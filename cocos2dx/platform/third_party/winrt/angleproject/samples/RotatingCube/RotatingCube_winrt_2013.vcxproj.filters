@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>5b49b15d-3723-47fb-9926-187d5d1ed1ed</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>5162204f-94b9-41b4-a4b1-c2bfa9d3db55</UniqueIdentifier>
+    </Filter>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="RotatingCube.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="CubeRenderer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RotatingCube.h" />
+    <ClInclude Include="BasicTimer.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="CubeRenderer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package_2013.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RotatingCube_TemporaryKey.pfx" />
+  </ItemGroup>
+</Project>

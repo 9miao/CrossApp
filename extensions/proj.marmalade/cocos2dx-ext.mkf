@@ -1,0 +1,144 @@
+options
+{
+    module_path="../../cocos2dx/proj.marmalade"
+    enable-exceptions
+}
+
+subprojects
+{
+    cocos2dx
+}
+includepaths
+{
+    .
+    "../"
+}
+
+files
+{
+    (.)
+    ["docs"]
+    cocos2dx-ext_public.defines.txt
+
+    ("../")
+    "*.h"
+
+    ["CCBReader"]
+    ("../CCBReader")
+    "*.h"
+    "*.cpp"
+
+    ["GUI/CCControlExtension"]
+    ("../GUI/CCControlExtension")
+    "*.h"
+    "*.cpp"
+
+    ["GUI/CCEditBox"]
+    ("../GUI/CCEditBox")
+    "CCEditBox.h"
+    "CCEditBox.cpp"
+    "CCEditBoxImplNone.cpp"
+
+    ["GUI/CCScrollView"]
+    ("../GUI/CCScrollView")
+    "*.h"
+    "*.cpp"
+
+    ["PhysicsNodes"]
+    ("../physics_nodes")
+    "*.h"
+    "*.cpp"
+
+    ["spine"]
+    ("../spine")
+    "*.h"
+    "*.cpp"
+    
+	["CocoStudio/Armature"]
+    ("../CocoStudio/Armature")
+    "*.h"
+    "*.cpp"
+
+	["CocoStudio/Armature/animation"]
+    ("../CocoStudio/Armature/animation")
+    "*.h"
+    "*.cpp"
+
+	["CocoStudio/Armature/datas"]
+    ("../CocoStudio/Armature/datas")
+    "*.h"
+    "*.cpp"
+
+	["CocoStudio/Armature/display"]
+    ("../CocoStudio/Armature/display")
+    "*.h"
+    "*.cpp"
+
+	["CocoStudio/Armature/physics"]
+    ("../CocoStudio/Armature/physics")
+    "*.h"
+    "*.cpp"
+
+	["CocoStudio/Armature/utils"]
+    ("../CocoStudio/Armature/utils")
+    "*.h"
+    "*.cpp"
+
+	["CocoStudio/Armature/external_tool"]
+    ("../CocoStudio/Armature/external_tool")
+    "*.h"
+	
+    ["CocoStudio/Components"]
+    ("../CocoStudio/Components")
+    "*.h"
+    "*.cpp"
+		
+	["CocoStudio/GUI/BaseClasses"]
+    ("../CocoStudio/GUI/BaseClasses")
+    "*.h"
+    "*.cpp"
+
+	["CocoStudio/GUI/Layouts"]
+    ("../CocoStudio/GUI/Layouts")
+    "*.h"
+    "*.cpp"
+	
+    ["CocoStudio/GUI/System"]
+    ("../CocoStudio/GUI/System")
+    "*.h"
+    "*.cpp"
+	
+	["CocoStudio/GUI/UIWidgets"]
+    ("../CocoStudio/GUI/UIWidgets")
+    "*.h"
+    "*.cpp"
+	
+	["CocoStudio/GUI/UIWidgets/Compatible"]
+    ("../CocoStudio/GUI/UIWidgets/Compatible")
+    "*.h"
+	
+	["CocoStudio/GUI/UIWidgets/ScrollWidget"]
+    ("../CocoStudio/GUI/UIWidgets/ScrollWidget")
+    "*.h"
+    "*.cpp"
+	
+	["CocoStudio/Json"]
+    ("../CocoStudio/Json")
+    "*.h"
+    "*.cpp"
+
+    ["CocoStudio/Json/lib_json"]
+    ("../CocoStudio/Json/lib_json")
+    "*.h"
+    "*.cpp"
+
+	["CocoStudio/Reader"]
+    ("../CocoStudio/Reader")
+    "*.h"
+    "*.cpp"
+	
+	["CocoStudio/Action"]
+    ("../CocoStudio/Action")
+    "*.h"
+    "*.cpp"
+}
