@@ -94,27 +94,7 @@ public:
      * @return An empty sprite object that is marked as autoreleased.
      */
     static CCSprite* create();
-    
-    /**
-     * Creates a sprite with an image filename.
-     *
-     * After creation, the rect of sprite will be the size of the image,
-     * and the offset will be (0,0).
-     *
-     * @param   pszFileName The string which indicates a path to image file, e.g., "scene1/monster.png".
-     * @return  A valid sprite object that is marked as autoreleased.
-     */
-    static CCSprite* create(const char *pszFileName);
-    
-    /**
-     * Creates a sprite with an image filename and a rect.
-     *
-     * @param   pszFileName The string wich indicates a path to image file, e.g., "scene1/monster.png"
-     * @param   rect        Only the contents inside rect of pszFileName's texture will be applied for this sprite.
-     * @return  A valid sprite object that is marked as autoreleased.
-     */
-    static CCSprite* create(const char *pszFileName, const CCRect& rect);
-    
+
     /**
      * Creates a sprite with an exsiting texture contained in a CCTexture2D object
      * After creation, the rect will be the size of the texture, and the offset will be (0,0).
@@ -153,19 +133,7 @@ public:
      * @param   pszSpriteFrameName A null terminated string which indicates the sprite frame name.
      * @return  A valid sprite object that is marked as autoreleased.
      */
-    static CCSprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
-    
-    /// @}  end of creators group
-    
-    
-    
-    /// @{
-    /// @name Initializers
-    
-    /**
-     * Default constructor
-     * @js ctor
-     */
+
     CCSprite(void);
     
     /**
@@ -223,45 +191,7 @@ public:
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
-    
-    /**
-     * Initializes a sprite with an sprite frame name.
-     *
-     * A CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
-     * If the CCSpriteFrame doesn't exist it will raise an exception.
-     *
-     * @param   pszSpriteFrameName  A key string that can fected a volid CCSpriteFrame from CCSpriteFrameCache
-     * @return  true if the sprite is initialized properly, false otherwise.
-     */
-    virtual bool initWithSpriteFrameName(const char *pszSpriteFrameName);
-    
-    /**
-     * Initializes a sprite with an image filename.
-     *
-     * This method will find pszFilename from local file system, load its content to CCTexture2D,
-     * then use CCTexture2D to create a sprite.
-     * After initialization, the rect used will be the size of the image. The offset will be (0,0).
-     *
-     * @param   pszFilename The path to an image file in local file system
-     * @return  true if the sprite is initialized properly, false otherwise.
-     * @js init
-     */
-    virtual bool initWithFile(const char *pszFilename);
-    
-    /**
-     * Initializes a sprite with an image filename, and a rect.
-     *
-     * This method will find pszFilename from local file system, load its content to CCTexture2D,
-     * then use CCTexture2D to create a sprite.
-     * After initialization, the offset will be (0,0).
-     *
-     * @param   pszFilename The path to an image file in local file system.
-     * @param   rect        The rectangle assigned the content area from texture.
-     * @return  true if the sprite is initialized properly, false otherwise.
-     * @js init
-     */
-    virtual bool initWithFile(const char *pszFilename, const CCRect& rect);
-    
+
     /// @} end of initializers
     
     /// @{
@@ -555,7 +485,7 @@ protected:
     bool m_bFlipY;                              /// Whether the sprite is flipped vertically or not.
 };
 
-typedef CCSprite UIImageView;
+typedef CCSprite CAImageView;
 // end of sprite_nodes group
 /// @}
 

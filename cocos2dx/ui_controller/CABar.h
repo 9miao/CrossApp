@@ -16,7 +16,7 @@
 NS_CC_BEGIN
 
 class CANavigationBar
-: public UIView
+: public CAView
 {
     
 public:
@@ -66,7 +66,7 @@ public:
 };
 
 class CATabBar
-:public UIView
+:public CAView
 {
     
 public:
@@ -133,7 +133,7 @@ protected:
 
     CCSize m_cItemSize;
     
-    std::vector<UIView*> m_pViews;
+    std::vector<CAView*> m_pViews;
     
     int m_nSelectedIndex;
     

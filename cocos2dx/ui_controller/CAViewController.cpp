@@ -24,7 +24,7 @@ CAViewController::CAViewController()
 ,m_sTitle("")
 ,m_bLifeLock(false)
 {
-    m_pView = UIView::createWithFrame(CCRectZero);
+    m_pView = CAView::createWithFrame(CCRectZero);
     m_pView->retain();
     m_pView->setViewDelegate(this);
 }
@@ -72,7 +72,7 @@ const char* CAViewController::getNibName()
     return typeid(*this).name();
 }
 
-UIView* CAViewController::getView()
+CAView* CAViewController::getView()
 {
     return m_pView;
 }
@@ -142,7 +142,7 @@ void CANavigationController::viewDidLoad()
     CCRect rect = this->getView()->getBounds();
     rect.size.height -= m_pNavigationBar->getContentSize().height;
     
-    m_pContainer = UIView::createWithFrame(rect);
+    m_pContainer = CAView::createWithFrame(rect);
     this->getView()->addChild(m_pContainer);
     
     CAViewController* viewController = m_pViewControllers.front();
@@ -337,7 +337,7 @@ void CATabBarController::viewDidLoad()
     rect.size.height -= m_pTabBar->getContentSize().height;
     rect.origin.y = m_pTabBar->getContentSize().height;
     
-    m_pContainer = UIView::createWithFrame(rect);
+    m_pContainer = CAView::createWithFrame(rect);
     this->getView()->addChild(m_pContainer);
     
     m_pTabBar->setFrame(CCRectZero);

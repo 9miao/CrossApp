@@ -28,7 +28,7 @@ CANavigationBar::~CANavigationBar()
 
 bool CANavigationBar::init()
 {
-    if (!UIView::init())
+    if (!CAView::init())
     {
         return false;
     }
@@ -41,7 +41,7 @@ bool CANavigationBar::init()
 
 void CANavigationBar::onEnterTransitionDidFinish()
 {
-    UIView::onEnterTransitionDidFinish();
+    CAView::onEnterTransitionDidFinish();
     
     if (m_pBackGround == NULL)
     {
@@ -53,7 +53,7 @@ void CANavigationBar::onEnterTransitionDidFinish()
 
 void CANavigationBar::onExitTransitionDidStart()
 {
-    UIView::onExitTransitionDidStart();
+    CAView::onExitTransitionDidStart();
 }
 
 void CANavigationBar::showBackGround()
@@ -156,7 +156,7 @@ CATabBar::~CATabBar()
 
 bool CATabBar::init(const std::vector<CATabBarItem*>& items)
 {
-    if (!UIView::init())
+    if (!CAView::init())
     {
         return false;
     }
@@ -173,7 +173,7 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items)
 
 void CATabBar::onEnterTransitionDidFinish()
 {
-    UIView::onEnterTransitionDidFinish();
+    CAView::onEnterTransitionDidFinish();
     
     if (m_pBackGround == NULL)
     {
@@ -189,7 +189,7 @@ void CATabBar::onEnterTransitionDidFinish()
 
 void CATabBar::onExitTransitionDidStart()
 {
-    UIView::onExitTransitionDidStart();
+    CAView::onExitTransitionDidStart();
 }
 
 CATabBar* CATabBar::create(const std::vector<CATabBarItem*>& items)
@@ -256,12 +256,12 @@ void CATabBar::showItems()
         
         for (unsigned int i=0; i<count; i++)
         {
-            UIView* view = UIView::createWithFrame(CCRect(i * width, 0, width, height));
+            CAView* view = CAView::createWithFrame(CCRect(i * width, 0, width, height));
             view->setOpacity(0);
             this->addChild(view, 3);
             m_pViews.push_back(view);
             
-            UIImageView* imageView = UIImageView::createWithTexture(m_pItems.at(i)->getImage());
+            CAImageView* imageView = CAImageView::createWithTexture(m_pItems.at(i)->getImage());
             imageView->setPosition(view->getContentSize()/2);
             view->addChild(imageView, 0, 0xffff);
             CCSize imageViewSize = imageView->getBounds().size;
@@ -328,8 +328,8 @@ void CATabBar::setSelectedAtIndex(int index)
 
         if (m_pSelectedItem && m_pSelectedItem->getSelectedImage())
         {
-            UIView* viewLast = m_pViews.at(m_nSelectedIndex);
-            if (UIImageView* imageView = dynamic_cast<UIImageView*>(viewLast->getChildByTag(0xffff)))
+            CAView* viewLast = m_pViews.at(m_nSelectedIndex);
+            if (CAImageView* imageView = dynamic_cast<CAImageView*>(viewLast->getChildByTag(0xffff)))
             {
                 imageView->setTexture(m_pSelectedItem->getImage());
             }
@@ -351,8 +351,8 @@ void CATabBar::setSelectedAtIndex(int index)
         
         if (m_pSelectedItem->getSelectedImage())
         {
-            UIView* view = m_pViews.at(m_nSelectedIndex);
-            if (UIImageView* imageView = dynamic_cast<UIImageView*>(view->getChildByTag(0xffff)))
+            CAView* view = m_pViews.at(m_nSelectedIndex);
+            if (CAImageView* imageView = dynamic_cast<CAImageView*>(view->getChildByTag(0xffff)))
             {
                 imageView->setTexture(m_pSelectedItem->getSelectedImage());
             }

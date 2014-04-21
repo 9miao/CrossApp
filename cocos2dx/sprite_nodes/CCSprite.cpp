@@ -82,30 +82,6 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     return NULL;
 }
 
-CCSprite* CCSprite::create(const char *pszFileName)
-{
-    CCSprite *pobSprite = new CCSprite();
-    if (pobSprite && pobSprite->initWithFile(pszFileName))
-    {
-        pobSprite->autorelease();
-        return pobSprite;
-    }
-    CC_SAFE_DELETE(pobSprite);
-    return NULL;
-}
-
-CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
-{
-    CCSprite *pobSprite = new CCSprite();
-    if (pobSprite && pobSprite->initWithFile(pszFileName, rect))
-    {
-        pobSprite->autorelease();
-        return pobSprite;
-    }
-    CC_SAFE_DELETE(pobSprite);
-    return NULL;
-}
-
 CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
     CCSprite *pobSprite = new CCSprite();
@@ -116,19 +92,6 @@ CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     }
     CC_SAFE_DELETE(pobSprite);
     return NULL;
-}
-
-CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
-{
-    CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
-    
-#if COCOS2D_DEBUG > 0
-    char msg[256] = {0};
-    sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
-    CCAssert(pFrame != NULL, msg);
-#endif
-    
-    return createWithSpriteFrame(pFrame);
 }
 
 CCSprite* CCSprite::create()
@@ -219,40 +182,6 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture)
     return initWithTexture(pTexture, rect);
 }
 
-bool CCSprite::initWithFile(const char *pszFilename)
-{
-    CCAssert(pszFilename != NULL, "Invalid filename for sprite");
-
-    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFilename);
-    if (pTexture)
-    {
-        CCRect rect = CCRectZero;
-        rect.size = pTexture->getContentSize();
-        return initWithTexture(pTexture, rect);
-    }
-
-    // don't release here.
-    // when load texture failed, it's better to get a "transparent" sprite then a crashed program
-    // this->release(); 
-    return false;
-}
-
-bool CCSprite::initWithFile(const char *pszFilename, const CCRect& rect)
-{
-    CCAssert(pszFilename != NULL, "");
-
-    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFilename);
-    if (pTexture)
-    {
-        return initWithTexture(pTexture, rect);
-    }
-
-    // don't release here.
-    // when load texture failed, it's better to get a "transparent" sprite then a crashed program
-    // this->release(); 
-    return false;
-}
-
 bool CCSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
     CCAssert(pSpriteFrame != NULL, "");
@@ -261,14 +190,6 @@ bool CCSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     setDisplayFrame(pSpriteFrame);
 
     return bRet;
-}
-
-bool CCSprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
-{
-    CCAssert(pszSpriteFrameName != NULL, "");
-
-    CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
-    return initWithSpriteFrame(pFrame);
 }
 
 // XXX: deprecated

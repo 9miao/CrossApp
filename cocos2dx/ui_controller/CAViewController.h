@@ -20,7 +20,7 @@ class CANavigationController;
 
 class CAViewController
 : public CCObject
-, public UIViewDelegate
+, public CAViewDelegate
 {
 
 public:
@@ -31,7 +31,7 @@ public:
     
     virtual bool init();
     
-    //void setSuperView(UIView* view);
+    //void setSuperView(CAView* view);
     
     const char* getNibName();
     
@@ -61,7 +61,7 @@ protected:
     
     virtual void viewDidUnload() = 0;
     
-    UIView* getView();
+    CAView* getView();
     
 private:
     
@@ -79,7 +79,7 @@ private:
     
 private:
     
-    UIView* m_pView;
+    CAView* m_pView;
     
     bool m_bLifeLock;
 };
@@ -118,7 +118,7 @@ private:
     
     std::vector<CAViewController*> m_pViewControllers;
     
-    UIView* m_pContainer;
+    CAView* m_pContainer;
     
 };
 
@@ -161,7 +161,7 @@ private:
     
     unsigned int m_nSelectedIndex;
 
-    UIView* m_pContainer;
+    CAView* m_pContainer;
 };
 
 

@@ -32,7 +32,7 @@ NS_CC_BEGIN
  - RGB colors
  */
 
-class UIViewDelegate
+class CAViewDelegate
 {
 public:
     
@@ -44,14 +44,14 @@ public:
 };
 
 class CCLayerColor;
-typedef CCLayerColor UIView;
+typedef CCLayerColor CAView;
 class CC_DLL CCLayerColor : public CCNodeRGBA, public CCBlendProtocol
 
 #ifdef EMSCRIPTEN
 , public CCGLBufferedNode
 #endif // EMSCRIPTEN
 {
-    CC_SYNTHESIZE(UIViewDelegate*, m_pViewDelegate, ViewDelegate);
+    CC_SYNTHESIZE(CAViewDelegate*, m_pViewDelegate, ViewDelegate);
     
 protected:
     ccVertex2F m_pSquareVertices[4];
