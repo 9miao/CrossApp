@@ -552,6 +552,7 @@ CCScale9Sprite* CCScale9Sprite::createWithTexture(CCTexture2D* texture, CCRect r
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
+    return NULL;
 }
 
 bool CCScale9Sprite::initWithTexture(CCTexture2D* texture, CCRect rect)
@@ -569,6 +570,7 @@ CCScale9Sprite* CCScale9Sprite::createWithTexture(CCTexture2D* texture, CCRect r
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
+    return NULL;
 }
 
 bool CCScale9Sprite::initWithTexture(CCRect capInsets, CCTexture2D* texture)
@@ -586,6 +588,7 @@ CCScale9Sprite* CCScale9Sprite::createWithTexture(CCRect capInsets, CCTexture2D*
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
+    return NULL;
 }
 
 bool CCScale9Sprite::initWithTexture(CCTexture2D* texture)

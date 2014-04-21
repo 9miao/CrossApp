@@ -287,6 +287,7 @@ THE SOFTWARE.
 
 //ui_controller
 #include "ui_controller/CAViewController.h"
+#include "ui_controller/CAButton.h"
 
 NS_CC_BEGIN
 

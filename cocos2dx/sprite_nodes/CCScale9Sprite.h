@@ -78,6 +78,8 @@ public:
     /** Sets the bottom side inset */
     CC_PROPERTY(float, m_insetBottom, InsetBottom);
 
+    CCTexture2D* getTexture(){return _scale9Image->getTexture();}
+    
 protected:
     bool m_bSpritesGenerated;
     CCRect m_spriteRect;

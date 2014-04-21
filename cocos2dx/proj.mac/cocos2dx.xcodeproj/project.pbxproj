@@ -286,6 +286,8 @@
 		469A7DFA16C247C8006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DF816C247C8006FFCB2 /* tinyxml2.h */; };
 		46A3939A16E03F4D00210B16 /* ccFPSImages.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A3939816E03F4D00210B16 /* ccFPSImages.c */; };
 		46A3939B16E03F4D00210B16 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A3939916E03F4D00210B16 /* ccFPSImages.h */; };
+		B01DFC041905107200214AE2 /* CAButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01DFC021905107200214AE2 /* CAButton.cpp */; };
+		B01DFC051905107200214AE2 /* CAButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B01DFC031905107200214AE2 /* CAButton.h */; };
 		B023919118FB855E0089F677 /* CABar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B023918F18FB855E0089F677 /* CABar.cpp */; };
 		B023919218FB855E0089F677 /* CABar.h in Headers */ = {isa = PBXBuildFile; fileRef = B023919018FB855E0089F677 /* CABar.h */; };
 		B023919918FBC7FB0089F677 /* CABarItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B023919718FBC7FB0089F677 /* CABarItem.cpp */; };
@@ -583,6 +585,8 @@
 		469A7DF816C247C8006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		46A3939816E03F4D00210B16 /* ccFPSImages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccFPSImages.c; sourceTree = "<group>"; };
 		46A3939916E03F4D00210B16 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
+		B01DFC021905107200214AE2 /* CAButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAButton.cpp; sourceTree = "<group>"; };
+		B01DFC031905107200214AE2 /* CAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAButton.h; sourceTree = "<group>"; };
 		B023918F18FB855E0089F677 /* CABar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CABar.cpp; sourceTree = "<group>"; };
 		B023919018FB855E0089F677 /* CABar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABar.h; sourceTree = "<group>"; };
 		B023919718FBC7FB0089F677 /* CABarItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CABarItem.cpp; sourceTree = "<group>"; };
@@ -1212,6 +1216,8 @@
 		B02730F518F78368002988D6 /* ui_controller */ = {
 			isa = PBXGroup;
 			children = (
+				B01DFC021905107200214AE2 /* CAButton.cpp */,
+				B01DFC031905107200214AE2 /* CAButton.h */,
 				B02730F618F78393002988D6 /* CAViewController.cpp */,
 				B02730F718F78393002988D6 /* CAViewController.h */,
 				B023918F18FB855E0089F677 /* CABar.cpp */,
@@ -1387,6 +1393,7 @@
 				46A3939B16E03F4D00210B16 /* ccFPSImages.h in Headers */,
 				1A589DA416EC7B2F00C6B691 /* CCUserDefault.h in Headers */,
 				1A60BF5C173CD9D90054773B /* CCBool.h in Headers */,
+				B01DFC051905107200214AE2 /* CAButton.h in Headers */,
 				1A60BF5E173CD9D90054773B /* CCDataVisitor.h in Headers */,
 				1A60BF5F173CD9D90054773B /* CCDouble.h in Headers */,
 				1A60BF60173CD9D90054773B /* CCFloat.h in Headers */,
@@ -1488,6 +1495,7 @@
 				1551A6CC158F2ADE00E66CFE /* plane.c in Sources */,
 				1551A6CD158F2ADE00E66CFE /* quaternion.c in Sources */,
 				1551A6CE158F2ADE00E66CFE /* ray2.c in Sources */,
+				B01DFC041905107200214AE2 /* CAButton.cpp in Sources */,
 				1551A6CF158F2ADE00E66CFE /* utility.c in Sources */,
 				1551A6D0158F2ADE00E66CFE /* vec2.c in Sources */,
 				1551A6D1158F2ADE00E66CFE /* vec3.c in Sources */,

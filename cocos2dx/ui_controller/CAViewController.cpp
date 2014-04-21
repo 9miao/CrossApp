@@ -150,6 +150,7 @@ void CANavigationController::viewDidLoad()
     
     m_pNavigationBar->setFrame(CCRect(0, rect.size.height, 0, 0));
     this->getView()->addChild(m_pNavigationBar);
+    m_pNavigationBar->setDelegate(this);
 }
 
 
@@ -268,7 +269,10 @@ void CANavigationController::popViewControllerFinish()
     m_pContainer->setFrame(CCRectZero);
 }
 
-
+void CANavigationController::navigationPopViewController(CANavigationBar* navigationBar, bool animated)
+{
+    this->popViewControllerAnimated(animated);
+}
 
 #pragma CATabBarController
 

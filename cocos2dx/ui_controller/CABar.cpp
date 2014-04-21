@@ -17,6 +17,8 @@ CANavigationBar::CANavigationBar()
 :m_pBackGround(NULL)
 ,m_pBackGroundImage(NULL)
 ,m_pTitle(NULL)
+,m_pBackButton(NULL)
+,m_pDelegate(NULL)
 {
 
 }
@@ -34,7 +36,7 @@ bool CANavigationBar::init()
     }
     this->setOpacity(0);
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    this->setContentSize(CCSize(winSize.width, winSize.width * 0.15f));
+    this->setContentSize(CCSize(winSize.width, MIN(winSize.width, winSize.height) * 0.15f));
     
     return true;
 }
@@ -48,6 +50,8 @@ void CANavigationBar::onEnterTransitionDidFinish()
         this->showBackGround();
         
         this->showTitle();
+        
+        this->showBackButton();
     }
 }
 
@@ -75,18 +79,51 @@ void CANavigationBar::showBackGround()
     
     ((CCScale9Sprite*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
-    this->addChild(m_pBackGround);
+    this->addChild(m_pBackGround, 0);
 }
 
 void CANavigationBar::showTitle()
 {
-    m_pTitle = CCLabelTTF::create("", "Arial", 40);
-    m_pTitle->setPosition(m_obContentSize/2);
-    this->addChild(m_pTitle);
+    if (m_pTitle == NULL)
+    {
+        m_pTitle = CCLabelTTF::create("", "Arial", 40);
+        m_pTitle->setPosition(m_obContentSize/2);
+        this->addChild(m_pTitle, 1);
+    }
     
     if (m_pItems.empty() == false)
     {
         ((CCLabelTTF*)m_pTitle)->setString(m_pItems.back()->getTitle().c_str());
+    }
+}
+
+void CANavigationBar::showBackButton()
+{
+    if (m_pBackButton == NULL)
+    {
+        m_pBackButton = CAButton::createWithFrame(CCRect(20, 0, 50, 50));
+        CAImageView* imageView = CAImageView::createWithTexture(CCTexture2D::create("button_left.png"));
+        m_pBackButton->setBackGround(CAButtonStateNormal, imageView);
+        m_pBackButton->setPositionY(m_obContentSize.height/2);
+        this->addChild(m_pBackButton, 1);
+        m_pBackButton->addTarget(this, CAButton_selector(CANavigationBar::goBack), TouchUpInSide);
+    }
+    
+    if (m_pItems.size() <= 1)
+    {
+        m_pBackButton->setVisible(false);
+    }
+    else
+    {
+        m_pBackButton->setVisible(true);
+    }
+}
+
+void CANavigationBar::goBack(CAButton* btn, CCPoint point)
+{
+    if (m_pDelegate)
+    {
+        m_pDelegate->navigationPopViewController(this, true);
     }
 }
 
@@ -96,23 +133,20 @@ void CANavigationBar::pushItem(CANavigationBarItem* item)
     {
         item = CANavigationBarItem::create(CCString::createWithFormat("item%ld",m_pItems.size())->getCString());
     }
-    
-    
-    do
-    {
-        CC_BREAK_IF(item->getBackButtonTitle().compare("") != 0);
-        CC_BREAK_IF(m_pItems.empty());
-        item->setBackButtonTitle(m_pItems.back()->getTitle());
-    }
-    while (0);
+
+//    do
+//    {
+//        CC_BREAK_IF(item->getBackButtonTitle().compare("") != 0);
+//        CC_BREAK_IF(m_pItems.empty());
+//        item->setBackButtonTitle(m_pItems.back()->getTitle());
+//    }
+//    while (0);
 
     item->retain();
     m_pItems.push_back(item);
     
-    if (m_pTitle)
-    {
-        ((CCLabelTTF*)m_pTitle)->setString(item->getTitle().c_str());
-    }
+    this->showTitle();
+    this->showBackButton();
 }
 
 void CANavigationBar::popItem()
@@ -120,10 +154,8 @@ void CANavigationBar::popItem()
     m_pItems.back()->autorelease();
     m_pItems.pop_back();
     
-    if (m_pTitle)
-    {
-        ((CCLabelTTF*)m_pTitle)->setString(m_pItems.back()->getTitle().c_str());
-    }
+    this->showTitle();
+    this->showBackButton();
 }
 
 #pragma CATabBar
@@ -164,7 +196,7 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items)
     this->setTouchEnabled(true);
     
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    this->setContentSize(CCSize(winSize.width, winSize.width * 0.15f));
+    this->setContentSize(CCSize(winSize.width, MIN(winSize.width, winSize.height) * 0.15f));
     
     this->setItems(items);
     

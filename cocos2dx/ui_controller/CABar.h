@@ -11,9 +11,19 @@
 
 #include <iostream>
 #include "sprite_nodes/CCView.h"
+#include "CAButton.h"
 #include "CABarItem.h"
 #include <vector>
 NS_CC_BEGIN
+
+class CANavigationBar;
+class CANavigationBarDelegate
+{
+public:
+    
+    virtual void navigationPopViewController(CANavigationBar* navigationBar, bool animated) = 0;
+    
+};
 
 class CANavigationBar
 : public CAView
@@ -41,17 +51,25 @@ public:
     
     CC_SYNTHESIZE(CCTexture2D*, m_pBackGroundImage, BackGroundImage);
     
+    CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
+    
 protected:
     
     void showBackGround();
     
     void showTitle();
     
+    void showBackButton();
+    
+    void goBack(CAButton* btn, CCPoint point);
+    
 protected:
     
     CCNodeRGBA* m_pBackGround;
     
     CCNodeRGBA* m_pTitle;
+    
+    CAButton* m_pBackButton;
     
     std::vector<CANavigationBarItem*> m_pItems;
 };

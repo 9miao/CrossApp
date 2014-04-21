@@ -86,6 +86,7 @@ private:
 
 class CANavigationController
 : public CAViewController
+, public CANavigationBarDelegate
 {
 
 public:
@@ -104,6 +105,8 @@ public:
     
     CC_SYNTHESIZE_READONLY(CANavigationBar*, m_pNavigationBar, NavigationBar);
     
+    inline unsigned long getViewControllerCount() {return m_pViewControllers.size();}
+    
 protected:
  
     virtual void viewDidLoad();
@@ -113,6 +116,8 @@ protected:
     void pushViewControllerFinish();
     
     void popViewControllerFinish();
+    
+    virtual void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
     
 private:
     

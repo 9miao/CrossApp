@@ -293,6 +293,8 @@
 		46A393F716E5D01B00210B16 /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A393F316E5D01B00210B16 /* CCUserDefault.h */; };
 		46A393F816E5D01B00210B16 /* CCUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F416E5D01B00210B16 /* CCUserDefault.mm */; };
 		46A393F916E5D01B00210B16 /* CCUserDefaultAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */; };
+		B01DFC1C190513DB00214AE2 /* CAButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01DFC1A190513DB00214AE2 /* CAButton.cpp */; };
+		B01DFC1D190513DB00214AE2 /* CAButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B01DFC1B190513DB00214AE2 /* CAButton.h */; };
 		B04C0C11190121B9009854FD /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0C0D190121B9009854FD /* CCScale9Sprite.cpp */; };
 		B04C0C12190121B9009854FD /* CCScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = B04C0C0E190121B9009854FD /* CCScale9Sprite.h */; };
 		B04C0C13190121B9009854FD /* CCView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0C0F190121B9009854FD /* CCView.cpp */; };
@@ -598,6 +600,8 @@
 		46A393F316E5D01B00210B16 /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
 		46A393F416E5D01B00210B16 /* CCUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUserDefault.mm; sourceTree = "<group>"; };
 		46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefaultAndroid.cpp; sourceTree = "<group>"; };
+		B01DFC1A190513DB00214AE2 /* CAButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAButton.cpp; sourceTree = "<group>"; };
+		B01DFC1B190513DB00214AE2 /* CAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAButton.h; sourceTree = "<group>"; };
 		B04C0C0D190121B9009854FD /* CCScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScale9Sprite.cpp; sourceTree = "<group>"; };
 		B04C0C0E190121B9009854FD /* CCScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScale9Sprite.h; sourceTree = "<group>"; };
 		B04C0C0F190121B9009854FD /* CCView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCView.cpp; sourceTree = "<group>"; };
@@ -1237,6 +1241,8 @@
 		B04C0C471901227B009854FD /* ui_controller */ = {
 			isa = PBXGroup;
 			children = (
+				B01DFC1A190513DB00214AE2 /* CAButton.cpp */,
+				B01DFC1B190513DB00214AE2 /* CAButton.h */,
 				B04C0C481901227B009854FD /* CABar.cpp */,
 				B04C0C491901227B009854FD /* CABar.h */,
 				B04C0C4A1901227B009854FD /* CABarItem.cpp */,
@@ -1357,6 +1363,7 @@
 				1551A820158F2ADF00E66CFE /* ccShader_PositionTexture_frag.h in Headers */,
 				1551A821158F2ADF00E66CFE /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				1551A822158F2ADF00E66CFE /* ccShader_PositionTexture_uColor_vert.h in Headers */,
+				B01DFC1D190513DB00214AE2 /* CAButton.h in Headers */,
 				1551A823158F2ADF00E66CFE /* ccShader_PositionTexture_vert.h in Headers */,
 				1551A824158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				1551A825158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_vert.h in Headers */,
@@ -1577,6 +1584,7 @@
 				1551A850158F2ADF00E66CFE /* unzip.cpp in Sources */,
 				1551A852158F2ADF00E66CFE /* ZipUtils.cpp in Sources */,
 				1551A855158F2ADF00E66CFE /* CCIMEDispatcher.cpp in Sources */,
+				B01DFC1C190513DB00214AE2 /* CAButton.cpp in Sources */,
 				1551A857158F2ADF00E66CFE /* CCTextFieldTTF.cpp in Sources */,
 				1551A859158F2ADF00E66CFE /* CCTexture2D.cpp in Sources */,
 				1551A85B158F2ADF00E66CFE /* CCTextureAtlas.cpp in Sources */,
