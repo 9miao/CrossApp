@@ -36,7 +36,7 @@ bool CANavigationBar::init()
     }
     this->setOpacity(0);
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    this->setContentSize(CCSize(winSize.width, MIN(winSize.width, winSize.height) * 0.15f));
+    this->setContentSize(CCSize(winSize.width, MIN(winSize.width, winSize.height) * 0.1f));
     
     return true;
 }
@@ -70,13 +70,10 @@ void CANavigationBar::showBackGround()
     
     if (m_pBackGroundImage == NULL)
     {
-        m_pBackGround = CCScale9Sprite::create("navigationController_bg.png");
+        m_pBackGroundImage = CCTexture2D::create("navigationController_bg.png");
     }
-    else
-    {
-        m_pBackGround = CCScale9Sprite::createWithTexture(m_pBackGroundImage);
-    }
-    
+
+    m_pBackGround = CCScale9Sprite::createWithTexture(m_pBackGroundImage);
     ((CCScale9Sprite*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
     this->addChild(m_pBackGround, 0);
@@ -196,7 +193,8 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items)
     this->setTouchEnabled(true);
     
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    this->setContentSize(CCSize(winSize.width, MIN(winSize.width, winSize.height) * 0.15f));
+
+    this->setContentSize(CCSize(winSize.width, MIN(winSize.width * 0.15f, winSize.height * 0.1f)));
     
     this->setItems(items);
     
@@ -262,13 +260,10 @@ void CATabBar::showBackGround()
     
     if (m_pBackGroundImage == NULL)
     {
-        m_pBackGround = CCScale9Sprite::create("tabBarController_bg.png");
-    }
-    else
-    {
-        m_pBackGround = CCScale9Sprite::createWithTexture(m_pBackGroundImage);
+        m_pBackGroundImage = CCTexture2D::create("tabBarController_bg.png");
     }
     
+    m_pBackGround = CCScale9Sprite::createWithTexture(m_pBackGroundImage);
     ((CCScale9Sprite*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
     this->addChild(m_pBackGround);
@@ -318,13 +313,10 @@ void CATabBar::showSelectedBackGround()
     
     if (m_pSelectedBackGroundImage == NULL)
     {
-        m_pSelectedBackGround = CCScale9Sprite::create("tabBarController_selected_bg.png");
+        m_pSelectedBackGroundImage = CCTexture2D::create("tabBarController_selected_bg.png");
     }
-    else
-    {
-        m_pSelectedBackGround = CCScale9Sprite::createWithTexture(m_pSelectedBackGroundImage);
-    }
-    
+
+    m_pSelectedBackGround = CCScale9Sprite::createWithTexture(m_pSelectedBackGroundImage);
     ((CCScale9Sprite*)m_pSelectedBackGround)->setPreferredSize(m_cItemSize);
     this->addChild(m_pSelectedBackGround, 1);
 }
@@ -339,13 +331,10 @@ void CATabBar::showSelectedIndicator()
     
     if (m_pSelectedIndicatorImage == NULL)
     {
-        m_pSelectedIndicator = CCScale9Sprite::create("tabBarController_selected_bottom.png");
-    }
-    else
-    {
-        m_pSelectedIndicator = CCScale9Sprite::createWithTexture(m_pSelectedIndicatorImage);
+        m_pSelectedIndicatorImage = CCTexture2D::create("tabBarController_selected_bottom.png");
     }
     
+    m_pSelectedIndicator = CCScale9Sprite::createWithTexture(m_pSelectedIndicatorImage);
     ((CCScale9Sprite*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
     m_pSelectedIndicator->setAnchorPoint(CCPointZero);
     this->addChild(m_pSelectedIndicator, 2);

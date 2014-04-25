@@ -810,7 +810,7 @@ void CCSprite::setFrame(const CCRect &rect)
     {
         this->setBoundsSize(rect.size);
         
-        CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.x * m_fScaleY);
+        CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
         point = ccpAdd(rect.origin, point);
         this->setPosition(point);
     }

@@ -23,9 +23,9 @@
 
 NS_CC_BEGIN
 
-/// CCLayerColor
+/// CAView
 
-CCLayerColor::CCLayerColor()
+CAView::CAView()
 :m_pViewDelegate(NULL)
 {
     // default blend function
@@ -33,24 +33,24 @@ CCLayerColor::CCLayerColor()
     m_tBlendFunc.dst = CC_BLEND_DST;
 }
 
-CCLayerColor::~CCLayerColor()
+CAView::~CAView()
 {
 }
 
 /// blendFunc getter
-ccBlendFunc CCLayerColor::getBlendFunc()
+ccBlendFunc CAView::getBlendFunc()
 {
     return m_tBlendFunc;
 }
 /// blendFunc setter
-void CCLayerColor::setBlendFunc(ccBlendFunc var)
+void CAView::setBlendFunc(ccBlendFunc var)
 {
     m_tBlendFunc = var;
 }
 
-CCLayerColor* CCLayerColor::createWithFrame(const CCRect &rect)
+CAView* CAView::createWithFrame(const CCRect &rect)
 {
-    CCLayerColor* pRet = new CCLayerColor();
+    CAView* pRet = new CAView();
     if (pRet && pRet->initWithFrame(rect))
     {
         pRet->autorelease();
@@ -62,7 +62,7 @@ CCLayerColor* CCLayerColor::createWithFrame(const CCRect &rect)
     return pRet;
 }
 
-void CCLayerColor::onEnterTransitionDidFinish()
+void CAView::onEnterTransitionDidFinish()
 {
     CCNodeRGBA::onEnterTransitionDidFinish();
     if (m_pViewDelegate)
@@ -72,7 +72,7 @@ void CCLayerColor::onEnterTransitionDidFinish()
     }
 }
 
-void CCLayerColor::onExitTransitionDidStart()
+void CAView::onExitTransitionDidStart()
 {
     CCNodeRGBA::onExitTransitionDidStart();
     if (m_pViewDelegate)
@@ -81,7 +81,7 @@ void CCLayerColor::onExitTransitionDidStart()
     }
 }
 
-bool CCLayerColor::init()
+bool CAView::init()
 {
     if (!CCNodeRGBA::init())
     {
@@ -110,9 +110,9 @@ bool CCLayerColor::init()
     return true;
 }
 
-bool CCLayerColor::initWithFrame(const CCRect& rect)
+bool CAView::initWithFrame(const CCRect& rect)
 {
-    if (!CCLayerColor::init())
+    if (!CAView::init())
     {
         return false;
     }
@@ -123,7 +123,7 @@ bool CCLayerColor::initWithFrame(const CCRect& rect)
 }
 
 /// override contentSize
-void CCLayerColor::setContentSize(const CCSize & size)
+void CAView::setContentSize(const CCSize & size)
 {
     m_pSquareVertices[1].x = size.width;
     m_pSquareVertices[2].y = size.height;
@@ -133,7 +133,7 @@ void CCLayerColor::setContentSize(const CCSize & size)
     CCNodeRGBA::setContentSize(size);
 }
 
-void CCLayerColor::updateColor()
+void CAView::updateColor()
 {
     for( unsigned int i=0; i < 4; i++ )
     {
@@ -144,7 +144,7 @@ void CCLayerColor::updateColor()
     }
 }
 
-void CCLayerColor::draw()
+void CAView::draw()
 {
     CC_NODE_DRAW_SETUP();
     
@@ -171,13 +171,13 @@ void CCLayerColor::draw()
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void CCLayerColor::setColor(const ccColor3B &color)
+void CAView::setColor(const ccColor3B &color)
 {
     CCNodeRGBA::setColor(color);
     updateColor();
 }
 
-void CCLayerColor::setOpacity(GLubyte opacity)
+void CAView::setOpacity(GLubyte opacity)
 {
     CCNodeRGBA::setOpacity(opacity);
     updateColor();

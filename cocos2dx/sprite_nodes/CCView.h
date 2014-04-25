@@ -23,9 +23,9 @@
 NS_CC_BEGIN
 
 //
-// CCLayerColor
+// CAView
 //
-/** @brief CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
+/** @brief CAView is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
  
  All features from CCLayer are valid, plus the following new features:
  - opacity
@@ -43,9 +43,8 @@ public:
     virtual void viewOnExitTransitionDidStart() = 0;
 };
 
-class CCLayerColor;
-typedef CCLayerColor CAView;
-class CC_DLL CCLayerColor : public CCNodeRGBA, public CCBlendProtocol
+
+class CC_DLL CAView : public CCNodeRGBA, public CCBlendProtocol
 
 #ifdef EMSCRIPTEN
 , public CCGLBufferedNode
@@ -61,12 +60,12 @@ public:
     /**
      *  @js ctor
      */
-    CCLayerColor();
+    CAView();
     /**
      *  @js NA
      *  @lua NA
      */
-    virtual ~CCLayerColor();
+    virtual ~CAView();
     
     virtual void onEnterTransitionDidFinish();
     
@@ -75,7 +74,7 @@ public:
     virtual void draw();
     virtual void setContentSize(const CCSize & var);
     
-    static CCLayerColor * createWithFrame(const CCRect& rect);
+    static CAView * createWithFrame(const CCRect& rect);
 
     virtual bool init();
     

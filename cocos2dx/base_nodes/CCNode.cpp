@@ -443,17 +443,20 @@ const CCRect& CCNode::getFrame() const
 
 void CCNode::setFrame(const CCRect &rect)
 {
-    this->setBoundsSize(rect.size);
+    if ( ! rect.size.equals(CCSizeZero))
+    {
+        this->setContentSize(CCSize(rect.size.width / m_fScaleX, rect.size.height / m_fScaleY));
+    }
     
     CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
-    point = ccpAdd(rect.origin, point);
+    point = ccpAdd(point, rect.origin);
     this->setPosition(point);
 }
 
 CCRect CCNode::getBounds() const
 {
     CCRect rect = CCRectZero;
-    rect.size = m_obFrameRect.size;
+    rect.size = m_obContentSize;
     return rect;
 }
 
@@ -461,8 +464,28 @@ void CCNode::setBoundsSize(const CCSize& size)
 {
     if ( ! size.equals(CCSizeZero))
     {
-        this->setContentSize(CCSize(size.width / m_fScaleX, size.height / m_fScaleY));
+        this->setContentSize(CCSize(size.width, size.height));
     }
+}
+
+
+CCPoint CCNode::getCenter()
+{
+    CCPoint point = ccpSub(ccpMult(m_obContentSize, 0.5f), m_obAnchorPointInPoints);
+    point = CCPoint(point.x * m_fScaleX, point.y * m_fScaleY);
+    point = ccpAdd(point, m_obPosition);
+    
+    return point;
+}
+
+
+void CCNode::setCenter(CCPoint center)
+{
+    CCPoint point = ccpSub(ccpMult(m_obContentSize, 0.5f), m_obAnchorPointInPoints);
+    point = CCPoint(point.x * m_fScaleX, point.y * m_fScaleY);
+    point = ccpSub(center, point);
+    
+    this->setPosition(point);
 }
 
 // isRunning getter
@@ -1303,7 +1326,7 @@ CCNodeRGBA::CCNodeRGBA()
 , m_bKeypadEnabled(false)
 , m_bDisplayRange(true)
 , m_nTouchPriority(0)
-, m_eTouchMode(kCCTouchesAllAtOnce)
+, m_eTouchMode(kCCTouchesOneByOne)
 {}
 
 CCNodeRGBA::~CCNodeRGBA() {}
@@ -1329,7 +1352,14 @@ void CCNodeRGBA::registerWithTouchDispatcher()
 {
     CCTouchDispatcher* pDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
     
-    pDispatcher->addTargetedDelegate(this, m_nTouchPriority, true);
+    if( m_eTouchMode == kCCTouchesAllAtOnce )
+    {
+        pDispatcher->addStandardDelegate(this, 0);
+    }
+    else
+    {
+        pDispatcher->addTargetedDelegate(this, m_nTouchPriority, true);
+    }
 }
 
 /// isTouchEnabled getter
@@ -1460,8 +1490,6 @@ void CCNodeRGBA::onExit()
     if( m_bTouchEnabled )
     {
         pDirector->getTouchDispatcher()->removeDelegate(this);
-        // [lua]:don't unregister script touch handler, or the handler will be destroyed
-        // unregisterScriptTouchHandler();
     }
 
     // remove this layer from the delegates who concern the keypad msg

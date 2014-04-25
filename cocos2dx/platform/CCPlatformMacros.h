@@ -135,6 +135,16 @@ public: virtual const varType& get##funName(void);
  The variables and methods declared after CC_PROPERTY are all public.
  If you need protected or private, please declare.
  */
+#define CC_PROPERTY_IS(varType, varName, funName)\
+protected: varType varName;\
+public: virtual varType is##funName(void);\
+public: virtual void set##funName(varType var);
+
+#define CC_PROPERTY_IS_PASS_BY_REF(varType, varName, funName)\
+protected: varType varName;\
+public: virtual const varType& is##funName(void);\
+public: virtual void set##funName(const varType& var);
+
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
 public: virtual varType get##funName(void);\
@@ -154,6 +164,14 @@ public: virtual void set##funName(const varType& var);
  The variables and methods declared after CC_SYNTHESIZE_READONLY are all public.
  If you need protected or private, please declare.
  */
+#define CC_SYNTHESIZE_IS_READONLY(varType, varName, funName)\
+protected: varType varName;\
+public: virtual varType is##funName(void) const { return varName; }
+
+#define CC_SYNTHESIZE_IS_READONLY_PASS_BY_REF(varType, varName, funName)\
+protected: varType varName;\
+public: virtual const varType& is##funName(void) const { return varName; }
+
 #define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
 protected: varType varName;\
 public: virtual varType get##funName(void) const { return varName; }
@@ -172,6 +190,17 @@ public: virtual const varType& get##funName(void) const { return varName; }
  The variables and methods declared after CC_SYNTHESIZE are all public.
  If you need protected or private, please declare.
  */
+
+#define CC_SYNTHESIZE_IS(varType, varName, funName)\
+protected: varType varName;\
+public: virtual varType is##funName(void) const { return varName; }\
+public: virtual void set##funName(varType var){ varName = var; }
+
+#define CC_SYNTHESIZE_IS_PASS_BY_REF(varType, varName, funName)\
+protected: varType varName;\
+public: virtual const varType& is##funName(void) const { return varName; }\
+public: virtual void set##funName(const varType& var){ varName = var; }
+
 #define CC_SYNTHESIZE(varType, varName, funName)\
 protected: varType varName;\
 public: virtual varType get##funName(void) const { return varName; }\

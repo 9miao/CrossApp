@@ -295,6 +295,10 @@
 		46A393F916E5D01B00210B16 /* CCUserDefaultAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */; };
 		B01DFC1C190513DB00214AE2 /* CAButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01DFC1A190513DB00214AE2 /* CAButton.cpp */; };
 		B01DFC1D190513DB00214AE2 /* CAButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B01DFC1B190513DB00214AE2 /* CAButton.h */; };
+		B02A1455190A69EE00C3633B /* CAProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1451190A69EE00C3633B /* CAProgress.cpp */; };
+		B02A1456190A69EE00C3633B /* CAProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A1452190A69EE00C3633B /* CAProgress.h */; };
+		B02A1457190A69EE00C3633B /* CAScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1453190A69EE00C3633B /* CAScrollView.cpp */; };
+		B02A1458190A69EE00C3633B /* CAScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A1454190A69EE00C3633B /* CAScrollView.h */; };
 		B04C0C11190121B9009854FD /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0C0D190121B9009854FD /* CCScale9Sprite.cpp */; };
 		B04C0C12190121B9009854FD /* CCScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = B04C0C0E190121B9009854FD /* CCScale9Sprite.h */; };
 		B04C0C13190121B9009854FD /* CCView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0C0F190121B9009854FD /* CCView.cpp */; };
@@ -602,6 +606,10 @@
 		46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefaultAndroid.cpp; sourceTree = "<group>"; };
 		B01DFC1A190513DB00214AE2 /* CAButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAButton.cpp; sourceTree = "<group>"; };
 		B01DFC1B190513DB00214AE2 /* CAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAButton.h; sourceTree = "<group>"; };
+		B02A1451190A69EE00C3633B /* CAProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAProgress.cpp; sourceTree = "<group>"; };
+		B02A1452190A69EE00C3633B /* CAProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAProgress.h; sourceTree = "<group>"; };
+		B02A1453190A69EE00C3633B /* CAScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAScrollView.cpp; sourceTree = "<group>"; };
+		B02A1454190A69EE00C3633B /* CAScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAScrollView.h; sourceTree = "<group>"; };
 		B04C0C0D190121B9009854FD /* CCScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScale9Sprite.cpp; sourceTree = "<group>"; };
 		B04C0C0E190121B9009854FD /* CCScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScale9Sprite.h; sourceTree = "<group>"; };
 		B04C0C0F190121B9009854FD /* CCView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCView.cpp; sourceTree = "<group>"; };
@@ -1241,6 +1249,10 @@
 		B04C0C471901227B009854FD /* ui_controller */ = {
 			isa = PBXGroup;
 			children = (
+				B02A1451190A69EE00C3633B /* CAProgress.cpp */,
+				B02A1452190A69EE00C3633B /* CAProgress.h */,
+				B02A1453190A69EE00C3633B /* CAScrollView.cpp */,
+				B02A1454190A69EE00C3633B /* CAScrollView.h */,
 				B01DFC1A190513DB00214AE2 /* CAButton.cpp */,
 				B01DFC1B190513DB00214AE2 /* CAButton.h */,
 				B04C0C481901227B009854FD /* CABar.cpp */,
@@ -1301,6 +1313,7 @@
 				1551A6B6158F2ADE00E66CFE /* cocos2d.h in Headers */,
 				1551A6B8158F2ADE00E66CFE /* aabb.h in Headers */,
 				1551A6B9158F2ADE00E66CFE /* mat4stack.h in Headers */,
+				B02A1456190A69EE00C3633B /* CAProgress.h in Headers */,
 				1551A6BA158F2ADE00E66CFE /* matrix.h in Headers */,
 				1551A6BB158F2ADE00E66CFE /* kazmath.h in Headers */,
 				1551A6BC158F2ADE00E66CFE /* mat3.h in Headers */,
@@ -1370,6 +1383,7 @@
 				1551A826158F2ADF00E66CFE /* ccShader_PositionTextureColor_frag.h in Headers */,
 				1551A827158F2ADF00E66CFE /* ccShader_PositionTextureColor_vert.h in Headers */,
 				1551A828158F2ADF00E66CFE /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
+				B02A1458190A69EE00C3633B /* CAScrollView.h in Headers */,
 				1551A82A158F2ADF00E66CFE /* CCShaderCache.h in Headers */,
 				1551A82B158F2ADF00E66CFE /* ccShaderEx_SwitchMask_frag.h in Headers */,
 				1551A82D158F2ADF00E66CFE /* ccShaders.h in Headers */,
@@ -1538,6 +1552,7 @@
 				1551A6DB158F2ADE00E66CFE /* CCLabelTTF.cpp in Sources */,
 				1551A6E1158F2ADE00E66CFE /* CCTransition.cpp in Sources */,
 				1551A6E3158F2ADE00E66CFE /* CCTransitionPageTurn.cpp in Sources */,
+				B02A1455190A69EE00C3633B /* CAProgress.cpp in Sources */,
 				1551A6E5158F2ADE00E66CFE /* CCTransitionProgress.cpp in Sources */,
 				1551A6EB158F2ADE00E66CFE /* CCMotionStreak.cpp in Sources */,
 				1551A6ED158F2ADE00E66CFE /* CCProgressTimer.cpp in Sources */,
@@ -1593,6 +1608,7 @@
 				1551A86F158F2ADF00E66CFE /* CCTouchDispatcher.cpp in Sources */,
 				1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */,
 				154269DC15B5653000712A7F /* CCNotificationCenter.cpp in Sources */,
+				B02A1457190A69EE00C3633B /* CAScrollView.cpp in Sources */,
 				D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */,
 				15FBEE5F164B8B5B008CB2C3 /* CCClippingNode.cpp in Sources */,
 				15FBEE68164BBA98008CB2C3 /* CCDrawingPrimitives.cpp in Sources */,

@@ -109,6 +109,8 @@ ui_controller/CAViewController.cpp \
 ui_controller/CABarItem.cpp \
 ui_controller/CABar.cpp \
 ui_controller/CAButton.cpp \
+ui_controller/CAScrollView.cpp \
+ui_controller/CAProgress.cpp \
 support/ccUTF8.cpp \
 support/CCNotificationCenter.cpp \
 support/CCProfiling.cpp \

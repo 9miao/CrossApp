@@ -92,7 +92,7 @@ void CAButton::onEnterTransitionDidFinish()
 CAButton* CAButton::createWithFrame(const CCRect& rect)
 {
 
-    CAButton* btn=new CAButton();
+    CAButton* btn = new CAButton();
     
     if (btn && btn->initWithFrame(rect))
     {
@@ -335,15 +335,18 @@ bool CAButton::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    if (!this->isVisible()) return false;
+    do
+    {
+        CC_BREAK_IF(!this->isVisible());
+        CC_BREAK_IF(!m_bTouchEnabled);
+        CC_BREAK_IF(!isNormal());
+        CC_BREAK_IF(!getBounds().containsPoint(point));
+        
+        return this->setTouchBegin(point);
+    }
+    while (0);
     
-    if (!m_bTouchEnabled) return false;
-    
-    if (!getBounds().containsPoint(point)) return false;
-    
-    if (!isNormal()) return false;
-    
-    return this->setTouchBegin(point);
+    return false;
 }
 
 void CAButton::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
@@ -370,7 +373,8 @@ void CAButton::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
 
-    if (!this->getTouchClick()) return;
+    if (!this->getTouchClick())
+        return;
     
     this->setTouchClick(false);
     
@@ -397,7 +401,8 @@ void CAButton::setTouchEnabled(bool enabled)
     
     CCNodeRGBA::setTouchEnabled(enabled);
     
-    if (!m_specially) return;
+    if (!m_specially)
+        return;
     
     if (m_bTouchEnabled)
     {
@@ -458,7 +463,8 @@ bool CAButton::isSelected()
 
 void CAButton::setTouchState(CAButtonTouchState var){
     
-    if (m_touchState == var) return;
+    if (m_touchState == var)
+        return;
     
     this->setNormalEffect();
     
@@ -487,7 +493,8 @@ CAButtonTouchState CAButton::getTouchState()
 
 void CAButton::setTouchClick(bool var)
 {
-    if (m_touchClick == var) return;
+    if (m_touchClick == var)
+        return;
     
     m_touchClick = var;
     
@@ -556,7 +563,8 @@ void CAButton::setTouchMovedOutSide(cocos2d::CCPoint point)
 
 void CAButton::setNormalEffect()
 {
-    if (!m_specially) return;
+    if (!m_specially)
+        return;
     
     if (m_touchState == CAButtonStateNormal) return;
     
@@ -594,7 +602,8 @@ void CAButton::setNormalEffect()
 
 void CAButton::setHighlightedEffect()
 {
-    if (!m_specially) return;
+    if (!m_specially)
+        return;
     
     if (m_bgHighlighted)
     {
@@ -613,7 +622,8 @@ void CAButton::setHighlightedEffect()
 
 void CAButton::setDisabledEffect()
 {
-    if (!m_specially) return;
+    if (!m_specially)
+        return;
     
     if (m_bgDisabled)
     {
@@ -632,7 +642,8 @@ void CAButton::setDisabledEffect()
 
 void CAButton::setSelectedEffect()
 {
-    if (!m_specially) return;
+    if (!m_specially)
+        return;
     
     if (m_bgSelected)
     {
@@ -665,7 +676,8 @@ void CAButton::setContentSize(const CCSize & var)
 
 void CAButton::setSprite(CAButtonTouchState touchState, CCNodeRGBA* var)
 {
-    if (!var) return;
+    if (!var)
+        return;
     
     var->setAnchorPoint(CCPoint(0.5f, 0.5f));
     
@@ -676,7 +688,8 @@ void CAButton::setSprite(CAButtonTouchState touchState, CCNodeRGBA* var)
 
 void CAButton::setSprite(CAButtonTouchState touchState, CCNodeRGBA* var, CCPoint point)
 {
-    if (!var) return;
+    if (!var)
+        return;
 
     var->setPosition(point);
     this->addChild(var);

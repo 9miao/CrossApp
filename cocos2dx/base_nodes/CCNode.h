@@ -448,6 +448,10 @@ public:
     
     virtual CCRect getBounds() const;
     
+    virtual void setCenter(CCPoint center);
+    
+    virtual CCPoint getCenter();
+    
     /**
      * Sets whether the node is visible
      *
