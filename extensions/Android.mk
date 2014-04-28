@@ -10,8 +10,8 @@ GUI/CAUIHelper.cpp \
 network/HttpClient.cpp \
 network/WebSocket.cpp \
 LocalStorage/LocalStorageAndroid.cpp \
-Json/CSContentJsonDictionary.cpp \
 Json/DictionaryHelper.cpp \
+Json/CSContentJsonDictionary.cpp \
 Json/lib_json/json_value.cpp \
 Json/lib_json/json_reader.cpp \
 Json/lib_json/json_writer.cpp \

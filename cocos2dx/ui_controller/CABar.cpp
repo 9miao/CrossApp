@@ -2,8 +2,8 @@
 //  CABar.cpp
 //  cocos2dx
 //
-//  Created by 栗元峰 on 14-4-14.
-//  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
+//  Created by liyuanfeng on 14-4-14.
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #include "CABar.h"
@@ -116,12 +116,14 @@ void CANavigationBar::showBackButton()
     }
 }
 
-void CANavigationBar::goBack(CAButton* btn, CCPoint point)
+bool CANavigationBar::goBack(CAButton* btn, CCPoint point)
 {
     if (m_pDelegate)
     {
         m_pDelegate->navigationPopViewController(this, true);
     }
+
+	return true;
 }
 
 void CANavigationBar::pushItem(CANavigationBarItem* item)

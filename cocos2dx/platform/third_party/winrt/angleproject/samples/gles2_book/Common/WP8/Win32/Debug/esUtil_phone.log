@@ -1,0 +1,22 @@
+﻿生成启动时间为 2014/4/27 16:42:29。
+     1>项目“E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_phone.vcxproj”在节点 4 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /I../../../include /I"E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common\\" /IWP8\Win32\Debug\ /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /ZW /nologo /W1 /WX- /MP /Od /Oy- /D _LIB /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"WP8\Win32\Debug\\" /Fd"WP8\Win32\Debug\vc110.pdb" /Gd /TP /FU"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\lib\platform.winmd" /FU"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata\Windows.winmd" /analyze- /errorReport:prompt esShader_winrt.cpp esShapes_winrt.cpp esTransform_winrt.cpp esUtil_winrt.cpp Win32\esUtil_win32_winrt.cpp
+         esShader_winrt.cpp
+         esShapes_winrt.cpp
+         esTransform_winrt.cpp
+         esUtil_winrt.cpp
+         esUtil_win32_winrt.cpp
+         esLoadTGA not implmented on WinRT
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\Lib.exe /OUT:"E:\工作\CrossApp\projects\ViewController\proj.wp8\WP8\redist\vs2012\Win32\Debug\esUtil_phone\esUtil_phone.lib" /NOLOGO /IGNORE:4264 WP8\Win32\Debug\esShader_winrt.obj
+         WP8\Win32\Debug\esShapes_winrt.obj
+         WP8\Win32\Debug\esTransform_winrt.obj
+         WP8\Win32\Debug\esUtil_winrt.obj
+         WP8\Win32\Debug\esUtil_win32_winrt.obj
+         esUtil_phone.vcxproj -> E:\工作\CrossApp\projects\ViewController\proj.wp8\WP8\redist\vs2012\Win32\Debug\esUtil_phone\esUtil_phone.lib
+     1>已完成生成项目“E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_phone.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:03.51

@@ -33,7 +33,7 @@ ModalLayer::~ModalLayer()
 
 bool ModalLayer::init()
 {
-    if ( !CCLayer::init() )
+    if ( !CAView::init() )
     {
         return false;
     }

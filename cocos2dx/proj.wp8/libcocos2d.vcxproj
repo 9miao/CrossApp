@@ -301,13 +301,10 @@
     <ClCompile Include="..\label_nodes\CCLabelAtlas.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelBMFont.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp" />
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCScene.cpp" />
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CAWindow.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp" />
-    <ClCompile Include="..\menu_nodes\CCMenu.cpp" />
-    <ClCompile Include="..\menu_nodes\CCMenuItem.cpp" />
     <ClCompile Include="..\misc_nodes\CCClippingNode.cpp" />
     <ClCompile Include="..\misc_nodes\CCMotionStreak.cpp" />
     <ClCompile Include="..\misc_nodes\CCProgressTimer.cpp" />
@@ -336,18 +333,18 @@
     <ClCompile Include="..\platform\wp8\CCEGLView.cpp" />
     <ClCompile Include="..\platform\wp8\Direct3DBase.cpp" />
     <ClCompile Include="..\platform\wp8\WP8Keyboard.cpp" />
-    <ClCompile Include="..\platform\wp8\ModalLayer.cpp" />
-    <ClCompile Include="..\script_support\CCScriptSupport.cpp" />
     <ClCompile Include="..\shaders\CCGLProgram.cpp" />
     <ClCompile Include="..\shaders\ccGLStateCache.cpp" />
     <ClCompile Include="..\shaders\CCShaderCache.cpp" />
     <ClCompile Include="..\shaders\ccShaders.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimation.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimationCache.cpp" />
+    <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSprite.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteBatchNode.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteFrame.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteFrameCache.cpp" />
+    <ClCompile Include="..\sprite_nodes\CCView.cpp" />
     <ClCompile Include="..\support\base64.cpp" />
     <ClCompile Include="..\support\CCNotificationCenter.cpp" />
     <ClCompile Include="..\support\CCPointExtension.cpp" />
@@ -372,15 +369,15 @@
     <ClCompile Include="..\textures\CCTexturePVR.cpp" />
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp" />
     <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp" />
-    <ClCompile Include="..\tilemap_parallax_nodes\CCParallaxNode.cpp" />
-    <ClCompile Include="..\tilemap_parallax_nodes\CCTileMapAtlas.cpp" />
-    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXLayer.cpp" />
-    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXObjectGroup.cpp" />
-    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXTiledMap.cpp" />
-    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXXMLParser.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
+    <ClCompile Include="..\ui_controller\CABar.cpp" />
+    <ClCompile Include="..\ui_controller\CABarItem.cpp" />
+    <ClCompile Include="..\ui_controller\CAButton.cpp" />
+    <ClCompile Include="..\ui_controller\CAProgress.cpp" />
+    <ClCompile Include="..\ui_controller\CAScrollView.cpp" />
+    <ClCompile Include="..\ui_controller\CAViewController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\actions\CCAction.h" />
@@ -449,13 +446,10 @@
     <ClInclude Include="..\label_nodes\CCLabelAtlas.h" />
     <ClInclude Include="..\label_nodes\CCLabelBMFont.h" />
     <ClInclude Include="..\label_nodes\CCLabelTTF.h" />
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCLayer.h" />
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCScene.h" />
+    <ClInclude Include="..\layers_scenes_transitions_nodes\CAWindow.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.h" />
-    <ClInclude Include="..\menu_nodes\CCMenu.h" />
-    <ClInclude Include="..\menu_nodes\CCMenuItem.h" />
     <ClInclude Include="..\misc_nodes\CCClippingNode.h" />
     <ClInclude Include="..\misc_nodes\CCMotionStreak.h" />
     <ClInclude Include="..\misc_nodes\CCProgressTimer.h" />
@@ -492,8 +486,6 @@
     <ClInclude Include="..\platform\wp8\CCEGLView.h" />
     <ClInclude Include="..\platform\wp8\Direct3DBase.h" />
     <ClInclude Include="..\platform\wp8\WP8Keyboard.h" />
-    <ClInclude Include="..\platform\wp8\ModalLayer.h" />
-    <ClInclude Include="..\script_support\CCScriptSupport.h" />
     <ClInclude Include="..\shaders\CCGLProgram.h" />
     <ClInclude Include="..\shaders\ccGLStateCache.h" />
     <ClInclude Include="..\shaders\CCShaderCache.h" />
@@ -501,10 +493,12 @@
     <ClInclude Include="..\shaders\precompiled\wp8\ccShaders_wp8.h" />
     <ClInclude Include="..\sprite_nodes\CCAnimation.h" />
     <ClInclude Include="..\sprite_nodes\CCAnimationCache.h" />
+    <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h" />
     <ClInclude Include="..\sprite_nodes\CCSprite.h" />
     <ClInclude Include="..\sprite_nodes\CCSpriteBatchNode.h" />
     <ClInclude Include="..\sprite_nodes\CCSpriteFrame.h" />
     <ClInclude Include="..\sprite_nodes\CCSpriteFrameCache.h" />
+    <ClInclude Include="..\sprite_nodes\CCView.h" />
     <ClInclude Include="..\support\base64.h" />
     <ClInclude Include="..\support\CCNotificationCenter.h" />
     <ClInclude Include="..\support\CCPointExtension.h" />
@@ -532,16 +526,16 @@
     <ClInclude Include="..\text_input_node\CCIMEDelegate.h" />
     <ClInclude Include="..\text_input_node\CCIMEDispatcher.h" />
     <ClInclude Include="..\text_input_node\CCTextFieldTTF.h" />
-    <ClInclude Include="..\tilemap_parallax_nodes\CCParallaxNode.h" />
-    <ClInclude Include="..\tilemap_parallax_nodes\CCTileMapAtlas.h" />
-    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXLayer.h" />
-    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXObjectGroup.h" />
-    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXTiledMap.h" />
-    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXXMLParser.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouch.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h" />
+    <ClInclude Include="..\ui_controller\CABar.h" />
+    <ClInclude Include="..\ui_controller\CABarItem.h" />
+    <ClInclude Include="..\ui_controller\CAButton.h" />
+    <ClInclude Include="..\ui_controller\CAProgress.h" />
+    <ClInclude Include="..\ui_controller\CAScrollView.h" />
+    <ClInclude Include="..\ui_controller\CAViewController.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_phone.vcxproj">

@@ -2,8 +2,8 @@
 //  CAScrollView.h
 //  cocos2dx
 //
-//  Created by 栗元峰 on 14-4-23.
-//  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
+//  Created by liyuanfeng on 14-4-23.
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #ifndef __cocos2dx__CAScrollView__
@@ -16,7 +16,7 @@
 NS_CC_BEGIN
 
 class CAScrollView;
-class CAScrollViewDelegate
+class CC_DLL CAScrollViewDelegate
 {
 public:
 
@@ -32,7 +32,7 @@ public:
 };
 
 class CAIndicator;
-class CAScrollView: public CAView
+class CC_DLL CAScrollView : public CAView
 {
     
 public:
@@ -123,7 +123,7 @@ protected:
 };
 
 
-class CAIndicator: public CCNodeRGBA
+class CC_DLL CAIndicator : public CCNodeRGBA
 {
 public:
     

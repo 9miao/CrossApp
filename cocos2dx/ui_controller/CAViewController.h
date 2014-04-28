@@ -2,7 +2,7 @@
 //  CAViewController.h
 //  cocos2dx
 //
-//  Created by 栗元峰 on 14-4-11.
+//  Created by liyuanfeng on 14-4-11.
 //  Copyright (c) 2014年 www.9miao.com All rights reserved.
 //
 
@@ -18,7 +18,7 @@ class CCScene;
 class CATabBarController;
 class CANavigationController;
 
-class CAViewController
+class CC_DLL CAViewController
 : public CCObject
 , public CAViewDelegate
 {
@@ -84,7 +84,7 @@ private:
     bool m_bLifeLock;
 };
 
-class CANavigationController
+class CC_DLL CANavigationController
 : public CAViewController
 , public CANavigationBarDelegate
 {
@@ -127,7 +127,7 @@ private:
     
 };
 
-class CATabBarController
+class CC_DLL CATabBarController
 : public CAViewController
 , public CATabBarDelegate
 {

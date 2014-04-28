@@ -2,8 +2,8 @@
 //  CABar.h
 //  cocos2dx
 //
-//  Created by 栗元峰 on 14-4-14.
-//  Copyright (c) 2014年 www.9miao.com All rights reserved.
+//  Created by liyuanfeng on 14-4-14.
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #ifndef __cocos2dx__CABar__
@@ -17,7 +17,7 @@
 NS_CC_BEGIN
 
 class CANavigationBar;
-class CANavigationBarDelegate
+class CC_DLL CANavigationBarDelegate
 {
 public:
     
@@ -25,7 +25,7 @@ public:
     
 };
 
-class CANavigationBar
+class CC_DLL CANavigationBar
 : public CAView
 {
     
@@ -61,7 +61,7 @@ protected:
     
     void showBackButton();
     
-    void goBack(CAButton* btn, CCPoint point);
+    bool goBack(CAButton* btn, CCPoint point);
     
 protected:
     
@@ -75,7 +75,7 @@ protected:
 };
 
 class CATabBar;
-class CATabBarDelegate
+class CC_DLL CATabBarDelegate
 {
 public:
     
@@ -83,7 +83,7 @@ public:
     
 };
 
-class CATabBar
+class CC_DLL CATabBar
 :public CAView
 {
     

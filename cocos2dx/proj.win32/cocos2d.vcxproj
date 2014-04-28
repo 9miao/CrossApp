@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -23,6 +23,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -30,6 +31,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -173,13 +175,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\label_nodes\CCLabelAtlas.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelBMFont.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp" />
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCScene.cpp" />
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CAWindow.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp" />
-    <ClCompile Include="..\menu_nodes\CCMenu.cpp" />
-    <ClCompile Include="..\menu_nodes\CCMenuItem.cpp" />
     <ClCompile Include="..\misc_nodes\CCClippingNode.cpp" />
     <ClCompile Include="..\misc_nodes\CCMotionStreak.cpp" />
     <ClCompile Include="..\misc_nodes\CCProgressTimer.cpp" />
@@ -208,10 +207,12 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\shaders\ccShaders.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimation.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimationCache.cpp" />
+    <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSprite.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteBatchNode.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteFrame.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteFrameCache.cpp" />
+    <ClCompile Include="..\sprite_nodes\CCView.cpp" />
     <ClCompile Include="..\support\base64.cpp" />
     <ClCompile Include="..\support\CCNotificationCenter.cpp" />
     <ClCompile Include="..\support\CCPointExtension.cpp" />
@@ -234,12 +235,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
     <ClCompile Include="..\textures\CCTextureETC.cpp" />
     <ClCompile Include="..\textures\CCTexturePVR.cpp" />
-    <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp" />
-    <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp" />
-    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXLayer.cpp" />
-    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.cpp" />
-    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXTiledMap.cpp" />
-    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXXMLParser.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
@@ -247,7 +242,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDispatcher.cpp" />
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp" />
     <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp" />
-    <ClCompile Include="..\script_support\CCScriptSupport.cpp" />
     <ClCompile Include="..\kazmath\src\aabb.c" />
     <ClCompile Include="..\kazmath\src\mat3.c" />
     <ClCompile Include="..\kazmath\src\mat4.c" />
@@ -266,6 +260,12 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\CCDirector.cpp" />
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
+    <ClCompile Include="..\ui_controller\CABar.cpp" />
+    <ClCompile Include="..\ui_controller\CABarItem.cpp" />
+    <ClCompile Include="..\ui_controller\CAButton.cpp" />
+    <ClCompile Include="..\ui_controller\CAProgress.cpp" />
+    <ClCompile Include="..\ui_controller\CAScrollView.cpp" />
+    <ClCompile Include="..\ui_controller\CAViewController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h" />
@@ -312,13 +312,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\label_nodes\CCLabelAtlas.h" />
     <ClInclude Include="..\label_nodes\CCLabelBMFont.h" />
     <ClInclude Include="..\label_nodes\CCLabelTTF.h" />
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCLayer.h" />
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCScene.h" />
+    <ClInclude Include="..\layers_scenes_transitions_nodes\CAWindow.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.h" />
-    <ClInclude Include="..\menu_nodes\CCMenu.h" />
-    <ClInclude Include="..\menu_nodes\CCMenuItem.h" />
     <ClInclude Include="..\misc_nodes\CCClippingNode.h" />
     <ClInclude Include="..\misc_nodes\CCMotionStreak.h" />
     <ClInclude Include="..\misc_nodes\CCProgressTimer.h" />
@@ -368,10 +365,12 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\shaders\ccShader_Position_uColor_vert.h" />
     <ClInclude Include="..\sprite_nodes\CCAnimation.h" />
     <ClInclude Include="..\sprite_nodes\CCAnimationCache.h" />
+    <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h" />
     <ClInclude Include="..\sprite_nodes\CCSprite.h" />
     <ClInclude Include="..\sprite_nodes\CCSpriteBatchNode.h" />
     <ClInclude Include="..\sprite_nodes\CCSpriteFrame.h" />
     <ClInclude Include="..\sprite_nodes\CCSpriteFrameCache.h" />
+    <ClInclude Include="..\sprite_nodes\CCView.h" />
     <ClInclude Include="..\support\base64.h" />
     <ClInclude Include="..\support\CCNotificationCenter.h" />
     <ClInclude Include="..\support\CCPointExtension.h" />
@@ -396,12 +395,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\textures\CCTextureCache.h" />
     <ClInclude Include="..\textures\CCTextureETC.h" />
     <ClInclude Include="..\textures\CCTexturePVR.h" />
-    <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h" />
-    <ClInclude Include="..\tileMap_parallax_nodes\CCTileMapAtlas.h" />
-    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXLayer.h" />
-    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.h" />
-    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXTiledMap.h" />
-    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXXMLParser.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouch.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h" />
@@ -411,7 +404,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\text_input_node\CCIMEDelegate.h" />
     <ClInclude Include="..\text_input_node\CCIMEDispatcher.h" />
     <ClInclude Include="..\text_input_node\CCTextFieldTTF.h" />
-    <ClInclude Include="..\script_support\CCScriptSupport.h" />
     <ClInclude Include="..\kazmath\include\kazmath\aabb.h" />
     <ClInclude Include="..\kazmath\include\kazmath\kazmath.h" />
     <ClInclude Include="..\kazmath\include\kazmath\mat3.h" />
@@ -430,6 +422,12 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\CCConfiguration.h" />
     <ClInclude Include="..\CCDirector.h" />
     <ClInclude Include="..\CCScheduler.h" />
+    <ClInclude Include="..\ui_controller\CABar.h" />
+    <ClInclude Include="..\ui_controller\CABarItem.h" />
+    <ClInclude Include="..\ui_controller\CAButton.h" />
+    <ClInclude Include="..\ui_controller\CAProgress.h" />
+    <ClInclude Include="..\ui_controller\CAScrollView.h" />
+    <ClInclude Include="..\ui_controller\CAViewController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

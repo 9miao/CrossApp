@@ -1,0 +1,9 @@
+﻿生成启动时间为 2014/4/27 16:53:32。
+     1>项目“E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_hlsl_phone.vcxproj”在节点 2 上(Build 个目标)。
+     1>Lib:
+         translator_hlsl_phone.vcxproj -> E:\工作\CrossApp\projects\ViewController\proj.wp8\WP8\redist\vs2012\Win32\Debug\translator_hlsl_phone\translator_hlsl_phone.lib
+     1>已完成生成项目“E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_hlsl_phone.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.28

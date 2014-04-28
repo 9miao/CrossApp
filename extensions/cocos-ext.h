@@ -3,8 +3,6 @@
 
 #include "ExtensionMacros.h"
 
-#include "GUI/CCScrollView/CCScrollView.h"
-
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"

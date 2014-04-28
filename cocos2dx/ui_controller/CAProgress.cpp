@@ -96,7 +96,8 @@ void CAProgress::onEnterTransitionDidFinish()
     CAView::onEnterTransitionDidFinish();
     
   
-    if (m_pCopyTarckImage == NULL ) {
+    if (m_pCopyTarckImage == NULL ) 
+	{
         this->init9SpriteWithImage("biggraycircle2.png");
         
         m_pCopyTarckImage=CCSprite::createWithTexture(m_pRender->getSprite()->getTexture());

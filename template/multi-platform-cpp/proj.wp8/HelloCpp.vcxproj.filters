@@ -40,7 +40,7 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+    <ClCompile Include="..\Classes\FirstViewController.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -52,7 +52,7 @@
     <ClInclude Include="..\Classes\AppMacros.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
+    <ClInclude Include="..\Classes\FirstViewController.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

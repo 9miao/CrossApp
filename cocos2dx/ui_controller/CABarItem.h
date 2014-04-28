@@ -2,8 +2,8 @@
 //  CABarItem.h
 //  cocos2dx
 //
-//  Created by 栗元峰 on 14-4-14.
-//  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
+//  Created by liyuanfeng on 14-4-14.
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #ifndef __cocos2dx__CABarItem__
@@ -16,7 +16,7 @@
 
 NS_CC_BEGIN
 
-class CABarItem
+class CC_DLL CABarItem
 : public CCObject
 {
     
@@ -42,7 +42,7 @@ protected:
     
 };
 
-class CANavigationBarItem
+class CC_DLL CANavigationBarItem
 : public CABarItem
 {
 
@@ -65,7 +65,7 @@ public:
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pBackButtonImage, BackButtonImage);
 };
 
-class CATabBarItem
+class CC_DLL CATabBarItem
 : public CABarItem
 {
 

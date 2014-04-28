@@ -23,7 +23,7 @@ typedef enum
     CAProgressStyleBar
 }CAProgressStyle;
 
-class CAProgress :public CAView
+class CC_DLL CAProgress :public CAView
 {
 public:
     

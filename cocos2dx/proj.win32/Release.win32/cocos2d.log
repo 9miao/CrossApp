@@ -1,0 +1,165 @@
+﻿生成启动时间为 2014/4/26 9:16:09。
+     1>项目“E:\CrossApp\cocos2dx\proj.win32\cocos2d.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files\Microsoft SDKs\Windows\v7.1A\include" /IE:\CrossApp\cocos2dx\proj.win32\.. /IE:\CrossApp\cocos2dx\proj.win32\..\platform\win32 /IE:\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\iconv /IE:\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\zlib /IE:\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libpng /IE:\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libjpeg /IE:\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libtiff /IE:\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libwebp /IE:\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\pthread /IE:\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\OGLES /I..\include /IE:\CrossApp\cocos2dx\proj.win32\..\kazmath\include /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D COCOS2DXWIN32_EXPORTS /D GL_GLEXT_PROTOTYPES /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release.win32\\" /Fd"Release.win32\vc120.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /analyze- /errorReport:prompt ..\ui_controller\CAProgress.cpp ..\ui_controller\CAScrollView.cpp
+         CAProgress.cpp
+     1>c:\program files\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
+                 C:\Program Files\Microsoft Visual Studio 12.0\VC\include\sal.h(2886) : 参见“__useHeader”的前一个定义
+     1>c:\program files\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
+                 C:\Program Files\Microsoft Visual Studio 12.0\VC\include\sal.h(2896) : 参见“__on_failure”的前一个定义
+     1>E:\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+         CAScrollView.cpp
+     1>..\ui_controller\CAScrollView.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\program files\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
+                 C:\Program Files\Microsoft Visual Studio 12.0\VC\include\sal.h(2886) : 参见“__useHeader”的前一个定义
+     1>c:\program files\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
+                 C:\Program Files\Microsoft Visual Studio 12.0\VC\include\sal.h(2896) : 参见“__on_failure”的前一个定义
+     1>E:\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>..\ui_controller\CAScrollView.cpp(20): warning C4068: 未知的杂注
+     1>..\ui_controller\CAScrollView.cpp(229): warning C4305: “*=”: 从“double”到“float”截断
+     1>..\ui_controller\CAScrollView.cpp(235): warning C4305: “*=”: 从“double”到“float”截断
+     1>..\ui_controller\CAScrollView.cpp(241): warning C4305: “*=”: 从“double”到“float”截断
+     1>..\ui_controller\CAScrollView.cpp(247): warning C4305: “*=”: 从“double”到“float”截断
+     1>..\ui_controller\CAScrollView.cpp(501): warning C4068: 未知的杂注
+     1>..\ui_controller\CAScrollView.cpp(651): warning C4068: 未知的杂注
+         正在生成代码...
+       PreLinkEvent:
+         if not exist "E:\CrossApp\projects\ViewController\proj.win32\Release.win32\" mkdir "E:\CrossApp\projects\ViewController\proj.win32\Release.win32\"
+         xcopy /Y /Q "E:\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libraries\*.*" "E:\CrossApp\projects\ViewController\proj.win32\Release.win32\"
+         
+         :VCEnd
+         复制了 15 个文件
+       Link:
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\CrossApp\projects\ViewController\proj.win32\Release.win32\libcocos2d.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:E:\CrossApp\projects\ViewController\proj.win32\Release.win32\ opengl32.lib glew32.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libwebp.lib libiconv.lib pthreadVCE2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\CrossApp\projects\ViewController\proj.win32\Release.win32\libcocos2d.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\CrossApp\projects\ViewController\proj.win32\Release.win32\libcocos2d.lib" /MACHINE:X86 /SAFESEH /DLL Release.win32\CCAtlasNode.obj
+         Release.win32\CCNode.obj
+         Release.win32\ccFPSImages.obj
+         Release.win32\CCAffineTransform.obj
+         Release.win32\CCArray.obj
+         Release.win32\CCAutoreleasePool.obj
+         Release.win32\CCDataVisitor.obj
+         Release.win32\CCDictionary.obj
+         Release.win32\CCGeometry.obj
+         Release.win32\CCNS.obj
+         Release.win32\CCObject.obj
+         Release.win32\CCSet.obj
+         Release.win32\CCString.obj
+         Release.win32\CCZone.obj
+         Release.win32\CCDrawingPrimitives.obj
+         Release.win32\CCDrawNode.obj
+         Release.win32\CCGrabber.obj
+         Release.win32\CCGrid.obj
+         Release.win32\CCAction.obj
+         Release.win32\CCActionCamera.obj
+         Release.win32\CCActionCatmullRom.obj
+         Release.win32\CCActionEase.obj
+         Release.win32\CCActionGrid.obj
+         Release.win32\CCActionGrid3D.obj
+         Release.win32\CCActionInstant.obj
+         Release.win32\CCActionInterval.obj
+         Release.win32\CCActionManager.obj
+         Release.win32\CCActionPageTurn3D.obj
+         Release.win32\CCActionProgressTimer.obj
+         Release.win32\CCActionTiledGrid.obj
+         Release.win32\CCActionTween.obj
+         Release.win32\CCLabelAtlas.obj
+         Release.win32\CCLabelBMFont.obj
+         Release.win32\CCLabelTTF.obj
+         Release.win32\CAWindow.obj
+         Release.win32\CCTransition.obj
+         Release.win32\CCTransitionPageTurn.obj
+         Release.win32\CCTransitionProgress.obj
+         Release.win32\CCClippingNode.obj
+         Release.win32\CCMotionStreak.obj
+         Release.win32\CCProgressTimer.obj
+         Release.win32\CCRenderTexture.obj
+         Release.win32\CCParticleBatchNode.obj
+         Release.win32\CCParticleExamples.obj
+         Release.win32\CCParticleSystem.obj
+         Release.win32\CCParticleSystemQuad.obj
+         Release.win32\CCEGLViewProtocol.obj
+         Release.win32\CCFileUtils.obj
+         Release.win32\CCImageCommonWebp.obj
+         Release.win32\CCSAXParser.obj
+         Release.win32\CCThread.obj
+         Release.win32\platform.obj
+         Release.win32\CCAccelerometer.obj
+         Release.win32\CCApplication.obj
+         Release.win32\CCCommon.obj
+         Release.win32\CCDevice.obj
+         Release.win32\CCEGLView.obj
+         Release.win32\CCFileUtilsWin32.obj
+         Release.win32\CCImage.obj
+         Release.win32\CCStdC.obj
+         Release.win32\CCGLProgram.obj
+         Release.win32\ccGLStateCache.obj
+         Release.win32\CCShaderCache.obj
+         Release.win32\ccShaders.obj
+         Release.win32\CCAnimation.obj
+         Release.win32\CCAnimationCache.obj
+         Release.win32\CCScale9Sprite.obj
+         Release.win32\CCSprite.obj
+         Release.win32\CCSpriteBatchNode.obj
+         Release.win32\CCSpriteFrame.obj
+         Release.win32\CCSpriteFrameCache.obj
+         Release.win32\CCView.obj
+         Release.win32\base64.obj
+         Release.win32\CCNotificationCenter.obj
+         Release.win32\CCPointExtension.obj
+         Release.win32\CCProfiling.obj
+         Release.win32\ccUTF8.obj
+         Release.win32\ccUtils.obj
+         Release.win32\CCVertex.obj
+         Release.win32\CCComponent.obj
+         Release.win32\CCComponentContainer.obj
+         Release.win32\tinyxml2.obj
+         Release.win32\TransformUtils.obj
+         Release.win32\ccCArray.obj
+         Release.win32\TGAlib.obj
+         Release.win32\CCUserDefault.obj
+         Release.win32\ioapi.obj
+         Release.win32\unzip.obj
+         Release.win32\ZipUtils.obj
+         Release.win32\CCTexture2D.obj
+         Release.win32\CCTextureAtlas.obj
+         Release.win32\CCTextureCache.obj
+         Release.win32\CCTextureETC.obj
+         Release.win32\CCTexturePVR.obj
+         Release.win32\CCTouch.obj
+         Release.win32\CCTouchDispatcher.obj
+         Release.win32\CCTouchHandler.obj
+         Release.win32\CCKeypadDelegate.obj
+         Release.win32\CCKeypadDispatcher.obj
+         Release.win32\CCIMEDispatcher.obj
+         Release.win32\CCTextFieldTTF.obj
+         Release.win32\aabb.obj
+         Release.win32\mat3.obj
+         Release.win32\mat4.obj
+         Release.win32\neon_matrix_impl.obj
+         Release.win32\plane.obj
+         Release.win32\quaternion.obj
+         Release.win32\ray2.obj
+         Release.win32\utility.obj
+         Release.win32\vec2.obj
+         Release.win32\vec3.obj
+         Release.win32\vec4.obj
+         Release.win32\mat4stack.obj
+         Release.win32\matrix.obj
+         Release.win32\CCCamera.obj
+         Release.win32\CCConfiguration.obj
+         Release.win32\CCDirector.obj
+         Release.win32\CCScheduler.obj
+         Release.win32\cocos2d.obj
+         Release.win32\CABar.obj
+         Release.win32\CABarItem.obj
+         Release.win32\CAButton.obj
+         Release.win32\CAProgress.obj
+         Release.win32\CAScrollView.obj
+         Release.win32\CAViewController.obj
+            正在创建库 E:\CrossApp\projects\ViewController\proj.win32\Release.win32\libcocos2d.lib 和对象 E:\CrossApp\projects\ViewController\proj.win32\Release.win32\libcocos2d.exp
+     1>LINK : warning LNK4098: 默认库“LIBCMT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
+         cocos2d.vcxproj -> E:\CrossApp\projects\ViewController\proj.win32\Release.win32\libcocos2d.dll
+     1>已完成生成项目“E:\CrossApp\cocos2dx\proj.win32\cocos2d.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:21.24

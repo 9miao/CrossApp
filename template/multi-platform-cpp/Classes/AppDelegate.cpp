@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "ViewController.h"
+#include "FirstViewController.h"
 
 USING_NS_CC;
 
@@ -26,7 +26,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     //pEGLView->setDesignResolutionSize(640, 960, kResolutionShowAll);
     // create a scene. it's an autorelease object
-    m_pWindow = ViewController::createWindow();
+	m_pWindow = FirstViewController::createWindow();
 
     // run
     pDirector->runWithScene(m_pWindow);

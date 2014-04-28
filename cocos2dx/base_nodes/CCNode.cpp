@@ -1523,11 +1523,11 @@ void CCNodeRGBA::visit()
         float off_X = 0;
         float off_Y = 0;
         
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#else
         
         float off_X = pGLView->getViewPortRect().origin.x;
         float off_Y = pGLView->getViewPortRect().origin.y;
-        
+
 #endif
         
         float scaleX = this->getScaleX();

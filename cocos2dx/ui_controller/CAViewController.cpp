@@ -2,8 +2,8 @@
 //  CAViewController.cpp
 //  cocos2dx
 //
-//  Created by 栗元峰 on 14-4-11.
-//  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
+//  Created by liyuanfeng on 14-4-11.
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #include "CAViewController.h"

@@ -46,9 +46,6 @@
     <Filter Include="layers_scenes_transitions_nodes">
       <UniqueIdentifier>{abf2e324-3571-46b9-b8a0-c3d35ec39886}</UniqueIdentifier>
     </Filter>
-    <Filter Include="menu_nodes">
-      <UniqueIdentifier>{48fc34a8-1987-443f-873d-3967886d9fc9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="misc_nodes">
       <UniqueIdentifier>{23821b0c-f17d-46bb-90a8-efaf2fca8275}</UniqueIdentifier>
     </Filter>
@@ -63,9 +60,6 @@
     </Filter>
     <Filter Include="platform\wp8">
       <UniqueIdentifier>{00b41d7b-b9d5-4e94-b98b-63df5b7d7641}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="script_suppport">
-      <UniqueIdentifier>{a7893f07-64fc-420e-96c4-13b3570906f7}</UniqueIdentifier>
     </Filter>
     <Filter Include="shaders">
       <UniqueIdentifier>{4a6d14fa-1126-4055-aedf-e46a691a00bb}</UniqueIdentifier>
@@ -100,9 +94,6 @@
     <Filter Include="textures">
       <UniqueIdentifier>{e544dd06-56d9-418a-bffe-9c3e7c51bace}</UniqueIdentifier>
     </Filter>
-    <Filter Include="tilemap_parrallax_nodes">
-      <UniqueIdentifier>{c494bb86-0655-4d2e-b10b-b43b2ae9529a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="touch_dispatcher">
       <UniqueIdentifier>{7b1b3b9d-7307-4a5c-8e6c-40e96804ed08}</UniqueIdentifier>
     </Filter>
@@ -111,6 +102,9 @@
     </Filter>
     <Filter Include="shaders\precompiled\wp8">
       <UniqueIdentifier>{9944a9b0-eb9b-4bb9-9e67-9c3eb6144a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui_controller">
+      <UniqueIdentifier>{4cec03f5-22e2-4d53-b5f9-421af07947fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -261,12 +255,6 @@
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCScene.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp">
       <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
@@ -275,12 +263,6 @@
     </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp">
       <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\menu_nodes\CCMenu.cpp">
-      <Filter>menu_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\menu_nodes\CCMenuItem.cpp">
-      <Filter>menu_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\misc_nodes\CCClippingNode.cpp">
       <Filter>misc_nodes</Filter>
@@ -353,9 +335,6 @@
     </ClCompile>
     <ClCompile Include="..\platform\platform.cpp">
       <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\script_support\CCScriptSupport.cpp">
-      <Filter>script_suppport</Filter>
     </ClCompile>
     <ClCompile Include="..\shaders\CCGLProgram.cpp">
       <Filter>shaders</Filter>
@@ -459,24 +438,6 @@
     <ClCompile Include="..\textures\CCTexturePVR.cpp">
       <Filter>textures</Filter>
     </ClCompile>
-    <ClCompile Include="..\tilemap_parallax_nodes\CCParallaxNode.cpp">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tilemap_parallax_nodes\CCTileMapAtlas.cpp">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXLayer.cpp">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXObjectGroup.cpp">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXTiledMap.cpp">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXXMLParser.cpp">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp">
       <Filter>touch_dispatcher</Filter>
     </ClCompile>
@@ -492,9 +453,6 @@
     <ClCompile Include="..\ccFPSImages.c" />
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
-    <ClCompile Include="..\platform\wp8\ModalLayer.cpp">
-      <Filter>platform\wp8</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\wp8\WP8Keyboard.cpp">
       <Filter>platform\wp8</Filter>
     </ClCompile>
@@ -506,6 +464,33 @@
     </ClCompile>
     <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp">
       <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CAWindow.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CCView.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CABar.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CABarItem.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CAButton.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CAProgress.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CAScrollView.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CAViewController.cpp">
+      <Filter>ui_controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -692,12 +677,6 @@
     <ClInclude Include="..\label_nodes\CCLabelTTF.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCLayer.h">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCScene.h">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h">
       <Filter>layers_scenes_transitions_nodes</Filter>
     </ClInclude>
@@ -706,12 +685,6 @@
     </ClInclude>
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.h">
       <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\menu_nodes\CCMenu.h">
-      <Filter>menu_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\menu_nodes\CCMenuItem.h">
-      <Filter>menu_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\misc_nodes\CCClippingNode.h">
       <Filter>misc_nodes</Filter>
@@ -808,9 +781,6 @@
     </ClInclude>
     <ClInclude Include="..\platform\platform.h">
       <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\script_support\CCScriptSupport.h">
-      <Filter>script_suppport</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\CCGLProgram.h">
       <Filter>shaders</Filter>
@@ -923,24 +893,6 @@
     <ClInclude Include="..\textures\CCTexturePVR.h">
       <Filter>textures</Filter>
     </ClInclude>
-    <ClInclude Include="..\tilemap_parallax_nodes\CCParallaxNode.h">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tilemap_parallax_nodes\CCTileMapAtlas.h">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXLayer.h">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXObjectGroup.h">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXTiledMap.h">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXXMLParser.h">
-      <Filter>tilemap_parrallax_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\touch_dispatcher\CCTouch.h">
       <Filter>touch_dispatcher</Filter>
     </ClInclude>
@@ -958,9 +910,6 @@
     <ClInclude Include="..\CCDirector.h" />
     <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\CCScheduler.h" />
-    <ClInclude Include="..\platform\wp8\ModalLayer.h">
-      <Filter>platform\wp8</Filter>
-    </ClInclude>
     <ClInclude Include="..\shaders\precompiled\wp8\ccShaders_wp8.h">
       <Filter>shaders\precompiled\wp8</Filter>
     </ClInclude>
@@ -975,6 +924,33 @@
     </ClInclude>
     <ClInclude Include="..\platform\winrt\CCPThreadWinRT.h">
       <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\layers_scenes_transitions_nodes\CAWindow.h">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CCView.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CABar.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CABarItem.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAButton.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAProgress.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAScrollView.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAViewController.h">
+      <Filter>ui_controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

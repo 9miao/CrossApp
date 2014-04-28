@@ -158,16 +158,15 @@ bool CAScrollView::isBounces()
 
 bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    CCPoint point = pTouch->getLocation();
-    point = this->convertToNodeSpace(point);
-    
     do
     {
+        
+        CCPoint point = this->convertTouchToNodeSpace(pTouch);
         CC_BREAK_IF(m_bscrollEnabled == false);
         CC_BREAK_IF(!this->isVisible());
         CC_BREAK_IF(!getBounds().containsPoint(point));
         CC_BREAK_IF(m_pTouches->count() > 2);
-        
+
         if (!m_pTouches->containsObject(pTouch))
         {
             m_pTouches->addObject(pTouch);
@@ -182,17 +181,16 @@ bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         {
             CCTouch* touch0 = dynamic_cast<CCTouch*>(m_pTouches->objectAtIndex(0));
             CCTouch* touch1 = dynamic_cast<CCTouch*>(m_pTouches->objectAtIndex(1));
-            
+           
             m_fTouchLength = ccpDistance(touch0->getLocation(), touch1->getLocation());
             
-//            CCPoint mid_point = ccpMidpoint(touch0->getLocation(), touch1->getLocation());
-//            m_pContainer->setPosition(mid_point);
-//            mid_point = this->convertToWorldSpace(mid_point);
-//            mid_point = m_pContainer->convertToWorldSpace(mid_point);
-//            mid_point = mid_point * m_pContainer->getScale();
-//            CCPoint p = CCPoint(mid_point.x / m_pContainer->getContentSize().width,
-//                                mid_point.y / m_pContainer->getContentSize().height);
-//            m_pContainer->setAnchorPoint(p);
+            CCPoint mid_point = ccpMidpoint(touch0->getLocation(), touch1->getLocation());
+            
+            CCPoint p = m_pContainer->convertToNodeSpace(mid_point);
+            p = CCPoint(p.x / m_pContainer->getContentSize().width,
+                        p.y / m_pContainer->getContentSize().height);
+            m_pContainer->setAnchorPoint(p);
+            m_pContainer->setPosition(this->convertToNodeSpace(mid_point));
             
             if (m_pScrollViewDelegate)
             {
@@ -211,12 +209,52 @@ bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint p_container = m_pContainer->getCenter();
-    CCPoint p_off = CCPointZero;
     
     if (m_pTouches->count() == 1)
     {
+        CCPoint p_off = CCPointZero;
         p_off = ccpSub(pTouch->getLocation(), pTouch->getPreviousLocation());
         
+		if (m_bBounces)
+		{
+			CCSize size = this->getContentSize();
+			CCRect rect = m_pContainer->getFrame();
+
+			if (p_container.x - rect.size.width / 2 > 0)
+			{
+				p_off.x *= 1 - rect.origin.x / size.width;
+				p_off.x *= 0.618;
+			}
+
+			if (p_container.y - rect.size.height / 2 > 0)
+			{
+				p_off.y *= 1 - rect.origin.y / size.height;
+				p_off.y *= 0.618;
+			}
+
+			if ((p_container.x + rect.size.width / 2 - size.width) < 0)
+			{
+				p_off.x *= (rect.size.width + rect.origin.x) / size.width;
+				p_off.x *= 0.618;
+			}
+
+			if ((p_container.y + rect.size.height / 2 - size.height) < 0)
+			{
+				p_off.y *= (rect.size.height + rect.origin.y) / size.height;
+				p_off.y *= 0.618;
+			}
+		}
+
+		p_container = ccpAdd(p_container, p_off);
+
+		m_tPointOffset.push_back(p_off);
+
+		if (m_tPointOffset.size() > 3)
+		{
+			m_tPointOffset.pop_front();
+		}
+
+
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewWillBeginDragging(this);
@@ -246,42 +284,13 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
             m_fTouchLength = touch_lenght;
         }
         
-        p_off = ccpSub(ccpMidpoint(touch0->getLocation(), touch1->getLocation()),
-                       ccpMidpoint(touch0->getPreviousLocation(), touch1->getPreviousLocation()));
-        p_off = ccpMult(p_off, 0.5f);
+		CCPoint mid_point = ccpMidpoint(touch0->getLocation(), touch1->getLocation());
+
+		m_pContainer->setPosition(this->convertToNodeSpace(mid_point));
+        
+        p_container = m_pContainer->getCenter();
     }
     
-    if (m_bBounces)
-    {
-        CCSize size = this->getContentSize();
-        CCRect rect = m_pContainer->getFrame();
-        
-        if (p_container.x - rect.size.width / 2 > 0)
-        {
-            p_off.x *= 1 - rect.origin.x / size.width;
-            p_off.x *= 0.618;
-        }
-        
-        if (p_container.y - rect.size.height / 2 > 0)
-        {
-            p_off.y *= 1 - rect.origin.y / size.height;
-            p_off.y *= 0.618;
-        }
-        
-        if ((p_container.x + rect.size.width / 2 - size.width) < 0)
-        {
-            p_off.x *= (rect.size.width + rect.origin.x) / size.width;
-            p_off.x *= 0.618;
-        }
-        
-        if ((p_container.y + rect.size.height / 2 - size.height) < 0)
-        {
-            p_off.y *= (rect.size.height + rect.origin.y) / size.height;
-            p_off.y *= 0.618;
-        }
-    }
-    
-    p_container = ccpAdd(p_container, p_off);
     
     if (m_bBounces == false)
     {
@@ -306,14 +315,6 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     }
     
     m_pContainer->setCenter(p_container);
-    
-    m_tPointOffset.push_back(p_off);
-    
-    if (m_tPointOffset.size() > 3)
-    {
-        m_tPointOffset.pop_front();
-    }
-    
 }
 
 void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
@@ -333,7 +334,8 @@ void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
                 p = p/m_tPointOffset.size();
             }
             m_tInertia = p;
-            
+			m_tPointOffset.clear();
+
             if (m_pScrollViewDelegate)
             {
                 m_pScrollViewDelegate->scrollViewDidEndDragging(this);
@@ -341,16 +343,16 @@ void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
             m_bTracking = false;
             
             this->schedule(schedule_selector(CAScrollView::deaccelerateScrolling));
+
         }
         else if (m_pTouches->count() == 2)
         {
-//            CCPoint point = m_pContainer->getCenter();
-//            m_pContainer->setPosition(point);
-//            m_pContainer->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            CCPoint point = m_pContainer->getCenter();
+            m_pContainer->setPosition(point);
+            m_pContainer->setAnchorPoint(CCPoint(0.5f, 0.5f));
 
             m_bZooming = false;
         }
-        m_tPointOffset.clear();
         m_pTouches->removeObject(pTouch);
     }
 }
@@ -388,22 +390,22 @@ void CAScrollView::deaccelerateScrolling(float delay)
         
         if (point.x - rect.size.width / 2 > 0)
         {
-            resilience.x = MAX_SPEED * (point.x - rect.size.width / 2) / size.width;
+            resilience.x = MAXPULLINGSPEED * (point.x - rect.size.width / 2) / size.width;
         }
         
         if (point.y - rect.size.height / 2 > 0)
         {
-            resilience.y = MAX_SPEED * (point.y - rect.size.height / 2) / size.height;
+            resilience.y = MAXPULLINGSPEED * (point.y - rect.size.height / 2) / size.height;
         }
         
         if ((point.x + rect.size.width / 2 - size.width) < 0)
         {
-            resilience.x = MAX_SPEED * (point.x + rect.size.width / 2 - size.width) / size.width;
+            resilience.x = MAXPULLINGSPEED * (point.x + rect.size.width / 2 - size.width) / size.width;
         }
         
         if ((point.y + rect.size.height / 2 - size.height) < 0)
         {
-            resilience.y = MAX_SPEED * (point.y + rect.size.height / 2 - size.height) / size.height;
+            resilience.y = MAXPULLINGSPEED * (point.y + rect.size.height / 2 - size.height) / size.height;
         }
         
         speed = ccpSub(speed, resilience);

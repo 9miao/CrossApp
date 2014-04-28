@@ -22,9 +22,6 @@
     <Filter Include="layers_scenes_transitions_nodes">
       <UniqueIdentifier>{206bd96b-f80e-4722-8675-d7c6ff9b3639}</UniqueIdentifier>
     </Filter>
-    <Filter Include="menu_nodes">
-      <UniqueIdentifier>{075492ba-08bc-404c-92da-32029797a600}</UniqueIdentifier>
-    </Filter>
     <Filter Include="misc_nodes">
       <UniqueIdentifier>{41abe422-1602-4fe0-ac1c-6b04a14c1abb}</UniqueIdentifier>
     </Filter>
@@ -55,9 +52,6 @@
     <Filter Include="textures">
       <UniqueIdentifier>{46c8d130-b8b5-47f5-a063-ca700e1c32cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="tilemap_parallax_nodes">
-      <UniqueIdentifier>{f2671200-b2d8-4d2e-9728-06719cf6f835}</UniqueIdentifier>
-    </Filter>
     <Filter Include="touch_dispatcher">
       <UniqueIdentifier>{eaa16c9b-dfbc-4a37-8e3e-e961d9ca1d1a}</UniqueIdentifier>
     </Filter>
@@ -66,9 +60,6 @@
     </Filter>
     <Filter Include="text_input_node">
       <UniqueIdentifier>{535c04b0-fe2b-44c9-9a8c-9029e2b6de5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="script_support">
-      <UniqueIdentifier>{5b082c5c-d396-43ca-b3b1-997d0f6247d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="kazmath">
       <UniqueIdentifier>{7751500e-ac9e-4604-a96d-670b30b7d8bd}</UniqueIdentifier>
@@ -102,6 +93,9 @@
     </Filter>
     <Filter Include="support\component">
       <UniqueIdentifier>{485f1c18-d463-48d0-bcaa-a10e32aa3332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui_controller">
+      <UniqueIdentifier>{0b0a80de-c158-4c85-b85f-31fe1050c115}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -195,12 +189,6 @@
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCScene.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp">
       <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
@@ -209,12 +197,6 @@
     </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp">
       <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\menu_nodes\CCMenu.cpp">
-      <Filter>menu_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\menu_nodes\CCMenuItem.cpp">
-      <Filter>menu_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\misc_nodes\CCMotionStreak.cpp">
       <Filter>misc_nodes</Filter>
@@ -333,24 +315,6 @@
     <ClCompile Include="..\textures\CCTexturePVR.cpp">
       <Filter>textures</Filter>
     </ClCompile>
-    <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXLayer.cpp">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.cpp">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXTiledMap.cpp">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXXMLParser.cpp">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp">
       <Filter>touch_dispatcher</Filter>
     </ClCompile>
@@ -371,9 +335,6 @@
     </ClCompile>
     <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp">
       <Filter>text_input_node</Filter>
-    </ClCompile>
-    <ClCompile Include="..\script_support\CCScriptSupport.cpp">
-      <Filter>script_support</Filter>
     </ClCompile>
     <ClCompile Include="..\kazmath\src\aabb.c">
       <Filter>kazmath\src</Filter>
@@ -473,6 +434,33 @@
     </ClCompile>
     <ClCompile Include="..\support\component\CCComponentContainer.cpp">
       <Filter>support\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CCView.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CAWindow.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CABar.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CABarItem.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CAButton.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CAProgress.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CAScrollView.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CAViewController.cpp">
+      <Filter>ui_controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -587,12 +575,6 @@
     <ClInclude Include="..\label_nodes\CCLabelTTF.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCLayer.h">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCScene.h">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h">
       <Filter>layers_scenes_transitions_nodes</Filter>
     </ClInclude>
@@ -601,12 +583,6 @@
     </ClInclude>
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.h">
       <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\menu_nodes\CCMenu.h">
-      <Filter>menu_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\menu_nodes\CCMenuItem.h">
-      <Filter>menu_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\misc_nodes\CCMotionStreak.h">
       <Filter>misc_nodes</Filter>
@@ -755,24 +731,6 @@
     <ClInclude Include="..\textures\CCTexturePVR.h">
       <Filter>textures</Filter>
     </ClInclude>
-    <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tileMap_parallax_nodes\CCTileMapAtlas.h">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXLayer.h">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.h">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXTiledMap.h">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXXMLParser.h">
-      <Filter>tilemap_parallax_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\touch_dispatcher\CCTouch.h">
       <Filter>touch_dispatcher</Filter>
     </ClInclude>
@@ -799,9 +757,6 @@
     </ClInclude>
     <ClInclude Include="..\text_input_node\CCTextFieldTTF.h">
       <Filter>text_input_node</Filter>
-    </ClInclude>
-    <ClInclude Include="..\script_support\CCScriptSupport.h">
-      <Filter>script_support</Filter>
     </ClInclude>
     <ClInclude Include="..\kazmath\include\kazmath\aabb.h">
       <Filter>kazmath\include\kazmath</Filter>
@@ -951,6 +906,33 @@
     </ClInclude>
     <ClInclude Include="..\support\component\CCComponentContainer.h">
       <Filter>support\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CCView.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\layers_scenes_transitions_nodes\CAWindow.h">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CABar.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CABarItem.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAButton.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAProgress.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAScrollView.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAViewController.h">
+      <Filter>ui_controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

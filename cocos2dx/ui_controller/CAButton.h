@@ -1,7 +1,7 @@
 //
 //  CAButton.h
 //
-//  Created by LI YUANFENG on 13-3-14.
+//  Created by liyuanfeng on 13-3-14.
 //
 //
 
@@ -35,7 +35,7 @@ typedef enum
 typedef bool (CCObject::*SEL_CAButton)(CAButton*, CCPoint);
 #define CAButton_selector(_SELECTOR) (SEL_CAButton)(&_SELECTOR)
 
-class CAButton: public CCNodeRGBA
+class CC_DLL CAButton : public CCNodeRGBA
 {
     
 public:
