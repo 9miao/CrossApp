@@ -487,9 +487,8 @@ void CCDirector::reshapeProjection(const CCSize& newWindowSize)
 	{
 		m_obWinSizeInPoints = CCSizeMake(newWindowSize.width * m_fContentScaleFactor,
 			newWindowSize.height * m_fContentScaleFactor);
-		setProjection(m_eProjection);       
+		setProjection(m_eProjection);
 	}
-
 }
 void CCDirector::setDepthTest(bool bOn)
 {

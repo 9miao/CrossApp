@@ -65,11 +65,20 @@ protected:
     
     void deaccelerateScrolling(float delay);
     
+    inline virtual float maxSpeed();
+    
+    inline virtual float maxSpeedCache();
+    
+    inline virtual float decelerationRatio();
+    
 protected:
     
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
     
 protected:
@@ -88,11 +97,11 @@ protected:
     
     CC_SYNTHESIZE_IS(bool, m_bDecelerating, Decelerating);
     
-    CC_SYNTHESIZE(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);
+    CC_PROPERTY_IS(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);
     
-    CC_SYNTHESIZE(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);
+    CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);
     
-    CC_SYNTHESIZE(bool, m_bBouncesZoom, BouncesZoom);
+    CC_SYNTHESIZE_IS(bool, m_bBouncesZoom, BouncesZoom);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bZooming, Zooming);
     

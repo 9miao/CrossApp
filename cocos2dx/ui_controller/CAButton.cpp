@@ -62,6 +62,11 @@ void CAButton::onEnterTransitionDidFinish()
 {
     CCNodeRGBA::onEnterTransitionDidFinish();
     
+    if (m_bgNormal == NULL)
+    {
+        this->setBackGroundDefault();
+    }
+    
     if (m_bgHighlighted == NULL)
     {
         if (CCScale9Sprite* bg = dynamic_cast<CCScale9Sprite*>(m_bgNormal))

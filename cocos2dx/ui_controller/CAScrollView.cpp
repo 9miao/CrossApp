@@ -11,10 +11,6 @@
 #include "actions/CCActionInterval.h"
 #include "actions/CCActionEase.h"
 
-#define MAX_SPEED (CCPoint(m_obContainerSize).getLength() / 32)
-#define MAXPULLINGSPEED (MAX_SPEED * 1.5f)
-#define OBSTRUCTION (0.3f)
-
 NS_CC_BEGIN
 
 #pragma CAScrollView
@@ -154,6 +150,42 @@ void CAScrollView::setBounces(bool var)
 bool CAScrollView::isBounces()
 {
     return m_bBounces;
+}
+
+void CAScrollView::setShowsHorizontalScrollIndicator(bool var)
+{
+    m_bShowsHorizontalScrollIndicator = var;
+    if (m_bShowsHorizontalScrollIndicator)
+    {
+        m_pIndicatorHorizontal->setVisible(true);
+    }
+    else
+    {
+        m_pIndicatorHorizontal->setVisible(false);
+    }
+}
+
+bool CAScrollView::isShowsHorizontalScrollIndicator()
+{
+    return m_bShowsHorizontalScrollIndicator;
+}
+
+void CAScrollView::setShowsVerticalScrollIndicator(bool var)
+{
+    m_bShowsVerticalScrollIndicator = var;
+    if (m_bShowsVerticalScrollIndicator)
+    {
+        m_pIndicatorVertical->setVisible(true);
+    }
+    else
+    {
+        m_pIndicatorVertical->setVisible(false);
+    }
+}
+
+bool CAScrollView::isShowsVerticalScrollIndicator()
+{
+    return m_bShowsVerticalScrollIndicator;
 }
 
 bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
@@ -364,15 +396,15 @@ void CAScrollView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 
 void CAScrollView::deaccelerateScrolling(float delay)
 {
-    if (m_tInertia.getLength() > MAXPULLINGSPEED)
+    if (m_tInertia.getLength() > maxSpeedCache())
     {
-        m_tInertia = ccpMult(m_tInertia, MAXPULLINGSPEED / m_tInertia.getLength());
+        m_tInertia = ccpMult(m_tInertia, maxSpeedCache() / m_tInertia.getLength());
     }
     
     CCPoint speed;
-    if (m_tInertia.getLength() > MAX_SPEED)
+    if (m_tInertia.getLength() > maxSpeed())
     {
-        speed = ccpMult(m_tInertia, MAX_SPEED / m_tInertia.getLength());
+        speed = ccpMult(m_tInertia, maxSpeed() / m_tInertia.getLength());
     }
     else
     {
@@ -390,22 +422,22 @@ void CAScrollView::deaccelerateScrolling(float delay)
         
         if (point.x - rect.size.width / 2 > 0)
         {
-            resilience.x = MAXPULLINGSPEED * (point.x - rect.size.width / 2) / size.width;
+            resilience.x = maxSpeedCache() * (point.x - rect.size.width / 2) / size.width;
         }
         
         if (point.y - rect.size.height / 2 > 0)
         {
-            resilience.y = MAXPULLINGSPEED * (point.y - rect.size.height / 2) / size.height;
+            resilience.y = maxSpeedCache() * (point.y - rect.size.height / 2) / size.height;
         }
         
         if ((point.x + rect.size.width / 2 - size.width) < 0)
         {
-            resilience.x = MAXPULLINGSPEED * (point.x + rect.size.width / 2 - size.width) / size.width;
+            resilience.x = maxSpeedCache() * (point.x + rect.size.width / 2 - size.width) / size.width;
         }
         
         if ((point.y + rect.size.height / 2 - size.height) < 0)
         {
-            resilience.y = MAXPULLINGSPEED * (point.y + rect.size.height / 2 - size.height) / size.height;
+            resilience.y = maxSpeedCache() * (point.y + rect.size.height / 2 - size.height) / size.height;
         }
         
         speed = ccpSub(speed, resilience);
@@ -437,7 +469,7 @@ void CAScrollView::deaccelerateScrolling(float delay)
     
     m_pContainer->setCenter(point);
     
-    m_tInertia = ccpMult(m_tInertia, 1 - OBSTRUCTION);
+    m_tInertia = ccpMult(m_tInertia, 1 - decelerationRatio());
     
     m_bDecelerating = true;
     
@@ -446,6 +478,21 @@ void CAScrollView::deaccelerateScrolling(float delay)
         m_bDecelerating = false;
         this->unschedule(schedule_selector(CAScrollView::deaccelerateScrolling));
     }
+}
+
+float CAScrollView::maxSpeed()
+{
+    return (CCPoint(m_obContainerSize).getLength() / 32);
+}
+
+float CAScrollView::maxSpeedCache()
+{
+    return (maxSpeed() * 1.5f);
+}
+
+float CAScrollView::decelerationRatio()
+{
+    return 0.25f;
 }
 
 void CAScrollView::update(float fDelta)

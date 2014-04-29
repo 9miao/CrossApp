@@ -78,7 +78,7 @@ void CAProgress::setProgress(float progress, bool animated)
 
 bool CAProgress::init()
 {
-    if (!CAView::init())
+    if (!CCNodeRGBA::init())
     {
         return false;
     }
@@ -93,7 +93,7 @@ bool CAProgress::init()
 void CAProgress::onEnterTransitionDidFinish()
 {
     
-    CAView::onEnterTransitionDidFinish();
+    CCNodeRGBA::onEnterTransitionDidFinish();
     
   
     if (m_pCopyTarckImage == NULL ) 
@@ -168,7 +168,7 @@ std::string CAProgress::getProgressTrackImage()
 
 void CAProgress::onExitTransitionDidStart()
 {
-    CAView::onExitTransitionDidStart();
+    CCNodeRGBA::onExitTransitionDidStart();
 }
 
 void CAProgress::schedule(float dt)
