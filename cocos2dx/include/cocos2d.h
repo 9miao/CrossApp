@@ -287,8 +287,10 @@ THE SOFTWARE.
 
 //ui_controller
 #include "ui_controller/CAViewController.h"
+#include "ui_controller/CAControl.h"
 #include "ui_controller/CAButton.h"
 #include "ui_controller/CAScrollView.h"
+#include "ui_controller/CATableView.h"
 #include "ui_controller/CAProgress.h"
 
 NS_CC_BEGIN

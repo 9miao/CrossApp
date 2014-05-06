@@ -2,7 +2,7 @@
 //  CABar.cpp
 //  cocos2dx
 //
-//  Created by liyuanfeng on 14-4-14.
+//  Created by Li Yuanfeng on 14-4-14.
 //  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
@@ -100,7 +100,7 @@ void CANavigationBar::showBackButton()
     {
         m_pBackButton = CAButton::createWithFrame(CCRect(20, 0, 50, 50));
         CAImageView* imageView = CAImageView::createWithTexture(CCTexture2D::create("button_left.png"));
-        m_pBackButton->setBackGround(CAButtonStateNormal, imageView);
+        m_pBackButton->setBackGround(CAControlStateNormal, imageView);
         m_pBackButton->setPositionY(m_obContentSize.height/2);
         this->addChild(m_pBackButton, 1);
         m_pBackButton->addTarget(this, CAButton_selector(CANavigationBar::goBack), TouchUpInSide);

@@ -99,7 +99,7 @@ CCObject* CAUIHelper::addButton(CSJson::Value jsonValue, cocos2d::CCRect &uiRect
 //    bool isEffect = jsonValue["isEffect"].asBool();
 //    bool isClick = jsonValue["isClick"].asBool();
 //    bool isTouchSuspend = jsonValue["isTouchSuspend"].asBool();
-    CAButtonTouchState  btnState = (CAButtonTouchState)jsonValue["btnState"].asInt();
+    CAControlState  btnState = (CAControlState)jsonValue["btnState"].asInt();
     int touchPriority = jsonValue["touchPriority"].asInt();
 
     int alpha = jsonValue["alpha"].asInt();
@@ -109,7 +109,7 @@ CCObject* CAUIHelper::addButton(CSJson::Value jsonValue, cocos2d::CCRect &uiRect
     btn->setTag(tag);
     btn->setOpacity(alpha);
     btn->setTouchPriority(touchPriority);
-    btn->setTouchState(btnState);
+    btn->setControlState(btnState);
     if (btntype == ButtonColor)
     {
         
@@ -118,7 +118,7 @@ CCObject* CAUIHelper::addButton(CSJson::Value jsonValue, cocos2d::CCRect &uiRect
     {
         CCScale9Sprite *image = CCScale9Sprite::createWithTexture(CAImage::create(imageRes.c_str()));
     
-        btn->setBackGround(CAButtonStateNormal, image);
+        btn->setBackGround(CAControlStateNormal, image);
         
     }
     else if (btntype == ButtonImage)

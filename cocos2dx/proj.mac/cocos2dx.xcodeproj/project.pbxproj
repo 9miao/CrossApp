@@ -298,6 +298,8 @@
 		B025150D18EEA7D30027586E /* CCView.h in Headers */ = {isa = PBXBuildFile; fileRef = B025150B18EEA7D30027586E /* CCView.h */; };
 		B02730F818F78393002988D6 /* CAViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02730F618F78393002988D6 /* CAViewController.cpp */; };
 		B02730F918F78393002988D6 /* CAViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B02730F718F78393002988D6 /* CAViewController.h */; };
+		B027AF101918878E00B99BF8 /* CAControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B027AF0E1918878E00B99BF8 /* CAControl.cpp */; };
+		B027AF111918878E00B99BF8 /* CAControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B027AF0F1918878E00B99BF8 /* CAControl.h */; };
 		B02A1446190A65B600C3633B /* CAProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1445190A65B600C3633B /* CAProgress.cpp */; };
 		B02A1448190A65BE00C3633B /* CAProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A1447190A65BE00C3633B /* CAProgress.h */; };
 		B07D5FAF1907682600B4B968 /* CAScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07D5FAD1907682600B4B968 /* CAScrollView.cpp */; };
@@ -603,6 +605,8 @@
 		B025150B18EEA7D30027586E /* CCView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCView.h; sourceTree = "<group>"; };
 		B02730F618F78393002988D6 /* CAViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewController.cpp; sourceTree = "<group>"; };
 		B02730F718F78393002988D6 /* CAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAViewController.h; sourceTree = "<group>"; };
+		B027AF0E1918878E00B99BF8 /* CAControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAControl.cpp; sourceTree = "<group>"; };
+		B027AF0F1918878E00B99BF8 /* CAControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAControl.h; sourceTree = "<group>"; };
 		B02A1445190A65B600C3633B /* CAProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAProgress.cpp; sourceTree = "<group>"; };
 		B02A1447190A65BE00C3633B /* CAProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAProgress.h; sourceTree = "<group>"; };
 		B07D5FAD1907682600B4B968 /* CAScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAScrollView.cpp; sourceTree = "<group>"; };
@@ -1228,6 +1232,8 @@
 		B02730F518F78368002988D6 /* ui_controller */ = {
 			isa = PBXGroup;
 			children = (
+				B027AF0E1918878E00B99BF8 /* CAControl.cpp */,
+				B027AF0F1918878E00B99BF8 /* CAControl.h */,
 				B02A1445190A65B600C3633B /* CAProgress.cpp */,
 				B02A1447190A65BE00C3633B /* CAProgress.h */,
 				B01DFC021905107200214AE2 /* CAButton.cpp */,
@@ -1349,6 +1355,7 @@
 				1551A823158F2ADF00E66CFE /* ccShader_PositionTexture_vert.h in Headers */,
 				1551A824158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				1551A825158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_vert.h in Headers */,
+				B027AF111918878E00B99BF8 /* CAControl.h in Headers */,
 				1551A826158F2ADF00E66CFE /* ccShader_PositionTextureColor_frag.h in Headers */,
 				1551A827158F2ADF00E66CFE /* ccShader_PositionTextureColor_vert.h in Headers */,
 				1551A828158F2ADF00E66CFE /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
@@ -1552,6 +1559,7 @@
 				1551A830158F2ADF00E66CFE /* CCAnimationCache.cpp in Sources */,
 				1551A832158F2ADF00E66CFE /* CCSprite.cpp in Sources */,
 				1551A834158F2ADF00E66CFE /* CCSpriteBatchNode.cpp in Sources */,
+				B027AF101918878E00B99BF8 /* CAControl.cpp in Sources */,
 				1551A836158F2ADF00E66CFE /* CCSpriteFrame.cpp in Sources */,
 				B02A1446190A65B600C3633B /* CAProgress.cpp in Sources */,
 				1551A838158F2ADF00E66CFE /* CCSpriteFrameCache.cpp in Sources */,

@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "support/data_support/ccCArray.h"
 #include "ccMacros.h"
 #include <algorithm>
+#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 
@@ -371,7 +372,12 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
                     switch (sHelper.m_type)
                     {
                     case CCTOUCHMOVED:
-                        pHandler->getDelegate()->ccTouchMoved(pTouch, pEvent);
+                        {
+                            if (ccpDistance(pTouch->getLocation(), pTouch->getPreviousLocation()) >= 0.05f)
+                            {
+                                pHandler->getDelegate()->ccTouchMoved(pTouch, pEvent);
+                            }
+                        }
                         break;
                     case CCTOUCHENDED:
                         pHandler->getDelegate()->ccTouchEnded(pTouch, pEvent);

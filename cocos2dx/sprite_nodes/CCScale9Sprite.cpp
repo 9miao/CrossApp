@@ -181,7 +181,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
 
     if (rect.size.width < 32)
     {
-        right_w = right_w + 0.667f;
+        right_w = right_w;
     }
     
     // calculate rects
@@ -411,6 +411,7 @@ void CCScale9Sprite::setContentSize(const CCSize &size)
 {
     CCNode::setContentSize(size);
     this->m_positionsAreDirty = true;
+    this->m_preferredSize = size;
 }
 
 void CCScale9Sprite::updatePositions()
@@ -620,7 +621,6 @@ CCScale9Sprite* CCScale9Sprite::create()
 void CCScale9Sprite::setPreferredSize(CCSize preferedSize)
 {
     this->setContentSize(preferedSize);
-    this->m_preferredSize = preferedSize;
 }
 
 CCSize CCScale9Sprite::getPreferredSize()

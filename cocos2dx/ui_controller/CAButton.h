@@ -1,41 +1,26 @@
 //
 //  CAButton.h
+//  cocos2dx
 //
-//  Created by liyuanfeng on 13-3-14.
+//  Created by Li Yuanfeng on 14-3-23.
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
-//
+
 
 #ifndef __CAButton__
 #define __CAButton__
 
 #include <iostream>
-#include "base_nodes/CCNode.h"
+#include "CAControl.h"
 
 NS_CC_BEGIN
 
 class CAButton;
 
-typedef enum
-{
-    TouchBegin          = 0,
-    TouchMoved          = 1,
-    TouchMovedOutSide   = 2,
-    TouchUpInSide       = 3,
-    TouchUpSide         = 4,
-}CAButtonType;
-
-typedef enum
-{
-    CAButtonStateNormal         = 0,
-    CAButtonStateHighlighted    = 1,
-    CAButtonStateDisabled       = 2,
-    CAButtonStateSelected       = 3
-}CAButtonTouchState;
-
 typedef bool (CCObject::*SEL_CAButton)(CAButton*, CCPoint);
 #define CAButton_selector(_SELECTOR) (SEL_CAButton)(&_SELECTOR)
 
-class CC_DLL CAButton : public CCNodeRGBA
+class CC_DLL CAButton : public CAControl
 {
     
 public:
@@ -56,41 +41,29 @@ public:
     
     void setBackGroundDefault();
     
-    void setBackGround(CAButtonTouchState touchState, CCNodeRGBA *var);
+    void setBackGround(CAControlState controlState, CCNodeRGBA *var);
 
-    CCNodeRGBA* getBackGround(CAButtonTouchState touchState);
+    void setSprite(CAControlState controlState, CCNodeRGBA* var);
 
-    void setSprite(CAButtonTouchState touchState, CCNodeRGBA* var);
+    void setSprite(CAControlState controlState, CCNodeRGBA* var, CCPoint point);
 
-    void setSprite(CAButtonTouchState touchState, CCNodeRGBA* var, CCPoint point);
-
-    CCNodeRGBA* getSprite(CAButtonTouchState touchState);
+    CCNodeRGBA* getSprite(CAControlState controlState);
+    
+    virtual void setControlState(CAControlState var);
     
 public:
     
     CC_SYNTHESIZE(std::string, m_textTag, TextTag);
     
-    CC_SYNTHESIZE(bool, m_specially, TouchSpecially);
-
     CC_SYNTHESIZE(bool, m_closeTapSound, CloseTapSound);
 
     CC_SYNTHESIZE(bool, m_stateSelected, StateSelected);
 
     CC_PROPERTY(bool, m_touchClick, TouchClick);
 
-    CC_PROPERTY(CAButtonTouchState, m_touchState, TouchState);
-
-    bool isNormal();
-
-    bool isHighlighted();
-
-    bool isSelected();
-
-    bool isDisabled();
-    
     bool isTextTagEqual(const char* text);
     
-    void addTarget(void* target, SEL_CAButton selector, CAButtonType type);
+    void addTarget(void* target, SEL_CAButton selector, CAControlType type);
 
     virtual void setOpacity(GLubyte opacity);
 
@@ -112,25 +85,9 @@ protected:
     
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
     
-    virtual void setNormalEffect();
-    
-    virtual void setHighlightedEffect();
-    
-    virtual void setDisabledEffect();
-    
-    virtual void setSelectedEffect();
-
 protected:
 
     ccColor3B m_color;
-    
-    CCNodeRGBA* m_bgNormal;
-    
-    CCNodeRGBA* m_bgHighlighted;
-    
-    CCNodeRGBA* m_bgDisabled;
-    
-    CCNodeRGBA* m_bgSelected;
     
     CCNodeRGBA* m_spriteNormal;
     

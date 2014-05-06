@@ -2,7 +2,7 @@
 //  CAScrollView.h
 //  cocos2dx
 //
-//  Created by liyuanfeng on 14-4-23.
+//  Created by Li Yuanfeng on 14-4-23.
 //  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
@@ -53,13 +53,17 @@ public:
 
     void addChild(CCNode* child, int zOrder, int tag);
     
+    void removeAllChildrenWithCleanup(bool cleanup);
+    
 protected:
     
-    CCPoint& getScrollWindowNotOutPoint(CCPoint& point);
+    const CCPoint& getScrollWindowNotOutPoint(CCPoint& point);
     
     float getScrollWindowNotOutHorizontal(float x);
     
     float getScrollWindowNotOutVertical(float y);
+    
+    bool isScrollWindowNotOutSide();
     
     void update(float fDelta);
     
@@ -70,6 +74,8 @@ protected:
     inline virtual float maxSpeedCache();
     
     inline virtual float decelerationRatio();
+    
+    inline virtual float maxBouncesSpeed();
     
 protected:
     
@@ -111,7 +117,7 @@ protected:
     
     CC_SYNTHESIZE(float, m_fZoomScale, ZoomScale);
     
-    CC_PROPERTY(CCSize, m_obContainerSize, ContainerSize);
+    CC_PROPERTY(CCSize, m_obViewSize, ViewSize);
     
 protected:
     
@@ -120,6 +126,8 @@ protected:
     CAIndicator* m_pIndicatorHorizontal;
     
     CAIndicator* m_pIndicatorVertical;
+    
+    CCArray* m_pChildInThis;
     
     CCArray* m_pTouches;
     

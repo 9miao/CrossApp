@@ -2,8 +2,8 @@
 //  CABarItem.cpp
 //  cocos2dx
 //
-//  Created by 栗元峰 on 14-4-14.
-//  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
+//  Created by Li Yuanfeng on 14-4-14.
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #include "CABarItem.h"

@@ -2,7 +2,7 @@
 //  CATableView.h
 //  cocos2dx
 //
-//  Created by liyuanfeng on 14-4-28.
+//  Created by Li Yuanfeng on 14-4-28.
 //  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
@@ -11,30 +11,55 @@
 
 #include <iostream>
 #include "CAScrollView.h"
+#include "CAControl.h"
+#include <vector>
 #include <deque>
+#include <set>
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
 
-typedef enum
-{
-    CATableViewOrientationHorizontal,
-    CATableViewOrientationVertical
-} CATableViewOrientation;
+//typedef enum
+//{
+//    CATableViewOrientationHorizontal,
+//    CATableViewOrientationVertical
+//} CATableViewOrientation;
 
 class CATableViewCell;
 class CATableView;
+
+class CATableViewDelegate
+{
+public:
+    
+    virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row){};
+    
+    virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row){};
+    
+    
+    
+};
 
 class CATableViewDataSource
 {
 public:
     
-    //初始化cell回调
-    virtual CATableViewCell* tableCellAtIndex(CATableView *table, unsigned int idx) = 0;
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, unsigned int section, unsigned int row) = 0;
     
-    //获取cell总个数回调
-    virtual unsigned int numberfRowsInTableView(CATableView *table) = 0;
+    virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section){return NULL;}
     
-    void removeDelegate(CATableView* table){};
+    virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, unsigned int section){return NULL;}
+    
+    virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section) = 0;
+    
+    virtual unsigned int numberOfSections(CATableView *table){return 1;}
+    
+    virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row) = 0;
+    
+    virtual unsigned int tableViewHeightForHeaderInSection(CATableView* table, unsigned int section){return 0;}
+    
+    virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section){return 0;}
     
 };
 
@@ -48,13 +73,31 @@ public:
     
     virtual ~CATableView();
     
-    virtual bool initWithFrame(const cocos2d::CCRect &rect, CATableViewOrientation tableViewOrientation = CATableViewOrientationVertical);
+    virtual bool initWithFrame(const cocos2d::CCRect &rect);
     
+    void reloadData();
+    
+    CATableViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
+    
+    virtual void setBackGroundImage(CAImage* image);
+    
+    virtual void setBackGroundScale9Image(CAImage* image);
+    
+protected:
+
     inline virtual float maxSpeed();
     
     inline virtual float maxSpeedCache();
     
     inline virtual float decelerationRatio();
+    
+    void clearData();
+    
+    void reloadViewSizeData();
+    
+    virtual void setViewSize(CCSize var);
+    
+    virtual void setContentSize(const CCSize& var);
     
 protected:
     
@@ -68,13 +111,60 @@ protected:
     
 protected:
     
-    CATableViewOrientation m_eTableViewOrientation;
+    CC_SYNTHESIZE(CATableViewDataSource*, m_pTableViewDataSource, TableViewDataSource);
     
-    std::deque<CATableViewCell*> m_pTableViewCells;
+    CC_SYNTHESIZE(CATableViewDelegate*, m_pTableViewDelegate, TableViewDelegate);
     
+    CC_SYNTHESIZE_RETAIN(CAView*, m_pTableHeaderView, TableHeaderView);
+    
+    CC_SYNTHESIZE_RETAIN(CAView*, m_pTableFooterView, TableFooterView);
+    
+    CC_SYNTHESIZE_RETAIN(CAView*, m_pTablePullDownView, TablePullDownView);
+    
+    CC_SYNTHESIZE_RETAIN(CAView*, m_pTablePullUpView, TablePullUpView);
+    
+    CC_SYNTHESIZE(unsigned int, m_nTableHeaderHeight, TableHeaderHeight);
+    
+    CC_SYNTHESIZE(unsigned int, m_nTableFooterHeight, TableFooterHeight);
+    
+    CC_SYNTHESIZE(unsigned int, m_nTablePullViewHeight, TablePullViewHeight);
+    
+    CC_SYNTHESIZE(ccColor4B, m_separatorColor, SeparatorColor);
+    
+    CC_SYNTHESIZE_IS(bool, m_bAllowsSelection, AllowsSelection);
+    
+    CC_SYNTHESIZE_IS(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
+    
+protected:
+    
+    std::vector<unsigned int> m_nRowsInSections;
+    
+    std::vector<unsigned int> m_nSectionHeights;
+    
+    std::vector<unsigned int> m_nSectionHeaderHeights;
+    
+    std::vector<unsigned int> m_nSectionFooterHeights;
+    
+    std::vector<std::vector<unsigned int> > m_nRowHeightss;
+    
+    std::vector<CCRect> m_rSectionRectss;
+    
+    std::vector<std::vector<CCRect> > m_rTableCellRectss;
+
+    std::deque<CATableViewCell*> m_pTableCells;
+    
+    std::set<CATableViewCell*> m_pSelectedTableCells;
+    
+    CATableViewCell* m_pHighlightedTableCells;
+    
+    CCDictionary* m_pCellDict;
+    
+    CCNodeRGBA* m_pBackGroundView;
+    
+    CCPoint m_tBeginPoint;
 };
 
-class CC_DLL CATableViewCell: public CCNode
+class CC_DLL CATableViewCell: public CAControl
 {
     
 public:
@@ -83,13 +173,19 @@ public:
     
     virtual ~CATableViewCell();
     
-    CREATE_FUNC(CATableViewCell);
+    static CATableViewCell* create(const char* reuseIdentifier);
     
-    
+    bool initWithReuseIdentifier(const char* reuseIdentifier);
     
 protected:
+
+    CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
     
-    CCNodeRGBA* m_pBackGroundView;
+    CC_SYNTHESIZE(unsigned int, m_nSection, Section);
+    
+    CC_SYNTHESIZE(unsigned int, m_nRow, Row);
+
+protected:
     
 };
 

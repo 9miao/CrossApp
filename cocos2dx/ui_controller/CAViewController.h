@@ -2,7 +2,7 @@
 //  CAViewController.h
 //  cocos2dx
 //
-//  Created by liyuanfeng on 14-4-11.
+//  Created by Li Yuanfeng on 14-4-11.
 //  Copyright (c) 2014年 www.9miao.com All rights reserved.
 //
 

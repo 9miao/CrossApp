@@ -297,6 +297,8 @@
 		B0052696190F45FB0003FD5F /* CATableView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0052694190F45FB0003FD5F /* CATableView.h */; };
 		B01DFC1C190513DB00214AE2 /* CAButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01DFC1A190513DB00214AE2 /* CAButton.cpp */; };
 		B01DFC1D190513DB00214AE2 /* CAButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B01DFC1B190513DB00214AE2 /* CAButton.h */; };
+		B027AF161918EF1A00B99BF8 /* CAControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B027AF141918EF1A00B99BF8 /* CAControl.cpp */; };
+		B027AF171918EF1A00B99BF8 /* CAControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B027AF151918EF1A00B99BF8 /* CAControl.h */; };
 		B02A1455190A69EE00C3633B /* CAProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1451190A69EE00C3633B /* CAProgress.cpp */; };
 		B02A1456190A69EE00C3633B /* CAProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A1452190A69EE00C3633B /* CAProgress.h */; };
 		B02A1457190A69EE00C3633B /* CAScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1453190A69EE00C3633B /* CAScrollView.cpp */; };
@@ -610,6 +612,8 @@
 		B0052694190F45FB0003FD5F /* CATableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATableView.h; sourceTree = "<group>"; };
 		B01DFC1A190513DB00214AE2 /* CAButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAButton.cpp; sourceTree = "<group>"; };
 		B01DFC1B190513DB00214AE2 /* CAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAButton.h; sourceTree = "<group>"; };
+		B027AF141918EF1A00B99BF8 /* CAControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAControl.cpp; sourceTree = "<group>"; };
+		B027AF151918EF1A00B99BF8 /* CAControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAControl.h; sourceTree = "<group>"; };
 		B02A1451190A69EE00C3633B /* CAProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAProgress.cpp; sourceTree = "<group>"; };
 		B02A1452190A69EE00C3633B /* CAProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAProgress.h; sourceTree = "<group>"; };
 		B02A1453190A69EE00C3633B /* CAScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAScrollView.cpp; sourceTree = "<group>"; };
@@ -1253,6 +1257,8 @@
 		B04C0C471901227B009854FD /* ui_controller */ = {
 			isa = PBXGroup;
 			children = (
+				B027AF141918EF1A00B99BF8 /* CAControl.cpp */,
+				B027AF151918EF1A00B99BF8 /* CAControl.h */,
 				B0052693190F45FB0003FD5F /* CATableView.cpp */,
 				B0052694190F45FB0003FD5F /* CATableView.h */,
 				B02A1451190A69EE00C3633B /* CAProgress.cpp */,
@@ -1286,6 +1292,7 @@
 				1551A633158F2ADE00E66CFE /* CCActionGrid3D.h in Headers */,
 				1551A635158F2ADE00E66CFE /* CCActionInstant.h in Headers */,
 				1551A637158F2ADE00E66CFE /* CCActionInterval.h in Headers */,
+				B027AF171918EF1A00B99BF8 /* CAControl.h in Headers */,
 				1551A639158F2ADE00E66CFE /* CCActionManager.h in Headers */,
 				1551A63B158F2ADE00E66CFE /* CCActionPageTurn3D.h in Headers */,
 				1551A63D158F2ADE00E66CFE /* CCActionProgressTimer.h in Headers */,
@@ -1615,6 +1622,7 @@
 				1551A86F158F2ADF00E66CFE /* CCTouchDispatcher.cpp in Sources */,
 				1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */,
 				154269DC15B5653000712A7F /* CCNotificationCenter.cpp in Sources */,
+				B027AF161918EF1A00B99BF8 /* CAControl.cpp in Sources */,
 				B02A1457190A69EE00C3633B /* CAScrollView.cpp in Sources */,
 				D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */,
 				15FBEE5F164B8B5B008CB2C3 /* CCClippingNode.cpp in Sources */,

@@ -2,8 +2,8 @@
 //  CCView.cpp
 //  cocos2dx
 //
-//  Created by 栗元峰 on 14-4-4.
-//  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
+//  Created by Li Yuanfeng on 14-4-4.
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #include "CCView.h"
@@ -62,6 +62,20 @@ CAView* CAView::createWithFrame(const CCRect &rect)
     return pRet;
 }
 
+CAView* CAView::createWithFrame(const CCRect& rect, const ccColor4B& color4B)
+{
+    CAView* pRet = new CAView();
+    if (pRet && pRet->initWithFrame(rect, color4B))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 void CAView::onEnterTransitionDidFinish()
 {
     CCNodeRGBA::onEnterTransitionDidFinish();
@@ -81,7 +95,7 @@ void CAView::onExitTransitionDidStart()
     }
 }
 
-bool CAView::init()
+bool CAView::initWithFrame(const CCRect& rect, const ccColor4B& color4B)
 {
     if (!CCNodeRGBA::init())
     {
@@ -92,10 +106,10 @@ bool CAView::init()
     m_tBlendFunc.src = GL_SRC_ALPHA;
     m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
     
-    _displayedColor.r = _realColor.r = 255;
-    _displayedColor.g = _realColor.g = 255;
-    _displayedColor.b = _realColor.b = 255;
-    _displayedOpacity = _realOpacity = 255;
+    _displayedColor.r = _realColor.r = color4B.r;
+    _displayedColor.g = _realColor.g = color4B.g;
+    _displayedColor.b = _realColor.b = color4B.b;
+    _displayedOpacity = _realOpacity = color4B.a;
     
     for (size_t i = 0; i<sizeof(m_pSquareVertices) / sizeof( m_pSquareVertices[0]); i++ )
     {
@@ -107,19 +121,19 @@ bool CAView::init()
     setAnchorPoint(ccp(0.5f, 0.5f));
     setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor));
     
+    this->setFrame(rect);
+    
     return true;
 }
 
 bool CAView::initWithFrame(const CCRect& rect)
 {
-    if (!CAView::init())
-    {
-        return false;
-    }
-    
-    this->setFrame(rect);
-    
-    return true;
+    return CAView::initWithFrame(rect, ccc4(255, 255, 255, 255));
+}
+
+bool CAView::init()
+{
+    return CAView::initWithFrame(CCRectZero);
 }
 
 /// override contentSize

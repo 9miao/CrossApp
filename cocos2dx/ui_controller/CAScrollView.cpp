@@ -2,8 +2,8 @@
 //  CAScrollView.cpp
 //  cocos2dx
 //
-//  Created by 栗元峰 on 14-4-23.
-//  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
+//  Created by Li Yuanfeng on 14-4-23.
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #include "CAScrollView.h"
@@ -17,7 +17,7 @@ NS_CC_BEGIN
 
 CAScrollView::CAScrollView()
 :m_pContainer(NULL)
-,m_obContainerSize(CCSizeZero)
+,m_obViewSize(CCSizeZero)
 ,m_pScrollViewDelegate(NULL)
 ,m_bBounces(true)
 ,m_bBounceHorizontal(true)
@@ -36,11 +36,13 @@ CAScrollView::CAScrollView()
 ,m_bShowsVerticalScrollIndicator(true)
 {
     m_pTouches = new CCArray(2);
+    m_pChildInThis = new CCArray();
 }
 
 CAScrollView::~CAScrollView()
 {
     CC_SAFE_DELETE(m_pTouches);
+    CC_SAFE_DELETE(m_pChildInThis);
 }
 
 void CAScrollView::onEnterTransitionDidFinish()
@@ -61,23 +63,24 @@ void CAScrollView::onExitTransitionDidStart()
 
 bool CAScrollView::initWithFrame(const cocos2d::CCRect &rect)
 {
-    if (!CAView::initWithFrame(rect))
+    if (!CAView::initWithFrame(rect, ccc4(255, 255, 255, 0)))
     {
         return false;
     }
     
     this->setTouchEnabled(true);
     this->setDisplayRange(false);
-    this->setOpacity(0);
     
-    m_pContainer = CAView::createWithFrame(this->getBounds());
-    m_pContainer->setOpacity(0);
+    m_pContainer = CAView::createWithFrame(this->getBounds(), ccc4(255, 255, 255, 0));
+    m_pChildInThis->addObject(m_pContainer);
     this->addChild(m_pContainer);
     
     m_pIndicatorHorizontal = CAIndicator::createWithFrame(CCRect(12, 2, rect.size.width - 24, 10), CAIndicator::CAIndicatorTypeHorizontal);
+    m_pChildInThis->addObject(m_pIndicatorHorizontal);
     this->addChild(m_pIndicatorHorizontal, 1);
     
     m_pIndicatorVertical = CAIndicator::createWithFrame(CCRect(rect.size.width - 12, 12, 10, rect.size.height - 24), CAIndicator::CAIndicatorTypeVertical);
+    m_pChildInThis->addObject(m_pIndicatorVertical);
     this->addChild(m_pIndicatorVertical, 1);
     
     
@@ -98,10 +101,7 @@ void CAScrollView::addChild(CCNode* child, int zOrder, int tag)
 {
     do
     {
-        CC_BREAK_IF(m_pContainer->isEqual(child));
-        CC_BREAK_IF(m_pIndicatorHorizontal->isEqual(child));
-        CC_BREAK_IF(m_pIndicatorVertical->isEqual(child));
-        
+        CC_BREAK_IF(m_pChildInThis->containsObject(child));
         m_pContainer->addChild(child, zOrder, tag);
         return;
     }
@@ -110,17 +110,22 @@ void CAScrollView::addChild(CCNode* child, int zOrder, int tag)
     CAView::addChild(child, zOrder, tag);
 }
 
-void CAScrollView::setContainerSize(cocos2d::CCSize var)
+void CAScrollView::removeAllChildrenWithCleanup(bool cleanup)
+{
+    m_pContainer->removeAllChildrenWithCleanup(cleanup);
+}
+
+void CAScrollView::setViewSize(cocos2d::CCSize var)
 {
     do
     {
-        CC_BREAK_IF(m_obContainerSize.equals(var));
+        CC_BREAK_IF(m_obViewSize.equals(var));
         
-        m_obContainerSize = var;
+        m_obViewSize = var;
         
         CC_BREAK_IF(m_pContainer == NULL);
         
-        m_pContainer->setBoundsSize(m_obContainerSize);
+        m_pContainer->setBoundsSize(m_obViewSize);
         
         CCRect rect = CCRectZero;
         rect.size = m_pContainer->getBounds().size;
@@ -132,9 +137,9 @@ void CAScrollView::setContainerSize(cocos2d::CCSize var)
     
 }
 
-CCSize CAScrollView::getContainerSize()
+CCSize CAScrollView::getViewSize()
 {
-    return m_obContainerSize;
+    return m_obViewSize;
 }
 
 void CAScrollView::setBounces(bool var)
@@ -254,26 +259,22 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 
 			if (p_container.x - rect.size.width / 2 > 0)
 			{
-				p_off.x *= 1 - rect.origin.x / size.width;
-				p_off.x *= 0.618;
+				p_off.x *= 0.618f - rect.origin.x / size.width;
 			}
 
 			if (p_container.y - rect.size.height / 2 > 0)
 			{
-				p_off.y *= 1 - rect.origin.y / size.height;
-				p_off.y *= 0.618;
+				p_off.y *= 0.618f - rect.origin.y / size.height;
 			}
 
 			if ((p_container.x + rect.size.width / 2 - size.width) < 0)
 			{
-				p_off.x *= (rect.size.width + rect.origin.x) / size.width;
-				p_off.x *= 0.618;
+				p_off.x *= (rect.size.width + rect.origin.x) / size.width - 1 + 0.618f;
 			}
 
 			if ((p_container.y + rect.size.height / 2 - size.height) < 0)
 			{
-				p_off.y *= (rect.size.height + rect.origin.y) / size.height;
-				p_off.y *= 0.618;
+				p_off.y *= (rect.size.height + rect.origin.y) / size.height - 1 + 0.618f;
 			}
 		}
 
@@ -285,7 +286,6 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 		{
 			m_tPointOffset.pop_front();
 		}
-
 
         if (m_pScrollViewDelegate)
         {
@@ -359,6 +359,11 @@ void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
             
             if (m_tPointOffset.size() > 0)
             {
+//                if (m_tPointOffset.size() > 1)
+//                {
+//                    m_tPointOffset.pop_back();
+//                }
+                
                 for (unsigned int i=0; i<m_tPointOffset.size(); i++)
                 {
                     p = ccpAdd(p, m_tPointOffset.at(i));
@@ -422,23 +427,25 @@ void CAScrollView::deaccelerateScrolling(float delay)
         
         if (point.x - rect.size.width / 2 > 0)
         {
-            resilience.x = maxSpeedCache() * (point.x - rect.size.width / 2) / size.width;
+            resilience.x = (point.x - rect.size.width / 2) / size.width;
         }
         
         if (point.y - rect.size.height / 2 > 0)
         {
-            resilience.y = maxSpeedCache() * (point.y - rect.size.height / 2) / size.height;
+            resilience.y = (point.y - rect.size.height / 2) / size.height;
         }
         
         if ((point.x + rect.size.width / 2 - size.width) < 0)
         {
-            resilience.x = maxSpeedCache() * (point.x + rect.size.width / 2 - size.width) / size.width;
+            resilience.x = (point.x + rect.size.width / 2 - size.width) / size.width;
         }
         
         if ((point.y + rect.size.height / 2 - size.height) < 0)
         {
-            resilience.y = maxSpeedCache() * (point.y + rect.size.height / 2 - size.height) / size.height;
+            resilience.y = (point.y + rect.size.height / 2 - size.height) / size.height;
         }
+        
+        resilience = ccpMult(resilience, maxBouncesSpeed());
         
         speed = ccpSub(speed, resilience);
     }
@@ -482,7 +489,7 @@ void CAScrollView::deaccelerateScrolling(float delay)
 
 float CAScrollView::maxSpeed()
 {
-    return (CCPoint(m_obContainerSize).getLength() / 32);
+    return (CCPoint(m_obContentSize).getLength() / 12);
 }
 
 float CAScrollView::maxSpeedCache()
@@ -495,13 +502,18 @@ float CAScrollView::decelerationRatio()
     return 0.25f;
 }
 
+float CAScrollView::maxBouncesSpeed()
+{
+    return (CCPoint(m_obContentSize).getLength() / 10);
+}
+
 void CAScrollView::update(float fDelta)
 {
     m_pIndicatorHorizontal->setIndicator(m_obContentSize, m_pContainer->getFrame());
     m_pIndicatorVertical->setIndicator(m_obContentSize, m_pContainer->getFrame());
 }
 
-CCPoint& CAScrollView::getScrollWindowNotOutPoint(CCPoint& point)
+const CCPoint& CAScrollView::getScrollWindowNotOutPoint(CCPoint& point)
 {
     point.x = this->getScrollWindowNotOutHorizontal(point.x);
     point.y = this->getScrollWindowNotOutVertical(point.y);
@@ -543,6 +555,35 @@ float CAScrollView::getScrollWindowNotOutVertical(float y)
     }
     
     return y;
+}
+
+bool CAScrollView::isScrollWindowNotOutSide()
+{
+    CCSize size = this->getContentSize();
+    CCRect rect = m_pContainer->getFrame();
+    CCPoint point = m_pContainer->getCenter();
+    
+    if (point.x - rect.size.width / 2 > 0.5f)
+    {
+        return true;
+    }
+    
+    if ((point.x + rect.size.width / 2 - size.width) < -0.5f)
+    {
+        return true;
+    }
+    
+    if (point.y - rect.size.height / 2 > 0.5f)
+    {
+        return true;
+    }
+    
+    if ((point.y + rect.size.height / 2 - size.height) < -0.5f)
+    {
+        return true;
+    }
+    
+    return false;
 }
 
 #pragma CAIndicator
@@ -619,7 +660,7 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
         {
             size.width *= (1 - lenght_scale_x) / (size_scale_x / 2);
         }
-        size.width = MAX(size.width, size.height);
+        size.width = MAX(size.width, 0);
         indicator->setPreferredSize(size);
         
         

@@ -2,7 +2,7 @@
 //  CCView.h
 //  cocos2dx
 //
-//  Created by liyuanfeng on 14-4-4.
+//  Created by Li Yuanfeng on 14-4-4.
 //  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
@@ -74,11 +74,15 @@ public:
     virtual void draw();
     virtual void setContentSize(const CCSize & var);
     
-    static CAView * createWithFrame(const CCRect& rect);
+    static CAView* createWithFrame(const CCRect& rect);
 
+    static CAView* createWithFrame(const CCRect& rect, const ccColor4B& color4B);
+    
     virtual bool init();
     
     virtual bool initWithFrame(const CCRect& rect);
+    
+    virtual bool initWithFrame(const CCRect& rect, const ccColor4B& color4B);
     
     /** BlendFunction. Conforms to CCBlendProtocol protocol */
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)

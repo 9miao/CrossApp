@@ -439,7 +439,6 @@ public:
      */
     virtual const CCSize& getContentSize() const;
 
-    
     virtual void setFrame(const CCRect& rect);
     
     virtual const CCRect& getFrame() const;

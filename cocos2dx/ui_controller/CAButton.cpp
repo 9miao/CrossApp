@@ -1,10 +1,9 @@
 //
 //  CAButton.cpp
-//  LTabelView
-//  出自九秒社区 http://www.9miao.com
+//  cocos2dx
 //
-//  Created by LI YUANFENG on 13-3-14.
-//
+//  Created by Li Yuanfeng on 14-3-23.
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #include "CAButton.h"
@@ -20,15 +19,9 @@ static int count = 0;
 CAButton::CAButton(void)
 :m_stateSelected(false)
 ,m_textTag("")
-,m_specially(true)
 ,m_closeTapSound(false)
 ,m_touchClick(false)
-,m_touchState(CAButtonStateNormal)
 ,m_color(ccWHITE)
-,m_bgNormal(NULL)
-,m_bgHighlighted(NULL)
-,m_bgDisabled(NULL)
-,m_bgSelected(NULL)
 ,m_spriteNormal(NULL)
 ,m_spriteHighlighted(NULL)
 ,m_spriteDisabled(NULL)
@@ -62,36 +55,37 @@ void CAButton::onEnterTransitionDidFinish()
 {
     CCNodeRGBA::onEnterTransitionDidFinish();
     
-    if (m_bgNormal == NULL)
+    if (this->CAControl::getBackGroundView() == NULL)
     {
         this->setBackGroundDefault();
     }
     
-    if (m_bgHighlighted == NULL)
+    if (this->getHighlightedBackGroundView() == NULL)
     {
-        if (CCScale9Sprite* bg = dynamic_cast<CCScale9Sprite*>(m_bgNormal))
+        if (CCScale9Sprite* bg = dynamic_cast<CCScale9Sprite*>(this->CAControl::getBackGroundView()))
         {
             CCScale9Sprite* bgHighLighted = CCScale9Sprite::createWithTexture(bg->getTexture());
             bgHighLighted->setPreferredSize(bg->getPreferredSize());
             bgHighLighted->setColor(ccc3(127, 127, 127));
-            this->setBackGround(CAButtonStateHighlighted, bgHighLighted);
+            this->setBackGround(CAControlStateHighlighted, bgHighLighted);
         }
-        else if (CCSprite* bg = dynamic_cast<CCSprite*>(m_bgNormal))
+        else if (CCSprite* bg = dynamic_cast<CCSprite*>(this->CAControl::getBackGroundView()))
         {
             CCSprite* bgHighLighted = CCSprite::createWithTexture(bg->getTexture());
             bgHighLighted->setBoundsSize(bg->getBounds().size);
             bgHighLighted->setColor(ccc3(127, 127, 127));
-            this->setBackGround(CAButtonStateHighlighted, bgHighLighted);
+            this->setBackGround(CAControlStateHighlighted, bgHighLighted);
         }
-        else if (CAView* bg = dynamic_cast<CAView*>(m_bgNormal))
+        else if (CAView* bg = dynamic_cast<CAView*>(this->CAControl::getBackGroundView()))
         {
             CAView* bgHighLighted = CAView::createWithFrame(bg->getFrame());
             bgHighLighted->setColor(ccc3(bg->getColor().r/2, bg->getColor().g/2, bg->getColor().b/2));
-            this->setBackGround(CAButtonStateHighlighted, bgHighLighted);
+            this->setBackGround(CAControlStateHighlighted, bgHighLighted);
         }
     }
     
     this->updateWithPoint();
+    this->setControlStateNormal();
 }
 
 CAButton* CAButton::createWithFrame(const CCRect& rect)
@@ -124,39 +118,35 @@ bool CAButton::initWithFrame(const CCRect& rect)
 void CAButton::setBackGroundDefault()
 {
     CCScale9Sprite* bgNormal = CCScale9Sprite::createWithTexture(CAImage::create("button_normal.png"));
-    this->setBackGround(CAButtonStateNormal, bgNormal);
+    this->setBackGround(CAControlStateNormal, bgNormal);
     CCScale9Sprite* bgHighlighted = CCScale9Sprite::createWithTexture(CAImage::create("button_highlighted.png"));
-    this->setBackGround(CAButtonStateHighlighted, bgHighlighted);
+    this->setBackGround(CAControlStateHighlighted, bgHighlighted);
     CCScale9Sprite* bgDisabled = CCScale9Sprite::createWithTexture(CAImage::create("button_disabled.png"));
-    this->setBackGround(CAButtonStateDisabled, bgDisabled);
+    this->setBackGround(CAControlStateDisabled, bgDisabled);
     CCScale9Sprite* bgSelected = CCScale9Sprite::createWithTexture(CAImage::create("button_selected.png"));
-    this->setBackGround(CAButtonStateSelected, bgSelected);
+    this->setBackGround(CAControlStateSelected, bgSelected);
 }
 
-void CAButton::setBackGround(CAButtonTouchState touchState, CCNodeRGBA *var)
+void CAButton::setBackGround(CAControlState controlState, CCNodeRGBA *var)
 {
-    if (touchState == CAButtonStateNormal)
+    if (controlState == CAControlStateNormal)
     {
-        this->removeChild(m_bgNormal);
-        m_bgNormal = var;
+        this->setBackGroundView(var);
     }
 
-    if (touchState == CAButtonStateHighlighted)
+    if (controlState == CAControlStateHighlighted)
     {
-        this->removeChild(m_bgHighlighted);
-        m_bgHighlighted = var;
+        this->setHighlightedBackGroundView(var);
     }
     
-    if (touchState == CAButtonStateDisabled)
+    if (controlState == CAControlStateDisabled)
     {
-        this->removeChild(m_bgDisabled);
-        m_bgDisabled = var;
+        this->setDisabledBackGroundView(var);
     }
     
-    if (touchState == CAButtonStateSelected)
+    if (controlState == CAControlStateSelected)
     {
-        this->removeChild(m_bgSelected);
-        m_bgSelected = var;
+        this->setSelectedBackGroundView(var);
     }
 
     do
@@ -170,11 +160,6 @@ void CAButton::setBackGround(CAButtonTouchState touchState, CCNodeRGBA *var)
             this->setContentSize(var->getContentSize());
         }
         
-        if (touchState != CAButtonStateNormal)
-        {
-            var->setVisible(false);
-        }
-
         this->updateWithPoint();
         this->updateWithPreferredSize();
     }
@@ -187,48 +172,48 @@ void CAButton::updateWithPreferredSize()
 
     do
     {
-        CC_BREAK_IF(m_bgNormal == NULL);
-        CC_BREAK_IF(this->getBounds().equals(m_bgNormal->getBounds()));
+        CC_BREAK_IF(m_pBackGroundView == NULL);
+        CC_BREAK_IF(this->getBounds().equals(m_pBackGroundView->getBounds()));
         
-        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_bgNormal))
+        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_pBackGroundView))
         {
             _var->setPreferredSize(m_obContentSize);
         }
         else
         {
-            m_bgNormal->setBoundsSize(m_obContentSize);
+            m_pBackGroundView->setContentSize(m_obContentSize);
         }
     }
     while (0);
 
     do
     {
-        CC_BREAK_IF(m_bgHighlighted == NULL);
-        CC_BREAK_IF(this->getBounds().equals(m_bgHighlighted->getBounds()));
+        CC_BREAK_IF(m_pHighlightedBackGroundView == NULL);
+        CC_BREAK_IF(this->getBounds().equals(m_pHighlightedBackGroundView->getBounds()));
         
-        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_bgHighlighted))
+        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_pHighlightedBackGroundView))
         {
             _var->setPreferredSize(m_obContentSize);
         }
         else
         {
-            m_bgHighlighted->setBoundsSize(m_obContentSize);
+            m_pHighlightedBackGroundView->setContentSize(m_obContentSize);
         }
     }
     while (0);
     
     do
     {
-        CC_BREAK_IF(m_bgDisabled == NULL);
-        CC_BREAK_IF(this->getBounds().equals(m_bgDisabled->getBounds()));
+        CC_BREAK_IF(m_pDisabledBackGroundView == NULL);
+        CC_BREAK_IF(this->getBounds().equals(m_pDisabledBackGroundView->getBounds()));
         
-        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_bgDisabled))
+        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_pDisabledBackGroundView))
         {
             _var->setPreferredSize(m_obContentSize);
         }
         else
         {
-            m_bgDisabled->setBoundsSize(m_obContentSize);
+            m_pDisabledBackGroundView->setContentSize(m_obContentSize);
         }
     }
     while (0);
@@ -237,16 +222,16 @@ void CAButton::updateWithPreferredSize()
     
     do
     {
-        CC_BREAK_IF(m_bgSelected == NULL);
-        CC_BREAK_IF(this->getBounds().equals(m_bgSelected->getBounds()));
+        CC_BREAK_IF(m_pSelectedBackGroundView == NULL);
+        CC_BREAK_IF(this->getBounds().equals(m_pSelectedBackGroundView->getBounds()));
         
-        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_bgSelected))
+        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_pSelectedBackGroundView))
         {
             _var->setPreferredSize(m_obContentSize);
         }
         else
         {
-            m_bgSelected->setBoundsSize(m_obContentSize);
+            m_pSelectedBackGroundView->setContentSize(m_obContentSize);
         }
     }
     while (0);
@@ -256,12 +241,6 @@ void CAButton::updateWithPoint()
 {
     
     CCPoint point = m_obContentSize/2;
-    
-    if (m_bgNormal)
-    {
-        m_bgNormal->setAnchorPoint(CCPoint(0.5f, 0.5f));
-        m_bgNormal->setPosition(point);
-    }
     
     if (m_spriteNormal)
     {
@@ -274,12 +253,6 @@ void CAButton::updateWithPoint()
         {
             m_spriteNormal->setPosition(m_spriteNPoint);
         }
-    }
-    
-    if (m_bgHighlighted)
-    {
-        m_bgHighlighted->setAnchorPoint(CCPoint(0.5f, 0.5f));
-        m_bgHighlighted->setPosition(point);
     }
     
     if (m_spriteHighlighted)
@@ -295,12 +268,6 @@ void CAButton::updateWithPoint()
         }
     }
     
-    if (m_bgDisabled)
-    {
-        m_bgDisabled->setAnchorPoint(CCPoint(0.5f, 0.5f));
-        m_bgDisabled->setPosition(point);
-    }
-    
     if (m_spriteDisabled)
     {
         if (m_spriteDPoint.equals(CCPointZero))
@@ -312,12 +279,6 @@ void CAButton::updateWithPoint()
         {
             m_spriteDisabled->setPosition(m_spriteDPoint);
         }
-    }
-    
-    if (m_bgSelected)
-    {
-        m_bgSelected->setAnchorPoint(CCPoint(0.5f, 0.5f));
-        m_bgSelected->setPosition(point);
     }
     
     if (m_spriteSelected)
@@ -363,13 +324,13 @@ void CAButton::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     
     if (getBounds().containsPoint(point))
     {
-        this->setTouchState(CAButtonStateHighlighted);
         this->setTouchMoved(point);
+        this->setControlState(CAControlStateHighlighted);
     }
     else
     {
-        this->setTouchState(CAButtonStateNormal);
         this->setTouchMovedOutSide(point);
+        this->setControlState(CAControlStateNormal);
     }
 }
 
@@ -381,17 +342,18 @@ void CAButton::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     if (!this->getTouchClick())
         return;
     
-    this->setTouchClick(false);
-    
     this->setTouchUpSide(point);
     
     if (getBounds().containsPoint(point))
     {
-        if (m_stateSelected)
-        {
-            this->setTouchState(CAButtonStateSelected);
-        }
         this->setTouchUpInSide(point);
+    }
+    
+    this->setTouchClick(false);
+    
+    if (m_stateSelected && getBounds().containsPoint(point))
+    {
+        this->setControlState(CAControlStateSelected);
     }
 }
 
@@ -411,15 +373,15 @@ void CAButton::setTouchEnabled(bool enabled)
     
     if (m_bTouchEnabled)
     {
-        this->setTouchState(CAButtonStateNormal);
+        this->setControlState(CAControlStateNormal);
     }
     else
     {
-        this->setTouchState(CAButtonStateDisabled);
+        this->setControlState(CAControlStateDisabled);
     }
 }
 
-void CAButton::addTarget(void *target, SEL_CAButton selector, CAButtonType type)
+void CAButton::addTarget(void *target, SEL_CAButton selector, CAControlType type)
 {
     
     switch (type)
@@ -446,54 +408,66 @@ void CAButton::addTarget(void *target, SEL_CAButton selector, CAButtonType type)
     m_target=target;
 }
 
-bool CAButton::isNormal()
+void CAButton::setControlState(CAControlState var)
 {
-    return (m_touchState == CAButtonStateNormal);
-}
+    CAControl::setControlState(var);
 
-bool CAButton::isHighlighted()
-{
-    return (m_touchState == CAButtonStateHighlighted);
-}
-
-bool CAButton::isDisabled()
-{
-    return (m_touchState == CAButtonStateDisabled);
-}
-
-bool CAButton::isSelected()
-{
-    return (m_touchState == CAButtonStateSelected);
-}
-
-void CAButton::setTouchState(CAButtonTouchState var){
+    this->removeChild(m_spriteNormal);
+    this->removeChild(m_spriteHighlighted);
+    this->removeChild(m_spriteDisabled);
+    this->removeChild(m_spriteSelected);
     
-    if (m_touchState == var)
-        return;
+    m_eControlState = var;
     
-    this->setNormalEffect();
-    
-    m_touchState = var;
-    
-    switch (m_touchState)
+    switch (m_eControlState)
     {
-        case CAButtonStateHighlighted:
-            this->setHighlightedEffect();
+        case CAControlStateNormal:
+        {
+            if (m_spriteNormal)
+            {
+                this->addChild(m_spriteNormal);
+            }
             break;
-        case CAButtonStateDisabled:
-            this->setDisabledEffect();
+        }
+        case CAControlStateHighlighted:
+        {
+            if (m_spriteHighlighted)
+            {
+                this->addChild(m_spriteHighlighted);
+            }
+            else
+            {
+                this->addChild(m_spriteNormal);
+            }
             break;
-        case CAButtonStateSelected:
-            this->setSelectedEffect();
+        }
+        case CAControlStateDisabled:
+        {
+            if (m_spriteDisabled)
+            {
+                this->addChild(m_spriteDisabled);
+            }
+            else
+            {
+                this->addChild(m_spriteNormal);
+            }
             break;
+        }
+        case CAControlStateSelected:
+        {
+            if (m_spriteSelected)
+            {
+                this->addChild(m_spriteSelected);
+            }
+            else
+            {
+                this->addChild(m_spriteNormal);
+            }
+            break;
+        }
         default:
             break;
     }
-}
-
-CAButtonTouchState CAButton::getTouchState()
-{
-    return m_touchState;
 }
 
 void CAButton::setTouchClick(bool var)
@@ -505,11 +479,11 @@ void CAButton::setTouchClick(bool var)
     
     if (m_touchClick)
     {
-        this->setTouchState(CAButtonStateHighlighted);
+        this->setControlState(CAControlStateHighlighted);
     }
     else
     {
-        this->setTouchState(CAButtonStateNormal);
+        this->setControlState(CAControlStateNormal);
     }
     
     if (var && !m_closeTapSound) PLAYSOUND;
@@ -566,105 +540,6 @@ void CAButton::setTouchMovedOutSide(cocos2d::CCPoint point)
     }
 }
 
-void CAButton::setNormalEffect()
-{
-    if (!m_specially)
-        return;
-    
-    if (m_touchState == CAButtonStateNormal) return;
-    
-    if (m_bgNormal)
-        m_bgNormal->setVisible(true);
-    
-    if (m_spriteNormal)
-        m_spriteNormal->setVisible(true);
-
-    if (m_touchState == CAButtonStateHighlighted)
-    {
-        
-        if (m_bgHighlighted) m_bgHighlighted->setVisible(false);
-        
-        if (m_spriteHighlighted) m_spriteHighlighted->setVisible(false);
-        
-    }
-    else if (m_touchState == CAButtonStateDisabled)
-    {
-        
-        if (m_bgDisabled) m_bgDisabled->setVisible(false);
-        
-        if (m_spriteDisabled) m_spriteDisabled->setVisible(false);
-        
-    }
-    else if (m_touchState == CAButtonStateSelected)
-    {
-        
-        if (m_bgSelected) m_bgSelected->setVisible(false);
-        
-        if (m_spriteSelected) m_spriteSelected->setVisible(false);
-        
-    }
-}
-
-void CAButton::setHighlightedEffect()
-{
-    if (!m_specially)
-        return;
-    
-    if (m_bgHighlighted)
-    {
-        if (m_bgNormal) m_bgNormal->setVisible(false);
-        
-        m_bgHighlighted->setVisible(true);
-    }
-    
-    if (m_spriteHighlighted)
-    {
-        if (m_spriteNormal) m_spriteNormal->setVisible(false);
-        
-        m_spriteHighlighted->setVisible(true);
-    }
-}
-
-void CAButton::setDisabledEffect()
-{
-    if (!m_specially)
-        return;
-    
-    if (m_bgDisabled)
-    {
-        if (m_bgNormal) m_bgNormal->setVisible(false);
-        
-        m_bgDisabled->setVisible(true);
-    }
-        
-    if (m_spriteDisabled)
-    {
-        if (m_spriteNormal) m_spriteNormal->setVisible(false);
-        
-        m_spriteDisabled->setVisible(true);
-    }
-}
-
-void CAButton::setSelectedEffect()
-{
-    if (!m_specially)
-        return;
-    
-    if (m_bgSelected)
-    {
-        if (m_bgNormal) m_bgNormal->setVisible(false);
-        
-        m_bgSelected->setVisible(true);
-    }
-        
-    if (m_spriteSelected)
-    {
-        if (m_spriteNormal) m_spriteNormal->setVisible(false);
-        
-        m_spriteSelected->setVisible(true);
-    }
-}
-
 bool CAButton::isTextTagEqual(const char *text)
 {
     return (m_textTag.compare(text)==0);
@@ -679,7 +554,7 @@ void CAButton::setContentSize(const CCSize & var)
     this->updateWithPreferredSize();
 }
 
-void CAButton::setSprite(CAButtonTouchState touchState, CCNodeRGBA* var)
+void CAButton::setSprite(CAControlState controlState, CCNodeRGBA* var)
 {
     if (!var)
         return;
@@ -688,26 +563,24 @@ void CAButton::setSprite(CAButtonTouchState touchState, CCNodeRGBA* var)
     
     CCPoint point = m_obContentSize/2;
     
-    this->setSprite(touchState, var, point);
+    this->setSprite(controlState, var, point);
 }
 
-void CAButton::setSprite(CAButtonTouchState touchState, CCNodeRGBA* var, CCPoint point)
+void CAButton::setSprite(CAControlState controlState, CCNodeRGBA* var, CCPoint point)
 {
     if (!var)
         return;
-
+    
+    var->setAnchorPoint(CCPoint(0.5f, 0.5f));
     var->setPosition(point);
-    this->addChild(var);
+    var->retain();
     
     CCPoint cPoint = m_obContentSize/2;
     
-    if (touchState == CAButtonStateNormal)
+    if (controlState == CAControlStateNormal)
     {
-        if (m_spriteNormal)
-        {
-            m_spriteNormal->removeFromParent();
-            m_spriteNormal = NULL;
-        }
+        this->removeChild(m_spriteNormal);
+        CC_SAFE_DELETE(m_spriteNormal);
         
         if (!cPoint.equals(point))
         {
@@ -715,39 +588,33 @@ void CAButton::setSprite(CAButtonTouchState touchState, CCNodeRGBA* var, CCPoint
         }
         else
         {
-            m_spriteNPoint=CCPointZero;
+            m_spriteNPoint = CCPointZero;
         }
         
-        m_spriteNormal=var;
+        m_spriteNormal = var;
         
         return;
     }
-    else if (touchState == CAButtonStateHighlighted)
+    else if (controlState == CAControlStateHighlighted)
     {
-        if (m_spriteHighlighted)
-        {
-            m_spriteHighlighted->removeFromParent();
-            m_spriteHighlighted = NULL;
-        }
+        this->removeChild(m_spriteHighlighted);
+        CC_SAFE_DELETE(m_spriteHighlighted);
         
         if (!cPoint.equals(point))
         {
-            m_spriteHPoint=point;
+            m_spriteHPoint = point;
         }
         else
         {
-            m_spriteHPoint=CCPointZero;
+            m_spriteHPoint = CCPointZero;
         }
         
-        m_spriteHighlighted=var;
+        m_spriteHighlighted = var;
     }
-    else if (touchState == CAButtonStateDisabled)
+    else if (controlState == CAControlStateDisabled)
     {
-        if (m_spriteDisabled)
-        {
-            m_spriteDisabled->removeFromParent();
-            m_spriteDisabled = NULL;
-        }
+        this->removeChild(m_spriteDisabled);
+        CC_SAFE_DELETE(m_spriteDisabled);
         
         if (!cPoint.equals(point))
         {
@@ -758,15 +625,12 @@ void CAButton::setSprite(CAButtonTouchState touchState, CCNodeRGBA* var, CCPoint
             m_spriteDPoint = CCPointZero;
         }
         
-        m_spriteDisabled=var;
+        m_spriteDisabled = var;
     }
-    else if (touchState == CAButtonStateSelected)
+    else if (controlState == CAControlStateSelected)
     {
-        if (m_spriteSelected)
-        {
-            m_spriteSelected->removeFromParent();
-            m_spriteSelected = NULL;
-        }
+        this->removeChild(m_spriteSelected);
+        CC_SAFE_DELETE(m_spriteSelected);
         
         if (!cPoint.equals(point))
         {
@@ -777,50 +641,25 @@ void CAButton::setSprite(CAButtonTouchState touchState, CCNodeRGBA* var, CCPoint
             m_spriteSPoint = CCPointZero;
         }
         
-        m_spriteSelected=var;
+        m_spriteSelected = var;
     }
-    
-    var->setVisible(false);
 }
 
-CCNodeRGBA* CAButton::getSprite(CAButtonTouchState touchState)
+CCNodeRGBA* CAButton::getSprite(CAControlState controlState)
 {
-    switch (touchState)
+    switch (controlState)
     {
-        case CAButtonStateNormal:
+        case CAControlStateNormal:
             return m_spriteNormal;
             break;
-        case CAButtonStateHighlighted:
+        case CAControlStateHighlighted:
             return m_spriteHighlighted;
             break;
-        case CAButtonStateDisabled:
+        case CAControlStateDisabled:
             return m_spriteDisabled;
             break;
-        case CAButtonStateSelected:
+        case CAControlStateSelected:
             return m_spriteSelected;
-            break;
-        default:
-            return NULL;
-            break;
-    }
-}
-
-
-CCNodeRGBA* CAButton::getBackGround(CAButtonTouchState touchState)
-{
-    switch (touchState)
-    {
-        case CAButtonStateNormal:
-            return m_bgNormal;
-            break;
-        case CAButtonStateHighlighted:
-            return m_bgHighlighted;
-            break;
-        case CAButtonStateDisabled:
-            return m_bgDisabled;
-            break;
-        case CAButtonStateSelected:
-            return m_bgSelected;
             break;
         default:
             return NULL;
