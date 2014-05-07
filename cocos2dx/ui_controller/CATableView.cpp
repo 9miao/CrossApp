@@ -190,12 +190,12 @@ void CATableView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 
 float CATableView::maxSpeed()
 {
-    return (CCPoint(m_obContentSize).getLength() / 12);
+    return (CCPoint(m_obContentSize).getLength() / 10);
 }
 
 float CATableView::maxSpeedCache()
 {
-    return (maxSpeed() * 2.0f);
+    return (maxSpeed() * 3.0f);
 }
 
 float CATableView::decelerationRatio()
