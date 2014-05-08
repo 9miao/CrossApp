@@ -153,8 +153,6 @@ void CAButton::setBackGround(CAControlState controlState, CCNodeRGBA *var)
     {
         CC_BREAK_IF(var == NULL);
         
-        this->addChild(var);
-        
         if (m_obContentSize.equals(CCSizeZero))
         {
             this->setContentSize(var->getContentSize());
@@ -435,7 +433,7 @@ void CAButton::setControlState(CAControlState var)
             {
                 this->addChild(m_spriteHighlighted);
             }
-            else
+            else if (m_spriteNormal)
             {
                 this->addChild(m_spriteNormal);
             }
@@ -447,7 +445,7 @@ void CAButton::setControlState(CAControlState var)
             {
                 this->addChild(m_spriteDisabled);
             }
-            else
+            else if (m_spriteNormal)
             {
                 this->addChild(m_spriteNormal);
             }
@@ -459,7 +457,7 @@ void CAButton::setControlState(CAControlState var)
             {
                 this->addChild(m_spriteSelected);
             }
-            else
+            else if (m_spriteNormal)
             {
                 this->addChild(m_spriteNormal);
             }

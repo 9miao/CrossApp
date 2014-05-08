@@ -106,6 +106,9 @@
     <Filter Include="ui_controller">
       <UniqueIdentifier>{4cec03f5-22e2-4d53-b5f9-421af07947fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="other">
+      <UniqueIdentifier>{1eb43a57-4704-421f-9ef6-407a1354e5f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\actions\CCAction.cpp">
@@ -491,6 +494,15 @@
     </ClCompile>
     <ClCompile Include="..\ui_controller\CAViewController.cpp">
       <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CAControl.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CATableView.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\other\CACamera.cpp">
+      <Filter>other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -951,6 +963,15 @@
     </ClInclude>
     <ClInclude Include="..\ui_controller\CAViewController.h">
       <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAControl.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CATableView.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\other\CACamera.h">
+      <Filter>other</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -75,7 +75,7 @@ public:
     
     virtual bool initWithFrame(const cocos2d::CCRect &rect);
     
-    void reloadData();
+    void reloadData(float delay = 0);
     
     CATableViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
     

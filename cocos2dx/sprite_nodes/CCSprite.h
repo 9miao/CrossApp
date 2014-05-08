@@ -436,6 +436,8 @@ public:
     
     void setBoundsSize(const CCSize& size);
     
+    void setContentSize(const CCSize &size);
+    
 protected:
     void updateColor(void);
     virtual void setTextureCoords(CCRect rect);

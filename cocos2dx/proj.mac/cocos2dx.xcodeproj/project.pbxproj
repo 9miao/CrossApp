@@ -302,6 +302,8 @@
 		B027AF111918878E00B99BF8 /* CAControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B027AF0F1918878E00B99BF8 /* CAControl.h */; };
 		B02A1446190A65B600C3633B /* CAProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1445190A65B600C3633B /* CAProgress.cpp */; };
 		B02A1448190A65BE00C3633B /* CAProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A1447190A65BE00C3633B /* CAProgress.h */; };
+		B047FD9E191A3BF700A4EC41 /* CACamera.h in Headers */ = {isa = PBXBuildFile; fileRef = B047FD98191A3BF700A4EC41 /* CACamera.h */; };
+		B047FDA3191A3D1600A4EC41 /* CACamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047FDA2191A3D1600A4EC41 /* CACamera.cpp */; };
 		B07D5FAF1907682600B4B968 /* CAScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07D5FAD1907682600B4B968 /* CAScrollView.cpp */; };
 		B07D5FB01907682600B4B968 /* CAScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = B07D5FAE1907682600B4B968 /* CAScrollView.h */; };
 		B0B96506190E388E00207C29 /* CATableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B96504190E388E00207C29 /* CATableView.cpp */; };
@@ -609,6 +611,8 @@
 		B027AF0F1918878E00B99BF8 /* CAControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAControl.h; sourceTree = "<group>"; };
 		B02A1445190A65B600C3633B /* CAProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAProgress.cpp; sourceTree = "<group>"; };
 		B02A1447190A65BE00C3633B /* CAProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAProgress.h; sourceTree = "<group>"; };
+		B047FD98191A3BF700A4EC41 /* CACamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACamera.h; sourceTree = "<group>"; };
+		B047FDA2191A3D1600A4EC41 /* CACamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACamera.cpp; sourceTree = "<group>"; };
 		B07D5FAD1907682600B4B968 /* CAScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAScrollView.cpp; sourceTree = "<group>"; };
 		B07D5FAE1907682600B4B968 /* CAScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAScrollView.h; sourceTree = "<group>"; };
 		B0B96504190E388E00207C29 /* CATableView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATableView.cpp; sourceTree = "<group>"; };
@@ -701,6 +705,7 @@
 				1551A60B158F2ADE00E66CFE /* textures */,
 				1551A621158F2ADE00E66CFE /* touch_dispatcher */,
 				B02730F518F78368002988D6 /* ui_controller */,
+				B047FD95191A3BF700A4EC41 /* other */,
 			);
 			name = cocos2dx;
 			path = ..;
@@ -1252,6 +1257,15 @@
 			path = ui_controller;
 			sourceTree = "<group>";
 		};
+		B047FD95191A3BF700A4EC41 /* other */ = {
+			isa = PBXGroup;
+			children = (
+				B047FD98191A3BF700A4EC41 /* CACamera.h */,
+				B047FDA2191A3D1600A4EC41 /* CACamera.cpp */,
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1326,6 +1340,7 @@
 				1551A6E6158F2ADE00E66CFE /* CCTransitionProgress.h in Headers */,
 				1551A6EC158F2ADE00E66CFE /* CCMotionStreak.h in Headers */,
 				1551A6EE158F2ADE00E66CFE /* CCProgressTimer.h in Headers */,
+				B047FD9E191A3BF700A4EC41 /* CACamera.h in Headers */,
 				1551A6F0158F2ADE00E66CFE /* CCRenderTexture.h in Headers */,
 				1551A6F2158F2ADE00E66CFE /* CCParticleBatchNode.h in Headers */,
 				1551A6F4158F2ADE00E66CFE /* CCParticleExamples.h in Headers */,
@@ -1571,6 +1586,7 @@
 				1551A846158F2ADF00E66CFE /* ccCArray.cpp in Sources */,
 				1551A84A158F2ADF00E66CFE /* TGAlib.cpp in Sources */,
 				1551A84C158F2ADF00E66CFE /* TransformUtils.cpp in Sources */,
+				B047FDA3191A3D1600A4EC41 /* CACamera.cpp in Sources */,
 				1551A84E158F2ADF00E66CFE /* ioapi.cpp in Sources */,
 				1551A850158F2ADF00E66CFE /* unzip.cpp in Sources */,
 				1551A852158F2ADF00E66CFE /* ZipUtils.cpp in Sources */,

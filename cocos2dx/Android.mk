@@ -113,6 +113,7 @@ ui_controller/CAButton.cpp \
 ui_controller/CAScrollView.cpp \
 ui_controller/CATableView.cpp \
 ui_controller/CAProgress.cpp \
+http/CAHttpClient.cpp \
 support/ccUTF8.cpp \
 support/CCNotificationCenter.cpp \
 support/CCProfiling.cpp \

@@ -20,7 +20,7 @@ CATableView::CATableView()
 ,m_pTableFooterView(NULL)
 ,m_pTablePullDownView(NULL)
 ,m_pTablePullUpView(NULL)
-,m_separatorColor(ccc4(127, 127, 127, 127))
+,m_separatorColor(ccc4(127, 127, 127, 255))
 ,m_nTableHeaderHeight(0)
 ,m_nTableFooterHeight(0)
 ,m_nTablePullViewHeight(0)
@@ -190,12 +190,12 @@ void CATableView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 
 float CATableView::maxSpeed()
 {
-    return (CCPoint(m_obContentSize).getLength() / 10);
+    return (CCPoint(m_obContentSize).getLength() / 12);
 }
 
 float CATableView::maxSpeedCache()
 {
-    return (maxSpeed() * 3.0f);
+    return (maxSpeed() * 5.0f);
 }
 
 float CATableView::decelerationRatio()
@@ -325,7 +325,7 @@ void CATableView::reloadViewSizeData()
     this->setViewSize(size);
 }
 
-void CATableView::reloadData()
+void CATableView::reloadData(float delay)
 {
     this->reloadViewSizeData();
 

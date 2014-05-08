@@ -57,7 +57,7 @@ void CAControl::setControlState(CAControlState var)
                 m_pHighlightedBackGroundView->setFrame(this->getBounds());
                 this->addChild(m_pHighlightedBackGroundView, -1);
             }
-            else
+            else if (m_pBackGroundView)
             {
                 m_pBackGroundView->setFrame(this->getBounds());
                 this->addChild(m_pBackGroundView, -1);
@@ -71,7 +71,7 @@ void CAControl::setControlState(CAControlState var)
                 m_pDisabledBackGroundView->setFrame(this->getBounds());
                 this->addChild(m_pDisabledBackGroundView, -1);
             }
-            else
+            else if (m_pBackGroundView)
             {
                 m_pBackGroundView->setFrame(this->getBounds());
                 this->addChild(m_pBackGroundView, -1);
@@ -85,7 +85,7 @@ void CAControl::setControlState(CAControlState var)
                 m_pSelectedBackGroundView->setFrame(this->getBounds());
                 this->addChild(m_pSelectedBackGroundView, -1);
             }
-            else
+            else if (m_pBackGroundView)
             {
                 m_pBackGroundView->setFrame(this->getBounds());
                 this->addChild(m_pBackGroundView, -1);

@@ -31,7 +31,7 @@ typedef enum
     CAControlStateSelected       = 3
 }CAControlState;
 
-class CAControl: public CCNodeRGBA
+class CC_DLL CAControl: public CCNodeRGBA
 {
     
 public:

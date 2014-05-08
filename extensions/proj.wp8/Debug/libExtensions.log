@@ -1,22 +1,13 @@
-﻿生成启动时间为 2014/4/27 16:40:37。
-     1>项目“E:\工作\CrossApp\extensions\proj.wp8\libExtensions.vcxproj”在节点 6 上(Build 个目标)。
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\external\chipmunk\include\chipmunk" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\external\sqlite3\include" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\external" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\cocos2dx" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\cocos2dx\include" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\cocos2dx\platform\third_party\winrt\angleproject\include" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\cocos2dx\kazmath\include" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\cocos2dx\platform\winrt" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\cocos2dx\platform\third_party\win32" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\cocos2dx\platform\third_party\win32\pthread" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\cocos2dx\platform\third_party\win32\OGLES" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\cocos2dx\platform\third_party\win32\zlib" /I"E:\工作\CrossApp\extensions\proj.wp8\..\..\CocosDenshion\include" /I..\ /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /Zi /ZW /nologo /W1 /WX- /MP /Od /Oy- /GL /D _LIB /D WP8 /D _WP8 /D CC_ENABLE_CHIPMUNK_INTEGRATION=1 /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D UNICODE /D _UNICODE /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /FU"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\lib\platform.winmd" /FU"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata\Windows.winmd" /analyze- /errorReport:prompt ..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp ..\AssetsManager\AssetsManager.cpp ..\GUI\CAUIHelper.cpp ..\network\HttpClient.cpp
-         CCPThreadWinRT.cpp
-         AssetsManager.cpp
-         CAUIHelper.cpp
-         HttpClient.cpp
-     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\AssetsManager\AssetsManager.cpp)
-     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\GUI\CAUIHelper.cpp)
-     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\network\HttpClient.cpp)
-       Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\Lib.exe /OUT:"E:\工作\CrossApp\projects\ViewController\proj.wp8\WP8\Win32\Debug\libExtensions\libExtensions.lib" /NOLOGO /LTCG /IGNORE:4264 Debug\CCPThreadWinRT.obj
+﻿生成启动时间为 2014/5/7 21:43:40。
+     1>项目“E:\工作\CrossApp\extensions\proj.wp8\libExtensions.vcxproj”在节点 4 上(Build 个目标)。
+     1>Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\Lib.exe /OUT:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8\WP8\Win32\Debug\libExtensions\libExtensions.lib" /NOLOGO /LTCG /IGNORE:4264 Debug\CCPThreadWinRT.obj
          Debug\AssetsManager.obj
          Debug\CAUIHelper.obj
          Debug\HttpClient.obj
-         libExtensions.vcxproj -> E:\工作\CrossApp\projects\ViewController\proj.wp8\WP8\Win32\Debug\libExtensions\libExtensions.lib
+         libExtensions.vcxproj -> E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8\WP8\Win32\Debug\libExtensions\libExtensions.lib
      1>已完成生成项目“E:\工作\CrossApp\extensions\proj.wp8\libExtensions.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:37.17
+已用时间 00:00:01.73

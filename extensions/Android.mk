@@ -7,6 +7,7 @@ LOCAL_MODULE_FILENAME := libextension
 
 LOCAL_SRC_FILES := AssetsManager/AssetsManager.cpp \
 GUI/CAUIHelper.cpp \
+network/CAHttpClient.cpp \
 network/HttpClient.cpp \
 network/WebSocket.cpp \
 LocalStorage/LocalStorageAndroid.cpp \

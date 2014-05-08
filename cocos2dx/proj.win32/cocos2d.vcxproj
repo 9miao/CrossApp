@@ -183,6 +183,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\misc_nodes\CCMotionStreak.cpp" />
     <ClCompile Include="..\misc_nodes\CCProgressTimer.cpp" />
     <ClCompile Include="..\misc_nodes\CCRenderTexture.cpp" />
+    <ClCompile Include="..\other\CACamera.cpp" />
     <ClCompile Include="..\particle_nodes\CCParticleBatchNode.cpp" />
     <ClCompile Include="..\particle_nodes\CCParticleExamples.cpp" />
     <ClCompile Include="..\particle_nodes\CCParticleSystem.cpp" />
@@ -263,8 +264,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\ui_controller\CABar.cpp" />
     <ClCompile Include="..\ui_controller\CABarItem.cpp" />
     <ClCompile Include="..\ui_controller\CAButton.cpp" />
+    <ClCompile Include="..\ui_controller\CAControl.cpp" />
     <ClCompile Include="..\ui_controller\CAProgress.cpp" />
     <ClCompile Include="..\ui_controller\CAScrollView.cpp" />
+    <ClCompile Include="..\ui_controller\CATableView.cpp" />
     <ClCompile Include="..\ui_controller\CAViewController.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -320,6 +323,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\misc_nodes\CCMotionStreak.h" />
     <ClInclude Include="..\misc_nodes\CCProgressTimer.h" />
     <ClInclude Include="..\misc_nodes\CCRenderTexture.h" />
+    <ClInclude Include="..\other\CACamera.h" />
     <ClInclude Include="..\particle_nodes\CCParticleBatchNode.h" />
     <ClInclude Include="..\particle_nodes\CCParticleExamples.h" />
     <ClInclude Include="..\particle_nodes\CCParticleSystem.h" />
@@ -425,8 +429,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\ui_controller\CABar.h" />
     <ClInclude Include="..\ui_controller\CABarItem.h" />
     <ClInclude Include="..\ui_controller\CAButton.h" />
+    <ClInclude Include="..\ui_controller\CAControl.h" />
     <ClInclude Include="..\ui_controller\CAProgress.h" />
     <ClInclude Include="..\ui_controller\CAScrollView.h" />
+    <ClInclude Include="..\ui_controller\CATableView.h" />
     <ClInclude Include="..\ui_controller\CAViewController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

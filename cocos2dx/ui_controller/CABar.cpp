@@ -285,21 +285,72 @@ void CATabBar::showItems()
         
         for (unsigned int i=0; i<count; i++)
         {
-            CAView* view = CAView::createWithFrame(CCRect(i * width, 0, width, height));
-            view->setOpacity(0);
+            CAView* view = CAView::createWithFrame(CCRect(i * width, 0, width, height), ccc4(0, 0, 0, 0));
             this->addChild(view, 3);
+            view->setDisplayRange(false);
             m_pViews.push_back(view);
             
-            CAImageView* imageView = CAImageView::createWithTexture(m_pItems.at(i)->getImage());
-            imageView->setPosition(view->getContentSize()/2);
-            view->addChild(imageView, 0, 0xffff);
-            CCSize imageViewSize = imageView->getBounds().size;
-            float scaleX = width / imageViewSize.width * 2/3;
-            float scaleY = height / imageViewSize.height * 2/3;
-            float scale = MIN(scaleX, scaleY);
-            scale = MIN(scale, 1.0f);
-            imageViewSize = ccpMult(imageViewSize, scale);
-            imageView->setBoundsSize(imageViewSize);
+            CAImageView* imageView = NULL;
+            CCLabelTTF* title = NULL;
+            
+            if (m_pItems.at(i)->getImage())
+            {
+                imageView = CAImageView::createWithTexture(m_pItems.at(i)->getImage());
+                view->addChild(imageView, 0, 0xffff);
+            }
+            
+            
+            if (m_pItems.at(i)->getTitle().compare("") != 0)
+            {
+                int fontSize = this->getContentSize().height / 5.0f;
+                title = CCLabelTTF::create(m_pItems.at(i)->getTitle().c_str(), "Arial", fontSize);
+                view->addChild(title, 0, 0xfffe);
+            }
+            
+            
+            if (imageView && title == NULL)
+            {
+                imageView->setCenter(view->getContentSize()/2);
+                
+                CCSize imageViewSize = imageView->getContentSize();
+                float scaleX = width / imageViewSize.width * 2/3;
+                float scaleY = height / imageViewSize.height * 2/3;
+                float scale = MIN(scaleX, scaleY);
+                scale = MIN(scale, 1.0f);
+                imageViewSize = ccpMult(imageViewSize, scale);
+                imageView->setBoundsSize(imageViewSize);
+            }
+            else if (title && imageView == NULL)
+            {
+                int fontSize = this->getContentSize().height / 2.0f;
+                title->setFontSize(fontSize);
+                title->setCenter(view->getContentSize()/2);
+                
+                CCSize titleSize = title->getContentSize();
+                float titleScale = height / titleSize.height * 1/2;
+                titleSize = ccpMult(titleSize, titleScale);
+                title->setBoundsSize(titleSize);
+            }
+            else
+            {
+                imageView->setCenter(CCPoint(view->getContentSize().width/2, view->getContentSize().height * 13/20));
+                
+                CCSize imageViewSize = imageView->getContentSize();
+                float scaleX = width / imageViewSize.width * 0.5f;
+                float scaleY = height / imageViewSize.height * 0.5f;
+                float scale = MIN(scaleX, scaleY);
+                scale = MIN(scale, 1.0f);
+                imageViewSize = ccpMult(imageViewSize, scale);
+                imageView->setBoundsSize(imageViewSize);
+                
+                title->setCenter(CCPoint(view->getContentSize().width/2, view->getContentSize().height * 5/20));
+                
+                CCSize titleSize = title->getContentSize();
+                float titleScale = height / titleSize.height * 3/10;
+                titleSize = ccpMult(titleSize, titleScale);
+                title->setBoundsSize(titleSize);
+                
+            }
         }
     }
     while (0);

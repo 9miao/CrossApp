@@ -31,7 +31,6 @@
 #include <queue>
 #include <pthread.h>
 #include <errno.h>
-
 #include "curl/curl.h"
 
 NS_CC_EXT_BEGIN

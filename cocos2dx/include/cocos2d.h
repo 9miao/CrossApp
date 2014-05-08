@@ -293,6 +293,9 @@ THE SOFTWARE.
 #include "ui_controller/CATableView.h"
 #include "ui_controller/CAProgress.h"
 
+
+//#include "http/CAHttpClient.h"
+
 NS_CC_BEGIN
 
 CC_DLL const char* cocos2dVersion();

@@ -806,14 +806,11 @@ bool CCSprite::isFlipY(void)
 
 void CCSprite::setFrame(const CCRect &rect)
 {
-    if ( ! rect.equals(m_obFrameRect) || m_obFrameRect.equals(CCRectZero))
-    {
-        this->setBoundsSize(rect.size);
-        
-        CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
-        point = ccpAdd(rect.origin, point);
-        this->setPosition(point);
-    }
+    this->setBoundsSize(rect.size);
+    
+    CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
+    point = ccpAdd(rect.origin, point);
+    this->setPosition(point);
 }
 
 void CCSprite::setBoundsSize(const CCSize& size)
@@ -827,6 +824,11 @@ void CCSprite::setBoundsSize(const CCSize& size)
         CCPoint scale = CCSize(size.width / m_obContentSize.width, size.height / m_obContentSize.height);
         this->CCNode::setScale(scale.x, scale.y);
     }
+}
+
+void CCSprite::setContentSize(const CCSize &size)
+{
+    CCNodeRGBA::setContentSize(size);
 }
 
 //

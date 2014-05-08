@@ -1517,7 +1517,7 @@ void CCNodeRGBA::visit()
         CCEGLView* pGLView = CCEGLView::sharedOpenGLView();
         float glScaleX = pGLView->getScaleX();
         float glScaleY = pGLView->getScaleY();
-        
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         
         float off_X = 0;
@@ -1545,9 +1545,25 @@ void CCNodeRGBA::visit()
         float y = point.y * glScaleY + off_Y;
         float width = size.width * scaleX * glScaleX;
         float height = size.height * scaleY * glScaleY;
+
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+		if (winSize.width > winSize.height)
+		{
+			glScissor(y, winSize.width - width - x, height, width);// 只显示当前窗口的区域
+		}
+		else
+		{
+			glScissor(x, y, width, height);
+		}
         
-        glScissor(x, y, width, height);// 只显示当前窗口的区域
-        
+#else
+
+		glScissor(x, y, width, height);// 只显示当前窗口的区域
+
+#endif
+
         CCNode::visit();
         
         glDisable(GL_SCISSOR_TEST);// 禁用

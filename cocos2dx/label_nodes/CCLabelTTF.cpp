@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "shaders/CCShaderCache.h"
 #include "CCApplication.h"
+#include "CCTextureCache.h"
 
 NS_CC_BEGIN
 
@@ -140,6 +141,8 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
         m_pFontName   = new std::string(fontName);
         m_fFontSize   = fontSize;
         
+        this->setAnchorPoint(CCPointZero);
+        
         this->setString(string);
         
         return true;
@@ -179,7 +182,9 @@ void CCLabelTTF::setString(const char *string)
     {
         m_string = string;
         
-        this->updateTexture();
+        //this->updateTexture();
+        
+        CCTextureCache::sharedTextureCache()->addStringImageAsync(string, m_pFontName->c_str(), m_fFontSize, m_tDimensions, m_hAlignment, m_vAlignment, this, callfuncO_selector(CCLabelTTF::updateTexture2D));
     }
 }
 
@@ -326,6 +331,24 @@ bool CCLabelTTF::updateTexture()
     
     //ok
     return true;
+}
+
+void CCLabelTTF::updateTexture2D(CCObject* object)
+{
+    CCTexture2D * tex = dynamic_cast<CCTexture2D*>(object);
+    
+    if (tex == NULL)
+        return;
+    
+    // set the texture
+    this->setTexture(tex);
+    // release it
+    tex->release();
+    
+    // set the size in the sprite
+    CCRect rect =CCRectZero;
+    rect.size   = m_pobTexture->getContentSize();
+    this->setTextureRect(rect);
 }
 
 void CCLabelTTF::enableShadow(const CCSize &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)

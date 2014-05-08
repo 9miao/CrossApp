@@ -303,6 +303,10 @@
 		B02A1456190A69EE00C3633B /* CAProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A1452190A69EE00C3633B /* CAProgress.h */; };
 		B02A1457190A69EE00C3633B /* CAScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1453190A69EE00C3633B /* CAScrollView.cpp */; };
 		B02A1458190A69EE00C3633B /* CAScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A1454190A69EE00C3633B /* CAScrollView.h */; };
+		B047FDB3191A3FD600A4EC41 /* CACamera.h in Headers */ = {isa = PBXBuildFile; fileRef = B047FDA9191A3FD500A4EC41 /* CACamera.h */; };
+		B047FDB4191A3FD600A4EC41 /* CACamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = B047FDAB191A3FD500A4EC41 /* CACamera.mm */; };
+		B047FDB5191A3FD600A4EC41 /* CACameraController.h in Headers */ = {isa = PBXBuildFile; fileRef = B047FDAC191A3FD500A4EC41 /* CACameraController.h */; };
+		B047FDB6191A3FD600A4EC41 /* CACameraController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B047FDAD191A3FD600A4EC41 /* CACameraController.mm */; };
 		B04C0C11190121B9009854FD /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0C0D190121B9009854FD /* CCScale9Sprite.cpp */; };
 		B04C0C12190121B9009854FD /* CCScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = B04C0C0E190121B9009854FD /* CCScale9Sprite.h */; };
 		B04C0C13190121B9009854FD /* CCView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0C0F190121B9009854FD /* CCView.cpp */; };
@@ -618,6 +622,10 @@
 		B02A1452190A69EE00C3633B /* CAProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAProgress.h; sourceTree = "<group>"; };
 		B02A1453190A69EE00C3633B /* CAScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAScrollView.cpp; sourceTree = "<group>"; };
 		B02A1454190A69EE00C3633B /* CAScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAScrollView.h; sourceTree = "<group>"; };
+		B047FDA9191A3FD500A4EC41 /* CACamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACamera.h; sourceTree = "<group>"; };
+		B047FDAB191A3FD500A4EC41 /* CACamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CACamera.mm; sourceTree = "<group>"; };
+		B047FDAC191A3FD500A4EC41 /* CACameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACameraController.h; sourceTree = "<group>"; };
+		B047FDAD191A3FD600A4EC41 /* CACameraController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CACameraController.mm; sourceTree = "<group>"; };
 		B04C0C0D190121B9009854FD /* CCScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScale9Sprite.cpp; sourceTree = "<group>"; };
 		B04C0C0E190121B9009854FD /* CCScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScale9Sprite.h; sourceTree = "<group>"; };
 		B04C0C0F190121B9009854FD /* CCView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCView.cpp; sourceTree = "<group>"; };
@@ -707,6 +715,7 @@
 				1551A60B158F2ADE00E66CFE /* textures */,
 				1551A621158F2ADE00E66CFE /* touch_dispatcher */,
 				B04C0C471901227B009854FD /* ui_controller */,
+				B047FDA5191A3FD500A4EC41 /* other */,
 			);
 			name = cocos2dx;
 			path = ..;
@@ -1254,6 +1263,25 @@
 			path = user_default;
 			sourceTree = "<group>";
 		};
+		B047FDA5191A3FD500A4EC41 /* other */ = {
+			isa = PBXGroup;
+			children = (
+				B047FDA9191A3FD500A4EC41 /* CACamera.h */,
+				B047FDAA191A3FD500A4EC41 /* ios */,
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
+		B047FDAA191A3FD500A4EC41 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B047FDAB191A3FD500A4EC41 /* CACamera.mm */,
+				B047FDAC191A3FD500A4EC41 /* CACameraController.h */,
+				B047FDAD191A3FD600A4EC41 /* CACameraController.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
 		B04C0C471901227B009854FD /* ui_controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1352,6 +1380,7 @@
 				1551A6EE158F2ADE00E66CFE /* CCProgressTimer.h in Headers */,
 				1551A6F0158F2ADE00E66CFE /* CCRenderTexture.h in Headers */,
 				1551A6F2158F2ADE00E66CFE /* CCParticleBatchNode.h in Headers */,
+				B047FDB3191A3FD600A4EC41 /* CACamera.h in Headers */,
 				1551A6F4158F2ADE00E66CFE /* CCParticleExamples.h in Headers */,
 				1551A6F6158F2ADE00E66CFE /* CCParticleSystem.h in Headers */,
 				1551A6F8158F2ADE00E66CFE /* CCParticleSystemQuad.h in Headers */,
@@ -1438,6 +1467,7 @@
 				2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */,
 				15FBEE5C164B87F2008CB2C3 /* CCClippingNode.h in Headers */,
 				15FBEE69164BBA98008CB2C3 /* CCDrawingPrimitives.h in Headers */,
+				B047FDB5191A3FD600A4EC41 /* CACameraController.h in Headers */,
 				15FBEE6B164BBB20008CB2C3 /* CCDrawNode.h in Headers */,
 				1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */,
 				1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */,
@@ -1614,9 +1644,11 @@
 				1551A852158F2ADF00E66CFE /* ZipUtils.cpp in Sources */,
 				1551A855158F2ADF00E66CFE /* CCIMEDispatcher.cpp in Sources */,
 				B01DFC1C190513DB00214AE2 /* CAButton.cpp in Sources */,
+				B047FDB6191A3FD600A4EC41 /* CACameraController.mm in Sources */,
 				1551A857158F2ADF00E66CFE /* CCTextFieldTTF.cpp in Sources */,
 				1551A859158F2ADF00E66CFE /* CCTexture2D.cpp in Sources */,
 				1551A85B158F2ADF00E66CFE /* CCTextureAtlas.cpp in Sources */,
+				B047FDB4191A3FD600A4EC41 /* CACamera.mm in Sources */,
 				1551A85D158F2ADF00E66CFE /* CCTextureCache.cpp in Sources */,
 				1551A85F158F2ADF00E66CFE /* CCTexturePVR.cpp in Sources */,
 				1551A86F158F2ADF00E66CFE /* CCTouchDispatcher.cpp in Sources */,
@@ -1724,7 +1756,8 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
+					"\\\"$(SRCROOT)/../platform/third_party/ios/libraries\\\"",
+					"/Users/liynfg/项目/引擎/CrossApp/cocos2dx/platform/third_party/ios/libraries",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1750,7 +1783,8 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
+					"\\\"$(SRCROOT)/../platform/third_party/ios/libraries\\\"",
+					"/Users/liynfg/项目/引擎/CrossApp/cocos2dx/platform/third_party/ios/libraries",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

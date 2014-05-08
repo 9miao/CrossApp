@@ -97,6 +97,9 @@
     <Filter Include="ui_controller">
       <UniqueIdentifier>{0b0a80de-c158-4c85-b85f-31fe1050c115}</UniqueIdentifier>
     </Filter>
+    <Filter Include="other">
+      <UniqueIdentifier>{bc558c05-8931-45cb-99d4-75f382b328a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -461,6 +464,15 @@
     </ClCompile>
     <ClCompile Include="..\ui_controller\CAViewController.cpp">
       <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CAControl.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CATableView.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\other\CACamera.cpp">
+      <Filter>other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -933,6 +945,15 @@
     </ClInclude>
     <ClInclude Include="..\ui_controller\CAViewController.h">
       <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAControl.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CATableView.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\other\CACamera.h">
+      <Filter>other</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
