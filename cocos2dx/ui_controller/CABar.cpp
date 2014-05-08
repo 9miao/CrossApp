@@ -84,7 +84,8 @@ void CANavigationBar::showTitle()
     if (m_pTitle == NULL)
     {
         m_pTitle = CCLabelTTF::create("", "Arial", 40);
-        m_pTitle->setPosition(m_obContentSize/2);
+        m_pTitle->setAnchorPoint(CCPoint(0.5f, 0.5f));
+        m_pTitle->setCenter(m_obContentSize/2);
         this->addChild(m_pTitle, 1);
     }
     
