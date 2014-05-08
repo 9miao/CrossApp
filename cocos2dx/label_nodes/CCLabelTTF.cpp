@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "shaders/CCShaderCache.h"
 #include "CCApplication.h"
-#include "CCTextureCache.h"
+#include "textures/CCTextureCache.h"
 
 NS_CC_BEGIN
 
@@ -182,9 +182,9 @@ void CCLabelTTF::setString(const char *string)
     {
         m_string = string;
         
-        //this->updateTexture();
+        this->updateTexture();
         
-        CCTextureCache::sharedTextureCache()->addStringImageAsync(string, m_pFontName->c_str(), m_fFontSize, m_tDimensions, m_hAlignment, m_vAlignment, this, callfuncO_selector(CCLabelTTF::updateTexture2D));
+        //CCTextureCache::sharedTextureCache()->addStringImageAsync(string, m_pFontName->c_str(), m_fFontSize, m_tDimensions, m_hAlignment, m_vAlignment, this, callfuncO_selector(CCLabelTTF::updateTexture2D));
     }
 }
 

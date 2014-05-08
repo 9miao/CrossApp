@@ -3,7 +3,7 @@
 //  project
 //
 //  Created by lh on 14-4-16.
-//
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #include "CAProgress.h"

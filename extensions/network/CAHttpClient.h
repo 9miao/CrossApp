@@ -1,4 +1,6 @@
 
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
+
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 #include <iostream>

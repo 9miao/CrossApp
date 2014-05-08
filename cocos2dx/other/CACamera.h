@@ -1,9 +1,8 @@
 //
 //  CACamera.h
-//  iBook
 //
 //  Created by lh on 14-5-5.
-//
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
 //
 
 #ifndef __iBook__CACamera__

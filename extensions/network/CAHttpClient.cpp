@@ -1,3 +1,6 @@
+
+//  Copyright (c) 2014 www.9miao.com All rights reserved.
+
 #include "CAHttpClient.h"
 #include <cstdio>
 

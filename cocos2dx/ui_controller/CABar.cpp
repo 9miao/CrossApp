@@ -287,7 +287,7 @@ void CATabBar::showItems()
         {
             CAView* view = CAView::createWithFrame(CCRect(i * width, 0, width, height), ccc4(0, 0, 0, 0));
             this->addChild(view, 3);
-            view->setDisplayRange(false);
+            //view->setDisplayRange(false);
             m_pViews.push_back(view);
             
             CAImageView* imageView = NULL;

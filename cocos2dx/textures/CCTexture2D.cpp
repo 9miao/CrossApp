@@ -47,10 +47,6 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCShaderCache.h"
 
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "CCTextureCache.h"
-#endif
-
 NS_CC_BEGIN
 
 //CLASS IMPLEMENTATIONS:
