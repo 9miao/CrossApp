@@ -99,9 +99,9 @@ protected:
     
     CC_SYNTHESIZE_IS(bool, m_bscrollEnabled, ScrollEnabled);
     
-    CC_SYNTHESIZE_IS(bool, m_bTracking, Tracking);
+	CC_SYNTHESIZE_IS_READONLY(bool, m_bTracking, Tracking);
     
-    CC_SYNTHESIZE_IS(bool, m_bDecelerating, Decelerating);
+	CC_SYNTHESIZE_IS_READONLY(bool, m_bDecelerating, Decelerating);
     
     CC_PROPERTY_IS(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);
     

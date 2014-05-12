@@ -59,11 +59,13 @@ public:
 
     CC_SYNTHESIZE(bool, m_stateSelected, StateSelected);
 
-    CC_PROPERTY(bool, m_touchClick, TouchClick);
+	CC_SYNTHESIZE_IS_READONLY(bool, m_touchClick, TouchClick);
 
     bool isTextTagEqual(const char* text);
     
     void addTarget(void* target, SEL_CAButton selector, CAControlType type);
+
+	void InterruptTouchState();
 
     virtual void setOpacity(GLubyte opacity);
 

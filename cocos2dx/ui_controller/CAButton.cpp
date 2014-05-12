@@ -318,7 +318,7 @@ void CAButton::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    if (!this->getTouchClick()) return;
+    if (!this->isTouchClick()) return;
     
     if (getBounds().containsPoint(point))
     {
@@ -337,7 +337,7 @@ void CAButton::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
 
-    if (!this->getTouchClick())
+    if (!this->isTouchClick())
         return;
     
     this->setTouchUpSide(point);
@@ -347,7 +347,7 @@ void CAButton::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
         this->setTouchUpInSide(point);
     }
     
-    this->setTouchClick(false);
+	this->setControlState(CAControlStateNormal);
     
     if (m_stateSelected && getBounds().containsPoint(point))
     {
@@ -468,42 +468,31 @@ void CAButton::setControlState(CAControlState var)
     }
 }
 
-void CAButton::setTouchClick(bool var)
+void CAButton::InterruptTouchState()
 {
-    if (m_touchClick == var)
-        return;
-    
-    m_touchClick = var;
-    
-    if (m_touchClick)
-    {
-        this->setControlState(CAControlStateHighlighted);
-    }
-    else
-    {
-        this->setControlState(CAControlStateNormal);
-    }
-    
-    if (var && !m_closeTapSound) PLAYSOUND;
-}
-
-bool CAButton::getTouchClick()
-{
-    return m_touchClick;
+	do
+	{
+		CC_BREAK_IF(m_touchClick == false);
+		m_touchClick = false;
+		this->setControlState(CAControlStateHighlighted);
+	} while (0);
 }
 
 bool CAButton::setTouchBegin(CCPoint point)
 {
+	m_touchClick = true;
+
     if (m_touchBegin)
     {
-        bool touchClick = ((CCObject *)m_target->*m_touchBegin)(this,point);
-        this->setTouchClick(touchClick);
-        return touchClick;
+		m_touchClick = ((CCObject *)m_target->*m_touchBegin)(this, point);
     }
     
-    this->setTouchClick(true);
-    
-    return true;
+	if (m_touchClick)
+	{
+		this->setControlState(CAControlStateHighlighted);
+	}
+
+	return m_touchClick;
 }
 
 void CAButton::setTouchUpInSide(CCPoint point)

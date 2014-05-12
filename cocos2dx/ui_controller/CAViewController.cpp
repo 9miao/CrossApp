@@ -300,7 +300,7 @@ CATabBarController::~CATabBarController()
     }
 }
 
-bool CATabBarController::initWithViewControllers(const std::vector<CAViewController*>& viewControllers, bool animated)
+bool CATabBarController::initWithViewControllers(const std::vector<CAViewController*>& viewControllers)
 {
     CAViewController::init();
     

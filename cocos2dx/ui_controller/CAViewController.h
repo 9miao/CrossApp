@@ -138,7 +138,7 @@ public:
     
     virtual ~CATabBarController();
     
-    virtual bool initWithViewControllers(const std::vector<CAViewController*>& viewControllers, bool animated);
+    virtual bool initWithViewControllers(const std::vector<CAViewController*>& viewControllers);
     
     bool showSelectedViewController(CAViewController* viewController, bool animated);
     

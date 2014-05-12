@@ -661,7 +661,7 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
             size.width *= (1 - lenght_scale_x) / (size_scale_x / 2);
         }
         size.width = MAX(size.width, 0);
-        indicator->setPreferredSize(size);
+        indicator->setContentSize(size);
         
         
         CCPoint point = m_obContentSize;
@@ -691,7 +691,7 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
             size.height *= (1 - lenght_scale_y) / (size_scale_y / 2);
         }
         size.height = MAX(size.height, size.width);
-        indicator->setPreferredSize(size);
+		indicator->setContentSize(size);
         
         
         CCPoint point = m_obContentSize;
