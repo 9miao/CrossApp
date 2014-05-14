@@ -96,7 +96,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     if(batchnode)
     {
         this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
-        this->setAnchorPoint(ccp(0.5f, 0.5f));
+        this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     }
     this->m_positionsAreDirty = true;
     
@@ -444,34 +444,34 @@ void CCScale9Sprite::updatePositions()
     float leftWidth = _bottomLeft->getContentSize().width;
     float bottomHeight = _bottomLeft->getContentSize().height;
 
-    _bottomLeft->setAnchorPoint(ccp(0,0));
-    _bottomRight->setAnchorPoint(ccp(0,0));
-    _topLeft->setAnchorPoint(ccp(0,0));
-    _topRight->setAnchorPoint(ccp(0,0));
-    _left->setAnchorPoint(ccp(0,0));
-    _right->setAnchorPoint(ccp(0,0));
-    _top->setAnchorPoint(ccp(0,0));
-    _bottom->setAnchorPoint(ccp(0,0));
-    _centre->setAnchorPoint(ccp(0,0));
+    _bottomLeft->setAnchorPoint(CCPoint(0,0));
+    _bottomRight->setAnchorPoint(CCPoint(0,0));
+    _topLeft->setAnchorPoint(CCPoint(0,0));
+    _topRight->setAnchorPoint(CCPoint(0,0));
+    _left->setAnchorPoint(CCPoint(0,0));
+    _right->setAnchorPoint(CCPoint(0,0));
+    _top->setAnchorPoint(CCPoint(0,0));
+    _bottom->setAnchorPoint(CCPoint(0,0));
+    _centre->setAnchorPoint(CCPoint(0,0));
 
     // Position corners
-    _bottomLeft->setPosition(ccp(0,0));
-    _bottomRight->setPosition(ccp(leftWidth+rescaledWidth,0));
-    _topLeft->setPosition(ccp(0, bottomHeight+rescaledHeight));
-    _topRight->setPosition(ccp(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
+    _bottomLeft->setPosition(CCPoint(0,0));
+    _bottomRight->setPosition(CCPoint(leftWidth+rescaledWidth,0));
+    _topLeft->setPosition(CCPoint(0, bottomHeight+rescaledHeight));
+    _topRight->setPosition(CCPoint(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
 
     // Scale and position borders
-    _left->setPosition(ccp(0, bottomHeight));
+    _left->setPosition(CCPoint(0, bottomHeight));
     _left->setScaleY(verticalScale);
-    _right->setPosition(ccp(leftWidth+rescaledWidth,bottomHeight));
+    _right->setPosition(CCPoint(leftWidth+rescaledWidth,bottomHeight));
     _right->setScaleY(verticalScale);
-    _bottom->setPosition(ccp(leftWidth,0));
+    _bottom->setPosition(CCPoint(leftWidth,0));
     _bottom->setScaleX(horizontalScale);
-    _top->setPosition(ccp(leftWidth,bottomHeight+rescaledHeight));
+    _top->setPosition(CCPoint(leftWidth,bottomHeight+rescaledHeight));
     _top->setScaleX(horizontalScale);
 
     // Position centre
-    _centre->setPosition(ccp(leftWidth, bottomHeight));
+    _centre->setPosition(CCPoint(leftWidth, bottomHeight));
 }
 
 bool CCScale9Sprite::initWithTexture(CCTexture2D* texture, CCRect rect, CCRect capInsets)

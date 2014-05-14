@@ -9,6 +9,9 @@
 #include "CAProgress.h"
 #include "actions/CCActionInterval.h"
 #include "sprite_nodes/CCScale9Sprite.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
+#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 

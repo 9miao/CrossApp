@@ -9,6 +9,12 @@
 #include "CABar.h"
 #include "sprite_nodes/CCScale9Sprite.h"
 #include "CCDirector.h"
+#include "label_nodes/CCLabelTTF.h"
+#include "support/CCPointExtension.h"
+#include "actions/CCActionInstant.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionEase.h"
+#include "touch_dispatcher/CCTouch.h"
 NS_CC_BEGIN
 
 #pragma CANavigationBar

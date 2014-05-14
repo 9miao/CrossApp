@@ -9,6 +9,12 @@
 #include "CATableView.h"
 #include "sprite_nodes/CCSprite.h"
 #include "sprite_nodes/CCScale9Sprite.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
+#include "actions/CCActionInstant.h"
+#include "actions/CCActionInterval.h"
+#include "touch_dispatcher/CCTouch.h"
+#include "support/CCPointExtension.h"
 
 
 NS_CC_BEGIN

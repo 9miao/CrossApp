@@ -9,6 +9,7 @@
 #include "CAButton.h"
 #include "sprite_nodes/CCScale9Sprite.h"
 #include "sprite_nodes/CCView.h"
+#include "touch_dispatcher/CCTouch.h"
 
 #define PLAYSOUND 
 
