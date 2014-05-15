@@ -186,3 +186,7 @@ EXPORTS
 	
 	; Setting up TRACE macro callbacks
     SetTraceFunctionPointers        @180
+
+	; WinRT Window functions
+    CreateWinrtEglWindow			@181
+	CreateWinPhone8XamlWindow		@182

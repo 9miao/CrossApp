@@ -71,7 +71,7 @@ public:
     /** initializes the action with the property name (key), and the from and to parameters. */
     bool initWithDuration(float aDuration, const char* key, float from, float to);
 
-    void startWithTarget(CCNode *pTarget);
+    void startWithTarget(CAView_ *pTarget);
     void update(float dt);
     CCActionInterval* reverse();
 

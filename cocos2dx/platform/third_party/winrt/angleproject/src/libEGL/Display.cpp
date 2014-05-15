@@ -40,13 +40,13 @@ egl::Display *Display::getDisplay(EGLNativeDisplayType displayId)
     
     // FIXME: Check if displayId is a valid display device context
 
-    egl::Display *display = new egl::Display(displayId, (HDC)displayId);
+    egl::Display *display = new egl::Display(displayId, displayId);
 
     displays[displayId] = display;
     return display;
 }
 
-Display::Display(EGLNativeDisplayType displayId, HDC deviceContext) : mDc(deviceContext)
+Display::Display(EGLNativeDisplayType displayId, AngleNativeWindowHDC deviceContext) : mDc(deviceContext)
 {
     mDisplayId = displayId;
     mRenderer = NULL;
@@ -243,16 +243,6 @@ EGLSurface Display::createWindowSurface(EGLNativeWindowType window, EGLConfig co
     }
 
     mSurfaceSet.insert(surface);
-
-#if defined(ANGLE_PLATFORM_WINRT)
-#if 0
-    m_orientation = Windows::Graphics::Display::DisplayProperties::CurrentOrientation;
-    m_windowBounds = window.window->Bounds;
-    mDisplayRT = ref new DisplayRT(this, surface);
-    window.window->SizeChanged += 
-        ref new Windows::Foundation::TypedEventHandler<Windows::UI::Core::CoreWindow^, Windows::UI::Core::WindowSizeChangedEventArgs^>(mDisplayRT, &DisplayRT::onWindowSizeChanged);
-#endif
-#endif // #if defined(ANGLE_PLATFORM_WINRT)
 
     return success(surface);
 }
@@ -548,32 +538,6 @@ const char *Display::getVendorString() const
     return mVendorString.c_str();
 }
 
-#if defined(ANGLE_PLATFORM_WINRT)
-#if 0
-void Display::onWindowSizeChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::WindowSizeChangedEventArgs^ args, Surface *surface)
-{
-    if (sender->Bounds.Width  != m_windowBounds.Width ||
-        sender->Bounds.Height != m_windowBounds.Height ||
-        m_orientation != Windows::Graphics::Display::DisplayProperties::CurrentOrientation)
-    {
-        glFlush();
 
-        m_orientation = Windows::Graphics::Display::DisplayProperties::CurrentOrientation;
-        m_windowBounds = sender->Bounds;
-        surface->onWindowSizeChanged();
-    }
-}
-
-Display::DisplayRT::DisplayRT(Display *display, Surface *surface) : mDisplay(display), mSurface(surface)
-{
-}
-
-void Display::DisplayRT::onWindowSizeChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::WindowSizeChangedEventArgs^ args)
-{
-    mDisplay->onWindowSizeChanged(sender, args, mSurface);
-}
-#endif
-
-#endif // #if defined(ANGLE_PLATFORM_WINRT)
 
 }

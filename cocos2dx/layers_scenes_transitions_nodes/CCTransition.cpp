@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "actions/CCActionGrid.h"
 #include "sprite_nodes/CCView.h"
 #include "misc_nodes/CCRenderTexture.h"
-
+#include "CCScheduler.h"
 
 NS_CC_BEGIN
 
@@ -129,15 +129,14 @@ void CCTransitionScene::finish()
      m_pOutScene->getCamera()->restore();
 
     //[self schedule:@selector(setNewScene:) interval:0];
-    this->schedule(schedule_selector(CCTransitionScene::setNewScene), 0);
+    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCTransitionScene::setNewScene), this, 0, false);
 
 }
 
 void CCTransitionScene::setNewScene(float dt)
 {    
     CC_UNUSED_PARAM(dt);
-
-    this->unschedule(schedule_selector(CCTransitionScene::setNewScene));
+    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCTransitionScene::setNewScene), this);
     
     // Before replacing, save the "send cleanup to scene"
     CCDirector *director = CCDirector::sharedDirector();
@@ -1221,8 +1220,9 @@ void CCTransitionFade :: onEnter()
     l->setOpacity(m_tColor.a);
     m_pInScene->setVisible(false);
 
-    addChild(l, 2, kSceneFade);
-    CCNode* f = getChildByTag(kSceneFade);
+    l->setTag(kSceneFade);
+    insertSubview(l, 2);
+    CAView_* f = getSubviewByTag(kSceneFade);
 
     CCActionInterval* a = (CCActionInterval *)CCSequence::create
         (
@@ -1238,7 +1238,7 @@ void CCTransitionFade :: onEnter()
 void CCTransitionFade::onExit()
 {
     CCTransitionScene::onExit();
-    this->removeChildByTag(kSceneFade, false);
+    this->removeSubviewByTag(kSceneFade);
 }
 
 //
@@ -1318,8 +1318,8 @@ void CCTransitionCrossFade::onEnter()
     outTexture->getSprite()->setBlendFunc(blend2);    
 
     // add render textures to the layer
-    layer->addChild(inTexture);
-    layer->addChild(outTexture);
+    layer->addSubview(inTexture);
+    layer->addSubview(outTexture);
 
     // initial opacity:
     inTexture->getSprite()->setOpacity(255);
@@ -1339,14 +1339,15 @@ void CCTransitionCrossFade::onEnter()
     outTexture->getSprite()->runAction( layerAction );
 
     // add the layer (which contains our two rendertextures) to the scene
-    addChild(layer, 2, kSceneFade);
+    layer->setTag(kSceneFade);
+    insertSubview(layer, 2);
 }
 
 // clean up on exit
 void CCTransitionCrossFade::onExit()
 {
     // remove our layer and release all containing objects 
-    this->removeChildByTag(kSceneFade, false);
+    this->removeSubviewByTag(kSceneFade);
     CCTransitionScene::onExit();
 }
 

@@ -56,12 +56,6 @@ using namespace std;
 
 NS_CC_BEGIN
 
-typedef enum _AsyncType
-{
-    AsyncImageType=0,
-    AsyncStringType
-}AsyncType;
-
 typedef struct _AsyncStruct
 {
     std::string            filename;
@@ -76,50 +70,6 @@ typedef struct _ImageInfo
     CCImage::EImageFormat imageType;
 } ImageInfo;
 
-typedef struct _AsyncStringStruct
-{
-    CCObject             *target;
-    
-    SEL_CallFuncO        selector;
-    
-    std::string           text;
-    
-    std::string           fontName;
-    
-    float                 fontSize;
-    
-    CCSize                dimensions;
-    
-    CCTextAlignment       textAlignment;
-    
-    CCVerticalTextAlignment verticalAlignment;
-    
-    AsyncType             type;
-    
-    _AsyncStringStruct()
-    :target(NULL)
-    ,selector(NULL)
-    ,text("")
-    ,fontName("")
-    ,fontSize(0.0f)
-    ,dimensions(CCSizeZero)
-    ,textAlignment(kCCTextAlignmentLeft)
-    ,verticalAlignment(kCCVerticalTextAlignmentTop)
-    {
-        
-    }
-}AsyncStringStruct;
-
-typedef struct _StringInfo
-{
-    AsyncStringStruct *asyncStruct;
-    CCImage        *image;
-    CCImage::ETextAlign stringType;
-} StringInfo;
-
-static int stringKey = 0;
-
-//image
 static pthread_t s_loadingThread;
 
 static pthread_mutex_t		s_SleepMutex;
@@ -127,14 +77,6 @@ static pthread_cond_t		s_SleepCondition;
 
 static pthread_mutex_t      s_asyncStructQueueMutex;
 static pthread_mutex_t      s_ImageInfoMutex;
-//string
-static pthread_t      s_loadingStringThread;
-
-static pthread_mutex_t      s_SleepStringMutex;
-static pthread_cond_t       s_SleepStringCondition;
-
-static pthread_mutex_t      s_asyncStructStringQueueMutex;
-static pthread_mutex_t      s_StringInfoMutex;
 
 #ifdef EMSCRIPTEN
 // Hack to get ASM.JS validation (no undefined symbols allowed).
@@ -143,19 +85,12 @@ static pthread_mutex_t      s_StringInfoMutex;
 
 static unsigned long s_nAsyncRefCount = 0;
 
-static unsigned long s_nAsyncStringRefCount = 0;
-
 static bool need_quit = false;
-
-static bool need_quit1 = false;
 
 static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
 
 static std::queue<ImageInfo*>*   s_pImageQueue = NULL;
 
-static std::queue<AsyncStringStruct*>* s_pAsyncStringStructQueue = NULL;
-
-static std::queue<StringInfo*>*  s_pStringQueue = NULL;
 
 static CCImage::EImageFormat computeImageFormatType(string& filename)
 {
@@ -181,51 +116,6 @@ static CCImage::EImageFormat computeImageFormatType(string& filename)
 #endif
    
     return ret;
-}
-
-
-
-static void loadStringData(AsyncStringStruct *pAsyncStruct)
-{
-    CCImage::ETextAlign eAlign;
-    
-    if (kCCVerticalTextAlignmentTop == pAsyncStruct->verticalAlignment)
-    {
-        eAlign = (kCCTextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignTop
-        : (kCCTextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
-    }
-    else if (kCCVerticalTextAlignmentCenter == pAsyncStruct->verticalAlignment)
-    {
-        eAlign = (kCCTextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignCenter
-        : (kCCTextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
-    }
-    else if (kCCVerticalTextAlignmentBottom == pAsyncStruct->verticalAlignment)
-    {
-        eAlign = (kCCTextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignBottom
-        : (kCCTextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
-    }
-    else
-    {
-        CCAssert(false, "Not supported alignment format!");
-        return ;
-    }
-    CCImage *pImage = new CCImage();
-    if (pImage && !pImage->initWithString(pAsyncStruct->text.c_str(),(int)pAsyncStruct->dimensions.width,(int)pAsyncStruct->dimensions.height,eAlign,pAsyncStruct->fontName.c_str(),(int)pAsyncStruct->fontSize))
-    {
-        CCLog("can not load");
-        CC_SAFE_RELEASE(pImage);
-        return;
-    }
-    // generate image info
-    CCLog("generate image info");
-    StringInfo *pImageInfo = new StringInfo();
-    pImageInfo->asyncStruct = pAsyncStruct;
-    pImageInfo->image = pImage;
-    pImageInfo->stringType = eAlign;
-    // put the image info into the queue
-    pthread_mutex_lock(&s_StringInfoMutex);
-    s_pStringQueue->push(pImageInfo);
-    pthread_mutex_unlock(&s_StringInfoMutex);
 }
 
 static void loadImageData(AsyncStruct *pAsyncStruct)
@@ -260,57 +150,7 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
     s_pImageQueue->push(pImageInfo);
     pthread_mutex_unlock(&s_ImageInfoMutex);   
 }
-static void* loadString(void* data)
-{
-    
-    AsyncStringStruct *pAsyncStruct = NULL;
-    
-    while (true)
-    {
-        // create autorelease pool for iOS
-        CCThread thread;
-        thread.createAutoreleasePool();
-        
-        std::queue<AsyncStringStruct*> *pQueue = s_pAsyncStringStructQueue;
-        pthread_mutex_lock(&s_asyncStructStringQueueMutex);// get async struct from queue
-        CCLog("*-*-*-*-*-%d",pQueue->empty());
-        if (pQueue->empty())
-        {
-            pthread_mutex_unlock(&s_asyncStructStringQueueMutex);
-            CCLog("need_quit1    %d",need_quit1);
-            if (need_quit1) {
-                break;
-            }
-            else {
-                pthread_cond_wait(&s_SleepStringCondition, &s_SleepStringMutex);
-                continue;
-            }
-        }
-        else
-        {
-            pAsyncStruct = pQueue->front();
-            pQueue->pop();
-            pthread_mutex_unlock(&s_asyncStructStringQueueMutex);
-            loadStringData(pAsyncStruct);
-        }
-    }
-    
-    if( s_pAsyncStringStructQueue != NULL )
-    {
-        
-        delete s_pAsyncStringStructQueue;
-        s_pAsyncStringStructQueue = NULL;
-        delete s_pStringQueue;
-        s_pStringQueue = NULL;
-        
-        pthread_mutex_destroy(&s_asyncStructStringQueueMutex);
-        pthread_mutex_destroy(&s_StringInfoMutex);
-        pthread_mutex_destroy(&s_SleepStringMutex);
-        pthread_cond_destroy(&s_SleepStringCondition);
-    }
-    
-    return 0;
-}
+
 static void* loadImage(void* data)
 {
     AsyncStruct *pAsyncStruct = NULL;
@@ -323,11 +163,9 @@ static void* loadImage(void* data)
 
         std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
         pthread_mutex_lock(&s_asyncStructQueueMutex);// get async struct from queue
-        CCLog("////////////%d",pQueue->empty());
         if (pQueue->empty())
         {
             pthread_mutex_unlock(&s_asyncStructQueueMutex);
-            CCLog(" need_quit  %d",need_quit);
             if (need_quit) {
                 break;
             }
@@ -387,9 +225,7 @@ CCTextureCache::~CCTextureCache()
 {
     CCLOGINFO("cocos2d: deallocing CCTextureCache.");
     need_quit = true;
-    need_quit1 = true;
     pthread_cond_signal(&s_SleepCondition);
-    pthread_cond_signal(&s_SleepStringCondition);
     CC_SAFE_RELEASE(m_pTextures);
 }
 
@@ -486,7 +322,6 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     // add async struct into queue
     pthread_mutex_lock(&s_asyncStructQueueMutex);
     s_pAsyncStructQueue->push(data);
-    CCLog("data == NULL   %d",s_pAsyncStructQueue->empty());
     pthread_mutex_unlock(&s_asyncStructQueueMutex);
     pthread_cond_signal(&s_SleepCondition);
 #else
@@ -552,120 +387,6 @@ void CCTextureCache::addImageAsyncCallBack(float dt)
         if (0 == s_nAsyncRefCount)
         {
             CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCTextureCache::addImageAsyncCallBack), this);
-        }
-    }
-}
-
-
-void CCTextureCache::addStringImageAsync(const char *text, const char *fontName, float fontSize, cocos2d::CCSize& dimensions, CCTextAlignment textAlignment, CCVerticalTextAlignment verticalAlignment, CCObject *target, SEL_CallFuncO selector)
-{
-    // lazy init
-    if (s_pAsyncStringStructQueue == NULL)
-    {
-        s_pAsyncStringStructQueue = new queue<AsyncStringStruct*>();
-        s_pStringQueue = new queue<StringInfo*>();
-        
-        pthread_mutex_init(&s_asyncStructStringQueueMutex, NULL);
-        pthread_mutex_init(&s_StringInfoMutex, NULL);
-        pthread_mutex_init(&s_SleepStringMutex, NULL);
-        pthread_cond_init(&s_SleepStringCondition, NULL);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-        pthread_create(&s_loadingStringThread, NULL, loadString, NULL);
-#endif
-        need_quit1 = false;
-    }
-    
-    if (0 == s_nAsyncStringRefCount)
-    {
-        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCTextureCache::addStringImageAsyncCallBack), this, 0, false);
-    }
-    
-    ++s_nAsyncStringRefCount;
-    
-    if (target)
-    {
-        target->retain();
-    }
-    
-    // generate async struct
-    AsyncStringStruct *data = new AsyncStringStruct();
-    data->text = text;
-    data->target = target;
-    data->selector = selector;
-    data->textAlignment=textAlignment;
-    data->verticalAlignment=verticalAlignment;
-    data->dimensions =dimensions;
-    data->fontName = fontName;
-    data->fontSize = fontSize;
-    
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-    // add async struct into queue
-    pthread_mutex_lock(&s_asyncStructStringQueueMutex);
-
-    s_pAsyncStringStructQueue->push(data);
-    pthread_mutex_unlock(&s_asyncStructStringQueueMutex);
-    pthread_cond_signal(&s_SleepStringCondition);
-#else
-    // WinRT uses an Async Task to load the image since the ThreadPool has a limited number of threads
-    //std::replace( data->filename.begin(), data->filename.end(), '/', '\\');
-    create_task([this, data]{loadImageData(data);});
-#endif
-}
-
-
-
-
-void CCTextureCache::addStringImageAsyncCallBack(float dt)
-{
-    // the image is generated in loading thread
-    std::queue<StringInfo*> *imagesQueue = s_pStringQueue;
-    
-    pthread_mutex_lock(&s_StringInfoMutex);
-    
-    if (imagesQueue->empty())
-    {
-        pthread_mutex_unlock(&s_StringInfoMutex);
-    }
-    else
-    {
-        StringInfo *pImageInfo = imagesQueue->front();
-        imagesQueue->pop();
-        pthread_mutex_unlock(&s_StringInfoMutex);
-        
-        AsyncStringStruct *pAsyncStruct = pImageInfo->asyncStruct;
-        CCImage *pImage = pImageInfo->image;
-        
-        CCObject *target = pAsyncStruct->target;
-        SEL_CallFuncO selector = pAsyncStruct->selector;
-        
-        // generate texture in render thread
-        CCTexture2D *texture = new CCTexture2D();
-#if 0 //TODO: (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        texture->initWithImage(pImage, kCCResolutioniPhone);
-#else
-        texture->initWithImage(pImage);
-#endif
-        
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-
-#endif
-        
-        // cache the texture
-
-        if (target && selector)
-        {
-            (target->*selector)(texture);
-            target->release();
-        }
-        
-        pImage->release();
-        delete pAsyncStruct;
-        delete pImageInfo;
-        
-        --s_nAsyncStringRefCount;
-        if (0 == s_nAsyncStringRefCount)
-        {
-            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCTextureCache::addStringImageAsyncCallBack), this);
         }
     }
 }
@@ -869,6 +590,37 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 #endif
     
     return texture;
+}
+
+bool CCTextureCache::reloadTexture(const char* fileName)
+{
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    if (fullpath.size() == 0)
+    {
+        return false;
+    }
+    
+    CCTexture2D * texture = (CCTexture2D*) m_pTextures->objectForKey(fullpath);
+    
+    bool ret = false;
+    if (! texture) {
+        texture = this->addImage(fullpath.c_str());
+        ret = (texture != NULL);
+    }
+    else
+    {
+        do {
+            CCImage* image = new CCImage();
+            CC_BREAK_IF(NULL == image);
+            
+            bool bRet = image->initWithImageFile(fullpath.c_str());
+            CC_BREAK_IF(!bRet);
+            
+            ret = texture->initWithImage(image);
+        } while (0);
+    }
+    
+    return ret;
 }
 
 // TextureCache - Remove

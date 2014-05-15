@@ -98,7 +98,11 @@
  * This precedes the return type of the function in the function prototype.
  */
 #if defined(_WIN32) && !defined(__SCITECH_SNAP__)
+#if defined(_USRDLL)
 #   define KHRONOS_APICALL __declspec(dllimport)
+#else
+#   define KHRONOS_APICALL
+#endif
 #elif defined (__SYMBIAN32__)
 #   define KHRONOS_APICALL IMPORT_C
 #else

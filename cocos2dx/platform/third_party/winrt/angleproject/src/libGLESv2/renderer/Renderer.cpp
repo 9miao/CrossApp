@@ -91,7 +91,11 @@ bool Renderer::initializeCompiler()
 #else
     // Load the version of the D3DCompiler DLL associated with the Direct3D version ANGLE was built with.
 #if defined(ANGLE_PLATFORM_WINRT)
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+    mD3dCompilerModule = LoadLibrary(D3DCOMPILER_DLL);
+#else
     mD3dCompilerModule = LoadPackagedLibrary((LPCWSTR)D3DCOMPILER_DLL, 0);
+#endif
     if (!mD3dCompilerModule)
     {
         ERR("No D3D compiler module found - must use precompiled shaders\n");
@@ -221,11 +225,20 @@ ShaderBlob *Renderer::compileToBinary(gl::InfoLog &infoLog, const char *hlsl, co
 extern "C"
 {
 
-rx::Renderer *glCreateRenderer(egl::Display *display, HDC hDc, EGLNativeDisplayType displayId)
+rx::Renderer *glCreateRenderer(egl::Display *display, AngleNativeWindowHDC hDc, EGLNativeDisplayType displayId)
 {
     rx::Renderer *renderer = NULL;
     EGLint status = EGL_BAD_ALLOC;
     
+#if defined(ANGLE_PLATFORM_WINRT)
+	renderer = new rx::Renderer11(display, hDc);
+	if (renderer)
+	{
+		status = renderer->initialize();
+	}
+
+	return status == EGL_SUCCESS ? renderer : NULL;
+#else
     if (ANGLE_ENABLE_D3D11 ||
         displayId == EGL_D3D11_ELSE_D3D9_DISPLAY_ANGLE ||
         displayId == EGL_D3D11_ONLY_DISPLAY_ANGLE)
@@ -249,6 +262,7 @@ rx::Renderer *glCreateRenderer(egl::Display *display, HDC hDc, EGLNativeDisplayT
         // Failed to create a D3D11 renderer, try creating a D3D9 renderer
         delete renderer;
     }
+#endif
 
 #if !defined(ANGLE_PLATFORM_WINRT)
     bool softwareDevice = (displayId == EGL_SOFTWARE_DISPLAY_ANGLE);

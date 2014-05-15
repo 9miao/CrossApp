@@ -28,12 +28,15 @@
 #include "libGLESv2/renderer/Query11.h"
 #include "libGLESv2/renderer/Fence11.h"
 
-#if defined(ANGLE_PLATFORM_WINRT) || defined(COMPILE_SHADER)
 #if defined(ANGLE_PLATFORM_WINRT)
 #include "common/winrtutils.h"
+#include "common/winrtangle.h"
+#include "common/winrtangleutils.h"
+#if !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 #include "third_party/winrt/ThreadEmulation/ThreadEmulation.h"
 using namespace ThreadEmulation;
 #endif
+using namespace Microsoft::WRL;
 
 #include "libGLESv2/renderer/shaders/compiled/winrt/passthrough11vs.h"
 #include "libGLESv2/renderer/shaders/compiled/winrt/passthroughrgba11ps.h"
@@ -84,7 +87,7 @@ enum
     MAX_TEXTURE_IMAGE_UNITS_VTF_SM4 = 16
 };
 
-Renderer11::Renderer11(egl::Display *display, HDC hDc) : Renderer(display), mDc(hDc)
+Renderer11::Renderer11(egl::Display *display, AngleNativeWindowHDC hDc) : Renderer(display), mDc(hDc)
 {
     mVertexDataManager = NULL;
     mIndexDataManager = NULL;
@@ -148,13 +151,33 @@ Renderer11 *Renderer11::makeRenderer11(Renderer *renderer)
 #define D3D11_MESSAGE_ID_DEVICE_DRAW_RENDERTARGETVIEW_NOT_SET ((D3D11_MESSAGE_ID)3146081)
 #endif
 
-EGLint Renderer11::initialize()
+static const D3D_FEATURE_LEVEL sfeatureLevels[] =
 {
-    if (!initializeCompiler())
-    {
-        return EGL_NOT_INITIALIZED;
-    }
+	D3D_FEATURE_LEVEL_11_0,
+    D3D_FEATURE_LEVEL_10_1,
+    D3D_FEATURE_LEVEL_10_0,
+    D3D_FEATURE_LEVEL_9_3,
+    D3D_FEATURE_LEVEL_9_2,
+    D3D_FEATURE_LEVEL_9_1
+};
 
+static const D3D_FEATURE_LEVEL* getFeatureLevels(const D3D_FEATURE_LEVEL maxLevel, unsigned int& size)
+{
+	unsigned int length = ArraySize(sfeatureLevels);
+	for(unsigned int i = 0; i < length; i++)
+	{
+		if(maxLevel == sfeatureLevels[i])
+		{
+			size = length - i;
+			return &sfeatureLevels[i];
+		}
+	}
+	size = 0;
+	return NULL;
+}
+
+EGLint Renderer11::createDevice()
+{
 #if !defined(ANGLE_PLATFORM_WINRT)
     mDxgiModule = LoadLibrary(TEXT("dxgi.dll"));
     mD3d11Module = LoadLibrary(TEXT("d3d11.dll"));
@@ -176,43 +199,59 @@ EGLint Renderer11::initialize()
     }
 #endif // #if !defined(ANGLE_PLATFORM_WINRT)
 
-#if (_MSC_VER < 1800)
-#if defined(ANGLE_PLATFORM_WP8)
-#define USE_FEATURE_LEVEL_9_3
-#elif defined(ANGLE_PLATFORM_WINRT)
-#define USE_FEATURE_LEVEL_9_1
-#endif // #if defined(ANGLE_PLATFORM_WP8)
-#endif // #if (_MSC_VER < 1800)
-
-
-    D3D_FEATURE_LEVEL featureLevels[] =
-    {
-#ifdef D3D_FEATURE_LEVEL_11_1
-        D3D_FEATURE_LEVEL_11_1,
-#endif // D3D_FEATURE_LEVEL_11_1
-#ifdef USE_FEATURE_LEVEL_11_0
-        D3D_FEATURE_LEVEL_11_0
-#elif defined(USE_FEATURE_LEVEL_10_1)
-        D3D_FEATURE_LEVEL_10_1
-#elif defined(USE_FEATURE_LEVEL_10_0)
-        D3D_FEATURE_LEVEL_10_0
-#elif defined(USE_FEATURE_LEVEL_9_3)
-        D3D_FEATURE_LEVEL_9_3
-#elif defined(USE_FEATURE_LEVEL_9_2)
-        D3D_FEATURE_LEVEL_9_2
-#elif defined(USE_FEATURE_LEVEL_9_1)
-        D3D_FEATURE_LEVEL_9_1
-#else
-        D3D_FEATURE_LEVEL_11_0,
-        D3D_FEATURE_LEVEL_10_1,
-        D3D_FEATURE_LEVEL_10_0,
-        D3D_FEATURE_LEVEL_9_3,
-        D3D_FEATURE_LEVEL_9_2,
-        D3D_FEATURE_LEVEL_9_1,
-#endif
-    };
-
     HRESULT result = S_OK;
+	D3D_FEATURE_LEVEL maxFeatureLevel = sfeatureLevels[0];
+
+#if defined(ANGLE_PLATFORM_WINRT)
+	ComPtr<IWinrtEglWindow> iWinRTWindow;
+	result = winrtangleutils::getIWinRTWindow(mDc, &iWinRTWindow);
+    if (FAILED(result))
+    {
+        ERR("Invalid IWinrtEglWindow - aborting!\n");
+        return EGL_NOT_INITIALIZED;
+    }
+
+	maxFeatureLevel = winrtangleutils::getD3DFeatureLevel(iWinRTWindow);
+
+	if(winrtangleutils::hasIPhoneXamlWindow(iWinRTWindow))
+	{
+		ComPtr<IWinPhone8XamlD3DWindow> iPhoneWindow;
+		result = winrtangleutils::getIPhoneXamlWindow(mDc, &iPhoneWindow);
+		if (SUCCEEDED(result))
+		{
+			ComPtr<ID3D11Device> device;
+			result = winrtangleutils::getID3D11Device(iPhoneWindow, &device);
+			if (SUCCEEDED(result))
+			{
+				mDevice = device.Get();
+			}
+
+			if (SUCCEEDED(result))
+			{
+				ComPtr<ID3D11DeviceContext> context;
+				result = winrtangleutils::getID3D11DeviceContext(iPhoneWindow, &context);
+				if (SUCCEEDED(result))
+				{
+					mDeviceContext = context.Get();
+				}
+			}
+	
+			mFeatureLevel = winrtangleutils::getD3DFeatureLevel(iWinRTWindow);
+
+		}
+
+		if(FAILED(result))
+		{
+			ERR("Invalid IWinPhone8XamlD3DWindow - aborting!\n");
+			return EGL_NOT_INITIALIZED;
+		}
+
+		return EGL_SUCCESS;
+	}
+#endif
+
+	unsigned int numFeatureLevels;
+	const D3D_FEATURE_LEVEL* featureLevels = getFeatureLevels(maxFeatureLevel, numFeatureLevels);
 
 #ifdef _DEBUG
     result = D3D11CreateDevice(NULL,
@@ -220,7 +259,7 @@ EGLint Renderer11::initialize()
                                NULL,
                                D3D11_CREATE_DEVICE_DEBUG,
                                featureLevels,
-                               ArraySize(featureLevels),
+                               numFeatureLevels,
                                D3D11_SDK_VERSION,
                                &mDevice,
                                &mFeatureLevel,
@@ -239,7 +278,7 @@ EGLint Renderer11::initialize()
                                    NULL,
                                    0,
                                    featureLevels,
-                                   ArraySize(featureLevels),
+                                   numFeatureLevels,
                                    D3D11_SDK_VERSION,
                                    &mDevice,
                                    &mFeatureLevel,
@@ -252,8 +291,27 @@ EGLint Renderer11::initialize()
         }
     }
 
+#if defined(ANGLE_PLATFORM_WINRT)
+    iWinRTWindow->SetAngleD3DDevice(mDevice);
+#endif
+	return EGL_SUCCESS;
+}
+
+EGLint Renderer11::initialize()
+{
+    if (!initializeCompiler())
+    {
+        return EGL_NOT_INITIALIZED;
+    }
+
+	EGLint err = createDevice();
+	if(err != EGL_SUCCESS)
+	{
+		return err;
+	}
+
     IDXGIDevice *dxgiDevice = NULL;
-    result = mDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
+    HRESULT result = mDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
 
     if (FAILED(result))
     {
@@ -1993,9 +2051,6 @@ bool Renderer11::testDeviceResettable()
 
     D3D_FEATURE_LEVEL featureLevels[] =
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-        D3D_FEATURE_LEVEL_11_1,
-#endif // 
         D3D_FEATURE_LEVEL_11_0,
         D3D_FEATURE_LEVEL_10_1,
         D3D_FEATURE_LEVEL_10_0,
@@ -2177,15 +2232,12 @@ float Renderer11::getTextureMaxAnisotropy() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0:
         return D3D11_MAX_MAXANISOTROPY;
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0:
         return D3D10_MAX_MAXANISOTROPY;
-#if defined(ANGLE_PLATFORM_WINRT) || defined(COMPILE_SHADER)
+#if defined(ANGLE_PLATFORM_WINRT)
       case D3D_FEATURE_LEVEL_9_3:
       case D3D_FEATURE_LEVEL_9_2:
       case D3D_FEATURE_LEVEL_9_1:
@@ -2205,9 +2257,6 @@ Range Renderer11::getViewportBounds() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0:
         return Range(D3D11_VIEWPORT_BOUNDS_MIN, D3D11_VIEWPORT_BOUNDS_MAX);
       case D3D_FEATURE_LEVEL_10_1:
@@ -2226,9 +2275,6 @@ unsigned int Renderer11::getMaxVertexTextureImageUnits() const
     META_ASSERT(MAX_TEXTURE_IMAGE_UNITS_VTF_SM4 <= gl::IMPLEMENTATION_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0:
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0:
@@ -2277,9 +2323,6 @@ unsigned int Renderer11::getMaxVaryingVectors() const
     META_ASSERT(gl::IMPLEMENTATION_MAX_VARYING_VECTORS == D3D11_VS_OUTPUT_REGISTER_COUNT);
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0:
         return D3D11_VS_OUTPUT_REGISTER_COUNT;
       case D3D_FEATURE_LEVEL_10_1:
@@ -2297,9 +2340,6 @@ bool Renderer11::getNonPower2TextureSupport() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0:
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0:
@@ -2316,9 +2356,6 @@ bool Renderer11::getOcclusionQuerySupport() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0:
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0:
@@ -2335,9 +2372,6 @@ bool Renderer11::getInstancingSupport() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0:
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0:
@@ -2363,9 +2397,6 @@ bool Renderer11::getDerivativeInstructionSupport() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0:
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0:
@@ -2388,9 +2419,6 @@ int Renderer11::getMajorShaderModel() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0: return D3D11_SHADER_MAJOR_VERSION;   // 5
       case D3D_FEATURE_LEVEL_10_1: return D3D10_1_SHADER_MAJOR_VERSION; // 4
       case D3D_FEATURE_LEVEL_10_0: return D3D10_SHADER_MAJOR_VERSION;   // 4
@@ -2405,9 +2433,6 @@ int Renderer11::getMinorShaderModel() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1: return 1;
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0: return D3D11_SHADER_MINOR_VERSION;   // 0
       case D3D_FEATURE_LEVEL_10_1: return D3D10_1_SHADER_MINOR_VERSION; // 1
       case D3D_FEATURE_LEVEL_10_0: return D3D10_SHADER_MINOR_VERSION;   // 0
@@ -2434,15 +2459,12 @@ int Renderer11::getMaxViewportDimension() const
 
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0:
         return D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION;   // 16384
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0: 
         return D3D10_REQ_TEXTURE2D_U_OR_V_DIMENSION;   // 8192
-#if defined(ANGLE_PLATFORM_WINRT) || defined(COMPILE_SHADER)
+#if defined(ANGLE_PLATFORM_WINRT)
       case D3D_FEATURE_LEVEL_9_3:
       case D3D_FEATURE_LEVEL_9_2:
       case D3D_FEATURE_LEVEL_9_1: return D3D_FL9_1_REQ_TEXTURE2D_U_OR_V_DIMENSION;
@@ -2456,13 +2478,10 @@ int Renderer11::getMaxTextureWidth() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0: return D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION;   // 16384
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0: return D3D10_REQ_TEXTURE2D_U_OR_V_DIMENSION;   // 8192
-#if defined(ANGLE_PLATFORM_WINRT) || defined(COMPILE_SHADER)
+#if defined(ANGLE_PLATFORM_WINRT)
       case D3D_FEATURE_LEVEL_9_3:
       case D3D_FEATURE_LEVEL_9_2:
       case D3D_FEATURE_LEVEL_9_1: return D3D_FL9_1_REQ_TEXTURE2D_U_OR_V_DIMENSION;
@@ -2475,13 +2494,10 @@ int Renderer11::getMaxTextureHeight() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0: return D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION;   // 16384
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0: return D3D10_REQ_TEXTURE2D_U_OR_V_DIMENSION;   // 8192
-#if defined(ANGLE_PLATFORM_WINRT) || defined(COMPILE_SHADER)
+#if defined(ANGLE_PLATFORM_WINRT)
       case D3D_FEATURE_LEVEL_9_3:
       case D3D_FEATURE_LEVEL_9_2:
       case D3D_FEATURE_LEVEL_9_1: return D3D_FL9_1_REQ_TEXTURE2D_U_OR_V_DIMENSION;
@@ -2494,9 +2510,6 @@ bool Renderer11::get32BitIndexSupport() const
 {
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0: 
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0: return D3D10_REQ_DRAWINDEXED_INDEX_COUNT_2_TO_EXP >= 32;   // true
@@ -2552,15 +2565,12 @@ unsigned int Renderer11::getMaxRenderTargets() const
 
     switch (mFeatureLevel)
     {
-#ifdef D3D_FEATURE_LEVEL_11_1
-      case D3D_FEATURE_LEVEL_11_1:
-#endif // D3D_FEATURE_LEVEL_11_1
       case D3D_FEATURE_LEVEL_11_0:
         return D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT;  // 8
       case D3D_FEATURE_LEVEL_10_1:
       case D3D_FEATURE_LEVEL_10_0:
         return D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT;  // 8
-#if defined(ANGLE_PLATFORM_WINRT) || defined(COMPILE_SHADER)
+#if defined(ANGLE_PLATFORM_WINRT)
       case D3D_FEATURE_LEVEL_9_3:
         return D3D_FL9_3_SIMULTANEOUS_RENDER_TARGET_COUNT;
       case D3D_FEATURE_LEVEL_9_2:

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCRENDER_TEXTURE_H__
 #define __CCRENDER_TEXTURE_H__
 
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "sprite_nodes/CCSprite.h"
 #include "kazmath/mat4.h"
 
@@ -51,7 +51,7 @@ There are also functions for saving the render texture to disk in PNG or JPG for
 
 @since v0.8.1
 */
-class CC_DLL CCRenderTexture : public CCNode 
+class CC_DLL CCRenderTexture : public CAView_ 
 {
     /** The CCSprite being used.
     The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.

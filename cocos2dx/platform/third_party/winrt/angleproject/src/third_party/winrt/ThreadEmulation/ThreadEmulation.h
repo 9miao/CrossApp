@@ -32,6 +32,9 @@
 
 #include <windows.h>
 
+#if defined(WINAPI_FAMILY)
+#if !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
 namespace ThreadEmulation
 {
     #ifndef CREATE_SUSPENDED
@@ -54,3 +57,6 @@ namespace ThreadEmulation
     
     void WINAPI TlsShutdown();
 }
+
+#endif
+#endif

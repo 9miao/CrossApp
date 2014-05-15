@@ -1,7 +1,20 @@
-﻿生成启动时间为 2014/5/7 21:43:40。
-     1>项目“E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\preprocessor\preprocessor_phone.vcxproj”在节点 3 上(Build 个目标)。
-     1>Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\Lib.exe /OUT:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8\WP8\redist\vs2012\Win32\Debug\preprocessor_phone\preprocessor_phone.lib" /NOLOGO WP8\Win32\Debug\DiagnosticsBase.obj
+﻿生成启动时间为 2014/5/11 21:24:56。
+     1>项目“J:\CrossAppNew\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\preprocessor\preprocessor_phone.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /nologo /W1 /WX- /MP /Od /Oy- /D _LIB /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"WP8\Win32\Debug\\" /Fd"WP8\Win32\Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt DiagnosticsBase.cpp DirectiveHandlerBase.cpp DirectiveParser.cpp ExpressionParser.cpp Input.cpp Lexer.cpp Macro.cpp MacroExpander.cpp Preprocessor.cpp Token.cpp Tokenizer.cpp
+         DiagnosticsBase.cpp
+         DirectiveHandlerBase.cpp
+         DirectiveParser.cpp
+         ExpressionParser.cpp
+         Input.cpp
+         Lexer.cpp
+         Macro.cpp
+         MacroExpander.cpp
+         Preprocessor.cpp
+         Token.cpp
+         Tokenizer.cpp
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\Lib.exe /OUT:"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\Win32\Debug\preprocessor_phone\preprocessor_phone.lib" /NOLOGO WP8\Win32\Debug\DiagnosticsBase.obj
          WP8\Win32\Debug\DirectiveHandlerBase.obj
          WP8\Win32\Debug\DirectiveParser.obj
          WP8\Win32\Debug\ExpressionParser.obj
@@ -12,9 +25,9 @@
          WP8\Win32\Debug\Preprocessor.obj
          WP8\Win32\Debug\Token.obj
          WP8\Win32\Debug\Tokenizer.obj
-         preprocessor_phone.vcxproj -> E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8\WP8\redist\vs2012\Win32\Debug\preprocessor_phone\preprocessor_phone.lib
-     1>已完成生成项目“E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\preprocessor\preprocessor_phone.vcxproj”(Build 个目标)的操作。
+         preprocessor_phone.vcxproj -> J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\Win32\Debug\preprocessor_phone\preprocessor_phone.lib
+     1>已完成生成项目“J:\CrossAppNew\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\preprocessor\preprocessor_phone.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:01.45
+已用时间 00:00:19.04

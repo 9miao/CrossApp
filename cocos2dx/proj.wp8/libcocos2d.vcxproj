@@ -77,7 +77,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;_USRDLL;WP8;_WP8;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;COCOS2D_DEBUG=1;_USRDLL;WP8;_WP8;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAsWinRT>true</CompileAsWinRT>
@@ -96,8 +96,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4264</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,12 +119,13 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4264</AdditionalOptions>
+      <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;_USRDLL;WP8;_WP8;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;COCOS2D_DEBUG=1;_USRDLL;WP8;_WP8;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAsWinRT>true</CompileAsWinRT>
@@ -141,8 +143,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4264</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -163,7 +166,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4264</AdditionalOptions>
+      <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -301,7 +305,6 @@
     <ClCompile Include="..\label_nodes\CCLabelAtlas.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelBMFont.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CAWindow.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp" />
@@ -309,11 +312,6 @@
     <ClCompile Include="..\misc_nodes\CCMotionStreak.cpp" />
     <ClCompile Include="..\misc_nodes\CCProgressTimer.cpp" />
     <ClCompile Include="..\misc_nodes\CCRenderTexture.cpp" />
-    <ClCompile Include="..\other\CACamera.cpp" />
-    <ClCompile Include="..\particle_nodes\CCParticleBatchNode.cpp" />
-    <ClCompile Include="..\particle_nodes\CCParticleExamples.cpp" />
-    <ClCompile Include="..\particle_nodes\CCParticleSystem.cpp" />
-    <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
@@ -332,12 +330,13 @@
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp" />
     <ClCompile Include="..\platform\winrt\sha1.cpp" />
     <ClCompile Include="..\platform\wp8\CCEGLView.cpp" />
-    <ClCompile Include="..\platform\wp8\Direct3DBase.cpp" />
     <ClCompile Include="..\platform\wp8\WP8Keyboard.cpp" />
+    <ClCompile Include="..\platform\wp8\ModalLayer.cpp" />
     <ClCompile Include="..\shaders\CCGLProgram.cpp" />
     <ClCompile Include="..\shaders\ccGLStateCache.cpp" />
     <ClCompile Include="..\shaders\CCShaderCache.cpp" />
     <ClCompile Include="..\shaders\ccShaders.cpp" />
+    <ClCompile Include="..\sprite_nodes\CAWindow.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimation.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimationCache.cpp" />
     <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp" />
@@ -449,7 +448,6 @@
     <ClInclude Include="..\label_nodes\CCLabelAtlas.h" />
     <ClInclude Include="..\label_nodes\CCLabelBMFont.h" />
     <ClInclude Include="..\label_nodes\CCLabelTTF.h" />
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CAWindow.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.h" />
@@ -457,12 +455,6 @@
     <ClInclude Include="..\misc_nodes\CCMotionStreak.h" />
     <ClInclude Include="..\misc_nodes\CCProgressTimer.h" />
     <ClInclude Include="..\misc_nodes\CCRenderTexture.h" />
-    <ClInclude Include="..\other\CACamera.h" />
-    <ClInclude Include="..\particle_nodes\CCParticleBatchNode.h" />
-    <ClInclude Include="..\particle_nodes\CCParticleExamples.h" />
-    <ClInclude Include="..\particle_nodes\CCParticleSystem.h" />
-    <ClInclude Include="..\particle_nodes\CCParticleSystemQuad.h" />
-    <ClInclude Include="..\particle_nodes\firePngData.h" />
     <ClInclude Include="..\platform\CCAccelerometerDelegate.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
@@ -488,13 +480,14 @@
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h" />
     <ClInclude Include="..\platform\winrt\sha1.h" />
     <ClInclude Include="..\platform\wp8\CCEGLView.h" />
-    <ClInclude Include="..\platform\wp8\Direct3DBase.h" />
     <ClInclude Include="..\platform\wp8\WP8Keyboard.h" />
+    <ClInclude Include="..\platform\wp8\ModalLayer.h" />
     <ClInclude Include="..\shaders\CCGLProgram.h" />
     <ClInclude Include="..\shaders\ccGLStateCache.h" />
     <ClInclude Include="..\shaders\CCShaderCache.h" />
     <ClInclude Include="..\shaders\ccShaders.h" />
     <ClInclude Include="..\shaders\precompiled\wp8\ccShaders_wp8.h" />
+    <ClInclude Include="..\sprite_nodes\CAWindow.h" />
     <ClInclude Include="..\sprite_nodes\CCAnimation.h" />
     <ClInclude Include="..\sprite_nodes\CCAnimationCache.h" />
     <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h" />

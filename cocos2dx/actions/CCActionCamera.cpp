@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCActionCamera.h"
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "CCCamera.h"
 #include "CCStdC.h"
 #include "cocoa/CCZone.h"
@@ -33,7 +33,7 @@ NS_CC_BEGIN
 //
 // CameraAction
 //
-void CCActionCamera::startWithTarget(CCNode *pTarget)
+void CCActionCamera::startWithTarget(CAView_ *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     
@@ -101,7 +101,7 @@ bool CCOrbitCamera::initWithDuration(float t, float radius, float deltaRadius, f
     return false;
 }
 
-void CCOrbitCamera::startWithTarget(CCNode *pTarget)
+void CCOrbitCamera::startWithTarget(CAView_ *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     float r, zenith, azimuth;

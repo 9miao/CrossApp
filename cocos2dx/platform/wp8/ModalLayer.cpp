@@ -38,23 +38,6 @@ bool ModalLayer::init()
         return false;
     }
     
-    CCDirector* pDirector = CCDirector::sharedDirector();
-	CCSize visibleSize = pDirector->getVisibleSize();
-    CCPoint origin = pDirector->getVisibleOrigin();
-
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority, true);
-    
-	m_frame = CCLayerColor::create(ccc4(0, 0, 0, 255 *.75));
-	CC_SAFE_RETAIN(m_frame);
-
-    m_frame->setPosition(ccp(0, 0));
-    this->addChild(m_frame);
-
-	CCMenuItemFont *pCloseItem = CCMenuItemFont::create("OK", this, menu_selector(ModalLayer::menuCloseCallback) );
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-    pMenu->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
-    m_frame->addChild(pMenu);
-    
     return true;
 }
 

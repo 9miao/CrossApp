@@ -64,10 +64,6 @@ class Surface
 
     virtual void setBoundTexture(gl::Texture2D *texture);
     virtual gl::Texture2D *getBoundTexture() const;
-    
-#if defined(ANGLE_PLATFORM_WINRT)
-    void onWindowSizeChanged();
-#endif // #if defined(ANGLE_PLATFORM_WINRT)
 
 
 private:

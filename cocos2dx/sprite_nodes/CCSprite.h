@@ -27,9 +27,8 @@ THE SOFTWARE.
 #ifndef __SPITE_NODE_CCSPRITE_H__
 #define __SPITE_NODE_CCSPRITE_H__
 
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "CCProtocols.h"
-#include "textures/CCTextureAtlas.h"
 #include "ccTypes.h"
 #include "cocoa/CCDictionary.h"
 #include <string>
@@ -79,6 +78,8 @@ struct transformValues_;
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
+class CCSprite;
+typedef CCSprite CAImageView;
 class CC_DLL CCSprite : public CCNodeRGBA, public CCTextureProtocol
 #ifdef EMSCRIPTEN
 , public CCGLBufferedNode
@@ -94,7 +95,7 @@ public:
      * @return An empty sprite object that is marked as autoreleased.
      */
     static CCSprite* create();
-
+    
     /**
      * Creates a sprite with an exsiting texture contained in a CCTexture2D object
      * After creation, the rect will be the size of the texture, and the offset will be (0,0).
@@ -124,16 +125,17 @@ public:
      */
     static CCSprite* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
     
+    /// @}  end of creators group
+    
+    
+    
+    /// @{
+    /// @name Initializers
+    
     /**
-     * Creates a sprite with an sprite frame name.
-     *
-     * A CCSpriteFrame will be fetched from the CCSpriteFrameCache by pszSpriteFrameName param.
-     * If the CCSpriteFrame doesn't exist it will raise an exception.
-     *
-     * @param   pszSpriteFrameName A null terminated string which indicates the sprite frame name.
-     * @return  A valid sprite object that is marked as autoreleased.
+     * Default constructor
+     * @js ctor
      */
-
     CCSprite(void);
     
     /**
@@ -191,7 +193,7 @@ public:
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
-
+    
     /// @} end of initializers
     
     /// @{
@@ -207,29 +209,7 @@ public:
 
     /// @{
     /// @name Functions inherited from CCNode
-    virtual void setScaleX(float fScaleX);
-    virtual void setScaleY(float fScaleY);
-    /**
-     * @lua NA
-     */
-    virtual void setPosition(const CCPoint& pos);
-    virtual void setRotation(float fRotation);
-    virtual void setRotationX(float fRotationX);
-    virtual void setRotationY(float fRotationY);
-    virtual void setSkewX(float sx);
-    virtual void setSkewY(float sy);
-    virtual void removeChild(CCNode* pChild, bool bCleanup);
-    virtual void removeAllChildrenWithCleanup(bool bCleanup);
-    virtual void reorderChild(CCNode *pChild, int zOrder);
-    virtual void addChild(CCNode *pChild);
-    virtual void addChild(CCNode *pChild, int zOrder);
-    virtual void addChild(CCNode *pChild, int zOrder, int tag);
-    virtual void sortAllChildren();
-    virtual void setScale(float fScale);
-    virtual void setVertexZ(float fVertexZ);
-    virtual void setAnchorPoint(const CCPoint& anchor);
-    virtual void ignoreAnchorPointForPosition(bool value);
-    virtual void setVisible(bool bVisible);
+
     virtual void draw(void);
     /// @}
     
@@ -251,29 +231,6 @@ public:
      * Updates the quad according the rotation, position, scale values. 
      */
     virtual void updateTransform(void);
-    
-    /**
-     * Returns the batch node object if this sprite is rendered by CCSpriteBatchNode
-     *
-     * @return The CCSpriteBatchNode object if this sprite is rendered by CCSpriteBatchNode,
-     *         NULL if the sprite isn't used batch node.
-     */
-    virtual CCSpriteBatchNode* getBatchNode(void);
-    /**
-     * Sets the batch node to sprite
-     * @warning This method is not recommended for game developers. Sample code for using batch node
-     * @code
-     * CCSpriteBatchNode *batch = CCSpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
-     * CCSprite *sprite = CCSprite::createWithTexture(batch->getTexture(), CCRectMake(0, 0, 57, 57));
-     * batch->addChild(sprite);
-     * layer->addChild(batch);
-     * @endcode
-     */
-    virtual void setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode);
-     
-    /// @} end of BatchNode methods
-    
-    
     
     /// @{
     /// @name Texture methods
@@ -376,16 +333,6 @@ public:
      */
     inline const CCRect& getTextureRect(void) { return m_obRect; }
 
-    /**
-     * Gets the weak reference of the CCTextureAtlas when the sprite is rendered using via CCSpriteBatchNode
-     */
-    inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
-    
-    /**
-     * Sets the weak reference of the CCTextureAtlas when the sprite is rendered using via CCSpriteBatchNode
-     */
-    inline void setTextureAtlas(CCTextureAtlas *pobTextureAtlas) { m_pobTextureAtlas = pobTextureAtlas; }
-
     /** 
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
@@ -431,13 +378,13 @@ public:
     void setFlipY(bool bFlipY);
     
     /// @} End of Sprite properties getter/setters
-    
-    void setFrame(const CCRect& rect);
-    
-    void setBoundsSize(const CCSize& size);
-    
-    void setContentSize(const CCSize &size);
-    
+
+	void setFrame(const CCRect& rect);
+
+	void setBoundsSize(const CCSize& size);
+
+	void setContentSize(const CCSize &size);
+
 protected:
     void updateColor(void);
     virtual void setTextureCoords(CCRect rect);
@@ -445,12 +392,7 @@ protected:
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
 
-    //
-    // Data used when the sprite is rendered using a CCSpriteSheet
-    //
-    CCTextureAtlas*     m_pobTextureAtlas;      /// CCSpriteBatchNode texture atlas (weak reference)
     unsigned int        m_uAtlasIndex;          /// Absolute (real) Index on the SpriteSheet
-    CCSpriteBatchNode*  m_pobBatchNode;         /// Used batch node (weak reference)
     
     bool                m_bDirty;               /// Whether the sprite needs to be updated
     bool                m_bRecursiveDirty;      /// Whether all of the sprite's children needs to be updated
@@ -487,7 +429,7 @@ protected:
     bool m_bFlipY;                              /// Whether the sprite is flipped vertically or not.
 };
 
-typedef CCSprite CAImageView;
+
 // end of sprite_nodes group
 /// @}
 

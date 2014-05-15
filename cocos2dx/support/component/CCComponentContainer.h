@@ -30,7 +30,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class CCComponent;
-class CCNode;
+class CAView_;
 /**
  *  @js NA
  *  @lua NA
@@ -38,13 +38,14 @@ class CCNode;
 class CC_DLL CCComponentContainer
 {
 protected:
-    CCComponentContainer(CCNode *pNode);
+    CCComponentContainer(CAView_ *pNode);
     
 public:
     virtual ~CCComponentContainer(void);
     virtual CCComponent* get(const char *pName) const;
     virtual bool add(CCComponent *pCom);
     virtual bool remove(const char *pName);
+    virtual bool remove(CCComponent *pCom);
     virtual void removeAll();
     virtual void visit(float fDelta);
 public:
@@ -55,9 +56,9 @@ private:
     
 private:
     CCDictionary *m_pComponents;        ///< Dictionary of components
-    CCNode *m_pOwner;
+    CAView_ *m_pOwner;
     
-    friend class CCNode;
+    friend class CAView_;
 };
 
 NS_CC_END

@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "CubeRenderer.h"
 #include "esUtil.h"
+#include "winrtangle.h"
 
 #include <GLES2/gl2ext.h>
 
@@ -51,7 +52,7 @@ protected:
 	void OnPointerMoved(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::PointerEventArgs^ args);
 
 private:
-	//CubeRenderer^ m_renderer;
+    Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
     ESContext m_esContext;
     UserData m_userData;
 	bool m_windowClosed;

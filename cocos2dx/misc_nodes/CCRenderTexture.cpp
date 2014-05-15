@@ -350,7 +350,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         m_bAutoDraw = false;
         
         // add sprite for backward compatibility
-        addChild(m_pSprite);
+        addSubview(m_pSprite);
         
         bRet = true;
     } while (0);
@@ -599,12 +599,12 @@ void CCRenderTexture::draw()
 		}
 		
 		//! make sure all children are drawn
-        sortAllChildren();
+        sortAllSubviews();
 		
 		CCObject *pElement;
-		CCARRAY_FOREACH(m_pChildren, pElement)
+		CCARRAY_FOREACH(m_pSubviews, pElement)
         {
-            CCNode *pChild = (CCNode*)pElement;
+            CAView_ *pChild = (CAView_*)pElement;
 
             if (pChild != m_pSprite)
             {

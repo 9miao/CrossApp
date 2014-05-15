@@ -31,8 +31,6 @@ public:
     
     virtual bool init();
     
-    //void setSuperView(CAView* view);
-    
     const char* getNibName();
     
     CC_SYNTHESIZE(std::string, m_sTitle, Title);
@@ -65,9 +63,9 @@ protected:
     
 private:
     
-    void setViewSuperNode(CCNode* node);
+    void addViewFromSuperview(CAView_* node);
     
-    void removeViewAtSuperNode();
+    void removeViewFromSuperview();
     
 private:
     

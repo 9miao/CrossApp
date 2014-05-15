@@ -23,7 +23,7 @@ CAControl::CAControl()
 
 CAControl::~CAControl()
 {
-    this->removeAllChildren();
+    this->removeAllSubviews();
     CC_SAFE_DELETE(m_pBackGroundView);
     CC_SAFE_DELETE(m_pHighlightedBackGroundView);
     CC_SAFE_DELETE(m_pDisabledBackGroundView);
@@ -32,10 +32,10 @@ CAControl::~CAControl()
 
 void CAControl::setControlState(CAControlState var)
 {
-    this->removeChild(m_pBackGroundView);
-    this->removeChild(m_pHighlightedBackGroundView);
-    this->removeChild(m_pDisabledBackGroundView);
-    this->removeChild(m_pSelectedBackGroundView);
+    this->removeSubview(m_pBackGroundView);
+    this->removeSubview(m_pHighlightedBackGroundView);
+    this->removeSubview(m_pDisabledBackGroundView);
+    this->removeSubview(m_pSelectedBackGroundView);
     
     m_eControlState = var;
     
@@ -46,7 +46,7 @@ void CAControl::setControlState(CAControlState var)
             if (m_pBackGroundView)
             {
                 m_pBackGroundView->setFrame(this->getBounds());
-                this->addChild(m_pBackGroundView, -1);
+                this->insertSubview(m_pBackGroundView, -1);
             }
             break;
         }
@@ -55,12 +55,12 @@ void CAControl::setControlState(CAControlState var)
             if (m_pHighlightedBackGroundView)
             {
                 m_pHighlightedBackGroundView->setFrame(this->getBounds());
-                this->addChild(m_pHighlightedBackGroundView, -1);
+                this->insertSubview(m_pHighlightedBackGroundView, -1);
             }
             else if (m_pBackGroundView)
             {
                 m_pBackGroundView->setFrame(this->getBounds());
-                this->addChild(m_pBackGroundView, -1);
+                this->insertSubview(m_pBackGroundView, -1);
             }
             break;
         }
@@ -69,12 +69,12 @@ void CAControl::setControlState(CAControlState var)
             if (m_pDisabledBackGroundView)
             {
                 m_pDisabledBackGroundView->setFrame(this->getBounds());
-                this->addChild(m_pDisabledBackGroundView, -1);
+                this->insertSubview(m_pDisabledBackGroundView, -1);
             }
             else if (m_pBackGroundView)
             {
                 m_pBackGroundView->setFrame(this->getBounds());
-                this->addChild(m_pBackGroundView, -1);
+                this->insertSubview(m_pBackGroundView, -1);
             }
             break;
         }
@@ -83,12 +83,12 @@ void CAControl::setControlState(CAControlState var)
             if (m_pSelectedBackGroundView)
             {
                 m_pSelectedBackGroundView->setFrame(this->getBounds());
-                this->addChild(m_pSelectedBackGroundView, -1);
+                this->insertSubview(m_pSelectedBackGroundView, -1);
             }
             else if (m_pBackGroundView)
             {
                 m_pBackGroundView->setFrame(this->getBounds());
-                this->addChild(m_pBackGroundView, -1);
+                this->insertSubview(m_pBackGroundView, -1);
             }
             break;
         }
@@ -147,7 +147,7 @@ void CAControl::setBackGroundView(cocos2d::CCNodeRGBA *var)
     if (m_pBackGroundView != var)
     {
         CC_SAFE_RETAIN(var);
-        this->removeChild(m_pBackGroundView);
+        this->removeSubview(m_pBackGroundView);
         CC_SAFE_RELEASE(m_pBackGroundView);
         m_pBackGroundView = var;
     }
@@ -163,7 +163,7 @@ void CAControl::setHighlightedBackGroundView(cocos2d::CCNodeRGBA *var)
     if (m_pHighlightedBackGroundView != var)
     {
         CC_SAFE_RETAIN(var);
-        this->removeChild(m_pHighlightedBackGroundView);
+        this->removeSubview(m_pHighlightedBackGroundView);
         CC_SAFE_RELEASE(m_pHighlightedBackGroundView);
         m_pHighlightedBackGroundView = var;
     }
@@ -179,7 +179,7 @@ void CAControl::setDisabledBackGroundView(cocos2d::CCNodeRGBA *var)
     if (m_pDisabledBackGroundView != var)
     {
         CC_SAFE_RETAIN(var);
-        this->removeChild(m_pDisabledBackGroundView);
+        this->removeSubview(m_pDisabledBackGroundView);
         CC_SAFE_RELEASE(m_pDisabledBackGroundView);
         m_pDisabledBackGroundView = var;
     }
@@ -195,7 +195,7 @@ void CAControl::setSelectedBackGroundView(cocos2d::CCNodeRGBA *var)
     if (m_pSelectedBackGroundView != var)
     {
         CC_SAFE_RETAIN(var);
-        this->removeChild(m_pSelectedBackGroundView);
+        this->removeSubview(m_pSelectedBackGroundView);
         CC_SAFE_RELEASE(m_pSelectedBackGroundView);
         m_pSelectedBackGroundView = var;
     }

@@ -12,7 +12,6 @@
 #include "CCDirector.h"
 #include "CCScheduler.h"
 #include "support/CCPointExtension.h"
-
 NS_CC_BEGIN
 
 CAProgress::CAProgress()
@@ -27,7 +26,7 @@ CAProgress::CAProgress()
 ,m_pCopyTarckImage(NULL)
 ,m_previousPercent(0.0f)
 {
-    m_pIndicator=CCNode::create();
+    m_pIndicator=CAView_::create();
     m_pIndicator->retain();
 }
 
@@ -58,7 +57,7 @@ void CAProgress::setProgress(float progress, bool animated)
     m_nCurPercent=progress;
     if (animated)
     {
-        this->cocos2d::CCNode::schedule(schedule_selector(CAProgress::schedule));
+        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CAProgress::schedule), this, 1/60.0f, false);
         
         CCMoveTo *pMoveTo=CCMoveTo::create((progress/1.0f)*0.3, ccp(this->getFrame().size.width*progress, 0));
         
@@ -106,7 +105,7 @@ void CAProgress::onEnterTransitionDidFinish()
         m_pCopyTarckImage=CCSprite::createWithTexture(m_pRender->getSprite()->getTexture());
         m_pCopyTarckImage->setPosition(CCPointZero);
         m_pCopyTarckImage->setAnchorPoint(CCPointZero);
-        this->addChild(m_pCopyTarckImage);
+        this->addSubview(m_pCopyTarckImage);
         
         
         
@@ -116,9 +115,9 @@ void CAProgress::onEnterTransitionDidFinish()
         m_pCopyProgressImage->setAnchorPoint(CCPointZero);
         m_pCopyProgressImage->setPosition(CCPointZero);
         m_pCopyProgressImage->setTextureRect(CCRectMake(m_pCopyProgressImage->getPosition().x, m_pCopyProgressImage->getPosition().y, m_pCopyProgressImage->getContentSize().width*m_fProgress, m_pCopyProgressImage->getContentSize().height));
-        this->addChild(m_pCopyProgressImage,1);
+        this->addSubview(m_pCopyProgressImage);
         m_pIndicator->setFrame(CCRectMake(m_pCopyProgressImage->getPosition().x, m_pCopyProgressImage->getPosition().y, 0, 0));
-        this->addChild(m_pIndicator);
+        this->addSubview(m_pIndicator);
     }
 }
 
@@ -132,7 +131,7 @@ void CAProgress::init9SpriteWithImage(const char *fileName)
     tarckImage->setCapInsets(tarckTap);
     tarckImage->setPreferredSize(m_obContentSize);
     tarckImage->setAnchorPoint(CCPointZero);
-    this->addChild(tarckImage);
+    this->addSubview(tarckImage);
     
     
     
@@ -141,7 +140,7 @@ void CAProgress::init9SpriteWithImage(const char *fileName)
     m_pRender->begin();
     tarckImage->visit();
     m_pRender->end();
-    this->removeChild(tarckImage);
+    this->removeSubview(tarckImage);
 }
 
 void CAProgress::setProgressTintImage(std::string var)
@@ -184,7 +183,7 @@ void CAProgress::schedule(float dt)
     }
     else
     {
-        this->unschedule(schedule_selector(CAProgress::schedule));
+        CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAProgress::schedule), this);
     }
     
     

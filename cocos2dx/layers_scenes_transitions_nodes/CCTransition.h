@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCTRANSITION_H__
 #define __CCTRANSITION_H__
 
-#include "CAWindow.h"
+#include "sprite_nodes/CAWindow.h"
 #include "ccTypes.h"
 
 NS_CC_BEGIN

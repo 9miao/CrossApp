@@ -49,9 +49,6 @@
     <Filter Include="misc_nodes">
       <UniqueIdentifier>{23821b0c-f17d-46bb-90a8-efaf2fca8275}</UniqueIdentifier>
     </Filter>
-    <Filter Include="particle_nodes">
-      <UniqueIdentifier>{02d66db8-1c75-470d-a4cf-aef16a125756}</UniqueIdentifier>
-    </Filter>
     <Filter Include="platform">
       <UniqueIdentifier>{f56836ba-85c3-40d4-a29b-7ece1c460be8}</UniqueIdentifier>
     </Filter>
@@ -104,10 +101,7 @@
       <UniqueIdentifier>{9944a9b0-eb9b-4bb9-9e67-9c3eb6144a72}</UniqueIdentifier>
     </Filter>
     <Filter Include="ui_controller">
-      <UniqueIdentifier>{4cec03f5-22e2-4d53-b5f9-421af07947fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="other">
-      <UniqueIdentifier>{1eb43a57-4704-421f-9ef6-407a1354e5f5}</UniqueIdentifier>
+      <UniqueIdentifier>{e7030664-1f5a-452b-ab25-94f3bd0628fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -279,22 +273,7 @@
     <ClCompile Include="..\misc_nodes\CCRenderTexture.cpp">
       <Filter>misc_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\particle_nodes\CCParticleBatchNode.cpp">
-      <Filter>particle_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\particle_nodes\CCParticleExamples.cpp">
-      <Filter>particle_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\particle_nodes\CCParticleSystem.cpp">
-      <Filter>particle_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp">
-      <Filter>particle_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\wp8\CCEGLView.cpp">
-      <Filter>platform\wp8</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\wp8\Direct3DBase.cpp">
       <Filter>platform\wp8</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\winrt\CCAccelerometer.cpp">
@@ -456,6 +435,9 @@
     <ClCompile Include="..\ccFPSImages.c" />
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
+    <ClCompile Include="..\platform\wp8\ModalLayer.cpp">
+      <Filter>platform\wp8</Filter>
+    </ClCompile>
     <ClCompile Include="..\platform\wp8\WP8Keyboard.cpp">
       <Filter>platform\wp8</Filter>
     </ClCompile>
@@ -468,8 +450,8 @@
     <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CAWindow.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
+    <ClCompile Include="..\sprite_nodes\CAWindow.cpp">
+      <Filter>sprite_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp">
       <Filter>sprite_nodes</Filter>
@@ -486,23 +468,20 @@
     <ClCompile Include="..\ui_controller\CAButton.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
+    <ClCompile Include="..\ui_controller\CAControl.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
     <ClCompile Include="..\ui_controller\CAProgress.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
     <ClCompile Include="..\ui_controller\CAScrollView.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\ui_controller\CAViewController.cpp">
-      <Filter>ui_controller</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ui_controller\CAControl.cpp">
-      <Filter>ui_controller</Filter>
-    </ClCompile>
     <ClCompile Include="..\ui_controller\CATableView.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\other\CACamera.cpp">
-      <Filter>other</Filter>
+    <ClCompile Include="..\ui_controller\CAViewController.cpp">
+      <Filter>ui_controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -710,25 +689,7 @@
     <ClInclude Include="..\misc_nodes\CCRenderTexture.h">
       <Filter>misc_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\particle_nodes\CCParticleBatchNode.h">
-      <Filter>particle_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\particle_nodes\CCParticleExamples.h">
-      <Filter>particle_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\particle_nodes\CCParticleSystem.h">
-      <Filter>particle_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\particle_nodes\CCParticleSystemQuad.h">
-      <Filter>particle_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\particle_nodes\firePngData.h">
-      <Filter>particle_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\wp8\CCEGLView.h">
-      <Filter>platform\wp8</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\wp8\Direct3DBase.h">
       <Filter>platform\wp8</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\CCAccelerometer.h">
@@ -922,6 +883,9 @@
     <ClInclude Include="..\CCDirector.h" />
     <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\CCScheduler.h" />
+    <ClInclude Include="..\platform\wp8\ModalLayer.h">
+      <Filter>platform\wp8</Filter>
+    </ClInclude>
     <ClInclude Include="..\shaders\precompiled\wp8\ccShaders_wp8.h">
       <Filter>shaders\precompiled\wp8</Filter>
     </ClInclude>
@@ -937,8 +901,8 @@
     <ClInclude Include="..\platform\winrt\CCPThreadWinRT.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CAWindow.h">
-      <Filter>layers_scenes_transitions_nodes</Filter>
+    <ClInclude Include="..\sprite_nodes\CAWindow.h">
+      <Filter>sprite_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h">
       <Filter>sprite_nodes</Filter>
@@ -955,23 +919,20 @@
     <ClInclude Include="..\ui_controller\CAButton.h">
       <Filter>ui_controller</Filter>
     </ClInclude>
+    <ClInclude Include="..\ui_controller\CAControl.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
     <ClInclude Include="..\ui_controller\CAProgress.h">
       <Filter>ui_controller</Filter>
     </ClInclude>
     <ClInclude Include="..\ui_controller\CAScrollView.h">
       <Filter>ui_controller</Filter>
     </ClInclude>
-    <ClInclude Include="..\ui_controller\CAViewController.h">
-      <Filter>ui_controller</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ui_controller\CAControl.h">
-      <Filter>ui_controller</Filter>
-    </ClInclude>
     <ClInclude Include="..\ui_controller\CATableView.h">
       <Filter>ui_controller</Filter>
     </ClInclude>
-    <ClInclude Include="..\other\CACamera.h">
-      <Filter>other</Filter>
+    <ClInclude Include="..\ui_controller\CAViewController.h">
+      <Filter>ui_controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

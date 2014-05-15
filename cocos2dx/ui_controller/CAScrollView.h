@@ -46,17 +46,15 @@ public:
     virtual void onExitTransitionDidStart();
     
     virtual bool initWithFrame(const cocos2d::CCRect &rect);
-    
-    void addChild(CCNode * child);
 
-    void addChild(CCNode * child, int zOrder);
-
-    void addChild(CCNode* child, int zOrder, int tag);
+    void addSubview(CAView_* subview);
     
-    void removeAllChildrenWithCleanup(bool cleanup);
+    virtual void insertSubview(CAView_* subview, int z);
+    
+    void removeAllSubviews();
     
 protected:
-    
+ 
     const CCPoint& getScrollWindowNotOutPoint(CCPoint& point);
     
     float getScrollWindowNotOutHorizontal(float x);
@@ -65,17 +63,21 @@ protected:
     
     bool isScrollWindowNotOutSide();
     
-    void update(float fDelta);
+    bool isScrollWindowNotMaxOutSide();
+    
+    virtual void update(float fDelta);
     
     void deaccelerateScrolling(float delay);
     
-    inline virtual float maxSpeed();
+    inline virtual float maxSpeed(float delay);
     
-    inline virtual float maxSpeedCache();
+    inline virtual float maxSpeedCache(float delay);
     
-    inline virtual float decelerationRatio();
+    inline virtual float decelerationRatio(float delay);
     
-    inline virtual float maxBouncesSpeed();
+    inline virtual CCPoint maxBouncesLenght();
+    
+    inline float maxBouncesSpeed(float delay);
     
 protected:
     
@@ -167,7 +169,7 @@ public:
     
 private:
 
-    CCNode* m_pIndicator;
+    CAView_* m_pIndicator;
     
     CAIndicatorType m_eType;
 };

@@ -60,9 +60,9 @@ public:
    
     
 private:
-    CCSprite *m_pCopyTarckImage;
+    CCSprite* m_pCopyTarckImage;
     
-    CCSprite *m_pCopyProgressImage;
+    CCSprite* m_pCopyProgressImage;
     
     CCRenderTexture *m_pRender;
     
@@ -70,7 +70,7 @@ private:
     
     float m_previousPercent;
     
-    CCNode *m_pIndicator;
+    CAView_* m_pIndicator;
     
     void init9SpriteWithImage(const char *fileName);
     

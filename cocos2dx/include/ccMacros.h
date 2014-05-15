@@ -36,13 +36,13 @@ THE SOFTWARE.
 
 #ifndef CCAssert
 #if COCOS2D_DEBUG > 0
-#define CCAssert(cond, msg) do {                              \
-      if (!(cond)) {                                          \
-        if (strlen(msg)) \
-          cocos2d::CCLog("Assert failed: %s", msg);           \
-        CC_ASSERT(cond);                                      \
-      } \
-    } while (0)
+#define CCAssert(cond, msg) do {								\
+if (!(cond)) {													\
+if (strlen(msg))												\
+	cocos2d::CCLog("Assert failed: %s", msg);					\
+	CC_ASSERT(cond);											\
+} \
+} while (0)
 #else
 #define CCAssert(cond, msg) ((void)(cond))
 #endif

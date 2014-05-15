@@ -26,7 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionManager.h"
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "support/data_support/ccCArray.h"
@@ -168,7 +168,7 @@ void CCActionManager::resumeTargets(cocos2d::CCSet *targetsToResume)
 
 // run
 
-void CCActionManager::addAction(CCAction *pAction, CCNode *pTarget, bool paused)
+void CCActionManager::addAction(CCAction *pAction, CAView_ *pTarget, bool paused)
 {
     CCAssert(pAction != NULL, "");
     CCAssert(pTarget != NULL, "");

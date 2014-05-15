@@ -48,7 +48,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void update(float time);
 
 public:
@@ -74,7 +74,7 @@ public:
      */
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual CCActionInterval* reverse(void);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void update(float time);
 
 public:

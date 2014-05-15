@@ -40,7 +40,7 @@
 #include <vector>
 
 #include "CCActionInterval.h"
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "cocoa/CCGeometry.h"
 
 NS_CC_BEGIN;
@@ -152,7 +152,7 @@ public:
     /**
      *  @lua NA
      */
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     /**
      *  @lua NA
      */
@@ -206,7 +206,7 @@ public:
     /**
      *  @lua NA
      */
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual CCActionInterval* reverse();
     /**
      *  @lua NA

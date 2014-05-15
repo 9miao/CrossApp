@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "textures/CCTexture2D.h"
 #include "ccTypes.h"
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN

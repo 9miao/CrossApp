@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __ACTION_CCINTERVAL_ACTION_H__
 #define __ACTION_CCINTERVAL_ACTION_H__
 
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "CCAction.h"
 #include "CCProtocols.h"
 #include "sprite_nodes/CCSpriteFrame.h"
@@ -75,7 +75,7 @@ public:
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void step(float dt);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     /** returns a reversed action */
     virtual CCActionInterval* reverse(void);
 
@@ -117,7 +117,7 @@ public:
     /**
      * @lua NA
      */
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     /**
      * @lua NA
      */
@@ -173,7 +173,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void stop(void);
     virtual void update(float dt);
     virtual bool isDone(void);
@@ -233,7 +233,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void startWithTarget(CCNode* pTarget);
+    virtual void startWithTarget(CAView_* pTarget);
     virtual void step(float dt);
     virtual bool isDone(void);
     virtual CCActionInterval* reverse(void);
@@ -285,7 +285,7 @@ public:
     /**
      * @lua NA
      */
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     /**
      * @lua NA
      */
@@ -324,7 +324,7 @@ protected:
     CCFiniteTimeAction *m_pTwo;
 };
 
-/** @brief Rotates a CCNode object to a certain angle by modifying it's
+/** @brief Rotates a CAView_ object to a certain angle by modifying it's
  rotation attribute.
  The direction will be decided by the shortest angle.
 */ 
@@ -344,7 +344,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void update(float time);
     
 protected:
@@ -357,7 +357,7 @@ protected:
     float m_fDiffAngleY;
 };
 
-/** @brief Rotates a CCNode object clockwise a number of degrees by modifying it's rotation attribute.
+/** @brief Rotates a CAView_ object clockwise a number of degrees by modifying it's rotation attribute.
 */
 class CC_DLL CCRotateBy : public CCActionInterval
 {
@@ -374,7 +374,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
     
@@ -385,7 +385,7 @@ protected:
     float m_fStartAngleY;
 };
 
-/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
+/**  Moves a CAView_ object x,y pixels by modifying it's position attribute.
  x and y are relative to the position of the object.
  Several CCMoveBy actions can be concurrently called, and the resulting
  movement will be the sum of individual movements.
@@ -401,7 +401,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual CCActionInterval* reverse(void);
     virtual void update(float time);
 
@@ -414,7 +414,7 @@ protected:
     CCPoint m_previousPosition;
 };
 
-/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+/** Moves a CAView_ object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
  Several CCMoveTo actions can be concurrently called, and the resulting
  movement will be the sum of individual movements.
  @since v2.1beta2-custom
@@ -429,7 +429,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
 
 public:
     /** creates the action */
@@ -438,7 +438,7 @@ protected:
     CCPoint m_endPosition;
 };
 
-/** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes
+/** Skews a CAView_ object to given angles by modifying it's skewX and skewY attributes
 @since v1.0
 */
 class CC_DLL CCSkewTo : public CCActionInterval
@@ -454,7 +454,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void update(float time);
 
 public:
@@ -472,14 +472,14 @@ protected:
     float m_fDeltaY;
 };
 
-/** Skews a CCNode object by skewX and skewY degrees
+/** Skews a CAView_ object by skewX and skewY degrees
 @since v1.0
 */
 class CC_DLL CCSkewBy : public CCSkewTo
 {
 public:
     virtual bool initWithDuration(float t, float sx, float sy);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual CCActionInterval* reverse(void);
 
 public:
@@ -488,7 +488,7 @@ public:
     static CCSkewBy* create(float t, float deltaSkewX, float deltaSkewY);
 };
 
-/** @brief Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
+/** @brief Moves a CAView_ object simulating a parabolic jump movement by modifying it's position attribute.
 */
 class CC_DLL CCJumpBy : public CCActionInterval
 {
@@ -500,7 +500,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
@@ -515,12 +515,12 @@ protected:
     CCPoint         m_previousPos;
 };
 
-/** @brief Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
+/** @brief Moves a CAView_ object to a parabolic position simulating a jump movement by modifying it's position attribute.
 */ 
 class CC_DLL CCJumpTo : public CCJumpBy
 {
 public:
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     /**
      *  @js NA
      *  @lua NA
@@ -560,7 +560,7 @@ public:
     /**
      *  @lua NA
      */
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     /**
      *  @lua NA
      */
@@ -590,7 +590,7 @@ public:
     /**
      *  @lua NA
      */
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     /**
      *  @js NA
      *  @lua NA
@@ -615,7 +615,7 @@ protected:
     ccBezierConfig m_sToConfig;
 };
 
-/** @brief Scales a CCNode object to a zoom factor by modifying it's scale attribute.
+/** @brief Scales a CAView_ object to a zoom factor by modifying it's scale attribute.
  @warning This action doesn't support "reverse"
  */
 class CC_DLL CCScaleTo : public CCActionInterval
@@ -631,7 +631,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void update(float time);
 
 public:
@@ -652,12 +652,12 @@ protected:
     float m_fDeltaY;
 };
 
-/** @brief Scales a CCNode object a zoom factor by modifying it's scale attribute.
+/** @brief Scales a CAView_ object a zoom factor by modifying it's scale attribute.
 */
 class CC_DLL CCScaleBy : public CCScaleTo
 {
 public:
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual CCActionInterval* reverse(void);
     /**
      *  @js NA
@@ -674,7 +674,7 @@ public:
     static CCScaleBy* create(float duration, float sx, float sy);
 };
 
-/** @brief Blinks a CCNode object by modifying it's visible attribute
+/** @brief Blinks a CAView_ object by modifying it's visible attribute
 */
 class CC_DLL CCBlink : public CCActionInterval
 {
@@ -694,7 +694,7 @@ public:
     /** creates the action */
     static CCBlink* create(float duration, unsigned int uBlinks);
     
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void stop();
     
 protected:
@@ -754,7 +754,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void update(float time);
 
 public:
@@ -765,7 +765,7 @@ protected:
     GLubyte m_fromOpacity;
 };
 
-/** @brief Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
+/** @brief Tints a CAView_ that implements the CCNodeRGB protocol from current tint to a custom one.
  @warning This action doesn't support "reverse"
  @since v0.7.2
 */
@@ -779,7 +779,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void update(float time);
 
 public:
@@ -790,7 +790,7 @@ protected:
     ccColor3B m_from;
 };
 
-/** @brief Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
+/** @brief Tints a CAView_ that implements the CCNodeRGB protocol from current tint to a custom one.
  @since v0.7.2
  */
 class CC_DLL CCTintBy : public CCActionInterval
@@ -803,7 +803,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
@@ -866,7 +866,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void stop(void);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
@@ -901,7 +901,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void stop(void);
     virtual void update(float t);
     virtual CCActionInterval* reverse(void);
@@ -934,21 +934,21 @@ public:
     virtual ~CCTargetedAction();
 
     /** Create an action with the specified action and forced target */
-    static CCTargetedAction* create(CCNode* pTarget, CCFiniteTimeAction* pAction);
+    static CCTargetedAction* create(CAView_* pTarget, CCFiniteTimeAction* pAction);
 
     /** Init an action with the specified action and forced target */
-    bool initWithTarget(CCNode* pTarget, CCFiniteTimeAction* pAction);
+    bool initWithTarget(CAView_* pTarget, CCFiniteTimeAction* pAction);
     /**
      *  @js NA
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
+    virtual void startWithTarget(CAView_ *pTarget);
     virtual void stop(void);
     virtual void update(float time);
 
     /** This is the target that the action will be forced to run with */
-    CC_SYNTHESIZE_RETAIN(CCNode*, m_pForcedTarget, ForcedTarget);
+    CC_SYNTHESIZE_RETAIN(CAView_*, m_pForcedTarget, ForcedTarget);
 private:
     CCFiniteTimeAction* m_pAction;
 };

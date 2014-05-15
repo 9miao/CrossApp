@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "CCAction.h"
 #include "CCActionInterval.h"
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "support/CCPointExtension.h"
 #include "CCDirector.h"
 #include "cocoa/CCZone.h"
@@ -79,7 +79,7 @@ CCObject* CCAction::copyWithZone(CCZone *pZone)
     return pRet;
 }
 
-void CCAction::startWithTarget(CCNode *aTarget)
+void CCAction::startWithTarget(CAView_ *aTarget)
 {
     m_pOriginalTarget = m_pTarget = aTarget;
 }
@@ -166,7 +166,7 @@ CCObject *CCSpeed::copyWithZone(CCZone *pZone)
     return pRet;
 }
 
-void CCSpeed::startWithTarget(CCNode* pTarget)
+void CCSpeed::startWithTarget(CAView_* pTarget)
 {
     CCAction::startWithTarget(pTarget);
     m_pInnerAction->startWithTarget(pTarget);
@@ -211,7 +211,7 @@ CCFollow::~CCFollow()
     CC_SAFE_RELEASE(m_pobFollowedNode);
 }
 
-CCFollow* CCFollow::create(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
+CCFollow* CCFollow::create(CAView_ *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
 {
     CCFollow *pRet = new CCFollow();
     if (pRet && pRet->initWithTarget(pFollowedNode, rect))
@@ -223,7 +223,7 @@ CCFollow* CCFollow::create(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZ
     return NULL;
 }
 
-bool CCFollow::initWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
+bool CCFollow::initWithTarget(CAView_ *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
 {
     CCAssert(pFollowedNode != NULL, "");
  

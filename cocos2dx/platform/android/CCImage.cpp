@@ -48,37 +48,17 @@ public:
     : m_pData(NULL)
     , m_nWidth(0)
     , m_nHeight(0)
-    , g_jvm(NULL)
-    , g_obj(NULL)
     {
     }
 
     ~BitmapDC(void)
     {
-        your_thread_stop_javaVMDetachCurrentThread();
         if (m_pData)
         {
             delete [] m_pData;
         }
     }
 
-    bool your_thread_start_javaVMAttachCurrentThread()
-    {
-        JNIEnv* env = NULL;
-        
-        if( JniHelper::getJavaVM()->AttachCurrentThread(&env,NULL) < 0)
-            return false;
-        
-        return true;
-    }
-    
-    
-    void your_thread_stop_javaVMDetachCurrentThread()
-    {
-        JniHelper::getJavaVM()->DetachCurrentThread();
-    }
-    
-    
     bool getBitmapFromJavaShadowStroke(	const char *text,
     									int nWidth,
     									int nHeight,
@@ -99,15 +79,11 @@ public:
     									float strokeColorB 		= 0.0,
     									float strokeSize 		= 0.0 )
     {
-            JniMethodInfo methodInfo;
-            your_thread_start_javaVMAttachCurrentThread();
-
+           JniMethodInfo methodInfo;
            if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmapShadowStroke",
                "(Ljava/lang/String;Ljava/lang/String;IFFFIIIZFFFZFFFF)V"))
            {
                CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
-
-            your_thread_stop_javaVMDetachCurrentThread();
                return false;
            }
         
@@ -139,8 +115,7 @@ public:
            methodInfo.env->DeleteLocalRef(jstrText);
            methodInfo.env->DeleteLocalRef(jstrFont);
            methodInfo.env->DeleteLocalRef(methodInfo.classID);
-        //your_thread_stop_javaVMDetachCurrentThread();
-//           (g_jvm)->DetachCurrentThread();
+
            return true;
     }
 
@@ -155,23 +130,19 @@ public:
     {
         return ((value << 8 & 0xffffff00) | (value >> 24 & 0x000000ff));
     }
+
 public:
-    
     int m_nWidth;
     int m_nHeight;
     unsigned char *m_pData;
     JNIEnv *env;
-    JavaVM *g_jvm;
-    jobject g_obj;
 };
 
 static BitmapDC& sharedBitmapDC()
 {
     static BitmapDC s_BmpDC;
-    
     return s_BmpDC;
 }
-
 
 bool CCImage::initWithString(
                                const char *    pText, 
@@ -229,12 +200,11 @@ bool CCImage::initWithStringShadowStroke(
                                          float strokeSize)
 {
 	 bool bRet = false;
-    
 	    do
 	    {
 	        CC_BREAK_IF(! pText);
-            BitmapDC &dc = sharedBitmapDC();
-	        
+
+	        BitmapDC &dc = sharedBitmapDC();
 
 
 	        CC_BREAK_IF(! dc.getBitmapFromJavaShadowStroke(pText, nWidth, nHeight, eAlignMask, pFontName,
@@ -259,10 +229,9 @@ bool CCImage::initWithStringShadowStroke(
 
 	        // ok
 	        bRet = true;
-          //  dc.your_thread_stop_javaVMDetachCurrentThread();
 
 	    } while (0);
-    
+
 	    return bRet;
 }
 
@@ -281,11 +250,6 @@ void swapAlphaChannel(unsigned int *pImageMemory, unsigned int numPixels)
 	}
 }
 
-static jobject g_obj1 = NULL;
-static JavaVM *g_jvm1 = NULL;
-
-
-
 // this method is called by Cocos2dxBitmap
 extern "C"
 {
@@ -294,14 +258,8 @@ extern "C"
     */
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
     {
-        
-        
         int size = width * height * 4;
         cocos2d::BitmapDC& bitmapDC = cocos2d::sharedBitmapDC();
-        env->GetJavaVM(&g_jvm1);
-        g_obj1=env->NewGlobalRef(thiz);
-//         env->GetJavaVM(env,&(bitmapDC.g_jvm));
-//        bitmapDC.g_obj = env->NewGlobalRef(env,thiz);
         bitmapDC.m_nWidth = width;
         bitmapDC.m_nHeight = height;
         bitmapDC.m_pData = new unsigned char[size];
@@ -318,6 +276,5 @@ extern "C"
                 *tempPtr++ = bitmapDC.swapAlpha(tempdata);
             }
         }
-        
     }
 };

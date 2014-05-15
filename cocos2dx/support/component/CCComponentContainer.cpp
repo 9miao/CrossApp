@@ -26,10 +26,10 @@ THE SOFTWARE.
 #include "support/component/CCComponentContainer.h"
 #include "support/component/CCComponent.h"
 #include "CCDirector.h"
-
+#include "CCScheduler.h"
 NS_CC_BEGIN
 
-CCComponentContainer::CCComponentContainer(CCNode *pNode)
+CCComponentContainer::CCComponentContainer(CAView_ *pNode)
 : m_pComponents(NULL)
 , m_pOwner(pNode)
 {
@@ -64,7 +64,7 @@ bool CCComponentContainer::add(CCComponent *pCom)
         {
             m_pComponents = CCDictionary::create();
             m_pComponents->retain();
-            m_pOwner->scheduleUpdate();
+            CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CAView_::CCObject::update), m_pOwner, 1/60.0f, false);
         }
         CCComponent *pComponent = dynamic_cast<CCComponent*>(m_pComponents->objectForKey(pCom->getName()));
         
@@ -104,6 +104,31 @@ bool CCComponentContainer::remove(const char *pName)
     return bRet;
  }
 
+bool CCComponentContainer::remove(CCComponent *pCom)
+{
+    bool bRet = false;
+    do 
+    { 
+        CC_BREAK_IF(!m_pComponents);
+        CCDictElement *pElement = NULL;
+        CCDictElement *tmp = NULL;
+        HASH_ITER(hh, m_pComponents->m_pElements, pElement, tmp)
+        {
+            if (pElement->getObject() == pCom)
+            {
+                pCom->onExit();
+                pCom->setOwner(NULL);
+                HASH_DEL(m_pComponents->m_pElements, pElement);
+                pElement->getObject()->release();
+                CC_SAFE_DELETE(pElement);
+                break;
+            }
+        }
+        bRet = true;
+    } while (0);
+    return bRet;
+}
+
 void CCComponentContainer::removeAll()
 {
     if (m_pComponents != NULL)
@@ -117,7 +142,7 @@ void CCComponentContainer::removeAll()
             pElement->getObject()->release();
             CC_SAFE_DELETE(pElement);
         }
-        m_pOwner->unscheduleUpdate();
+        CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAView_::update), m_pOwner);
     }
 }
 
@@ -143,5 +168,8 @@ bool CCComponentContainer::isEmpty() const
 {
     return (bool)(!(m_pComponents && m_pComponents->count()));
 }
+
+
+
 
 NS_CC_END

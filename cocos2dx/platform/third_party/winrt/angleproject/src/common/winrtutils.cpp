@@ -4,7 +4,7 @@
 // found in the LICENSE file.
 //
 
-// debug.cpp: Debugging utilities.
+// winrtutils.cpp: WinRT/WP8 utilities.
 
 #include "common/winrtutils.h"
 
@@ -16,25 +16,7 @@
 #include <windows.applicationmodel.core.h>
 #include <math.h>
 
-// check if WinRT
-#if defined(WINAPI_FAMILY)
-#if !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-#define ANGLE_PLATFORM_WINRT
-#endif
-#endif // !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-#endif // #if defined(WINAPI_FAMILY)
-
-// check if Windows Phone 8
-#if defined(WINAPI_FAMILY)
-#if defined(WINAPI_PARTITION_PHONE) && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_PHONE)
-#define ANGLE_PLATFORM_WP8
-#ifndef ANGLE_PLATFORM_WINRT
-#define ANGLE_PLATFORM_WINRT
-#endif
-#endif // #if defined(WINAPI_PARTITION_PHONE) && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_PHONE)
-#endif // #if defined(WINAPI_FAMILY)
-
+#include "common/winrtplatform.h"
 
 #if !defined(ANGLE_PLATFORM_WP8)
 #include <windows.ui.xaml.media.dxinterop.h>
@@ -95,7 +77,7 @@ bool isSwapChainBackgroundPanel(ComPtr<IUnknown> window)
     return FALSE;
 #else
     ComPtr<ISwapChainBackgroundPanelNative> panelNative;
-    return S_OK == (window.Get())->QueryInterface(IID_PPV_ARGS(&panelNative));
+    return S_OK == (window.As(&panelNative));
 #endif // #if defined(ANGLE_PLATFORM_WP8)
 }
 

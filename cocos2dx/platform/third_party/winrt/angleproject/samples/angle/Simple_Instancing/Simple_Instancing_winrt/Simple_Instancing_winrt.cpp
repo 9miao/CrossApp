@@ -208,31 +208,49 @@ void Simple_Instancing_winrt::Initialize(CoreApplicationView^ applicationView)
 
 void Simple_Instancing_winrt::SetWindow(CoreWindow^ window)
 {
-	window->SizeChanged += 
+    window->SizeChanged +=
         ref new TypedEventHandler<CoreWindow^, WindowSizeChangedEventArgs^>(this, &Simple_Instancing_winrt::OnWindowSizeChanged);
 
-	window->VisibilityChanged +=
-		ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &Simple_Instancing_winrt::OnVisibilityChanged);
+    window->VisibilityChanged +=
+        ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &Simple_Instancing_winrt::OnVisibilityChanged);
 
-	window->Closed += 
+    window->Closed +=
         ref new TypedEventHandler<CoreWindow^, CoreWindowEventArgs^>(this, &Simple_Instancing_winrt::OnWindowClosed);
 
-	window->PointerCursor = ref new CoreCursor(CoreCursorType::Arrow, 0);
+    window->PointerCursor = ref new CoreCursor(CoreCursorType::Arrow, 0);
 
-	window->PointerPressed +=
-		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &Simple_Instancing_winrt::OnPointerPressed);
+    window->PointerPressed +=
+        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &Simple_Instancing_winrt::OnPointerPressed);
 
-	window->PointerMoved +=
-		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &Simple_Instancing_winrt::OnPointerMoved);
+    window->PointerMoved +=
+        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &Simple_Instancing_winrt::OnPointerMoved);
 
-	//m_renderer->Initialize(CoreWindow::GetForCurrentThread());
-    m_esContext.hWnd.window = CoreWindow::GetForCurrentThread();
-    esCreateWindow ( &m_esContext, TEXT("Simple Instancing"), 320, 240, ES_WINDOW_RGB );
-   
-    if ( !Init ( &m_esContext ) )
-      return;
+    // we need to select the correct DirectX feature level depending on the platform
+    // default is for WinRT on Windows 8.0
+    ANGLE_D3D_FEATURE_LEVEL featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_1;
 
-    esRegisterDrawFunc ( &m_esContext, Draw );
+    //m_renderer->Initialize(CoreWindow::GetForCurrentThread());
+#if (_MSC_VER >= 1800)
+    // WinRT on Windows 8.1 can compile shaders at run time so we don't care about the DirectX feature level
+    featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_ANY;
+#elif WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_PHONE)
+    // Windows Phone 8.0 uses D3D_FEATURE_LEVEL_9_3
+    featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_3;
+#endif 
+
+    HRESULT result = CreateWinrtEglWindow(WINRT_EGL_IUNKNOWN(CoreWindow::GetForCurrentThread()), featureLevel, m_eglWindow.GetAddressOf());    
+    if (SUCCEEDED(result))
+    {
+        m_esContext.hWnd = m_eglWindow;
+        //title, width, and height are unused, but included for backwards compatibility
+        if (esCreateWindow(&m_esContext, TEXT("Simple Instancing"), 320, 240, ES_WINDOW_RGB) != GL_TRUE)
+            return;
+
+        if (!Init(&m_esContext))
+            return; 
+
+        esRegisterDrawFunc(&m_esContext, Draw);
+    }
 }
 
 void Simple_Instancing_winrt::Load(Platform::String^ entryPoint)

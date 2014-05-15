@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "CCConfiguration.h"
 #include "cocoa/CCNS.h"
-#include "layers_scenes_transitions_nodes/CAWindow.h"
+#include "sprite_nodes/CAWindow.h"
 #include "cocoa/CCArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
@@ -47,8 +47,6 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
-#include "label_nodes/CCLabelBMFont.h"
-#include "label_nodes/CCLabelAtlas.h"
 #include "actions/CCActionManager.h"
 #include "CCConfiguration.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
@@ -130,6 +128,7 @@ bool CCDirector::init(void)
     m_uTotalFrames = m_uFrames = 0;
     m_pszFPS = new char[10];
     m_pLastUpdate = new struct cc_timeval();
+    m_fSecondsPerFrame = 0.0f;
 
     // paused ?
     m_bPaused = false;
@@ -349,7 +348,8 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 		conf->dumpInfo();
 
         // EAGLView is not a CCObject
-        delete m_pobOpenGLView; // [openGLView_ release]
+        if(m_pobOpenGLView)
+            delete m_pobOpenGLView; // [openGLView_ release]
         m_pobOpenGLView = pobOpenGLView;
 
         // set size
@@ -453,7 +453,6 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
 void CCDirector::purgeCachedData(void)
 {
-    CCLabelBMFont::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
         CCTextureCache::sharedTextureCache()->removeUnusedTextures();
@@ -487,8 +486,9 @@ void CCDirector::reshapeProjection(const CCSize& newWindowSize)
 	{
 		m_obWinSizeInPoints = CCSizeMake(newWindowSize.width * m_fContentScaleFactor,
 			newWindowSize.height * m_fContentScaleFactor);
-		setProjection(m_eProjection);
+		setProjection(m_eProjection);       
 	}
+
 }
 void CCDirector::setDepthTest(bool bOn)
 {
@@ -600,6 +600,7 @@ void CCDirector::runWithScene(CAWindow *pScene)
 
     pushScene(pScene);
     startAnimation();
+    
 }
 
 void CCDirector::replaceScene(CAWindow *pScene)
@@ -621,7 +622,7 @@ void CCDirector::pushScene(CAWindow *pScene)
 
     m_bSendCleanupToScene = false;
 
-    m_pobScenesStack->addObject(pScene);
+    m_pobScenesStack->addObject(pScene); 
     m_pNextScene = pScene;
 }
 
@@ -719,9 +720,6 @@ void CCDirector::purgeDirector()
     CC_SAFE_RELEASE_NULL(m_pSPFLabel);
     CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
 
-    // purge bitmap cache
-    CCLabelBMFont::purgeCachedData();
-
     // purge all managed caches
     ccDrawFree();
     CCAnimationCache::purgeSharedAnimationCache();
@@ -774,7 +772,7 @@ void CCDirector::setNextScene(void)
         m_pRunningScene->release();
     }
     m_pRunningScene = m_pNextScene;
-    m_pNextScene->retain();
+    m_pRunningScene->retain();
     m_pNextScene = NULL;
 
     if ((! runningIsTransition) && m_pRunningScene)
@@ -911,27 +909,32 @@ void CCDirector::createStatsLabel()
      Secondly, the size of this image is 480*320, to display the FPS label with correct size, 
      a factor of design resolution ratio of 480x320 is also needed.
      */
-    float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 320.0f;
+    float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 640.0f;
 
-    m_pFPSLabel = new CCLabelAtlas();
-    m_pFPSLabel->setIgnoreContentScaleFactor(true);
-    m_pFPSLabel->initWithString("00.0", texture, 12, 32 , '.');
+    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", 24);
+    m_pFPSLabel->setAnchorPoint(CCPointZero);
+    m_pFPSLabel->retain();
     m_pFPSLabel->setScale(factor);
-
-    m_pSPFLabel = new CCLabelAtlas();
-    m_pSPFLabel->setIgnoreContentScaleFactor(true);
-    m_pSPFLabel->initWithString("0.000", texture, 12, 32, '.');
+    m_pFPSLabel->setColor(ccBLUE);
+    
+    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", 24);
+    m_pSPFLabel->setAnchorPoint(CCPointZero);
+    m_pSPFLabel->retain();
     m_pSPFLabel->setScale(factor);
-
-    m_pDrawsLabel = new CCLabelAtlas();
-    m_pDrawsLabel->setIgnoreContentScaleFactor(true);
-    m_pDrawsLabel->initWithString("000", texture, 12, 32, '.');
+    m_pSPFLabel->setColor(ccBLUE);
+    
+    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", 24);
+    m_pDrawsLabel->setAnchorPoint(CCPointZero);
+    m_pDrawsLabel->retain();
     m_pDrawsLabel->setScale(factor);
-
+    m_pDrawsLabel->setColor(ccBLUE);
+    
     CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    m_pDrawsLabel->setPosition(ccpAdd(ccp(0, 34*factor), CC_DIRECTOR_STATS_POSITION));
-    m_pSPFLabel->setPosition(ccpAdd(ccp(0, 17*factor), CC_DIRECTOR_STATS_POSITION));
+    CCLog("%f, %f", CC_DIRECTOR_STATS_POSITION.x, CC_DIRECTOR_STATS_POSITION.y);
+    
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(0, 64*factor), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setPosition(ccpAdd(ccp(0, 32*factor), CC_DIRECTOR_STATS_POSITION));
     m_pFPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 
@@ -949,12 +952,12 @@ void CCDirector::setContentScaleFactor(float scaleFactor)
     }
 }
 
-CCNode* CCDirector::getNotificationNode() 
+CAView_* CCDirector::getNotificationNode()
 { 
     return m_pNotificationNode; 
 }
 
-void CCDirector::setNotificationNode(CCNode *node)
+void CCDirector::setNotificationNode(CAView_ *node)
 {
     CC_SAFE_RELEASE(m_pNotificationNode);
     m_pNotificationNode = node;

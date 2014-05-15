@@ -23,17 +23,9 @@
 
 #if defined(ANGLE_PLATFORM_WINRT)
 #include "common/winrtutils.h"
-#include <wrl/client.h>
-#include <wrl\implements.h>
-#include <wrl\module.h>
-#include <wrl\event.h>
-#include <wrl\wrappers\corewrappers.h>
-#include <windows.applicationmodel.core.h>
-
-using namespace ABI::Windows::UI::Core;
+#include "common/winrtangleutils.h"
+using namespace Microsoft::WRL;
 #endif // #if defined(ANGLE_PLATFORM_WINRT)
-
-
 
 namespace egl
 {
@@ -112,7 +104,9 @@ bool Surface::resetSwapChain()
     if (mWindow)
     {
 #if defined(ANGLE_PLATFORM_WINRT)
-        winrt::getCurrentWindowDimensions(width, height);
+
+		winrtangleutils::getWindowSize(mWindow, width, height);
+
 #else
         RECT windowRect;
         if (!GetClientRect(getWindowHandle(), &windowRect))
@@ -244,16 +238,6 @@ EGLNativeWindowType Surface::getWindowHandle()
 }
 
 
-#if defined(ANGLE_PLATFORM_WINRT)
-
-
-
-void Surface::onWindowSizeChanged()
-{
-    checkForOutOfDateSwapChain();    
-}
-
-#endif // #if defined(ANGLE_PLATFORM_WINRT)
 
 
 #define kSurfaceProperty _TEXT("Egl::SurfaceOwner")
@@ -338,7 +322,7 @@ bool Surface::checkForOutOfDateSwapChain()
 #if defined(ANGLE_PLATFORM_WINRT)
     int clientWidth = 0;
     int clientHeight = 0;
-    winrt::getCurrentWindowDimensions(clientWidth,clientHeight);
+	winrtangleutils::getWindowSize(mWindow, clientWidth, clientHeight);
 #else
     RECT client;
     if (!GetClientRect(getWindowHandle(), &client))

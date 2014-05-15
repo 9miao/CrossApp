@@ -25,9 +25,6 @@
     <Filter Include="misc_nodes">
       <UniqueIdentifier>{41abe422-1602-4fe0-ac1c-6b04a14c1abb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="particle_nodes">
-      <UniqueIdentifier>{8bf0f517-2ac3-4fc3-a1ad-999d9ea103cd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="platform">
       <UniqueIdentifier>{926fc31c-8742-4984-9940-c972dd02fc8a}</UniqueIdentifier>
     </Filter>
@@ -95,10 +92,7 @@
       <UniqueIdentifier>{485f1c18-d463-48d0-bcaa-a10e32aa3332}</UniqueIdentifier>
     </Filter>
     <Filter Include="ui_controller">
-      <UniqueIdentifier>{0b0a80de-c158-4c85-b85f-31fe1050c115}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="other">
-      <UniqueIdentifier>{bc558c05-8931-45cb-99d4-75f382b328a7}</UniqueIdentifier>
+      <UniqueIdentifier>{e1cc5eaf-a2f7-4944-b0c7-3744263ab9f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -209,18 +203,6 @@
     </ClCompile>
     <ClCompile Include="..\misc_nodes\CCRenderTexture.cpp">
       <Filter>misc_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\particle_nodes\CCParticleBatchNode.cpp">
-      <Filter>particle_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\particle_nodes\CCParticleExamples.cpp">
-      <Filter>particle_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\particle_nodes\CCParticleSystem.cpp">
-      <Filter>particle_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp">
-      <Filter>particle_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp">
       <Filter>platform</Filter>
@@ -438,14 +420,14 @@
     <ClCompile Include="..\support\component\CCComponentContainer.cpp">
       <Filter>support\component</Filter>
     </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CAWindow.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
     <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\sprite_nodes\CCView.cpp">
       <Filter>sprite_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CAWindow.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\ui_controller\CABar.cpp">
       <Filter>ui_controller</Filter>
@@ -456,23 +438,20 @@
     <ClCompile Include="..\ui_controller\CAButton.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
+    <ClCompile Include="..\ui_controller\CAControl.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
     <ClCompile Include="..\ui_controller\CAProgress.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
     <ClCompile Include="..\ui_controller\CAScrollView.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\ui_controller\CAViewController.cpp">
-      <Filter>ui_controller</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ui_controller\CAControl.cpp">
-      <Filter>ui_controller</Filter>
-    </ClCompile>
     <ClCompile Include="..\ui_controller\CATableView.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\other\CACamera.cpp">
-      <Filter>other</Filter>
+    <ClCompile Include="..\ui_controller\CAViewController.cpp">
+      <Filter>ui_controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -604,18 +583,6 @@
     </ClInclude>
     <ClInclude Include="..\misc_nodes\CCRenderTexture.h">
       <Filter>misc_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\particle_nodes\CCParticleBatchNode.h">
-      <Filter>particle_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\particle_nodes\CCParticleExamples.h">
-      <Filter>particle_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\particle_nodes\CCParticleSystem.h">
-      <Filter>particle_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\particle_nodes\CCParticleSystemQuad.h">
-      <Filter>particle_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCAccelerometerDelegate.h">
       <Filter>platform</Filter>
@@ -919,14 +886,14 @@
     <ClInclude Include="..\support\component\CCComponentContainer.h">
       <Filter>support\component</Filter>
     </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CAWindow.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
     <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h">
       <Filter>sprite_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\sprite_nodes\CCView.h">
       <Filter>sprite_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CAWindow.h">
-      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\ui_controller\CABar.h">
       <Filter>ui_controller</Filter>
@@ -937,23 +904,20 @@
     <ClInclude Include="..\ui_controller\CAButton.h">
       <Filter>ui_controller</Filter>
     </ClInclude>
+    <ClInclude Include="..\ui_controller\CAControl.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
     <ClInclude Include="..\ui_controller\CAProgress.h">
       <Filter>ui_controller</Filter>
     </ClInclude>
     <ClInclude Include="..\ui_controller\CAScrollView.h">
       <Filter>ui_controller</Filter>
     </ClInclude>
-    <ClInclude Include="..\ui_controller\CAViewController.h">
-      <Filter>ui_controller</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ui_controller\CAControl.h">
-      <Filter>ui_controller</Filter>
-    </ClInclude>
     <ClInclude Include="..\ui_controller\CATableView.h">
       <Filter>ui_controller</Filter>
     </ClInclude>
-    <ClInclude Include="..\other\CACamera.h">
-      <Filter>other</Filter>
+    <ClInclude Include="..\ui_controller\CAViewController.h">
+      <Filter>ui_controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

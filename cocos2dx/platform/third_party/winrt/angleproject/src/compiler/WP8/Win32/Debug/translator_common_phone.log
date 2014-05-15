@@ -1,17 +1,46 @@
-﻿生成启动时间为 2014/5/7 21:43:39。
-     1>项目“E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_common_phone.vcxproj”在节点 2 上(Build 个目标)。
+﻿生成启动时间为 2014/5/11 21:24:56。
+     1>项目“J:\CrossAppNew\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_common_phone.vcxproj”在节点 3 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /I"E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\\" /I"E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\../" /I"E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\../../include" /IWP8\Win32\Debug\ /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /nologo /W1 /WX- /MP /Od /Oy- /D _LIB /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"WP8\Win32\Debug\\" /Fd"WP8\Win32\Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt InfoSink.cpp QualifierAlive.cpp RemoveTree.cpp SymbolTable.cpp VariableInfo.cpp intermOut.cpp timing\RestrictVertexShaderTiming.cpp util.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /IJ:\CrossAppNew\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\ /IJ:\CrossAppNew\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\../ /IJ:\CrossAppNew\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\../../include /IWP8\Win32\Debug\ /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /nologo /W1 /WX- /MP /Od /Oy- /D _LIB /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"WP8\Win32\Debug\\" /Fd"WP8\Win32\Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\third_party\compiler\ArrayBoundsClamper.cpp BuiltInFunctionEmulator.cpp Compiler.cpp debug.cpp depgraph\DependencyGraph.cpp depgraph\DependencyGraphBuilder.cpp depgraph\DependencyGraphOutput.cpp depgraph\DependencyGraphTraverse.cpp DetectCallDepth.cpp Diagnostics.cpp DirectiveHandler.cpp ForLoopUnroll.cpp glslang_lex.cpp glslang_tab.cpp InfoSink.cpp Initialize.cpp InitializeDll.cpp InitializeGLPosition.cpp InitializeParseContext.cpp Intermediate.cpp intermOut.cpp IntermTraverse.cpp MapLongVariableNames.cpp ossource_win.cpp parseConst.cpp ParseHelper.cpp PoolAlloc.cpp QualifierAlive.cpp RemoveTree.cpp ShaderLang.cpp SymbolTable.cpp timing\RestrictFragmentShaderTiming.cpp timing\RestrictVertexShaderTiming.cpp util.cpp ValidateLimitations.cpp VariableInfo.cpp VariablePacker.cpp
+         ArrayBoundsClamper.cpp
+         BuiltInFunctionEmulator.cpp
+         Compiler.cpp
+         debug.cpp
+         DependencyGraph.cpp
+         DependencyGraphBuilder.cpp
+         DependencyGraphOutput.cpp
+         DependencyGraphTraverse.cpp
+         DetectCallDepth.cpp
+         Diagnostics.cpp
+         DirectiveHandler.cpp
+         ForLoopUnroll.cpp
+         glslang_lex.cpp
+         glslang_tab.cpp
          InfoSink.cpp
+         Initialize.cpp
+         InitializeDll.cpp
+         InitializeGLPosition.cpp
+         InitializeParseContext.cpp
+         Intermediate.cpp
+         intermOut.cpp
+         IntermTraverse.cpp
+         MapLongVariableNames.cpp
+         ossource_win.cpp
+         parseConst.cpp
+         ParseHelper.cpp
+         PoolAlloc.cpp
          QualifierAlive.cpp
          RemoveTree.cpp
+         ShaderLang.cpp
          SymbolTable.cpp
-         VariableInfo.cpp
-         intermOut.cpp
+         RestrictFragmentShaderTiming.cpp
          RestrictVertexShaderTiming.cpp
          util.cpp
+         ValidateLimitations.cpp
+         VariableInfo.cpp
+         VariablePacker.cpp
        Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\Lib.exe /OUT:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8\WP8\redist\vs2012\Win32\Debug\translator_common_phone\translator_common_phone.lib" /NOLOGO WP8\Win32\Debug\ArrayBoundsClamper.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\Lib.exe /OUT:"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\Win32\Debug\translator_common_phone\translator_common_phone.lib" /NOLOGO WP8\Win32\Debug\ArrayBoundsClamper.obj
          WP8\Win32\Debug\BuiltInFunctionEmulator.obj
          WP8\Win32\Debug\Compiler.obj
          WP8\Win32\Debug\debug.obj
@@ -48,9 +77,9 @@
          WP8\Win32\Debug\ValidateLimitations.obj
          WP8\Win32\Debug\VariableInfo.obj
          WP8\Win32\Debug\VariablePacker.obj
-         translator_common_phone.vcxproj -> E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8\WP8\redist\vs2012\Win32\Debug\translator_common_phone\translator_common_phone.lib
-     1>已完成生成项目“E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_common_phone.vcxproj”(Build 个目标)的操作。
+         translator_common_phone.vcxproj -> J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\Win32\Debug\translator_common_phone\translator_common_phone.lib
+     1>已完成生成项目“J:\CrossAppNew\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_common_phone.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:03.56
+已用时间 00:01:23.21

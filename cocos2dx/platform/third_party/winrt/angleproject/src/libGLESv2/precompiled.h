@@ -32,16 +32,7 @@
 #include <unordered_map>
 #include <vector>
 
-#if defined(WINAPI_FAMILY)
-#if !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-#define ANGLE_PLATFORM_WINRT
-#endif
-#if defined(WINAPI_PARTITION_PHONE) && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_PHONE)
-#define ANGLE_PLATFORM_WP8
-#endif
-#endif
-#endif
+#include "common/winrtplatform.h"
 
 #if defined(ANGLE_PLATFORM_WINRT)
 #include <D3D11_1.h>

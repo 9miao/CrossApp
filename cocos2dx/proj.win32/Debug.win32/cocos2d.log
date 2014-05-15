@@ -1,15 +1,141 @@
-﻿生成启动时间为 2014/5/7 21:15:49。
-     1>项目“E:\工作\CrossApp\cocos2dx\proj.win32\cocos2d.vcxproj”在节点 2 上(Build 个目标)。
+﻿生成启动时间为 2014/5/11 20:54:25。
+     1>项目“E:\win 开发\CrossAppNew\cocos2dx\proj.win32\cocos2d.vcxproj”在节点 2 上(Build 个目标)。
      1>PreLinkEvent:
-         if not exist "E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\" mkdir "E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\"
-         xcopy /Y /Q "E:\工作\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libraries\*.*" "E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\"
+         if not exist "E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\" mkdir "E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\"
+         xcopy /Y /Q "E:\win 开发\CrossAppNew\cocos2dx\proj.win32\..\platform\third_party\win32\libraries\*.*" "E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\"
          
          :VCEnd
          复制了 15 个文件
        Link:
-         cocos2d.vcxproj -> E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.dll
-     1>已完成生成项目“E:\工作\CrossApp\cocos2dx\proj.win32\cocos2d.vcxproj”(Build 个目标)的操作。
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\\" opengl32.lib glew32.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libwebp.lib libiconv.lib pthreadVCE2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.pdb" /SUBSYSTEM:WINDOWS,"5.01" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.lib" /MACHINE:X86 /SAFESEH /DLL Debug.win32\CCAtlasNode.obj
+         Debug.win32\CCNode.obj
+         Debug.win32\ccFPSImages.obj
+         Debug.win32\CCAffineTransform.obj
+         Debug.win32\CCArray.obj
+         Debug.win32\CCAutoreleasePool.obj
+         Debug.win32\CCDataVisitor.obj
+         Debug.win32\CCDictionary.obj
+         Debug.win32\CCGeometry.obj
+         Debug.win32\CCNS.obj
+         Debug.win32\CCObject.obj
+         Debug.win32\CCSet.obj
+         Debug.win32\CCString.obj
+         Debug.win32\CCZone.obj
+         Debug.win32\CCDrawingPrimitives.obj
+         Debug.win32\CCDrawNode.obj
+         Debug.win32\CCGrabber.obj
+         Debug.win32\CCGrid.obj
+         Debug.win32\CCAction.obj
+         Debug.win32\CCActionCamera.obj
+         Debug.win32\CCActionCatmullRom.obj
+         Debug.win32\CCActionEase.obj
+         Debug.win32\CCActionGrid.obj
+         Debug.win32\CCActionGrid3D.obj
+         Debug.win32\CCActionInstant.obj
+         Debug.win32\CCActionInterval.obj
+         Debug.win32\CCActionManager.obj
+         Debug.win32\CCActionPageTurn3D.obj
+         Debug.win32\CCActionProgressTimer.obj
+         Debug.win32\CCActionTiledGrid.obj
+         Debug.win32\CCActionTween.obj
+         Debug.win32\CCLabelAtlas.obj
+         Debug.win32\CCLabelBMFont.obj
+         Debug.win32\CCLabelTTF.obj
+         Debug.win32\CCTransition.obj
+         Debug.win32\CCTransitionPageTurn.obj
+         Debug.win32\CCTransitionProgress.obj
+         Debug.win32\CCClippingNode.obj
+         Debug.win32\CCMotionStreak.obj
+         Debug.win32\CCProgressTimer.obj
+         Debug.win32\CCRenderTexture.obj
+         Debug.win32\CCEGLViewProtocol.obj
+         Debug.win32\CCFileUtils.obj
+         Debug.win32\CCImageCommonWebp.obj
+         Debug.win32\CCSAXParser.obj
+         Debug.win32\CCThread.obj
+         Debug.win32\platform.obj
+         Debug.win32\CCAccelerometer.obj
+         Debug.win32\CCApplication.obj
+         Debug.win32\CCCommon.obj
+         Debug.win32\CCDevice.obj
+         Debug.win32\CCEGLView.obj
+         Debug.win32\CCFileUtilsWin32.obj
+         Debug.win32\CCImage.obj
+         Debug.win32\CCStdC.obj
+         Debug.win32\CCGLProgram.obj
+         Debug.win32\ccGLStateCache.obj
+         Debug.win32\CCShaderCache.obj
+         Debug.win32\ccShaders.obj
+         Debug.win32\CAWindow.obj
+         Debug.win32\CCAnimation.obj
+         Debug.win32\CCAnimationCache.obj
+         Debug.win32\CCScale9Sprite.obj
+         Debug.win32\CCSprite.obj
+         Debug.win32\CCSpriteBatchNode.obj
+         Debug.win32\CCSpriteFrame.obj
+         Debug.win32\CCSpriteFrameCache.obj
+         Debug.win32\CCView.obj
+         Debug.win32\base64.obj
+         Debug.win32\CCNotificationCenter.obj
+         Debug.win32\CCPointExtension.obj
+         Debug.win32\CCProfiling.obj
+         Debug.win32\ccUTF8.obj
+         Debug.win32\ccUtils.obj
+         Debug.win32\CCVertex.obj
+         Debug.win32\CCComponent.obj
+         Debug.win32\CCComponentContainer.obj
+         Debug.win32\tinyxml2.obj
+         Debug.win32\TransformUtils.obj
+         Debug.win32\ccCArray.obj
+         Debug.win32\TGAlib.obj
+         Debug.win32\CCUserDefault.obj
+         Debug.win32\ioapi.obj
+         Debug.win32\unzip.obj
+         Debug.win32\ZipUtils.obj
+         Debug.win32\CCTexture2D.obj
+         Debug.win32\CCTextureAtlas.obj
+         Debug.win32\CCTextureCache.obj
+         Debug.win32\CCTextureETC.obj
+         Debug.win32\CCTexturePVR.obj
+         Debug.win32\CCTouch.obj
+         Debug.win32\CCTouchDispatcher.obj
+         Debug.win32\CCTouchHandler.obj
+         Debug.win32\CCKeypadDelegate.obj
+         Debug.win32\CCKeypadDispatcher.obj
+         Debug.win32\CCIMEDispatcher.obj
+         Debug.win32\CCTextFieldTTF.obj
+         Debug.win32\aabb.obj
+         Debug.win32\mat3.obj
+         Debug.win32\mat4.obj
+         Debug.win32\neon_matrix_impl.obj
+         Debug.win32\plane.obj
+         Debug.win32\quaternion.obj
+         Debug.win32\ray2.obj
+         Debug.win32\utility.obj
+         Debug.win32\vec2.obj
+         Debug.win32\vec3.obj
+         Debug.win32\vec4.obj
+         Debug.win32\mat4stack.obj
+         Debug.win32\matrix.obj
+         Debug.win32\CCCamera.obj
+         Debug.win32\CCConfiguration.obj
+         Debug.win32\CCDirector.obj
+         Debug.win32\CCScheduler.obj
+         Debug.win32\cocos2d.obj
+         Debug.win32\CABar.obj
+         Debug.win32\CABarItem.obj
+         Debug.win32\CAButton.obj
+         Debug.win32\CAControl.obj
+         Debug.win32\CAProgress.obj
+         Debug.win32\CAScrollView.obj
+         Debug.win32\CATableView.obj
+         Debug.win32\CAViewController.obj
+     1>CCAtlasNode.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/OPT:LBR”规范)
+            正在创建库 E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.lib 和对象 E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.exp
+     1>LINK : warning LNK4098: 默认库“LIBCMT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
+         cocos2d.vcxproj -> E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.dll
+     1>已完成生成项目“E:\win 开发\CrossAppNew\cocos2dx\proj.win32\cocos2d.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:00.42
+已用时间 00:00:02.55

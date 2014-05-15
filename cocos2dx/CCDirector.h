@@ -34,9 +34,8 @@ THE SOFTWARE.
 #include "cocoa/CCArray.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
-#include "label_nodes/CCLabelAtlas.h"
 #include "ccTypeInfo.h"
-
+#include "label_nodes/CCLabelTTF.h"
 
 NS_CC_BEGIN
 
@@ -94,7 +93,6 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-
 class CC_DLL CCDirector : public CCObject, public TypeInfo
 {
 public:
@@ -177,8 +175,8 @@ public:
      Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
      @since v0.99.5
      */
-    CCNode* getNotificationNode();
-    void setNotificationNode(CCNode *node);
+    CAView_* getNotificationNode();
+    void setNotificationNode(CAView_ *node);
     
     /** CCDirector delegate. It shall implemente the CCDirectorDelegate protocol
      @since v0.99.5
@@ -391,9 +389,9 @@ protected:
     float m_fAccumDt;
     float m_fFrameRate;
     
-    CCLabelAtlas *m_pFPSLabel;
-    CCLabelAtlas *m_pSPFLabel;
-    CCLabelAtlas *m_pDrawsLabel;
+    CCLabelTTF *m_pFPSLabel;
+    CCLabelTTF *m_pSPFLabel;
+    CCLabelTTF *m_pDrawsLabel;
     
     /** Whether or not the Director is paused */
     bool m_bPaused;
@@ -435,7 +433,7 @@ protected:
     char *m_pszFPS;
 
     /* This object will be visited after the scene. Useful to hook a notification node */
-    CCNode *m_pNotificationNode;
+    CAView_ *m_pNotificationNode;
 
     /* Projection protocol delegate */
     CCDirectorDelegate *m_pProjectionDelegate;

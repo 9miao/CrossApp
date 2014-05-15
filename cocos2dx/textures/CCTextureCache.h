@@ -57,15 +57,12 @@ class CC_DLL CCTextureCache : public CCObject
 {
 protected:
     CCDictionary* m_pTextures;
-    
     //pthread_mutex_t                *m_pDictLock;
 
 
 private:
     /// todo: void addImageWithAsyncObject(CCAsyncObject* async);
     void addImageAsyncCallBack(float dt);
-    
-    void addStringImageAsyncCallBack(float dt);
 public:
     /**
      *  @js ctor
@@ -116,9 +113,6 @@ public:
     
     void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
 
-    
-    void addStringImageAsync(const char *text, const char *fontName, float fontSize, cocos2d::CCSize& dimensions, CCTextAlignment textAlignment, CCVerticalTextAlignment verticalAlignment, CCObject *target, SEL_CallFuncO selector);
-    
     /* Returns a Texture2D object given an CGImageRef image
     * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
     * Otherwise it will return a reference of a previously loaded image
@@ -139,6 +133,15 @@ public:
     @since v0.99.5
     */
     CCTexture2D* textureForKey(const char* key);
+    
+    /** Reload texture from the image file
+     * If the file image hasn't loaded before, load it.
+     * Otherwise the texture will be reloaded from the file image.
+     * The "filenName" parameter is the related/absolute path of the file image.
+     * Return true if the reloading is succeed, otherwise return false.
+     */
+    bool reloadTexture(const char* fileName);
+
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"
     * In the short term: it will free some resources preventing your app from being killed

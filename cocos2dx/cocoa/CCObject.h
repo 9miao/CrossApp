@@ -42,7 +42,7 @@ class CCZone;
 class CCObject;
 class CCNode;
 class CCEvent;
-
+class CAView_;
 /**
  * @js NA
  * @lua NA
@@ -92,8 +92,8 @@ public:
 
 typedef void (CCObject::*SEL_SCHEDULE)(float);
 typedef void (CCObject::*SEL_CallFunc)();
-typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
-typedef void (CCObject::*SEL_CallFuncND)(CCNode*, void*);
+typedef void (CCObject::*SEL_CallFuncN)(CAView_*);
+typedef void (CCObject::*SEL_CallFuncND)(CAView_*, void*);
 typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
 typedef void (CCObject::*SEL_MenuHandler)(CCObject*);
 typedef void (CCObject::*SEL_EventHandler)(CCEvent*);

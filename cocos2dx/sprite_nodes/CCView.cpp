@@ -81,7 +81,7 @@ void CAView::onEnterTransitionDidFinish()
     CCNodeRGBA::onEnterTransitionDidFinish();
     if (m_pViewDelegate)
     {
-        m_pViewDelegate->getSuperViewRect(this->getParent()->getBounds());
+        m_pViewDelegate->getSuperViewRect(this->getSuperview()->getBounds());
         m_pViewDelegate->viewOnEnterTransitionDidFinish();
     }
 }

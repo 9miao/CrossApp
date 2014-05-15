@@ -70,7 +70,7 @@ void CANavigationBar::showBackGround()
 {
     if (m_pBackGround)
     {
-        m_pBackGround->removeFromParent();
+        m_pBackGround->removeFromSuperview();
         m_pBackGround = NULL;
     }
     
@@ -82,7 +82,7 @@ void CANavigationBar::showBackGround()
     m_pBackGround = CCScale9Sprite::createWithTexture(m_pBackGroundImage);
     ((CCScale9Sprite*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
-    this->addChild(m_pBackGround, 0);
+    this->addSubview(m_pBackGround);
 }
 
 void CANavigationBar::showTitle()
@@ -92,7 +92,7 @@ void CANavigationBar::showTitle()
         m_pTitle = CCLabelTTF::create("", "Arial", 40);
         m_pTitle->setAnchorPoint(CCPoint(0.5f, 0.5f));
         m_pTitle->setCenter(m_obContentSize/2);
-        this->addChild(m_pTitle, 1);
+        this->insertSubview(m_pTitle, 1);
     }
     
     if (m_pItems.empty() == false)
@@ -105,11 +105,15 @@ void CANavigationBar::showBackButton()
 {
     if (m_pBackButton == NULL)
     {
-        m_pBackButton = CAButton::createWithFrame(CCRect(20, 0, 50, 50));
+        CCRect rect = this->getBounds();
+        rect.origin.x = 20;
+        rect.origin.y = rect.size.height * 0.05f;
+        rect.size = ccpMult(rect.size, 0.9f);
+        m_pBackButton = CAButton::createWithFrame(rect);
         CAImageView* imageView = CAImageView::createWithTexture(CCTexture2D::create("button_left.png"));
         m_pBackButton->setBackGround(CAControlStateNormal, imageView);
         m_pBackButton->setPositionY(m_obContentSize.height/2);
-        this->addChild(m_pBackButton, 1);
+        this->insertSubview(m_pBackButton, 1);
         m_pBackButton->addTarget(this, CAButton_selector(CANavigationBar::goBack), TouchUpInSide);
     }
     
@@ -263,7 +267,7 @@ void CATabBar::showBackGround()
 {
     if (m_pBackGround)
     {
-        m_pBackGround->removeFromParent();
+        m_pBackGround->removeFromSuperview();
         m_pBackGround=NULL;
     }
     
@@ -275,7 +279,7 @@ void CATabBar::showBackGround()
     m_pBackGround = CCScale9Sprite::createWithTexture(m_pBackGroundImage);
     ((CCScale9Sprite*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
-    this->addChild(m_pBackGround);
+    this->addSubview(m_pBackGround);
 }
 
 void CATabBar::showItems()
@@ -293,7 +297,7 @@ void CATabBar::showItems()
         for (unsigned int i=0; i<count; i++)
         {
             CAView* view = CAView::createWithFrame(CCRect(i * width, 0, width, height), ccc4(0, 0, 0, 0));
-            this->addChild(view, 3);
+            this->insertSubview(view, 3);
             //view->setDisplayRange(false);
             m_pViews.push_back(view);
             
@@ -303,7 +307,8 @@ void CATabBar::showItems()
             if (m_pItems.at(i)->getImage())
             {
                 imageView = CAImageView::createWithTexture(m_pItems.at(i)->getImage());
-                view->addChild(imageView, 0, 0xffff);
+                imageView->setTag(0xffff);
+                view->addSubview(imageView);
             }
             
             
@@ -311,7 +316,8 @@ void CATabBar::showItems()
             {
                 int fontSize = this->getContentSize().height / 5.0f;
                 title = CCLabelTTF::create(m_pItems.at(i)->getTitle().c_str(), "Arial", fontSize);
-                view->addChild(title, 0, 0xfffe);
+                title->setTag(0xfffe);
+                view->addSubview(title);
             }
             
             
@@ -340,7 +346,7 @@ void CATabBar::showItems()
             }
             else
             {
-                imageView->setCenter(CCPoint(view->getContentSize().width/2, view->getContentSize().height * 13/20));
+                imageView->setCenter(CCPoint(view->getContentSize().width/2, view->getContentSize().height * 7/20));
                 
                 CCSize imageViewSize = imageView->getContentSize();
                 float scaleX = width / imageViewSize.width * 0.5f;
@@ -350,7 +356,7 @@ void CATabBar::showItems()
                 imageViewSize = ccpMult(imageViewSize, scale);
                 imageView->setBoundsSize(imageViewSize);
                 
-                title->setCenter(CCPoint(view->getContentSize().width/2, view->getContentSize().height * 5/20));
+                title->setCenter(CCPoint(view->getContentSize().width/2, view->getContentSize().height * 15/20));
                 
                 CCSize titleSize = title->getContentSize();
                 float titleScale = height / titleSize.height * 3/10;
@@ -367,7 +373,7 @@ void CATabBar::showSelectedBackGround()
 {
     if (m_pSelectedBackGround)
     {
-        m_pSelectedBackGround->removeFromParent();
+        m_pSelectedBackGround->removeFromSuperview();
         m_pSelectedBackGround=NULL;
     }
     
@@ -378,14 +384,14 @@ void CATabBar::showSelectedBackGround()
 
     m_pSelectedBackGround = CCScale9Sprite::createWithTexture(m_pSelectedBackGroundImage);
     ((CCScale9Sprite*)m_pSelectedBackGround)->setPreferredSize(m_cItemSize);
-    this->addChild(m_pSelectedBackGround, 1);
+    this->insertSubview(m_pSelectedBackGround, 1);
 }
 
 void CATabBar::showSelectedIndicator()
 {
     if (m_pSelectedIndicator)
     {
-        m_pSelectedIndicator->removeFromParent();
+        m_pSelectedIndicator->removeFromSuperview();
         m_pSelectedIndicator=NULL;
     }
     
@@ -396,8 +402,9 @@ void CATabBar::showSelectedIndicator()
     
     m_pSelectedIndicator = CCScale9Sprite::createWithTexture(m_pSelectedIndicatorImage);
     ((CCScale9Sprite*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
-    m_pSelectedIndicator->setAnchorPoint(CCPointZero);
-    this->addChild(m_pSelectedIndicator, 2);
+    m_pSelectedIndicator->setAnchorPoint(CCPoint(0.0f, 1.0f));
+    m_pSelectedIndicator->setFrame(CCRect(0, this->getBounds().size.height, 0, 0));
+    this->insertSubview(m_pSelectedIndicator, 2);
 }
 
 void CATabBar::setSelectedAtIndex(int index)
@@ -410,7 +417,7 @@ void CATabBar::setSelectedAtIndex(int index)
         if (m_pSelectedItem && m_pSelectedItem->getSelectedImage())
         {
             CAView* viewLast = m_pViews.at(m_nSelectedIndex);
-            if (CAImageView* imageView = dynamic_cast<CAImageView*>(viewLast->getChildByTag(0xffff)))
+            if (CAImageView* imageView = dynamic_cast<CAImageView*>(viewLast->getSubviewByTag(0xffff)))
             {
                 imageView->setTexture(m_pSelectedItem->getImage());
             }
@@ -424,7 +431,7 @@ void CATabBar::setSelectedAtIndex(int index)
         {
             ((CCScale9Sprite*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
             m_pSelectedIndicator->stopAllActions();
-            CCPoint p = m_pSelectedBackGround->getFrame().origin;
+            CCPoint p = CCPoint(m_pSelectedBackGround->getFrame().origin.x, m_pSelectedBackGround->getFrame().size.height);
             CCMoveTo* moveTo = CCMoveTo::create(0.3f, p);
             CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
             m_pSelectedIndicator->runAction(easeBack);
@@ -433,7 +440,7 @@ void CATabBar::setSelectedAtIndex(int index)
         if (m_pSelectedItem->getSelectedImage())
         {
             CAView* view = m_pViews.at(m_nSelectedIndex);
-            if (CAImageView* imageView = dynamic_cast<CAImageView*>(view->getChildByTag(0xffff)))
+            if (CAImageView* imageView = dynamic_cast<CAImageView*>(view->getSubviewByTag(0xffff)))
             {
                 imageView->setTexture(m_pSelectedItem->getSelectedImage());
             }

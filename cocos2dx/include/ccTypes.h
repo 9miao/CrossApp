@@ -1,28 +1,28 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #ifndef __CCTYPES_H__
 #define __CCTYPES_H__
@@ -35,7 +35,7 @@
 NS_CC_BEGIN
 
 /** RGB color composed of bytes 3 bytes
- @since v0.8
+@since v0.8
  */
 typedef struct _ccColor3B
 {
@@ -80,8 +80,8 @@ static const ccColor3B ccORANGE={255,127,0};
 static const ccColor3B ccGRAY={166,166,166};
 
 /** RGBA color composed of 4 bytes
- @since v0.8
- */
+@since v0.8
+*/
 typedef struct _ccColor4B
 {
     GLubyte r;
@@ -99,8 +99,8 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 
 
 /** RGBA color composed of 4 floats
- @since v0.8
- */
+@since v0.8
+*/
 typedef struct _ccColor4F {
     GLfloat r;
     GLfloat g;
@@ -119,7 +119,7 @@ static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
 }
 
 //! helper that creates a ccColor4f type
-static inline ccColor4F
+static inline ccColor4F 
 ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
 {
     ccColor4F c4 = {r, g, b, a};
@@ -180,13 +180,13 @@ static inline ccVertex3F vertex3(const float x, const float y, const float z)
     ccVertex3F c = {x, y, z};
     return c;
 }
-
+        
 /** A texcoord composed of 2 floats: u, y
  @since v0.8
  */
 typedef struct _ccTex2F {
-    GLfloat u;
-    GLfloat v;
+     GLfloat u;
+     GLfloat v;
 } ccTex2F;
 
 static inline ccTex2F tex2(const float u, const float v)
@@ -195,7 +195,7 @@ static inline ccTex2F tex2(const float u, const float v)
     return t;
 }
 
-
+ 
 //! Point Sprite component
 typedef struct _ccPointSprite
 {
@@ -248,12 +248,12 @@ typedef struct _ccV3F_C4B_T2F
 {
     //! vertices (3F)
     ccVertex3F        vertices;            // 12 bytes
-    //    char __padding__[4];
-    
+//    char __padding__[4];
+
     //! colors (4B)
     ccColor4B        colors;                // 4 bytes
-    //    char __padding2__[4];
-    
+//    char __padding2__[4];
+
     // tex coords (2F)
     ccTex2F            texCoords;            // 8 bytes
 } ccV3F_C4B_T2F;
@@ -357,7 +357,7 @@ typedef struct
 {
     ccT2F_Quad texCoords;
     float delay;
-    CCSize size;
+    CCSize size; 
 } ccAnimationFrameData;
 
 

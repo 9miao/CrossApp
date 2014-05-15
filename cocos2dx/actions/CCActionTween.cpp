@@ -54,7 +54,7 @@ bool CCActionTween::initWithDuration(float aDuration, const char* key, float fro
     return false;
 }
 
-void CCActionTween::startWithTarget(CCNode *pTarget)
+void CCActionTween::startWithTarget(CAView_ *pTarget)
 {
     CCAssert(dynamic_cast<CCActionTweenDelegate*>(pTarget), "target must implement CCActionTweenDelegate");
     CCActionInterval::startWithTarget(pTarget);

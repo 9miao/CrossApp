@@ -37,7 +37,9 @@ public:
     
     virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row){};
     
+    virtual void tableViewDidShowPullDownView(CATableView* table){};
     
+    virtual void tableViewDidShowPullUpView(CATableView* table){};
     
 };
 
@@ -85,11 +87,13 @@ public:
     
 protected:
 
-    inline virtual float maxSpeed();
+    inline virtual float maxSpeed(float delay);
     
-    inline virtual float maxSpeedCache();
+    inline virtual float maxSpeedCache(float delay);
     
-    inline virtual float decelerationRatio();
+    inline virtual float decelerationRatio(float delay);
+    
+    inline virtual CCPoint maxBouncesLenght();
     
     void clearData();
     
@@ -98,6 +102,8 @@ protected:
     virtual void setViewSize(CCSize var);
     
     virtual void setContentSize(const CCSize& var);
+    
+    virtual void update(float fDelta);
     
 protected:
     

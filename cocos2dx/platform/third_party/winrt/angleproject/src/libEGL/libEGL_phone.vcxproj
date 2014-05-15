@@ -176,6 +176,9 @@
     <ClInclude Include="..\..\include\EGL\eglext.h" />
     <ClInclude Include="..\..\include\EGL\eglplatform.h" />
     <ClInclude Include="..\common\version.h" />
+    <ClInclude Include="..\common\winrtangle.h" />
+    <ClInclude Include="..\common\winrtangleutils.h" />
+    <ClInclude Include="..\common\winrtplatform.h" />
     <ClInclude Include="..\common\winrt\ThreadEmulation.h" />
     <ClInclude Include="..\common\winrt\threadutils.h" />
     <ClInclude Include="Config.h" />
@@ -183,15 +186,18 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Surface.h" />
+    <ClInclude Include="TLSWinrt.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\debug.cpp" />
+    <ClCompile Include="..\common\winrtangleutils.cpp" />
     <ClCompile Include="..\common\winrtutils.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="libEGL.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Surface.cpp" />
+    <ClCompile Include="TLSWinrt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libGLESv2\libGLESv2_phone.vcxproj">

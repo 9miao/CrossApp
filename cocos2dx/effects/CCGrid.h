@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __EFFECTS_CCGRID_H__
 
 #include "cocoa/CCObject.h"
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "CCCamera.h"
 #include "ccTypes.h"
 #include "textures/CCTexture2D.h"
@@ -117,7 +117,7 @@ public:
     /**
      *  @lua NA
      */
-    void afterDraw(CCNode *pTarget);
+    void afterDraw(CAView_ *pTarget);
     /**
      *  @lua NA
      */

@@ -1,15 +1,8 @@
-﻿生成启动时间为 2014/5/7 21:44:51。
-     1>项目“E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_hlsl_phone.vcxproj”在节点 2 上(Build 个目标)。
+﻿生成启动时间为 2014/5/11 21:41:49。
+     1>项目“J:\CrossAppNew\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_hlsl_phone.vcxproj”在节点 2 上(Build 个目标)。
      1>Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\Lib.exe /OUT:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8\WP8\redist\vs2012\Win32\Debug\translator_hlsl_phone\translator_hlsl_phone.lib" /NOLOGO WP8\Win32\Debug\CodeGenHLSL.obj
-         WP8\Win32\Debug\DetectDiscontinuity.obj
-         WP8\Win32\Debug\OutputHLSL.obj
-         WP8\Win32\Debug\SearchSymbol.obj
-         WP8\Win32\Debug\TranslatorHLSL.obj
-         WP8\Win32\Debug\UnfoldShortCircuit.obj
-         WP8\Win32\Debug\Uniform.obj
-         translator_hlsl_phone.vcxproj -> E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8\WP8\redist\vs2012\Win32\Debug\translator_hlsl_phone\translator_hlsl_phone.lib
-     1>已完成生成项目“E:\工作\CrossApp\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_hlsl_phone.vcxproj”(Build 个目标)的操作。
+         translator_hlsl_phone.vcxproj -> J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\Win32\Debug\translator_hlsl_phone\translator_hlsl_phone.lib
+     1>已完成生成项目“J:\CrossAppNew\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_hlsl_phone.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 

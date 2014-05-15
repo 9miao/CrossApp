@@ -10,7 +10,7 @@
 #define __cocos2dx__CAControl__
 
 #include <iostream>
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 
 NS_CC_BEGIN
 

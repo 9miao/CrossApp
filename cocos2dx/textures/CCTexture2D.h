@@ -127,9 +127,8 @@ public:
      *  @js NA
      *  @lua NA
      */
-    
-    static CCTexture2D* create(const char* file);
-    
+	static CCTexture2D* create(const char* file);
+
     const char* description(void);
 
     /** These functions are needed to create mutable textures 

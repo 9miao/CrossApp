@@ -176,6 +176,9 @@
     <None Include="libGLESv2_phone.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\winrtplatform.h" />
+    <ClInclude Include="..\common\winrtutils.h" />
+    <ClInclude Include="..\common\winrtangle.h" />
     <ClInclude Include="..\third_party\winrt\ThreadEmulation\ThreadEmulation.h" />
     <ClInclude Include="renderer\BufferStorage.h" />
     <ClInclude Include="renderer\BufferStorage11.h" />
@@ -220,12 +223,15 @@
     <ClInclude Include="renderer\VertexBuffer11.h" />
     <ClInclude Include="renderer\vertexconversion.h" />
     <ClInclude Include="renderer\VertexDataManager.h" />
+    <ClInclude Include="TLSWinrt.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\debug.cpp" />
     <ClCompile Include="..\common\event_tracer.cpp" />
     <ClCompile Include="..\common\RefCountObject.cpp" />
+    <ClCompile Include="..\common\winrtangleutils.cpp" />
     <ClCompile Include="..\common\winrtutils.cpp" />
+    <ClCompile Include="..\common\winrtangle.cpp" />
     <ClCompile Include="..\third_party\murmurhash\MurmurHash3.cpp" />
     <ClCompile Include="..\third_party\winrt\ThreadEmulation\ThreadEmulation.cpp" />
     <ClCompile Include="Buffer.cpp" />
@@ -267,6 +273,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TLSWinrt.cpp" />
     <ClCompile Include="Uniform.cpp" />
     <ClCompile Include="utilities.cpp" />
   </ItemGroup>

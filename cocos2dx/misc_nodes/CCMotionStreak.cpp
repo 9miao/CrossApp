@@ -31,7 +31,8 @@ THE SOFTWARE.
 
 #include "support/CCVertex.h"
 #include "support/CCPointExtension.h"
-
+#include "CCDirector.h"
+#include "CCScheduler.h"
 NS_CC_BEGIN
 
 CCMotionStreak::CCMotionStreak()
@@ -63,6 +64,7 @@ CCMotionStreak::~CCMotionStreak()
     CC_SAFE_FREE(m_pVertices);
     CC_SAFE_FREE(m_pColorPointer);
     CC_SAFE_FREE(m_pTexCoords);
+    CCDirector::sharedDirector()->getScheduler()->unscheduleUpdateForTarget(this);
 }
 
 CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
@@ -101,7 +103,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
 
 bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture)
 {
-    CCNode::setPosition(CCPointZero);
+    CAView_::setPosition(CCPointZero);
     setAnchorPoint(CCPointZero);
     ignoreAnchorPointForPosition(true);
     m_bStartingPositionInitialized = false;
@@ -132,8 +134,8 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
 
     setTexture(texture);
     setColor(color);
-    scheduleUpdate();
-
+    
+    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCMotionStreak::update), this, 1/60.0f, false);
     return true;
 }
 

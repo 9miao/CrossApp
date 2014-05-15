@@ -49,19 +49,19 @@ CCPoint CCTouch::getStartLocationInView() const
 // returns the current touch location in OpenGL coordinates
 CCPoint CCTouch::getLocation() const
 { 
-    return CCDirector::sharedDirector()->convertToGL(m_point); 
+    return m_point;
 }
 
 // returns the previous touch location in OpenGL coordinates
 CCPoint CCTouch::getPreviousLocation() const
 { 
-    return CCDirector::sharedDirector()->convertToGL(m_prevPoint);  
+    return m_prevPoint;
 }
 
 // returns the start touch location in OpenGL coordinates
 CCPoint CCTouch::getStartLocation() const
 { 
-    return CCDirector::sharedDirector()->convertToGL(m_startPoint);  
+    return m_startPoint;  
 }
 
 // returns the delta position between the current location and the previous location in OpenGL coordinates

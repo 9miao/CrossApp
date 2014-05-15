@@ -239,7 +239,7 @@ void CCProgressTimer::updateProgress(void)
 
 void CCProgressTimer::setAnchorPoint(CCPoint anchorPoint)
 {
-    CCNode::setAnchorPoint(anchorPoint);
+    CAView_::setAnchorPoint(anchorPoint);
 }
 
 CCPoint CCProgressTimer::getMidpoint(void)

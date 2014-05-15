@@ -230,11 +230,11 @@ void Shader::initializeCompiler()
 
         if (result)
         {
-#if defined(ANGLE_PLATFORM_WINRT) || defined(COMPILE_SHADER)
+#if defined(ANGLE_PLATFORM_WINRT)
             ShShaderOutput hlslVersion = SH_HLSL11_OUTPUT;
 #else
             ShShaderOutput hlslVersion = (mRenderer->getMajorShaderModel() >= 4) ? SH_HLSL11_OUTPUT : SH_HLSL9_OUTPUT;
-#endif // #if defined(ANGLE_PLATFORM_WINRT) || defined(COMPILE_SHADER)
+#endif // #if defined(ANGLE_PLATFORM_WINRT)
 
             ShBuiltInResources resources;
             ShInitBuiltInResources(&resources);

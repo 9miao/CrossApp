@@ -77,16 +77,16 @@ CAView* CAViewController::getView()
     return m_pView;
 }
 
-void CAViewController::setViewSuperNode(CCNode* node)
+void CAViewController::addViewFromSuperview(CAView_* node)
 {
     m_bLifeLock = false;
-    node->addChild(m_pView);
+    node->addSubview(m_pView);
 }
 
-void CAViewController::removeViewAtSuperNode()
+void CAViewController::removeViewFromSuperview()
 {
     m_bLifeLock = false;
-    m_pView->removeFromParent();
+    m_pView->removeFromSuperview();
 }
 
 #pragma CANavigationController
@@ -141,15 +141,16 @@ void CANavigationController::viewDidLoad()
 {
     CCRect rect = this->getView()->getBounds();
     rect.size.height -= m_pNavigationBar->getContentSize().height;
+    rect.origin.y = m_pNavigationBar->getFrame().size.height;
     
     m_pContainer = CAView::createWithFrame(rect);
-    this->getView()->addChild(m_pContainer);
+    this->getView()->addSubview(m_pContainer);
     
     CAViewController* viewController = m_pViewControllers.front();
-    viewController->setViewSuperNode(m_pContainer);
+    viewController->addViewFromSuperview(m_pContainer);
     
-    m_pNavigationBar->setFrame(CCRect(0, rect.size.height, 0, 0));
-    this->getView()->addChild(m_pNavigationBar);
+    m_pNavigationBar->setFrame(CCRectZero);
+    this->getView()->addSubview(m_pNavigationBar);
     m_pNavigationBar->setDelegate(this);
 }
 
@@ -159,17 +160,17 @@ void CANavigationController::viewDidUnload()
     std::vector<CAViewController*>::iterator itr;
     for (itr=m_pViewControllers.begin(); itr!=m_pViewControllers.end(); itr++)
     {
-        (*itr)->removeViewAtSuperNode();
+        (*itr)->removeViewFromSuperview();
     }
     
-    m_pContainer->removeFromParent();
+    m_pContainer->removeFromSuperview();
     m_pContainer = NULL;
-    m_pNavigationBar->removeFromParent();
+    m_pNavigationBar->removeFromSuperview();
 }
 
 void CANavigationController::pushViewController(CAViewController* viewController, bool animated)
 {
-    if (this->getView()->getParent() == NULL)
+    if (this->getView()->getSuperview() == NULL)
     {
         return;
     }
@@ -188,12 +189,12 @@ void CANavigationController::pushViewController(CAViewController* viewController
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
     m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
-    viewController->setViewSuperNode(m_pContainer);
+    viewController->addViewFromSuperview(m_pContainer);
     
     if (animated)
     {
         m_pContainer->stopAllActions();
-        m_pContainer->setFrame(CCRect(x, 0, 0, 0));
+        m_pContainer->setFrame(CCRect(x, m_pContainer->getFrame().origin.y, 0, 0));
         
         CCMoveBy* moveBy = CCMoveBy::create(0.3f, CCPoint(-x, 0));
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveBy);
@@ -210,10 +211,10 @@ void CANavigationController::pushViewController(CAViewController* viewController
 
 void CANavigationController::pushViewControllerFinish()
 {
-    m_pContainer->setFrame(CCRectZero);
+    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
     
     CAViewController* lastViewController = m_pViewControllers.at(m_pViewControllers.size() - 2);
-    lastViewController->getView()->removeFromParent();
+    lastViewController->getView()->removeFromSuperview();
 }
 
 CAViewController* CANavigationController::popViewControllerAnimated(bool animated)
@@ -231,7 +232,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     unsigned int index = m_pViewControllers.size() - 2;
     CAViewController* showViewController = m_pViewControllers.at(index);
     showViewController->getView()->setFrame(CCRectZero);
-    m_pContainer->addChild(showViewController->getView());
+    m_pContainer->addSubview(showViewController->getView());
     
     CAViewController* backViewController = m_pViewControllers.back();
     
@@ -241,7 +242,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     if (animated)
     {
         m_pContainer->stopAllActions();
-        m_pContainer->setFrame(CCRect(-x, 0, 0, 0));
+        m_pContainer->setFrame(CCRect(-x, m_pContainer->getFrame().origin.y, 0, 0));
         
         CCMoveBy* moveBy = CCMoveBy::create(0.3f, CCPoint(x, 0));
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveBy);
@@ -261,12 +262,12 @@ void CANavigationController::popViewControllerFinish()
 {
     CAViewController* lastViewController = m_pViewControllers.back();
     lastViewController->m_pNavigationController = NULL;
-    lastViewController->removeViewAtSuperNode();
+    lastViewController->removeViewFromSuperview();
     lastViewController->autorelease();
     m_pViewControllers.pop_back();
     m_pNavigationBar->popItem();
     
-    m_pContainer->setFrame(CCRectZero);
+    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
 }
 
 void CANavigationController::navigationPopViewController(CANavigationBar* navigationBar, bool animated)
@@ -339,13 +340,12 @@ void CATabBarController::viewDidLoad()
 {
     CCRect rect = this->getView()->getBounds();
     rect.size.height -= m_pTabBar->getContentSize().height;
-    rect.origin.y = m_pTabBar->getContentSize().height;
     
     m_pContainer = CAView::createWithFrame(rect);
-    this->getView()->addChild(m_pContainer);
+    this->getView()->addSubview(m_pContainer);
     
-    m_pTabBar->setFrame(CCRectZero);
-    this->getView()->addChild(m_pTabBar);
+    m_pTabBar->setFrame(CCRect(0, rect.size.height, 0, 0));
+    this->getView()->addSubview(m_pTabBar);
 }
 
 void CATabBarController::viewDidUnload()
@@ -353,12 +353,12 @@ void CATabBarController::viewDidUnload()
     std::vector<CAViewController*>::iterator itr;
     for (itr=m_pViewControllers.begin(); itr!=m_pViewControllers.end(); itr++)
     {
-        (*itr)->removeViewAtSuperNode();
+        (*itr)->removeViewFromSuperview();
     }
     
-    m_pContainer->removeFromParent();
+    m_pContainer->removeFromSuperview();
     m_pContainer = NULL;
-    m_pTabBar->removeFromParent();
+    m_pTabBar->removeFromSuperview();
 }
 
 bool CATabBarController::showSelectedViewController(CAViewController* viewController, bool animated)
@@ -377,12 +377,12 @@ bool CATabBarController::showSelectedViewController(CAViewController* viewContro
         
         if (m_pSelectedViewController)
         {
-            m_pSelectedViewController->getView()->removeFromParent();
+            m_pSelectedViewController->getView()->removeFromSuperview();
             m_pSelectedViewController = NULL;
         }
         
         m_pSelectedViewController = *itr;
-        m_pContainer->addChild(m_pSelectedViewController->getView());
+        m_pContainer->addSubview(m_pSelectedViewController->getView());
         
         if (animated)
         {
@@ -415,12 +415,12 @@ bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index, b
         
         if (m_pSelectedViewController)
         {
-            m_pSelectedViewController->getView()->removeFromParent();
+            m_pSelectedViewController->getView()->removeFromSuperview();
             m_pSelectedViewController = NULL;
         }
         
         m_pSelectedViewController = viewController;
-        m_pContainer->addChild(m_pSelectedViewController->getView());
+        m_pContainer->addSubview(m_pSelectedViewController->getView());
         
         if (animated)
         {

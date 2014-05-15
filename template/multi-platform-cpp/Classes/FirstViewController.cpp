@@ -33,13 +33,13 @@ void FirstViewController::viewDidLoad()
     // Do any additional setup after loading the view from its nib.
     
     CAImageView* imageView = CAImageView::createWithTexture(CAImage::create("9m.jpg"));
-    imageView->setFrame(CCRect(200, 300, 330, 214));
-    this->getView()->addChild(imageView);
+    imageView->setFrame(CCRect(100, 100, 0, 0));
+    this->getView()->addSubview(imageView);
     
     CCLabelTTF* ttf = CCLabelTTF::create("Hello World!", "Arial", 50);
     ttf->setColor(ccBLACK);
     ttf->setFrame(CCRect(200, 450, 0, 0));
-    this->getView()->addChild(ttf);
+    this->getView()->addSubview(ttf);
 }
 
 void FirstViewController::viewDidUnload()

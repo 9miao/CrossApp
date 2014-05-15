@@ -271,6 +271,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\common\event_tracer.cpp" />
+    <ClCompile Include="..\common\winrtangle.cpp" />
+    <ClCompile Include="..\common\winrtangleutils.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\common\winrtutils.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
@@ -358,12 +367,16 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TLSWinrt.cpp" />
     <ClCompile Include="Uniform.cpp" />
     <ClCompile Include="utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\debug.h" />
     <ClInclude Include="..\common\system.h" />
+    <ClInclude Include="..\common\winrtangle.h" />
+    <ClInclude Include="..\common\winrtangleutils.h" />
+    <ClInclude Include="..\common\winrtplatform.h" />
     <ClInclude Include="..\common\winrtutils.h" />
     <ClInclude Include="..\common\winrt\ThreadEmulation.h" />
     <ClInclude Include="..\common\winrt\threadutils.h" />
@@ -435,6 +448,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TLSWinrt.h" />
     <ClInclude Include="Uniform.h" />
     <ClInclude Include="utilities.h" />
     <ClInclude Include="..\common\version.h" />

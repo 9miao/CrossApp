@@ -10,7 +10,7 @@
 #define __cocos2dx__CCView__
 
 #include <iostream>
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "CCProtocols.h"
 #include "touch_dispatcher/CCTouchDelegateProtocol.h"
 #include "platform/CCAccelerometerDelegate.h"

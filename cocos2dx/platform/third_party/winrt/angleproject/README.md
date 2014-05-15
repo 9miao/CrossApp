@@ -1,5 +1,5 @@
-angleproject
-============
+Angle
+=====
 
 WinRT (Windows 8.0 and 8.1) and Windows Phone 8.0 contributions by Dale Stammen (https://github.com/stammen) and Steven Chith (https://github.com/steven-chith)
 
@@ -7,9 +7,20 @@ Angle Project (https://code.google.com/p/angleproject/) with support for Windows
 developing Windows Store Apps using Visual Studio 2013 and Windows 8.1. It is also possbile to develop a Windows Store App
 using Visual Studio 2012 and Windows 8.0 but this version will not be accepted in the Windows App Store.
 
-This version is based on ANGLE v1.2.0.2446
+This version adds support for Windows Phone 8.0 and Windows 8.0 WinRT Store Apps using precompiled shaders. For sample code, see samples/RotatingCube
 
-This version adds support for Windows Phone 8.0 and Windows 8.0 WinRT Store Apps using precompiled shaders. For an example, see samples/RotatingCube/RotatingCube_phone.sln.
+* samples/RotatingCube/RotatingCubeWinRT is a Windows 8.0 Store App in C++
+* samples/RotatingCube/RotatingCubeWinRTXaml is a Windows 8.0 Store App in XAML/C++
+* samples/RotatingCube/RotatingCubeWP8 is a Windows Phone 8.0 App in C++
+* samples/RotatingCube/RotatingCubeWP8Xaml is a Windows Phone 8.0 App in Xaml/C++
+
+**Please note that you must precompile shaders for Windows 8.0 Store (WinRT) and Windows Phone 8.0 apps. There is a shader compiler for these versions in src/winrtcompiler. Please see the README file for usage.**
+
+For WinRT Apps, the prefered platform is now Windows 8.1 with Visual Studio 2013. The Windows 8.1 versions do not require the shaders to be precompiled as runtime shader compilation is now supported. Please see the following samples:
+
+* samples/RotatingCube/RotatingCubeWinRT_2013 is a Windows 8.1 Store App in C++
+* samples/RotatingCube/RotatingCubeWinRTXaml_2013 is a Windows 8.1 Store App in XAML/C++
+
 
 ANGLE
 =====

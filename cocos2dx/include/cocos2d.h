@@ -52,10 +52,6 @@ THE SOFTWARE.
 #include "actions/CCActionTween.h"
 #include "actions/CCActionCatmullRom.h"
 
-// base_nodes
-#include "base_nodes/CCNode.h"
-#include "base_nodes/CCAtlasNode.h"
-
 // cocoa
 #include "cocoa/CCAffineTransform.h"
 #include "cocoa/CCDictionary.h"
@@ -96,12 +92,9 @@ THE SOFTWARE.
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
 
 // label_nodes
-#include "label_nodes/CCLabelAtlas.h"
 #include "label_nodes/CCLabelTTF.h"
-#include "label_nodes/CCLabelBMFont.h"
 
 // layers_scenes_transitions_nodes
-#include "layers_scenes_transitions_nodes/CAWindow.h"
 #include "layers_scenes_transitions_nodes/CCTransition.h"
 #include "layers_scenes_transitions_nodes/CCTransitionPageTurn.h"
 #include "layers_scenes_transitions_nodes/CCTransitionProgress.h"
@@ -111,12 +104,6 @@ THE SOFTWARE.
 #include "misc_nodes/CCMotionStreak.h"
 #include "misc_nodes/CCProgressTimer.h"
 #include "misc_nodes/CCRenderTexture.h"
-
-// particle_nodes
-#include "particle_nodes/CCParticleBatchNode.h"
-#include "particle_nodes/CCParticleSystem.h"
-#include "particle_nodes/CCParticleExamples.h"
-#include "particle_nodes/CCParticleSystemQuad.h"
 
 // platform
 #include "platform/CCDevice.h"
@@ -233,6 +220,7 @@ THE SOFTWARE.
     #include "platform/tizen/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
+
 // shaders
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
@@ -243,11 +231,12 @@ THE SOFTWARE.
 #include "sprite_nodes/CCAnimation.h"
 #include "sprite_nodes/CCAnimationCache.h"
 #include "sprite_nodes/CCSprite.h"
-#include "sprite_nodes/CCScale9Sprite.h"
-#include "sprite_nodes/CCSpriteBatchNode.h"
 #include "sprite_nodes/CCSpriteFrame.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
+#include "sprite_nodes/CCScale9Sprite.h"
 #include "sprite_nodes/CCView.h"
+#include "sprite_nodes/CAWindow.h"
+#include "sprite_nodes/CAView.h"
 
 // support
 #include "support/ccUTF8.h"
@@ -265,7 +254,6 @@ THE SOFTWARE.
 
 // textures
 #include "textures/CCTexture2D.h"
-#include "textures/CCTextureAtlas.h"
 #include "textures/CCTextureCache.h"
 #include "textures/CCTexturePVR.h"
 
@@ -292,9 +280,6 @@ THE SOFTWARE.
 #include "ui_controller/CAScrollView.h"
 #include "ui_controller/CATableView.h"
 #include "ui_controller/CAProgress.h"
-
-
-//#include "http/CAHttpClient.h"
 
 NS_CC_BEGIN
 

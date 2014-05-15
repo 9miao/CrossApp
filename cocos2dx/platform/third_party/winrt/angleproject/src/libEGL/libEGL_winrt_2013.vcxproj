@@ -265,6 +265,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\winrtangleutils.cpp" />
     <ClCompile Include="..\common\winrtutils.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="..\Common\debug.cpp" />
@@ -272,8 +273,11 @@
     <ClCompile Include="libEGL.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Surface.cpp" />
+    <ClCompile Include="TLSWinrt.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\winrtangleutils.h" />
+    <ClInclude Include="..\common\winrtplatform.h" />
     <ClInclude Include="..\common\winrtutils.h" />
     <ClInclude Include="..\common\winrt\ThreadEmulation.h" />
     <ClInclude Include="..\common\winrt\threadutils.h" />
@@ -286,6 +290,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Surface.h" />
     <ClInclude Include="..\common\version.h" />
+    <ClInclude Include="TLSWinrt.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="libEGL.rc" />

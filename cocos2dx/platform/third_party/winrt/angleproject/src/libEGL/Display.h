@@ -18,6 +18,10 @@
 
 #include "libEGL/Config.h"
 
+
+
+
+
 namespace gl
 {
 class Context;
@@ -65,33 +69,12 @@ class Display
   private:
     DISALLOW_COPY_AND_ASSIGN(Display);
 
-    Display(EGLNativeDisplayType displayId, HDC deviceContext);
+    Display(EGLNativeDisplayType displayId, AngleNativeWindowHDC deviceContext);
 
     bool restoreLostDevice();
 
-#if defined(ANGLE_PLATFORM_WINRT)
-#if 0
-    void onWindowSizeChanged(ABI::Windows::UI::Core::CoreWindow* sender, ABI::Windows::UI::Core::WindowSizeChangedEventArgs^ args, Surface *surface);
-
-    class DisplayRT
-    {
-      internal:
-        DisplayRT(Display *display, Surface *surface);
-        void onWindowSizeChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::WindowSizeChangedEventArgs^ args);
-        
-        Display *mDisplay;
-        Surface *mSurface;
-    };
-    
-    DisplayRT ^mDisplayRT;
-	ABI::Windows::Graphics::Display::DisplayOrientations m_orientation;
-
-	ABI::Windows::Foundation::Rect m_windowBounds;
-#endif
-#endif // #if defined(ANGLE_PLATFORM_WINRT)
-
     EGLNativeDisplayType mDisplayId;
-    const HDC mDc;
+    const AngleNativeWindowHDC mDc;
 
     bool mSoftwareDevice;
     

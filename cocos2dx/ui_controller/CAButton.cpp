@@ -411,10 +411,10 @@ void CAButton::setControlState(CAControlState var)
 {
     CAControl::setControlState(var);
 
-    this->removeChild(m_spriteNormal);
-    this->removeChild(m_spriteHighlighted);
-    this->removeChild(m_spriteDisabled);
-    this->removeChild(m_spriteSelected);
+    this->removeSubview(m_spriteNormal);
+    this->removeSubview(m_spriteHighlighted);
+    this->removeSubview(m_spriteDisabled);
+    this->removeSubview(m_spriteSelected);
     
     m_eControlState = var;
     
@@ -424,7 +424,7 @@ void CAButton::setControlState(CAControlState var)
         {
             if (m_spriteNormal)
             {
-                this->addChild(m_spriteNormal);
+                this->addSubview(m_spriteNormal);
             }
             break;
         }
@@ -432,11 +432,11 @@ void CAButton::setControlState(CAControlState var)
         {
             if (m_spriteHighlighted)
             {
-                this->addChild(m_spriteHighlighted);
+                this->addSubview(m_spriteHighlighted);
             }
             else if (m_spriteNormal)
             {
-                this->addChild(m_spriteNormal);
+                this->addSubview(m_spriteNormal);
             }
             break;
         }
@@ -444,11 +444,11 @@ void CAButton::setControlState(CAControlState var)
         {
             if (m_spriteDisabled)
             {
-                this->addChild(m_spriteDisabled);
+                this->addSubview(m_spriteDisabled);
             }
             else if (m_spriteNormal)
             {
-                this->addChild(m_spriteNormal);
+                this->addSubview(m_spriteNormal);
             }
             break;
         }
@@ -456,11 +456,11 @@ void CAButton::setControlState(CAControlState var)
         {
             if (m_spriteSelected)
             {
-                this->addChild(m_spriteSelected);
+                this->addSubview(m_spriteSelected);
             }
             else if (m_spriteNormal)
             {
-                this->addChild(m_spriteNormal);
+                this->addSubview(m_spriteNormal);
             }
             break;
         }
@@ -567,7 +567,7 @@ void CAButton::setSprite(CAControlState controlState, CCNodeRGBA* var, CCPoint p
     
     if (controlState == CAControlStateNormal)
     {
-        this->removeChild(m_spriteNormal);
+        this->removeSubview(m_spriteNormal);
         CC_SAFE_DELETE(m_spriteNormal);
         
         if (!cPoint.equals(point))
@@ -585,7 +585,7 @@ void CAButton::setSprite(CAControlState controlState, CCNodeRGBA* var, CCPoint p
     }
     else if (controlState == CAControlStateHighlighted)
     {
-        this->removeChild(m_spriteHighlighted);
+        this->removeSubview(m_spriteHighlighted);
         CC_SAFE_DELETE(m_spriteHighlighted);
         
         if (!cPoint.equals(point))
@@ -601,7 +601,7 @@ void CAButton::setSprite(CAControlState controlState, CCNodeRGBA* var, CCPoint p
     }
     else if (controlState == CAControlStateDisabled)
     {
-        this->removeChild(m_spriteDisabled);
+        this->removeSubview(m_spriteDisabled);
         CC_SAFE_DELETE(m_spriteDisabled);
         
         if (!cPoint.equals(point))
@@ -617,7 +617,7 @@ void CAButton::setSprite(CAControlState controlState, CCNodeRGBA* var, CCPoint p
     }
     else if (controlState == CAControlStateSelected)
     {
-        this->removeChild(m_spriteSelected);
+        this->removeSubview(m_spriteSelected);
         CC_SAFE_DELETE(m_spriteSelected);
         
         if (!cPoint.equals(point))
@@ -659,13 +659,13 @@ void CAButton::setOpacity(GLubyte opacity)
 {
     CCNodeRGBA::setOpacity(opacity);
     
-    if (this->getChildren())
+    if (this->getSubviews())
     {
-        for (int i=0; i<this->getChildren()->count(); i++)
+        for (int i=0; i<this->getSubviews()->count(); i++)
         {
-            CCNode* node=(CCNode*)this->getChildren()->objectAtIndex(i);
+            CAView_* view=(CAView_*)this->getSubviews()->objectAtIndex(i);
             
-            if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(node))
+            if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(view))
             {
                 _children->setOpacity(opacity);
             }
@@ -677,15 +677,15 @@ void CAButton::setColor(const ccColor3B &color3){
     
     m_color=color3;
     
-    if (this->getChildren())
+    if (this->getSubviews())
     {
-        for (int i=0; i<this->getChildren()->count(); i++)
+        for (int i=0; i<this->getSubviews()->count(); i++)
         {
-            CCNode* node=(CCNode*)this->getChildren()->objectAtIndex(i);
+            CAView_* view=(CAView_*)this->getSubviews()->objectAtIndex(i);
             
-            if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(node))
+            if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(view))
             {
-                _children->setColor(m_color);
+                _children->setColor(color3);
             }
         }
     }

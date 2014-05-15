@@ -32,9 +32,6 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
-    
-    CC_SYNTHESIZE_READONLY(cocos2d::CAWindow*, m_pWindow, Window);
-    
 };
 
 #endif // _APP_DELEGATE_H_

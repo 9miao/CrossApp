@@ -12,8 +12,10 @@
 #include "libGLESv2/renderer/Renderer11.h"
 
 #if defined(ANGLE_PLATFORM_WINRT)
+#if !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 #include "third_party/winrt/ThreadEmulation/ThreadEmulation.h"
 using namespace ThreadEmulation;
+#endif
 #endif // #if defined(ANGLE_PLATFORM_WINRT)
 
 namespace rx

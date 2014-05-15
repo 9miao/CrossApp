@@ -37,15 +37,15 @@ NS_CC_BEGIN
 
 static GLint g_sStencilBits = -1;
 
-static void setProgram(CCNode *n, CCGLProgram *p)
+static void setProgram(CAView_ *n, CCGLProgram *p)
 {
     n->setShaderProgram(p);
-    if (!n->getChildren()) return;
+    if (!n->getSubviews()) return;
     
     CCObject* pObj = NULL;
-    CCARRAY_FOREACH(n->getChildren(), pObj)
+    CCARRAY_FOREACH(n->getSubviews(), pObj)
     {
-        setProgram((CCNode*)pObj, p);
+        setProgram((CAView_*)pObj, p);
     }
 }
 
@@ -75,7 +75,7 @@ CCClippingNode* CCClippingNode::create()
     return pRet;
 }
 
-CCClippingNode* CCClippingNode::create(CCNode *pStencil)
+CCClippingNode* CCClippingNode::create(CAView_ *pStencil)
 {
     CCClippingNode *pRet = new CCClippingNode();
     if (pRet && pRet->init(pStencil))
@@ -95,7 +95,7 @@ bool CCClippingNode::init()
     return init(NULL);
 }
 
-bool CCClippingNode::init(CCNode *pStencil)
+bool CCClippingNode::init(CAView_ *pStencil)
 {
     CC_SAFE_RELEASE(m_pStencil);
     m_pStencil = pStencil;
@@ -120,26 +120,26 @@ bool CCClippingNode::init(CCNode *pStencil)
 
 void CCClippingNode::onEnter()
 {
-    CCNode::onEnter();
+    CAView_::onEnter();
     m_pStencil->onEnter();
 }
 
 void CCClippingNode::onEnterTransitionDidFinish()
 {
-    CCNode::onEnterTransitionDidFinish();
+    CAView_::onEnterTransitionDidFinish();
     m_pStencil->onEnterTransitionDidFinish();
 }
 
 void CCClippingNode::onExitTransitionDidStart()
 {
     m_pStencil->onExitTransitionDidStart();
-    CCNode::onExitTransitionDidStart();
+    CAView_::onExitTransitionDidStart();
 }
 
 void CCClippingNode::onExit()
 {
     m_pStencil->onExit();
-    CCNode::onExit();
+    CAView_::onExit();
 }
 
 void CCClippingNode::visit()
@@ -148,7 +148,7 @@ void CCClippingNode::visit()
     if (g_sStencilBits < 1)
     {
         // draw everything, as if there where no stencil
-        CCNode::visit();
+        CAView_::visit();
         return;
     }
     
@@ -160,7 +160,7 @@ void CCClippingNode::visit()
         if (m_bInverted)
         {
             // draw everything
-            CCNode::visit();
+            CAView_::visit();
         }
         return;
     }
@@ -184,7 +184,7 @@ void CCClippingNode::visit()
             once = false;
         }
         // draw everything, as if there where no stencil
-        CCNode::visit();
+        CAView_::visit();
         return;
     }
     
@@ -295,6 +295,7 @@ void CCClippingNode::visit()
         CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
         GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
         // set our alphaThreshold
+        program->use();
         program->setUniformLocationWith1f(alphaValueLocation, m_fAlphaThreshold);
         // we need to recursively apply this shader to all the nodes in the stencil node
         // XXX: we should have a way to apply shader to all nodes without having to do this
@@ -344,7 +345,7 @@ void CCClippingNode::visit()
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
     
     // draw (according to the stencil test func) this node and its childs
-    CCNode::visit();
+    CAView_::visit();
     
     ///////////////////////////////////
     // CLEANUP
@@ -362,12 +363,12 @@ void CCClippingNode::visit()
     layer--;
 }
 
-CCNode* CCClippingNode::getStencil() const
+CAView_* CCClippingNode::getStencil() const
 {
     return m_pStencil;
 }
 
-void CCClippingNode::setStencil(CCNode *pStencil)
+void CCClippingNode::setStencil(CAView_ *pStencil)
 {
     CC_SAFE_RELEASE(m_pStencil);
     m_pStencil = pStencil;

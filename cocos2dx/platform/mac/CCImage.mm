@@ -365,7 +365,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		// color
 		NSColor* foregroundColor;
 		if (pStrokeColor) {
-			foregroundColor = [NSColor colorWithDeviceRed:pStrokeColor->r/255.0 green:pStrokeColor->g/255.0 blue:pStrokeColor->b/255.0 alpha:1.0f];
+			foregroundColor = [NSColor colorWithDeviceRed:pStrokeColor->r/255.0 green:pStrokeColor->g/255.0 blue:pStrokeColor->b/255.0 alpha:1];
 		} else {
 			foregroundColor = [NSColor whiteColor];
 		}

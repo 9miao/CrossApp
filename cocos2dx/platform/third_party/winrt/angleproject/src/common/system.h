@@ -15,23 +15,15 @@
 
 #include <windows.h>
 
-#if defined(WINAPI_FAMILY)
-#if !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-#define ANGLE_PLATFORM_WINRT
-#endif
-#endif // !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-#endif // #if defined(WINAPI_FAMILY)
+#include "common/winrtplatform.h"
 
-// check if Windows Phone 8
-#if defined(WINAPI_FAMILY)
-#if defined(WINAPI_PARTITION_PHONE) && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_PHONE)
-#define ANGLE_PLATFORM_WP8
-#ifndef ANGLE_PLATFORM_WINRT
-#define ANGLE_PLATFORM_WINRT
-#endif
-#endif // #if defined(WINAPI_PARTITION_PHONE) && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_PHONE)
-#endif // #if defined(WINAPI_FAMILY)
+
+#if defined(ANGLE_PLATFORM_WINRT)
+#include <wrl\client.h>
+typedef Microsoft::WRL::ComPtr<IUnknown> AngleNativeWindowHDC;
+#else
+typedef HDC AngleNativeWindowHDC;
+#endif //#if defined(WINAPI_FAMILY)
 
 
 #if defined(min)

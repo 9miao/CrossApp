@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 #include "CCActionInstant.h"
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "sprite_nodes/CCSprite.h"
 #include "cocoa/CCZone.h"
 
@@ -208,7 +208,7 @@ bool CCRemoveSelf::init(bool isNeedCleanUp) {
 
 void CCRemoveSelf::update(float time) {
 	CC_UNUSED_PARAM(time);
-	m_pTarget->removeFromParentAndCleanup(m_bIsNeedCleanUp);
+	m_pTarget->removeFromSuperview();
 }
 
 CCFiniteTimeAction *CCRemoveSelf::reverse() {

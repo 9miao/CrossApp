@@ -164,9 +164,6 @@ public:
     
 private:
     bool updateTexture();
-    
-    void updateTexture2D(CCObject* object);
-    
 protected:
     
     /** set the text definition for this label */

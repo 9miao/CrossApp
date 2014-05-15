@@ -30,7 +30,7 @@
 #ifndef __CCDRAWNODES_CCDRAW_NODE_H__
 #define __CCDRAWNODES_CCDRAW_NODE_H__
 
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "ccTypes.h"
 
 NS_CC_BEGIN
@@ -42,7 +42,7 @@ NS_CC_BEGIN
  @since v2.1
  @lua NA
  */
-class CC_DLL CCDrawNode : public CCNode
+class CC_DLL CCDrawNode : public CAView_
 {
 protected:
     GLuint      m_uVao;

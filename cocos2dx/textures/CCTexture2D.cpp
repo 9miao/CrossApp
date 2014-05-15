@@ -47,6 +47,10 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCShaderCache.h"
 
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    #include "CCTextureCache.h"
+#endif
+
 NS_CC_BEGIN
 
 //CLASS IMPLEMENTATIONS:
@@ -88,7 +92,7 @@ CCTexture2D::~CCTexture2D()
 
 CCTexture2D* CCTexture2D::create(const char* file)
 {
-    return CCTextureCache::sharedTextureCache()->addImage(file);
+	return CCTextureCache::sharedTextureCache()->addImage(file);
 }
 
 CCTexture2DPixelFormat CCTexture2D::getPixelFormat()

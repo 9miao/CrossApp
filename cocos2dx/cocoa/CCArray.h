@@ -79,7 +79,7 @@ do {                                                                  \
         CCObject* child;                                              \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
-            elementType pNode = (elementType) child;                  \
+            elementType pNode = dynamic_cast<elementType>(child);     \
             if(pNode)                                                 \
             {                                                         \
                 pNode->func();                                        \
@@ -96,7 +96,7 @@ do {                                                                  \
         CCObject* child = NULL;                                       \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
-            elementType pNode = (elementType) child;                  \
+            elementType pNode = dynamic_cast<elementType>(child);                  \
             if(pNode)                                                 \
             {                                                         \
                 pNode->func(pObject);                                 \

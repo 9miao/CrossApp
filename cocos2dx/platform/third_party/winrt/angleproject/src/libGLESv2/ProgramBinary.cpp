@@ -1162,11 +1162,11 @@ bool ProgramBinary::linkVaryings(InfoLog &infoLog, int registers, const Varying 
         return false;
     }
 
-#if defined(ANGLE_PLATFORM_WINRT)  || defined(COMPILE_SHADER)
+#if defined(ANGLE_PLATFORM_WINRT)
     bool isWinRT = true;
 #else
     bool isWinRT = false;
-#endif // #if defined(ANGLE_PLATFORM_WINRT)  || defined(COMPILE_SHADER)
+#endif // #if defined(ANGLE_PLATFORM_WINRT)
 
     bool usesMRT = fragmentShader->mUsesMultipleRenderTargets;
     bool usesFragColor = fragmentShader->mUsesFragColor;

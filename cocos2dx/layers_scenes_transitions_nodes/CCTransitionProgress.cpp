@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "misc_nodes/CCRenderTexture.h"
 #include "misc_nodes/CCProgressTimer.h"
-#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CAView.h"
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionProgressTimer.h"
 #include "support/CCPointExtension.h"
@@ -101,14 +101,15 @@ void CCTransitionProgress::onEnter()
     pNode->runAction(layerAction);
 
     // add the layer (which contains our two rendertextures) to the scene
-    addChild(pNode, 2, kCAWindowRadial);
+    pNode->setTag(kCAWindowRadial);
+    this->insertSubview(pNode, 2);
 }
 
 // clean up on exit
 void CCTransitionProgress::onExit()
 {
     // remove our layer and release all containing objects
-    removeChildByTag(kCAWindowRadial, true);
+    removeSubviewByTag(kCAWindowRadial);
     CCTransitionScene::onExit();
 }
 
