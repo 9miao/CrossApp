@@ -135,75 +135,23 @@
     <ClCompile Include="..\spine\AnimationStateData.cpp" />
     <ClCompile Include="..\spine\Atlas.cpp" />
     <ClCompile Include="..\spine\AtlasAttachmentLoader.cpp" />
-    <ClCompile Include="..\spine\Attachment.cpp" />
-    <ClCompile Include="..\spine\AttachmentLoader.cpp" />
-    <ClCompile Include="..\spine\Bone.cpp" />
-    <ClCompile Include="..\spine\BoneData.cpp" />
-    <ClCompile Include="..\spine\CCSkeleton.cpp" />
-    <ClCompile Include="..\spine\CCSkeletonAnimation.cpp" />
-    <ClCompile Include="..\spine\extension.cpp" />
-    <ClCompile Include="..\spine\Json.cpp" />
-    <ClCompile Include="..\spine\RegionAttachment.cpp" />
-    <ClCompile Include="..\spine\Skeleton.cpp" />
-    <ClCompile Include="..\spine\SkeletonData.cpp" />
-    <ClCompile Include="..\spine\SkeletonJson.cpp" />
-    <ClCompile Include="..\spine\Skin.cpp" />
-    <ClCompile Include="..\spine\Slot.cpp" />
-    <ClCompile Include="..\spine\SlotData.cpp" />
-    <ClCompile Include="..\spine\spine-cocos2dx.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
-    <ClInclude Include="..\AssetsManager\AssetsManager.h" />
-    <ClInclude Include="..\CCBReader\CCBAnimationManager.h" />
-    <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
-    <ClInclude Include="..\CCBReader\CCBKeyframe.h" />
-    <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h" />
-    <ClInclude Include="..\CCBReader\CCBReader.h" />
-    <ClInclude Include="..\CCBReader\CCBSelectorResolver.h" />
-    <ClInclude Include="..\CCBReader\CCBSequence.h" />
-    <ClInclude Include="..\CCBReader\CCBSequenceProperty.h" />
-    <ClInclude Include="..\CCBReader\CCBValue.h" />
-    <ClInclude Include="..\CCBReader\CCControlButtonLoader.h" />
-    <ClInclude Include="..\CCBReader\CCControlLoader.h" />
-    <ClInclude Include="..\CCBReader\CCData.h" />
-    <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h" />
-    <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h" />
-    <ClInclude Include="..\CCBReader\CCLayerColorLoader.h" />
-    <ClInclude Include="..\CCBReader\CCLayerGradientLoader.h" />
-    <ClInclude Include="..\CCBReader\CCLayerLoader.h" />
-    <ClInclude Include="..\CCBReader\CCMenuItemImageLoader.h" />
-    <ClInclude Include="..\CCBReader\CCMenuItemLoader.h" />
-    <ClInclude Include="..\CCBReader\CCMenuLoader.h" />
-    <ClInclude Include="..\CCBReader\CCNode+CCBRelativePositioning.h" />
-    <ClInclude Include="..\CCBReader\CCNodeLoader.h" />
-    <ClInclude Include="..\CCBReader\CCNodeLoaderLibrary.h" />
-    <ClInclude Include="..\CCBReader\CCNodeLoaderListener.h" />
-    <ClInclude Include="..\CCBReader\CCParticleSystemQuadLoader.h" />
-    <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h" />
-    <ClInclude Include="..\CCBReader\CCScrollViewLoader.h" />
-    <ClInclude Include="..\CCBReader\CCSpriteLoader.h" />
-    <ClInclude Include="..\cocos-ext.h" />
-    <ClInclude Include="..\CocoStudio\Action\CCActionFrame.h" />
-    <ClInclude Include="..\CocoStudio\Action\CCActionFrameEasing.h" />
-    <ClInclude Include="..\CocoStudio\Action\CCActionManager.h" />
-    <ClInclude Include="..\CocoStudio\Action\CCActionNode.h" />
-    <ClInclude Include="..\CocoStudio\Action\CCActionObject.h" />
-    <ClInclude Include="..\CocoStudio\Armature\animation\CCArmatureAnimation.h" />
-    <ClInclude Include="..\CocoStudio\Armature\animation\CCProcessBase.h" />
-    <ClInclude Include="..\CocoStudio\Armature\animation\CCTween.h" />
-    <ClInclude Include="..\CocoStudio\Armature\CCArmature.h" />
-    <ClInclude Include="..\CocoStudio\Armature\CCBone.h" />
-    <ClInclude Include="..\CocoStudio\Armature\datas\CCDatas.h" />
-    <ClInclude Include="..\CocoStudio\Armature\display\CCBatchNode.h" />
-    <ClInclude Include="..\CocoStudio\Armature\display\CCDecorativeDisplay.h" />
-    <ClInclude Include="..\CocoStudio\Armature\display\CCDisplayFactory.h" />
-    <ClInclude Include="..\CocoStudio\Armature\display\CCDisplayManager.h" />
-    <ClInclude Include="..\CocoStudio\Armature\display\CCSkin.h" />
-    <ClInclude Include="..\CocoStudio\Armature\external_tool\sigslot.h" />
-    <ClInclude Include="..\CocoStudio\Armature\physics\CCColliderDetector.h" />
-    <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.h" />
-    <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDefine.h" />
+    <ClCompile Include="..\spine\Attachment¡¥†—^¯»ÆA,š\ù@Ðjh_Öû®Æ-¾Œ,•ÞÂèR‡V˜]R=[Öþpuk´Á|ÿp¶Há¬'ë,÷å`
+ÒàeaÂä1Ç?o¿b7âTÀÀÚ²èW7à´§‡0c’?ßÒèåºÜ!ÎxRˆ†C(\CM7áÄ|$¨X;ÍéO·Œ—èâêÜJÚU¶BÁ~¸7‡?³IJÑ¬þ­æCšÑØ^¦—0Ô¯µfAÂŠi%´:aÄÄÉù”¦™Ôy##þx‹Î‰œ#ò8=_¿»q|ž¥¿°aÊdÉ/ã&*ÕÞza2áÚ%Ý3.y(3H‚ç^ªpmîÉ!¢ãð¼a¤Ý\%¶øŒ&õ³›ùœ&BŽ¥j¶I‘w„s(…ÓýU»ÍQ¢æ@
+¼›qå±Ì—4Â:¯f@²QÊ½±ÈWY› Ô e½4Ìômƒ"X5mé™!É(RãMáwÃž©ÿðmV$pn~¤Å¯«ËÆD¤ª `Û¥±aòŒ¸âèZ†˜ŽtÎÈ?T lM4q©˜ä£,–N¯ûË­õÝàŠ»sœ(âŽÇ3/	óÐ¹N¬œ–/Ãýâ†Gè1Ì/ÙE§PÖýŽåÜ'î£šÛµêŒ@|öþpL@jgÔ£õÐÐe¸„zØ…¸ŽµÜL%ÅŸf™ôÏ 	ð ½]çàgt£#F•Ú…Ýå¸<—‰I%Úc.ã‘_g4²á§7]é@gWâæœü”}?¸Yü+Àn
+† c%Uk{ÏÕØ[®»Ê¢‹¨ãFñÁ{¯}ê¾q§825i)ô®«Æö)–•	$vN¥l–’Y$…3KŠºG‹zµnÁ”¬ùýˆ8Ž¢X€¸U¼QÉ-âUa¢Œûs@ÞÊh‰™“DÇŠ²ƒœ•¿i'T®}P³–,”®KÊ¼ÿjkÏb2Râ=:Ôø7[É›¯{³JÚ¼HWávñ=1Ä¯[Ë{CJgá¯·†÷…»wQu Þž¡Ýî¨ŠmåÙ—X`ê,@Øê³AÊ
+²;qÄsôs-5³ÿ€¶õ¼KÇŒ’XTÆ&Ÿâà¼'\.¦NvJeð·€×^sMî§Z¶×éNÇW4pÙC.|˜…dx2S’æ™L"QÅmTÄÆ)OÓ—îÂ1œ,"ãHQÁ­9K¤ÇëLš¼”¡É¿²|#øXPKjDvü(Pû¦Fö‘{ÄÅ¹"7>¢9&O¾|—U¿<-„®®v@l@›§„ v–“)ÿ¾<š¹$åjj¿¹‘ÊÙ”Èâ„§^výX‹ cï§æ›¬”ô‚á~qÃ#ôæ—ì"‡S(ë~ÇŽrî÷QÍíÚõF >{¸…
+& µ³GêÑzhè2\B=ìB\GZn¦’€bƒO³Lúg€x€Þ®sð³@ºÑ£JmÂîr\žËÄ¤í1‰ñÈ‹¯³Fš
+ÙðÓ›®t ³+qsN~Ê¾Ü,þ`·…C±ªµ½çêì-Wˆ]å ÑÆEÔq£øà½W‡>uß¸SœF™š´z×UcûËÊ;§R6KÉ,’ŽÂƒ™%	EÝ£E½Z·àJÖüþÆFDGQ¬F@Ü*ÞÎ¨äñª°QÆý9 oe´ÄÌI"ŠcEÙAÎÊß´*×>¨YKJ×Œ%eÞµµg1)ñêü›­äÍW‚=ˆY%m^¤«p»xŒžâW­å½Œ!¥³ð×[ÃûÂ]»¨: oÏÐ¿nwTÅ¶òìK¬G0‰Fõ lõÙ eÙ8â9ú¹–šÙÿ@ÛzÞ¥cFI,*c“OqpÞ.S';¥²€ø[Àk¯¹&÷S-[Èët§ã+¸ì!>ÌB2<™)IóL&‘¨â6*bã”§éKwáŠN‘q¤¨àÖœ%Òãõ&M^ÊÐdÈ_Ù@¾|,(ƒ%5";~¨}S#ûÈ=ââ\‘Ñ“'_¾ËªßžBWW; 6 ŽÍSBP;ËÉ”ßÍ\’‹r5µßÜHålJdqÂS/»~¬EÐ±Îw‚SóMVJzƒÕ	ø€fC"<.ÃJßþ{£ü ÐØåcš¿Ì-9óI–'„ã'Z}†%Ó“.¯¾v÷8æù—6ôt}5Ø4¥ßkuoÕÙNªºm<Ÿ	’;¿g‡Txë,-3“$ÏÓ/“ý‰Må·ìLüG[Ì+(Å¾r7Ui›y’>¯	K}uÓøåá«wëxçUº½Š~{£N­ìMŒœøT°Ú·Xáaª¿ÝŠ³óG6'RŽ¦˜àÚ»WŠ½SGà±1™G2ç?ÄvDÅÏfò?m_ÔpÓ#C%l.è€Ñ~¨…½>¬™&™(9(ï¾ª ·=Š¹“*oÓù•ÖB3LBŠÑÈåÔ§5½_V °ñÆ+¯eÐßµcñt¦“ð¹ ×ˆåQ[­êmWT«ÍæŸlù™–ô¢ëpgŽ¤xVHëÌJ²ç‡ì•ºÙ‘xT¨]‹{Åµb¯ËÒáºa|)˜5	òàÖ—5d™œ”Ï²„Ì•Ô¢…sýƒ-ˆîçç7hHZÑÃ'4uiõ†Mˆ\•Ûr^~}ƒ•e¿Ôz³NÑÇ5Ò;ÃIOaÒWXë{w8^Æúi ®›Éñ}‡U0¶”ƒ!ÈX‰@ÕÚÞsõö–+Ä®r€hã"ê¸Q|ðÞ«ÃFŸºoÜ)N£LMZ
+½ëª±}Šee‰S)›¥dIGáÁÌ’„¢îÀÑ¢^­[p%k~c#"Ž£(V# nogTr‹xUØ†(ãþ·2Zbæ$Å±¢ì gåoÚ	•kÔ¬%¥kÆ’2ï¿ÚÚ³˜Œ”xuþÍVòæ+ÁÄ¬’6/ÒU¸]<FOñ«ÀÖò^ÆÒYøë­á}á®Ç]T€·…gè_·;ªb[yö%Ö#˜ƒD£ú ¶úl²‚ìNñý\KÍìÿ m=ïÒ1£$•±É'‚88ï	—‹©“RY@ü-àµ×\“û©–-äuºÓñ\öf!žÌ”¤y&“HTq±qÊÓô¥»pE'‹È8RTpkÎéñz“&/eh2ä¯l ß>”Á„‘?
+ÔÀ¾©‘}äqq®ÈhŽÉ“/ßeÕoO¡««PÇæ)!¨ƒådÊ¿of.ÉE¹šÚon¤r6%²8á©—]?Ö"èXç;Á©ù&+¥½†AÈê|@³!Ša¥oÿ½Q~hìò1Í_æ–œù$ËBŒñ-‡>Ã’éI—W_»{óüKzº¾lšÒïµº·êl'UÝ6žÏÉß³C*¼õ
+––™I’çé—ÉþÄ¦ò[v&þ£-æ•”Àb_¹›ª´Í<IŸ×„¥¾Àºiüò†ðÕ»u¼ó*Ý^Å ¿½Q§Vö&FN|*Xí[¬ð0ÕßnÅÙù#›)GSLðí]Œ+ÅÞ©#ðØ‹ŽÌ#™óŸ b;¢â€g3ùŸ¶/j¸é‘¡6—?tÀh?ÔÂ^ÖL“L””w_Õ €ÛÅÜI•·éüJk¡&!ÅhärêÓšÞ¯+Øxã•×2èïÚ±x:ÓIø\kÄr„¨Ž­ˆVõ¶+ªÕfóO¶üLKzÑu¸3GR<+¤uf%ÙóCöJÝìH<*Ô®Å½âZ±À×‚…eéð
+Ý0¾ÌšyðëË²ŒLNÊgYBæJjÑÂ…¹þÁDwŒóó›À´À$­èášº´zÃ&D®Êm9/¿¾ÁÊ²_j½Y'èãšéá¤§0é+¬õ½;/
+cý4W‹ÍˆäxŠ¾Ã*[ÊÂàÒ\H]¨ì–*´uÑSJÐÜ%Ýêhçâ‡73’Tp·8:¿ÐºÞÁx?cÿÔ¦EfüŸm‰B5l™B‚Qû{|(èîªjÛ¢èà
+j4­_°kª	Û©øVð†/³þw[m‡â5º=ë\,Fø1{Sü?Ë§ïk¬)K„¡~­5VL+¡ÅÐ	#&NÎ§4Í„¤ÎñÇ[tÆHä‘ÇéùúÝãó,ý…S&K~7Q©ööðÐÃ	ÿÐf(éžqÉC™A<÷R]€ksO‡ç…#ýèæ*±Åg4©ŸÝäÈç4rŒ(U³MŠ¼#œC),˜î¯ÚmŽ5RàÝŒ“(e¾¤¡Ö!x5’Rî}ŒE¾ÊÚ¥-ë¥a¦ÿkÁªiKÏIF‘o
+¿öLý7€o³"só#-^x]X]6&"U Û¦(…ãg„Ä¼@×:h4Ät¤sFþ Ú ek¢‰KÅl$e±tzeØ_n}4¨ïGPÜãDw<žyI˜‡„Îubå´|!î7<Ba~É.r8…²îwì(ç>qÕÜþ¨=Po`rà³÷‡[¨0`R;{¤­‡†.Ã%ÔÃ.ÄuÔ¨åf*	(6ø4Ë¤H€èí:?¤1ªÔ(ì.Çå¹LL*Ñs‘¼ø:k¤©?½éJ:»7çä§ìûÁÍâ_vûxPh0+¨ZÛ{®~ÀÞr…ØUm\D7ŠÞ{uØèS÷;Åi”©IK¡w]5¶O±¬L ±s*e³”Ì"é(<˜Y’PÔ8ZÔ«uÎ dÍïolDÄqÅjÄ­âíŒJn¯
+ÛeÜŸòVFKÌœ$¢8V”ä¬üM;¡ríƒšµd¡tÍXRæýW[{“‘ïÑ¡ÎÀ¿ÙJÞ|%Øƒ˜UÒæEº
+·‹Çè‰!~ØZÞËR:½5¼/Üõ¸‹ªð¶ðýëvGUl+Ï¾ÄzshT`ÂVŸRVÝ‰#ž£Ÿk©™ý? ´­ç]:f”Ä¢26ùDç=ár1u²S*È€¿¼öškr?Õ²…¼Nw:¾¢ËráÃ,$Ã“™’4Ïd‰*n£"6Nyš¾tŽ¡ÈàdGŠ
+nÍY"=^Ï`Òä¥M†ü•äÁÇ‚2X‚Pc ²ãGØ75²Ü#.Î¹ñÍ1yòå»¬úmài!tuµ*`"àØ<%u°³œLù÷íàÑÌ%¹(WSûÍTÎ¦D'<õ²ëÇZë|'85ßd¥´ ×0Y€h6$ÂãB1¬ôÍà¿·1Ê]>¦ùKÀÜ’3ŸdyBˆ1~¢åÐgX2=éòêkwcžiCO×WƒMSú½V÷Víä¡ªÛÆó™ ¹óñ{vH…·^ÁÀÒ23Iò<ý20ÙŸØT~ËÎÄ´Å¼’Xì+wS•¶™'éóš°ÔX7_Þ¾z·Žw^¥Û«à·7êÔÊÞÄÈ‰O«}‹¾¡¦úÛ­8;ds"åhŠ	oStudio\Armature\utils\CCArmatureDefine.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCDataReaderHelper.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCSpriteFrameCacheHelper.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCTransformHelp.h" />

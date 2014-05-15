@@ -1,21 +1,13 @@
-﻿生成启动时间为 2014/5/7 21:13:25。
-     1>项目“E:\工作\CrossApp\CocosDenshion\proj.win32\CocosDenshion.vcxproj”在节点 2 上(Build 个目标)。
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\include" /I..\Include /I"E:\工作\CrossApp\CocosDenshion\proj.win32\..\..\cocos2dx" /I"E:\工作\CrossApp\CocosDenshion\proj.win32\..\..\cocos2dx\include" /I"E:\工作\CrossApp\CocosDenshion\proj.win32\..\..\cocos2dx\kazmath\include" /I"E:\工作\CrossApp\CocosDenshion\proj.win32\..\..\cocos2dx\platform\win32" /I"E:\工作\CrossApp\CocosDenshion\proj.win32\..\..\cocos2dx\platform\third_party\win32\OGLES" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D COCOSDENSHIONWIN32_EXPORTS /D _EXPORT_DLL_ /D _WINDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug.win32\\" /Fd"Debug.win32\vc120.pdb" /Gd /TP /wd4251 /analyze- /errorReport:prompt ..\win32\SimpleAudioEngine.cpp
-         SimpleAudioEngine.cpp
-     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
-     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
-     1>e:\工作\crossapp\cocos2dx\ui_controller\caviewcontroller.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\\" winmm.lib libcocos2d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.lib" /MACHINE:X86 /SAFESEH /DLL Debug.win32\MciPlayer.obj
+﻿生成启动时间为 2014/5/11 20:54:28。
+     1>项目“E:\win 开发\CrossAppNew\CocosDenshion\proj.win32\CocosDenshion.vcxproj”在节点 2 上(Build 个目标)。
+     1>Link:
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\\" winmm.lib libcocos2d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.pdb" /SUBSYSTEM:WINDOWS,"5.01" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.lib" /MACHINE:X86 /SAFESEH /DLL Debug.win32\MciPlayer.obj
          Debug.win32\SimpleAudioEngine.obj
      1>MciPlayer.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/OPT:LBR”规范)
-            正在创建库 E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.lib 和对象 E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.exp
-         CocosDenshion.vcxproj -> E:\工作\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.dll
-     1>已完成生成项目“E:\工作\CrossApp\CocosDenshion\proj.win32\CocosDenshion.vcxproj”(Build 个目标)的操作。
+            正在创建库 E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.lib 和对象 E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.exp
+         CocosDenshion.vcxproj -> E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libCocosDenshion.dll
+     1>已完成生成项目“E:\win 开发\CrossAppNew\CocosDenshion\proj.win32\CocosDenshion.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:02.71
+已用时间 00:00:00.69

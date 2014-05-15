@@ -153,7 +153,7 @@ void PluginUtils::outputLog(const char* logTag, const char* pFormat, ...)
 	vsnprintf(buf, MAX_LOG_LEN, pFormat, args);
 	va_end(args);
 
-	__android_log_print(ANDROID_LOG_DEBUG, logTag,  buf);
+	__android_log_print(ANDROID_LOG_DEBUG, logTag, "%s", buf);
 }
 
 jobject PluginUtils::getJObjFromParam(PluginParam* param)

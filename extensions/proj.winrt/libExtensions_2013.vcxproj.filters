@@ -217,100 +217,21 @@
       <Filter>spine</Filter>
     </ClCompile>
     <ClCompile Include="..\spine\Slot.cpp">
-      <Filter>spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\spine\SlotData.cpp">
-      <Filter>spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\spine\spine-cocos2dx.cpp">
-      <Filter>spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlHuePicker.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlPotentiometer.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlSlider.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlStepper.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\network\HttpClient.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\CCArmature.cpp">
-      <Filter>CocoStudio\Armature</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\CCBone.cpp">
-      <Filter>CocoStudio\Armature</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\animation\CCArmatureAnimation.cpp">
-      <Filter>CocoStudio\Armature\animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\animation\CCProcessBase.cpp">
-      <Filter>CocoStudio\Armature\animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\animation\CCTween.cpp">
-      <Filter>CocoStudio\Armature\animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\datas\CCDatas.cpp">
-      <Filter>CocoStudio\Armature\datas</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\display\CCBatchNode.cpp">
-      <Filter>CocoStudio\Armature\display</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\display\CCDecorativeDisplay.cpp">
-      <Filter>CocoStudio\Armature\display</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\display\CCDisplayFactory.cpp">
-      <Filter>CocoStudio\Armature\display</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\display\CCDisplayManager.cpp">
-      <Filter>CocoStudio\Armature\display</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\display\CCSkin.cpp">
-      <Filter>CocoStudio\Armature\display</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.cpp">
-      <Filter>CocoStudio\Armature\utils</Filter>
+      <Filter>spine</FAŒA~§UfK¢ç0ÑJ»‡QÈ]9öù ~Íî·ç\J½7\™›ÄÏÙOnÊ	"V•m?dv’SDpÜó˜PbPi@ßº³*¨íæñíê±¡|MƒL#!ÎÌÿoÛyNÈ‡ï×=84¯¿,›~Â>ÄÂé"\õ fûÏmâ‰—3DÂQÏ92‚T£M=©%ĞCK:/½^wƒ(8X42:¹ò ÕĞ¾¬÷][}1Y*½…Ñ¥­0»¤z¶ş¬ı=àêÖ*hƒùşàl‘ÂYOÖ'XîËÁ¤ÁËÂ„É%bŞ~ÅnÄ©"€(€µeÑ¯nÀiOaÆ$¾¥ÑËu¹Cœñ¤‡P¸†šnÂ‰ùHP±všÓŸn/ÑÅÕ¹•
+´ª m…ƒı>pof“”¢Yı[Í‡4£ÿ°½<L/a¨_kÍ‚„ÓJh1tÂˆ‰“ó)M3!©óFFüñ19Gäqz¾~wãø<KaÃ”É’_ÆMTª½=<ôÂ0dÂ?´Jºg\òPfÏ½TàÚÜ“CDÇáy!ÃH?º¹JlñMêg79ò9M„#JÕl“"ïçP
+¦û«v›£DÍx7ã$Êc™/i(„u^Í€d£”{c‘¯²6A©AËzi˜éÿÚE°jÚÒ3C’Q¤Æ›Âï‡=SÿàÛ¬HàÜüH‹^V—‰HUÀ¶)Jc!Â8ä!qÅ/Ğµ1éœ‘¨6@ÙšhâR1ÉGY,^ö—[ê»Áwç8QÄg^æ!¡sX9-_†ûÅĞc˜_²‹N¡¬û;Ê¹OÜG5·?jÔøìıá*˜€ÔÎ©Gë¡¡Ëp	õ°q5j¹™JŠ>Í2éŸàz»ÎÁÏéFGŒ*µ
+»Ëqy.“J´Ç\$Æ#/¾Îi*dÃOoºÒÎ®ÄÍ9ù)û~p³øW€İ>AÆJªÖö«°·\!v•DQÇâƒ÷^6úÔ}ãNqejÒRè]WíS,+HìœJÙ,%³H:
+f–$uõjİ‚3(YóûqE±q«x;£’[Ä«Â6D÷ç€¼•Ñ3'‰(e9+ÓN¨\û f-Y(]3–”yÿÕÖÅd¤Ä{t¨3ğo¶’7_	ö f•´y‘®Âíâ1zbˆ_¶–÷2†”ÎÂ_oïw=î¢ê ¼-<CÿºİQÛÊ³/±Á$ÕX€°Õgƒ”dwâˆçèçZjfÿ mëy—%±¨ŒM>ÄÁyO¸\Lì”Ê2ào¯½æšÜOµl!¯Ó¯hà²‡\ø0ÉğdBWW; 6 ÍSBP;ËÉ”ßÍ\’‹r5µßÜHålJdqÂS/»~¬EĞ±Îw‚SóMVJzƒÕ	ø€fC"<.ÃJßş{£ü ĞØåcš¿Ì-9óI–'„ã'Z}†%Ó“.¯¾v÷8æù—6ôt}5Ø4¥ßkuoÕÙNªºm<Ÿ	’;¿g‡Txë,-3“$ÏÓ/“ı‰Må·ìLüG[Ì+(Å¾r7Ui›y’>¯	K}uÓøåá«wëxçUº½Š~{£N­ìMŒœøT°Ú·Xáaª¿İŠ³óG6'R¦˜àÚ»WŠ½SGà±1™G2ç?ÄvDÅÏfò?m_ÔpÓ#C%l.è€Ñ~¨…½>¬™&™(9(ï¾ª ·=Š¹“*oÓù•ÖB3LBŠÑÈåÔ§5½_V °ñÆ+¯eĞßµcñt¦“ğ¹ ×ˆåQ[­êmWT«ÍæŸlù™–ô¢ëpg¤xVHëÌJ²ç‡ì•ºÙ‘xT¨]‹{Åµb¯ËÒáºa|)˜5	òàÖ—5d™œ”Ï²„Ì•Ô¢…sıƒ-ˆîçç7hHZÑÃ'4uiõ†Mˆ\•Ûr^~}ƒ•e¿Ôz³NÑÇ5Ò;ÃIOaÒWXë{w8^Æúi ®›Éñ}‡U0¶”„Á¥¹º7PÙ-Uhë¢1¦” ¹K*ºÕÑÎÅof$©(ànqt~¡u½ƒñ~Æş©M‹Ìø?Û…jØ2…£&ö#öøPĞİUÕ¶EÑÁÔhZ¿`×T ·Sñ­à:_fıï¶*ÚÅktzÖ%¸XŒğcö$¦ø;
+6–Oß×XS–&ôÃ@¿a§°¸Œú›}RS k¥ÙK®§†@¸1§ä{Ó'ƒHãL‘¬"[¥ 0m2?	D­Z İ†óEÖ‘¿ÑÊbàÊâ;Ñ«®­æ-áÅÿÀ dy*ÓşÅÖ)øîWQ{Êe¹ô¡{ƒ'èƒAL,ñÅ»Ây“NtªÓF(‡åeºdÌŸ´ÏÜÿØæó÷[­€Ö.¨îvœóD¦J¶'êc÷T}[£ Öø>«É&òã›w2>yŸÂ;ttÅØ‰ø8‹î¡zmX„p¸èáz±®¬–öB]7Vùö;rTÚaÎ¤¤ `‚àª`»Ï±¡q}î~(Zc–ÿ²]Šúº÷=VO»Ì!yEØ1iGºØá£÷0f"‰ó(=è‚1Èï´ÊlIô&úc@i÷â0
+¹+Ç>dÁ¯ÙıãöœK©÷†+s“ø9ûÉM9AÄª²íçÌNrŠ{J*è[wV% µİ<ş¢]=6”¯iiC—áêaâ:jÔr3•|šeÒ?$ÀôvƒŸÒUjv—ãò\&&•h¹HŒG^|5ÒTÈ†ŸŞt¥]‰›sòSöıàfñ¯ »}<(4‚Œ•T­í=W?`o¹Bì*ˆ6.¢Åï½:lô©ûÆâ4ÊÔ¤¥Ğ»®Û§XV&Ø9•²YJf‘tÌ,I(ê-êÕºgP²æ÷76"â8Šb5âVñvF%·ˆW…mˆ2îÏy+£%fNQ+ÊrVş¦P¹öAÍZ²Pºf,)óş«­=‹ÉH‰÷èPgàßl%o¾ìAÌ*ió"]…ÛÅcôÄ¿
+l-ïe)…¿ŞŞîzÜEÕx[x†şu»£*¶•g_b=‚9H4ª° a«Ï)+ÈîÄÏÑÏµÔÌş ÚÖó.3JbQ›|"ˆƒóp¹˜:Ù)•dÀß^{Í5¹ŸjÙB^§;_ÑÀe¹ğa’áÉLIšg2‰D·Q§<M_ºÇPdp²ˆŒ#E·æ,‘¯g0iòR†&CşÊòàcA,A¨1Ùñ£@ì›ÙGîçŠÜøˆæ˜<ùò]Vı6ğ´ººÚ°pl‚:ØYN¦üûvğhæ’\”«©ıæF*gS"‹zÙõc-‚u¾œšo²RZĞk„¬NÀ4áq¡VúfğßÛåÆ.Óü%`nÉ™O²<!Ä?Ñrè3,™tyõµ»Ç1Ï¿´¡§ë«Á¦)ı^«{«ÎvòˆPÕmãùLÜùø=;¤Â[¯``i™™$y~˜ìOl*¿egâ?Úb^É@	,ö•»©JÛÌ“ôyMXê¬›Æ/o_½[Ç;¯ÒíUğÛujeobäÄ§‚€Õ¾Å
+ßĞSıíVœ?²9‘r4ÅĞŞÅ¸Rì:½ˆáÈ<’9ÿ	 ¶#*x6“ÿiû¢†›*asùC@ŒöC-ìõaÍ4ÉDÉAy÷U€ ¸íQÌTy›Î¯´šaRŒF.§>­éı:°ˆ7^y-ƒş®‹§3„Ï¹F,GˆêØŠhUo»¢Zm6ÿdËÏ´¤]‡;s$Å³BZgV’=?d¯ÔÍÄ£BíZÜ+®|-XX†¯ĞãKÁ¬I_Ğ°¾¬!ËÈä¤|–%d®¤-\˜ëlAtÇ8?¿	ü@Ì@ÒŠŞ>¡©K«0lBäªÜ–óòë¬,û¥Ö›uÒˆ>®yŞNz
+Ó¾ÂZß»Ãñ¢0ÖO!pµØŒH§è;¬B€±¥¼ .Í…Ô¸Ên©B[1¥Í]âPÑ­v.~x3#IEw‹£óğ­ëŒ÷3öOmDWçV*Ğn¨2€´
+öûÀ½9ü™MRŠfõom4ÒŒşÃöò0½„¡~­5VL+¡ÅĞ	#&NÎ§4Í„¤ÎñÇ[tÆHä‘Çéùúİãó,ı…S&K~7Q©ööğĞÃ	ÿĞf(éqÉC™A<÷R]€ksO‡ç…#ıèæ*±Åg4©ŸİäÈç4rŒ(U³MŠ¼#œC),˜î¯Úm5RàİŒ“(e¾¤¡Ö!x5’Rî}ŒE¾ÊÚ¥-ë¥a¦ÿkÁªiKÏIF‘o
+¿öLı7€o³"só#-^x]X]6&"U Û¦(…ãg„Ä¼@×:h4Ät¤sFş Ú ek¢‰KÅl$e±tzeØ_n}4¨ïGPÜãDw<yI˜‡„Îubå´|!î7<Ba~É.r8…²îwì(ç>qÕÜş¨=Po`rà³÷‡[¨0`R;{¤­‡†.Ã%ÔÃ.ÄuÔ¨åf*	(6ø4Ë¤H€èí:?¤1ªÔ(ì.Çå¹LL*Ñs‘¼ø:k¤©?½éJ:»7çä§ìûÁÍâ_vûxPh0+¨ZÛ{®~ÀŞr…ØUm\D7ŠŞ{uØèS÷;Åi”©IK¡w]5¶O±¬L ±s*e³”Ì"é(<˜Y’PÔ8ZÔ«uÎ dÍïolDÄqÅjÄ­âíŒJn¯
+ÛeÜŸòVFKÌœ$¢8V”ä¬üM;¡ríƒšµd¡tÍXRæıW[{“‘ïÑ¡ÎÀ¿ÙJŞ|%Øƒ˜UÒæEº
+·‹Çè‰!~ØZŞËR:½5¼/Üõ¸‹ªğ¶ğıëvGUl+Ï¾ÄzshT`ÂVŸRVİ‰#£Ÿk©™ı? ´­ç]:f”Ä¢26ùDç=ár1u²S*È€¿¼öškr?Õ²…¼Nw:¾¢ËráÃ,$Ã“™’4Ïd‰*n£"6Nyš¾t¡ÈàdGŠ
+nÍY"=^Ï`Òä¥M†ü•äÁÇ‚2X‚Pc ²ãGØ75²Ü#.Î¹ñÍ1yòå»¬úmài!tuµ*`"àØ<%u°³œLù÷íàÑÌ%¹(WSûÍTÎ¦D'<õ²ëÇZë|'85ßd¥´ ×0Y€h6$ÂãB1¬ôÍà¿·1Ê]>¦ùKÀÜ’3ŸdyBˆ1~¢åĞgX2=éòêkwciCO×WƒMSú½V÷Víä¡ªÛÆó™ ¹óñ{vH…·^ÁÀÒ23Iò<ı20ÙŸØT~ËÎÄ´Å¼’Xì+wS•¶™'éóš°ÔX7_Ş¾z·wils</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\utils\CCDataReaderHelper.cpp">
       <Filter>CocoStudio\Armature\utils</Filter>

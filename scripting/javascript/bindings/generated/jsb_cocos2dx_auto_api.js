@@ -710,13 +710,6 @@ CCTexture2D : function () {},
 cc.Node = {
 
 /**
- * @method removeComponent
- * @return A value converted from C/C++ "bool"
- * @param {const char*}
- */
-removeComponent : function () {},
-
-/**
  * @method removeAllComponents
  */
 removeAllComponents : function () {},
@@ -917,12 +910,6 @@ isVisible : function () {},
 getChildrenCount : function () {},
 
 /**
- * @method setAnchorPoint
- * @param {cocos2d::CCPoint}
- */
-setAnchorPoint : function () {},
-
-/**
  * @method convertToNodeSpaceAR
  * @return A value converted from C/C++ "cocos2d::CCPoint"
  * @param {cocos2d::CCPoint}
@@ -1053,12 +1040,6 @@ getScheduler : function () {},
  * @return A value converted from C/C++ "unsigned int"
  */
 getOrderOfArrival : function () {},
-
-/**
- * @method setContentSize
- * @param {cocos2d::CCSize}
- */
-setContentSize : function () {},
 
 /**
  * @method setActionManager
@@ -3986,12 +3967,6 @@ update : function () {},
 getLensEffect : function () {},
 
 /**
- * @method setPosition
- * @param {cocos2d::CCPoint}
- */
-setPosition : function () {},
-
-/**
  * @method getPosition
  * @return A value converted from C/C++ "cocos2d::CCPoint"
  */
@@ -4055,12 +4030,6 @@ setAmplitude : function () {},
  * @return A value converted from C/C++ "float"
  */
 getAmplitude : function () {},
-
-/**
- * @method setPosition
- * @param {cocos2d::CCPoint}
- */
-setPosition : function () {},
 
 /**
  * @method getPosition
@@ -4278,12 +4247,6 @@ setAmplitude : function () {},
  * @return A value converted from C/C++ "float"
  */
 getAmplitude : function () {},
-
-/**
- * @method setPosition
- * @param {cocos2d::CCPoint}
- */
-setPosition : function () {},
 
 /**
  * @method getPosition
@@ -5899,12 +5862,6 @@ setDisplayFrameWithAnimationName : function () {},
 setRotationY : function () {},
 
 /**
- * @method setAnchorPoint
- * @param {cocos2d::CCPoint}
- */
-setAnchorPoint : function () {},
-
-/**
  * @method setOpacityModifyRGB
  * @param {bool}
  */
@@ -6463,12 +6420,6 @@ CCSpriteBatchNode : function () {},
 cc.LabelBMFont = {
 
 /**
- * @method setAnchorPoint
- * @param {cocos2d::CCPoint}
- */
-setAnchorPoint : function () {},
-
-/**
  * @method createFontChars
  */
 createFontChars : function () {},
@@ -7018,12 +6969,6 @@ setOpacity : function () {},
  * @param {float}
  */
 changeWidth : function () {},
-
-/**
- * @method setContentSize
- * @param {cocos2d::CCSize}
- */
-setContentSize : function () {},
 
 /**
  * @method changeHeight
@@ -8723,12 +8668,6 @@ CCMotionStreak : function () {},
  * @class CCProgressTimer
  */
 cc.ProgressTimer = {
-
-/**
- * @method setAnchorPoint
- * @param {cocos2d::CCPoint}
- */
-setAnchorPoint : function () {},
 
 /**
  * @method draw
@@ -10519,6 +10458,7 @@ init : function () {},
 /**
  * @method addAnimationsWithDictionary
  * @param {cocos2d::CCDictionary*}
+ * @param {const char*}
  */
 addAnimationsWithDictionary : function () {},
 
@@ -10720,6 +10660,13 @@ cc.TextureCache = {
  * @method dumpCachedTextureInfo
  */
 dumpCachedTextureInfo : function () {},
+
+/**
+ * @method reloadTexture
+ * @return A value converted from C/C++ "bool"
+ * @param {const char*}
+ */
+reloadTexture : function () {},
 
 /**
  * @method addETCImage
@@ -11649,12 +11596,6 @@ cc.Component = {
 setEnabled : function () {},
 
 /**
- * @method setNode
- * @param {cocos2d::CCNode*}
- */
-setNode : function () {},
-
-/**
  * @method setName
  * @param {const char*}
  */
@@ -11668,6 +11609,7 @@ isEnabled : function () {},
 
 /**
  * @method serialize
+ * @return A value converted from C/C++ "bool"
  * @param {void*}
  */
 serialize : function () {},
@@ -11701,12 +11643,6 @@ setOwner : function () {},
  * @return A value converted from C/C++ "const char*"
  */
 getName : function () {},
-
-/**
- * @method getNode
- * @return A value converted from C/C++ "cocos2d::CCNode*"
- */
-getNode : function () {},
 
 /**
  * @method create

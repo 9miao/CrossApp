@@ -508,11 +508,12 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
     unsigned long length = 0;
-    void *data = futil->getFileData(byteCodePath.c_str(),
+    unsigned char* data = futil->getFileData(byteCodePath.c_str(),
                                     "rb",
                                     &length);
     if (data) {
         script = JS_DecodeScript(cx, data, length, NULL, NULL);
+        CC_SAFE_DELETE_ARRAY(data);
     }
     
     // b) no jsc file, check js file
@@ -2328,3 +2329,13 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
     // we are done here
 	return JS_TRUE;
 }
+
+bool ScriptingCore::parseConfig(ConfigType type, const std::string& str)
+{
+    jsval args[2];
+    args[0] = int32_to_jsval(cx_, static_cast<int>(type));
+    args[1] = std_string_to_jsval(cx_, str);
+    return (JS_TRUE == executeFunctionWithOwner(OBJECT_TO_JSVAL(global_), "__onParseConfig", 2, args));
+}
+
+
