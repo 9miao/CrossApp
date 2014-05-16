@@ -84,12 +84,12 @@ void  CCComponent::setName(const char *pName)
     m_strName.assign(pName);
 }
 
-CAView_* CCComponent::getOwner() const
+CAView* CCComponent::getOwner() const
 {
     return m_pOwner;
 }
 
-void CCComponent::setOwner(CAView_ *pOwner)
+void CCComponent::setOwner(CAView *pOwner)
 {
     m_pOwner = pOwner;
 }

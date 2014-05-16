@@ -10,7 +10,7 @@
 #define __project__CASlider__
 
 #include <iostream>
-#include "sprite_nodes/CCView.h"
+#include "sprite_nodes/CAView.h"
 #include "sprite_nodes/CCSprite.h"
 #include "misc_nodes/CCRenderTexture.h"
 
@@ -22,7 +22,7 @@ typedef enum
     CAProgressStyleBar
 }CAProgressStyle;
 
-class CC_DLL CAProgress :public CCNodeRGBA
+class CC_DLL CAProgress :public CAView
 {
 public:
     
@@ -70,7 +70,7 @@ private:
     
     float m_previousPercent;
     
-    CAView_* m_pIndicator;
+    CAView* m_pIndicator;
     
     void init9SpriteWithImage(const char *fileName);
     

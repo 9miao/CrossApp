@@ -154,7 +154,7 @@ public:
 };
 
 /** 
- * CAView_ objects that uses a CCTexture2D to render the images.
+ * CAView objects that uses a CCTexture2D to render the images.
  * The texture can have a blending function.
  * If the texture has alpha premultiplied the default blending function is:
  *   src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA

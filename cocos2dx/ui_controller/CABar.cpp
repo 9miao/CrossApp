@@ -91,7 +91,7 @@ void CANavigationBar::showTitle()
     {
         m_pTitle = CCLabelTTF::create("", "Arial", 40);
         m_pTitle->setAnchorPoint(CCPoint(0.5f, 0.5f));
-        m_pTitle->setCenter(m_obContentSize/2);
+        m_pTitle->setCenterOrigin(m_obContentSize/2);
         this->insertSubview(m_pTitle, 1);
     }
     
@@ -106,13 +106,14 @@ void CANavigationBar::showBackButton()
     if (m_pBackButton == NULL)
     {
         CCRect rect = this->getBounds();
-        rect.origin.x = 20;
-        rect.origin.y = rect.size.height * 0.05f;
-        rect.size = ccpMult(rect.size, 0.9f);
-        m_pBackButton = CAButton::createWithFrame(rect);
+        rect.size.height = rect.size.height * 0.9f;
+        rect.size.width = rect.size.height;
+        rect.origin.x = rect.size.width;
+        rect.origin.y = rect.size.height * 0.5f;
+        
+        m_pBackButton = CAButton::createWithCenter(rect);
         CAImageView* imageView = CAImageView::createWithTexture(CCTexture2D::create("button_left.png"));
         m_pBackButton->setBackGround(CAControlStateNormal, imageView);
-        m_pBackButton->setPositionY(m_obContentSize.height/2);
         this->insertSubview(m_pBackButton, 1);
         m_pBackButton->addTarget(this, CAButton_selector(CANavigationBar::goBack), TouchUpInSide);
     }
@@ -298,7 +299,7 @@ void CATabBar::showItems()
         {
             CAView* view = CAView::createWithFrame(CCRect(i * width, 0, width, height), ccc4(0, 0, 0, 0));
             this->insertSubview(view, 3);
-            //view->setDisplayRange(false);
+            view->setDisplayRange(false);
             m_pViews.push_back(view);
             
             CAImageView* imageView = NULL;
@@ -323,45 +324,62 @@ void CATabBar::showItems()
             
             if (imageView && title == NULL)
             {
-                imageView->setCenter(view->getContentSize()/2);
-                
-                CCSize imageViewSize = imageView->getContentSize();
-                float scaleX = width / imageViewSize.width * 2/3;
-                float scaleY = height / imageViewSize.height * 2/3;
+                CCSize imageViewSize = imageView->getBounds().size;
+                float scaleX = width / imageViewSize.width * 2/3.0f;
+                float scaleY = height / imageViewSize.height * 2/3.0f;
                 float scale = MIN(scaleX, scaleY);
                 scale = MIN(scale, 1.0f);
                 imageViewSize = ccpMult(imageViewSize, scale);
-                imageView->setBoundsSize(imageViewSize);
+                
+                CCRect rect;
+                rect.origin = view->getBounds().size/2;
+                rect.size = imageViewSize;
+                
+                imageView->setCenter(rect);
+    
             }
             else if (title && imageView == NULL)
             {
                 int fontSize = this->getContentSize().height / 2.0f;
                 title->setFontSize(fontSize);
-                title->setCenter(view->getContentSize()/2);
                 
-                CCSize titleSize = title->getContentSize();
-                float titleScale = height / titleSize.height * 1/2;
+                CCSize titleSize = title->getBounds().size;
+                float titleScale = height / titleSize.height * 1/2.0f;
                 titleSize = ccpMult(titleSize, titleScale);
-                title->setBoundsSize(titleSize);
-            }
-            else
-            {
-                imageView->setCenter(CCPoint(view->getContentSize().width/2, view->getContentSize().height * 7/20));
                 
-                CCSize imageViewSize = imageView->getContentSize();
-                float scaleX = width / imageViewSize.width * 0.5f;
-                float scaleY = height / imageViewSize.height * 0.5f;
+                CCRect rect;
+                rect.origin = view->getBounds().size/2;
+                rect.size = titleSize;
+                
+                title->setCenter(rect);
+            }
+            else if (title && imageView)
+            {
+
+                CCSize imageViewSize = imageView->getBounds().size;
+                float scaleX = width / imageViewSize.width * 1/2.0f;
+                float scaleY = height / imageViewSize.height * 1/2.0f;
                 float scale = MIN(scaleX, scaleY);
                 scale = MIN(scale, 1.0f);
                 imageViewSize = ccpMult(imageViewSize, scale);
-                imageView->setBoundsSize(imageViewSize);
-                
-                title->setCenter(CCPoint(view->getContentSize().width/2, view->getContentSize().height * 15/20));
-                
-                CCSize titleSize = title->getContentSize();
+ 
+                CCRect rect;
+                rect.size = imageViewSize;
+                rect.origin = view->getBounds().size;
+                rect.origin.x *= 1/2.0f;
+                rect.origin.y *= 7/20.0f;
+                imageView->setCenter(rect);
+
+                CCSize titleSize = title->getBounds().size;
                 float titleScale = height / titleSize.height * 3/10;
                 titleSize = ccpMult(titleSize, titleScale);
-                title->setBoundsSize(titleSize);
+                
+                CCRect rect2;
+                rect2.size = titleSize;
+                rect2.origin = view->getBounds().size;
+                rect2.origin.x *= 1/2.0f;
+                rect2.origin.y *= 15/20.0f;
+                title->setCenter(rect2);
                 
             }
         }

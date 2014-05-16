@@ -10,7 +10,7 @@
 #define __cocos2dx__CAScrollView__
 
 #include <iostream>
-#include "sprite_nodes/CCView.h"
+#include "sprite_nodes/CAView.h"
 #include <deque>
 
 NS_CC_BEGIN
@@ -47,9 +47,9 @@ public:
     
     virtual bool initWithFrame(const cocos2d::CCRect &rect);
 
-    void addSubview(CAView_* subview);
+    void addSubview(CAView* subview);
     
-    virtual void insertSubview(CAView_* subview, int z);
+    virtual void insertSubview(CAView* subview, int z);
     
     void removeAllSubviews();
     
@@ -142,7 +142,7 @@ protected:
 };
 
 
-class CC_DLL CAIndicator : public CCNodeRGBA
+class CC_DLL CAIndicator : public CAView
 {
 public:
     
@@ -169,7 +169,7 @@ public:
     
 private:
 
-    CAView_* m_pIndicator;
+    CAView* m_pIndicator;
     
     CAIndicatorType m_eType;
 };

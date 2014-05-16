@@ -45,7 +45,7 @@ struct _hashElement;
 
 /** 
  @brief CCActionManager is a singleton that manages all the actions.
- Normally you won't need to use this singleton directly. 99% of the cases you will use the CAView_ interface,
+ Normally you won't need to use this singleton directly. 99% of the cases you will use the CAView interface,
  which uses this singleton.
  But there are some cases where you might need to use this singleton.
  Examples:
@@ -74,7 +74,7 @@ public:
      If the target is not present, a new instance of this target will be created either paused or not, and the action will be added to the newly created target.
      When the target is paused, the queued actions won't be 'ticked'.
      */
-    void addAction(CCAction *pAction, CAView_ *pTarget, bool paused);
+    void addAction(CCAction *pAction, CAView *pTarget, bool paused);
 
     /** Removes all actions from all the targets.
     */

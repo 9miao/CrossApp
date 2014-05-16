@@ -91,7 +91,7 @@ bool CAScrollView::initWithFrame(const cocos2d::CCRect &rect)
     return true;
 }
 
-void CAScrollView::addSubview(CAView_* subview)
+void CAScrollView::addSubview(CAView* subview)
 {
     do
     {
@@ -104,7 +104,7 @@ void CAScrollView::addSubview(CAView_* subview)
     CAView::addSubview(subview);
 }
 
-void CAScrollView::insertSubview(CAView_* subview, int z)
+void CAScrollView::insertSubview(CAView* subview, int z)
 {
     do
     {
@@ -131,11 +131,9 @@ void CAScrollView::setViewSize(cocos2d::CCSize var)
         m_obViewSize = var;
         
         CC_BREAK_IF(m_pContainer == NULL);
-        
-        m_pContainer->setBoundsSize(m_obViewSize);
-        
+
         CCRect rect = CCRectZero;
-        rect.size = m_pContainer->getBounds().size;
+        rect.size = var;
         m_pContainer->setFrame(rect);
         
     }
@@ -230,10 +228,7 @@ bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
             CCPoint mid_point = ccpMidpoint(touch0->getLocation(), touch1->getLocation());
             
             CCPoint p = m_pContainer->convertToNodeSpace(mid_point);
-            p = CCPoint(p.x / m_pContainer->getContentSize().width,
-                        p.y / m_pContainer->getContentSize().height);
-            m_pContainer->setAnchorPoint(p);
-            m_pContainer->setPosition(this->convertToNodeSpace(mid_point));
+            m_pContainer->setAnchorPointInPoints(p);
             
             if (m_pScrollViewDelegate)
             {
@@ -251,7 +246,7 @@ bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
-    CCPoint p_container = m_pContainer->getCenter();
+    CCPoint p_container = m_pContainer->getCenter().origin;
     CCPoint p_off = CCPointZero;
     
     if (m_pTouches->count() == 1)
@@ -350,12 +345,12 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
         }
     }
     
-    if (m_pScrollViewDelegate && p_container.equals(m_pContainer->getCenter()) == false)
+    if (m_pScrollViewDelegate && p_container.equals(m_pContainer->getCenter().origin) == false)
     {
         m_pScrollViewDelegate->scrollViewDidScroll(this);
     }
     
-    m_pContainer->setCenter(p_container);
+    m_pContainer->setCenter(CCRect(p_container.x, p_container.y, 0, 0));
 }
 
 void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
@@ -392,8 +387,6 @@ void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         }
         else if (m_pTouches->count() == 2)
         {
-            CCPoint point = m_pContainer->getCenter();
-            m_pContainer->setPosition(point);
             m_pContainer->setAnchorPoint(CCPoint(0.5f, 0.5f));
 
             m_bZooming = false;
@@ -424,7 +417,7 @@ void CAScrollView::deaccelerateScrolling(float delay)
         speed = m_tInertia;
     }
     
-    CCPoint point = m_pContainer->getCenter();
+    CCPoint point = m_pContainer->getCenter().origin;
 
     if (m_bBounces)
     {
@@ -486,12 +479,12 @@ void CAScrollView::deaccelerateScrolling(float delay)
         }
     }
     
-    if (m_pScrollViewDelegate && point.equals(m_pContainer->getCenter()) == false)
+    if (m_pScrollViewDelegate && point.equals(m_pContainer->getCenter().origin) == false)
     {
         m_pScrollViewDelegate->scrollViewDidScroll(this);
     }
     
-    m_pContainer->setCenter(point);
+    m_pContainer->setCenterOrigin(point);
     
     m_tInertia = ccpMult(m_tInertia, 1 - decelerationRatio(delay));
     
@@ -583,7 +576,7 @@ bool CAScrollView::isScrollWindowNotOutSide()
 {
     CCSize size = this->getContentSize();
     CCRect rect = m_pContainer->getFrame();
-    CCPoint point = m_pContainer->getCenter();
+    CCPoint point = m_pContainer->getCenter().origin;
     
     if (point.x - rect.size.width / 2 > 0.5f)
     {
@@ -613,7 +606,7 @@ bool CAScrollView::isScrollWindowNotMaxOutSide()
 {
     CCSize size = this->getContentSize();
     CCRect rect = m_pContainer->getFrame();
-    CCPoint point = m_pContainer->getCenter();
+    CCPoint point = m_pContainer->getCenter().origin;
     
     if (point.x - rect.size.width / 2 - maxBouncesLenght().x > 0)
     {
@@ -666,7 +659,7 @@ CAIndicator* CAIndicator::createWithFrame(const CCRect& rect, CAIndicatorType ty
 
 bool CAIndicator::initWithFrame(const CCRect& rect, CAIndicatorType type)
 {
-    if (!CCNodeRGBA::init())
+    if (!CAView::init())
     {
         return false;
     }
@@ -690,8 +683,8 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
 {
     CCScale9Sprite* indicator = dynamic_cast<CCScale9Sprite*>(m_pIndicator);
     
-    int x = (int)indicator->getPositionX() * 10;
-    int y = (int)indicator->getPositionY() * 10;
+    int x = (int)indicator->getCenterOrigin().x * 10;
+    int y = (int)indicator->getCenterOrigin().y * 10;
     
     
     if (m_eType == CAIndicatorTypeHorizontal)
@@ -714,14 +707,14 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
             size.width *= (1 - lenght_scale_x) / (size_scale_x / 2);
         }
         size.width = MAX(size.height, size.width);
-        indicator->setContentSize(size);
+        indicator->setPreferredSize(size);
         
         CCPoint point = m_obContentSize;
         point.y *= 0.5f;
         point.x *= lenght_scale_x;
         point.x = MAX(point.x, size.width/2);
         point.x = MIN(point.x, m_obContentSize.width - size.width/2);
-        indicator->setPosition(point);
+        indicator->setCenterOrigin(point);
     }
     else if (m_eType == CAIndicatorTypeVertical)
     {
@@ -743,7 +736,7 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
             size.height *= (1 - lenght_scale_y) / (size_scale_y / 2);
         }
         size.height = MAX(size.height, size.width);
-		indicator->setContentSize(size);
+		indicator->setPreferredSize(size);
         
         
         CCPoint point = m_obContentSize;
@@ -752,12 +745,12 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
         point.y = MAX(point.y, size.height/2);
         point.y = MIN(point.y, m_obContentSize.height - size.height/2);
         
-        indicator->setPosition(point);
+        indicator->setCenterOrigin(point);
     }
     
     do
     {
-        if (x == (int)indicator->getPositionX() * 10 && y == (int)indicator->getPositionY() * 10)
+        if (x == (int)indicator->getCenterOrigin().x * 10 && y == (int)indicator->getCenterOrigin().y * 10)
         {
             CC_BREAK_IF(indicator->getActionByTag(0xfff));
             

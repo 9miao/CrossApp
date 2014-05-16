@@ -94,7 +94,6 @@ sprite_nodes/CCAnimationCache.cpp \
 sprite_nodes/CCSprite.cpp \
 sprite_nodes/CCSpriteFrame.cpp \
 sprite_nodes/CCSpriteFrameCache.cpp \
-sprite_nodes/CCView.cpp \
 sprite_nodes/CCScale9Sprite.cpp \
 sprite_nodes/CAWindow.cpp \
 sprite_nodes/CAView.cpp \

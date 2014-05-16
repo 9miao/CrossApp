@@ -23,6 +23,7 @@ CAViewController::CAViewController()
 ,m_pTabBarItem(NULL)
 ,m_sTitle("")
 ,m_bLifeLock(false)
+,m_bKeypadEnabled(false)
 {
     m_pView = CAView::createWithFrame(CCRectZero);
     m_pView->retain();
@@ -33,6 +34,12 @@ CAViewController::~CAViewController()
 {
     m_pView->setViewDelegate(NULL);
     CC_SAFE_RELEASE_NULL(m_pView);
+    
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    if (m_bKeypadEnabled)
+    {
+        pDirector->getKeypadDispatcher()->removeDelegate(this);
+    }
 }
 
 bool CAViewController::init()
@@ -44,6 +51,7 @@ void CAViewController::getSuperViewRect(const CCRect& rect)
 {
     m_pView->setFrame(rect);
 }
+
 
 void CAViewController::viewOnEnterTransitionDidFinish()
 {
@@ -77,7 +85,7 @@ CAView* CAViewController::getView()
     return m_pView;
 }
 
-void CAViewController::addViewFromSuperview(CAView_* node)
+void CAViewController::addViewFromSuperview(CAView* node)
 {
     m_bLifeLock = false;
     node->addSubview(m_pView);
@@ -87,6 +95,31 @@ void CAViewController::removeViewFromSuperview()
 {
     m_bLifeLock = false;
     m_pView->removeFromSuperview();
+}
+
+/// isKeypadEnabled getter
+bool CAViewController::isKeypadEnabled()
+{
+    return m_bKeypadEnabled;
+}
+
+/// isKeypadEnabled setter
+void CAViewController::setKeypadEnabled(bool enabled)
+{
+    if (enabled != m_bKeypadEnabled)
+    {
+        m_bKeypadEnabled = enabled;
+        
+        CCDirector* pDirector = CCDirector::sharedDirector();
+        if (enabled)
+        {
+            pDirector->getKeypadDispatcher()->addDelegate(this);
+        }
+        else
+        {
+            pDirector->getKeypadDispatcher()->removeDelegate(this);
+        }
+    }
 }
 
 #pragma CANavigationController
@@ -140,7 +173,7 @@ bool CANavigationController::initWithRootViewController(CAViewController* viewCo
 void CANavigationController::viewDidLoad()
 {
     CCRect rect = this->getView()->getBounds();
-    rect.size.height -= m_pNavigationBar->getContentSize().height;
+    rect.size.height -= m_pNavigationBar->getFrame().size.height;
     rect.origin.y = m_pNavigationBar->getFrame().size.height;
     
     m_pContainer = CAView::createWithFrame(rect);
@@ -180,7 +213,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
         return;
     }
 
-    float x = m_pContainer->getContentSize().width;
+    float x = m_pContainer->getFrame().size.width;
     
     CAViewController* lastViewController = m_pViewControllers.back();
     lastViewController->getView()->setFrame(CCRect(-x, 0, 0, 0));
@@ -236,7 +269,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     
     CAViewController* backViewController = m_pViewControllers.back();
     
-    float x = m_pContainer->getContentSize().width;
+    float x = m_pContainer->getFrame().size.width;
     backViewController->getView()->setFrame(CCRect(x, 0, 0, 0));
     
     if (animated)
@@ -339,7 +372,7 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
 void CATabBarController::viewDidLoad()
 {
     CCRect rect = this->getView()->getBounds();
-    rect.size.height -= m_pTabBar->getContentSize().height;
+    rect.size.height -= m_pTabBar->getFrame().size.height;
     
     m_pContainer = CAView::createWithFrame(rect);
     this->getView()->addSubview(m_pContainer);

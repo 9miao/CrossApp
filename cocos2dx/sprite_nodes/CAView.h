@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
 //
 
-#ifndef __cocos2dx__CAView__
-#define __cocos2dx__CAView__
+#ifndef __cocos2dx__CAView_
+#define __cocos2dx__CAView_
 
 #include <iostream>
 #include "ccMacros.h"
@@ -39,6 +39,9 @@ class CCActionManager;
 class CCComponent;
 class CCDictionary;
 class CCComponentContainer;
+class CCTexture2D;
+class CAViewDelegate;
+struct transformValues_;
 
 /**
  * @addtogroup base_nodes
@@ -57,18 +60,24 @@ enum {
     kCAViewOnCleanup
 };
 
-
-class CAView_: public CCObject
+class CC_DLL CAView
+:public CCObject
+,public CCRGBAProtocol
+,public CCTouchDelegate
+,public CCTextureProtocol
+#ifdef EMSCRIPTEN
+,public CCGLBufferedNode
+#endif // EMSCRIPTEN
 {
     
 public:
 
-    CAView_();
+    CAView();
     
-    virtual ~CAView_();
+    virtual ~CAView();
     
     /**
-     *  Initializes the instance of CAView_
+     *  Initializes the instance of CAView
      *  @return Whether the initialization was successful.
      */
     virtual bool init();
@@ -76,7 +85,16 @@ public:
      * Allocates and initializes a node.
      * @return A initialized node which is marked as "autorelease".
      */
-    static CAView_ * create(void);
+    
+    virtual bool initWithFrame(const CCRect& rect);
+    
+    virtual bool initWithFrame(const CCRect& rect, const ccColor4B& color4B);
+    
+    static CAView * create(void);
+    
+    static CAView* createWithFrame(const CCRect& rect);
+    
+    static CAView* createWithFrame(const CCRect& rect, const ccColor4B& color4B);
     
     /**
      * Gets the description string. It makes debugging easier.
@@ -234,40 +252,14 @@ public:
      * @return The position (x,y) of the node in OpenGL coordinates
      */
     virtual const CCPoint& getPosition();
-    /**
-     * Sets position in a more efficient way.
-     *
-     * Passing two numbers (x,y) is much efficient than passing CCPoint object.
-     * This method is binded to lua and javascript.
-     * Passing a number is 10 times faster than passing a object from lua to c++
-     *
-     * @code
-     * // sample code in lua
-     * local pos  = node::getPosition()  -- returns CCPoint object from C++
-     * node:setPosition(x, y)            -- pass x, y coordinate to C++
-     * @endcode
-     *
-     * @param x     X coordinate for position
-     * @param y     Y coordinate for position
-     * @js NA
-     */
-    virtual void setPosition(float x, float y);
+
     /**
      * Gets position in a more efficient way, returns two number instead of a CCPoint object
      *
      * @see setPosition(float, float)
      */
     virtual void getPosition(float* x, float* y);
-    /**
-     * Gets/Sets x or y coordinate individually for position.
-     * These methods are used in Lua and Javascript Bindings
-     */
-    virtual void  setPositionX(float x);
-    virtual float getPositionX(void);
-    virtual void  setPositionY(float y);
-    virtual float getPositionY(void);
-    
-    
+
     /**
      * Changes the X skew angle of the node in degrees.
      *
@@ -319,7 +311,7 @@ public:
      *
      * @param anchorPoint   The anchor point of node.
      */
-    virtual void setAnchorPoint(const CCPoint& anchorPoint);
+    void setAnchorPoint(const CCPoint& anchorPoint);
     /**
      * Returns the anchor point in percent.
      *
@@ -327,7 +319,7 @@ public:
      *
      * @return The anchor point of node.
      */
-    virtual const CCPoint& getAnchorPoint();
+    const CCPoint& getAnchorPoint();
     /**
      * Returns the anchorPoint in absolute pixels.
      *
@@ -336,39 +328,31 @@ public:
      *
      * @return The anchor point in absolute pixels.
      */
-    virtual const CCPoint& getAnchorPointInPoints();
     
+    void setAnchorPointInPoints(const CCPoint& anchorPointInPoints);
     
-    /**
-     * Sets the untransformed size of the node.
-     *
-     * The contentSize remains the same no matter the node is scaled or rotated.
-     * All nodes has a size. Layer and Scene has the same size of the screen.
-     *
-     * @param contentSize   The untransformed size of the node.
-     */
-    virtual void setContentSize(const CCSize& contentSize);
-    /**
-     * Returns the untransformed size of the node.
-     *
-     * @see setContentSize(const CCSize&)
-     *
-     * @return The untransformed size of the node.
-     */
-    virtual const CCSize& getContentSize() const;
+    const CCPoint& getAnchorPointInPoints();
     
     virtual void setFrame(const CCRect& rect);
     
     virtual const CCRect& getFrame() const;
     
-    virtual void setBoundsSize(const CCSize& size);
+    virtual void setFrameOrigin(const CCPoint& point);
+    
+    virtual const CCPoint& getFrameOrigin();
+    
+    virtual void setBounds(const CCRect& rect);
     
     virtual CCRect getBounds() const;
     
-    virtual void setCenter(CCPoint center);
+    virtual void setCenter(CCRect rect);
     
-    virtual CCPoint getCenter();
+    virtual CCRect getCenter();
     
+    virtual void setCenterOrigin(const CCPoint& point);
+    
+    virtual CCPoint getCenterOrigin();
+
     /**
      * Sets whether the node is visible
      *
@@ -513,27 +497,27 @@ public:
      *
      * @param child A child node
      */
-    virtual void addSubview(CAView_ * child);
+    virtual void addSubview(CAView * child);
     
     /// helper that reorder a child
-    virtual void insertSubview(CAView_* subview, int z);
+    virtual void insertSubview(CAView* subview, int z);
     
     /*
      * Gets a child from the container with its tag
      *
      * @param tag   An identifier to find the child node.
      *
-     * @return a CAView_ object whose tag equals to the input parameter
+     * @return a CAView object whose tag equals to the input parameter
      */
     
-    CAView_ * getSubviewByTag(int tag);
+    CAView * getSubviewByTag(int tag);
     /**
      * Return an array of children
      *
-     * Composing a "tree" structure is a very important feature of CAView_
+     * Composing a "tree" structure is a very important feature of CAView
      * Here's a sample code of traversing children array:
      * @code
-     * CAView_* node = NULL;
+     * CAView* node = NULL;
      * CCARRAY_FOREACH(parent->getChildren(), node)
      * {
      *     node->setPosition(0,0);
@@ -558,7 +542,7 @@ public:
      * @param parent    A pointer to the parnet node
      */
     
-    CC_PROPERTY(CAView_*, m_pSuperview, Superview);
+    CC_PROPERTY(CAView*, m_pSuperview, Superview);
     
     
     virtual void removeFromSuperview();
@@ -566,11 +550,11 @@ public:
     /**
      * Removes a child from the container with a cleanup
      *
-     * @see removeChild(CAView_, bool)
+     * @see removeChild(CAView, bool)
      *
      * @param child     The child node which will be removed.
      */
-    virtual void removeSubview(CAView_* subview);
+    virtual void removeSubview(CAView* subview);
     /**
      * Removes a child from the container by tag value with a cleanup.
      *
@@ -592,7 +576,7 @@ public:
      * @param child     An already added child node. It MUST be already added.
      * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
      */
-    virtual void reorderSubview(CAView_ * child, int zOrder);
+    virtual void reorderSubview(CAView * child, int zOrder);
     
     /**
      * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
@@ -644,7 +628,7 @@ public:
      * parent->addChild(node2);
      * parent->addChild(node3);
      * // identify by tags
-     * CAView_* node = NULL;
+     * CAView* node = NULL;
      * CCARRAY_FOREACH(parent->getChildren(), node)
      * {
      *     switch(node->getTag())
@@ -707,7 +691,7 @@ public:
      * Similar to UserData, but instead of holding a void* it holds an object.
      * The UserObject will be retained once in this method,
      * and the previous UserObject (if existed) will be relese.
-     * The UserObject will be released in CAView_'s destructure.
+     * The UserObject will be released in CAView's destructure.
      *
      * @param A user assigned CCObject
      */
@@ -768,36 +752,36 @@ public:
     /// @name Event Callbacks
     
     /**
-     * Event callback that is invoked every time when CAView_ enters the 'stage'.
-     * If the CAView_ enters the 'stage' with a transition, this event is called when the transition starts.
+     * Event callback that is invoked every time when CAView enters the 'stage'.
+     * If the CAView enters the 'stage' with a transition, this event is called when the transition starts.
      * During onEnter you can't access a "sister/brother" node.
-     * If you override onEnter, you shall call its parent's one, e.g., CAView_::onEnter().
+     * If you override onEnter, you shall call its parent's one, e.g., CAView::onEnter().
      * @js NA
      * @lua NA
      */
     virtual void onEnter();
     
-    /** Event callback that is invoked when the CAView_ enters in the 'stage'.
-     * If the CAView_ enters the 'stage' with a transition, this event is called when the transition finishes.
-     * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. CAView_::onEnterTransitionDidFinish()
+    /** Event callback that is invoked when the CAView enters in the 'stage'.
+     * If the CAView enters the 'stage' with a transition, this event is called when the transition finishes.
+     * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. CAView::onEnterTransitionDidFinish()
      * @js NA
      * @lua NA
      */
     virtual void onEnterTransitionDidFinish();
     
     /**
-     * Event callback that is invoked every time the CAView_ leaves the 'stage'.
-     * If the CAView_ leaves the 'stage' with a transition, this event is called when the transition finishes.
+     * Event callback that is invoked every time the CAView leaves the 'stage'.
+     * If the CAView leaves the 'stage' with a transition, this event is called when the transition finishes.
      * During onExit you can't access a sibling node.
-     * If you override onExit, you shall call its parent's one, e.g., CAView_::onExit().
+     * If you override onExit, you shall call its parent's one, e.g., CAView::onExit().
      * @js NA
      * @lua NA
      */
     virtual void onExit();
     
     /**
-     * Event callback that is called every time the CAView_ leaves the 'stage'.
-     * If the CAView_ leaves the 'stage' with a transition, this callback is called when the transition starts.
+     * Event callback that is called every time the CAView leaves the 'stage'.
+     * If the CAView leaves the 'stage' with a transition, this callback is called when the transition starts.
      * @js NA
      * @lua NA
      */
@@ -828,6 +812,7 @@ public:
      */
     virtual void visit(void);
     
+    void rendering();
     
     /**
      * Returns a "local" axis aligned bounding box of the node.
@@ -921,7 +906,7 @@ public:
      * Calls children's updateTransform() method recursively.
      *
      * This method is moved from CCSprite, so it's no longer specific to CCSprite.
-     * As the result, you apply CCSpriteBatchNode's optimization on your customed CAView_.
+     * As the result, you apply CCSpriteBatchNode's optimization on your customed CAView.
      * e.g., batchNode->addChild(myCustomNode), while you can only addChild(sprite) before.
      */
     virtual void updateTransform(void);
@@ -985,6 +970,53 @@ public:
      * converts a CCTouch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
      */
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
+    
+    virtual bool isDisplayRange();
+    virtual void setDisplayRange(bool value);
+    
+    // default implements are used to call script callback if exist
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+
+    /** If isTouchEnabled, this method is called onEnter. Override it to change the
+     way CCLayer receives touch events.
+     ( Default: CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
+     Example:
+     void CCLayer::registerWithTouchDispatcher()
+     {
+     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
+     }
+     @since v0.8.0
+     */
+    virtual void registerWithTouchDispatcher(void);
+    
+    
+    virtual bool isTouchEnabled();
+    virtual void setTouchEnabled(bool value);
+    
+    /** priority of the touch events. Default is 0 */
+    virtual void setTouchPriority(int priority);
+    virtual int getTouchPriority();
+    
+
+    virtual GLubyte getOpacity();
+    virtual GLubyte getDisplayedOpacity();
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled();
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    
+    virtual const ccColor3B& getColor(void);
+    virtual const ccColor3B& getDisplayedColor();
+    virtual void setColor(const ccColor3B& color);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual bool isCascadeColorEnabled();
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    
+    virtual void setOpacityModifyRGB(bool bValue);
+    virtual bool isOpacityModifyRGB();
     
 	/**
      *  Sets the additional transform.
@@ -1068,7 +1100,7 @@ private:
     void childrenAlloc(void);
     
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
-    void detachSubview(CAView_ *subview);
+    void detachSubview(CAView *subview);
     
     /** Convert cocos2d coordinates to UI windows coordinate.
      * @js NA
@@ -1129,7 +1161,7 @@ protected:
     bool m_bAdditionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
     bool m_bVisible;                    ///< is this node visible
     
-    bool m_bIgnoreAnchorPointForPosition; ///< true if the Anchor Point will be (0,0) when you position the CAView_, false otherwise.
+    bool m_bIgnoreAnchorPointForPosition; ///< true if the Anchor Point will be (0,0) when you position the CAView, false otherwise.
     ///< Used by CCLayer and CCScene.
     
     bool m_bReorderChildDirty;          ///< children order dirty flag
@@ -1137,161 +1169,214 @@ protected:
     
     CCComponentContainer *m_pComponentContainer;        ///< Dictionary of components
     
-
-    
-};
-
-
-//#pragma mark - CCNodeRGBA
-
-/** CCNodeRGBA is a subclass of CCNode that implements the CCRGBAProtocol protocol.
- 
- All features from CCNode are valid, plus the following new features:
- - opacity
- - RGB colors
- 
- Opacity/Color propagates into children that conform to the CCRGBAProtocol if cascadeOpacity/cascadeColor is enabled.
- @since v2.1
- */
-typedef enum {
-	kCCTouchesAllAtOnce,
-	kCCTouchesOneByOne,
-} ccTouchesMode;
-
-class CC_DLL CCNodeRGBA : public CAView_, public CCRGBAProtocol, public CCTouchDelegate,  public CCKeypadDelegate
-{
-public:
-    /**
-     *  @js ctor
-     */
-    CCNodeRGBA();
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    virtual ~CCNodeRGBA();
-    
-    virtual bool init();
-    
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    virtual void onEnter();
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    virtual void onExit();
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    
-    virtual void visit(void);
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    
-    virtual bool isDisplayRange();
-    virtual void setDisplayRange(bool value);
-    
-    // default implements are used to call script callback if exist
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
-    
-    // default implements are used to call script callback if exist
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    
-    /** If isTouchEnabled, this method is called onEnter. Override it to change the
-     way CCLayer receives touch events.
-     ( Default: CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
-     Example:
-     void CCLayer::registerWithTouchDispatcher()
-     {
-     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
-     }
-     @since v0.8.0
-     */
-    virtual void registerWithTouchDispatcher(void);
-    
-    
-    virtual bool isTouchEnabled();
-    virtual void setTouchEnabled(bool value);
-    
-    virtual void setTouchMode(ccTouchesMode mode);
-    virtual int getTouchMode();
-    
-    /** priority of the touch events. Default is 0 */
-    virtual void setTouchPriority(int priority);
-    virtual int getTouchPriority();
-    
-    /** whether or not it will receive keypad events
-     You can enable / disable accelerometer events with this property.
-     it's new in cocos2d-x
-     */
-    virtual bool isKeypadEnabled();
-    virtual void setKeypadEnabled(bool value);
-    
-    virtual void keyBackClicked(void);
-    virtual void keyMenuClicked(void);
-    
-protected:
-    bool m_bTouchEnabled;
-    bool m_bKeypadEnabled;
-    bool m_bDisplayRange;
-    
-private:
-    
-    int m_nTouchPriority;
-    ccTouchesMode m_eTouchMode;
-    
-public:
-    
-    static CCNodeRGBA * create(void);
-    
-    virtual GLubyte getOpacity();
-    virtual GLubyte getDisplayedOpacity();
-    virtual void setOpacity(GLubyte opacity);
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled();
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    
-    virtual const ccColor3B& getColor(void);
-    virtual const ccColor3B& getDisplayedColor();
-    virtual void setColor(const ccColor3B& color);
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    virtual bool isCascadeColorEnabled();
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);};
-    virtual bool isOpacityModifyRGB() { return false; };
-    
-protected:
-	GLubyte		_displayedOpacity;
+    GLubyte		_displayedOpacity;
     GLubyte     _realOpacity;
 	ccColor3B	_displayedColor;
     ccColor3B   _realColor;
 	bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
+    
+    bool m_bTouchEnabled;
+    bool m_bDisplayRange;
+    int m_nTouchPriority;
+    
+public:
+    
+    virtual void setTexture(CCTexture2D *texture);
+    
+    virtual CCTexture2D* getTexture(void);
+    
+    inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
+
+    inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
+    
+    /// @{
+    /// @name Texture methods
+    
+    /**
+     * Updates the texture rect of the CCSprite in points.
+     * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
+     */
+    virtual void setTextureRect(const CCRect& rect);
+    
+    /**
+     * Sets the texture rect, rectRotated and untrimmed size of the CCSprite in points.
+     * It will update the texture coordinates and the vertex rectangle.
+     */
+    virtual void setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
+    
+    /**
+     * Sets the vertex rect.
+     * It will be called internally by setTextureRect.
+     * Useful if you want to create 2x images from SD images in Retina Display.
+     * Do not call it manually. Use setTextureRect instead.
+     */
+    virtual void setVertexRect(const CCRect& rect);
+    
+    /// @{
+    /// @name Sprite Properties' setter/getters
+    
+    /**
+     * Whether or not the Sprite needs to be updated in the Atlas.
+     *
+     * @return true if the sprite needs to be updated in the Atlas, false otherwise.
+     */
+    inline virtual bool isDirty(void) { return m_bDirty; }
+    
+    /**
+     * Makes the Sprite to be updated in the Atlas.
+     */
+    inline virtual void setDirty(bool bDirty) { m_bDirty = bDirty; }
+    
+    /**
+     * Returns the quad (tex coords, vertex coords and color) information.
+     * @js NA
+     */
+    inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
+    
+    /**
+     * Returns whether or not the texture rectangle is rotated.
+     */
+    inline bool isTextureRectRotated(void) { return m_bRectRotated; }
+    
+    /**
+     * Returns the index used on the TextureAtlas.
+     */
+    inline unsigned int getAtlasIndex(void) { return m_uAtlasIndex; }
+    
+    /**
+     * Sets the index used on the TextureAtlas.
+     * @warning Don't modify this value unless you know what you are doing
+     */
+    inline void setAtlasIndex(unsigned int uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
+    
+    /**
+     * Returns the rect of the CCSprite in points
+     */
+    inline const CCRect& getTextureRect(void) { return m_obRect; }
+    
+    /**
+     * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
+     */
+    inline const CCPoint& getOffsetPosition(void) { return m_obOffsetPosition; }
+    
+    
+    /**
+     * Returns the flag which indicates whether the sprite is flipped horizontally or not.
+     *
+     * It only flips the texture of the sprite, and not the texture of the sprite's children.
+     * Also, flipping the texture doesn't alter the anchorPoint.
+     * If you want to flip the anchorPoint too, and/or to flip the children too use:
+     * sprite->setScaleX(sprite->getScaleX() * -1);
+     *
+     * @return true if the sprite is flipped horizaontally, false otherwise.
+     * @js isFlippedX
+     */
+    bool isFlipX(void);
+    /**
+     * Sets whether the sprite should be flipped horizontally or not.
+     *
+     * @param bFlipX true if the sprite should be flipped horizaontally, false otherwise.
+     */
+    void setFlipX(bool bFlipX);
+    
+    /**
+     * Return the flag which indicates whether the sprite is flipped vertically or not.
+     *
+     * It only flips the texture of the sprite, and not the texture of the sprite's children.
+     * Also, flipping the texture doesn't alter the anchorPoint.
+     * If you want to flip the anchorPoint too, and/or to flip the children too use:
+     * sprite->setScaleY(sprite->getScaleY() * -1);
+     *
+     * @return true if the sprite is flipped vertically, flase otherwise.
+     * @js isFlippedY
+     */
+    bool isFlipY(void);
+    /**
+     * Sets whether the sprite should be flipped vertically or not.
+     *
+     * @param bFlipY true if the sprite should be flipped vertically, flase otherwise.
+     */
+    void setFlipY(bool bFlipY);
+    
+protected:
+    
+    /**
+     * Sets the untransformed size of the node.
+     *
+     * The contentSize remains the same no matter the node is scaled or rotated.
+     * All nodes has a size. Layer and Scene has the same size of the screen.
+     *
+     * @param contentSize   The untransformed size of the node.
+     */
+    virtual void setContentSize(const CCSize& contentSize);
+    /**
+     * Returns the untransformed size of the node.
+     *
+     * @see setContentSize(const CCSize&)
+     *
+     * @return The untransformed size of the node.
+     */
+    virtual const CCSize& getContentSize() const;
+    
+    void updateColor(void);
+    virtual void setTextureCoords(CCRect rect);
+    virtual void updateBlendFunc(void);
+    virtual void setReorderChildDirtyRecursively(void);
+    virtual void setDirtyRecursively(bool bValue);
+    
+    unsigned int        m_uAtlasIndex;          /// Absolute (real) Index on the SpriteSheet
+    
+    bool                m_bDirty;               /// Whether the sprite needs to be updated
+    bool                m_bRecursiveDirty;      /// Whether all of the sprite's children needs to be updated
+    bool                m_bHasChildren;         /// Whether the sprite contains children
+    bool                m_bShouldBeHidden;      /// should not be drawn because one of the ancestors is not visible
+    CCAffineTransform   m_transformToBatch;
+    
+    //
+    // Data used when the sprite is self-rendered
+    //
+    
+    //
+    // Shared data
+    //
+    
+    // texture
+    CCRect m_obRect;                            /// Retangle of CCTexture2D
+    bool   m_bRectRotated;                      /// Whether the texture is rotated
+    
+    // Offset Position (used by Zwoptex)
+    CCPoint m_obOffsetPosition;
+    CCPoint m_obUnflippedOffsetPositionFromCenter;
+    
+    // vertex coords, texture coords and color info
+    ccV3F_C4B_T2F_Quad m_sQuad;
+    
+    // opacity and RGB protocol
+    bool m_bOpacityModifyRGB;
+    
+    // image is flipped
+    bool m_bFlipX;                              /// Whether the sprite is flipped horizaontally or not.
+    bool m_bFlipY;                              /// Whether the sprite is flipped vertically or not.
+    
+    ccBlendFunc        m_sBlendFunc;            /// It's required for CCTextureProtocol inheritance
+    CCTexture2D*       m_pobTexture;            /// CCTexture2D object that is used to render the sprite
+    
+    CC_SYNTHESIZE(CAViewDelegate*, m_pViewDelegate, ViewDelegate);
 };
 
-// end of base_node group
-/// @}
-
-
+class CAViewDelegate
+{
+public:
+    
+    virtual void getSuperViewRect(const CCRect& rect) = 0;
+    
+    virtual void viewOnEnterTransitionDidFinish() = 0;
+    
+    virtual void viewOnExitTransitionDidStart() = 0;
+};
 
 NS_CC_END
 
 
-#endif /* defined(__cocos2dx__CAView__) */
+#endif /* defined(__cocos2dx__CAView_) */

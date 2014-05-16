@@ -604,7 +604,7 @@ void CCRenderTexture::draw()
 		CCObject *pElement;
 		CCARRAY_FOREACH(m_pSubviews, pElement)
         {
-            CAView_ *pChild = (CAView_*)pElement;
+            CAView *pChild = (CAView*)pElement;
 
             if (pChild != m_pSprite)
             {

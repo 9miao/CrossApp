@@ -98,7 +98,7 @@ public:
     CCSize getDelta(const CCSize& pos);
     void placeTile(const CCPoint& pos, Tile *t);
 
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
     virtual void update(float time);
     /**
      *  @js NA
@@ -198,7 +198,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
     virtual void update(float time);
 
 public:
@@ -289,7 +289,7 @@ public :
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
 
 public:
 
@@ -312,7 +312,7 @@ public:
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
 
 public:
     /** creates the action with the number of columns to split and the duration */

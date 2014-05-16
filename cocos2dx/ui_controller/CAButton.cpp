@@ -8,9 +8,9 @@
 
 #include "CAButton.h"
 #include "sprite_nodes/CCScale9Sprite.h"
-#include "sprite_nodes/CCView.h"
+#include "sprite_nodes/CAView.h"
 #include "touch_dispatcher/CCTouch.h"
-
+#include "support/CCPointExtension.h"
 #define PLAYSOUND 
 
 NS_CC_BEGIN
@@ -49,12 +49,12 @@ CAButton::~CAButton(void)
 
 void CAButton::onExitTransitionDidStart()
 {
-    CCNodeRGBA::onExitTransitionDidStart();
+    CAView::onExitTransitionDidStart();
 }
 
 void CAButton::onEnterTransitionDidFinish()
 {
-    CCNodeRGBA::onEnterTransitionDidFinish();
+    CAView::onEnterTransitionDidFinish();
     
     if (this->CAControl::getBackGroundView() == NULL)
     {
@@ -73,7 +73,7 @@ void CAButton::onEnterTransitionDidFinish()
         else if (CCSprite* bg = dynamic_cast<CCSprite*>(this->CAControl::getBackGroundView()))
         {
             CCSprite* bgHighLighted = CCSprite::createWithTexture(bg->getTexture());
-            bgHighLighted->setBoundsSize(bg->getBounds().size);
+            bgHighLighted->setBounds(bg->getBounds());
             bgHighLighted->setColor(ccc3(127, 127, 127));
             this->setBackGround(CAControlStateHighlighted, bgHighLighted);
         }
@@ -104,14 +104,41 @@ CAButton* CAButton::createWithFrame(const CCRect& rect)
     return NULL;
 }
 
+CAButton* CAButton::createWithCenter(const CCRect& rect)
+{
+    
+    CAButton* btn = new CAButton();
+    
+    if (btn && btn->initWithCenter(rect))
+    {
+        btn->autorelease();
+        return btn;
+    }
+    
+    CC_SAFE_DELETE(btn);
+    return NULL;
+}
+
 bool CAButton::initWithFrame(const CCRect& rect)
 {
-    if (!CCNodeRGBA::init())
+    if (!CAView::init())
     {
         return false;
     }
 
     this->setFrame(rect);
+    this->setTouchEnabled(true);
+    return true;
+}
+
+bool CAButton::initWithCenter(const CCRect& rect)
+{
+    if (!CAView::init())
+    {
+        return false;
+    }
+    
+    this->setCenter(rect);
     this->setTouchEnabled(true);
     return true;
 }
@@ -128,7 +155,7 @@ void CAButton::setBackGroundDefault()
     this->setBackGround(CAControlStateSelected, bgSelected);
 }
 
-void CAButton::setBackGround(CAControlState controlState, CCNodeRGBA *var)
+void CAButton::setBackGround(CAControlState controlState, CAView *var)
 {
     if (controlState == CAControlStateNormal)
     {
@@ -154,9 +181,9 @@ void CAButton::setBackGround(CAControlState controlState, CCNodeRGBA *var)
     {
         CC_BREAK_IF(var == NULL);
         
-        if (m_obContentSize.equals(CCSizeZero))
+        if (this->getBounds().equals(CCRectZero))
         {
-            this->setContentSize(var->getContentSize());
+            this->setBounds(CCRect(0, 0, var->getFrame().size.width, var->getFrame().size.height));
         }
         
         this->updateWithPoint();
@@ -180,7 +207,7 @@ void CAButton::updateWithPreferredSize()
         }
         else
         {
-            m_pBackGroundView->setContentSize(m_obContentSize);
+            m_pBackGroundView->setFrame(this->getBounds());
         }
     }
     while (0);
@@ -196,7 +223,7 @@ void CAButton::updateWithPreferredSize()
         }
         else
         {
-            m_pHighlightedBackGroundView->setContentSize(m_obContentSize);
+            m_pHighlightedBackGroundView->setFrame(this->getBounds());
         }
     }
     while (0);
@@ -212,13 +239,11 @@ void CAButton::updateWithPreferredSize()
         }
         else
         {
-            m_pDisabledBackGroundView->setContentSize(m_obContentSize);
+            m_pDisabledBackGroundView->setFrame(this->getBounds());
         }
     }
     while (0);
-    
-    
-    
+
     do
     {
         CC_BREAK_IF(m_pSelectedBackGroundView == NULL);
@@ -230,7 +255,7 @@ void CAButton::updateWithPreferredSize()
         }
         else
         {
-            m_pSelectedBackGroundView->setContentSize(m_obContentSize);
+            m_pSelectedBackGroundView->setFrame(this->getBounds());
         }
     }
     while (0);
@@ -365,7 +390,7 @@ void CAButton::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEve
 void CAButton::setTouchEnabled(bool enabled)
 {
     
-    CCNodeRGBA::setTouchEnabled(enabled);
+    CAView::setTouchEnabled(enabled);
     
     if (!m_specially)
         return;
@@ -535,14 +560,14 @@ bool CAButton::isTextTagEqual(const char *text)
 
 void CAButton::setContentSize(const CCSize & var)
 {
-    CCNodeRGBA::setContentSize(var);
+    CAView::setContentSize(var);
     
     this->updateWithPoint();
     
     this->updateWithPreferredSize();
 }
 
-void CAButton::setSprite(CAControlState controlState, CCNodeRGBA* var)
+void CAButton::setSprite(CAControlState controlState, CAView* var)
 {
     if (!var)
         return;
@@ -554,7 +579,7 @@ void CAButton::setSprite(CAControlState controlState, CCNodeRGBA* var)
     this->setSprite(controlState, var, point);
 }
 
-void CAButton::setSprite(CAControlState controlState, CCNodeRGBA* var, CCPoint point)
+void CAButton::setSprite(CAControlState controlState, CAView* var, CCPoint point)
 {
     if (!var)
         return;
@@ -633,7 +658,7 @@ void CAButton::setSprite(CAControlState controlState, CCNodeRGBA* var, CCPoint p
     }
 }
 
-CCNodeRGBA* CAButton::getSprite(CAControlState controlState)
+CAView* CAButton::getSprite(CAControlState controlState)
 {
     switch (controlState)
     {
@@ -657,13 +682,13 @@ CCNodeRGBA* CAButton::getSprite(CAControlState controlState)
 
 void CAButton::setOpacity(GLubyte opacity)
 {
-    CCNodeRGBA::setOpacity(opacity);
+    CAView::setOpacity(opacity);
     
     if (this->getSubviews())
     {
         for (int i=0; i<this->getSubviews()->count(); i++)
         {
-            CAView_* view=(CAView_*)this->getSubviews()->objectAtIndex(i);
+            CAView* view=(CAView*)this->getSubviews()->objectAtIndex(i);
             
             if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(view))
             {
@@ -681,7 +706,7 @@ void CAButton::setColor(const ccColor3B &color3){
     {
         for (int i=0; i<this->getSubviews()->count(); i++)
         {
-            CAView_* view=(CAView_*)this->getSubviews()->objectAtIndex(i);
+            CAView* view=(CAView*)this->getSubviews()->objectAtIndex(i);
             
             if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(view))
             {

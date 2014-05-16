@@ -141,7 +141,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #endif
 
 /** @def CC_NODE_RENDER_SUBPIXEL
- If enabled, the CAView_ objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
+ If enabled, the CAView objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.
  
  To enable set it to 1. Enabled by default.

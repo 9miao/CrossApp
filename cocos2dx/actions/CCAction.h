@@ -73,7 +73,7 @@ public:
     virtual bool isDone(void);
 
     //! called before the action start. It will also set the target.
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
 
     /** 
     called after the action has finished. It will set the 'target' to nil.
@@ -94,17 +94,17 @@ public:
     */
     virtual void update(float time);
     
-    inline CAView_* getTarget(void) { return m_pTarget; }
+    inline CAView* getTarget(void) { return m_pTarget; }
     /** The action will modify the target properties. */
-    inline void setTarget(CAView_ *pTarget) { m_pTarget = pTarget; }
+    inline void setTarget(CAView *pTarget) { m_pTarget = pTarget; }
     
-    inline CAView_* getOriginalTarget(void) { return m_pOriginalTarget; } 
+    inline CAView* getOriginalTarget(void) { return m_pOriginalTarget; } 
     /** Set the original target, since target can be nil.
     Is the target that were used to run the action. Unless you are doing something complex, like CCActionManager, you should NOT call this method.
     The target is 'assigned', it is not 'retained'.
     @since v0.8.2
     */
-    inline void setOriginalTarget(CAView_ *pOriginalTarget) { m_pOriginalTarget = pOriginalTarget; }
+    inline void setOriginalTarget(CAView *pOriginalTarget) { m_pOriginalTarget = pOriginalTarget; }
 
     inline int getTag(void) { return m_nTag; }
     inline void setTag(int nTag) { m_nTag = nTag; }
@@ -113,13 +113,13 @@ public:
     /** Create an action */
     static CCAction* create();
 protected:
-    CAView_    *m_pOriginalTarget;
+    CAView    *m_pOriginalTarget;
     /** The "target".
     The target will be set with the 'startWithTarget' method.
     When the 'stop' method is called, target will be set to nil.
     The target is 'assigned', it is not 'retained'.
     */
-    CAView_    *m_pTarget;
+    CAView    *m_pTarget;
     /** The action tag. An identifier of the action */
     int     m_nTag;
 };
@@ -195,7 +195,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void startWithTarget(CAView_* pTarget);
+    virtual void startWithTarget(CAView* pTarget);
     virtual void stop();
     virtual void step(float dt);
     virtual bool isDone(void);
@@ -251,7 +251,7 @@ public:
     inline void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
 
     /** initializes the action with a set boundary */
-    bool initWithTarget(CAView_ *pFollowedNode, const CCRect& rect = CCRectZero);
+    bool initWithTarget(CAView *pFollowedNode, const CCRect& rect = CCRectZero);
     /**
      *  @js NA
      *  @lua NA
@@ -265,10 +265,10 @@ public:
     /** creates the action with a set boundary,
     It will work with no boundary if @param rect is equal to CCRectZero.
     */
-    static CCFollow* create(CAView_ *pFollowedNode, const CCRect& rect = CCRectZero);
+    static CCFollow* create(CAView *pFollowedNode, const CCRect& rect = CCRectZero);
 protected:
     // node to follow
-    CAView_ *m_pobFollowedNode;
+    CAView *m_pobFollowedNode;
 
     // whether camera should be limited to certain area
     bool m_bBoundarySet;

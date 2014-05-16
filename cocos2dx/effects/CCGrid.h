@@ -117,7 +117,7 @@ public:
     /**
      *  @lua NA
      */
-    void afterDraw(CAView_ *pTarget);
+    void afterDraw(CAView *pTarget);
     /**
      *  @lua NA
      */

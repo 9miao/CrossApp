@@ -29,7 +29,6 @@ LOCAL_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 LOCAL_EXPORT_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
-                           $(LOCAL_PATH)/GUI/CCScrollView \
                            $(LOCAL_PATH)/network \
                            $(LOCAL_PATH)/LocalStorage \
 				$(LOCAL_PATH)/Json \

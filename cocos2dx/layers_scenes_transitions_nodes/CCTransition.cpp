@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "actions/CCActionCamera.h"
 #include "actions/CCActionTiledGrid.h"
 #include "actions/CCActionGrid.h"
-#include "sprite_nodes/CCView.h"
+#include "sprite_nodes/CAView.h"
 #include "misc_nodes/CCRenderTexture.h"
 #include "CCScheduler.h"
 
@@ -1222,7 +1222,7 @@ void CCTransitionFade :: onEnter()
 
     l->setTag(kSceneFade);
     insertSubview(l, 2);
-    CAView_* f = getSubviewByTag(kSceneFade);
+    CAView* f = getSubviewByTag(kSceneFade);
 
     CCActionInterval* a = (CCActionInterval *)CCSequence::create
         (

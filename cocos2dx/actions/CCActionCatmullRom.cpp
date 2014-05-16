@@ -266,7 +266,7 @@ CCCardinalSplineTo::CCCardinalSplineTo()
 {
 }
 
-void CCCardinalSplineTo::startWithTarget(cocos2d::CAView_ *pTarget)
+void CCCardinalSplineTo::startWithTarget(cocos2d::CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
 	
@@ -331,7 +331,7 @@ void CCCardinalSplineTo::update(float time)
 	
 #if CC_ENABLE_STACKABLE_ACTIONS
     // Support for stacked actions
-    CAView_ *node = m_pTarget;
+    CAView *node = m_pTarget;
     CCPoint diff = ccpSub( node->getPosition(), m_previousPosition);
     if( diff.x !=0 || diff.y != 0 ) {
         m_accumulatedDiff = ccpAdd( m_accumulatedDiff, diff);
@@ -431,7 +431,7 @@ CCActionInterval* CCCardinalSplineBy::reverse()
     return CCCardinalSplineBy::create(m_fDuration, pReverse, m_fTension);
 }
 
-void CCCardinalSplineBy::startWithTarget(cocos2d::CAView_ *pTarget)
+void CCCardinalSplineBy::startWithTarget(cocos2d::CAView *pTarget)
 {    
     CCCardinalSplineTo::startWithTarget(pTarget);
     m_startPosition = pTarget->getPosition();

@@ -10,8 +10,10 @@
 #define __cocos2dx__CAViewController__
 
 #include <iostream>
-#include "sprite_nodes/CCView.h"
+#include "sprite_nodes/CAView.h"
 #include "CABar.h"
+#include "keypad_dispatcher/CCKeypadDelegate.h"
+#include "keypad_dispatcher/CCKeypadDispatcher.h"
 NS_CC_BEGIN
 
 class CCScene;
@@ -21,6 +23,7 @@ class CANavigationController;
 class CC_DLL CAViewController
 : public CCObject
 , public CAViewDelegate
+, public CCKeypadDelegate
 {
 
 public:
@@ -45,6 +48,10 @@ public:
     
     void clearUp();
     
+    virtual bool isKeypadEnabled();
+    
+    virtual void setKeypadEnabled(bool value);
+    
 public:
     
     friend class CATabBarController;
@@ -61,9 +68,13 @@ protected:
     
     CAView* getView();
     
+    virtual void keyBackClicked() {}
+
+    virtual void keyMenuClicked() {};
+    
 private:
     
-    void addViewFromSuperview(CAView_* node);
+    void addViewFromSuperview(CAView* node);
     
     void removeViewFromSuperview();
     
@@ -80,6 +91,8 @@ private:
     CAView* m_pView;
     
     bool m_bLifeLock;
+    
+    bool m_bKeypadEnabled;
 };
 
 class CC_DLL CANavigationController

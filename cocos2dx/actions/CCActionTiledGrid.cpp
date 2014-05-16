@@ -338,7 +338,7 @@ void CCShuffleTiles::placeTile(const CCPoint& pos, Tile *t)
     setTile(pos, coords);
 }
 
-void CCShuffleTiles::startWithTarget(CAView_ *pTarget)
+void CCShuffleTiles::startWithTarget(CAView *pTarget)
 {
     CCTiledGrid3DAction::startWithTarget(pTarget);
 
@@ -693,7 +693,7 @@ void CCTurnOffTiles::turnOffTile(const CCPoint& pos)
     setTile(pos, coords);
 }
 
-void CCTurnOffTiles::startWithTarget(CAView_ *pTarget)
+void CCTurnOffTiles::startWithTarget(CAView *pTarget)
 {
     unsigned int i;
 
@@ -954,7 +954,7 @@ CCObject* CCSplitRows::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCSplitRows::startWithTarget(CAView_ *pTarget)
+void CCSplitRows::startWithTarget(CAView *pTarget)
 {
     CCTiledGrid3DAction::startWithTarget(pTarget);
     m_winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
@@ -1031,7 +1031,7 @@ CCObject* CCSplitCols::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCSplitCols::startWithTarget(CAView_ *pTarget)
+void CCSplitCols::startWithTarget(CAView *pTarget)
 {
     CCTiledGrid3DAction::startWithTarget(pTarget);
     m_winSize = CCDirector::sharedDirector()->getWinSizeInPixels();

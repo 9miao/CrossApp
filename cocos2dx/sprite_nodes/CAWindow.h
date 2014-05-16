@@ -36,9 +36,9 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @brief CCScene is a subclass of CAView_ that is used only as an abstract concept.
+/** @brief CCScene is a subclass of CAView that is used only as an abstract concept.
 
-CCScene an CAView_ are almost identical with the difference that CCScene has it's
+CCScene an CAView are almost identical with the difference that CCScene has it's
 anchor point (by default) at the center of the screen.
 
 For the moment CCScene has no other logic than that, but in future releases it might have
@@ -47,7 +47,7 @@ additional logic.
 It is a good practice to use and CCScene as the parent of all your nodes.
 */
 
-class CC_DLL CAWindow : public CAView_
+class CC_DLL CAWindow : public CAView
 {
     
     CC_PROPERTY(CAViewController*, m_pRootViewController, RootViewController);

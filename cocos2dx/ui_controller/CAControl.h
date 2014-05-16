@@ -31,7 +31,7 @@ typedef enum
     CAControlStateSelected       = 3
 }CAControlState;
 
-class CC_DLL CAControl: public CCNodeRGBA
+class CC_DLL CAControl: public CAView
 {
     
 public:
@@ -60,13 +60,13 @@ public:
     
     bool isSelected();
     
-    CC_PROPERTY(CCNodeRGBA*, m_pBackGroundView, BackGroundView);
+    CC_PROPERTY(CAView*, m_pBackGroundView, BackGroundView);
     
-    CC_PROPERTY(CCNodeRGBA*, m_pHighlightedBackGroundView, HighlightedBackGroundView);
+    CC_PROPERTY(CAView*, m_pHighlightedBackGroundView, HighlightedBackGroundView);
     
-    CC_PROPERTY(CCNodeRGBA*, m_pDisabledBackGroundView, DisabledBackGroundView);
+    CC_PROPERTY(CAView*, m_pDisabledBackGroundView, DisabledBackGroundView);
     
-    CC_PROPERTY(CCNodeRGBA*, m_pSelectedBackGroundView, SelectedBackGroundView);
+    CC_PROPERTY(CAView*, m_pSelectedBackGroundView, SelectedBackGroundView);
     
     virtual void setContentSize(const CCSize& var);
     

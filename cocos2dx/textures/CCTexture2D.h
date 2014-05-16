@@ -128,7 +128,7 @@ public:
      *  @lua NA
      */
 	static CCTexture2D* create(const char* file);
-
+    
     const char* description(void);
 
     /** These functions are needed to create mutable textures 
@@ -301,6 +301,8 @@ private:
 
     /** shader program used by drawAtPoint and drawInRect */
     CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);
+    
+    CC_SYNTHESIZE_IS(bool, m_bMonochrome, Monochrome);
 };
 
 // end of textures group

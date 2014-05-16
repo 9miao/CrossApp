@@ -37,7 +37,7 @@ NS_CC_BEGIN
 
 static GLint g_sStencilBits = -1;
 
-static void setProgram(CAView_ *n, CCGLProgram *p)
+static void setProgram(CAView *n, CCGLProgram *p)
 {
     n->setShaderProgram(p);
     if (!n->getSubviews()) return;
@@ -45,7 +45,7 @@ static void setProgram(CAView_ *n, CCGLProgram *p)
     CCObject* pObj = NULL;
     CCARRAY_FOREACH(n->getSubviews(), pObj)
     {
-        setProgram((CAView_*)pObj, p);
+        setProgram((CAView*)pObj, p);
     }
 }
 
@@ -75,7 +75,7 @@ CCClippingNode* CCClippingNode::create()
     return pRet;
 }
 
-CCClippingNode* CCClippingNode::create(CAView_ *pStencil)
+CCClippingNode* CCClippingNode::create(CAView *pStencil)
 {
     CCClippingNode *pRet = new CCClippingNode();
     if (pRet && pRet->init(pStencil))
@@ -95,7 +95,7 @@ bool CCClippingNode::init()
     return init(NULL);
 }
 
-bool CCClippingNode::init(CAView_ *pStencil)
+bool CCClippingNode::init(CAView *pStencil)
 {
     CC_SAFE_RELEASE(m_pStencil);
     m_pStencil = pStencil;
@@ -120,26 +120,26 @@ bool CCClippingNode::init(CAView_ *pStencil)
 
 void CCClippingNode::onEnter()
 {
-    CAView_::onEnter();
+    CAView::onEnter();
     m_pStencil->onEnter();
 }
 
 void CCClippingNode::onEnterTransitionDidFinish()
 {
-    CAView_::onEnterTransitionDidFinish();
+    CAView::onEnterTransitionDidFinish();
     m_pStencil->onEnterTransitionDidFinish();
 }
 
 void CCClippingNode::onExitTransitionDidStart()
 {
     m_pStencil->onExitTransitionDidStart();
-    CAView_::onExitTransitionDidStart();
+    CAView::onExitTransitionDidStart();
 }
 
 void CCClippingNode::onExit()
 {
     m_pStencil->onExit();
-    CAView_::onExit();
+    CAView::onExit();
 }
 
 void CCClippingNode::visit()
@@ -148,7 +148,7 @@ void CCClippingNode::visit()
     if (g_sStencilBits < 1)
     {
         // draw everything, as if there where no stencil
-        CAView_::visit();
+        CAView::visit();
         return;
     }
     
@@ -160,7 +160,7 @@ void CCClippingNode::visit()
         if (m_bInverted)
         {
             // draw everything
-            CAView_::visit();
+            CAView::visit();
         }
         return;
     }
@@ -184,7 +184,7 @@ void CCClippingNode::visit()
             once = false;
         }
         // draw everything, as if there where no stencil
-        CAView_::visit();
+        CAView::visit();
         return;
     }
     
@@ -345,7 +345,7 @@ void CCClippingNode::visit()
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
     
     // draw (according to the stencil test func) this node and its childs
-    CAView_::visit();
+    CAView::visit();
     
     ///////////////////////////////////
     // CLEANUP
@@ -363,12 +363,12 @@ void CCClippingNode::visit()
     layer--;
 }
 
-CAView_* CCClippingNode::getStencil() const
+CAView* CCClippingNode::getStencil() const
 {
     return m_pStencil;
 }
 
-void CCClippingNode::setStencil(CAView_ *pStencil)
+void CCClippingNode::setStencil(CAView *pStencil)
 {
     CC_SAFE_RELEASE(m_pStencil);
     m_pStencil = pStencil;

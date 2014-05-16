@@ -33,7 +33,7 @@ NS_CC_BEGIN
 //
 // CameraAction
 //
-void CCActionCamera::startWithTarget(CAView_ *pTarget)
+void CCActionCamera::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     
@@ -101,7 +101,7 @@ bool CCOrbitCamera::initWithDuration(float t, float radius, float deltaRadius, f
     return false;
 }
 
-void CCOrbitCamera::startWithTarget(CAView_ *pTarget)
+void CCOrbitCamera::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     float r, zenith, azimuth;

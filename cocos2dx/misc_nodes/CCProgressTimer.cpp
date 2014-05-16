@@ -111,7 +111,7 @@ void CCProgressTimer::setSprite(CCSprite *pSprite)
         CC_SAFE_RETAIN(pSprite);
         CC_SAFE_RELEASE(m_pSprite);
         m_pSprite = pSprite;
-        setContentSize(m_pSprite->getContentSize());
+        setContentSize(m_pSprite->getFrame().size);
 
         //    Every time we set a new sprite, we free the current vertex data
         if (m_pVertexData)
@@ -239,7 +239,7 @@ void CCProgressTimer::updateProgress(void)
 
 void CCProgressTimer::setAnchorPoint(CCPoint anchorPoint)
 {
-    CAView_::setAnchorPoint(anchorPoint);
+    CAView::setAnchorPoint(anchorPoint);
 }
 
 CCPoint CCProgressTimer::getMidpoint(void)

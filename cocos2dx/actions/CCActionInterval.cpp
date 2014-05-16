@@ -173,7 +173,7 @@ float CCActionInterval::getAmplitudeRate(void)
     return 0;
 }
 
-void CCActionInterval::startWithTarget(CAView_ *pTarget)
+void CCActionInterval::startWithTarget(CAView *pTarget)
 {
     CCFiniteTimeAction::startWithTarget(pTarget);
     m_elapsed = 0.0f;
@@ -313,7 +313,7 @@ CCSequence::~CCSequence(void)
     CC_SAFE_RELEASE(m_pActions[1]);
 }
 
-void CCSequence::startWithTarget(CAView_ *pTarget)
+void CCSequence::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_split = m_pActions[0]->getDuration() / m_fDuration;
@@ -464,7 +464,7 @@ CCRepeat::~CCRepeat(void)
     CC_SAFE_RELEASE(m_pInnerAction);
 }
 
-void CCRepeat::startWithTarget(CAView_ *pTarget)
+void CCRepeat::startWithTarget(CAView *pTarget)
 {
     m_uTotal = 0;
     m_fNextDt = m_pInnerAction->getDuration()/m_fDuration;
@@ -579,7 +579,7 @@ CCObject* CCRepeatForever::copyWithZone(CCZone *pZone)
     return pRet;
 }
 
-void CCRepeatForever::startWithTarget(CAView_* pTarget)
+void CCRepeatForever::startWithTarget(CAView* pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_pInnerAction->startWithTarget(pTarget);
@@ -752,7 +752,7 @@ CCSpawn::~CCSpawn(void)
     CC_SAFE_RELEASE(m_pTwo);
 }
 
-void CCSpawn::startWithTarget(CAView_ *pTarget)
+void CCSpawn::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_pOne->startWithTarget(pTarget);
@@ -853,7 +853,7 @@ CCObject* CCRotateTo::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCRotateTo::startWithTarget(CAView_ *pTarget)
+void CCRotateTo::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     
@@ -979,7 +979,7 @@ CCObject* CCRotateBy::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCRotateBy::startWithTarget(CAView_ *pTarget)
+void CCRotateBy::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_fStartAngleX = pTarget->getRotationX();
@@ -1048,7 +1048,7 @@ CCObject* CCMoveBy::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCMoveBy::startWithTarget(CAView_ *pTarget)
+void CCMoveBy::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_previousPosition = m_startPosition = pTarget->getPosition();
@@ -1124,7 +1124,7 @@ CCObject* CCMoveTo::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCMoveTo::startWithTarget(CAView_ *pTarget)
+void CCMoveTo::startWithTarget(CAView *pTarget)
 {
     CCMoveBy::startWithTarget(pTarget);
     m_positionDelta = ccpSub( m_endPosition, pTarget->getPosition() );
@@ -1190,7 +1190,7 @@ CCObject* CCSkewTo::copyWithZone(CCZone* pZone)
     return pCopy;
 }
 
-void CCSkewTo::startWithTarget(CAView_ *pTarget)
+void CCSkewTo::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
 
@@ -1293,7 +1293,7 @@ bool CCSkewBy::initWithDuration(float t, float deltaSkewX, float deltaSkewY)
     return bRet;
 }
 
-void CCSkewBy::startWithTarget(CAView_ *pTarget)
+void CCSkewBy::startWithTarget(CAView *pTarget)
 {
     CCSkewTo::startWithTarget(pTarget);
     m_fDeltaX = m_fSkewX;
@@ -1357,7 +1357,7 @@ CCObject* CCJumpBy::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCJumpBy::startWithTarget(CAView_ *pTarget)
+void CCJumpBy::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_previousPos = m_startPosition = pTarget->getPosition();
@@ -1431,7 +1431,7 @@ CCObject* CCJumpTo::copyWithZone(CCZone* pZone)
     return pCopy;
 }
 
-void CCJumpTo::startWithTarget(CAView_ *pTarget)
+void CCJumpTo::startWithTarget(CAView *pTarget)
 {
     CCJumpBy::startWithTarget(pTarget);
     m_delta = ccp(m_delta.x - m_startPosition.x, m_delta.y - m_startPosition.y);
@@ -1473,7 +1473,7 @@ bool CCBezierBy::initWithDuration(float t, const ccBezierConfig& c)
     return false;
 }
 
-void CCBezierBy::startWithTarget(CAView_ *pTarget)
+void CCBezierBy::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_previousPosition = m_startPosition = pTarget->getPosition();
@@ -1594,7 +1594,7 @@ CCObject* CCBezierTo::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCBezierTo::startWithTarget(CAView_ *pTarget)
+void CCBezierTo::startWithTarget(CAView *pTarget)
 {
     CCBezierBy::startWithTarget(pTarget);
     m_sConfig.controlPoint_1 = ccpSub(m_sToConfig.controlPoint_1, m_startPosition);
@@ -1673,7 +1673,7 @@ CCObject* CCScaleTo::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCScaleTo::startWithTarget(CAView_ *pTarget)
+void CCScaleTo::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_fStartScaleX = pTarget->getScaleX();
@@ -1737,7 +1737,7 @@ CCObject* CCScaleBy::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCScaleBy::startWithTarget(CAView_ *pTarget)
+void CCScaleBy::startWithTarget(CAView *pTarget)
 {
     CCScaleTo::startWithTarget(pTarget);
     m_fDeltaX = m_fStartScaleX * m_fEndScaleX - m_fStartScaleX;
@@ -1779,7 +1779,7 @@ void CCBlink::stop()
     CCActionInterval::stop();
 }
 
-void CCBlink::startWithTarget(CAView_ *pTarget)
+void CCBlink::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_bOriginalState = pTarget->isVisible();
@@ -1974,7 +1974,7 @@ CCObject* CCFadeTo::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCFadeTo::startWithTarget(CAView_ *pTarget)
+void CCFadeTo::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
 
@@ -2042,7 +2042,7 @@ CCObject* CCTintTo::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCTintTo::startWithTarget(CAView_ *pTarget)
+void CCTintTo::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
@@ -2114,7 +2114,7 @@ CCObject* CCTintBy::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCTintBy::startWithTarget(CAView_ *pTarget)
+void CCTintBy::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
 
@@ -2257,7 +2257,7 @@ CCReverseTime::~CCReverseTime(void)
     CC_SAFE_RELEASE(m_pOther);
 }
 
-void CCReverseTime::startWithTarget(CAView_ *pTarget)
+void CCReverseTime::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_pOther->startWithTarget(pTarget);
@@ -2368,7 +2368,7 @@ CCAnimate::~CCAnimate()
     CC_SAFE_DELETE(m_pSplitTimes);
 }
 
-void CCAnimate::startWithTarget(CAView_ *pTarget)
+void CCAnimate::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     CCSprite *pSprite = (CCSprite*)(pTarget);
@@ -2479,7 +2479,7 @@ CCTargetedAction::~CCTargetedAction()
     CC_SAFE_RELEASE(m_pAction);
 }
 
-CCTargetedAction* CCTargetedAction::create(CAView_* pTarget, CCFiniteTimeAction* pAction)
+CCTargetedAction* CCTargetedAction::create(CAView* pTarget, CCFiniteTimeAction* pAction)
 {
     CCTargetedAction* p = new CCTargetedAction();
     p->initWithTarget(pTarget, pAction);
@@ -2488,7 +2488,7 @@ CCTargetedAction* CCTargetedAction::create(CAView_* pTarget, CCFiniteTimeAction*
 }
 
 
-bool CCTargetedAction::initWithTarget(CAView_* pTarget, CCFiniteTimeAction* pAction)
+bool CCTargetedAction::initWithTarget(CAView* pTarget, CCFiniteTimeAction* pAction)
 {
     if(CCActionInterval::initWithDuration(pAction->getDuration()))
     {
@@ -2521,7 +2521,7 @@ CCObject* CCTargetedAction::copyWithZone(CCZone* pZone)
     return pRet;
 }
 
-void CCTargetedAction::startWithTarget(CAView_ *pTarget)
+void CCTargetedAction::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_pAction->startWithTarget(m_pForcedTarget);

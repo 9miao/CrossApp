@@ -175,8 +175,8 @@ public:
      Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
      @since v0.99.5
      */
-    CAView_* getNotificationNode();
-    void setNotificationNode(CAView_ *node);
+    CAView* getNotificationNode();
+    void setNotificationNode(CAView *node);
     
     /** CCDirector delegate. It shall implemente the CCDirectorDelegate protocol
      @since v0.99.5
@@ -433,7 +433,7 @@ protected:
     char *m_pszFPS;
 
     /* This object will be visited after the scene. Useful to hook a notification node */
-    CAView_ *m_pNotificationNode;
+    CAView *m_pNotificationNode;
 
     /* Projection protocol delegate */
     CCDirectorDelegate *m_pProjectionDelegate;

@@ -165,7 +165,7 @@ protected:
     
     CCDictionary* m_pCellDict;
     
-    CCNodeRGBA* m_pBackGroundView;
+    CAView* m_pBackGroundView;
     
     CCPoint m_tBeginPoint;
 };

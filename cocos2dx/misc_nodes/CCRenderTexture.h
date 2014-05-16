@@ -51,7 +51,7 @@ There are also functions for saving the render texture to disk in PNG or JPG for
 
 @since v0.8.1
 */
-class CC_DLL CCRenderTexture : public CAView_ 
+class CC_DLL CCRenderTexture : public CAView 
 {
     /** The CCSprite being used.
     The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.

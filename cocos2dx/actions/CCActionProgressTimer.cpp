@@ -76,7 +76,7 @@ CCObject* CCProgressTo::copyWithZone(CCZone *pZone)
     return pCopy;
 }
 
-void CCProgressTo::startWithTarget(CAView_ *pTarget)
+void CCProgressTo::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_fFrom = ((kProgressTimerCast)(pTarget))->getPercentage();
@@ -146,7 +146,7 @@ CCActionInterval* CCProgressFromTo::reverse(void)
     return CCProgressFromTo::create(m_fDuration, m_fTo, m_fFrom);
 }
 
-void CCProgressFromTo::startWithTarget(CAView_ *pTarget)
+void CCProgressFromTo::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
 }

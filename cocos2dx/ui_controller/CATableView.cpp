@@ -443,7 +443,7 @@ void CATableView::update(float fDelta)
     for (itr=m_pTableCells.begin(); itr!=m_pTableCells.end(); itr++)
     {
         CATableViewCell* cell = *itr;
-        CCPoint point = cell->getCenter();
+        CCPoint point = cell->getCenterOrigin();
         point = m_pContainer->convertToWorldSpace(point);
         point = this->convertToNodeSpace(point);
         
@@ -490,7 +490,7 @@ bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
     {
         return false;
     }
-    
+
     this->setReuseIdentifier(reuseIdentifier);
     
     this->setBackGroundView(CAView::createWithFrame(this->getBounds(), ccc4(255, 255, 255, 255)));

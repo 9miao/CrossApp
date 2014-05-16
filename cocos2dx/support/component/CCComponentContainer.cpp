@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 NS_CC_BEGIN
 
-CCComponentContainer::CCComponentContainer(CAView_ *pNode)
+CCComponentContainer::CCComponentContainer(CAView *pNode)
 : m_pComponents(NULL)
 , m_pOwner(pNode)
 {
@@ -64,7 +64,7 @@ bool CCComponentContainer::add(CCComponent *pCom)
         {
             m_pComponents = CCDictionary::create();
             m_pComponents->retain();
-            CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CAView_::CCObject::update), m_pOwner, 1/60.0f, false);
+            CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CAView::CCObject::update), m_pOwner, 1/60.0f, false);
         }
         CCComponent *pComponent = dynamic_cast<CCComponent*>(m_pComponents->objectForKey(pCom->getName()));
         
@@ -142,7 +142,7 @@ void CCComponentContainer::removeAll()
             pElement->getObject()->release();
             CC_SAFE_DELETE(pElement);
         }
-        CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAView_::update), m_pOwner);
+        CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAView::update), m_pOwner);
     }
 }
 

@@ -64,7 +64,7 @@ public:
      */
     virtual ~CCActionCamera(){}
     // super methods
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
     virtual CCActionInterval * reverse();
 protected:
     float m_fCenterXOrig;
@@ -122,7 +122,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
     virtual void update(float time);
 
 protected:

@@ -60,13 +60,13 @@ bool CCGridAction::initWithDuration(float duration, const CCSize& gridSize)
     return false;
 }
 
-void CCGridAction::startWithTarget(CAView_ *pTarget)
+void CCGridAction::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
 
     CCGridBase *newgrid = this->getGrid();
 
-    CAView_ *t = m_pTarget;
+    CAView *t = m_pTarget;
     CCGridBase *targetGrid = t->getGrid();
 
     if (targetGrid && targetGrid->getReuseGrid() > 0)
@@ -232,7 +232,7 @@ CCAccelDeccelAmplitude::~CCAccelDeccelAmplitude(void)
     CC_SAFE_RELEASE(m_pOther);
 }
 
-void CCAccelDeccelAmplitude::startWithTarget(CAView_ *pTarget)
+void CCAccelDeccelAmplitude::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_pOther->startWithTarget(pTarget);
@@ -295,7 +295,7 @@ CCAccelAmplitude::~CCAccelAmplitude(void)
     CC_SAFE_DELETE(m_pOther);
 }
 
-void CCAccelAmplitude::startWithTarget(CAView_ *pTarget)
+void CCAccelAmplitude::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_pOther->startWithTarget(pTarget);
@@ -352,7 +352,7 @@ CCDeccelAmplitude::~CCDeccelAmplitude(void)
     CC_SAFE_RELEASE(m_pOther);
 }
 
-void CCDeccelAmplitude::startWithTarget(CAView_ *pTarget)
+void CCDeccelAmplitude::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_pOther->startWithTarget(pTarget);
@@ -371,7 +371,7 @@ CCActionInterval* CCDeccelAmplitude::reverse(void)
 
 // implementation of StopGrid
 
-void CCStopGrid::startWithTarget(CAView_ *pTarget)
+void CCStopGrid::startWithTarget(CAView *pTarget)
 {
     CCActionInstant::startWithTarget(pTarget);
 
@@ -416,7 +416,7 @@ bool CCReuseGrid::initWithTimes(int times)
     return true;
 }
 
-void CCReuseGrid::startWithTarget(CAView_ *pTarget)
+void CCReuseGrid::startWithTarget(CAView *pTarget)
 {
     CCActionInstant::startWithTarget(pTarget);
 

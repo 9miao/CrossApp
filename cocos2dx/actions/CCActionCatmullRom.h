@@ -152,7 +152,7 @@ public:
     /**
      *  @lua NA
      */
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
     /**
      *  @lua NA
      */
@@ -206,7 +206,7 @@ public:
     /**
      *  @lua NA
      */
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
     virtual CCActionInterval* reverse();
     /**
      *  @lua NA

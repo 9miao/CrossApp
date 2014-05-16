@@ -104,7 +104,7 @@ CCActionEase::~CCActionEase(void)
     CC_SAFE_RELEASE(m_pInner);
 }
 
-void CCActionEase::startWithTarget(CAView_ *pTarget)
+void CCActionEase::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
     m_pInner->startWithTarget(m_pTarget);

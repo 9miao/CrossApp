@@ -60,11 +60,11 @@ public:
     const char* getName() const;
     void setName(const char *pName);
     
-    void setOwner(CAView_ *pOwner);
-    CAView_* getOwner() const;
+    void setOwner(CAView *pOwner);
+    CAView* getOwner() const;
     
 protected:
-    CAView_ *m_pOwner;
+    CAView *m_pOwner;
     std::string m_strName;
     bool m_bEnabled;
 };

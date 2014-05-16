@@ -103,7 +103,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
 
 bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture)
 {
-    CAView_::setPosition(CCPointZero);
+    CAView::setPosition(CCPointZero);
     setAnchorPoint(CCPointZero);
     ignoreAnchorPointForPosition(true);
     m_bStartingPositionInitialized = false;

@@ -10,7 +10,7 @@
 #define __cocos2dx__CABar__
 
 #include <iostream>
-#include "sprite_nodes/CCView.h"
+#include "sprite_nodes/CAView.h"
 #include "CAButton.h"
 #include "CABarItem.h"
 #include <vector>
@@ -65,9 +65,9 @@ protected:
     
 protected:
     
-    CCNodeRGBA* m_pBackGround;
+    CAView* m_pBackGround;
     
-    CCNodeRGBA* m_pTitle;
+    CAView* m_pTitle;
     
     CAButton* m_pBackButton;
     
@@ -139,11 +139,11 @@ protected:
     
 protected:
     
-    CCNodeRGBA* m_pBackGround;
+    CAView* m_pBackGround;
     
-    CCNodeRGBA* m_pSelectedBackGround;
+    CAView* m_pSelectedBackGround;
     
-    CCNodeRGBA* m_pSelectedIndicator;
+    CAView* m_pSelectedIndicator;
     
     CATabBarItem* m_pSelectedItem;
     

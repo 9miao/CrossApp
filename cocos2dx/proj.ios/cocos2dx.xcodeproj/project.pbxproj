@@ -279,8 +279,6 @@
 		B0AD93BF19207A6500EA40BB /* CAWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B0AD93B919207A6500EA40BB /* CAWindow.h */; };
 		B0AD93C019207A6500EA40BB /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93BA19207A6500EA40BB /* CCScale9Sprite.cpp */; };
 		B0AD93C119207A6500EA40BB /* CCScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = B0AD93BB19207A6500EA40BB /* CCScale9Sprite.h */; };
-		B0AD93C219207A6500EA40BB /* CCView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93BC19207A6500EA40BB /* CCView.cpp */; };
-		B0AD93C319207A6500EA40BB /* CCView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0AD93BD19207A6500EA40BB /* CCView.h */; };
 		B0AD93D519207A8C00EA40BB /* CABar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93C519207A8C00EA40BB /* CABar.cpp */; };
 		B0AD93D619207A8C00EA40BB /* CABar.h in Headers */ = {isa = PBXBuildFile; fileRef = B0AD93C619207A8C00EA40BB /* CABar.h */; };
 		B0AD93D719207A8C00EA40BB /* CABarItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93C719207A8C00EA40BB /* CABarItem.cpp */; };
@@ -576,8 +574,6 @@
 		B0AD93B919207A6500EA40BB /* CAWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWindow.h; sourceTree = "<group>"; };
 		B0AD93BA19207A6500EA40BB /* CCScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScale9Sprite.cpp; sourceTree = "<group>"; };
 		B0AD93BB19207A6500EA40BB /* CCScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScale9Sprite.h; sourceTree = "<group>"; };
-		B0AD93BC19207A6500EA40BB /* CCView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCView.cpp; sourceTree = "<group>"; };
-		B0AD93BD19207A6500EA40BB /* CCView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCView.h; sourceTree = "<group>"; };
 		B0AD93C519207A8C00EA40BB /* CABar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CABar.cpp; sourceTree = "<group>"; };
 		B0AD93C619207A8C00EA40BB /* CABar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABar.h; sourceTree = "<group>"; };
 		B0AD93C719207A8C00EA40BB /* CABarItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CABarItem.cpp; sourceTree = "<group>"; };
@@ -997,8 +993,6 @@
 				B0AD93B919207A6500EA40BB /* CAWindow.h */,
 				B0AD93BA19207A6500EA40BB /* CCScale9Sprite.cpp */,
 				B0AD93BB19207A6500EA40BB /* CCScale9Sprite.h */,
-				B0AD93BC19207A6500EA40BB /* CCView.cpp */,
-				B0AD93BD19207A6500EA40BB /* CCView.h */,
 				1551A5DB158F2ADE00E66CFE /* CCAnimation.cpp */,
 				1551A5DC158F2ADE00E66CFE /* CCAnimation.h */,
 				1551A5DD158F2ADE00E66CFE /* CCAnimationCache.cpp */,
@@ -1270,7 +1264,6 @@
 				1551A6D4158F2ADE00E66CFE /* CCKeypadDelegate.h in Headers */,
 				1551A6D6158F2ADE00E66CFE /* CCKeypadDispatcher.h in Headers */,
 				1551A6DC158F2ADE00E66CFE /* CCLabelTTF.h in Headers */,
-				B0AD93C319207A6500EA40BB /* CCView.h in Headers */,
 				1551A6E2158F2ADE00E66CFE /* CCTransition.h in Headers */,
 				1551A6E4158F2ADE00E66CFE /* CCTransitionPageTurn.h in Headers */,
 				1551A6E6158F2ADE00E66CFE /* CCTransitionProgress.h in Headers */,
@@ -1556,7 +1549,6 @@
 				4698CFA9174CBB700066A57B /* CCTextureETC.cpp in Sources */,
 				37EEEBF8175DDF3A003C1193 /* CCComponent.cpp in Sources */,
 				37EEEBFA175DDF3A003C1193 /* CCComponentContainer.cpp in Sources */,
-				B0AD93C219207A6500EA40BB /* CCView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

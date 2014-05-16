@@ -276,6 +276,16 @@ bool CCScale9Sprite::updateWithTexture(CAImage* image, CCRect rect, CCRect capIn
     this->insertSubview(_bottomRight, 2);
     this->setContentSize(rect.size);
     
+    _bottomLeft->setAnchorPoint(CCPoint(0,0));
+    _bottomRight->setAnchorPoint(CCPoint(0,0));
+    _topLeft->setAnchorPoint(CCPoint(0,0));
+    _topRight->setAnchorPoint(CCPoint(0,0));
+    _left->setAnchorPoint(CCPoint(0,0));
+    _right->setAnchorPoint(CCPoint(0,0));
+    _top->setAnchorPoint(CCPoint(0,0));
+    _bottom->setAnchorPoint(CCPoint(0,0));
+    _centre->setAnchorPoint(CCPoint(0,0));
+    
     if (m_bSpritesGenerated)
         {
             // Restore color and opacity
@@ -289,7 +299,7 @@ bool CCScale9Sprite::updateWithTexture(CAImage* image, CCRect rect, CCRect capIn
 
 void CCScale9Sprite::setContentSize(const CCSize &size)
 {
-    CAView_::setContentSize(size);
+    CAView::setContentSize(size);
     this->m_positionsAreDirty = true;
     this->m_preferredSize = size;
 }
@@ -323,15 +333,7 @@ void CCScale9Sprite::updatePositions()
     float leftWidth = _bottomLeft->getContentSize().width;
     float bottomHeight = _bottomLeft->getContentSize().height;
 
-    _bottomLeft->setAnchorPoint(CCPoint(0,0));
-    _bottomRight->setAnchorPoint(CCPoint(0,0));
-    _topLeft->setAnchorPoint(CCPoint(0,0));
-    _topRight->setAnchorPoint(CCPoint(0,0));
-    _left->setAnchorPoint(CCPoint(0,0));
-    _right->setAnchorPoint(CCPoint(0,0));
-    _top->setAnchorPoint(CCPoint(0,0));
-    _bottom->setAnchorPoint(CCPoint(0,0));
-    _centre->setAnchorPoint(CCPoint(0,0));
+    
 
     // Position corners
     _bottomLeft->setPosition(CCPoint(0,0));
@@ -534,13 +536,13 @@ bool CCScale9Sprite::isOpacityModifyRGB()
 
 void CCScale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
 {
-    CCNodeRGBA::updateDisplayedOpacity(parentOpacity);
+    CAView::updateDisplayedOpacity(parentOpacity);
     setOpacity(parentOpacity);
 }
 
 void CCScale9Sprite::updateDisplayedColor(const cocos2d::ccColor3B &color)
 {
-    CCNodeRGBA::updateDisplayedColor(color);
+    CAView::updateDisplayedColor(color);
     setColor(color);
 }
 
@@ -595,7 +597,7 @@ void CCScale9Sprite::visit()
         this->updatePositions();
         this->m_positionsAreDirty = false;
     }
-    CAView_::visit();
+    CAView::visit();
 }
 
 void CCScale9Sprite::setColor(const ccColor3B& color)

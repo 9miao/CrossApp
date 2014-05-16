@@ -51,7 +51,7 @@ NS_CC_BEGIN
  */
 class CCScale9Sprite;
 typedef CCScale9Sprite CAScale9ImageView;
-class CCScale9Sprite : public CCNodeRGBA
+class CCScale9Sprite : public CAView
 {
 public:
     CCScale9Sprite();
@@ -104,9 +104,10 @@ protected:
     void updateCapInset();
     void updatePositions();
 
-public:
-    
     virtual void setContentSize(const CCSize & size);
+    
+public:
+
     /**
      *  @js NA
      */

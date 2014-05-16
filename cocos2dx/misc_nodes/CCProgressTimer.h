@@ -53,7 +53,7 @@ typedef enum {
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CC_DLL CCProgressTimer : public CCNodeRGBA
+class CC_DLL CCProgressTimer : public CAView
 #ifdef EMSCRIPTEN
 , public CCGLBufferedNode
 #endif // EMSCRIPTEN

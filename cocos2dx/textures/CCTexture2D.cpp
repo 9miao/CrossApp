@@ -72,6 +72,7 @@ CCTexture2D::CCTexture2D()
 , m_bHasPremultipliedAlpha(false)
 , m_bHasMipmaps(false)
 , m_pShaderProgram(NULL)
+, m_bMonochrome(false)
 {
 }
 

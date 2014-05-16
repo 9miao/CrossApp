@@ -168,7 +168,7 @@ void CCActionManager::resumeTargets(cocos2d::CCSet *targetsToResume)
 
 // run
 
-void CCActionManager::addAction(CCAction *pAction, CAView_ *pTarget, bool paused)
+void CCActionManager::addAction(CCAction *pAction, CAView *pTarget, bool paused)
 {
     CCAssert(pAction != NULL, "");
     CCAssert(pTarget != NULL, "");

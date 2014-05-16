@@ -26,7 +26,7 @@ CAProgress::CAProgress()
 ,m_pCopyTarckImage(NULL)
 ,m_previousPercent(0.0f)
 {
-    m_pIndicator=CAView_::create();
+    m_pIndicator=CAView::create();
     m_pIndicator->retain();
 }
 
@@ -67,7 +67,7 @@ void CAProgress::setProgress(float progress, bool animated)
     {
         if (m_pCopyProgressImage)
         {
-            m_pCopyProgressImage->setTextureRect(CCRectMake(m_pCopyProgressImage->getPosition().x, m_pCopyProgressImage->getPosition().y, m_pCopyProgressImage->getContentSize().width*progress, m_pCopyProgressImage->getContentSize().height));
+            m_pCopyProgressImage->setTextureRect(CCRectMake(m_pCopyProgressImage->getPosition().x, m_pCopyProgressImage->getPosition().y, m_pCopyProgressImage->getFrame().size.width*progress, m_pCopyProgressImage->getFrame().size.height));
         }
         else
         {
@@ -80,7 +80,7 @@ void CAProgress::setProgress(float progress, bool animated)
 
 bool CAProgress::init()
 {
-    if (!CCNodeRGBA::init())
+    if (!CAView::init())
     {
         return false;
     }
@@ -95,7 +95,7 @@ bool CAProgress::init()
 void CAProgress::onEnterTransitionDidFinish()
 {
     
-    CCNodeRGBA::onEnterTransitionDidFinish();
+    CAView::onEnterTransitionDidFinish();
     
   
     if (m_pCopyTarckImage == NULL ) 
@@ -114,7 +114,7 @@ void CAProgress::onEnterTransitionDidFinish()
         m_pCopyProgressImage=CCSprite::createWithTexture(m_pRender->getSprite()->getTexture());
         m_pCopyProgressImage->setAnchorPoint(CCPointZero);
         m_pCopyProgressImage->setPosition(CCPointZero);
-        m_pCopyProgressImage->setTextureRect(CCRectMake(m_pCopyProgressImage->getPosition().x, m_pCopyProgressImage->getPosition().y, m_pCopyProgressImage->getContentSize().width*m_fProgress, m_pCopyProgressImage->getContentSize().height));
+        m_pCopyProgressImage->setTextureRect(CCRectMake(m_pCopyProgressImage->getPosition().x, m_pCopyProgressImage->getPosition().y, m_pCopyProgressImage->getFrame().size.width*m_fProgress, m_pCopyProgressImage->getFrame().size.height));
         this->addSubview(m_pCopyProgressImage);
         m_pIndicator->setFrame(CCRectMake(m_pCopyProgressImage->getPosition().x, m_pCopyProgressImage->getPosition().y, 0, 0));
         this->addSubview(m_pIndicator);
@@ -125,7 +125,7 @@ void CAProgress::init9SpriteWithImage(const char *fileName)
 {
     CCScale9Sprite *tarckImage=CCScale9Sprite::createWithTexture(CCTexture2D::create(fileName));
     CCRect tarckTap;
-    tarckTap.origin=tarckImage->getContentSize()/2;
+    tarckTap.origin=tarckImage->getFrame().size/2;
     tarckTap.origin=ccpSub(tarckTap.origin, CCPoint(1, 1));
     tarckTap.size=CCSize(2, 2);
     tarckImage->setCapInsets(tarckTap);
@@ -135,7 +135,7 @@ void CAProgress::init9SpriteWithImage(const char *fileName)
     
     
     
-    m_pRender->initWithWidthAndHeight(tarckImage->getContentSize().width, tarckImage->getContentSize().height, kCCTexture2DPixelFormat_RGBA8888);
+    m_pRender->initWithWidthAndHeight(tarckImage->getFrame().size.width, tarckImage->getFrame().size.height, kCCTexture2DPixelFormat_RGBA8888);
     m_pRender->setPosition(tarckImage->getPosition());
     m_pRender->begin();
     tarckImage->visit();
@@ -170,15 +170,15 @@ std::string CAProgress::getProgressTrackImage()
 
 void CAProgress::onExitTransitionDidStart()
 {
-    CCNodeRGBA::onExitTransitionDidStart();
+    CAView::onExitTransitionDidStart();
 }
 
 void CAProgress::schedule(float dt)
 {
-    if(m_pCopyProgressImage->getContentSize().width<m_pCopyTarckImage->getContentSize().width*m_nCurPercent)
+    if(m_pCopyProgressImage->getFrame().size.width<m_pCopyTarckImage->getFrame().size.width*m_nCurPercent)
     {
 
-        m_pCopyProgressImage->setTextureRect(CCRectMake(m_pCopyProgressImage->getPosition().x, m_pCopyProgressImage->getPosition().y, m_pIndicator->getPosition().x, m_pCopyProgressImage->getContentSize().height));
+        m_pCopyProgressImage->setTextureRect(CCRectMake(m_pCopyProgressImage->getPosition().x, m_pCopyProgressImage->getPosition().y, m_pIndicator->getPosition().x, m_pCopyProgressImage->getFrame().size.height));
         
     }
     else

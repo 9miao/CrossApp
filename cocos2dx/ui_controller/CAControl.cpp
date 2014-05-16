@@ -142,7 +142,7 @@ bool CAControl::isSelected()
     return (m_eControlState == CAControlStateSelected);
 }
 
-void CAControl::setBackGroundView(cocos2d::CCNodeRGBA *var)
+void CAControl::setBackGroundView(cocos2d::CAView *var)
 {
     if (m_pBackGroundView != var)
     {
@@ -153,12 +153,12 @@ void CAControl::setBackGroundView(cocos2d::CCNodeRGBA *var)
     }
 }
 
-CCNodeRGBA* CAControl::getBackGroundView()
+CAView* CAControl::getBackGroundView()
 {
     return m_pBackGroundView;
 }
 
-void CAControl::setHighlightedBackGroundView(cocos2d::CCNodeRGBA *var)
+void CAControl::setHighlightedBackGroundView(cocos2d::CAView *var)
 {
     if (m_pHighlightedBackGroundView != var)
     {
@@ -169,12 +169,12 @@ void CAControl::setHighlightedBackGroundView(cocos2d::CCNodeRGBA *var)
     }
 }
 
-CCNodeRGBA* CAControl::getHighlightedBackGroundView()
+CAView* CAControl::getHighlightedBackGroundView()
 {
     return m_pHighlightedBackGroundView;
 }
 
-void CAControl::setDisabledBackGroundView(cocos2d::CCNodeRGBA *var)
+void CAControl::setDisabledBackGroundView(cocos2d::CAView *var)
 {
     if (m_pDisabledBackGroundView != var)
     {
@@ -185,12 +185,12 @@ void CAControl::setDisabledBackGroundView(cocos2d::CCNodeRGBA *var)
     }
 }
 
-CCNodeRGBA* CAControl::getDisabledBackGroundView()
+CAView* CAControl::getDisabledBackGroundView()
 {
     return m_pDisabledBackGroundView;
 }
 
-void CAControl::setSelectedBackGroundView(cocos2d::CCNodeRGBA *var)
+void CAControl::setSelectedBackGroundView(cocos2d::CAView *var)
 {
     if (m_pSelectedBackGroundView != var)
     {
@@ -201,14 +201,14 @@ void CAControl::setSelectedBackGroundView(cocos2d::CCNodeRGBA *var)
     }
 }
 
-CCNodeRGBA* CAControl::getSelectedBackGroundView()
+CAView* CAControl::getSelectedBackGroundView()
 {
     return m_pSelectedBackGroundView;
 }
 
 void CAControl::setContentSize(const CCSize& var)
 {
-    CCNodeRGBA::setContentSize(var);
+    CAView::setContentSize(var);
     
     if (m_pBackGroundView)
     {

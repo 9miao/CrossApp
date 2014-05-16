@@ -46,7 +46,7 @@ public:
      *  @lua NA
      */
     virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
     virtual CCActionInterval* reverse(void);
 
     /** initializes the action with size and duration */
@@ -125,7 +125,7 @@ public:
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(CCAction *pAction, float duration);
 
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
@@ -160,7 +160,7 @@ public:
     /** set amplitude rate */
     inline void setRate(float fRate) { m_fRate = fRate; }
 
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
@@ -189,7 +189,7 @@ public:
     /** set amplitude rate */
     inline void setRate(float fRate) { m_fRate = fRate; }
 
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
 
@@ -210,7 +210,7 @@ protected:
 class CC_DLL CCStopGrid : public CCActionInstant
 {
 public:
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
 
 public:
     /** Allocates and initializes the action */
@@ -224,7 +224,7 @@ public:
     /** initializes an action with the number of times that the current grid will be reused */
     bool initWithTimes(int times);
 
-    virtual void startWithTarget(CAView_ *pTarget);
+    virtual void startWithTarget(CAView *pTarget);
 
 public:
     /** creates an action with the number of times that the current grid will be reused */

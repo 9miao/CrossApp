@@ -234,7 +234,6 @@ THE SOFTWARE.
 #include "sprite_nodes/CCSpriteFrame.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "sprite_nodes/CCScale9Sprite.h"
-#include "sprite_nodes/CCView.h"
 #include "sprite_nodes/CAWindow.h"
 #include "sprite_nodes/CAView.h"
 

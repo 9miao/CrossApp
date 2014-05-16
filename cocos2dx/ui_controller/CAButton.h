@@ -35,19 +35,23 @@ public:
     
     static CAButton* createWithFrame(const CCRect& rect);
 
+    static CAButton* createWithCenter(const CCRect& rect);
+    
 public:
     
     bool initWithFrame(const CCRect& rect);
     
+    bool initWithCenter(const CCRect& rect);
+    
     void setBackGroundDefault();
     
-    void setBackGround(CAControlState controlState, CCNodeRGBA *var);
+    void setBackGround(CAControlState controlState, CAView *var);
 
-    void setSprite(CAControlState controlState, CCNodeRGBA* var);
+    void setSprite(CAControlState controlState, CAView* var);
 
-    void setSprite(CAControlState controlState, CCNodeRGBA* var, CCPoint point);
+    void setSprite(CAControlState controlState, CAView* var, CCPoint point);
 
-    CCNodeRGBA* getSprite(CAControlState controlState);
+    CAView* getSprite(CAControlState controlState);
     
     virtual void setControlState(CAControlState var);
     
@@ -91,13 +95,13 @@ protected:
 
     ccColor3B m_color;
     
-    CCNodeRGBA* m_spriteNormal;
+    CAView* m_spriteNormal;
     
-    CCNodeRGBA* m_spriteHighlighted;
+    CAView* m_spriteHighlighted;
     
-    CCNodeRGBA* m_spriteDisabled;
+    CAView* m_spriteDisabled;
     
-    CCNodeRGBA* m_spriteSelected;
+    CAView* m_spriteSelected;
     
     CCPoint m_spriteNPoint;
     

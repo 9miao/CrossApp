@@ -35,13 +35,13 @@ NS_CC_BEGIN
 
 /** CCClippingNode is a subclass of CCNode.
  It draws its content (childs) clipped using a stencil.
- The stencil is an other CAView_ that will not be drawn.
+ The stencil is an other CAView that will not be drawn.
  The clipping is done using the alpha part of the stencil (adjusted with an alphaThreshold).
  */
-class CC_DLL CCClippingNode : public CAView_
+class CC_DLL CCClippingNode : public CAView
 {
 protected:
-    CAView_* m_pStencil;
+    CAView* m_pStencil;
     GLfloat m_fAlphaThreshold;
     bool    m_bInverted;
     
@@ -53,7 +53,7 @@ public:
     /** Creates and initializes a clipping node with an other node as its stencil.
      The stencil node will be retained.
      */
-    static CCClippingNode* create(CAView_ *pStencil);
+    static CCClippingNode* create(CAView *pStencil);
     /**
      * @js NA
      * @lua NA
@@ -67,7 +67,7 @@ public:
     /** Initializes a clipping node with an other node as its stencil.
      The stencil node will be retained, and its parent will be set to this clipping node.
      */
-    virtual bool init(CAView_ *pStencil);
+    virtual bool init(CAView *pStencil);
     /**
      *  @js NA
      *  @lua NA
@@ -90,12 +90,12 @@ public:
     virtual void onExit();
     virtual void visit();
     
-    /** The CAView_ to use as a stencil to do the clipping.
+    /** The CAView to use as a stencil to do the clipping.
      The stencil node will be retained.
      This default to nil.
      */
-    CAView_* getStencil() const;
-    void setStencil(CAView_ *pStencil);
+    CAView* getStencil() const;
+    void setStencil(CAView *pStencil);
     
     /** The alpha threshold.
      The content is drawn only where the stencil have pixel with alpha greater than the alphaThreshold.

@@ -209,7 +209,7 @@ void CCGridBase::beforeDraw(void)
     m_pGrabber->beforeRender(m_pTexture);
 }
 
-void CCGridBase::afterDraw(cocos2d::CAView_ *pTarget)
+void CCGridBase::afterDraw(cocos2d::CAView *pTarget)
 {
     m_pGrabber->afterRender(m_pTexture);
 
