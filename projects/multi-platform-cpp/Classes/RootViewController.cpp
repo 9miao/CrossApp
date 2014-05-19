@@ -36,13 +36,13 @@ void RootViewController::viewDidLoad()
     tableView->setBackGroundImage(CAImage::create("1.jpg"));
     
     CAButton* btn1 = CAButton::createWithFrame(CCRect(10, tableRect.size.height+10, 240, 60));
-    btn1->setSprite(CAControlStateNormal, CCLabelTTF::create("111", "Arial", 30));
+    btn1->setSprite(CAControlStateNormal, CCLabelTTF::create("目前不可选", "Arial", 30));
     btn1->getSprite(CAControlStateNormal)->setColor(ccBLACK);
     this->getView()->addSubview(btn1);
     btn1->addTarget(this, CAButton_selector(RootViewController::setAllowsSelection), TouchUpInSide);
     
     CAButton* btn2 = CAButton::createWithFrame(CCRect(260, tableRect.size.height+10, 240, 60));
-    btn2->setSprite(CAControlStateNormal, CCLabelTTF::create("111", "Arial", 30));
+    btn2->setSprite(CAControlStateNormal, CCLabelTTF::create("目前单选", "Arial", 30));
     btn2->getSprite(CAControlStateNormal)->setColor(ccBLACK);
     this->getView()->addSubview(btn2);
     btn2->addTarget(this, CAButton_selector(RootViewController::setAllowsMultipleSelection), TouchUpInSide);
@@ -71,12 +71,12 @@ bool RootViewController::setAllowsSelection(CAButton* btn, CCPoint point)
     if (tableView->isAllowsSelection())
     {
         tableView->setAllowsSelection(false);
-        btn->setSprite(CAControlStateNormal, CCLabelTTF::create("111", "Arial", 30));
+        btn->setSprite(CAControlStateNormal, CCLabelTTF::create("目前不可选", "Arial", 30));
     }
     else
     {
         tableView->setAllowsSelection(true);
-        btn->setSprite(CAControlStateNormal, CCLabelTTF::create("222", "Arial", 30));
+        btn->setSprite(CAControlStateNormal, CCLabelTTF::create("目前可选", "Arial", 30));
     }
     btn->getSprite(CAControlStateNormal)->setColor(ccBLACK);
     tableView->reloadData();
@@ -89,12 +89,12 @@ bool RootViewController::setAllowsMultipleSelection(CAButton* btn, CCPoint point
     if (tableView->isAllowsMultipleSelection())
     {
         tableView->setAllowsMultipleSelection(false);
-        btn->setSprite(CAControlStateNormal, CCLabelTTF::create("111", "Arial", 30));
+        btn->setSprite(CAControlStateNormal, CCLabelTTF::create("目前单选", "Arial", 30));
     }
     else
     {
         tableView->setAllowsMultipleSelection(true);
-        btn->setSprite(CAControlStateNormal, CCLabelTTF::create("222", "Arial", 30));
+        btn->setSprite(CAControlStateNormal, CCLabelTTF::create("目前多选", "Arial", 30));
     }
     btn->getSprite(CAControlStateNormal)->setColor(ccBLACK);
     tableView->reloadData();
@@ -135,8 +135,7 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     CCString* str = CCString::createWithFormat("CELL - %u", row);
     CCLabelTTF* ttf = CCLabelTTF::create(str->getCString(), "Arial", 40);
     ttf->setColor(ccBLACK);
-    ttf->setFrame(CCRect(10, 30, 0, 0));
-    ttf->setCenterOrigin(CCPoint(300, 60));
+    ttf->setFrame(CCRect(10, 60, 0, 0));
     cell->addSubview(ttf);
 //    CALabel* label = CALabel::create(CCRect(0, 0, 600, 100));
 //    label->setOpacity(128);
@@ -145,9 +144,7 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
 //    label->setText(str->getCString());
 //    cell->addSubview(label);
     
-    
-    
-    
+
     return cell;
 }
 
