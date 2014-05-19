@@ -133,17 +133,17 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     }
     
     CCString* str = CCString::createWithFormat("CELL - %u", row);
-//    CCLabelTTF* ttf = CCLabelTTF::create(str->getCString(), "Arial", 40);
-//    ttf->setColor(ccBLACK);
-//    ttf->setFrame(CCRect(10, 30, 0, 0));
-//    ttf->setCenterOrigin(CCPoint(300, 60));
-//    cell->addSubview(ttf);
-    CALabel* label = CALabel::create(CCRect(0, 0, 600, 100));
-    label->setOpacity(128);
-    label->setVerticalTextAlignmet(kCCVerticalTextAlignmentCenter);
-    label->setCenterOrigin(CCPoint(300, 60));
-    label->setText(str->getCString());
-    cell->addSubview(label);
+    CCLabelTTF* ttf = CCLabelTTF::create(str->getCString(), "Arial", 40);
+    ttf->setColor(ccBLACK);
+    ttf->setFrame(CCRect(10, 30, 0, 0));
+    ttf->setCenterOrigin(CCPoint(300, 60));
+    cell->addSubview(ttf);
+//    CALabel* label = CALabel::create(CCRect(0, 0, 600, 100));
+//    label->setOpacity(128);
+//    label->setVerticalTextAlignmet(kCCVerticalTextAlignmentCenter);
+//    label->setCenterOrigin(CCPoint(300, 60));
+//    label->setText(str->getCString());
+//    cell->addSubview(label);
     
     
     
