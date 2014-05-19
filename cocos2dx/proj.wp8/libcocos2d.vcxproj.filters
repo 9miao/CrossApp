@@ -387,9 +387,6 @@
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp">
       <Filter>text_input_node</Filter>
     </ClCompile>
-    <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp">
-      <Filter>text_input_node</Filter>
-    </ClCompile>
     <ClCompile Include="..\textures\CCTexture2D.cpp">
       <Filter>textures</Filter>
     </ClCompile>
@@ -464,6 +461,12 @@
     </ClCompile>
     <ClCompile Include="..\sprite_nodes\CAView.cpp">
       <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\text_input_node\CATextField.cpp">
+      <Filter>text_input_node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\label_nodes\CALabel.cpp">
+      <Filter>label_nodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -815,9 +818,6 @@
     <ClInclude Include="..\text_input_node\CCIMEDispatcher.h">
       <Filter>text_input_node</Filter>
     </ClInclude>
-    <ClInclude Include="..\text_input_node\CCTextFieldTTF.h">
-      <Filter>text_input_node</Filter>
-    </ClInclude>
     <ClInclude Include="..\textures\CCTexture2D.h">
       <Filter>textures</Filter>
     </ClInclude>
@@ -897,6 +897,12 @@
     </ClInclude>
     <ClInclude Include="..\sprite_nodes\CAView.h">
       <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\text_input_node\CATextField.h">
+      <Filter>text_input_node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CALabel.h">
+      <Filter>label_nodes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

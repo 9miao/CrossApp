@@ -300,6 +300,7 @@
     </ClCompile>
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDelegate.cpp" />
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDispatcher.cpp" />
+    <ClCompile Include="..\label_nodes\CALabel.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp" />
@@ -361,8 +362,8 @@
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
     <ClCompile Include="..\textures\CCTextureETC.cpp" />
     <ClCompile Include="..\textures\CCTexturePVR.cpp" />
+    <ClCompile Include="..\text_input_node\CATextField.cpp" />
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp" />
-    <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
@@ -437,6 +438,7 @@
     <ClInclude Include="..\kazmath\include\kazmath\vec4.h" />
     <ClInclude Include="..\keypad_dispatcher\CCKeypadDelegate.h" />
     <ClInclude Include="..\keypad_dispatcher\CCKeypadDispatcher.h" />
+    <ClInclude Include="..\label_nodes\CALabel.h" />
     <ClInclude Include="..\label_nodes\CCLabelTTF.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.h" />
@@ -508,9 +510,9 @@
     <ClInclude Include="..\textures\CCTextureCache.h" />
     <ClInclude Include="..\textures\CCTextureETC.h" />
     <ClInclude Include="..\textures\CCTexturePVR.h" />
+    <ClInclude Include="..\text_input_node\CATextField.h" />
     <ClInclude Include="..\text_input_node\CCIMEDelegate.h" />
     <ClInclude Include="..\text_input_node\CCIMEDispatcher.h" />
-    <ClInclude Include="..\text_input_node\CCTextFieldTTF.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouch.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h" />

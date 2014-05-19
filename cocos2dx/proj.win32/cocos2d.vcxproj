@@ -172,6 +172,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionProgressTimer.cpp" />
     <ClCompile Include="..\actions\CCActionTiledGrid.cpp" />
     <ClCompile Include="..\actions\CCActionTween.cpp" />
+    <ClCompile Include="..\label_nodes\CALabel.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp" />
@@ -227,13 +228,13 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
     <ClCompile Include="..\textures\CCTextureETC.cpp" />
     <ClCompile Include="..\textures\CCTexturePVR.cpp" />
+    <ClCompile Include="..\text_input_node\CATextField.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDelegate.cpp" />
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDispatcher.cpp" />
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp" />
-    <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp" />
     <ClCompile Include="..\kazmath\src\aabb.c" />
     <ClCompile Include="..\kazmath\src\mat3.c" />
     <ClCompile Include="..\kazmath\src\mat4.c" />
@@ -301,6 +302,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\include\CCProtocols.h" />
     <ClInclude Include="..\include\ccTypes.h" />
     <ClInclude Include="..\include\cocos2d.h" />
+    <ClInclude Include="..\label_nodes\CALabel.h" />
     <ClInclude Include="..\label_nodes\CCLabelTTF.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.h" />
@@ -379,6 +381,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\textures\CCTextureCache.h" />
     <ClInclude Include="..\textures\CCTextureETC.h" />
     <ClInclude Include="..\textures\CCTexturePVR.h" />
+    <ClInclude Include="..\text_input_node\CATextField.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouch.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h" />
@@ -387,7 +390,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\keypad_dispatcher\CCKeypadDispatcher.h" />
     <ClInclude Include="..\text_input_node\CCIMEDelegate.h" />
     <ClInclude Include="..\text_input_node\CCIMEDispatcher.h" />
-    <ClInclude Include="..\text_input_node\CCTextFieldTTF.h" />
     <ClInclude Include="..\kazmath\include\kazmath\aabb.h" />
     <ClInclude Include="..\kazmath\include\kazmath\kazmath.h" />
     <ClInclude Include="..\kazmath\include\kazmath\mat3.h" />
