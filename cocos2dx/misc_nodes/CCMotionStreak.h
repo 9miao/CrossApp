@@ -62,12 +62,12 @@ public:
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
     static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
-    static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture);
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
     bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
-    bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture);
+    bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture);
 
     /** color used for the tint */
     void tintWithColor(ccColor3B colors);
@@ -81,8 +81,8 @@ public:
     virtual void update(float delta);
 
     /* Implement interfaces */
-    virtual CCTexture2D* getTexture(void);
-    virtual void setTexture(CCTexture2D *texture);
+    virtual CAImage* getImage(void);
+    virtual void setImage(CAImage* texture);
     /**
      * @js NA
      */
@@ -110,7 +110,7 @@ protected:
     bool m_bStartingPositionInitialized;
 private:
     /** texture used for the motion streak */
-    CCTexture2D* m_pTexture;
+    CAImage* m_pImage;
     ccBlendFunc m_tBlendFunc;
     CCPoint m_tPositionR;
 

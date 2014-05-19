@@ -92,6 +92,7 @@ THE SOFTWARE.
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
 
 // label_nodes
+#include "label_nodes/CALabel.h"
 #include "label_nodes/CCLabelTTF.h"
 
 // layers_scenes_transitions_nodes
@@ -249,7 +250,8 @@ THE SOFTWARE.
 // text_input_node
 #include "text_input_node/CCIMEDelegate.h"
 #include "text_input_node/CCIMEDispatcher.h"
-#include "text_input_node/CCTextFieldTTF.h"
+#include "text_input_node/CATextField.h"
+
 
 // textures
 #include "textures/CCTexture2D.h"

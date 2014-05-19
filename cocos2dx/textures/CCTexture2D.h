@@ -106,9 +106,7 @@ typedef struct _ccTexParams {
 * Depending on how you create the CCTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
 * Be aware that the content of the generated textures will be upside-down!
 */
-class CCTexture2D;
-typedef CCTexture2D CAImage;
-class CC_DLL CCTexture2D : public CCObject
+class CC_DLL CAImage : public CCObject
 #ifdef EMSCRIPTEN
 , public CCGLBufferedNode
 #endif // EMSCRIPTEN
@@ -117,17 +115,17 @@ public:
     /**
      * @js ctor
      */
-    CCTexture2D();
+    CAImage();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~CCTexture2D();
+    virtual ~CAImage();
     /**
      *  @js NA
      *  @lua NA
      */
-	static CCTexture2D* create(const char* file);
+	static CAImage* create(const char* file);
     
     const char* description(void);
 

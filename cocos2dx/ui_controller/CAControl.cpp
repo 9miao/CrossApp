@@ -36,7 +36,7 @@ void CAControl::setControlState(CAControlState var)
     this->removeSubview(m_pHighlightedBackGroundView);
     this->removeSubview(m_pDisabledBackGroundView);
     this->removeSubview(m_pSelectedBackGroundView);
-    
+
     m_eControlState = var;
     
     switch (m_eControlState)

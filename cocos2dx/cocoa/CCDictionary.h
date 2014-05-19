@@ -53,7 +53,7 @@ class CCDictionary;
  *  {
  *      const char*key = pElement->getStrKey();
  *      // You certainly know the type of value, so we assume that it's a CCSprite.
- *      CCSprite* pSprite = (CCSprite*)pElement->getObject();
+ *      CAImageView* pSprite = (CAImageView*)pElement->getObject();
  *      // ......
  *  }
  *  @endcode

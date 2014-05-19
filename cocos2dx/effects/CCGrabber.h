@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCTexture2D;
+class CAImage;
 
 /**
  * @addtogroup effects
@@ -48,9 +48,9 @@ public:
     CCGrabber(void);
     ~CCGrabber(void);
 
-    void grab(CCTexture2D *pTexture);
-    void beforeRender(CCTexture2D *pTexture);
-    void afterRender(CCTexture2D *pTexture);
+    void grab(CAImage* image);
+    void beforeRender(CAImage* image);
+    void afterRender(CAImage* image);
 
 protected:
     GLuint m_FBO;

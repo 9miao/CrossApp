@@ -42,15 +42,15 @@ NS_CC_BEGIN;
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
 
-static CCTexture2D* CC_2x2_WHITE_IMAGE(const CCSize& size)
+static CAImage* CC_2x2_WHITE_IMAGE(const CCSize& size)
 {
-    CCTexture2D* texture = NULL;
+    CAImage* texture = NULL;
     
     if (1)
     {
         int pixels[1][1] = {0xffffffff};
         
-        texture = new CCTexture2D();
+        texture = new CAImage();
         texture->initWithData(pixels, kCCTexture2DPixelFormat_RGB888, 1, 1, size);
         texture->setMonochrome(true);
     }
@@ -234,7 +234,7 @@ bool CAView::initWithFrame(const CCRect& rect, const ccColor4B& color4B)
     // shader program
     setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
     
-    this->setTexture(CC_2x2_WHITE_IMAGE(rect.size));
+    this->setImage(CC_2x2_WHITE_IMAGE(rect.size));
     this->setTextureRect(rect, false, rect.size);
     this->setColor(ccc3(color4B.r, color4B.g, color4B.b));
     this->setOpacity(color4B.a);
@@ -530,7 +530,7 @@ void CAView::setContentSize(const CCSize & size)
             CC_BREAK_IF(m_pobTexture->isMonochrome() == false);
             CC_BREAK_IF(m_pobTexture->getContentSize().equals(size));
 
-            this->setTexture(CC_2x2_WHITE_IMAGE(size));
+            this->setImage(CC_2x2_WHITE_IMAGE(size));
             this->setTextureRect(CCRect(0, 0, size.width, size.height));
         }
         while (0);
@@ -979,7 +979,7 @@ void CAView::draw()
     
     CC_INCREMENT_GL_DRAWS(1);
     
-    CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CCSprite - draw");
+    CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAImageView - draw");
 
     
 }
@@ -1440,7 +1440,7 @@ void CAView::updateTransform()
     if(m_pobTexture && isDirty() ) {
         
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
-        if( !m_bVisible || ( m_pSuperview && ((CCSprite*)m_pSuperview)->m_bShouldBeHidden) )
+        if( !m_bVisible || ( m_pSuperview && ((CAImageView*)m_pSuperview)->m_bShouldBeHidden) )
         {
             m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = vertex3(0,0,0);
             m_bShouldBeHidden = true;
@@ -1455,8 +1455,8 @@ void CAView::updateTransform()
             }
             else
             {
-                CCAssert( dynamic_cast<CCSprite*>(m_pSuperview), "Logic error in CCSprite. Parent must be a CCSprite");
-                m_transformToBatch = CCAffineTransformConcat( nodeToParentTransform() , ((CCSprite*)m_pSuperview)->m_transformToBatch );
+                CCAssert( dynamic_cast<CAImageView*>(m_pSuperview), "Logic error in CAImageView. Parent must be a CAImageView");
+                m_transformToBatch = CCAffineTransformConcat( nodeToParentTransform() , ((CAImageView*)m_pSuperview)->m_transformToBatch );
             }
             
             //
@@ -1507,7 +1507,7 @@ void CAView::updateTransform()
      {
      // MARMALADE: CHANGED TO USE CCNode*
      // NOTE THAT WE HAVE ALSO DEFINED virtual CAView::updateTransform()
-     arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CCSprite*);
+     arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAImageView*);
      }*/
     CAView::updateTransform();
     
@@ -1759,7 +1759,7 @@ void CAView::setCascadeColorEnabled(bool cascadeColorEnabled)
 
 //Image...
 
-void CAView::setTexture(CCTexture2D *texture)
+void CAView::setImage(CAImage* texture)
 {
     CC_SAFE_RETAIN(texture);
     CC_SAFE_RELEASE(m_pobTexture);
@@ -1767,7 +1767,7 @@ void CAView::setTexture(CCTexture2D *texture)
     updateBlendFunc();
 }
 
-CCTexture2D* CAView::getTexture(void)
+CAImage* CAView::getImage(void)
 {
     return m_pobTexture;
 }
@@ -1826,7 +1826,7 @@ void CAView::setTextureCoords(CCRect rect)
 {
     rect = CC_RECT_POINTS_TO_PIXELS(rect);
     
-    CCTexture2D *tex = m_pobTexture;
+    CAImage* tex = m_pobTexture;
     if (! tex)
     {
         return;
@@ -1989,7 +1989,7 @@ void CAView::setDirtyRecursively(bool bValue)
         CCObject* pObject = NULL;
         CCARRAY_FOREACH(m_pSubviews, pObject)
         {
-            CCSprite* pChild = dynamic_cast<CCSprite*>(pObject);
+            CAImageView* pChild = dynamic_cast<CAImageView*>(pObject);
             if (pChild)
             {
                 pChild->setDirtyRecursively(true);

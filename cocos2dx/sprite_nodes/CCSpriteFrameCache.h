@@ -74,7 +74,7 @@ public:
 private:
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
-    void addSpriteFramesWithDictionary(CCDictionary* pobDictionary, CCTexture2D *pobTexture);
+    void addSpriteFramesWithDictionary(CCDictionary* pobDictionary, CAImage* pobTexture);
 public:
     /** Adds multiple Sprite Frames from a plist file.
      * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
@@ -92,7 +92,7 @@ public:
     /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. 
      * @js addSpriteFrames
      */
-    void addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture);
+    void addSpriteFramesWithFile(const char *pszPlist, CAImage* pobTexture);
 
     /** Adds an sprite frame with a given name.
      If the name already exists, then the contents of the old name will be replaced with the new one.
@@ -135,7 +135,7 @@ public:
     * It is convenient to call this method when a specific texture needs to be removed.
     * @since v0.995.
     */
-    void removeSpriteFramesFromTexture(CCTexture2D* texture);
+    void removeSpriteFramesFromImage(CAImage* texture);
 
     /** Returns an Sprite Frame that was previously added.
      If the name is not found it will return nil.

@@ -2371,7 +2371,7 @@ CCAnimate::~CCAnimate()
 void CCAnimate::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-    CCSprite *pSprite = (CCSprite*)(pTarget);
+    CAImageView *pSprite = (CAImageView*)(pTarget);
 
     CC_SAFE_RELEASE(m_pOrigFrame);
 
@@ -2388,7 +2388,7 @@ void CCAnimate::stop(void)
 {
     if (m_pAnimation->getRestoreOriginalFrame() && m_pTarget)
     {
-        ((CCSprite*)(m_pTarget))->setDisplayFrame(m_pOrigFrame);
+        ((CAImageView*)(m_pTarget))->setDisplayFrame(m_pOrigFrame);
     }
 
     CCActionInterval::stop();
@@ -2421,7 +2421,7 @@ void CCAnimate::update(float t)
         if( splitTime <= t ) {
             CCAnimationFrame* frame = (CCAnimationFrame*)frames->objectAtIndex(i);
             frameToDisplay = frame->getSpriteFrame();
-            ((CCSprite*)m_pTarget)->setDisplayFrame(frameToDisplay);
+            ((CAImageView*)m_pTarget)->setDisplayFrame(frameToDisplay);
 
             CCDictionary* dict = frame->getUserInfo();
             if( dict )

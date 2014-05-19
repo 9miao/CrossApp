@@ -905,7 +905,7 @@ public:
     /**
      * Calls children's updateTransform() method recursively.
      *
-     * This method is moved from CCSprite, so it's no longer specific to CCSprite.
+     * This method is moved from CAImageView, so it's no longer specific to CCSprite.
      * As the result, you apply CCSpriteBatchNode's optimization on your customed CAView.
      * e.g., batchNode->addChild(myCustomNode), while you can only addChild(sprite) before.
      */
@@ -1029,8 +1029,8 @@ public:
      this->addChild(batch);
      
      // create two sprites, spriteA will be added to batchNode, they are using different textures.
-     CCSprite* spriteA = CCSprite::createWithTexture(batch->getTexture());
-     CCSprite* spriteB = CCSprite::create("Icon-72.png");
+     CAImageView* spriteA = CAImageView::createWithImage(batch->getImage());
+     CAImageView* spriteB = CAImageView::create("Icon-72.png");
      
      batch->addChild(spriteA);
      
@@ -1182,9 +1182,9 @@ protected:
     
 public:
     
-    virtual void setTexture(CCTexture2D *texture);
+    virtual void setImage(CAImage* texture);
     
-    virtual CCTexture2D* getTexture(void);
+    virtual CAImage* getImage(void);
     
     inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
 
@@ -1194,13 +1194,13 @@ public:
     /// @name Texture methods
     
     /**
-     * Updates the texture rect of the CCSprite in points.
+     * Updates the texture rect of the CAImageView in points.
      * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
      */
     virtual void setTextureRect(const CCRect& rect);
     
     /**
-     * Sets the texture rect, rectRotated and untrimmed size of the CCSprite in points.
+     * Sets the texture rect, rectRotated and untrimmed size of the CAImageView in points.
      * It will update the texture coordinates and the vertex rectangle.
      */
     virtual void setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
@@ -1251,7 +1251,7 @@ public:
     inline void setAtlasIndex(unsigned int uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
     
     /**
-     * Returns the rect of the CCSprite in points
+     * Returns the rect of the CAImageView in points
      */
     inline const CCRect& getTextureRect(void) { return m_obRect; }
     
@@ -1360,7 +1360,7 @@ protected:
     bool m_bFlipY;                              /// Whether the sprite is flipped vertically or not.
     
     ccBlendFunc        m_sBlendFunc;            /// It's required for CCTextureProtocol inheritance
-    CCTexture2D*       m_pobTexture;            /// CCTexture2D object that is used to render the sprite
+    CAImage*       m_pobTexture;            /// CCTexture2D object that is used to render the sprite
     
     CC_SYNTHESIZE(CAViewDelegate*, m_pViewDelegate, ViewDelegate);
 };

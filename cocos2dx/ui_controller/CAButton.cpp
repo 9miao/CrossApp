@@ -65,14 +65,14 @@ void CAButton::onEnterTransitionDidFinish()
     {
         if (CCScale9Sprite* bg = dynamic_cast<CCScale9Sprite*>(this->CAControl::getBackGroundView()))
         {
-            CCScale9Sprite* bgHighLighted = CCScale9Sprite::createWithTexture(bg->getTexture());
+            CCScale9Sprite* bgHighLighted = CCScale9Sprite::createWithImage(bg->getImage());
             bgHighLighted->setPreferredSize(bg->getPreferredSize());
             bgHighLighted->setColor(ccc3(127, 127, 127));
             this->setBackGround(CAControlStateHighlighted, bgHighLighted);
         }
-        else if (CCSprite* bg = dynamic_cast<CCSprite*>(this->CAControl::getBackGroundView()))
+        else if (CAImageView* bg = dynamic_cast<CAImageView*>(this->CAControl::getBackGroundView()))
         {
-            CCSprite* bgHighLighted = CCSprite::createWithTexture(bg->getTexture());
+            CAImageView* bgHighLighted = CAImageView::createWithImage(bg->getImage());
             bgHighLighted->setBounds(bg->getBounds());
             bgHighLighted->setColor(ccc3(127, 127, 127));
             this->setBackGround(CAControlStateHighlighted, bgHighLighted);
@@ -145,13 +145,13 @@ bool CAButton::initWithCenter(const CCRect& rect)
 
 void CAButton::setBackGroundDefault()
 {
-    CCScale9Sprite* bgNormal = CCScale9Sprite::createWithTexture(CAImage::create("button_normal.png"));
+    CCScale9Sprite* bgNormal = CCScale9Sprite::createWithImage(CAImage::create("button_normal.png"));
     this->setBackGround(CAControlStateNormal, bgNormal);
-    CCScale9Sprite* bgHighlighted = CCScale9Sprite::createWithTexture(CAImage::create("button_highlighted.png"));
+    CCScale9Sprite* bgHighlighted = CCScale9Sprite::createWithImage(CAImage::create("button_highlighted.png"));
     this->setBackGround(CAControlStateHighlighted, bgHighlighted);
-    CCScale9Sprite* bgDisabled = CCScale9Sprite::createWithTexture(CAImage::create("button_disabled.png"));
+    CCScale9Sprite* bgDisabled = CCScale9Sprite::createWithImage(CAImage::create("button_disabled.png"));
     this->setBackGround(CAControlStateDisabled, bgDisabled);
-    CCScale9Sprite* bgSelected = CCScale9Sprite::createWithTexture(CAImage::create("button_selected.png"));
+    CCScale9Sprite* bgSelected = CCScale9Sprite::createWithImage(CAImage::create("button_selected.png"));
     this->setBackGround(CAControlStateSelected, bgSelected);
 }
 

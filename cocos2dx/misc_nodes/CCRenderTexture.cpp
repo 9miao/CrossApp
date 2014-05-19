@@ -142,12 +142,12 @@ void CCRenderTexture::listenToForeground(cocos2d::CCObject *obj)
 #endif
 }
 
-CCSprite * CCRenderTexture::getSprite()
+CAImageView * CCRenderTexture::getSprite()
 {
     return m_pSprite;
 }
 
-void CCRenderTexture::setSprite(CCSprite* var)
+void CCRenderTexture::setSprite(CAImageView* var)
 {
     CC_SAFE_RELEASE(m_pSprite);
     m_pSprite = var;
@@ -282,7 +282,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         memset(data, 0, (int)(powW * powH * 4));
         m_ePixelFormat = eFormat;
 
-        m_pTexture = new CCTexture2D();
+        m_pTexture = new CAImage();
         if (m_pTexture)
         {
             m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
@@ -296,7 +296,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         
         if (CCConfiguration::sharedConfiguration()->checkForGLExtension("GL_QCOM"))
         {
-            m_pTextureCopy = new CCTexture2D();
+            m_pTextureCopy = new CAImage();
             if (m_pTextureCopy)
             {
                 m_pTextureCopy->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
@@ -335,7 +335,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         m_pTexture->setAliasTexParameters();
 
         // retained
-        setSprite(CCSprite::createWithTexture(m_pTexture));
+        setSprite(CAImageView::createWithImage(m_pTexture));
 
         m_pTexture->release();
         m_pSprite->setScaleY(-1);

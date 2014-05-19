@@ -1,5 +1,517 @@
-﻿生成启动时间为 2014/5/11 22:26:00。
+﻿生成启动时间为 2014/5/16 22:54:28。
+     1>项目“E:\工作\CrossApp\cocos2dx\proj.wp8\libcocos2d.vcxproj”在节点 5 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\x86_arm\CL.exe /c /I../platform/wp8 /I../platform/winrt /I../include /I../ /I../kazmath/include /I../kazmath/include/GL /I../platform/third_party/wp8/zlib /I../platform/third_party/wp8/libpng /I../platform/third_party/wp8/freetype/include /I../platform/third_party/wp8/libjpeg /I../platform/third_party/wp8/libtiff /I../platform/third_party/wp8/libwebp /I../platform/third_party/winrt/angleproject/include /I../platform/third_party/winrt/angleproject/samples/gles2_book/Common /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /Zi /ZW /nologo /W1 /WX- /MP /Od /Oy- /GL /D UNICODE /D COCOS2D_DEBUG=1 /D _USRDLL /D WP8 /D _WP8 /D GL_GLEXT_PROTOTYPES /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _WINDLL /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"ARM\Debug\\" /Fd"ARM\Debug\vc110.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /wd4453 /FU"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\lib\arm\platform.winmd" /FU"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata\Windows.winmd" /analyze- /errorReport:prompt ..\actions\CCAction.cpp ..\actions\CCActionCamera.cpp ..\actions\CCActionCatmullRom.cpp ..\actions\CCActionEase.cpp ..\actions\CCActionGrid.cpp ..\actions\CCActionGrid3D.cpp ..\actions\CCActionInstant.cpp ..\actions\CCActionInterval.cpp ..\actions\CCActionManager.cpp ..\actions\CCActionPageTurn3D.cpp ..\actions\CCActionProgressTimer.cpp ..\actions\CCActionTiledGrid.cpp ..\actions\CCActionTween.cpp ..\base_nodes\CCGLBufferedNode.cpp ..\CCCamera.cpp ..\CCConfiguration.cpp ..\CCDirector.cpp ..\CCScheduler.cpp ..\cocoa\CCAffineTransform.cpp ..\cocoa\CCArray.cpp ..\cocoa\CCAutoreleasePool.cpp ..\cocoa\CCDataVisitor.cpp ..\cocoa\CCDictionary.cpp ..\cocoa\CCGeometry.cpp ..\cocoa\CCNS.cpp ..\cocoa\CCObject.cpp ..\cocoa\CCSet.cpp ..\cocoa\CCString.cpp ..\cocoa\CCZone.cpp ..\cocos2d.cpp ..\draw_nodes\CCDrawingPrimitives.cpp ..\draw_nodes\CCDrawNode.cpp ..\effects\CCGrabber.cpp ..\effects\CCGrid.cpp ..\keypad_dispatcher\CCKeypadDelegate.cpp ..\keypad_dispatcher\CCKeypadDispatcher.cpp ..\label_nodes\CCLabelTTF.cpp ..\layers_scenes_transitions_nodes\CCTransition.cpp ..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp ..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp ..\misc_nodes\CCClippingNode.cpp ..\misc_nodes\CCMotionStreak.cpp ..\misc_nodes\CCProgressTimer.cpp ..\misc_nodes\CCRenderTexture.cpp ..\platform\CCEGLViewProtocol.cpp ..\platform\CCFileUtils.cpp ..\platform\CCSAXParser.cpp ..\platform\CCThread.cpp ..\platform\platform.cpp ..\platform\winrt\CCAccelerometer.cpp ..\platform\winrt\CCApplication.cpp ..\platform\winrt\CCCommon.cpp ..\platform\winrt\CCDevice.cpp ..\platform\winrt\CCFileUtilsWinRT.cpp ..\platform\winrt\CCFreeTypeFont.cpp ..\platform\winrt\CCImage.cpp ..\platform\winrt\CCPrecompiledShaders.cpp ..\platform\winrt\CCPThreadWinRT.cpp ..\platform\winrt\CCStdC.cpp ..\platform\winrt\CCWinRTUtils.cpp ..\platform\winrt\sha1.cpp ..\platform\wp8\CCEGLView.cpp ..\platform\wp8\WP8Keyboard.cpp ..\platform\wp8\ModalLayer.cpp ..\shaders\CCGLProgram.cpp ..\shaders\ccGLStateCache.cpp ..\shaders\CCShaderCache.cpp ..\shaders\ccShaders.cpp ..\sprite_nodes\CAView.cpp ..\sprite_nodes\CAWindow.cpp ..\sprite_nodes\CCAnimation.cpp ..\sprite_nodes\CCAnimationCache.cpp ..\sprite_nodes\CCScale9Sprite.cpp ..\sprite_nodes\CCSprite.cpp ..\sprite_nodes\CCSpriteFrame.cpp ..\sprite_nodes\CCSpriteFrameCache.cpp ..\support\base64.cpp ..\support\CCNotificationCenter.cpp ..\support\CCPointExtension.cpp ..\support\CCProfiling.cpp ..\support\ccUTF8.cpp ..\support\ccUtils.cpp ..\support\CCVertex.cpp ..\support\component\CCComponent.cpp ..\support\component\CCComponentContainer.cpp ..\support\data_support\ccCArray.cpp ..\support\image_support\TGAlib.cpp ..\support\tinyxml2\tinyxml2.cpp ..\support\TransformUtils.cpp ..\support\user_default\CCUserDefault.cpp ..\support\zip_support\ioapi.cpp ..\support\zip_support\unzip.cpp ..\support\zip_support\ZipUtils.cpp ..\textures\CCTexture2D.cpp ..\textures\CCTextureCache.cpp ..\textures\CCTextureETC.cpp ..\textures\CCTexturePVR.cpp ..\text_input_node\CCIMEDispatcher.cpp ..\text_input_node\CCTextFieldTTF.cpp ..\touch_dispatcher\CCTouch.cpp ..\touch_dispatcher\CCTouchDispatcher.cpp ..\touch_dispatcher\CCTouchHandler.cpp ..\ui_controller\CABar.cpp ..\ui_controller\CABarItem.cpp ..\ui_controller\CAButton.cpp ..\ui_controller\CAControl.cpp ..\ui_controller\CAProgress.cpp ..\ui_controller\CAScrollView.cpp ..\ui_controller\CATableView.cpp ..\ui_controller\CAViewController.cpp
+         CCAction.cpp
+         CCActionCamera.cpp
+         CCActionCatmullRom.cpp
+         CCActionEase.cpp
+         CCActionGrid.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionCamera.cpp)
+         CCActionGrid3D.cpp
+         CCActionInstant.cpp
+         CCActionInterval.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionEase.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionGrid.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionGrid3D.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionInterval.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCAction.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionInstant.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionCatmullRom.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCAction.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionGrid.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionGrid3D.cpp)
+         CCActionManager.cpp
+         CCActionPageTurn3D.cpp
+         CCActionProgressTimer.cpp
+         CCActionTiledGrid.cpp
+         CCActionTween.cpp
+         CCGLBufferedNode.cpp
+         CCCamera.cpp
+         CCConfiguration.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionProgressTimer.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionTween.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionPageTurn3D.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionTiledGrid.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionManager.cpp)
+         CCDirector.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\CCCamera.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\CCConfiguration.cpp)
+         CCScheduler.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\actions\CCActionTiledGrid.cpp)
+     1>e:\工作\crossapp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\CCConfiguration.cpp)
+         CCAffineTransform.cpp
+     1>e:\工作\crossapp\cocos2dx\misc_nodes/CCMotionStreak.h(50): warning C4584: “cocos2d::CCMotionStreak”: 基类“cocos2d::CCTextureProtocol”已是“cocos2d::CAView”的基类 (..\CCConfiguration.cpp)
+                 e:\工作\crossapp\cocos2dx\include\CCProtocols.h(166) : 参见“cocos2d::CCTextureProtocol”的声明
+                 e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h(64) : 参见“cocos2d::CAView”的声明
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\CCDirector.cpp)
+     1>e:\工作\crossapp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\CCDirector.cpp)
+         CCArray.cpp
+         CCAutoreleasePool.cpp
+         CCDataVisitor.cpp
+         CCDictionary.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\CCScheduler.cpp)
+         CCGeometry.cpp
+         CCNS.cpp
+         CCObject.cpp
+         CCSet.cpp
+         CCString.cpp
+         CCZone.cpp
+         cocos2d.cpp
+         CCDrawingPrimitives.cpp
+         CCDrawNode.cpp
+         CCGrabber.cpp
+         CCGrid.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\draw_nodes\CCDrawNode.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\cocos2d.cpp)
+         CCKeypadDelegate.cpp
+         CCKeypadDispatcher.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\draw_nodes\CCDrawingPrimitives.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\effects\CCGrid.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\draw_nodes\CCDrawingPrimitives.cpp)
+     1>e:\工作\crossapp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\cocos2d.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\effects\CCGrid.cpp)
+     1>e:\工作\crossapp\cocos2dx\misc_nodes/CCMotionStreak.h(50): warning C4584: “cocos2d::CCMotionStreak”: 基类“cocos2d::CCTextureProtocol”已是“cocos2d::CAView”的基类 (..\cocos2d.cpp)
+                 e:\工作\crossapp\cocos2dx\include\CCProtocols.h(166) : 参见“cocos2d::CCTextureProtocol”的声明
+                 e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h(64) : 参见“cocos2d::CAView”的声明
+         CCLabelTTF.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\label_nodes\CCLabelTTF.cpp)
+         CCTransition.cpp
+         CCTransitionPageTurn.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\layers_scenes_transitions_nodes\CCTransition.cpp)
+         CCTransitionProgress.cpp
+         CCClippingNode.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp)
+         CCMotionStreak.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\misc_nodes\CCClippingNode.cpp)
+         CCProgressTimer.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\misc_nodes\CCProgressTimer.cpp)
+     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\layers_scenes_transitions_nodes\CCTransition.cpp)
+     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\layers_scenes_transitions_nodes\CCTransition.cpp)
+     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\misc_nodes\CCMotionStreak.cpp)
+     1>e:\工作\crossapp\cocos2dx\misc_nodes\CCMotionStreak.h(50): warning C4584: “cocos2d::CCMotionStreak”: 基类“cocos2d::CCTextureProtocol”已是“cocos2d::CAView”的基类 (..\misc_nodes\CCMotionStreak.cpp)
+                 E:\工作\CrossApp\cocos2dx\include\CCProtocols.h(166) : 参见“cocos2d::CCTextureProtocol”的声明
+                 E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h(64) : 参见“cocos2d::CAView”的声明
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\misc_nodes\CCClippingNode.cpp)
+         CCRenderTexture.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\misc_nodes\CCMotionStreak.cpp)
+         CCEGLViewProtocol.cpp
+         CCFileUtils.cpp
+         CCSAXParser.cpp
+         CCThread.cpp
+         platform.cpp
+         CCAccelerometer.cpp
+         CCApplication.cpp
+         CCCommon.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\misc_nodes\CCRenderTexture.cpp)
+         CCDevice.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\winrt\CCAccelerometer.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\CCEGLViewProtocol.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\CCFileUtils.cpp)
+         CCFileUtilsWinRT.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\winrt\CCAccelerometer.cpp)
+     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\winrt\CCAccelerometer.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\winrt\CCCommon.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\winrt\CCApplication.cpp)
+     1>E:\工作\CrossApp\cocos2dx\misc_nodes/CCMotionStreak.h(50): warning C4584: “cocos2d::CCMotionStreak”: 基类“cocos2d::CCTextureProtocol”已是“cocos2d::CAView”的基类 (..\platform\winrt\CCAccelerometer.cpp)
+                 e:\工作\crossapp\cocos2dx\include\CCProtocols.h(166) : 参见“cocos2d::CCTextureProtocol”的声明
+                 E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h(64) : 参见“cocos2d::CAView”的声明
+         CCFreeTypeFont.cpp
+         CCImage.cpp
+         CCPrecompiledShaders.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\winrt\CCCommon.cpp)
+     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\winrt\CCCommon.cpp)
+         CCPThreadWinRT.cpp
+     1>E:\工作\CrossApp\cocos2dx\misc_nodes/CCMotionStreak.h(50): warning C4584: “cocos2d::CCMotionStreak”: 基类“cocos2d::CCTextureProtocol”已是“cocos2d::CAView”的基类 (..\platform\winrt\CCCommon.cpp)
+                 e:\工作\crossapp\cocos2dx\include\CCProtocols.h(166) : 参见“cocos2d::CCTextureProtocol”的声明
+                 E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h(64) : 参见“cocos2d::CAView”的声明
+         CCStdC.cpp
+         CCWinRTUtils.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\winrt\CCFreeTypeFont.cpp)
+         sha1.cpp
+         CCEGLView.cpp
+         WP8Keyboard.cpp
+         ModalLayer.cpp
+         CCGLProgram.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\wp8\WP8Keyboard.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\wp8\ModalLayer.cpp)
+         ccGLStateCache.cpp
+         CCShaderCache.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\wp8\CCEGLView.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\wp8\WP8Keyboard.cpp)
+     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\wp8\WP8Keyboard.cpp)
+         ccShaders.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\wp8\ModalLayer.cpp)
+     1>E:\工作\CrossApp\cocos2dx\misc_nodes/CCMotionStreak.h(50): warning C4584: “cocos2d::CCMotionStreak”: 基类“cocos2d::CCTextureProtocol”已是“cocos2d::CAView”的基类 (..\platform\wp8\WP8Keyboard.cpp)
+                 e:\工作\crossapp\cocos2dx\include\CCProtocols.h(166) : 参见“cocos2d::CCTextureProtocol”的声明
+                 E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h(64) : 参见“cocos2d::CAView”的声明
+     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\platform\wp8\ModalLayer.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\shaders\CCGLProgram.cpp)
+     1>E:\工作\CrossApp\cocos2dx\misc_nodes/CCMotionStreak.h(50): warning C4584: “cocos2d::CCMotionStreak”: 基类“cocos2d::CCTextureProtocol”已是“cocos2d::CAView”的基类 (..\platform\wp8\ModalLayer.cpp)
+                 e:\工作\crossapp\cocos2dx\include\CCProtocols.h(166) : 参见“cocos2d::CCTextureProtocol”的声明
+                 E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h(64) : 参见“cocos2d::CAView”的声明
+         CAView.cpp
+     1>..\sprite_nodes\CAView.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CAView.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes\CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CAView.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\shaders\ccGLStateCache.cpp)
+         CAWindow.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CAWindow.cpp)
+         CCAnimation.cpp
+         CCAnimationCache.cpp
+         CCScale9Sprite.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CCScale9Sprite.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CAView.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CAView.cpp)
+         CCSprite.cpp
+     1>E:\工作\CrossApp\cocos2dx\ui_controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CAWindow.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CCAnimation.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CAWindow.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CCAnimationCache.cpp)
+         CCSpriteFrame.cpp
+         CCSpriteFrameCache.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CCSprite.cpp)
+         base64.cpp
+         CCNotificationCenter.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CCSpriteFrame.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CCSpriteFrame.cpp)
+         CCPointExtension.cpp
+         CCProfiling.cpp
+         ccUTF8.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\sprite_nodes\CCSpriteFrameCache.cpp)
+         ccUtils.cpp
+         CCVertex.cpp
+         CCComponent.cpp
+         CCComponentContainer.cpp
+         ccCArray.cpp
+         TGAlib.cpp
+         tinyxml2.cpp
+         TransformUtils.cpp
+         CCUserDefault.cpp
+         ioapi.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\support\component\CCComponent.cpp)
+         unzip.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\support\component\CCComponentContainer.cpp)
+         ZipUtils.cpp
+         CCTexture2D.cpp
+         CCTextureCache.cpp
+         CCTextureETC.cpp
+         CCTexturePVR.cpp
+         CCIMEDispatcher.cpp
+         CCTextFieldTTF.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\text_input_node\CCTextFieldTTF.cpp)
+         CCTouch.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\textures\CCTextureCache.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\textures\CCTexture2D.cpp)
+         CCTouchDispatcher.cpp
+         CCTouchHandler.cpp
+         CABar.cpp
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\touch_dispatcher\CCTouch.cpp)
+         CABarItem.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\ui_controller\CABar.cpp)
+         CAButton.cpp
+         CAControl.cpp
+         CAProgress.cpp
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\ui_controller\CAButton.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\ui_controller\CAControl.cpp)
+     1>..\ui_controller\CABarItem.cpp(13): warning C4068: 未知的杂注 (..\ui_controller\CABarItem.cpp)
+     1>..\ui_controller\CABarItem.cpp(41): warning C4068: 未知的杂注 (..\ui_controller\CABarItem.cpp)
+     1>..\ui_controller\CABarItem.cpp(78): warning C4068: 未知的杂注 (..\ui_controller\CABarItem.cpp)
+     1>..\ui_controller\CABar.cpp(20): warning C4068: 未知的杂注 (..\ui_controller\CABar.cpp)
+     1>..\ui_controller\CABar.cpp(172): warning C4068: 未知的杂注 (..\ui_controller\CABar.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\ui_controller\CAProgress.cpp)
+         CAScrollView.cpp
+         CATableView.cpp
+         CAViewController.cpp
+     1>e:\工作\crossapp\cocos2dx\ui_controller\CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\ui_controller\CAViewController.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\ui_controller\CAScrollView.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\ui_controller\CATableView.cpp)
+     1>E:\工作\CrossApp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\ui_controller\CAViewController.cpp)
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes/CAView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\ui_controller\CAViewController.cpp)
+     1>..\ui_controller\CAScrollView.cpp(19): warning C4068: 未知的杂注 (..\ui_controller\CAScrollView.cpp)
+     1>..\ui_controller\CAScrollView.cpp(635): warning C4068: 未知的杂注 (..\ui_controller\CAScrollView.cpp)
+     1>..\ui_controller\CAScrollView.cpp(784): warning C4068: 未知的杂注 (..\ui_controller\CAScrollView.cpp)
+     1>..\ui_controller\CAViewController.cpp(125): warning C4068: 未知的杂注 (..\ui_controller\CAViewController.cpp)
+     1>..\ui_controller\CAViewController.cpp(311): warning C4068: 未知的杂注 (..\ui_controller\CAViewController.cpp)
+     1>..\ui_controller\CATableView.cpp(20): warning C4068: 未知的杂注 (..\ui_controller\CATableView.cpp)
+     1>..\ui_controller\CATableView.cpp(461): warning C4068: 未知的杂注 (..\ui_controller\CATableView.cpp)
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\x86_arm\CL.exe /c /I../platform/wp8 /I../platform/winrt /I../include /I../ /I../kazmath/include /I../kazmath/include/GL /I../platform/third_party/wp8/zlib /I../platform/third_party/wp8/libpng /I../platform/third_party/wp8/freetype/include /I../platform/third_party/wp8/libjpeg /I../platform/third_party/wp8/libtiff /I../platform/third_party/wp8/libwebp /I../platform/third_party/winrt/angleproject/include /I../platform/third_party/winrt/angleproject/samples/gles2_book/Common /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /Zi /nologo /W1 /WX- /MP /Od /Oy- /GL /D UNICODE /D COCOS2D_DEBUG=1 /D _USRDLL /D WP8 /D _WP8 /D GL_GLEXT_PROTOTYPES /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _WINDLL /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"ARM\Debug\\" /Fd"ARM\Debug\vc110.pdb" /Gd /TC /wd4267 /wd4251 /wd4244 /wd4453 /analyze- /errorReport:prompt ..\ccFPSImages.c ..\kazmath\src\aabb.c ..\kazmath\src\GL\mat4stack.c ..\kazmath\src\GL\matrix.c ..\kazmath\src\mat3.c ..\kazmath\src\mat4.c ..\kazmath\src\neon_matrix_impl.c ..\kazmath\src\plane.c ..\kazmath\src\quaternion.c ..\kazmath\src\ray2.c ..\kazmath\src\utility.c ..\kazmath\src\vec2.c ..\kazmath\src\vec3.c ..\kazmath\src\vec4.c
+         ccFPSImages.c
+         aabb.c
+         mat4stack.c
+         matrix.c
+         mat3.c
+         mat4.c
+         neon_matrix_impl.c
+         plane.c
+     1>..\kazmath\src\plane.c : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (..\kazmath\src\plane.c)
+         quaternion.c
+         ray2.c
+         utility.c
+         vec2.c
+         vec3.c
+         vec4.c
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\x86_arm\link.exe /ERRORREPORT:PROMPT /OUT:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libcocos2d.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\platform\third_party\wp8\libraries\arm d3d11.lib zlib.lib libpng.lib libjpeg.lib libtiff.lib freetype.lib xaudio2.lib WindowsPhoneCore.lib RuntimeObject.lib PhoneAppModelHost.lib /NODEFAULTLIB:ole32.lib /MANIFEST:NO /DEBUG /PDB:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libcocos2d.pdb" /SUBSYSTEM:CONSOLE /LTCG /TLBID:1 /WINMD:NO /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libcocos2d.lib" /MACHINE:ARM /IGNORE:4264 /DLL ARM\Debug\CCAction.obj
+         ARM\Debug\CCActionCamera.obj
+         ARM\Debug\CCActionCatmullRom.obj
+         ARM\Debug\CCActionEase.obj
+         ARM\Debug\CCActionGrid.obj
+         ARM\Debug\CCActionGrid3D.obj
+         ARM\Debug\CCActionInstant.obj
+         ARM\Debug\CCActionInterval.obj
+         ARM\Debug\CCActionManager.obj
+         ARM\Debug\CCActionPageTurn3D.obj
+         ARM\Debug\CCActionProgressTimer.obj
+         ARM\Debug\CCActionTiledGrid.obj
+         ARM\Debug\CCActionTween.obj
+         ARM\Debug\CCGLBufferedNode.obj
+         ARM\Debug\CCCamera.obj
+         ARM\Debug\CCConfiguration.obj
+         ARM\Debug\CCDirector.obj
+         ARM\Debug\ccFPSImages.obj
+         ARM\Debug\CCScheduler.obj
+         ARM\Debug\CCAffineTransform.obj
+         ARM\Debug\CCArray.obj
+         ARM\Debug\CCAutoreleasePool.obj
+         ARM\Debug\CCDataVisitor.obj
+         ARM\Debug\CCDictionary.obj
+         ARM\Debug\CCGeometry.obj
+         ARM\Debug\CCNS.obj
+         ARM\Debug\CCObject.obj
+         ARM\Debug\CCSet.obj
+         ARM\Debug\CCString.obj
+         ARM\Debug\CCZone.obj
+         ARM\Debug\cocos2d.obj
+         ARM\Debug\CCDrawingPrimitives.obj
+         ARM\Debug\CCDrawNode.obj
+         ARM\Debug\CCGrabber.obj
+         ARM\Debug\CCGrid.obj
+         ARM\Debug\aabb.obj
+         ARM\Debug\mat4stack.obj
+         ARM\Debug\matrix.obj
+         ARM\Debug\mat3.obj
+         ARM\Debug\mat4.obj
+         ARM\Debug\neon_matrix_impl.obj
+         ARM\Debug\plane.obj
+         ARM\Debug\quaternion.obj
+         ARM\Debug\ray2.obj
+         ARM\Debug\utility.obj
+         ARM\Debug\vec2.obj
+         ARM\Debug\vec3.obj
+         ARM\Debug\vec4.obj
+         ARM\Debug\CCKeypadDelegate.obj
+         ARM\Debug\CCKeypadDispatcher.obj
+         ARM\Debug\CCLabelTTF.obj
+         ARM\Debug\CCTransition.obj
+         ARM\Debug\CCTransitionPageTurn.obj
+         ARM\Debug\CCTransitionProgress.obj
+         ARM\Debug\CCClippingNode.obj
+         ARM\Debug\CCMotionStreak.obj
+         ARM\Debug\CCProgressTimer.obj
+         ARM\Debug\CCRenderTexture.obj
+         ARM\Debug\CCEGLViewProtocol.obj
+         ARM\Debug\CCFileUtils.obj
+         ARM\Debug\CCSAXParser.obj
+         ARM\Debug\CCThread.obj
+         ARM\Debug\platform.obj
+         ARM\Debug\CCAccelerometer.obj
+         ARM\Debug\CCApplication.obj
+         ARM\Debug\CCCommon.obj
+         ARM\Debug\CCDevice.obj
+         ARM\Debug\CCFileUtilsWinRT.obj
+         ARM\Debug\CCFreeTypeFont.obj
+         ARM\Debug\CCImage.obj
+         ARM\Debug\CCPrecompiledShaders.obj
+         ARM\Debug\CCPThreadWinRT.obj
+         ARM\Debug\CCStdC.obj
+         ARM\Debug\CCWinRTUtils.obj
+         ARM\Debug\sha1.obj
+         ARM\Debug\CCEGLView.obj
+         ARM\Debug\WP8Keyboard.obj
+         ARM\Debug\ModalLayer.obj
+         ARM\Debug\CCGLProgram.obj
+         ARM\Debug\ccGLStateCache.obj
+         ARM\Debug\CCShaderCache.obj
+         ARM\Debug\ccShaders.obj
+         ARM\Debug\CAView.obj
+         ARM\Debug\CAWindow.obj
+         ARM\Debug\CCAnimation.obj
+         ARM\Debug\CCAnimationCache.obj
+         ARM\Debug\CCScale9Sprite.obj
+         ARM\Debug\CCSprite.obj
+         ARM\Debug\CCSpriteFrame.obj
+         ARM\Debug\CCSpriteFrameCache.obj
+         ARM\Debug\base64.obj
+         ARM\Debug\CCNotificationCenter.obj
+         ARM\Debug\CCPointExtension.obj
+         ARM\Debug\CCProfiling.obj
+         ARM\Debug\ccUTF8.obj
+         ARM\Debug\ccUtils.obj
+         ARM\Debug\CCVertex.obj
+         ARM\Debug\CCComponent.obj
+         ARM\Debug\CCComponentContainer.obj
+         ARM\Debug\ccCArray.obj
+         ARM\Debug\TGAlib.obj
+         ARM\Debug\tinyxml2.obj
+         ARM\Debug\TransformUtils.obj
+         ARM\Debug\CCUserDefault.obj
+         ARM\Debug\ioapi.obj
+         ARM\Debug\unzip.obj
+         ARM\Debug\ZipUtils.obj
+         ARM\Debug\CCTexture2D.obj
+         ARM\Debug\CCTextureCache.obj
+         ARM\Debug\CCTextureETC.obj
+         ARM\Debug\CCTexturePVR.obj
+         ARM\Debug\CCIMEDispatcher.obj
+         ARM\Debug\CCTextFieldTTF.obj
+         ARM\Debug\CCTouch.obj
+         ARM\Debug\CCTouchDispatcher.obj
+         ARM\Debug\CCTouchHandler.obj
+         ARM\Debug\CABar.obj
+         ARM\Debug\CABarItem.obj
+         ARM\Debug\CAButton.obj
+         ARM\Debug\CAControl.obj
+         ARM\Debug\CAProgress.obj
+         ARM\Debug\CAScrollView.obj
+         ARM\Debug\CATableView.obj
+         ARM\Debug\CAViewController.obj
+         "E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\ARM\Debug\libEGL_phone\libEGL_phone.lib"
+         "E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\ARM\Debug\libGLESv2_phone\libGLESv2_phone.lib"
+         "E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\ARM\Debug\esUtil_phone\esUtil_phone.lib"
+            Creating library E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libcocos2d.lib and object E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libcocos2d.exp
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+         Generating code
+     1>e:\工作\crossapp\cocos2dx\sprite_nodes\caview.cpp(1524): warning C4717: “cocos2d::CAView::updateTransform”: 如递归所有控件路径，函数将导致运行时堆栈溢出
+         Finished generating code
+     1>libpng.lib(pngread.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngread.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngwrite.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngwrite.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngrtran.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngrtran.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngget.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngget.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngmem.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngmem.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngtrans.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngtrans.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(png.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(png.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngrio.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngrio.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngerror.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngerror.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngset.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngset.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngrutil.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngrutil.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngwio.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngwio.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngwutil.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngwutil.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libpng.lib(pngwtran.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libpng.lib(pngwtran.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_open.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_open.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_close.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_close.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_getimage.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_getimage.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_dir.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_dir.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_unix.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_unix.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_swab.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_swab.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_error.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_error.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_compress.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_compress.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_dirread.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_dirread.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_flush.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_flush.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_strip.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_strip.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_color.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_color.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_tile.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_tile.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_read.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_read.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_aux.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_aux.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_warning.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_warning.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_dirinfo.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_dirinfo.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_codec.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_codec.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_write.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_write.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_dirwrite.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_dirwrite.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_fax3.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_fax3.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_thunder.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_thunder.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_luv.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_luv.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_lzw.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_lzw.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_packbits.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_packbits.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_next.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_next.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_dumpmode.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_dumpmode.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_fax3sm.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_fax3sm.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>libtiff.lib(tif_predict.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'libtiff.lib(tif_predict.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(ftglyph.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(ftglyph.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(ftbase.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(ftbase.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(ftinit.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(ftinit.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(ftbitmap.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(ftbitmap.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(ftsystem.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(ftsystem.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(winfnt.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(winfnt.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(type42.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(type42.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(cff.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(cff.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(raster.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(raster.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(autofit.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(autofit.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(pfr.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(pfr.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(psaux.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(psaux.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(smooth.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(smooth.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(pcf.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(pcf.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(type1.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(type1.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(psmodule.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(psmodule.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(bdf.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(bdf.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(pshinter.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(pshinter.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(truetype.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(truetype.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(type1cid.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(type1cid.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(sfnt.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(sfnt.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(ftgzip.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(ftgzip.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>freetype.lib(ftlzw.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'freetype.lib(ftlzw.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\vc110.pdb'; linking object as if no debug info
+     1>zlib.lib(adler32.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(adler32.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>zlib.lib(compress.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(compress.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>zlib.lib(crc32.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(crc32.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>zlib.lib(deflate.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(deflate.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>zlib.lib(gzio.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(gzio.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>zlib.lib(inffast.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(inffast.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>zlib.lib(inflate.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(inflate.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>zlib.lib(inftrees.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(inftrees.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>zlib.lib(trees.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(trees.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>zlib.lib(uncompr.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(uncompr.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>zlib.lib(zutil.obj) : warning LNK4099: PDB 'zlib.pdb' was not found with 'zlib.lib(zutil.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\zlib.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jaricom.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jaricom.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcapimin.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcapimin.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcapistd.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcapistd.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcarith.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcarith.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jccoefct.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jccoefct.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jccolor.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jccolor.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcdctmgr.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcdctmgr.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jchuff.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jchuff.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcinit.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcinit.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcmainct.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcmainct.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcmarker.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcmarker.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcmaster.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcmaster.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcomapi.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcomapi.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcparam.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcparam.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcprepct.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcprepct.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jcsample.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jcsample.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdapimin.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdapimin.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdapistd.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdapistd.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdarith.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdarith.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdatadst.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdatadst.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdatasrc.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdatasrc.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdcoefct.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdcoefct.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdcolor.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdcolor.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jddctmgr.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jddctmgr.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdhuff.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdhuff.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdinput.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdinput.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdmainct.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdmainct.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdmarker.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdmarker.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdmaster.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdmaster.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdmerge.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdmerge.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdpostct.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdpostct.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jdsample.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jdsample.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jerror.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jerror.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jfdctflt.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jfdctflt.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jfdctfst.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jfdctfst.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jfdctint.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jfdctint.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jidctflt.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jidctflt.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jidctfst.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jidctfst.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jidctint.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jidctint.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jmemmgr.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jmemmgr.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jmemnobs.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jmemnobs.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jquant1.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jquant1.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jquant2.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jquant2.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+     1>libjpeg.lib(jutils.obj) : warning LNK4099: PDB 'libjpeg.pdb' was not found with 'libjpeg.lib(jutils.obj)' or at 'E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libjpeg.pdb'; linking object as if no debug info
+         libcocos2d.vcxproj -> E:\工作\CrossApp\projects\multi-platform-cpp\proj.wp8-xaml\WP8\ARM\Debug\libcocos2d\libcocos2d.dll
+     1>已完成生成项目“E:\工作\CrossApp\cocos2dx\proj.wp8\libcocos2d.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:00.03
+已用时间 00:01:17.18

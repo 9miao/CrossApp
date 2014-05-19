@@ -144,13 +144,7 @@
     <ClCompile Include="..\actions\CCActionTween.cpp">
       <Filter>actions</Filter>
     </ClCompile>
-    <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
-      <Filter>base_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\base_nodes\CCGLBufferedNode.cpp">
-      <Filter>base_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\base_nodes\CCNode.cpp">
       <Filter>base_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp">
@@ -243,12 +237,6 @@
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDispatcher.cpp">
       <Filter>keyboard_dispatcher</Filter>
     </ClCompile>
-    <ClCompile Include="..\label_nodes\CCLabelAtlas.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\label_nodes\CCLabelBMFont.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
@@ -339,9 +327,6 @@
     <ClCompile Include="..\sprite_nodes\CCSprite.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\sprite_nodes\CCSpriteBatchNode.cpp">
-      <Filter>sprite_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\sprite_nodes\CCSpriteFrame.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
@@ -408,9 +393,6 @@
     <ClCompile Include="..\textures\CCTexture2D.cpp">
       <Filter>textures</Filter>
     </ClCompile>
-    <ClCompile Include="..\textures\CCTextureAtlas.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
     <ClCompile Include="..\textures\CCTextureCache.cpp">
       <Filter>textures</Filter>
     </ClCompile>
@@ -456,9 +438,6 @@
     <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\sprite_nodes\CCView.cpp">
-      <Filter>sprite_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\ui_controller\CABar.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
@@ -482,6 +461,9 @@
     </ClCompile>
     <ClCompile Include="..\ui_controller\CAViewController.cpp">
       <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CAView.cpp">
+      <Filter>sprite_nodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -524,13 +506,7 @@
     <ClInclude Include="..\actions\CCActionTween.h">
       <Filter>actions</Filter>
     </ClInclude>
-    <ClInclude Include="..\base_nodes\CCAtlasNode.h">
-      <Filter>base_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\base_nodes\CCGLBufferedNode.h">
-      <Filter>base_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base_nodes\CCNode.h">
       <Filter>base_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCAffineTransform.h">
@@ -659,12 +635,6 @@
     <ClInclude Include="..\keypad_dispatcher\CCKeypadDispatcher.h">
       <Filter>keyboard_dispatcher</Filter>
     </ClInclude>
-    <ClInclude Include="..\label_nodes\CCLabelAtlas.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\label_nodes\CCLabelBMFont.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\label_nodes\CCLabelTTF.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
@@ -776,9 +746,6 @@
     <ClInclude Include="..\sprite_nodes\CCSprite.h">
       <Filter>sprite_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\sprite_nodes\CCSpriteBatchNode.h">
-      <Filter>sprite_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\sprite_nodes\CCSpriteFrame.h">
       <Filter>sprite_nodes</Filter>
     </ClInclude>
@@ -854,9 +821,6 @@
     <ClInclude Include="..\textures\CCTexture2D.h">
       <Filter>textures</Filter>
     </ClInclude>
-    <ClInclude Include="..\textures\CCTextureAtlas.h">
-      <Filter>textures</Filter>
-    </ClInclude>
     <ClInclude Include="..\textures\CCTextureCache.h">
       <Filter>textures</Filter>
     </ClInclude>
@@ -907,9 +871,6 @@
     <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h">
       <Filter>sprite_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\sprite_nodes\CCView.h">
-      <Filter>sprite_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\ui_controller\CABar.h">
       <Filter>ui_controller</Filter>
     </ClInclude>
@@ -933,6 +894,9 @@
     </ClInclude>
     <ClInclude Include="..\ui_controller\CAViewController.h">
       <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CAView.h">
+      <Filter>sprite_nodes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

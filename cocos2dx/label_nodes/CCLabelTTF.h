@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __CCLABELTTF_H__
 
 #include "sprite_nodes/CCSprite.h"
-#include "textures/CCTexture2D.h"
 
 NS_CC_BEGIN
 
@@ -54,7 +53,7 @@ NS_CC_BEGIN
  * @endcode
  *
  */
-class CC_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
+class CC_DLL CCLabelTTF : public CAImageView, public CCLabelProtocol
 {
 public:
     /**

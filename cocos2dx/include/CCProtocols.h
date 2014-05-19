@@ -172,7 +172,7 @@ public:
      * @return  The texture that is currenlty being used.
      * @lua NA
      */
-    virtual CCTexture2D* getTexture(void) = 0;
+    virtual CAImage* getImage(void) = 0;
 
     /**
      * Sets a new texuture. It will be retained.
@@ -180,7 +180,7 @@ public:
      * @param   texture A valid CCTexture2D object, which will be applied to this sprite object.
      * @lua NA
      */
-    virtual void setTexture(CCTexture2D *texture) = 0;
+    virtual void setImage(CAImage* texture) = 0;
 };
 
 /**

@@ -39,7 +39,7 @@ CCGrabber::CCGrabber(void)
     glGenFramebuffers(1, &m_FBO);
 }
 
-void CCGrabber::grab(CCTexture2D *pTexture)
+void CCGrabber::grab(CAImage* image)
 {
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 
@@ -47,7 +47,7 @@ void CCGrabber::grab(CCTexture2D *pTexture)
     glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 
     // associate texture with FBO
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pTexture->getName(), 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, image->getName(), 0);
 
     // check if it worked (probably worth doing :) )
     GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -59,9 +59,9 @@ void CCGrabber::grab(CCTexture2D *pTexture)
     glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
 }
 
-void CCGrabber::beforeRender(CCTexture2D *pTexture)
+void CCGrabber::beforeRender(CAImage* image)
 {
-    CC_UNUSED_PARAM(pTexture);
+    CC_UNUSED_PARAM(image);
 
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
@@ -81,9 +81,9 @@ void CCGrabber::beforeRender(CCTexture2D *pTexture)
 //  glColorMask(true, true, true, false);    // #631
 }
 
-void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
+void CCGrabber::afterRender(cocos2d::CAImage* image)
 {
-    CC_UNUSED_PARAM(pTexture);
+    CC_UNUSED_PARAM(image);
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
 //  glColorMask(true, true, true, true);    // #631

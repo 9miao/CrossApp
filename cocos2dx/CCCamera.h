@@ -56,7 +56,7 @@ Limitations:
 - Some nodes, like CCParallaxNode, CCParticle uses world node coordinates, and they won't work properly if you move them (or any of their ancestors)
 using the camera.
 
-- It doesn't work on batched nodes like CCSprite objects when they are parented to a CCSpriteBatchNode object.
+- It doesn't work on batched nodes like CAImageView objects when they are parented to a CCSpriteBatchNode object.
 
 - It is recommended to use it ONLY if you are going to create 3D effects. For 2D effects, use the action CCFollow or position/scale/rotate.
 

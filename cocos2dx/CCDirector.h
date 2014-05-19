@@ -35,8 +35,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "kazmath/mat4.h"
 #include "ccTypeInfo.h"
-#include "label_nodes/CCLabelTTF.h"
-
+#include "label_nodes/CALabel.h"
 NS_CC_BEGIN
 
 /**
@@ -389,9 +388,9 @@ protected:
     float m_fAccumDt;
     float m_fFrameRate;
     
-    CCLabelTTF *m_pFPSLabel;
-    CCLabelTTF *m_pSPFLabel;
-    CCLabelTTF *m_pDrawsLabel;
+    CALabel *m_pFPSLabel;
+    CALabel *m_pSPFLabel;
+    CALabel *m_pDrawsLabel;
     
     /** Whether or not the Director is paused */
     bool m_bPaused;

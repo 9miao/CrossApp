@@ -53,12 +53,12 @@ There are also functions for saving the render texture to disk in PNG or JPG for
 */
 class CC_DLL CCRenderTexture : public CAView 
 {
-    /** The CCSprite being used.
+    /** The CAImageView being used.
     The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
     The blending function can be changed in runtime by calling:
     - [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
     */
-    CC_PROPERTY(CCSprite*, m_pSprite, Sprite)
+    CC_PROPERTY(CAImageView*, m_pSprite, Sprite)
 public:
     /**
      * @js ctor
@@ -171,8 +171,8 @@ protected:
     GLuint       m_uFBO;
     GLuint       m_uDepthRenderBufffer;
     GLint        m_nOldFBO;
-    CCTexture2D* m_pTexture;
-    CCTexture2D* m_pTextureCopy;    // a copy of m_pTexture
+    CAImage* m_pTexture;
+    CAImage* m_pTextureCopy;    // a copy of m_pTexture
     CCImage*     m_pUITextureImage;
     GLenum       m_ePixelFormat;
     

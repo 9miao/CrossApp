@@ -1,15 +1,17 @@
-﻿生成启动时间为 2014/5/11 20:54:25。
-     1>项目“E:\win 开发\CrossAppNew\cocos2dx\proj.win32\cocos2d.vcxproj”在节点 2 上(Build 个目标)。
-     1>PreLinkEvent:
-         if not exist "E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\" mkdir "E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\"
-         xcopy /Y /Q "E:\win 开发\CrossAppNew\cocos2dx\proj.win32\..\platform\third_party\win32\libraries\*.*" "E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\"
+﻿生成启动时间为 2014/5/18 23:10:24。
+     1>项目“E:\win 开发\CrossApp\cocos2dx\proj.win32\cocos2d.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files\Microsoft SDKs\Windows\v7.1A\include" /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\.." /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\..\platform\win32" /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\iconv" /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\zlib" /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libpng" /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libjpeg" /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libtiff" /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libwebp" /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\pthread" /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\OGLES" /I..\include /I"E:\win 开发\CrossApp\cocos2dx\proj.win32\..\kazmath\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D COCOS2DXWIN32_EXPORTS /D GL_GLEXT_PROTOTYPES /D COCOS2D_DEBUG=1 /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _USING_V110_SDK71_ /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug.win32\\" /Fd"Debug.win32\vc120.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /analyze- /errorReport:prompt ..\ui_controller\CAProgress.cpp
+         CAProgress.cpp
+     1>e:\win 开发\crossapp\cocos2dx\sprite_nodes\caview.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+       PreLinkEvent:
+         if not exist "E:\win 开发\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\" mkdir "E:\win 开发\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\"
+         xcopy /Y /Q "E:\win 开发\CrossApp\cocos2dx\proj.win32\..\platform\third_party\win32\libraries\*.*" "E:\win 开发\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\"
          
          :VCEnd
          复制了 15 个文件
        Link:
-         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\\" opengl32.lib glew32.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libwebp.lib libiconv.lib pthreadVCE2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.pdb" /SUBSYSTEM:WINDOWS,"5.01" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.lib" /MACHINE:X86 /SAFESEH /DLL Debug.win32\CCAtlasNode.obj
-         Debug.win32\CCNode.obj
-         Debug.win32\ccFPSImages.obj
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\win 开发\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:"E:\win 开发\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\\" opengl32.lib glew32.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libwebp.lib libiconv.lib pthreadVCE2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\win 开发\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.pdb" /SUBSYSTEM:WINDOWS,"5.01" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\win 开发\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.lib" /MACHINE:X86 /SAFESEH /DLL Debug.win32\ccFPSImages.obj
          Debug.win32\CCAffineTransform.obj
          Debug.win32\CCArray.obj
          Debug.win32\CCAutoreleasePool.obj
@@ -38,8 +40,6 @@
          Debug.win32\CCActionProgressTimer.obj
          Debug.win32\CCActionTiledGrid.obj
          Debug.win32\CCActionTween.obj
-         Debug.win32\CCLabelAtlas.obj
-         Debug.win32\CCLabelBMFont.obj
          Debug.win32\CCLabelTTF.obj
          Debug.win32\CCTransition.obj
          Debug.win32\CCTransitionPageTurn.obj
@@ -66,15 +66,14 @@
          Debug.win32\ccGLStateCache.obj
          Debug.win32\CCShaderCache.obj
          Debug.win32\ccShaders.obj
+         Debug.win32\CAView.obj
          Debug.win32\CAWindow.obj
          Debug.win32\CCAnimation.obj
          Debug.win32\CCAnimationCache.obj
          Debug.win32\CCScale9Sprite.obj
          Debug.win32\CCSprite.obj
-         Debug.win32\CCSpriteBatchNode.obj
          Debug.win32\CCSpriteFrame.obj
          Debug.win32\CCSpriteFrameCache.obj
-         Debug.win32\CCView.obj
          Debug.win32\base64.obj
          Debug.win32\CCNotificationCenter.obj
          Debug.win32\CCPointExtension.obj
@@ -93,7 +92,6 @@
          Debug.win32\unzip.obj
          Debug.win32\ZipUtils.obj
          Debug.win32\CCTexture2D.obj
-         Debug.win32\CCTextureAtlas.obj
          Debug.win32\CCTextureCache.obj
          Debug.win32\CCTextureETC.obj
          Debug.win32\CCTexturePVR.obj
@@ -130,12 +128,12 @@
          Debug.win32\CAScrollView.obj
          Debug.win32\CATableView.obj
          Debug.win32\CAViewController.obj
-     1>CCAtlasNode.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/OPT:LBR”规范)
-            正在创建库 E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.lib 和对象 E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.exp
+     1>ccFPSImages.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/OPT:LBR”规范)
+            正在创建库 E:\win 开发\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.lib 和对象 E:\win 开发\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.exp
      1>LINK : warning LNK4098: 默认库“LIBCMT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
-         cocos2d.vcxproj -> E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.dll
-     1>已完成生成项目“E:\win 开发\CrossAppNew\cocos2dx\proj.win32\cocos2d.vcxproj”(Build 个目标)的操作。
+         cocos2d.vcxproj -> E:\win 开发\CrossApp\projects\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.dll
+     1>已完成生成项目“E:\win 开发\CrossApp\cocos2dx\proj.win32\cocos2d.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:02.55
+已用时间 00:00:03.63

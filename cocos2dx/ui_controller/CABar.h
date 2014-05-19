@@ -49,7 +49,7 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    CC_SYNTHESIZE(CCTexture2D*, m_pBackGroundImage, BackGroundImage);
+    CC_SYNTHESIZE(CAImage*, m_pBackGroundImage, BackGroundImage);
     
     CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
     
@@ -105,11 +105,11 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    CC_SYNTHESIZE(CCTexture2D*, m_pBackGroundImage, BackGroundImage);
+    CC_SYNTHESIZE(CAImage*, m_pBackGroundImage, BackGroundImage);
     
-    CC_SYNTHESIZE(CCTexture2D*, m_pSelectedBackGroundImage, SelectedBackGroundImage);
+    CC_SYNTHESIZE(CAImage*, m_pSelectedBackGroundImage, SelectedBackGroundImage);
     
-    CC_SYNTHESIZE(CCTexture2D*, m_pSelectedIndicatorImage, SelectedIndicatorImage);
+    CC_SYNTHESIZE(CAImage*, m_pSelectedIndicatorImage, SelectedIndicatorImage);
     
     CC_SYNTHESIZE(unsigned int, m_nMaxShowCount, MaxShowCount)
     

@@ -76,7 +76,7 @@ CCSpriteFrameCache::~CCSpriteFrameCache(void)
     CC_SAFE_DELETE(m_pLoadedFileNames);
 }
 
-void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary, CCTexture2D *pobTexture)
+void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary, CAImage* pobTexture)
 {
     /*
     Supported Zwoptex Formats:
@@ -131,7 +131,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             oh = abs(oh);
             // create frame
             spriteFrame = new CCSpriteFrame();
-            spriteFrame->initWithTexture(pobTexture, 
+            spriteFrame->initWithImage(pobTexture, 
                                         CCRectMake(x, y, w, h), 
                                         false,
                                         CCPointMake(ox, oy),
@@ -154,7 +154,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
 
             // create frame
             spriteFrame = new CCSpriteFrame();
-            spriteFrame->initWithTexture(pobTexture, 
+            spriteFrame->initWithImage(pobTexture, 
                 frame,
                 rotated,
                 offset,
@@ -188,7 +188,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             frameKey->release();
             // create frame
             spriteFrame = new CCSpriteFrame();
-            spriteFrame->initWithTexture(pobTexture,
+            spriteFrame->initWithImage(pobTexture,
                             CCRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
                             textureRotated,
                             spriteOffset,
@@ -201,7 +201,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
     }
 }
 
-void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture)
+void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CAImage* pobTexture)
 {
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
     CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
@@ -214,7 +214,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* textureFileName)
 {
     CCAssert(textureFileName, "texture name should not be null");
-    CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(textureFileName);
+    CAImage* texture = CCTextureCache::sharedTextureCache()->addImage(textureFileName);
 
     if (texture)
     {
@@ -264,7 +264,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
             CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
         }
 
-        CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());
+        CAImage* pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());
 
         if (pTexture)
         {
@@ -375,7 +375,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary* dictiona
     m_pSpriteFrames->removeObjectsForKeys(keysToRemove);
 }
 
-void CCSpriteFrameCache::removeSpriteFramesFromTexture(CCTexture2D* texture)
+void CCSpriteFrameCache::removeSpriteFramesFromImage(CAImage* texture)
 {
     CCArray* keysToRemove = CCArray::create();
 
@@ -384,7 +384,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromTexture(CCTexture2D* texture)
     {
         string key = pElement->getStrKey();
         CCSpriteFrame* frame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(key.c_str());
-        if (frame && (frame->getTexture() == texture))
+        if (frame && (frame->getImage() == texture))
         {
             keysToRemove->addObject(CCString::create(pElement->getStrKey()));
         }

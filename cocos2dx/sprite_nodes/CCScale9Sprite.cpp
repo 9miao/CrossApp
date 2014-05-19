@@ -49,7 +49,7 @@ CCScale9Sprite::CCScale9Sprite()
 , m_insetBottom(0)
 , m_bSpritesGenerated(false)
 , m_positionsAreDirty(false)
-, m_pTexture(NULL)
+, m_pImage(NULL)
 , _topLeft(NULL)
 , _top(NULL)
 , _topRight(NULL)
@@ -77,12 +77,12 @@ CCScale9Sprite::~CCScale9Sprite()
     CC_SAFE_RELEASE(_bottomLeft);
     CC_SAFE_RELEASE(_bottom);
     CC_SAFE_RELEASE(_bottomRight);
-    CC_SAFE_RELEASE(m_pTexture);
+    CC_SAFE_RELEASE(m_pImage);
 }
 
 bool CCScale9Sprite::init()
 {
-    return this->initWithTexture(NULL, CCRectZero, CCRectZero);
+    return this->initWithImage(NULL, CCRectZero, CCRectZero);
 }
 
 
@@ -92,7 +92,7 @@ bool CCScale9Sprite::init()
 #define    TRANSLATE_Y(x, y, ytranslate) \
     y+=ytranslate;                       \
 
-bool CCScale9Sprite::updateWithTexture(CAImage* image, CCRect rect, CCRect capInsets)
+bool CCScale9Sprite::updateWithImage(CAImage* image, CCRect rect, CCRect capInsets)
 {
     GLubyte opacity = getOpacity();
     ccColor3B color = getColor();
@@ -110,7 +110,7 @@ bool CCScale9Sprite::updateWithTexture(CAImage* image, CCRect rect, CCRect capIn
     CC_SAFE_RELEASE(this->_bottom);
     CC_SAFE_RELEASE(this->_bottomRight);
 
-    this->setTexture(image);
+    this->setImage(image);
     
     this->removeAllSubviews();
     m_capInsets = capInsets;
@@ -222,56 +222,56 @@ bool CCScale9Sprite::updateWithTexture(CAImage* image, CCRect rect, CCRect capIn
     centertopbounds = CCRectApplyAffineTransform(centertopbounds, t);
     
     // Centre
-    _centre = new CCSprite();
-    _centre->initWithTexture(m_pTexture, centerbounds);
+    _centre = new CAImageView();
+    _centre->initWithImage(m_pImage, centerbounds);
     _centre->setTag(pCentre);
     this->insertSubview(_centre, 0);
     
     // Top
-    _top = new CCSprite();
-    _top->initWithTexture(m_pTexture, centertopbounds);
+    _top = new CAImageView();
+    _top->initWithImage(m_pImage, centertopbounds);
     _top->setTag(pTop);
     this->insertSubview(_top, 1);
     
     // Bottom
-    _bottom = new CCSprite();
-    _bottom->initWithTexture(m_pTexture, centerbottombounds);
+    _bottom = new CAImageView();
+    _bottom->initWithImage(m_pImage, centerbottombounds);
     _bottom->setTag(pBottom);
     this->insertSubview(_bottom, 1);
     
     // Left
-    _left = new CCSprite();
-    _left->initWithTexture(m_pTexture, leftcenterbounds);
+    _left = new CAImageView();
+    _left->initWithImage(m_pImage, leftcenterbounds);
     _left->setTag(pLeft);
     this->insertSubview(_left, 1);
     
     // Right
-    _right = new CCSprite();
-    _right->initWithTexture(m_pTexture, rightcenterbounds);
+    _right = new CAImageView();
+    _right->initWithImage(m_pImage, rightcenterbounds);
     _right->setTag(pRight);
     this->insertSubview(_right, 1);
     
     // Top left
-    _topLeft = new CCSprite();
-    _topLeft->initWithTexture(m_pTexture, lefttopbounds);
+    _topLeft = new CAImageView();
+    _topLeft->initWithImage(m_pImage, lefttopbounds);
     _topLeft->setTag(pTopLeft);
     this->insertSubview(_topLeft, 2);
     
     // Top right
-    _topRight = new CCSprite();
-    _topRight->initWithTexture(m_pTexture, righttopbounds);
+    _topRight = new CAImageView();
+    _topRight->initWithImage(m_pImage, righttopbounds);
     _topLeft->setTag(pTopRight);
     this->insertSubview(_topRight, 2);
     
     // Bottom left
-    _bottomLeft = new CCSprite();
-    _bottomLeft->initWithTexture(m_pTexture, leftbottombounds);
+    _bottomLeft = new CAImageView();
+    _bottomLeft->initWithImage(m_pImage, leftbottombounds);
     _bottom->setTag(pBottomLeft);
     this->insertSubview(_bottomLeft, 2);
     
     // Bottom right
-    _bottomRight = new CCSprite();
-    _bottomRight->initWithTexture(m_pTexture, rightbottombounds);
+    _bottomRight = new CAImageView();
+    _bottomRight->initWithImage(m_pImage, rightbottombounds);
     _bottomRight->setTag(pBottomRight);
     this->insertSubview(_bottomRight, 2);
     this->setContentSize(rect.size);
@@ -356,11 +356,11 @@ void CCScale9Sprite::updatePositions()
 }
 
 
-bool CCScale9Sprite::initWithTexture(CCTexture2D* texture, CCRect rect, CCRect capInsets)
+bool CCScale9Sprite::initWithImage(CAImage* texture, CCRect rect, CCRect capInsets)
 {
     if (texture)
     {
-        this->updateWithTexture(texture, rect, capInsets);
+        this->updateWithImage(texture, rect, capInsets);
         this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     }
     this->m_positionsAreDirty = true;
@@ -368,10 +368,10 @@ bool CCScale9Sprite::initWithTexture(CCTexture2D* texture, CCRect rect, CCRect c
 	return true;
 }
 
-CCScale9Sprite* CCScale9Sprite::createWithTexture(CCTexture2D* texture, CCRect rect, CCRect capInsets)
+CCScale9Sprite* CCScale9Sprite::createWithImage(CAImage* texture, CCRect rect, CCRect capInsets)
 {
 	CCScale9Sprite* pReturn = new CCScale9Sprite();
-	if (pReturn && pReturn->initWithTexture(texture, rect, capInsets))
+	if (pReturn && pReturn->initWithImage(texture, rect, capInsets))
 	{
 		pReturn->autorelease();
 		return pReturn;
@@ -380,16 +380,16 @@ CCScale9Sprite* CCScale9Sprite::createWithTexture(CCTexture2D* texture, CCRect r
 	return NULL;
 }
 
-bool CCScale9Sprite::initWithTexture(CCTexture2D* texture, CCRect rect)
+bool CCScale9Sprite::initWithImage(CAImage* texture, CCRect rect)
 {
-	bool pReturn = this->initWithTexture(texture, rect, CCRectZero);
+	bool pReturn = this->initWithImage(texture, rect, CCRectZero);
 	return pReturn;
 }
 
-CCScale9Sprite* CCScale9Sprite::createWithTexture(CCTexture2D* texture, CCRect rect)
+CCScale9Sprite* CCScale9Sprite::createWithImage(CAImage* texture, CCRect rect)
 {
 	CCScale9Sprite* pReturn = new CCScale9Sprite();
-	if (pReturn && pReturn->initWithTexture(texture, rect))
+	if (pReturn && pReturn->initWithImage(texture, rect))
 	{
 		pReturn->autorelease();
 		return pReturn;
@@ -398,16 +398,16 @@ CCScale9Sprite* CCScale9Sprite::createWithTexture(CCTexture2D* texture, CCRect r
 	return NULL;
 }
 
-bool CCScale9Sprite::initWithTexture(CCRect capInsets, CCTexture2D* texture)
+bool CCScale9Sprite::initWithImage(CCRect capInsets, CAImage* texture)
 {
-	bool pReturn = this->initWithTexture(texture, CCRectZero, capInsets);
+	bool pReturn = this->initWithImage(texture, CCRectZero, capInsets);
 	return pReturn;
 }
 
-CCScale9Sprite* CCScale9Sprite::createWithTexture(CCRect capInsets, CCTexture2D* texture)
+CCScale9Sprite* CCScale9Sprite::createWithImage(CCRect capInsets, CAImage* texture)
 {
 	CCScale9Sprite* pReturn = new CCScale9Sprite();
-	if (pReturn && pReturn->initWithTexture(capInsets, texture))
+	if (pReturn && pReturn->initWithImage(capInsets, texture))
 	{
 		pReturn->autorelease();
 		return pReturn;
@@ -416,16 +416,16 @@ CCScale9Sprite* CCScale9Sprite::createWithTexture(CCRect capInsets, CCTexture2D*
 	return NULL;
 }
 
-bool CCScale9Sprite::initWithTexture(CCTexture2D* texture)
+bool CCScale9Sprite::initWithImage(CAImage* texture)
 {
-	bool pReturn = this->initWithTexture(texture, CCRectZero);
+	bool pReturn = this->initWithImage(texture, CCRectZero);
 	return pReturn;
 }
 
-CCScale9Sprite* CCScale9Sprite::createWithTexture(CCTexture2D* texture)
+CCScale9Sprite* CCScale9Sprite::createWithImage(CAImage* texture)
 {
 	CCScale9Sprite* pReturn = new CCScale9Sprite();
-	if (pReturn && pReturn->initWithTexture(texture))
+	if (pReturn && pReturn->initWithImage(texture))
 	{
 		pReturn->autorelease();
 		return pReturn;
@@ -437,7 +437,7 @@ CCScale9Sprite* CCScale9Sprite::createWithTexture(CCTexture2D* texture)
 CCScale9Sprite* CCScale9Sprite::resizableSpriteWithCapInsets(CCRect capInsets)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
-    if ( pReturn && pReturn->initWithTexture(m_pTexture, m_spriteRect, capInsets) )
+    if ( pReturn && pReturn->initWithImage(m_pImage, m_spriteRect, capInsets) )
     {
         pReturn->autorelease();
         return pReturn;
@@ -478,8 +478,8 @@ void CCScale9Sprite::setCapInsets(CCRect capInsets)
 {
     do
     {
-        CC_BREAK_IF(m_pTexture == NULL);
-        this->updateWithTexture(m_pTexture, this->m_spriteRect, capInsets);
+        CC_BREAK_IF(m_pImage == NULL);
+        this->updateWithImage(m_pImage, this->m_spriteRect, capInsets);
     }
     while (0);
     
@@ -511,7 +511,7 @@ void CCScale9Sprite::setOpacityModifyRGB(bool var)
 {
     do
     {
-        CC_BREAK_IF(m_pTexture == NULL);
+        CC_BREAK_IF(m_pImage == NULL);
         
         _opacityModifyRGB = var;
         CCObject* child;

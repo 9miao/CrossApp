@@ -234,7 +234,7 @@ void CATableView::setBackGroundImage(CAImage* image)
         m_pChildInThis->removeObject(m_pBackGroundView);
         m_pBackGroundView->removeFromSuperview();
     }
-    m_pBackGroundView = CAImageView::createWithTexture(image);
+    m_pBackGroundView = CAImageView::createWithImage(image);
     m_pBackGroundView->setFrame(this->getBounds());
     m_pChildInThis->addObject(m_pBackGroundView);
     this->insertSubview(m_pBackGroundView, -1);
@@ -247,7 +247,7 @@ void CATableView::setBackGroundScale9Image(CAImage* image)
         m_pChildInThis->removeObject(m_pBackGroundView);
         m_pBackGroundView->removeFromSuperview();
     }
-    m_pBackGroundView = CCScale9Sprite::createWithTexture(image);
+    m_pBackGroundView = CCScale9Sprite::createWithImage(image);
     m_pBackGroundView->setFrame(this->getBounds());
     m_pChildInThis->addObject(m_pBackGroundView);
     this->insertSubview(m_pBackGroundView, -1);

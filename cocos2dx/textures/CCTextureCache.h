@@ -100,7 +100,7 @@ public:
     * Otherwise it will return a reference of a previously loaded image.
     * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
     */
-    CCTexture2D* addImage(const char* fileimage);
+    CAImage* addImage(const char* fileimage);
 
     /* Returns a Texture2D object given a file image
     * If the file image was not previously loaded, it will create a new CCTexture2D object and it will return it.
@@ -113,6 +113,8 @@ public:
     
     void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
 
+    void addStringImageAsync(const char *text, const char *fontName, float fontSize, cocos2d::CCSize& dimensions, CCTextAlignment textAlignment, CCVerticalTextAlignment verticalAlignment, CCObject *target, SEL_CallFuncO selector);
+    
     /* Returns a Texture2D object given an CGImageRef image
     * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
     * Otherwise it will return a reference of a previously loaded image
@@ -120,19 +122,19 @@ public:
     * If "key" is nil, then a new texture will be created each time.
     * @since v0.8
     */
-    // todo: CGImageRef CCTexture2D* addCGImage(CGImageRef image, string &  key);
+    // todo: CGImageRef CAImage* addCGImage(CGImageRef image, string &  key);
     /** Returns a Texture2D object given an UIImage image
     * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
     * Otherwise it will return a reference of a previously loaded image
     * The "key" parameter will be used as the "key" for the cache.
     * If "key" is nil, then a new texture will be created each time.
     */
-    CCTexture2D* addUIImage(CCImage *image, const char *key);
+    CAImage* addUIImage(CCImage *image, const char *key);
 
     /** Returns an already created texture. Returns nil if the texture doesn't exist.
     @since v0.99.5
     */
-    CCTexture2D* textureForKey(const char* key);
+    CAImage* textureForKey(const char* key);
     
     /** Reload texture from the image file
      * If the file image hasn't loaded before, load it.
@@ -159,7 +161,7 @@ public:
 
     /** Deletes a texture from the cache given a texture
     */
-    void removeTexture(CCTexture2D* texture);
+    void removeTexture(CAImage* texture);
 
     /** Deletes a texture from the cache given a its key name
     @since v0.99.4
@@ -177,14 +179,14 @@ public:
     * If the file image was not previously loaded, it will create a new CCTexture2D
     *  object and it will return it. Otherwise it will return a reference of a previously loaded image
     */
-    CCTexture2D* addPVRImage(const char* filename);
+    CAImage* addPVRImage(const char* filename);
     
     /** Returns a Texture2D object given an ETC filename
      * If the file image was not previously loaded, it will create a new CCTexture2D
      *  object and it will return it. Otherwise it will return a reference of a previously loaded image
      *  @lua NA
      */
-    CCTexture2D* addETCImage(const char* filename);
+    CAImage* addETCImage(const char* filename);
 
     /** Reload all textures
     It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
@@ -205,17 +207,17 @@ typedef enum {
 }ccCachedImageType;
 
 public:
-    VolatileTexture(CCTexture2D *t);
+    VolatileTexture(CAImage* t);
     ~VolatileTexture();
 
-    static void addImageTexture(CCTexture2D *tt, const char* imageFileName, CCImage::EImageFormat format);
-    static void addStringTexture(CCTexture2D *tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, 
+    static void addImageTexture(CAImage* tt, const char* imageFileName, CCImage::EImageFormat format);
+    static void addStringTexture(CAImage* tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, 
                                  CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize);
-    static void addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize);
-    static void addCCImage(CCTexture2D *tt, CCImage *image);
+    static void addDataTexture(CAImage* tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize);
+    static void addCCImage(CAImage* tt, CCImage *image);
 
-    static void setTexParameters(CCTexture2D *t, ccTexParams *texParams);
-    static void removeTexture(CCTexture2D *t);
+    static void setTexParameters(CAImage* t, ccTexParams *texParams);
+    static void removeTexture(CAImage* t);
     static void reloadAllTextures();
 
 public:
@@ -223,12 +225,12 @@ public:
     static bool isReloading;
     
 private:
-    // find VolatileTexture by CCTexture2D*
+    // find VolatileTexture by CAImage*
     // if not found, create a new one
-    static VolatileTexture* findVolotileTexture(CCTexture2D *tt);
+    static VolatileTexture* findVolotileTexture(CAImage* tt);
 
 protected:
-    CCTexture2D *texture;
+    CAImage* texture;
     
     CCImage *uiImage;
 

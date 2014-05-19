@@ -78,7 +78,7 @@ This formula prevents artifacts by using 99% of the texture.
 The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.
 
 Affected nodes:
-- CCSprite / CCSpriteBatchNode and subclasses: CCLabelBMFont, CCTMXTiledMap
+- CAImageView / CCSpriteBatchNode and subclasses: CCLabelBMFont, CCTMXTiledMap
 - CCLabelAtlas
 - CCQuadParticleSystem
 - CCTileMap
@@ -151,7 +151,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #endif
 
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
- If enabled, the CCSprite objects rendered with CCSpriteBatchNode will be able to render in subpixels.
+ If enabled, the CAImageView objects rendered with CCSpriteBatchNode will be able to render in subpixels.
  If disabled, integer pixels will be used.
  
  To enable set it to 1. Enabled by default.
@@ -205,7 +205,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #endif
 
 /** @def CC_SPRITE_DEBUG_DRAW
- If enabled, all subclasses of CCSprite will draw a bounding box
+ If enabled, all subclasses of CAImageView will draw a bounding box
  Useful for debugging purposes only. It is recommended to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default:
@@ -221,7 +221,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #endif
 
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
-If enabled, all subclasses of CCSprite that are rendered using an CCSpriteBatchNode draw a bounding box.
+If enabled, all subclasses of CAImageView that are rendered using an CCSpriteBatchNode draw a bounding box.
 Useful for debugging purposes only. It is recommended to leave it disabled.
 
 To enable set it to a value different than 0. Disabled by default.

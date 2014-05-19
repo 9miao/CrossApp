@@ -57,10 +57,10 @@ NS_CC_BEGIN
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
+CAImageView* CAImageView::createWithImage(CAImage* Image)
 {
-    CCSprite *pobSprite = new CCSprite();
-    if (pobSprite && pobSprite->initWithTexture(pTexture))
+    CAImageView *pobSprite = new CAImageView();
+    if (pobSprite && pobSprite->initWithImage(Image))
     {
         pobSprite->autorelease();
         return pobSprite;
@@ -69,10 +69,10 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
     return NULL;
 }
 
-CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
+CAImageView* CAImageView::createWithImage(CAImage* Image, const CCRect& rect)
 {
-    CCSprite *pobSprite = new CCSprite();
-    if (pobSprite && pobSprite->initWithTexture(pTexture, rect))
+    CAImageView *pobSprite = new CAImageView();
+    if (pobSprite && pobSprite->initWithImage(Image, rect))
     {
         pobSprite->autorelease();
         return pobSprite;
@@ -81,9 +81,9 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     return NULL;
 }
 
-CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
+CAImageView* CAImageView::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
-    CCSprite *pobSprite = new CCSprite();
+    CAImageView *pobSprite = new CAImageView();
     if (pSpriteFrame && pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
     {
         pobSprite->autorelease();
@@ -93,9 +93,9 @@ CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     return NULL;
 }
 
-CCSprite* CCSprite::create()
+CAImageView* CAImageView::create()
 {
-    CCSprite *pSprite = new CCSprite();
+    CAImageView *pSprite = new CAImageView();
     if (pSprite && pSprite->init())
     {
         pSprite->autorelease();
@@ -105,13 +105,13 @@ CCSprite* CCSprite::create()
     return NULL;
 }
 
-bool CCSprite::init(void)
+bool CAImageView::init(void)
 {
-    return initWithTexture(NULL, CCRectZero);
+    return initWithImage(NULL, CCRectZero);
 }
 
 // designated initializer
-bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool rotated)
+bool CAImageView::initWithImage(CAImage* Image, const CCRect& rect, bool rotated)
 {
     if (CAView::init())
     {
@@ -148,7 +148,7 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
         setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
         
         // update texture (calls updateBlendFunc)
-        setTexture(pTexture);
+        setImage(Image);
         setTextureRect(rect, rotated, rect.size);
         
         // by default use "Self Render".
@@ -161,26 +161,26 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
     }
 }
 
-bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect)
+bool CAImageView::initWithImage(CAImage* Image, const CCRect& rect)
 {
-    return initWithTexture(pTexture, rect, false);
+    return initWithImage(Image, rect, false);
 }
 
-bool CCSprite::initWithTexture(CCTexture2D *pTexture)
+bool CAImageView::initWithImage(CAImage* Image)
 {
-    CCAssert(pTexture != NULL, "Invalid texture for sprite");
+    CCAssert(Image != NULL, "Invalid texture for sprite");
 
     CCRect rect = CCRectZero;
-    rect.size = pTexture->getContentSize();
+    rect.size = Image->getContentSize();
     
-    return initWithTexture(pTexture, rect);
+    return initWithImage(Image, rect);
 }
 
-bool CCSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
+bool CAImageView::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
     CCAssert(pSpriteFrame != NULL, "");
 
-    bool bRet = initWithTexture(pSpriteFrame->getTexture(), pSpriteFrame->getRect());
+    bool bRet = initWithImage(pSpriteFrame->getImage(), pSpriteFrame->getRect());
     setDisplayFrame(pSpriteFrame);
 
     return bRet;
@@ -188,7 +188,7 @@ bool CCSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 
 // XXX: deprecated
 /*
-CCSprite* CCSprite::initWithCGImage(CGImageRef pImage)
+CAImageView* CAImageView::initWithCGImage(CGImageRef pImage)
 {
     // todo
     // because it is deprecated, so we do not implement it
@@ -198,60 +198,60 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage)
 */
 
 /*
-CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
+CAImageView* CAImageView::initWithCGImage(CGImageRef pImage, const char *pszKey)
 {
     CCAssert(pImage != NULL);
 
     // XXX: possible bug. See issue #349. New API should be added
-    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addCGImage(pImage, pszKey);
+    CAImage* Image = CCTextureCache::sharedTextureCache()->addCGImage(pImage, pszKey);
 
-    const CCSize& size = pTexture->getContentSize();
+    const CCSize& size = Image->getContentSize();
     CCRect rect = CCRectMake(0 ,0, size.width, size.height);
 
-    return initWithTexture(texture, rect);
+    return initWithImage(texture, rect);
 }
 */
 
-CCSprite::CCSprite(void)
+CAImageView::CAImageView(void)
 {
     
 }
 
-CCSprite::~CCSprite(void)
+CAImageView::~CAImageView(void)
 {
     
 }
 
 
-void CCSprite::setFrame(const CCRect &rect)
+void CAImageView::setFrame(const CCRect &rect)
 {
 	this->setBounds(rect);
 
 	this->setFrameOrigin(rect.origin);
 }
 
-void CCSprite::setFrameOrigin(const CCPoint& point)
+void CAImageView::setFrameOrigin(const CCPoint& point)
 {
     CCPoint p = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
 	p = ccpAdd(point, p);
 	this->setPosition(p);
 }
 
-void CCSprite::setCenter(const CCRect& rect)
+void CAImageView::setCenter(const CCRect& rect)
 {
     this->setBounds(rect);
     
     this->setCenterOrigin(rect.origin);
 }
 
-CCRect CCSprite::getCenter()
+CCRect CAImageView::getCenter()
 {
     CCRect rect = m_obFrameRect;
     rect.origin = ccpAdd(rect.origin, CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY));
     return rect;
 }
 
-void CCSprite::setCenterOrigin(const CCPoint& point)
+void CAImageView::setCenterOrigin(const CCPoint& point)
 {
     CCPoint p = CCPoint(m_obContentSize.width * m_fScaleX, m_obContentSize.height * m_fScaleY);
     p = ccpSub(point, p/2);
@@ -259,12 +259,12 @@ void CCSprite::setCenterOrigin(const CCPoint& point)
     this->setPosition(p);
 }
 
-CCPoint CCSprite::getCenterOrigin()
+CCPoint CAImageView::getCenterOrigin()
 {
     return this->getCenter().origin;
     
 }
-void CCSprite::setBounds(const CCRect& rect)
+void CAImageView::setBounds(const CCRect& rect)
 {
 	if (!rect.size.equals(CCSizeZero))
 	{
@@ -273,28 +273,28 @@ void CCSprite::setBounds(const CCRect& rect)
 	}
 }
 
-CCRect CCSprite::getBounds() const
+CCRect CAImageView::getBounds() const
 {
     CCRect rect = this->getFrame();
     rect.origin = CCPointZero;
     return rect;
 }
-void CCSprite::setContentSize(const CCSize &size)
+void CAImageView::setContentSize(const CCSize &size)
 {
 	CAView::setContentSize(size);
 }
 
 // Frames
 
-void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
+void CAImageView::setDisplayFrame(CCSpriteFrame *pNewFrame)
 {
     m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffset();
 
-    CCTexture2D *pNewTexture = pNewFrame->getTexture();
+    CAImage* pNewTexture = pNewFrame->getImage();
     // update texture before updating texture rect
     if (pNewTexture != m_pobTexture)
     {
-        setTexture(pNewTexture);
+        setImage(pNewTexture);
     }
 
     // update rect
@@ -302,7 +302,7 @@ void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
     setTextureRect(pNewFrame->getRect(), m_bRectRotated, pNewFrame->getOriginalSize());
 }
 
-void CCSprite::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
+void CAImageView::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
 {
     CCAssert(animationName, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
 
@@ -317,18 +317,18 @@ void CCSprite::setDisplayFrameWithAnimationName(const char *animationName, int f
     setDisplayFrame(frame->getSpriteFrame());
 }
 
-bool CCSprite::isFrameDisplayed(CCSpriteFrame *pFrame)
+bool CAImageView::isFrameDisplayed(CCSpriteFrame *pFrame)
 {
     CCRect r = pFrame->getRect();
 
     return (r.equals(m_obRect) &&
-            pFrame->getTexture()->getName() == m_pobTexture->getName() &&
+            pFrame->getImage()->getName() == m_pobTexture->getName() &&
             pFrame->getOffset().equals(m_obUnflippedOffsetPositionFromCenter));
 }
 
-CCSpriteFrame* CCSprite::displayFrame(void)
+CCSpriteFrame* CAImageView::displayFrame(void)
 {
-    return CCSpriteFrame::createWithTexture(m_pobTexture,
+    return CCSpriteFrame::createWithImage(m_pobTexture,
                                            CC_RECT_POINTS_TO_PIXELS(m_obRect),
                                            m_bRectRotated,
                                            CC_POINT_POINTS_TO_PIXELS(m_obUnflippedOffsetPositionFromCenter),
@@ -344,7 +344,7 @@ CCSpriteFrame* CCSprite::displayFrame(void)
  * It's used for creating a default texture when sprite's texture is set to NULL.
  * Supposing codes as follows:
  *
- *   CCSprite* sp = new CCSprite();
+ *   CAImageView* sp = new CAImageView();
  *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
  *
  * The test is in "TestCpp/SpriteTest/Sprite without texture".
@@ -359,10 +359,10 @@ static unsigned char cc_2x2_white_image[] = {
 
 #define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
 
-void CCSprite::setTexture(CCTexture2D *texture)
+void CAImageView::setImage(CAImage* texture)
 {
     // accept texture==nil as argument
-    CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
+    CCAssert( !texture || dynamic_cast<CAImage*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
 
     if (NULL == texture)
     {
@@ -381,7 +381,7 @@ void CCSprite::setTexture(CCTexture2D *texture)
         }
     }
 
-    CAView::setTexture(texture);
+    CAView::setImage(texture);
 }
 
 NS_CC_END

@@ -38,7 +38,7 @@ NS_CC_BEGIN
 CCMotionStreak::CCMotionStreak()
 : m_bFastMode(false)
 , m_bStartingPositionInitialized(false)
-, m_pTexture(NULL)
+, m_pImage(NULL)
 , m_tPositionR(CCPointZero)
 , m_fStroke(0.0f)
 , m_fFadeDelta(0.0f)
@@ -58,7 +58,7 @@ CCMotionStreak::CCMotionStreak()
 
 CCMotionStreak::~CCMotionStreak()
 {
-    CC_SAFE_RELEASE(m_pTexture);
+    CC_SAFE_RELEASE(m_pImage);
     CC_SAFE_FREE(m_pPointState);
     CC_SAFE_FREE(m_pPointVertexes);
     CC_SAFE_FREE(m_pVertices);
@@ -80,7 +80,7 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     return NULL;
 }
 
-CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture)
+CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture)
 {
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, texture))
@@ -97,11 +97,11 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
 {
     CCAssert(path != NULL, "Invalid filename");
 
-    CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(path);
+    CAImage* texture = CCTextureCache::sharedTextureCache()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, texture);
 }
 
-bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture)
+bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture)
 {
     CAView::setPosition(CCPointZero);
     setAnchorPoint(CCPointZero);
@@ -132,7 +132,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
     // shader program
     setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 
-    setTexture(texture);
+    setImage(texture);
     setColor(color);
     
     CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCMotionStreak::update), this, 1/60.0f, false);
@@ -156,18 +156,18 @@ void CCMotionStreak::tintWithColor(ccColor3B colors)
     }
 }
 
-CCTexture2D* CCMotionStreak::getTexture(void)
+CAImage* CCMotionStreak::getImage(void)
 {
-    return m_pTexture;
+    return m_pImage;
 }
 
-void CCMotionStreak::setTexture(CCTexture2D *texture)
+void CCMotionStreak::setImage(CAImage* texture)
 {
-    if (m_pTexture != texture)
+    if (m_pImage != texture)
     {
         CC_SAFE_RETAIN(texture);
-        CC_SAFE_RELEASE(m_pTexture);
-        m_pTexture = texture;
+        CC_SAFE_RELEASE(m_pImage);
+        m_pImage = texture;
     }
 }
 
@@ -337,7 +337,7 @@ void CCMotionStreak::draw()
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
-    ccGLBindTexture2D( m_pTexture->getName() );
+    ccGLBindTexture2D( m_pImage->getName() );
 
 #ifdef EMSCRIPTEN
     // Size calculations from ::initWithFade

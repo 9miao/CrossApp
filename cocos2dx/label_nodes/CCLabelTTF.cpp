@@ -129,7 +129,7 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
                                 const cocos2d::CCSize &dimensions, CCTextAlignment hAlignment,
                                 CCVerticalTextAlignment vAlignment)
 {
-    if (CCSprite::init())
+    if (CAImageView::init())
     {
         // shader program
         this->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
@@ -150,7 +150,7 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
 
 bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccFontDefinition &textDefinition)
 {
-    if (CCSprite::init())
+    if (CAImageView::init())
     {
         // shader program
         this->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
@@ -292,8 +292,8 @@ void CCLabelTTF::setFontName(const char *fontName)
 // Helper
 bool CCLabelTTF::updateTexture()
 {
-    CCTexture2D *tex;
-    tex = new CCTexture2D();
+    CAImage *tex;
+    tex = new CAImage();
     
     if (!tex)
         return false;
@@ -315,7 +315,7 @@ bool CCLabelTTF::updateTexture()
     #endif
     
     // set the texture
-    this->setTexture(tex);
+    this->setImage(tex);
     // release it
     tex->release();
     

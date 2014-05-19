@@ -57,6 +57,7 @@ kazmath/src/GL/matrix.c \
 keypad_dispatcher/CCKeypadDelegate.cpp \
 keypad_dispatcher/CCKeypadDispatcher.cpp \
 label_nodes/CCLabelTTF.cpp \
+label_nodes/CALabel.cpp \
 layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp \
 layers_scenes_transitions_nodes/CCTransition.cpp \
 layers_scenes_transitions_nodes/CCTransitionProgress.cpp \
@@ -123,7 +124,7 @@ support/zip_support/unzip.cpp \
 support/component/CCComponent.cpp \
 support/component/CCComponentContainer.cpp \
 text_input_node/CCIMEDispatcher.cpp \
-text_input_node/CCTextFieldTTF.cpp \
+text_input_node/CATextField.cpp \
 textures/CCTexture2D.cpp \
 textures/CCTextureCache.cpp \
 textures/CCTextureETC.cpp \

@@ -38,7 +38,7 @@ public:
     CREATE_FUNC(ModalLayer);
 
 private:
-	CCNode* m_frame;
+	CAView * m_frame;
 };
 
 #endif    // end of __ModalLayer_WP8_H__

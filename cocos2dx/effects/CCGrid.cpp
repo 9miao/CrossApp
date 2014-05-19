@@ -58,7 +58,7 @@ CCGridBase* CCGridBase::create(const CCSize& gridSize)
     return pGridBase;
 }
 
-CCGridBase* CCGridBase::create(const CCSize& gridSize, CCTexture2D *texture, bool flipped)
+CCGridBase* CCGridBase::create(const CCSize& gridSize, CAImage* texture, bool flipped)
 {
     CCGridBase *pGridBase = new CCGridBase();
 
@@ -77,7 +77,7 @@ CCGridBase* CCGridBase::create(const CCSize& gridSize, CCTexture2D *texture, boo
     return pGridBase;
 }
 
-bool CCGridBase::initWithSize(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
+bool CCGridBase::initWithSize(const CCSize& gridSize, CAImage* pTexture, bool bFlipped)
 {
     bool bRet = true;
 
@@ -128,7 +128,7 @@ bool CCGridBase::initWithSize(const CCSize& gridSize)
         return false;
     }
 
-    CCTexture2D *pTexture = new CCTexture2D();
+    CAImage* pTexture = new CAImage();
     pTexture->initWithData(data, format, POTWide, POTHigh, s);
 
     free(data);
@@ -254,7 +254,7 @@ void CCGridBase::calculateVertexPoints(void)
 
 // implementation of CCGrid3D
 
-CCGrid3D* CCGrid3D::create(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
+CCGrid3D* CCGrid3D::create(const CCSize& gridSize, CAImage* pTexture, bool bFlipped)
 {
     CCGrid3D *pRet= new CCGrid3D();
 
@@ -487,7 +487,7 @@ CCTiledGrid3D::~CCTiledGrid3D(void)
     CC_SAFE_FREE(m_pIndices);
 }
 
-CCTiledGrid3D* CCTiledGrid3D::create(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
+CCTiledGrid3D* CCTiledGrid3D::create(const CCSize& gridSize, CAImage* pTexture, bool bFlipped)
 {
     CCTiledGrid3D *pRet= new CCTiledGrid3D();
 

@@ -76,10 +76,10 @@ void CANavigationBar::showBackGround()
     
     if (m_pBackGroundImage == NULL)
     {
-        m_pBackGroundImage = CCTexture2D::create("navigationController_bg.png");
+        m_pBackGroundImage = CAImage::create("navigationController_bg.png");
     }
 
-    m_pBackGround = CCScale9Sprite::createWithTexture(m_pBackGroundImage);
+    m_pBackGround = CCScale9Sprite::createWithImage(m_pBackGroundImage);
     ((CCScale9Sprite*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
     this->addSubview(m_pBackGround);
@@ -112,7 +112,7 @@ void CANavigationBar::showBackButton()
         rect.origin.y = rect.size.height * 0.5f;
         
         m_pBackButton = CAButton::createWithCenter(rect);
-        CAImageView* imageView = CAImageView::createWithTexture(CCTexture2D::create("button_left.png"));
+        CAImageView* imageView = CAImageView::createWithImage(CAImage::create("button_left.png"));
         m_pBackButton->setBackGround(CAControlStateNormal, imageView);
         this->insertSubview(m_pBackButton, 1);
         m_pBackButton->addTarget(this, CAButton_selector(CANavigationBar::goBack), TouchUpInSide);
@@ -274,10 +274,10 @@ void CATabBar::showBackGround()
     
     if (m_pBackGroundImage == NULL)
     {
-        m_pBackGroundImage = CCTexture2D::create("tabBarController_bg.png");
+        m_pBackGroundImage = CAImage::create("tabBarController_bg.png");
     }
     
-    m_pBackGround = CCScale9Sprite::createWithTexture(m_pBackGroundImage);
+    m_pBackGround = CCScale9Sprite::createWithImage(m_pBackGroundImage);
     ((CCScale9Sprite*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
     this->addSubview(m_pBackGround);
@@ -307,7 +307,7 @@ void CATabBar::showItems()
             
             if (m_pItems.at(i)->getImage())
             {
-                imageView = CAImageView::createWithTexture(m_pItems.at(i)->getImage());
+                imageView = CAImageView::createWithImage(m_pItems.at(i)->getImage());
                 imageView->setTag(0xffff);
                 view->addSubview(imageView);
             }
@@ -397,10 +397,10 @@ void CATabBar::showSelectedBackGround()
     
     if (m_pSelectedBackGroundImage == NULL)
     {
-        m_pSelectedBackGroundImage = CCTexture2D::create("tabBarController_selected_bg.png");
+        m_pSelectedBackGroundImage = CAImage::create("tabBarController_selected_bg.png");
     }
 
-    m_pSelectedBackGround = CCScale9Sprite::createWithTexture(m_pSelectedBackGroundImage);
+    m_pSelectedBackGround = CCScale9Sprite::createWithImage(m_pSelectedBackGroundImage);
     ((CCScale9Sprite*)m_pSelectedBackGround)->setPreferredSize(m_cItemSize);
     this->insertSubview(m_pSelectedBackGround, 1);
 }
@@ -415,10 +415,10 @@ void CATabBar::showSelectedIndicator()
     
     if (m_pSelectedIndicatorImage == NULL)
     {
-        m_pSelectedIndicatorImage = CCTexture2D::create("tabBarController_selected_bottom.png");
+        m_pSelectedIndicatorImage = CAImage::create("tabBarController_selected_bottom.png");
     }
     
-    m_pSelectedIndicator = CCScale9Sprite::createWithTexture(m_pSelectedIndicatorImage);
+    m_pSelectedIndicator = CCScale9Sprite::createWithImage(m_pSelectedIndicatorImage);
     ((CCScale9Sprite*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
     m_pSelectedIndicator->setAnchorPoint(CCPoint(0.0f, 1.0f));
     m_pSelectedIndicator->setFrame(CCRect(0, this->getBounds().size.height, 0, 0));
@@ -437,7 +437,7 @@ void CATabBar::setSelectedAtIndex(int index)
             CAView* viewLast = m_pViews.at(m_nSelectedIndex);
             if (CAImageView* imageView = dynamic_cast<CAImageView*>(viewLast->getSubviewByTag(0xffff)))
             {
-                imageView->setTexture(m_pSelectedItem->getImage());
+                imageView->setImage(m_pSelectedItem->getImage());
             }
         }
         
@@ -460,7 +460,7 @@ void CATabBar::setSelectedAtIndex(int index)
             CAView* view = m_pViews.at(m_nSelectedIndex);
             if (CAImageView* imageView = dynamic_cast<CAImageView*>(view->getSubviewByTag(0xffff)))
             {
-                imageView->setTexture(m_pSelectedItem->getSelectedImage());
+                imageView->setImage(m_pSelectedItem->getSelectedImage());
             }
         }
         

@@ -217,15 +217,15 @@ void CCDirector::setDefaultValues(void)
 	// Default pixel format for PNG images with alpha
 	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
 	if( strcmp(pixel_format, "rgba8888") == 0 )
-		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+		CAImage::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
 	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+		CAImage::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
 	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
+		CAImage::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
 	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
-	CCTexture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
+	CAImage::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
 void CCDirector::setGLDefaultValues(void)
@@ -828,17 +828,17 @@ void CCDirector::showStats(void)
             if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL)
             {
                 sprintf(m_pszFPS, "%.3f", m_fSecondsPerFrame);
-                m_pSPFLabel->setString(m_pszFPS);
+                m_pSPFLabel->setText(m_pszFPS);
                 
                 m_fFrameRate = m_uFrames / m_fAccumDt;
                 m_uFrames = 0;
                 m_fAccumDt = 0;
                 
                 sprintf(m_pszFPS, "%.1f", m_fFrameRate);
-                m_pFPSLabel->setString(m_pszFPS);
+                m_pFPSLabel->setText(m_pszFPS);
                 
                 sprintf(m_pszFPS, "%4lu", (unsigned long)g_uNumberOfDraws);
-                m_pDrawsLabel->setString(m_pszFPS);
+                m_pDrawsLabel->setText(m_pszFPS);
             }
             
             m_pDrawsLabel->visit();
@@ -868,7 +868,7 @@ void CCDirector::getFPSImageData(unsigned char** datapointer, unsigned int* leng
 
 void CCDirector::createStatsLabel()
 {
-    CCTexture2D *texture = NULL;
+    CAImage* texture = NULL;
     CCTextureCache *textureCache = CCTextureCache::sharedTextureCache();
 
     if( m_pFPSLabel && m_pSPFLabel )
@@ -880,8 +880,8 @@ void CCDirector::createStatsLabel()
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
-    CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+    CCTexture2DPixelFormat currentFormat = CAImage::defaultAlphaPixelFormat();
+    CAImage::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);
@@ -911,31 +911,28 @@ void CCDirector::createStatsLabel()
      */
     float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 640.0f;
 
-    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", 24);
+    m_pFPSLabel = CALabel::create(CCRect(0, 0, 100, CC_DIRECTOR_STATS_POSITION.y));
+    m_pFPSLabel->setfontSize(24);
     m_pFPSLabel->setAnchorPoint(CCPointZero);
     m_pFPSLabel->retain();
     m_pFPSLabel->setScale(factor);
     m_pFPSLabel->setColor(ccBLUE);
     
-    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", 24);
+    m_pSPFLabel = CALabel::create(CCRect(0, 32*factor, 100, CC_DIRECTOR_STATS_POSITION.y));
+    m_pSPFLabel->setfontSize(24);
     m_pSPFLabel->setAnchorPoint(CCPointZero);
     m_pSPFLabel->retain();
     m_pSPFLabel->setScale(factor);
     m_pSPFLabel->setColor(ccBLUE);
     
-    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", 24);
+    m_pDrawsLabel = CALabel::create(CCRect(0, 64*factor, 100, CC_DIRECTOR_STATS_POSITION.y));
+    m_pDrawsLabel->setfontSize(24);
     m_pDrawsLabel->setAnchorPoint(CCPointZero);
     m_pDrawsLabel->retain();
     m_pDrawsLabel->setScale(factor);
     m_pDrawsLabel->setColor(ccBLUE);
     
-    CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
-
-    CCLog("%f, %f", CC_DIRECTOR_STATS_POSITION.x, CC_DIRECTOR_STATS_POSITION.y);
-    
-    m_pDrawsLabel->setPosition(ccpAdd(ccp(0, 64*factor), CC_DIRECTOR_STATS_POSITION));
-    m_pSPFLabel->setPosition(ccpAdd(ccp(0, 32*factor), CC_DIRECTOR_STATS_POSITION));
-    m_pFPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
+    CAImage::setDefaultAlphaPixelFormat(currentFormat);
 }
 
 float CCDirector::getContentScaleFactor(void)

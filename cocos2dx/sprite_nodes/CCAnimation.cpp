@@ -187,16 +187,16 @@ void CCAnimation::addSpriteFrame(CCSpriteFrame *pFrame)
 
 void CCAnimation::addSpriteFrameWithFileName(const char *pszFileName)
 {
-    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFileName);
+    CAImage* pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFileName);
     CCRect rect = CCRectZero;
     rect.size = pTexture->getContentSize();
-    CCSpriteFrame *pFrame = CCSpriteFrame::createWithTexture(pTexture, rect);
+    CCSpriteFrame *pFrame = CCSpriteFrame::createWithImage(pTexture, rect);
     addSpriteFrame(pFrame);
 }
 
-void CCAnimation::addSpriteFrameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
+void CCAnimation::addSpriteFrameWithImage(CAImage* pobTexture, const CCRect& rect)
 {
-    CCSpriteFrame *pFrame = CCSpriteFrame::createWithTexture(pobTexture, rect);
+    CCSpriteFrame *pFrame = CCSpriteFrame::createWithImage(pobTexture, rect);
     addSpriteFrame(pFrame);
 }
 

@@ -165,6 +165,10 @@ bool CANavigationController::initWithRootViewController(CAViewController* viewCo
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
+    if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
+    {
+        viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
+    }
     m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     
     return true;
@@ -221,6 +225,10 @@ void CANavigationController::pushViewController(CAViewController* viewController
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
+    if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
+    {
+        viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
+    }
     m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     viewController->addViewFromSuperview(m_pContainer);
     

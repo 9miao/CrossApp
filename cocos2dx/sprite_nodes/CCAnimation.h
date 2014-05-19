@@ -85,7 +85,7 @@ public:
 
 
 
-/** A CCAnimation object is used to perform animations on the CCSprite objects.
+/** A CCAnimation object is used to perform animations on the CAImageView objects.
 
 The CCAnimation object contains CCAnimationFrame objects, and a possible delay between the frames.
 You can animate a CCAnimation object by using the CCAnimate action. Example:
@@ -142,7 +142,7 @@ public:
      The frame will be added with one "delay unit".
      Added to facilitate the migration from v0.8 to v0.9.
      */
-    void addSpriteFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+    void addSpriteFrameWithImage(CAImage* pobTexture, const CCRect& rect);
     /**
      * @lua NA
      */

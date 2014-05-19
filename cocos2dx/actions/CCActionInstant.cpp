@@ -256,7 +256,7 @@ bool CCFlipX::initWithFlipX(bool x) {
 
 void CCFlipX::update(float time) {
     CC_UNUSED_PARAM(time);
-    ((CCSprite*) (m_pTarget))->setFlipX(m_bFlipX);
+    ((CAImageView*) (m_pTarget))->setFlipX(m_bFlipX);
 }
 
 CCFiniteTimeAction* CCFlipX::reverse() {
@@ -304,7 +304,7 @@ bool CCFlipY::initWithFlipY(bool y) {
 
 void CCFlipY::update(float time) {
     CC_UNUSED_PARAM(time);
-    ((CCSprite*) (m_pTarget))->setFlipY(m_bFlipY);
+    ((CAImageView*) (m_pTarget))->setFlipY(m_bFlipY);
 }
 
 CCFiniteTimeAction* CCFlipY::reverse() {

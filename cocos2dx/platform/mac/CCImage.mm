@@ -650,7 +650,7 @@ bool CCImage::potImageData(unsigned int POTWide, unsigned int POTHigh)
     // compute pixel format
 	if(hasAlpha)
 	{
-		pixelFormat = CCTexture2D::defaultAlphaPixelFormat();
+		pixelFormat = CAImage::defaultAlphaPixelFormat();
 	}
 	else
 	{

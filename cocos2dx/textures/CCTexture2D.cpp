@@ -62,7 +62,7 @@ static CCTexture2DPixelFormat g_defaultAlphaPixelFormat = kCCTexture2DPixelForma
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static bool PVRHaveAlphaPremultiplied_ = false;
 
-CCTexture2D::CCTexture2D()
+CAImage::CAImage()
 : m_bPVRHaveAlphaPremultiplied(true)
 , m_uPixelsWide(0)
 , m_uPixelsHigh(0)
@@ -76,7 +76,7 @@ CCTexture2D::CCTexture2D()
 {
 }
 
-CCTexture2D::~CCTexture2D()
+CAImage::~CAImage()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::removeTexture(this);
@@ -91,32 +91,32 @@ CCTexture2D::~CCTexture2D()
     }
 }
 
-CCTexture2D* CCTexture2D::create(const char* file)
+CAImage* CAImage::create(const char* file)
 {
 	return CCTextureCache::sharedTextureCache()->addImage(file);
 }
 
-CCTexture2DPixelFormat CCTexture2D::getPixelFormat()
+CCTexture2DPixelFormat CAImage::getPixelFormat()
 {
     return m_ePixelFormat;
 }
 
-unsigned int CCTexture2D::getPixelsWide()
+unsigned int CAImage::getPixelsWide()
 {
     return m_uPixelsWide;
 }
 
-unsigned int CCTexture2D::getPixelsHigh()
+unsigned int CAImage::getPixelsHigh()
 {
     return m_uPixelsHigh;
 }
 
-GLuint CCTexture2D::getName()
+GLuint CAImage::getName()
 {
     return m_uName;
 }
 
-CCSize CCTexture2D::getContentSize()
+CCSize CAImage::getContentSize()
 {
 
     CCSize ret;
@@ -126,61 +126,61 @@ CCSize CCTexture2D::getContentSize()
     return ret;
 }
 
-const CCSize& CCTexture2D::getContentSizeInPixels()
+const CCSize& CAImage::getContentSizeInPixels()
 {
     return m_tContentSize;
 }
 
-GLfloat CCTexture2D::getMaxS()
+GLfloat CAImage::getMaxS()
 {
     return m_fMaxS;
 }
 
-void CCTexture2D::setMaxS(GLfloat maxS)
+void CAImage::setMaxS(GLfloat maxS)
 {
     m_fMaxS = maxS;
 }
 
-GLfloat CCTexture2D::getMaxT()
+GLfloat CAImage::getMaxT()
 {
     return m_fMaxT;
 }
 
-void CCTexture2D::setMaxT(GLfloat maxT)
+void CAImage::setMaxT(GLfloat maxT)
 {
     m_fMaxT = maxT;
 }
 
-CCGLProgram* CCTexture2D::getShaderProgram(void)
+CCGLProgram* CAImage::getShaderProgram(void)
 {
     return m_pShaderProgram;
 }
 
-void CCTexture2D::setShaderProgram(CCGLProgram* pShaderProgram)
+void CAImage::setShaderProgram(CCGLProgram* pShaderProgram)
 {
     CC_SAFE_RETAIN(pShaderProgram);
     CC_SAFE_RELEASE(m_pShaderProgram);
     m_pShaderProgram = pShaderProgram;
 }
 
-void CCTexture2D::releaseData(void *data)
+void CAImage::releaseData(void *data)
 {
     free(data);
 }
 
-void* CCTexture2D::keepData(void *data, unsigned int length)
+void* CAImage::keepData(void *data, unsigned int length)
 {
     CC_UNUSED_PARAM(length);
     //The texture data mustn't be saved because it isn't a mutable texture.
     return data;
 }
 
-bool CCTexture2D::hasPremultipliedAlpha()
+bool CAImage::hasPremultipliedAlpha()
 {
     return m_bHasPremultipliedAlpha;
 }
 
-bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
+bool CAImage::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
     unsigned int bitsPerPixel;
     //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
@@ -270,14 +270,14 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 }
 
 
-const char* CCTexture2D::description(void)
+const char* CAImage::description(void)
 {
     return CCString::createWithFormat("<CCTexture2D | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT)->getCString();
 }
 
 // implementation CCTexture2D (Image)
 
-bool CCTexture2D::initWithImage(CCImage *uiImage)
+bool CAImage::initWithImage(CCImage *uiImage)
 {
     if (uiImage == NULL)
     {
@@ -301,7 +301,7 @@ bool CCTexture2D::initWithImage(CCImage *uiImage)
     return initPremultipliedATextureWithImage(uiImage, imageWidth, imageHeight);
 }
 
-bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned int width, unsigned int height)
+bool CAImage::initPremultipliedATextureWithImage(CCImage *image, unsigned int width, unsigned int height)
 {
     unsigned char*            tempData = image->getData();
     unsigned int*             inPixel32  = NULL;
@@ -441,12 +441,12 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 }
 
 // implementation CCTexture2D (Text)
-bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize)
+bool CAImage::initWithString(const char *text, const char *fontName, float fontSize)
 {
     return initWithString(text,  fontName, fontSize, CCSizeMake(0,0), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop);
 }
 
-bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment)
+bool CAImage::initWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -516,7 +516,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
     
 }
 
-bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinition)
+bool CAImage::initWithString(const char *text, ccFontDefinition *textDefinition)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -628,7 +628,7 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
 
 // implementation CCTexture2D (Drawing)
 
-void CCTexture2D::drawAtPoint(const CCPoint& point)
+void CAImage::drawAtPoint(const CCPoint& point)
 {
     GLfloat    coordinates[] = {    
         0.0f,    m_fMaxT,
@@ -666,7 +666,7 @@ void CCTexture2D::drawAtPoint(const CCPoint& point)
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-void CCTexture2D::drawInRect(const CCRect& rect)
+void CAImage::drawInRect(const CCRect& rect)
 {
     GLfloat    coordinates[] = {    
         0.0f,    m_fMaxT,
@@ -698,7 +698,7 @@ void CCTexture2D::drawInRect(const CCRect& rect)
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-bool CCTexture2D::initWithPVRFile(const char* file)
+bool CAImage::initWithPVRFile(const char* file)
 {
     bool bRet = false;
     // nothing to do with CCObject::init
@@ -730,7 +730,7 @@ bool CCTexture2D::initWithPVRFile(const char* file)
     return bRet;
 }
 
-bool CCTexture2D::initWithETCFile(const char* file)
+bool CAImage::initWithETCFile(const char* file)
 {
     bool bRet = false;
     // nothing to do with CCObject::init
@@ -758,7 +758,7 @@ bool CCTexture2D::initWithETCFile(const char* file)
     return bRet;
 }
 
-void CCTexture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
+void CAImage::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
     PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
 }
@@ -769,7 +769,7 @@ void CCTexture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 //
 // implementation CCTexture2D (GLFilter)
 
-void CCTexture2D::generateMipmap()
+void CAImage::generateMipmap()
 {
     CCAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mipmap texture only works in POT textures");
     ccGLBindTexture2D( m_uName );
@@ -777,12 +777,12 @@ void CCTexture2D::generateMipmap()
     m_bHasMipmaps = true;
 }
 
-bool CCTexture2D::hasMipmaps()
+bool CAImage::hasMipmaps()
 {
     return m_bHasMipmaps;
 }
 
-void CCTexture2D::setTexParameters(ccTexParams *texParams)
+void CAImage::setTexParameters(ccTexParams *texParams)
 {
     CCAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) || texParams->wrapS == GL_CLAMP_TO_EDGE) &&
         (m_uPixelsHigh == ccNextPOT(m_uPixelsHigh) || texParams->wrapT == GL_CLAMP_TO_EDGE),
@@ -799,7 +799,7 @@ void CCTexture2D::setTexParameters(ccTexParams *texParams)
 #endif
 }
 
-void CCTexture2D::setAliasTexParameters()
+void CAImage::setAliasTexParameters()
 {
     ccGLBindTexture2D( m_uName );
 
@@ -819,7 +819,7 @@ void CCTexture2D::setAliasTexParameters()
 #endif
 }
 
-void CCTexture2D::setAntiAliasTexParameters()
+void CAImage::setAntiAliasTexParameters()
 {
     ccGLBindTexture2D( m_uName );
 
@@ -839,7 +839,7 @@ void CCTexture2D::setAntiAliasTexParameters()
 #endif
 }
 
-const char* CCTexture2D::stringForFormat()
+const char* CAImage::stringForFormat()
 {
 	switch (m_ePixelFormat) 
 	{
@@ -887,17 +887,17 @@ const char* CCTexture2D::stringForFormat()
 //
 // implementation CCTexture2D (PixelFormat)
 
-void CCTexture2D::setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format)
+void CAImage::setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format)
 {
     g_defaultAlphaPixelFormat = format;
 }
 
-CCTexture2DPixelFormat CCTexture2D::defaultAlphaPixelFormat()
+CCTexture2DPixelFormat CAImage::defaultAlphaPixelFormat()
 {
     return g_defaultAlphaPixelFormat;
 }
 
-unsigned int CCTexture2D::bitsPerPixelForFormat(CCTexture2DPixelFormat format)
+unsigned int CAImage::bitsPerPixelForFormat(CCTexture2DPixelFormat format)
 {
 	unsigned int ret=0;
 
@@ -942,7 +942,7 @@ unsigned int CCTexture2D::bitsPerPixelForFormat(CCTexture2DPixelFormat format)
 	return ret;
 }
 
-unsigned int CCTexture2D::bitsPerPixelForFormat()
+unsigned int CAImage::bitsPerPixelForFormat()
 {
 	return this->bitsPerPixelForFormat(m_ePixelFormat);
 }

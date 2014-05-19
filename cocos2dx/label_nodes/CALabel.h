@@ -11,9 +11,8 @@
 
 #include <iostream>
 
-#include "cocos2d.h"
-#include "sprite_nodes/CAView.h"
-USING_NS_CC;
+#include "sprite_nodes/CCSprite.h"
+NS_CC_BEGIN
 using namespace std;
 typedef struct _caFontDefinition
 {
@@ -40,14 +39,14 @@ public:
     
 } caFontDefinition;
 
-class CALabel:public CAView
+class CALabel: public CAView
 {
 public:
+    
     CALabel();
     
     virtual ~CALabel();
     
-public:
     static CALabel *create(CCRect frame);
     
     virtual bool initWithFrame(CCRect frame);
@@ -60,26 +59,30 @@ public:
     
     CC_PROPERTY(ccColor4B, m_nTextcolor, Textcolor);
     
-    CC_PROPERTY(ccColor4B, m_nShadowcolor, Shadowcolor);
-
-    CC_PROPERTY(CCSize, m_nShadowOffset, ShadowOffset);
+//    CC_PROPERTY(ccColor4B, m_nShadowcolor, Shadowcolor);
+//
+//    CC_PROPERTY(CCSize, m_nShadowOffset, ShadowOffset);
     
-    CC_SYNTHESIZE(CCVerticalTextAlignment, m_nvTextAlignmet, vTextAlignmet);
+    CC_SYNTHESIZE(CCVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
     
     CC_PROPERTY(CCTextAlignment, m_nTextAlignment, TextAlignment);
     
-    CC_SYNTHESIZE(CCSize, m_nDimensions, Dimensions);
+    CC_PROPERTY(CCSize, m_nDimensions, Dimensions);
     
     CC_PROPERTY(unsigned int, m_nNumberOfLine, NumberOfLine);
     
-    CCSprite *m_pTextTexture;
-private:
+    CC_SYNTHESIZE_READONLY(CAImageView*, m_pTextImage, TextImage);
+
+    CC_SYNTHESIZE_READONLY(CCSize, m_cLabelSize, LabelSize);
     
-    bool updataTexture();
+    bool updateImage();
+    
+private:
     
     virtual void onEnterTransitionDidFinish();
     
     caFontDefinition setFontDefiniton(bool flag);
 };
 
+NS_CC_END
 #endif /* defined(__project__CALabel__) */

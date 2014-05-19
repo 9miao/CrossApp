@@ -79,7 +79,7 @@ public:
     /** Sets the bottom side inset */
     CC_PROPERTY(float, m_insetBottom, InsetBottom);
 
-    CC_SYNTHESIZE_RETAIN(CCTexture2D*, m_pTexture, Texture);
+    CC_SYNTHESIZE_RETAIN(CAImage*, m_pImage, Image);
     
 protected:
     bool m_bSpritesGenerated;
@@ -87,15 +87,15 @@ protected:
     CCRect m_capInsetsInternal;
     bool m_positionsAreDirty;
     
-    CCSprite* _topLeft;
-    CCSprite* _top;
-    CCSprite* _topRight;
-    CCSprite* _left;
-    CCSprite* _centre;
-    CCSprite* _right;
-    CCSprite* _bottomLeft;
-    CCSprite* _bottom;
-    CCSprite* _bottomRight;
+    CAImageView* _topLeft;
+    CAImageView* _top;
+    CAImageView* _topRight;
+    CAImageView* _left;
+    CAImageView* _centre;
+    CAImageView* _right;
+    CAImageView* _bottomLeft;
+    CAImageView* _bottom;
+    CAImageView* _bottomRight;
 
     bool _opacityModifyRGB;
     GLubyte _opacity;
@@ -116,34 +116,34 @@ public:
     virtual bool init();
 
     /**
-     * Initializes a 9-slice sprite with a texture file, a delimitation zone and
+     * Initializes a 9-slice sprite with a image file, a delimitation zone and
      * with the specified cap insets.
      * Once the sprite is created, you can then call its "setContentSize:" method
      * to resize the sprite will all it's 9-slice goodness intract.
      * It respects the anchorPoint too.
      *
-     * @param file The name of the texture file.
-     * @param rect The rectangle that describes the sub-part of the texture that
-     * is the whole image. If the shape is the whole texture, set this to the 
-     * texture's full rect.
+     * @param file The name of the image file.
+     * @param rect The rectangle that describes the sub-part of the image that
+     * is the whole image. If the shape is the whole image, set this to the 
+     * image's full rect.
      * @param capInsets The values to use for the cap insets.
      */
 
-	virtual bool initWithTexture(CCTexture2D* texture, CCRect rect, CCRect capInsets);
+	virtual bool initWithImage(CAImage* image, CCRect rect, CCRect capInsets);
 
-	static CCScale9Sprite* createWithTexture(CCTexture2D* texture, CCRect rect, CCRect capInsets);
+	static CCScale9Sprite* createWithImage(CAImage* image, CCRect rect, CCRect capInsets);
 
-	virtual bool initWithTexture(CCTexture2D* texture, CCRect rect);
+	virtual bool initWithImage(CAImage* image, CCRect rect);
 
-	static CCScale9Sprite* createWithTexture(CCTexture2D* texture, CCRect rect);
+	static CCScale9Sprite* createWithImage(CAImage* image, CCRect rect);
 
-	virtual bool initWithTexture(CCRect capInsets, CCTexture2D* texture);
+	virtual bool initWithImage(CCRect capInsets, CAImage* image);
 
-	static CCScale9Sprite* createWithTexture(CCRect capInsets, CCTexture2D* texture);
+	static CCScale9Sprite* createWithImage(CCRect capInsets, CAImage* image);
 
-	virtual bool initWithTexture(CCTexture2D* texture);
+	virtual bool initWithImage(CAImage* image);
 
-	static CCScale9Sprite* createWithTexture(CCTexture2D* texture);
+	static CCScale9Sprite* createWithImage(CAImage* image);
 
     /**
      * Creates and returns a new sprite object with the specified cap insets.
@@ -162,7 +162,7 @@ public:
     /** sets the premultipliedAlphaOpacity property.
      If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
      If set to YES then oapcity will be applied as: glColor(opacity, opacity, opacity, opacity );
-     Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
+     images with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
      @since v0.8
      */
     virtual void setOpacityModifyRGB(bool bValue);
@@ -176,7 +176,7 @@ public:
     virtual void setColor(const ccColor3B& color);
 	virtual const ccColor3B& getColor();
 
-    virtual bool updateWithTexture(CAImage* image, CCRect rect, CCRect capInsets);
+    virtual bool updateWithImage(CAImage* image, CCRect rect, CCRect capInsets);
 
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     virtual void updateDisplayedColor(const cocos2d::ccColor3B& parentColor);

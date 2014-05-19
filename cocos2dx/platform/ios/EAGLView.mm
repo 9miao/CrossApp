@@ -393,7 +393,7 @@ static EAGLView *view = 0;
 #pragma mark EAGLView - Touch Delegate
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
+    if (isKeyboardShown_ && ![self isFirstResponder])
     {
         [self handleTouchesAfterKeyboardShow];
         return;
@@ -415,7 +415,7 @@ static EAGLView *view = 0;
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
+    if (isKeyboardShown_ && ![self isFirstResponder])
     {
         return;
     }
@@ -435,7 +435,7 @@ static EAGLView *view = 0;
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
+    if (isKeyboardShown_ && ![self isFirstResponder])
     {
         return;
     }
@@ -456,7 +456,7 @@ static EAGLView *view = 0;
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
+    if (isKeyboardShown_ && ![self isFirstResponder])
     {
         return;
     }

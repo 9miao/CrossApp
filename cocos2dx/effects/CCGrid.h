@@ -105,7 +105,7 @@ public:
     /**
      *  @lua NA
      */
-    bool initWithSize(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    bool initWithSize(const CCSize& gridSize, CAImage* pTexture, bool bFlipped);
     /**
      *  @lua NA
      */
@@ -136,7 +136,7 @@ public:
     /** create one Grid 
      * @lua NA
      */
-    static CCGridBase* create(const CCSize& gridSize, CCTexture2D *texture, bool flipped);
+    static CCGridBase* create(const CCSize& gridSize, CAImage* texture, bool flipped);
     /** create one Grid 
      * @lua NA
      */
@@ -150,7 +150,7 @@ protected:
     bool m_bActive;
     int  m_nReuseGrid;
     CCSize m_sGridSize;
-    CCTexture2D *m_pTexture;
+    CAImage* m_pTexture;
     CCPoint m_obStep;
     CCGrabber *m_pGrabber;
     bool m_bIsTextureFlipped;
@@ -185,7 +185,7 @@ public:
 
 public:
     /** create one Grid */
-    static CCGrid3D* create(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    static CCGrid3D* create(const CCSize& gridSize, CAImage* pTexture, bool bFlipped);
     /** create one Grid */
     static CCGrid3D* create(const CCSize& gridSize);
     
@@ -225,7 +225,7 @@ public:
 public:
 
     /** create one Grid */
-    static CCTiledGrid3D* create(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+    static CCTiledGrid3D* create(const CCSize& gridSize, CAImage* pTexture, bool bFlipped);
     /** create one Grid */
     static CCTiledGrid3D* create(const CCSize& gridSize);
     

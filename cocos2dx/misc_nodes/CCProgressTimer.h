@@ -76,13 +76,13 @@ public:
     inline float getPercentage(void) {return m_fPercentage; }
 
     /** The image to show the progress percentage, retain */
-    inline CCSprite* getSprite(void) { return m_pSprite; }
+    inline CAImageView* getSprite(void) { return m_pSprite; }
 
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
-    bool initWithSprite(CCSprite* sp);
+    bool initWithSprite(CAImageView* sp);
 
     void setPercentage(float fPercentage);
-    void setSprite(CCSprite *pSprite);
+    void setSprite(CAImageView *pSprite);
     void setType(CCProgressTimerType type);
     /**
      *  @js setReverseDirection
@@ -102,7 +102,7 @@ public:
 
 public:
     /** Creates a progress timer with the sprite as the shape the timer goes through */
-    static CCProgressTimer* create(CCSprite* sp);
+    static CCProgressTimer* create(CAImageView* sp);
 protected:
     ccTex2F textureCoordFromAlphaPoint(CCPoint alpha);
     ccVertex2F vertexFromAlphaPoint(CCPoint alpha);
@@ -115,7 +115,7 @@ protected:
 protected:
     CCProgressTimerType m_eType;
     float m_fPercentage;
-    CCSprite *m_pSprite;
+    CAImageView *m_pSprite;
     int m_nVertexDataCount;
     ccV2F_C4B_T2F *m_pVertexData;
 

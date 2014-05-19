@@ -113,16 +113,66 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectorÁzßÕ¸åÑƒ‘¥Ò[]êĞ
-³KªgëÏÚß. n­‚6˜ïßÎ)œõd}‚å¾LA¼,L˜\"æøçíWìFœ*8€X[ıêœöôfLòç[½\—;ÄO
-Ñp…k¨é&œ˜k§9ıé–ñ]\[©@»¡Ê ÒV(0Øï÷æğg6I)šÕ¿µÑ|H3úÛËÃô†úµÖ,HX1­„C'Œ˜89ŸÒ4’:odÄoÑ#‘sD§çëw7Ï³ô6L™,ùE`ÜD¥ÚÛÃC/C&üC›¡¤{Æ%eIğÜKu®Í=9Dt2Œô£›«ÄŸÑ¤~v“#ŸÓDÈ1¢TÍ6)òp¥°`º¿j·9JÔHw3N¢<–ù’†BX‡àÕH6J¹÷1ù*k”´¬—†™ş¯mP«¦-=3$Ej¼)ü.pØ3õß ¾ÍŠÎÍ´xáuauÙ˜ˆT l›¢4"ŒCW<ğ]ë ÑÓ‘ÎùG€j”­‰&.³‘|”ÅÒé•a¹õÑ ¾AqwEÜñxæ%a:×‰•Óò…`¸_Üğ=†ù%»ÈáÊºß±£œûÄ}Tsû£ö@½ÈÏŞn¡Â€	Híì‘z´º—P»×Q£–›©$ ØàÓ,“ş  ·ëü,ntÄ¨R[ °»—ç21©D{ÌEb<òâë¬‘¦B6üô¦+èìJÜœ“Ÿ²ï7‹ØíãA¡Ád¬D jmï¹ú{ËbW9@´quÜ(>xïÕa£Oİ7î§Q¦&-…ŞuÕØ>Å²2ÄÎ©”ÍR2‹¤£ğ`fIBQwàhQ¯Ö-8ƒ’5¿¿±ÇQ«·Š·3*¹E¼*lC”qÈ[-1s’ˆâXQv³ò7í„ÊµjÖ’…Ò5cI™÷_míYLFJ¼G‡:ÿf+yó•`bVI›é*Ü.£'†øU`ky/cHé,üõÖğ¾p×ã.ªÀÛÂ3ô¯ÛU±­<ûëÌA¢Q}€[}6HYAv'x~®¥föÿ Ğ¶wé˜Q‹ÊØäAœ÷„ËÅÔÉN©, şğÚk®ÉıTËò:İéøŠ.{È…³OfJÒ<“I$ª¸ŠØ8åiúÒ]8†"ƒ“Ed)*¸5g‰ôx=ƒI“—24òW6oÊ`	BÈj`ßÔÈ>r¸8WäÆG4ÇäÉ—ï²ê·§…ĞÕÕ¨€ˆ€có”ÔÁÎr2åß·ƒG3—ä¢\Mí77R9›YœğÔË®kt¬óàÔ|“•Ò‚^Ã du> ÙÅ°Ò7ƒÿŞÆ(?4vù˜Â:¯f@²QÊ½±ÈWY› Ô e½4Ìômƒ"X5mé™!É(RãMáwÃ©ÿğmV$pn~¤Å¯«ËÆD¤ª `Û¥±aòŒ¸âèZ†˜tÎÈ?T lM4q©˜ä£,–N¯ûË­õİàŠ»sœ(âÇ3/	óĞ¹N¬œ–/Ãıâ†Gè1Ì/ÙE§PÖıåÜ'î£šÛµêŒ@|öşpL@jgÔ£õĞĞe¸„zØ…¸µÜL%ÅŸf™ôÏ 	ğ ½]çàgt£#F•Ú…İå¸<—‰I%Úc.ã‘_g4²á§7]é@gWâæœü”}?¸Yü+Àn
-† c%Uk{ÏÕØ[®»Ê¢‹¨ãFñÁ{¯}ê¾q§825i)ô®«Æö)–•	$vN¥l–’Y$…3KŠºG‹zµnÁ”¬ùıˆ8¢X€¸U¼QÉ-âUa¢Œûs@ŞÊh‰™“DÇŠ²ƒœ•¿i'T®}P³–,”®KÊ¼ÿjkÏb2Râ=:Ôø7[É›¯{³JÚ¼HWávñ=1Ä¯[Ë{CJgá¯·†÷…»wQu Ş¡İî¨ŠmåÙ—X`ê,@Øê³AÊ
-²;qÄsôs-5³ÿ€¶õ¼KÇŒ’XTÆ&Ÿâà¼'\.¦NvJeğ·€×^sMî§Z¶×éNÇW4pÙC.|˜…dx2S’æ™L"QÅmTÄÆ)OÓ—îÂ1œ,"ãHQÁ­9K¤ÇëLš¼”¡É¿²|#øXPKjDvü(Pû¦Fö‘{ÄÅ¹"7>¢9&O¾|—U¿<-„®®v@l@›§„ v–“)ÿ¾<š¹$åjj¿¹‘ÊÙ”Èâ„§^vıX‹ cï§æ›¬”ô!«ğÍ†Dx\(†•¾ü÷6FùA ±ËÇ4	˜[ræ“,O1ÆO´úK¦']^}íîqÌó/mèéúj°iJ¿×êŞª³<"TuÛx>$w>~Ï©ğÖ+XZf&I§_&û›ÊoÙ™ø¶˜W2P‹}ånªÒ6ó$}^–úë¦ñËÂWïÖñÎ«t{üöFZÙ›9ñ© `µo±Â74ÂT»gçlN¤M1Á´w1®{§Àc/b82dÎˆíˆŠÍäÚ¾¨á¦G†JØ\şĞ£ıP{}X3M2QrPŞ}U  n{s'UŞ¦ó+­…f˜„£‘Ë©Okz¿¬@`âW^Ë ¿kÇâéL'ásA®Ë¢:¶"ZÕÛ®¨V›Í?Ùò3-éE×áÎIñ¬Ö™•Ãú²†,#““òY–¹’Z´pa®°Ñãüü&ğ-0I+zcø„¦.­^À°	‘«r[ÎË¯o°²ì—ZoÖI#ú¸æAzg8é)LCú
-k}ïÇ‹ÂX?„ÀÕb3"9¢ï°
-Æ–ò‚0¸4RWà*»¥
-m]4Æ”4w‰CE·:Ú¹øáÍŒ$Ü-ÎÃ/´®w0ŞÏØ?µi‘ÿg[¢P[¦`ÔÄ~Ä
-º»ªÚ¶(:¸‚ZMëìšjäv*¾¼A§áË¬ÿİVEÛ¡xîÃAÏº‹~ÌÄgãOÁÆòéûkÊÒ„~è7ìô—Q`³Oj
-d­4{ÉõÔ7æ”|Ocúdiœ)’Ud« ¦Mæ'¨U Ûp¾È:²â7Z¹@œ@¹A|Gã!zÕµÕ¼%¼˜á€l#OeÚ¿Ø:ß½ã*jcO¹,—>t¯cğ}0h‚‰%¾xW80oÒ‰NuÚå°¼L—Œù“ö™ûÛ|ş~«ĞÚÕİsÈTÉöD}ìªokÄßg5ÙD~|óNÆ'ïÓAx‡®;gQÂ=T¯‹=\/Ö•ÕÒ^¨ëÆ*ß¾sGÊB;Ì™”¬AÜAl÷9–"4®ÏİEkÌò_¶KqÁÃB_×à¾Çêi—9$¯;¦"íèQ;|ôÆL$q¥]0ùV™-‰ÃD(í^F!wåØçƒ,ø5»Üs)õŞpen?g?¹)'ˆXU¶ı<ÙINÁqÏcB‰A¥}ëÎª ¶›Ç_´«Ç†ò52„x83ÿ¿mç9!¾\÷àĞ¼ş°lú	û§‹pÕ˜í?·‰'^Î	G=7ätÊR6õ¦–@-]è0¼ôzİ5¢à`ÑtÈèäÊ‚VCûz°Şw5nyôÅ`d©ôF—:´Âì’êÙú³ö÷€¨[« æûw€³E
-g=YŸ`¹/S/&—ˆ9şyû»§Š   Ö–E¿º§==„“üù–F/×åqÆ“B4Bájº	'æ#AÅÚiNºe¼DWçV*Ğn¨2€´
-öûÀ½9ü™MRŠfõom4ÒŒşÃöò0½„¡~­5VL+¡ÅĞ	#&NÎ§4Í„¤ÎñÇ[tÆHä‘Çéùúİãó,ı…S&K~7Q©ööğĞÃ	ÿĞf(éqÉC™A<÷R]€ksO‡ç…#ıèæ*±Åg4©ŸİäÈç4rŒ(U³MŠ¼#œC),˜î¯Úm5RàİŒ“(e¾¤¡Ö!x5’Rî}ŒE¾ÊÚ¥-ë¥a¦ÿkÁªiKÏIF‘ÄzshT`ÂVŸRVİ‰#£Ÿk©™ı? ´­ç]:f”Ä¢26ùDç=ár1u²S*È€¿¼öškr?Õ²…¼Nw:¾¢ËráÃ,$Ã“™’4Ïd‰*n£"6Nyš¾t¡ÈàdGŠ
-nÍY"=^Ï`Òä¥M†ü•äÁÇ‚2X‚Pc ²ãGØ75²Ü#.Î¹ñÍ1yòå»¬úmài!tuµ*`"àØ<%u°³œLù÷íàÑÌ%¹(WSûÍTÎ¦D'<õ²ëÇZë|'85ßd¥´ ×0Y€h6$ÂãB1¬ôÍà¿·1Ê]>¦ùKÀÜ’3ŸdyBˆ1~¢åĞgX2=éòêkwciCO×WƒMSú½V÷Víä¡ªÛÆó™ ¹óñ{vH…·^ÁÀÒ23Iò<ı20ÙŸØT~ËÎÄ´Å¼’Xì+wS•¶™'éóš°ÔX7_Ş¾z·w^¥Û«à·7êÔÊŞÄÈ‰O«}‹¾¡¦úÛ­8;ds"åhŠ	ş ½‹q¥Ø;u{Ã‘y$sş@lGTğl&ÿÓöE7=2TÂæò‡€í‡ZØëÃši’‰’ƒòî« pÛ£˜;©ò6_i-4Ã$¤\N}ZÓûu`;o¼òZı];Og:	ŸrXÕ±ÑªŞvEµÚlşÉ–ŸiI/ºwæHŠg…´Î¬${~È^©›‰G…Úµ¸W\+øZ°°!^¡Æ—‚Y“ ¾ a}
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="Windows">
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+    <Reference Include="platform.winmd">
+      <IsWinMDFile>true</IsWinMDFile>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp" />
+    <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
+    <ClCompile Include="..\GUI\CAUIHelper.cpp" />
+    <ClCompile Include="..\network\HttpClient.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
+    <ClInclude Include="..\AssetsManager\AssetsManager.h" />
+    <ClInclude Include="..\cocos-ext.h" />
+    <ClInclude Include="..\ExtensionMacros.h" />
+    <ClInclude Include="..\GUI\CAUIHelper.h" />
+    <ClInclude Include="..\network\HttpClient.h" />
+    <ClInclude Include="..\network\HttpRequest.h" />
+    <ClInclude Include="..\network\HttpResponse.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

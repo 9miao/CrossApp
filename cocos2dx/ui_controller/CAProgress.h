@@ -38,42 +38,39 @@ public:
     
     virtual void onExitTransitionDidStart();
     
+	void setProgress(float progress, bool animated = false);
+
+	float getProgress();
+
 public:
-    
-    void schedule(float dt);
-    
-    void setProgress(float progress, bool animated = false);
-    
-    
-    CC_SYNTHESIZE(float, m_fProgress, progress);
     
     CC_SYNTHESIZE(CAProgressStyle, m_pProgressStyle, ProgressStyle);
     
-    CC_SYNTHESIZE(ccColor3B, m_pProgressTintColor, ProgressTintColor);
+    CC_SYNTHESIZE(ccColor3B, m_progressTintColor, ProgressTintColor);
     
-    CC_SYNTHESIZE(ccColor3B, m_pProgresstrackColor, ProgresstrackColor);
+    CC_SYNTHESIZE(ccColor3B, m_progresstrackColor, ProgresstrackColor);
     
-    CC_PROPERTY(std::string, m_pProgressTintImage, ProgressTintImage);
+	CC_SYNTHESIZE_RETAIN(CAImage*, m_pProgressTintImage, ProgressTintImage);
     
-    CC_PROPERTY(std::string, m_pProgressTrackImage, ProgressTrackImage);
+	CC_SYNTHESIZE_RETAIN(CAImage*, m_pProgressTrackImage, ProgressTrackImage);
     
-   
+protected:
+
+	void update(float dt);
     
-private:
-    CCSprite* m_pCopyTarckImage;
+	void animatedBegin();
+
+	void animatedFinish();
+
+	CAImage* getImage(CAImage*);
+
+    CAImageView* m_pTarckImageView;
     
-    CCSprite* m_pCopyProgressImage;
-    
-    CCRenderTexture *m_pRender;
-    
-    float m_nCurPercent;
-    
-    float m_previousPercent;
-    
+	CAImageView* m_pProgressImageView;
+
+	float m_fProgress;
+
     CAView* m_pIndicator;
-    
-    void init9SpriteWithImage(const char *fileName);
-    
 };
 
 NS_CC_END

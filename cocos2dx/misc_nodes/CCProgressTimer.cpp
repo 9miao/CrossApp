@@ -56,7 +56,7 @@ CCProgressTimer::CCProgressTimer()
 ,m_bReverseDirection(false)
 {}
 
-CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
+CCProgressTimer* CCProgressTimer::create(CAImageView* sp)
 {
     CCProgressTimer *pProgressTimer = new CCProgressTimer();
     if (pProgressTimer->initWithSprite(sp))
@@ -72,7 +72,7 @@ CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
     return pProgressTimer;
 }
 
-bool CCProgressTimer::initWithSprite(CCSprite* sp)
+bool CCProgressTimer::initWithSprite(CAImageView* sp)
 {
     setPercentage(0.0f);
     m_pVertexData = NULL;
@@ -104,7 +104,7 @@ void CCProgressTimer::setPercentage(float fPercentage)
     }
 }
 
-void CCProgressTimer::setSprite(CCSprite *pSprite)
+void CCProgressTimer::setSprite(CAImageView *pSprite)
 {
     if (m_pSprite != pSprite)
     {
@@ -509,7 +509,7 @@ void CCProgressTimer::draw(void)
 
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
 
-    ccGLBindTexture2D( m_pSprite->getTexture()->getName() );
+    ccGLBindTexture2D( m_pSprite->getImage()->getName() );
 
 #ifdef EMSCRIPTEN
     setGLBufferData((void*) m_pVertexData, (m_nVertexDataCount * sizeof(ccV2F_C4B_T2F)), 0);

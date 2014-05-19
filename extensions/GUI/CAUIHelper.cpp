@@ -116,7 +116,7 @@ CCObject* CAUIHelper::addButton(CSJson::Value jsonValue, cocos2d::CCRect &uiRect
     }
     else if (btntype == ButtonGrid9)
     {
-        CCScale9Sprite *image = CCScale9Sprite::createWithTexture(CAImage::create(imageRes.c_str()));
+        CCScale9Sprite *image = CCScale9Sprite::createWithImage(CAImage::create(imageRes.c_str()));
     
         btn->setBackGround(CAControlStateNormal, image);
         
@@ -141,7 +141,7 @@ CCObject* CAUIHelper::addLabel(CSJson::Value jsonValue, CCRect &uiRect)
 }
 CCObject* CAUIHelper::addImage(CSJson::Value jsonValue, CCRect &uiRect)
 {
-    CAImageView *imageview = CAImageView::createWithTexture(CAImage::create(""));
+    CAImageView *imageview = CAImageView::createWithImage(CAImage::create(""));
     imageview->setFrame(uiRect);
     return NULL;
 }

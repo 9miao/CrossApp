@@ -7,26 +7,29 @@
 //
 
 #include "CALabel.h"
-
+#include "include/ccMacros.h"
+#include "CCDirector.h"
+NS_CC_BEGIN
 CALabel::CALabel()
 :m_nNumberOfLine(0),
-m_nShadowcolor(ccc4(0, 0, 0,255)),
-m_nShadowOffset(CCSizeZero),
-m_nTextAlignment(kCCTextAlignmentCenter),
+m_nTextAlignment(kCCTextAlignmentLeft),
 m_nText(""),
 m_nfontName("Arial"),
 m_nTextcolor(ccc4(0, 0, 0, 255)),
-m_nvTextAlignmet(kCCVerticalTextAlignmentTop),
-m_pTextTexture(NULL),
+m_nVerticalTextAlignmet(kCCVerticalTextAlignmentTop),
+m_pTextImage(NULL),
 m_nDimensions(CCSizeZero),
-m_nfontSize(18)
+m_nfontSize(18),
+m_cLabelSize(CCSizeZero)
 {
     
 }
+
 CALabel::~CALabel()
 {
     
 }
+
 CALabel *CALabel::create(CCRect frame)
 {
     CALabel *label = new CALabel();
@@ -38,11 +41,13 @@ CALabel *CALabel::create(CCRect frame)
     CC_SAFE_DELETE(label);
     return NULL;
 }
+
 void CALabel::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
-    this->updataTexture();
+    this->updateImage();
 }
+
 bool CALabel::initWithFrame(CCRect frame)
 {
    
@@ -51,14 +56,16 @@ bool CALabel::initWithFrame(CCRect frame)
     }
     
     this->setOpacity(0);
-    m_pTextTexture = CCSprite::create();
     
-    m_pTextTexture -> setFrame(this->getBounds());
+    m_pTextImage = CAImageView::create();
     
-    this->addSubview(m_pTextTexture);
+    m_pTextImage->setFrame(CCRectZero);
+    
+    this->addSubview(m_pTextImage);
     
     return true;
 }
+
 caFontDefinition CALabel::setFontDefiniton(bool flag)
 {
     caFontDefinition texDef;
@@ -70,7 +77,7 @@ caFontDefinition CALabel::setFontDefiniton(bool flag)
     
     texDef.m_fontName       = m_nfontName;
     texDef.m_alignment      =  m_nTextAlignment;
-    texDef.m_vertAlignment  =  m_nvTextAlignmet;
+    texDef.m_vertAlignment  =  m_nVerticalTextAlignmet;
     
     
     if (flag)
@@ -84,78 +91,85 @@ caFontDefinition CALabel::setFontDefiniton(bool flag)
     return texDef;
 }
 
-bool CALabel::updataTexture()
+bool CALabel::updateImage()
 {
-    
     if (m_bRunning == false)
     {
         return false;
     }
     
-    CCTexture2D *tex = new CCTexture2D();
-    if (!tex)
-    {
+    CAImage *tex = new CAImage();
+    if (!tex) {
         return false;
     }
-    
     caFontDefinition fontDef = setFontDefiniton(true);
-    tex->initWithString("国", fontDef.m_fontName.c_str(), fontDef.m_fontSize, CCSizeMake(this->getBounds().size.width, 0), fontDef.m_alignment, fontDef.m_vertAlignment);
-    float fontHeight = tex->getContentSize().height+1;
 
+    CAImage *at = new CAImage();
+    at->initWithString("萨", fontDef.m_fontName.c_str(), fontDef.m_fontSize, CCSizeZero, fontDef.m_alignment, fontDef.m_vertAlignment);
+    float fontHeight = at->getContentSize().height+1;
+    at->release();
     unsigned int linenumber = (int)this->getBounds().size.height/fontHeight;
     if (m_nNumberOfLine <= linenumber && m_nNumberOfLine != 0)
     {
-
-        tex->initWithString(m_nText.c_str(), fontDef.m_fontName.c_str(), fontDef.m_fontSize, CCSizeMake(this->getBounds().size.width, m_nNumberOfLine*fontHeight), fontDef.m_alignment, fontDef.m_vertAlignment);
-    }
-    else
-    {
-         tex->initWithString(m_nText.c_str(), fontDef.m_fontName.c_str(), fontDef.m_fontSize, this->getBounds().size, fontDef.m_alignment, fontDef.m_vertAlignment);
-    }
-    
-    
-    m_pTextTexture->setTexture(tex);
-    
-
-    
-    m_pTextTexture->setColor(ccc3(m_nTextcolor.r, m_nTextcolor.g, m_nTextcolor.b));
-    
-    m_pTextTexture->setOpacity(m_nTextcolor.a);
-    
-    if (this->getBounds().size.height == 0)
-    {
-        this->setFrame(CCRectMake(this->getBounds().origin.x, this->getBounds().origin.y, tex->getContentSize().width, tex->getContentSize().height));
-        m_pTextTexture->setTextureRect(CCRectMake(0, 0, tex->getContentSize().width, tex->getContentSize().height));
-        m_pTextTexture -> setFrame(CCRectMake(0, 0, tex->getContentSize().width, tex->getContentSize().height));
         
+        tex->initWithString(m_nText.c_str(), fontDef.m_fontName.c_str(), fontDef.m_fontSize, CCSizeZero, fontDef.m_alignment, fontDef.m_vertAlignment);
     }
     else
     {
-        m_pTextTexture->setTextureRect(this->getBounds());
-        m_pTextTexture -> setFrame(CCRectMake(0, 0, this->getBounds().size.width, this->getBounds().size.height));
+        if (this->getBounds().size.width == 0 && this->getBounds().size.height == 0)
+        {
+            tex->initWithString(m_nText.c_str(), fontDef.m_fontName.c_str(), fontDef.m_fontSize, CCSizeZero, fontDef.m_alignment, fontDef.m_vertAlignment);
+        }
+        else
+        {
+            tex->initWithString(m_nText.c_str(), fontDef.m_fontName.c_str(), fontDef.m_fontSize, this->getBounds().size, fontDef.m_alignment, fontDef.m_vertAlignment);
+        }
     }
     
+    CCRect rect = CCRectZero;
+    rect.size = tex->getContentSize();
     
+    m_cLabelSize = tex->getContentSize();
+    
+    m_pTextImage->setImage(tex);
+
+    m_pTextImage->setTextureRect(rect);
+    
+    m_pTextImage->setColor(ccc3(m_nTextcolor.r, m_nTextcolor.g, m_nTextcolor.b));
+    
+    m_pTextImage->setOpacity(m_nTextcolor.a);
+
+    m_pTextImage->CAView::setFrameOrigin(CCPoint(0, (this->getBounds().size.height - rect.size.height)/2));
+
     tex->release();
-    
     return true;
+}
+
+void CALabel::setDimensions(cocos2d::CCSize var)
+{
+    m_nDimensions = var;
+    this->updateImage();
+}
+
+CCSize CALabel::getDimensions()
+{
+    return m_nDimensions;
 }
 
 void CALabel::setText(string var)
 {
     m_nText = var;
-    if(var.size()>0){
-        this->updataTexture();
-        
-    }
-   
+
+    this->updateImage();
 }
 
 void CALabel::setTextAlignment(CCTextAlignment var)
 {
     m_nTextAlignment = var;
-    if (m_nText.size()>0) {
-        this->updataTexture();
+    
+    if (m_nText.size()>0)
+    {
+        this->updateImage();
     }
     
 }
@@ -170,15 +184,15 @@ ccColor4B CALabel::getTextcolor()
     return m_nTextcolor;
 }
 
-ccColor4B CALabel::getShadowcolor()
-{
-    return m_nShadowcolor;
-}
+//ccColor4B CALabel::getShadowcolor()
+//{
+//    return m_nShadowcolor;
+//}
 
-CCSize CALabel::getShadowOffset()
-{
-    return m_nShadowOffset;
-}
+//CCSize CALabel::getShadowOffset()
+//{
+//    return m_nShadowOffset;
+//}
 
 string CALabel::getText()
 {
@@ -194,28 +208,29 @@ void CALabel::setTextcolor(ccColor4B var)
 {
     m_nTextcolor = var;
   
-    this->updataTexture();
-
-    
-}
-void CALabel::setShadowcolor(ccColor4B var)
-{
-    m_nShadowcolor= var;
-    if (m_nText.size()>0)
-    {
-        this->updataTexture();
-    }
-    
+    this->updateImage();
 }
 
-void CALabel::setShadowOffset(cocos2d::CCSize var)
-{
-    m_nShadowOffset = var;
-    this->updataTexture();
-}
+//void CALabel::setShadowcolor(ccColor4B var)
+//{
+//    m_nShadowcolor= var;
+//    if (m_nText.size()>0)
+//    {
+//        this->updataImage();
+//    }
+//    
+//}
+
+//void CALabel::setShadowOffset(cocos2d::CCSize var)
+//{
+//    m_nShadowOffset = var;
+//    this->updataImage();
+//}
 
 void CALabel::setNumberOfLine(unsigned int var)
 {
     m_nNumberOfLine = var;
-    this->updataTexture();
+    this->updateImage();
 }
+
+NS_CC_END
