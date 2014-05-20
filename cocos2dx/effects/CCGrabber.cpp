@@ -46,14 +46,14 @@ void CCGrabber::grab(CAImage* image)
     // bind
     glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 
-    // associate texture with FBO
+    // associate Image with FBO
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, image->getName(), 0);
 
     // check if it worked (probably worth doing :) )
     GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (status != GL_FRAMEBUFFER_COMPLETE)
     {
-        CCAssert(0, "Frame Grabber: could not attach texture to framebuffer");
+        CCAssert(0, "Frame Grabber: could not attach Image to framebuffer");
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);

@@ -76,7 +76,7 @@ CCSpriteFrameCache::~CCSpriteFrameCache(void)
     CC_SAFE_DELETE(m_pLoadedFileNames);
 }
 
-void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary, CAImage* pobTexture)
+void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary, CAImage* pobImage)
 {
     /*
     Supported Zwoptex Formats:
@@ -98,7 +98,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
     }
 
     // check the format
-    CCAssert(format >=0 && format <= 3, "format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
+    CCAssert(format >=0 && format <= 3, "format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:imageFilename:");
 
     CCDictElement* pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)
@@ -131,7 +131,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             oh = abs(oh);
             // create frame
             spriteFrame = new CCSpriteFrame();
-            spriteFrame->initWithImage(pobTexture, 
+            spriteFrame->initWithImage(pobImage, 
                                         CCRectMake(x, y, w, h), 
                                         false,
                                         CCPointMake(ox, oy),
@@ -154,7 +154,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
 
             // create frame
             spriteFrame = new CCSpriteFrame();
-            spriteFrame->initWithImage(pobTexture, 
+            spriteFrame->initWithImage(pobImage, 
                 frame,
                 rotated,
                 offset,
@@ -167,8 +167,8 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             CCSize spriteSize = CCSizeFromString(frameDict->valueForKey("spriteSize")->getCString());
             CCPoint spriteOffset = CCPointFromString(frameDict->valueForKey("spriteOffset")->getCString());
             CCSize spriteSourceSize = CCSizeFromString(frameDict->valueForKey("spriteSourceSize")->getCString());
-            CCRect textureRect = CCRectFromString(frameDict->valueForKey("textureRect")->getCString());
-            bool textureRotated = frameDict->valueForKey("textureRotated")->boolValue();
+            CCRect ImageRect = CCRectFromString(frameDict->valueForKey("ImageRect")->getCString());
+            bool imageRotated = frameDict->valueForKey("imageRotated")->boolValue();
 
             // get aliases
             CCArray* aliases = (CCArray*) (frameDict->objectForKey("aliases"));
@@ -188,9 +188,9 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             frameKey->release();
             // create frame
             spriteFrame = new CCSpriteFrame();
-            spriteFrame->initWithImage(pobTexture,
-                            CCRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
-                            textureRotated,
+            spriteFrame->initWithImage(pobImage,
+                            CCRectMake(ImageRect.origin.x, ImageRect.origin.y, spriteSize.width, spriteSize.height),
+                            imageRotated,
                             spriteOffset,
                             spriteSourceSize);
         }
@@ -201,28 +201,28 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
     }
 }
 
-void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CAImage* pobTexture)
+void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CAImage* pobImage)
 {
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
     CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
 
-    addSpriteFramesWithDictionary(dict, pobTexture);
+    addSpriteFramesWithDictionary(dict, pobImage);
 
     dict->release();
 }
 
-void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* textureFileName)
+void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* imageFileName)
 {
-    CCAssert(textureFileName, "texture name should not be null");
-    CAImage* texture = CCTextureCache::sharedTextureCache()->addImage(textureFileName);
+    CCAssert(imageFileName, "image name should not be null");
+    CAImage* image = CCTextureCache::sharedTextureCache()->addImage(imageFileName);
 
-    if (texture)
+    if (image)
     {
-        addSpriteFramesWithFile(plist, texture);
+        addSpriteFramesWithFile(plist, image);
     }
     else
     {
-        CCLOG("cocos2d: CCSpriteFrameCache: couldn't load texture file. File not found %s", textureFileName);
+        CCLOG("cocos2d: CCSpriteFrameCache: couldn't load image file. File not found %s", imageFileName);
     }
 }
 
@@ -235,45 +235,45 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
         std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
         CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
 
-        string texturePath("");
+        string imagePath("");
 
         CCDictionary* metadataDict = (CCDictionary*)dict->objectForKey("metadata");
         if (metadataDict)
         {
-            // try to read  texture file name from meta data
-            texturePath = metadataDict->valueForKey("textureFileName")->getCString();
+            // try to read  image file name from meta data
+            imagePath = metadataDict->valueForKey("imageFileName")->getCString();
         }
 
-        if (! texturePath.empty())
+        if (! imagePath.empty())
         {
-            // build texture path relative to plist file
-            texturePath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(texturePath.c_str(), pszPlist);
+            // build image path relative to plist file
+            imagePath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(imagePath.c_str(), pszPlist);
         }
         else
         {
-            // build texture path by replacing file extension
-            texturePath = pszPlist;
+            // build image path by replacing file extension
+            imagePath = pszPlist;
 
             // remove .xxx
-            size_t startPos = texturePath.find_last_of("."); 
-            texturePath = texturePath.erase(startPos);
+            size_t startPos = imagePath.find_last_of("."); 
+            imagePath = imagePath.erase(startPos);
 
             // append .png
-            texturePath = texturePath.append(".png");
+            imagePath = imagePath.append(".png");
 
-            CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
+            CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as image", imagePath.c_str());
         }
 
-        CAImage* pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());
+        CAImage* pimage = CCTextureCache::sharedTextureCache()->addImage(imagePath.c_str());
 
-        if (pTexture)
+        if (pimage)
         {
-            addSpriteFramesWithDictionary(dict, pTexture);
+            addSpriteFramesWithDictionary(dict, pimage);
             m_pLoadedFileNames->insert(pszPlist);
         }
         else
         {
-            CCLOG("cocos2d: CCSpriteFrameCache: Couldn't load texture");
+            CCLOG("cocos2d: CCSpriteFrameCache: Couldn't load image");
         }
 
         dict->release();
@@ -375,7 +375,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary* dictiona
     m_pSpriteFrames->removeObjectsForKeys(keysToRemove);
 }
 
-void CCSpriteFrameCache::removeSpriteFramesFromImage(CAImage* texture)
+void CCSpriteFrameCache::removeSpriteFramesFromImage(CAImage* image)
 {
     CCArray* keysToRemove = CCArray::create();
 
@@ -384,7 +384,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromImage(CAImage* texture)
     {
         string key = pElement->getStrKey();
         CCSpriteFrame* frame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(key.c_str());
-        if (frame && (frame->getImage() == texture))
+        if (frame && (frame->getImage() == image))
         {
             keysToRemove->addObject(CCString::create(pElement->getStrKey()));
         }

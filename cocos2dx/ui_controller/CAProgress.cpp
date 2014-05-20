@@ -88,7 +88,7 @@ void CAProgress::onEnterTransitionDidFinish()
 
 		CCRect rect = m_pProgressImageView->getBounds();
 		rect.size.width *= m_fProgress;
-		m_pProgressImageView->setTextureRect(rect);
+		m_pProgressImageView->setImageRect(rect);
 
         this->addSubview(m_pIndicator);
     }
@@ -161,7 +161,7 @@ void CAProgress::update(float dt)
 {
 	CCRect rect = CCRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
 
-	m_pProgressImageView->setTextureRect(rect);
+	m_pProgressImageView->setImageRect(rect);
     
 	m_fProgress = rect.size.width / this->getBounds().size.width;
 }

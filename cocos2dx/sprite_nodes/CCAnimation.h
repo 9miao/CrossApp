@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCTexture2D;
+class CAImage;
 class CCSpriteFrame;
 
 /**
@@ -138,11 +138,11 @@ public:
      */  
     void addSpriteFrameWithFileName(const char *pszFileName);
 
-    /** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
+    /** Adds a frame with a Image and a rect. Internally it will create a CCSpriteFrame and it will add it.
      The frame will be added with one "delay unit".
      Added to facilitate the migration from v0.8 to v0.9.
      */
-    void addSpriteFrameWithImage(CAImage* pobTexture, const CCRect& rect);
+    void addSpriteFrameWithImage(CAImage* pobImage, const CCRect& rect);
     /**
      * @lua NA
      */

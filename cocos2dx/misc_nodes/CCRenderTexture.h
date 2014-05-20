@@ -46,8 +46,8 @@ typedef enum eImageFormat
 simply construct a render target, call begin on it, call visit on any cocos
 scenes or objects to render them, and call end. For convenience, render texture
 adds a sprite as it's display child with the results, so you can simply add
-the render texture to your scene and treat it like any other CocosNode.
-There are also functions for saving the render texture to disk in PNG or JPG format.
+the render Image to your scene and treat it like any other CocosNode.
+There are also functions for saving the render Image to disk in PNG or JPG format.
 
 @since v0.8.1
 */
@@ -91,15 +91,15 @@ public:
     /** starts grabbing */
     void begin();
 
-    /** starts rendering to the texture while clearing the texture first.
+    /** starts rendering to the Image while clearing the Image first.
     This is more efficient then calling -clear first and then -begin */
     void beginWithClear(float r, float g, float b, float a);
 
-    /** starts rendering to the texture while clearing the texture first.
+    /** starts rendering to the Image while clearing the Image first.
      This is more efficient then calling -clear first and then -begin */
     void beginWithClear(float r, float g, float b, float a, float depthValue);
 
-    /** starts rendering to the texture while clearing the texture first.
+    /** starts rendering to the Image while clearing the Image first.
      This is more efficient then calling -clear first and then -begin */
     void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
 
@@ -109,25 +109,25 @@ public:
     /** ends grabbing*/
     void end();
 
-    /** clears the texture with a color */
+    /** clears the Image with a color */
     void clear(float r, float g, float b, float a);
 
-    /** clears the texture with a specified depth value */
+    /** clears the Image with a specified depth value */
     void clearDepth(float depthValue);
 
-    /** clears the texture with a specified stencil value */
+    /** clears the Image with a specified stencil value */
     void clearStencil(int stencilValue);
     /* creates a new CCImage from with the texture's data.
        Caller is responsible for releasing it by calling delete.
      */
     CCImage* newCCImage(bool flipImage = true);
 
-    /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
+    /** saves the Image into a file using JPEG format. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
      */
     bool saveToFile(const char *szFilePath);
 
-    /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
+    /** saves the Image into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
      */
     bool saveToFile(const char *name, tCCImageFormat format);
@@ -158,7 +158,7 @@ public:
     int getClearStencil() const;
     void setClearStencil(float fClearStencil);
     
-    /** When enabled, it will render its children into the texture automatically. Disabled by default for compatiblity reasons.
+    /** When enabled, it will render its children into the Image automatically. Disabled by default for compatiblity reasons.
      Will be enabled in the future.
      */
     bool isAutoDraw() const;

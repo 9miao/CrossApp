@@ -118,7 +118,7 @@ bool CCScale9Sprite::updateWithImage(CAImage* image, CCRect rect, CCRect capInse
     // If there is no given rect
     if ( rect.equals(CCRectZero) )
     {
-        // Get the texture size as original
+        // Get the Image size as original
         CCSize textureSize = image->getContentSize();
         
         rect = CCRectMake(0, 0, textureSize.width, textureSize.height);
@@ -459,7 +459,7 @@ CCScale9Sprite* CCScale9Sprite::create()
 }
 
 /** sets the opacity.
- @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
+ @warning If the the Image has premultiplied alpha then, the R, G and B channels will be modifed.
  Values goes from 0 to 255, where 255 means fully opaque.
  */
 

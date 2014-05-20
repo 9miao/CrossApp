@@ -174,7 +174,7 @@ GLubyte CCProgressTimer::getOpacity() const
 // Interval
 
 ///
-//    @returns the vertex position from the texture coordinate
+//    @returns the vertex position from the Image coordinate
 ///
 ccTex2F CCProgressTimer::textureCoordFromAlphaPoint(CCPoint alpha)
 {
@@ -185,8 +185,8 @@ ccTex2F CCProgressTimer::textureCoordFromAlphaPoint(CCPoint alpha)
     ccV3F_C4B_T2F_Quad quad = m_pSprite->getQuad();
     CCPoint min = ccp(quad.bl.texCoords.u,quad.bl.texCoords.v);
     CCPoint max = ccp(quad.tr.texCoords.u,quad.tr.texCoords.v);
-    //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
-    if (m_pSprite->isTextureRectRotated()) {
+    //  Fix bug #1303 so that progress timer handles sprite frame Image rotation
+    if (m_pSprite->isImageRectRotated()) {
         CC_SWAP(alpha.x, alpha.y, float);
     }
     return tex2(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
@@ -253,7 +253,7 @@ void CCProgressTimer::setMidpoint(CCPoint midPoint)
 }
 
 ///
-//    Update does the work of mapping the texture onto the triangles
+//    Update does the work of mapping the Image onto the triangles
 //    It now doesn't occur the cost of free/alloc data every update cycle.
 //    It also only changes the percentage point but no other points if they have not
 //    been modified.
@@ -291,7 +291,7 @@ void CCProgressTimer::updateRadial(void)
         hit = topMid;
         index = 4;
     } else {
-        //    We run a for loop checking the edges of the texture to find the
+        //    We run a for loop checking the edges of the Image to find the
         //    intersection point
         //    We loop through five points since the top is split in half
 
@@ -327,7 +327,7 @@ void CCProgressTimer::updateRadial(void)
                 //    As long as our t isn't negative we are at least finding a
                 //    correct hitpoint from m_tMidpoint to percentagePt.
                 if (t >= 0.f) {
-                    //    Because the percentage line and all the texture edges are
+                    //    Because the percentage line and all the Image edges are
                     //    rays we should only account for the shortest intersection
                     if (t < min_t) {
                         min_t = t;
@@ -385,7 +385,7 @@ void CCProgressTimer::updateRadial(void)
 }
 
 ///
-//    Update does the work of mapping the texture onto the triangles for the bar
+//    Update does the work of mapping the Image onto the triangles for the bar
 //    It now doesn't occur the cost of free/alloc data every update cycle.
 //    It also only changes the percentage point but no other points if they have not
 //    been modified.

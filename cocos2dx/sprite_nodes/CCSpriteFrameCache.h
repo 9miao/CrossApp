@@ -30,7 +30,7 @@ THE SOFTWARE.
 #define __SPRITE_CCSPRITE_FRAME_CACHE_H__
 
 /*
- * To create sprite frames and texture atlas, use this tool:
+ * To create sprite frames and image atlas, use this tool:
  * http://zwoptex.zwopple.com/
  */
 
@@ -44,7 +44,7 @@ NS_CC_BEGIN
 
 class CCDictionary;
 class CCArray;
-class CCSprite;
+class CAImageView;
 
 /**
  * @addtogroup sprite_nodes
@@ -72,27 +72,27 @@ public:
     ~CCSpriteFrameCache(void);
 
 private:
-    /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
+    /*Adds multiple Sprite Frames with a dictionary. The image will be associated with the created sprite frames.
      */
-    void addSpriteFramesWithDictionary(CCDictionary* pobDictionary, CAImage* pobTexture);
+    void addSpriteFramesWithDictionary(CCDictionary* pobDictionary, CAImage* pobImage);
 public:
     /** Adds multiple Sprite Frames from a plist file.
-     * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
-     * If you want to use another texture, you should use the addSpriteFramesWithFile:texture method.
+     * A image will be loaded automatically. The image name will composed by replacing the .plist suffix with .png
+     * If you want to use another image, you should use the addSpriteFramesWithFile:image method.
      * @js addSpriteFrames
      */
     void addSpriteFramesWithFile(const char *pszPlist);
 
-    /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
+    /** Adds multiple Sprite Frames from a plist file. The image will be associated with the created sprite frames.
      @since v0.99.5
      @js addSpriteFrames
      */
-    void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
+    void addSpriteFramesWithFile(const char* plist, const char* imageFileName);
 
-    /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. 
+    /** Adds multiple Sprite Frames from a plist file. The image will be associated with the created sprite frames. 
      * @js addSpriteFrames
      */
-    void addSpriteFramesWithFile(const char *pszPlist, CAImage* pobTexture);
+    void addSpriteFramesWithFile(const char *pszPlist, CAImage* pobImage);
 
     /** Adds an sprite frame with a given name.
      If the name already exists, then the contents of the old name will be replaced with the new one.
@@ -120,7 +120,7 @@ public:
 
     /** Removes multiple Sprite Frames from a plist file.
     * Sprite Frames stored in this file will be removed.
-    * It is convenient to call this method when a specific texture needs to be removed.
+    * It is convenient to call this method when a specific image needs to be removed.
     * @since v0.99.5
     */
     void removeSpriteFramesFromFile(const char* plist);
@@ -131,11 +131,11 @@ private:
     */
     void removeSpriteFramesFromDictionary(CCDictionary* dictionary);
 public:
-    /** Removes all Sprite Frames associated with the specified textures.
-    * It is convenient to call this method when a specific texture needs to be removed.
+    /** Removes all Sprite Frames associated with the specified images.
+    * It is convenient to call this method when a specific image needs to be removed.
     * @since v0.995.
     */
-    void removeSpriteFramesFromImage(CAImage* texture);
+    void removeSpriteFramesFromImage(CAImage* image);
 
     /** Returns an Sprite Frame that was previously added.
      If the name is not found it will return nil.

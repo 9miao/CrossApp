@@ -59,14 +59,14 @@ public:
      */
     virtual ~CCMotionStreak();
 
-    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
+    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, Image filename */
     static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
-    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
+    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, Image */
     static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture);
 
-    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
+    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and Image filename */
     bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
-    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
+    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and Image  */
     bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture);
 
     /** color used for the tint */
@@ -109,7 +109,7 @@ protected:
     bool m_bFastMode;
     bool m_bStartingPositionInitialized;
 private:
-    /** texture used for the motion streak */
+    /** Image used for the motion streak */
     CAImage* m_pImage;
     ccBlendFunc m_tBlendFunc;
     CCPoint m_tPositionR;

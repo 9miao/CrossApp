@@ -38,7 +38,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCTexture2D;
+class CAImage;
 class CCGrabber;
 class CCGLProgram;
 
@@ -94,14 +94,14 @@ public:
      */
     inline void setStep(const CCPoint& step) { m_obStep = step; }
 
-    /** is texture flipped 
+    /** is Image flipped 
      * @lua NA
      */
     inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
     /**
      *  @lua NA
      */
-    void setTextureFlipped(bool bFlipped);
+    void setImageFlipped(bool bFlipped);
     /**
      *  @lua NA
      */

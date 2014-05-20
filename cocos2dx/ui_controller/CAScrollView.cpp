@@ -679,13 +679,13 @@ bool CAIndicator::initWithFrame(const CCRect& rect, CAIndicatorType type)
     
     m_eType = type;
     
-    CAImage* texture = CAImage::create("indicator.png");
+    CAImage* image = CAImage::create("indicator.png");
     
     CCRect r;
-    r.origin = ccpSub(ccpMult(texture->getContentSize(), 0.5f), CCPoint(0.5f, 0.5f));
+    r.origin = ccpSub(ccpMult(image->getContentSize(), 0.5f), CCPoint(0.5f, 0.5f));
     r.size = CCSize(1.0f, 1.0f);
     
-    m_pIndicator = CCScale9Sprite::createWithImage(r, texture);
+    m_pIndicator = CCScale9Sprite::createWithImage(r, image);
     this->addSubview(m_pIndicator);
     
     return true;

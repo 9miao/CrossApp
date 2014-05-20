@@ -147,9 +147,9 @@ bool CAImageView::initWithImage(CAImage* Image, const CCRect& rect, bool rotated
         // shader program
         setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
         
-        // update texture (calls updateBlendFunc)
+        // update image (calls updateBlendFunc)
         setImage(Image);
-        setTextureRect(rect, rotated, rect.size);
+        setImageRect(rect, rotated, rect.size);
         
         // by default use "Self Render".
 
@@ -168,7 +168,7 @@ bool CAImageView::initWithImage(CAImage* Image, const CCRect& rect)
 
 bool CAImageView::initWithImage(CAImage* Image)
 {
-    CCAssert(Image != NULL, "Invalid texture for sprite");
+    CCAssert(Image != NULL, "Invalid image for sprite");
 
     CCRect rect = CCRectZero;
     rect.size = Image->getContentSize();
@@ -208,7 +208,7 @@ CAImageView* CAImageView::initWithCGImage(CGImageRef pImage, const char *pszKey)
     const CCSize& size = Image->getContentSize();
     CCRect rect = CCRectMake(0 ,0, size.width, size.height);
 
-    return initWithImage(texture, rect);
+    return initWithImage(image, rect);
 }
 */
 
@@ -279,10 +279,6 @@ CCRect CAImageView::getBounds() const
     rect.origin = CCPointZero;
     return rect;
 }
-void CAImageView::setContentSize(const CCSize &size)
-{
-	CAView::setContentSize(size);
-}
 
 // Frames
 
@@ -290,16 +286,16 @@ void CAImageView::setDisplayFrame(CCSpriteFrame *pNewFrame)
 {
     m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffset();
 
-    CAImage* pNewTexture = pNewFrame->getImage();
-    // update texture before updating texture rect
-    if (pNewTexture != m_pobTexture)
+    CAImage* pNewimage = pNewFrame->getImage();
+    // update image before updating image rect
+    if (pNewimage != m_pobImage)
     {
-        setImage(pNewTexture);
+        setImage(pNewimage);
     }
 
     // update rect
     m_bRectRotated = pNewFrame->isRotated();
-    setTextureRect(pNewFrame->getRect(), m_bRectRotated, pNewFrame->getOriginalSize());
+    setImageRect(pNewFrame->getRect(), m_bRectRotated, pNewFrame->getOriginalSize());
 }
 
 void CAImageView::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
@@ -322,32 +318,32 @@ bool CAImageView::isFrameDisplayed(CCSpriteFrame *pFrame)
     CCRect r = pFrame->getRect();
 
     return (r.equals(m_obRect) &&
-            pFrame->getImage()->getName() == m_pobTexture->getName() &&
+            pFrame->getImage()->getName() == m_pobImage->getName() &&
             pFrame->getOffset().equals(m_obUnflippedOffsetPositionFromCenter));
 }
 
 CCSpriteFrame* CAImageView::displayFrame(void)
 {
-    return CCSpriteFrame::createWithImage(m_pobTexture,
+    return CCSpriteFrame::createWithImage(m_pobImage,
                                            CC_RECT_POINTS_TO_PIXELS(m_obRect),
                                            m_bRectRotated,
                                            CC_POINT_POINTS_TO_PIXELS(m_obUnflippedOffsetPositionFromCenter),
                                            CC_SIZE_POINTS_TO_PIXELS(m_obContentSize));
 }
 
-// Texture protocol
+// image protocol
 
 
 
 /*
  * This array is the data of a white image with 2 by 2 dimension.
- * It's used for creating a default texture when sprite's texture is set to NULL.
+ * It's used for creating a default image when sprite's image is set to NULL.
  * Supposing codes as follows:
  *
  *   CAImageView* sp = new CAImageView();
- *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *   sp->init();  // image was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white image.
  *
- * The test is in "TestCpp/SpriteTest/Sprite without texture".
+ * The test is in "TestCpp/SpriteTest/Sprite without image".
  */
 static unsigned char cc_2x2_white_image[] = {
     // RGBA8888
@@ -359,29 +355,29 @@ static unsigned char cc_2x2_white_image[] = {
 
 #define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
 
-void CAImageView::setImage(CAImage* texture)
+void CAImageView::setImage(CAImage* image)
 {
-    // accept texture==nil as argument
-    CCAssert( !texture || dynamic_cast<CAImage*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
+    // accept image==nil as argument
+    CCAssert( !image || dynamic_cast<CAImage*>(image), "setImage expects a CCimage2D. Invalid argument");
 
-    if (NULL == texture)
+    if (NULL == image)
     {
-        // Gets the texture by key firstly.
-        texture = CCTextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
+        // Gets the image by key firstly.
+        image = CCTextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
 
-        // If texture wasn't in cache, create it from RAW data.
-        if (NULL == texture)
+        // If image wasn't in cache, create it from RAW data.
+        if (NULL == image)
         {
-            CCImage* image = new CCImage();
-            bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), CCImage::kFmtRawData, 2, 2, 8);
-            CCAssert(isOK, "The 2x2 empty texture was created unsuccessfully.");
+            CCImage* cImage = new CCImage();
+            bool isOK = cImage->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), CCImage::kFmtRawData, 2, 2, 8);
+            CCAssert(isOK, "The 2x2 empty image was created unsuccessfully.");
 
-            texture = CCTextureCache::sharedTextureCache()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            image = CCTextureCache::sharedTextureCache()->addUIImage(cImage, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
     }
 
-    CAView::setImage(texture);
+    CAView::setImage(image);
 }
 
 NS_CC_END

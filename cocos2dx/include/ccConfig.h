@@ -68,7 +68,7 @@ THE SOFTWARE.
 #endif
 
 /** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-If enabled, the texture coordinates will be calculated by using this formula:
+If enabled, the Image coordinates will be calculated by using this formula:
 - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
 - texCoord.right = texCoord.left + (rect.size.width*2-2)/(texture.wide*2);
 
@@ -161,7 +161,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #endif
 
 /** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
- Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
+ Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the Image atlas.
  It seems it is the recommend way, but it is much slower, so, enable it at your own risk
  
  To enable set it to a value different than 0. Disabled by default.
@@ -211,10 +211,10 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  To enable set it to a value different than 0. Disabled by default:
  0 -- disabled
  1 -- draw bounding box
- 2 -- draw texture box
+ 2 -- draw Image box
  0 -- disabled
  1 -- draw bounding box
- 2 -- draw texture box
+ 2 -- draw Image box
 */
 #ifndef CC_SPRITE_DEBUG_DRAW
 #define CC_SPRITE_DEBUG_DRAW 0

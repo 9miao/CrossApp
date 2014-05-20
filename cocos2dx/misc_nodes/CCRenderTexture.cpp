@@ -61,7 +61,7 @@ CCRenderTexture::CCRenderTexture()
 , m_bAutoDraw(false)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    // Listen this event to save render texture before come to background.
+    // Listen this event to save render Image before come to background.
     // Then it can be restored after coming to foreground on Android.
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                   callfuncO_selector(CCRenderTexture::listenToBackground),
@@ -98,7 +98,7 @@ void CCRenderTexture::listenToBackground(cocos2d::CCObject *obj)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     CC_SAFE_DELETE(m_pUITextureImage);
     
-    // to get the rendered texture data
+    // to get the rendered Image data
     m_pUITextureImage = newCCImage(false);
 
     if (m_pUITextureImage)
@@ -311,7 +311,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         glGenFramebuffers(1, &m_uFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
 
-        // associate texture with FBO
+        // associate Image with FBO
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
 
         if (uDepthStencilFormat != 0)
@@ -330,7 +330,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         }
 
         // check if it worked (probably worth doing :) )
-        CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
+        CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach Image to framebuffer");
 
         m_pTexture->setAliasTexParameters();
 
@@ -398,11 +398,11 @@ void CCRenderTexture::begin()
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
     
-    /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of CCRenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+    /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary Image to overcome this. At the end of CCRenderTexture::begin(), switch the attached Image to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
      */
     if (CCConfiguration::sharedConfiguration()->checkForGLExtension("GL_QCOM"))
     {
-        // -- bind a temporary texture so we can clear the render buffer without losing our texture
+        // -- bind a temporary Image so we can clear the render buffer without losing our texture
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTextureCopy->getName(), 0);
         CHECK_GL_ERROR_DEBUG();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -661,7 +661,7 @@ CCImage* CCRenderTexture::newCCImage(bool flipImage)
     const CCSize& s = m_pTexture->getContentSizeInPixels();
 
     // to get the image size to save
-    //        if the saving image domain exceeds the buffer texture domain,
+    //        if the saving image domain exceeds the buffer Image domain,
     //        it should be cut
     int nSavedBufferWidth = (int)s.width;
     int nSavedBufferHeight = (int)s.height;
@@ -688,7 +688,7 @@ CCImage* CCRenderTexture::newCCImage(bool flipImage)
 
         if ( flipImage ) // -- flip is only required when saving image to file
         {
-            // to get the actual texture data
+            // to get the actual Image data
             // #640 the image read from rendertexture is dirty
             for (int i = 0; i < nSavedBufferHeight; ++i)
             {

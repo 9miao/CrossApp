@@ -60,7 +60,7 @@ typedef enum {
     kCCTexture2DPixelFormat_RGBA8888,
         //! 24-bit texture: RGBA888
     kCCTexture2DPixelFormat_RGB888,
-        //! 16-bit texture without Alpha channel
+        //! 16-bit Image without Alpha channel
     kCCTexture2DPixelFormat_RGB565,
         //! 8-bit textures used as masks
     kCCTexture2DPixelFormat_A8,
@@ -69,7 +69,7 @@ typedef enum {
         //! 16-bit textures: RGB5A1
     kCCTexture2DPixelFormat_RGB5A1,    
     
-        //! Default texture format: RGBA8888
+        //! Default Image format: RGBA8888
     kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
     
         // backward compatibility stuff
@@ -660,7 +660,7 @@ bool CCImage::potImageData(unsigned int POTWide, unsigned int POTHigh)
 		}
 		else
 		{
-			CCLOG("cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
+			CCLOG("cocos2d: CCTexture2D: Using RGB565 Image since image has no alpha");
 			pixelFormat = kCCTexture2DPixelFormat_RGB565;
 		}
 	}

@@ -250,7 +250,7 @@ void CCAnimationCache::addAnimationsWithDictionary(CCDictionary* dictionary,cons
 /** Read an NSDictionary from a plist file and parse it automatically for animations */
 void CCAnimationCache::addAnimationsWithFile(const char* plist)
 {
-    CCAssert( plist, "Invalid texture file name");
+    CCAssert( plist, "Invalid Image file name");
 
     std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(plist);
     CCDictionary* dict = CCDictionary::createWithContentsOfFile(path.c_str());

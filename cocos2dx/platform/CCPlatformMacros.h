@@ -75,7 +75,7 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
 }
 
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
-Enable it if you want to cache the texture data.
+Enable it if you want to cache the Image data.
 Basically, it's only enabled for Emscripten.
 
 It's new in cocos2d-x since v0.99.5

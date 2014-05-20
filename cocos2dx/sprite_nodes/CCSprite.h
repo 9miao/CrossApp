@@ -46,29 +46,29 @@ public:
     /// @name Creators
     
     /**
-     * Creates an empty sprite without texture. You can call setTexture method subsequently.
+     * Creates an empty sprite without image. You can call setImage method subsequently.
      *
      * @return An empty sprite object that is marked as autoreleased.
      */
     static CAImageView* create();
     
     /**
-     * Creates a sprite with an exsiting texture contained in a CCTexture2D object
-     * After creation, the rect will be the size of the texture, and the offset will be (0,0).
+     * Creates a sprite with an exsiting image contained in a CAImage object
+     * After creation, the rect will be the size of the image, and the offset will be (0,0).
      *
-     * @param   Image    A pointer to a CCTexture2D object.
+     * @param   Image    A pointer to a CAImage object.
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static CAImageView* createWithImage(CAImage* Image);
     
     /**
-     * Creates a sprite with a texture and a rect.
+     * Creates a sprite with a image and a rect.
      *
      * After creation, the offset will be (0,0).
      *
-     * @param   Image    A pointer to an existing CCTexture2D object.
-     *                      You can use a CCTexture2D object for many sprites.
-     * @param   rect        Only the contents inside the rect of this texture will be applied for this sprite.
+     * @param   Image    A pointer to an existing CAImage object.
+     *                      You can use a CAImage object for many sprites.
+     * @param   rect        Only the contents inside the rect of this image will be applied for this sprite.
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static CAImageView* createWithImage(CAImage* Image, const CCRect& rect);
@@ -76,7 +76,7 @@ public:
     /**
      * Creates a sprite with an sprite frame.
      *
-     * @param   pSpriteFrame    A sprite frame which involves a texture and a rect
+     * @param   pSpriteFrame    A sprite frame which involves a image and a rect
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static CAImageView* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
@@ -107,45 +107,45 @@ public:
     virtual bool init(void);
     
     /**
-     * Initializes a sprite with a texture.
+     * Initializes a sprite with a image.
      *
-     * After initialization, the rect used will be the size of the texture, and the offset will be (0,0).
+     * After initialization, the rect used will be the size of the image, and the offset will be (0,0).
      *
-     * @param   Image    A pointer to an existing CCTexture2D object.
-     *                      You can use a CCTexture2D object for many sprites.
+     * @param   Image    A pointer to an existing CAImage object.
+     *                      You can use a CAImage object for many sprites.
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithImage(CAImage* Image);
     
     /**
-     * Initializes a sprite with a texture and a rect.
+     * Initializes a sprite with a image and a rect.
      *
      * After initialization, the offset will be (0,0).
      *
-     * @param   Image    A pointer to an exisiting CCTexture2D object.
-     *                      You can use a CCTexture2D object for many sprites.
-     * @param   rect        Only the contents inside rect of this texture will be applied for this sprite.
+     * @param   Image    A pointer to an exisiting CAImage object.
+     *                      You can use a CAImage object for many sprites.
+     * @param   rect        Only the contents inside rect of this image will be applied for this sprite.
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithImage(CAImage* Image, const CCRect& rect);
     
     /**
-     * Initializes a sprite with a texture and a rect in points, optionally rotated.
+     * Initializes a sprite with a image and a rect in points, optionally rotated.
      *
      * After initialization, the offset will be (0,0).
      * @note    This is the designated initializer.
      *
-     * @param   Image    A CCTexture2D object whose texture will be applied to this sprite.
-     * @param   rect        A rectangle assigned the contents of texture.
-     * @param   rotated     Whether or not the texture rectangle is rotated.
+     * @param   Image    A CAImage object whose image will be applied to this sprite.
+     * @param   rect        A rectangle assigned the contents of image.
+     * @param   rotated     Whether or not the image rectangle is rotated.
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithImage(CAImage* Image, const CCRect& rect, bool rotated);
     
     /**
-     * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite
+     * Initializes a sprite with an SpriteFrame. The image and rect in SpriteFrame will be applied on this sprite
      *
-     * @param   pSpriteFrame  A CCSpriteFrame object. It should includes a valid texture and a rect
+     * @param   pSpriteFrame  A CCSpriteFrame object. It should includes a valid image and a rect
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
@@ -188,11 +188,8 @@ public:
 
     CCRect getBounds() const;
     
-	void setContentSize(const CCSize &size);
     
-    
-    
-    /// @} end of texture methods
+    /// @} end of image methods
     
     /// @{
     /// @name Animation methods
@@ -203,7 +200,7 @@ public:
     virtual void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
     /// @}
     
-    virtual void setImage(CAImage* texture);
+    virtual void setImage(CAImage* image);
     
     friend class CCScale9Sprite;
 };

@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCTexture2D;
+class CAImage;
 class CCZone;
 
 /**
@@ -43,13 +43,13 @@ class CCZone;
  */
 
 /** @brief A CCSpriteFrame has:
-    - texture: A CCTexture2D that will be used by the CCSprite
-    - rectangle: A rectangle of the texture
+    - image: A CCimage2D that will be used by the CCSprite
+    - rectangle: A rectangle of the image
 
 
  You can modify the frame of a CAImageView by doing:
  
-    CCSpriteFrame *frame = CCSpriteFrame::frameWithImage(texture, rect, offset);
+    CCSpriteFrame *frame = CCSpriteFrame::frameWithImage(image, rect, offset);
     sprite->setDisplayFrame(frame);
  */
 class CC_DLL CCSpriteFrame : public CCObject
@@ -83,10 +83,10 @@ public:
     /** set original size of the trimmed image */
     inline void setOriginalSize(const CCSize& sizeInPixels) { m_obOriginalSize = sizeInPixels; }
 
-    /** get texture of the frame */
+    /** get image of the frame */
     CAImage* getImage(void);
-    /** set texture of the frame, the texture is retained */
-    void setImage(CAImage* pobTexture);
+    /** set image of the frame, the image is retained */
+    void setImage(CAImage* pobImage);
 
     const CCPoint& getOffset(void);
     void setOffset(const CCPoint& offsets);
@@ -103,48 +103,48 @@ public:
      */
     virtual CCObject* copyWithZone(CCZone *pZone);
 
-    /** Create a CCSpriteFrame with a texture filename, rect in points.
+    /** Create a CCSpriteFrame with a image filename, rect in points.
      It is assumed that the frame was not trimmed.
      */
     static CCSpriteFrame* create(const char* filename, const CCRect& rect);
     
-    /** Create a CCSpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
+    /** Create a CCSpriteFrame with a image filename, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
      */
     static CCSpriteFrame* create(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
     
-    /** Create a CCSpriteFrame with a texture, rect in points.
+    /** Create a CCSpriteFrame with a image, rect in points.
      It is assumed that the frame was not trimmed.
      */
-    static CCSpriteFrame* createWithImage(CAImage* pobTexture, const CCRect& rect);
+    static CCSpriteFrame* createWithImage(CAImage* pobImage, const CCRect& rect);
 
-    /** Create a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+    /** Create a CCSpriteFrame with a image, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in points of the frame before being trimmed.
      */
-    static CCSpriteFrame* createWithImage(CAImage* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+    static CCSpriteFrame* createWithImage(CAImage* pobImage, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
 
 public:
-    /** Initializes a CCSpriteFrame with a texture, rect in points.
+    /** Initializes a CCSpriteFrame with a image, rect in points.
      It is assumed that the frame was not trimmed.
      */
-    bool initWithImage(CAImage* pobTexture, const CCRect& rect);
+    bool initWithImage(CAImage* pobImage, const CCRect& rect);
 
-    /** Initializes a CCSpriteFrame with a texture filename, rect in points;
+    /** Initializes a CCSpriteFrame with a image filename, rect in points;
      It is assumed that the frame was not trimmed.
      */
-    bool initWithTextureFilename(const char* filename, const CCRect& rect);
+    bool initWithimageFilename(const char* filename, const CCRect& rect);
 
-    /** Initializes a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+    /** Initializes a CCSpriteFrame with a image, rect, rotated, offset and originalSize in pixels.
     The originalSize is the size in points of the frame before being trimmed.
     */
-    bool initWithImage(CAImage* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+    bool initWithImage(CAImage* pobImage, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
 
-    /** Initializes a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+    /** Initializes a CCSpriteFrame with a image, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
 
      @since v1.1
      */
-    bool initWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+    bool initWithimageFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
 
 
 protected:
@@ -155,8 +155,8 @@ protected:
     CCRect m_obRect;
     CCPoint m_obOffsetInPixels;
     CCSize m_obOriginalSizeInPixels;
-    CAImage* m_pobTexture;
-    std::string  m_strTextureFilename;
+    CAImage* m_pobImage;
+    std::string  m_strimageFilename;
 };
 
 // end of sprite_nodes group

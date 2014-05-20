@@ -39,7 +39,7 @@ class CCActionManager;
 class CCComponent;
 class CCDictionary;
 class CCComponentContainer;
-class CCTexture2D;
+class CAImage;
 class CAViewDelegate;
 struct transformValues_;
 
@@ -1182,7 +1182,7 @@ protected:
     
 public:
     
-    virtual void setImage(CAImage* texture);
+    virtual void setImage(CAImage* image);
     
     virtual CAImage* getImage(void);
     
@@ -1191,25 +1191,25 @@ public:
     inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
     
     /// @{
-    /// @name Texture methods
+    /// @name Image methods
     
     /**
-     * Updates the texture rect of the CAImageView in points.
-     * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
+     * Updates the Image rect of the CAImageView in points.
+     * It will call setImageRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
      */
-    virtual void setTextureRect(const CCRect& rect);
+    virtual void setImageRect(const CCRect& rect);
     
     /**
-     * Sets the texture rect, rectRotated and untrimmed size of the CAImageView in points.
-     * It will update the texture coordinates and the vertex rectangle.
+     * Sets the Image rect, rectRotated and untrimmed size of the CAImageView in points.
+     * It will update the Image coordinates and the vertex rectangle.
      */
-    virtual void setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
+    virtual void setImageRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
     
     /**
      * Sets the vertex rect.
-     * It will be called internally by setTextureRect.
+     * It will be called internally by setImageRect.
      * Useful if you want to create 2x images from SD images in Retina Display.
-     * Do not call it manually. Use setTextureRect instead.
+     * Do not call it manually. Use setImageRect instead.
      */
     virtual void setVertexRect(const CCRect& rect);
     
@@ -1235,9 +1235,9 @@ public:
     inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
     
     /**
-     * Returns whether or not the texture rectangle is rotated.
+     * Returns whether or not the Image rectangle is rotated.
      */
-    inline bool isTextureRectRotated(void) { return m_bRectRotated; }
+    inline bool isImageRectRotated(void) { return m_bRectRotated; }
     
     /**
      * Returns the index used on the TextureAtlas.
@@ -1253,7 +1253,7 @@ public:
     /**
      * Returns the rect of the CAImageView in points
      */
-    inline const CCRect& getTextureRect(void) { return m_obRect; }
+    inline const CCRect& getImageRect(void) { return m_obRect; }
     
     /**
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
@@ -1264,8 +1264,8 @@ public:
     /**
      * Returns the flag which indicates whether the sprite is flipped horizontally or not.
      *
-     * It only flips the texture of the sprite, and not the texture of the sprite's children.
-     * Also, flipping the texture doesn't alter the anchorPoint.
+     * It only flips the Image of the sprite, and not the Image of the sprite's children.
+     * Also, flipping the Image doesn't alter the anchorPoint.
      * If you want to flip the anchorPoint too, and/or to flip the children too use:
      * sprite->setScaleX(sprite->getScaleX() * -1);
      *
@@ -1283,8 +1283,8 @@ public:
     /**
      * Return the flag which indicates whether the sprite is flipped vertically or not.
      *
-     * It only flips the texture of the sprite, and not the texture of the sprite's children.
-     * Also, flipping the texture doesn't alter the anchorPoint.
+     * It only flips the Image of the sprite, and not the Image of the sprite's children.
+     * Also, flipping the Image doesn't alter the anchorPoint.
      * If you want to flip the anchorPoint too, and/or to flip the children too use:
      * sprite->setScaleY(sprite->getScaleY() * -1);
      *
@@ -1320,7 +1320,7 @@ protected:
     virtual const CCSize& getContentSize() const;
     
     void updateColor(void);
-    virtual void setTextureCoords(CCRect rect);
+    virtual void setImageCoords(CCRect rect);
     virtual void updateBlendFunc(void);
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
@@ -1342,14 +1342,14 @@ protected:
     //
     
     // texture
-    CCRect m_obRect;                            /// Retangle of CCTexture2D
-    bool   m_bRectRotated;                      /// Whether the texture is rotated
+    CCRect m_obRect;                            /// Retangle of CAImage
+    bool   m_bRectRotated;                      /// Whether the Image is rotated
     
     // Offset Position (used by Zwoptex)
     CCPoint m_obOffsetPosition;
     CCPoint m_obUnflippedOffsetPositionFromCenter;
     
-    // vertex coords, texture coords and color info
+    // vertex coords, Image coords and color info
     ccV3F_C4B_T2F_Quad m_sQuad;
     
     // opacity and RGB protocol
@@ -1360,7 +1360,7 @@ protected:
     bool m_bFlipY;                              /// Whether the sprite is flipped vertically or not.
     
     ccBlendFunc        m_sBlendFunc;            /// It's required for CCTextureProtocol inheritance
-    CAImage*       m_pobTexture;            /// CCTexture2D object that is used to render the sprite
+    CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
     
     CC_SYNTHESIZE(CAViewDelegate*, m_pViewDelegate, ViewDelegate);
 };

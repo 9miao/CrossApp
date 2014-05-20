@@ -68,13 +68,13 @@ public:
      */
 	virtual ~CCConfiguration(void);
 
-    /** OpenGL Max texture size. */
+    /** OpenGL Max Image size. */
 	int getMaxTextureSize(void) const;
 
     /** OpenGL Max Modelview Stack Depth. */
 	int getMaxModelviewStackDepth(void) const;
 
-    /** returns the maximum texture units
+    /** returns the maximum Image units
      @since v2.0.0
      */
 	int getMaxTextureUnits(void) const;
@@ -86,7 +86,7 @@ public:
      */
 	bool supportsNPOT(void) const;
 
-    /** Whether or not PVR Texture Compressed is supported */
+    /** Whether or not PVR Image Compressed is supported */
 	bool supportsPVRTC(void) const;
 
     /** Whether or not BGRA8888 textures are supported.

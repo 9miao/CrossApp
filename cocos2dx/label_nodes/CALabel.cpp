@@ -133,7 +133,7 @@ bool CALabel::updateImage()
     
     m_pTextImage->setImage(tex);
 
-    m_pTextImage->setTextureRect(rect);
+    m_pTextImage->setImageRect(rect);
     
     m_pTextImage->setColor(ccc3(m_nTextcolor.r, m_nTextcolor.g, m_nTextcolor.b));
     

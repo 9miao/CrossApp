@@ -155,8 +155,8 @@ public:
 
 /** 
  * CAView objects that uses a CCTexture2D to render the images.
- * The texture can have a blending function.
- * If the texture has alpha premultiplied the default blending function is:
+ * The Image can have a blending function.
+ * If the Image has alpha premultiplied the default blending function is:
  *   src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA
  * else
  *   src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
@@ -169,7 +169,7 @@ public:
     /**
      * Returns the currently used texture
      *
-     * @return  The texture that is currenlty being used.
+     * @return  The Image that is currenlty being used.
      * @lua NA
      */
     virtual CAImage* getImage(void) = 0;
@@ -177,7 +177,7 @@ public:
     /**
      * Sets a new texuture. It will be retained.
      *
-     * @param   texture A valid CCTexture2D object, which will be applied to this sprite object.
+     * @param   Image A valid CCTexture2D object, which will be applied to this sprite object.
      * @lua NA
      */
     virtual void setImage(CAImage* texture) = 0;

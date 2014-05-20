@@ -81,7 +81,7 @@ static unsigned int sLength = 0;
 
 extern "C"
 {
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxETCLoader_nativeSetTextureInfo(JNIEnv* env, jobject thiz, jint width, jint height, jbyteArray data, jint dataLength)
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxETCLoader_nativesetImageInfo(JNIEnv* env, jobject thiz, jint width, jint height, jbyteArray data, jint dataLength)
     {
         sWidth = (unsigned int)width;
         sHeight = (unsigned int)height;

@@ -35,7 +35,7 @@ uniform sampler2D CC_Texture0;						\n\
 void main()											\n\
 {													\n\
 	gl_FragColor = vec4( v_fragmentColor.rgb,										// RGB from uniform				\n\
-						v_fragmentColor.a * texture2D(CC_Texture0, v_texCoord).a	// A from texture & uniform		\n\
+						v_fragmentColor.a * texture2D(CC_Texture0, v_texCoord).a	// A from Image & uniform		\n\
 						);							\n\
 }													\n\
 ";

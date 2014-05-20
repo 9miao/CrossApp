@@ -321,8 +321,8 @@ bool CCLabelTTF::updateTexture()
     
     // set the size in the sprite
     CCRect rect =CCRectZero;
-    rect.size   = m_pobTexture->getContentSize();
-    this->setTextureRect(rect);
+    rect.size   = m_pobImage->getContentSize();
+    this->setImageRect(rect);
     
     //ok
     return true;

@@ -97,8 +97,8 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
 {
     CCAssert(path != NULL, "Invalid filename");
 
-    CAImage* texture = CCTextureCache::sharedTextureCache()->addImage(path);
-    return initWithFade(fade, minSeg, stroke, color, texture);
+    CAImage* image = CCTextureCache::sharedTextureCache()->addImage(path);
+    return initWithFade(fade, minSeg, stroke, color, image);
 }
 
 bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture)

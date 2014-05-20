@@ -46,17 +46,17 @@ static int s_globalOrderOfArrival = 1;
 
 static CAImage* CC_2x2_WHITE_IMAGE(const CCSize& size)
 {
-    CAImage* texture = NULL;
+    CAImage* image = NULL;
     
     if (1)
     {
         int pixels[1][1] = {0xffffffff};
         
-        texture = new CAImage();
-        texture->initWithData(pixels, kCCTexture2DPixelFormat_RGB888, 1, 1, size);
-        texture->setMonochrome(true);
+        image = new CAImage();
+        image->initWithData(pixels, kCCTexture2DPixelFormat_RGB888, 1, 1, size);
+        image->setMonochrome(true);
     }
-    return texture;
+    return image;
 }
 
 CAView::CAView(void)
@@ -101,7 +101,7 @@ CAView::CAView(void)
 , m_bTouchEnabled(false)
 , m_bDisplayRange(true)
 , m_nTouchPriority(0)
-, m_pobTexture(NULL)
+, m_pobImage(NULL)
 , m_bShouldBeHidden(false)
 , m_bFlipX(false)
 , m_bFlipY(false)
@@ -156,7 +156,7 @@ CAView::~CAView(void)
     m_pComponentContainer->removeAll();
     CC_SAFE_DELETE(m_pComponentContainer);
     
-    CC_SAFE_RELEASE(m_pobTexture);
+    CC_SAFE_RELEASE(m_pobImage);
     
     --viewCount;
     CCLog("~CAView = %d\n",viewCount);
@@ -243,7 +243,7 @@ bool CAView::initWithFrame(const CCRect& rect, const ccColor4B& color4B)
     setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
     
     this->setImage(CC_2x2_WHITE_IMAGE(rect.size));
-    this->setTextureRect(rect, false, rect.size);
+    this->setImageRect(rect, false, rect.size);
     this->setColor(ccc3(color4B.r, color4B.g, color4B.b));
     this->setOpacity(color4B.a);
 
@@ -534,12 +534,12 @@ void CAView::setContentSize(const CCSize & size)
 
         do
         {
-            CC_BREAK_IF(m_pobTexture == NULL);
-            CC_BREAK_IF(m_pobTexture->isMonochrome() == false);
-            CC_BREAK_IF(m_pobTexture->getContentSize().equals(size));
+            CC_BREAK_IF(m_pobImage == NULL);
+            CC_BREAK_IF(m_pobImage->isMonochrome() == false);
+            CC_BREAK_IF(m_pobImage->getContentSize().equals(size));
 
             this->setImage(CC_2x2_WHITE_IMAGE(size));
-            this->setTextureRect(CCRect(0, 0, size.width, size.height));
+            this->setImageRect(CCRect(0, 0, size.width, size.height));
         }
         while (0);
     }
@@ -932,14 +932,14 @@ void CAView::draw()
     // Only use- this function to draw your stuff.
     // DON'T draw your stuff outside this method
     
-    if (m_pobTexture == NULL)
+    if (m_pobImage == NULL)
         return;
     
     CC_NODE_DRAW_SETUP();
     
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
     
-    ccGLBindTexture2D( m_pobTexture->getName() );
+    ccGLBindTexture2D( m_pobImage->getName() );
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
     
 #define kQuadSize sizeof(m_sQuad.bl)
@@ -978,8 +978,8 @@ void CAView::draw()
     };
     ccDrawPoly(vertices, 4, true);
 #elif CC_SPRITE_DEBUG_DRAW == 2
-    // draw texture box
-    CCSize s = this->getTextureRect().size;
+    // draw Image box
+    CCSize s = this->getImageRect().size;
     CCPoint offsetPix = this->getOffsetPosition();
     CCPoint vertices[4] = {
         ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
@@ -1454,7 +1454,7 @@ void CAView::updateTransform()
     // Recursively iterate over children
     arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAView*);
     
-    if(m_pobTexture && isDirty() ) {
+    if(m_pobImage && isDirty() ) {
         
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !m_bVisible || ( m_pSuperview && ((CAImageView*)m_pSuperview)->m_bShouldBeHidden) )
@@ -1512,7 +1512,7 @@ void CAView::updateTransform()
             m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
         }
         
-        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / Image ATLAS
         
         m_bRecursiveDirty = false;
         setDirty(false);
@@ -1776,32 +1776,32 @@ void CAView::setCascadeColorEnabled(bool cascadeColorEnabled)
 
 //Image...
 
-void CAView::setImage(CAImage* texture)
+void CAView::setImage(CAImage* image)
 {
-    CC_SAFE_RETAIN(texture);
-    CC_SAFE_RELEASE(m_pobTexture);
-    m_pobTexture = texture;
+    CC_SAFE_RETAIN(image);
+    CC_SAFE_RELEASE(m_pobImage);
+    m_pobImage = image;
     updateBlendFunc();
 }
 
 CAImage* CAView::getImage(void)
 {
-    return m_pobTexture;
+    return m_pobImage;
 }
 
-void CAView::setTextureRect(const CCRect& rect)
+void CAView::setImageRect(const CCRect& rect)
 {
-    setTextureRect(rect, false, rect.size);
+    setImageRect(rect, false, rect.size);
 }
 
 
-void CAView::setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize)
+void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize)
 {
     m_bRectRotated = rotated;
     
     setContentSize(untrimmedSize);
     setVertexRect(rect);
-    setTextureCoords(rect);
+    setImageCoords(rect);
     
     CCPoint relativeOffset = m_obUnflippedOffsetPositionFromCenter;
     
@@ -1839,11 +1839,11 @@ void CAView::setVertexRect(const CCRect& rect)
     m_obRect = rect;
 }
 
-void CAView::setTextureCoords(CCRect rect)
+void CAView::setImageCoords(CCRect rect)
 {
     rect = CC_RECT_POINTS_TO_PIXELS(rect);
     
-    CAImage* tex = m_pobTexture;
+    CAImage* tex = m_pobImage;
     if (! tex)
     {
         return;
@@ -1924,7 +1924,7 @@ void CAView::setTextureCoords(CCRect rect)
 
 void CAView::updateColor(void)
 {
-    if (m_pobTexture == NULL)
+    if (m_pobImage == NULL)
     {
         return;
     }
@@ -1966,7 +1966,7 @@ bool CAView::isOpacityModifyRGB(void)
 void CAView::updateBlendFunc(void)
 {
     // it is possible to have an untextured sprite
-    if (! m_pobTexture || ! m_pobTexture->hasPremultipliedAlpha())
+    if (! m_pobImage || ! m_pobImage->hasPremultipliedAlpha())
     {
         m_sBlendFunc.src = GL_SRC_ALPHA;
         m_sBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
@@ -2020,9 +2020,9 @@ void CAView::setFlipX(bool bFlipX)
     if (m_bFlipX != bFlipX)
     {
         m_bFlipX = bFlipX;
-        if (m_pobTexture)
+        if (m_pobImage)
         {
-            setTextureRect(m_obRect, m_bRectRotated, m_obContentSize);
+            setImageRect(m_obRect, m_bRectRotated, m_obContentSize);
         }
     }
 }
@@ -2037,9 +2037,9 @@ void CAView::setFlipY(bool bFlipY)
     if (m_bFlipY != bFlipY)
     {
         m_bFlipY = bFlipY;
-        if (m_pobTexture)
+        if (m_pobImage)
         {
-            setTextureRect(m_obRect, m_bRectRotated, m_obContentSize);
+            setImageRect(m_obRect, m_bRectRotated, m_obContentSize);
         }
     }
 }

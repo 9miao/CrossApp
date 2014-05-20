@@ -51,7 +51,7 @@ void RootViewController::viewDidLoad()
     btn2->addTarget(this, CAButton_selector(RootViewController::setAllowsMultipleSelection), TouchUpInSide);
     
     progress = CAProgress::create();
-    progress->setFrame(CCRect(600, tableRect.size.height+10, 200, 16));
+    progress->setFrame(CCRect(520, tableRect.size.height+10, 200, 16));
     this->getView()->addSubview(progress);
     progress->setProgress(0.5f);
     

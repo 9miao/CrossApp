@@ -194,9 +194,9 @@ void CCAnimation::addSpriteFrameWithFileName(const char *pszFileName)
     addSpriteFrame(pFrame);
 }
 
-void CCAnimation::addSpriteFrameWithImage(CAImage* pobTexture, const CCRect& rect)
+void CCAnimation::addSpriteFrameWithImage(CAImage* pobImage, const CCRect& rect)
 {
-    CCSpriteFrame *pFrame = CCSpriteFrame::createWithImage(pobTexture, rect);
+    CCSpriteFrame *pFrame = CCSpriteFrame::createWithImage(pobImage, rect);
     addSpriteFrame(pFrame);
 }
 

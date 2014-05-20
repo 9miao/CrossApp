@@ -115,26 +115,26 @@ void CC_DLL ccSetProjectionMatrixDirty(void);
  */
 void CC_DLL ccGLEnableVertexAttribs(unsigned int flags);
 
-/** If the texture is not already bound to texture unit 0, it binds it.
+/** If the Image is not already bound to Image unit 0, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
  @since v2.0.0
  */
 void CC_DLL ccGLBindTexture2D(GLuint textureId);
 
 
-/** If the texture is not already bound to a given unit, it binds it.
+/** If the Image is not already bound to a given unit, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
  @since v2.1.0
  */
 void CC_DLL ccGLBindTexture2DN(GLuint textureUnit, GLuint textureId);
 
-/** It will delete a given texture. If the texture was bound, it will invalidate the cached.
+/** It will delete a given texture. If the Image was bound, it will invalidate the cached.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
  @since v2.0.0
  */
 void CC_DLL ccGLDeleteTexture(GLuint textureId);
 
-/** It will delete a given texture. If the texture was bound, it will invalidate the cached for the given texture unit.
+/** It will delete a given texture. If the Image was bound, it will invalidate the cached for the given Image unit.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
  @since v2.1.0
  */

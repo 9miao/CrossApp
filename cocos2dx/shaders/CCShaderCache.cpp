@@ -88,14 +88,14 @@ bool CCShaderCache::init()
 
 void CCShaderCache::loadDefaultShaders()
 {
-    // Position Texture Color shader
+    // Position Image Color shader
     CCGLProgram *p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureColor);
 
     m_pPrograms->setObject(p, kCCShader_PositionTextureColor);
     p->release();
 
-    // Position Texture Color alpha test
+    // Position Image Color alpha test
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureColorAlphaTest);
 
@@ -112,7 +112,7 @@ void CCShaderCache::loadDefaultShaders()
     p->release();
 
     //
-    // Position Texture shader
+    // Position Image shader
     //
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTexture);
@@ -121,7 +121,7 @@ void CCShaderCache::loadDefaultShaders()
     p->release();
 
     //
-    // Position, Texture attribs, 1 Color as uniform shader
+    // Position, Image attribs, 1 Color as uniform shader
     //
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTexture_uColor);
@@ -130,7 +130,7 @@ void CCShaderCache::loadDefaultShaders()
     p->release();
 
     //
-    // Position Texture A8 Color shader
+    // Position Image A8 Color shader
     //
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureA8Color);
@@ -172,12 +172,12 @@ void CCShaderCache::reloadDefaultShaders()
 {
     // reset all programs and reload them
     
-    // Position Texture Color shader
+    // Position Image Color shader
     CCGLProgram *p = programForKey(kCCShader_PositionTextureColor);    
     p->reset();
     loadDefaultShader(p, kCCShaderType_PositionTextureColor);
 
-    // Position Texture Color alpha test
+    // Position Image Color alpha test
     p = programForKey(kCCShader_PositionTextureColorAlphaTest);
     p->reset();    
     loadDefaultShader(p, kCCShaderType_PositionTextureColorAlphaTest);
@@ -190,21 +190,21 @@ void CCShaderCache::reloadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_PositionColor);
     
     //
-    // Position Texture shader
+    // Position Image shader
     //
     p = programForKey(kCCShader_PositionTexture);
     p->reset();
     loadDefaultShader(p, kCCShaderType_PositionTexture);
     
     //
-    // Position, Texture attribs, 1 Color as uniform shader
+    // Position, Image attribs, 1 Color as uniform shader
     //
     p = programForKey(kCCShader_PositionTexture_uColor);
     p->reset();
     loadDefaultShader(p, kCCShaderType_PositionTexture_uColor);
     
     //
-    // Position Texture A8 Color shader
+    // Position Image A8 Color shader
     //
     p = programForKey(kCCShader_PositionTextureA8Color);
     p->reset();

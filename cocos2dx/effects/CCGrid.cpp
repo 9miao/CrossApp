@@ -167,7 +167,7 @@ void CCGridBase::setActive(bool bActive)
     }
 }
 
-void CCGridBase::setTextureFlipped(bool bFlipped)
+void CCGridBase::setImageFlipped(bool bFlipped)
 {
     if (m_bIsTextureFlipped != bFlipped)
     {
