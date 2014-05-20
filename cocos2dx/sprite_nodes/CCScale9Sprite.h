@@ -51,7 +51,7 @@ NS_CC_BEGIN
  */
 class CCScale9Sprite;
 typedef CCScale9Sprite CAScale9ImageView;
-class CCScale9Sprite : public CAView
+class CC_DLL CCScale9Sprite : public CAView
 {
 public:
     CCScale9Sprite();

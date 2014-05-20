@@ -39,7 +39,7 @@ public:
     
 } caFontDefinition;
 
-class CALabel: public CAView
+class CC_DLL CALabel: public CAView
 {
 public:
     
