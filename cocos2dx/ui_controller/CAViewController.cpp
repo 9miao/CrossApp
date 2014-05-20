@@ -33,8 +33,7 @@ CAViewController::CAViewController()
 CAViewController::~CAViewController()
 {
     m_pView->setViewDelegate(NULL);
-    //CC_SAFE_RELEASE_NULL(m_pView);
-    m_pView->release();
+    CC_SAFE_RELEASE_NULL(m_pView);
     CC_SAFE_DELETE(m_pTabBarItem);
     CC_SAFE_DELETE(m_pNavigationBarItem);
     CCDirector* pDirector = CCDirector::sharedDirector();
@@ -223,7 +222,6 @@ void CANavigationController::pushViewController(CAViewController* viewController
     
     CAViewController* lastViewController = m_pViewControllers.back();
     lastViewController->getView()->setFrame(CCRect(-x, 0, 0, 0));
-    CCLog("view:%d",viewController->retainCount());
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
@@ -239,10 +237,11 @@ void CANavigationController::pushViewController(CAViewController* viewController
         m_pContainer->stopAllActions();
         m_pContainer->setFrame(CCRect(x, m_pContainer->getFrame().origin.y, 0, 0));
         
+        CCDelayTime* delayTime = CCDelayTime::create(0.1f);
         CCMoveBy* moveBy = CCMoveBy::create(0.3f, CCPoint(-x, 0));
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveBy);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::pushViewControllerFinish));
-        CCSequence* actions = CCSequence::create(easeBack, finish, NULL);
+        CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);
         m_pContainer->runAction(actions);
         actions->setTag(0);
     }
@@ -287,10 +286,11 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
         m_pContainer->stopAllActions();
         m_pContainer->setFrame(CCRect(-x, m_pContainer->getFrame().origin.y, 0, 0));
         
+        CCDelayTime* delayTime = CCDelayTime::create(0.1f);
         CCMoveBy* moveBy = CCMoveBy::create(0.3f, CCPoint(x, 0));
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveBy);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::popViewControllerFinish));
-        CCSequence* actions = CCSequence::create(easeBack, finish, NULL);
+        CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);
         m_pContainer->runAction(actions);
         actions->setTag(0);
     }
@@ -306,7 +306,7 @@ void CANavigationController::popViewControllerFinish()
     CAViewController* lastViewController = m_pViewControllers.back();
     lastViewController->m_pNavigationController = NULL;
     lastViewController->removeViewFromSuperview();
-    //lastViewController->autorelease();
+    lastViewController->autorelease();
     m_pViewControllers.pop_back();
     m_pNavigationBar->popItem();
     m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));

@@ -41,14 +41,14 @@ CATableView::CATableView()
 CATableView::~CATableView()
 {
     CC_SAFE_DELETE(m_pCellDict);
-    CC_SAFE_DELETE(m_pTableHeaderView);
-    CC_SAFE_DELETE(m_pTableFooterView);
-    CC_SAFE_DELETE(m_pTablePullDownView);
-    CC_SAFE_DELETE(m_pTablePullUpView);
-//    m_pTableViewDataSource = NULL;
-//    m_pTableViewDelegate = NULL;
-    m_pTableViewDelegate->removeDelegate(this);
-    m_pTableViewDataSource->removeDelegate(this);
+    CC_SAFE_RELEASE_NULL(m_pTableHeaderView);
+    CC_SAFE_RELEASE_NULL(m_pTableFooterView);
+    CC_SAFE_RELEASE_NULL(m_pTablePullDownView);
+    CC_SAFE_RELEASE_NULL(m_pTablePullUpView);
+    m_pTableViewDataSource = NULL;
+    m_pTableViewDelegate = NULL;
+//    m_pTableViewDelegate->removeDelegate(this);
+//    m_pTableViewDataSource->removeDelegate(this);
 }
 
 void CATableView::onEnterTransitionDidFinish()

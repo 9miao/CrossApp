@@ -39,6 +39,8 @@
 
 NS_CC_BEGIN;
 
+static int viewCount = 0;
+
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
 
@@ -117,6 +119,9 @@ CAView::CAView(void)
     m_pActionManager->retain();
     
     m_pComponentContainer = new CCComponentContainer(this);
+    
+    ++viewCount;
+    //CCLog("CAView = %d\n",viewCount);
 }
 
 CAView::~CAView(void)
@@ -145,13 +150,16 @@ CAView::~CAView(void)
     }
     
     // children
-    CC_SAFE_RELEASE(m_pSubviews);
+    CC_SAFE_RELEASE_NULL(m_pSubviews);
     
     // m_pComsContainer
     m_pComponentContainer->removeAll();
     CC_SAFE_DELETE(m_pComponentContainer);
     
     CC_SAFE_RELEASE(m_pobTexture);
+    
+    --viewCount;
+    //CCLog("~CAView = %d\n",viewCount);
 }
 
 CAView * CAView::create(void)
@@ -720,6 +728,9 @@ void CAView::cleanup()
 {
     // actions
     this->stopAllActions();
+    
+    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
+    
     // timers
     arrayMakeObjectsPerformSelector(m_pSubviews, cleanup, CAView*);
 }
@@ -1162,6 +1173,9 @@ void CAView::onEnter()
     {
         this->registerWithTouchDispatcher();
     }
+    
+    CCDirector::sharedDirector()->getScheduler()->resumeTarget(this);
+    m_pActionManager->resumeTarget(this);
 }
 
 void CAView::onEnterTransitionDidFinish()
@@ -1191,10 +1205,14 @@ void CAView::onExit()
     
     arrayMakeObjectsPerformSelector(m_pSubviews, onExit, CAView*);
     
-    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    if( m_bTouchEnabled )
+    {
+        pDirector->getTouchDispatcher()->removeDelegate(this);
+    }
     
-    this->stopAllActions();
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
+    CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
+    m_pActionManager->pauseTarget(this);
 }
 
 void CAView::setActionManager(CCActionManager* actionManager)

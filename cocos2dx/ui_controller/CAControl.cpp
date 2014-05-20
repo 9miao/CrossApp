@@ -24,10 +24,10 @@ CAControl::CAControl()
 CAControl::~CAControl()
 {
     this->removeAllSubviews();
-    CC_SAFE_DELETE(m_pBackGroundView);
-    CC_SAFE_DELETE(m_pHighlightedBackGroundView);
-    CC_SAFE_DELETE(m_pDisabledBackGroundView);
-    CC_SAFE_DELETE(m_pSelectedBackGroundView);
+    CC_SAFE_RELEASE_NULL(m_pBackGroundView);
+    CC_SAFE_RELEASE_NULL(m_pHighlightedBackGroundView);
+    CC_SAFE_RELEASE_NULL(m_pDisabledBackGroundView);
+    CC_SAFE_RELEASE_NULL(m_pSelectedBackGroundView);
 }
 
 void CAControl::setControlState(CAControlState var)

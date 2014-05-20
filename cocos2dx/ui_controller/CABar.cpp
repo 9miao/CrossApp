@@ -106,10 +106,10 @@ void CANavigationBar::showBackButton()
     if (m_pBackButton == NULL)
     {
         CCRect rect = this->getBounds();
-        rect.size.height = rect.size.height * 0.9f;
+        rect.size.height = rect.size.height * 0.85f;
         rect.size.width = rect.size.height;
-        rect.origin.x = rect.size.width;
-        rect.origin.y = rect.size.height * 0.5f;
+        rect.origin.x = rect.size.width * 0.8f;
+        rect.origin.y = this->getBounds().size.height * 0.5f;
         
         m_pBackButton = CAButton::createWithCenter(rect);
         CAImageView* imageView = CAImageView::createWithImage(CAImage::create("button_left.png"));
