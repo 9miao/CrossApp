@@ -1,0 +1,492 @@
+Ôªø<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp" />
+    <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
+    <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp" />
+    <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCBKeyframe.cpp" />
+    <ClCompile Include="..\CCBReader\CCBReader.cpp" />
+    <ClCompile Include="..\CCBReader\CCBSequence.cpp" />
+    <ClCompile Include="..\CCBReader\CCBSequenceProperty.cpp" />
+    <ClCompile Include="..\CCBReader\CCBValue.cpp" />
+    <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCControlLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCData.cpp" />
+    <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLayerGradientLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLayerLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCMenuItemImageLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCMenuItemLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCNode+CCBRelativePositioning.cpp" />
+    <ClCompile Include="..\CCBReader\CCNodeLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCNodeLoaderLibrary.cpp" />
+    <ClCompile Include="..\CCBReader\CCParticleSystemQuadLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionFrameEasing.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionManager.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionNode.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionObject.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\animation\CCArmatureAnimation.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\animation\CCProcessBase.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\animation\CCTween.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\CCArmature.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\CCBone.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\datas\CCDatas.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\display\CCBatchNode.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\display\CCDecorativeDisplay.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\display\CCDisplayFactory.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\display\CCDisplayManager.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\display\CCSkin.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\physics\CCColliderDetector.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCDataReaderHelper.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCSpriteFrameCacheHelper.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCTransformHelp.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCTweenFunction.cpp" />
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCUtilMath.cpp" />
+    <ClCompile Include="..\CocoStudio\Components\CCComAttribute.cpp" />
+    <ClCompile Include="..\CocoStudio\Components\CCComAudio.cpp" />
+    <ClCompile Include="..\CocoStudio\Components\CCComController.cpp" />
+    <ClCompile Include="..\CocoStudio\Components\CCComRender.cpp" />
+    <ClCompile Include="..\CocoStudio\Components\CCInputDelegate.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIWidget.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayout.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\System\CocosGUI.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\System\UIHelper.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\System\UIInputManager.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\System\UILayer.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIButton.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UICheckBox.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIImageView.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILabel.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILabelAtlas.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILabelBMFont.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISwitch.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\CSContentJsonDictionary.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\lib_json\json_value.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp" />
+    <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
+    <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlHuePicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlPotentiometer.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSlider.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlStepper.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp" />
+    <ClCompile Include="..\network\HttpClient.cpp" />
+    <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp" />
+    <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp" />
+    <ClCompile Include="..\spine\Animation.cpp" />
+    <ClCompile Include="..\spine\AnimationState.cpp" />
+    <ClCompile Include="..\spine\AnimationStateData.cpp" />
+    <ClCompile Include="..\spine\Atlas.cpp" />
+    <ClCompile Include="..\spine\AtlasAttachmentLoader.cpp" />
+    <ClCompile Include="..\spine\AttachmentÅ°•Üó^Øª∆A,öù\˘@–jh_÷˚Æ∆-èæå,ïﬁ¬ËRáVò]R=[÷˛puk¥¡|ˇp∂H·¨'Î,˜Â`
+“‡ea¬‰1«?oøb7‚T¿¿⁄≤ËW7‡¥ßá0cí?ﬂ“ËÂ∫‹!ŒxRàÜC(\CM7·ƒ|$®X;ÕÈO∑åóË‚Í‹J⁄Uê∂BÅ¡~∏7á?≥IJ—¨˛≠çÊCö—ÿ^¶ó0‘ØµfA¬äi%¥:aƒƒ…˘î¶ôê‘y##˛xãŒâú#Ú8=_øªq|û•ø∞a d…/„&*’ﬁza2·⁄%›3.y(3HÇÁ^™pmÓ…!¢„ºêa§›\%∂¯å&ı≥õ˘ú&Bé•j∂IëwÑs(Ö”˝UªÕQ¢Ê@
+ºõqÂ±Ãó4¬:Øf@≤Q Ωè±»WYõ†‘†eΩ4ÃÙmÉ"X5mÈô!…(R„M·wÅ√û©ˇmV$pn~§≈Ø´À∆D§™ `€•±aÚåê∏‚ÅËZçÜòétŒ»?T†lM4q©òç‰£,ñNØ˚À≠èı›‡äªsú(‚é«3/	Ûê–πN¨úñ/√˝‚ÜGË1Ã/ŸEßP÷˝éÂ‹'Ó£ö€µÍå@|ˆ˛pL@jgè‘£ı––e∏ÑzÿÖ∏éµ‹L%≈üfôÙœ 	 Ω]Á‡gÅt£#Fï⁄Ö›Â∏<óâI%⁄c.„ë_gç4≤·ß7]È@gW‚Êú¸î}?∏Y¸+¿n
+Ü c%Uk{œ’ÿ[Æª ¢çã®„FÒ¡{Ø}Íæqß8ç25i)ÙÆ´∆ˆ)ñï	$vN•lñíY$Ö3Kä∫Gãzµn¡î¨˘˝ççà8é¢XçÄ∏UºùQ…-‚Ua¢å˚s@ﬁ hâôìD«ä≤Éúïøi'TÆ}P≥ñ,îÆK ºˇjkœb2R‚=:‘¯7[…õØ{≥J⁄ºHW·vÒ=1ƒØ[À{CJg·Ø∑Ü˜ÖªwQu ﬁû°›Ó®ämÂŸóXè`çÍ,@ÿÍ≥A 
+≤;qƒsÙs-5≥ˇÄ∂ıºK«åíXT∆&ü‚‡º'\.¶NvJe∑Ä◊^sMÓßZ∂ê◊ÈN«W4pŸC.|òÖdx2SíÊôL"Q≈mTƒ∆)O”óÓ¬1ú,"„HQ¡≠9K§«ÎLöºî°…êø≤Å|#¯XPKjDv¸(P˚¶Fˆë{ƒ≈π"7>¢9&Oæ|óUø<-ÑÆÆv@l@õßÑ†vñì)ˇæ<öπ$Âjjøπë Ÿî»‚Ñß^v˝Xã†cùÔßÊõ¨îÙÇ·~q√#ÙÊóÏ"áS(Î~«érÓ˜QÕÌè⁄ıF >{∏Ö
+& µ≥GÍ—zhË2\B=ÏB\GçZn¶íÄbÉO≥L˙gÄxÄﬁÆs≥@∫—£JmÅ¬Ór\ûÀƒ§Ì1âÒ»ãØ≥Fö
+Ÿ”õÆt†≥+qsN~ æ‹,˛`∑èÖCê±Å™µΩÁÍÏ-Wà]Â —∆E‘q£¯‡ΩWáç>uﬂ∏SúFôö¥z◊Uc˚À ;ßR6K…,íé¬Éô%	E›Å£EΩZ∑‡J÷¸˛∆FDGQ¨F@‹*ﬁŒ®‰Ò™∞Q∆˝9 oe¥ƒÃI"äcEŸAŒ ﬂ¥*◊>®YKJ◊å%eﬁµµg1)ÒÍ¸õ≠‰ÕWÇ=àY%m^§´pªxåû‚WÅ≠ÂΩå!•≥◊[√˚¬]èª®: oœ–ønwT≈∂ÚÏK¨G0âFı lıŸ eŸù8‚9˙πñöŸˇ@€zﬁ•cFI,*cìOqpﬁ.S';•≤Ä¯[¿kØπ&˜S-[»Îtß„+∏Ï!>ÃB2<ô)IÛL&ë®‚6*b„îßÈKw·äNëq§®‡÷ú%“„ı&M^ –d»_Ÿ@æ|,(É%5";~®Å}S#˚»=‚‚\ë—ì'_æÀ™ﬂûBWW;†6 éÕSBP;À…îﬂÕ\íãr5µﬂ‹HÂlJdq¬S/ª~¨E–±ŒwÇSÛMVJzÉê’	¯ÄfC"<.√Jﬂ˛{£¸ –ÿÂcöøÃ-9ÛIñ'Ñ„'Z}Ü%”ì.Øæv˜8Ê˘ó6Ùt}5ÿ4•ﬂkuo’ŸN™∫m<ü	í;øgáTxÎ,-3ì$œ”/ì˝âMÂ∑ÏL¸G[Ã+(Å≈ær7Uiõyí>Ø	K}Åu”¯Â·´wÎxÁU∫Ωä~{£N≠ÏMåú¯T∞⁄∑X·a™ø›ä≥ÛG6'Ré¶ò‡⁄ªWäΩSG‡±1ôG2Á?ƒvD≈œfÚ?m_‘p”#C%l.ËÄ—~®ÖΩ>¨ô&ô(9(Ôæ™ ∑=äπì*o”˘ï÷B3LBä—»Â‘ß5Ω_V ∞Ò∆+Øe–ﬂµcÒt¶ìπ ◊àÂQ[≠ÍmWT´ÕÊül˘ôñÙ¢Îpgé§xVHÎÃJ≤ÁáÏï∫ŸëxT®]ã{≈µbÅØÀ“·∫a|)ò5	Ú‡÷ó5dôúîœ≤ÑÃï‘¢Ös˝É-àÓÁÁ7ÅhÅHZ—√'4uiıÜMà\ï€r^~}Éïeø‘z≥N—«5“;√IOa“WXÎ{w8^∆˙i Æõ…Ò}áU0∂îÉ!»Xâ@’⁄ﬁsıˆñ+ƒÆrÄh„"Í∏Q|ﬁ´√Fü∫o‹)N£LMZ
+ΩÎ™±}äeeâùS)õ•dIG·¡ÃíÑ¢Ó¿—¢^≠[p%k~c#"é£(V# nogTrãxUÿÜ(„˛ê∑2ZbÊ$≈±¢Ï gÂo⁄	ïk‘¨%•k∆í2Ôø⁄⁄≥òåîxèu˛ÕVÚÊ+¡ƒ¨í6/“U∏]<FOÒ´¿÷Ú^∆ê“Y¯Î≠·}·Æ«]TÄ∑ÖgË_∑;™b[yˆ%÷#òÉD£˙ ∂˙lê≤ÇÏNÒ˝\KÕÏˇ†m=Ô“1£$ï±…'Ç88Ô	óã©ìùRY@¸-‡µ◊\ì˚©ñ-‰u∫”Ò\ˆêf!ûÃî§y&ìHTq±q ”Ù•ªpE'ã»8RTpkŒÈÒzì&/eh2‰Øl ﬂ>î¡Ñë?
+‘¿æ©ë}‰qqÆ»çèhé…ì/ﬂe’oO°´´P«Ê)!®ÉùÂd øoèf.…Eπö⁄on§r6%≤8·©ó]?÷"ËXÁ;¡©˘&+•ΩÜA»Í|@≥!äa•oˇΩçQ~hÏÚ1Õ_Êñú˘$ÀBåÒ-á>√íÈIóW_ª{Û¸Kz∫ælö“Ôµ∫∑Íl'èU›6ûœ…ùèﬂ≥C*ºı
+ññôIíÁÈóÅ…˛ƒ¶Ú[v&˛£-Êïî¿b_πõ™¥Õ<Iü◊Ñ•æ¿∫i¸ÚÜ’ªuºÛ*›^≈ øΩQßVˆ&FN|*XÌ[¨ç0’ﬂn≈Ÿ˘#õ)GSLÌ]å+≈ﬁ©#ÿãéÃ#ôÛü b;¢‚Äg3˘ü∂/j∏Èë°6ó?t¿h?‘¬^÷LìLîîw_’ Ä€≈‹Iï∑È¸Jk°&!≈h‰rÍ”öﬁØ+ÿÅx„ï◊2ËÔ⁄±x:”I¯\êkƒrÑ®é≠àVı∂+™’fÛO∂¸LKz—u∏3GR<+§uf%ŸÛCˆJ›ÏH<*‘Æ≈Ω‚Z±¿◊ÇÖeÈ
+›0æÃöyÎÀ≤åLN gYBÊJj—¬Öπ˛¡DwåÛÛõ¿¥¿$≠Ëç·ö∫¥z√&DÆ m9/øæ¡ ≤_jΩY'çË„öÈù·§ß0È+¨ıΩ;/
+c˝4WãÕà‰xäæ√*[ ¬‡“\H]Å®Ïñ*¥u—SJ–‹%›ÍhÁ‚á73íTp∑8:ø–∫ﬁ¡x?cˇ‘¶Ef¸ümâB5lôBÇQ˚{|(ËÓ™j€¢Ë‡
+j4≠_∞k™	ê€©¯VùÜ/≥˛w[má‚5∫=Î\,F¯1{S¸ùç?ÀßÔk¨)KÑ°~≠5VL+°≈–	#&NŒß4ÕÑ§ŒÒ«[t∆H‰ë«È˘˙›ç„Û,˝ÖS&K~7Q©ˆˆ–√ê	ˇ–f(Èûq…CôA<˜R]ÄksOáÁÖ#˝ËÊ*±≈g4©ü›‰»Á4rå(U≥Mäº#úC),òÓØ⁄mé5R‡›åì(èeæ§°÷!x5íçRÓ}åEæ ⁄•-Î•a¶ˇk¡™iKœIFëo
+øˆL˝7Äo≥"ÅsÛ#-^x]X]6&"U €¶(çÖ„êgÑƒº@◊:h4ƒt§sF˛†⁄ ek¢âK≈l$e±tzeÿ_n}4®ÔGP‹ù„Dw<ûyIòáÑŒubÂ¥|!Ó7<Bèa~….r8Ö≤ÓwÏ(Á>q’‹˛®=Po`r‡≥˜á[®0`R;{§≠áÜ.√%‘√.ƒu‘®Âf*	(6¯4À§HÄËÌ:?§1™‘(Ï.«ÂπLL*—sëèº¯:k§©ê?ΩÈJ:ª7Á‰ßÏ˚¡Õ‚_v˚xPh0+®Z€{Æ~¿ﬁrÖÿUm\D7äﬁ{uÿËS˜ç;≈iî©IK°w]5∂O±¨L ±s*e≥îÃ"È(<òYíP‘8Z‘´uŒ†dÕÔolDƒq≈jƒ≠‚ÌåJnØ
+€e‹üÚVFKÃú$¢8Vî‰¨¸M;°rÌÉöµd°tÕXRÊ˝W[{ìëÔ—°Œ¿øŸJﬁ|%ÿÉòU“ÊE∫
+∑ã«Ëâ!~ÿZﬁÀR:Ω5º/‹ı∏ã™∂˝ÎvGUl+œæƒzsêhT`¬VüRVê›â#û£ük©ô˝? ¥≠Á]:fîƒ¢26˘DÁ=·r1u≤S*»Äøºˆökr?’≤ÖºNw:æ¢ÅÀr·√,$√ìôí4œdâ*n£"6Nyöæté°»‡dGä
+nÕY"=^œ`“‰•MÜ¸ï‰¡«Ç2XÇPc ≤„GÅÿ75≤è‹#.ŒπÒÕ1yÚÂª¨˙m‡i!tuµ*`"‡ÿ<%u∞≥úL˘˜Ì‡—Ã%π(WS˚ÕçTŒ¶D'<ı≤Î«ZÎ|'85ﬂd•¥†◊0YùÄh6$¬„B1¨ÙÕ‡ø∑1 ç]>¶˘K¿‹í3üdyBà1~¢Â–gX2=ÈÚÍkwècûiCO◊WÉMS˙ΩV˜VùÌ‰°™€∆Ûô πÛÒ{vHÖ∑^¡¿“23IÚ<˝20ŸüÿT~ÀŒƒ¥≈ºíÅXÏ+wSï∂ô'ÈÛö∞‘X7ç_ﬁæz∑éw^•€´‡∑7Í‘ ﬁƒ»âO´}ãæ°¶˙€≠8;ds"Âhä	oStudio\Armature\utils\CCArmatureDefine.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCDataReaderHelper.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCSpriteFrameCacheHelper.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCTransformHelp.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCTweenFunction.h" />
+    <ClInclude Include="..\CocoStudio\Armature\utils\CCUtilMath.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCComAttribute.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCComAudio.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCComController.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCComRender.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCInputDelegate.h" />
+    <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.h" />
+    <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIWidget.h" />
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayout.h" />
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h" />
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.h" />
+    <ClInclude Include="..\CocoStudio\GUI\System\CocosGUI.h" />
+    <ClInclude Include="..\CocoStudio\GUI\System\UIHelper.h" />
+    <ClInclude Include="..\CocoStudio\GUI\System\UIInputManager.h" />
+    <ClInclude Include="..\CocoStudio\GUI\System\UILayer.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\Compatible\CompatibleClasses.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollInterface.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UIButton.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UICheckBox.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UIImageView.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UILabel.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UILabelAtlas.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UILabelBMFont.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISwitch.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h" />
+    <ClInclude Include="..\CocoStudio\Json\CSContentJsonDictionary.h" />
+    <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\autolink.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\config.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\features.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\forwards.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\json_batchallocator.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\json_lib.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\json_tool.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\reader.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\value.h" />
+    <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h" />
+    <ClInclude Include="..\CocoStudio\Reader\GUIReader.h" />
+    <ClInclude Include="..\CocoStudio\Reader\SceneReader.h" />
+    <ClInclude Include="..\ExtensionMacros.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlExtensions.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlHuePicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlPotentiometer.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSlider.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlStepper.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSwitch.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlUtils.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCSorting.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCTableView.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h" />
+    <ClInclude Include="..\network\HttpClient.h" />
+    <ClInclude Include="..\network\HttpRequest.h" />
+    <ClInclude Include="..\network\HttpResponse.h" />
+    <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h" />
+    <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h" />
+    <ClInclude Include="..\spine\Animation.h" />
+    <ClInclude Include="..\spine\AnimationState.h" />
+    <ClInclude Include="..\spine\AnimationStateData.h" />
+    <ClInclude Include="..\spine\Atlas.h" />
+    <ClInclude Include="..\spine\AtlasAttachmentLoader.h" />
+    <ClInclude Include="..\spine\Attachment.h" />
+    <ClInclude Include="..\spine\AttachmentLoader.h" />
+    <ClInclude Include="..\spine\Bone.h" />
+    <ClInclude Include="..\spine\BoneData.h" />
+    <ClInclude Include="..\spine\CCSkeleton.h" />
+    <ClInclude Include="..\spine\extension.h" />
+    <ClInclude Include="..\spine\Json.h" />
+    <ClInclude Include="..\spine\RegionAttachment.h" />
+    <ClInclude Include="..\spine\Skeleton.h" />
+    <ClInclude Include="..\spine\SkeletonData.h" />
+    <ClInclude Include="..\spine\SkeletonJson.h" />
+    <ClInclude Include="..\spine\Skin.h" />
+    <ClInclude Include="..\spine\Slot.h" />
+    <ClInclude Include="..\spine\SlotData.h" />
+    <ClInclude Include="..\spine\spine-cocos2dx.h" />
+    <ClInclude Include="..\spine\spine.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\CocoStudio\Json\lib_json\json_internalarray.inl" />
+    <None Include="..\CocoStudio\Json\lib_json\json_internalmap.inl" />
+    <None Include="..\CocoStudio\Json\lib_json\json_valueiterator.inl" />
+    <None Include="..\CocoStudio\Json\lib_json\sconscript" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{f8a69a16-14eb-4e5c-8f99-4cbfc5a6e089}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>libExtensions</ProjectName>
+    <RootNamespace>libExtensions</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>8.1</ApplicationTypeRevision>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WinRT\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WinRT\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WinRT\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WinRT\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WinRT\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)WinRT\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions> /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions> /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions> /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions> /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions> /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions> /IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

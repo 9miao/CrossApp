@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="AssetsManager">
+      <UniqueIdentifier>{39b1f265-4a90-4e83-9645-19215c5b1ba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{bdb52200-6ddd-4223-8d27-9f43fe847ca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{e31a0268-e818-4b34-a2ab-4f24e46627eb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\AssetsManager\AssetsManager.cpp">
+      <Filter>AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\HttpClient.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp" />
+    <ClCompile Include="..\GUI\CAUIHelper.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\AssetsManager\AssetsManager.h">
+      <Filter>AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos-ext.h" />
+    <ClInclude Include="..\ExtensionMacros.h" />
+    <ClInclude Include="..\network\HttpClient.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\HttpRequest.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\HttpResponse.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
+    <ClInclude Include="..\GUI\CAUIHelper.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
