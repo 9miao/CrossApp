@@ -252,7 +252,6 @@ void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
     // otherwise we access invalid memory when the release call deletes the target
     // and the target calls removeAllSelectors() during its destructor
     target->release();
-
 }
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused)

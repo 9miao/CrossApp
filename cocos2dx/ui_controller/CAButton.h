@@ -77,8 +77,6 @@ public:
     
     ccColor3B& getColor();
     
-    virtual void setContentSize(const CCSize & var);
-    
     virtual void setTouchEnabled(bool enabled);
     
 protected:
@@ -95,21 +93,21 @@ protected:
 
     ccColor3B m_color;
     
-    CAView* m_spriteNormal;
+    CAView* m_pSpriteNormal;
     
-    CAView* m_spriteHighlighted;
+    CAView* m_pSpriteHighlighted;
     
-    CAView* m_spriteDisabled;
+    CAView* m_pSpriteDisabled;
     
-    CAView* m_spriteSelected;
+    CAView* m_pSpriteSelected;
     
-    CCPoint m_spriteNPoint;
+    CCPoint m_tSpriteNPoint;
     
-    CCPoint m_spriteHPoint;
+    CCPoint m_tSpriteHPoint;
 
-    CCPoint m_spriteDPoint;
+    CCPoint m_tSpriteDPoint;
     
-    CCPoint m_spriteSPoint;
+    CCPoint m_tSpriteSPoint;
 
 protected:
     
@@ -129,6 +127,8 @@ protected:
 
     bool m_IsRehisterTouchDispatcher;
 
+    virtual void setContentSize(const CCSize & var);
+    
 private:
     
     void* m_target;

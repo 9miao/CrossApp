@@ -41,8 +41,6 @@ public:
     virtual void tableViewDidShowPullDownView(CATableView* table){};
     
     virtual void tableViewDidShowPullUpView(CATableView* table){};
-    
-    void removeDelegate(CATableView* table);
 };
 
 class CATableViewDataSource
@@ -65,8 +63,6 @@ public:
     virtual unsigned int tableViewHeightForHeaderInSection(CATableView* table, unsigned int section){return 0;}
     
     virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section){return 0;}
-    
-    void removeDelegate(CATableView* table);
 };
 
 

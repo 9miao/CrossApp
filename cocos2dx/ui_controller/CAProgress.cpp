@@ -33,8 +33,8 @@ CAProgress::CAProgress()
 CAProgress::~CAProgress()
 {
     CC_SAFE_RELEASE_NULL(m_pIndicator);
-	CC_SAFE_DELETE(m_pProgressTrackImage);
-	CC_SAFE_DELETE(m_pProgressTintImage);
+	CC_SAFE_RELEASE_NULL(m_pProgressTrackImage);
+	CC_SAFE_RELEASE_NULL(m_pProgressTintImage);
 }
 
 CAProgress* CAProgress::create()

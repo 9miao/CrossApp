@@ -47,8 +47,6 @@ CATableView::~CATableView()
     CC_SAFE_RELEASE_NULL(m_pTablePullUpView);
     m_pTableViewDataSource = NULL;
     m_pTableViewDelegate = NULL;
-//    m_pTableViewDelegate->removeDelegate(this);
-//    m_pTableViewDataSource->removeDelegate(this);
 }
 
 void CATableView::onEnterTransitionDidFinish()
@@ -524,16 +522,6 @@ bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
     this->setControlStateNormal();
     
     return true;
-}
-
-void CATableViewDataSource::removeDelegate(cocos2d::CATableView *table)
-{
-    table->setTableViewDataSource(NULL);
-}
-
-void CATableViewDelegate::removeDelegate(cocos2d::CATableView *table)
-{
-    table->setTableViewDelegate(NULL);
 }
 
 NS_CC_END

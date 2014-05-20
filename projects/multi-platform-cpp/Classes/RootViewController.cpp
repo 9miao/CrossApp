@@ -14,7 +14,7 @@ void RootViewController::viewDidLoad()
     
     CCRect tableRect = rect;
     tableRect.size.height = rect.size.height - 80;
-    
+
     tableView = new CATableView();
     tableView->initWithFrame(tableRect);
     tableView->setTableViewDataSource(this);
@@ -36,6 +36,8 @@ void RootViewController::viewDidLoad()
     
     tableView->setBackGroundImage(CAImage::create("1.jpg"));
     
+    tableView->setAllowsSelection(true);
+    
     CAButton* btn1 = CAButton::createWithFrame(CCRect(10, tableRect.size.height+10, 240, 60));
     btn1->setSprite(CAControlStateNormal, CCLabelTTF::create("目前不可选", "Arial", 30));
     btn1->getSprite(CAControlStateNormal)->setColor(ccBLACK);
@@ -48,18 +50,18 @@ void RootViewController::viewDidLoad()
     this->getView()->addSubview(btn2);
     btn2->addTarget(this, CAButton_selector(RootViewController::setAllowsMultipleSelection), TouchUpInSide);
     
-//    progress = CAProgress::create();
-//    progress->setFrame(CCRect(600, tableRect.size.height+10, 200, 16));
-//    this->getView()->addSubview(progress);
-//    progress->setProgress(0.5f);
+    progress = CAProgress::create();
+    progress->setFrame(CCRect(600, tableRect.size.height+10, 200, 16));
+    this->getView()->addSubview(progress);
+    progress->setProgress(0.5f);
     
-    //CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(RootViewController::updateProgress), this, 1, false);
+    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(RootViewController::updateProgress), this, 1, false);
     
 }
 
 void RootViewController::viewDidUnload()
 {
-    
+    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(RootViewController::updateProgress), this);
 }
 
 void RootViewController::updateProgress(float dt)
@@ -81,6 +83,7 @@ bool RootViewController::setAllowsSelection(CAButton* btn, CCPoint point)
     }
     btn->getSprite(CAControlStateNormal)->setColor(ccBLACK);
     tableView->reloadData();
+    
     
     return false;
 }

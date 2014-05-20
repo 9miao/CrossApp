@@ -159,6 +159,10 @@ public:
     
     virtual ~CAIndicator();
     
+    virtual void onEnterTransitionDidFinish();
+    
+    virtual void onExitTransitionDidStart();
+    
     static CAIndicator* createWithFrame(const CCRect& rect, CAIndicatorType type);
     
     virtual bool initWithFrame(const CCRect& rect, CAIndicatorType type);

@@ -646,6 +646,17 @@ CAIndicator::~CAIndicator()
 
 }
 
+void CAIndicator::onEnterTransitionDidFinish()
+{
+    CAView::onEnterTransitionDidFinish();
+}
+
+void CAIndicator::onExitTransitionDidStart()
+{
+    CAView::onExitTransitionDidStart();
+    this->setOpacity(0);
+}
+
 CAIndicator* CAIndicator::createWithFrame(const CCRect& rect, CAIndicatorType type)
 {
     CAIndicator* indicator = new CAIndicator();

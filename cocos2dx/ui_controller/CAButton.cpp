@@ -21,12 +21,14 @@ CAButton::CAButton(void)
 ,m_closeTapSound(false)
 ,m_touchClick(false)
 ,m_color(ccWHITE)
-,m_spriteNormal(NULL)
-,m_spriteHighlighted(NULL)
-,m_spriteDisabled(NULL)
-,m_spriteSelected(NULL)
-,m_spriteNPoint(CCPointZero)
-,m_spriteHPoint(CCPointZero)
+,m_pSpriteNormal(NULL)
+,m_pSpriteHighlighted(NULL)
+,m_pSpriteDisabled(NULL)
+,m_pSpriteSelected(NULL)
+,m_tSpriteNPoint(CCPointZero)
+,m_tSpriteHPoint(CCPointZero)
+,m_tSpriteDPoint(CCPointZero)
+,m_tSpriteSPoint(CCPointZero)
 ,m_target(NULL)
 ,m_touchBegin(NULL)
 ,m_touchMoved(NULL)
@@ -39,6 +41,10 @@ CAButton::CAButton(void)
 
 CAButton::~CAButton(void)
 {
+    CC_SAFE_RELEASE_NULL(m_pSpriteNormal);
+    CC_SAFE_RELEASE_NULL(m_pSpriteHighlighted);
+    CC_SAFE_RELEASE_NULL(m_pSpriteDisabled);
+    CC_SAFE_RELEASE_NULL(m_pSpriteSelected);
 }
 
 void CAButton::onExitTransitionDidStart()
@@ -260,55 +266,55 @@ void CAButton::updateWithPoint()
     
     CCPoint point = m_obContentSize/2;
     
-    if (m_spriteNormal)
+    if (m_pSpriteNormal)
     {
-        if (m_spriteNPoint.equals(CCPointZero))
+        if (m_tSpriteNPoint.equals(CCPointZero))
         {
-            m_spriteNormal->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_spriteNormal->setPosition(point);
+            m_pSpriteNormal->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            m_pSpriteNormal->setPosition(point);
         }
         else
         {
-            m_spriteNormal->setPosition(m_spriteNPoint);
+            m_pSpriteNormal->setPosition(m_tSpriteNPoint);
         }
     }
     
-    if (m_spriteHighlighted)
+    if (m_pSpriteHighlighted)
     {
-        if (m_spriteHPoint.equals(CCPointZero))
+        if (m_tSpriteHPoint.equals(CCPointZero))
         {
-            m_spriteHighlighted->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_spriteHighlighted->setPosition(point);
+            m_pSpriteHighlighted->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            m_pSpriteHighlighted->setPosition(point);
         }
         else
         {
-            m_spriteHighlighted->setPosition(m_spriteHPoint);
+            m_pSpriteHighlighted->setPosition(m_tSpriteHPoint);
         }
     }
     
-    if (m_spriteDisabled)
+    if (m_pSpriteDisabled)
     {
-        if (m_spriteDPoint.equals(CCPointZero))
+        if (m_tSpriteDPoint.equals(CCPointZero))
         {
-            m_spriteDisabled->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_spriteDisabled->setPosition(point);
+            m_pSpriteDisabled->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            m_pSpriteDisabled->setPosition(point);
         }
         else
         {
-            m_spriteDisabled->setPosition(m_spriteDPoint);
+            m_pSpriteDisabled->setPosition(m_tSpriteDPoint);
         }
     }
     
-    if (m_spriteSelected)
+    if (m_pSpriteSelected)
     {
-        if (m_spriteSPoint.equals(CCPointZero))
+        if (m_tSpriteSPoint.equals(CCPointZero))
         {
-            m_spriteSelected->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_spriteSelected->setPosition(point);
+            m_pSpriteSelected->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            m_pSpriteSelected->setPosition(point);
         }
         else
         {
-            m_spriteSelected->setPosition(m_spriteSPoint);
+            m_pSpriteSelected->setPosition(m_tSpriteSPoint);
         }
     }
 }
@@ -430,10 +436,10 @@ void CAButton::setControlState(CAControlState var)
 {
     CAControl::setControlState(var);
 
-    this->removeSubview(m_spriteNormal);
-    this->removeSubview(m_spriteHighlighted);
-    this->removeSubview(m_spriteDisabled);
-    this->removeSubview(m_spriteSelected);
+    this->removeSubview(m_pSpriteNormal);
+    this->removeSubview(m_pSpriteHighlighted);
+    this->removeSubview(m_pSpriteDisabled);
+    this->removeSubview(m_pSpriteSelected);
     
     m_eControlState = var;
     
@@ -441,45 +447,45 @@ void CAButton::setControlState(CAControlState var)
     {
         case CAControlStateNormal:
         {
-            if (m_spriteNormal)
+            if (m_pSpriteNormal)
             {
-                this->addSubview(m_spriteNormal);
+                this->addSubview(m_pSpriteNormal);
             }
             break;
         }
         case CAControlStateHighlighted:
         {
-            if (m_spriteHighlighted)
+            if (m_pSpriteHighlighted)
             {
-                this->addSubview(m_spriteHighlighted);
+                this->addSubview(m_pSpriteHighlighted);
             }
-            else if (m_spriteNormal)
+            else if (m_pSpriteNormal)
             {
-                this->addSubview(m_spriteNormal);
+                this->addSubview(m_pSpriteNormal);
             }
             break;
         }
         case CAControlStateDisabled:
         {
-            if (m_spriteDisabled)
+            if (m_pSpriteDisabled)
             {
-                this->addSubview(m_spriteDisabled);
+                this->addSubview(m_pSpriteDisabled);
             }
-            else if (m_spriteNormal)
+            else if (m_pSpriteNormal)
             {
-                this->addSubview(m_spriteNormal);
+                this->addSubview(m_pSpriteNormal);
             }
             break;
         }
         case CAControlStateSelected:
         {
-            if (m_spriteSelected)
+            if (m_pSpriteSelected)
             {
-                this->addSubview(m_spriteSelected);
+                this->addSubview(m_pSpriteSelected);
             }
-            else if (m_spriteNormal)
+            else if (m_pSpriteNormal)
             {
-                this->addSubview(m_spriteNormal);
+                this->addSubview(m_pSpriteNormal);
             }
             break;
         }
@@ -586,69 +592,69 @@ void CAButton::setSprite(CAControlState controlState, CAView* var, CCPoint point
     
     if (controlState == CAControlStateNormal)
     {
-        this->removeSubview(m_spriteNormal);
-        CC_SAFE_DELETE(m_spriteNormal);
+        this->removeSubview(m_pSpriteNormal);
+        CC_SAFE_DELETE(m_pSpriteNormal);
         
         if (!cPoint.equals(point))
         {
-            m_spriteNPoint = point;
+            m_tSpriteNPoint = point;
         }
         else
         {
-            m_spriteNPoint = CCPointZero;
+            m_tSpriteNPoint = CCPointZero;
         }
         
-        m_spriteNormal = var;
+        m_pSpriteNormal = var;
         
         return;
     }
     else if (controlState == CAControlStateHighlighted)
     {
-        this->removeSubview(m_spriteHighlighted);
-        CC_SAFE_DELETE(m_spriteHighlighted);
+        this->removeSubview(m_pSpriteHighlighted);
+        CC_SAFE_DELETE(m_pSpriteHighlighted);
         
         if (!cPoint.equals(point))
         {
-            m_spriteHPoint = point;
+            m_tSpriteHPoint = point;
         }
         else
         {
-            m_spriteHPoint = CCPointZero;
+            m_tSpriteHPoint = CCPointZero;
         }
         
-        m_spriteHighlighted = var;
+        m_pSpriteHighlighted = var;
     }
     else if (controlState == CAControlStateDisabled)
     {
-        this->removeSubview(m_spriteDisabled);
-        CC_SAFE_DELETE(m_spriteDisabled);
+        this->removeSubview(m_pSpriteDisabled);
+        CC_SAFE_DELETE(m_pSpriteDisabled);
         
         if (!cPoint.equals(point))
         {
-            m_spriteDPoint = point;
+            m_tSpriteDPoint = point;
         }
         else
         {
-            m_spriteDPoint = CCPointZero;
+            m_tSpriteDPoint = CCPointZero;
         }
         
-        m_spriteDisabled = var;
+        m_pSpriteDisabled = var;
     }
     else if (controlState == CAControlStateSelected)
     {
-        this->removeSubview(m_spriteSelected);
-        CC_SAFE_DELETE(m_spriteSelected);
+        this->removeSubview(m_pSpriteSelected);
+        CC_SAFE_DELETE(m_pSpriteSelected);
         
         if (!cPoint.equals(point))
         {
-            m_spriteSPoint = point;
+            m_tSpriteSPoint = point;
         }
         else
         {
-            m_spriteSPoint = CCPointZero;
+            m_tSpriteSPoint = CCPointZero;
         }
         
-        m_spriteSelected = var;
+        m_pSpriteSelected = var;
     }
 }
 
@@ -657,16 +663,16 @@ CAView* CAButton::getSprite(CAControlState controlState)
     switch (controlState)
     {
         case CAControlStateNormal:
-            return m_spriteNormal;
+            return m_pSpriteNormal;
             break;
         case CAControlStateHighlighted:
-            return m_spriteHighlighted;
+            return m_pSpriteHighlighted;
             break;
         case CAControlStateDisabled:
-            return m_spriteDisabled;
+            return m_pSpriteDisabled;
             break;
         case CAControlStateSelected:
-            return m_spriteSelected;
+            return m_pSpriteSelected;
             break;
         default:
             return NULL;

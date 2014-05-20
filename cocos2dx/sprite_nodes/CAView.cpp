@@ -121,7 +121,7 @@ CAView::CAView(void)
     m_pComponentContainer = new CCComponentContainer(this);
     
     ++viewCount;
-    //CCLog("CAView = %d\n",viewCount);
+    CCLog("CAView = %d\n",viewCount);
 }
 
 CAView::~CAView(void)
@@ -159,7 +159,7 @@ CAView::~CAView(void)
     CC_SAFE_RELEASE(m_pobTexture);
     
     --viewCount;
-    //CCLog("~CAView = %d\n",viewCount);
+    CCLog("~CAView = %d\n",viewCount);
 }
 
 CAView * CAView::create(void)
