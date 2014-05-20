@@ -20,6 +20,7 @@ void RootViewController::viewDidLoad()
     tableView->setTableViewDataSource(this);
     tableView->setTableViewDelegate(this);
     this->getView()->addSubview(tableView);
+    tableView->release();
     
     CAView* v = CAView::createWithFrame(CCRectZero, ccc4(80, 80, 180, 255));
     tableView->setTableHeaderHeight(300);
@@ -47,12 +48,12 @@ void RootViewController::viewDidLoad()
     this->getView()->addSubview(btn2);
     btn2->addTarget(this, CAButton_selector(RootViewController::setAllowsMultipleSelection), TouchUpInSide);
     
-    progress = CAProgress::create();
-    progress->setFrame(CCRect(600, tableRect.size.height+10, 200, 16));
-    this->getView()->addSubview(progress);
-    progress->setProgress(0.5f);
+//    progress = CAProgress::create();
+//    progress->setFrame(CCRect(600, tableRect.size.height+10, 200, 16));
+//    this->getView()->addSubview(progress);
+//    progress->setProgress(0.5f);
     
-    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(RootViewController::updateProgress), this, 1, false);
+    //CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(RootViewController::updateProgress), this, 1, false);
     
 }
 
@@ -113,6 +114,8 @@ void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
     viewController->setTitle("view1");
     
     this->getNavigationController()->pushViewController(viewController, true);
+    viewController->autorelease();
+    
     CCLog("selected = %d %d",section, row);
 }
 

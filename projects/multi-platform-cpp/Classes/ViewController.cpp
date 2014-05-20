@@ -8,7 +8,6 @@
 
 #include "ViewController.h"
 
-static int count = 0;
 
 void ViewController::viewDidLoad()
 {

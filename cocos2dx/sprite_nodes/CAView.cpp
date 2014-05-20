@@ -1191,11 +1191,10 @@ void CAView::onExit()
     
     arrayMakeObjectsPerformSelector(m_pSubviews, onExit, CAView*);
     
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    if( m_bTouchEnabled )
-    {
-        pDirector->getTouchDispatcher()->removeDelegate(this);
-    }
+    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    
+    this->stopAllActions();
+    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
 }
 
 void CAView::setActionManager(CCActionManager* actionManager)

@@ -41,6 +41,30 @@ CATableView::CATableView()
 CATableView::~CATableView()
 {
     CC_SAFE_DELETE(m_pCellDict);
+    CC_SAFE_DELETE(m_pTableHeaderView);
+    CC_SAFE_DELETE(m_pTableFooterView);
+    CC_SAFE_DELETE(m_pTablePullDownView);
+    CC_SAFE_DELETE(m_pTablePullUpView);
+//    m_pTableViewDataSource = NULL;
+//    m_pTableViewDelegate = NULL;
+    m_pTableViewDelegate->removeDelegate(this);
+    m_pTableViewDataSource->removeDelegate(this);
+}
+
+void CATableView::onEnterTransitionDidFinish()
+{
+    CAScrollView::onEnterTransitionDidFinish();
+    
+    if (m_pTableCells.empty())
+    {
+        this->runAction(CCSequence::create(CCDelayTime::create(1/60.0f),
+                                           CCCallFunc::create(this, callfunc_selector(CATableView::reloadData)), NULL));
+    }
+}
+
+void CATableView::onExitTransitionDidStart()
+{
+    CAScrollView::onExitTransitionDidStart();
 }
 
 bool CATableView::initWithFrame(const cocos2d::CCRect &rect)
@@ -53,8 +77,6 @@ bool CATableView::initWithFrame(const cocos2d::CCRect &rect)
     this->setViewSize(rect.size);
     this->setShowsHorizontalScrollIndicator(false);
     this->setBounceHorizontal(false);
-    
-    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CATableView::reloadData), this, 0, 0, 0, false);
     
     return true;
 }
@@ -349,7 +371,7 @@ void CATableView::reloadViewSizeData()
     this->setViewSize(size);
 }
 
-void CATableView::reloadData(float delay)
+void CATableView::reloadData()
 {
     this->reloadViewSizeData();
 
@@ -502,6 +524,16 @@ bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
     this->setControlStateNormal();
     
     return true;
+}
+
+void CATableViewDataSource::removeDelegate(cocos2d::CATableView *table)
+{
+    table->setTableViewDataSource(NULL);
+}
+
+void CATableViewDelegate::removeDelegate(cocos2d::CATableView *table)
+{
+    table->setTableViewDelegate(NULL);
 }
 
 NS_CC_END

@@ -31,6 +31,7 @@ class CATableView;
 
 class CATableViewDelegate
 {
+    
 public:
     
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row){};
@@ -41,10 +42,12 @@ public:
     
     virtual void tableViewDidShowPullUpView(CATableView* table){};
     
+    void removeDelegate(CATableView* table);
 };
 
 class CATableViewDataSource
 {
+    
 public:
     
     virtual CATableViewCell* tableCellAtIndex(CATableView* table, unsigned int section, unsigned int row) = 0;
@@ -63,6 +66,7 @@ public:
     
     virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section){return 0;}
     
+    void removeDelegate(CATableView* table);
 };
 
 
@@ -75,9 +79,13 @@ public:
     
     virtual ~CATableView();
     
+    virtual void onEnterTransitionDidFinish();
+    
+    virtual void onExitTransitionDidStart();
+    
     virtual bool initWithFrame(const cocos2d::CCRect &rect);
     
-    void reloadData(float delay = 0);
+    void reloadData();
     
     CATableViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
     

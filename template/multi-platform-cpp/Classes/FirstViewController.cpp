@@ -32,7 +32,7 @@ void FirstViewController::viewDidLoad()
 {
     // Do any additional setup after loading the view from its nib.
     
-    CAImageView* imageView = CAImageView::createWithTexture(CAImage::create("9m.jpg"));
+    CAImageView* imageView = CAImageView::createWithImage(CAImage::create("9m.jpg"));
     imageView->setFrame(CCRect(100, 100, 0, 0));
     this->getView()->addSubview(imageView);
     

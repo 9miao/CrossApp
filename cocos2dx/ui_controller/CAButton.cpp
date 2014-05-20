@@ -15,8 +15,6 @@
 
 NS_CC_BEGIN
 
-static int count = 0;
-
 CAButton::CAButton(void)
 :m_stateSelected(false)
 ,m_textTag("")
@@ -37,14 +35,10 @@ CAButton::CAButton(void)
 ,m_touchUpSide(NULL)
 ,m_IsRehisterTouchDispatcher(false)
 {
-    count++;
-    printf("CAButton:%d",count);
 }
 
 CAButton::~CAButton(void)
-{    
-    count--;
-    printf("~CAButton:%d",count);
+{
 }
 
 void CAButton::onExitTransitionDidStart()

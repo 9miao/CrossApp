@@ -33,8 +33,10 @@ CAViewController::CAViewController()
 CAViewController::~CAViewController()
 {
     m_pView->setViewDelegate(NULL);
-    CC_SAFE_RELEASE_NULL(m_pView);
-    
+    //CC_SAFE_RELEASE_NULL(m_pView);
+    m_pView->release();
+    CC_SAFE_DELETE(m_pTabBarItem);
+    CC_SAFE_DELETE(m_pNavigationBarItem);
     CCDirector* pDirector = CCDirector::sharedDirector();
     if (m_bKeypadEnabled)
     {
@@ -221,7 +223,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
     
     CAViewController* lastViewController = m_pViewControllers.back();
     lastViewController->getView()->setFrame(CCRect(-x, 0, 0, 0));
-    
+    CCLog("view:%d",viewController->retainCount());
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
@@ -304,10 +306,9 @@ void CANavigationController::popViewControllerFinish()
     CAViewController* lastViewController = m_pViewControllers.back();
     lastViewController->m_pNavigationController = NULL;
     lastViewController->removeViewFromSuperview();
-    lastViewController->autorelease();
+    //lastViewController->autorelease();
     m_pViewControllers.pop_back();
     m_pNavigationBar->popItem();
-    
     m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
 }
 

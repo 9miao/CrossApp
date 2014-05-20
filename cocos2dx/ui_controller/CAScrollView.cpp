@@ -46,7 +46,6 @@ CAScrollView::~CAScrollView()
 {
     CC_SAFE_DELETE(m_pTouches);
     CC_SAFE_DELETE(m_pChildInThis);
-    CCDirector::sharedDirector()->getScheduler()->unscheduleUpdateForTarget(this);
 }
 
 void CAScrollView::onEnterTransitionDidFinish()
@@ -63,6 +62,8 @@ void CAScrollView::onExitTransitionDidStart()
     m_tPointOffset.clear();
     m_pTouches->removeAllObjects();
     m_tInertia = CCPointZero;
+    
+    CCDirector::sharedDirector()->getScheduler()->unscheduleUpdateForTarget(this);
 }
 
 bool CAScrollView::initWithFrame(const cocos2d::CCRect &rect)
