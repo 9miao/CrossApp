@@ -1,0 +1,29 @@
+﻿生成启动时间为 2014/5/11 22:01:08。
+     1>项目“J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\HelloCppComponent.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\cocos2dx\include" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\cocos2dx" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\cocos2dx\platform\wp8" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\cocos2dx\platform\winrt" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\Classes" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\CocosDenshion\include" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\extensions" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\external" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\external\chipmunk\include\chipmunk" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\..\..\..\..\..\cocos2dx\kazmath\include" /I"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\\" /I"Generated Files\\" /IDebug\ /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /ZW /ZW:nostdlib /nologo /W3 /WX- /sdl /MP /Od /Oy- /D _WINRT_DLL /D WP8 /D _WP8 /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /D _DEBUG /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /wd4453 /FU"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\Win32\Debug\CocosDenshion\CocosDenshion.winmd" /FU"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\lib\platform.winmd" /FU"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata\Windows.winmd" /analyze- /errorReport:prompt "..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.cpp"
+         Direct3DInterop.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\Debug\HelloCppComponent\HelloCppComponent.dll" /INCREMENTAL /NOLOGO d3d11.lib WindowsPhoneCore.lib RuntimeObject.lib PhoneAppModelHost.lib /NODEFAULTLIB:ole32.lib /MANIFEST:NO /DEBUG /PDB:"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\Debug\HelloCppComponent\HelloCppComponent.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /WINMD /WINMDFILE:"J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\Debug\HelloCppComponent\PhoneDirect3DXamlAppComponent.winmd" /DYNAMICBASE /NXCOMPAT /MACHINE:X86 /DLL Debug\Cocos2dRenderer.obj
+         Debug\Direct3DContentProvider.obj
+         Debug\Direct3DContentProviderBase.obj
+         Debug\Direct3DInterop.obj
+         Debug\DirectXBase.obj
+         Debug\InputEvent.obj
+         Debug\AppDelegate.obj
+         Debug\FirstViewController.obj
+         Debug\RootViewController.obj
+         Debug\ViewController.obj
+         "J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\Win32\Debug\libEGL_phone\libEGL_phone.lib"
+         "J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\Win32\Debug\libGLESv2_phone\libGLESv2_phone.lib"
+         "J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\redist\vs2012\Win32\Debug\esUtil_phone\esUtil_phone.lib"
+         "J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\Win32\Debug\libExtensions\libExtensions.lib"
+         "J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\Win32\Debug\libcocos2d\libcocos2d.lib"
+         "J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\WP8\Win32\Debug\CocosDenshion\CocosDenshion.lib"
+            正在创建库 J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\Debug\HelloCppComponent\HelloCppComponent.lib 和对象 J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\Debug\HelloCppComponent\HelloCppComponent.exp
+         HelloCppComponent.vcxproj -> J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\Debug\HelloCppComponent\HelloCppComponent.dll
+     1>已完成生成项目“J:\CrossAppNew\project\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\HelloCppComponent.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:24.87
