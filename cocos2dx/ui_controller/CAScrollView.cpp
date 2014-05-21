@@ -14,6 +14,7 @@
 #include "CCScheduler.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "support/CCPointExtension.h"
+
 NS_CC_BEGIN
 
 #pragma CAScrollView
@@ -213,11 +214,12 @@ bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         {
             m_pTouches->addObject(pTouch);
         }
-        
+
         if (m_pTouches->count() == 1)
         {
             CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAScrollView::deaccelerateScrolling), this);
             m_tInertia = CCPointZero;
+            m_pContainer->setAnchorPoint(CCPoint(0.5f, 0.5f));
         }
         else if (m_pTouches->count() == 2)
         {
@@ -388,9 +390,9 @@ void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         }
         else if (m_pTouches->count() == 2)
         {
-            m_pContainer->setAnchorPoint(CCPoint(0.5f, 0.5f));
-
             m_bZooming = false;
+            
+            this->backtorangeZooming();
         }
         m_pTouches->removeObject(pTouch);
     }
@@ -496,6 +498,27 @@ void CAScrollView::deaccelerateScrolling(float delay)
         m_bDecelerating = false;
         CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     }
+}
+
+#define TAG_SCALETO_CONTAINER 0xffffffff
+
+void CAScrollView::backtorangeZooming()
+{
+    do
+    {
+        CC_BREAK_IF(!m_bBouncesZoom);
+
+        m_fZoomScale = MIN(m_fZoomScale, m_fMaximumZoomScale);
+        m_fZoomScale = MAX(m_fZoomScale, m_fMinimumZoomScale);
+        
+        m_pContainer->stopActionByTag(TAG_SCALETO_CONTAINER);
+        
+        CCScaleTo* scaleTo = CCScaleTo::create(0.3f, m_fZoomScale);
+        m_pContainer->runAction(scaleTo);
+        scaleTo->setTag(TAG_SCALETO_CONTAINER);
+        
+    }
+    while (0);
 }
 
 float CAScrollView::maxSpeed(float delay)
