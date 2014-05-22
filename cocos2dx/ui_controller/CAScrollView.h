@@ -69,8 +69,6 @@ protected:
     
     void deaccelerateScrolling(float delay);
     
-    void backtorangeZooming();
-    
     inline virtual float maxSpeed(float delay);
     
     inline virtual float maxSpeedCache(float delay);
@@ -110,8 +108,6 @@ protected:
     CC_PROPERTY_IS(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);
     
     CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);
-    
-    CC_SYNTHESIZE_IS(bool, m_bBouncesZoom, BouncesZoom);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bZooming, Zooming);
     

@@ -29,7 +29,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60.0f);
     
-    //pEGLView->setDesignResolutionSize(640, 960, kResolutionShowAll);
+    //pEGLView->setDesignResolutionSize(800, 1200, kResolutionShowAll);
 
     // create a scene. it's an autorelease object
 	m_pWindow = CAWindow::create();
@@ -40,17 +40,19 @@ bool AppDelegate::applicationDidFinishLaunching()
     RootViewController* viewController = new RootViewController();
     viewController->init();
     viewController->setTitle("view1");
-    
+    viewController->setNavigationBarItem(CANavigationBarItem::create("The Home Page"));
     
     CANavigationController* navigationController = new CANavigationController();
     navigationController->initWithRootViewController(viewController);
     navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("h.png"), 100));
     
-    viewController->setNavigationBarItem(CANavigationBarItem::create("The Home Page"));
+    viewController->release();
+    
+    
     
     ViewController* viewController2 = new ViewController();
     viewController2->init();
-    viewController2->setTabBarItem(CATabBarItem::create("", CAImage::create("e.png"), 101));
+    viewController2->setTabBarItem(CATabBarItem::create("Second", CAImage::create("e.png"), 101));
     viewController2->setNavigationBarItem(CANavigationBarItem::create("viewController2"));
     viewController2->setTitle("view2");
     
@@ -79,6 +81,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     CATabBarController* tabBarController = new CATabBarController();
     tabBarController->initWithViewControllers(views);
     tabBarController->getTabBar()->showSelectedIndicator();
+    
+    navigationController->release();
+    viewController2->release();
+    viewController3->release();
+    viewController4->release();
+    viewController5->release();
     
 
     m_pWindow->setRootViewController(tabBarController);

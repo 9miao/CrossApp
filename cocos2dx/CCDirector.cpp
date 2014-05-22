@@ -828,22 +828,21 @@ void CCDirector::showStats(void)
             if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL)
             {
                 sprintf(m_pszFPS, "%.3f", m_fSecondsPerFrame);
-                m_pSPFLabel->setText(m_pszFPS);
+                m_pSPFLabel->setString(m_pszFPS);
                 
                 m_fFrameRate = m_uFrames / m_fAccumDt;
                 m_uFrames = 0;
                 m_fAccumDt = 0;
                 
                 sprintf(m_pszFPS, "%.1f", m_fFrameRate);
-                m_pFPSLabel->setText(m_pszFPS);
+                m_pFPSLabel->setString(m_pszFPS);
                 
                 sprintf(m_pszFPS, "%4lu", (unsigned long)g_uNumberOfDraws);
-                m_pDrawsLabel->setText(m_pszFPS);
+                m_pDrawsLabel->setString(m_pszFPS);
             }
-            
-            m_pDrawsLabel->visit();
-            m_pFPSLabel->visit();
             m_pSPFLabel->visit();
+            m_pFPSLabel->visit();
+            m_pDrawsLabel->visit();
         }
     }    
     
@@ -911,26 +910,27 @@ void CCDirector::createStatsLabel()
      */
     float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 640.0f;
 
-    m_pFPSLabel = CALabel::create(CCRect(0, 0, 100, CC_DIRECTOR_STATS_POSITION.y));
-    m_pFPSLabel->setfontSize(24);
+    m_pFPSLabel = CCLabelTTF::create("", "Arial", 24);
     m_pFPSLabel->setAnchorPoint(CCPointZero);
     m_pFPSLabel->retain();
     m_pFPSLabel->setScale(factor);
     m_pFPSLabel->setColor(ccBLUE);
     
-    m_pSPFLabel = CALabel::create(CCRect(0, 32*factor, 100, CC_DIRECTOR_STATS_POSITION.y));
-    m_pSPFLabel->setfontSize(24);
+    m_pSPFLabel = CCLabelTTF::create("", "Arial", 24);
     m_pSPFLabel->setAnchorPoint(CCPointZero);
     m_pSPFLabel->retain();
     m_pSPFLabel->setScale(factor);
-    m_pSPFLabel->setColor(ccBLUE);
+    m_pSPFLabel->setColor(ccYELLOW);
     
-    m_pDrawsLabel = CALabel::create(CCRect(0, 64*factor, 100, CC_DIRECTOR_STATS_POSITION.y));
-    m_pDrawsLabel->setfontSize(24);
+    m_pDrawsLabel = CCLabelTTF::create("", "Arial", 24);
     m_pDrawsLabel->setAnchorPoint(CCPointZero);
     m_pDrawsLabel->retain();
     m_pDrawsLabel->setScale(factor);
-    m_pDrawsLabel->setColor(ccBLUE);
+    m_pDrawsLabel->setColor(ccGREEN);
+    
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(0, 64*factor), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setPosition(ccpAdd(ccp(0, 32*factor), CC_DIRECTOR_STATS_POSITION));
+    m_pFPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
     
     CAImage::setDefaultAlphaPixelFormat(currentFormat);
 }

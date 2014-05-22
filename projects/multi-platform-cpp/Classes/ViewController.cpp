@@ -15,12 +15,12 @@ void ViewController::viewDidLoad()
     CAScrollView* scroll = new CAScrollView();
     scroll->initWithFrame(this->getView()->getBounds());
     this->getView()->addSubview(scroll);
-    scroll->setViewSize(scroll->getBounds().size * 2);
+    scroll->setViewSize(scroll->getBounds().size);
     scroll->setMaximumZoomScale(3.0f);
     scroll->setMinimumZoomScale(0.5f);
-    scroll->setBouncesZoom(false);
+    //scroll->setBouncesZoom(false);
     
-    CAImageView* v = CAImageView::createWithImage(CAImage::create("1.jpg"));
+    CAImageView* v = CAImageView::createWithImage(CAImage::create("bg.jpg"));
     v->setFrame(CCRect(0, 0, scroll->getViewSize().width, scroll->getViewSize().height));
     scroll->addSubview(v);
     
@@ -53,6 +53,7 @@ void ViewController::viewDidLoad()
         color = ccRED;
         
         scroll->setBounces(false);
+        scroll->setZoomScale(0.5f);
     }
 
     this->getView()->setColor(color);

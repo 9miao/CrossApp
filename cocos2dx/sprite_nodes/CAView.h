@@ -90,11 +90,23 @@ public:
     
     virtual bool initWithFrame(const CCRect& rect, const ccColor4B& color4B);
     
+    virtual bool initWithCenter(const CCRect& rect);
+    
+    virtual bool initWithCenter(const CCRect& rect, const ccColor4B& color4B);
+    
+    virtual bool initWithColor(const ccColor4B& color4B);
+    
     static CAView * create(void);
     
     static CAView* createWithFrame(const CCRect& rect);
     
     static CAView* createWithFrame(const CCRect& rect, const ccColor4B& color4B);
+    
+    static CAView* createWithCenter(const CCRect& rect);
+    
+    static CAView* createWithCenter(const CCRect& rect, const ccColor4B& color4B);
+    
+    static CAView* createWithColor(const ccColor4B& color4B);
     
     /**
      * Gets the description string. It makes debugging easier.
@@ -1363,6 +1375,8 @@ protected:
     CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
     
     CC_SYNTHESIZE(CAViewDelegate*, m_pViewDelegate, ViewDelegate);
+    
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bFrame, Frame);
 };
 
 class CAViewDelegate

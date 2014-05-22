@@ -25,7 +25,7 @@ CAViewController::CAViewController()
 ,m_bLifeLock(false)
 ,m_bKeypadEnabled(false)
 {
-    m_pView = CAView::createWithFrame(CCRectZero);
+    m_pView = CAView::createWithFrame(CCRectZero, ccc4(255, 255, 255, 255));
     m_pView->retain();
     m_pView->setViewDelegate(this);
 }
@@ -237,8 +237,8 @@ void CANavigationController::pushViewController(CAViewController* viewController
         m_pContainer->stopAllActions();
         m_pContainer->setFrame(CCRect(x, m_pContainer->getFrame().origin.y, 0, 0));
         
-        CCDelayTime* delayTime = CCDelayTime::create(0.1f);
-        CCMoveBy* moveBy = CCMoveBy::create(0.3f, CCPoint(-x, 0));
+        CCDelayTime* delayTime = CCDelayTime::create(0.2f);
+        CCMoveBy* moveBy = CCMoveBy::create(0.4f, CCPoint(-x, 0));
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveBy);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::pushViewControllerFinish));
         CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);
@@ -286,8 +286,8 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
         m_pContainer->stopAllActions();
         m_pContainer->setFrame(CCRect(-x, m_pContainer->getFrame().origin.y, 0, 0));
         
-        CCDelayTime* delayTime = CCDelayTime::create(0.1f);
-        CCMoveBy* moveBy = CCMoveBy::create(0.3f, CCPoint(x, 0));
+        CCDelayTime* delayTime = CCDelayTime::create(0.2f);
+        CCMoveBy* moveBy = CCMoveBy::create(0.4f, CCPoint(x, 0));
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveBy);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::popViewControllerFinish));
         CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);

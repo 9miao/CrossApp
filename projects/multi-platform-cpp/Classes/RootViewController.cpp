@@ -22,8 +22,8 @@ void RootViewController::viewDidLoad()
     this->getView()->addSubview(tableView);
     tableView->release();
     
-    CAView* v = CAView::createWithFrame(CCRectZero, ccc4(80, 80, 180, 255));
-    tableView->setTableHeaderHeight(300);
+    CAImageView* v = CAImageView::createWithImage(CAImage::create("2.jpg"));
+    tableView->setTableHeaderHeight(400);
     tableView->setTableHeaderView(v);
     
     CAView* v2 = CAView::createWithFrame(CCRectZero, ccc4(80, 80, 180, 255));
@@ -34,9 +34,9 @@ void RootViewController::viewDidLoad()
     tableView->setTablePullDownView(s);
     tableView->setTablePullViewHeight(200);
     
-    tableView->setBackGroundImage(CAImage::create("1.jpg"));
+    tableView->setBackGroundImage(CAImage::create("bg.jpg"));
     
-    tableView->setAllowsSelection(true);
+    //tableView->setAllowsSelection(true);
     
     CAButton* btn1 = CAButton::createWithFrame(CCRect(10, tableRect.size.height+10, 240, 60));
     btn1->setSprite(CAControlStateNormal, CCLabelTTF::create("目前不可选", "Arial", 30));
@@ -135,7 +135,7 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     if (cell == NULL)
     {
         cell = CATableViewCell::create("aaa");
-        cell->setBackGroundView(CAView::createWithFrame(cell->getBounds(), ccc4(0, 0, 0, 0)));
+        //cell->setBackGroundView(CAView::createWithFrame(cell->getBounds(), ccc4(0, 0, 0, 0)));
     }
     
     CCString* str = CCString::createWithFormat("CELL - %u", row);

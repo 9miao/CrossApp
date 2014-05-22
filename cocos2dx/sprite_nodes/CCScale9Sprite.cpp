@@ -141,7 +141,7 @@ bool CCScale9Sprite::updateWithImage(CAImage* image, CCRect rect, CCRect capInse
         m_capInsetsInternal = CCRectMake(w/3, h/3, w/3, h/3);
     }
 
-    float left_w = m_capInsetsInternal.origin.x;
+    float left_w = m_capInsetsInternal.origin.x-0.5;
     float center_w = m_capInsetsInternal.size.width;
     float right_w = rect.size.width - (left_w + center_w);
 

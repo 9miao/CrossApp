@@ -62,6 +62,8 @@ static CCTexture2DPixelFormat g_defaultAlphaPixelFormat = kCCTexture2DPixelForma
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static bool PVRHaveAlphaPremultiplied_ = false;
 
+static CAImage* cc_white_image = NULL;
+
 CAImage::CAImage()
 : m_bPVRHaveAlphaPremultiplied(true)
 , m_uPixelsWide(0)
@@ -947,5 +949,21 @@ unsigned int CAImage::bitsPerPixelForFormat()
 	return this->bitsPerPixelForFormat(m_ePixelFormat);
 }
 
+CAImage* CAImage::CC_WHITE_IMAGE()
+{
+    if (cc_white_image == NULL)
+    {
+        int pixels[1][1] = {0xffffffff};
+        
+        CCImage* image = new CCImage();
+        image->initWithImageData(pixels, sizeof(pixels), CCImage::kFmtRawData, 1, 1, 8);
+        cc_white_image = CCTextureCache::sharedTextureCache()->addUIImage(image, "CC_WHITE_IMAGE");
+        cc_white_image->retain();
+        cc_white_image->m_bMonochrome = true;
+        
+        
+    }
+    return cc_white_image;
+}
 
 NS_CC_END

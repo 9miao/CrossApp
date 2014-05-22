@@ -44,21 +44,6 @@ static int viewCount = 0;
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
 
-static CAImage* CC_2x2_WHITE_IMAGE(const CCSize& size)
-{
-    CAImage* image = NULL;
-    
-    if (1)
-    {
-        int pixels[1][1] = {0xffffffff};
-        
-        image = new CAImage();
-        image->initWithData(pixels, kCCTexture2DPixelFormat_RGB888, 1, 1, size);
-        image->setMonochrome(true);
-    }
-    return image;
-}
-
 CAView::CAView(void)
 : m_fRotationX(0.0f)
 , m_fRotationY(0.0f)
@@ -111,6 +96,7 @@ CAView::CAView(void)
 , m_obOffsetPosition(CCPointZero)
 , m_bHasChildren(false)
 , m_pViewDelegate(NULL)
+, m_bFrame(true)
 {
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
@@ -120,8 +106,27 @@ CAView::CAView(void)
     
     m_pComponentContainer = new CCComponentContainer(this);
     
+    _displayedOpacity = _realOpacity = 255;
+    _displayedColor = _realColor = ccWHITE;
+    _cascadeOpacityEnabled = _cascadeColorEnabled = false;
+    
+    // clean the Quad
+    memset(&m_sQuad, 0, sizeof(m_sQuad));
+    
+    // Atlas: Color
+    ccColor4B tmpColor = { 255, 255, 255, 255 };
+    m_sQuad.bl.colors = tmpColor;
+    m_sQuad.br.colors = tmpColor;
+    m_sQuad.tl.colors = tmpColor;
+    m_sQuad.tr.colors = tmpColor;
+    
+    // shader program
+    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    
+    this->setAnchorPoint(CCPoint(0.5f, 0.5f));
+    
     ++viewCount;
-    CCLog("CAView = %d\n",viewCount);
+//    CCLog("CAView = %d\n",viewCount);
 }
 
 CAView::~CAView(void)
@@ -159,7 +164,7 @@ CAView::~CAView(void)
     CC_SAFE_RELEASE(m_pobImage);
     
     --viewCount;
-    CCLog("~CAView = %d\n",viewCount);
+//    CCLog("~CAView = %d\n",viewCount);
 }
 
 CAView * CAView::create(void)
@@ -178,12 +183,6 @@ CAView * CAView::create(void)
 
 bool CAView::init()
 {
-    _displayedOpacity = _realOpacity = 255;
-    _displayedColor = _realColor = ccWHITE;
-    _cascadeOpacityEnabled = _cascadeColorEnabled = false;
-    
-    this->setAnchorPoint(CCPoint(0.5f, 0.5f));
-
     return true;
 }
 
@@ -215,38 +214,101 @@ CAView* CAView::createWithFrame(const CCRect& rect, const ccColor4B& color4B)
 	return pRet;
 }
 
-bool CAView::initWithFrame(const CCRect& rect)
+CAView* CAView::createWithCenter(const CCRect& rect)
 {
-    return this->initWithFrame(rect, ccc4(255, 255, 255, 255));
+	CAView * pRet = new CAView();
+    if (pRet && pRet->initWithCenter(rect))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+	return pRet;
 }
 
-bool CAView::initWithFrame(const CCRect& rect, const ccColor4B& color4B)
+CAView* CAView::createWithCenter(const CCRect& rect, const ccColor4B& color4B)
+{
+    CAView * pRet = new CAView();
+    if (pRet && pRet->initWithCenter(rect, color4B))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+	return pRet;
+}
+
+CAView* CAView::createWithColor(const ccColor4B& color4B)
+{
+   	CAView * pRet = new CAView();
+    if (pRet && pRet->initWithColor(color4B))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+	return pRet;
+}
+
+bool CAView::initWithColor(const ccColor4B& color4B)
 {
     if (!CAView::init())
     {
         return false;
     }
-    
-    this->setFrame(rect);
-
-    // clean the Quad
-    memset(&m_sQuad, 0, sizeof(m_sQuad));
-    
-    // Atlas: Color
-    ccColor4B tmpColor = { 255, 255, 255, 255 };
-    m_sQuad.bl.colors = tmpColor;
-    m_sQuad.br.colors = tmpColor;
-    m_sQuad.tl.colors = tmpColor;
-    m_sQuad.tr.colors = tmpColor;
-    
-    // shader program
-    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-    
-    this->setImage(CC_2x2_WHITE_IMAGE(rect.size));
-    this->setImageRect(rect, false, rect.size);
+    this->setImage(CAImage::CC_WHITE_IMAGE());
     this->setColor(ccc3(color4B.r, color4B.g, color4B.b));
     this->setOpacity(color4B.a);
+    return true;
+}
 
+bool CAView::initWithFrame(const CCRect& rect)
+{
+    if (!CAView::init())
+    {
+        return false;
+    }
+    this->setFrame(rect);
+    
+    return true;
+}
+
+bool CAView::initWithFrame(const CCRect& rect, const ccColor4B& color4B)
+{
+    if (!CAView::initWithColor(color4B))
+    {
+        return false;
+    }
+    this->setFrame(rect);
+
+    return true;
+}
+
+bool CAView::initWithCenter(const CCRect& rect)
+{
+    if (!CAView::init())
+    {
+        return false;
+    }
+    this->setCenter(rect);
+    
+    return true;
+}
+
+bool CAView::initWithCenter(const CCRect& rect, const ccColor4B& color4B)
+{
+    if (!CAView::initWithColor(color4B))
+    {
+        return false;
+    }
+    this->setCenter(rect);
+    
     return true;
 }
 
@@ -488,13 +550,28 @@ void CAView::setAnchorPointInPoints(const CCPoint& anchorPointInPoints)
 {
     if( ! anchorPointInPoints.equals(m_obAnchorPointInPoints))
     {
-        CCPoint p = this->getFrameOrigin();
+        CCPoint p;
+        if (m_bFrame)
+        {
+            p = this->getFrameOrigin();
+        }
+        else
+        {
+            p = this->getCenterOrigin();
+        }
         
         m_obAnchorPointInPoints = anchorPointInPoints;
-        m_obAnchorPoint = ccp(m_obAnchorPoint.x / m_obContentSize.width,
-                              m_obAnchorPoint.y / m_obContentSize.height);
+        m_obAnchorPoint = ccp(m_obAnchorPointInPoints.x / m_obContentSize.width,
+                              m_obAnchorPointInPoints.y / m_obContentSize.height);
         
-        this->setFrameOrigin(p);
+        if (m_bFrame)
+        {
+            this->setFrameOrigin(p);
+        }
+        else
+        {
+            this->setCenterOrigin(p);
+        }
         
         m_bTransformDirty = m_bInverseDirty = true;
     }
@@ -504,13 +581,31 @@ void CAView::setAnchorPoint(const CCPoint& point)
 {
     if( ! point.equals(m_obAnchorPoint))
     {
-        CCPoint p = this->getFrameOrigin();
+        CCPoint p;
+        if (m_bFrame)
+        {
+            p = this->getFrameOrigin();
+        }
+        else
+        {
+            p = this->getCenterOrigin();
+        }
+        
         
         m_obAnchorPoint = point;
         m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x,
                                       m_obContentSize.height * m_obAnchorPoint.y );
         //m_obFrameRect.origin = ccpSub(m_obPosition, m_obAnchorPointInPoints);
-        this->setFrameOrigin(p);
+        
+        if (m_bFrame)
+        {
+            this->setFrameOrigin(p);
+        }
+        else
+        {
+            this->setCenterOrigin(p);
+        }
+        
         m_bTransformDirty = m_bInverseDirty = true;
     }
 }
@@ -538,7 +633,6 @@ void CAView::setContentSize(const CCSize & size)
             CC_BREAK_IF(m_pobImage->isMonochrome() == false);
             CC_BREAK_IF(m_pobImage->getContentSize().equals(size));
 
-            this->setImage(CC_2x2_WHITE_IMAGE(size));
             this->setImageRect(CCRect(0, 0, size.width, size.height));
         }
         while (0);
@@ -566,6 +660,8 @@ void CAView::setFrameOrigin(const CCPoint& point)
                             m_obAnchorPointInPoints.y * m_fScaleY);
     p = ccpAdd(p, point);
     this->setPosition(p);
+    
+    m_bFrame = true;
 }
 
 const CCPoint& CAView::getFrameOrigin()
@@ -616,6 +712,8 @@ void CAView::setCenterOrigin(const CCPoint& point)
     p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
     p = ccpSub(point, p);
     this->setPosition(p);
+    
+    m_bFrame = false;
 }
 
 // isRunning getter
@@ -936,6 +1034,8 @@ void CAView::draw()
         return;
     
     CC_NODE_DRAW_SETUP();
+    
+    //arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAView*);
     
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
     
@@ -1452,7 +1552,6 @@ CCPoint CAView::convertTouchToNodeSpaceAR(CCTouch *touch)
 void CAView::updateTransform()
 {
     // Recursively iterate over children
-    arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAView*);
     
     if(m_pobImage && isDirty() ) {
         
@@ -1526,12 +1625,12 @@ void CAView::updateTransform()
      // NOTE THAT WE HAVE ALSO DEFINED virtual CAView::updateTransform()
      arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAImageView*);
      }*/
-    CAView::updateTransform();
+    arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAView*);
     
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
     CCPoint vertices[4] = {
-        ccp( m_sQuad.bl.vertices.x, m_sQuad.bl.vertices.y ),
+        ccp( m_sQuad.bl.vertices.x, m_sQuad.bl.vertices.y ),draw
         ccp( m_sQuad.br.vertices.x, m_sQuad.br.vertices.y ),
         ccp( m_sQuad.tr.vertices.x, m_sQuad.tr.vertices.y ),
         ccp( m_sQuad.tl.vertices.x, m_sQuad.tl.vertices.y ),

@@ -147,10 +147,8 @@ bool CAImageView::initWithImage(CAImage* Image, const CCRect& rect, bool rotated
         // shader program
         setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
         
-        // update image (calls updateBlendFunc)
-        setImage(Image);
+        this->setImage(Image);
         setImageRect(rect, rotated, rect.size);
-        
         // by default use "Self Render".
 
         return true;
@@ -235,6 +233,8 @@ void CAImageView::setFrameOrigin(const CCPoint& point)
     CCPoint p = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
 	p = ccpAdd(point, p);
 	this->setPosition(p);
+    
+    m_bFrame = true;
 }
 
 void CAImageView::setCenter(const CCRect& rect)
@@ -257,6 +257,8 @@ void CAImageView::setCenterOrigin(const CCPoint& point)
     p = ccpSub(point, p/2);
     p = ccpAdd(CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY), p);
     this->setPosition(p);
+    
+    m_bFrame = false;
 }
 
 CCPoint CAImageView::getCenterOrigin()
@@ -331,50 +333,11 @@ CCSpriteFrame* CAImageView::displayFrame(void)
                                            CC_SIZE_POINTS_TO_PIXELS(m_obContentSize));
 }
 
-// image protocol
-
-
-
-/*
- * This array is the data of a white image with 2 by 2 dimension.
- * It's used for creating a default image when sprite's image is set to NULL.
- * Supposing codes as follows:
- *
- *   CAImageView* sp = new CAImageView();
- *   sp->init();  // image was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white image.
- *
- * The test is in "TestCpp/SpriteTest/Sprite without image".
- */
-static unsigned char cc_2x2_white_image[] = {
-    // RGBA8888
-    0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF
-};
-
-#define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
-
 void CAImageView::setImage(CAImage* image)
 {
-    // accept image==nil as argument
-    CCAssert( !image || dynamic_cast<CAImage*>(image), "setImage expects a CCimage2D. Invalid argument");
-
     if (NULL == image)
     {
-        // Gets the image by key firstly.
-        image = CCTextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
-
-        // If image wasn't in cache, create it from RAW data.
-        if (NULL == image)
-        {
-            CCImage* cImage = new CCImage();
-            bool isOK = cImage->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), CCImage::kFmtRawData, 2, 2, 8);
-            CCAssert(isOK, "The 2x2 empty image was created unsuccessfully.");
-
-            image = CCTextureCache::sharedTextureCache()->addUIImage(cImage, CC_2x2_WHITE_IMAGE_KEY);
-            CC_SAFE_RELEASE(image);
-        }
+        image = CAImage::CC_WHITE_IMAGE();
     }
 
     CAView::setImage(image);

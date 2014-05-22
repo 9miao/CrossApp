@@ -269,6 +269,9 @@ public:
     
     bool hasPremultipliedAlpha();
     bool hasMipmaps();
+    
+    static CAImage* CC_WHITE_IMAGE();
+    
 private:
     bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
@@ -300,7 +303,7 @@ private:
     /** shader program used by drawAtPoint and drawInRect */
     CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);
     
-    CC_SYNTHESIZE_IS(bool, m_bMonochrome, Monochrome);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bMonochrome, Monochrome);
 };
 
 // end of textures group
