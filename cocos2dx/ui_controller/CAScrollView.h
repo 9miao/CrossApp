@@ -69,6 +69,8 @@ protected:
     
     void deaccelerateScrolling(float delay);
     
+    void backtorangeZooming();
+    
     inline virtual float maxSpeed(float delay);
     
     inline virtual float maxSpeedCache(float delay);
