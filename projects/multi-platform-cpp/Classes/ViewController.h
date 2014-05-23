@@ -14,7 +14,7 @@
 
 USING_NS_CC;
 
-class ViewController: public CAViewController
+class ViewController: public CAViewController, public CAScrollViewDelegate
 {
     
 public:
@@ -31,6 +31,7 @@ public:
     
     bool setAllowsSelection(CAButton* btn, CCPoint point);
     
+    void scrollViewDidEndDragging(CAScrollView* view);
 };
 
 #endif /* defined(__project__ViewController__) */

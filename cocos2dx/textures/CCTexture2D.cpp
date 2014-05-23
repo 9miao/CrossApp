@@ -960,8 +960,6 @@ CAImage* CAImage::CC_WHITE_IMAGE()
         cc_white_image = CCTextureCache::sharedTextureCache()->addUIImage(image, "CC_WHITE_IMAGE");
         cc_white_image->retain();
         cc_white_image->m_bMonochrome = true;
-        
-        
     }
     return cc_white_image;
 }

@@ -20,13 +20,13 @@ class CC_DLL CAScrollViewDelegate
 {
 public:
 
-    virtual void scrollViewDidScroll(CAScrollView* view) = 0;
+    virtual void scrollViewDidScroll(CAScrollView* view){};
     
-    virtual void scrollViewWillBeginDragging(CAScrollView* view) = 0;
+    virtual void scrollViewWillBeginDragging(CAScrollView* view){};
     
-    virtual void scrollViewDidEndDragging(CAScrollView* view) = 0;
+    virtual void scrollViewDidEndDragging(CAScrollView* view){};
     
-    virtual void scrollViewDidZoom(CAScrollView* view) = 0;
+    virtual void scrollViewDidZoom(CAScrollView* view){};
     
     void removeDelegate(CAScrollView* view);
 };
@@ -53,6 +53,10 @@ public:
     
     void removeAllSubviews();
     
+    void setContentOffset(CCPoint offset, bool animated);
+    
+    CCPoint getContentOffset();
+    
 protected:
  
     const CCPoint& getScrollWindowNotOutPoint(CCPoint& point);
@@ -78,6 +82,8 @@ protected:
     inline virtual CCPoint maxBouncesLenght();
     
     inline float maxBouncesSpeed(float delay);
+    
+    void closeToPoint(float delay);
     
 protected:
     
@@ -136,6 +142,8 @@ protected:
     CCPoint m_tInertia;
     
     std::deque<CCPoint> m_tPointOffset;
+    
+    CCPoint m_tCloseToPoint;
     
 };
 

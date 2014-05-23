@@ -105,7 +105,7 @@ bool CALabel::updateImage()
     caFontDefinition fontDef = setFontDefiniton(true);
 
     CAImage *at = new CAImage();
-    at->initWithString("萨", fontDef.m_fontName.c_str(), fontDef.m_fontSize, CCSizeZero, fontDef.m_alignment, fontDef.m_vertAlignment);
+    at->initWithString("9m", fontDef.m_fontName.c_str(), fontDef.m_fontSize, CCSizeZero, fontDef.m_alignment, fontDef.m_vertAlignment);
     float fontHeight = at->getContentSize().height+1;
     at->release();
     unsigned int linenumber = (int)this->getBounds().size.height/fontHeight;

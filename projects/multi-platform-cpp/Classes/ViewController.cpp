@@ -15,7 +15,7 @@ void ViewController::viewDidLoad()
     CAScrollView* scroll = new CAScrollView();
     scroll->initWithFrame(this->getView()->getBounds());
     this->getView()->addSubview(scroll);
-    scroll->setViewSize(scroll->getBounds().size);
+    scroll->setViewSize(scroll->getBounds().size * 3);
     scroll->setMaximumZoomScale(3.0f);
     scroll->setMinimumZoomScale(0.5f);
     //scroll->setBouncesZoom(false);
@@ -29,12 +29,14 @@ void ViewController::viewDidLoad()
     if (this->getTitle().compare("view1") == 0)
     {
         color = ccBLACK;
+        
     }
     else if (this->getTitle().compare("view2") == 0)
     {
         scroll->setMaximumZoomScale(1.0f);
         scroll->setMinimumZoomScale(1.0f);
         scroll->setBounces(false);
+        scroll->setScrollViewDelegate(this);
     }
     else if (this->getTitle().compare("view3") == 0)
     {
@@ -57,6 +59,19 @@ void ViewController::viewDidLoad()
     }
 
     this->getView()->setColor(color);
+}
+
+void ViewController::scrollViewDidEndDragging(CAScrollView* view)
+{
+    if (view->getContentOffset().x < view->getViewSize().width/2)
+    {
+        view->setContentOffset(CCPointMake(view->getFrame().size.width/2, 100), true);
+    }
+    else
+    {
+        view->setContentOffset(CCPointMake(view->getViewSize().width/2, 100), true);
+    }
+    
 }
 
 bool ViewController::setAllowsSelection(CAButton* btn, CCPoint point)

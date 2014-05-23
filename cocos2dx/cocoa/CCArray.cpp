@@ -156,7 +156,6 @@ bool CCArray::initWithObject(CCObject* pObject)
 /** Initializes an array with some objects */
 bool CCArray::initWithObjects(CCObject* pObject, ...)
 {
-    ccArrayFree(data);
     bool bRet = false;
     do 
     {

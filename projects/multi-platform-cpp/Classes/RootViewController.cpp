@@ -57,6 +57,10 @@ void RootViewController::viewDidLoad()
     
     CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(RootViewController::updateProgress), this, 1, false);
     
+    CCString* b = CCString::create("");
+    
+    CCArray* a = new CCArray();
+    a->initWithObjects(b,NULL);
 }
 
 void RootViewController::viewDidUnload()
