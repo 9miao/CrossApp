@@ -39,6 +39,8 @@
 
 NS_CC_BEGIN;
 
+
+
 static int viewCount = 0;
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
@@ -50,13 +52,13 @@ CAView::CAView(void)
 , m_fScaleX(1.0f)
 , m_fScaleY(1.0f)
 , m_fVertexZ(0.0f)
-, m_obPosition(CCPointZero)
 , m_fSkewX(0.0f)
 , m_fSkewY(0.0f)
-, m_obAnchorPointInPoints(CCPointZero)
-, m_obAnchorPoint(CCPointZero)
-, m_obContentSize(CCSizeZero)
-, m_obFrameRect(CCRectZero)
+, m_obAnchorPointInPoints(kCAViewPointInvalid)
+, m_obAnchorPoint(kCAViewPointInvalid)
+, m_obContentSize(kCAViewSizeInvalid)
+, m_obFrameRect(kCAViewRectInvalid)
+, m_obPosition(kCAViewPointInvalid)
 , m_sAdditionalTransform(CCAffineTransformMakeIdentity())
 , m_pCamera(NULL)
 , m_pGrid(NULL)
@@ -319,8 +321,12 @@ float CAView::getSkewX()
 
 void CAView::setSkewX(float newSkewX)
 {
-    m_fSkewX = newSkewX;
-    m_bTransformDirty = m_bInverseDirty = true;
+    if (m_fSkewX != newSkewX)
+    {
+        m_fSkewX = newSkewX;
+        m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
+    }
 }
 
 float CAView::getSkewY()
@@ -330,9 +336,12 @@ float CAView::getSkewY()
 
 void CAView::setSkewY(float newSkewY)
 {
-    m_fSkewY = newSkewY;
-    
-    m_bTransformDirty = m_bInverseDirty = true;
+    if (m_fSkewY != newSkewY)
+    {
+        m_fSkewY = newSkewY;
+        m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
+    }
 }
 
 /// zOrder getter
@@ -381,8 +390,12 @@ float CAView::getRotation()
 /// rotation setter
 void CAView::setRotation(float newRotation)
 {
-    m_fRotationX = m_fRotationY = newRotation;
-    m_bTransformDirty = m_bInverseDirty = true;
+    if (m_fRotationX != newRotation || m_fRotationY != newRotation)
+    {
+        m_fRotationX = m_fRotationY = newRotation;
+        m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
+    }
 }
 
 float CAView::getRotationX()
@@ -392,8 +405,12 @@ float CAView::getRotationX()
 
 void CAView::setRotationX(float fRotationX)
 {
-    m_fRotationX = fRotationX;
-    m_bTransformDirty = m_bInverseDirty = true;
+    if (m_fRotationX != fRotationX)
+    {
+        m_fRotationX = fRotationX;
+        m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
+    }
 }
 
 float CAView::getRotationY()
@@ -403,8 +420,12 @@ float CAView::getRotationY()
 
 void CAView::setRotationY(float fRotationY)
 {
-    m_fRotationY = fRotationY;
-    m_bTransformDirty = m_bInverseDirty = true;
+    if (m_fRotationY != fRotationY)
+    {
+        m_fRotationY = fRotationY;
+        m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
+    }
 }
 
 /// scale getter
@@ -423,13 +444,17 @@ void CAView::setScale(float scale)
 /// scale setter
 void CAView::setScale(float fScaleX,float fScaleY)
 {
-    m_fScaleX = fScaleX;
-    m_fScaleY = fScaleY;
-    m_obFrameRect.size.width = m_fScaleX * m_obContentSize.width;
-    m_obFrameRect.size.height = m_fScaleY * m_obContentSize.height;
-    CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
-    m_obFrameRect.origin = ccpSub(m_obPosition, point);
-    m_bTransformDirty = m_bInverseDirty = true;
+    if (m_fScaleX != fScaleX || m_fScaleY != fScaleY)
+    {
+        m_fScaleX = fScaleX;
+        m_fScaleY = fScaleY;
+        m_obFrameRect.size.width = m_fScaleX * m_obContentSize.width;
+        m_obFrameRect.size.height = m_fScaleY * m_obContentSize.height;
+        CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
+        m_obFrameRect.origin = ccpSub(m_obPosition, point);
+        m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
+    }
 }
 
 /// scaleX getter
@@ -441,11 +466,15 @@ float CAView::getScaleX()
 /// scaleX setter
 void CAView::setScaleX(float newScaleX)
 {
-    m_fScaleX = newScaleX;
-    m_obFrameRect.size.width = m_fScaleX * m_obContentSize.width;
-    float x = m_obAnchorPointInPoints.x * m_fScaleX;
-    m_obFrameRect.origin.x = m_obPosition.y - x;
-    m_bTransformDirty = m_bInverseDirty = true;
+    if (m_fScaleX != newScaleX)
+    {
+        m_fScaleX = newScaleX;
+        m_obFrameRect.size.width = m_fScaleX * m_obContentSize.width;
+        float x = m_obAnchorPointInPoints.x * m_fScaleX;
+        m_obFrameRect.origin.x = m_obPosition.y - x;
+        m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
+    }
 }
 
 /// scaleY getter
@@ -457,11 +486,15 @@ float CAView::getScaleY()
 /// scaleY setter
 void CAView::setScaleY(float newScaleY)
 {
-    m_fScaleY = newScaleY;
-    m_obFrameRect.size.height = m_fScaleY * m_obContentSize.height;
-    float y = m_obAnchorPointInPoints.y * m_fScaleY;
-    m_obFrameRect.origin.y = m_obPosition.y - y;
-    m_bTransformDirty = m_bInverseDirty = true;
+    if (m_fScaleY != newScaleY)
+    {
+        m_fScaleY = newScaleY;
+        m_obFrameRect.size.height = m_fScaleY * m_obContentSize.height;
+        float y = m_obAnchorPointInPoints.y * m_fScaleY;
+        m_obFrameRect.origin.y = m_obPosition.y - y;
+        m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
+    }
 }
 
 /// position getter
@@ -473,10 +506,14 @@ const CCPoint& CAView::getPosition()
 /// position setter
 void CAView::setPosition(const CCPoint& newPosition)
 {
-    m_obPosition = newPosition;
-    CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
-    m_obFrameRect.origin = ccpSub(m_obPosition, point);
-    m_bTransformDirty = m_bInverseDirty = true;
+    if (1)
+    {
+        m_obPosition = newPosition;
+        CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
+        m_obFrameRect.origin = ccpSub(m_obPosition, point);
+        m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
+    }
 }
 
 void CAView::getPosition(float* x, float* y)
@@ -574,6 +611,7 @@ void CAView::setAnchorPointInPoints(const CCPoint& anchorPointInPoints)
         }
         
         m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
     }
 }
 
@@ -607,6 +645,7 @@ void CAView::setAnchorPoint(const CCPoint& point)
         }
         
         m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
     }
 }
 
@@ -625,8 +664,6 @@ void CAView::setContentSize(const CCSize & size)
         m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x, m_obContentSize.height * m_obAnchorPoint.y );
         m_obFrameRect.size = CCSize(m_obContentSize.width * m_fScaleX, m_obContentSize.height * m_fScaleY);
 
-        m_bTransformDirty = m_bInverseDirty = true;
-
         do
         {
             CC_BREAK_IF(m_pobImage == NULL);
@@ -636,6 +673,9 @@ void CAView::setContentSize(const CCSize & size)
             this->setImageRect(CCRect(0, 0, size.width, size.height));
         }
         while (0);
+        
+        m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
     }
 }
 
@@ -657,11 +697,14 @@ void CAView::setFrame(const CCRect &rect)
 void CAView::setFrameOrigin(const CCPoint& point)
 {
     CCPoint p = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX,
-                            m_obAnchorPointInPoints.y * m_fScaleY);
+                        m_obAnchorPointInPoints.y * m_fScaleY);
     p = ccpAdd(p, point);
     this->setPosition(p);
     
-    m_bFrame = true;
+    m_bFrame = true;if (!this->getFrameOrigin().equals(point))
+    {
+        
+    }
 }
 
 const CCPoint& CAView::getFrameOrigin()
@@ -745,6 +788,7 @@ void CAView::ignoreAnchorPointForPosition(bool newValue)
     {
 		m_bIgnoreAnchorPointForPosition = newValue;
 		m_bTransformDirty = m_bInverseDirty = true;
+        this->updateDraw();
 	}
 }
 
@@ -839,6 +883,14 @@ const char* CAView::description()
     return CCString::createWithFormat("<CAView | Tag = %d>", m_nTag)->getCString();
 }
 
+void CAView::updateDraw()
+{
+    if (this->getSuperview())
+    {
+        CCDirector::sharedDirector()->drawScene();
+    }
+}
+
 // lazy allocs
 void CAView::childrenAlloc(void)
 {
@@ -885,6 +937,8 @@ void CAView::insertSubview(CAView* subview, int z)
     
     subview->setSuperview(this);
     subview->setOrderOfArrival(s_globalOrderOfArrival++);
+    
+    this->updateDraw();
     
     if( m_bRunning )
     {
@@ -1147,8 +1201,6 @@ void CAView::visit()
         float width = size.width * scaleX * glScaleX;
         float height = size.height * scaleY * glScaleY;
         
-        //y = CCDirector::sharedDirector()->getWinSize().height - height - y;
-        
 		glScissor(x, y, width, height);// 只显示当前窗口的区域
         
         CAView::rendering();
@@ -1207,6 +1259,8 @@ void CAView::rendering()
         this->draw();
     }
     
+    //this->draw();
+    
     // reset for next frame
     m_uOrderOfArrival = 0;
     
@@ -1217,6 +1271,22 @@ void CAView::rendering()
     
     kmGLPopMatrix();
 
+//    if(m_pSubviews && m_pSubviews->count() > 0)
+//    {
+//        this->sortAllSubviews();
+//        // draw children zOrder < 0
+//        ccArray *arrayData = m_pSubviews->data;
+//
+//        for(unsigned int i = 0 ; i < arrayData->num; i++ )
+//        {
+//            CAView* pNode = (CAView*) arrayData->arr[i];
+//            if (pNode)
+//            {
+//                pNode->visit();
+//            }
+//        }
+//    }
+    
 }
 
 

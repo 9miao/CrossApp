@@ -117,7 +117,7 @@ public:
     // attribute
 
     /** Get current running Scene. Director can only run one Scene at the time */
-    inline CAWindow* getRunningScene(void) { return m_pRunningScene; }
+    inline CAWindow* getRootWindow(void) { return m_pRootWindow; }
 
     /** Get the FPS value */
     inline double getAnimationInterval(void) { return m_dAnimationInterval; }
@@ -224,39 +224,7 @@ public:
      *
      * It will call pushScene: and then it will call startAnimation
      */
-    void runWithScene(CAWindow *pScene);
-
-    /** Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
-     * The new scene will be executed.
-     * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
-     * ONLY call it if there is a running scene.
-     */
-    void pushScene(CAWindow *pScene);
-
-    /** Pops out a scene from the queue.
-     * This scene will replace the running one.
-     * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
-     * ONLY call it if there is a running scene.
-     */
-    void popScene(void);
-
-    /** Pops out all scenes from the queue until the root scene in the queue.
-     * This scene will replace the running one.
-     * Internally it will call `popToSceneStackLevel(1)`
-     */
-    void popToRootScene(void);
-
-    /** Pops out all scenes from the queue until it reaches `level`.
-     If level is 0, it will end the director.
-     If level is 1, it will pop all scenes until it reaches to root scene.
-     If level is <= than the current stack level, it won't do anything.
-     */
- 	void popToSceneStackLevel(int level);
-
-    /** Replaces the running scene with a new one. The running scene is terminated.
-     * ONLY call it if there is a running scene.
-     */
-    void replaceScene(CAWindow *pScene);
+    void runWindow(CAWindow *pWindow);
 
     /** Ends the execution, releases the running scene.
      It doesn't remove the OpenGL view from its parent. You have to do it manually.
@@ -289,8 +257,14 @@ public:
     /** Draw the scene.
     This method is called every frame. Don't call it manually.
     */
-    void drawScene(void);
+    void drawView(CAView* var);
 
+    void drawScene();
+    
+    void drawOK(float dt);
+    
+    void run(float dt);
+    
     // Memory Helper
 
     /** Removes cached all cocos2d cached data.
@@ -365,8 +339,6 @@ protected:
     void purgeDirector();
     bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()
     
-    void setNextScene(void);
-    
     void showStats();
     void createStatsLabel();
     void calculateMPF();
@@ -401,17 +373,10 @@ protected:
     float m_fSecondsPerFrame;
      
     /* The running scene */
-    CAWindow *m_pRunningScene;
-    
-    /* will be the next 'runningScene' in the next frame
-     nextScene is a weak reference. */
-    CAWindow *m_pNextScene;
+    CAWindow *m_pRootWindow;
     
     /* If YES, then "old" scene will receive the cleanup message */
     bool    m_bSendCleanupToScene;
-
-    /* scheduled scenes */
-    CCArray* m_pobScenesStack;
     
     /* last time the main loop was updated */
     struct cc_timeval *m_pLastUpdate;

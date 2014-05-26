@@ -153,6 +153,7 @@ void CATableView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
         }
     }
     while (0);
+    
 }
 
 void CATableView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
@@ -448,7 +449,6 @@ void CATableView::reloadData()
         this->addSubview(m_pTableFooterView);
         y += m_nTableFooterHeight;
     }
-    
 }
 
 void CATableView::update(float fDelta)
@@ -456,18 +456,18 @@ void CATableView::update(float fDelta)
     CAScrollView::update(fDelta);
     
     CCRect rect = this->getBounds();
-    rect.origin.y -= rect.size.height/2;
-    rect.size.height *= 2;
+    rect.origin.y -= rect.size.height * 0.1f;
+    rect.size.height *= 1.2f;
     
     std::deque<CATableViewCell*>::iterator itr;
     for (itr=m_pTableCells.begin(); itr!=m_pTableCells.end(); itr++)
     {
         CATableViewCell* cell = *itr;
-        CCPoint point = cell->getCenterOrigin();
-        point = m_pContainer->convertToWorldSpace(point);
-        point = this->convertToNodeSpace(point);
+        CCRect cellRect = cell->getFrame();
+        cellRect.origin = m_pContainer->convertToWorldSpace(cellRect.origin);
+        cellRect.origin = this->convertToNodeSpace(cellRect.origin);
         
-        if (rect.containsPoint(point))
+        if (rect.intersectsRect(cellRect))
         {
             cell->setVisible(true);
         }

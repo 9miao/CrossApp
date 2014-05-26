@@ -284,7 +284,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CC_DLL const char* cocos2dVersion();
+CC_DLL const char* CrossAppVersion();
 
 NS_CC_END
 

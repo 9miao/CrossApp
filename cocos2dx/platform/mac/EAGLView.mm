@@ -167,7 +167,7 @@ static EAGLView *view;
 	// Add a mutex around to avoid the threads accessing the context simultaneously when resizing
 
 	[self lockOpenGLContext];
-	
+	//NO_FINISH
 //	NSRect rect = [self bounds];
 	
 	cocos2d::CCDirector *director = cocos2d::CCDirector::sharedDirector();
@@ -176,7 +176,7 @@ static EAGLView *view;
 	//director->reshapeProjection(ccsize);
 	
 	// avoid flicker
-	director->drawScene();
+//	director->drawScene();
 //	[self setNeedsDisplay:YES];
 	
 	[self unlockOpenGLContext];

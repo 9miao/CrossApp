@@ -75,7 +75,7 @@ bool CCTransitionScene::initWithDuration(float t, CAWindow *scene)
         // retain
         m_pInScene = scene;
         m_pInScene->retain();
-        m_pOutScene = CCDirector::sharedDirector()->getRunningScene();
+        m_pOutScene = CCDirector::sharedDirector()->getRootWindow();
         if (m_pOutScene == NULL)
         {
             m_pOutScene = CAWindow::create();
@@ -141,8 +141,6 @@ void CCTransitionScene::setNewScene(float dt)
     // Before replacing, save the "send cleanup to scene"
     CCDirector *director = CCDirector::sharedDirector();
     m_bIsSendCleanupToScene = director->isSendCleanupToScene();
-    
-    director->replaceScene(m_pInScene);
     
     // issue #267
     m_pOutScene->setVisible(true);

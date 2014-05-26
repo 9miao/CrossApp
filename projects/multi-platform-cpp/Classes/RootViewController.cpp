@@ -50,12 +50,12 @@ void RootViewController::viewDidLoad()
     this->getView()->addSubview(btn2);
     btn2->addTarget(this, CAButton_selector(RootViewController::setAllowsMultipleSelection), TouchUpInSide);
     
-    progress = CAProgress::create();
-    progress->setFrame(CCRect(520, tableRect.size.height+10, 200, 16));
-    this->getView()->addSubview(progress);
-    progress->setProgress(0.5f);
+//    progress = CAProgress::create();
+//    progress->setFrame(CCRect(520, tableRect.size.height+10, 200, 16));
+//    this->getView()->addSubview(progress);
+//    progress->setProgress(0.5f);
     
-    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(RootViewController::updateProgress), this, 1, false);
+    //CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(RootViewController::updateProgress), this, 1, false);
     
     CCString* b = CCString::create("");
     
@@ -65,7 +65,7 @@ void RootViewController::viewDidLoad()
 
 void RootViewController::viewDidUnload()
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(RootViewController::updateProgress), this);
+    //CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(RootViewController::updateProgress), this);
 }
 
 void RootViewController::updateProgress(float dt)
@@ -139,14 +139,15 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     if (cell == NULL)
     {
         cell = CATableViewCell::create("aaa");
-        //cell->setBackGroundView(CAView::createWithFrame(cell->getBounds(), ccc4(0, 0, 0, 0)));
+        //cell->setBackGroundView(NULL);
     }
     
-    CCString* str = CCString::createWithFormat("CELL - %u", row);
-    CCLabelTTF* ttf = CCLabelTTF::create(str->getCString(), "Arial", 40);
-    ttf->setColor(ccBLACK);
-    ttf->setFrame(CCRect(10, 60, 0, 0));
-    cell->addSubview(ttf);
+//    CCString* str = CCString::createWithFormat("CELL - %u", row);
+//    CCLabelTTF* ttf = CCLabelTTF::create(str->getCString(), "Arial", 40);
+//    ttf->setColor(ccBLACK);
+//    ttf->setFrame(CCRect(10, 60, 0, 0));
+//    cell->addSubview(ttf);
+    
 //    CALabel* label = CALabel::create(CCRect(0, 0, 600, 100));
 //    label->setOpacity(128);
 //    label->setVerticalTextAlignmet(kCCVerticalTextAlignmentCenter);
@@ -185,12 +186,12 @@ CAView* RootViewController::tableViewSectionViewForFooterInSection(CATableView* 
 }
 unsigned int RootViewController::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    return 5;
+    return 3;
 }
 
 unsigned int RootViewController::numberOfSections(CATableView *table)
 {
-    return 10;
+    return 3;
 }
 
 unsigned int RootViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)

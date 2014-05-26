@@ -463,7 +463,7 @@ void CAScrollView::deaccelerateScrolling(float delay)
 
     if (m_bBounces)
     {
-        CCSize size = this->getContentSize();
+        CCSize size = this->getBounds().size;
         CCSize cSize = m_pContainer->getFrame().size;
         cSize.width = MAX(cSize.width, size.width);
         cSize.height = MAX(cSize.height, size.height);
@@ -539,7 +539,6 @@ void CAScrollView::deaccelerateScrolling(float delay)
     }
     
     m_pContainer->setCenterOrigin(point);
-    
 }
 
 float CAScrollView::maxSpeed(float delay)
@@ -767,14 +766,22 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
             size.width *= (1 - lenght_scale_x) / (size_scale_x / 2);
         }
         size.width = MAX(size.height, size.width);
-        indicator->setPreferredSize(size);
+        
+        if (!indicator->getPreferredSize().equals(size))
+        {
+            indicator->setPreferredSize(size);
+        }
         
         CCPoint point = m_obContentSize;
         point.y *= 0.5f;
         point.x *= lenght_scale_x;
         point.x = MAX(point.x, size.width/2);
         point.x = MIN(point.x, m_obContentSize.width - size.width/2);
-        indicator->setCenterOrigin(point);
+        
+        if (!indicator->getCenterOrigin().equals(point))
+        {
+            indicator->setCenterOrigin(point);
+        }
     }
     else if (m_eType == CAIndicatorTypeVertical)
     {
@@ -796,7 +803,11 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
             size.height *= (1 - lenght_scale_y) / (size_scale_y / 2);
         }
         size.height = MAX(size.height, size.width);
-		indicator->setPreferredSize(size);
+        
+		if (!indicator->getPreferredSize().equals(size))
+        {
+            indicator->setPreferredSize(size);
+        }
         
         
         CCPoint point = m_obContentSize;
@@ -805,7 +816,10 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
         point.y = MAX(point.y, size.height/2);
         point.y = MIN(point.y, m_obContentSize.height - size.height/2);
         
-        indicator->setCenterOrigin(point);
+        if (!indicator->getCenterOrigin().equals(point))
+        {
+            indicator->setCenterOrigin(point);
+        }
     }
     
     do

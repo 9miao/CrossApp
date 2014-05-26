@@ -28,9 +28,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-const char* cocos2dVersion()
+const char* CrossAppVersion()
 {
-    return "2.2.3";
+    return "0.1.3";
 }
 
 NS_CC_END

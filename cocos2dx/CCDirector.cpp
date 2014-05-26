@@ -108,13 +108,9 @@ bool CCDirector::init(void)
 	setDefaultValues();
 
     // scenes
-    m_pRunningScene = NULL;
-    m_pNextScene = NULL;
+    m_pRootWindow = NULL;
 
     m_pNotificationNode = NULL;
-
-    m_pobScenesStack = new CCArray();
-    m_pobScenesStack->init();
 
     // projection delegate if "Custom" projection is used
     m_pProjectionDelegate = NULL;
@@ -171,9 +167,8 @@ CCDirector::~CCDirector(void)
     CC_SAFE_RELEASE(m_pSPFLabel);
     CC_SAFE_RELEASE(m_pDrawsLabel);
     
-    CC_SAFE_RELEASE(m_pRunningScene);
+    CC_SAFE_RELEASE(m_pRootWindow);
     CC_SAFE_RELEASE(m_pNotificationNode);
-    CC_SAFE_RELEASE(m_pobScenesStack);
     CC_SAFE_RELEASE(m_pScheduler);
     CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pTouchDispatcher);
@@ -244,49 +239,70 @@ void CCDirector::setGLDefaultValues(void)
 }
 
 // Draw the Scene
-void CCDirector::drawScene(void)
+void CCDirector::drawView(CAView* var)
 {
-    // calculate "global" dt
-    calculateDeltaTime();
-
     //tick before glClear: issue #533
-    if (! m_bPaused)
+
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//    CCPoint point = var->convertToWorldSpace(CCPoint(0, var->getBounds().size.height));
+//    point = CCDirector::sharedDirector()->convertToGL(point);
+//    
+//    glScissor(point.x, point.y, var->getFrame().size.width, var->getFrame().size.height);
+//    
+//    kmGLPushMatrix();
+//
+//    // draw the scene
+//    if (var)
+//    {
+//        var->visit();
+//    }
+//
+//    CCLog(" <<<<<<< %s\n",typeid(*var).name());
+//    
+//    kmGLPopMatrix();
+//
+//    m_uTotalFrames++;
+//
+//    // swap buffers
+//    if (m_pobOpenGLView)
+//    {
+//        m_pobOpenGLView->swapBuffers();
+//    }
+//    
+//    if (m_bDisplayStats)
+//    {
+//        calculateMPF();
+//    }
+}
+
+static bool protect = false;
+
+void CCDirector::drawScene()
+{
+    //tick before glClear: issue #533
+    
+    if (protect)
     {
-        m_pScheduler->update(m_fDeltaTime);
-    }
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    /* to avoid flickr, nextScene MUST be here: after tick and before draw.
-     XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
-    if (m_pNextScene)
-    {
-        setNextScene();
-    }
-
-    kmGLPushMatrix();
-
-    // draw the scene
-    if (m_pRunningScene)
-    {
-        m_pRunningScene->visit();
-    }
-
-    // draw the notifications node
-    if (m_pNotificationNode)
-    {
-        m_pNotificationNode->visit();
+        return;
     }
     
-    if (m_bDisplayStats)
+    protect = true;
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    kmGLPushMatrix();
+    
+    // draw the scene
+    if (m_pRootWindow)
     {
-        showStats();
+        m_pRootWindow->visit();
     }
     
     kmGLPopMatrix();
-
+    
     m_uTotalFrames++;
-
+    
     // swap buffers
     if (m_pobOpenGLView)
     {
@@ -297,6 +313,14 @@ void CCDirector::drawScene(void)
     {
         calculateMPF();
     }
+    
+    this->getScheduler()->scheduleSelector(schedule_selector(CCDirector::drawOK), this, 1/60.0f, false);
+}
+
+void CCDirector::drawOK(float dt)
+{
+    this->getScheduler()->unscheduleSelector(schedule_selector(CCDirector::drawOK), this);
+    protect = false;
 }
 
 void CCDirector::calculateDeltaTime(void)
@@ -593,96 +617,29 @@ CCPoint CCDirector::getVisibleOrigin()
 
 // scene management
 
-void CCDirector::runWithScene(CAWindow *pScene)
+void CCDirector::runWindow(CAWindow *pWindow)
 {
-    CCAssert(pScene != NULL, "This command can only be used to start the CCDirector. There is already a scene present.");
-    CCAssert(m_pRunningScene == NULL, "m_pRunningScene should be null");
-
-    pushScene(pScene);
-    startAnimation();
-    
-}
-
-void CCDirector::replaceScene(CAWindow *pScene)
-{
-    CCAssert(m_pRunningScene, "Use runWithScene: instead to start the director");
-    CCAssert(pScene != NULL, "the scene should not be null");
-
-    unsigned int index = m_pobScenesStack->count();
-
-    m_bSendCleanupToScene = true;
-    m_pobScenesStack->replaceObjectAtIndex(index - 1, pScene);
-
-    m_pNextScene = pScene;
-}
-
-void CCDirector::pushScene(CAWindow *pScene)
-{
-    CCAssert(pScene, "the scene should not null");
+    CCAssert(pWindow != NULL, "This command can only be used to start the CCDirector. There is already a scene present.");
+    CCAssert(m_pRootWindow == NULL, "m_pRootWindow should be null");
 
     m_bSendCleanupToScene = false;
-
-    m_pobScenesStack->addObject(pScene); 
-    m_pNextScene = pScene;
+    
+    pWindow->retain();
+    m_pRootWindow = pWindow;
+    
+    startAnimation();
+ 
+    this->getScheduler()->scheduleSelector(schedule_selector(CCDirector::run), this, 0, false);
 }
 
-void CCDirector::popScene(void)
+void CCDirector::run(float dt)
 {
-    CCAssert(m_pRunningScene != NULL, "running scene should not null");
-
-    m_pobScenesStack->removeLastObject();
-    unsigned int c = m_pobScenesStack->count();
-
-    if (c == 0)
+    if (m_pRootWindow)
     {
-        end();
+        m_pRootWindow->onEnter();
+        m_pRootWindow->onEnterTransitionDidFinish();
     }
-    else
-    {
-        m_bSendCleanupToScene = true;
-        m_pNextScene = (CAWindow*)m_pobScenesStack->objectAtIndex(c - 1);
-    }
-}
-
-void CCDirector::popToRootScene(void)
-{
-    popToSceneStackLevel(1);
-}
-
-void CCDirector::popToSceneStackLevel(int level)
-{
-    CCAssert(m_pRunningScene != NULL, "A running Scene is needed");
-    int c = (int)m_pobScenesStack->count();
-
-    // level 0? -> end
-    if (level == 0)
-    {
-        end();
-        return;
-    }
-
-    // current level or lower -> nothing
-    if (level >= c)
-        return;
-
-	// pop stack until reaching desired level
-	while (c > level)
-    {
-		CAWindow *current = (CAWindow*)m_pobScenesStack->lastObject();
-
-		if (current->isRunning())
-        {
-            current->onExitTransitionDidStart();
-            current->onExit();
-		}
-
-        current->cleanup();
-        m_pobScenesStack->removeLastObject();
-		c--;
-	}
-
-	m_pNextScene = (CAWindow*)m_pobScenesStack->lastObject();
-	m_bSendCleanupToScene = false;
+    this->getScheduler()->unscheduleSelector(schedule_selector(CCDirector::run), this);
 }
 
 void CCDirector::end()
@@ -699,20 +656,15 @@ void CCDirector::purgeDirector()
     // They are needed in case the director is run again
     m_pTouchDispatcher->removeAllDelegates();
 
-    if (m_pRunningScene)
+    if (m_pRootWindow)
     {
-        m_pRunningScene->onExitTransitionDidStart();
-        m_pRunningScene->onExit();
-        m_pRunningScene->cleanup();
-        m_pRunningScene->release();
+        m_pRootWindow->onExitTransitionDidStart();
+        m_pRootWindow->onExit();
+        m_pRootWindow->cleanup();
+        m_pRootWindow->release();
     }
     
-    m_pRunningScene = NULL;
-    m_pNextScene = NULL;
-
-    // remove all objects, but don't release it.
-    // runWithScene might be executed after 'end'.
-    m_pobScenesStack->removeAllObjects();
+    m_pRootWindow = NULL;
 
     stopAnimation();
 
@@ -743,43 +695,6 @@ void CCDirector::purgeDirector()
 
     // delete CCDirector
     release();
-}
-
-void CCDirector::setNextScene(void)
-{
-    bool runningIsTransition = dynamic_cast<CCTransitionScene*>(m_pRunningScene) != NULL;
-    bool newIsTransition = dynamic_cast<CCTransitionScene*>(m_pNextScene) != NULL;
-
-    // If it is not a transition, call onExit/cleanup
-     if (! newIsTransition)
-     {
-         if (m_pRunningScene)
-         {
-             m_pRunningScene->onExitTransitionDidStart();
-             m_pRunningScene->onExit();
-         }
- 
-         // issue #709. the root node (scene) should receive the cleanup message too
-         // otherwise it might be leaked.
-         if (m_bSendCleanupToScene && m_pRunningScene)
-         {
-             m_pRunningScene->cleanup();
-         }
-     }
-
-    if (m_pRunningScene)
-    {
-        m_pRunningScene->release();
-    }
-    m_pRunningScene = m_pNextScene;
-    m_pRunningScene->retain();
-    m_pNextScene = NULL;
-
-    if ((! runningIsTransition) && m_pRunningScene)
-    {
-        m_pRunningScene->onEnter();
-        m_pRunningScene->onEnterTransitionDidFinish();
-    }
 }
 
 void CCDirector::pause(void)
@@ -1071,9 +986,27 @@ void CCDisplayLinkDirector::mainLoop(void)
     }
     else if (! m_bInvalid)
      {
-         drawScene();
-     
-         // release the objects
+         // calculate "global" dt
+         calculateDeltaTime();
+         
+         if (! m_bPaused)
+         {
+             m_pScheduler->update(m_fDeltaTime);
+         }
+         
+         if (m_bDisplayStats)
+         {
+             showStats();
+         }
+         
+         // draw the notifications node
+         if (m_pNotificationNode)
+         {
+             m_pNotificationNode->visit();
+         }
+         
+         //drawScene();
+         
          CCPoolManager::sharedPoolManager()->pop();        
      }
 }

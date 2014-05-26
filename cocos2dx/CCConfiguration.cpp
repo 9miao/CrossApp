@@ -60,19 +60,19 @@ bool CCConfiguration::init(void)
 	m_pValueDict = CCDictionary::create();
 	m_pValueDict->retain();
 
-	m_pValueDict->setObject( CCString::create( cocos2dVersion() ), "cocos2d.x.version");
+	m_pValueDict->setObject( CCString::create( CrossAppVersion() ), "CrossApp.version");
 
 
 #if CC_ENABLE_PROFILERS
-	m_pValueDict->setObject( CCBool::create(true), "cocos2d.x.compiled_with_profiler");
+	m_pValueDict->setObject( CCBool::create(true), "CrossApp.compiled_with_profiler");
 #else
-	m_pValueDict->setObject( CCBool::create(false), "cocos2d.x.compiled_with_profiler");
+	m_pValueDict->setObject( CCBool::create(false), "CrossApp.compiled_with_profiler");
 #endif
 
 #if CC_ENABLE_GL_STATE_CACHE == 0
-	m_pValueDict->setObject( CCBool::create(false), "cocos2d.x.compiled_with_gl_state_cache");
+	m_pValueDict->setObject( CCBool::create(false), "CrossApp.compiled_with_gl_state_cache");
 #else
-	m_pValueDict->setObject( CCBool::create(true), "cocos2d.x.compiled_with_gl_state_cache");
+	m_pValueDict->setObject( CCBool::create(true), "CrossApp.compiled_with_gl_state_cache");
 #endif
 
 	return true;

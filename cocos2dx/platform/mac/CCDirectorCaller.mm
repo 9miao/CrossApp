@@ -79,7 +79,6 @@ static id s_sharedDirectorCaller;
     
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	cocos2d::CCDirector::sharedDirector()->drawScene();
 	cocos2d::CCPoolManager::sharedPoolManager()->pop();
 	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
 	

@@ -24,7 +24,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	pDirector->setDelegate(this);
     
     // turn on display FPS
-    pDirector->setDisplayStats(true);
+    pDirector->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60.0f);
@@ -35,7 +35,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	m_pWindow = CAWindow::create();
     
     // run
-    pDirector->runWithScene(m_pWindow);
+    pDirector->runWindow(m_pWindow);
 
     RootViewController* viewController = new RootViewController();
     viewController->init();

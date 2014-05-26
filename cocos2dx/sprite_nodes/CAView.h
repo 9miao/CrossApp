@@ -43,14 +43,6 @@ class CAImage;
 class CAViewDelegate;
 struct transformValues_;
 
-/**
- * @addtogroup base_nodes
- * @{
- */
-
-enum {
-    kCAViewTagInvalid = -1,
-};
 
 enum {
     kCAViewOnEnter,
@@ -59,6 +51,11 @@ enum {
     kCAViewOnExitTransitionDidStart,
     kCAViewOnCleanup
 };
+
+#define kCAViewTagInvalid -1
+#define kCAViewPointInvalid CCPoint(-0xffffffff, -0xffffffff)
+#define kCAViewSizeInvalid CCPoint(0, 0)
+#define kCAViewRectInvalid CCRect(0, 0, 0, 0)
 
 class CC_DLL CAView
 :public CCObject
@@ -1119,6 +1116,8 @@ private:
      * @lua NA
      */
     CCPoint convertToWindowSpace(const CCPoint& nodePoint);
+    
+    void updateDraw();
     
 protected:
     float m_fRotationX;                 ///< rotation angle on x-axis

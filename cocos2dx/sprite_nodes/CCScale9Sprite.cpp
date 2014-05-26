@@ -302,6 +302,12 @@ void CCScale9Sprite::setContentSize(const CCSize &size)
     CAView::setContentSize(size);
     this->m_positionsAreDirty = true;
     this->m_preferredSize = size;
+    
+    if(this->m_positionsAreDirty)
+    {
+        this->updatePositions();
+        this->m_positionsAreDirty = false;
+    }
 }
 
 void CCScale9Sprite::updatePositions()
@@ -333,8 +339,6 @@ void CCScale9Sprite::updatePositions()
     float leftWidth = _bottomLeft->getContentSize().width;
     float bottomHeight = _bottomLeft->getContentSize().height;
 
-    
-
     // Position corners
     _bottomLeft->setPosition(CCPoint(0,0));
     _bottomRight->setPosition(CCPoint(leftWidth+rescaledWidth,0));
@@ -364,6 +368,12 @@ bool CCScale9Sprite::initWithImage(CAImage* texture, CCRect rect, CCRect capInse
         this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     }
     this->m_positionsAreDirty = true;
+    
+    if(this->m_positionsAreDirty)
+    {
+        this->updatePositions();
+        this->m_positionsAreDirty = false;
+    }
     
 	return true;
 }
@@ -465,8 +475,12 @@ CCScale9Sprite* CCScale9Sprite::create()
 
 void CCScale9Sprite::setPreferredSize(CCSize preferedSize)
 {
-    this->setContentSize(preferedSize);
-    this->m_preferredSize = preferedSize;
+    if (!m_obContentSize.equals(preferedSize))
+    {
+        this->setContentSize(preferedSize);
+        this->m_preferredSize = preferedSize;
+    }
+    
 }
 
 CCSize CCScale9Sprite::getPreferredSize()
@@ -592,11 +606,6 @@ void CCScale9Sprite::setInsetBottom(float insetBottom)
 
 void CCScale9Sprite::visit()
 {
-    if(this->m_positionsAreDirty)
-    {
-        this->updatePositions();
-        this->m_positionsAreDirty = false;
-    }
     CAView::visit();
 }
 
