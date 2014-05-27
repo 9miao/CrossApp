@@ -28,7 +28,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CAWindow *pWindow = FirstViewController::createWindow();
 
     // run
-    pDirector->runWithScene(pWindow);
+    pDirector->runWindow(pWindow);
 
     return true;
 }

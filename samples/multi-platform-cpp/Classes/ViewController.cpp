@@ -15,7 +15,7 @@ void ViewController::viewDidLoad()
     CAScrollView* scroll = new CAScrollView();
     scroll->initWithFrame(this->getView()->getBounds());
     this->getView()->addSubview(scroll);
-    scroll->setViewSize(scroll->getBounds().size * 3);
+    scroll->setViewSize(scroll->getBounds().size * 2);
     scroll->setMaximumZoomScale(3.0f);
     scroll->setMinimumZoomScale(0.5f);
     //scroll->setBouncesZoom(false);

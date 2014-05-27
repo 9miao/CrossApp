@@ -536,7 +536,7 @@ void CAScrollView::deaccelerateScrolling(float delay)
         this->hideIndicator();
     }
     
-    m_pContainer->setPosition(point);
+    m_pContainer->setCenterOrigin(point);
 }
 
 float CAScrollView::maxSpeed(float delay)
