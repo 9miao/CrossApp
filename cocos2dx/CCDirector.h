@@ -66,7 +66,7 @@ class CAWindow;
 class CCEGLView;
 class CCDirectorDelegate;
 class CCNode;
-class CCScheduler;
+class CAScheduler;
 class CCActionManager;
 class CCTouchDispatcher;
 class CCKeypadDispatcher;
@@ -257,18 +257,18 @@ public:
     /** Draw the scene.
     This method is called every frame. Don't call it manually.
     */
-    void drawView(CAView* var);
+    //void drawView(CAView* var);
 
-    void drawScene();
+    void updateDraw();
     
-    void drawOK(float dt);
+    void drawScene(float dt = 0);
     
     void run(float dt);
     
     // Memory Helper
 
     /** Removes cached all cocos2d cached data.
-     It will purge the CCTextureCache, CCSpriteFrameCache, CCLabelBMFont cache
+     It will purge the CAImageCache, CCSpriteFrameCache, CCLabelBMFont cache
      @since v0.99.3
      */
     void purgeCachedData(void);
@@ -298,10 +298,6 @@ public:
     float getContentScaleFactor(void);
 
 public:
-    /** CCScheduler associated with this director
-     @since v2.0
-     */
-    CC_PROPERTY(CCScheduler*, m_pScheduler, Scheduler);
 
     /** CCActionManager associated with this director
      @since v2.0
@@ -327,7 +323,7 @@ public:
 
     /* delta time since last tick to main loop */
 	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
-	
+    
 public:
     /** returns a shared instance of the director 
      *  @js getInstance
@@ -401,6 +397,8 @@ protected:
 
     /* Projection protocol delegate */
     CCDirectorDelegate *m_pProjectionDelegate;
+    
+    int m_nDrawCount;
     
     // CCEGLViewProtocol will recreate stats labels to fit visible rect
     friend class CCEGLViewProtocol;

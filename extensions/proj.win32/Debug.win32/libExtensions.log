@@ -1,48 +1,5 @@
-﻿生成启动时间为 2014/5/11 20:54:06。
-     1>项目“E:\win 开发\CrossAppNew\extensions\proj.win32\libExtensions.vcxproj”在节点 2 上(Rebuild 个目标)。
-     1>ClCompile:
-         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files\Microsoft SDKs\Windows\v7.1A\include" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\external\chipmunk\include\chipmunk" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\external\sqlite3\include" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\external" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\external\libwebsockets\win32\include" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\cocos2dx" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\cocos2dx\include" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\cocos2dx\kazmath\include" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\cocos2dx\platform\win32" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\cocos2dx\platform\third_party\win32" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\cocos2dx\platform\third_party\win32\pthread" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\cocos2dx\platform\third_party\win32\OGLES" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\cocos2dx\platform\third_party\win32\zlib" /I"E:\win 开发\CrossAppNew\extensions\proj.win32\..\..\CocosDenshion\include" /I..\ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _LIB /D COCOS2D_DEBUG=1 /D CC_ENABLE_CHIPMUNK_INTEGRATION=1 /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug.win32\\" /Fd"Debug.win32\vc120.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /analyze- /errorReport:prompt ..\AssetsManager\AssetsManager.cpp ..\GUI\CAUIHelper.cpp ..\LocalStorage\LocalStorage.cpp ..\network\HttpClient.cpp ..\network\Websocket.cpp
-         Websocket.cpp
-     1>c:\program files\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
-                 c:\program files\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
-     1>c:\program files\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
-                 c:\program files\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
-     1>e:\win 开发\crossappnew\cocos2dx\ui_controller\caviewcontroller.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         HttpClient.cpp
-     1>c:\program files\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
-                 c:\program files\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
-     1>c:\program files\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
-                 c:\program files\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
-     1>e:\win 开发\crossappnew\cocos2dx\ui_controller\caviewcontroller.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         LocalStorage.cpp
-     1>c:\program files\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
-                 c:\program files\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
-     1>c:\program files\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
-                 c:\program files\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
-     1>e:\win 开发\crossappnew\cocos2dx\ui_controller\caviewcontroller.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         CAUIHelper.cpp
-     1>c:\program files\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
-                 c:\program files\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
-     1>c:\program files\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
-                 c:\program files\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
-     1>e:\win 开发\crossappnew\cocos2dx\ui_controller\caviewcontroller.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\win 开发\crossappnew\extensions\gui\cauihelper.cpp(64): warning C4018: “<”: 有符号/无符号不匹配
-         AssetsManager.cpp
-     1>c:\program files\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
-                 c:\program files\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
-     1>c:\program files\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
-                 c:\program files\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
-     1>e:\win 开发\crossappnew\cocos2dx\ui_controller\caviewcontroller.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         正在生成代码...
-       Lib:
-         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libExtensions.lib" /NOLOGO Debug.win32\AssetsManager.obj
-         Debug.win32\CAUIHelper.obj
-         Debug.win32\LocalStorage.obj
-         Debug.win32\HttpClient.obj
-         Debug.win32\Websocket.obj
-         libExtensions.vcxproj -> E:\win 开发\CrossAppNew\project\multi-platform-cpp\proj.win32\Debug.win32\libExtensions.lib
-     1>已完成生成项目“E:\win 开发\CrossAppNew\extensions\proj.win32\libExtensions.vcxproj”(Rebuild 个目标)的操作。
+﻿生成启动时间为 2014/5/27 17:41:51。
 
 生成成功。
 
-已用时间 00:00:08.09
+已用时间 00:00:00.06

@@ -23,7 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "textures/CCTextureCache.h"
+#include "images/CAImageCache.h"
 #include "CCSpriteFrame.h"
 #include "CCDirector.h"
 
@@ -180,7 +180,7 @@ CAImage* CCSpriteFrame::getImage(void)
     }
 
     if( m_strimageFilename.length() > 0 ) {
-        return CCTextureCache::sharedTextureCache()->addImage(m_strimageFilename.c_str());
+        return CAImageCache::sharedImageCache()->addImage(m_strimageFilename.c_str());
     }
     // no image or image filename
     return NULL;

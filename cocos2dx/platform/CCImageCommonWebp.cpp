@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "platform/CCImage.h"
-#include "textures/CCTexture2D.h"
+#include "images/CAImage.h"
 #if defined(__native_client__) || defined(EMSCRIPTEN)
 // TODO(sbc): I'm pretty sure all platforms should be including
 // webph headers in this way.

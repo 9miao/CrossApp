@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "CCConfiguration.h"
 #include "support/ccUtils.h"
-#include "textures/CCTextureCache.h"
+#include "images/CAImageCache.h"
 #include "platform/CCFileUtils.h"
 #include "CCGL.h"
 #include "support/CCNotificationCenter.h"
@@ -53,7 +53,7 @@ CCRenderTexture::CCRenderTexture()
 , m_pTexture(0)
 , m_pTextureCopy(0)
 , m_pUITextureImage(NULL)
-, m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+, m_ePixelFormat(kCAImagePixelFormat_RGBA8888)
 , m_uClearFlags(0)
 , m_sClearColor(ccc4f(0,0,0,0))
 , m_fClearDepth(0.0f)
@@ -104,11 +104,11 @@ void CCRenderTexture::listenToBackground(cocos2d::CCObject *obj)
     if (m_pUITextureImage)
     {
         const CCSize& s = m_pTexture->getContentSizeInPixels();
-        VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+        VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kImagePixelFormat_RGBA8888, s);
         
         if ( m_pTextureCopy )
         {
-            VolatileTexture::addDataTexture(m_pTextureCopy, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+            VolatileTexture::addDataTexture(m_pTextureCopy, m_pUITextureImage->getData(), kImagePixelFormat_RGBA8888, s);
         }
     }
     else
@@ -204,7 +204,7 @@ void CCRenderTexture::setAutoDraw(bool bAutoDraw)
     m_bAutoDraw = bAutoDraw;
 }
 
-CCRenderTexture * CCRenderTexture::create(int w, int h, CCTexture2DPixelFormat eFormat)
+CCRenderTexture * CCRenderTexture::create(int w, int h, CAImagePixelFormat eFormat)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
 
@@ -217,7 +217,7 @@ CCRenderTexture * CCRenderTexture::create(int w, int h, CCTexture2DPixelFormat e
     return NULL;
 }
 
-CCRenderTexture * CCRenderTexture::create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
+CCRenderTexture * CCRenderTexture::create(int w ,int h, CAImagePixelFormat eFormat, GLuint uDepthStencilFormat)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
 
@@ -234,7 +234,7 @@ CCRenderTexture * CCRenderTexture::create(int w, int h)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
 
-    if(pRet && pRet->initWithWidthAndHeight(w, h, kCCTexture2DPixelFormat_RGBA8888, 0))
+    if(pRet && pRet->initWithWidthAndHeight(w, h, kCAImagePixelFormat_RGBA8888, 0))
     {
         pRet->autorelease();
         return pRet;
@@ -243,14 +243,14 @@ CCRenderTexture * CCRenderTexture::create(int w, int h)
     return NULL;
 }
 
-bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
+bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFormat)
 {
     return initWithWidthAndHeight(w, h, eFormat, 0);
 }
 
-bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
+bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFormat, GLuint uDepthStencilFormat)
 {
-    CCAssert(eFormat != kCCTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
+    CCAssert(eFormat != kCAImagePixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool bRet = false;
     void *data = NULL;
@@ -285,7 +285,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         m_pTexture = new CAImage();
         if (m_pTexture)
         {
-            m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+            m_pTexture->initWithData(data, (CAImagePixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
         }
         else
         {
@@ -299,7 +299,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
             m_pTextureCopy = new CAImage();
             if (m_pTextureCopy)
             {
-                m_pTextureCopy->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+                m_pTextureCopy->initWithData(data, (CAImagePixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
             }
             else
             {
@@ -651,7 +651,7 @@ bool CCRenderTexture::saveToFile(const char *fileName, tCCImageFormat format)
 /* get buffer as CCImage */
 CCImage* CCRenderTexture::newCCImage(bool flipImage)
 {
-    CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
+    CCAssert(m_ePixelFormat == kCAImagePixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
 
     if (NULL == m_pTexture)
     {

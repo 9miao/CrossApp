@@ -200,7 +200,7 @@ static void* networkThread(void *data)
         pthread_mutex_unlock(&s_responseQueueMutex);
         
         // resume dispatcher selector
-        CCDirector::sharedDirector()->getScheduler()->resumeTarget(CCHttpClient::getInstance());
+        CAScheduler::getScheduler()->resumeTarget(CCHttpClient::getInstance());
     }
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
@@ -392,7 +392,7 @@ CCHttpClient* CCHttpClient::getInstance()
 void CCHttpClient::destroyInstance()
 {
     CCAssert(s_pHttpClient, "");
-    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCHttpClient::dispatchResponseCallbacks), s_pHttpClient);
+    CAScheduler::unschedule(schedule_selector(CCHttpClient::dispatchResponseCallbacks), s_pHttpClient);
     s_pHttpClient->release();
 }
 
@@ -400,9 +400,8 @@ CCHttpClient::CCHttpClient()
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
 {
-    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(
-                    schedule_selector(CCHttpClient::dispatchResponseCallbacks), this, 0, false);
-    CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
+    CAScheduler::schedule(schedule_selector(CCHttpClient::dispatchResponseCallbacks), this, 0, false);
+    CAScheduler::getScheduler()->pauseTarget(this);
 }
 
 CCHttpClient::~CCHttpClient()
@@ -502,7 +501,7 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
     
     if (0 == s_asyncRequestCount) 
     {
-        CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
+        CAScheduler::getScheduler()->pauseTarget(this);
     }
     
 }

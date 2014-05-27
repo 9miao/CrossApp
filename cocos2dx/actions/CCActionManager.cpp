@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCActionManager.h"
 #include "sprite_nodes/CAView.h"
-#include "CCScheduler.h"
+#include "CAScheduler.H"
 #include "ccMacros.h"
 #include "support/data_support/ccCArray.h"
 #include "support/data_support/uthash.h"

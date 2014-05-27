@@ -34,7 +34,7 @@ class CCTouch;
 class CCAction;
 class CCRGBAProtocol;
 class CCLabelProtocol;
-class CCScheduler;
+class CAScheduler;
 class CCActionManager;
 class CCComponent;
 class CCDictionary;

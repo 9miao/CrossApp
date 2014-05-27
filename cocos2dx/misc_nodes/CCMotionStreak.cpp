@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCMotionStreak.h"
-#include "textures/CCTextureCache.h"
+#include "images/CAImageCache.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/CCShaderCache.h"
@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "support/CCVertex.h"
 #include "support/CCPointExtension.h"
 #include "CCDirector.h"
-#include "CCScheduler.h"
+#include "CAScheduler.h"
 NS_CC_BEGIN
 
 CCMotionStreak::CCMotionStreak()
@@ -64,7 +64,6 @@ CCMotionStreak::~CCMotionStreak()
     CC_SAFE_FREE(m_pVertices);
     CC_SAFE_FREE(m_pColorPointer);
     CC_SAFE_FREE(m_pTexCoords);
-    CCDirector::sharedDirector()->getScheduler()->unscheduleUpdateForTarget(this);
 }
 
 CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
@@ -97,7 +96,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
 {
     CCAssert(path != NULL, "Invalid filename");
 
-    CAImage* image = CCTextureCache::sharedTextureCache()->addImage(path);
+    CAImage* image = CAImageCache::sharedImageCache()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, image);
 }
 
@@ -135,7 +134,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
     setImage(texture);
     setColor(color);
     
-    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCMotionStreak::update), this, 1/60.0f, false);
+    CAScheduler::schedule(schedule_selector(CCMotionStreak::update), this, 1/60.0f, false);
     return true;
 }
 

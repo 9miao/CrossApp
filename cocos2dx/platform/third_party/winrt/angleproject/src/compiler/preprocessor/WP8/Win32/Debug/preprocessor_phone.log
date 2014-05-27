@@ -1,5 +1,20 @@
-﻿生成启动时间为 2014/5/19 15:33:35。
+﻿生成启动时间为 2014/5/27 17:43:47。
+     1>项目“I:\CrossApp_\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\preprocessor\preprocessor_phone.vcxproj”在节点 5 上(Build 个目标)。
+     1>Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\Lib.exe /OUT:"I:\CrossApp_\samples\multi-platform-cpp\proj.wp8\WP8\redist\vs2012\Win32\Debug\preprocessor_phone\preprocessor_phone.lib" /NOLOGO WP8\Win32\Debug\DiagnosticsBase.obj
+         WP8\Win32\Debug\DirectiveHandlerBase.obj
+         WP8\Win32\Debug\DirectiveParser.obj
+         WP8\Win32\Debug\ExpressionParser.obj
+         WP8\Win32\Debug\Input.obj
+         WP8\Win32\Debug\Lexer.obj
+         WP8\Win32\Debug\Macro.obj
+         WP8\Win32\Debug\MacroExpander.obj
+         WP8\Win32\Debug\Preprocessor.obj
+         WP8\Win32\Debug\Token.obj
+         WP8\Win32\Debug\Tokenizer.obj
+         preprocessor_phone.vcxproj -> I:\CrossApp_\samples\multi-platform-cpp\proj.wp8\WP8\redist\vs2012\Win32\Debug\preprocessor_phone\preprocessor_phone.lib
+     1>已完成生成项目“I:\CrossApp_\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\preprocessor\preprocessor_phone.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:00.01
+已用时间 00:00:02.68

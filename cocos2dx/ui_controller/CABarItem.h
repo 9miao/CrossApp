@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-#include "textures/CCTexture2D.h"
+#include "images/CAImage.h"
 #include <string>
 
 NS_CC_BEGIN

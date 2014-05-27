@@ -63,7 +63,7 @@ void Cocos2dRenderer::CreateGLResources()
         ccGLInvalidateStateCache();
         CCShaderCache::sharedShaderCache()->reloadDefaultShaders();
         ccDrawInit();
-        CCTextureCache::sharedTextureCache()->reloadAllTextures();
+        CAImageCache::sharedImageCache()->reloadAllTextures();
         CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_FOREGROUND, NULL);
         CCDirector::sharedDirector()->setGLDefaultValues(); 
         CCDirector::sharedDirector()->resume(); 

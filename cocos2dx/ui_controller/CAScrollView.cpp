@@ -7,11 +7,11 @@
 //
 
 #include "CAScrollView.h"
-#include "sprite_nodes/CCScale9Sprite.h"
+#include "sprite_nodes/CAScale9ImageView.h"
 #include "actions/CCActionInterval.h"
 #include "actions/CCActionEase.h"
 #include "CCDirector.h"
-#include "CCScheduler.h"
+#include "CAScheduler.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "support/CCPointExtension.h"
 
@@ -52,8 +52,6 @@ CAScrollView::~CAScrollView()
 void CAScrollView::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
-    
-    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CAScrollView::update), this, 1/60.0f, false);
 }
 
 void CAScrollView::onExitTransitionDidStart()
@@ -63,8 +61,6 @@ void CAScrollView::onExitTransitionDidStart()
     m_tPointOffset.clear();
     m_pTouches->removeAllObjects();
     m_tInertia = CCPointZero;
-    
-    CCDirector::sharedDirector()->getScheduler()->unscheduleUpdateForTarget(this);
 }
 
 bool CAScrollView::initWithFrame(const cocos2d::CCRect &rect)
@@ -204,7 +200,7 @@ void CAScrollView::setContentOffset(CCPoint offset, bool animated)
     if (animated)
     {
         m_tCloseToPoint = ccpMult(offset, -1);
-        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CAScrollView::closeToPoint), this, 1/60.0f, false);
+        CAScheduler::schedule(schedule_selector(CAScrollView::closeToPoint), this, 1/60.0f, false);
     }
     else
     {
@@ -227,7 +223,7 @@ void CAScrollView::closeToPoint(float delay)
     if (resilience.getLength() <= 0.5f)
     {
         m_pContainer->setFrameOrigin(m_tCloseToPoint);
-        CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAScrollView::closeToPoint), this);
+        CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
         m_tCloseToPoint = CCPoint(-1, -1);
     }
     else
@@ -261,11 +257,12 @@ bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
         if (m_pTouches->count() == 1)
         {
-            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAScrollView::deaccelerateScrolling), this);
+            CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
             m_tInertia = CCPointZero;
-            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAScrollView::closeToPoint), this);
+            CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
             m_tCloseToPoint = CCPoint(-1, -1);
             m_pContainer->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            this->showIndicator();
         }
         else if (m_pTouches->count() == 2)
         {
@@ -419,7 +416,7 @@ void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
             m_tInertia = p;
 			m_tPointOffset.clear();
 
-            CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f, false);
+            CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f, false);
             
             if (m_pScrollViewDelegate)
             {
@@ -535,10 +532,11 @@ void CAScrollView::deaccelerateScrolling(float delay)
     {
         point = this->getScrollWindowNotOutPoint(point);
         m_bDecelerating = false;
-        CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAScrollView::deaccelerateScrolling), this);
+        CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
+        this->hideIndicator();
     }
     
-    m_pContainer->setCenterOrigin(point);
+    m_pContainer->setPosition(point);
 }
 
 float CAScrollView::maxSpeed(float delay)
@@ -564,6 +562,20 @@ float CAScrollView::maxBouncesSpeed(float delay)
 CCPoint CAScrollView::maxBouncesLenght()
 {
     return ccpMult(m_obContentSize, 0.5f);
+}
+
+void CAScrollView::showIndicator()
+{
+    CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f, false);
+    m_pIndicatorHorizontal->setHide(false);
+    m_pIndicatorVertical->setHide(false);
+}
+
+void CAScrollView::hideIndicator()
+{
+    CAScheduler::unschedule(schedule_selector(CAScrollView::update), this);
+    m_pIndicatorHorizontal->setHide(true);
+    m_pIndicatorVertical->setHide(true);
 }
 
 void CAScrollView::update(float fDelta)
@@ -732,19 +744,16 @@ bool CAIndicator::initWithFrame(const CCRect& rect, CAIndicatorType type)
     r.origin = ccpSub(ccpMult(image->getContentSize(), 0.5f), CCPoint(0.5f, 0.5f));
     r.size = CCSize(1.0f, 1.0f);
     
-    m_pIndicator = CCScale9Sprite::createWithImage(r, image);
+    m_pIndicator = CAScale9ImageView::createWithImage(r, image);
     this->addSubview(m_pIndicator);
+    this->setOpacity(0);
     
     return true;
 }
 
 void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenFrame)
 {
-    CCScale9Sprite* indicator = dynamic_cast<CCScale9Sprite*>(m_pIndicator);
-    
-    int x = (int)indicator->getCenterOrigin().x * 10;
-    int y = (int)indicator->getCenterOrigin().y * 10;
-    
+    CAScale9ImageView* indicator = dynamic_cast<CAScale9ImageView*>(m_pIndicator);
     
     if (m_eType == CAIndicatorTypeHorizontal)
     {
@@ -778,10 +787,7 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
         point.x = MAX(point.x, size.width/2);
         point.x = MIN(point.x, m_obContentSize.width - size.width/2);
         
-        if (!indicator->getCenterOrigin().equals(point))
-        {
-            indicator->setCenterOrigin(point);
-        }
+        indicator->setCenterOrigin(point);
     }
     else if (m_eType == CAIndicatorTypeVertical)
     {
@@ -809,22 +815,40 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
             indicator->setPreferredSize(size);
         }
         
-        
         CCPoint point = m_obContentSize;
         point.x *= 0.5f;
         point.y *= lenght_scale_y;
         point.y = MAX(point.y, size.height/2);
         point.y = MIN(point.y, m_obContentSize.height - size.height/2);
         
-        if (!indicator->getCenterOrigin().equals(point))
-        {
-            indicator->setCenterOrigin(point);
-        }
+        indicator->setCenterOrigin(point);
     }
+}
+
+void CAIndicator::setOpacity(GLubyte opacity)
+{
+    CAScale9ImageView* indicator = dynamic_cast<CAScale9ImageView*>(m_pIndicator);
+    if (indicator)
+    {
+        indicator->setOpacity(opacity);
+        indicator->setColor(ccc3(opacity, opacity, opacity));
+    }
+}
+
+void CAIndicator::setHide(bool var)
+{
+    CAScale9ImageView* indicator = dynamic_cast<CAScale9ImageView*>(m_pIndicator);
     
     do
     {
-        if (x == (int)indicator->getCenterOrigin().x * 10 && y == (int)indicator->getCenterOrigin().y * 10)
+        if (var == false)
+        {
+            CC_BREAK_IF(indicator->getOpacity() == 255);
+            
+            indicator->stopAllActions();
+            this->setOpacity(255);
+        }
+        else
         {
             CC_BREAK_IF(indicator->getActionByTag(0xfff));
             
@@ -837,25 +861,8 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
             actions->setTag(0xfff);
             this->runAction(actions);
         }
-        else
-        {
-            CC_BREAK_IF(indicator->getOpacity() == 255);
-            
-            indicator->stopAllActions();
-            this->setOpacity(255);
-        }
     }
     while (0);
-}
-
-void CAIndicator::setOpacity(GLubyte opacity)
-{
-    CCScale9Sprite* indicator = dynamic_cast<CCScale9Sprite*>(m_pIndicator);
-    if (indicator)
-    {
-        indicator->setOpacity(opacity);
-        indicator->setColor(ccc3(opacity, opacity, opacity));
-    }
 }
 
 #pragma CAScrollViewDelegate

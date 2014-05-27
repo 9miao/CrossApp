@@ -514,12 +514,11 @@ AssetsManager::Helper::Helper()
 {
     _messageQueue = new list<Message*>();
     pthread_mutex_init(&_messageQueueMutex, NULL);
-    CCDirector::sharedDirector()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
+    CAScheduler::schedule(schedule_selector(AssetsManager::update), this, 0, false);
 }
 
 AssetsManager::Helper::~Helper()
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
     delete _messageQueue;
 }
 

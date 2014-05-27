@@ -1,5 +1,13 @@
-﻿生成启动时间为 2014/5/16 21:53:50。
+﻿生成启动时间为 2014/5/27 17:43:50。
+     1>项目“I:\CrossApp_\extensions\proj.wp8\libExtensions.vcxproj”在节点 3 上(Build 个目标)。
+     1>Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\Lib.exe /OUT:"I:\CrossApp_\samples\multi-platform-cpp\proj.wp8\WP8\Win32\Debug\libExtensions\libExtensions.lib" /NOLOGO /LTCG /IGNORE:4264 Debug\CCPThreadWinRT.obj
+         Debug\AssetsManager.obj
+         Debug\CAUIHelper.obj
+         Debug\HttpClient.obj
+         libExtensions.vcxproj -> I:\CrossApp_\samples\multi-platform-cpp\proj.wp8\WP8\Win32\Debug\libExtensions\libExtensions.lib
+     1>已完成生成项目“I:\CrossApp_\extensions\proj.wp8\libExtensions.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:00.01
+已用时间 00:00:03.71

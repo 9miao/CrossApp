@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCMOTION_STREAK_H__
 
 #include "CCProtocols.h"
-#include "textures/CCTexture2D.h"
+#include "images/CAImage.h"
 #include "ccTypes.h"
 #include "sprite_nodes/CAView.h"
 #ifdef EMSCRIPTEN

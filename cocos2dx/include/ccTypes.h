@@ -319,7 +319,7 @@ typedef struct _ccBlendFunc
 
 static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 
-// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update CAImage.m
 //! Vertical text alignment type
 typedef enum
 {
@@ -328,7 +328,7 @@ typedef enum
     kCCVerticalTextAlignmentBottom,
 } CCVerticalTextAlignment;
 
-// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update CAImage.m
 //! Horizontal text alignment type
 typedef enum
 {

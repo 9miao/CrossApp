@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
+#include "CAScheduler.h"
 
 NS_CC_BEGIN
 
@@ -49,6 +50,8 @@ CCObject::~CCObject(void)
 {
     // if the object is managed, we should remove it
     // from pool manager
+    CAScheduler::unscheduleAllForTarget(this);
+    
     if (m_uAutoReleaseCount > 0)
     {
         CCPoolManager::sharedPoolManager()->removeObject(this);

@@ -51,15 +51,7 @@ public:
     void setControlStateDisabled();
     
     void setControlStateSelected();
-    
-    bool isNormal();
-    
-    bool isHighlighted();
-    
-    bool isDisabled();
-    
-    bool isSelected();
-    
+
     CC_PROPERTY(CAView*, m_pBackGroundView, BackGroundView);
     
     CC_PROPERTY(CAView*, m_pHighlightedBackGroundView, HighlightedBackGroundView);

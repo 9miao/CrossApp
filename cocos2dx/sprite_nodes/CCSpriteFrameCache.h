@@ -35,7 +35,7 @@ THE SOFTWARE.
  */
 
 #include "sprite_nodes/CCSpriteFrame.h"
-#include "textures/CCTexture2D.h"
+#include "images/CAImage.h"
 #include "cocoa/CCObject.h"
 #include <set>
 #include <string>

@@ -85,6 +85,10 @@ protected:
     
     void closeToPoint(float delay);
     
+    void showIndicator();
+    
+    void hideIndicator();
+    
 protected:
     
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
@@ -176,6 +180,8 @@ public:
     void setIndicator(const CCSize& parentSize, const CCRect& childrenFrame);
     
     void setOpacity(GLubyte opacity);
+    
+    void setHide(bool var);
     
 private:
 

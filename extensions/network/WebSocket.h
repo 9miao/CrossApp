@@ -31,6 +31,7 @@
 #define __CC_WEBSOCKET_H__
 
 #include "ExtensionMacros.h"
+
 #include "cocos2d.h"
 #include "libwebsockets.h"
 #include <list>

@@ -7,7 +7,7 @@
 //
 
 #include "CABar.h"
-#include "sprite_nodes/CCScale9Sprite.h"
+#include "sprite_nodes/CAScale9ImageView.h"
 #include "CCDirector.h"
 #include "label_nodes/CCLabelTTF.h"
 #include "support/CCPointExtension.h"
@@ -79,8 +79,8 @@ void CANavigationBar::showBackGround()
         m_pBackGroundImage = CAImage::create("navigationController_bg.png");
     }
 
-    m_pBackGround = CCScale9Sprite::createWithImage(m_pBackGroundImage);
-    ((CCScale9Sprite*)m_pBackGround)->setPreferredSize(m_obContentSize);
+    m_pBackGround = CAScale9ImageView::createWithImage(m_pBackGroundImage);
+    ((CAScale9ImageView*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
     this->addSubview(m_pBackGround);
 }
@@ -106,14 +106,16 @@ void CANavigationBar::showBackButton()
     if (m_pBackButton == NULL)
     {
         CCRect rect = this->getBounds();
-        rect.size.height = rect.size.height * 0.85f;
-        rect.size.width = rect.size.height;
-        rect.origin.x = rect.size.width * 0.8f;
-        rect.origin.y = this->getBounds().size.height * 0.5f;
+        rect.origin.x = rect.size.height * 0.8f;
+        rect.origin.y = rect.size.height * 0.5f;
+        rect.size.width = rect.size.height * 2;
         
         m_pBackButton = CAButton::createWithCenter(rect);
+        m_pBackButton->setBackGroundViewForState(CAControlStateNormal, CAView::create());
+        rect.size.width = rect.size.height = rect.size.height * 0.85f;
         CAImageView* imageView = CAImageView::createWithImage(CAImage::create("button_left.png"));
-        m_pBackButton->setBackGround(CAControlStateNormal, imageView);
+        imageView->setBounds(rect);
+        m_pBackButton->setView(CAControlStateNormal, imageView);
         this->insertSubview(m_pBackButton, 1);
         m_pBackButton->addTarget(this, CAButton_selector(CANavigationBar::goBack), TouchUpInSide);
     }
@@ -277,8 +279,8 @@ void CATabBar::showBackGround()
         m_pBackGroundImage = CAImage::create("tabBarController_bg.png");
     }
     
-    m_pBackGround = CCScale9Sprite::createWithImage(m_pBackGroundImage);
-    ((CCScale9Sprite*)m_pBackGround)->setPreferredSize(m_obContentSize);
+    m_pBackGround = CAScale9ImageView::createWithImage(m_pBackGroundImage);
+    ((CAScale9ImageView*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
     this->addSubview(m_pBackGround);
 }
@@ -400,8 +402,8 @@ void CATabBar::showSelectedBackGround()
         m_pSelectedBackGroundImage = CAImage::create("tabBarController_selected_bg.png");
     }
 
-    m_pSelectedBackGround = CCScale9Sprite::createWithImage(m_pSelectedBackGroundImage);
-    ((CCScale9Sprite*)m_pSelectedBackGround)->setPreferredSize(m_cItemSize);
+    m_pSelectedBackGround = CAScale9ImageView::createWithImage(m_pSelectedBackGroundImage);
+    ((CAScale9ImageView*)m_pSelectedBackGround)->setPreferredSize(m_cItemSize);
     this->insertSubview(m_pSelectedBackGround, 1);
 }
 
@@ -418,8 +420,8 @@ void CATabBar::showSelectedIndicator()
         m_pSelectedIndicatorImage = CAImage::create("tabBarController_selected_bottom.png");
     }
     
-    m_pSelectedIndicator = CCScale9Sprite::createWithImage(m_pSelectedIndicatorImage);
-    ((CCScale9Sprite*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
+    m_pSelectedIndicator = CAScale9ImageView::createWithImage(m_pSelectedIndicatorImage);
+    ((CAScale9ImageView*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
     m_pSelectedIndicator->setAnchorPoint(CCPoint(0.0f, 1.0f));
     m_pSelectedIndicator->setFrame(CCRect(0, this->getBounds().size.height, 0, 0));
     this->insertSubview(m_pSelectedIndicator, 2);
@@ -447,7 +449,7 @@ void CATabBar::setSelectedAtIndex(int index)
         
         if (m_pSelectedIndicator)
         {
-            ((CCScale9Sprite*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
+            ((CAScale9ImageView*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
             m_pSelectedIndicator->stopAllActions();
             CCPoint p = CCPoint(m_pSelectedBackGround->getFrame().origin.x, m_pSelectedBackGround->getFrame().size.height);
             CCMoveTo* moveTo = CCMoveTo::create(0.3f, p);

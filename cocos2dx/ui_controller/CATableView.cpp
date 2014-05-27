@@ -7,10 +7,10 @@
 //
 
 #include "CATableView.h"
-#include "sprite_nodes/CCSprite.h"
-#include "sprite_nodes/CCScale9Sprite.h"
+#include "sprite_nodes/CAImageView.h"
+#include "sprite_nodes/CAScale9ImageView.h"
 #include "CCDirector.h"
-#include "CCScheduler.h"
+#include "CAScheduler.h"
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionInterval.h"
 #include "touch_dispatcher/CCTouch.h"
@@ -111,11 +111,11 @@ bool CATableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
             CATableViewCell* cell = *itr;
             if (cell->getFrame().containsPoint(point))
             {
-                CC_BREAK_IF(cell->isDisabled());
+                CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
                 
                 m_pHighlightedTableCells = cell;
 
-                CC_BREAK_IF(cell->isSelected());
+                CC_BREAK_IF(cell->getControlState() == CAControlStateSelected);
                 
                 CCDelayTime* delayTime = CCDelayTime::create(0.1f);
                 CCCallFunc* func = CCCallFunc::create(cell, callfunc_selector(CATableViewCell::setControlStateHighlighted));
@@ -144,7 +144,7 @@ void CATableView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
         {
             this->stopActionByTag(0xffff);
             
-            if (m_pHighlightedTableCells->isHighlighted())
+            if (m_pHighlightedTableCells->getControlState() == CAControlStateHighlighted)
             {
                 m_pHighlightedTableCells->setControlStateNormal();
             }
@@ -268,7 +268,7 @@ void CATableView::setBackGroundScale9Image(CAImage* image)
         m_pChildInThis->removeObject(m_pBackGroundView);
         m_pBackGroundView->removeFromSuperview();
     }
-    m_pBackGroundView = CCScale9Sprite::createWithImage(image);
+    m_pBackGroundView = CAScale9ImageView::createWithImage(image);
     m_pBackGroundView->setFrame(this->getBounds());
     m_pChildInThis->addObject(m_pBackGroundView);
     this->insertSubview(m_pBackGroundView, -1);

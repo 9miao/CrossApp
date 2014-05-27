@@ -81,7 +81,7 @@ void CATextField::initMarkSprite()
     pixels[0][0] = 0;
 
     CAImage *image = new CAImage();
-    image->initWithData(pixels, kCCTexture2DPixelFormat_RGB888, 1, 1, CCSizeMake(m_fFontSize / 10.0f, m_fFontSize));
+    image->initWithData(pixels, kCAImagePixelFormat_RGB888, 1, 1, CCSizeMake(m_fFontSize / 10.0f, m_fFontSize));
     
     m_pMark = CAImageView::createWithImage(image);
     m_pMark->setVisible(false);

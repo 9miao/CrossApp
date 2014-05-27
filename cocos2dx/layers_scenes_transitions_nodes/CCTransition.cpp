@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "actions/CCActionGrid.h"
 #include "sprite_nodes/CAView.h"
 #include "misc_nodes/CCRenderTexture.h"
-#include "CCScheduler.h"
+#include "CAScheduler.h"
 
 NS_CC_BEGIN
 
@@ -129,14 +129,14 @@ void CCTransitionScene::finish()
      m_pOutScene->getCamera()->restore();
 
     //[self schedule:@selector(setNewScene:) interval:0];
-    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCTransitionScene::setNewScene), this, 0, false);
+    CAScheduler::schedule(schedule_selector(CCTransitionScene::setNewScene), this, 0, false);
 
 }
 
 void CCTransitionScene::setNewScene(float dt)
 {    
     CC_UNUSED_PARAM(dt);
-    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCTransitionScene::setNewScene), this);
+    CAScheduler::unschedule(schedule_selector(CCTransitionScene::setNewScene), this);
     
     // Before replacing, save the "send cleanup to scene"
     CCDirector *director = CCDirector::sharedDirector();

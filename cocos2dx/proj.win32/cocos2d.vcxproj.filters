@@ -43,9 +43,6 @@
     <Filter Include="support\zip_support">
       <UniqueIdentifier>{fdea327e-b905-47db-8c33-b70d7866166b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="textures">
-      <UniqueIdentifier>{46c8d130-b8b5-47f5-a063-ca700e1c32cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="touch_dispatcher">
       <UniqueIdentifier>{eaa16c9b-dfbc-4a37-8e3e-e961d9ca1d1a}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,9 @@
     </Filter>
     <Filter Include="ui_controller">
       <UniqueIdentifier>{e1cc5eaf-a2f7-4944-b0c7-3744263ab9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="images">
+      <UniqueIdentifier>{206d4064-4116-4818-9079-856d7713b2f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -225,9 +225,6 @@
     <ClCompile Include="..\sprite_nodes\CCAnimationCache.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\sprite_nodes\CCSprite.cpp">
-      <Filter>sprite_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\sprite_nodes\CCSpriteFrame.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
@@ -269,15 +266,6 @@
     </ClCompile>
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp">
       <Filter>support\zip_support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\textures\CCTexture2D.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
-    <ClCompile Include="..\textures\CCTextureCache.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
-    <ClCompile Include="..\textures\CCTexturePVR.cpp">
-      <Filter>textures</Filter>
     </ClCompile>
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp">
       <Filter>touch_dispatcher</Filter>
@@ -339,7 +327,6 @@
     <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCConfiguration.cpp" />
     <ClCompile Include="..\CCDirector.cpp" />
-    <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\draw_nodes\CCDrawingPrimitives.cpp">
       <Filter>draw_nodes</Filter>
@@ -387,9 +374,6 @@
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\ccFPSImages.c" />
-    <ClCompile Include="..\textures\CCTextureETC.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\component\CCComponent.cpp">
       <Filter>support\component</Filter>
     </ClCompile>
@@ -397,9 +381,6 @@
       <Filter>support\component</Filter>
     </ClCompile>
     <ClCompile Include="..\sprite_nodes\CAWindow.cpp">
-      <Filter>sprite_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\ui_controller\CABar.cpp">
@@ -435,6 +416,25 @@
     <ClCompile Include="..\label_nodes\CALabel.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CAImageView.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CAScale9ImageView.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAImage.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAImageCache.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAImageETC.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAImagePVR.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CAScheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCAffineTransform.h">
@@ -614,9 +614,6 @@
     <ClInclude Include="..\sprite_nodes\CCAnimationCache.h">
       <Filter>sprite_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\sprite_nodes\CCSprite.h">
-      <Filter>sprite_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\sprite_nodes\CCSpriteFrame.h">
       <Filter>sprite_nodes</Filter>
     </ClInclude>
@@ -664,15 +661,6 @@
     </ClInclude>
     <ClInclude Include="..\support\zip_support\ZipUtils.h">
       <Filter>support\zip_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\textures\CCTexture2D.h">
-      <Filter>textures</Filter>
-    </ClInclude>
-    <ClInclude Include="..\textures\CCTextureCache.h">
-      <Filter>textures</Filter>
-    </ClInclude>
-    <ClInclude Include="..\textures\CCTexturePVR.h">
-      <Filter>textures</Filter>
     </ClInclude>
     <ClInclude Include="..\touch_dispatcher\CCTouch.h">
       <Filter>touch_dispatcher</Filter>
@@ -743,7 +731,6 @@
     <ClInclude Include="..\CCCamera.h" />
     <ClInclude Include="..\CCConfiguration.h" />
     <ClInclude Include="..\CCDirector.h" />
-    <ClInclude Include="..\CCScheduler.h" />
     <ClInclude Include="..\draw_nodes\CCDrawingPrimitives.h">
       <Filter>draw_nodes</Filter>
     </ClInclude>
@@ -837,9 +824,6 @@
     <ClInclude Include="..\cocoa\CCFloat.h">
       <Filter>cocoa</Filter>
     </ClInclude>
-    <ClInclude Include="..\textures\CCTextureETC.h">
-      <Filter>textures</Filter>
-    </ClInclude>
     <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\support\component\CCComponent.h">
       <Filter>support\component</Filter>
@@ -848,9 +832,6 @@
       <Filter>support\component</Filter>
     </ClInclude>
     <ClInclude Include="..\sprite_nodes\CAWindow.h">
-      <Filter>sprite_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h">
       <Filter>sprite_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\ui_controller\CABar.h">
@@ -886,5 +867,24 @@
     <ClInclude Include="..\label_nodes\CALabel.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CAImageView.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CAScale9ImageView.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImage.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImageCache.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImageETC.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImagePVR.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CAScheduler.h" />
   </ItemGroup>
 </Project>

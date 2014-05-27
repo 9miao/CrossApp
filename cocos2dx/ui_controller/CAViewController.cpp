@@ -13,6 +13,7 @@
 #include "actions/CCActionInterval.h"
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionEase.h"
+#include "CAScheduler.h"
 NS_CC_BEGIN
 
 CAViewController::CAViewController()
@@ -257,6 +258,7 @@ void CANavigationController::pushViewControllerFinish()
     
     CAViewController* lastViewController = m_pViewControllers.at(m_pViewControllers.size() - 2);
     lastViewController->getView()->removeFromSuperview();
+    CAScheduler::getScheduler()->pauseTarget(lastViewController);
 }
 
 CAViewController* CANavigationController::popViewControllerAnimated(bool animated)
@@ -275,6 +277,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     CAViewController* showViewController = m_pViewControllers.at(index);
     showViewController->getView()->setFrame(CCRectZero);
     m_pContainer->addSubview(showViewController->getView());
+    CAScheduler::getScheduler()->resumeTarget(showViewController);
     
     CAViewController* backViewController = m_pViewControllers.back();
     

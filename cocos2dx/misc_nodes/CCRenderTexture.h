@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCRENDER_TEXTURE_H__
 
 #include "sprite_nodes/CAView.h"
-#include "sprite_nodes/CCSprite.h"
+#include "sprite_nodes/CAImageView.h"
 #include "kazmath/mat4.h"
 
 NS_CC_BEGIN
@@ -74,19 +74,19 @@ public:
     virtual void draw();
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    static CCRenderTexture * create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+    static CCRenderTexture * create(int w ,int h, CAImagePixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    static CCRenderTexture * create(int w, int h, CCTexture2DPixelFormat eFormat);
+    static CCRenderTexture * create(int w, int h, CAImagePixelFormat eFormat);
 
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static CCRenderTexture * create(int w, int h);
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
+    bool initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFormat);
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+    bool initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** starts grabbing */
     void begin();

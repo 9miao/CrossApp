@@ -13,7 +13,7 @@
 #include "CCCamera.h"
 #include "effects/CCGrid.h"
 #include "CCDirector.h"
-#include "CCScheduler.h"
+#include "CAScheduler.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "actions/CCActionManager.h"
 #include "shaders/CCGLProgram.h"
@@ -871,8 +871,6 @@ void CAView::cleanup()
     // actions
     this->stopAllActions();
     
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
-    
     // timers
     arrayMakeObjectsPerformSelector(m_pSubviews, cleanup, CAView*);
 }
@@ -887,7 +885,7 @@ void CAView::updateDraw()
 {
     if (this->getSuperview())
     {
-        CCDirector::sharedDirector()->drawScene();
+        CCDirector::sharedDirector()->updateDraw();
     }
 }
 
@@ -1076,7 +1074,7 @@ void CAView::sortAllSubviews()
     }
 }
 
-#include "CCSprite.h"
+#include "CAImageView.h"
 void CAView::draw()
 {
     //CCAssert(0);
@@ -1344,7 +1342,7 @@ void CAView::onEnter()
         this->registerWithTouchDispatcher();
     }
     
-    CCDirector::sharedDirector()->getScheduler()->resumeTarget(this);
+    CAScheduler::getScheduler()->resumeTarget(this);
     m_pActionManager->resumeTarget(this);
 }
 
@@ -1381,7 +1379,7 @@ void CAView::onExit()
         pDirector->getTouchDispatcher()->removeDelegate(this);
     }
     
-    CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
+    CAScheduler::getScheduler()->pauseTarget(this);
     m_pActionManager->pauseTarget(this);
 }
 
@@ -1798,7 +1796,6 @@ bool CAView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
-    CCAssert(false, "Layer#ccTouchBegan override me");
     return true;
 }
 
@@ -2113,7 +2110,7 @@ void CAView::updateColor(void)
     m_sQuad.tl.colors = color4;
     m_sQuad.tr.colors = color4;
     
-    
+    this->updateDraw();
     // self render
     // do nothing
 }

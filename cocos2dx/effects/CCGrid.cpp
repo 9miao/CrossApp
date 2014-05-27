@@ -118,7 +118,7 @@ bool CCGridBase::initWithSize(const CCSize& gridSize)
     unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
 
     // we only use rgba8888
-    CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;
+    CAImagePixelFormat format = kCAImagePixelFormat_RGBA8888;
 
     void *data = calloc((int)(POTWide * POTHigh * 4), 1);
     if (! data)

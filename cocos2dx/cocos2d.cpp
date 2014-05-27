@@ -30,7 +30,7 @@ NS_CC_BEGIN
 
 const char* CrossAppVersion()
 {
-    return "0.1.3";
+    return "alpha 0.1.4";
 }
 
 NS_CC_END

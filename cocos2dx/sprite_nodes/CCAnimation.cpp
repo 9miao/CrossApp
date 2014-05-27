@@ -24,8 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCAnimation.h"
-#include "textures/CCTextureCache.h"
-#include "textures/CCTexture2D.h"
+#include "images/CAImageCache.h"
+#include "images/CAImage.h"
 #include "ccMacros.h"
 #include "sprite_nodes/CCSpriteFrame.h"
 #include "cocoa/CCZone.h"
@@ -187,7 +187,7 @@ void CCAnimation::addSpriteFrame(CCSpriteFrame *pFrame)
 
 void CCAnimation::addSpriteFrameWithFileName(const char *pszFileName)
 {
-    CAImage* pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFileName);
+    CAImage* pTexture = CAImageCache::sharedImageCache()->addImage(pszFileName);
     CCRect rect = CCRectZero;
     rect.size = pTexture->getContentSize();
     CCSpriteFrame *pFrame = CCSpriteFrame::createWithImage(pTexture, rect);

@@ -28,10 +28,10 @@ THE SOFTWARE.
 
 #include "cocoa/CCNS.h"
 #include "ccMacros.h"
-#include "textures/CCTextureCache.h"
+#include "images/CAImageCache.h"
 #include "CCSpriteFrameCache.h"
 #include "CCSpriteFrame.h"
-#include "CCSprite.h"
+#include "CAImageView.h"
 #include "support/TransformUtils.h"
 #include "platform/CCFileUtils.h"
 #include "cocoa/CCString.h"
@@ -214,7 +214,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CAImage* 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* imageFileName)
 {
     CCAssert(imageFileName, "image name should not be null");
-    CAImage* image = CCTextureCache::sharedTextureCache()->addImage(imageFileName);
+    CAImage* image = CAImageCache::sharedImageCache()->addImage(imageFileName);
 
     if (image)
     {
@@ -264,7 +264,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
             CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as image", imagePath.c_str());
         }
 
-        CAImage* pimage = CCTextureCache::sharedTextureCache()->addImage(imagePath.c_str());
+        CAImage* pimage = CAImageCache::sharedImageCache()->addImage(imagePath.c_str());
 
         if (pimage)
         {

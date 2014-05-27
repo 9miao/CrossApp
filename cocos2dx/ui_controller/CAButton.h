@@ -43,15 +43,15 @@ public:
     
     bool initWithCenter(const CCRect& rect);
     
-    void setBackGroundDefault();
+    void setBackGroundViewDefault();
     
-    void setBackGround(CAControlState controlState, CAView *var);
+    void setBackGroundViewForState(CAControlState controlState, CAView *var);
 
-    void setSprite(CAControlState controlState, CAView* var);
+    void setView(CAControlState controlState, CAView* var);
 
-    void setSprite(CAControlState controlState, CAView* var, CCPoint point);
+    void setView(CAControlState controlState, CAView* var, CCPoint point);
 
-    CAView* getSprite(CAControlState controlState);
+    CAView* getView(CAControlState controlState);
     
     virtual void setControlState(CAControlState var);
     
@@ -59,11 +59,13 @@ public:
     
     CC_SYNTHESIZE(std::string, m_textTag, TextTag);
     
-    CC_SYNTHESIZE(bool, m_closeTapSound, CloseTapSound);
+    CC_SYNTHESIZE_IS(bool, m_closeTapSound, CloseTapSound);
 
-    CC_SYNTHESIZE(bool, m_stateSelected, StateSelected);
+    CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
 
-	CC_SYNTHESIZE_IS_READONLY(bool, m_touchClick, TouchClick);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bSelected, Selected);
+    
+	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
 
     bool isTextTagEqual(const char* text);
     

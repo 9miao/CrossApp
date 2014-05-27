@@ -84,7 +84,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     {
 	    ModalLayer *messageBox = ModalLayer::create();
 	    messageBox->setMessage(pszMsg);
-	    CCDirector::sharedDirector()->getRunningScene()->addSubview(messageBox);
+	    CCDirector::sharedDirector()->getRootWindow()->addSubview(messageBox);
     }
 #endif
 

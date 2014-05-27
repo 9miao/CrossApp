@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-#include "sprite_nodes/CCSprite.h"
+#include "sprite_nodes/CAImageView.h"
 NS_CC_BEGIN
 using namespace std;
 typedef struct _caFontDefinition

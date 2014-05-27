@@ -88,9 +88,6 @@
     <Filter Include="text_input_node">
       <UniqueIdentifier>{d4bbb376-726a-4193-bc10-ef716941d2c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="textures">
-      <UniqueIdentifier>{e544dd06-56d9-418a-bffe-9c3e7c51bace}</UniqueIdentifier>
-    </Filter>
     <Filter Include="touch_dispatcher">
       <UniqueIdentifier>{7b1b3b9d-7307-4a5c-8e6c-40e96804ed08}</UniqueIdentifier>
     </Filter>
@@ -102,6 +99,9 @@
     </Filter>
     <Filter Include="ui_controller">
       <UniqueIdentifier>{e7030664-1f5a-452b-ab25-94f3bd0628fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="images">
+      <UniqueIdentifier>{40efc494-e73d-44ec-b11a-06a7b7df73c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -324,9 +324,6 @@
     <ClCompile Include="..\sprite_nodes\CCAnimationCache.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\sprite_nodes\CCSprite.cpp">
-      <Filter>sprite_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\sprite_nodes\CCSpriteFrame.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
@@ -387,18 +384,6 @@
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp">
       <Filter>text_input_node</Filter>
     </ClCompile>
-    <ClCompile Include="..\textures\CCTexture2D.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
-    <ClCompile Include="..\textures\CCTextureCache.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
-    <ClCompile Include="..\textures\CCTextureETC.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
-    <ClCompile Include="..\textures\CCTexturePVR.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp">
       <Filter>touch_dispatcher</Filter>
     </ClCompile>
@@ -412,7 +397,6 @@
     <ClCompile Include="..\CCConfiguration.cpp" />
     <ClCompile Include="..\CCDirector.cpp" />
     <ClCompile Include="..\ccFPSImages.c" />
-    <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\platform\wp8\ModalLayer.cpp">
       <Filter>platform\wp8</Filter>
@@ -430,9 +414,6 @@
       <Filter>platform\winrt</Filter>
     </ClCompile>
     <ClCompile Include="..\sprite_nodes\CAWindow.cpp">
-      <Filter>sprite_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\ui_controller\CABar.cpp">
@@ -468,6 +449,25 @@
     <ClCompile Include="..\label_nodes\CALabel.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\images\CAImage.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAImageCache.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAImageETC.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAImagePVR.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CAImageView.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CAScale9ImageView.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CAScheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\actions\CCAction.h">
@@ -746,9 +746,6 @@
     <ClInclude Include="..\sprite_nodes\CCAnimationCache.h">
       <Filter>sprite_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\sprite_nodes\CCSprite.h">
-      <Filter>sprite_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\sprite_nodes\CCSpriteFrame.h">
       <Filter>sprite_nodes</Filter>
     </ClInclude>
@@ -818,18 +815,6 @@
     <ClInclude Include="..\text_input_node\CCIMEDispatcher.h">
       <Filter>text_input_node</Filter>
     </ClInclude>
-    <ClInclude Include="..\textures\CCTexture2D.h">
-      <Filter>textures</Filter>
-    </ClInclude>
-    <ClInclude Include="..\textures\CCTextureCache.h">
-      <Filter>textures</Filter>
-    </ClInclude>
-    <ClInclude Include="..\textures\CCTextureETC.h">
-      <Filter>textures</Filter>
-    </ClInclude>
-    <ClInclude Include="..\textures\CCTexturePVR.h">
-      <Filter>textures</Filter>
-    </ClInclude>
     <ClInclude Include="..\touch_dispatcher\CCTouch.h">
       <Filter>touch_dispatcher</Filter>
     </ClInclude>
@@ -846,7 +831,6 @@
     <ClInclude Include="..\CCConfiguration.h" />
     <ClInclude Include="..\CCDirector.h" />
     <ClInclude Include="..\ccFPSImages.h" />
-    <ClInclude Include="..\CCScheduler.h" />
     <ClInclude Include="..\platform\wp8\ModalLayer.h">
       <Filter>platform\wp8</Filter>
     </ClInclude>
@@ -866,9 +850,6 @@
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\sprite_nodes\CAWindow.h">
-      <Filter>sprite_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h">
       <Filter>sprite_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\ui_controller\CABar.h">
@@ -904,5 +885,24 @@
     <ClInclude Include="..\label_nodes\CALabel.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
+    <ClInclude Include="..\images\CAImage.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImageCache.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImageETC.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImagePVR.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CAImageView.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CAScale9ImageView.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CAScheduler.h" />
   </ItemGroup>
 </Project>

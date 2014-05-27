@@ -143,6 +143,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\CAScheduler.cpp" />
     <ClCompile Include="..\ccFPSImages.c" />
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
@@ -172,6 +173,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionProgressTimer.cpp" />
     <ClCompile Include="..\actions\CCActionTiledGrid.cpp" />
     <ClCompile Include="..\actions\CCActionTween.cpp" />
+    <ClCompile Include="..\images\CAImage.cpp" />
+    <ClCompile Include="..\images\CAImageCache.cpp" />
+    <ClCompile Include="..\images\CAImageETC.cpp" />
+    <ClCompile Include="..\images\CAImagePVR.cpp" />
     <ClCompile Include="..\label_nodes\CALabel.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp" />
@@ -199,12 +204,12 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\shaders\ccGLStateCache.cpp" />
     <ClCompile Include="..\shaders\CCShaderCache.cpp" />
     <ClCompile Include="..\shaders\ccShaders.cpp" />
+    <ClCompile Include="..\sprite_nodes\CAImageView.cpp" />
+    <ClCompile Include="..\sprite_nodes\CAScale9ImageView.cpp" />
     <ClCompile Include="..\sprite_nodes\CAView.cpp" />
     <ClCompile Include="..\sprite_nodes\CAWindow.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimation.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimationCache.cpp" />
-    <ClCompile Include="..\sprite_nodes\CCScale9Sprite.cpp" />
-    <ClCompile Include="..\sprite_nodes\CCSprite.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteFrame.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteFrameCache.cpp" />
     <ClCompile Include="..\support\base64.cpp" />
@@ -224,10 +229,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\support\zip_support\ioapi.cpp" />
     <ClCompile Include="..\support\zip_support\unzip.cpp" />
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp" />
-    <ClCompile Include="..\textures\CCTexture2D.cpp" />
-    <ClCompile Include="..\textures\CCTextureCache.cpp" />
-    <ClCompile Include="..\textures\CCTextureETC.cpp" />
-    <ClCompile Include="..\textures\CCTexturePVR.cpp" />
     <ClCompile Include="..\text_input_node\CATextField.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp" />
@@ -251,7 +252,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCConfiguration.cpp" />
     <ClCompile Include="..\CCDirector.cpp" />
-    <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\ui_controller\CABar.cpp" />
     <ClCompile Include="..\ui_controller\CABarItem.cpp" />
@@ -263,6 +263,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\ui_controller\CAViewController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CAScheduler.h" />
     <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\cocoa\CCAffineTransform.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
@@ -296,6 +297,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\actions\CCActionProgressTimer.h" />
     <ClInclude Include="..\actions\CCActionTiledGrid.h" />
     <ClInclude Include="..\actions\CCActionTween.h" />
+    <ClInclude Include="..\images\CAImage.h" />
+    <ClInclude Include="..\images\CAImageCache.h" />
+    <ClInclude Include="..\images\CAImageETC.h" />
+    <ClInclude Include="..\images\CAImagePVR.h" />
     <ClInclude Include="..\include\ccConfig.h" />
     <ClInclude Include="..\include\CCEventType.h" />
     <ClInclude Include="..\include\ccMacros.h" />
@@ -350,12 +355,12 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\shaders\ccShader_PositionTexture_vert.h" />
     <ClInclude Include="..\shaders\ccShader_Position_uColor_frag.h" />
     <ClInclude Include="..\shaders\ccShader_Position_uColor_vert.h" />
+    <ClInclude Include="..\sprite_nodes\CAImageView.h" />
+    <ClInclude Include="..\sprite_nodes\CAScale9ImageView.h" />
     <ClInclude Include="..\sprite_nodes\CAView.h" />
     <ClInclude Include="..\sprite_nodes\CAWindow.h" />
     <ClInclude Include="..\sprite_nodes\CCAnimation.h" />
     <ClInclude Include="..\sprite_nodes\CCAnimationCache.h" />
-    <ClInclude Include="..\sprite_nodes\CCScale9Sprite.h" />
-    <ClInclude Include="..\sprite_nodes\CCSprite.h" />
     <ClInclude Include="..\sprite_nodes\CCSpriteFrame.h" />
     <ClInclude Include="..\sprite_nodes\CCSpriteFrameCache.h" />
     <ClInclude Include="..\support\base64.h" />
@@ -377,10 +382,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\support\zip_support\ioapi.h" />
     <ClInclude Include="..\support\zip_support\unzip.h" />
     <ClInclude Include="..\support\zip_support\ZipUtils.h" />
-    <ClInclude Include="..\textures\CCTexture2D.h" />
-    <ClInclude Include="..\textures\CCTextureCache.h" />
-    <ClInclude Include="..\textures\CCTextureETC.h" />
-    <ClInclude Include="..\textures\CCTexturePVR.h" />
     <ClInclude Include="..\text_input_node\CATextField.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouch.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h" />
@@ -407,7 +408,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\CCCamera.h" />
     <ClInclude Include="..\CCConfiguration.h" />
     <ClInclude Include="..\CCDirector.h" />
-    <ClInclude Include="..\CCScheduler.h" />
     <ClInclude Include="..\ui_controller\CABar.h" />
     <ClInclude Include="..\ui_controller\CABarItem.h" />
     <ClInclude Include="..\ui_controller\CAButton.h" />

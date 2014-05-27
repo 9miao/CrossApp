@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include "sprite_nodes/CAView.h"
-#include "sprite_nodes/CCSprite.h"
+#include "sprite_nodes/CAImageView.h"
 #include "misc_nodes/CCRenderTexture.h"
 
 NS_CC_BEGIN

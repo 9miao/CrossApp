@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __CCPROTOCOLS_H__
 
 #include "ccTypes.h"
-#include "textures/CCTexture2D.h"
+#include "images/CAImage.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -154,7 +154,7 @@ public:
 };
 
 /** 
- * CAView objects that uses a CCTexture2D to render the images.
+ * CAView objects that uses a CAImage to render the images.
  * The Image can have a blending function.
  * If the Image has alpha premultiplied the default blending function is:
  *   src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA
@@ -177,7 +177,7 @@ public:
     /**
      * Sets a new texuture. It will be retained.
      *
-     * @param   Image A valid CCTexture2D object, which will be applied to this sprite object.
+     * @param   Image A valid CAImage object, which will be applied to this sprite object.
      * @lua NA
      */
     virtual void setImage(CAImage* texture) = 0;

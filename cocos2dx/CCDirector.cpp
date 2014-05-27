@@ -35,13 +35,13 @@ THE SOFTWARE.
 #include "cocoa/CCNS.h"
 #include "sprite_nodes/CAWindow.h"
 #include "cocoa/CCArray.h"
-#include "CCScheduler.h"
+#include "CAScheduler.h"
 #include "ccMacros.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "support/CCPointExtension.h"
 #include "support/CCNotificationCenter.h"
 #include "layers_scenes_transitions_nodes/CCTransition.h"
-#include "textures/CCTextureCache.h"
+#include "images/CAImageCache.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "cocoa/CCAutoreleasePool.h"
 #include "platform/platform.h"
@@ -126,6 +126,8 @@ bool CCDirector::init(void)
     m_pLastUpdate = new struct cc_timeval();
     m_fSecondsPerFrame = 0.0f;
 
+    m_nDrawCount = 60;
+    
     // paused ?
     m_bPaused = false;
    
@@ -138,11 +140,11 @@ bool CCDirector::init(void)
 
     m_fContentScaleFactor = 1.0f;
 
-    // scheduler
-    m_pScheduler = new CCScheduler();
     // action manager
     m_pActionManager = new CCActionManager();
-    m_pScheduler->scheduleUpdateForTarget(m_pActionManager, kCCPrioritySystem, false);
+    
+    CAScheduler::schedule(schedule_selector(CCDirector::update), m_pActionManager, kCCPrioritySystem, false);
+    
     // touchDispatcher
     m_pTouchDispatcher = new CCTouchDispatcher();
     m_pTouchDispatcher->init();
@@ -169,7 +171,6 @@ CCDirector::~CCDirector(void)
     
     CC_SAFE_RELEASE(m_pRootWindow);
     CC_SAFE_RELEASE(m_pNotificationNode);
-    CC_SAFE_RELEASE(m_pScheduler);
     CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pTouchDispatcher);
     CC_SAFE_RELEASE(m_pKeypadDispatcher);
@@ -212,11 +213,11 @@ void CCDirector::setDefaultValues(void)
 	// Default pixel format for PNG images with alpha
 	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
 	if( strcmp(pixel_format, "rgba8888") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGBA8888);
 	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGBA4444);
 	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
+		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
 	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
@@ -239,11 +240,11 @@ void CCDirector::setGLDefaultValues(void)
 }
 
 // Draw the Scene
-void CCDirector::drawView(CAView* var)
-{
-    //tick before glClear: issue #533
-
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//void CCDirector::drawView(CAView* var)
+//{
+//    //tick before glClear: issue #533
+//
+//    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //
 //    CCPoint point = var->convertToWorldSpace(CCPoint(0, var->getBounds().size.height));
 //    point = CCDirector::sharedDirector()->convertToGL(point);
@@ -274,53 +275,46 @@ void CCDirector::drawView(CAView* var)
 //    {
 //        calculateMPF();
 //    }
+//}
+
+void CCDirector::updateDraw()
+{
+    m_nDrawCount = 60;
 }
 
-static bool protect = false;
-
-void CCDirector::drawScene()
+void CCDirector::drawScene(float dt)
 {
     //tick before glClear: issue #533
     
-    if (protect)
+    if (m_nDrawCount > 0)
     {
-        return;
+        --m_nDrawCount;
+        
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        kmGLPushMatrix();
+        
+        // draw the scene
+        if (m_pRootWindow)
+        {
+            m_pRootWindow->visit();
+        }
+        
+        kmGLPopMatrix();
+        
+        m_uTotalFrames++;
+        
+        // swap buffers
+        if (m_pobOpenGLView)
+        {
+            m_pobOpenGLView->swapBuffers();
+        }
+        
+        if (m_bDisplayStats)
+        {
+            calculateMPF();
+        }
     }
-    
-    protect = true;
-    
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    kmGLPushMatrix();
-    
-    // draw the scene
-    if (m_pRootWindow)
-    {
-        m_pRootWindow->visit();
-    }
-    
-    kmGLPopMatrix();
-    
-    m_uTotalFrames++;
-    
-    // swap buffers
-    if (m_pobOpenGLView)
-    {
-        m_pobOpenGLView->swapBuffers();
-    }
-    
-    if (m_bDisplayStats)
-    {
-        calculateMPF();
-    }
-    
-    this->getScheduler()->scheduleSelector(schedule_selector(CCDirector::drawOK), this, 1/60.0f, false);
-}
-
-void CCDirector::drawOK(float dt)
-{
-    this->getScheduler()->unscheduleSelector(schedule_selector(CCDirector::drawOK), this);
-    protect = false;
 }
 
 void CCDirector::calculateDeltaTime(void)
@@ -479,7 +473,7 @@ void CCDirector::purgeCachedData(void)
 {
     if (s_SharedDirector->getOpenGLView())
     {
-        CCTextureCache::sharedTextureCache()->removeUnusedTextures();
+        CAImageCache::sharedImageCache()->removeUnusedTextures();
     }
     CCFileUtils::sharedFileUtils()->purgeCachedEntries();
 }
@@ -629,7 +623,7 @@ void CCDirector::runWindow(CAWindow *pWindow)
     
     startAnimation();
  
-    this->getScheduler()->scheduleSelector(schedule_selector(CCDirector::run), this, 0, false);
+    CAScheduler::schedule(schedule_selector(CCDirector::run), this, 0, false);
 }
 
 void CCDirector::run(float dt)
@@ -639,7 +633,7 @@ void CCDirector::run(float dt)
         m_pRootWindow->onEnter();
         m_pRootWindow->onEnterTransitionDidFinish();
     }
-    this->getScheduler()->unscheduleSelector(schedule_selector(CCDirector::run), this);
+    CAScheduler::unschedule(schedule_selector(CCDirector::run), this);
 }
 
 void CCDirector::end()
@@ -650,7 +644,7 @@ void CCDirector::end()
 void CCDirector::purgeDirector()
 {
     // cleanup scheduler
-    getScheduler()->unscheduleAll();
+    CAScheduler::unscheduleAll();
     
     // don't release the event handlers
     // They are needed in case the director is run again
@@ -676,7 +670,7 @@ void CCDirector::purgeDirector()
     ccDrawFree();
     CCAnimationCache::purgeSharedAnimationCache();
     CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-    CCTextureCache::purgeSharedTextureCache();
+    CAImageCache::purgeSharedImageCache();
     CCShaderCache::purgeSharedShaderCache();
     CCFileUtils::purgeFileUtils();
     CCConfiguration::purgeConfiguration();
@@ -783,19 +777,19 @@ void CCDirector::getFPSImageData(unsigned char** datapointer, unsigned int* leng
 void CCDirector::createStatsLabel()
 {
     CAImage* texture = NULL;
-    CCTextureCache *textureCache = CCTextureCache::sharedTextureCache();
+    CAImageCache *ImageCache = CAImageCache::sharedImageCache();
 
     if( m_pFPSLabel && m_pSPFLabel )
     {
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         CC_SAFE_RELEASE_NULL(m_pSPFLabel);
         CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
-        textureCache->removeTextureForKey("cc_fps_images");
+        ImageCache->removeTextureForKey("cc_fps_images");
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
-    CCTexture2DPixelFormat currentFormat = CAImage::defaultAlphaPixelFormat();
-    CAImage::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+    CAImagePixelFormat currentFormat = CAImage::defaultAlphaPixelFormat();
+    CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);
@@ -807,7 +801,7 @@ void CCDirector::createStatsLabel()
         return;
     }
 
-    texture = textureCache->addUIImage(image, "cc_fps_images");
+    texture = ImageCache->addUIImage(image, "cc_fps_images");
     CC_SAFE_RELEASE(image);
 
     /*
@@ -843,9 +837,9 @@ void CCDirector::createStatsLabel()
     m_pDrawsLabel->setScale(factor);
     m_pDrawsLabel->setColor(ccGREEN);
     
-    m_pDrawsLabel->setPosition(ccpAdd(ccp(0, 64*factor), CC_DIRECTOR_STATS_POSITION));
-    m_pSPFLabel->setPosition(ccpAdd(ccp(0, 32*factor), CC_DIRECTOR_STATS_POSITION));
-    m_pFPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
+    m_pDrawsLabel->setFrameOrigin(ccpAdd(ccp(0, 64*factor), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setFrameOrigin(ccpAdd(ccp(0, 32*factor), CC_DIRECTOR_STATS_POSITION));
+    m_pFPSLabel->setFrameOrigin(CC_DIRECTOR_STATS_POSITION);
     
     CAImage::setDefaultAlphaPixelFormat(currentFormat);
 }
@@ -884,21 +878,6 @@ CCDirectorDelegate* CCDirector::getDelegate() const
 void CCDirector::setDelegate(CCDirectorDelegate* pDelegate)
 {
     m_pProjectionDelegate = pDelegate;
-}
-
-void CCDirector::setScheduler(CCScheduler* pScheduler)
-{
-    if (m_pScheduler != pScheduler)
-    {
-        CC_SAFE_RETAIN(pScheduler);
-        CC_SAFE_RELEASE(m_pScheduler);
-        m_pScheduler = pScheduler;
-    }
-}
-
-CCScheduler* CCDirector::getScheduler()
-{
-    return m_pScheduler;
 }
 
 void CCDirector::setActionManager(CCActionManager* pActionManager)
@@ -991,7 +970,7 @@ void CCDisplayLinkDirector::mainLoop(void)
          
          if (! m_bPaused)
          {
-             m_pScheduler->update(m_fDeltaTime);
+             CAScheduler::getScheduler()->update(m_fDeltaTime);
          }
          
          if (m_bDisplayStats)
@@ -1005,7 +984,7 @@ void CCDisplayLinkDirector::mainLoop(void)
              m_pNotificationNode->visit();
          }
          
-         //drawScene();
+         drawScene();
          
          CCPoolManager::sharedPoolManager()->pop();        
      }

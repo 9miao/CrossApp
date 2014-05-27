@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "sprite_nodes/CAView.h"
 #include "CCCamera.h"
 #include "ccTypes.h"
-#include "textures/CCTexture2D.h"
+#include "images/CAImage.h"
 #include "CCDirector.h"
 #include "kazmath/mat4.h"
 #ifdef EMSCRIPTEN

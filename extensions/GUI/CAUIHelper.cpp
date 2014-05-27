@@ -116,9 +116,9 @@ CCObject* CAUIHelper::addButton(CSJson::Value jsonValue, cocos2d::CCRect &uiRect
     }
     else if (btntype == ButtonGrid9)
     {
-        CCScale9Sprite *image = CCScale9Sprite::createWithImage(CAImage::create(imageRes.c_str()));
+        CAScale9ImageView *image = CAScale9ImageView::createWithImage(CAImage::create(imageRes.c_str()));
     
-        btn->setBackGround(CAControlStateNormal, image);
+        btn->setBackGroundViewForState(CAControlStateNormal, image);
         
     }
     else if (btntype == ButtonImage)

@@ -122,26 +122,6 @@ void CAControl::setControlStateSelected()
     this->setControlState(CAControlStateSelected);
 }
 
-bool CAControl::isNormal()
-{
-    return (m_eControlState == CAControlStateNormal);
-}
-
-bool CAControl::isHighlighted()
-{
-    return (m_eControlState == CAControlStateHighlighted);
-}
-
-bool CAControl::isDisabled()
-{
-    return (m_eControlState == CAControlStateDisabled);
-}
-
-bool CAControl::isSelected()
-{
-    return (m_eControlState == CAControlStateSelected);
-}
-
 void CAControl::setBackGroundView(cocos2d::CAView *var)
 {
     if (m_pBackGroundView != var)

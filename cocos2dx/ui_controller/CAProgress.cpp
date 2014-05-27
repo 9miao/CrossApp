@@ -9,9 +9,9 @@
 #include "CAProgress.h"
 #include "actions/CCActionInterval.h"
 #include "actions/CCActionInstant.h"
-#include "sprite_nodes/CCScale9Sprite.h"
+#include "sprite_nodes/CAScale9ImageView.h"
 #include "CCDirector.h"
-#include "CCScheduler.h"
+#include "CAScheduler.h"
 #include "support/CCPointExtension.h"
 NS_CC_BEGIN
 
@@ -101,17 +101,16 @@ void CAProgress::onExitTransitionDidStart()
 
 CAImage* CAProgress::getImage(CAImage* image)
 {
-	CCScale9Sprite *scale9Image = CCScale9Sprite::createWithImage(image);
     CCRect rect;
-    rect.origin = scale9Image->getFrame().size/2;
-    rect.origin = ccpSub(rect.origin, CCPoint(0.5f, 0.5f));
+    rect.origin = ccpSub(ccpMult(image->getContentSize(), 0.5f), CCPoint(0.5f, 0.5f));
     rect.size = CCSize(1, 1);
-    scale9Image->setCapInsets(rect);
-	scale9Image->setPreferredSize(this->getBounds().size);
+    
+	CAScale9ImageView *scale9Image = CAScale9ImageView::createWithImage(rect, image);
     scale9Image->setAnchorPoint(CCPointZero);
+	scale9Image->setPreferredSize(this->getBounds().size);
     this->addSubview(scale9Image);
     
-	CCRenderTexture* render = CCRenderTexture::create(this->getBounds().size.width, this->getBounds().size.height, kCCTexture2DPixelFormat_RGBA8888);
+	CCRenderTexture* render = CCRenderTexture::create(this->getBounds().size.width, this->getBounds().size.height, kCAImagePixelFormat_RGBA8888);
 	render->beginWithClear(0, 0, 0, 0);
     scale9Image->visit();
 	render->end();
@@ -168,12 +167,12 @@ void CAProgress::update(float dt)
 
 void CAProgress::animatedBegin()
 {
-	CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CAProgress::update), this, 1 / 60.0f, false);
+	CAScheduler::schedule(schedule_selector(CAProgress::update), this, 1 / 60.0f, false);
 }
 
 void CAProgress::animatedFinish()
 {
-	CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CAProgress::update), this);
+	CAScheduler::unschedule(schedule_selector(CAProgress::update), this);
 }
 
 NS_CC_END

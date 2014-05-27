@@ -8,7 +8,7 @@ LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_SRC_FILES := \
 CCConfiguration.cpp \
-CCScheduler.cpp \
+CAScheduler.cpp \
 CCCamera.cpp \
 ccFPSImages.c \
 actions/CCAction.cpp \
@@ -92,10 +92,10 @@ shaders/ccGLStateCache.cpp \
 shaders/CCShaderCache.cpp \
 sprite_nodes/CCAnimation.cpp \
 sprite_nodes/CCAnimationCache.cpp \
-sprite_nodes/CCSprite.cpp \
+sprite_nodes/CAImageView.cpp \
 sprite_nodes/CCSpriteFrame.cpp \
 sprite_nodes/CCSpriteFrameCache.cpp \
-sprite_nodes/CCScale9Sprite.cpp \
+sprite_nodes/CAScale9ImageView.cpp \
 sprite_nodes/CAWindow.cpp \
 sprite_nodes/CAView.cpp \
 ui_controller/CAViewController.cpp \
@@ -125,10 +125,10 @@ support/component/CCComponent.cpp \
 support/component/CCComponentContainer.cpp \
 text_input_node/CCIMEDispatcher.cpp \
 text_input_node/CATextField.cpp \
-textures/CCTexture2D.cpp \
-textures/CCTextureCache.cpp \
-textures/CCTextureETC.cpp \
-textures/CCTexturePVR.cpp \
+images/CAImage.cpp \
+images/CAImageCache.cpp \
+images/CAImageETC.cpp \
+images/CAImagePVR.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
 touch_dispatcher/CCTouchHandler.cpp \
 touch_dispatcher/CCTouch.cpp

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCLABELTTF_H__
 #define __CCLABELTTF_H__
 
-#include "sprite_nodes/CCSprite.h"
+#include "sprite_nodes/CAImageView.h"
 
 NS_CC_BEGIN
 

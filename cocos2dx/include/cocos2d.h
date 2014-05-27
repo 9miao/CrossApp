@@ -231,10 +231,10 @@ THE SOFTWARE.
 // sprite_nodes
 #include "sprite_nodes/CCAnimation.h"
 #include "sprite_nodes/CCAnimationCache.h"
-#include "sprite_nodes/CCSprite.h"
+#include "sprite_nodes/CAImageView.h"
 #include "sprite_nodes/CCSpriteFrame.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
-#include "sprite_nodes/CCScale9Sprite.h"
+#include "sprite_nodes/CAScale9ImageView.h"
 #include "sprite_nodes/CAWindow.h"
 #include "sprite_nodes/CAView.h"
 
@@ -254,9 +254,9 @@ THE SOFTWARE.
 
 
 // textures
-#include "textures/CCTexture2D.h"
-#include "textures/CCTextureCache.h"
-#include "textures/CCTexturePVR.h"
+#include "images/CAImage.h"
+#include "images/CAImageCache.h"
+#include "images/CAImagePVR.h"
 
 // touch_dispatcher
 #include "touch_dispatcher/CCTouch.h"
@@ -268,7 +268,7 @@ THE SOFTWARE.
 #include "CCCamera.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
-#include "CCScheduler.h"
+#include "CAScheduler.h"
 
 // component
 #include "support/component/CCComponent.h"

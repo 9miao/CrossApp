@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCProgressTimer.h"
 
 #include "ccMacros.h"
-#include "textures/CCTextureCache.h"
+#include "images/CAImageCache.h"
 #include "support/CCPointExtension.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/CCShaderCache.h"

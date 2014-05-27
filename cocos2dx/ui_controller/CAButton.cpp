@@ -7,7 +7,7 @@
 //
 
 #include "CAButton.h"
-#include "sprite_nodes/CCScale9Sprite.h"
+#include "sprite_nodes/CAScale9ImageView.h"
 #include "sprite_nodes/CAView.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "support/CCPointExtension.h"
@@ -16,10 +16,11 @@
 NS_CC_BEGIN
 
 CAButton::CAButton(void)
-:m_stateSelected(false)
+:m_bAllowsSelected(false)
+,m_bSelected(false)
 ,m_textTag("")
 ,m_closeTapSound(false)
-,m_touchClick(false)
+,m_bTouchClick(false)
 ,m_color(ccWHITE)
 ,m_pSpriteNormal(NULL)
 ,m_pSpriteHighlighted(NULL)
@@ -58,35 +59,35 @@ void CAButton::onEnterTransitionDidFinish()
     
     if (this->CAControl::getBackGroundView() == NULL)
     {
-        this->setBackGroundDefault();
+        this->setBackGroundViewDefault();
     }
     
     if (this->getHighlightedBackGroundView() == NULL)
     {
-        if (CCScale9Sprite* bg = dynamic_cast<CCScale9Sprite*>(this->CAControl::getBackGroundView()))
+        if (CAScale9ImageView* bg = dynamic_cast<CAScale9ImageView*>(this->CAControl::getBackGroundView()))
         {
-            CCScale9Sprite* bgHighLighted = CCScale9Sprite::createWithImage(bg->getImage());
+            CAScale9ImageView* bgHighLighted = CAScale9ImageView::createWithImage(bg->getImage());
             bgHighLighted->setPreferredSize(bg->getPreferredSize());
             bgHighLighted->setColor(ccc3(127, 127, 127));
-            this->setBackGround(CAControlStateHighlighted, bgHighLighted);
+            this->setBackGroundViewForState(CAControlStateHighlighted, bgHighLighted);
         }
         else if (CAImageView* bg = dynamic_cast<CAImageView*>(this->CAControl::getBackGroundView()))
         {
             CAImageView* bgHighLighted = CAImageView::createWithImage(bg->getImage());
             bgHighLighted->setBounds(bg->getBounds());
             bgHighLighted->setColor(ccc3(127, 127, 127));
-            this->setBackGround(CAControlStateHighlighted, bgHighLighted);
+            this->setBackGroundViewForState(CAControlStateHighlighted, bgHighLighted);
         }
         else if (CAView* bg = dynamic_cast<CAView*>(this->CAControl::getBackGroundView()))
         {
             CAView* bgHighLighted = CAView::createWithFrame(bg->getFrame());
             bgHighLighted->setColor(ccc3(bg->getColor().r/2, bg->getColor().g/2, bg->getColor().b/2));
-            this->setBackGround(CAControlStateHighlighted, bgHighLighted);
+            this->setBackGroundViewForState(CAControlStateHighlighted, bgHighLighted);
         }
     }
     
     this->updateWithPoint();
-    this->setControlStateNormal();
+    this->setControlState(m_eControlState);
 }
 
 CAButton* CAButton::createWithFrame(const CCRect& rect)
@@ -143,19 +144,19 @@ bool CAButton::initWithCenter(const CCRect& rect)
     return true;
 }
 
-void CAButton::setBackGroundDefault()
+void CAButton::setBackGroundViewDefault()
 {
-    CCScale9Sprite* bgNormal = CCScale9Sprite::createWithImage(CAImage::create("button_normal.png"));
-    this->setBackGround(CAControlStateNormal, bgNormal);
-    CCScale9Sprite* bgHighlighted = CCScale9Sprite::createWithImage(CAImage::create("button_highlighted.png"));
-    this->setBackGround(CAControlStateHighlighted, bgHighlighted);
-    CCScale9Sprite* bgDisabled = CCScale9Sprite::createWithImage(CAImage::create("button_disabled.png"));
-    this->setBackGround(CAControlStateDisabled, bgDisabled);
-    CCScale9Sprite* bgSelected = CCScale9Sprite::createWithImage(CAImage::create("button_selected.png"));
-    this->setBackGround(CAControlStateSelected, bgSelected);
+    CAScale9ImageView* bgNormal = CAScale9ImageView::createWithImage(CAImage::create("button_normal.png"));
+    this->setBackGroundViewForState(CAControlStateNormal, bgNormal);
+    CAScale9ImageView* bgHighlighted = CAScale9ImageView::createWithImage(CAImage::create("button_highlighted.png"));
+    this->setBackGroundViewForState(CAControlStateHighlighted, bgHighlighted);
+    CAScale9ImageView* bgDisabled = CAScale9ImageView::createWithImage(CAImage::create("button_disabled.png"));
+    this->setBackGroundViewForState(CAControlStateDisabled, bgDisabled);
+    CAScale9ImageView* bgSelected = CAScale9ImageView::createWithImage(CAImage::create("button_selected.png"));
+    this->setBackGroundViewForState(CAControlStateSelected, bgSelected);
 }
 
-void CAButton::setBackGround(CAControlState controlState, CAView *var)
+void CAButton::setBackGroundViewForState(CAControlState controlState, CAView *var)
 {
     if (controlState == CAControlStateNormal)
     {
@@ -201,7 +202,7 @@ void CAButton::updateWithPreferredSize()
         CC_BREAK_IF(m_pBackGroundView == NULL);
         CC_BREAK_IF(this->getBounds().equals(m_pBackGroundView->getBounds()));
         
-        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_pBackGroundView))
+        if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pBackGroundView))
         {
             _var->setPreferredSize(m_obContentSize);
         }
@@ -217,7 +218,7 @@ void CAButton::updateWithPreferredSize()
         CC_BREAK_IF(m_pHighlightedBackGroundView == NULL);
         CC_BREAK_IF(this->getBounds().equals(m_pHighlightedBackGroundView->getBounds()));
         
-        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_pHighlightedBackGroundView))
+        if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pHighlightedBackGroundView))
         {
             _var->setPreferredSize(m_obContentSize);
         }
@@ -233,7 +234,7 @@ void CAButton::updateWithPreferredSize()
         CC_BREAK_IF(m_pDisabledBackGroundView == NULL);
         CC_BREAK_IF(this->getBounds().equals(m_pDisabledBackGroundView->getBounds()));
         
-        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_pDisabledBackGroundView))
+        if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pDisabledBackGroundView))
         {
             _var->setPreferredSize(m_obContentSize);
         }
@@ -249,7 +250,7 @@ void CAButton::updateWithPreferredSize()
         CC_BREAK_IF(m_pSelectedBackGroundView == NULL);
         CC_BREAK_IF(this->getBounds().equals(m_pSelectedBackGroundView->getBounds()));
         
-        if (CCScale9Sprite* _var = dynamic_cast<CCScale9Sprite*>(m_pSelectedBackGroundView))
+        if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pSelectedBackGroundView))
         {
             _var->setPreferredSize(m_obContentSize);
         }
@@ -329,7 +330,7 @@ bool CAButton::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     {
         CC_BREAK_IF(!this->isVisible());
         CC_BREAK_IF(!m_bTouchEnabled);
-        CC_BREAK_IF(!isNormal());
+        CC_BREAK_IF(m_eControlState != CAControlStateNormal && m_eControlState != CAControlStateSelected);
         CC_BREAK_IF(!getBounds().containsPoint(point));
         
         return this->setTouchBegin(point);
@@ -373,17 +374,32 @@ void CAButton::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
         this->setTouchUpInSide(point);
     }
     
-	this->setControlState(CAControlStateNormal);
-    
-    if (m_stateSelected && getBounds().containsPoint(point))
+    if (getBounds().containsPoint(point))
     {
-        this->setControlState(CAControlStateSelected);
+        if (m_bAllowsSelected)
+        {
+            if (m_bSelected)
+            {
+                m_bSelected = false;
+                this->setControlState(CAControlStateNormal);
+            }
+            else
+            {
+                m_bSelected = true;
+                this->setControlState(CAControlStateSelected);
+            }
+        }
+        else
+        {
+            this->setControlState(CAControlStateNormal);
+        }
     }
+    
+    
 }
 
 void CAButton::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    
     this->ccTouchEnded(pTouch, pEvent);
 }
 
@@ -498,27 +514,27 @@ void CAButton::InterruptTouchState()
 {
 	do
 	{
-		CC_BREAK_IF(m_touchClick == false);
-		m_touchClick = false;
-		this->setControlState(CAControlStateHighlighted);
+		CC_BREAK_IF(m_bTouchClick == false);
+		m_bTouchClick = false;
+		this->setControlState(CAControlStateNormal);
 	} while (0);
 }
 
 bool CAButton::setTouchBegin(CCPoint point)
 {
-	m_touchClick = true;
+	m_bTouchClick = true;
 
     if (m_touchBegin)
     {
-		m_touchClick = ((CCObject *)m_target->*m_touchBegin)(this, point);
+		m_bTouchClick = ((CCObject *)m_target->*m_touchBegin)(this, point);
     }
     
-	if (m_touchClick)
+	if (m_bTouchClick)
 	{
 		this->setControlState(CAControlStateHighlighted);
 	}
 
-	return m_touchClick;
+	return m_bTouchClick;
 }
 
 void CAButton::setTouchUpInSide(CCPoint point)
@@ -567,7 +583,7 @@ void CAButton::setContentSize(const CCSize & var)
     this->updateWithPreferredSize();
 }
 
-void CAButton::setSprite(CAControlState controlState, CAView* var)
+void CAButton::setView(CAControlState controlState, CAView* var)
 {
     if (!var)
         return;
@@ -576,10 +592,10 @@ void CAButton::setSprite(CAControlState controlState, CAView* var)
     
     CCPoint point = m_obContentSize/2;
     
-    this->setSprite(controlState, var, point);
+    this->setView(controlState, var, point);
 }
 
-void CAButton::setSprite(CAControlState controlState, CAView* var, CCPoint point)
+void CAButton::setView(CAControlState controlState, CAView* var, CCPoint point)
 {
     if (!var)
         return;
@@ -658,7 +674,7 @@ void CAButton::setSprite(CAControlState controlState, CAView* var, CCPoint point
     }
 }
 
-CAView* CAButton::getSprite(CAControlState controlState)
+CAView* CAButton::getView(CAControlState controlState)
 {
     switch (controlState)
     {

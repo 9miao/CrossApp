@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "cocoa/CCArray.h"
 #include "cocoa/CCSet.h"
 #include "CCTouch.h"
-#include "textures/CCTexture2D.h"
+#include "images/CAImage.h"
 #include "support/data_support/ccCArray.h"
 #include "ccMacros.h"
 #include <algorithm>

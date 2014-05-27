@@ -84,7 +84,7 @@ public:
 
     /*
      @brief The same result as with initWithImageFile, but thread safe. It is caused by
-            loadImage() in CCTextureCache.cpp.
+            loadImage() in CAImageCache.cpp.
      @param fullpath  full path of the file.
      @param imageType the type of image, currently only supporting two types.
      @return  true if loaded correctly.
