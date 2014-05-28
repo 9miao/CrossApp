@@ -15,6 +15,9 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\FirstViewController.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\RootViewController.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
@@ -27,6 +30,9 @@
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FirstViewController.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\RootViewController.h">

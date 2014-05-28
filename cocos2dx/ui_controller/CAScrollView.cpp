@@ -845,7 +845,7 @@ void CAIndicator::setHide(bool var)
         {
             CC_BREAK_IF(indicator->getOpacity() == 255);
             
-            indicator->stopAllActions();
+            this->stopActionByTag(0xfff);
             this->setOpacity(255);
         }
         else

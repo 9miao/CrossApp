@@ -57,6 +57,8 @@ void CAViewController::getSuperViewRect(const CCRect& rect)
 
 void CAViewController::viewOnEnterTransitionDidFinish()
 {
+    CAScheduler::getScheduler()->resumeTarget(this);
+    
     do
     {
         CC_BREAK_IF(m_bLifeLock);
@@ -68,6 +70,8 @@ void CAViewController::viewOnEnterTransitionDidFinish()
 
 void CAViewController::viewOnExitTransitionDidStart()
 {
+    CAScheduler::getScheduler()->pauseTarget(this);
+    
     do
     {
         CC_BREAK_IF(m_bLifeLock);
@@ -258,7 +262,6 @@ void CANavigationController::pushViewControllerFinish()
     
     CAViewController* lastViewController = m_pViewControllers.at(m_pViewControllers.size() - 2);
     lastViewController->getView()->removeFromSuperview();
-    CAScheduler::getScheduler()->pauseTarget(lastViewController);
 }
 
 CAViewController* CANavigationController::popViewControllerAnimated(bool animated)
@@ -277,7 +280,6 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     CAViewController* showViewController = m_pViewControllers.at(index);
     showViewController->getView()->setFrame(CCRectZero);
     m_pContainer->addSubview(showViewController->getView());
-    CAScheduler::getScheduler()->resumeTarget(showViewController);
     
     CAViewController* backViewController = m_pViewControllers.back();
     

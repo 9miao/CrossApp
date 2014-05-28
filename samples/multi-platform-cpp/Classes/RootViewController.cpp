@@ -60,7 +60,7 @@ void RootViewController::viewDidLoad()
     progress->setFrame(CCRect(520, tableRect.size.height+10, 200, 16));
     this->getView()->addSubview(progress);
     progress->setProgress(0.5f);
-
+    
     CAScheduler::schedule(schedule_selector(RootViewController::updateProgress), this, 5, false);
 }
 
