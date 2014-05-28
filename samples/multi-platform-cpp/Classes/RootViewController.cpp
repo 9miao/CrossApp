@@ -30,7 +30,7 @@ void RootViewController::viewDidLoad()
     tableView->setTableFooterHeight(200);
     tableView->setTableFooterView(v2);
     
-    CAView* s = CAView::createWithFrame(CCRectZero, ccc4(255, 0, 0, 255));
+    CAView* s = CAView::createWithFrame(CCRectZero, ccc4(127, 127, 127, 127));
     tableView->setTablePullDownView(s);
     tableView->setTablePullViewHeight(200);
     
@@ -141,11 +141,11 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
         //cell->setBackGroundView(NULL);
     }
     
-//    CCString* str = CCString::createWithFormat("CELL - %u", row);
-//    CCLabelTTF* ttf = CCLabelTTF::create(str->getCString(), "Arial", 40);
-//    ttf->setColor(ccBLACK);
-//    ttf->setFrame(CCRect(10, 60, 0, 0));
-//    cell->addSubview(ttf);
+    CCString* str = CCString::createWithFormat("CELL - %u", row);
+    CCLabelTTF* ttf = CCLabelTTF::create(str->getCString(), "Arial", 40);
+    ttf->setColor(ccBLACK);
+    ttf->setFrame(CCRect(10, 60, 0, 0));
+    cell->addSubview(ttf);
     
 //    CALabel* label = CALabel::create(CCRect(0, 0, 600, 100));
 //    label->setOpacity(128);
