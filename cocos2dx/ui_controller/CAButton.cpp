@@ -355,7 +355,14 @@ void CAButton::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     else
     {
         this->setTouchMovedOutSide(point);
-        this->setControlState(CAControlStateNormal);
+        if (m_bAllowsSelected && m_bSelected)
+        {
+            this->setControlState(CAControlStateSelected);
+        }
+        else
+        {
+            this->setControlState(CAControlStateNormal);
+        }
     }
 }
 
