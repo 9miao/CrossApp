@@ -10,4 +10,8 @@
 #include "Json/CSContentJsonDictionary.h"
 #include "Json/DictionaryHelper.h"
 
+//other
+#include "other/CAAdress/CAAddressManager.h"
+#include "other/CACamera/CAMediaManager.h"
+#include "other/CALocation/CALocationManager.h"
 #endif /* __COCOS2D_EXT_H__ */

@@ -79,6 +79,16 @@
 		D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949B15BD2D8E00D803EB /* Icon-114.png */; };
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
+		EB1818C819387F67002856FF /* CAAddress.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818AD19387F67002856FF /* CAAddress.mm */; };
+		EB1818C919387F67002856FF /* CAAddressManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818AE19387F67002856FF /* CAAddressManager.mm */; };
+		EB1818CC19387F67002856FF /* CAAlbumController.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818B719387F67002856FF /* CAAlbumController.mm */; };
+		EB1818CD19387F67002856FF /* CACameraController.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818B919387F67002856FF /* CACameraController.mm */; };
+		EB1818CE19387F67002856FF /* CAMediaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818BA19387F67002856FF /* CAMediaManager.mm */; };
+		EB1818D119387F67002856FF /* CALocation.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818C319387F67002856FF /* CALocation.mm */; };
+		EB1818D219387F67002856FF /* CALocationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818C419387F67002856FF /* CALocationManager.mm */; };
+		EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D519387FFA002856FF /* CoreLocation.framework */; };
+		EB1818D819388001002856FF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D719388001002856FF /* AddressBook.framework */; };
+		EB1818DA19388005002856FF /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D919388005002856FF /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,6 +217,23 @@
 		D4EF949D15BD2D9600D803EB /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../proj.ios/Icon-72.png"; sourceTree = "<group>"; };
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		EB1818AA19387F67002856FF /* CAAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressManager.h; sourceTree = "<group>"; };
+		EB1818AC19387F67002856FF /* CAAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddress.h; sourceTree = "<group>"; };
+		EB1818AD19387F67002856FF /* CAAddress.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddress.mm; sourceTree = "<group>"; };
+		EB1818AE19387F67002856FF /* CAAddressManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddressManager.mm; sourceTree = "<group>"; };
+		EB1818B419387F67002856FF /* CAMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMediaManager.h; sourceTree = "<group>"; };
+		EB1818B619387F67002856FF /* CAAlbumController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlbumController.h; sourceTree = "<group>"; };
+		EB1818B719387F67002856FF /* CAAlbumController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAlbumController.mm; sourceTree = "<group>"; };
+		EB1818B819387F67002856FF /* CACameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACameraController.h; sourceTree = "<group>"; };
+		EB1818B919387F67002856FF /* CACameraController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CACameraController.mm; sourceTree = "<group>"; };
+		EB1818BA19387F67002856FF /* CAMediaManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAMediaManager.mm; sourceTree = "<group>"; };
+		EB1818C019387F67002856FF /* CALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocationManager.h; sourceTree = "<group>"; };
+		EB1818C219387F67002856FF /* CALocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocation.h; sourceTree = "<group>"; };
+		EB1818C319387F67002856FF /* CALocation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocation.mm; sourceTree = "<group>"; };
+		EB1818C419387F67002856FF /* CALocationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocationManager.mm; sourceTree = "<group>"; };
+		EB1818D519387FFA002856FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EB1818D719388001002856FF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		EB1818D919388005002856FF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +241,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB1818DA19388005002856FF /* AddressBookUI.framework in Frameworks */,
+				EB1818D819388001002856FF /* AddressBook.framework in Frameworks */,
+				EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */,
 				15A3DA6A1682F886002FB0C5 /* libcocos2dx.a in Frameworks */,
 				1ACB3244164770DE00914215 /* libcurl.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
@@ -259,6 +289,7 @@
 		15A3D9B31682F826002FB0C5 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				EB1818A619387F67002856FF /* other */,
 				B04C0BEC19012079009854FD /* Json */,
 				1A9CE8211765A12C000E3062 /* AssetsManager */,
 				15A3D9EA1682F826002FB0C5 /* cocos-ext.h */,
@@ -411,6 +442,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EB1818D919388005002856FF /* AddressBookUI.framework */,
+				EB1818D719388001002856FF /* AddressBook.framework */,
+				EB1818D519387FFA002856FF /* CoreLocation.framework */,
 				1ACB3243164770DE00914215 /* libcurl.a */,
 				BF170DB212928DE900B8313A /* libxml2.dylib */,
 				BF170DB412928DE900B8313A /* libz.dylib */,
@@ -504,6 +538,75 @@
 				B04C0C021901207A009854FD /* writer.h */,
 			);
 			path = lib_json;
+			sourceTree = "<group>";
+		};
+		EB1818A619387F67002856FF /* other */ = {
+			isa = PBXGroup;
+			children = (
+				EB1818A719387F67002856FF /* CAAdress */,
+				EB1818B119387F67002856FF /* CACamera */,
+				EB1818BD19387F67002856FF /* CALocation */,
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
+		EB1818A719387F67002856FF /* CAAdress */ = {
+			isa = PBXGroup;
+			children = (
+				EB1818AA19387F67002856FF /* CAAddressManager.h */,
+				EB1818AB19387F67002856FF /* ios */,
+			);
+			path = CAAdress;
+			sourceTree = "<group>";
+		};
+		EB1818AB19387F67002856FF /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				EB1818AC19387F67002856FF /* CAAddress.h */,
+				EB1818AD19387F67002856FF /* CAAddress.mm */,
+				EB1818AE19387F67002856FF /* CAAddressManager.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		EB1818B119387F67002856FF /* CACamera */ = {
+			isa = PBXGroup;
+			children = (
+				EB1818B419387F67002856FF /* CAMediaManager.h */,
+				EB1818B519387F67002856FF /* ios */,
+			);
+			path = CACamera;
+			sourceTree = "<group>";
+		};
+		EB1818B519387F67002856FF /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				EB1818B619387F67002856FF /* CAAlbumController.h */,
+				EB1818B719387F67002856FF /* CAAlbumController.mm */,
+				EB1818B819387F67002856FF /* CACameraController.h */,
+				EB1818B919387F67002856FF /* CACameraController.mm */,
+				EB1818BA19387F67002856FF /* CAMediaManager.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		EB1818BD19387F67002856FF /* CALocation */ = {
+			isa = PBXGroup;
+			children = (
+				EB1818C019387F67002856FF /* CALocationManager.h */,
+				EB1818C119387F67002856FF /* ios */,
+			);
+			path = CALocation;
+			sourceTree = "<group>";
+		};
+		EB1818C119387F67002856FF /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				EB1818C219387F67002856FF /* CALocation.h */,
+				EB1818C319387F67002856FF /* CALocation.mm */,
+				EB1818C419387F67002856FF /* CALocationManager.mm */,
+			);
+			path = ios;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -627,20 +730,27 @@
 			files = (
 				B04C0C071901207A009854FD /* json_reader.cpp in Sources */,
 				B04C0C041901207A009854FD /* DictionaryHelper.cpp in Sources */,
+				EB1818D119387F67002856FF /* CALocation.mm in Sources */,
 				B04C0C031901207A009854FD /* CSContentJsonDictionary.cpp in Sources */,
 				B04C0C0A1901207A009854FD /* json_writer.cpp in Sources */,
+				EB1818CD19387F67002856FF /* CACameraController.mm in Sources */,
 				B04C0C081901207A009854FD /* json_value.cpp in Sources */,
 				15A3DA5D1682F826002FB0C5 /* HttpClient.cpp in Sources */,
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
 				B0AD93EA19207CA300EA40BB /* FirstViewController.cpp in Sources */,
 				B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */,
 				15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */,
+				EB1818C919387F67002856FF /* CAAddressManager.mm in Sources */,
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
+				EB1818CE19387F67002856FF /* CAMediaManager.mm in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */,
 				1AC3624B16D4A1E8000847F2 /* main.m in Sources */,
+				EB1818D219387F67002856FF /* CALocationManager.mm in Sources */,
+				EB1818C819387F67002856FF /* CAAddress.mm in Sources */,
+				EB1818CC19387F67002856FF /* CAAlbumController.mm in Sources */,
 				1AFCDA8216D4A25900906EA6 /* RootViewController.mm in Sources */,
 				1AB87035175E0A84005D39BF /* WebSocket.cpp in Sources */,
 				1A9CE8781765A12C000E3062 /* AssetsManager.cpp in Sources */,
