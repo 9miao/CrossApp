@@ -77,18 +77,18 @@ bool RootViewController::setAllowsSelection(CAControl* sender, CCPoint point)
 
 bool RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint point)
 {
-//	CAButton* btn = (CAButton*)sender;
-//    
-//	if (btn->isSelected())
-//    {
-//        tableView->setAllowsMultipleSelection(false);
-//    }
-//    else
-//    {
-//        tableView->setAllowsMultipleSelection(true);
-//    }
-//    
-//    tableView->reloadData();
+	CAButton* btn = (CAButton*)sender;
+    
+	if (btn->isSelected())
+    {
+        tableView->setAllowsMultipleSelection(false);
+    }
+    else
+    {
+        tableView->setAllowsMultipleSelection(true);
+    }
+    
+    tableView->reloadData();
     
     return true;
 }

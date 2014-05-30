@@ -13,6 +13,18 @@
     <Filter Include="network">
       <UniqueIdentifier>{2a7741ff-87a5-41c8-8e51-d7a1cf0c8e4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="other">
+      <UniqueIdentifier>{2cec268f-4602-45c2-94df-b4b41e5c7127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="other\CAAdress">
+      <UniqueIdentifier>{f317b8a7-8edf-4b6a-bda1-2e89dc54d9de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="other\CACamera">
+      <UniqueIdentifier>{f67029b8-4cbe-48d4-aed5-aa6e3823e84b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="other\CALocation">
+      <UniqueIdentifier>{ae036374-c639-48e9-9402-573f93af97e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\network\HttpClient.cpp">
@@ -29,6 +41,15 @@
     </ClCompile>
     <ClCompile Include="..\GUI\CAUIHelper.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\other\CAAdress\wp8\CAAddressManager.cpp">
+      <Filter>other\CAAdress</Filter>
+    </ClCompile>
+    <ClCompile Include="..\other\CACamera\wp8\CAMediaManager.cpp">
+      <Filter>other\CACamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\other\CALocation\wp8\CALocationManager.cpp">
+      <Filter>other\CALocation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +72,15 @@
     </ClInclude>
     <ClInclude Include="..\GUI\CAUIHelper.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\other\CAAdress\CAAddressManager.h">
+      <Filter>other\CAAdress</Filter>
+    </ClInclude>
+    <ClInclude Include="..\other\CACamera\CAMediaManager.h">
+      <Filter>other\CACamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\other\CALocation\CALocationManager.h">
+      <Filter>other\CALocation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,11 +6,10 @@
 //
 //
 
-#include "CALocationManager.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#import "CALocation.h"
-#endif
+#include "../CALocationManager.h"
+
 static CALocationManager *manger =NULL;
+
 CALocationManager::CALocationManager()
 {
     
@@ -28,11 +27,7 @@ CALocationManager* CALocationManager::create()
 }
 void CALocationManager::startLocation()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    CALocation *location = [[CALocation alloc] init];
-    [location setLocation:this];
-    [location startUpdatingLocation];
-#endif
+
 }
 
 

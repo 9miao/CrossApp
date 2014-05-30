@@ -57,6 +57,9 @@
 		B03E8FCE1938875F00FD9A06 /* btn_square_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FC21938875F00FD9A06 /* btn_square_normal.png */; };
 		B03E8FCF1938875F00FD9A06 /* btn_square_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FC31938875F00FD9A06 /* btn_square_selected.png */; };
 		B03E8FD11938876B00FD9A06 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FD01938876B00FD9A06 /* HelloWorld.png */; };
+		B03E904919389A4C00FD9A06 /* CAAddressManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E902E19389A4C00FD9A06 /* CAAddressManager.mm */; };
+		B03E904E19389A4C00FD9A06 /* CAMediaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E903A19389A4C00FD9A06 /* CAMediaManager.mm */; };
+		B03E905219389A4C00FD9A06 /* CALocationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E904419389A4C00FD9A06 /* CALocationManager.mm */; };
 		B04C0BB119011ED8009854FD /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0B9B19011ED8009854FD /* CSContentJsonDictionary.cpp */; };
 		B04C0BB219011ED8009854FD /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0B9D19011ED8009854FD /* DictionaryHelper.cpp */; };
 		B04C0BB319011ED8009854FD /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BA519011ED8009854FD /* json_internalarray.inl */; };
@@ -168,6 +171,12 @@
 		B03E8FC21938875F00FD9A06 /* btn_square_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_square_normal.png; sourceTree = "<group>"; };
 		B03E8FC31938875F00FD9A06 /* btn_square_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_square_selected.png; sourceTree = "<group>"; };
 		B03E8FD01938876B00FD9A06 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
+		B03E902A19389A4C00FD9A06 /* CAAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressManager.h; sourceTree = "<group>"; };
+		B03E902E19389A4C00FD9A06 /* CAAddressManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddressManager.mm; sourceTree = "<group>"; };
+		B03E903419389A4C00FD9A06 /* CAMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMediaManager.h; sourceTree = "<group>"; };
+		B03E903A19389A4C00FD9A06 /* CAMediaManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAMediaManager.mm; sourceTree = "<group>"; };
+		B03E904019389A4C00FD9A06 /* CALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocationManager.h; sourceTree = "<group>"; };
+		B03E904419389A4C00FD9A06 /* CALocationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocationManager.mm; sourceTree = "<group>"; };
 		B04C0B9B19011ED8009854FD /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
 		B04C0B9C19011ED8009854FD /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		B04C0B9D19011ED8009854FD /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
@@ -274,6 +283,7 @@
 		15C1589C168315E500D239F2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B03E902619389A4C00FD9A06 /* other */,
 				B04C0B9A19011ED8009854FD /* Json */,
 				1A9CE9271765A7FA000E3062 /* AssetsManager */,
 				15C158D4168315E500D239F2 /* ExtensionMacros.h */,
@@ -409,6 +419,67 @@
 			);
 			path = en.lproj;
 			sourceTree = SOURCE_ROOT;
+		};
+		B03E902619389A4C00FD9A06 /* other */ = {
+			isa = PBXGroup;
+			children = (
+				B03E902719389A4C00FD9A06 /* CAAdress */,
+				B03E903119389A4C00FD9A06 /* CACamera */,
+				B03E903D19389A4C00FD9A06 /* CALocation */,
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
+		B03E902719389A4C00FD9A06 /* CAAdress */ = {
+			isa = PBXGroup;
+			children = (
+				B03E902A19389A4C00FD9A06 /* CAAddressManager.h */,
+				B03E902B19389A4C00FD9A06 /* ios */,
+			);
+			path = CAAdress;
+			sourceTree = "<group>";
+		};
+		B03E902B19389A4C00FD9A06 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B03E902E19389A4C00FD9A06 /* CAAddressManager.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		B03E903119389A4C00FD9A06 /* CACamera */ = {
+			isa = PBXGroup;
+			children = (
+				B03E903419389A4C00FD9A06 /* CAMediaManager.h */,
+				B03E903519389A4C00FD9A06 /* ios */,
+			);
+			path = CACamera;
+			sourceTree = "<group>";
+		};
+		B03E903519389A4C00FD9A06 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B03E903A19389A4C00FD9A06 /* CAMediaManager.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		B03E903D19389A4C00FD9A06 /* CALocation */ = {
+			isa = PBXGroup;
+			children = (
+				B03E904019389A4C00FD9A06 /* CALocationManager.h */,
+				B03E904119389A4C00FD9A06 /* ios */,
+			);
+			path = CALocation;
+			sourceTree = "<group>";
+		};
+		B03E904119389A4C00FD9A06 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B03E904419389A4C00FD9A06 /* CALocationManager.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
 		};
 		B04C0B9A19011ED8009854FD /* Json */ = {
 			isa = PBXGroup;
@@ -605,6 +676,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B03E904919389A4C00FD9A06 /* CAAddressManager.mm in Sources */,
 				41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */,
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
 				B04C0BB519011ED8009854FD /* json_reader.cpp in Sources */,
@@ -625,6 +697,8 @@
 				1A9CE9821765A7FA000E3062 /* AssetsManager.cpp in Sources */,
 				B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */,
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,
+				B03E905219389A4C00FD9A06 /* CALocationManager.mm in Sources */,
+				B03E904E19389A4C00FD9A06 /* CAMediaManager.mm in Sources */,
 				1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

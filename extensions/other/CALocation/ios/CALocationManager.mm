@@ -6,7 +6,7 @@
 //
 //
 
-#include "CALocationManager.h"
+#include "../CALocationManager.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #import "CALocation.h"
 #endif

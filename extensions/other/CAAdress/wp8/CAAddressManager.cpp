@@ -7,9 +7,7 @@
 //
 
 #include "../CAAddressManager.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#import "CAAddress.h"
-#endif
+
 static CAAddressManager *manger = NULL;
 CAAddressManager::CAAddressManager()
 :_addressBookArr(NULL)
@@ -36,9 +34,7 @@ vector<CAAddressBookRecord*> CAAddressManager::getAddressBook()
     if (_addressBookArr.size()>0) {
         return _addressBookArr;
     }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#endif
     return _addressBookArr;
     
 

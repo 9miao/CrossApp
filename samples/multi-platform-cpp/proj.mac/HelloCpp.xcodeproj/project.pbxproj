@@ -56,6 +56,9 @@
 		B03E8FA71938631600FD9A06 /* btn_square_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FA41938631600FD9A06 /* btn_square_highlighted.png */; };
 		B03E8FA81938631600FD9A06 /* btn_square_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FA51938631600FD9A06 /* btn_square_normal.png */; };
 		B03E8FA91938631600FD9A06 /* btn_square_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FA61938631600FD9A06 /* btn_square_selected.png */; };
+		B03E9018193897CC00FD9A06 /* CAMediaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E9004193897CC00FD9A06 /* CAMediaManager.mm */; };
+		B03E901C193897CC00FD9A06 /* CALocationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E900E193897CC00FD9A06 /* CALocationManager.mm */; };
+		B03E90241938990600FD9A06 /* CAAddressManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E90221938990600FD9A06 /* CAAddressManager.mm */; };
 		B04C0BB119011ED8009854FD /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0B9B19011ED8009854FD /* CSContentJsonDictionary.cpp */; };
 		B04C0BB219011ED8009854FD /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0B9D19011ED8009854FD /* DictionaryHelper.cpp */; };
 		B04C0BB319011ED8009854FD /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BA519011ED8009854FD /* json_internalarray.inl */; };
@@ -178,6 +181,13 @@
 		B03E8FA41938631600FD9A06 /* btn_square_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_square_highlighted.png; sourceTree = "<group>"; };
 		B03E8FA51938631600FD9A06 /* btn_square_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_square_normal.png; sourceTree = "<group>"; };
 		B03E8FA61938631600FD9A06 /* btn_square_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_square_selected.png; sourceTree = "<group>"; };
+		B03E8FF4193897CC00FD9A06 /* CAAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressManager.h; sourceTree = "<group>"; };
+		B03E8FFE193897CC00FD9A06 /* CAMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMediaManager.h; sourceTree = "<group>"; };
+		B03E9004193897CC00FD9A06 /* CAMediaManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAMediaManager.mm; sourceTree = "<group>"; };
+		B03E900A193897CC00FD9A06 /* CALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocationManager.h; sourceTree = "<group>"; };
+		B03E900E193897CC00FD9A06 /* CALocationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocationManager.mm; sourceTree = "<group>"; };
+		B03E901E1938980100FD9A06 /* cocos-ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos-ext.h"; sourceTree = "<group>"; };
+		B03E90221938990600FD9A06 /* CAAddressManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddressManager.mm; sourceTree = "<group>"; };
 		B04C0B9B19011ED8009854FD /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
 		B04C0B9C19011ED8009854FD /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		B04C0B9D19011ED8009854FD /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
@@ -292,9 +302,11 @@
 		15C1589C168315E500D239F2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B03E901E1938980100FD9A06 /* cocos-ext.h */,
+				15C158D4168315E500D239F2 /* ExtensionMacros.h */,
+				B03E8FF0193897CC00FD9A06 /* other */,
 				B04C0B9A19011ED8009854FD /* Json */,
 				1A9CE9271765A7FA000E3062 /* AssetsManager */,
-				15C158D4168315E500D239F2 /* ExtensionMacros.h */,
 				15C158D5168315E500D239F2 /* GUI */,
 				1A9CE97E1765A7FA000E3062 /* LocalStorage */,
 				15C15903168315E500D239F2 /* network */,
@@ -427,6 +439,67 @@
 			);
 			path = en.lproj;
 			sourceTree = SOURCE_ROOT;
+		};
+		B03E8FF0193897CC00FD9A06 /* other */ = {
+			isa = PBXGroup;
+			children = (
+				B03E8FF1193897CC00FD9A06 /* CAAdress */,
+				B03E8FFB193897CC00FD9A06 /* CACamera */,
+				B03E9007193897CC00FD9A06 /* CALocation */,
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
+		B03E8FF1193897CC00FD9A06 /* CAAdress */ = {
+			isa = PBXGroup;
+			children = (
+				B03E901F1938990600FD9A06 /* ios */,
+				B03E8FF4193897CC00FD9A06 /* CAAddressManager.h */,
+			);
+			path = CAAdress;
+			sourceTree = "<group>";
+		};
+		B03E8FFB193897CC00FD9A06 /* CACamera */ = {
+			isa = PBXGroup;
+			children = (
+				B03E8FFE193897CC00FD9A06 /* CAMediaManager.h */,
+				B03E8FFF193897CC00FD9A06 /* ios */,
+			);
+			path = CACamera;
+			sourceTree = "<group>";
+		};
+		B03E8FFF193897CC00FD9A06 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B03E9004193897CC00FD9A06 /* CAMediaManager.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		B03E9007193897CC00FD9A06 /* CALocation */ = {
+			isa = PBXGroup;
+			children = (
+				B03E900A193897CC00FD9A06 /* CALocationManager.h */,
+				B03E900B193897CC00FD9A06 /* ios */,
+			);
+			path = CALocation;
+			sourceTree = "<group>";
+		};
+		B03E900B193897CC00FD9A06 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B03E900E193897CC00FD9A06 /* CALocationManager.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		B03E901F1938990600FD9A06 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B03E90221938990600FD9A06 /* CAAddressManager.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
 		};
 		B04C0B9A19011ED8009854FD /* Json */ = {
 			isa = PBXGroup;
@@ -640,11 +713,14 @@
 				B04C0BB619011ED8009854FD /* json_value.cpp in Sources */,
 				15C15946168315E500D239F2 /* HttpClient.cpp in Sources */,
 				B04C0BB119011ED8009854FD /* CSContentJsonDictionary.cpp in Sources */,
+				B03E901C193897CC00FD9A06 /* CALocationManager.mm in Sources */,
 				15D8B23E168318C3006C7997 /* CDAudioManager.m in Sources */,
 				B0AD93AB192077F900EA40BB /* CAHttpClient.cpp in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
+				B03E9018193897CC00FD9A06 /* CAMediaManager.mm in Sources */,
 				B02B387F1932D7C700A7BDF0 /* RootViewController.cpp in Sources */,
+				B03E90241938990600FD9A06 /* CAAddressManager.mm in Sources */,
 				B02B387D1932D7C700A7BDF0 /* AppDelegate.cpp in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,

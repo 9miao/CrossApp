@@ -98,6 +98,9 @@
     <ClCompile Include="..\LocalStorage\LocalStorage.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\Websocket.cpp" />
+    <ClCompile Include="..\other\CAAdress\wp8\CAAddressManager.cpp" />
+    <ClCompile Include="..\other\CACamera\wp8\CAMediaManager.cpp" />
+    <ClCompile Include="..\other\CALocation\wp8\CALocationManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h" />
@@ -109,6 +112,9 @@
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
     <ClInclude Include="..\network\Websocket.h" />
+    <ClInclude Include="..\other\CAAdress\CAAddressManager.h" />
+    <ClInclude Include="..\other\CACamera\CAMediaManager.h" />
+    <ClInclude Include="..\other\CALocation\CALocationManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

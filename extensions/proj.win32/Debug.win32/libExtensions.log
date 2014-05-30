@@ -1,5 +1,50 @@
-﻿生成启动时间为 2014/5/30 17:24:56。
+﻿生成启动时间为 2014/5/30 19:17:42。
+     1>项目“I:\CrossApp_\extensions\proj.win32\libExtensions.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\include" /II:\CrossApp_\extensions\proj.win32\..\..\external\chipmunk\include\chipmunk /II:\CrossApp_\extensions\proj.win32\..\..\external\sqlite3\include /II:\CrossApp_\extensions\proj.win32\..\..\external /II:\CrossApp_\extensions\proj.win32\..\..\external\libwebsockets\win32\include /II:\CrossApp_\extensions\proj.win32\..\..\cocos2dx /II:\CrossApp_\extensions\proj.win32\..\..\cocos2dx\include /II:\CrossApp_\extensions\proj.win32\..\..\cocos2dx\kazmath\include /II:\CrossApp_\extensions\proj.win32\..\..\cocos2dx\platform\win32 /II:\CrossApp_\extensions\proj.win32\..\..\cocos2dx\platform\third_party\win32 /II:\CrossApp_\extensions\proj.win32\..\..\cocos2dx\platform\third_party\win32\pthread /II:\CrossApp_\extensions\proj.win32\..\..\cocos2dx\platform\third_party\win32\OGLES /II:\CrossApp_\extensions\proj.win32\..\..\cocos2dx\platform\third_party\win32\zlib /II:\CrossApp_\extensions\proj.win32\..\..\CocosDenshion\include /I..\ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _LIB /D COCOS2D_DEBUG=1 /D CC_ENABLE_CHIPMUNK_INTEGRATION=1 /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug.win32\\" /Fd"Debug.win32\vc120.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /analyze- /errorReport:prompt ..\other\CAAdress\wp8\CAAddressManager.cpp ..\other\CACamera\wp8\CAMediaManager.cpp ..\other\CALocation\wp8\CALocationManager.cpp
+         CALocationManager.cpp
+     1>i:\crossapp_\cocos2dx\sprite_nodes\caview.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
+     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
+     1>i:\crossapp_\cocos2dx\ui_controller\caviewcontroller.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>i:\crossapp_\cocos2dx\misc_nodes\ccmotionstreak.h(50): warning C4584: “cocos2d::CCMotionStreak”: 基类“cocos2d::CCTextureProtocol”已是“cocos2d::CAView”的基类
+                 i:\crossapp_\cocos2dx\include\ccprotocols.h(166) : 参见“cocos2d::CCTextureProtocol”的声明
+                 i:\crossapp_\cocos2dx\sprite_nodes\caview.h(60) : 参见“cocos2d::CAView”的声明
+         CAMediaManager.cpp
+     1>i:\crossapp_\cocos2dx\sprite_nodes\caview.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
+     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
+     1>i:\crossapp_\cocos2dx\ui_controller\caviewcontroller.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>i:\crossapp_\cocos2dx\misc_nodes\ccmotionstreak.h(50): warning C4584: “cocos2d::CCMotionStreak”: 基类“cocos2d::CCTextureProtocol”已是“cocos2d::CAView”的基类
+                 i:\crossapp_\cocos2dx\include\ccprotocols.h(166) : 参见“cocos2d::CCTextureProtocol”的声明
+                 i:\crossapp_\cocos2dx\sprite_nodes\caview.h(60) : 参见“cocos2d::CAView”的声明
+         CAAddressManager.cpp
+     1>i:\crossapp_\cocos2dx\sprite_nodes\caview.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
+     1>c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
+     1>i:\crossapp_\cocos2dx\ui_controller\caviewcontroller.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>i:\crossapp_\cocos2dx\misc_nodes\ccmotionstreak.h(50): warning C4584: “cocos2d::CCMotionStreak”: 基类“cocos2d::CCTextureProtocol”已是“cocos2d::CAView”的基类
+                 i:\crossapp_\cocos2dx\include\ccprotocols.h(166) : 参见“cocos2d::CCTextureProtocol”的声明
+                 i:\crossapp_\cocos2dx\sprite_nodes\caview.h(60) : 参见“cocos2d::CAView”的声明
+         正在生成代码...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"I:\CrossApp_\samples\multi-platform-cpp\proj.win32\Debug.win32\libExtensions.lib" /NOLOGO Debug.win32\AssetsManager.obj
+         Debug.win32\CAUIHelper.obj
+         Debug.win32\LocalStorage.obj
+         Debug.win32\HttpClient.obj
+         Debug.win32\Websocket.obj
+         Debug.win32\CAAddressManager.obj
+         Debug.win32\CAMediaManager.obj
+         Debug.win32\CALocationManager.obj
+         libExtensions.vcxproj -> I:\CrossApp_\samples\multi-platform-cpp\proj.win32\Debug.win32\libExtensions.lib
+     1>已完成生成项目“I:\CrossApp_\extensions\proj.win32\libExtensions.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:00.07
+已用时间 00:00:04.10

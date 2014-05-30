@@ -10,9 +10,10 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #include "../CAAddressManager.h"
+
 @interface CAAddress : NSObject
 {
     
 }
--(vector<CAAddressBookRecord*>)getAddressBook;
+-(std::vector<CAAddressBookRecord*>)getAddressBook;
 @end

@@ -512,12 +512,15 @@ void CAButton::setControlState(CAControlState var)
             m_pImageView->setCenter(imageViewCenter);
         }
         
-        if (strcmp(title.c_str(), m_pLabel->getString().c_str()) && strcmp(title.c_str(), ""))
+        if (strcmp(title.c_str(), m_pLabel->getString().c_str()))
         {
             m_pLabel->setColor(m_sTitleColor[m_eControlState]);
-            m_pLabel->setFontSize(labelSize);
-            m_pLabel->setString(title.c_str());
-            m_pLabel->setCenterOrigin(labelCenterOrigin);
+            if (strcmp(title.c_str(), ""))
+            {
+                m_pLabel->setFontSize(labelSize);
+                m_pLabel->setString(title.c_str());
+                m_pLabel->setCenterOrigin(labelCenterOrigin);
+            }
         }
     }
     while (0);

@@ -160,6 +160,9 @@
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
     <ClCompile Include="..\GUI\CAUIHelper.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
+    <ClCompile Include="..\other\CAAdress\wp8\CAAddressManager.cpp" />
+    <ClCompile Include="..\other\CACamera\wp8\CAMediaManager.cpp" />
+    <ClCompile Include="..\other\CALocation\wp8\CALocationManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
@@ -170,6 +173,9 @@
     <ClInclude Include="..\network\HttpClient.h" />
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
+    <ClInclude Include="..\other\CAAdress\CAAddressManager.h" />
+    <ClInclude Include="..\other\CACamera\CAMediaManager.h" />
+    <ClInclude Include="..\other\CALocation\CALocationManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />

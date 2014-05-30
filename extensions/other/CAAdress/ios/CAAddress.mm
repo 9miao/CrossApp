@@ -37,10 +37,7 @@
         accessGranted = YES;
     }
     
-    
-    
-    
-    vector<CAAddressBookRecord*> arr;
+    std::vector<CAAddressBookRecord*> arr;
     
     if (accessGranted) {
         
