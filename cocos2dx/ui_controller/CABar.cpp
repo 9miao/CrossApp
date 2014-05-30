@@ -1,9 +1,9 @@
 //
 //  CABar.cpp
-//  cocos2dx
+//  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-14.
-//  Copyright (c) 2014 www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
 #include "CABar.h"
@@ -89,7 +89,8 @@ void CANavigationBar::showTitle()
 {
     if (m_pTitle == NULL)
     {
-        m_pTitle = CCLabelTTF::create("", "Arial", 40);
+        m_pTitle = CCLabelTTF::create("", "fonts/arial.ttf", 40);
+        m_pTitle->setColor(ccWHITE);
         m_pTitle->setAnchorPoint(CCPoint(0.5f, 0.5f));
         m_pTitle->setCenterOrigin(m_obContentSize/2);
         this->insertSubview(m_pTitle, 1);
@@ -110,14 +111,14 @@ void CANavigationBar::showBackButton()
         rect.origin.y = rect.size.height * 0.5f;
         rect.size.width = rect.size.height * 2;
         
-        m_pBackButton = CAButton::createWithCenter(rect);
+        m_pBackButton = CAButton::createWithCenter(rect, CAButtonTypeCustom);
         m_pBackButton->setBackGroundViewForState(CAControlStateNormal, CAView::create());
         rect.size.width = rect.size.height = rect.size.height * 0.85f;
         CAImageView* imageView = CAImageView::createWithImage(CAImage::create("button_left.png"));
         imageView->setBounds(rect);
         m_pBackButton->setView(CAControlStateNormal, imageView);
         this->insertSubview(m_pBackButton, 1);
-        m_pBackButton->addTarget(this, CAButton_selector(CANavigationBar::goBack), TouchUpInSide);
+        m_pBackButton->addTarget(this, CAControl_selector(CANavigationBar::goBack), CAControlTouchUpInSide);
     }
     
     if (m_pItems.size() <= 1)
@@ -130,7 +131,7 @@ void CANavigationBar::showBackButton()
     }
 }
 
-bool CANavigationBar::goBack(CAButton* btn, CCPoint point)
+bool CANavigationBar::goBack(CAControl* btn, CCPoint point)
 {
     if (m_pDelegate)
     {
@@ -206,7 +207,6 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items)
         return false;
     }
     this->setOpacity(0);
-    this->setTouchEnabled(true);
     
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -318,7 +318,8 @@ void CATabBar::showItems()
             if (m_pItems.at(i)->getTitle().compare("") != 0)
             {
                 int fontSize = this->getContentSize().height / 5.0f;
-                title = CCLabelTTF::create(m_pItems.at(i)->getTitle().c_str(), "Arial", fontSize);
+                title = CCLabelTTF::create(m_pItems.at(i)->getTitle().c_str(), "fonts/arial.ttf", fontSize);
+                title->setColor(ccWHITE);
                 title->setTag(0xfffe);
                 view->addSubview(title);
             }
@@ -327,8 +328,8 @@ void CATabBar::showItems()
             if (imageView && title == NULL)
             {
                 CCSize imageViewSize = imageView->getBounds().size;
-                float scaleX = width / imageViewSize.width * 2/3.0f;
-                float scaleY = height / imageViewSize.height * 2/3.0f;
+                float scaleX = width / imageViewSize.width * 0.667f;
+                float scaleY = height / imageViewSize.height * 0.667f;
                 float scale = MIN(scaleX, scaleY);
                 scale = MIN(scale, 1.0f);
                 imageViewSize = ccpMult(imageViewSize, scale);
@@ -342,11 +343,11 @@ void CATabBar::showItems()
             }
             else if (title && imageView == NULL)
             {
-                int fontSize = this->getContentSize().height / 2.0f;
+                int fontSize = this->getContentSize().height / 2;
                 title->setFontSize(fontSize);
                 
                 CCSize titleSize = title->getBounds().size;
-                float titleScale = height / titleSize.height * 1/2.0f;
+                float titleScale = height / titleSize.height / 2;
                 titleSize = ccpMult(titleSize, titleScale);
                 
                 CCRect rect;
@@ -359,8 +360,8 @@ void CATabBar::showItems()
             {
 
                 CCSize imageViewSize = imageView->getBounds().size;
-                float scaleX = width / imageViewSize.width * 1/2.0f;
-                float scaleY = height / imageViewSize.height * 1/2.0f;
+                float scaleX = width / imageViewSize.width / 2;
+                float scaleY = height / imageViewSize.height / 2;
                 float scale = MIN(scaleX, scaleY);
                 scale = MIN(scale, 1.0f);
                 imageViewSize = ccpMult(imageViewSize, scale);

@@ -1,9 +1,9 @@
 //
 //  CAButton.h
-//  cocos2dx
+//  CrossApp
 //
 //  Created by Li Yuanfeng on 14-3-23.
-//  Copyright (c) 2014 www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
 
@@ -12,20 +12,25 @@
 
 #include <iostream>
 #include "CAControl.h"
-
 NS_CC_BEGIN
 
-class CAButton;
+typedef enum
+{
+    CAButtonTypeCustom = 0,
+    CAButtonTypeSquareRect,
+    CAButtonTypeRoundedRect,
+    CAButtonTypeRounded3DRect
+} CAButtonType;
 
-typedef bool (CCObject::*SEL_CAButton)(CAButton*, CCPoint);
-#define CAButton_selector(_SELECTOR) (SEL_CAButton)(&_SELECTOR)
+class CAImageView;
+class CCLabelTTF;
 
 class CC_DLL CAButton : public CAControl
 {
     
 public:
     
-    CAButton(void);
+    CAButton(CAButtonType buttonType);
     
     virtual ~CAButton(void);
 
@@ -33,27 +38,31 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
-    static CAButton* createWithFrame(const CCRect& rect);
+    static CAButton* create(CAButtonType buttonType);
+    
+    static CAButton* createWithFrame(const CCRect& rect, CAButtonType buttonType);
 
-    static CAButton* createWithCenter(const CCRect& rect);
+    static CAButton* createWithCenter(const CCRect& rect, CAButtonType buttonType);
     
 public:
     
-    bool initWithFrame(const CCRect& rect);
+    virtual bool init();
     
-    bool initWithCenter(const CCRect& rect);
+    virtual bool initWithFrame(const CCRect& rect);
     
-    void setBackGroundViewDefault();
+    virtual bool initWithCenter(const CCRect& rect);
     
     void setBackGroundViewForState(CAControlState controlState, CAView *var);
 
-    void setView(CAControlState controlState, CAView* var);
-
-    void setView(CAControlState controlState, CAView* var, CCPoint point);
-
-    CAView* getView(CAControlState controlState);
+    void setImageForState(CAControlState controlState, CAImage* var);
     
-    virtual void setControlState(CAControlState var);
+    void setTitleForState(CAControlState controlState, std::string var);
+    
+    void setTitleColorForState(CAControlState controlState, ccColor3B var);
+    
+    void setTitleFontName(std::string var);
+    
+    void setControlState(CAControlState var);
     
 public:
     
@@ -66,20 +75,16 @@ public:
     CC_SYNTHESIZE_IS_READONLY(bool, m_bSelected, Selected);
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
-
+    
     bool isTextTagEqual(const char* text);
     
-    void addTarget(void* target, SEL_CAButton selector, CAControlType type);
-
-	void InterruptTouchState();
+	void interruptTouchState();
 
     virtual void setOpacity(GLubyte opacity);
 
     virtual void setColor(const ccColor3B &color3);
     
     ccColor3B& getColor();
-    
-    virtual void setTouchEnabled(bool enabled);
     
 protected:
     
@@ -93,29 +98,25 @@ protected:
     
 protected:
 
+    CAButtonType m_eButtonType;
+    
     ccColor3B m_color;
     
-    CAView* m_pSpriteNormal;
-    
-    CAView* m_pSpriteHighlighted;
-    
-    CAView* m_pSpriteDisabled;
-    
-    CAView* m_pSpriteSelected;
-    
-    CCPoint m_tSpriteNPoint;
-    
-    CCPoint m_tSpriteHPoint;
+    CAImage* m_pImage[CAControlStateAll];
 
-    CCPoint m_tSpriteDPoint;
-    
-    CCPoint m_tSpriteSPoint;
+    std::string m_sTitle[CAControlStateAll];
 
+    ccColor3B m_sTitleColor[CAControlStateAll];
+    
+    std::string m_sTitleFontName;
+    
+    CAImageView* m_pImageView;
+    
+    CCLabelTTF* m_pLabel;
+    
 protected:
     
     void updateWithPreferredSize();
-    
-    void updateWithPoint();
     
     void setTouchMoved(CCPoint point);
     
@@ -129,22 +130,51 @@ protected:
 
     bool m_IsRehisterTouchDispatcher;
 
-    virtual void setContentSize(const CCSize & var);
+    void setContentSize(const CCSize & var);
     
-private:
+    bool isMutableTouches(void) const;
     
-    void* m_target;
+    void setMutableTouches(bool var);
     
-    SEL_CAButton m_touchBegin;
+    void setBackGroundViewSquareRect();
     
-    SEL_CAButton m_touchMoved;
+    void setBackGroundViewRoundedRect();
     
-    SEL_CAButton m_touchMovedOutSide;
+    void setBackGroundViewRounded3DRect();
     
-    SEL_CAButton m_touchUpInSide;
+/********************************************************************/
     
-    SEL_CAButton m_touchUpSide;
+//Ready to give up some functions use...
     
+public:
+    
+    CC_DEPRECATED_ATTRIBUTE void setView(CAControlState controlState, CAView* var);
+    
+    CC_DEPRECATED_ATTRIBUTE void setView(CAControlState controlState, CAView* var, CCPoint point);
+    
+    CC_DEPRECATED_ATTRIBUTE CAView* getView(CAControlState controlState);
+    
+protected:
+    
+    void updateWithPoint();
+    
+    CCPoint m_tSpriteNPoint;
+    
+    CCPoint m_tSpriteHPoint;
+    
+    CCPoint m_tSpriteDPoint;
+    
+    CCPoint m_tSpriteSPoint;
+    
+    CAView* m_pSpriteNormal;
+    
+    CAView* m_pSpriteHighlighted;
+    
+    CAView* m_pSpriteDisabled;
+    
+    CAView* m_pSpriteSelected;
+    
+/********************************************************************/
 };
 
 NS_CC_END

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include "CCSet.h"
 #include "CCTouch.h"
-#include "CCTouchDispatcher.h"
+#include "touch_dispatcher/CATouchDispatcher.h"
 
 NS_CC_BEGIN
 

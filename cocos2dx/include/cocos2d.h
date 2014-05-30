@@ -260,9 +260,7 @@ THE SOFTWARE.
 
 // touch_dispatcher
 #include "touch_dispatcher/CCTouch.h"
-#include "touch_dispatcher/CCTouchDelegateProtocol.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
-#include "touch_dispatcher/CCTouchHandler.h"
+#include "touch_dispatcher/CATouchDispatcher.h"
 
 // root
 #include "CCCamera.h"
@@ -278,6 +276,7 @@ THE SOFTWARE.
 #include "ui_controller/CAViewController.h"
 #include "ui_controller/CAControl.h"
 #include "ui_controller/CAButton.h"
+#include "ui_controller/CASwitch.h"
 #include "ui_controller/CAScrollView.h"
 #include "ui_controller/CATableView.h"
 #include "ui_controller/CAProgress.h"

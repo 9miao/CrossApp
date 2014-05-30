@@ -143,8 +143,9 @@ public:
     /** changes the string to render
     * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas
     */
-    virtual void setString(const char *label);
-    virtual const char* getString(void);
+    virtual void setString(std::string label);
+    
+    virtual const std::string& getString(void) const;
     
     CCTextAlignment getHorizontalAlignment();
     void setHorizontalAlignment(CCTextAlignment alignment);

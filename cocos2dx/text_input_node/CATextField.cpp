@@ -8,7 +8,6 @@
 
 #include "CATextField.h"
 #include "CCDirector.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
 #include "actions/CCActionInterval.h"
 #include "CCEGLView.h"
 
@@ -54,13 +53,11 @@ void CATextField::onEnterTransitionDidFinish()
 {
     CAControl::onEnterTransitionDidFinish();
     
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 1, false);
 }
 
 void CATextField::onExitTransitionDidStart()
 {
     CAControl::onExitTransitionDidStart();
-    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
 }
 
 CATextField* CATextField::create(CCRect frame)

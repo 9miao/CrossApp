@@ -30,38 +30,25 @@ void RootViewController::viewDidLoad()
     tableView->setTableFooterHeight(200);
     tableView->setTableFooterView(v2);
     
-    CAView* s = CAView::createWithFrame(CCRectZero, ccc4(127, 127, 127, 127));
-    tableView->setTablePullDownView(s);
+    CAView* s = CAView::createWithFrame(CCRectZero, ccc4(127, 255, 127, 127));
+    tableView->setTablePullUpView(s);
     tableView->setTablePullViewHeight(200);
     
     tableView->setBackGroundImage(CAImage::create("bg.jpg"));
     
-    
-    CAButton* btn1 = CAButton::createWithFrame(CCRect(10, tableRect.size.height+10, 240, 60));
-    btn1->setView(CAControlStateNormal, CCLabelTTF::create("unSelected", "Arial", 30));
-    btn1->setView(CAControlStateSelected, CCLabelTTF::create("selected", "Arial", 30));
-    btn1->getView(CAControlStateNormal)->setColor(ccBLACK);
-    btn1->getView(CAControlStateSelected)->setColor(ccBLACK);
-    this->getView()->addSubview(btn1);
-    btn1->addTarget(this, CAButton_selector(RootViewController::setAllowsSelection), TouchUpInSide);
-    btn1->setAllowsSelected(true);
-    
-    CAButton* btn2 = CAButton::createWithFrame(CCRect(260, tableRect.size.height+10, 240, 60));
-    btn2->setView(CAControlStateNormal, CCLabelTTF::create("unAllowsMultiple", "Arial", 30));
-    btn2->setView(CAControlStateSelected, CCLabelTTF::create("allowsMultiple", "Arial", 30));
-    btn2->getView(CAControlStateNormal)->setColor(ccBLACK);
-    btn2->getView(CAControlStateSelected)->setColor(ccBLACK);
+    CAButton* btn2 = CAButton::createWithFrame(CCRect(200, tableRect.size.height+10, 320, 60), CAButtonTypeRoundedRect);
+    btn2->setTitleForState(CAControlStateNormal, "un-allowsMultiple");
+    btn2->setTitleForState(CAControlStateSelected, "allowsMultiple");
     this->getView()->addSubview(btn2);
-    btn2->addTarget(this, CAButton_selector(RootViewController::setAllowsMultipleSelection), TouchUpInSide);
+    btn2->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlTouchUpInSide);
     btn2->setAllowsSelected(true);
     
+    CASwitch* s3 = CASwitch::createWithFrame(CCRect(10, tableRect.size.height+10, 120, 60));
+    s3->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection), CAControlTouchUpInSide);
+    this->getView()->addSubview(s3);
     
-    progress = CAProgress::create();
-    progress->setFrame(CCRect(520, tableRect.size.height+10, 200, 16));
-    this->getView()->addSubview(progress);
-    progress->setProgress(0.5f);
+    //CAScheduler::schedule(schedule_selector(RootViewController::updateProgress), this, 5, false);
     
-    CAScheduler::schedule(schedule_selector(RootViewController::updateProgress), this, 5, false);
 }
 
 void RootViewController::viewDidUnload()
@@ -69,16 +56,11 @@ void RootViewController::viewDidUnload()
 
 }
 
-void RootViewController::updateProgress(float dt)
+bool RootViewController::setAllowsSelection(CAControl* sender, CCPoint point)
 {
-    progress->setProgress(CCRANDOM_0_1(), true);
+    CASwitch* switch_ = (CASwitch*)sender;
     
-    CCLog("-- %s",this->getNavigationBarItem()->getTitle().c_str());
-}
-
-bool RootViewController::setAllowsSelection(CAButton* btn, CCPoint point)
-{
-    if (btn->isSelected())
+    if (switch_->isOn() == false)
     {
         tableView->setAllowsSelection(false);
     }
@@ -93,18 +75,20 @@ bool RootViewController::setAllowsSelection(CAButton* btn, CCPoint point)
     return true;
 }
 
-bool RootViewController::setAllowsMultipleSelection(CAButton* btn, CCPoint point)
+bool RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint point)
 {
-    if (btn->isSelected())
-    {
-        tableView->setAllowsMultipleSelection(false);
-    }
-    else
-    {
-        tableView->setAllowsMultipleSelection(true);
-    }
-    
-    tableView->reloadData();
+//	CAButton* btn = (CAButton*)sender;
+//    
+//	if (btn->isSelected())
+//    {
+//        tableView->setAllowsMultipleSelection(false);
+//    }
+//    else
+//    {
+//        tableView->setAllowsMultipleSelection(true);
+//    }
+//    
+//    tableView->reloadData();
     
     return true;
 }
@@ -154,8 +138,8 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
 //    label->setText(str->getCString());
 //    cell->addSubview(label);
     
-
     return cell;
+    
 }
 
 CAView* RootViewController::tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section)

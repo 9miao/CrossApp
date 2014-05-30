@@ -1,5 +1,5 @@
 #include "CCEGLViewProtocol.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "touch_dispatcher/CATouchDispatcher.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "CCDirector.h"
 #include "cocoa/CCSet.h"
@@ -221,7 +221,6 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
 			pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x) / m_fScaleX, 
                                      (y - m_obViewPortRect.origin.y) / m_fScaleY);
             
-            //CCLOG("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
             
             CCInteger* pInterObj = new CCInteger(nUnusedIndex);
             s_TouchesIntergerDict.setObject(pInterObj, id);

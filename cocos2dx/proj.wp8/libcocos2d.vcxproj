@@ -364,15 +364,15 @@
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp" />
     <ClCompile Include="..\text_input_node\CATextField.cpp" />
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp" />
+    <ClCompile Include="..\touch_dispatcher\CATouchDispatcher.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp" />
-    <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp" />
-    <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
     <ClCompile Include="..\ui_controller\CABar.cpp" />
     <ClCompile Include="..\ui_controller\CABarItem.cpp" />
     <ClCompile Include="..\ui_controller\CAButton.cpp" />
     <ClCompile Include="..\ui_controller\CAControl.cpp" />
     <ClCompile Include="..\ui_controller\CAProgress.cpp" />
     <ClCompile Include="..\ui_controller\CAScrollView.cpp" />
+    <ClCompile Include="..\ui_controller\CASwitch.cpp" />
     <ClCompile Include="..\ui_controller\CATableView.cpp" />
     <ClCompile Include="..\ui_controller\CAViewController.cpp" />
   </ItemGroup>
@@ -513,16 +513,15 @@
     <ClInclude Include="..\text_input_node\CATextField.h" />
     <ClInclude Include="..\text_input_node\CCIMEDelegate.h" />
     <ClInclude Include="..\text_input_node\CCIMEDispatcher.h" />
+    <ClInclude Include="..\touch_dispatcher\CATouchDispatcher.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouch.h" />
-    <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h" />
-    <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h" />
-    <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h" />
     <ClInclude Include="..\ui_controller\CABar.h" />
     <ClInclude Include="..\ui_controller\CABarItem.h" />
     <ClInclude Include="..\ui_controller\CAButton.h" />
     <ClInclude Include="..\ui_controller\CAControl.h" />
     <ClInclude Include="..\ui_controller\CAProgress.h" />
     <ClInclude Include="..\ui_controller\CAScrollView.h" />
+    <ClInclude Include="..\ui_controller\CASwitch.h" />
     <ClInclude Include="..\ui_controller\CATableView.h" />
     <ClInclude Include="..\ui_controller\CAViewController.h" />
   </ItemGroup>

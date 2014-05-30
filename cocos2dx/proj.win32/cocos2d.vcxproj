@@ -230,9 +230,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\support\zip_support\unzip.cpp" />
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp" />
     <ClCompile Include="..\text_input_node\CATextField.cpp" />
+    <ClCompile Include="..\touch_dispatcher\CATouchDispatcher.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp" />
-    <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp" />
-    <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDelegate.cpp" />
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDispatcher.cpp" />
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp" />
@@ -259,6 +258,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\ui_controller\CAControl.cpp" />
     <ClCompile Include="..\ui_controller\CAProgress.cpp" />
     <ClCompile Include="..\ui_controller\CAScrollView.cpp" />
+    <ClCompile Include="..\ui_controller\CASwitch.cpp" />
     <ClCompile Include="..\ui_controller\CATableView.cpp" />
     <ClCompile Include="..\ui_controller\CAViewController.cpp" />
   </ItemGroup>
@@ -383,10 +383,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\support\zip_support\unzip.h" />
     <ClInclude Include="..\support\zip_support\ZipUtils.h" />
     <ClInclude Include="..\text_input_node\CATextField.h" />
+    <ClInclude Include="..\touch_dispatcher\CATouchDispatcher.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouch.h" />
-    <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h" />
-    <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h" />
-    <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h" />
     <ClInclude Include="..\keypad_dispatcher\CCKeypadDelegate.h" />
     <ClInclude Include="..\keypad_dispatcher\CCKeypadDispatcher.h" />
     <ClInclude Include="..\text_input_node\CCIMEDelegate.h" />
@@ -414,6 +412,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\ui_controller\CAControl.h" />
     <ClInclude Include="..\ui_controller\CAProgress.h" />
     <ClInclude Include="..\ui_controller\CAScrollView.h" />
+    <ClInclude Include="..\ui_controller\CASwitch.h" />
     <ClInclude Include="..\ui_controller\CATableView.h" />
     <ClInclude Include="..\ui_controller\CAViewController.h" />
   </ItemGroup>

@@ -103,6 +103,7 @@ ui_controller/CABarItem.cpp \
 ui_controller/CABar.cpp \
 ui_controller/CAControl.cpp \
 ui_controller/CAButton.cpp \
+ui_controller/CASwitch.cpp \
 ui_controller/CAScrollView.cpp \
 ui_controller/CATableView.cpp \
 ui_controller/CAProgress.cpp \
@@ -129,8 +130,7 @@ images/CAImage.cpp \
 images/CAImageCache.cpp \
 images/CAImageETC.cpp \
 images/CAImagePVR.cpp \
-touch_dispatcher/CCTouchDispatcher.cpp \
-touch_dispatcher/CCTouchHandler.cpp \
+touch_dispatcher/CATouchDispatcher.cpp \
 touch_dispatcher/CCTouch.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \

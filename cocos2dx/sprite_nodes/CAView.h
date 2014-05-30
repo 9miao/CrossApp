@@ -1,13 +1,13 @@
 //
 //  CAView.h
-//  cocos2dx
+//  CrossApp
 //
-//  Created by 栗元峰 on 14-5-12.
+//  Created by Li Yuanfeng on 14-5-12.
 //  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
 //
 
-#ifndef __cocos2dx__CAView_
-#define __cocos2dx__CAView_
+#ifndef __CAView__
+#define __CAView__
 
 #include <iostream>
 #include "ccMacros.h"
@@ -18,7 +18,6 @@
 #include "shaders/CCGLProgram.h"
 #include "kazmath/kazmath.h"
 #include "CCProtocols.h"
-#include "touch_dispatcher/CCTouchDelegateProtocol.h"
 #include "platform/CCAccelerometerDelegate.h"
 #include "keypad_dispatcher/CCKeypadDelegate.h"
 #ifdef EMSCRIPTEN
@@ -60,7 +59,6 @@ enum {
 class CC_DLL CAView
 :public CCObject
 ,public CCRGBAProtocol
-,public CCTouchDelegate
 ,public CCTextureProtocol
 #ifdef EMSCRIPTEN
 ,public CCGLBufferedNode
@@ -951,6 +949,16 @@ public:
     /**
      * Converts a Point to node (local) space coordinates. The result is in Points.
      */
+    CCRect convertRectToNodeSpace(const CCRect& worldRect);
+    
+    /**
+     * Converts a Point to world space coordinates. The result is in Points.
+     */
+    CCRect convertRectToWorldSpace(const CCRect& nodeRect);
+    
+    /**
+     * Converts a Point to node (local) space coordinates. The result is in Points.
+     */
     CCPoint convertToNodeSpace(const CCPoint& worldPoint);
     
     /**
@@ -988,27 +996,6 @@ public:
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
-
-    /** If isTouchEnabled, this method is called onEnter. Override it to change the
-     way CCLayer receives touch events.
-     ( Default: CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
-     Example:
-     void CCLayer::registerWithTouchDispatcher()
-     {
-     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
-     }
-     @since v0.8.0
-     */
-    virtual void registerWithTouchDispatcher(void);
-    
-    
-    virtual bool isTouchEnabled();
-    virtual void setTouchEnabled(bool value);
-    
-    /** priority of the touch events. Default is 0 */
-    virtual void setTouchPriority(int priority);
-    virtual int getTouchPriority();
-    
 
     virtual GLubyte getOpacity();
     virtual GLubyte getDisplayedOpacity();
@@ -1187,9 +1174,7 @@ protected:
 	bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
     
-    bool m_bTouchEnabled;
     bool m_bDisplayRange;
-    int m_nTouchPriority;
     
 public:
     
@@ -1373,9 +1358,14 @@ protected:
     ccBlendFunc        m_sBlendFunc;            /// It's required for CCTextureProtocol inheritance
     CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
     
+    
+    CC_SYNTHESIZE_READONLY(CCSet*, m_pTouchesSet, TouchesSet);
+    
     CC_SYNTHESIZE(CAViewDelegate*, m_pViewDelegate, ViewDelegate);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bFrame, Frame);
+    
+    CC_SYNTHESIZE_IS(bool, m_bMutableTouches, MutableTouches);
 };
 
 class CAViewDelegate

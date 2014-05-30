@@ -387,12 +387,6 @@
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp">
       <Filter>touch_dispatcher</Filter>
     </ClCompile>
-    <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp">
-      <Filter>touch_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp">
-      <Filter>touch_dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCConfiguration.cpp" />
     <ClCompile Include="..\CCDirector.cpp" />
@@ -468,6 +462,12 @@
       <Filter>sprite_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\CAScheduler.cpp" />
+    <ClCompile Include="..\touch_dispatcher\CATouchDispatcher.cpp">
+      <Filter>touch_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CASwitch.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\actions\CCAction.h">
@@ -818,15 +818,6 @@
     <ClInclude Include="..\touch_dispatcher\CCTouch.h">
       <Filter>touch_dispatcher</Filter>
     </ClInclude>
-    <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h">
-      <Filter>touch_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h">
-      <Filter>touch_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h">
-      <Filter>touch_dispatcher</Filter>
-    </ClInclude>
     <ClInclude Include="..\CCCamera.h" />
     <ClInclude Include="..\CCConfiguration.h" />
     <ClInclude Include="..\CCDirector.h" />
@@ -904,5 +895,11 @@
       <Filter>sprite_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\CAScheduler.h" />
+    <ClInclude Include="..\touch_dispatcher\CATouchDispatcher.h">
+      <Filter>touch_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CASwitch.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

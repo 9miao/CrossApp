@@ -1,9 +1,9 @@
 //
 //  CABarItem.h
-//  cocos2dx
+//  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-14.
-//  Copyright (c) 2014 www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
 #ifndef __cocos2dx__CABarItem__

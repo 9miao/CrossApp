@@ -1,9 +1,9 @@
 //
 //  CAControl.cpp
-//  cocos2dx
+//  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-6.
-//  Copyright (c) 2014 www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
 #include "CAControl.h"
@@ -11,90 +11,60 @@
 NS_CC_BEGIN
 
 CAControl::CAControl()
-:m_pBackGroundView(NULL)
-,m_pHighlightedBackGroundView(NULL)
-,m_pDisabledBackGroundView(NULL)
-,m_pSelectedBackGroundView(NULL)
-,m_eControlState(CAControlStateNormal)
-,m_specially(true)
+:m_eControlState(CAControlStateNormal)
+,m_bControlStateLocked(false)
+,m_target(NULL)
+,m_bTouchEnabled(true)
 {
-
+    for (int i=0; i<CAControlStateAll; i++)
+    {
+        m_pBackGroundView[i] = NULL;
+    }
+    
+    for (int i=0; i<5; i++)
+    {
+        m_selTouch[i] = NULL;
+    }
 }
 
 CAControl::~CAControl()
 {
     this->removeAllSubviews();
-    CC_SAFE_RELEASE_NULL(m_pBackGroundView);
-    CC_SAFE_RELEASE_NULL(m_pHighlightedBackGroundView);
-    CC_SAFE_RELEASE_NULL(m_pDisabledBackGroundView);
-    CC_SAFE_RELEASE_NULL(m_pSelectedBackGroundView);
+    for (int i=0; i<CAControlStateAll; i++)
+    {
+        CC_SAFE_RELEASE_NULL(m_pBackGroundView[i]);
+    }
 }
 
 void CAControl::setControlState(CAControlState var)
 {
-    this->removeSubview(m_pBackGroundView);
-    this->removeSubview(m_pHighlightedBackGroundView);
-    this->removeSubview(m_pDisabledBackGroundView);
-    this->removeSubview(m_pSelectedBackGroundView);
-
-    m_eControlState = var;
-    
-    switch (m_eControlState)
+    do
     {
-        case CAControlStateNormal:
+        CC_BREAK_IF(var == CAControlStateAll);
+        
+        for (int i=0; i<CAControlStateAll; i++)
         {
-            if (m_pBackGroundView)
-            {
-                m_pBackGroundView->setFrame(this->getBounds());
-                this->insertSubview(m_pBackGroundView, -1);
-            }
-            break;
+            this->removeSubview(m_pBackGroundView[i]);
         }
-        case CAControlStateHighlighted:
+
+        m_eControlState = var;
+        
+        if (m_bControlStateLocked)
         {
-            if (m_pHighlightedBackGroundView)
-            {
-                m_pHighlightedBackGroundView->setFrame(this->getBounds());
-                this->insertSubview(m_pHighlightedBackGroundView, -1);
-            }
-            else if (m_pBackGroundView)
-            {
-                m_pBackGroundView->setFrame(this->getBounds());
-                this->insertSubview(m_pBackGroundView, -1);
-            }
-            break;
+            m_eControlState = CAControlStateNormal;
         }
-        case CAControlStateDisabled:
+        
+        if (m_pBackGroundView[m_eControlState] && m_eControlState != CAControlStateNormal)
         {
-            if (m_pDisabledBackGroundView)
-            {
-                m_pDisabledBackGroundView->setFrame(this->getBounds());
-                this->insertSubview(m_pDisabledBackGroundView, -1);
-            }
-            else if (m_pBackGroundView)
-            {
-                m_pBackGroundView->setFrame(this->getBounds());
-                this->insertSubview(m_pBackGroundView, -1);
-            }
-            break;
+            m_pBackGroundView[m_eControlState]->setFrame(this->getBounds());
+            this->insertSubview(m_pBackGroundView[m_eControlState], -1);
         }
-        case CAControlStateSelected:
+        else if (m_pBackGroundView[CAControlStateNormal])
         {
-            if (m_pSelectedBackGroundView)
-            {
-                m_pSelectedBackGroundView->setFrame(this->getBounds());
-                this->insertSubview(m_pSelectedBackGroundView, -1);
-            }
-            else if (m_pBackGroundView)
-            {
-                m_pBackGroundView->setFrame(this->getBounds());
-                this->insertSubview(m_pBackGroundView, -1);
-            }
-            break;
+            m_pBackGroundView[CAControlStateNormal]->setFrame(this->getBounds());
+            this->insertSubview(m_pBackGroundView[CAControlStateNormal], -1);
         }
-        default:
-            break;
-    }
+    } while (0);
 }
 
 CAControlState CAControl::getControlState()
@@ -122,92 +92,69 @@ void CAControl::setControlStateSelected()
     this->setControlState(CAControlStateSelected);
 }
 
-void CAControl::setBackGroundView(cocos2d::CAView *var)
+void CAControl::setBackGroundViewForState(CAControlState controlState, CAView *var)
 {
-    if (m_pBackGroundView != var)
+    if (controlState == CAControlStateAll)
+    {
+        for (int i=0; i<CAControlStateAll; i++)
+        {
+            this->setBackGroundViewForState((CAControlState)i, var);
+        }
+        return;
+    }
+    
+    if (m_pBackGroundView[controlState] != var)
     {
         CC_SAFE_RETAIN(var);
-        this->removeSubview(m_pBackGroundView);
-        CC_SAFE_RELEASE(m_pBackGroundView);
-        m_pBackGroundView = var;
+        this->removeSubview(m_pBackGroundView[controlState]);
+        CC_SAFE_RELEASE(m_pBackGroundView[controlState]);
+        m_pBackGroundView[controlState] = var;
     }
 }
 
-CAView* CAControl::getBackGroundView()
+CAView* CAControl::getBackGroundViewForState(CAControlState controlState)
 {
-    return m_pBackGroundView;
+    if (controlState == CAControlStateAll)
+    {
+        return NULL;
+    }
+    return m_pBackGroundView[controlState];
 }
 
-void CAControl::setHighlightedBackGroundView(cocos2d::CAView *var)
+void CAControl::addTarget(void *target, SEL_CAControl selector, CAControlTouchType type)
 {
-    if (m_pHighlightedBackGroundView != var)
+    m_selTouch[type] = selector;
+    
+    m_target = target;
+}
+
+void CAControl::setTouchEnabled(bool enabled)
+{
+    m_bTouchEnabled = enabled;
+    
+    if (m_bTouchEnabled)
     {
-        CC_SAFE_RETAIN(var);
-        this->removeSubview(m_pHighlightedBackGroundView);
-        CC_SAFE_RELEASE(m_pHighlightedBackGroundView);
-        m_pHighlightedBackGroundView = var;
+        this->setControlState(CAControlStateNormal);
+    }
+    else
+    {
+        this->setControlState(CAControlStateDisabled);
     }
 }
 
-CAView* CAControl::getHighlightedBackGroundView()
+bool CAControl::isTouchEnabled()
 {
-    return m_pHighlightedBackGroundView;
-}
-
-void CAControl::setDisabledBackGroundView(cocos2d::CAView *var)
-{
-    if (m_pDisabledBackGroundView != var)
-    {
-        CC_SAFE_RETAIN(var);
-        this->removeSubview(m_pDisabledBackGroundView);
-        CC_SAFE_RELEASE(m_pDisabledBackGroundView);
-        m_pDisabledBackGroundView = var;
-    }
-}
-
-CAView* CAControl::getDisabledBackGroundView()
-{
-    return m_pDisabledBackGroundView;
-}
-
-void CAControl::setSelectedBackGroundView(cocos2d::CAView *var)
-{
-    if (m_pSelectedBackGroundView != var)
-    {
-        CC_SAFE_RETAIN(var);
-        this->removeSubview(m_pSelectedBackGroundView);
-        CC_SAFE_RELEASE(m_pSelectedBackGroundView);
-        m_pSelectedBackGroundView = var;
-    }
-}
-
-CAView* CAControl::getSelectedBackGroundView()
-{
-    return m_pSelectedBackGroundView;
+    return m_bTouchEnabled;
 }
 
 void CAControl::setContentSize(const CCSize& var)
 {
     CAView::setContentSize(var);
     
-    if (m_pBackGroundView)
+    for(int i=0; i<CAControlStateAll; i++)
     {
-        m_pBackGroundView->setFrame(this->getBounds());
-    }
-    
-    if (m_pHighlightedBackGroundView)
-    {
-        m_pHighlightedBackGroundView->setFrame(this->getBounds());
-    }
-    
-    if (m_pDisabledBackGroundView)
-    {
-        m_pDisabledBackGroundView->setFrame(this->getBounds());
-    }
-    
-    if (m_pSelectedBackGroundView)
-    {
-        m_pSelectedBackGroundView->setFrame(this->getBounds());
+        CC_CONTINUE_IF(m_pBackGroundView[i] == NULL);
+        m_pBackGroundView[i]->setFrame(this->getBounds());
     }
 }
     

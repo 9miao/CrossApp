@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "../CCEGLView.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "touch_dispatcher/CATouchDispatcher.h"
 
 #include <android/log.h>
 #include <jni.h>

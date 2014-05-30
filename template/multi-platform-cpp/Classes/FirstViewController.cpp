@@ -31,21 +31,19 @@ FirstViewController::~FirstViewController()
 void FirstViewController::viewDidLoad()
 {
     // Do any additional setup after loading the view from its nib.
-    
-    CAImageView* imageView = CAImageView::createWithImage(CAImage::create("9m.jpg"));
-    imageView->setFrame(CCRect(100, 100, 0, 0));
+	CCRect winRect = this->getView()->getBounds();
+    CAImageView* imageView = CAImageView::createWithImage(CAImage::create("HelloWorld.png"));
+    imageView->setFrame(CCRect(0, 0, 0, 0));
     this->getView()->addSubview(imageView);
     
-    CCLabelTTF* ttf = CCLabelTTF::create("Hello World!", "Arial", 50);
-    ttf->setColor(ccBLACK);
-    ttf->setFrame(CCRect(200, 450, 0, 0));
-    this->getView()->addSubview(ttf);
+    CCLabelTTF* ttf = CCLabelTTF::create("Hello World!", "CODE LIGHT", 72);
+    ttf->setColor(ccWHITE);
+    ttf->setCenter(CCRect(winRect.size.width*0.5, winRect.size.height*0.5-270, 0, 0));
+    this->getView()->insertSubview(ttf,1);
 }
 
 void FirstViewController::viewDidUnload()
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    
-    
 }

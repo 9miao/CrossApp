@@ -1,9 +1,9 @@
 //
 //  CAControl.h
-//  cocos2dx
+//  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-6.
-//  Copyright (c) 2014 www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
 #ifndef __cocos2dx__CAControl__
@@ -16,20 +16,26 @@ NS_CC_BEGIN
 
 typedef enum
 {
-    TouchBegin          = 0,
-    TouchMoved          = 1,
-    TouchMovedOutSide   = 2,
-    TouchUpInSide       = 3,
-    TouchUpSide         = 4,
-}CAControlType;
+    CAControlTouchBegin = 0,
+    CAControlTouchMoved,
+    CAControlTouchMovedOutSide,
+    CAControlTouchUpInSide,
+    CAControlTouchUpSide
+}CAControlTouchType;
 
 typedef enum
 {
-    CAControlStateNormal         = 0,
-    CAControlStateHighlighted    = 1,
-    CAControlStateDisabled       = 2,
-    CAControlStateSelected       = 3
+    CAControlStateNormal = 0,
+    CAControlStateHighlighted,
+    CAControlStateDisabled,
+    CAControlStateSelected,
+    CAControlStateAll
 }CAControlState;
+
+class CAControl;
+
+typedef bool (CCObject::*SEL_CAControl)(CAControl*, CCPoint);
+#define CAControl_selector(_SELECTOR) (SEL_CAControl)(&_SELECTOR)
 
 class CC_DLL CAControl: public CAView
 {
@@ -40,7 +46,7 @@ public:
     
     virtual ~CAControl();
     
-    CC_SYNTHESIZE(bool, m_specially, TouchSpecially);
+    CC_SYNTHESIZE(bool, m_bControlStateLocked, ControlStateLocked);
     
     CC_PROPERTY(CAControlState, m_eControlState, ControlState);
     
@@ -51,17 +57,26 @@ public:
     void setControlStateDisabled();
     
     void setControlStateSelected();
-
-    CC_PROPERTY(CAView*, m_pBackGroundView, BackGroundView);
     
-    CC_PROPERTY(CAView*, m_pHighlightedBackGroundView, HighlightedBackGroundView);
+    void addTarget(void* target, SEL_CAControl selector, CAControlTouchType type);
     
-    CC_PROPERTY(CAView*, m_pDisabledBackGroundView, DisabledBackGroundView);
+    CC_PROPERTY_IS(bool, m_bTouchEnabled, TouchEnabled);
     
-    CC_PROPERTY(CAView*, m_pSelectedBackGroundView, SelectedBackGroundView);
+protected:
     
     virtual void setContentSize(const CCSize& var);
     
+    virtual void setBackGroundViewForState(CAControlState controlState, CAView *var);
+    
+    virtual CAView* getBackGroundViewForState(CAControlState controlState);
+    
+protected:
+    
+    CAView* m_pBackGroundView[CAControlStateAll];
+    
+    void* m_target;
+    
+    SEL_CAControl m_selTouch[5];
 };
 
 

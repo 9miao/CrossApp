@@ -40,12 +40,13 @@ void FirstViewController::viewDidLoad()
     ttf->setColor(ccBLACK);
     ttf->setFrame(CCRect(200, 450, 0, 0));
     this->getView()->addSubview(ttf);
+
 }
 
 void FirstViewController::viewDidUnload()
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    
+
     
 }

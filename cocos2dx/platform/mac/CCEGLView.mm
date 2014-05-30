@@ -26,7 +26,7 @@
 #include "CCDirectorCaller.h"
 #include "CCSet.h"
 #include "CCTouch.h"
-#include "CCTouchDispatcher.h"
+#include "CATouchDispatcher.h"
 
 NS_CC_BEGIN
 

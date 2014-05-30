@@ -1,9 +1,9 @@
 //
 //  CATableView.h
-//  cocos2dx
+//  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-28.
-//  Copyright (c) 2014 www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
 #ifndef __cocos2dx__CATableView__
@@ -187,6 +187,8 @@ public:
     
     bool initWithReuseIdentifier(const char* reuseIdentifier);
     
+    void setBackGroundViewForState(CAControlState controlState, CAView *var);
+    
 protected:
 
     CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
@@ -195,8 +197,6 @@ protected:
     
     CC_SYNTHESIZE(unsigned int, m_nRow, Row);
 
-protected:
-    
 };
 
 NS_CC_END;

@@ -94,13 +94,12 @@ CCDictionary* CAUIHelper::createCAWidgetWithJsonFile(const char *filename)
 
 CCObject* CAUIHelper::addButton(CSJson::Value jsonValue, cocos2d::CCRect &uiRect)
 {
-    CAButton *btn = CAButton::createWithFrame(uiRect);
+    CAButton *btn = CAButton::createWithFrame(uiRect, CAButtonTypeRoundedRect);
     int tag = jsonValue["tag"].asInt();
 //    bool isEffect = jsonValue["isEffect"].asBool();
 //    bool isClick = jsonValue["isClick"].asBool();
 //    bool isTouchSuspend = jsonValue["isTouchSuspend"].asBool();
     CAControlState  btnState = (CAControlState)jsonValue["btnState"].asInt();
-    int touchPriority = jsonValue["touchPriority"].asInt();
 
     int alpha = jsonValue["alpha"].asInt();
     std::string imageRes = jsonValue["backgroundImage"].asString();
@@ -108,7 +107,6 @@ CCObject* CAUIHelper::addButton(CSJson::Value jsonValue, cocos2d::CCRect &uiRect
     
     btn->setTag(tag);
     btn->setOpacity(alpha);
-    btn->setTouchPriority(touchPriority);
     btn->setControlState(btnState);
     if (btntype == ButtonColor)
     {

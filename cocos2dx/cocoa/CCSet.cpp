@@ -92,14 +92,19 @@ int CCSet::count(void)
 
 void CCSet::addObject(CCObject *pObject)
 {
-    CC_SAFE_RETAIN(pObject);
-    m_pSet->insert(pObject);
+    if (m_pSet->count(pObject) == 0)
+    {
+        CC_SAFE_RETAIN(pObject);
+        m_pSet->insert(pObject);
+    }
 }
 
 void CCSet::removeObject(CCObject *pObject)
 {
-    m_pSet->erase(pObject);
-    CC_SAFE_RELEASE(pObject);
+    if (m_pSet->erase(pObject) > 0)
+    {
+        CC_SAFE_RELEASE(pObject);
+    }
 }
 
 void CCSet::removeAllObjects()
@@ -107,13 +112,9 @@ void CCSet::removeAllObjects()
     CCSetIterator it;
     for (it = m_pSet->begin(); it != m_pSet->end(); ++it)
     {
-        if (! (*it))
-        {
-            break;
-        }
-
-        (*it)->release();
+        CC_SAFE_RELEASE((*it));
     }
+    m_pSet->clear();
 }
 
 bool CCSet::containsObject(CCObject *pObject)

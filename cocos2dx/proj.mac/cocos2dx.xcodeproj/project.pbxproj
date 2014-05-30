@@ -191,11 +191,8 @@
 		1551A852158F2ADF00E66CFE /* ZipUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A603158F2ADE00E66CFE /* ZipUtils.cpp */; };
 		1551A853158F2ADF00E66CFE /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A604158F2ADE00E66CFE /* ZipUtils.h */; };
 		1551A86D158F2ADF00E66CFE /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A622158F2ADE00E66CFE /* CCTouch.h */; };
-		1551A86E158F2ADF00E66CFE /* CCTouchDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A623158F2ADE00E66CFE /* CCTouchDelegateProtocol.h */; };
-		1551A86F158F2ADF00E66CFE /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A624158F2ADE00E66CFE /* CCTouchDispatcher.cpp */; };
-		1551A870158F2ADF00E66CFE /* CCTouchDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A625158F2ADE00E66CFE /* CCTouchDispatcher.h */; };
-		1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A626158F2ADE00E66CFE /* CCTouchHandler.cpp */; };
-		1551A872158F2ADF00E66CFE /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A627158F2ADE00E66CFE /* CCTouchHandler.h */; };
+		1551A86F158F2ADF00E66CFE /* CATouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A624158F2ADE00E66CFE /* CATouchDispatcher.cpp */; };
+		1551A870158F2ADF00E66CFE /* CATouchDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A625158F2ADE00E66CFE /* CATouchDispatcher.h */; };
 		1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */; };
 		15842A2615CF6C42006B033F /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15842A2515CF6C42006B033F /* CCTouch.cpp */; };
 		15C647EF165F2B77007D4F18 /* CCClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C647ED165F2B77007D4F18 /* CCClippingNode.cpp */; };
@@ -252,9 +249,11 @@
 		B020AF781929DE41009FFA81 /* CCIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B020AF751929DE41009FFA81 /* CCIMEDelegate.h */; };
 		B020AF791929DE41009FFA81 /* CCIMEDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B020AF761929DE41009FFA81 /* CCIMEDispatcher.cpp */; };
 		B020AF7A1929DE41009FFA81 /* CCIMEDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B020AF771929DE41009FFA81 /* CCIMEDispatcher.h */; };
-		B06FDC8A1925AE2D00AB5BCA /* CAVector.h in Headers */ = {isa = PBXBuildFile; fileRef = B06FDC891925AE2D00AB5BCA /* CAVector.h */; };
+		B03E8FAB1938640E00FD9A06 /* CASwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = B03E8FAA1938640E00FD9A06 /* CASwitch.h */; };
+		B03E8FAD1938641400FD9A06 /* CASwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03E8FAC1938641400FD9A06 /* CASwitch.cpp */; };
 		B06FDC8F1925F2A600AB5BCA /* CALabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06FDC8E1925F2A600AB5BCA /* CALabel.cpp */; };
 		B06FDC911925F2AC00AB5BCA /* CALabel.h in Headers */ = {isa = PBXBuildFile; fileRef = B06FDC901925F2AC00AB5BCA /* CALabel.h */; };
+		B083180E1935E2D800C9C509 /* CAVector.h in Headers */ = {isa = PBXBuildFile; fileRef = B083180D1935E2D800C9C509 /* CAVector.h */; };
 		B099B73619209FEE004339EC /* CAView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B099B73419209FEE004339EC /* CAView.cpp */; };
 		B099B73719209FEE004339EC /* CAView.h in Headers */ = {isa = PBXBuildFile; fileRef = B099B73519209FEE004339EC /* CAView.h */; };
 		B0AD9382192077B600EA40BB /* CAWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD937C192077B600EA40BB /* CAWindow.cpp */; };
@@ -481,11 +480,8 @@
 		1551A603158F2ADE00E66CFE /* ZipUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZipUtils.cpp; sourceTree = "<group>"; };
 		1551A604158F2ADE00E66CFE /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		1551A622158F2ADE00E66CFE /* CCTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouch.h; sourceTree = "<group>"; };
-		1551A623158F2ADE00E66CFE /* CCTouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDelegateProtocol.h; sourceTree = "<group>"; };
-		1551A624158F2ADE00E66CFE /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
-		1551A625158F2ADE00E66CFE /* CCTouchDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDispatcher.h; sourceTree = "<group>"; };
-		1551A626158F2ADE00E66CFE /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
-		1551A627158F2ADE00E66CFE /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
+		1551A624158F2ADE00E66CFE /* CATouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATouchDispatcher.cpp; sourceTree = "<group>"; };
+		1551A625158F2ADE00E66CFE /* CATouchDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATouchDispatcher.h; sourceTree = "<group>"; };
 		1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos2dx-Prefix.pch"; sourceTree = "<group>"; };
 		15842A2515CF6C42006B033F /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 		15C647ED165F2B77007D4F18 /* CCClippingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingNode.cpp; sourceTree = "<group>"; };
@@ -542,9 +538,11 @@
 		B020AF751929DE41009FFA81 /* CCIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDelegate.h; sourceTree = "<group>"; };
 		B020AF761929DE41009FFA81 /* CCIMEDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCIMEDispatcher.cpp; sourceTree = "<group>"; };
 		B020AF771929DE41009FFA81 /* CCIMEDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDispatcher.h; sourceTree = "<group>"; };
-		B06FDC891925AE2D00AB5BCA /* CAVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVector.h; path = "../../../../../Library/Application Support/RTXC/accounts/栗元峰/sessionPhoto/CAVector.h"; sourceTree = "<group>"; };
+		B03E8FAA1938640E00FD9A06 /* CASwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASwitch.h; sourceTree = "<group>"; };
+		B03E8FAC1938641400FD9A06 /* CASwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASwitch.cpp; sourceTree = "<group>"; };
 		B06FDC8E1925F2A600AB5BCA /* CALabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALabel.cpp; sourceTree = "<group>"; };
 		B06FDC901925F2AC00AB5BCA /* CALabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALabel.h; sourceTree = "<group>"; };
+		B083180D1935E2D800C9C509 /* CAVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVector.h; sourceTree = "<group>"; };
 		B099B73419209FEE004339EC /* CAView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAView.cpp; sourceTree = "<group>"; };
 		B099B73519209FEE004339EC /* CAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAView.h; sourceTree = "<group>"; };
 		B0AD937C192077B600EA40BB /* CAWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWindow.cpp; sourceTree = "<group>"; };
@@ -706,7 +704,7 @@
 		1551A37F158F2ADE00E66CFE /* cocoa */ = {
 			isa = PBXGroup;
 			children = (
-				B06FDC891925AE2D00AB5BCA /* CAVector.h */,
+				B083180D1935E2D800C9C509 /* CAVector.h */,
 				1551A380158F2ADE00E66CFE /* CCAffineTransform.cpp */,
 				1551A381158F2ADE00E66CFE /* CCAffineTransform.h */,
 				1551A382158F2ADE00E66CFE /* CCArray.cpp */,
@@ -1045,11 +1043,8 @@
 			children = (
 				15842A2515CF6C42006B033F /* CCTouch.cpp */,
 				1551A622158F2ADE00E66CFE /* CCTouch.h */,
-				1551A623158F2ADE00E66CFE /* CCTouchDelegateProtocol.h */,
-				1551A624158F2ADE00E66CFE /* CCTouchDispatcher.cpp */,
-				1551A625158F2ADE00E66CFE /* CCTouchDispatcher.h */,
-				1551A626158F2ADE00E66CFE /* CCTouchHandler.cpp */,
-				1551A627158F2ADE00E66CFE /* CCTouchHandler.h */,
+				1551A624158F2ADE00E66CFE /* CATouchDispatcher.cpp */,
+				1551A625158F2ADE00E66CFE /* CATouchDispatcher.h */,
 			);
 			path = touch_dispatcher;
 			sourceTree = "<group>";
@@ -1156,6 +1151,8 @@
 				B0AD938C192077C200EA40BB /* CABarItem.h */,
 				B0AD938D192077C200EA40BB /* CAButton.cpp */,
 				B0AD938E192077C200EA40BB /* CAButton.h */,
+				B03E8FAC1938641400FD9A06 /* CASwitch.cpp */,
+				B03E8FAA1938640E00FD9A06 /* CASwitch.h */,
 				B0AD938F192077C200EA40BB /* CAControl.cpp */,
 				B0AD9390192077C200EA40BB /* CAControl.h */,
 				B0AD9391192077C200EA40BB /* CAProgress.cpp */,
@@ -1214,6 +1211,7 @@
 				1551A64B158F2ADE00E66CFE /* CCDirector.h in Headers */,
 				B099B73719209FEE004339EC /* CAView.h in Headers */,
 				1551A651158F2ADE00E66CFE /* CCAffineTransform.h in Headers */,
+				B03E8FAB1938640E00FD9A06 /* CASwitch.h in Headers */,
 				1551A653158F2ADE00E66CFE /* CCArray.h in Headers */,
 				1551A655158F2ADE00E66CFE /* CCAutoreleasePool.h in Headers */,
 				1551A657158F2ADE00E66CFE /* CCDictionary.h in Headers */,
@@ -1313,11 +1311,9 @@
 				1551A84F158F2ADF00E66CFE /* ioapi.h in Headers */,
 				1551A851158F2ADF00E66CFE /* unzip.h in Headers */,
 				1551A853158F2ADF00E66CFE /* ZipUtils.h in Headers */,
-				B06FDC8A1925AE2D00AB5BCA /* CAVector.h in Headers */,
 				1551A86D158F2ADF00E66CFE /* CCTouch.h in Headers */,
-				1551A86E158F2ADF00E66CFE /* CCTouchDelegateProtocol.h in Headers */,
-				1551A870158F2ADF00E66CFE /* CCTouchDispatcher.h in Headers */,
-				1551A872158F2ADF00E66CFE /* CCTouchHandler.h in Headers */,
+				B083180E1935E2D800C9C509 /* CAVector.h in Headers */,
+				1551A870158F2ADF00E66CFE /* CATouchDispatcher.h in Headers */,
 				1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */,
 				154269DD15B5653000712A7F /* CCNotificationCenter.h in Headers */,
 				41CD6C3515BF7382005E6F29 /* CCAccelerometer.h in Headers */,
@@ -1442,6 +1438,7 @@
 				1551A668158F2ADE00E66CFE /* CCGrid.cpp in Sources */,
 				1551A6C6158F2ADE00E66CFE /* aabb.c in Sources */,
 				1551A6C7158F2ADE00E66CFE /* mat4stack.c in Sources */,
+				B03E8FAD1938641400FD9A06 /* CASwitch.cpp in Sources */,
 				1551A6C8158F2ADE00E66CFE /* matrix.c in Sources */,
 				1551A6C9158F2ADE00E66CFE /* mat3.c in Sources */,
 				1551A6CA158F2ADE00E66CFE /* mat4.c in Sources */,
@@ -1496,8 +1493,7 @@
 				1551A850158F2ADF00E66CFE /* unzip.cpp in Sources */,
 				1551A852158F2ADF00E66CFE /* ZipUtils.cpp in Sources */,
 				B0AD939D192077C200EA40BB /* CAButton.cpp in Sources */,
-				1551A86F158F2ADF00E66CFE /* CCTouchDispatcher.cpp in Sources */,
-				1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */,
+				1551A86F158F2ADF00E66CFE /* CATouchDispatcher.cpp in Sources */,
 				154269DC15B5653000712A7F /* CCNotificationCenter.cpp in Sources */,
 				41CD6C3715BF7382005E6F29 /* CCApplication.mm in Sources */,
 				41CD6C3815BF7382005E6F29 /* CCCommon.mm in Sources */,

@@ -68,7 +68,7 @@ class CCDirectorDelegate;
 class CCNode;
 class CAScheduler;
 class CCActionManager;
-class CCTouchDispatcher;
+class CATouchDispatcher;
 class CCKeypadDispatcher;
 class CCAccelerometer;
 
@@ -304,10 +304,10 @@ public:
      */
     CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
 
-    /** CCTouchDispatcher associated with this director
+    /** CATouchDispatcher associated with this director
      @since v2.0
      */
-    CC_PROPERTY(CCTouchDispatcher*, m_pTouchDispatcher, TouchDispatcher);
+    CC_PROPERTY(CATouchDispatcher*, m_pTouchDispatcher, TouchDispatcher);
 
     /** CCKeypadDispatcher associated with this director
      @since v2.0

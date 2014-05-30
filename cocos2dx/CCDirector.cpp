@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "cocoa/CCArray.h"
 #include "CAScheduler.h"
 #include "ccMacros.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "touch_dispatcher/CATouchDispatcher.h"
 #include "support/CCPointExtension.h"
 #include "support/CCNotificationCenter.h"
 #include "layers_scenes_transitions_nodes/CCTransition.h"
@@ -146,7 +146,7 @@ bool CCDirector::init(void)
     CAScheduler::schedule(schedule_selector(CCDirector::update), m_pActionManager, kCCPrioritySystem, false);
     
     // touchDispatcher
-    m_pTouchDispatcher = new CCTouchDispatcher();
+    m_pTouchDispatcher = new CATouchDispatcher();
     m_pTouchDispatcher->init();
 
     // KeypadDispatcher
@@ -648,7 +648,6 @@ void CCDirector::purgeDirector()
     
     // don't release the event handlers
     // They are needed in case the director is run again
-    m_pTouchDispatcher->removeAllDelegates();
 
     if (m_pRootWindow)
     {
@@ -895,7 +894,7 @@ CCActionManager* CCDirector::getActionManager()
     return m_pActionManager;
 }
 
-void CCDirector::setTouchDispatcher(CCTouchDispatcher* pTouchDispatcher)
+void CCDirector::setTouchDispatcher(CATouchDispatcher* pTouchDispatcher)
 {
     if (m_pTouchDispatcher != pTouchDispatcher)
     {
@@ -905,7 +904,7 @@ void CCDirector::setTouchDispatcher(CCTouchDispatcher* pTouchDispatcher)
     }    
 }
 
-CCTouchDispatcher* CCDirector::getTouchDispatcher()
+CATouchDispatcher* CCDirector::getTouchDispatcher()
 {
     return m_pTouchDispatcher;
 }

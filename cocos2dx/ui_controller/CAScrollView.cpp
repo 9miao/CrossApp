@@ -1,9 +1,9 @@
 //
 //  CAScrollView.cpp
-//  cocos2dx
+//  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-23.
-//  Copyright (c) 2014 www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
 #include "CAScrollView.h"
@@ -69,8 +69,7 @@ bool CAScrollView::initWithFrame(const cocos2d::CCRect &rect)
     {
         return false;
     }
-    
-    this->setTouchEnabled(true);
+
     this->setDisplayRange(false);
     
     m_pContainer = CAView::createWithFrame(this->getBounds(), ccc4(255, 255, 255, 0));

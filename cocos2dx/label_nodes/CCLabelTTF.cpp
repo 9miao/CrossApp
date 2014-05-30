@@ -140,6 +140,8 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
         m_pFontName   = new std::string(fontName);
         m_fFontSize   = fontSize;
         
+        this->setColor(ccBLACK);
+        
         this->setString(string);
         
         return true;
@@ -171,21 +173,25 @@ bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccFontDefin
 }
 
 
-void CCLabelTTF::setString(const char *string)
+void CCLabelTTF::setString(std::string string)
 {
-    CCAssert(string != NULL, "Invalid string");
+    if (strcmp(string.c_str(), "") == 0)
+    {
+        this->setImageRect(CCRectZero);
+        return;
+    }
     
-    if (m_string.compare(string))
+    if (strcmp(m_string.c_str(), string.c_str()))
     {
         m_string = string;
-        
+
         this->updateTexture();
     }
 }
 
-const char* CCLabelTTF::getString(void)
+const std::string& CCLabelTTF::getString(void) const
 {
-    return m_string.c_str();
+    return m_string;
 }
 
 const char* CCLabelTTF::description()

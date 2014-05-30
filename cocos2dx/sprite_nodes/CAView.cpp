@@ -1,9 +1,9 @@
 //
 //  CAView.cpp
-//  cocos2dx
+//  CrossApp
 //
-//  Created by 栗元峰 on 14-5-12.
-//  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
+//  Created by Li Yuanfeng on 14-5-12.
+//  Copyright (c) 2014年 http://www.9miao.com All rights reserved.
 //
 
 #include "CAView.h"
@@ -23,13 +23,14 @@
 #include "support/component/CCComponentContainer.h"
 
 #include <stdarg.h>
-#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "touch_dispatcher/CATouchDispatcher.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
 #include "CCAccelerometer.h"
 #include "shaders/CCShaderCache.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "CCEGLView.h"
+#include "cocoa/CCSet.h"
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -85,9 +86,7 @@ CAView::CAView(void)
 , _realColor(ccWHITE)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
-, m_bTouchEnabled(false)
 , m_bDisplayRange(true)
-, m_nTouchPriority(0)
 , m_pobImage(NULL)
 , m_bShouldBeHidden(false)
 , m_bFlipX(false)
@@ -99,6 +98,7 @@ CAView::CAView(void)
 , m_bHasChildren(false)
 , m_pViewDelegate(NULL)
 , m_bFrame(true)
+, m_bMutableTouches(true)
 {
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
@@ -107,6 +107,7 @@ CAView::CAView(void)
     m_pActionManager->retain();
     
     m_pComponentContainer = new CCComponentContainer(this);
+    m_pTouchesSet = new CCSet();
     
     _displayedOpacity = _realOpacity = 255;
     _displayedColor = _realColor = ccWHITE;
@@ -162,7 +163,7 @@ CAView::~CAView(void)
     // m_pComsContainer
     m_pComponentContainer->removeAll();
     CC_SAFE_DELETE(m_pComponentContainer);
-    
+    CC_SAFE_DELETE(m_pTouchesSet);
     CC_SAFE_RELEASE(m_pobImage);
     
     --viewCount;
@@ -1337,11 +1338,6 @@ void CAView::onEnter()
 
     m_bRunning = true;
     
-    if (m_bTouchEnabled)
-    {
-        this->registerWithTouchDispatcher();
-    }
-    
     CAScheduler::getScheduler()->resumeTarget(this);
     m_pActionManager->resumeTarget(this);
 }
@@ -1373,14 +1369,20 @@ void CAView::onExit()
     
     arrayMakeObjectsPerformSelector(m_pSubviews, onExit, CAView*);
     
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    if( m_bTouchEnabled )
-    {
-        pDirector->getTouchDispatcher()->removeDelegate(this);
-    }
-    
     CAScheduler::getScheduler()->pauseTarget(this);
     m_pActionManager->pauseTarget(this);
+    
+    if (m_pTouchesSet->count() > 0)
+    {
+        CCTouch *pTouch;
+        CCSetIterator setIter;
+        for (setIter = m_pTouchesSet->begin(); setIter != m_pTouchesSet->end(); setIter++)
+        {
+            pTouch = (CCTouch *)(*setIter);
+            this->ccTouchCancelled(pTouch, NULL);
+        }
+        m_pTouchesSet->removeAllObjects();
+    }
 }
 
 void CAView::setActionManager(CCActionManager* actionManager)
@@ -1570,6 +1572,27 @@ CCAffineTransform CAView::worldToNodeTransform(void)
     return CCAffineTransformInvert(this->nodeToWorldTransform());
 }
 
+CCRect CAView::convertRectToNodeSpace(const cocos2d::CCRect &worldRect)
+{
+    CCPoint p = CCDirector::sharedDirector()->convertToGL(worldRect.origin);
+    CCRect ret;
+    ret.size = worldRect.size;
+    ret.origin = CCPointApplyAffineTransform(p, worldToNodeTransform());
+    ret.origin.y = this->getBounds().size.height - ret.origin.y;
+    return ret;
+}
+
+CCRect CAView::convertRectToWorldSpace(const cocos2d::CCRect &nodeRect)
+{
+    CCPoint p = nodeRect.origin;
+    p.y = this->getBounds().size.height - p.y;
+    CCRect ret;
+    ret.size = nodeRect.size;
+    ret.origin = CCPointApplyAffineTransform(p, nodeToWorldTransform());
+    ret.origin = CCDirector::sharedDirector()->convertToUI(ret.origin);
+    return ret;
+}
+
 CCPoint CAView::convertToNodeSpace(const CCPoint& worldPoint)
 {
     CCPoint p = CCDirector::sharedDirector()->convertToGL(worldPoint);
@@ -1726,60 +1749,6 @@ bool CAView::removeComponent(const char *pName)
 void CAView::removeAllComponents()
 {
     m_pComponentContainer->removeAll();
-}
-
-
-/// Touch and Accelerometer related
-
-void CAView::registerWithTouchDispatcher()
-{
-    CCTouchDispatcher* pDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
-    pDispatcher->addTargetedDelegate(this, m_nTouchPriority, true);
-}
-
-/// isTouchEnabled getter
-bool CAView::isTouchEnabled()
-{
-    return m_bTouchEnabled;
-}
-/// isTouchEnabled setter
-void CAView::setTouchEnabled(bool enabled)
-{
-    if (m_bTouchEnabled != enabled)
-    {
-        m_bTouchEnabled = enabled;
-        if (m_bRunning)
-        {
-            if (enabled)
-            {
-                this->registerWithTouchDispatcher();
-            }
-            else
-            {
-                // have problems?
-                CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
-            }
-        }
-    }
-}
-
-void CAView::setTouchPriority(int priority)
-{
-    if (m_nTouchPriority != priority)
-    {
-        m_nTouchPriority = priority;
-        
-		if( m_bTouchEnabled)
-        {
-			setTouchEnabled(false);
-			setTouchEnabled(true);
-		}
-    }
-}
-
-int CAView::getTouchPriority()
-{
-    return m_nTouchPriority;
 }
 
 bool CAView::isDisplayRange()

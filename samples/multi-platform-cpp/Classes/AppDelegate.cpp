@@ -36,7 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     // run
     pDirector->runWindow(m_pWindow);
-
+    
     RootViewController* viewController = new RootViewController();
     viewController->init();
     viewController->setTitle("view1");
@@ -47,8 +47,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("h.png"), 100));
     
     viewController->release();
-    
-    
     
     ViewController* viewController2 = new ViewController();
     viewController2->init();

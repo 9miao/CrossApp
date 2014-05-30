@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "CCCamera.h"
 #include "support/CCPointExtension.h"
 #include "CCDirector.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
 #include "actions/CCActionInterval.h"
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionEase.h"
@@ -37,6 +36,7 @@ THE SOFTWARE.
 #include "actions/CCActionGrid.h"
 #include "sprite_nodes/CAView.h"
 #include "misc_nodes/CCRenderTexture.h"
+#include "touch_dispatcher/CATouchDispatcher.h"
 #include "CAScheduler.h"
 
 NS_CC_BEGIN

@@ -1,9 +1,9 @@
 //
 //  CATableView.cpp
-//  cocos2dx
+//  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-28.
-//  Copyright (c) 2014 www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
 #include "CATableView.h"
@@ -210,8 +210,7 @@ void CATableView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
             m_pTableViewDelegate->tableViewDidShowPullDownView(this);
         }
         
-        if (m_pTablePullUpView && m_pContainer->getFrame().origin.y + m_pContainer->getFrame().size.height - this->getBounds().size.height
-            < -m_nTablePullViewHeight)
+        if (m_pTablePullUpView && this->getBounds().size.height - (m_pContainer->getFrame().origin.y + m_pContainer->getFrame().size.height) > m_nTablePullViewHeight)
         {
             m_pTableViewDelegate->tableViewDidShowPullUpView(this);
         }
@@ -385,12 +384,6 @@ void CATableView::reloadData()
         this->addSubview(m_pTablePullDownView);
     }
     
-    if (m_pTablePullUpView)
-    {
-        m_pTablePullUpView->setFrame(CCRect(0, this->getBounds().size.height, width, m_nTablePullViewHeight));
-        this->addSubview(m_pTablePullUpView);
-    }
-    
     if (m_pTableHeaderView)
     {
         m_pTableHeaderView->setFrame(CCRect(0, y, width, m_nTableHeaderHeight));
@@ -448,6 +441,12 @@ void CATableView::reloadData()
         m_pTableFooterView->setFrame(CCRect(0, y, width, m_nTableFooterHeight));
         this->addSubview(m_pTableFooterView);
         y += m_nTableFooterHeight;
+    }
+    
+    if (m_pTablePullUpView)
+    {
+        m_pTablePullUpView->setFrame(CCRect(0, y, width, m_nTablePullViewHeight));
+        this->addSubview(m_pTablePullUpView);
     }
 }
 
@@ -513,15 +512,20 @@ bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
 
     this->setReuseIdentifier(reuseIdentifier);
     
-    this->setBackGroundView(CAView::createWithFrame(this->getBounds(), ccc4(255, 255, 255, 255)));
+    this->setBackGroundViewForState(CAControlStateNormal, CAView::createWithFrame(this->getBounds(), ccc4(255, 255, 255, 255)));
 
-    this->setHighlightedBackGroundView(CAView::createWithFrame(this->getBounds(), ccc4(50, 50, 200, 255)));
+    this->setBackGroundViewForState(CAControlStateHighlighted, CAView::createWithFrame(this->getBounds(), ccc4(50, 50, 200, 255)));
     
-    this->setSelectedBackGroundView(CAView::createWithFrame(this->getBounds(), ccc4(50, 50, 200, 255)));
+    this->setBackGroundViewForState(CAControlStateSelected, CAView::createWithFrame(this->getBounds(), ccc4(50, 50, 200, 255)));
     
     this->setControlStateNormal();
     
     return true;
+}
+
+void CATableViewCell::setBackGroundViewForState(CAControlState controlState, CAView *var)
+{
+    CAControl::setBackGroundViewForState(controlState, var);
 }
 
 NS_CC_END

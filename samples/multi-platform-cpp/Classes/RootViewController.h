@@ -19,8 +19,6 @@ class RootViewController: public CAViewController, public CATableViewDataSource,
     
     CATableView* tableView;
     
-    CAProgress* progress;
-    
 public:
     
     virtual void viewDidLoad();
@@ -51,11 +49,9 @@ public:
     
     virtual void tableViewDidShowPullUpView(CATableView* table);
     
-    bool setAllowsSelection(CAButton* btn, CCPoint point);
+    bool setAllowsSelection(CAControl* sender, CCPoint point);
     
-    bool setAllowsMultipleSelection(CAButton* btn, CCPoint point);
-    
-    void updateProgress(float dt);
+	bool setAllowsMultipleSelection(CAControl* sender, CCPoint point);
 };
 
 

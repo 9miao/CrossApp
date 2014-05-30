@@ -1,9 +1,9 @@
 //
 //  CAButton.cpp
-//  cocos2dx
+//  CrossApp
 //
 //  Created by Li Yuanfeng on 14-3-23.
-//  Copyright (c) 2014 www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
 #include "CAButton.h"
@@ -11,17 +11,24 @@
 #include "sprite_nodes/CAView.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "support/CCPointExtension.h"
+#include "cocoa/CCSet.h"
+#include "label_nodes/CCLabelTTF.h"
 #define PLAYSOUND 
 
 NS_CC_BEGIN
 
-CAButton::CAButton(void)
+CAButton::CAButton(CAButtonType buttonType)
 :m_bAllowsSelected(false)
 ,m_bSelected(false)
 ,m_textTag("")
 ,m_closeTapSound(false)
 ,m_bTouchClick(false)
 ,m_color(ccWHITE)
+,m_IsRehisterTouchDispatcher(false)
+,m_eButtonType(buttonType)
+,m_sTitleFontName("fonts/arial.ttf")
+,m_pImageView(NULL)
+,m_pLabel(NULL)
 ,m_pSpriteNormal(NULL)
 ,m_pSpriteHighlighted(NULL)
 ,m_pSpriteDisabled(NULL)
@@ -30,18 +37,24 @@ CAButton::CAButton(void)
 ,m_tSpriteHPoint(CCPointZero)
 ,m_tSpriteDPoint(CCPointZero)
 ,m_tSpriteSPoint(CCPointZero)
-,m_target(NULL)
-,m_touchBegin(NULL)
-,m_touchMoved(NULL)
-,m_touchMovedOutSide(NULL)
-,m_touchUpInSide(NULL)
-,m_touchUpSide(NULL)
-,m_IsRehisterTouchDispatcher(false)
 {
+    for (int i=0; i<CAControlStateAll; i++)
+    {
+        m_pImage[i] = NULL;
+        m_sTitle[i] = "";
+        m_sTitleColor[i] = ccBLACK;
+    }
+    
+    m_pImageView = new CAImageView();
+    m_pImageView->init();
+    m_pLabel = new CCLabelTTF();
+    m_pLabel->initWithString("", m_sTitleFontName.c_str(), 20);
 }
 
 CAButton::~CAButton(void)
 {
+    CC_SAFE_RELEASE_NULL(m_pImageView);
+    CC_SAFE_RELEASE_NULL(m_pLabel);
     CC_SAFE_RELEASE_NULL(m_pSpriteNormal);
     CC_SAFE_RELEASE_NULL(m_pSpriteHighlighted);
     CC_SAFE_RELEASE_NULL(m_pSpriteDisabled);
@@ -57,43 +70,29 @@ void CAButton::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
     
-    if (this->CAControl::getBackGroundView() == NULL)
-    {
-        this->setBackGroundViewDefault();
-    }
-    
-    if (this->getHighlightedBackGroundView() == NULL)
-    {
-        if (CAScale9ImageView* bg = dynamic_cast<CAScale9ImageView*>(this->CAControl::getBackGroundView()))
-        {
-            CAScale9ImageView* bgHighLighted = CAScale9ImageView::createWithImage(bg->getImage());
-            bgHighLighted->setPreferredSize(bg->getPreferredSize());
-            bgHighLighted->setColor(ccc3(127, 127, 127));
-            this->setBackGroundViewForState(CAControlStateHighlighted, bgHighLighted);
-        }
-        else if (CAImageView* bg = dynamic_cast<CAImageView*>(this->CAControl::getBackGroundView()))
-        {
-            CAImageView* bgHighLighted = CAImageView::createWithImage(bg->getImage());
-            bgHighLighted->setBounds(bg->getBounds());
-            bgHighLighted->setColor(ccc3(127, 127, 127));
-            this->setBackGroundViewForState(CAControlStateHighlighted, bgHighLighted);
-        }
-        else if (CAView* bg = dynamic_cast<CAView*>(this->CAControl::getBackGroundView()))
-        {
-            CAView* bgHighLighted = CAView::createWithFrame(bg->getFrame());
-            bgHighLighted->setColor(ccc3(bg->getColor().r/2, bg->getColor().g/2, bg->getColor().b/2));
-            this->setBackGroundViewForState(CAControlStateHighlighted, bgHighLighted);
-        }
-    }
-    
     this->updateWithPoint();
     this->setControlState(m_eControlState);
 }
 
-CAButton* CAButton::createWithFrame(const CCRect& rect)
+CAButton* CAButton::create(CAButtonType buttonType)
+{
+    
+    CAButton* btn = new CAButton(buttonType);
+    
+    if (btn && btn->init())
+    {
+        btn->autorelease();
+        return btn;
+    }
+    
+    CC_SAFE_DELETE(btn);
+    return NULL;
+}
+
+CAButton* CAButton::createWithFrame(const CCRect& rect, CAButtonType buttonType)
 {
 
-    CAButton* btn = new CAButton();
+    CAButton* btn = new CAButton(buttonType);
     
     if (btn && btn->initWithFrame(rect))
     {
@@ -105,10 +104,10 @@ CAButton* CAButton::createWithFrame(const CCRect& rect)
     return NULL;
 }
 
-CAButton* CAButton::createWithCenter(const CCRect& rect)
+CAButton* CAButton::createWithCenter(const CCRect& rect, CAButtonType buttonType)
 {
     
-    CAButton* btn = new CAButton();
+    CAButton* btn = new CAButton(buttonType);
     
     if (btn && btn->initWithCenter(rect))
     {
@@ -122,62 +121,139 @@ CAButton* CAButton::createWithCenter(const CCRect& rect)
 
 bool CAButton::initWithFrame(const CCRect& rect)
 {
-    if (!CAView::init())
+    if (!CAButton::init())
     {
         return false;
     }
 
     this->setFrame(rect);
-    this->setTouchEnabled(true);
     return true;
 }
 
 bool CAButton::initWithCenter(const CCRect& rect)
 {
-    if (!CAView::init())
+    if (!CAButton::init())
     {
         return false;
     }
     
     this->setCenter(rect);
-    this->setTouchEnabled(true);
     return true;
 }
 
-void CAButton::setBackGroundViewDefault()
+bool CAButton::init()
 {
-    CAScale9ImageView* bgNormal = CAScale9ImageView::createWithImage(CAImage::create("button_normal.png"));
-    this->setBackGroundViewForState(CAControlStateNormal, bgNormal);
-    CAScale9ImageView* bgHighlighted = CAScale9ImageView::createWithImage(CAImage::create("button_highlighted.png"));
-    this->setBackGroundViewForState(CAControlStateHighlighted, bgHighlighted);
-    CAScale9ImageView* bgDisabled = CAScale9ImageView::createWithImage(CAImage::create("button_disabled.png"));
-    this->setBackGroundViewForState(CAControlStateDisabled, bgDisabled);
-    CAScale9ImageView* bgSelected = CAScale9ImageView::createWithImage(CAImage::create("button_selected.png"));
-    this->setBackGroundViewForState(CAControlStateSelected, bgSelected);
+    if (!CAView::init())
+    {
+        return false;
+    }
+    this->setMutableTouches(false);
+    
+    switch (m_eButtonType)
+    {
+        case CAButtonTypeSquareRect:
+            this->setBackGroundViewSquareRect();
+            break;
+        case CAButtonTypeRoundedRect:
+            this->setBackGroundViewRoundedRect();
+            break;
+        case CAButtonTypeRounded3DRect:
+            this->setBackGroundViewRounded3DRect();
+            break;
+        default:
+            break;
+    }
+    
+    this->insertSubview(m_pImageView, 1);
+    this->insertSubview(m_pLabel, 1);
+    
+    return true;
+}
+
+void CAButton::setBackGroundViewSquareRect()
+{
+    const char* fileName[CAControlStateAll] =
+    {
+        "btn_square_normal.png",
+        "btn_square_highlighted.png",
+        "btn_square_disabled.png",
+        "btn_square_selected.png"
+    };
+    
+    ccColor3B color[CAControlStateAll] =
+    {
+        ccc3(11, 106, 255),
+        ccc3(11, 106, 255),
+        ccc3(255, 255, 255),
+        ccc3(138, 138, 138)
+    };
+    
+    for (int i=0; i<CAControlStateAll; i++)
+    {
+        CAImage* image = CAImage::create(fileName[i]);
+        CAScale9ImageView* bg = CAScale9ImageView::createWithImage(image);
+        this->setBackGroundViewForState((CAControlState)i, bg);
+        m_sTitleColor[i] = color[i];
+    }
+}
+
+void CAButton::setBackGroundViewRoundedRect()
+{
+    const char* fileName[CAControlStateAll] =
+    {
+        "btn_rounded_normal.png",
+        "btn_rounded_highlighted.png",
+        "btn_rounded_disabled.png",
+        "btn_rounded_selected.png"
+    };
+    
+    ccColor3B color[CAControlStateAll] =
+    {
+        ccc3(11, 106, 255),
+        ccc3(11, 106, 255),
+        ccc3(255, 255, 255),
+        ccc3(138, 138, 138)
+    };
+    
+    for (int i=0; i<CAControlStateAll; i++)
+    {
+        CAImage* image = CAImage::create(fileName[i]);
+        CAScale9ImageView* bg = CAScale9ImageView::createWithImage(image);
+        this->setBackGroundViewForState((CAControlState)i, bg);
+        m_sTitleColor[i] = color[i];
+    }
+}
+
+void CAButton::setBackGroundViewRounded3DRect()
+{
+    const char* fileName[CAControlStateAll] =
+    {
+        "btn_rounded3D_normal.png",
+        "btn_rounded3D_highlighted.png",
+        "btn_rounded3D_disabled.png",
+        "btn_rounded3D_selected.png"
+    };
+    
+    ccColor3B color[CAControlStateAll] =
+    {
+        ccc3(255, 255, 255),
+        ccc3(0, 41, 57),
+        ccc3(127, 127, 127),
+        ccc3(255, 255, 255)
+    };
+    
+    for (int i=0; i<CAControlStateAll; i++)
+    {
+        CAImage* image = CAImage::create(fileName[i]);
+        CAScale9ImageView* bg = CAScale9ImageView::createWithImage(image);
+        this->setBackGroundViewForState((CAControlState)i, bg);
+        m_sTitleColor[i] = color[i];
+    }
 }
 
 void CAButton::setBackGroundViewForState(CAControlState controlState, CAView *var)
 {
-    if (controlState == CAControlStateNormal)
-    {
-        this->setBackGroundView(var);
-    }
-
-    if (controlState == CAControlStateHighlighted)
-    {
-        this->setHighlightedBackGroundView(var);
-    }
-    
-    if (controlState == CAControlStateDisabled)
-    {
-        this->setDisabledBackGroundView(var);
-    }
-    
-    if (controlState == CAControlStateSelected)
-    {
-        this->setSelectedBackGroundView(var);
-    }
-
+    CAControl::setBackGroundViewForState(controlState, var);
     do
     {
         CC_BREAK_IF(var == NULL);
@@ -193,139 +269,76 @@ void CAButton::setBackGroundViewForState(CAControlState controlState, CAView *va
     while (0);
 }
 
+void CAButton::setImageForState(CAControlState controlState, CAImage* var)
+{
+    if (controlState == CAControlStateAll)
+    {
+        for (int i=0; i<CAControlStateAll; i++)
+        {
+            this->setImageForState((CAControlState)i, var);
+        }
+        return;
+    }
+    
+    if (m_pImage[controlState] != var)
+    {
+        CC_SAFE_RETAIN(var);
+        CC_SAFE_RELEASE(m_pImage[controlState]);
+        m_pImage[controlState] = var;
+    }
+}
+
+void CAButton::setTitleForState(CAControlState controlState, std::string var)
+{
+    if (controlState == CAControlStateAll)
+    {
+        for (int i=0; i<CAControlStateAll; i++)
+        {
+            this->setTitleForState((CAControlState)i, var);
+        }
+        return;
+    }
+    
+    if (m_sTitle[controlState] != var)
+    {
+        m_sTitle[controlState] = var;
+    }
+}
+
+void CAButton::setTitleFontName(std::string var)
+{
+    if (m_sTitleFontName.compare(var))
+    {
+        m_sTitleFontName = var;
+        m_pLabel->setFontName(m_sTitleFontName.c_str());
+    }
+}
 
 void CAButton::updateWithPreferredSize()
 {
-
-    do
+    for (int i=0; i<CAControlStateAll; i++)
     {
-        CC_BREAK_IF(m_pBackGroundView == NULL);
-        CC_BREAK_IF(this->getBounds().equals(m_pBackGroundView->getBounds()));
+        CC_CONTINUE_IF(m_pBackGroundView[i] == NULL);
+        CC_CONTINUE_IF(this->getBounds().equals(m_pBackGroundView[i]->getBounds()));
         
-        if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pBackGroundView))
+        if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pBackGroundView[i]))
         {
             _var->setPreferredSize(m_obContentSize);
         }
         else
         {
-            m_pBackGroundView->setFrame(this->getBounds());
-        }
-    }
-    while (0);
-
-    do
-    {
-        CC_BREAK_IF(m_pHighlightedBackGroundView == NULL);
-        CC_BREAK_IF(this->getBounds().equals(m_pHighlightedBackGroundView->getBounds()));
-        
-        if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pHighlightedBackGroundView))
-        {
-            _var->setPreferredSize(m_obContentSize);
-        }
-        else
-        {
-            m_pHighlightedBackGroundView->setFrame(this->getBounds());
-        }
-    }
-    while (0);
-    
-    do
-    {
-        CC_BREAK_IF(m_pDisabledBackGroundView == NULL);
-        CC_BREAK_IF(this->getBounds().equals(m_pDisabledBackGroundView->getBounds()));
-        
-        if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pDisabledBackGroundView))
-        {
-            _var->setPreferredSize(m_obContentSize);
-        }
-        else
-        {
-            m_pDisabledBackGroundView->setFrame(this->getBounds());
-        }
-    }
-    while (0);
-
-    do
-    {
-        CC_BREAK_IF(m_pSelectedBackGroundView == NULL);
-        CC_BREAK_IF(this->getBounds().equals(m_pSelectedBackGroundView->getBounds()));
-        
-        if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pSelectedBackGroundView))
-        {
-            _var->setPreferredSize(m_obContentSize);
-        }
-        else
-        {
-            m_pSelectedBackGroundView->setFrame(this->getBounds());
-        }
-    }
-    while (0);
-}
-
-void CAButton::updateWithPoint()
-{
-    
-    CCPoint point = m_obContentSize/2;
-    
-    if (m_pSpriteNormal)
-    {
-        if (m_tSpriteNPoint.equals(CCPointZero))
-        {
-            m_pSpriteNormal->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_pSpriteNormal->setPosition(point);
-        }
-        else
-        {
-            m_pSpriteNormal->setPosition(m_tSpriteNPoint);
+            m_pBackGroundView[i]->setFrame(this->getBounds());
         }
     }
     
-    if (m_pSpriteHighlighted)
-    {
-        if (m_tSpriteHPoint.equals(CCPointZero))
-        {
-            m_pSpriteHighlighted->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_pSpriteHighlighted->setPosition(point);
-        }
-        else
-        {
-            m_pSpriteHighlighted->setPosition(m_tSpriteHPoint);
-        }
-    }
-    
-    if (m_pSpriteDisabled)
-    {
-        if (m_tSpriteDPoint.equals(CCPointZero))
-        {
-            m_pSpriteDisabled->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_pSpriteDisabled->setPosition(point);
-        }
-        else
-        {
-            m_pSpriteDisabled->setPosition(m_tSpriteDPoint);
-        }
-    }
-    
-    if (m_pSpriteSelected)
-    {
-        if (m_tSpriteSPoint.equals(CCPointZero))
-        {
-            m_pSpriteSelected->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_pSpriteSelected->setPosition(point);
-        }
-        else
-        {
-            m_pSpriteSelected->setPosition(m_tSpriteSPoint);
-        }
-    }
+    m_pLabel->setFontSize(this->getBounds().size.height * 0.667f);
 }
 
 bool CAButton::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
-    
+
     do
     {
         CC_BREAK_IF(!this->isVisible());
@@ -380,9 +393,11 @@ void CAButton::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     {
         this->setTouchUpInSide(point);
     }
-    
-    if (getBounds().containsPoint(point))
+
+    do
     {
+        CC_BREAK_IF(this->getControlState() != CAControlStateHighlighted);
+        
         if (m_bAllowsSelected)
         {
             if (m_bSelected)
@@ -401,70 +416,118 @@ void CAButton::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
             this->setControlState(CAControlStateNormal);
         }
     }
-    
-    
+    while (0);
 }
 
 void CAButton::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    this->ccTouchEnded(pTouch, pEvent);
-}
-
-void CAButton::setTouchEnabled(bool enabled)
-{
-    
-    CAView::setTouchEnabled(enabled);
-    
-    if (!m_specially)
-        return;
-    
-    if (m_bTouchEnabled)
+    if (m_bAllowsSelected && m_bSelected)
     {
-        this->setControlState(CAControlStateNormal);
+        this->setControlState(CAControlStateSelected);
     }
     else
     {
-        this->setControlState(CAControlStateDisabled);
+        this->setControlState(CAControlStateNormal);
     }
 }
 
-void CAButton::addTarget(void *target, SEL_CAButton selector, CAControlType type)
+void CAButton::setMutableTouches(bool var)
 {
-    
-    switch (type)
-    {
-        case TouchBegin:
-            m_touchBegin = selector;
-            break;
-        case TouchMoved:
-            m_touchMoved = selector;
-            break;
-        case TouchMovedOutSide:
-            m_touchMovedOutSide = selector;
-            break;
-        case TouchUpInSide:
-            m_touchUpInSide = selector;
-            break;
-        case TouchUpSide:
-            m_touchUpSide = selector;
-            break;
-        default:
-            return;
-    }
-    
-    m_target=target;
+    CAView::setMutableTouches(var);
+}
+
+bool CAButton::isMutableTouches() const
+{
+    return CAView::isMutableTouches();
 }
 
 void CAButton::setControlState(CAControlState var)
 {
     CAControl::setControlState(var);
 
+    do
+    {
+        CC_BREAK_IF(m_pSpriteNormal);
+        CC_BREAK_IF(m_pSpriteHighlighted);
+        CC_BREAK_IF(m_pSpriteDisabled);
+        CC_BREAK_IF(m_pSpriteSelected);
+        
+        CAImage* image = NULL;
+        std::string title = "";
+        CCRect imageViewCenter = CCRectZero;
+        CCRect rect = CCRectZero;
+        
+        CCPoint labelCenterOrigin = CCPointZero;
+        float labelSize = 0;
+        
+        image = m_pImage[m_eControlState];
+        title = m_sTitle[m_eControlState];
+        
+        if (image && title.compare("") == 0)
+        {
+            CCSize size = this->getBounds().size;
+            CCSize iSize = image->getContentSize();
+            float scaleX = size.width / iSize.width * 0.667f;
+            float scaleY = size.height / iSize.height * 0.667f;
+            float scale = MIN(scaleX, scaleY);
+            scale = MIN(scale, 1.0f);
+            iSize = ccpMult(iSize, scale);
+            
+            imageViewCenter.origin = size / 2;
+            imageViewCenter.size = iSize;
+        }
+        else if (image == NULL && title.compare("") != 0)
+        {
+            labelSize = this->getBounds().size.height * 0.667f;
+            labelCenterOrigin = this->getBounds().size / 2 ;
+        }
+        else if (image && title.compare("") != 0)
+        {
+            CCSize size = this->getBounds().size;
+            CCSize iSize = image->getContentSize();
+            float scaleX = size.width / iSize.width * 0.4f;
+            float scaleY = size.height / iSize.height * 0.4f;
+            float scale = MIN(scaleX, scaleY);
+            scale = MIN(scale, 1.0f);
+            iSize = ccpMult(iSize, scale);
+            
+            imageViewCenter.size = iSize;
+            imageViewCenter.origin.x = size.width / 2;
+            imageViewCenter.origin.y = size.height * 0.35f;
+
+            labelSize = size.height * 0.3f;
+            labelCenterOrigin.x = size.width / 2;
+            labelCenterOrigin.y = size.height * 0.8f;
+        }
+        
+        if (image)
+        {
+            rect.size = image->getContentSize();
+        }
+        
+        if (image != m_pImageView->getImage())
+        {
+            m_pImageView->setImage(image);
+            m_pImageView->setImageRect(rect);
+            m_pImageView->setCenter(imageViewCenter);
+        }
+        
+        if (strcmp(title.c_str(), m_pLabel->getString().c_str()) && strcmp(title.c_str(), ""))
+        {
+            m_pLabel->setColor(m_sTitleColor[m_eControlState]);
+            m_pLabel->setFontSize(labelSize);
+            m_pLabel->setString(title.c_str());
+            m_pLabel->setCenterOrigin(labelCenterOrigin);
+        }
+    }
+    while (0);
+    
+    /*****************************/
+    
     this->removeSubview(m_pSpriteNormal);
     this->removeSubview(m_pSpriteHighlighted);
     this->removeSubview(m_pSpriteDisabled);
     this->removeSubview(m_pSpriteSelected);
-    
-    m_eControlState = var;
     
     switch (m_eControlState)
     {
@@ -515,15 +578,25 @@ void CAButton::setControlState(CAControlState var)
         default:
             break;
     }
+    
+    /*****************************/
 }
 
-void CAButton::InterruptTouchState()
+void CAButton::interruptTouchState()
 {
 	do
 	{
 		CC_BREAK_IF(m_bTouchClick == false);
 		m_bTouchClick = false;
-		this->setControlState(CAControlStateNormal);
+		if (m_bAllowsSelected && m_bSelected)
+        {
+            this->setControlState(CAControlStateSelected);
+        }
+        else
+        {
+            this->setControlState(CAControlStateNormal);
+        }
+        m_pTouchesSet->removeAllObjects();
 	} while (0);
 }
 
@@ -531,9 +604,9 @@ bool CAButton::setTouchBegin(CCPoint point)
 {
 	m_bTouchClick = true;
 
-    if (m_touchBegin)
+    if (m_selTouch[CAControlTouchBegin])
     {
-		m_bTouchClick = ((CCObject *)m_target->*m_touchBegin)(this, point);
+		m_bTouchClick = ((CCObject *)m_target->*m_selTouch[CAControlTouchBegin])(this, point);
     }
     
 	if (m_bTouchClick)
@@ -546,33 +619,33 @@ bool CAButton::setTouchBegin(CCPoint point)
 
 void CAButton::setTouchUpInSide(CCPoint point)
 {
-    if (m_touchUpInSide)
+    if (m_selTouch[CAControlTouchUpInSide])
     {
-        ((CCObject *)m_target->*m_touchUpInSide)(this,point);
+        ((CCObject *)m_target->*m_selTouch[CAControlTouchUpInSide])(this,point);
     }
 }
 
 void CAButton::setTouchUpSide(CCPoint point)
 {
-    if (m_touchUpSide)
+    if (m_selTouch[CAControlTouchUpSide])
     {
-        ((CCObject *)m_target->*m_touchUpSide)(this,point);
+        ((CCObject *)m_target->*m_selTouch[CAControlTouchUpSide])(this,point);
     }
 }
 
 void CAButton::setTouchMoved(cocos2d::CCPoint point)
 {
-    if (m_touchMoved)
+    if (m_selTouch[CAControlTouchMoved])
     {
-        ((CCObject *)m_target->*m_touchMoved)(this,point);
+        ((CCObject *)m_target->*m_selTouch[CAControlTouchUpSide])(this,point);
     }
 }
 
 void CAButton::setTouchMovedOutSide(cocos2d::CCPoint point)
 {
-    if (m_touchMovedOutSide)
+    if (m_selTouch[CAControlTouchMovedOutSide])
     {
-        ((CCObject *)m_target->*m_touchMovedOutSide)(this,point);
+        ((CCObject *)m_target->*m_selTouch[CAControlTouchMovedOutSide])(this,point);
     }
 }
 
@@ -589,6 +662,49 @@ void CAButton::setContentSize(const CCSize & var)
     
     this->updateWithPreferredSize();
 }
+
+void CAButton::setOpacity(GLubyte opacity)
+{
+    CAView::setOpacity(opacity);
+    
+    if (this->getSubviews())
+    {
+        for (int i=0; i<this->getSubviews()->count(); i++)
+        {
+            CAView* view=(CAView*)this->getSubviews()->objectAtIndex(i);
+            
+            if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(view))
+            {
+                _children->setOpacity(opacity);
+            }
+        }
+    }
+}
+
+void CAButton::setColor(const ccColor3B &color3){
+    
+    m_color=color3;
+    
+    if (this->getSubviews())
+    {
+        for (int i=0; i<this->getSubviews()->count(); i++)
+        {
+            CAView* view=(CAView*)this->getSubviews()->objectAtIndex(i);
+            
+            if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(view))
+            {
+                _children->setColor(color3);
+            }
+        }
+    }
+}
+
+ccColor3B& CAButton::getColor(){
+    
+    return m_color;
+}
+
+
 
 void CAButton::setView(CAControlState controlState, CAView* var)
 {
@@ -703,45 +819,62 @@ CAView* CAButton::getView(CAControlState controlState)
     }
 }
 
-void CAButton::setOpacity(GLubyte opacity)
+void CAButton::updateWithPoint()
 {
-    CAView::setOpacity(opacity);
     
-    if (this->getSubviews())
+    CCPoint point = m_obContentSize/2;
+    
+    if (m_pSpriteNormal)
     {
-        for (int i=0; i<this->getSubviews()->count(); i++)
+        if (m_tSpriteNPoint.equals(CCPointZero))
         {
-            CAView* view=(CAView*)this->getSubviews()->objectAtIndex(i);
-            
-            if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(view))
-            {
-                _children->setOpacity(opacity);
-            }
+            m_pSpriteNormal->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            m_pSpriteNormal->setPosition(point);
+        }
+        else
+        {
+            m_pSpriteNormal->setPosition(m_tSpriteNPoint);
         }
     }
-}
-
-void CAButton::setColor(const ccColor3B &color3){
     
-    m_color=color3;
-    
-    if (this->getSubviews())
+    if (m_pSpriteHighlighted)
     {
-        for (int i=0; i<this->getSubviews()->count(); i++)
+        if (m_tSpriteHPoint.equals(CCPointZero))
         {
-            CAView* view=(CAView*)this->getSubviews()->objectAtIndex(i);
-            
-            if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(view))
-            {
-                _children->setColor(color3);
-            }
+            m_pSpriteHighlighted->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            m_pSpriteHighlighted->setPosition(point);
+        }
+        else
+        {
+            m_pSpriteHighlighted->setPosition(m_tSpriteHPoint);
         }
     }
-}
-
-ccColor3B& CAButton::getColor(){
     
-    return m_color;
+    if (m_pSpriteDisabled)
+    {
+        if (m_tSpriteDPoint.equals(CCPointZero))
+        {
+            m_pSpriteDisabled->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            m_pSpriteDisabled->setPosition(point);
+        }
+        else
+        {
+            m_pSpriteDisabled->setPosition(m_tSpriteDPoint);
+        }
+    }
+    
+    if (m_pSpriteSelected)
+    {
+        if (m_tSpriteSPoint.equals(CCPointZero))
+        {
+            m_pSpriteSelected->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            m_pSpriteSelected->setPosition(point);
+        }
+        else
+        {
+            m_pSpriteSelected->setPosition(m_tSpriteSPoint);
+        }
+    }
 }
 
 NS_CC_END
