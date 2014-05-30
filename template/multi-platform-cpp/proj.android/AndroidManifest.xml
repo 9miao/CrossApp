@@ -27,4 +27,16 @@
                       android:normalScreens="true"/>
                          
     <uses-permission android:name="android.permission.INTERNET"/>
-</manifest> 
+   <!--
+    If you do not locate required permissions  please ignore
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> 
+    
+    
+    -->
+   <!-- 
+    If you don't need permission to contact please ignore
+    <uses-permission android:name="android.permission.READ_CONTACTS"/> 
+    
+    
+    -->
+</manifest>

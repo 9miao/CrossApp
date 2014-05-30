@@ -16,7 +16,9 @@ Json/CSContentJsonDictionary.cpp \
 Json/lib_json/json_value.cpp \
 Json/lib_json/json_reader.cpp \
 Json/lib_json/json_writer.cpp \
-
+other/CAAdress/android/CAAddressManager.cpp \
+other/CACamera/android/CAMediaManager.cpp \
+other/CALocation/android/CALocationManager.cpp \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
