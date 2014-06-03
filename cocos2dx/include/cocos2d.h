@@ -277,6 +277,7 @@ THE SOFTWARE.
 #include "ui_controller/CAControl.h"
 #include "ui_controller/CAProgress.h"
 #include "ui_controller/CAScrollView.h"
+#include "ui_controller/CASegmentedControl.h"
 #include "ui_controller/CASlider.h"
 #include "ui_controller/CASwitch.h"
 #include "ui_controller/CATableView.h"

@@ -28,21 +28,23 @@ public:
     virtual void onEnterTransitionDidFinish();
     
     static CASegmentedControl* create(const CCRect& rect,
-                                      std::vector<CAImage *> items,
+                                      std::vector<CAImage *> normalImages,
+                                      std::vector<CAImage *> selectedImages,
                                       int selectedIndex = 0);
     
 public:
     bool init(const CCRect& rect,
-              std::vector<CAImage *> items,
+              std::vector<CAImage *> normalImages,
+              std::vector<CAImage *> selectedImages,
               int selectedIndex);
     
-    virtual void insertSegmentWithTitle(const char* title, int index);
-    virtual void insertSegmentWithImage(CAImage *image, int index);
+    virtual void insertSegmentWithTitle(const char* title, int index, CAControlState controlState);
+    virtual void insertSegmentWithImage(CAImage *image, int index, CAControlState controlState);
     virtual void removeSegmentAtIndex(int index);
     virtual void removeAllSegments();
     
-    virtual void setTitleAtIndex(const char* title, int index);
-    virtual void setImageAtIndex(CAImage *image, int index);
+    virtual void setTitleAtIndex(const char* title, int index, CAControlState controlState);
+    virtual void setImageAtIndex(CAImage *image, int index, CAControlState controlState);
     
 protected:
     std::vector<CAButton *> m_segments;
