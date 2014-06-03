@@ -58,6 +58,8 @@ public:
     
     void setTitleForState(CAControlState controlState, std::string var);
     
+    void setImageColorForState(CAControlState controlState, ccColor3B var);
+    
     void setTitleColorForState(CAControlState controlState, ccColor3B var);
     
     void setTitleFontName(std::string var);
@@ -106,6 +108,8 @@ protected:
 
     std::string m_sTitle[CAControlStateAll];
 
+    ccColor3B m_sImageColor[CAControlStateAll];
+    
     ccColor3B m_sTitleColor[CAControlStateAll];
     
     std::string m_sTitleFontName;

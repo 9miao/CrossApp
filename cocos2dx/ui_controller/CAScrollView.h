@@ -27,8 +27,6 @@ public:
     virtual void scrollViewDidEndDragging(CAScrollView* view){};
     
     virtual void scrollViewDidZoom(CAScrollView* view){};
-    
-    void removeDelegate(CAScrollView* view);
 };
 
 class CAIndicator;

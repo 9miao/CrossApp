@@ -16,12 +16,13 @@ NS_CC_BEGIN
 
 typedef enum
 {
-    CAControlTouchBegin = 0,
-    CAControlTouchMoved,
-    CAControlTouchMovedOutSide,
-    CAControlTouchUpInSide,
-    CAControlTouchUpSide
-}CAControlTouchType;
+    CAControlEventTouchDown = 0,
+    CAControlEventTouchDownRepeat,
+    CAControlEventTouchMoved,
+    CAControlEventTouchMovedOutSide,
+    CAControlEventTouchUpInSide,
+    CAControlEventTouchUpSide
+}CAControlEvents;
 
 typedef enum
 {
@@ -58,7 +59,9 @@ public:
     
     void setControlStateSelected();
     
-    void addTarget(void* target, SEL_CAControl selector, CAControlTouchType type);
+    void addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
+    
+    void removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
     
     CC_PROPERTY_IS(bool, m_bTouchEnabled, TouchEnabled);
     
@@ -74,10 +77,16 @@ protected:
     
     CAView* m_pBackGroundView[CAControlStateAll];
     
-    void* m_target;
+    CCObject* m_pTarget[6];
     
-    SEL_CAControl m_selTouch[5];
+    SEL_CAControl m_selTouch[6];
 };
+
+#define CAControlTouchDown (CAControlEventTouchDown)
+#define CAControlTouchMoved (CAControlEventTouchMoved)
+#define CAControlTouchMovedOutSide (CAControlEventTouchMovedOutSide)
+#define CAControlTouchUpInSide (CAControlEventTouchUpInSide)
+#define CAControlTouchUpSide (CAControlEventTouchUpSide)
 
 
 NS_CC_END

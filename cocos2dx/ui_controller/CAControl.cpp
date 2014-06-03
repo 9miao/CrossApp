@@ -13,7 +13,6 @@ NS_CC_BEGIN
 CAControl::CAControl()
 :m_eControlState(CAControlStateNormal)
 ,m_bControlStateLocked(false)
-,m_target(NULL)
 ,m_bTouchEnabled(true)
 {
     for (int i=0; i<CAControlStateAll; i++)
@@ -21,9 +20,10 @@ CAControl::CAControl()
         m_pBackGroundView[i] = NULL;
     }
     
-    for (int i=0; i<5; i++)
+    for (int i=0; i<6; i++)
     {
         m_selTouch[i] = NULL;
+        m_pTarget[i] = NULL;
     }
 }
 
@@ -33,6 +33,11 @@ CAControl::~CAControl()
     for (int i=0; i<CAControlStateAll; i++)
     {
         CC_SAFE_RELEASE_NULL(m_pBackGroundView[i]);
+    }
+    for (int i=0; i<6; i++)
+    {
+        CC_SAFE_RELEASE_NULL(m_pTarget[i]);
+        m_selTouch[i] = NULL;
     }
 }
 
@@ -121,11 +126,17 @@ CAView* CAControl::getBackGroundViewForState(CAControlState controlState)
     return m_pBackGroundView[controlState];
 }
 
-void CAControl::addTarget(void *target, SEL_CAControl selector, CAControlTouchType type)
+void CAControl::addTarget(CCObject *target, SEL_CAControl selector, CAControlEvents event)
 {
-    m_selTouch[type] = selector;
-    
-    m_target = target;
+    CC_SAFE_RETAIN(target);
+    m_pTarget[event] = target;
+    m_selTouch[event] = selector;
+}
+
+void CAControl::removeTarget(CCObject *target, SEL_CAControl selector, CAControlEvents event)
+{
+    CC_SAFE_RELEASE_NULL(m_pTarget[event]);
+    m_selTouch[event] = NULL;
 }
 
 void CAControl::setTouchEnabled(bool enabled)

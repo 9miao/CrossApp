@@ -251,7 +251,7 @@ void CASwitch::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     {
         this->setControlState(CAControlStateNormal);
         this->setIsOn(!m_isOn);
-        ((CCObject *)m_target->*m_selTouch[CAControlTouchUpInSide])(this, point);
+        ((CCObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this, point);
     }
 }
 

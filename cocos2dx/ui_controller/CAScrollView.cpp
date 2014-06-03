@@ -47,6 +47,7 @@ CAScrollView::~CAScrollView()
 {
     CC_SAFE_DELETE(m_pTouches);
     CC_SAFE_DELETE(m_pChildInThis);
+    m_pScrollViewDelegate = NULL;
 }
 
 void CAScrollView::onEnterTransitionDidFinish()
@@ -433,7 +434,24 @@ void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 
 void CAScrollView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
-    this->ccTouchEnded(pTouch, pEvent);
+    if (m_pTouches->containsObject(pTouch))
+    {
+        if (m_pTouches->count() == 1)
+        {
+			m_tPointOffset.clear();
+
+            if (m_pScrollViewDelegate)
+            {
+                m_pScrollViewDelegate->scrollViewDidEndDragging(this);
+            }
+            m_bTracking = false;
+        }
+        else if (m_pTouches->count() == 2)
+        {
+            m_bZooming = false;
+        }
+        m_pTouches->removeObject(pTouch);
+    }
 }
 
 void CAScrollView::deaccelerateScrolling(float delay)
@@ -550,7 +568,7 @@ float CAScrollView::maxSpeedCache(float delay)
 
 float CAScrollView::decelerationRatio(float delay)
 {
-    return 10 * delay;
+    return 6 * delay;
 }
 
 float CAScrollView::maxBouncesSpeed(float delay)
@@ -862,13 +880,6 @@ void CAIndicator::setHide(bool var)
         }
     }
     while (0);
-}
-
-#pragma CAScrollViewDelegate
-
-void CAScrollViewDelegate::removeDelegate(CAScrollView* view)
-{
-    view->setScrollViewDelegate(NULL);
 }
 
 NS_CC_END

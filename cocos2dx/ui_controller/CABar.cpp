@@ -112,13 +112,11 @@ void CANavigationBar::showBackButton()
         rect.size.width = rect.size.height * 2;
         
         m_pBackButton = CAButton::createWithCenter(rect, CAButtonTypeCustom);
-        m_pBackButton->setBackGroundViewForState(CAControlStateNormal, CAView::create());
+        m_pBackButton->setImageForState(CAControlStateNormal, CAImage::create("button_left.png"));
+        m_pBackButton->setImageColorForState(CAControlStateHighlighted, ccc3(255, 255, 200));
         rect.size.width = rect.size.height = rect.size.height * 0.85f;
-        CAImageView* imageView = CAImageView::createWithImage(CAImage::create("button_left.png"));
-        imageView->setBounds(rect);
-        m_pBackButton->setView(CAControlStateNormal, imageView);
         this->insertSubview(m_pBackButton, 1);
-        m_pBackButton->addTarget(this, CAControl_selector(CANavigationBar::goBack), CAControlTouchUpInSide);
+        m_pBackButton->addTarget(this, CAControl_selector(CANavigationBar::goBack), CAControlEventTouchUpInSide);
     }
     
     if (m_pItems.size() <= 1)

@@ -40,11 +40,11 @@ void RootViewController::viewDidLoad()
     btn2->setTitleForState(CAControlStateNormal, "un-allowsMultiple");
     btn2->setTitleForState(CAControlStateSelected, "allowsMultiple");
     this->getView()->addSubview(btn2);
-    btn2->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlTouchUpInSide);
+    btn2->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
     btn2->setAllowsSelected(true);
     
     CASwitch* s3 = CASwitch::createWithFrame(CCRect(10, tableRect.size.height+10, 120, 60));
-    s3->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection), CAControlTouchUpInSide);
+    s3->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection), CAControlEventTouchUpInSide);
     this->getView()->addSubview(s3);
     
     //CAScheduler::schedule(schedule_selector(RootViewController::updateProgress), this, 5, false);
@@ -169,7 +169,7 @@ CAView* RootViewController::tableViewSectionViewForFooterInSection(CATableView* 
 }
 unsigned int RootViewController::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    return 3;
+    return 30;
 }
 
 unsigned int RootViewController::numberOfSections(CATableView *table)

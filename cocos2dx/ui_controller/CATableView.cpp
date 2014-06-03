@@ -25,6 +25,7 @@ CATableView::CATableView()
 ,m_pTablePullDownView(NULL)
 ,m_pTablePullUpView(NULL)
 ,m_separatorColor(ccc4(127, 127, 127, 255))
+,m_nSeparatorViewHeight(1)
 ,m_nTableHeaderHeight(0)
 ,m_nTableFooterHeight(0)
 ,m_nTablePullViewHeight(0)
@@ -354,9 +355,9 @@ void CATableView::reloadViewSizeData()
         for (unsigned int j=0; j<m_nRowHeightss.at(i).size(); j++)
         {
             sectionHeight += m_nRowHeightss.at(i).at(j);
-            sectionHeight += 1;
+            sectionHeight += m_nSeparatorViewHeight;
         }
-        sectionHeight -= 1;
+        sectionHeight -= m_nSeparatorViewHeight;
         m_nSectionHeights[i] = sectionHeight;
         viewHeight += sectionHeight;
     }
@@ -421,9 +422,9 @@ void CATableView::reloadData()
             
             if (j < m_nRowHeightss.at(i).size() - 1)
             {
-                CAView* view = CAView::createWithFrame(CCRect(0, y, width, 1), m_separatorColor);
+                CAView* view = CAView::createWithFrame(CCRect(0, y, width, m_nSeparatorViewHeight), m_separatorColor);
                 this->addSubview(view);
-                y += 1;
+                y += m_nSeparatorViewHeight;
             }
         }
         

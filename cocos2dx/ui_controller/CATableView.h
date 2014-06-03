@@ -139,6 +139,8 @@ protected:
     
     CC_SYNTHESIZE(unsigned int, m_nTablePullViewHeight, TablePullViewHeight);
     
+    CC_SYNTHESIZE(unsigned int, m_nSeparatorViewHeight, SeparatorViewHeight);
+    
     CC_SYNTHESIZE(ccColor4B, m_separatorColor, SeparatorColor);
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelection, AllowsSelection);
