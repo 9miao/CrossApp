@@ -273,13 +273,14 @@ THE SOFTWARE.
 #include "support/component/CCComponentContainer.h"
 
 //ui_controller
-#include "ui_controller/CAViewController.h"
-#include "ui_controller/CAControl.h"
 #include "ui_controller/CAButton.h"
-#include "ui_controller/CASwitch.h"
-#include "ui_controller/CAScrollView.h"
-#include "ui_controller/CATableView.h"
+#include "ui_controller/CAControl.h"
 #include "ui_controller/CAProgress.h"
+#include "ui_controller/CAScrollView.h"
+#include "ui_controller/CASlider.h"
+#include "ui_controller/CASwitch.h"
+#include "ui_controller/CATableView.h"
+#include "ui_controller/CAViewController.h"
 
 NS_CC_BEGIN
 
