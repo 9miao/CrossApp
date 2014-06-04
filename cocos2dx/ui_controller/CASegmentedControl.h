@@ -16,6 +16,7 @@ NS_CC_BEGIN
 
 class CAButton;
 class CAImage;
+class CAImageView;
 
 class CC_DLL CASegmentedControl : public CAControl
 {
@@ -27,28 +28,42 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
-    static CASegmentedControl* create(const CCRect& rect,
-                                      std::vector<CAImage *> normalImages,
-                                      std::vector<CAImage *> selectedImages,
-                                      int selectedIndex = 0);
+    static CASegmentedControl* createWithFrame(const CCRect& rect);
     
 public:
-    bool init(const CCRect& rect,
-              std::vector<CAImage *> normalImages,
-              std::vector<CAImage *> selectedImages,
-              int selectedIndex);
+    bool initWithFrame(const CCRect& rect);
     
-    virtual void insertSegmentWithTitle(const char* title, int index, CAControlState controlState);
-    virtual void insertSegmentWithImage(CAImage *image, int index, CAControlState controlState);
+    virtual bool insertSegmentWithTitle(const char* title, int index, CAControlState controlState);
+    virtual bool insertSegmentWithBackgroundImage(CAImage *image, int index, CAControlState controlState);
+    virtual bool insertSegmentWithImage(CAImage *image, int index, CAControlState controlState);
     virtual void removeSegmentAtIndex(int index);
     virtual void removeAllSegments();
     
-    virtual void setTitleAtIndex(const char* title, int index, CAControlState controlState);
-    virtual void setImageAtIndex(CAImage *image, int index, CAControlState controlState);
+    virtual bool setTitleAtIndex(const char* title, int index, CAControlState controlState);
+    virtual bool setBackgroundImageAtIndex(CAImage *image, int index, CAControlState controlState);
+    virtual bool setImageAtIndex(CAImage *image, int index, CAControlState controlState);
+    
+    virtual CAView *getDefaultNormalBackgroundView();
+    virtual CAView *getDefaultHighlightedBackgroundView();
+    virtual CAView *getDefaultSelectedBackgroundView();
+    
+    CC_SYNTHESIZE_READONLY(int, m_selectedIndex, selectedIndex);       // default 0
+    CC_SYNTHESIZE_READONLY(CCSize, m_itemSize, ItemSize);       
+    void setSelectedAtIndex(int index);
+    int getItemCount() const;
+    void layoutSubviews();
+    
+protected:
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+    
+private:
+    bool indexIsValid(int index);
     
 protected:
     std::vector<CAButton *> m_segments;
-    int m_selectedIndex;
+    CAImageView *m_backGroundImage;
 };
 
 NS_CC_END
