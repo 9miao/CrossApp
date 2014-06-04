@@ -47,6 +47,8 @@ public:
     virtual CAView *getDefaultHighlightedBackgroundView();
     virtual CAView *getDefaultSelectedBackgroundView();
     
+    virtual CAButton *createDefaultSegment();
+    
     CC_SYNTHESIZE_READONLY(int, m_selectedIndex, selectedIndex);       // default 0
     CC_SYNTHESIZE_READONLY(CCSize, m_itemSize, ItemSize);       
     void setSelectedAtIndex(int index);

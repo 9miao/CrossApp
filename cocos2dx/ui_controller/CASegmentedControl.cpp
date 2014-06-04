@@ -64,23 +64,17 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
     const float elemWidth = rect.size.width / totalCount;
     m_itemSize = CCSizeMake(elemWidth, rect.size.height);
     CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
-    CAView* normalBG = this->getDefaultNormalBackgroundView();
-    CAView* selectedBG = this->getDefaultSelectedBackgroundView();
-    CAView* highlightedBG = this->getDefaultHighlightedBackgroundView();
     for (int i = 0; i < totalCount; ++i)
     {
-        CAButton *btn = CAButton::createWithFrame(elemFrame, CAButtonTypeCustom);
+        CAButton *btn = this->createDefaultSegment();
         if (btn)
         {
+            btn->setFrame(elemFrame);
             char tmp[8] = {0};
             snprintf(tmp, 8, "%d", i);
-            btn->setBackGroundViewForState(CAControlStateNormal, normalBG);
-            btn->setBackGroundViewForState(CAControlStateSelected, selectedBG);
-            btn->setBackGroundViewForState(CAControlStateHighlighted, highlightedBG);
             btn->setTitleForState(CAControlStateNormal, tmp);
             btn->setTitleForState(CAControlStateSelected, tmp);
             btn->setTitleForState(CAControlStateHighlighted, tmp);
-            btn->setAllowsSelected(true);
             m_segments.push_back(btn);
             this->addSubview(btn);
             btn->setControlState((m_selectedIndex == i) ? CAControlStateSelected : CAControlStateNormal);
@@ -102,28 +96,13 @@ bool CASegmentedControl::insertSegmentWithTitle(const char* title, int index, CA
         index = curItemCount;
     }
     
-    const int totalCount = curItemCount + 1;
-    const CCSize controlSize = this->getBounds().size;
-    const float elemWidth = controlSize.width / totalCount;
-    m_itemSize = CCSizeMake(elemWidth, controlSize.height);
-    CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
-    
-    CAButton *newBtn = CAButton::createWithFrame(elemFrame, CAButtonTypeCustom);
+    CAButton *newBtn = this->createDefaultSegment();
     if (NULL == newBtn)
     {
         return false;
     }
     
-    CAView* normalBG = this->getDefaultNormalBackgroundView();
-    CAView* selectedBG = this->getDefaultSelectedBackgroundView();
-    CAView* highlightedBG = this->getDefaultHighlightedBackgroundView();
-    newBtn->setBackGroundViewForState(CAControlStateNormal, normalBG);
-    newBtn->setBackGroundViewForState(CAControlStateSelected, selectedBG);
-    newBtn->setBackGroundViewForState(CAControlStateHighlighted, highlightedBG);
-    newBtn->setTitleForState(CAControlStateNormal, title);
-    newBtn->setTitleForState(CAControlStateSelected, title);
-    newBtn->setTitleForState(CAControlStateHighlighted, title);
-    newBtn->setAllowsSelected(true);
+    newBtn->setTitleForState(controlState, title);
     m_segments.insert(m_segments.begin() + index, newBtn);
     this->addSubview(newBtn);
     this->layoutSubviews();
@@ -142,20 +121,13 @@ bool CASegmentedControl::insertSegmentWithBackgroundImage(CAImage *image, int in
         index = curItemCount;
     }
     
-    const int totalCount = curItemCount + 1;
-    const CCSize controlSize = this->getBounds().size;
-    const float elemWidth = controlSize.width / totalCount;
-    m_itemSize = CCSizeMake(elemWidth, controlSize.height);
-    CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
-    
-    CAButton *newBtn = CAButton::createWithFrame(elemFrame, CAButtonTypeCustom);
+    CAButton *newBtn = this->createDefaultSegment();
     if (NULL == newBtn)
     {
         return false;
     }
     
     newBtn->setBackGroundViewForState(controlState, CAScale9ImageView::createWithImage(image));
-    newBtn->setAllowsSelected(true);
     m_segments.insert(m_segments.begin() + index, newBtn);
     this->addSubview(newBtn);
     this->layoutSubviews();
@@ -174,26 +146,13 @@ bool CASegmentedControl::insertSegmentWithImage(CAImage *image, int index, CACon
         index = curItemCount;
     }
     
-    const int totalCount = curItemCount + 1;
-    const CCSize controlSize = this->getBounds().size;
-    const float elemWidth = controlSize.width / totalCount;
-    m_itemSize = CCSizeMake(elemWidth, controlSize.height);
-    CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
-    
-    CAButton *newBtn = CAButton::createWithFrame(elemFrame, CAButtonTypeCustom);
+    CAButton *newBtn = this->createDefaultSegment();
     if (NULL == newBtn)
     {
         return false;
     }
     
-    CAView* normalBG = this->getDefaultNormalBackgroundView();
-    CAView* selectedBG = this->getDefaultSelectedBackgroundView();
-    CAView* highlightedBG = this->getDefaultHighlightedBackgroundView();
-    newBtn->setBackGroundViewForState(CAControlStateNormal, normalBG);
-    newBtn->setBackGroundViewForState(CAControlStateSelected, selectedBG);
-    newBtn->setBackGroundViewForState(CAControlStateHighlighted, highlightedBG);
     newBtn->setImageForState(controlState, image);
-    newBtn->setAllowsSelected(true);
     m_segments.insert(m_segments.begin() + index, newBtn);
     this->addSubview(newBtn);
     this->layoutSubviews();
@@ -284,6 +243,24 @@ CAView* CASegmentedControl::getDefaultHighlightedBackgroundView()
 CAView* CASegmentedControl::getDefaultSelectedBackgroundView()
 {
     return CAScale9ImageView::createWithImage(CAImage::create("btn_square_selected.png"));
+}
+
+CAButton* CASegmentedControl::createDefaultSegment()
+{
+    CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
+    
+    CAButton *newBtn = CAButton::createWithFrame(elemFrame, CAButtonTypeCustom);
+    if (newBtn)
+    {
+        CAView* normalBG = this->getDefaultNormalBackgroundView();
+        CAView* selectedBG = this->getDefaultSelectedBackgroundView();
+        CAView* highlightedBG = this->getDefaultHighlightedBackgroundView();
+        newBtn->setBackGroundViewForState(CAControlStateNormal, normalBG);
+        newBtn->setBackGroundViewForState(CAControlStateSelected, selectedBG);
+        newBtn->setBackGroundViewForState(CAControlStateHighlighted, highlightedBG);
+        newBtn->setAllowsSelected(true);
+    }
+    return newBtn;
 }
 
 void CASegmentedControl::setSelectedAtIndex(int index)
