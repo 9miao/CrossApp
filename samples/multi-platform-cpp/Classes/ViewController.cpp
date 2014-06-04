@@ -82,7 +82,7 @@ bool ViewController::setAllowsSelection(CAButton* btn, CCPoint point)
 
 void ViewController::viewDidUnload()
 {
-    this->getView()->removeAllSubviews();
+
 }
 
 void ViewController::touchUpInSide()

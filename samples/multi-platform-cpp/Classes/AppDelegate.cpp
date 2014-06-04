@@ -24,7 +24,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	pDirector->setDelegate(this);
     
     // turn on display FPS
-    pDirector->setDisplayStats(false);
+    pDirector->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60.0f);
@@ -79,6 +79,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CATabBarController* tabBarController = new CATabBarController();
     tabBarController->initWithViewControllers(views);
     tabBarController->getTabBar()->showSelectedIndicator();
+    tabBarController->showSelectedViewControllerAtIndex(2, false);
     
     navigationController->release();
     viewController2->release();

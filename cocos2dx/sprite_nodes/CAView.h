@@ -819,7 +819,7 @@ public:
      */
     virtual void visit(void);
     
-    void rendering();
+    virtual void rendering();
     
     /**
      * Returns a "local" axis aligned bounding box of the node.

@@ -16,7 +16,7 @@
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:configChanges="orientation">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />ßß
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -27,16 +27,8 @@
                       android:normalScreens="true"/>
                          
     <uses-permission android:name="android.permission.INTERNET"/>
-   <!--
-    If you do not locate required permissions  please ignore
+    
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> 
-    
-    
-    -->
-   <!-- 
-    If you don't need permission to contact please ignore
     <uses-permission android:name="android.permission.READ_CONTACTS"/> 
-    
-    
-    -->
+
 </manifest>

@@ -86,7 +86,7 @@ protected:
     void showIndicator();
     
     void hideIndicator();
-    
+
 protected:
     
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);

@@ -8,6 +8,8 @@
 
 #include "RootViewController.h"
 
+
+
 void RootViewController::viewDidLoad()
 {
     CCRect rect = this->getView()->getBounds();
@@ -41,7 +43,8 @@ void RootViewController::viewDidLoad()
     btn2->setTitleForState(CAControlStateSelected, "allowsMultiple");
     this->getView()->addSubview(btn2);
     btn2->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
-    btn2->setAllowsSelected(true);
+    //btn2->setAllowsSelected(true);
+    //btn2->setControlStateLocked(true);
     
     CASwitch* s3 = CASwitch::createWithFrame(CCRect(10, tableRect.size.height+10, 120, 60));
     s3->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection), CAControlEventTouchUpInSide);
@@ -78,17 +81,22 @@ bool RootViewController::setAllowsSelection(CAControl* sender, CCPoint point)
 bool RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint point)
 {
 	CAButton* btn = (CAButton*)sender;
+//    
+//	if (btn->isSelected())
+//    {
+//        tableView->setAllowsMultipleSelection(false);
+//    }
+//    else
+//    {
+//        tableView->setAllowsMultipleSelection(true);
+//    }
+//    
+//    tableView->reloadData();
     
-	if (btn->isSelected())
-    {
-        tableView->setAllowsMultipleSelection(false);
-    }
-    else
-    {
-        tableView->setAllowsMultipleSelection(true);
-    }
+    CCRect rect = btn->getFrame();
+    rect.size.width += 10;
     
-    tableView->reloadData();
+    btn->setFrame(rect);
     
     return true;
 }

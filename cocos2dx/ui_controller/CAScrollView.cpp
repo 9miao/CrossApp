@@ -14,6 +14,9 @@
 #include "CAScheduler.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "support/CCPointExtension.h"
+#include "kazmath/GL/matrix.h"
+#include "effects/CCGrid.h"
+#include "CCEGLView.h"
 
 NS_CC_BEGIN
 
@@ -708,7 +711,6 @@ bool CAScrollView::isScrollWindowNotMaxOutSide()
     return false;
 }
 
-
 #pragma CAIndicator
 
 CAIndicator::CAIndicator()
@@ -770,6 +772,9 @@ bool CAIndicator::initWithFrame(const CCRect& rect, CAIndicatorType type)
 
 void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenFrame)
 {
+    if ( !this->isVisible())
+        return;
+    
     CAScale9ImageView* indicator = dynamic_cast<CAScale9ImageView*>(m_pIndicator);
     
     if (m_eType == CAIndicatorTypeHorizontal)

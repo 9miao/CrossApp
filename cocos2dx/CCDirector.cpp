@@ -300,6 +300,11 @@ void CCDirector::drawScene(float dt)
             m_pRootWindow->visit();
         }
         
+        if (m_bDisplayStats)
+        {
+            showStats();
+        }
+        
         kmGLPopMatrix();
         
         m_uTotalFrames++;
@@ -970,11 +975,6 @@ void CCDisplayLinkDirector::mainLoop(void)
          if (! m_bPaused)
          {
              CAScheduler::getScheduler()->update(m_fDeltaTime);
-         }
-         
-         if (m_bDisplayStats)
-         {
-             showStats();
          }
          
          // draw the notifications node

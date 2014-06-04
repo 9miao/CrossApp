@@ -79,7 +79,7 @@ class CC_DLL CATabBarDelegate
 {
 public:
     
-    virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, int index) = 0;
+    virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index) = 0;
     
 };
 

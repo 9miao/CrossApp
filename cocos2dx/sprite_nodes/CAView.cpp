@@ -1158,7 +1158,7 @@ void CAView::visit()
     
     if (m_bDisplayRange)
     {
-        CAView::rendering();
+        this->rendering();
     }
     else
     {
@@ -1202,7 +1202,7 @@ void CAView::visit()
         
 		glScissor(x, y, width, height);// 只显示当前窗口的区域
         
-        CAView::rendering();
+        this->rendering();
         
         glDisable(GL_SCISSOR_TEST);// 禁用
     }
@@ -1227,6 +1227,7 @@ void CAView::rendering()
         this->sortAllSubviews();
         // draw children zOrder < 0
         ccArray *arrayData = m_pSubviews->data;
+
         for( ; i < arrayData->num; i++ )
         {
             pNode = (CAView*) arrayData->arr[i];
@@ -1241,13 +1242,12 @@ void CAView::rendering()
             }
         }
         
-        // self draw
         this->draw();
         
         for( ; i < arrayData->num; i++ )
         {
             pNode = (CAView*) arrayData->arr[i];
-            if (pNode)
+            if (pNode && pNode->m_nZOrder >= 0)
             {
                 pNode->visit();
             }
@@ -1574,22 +1574,28 @@ CCAffineTransform CAView::worldToNodeTransform(void)
 
 CCRect CAView::convertRectToNodeSpace(const cocos2d::CCRect &worldRect)
 {
-    CCPoint p = CCDirector::sharedDirector()->convertToGL(worldRect.origin);
-    CCRect ret;
-    ret.size = worldRect.size;
-    ret.origin = CCPointApplyAffineTransform(p, worldToNodeTransform());
-    ret.origin.y = this->getBounds().size.height - ret.origin.y;
+    CCRect ret = worldRect;
+    ret.origin = this->convertToNodeSpace(ret.origin);
+    
+    CAView*  view = this;
+    while (view)
+    {
+        ret.size = CCSize(ret.size.width / view->getScaleX(), ret.size.height / view->getScaleY());
+        view = view->getSuperview();
+    }
     return ret;
 }
 
 CCRect CAView::convertRectToWorldSpace(const cocos2d::CCRect &nodeRect)
 {
-    CCPoint p = nodeRect.origin;
-    p.y = this->getBounds().size.height - p.y;
-    CCRect ret;
-    ret.size = nodeRect.size;
-    ret.origin = CCPointApplyAffineTransform(p, nodeToWorldTransform());
-    ret.origin = CCDirector::sharedDirector()->convertToUI(ret.origin);
+    CCRect ret = nodeRect;
+    ret.origin = this->convertToWorldSpace(ret.origin);
+    CAView*  view = this;
+    while (view)
+    {
+        ret.size = CCSize(ret.size.width * view->getScaleX(), ret.size.height * view->getScaleY());
+        view = view->getSuperview();
+    }
     return ret;
 }
 

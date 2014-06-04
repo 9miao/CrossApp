@@ -530,8 +530,8 @@ void CAButton::setControlState(CAControlState var)
         {
             m_pImageView->setImage(image);
             m_pImageView->setImageRect(rect);
-            m_pImageView->setCenter(imageViewCenter);
         }
+        m_pImageView->setCenter(imageViewCenter);
         
         m_pImageView->setColor(m_sImageColor[m_eControlState]);
         m_pLabel->setColor(m_sTitleColor[m_eControlState]);
@@ -540,8 +540,8 @@ void CAButton::setControlState(CAControlState var)
         {
             m_pLabel->setFontSize(labelSize);
             m_pLabel->setString(title.c_str());
-            m_pLabel->setCenterOrigin(labelCenterOrigin);
         }
+        m_pLabel->setCenterOrigin(labelCenterOrigin);
     }
     while (0);
     
@@ -627,7 +627,7 @@ bool CAButton::setTouchBegin(CCPoint point)
 {
 	m_bTouchClick = true;
 
-    if (m_selTouch[CAControlEventTouchDown])
+    if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
     {
 		m_bTouchClick = ((CCObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
     }
@@ -642,7 +642,7 @@ bool CAButton::setTouchBegin(CCPoint point)
 
 void CAButton::setTouchUpInSide(CCPoint point)
 {
-    if (m_selTouch[CAControlEventTouchUpInSide])
+    if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
     {
         ((CCObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this,point);
     }
@@ -650,7 +650,7 @@ void CAButton::setTouchUpInSide(CCPoint point)
 
 void CAButton::setTouchUpSide(CCPoint point)
 {
-    if (m_selTouch[CAControlEventTouchUpSide])
+    if (m_pTarget[CAControlEventTouchUpSide] && m_selTouch[CAControlEventTouchUpSide])
     {
         ((CCObject *)m_pTarget[CAControlEventTouchUpSide]->*m_selTouch[CAControlEventTouchUpSide])(this,point);
     }
@@ -658,7 +658,7 @@ void CAButton::setTouchUpSide(CCPoint point)
 
 void CAButton::setTouchMoved(cocos2d::CCPoint point)
 {
-    if (m_selTouch[CAControlEventTouchMoved])
+    if (m_pTarget[CAControlEventTouchMoved] && m_selTouch[CAControlEventTouchMoved])
     {
         ((CCObject *)m_pTarget[CAControlEventTouchMoved]->*m_selTouch[CAControlEventTouchMoved])(this,point);
     }
@@ -666,7 +666,7 @@ void CAButton::setTouchMoved(cocos2d::CCPoint point)
 
 void CAButton::setTouchMovedOutSide(cocos2d::CCPoint point)
 {
-    if (m_selTouch[CAControlEventTouchMovedOutSide])
+    if (m_pTarget[CAControlEventTouchMovedOutSide] && m_selTouch[CAControlEventTouchMovedOutSide])
     {
         ((CCObject *)m_pTarget[CAControlEventTouchMovedOutSide]->*m_selTouch[CAControlEventTouchMovedOutSide])(this,point);
     }
@@ -679,11 +679,13 @@ bool CAButton::isTextTagEqual(const char *text)
 
 void CAButton::setContentSize(const CCSize & var)
 {
-    CAView::setContentSize(var);
+    CAControl::setContentSize(var);
     
     this->updateWithPoint();
     
     this->updateWithPreferredSize();
+    
+    this->setControlState(m_eControlState);
 }
 
 void CAButton::setOpacity(GLubyte opacity)

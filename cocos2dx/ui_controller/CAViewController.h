@@ -12,11 +12,18 @@
 #include <iostream>
 #include "sprite_nodes/CAView.h"
 #include "CABar.h"
+#include "CAScrollView.h"
 #include "keypad_dispatcher/CCKeypadDelegate.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
 NS_CC_BEGIN
 
-class CCScene;
+typedef enum
+{
+    CABarVerticalAlignmentTop = 0,
+    CABarVerticalAlignmentBottom
+}CABarVerticalAlignment;
+
+class CAWindow;
 class CATabBarController;
 class CANavigationController;
 
@@ -66,6 +73,8 @@ protected:
     
     virtual void viewDidUnload() = 0;
     
+    virtual void reshapeViewRectDidFinish(){};
+    
     CAView* getView();
     
     virtual void keyBackClicked() {}
@@ -106,7 +115,8 @@ public:
     
     virtual ~CANavigationController();
     
-    virtual bool initWithRootViewController(CAViewController* viewController);
+    virtual bool initWithRootViewController(CAViewController* viewController,
+                                            CABarVerticalAlignment var = CABarVerticalAlignmentTop);
     
 public:
     
@@ -114,9 +124,15 @@ public:
     
     CAViewController* popViewControllerAnimated(bool animated);
     
+    inline unsigned long getViewControllerCount() {return m_pViewControllers.size();}
+    
+    void setNavigationBarHidden(bool hidden, bool animated);
+    
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bNavigationBarHidden, NavigationBarHidden);
+    
     CC_SYNTHESIZE_READONLY(CANavigationBar*, m_pNavigationBar, NavigationBar);
     
-    inline unsigned long getViewControllerCount() {return m_pViewControllers.size();}
+    CC_SYNTHESIZE_READONLY(CABarVerticalAlignment, m_eNavigationBarVerticalAlignment, NavigationBarVerticalAlignment);
     
 protected:
  
@@ -149,7 +165,8 @@ public:
     
     virtual ~CATabBarController();
     
-    virtual bool initWithViewControllers(const std::vector<CAViewController*>& viewControllers);
+    virtual bool initWithViewControllers(const std::vector<CAViewController*>& viewControllers,
+                                         CABarVerticalAlignment var = CABarVerticalAlignmentBottom);
     
     bool showSelectedViewController(CAViewController* viewController, bool animated);
     
@@ -158,8 +175,14 @@ public:
     bool showSelectedViewControllerAtIndex(unsigned int index, bool animated);
     
     unsigned int getSelectedViewControllerAtIndex();
-
+    
+    void setTabBarHidden(bool hidden, bool animated);
+    
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bTabBarHidden, TabBarHidden);
+    
     CC_SYNTHESIZE_READONLY(CATabBar*, m_pTabBar, TabBar);
+    
+    CC_SYNTHESIZE_READONLY(CABarVerticalAlignment, m_eTabBarVerticalAlignment, TabBarVerticalAlignment);
     
 protected:
 
@@ -167,17 +190,19 @@ protected:
     
     void viewDidUnload();
     
-    virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, int index);
+    virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index);
+    
+    CC_DEPRECATED_ATTRIBUTE void renderingAllViewController(float dt = 0);
+    
+    CC_DEPRECATED_ATTRIBUTE void renderingSelectedViewController(float dt = 0);
     
 private:
     
     std::vector<CAViewController*> m_pViewControllers;
-  
-    CAViewController* m_pSelectedViewController;
     
     unsigned int m_nSelectedIndex;
 
-    CAView* m_pContainer;
+    CAScrollView* m_pContainer;
 };
 
 

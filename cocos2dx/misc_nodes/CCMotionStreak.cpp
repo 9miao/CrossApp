@@ -79,10 +79,10 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     return NULL;
 }
 
-CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture)
+CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* image)
 {
     CCMotionStreak *pRet = new CCMotionStreak();
-    if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, texture))
+    if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, image))
     {
         pRet->autorelease();
         return pRet;
@@ -100,7 +100,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
     return initWithFade(fade, minSeg, stroke, color, image);
 }
 
-bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture)
+bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* image)
 {
     CAView::setPosition(CCPointZero);
     setAnchorPoint(CCPointZero);
@@ -131,7 +131,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
     // shader program
     setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 
-    setImage(texture);
+    setImage(image);
     setColor(color);
     
     CAScheduler::schedule(schedule_selector(CCMotionStreak::update), this, 1/60.0f, false);
@@ -160,13 +160,13 @@ CAImage* CCMotionStreak::getImage(void)
     return m_pImage;
 }
 
-void CCMotionStreak::setImage(CAImage* texture)
+void CCMotionStreak::setImage(CAImage* image)
 {
-    if (m_pImage != texture)
+    if (m_pImage != image)
     {
-        CC_SAFE_RETAIN(texture);
+        CC_SAFE_RETAIN(image);
         CC_SAFE_RELEASE(m_pImage);
-        m_pImage = texture;
+        m_pImage = image;
     }
 }
 

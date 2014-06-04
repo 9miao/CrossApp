@@ -59,7 +59,7 @@ void CATouchDispatcher::touchesBegan(CCSet *touches, CCEvent *pEvent)
             {
                 bClaimed = view->ccTouchBegan(pTouch, pEvent);
                 
-                CC_BREAK_IF(!bClaimed);
+                //CC_BREAK_IF(!bClaimed);
                 
                 view->getTouchesSet()->addObject(pTouch);
                 

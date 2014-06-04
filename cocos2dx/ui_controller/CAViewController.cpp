@@ -134,6 +134,7 @@ CANavigationController::CANavigationController()
 :m_pViewControllers(NULL)
 ,m_pNavigationBar(NULL)
 ,m_pContainer(NULL)
+,m_bNavigationBarHidden(false)
 {
     m_pNavigationBar = CANavigationBar::create();
     m_pNavigationBar->retain();
@@ -154,7 +155,7 @@ CANavigationController::~CANavigationController()
     }
 }
 
-bool CANavigationController::initWithRootViewController(CAViewController* viewController)
+bool CANavigationController::initWithRootViewController(CAViewController* viewController, CABarVerticalAlignment var)
 {
     CAViewController::init();
     
@@ -177,22 +178,41 @@ bool CANavigationController::initWithRootViewController(CAViewController* viewCo
     }
     m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     
+    m_eNavigationBarVerticalAlignment = var;
+    
     return true;
 }
 
 void CANavigationController::viewDidLoad()
 {
-    CCRect rect = this->getView()->getBounds();
-    rect.size.height -= m_pNavigationBar->getFrame().size.height;
-    rect.origin.y = m_pNavigationBar->getFrame().size.height;
+    CCRect navigation_bar_rect = CCRectZero;
     
-    m_pContainer = CAView::createWithFrame(rect);
+    CCRect container_rect = this->getView()->getBounds();
+    container_rect.size.height -= m_pNavigationBar->getFrame().size.height;
+    
+    switch (m_eNavigationBarVerticalAlignment)
+    {
+        case CABarVerticalAlignmentTop:
+        {
+            container_rect.origin.y = m_pNavigationBar->getFrame().size.height;
+        }
+            break;
+        case CABarVerticalAlignmentBottom:
+        {
+            navigation_bar_rect.origin.y = container_rect.size.height;
+        }
+            break;
+        default:
+            break;
+    }
+    
+    m_pContainer = CAView::createWithFrame(container_rect);
     this->getView()->addSubview(m_pContainer);
     
     CAViewController* viewController = m_pViewControllers.front();
     viewController->addViewFromSuperview(m_pContainer);
     
-    m_pNavigationBar->setFrame(CCRectZero);
+    m_pNavigationBar->setFrame(navigation_bar_rect);
     this->getView()->addSubview(m_pNavigationBar);
     m_pNavigationBar->setDelegate(this);
 }
@@ -322,13 +342,32 @@ void CANavigationController::navigationPopViewController(CANavigationBar* naviga
     this->popViewControllerAnimated(animated);
 }
 
+void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
+{
+    switch (m_eNavigationBarVerticalAlignment)
+    {
+        case CABarVerticalAlignmentTop:
+        {
+        
+        }
+            break;
+        case CABarVerticalAlignmentBottom:
+        {
+        
+        }
+            break;
+        default:
+            break;
+    }
+}
+
 #pragma CATabBarController
 
 CATabBarController::CATabBarController()
-:m_pSelectedViewController(NULL)
-,m_nSelectedIndex(0)
+:m_nSelectedIndex(0)
 ,m_pTabBar(NULL)
 ,m_pContainer(NULL)
+,m_bTabBarHidden(false)
 {
 
 }
@@ -342,13 +381,11 @@ CATabBarController::~CATabBarController()
     }
     m_pViewControllers.clear();
     
-    if (m_pTabBar)
-    {
-        CC_SAFE_RELEASE_NULL(m_pTabBar);
-    }
+    CC_SAFE_RELEASE_NULL(m_pTabBar);
+    CC_SAFE_RELEASE_NULL(m_pContainer);
 }
 
-bool CATabBarController::initWithViewControllers(const std::vector<CAViewController*>& viewControllers)
+bool CATabBarController::initWithViewControllers(const std::vector<CAViewController*>& viewControllers, CABarVerticalAlignment var)
 {
     CAViewController::init();
     
@@ -376,8 +413,18 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
         m_pTabBar = CATabBar::create(items);
         m_pTabBar->retain();
         m_pTabBar->setDelegate(this);
+        
+        m_pContainer = new CAScrollView();
+        m_pContainer->initWithFrame(CCRectZero);
+        m_pContainer->setScrollEnabled(false);
+        m_pContainer->setBounces(false);
+        m_pContainer->setShowsHorizontalScrollIndicator(false);
+        m_pContainer->setShowsVerticalScrollIndicator(false);
+        
     }
     while (0);
+    
+    m_eTabBarVerticalAlignment = var;
     
     return true;
     
@@ -385,14 +432,51 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
 
 void CATabBarController::viewDidLoad()
 {
-    CCRect rect = this->getView()->getBounds();
-    rect.size.height -= m_pTabBar->getFrame().size.height;
+    CCRect tab_bar_rect = CCRectZero;
     
-    m_pContainer = CAView::createWithFrame(rect);
+    CCRect container_rect = this->getView()->getBounds();
+    container_rect.size.height -= m_pTabBar->getFrame().size.height;
+    
+    CCSize container_view_size = container_rect.size;
+    container_view_size.width *= m_pViewControllers.size();
+    
+    switch (m_eTabBarVerticalAlignment)
+    {
+        case CABarVerticalAlignmentBottom:
+        {
+            tab_bar_rect.origin.y = container_rect.size.height;
+        }
+            break;
+        case CABarVerticalAlignmentTop:
+        {
+            container_rect.origin.y = m_pTabBar->getFrame().size.height;
+        }
+            break;
+        default:
+            break;
+    }
+    
+    m_pContainer->setFrame(container_rect);
+    m_pContainer->setViewSize(container_view_size);
     this->getView()->addSubview(m_pContainer);
+    CCPoint point = CCPoint(m_pContainer->getFrame().size.width * m_nSelectedIndex, 0);
+    m_pContainer->setContentOffset(point, false);
     
-    m_pTabBar->setFrame(CCRect(0, rect.size.height, 0, 0));
+    m_pTabBar->setFrame(tab_bar_rect);
     this->getView()->addSubview(m_pTabBar);
+    
+    unsigned int index = 0;
+    while (index < m_pViewControllers.size())
+    {
+        CCRect rect = container_rect;
+        rect.origin.x = index * rect.size.width;
+        rect.origin.y = 0;
+        CAView* view = CAView::createWithFrame(rect);
+        m_pContainer->addSubview(view);
+        m_pViewControllers.at(index)->getView()->setFrame(view->getBounds());
+        m_pViewControllers.at(index)->addViewFromSuperview(view);
+        index++;
+    }
 }
 
 void CATabBarController::viewDidUnload()
@@ -403,6 +487,7 @@ void CATabBarController::viewDidUnload()
         (*itr)->removeViewFromSuperview();
     }
     
+    m_pContainer->removeAllSubviews();
     m_pContainer->removeFromSuperview();
     m_pContainer = NULL;
     m_pTabBar->removeFromSuperview();
@@ -412,35 +497,16 @@ bool CATabBarController::showSelectedViewController(CAViewController* viewContro
 {
     do
     {
-        CC_BREAK_IF(viewController->isEqual(m_pSelectedViewController));
+        CC_BREAK_IF(m_pViewControllers.at(m_nSelectedIndex)->isEqual(viewController));
         
-        std::vector<CAViewController*>::iterator itr;
-        for (itr=m_pViewControllers.begin(); itr!=m_pViewControllers.end(); itr++)
+        unsigned int index = 0;
+        while (index < m_pViewControllers.size())
         {
-            CC_BREAK_IF(viewController->isEqual(*itr));
-        }
-        CC_BREAK_IF(itr == m_pViewControllers.end());
-        CC_BREAK_IF((*itr)->isEqual(m_pSelectedViewController));
-        
-        if (m_pSelectedViewController)
-        {
-            m_pSelectedViewController->getView()->removeFromSuperview();
-            m_pSelectedViewController = NULL;
+            CC_BREAK_IF(m_pViewControllers.at(index)->isEqual(viewController));
+            index++;
         }
         
-        m_pSelectedViewController = *itr;
-        m_pContainer->addSubview(m_pSelectedViewController->getView());
-        
-        if (animated)
-        {
-            
-        }
-        else
-        {
-            
-        }
-        
-        return true;
+        return this->showSelectedViewControllerAtIndex(index, animated);
     }
     while (0);
     
@@ -449,7 +515,7 @@ bool CATabBarController::showSelectedViewController(CAViewController* viewContro
 
 CAViewController* CATabBarController::getSelectedViewController()
 {
-    return m_pSelectedViewController;
+    return m_pViewControllers.at(m_nSelectedIndex);
 }
 
 bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index, bool animated)
@@ -457,26 +523,21 @@ bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index, b
     do
     {
         CC_BREAK_IF(index >= m_pViewControllers.size());
-        CAViewController* viewController = m_pViewControllers.at(index);
-        CC_BREAK_IF(viewController->isEqual(m_pSelectedViewController));
+        CC_BREAK_IF(index == m_nSelectedIndex);
+        m_nSelectedIndex = index;
         
-        if (m_pSelectedViewController)
-        {
-            m_pSelectedViewController->getView()->removeFromSuperview();
-            m_pSelectedViewController = NULL;
-        }
-        
-        m_pSelectedViewController = viewController;
-        m_pContainer->addSubview(m_pSelectedViewController->getView());
+        m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
         
         if (animated)
         {
-            
+            this->renderingAllViewController();
         }
-        else
-        {
         
-        }
+        CCPoint point = CCPoint(m_pContainer->getFrame().size.width * m_nSelectedIndex, 0);
+        
+        m_pContainer->setContentOffset(point, animated);
+        
+        CAScheduler::schedule(schedule_selector(CATabBarController::renderingSelectedViewController), this, 0, 1, 1.0f,false);
         
         return true;
     }
@@ -490,9 +551,71 @@ unsigned int CATabBarController::getSelectedViewControllerAtIndex()
     return m_nSelectedIndex;
 }
 
-void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, int index)
+void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index)
 {
-    this->showSelectedViewControllerAtIndex(index, true);
+    do
+    {
+        CC_BREAK_IF(index == m_nSelectedIndex);
+        this->showSelectedViewControllerAtIndex(index, true);
+    }
+    while (0);
+}
+
+void CATabBarController::renderingAllViewController(float dt)
+{
+    std::vector<CAViewController*>::iterator itr;
+    for (itr=m_pViewControllers.begin(); itr!=m_pViewControllers.end(); itr++)
+    {
+        (*itr)->getView()->setVisible(true);
+    }
+}
+
+void CATabBarController::renderingSelectedViewController(float dt)
+{
+    std::vector<CAViewController*>::iterator itr;
+    for (itr=m_pViewControllers.begin(); itr!=m_pViewControllers.end(); itr++)
+    {
+        (*itr)->getView()->setVisible(false);
+    }
+    m_pViewControllers.at(m_nSelectedIndex)->getView()->setVisible(true);
+}
+
+void CATabBarController::setTabBarHidden(bool hidden, bool animated)
+{
+    do
+    {
+        CC_BREAK_IF(m_bTabBarHidden == hidden);
+        m_bTabBarHidden = hidden;
+        
+        if (m_bTabBarHidden)
+        {
+            
+            
+            
+            
+        }
+        else
+        {
+        
+        }
+        
+        switch (m_eTabBarVerticalAlignment)
+        {
+            case CABarVerticalAlignmentTop:
+            {
+                
+            }
+                break;
+            case CABarVerticalAlignmentBottom:
+            {
+                
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    while (0);
 }
 
 NS_CC_END;

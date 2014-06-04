@@ -62,12 +62,12 @@ public:
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, Image filename */
     static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, Image */
-    static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* image);
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and Image filename */
     bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and Image  */
-    bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* texture);
+    bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* image);
 
     /** color used for the tint */
     void tintWithColor(ccColor3B colors);
@@ -82,7 +82,7 @@ public:
 
     /* Implement interfaces */
     virtual CAImage* getImage(void);
-    virtual void setImage(CAImage* texture);
+    virtual void setImage(CAImage* image);
     /**
      * @js NA
      */

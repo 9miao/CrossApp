@@ -227,7 +227,7 @@ void CATabBar::onEnterTransitionDidFinish()
         
         this->showSelectedBackGround();
         
-        this->setSelectedAtIndex(0);
+        this->setSelectedAtIndex(m_nSelectedIndex);
     }
 }
 
@@ -432,7 +432,7 @@ void CATabBar::setSelectedAtIndex(int index)
     {
         CC_BREAK_IF(index < 0);
         CC_BREAK_IF(index >= m_pItems.size());
-
+        
         if (m_pSelectedItem && m_pSelectedItem->getSelectedImage())
         {
             CAView* viewLast = m_pViews.at(m_nSelectedIndex);
@@ -443,6 +443,9 @@ void CATabBar::setSelectedAtIndex(int index)
         }
         
         m_nSelectedIndex = index;
+        
+        CC_BREAK_IF(!m_bRunning);
+        
         m_pSelectedItem = m_pItems.at(m_nSelectedIndex);
         m_pSelectedBackGround->setFrame(m_pViews.at(m_nSelectedIndex)->getFrame());
         
