@@ -297,6 +297,9 @@
 		B0B553DC193485BE0065053D /* CAImagePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553D4193485BE0065053D /* CAImagePVR.cpp */; };
 		B0B553DD193485BE0065053D /* CAImagePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553D5193485BE0065053D /* CAImagePVR.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
+		EAFDBC0F193DC74E002061B8 /* CASlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EAFDBC0D193DC74E002061B8 /* CASlider.cpp */; };
+		EAFDBC10193DC74E002061B8 /* CASlider.h in Headers */ = {isa = PBXBuildFile; fileRef = EAFDBC0E193DC74E002061B8 /* CASlider.h */; };
+		EAFDBC13193DF51E002061B8 /* CASegmentedControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EAFDBC12193DF51E002061B8 /* CASegmentedControl.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -593,6 +596,10 @@
 		B0B553D4193485BE0065053D /* CAImagePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImagePVR.cpp; sourceTree = "<group>"; };
 		B0B553D5193485BE0065053D /* CAImagePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImagePVR.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
+		EAFDBC0D193DC74E002061B8 /* CASlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASlider.cpp; sourceTree = "<group>"; };
+		EAFDBC0E193DC74E002061B8 /* CASlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASlider.h; sourceTree = "<group>"; };
+		EAFDBC11193DF50C002061B8 /* CASegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CASegmentedControl.h; sourceTree = "<group>"; };
+		EAFDBC12193DF51E002061B8 /* CASegmentedControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASegmentedControl.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1173,14 +1180,18 @@
 				B0AD93C819207A8C00EA40BB /* CABarItem.h */,
 				B0AD93C919207A8C00EA40BB /* CAButton.cpp */,
 				B0AD93CA19207A8C00EA40BB /* CAButton.h */,
-				B03E8FB319387FAD00FD9A06 /* CASwitch.cpp */,
-				B03E8FB419387FAD00FD9A06 /* CASwitch.h */,
 				B0AD93CB19207A8C00EA40BB /* CAControl.cpp */,
 				B0AD93CC19207A8C00EA40BB /* CAControl.h */,
-				B0AD93CD19207A8C00EA40BB /* CAProgress.cpp */,
-				B0AD93CE19207A8C00EA40BB /* CAProgress.h */,
 				B0AD93CF19207A8C00EA40BB /* CAScrollView.cpp */,
 				B0AD93D019207A8C00EA40BB /* CAScrollView.h */,
+				EAFDBC12193DF51E002061B8 /* CASegmentedControl.cpp */,
+				EAFDBC11193DF50C002061B8 /* CASegmentedControl.h */,
+				EAFDBC0D193DC74E002061B8 /* CASlider.cpp */,
+				EAFDBC0E193DC74E002061B8 /* CASlider.h */,
+				B03E8FB319387FAD00FD9A06 /* CASwitch.cpp */,
+				B03E8FB419387FAD00FD9A06 /* CASwitch.h */,
+				B0AD93CD19207A8C00EA40BB /* CAProgress.cpp */,
+				B0AD93CE19207A8C00EA40BB /* CAProgress.h */,
 				B0AD93D119207A8C00EA40BB /* CATableView.cpp */,
 				B0AD93D219207A8C00EA40BB /* CATableView.h */,
 				B0AD93D319207A8C00EA40BB /* CAViewController.cpp */,
@@ -1234,6 +1245,7 @@
 				1551A653158F2ADE00E66CFE /* CCArray.h in Headers */,
 				1551A655158F2ADE00E66CFE /* CCAutoreleasePool.h in Headers */,
 				B020AF7F1929DED0009FFA81 /* CCIMEDelegate.h in Headers */,
+				EAFDBC10193DC74E002061B8 /* CASlider.h in Headers */,
 				1551A657158F2ADE00E66CFE /* CCDictionary.h in Headers */,
 				1551A659158F2ADE00E66CFE /* CCGeometry.h in Headers */,
 				1551A65A158F2ADE00E66CFE /* CCInteger.h in Headers */,
@@ -1494,10 +1506,12 @@
 				B03A20ED192348BC00F8E24E /* CAView.cpp in Sources */,
 				1551A72E158F2ADE00E66CFE /* CCCommon.mm in Sources */,
 				1551A730158F2ADE00E66CFE /* CCDirectorCaller.mm in Sources */,
+				EAFDBC13193DF51E002061B8 /* CASegmentedControl.cpp in Sources */,
 				1551A732158F2ADE00E66CFE /* CCEGLView.mm in Sources */,
 				1551A734158F2ADE00E66CFE /* CCES2Renderer.m in Sources */,
 				1551A736158F2ADE00E66CFE /* CCFileUtilsIOS.mm in Sources */,
 				1551A738158F2ADE00E66CFE /* CCImage.mm in Sources */,
+				EAFDBC0F193DC74E002061B8 /* CASlider.cpp in Sources */,
 				1551A739158F2ADE00E66CFE /* CCLock.cpp in Sources */,
 				1551A73D158F2ADE00E66CFE /* CCThread.mm in Sources */,
 				1551A73F158F2ADE00E66CFE /* EAGLView.mm in Sources */,
