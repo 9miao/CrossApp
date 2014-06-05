@@ -87,6 +87,8 @@ protected:
     
     void hideIndicator();
 
+    virtual void setContentSize(const CCSize& var);
+    
 protected:
     
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);

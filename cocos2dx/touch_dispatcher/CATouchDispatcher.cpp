@@ -59,8 +59,6 @@ void CATouchDispatcher::touchesBegan(CCSet *touches, CCEvent *pEvent)
             {
                 bClaimed = view->ccTouchBegan(pTouch, pEvent);
                 
-                //CC_BREAK_IF(!bClaimed);
-                
                 view->getTouchesSet()->addObject(pTouch);
                 
                 view->sortAllSubviews();
@@ -75,6 +73,7 @@ void CATouchDispatcher::touchesBegan(CCSet *touches, CCEvent *pEvent)
                     if (subview && subview->isVisible())
                     {
                         CCPoint point = subview->convertTouchToNodeSpace(pTouch);
+                        
                         if (subview->getBounds().containsPoint(point))
                         {
 //                            CC_BREAK_IF(subview->isMutableTouches() == false && subview->getTouchesSet()->count() > 0);

@@ -989,29 +989,43 @@ public:
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
     
     virtual bool isDisplayRange();
-    virtual void setDisplayRange(bool value);
     
-    // default implements are used to call script callback if exist
+    virtual void setDisplayRange(bool value);
+
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
     virtual GLubyte getOpacity();
+    
     virtual GLubyte getDisplayedOpacity();
+    
     virtual void setOpacity(GLubyte opacity);
+    
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    
     virtual bool isCascadeOpacityEnabled();
+    
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
     virtual const ccColor3B& getColor(void);
+    
     virtual const ccColor3B& getDisplayedColor();
+    
     virtual void setColor(const ccColor3B& color);
+    
     virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    
     virtual bool isCascadeColorEnabled();
+    
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
     virtual void setOpacityModifyRGB(bool bValue);
+    
     virtual bool isOpacityModifyRGB();
     
 	/**
@@ -1063,33 +1077,19 @@ public:
      *  @endcode
      */
     void setAdditionalTransform(const CCAffineTransform& additionalTransform);
-    
-    /// @} end of Coordinate Converters
-    
-    /// @{
-    /// @name component functions
-    /**
-     *   gets a component by its name
-     */
+
     CCComponent* getComponent(const char *pName) const;
-    
-    /**
-     *   adds a component
-     */
+
     virtual bool addComponent(CCComponent *pComponent);
-    
-    /**
-     *   removes a component by its name
-     */
+
     virtual bool removeComponent(const char *pName);
-    
-    /**
-     *   removes all components
-     */
+
     virtual void removeAllComponents();
-    /// @} end of component functions
     
     virtual void update(float fDelta);
+    
+    void reViewlayout();
+    
     
 private:
     /// lazy allocs
@@ -1105,6 +1105,7 @@ private:
     CCPoint convertToWindowSpace(const CCPoint& nodePoint);
     
     void updateDraw();
+    
     
 protected:
     float m_fRotationX;                 ///< rotation angle on x-axis

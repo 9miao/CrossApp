@@ -456,6 +456,15 @@ void CAButton::setControlState(CAControlState var)
 {
     CAControl::setControlState(var);
 
+    if (m_eControlState == CAControlStateSelected)
+    {
+        m_bSelected = true;
+    }
+    else if(m_eControlState != CAControlStateHighlighted)
+    {
+        m_bSelected = false;
+    }
+    
     do
     {
         CC_BREAK_IF(m_pSpriteNormal);

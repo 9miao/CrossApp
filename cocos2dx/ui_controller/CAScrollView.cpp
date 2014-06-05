@@ -39,6 +39,8 @@ CAScrollView::CAScrollView()
 ,m_fTouchLength(0.0f)
 ,m_tInertia(CCPointZero)
 ,m_tCloseToPoint(CCPoint(-1, -1))
+,m_pIndicatorHorizontal(NULL)
+,m_pIndicatorVertical(NULL)
 ,m_bShowsHorizontalScrollIndicator(true)
 ,m_bShowsVerticalScrollIndicator(true)
 {
@@ -214,6 +216,21 @@ void CAScrollView::setContentOffset(CCPoint offset, bool animated)
 CCPoint CAScrollView::getContentOffset()
 {
     return ccpMult(m_pContainer->getFrameOrigin(), -1);
+}
+
+void CAScrollView::setContentSize(const cocos2d::CCSize &var)
+{
+    CAView::setContentSize(var);
+    
+    if (m_pIndicatorHorizontal)
+    {
+        m_pIndicatorHorizontal->setFrame(CCRect(12, var.height - 12, var.width - 24, 10));
+    }
+    if (m_pIndicatorVertical)
+    {
+        m_pIndicatorVertical->setFrame(CCRect(var.width - 12, 12, 10, var.height - 24));
+    }
+    this->update(0);
 }
 
 void CAScrollView::closeToPoint(float delay)
@@ -600,8 +617,14 @@ void CAScrollView::hideIndicator()
 
 void CAScrollView::update(float fDelta)
 {
-    m_pIndicatorHorizontal->setIndicator(m_obContentSize, m_pContainer->getFrame());
-    m_pIndicatorVertical->setIndicator(m_obContentSize, m_pContainer->getFrame());
+    if (m_pIndicatorHorizontal)
+    {
+        m_pIndicatorHorizontal->setIndicator(m_obContentSize, m_pContainer->getFrame());
+    }
+    if (m_pIndicatorVertical)
+    {
+        m_pIndicatorVertical->setIndicator(m_obContentSize, m_pContainer->getFrame());
+    }
 }
 
 const CCPoint& CAScrollView::getScrollWindowNotOutPoint(CCPoint& point)

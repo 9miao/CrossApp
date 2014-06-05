@@ -45,6 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CANavigationController* navigationController = new CANavigationController();
     navigationController->initWithRootViewController(viewController);
     navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("h.png"), 100));
+    navigationController->setNavigationBarHidden(true, false);
     
     viewController->release();
     

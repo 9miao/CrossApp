@@ -325,7 +325,6 @@ void CAView::setSkewX(float newSkewX)
     if (m_fSkewX != newSkewX)
     {
         m_fSkewX = newSkewX;
-        m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
     }
 }
@@ -340,7 +339,6 @@ void CAView::setSkewY(float newSkewY)
     if (m_fSkewY != newSkewY)
     {
         m_fSkewY = newSkewY;
-        m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
     }
 }
@@ -394,7 +392,6 @@ void CAView::setRotation(float newRotation)
     if (m_fRotationX != newRotation || m_fRotationY != newRotation)
     {
         m_fRotationX = m_fRotationY = newRotation;
-        m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
     }
 }
@@ -409,7 +406,6 @@ void CAView::setRotationX(float fRotationX)
     if (m_fRotationX != fRotationX)
     {
         m_fRotationX = fRotationX;
-        m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
     }
 }
@@ -424,7 +420,6 @@ void CAView::setRotationY(float fRotationY)
     if (m_fRotationY != fRotationY)
     {
         m_fRotationY = fRotationY;
-        m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
     }
 }
@@ -453,7 +448,6 @@ void CAView::setScale(float fScaleX,float fScaleY)
         m_obFrameRect.size.height = m_fScaleY * m_obContentSize.height;
         CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
         m_obFrameRect.origin = ccpSub(m_obPosition, point);
-        m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
     }
 }
@@ -473,7 +467,6 @@ void CAView::setScaleX(float newScaleX)
         m_obFrameRect.size.width = m_fScaleX * m_obContentSize.width;
         float x = m_obAnchorPointInPoints.x * m_fScaleX;
         m_obFrameRect.origin.x = m_obPosition.y - x;
-        m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
     }
 }
@@ -493,7 +486,6 @@ void CAView::setScaleY(float newScaleY)
         m_obFrameRect.size.height = m_fScaleY * m_obContentSize.height;
         float y = m_obAnchorPointInPoints.y * m_fScaleY;
         m_obFrameRect.origin.y = m_obPosition.y - y;
-        m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
     }
 }
@@ -507,14 +499,10 @@ const CCPoint& CAView::getPosition()
 /// position setter
 void CAView::setPosition(const CCPoint& newPosition)
 {
-    if (1)
-    {
-        m_obPosition = newPosition;
-        CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
-        m_obFrameRect.origin = ccpSub(m_obPosition, point);
-        m_bTransformDirty = m_bInverseDirty = true;
-        this->updateDraw();
-    }
+    m_obPosition = newPosition;
+    CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
+    m_obFrameRect.origin = ccpSub(m_obPosition, point);
+    this->updateDraw();
 }
 
 void CAView::getPosition(float* x, float* y)
@@ -611,7 +599,6 @@ void CAView::setAnchorPointInPoints(const CCPoint& anchorPointInPoints)
             this->setCenterOrigin(p);
         }
         
-        m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
     }
 }
@@ -645,7 +632,6 @@ void CAView::setAnchorPoint(const CCPoint& point)
             this->setCenterOrigin(p);
         }
         
-        m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
     }
 }
@@ -675,7 +661,8 @@ void CAView::setContentSize(const CCSize & size)
         }
         while (0);
         
-        m_bTransformDirty = m_bInverseDirty = true;
+        arrayMakeObjectsPerformSelector(m_pSubviews, reViewlayout, CAView*);
+        
         this->updateDraw();
     }
 }
@@ -702,10 +689,7 @@ void CAView::setFrameOrigin(const CCPoint& point)
     p = ccpAdd(p, point);
     this->setPosition(p);
     
-    m_bFrame = true;if (!this->getFrameOrigin().equals(point))
-    {
-        
-    }
+    m_bFrame = true;
 }
 
 const CCPoint& CAView::getFrameOrigin()
@@ -788,7 +772,6 @@ void CAView::ignoreAnchorPointForPosition(bool newValue)
     if (newValue != m_bIgnoreAnchorPointForPosition)
     {
 		m_bIgnoreAnchorPointForPosition = newValue;
-		m_bTransformDirty = m_bInverseDirty = true;
         this->updateDraw();
 	}
 }
@@ -882,10 +865,16 @@ const char* CAView::description()
     return CCString::createWithFormat("<CAView | Tag = %d>", m_nTag)->getCString();
 }
 
+void CAView::reViewlayout()
+{
+    m_bTransformDirty = m_bInverseDirty = true;
+}
+
 void CAView::updateDraw()
 {
     if (this->getSuperview())
     {
+        this->reViewlayout();
         CCDirector::sharedDirector()->updateDraw();
     }
 }
@@ -1451,21 +1440,20 @@ CCAffineTransform CAView::nodeToParentTransform(void)
     {
         
         // Translate values
-        float x = m_obPosition.x;
-        float y = -m_obPosition.y;
-        
         float height = 0;
         
         if (this->getSuperview())
         {
-            height= this->getSuperview()->getContentSize().height;
+            height= this->getSuperview()->getBounds().size.height;
         }
         else
         {
             height= CCDirector::sharedDirector()->getWinSize().height;
         }
         
-        y += height;
+        
+        float x = m_obPosition.x;
+        float y = height - m_obPosition.y;
         
         if (m_bIgnoreAnchorPointForPosition)
         {
@@ -1575,7 +1563,10 @@ CCAffineTransform CAView::worldToNodeTransform(void)
 CCRect CAView::convertRectToNodeSpace(const cocos2d::CCRect &worldRect)
 {
     CCRect ret = worldRect;
+    ret.origin.y += ret.size.height;
+    ret.origin = CCDirector::sharedDirector()->convertToGL(ret.origin);
     ret.origin = this->convertToNodeSpace(ret.origin);
+    ret.origin.y = this->getBounds().size.height - ret.size.height - ret.origin.y;
     
     CAView*  view = this;
     while (view)
@@ -1589,7 +1580,10 @@ CCRect CAView::convertRectToNodeSpace(const cocos2d::CCRect &worldRect)
 CCRect CAView::convertRectToWorldSpace(const cocos2d::CCRect &nodeRect)
 {
     CCRect ret = nodeRect;
+    ret.origin.y = this->getBounds().size.height - ret.size.height - ret.origin.y;
     ret.origin = this->convertToWorldSpace(ret.origin);
+    ret.origin = CCDirector::sharedDirector()->convertToUI(ret.origin);
+    ret.origin.y -= ret.size.height;
     CAView*  view = this;
     while (view)
     {
@@ -1940,7 +1934,11 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
 {
     m_bRectRotated = rotated;
     
-    setContentSize(untrimmedSize);
+    if (!m_obContentSize.equals(untrimmedSize))
+    {
+        setContentSize(untrimmedSize);
+    }
+    
     setVertexRect(rect);
     setImageCoords(rect);
     

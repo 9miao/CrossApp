@@ -37,6 +37,10 @@ public:
     
     void popItem();
     
+    void insterRightView(CAView* view);
+    
+    void removeRightView();
+    
 public:
     
     CANavigationBar();
@@ -70,6 +74,8 @@ protected:
     CAView* m_pTitle;
     
     CAButton* m_pBackButton;
+    
+    CAView* m_pRightView;
     
     std::vector<CANavigationBarItem*> m_pItems;
 };

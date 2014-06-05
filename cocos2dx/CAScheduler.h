@@ -145,9 +145,9 @@ public:
      */
     ~CAScheduler(void);
 
-    static void schedule(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused);
+    static void schedule(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused = false);
     
-    static void schedule(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused);
+    static void schedule(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused = false);
     
     static void unschedule(SEL_SCHEDULE pfnSelector, CCObject *pTarget);
     
@@ -232,13 +232,13 @@ protected:
      @js  NA
      @lua NA
      */
-    void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused);
+    void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused = false);
 
     /** calls scheduleSelector with kCCRepeatForever and a 0 delay 
      *  @js NA
      *  @lua NA
      */
-    void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused);
+    void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused = false);
 
     /** Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.

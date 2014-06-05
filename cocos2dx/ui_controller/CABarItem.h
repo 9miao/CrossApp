@@ -63,6 +63,8 @@ public:
     CC_SYNTHESIZE(std::string, m_sBackButtonTitle, BackButtonTitle);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pBackButtonImage, BackButtonImage);
+    
+    CC_SYNTHESIZE_RETAIN(CAImage*, m_pHighlightedBackButtonImage, HighlightedBackButtonImage);
 };
 
 class CC_DLL CATabBarItem

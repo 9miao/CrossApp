@@ -139,12 +139,16 @@ protected:
     virtual void viewDidLoad();
     
     virtual void viewDidUnload();
-
+    
+    virtual void reshapeViewRectDidFinish();
+    
     void pushViewControllerFinish();
     
     void popViewControllerFinish();
     
     virtual void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
+    
+    void update(float dt);
     
 private:
     
@@ -186,15 +190,19 @@ public:
     
 protected:
 
-    void viewDidLoad();
+    virtual void viewDidLoad();
     
-    void viewDidUnload();
+    virtual void viewDidUnload();
+    
+    virtual void reshapeViewRectDidFinish();
     
     virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index);
     
     CC_DEPRECATED_ATTRIBUTE void renderingAllViewController(float dt = 0);
     
     CC_DEPRECATED_ATTRIBUTE void renderingSelectedViewController(float dt = 0);
+    
+    void update(float dt);
     
 private:
     

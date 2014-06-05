@@ -19,11 +19,17 @@ class RootViewController: public CAViewController, public CATableViewDataSource,
     
     CATableView* tableView;
     
+    CAButton* button_;
+    
+    CASwitch* switch_;
+    
 public:
     
     virtual void viewDidLoad();
     
     virtual void viewDidUnload();
+    
+    virtual void reshapeViewRectDidFinish();
     
     virtual CATableViewCell* tableCellAtIndex(CATableView *table, unsigned int section, unsigned int row);
     

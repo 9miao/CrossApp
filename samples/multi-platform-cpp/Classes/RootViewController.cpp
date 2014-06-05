@@ -12,7 +12,10 @@
 
 void RootViewController::viewDidLoad()
 {
+    
     CCRect rect = this->getView()->getBounds();
+    
+    CCLog("viewDidLoad= %f, %f", rect.size.width, rect.size.height);
     
     CCRect tableRect = rect;
     tableRect.size.height = rect.size.height - 80;
@@ -38,25 +41,43 @@ void RootViewController::viewDidLoad()
     
     tableView->setBackGroundImage(CAImage::create("bg.jpg"));
     
-    CAButton* btn2 = CAButton::createWithFrame(CCRect(200, tableRect.size.height+10, 320, 60), CAButtonTypeRoundedRect);
-    btn2->setTitleForState(CAControlStateNormal, "un-allowsMultiple");
-    btn2->setTitleForState(CAControlStateSelected, "allowsMultiple");
-    this->getView()->addSubview(btn2);
-    btn2->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
-    //btn2->setAllowsSelected(true);
-    //btn2->setControlStateLocked(true);
+    button_ = CAButton::createWithFrame(CCRect(200, tableRect.size.height+10, 320, 60), CAButtonTypeRoundedRect);
+    button_->setTitleForState(CAControlStateNormal, "Hide-Bar");
+    button_->setTitleForState(CAControlStateSelected, "Show-Bar");
+    this->getView()->addSubview(button_);
+    button_->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
+    button_->setAllowsSelected(true);
     
-    CASwitch* s3 = CASwitch::createWithFrame(CCRect(10, tableRect.size.height+10, 120, 60));
-    s3->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection), CAControlEventTouchUpInSide);
-    this->getView()->addSubview(s3);
+    if (this->getNavigationController()->isNavigationBarHidden())
+    {
+        button_->setControlState(CAControlStateSelected);
+    }
+    
+    switch_ = CASwitch::createWithFrame(CCRect(10, tableRect.size.height+10, 120, 60));
+    switch_->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection), CAControlEventTouchUpInSide);
+    this->getView()->addSubview(switch_);
     
     //CAScheduler::schedule(schedule_selector(RootViewController::updateProgress), this, 5, false);
-    
 }
 
 void RootViewController::viewDidUnload()
 {
 
+}
+
+void RootViewController::reshapeViewRectDidFinish()
+{
+    CCRect rect = this->getView()->getBounds();
+    
+    CCRect tableRect = rect;
+    tableRect.size.height = rect.size.height - 80;
+    
+    tableView->setFrame(tableRect);
+    
+    button_->setFrame(CCRect(200, tableRect.size.height+10, 320, 60));
+    
+    switch_->setFrame(CCRect(10, tableRect.size.height+10, 120, 60));
+    
 }
 
 bool RootViewController::setAllowsSelection(CAControl* sender, CCPoint point)
@@ -93,10 +114,17 @@ bool RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint p
 //    
 //    tableView->reloadData();
     
-    CCRect rect = btn->getFrame();
-    rect.size.width += 10;
     
-    btn->setFrame(rect);
+    if (btn->isSelected())
+    {
+        this->getNavigationController()->getTabBarController()->setTabBarHidden(false, true);
+        this->getNavigationController()->setNavigationBarHidden(false, true);
+    }
+    else
+    {
+        this->getNavigationController()->getTabBarController()->setTabBarHidden(true, true);
+        this->getNavigationController()->setNavigationBarHidden(true, true);
+    }
     
     return true;
 }
@@ -104,7 +132,7 @@ bool RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint p
 void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
     char s[32];
-    sprintf(s, "viewControll = %ld",this->getNavigationController()->getViewControllerCount());
+    sprintf(s, "viewController = %ld",this->getNavigationController()->getViewControllerCount());
     
     RootViewController* viewController = new RootViewController();
     viewController->init();

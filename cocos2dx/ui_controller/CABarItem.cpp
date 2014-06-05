@@ -43,6 +43,7 @@ bool CABarItem::isTouchEnabled()
 CANavigationBarItem::CANavigationBarItem()
 :m_pTitleViewImage(NULL)
 ,m_pBackButtonImage(NULL)
+,m_pHighlightedBackButtonImage(NULL)
 ,m_sBackButtonTitle("")
 {
 

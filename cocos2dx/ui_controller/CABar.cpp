@@ -24,6 +24,7 @@ CANavigationBar::CANavigationBar()
 ,m_pBackGroundImage(NULL)
 ,m_pTitle(NULL)
 ,m_pBackButton(NULL)
+,m_pRightView(NULL)
 ,m_pDelegate(NULL)
 {
 
@@ -89,7 +90,9 @@ void CANavigationBar::showTitle()
 {
     if (m_pTitle == NULL)
     {
-        m_pTitle = CCLabelTTF::create("", "fonts/arial.ttf", 40);
+        int fontSize = this->getBounds().size.height * 0.75f;
+        
+        m_pTitle = CCLabelTTF::create("", "fonts/arial.ttf", fontSize);
         m_pTitle->setColor(ccWHITE);
         m_pTitle->setAnchorPoint(CCPoint(0.5f, 0.5f));
         m_pTitle->setCenterOrigin(m_obContentSize/2);
@@ -99,6 +102,15 @@ void CANavigationBar::showTitle()
     if (m_pItems.empty() == false)
     {
         ((CCLabelTTF*)m_pTitle)->setString(m_pItems.back()->getTitle().c_str());
+        
+        float width = this->getBounds().size.width - this->getBounds().size.height * 4;
+        
+        if (m_pTitle->getFrame().size.width > width)
+        {
+            CCRect rect = m_pTitle->getBounds();
+            rect.size.width = width;
+            m_pTitle->setImageRect(rect);
+        }
     }
 }
 
@@ -126,6 +138,29 @@ void CANavigationBar::showBackButton()
     else
     {
         m_pBackButton->setVisible(true);
+    }
+}
+
+void CANavigationBar::insterRightView(CAView* view)
+{
+    this->removeRightView();
+    
+    m_pRightView = view;
+    
+    CCRect rect = this->getBounds();
+    rect.origin.x = rect.size.width - rect.size.height * 0.8f;
+    rect.origin.y = rect.size.height * 0.5f;
+    rect.size.width = rect.size.height * 2;
+    
+    m_pRightView->setCenter(rect);
+}
+
+void CANavigationBar::removeRightView()
+{
+    if (m_pRightView)
+    {
+        m_pRightView->removeFromSuperview();
+        m_pRightView = NULL;
     }
 }
 
