@@ -27,6 +27,7 @@ import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
@@ -48,7 +49,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
 	private static Context sContext = null;
-	
+	AndroidNativeTool actAndroidNativeTool;
+
 	public static Context getContext() {
 		return sContext;
 	}
@@ -62,12 +64,18 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		super.onCreate(savedInstanceState);
 		sContext = this;
     	this.mHandler = new Cocos2dxHandler(this);
-
+    	actAndroidNativeTool = new AndroidNativeTool(this);
+    	
+    	AndroidPersonList.Init(this);
+    	AndroidGPS.Init(this);
     	this.init();
 
 		Cocos2dxHelper.init(this, this);
 	}
-
+	 public void onActivityResult(int requestCode, int resultCode, Intent intent)
+	 {
+		 actAndroidNativeTool.onActivityResult(requestCode, resultCode, intent);
+	 }
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================

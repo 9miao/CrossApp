@@ -249,6 +249,12 @@
 		B020AF781929DE41009FFA81 /* CCIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B020AF751929DE41009FFA81 /* CCIMEDelegate.h */; };
 		B020AF791929DE41009FFA81 /* CCIMEDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B020AF761929DE41009FFA81 /* CCIMEDispatcher.cpp */; };
 		B020AF7A1929DE41009FFA81 /* CCIMEDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = B020AF771929DE41009FFA81 /* CCIMEDispatcher.h */; };
+		B036EB4C19406491000434DD /* CADateSpinner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B036EB4619406491000434DD /* CADateSpinner.cpp */; };
+		B036EB4D19406491000434DD /* CADateSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = B036EB4719406491000434DD /* CADateSpinner.h */; };
+		B036EB4E19406491000434DD /* CASegmentedControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B036EB4819406491000434DD /* CASegmentedControl.cpp */; };
+		B036EB4F19406491000434DD /* CASegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B036EB4919406491000434DD /* CASegmentedControl.h */; };
+		B036EB5019406491000434DD /* CASlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B036EB4A19406491000434DD /* CASlider.cpp */; };
+		B036EB5119406491000434DD /* CASlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B036EB4B19406491000434DD /* CASlider.h */; };
 		B03E8FAB1938640E00FD9A06 /* CASwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = B03E8FAA1938640E00FD9A06 /* CASwitch.h */; };
 		B03E8FAD1938641400FD9A06 /* CASwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03E8FAC1938641400FD9A06 /* CASwitch.cpp */; };
 		B06FDC8F1925F2A600AB5BCA /* CALabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06FDC8E1925F2A600AB5BCA /* CALabel.cpp */; };
@@ -538,6 +544,12 @@
 		B020AF751929DE41009FFA81 /* CCIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDelegate.h; sourceTree = "<group>"; };
 		B020AF761929DE41009FFA81 /* CCIMEDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCIMEDispatcher.cpp; sourceTree = "<group>"; };
 		B020AF771929DE41009FFA81 /* CCIMEDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDispatcher.h; sourceTree = "<group>"; };
+		B036EB4619406491000434DD /* CADateSpinner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADateSpinner.cpp; sourceTree = "<group>"; };
+		B036EB4719406491000434DD /* CADateSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADateSpinner.h; sourceTree = "<group>"; };
+		B036EB4819406491000434DD /* CASegmentedControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASegmentedControl.cpp; sourceTree = "<group>"; };
+		B036EB4919406491000434DD /* CASegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASegmentedControl.h; sourceTree = "<group>"; };
+		B036EB4A19406491000434DD /* CASlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASlider.cpp; sourceTree = "<group>"; };
+		B036EB4B19406491000434DD /* CASlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASlider.h; sourceTree = "<group>"; };
 		B03E8FAA1938640E00FD9A06 /* CASwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASwitch.h; sourceTree = "<group>"; };
 		B03E8FAC1938641400FD9A06 /* CASwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASwitch.cpp; sourceTree = "<group>"; };
 		B06FDC8E1925F2A600AB5BCA /* CALabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALabel.cpp; sourceTree = "<group>"; };
@@ -1145,6 +1157,12 @@
 		B0AD9388192077C200EA40BB /* ui_controller */ = {
 			isa = PBXGroup;
 			children = (
+				B036EB4619406491000434DD /* CADateSpinner.cpp */,
+				B036EB4719406491000434DD /* CADateSpinner.h */,
+				B036EB4819406491000434DD /* CASegmentedControl.cpp */,
+				B036EB4919406491000434DD /* CASegmentedControl.h */,
+				B036EB4A19406491000434DD /* CASlider.cpp */,
+				B036EB4B19406491000434DD /* CASlider.h */,
 				B0AD9389192077C200EA40BB /* CABar.cpp */,
 				B0AD938A192077C200EA40BB /* CABar.h */,
 				B0AD938B192077C200EA40BB /* CABarItem.cpp */,
@@ -1197,6 +1215,7 @@
 				B0B553B4193480470065053D /* CAImageETC.h in Headers */,
 				1551A62F158F2ADE00E66CFE /* CCActionEase.h in Headers */,
 				B0B553B6193480470065053D /* CAImagePVR.h in Headers */,
+				B036EB5119406491000434DD /* CASlider.h in Headers */,
 				1551A631158F2ADE00E66CFE /* CCActionGrid.h in Headers */,
 				1551A633158F2ADE00E66CFE /* CCActionGrid3D.h in Headers */,
 				1551A635158F2ADE00E66CFE /* CCActionInstant.h in Headers */,
@@ -1284,6 +1303,7 @@
 				1551A822158F2ADF00E66CFE /* ccShader_PositionTexture_uColor_vert.h in Headers */,
 				1551A823158F2ADF00E66CFE /* ccShader_PositionTexture_vert.h in Headers */,
 				1551A824158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_frag.h in Headers */,
+				B036EB4F19406491000434DD /* CASegmentedControl.h in Headers */,
 				1551A825158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_vert.h in Headers */,
 				1551A826158F2ADF00E66CFE /* ccShader_PositionTextureColor_frag.h in Headers */,
 				1551A827158F2ADF00E66CFE /* ccShader_PositionTextureColor_vert.h in Headers */,
@@ -1302,6 +1322,7 @@
 				1551A83F158F2ADF00E66CFE /* CCProfiling.h in Headers */,
 				1551A843158F2ADF00E66CFE /* ccUtils.h in Headers */,
 				1551A845158F2ADF00E66CFE /* CCVertex.h in Headers */,
+				B036EB4D19406491000434DD /* CADateSpinner.h in Headers */,
 				1551A847158F2ADF00E66CFE /* ccCArray.h in Headers */,
 				1551A848158F2ADF00E66CFE /* uthash.h in Headers */,
 				1551A849158F2ADF00E66CFE /* utlist.h in Headers */,
@@ -1416,6 +1437,7 @@
 				1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */,
 				1551A63A158F2ADE00E66CFE /* CCActionPageTurn3D.cpp in Sources */,
 				1551A63C158F2ADE00E66CFE /* CCActionProgressTimer.cpp in Sources */,
+				B036EB4C19406491000434DD /* CADateSpinner.cpp in Sources */,
 				1551A63E158F2ADE00E66CFE /* CCActionTiledGrid.cpp in Sources */,
 				B020AF581929C2CF009FFA81 /* CATextField.cpp in Sources */,
 				1551A640158F2ADE00E66CFE /* CCActionTween.cpp in Sources */,
@@ -1442,6 +1464,7 @@
 				1551A6C8158F2ADE00E66CFE /* matrix.c in Sources */,
 				1551A6C9158F2ADE00E66CFE /* mat3.c in Sources */,
 				1551A6CA158F2ADE00E66CFE /* mat4.c in Sources */,
+				B036EB4E19406491000434DD /* CASegmentedControl.cpp in Sources */,
 				B0AD939B192077C200EA40BB /* CABarItem.cpp in Sources */,
 				1551A6CB158F2ADE00E66CFE /* neon_matrix_impl.c in Sources */,
 				1551A6CC158F2ADE00E66CFE /* plane.c in Sources */,
@@ -1501,6 +1524,7 @@
 				41CD6C3C15BF7382005E6F29 /* CCEGLView.mm in Sources */,
 				41CD6C3E15BF7382005E6F29 /* CCEventDispatcher.mm in Sources */,
 				B06FDC8F1925F2A600AB5BCA /* CALabel.cpp in Sources */,
+				B036EB5019406491000434DD /* CASlider.cpp in Sources */,
 				41CD6C4115BF7382005E6F29 /* CCImage.mm in Sources */,
 				B0AD93A3192077C200EA40BB /* CAScrollView.cpp in Sources */,
 				41CD6C4515BF7382005E6F29 /* CCWindow.m in Sources */,

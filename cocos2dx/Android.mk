@@ -104,6 +104,9 @@ ui_controller/CABar.cpp \
 ui_controller/CAControl.cpp \
 ui_controller/CAButton.cpp \
 ui_controller/CASwitch.cpp \
+ui_controller/CASlider.cpp \
+ui_controller/CASegmentedControl.cpp \
+ui_controller/CADateSpinner.cpp \
 ui_controller/CAScrollView.cpp \
 ui_controller/CATableView.cpp \
 ui_controller/CAProgress.cpp \

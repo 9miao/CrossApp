@@ -47,9 +47,13 @@ public:
     
     virtual ~CALabel();
     
-    static CALabel *create(CCRect frame);
+    static CALabel* createWithFrame(const CCRect& rect);
     
-    virtual bool initWithFrame(CCRect frame);
+    static CALabel* createWithCenter(const CCRect& rect);
+    
+    virtual bool initWithFrame(const CCRect& rect);
+    
+    virtual bool initWithCenter(const CCRect& rect);
     
     CC_PROPERTY(string, m_nText, Text);
     
@@ -58,10 +62,6 @@ public:
     CC_SYNTHESIZE(string, m_nfontName, fontName);
     
     CC_PROPERTY(ccColor4B, m_nTextcolor, Textcolor);
-    
-//    CC_PROPERTY(ccColor4B, m_nShadowcolor, Shadowcolor);
-//
-//    CC_PROPERTY(CCSize, m_nShadowOffset, ShadowOffset);
     
     CC_SYNTHESIZE(CCVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
     
@@ -74,6 +74,10 @@ public:
     CC_SYNTHESIZE_READONLY(CAImageView*, m_pTextImage, TextImage);
 
     CC_SYNTHESIZE_READONLY(CCSize, m_cLabelSize, LabelSize);
+    
+    //    CC_PROPERTY(ccColor4B, m_nShadowcolor, Shadowcolor);
+    //
+    //    CC_PROPERTY(CCSize, m_nShadowOffset, ShadowOffset);
     
     bool updateImage();
     

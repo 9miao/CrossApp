@@ -16,6 +16,7 @@
 #include <algorithm>
 #include "CCDirector.h"
 #include "sprite_nodes/CAWindow.h"
+#include "ui_controller/CAControl.h"
 
 NS_CC_BEGIN
 
@@ -85,6 +86,10 @@ void CATouchDispatcher::touchesBegan(CCSet *touches, CCEvent *pEvent)
                 view = nextView;
             }
             while (view);
+            
+            
+            
+            
             CCLog("begin pID = %d, count= %d", pTouch->getID(), pTouch->retainCount());
         }
         m_bLocked = false;

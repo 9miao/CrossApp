@@ -263,12 +263,11 @@ bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     do
     {
-        
-        CCPoint point = this->convertTouchToNodeSpace(pTouch);
-        CC_BREAK_IF(m_bscrollEnabled == false);
         CC_BREAK_IF(!this->isVisible());
-        CC_BREAK_IF(!getBounds().containsPoint(point));
         CC_BREAK_IF(m_pTouches->count() > 2);
+        
+        if (m_bscrollEnabled == false)
+            return true;
 
         if (!m_pTouches->containsObject(pTouch))
         {
@@ -312,6 +311,9 @@ bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
+    if (m_bscrollEnabled == false)
+        return;
+    
     CCPoint p_container = m_pContainer->getCenter().origin;
     CCPoint p_off = CCPointZero;
     
@@ -419,6 +421,9 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 
 void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
+    if (m_bscrollEnabled == false)
+        return;
+    
     if (m_pTouches->containsObject(pTouch))
     {
         if (m_pTouches->count() == 1)

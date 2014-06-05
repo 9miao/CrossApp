@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "RootViewController.h"
 #include "ViewController.h"
+#include "FirstViewController.h"
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
@@ -65,7 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     viewController4->setTabBarItem(CATabBarItem::create("Fourth", CAImage::create("o.png"), 103));
     viewController4->setTitle("view4");
     
-    ViewController* viewController5 = new ViewController();
+    FirstViewController* viewController5 = new FirstViewController();
     viewController5->init();
     viewController5->setTabBarItem(CATabBarItem::create("Fifth", CAImage::create("s.png"), 104));
     viewController5->setTitle("view5");

@@ -298,23 +298,13 @@ void CASlider::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     if (!this->isTouchClick()) return;
     
     CCRect bounds = getBounds();
-    if (bounds.containsPoint(point))
+    float value = (m_maxValue - m_minValue) * (point.x / bounds.size.width);
+    value = (point.x <= 0) ? m_minValue : ((point.x >= bounds.size.width) ? m_maxValue : value);
+    this->setValue(value);
+    
+    if (m_pTarget[CAControlEventTouchDown])
     {
-        float value = (m_maxValue - m_minValue) * (point.x / bounds.size.width);
-        this->setValue(value);
-        if (m_target)
-        {
-            ((CCObject *)m_target->*m_selTouch[CAControlTouchMoved])(this, point);
-        }
-    }
-    else
-    {
-        float value = (point.x < 0) ? m_minValue : m_maxValue;
-        this->setValue(value);
-        if (m_target)
-        {
-            ((CCObject *)m_target->*m_selTouch[CAControlTouchMovedOutSide])(this, point);
-        }
+        ((CCObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
     }
 }
 
@@ -330,11 +320,31 @@ void CASlider::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     {
         float value = (m_maxValue - m_minValue) * (point.x / bounds.size.width);
         this->setValue(value);
-        if (m_target)
+        if (m_pTarget[CAControlEventTouchDown])
         {
-            ((CCObject *)m_target->*m_selTouch[CAControlTouchUpInSide])(this, point);
+            ((CCObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
         }
     }
+}
+
+void CASlider::addTarget(CCObject* target, SEL_CAControl selector)
+{
+    this->addTarget(target, selector, CAControlEventTouchDown);
+}
+
+void CASlider::removeTarget(CCObject* target, SEL_CAControl selector)
+{
+    this->removeTarget(target, selector, CAControlEventTouchDown);
+}
+
+void CASlider::addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event)
+{
+    CAControl::addTarget(target, selector, event);
+}
+
+void CASlider::removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event)
+{
+    CAControl::removeTarget(target, selector, event);
 }
 
 NS_CC_END

@@ -14,9 +14,12 @@
 
 USING_NS_CC;
 
-class RootViewController: public CAViewController, public CATableViewDataSource, public CATableViewDelegate
+class RootViewController:
+public CAViewController,
+public CATableViewDataSource,
+public CATableViewDelegate,
+public CAScrollViewDelegate
 {
-    
     CATableView* tableView;
     
     CAButton* button_;
@@ -54,6 +57,8 @@ public:
     virtual void tableViewDidShowPullDownView(CATableView* table);
     
     virtual void tableViewDidShowPullUpView(CATableView* table);
+    
+    virtual void scrollViewDidEndDragging(CAScrollView* view);
     
     bool setAllowsSelection(CAControl* sender, CCPoint point);
     

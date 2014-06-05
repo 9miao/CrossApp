@@ -387,6 +387,7 @@ void CATableView::reloadData()
     
     if (m_pTableHeaderView)
     {
+        m_pTableHeaderView->setDisplayRange(true);
         m_pTableHeaderView->setFrame(CCRect(0, y, width, m_nTableHeaderHeight));
         this->addSubview(m_pTableHeaderView);
         y += m_nTableHeaderHeight;
@@ -439,6 +440,7 @@ void CATableView::reloadData()
     
     if (m_pTableFooterView)
     {
+        m_pTableFooterView->setDisplayRange(true);
         m_pTableFooterView->setFrame(CCRect(0, y, width, m_nTableFooterHeight));
         this->addSubview(m_pTableFooterView);
         y += m_nTableFooterHeight;

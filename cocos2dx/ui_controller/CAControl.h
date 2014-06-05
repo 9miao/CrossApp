@@ -59,9 +59,9 @@ public:
     
     void setControlStateSelected();
     
-    void addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
+    virtual void addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
     
-    void removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
+    virtual void removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
     
     CC_PROPERTY_IS(bool, m_bTouchEnabled, TouchEnabled);
     

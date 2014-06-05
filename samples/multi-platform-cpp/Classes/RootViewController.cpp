@@ -27,9 +27,21 @@ void RootViewController::viewDidLoad()
     this->getView()->addSubview(tableView);
     tableView->release();
     
-    CAImageView* v = CAImageView::createWithImage(CAImage::create("2.jpg"));
+    CAScrollView* scroll = new CAScrollView();
+    scroll->initWithFrame(CCRect(0, 0, rect.size.width, 400));
+    scroll->setViewSize(CCSize(rect.size.width * 3, 400));
+    scroll->setBounceVertical(false);
+    scroll->setShowsVerticalScrollIndicator(false);
+    scroll->setScrollViewDelegate(this);
     tableView->setTableHeaderHeight(400);
-    tableView->setTableHeaderView(v);
+    tableView->setTableHeaderView(scroll);
+    
+    for (int i=0; i<3; i++)
+    {
+        CAImageView* image = CAImageView::createWithImage(CAImage::create("2.jpg"));
+        image->setFrame(CCRect(i * rect.size.width, 0, rect.size.width, 400));
+        scroll->addSubview(image);
+    }
     
     CAView* v2 = CAView::createWithFrame(CCRectZero, ccc4(80, 80, 180, 255));
     tableView->setTableFooterHeight(200);
@@ -129,20 +141,28 @@ bool RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint p
     return true;
 }
 
+void RootViewController::scrollViewDidEndDragging(CAScrollView* view)
+{
+    CCPoint p = view->getContentOffset();
+    int x = (p.x + view->getFrame().size.width/2) / view->getFrame().size.width;
+    
+    view->setContentOffset(CCPointMake(x * view->getFrame().size.width, 0), true);
+}
+
 void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    char s[32];
-    sprintf(s, "viewController = %ld",this->getNavigationController()->getViewControllerCount());
-    
-    RootViewController* viewController = new RootViewController();
-    viewController->init();
-    viewController->setNavigationBarItem(CANavigationBarItem::create(s));
-    viewController->setTitle("view1");
-    
-    this->getNavigationController()->pushViewController(viewController, true);
-    viewController->autorelease();
-    
-    CCLog("selected = %d %d",section, row);
+//    char s[32];
+//    sprintf(s, "viewController = %ld",this->getNavigationController()->getViewControllerCount());
+//    
+//    RootViewController* viewController = new RootViewController();
+//    viewController->init();
+//    viewController->setNavigationBarItem(CANavigationBarItem::create(s));
+//    viewController->setTitle("view1");
+//    
+//    this->getNavigationController()->pushViewController(viewController, true);
+//    viewController->autorelease();
+//    
+//    CCLog("selected = %d %d",section, row);
 }
 
 void RootViewController::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)

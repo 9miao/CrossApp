@@ -30,8 +30,6 @@ public:
     CCLabelTTF* ttf;
     
     bool setAllowsSelection(CAButton* btn, CCPoint point);
-    
-    void scrollViewDidEndDragging(CAScrollView* view);
 };
 
 #endif /* defined(__project__ViewController__) */

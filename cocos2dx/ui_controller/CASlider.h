@@ -36,6 +36,10 @@ public:
     
     bool initWithCenter(const CCRect& rect);
     
+    void addTarget(CCObject* target, SEL_CAControl selector);
+    
+    void removeTarget(CCObject* target, SEL_CAControl selector);
+    
 public:
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
     
@@ -70,6 +74,8 @@ public:
     
 protected:
     CAImage* getImage(CAImage* image, CCSize size);
+    virtual void addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
+    virtual void removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
     
 protected:
     CAImageView *m_pMinTrackTintImageView;

@@ -30,10 +30,22 @@ CALabel::~CALabel()
     
 }
 
-CALabel *CALabel::create(CCRect frame)
+CALabel *CALabel::createWithFrame(const CCRect& rect)
 {
     CALabel *label = new CALabel();
-    if (label && label->initWithFrame(frame))
+    if (label && label->initWithFrame(rect))
+    {
+        label->autorelease();
+        return label;
+    }
+    CC_SAFE_DELETE(label);
+    return NULL;
+}
+
+CALabel* CALabel::createWithCenter(const cocos2d::CCRect &rect)
+{
+    CALabel *label = new CALabel();
+    if (label && label->initWithCenter(rect))
     {
         label->autorelease();
         return label;
@@ -48,10 +60,30 @@ void CALabel::onEnterTransitionDidFinish()
     this->updateImage();
 }
 
-bool CALabel::initWithFrame(CCRect frame)
+bool CALabel::initWithFrame(const CCRect& rect)
 {
    
-    if (!CAView::initWithFrame(frame)) {
+    if (!CAView::initWithFrame(rect))
+    {
+        return false;
+    }
+    
+    this->setOpacity(0);
+    
+    m_pTextImage = CAImageView::create();
+    
+    m_pTextImage->setFrame(CCRectZero);
+    
+    this->addSubview(m_pTextImage);
+    
+    return true;
+}
+
+bool CALabel::initWithCenter(const CCRect& rect)
+{
+    
+    if (!CAView::initWithCenter(rect))
+    {
         return false;
     }
     

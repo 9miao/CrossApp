@@ -17,10 +17,10 @@ USING_NS_CC;
 class FirstViewController: public CAViewController
 {
     
+    CALabel* label;
+    
 public:
 
-	static cocos2d::CAWindow* createWindow();
-    
 	FirstViewController();
     
 	virtual ~FirstViewController();
@@ -31,6 +31,8 @@ protected:
     
     void viewDidUnload();
 
+    bool updateSlider(CAControl* sender, CCPoint point);
+    
 };
 
 

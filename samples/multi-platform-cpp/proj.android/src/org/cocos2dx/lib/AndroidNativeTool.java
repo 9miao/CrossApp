@@ -1,9 +1,12 @@
 package org.cocos2dx.lib;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
+import android.R.string;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -14,8 +17,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 
+@SuppressLint("SdCardPath")
 public class AndroidNativeTool
 {
 	private static AlertDialog mDialog = null;
@@ -58,10 +63,38 @@ public class AndroidNativeTool
         });
     }
 	
+	static String s;
 	public static void CAImageCapture()
 	{
-		Intent getImageByCamera= new Intent("android.media.action.IMAGE_CAPTURE");     
-		s_pContext.startActivityForResult(getImageByCamera,0);
+		File sdDir = null; 
+		boolean sdCardExist = Environment.getExternalStorageState() 
+				.equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在 
+	    if (sdCardExist) 
+		{ 
+	    	sdDir = Environment.getExternalStorageDirectory();//获取跟目录 
+		} 
+		System.out.println("getExternalStorageDirectory(): "+sdDir.toString()); 
+
+		
+		
+		//必须确保文件夹路径存在，否则拍照后无法完成回调
+		String mediapathString =sdDir.toString();
+		
+		System.out.println(mediapathString);
+		s=mediapathString+"/img.jpg";
+		File vFile = new File(s);
+		
+		if(!vFile.exists())
+		{
+			File vDirPath = vFile.getParentFile(); //new File(vFile.getParent());
+			vDirPath.mkdirs();
+		}
+		Uri uri = Uri.fromFile(vFile);
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//
+		s_pContext.startActivityForResult(intent,0);
+//		Intent getImageByCamera= new Intent("android.media.action.IMAGE_CAPTURE");     
+//		s_pContext.startActivityForResult(getImageByCamera,0);
 	}
 	public static void CAVideoCapture()
 	{
@@ -78,13 +111,16 @@ public class AndroidNativeTool
 	public static void CAImageAlbum()
 	{
 		Intent getImage = new Intent(Intent.ACTION_GET_CONTENT);   
+		
         //getImage.addCategory(Intent.CATEGORY_OPENABLE);   
         getImage.setType("image/*");  
+        
         Intent wrapperIntent2 = Intent.createChooser(getImage, null);
         s_pContext.startActivityForResult(wrapperIntent2, 3);
 	}
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {  
+    	System.out.println("~~~||||");
     	ContentResolver resolver = s_pContext.getContentResolver();   
     	System.out.println(resultCode);
         if (resultCode == -1) {  
@@ -122,14 +158,15 @@ public class AndroidNativeTool
                 } catch (FileNotFoundException e) {  
                     e.printStackTrace();  
                 }*/
+                System.out.println(path);
                 NativeReturn( path , null );
                 break;  
             case 1:
             case 0:  // camera image
                 /*Bundle extras = intent.getExtras();   
                 Bitmap originalBitmap1 = (Bitmap) extras.get("data");  */
-            	originalUri = intent.getData();   
-                NativeReturn( originalUri.getPath() , null );
+     
+                NativeReturn( s , null );
                 break;  
             default:  
                 break;  

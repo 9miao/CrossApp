@@ -98,7 +98,7 @@ bool CATextField::initWithTextFieldFrame(cocos2d::CCRect frame)
     this->setColor(ccYELLOW);
     this->setOpacity(255);
     
-    m_pText = CALabel::create(this->getBounds());
+    m_pText = CALabel::createWithFrame(this->getBounds());
     m_pText->setText("");
     m_pText->setVerticalTextAlignmet(kCCVerticalTextAlignmentCenter);
     m_pText->setNumberOfLine(1);
