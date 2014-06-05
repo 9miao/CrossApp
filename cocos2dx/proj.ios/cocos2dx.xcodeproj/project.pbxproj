@@ -297,6 +297,7 @@
 		B0B553DC193485BE0065053D /* CAImagePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553D4193485BE0065053D /* CAImagePVR.cpp */; };
 		B0B553DD193485BE0065053D /* CAImagePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553D5193485BE0065053D /* CAImagePVR.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
+		EAC491AF193F6ACA003120EC /* CADateSpinner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EAC491AE193F6ACA003120EC /* CADateSpinner.cpp */; };
 		EAFDBC0F193DC74E002061B8 /* CASlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EAFDBC0D193DC74E002061B8 /* CASlider.cpp */; };
 		EAFDBC10193DC74E002061B8 /* CASlider.h in Headers */ = {isa = PBXBuildFile; fileRef = EAFDBC0E193DC74E002061B8 /* CASlider.h */; };
 		EAFDBC13193DF51E002061B8 /* CASegmentedControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EAFDBC12193DF51E002061B8 /* CASegmentedControl.cpp */; };
@@ -596,6 +597,8 @@
 		B0B553D4193485BE0065053D /* CAImagePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImagePVR.cpp; sourceTree = "<group>"; };
 		B0B553D5193485BE0065053D /* CAImagePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImagePVR.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
+		EAC491AD193F6AC0003120EC /* CADateSpinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CADateSpinner.h; sourceTree = "<group>"; };
+		EAC491AE193F6ACA003120EC /* CADateSpinner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADateSpinner.cpp; sourceTree = "<group>"; };
 		EAFDBC0D193DC74E002061B8 /* CASlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASlider.cpp; sourceTree = "<group>"; };
 		EAFDBC0E193DC74E002061B8 /* CASlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASlider.h; sourceTree = "<group>"; };
 		EAFDBC11193DF50C002061B8 /* CASegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CASegmentedControl.h; sourceTree = "<group>"; };
@@ -1182,6 +1185,8 @@
 				B0AD93CA19207A8C00EA40BB /* CAButton.h */,
 				B0AD93CB19207A8C00EA40BB /* CAControl.cpp */,
 				B0AD93CC19207A8C00EA40BB /* CAControl.h */,
+				EAC491AE193F6ACA003120EC /* CADateSpinner.cpp */,
+				EAC491AD193F6AC0003120EC /* CADateSpinner.h */,
 				B0AD93CF19207A8C00EA40BB /* CAScrollView.cpp */,
 				B0AD93D019207A8C00EA40BB /* CAScrollView.h */,
 				EAFDBC12193DF51E002061B8 /* CASegmentedControl.cpp */,
@@ -1539,6 +1544,7 @@
 				B0B553C5193485950065053D /* CAImageView.cpp in Sources */,
 				1551A84C158F2ADF00E66CFE /* TransformUtils.cpp in Sources */,
 				1551A84E158F2ADF00E66CFE /* ioapi.cpp in Sources */,
+				EAC491AF193F6ACA003120EC /* CADateSpinner.cpp in Sources */,
 				1551A850158F2ADF00E66CFE /* unzip.cpp in Sources */,
 				1551A852158F2ADF00E66CFE /* ZipUtils.cpp in Sources */,
 				B0AD93D519207A8C00EA40BB /* CABar.cpp in Sources */,
