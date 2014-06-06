@@ -51,6 +51,10 @@ public:
     
     void removeAllSubviews();
     
+    void removeSubview(CAView* subview);
+
+    void removeSubviewByTag(int tag);
+    
     void setContentOffset(CCPoint offset, bool animated);
     
     CCPoint getContentOffset();

@@ -17,7 +17,7 @@ NS_CC_BEGIN;
 
 class CCTouch;
 
-class CAResponder: public CCObject
+class CC_DLL CAResponder: public CCObject
 {
     
 public:

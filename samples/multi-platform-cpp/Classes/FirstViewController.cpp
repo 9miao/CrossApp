@@ -23,12 +23,15 @@ FirstViewController::~FirstViewController()
 void FirstViewController::viewDidLoad()
 {
     // Do any additional setup after loading the view from its nib.
-    label = CALabel::createWithFrame(CCRect(30, 30, 100, 40));
+    CCSize size = this->getView()->getBounds().size;
+    
+    label = CALabel::createWithCenter(CCRect(size.width/2, 60, 200, 50));
+    label->setfontSize(size.width/30);
     label->setText("0.000000");
     this->getView()->addSubview(label);
     
     
-    CASlider* slider = CASlider::createWithFrame(CCRect(30, 60, 200, 30));
+    CASlider* slider = CASlider::createWithCenter(CCRect(size.width/2, size.width * 0.8f * 0.15f / 2 + 60, size.width * 0.8f, size.width * 0.8f * 0.15f));
     this->getView()->addSubview(slider);
     slider->addTarget(this, CAControl_selector(FirstViewController::updateSlider));
 

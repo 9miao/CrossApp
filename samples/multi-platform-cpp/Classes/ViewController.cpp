@@ -24,7 +24,6 @@ void ViewController::viewDidLoad()
     v->setFrame(CCRect(0, 0, scroll->getViewSize().width, scroll->getViewSize().height));
     scroll->addSubview(v);
     
-    
     ccColor3B color = ccRED;
     if (this->getTitle().compare("view3") == 0)
     {

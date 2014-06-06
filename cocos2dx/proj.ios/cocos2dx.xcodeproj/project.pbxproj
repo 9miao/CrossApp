@@ -264,6 +264,8 @@
 		B03A20EE192348BC00F8E24E /* CAView.h in Headers */ = {isa = PBXBuildFile; fileRef = B03A20EC192348BC00F8E24E /* CAView.h */; };
 		B03E8FB519387FAD00FD9A06 /* CASwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03E8FB319387FAD00FD9A06 /* CASwitch.cpp */; };
 		B03E8FB619387FAD00FD9A06 /* CASwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = B03E8FB419387FAD00FD9A06 /* CASwitch.h */; };
+		B042B4F919419F43006ABC19 /* CAResponder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B042B4F619419F43006ABC19 /* CAResponder.cpp */; };
+		B042B4FA19419F43006ABC19 /* CAResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = B042B4F719419F43006ABC19 /* CAResponder.h */; };
 		B0AD93BE19207A6500EA40BB /* CAWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93B819207A6500EA40BB /* CAWindow.cpp */; };
 		B0AD93BF19207A6500EA40BB /* CAWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B0AD93B919207A6500EA40BB /* CAWindow.h */; };
 		B0AD93D519207A8C00EA40BB /* CABar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93C519207A8C00EA40BB /* CABar.cpp */; };
@@ -564,6 +566,8 @@
 		B03A20EC192348BC00F8E24E /* CAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAView.h; sourceTree = "<group>"; };
 		B03E8FB319387FAD00FD9A06 /* CASwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASwitch.cpp; sourceTree = "<group>"; };
 		B03E8FB419387FAD00FD9A06 /* CASwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASwitch.h; sourceTree = "<group>"; };
+		B042B4F619419F43006ABC19 /* CAResponder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAResponder.cpp; sourceTree = "<group>"; };
+		B042B4F719419F43006ABC19 /* CAResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAResponder.h; sourceTree = "<group>"; };
 		B0AD93B819207A6500EA40BB /* CAWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWindow.cpp; sourceTree = "<group>"; };
 		B0AD93B919207A6500EA40BB /* CAWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWindow.h; sourceTree = "<group>"; };
 		B0AD93C519207A8C00EA40BB /* CABar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CABar.cpp; sourceTree = "<group>"; };
@@ -718,6 +722,8 @@
 		1551A37F158F2ADE00E66CFE /* cocoa */ = {
 			isa = PBXGroup;
 			children = (
+				B042B4F619419F43006ABC19 /* CAResponder.cpp */,
+				B042B4F719419F43006ABC19 /* CAResponder.h */,
 				1551A380158F2ADE00E66CFE /* CCAffineTransform.cpp */,
 				1551A381158F2ADE00E66CFE /* CCAffineTransform.h */,
 				1551A382158F2ADE00E66CFE /* CCArray.cpp */,
@@ -1333,6 +1339,7 @@
 				1551A821158F2ADF00E66CFE /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				1551A822158F2ADF00E66CFE /* ccShader_PositionTexture_uColor_vert.h in Headers */,
 				1551A823158F2ADF00E66CFE /* ccShader_PositionTexture_vert.h in Headers */,
+				B042B4FA19419F43006ABC19 /* CAResponder.h in Headers */,
 				1551A824158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				1551A825158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_vert.h in Headers */,
 				B0AD93D819207A8C00EA40BB /* CABarItem.h in Headers */,
@@ -1455,6 +1462,7 @@
 				1551A632158F2ADE00E66CFE /* CCActionGrid3D.cpp in Sources */,
 				1551A634158F2ADE00E66CFE /* CCActionInstant.cpp in Sources */,
 				1551A636158F2ADE00E66CFE /* CCActionInterval.cpp in Sources */,
+				B042B4F919419F43006ABC19 /* CAResponder.cpp in Sources */,
 				1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */,
 				1551A63A158F2ADE00E66CFE /* CCActionPageTurn3D.cpp in Sources */,
 				1551A63C158F2ADE00E66CFE /* CCActionProgressTimer.cpp in Sources */,

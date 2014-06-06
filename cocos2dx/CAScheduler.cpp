@@ -293,7 +293,7 @@ void CAScheduler::removeHashElement(_hashSelectorEntry *pElement)
 
 void CAScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused)
 {
-    this->scheduleSelector(pfnSelector, pTarget, fInterval, kCCRepeatForever, 1/60.0f, bPaused);
+    this->scheduleSelector(pfnSelector, pTarget, fInterval, kCCRepeatForever, 0, bPaused);
 }
 
 void CAScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused)
@@ -332,7 +332,7 @@ void CAScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
 
             if (pfnSelector == timer->getSelector())
             {
-                CCLOG("CAScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), fInterval);
+                //CCLOG("CAScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), fInterval);
                 timer->setInterval(fInterval);
                 return;
             }        

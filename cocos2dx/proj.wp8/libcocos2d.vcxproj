@@ -204,6 +204,7 @@
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
     </ClCompile>
+    <ClCompile Include="..\cocoa\CAResponder.cpp" />
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
@@ -372,6 +373,8 @@
     <ClCompile Include="..\ui_controller\CAControl.cpp" />
     <ClCompile Include="..\ui_controller\CAProgress.cpp" />
     <ClCompile Include="..\ui_controller\CAScrollView.cpp" />
+    <ClCompile Include="..\ui_controller\CASegmentedControl.cpp" />
+    <ClCompile Include="..\ui_controller\CASlider.cpp" />
     <ClCompile Include="..\ui_controller\CASwitch.cpp" />
     <ClCompile Include="..\ui_controller\CATableView.cpp" />
     <ClCompile Include="..\ui_controller\CAViewController.cpp" />
@@ -396,6 +399,7 @@
     <ClInclude Include="..\CCConfiguration.h" />
     <ClInclude Include="..\CCDirector.h" />
     <ClInclude Include="..\ccFPSImages.h" />
+    <ClInclude Include="..\cocoa\CAResponder.h" />
     <ClInclude Include="..\cocoa\CCAffineTransform.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
     <ClInclude Include="..\cocoa\CCAutoreleasePool.h" />
@@ -521,6 +525,8 @@
     <ClInclude Include="..\ui_controller\CAControl.h" />
     <ClInclude Include="..\ui_controller\CAProgress.h" />
     <ClInclude Include="..\ui_controller\CAScrollView.h" />
+    <ClInclude Include="..\ui_controller\CASegmentedControl.h" />
+    <ClInclude Include="..\ui_controller\CASlider.h" />
     <ClInclude Include="..\ui_controller\CASwitch.h" />
     <ClInclude Include="..\ui_controller\CATableView.h" />
     <ClInclude Include="..\ui_controller\CAViewController.h" />

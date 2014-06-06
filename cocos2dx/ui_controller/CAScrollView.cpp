@@ -127,6 +127,16 @@ void CAScrollView::removeAllSubviews()
     m_pContainer->removeAllSubviews();
 }
 
+void CAScrollView::removeSubview(CAView* subview)
+{
+    m_pContainer->removeSubview(subview);
+}
+
+void CAScrollView::removeSubviewByTag(int tag)
+{
+    m_pContainer->removeSubviewByTag(tag);
+}
+
 void CAScrollView::setViewSize(cocos2d::CCSize var)
 {
     do

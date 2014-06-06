@@ -9,14 +9,16 @@
 #ifndef __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__
 #define __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__
 
-#include "cocoa/CCObject.h"
-#include "cocoa/CCArray.h"
+#include "cocoa/CAResponder.h"
 #include "platform/CCPlatformMacros.h"
-#include "cocoa/CAVector.h"
+#include <vector>
+#include <map>
+
+
 NS_CC_BEGIN
 
 
-class CCSet;
+class CCTouch;
 class CCEvent;
 
 /**
@@ -48,7 +50,7 @@ public:
 };
 
 
-class CATouchController: public CCObject
+class CC_DLL CATouchController: public CCObject
 {
     
 public:
@@ -75,15 +77,13 @@ protected:
     
     void passingTouchesViewCache(float dt = 0);
     
-    CAVector<CAView*> getEventListener(CCTouch* touch);
+    std::vector<CAView*> getEventListener(CCTouch* touch);
     
 protected:
     
-    std::deque<int> m_nWillTouchIDes;
+    std::vector<CAView*> m_vWillTouchesViewCache;
     
-    CAVector<CAView*> m_vWillTouchesViewCache;
-    
-    CAVector<CAView*> m_vTouchesViewCache;
+    std::vector<CAView*> m_vTouchesViewCache;
     
     CCPoint m_tFirstPoint;
 };

@@ -8,6 +8,7 @@
 
 #include "CAResponder.h"
 #include "touch_dispatcher/CATouchDispatcher.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN;
 

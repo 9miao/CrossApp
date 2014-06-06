@@ -189,7 +189,7 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     
     CCSize size = this->getView()->getBounds().size;
     
-    CAButton* btn = CAButton::createWithCenter(CCRect(size.width - 80, 60, 120, 80), CAButtonTypeRoundedRect);
+    CAButton* btn = CAButton::createWithCenter(CCRect(size.width - 100, 60, 120, 100), CAButtonTypeRoundedRect);
     btn->setTitleForState(CAControlStateAll, "button");
     cell->addSubview(btn);
     
@@ -231,12 +231,12 @@ CAView* RootViewController::tableViewSectionViewForFooterInSection(CATableView* 
 }
 unsigned int RootViewController::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    return 30;
+    return 10;
 }
 
 unsigned int RootViewController::numberOfSections(CATableView *table)
 {
-    return 3;
+    return 4;
 }
 
 unsigned int RootViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)

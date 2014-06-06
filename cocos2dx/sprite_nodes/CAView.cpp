@@ -902,7 +902,7 @@ CAView* CAView::getSubviewByTag(int aTag)
 
 void CAView::addSubview(CAView *subview)
 {
-    this->insertSubview(subview, 0);
+    this->insertSubview(subview, subview->getZOrder());
 }
 
 // helper used by reorderChild & add

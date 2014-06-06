@@ -35,6 +35,7 @@ cocoa/CCString.cpp \
 cocoa/CCZone.cpp \
 cocoa/CCArray.cpp \
 cocoa/CCDataVisitor.cpp \
+cocoa/CAResponder.cpp \
 cocos2d.cpp \
 CCDirector.cpp \
 draw_nodes/CCDrawingPrimitives.cpp \

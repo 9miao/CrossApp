@@ -468,6 +468,15 @@
     <ClCompile Include="..\ui_controller\CASwitch.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocoa\CAResponder.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CASegmentedControl.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui_controller\CASlider.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\actions\CCAction.h">
@@ -899,6 +908,15 @@
       <Filter>touch_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\ui_controller\CASwitch.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocoa\CAResponder.h">
+      <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CASegmentedControl.h">
+      <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CASlider.h">
       <Filter>ui_controller</Filter>
     </ClInclude>
   </ItemGroup>

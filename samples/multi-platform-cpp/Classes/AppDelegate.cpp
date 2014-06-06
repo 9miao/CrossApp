@@ -46,7 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CANavigationController* navigationController = new CANavigationController();
     navigationController->initWithRootViewController(viewController);
     navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("h.png"), 100));
-    navigationController->setNavigationBarHidden(true, false);
+    //navigationController->setNavigationBarHidden(true, false);
     
     viewController->release();
     
@@ -81,7 +81,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CATabBarController* tabBarController = new CATabBarController();
     tabBarController->initWithViewControllers(views);
     tabBarController->getTabBar()->showSelectedIndicator();
-    tabBarController->showSelectedViewControllerAtIndex(4, false);
+    //tabBarController->showSelectedViewControllerAtIndex(4, false);
     
     navigationController->release();
     viewController2->release();

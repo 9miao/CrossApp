@@ -261,7 +261,6 @@
 		B03E8FAD1938641400FD9A06 /* CASwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03E8FAC1938641400FD9A06 /* CASwitch.cpp */; };
 		B06FDC8F1925F2A600AB5BCA /* CALabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06FDC8E1925F2A600AB5BCA /* CALabel.cpp */; };
 		B06FDC911925F2AC00AB5BCA /* CALabel.h in Headers */ = {isa = PBXBuildFile; fileRef = B06FDC901925F2AC00AB5BCA /* CALabel.h */; };
-		B083180E1935E2D800C9C509 /* CAVector.h in Headers */ = {isa = PBXBuildFile; fileRef = B083180D1935E2D800C9C509 /* CAVector.h */; };
 		B099B73619209FEE004339EC /* CAView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B099B73419209FEE004339EC /* CAView.cpp */; };
 		B099B73719209FEE004339EC /* CAView.h in Headers */ = {isa = PBXBuildFile; fileRef = B099B73519209FEE004339EC /* CAView.h */; };
 		B0AD9382192077B600EA40BB /* CAWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD937C192077B600EA40BB /* CAWindow.cpp */; };
@@ -558,7 +557,6 @@
 		B03E8FAC1938641400FD9A06 /* CASwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASwitch.cpp; sourceTree = "<group>"; };
 		B06FDC8E1925F2A600AB5BCA /* CALabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALabel.cpp; sourceTree = "<group>"; };
 		B06FDC901925F2AC00AB5BCA /* CALabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALabel.h; sourceTree = "<group>"; };
-		B083180D1935E2D800C9C509 /* CAVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVector.h; sourceTree = "<group>"; };
 		B099B73419209FEE004339EC /* CAView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAView.cpp; sourceTree = "<group>"; };
 		B099B73519209FEE004339EC /* CAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAView.h; sourceTree = "<group>"; };
 		B0AD937C192077B600EA40BB /* CAWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWindow.cpp; sourceTree = "<group>"; };
@@ -720,7 +718,6 @@
 		1551A37F158F2ADE00E66CFE /* cocoa */ = {
 			isa = PBXGroup;
 			children = (
-				B083180D1935E2D800C9C509 /* CAVector.h */,
 				1551A380158F2ADE00E66CFE /* CCAffineTransform.cpp */,
 				1551A381158F2ADE00E66CFE /* CCAffineTransform.h */,
 				1551A382158F2ADE00E66CFE /* CCArray.cpp */,
@@ -1339,7 +1336,6 @@
 				1551A851158F2ADF00E66CFE /* unzip.h in Headers */,
 				1551A853158F2ADF00E66CFE /* ZipUtils.h in Headers */,
 				1551A86D158F2ADF00E66CFE /* CCTouch.h in Headers */,
-				B083180E1935E2D800C9C509 /* CAVector.h in Headers */,
 				1551A870158F2ADF00E66CFE /* CATouchDispatcher.h in Headers */,
 				1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */,
 				154269DD15B5653000712A7F /* CCNotificationCenter.h in Headers */,
