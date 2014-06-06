@@ -1,4 +1,29 @@
 
+####CrossApp alpha 0.1.6 更新内容：  
+#####1. 添加CASlider：  
+滑动条
+在此特别鸣谢 9秒ID为juguanhui的 美女程序员，为我们提供了优质的控件源码。
+
+#####2. 添加CASegmentedControl：  
+分段选项器
+在此特别鸣谢 9秒ID为juguanhui的 美女程序员，为我们提供了优质的控件源码。
+
+#####3. 触摸事件分发规则优化，添加CAResponder类  
+经过此次优化，触摸事件分发更加智能，使开发过程变得简单容易。
+
+#####4. CATextField功能补全：  
+添加输入框选择键盘类型、遮蔽显示字符为※，光标移动以及插入删除，获取键盘高度等功能。
+目前只支持iOS与Android。
+
+#####5. 添加CATabBarController 、CANavigationController新功能
+支持tabBarControll切换viewController动画效果功能
+增加 CATabBarController 、CANavigationController 隐藏 其Bar的功能
+
+#####6. 修改部分bug 
+
+#####7. win32平台支持VS2012编译
+
+
 
 ####CrossApp alpha 0.1.5 更新内容：  
 #####1. 添加CASwitch：  
@@ -50,7 +75,6 @@ demo有原来的projects文件夹移到samples
  <http://www.9miao.com/crossapp/list-24-1.html>
 
 ####近期要做的控件：  
-分段选项按钮：CASegmentedControl  
 提示框：CAAlertView  
 视图分页控制器：CAPageControl  
 大段文字输入控件：CATextView  
