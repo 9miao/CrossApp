@@ -15,6 +15,18 @@
 #include "ui_controller/CAControl.h"
 #include <vector>
 NS_CC_BEGIN
+using namespace std;
+
+
+enum eKeyBoardType{
+    KEY_BOARD_TYPE_NORMAL = 0,
+    KEY_BOARD_TYPE_NUMBER,
+    KEY_BOARD_TYPE_ALPHABET,
+};
+enum eKeyBoardInputType{
+    KEY_BOARD_INPUT_NORMAL=1,
+    KEY_BOARD_INPUT_PASSWORD,
+};
 class CATextField;
 class CC_DLL CATextFieldDelegate
 {
@@ -59,9 +71,8 @@ public:
     /**
      @brief    If the sender doesn't want to draw, return true.
      */
-    virtual bool onDraw(CATextField * sender)
+    virtual bool getKeyBoardHeight(int height)
     {
-        CC_UNUSED_PARAM(sender);
         return false;
     }
 };
@@ -86,13 +97,25 @@ public:
     virtual void onEnterTransitionDidFinish();
     
     virtual void onExitTransitionDidStart();
+    
+    virtual bool resignFirstResponder();
+    
+    virtual bool becomeFirstResponder();
+    
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 public:
     
-    static CATextField* create(CCRect frame);
+    static CATextField* createWithFrame(const CCRect& frame);
     
-    bool initWithTextFieldFrame(CCRect frame);
+    static CATextField* createWithCenter(const CCRect& rect);
+    
+    bool initWithFrame(const CCRect& frame);
+    
+    bool initWithCenter(const CCRect& rect);
     
     CC_PROPERTY(std::string, m_sPlaceHolder, PlaceHolder);
+    
+    CC_PROPERTY(std::string, m_sText, Text);
     
     CC_SYNTHESIZE_READONLY(int, m_nCharCount, CharCount);
     
@@ -106,38 +129,47 @@ public:
     
     CC_PROPERTY(float, m_fFontSize, FontSize);
     
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    CC_PROPERTY(eKeyBoardInputType, m_nInputType, InputType);
     
-    virtual bool attachWithIME();//打开键盘
+    virtual bool attachWithIME();
     
-    virtual bool detachWithIME();//关闭键盘
+    virtual bool detachWithIME();
     
+    inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
+    
+    inline int getKeyboardType () {return m_keyboardType; }
+  
 private:
     
-    unsigned int charpos;
-    bool spaceHolderIsOn;
-    float _oldPos;
-    unsigned int frontlength;
-    unsigned int backlength;
-    CALabel *m_pText;
-    CCAction *m_pCursorAction;
-    std::string m_sInputString;
-    CAImageView *m_pMark;
-    bool status;
     void initMarkSprite();
     
-protected:
-    
+    std::vector<float> lengthArr;
+    std::vector<int> byteArr;
+    std::string frontStr;
+    std::string temporaryString;
     std::string m_pPlaceHolderString;
-    
+    float beforeWidth;
+    float afterWidth;
+    float frontWidth;
+    bool spaceHolderIsOn;
+    bool isEditing;
+    int byteCount;
+    int bytePos;
+    CAView *willBg;
+    CALabel *m_pText;
+    CCAction *m_pCursorAction;
+    CAImageView *m_pMark;
+    eKeyBoardType m_keyboardType;
 protected:
-    
-    virtual void draw();
+
     virtual bool canAttachWithIME();
     virtual bool canDetachWithIME();
     virtual void insertText(const char * text, int len);
+    virtual void willInsertText(const char* text,int len);
+    virtual void getKeyBoardHeight(int height);
     virtual void deleteBackward();
     virtual const char * getContentText();
+
 };
 
 NS_CC_END

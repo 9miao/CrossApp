@@ -27,8 +27,6 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.Message;
-import android.text.InputType;
-import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -92,7 +90,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							final String text = (String) msg.obj;
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.append(text);
 							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0);

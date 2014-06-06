@@ -59,11 +59,13 @@ public:
     */
     void dispatchInsertText(const char * pText, int nLen);
 
+    void dispatchWillInsertText(const char * pText, int nLen);
     /**
     @brief Dispatches the delete-backward operation.
     */
     void dispatchDeleteBackward();
 
+    void dispatchGetKeyBoardHeight(int height);
     /**
     @brief Get the content text from CCIMEDelegate, retrieved previously from IME.
     */

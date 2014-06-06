@@ -89,6 +89,19 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
     setKeyboardStateJNI((int)bOpen);
 }
+void CCEGLView::setIMEKeyboardNumber()
+{
+    setKeyboardType(11);
+}
 
+void CCEGLView::setIMEKeyboardDefault()
+{
+    setKeyboardType(10);
+}
+
+void CCEGLView::setIMEKeyboardAlphabet()
+{
+    setKeyboardType(12);
+}
 NS_CC_END
 

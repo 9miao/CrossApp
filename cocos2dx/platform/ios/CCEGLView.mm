@@ -81,7 +81,21 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
         [[EAGLView sharedEGLView] resignFirstResponder];
     }
 }
-
+void CCEGLView::setIMEKeyboardNumber()
+{
+    EAGLView * view = [EAGLView sharedEGLView];
+    view.keyboardType =UIKeyboardTypeNumberPad;
+}
+void CCEGLView::setIMEKeyboardDefault()
+{
+    EAGLView * view = [EAGLView sharedEGLView];
+    view.keyboardType =UIKeyboardTypeDefault;
+}
+void CCEGLView::setIMEKeyboardAlphabet()
+{
+    EAGLView * view = [EAGLView sharedEGLView];
+    view.keyboardType =UIKeyboardTypeASCIICapable;
+}
 CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView instance;

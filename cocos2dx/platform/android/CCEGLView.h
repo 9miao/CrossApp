@@ -43,6 +43,11 @@ public:
     void    swapBuffers();
     void    setIMEKeyboardState(bool bOpen);
     
+    virtual void setIMEKeyboardNumber();
+    
+    virtual void setIMEKeyboardDefault();
+    
+    virtual void setIMEKeyboardAlphabet();
     // static function
     /**
     @brief    get the shared main open gl window

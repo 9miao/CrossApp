@@ -45,4 +45,8 @@ extern "C" {
         const char * pszText = cocos2d::CCIMEDispatcher::sharedDispatcher()->getContentText();
         return env->NewStringUTF(pszText);
     }
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxActivity_KeyBoardHeightReturn(JNIEnv* env, jobject thiz, jint height) {
+        cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchGetKeyBoardHeight(height);
+    }
+    
 }
