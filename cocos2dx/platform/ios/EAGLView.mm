@@ -145,7 +145,10 @@ static EAGLView *view = 0;
             [self release];
             return nil;
         }
-
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillShow:)
+                                                     name:UIKeyboardWillShowNotification
+                                                   object:nil];
         
         view = self;
         
@@ -161,6 +164,16 @@ static EAGLView *view = 0;
     return self;
 }
 
+- (void)keyboardWillShow:(NSNotification *)aNotification
+{
+    //获取键盘的高度
+    NSDictionary *userInfo = [aNotification userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+    int height = keyboardRect.size.height;
+    cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchGetKeyBoardHeight(height);
+    NSLog(@"%d",height);
+}
 -(id) initWithCoder:(NSCoder *)aDecoder
 {
     if( (self = [super initWithCoder:aDecoder]) ) {
@@ -318,7 +331,7 @@ static EAGLView *view = 0;
     
      if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
         {
-//         CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
+//         //CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
         }
 
 #if COCOS2D_DEBUG
@@ -556,7 +569,7 @@ static EAGLView *view = 0;
  * always performed on the text from this selection.  nil corresponds to no selection. */
 - (void)setSelectedTextRange:(UITextRange *)aSelectedTextRange;
 {
-    CCLOG("UITextRange:setSelectedTextRange");
+    //CCLOG("UITextRange:setSelectedTextRange");
 }
 - (UITextRange *)selectedTextRange;
 {
@@ -567,12 +580,12 @@ static EAGLView *view = 0;
 
 - (NSString *)textInRange:(UITextRange *)range;
 {
-    CCLOG("textInRange");
+    //CCLOG("textInRange");
     return @"";
 }
 - (void)replaceRange:(UITextRange *)range withText:(NSString *)theText;
 {
-    CCLOG("replaceRange");
+    //CCLOG("replaceRange");
 }
 
 #pragma mark UITextInput - Working with Marked and Selected Text
@@ -589,39 +602,41 @@ static EAGLView *view = 0;
 
 - (void)setMarkedTextRange:(UITextRange *)markedTextRange;
 {
-    CCLOG("setMarkedTextRange");
+
 }
 
 - (UITextRange *)markedTextRange;
 {
-    CCLOG("markedTextRange");
+    //CCLOG("markedTextRange");
     return nil; // Nil if no marked text.
 }
 - (void)setMarkedTextStyle:(NSDictionary *)markedTextStyle;
 {
-    CCLOG("setMarkedTextStyle");
+    //CCLOG("setMarkedTextStyle");
     
 }
 - (NSDictionary *)markedTextStyle;
 {
-    CCLOG("markedTextStyle");
+    //CCLOG("markedTextStyle");
     return nil;
 }
 - (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
 {
-    CCLOG("setMarkedText");
+    //CCLOG("setMarkedText");
     if (markedText == markedText_) {
         return;
     }
     if (nil != markedText_) {
         [markedText_ release];
     }
+    const char * pszText = [markedText cStringUsingEncoding:NSUTF8StringEncoding];
+    cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchWillInsertText(pszText, strlen(pszText));
     markedText_ = markedText;
     [markedText_ retain];
 }
 - (void)unmarkText;
 {
-    CCLOG("unmarkText");
+    //CCLOG("unmarkText");
     if (nil == markedText_)
     {
         return;
@@ -636,40 +651,40 @@ static EAGLView *view = 0;
 
 - (UITextRange *)textRangeFromPosition:(UITextPosition *)fromPosition toPosition:(UITextPosition *)toPosition;
 {
-    CCLOG("textRangeFromPosition");
+    //CCLOG("textRangeFromPosition");
     return nil;
 }
 - (UITextPosition *)positionFromPosition:(UITextPosition *)position offset:(NSInteger)offset;
 {
-    CCLOG("positionFromPosition");
+    //CCLOG("positionFromPosition");
     return nil;
 }
 - (UITextPosition *)positionFromPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction offset:(NSInteger)offset;
 {
-    CCLOG("positionFromPosition");
+    //CCLOG("positionFromPosition");
     return nil;
 }
 
 /* Simple evaluation of positions */
 - (NSComparisonResult)comparePosition:(UITextPosition *)position toPosition:(UITextPosition *)other;
 {
-    CCLOG("comparePosition");
+    //CCLOG("comparePosition");
     return (NSComparisonResult)0;
 }
 - (NSInteger)offsetFromPosition:(UITextPosition *)from toPosition:(UITextPosition *)toPosition;
 {
-    CCLOG("offsetFromPosition");
+    //CCLOG("offsetFromPosition");
     return 0;
 }
 
 - (UITextPosition *)positionWithinRange:(UITextRange *)range farthestInDirection:(UITextLayoutDirection)direction;
 {
-    CCLOG("positionWithinRange");
+    //CCLOG("positionWithinRange");
     return nil;
 }
 - (UITextRange *)characterRangeByExtendingPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction;
 {
-    CCLOG("characterRangeByExtendingPosition");
+    //CCLOG("characterRangeByExtendingPosition");
     return nil;
 }
 
@@ -677,12 +692,12 @@ static EAGLView *view = 0;
 
 - (UITextWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction;
 {
-    CCLOG("baseWritingDirectionForPosition");
+    //CCLOG("baseWritingDirectionForPosition");
     return UITextWritingDirectionNatural;
 }
 - (void)setBaseWritingDirection:(UITextWritingDirection)writingDirection forRange:(UITextRange *)range;
 {
-    CCLOG("setBaseWritingDirection");
+    //CCLOG("setBaseWritingDirection");
 }
 
 #pragma mark Geometry
@@ -690,12 +705,12 @@ static EAGLView *view = 0;
 /* Geometry used to provide, for example, a correction rect. */
 - (CGRect)firstRectForRange:(UITextRange *)range;
 {
-    CCLOG("firstRectForRange");
+    //CCLOG("firstRectForRange");
     return CGRectNull;
 }
 - (CGRect)caretRectForPosition:(UITextPosition *)position;
 {
-    CCLOG("caretRectForPosition");
+    //CCLOG("caretRectForPosition");
     return caretRect_;
 }
 
@@ -704,23 +719,23 @@ static EAGLView *view = 0;
 /* JS - Find the closest position to a given point */
 - (UITextPosition *)closestPositionToPoint:(CGPoint)point;
 {
-    CCLOG("closestPositionToPoint");
+    //CCLOG("closestPositionToPoint");
     return nil;
 }
 - (UITextPosition *)closestPositionToPoint:(CGPoint)point withinRange:(UITextRange *)range;
 {
-    CCLOG("closestPositionToPoint");
+    //CCLOG("closestPositionToPoint");
     return nil;
 }
 - (UITextRange *)characterRangeAtPoint:(CGPoint)point;
 {
-    CCLOG("characterRangeAtPoint");
+    //CCLOG("characterRangeAtPoint");
     return nil;
 }
 
 - (NSArray *)selectionRectsForRange:(UITextRange *)range
 {
-    CCLOG("selectionRectsForRange");
+    //CCLOG("selectionRectsForRange");
     return nil;
 }
 
@@ -810,7 +825,7 @@ static EAGLView *view = 0;
     }
     
     float offestY = cocos2d::CCEGLView::sharedOpenGLView()->getViewPortRect().origin.y;
-    CCLOG("offestY = %f", offestY);
+    //CCLOG("offestY = %f", offestY);
     if (offestY < 0.0f)
     {
         begin.origin.y += offestY;

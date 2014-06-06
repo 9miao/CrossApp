@@ -39,16 +39,31 @@ extern "C" {
             closeKeyboardJNI();
         }
     }
-
-    void openKeyboardJNI() {
+    void  openKeyboardJNI()
+    {
         JniMethodInfo t;
-
         if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "openIMEKeyboard", "()V")) {
             t.env->CallStaticVoidMethod(t.classID, t.methodID);
             t.env->DeleteLocalRef(t.classID);
         }
     }
-
+    void setKeyboardType(int type)
+    {
+        JniMethodInfo t;
+        jobject jobj;
+        bool isHave;
+        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "getInstance", "()Lorg/cocos2dx/lib/Cocos2dxGLSurfaceView;")) {
+            jobj=t.env->CallStaticObjectMethod(t.classID, t.methodID);
+            isHave = JniHelper::getMethodInfo(t,
+                                              "org/cocos2dx/lib/Cocos2dxGLSurfaceView",
+                                              "setKeyBoardType",
+                                              "(I)V");
+            if (isHave) {
+                t.env->CallVoidMethod(jobj, t.methodID,type);
+            }
+            t.env->DeleteLocalRef(t.classID);
+        }
+    }
     void closeKeyboardJNI() {
         JniMethodInfo t;
 

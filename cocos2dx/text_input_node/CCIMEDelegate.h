@@ -83,11 +83,14 @@ protected:
     */
     virtual void insertText(const char * text, int len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
 
+    
+    virtual void willInsertText(const char * text, int len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
     /**
     @brief    Called by CCIMEDispatcher after the user clicks the backward key.
     */
     virtual void deleteBackward() {}
 
+    virtual void getKeyBoardHeight(int height) {}
     /**
     @brief    Called by CCIMEDispatcher for text stored in delegate.
     */

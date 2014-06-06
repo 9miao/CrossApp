@@ -100,7 +100,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     NSNotification*         keyboardShowNotification_;
     BOOL                    isKeyboardShown_;
 }
-
+@property(nonatomic)UIKeyboardType keyboardType;
 @property(nonatomic, readonly) UITextPosition *beginningOfDocument;
 @property(nonatomic, readonly) UITextPosition *endOfDocument;
 @property(nonatomic, assign) id<UITextInputDelegate> inputDelegate;
