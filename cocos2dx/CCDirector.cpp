@@ -279,7 +279,7 @@ void CCDirector::setGLDefaultValues(void)
 
 void CCDirector::updateDraw()
 {
-    m_nDrawCount = 60;
+    m_nDrawCount = 10;
 }
 
 void CCDirector::drawScene(float dt)
@@ -298,6 +298,12 @@ void CCDirector::drawScene(float dt)
         if (m_pRootWindow)
         {
             m_pRootWindow->visit();
+        }
+        
+        // draw the notifications node
+        if (m_pNotificationNode)
+        {
+            m_pNotificationNode->visit();
         }
         
         if (m_bDisplayStats)
@@ -872,6 +878,7 @@ void CCDirector::setNotificationNode(CAView *node)
     CC_SAFE_RELEASE(m_pNotificationNode);
     m_pNotificationNode = node;
     CC_SAFE_RETAIN(m_pNotificationNode);
+    this->updateDraw();
 }
 
 CCDirectorDelegate* CCDirector::getDelegate() const
@@ -975,12 +982,6 @@ void CCDisplayLinkDirector::mainLoop(void)
          if (! m_bPaused)
          {
              CAScheduler::getScheduler()->update(m_fDeltaTime);
-         }
-         
-         // draw the notifications node
-         if (m_pNotificationNode)
-         {
-             m_pNotificationNode->visit();
          }
          
          drawScene();

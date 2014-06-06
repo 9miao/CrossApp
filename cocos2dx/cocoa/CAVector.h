@@ -159,6 +159,16 @@ public:
         m_data.insert((m_data.begin() + index), object);
         object->retain();
     }
+    
+    void insert(iterator __position, iterator __first, iterator __last)
+    {
+        m_data.insert(__position, __first, __last);
+        for (iterator itr = __first; itr!=__last; itr++)
+        {
+            (*itr)->retain();
+        }
+    }
+    
     bool equals(const CAVector<T> &other)
     {
         ssize_t s = this->size();

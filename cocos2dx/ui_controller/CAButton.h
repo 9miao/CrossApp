@@ -138,8 +138,6 @@ protected:
     
     bool isMutableTouches(void) const;
     
-    void setMutableTouches(bool var);
-    
     void setBackGroundViewSquareRect();
     
     void setBackGroundViewRoundedRect();

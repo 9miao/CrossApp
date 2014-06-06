@@ -109,8 +109,6 @@ protected:
     
     CC_SYNTHESIZE_IS(bool, m_bBounceVertical, BounceVertical);
     
-    CC_SYNTHESIZE_IS(bool, m_bscrollEnabled, ScrollEnabled);
-    
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bTracking, Tracking);
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bDecelerating, Decelerating);
@@ -126,6 +124,8 @@ protected:
     CC_SYNTHESIZE(float, m_fMaximumZoomScale, MaximumZoomScale);
     
     CC_SYNTHESIZE(float, m_fZoomScale, ZoomScale);
+    
+    CC_PROPERTY_IS(bool, m_bscrollEnabled, ScrollEnabled);
     
     CC_PROPERTY(CCSize, m_obViewSize, ViewSize);
     

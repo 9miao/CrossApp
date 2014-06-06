@@ -15,6 +15,8 @@ CAControl::CAControl()
 ,m_bControlStateLocked(false)
 ,m_bTouchEnabled(true)
 {
+    m_bControl = true;
+    
     for (int i=0; i<CAControlStateAll; i++)
     {
         m_pBackGroundView[i] = NULL;

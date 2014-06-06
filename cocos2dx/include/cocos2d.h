@@ -67,6 +67,7 @@ THE SOFTWARE.
 #include "cocoa/CCString.h"
 #include "cocoa/CCNS.h"
 #include "cocoa/CCZone.h"
+#include "cocoa/CAResponder.h"
 
 // draw nodes
 #include "draw_nodes/CCDrawingPrimitives.h"

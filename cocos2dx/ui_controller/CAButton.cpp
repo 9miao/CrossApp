@@ -148,7 +148,6 @@ bool CAButton::init()
     {
         return false;
     }
-    this->setMutableTouches(false);
     
     switch (m_eButtonType)
     {
@@ -442,16 +441,6 @@ void CAButton::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEve
     }
 }
 
-void CAButton::setMutableTouches(bool var)
-{
-    CAView::setMutableTouches(var);
-}
-
-bool CAButton::isMutableTouches() const
-{
-    return CAView::isMutableTouches();
-}
-
 void CAButton::setControlState(CAControlState var)
 {
     CAControl::setControlState(var);
@@ -476,7 +465,6 @@ void CAButton::setControlState(CAControlState var)
         std::string title = "";
         CCRect imageViewCenter = CCRectZero;
         CCRect rect = CCRectZero;
-        
         CCPoint labelCenterOrigin = CCPointZero;
         float labelSize = 0;
         
@@ -549,6 +537,12 @@ void CAButton::setControlState(CAControlState var)
         {
             m_pLabel->setFontSize(labelSize);
             m_pLabel->setString(title.c_str());
+            
+            if (m_pLabel->getFrame().size.width > this->getBounds().size.width * 0.8f)
+            {
+                float scale = (this->getBounds().size.width * 0.8f) / m_pLabel->getFrame().size.width;
+                m_pLabel->setScale(scale);
+            }
         }
         m_pLabel->setCenterOrigin(labelCenterOrigin);
     }
@@ -628,7 +622,7 @@ void CAButton::interruptTouchState()
         {
             this->setControlState(CAControlStateNormal);
         }
-        m_pTouchesSet->removeAllObjects();
+
 	} while (0);
 }
 

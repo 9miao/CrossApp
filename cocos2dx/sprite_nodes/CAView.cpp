@@ -98,7 +98,6 @@ CAView::CAView(void)
 , m_bHasChildren(false)
 , m_pViewDelegate(NULL)
 , m_bFrame(true)
-, m_bMutableTouches(true)
 {
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
@@ -107,7 +106,6 @@ CAView::CAView(void)
     m_pActionManager->retain();
     
     m_pComponentContainer = new CCComponentContainer(this);
-    m_pTouchesSet = new CCSet();
     
     _displayedOpacity = _realOpacity = 255;
     _displayedColor = _realColor = ccWHITE;
@@ -163,7 +161,6 @@ CAView::~CAView(void)
     // m_pComsContainer
     m_pComponentContainer->removeAll();
     CC_SAFE_DELETE(m_pComponentContainer);
-    CC_SAFE_DELETE(m_pTouchesSet);
     CC_SAFE_RELEASE(m_pobImage);
     
     --viewCount;
@@ -1360,18 +1357,6 @@ void CAView::onExit()
     
     CAScheduler::getScheduler()->pauseTarget(this);
     m_pActionManager->pauseTarget(this);
-    
-    if (m_pTouchesSet->count() > 0)
-    {
-        CCTouch *pTouch;
-        CCSetIterator setIter;
-        for (setIter = m_pTouchesSet->begin(); setIter != m_pTouchesSet->end(); setIter++)
-        {
-            pTouch = (CCTouch *)(*setIter);
-            this->ccTouchCancelled(pTouch, NULL);
-        }
-        m_pTouchesSet->removeAllObjects();
-    }
 }
 
 void CAView::setActionManager(CCActionManager* actionManager)
@@ -1759,31 +1744,6 @@ bool CAView::isDisplayRange()
 void CAView::setDisplayRange(bool value)
 {
     m_bDisplayRange = value;
-}
-
-bool CAView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
-{
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
-    return true;
-}
-
-void CAView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
-{
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
-}
-
-void CAView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
-{
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
-}
-
-void CAView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
-{
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
 }
 
 GLubyte CAView::getOpacity(void)
@@ -2187,5 +2147,40 @@ bool CAView::isFlipY(void)
 {
     return m_bFlipY;
 }
+
+bool CAView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+    if (m_pViewDelegate)
+    {
+        return m_pViewDelegate->ccTouchBegan(pTouch, pEvent);
+    }
+    
+    return false;
+}
+
+void CAView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+{
+    if (m_pViewDelegate)
+    {
+        m_pViewDelegate->ccTouchMoved(pTouch, pEvent);
+    }
+}
+
+void CAView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+{
+    if (m_pViewDelegate)
+    {
+        m_pViewDelegate->ccTouchEnded(pTouch, pEvent);
+    }
+}
+
+void CAView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
+{
+    if (m_pViewDelegate)
+    {
+        m_pViewDelegate->ccTouchCancelled(pTouch, pEvent);
+    }
+}
+
 
 NS_CC_END;

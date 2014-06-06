@@ -142,6 +142,7 @@ CANavigationController::CANavigationController()
 {
     m_pNavigationBar = CANavigationBar::create();
     m_pNavigationBar->retain();
+    m_pNavigationBar->setAnchorPoint(CCPointZero);
 }
 
 CANavigationController::~CANavigationController()
@@ -376,10 +377,10 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
 {
     do
     {
-        CC_BREAK_IF(m_pNavigationBar->getActionByTag(0xeeee));
         CC_BREAK_IF(m_bNavigationBarHidden == hidden);
         m_bNavigationBarHidden = hidden;
-        
+        m_pNavigationBar->stopAllActions();
+        this->unScheduleUpdate();
         CC_BREAK_IF(this->getView()->getSuperview() == NULL);
         
         CCPoint point = CCPointZero;
@@ -395,7 +396,7 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
                     break;
                 case CABarVerticalAlignmentBottom:
                 {
-                    point.y = m_pNavigationBar->getFrame().size.height;
+                    point.y = this->getView()->getBounds().size.height;
                 }
                     break;
                 default:
@@ -408,12 +409,12 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
             {
                 case CABarVerticalAlignmentTop:
                 {
-                    point.y = m_pNavigationBar->getFrame().size.height;
+                    point.y = 0;
                 }
                     break;
                 case CABarVerticalAlignmentBottom:
                 {
-                    point.y = -m_pNavigationBar->getFrame().size.height;
+                    point.y = this->getView()->getBounds().size.height - m_pNavigationBar->getFrame().size.height;
                 }
                     break;
                 default:
@@ -423,15 +424,16 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
         
         if (animated)
         {
-            CCMoveBy* moveBy = CCMoveBy::create(0.3f, point);
-            moveBy->setTag(0xeeee);
-            m_pNavigationBar->runAction(moveBy);
+            CCMoveTo* moveTo = CCMoveTo::create(0.3f, point);
+            CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CANavigationController::scheduleUpdate));
+            CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CANavigationController::unScheduleUpdate));
+            CCSequence* actions = CCSequence::create(begin, moveTo, end, NULL);
+            m_pNavigationBar->runAction(actions);
         }
         else
         {
-            m_pNavigationBar->setFrameOrigin(ccpAdd(m_pNavigationBar->getFrameOrigin(), point));
+            m_pNavigationBar->setFrameOrigin(point);
         }
-        CAScheduler::schedule(schedule_selector(CANavigationController::update), this, 1/60.0f, false);
     }
     while (0);
 }
@@ -457,22 +459,25 @@ void CANavigationController::update(float dt)
             break;
     }
     
-    if (rect.equals(m_pContainer->getFrame()))
+    m_pContainer->setFrame(rect);
+    
+    for (unsigned int i=0; i<m_pViewControllers.size(); i++)
     {
-        CAScheduler::unschedule(schedule_selector(CANavigationController::update), this);
+        CAViewController* viewController = m_pViewControllers.at(i);
+        rect.origin.x = viewController->getView()->getFrameOrigin().x;
+        rect.origin.y = 0;
+        viewController->getSuperViewRect(rect);
     }
-    else
-    {
-        m_pContainer->setFrame(rect);
-        
-        for (unsigned int i=0; i<m_pViewControllers.size(); i++)
-        {
-            CAViewController* viewController = m_pViewControllers.at(i);
-            rect.origin.x = viewController->getView()->getFrameOrigin().x;
-            rect.origin.y = 0;
-            viewController->getSuperViewRect(rect);
-        }
-    }
+}
+
+void CANavigationController::scheduleUpdate()
+{
+    CAScheduler::schedule(schedule_selector(CANavigationController::update), this, 1/60.0f, false);
+}
+
+void CANavigationController::unScheduleUpdate()
+{
+    CAScheduler::unschedule(schedule_selector(CANavigationController::update), this);
 }
 
 #pragma CATabBarController
@@ -526,6 +531,7 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
         
         m_pTabBar = CATabBar::create(items);
         m_pTabBar->retain();
+        m_pTabBar->setAnchorPoint(CCPointZero);
         m_pTabBar->setDelegate(this);
         
         m_pContainer = new CAScrollView();
@@ -724,10 +730,10 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
 {
     do
     {
-        CC_BREAK_IF(m_pTabBar->getActionByTag(0xeeee));
         CC_BREAK_IF(m_bTabBarHidden == hidden);
         m_bTabBarHidden = hidden;
-        
+        m_pTabBar->stopAllActions();
+        this->unScheduleUpdate();
         CC_BREAK_IF(this->getView()->getSuperview() == NULL);
         
         CCPoint point = CCPointZero;
@@ -743,7 +749,7 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
                     break;
                 case CABarVerticalAlignmentBottom:
                 {
-                    point.y = m_pTabBar->getFrame().size.height;
+                    point.y = this->getView()->getBounds().size.height;
                 }
                     break;
                 default:
@@ -756,12 +762,12 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
             {
                 case CABarVerticalAlignmentTop:
                 {
-                    point.y = m_pTabBar->getFrame().size.height;
+                    point.y = 0;
                 }
                     break;
                 case CABarVerticalAlignmentBottom:
                 {
-                    point.y = -m_pTabBar->getFrame().size.height;
+                    point.y = this->getView()->getBounds().size.height - m_pTabBar->getFrame().size.height;
                 }
                     break;
                 default:
@@ -769,19 +775,22 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
             }
         }
         
-        
-        
         if (animated)
         {
-            CCMoveBy* moveBy = CCMoveBy::create(0.3f, point);
-            moveBy->setTag(0xeeee);
-            m_pTabBar->runAction(moveBy);
+            CCMoveTo* moveTo = CCMoveTo::create(0.3f, point);
+            CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CATabBarController::scheduleUpdate));
+            CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CATabBarController::unScheduleUpdate));
+            CCSequence* actions = CCSequence::create(begin, moveTo, end, NULL);
+            m_pTabBar->runAction(actions);
         }
         else
         {
-            m_pTabBar->setFrameOrigin(ccpAdd(m_pTabBar->getFrameOrigin(), point));
+            m_pTabBar->setFrameOrigin(point);
+            if (this->getView()->getSuperview())
+            {
+                this->update(0);
+            }
         }
-        CAScheduler::schedule(schedule_selector(CATabBarController::update), this, 1/60.0f, false);
     }
     while (0);
 }
@@ -809,25 +818,29 @@ void CATabBarController::update(float dt)
     }
     size.height = rect.size.height;
     
-    if (rect.equals(m_pContainer->getFrame()))
+    m_pContainer->setFrame(rect);
+    m_pContainer->setViewSize(size);
+    
+    for (unsigned int i=0; i<m_pViewControllers.size(); i++)
     {
-        CAScheduler::unschedule(schedule_selector(CATabBarController::update), this);
+        CAViewController* viewController = m_pViewControllers.at(i);
+        CAView* superview = viewController->getView()->getSuperview();
+        rect.origin.x = superview->getFrameOrigin().x;
+        rect.origin.y = 0;
+        superview->setFrame(rect);
+        viewController->getSuperViewRect(superview->getBounds());
     }
-    else
-    {
-        m_pContainer->setFrame(rect);
-        m_pContainer->setViewSize(size);
-        
-        for (unsigned int i=0; i<m_pViewControllers.size(); i++)
-        {
-            CAViewController* viewController = m_pViewControllers.at(i);
-            CAView* superview = viewController->getView()->getSuperview();
-            rect.origin.x = superview->getFrameOrigin().x;
-            rect.origin.y = 0;
-            superview->setFrame(rect);
-            viewController->getSuperViewRect(superview->getBounds());
-        }
-    }
+
+}
+
+void CATabBarController::scheduleUpdate()
+{
+    CAScheduler::schedule(schedule_selector(CATabBarController::update), this, 1/60.0f, false);
+}
+
+void CATabBarController::unScheduleUpdate()
+{
+    CAScheduler::unschedule(schedule_selector(CATabBarController::update), this);
 }
 
 NS_CC_END;

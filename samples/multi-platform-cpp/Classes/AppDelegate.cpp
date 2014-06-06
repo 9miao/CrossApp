@@ -81,7 +81,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CATabBarController* tabBarController = new CATabBarController();
     tabBarController->initWithViewControllers(views);
     tabBarController->getTabBar()->showSelectedIndicator();
-    tabBarController->showSelectedViewControllerAtIndex(2, false);
+    tabBarController->showSelectedViewControllerAtIndex(4, false);
     
     navigationController->release();
     viewController2->release();

@@ -20,6 +20,7 @@
 #include "CCProtocols.h"
 #include "platform/CCAccelerometerDelegate.h"
 #include "keypad_dispatcher/CCKeypadDelegate.h"
+#include "cocoa/CAResponder.h"
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -40,6 +41,7 @@ class CCDictionary;
 class CCComponentContainer;
 class CAImage;
 class CAViewDelegate;
+
 struct transformValues_;
 
 
@@ -57,7 +59,7 @@ enum {
 #define kCAViewRectInvalid CCRect(0, 0, 0, 0)
 
 class CC_DLL CAView
-:public CCObject
+:public CAResponder
 ,public CCRGBAProtocol
 ,public CCTextureProtocol
 #ifdef EMSCRIPTEN
@@ -992,14 +994,6 @@ public:
     
     virtual void setDisplayRange(bool value);
 
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-    
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-    
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-    
-    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
-
     virtual GLubyte getOpacity();
     
     virtual GLubyte getDisplayedOpacity();
@@ -1296,6 +1290,14 @@ public:
      */
     void setFlipY(bool bFlipY);
     
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+    
 protected:
     
     /**
@@ -1360,13 +1362,9 @@ protected:
     CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
     
     
-    CC_SYNTHESIZE_READONLY(CCSet*, m_pTouchesSet, TouchesSet);
-    
     CC_SYNTHESIZE(CAViewDelegate*, m_pViewDelegate, ViewDelegate);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bFrame, Frame);
-    
-    CC_SYNTHESIZE_IS(bool, m_bMutableTouches, MutableTouches);
 };
 
 class CAViewDelegate
@@ -1378,6 +1376,14 @@ public:
     virtual void viewOnEnterTransitionDidFinish() = 0;
     
     virtual void viewOnExitTransitionDidStart() = 0;
+    
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent){ return false; };
+    
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent){};
+    
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent){};
+    
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent){};
 };
 
 NS_CC_END

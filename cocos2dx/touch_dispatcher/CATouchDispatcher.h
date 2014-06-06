@@ -12,6 +12,7 @@
 #include "cocoa/CCObject.h"
 #include "cocoa/CCArray.h"
 #include "platform/CCPlatformMacros.h"
+#include "cocoa/CAVector.h"
 NS_CC_BEGIN
 
 
@@ -46,6 +47,46 @@ public:
     virtual ~EGLTouchDelegate() {}
 };
 
+
+class CATouchController: public CCObject
+{
+    
+public:
+    
+    CATouchController();
+    
+    virtual ~CATouchController();
+
+    void touchBegan();
+
+    void touchMoved();
+
+    void touchEnded();
+
+    void touchCancelled();
+    
+    int getTouchID();
+    
+    CC_SYNTHESIZE_RETAIN(CCTouch*, m_pTouch, Touch);
+    
+    CC_SYNTHESIZE_RETAIN(CCEvent*, m_pEvent, Event);
+    
+protected:
+    
+    void passingTouchesViewCache(float dt = 0);
+    
+    CAVector<CAView*> getEventListener(CCTouch* touch);
+    
+protected:
+    
+    std::deque<int> m_nWillTouchIDes;
+    
+    CAVector<CAView*> m_vWillTouchesViewCache;
+    
+    CAVector<CAView*> m_vTouchesViewCache;
+    
+    CCPoint m_tFirstPoint;
+};
 
 class CC_DLL CATouchDispatcher : public CCObject, public EGLTouchDelegate
 {
@@ -84,10 +125,13 @@ public:
 
 protected:
 
+    CC_SYNTHESIZE_RETAIN(CAResponder*, m_pFirstResponder, FirstResponder);
+    
     CC_SYNTHESIZE_IS(bool, m_bDispatchEvents, DispatchEvents);
     
     bool m_bLocked;
     
+    std::map<int, CATouchController*> m_vTouchControllers;
 };
 
 // end of input group

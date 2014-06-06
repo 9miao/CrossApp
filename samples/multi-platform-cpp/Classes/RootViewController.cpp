@@ -187,6 +187,12 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     ttf->setFrame(CCRect(10, 60, 0, 0));
     cell->addSubview(ttf);
     
+    CCSize size = this->getView()->getBounds().size;
+    
+    CAButton* btn = CAButton::createWithCenter(CCRect(size.width - 80, 60, 120, 80), CAButtonTypeRoundedRect);
+    btn->setTitleForState(CAControlStateAll, "button");
+    cell->addSubview(btn);
+    
 //    CALabel* label = CALabel::create(CCRect(0, 0, 600, 100));
 //    label->setOpacity(128);
 //    label->setVerticalTextAlignmet(kCCVerticalTextAlignmentCenter);

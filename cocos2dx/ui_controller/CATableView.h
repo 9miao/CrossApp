@@ -172,8 +172,6 @@ protected:
     CCDictionary* m_pCellDict;
     
     CAView* m_pBackGroundView;
-    
-    CCPoint m_tBeginPoint;
 };
 
 class CC_DLL CATableViewCell: public CAControl

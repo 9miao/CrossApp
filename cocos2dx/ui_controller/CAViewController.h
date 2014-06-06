@@ -28,7 +28,7 @@ class CATabBarController;
 class CANavigationController;
 
 class CC_DLL CAViewController
-: public CCObject
+: public CAResponder
 , public CAViewDelegate
 , public CCKeypadDelegate
 {
@@ -150,6 +150,10 @@ protected:
     
     void update(float dt);
     
+    void scheduleUpdate();
+    
+    void unScheduleUpdate();
+    
 private:
     
     std::vector<CAViewController*> m_pViewControllers;
@@ -203,6 +207,10 @@ protected:
     CC_DEPRECATED_ATTRIBUTE void renderingSelectedViewController(float dt = 0);
     
     void update(float dt);
+    
+    void scheduleUpdate();
+    
+    void unScheduleUpdate();
     
 private:
     

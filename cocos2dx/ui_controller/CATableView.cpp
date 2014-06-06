@@ -97,7 +97,9 @@ void CATableView::setContentSize(const cocos2d::CCSize &var)
 bool CATableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (m_pTouches->count() > 0)
-        return false;
+    {
+        m_pTouches->removeAllObjects();
+    }
     
     if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
         return false;
@@ -127,9 +129,6 @@ bool CATableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
             }
         }
     }
-    
-    m_tBeginPoint = pTouch->getLocation();
-    
     return true;
 }
 
@@ -139,8 +138,6 @@ void CATableView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     
     do
     {
-        CC_BREAK_IF(ccpDistance(m_tBeginPoint, pTouch->getLocation()) < 8.0f);
-        
         if (m_pHighlightedTableCells)
         {
             this->stopActionByTag(0xffff);
@@ -448,7 +445,7 @@ void CATableView::reloadData()
     
     if (m_pTablePullUpView)
     {
-        m_pTablePullUpView->setFrame(CCRect(0, y, width, m_nTablePullViewHeight));
+        m_pTablePullUpView->setFrame(CCRect(0, m_obViewSize.height, width, m_nTablePullViewHeight));
         this->addSubview(m_pTablePullUpView);
     }
 }
@@ -486,7 +483,7 @@ CATableViewCell::CATableViewCell()
 :m_nSection(0)
 ,m_nRow(0)
 {
-
+    m_bControl = false;
 }
 
 CATableViewCell::~CATableViewCell()

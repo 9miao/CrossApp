@@ -44,6 +44,8 @@ CAScrollView::CAScrollView()
 ,m_bShowsHorizontalScrollIndicator(true)
 ,m_bShowsVerticalScrollIndicator(true)
 {
+    m_bSlideContainers = true;
+    
     m_pTouches = new CCArray(2);
     m_pChildInThis = new CCArray();
 }
@@ -132,11 +134,13 @@ void CAScrollView::setViewSize(cocos2d::CCSize var)
         CC_BREAK_IF(m_obViewSize.equals(var));
         
         m_obViewSize = var;
+        m_obViewSize.width = MAX(m_obViewSize.width, m_obContentSize.width);
+        m_obViewSize.height = MAX(m_obViewSize.height, m_obContentSize.height);
         
         CC_BREAK_IF(m_pContainer == NULL);
 
         CCRect rect = CCRectZero;
-        rect.size = var;
+        rect.size = m_obViewSize;
         m_pContainer->setFrame(rect);
         
     }
@@ -147,6 +151,16 @@ void CAScrollView::setViewSize(cocos2d::CCSize var)
 CCSize CAScrollView::getViewSize()
 {
     return m_obViewSize;
+}
+
+void CAScrollView::setScrollEnabled(bool var)
+{
+    m_bSlideContainers = m_bscrollEnabled = var;
+}
+
+bool CAScrollView::isScrollEnabled()
+{
+    return m_bscrollEnabled;
 }
 
 void CAScrollView::setBounces(bool var)
@@ -205,6 +219,8 @@ void CAScrollView::setContentOffset(CCPoint offset, bool animated)
     if (animated)
     {
         m_tCloseToPoint = ccpMult(offset, -1);
+        m_tInertia = CCPointZero;
+        CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
         CAScheduler::schedule(schedule_selector(CAScrollView::closeToPoint), this, 1/60.0f, false);
     }
     else
@@ -237,7 +253,6 @@ void CAScrollView::closeToPoint(float delay)
 {
     CCSize size = this->getContentSize();
     CCPoint point = m_pContainer->getFrameOrigin();
-
     CCPoint resilience = ccpSub(m_tCloseToPoint, point);
     
     if (resilience.getLength() <= 0.5f)
@@ -250,11 +265,8 @@ void CAScrollView::closeToPoint(float delay)
     {
         resilience.x /= size.width;
         resilience.y /= size.height;
-        
         resilience = ccpMult(resilience, maxBouncesSpeed(delay));
-        
         resilience = ccpAdd(resilience, point);
-        
         m_pContainer->setFrameOrigin(resilience);
     }
 }

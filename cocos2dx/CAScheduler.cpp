@@ -293,7 +293,7 @@ void CAScheduler::removeHashElement(_hashSelectorEntry *pElement)
 
 void CAScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused)
 {
-    this->scheduleSelector(pfnSelector, pTarget, fInterval, kCCRepeatForever, 0.0f, bPaused);
+    this->scheduleSelector(pfnSelector, pTarget, fInterval, kCCRepeatForever, 1/60.0f, bPaused);
 }
 
 void CAScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused)
@@ -301,6 +301,8 @@ void CAScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
     CCAssert(pfnSelector, "Argument selector must be non-NULL");
     CCAssert(pTarget, "Argument target must be non-NULL");
 
+    fInterval = MAX(fInterval, 1/60.0f);
+    
     tHashTimerEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForTimers, &pTarget, pElement);
 
