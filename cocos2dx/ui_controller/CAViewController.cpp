@@ -832,7 +832,6 @@ void CATabBarController::update(float dt)
         superview->setFrame(rect);
         viewController->getSuperViewRect(superview->getBounds());
     }
-
 }
 
 void CATabBarController::scheduleUpdate()
