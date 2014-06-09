@@ -305,6 +305,7 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 	}
 
 	private void openKeyboard() {
+		System.out.println("openKeyboard");
 		final InputMethodManager imm = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.showSoftInput(this.mInputEditText, 0);
 	}
