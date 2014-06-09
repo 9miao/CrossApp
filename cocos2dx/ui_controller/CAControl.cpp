@@ -22,7 +22,7 @@ CAControl::CAControl()
         m_pBackGroundView[i] = NULL;
     }
     
-    for (int i=0; i<6; i++)
+    for (int i=0; i<7; i++)
     {
         m_selTouch[i] = NULL;
         m_pTarget[i] = NULL;
@@ -36,7 +36,7 @@ CAControl::~CAControl()
     {
         CC_SAFE_RELEASE_NULL(m_pBackGroundView[i]);
     }
-    for (int i=0; i<6; i++)
+    for (int i=0; i<7; i++)
     {
         CC_SAFE_RELEASE_NULL(m_pTarget[i]);
         m_selTouch[i] = NULL;

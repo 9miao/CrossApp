@@ -30,6 +30,10 @@ public:
     
     static CASwitch* createWithCenter(const CCRect& rect);
     
+    void addTarget(CCObject* target, SEL_CAControl selector);
+    
+    void removeTarget(CCObject* target, SEL_CAControl selector);
+    
 public:
     
     bool initWithFrame(const CCRect& rect);
@@ -55,6 +59,8 @@ public:
 protected:
     CAImage* getImage(CAImage* image, CCSize size);
     void updateSwitchState();
+    virtual void addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
+    virtual void removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
     
 protected:
     CAImageView *m_onImageView;
