@@ -1,6 +1,4 @@
 #import "AppController.h"
-#import "EAGLView.h"
-#import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
@@ -17,21 +15,14 @@ static AppDelegate s_sharedApplication;
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
+    
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     
     // Init the EAGLView
-    EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
-                                     pixelFormat: kEAGLColorFormatRGB565
-                                     depthFormat: GL_DEPTH24_STENCIL8_OES
-                              preserveBackbuffer: NO
-                                      sharegroup: nil
-                                   multiSampling: NO
-                                 numberOfSamples: 0];
-    [__glView setMultipleTouchEnabled:YES];
+
     // Use RootViewController manage EAGLView 
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-    viewController.wantsFullScreenLayout = YES;
-    viewController.view = __glView;
+    viewController.wantsFullScreenLayout = NO;
 
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
@@ -47,7 +38,7 @@ static AppDelegate s_sharedApplication;
     
     [window makeKeyAndVisible];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:true];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     cocos2d::CCApplication::sharedApplication()->run();
 

@@ -1,5 +1,6 @@
 #import "RootViewController.h"
-
+#import "EAGLView.h"
+#import "cocos2d.h"
 
 @implementation RootViewController
 
@@ -19,13 +20,29 @@
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    rect.size.height -= 20;
+    rect.origin.y = 20;
+    
+    EAGLView *__glView = [EAGLView viewWithFrame: rect
+                                     pixelFormat: kEAGLColorFormatRGB565
+                                     depthFormat: GL_DEPTH24_STENCIL8_OES
+                              preserveBackbuffer: NO
+                                      sharegroup: nil
+                                   multiSampling: NO
+                                 numberOfSamples: 0];
+    [__glView setMultipleTouchEnabled:YES];
+    [self.view addSubview:__glView];
 }
- 
-*/
+
+
 // Override to allow orientations other than the default portrait orientation.
 // This method is deprecated on ios6
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -40,13 +57,13 @@
 }
 
 - (BOOL) shouldAutorotate {
-    return YES;
+    return NO;
 }
 
 //fix not hide status on ios7
 - (BOOL)prefersStatusBarHidden
 {
-    return YES;
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {

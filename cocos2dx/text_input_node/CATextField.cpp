@@ -51,7 +51,7 @@ void CATextField::onExitTransitionDidStart()
 
 bool CATextField::resignFirstResponder()
 {
-    bool result =CAView::resignFirstResponder();
+    bool result = CAView::resignFirstResponder();
     if (result) {
         attachWithIME();
     }

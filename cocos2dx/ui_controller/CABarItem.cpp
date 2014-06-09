@@ -26,18 +26,6 @@ CABarItem::~CABarItem()
     CC_SAFE_RELEASE_NULL(m_pImage);
 }
 
-void CABarItem::setTouchEnabled(bool enabled)
-{
-    m_bTouchEnabled = enabled;
-}
-
-bool CABarItem::isTouchEnabled()
-{
-    return m_bTouchEnabled;
-}
-
-
-
 #pragma CANavigationBarItem
 
 CANavigationBarItem::CANavigationBarItem()

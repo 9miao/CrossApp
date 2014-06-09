@@ -875,10 +875,16 @@ CAView* CCDirector::getNotificationNode()
 
 void CCDirector::setNotificationNode(CAView *node)
 {
-    m_pNotificationNode->becomeFirstResponder();
+    if (m_pNotificationNode)
+    {
+        m_pNotificationNode->becomeFirstResponder();
+    }
     CC_SAFE_RELEASE(m_pNotificationNode);
     m_pNotificationNode = node;
-    m_pNotificationNode->resignFirstResponder();
+    if (m_pNotificationNode)
+    {
+        m_pNotificationNode->resignFirstResponder();
+    }
     CC_SAFE_RETAIN(m_pNotificationNode);
     this->updateDraw();
 }

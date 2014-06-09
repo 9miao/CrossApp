@@ -37,7 +37,7 @@ public:
     
     void popItem();
     
-    void insterRightView(CAView* view);
+    void insertRightView(CAView* view);
     
     void removeRightView();
     

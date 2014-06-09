@@ -30,10 +30,19 @@ void FirstViewController::viewDidLoad()
     label->setText("0.000000");
     this->getView()->addSubview(label);
     
+    float height = size.width * 0.8f * 0.15f;
     
-    CASlider* slider = CASlider::createWithCenter(CCRect(size.width/2, size.width * 0.8f * 0.15f / 2 + 60, size.width * 0.8f, size.width * 0.8f * 0.15f));
+    CCRect slider_rect = CCRect(size.width/2, height + 60, size.width * 0.8f, height);
+    CASlider* slider = CASlider::createWithCenter(slider_rect);
     this->getView()->addSubview(slider);
     slider->addTarget(this, CAControl_selector(FirstViewController::updateSlider));
+    
+    CCRect segmentedControl_rect = CCRect(size.width * 0.1f, height * 2 + 60, size.width * 0.8f, height);
+    CASegmentedControl* segmentedControl = CASegmentedControl::createWithFrame(segmentedControl_rect);
+    segmentedControl->insertSegmentWithTitle("2", 2, CAControlStateAll);
+    segmentedControl->insertSegmentWithTitle("3", 3, CAControlStateAll);
+    segmentedControl->insertSegmentWithTitle("4", 4, CAControlStateAll);
+    this->getView()->addSubview(segmentedControl);
 
 }
 

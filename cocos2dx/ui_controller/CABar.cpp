@@ -83,20 +83,20 @@ void CANavigationBar::showBackGround()
     m_pBackGround = CAScale9ImageView::createWithImage(m_pBackGroundImage);
     ((CAScale9ImageView*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
-    this->addSubview(m_pBackGround);
+    this->insertSubview(m_pBackGround, -1);
 }
 
 void CANavigationBar::showTitle()
 {
     if (m_pTitle == NULL)
     {
-        int fontSize = this->getBounds().size.height * 0.75f;
+        int fontSize = this->getBounds().size.height * 0.7f;
         
         m_pTitle = CCLabelTTF::create("", "fonts/arial.ttf", fontSize);
         m_pTitle->setColor(ccWHITE);
         m_pTitle->setAnchorPoint(CCPoint(0.5f, 0.5f));
         m_pTitle->setCenterOrigin(m_obContentSize/2);
-        this->insertSubview(m_pTitle, 1);
+        this->addSubview(m_pTitle);
     }
     
     if (m_pItems.empty() == false)
@@ -127,7 +127,7 @@ void CANavigationBar::showBackButton()
         m_pBackButton->setImageForState(CAControlStateNormal, CAImage::create("button_left.png"));
         m_pBackButton->setImageColorForState(CAControlStateHighlighted, ccc3(255, 255, 200));
         rect.size.width = rect.size.height = rect.size.height * 0.85f;
-        this->insertSubview(m_pBackButton, 1);
+        this->addSubview(m_pBackButton);
         m_pBackButton->addTarget(this, CAControl_selector(CANavigationBar::goBack), CAControlEventTouchUpInSide);
     }
     
@@ -141,7 +141,7 @@ void CANavigationBar::showBackButton()
     }
 }
 
-void CANavigationBar::insterRightView(CAView* view)
+void CANavigationBar::insertRightView(CAView* view)
 {
     this->removeRightView();
     
@@ -315,7 +315,7 @@ void CATabBar::showBackGround()
     m_pBackGround = CAScale9ImageView::createWithImage(m_pBackGroundImage);
     ((CAScale9ImageView*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
-    this->addSubview(m_pBackGround);
+    this->insertSubview(m_pBackGround, -1);
 }
 
 void CATabBar::showItems()
@@ -438,7 +438,7 @@ void CATabBar::showSelectedBackGround()
 
     m_pSelectedBackGround = CAScale9ImageView::createWithImage(m_pSelectedBackGroundImage);
     ((CAScale9ImageView*)m_pSelectedBackGround)->setPreferredSize(m_cItemSize);
-    this->insertSubview(m_pSelectedBackGround, 1);
+    this->addSubview(m_pSelectedBackGround);
 }
 
 void CATabBar::showSelectedIndicator()
@@ -458,7 +458,7 @@ void CATabBar::showSelectedIndicator()
     ((CAScale9ImageView*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
     m_pSelectedIndicator->setAnchorPoint(CCPoint(0.0f, 1.0f));
     m_pSelectedIndicator->setFrame(CCRect(0, this->getBounds().size.height, 0, 0));
-    this->insertSubview(m_pSelectedIndicator, 2);
+    this->insertSubview(m_pSelectedIndicator, 1);
 }
 
 void CATabBar::setSelectedAtIndex(int index)
@@ -518,13 +518,7 @@ bool CATabBar::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         return false;
     }
     
-    if (!this->getBounds().containsPoint(point))
-    {
-        return false;
-    }
-    
-    
-    
+
     
     return true;
 }

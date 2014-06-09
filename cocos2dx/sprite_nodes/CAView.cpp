@@ -1208,6 +1208,10 @@ void CAView::rendering()
     CAView* pNode = NULL;
     unsigned int i = 0;
     
+    CCRect winRect = CCRectZero;
+    winRect.size = CCDirector::sharedDirector()->getWinSize();
+    
+    
     if(m_pSubviews && m_pSubviews->count() > 0)
     {
         this->sortAllSubviews();

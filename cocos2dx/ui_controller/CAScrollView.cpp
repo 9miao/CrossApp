@@ -153,6 +153,7 @@ void CAScrollView::setViewSize(cocos2d::CCSize var)
         rect.size = m_obViewSize;
         m_pContainer->setFrame(rect);
         
+        CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f, false);
     }
     while (0);
     
@@ -270,6 +271,7 @@ void CAScrollView::closeToPoint(float delay)
         m_pContainer->setFrameOrigin(m_tCloseToPoint);
         CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
         m_tCloseToPoint = CCPoint(-1, -1);
+        this->hideIndicator();
     }
     else
     {

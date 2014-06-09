@@ -32,14 +32,13 @@ public:
     
     CC_SYNTHESIZE(int, m_nTag, Tag);
     
-    virtual void setTouchEnabled(bool enabled);
-    
-    bool isTouchEnabled();
-    
-protected:
-    
-    bool m_bTouchEnabled;
-    
+    CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);
+};
+
+class CC_DLL CABarButtonItem
+: public CABarItem
+{
+
 };
 
 class CC_DLL CANavigationBarItem
