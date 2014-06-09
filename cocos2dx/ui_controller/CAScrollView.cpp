@@ -303,7 +303,6 @@ bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
             CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
             m_tCloseToPoint = CCPoint(-1, -1);
             m_pContainer->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            this->showIndicator();
         }
         else if (m_pTouches->count() == 2)
         {
@@ -439,6 +438,7 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     }
     
     m_pContainer->setCenter(CCRect(p_container.x, p_container.y, 0, 0));
+    this->showIndicator();
 }
 
 void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
@@ -630,7 +630,10 @@ CCPoint CAScrollView::maxBouncesLenght()
 
 void CAScrollView::showIndicator()
 {
-    CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f, false);
+    if (!CAScheduler::isScheduled(schedule_selector(CAScrollView::update), this))
+    {
+        CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f, false);
+    }
     m_pIndicatorHorizontal->setHide(false);
     m_pIndicatorVertical->setHide(false);
 }

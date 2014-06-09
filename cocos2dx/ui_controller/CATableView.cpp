@@ -97,9 +97,7 @@ void CATableView::setContentSize(const cocos2d::CCSize &var)
 bool CATableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (m_pTouches->count() > 0)
-    {
-        m_pTouches->removeAllObjects();
-    }
+        return false;
     
     if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
         return false;
@@ -115,6 +113,11 @@ bool CATableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
             if (cell->getFrame().containsPoint(point))
             {
                 CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
+                
+                if (m_pHighlightedTableCells)
+                {
+                    m_pHighlightedTableCells->setControlStateNormal();
+                }
                 
                 m_pHighlightedTableCells = cell;
 
@@ -218,6 +221,12 @@ void CATableView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 void CATableView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
     CAScrollView::ccTouchCancelled(pTouch, pEvent);
+    
+    if (m_pHighlightedTableCells)
+    {
+        m_pHighlightedTableCells->setControlStateNormal();
+        m_pHighlightedTableCells = NULL;
+    }
 }
 
 float CATableView::maxSpeed(float delay)
@@ -389,7 +398,6 @@ void CATableView::reloadData()
         this->addSubview(m_pTableHeaderView);
         y += m_nTableHeaderHeight;
     }
-    
     
     unsigned int sectionCount = m_pTableViewDataSource->numberOfSections(this);
     

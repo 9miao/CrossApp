@@ -819,7 +819,9 @@ void CATabBarController::update(float dt)
     size.height = rect.size.height;
     
     m_pContainer->setFrame(rect);
+    CCPoint point = m_pContainer->getContentOffset();
     m_pContainer->setViewSize(size);
+    m_pContainer->setContentOffset(point, false);
     
     for (unsigned int i=0; i<m_pViewControllers.size(); i++)
     {

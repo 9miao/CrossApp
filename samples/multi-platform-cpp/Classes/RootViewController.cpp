@@ -161,8 +161,8 @@ void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
 //    
 //    this->getNavigationController()->pushViewController(viewController, true);
 //    viewController->autorelease();
-//    
-//    CCLog("selected = %d %d",section, row);
+    
+    CCLog("selected = %d %d",section, row);
 }
 
 void RootViewController::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
@@ -231,12 +231,12 @@ CAView* RootViewController::tableViewSectionViewForFooterInSection(CATableView* 
 }
 unsigned int RootViewController::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    return 10;
+    return 5;
 }
 
 unsigned int RootViewController::numberOfSections(CATableView *table)
 {
-    return 4;
+    return 3;
 }
 
 unsigned int RootViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)

@@ -102,7 +102,6 @@ public:
     
     virtual bool becomeFirstResponder();
     
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 public:
     
     static CATextField* createWithFrame(const CCRect& frame);
@@ -131,17 +130,11 @@ public:
     
     CC_PROPERTY(eKeyBoardInputType, m_nInputType, InputType);
     
-    virtual bool attachWithIME();
-    
-    virtual bool detachWithIME();
-    
     inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
     
     inline int getKeyboardType () {return m_keyboardType; }
   
 private:
-    
-    void initMarkSprite();
     
     std::vector<float> lengthArr;
     std::vector<int> byteArr;
@@ -161,7 +154,11 @@ private:
     CAImageView *m_pMark;
     eKeyBoardType m_keyboardType;
 protected:
-
+    
+    virtual bool attachWithIME();
+    virtual bool detachWithIME();
+    void initMarkSprite();
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual bool canAttachWithIME();
     virtual bool canDetachWithIME();
     virtual void insertText(const char * text, int len);
@@ -169,7 +166,6 @@ protected:
     virtual void getKeyBoardHeight(int height);
     virtual void deleteBackward();
     virtual const char * getContentText();
-
 };
 
 NS_CC_END

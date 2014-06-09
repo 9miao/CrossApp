@@ -48,6 +48,7 @@ void CATextField::onExitTransitionDidStart()
 {
     CAControl::onExitTransitionDidStart();
 }
+
 bool CATextField::resignFirstResponder()
 {
     bool result =CAView::resignFirstResponder();
@@ -56,6 +57,7 @@ bool CATextField::resignFirstResponder()
     }
     return result;
 }
+
 bool CATextField::becomeFirstResponder()
 {
     bool result = CAView::becomeFirstResponder();
@@ -65,6 +67,7 @@ bool CATextField::becomeFirstResponder()
     return result;
     
 }
+
 CATextField* CATextField::createWithFrame(const CCRect& frame)
 {
     CATextField *text = new CATextField();
@@ -76,6 +79,7 @@ CATextField* CATextField::createWithFrame(const CCRect& frame)
     CC_SAFE_DELETE(text);
     return NULL;
 }
+
 CATextField* CATextField::createWithCenter(const CCRect& rect)
 {
     CATextField* textField = new CATextField();
@@ -112,6 +116,7 @@ bool CATextField::initWithFrame(const CCRect& frame)
     this->initMarkSprite();
     return true;
 }
+
 bool CATextField::initWithCenter(const CCRect& rect)
 {
     if (!CAControl::initWithCenter(rect)) {
@@ -134,6 +139,7 @@ bool CATextField::initWithCenter(const CCRect& rect)
     this->initMarkSprite();
     return true;
 }
+
 void CATextField::initMarkSprite()
 {
     int pixels[1][1];
@@ -154,6 +160,7 @@ void CATextField::initMarkSprite()
     m_pMark->runAction(m_pCursorAction);
     
 }
+
 void CATextField::setFontSize(float var)
 {
     m_fFontSize = var;
@@ -167,53 +174,64 @@ float CATextField::getFontSize()
 {
     return m_fFontSize;
 }
+
 void CATextField::setText(std::string var)
 {
     m_sText=var;
 }
+
 std::string CATextField::getText()
 {
     return m_sText;
 }
+
 void CATextField::setPlaceHolder(std::string var)
 {
     m_sPlaceHolder = var;
     m_pText->setTextcolor(getSpaceHolderColor());
     m_pText->setText(var);
 }
+
 std::string CATextField::getPlaceHolder()
 {
     return m_sPlaceHolder;
 }
+
 void CATextField::setSpaceHolderColor(ccColor4B var)
 {
     m_cSpaceHolderColor = var;
     m_pText->setTextcolor(var);
     
 }
+
 ccColor4B CATextField::getSpaceHolderColor()
 {
     return m_cSpaceHolderColor;
 }
+
 void CATextField::setTextColor(ccColor4B var)
 {
     m_pText->setTextcolor(var);
     m_cTextColor = var;
 }
+
 ccColor4B CATextField::getTextColor()
 {
     
     return m_cTextColor;
 }
+
 void CATextField::setTextAlignment(CCTextAlignment var)
 {
     m_pText->setTextAlignment(var);
     m_aTextAlignment = var;
 }
+
 CCTextAlignment CATextField::getTextAlignment()
 {
     return m_aTextAlignment;
 }
+
 bool CATextField::attachWithIME()
 {
     bool bRet = CCIMEDelegate::attachWithIME();
@@ -223,20 +241,26 @@ bool CATextField::attachWithIME()
         CCEGLView * pGlView = CCDirector::sharedDirector()->getOpenGLView();
         if (pGlView)
         {
-            
-            if (getKeyboardType() ==KEY_BOARD_TYPE_NORMAL) {
+#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID||CC_TARGET_PLATFORM==CC_PLATFORM_IOS)        
+            if (getKeyboardType() ==KEY_BOARD_TYPE_NORMAL)
+            {
                 pGlView->setIMEKeyboardDefault();
-            }else if (getKeyboardType() ==KEY_BOARD_TYPE_NUMBER) {
+            }
+            else if (getKeyboardType() ==KEY_BOARD_TYPE_NUMBER)
+            {
                 pGlView->setIMEKeyboardNumber();
-            }else if(getKeyboardType() ==KEY_BOARD_TYPE_ALPHABET)
+            }
+            else if(getKeyboardType() ==KEY_BOARD_TYPE_ALPHABET)
             {
                 pGlView->setIMEKeyboardAlphabet();
             }
+#endif
             pGlView->setIMEKeyboardState(true);
         }
     }
     return bRet;
 }
+
 bool CATextField::detachWithIME()
 {
     bool bRet = CCIMEDelegate::detachWithIME();
@@ -251,19 +275,21 @@ bool CATextField::detachWithIME()
     }
     return bRet;
 }
+
 void CATextField::setInputType(eKeyBoardInputType type)
 {
     m_nInputType=type;
 }
+
 eKeyBoardInputType CATextField::getInputType()
 {
     return m_nInputType;
 }
+
 bool CATextField::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    
-    
-    if (isEditing) {
+    if (isEditing)
+    {
         return false;
     }
     
@@ -292,6 +318,15 @@ bool CATextField::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
                 return true;
             }
 
+			if (lengthArr.size() == 1)
+			{
+				m_pMark->setCenterOrigin(CCPoint(0, this->getBounds().size.height / 2));
+				bytePos = 0;
+				return true;
+					
+			}
+
+
             for (int i=0; i<lengthArr.size(); i++)
             {
                 
@@ -301,7 +336,7 @@ bool CATextField::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
                 float lengthadd =0;
                 if (i==lengthArr.size()-1)
                 {
-                    lengthadd = (*lengthArr.end()-1);
+                    lengthadd = (*(lengthArr.end()-1));
                 }
                 else
                 {
@@ -313,7 +348,7 @@ bool CATextField::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
                     bytePos = i;
                     break;
                 }
-                else if(i==lengthArr.size()-1 &&lengthArr.size()>1)
+                else if(i==(lengthArr.size()-1) &&lengthArr.size()>1)
                 {
                     bytePos = i;
                     m_pMark->setCenterOrigin(CCPoint(m_pText->getLabelSize().width, this->getBounds().size.height/2));
@@ -343,6 +378,7 @@ bool CATextField::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     
     return true;
 }
+
 bool CATextField::canAttachWithIME()
 {
     return (m_pDelegate) ? (! m_pDelegate->onTextFieldAttachWithIME(this)) : true;
@@ -355,15 +391,16 @@ bool CATextField::canDetachWithIME()
 
 void CATextField::insertText(const char * text, int len)
 {
-
-    if (m_nInputType == KEY_BOARD_INPUT_PASSWORD) {
-        if (len>=2) {
+    if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+    {
+        if (len>=2)
             return;
-        }
+        
         m_sText.append(text);
         
         std::string password="";
-        for (int i=0; i<m_sText.length(); i++) {
+        for (int i=0; i<m_sText.length(); i++)
+        {
             password.append("*");
         }
         m_pText->setTextcolor(m_cTextColor);
@@ -375,9 +412,9 @@ void CATextField::insertText(const char * text, int len)
         if (m_pText->getLabelSize().width < this->getBounds().size.width)
         {
             m_pMark->setCenterOrigin(CCPoint(m_pText->getLabelSize().width, this->getBounds().size.height/2));
-        }else
+        }
+        else
         {
-            
             //textlength+lengt
             if (m_pText->getLabelSize().width<rect.size.width)
             {
@@ -414,7 +451,8 @@ void CATextField::insertText(const char * text, int len)
     }
     
     
-    if (!strcmp(text, "\n")) {
+    if (!strcmp(text, "\n"))
+    {
         return;
     }
     
@@ -428,11 +466,13 @@ void CATextField::insertText(const char * text, int len)
         spaceHolderIsOn=false;
         
     }
+    
     if(isEditing)
     {
         isEditing =false;
     }
     willBg->setVisible(false);
+    
     if (len > 0)
     {
         if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this,text, len))
@@ -476,6 +516,7 @@ void CATextField::insertText(const char * text, int len)
         {
             numbers=0;
         }
+        
         if (numbers*m_pText->getfontSize()>m_pText->getfontSize())
         {
             for (int i =1; i<=numbers; i++)
@@ -485,7 +526,8 @@ void CATextField::insertText(const char * text, int len)
                 lengthArr.push_back(frontWidth+m_pText->getfontSize()*i);
                 byteArr.push_back(byteCount);
             }
-        }else
+        }
+        else
         {
            
             byteCount+=strlen(text);
@@ -517,6 +559,7 @@ void CATextField::insertText(const char * text, int len)
         
         float textlength=(float)(*(lengthArr.begin()+bytePos));
         float length =(m_pText->getLabelSize().width)-textlength-(*(lengthArr.end()-1)-(*(lengthArr.begin()+bytePos)));
+        
         if (m_pText->getLabelSize().width < this->getBounds().size.width)
         {
             m_pMark->setCenterOrigin(CCPoint(textlength+length, this->getBounds().size.height/2));
@@ -552,16 +595,14 @@ void CATextField::insertText(const char * text, int len)
             }
         }
         m_pText->setFrame(rect);
-        
-      
     }
 }
+
 void CATextField::willInsertText(const char *text, int len)
 {
     
-    if (m_nInputType ==KEY_BOARD_INPUT_PASSWORD) {
+    if (m_nInputType ==KEY_BOARD_INPUT_PASSWORD)
         return;
-    }
     
     if (len>0)
     {
@@ -681,7 +722,7 @@ void CATextField::deleteBackward()
         m_pMark->setCenterOrigin(CCPoint(0, this->getBounds().size.height/2));
         return;
     }
-    if(spaceHolderIsOn)
+    if(spaceHolderIsOn||bytePos==0)
     {
         
         return;
@@ -737,7 +778,8 @@ void CATextField::deleteBackward()
         afterWidth = frontWidth-beforeWidth;
         std::string backStr= frontStr.substr((*(byteArr.begin()+bytePos)),strlen(frontStr.c_str()));
         sprintf(str, "%s%s",beforeStr.c_str(),backStr.c_str());
-    }else
+    }
+    else
     {
         sprintf(str, "%s",sText.c_str());
     }
@@ -761,7 +803,9 @@ void CATextField::deleteBackward()
     if (byteArr.size()==1)
     {
         byteCount=0;
-    }else{
+    }
+    else
+    {
         byteCount=(*(byteArr.end()-2));
     }
     
@@ -775,12 +819,14 @@ void CATextField::deleteBackward()
     {
         return;
     }
+    
     frontStr=str;
     CCRect rect = CCRectZero;
     rect.size = this->getBounds().size;
     rect.size.width = MIN(this->getBounds().size.width, m_pText->getLabelSize().width);
     m_pText->setText(str);
     m_sText=str;
+    
     float markWidth =(*(lengthArr.begin()+bytePos));
     if (m_pText->getLabelSize().width>this->getBounds().size.width) {
         markWidth = this->getBounds().size.width;
@@ -800,6 +846,7 @@ const char* CATextField::getContentText()
 {
     return m_sText.c_str();
 }
+
 void CATextField::getKeyBoardHeight(int height)
 {
     if( m_pDelegate && m_pDelegate->getKeyBoardHeight(height) )
