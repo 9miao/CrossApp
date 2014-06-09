@@ -21,7 +21,8 @@ typedef enum
     CAControlEventTouchMoved,
     CAControlEventTouchMovedOutSide,
     CAControlEventTouchUpInSide,
-    CAControlEventTouchUpSide
+    CAControlEventTouchUpSide,
+    CAControlEventTouchValueChanged,
 }CAControlEvents;
 
 typedef enum
@@ -77,9 +78,9 @@ protected:
     
     CAView* m_pBackGroundView[CAControlStateAll];
     
-    CCObject* m_pTarget[6];
+    CCObject* m_pTarget[7];
     
-    SEL_CAControl m_selTouch[6];
+    SEL_CAControl m_selTouch[7];
 };
 
 #define CAControlTouchDown (CAControlEventTouchDown)

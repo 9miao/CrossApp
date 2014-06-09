@@ -251,12 +251,32 @@ void CASwitch::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     {
         this->setControlState(CAControlStateNormal);
         this->setIsOn(!m_isOn);
-        
-        if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
+
+        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
         {
-            ((CCObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this, point);
+            ((CCObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, point);
         }
     }
+}
+
+void CASwitch::addTarget(CCObject* target, SEL_CAControl selector)
+{
+    this->addTarget(target, selector, CAControlEventTouchValueChanged);
+}
+
+void CASwitch::removeTarget(CCObject* target, SEL_CAControl selector)
+{
+    this->removeTarget(target, selector, CAControlEventTouchValueChanged);
+}
+
+void CASwitch::addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event)
+{
+    CAControl::addTarget(target, selector, event);
+}
+
+void CASwitch::removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event)
+{
+    CAControl::removeTarget(target, selector, event);
 }
 
 NS_CC_END

@@ -302,9 +302,9 @@ void CASlider::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     value = (point.x <= 0) ? m_minValue : ((point.x >= bounds.size.width) ? m_maxValue : value);
     this->setValue(value);
     
-    if (m_pTarget[CAControlEventTouchDown])
+    if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
     {
-        ((CCObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
+        ((CCObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, point);
     }
 }
 
@@ -320,21 +320,21 @@ void CASlider::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     {
         float value = (m_maxValue - m_minValue) * (point.x / bounds.size.width);
         this->setValue(value);
-        if (m_pTarget[CAControlEventTouchDown])
+        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
         {
-            ((CCObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
+            ((CCObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, point);
         }
     }
 }
 
 void CASlider::addTarget(CCObject* target, SEL_CAControl selector)
 {
-    this->addTarget(target, selector, CAControlEventTouchDown);
+    this->addTarget(target, selector, CAControlEventTouchValueChanged);
 }
 
 void CASlider::removeTarget(CCObject* target, SEL_CAControl selector)
 {
-    this->removeTarget(target, selector, CAControlEventTouchDown);
+    this->removeTarget(target, selector, CAControlEventTouchValueChanged);
 }
 
 void CASlider::addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event)
