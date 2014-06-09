@@ -104,20 +104,19 @@ void CATouchController::passingTouchesViewCache(float dt)
 {
     bool isControl = false;
     
-    for (std::vector<CAView*>::iterator itr=m_vWillTouchesViewCache.end()-1;
-         itr!=m_vWillTouchesViewCache.begin()-1;
-         itr--)
+    for (int i=m_vWillTouchesViewCache.size()-1; i>=0; i--)
     {
-        if ((*itr)->isControl() || (*itr)->isSlideContainers())
+        CAView* view = m_vWillTouchesViewCache.at(i);
+        if (view->isControl() || view->isSlideContainers())
         {
-            CAControl* control = dynamic_cast<CAControl*>(*itr);
-            CAScrollView* scroll = dynamic_cast<CAScrollView*>(*itr);
+            CAControl* control = dynamic_cast<CAControl*>(view);
+            CAScrollView* scroll = dynamic_cast<CAScrollView*>(view);
             if ((control && control->isTouchEnabled())
                     ||
                 (scroll && scroll->isScrollEnabled()))
             {
                 CLEAR_VECTOR(m_vTouchesViewCache);
-                m_vTouchesViewCache.insert(m_vTouchesViewCache.begin(), itr, m_vWillTouchesViewCache.end());
+                m_vTouchesViewCache.insert(m_vTouchesViewCache.begin(), m_vWillTouchesViewCache.begin()+i, m_vWillTouchesViewCache.end());
                 RETAIN_VECTOR(m_vTouchesViewCache);
                 isControl = true;
             }
