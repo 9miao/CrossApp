@@ -20,7 +20,8 @@ typedef enum
     CAControlTouchMoved,
     CAControlTouchMovedOutSide,
     CAControlTouchUpInSide,
-    CAControlTouchUpSide
+    CAControlTouchUpSide,
+    CAControlTouchValueChanged,
 }CAControlTouchType;
 
 typedef enum
@@ -76,7 +77,7 @@ protected:
     
     void* m_target;
     
-    SEL_CAControl m_selTouch[5];
+    SEL_CAControl m_selTouch[6];
 };
 
 

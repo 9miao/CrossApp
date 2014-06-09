@@ -269,20 +269,25 @@ void CASegmentedControl::setSelectedAtIndex(int index)
     {
         return ;
     }
-    
-    CAButton *oldSelectedButton = m_segments.at(m_selectedIndex);
-    if (oldSelectedButton)
-    {
-        oldSelectedButton->setControlStateNormal();
+    if (m_selectedIndex != index) {
+        CAButton *oldSelectedButton = m_segments.at(m_selectedIndex);
+        if (oldSelectedButton)
+        {
+            oldSelectedButton->setControlStateNormal();
+        }
+        
+        CAButton *newSelectedButton = m_segments.at(index);
+        if (newSelectedButton)
+        {
+            newSelectedButton->setControlStateSelected();
+        }
+        
+        m_selectedIndex = index;
+        
+        if (m_target) {
+            ((CCObject *)m_target->*m_selTouch[CAControlTouchValueChanged])(this, CCPointZero);
+        }
     }
-    
-    CAButton *newSelectedButton = m_segments.at(index);
-    if (newSelectedButton)
-    {
-        newSelectedButton->setControlStateSelected();
-    }
-    
-    m_selectedIndex = index;
 }
 
 int CASegmentedControl::getItemCount() const
