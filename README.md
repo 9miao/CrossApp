@@ -1,4 +1,11 @@
 
+####CrossApp alpha 0.1.7 更新内容：  
+
+#####1.修复CATextField在 win32 与mac平台编译报错的问题
+
+#####2.修复TabBarController当前viewController不是第一项时 显示与隐藏 tabBar时画面出错的问题
+
+
 ####CrossApp alpha 0.1.6 更新内容：  
 #####1. 添加CASlider：  
 滑动条
@@ -12,16 +19,22 @@
 经过此次优化，触摸事件分发更加智能，使开发过程变得简单容易。
 
 #####4. CATextField功能补全：  
-添加输入框选择键盘类型、遮蔽显示字符为※，光标移动以及插入删除，获取键盘高度等功能。
-目前只支持iOS与Android。
+1.添加输入框选择键盘类型
+2.添加遮蔽显示字符为※
+3.添加光标移动以及插入删除
+4.添加获取键盘高度等功能。
+5.目前只支持iOS与Android。
 
 #####5. 添加CATabBarController 、CANavigationController新功能
 支持tabBarControll切换viewController动画效果功能
 增加 CATabBarController 、CANavigationController 隐藏 其Bar的功能
 
 #####6. 修改部分bug 
+1.修正CAView在addSubview之前设置ZOder不起作用的bug
+2.修正调用CCDirector中setNotificationNode(CAView* view)不起作用的bug
+3.scrollView指示条显示隐藏时机错误的bug
 
-#####7. win32平台支持VS2012编译
+#####7. win32平台向下兼容至VS2012
 
 
 
