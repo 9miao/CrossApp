@@ -153,6 +153,7 @@ private:
     CCAction *m_pCursorAction;
     CAImageView *m_pMark;
     eKeyBoardType m_keyboardType;
+    
 protected:
     
     virtual bool attachWithIME();

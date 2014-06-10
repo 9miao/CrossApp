@@ -31,7 +31,7 @@ protected:
     
     void viewDidUnload();
 
-    bool updateSlider(CAControl* sender, CCPoint point);
+    void updateSlider(CAControl* sender, CCPoint point);
     
 };
 

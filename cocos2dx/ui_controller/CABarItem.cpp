@@ -26,26 +26,78 @@ CABarItem::~CABarItem()
     CC_SAFE_RELEASE_NULL(m_pImage);
 }
 
+
+#pragma CABarButtonItem
+
+CABarButtonItem::CABarButtonItem()
+:m_pHighlightedImage(NULL)
+,m_pTarget(NULL)
+,m_selCallFunc(NULL)
+{
+
+}
+
+CABarButtonItem::~CABarButtonItem()
+{
+    CC_SAFE_RELEASE_NULL(m_pHighlightedImage);
+}
+
+CABarButtonItem* CABarButtonItem::create(std::string title, CAImage* image, CAImage* highlightedImage)
+{
+    CABarButtonItem* item = new CABarButtonItem();
+    if (item && item->init(title, image, highlightedImage))
+    {
+        item->autorelease();
+        return item;
+    }
+    CC_SAFE_DELETE(item);
+    return NULL;
+}
+
+bool CABarButtonItem::init(std::string title, CAImage *image, CAImage *highlightedImage)
+{
+    this->setTitle(title);
+    this->setImage(image);
+    this->setHighlightedImage(highlightedImage);
+    return true;
+}
+
+void CABarButtonItem::setTarget(CCObject* target, SEL_CAControl callfunc)
+{
+    m_pTarget = target;
+    m_selCallFunc = callfunc;
+}
+
+CCObject* CABarButtonItem::getTarget()
+{
+    return m_pTarget;
+}
+
+SEL_CAControl CABarButtonItem::getSel()
+{
+    return m_selCallFunc;
+}
+
 #pragma CANavigationBarItem
 
 CANavigationBarItem::CANavigationBarItem()
 :m_pTitleViewImage(NULL)
-,m_pBackButtonImage(NULL)
-,m_pHighlightedBackButtonImage(NULL)
-,m_sBackButtonTitle("")
+,m_pLeftButtonItem(NULL)
+,m_pRightButtonItem(NULL)
 {
 
 }
 
 CANavigationBarItem::~CANavigationBarItem()
 {
-
+    CC_SAFE_RELEASE_NULL(m_pTitleViewImage);
+    CC_SAFE_RELEASE_NULL(m_pLeftButtonItem);
+    CC_SAFE_RELEASE_NULL(m_pRightButtonItem);
 }
 
 bool CANavigationBarItem::init(std::string title)
 {
     this->setTitle(title);
-    
     return true;
 }
 
@@ -62,8 +114,6 @@ CANavigationBarItem* CANavigationBarItem::create(std::string title)
 }
 
 
-
-
 #pragma CATabBarItem
 
 
@@ -75,22 +125,20 @@ CATabBarItem::CATabBarItem()
 
 CATabBarItem::~CATabBarItem()
 {
-
+    CC_SAFE_RELEASE_NULL(m_pSelectedImage);
 }
 
-bool CATabBarItem::init(std::string title, CAImage* image, int tag)
+bool CATabBarItem::init(std::string title, CAImage* image)
 {
     this->setTitle(title);
     this->setImage(image);
-    this->setTag(tag);
-    
     return true;
 }
 
-CATabBarItem* CATabBarItem::create(std::string title, CAImage* image, int tag)
+CATabBarItem* CATabBarItem::create(std::string title, CAImage* image)
 {
     CATabBarItem* item = new CATabBarItem();
-    if (item && item->init(title, image, tag))
+    if (item && item->init(title, image))
     {
         item->autorelease();
         return item;

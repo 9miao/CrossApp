@@ -13,6 +13,7 @@
 
 #include "images/CAImage.h"
 #include <string>
+#include "CAControl.h"
 
 NS_CC_BEGIN
 
@@ -38,7 +39,32 @@ public:
 class CC_DLL CABarButtonItem
 : public CABarItem
 {
-
+    
+public:
+    
+    static CABarButtonItem* create(std::string title, CAImage* image, CAImage* highlightedImage);
+    
+public:
+    
+    CABarButtonItem();
+    
+    virtual ~CABarButtonItem();
+    
+    bool init(std::string title, CAImage* image, CAImage* highlightedImage);
+    
+    CC_SYNTHESIZE_RETAIN(CAImage*, m_pHighlightedImage, HighlightedImage);
+    
+    void setTarget(CCObject* target, SEL_CAControl callfunc);
+    
+    CCObject* getTarget();
+    
+    SEL_CAControl getSel();
+    
+protected:
+    
+    CCObject* m_pTarget;
+    
+    SEL_CAControl m_selCallFunc;
 };
 
 class CC_DLL CANavigationBarItem
@@ -59,20 +85,18 @@ public:
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pTitleViewImage, TitleViewImage);
     
-    CC_SYNTHESIZE(std::string, m_sBackButtonTitle, BackButtonTitle);
+    CC_SYNTHESIZE_RETAIN(CABarButtonItem*, m_pLeftButtonItem, LeftButtonItem);
     
-    CC_SYNTHESIZE_RETAIN(CAImage*, m_pBackButtonImage, BackButtonImage);
-    
-    CC_SYNTHESIZE_RETAIN(CAImage*, m_pHighlightedBackButtonImage, HighlightedBackButtonImage);
+    CC_SYNTHESIZE_RETAIN(CABarButtonItem*, m_pRightButtonItem, RightButtonItem);
 };
 
 class CC_DLL CATabBarItem
 : public CABarItem
 {
-
+    
 public:
     
-    static CATabBarItem* create(std::string title, CAImage* image, int tag);
+    static CATabBarItem* create(std::string title, CAImage* image);
     
 public:
 
@@ -80,7 +104,7 @@ public:
     
     virtual ~CATabBarItem();
     
-    bool init(std::string title, CAImage* image, int tag);
+    bool init(std::string title, CAImage* image);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pSelectedImage, SelectedImage);
     

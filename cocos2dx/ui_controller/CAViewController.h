@@ -120,6 +120,8 @@ public:
     
 public:
     
+    void replaceViewController(CAViewController* viewController, bool animated);
+    
     void pushViewController(CAViewController* viewController, bool animated);
     
     CAViewController* popViewControllerAnimated(bool animated);
@@ -141,6 +143,8 @@ protected:
     virtual void viewDidUnload();
     
     virtual void reshapeViewRectDidFinish();
+    
+    void replaceViewControllerFinish();
     
     void pushViewControllerFinish();
     

@@ -711,6 +711,7 @@ void CATextField::willInsertText(const char *text, int len)
         return;
     }
 }
+
 void CATextField::deleteBackward()
 {
     if (m_nInputType==KEY_BOARD_INPUT_PASSWORD)

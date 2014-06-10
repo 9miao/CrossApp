@@ -295,7 +295,8 @@ void CASlider::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    if (!this->isTouchClick()) return;
+    if (!this->isTouchClick())
+        return;
     
     CCRect bounds = getBounds();
     float value = (m_maxValue - m_minValue) * (point.x / bounds.size.width);

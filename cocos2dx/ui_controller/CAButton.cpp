@@ -184,8 +184,9 @@ void CAButton::setBackGroundViewSquareRect()
     {
         ccc3(11, 106, 255),
         ccc3(11, 106, 255),
-        ccc3(255, 255, 255),
-        ccc3(138, 138, 138)
+        ccc3(138, 138, 138),
+        ccc3(255, 255, 255)
+        
     };
     
     for (int i=0; i<CAControlStateAll; i++)
@@ -212,7 +213,8 @@ void CAButton::setBackGroundViewRoundedRect()
         ccc3(11, 106, 255),
         ccc3(11, 106, 255),
         ccc3(255, 255, 255),
-        ccc3(138, 138, 138)
+        ccc3(255, 255, 255)
+        
     };
     
     for (int i=0; i<CAControlStateAll; i++)
@@ -238,8 +240,9 @@ void CAButton::setBackGroundViewRounded3DRect()
     {
         ccc3(255, 255, 255),
         ccc3(0, 41, 57),
-        ccc3(127, 127, 127),
+        ccc3(255, 255, 255),
         ccc3(255, 255, 255)
+        
     };
     
     for (int i=0; i<CAControlStateAll; i++)
@@ -274,9 +277,8 @@ void CAButton::setImageForState(CAControlState controlState, CAImage* var)
     if (controlState == CAControlStateAll)
     {
         for (int i=0; i<CAControlStateAll; i++)
-        {
             this->setImageForState((CAControlState)i, var);
-        }
+
         return;
     }
     
@@ -293,9 +295,8 @@ void CAButton::setTitleForState(CAControlState controlState, std::string var)
     if (controlState == CAControlStateAll)
     {
         for (int i=0; i<CAControlStateAll; i++)
-        {
             this->setTitleForState((CAControlState)i, var);
-        }
+        
         return;
     }
     
@@ -307,12 +308,28 @@ void CAButton::setTitleForState(CAControlState controlState, std::string var)
 
 void CAButton::setImageColorForState(CAControlState controlState, ccColor3B var)
 {
-    m_sImageColor[controlState] = var;
+    if (controlState == CAControlStateAll)
+    {
+        for (int i=0; i<CAControlStateAll; i++)
+            this->setImageColorForState((CAControlState)i, var);
+    }
+    else
+    {
+        m_sImageColor[controlState] = var;
+    }
 }
 
 void CAButton::setTitleColorForState(CAControlState controlState, ccColor3B var)
 {
-    m_sTitleColor[controlState] = var;
+    if (controlState == CAControlStateAll)
+    {
+        for (int i=0; i<CAControlStateAll; i++)
+            this->setTitleColorForState((CAControlState)i, var);
+    }
+    else
+    {
+        m_sTitleColor[controlState] = var;
+    }
 }
 
 void CAButton::setTitleFontName(std::string var)
@@ -354,7 +371,6 @@ bool CAButton::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
         CC_BREAK_IF(!this->isVisible());
         CC_BREAK_IF(!m_bTouchEnabled);
         CC_BREAK_IF(m_eControlState != CAControlStateNormal && m_eControlState != CAControlStateSelected);
-        CC_BREAK_IF(!getBounds().containsPoint(point));
         
         return this->setTouchBegin(point);
     }
@@ -396,7 +412,7 @@ void CAButton::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 
     if (!this->isTouchClick())
         return;
-    
+
     this->setTouchUpSide(point);
     
     if (getBounds().containsPoint(point))
@@ -444,7 +460,7 @@ void CAButton::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEve
 void CAButton::setControlState(CAControlState var)
 {
     CAControl::setControlState(var);
-
+    
     if (m_eControlState == CAControlStateSelected)
     {
         m_bSelected = true;
@@ -503,8 +519,8 @@ void CAButton::setControlState(CAControlState var)
         {
             CCSize size = this->getBounds().size;
             CCSize iSize = image->getContentSize();
-            float scaleX = size.width / iSize.width * 0.4f;
-            float scaleY = size.height / iSize.height * 0.4f;
+            float scaleX = size.width / iSize.width * 0.5f;
+            float scaleY = size.height / iSize.height * 0.5f;
             float scale = MIN(scaleX, scaleY);
             scale = MIN(scale, 1.0f);
             iSize = ccpMult(iSize, scale);
@@ -513,9 +529,9 @@ void CAButton::setControlState(CAControlState var)
             imageViewCenter.origin.x = size.width / 2;
             imageViewCenter.origin.y = size.height * 0.35f;
 
-            labelSize = size.height * 0.3f;
+            labelSize = size.height * 0.25f;
             labelCenterOrigin.x = size.width / 2;
-            labelCenterOrigin.y = size.height * 0.8f;
+            labelCenterOrigin.y = size.height * 0.75f;
         }
         
         if (image)
@@ -614,6 +630,7 @@ void CAButton::interruptTouchState()
 	{
 		CC_BREAK_IF(m_bTouchClick == false);
 		m_bTouchClick = false;
+        CC_BREAK_IF(m_eControlState != CAControlStateHighlighted);
 		if (m_bAllowsSelected && m_bSelected)
         {
             this->setControlState(CAControlStateSelected);
@@ -632,7 +649,7 @@ bool CAButton::setTouchBegin(CCPoint point)
 
     if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
     {
-		m_bTouchClick = ((CCObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
+		((CCObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
     }
     
 	if (m_bTouchClick)

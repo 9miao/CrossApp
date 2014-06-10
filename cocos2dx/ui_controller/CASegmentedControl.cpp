@@ -49,6 +49,19 @@ CASegmentedControl* CASegmentedControl::createWithFrame(const CCRect& rect)
     return NULL;
 }
 
+CASegmentedControl* CASegmentedControl::createWithCenter(const CCRect& rect)
+{
+    CASegmentedControl* segmentedControl = new CASegmentedControl();
+    if (segmentedControl && segmentedControl->initWithCenter(rect))
+    {
+        segmentedControl->autorelease();
+        return segmentedControl;
+    }
+    
+    CC_SAFE_DELETE(segmentedControl);
+    return NULL;
+}
+
 bool CASegmentedControl::initWithFrame(const CCRect& rect)
 {
     if (!CAControl::init())
@@ -57,6 +70,41 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
     }
     
     this->setFrame(rect);
+    m_selectedIndex = 0;
+    
+    this->removeAllSegments();
+    int totalCount = 2;
+    const float elemWidth = rect.size.width / totalCount;
+    m_itemSize = CCSizeMake(elemWidth, rect.size.height);
+    CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
+    for (int i = 0; i < totalCount; ++i)
+    {
+        CAButton *btn = this->createDefaultSegment();
+        if (btn)
+        {
+            btn->setFrame(elemFrame);
+            char tmp[8] = {0};
+            snprintf(tmp, 8, "%d", i);
+            btn->setTitleForState(CAControlStateNormal, tmp);
+            btn->setTitleForState(CAControlStateSelected, tmp);
+            btn->setTitleForState(CAControlStateHighlighted, tmp);
+            m_segments.push_back(btn);
+            this->addSubview(btn);
+            btn->setControlState((m_selectedIndex == i) ? CAControlStateSelected : CAControlStateNormal);
+        }
+        elemFrame.origin.x += elemWidth;
+    }
+    return true;
+}
+
+bool CASegmentedControl::initWithCenter(const CCRect& rect)
+{
+    if (!CAControl::init())
+    {
+        return false;
+    }
+    
+    this->setCenter(rect);
     m_selectedIndex = 0;
     
     this->removeAllSegments();
@@ -259,29 +307,48 @@ CAButton* CASegmentedControl::createDefaultSegment()
         newBtn->setBackGroundViewForState(CAControlStateSelected, selectedBG);
         newBtn->setBackGroundViewForState(CAControlStateHighlighted, highlightedBG);
         newBtn->setAllowsSelected(true);
+        newBtn->setTouchEnabled(false);
     }
     return newBtn;
 }
 
-void CASegmentedControl::setSelectedAtIndex(int index)
+void CASegmentedControl::setHighlightedAtIndex(int index)
 {
     if (!this->indexIsValid(index))
     {
         return ;
     }
-    if (m_selectedIndex != index) {
-        CAButton *oldSelectedButton = m_segments.at(m_selectedIndex);
-        if (oldSelectedButton)
+    
+    std::vector<CAButton*>::iterator itr;
+    for (itr=m_segments.begin(); itr!=m_segments.end(); itr++)
+    {
+        if (itr - m_segments.begin() == index)
         {
-            oldSelectedButton->setControlStateNormal();
+            (*itr)->setControlStateHighlighted();
         }
-        
-        CAButton *newSelectedButton = m_segments.at(index);
-        if (newSelectedButton)
+        else
         {
-            newSelectedButton->setControlStateSelected();
+            (*itr)->setControlStateNormal();
         }
-        
+    }
+}
+
+void CASegmentedControl::setSelectedHighlighted()
+{
+    int index = 0;
+    
+    std::vector<CAButton*>::iterator itr;
+    for (itr=m_segments.begin(); itr!=m_segments.end(); itr++)
+    {
+        if ((*itr)->getControlState() == CAControlStateHighlighted)
+        {
+            (*itr)->setControlStateSelected();
+            index = (int)(itr - m_segments.begin());
+        }
+    }
+    
+    if (m_selectedIndex != index)
+    {
         m_selectedIndex = index;
         
         if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
@@ -301,8 +368,8 @@ void CASegmentedControl::layoutSubviews()
     const CCSize controlSize = this->getBounds().size;
     const int totalCount = this->getItemCount();
     const float elemWidth = controlSize.width / totalCount;
-    m_itemSize = CCSizeMake(elemWidth, controlSize.height);
-    CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
+    m_itemSize = CCSize(elemWidth, controlSize.height);
+    CCRect elemFrame = CCRect(0, 0, m_itemSize.width, m_itemSize.height);
     
     for (int i = 0; i < totalCount; ++i)
     {
@@ -321,17 +388,22 @@ bool CASegmentedControl::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    if (!this->isVisible())
+    if (getBounds().containsPoint(point))
     {
-        return false;
+        this->setHighlightedAtIndex((int)(point.x / m_itemSize.width));
     }
-    
-    if (!this->getBounds().containsPoint(point))
-    {
-        return false;
-    }
-    
     return true;
+}
+
+void CASegmentedControl::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
+{
+    CCPoint point = pTouch->getLocation();
+    point = this->convertToNodeSpace(point);
+    
+    if (getBounds().containsPoint(point))
+    {
+        this->setHighlightedAtIndex((int)(point.x / m_itemSize.width));
+    }
 }
 
 void CASegmentedControl::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
@@ -339,7 +411,7 @@ void CASegmentedControl::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    this->setSelectedAtIndex((int)(point.x / m_itemSize.width));
+    this->setSelectedHighlighted();
 }
 
 void CASegmentedControl::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)

@@ -187,16 +187,7 @@ public:
 	void setBounds(const CCRect& rect);
 
     CCRect getBounds() const;
-    
-    
-    /// @} end of image methods
-    
-    /// @{
-    /// @name Animation methods
-    /**
-     * Changes the display frame with animation name and index.
-     * The animation name will be get from the CCAnimationCache
-     */
+
     virtual void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
     /// @}
     

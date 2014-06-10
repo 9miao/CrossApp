@@ -46,10 +46,9 @@ void ViewController::viewDidLoad()
     this->getView()->setColor(color);
 }
 
-bool ViewController::setAllowsSelection(CAButton* btn, CCPoint point)
+void ViewController::setAllowsSelection(CAButton* btn, CCPoint point)
 {
     CCLog("%f   %f", point.x, point.y);
-    return true;
 }
 
 void ViewController::viewDidUnload()
@@ -61,7 +60,7 @@ void ViewController::touchUpInSide()
 {
     ViewController* viewController2 = new ViewController();
     viewController2->init();
-    viewController2->setTabBarItem(CATabBarItem::create("222", CAImage::create("e.png"), 101));
+    viewController2->setTabBarItem(CATabBarItem::create("222", CAImage::create("e.png")));
     viewController2->setNavigationBarItem(CANavigationBarItem::create(CCString::createWithFormat("ViewController %d", 0)->getCString()));
     viewController2->setTitle("view2");
 

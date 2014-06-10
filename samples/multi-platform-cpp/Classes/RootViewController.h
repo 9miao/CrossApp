@@ -28,6 +28,10 @@ public CAScrollViewDelegate
     
 public:
     
+    RootViewController();
+    
+    virtual ~RootViewController();
+    
     virtual void viewDidLoad();
     
     virtual void viewDidUnload();
@@ -60,9 +64,9 @@ public:
     
     virtual void scrollViewDidEndDragging(CAScrollView* view);
     
-    bool setAllowsSelection(CAControl* sender, CCPoint point);
+    void setAllowsSelection(CAControl* sender, CCPoint point);
     
-	bool setAllowsMultipleSelection(CAControl* sender, CCPoint point);
+	void setAllowsMultipleSelection(CAControl* sender, CCPoint point);
 };
 
 

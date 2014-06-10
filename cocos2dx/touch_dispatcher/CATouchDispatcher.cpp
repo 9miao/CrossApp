@@ -222,9 +222,7 @@ void CATouchController::touchEnded()
         && CAScheduler::isScheduled(schedule_selector(CATouchController::passingTouchesViewCache), this))
     {
         CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViewCache), this);
-        
-        CLEAR_VECTOR(m_vWillTouchesViewCache);
-        TOUCHES_VIEW_SEL(ccTouchBegan);
+        this->passingTouchesViewCache();
     }
     
     TOUCHES_VIEW_SEL(ccTouchEnded);
@@ -236,9 +234,7 @@ void CATouchController::touchCancelled()
         && CAScheduler::isScheduled(schedule_selector(CATouchController::passingTouchesViewCache), this))
     {
         CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViewCache), this);
-        
-        CLEAR_VECTOR(m_vWillTouchesViewCache);
-        TOUCHES_VIEW_SEL(ccTouchBegan);
+        this->passingTouchesViewCache();
     }
     
     TOUCHES_VIEW_SEL(ccTouchCancelled);

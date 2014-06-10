@@ -37,8 +37,8 @@ void FirstViewController::viewDidLoad()
     this->getView()->addSubview(slider);
     slider->addTarget(this, CAControl_selector(FirstViewController::updateSlider));
     
-    CCRect segmentedControl_rect = CCRect(size.width * 0.1f, height * 2 + 60, size.width * 0.8f, height);
-    CASegmentedControl* segmentedControl = CASegmentedControl::createWithFrame(segmentedControl_rect);
+    CCRect segmentedControl_rect = CCRect(size.width/2, height * 2 + 60, size.width * 0.8f, height);
+    CASegmentedControl* segmentedControl = CASegmentedControl::createWithCenter(segmentedControl_rect);
     segmentedControl->insertSegmentWithTitle("2", 2, CAControlStateAll);
     segmentedControl->insertSegmentWithTitle("3", 3, CAControlStateAll);
     segmentedControl->insertSegmentWithTitle("4", 4, CAControlStateAll);
@@ -53,7 +53,7 @@ void FirstViewController::viewDidUnload()
 
 }
 
-bool FirstViewController::updateSlider(cocos2d::CAControl *sender, cocos2d::CCPoint point)
+void FirstViewController::updateSlider(cocos2d::CAControl *sender, cocos2d::CCPoint point)
 {
     CASlider* slider = (CASlider*)sender;
     
@@ -61,7 +61,4 @@ bool FirstViewController::updateSlider(cocos2d::CAControl *sender, cocos2d::CCPo
     sprintf(str, "%.6f", slider->getValue());
     
     label->setText(str);
-    
-    return false;
 }
-

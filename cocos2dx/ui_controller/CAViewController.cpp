@@ -35,8 +35,8 @@ CAViewController::~CAViewController()
 {
     m_pView->setViewDelegate(NULL);
     CC_SAFE_RELEASE_NULL(m_pView);
-    CC_SAFE_DELETE(m_pTabBarItem);
-    CC_SAFE_DELETE(m_pNavigationBarItem);
+    CC_SAFE_RELEASE_NULL(m_pTabBarItem);
+    CC_SAFE_RELEASE_NULL(m_pNavigationBarItem);
     CCDirector* pDirector = CCDirector::sharedDirector();
     if (m_bKeypadEnabled)
     {
@@ -262,6 +262,66 @@ void CANavigationController::reshapeViewRectDidFinish()
     this->update(0);
 }
 
+void CANavigationController::replaceViewController(cocos2d::CAViewController *viewController, bool animated)
+{
+    if (this->getView()->getSuperview() == NULL)
+    {
+        return;
+    }
+    
+    if (m_pContainer->getActionByTag(0))
+    {
+        return;
+    }
+    
+    float x = m_pContainer->getFrame().size.width;
+    
+    CAViewController* lastViewController = m_pViewControllers.back();
+    lastViewController->getView()->setFrame(CCRect(-x, 0, 0, 0));
+    viewController->retain();
+    viewController->m_pNavigationController = this;
+    m_pViewControllers.insert(m_pViewControllers.end()-1, viewController);
+    viewController->addViewFromSuperview(m_pContainer);
+    
+    if (animated)
+    {
+        m_pContainer->stopAllActions();
+        m_pContainer->setFrame(CCRect(x, m_pContainer->getFrame().origin.y, 0, 0));
+        
+        CCDelayTime* delayTime = CCDelayTime::create(0.2f);
+        CCMoveBy* moveBy = CCMoveBy::create(0.4f, CCPoint(-x, 0));
+        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveBy);
+        CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::replaceViewControllerFinish));
+        CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);
+        m_pContainer->runAction(actions);
+        actions->setTag(0);
+    }
+    else
+    {
+        this->replaceViewControllerFinish();
+    }
+
+}
+
+void CANavigationController::replaceViewControllerFinish()
+{
+    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
+    
+    CAViewController* lastViewController = m_pViewControllers.back();
+    m_pViewControllers.pop_back();
+    m_pNavigationBar->popItem();
+    lastViewController->removeViewFromSuperview();
+    lastViewController->autorelease();
+    
+    CAViewController* viewController = m_pViewControllers.back();
+    
+    if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
+    {
+        viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
+    }
+    m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
+}
+
 void CANavigationController::pushViewController(CAViewController* viewController, bool animated)
 {
     if (this->getView()->getSuperview() == NULL)
@@ -281,11 +341,6 @@ void CANavigationController::pushViewController(CAViewController* viewController
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
-    if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
-    {
-        viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
-    }
-    m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     viewController->addViewFromSuperview(m_pContainer);
     
     if (animated)
@@ -310,6 +365,14 @@ void CANavigationController::pushViewController(CAViewController* viewController
 void CANavigationController::pushViewControllerFinish()
 {
     m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
+    
+    CAViewController* viewController = m_pViewControllers.back();
+    
+    if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
+    {
+        viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
+    }
+    m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     
     CAViewController* lastViewController = m_pViewControllers.at(m_pViewControllers.size() - 2);
     lastViewController->getView()->removeFromSuperview();
@@ -523,7 +586,8 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
             if (view->getTabBarItem() == NULL)
             {
                 const char* title = CCString::createWithFormat("item%d",i)->getCString();
-                CATabBarItem* item = CATabBarItem::create(title, NULL, i);
+                CATabBarItem* item = CATabBarItem::create(title, NULL);
+                item->setTag(i);
                 view->setTabBarItem(item);
             }
             items.push_back(view->getTabBarItem());

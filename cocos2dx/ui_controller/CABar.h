@@ -12,6 +12,7 @@
 #include <iostream>
 #include "sprite_nodes/CAView.h"
 #include "CAButton.h"
+#include "CASegmentedControl.h"
 #include "CABarItem.h"
 #include <vector>
 NS_CC_BEGIN
@@ -37,10 +38,6 @@ public:
     
     void popItem();
     
-    void insertRightView(CAView* view);
-    
-    void removeRightView();
-    
 public:
     
     CANavigationBar();
@@ -53,7 +50,11 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    CC_SYNTHESIZE(CAImage*, m_pBackGroundImage, BackGroundImage);
+    CC_SYNTHESIZE_RETAIN(CAButton*, m_pLeftButton, LeftButton);
+    
+    CC_SYNTHESIZE_RETAIN(CAButton*, m_pRightButton, RightButton);
+    
+    CC_SYNTHESIZE_RETAIN(CAImage*, m_pBackGroundImage, BackGroundImage);
     
     CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
     
@@ -63,19 +64,21 @@ protected:
     
     void showTitle();
     
-    void showBackButton();
+    void showLeftButton();
+    
+    void showRightButton();
     
     bool goBack(CAControl* btn, CCPoint point);
+    
+    void updateLeftButton();
+    
+    void updateRightButton();
     
 protected:
     
     CAView* m_pBackGround;
     
     CAView* m_pTitle;
-    
-    CAButton* m_pBackButton;
-    
-    CAView* m_pRightView;
     
     std::vector<CANavigationBarItem*> m_pItems;
 };
@@ -111,11 +114,11 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    CC_SYNTHESIZE(CAImage*, m_pBackGroundImage, BackGroundImage);
+    CC_SYNTHESIZE_RETAIN(CAImage*, m_pBackGroundImage, BackGroundImage);
     
-    CC_SYNTHESIZE(CAImage*, m_pSelectedBackGroundImage, SelectedBackGroundImage);
+    CC_SYNTHESIZE_RETAIN(CAImage*, m_pSelectedBackGroundImage, SelectedBackGroundImage);
     
-    CC_SYNTHESIZE(CAImage*, m_pSelectedIndicatorImage, SelectedIndicatorImage);
+    CC_SYNTHESIZE_RETAIN(CAImage*, m_pSelectedIndicatorImage, SelectedIndicatorImage);
     
     CC_SYNTHESIZE(unsigned int, m_nMaxShowCount, MaxShowCount)
     

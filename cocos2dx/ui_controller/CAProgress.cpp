@@ -56,7 +56,6 @@ bool CAProgress::init()
         return false;
     }
     return true;
-
 }
 
 void CAProgress::onEnterTransitionDidFinish()

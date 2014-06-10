@@ -192,7 +192,6 @@ CASwitch* CASwitch::createWithFrame(const CCRect& rect)
 
 CASwitch* CASwitch::createWithCenter(const CCRect& rect)
 {
-    
     CASwitch* switchControl = new CASwitch();
     
     if (switchControl && switchControl->initWithCenter(rect))

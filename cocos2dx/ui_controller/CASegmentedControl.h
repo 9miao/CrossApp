@@ -21,7 +21,9 @@ class CAImageView;
 class CC_DLL CASegmentedControl : public CAControl
 {
 public:
+    
     CASegmentedControl();
+    
     virtual ~CASegmentedControl();
     
     virtual void onExitTransitionDidStart();
@@ -30,8 +32,13 @@ public:
     
     static CASegmentedControl* createWithFrame(const CCRect& rect);
     
+    static CASegmentedControl* createWithCenter(const CCRect& rect);
+    
 public:
+    
     bool initWithFrame(const CCRect& rect);
+
+    bool initWithCenter(const CCRect& rect);
     
     virtual bool insertSegmentWithTitle(const char* title, int index, CAControlState controlState);
     virtual bool insertSegmentWithBackgroundImage(CAImage *image, int index, CAControlState controlState);
@@ -50,20 +57,25 @@ public:
     virtual CAButton *createDefaultSegment();
     
     CC_SYNTHESIZE_READONLY(int, m_selectedIndex, selectedIndex);       // default 0
-    CC_SYNTHESIZE_READONLY(CCSize, m_itemSize, ItemSize);       
-    void setSelectedAtIndex(int index);
+    CC_SYNTHESIZE_READONLY(CCSize, m_itemSize, ItemSize);
+    void setHighlightedAtIndex(int index);
+    void setSelectedHighlighted();
     int getItemCount() const;
     void layoutSubviews();
     
 protected:
+    
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
     
 private:
+
     bool indexIsValid(int index);
     
 protected:
+    
     std::vector<CAButton *> m_segments;
     CAImageView *m_backGroundImage;
 };

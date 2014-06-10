@@ -29,7 +29,7 @@ public:
     
     CCLabelTTF* ttf;
     
-    bool setAllowsSelection(CAButton* btn, CCPoint point);
+    void setAllowsSelection(CAButton* btn, CCPoint point);
 };
 
 #endif /* defined(__project__ViewController__) */

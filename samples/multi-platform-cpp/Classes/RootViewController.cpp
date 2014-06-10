@@ -8,14 +8,20 @@
 
 #include "RootViewController.h"
 
+RootViewController::RootViewController()
+{
 
+}
+
+RootViewController::~RootViewController()
+{
+
+}
 
 void RootViewController::viewDidLoad()
 {
     
     CCRect rect = this->getView()->getBounds();
-    
-    CCLog("viewDidLoad= %f, %f", rect.size.width, rect.size.height);
     
     CCRect tableRect = rect;
     tableRect.size.height = rect.size.height - 80;
@@ -66,7 +72,7 @@ void RootViewController::viewDidLoad()
     }
     
     switch_ = CASwitch::createWithFrame(CCRect(10, tableRect.size.height+10, 120, 60));
-    switch_->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection), CAControlEventTouchUpInSide);
+    switch_->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection));
     this->getView()->addSubview(switch_);
     
     //CAScheduler::schedule(schedule_selector(RootViewController::updateProgress), this, 5, false);
@@ -74,7 +80,8 @@ void RootViewController::viewDidLoad()
 
 void RootViewController::viewDidUnload()
 {
-
+    button_->removeTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
+    switch_->removeTarget(this, CAControl_selector(RootViewController::setAllowsSelection));
 }
 
 void RootViewController::reshapeViewRectDidFinish()
@@ -92,7 +99,7 @@ void RootViewController::reshapeViewRectDidFinish()
     
 }
 
-bool RootViewController::setAllowsSelection(CAControl* sender, CCPoint point)
+void RootViewController::setAllowsSelection(CAControl* sender, CCPoint point)
 {
     CASwitch* switch_ = (CASwitch*)sender;
     
@@ -106,12 +113,9 @@ bool RootViewController::setAllowsSelection(CAControl* sender, CCPoint point)
     }
     
     tableView->reloadData();
-    
-    
-    return true;
 }
 
-bool RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint point)
+void RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint point)
 {
 	CAButton* btn = (CAButton*)sender;
 //    
@@ -137,8 +141,6 @@ bool RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint p
         this->getNavigationController()->getTabBarController()->setTabBarHidden(true, true);
         this->getNavigationController()->setNavigationBarHidden(true, true);
     }
-    
-    return true;
 }
 
 void RootViewController::scrollViewDidEndDragging(CAScrollView* view)
@@ -151,16 +153,19 @@ void RootViewController::scrollViewDidEndDragging(CAScrollView* view)
 
 void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-//    char s[32];
-//    sprintf(s, "viewController = %ld",this->getNavigationController()->getViewControllerCount());
-//    
-//    RootViewController* viewController = new RootViewController();
-//    viewController->init();
-//    viewController->setNavigationBarItem(CANavigationBarItem::create(s));
-//    viewController->setTitle("view1");
-//    
-//    this->getNavigationController()->pushViewController(viewController, true);
-//    viewController->autorelease();
+    char s[32];
+    sprintf(s, "viewController = %ld",this->getNavigationController()->getViewControllerCount());
+    
+    CANavigationBarItem* item = CANavigationBarItem::create(s);
+    item->setRightButtonItem(CABarButtonItem::create("<返回", CAImage::create("2.jpg"), NULL));
+    
+    RootViewController* viewController = new RootViewController();
+    viewController->init();
+    viewController->setNavigationBarItem(item);
+    viewController->setTitle("view1");
+    
+    this->getNavigationController()->replaceViewController(viewController, true);
+    viewController->autorelease();
     
     CCLog("selected = %d %d",section, row);
 }
@@ -192,7 +197,8 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     CAButton* btn = CAButton::createWithCenter(CCRect(size.width - 100, 60, 120, 100), CAButtonTypeRoundedRect);
     btn->setTitleForState(CAControlStateAll, "button");
     cell->addSubview(btn);
-    
+    btn->setAllowsSelected(true);
+    btn->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
 //    CALabel* label = CALabel::create(CCRect(0, 0, 600, 100));
 //    label->setOpacity(128);
 //    label->setVerticalTextAlignmet(kCCVerticalTextAlignmentCenter);

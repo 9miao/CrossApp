@@ -22,7 +22,7 @@ typedef enum
     CAControlEventTouchMovedOutSide,
     CAControlEventTouchUpInSide,
     CAControlEventTouchUpSide,
-    CAControlEventTouchValueChanged,
+    CAControlEventTouchValueChanged
 }CAControlEvents;
 
 typedef enum
@@ -36,7 +36,7 @@ typedef enum
 
 class CAControl;
 
-typedef bool (CCObject::*SEL_CAControl)(CAControl*, CCPoint);
+typedef void (CCObject::*SEL_CAControl)(CAControl*, CCPoint);
 #define CAControl_selector(_SELECTOR) (SEL_CAControl)(&_SELECTOR)
 
 class CC_DLL CAControl: public CAView
@@ -63,6 +63,8 @@ public:
     virtual void addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
     
     virtual void removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
+    
+    virtual void removeAllTargets();
     
     CC_PROPERTY_IS(bool, m_bTouchEnabled, TouchEnabled);
     

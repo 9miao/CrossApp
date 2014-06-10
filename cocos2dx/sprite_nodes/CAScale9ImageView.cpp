@@ -359,11 +359,11 @@ void CAScale9ImageView::updatePositions()
 }
 
 
-bool CAScale9ImageView::initWithImage(CAImage* texture, CCRect rect, CCRect capInsets)
+bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect, CCRect capInsets)
 {
-    if (texture)
+    if (image)
     {
-        this->updateWithImage(texture, rect, capInsets);
+        this->updateWithImage(image, rect, capInsets);
         this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     }
     this->m_positionsAreDirty = true;
@@ -377,10 +377,10 @@ bool CAScale9ImageView::initWithImage(CAImage* texture, CCRect rect, CCRect capI
 	return true;
 }
 
-CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* texture, CCRect rect, CCRect capInsets)
+CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image, CCRect rect, CCRect capInsets)
 {
 	CAScale9ImageView* pReturn = new CAScale9ImageView();
-	if (pReturn && pReturn->initWithImage(texture, rect, capInsets))
+	if (pReturn && pReturn->initWithImage(image, rect, capInsets))
 	{
 		pReturn->autorelease();
 		return pReturn;
@@ -389,16 +389,16 @@ CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* texture, CCRect r
 	return NULL;
 }
 
-bool CAScale9ImageView::initWithImage(CAImage* texture, CCRect rect)
+bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect)
 {
-	bool pReturn = this->initWithImage(texture, rect, CCRectZero);
+	bool pReturn = this->initWithImage(image, rect, CCRectZero);
 	return pReturn;
 }
 
-CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* texture, CCRect rect)
+CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image, CCRect rect)
 {
 	CAScale9ImageView* pReturn = new CAScale9ImageView();
-	if (pReturn && pReturn->initWithImage(texture, rect))
+	if (pReturn && pReturn->initWithImage(image, rect))
 	{
 		pReturn->autorelease();
 		return pReturn;
@@ -407,16 +407,16 @@ CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* texture, CCRect r
 	return NULL;
 }
 
-bool CAScale9ImageView::initWithImage(CCRect capInsets, CAImage* texture)
+bool CAScale9ImageView::initWithImage(CCRect capInsets, CAImage* image)
 {
-	bool pReturn = this->initWithImage(texture, CCRectZero, capInsets);
+	bool pReturn = this->initWithImage(image, CCRectZero, capInsets);
 	return pReturn;
 }
 
-CAScale9ImageView* CAScale9ImageView::createWithImage(CCRect capInsets, CAImage* texture)
+CAScale9ImageView* CAScale9ImageView::createWithImage(CCRect capInsets, CAImage* image)
 {
 	CAScale9ImageView* pReturn = new CAScale9ImageView();
-	if (pReturn && pReturn->initWithImage(capInsets, texture))
+	if (pReturn && pReturn->initWithImage(capInsets, image))
 	{
 		pReturn->autorelease();
 		return pReturn;
@@ -425,16 +425,16 @@ CAScale9ImageView* CAScale9ImageView::createWithImage(CCRect capInsets, CAImage*
 	return NULL;
 }
 
-bool CAScale9ImageView::initWithImage(CAImage* texture)
+bool CAScale9ImageView::initWithImage(CAImage* image)
 {
-	bool pReturn = this->initWithImage(texture, CCRectZero);
+	bool pReturn = this->initWithImage(image, CCRectZero);
 	return pReturn;
 }
 
-CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* texture)
+CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image)
 {
 	CAScale9ImageView* pReturn = new CAScale9ImageView();
-	if (pReturn && pReturn->initWithImage(texture))
+	if (pReturn && pReturn->initWithImage(image))
 	{
 		pReturn->autorelease();
 		return pReturn;

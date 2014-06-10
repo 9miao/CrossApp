@@ -1,4 +1,21 @@
 
+####CrossApp alpha 0.1.8 更新内容：  
+
+#####1.添加CANavigationController左右button的定制
+
+#####2.CATextField添加win32输入功能
+
+#####3.添加CANavigationController 替换当前CAViewController的功能
+
+#####4.修复触摸分发系统在可滑动容器上快速点击按钮无法触发按钮事件的bug
+
+#####6.修复在win32由于触摸事件造成的偶尔崩溃的bug
+
+#####5.优化CASegmentedControl
+
+#####6.优化CANavigationBar在竖屏的高度及布局。
+
+
 ####CrossApp alpha 0.1.7 更新内容：  
 
 #####1.修复CATextField在 win32 与mac平台编译报错的问题

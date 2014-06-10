@@ -21,18 +21,20 @@ NS_CC_BEGIN
 
 CANavigationBar::CANavigationBar()
 :m_pBackGround(NULL)
-,m_pBackGroundImage(NULL)
 ,m_pTitle(NULL)
-,m_pBackButton(NULL)
-,m_pRightView(NULL)
+,m_pLeftButton(NULL)
+,m_pRightButton(NULL)
 ,m_pDelegate(NULL)
+,m_pBackGroundImage(NULL)
 {
 
 }
 
 CANavigationBar::~CANavigationBar()
 {
-
+    CC_SAFE_RELEASE_NULL(m_pBackGroundImage);
+    CC_SAFE_RELEASE_NULL(m_pLeftButton);
+    CC_SAFE_RELEASE_NULL(m_pRightButton);
 }
 
 bool CANavigationBar::init()
@@ -43,7 +45,7 @@ bool CANavigationBar::init()
     }
     this->setOpacity(0);
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    this->setContentSize(CCSize(winSize.width, MIN(winSize.width, winSize.height) * 0.1f));
+    this->setContentSize(CCSize(winSize.width, MIN(winSize.width * 0.15f, winSize.height * 0.1f)));
     
     return true;
 }
@@ -51,14 +53,16 @@ bool CANavigationBar::init()
 void CANavigationBar::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
-    
+
     if (m_pBackGround == NULL)
     {
         this->showBackGround();
         
         this->showTitle();
         
-        this->showBackButton();
+        this->showLeftButton();
+        
+        this->showRightButton();
     }
 }
 
@@ -77,10 +81,10 @@ void CANavigationBar::showBackGround()
     
     if (m_pBackGroundImage == NULL)
     {
-        m_pBackGroundImage = CAImage::create("navigationController_bg.png");
+        this->setBackGroundImage(CAImage::create("navigationController_bg.png"));
     }
 
-    m_pBackGround = CAScale9ImageView::createWithImage(m_pBackGroundImage);
+    m_pBackGround = CAScale9ImageView::createWithImage(this->getBackGroundImage());
     ((CAScale9ImageView*)m_pBackGround)->setPreferredSize(m_obContentSize);
     m_pBackGround->setFrame(CCRectZero);
     this->insertSubview(m_pBackGround, -1);
@@ -90,7 +94,7 @@ void CANavigationBar::showTitle()
 {
     if (m_pTitle == NULL)
     {
-        int fontSize = this->getBounds().size.height * 0.7f;
+        int fontSize = this->getBounds().size.height * 0.4f;
         
         m_pTitle = CCLabelTTF::create("", "fonts/arial.ttf", fontSize);
         m_pTitle->setColor(ccWHITE);
@@ -103,7 +107,7 @@ void CANavigationBar::showTitle()
     {
         ((CCLabelTTF*)m_pTitle)->setString(m_pItems.back()->getTitle().c_str());
         
-        float width = this->getBounds().size.width - this->getBounds().size.height * 4;
+        float width = this->getBounds().size.width - this->getBounds().size.height * 3;
         
         if (m_pTitle->getFrame().size.width > width)
         {
@@ -114,53 +118,130 @@ void CANavigationBar::showTitle()
     }
 }
 
-void CANavigationBar::showBackButton()
+void CANavigationBar::showLeftButton()
 {
-    if (m_pBackButton == NULL)
+    if (m_pLeftButton == NULL)
     {
         CCRect rect = this->getBounds();
-        rect.origin.x = rect.size.height * 0.8f;
-        rect.origin.y = rect.size.height * 0.5f;
-        rect.size.width = rect.size.height * 2;
+        rect.size.width = rect.size.height * 1.414f;
         
-        m_pBackButton = CAButton::createWithCenter(rect, CAButtonTypeCustom);
-        m_pBackButton->setImageForState(CAControlStateNormal, CAImage::create("button_left.png"));
-        m_pBackButton->setImageColorForState(CAControlStateHighlighted, ccc3(255, 255, 200));
-        rect.size.width = rect.size.height = rect.size.height * 0.85f;
-        this->addSubview(m_pBackButton);
-        m_pBackButton->addTarget(this, CAControl_selector(CANavigationBar::goBack), CAControlEventTouchUpInSide);
+        m_pLeftButton = CAButton::createWithFrame(rect, CAButtonTypeCustom);
+        this->addSubview(m_pLeftButton);
     }
     
-    if (m_pItems.size() <= 1)
+    this->updateLeftButton();
+}
+
+void CANavigationBar::showRightButton()
+{
+    if (m_pRightButton == NULL)
     {
-        m_pBackButton->setVisible(false);
+        CCRect rect = this->getBounds();
+        rect.origin.x = rect.size.width - rect.size.height * 1.414f;
+        rect.size.width = rect.size.height * 1.414f;
+        
+        m_pRightButton = CAButton::createWithFrame(rect, CAButtonTypeCustom);
+        this->addSubview(m_pRightButton);
+    }
+    
+    this->updateRightButton();
+}
+
+void CANavigationBar::updateLeftButton()
+{
+    m_pLeftButton->removeAllTargets();
+    CABarButtonItem* buttonItem = m_pItems.back()->getLeftButtonItem();
+    
+    if (buttonItem)
+    {
+        m_pLeftButton->setTitleForState(CAControlStateNormal, buttonItem->getTitle());
+        m_pLeftButton->setTitleColorForState(CAControlStateNormal, ccWHITE);
+        m_pLeftButton->setTitleForState(CAControlStateHighlighted, buttonItem->getTitle());
+        m_pLeftButton->setTitleColorForState(CAControlStateHighlighted, ccc3(255, 255, 200));
+        m_pLeftButton->setImageForState(CAControlStateNormal, buttonItem->getImage());
+        if (buttonItem->getHighlightedImage())
+        {
+            m_pLeftButton->setImageForState(CAControlStateHighlighted, buttonItem->getHighlightedImage());
+        }
+        else
+        {
+            m_pLeftButton->setImageColorForState(CAControlStateHighlighted, ccc3(255, 255, 200));
+        }
     }
     else
     {
-        m_pBackButton->setVisible(true);
+        m_pLeftButton->setImageForState(CAControlStateNormal, CAImage::create("button_left.png"));
+        m_pLeftButton->setImageColorForState(CAControlStateHighlighted, ccc3(255, 255, 200));
+    }
+    
+    m_pLeftButton->setControlStateNormal();
+    
+    CCObject* target;
+    SEL_CAControl sel;
+    if (buttonItem && buttonItem->getTarget())
+    {
+        target = buttonItem->getTarget();
+        sel = buttonItem->getSel();
+    }
+    else
+    {
+        target = this;
+        sel = CAControl_selector(CANavigationBar::goBack);
+    }
+    m_pLeftButton->addTarget(target, sel, CAControlEventTouchUpInSide);
+    
+    if (m_pItems.size() <= 1)
+    {
+        m_pLeftButton->setVisible(false);
+    }
+    else
+    {
+        m_pLeftButton->setVisible(true);
     }
 }
 
-void CANavigationBar::insertRightView(CAView* view)
+void CANavigationBar::updateRightButton()
 {
-    this->removeRightView();
+    m_pRightButton->removeAllTargets();
+    CABarButtonItem* buttonItem = m_pItems.back()->getRightButtonItem();
     
-    m_pRightView = view;
-    
-    CCRect rect = this->getBounds();
-    rect.origin.x = rect.size.width - rect.size.height * 0.8f;
-    rect.origin.y = rect.size.height * 0.5f;
-    rect.size.width = rect.size.height * 2;
-    
-    m_pRightView->setCenter(rect);
-}
-
-void CANavigationBar::removeRightView()
-{
-    if (m_pRightView)
+    if (buttonItem)
     {
-        m_pRightView->removeFromSuperview();
-        m_pRightView = NULL;
+        m_pRightButton->setTitleForState(CAControlStateNormal, buttonItem->getTitle());
+        m_pRightButton->setTitleColorForState(CAControlStateNormal, ccWHITE);
+        m_pRightButton->setTitleForState(CAControlStateHighlighted, buttonItem->getTitle());
+        m_pRightButton->setTitleColorForState(CAControlStateHighlighted, ccc3(255, 255, 200));
+        m_pRightButton->setImageForState(CAControlStateNormal, buttonItem->getImage());
+        if (buttonItem->getHighlightedImage())
+        {
+            m_pRightButton->setImageForState(CAControlStateHighlighted, buttonItem->getHighlightedImage());
+        }
+        else
+        {
+            m_pRightButton->setImageColorForState(CAControlStateHighlighted, ccc3(255, 255, 200));
+        }
+        
+        m_pRightButton->setControlStateNormal();
+        
+        CCObject* target;
+        SEL_CAControl sel;
+        if (buttonItem->getTarget())
+        {
+            target = buttonItem->getTarget();
+            sel = buttonItem->getSel();
+            m_pRightButton->addTarget(target, sel, CAControlEventTouchUpInSide);
+        }
+        
+        
+    }
+    
+    if (buttonItem)
+    {
+        m_pRightButton->setVisible(true);
+    }
+    else
+    {
+        m_pRightButton->setVisible(false);
     }
 }
 
@@ -170,7 +251,7 @@ bool CANavigationBar::goBack(CAControl* btn, CCPoint point)
     {
         m_pDelegate->navigationPopViewController(this, true);
     }
-
+    
 	return true;
 }
 
@@ -193,7 +274,8 @@ void CANavigationBar::pushItem(CANavigationBarItem* item)
     m_pItems.push_back(item);
     
     this->showTitle();
-    this->showBackButton();
+    this->showLeftButton();
+    this->showRightButton();
 }
 
 void CANavigationBar::popItem()
@@ -201,8 +283,12 @@ void CANavigationBar::popItem()
     m_pItems.back()->autorelease();
     m_pItems.pop_back();
     
-    this->showTitle();
-    this->showBackButton();
+    if (!m_pItems.empty())
+    {
+        this->showTitle();
+        this->showLeftButton();
+        this->showRightButton();
+    }
 }
 
 #pragma CATabBar
@@ -231,6 +317,10 @@ CATabBar::~CATabBar()
         (*itr)->autorelease();
     }
     m_pItems.clear();
+    
+    CC_SAFE_RELEASE_NULL(m_pBackGroundImage);
+    CC_SAFE_RELEASE_NULL(m_pSelectedBackGroundImage);
+    CC_SAFE_RELEASE_NULL(m_pSelectedIndicatorImage);
 }
 
 bool CATabBar::init(const std::vector<CATabBarItem*>& items)
@@ -513,13 +603,6 @@ bool CATabBar::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    if (!this->isVisible())
-    {
-        return false;
-    }
-    
-
-    
     return true;
 }
 
@@ -533,7 +616,10 @@ void CATabBar::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    this->setSelectedAtIndex((int)(point.x / m_cItemSize.width));
+    if (this->getBounds().containsPoint(point))
+    {
+        this->setSelectedAtIndex((int)(point.x / m_cItemSize.width));
+    }
 }
 
 void CATabBar::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
