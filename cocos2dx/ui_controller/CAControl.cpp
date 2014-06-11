@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-6.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #include "CAControl.h"
@@ -111,6 +111,7 @@ void CAControl::setBackGroundViewForState(CAControlState controlState, CAView *v
         this->removeSubview(m_pBackGroundView[controlState]);
         CC_SAFE_RELEASE(m_pBackGroundView[controlState]);
         m_pBackGroundView[controlState] = var;
+        this->setControlState(m_eControlState);
     }
 }
 

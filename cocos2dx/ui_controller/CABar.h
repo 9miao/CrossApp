@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-14.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #ifndef __cocos2dx__CABar__
@@ -50,9 +50,9 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    CC_SYNTHESIZE_RETAIN(CAButton*, m_pLeftButton, LeftButton);
+    CC_SYNTHESIZE_READONLY(CAButton*, m_pLeftButton, LeftButton);
     
-    CC_SYNTHESIZE_RETAIN(CAButton*, m_pRightButton, RightButton);
+    CC_SYNTHESIZE_READONLY(CAButton*, m_pRightButton, RightButton);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pBackGroundImage, BackGroundImage);
     
@@ -68,7 +68,7 @@ protected:
     
     void showRightButton();
     
-    bool goBack(CAControl* btn, CCPoint point);
+    void goBack(CAControl* btn, CCPoint point);
     
     void updateLeftButton();
     

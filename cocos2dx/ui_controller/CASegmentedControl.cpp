@@ -388,10 +388,8 @@ bool CASegmentedControl::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    if (getBounds().containsPoint(point))
-    {
-        this->setHighlightedAtIndex((int)(point.x / m_itemSize.width));
-    }
+    this->setHighlightedAtIndex((int)(point.x / m_itemSize.width));
+    
     return true;
 }
 

@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-12.
-//  Copyright (c) 2014年 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014年 http://9miao.com All rights reserved.
 //
 
 #include "CAView.h"
@@ -66,7 +66,6 @@ CAView::CAView(void)
 , m_nZOrder(0)
 , m_pSubviews(NULL)
 , m_pSuperview(NULL)
-, m_nTag(kCAViewTagInvalid)
 , m_pUserData(NULL)
 , m_pUserObject(NULL)
 , m_pShaderProgram(NULL)
@@ -77,7 +76,6 @@ CAView::CAView(void)
 , m_bInverseDirty(true)
 , m_bAdditionalTransformDirty(false)
 , m_bVisible(true)
-, m_bIgnoreAnchorPointForPosition(false)
 , m_bReorderChildDirty(false)
 , m_pComponentContainer(NULL)
 , _displayedOpacity(255)
@@ -758,33 +756,6 @@ void CAView::setSuperview(cocos2d::CAView *var)
     m_pSuperview = var;
 }
 
-/// isRelativeAnchorPoint getter
-bool CAView::isIgnoreAnchorPointForPosition()
-{
-    return m_bIgnoreAnchorPointForPosition;
-}
-/// isRelativeAnchorPoint setter
-void CAView::ignoreAnchorPointForPosition(bool newValue)
-{
-    if (newValue != m_bIgnoreAnchorPointForPosition)
-    {
-		m_bIgnoreAnchorPointForPosition = newValue;
-        this->updateDraw();
-	}
-}
-
-/// tag getter
-int CAView::getTag() const
-{
-    return m_nTag;
-}
-
-/// tag setter
-void CAView::setTag(int var)
-{
-    m_nTag = var;
-}
-
 /// userData getter
 void * CAView::getUserData()
 {
@@ -841,12 +812,6 @@ void CAView::setShaderProgram(CCGLProgram *pShaderProgram)
     m_pShaderProgram = pShaderProgram;
 }
 
-CCRect CAView::boundingBox()
-{
-    CCRect rect = CCRectMake(0, 0, m_obContentSize.width, m_obContentSize.height);
-    return CCRectApplyAffineTransform(rect, nodeToParentTransform());
-}
-
 void CAView::cleanup()
 {
     // actions
@@ -884,7 +849,7 @@ void CAView::childrenAlloc(void)
 
 CAView* CAView::getSubviewByTag(int aTag)
 {
-    CCAssert( aTag != kCAViewTagInvalid, "Invalid tag");
+    CCAssert( aTag != kCCObjectTagInvalid, "Invalid tag");
     
     if(m_pSubviews && m_pSubviews->count() > 0)
     {
@@ -957,7 +922,7 @@ void CAView::removeSubview(CAView* subview)
 
 void CAView::removeSubviewByTag(int tag)
 {
-    CCAssert( tag != kCAViewTagInvalid, "Invalid tag");
+    CCAssert( tag != kCCObjectTagInvalid, "Invalid tag");
     
     CAView *subview = this->getSubviewByTag(tag);
     
@@ -1444,12 +1409,6 @@ CCAffineTransform CAView::nodeToParentTransform(void)
         float x = m_obPosition.x;
         float y = height - m_obPosition.y;
         
-        if (m_bIgnoreAnchorPointForPosition)
-        {
-            x += m_obAnchorPointInPoints.x;
-            y -= m_obContentSize.height - m_obAnchorPointInPoints.y;
-        }
-        
         // Rotation values
 		// Change rotation code to handle X and Y
 		// If we skew with the exact same value for both x and y then we're simply just rotating
@@ -1609,12 +1568,6 @@ CCPoint CAView::convertToWorldSpaceAR(const CCPoint& nodePoint)
 {
     CCPoint pt = ccpAdd(nodePoint, m_obAnchorPointInPoints);
     return convertToWorldSpace(pt);
-}
-
-CCPoint CAView::convertToWindowSpace(const CCPoint& nodePoint)
-{
-    CCPoint worldPoint = this->convertToWorldSpace(nodePoint);
-    return CCDirector::sharedDirector()->convertToUI(worldPoint);
 }
 
 // convenience methods which take a CCTouch instead of CCPoint

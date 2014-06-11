@@ -1,5 +1,5 @@
 
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 
 #include "CAHttpClient.h"
 #include <cstdio>

@@ -3,7 +3,7 @@
 //  cocos2dx
 //
 //  Created by juguanhui on 14-5-29.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #ifndef cocos2dx_CASwitch_h

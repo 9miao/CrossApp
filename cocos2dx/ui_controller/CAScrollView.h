@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-23.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #ifndef __cocos2dx__CAScrollView__
@@ -54,6 +54,8 @@ public:
     void removeSubview(CAView* subview);
 
     void removeSubviewByTag(int tag);
+    
+    CCArray* getSubviews();
     
     void setContentOffset(CCPoint offset, bool animated);
     

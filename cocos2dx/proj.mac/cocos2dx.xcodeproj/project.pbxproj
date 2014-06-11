@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		041633FF1940AA8800EE3949 /* CAResponder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041633FD1940AA8800EE3949 /* CAResponder.cpp */; };
 		041634001940AA8800EE3949 /* CAResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = 041633FE1940AA8800EE3949 /* CAResponder.h */; };
+		042B4401194741CF001CD5B8 /* CAImageAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 042B43FF194741CF001CD5B8 /* CAImageAtlas.cpp */; };
+		042B4402194741CF001CD5B8 /* CAImageAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 042B4400194741CF001CD5B8 /* CAImageAtlas.h */; };
 		152DCD8E165614AB009B8D87 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152DCD8A165614AB009B8D87 /* CCDrawingPrimitives.cpp */; };
 		152DCD8F165614AB009B8D87 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 152DCD8B165614AB009B8D87 /* CCDrawingPrimitives.h */; };
 		152DCD90165614AB009B8D87 /* CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152DCD8C165614AB009B8D87 /* CCDrawNode.cpp */; };
@@ -301,6 +303,8 @@
 /* Begin PBXFileReference section */
 		041633FD1940AA8800EE3949 /* CAResponder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAResponder.cpp; sourceTree = "<group>"; };
 		041633FE1940AA8800EE3949 /* CAResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAResponder.h; sourceTree = "<group>"; };
+		042B43FF194741CF001CD5B8 /* CAImageAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageAtlas.cpp; sourceTree = "<group>"; };
+		042B4400194741CF001CD5B8 /* CAImageAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageAtlas.h; sourceTree = "<group>"; };
 		152DCD8A165614AB009B8D87 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
 		152DCD8B165614AB009B8D87 /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
 		152DCD8C165614AB009B8D87 /* CCDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawNode.cpp; sourceTree = "<group>"; };
@@ -1191,6 +1195,8 @@
 		B0B553A6193480470065053D /* images */ = {
 			isa = PBXGroup;
 			children = (
+				042B43FF194741CF001CD5B8 /* CAImageAtlas.cpp */,
+				042B4400194741CF001CD5B8 /* CAImageAtlas.h */,
 				B0B553A7193480470065053D /* CAImage.cpp */,
 				B0B553A8193480470065053D /* CAImage.h */,
 				B0B553A9193480470065053D /* CAImageCache.cpp */,
@@ -1373,6 +1379,7 @@
 				37EEEC08175DDF83003C1193 /* CCComponentContainer.h in Headers */,
 				B020AF7A1929DE41009FFA81 /* CCIMEDispatcher.h in Headers */,
 				041634001940AA8800EE3949 /* CAResponder.h in Headers */,
+				042B4402194741CF001CD5B8 /* CAImageAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1551,6 +1558,7 @@
 				37EEEC05175DDF83003C1193 /* CCComponent.cpp in Sources */,
 				37EEEC07175DDF83003C1193 /* CCComponentContainer.cpp in Sources */,
 				041633FF1940AA8800EE3949 /* CAResponder.cpp in Sources */,
+				042B4401194741CF001CD5B8 /* CAImageAtlas.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

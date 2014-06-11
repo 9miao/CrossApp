@@ -34,18 +34,18 @@ void RootViewController::viewDidLoad()
     tableView->release();
     
     CAScrollView* scroll = new CAScrollView();
-    scroll->initWithFrame(CCRect(0, 0, rect.size.width, 400));
-    scroll->setViewSize(CCSize(rect.size.width * 3, 400));
+    scroll->initWithFrame(CCRect(0, 0, rect.size.width, rect.size.width * 0.6));
+    scroll->setViewSize(CCSize(rect.size.width * 3, rect.size.width * 0.6));
     scroll->setBounceVertical(false);
     scroll->setShowsVerticalScrollIndicator(false);
     scroll->setScrollViewDelegate(this);
-    tableView->setTableHeaderHeight(400);
+    tableView->setTableHeaderHeight(rect.size.width * 0.6);
     tableView->setTableHeaderView(scroll);
     
     for (int i=0; i<3; i++)
     {
         CAImageView* image = CAImageView::createWithImage(CAImage::create("2.jpg"));
-        image->setFrame(CCRect(i * rect.size.width, 0, rect.size.width, 400));
+        image->setFrame(CCRect(i * rect.size.width, 0, rect.size.width, rect.size.width * 0.6));
         scroll->addSubview(image);
     }
     
@@ -157,7 +157,7 @@ void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
     sprintf(s, "viewController = %ld",this->getNavigationController()->getViewControllerCount());
     
     CANavigationBarItem* item = CANavigationBarItem::create(s);
-    item->setRightButtonItem(CABarButtonItem::create("<返回", CAImage::create("2.jpg"), NULL));
+    item->setRightButtonItem(CABarButtonItem::create("<返回", NULL, NULL));
     
     RootViewController* viewController = new RootViewController();
     viewController->init();

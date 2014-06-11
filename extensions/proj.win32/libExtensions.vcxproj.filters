@@ -25,6 +25,12 @@
     <Filter Include="other\CALocation">
       <UniqueIdentifier>{ae036374-c639-48e9-9402-573f93af97e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{231d1242-516f-4183-86f7-020feb7befd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\lib_json">
+      <UniqueIdentifier>{3bdcfa22-2dcc-4a54-878c-1fe9a1076b88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\network\HttpClient.cpp">
@@ -50,6 +56,21 @@
     </ClCompile>
     <ClCompile Include="..\other\CALocation\wp8\CALocationManager.cpp">
       <Filter>other\CALocation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Json\CSContentJsonDictionary.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Json\DictionaryHelper.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Json\lib_json\json_reader.cpp">
+      <Filter>json\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Json\lib_json\json_value.cpp">
+      <Filter>json\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Json\lib_json\json_writer.cpp">
+      <Filter>json\lib_json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,10 +103,57 @@
     <ClInclude Include="..\other\CALocation\CALocationManager.h">
       <Filter>other\CALocation</Filter>
     </ClInclude>
+    <ClInclude Include="..\Json\CSContentJsonDictionary.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\DictionaryHelper.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\lib_json\autolink.h">
+      <Filter>json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\lib_json\config.h">
+      <Filter>json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\lib_json\features.h">
+      <Filter>json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\lib_json\forwards.h">
+      <Filter>json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\lib_json\json_batchallocator.h">
+      <Filter>json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\lib_json\json_lib.h">
+      <Filter>json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\lib_json\json_tool.h">
+      <Filter>json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\lib_json\reader.h">
+      <Filter>json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\lib_json\value.h">
+      <Filter>json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\lib_json\writer.h">
+      <Filter>json\lib_json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\network\Websocket.h">
       <Filter>network</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Json\lib_json\json_internalarray.inl">
+      <Filter>json\lib_json</Filter>
+    </None>
+    <None Include="..\Json\lib_json\json_internalmap.inl">
+      <Filter>json\lib_json</Filter>
+    </None>
+    <None Include="..\Json\lib_json\json_valueiterator.inl">
+      <Filter>json\lib_json</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -104,7 +104,6 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
 {
     CAView::setPosition(CCPointZero);
     setAnchorPoint(CCPointZero);
-    ignoreAnchorPointForPosition(true);
     m_bStartingPositionInitialized = false;
 
     m_tPositionR = CCPointZero;

@@ -258,6 +258,7 @@ THE SOFTWARE.
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
 #include "images/CAImagePVR.h"
+#include "images/CAImageAtlas.h"
 
 // touch_dispatcher
 #include "touch_dispatcher/CCTouch.h"

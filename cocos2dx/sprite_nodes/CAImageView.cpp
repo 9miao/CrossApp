@@ -1,28 +1,10 @@
-/****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+//
+//  CAImageView.h
+//  CrossApp
+//
+//  Created by Li Yuanfeng on 14-5-18.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
+//
 
 #include "CCAnimation.h"
 #include "CCAnimationCache.h"
@@ -57,10 +39,10 @@ NS_CC_BEGIN
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-CAImageView* CAImageView::createWithImage(CAImage* Image)
+CAImageView* CAImageView::createWithImage(CAImage* image)
 {
     CAImageView *pobSprite = new CAImageView();
-    if (pobSprite && pobSprite->initWithImage(Image))
+    if (pobSprite && pobSprite->initWithImage(image))
     {
         pobSprite->autorelease();
         return pobSprite;
@@ -69,10 +51,10 @@ CAImageView* CAImageView::createWithImage(CAImage* Image)
     return NULL;
 }
 
-CAImageView* CAImageView::createWithImage(CAImage* Image, const CCRect& rect)
+CAImageView* CAImageView::createWithImage(CAImage* image, const CCRect& rect)
 {
     CAImageView *pobSprite = new CAImageView();
-    if (pobSprite && pobSprite->initWithImage(Image, rect))
+    if (pobSprite && pobSprite->initWithImage(image, rect))
     {
         pobSprite->autorelease();
         return pobSprite;
@@ -110,68 +92,32 @@ bool CAImageView::init(void)
     return initWithImage(NULL, CCRectZero);
 }
 
-// designated initializer
-bool CAImageView::initWithImage(CAImage* Image, const CCRect& rect, bool rotated)
+bool CAImageView::initWithImage(CAImage* image, const CCRect& rect, bool rotated)
 {
-    if (CAView::init())
-    {
-        
-        m_bRecursiveDirty = false;
-        setDirty(false);
-        
-        m_bOpacityModifyRGB = true;
-        
-        m_sBlendFunc.src = CC_BLEND_SRC;
-        m_sBlendFunc.dst = CC_BLEND_DST;
-        
-        m_bFlipX = m_bFlipY = false;
-        
-        // default transform anchor: center
-        setAnchorPoint(ccp(0.5f, 0.5f));
-        
-        // zwoptex default values
-        m_obOffsetPosition = CCPointZero;
-        
-        m_bHasChildren = false;
-        
-        // clean the Quad
-        memset(&m_sQuad, 0, sizeof(m_sQuad));
-        
-        // Atlas: Color
-        ccColor4B tmpColor = { 255, 255, 255, 255 };
-        m_sQuad.bl.colors = tmpColor;
-        m_sQuad.br.colors = tmpColor;
-        m_sQuad.tl.colors = tmpColor;
-        m_sQuad.tr.colors = tmpColor;
-
-        // shader program
-        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-        
-        this->setImage(Image);
-        setImageRect(rect, rotated, rect.size);
-        // by default use "Self Render".
-
-        return true;
-    }
-    else
-    {
+    if (!CAView::init())
         return false;
-    }
-}
 
-bool CAImageView::initWithImage(CAImage* Image, const CCRect& rect)
-{
-    return initWithImage(Image, rect, false);
-}
-
-bool CAImageView::initWithImage(CAImage* Image)
-{
-    CCAssert(Image != NULL, "Invalid image for sprite");
-
-    CCRect rect = CCRectZero;
-    rect.size = Image->getContentSize();
+    this->setImage(image);
+    setImageRect(rect, rotated, rect.size);
     
-    return initWithImage(Image, rect);
+    return true;
+}
+
+bool CAImageView::initWithImage(CAImage* image, const CCRect& rect)
+{
+    return initWithImage(image, rect, false);
+}
+
+bool CAImageView::initWithImage(CAImage* image)
+{
+    CCRect rect = CCRectZero;
+    
+    if (image)
+    {
+        rect.size = image->getContentSize();
+    }
+    
+    return initWithImage(image, rect);
 }
 
 bool CAImageView::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
@@ -184,32 +130,6 @@ bool CAImageView::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     return bRet;
 }
 
-// XXX: deprecated
-/*
-CAImageView* CAImageView::initWithCGImage(CGImageRef pImage)
-{
-    // todo
-    // because it is deprecated, so we do not implement it
-
-    return NULL;
-}
-*/
-
-/*
-CAImageView* CAImageView::initWithCGImage(CGImageRef pImage, const char *pszKey)
-{
-    CCAssert(pImage != NULL);
-
-    // XXX: possible bug. See issue #349. New API should be added
-    CAImage* Image = CAImageCache::sharedImageCache()->addCGImage(pImage, pszKey);
-
-    const CCSize& size = Image->getContentSize();
-    CCRect rect = CCRectMake(0 ,0, size.width, size.height);
-
-    return initWithImage(image, rect);
-}
-*/
-
 CAImageView::CAImageView(void)
 {
     
@@ -219,7 +139,6 @@ CAImageView::~CAImageView(void)
 {
     
 }
-
 
 void CAImageView::setFrame(const CCRect &rect)
 {
@@ -282,20 +201,17 @@ CCRect CAImageView::getBounds() const
     return rect;
 }
 
-// Frames
-
 void CAImageView::setDisplayFrame(CCSpriteFrame *pNewFrame)
 {
     m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffset();
 
     CAImage* pNewimage = pNewFrame->getImage();
-    // update image before updating image rect
+
     if (pNewimage != m_pobImage)
     {
         setImage(pNewimage);
     }
 
-    // update rect
     m_bRectRotated = pNewFrame->isRotated();
     setImageRect(pNewFrame->getRect(), m_bRectRotated, pNewFrame->getOriginalSize());
 }
@@ -340,7 +256,26 @@ void CAImageView::setImage(CAImage* image)
         image = CAImage::CC_WHITE_IMAGE();
     }
 
+    CCRect rect;
+    if (this->isFrame())
+    {
+        rect = this->getFrame();
+    }
+    else
+    {
+        rect = this->getCenter();
+    }
+    
     CAView::setImage(image);
+    
+    if (this->isFrame())
+    {
+        this->setFrame(rect);
+    }
+    else
+    {
+        this->CAView::setCenter(rect);
+    }
 }
 
 NS_CC_END

@@ -40,6 +40,7 @@ CCObject* CCCopying::copyWithZone(CCZone *pZone)
 CCObject::CCObject(void)
 : m_uReference(1) // when the object is created, the reference count of it is 1
 , m_uAutoReleaseCount(0)
+, m_nTag(kCCObjectTagInvalid)
 {
     static unsigned int uObjectCount = 0;
 

@@ -1,31 +1,13 @@
-/****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
+//
+//  CAImageView.h
+//  CrossApp
+//
+//  Created by Li Yuanfeng on 14-5-18.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
+//
 
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
-
-#ifndef __SPITE_NODE_CCSPRITE_H__
-#define __SPITE_NODE_CCSPRITE_H__
+#ifndef __CAIMAGEVIEW__
+#define __CAIMAGEVIEW__
 
 #include "sprite_nodes/CAView.h"
 
@@ -34,143 +16,38 @@ NS_CC_BEGIN
 class CCSpriteFrame;
 class CCAnimation;
 class CAScale9ImageView;
-/**
- * @addtogroup sprite_nodes
- * @{
- */
 
 class CC_DLL CAImageView : public CAView
 {
 public:
-    /// @{
-    /// @name Creators
-    
-    /**
-     * Creates an empty sprite without image. You can call setImage method subsequently.
-     *
-     * @return An empty sprite object that is marked as autoreleased.
-     */
-    static CAImageView* create();
-    
-    /**
-     * Creates a sprite with an exsiting image contained in a CAImage object
-     * After creation, the rect will be the size of the image, and the offset will be (0,0).
-     *
-     * @param   Image    A pointer to a CAImage object.
-     * @return  A valid sprite object that is marked as autoreleased.
-     */
-    static CAImageView* createWithImage(CAImage* Image);
-    
-    /**
-     * Creates a sprite with a image and a rect.
-     *
-     * After creation, the offset will be (0,0).
-     *
-     * @param   Image    A pointer to an existing CAImage object.
-     *                      You can use a CAImage object for many sprites.
-     * @param   rect        Only the contents inside the rect of this image will be applied for this sprite.
-     * @return  A valid sprite object that is marked as autoreleased.
-     */
-    static CAImageView* createWithImage(CAImage* Image, const CCRect& rect);
-    
-    /**
-     * Creates a sprite with an sprite frame.
-     *
-     * @param   pSpriteFrame    A sprite frame which involves a image and a rect
-     * @return  A valid sprite object that is marked as autoreleased.
-     */
-    static CAImageView* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
-    
-    /// @}  end of creators group
-    
-    
-    
-    /// @{
-    /// @name Initializers
-    
-    /**
-     * Default constructor
-     * @js ctor
-     */
-    CAImageView(void);
-    
-    /**
-     * Default destructor
-     * @js NA
-     * @lua NA
-     */
-    virtual ~CAImageView(void);
-    
-    /**
-     * Initializes an empty sprite with nothing init.
-     */
-    virtual bool init(void);
-    
-    /**
-     * Initializes a sprite with a image.
-     *
-     * After initialization, the rect used will be the size of the image, and the offset will be (0,0).
-     *
-     * @param   Image    A pointer to an existing CAImage object.
-     *                      You can use a CAImage object for many sprites.
-     * @return  true if the sprite is initialized properly, false otherwise.
-     */
-    virtual bool initWithImage(CAImage* Image);
-    
-    /**
-     * Initializes a sprite with a image and a rect.
-     *
-     * After initialization, the offset will be (0,0).
-     *
-     * @param   Image    A pointer to an exisiting CAImage object.
-     *                      You can use a CAImage object for many sprites.
-     * @param   rect        Only the contents inside rect of this image will be applied for this sprite.
-     * @return  true if the sprite is initialized properly, false otherwise.
-     */
-    virtual bool initWithImage(CAImage* Image, const CCRect& rect);
-    
-    /**
-     * Initializes a sprite with a image and a rect in points, optionally rotated.
-     *
-     * After initialization, the offset will be (0,0).
-     * @note    This is the designated initializer.
-     *
-     * @param   Image    A CAImage object whose image will be applied to this sprite.
-     * @param   rect        A rectangle assigned the contents of image.
-     * @param   rotated     Whether or not the image rectangle is rotated.
-     * @return  true if the sprite is initialized properly, false otherwise.
-     */
-    virtual bool initWithImage(CAImage* Image, const CCRect& rect, bool rotated);
-    
-    /**
-     * Initializes a sprite with an SpriteFrame. The image and rect in SpriteFrame will be applied on this sprite
-     *
-     * @param   pSpriteFrame  A CCSpriteFrame object. It should includes a valid image and a rect
-     * @return  true if the sprite is initialized properly, false otherwise.
-     */
-    virtual bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
-    
-    /// @{
-    /// @name Frames methods
-    
-    /**
-     * Sets a new display frame to the CCSprite.
-     */
-    virtual void setDisplayFrame(CCSpriteFrame *pNewFrame);
-    
-    /**
-     * Returns whether or not a CCSpriteFrame is being displayed
-     */
-    virtual bool isFrameDisplayed(CCSpriteFrame *pFrame);
-    
-    /**
-     * Returns the current displayed frame.
-     * @js NA
-     */
-    virtual CCSpriteFrame* displayFrame(void);
 
-    
-    /// @} End of Sprite properties getter/setters
+    static CAImageView* create();
+
+    static CAImageView* createWithImage(CAImage* image);
+
+    static CAImageView* createWithImage(CAImage* image, const CCRect& rect);
+
+    static CAImageView* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+
+    CAImageView(void);
+
+    virtual ~CAImageView(void);
+
+    virtual bool init(void);
+
+    virtual bool initWithImage(CAImage* image);
+
+    virtual bool initWithImage(CAImage* image, const CCRect& rect);
+
+    virtual bool initWithImage(CAImage* image, const CCRect& rect, bool rotated);
+
+    virtual bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+
+    virtual void setDisplayFrame(CCSpriteFrame *pNewFrame);
+
+    virtual bool isFrameDisplayed(CCSpriteFrame *pFrame);
+
+    virtual CCSpriteFrame* displayFrame(void);
 
 	void setFrame(const CCRect& rect);
     
@@ -189,17 +66,12 @@ public:
     CCRect getBounds() const;
 
     virtual void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
-    /// @}
-    
+
     virtual void setImage(CAImage* image);
     
     friend class CAScale9ImageView;
 };
 
-
-// end of sprite_nodes group
-/// @}
-
 NS_CC_END
 
-#endif // __SPITE_NODE_CCSPRITE_H__
+#endif

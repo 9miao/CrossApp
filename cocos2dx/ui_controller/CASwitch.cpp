@@ -3,7 +3,7 @@
 //  cocos2dx
 //
 //  Created by juguanhui on 14-5-29.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #include "CASwitch.h"
@@ -234,7 +234,9 @@ bool CASwitch::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-	m_bTouchClick = (getBounds().containsPoint(point));
+	m_bTouchClick = true;
+    
+    
     return m_bTouchClick;
 }
 

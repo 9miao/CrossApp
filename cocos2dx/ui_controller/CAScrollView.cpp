@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-23.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #include "CAScrollView.h"
@@ -137,6 +137,11 @@ void CAScrollView::removeSubviewByTag(int tag)
     m_pContainer->removeSubviewByTag(tag);
 }
 
+CCArray* CAScrollView::getSubviews()
+{
+    return m_pContainer->getSubviews();
+}
+
 void CAScrollView::setViewSize(cocos2d::CCSize var)
 {
     do
@@ -152,8 +157,10 @@ void CAScrollView::setViewSize(cocos2d::CCSize var)
         CCRect rect = CCRectZero;
         rect.size = m_obViewSize;
         m_pContainer->setFrame(rect);
-        
-        CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f, false);
+
+//        CCPoint point = m_pContainer->getCenterOrigin();
+//        point = this->getScrollWindowNotOutPoint(point);
+//        m_pContainer->setCenterOrigin(point);
     }
     while (0);
     
@@ -674,15 +681,8 @@ float CAScrollView::getScrollWindowNotOutHorizontal(float x)
     cSize.width = MAX(cSize.width, size.width);
     cSize.height = MAX(cSize.height, size.height);
     
-    if (x - cSize.width / 2 > 0)
-    {
-        x = cSize.width / 2;
-    }
-    
-    if ((x + cSize.width / 2 - size.width) < 0)
-    {
-        x = size.width - cSize.width / 2;
-    }
+    x = MIN(x, cSize.width / 2) ;
+    x = MAX(x, size.width - cSize.width / 2);
     
     return x;
 }
@@ -694,16 +694,9 @@ float CAScrollView::getScrollWindowNotOutVertical(float y)
     cSize.width = MAX(cSize.width, size.width);
     cSize.height = MAX(cSize.height, size.height);
     
-    if (y - cSize.height / 2 > 0)
-    {
-        y = cSize.height / 2;
-    }
-    
-    if ((y + cSize.height / 2 - size.height) < 0)
-    {
-        y = size.height - cSize.height / 2;
-    }
-    
+    y = MIN(y, cSize.height / 2);
+    y = MAX(y, size.height - cSize.height / 2);
+
     return y;
 }
 

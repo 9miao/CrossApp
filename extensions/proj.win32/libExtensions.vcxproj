@@ -95,6 +95,11 @@
   <ItemGroup>
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
     <ClCompile Include="..\GUI\CAUIHelper.cpp" />
+    <ClCompile Include="..\Json\CSContentJsonDictionary.cpp" />
+    <ClCompile Include="..\Json\DictionaryHelper.cpp" />
+    <ClCompile Include="..\Json\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\Json\lib_json\json_value.cpp" />
+    <ClCompile Include="..\Json\lib_json\json_writer.cpp" />
     <ClCompile Include="..\LocalStorage\LocalStorage.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\Websocket.cpp" />
@@ -107,6 +112,18 @@
     <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\GUI\CAUIHelper.h" />
+    <ClInclude Include="..\Json\CSContentJsonDictionary.h" />
+    <ClInclude Include="..\Json\DictionaryHelper.h" />
+    <ClInclude Include="..\Json\lib_json\autolink.h" />
+    <ClInclude Include="..\Json\lib_json\config.h" />
+    <ClInclude Include="..\Json\lib_json\features.h" />
+    <ClInclude Include="..\Json\lib_json\forwards.h" />
+    <ClInclude Include="..\Json\lib_json\json_batchallocator.h" />
+    <ClInclude Include="..\Json\lib_json\json_lib.h" />
+    <ClInclude Include="..\Json\lib_json\json_tool.h" />
+    <ClInclude Include="..\Json\lib_json\reader.h" />
+    <ClInclude Include="..\Json\lib_json\value.h" />
+    <ClInclude Include="..\Json\lib_json\writer.h" />
     <ClInclude Include="..\LocalStorage\LocalStorage.h" />
     <ClInclude Include="..\network\HttpClient.h" />
     <ClInclude Include="..\network\HttpRequest.h" />
@@ -115,6 +132,11 @@
     <ClInclude Include="..\other\CAAdress\CAAddressManager.h" />
     <ClInclude Include="..\other\CACamera\CAMediaManager.h" />
     <ClInclude Include="..\other\CALocation\CALocationManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Json\lib_json\json_internalarray.inl" />
+    <None Include="..\Json\lib_json\json_internalmap.inl" />
+    <None Include="..\Json\lib_json\json_valueiterator.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

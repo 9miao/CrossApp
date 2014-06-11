@@ -8,8 +8,7 @@ NS_CC_BEGIN
 CAWindow::CAWindow()
 :m_pRootViewController(NULL)
 {
-    m_bIgnoreAnchorPointForPosition = true;
-    setAnchorPoint(ccp(0.5f, 0.5f));
+
 }
 
 CAWindow::~CAWindow()
@@ -25,6 +24,7 @@ bool CAWindow::init()
          CCDirector * pDirector;
          CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
          this->setContentSize(pDirector->getWinSize());
+         this->setFrame(CCRectZero);
          // success
          bRet = true;
      } while (0);

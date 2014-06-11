@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-23.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #ifndef __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__
@@ -77,7 +77,7 @@ protected:
     
     void passingTouchesViewCache(float dt = 0);
     
-    std::vector<CAView*> getEventListener(CCTouch* touch);
+    std::vector<CAView*> getEventListener(CCTouch* touch, CAView* view);
     
 protected:
     

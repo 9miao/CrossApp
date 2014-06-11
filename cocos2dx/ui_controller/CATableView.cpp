@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-28.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #include "CATableView.h"
@@ -97,7 +97,7 @@ void CATableView::setContentSize(const cocos2d::CCSize &var)
 bool CATableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (m_pTouches->count() > 0)
-        return false;
+        return true;
     
     if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
         return false;

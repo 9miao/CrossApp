@@ -40,7 +40,6 @@ NS_CC_BEGIN
 
 class CCZone;
 class CCObject;
-class CCNode;
 class CCEvent;
 class CAView;
 /**
@@ -52,6 +51,8 @@ class CC_DLL CCCopying
 public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 };
+
+#define kCCObjectTagInvalid -1
 
 /**
  * @js NA
@@ -85,6 +86,8 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor);
 
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
+    
+    CC_SYNTHESIZE(int, m_nTag, Tag);
     
     friend class CCAutoreleasePool;
 };

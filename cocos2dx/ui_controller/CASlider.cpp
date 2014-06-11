@@ -286,7 +286,7 @@ bool CASlider::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-	m_bTouchClick = (getBounds().containsPoint(point));
+	m_bTouchClick = true;
     return m_bTouchClick;
 }
 

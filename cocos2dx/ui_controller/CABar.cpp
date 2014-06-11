@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-14.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #include "CABar.h"
@@ -33,8 +33,6 @@ CANavigationBar::CANavigationBar()
 CANavigationBar::~CANavigationBar()
 {
     CC_SAFE_RELEASE_NULL(m_pBackGroundImage);
-    CC_SAFE_RELEASE_NULL(m_pLeftButton);
-    CC_SAFE_RELEASE_NULL(m_pRightButton);
 }
 
 bool CANavigationBar::init()
@@ -245,14 +243,12 @@ void CANavigationBar::updateRightButton()
     }
 }
 
-bool CANavigationBar::goBack(CAControl* btn, CCPoint point)
+void CANavigationBar::goBack(CAControl* btn, CCPoint point)
 {
     if (m_pDelegate)
     {
         m_pDelegate->navigationPopViewController(this, true);
     }
-    
-	return true;
 }
 
 void CANavigationBar::pushItem(CANavigationBarItem* item)
@@ -600,9 +596,6 @@ void CATabBar::setSelectedAtIndex(int index)
 
 bool CATabBar::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    CCPoint point = pTouch->getLocation();
-    point = this->convertToNodeSpace(point);
-    
     return true;
 }
 

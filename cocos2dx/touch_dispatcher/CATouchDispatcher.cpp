@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-23.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #include "CATouchDispatcher.h"
@@ -20,16 +20,29 @@
 #include "CAScheduler.h"
 #include "support/CCPointExtension.h"
 
-#define TOUCHES_VIEW_SEL(CCTouch_SEL)   for (std::vector<CAView*>::iterator itr=m_vTouchesViewCache.begin();   \
-                                            itr!=m_vTouchesViewCache.end();                                 \
-                                            itr++)                                                          \
-                                            {                                                               \
-                                                (*itr)->CCTouch_SEL(m_pTouch, m_pEvent);                    \
-                                            }                                                               \
+#define TOUCHES_BOOL_VIEW   for (int i=0; i<m_vTouchesViewCache.size();)                        \
+                            {                                                                   \
+                                CAView* view = m_vTouchesViewCache.at(i);                       \
+                                if (view->ccTouchBegan(m_pTouch, m_pEvent) == true)             \
+                                {                                                               \
+                                    i++;                                                        \
+                                }                                                               \
+                                else                                                            \
+                                {                                                               \
+                                    m_vTouchesViewCache.erase(m_vTouchesViewCache.begin() + i); \
+                                }                                                               \
+                            }
+
+#define TOUCHES_VIEW_SEL(CCTouch_SEL)   for (std::vector<CAView*>::iterator itr=m_vTouchesViewCache.begin();    \
+                                            itr!=m_vTouchesViewCache.end();                                     \
+                                            itr++)                                                              \
+                                        {                                                                       \
+                                            (*itr)->CCTouch_SEL(m_pTouch, m_pEvent);                            \
+                                        }                                                                       \
 
 #define CLEAR_VECTOR(VECTOR)    for (std::vector<CAView*>::iterator itr=VECTOR.begin(); itr!=VECTOR.end(); itr++)   \
                                 {                                                                                   \
-                                    CC_SAFE_RELEASE(*itr);                                                              \
+                                    CC_SAFE_RELEASE(*itr);                                                          \
                                 }                                                                                   \
                                 VECTOR.clear();                                                                     \
 
@@ -42,6 +55,7 @@
                                 }
 
 NS_CC_BEGIN
+
 CATouchController::CATouchController()
 :m_pTouch(NULL)
 ,m_pEvent(NULL)
@@ -63,11 +77,9 @@ int CATouchController::getTouchID()
     return m_pTouch ? m_pTouch->getID() : -1;
 }
 
-std::vector<CAView*> CATouchController::getEventListener(CCTouch* touch)
+std::vector<CAView*> CATouchController::getEventListener(CCTouch* touch, CAView* view)
 {
     std::vector<CAView*> vector;
-    
-    CAView* view = dynamic_cast<CAView*>(CCDirector::sharedDirector()->getRootWindow());
     
     do
     {
@@ -135,7 +147,7 @@ void CATouchController::passingTouchesViewCache(float dt)
     }
     CLEAR_VECTOR(m_vWillTouchesViewCache);
     
-    TOUCHES_VIEW_SEL(ccTouchBegan);
+    TOUCHES_BOOL_VIEW;
 }
 
 void CATouchController::touchBegan()
@@ -146,11 +158,11 @@ void CATouchController::touchBegan()
     
     if (CAView* view = dynamic_cast<CAView*>(CCDirector::sharedDirector()->getTouchDispatcher()->getFirstResponder()))
     {
-        PUSH_BACK_IN_VECTOR(vector, view);
+        vector = this->getEventListener(m_pTouch, view);
     }
     else
     {
-        vector = this->getEventListener(m_pTouch);
+        vector = this->getEventListener(m_pTouch, CCDirector::sharedDirector()->getRootWindow());
     }
 
     std::vector<CAView*>::iterator itr;
@@ -186,11 +198,11 @@ void CATouchController::touchBegan()
     
     if (m_vWillTouchesViewCache.size() > 0)
     {
-        CAScheduler::schedule(schedule_selector(CATouchController::passingTouchesViewCache), this, 0, 1, 0.066f);
+        CAScheduler::schedule(schedule_selector(CATouchController::passingTouchesViewCache), this, 0, 0, 0.066f);
     }
     else
     {
-        TOUCHES_VIEW_SEL(ccTouchBegan);
+        TOUCHES_BOOL_VIEW;
     }
 }
 
@@ -207,7 +219,7 @@ void CATouchController::touchMoved()
             CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViewCache), this);
             
             CLEAR_VECTOR(m_vWillTouchesViewCache);
-            TOUCHES_VIEW_SEL(ccTouchBegan);
+            TOUCHES_BOOL_VIEW;
         }
 
         TOUCHES_VIEW_SEL(ccTouchMoved);
