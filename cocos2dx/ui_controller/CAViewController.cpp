@@ -763,12 +763,7 @@ unsigned int CATabBarController::getSelectedViewControllerAtIndex()
 
 void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index)
 {
-    do
-    {
-        CC_BREAK_IF(index == m_nSelectedIndex);
-        this->showSelectedViewControllerAtIndex(index, true);
-    }
-    while (0);
+    this->showSelectedViewControllerAtIndex(index, true);
 }
 
 void CATabBarController::renderingAllViewController(float dt)

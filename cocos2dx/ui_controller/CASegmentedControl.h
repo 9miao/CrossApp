@@ -22,7 +22,7 @@ class CC_DLL CASegmentedControl : public CAControl
 {
 public:
     
-    CASegmentedControl();
+    CASegmentedControl(unsigned int itemsCount);
     
     virtual ~CASegmentedControl();
     
@@ -30,9 +30,13 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
-    static CASegmentedControl* createWithFrame(const CCRect& rect);
+    static CASegmentedControl* createWithFrame(const CCRect& rect, unsigned int itemsCount);
     
-    static CASegmentedControl* createWithCenter(const CCRect& rect);
+    static CASegmentedControl* createWithCenter(const CCRect& rect, unsigned int itemsCount);
+    
+    void addTarget(CCObject* target, SEL_CAControl selector);
+    
+    void removeTarget(CCObject* target, SEL_CAControl selector);
     
 public:
     
@@ -47,6 +51,7 @@ public:
     virtual void removeAllSegments();
     
     virtual bool setTitleAtIndex(const char* title, int index, CAControlState controlState);
+    virtual bool setTitleColorAtIndex(ccColor3B color, int index, CAControlState controlState);
     virtual bool setBackgroundImageAtIndex(CAImage *image, int index, CAControlState controlState);
     virtual bool setImageAtIndex(CAImage *image, int index, CAControlState controlState);
     
@@ -59,6 +64,7 @@ public:
     CC_SYNTHESIZE_READONLY(int, m_selectedIndex, selectedIndex);       // default 0
     CC_SYNTHESIZE_READONLY(CCSize, m_itemSize, ItemSize);
     void setHighlightedAtIndex(int index);
+    void setSelectedAtIndex(int index);
     void setSelectedHighlighted();
     int getItemCount() const;
     void layoutSubviews();
@@ -70,12 +76,15 @@ protected:
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
     
-private:
-
     bool indexIsValid(int index);
+    virtual void addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
+    virtual void removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
+    void setContentSize(const CCSize & var);
+    
     
 protected:
     
+    unsigned int m_nItemsCount;
     std::vector<CAButton *> m_segments;
     CAImageView *m_backGroundImage;
 };

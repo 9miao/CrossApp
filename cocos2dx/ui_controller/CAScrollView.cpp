@@ -137,6 +137,11 @@ void CAScrollView::removeSubviewByTag(int tag)
     m_pContainer->removeSubviewByTag(tag);
 }
 
+CAView* CAScrollView::getSubviewByTag(int aTag)
+{
+    return m_pContainer->getSubviewByTag(aTag);
+}
+
 CCArray* CAScrollView::getSubviews()
 {
     return m_pContainer->getSubviews();

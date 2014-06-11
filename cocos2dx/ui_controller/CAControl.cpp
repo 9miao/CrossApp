@@ -132,6 +132,7 @@ void CAControl::addTarget(CCObject *target, SEL_CAControl selector, CAControlEve
 
 void CAControl::removeTarget(CCObject *target, SEL_CAControl selector, CAControlEvents event)
 {
+    m_pTarget[event] = NULL;
     m_selTouch[event] = NULL;
 }
 

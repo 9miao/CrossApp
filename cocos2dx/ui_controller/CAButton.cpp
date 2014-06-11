@@ -460,7 +460,7 @@ void CAButton::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEve
 void CAButton::setControlState(CAControlState var)
 {
     CAControl::setControlState(var);
-    
+
     if (m_eControlState == CAControlStateSelected)
     {
         m_bSelected = true;
@@ -551,16 +551,15 @@ void CAButton::setControlState(CAControlState var)
         
         if (strcmp(title.c_str(), m_pLabel->getString().c_str()))
         {
-            m_pLabel->setFontSize(labelSize);
             m_pLabel->setString(title.c_str());
-            
-            if (m_pLabel->getFrame().size.width > this->getBounds().size.width * 0.8f)
-            {
-                float scale = (this->getBounds().size.width * 0.8f) / m_pLabel->getFrame().size.width;
-                m_pLabel->setScale(scale);
-            }
         }
+        m_pLabel->setFontSize(labelSize);
         m_pLabel->setCenterOrigin(labelCenterOrigin);
+        if (m_pLabel->getFrame().size.width > this->getBounds().size.width * 0.8f)
+        {
+            float scale = (this->getBounds().size.width * 0.8f) / m_pLabel->getFrame().size.width;
+            m_pLabel->setScale(scale);
+        }
     }
     while (0);
     

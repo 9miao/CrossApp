@@ -124,6 +124,10 @@ public:
     
     CC_SYNTHESIZE(CATabBarDelegate* , m_pDelegate, Delegate);
     
+    CC_SYNTHESIZE(ccColor3B, m_sTitleColor, TitleColorForNormal);
+    
+    CC_SYNTHESIZE(ccColor3B, m_sSelectedTitleColor, TitleColorForSelected);
+    
     void setSelectedAtIndex(int index);
     
     void showSelectedIndicator();
@@ -134,23 +138,11 @@ protected:
     
     void showItems();
     
-    void showSelectedBackGround();
-    
-protected:
-    
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-    
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-    
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-    
-    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+    void setTouchSelected(CAControl* control, CCPoint point);
     
 protected:
     
     CAView* m_pBackGround;
-    
-    CAView* m_pSelectedBackGround;
     
     CAView* m_pSelectedIndicator;
     
@@ -159,8 +151,8 @@ protected:
     std::vector<CATabBarItem*> m_pItems;
 
     CCSize m_cItemSize;
-    
-    std::vector<CAView*> m_pViews;
+
+    CASegmentedControl* m_pSegmentedControl;
     
     int m_nSelectedIndex;
     

@@ -298,10 +298,10 @@ void CCLabelTTF::setFontName(const char *fontName)
 // Helper
 bool CCLabelTTF::updateTexture()
 {
-    CAImage *tex;
-    tex = new CAImage();
+    CAImage *image;
+    image = new CAImage();
     
-    if (!tex)
+    if (!image)
         return false;
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -311,7 +311,7 @@ bool CCLabelTTF::updateTexture()
     
     #else
     
-        tex->initWithString( m_string.c_str(),
+        image->initWithString( m_string.c_str(),
                             m_pFontName->c_str(),
                             m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
                             CC_SIZE_POINTS_TO_PIXELS(m_tDimensions),
@@ -320,15 +320,34 @@ bool CCLabelTTF::updateTexture()
     
     #endif
     
-    // set the texture
-    this->setImage(tex);
+    CCPoint point;
+    if (this->isFrame())
+    {
+        point = this->getFrameOrigin();
+    }
+    else
+    {
+        point = this->getCenterOrigin();
+    }
+    
+    // set the image
+    this->setImage(image);
     // release it
-    tex->release();
+    image->release();
     
     // set the size in the sprite
-    CCRect rect =CCRectZero;
+    CCRect rect = CCRectZero;
     rect.size   = m_pobImage->getContentSize();
     this->setImageRect(rect);
+    
+    if (this->isFrame())
+    {
+        this->setFrameOrigin(point);
+    }
+    else
+    {
+        this->setCenterOrigin(point);
+    }
     
     //ok
     return true;

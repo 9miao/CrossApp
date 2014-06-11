@@ -14,9 +14,10 @@
 using namespace std;
 NS_CC_BEGIN
 
-CASegmentedControl::CASegmentedControl()
+CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     : CAControl()
     , m_selectedIndex(0)
+    , m_nItemsCount(itemsCount)
 {
     
 }
@@ -36,9 +37,9 @@ void CASegmentedControl::onEnterTransitionDidFinish()
     CAControl::onEnterTransitionDidFinish();
 }
 
-CASegmentedControl* CASegmentedControl::createWithFrame(const CCRect& rect)
+CASegmentedControl* CASegmentedControl::createWithFrame(const CCRect& rect, unsigned int itemsCount)
 {
-    CASegmentedControl* segmentedControl = new CASegmentedControl();
+    CASegmentedControl* segmentedControl = new CASegmentedControl(itemsCount);
     if (segmentedControl && segmentedControl->initWithFrame(rect))
     {
         segmentedControl->autorelease();
@@ -49,9 +50,9 @@ CASegmentedControl* CASegmentedControl::createWithFrame(const CCRect& rect)
     return NULL;
 }
 
-CASegmentedControl* CASegmentedControl::createWithCenter(const CCRect& rect)
+CASegmentedControl* CASegmentedControl::createWithCenter(const CCRect& rect, unsigned int itemsCount)
 {
-    CASegmentedControl* segmentedControl = new CASegmentedControl();
+    CASegmentedControl* segmentedControl = new CASegmentedControl(itemsCount);
     if (segmentedControl && segmentedControl->initWithCenter(rect))
     {
         segmentedControl->autorelease();
@@ -73,11 +74,10 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
     m_selectedIndex = 0;
     
     this->removeAllSegments();
-    int totalCount = 2;
-    const float elemWidth = rect.size.width / totalCount;
+    const float elemWidth = rect.size.width / m_nItemsCount;
     m_itemSize = CCSizeMake(elemWidth, rect.size.height);
     CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
-    for (int i = 0; i < totalCount; ++i)
+    for (int i = 0; i < m_nItemsCount; ++i)
     {
         CAButton *btn = this->createDefaultSegment();
         if (btn)
@@ -108,11 +108,10 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
     m_selectedIndex = 0;
     
     this->removeAllSegments();
-    int totalCount = 2;
-    const float elemWidth = rect.size.width / totalCount;
-    m_itemSize = CCSizeMake(elemWidth, rect.size.height);
-    CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
-    for (int i = 0; i < totalCount; ++i)
+    const float elemWidth = rect.size.width / m_nItemsCount;
+    m_itemSize = CCSize(elemWidth, rect.size.height);
+    CCRect elemFrame = CCRect(0, 0, m_itemSize.width, m_itemSize.height);
+    for (int i = 0; i < m_nItemsCount; ++i)
     {
         CAButton *btn = this->createDefaultSegment();
         if (btn)
@@ -246,6 +245,22 @@ bool CASegmentedControl::setTitleAtIndex(const char* title, int index, CAControl
     return true;
 }
 
+bool CASegmentedControl::setTitleColorAtIndex(ccColor3B color, int index, CAControlState controlState)
+{
+    if (!this->indexIsValid(index))
+    {
+        return false;
+    }
+    
+    CAButton *btn = m_segments.at(index);
+    if (NULL == btn)
+    {
+        return false;
+    }
+    btn->setTitleColorForState(controlState, color);
+    return true;
+}
+
 bool CASegmentedControl::setBackgroundImageAtIndex(CAImage *image, int index, CAControlState controlState)
 {
     if (!this->indexIsValid(index))
@@ -336,14 +351,14 @@ void CASegmentedControl::setHighlightedAtIndex(int index)
 void CASegmentedControl::setSelectedHighlighted()
 {
     int index = 0;
-    
-    std::vector<CAButton*>::iterator itr;
-    for (itr=m_segments.begin(); itr!=m_segments.end(); itr++)
+
+    for (int i=0; i<m_segments.size(); i++)
     {
-        if ((*itr)->getControlState() == CAControlStateHighlighted)
+        if (m_segments.at(i)->getControlState() == CAControlStateHighlighted)
         {
-            (*itr)->setControlStateSelected();
-            index = (int)(itr - m_segments.begin());
+            m_segments.at(i)->setControlStateSelected();
+            index = i;
+            break;
         }
     }
     
@@ -356,6 +371,12 @@ void CASegmentedControl::setSelectedHighlighted()
             ((CCObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
         }
     }
+}
+
+void CASegmentedControl::setSelectedAtIndex(int index)
+{
+    this->setHighlightedAtIndex(index);
+    this->setSelectedHighlighted();
 }
 
 int CASegmentedControl::getItemCount() const
@@ -420,6 +441,32 @@ void CASegmentedControl::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 bool CASegmentedControl::indexIsValid(int index)
 {
     return index >= 0 && index < m_segments.size();
+}
+
+void CASegmentedControl::setContentSize(const cocos2d::CCSize &var)
+{
+    CAControl::setContentSize(var);
+    this->layoutSubviews();
+}
+
+void CASegmentedControl::addTarget(CCObject* target, SEL_CAControl selector)
+{
+    this->addTarget(target, selector, CAControlEventTouchValueChanged);
+}
+
+void CASegmentedControl::removeTarget(CCObject* target, SEL_CAControl selector)
+{
+    this->removeTarget(target, selector, CAControlEventTouchValueChanged);
+}
+
+void CASegmentedControl::addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event)
+{
+    CAControl::addTarget(target, selector, event);
+}
+
+void CASegmentedControl::removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event)
+{
+    CAControl::removeTarget(target, selector, event);
 }
 
 NS_CC_END

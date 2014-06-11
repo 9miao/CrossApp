@@ -38,11 +38,16 @@ void FirstViewController::viewDidLoad()
     slider->addTarget(this, CAControl_selector(FirstViewController::updateSlider));
     
     CCRect segmentedControl_rect = CCRect(size.width/2, height * 2 + 60, size.width * 0.8f, height);
-    CASegmentedControl* segmentedControl = CASegmentedControl::createWithCenter(segmentedControl_rect);
+    CASegmentedControl* segmentedControl = CASegmentedControl::createWithCenter(segmentedControl_rect, 2);
     segmentedControl->insertSegmentWithTitle("2", 2, CAControlStateAll);
     segmentedControl->insertSegmentWithTitle("3", 3, CAControlStateAll);
     segmentedControl->insertSegmentWithTitle("4", 4, CAControlStateAll);
     this->getView()->addSubview(segmentedControl);
+    
+    for (int i=0; i<5; i++)
+    {
+        segmentedControl->setImageAtIndex(CAImage::create("2.jpg"), i, CAControlStateAll);
+    }
 
 }
 

@@ -97,14 +97,14 @@ void CANavigationBar::showTitle()
         m_pTitle = CCLabelTTF::create("", "fonts/arial.ttf", fontSize);
         m_pTitle->setColor(ccWHITE);
         m_pTitle->setAnchorPoint(CCPoint(0.5f, 0.5f));
-        m_pTitle->setCenterOrigin(m_obContentSize/2);
+        m_pTitle->setCenterOrigin(this->getBounds().size/2);
         this->addSubview(m_pTitle);
     }
     
     if (m_pItems.empty() == false)
     {
         ((CCLabelTTF*)m_pTitle)->setString(m_pItems.back()->getTitle().c_str());
-        
+
         float width = this->getBounds().size.width - this->getBounds().size.height * 3;
         
         if (m_pTitle->getFrame().size.width > width)
@@ -292,7 +292,7 @@ void CANavigationBar::popItem()
 CATabBar::CATabBar()
 :m_pBackGround(NULL)
 ,m_pBackGroundImage(NULL)
-,m_pSelectedBackGround(NULL)
+,m_pSegmentedControl(NULL)
 ,m_pSelectedBackGroundImage(NULL)
 ,m_pSelectedIndicator(NULL)
 ,m_pSelectedIndicatorImage(NULL)
@@ -300,6 +300,8 @@ CATabBar::CATabBar()
 ,m_nMaxShowCount(5)
 ,m_cItemSize(CCSizeZero)
 ,m_nSelectedIndex(0)
+,m_sTitleColor(ccWHITE)
+,m_sSelectedTitleColor(ccWHITE)
 ,m_pDelegate(NULL)
 {
     
@@ -345,8 +347,6 @@ void CATabBar::onEnterTransitionDidFinish()
         this->showBackGround();
         
         this->showItems();
-        
-        this->showSelectedBackGround();
         
         this->setSelectedAtIndex(m_nSelectedIndex);
     }
@@ -406,125 +406,29 @@ void CATabBar::showBackGround()
 
 void CATabBar::showItems()
 {
-    do
+    unsigned int count = MIN(m_nMaxShowCount, m_pItems.size());
+    m_pSegmentedControl = CASegmentedControl::createWithFrame(this->getBounds(), count);
+    this->addSubview(m_pSegmentedControl);
+    m_pSegmentedControl->addTarget(this, CAControl_selector(CATabBar::setTouchSelected));
+    for (int i=0; i<count; i++)
     {
-        CC_BREAK_IF(m_pViews.empty() == false);
-        
-        unsigned int count = MIN(m_nMaxShowCount, m_pItems.size());
-        
-        float width = m_obContentSize.width / count;
-        float height = m_obContentSize.height;
-        m_cItemSize = CCSize(width, height);
-        
-        for (unsigned int i=0; i<count; i++)
+        m_pSegmentedControl->setTitleAtIndex(m_pItems.at(i)->getTitle().c_str(), i, CAControlStateAll);
+        m_pSegmentedControl->setTitleColorAtIndex(m_sTitleColor, i, CAControlStateAll);
+        m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateSelected);
+        m_pSegmentedControl->setImageAtIndex(m_pItems.at(i)->getImage(), i, CAControlStateNormal);
+        m_pSegmentedControl->setImageAtIndex(m_pItems.at(i)->getImage(), i, CAControlStateHighlighted);
+        CAImage* selectedImage = m_pItems.at(i)->getSelectedImage() ? m_pItems.at(i)->getSelectedImage() : m_pItems.at(i)->getImage();
+        m_pSegmentedControl->setImageAtIndex(selectedImage, i, CAControlStateSelected);
+        m_pSegmentedControl->setBackgroundImageAtIndex(NULL, i, CAControlStateNormal);
+        if (m_pSelectedBackGroundImage == NULL)
         {
-            CAView* view = CAView::createWithFrame(CCRect(i * width, 0, width, height), ccc4(0, 0, 0, 0));
-            this->insertSubview(view, 3);
-            view->setDisplayRange(false);
-            m_pViews.push_back(view);
-            
-            CAImageView* imageView = NULL;
-            CCLabelTTF* title = NULL;
-            
-            if (m_pItems.at(i)->getImage())
-            {
-                imageView = CAImageView::createWithImage(m_pItems.at(i)->getImage());
-                imageView->setTag(0xffff);
-                view->addSubview(imageView);
-            }
-            
-            
-            if (m_pItems.at(i)->getTitle().compare("") != 0)
-            {
-                int fontSize = this->getContentSize().height / 5.0f;
-                title = CCLabelTTF::create(m_pItems.at(i)->getTitle().c_str(), "fonts/arial.ttf", fontSize);
-                title->setColor(ccWHITE);
-                title->setTag(0xfffe);
-                view->addSubview(title);
-            }
-            
-            
-            if (imageView && title == NULL)
-            {
-                CCSize imageViewSize = imageView->getBounds().size;
-                float scaleX = width / imageViewSize.width * 0.667f;
-                float scaleY = height / imageViewSize.height * 0.667f;
-                float scale = MIN(scaleX, scaleY);
-                scale = MIN(scale, 1.0f);
-                imageViewSize = ccpMult(imageViewSize, scale);
-                
-                CCRect rect;
-                rect.origin = view->getBounds().size/2;
-                rect.size = imageViewSize;
-                
-                imageView->setCenter(rect);
-    
-            }
-            else if (title && imageView == NULL)
-            {
-                int fontSize = this->getContentSize().height / 2;
-                title->setFontSize(fontSize);
-                
-                CCSize titleSize = title->getBounds().size;
-                float titleScale = height / titleSize.height / 2;
-                titleSize = ccpMult(titleSize, titleScale);
-                
-                CCRect rect;
-                rect.origin = view->getBounds().size/2;
-                rect.size = titleSize;
-                
-                title->setCenter(rect);
-            }
-            else if (title && imageView)
-            {
-
-                CCSize imageViewSize = imageView->getBounds().size;
-                float scaleX = width / imageViewSize.width / 2;
-                float scaleY = height / imageViewSize.height / 2;
-                float scale = MIN(scaleX, scaleY);
-                scale = MIN(scale, 1.0f);
-                imageViewSize = ccpMult(imageViewSize, scale);
- 
-                CCRect rect;
-                rect.size = imageViewSize;
-                rect.origin = view->getBounds().size;
-                rect.origin.x *= 1/2.0f;
-                rect.origin.y *= 7/20.0f;
-                imageView->setCenter(rect);
-
-                CCSize titleSize = title->getBounds().size;
-                float titleScale = height / titleSize.height * 3/10;
-                titleSize = ccpMult(titleSize, titleScale);
-                
-                CCRect rect2;
-                rect2.size = titleSize;
-                rect2.origin = view->getBounds().size;
-                rect2.origin.x *= 1/2.0f;
-                rect2.origin.y *= 15/20.0f;
-                title->setCenter(rect2);
-                
-            }
+            m_pSelectedBackGroundImage = CAImage::create("tabBarController_selected_bg.png");
         }
+        m_pSegmentedControl->setBackgroundImageAtIndex(m_pSelectedBackGroundImage, i, CAControlStateHighlighted);
+        m_pSegmentedControl->setBackgroundImageAtIndex(m_pSelectedBackGroundImage, i, CAControlStateSelected);
     }
-    while (0);
-}
+    m_cItemSize = m_pSegmentedControl->getItemSize();
 
-void CATabBar::showSelectedBackGround()
-{
-    if (m_pSelectedBackGround)
-    {
-        m_pSelectedBackGround->removeFromSuperview();
-        m_pSelectedBackGround=NULL;
-    }
-    
-    if (m_pSelectedBackGroundImage == NULL)
-    {
-        m_pSelectedBackGroundImage = CAImage::create("tabBarController_selected_bg.png");
-    }
-
-    m_pSelectedBackGround = CAScale9ImageView::createWithImage(m_pSelectedBackGroundImage);
-    ((CAScale9ImageView*)m_pSelectedBackGround)->setPreferredSize(m_cItemSize);
-    this->addSubview(m_pSelectedBackGround);
 }
 
 void CATabBar::showSelectedIndicator()
@@ -554,70 +458,31 @@ void CATabBar::setSelectedAtIndex(int index)
         CC_BREAK_IF(index < 0);
         CC_BREAK_IF(index >= m_pItems.size());
         
-        if (m_pSelectedItem && m_pSelectedItem->getSelectedImage())
-        {
-            CAView* viewLast = m_pViews.at(m_nSelectedIndex);
-            if (CAImageView* imageView = dynamic_cast<CAImageView*>(viewLast->getSubviewByTag(0xffff)))
-            {
-                imageView->setImage(m_pSelectedItem->getImage());
-            }
-        }
-        
         m_nSelectedIndex = index;
+        m_pSelectedItem = m_pItems.at(m_nSelectedIndex);
         
         CC_BREAK_IF(!m_bRunning);
-        
-        m_pSelectedItem = m_pItems.at(m_nSelectedIndex);
-        m_pSelectedBackGround->setFrame(m_pViews.at(m_nSelectedIndex)->getFrame());
         
         if (m_pSelectedIndicator)
         {
             ((CAScale9ImageView*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
             m_pSelectedIndicator->stopAllActions();
-            CCPoint p = CCPoint(m_pSelectedBackGround->getFrame().origin.x, m_pSelectedBackGround->getFrame().size.height);
+            CCPoint p = m_cItemSize;
+            p.x *= m_nSelectedIndex;
             CCMoveTo* moveTo = CCMoveTo::create(0.3f, p);
             CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
             m_pSelectedIndicator->runAction(easeBack);
         }
         
-        if (m_pSelectedItem->getSelectedImage())
-        {
-            CAView* view = m_pViews.at(m_nSelectedIndex);
-            if (CAImageView* imageView = dynamic_cast<CAImageView*>(view->getSubviewByTag(0xffff)))
-            {
-                imageView->setImage(m_pSelectedItem->getSelectedImage());
-            }
-        }
-        
+        m_pSegmentedControl->setSelectedAtIndex(index);
         m_pDelegate->tabBarSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
     }
     while (0);
 }
 
-bool CATabBar::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+void CATabBar::setTouchSelected(cocos2d::CAControl *control, cocos2d::CCPoint point)
 {
-    return true;
-}
-
-void CATabBar::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
-{
-    
-}
-
-void CATabBar::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
-{
-    CCPoint point = pTouch->getLocation();
-    point = this->convertToNodeSpace(point);
-    
-    if (this->getBounds().containsPoint(point))
-    {
-        this->setSelectedAtIndex((int)(point.x / m_cItemSize.width));
-    }
-}
-
-void CATabBar::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
-{
-    this->ccTouchEnded(pTouch, pEvent);
+    this->setSelectedAtIndex(m_pSegmentedControl->getselectedIndex());
 }
 
 

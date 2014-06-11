@@ -265,7 +265,7 @@ void CAImageView::setImage(CAImage* image)
     {
         rect = this->getCenter();
     }
-    
+
     CAView::setImage(image);
     
     if (this->isFrame())
@@ -274,7 +274,7 @@ void CAImageView::setImage(CAImage* image)
     }
     else
     {
-        this->CAView::setCenter(rect);
+        this->setCenter(rect);
     }
 }
 

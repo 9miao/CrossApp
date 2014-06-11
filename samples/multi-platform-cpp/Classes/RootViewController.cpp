@@ -195,6 +195,7 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     CCSize size = this->getView()->getBounds().size;
     
     CAButton* btn = CAButton::createWithCenter(CCRect(size.width - 100, 60, 120, 100), CAButtonTypeRoundedRect);
+    btn->setImageForState(CAControlStateAll, CAImage::create("2.jpg"));
     btn->setTitleForState(CAControlStateAll, "button");
     cell->addSubview(btn);
     btn->setAllowsSelected(true);
