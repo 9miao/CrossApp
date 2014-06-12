@@ -128,17 +128,18 @@ CATabBarItem::~CATabBarItem()
     CC_SAFE_RELEASE_NULL(m_pSelectedImage);
 }
 
-bool CATabBarItem::init(std::string title, CAImage* image)
+bool CATabBarItem::init(std::string title, CAImage* image, CAImage* selectedImage)
 {
     this->setTitle(title);
     this->setImage(image);
+    this->setSelectedImage(selectedImage);
     return true;
 }
 
-CATabBarItem* CATabBarItem::create(std::string title, CAImage* image)
+CATabBarItem* CATabBarItem::create(std::string title, CAImage* image, CAImage* selectedImage)
 {
     CATabBarItem* item = new CATabBarItem();
-    if (item && item->init(title, image))
+    if (item && item->init(title, image, selectedImage))
     {
         item->autorelease();
         return item;

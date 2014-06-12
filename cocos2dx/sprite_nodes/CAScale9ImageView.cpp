@@ -26,6 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CAScale9ImageView.h"
+#include "CABatchView.h"
 
 NS_CC_BEGIN
 
@@ -49,7 +50,7 @@ CAScale9ImageView::CAScale9ImageView()
 , m_insetBottom(0)
 , m_bSpritesGenerated(false)
 , m_positionsAreDirty(false)
-, m_pImage(NULL)
+, _scale9Image(NULL)
 , _topLeft(NULL)
 , _top(NULL)
 , _topRight(NULL)
@@ -77,7 +78,7 @@ CAScale9ImageView::~CAScale9ImageView()
     CC_SAFE_RELEASE(_bottomLeft);
     CC_SAFE_RELEASE(_bottom);
     CC_SAFE_RELEASE(_bottomRight);
-    CC_SAFE_RELEASE(m_pImage);
+    CC_SAFE_RELEASE(_scale9Image);
 }
 
 bool CAScale9ImageView::init()
@@ -92,7 +93,7 @@ bool CAScale9ImageView::init()
 #define    TRANSLATE_Y(x, y, ytranslate) \
     y+=ytranslate;                       \
 
-bool CAScale9ImageView::updateWithImage(CAImage* image, CCRect rect, CCRect capInsets)
+bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, CCRect capInsets)
 {
     GLubyte opacity = getOpacity();
     ccColor3B color = getColor();
@@ -110,7 +111,12 @@ bool CAScale9ImageView::updateWithImage(CAImage* image, CCRect rect, CCRect capI
     CC_SAFE_RELEASE(this->_bottom);
     CC_SAFE_RELEASE(this->_bottomRight);
 
-    this->setImage(image);
+    if(this->_scale9Image != batch)
+    {
+        CC_SAFE_RELEASE(this->_scale9Image);
+        _scale9Image = batch;
+        CC_SAFE_RETAIN(_scale9Image);
+    }
     
     this->removeAllSubviews();
     m_capInsets = capInsets;
@@ -119,12 +125,13 @@ bool CAScale9ImageView::updateWithImage(CAImage* image, CCRect rect, CCRect capI
     if ( rect.equals(CCRectZero) )
     {
         // Get the Image size as original
-        CCSize textureSize = image->getContentSize();
+        CCSize textureSize = _scale9Image->getImageAtlas()->getImage()->getContentSize();
         
         rect = CCRectMake(0, 0, textureSize.width, textureSize.height);
     }
     
     this->setContentSize(rect.size);
+    
     // Set the given rect's size as original size
     m_spriteRect = rect;
     m_originalSize = rect.size;
@@ -223,59 +230,59 @@ bool CAScale9ImageView::updateWithImage(CAImage* image, CCRect rect, CCRect capI
     
     // Centre
     _centre = new CAImageView();
-    _centre->initWithImage(m_pImage, centerbounds);
+    _centre->initWithImage(_scale9Image->getImage(), centerbounds);
     _centre->setTag(pCentre);
-    this->insertSubview(_centre, 0);
+    _scale9Image->insertSubview(_centre, 0);
     
     // Top
     _top = new CAImageView();
-    _top->initWithImage(m_pImage, centertopbounds);
+    _top->initWithImage(_scale9Image->getImage(), centertopbounds);
     _top->setTag(pTop);
-    this->insertSubview(_top, 1);
+    _scale9Image->insertSubview(_top, 1);
     
     // Bottom
     _bottom = new CAImageView();
-    _bottom->initWithImage(m_pImage, centerbottombounds);
+    _bottom->initWithImage(_scale9Image->getImage(), centerbottombounds);
     _bottom->setTag(pBottom);
-    this->insertSubview(_bottom, 1);
+    _scale9Image->insertSubview(_bottom, 1);
     
     // Left
     _left = new CAImageView();
-    _left->initWithImage(m_pImage, leftcenterbounds);
+    _left->initWithImage(_scale9Image->getImage(), leftcenterbounds);
     _left->setTag(pLeft);
-    this->insertSubview(_left, 1);
+    _scale9Image->insertSubview(_left, 1);
     
     // Right
     _right = new CAImageView();
-    _right->initWithImage(m_pImage, rightcenterbounds);
+    _right->initWithImage(_scale9Image->getImage(), rightcenterbounds);
     _right->setTag(pRight);
-    this->insertSubview(_right, 1);
+    _scale9Image->insertSubview(_right, 1);
     
     // Top left
     _topLeft = new CAImageView();
-    _topLeft->initWithImage(m_pImage, lefttopbounds);
+    _topLeft->initWithImage(_scale9Image->getImage(), lefttopbounds);
     _topLeft->setTag(pTopLeft);
-    this->insertSubview(_topLeft, 2);
+    _scale9Image->insertSubview(_topLeft, 2);
     
     // Top right
     _topRight = new CAImageView();
-    _topRight->initWithImage(m_pImage, righttopbounds);
+    _topRight->initWithImage(_scale9Image->getImage(), righttopbounds);
     _topRight->setTag(pTopRight);
-    this->insertSubview(_topRight, 2);
+    _scale9Image->insertSubview(_topRight, 2);
     
     // Bottom left
     _bottomLeft = new CAImageView();
-    _bottomLeft->initWithImage(m_pImage, leftbottombounds);
+    _bottomLeft->initWithImage(_scale9Image->getImage(), leftbottombounds);
     _bottomLeft->setTag(pBottomLeft);
-    this->insertSubview(_bottomLeft, 2);
+    _scale9Image->insertSubview(_bottomLeft, 2);
     
     // Bottom right
     _bottomRight = new CAImageView();
-    _bottomRight->initWithImage(m_pImage, rightbottombounds);
+    _bottomRight->initWithImage(_scale9Image->getImage(), rightbottombounds);
     _bottomRight->setTag(pBottomRight);
-    this->insertSubview(_bottomRight, 2);
-    this->setContentSize(rect.size);
+    _scale9Image->insertSubview(_bottomRight, 2);
     
+
     _bottomLeft->setAnchorPoint(CCPoint(0,0));
     _bottomRight->setAnchorPoint(CCPoint(0,0));
     _topLeft->setAnchorPoint(CCPoint(0,0));
@@ -285,6 +292,8 @@ bool CAScale9ImageView::updateWithImage(CAImage* image, CCRect rect, CCRect capI
     _top->setAnchorPoint(CCPoint(0,0));
     _bottom->setAnchorPoint(CCPoint(0,0));
     _centre->setAnchorPoint(CCPoint(0,0));
+    
+    this->addSubview(_scale9Image);
     
     if (m_bSpritesGenerated)
         {
@@ -363,7 +372,7 @@ bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect, CCRect capIns
 {
     if (image)
     {
-        this->updateWithImage(image, rect, capInsets);
+        this->updateWithImage(CABatchView::createWithImage(image), rect, capInsets);
         this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     }
     this->m_positionsAreDirty = true;
@@ -446,7 +455,7 @@ CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image)
 CAScale9ImageView* CAScale9ImageView::resizableSpriteWithCapInsets(CCRect capInsets)
 {
     CAScale9ImageView* pReturn = new CAScale9ImageView();
-    if ( pReturn && pReturn->initWithImage(m_pImage, m_spriteRect, capInsets) )
+    if ( pReturn && pReturn->initWithImage(_scale9Image->getImage(), m_spriteRect, capInsets) )
     {
         pReturn->autorelease();
         return pReturn;
@@ -491,8 +500,8 @@ void CAScale9ImageView::setCapInsets(CCRect capInsets)
 {
     do
     {
-        CC_BREAK_IF(m_pImage == NULL);
-        this->updateWithImage(m_pImage, this->m_spriteRect, capInsets);
+        CC_BREAK_IF(_scale9Image == NULL);
+        this->updateWithImage(_scale9Image, this->m_spriteRect, capInsets);
     }
     while (0);
     
@@ -524,7 +533,7 @@ void CAScale9ImageView::setOpacityModifyRGB(bool var)
 {
     do
     {
-        CC_BREAK_IF(m_pImage == NULL);
+        CC_BREAK_IF(_scale9Image == NULL);
         
         _opacityModifyRGB = var;
         CCObject* child;

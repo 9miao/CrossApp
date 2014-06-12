@@ -99,6 +99,7 @@ sprite_nodes/CCSpriteFrameCache.cpp \
 sprite_nodes/CAScale9ImageView.cpp \
 sprite_nodes/CAWindow.cpp \
 sprite_nodes/CAView.cpp \
+sprite_nodes/CABatchView.cpp \
 ui_controller/CAViewController.cpp \
 ui_controller/CABarItem.cpp \
 ui_controller/CABar.cpp \
@@ -134,6 +135,7 @@ images/CAImage.cpp \
 images/CAImageCache.cpp \
 images/CAImageETC.cpp \
 images/CAImagePVR.cpp \
+images/CAImageAtlas.cpp \
 touch_dispatcher/CATouchDispatcher.cpp \
 touch_dispatcher/CCTouch.cpp
 

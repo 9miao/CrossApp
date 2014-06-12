@@ -248,6 +248,8 @@
 		469A7DFA16C247C8006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DF816C247C8006FFCB2 /* tinyxml2.h */; };
 		46A3939A16E03F4D00210B16 /* ccFPSImages.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A3939816E03F4D00210B16 /* ccFPSImages.c */; };
 		46A3939B16E03F4D00210B16 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A3939916E03F4D00210B16 /* ccFPSImages.h */; };
+		B00E512D1949BA5400400911 /* CABatchView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00E512B1949BA5400400911 /* CABatchView.cpp */; };
+		B00E512E1949BA5400400911 /* CABatchView.h in Headers */ = {isa = PBXBuildFile; fileRef = B00E512C1949BA5400400911 /* CABatchView.h */; };
 		B020AF581929C2CF009FFA81 /* CATextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B020AF571929C2CF009FFA81 /* CATextField.cpp */; };
 		B020AF5A1929C2D4009FFA81 /* CATextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B020AF591929C2D4009FFA81 /* CATextField.h */; };
 		B020AF781929DE41009FFA81 /* CCIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B020AF751929DE41009FFA81 /* CCIMEDelegate.h */; };
@@ -546,6 +548,8 @@
 		469A7DF816C247C8006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		46A3939816E03F4D00210B16 /* ccFPSImages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccFPSImages.c; sourceTree = "<group>"; };
 		46A3939916E03F4D00210B16 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
+		B00E512B1949BA5400400911 /* CABatchView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CABatchView.cpp; sourceTree = "<group>"; };
+		B00E512C1949BA5400400911 /* CABatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABatchView.h; sourceTree = "<group>"; };
 		B020AF571929C2CF009FFA81 /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
 		B020AF591929C2D4009FFA81 /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
 		B020AF751929DE41009FFA81 /* CCIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDelegate.h; sourceTree = "<group>"; };
@@ -963,6 +967,8 @@
 		1551A5DA158F2ADE00E66CFE /* sprite_nodes */ = {
 			isa = PBXGroup;
 			children = (
+				B00E512B1949BA5400400911 /* CABatchView.cpp */,
+				B00E512C1949BA5400400911 /* CABatchView.h */,
 				B0AD937C192077B600EA40BB /* CAWindow.cpp */,
 				B0AD937D192077B600EA40BB /* CAWindow.h */,
 				1551A5DB158F2ADE00E66CFE /* CCAnimation.cpp */,
@@ -1333,6 +1339,7 @@
 				1551A845158F2ADF00E66CFE /* CCVertex.h in Headers */,
 				B036EB4D19406491000434DD /* CADateSpinner.h in Headers */,
 				1551A847158F2ADF00E66CFE /* ccCArray.h in Headers */,
+				B00E512E1949BA5400400911 /* CABatchView.h in Headers */,
 				1551A848158F2ADF00E66CFE /* uthash.h in Headers */,
 				1551A849158F2ADF00E66CFE /* utlist.h in Headers */,
 				1551A84B158F2ADF00E66CFE /* TGAlib.h in Headers */,
@@ -1501,6 +1508,7 @@
 				B0B553B3193480470065053D /* CAImageETC.cpp in Sources */,
 				B0B553BC193484610065053D /* CAImageView.cpp in Sources */,
 				B099B73619209FEE004339EC /* CAView.cpp in Sources */,
+				B00E512D1949BA5400400911 /* CABatchView.cpp in Sources */,
 				B0B553A419347E8B0065053D /* CAScheduler.cpp in Sources */,
 				1551A71C158F2ADE00E66CFE /* CCEGLViewProtocol.cpp in Sources */,
 				1551A724158F2ADE00E66CFE /* CCSAXParser.cpp in Sources */,

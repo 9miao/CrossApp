@@ -251,6 +251,10 @@
 		46A393F716E5D01B00210B16 /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A393F316E5D01B00210B16 /* CCUserDefault.h */; };
 		46A393F816E5D01B00210B16 /* CCUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F416E5D01B00210B16 /* CCUserDefault.mm */; };
 		46A393F916E5D01B00210B16 /* CCUserDefaultAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */; };
+		B00E51321949CE3300400911 /* CABatchView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00E51301949CE3300400911 /* CABatchView.cpp */; };
+		B00E51331949CE3300400911 /* CABatchView.h in Headers */ = {isa = PBXBuildFile; fileRef = B00E51311949CE3300400911 /* CABatchView.h */; };
+		B00E51361949CE3E00400911 /* CAImageAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00E51341949CE3E00400911 /* CAImageAtlas.cpp */; };
+		B00E51371949CE3E00400911 /* CAImageAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = B00E51351949CE3E00400911 /* CAImageAtlas.h */; };
 		B020AF6A1929CE70009FFA81 /* CATextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B020AF651929CE70009FFA81 /* CATextField.cpp */; };
 		B020AF6B1929CE70009FFA81 /* CATextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B020AF661929CE70009FFA81 /* CATextField.h */; };
 		B020AF6E1929CE7E009FFA81 /* CALabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B020AF6C1929CE7E009FFA81 /* CALabel.cpp */; };
@@ -553,6 +557,10 @@
 		46A393F316E5D01B00210B16 /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
 		46A393F416E5D01B00210B16 /* CCUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUserDefault.mm; sourceTree = "<group>"; };
 		46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefaultAndroid.cpp; sourceTree = "<group>"; };
+		B00E51301949CE3300400911 /* CABatchView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CABatchView.cpp; sourceTree = "<group>"; };
+		B00E51311949CE3300400911 /* CABatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABatchView.h; sourceTree = "<group>"; };
+		B00E51341949CE3E00400911 /* CAImageAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageAtlas.cpp; sourceTree = "<group>"; };
+		B00E51351949CE3E00400911 /* CAImageAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageAtlas.h; sourceTree = "<group>"; };
 		B020AF651929CE70009FFA81 /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
 		B020AF661929CE70009FFA81 /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
 		B020AF6C1929CE7E009FFA81 /* CALabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALabel.cpp; sourceTree = "<group>"; };
@@ -1007,6 +1015,8 @@
 		1551A5DA158F2ADE00E66CFE /* sprite_nodes */ = {
 			isa = PBXGroup;
 			children = (
+				B00E51301949CE3300400911 /* CABatchView.cpp */,
+				B00E51311949CE3300400911 /* CABatchView.h */,
 				B0B553C1193485950065053D /* CAImageView.cpp */,
 				B0B553C2193485950065053D /* CAImageView.h */,
 				B0B553C3193485950065053D /* CAScale9ImageView.cpp */,
@@ -1214,6 +1224,8 @@
 		B0B553CD193485BE0065053D /* images */ = {
 			isa = PBXGroup;
 			children = (
+				B00E51341949CE3E00400911 /* CAImageAtlas.cpp */,
+				B00E51351949CE3E00400911 /* CAImageAtlas.h */,
 				B0B553CE193485BE0065053D /* CAImage.cpp */,
 				B0B553CF193485BE0065053D /* CAImage.h */,
 				B0B553D0193485BE0065053D /* CAImageCache.cpp */,
@@ -1259,6 +1271,7 @@
 				EAFDBC10193DC74E002061B8 /* CASlider.h in Headers */,
 				1551A657158F2ADE00E66CFE /* CCDictionary.h in Headers */,
 				1551A659158F2ADE00E66CFE /* CCGeometry.h in Headers */,
+				B00E51331949CE3300400911 /* CABatchView.h in Headers */,
 				1551A65A158F2ADE00E66CFE /* CCInteger.h in Headers */,
 				1551A65C158F2ADE00E66CFE /* CCNS.h in Headers */,
 				1551A65E158F2ADE00E66CFE /* CCObject.h in Headers */,
@@ -1271,6 +1284,7 @@
 				1551A6B1158F2ADE00E66CFE /* ccConfig.h in Headers */,
 				1551A6B2158F2ADE00E66CFE /* CCEventType.h in Headers */,
 				1551A6B3158F2ADE00E66CFE /* ccMacros.h in Headers */,
+				B00E51371949CE3E00400911 /* CAImageAtlas.h in Headers */,
 				1551A6B4158F2ADE00E66CFE /* CCProtocols.h in Headers */,
 				1551A6B5158F2ADE00E66CFE /* ccTypes.h in Headers */,
 				1551A6B6158F2ADE00E66CFE /* cocos2d.h in Headers */,
@@ -1454,6 +1468,7 @@
 			files = (
 				B020AF721929DC7A009FFA81 /* CCLabelTTF.cpp in Sources */,
 				1551A628158F2ADE00E66CFE /* CCAction.cpp in Sources */,
+				B00E51361949CE3E00400911 /* CAImageAtlas.cpp in Sources */,
 				B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */,
 				1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */,
 				1551A62C158F2ADE00E66CFE /* CCActionCatmullRom.cpp in Sources */,
@@ -1461,6 +1476,7 @@
 				1551A630158F2ADE00E66CFE /* CCActionGrid.cpp in Sources */,
 				1551A632158F2ADE00E66CFE /* CCActionGrid3D.cpp in Sources */,
 				1551A634158F2ADE00E66CFE /* CCActionInstant.cpp in Sources */,
+				B00E51321949CE3300400911 /* CABatchView.cpp in Sources */,
 				1551A636158F2ADE00E66CFE /* CCActionInterval.cpp in Sources */,
 				B042B4F919419F43006ABC19 /* CAResponder.cpp in Sources */,
 				1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */,

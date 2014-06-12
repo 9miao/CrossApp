@@ -17,6 +17,7 @@
 #include "touch_dispatcher/CCTouch.h"
 #include "actions/CCActionManager.h"
 #include "shaders/CCGLProgram.h"
+#include "CABatchView.h"
 // externals
 #include "kazmath/GL/matrix.h"
 #include "support/component/CCComponent.h"
@@ -37,6 +38,17 @@
 #else
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
+
+#define SET_DIRTY_RECURSIVELY() {                                       \
+                        if (m_pobBatchView && ! m_bRecursiveDirty)      \
+                        {                                               \
+                            m_bRecursiveDirty = true;                   \
+                            setDirty(true);                             \
+                            if (m_bHasChildren)                         \
+                                setDirtyRecursively(true);              \
+                        }                                               \
+                    }
+
 
 NS_CC_BEGIN;
 
@@ -124,6 +136,9 @@ CAView::CAView(void)
     
     this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     
+    m_pobBatchView = NULL;
+    m_pobImageAtlas = NULL;
+    
     ++viewCount;
 //    CCLog("CAView = %d\n",viewCount);
 }
@@ -181,6 +196,7 @@ CAView * CAView::create(void)
 
 bool CAView::init()
 {
+    
     return true;
 }
 
@@ -834,6 +850,7 @@ void CAView::reViewlayout()
 
 void CAView::updateDraw()
 {
+    SET_DIRTY_RECURSIVELY();
     if (this->getSuperview())
     {
         this->reViewlayout();
@@ -876,6 +893,16 @@ void CAView::insertSubview(CAView* subview, int z)
     CCAssert( subview != NULL, "Argument must be non-nil");
     CCAssert( subview->m_pSuperview == NULL, "child already added. It can't be added again");
     
+    if (m_pobBatchView)
+    {
+        m_pobBatchView->appendChild(subview);
+        
+        if (!m_bReorderChildDirty)
+        {
+            setReorderChildDirtyRecursively();
+        }
+    }
+    
     if(m_pSubviews == NULL)
     {
         this->childrenAlloc();
@@ -913,6 +940,11 @@ void CAView::removeSubview(CAView* subview)
         return;
     }
     
+    if (m_pobBatchView)
+    {
+        m_pobBatchView->removeSpriteFromAtlas(subview);
+    }
+    
     if ( m_pSubviews->containsObject(subview) )
     {
         this->detachSubview(subview);
@@ -941,30 +973,44 @@ void CAView::removeAllSubviews()
     // not using detachChild improves speed here
     if ( m_pSubviews && m_pSubviews->count() > 0 )
     {
-        CCObject* subview;
-        CCARRAY_FOREACH(m_pSubviews, subview)
+        if (m_pobBatchView)
         {
-            CAView* pNode = (CAView*) subview;
-            if (pNode)
+            CCObject* obj = NULL;
+            CCARRAY_FOREACH(m_pSubviews, obj)
+            {
+                CAView* subview = dynamic_cast<CAView*>(obj);
+                if (subview)
+                {
+                    m_pobBatchView->removeSpriteFromAtlas(subview);
+                }
+            }
+        }
+        
+        CCObject* obj;
+        CCARRAY_FOREACH(m_pSubviews, obj)
+        {
+            CAView* subview = dynamic_cast<CAView*>(obj);
+            if (subview)
             {
                 // IMPORTANT:
                 //  -1st do onExit
                 //  -2nd cleanup
                 if(m_bRunning)
                 {
-                    pNode->onExitTransitionDidStart();
-                    pNode->onExit();
+                    subview->onExitTransitionDidStart();
+                    subview->onExit();
                 }
                 
-                pNode->cleanup();
+                subview->cleanup();
                 // set parent nil at the end
-                pNode->setSuperview(NULL);
+                subview->setSuperview(NULL);
             }
         }
         
         m_pSubviews->removeAllObjects();
     }
     
+    m_bHasChildren = false;
 }
 
 
@@ -991,6 +1037,17 @@ void CAView::detachSubview(CAView *subview)
 
 void CAView::reorderSubview(CAView *subview, int zOrder)
 {
+    if (zOrder == subview->getZOrder())
+    {
+        return;
+    }
+    
+    if( m_pobBatchView && ! m_bReorderChildDirty)
+    {
+        setReorderChildDirtyRecursively();
+        m_pobBatchView->reorderBatch(true);
+    }
+    
     CCAssert( subview != NULL, "Child must be non-nil");
     m_bReorderChildDirty = true;
     subview->setOrderOfArrival(s_globalOrderOfArrival++);
@@ -1022,11 +1079,17 @@ void CAView::sortAllSubviews()
         
         //don't need to check children recursively, that's done in visit of each child
         
+        if ( m_pobBatchView)
+        {
+            arrayMakeObjectsPerformSelector(m_pSubviews, sortAllSubviews, CAView*);
+        }
+        
         m_bReorderChildDirty = false;
     }
 }
 
 #include "CAImageView.h"
+
 void CAView::draw()
 {
     //CCAssert(0);
@@ -1038,8 +1101,6 @@ void CAView::draw()
         return;
     
     CC_NODE_DRAW_SETUP();
-    
-    //arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAView*);
     
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
     
@@ -1589,7 +1650,7 @@ void CAView::updateTransform()
     if(m_pobImage && isDirty() ) {
         
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
-        if( !m_bVisible || ( m_pSuperview && ((CAImageView*)m_pSuperview)->m_bShouldBeHidden) )
+        if( !m_bVisible || ( m_pSuperview && m_pSuperview != m_pobBatchView && m_pSuperview->m_bShouldBeHidden) )
         {
             m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = vertex3(0,0,0);
             m_bShouldBeHidden = true;
@@ -1598,7 +1659,7 @@ void CAView::updateTransform()
         {
             m_bShouldBeHidden = false;
             
-            if( ! m_pSuperview)
+            if( ! m_pSuperview || m_pSuperview == m_pobBatchView)
             {
                 m_transformToBatch = nodeToParentTransform();
             }
@@ -1645,6 +1706,10 @@ void CAView::updateTransform()
         }
         
         // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / Image ATLAS
+        if (m_pobImageAtlas)
+		{
+            m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+        }
         
         m_bRecursiveDirty = false;
         setDirty(false);
@@ -1830,10 +1895,13 @@ void CAView::setCascadeColorEnabled(bool cascadeColorEnabled)
 
 void CAView::setImage(CAImage* image)
 {
-    CC_SAFE_RETAIN(image);
-    CC_SAFE_RELEASE(m_pobImage);
-    m_pobImage = image;
-    updateBlendFunc();
+    if (!m_pobBatchView)
+    {
+        CC_SAFE_RETAIN(image);
+        CC_SAFE_RELEASE(m_pobImage);
+        m_pobImage = image;
+        updateBlendFunc();
+    }
 }
 
 CAImage* CAView::getImage(void)
@@ -1874,19 +1942,29 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
     m_obOffsetPosition.x = relativeOffset.x + (m_obContentSize.width - m_obRect.size.width) / 2;
     m_obOffsetPosition.y = relativeOffset.y + (m_obContentSize.height - m_obRect.size.height) / 2;
     
-    // self rendering
+    if (m_pobBatchView)
+    {
+        // update dirty_, don't update recursiveDirty_
+        setDirty(true);
+    }
+    else
+    {
+        // self rendering
+        
+        // Atlas: Vertex
+        float x1 = 0 + m_obOffsetPosition.x;
+        float y1 = 0 + m_obOffsetPosition.y;
+        float x2 = x1 + m_obRect.size.width;
+        float y2 = y1 + m_obRect.size.height;
+        
+        // Don't update Z.
+        m_sQuad.bl.vertices = vertex3(x1, y1, 0);
+        m_sQuad.br.vertices = vertex3(x2, y1, 0);
+        m_sQuad.tl.vertices = vertex3(x1, y2, 0);
+        m_sQuad.tr.vertices = vertex3(x2, y2, 0);
+    }
     
-    // Atlas: Vertex
-    float x1 = 0 + m_obOffsetPosition.x;
-    float y1 = 0 + m_obOffsetPosition.y;
-    float x2 = x1 + m_obRect.size.width;
-    float y2 = y1 + m_obRect.size.height;
     
-    // Don't update Z.
-    m_sQuad.bl.vertices = vertex3(x1, y1, 0);
-    m_sQuad.br.vertices = vertex3(x2, y1, 0);
-    m_sQuad.tl.vertices = vertex3(x1, y2, 0);
-    m_sQuad.tr.vertices = vertex3(x2, y2, 0);
 }
 
 // override this method to generate "double scale" sprites
@@ -1899,7 +1977,7 @@ void CAView::setImageCoords(CCRect rect)
 {
     rect = CC_RECT_POINTS_TO_PIXELS(rect);
     
-    CAImage* tex = m_pobImage;
+    CAImage* tex = m_pobBatchView ? m_pobImageAtlas->getImage() : m_pobImage;
     if (! tex)
     {
         return;
@@ -2000,6 +2078,20 @@ void CAView::updateColor(void)
     m_sQuad.tl.colors = color4;
     m_sQuad.tr.colors = color4;
     
+    if (m_pobBatchView)
+    {
+        if (m_uAtlasIndex != 0xffffffff)
+        {
+            m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+        }
+        else
+        {
+            // no need to set it recursively
+            // update dirty_, don't update recursiveDirty_
+            setDirty(true);
+        }
+    }
+    
     this->updateDraw();
     // self render
     // do nothing
@@ -2043,7 +2135,7 @@ void CAView::setReorderChildDirtyRecursively(void)
     {
         m_bReorderChildDirty = true;
         CAView* pNode = (CAView*)m_pSuperview;
-        while (pNode)
+        while (pNode && pNode != m_pobBatchView)
         {
             pNode->setReorderChildDirtyRecursively();
             pNode=pNode->getSuperview();
@@ -2139,5 +2231,32 @@ void CAView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
     }
 }
 
+void CAView::setBatch(CABatchView *batchView)
+{
+    m_pobBatchView = batchView; // weak reference
+    
+    // self render
+    if( ! m_pobBatchView ) {
+        m_uAtlasIndex = 0xffffffff;
+        setImageAtlas(NULL);
+        m_bRecursiveDirty = false;
+        setDirty(false);
+        
+        float x1 = m_obOffsetPosition.x;
+        float y1 = m_obOffsetPosition.y;
+        float x2 = x1 + m_obRect.size.width;
+        float y2 = y1 + m_obRect.size.height;
+        m_sQuad.bl.vertices = vertex3( x1, y1, 0 );
+        m_sQuad.br.vertices = vertex3( x2, y1, 0 );
+        m_sQuad.tl.vertices = vertex3( x1, y2, 0 );
+        m_sQuad.tr.vertices = vertex3( x2, y2, 0 );
+        
+    } else {
+        
+        // using batch
+        m_transformToBatch = CCAffineTransformIdentity;
+        setImageAtlas(m_pobBatchView->getImageAtlas()); // weak ref
+    }
+}
 
 NS_CC_END;

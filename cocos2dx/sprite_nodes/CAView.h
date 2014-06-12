@@ -21,6 +21,8 @@
 #include "platform/CCAccelerometerDelegate.h"
 #include "keypad_dispatcher/CCKeypadDelegate.h"
 #include "cocoa/CAResponder.h"
+#include "images/CAImageAtlas.h"
+
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -41,7 +43,7 @@ class CCDictionary;
 class CCComponentContainer;
 class CAImage;
 class CAViewDelegate;
-
+class CABatchView;
 struct transformValues_;
 
 
@@ -585,6 +587,8 @@ public:
     
     void setFlipY(bool bFlipY);
     
+    void setBatch(CABatchView* batchView);
+    
 public:
     
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
@@ -611,11 +615,11 @@ protected:
     
     virtual void setImageCoords(CCRect rect);
     
-    virtual void updateBlendFunc(void);
-    
     virtual void setReorderChildDirtyRecursively(void);
     
     virtual void setDirtyRecursively(bool bValue);
+
+    virtual void updateBlendFunc(void);
     
 protected:
     
@@ -625,6 +629,10 @@ protected:
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bFrame, Frame);
     
+    CC_SYNTHESIZE_READONLY(CABatchView*, m_pobBatchView, Batch);
+    
+    CC_SYNTHESIZE(CAImageAtlas*, m_pobImageAtlas, ImageAtlas);
+
     float m_fRotationX;                 ///< rotation angle on x-axis
     float m_fRotationY;                 ///< rotation angle on y-axis
     

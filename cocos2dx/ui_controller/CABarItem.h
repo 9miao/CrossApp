@@ -96,7 +96,7 @@ class CC_DLL CATabBarItem
     
 public:
     
-    static CATabBarItem* create(std::string title, CAImage* image);
+    static CATabBarItem* create(std::string title, CAImage* image, CAImage* selectedImage = NULL);
     
 public:
 
@@ -104,7 +104,7 @@ public:
     
     virtual ~CATabBarItem();
     
-    bool init(std::string title, CAImage* image);
+    bool init(std::string title, CAImage* image, CAImage* selectedImage = NULL);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pSelectedImage, SelectedImage);
     

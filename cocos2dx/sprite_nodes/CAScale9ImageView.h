@@ -78,8 +78,6 @@ public:
     CC_PROPERTY(float, m_insetRight, InsetRight);
     /** Sets the bottom side inset */
     CC_PROPERTY(float, m_insetBottom, InsetBottom);
-
-    CC_SYNTHESIZE_RETAIN(CAImage*, m_pImage, Image);
     
 protected:
     bool m_bSpritesGenerated;
@@ -87,6 +85,7 @@ protected:
     CCRect m_capInsetsInternal;
     bool m_positionsAreDirty;
     
+    CABatchView* _scale9Image;
     CAImageView* _topLeft;
     CAImageView* _top;
     CAImageView* _topRight;
@@ -176,7 +175,7 @@ public:
     virtual void setColor(const ccColor3B& color);
 	virtual const ccColor3B& getColor();
 
-    virtual bool updateWithImage(CAImage* image, CCRect rect, CCRect capInsets);
+    virtual bool updateWithImage(CABatchView* batch, CCRect rect, CCRect capInsets);
 
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     virtual void updateDisplayedColor(const cocos2d::ccColor3B& parentColor);

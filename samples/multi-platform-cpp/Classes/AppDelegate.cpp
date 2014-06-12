@@ -45,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     CANavigationController* navigationController = new CANavigationController();
     navigationController->initWithRootViewController(viewController);
-    navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("h.png")));
+    navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("first_1.png"), CAImage::create("first_2.png")));
     //navigationController->setNavigationBarHidden(true, false);
     viewController->setNavigationBarItem(CANavigationBarItem::create("The Home Page"));
     
@@ -54,23 +54,23 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     ViewController* viewController2 = new ViewController();
     viewController2->init();
-    viewController2->setTabBarItem(CATabBarItem::create("Second", CAImage::create("e.png")));
+    viewController2->setTabBarItem(CATabBarItem::create("Second", CAImage::create("second_1.png"), CAImage::create("second_2.png")));
     viewController2->setNavigationBarItem(CANavigationBarItem::create("viewController2"));
     viewController2->setTitle("view2");
     
     ViewController* viewController3 = new ViewController();
     viewController3->init();
-    viewController3->setTabBarItem(CATabBarItem::create("Third", CAImage::create("a.png")));
+    viewController3->setTabBarItem(CATabBarItem::create("Third", CAImage::create("third_1.png"), CAImage::create("third_2.png")));
     viewController3->setTitle("view3");
     
     ViewController* viewController4 = new ViewController();
     viewController4->init();
-    viewController4->setTabBarItem(CATabBarItem::create("Fourth", CAImage::create("o.png")));
+    viewController4->setTabBarItem(CATabBarItem::create("Fourth", CAImage::create("fourth_1.png"), CAImage::create("fourth_2.png")));
     viewController4->setTitle("view4");
     
     FirstViewController* viewController5 = new FirstViewController();
     viewController5->init();
-    viewController5->setTabBarItem(CATabBarItem::create("Fifth", CAImage::create("s.png")));
+    viewController5->setTabBarItem(CATabBarItem::create("Fifth", CAImage::create("fifth_1.png"), CAImage::create("fifth_2.png")));
     viewController5->setTitle("view5");
     
     std::vector<CAViewController*> views;
