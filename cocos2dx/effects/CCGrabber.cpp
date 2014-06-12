@@ -70,7 +70,7 @@ void CCGrabber::beforeRender(CAImage* image)
     glGetFloatv(GL_COLOR_CLEAR_VALUE, m_oldClearColor);
     // BUG XXX: doesn't work with RGB565.
 
-    glClearColor(0, 0, 0, 0);
+    glClearColor(1.0f, 1.0f, 1.0f, 0);
 
     // BUG #631: To fix #631, uncomment the lines with #631
     // Warning: But it CCGrabber won't work with 2 effects at the same time

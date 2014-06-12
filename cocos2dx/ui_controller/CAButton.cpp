@@ -549,11 +549,16 @@ void CAButton::setControlState(CAControlState var)
         m_pImageView->setColor(m_sImageColor[m_eControlState]);
         m_pLabel->setColor(m_sTitleColor[m_eControlState]);
         
+
         if (strcmp(title.c_str(), m_pLabel->getString().c_str()))
         {
             m_pLabel->setString(title.c_str());
         }
-        m_pLabel->setFontSize(labelSize);
+        
+        if (!title.empty())
+        {
+            m_pLabel->setFontSize(labelSize);
+        }
         m_pLabel->setCenterOrigin(labelCenterOrigin);
         if (m_pLabel->getFrame().size.width > this->getBounds().size.width * 0.8f)
         {

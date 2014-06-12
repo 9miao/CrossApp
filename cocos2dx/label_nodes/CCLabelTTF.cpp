@@ -175,7 +175,7 @@ bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccFontDefin
 
 void CCLabelTTF::setString(std::string string)
 {
-    if (strcmp(string.c_str(), "") == 0)
+    if (string.empty())
     {
         this->setImageRect(CCRectZero);
         return;
@@ -268,7 +268,7 @@ void CCLabelTTF::setFontSize(float fontSize)
         m_fFontSize = fontSize;
         
         // Force update
-        if (m_string.size() > 0)
+        if (!m_string.empty())
         {
             this->updateTexture();
         }
@@ -307,7 +307,7 @@ bool CCLabelTTF::updateTexture()
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
         ccFontDefinition texDef = _prepareTextDefinition(true);
-        tex->initWithString( m_string.c_str(), &texDef );
+        image->initWithString( m_string.c_str(), &texDef );
     
     #else
     

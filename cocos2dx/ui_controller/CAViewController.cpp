@@ -22,7 +22,7 @@ CAViewController::CAViewController()
 ,m_pNavigationBarItem(NULL)
 ,m_pTabBarController(NULL)
 ,m_pTabBarItem(NULL)
-,m_sTitle("")
+,m_sTitle("The Title")
 ,m_bLifeLock(false)
 ,m_bKeypadEnabled(false)
 {
@@ -132,6 +132,36 @@ void CAViewController::setKeypadEnabled(bool enabled)
     }
 }
 
+void CAViewController::setNavigationBarItem(CANavigationBarItem* item)
+{
+    if (item)
+    {
+        CC_SAFE_RETAIN(item);
+        CC_SAFE_RELEASE(m_pNavigationBarItem);
+        m_pNavigationBarItem = item;
+        
+        if (m_pNavigationController)
+        {
+            m_pNavigationController->updateItem(this);
+        }
+    }
+}
+
+void CAViewController::setTabBarItem(CATabBarItem* item)
+{
+    if (item)
+    {
+        CC_SAFE_RETAIN(item);
+        CC_SAFE_RELEASE(m_pTabBarItem);
+        m_pTabBarItem = item;
+        
+        if (m_pTabBarController)
+        {
+            m_pTabBarController->updateItem(this);
+        }
+    }
+}
+
 #pragma CANavigationController
 
 CANavigationController::CANavigationController()
@@ -177,15 +207,29 @@ bool CANavigationController::initWithRootViewController(CAViewController* viewCo
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
-    if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
+    
+    CANavigationBarItem* item = viewController->getNavigationBarItem();
+    if (item == NULL)
     {
         viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
     }
+
     m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     
     m_eNavigationBarVerticalAlignment = var;
 
     return true;
+}
+
+void CANavigationController::updateItem(CAViewController* viewController)
+{
+    size_t index = 0;
+    while (index < m_pViewControllers.size())
+    {
+        CC_BREAK_IF(viewController->isEqual(m_pViewControllers.at(index)));
+    };
+    
+    m_pNavigationBar->replaceItemAtIndex(index, viewController->getNavigationBarItem());
 }
 
 void CANavigationController::viewDidLoad()
@@ -613,6 +657,18 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
     return true;
     
 }
+
+void CATabBarController::updateItem(CAViewController* viewController)
+{
+    size_t index = 0;
+    while (index < m_pViewControllers.size())
+    {
+        CC_BREAK_IF(viewController->isEqual(m_pViewControllers.at(index)));
+    };
+
+    m_pTabBar->replaceItemAtIndex(index, viewController->getTabBarItem());
+}
+
 
 void CATabBarController::viewDidLoad()
 {

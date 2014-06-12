@@ -55,18 +55,32 @@ void CANavigationBar::onEnterTransitionDidFinish()
     if (m_pBackGround == NULL)
     {
         this->showBackGround();
-        
-        this->showTitle();
-        
-        this->showLeftButton();
-        
-        this->showRightButton();
+        this->updateNavigationBar();
     }
 }
 
 void CANavigationBar::onExitTransitionDidStart()
 {
     CAView::onExitTransitionDidStart();
+}
+
+void CANavigationBar::replaceItemAtIndex(size_t index, CANavigationBarItem* item)
+{
+    if (index < m_pItems.size())
+    {
+        CANavigationBarItem* oldItem = m_pItems.at(index);
+        m_pItems.at(index) = item;
+        CC_SAFE_RELEASE(oldItem);
+        CC_SAFE_RETAIN(item);
+        this->updateNavigationBar();
+    }
+}
+
+void CANavigationBar::updateNavigationBar()
+{
+    this->showTitle();
+    this->showLeftButton();
+    this->showRightButton();
 }
 
 void CANavigationBar::showBackGround()
@@ -92,7 +106,7 @@ void CANavigationBar::showTitle()
 {
     if (m_pTitle == NULL)
     {
-        int fontSize = this->getBounds().size.height * 0.4f;
+        int fontSize = this->getBounds().size.height * 0.35f;
         
         m_pTitle = CCLabelTTF::create("", "fonts/arial.ttf", fontSize);
         m_pTitle->setColor(ccWHITE);
@@ -101,9 +115,11 @@ void CANavigationBar::showTitle()
         this->addSubview(m_pTitle);
     }
     
-    if (m_pItems.empty() == false)
+    if (!m_pItems.empty())
     {
-        ((CCLabelTTF*)m_pTitle)->setString(m_pItems.back()->getTitle().c_str());
+        std::string str = m_pItems.back()->getTitle();
+        CCLog("%s",str.c_str());
+        ((CCLabelTTF*)m_pTitle)->setString(str.c_str());
 
         float width = this->getBounds().size.width - this->getBounds().size.height * 3;
         
@@ -121,7 +137,7 @@ void CANavigationBar::showLeftButton()
     if (m_pLeftButton == NULL)
     {
         CCRect rect = this->getBounds();
-        rect.size.width = rect.size.height * 1.414f;
+        rect.size.width = rect.size.height;
         
         m_pLeftButton = CAButton::createWithFrame(rect, CAButtonTypeCustom);
         this->addSubview(m_pLeftButton);
@@ -135,8 +151,8 @@ void CANavigationBar::showRightButton()
     if (m_pRightButton == NULL)
     {
         CCRect rect = this->getBounds();
-        rect.origin.x = rect.size.width - rect.size.height * 1.414f;
-        rect.size.width = rect.size.height * 1.414f;
+        rect.origin.x = rect.size.width - rect.size.height;
+        rect.size.width = rect.size.height;
         
         m_pRightButton = CAButton::createWithFrame(rect, CAButtonTypeCustom);
         this->addSubview(m_pRightButton);
@@ -269,9 +285,7 @@ void CANavigationBar::pushItem(CANavigationBarItem* item)
     item->retain();
     m_pItems.push_back(item);
     
-    this->showTitle();
-    this->showLeftButton();
-    this->showRightButton();
+    this->updateNavigationBar();
 }
 
 void CANavigationBar::popItem()
@@ -346,7 +360,7 @@ void CATabBar::onEnterTransitionDidFinish()
     {
         this->showBackGround();
         
-        this->showItems();
+        this->updateTabBar();
         
         this->setSelectedAtIndex(m_nSelectedIndex);
     }
@@ -383,6 +397,23 @@ void CATabBar::setItems(const std::vector<CATabBarItem*>& items)
         }
     }
     while (0);
+}
+
+void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)
+{
+    if (index < m_pItems.size())
+    {
+        CATabBarItem* oldItem = m_pItems.at(index);
+        m_pItems.at(index) = item;
+        CC_SAFE_RELEASE(oldItem);
+        CC_SAFE_RETAIN(item);
+        this->updateTabBar();
+    }
+}
+
+void CATabBar::updateTabBar()
+{
+    this->showItems();
 }
 
 void CATabBar::showBackGround()

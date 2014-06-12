@@ -66,10 +66,10 @@ void RootViewController::viewDidLoad()
     button_->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
     button_->setAllowsSelected(true);
     
-    if (this->getNavigationController()->isNavigationBarHidden())
-    {
-        button_->setControlState(CAControlStateSelected);
-    }
+//    if (this->getNavigationController()->isNavigationBarHidden())
+//    {
+//        button_->setControlState(CAControlStateSelected);
+//    }
     
     switch_ = CASwitch::createWithFrame(CCRect(10, tableRect.size.height+10, 120, 60));
     switch_->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection));
@@ -194,12 +194,12 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     
     CCSize size = this->getView()->getBounds().size;
     
-    CAButton* btn = CAButton::createWithCenter(CCRect(size.width - 100, 60, 120, 100), CAButtonTypeRoundedRect);
-    btn->setImageForState(CAControlStateAll, CAImage::create("2.jpg"));
-    btn->setTitleForState(CAControlStateAll, "button");
-    cell->addSubview(btn);
-    btn->setAllowsSelected(true);
-    btn->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
+//    CAButton* btn = CAButton::createWithCenter(CCRect(size.width - 100, 60, 120, 100), CAButtonTypeRoundedRect);
+//    btn->setImageForState(CAControlStateAll, CAImage::create("2.jpg"));
+//    btn->setTitleForState(CAControlStateAll, "button");
+//    cell->addSubview(btn);
+//    btn->setAllowsSelected(true);
+//    btn->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
 //    CALabel* label = CALabel::create(CCRect(0, 0, 600, 100));
 //    label->setOpacity(128);
 //    label->setVerticalTextAlignmet(kCCVerticalTextAlignmentCenter);

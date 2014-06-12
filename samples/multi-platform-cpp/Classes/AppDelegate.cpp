@@ -40,13 +40,15 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     RootViewController* viewController = new RootViewController();
     viewController->init();
-    viewController->setTitle("view1");
-    viewController->setNavigationBarItem(CANavigationBarItem::create("The Home Page"));
+    viewController->setTitle("设置");
+    
     
     CANavigationController* navigationController = new CANavigationController();
     navigationController->initWithRootViewController(viewController);
     navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("h.png")));
     //navigationController->setNavigationBarHidden(true, false);
+    viewController->setNavigationBarItem(CANavigationBarItem::create("The Home Page"));
+    
     
     viewController->release();
     

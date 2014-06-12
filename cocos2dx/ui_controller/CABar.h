@@ -58,6 +58,10 @@ public:
     
     CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
     
+    CC_SYNTHESIZE_READONLY(std::vector<CANavigationBarItem*>, m_pItems, Items);
+    
+    void replaceItemAtIndex(size_t index, CANavigationBarItem* item);
+    
 protected:
     
     void showBackGround();
@@ -74,13 +78,13 @@ protected:
     
     void updateRightButton();
     
+    void updateNavigationBar();
+    
 protected:
     
     CAView* m_pBackGround;
     
     CAView* m_pTitle;
-    
-    std::vector<CANavigationBarItem*> m_pItems;
 };
 
 class CATabBar;
@@ -128,9 +132,15 @@ public:
     
     CC_SYNTHESIZE(ccColor3B, m_sSelectedTitleColor, TitleColorForSelected);
     
+    CC_SYNTHESIZE_READONLY(std::vector<CATabBarItem*>, m_pItems, Items);
+    
+    CC_SYNTHESIZE_READONLY(int, m_nSelectedIndex, SelectedIndex);
+    
     void setSelectedAtIndex(int index);
     
     void showSelectedIndicator();
+    
+    void replaceItemAtIndex(size_t index, CATabBarItem* item);
     
 protected:
     
@@ -140,6 +150,8 @@ protected:
     
     void setTouchSelected(CAControl* control, CCPoint point);
     
+    void updateTabBar();
+    
 protected:
     
     CAView* m_pBackGround;
@@ -148,14 +160,9 @@ protected:
     
     CATabBarItem* m_pSelectedItem;
     
-    std::vector<CATabBarItem*> m_pItems;
-
     CCSize m_cItemSize;
 
     CASegmentedControl* m_pSegmentedControl;
-    
-    int m_nSelectedIndex;
-    
 };
 
 

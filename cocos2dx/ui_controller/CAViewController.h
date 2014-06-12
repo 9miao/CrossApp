@@ -47,11 +47,15 @@ public:
     
     CC_SYNTHESIZE_READONLY(CANavigationController*, m_pNavigationController, NavigationController);
 
-    CC_SYNTHESIZE_RETAIN(CANavigationBarItem*, m_pNavigationBarItem, NavigationBarItem);
+    CC_SYNTHESIZE_READONLY(CANavigationBarItem*, m_pNavigationBarItem, NavigationBarItem);
     
     CC_SYNTHESIZE_READONLY(CATabBarController*, m_pTabBarController, TabBarController);
 
-    CC_SYNTHESIZE_RETAIN(CATabBarItem*, m_pTabBarItem, TabBarItem);
+    CC_SYNTHESIZE_READONLY(CATabBarItem*, m_pTabBarItem, TabBarItem);
+    
+    void setNavigationBarItem(CANavigationBarItem* item);
+    
+    void setTabBarItem(CATabBarItem* item);
     
     void clearUp();
     
@@ -136,6 +140,8 @@ public:
     
     CC_SYNTHESIZE_READONLY(CABarVerticalAlignment, m_eNavigationBarVerticalAlignment, NavigationBarVerticalAlignment);
     
+    void updateItem(CAViewController* viewController);
+    
 protected:
  
     virtual void viewDidLoad();
@@ -195,6 +201,8 @@ public:
     CC_SYNTHESIZE_READONLY(CATabBar*, m_pTabBar, TabBar);
     
     CC_SYNTHESIZE_READONLY(CABarVerticalAlignment, m_eTabBarVerticalAlignment, TabBarVerticalAlignment);
+    
+    void updateItem(CAViewController* viewController);
     
 protected:
 
