@@ -72,7 +72,10 @@ void CANavigationBar::replaceItemAtIndex(size_t index, CANavigationBarItem* item
         m_pItems.at(index) = item;
         CC_SAFE_RELEASE(oldItem);
         CC_SAFE_RETAIN(item);
-        this->updateNavigationBar();
+        if (index == m_pItems.size() - 1)
+        {
+            this->updateNavigationBar();
+        }
     }
 }
 

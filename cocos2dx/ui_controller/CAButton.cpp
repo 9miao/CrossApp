@@ -29,14 +29,6 @@ CAButton::CAButton(CAButtonType buttonType)
 ,m_sTitleFontName("fonts/arial.ttf")
 ,m_pImageView(NULL)
 ,m_pLabel(NULL)
-,m_pSpriteNormal(NULL)
-,m_pSpriteHighlighted(NULL)
-,m_pSpriteDisabled(NULL)
-,m_pSpriteSelected(NULL)
-,m_tSpriteNPoint(CCPointZero)
-,m_tSpriteHPoint(CCPointZero)
-,m_tSpriteDPoint(CCPointZero)
-,m_tSpriteSPoint(CCPointZero)
 {
     for (int i=0; i<CAControlStateAll; i++)
     {
@@ -56,10 +48,6 @@ CAButton::~CAButton(void)
 {
     CC_SAFE_RELEASE_NULL(m_pImageView);
     CC_SAFE_RELEASE_NULL(m_pLabel);
-    CC_SAFE_RELEASE_NULL(m_pSpriteNormal);
-    CC_SAFE_RELEASE_NULL(m_pSpriteHighlighted);
-    CC_SAFE_RELEASE_NULL(m_pSpriteDisabled);
-    CC_SAFE_RELEASE_NULL(m_pSpriteSelected);
 }
 
 void CAButton::onExitTransitionDidStart()
@@ -70,8 +58,7 @@ void CAButton::onExitTransitionDidStart()
 void CAButton::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
-    
-    this->updateWithPoint();
+
     this->setControlState(m_eControlState);
 }
 
@@ -266,7 +253,6 @@ void CAButton::setBackGroundViewForState(CAControlState controlState, CAView *va
             this->setBounds(CCRect(0, 0, var->getFrame().size.width, var->getFrame().size.height));
         }
         
-        this->updateWithPoint();
         this->updateWithPreferredSize();
     }
     while (0);
@@ -472,11 +458,6 @@ void CAButton::setControlState(CAControlState var)
     
     do
     {
-        CC_BREAK_IF(m_pSpriteNormal);
-        CC_BREAK_IF(m_pSpriteHighlighted);
-        CC_BREAK_IF(m_pSpriteDisabled);
-        CC_BREAK_IF(m_pSpriteSelected);
-        
         CAImage* image = NULL;
         std::string title = "";
         CCRect imageViewCenter = CCRectZero;
@@ -560,72 +541,12 @@ void CAButton::setControlState(CAControlState var)
             m_pLabel->setFontSize(labelSize);
         }
         m_pLabel->setCenterOrigin(labelCenterOrigin);
-        if (m_pLabel->getFrame().size.width > this->getBounds().size.width * 0.8f)
-        {
-            float scale = (this->getBounds().size.width * 0.8f) / m_pLabel->getFrame().size.width;
-            m_pLabel->setScale(scale);
-        }
+        
+        float scale = this->getBounds().size.width / m_pLabel->getImage()->getContentSize().width * 0.8f;
+        scale = MIN(scale, 1.0f);
+        m_pLabel->setScale(scale);
     }
     while (0);
-    
-    /*****************************/
-    
-    this->removeSubview(m_pSpriteNormal);
-    this->removeSubview(m_pSpriteHighlighted);
-    this->removeSubview(m_pSpriteDisabled);
-    this->removeSubview(m_pSpriteSelected);
-    
-    switch (m_eControlState)
-    {
-        case CAControlStateNormal:
-        {
-            if (m_pSpriteNormal)
-            {
-                this->addSubview(m_pSpriteNormal);
-            }
-            break;
-        }
-        case CAControlStateHighlighted:
-        {
-            if (m_pSpriteHighlighted)
-            {
-                this->addSubview(m_pSpriteHighlighted);
-            }
-            else if (m_pSpriteNormal)
-            {
-                this->addSubview(m_pSpriteNormal);
-            }
-            break;
-        }
-        case CAControlStateDisabled:
-        {
-            if (m_pSpriteDisabled)
-            {
-                this->addSubview(m_pSpriteDisabled);
-            }
-            else if (m_pSpriteNormal)
-            {
-                this->addSubview(m_pSpriteNormal);
-            }
-            break;
-        }
-        case CAControlStateSelected:
-        {
-            if (m_pSpriteSelected)
-            {
-                this->addSubview(m_pSpriteSelected);
-            }
-            else if (m_pSpriteNormal)
-            {
-                this->addSubview(m_pSpriteNormal);
-            }
-            break;
-        }
-        default:
-            break;
-    }
-    
-    /*****************************/
 }
 
 void CAButton::interruptTouchState()
@@ -705,8 +626,6 @@ void CAButton::setContentSize(const CCSize & var)
 {
     CAControl::setContentSize(var);
     
-    this->updateWithPoint();
-    
     this->updateWithPreferredSize();
     
     this->setControlState(m_eControlState);
@@ -751,179 +670,6 @@ void CAButton::setColor(const ccColor3B &color3){
 ccColor3B& CAButton::getColor(){
     
     return m_color;
-}
-
-
-
-void CAButton::setView(CAControlState controlState, CAView* var)
-{
-    if (!var)
-        return;
-    
-    var->setAnchorPoint(CCPoint(0.5f, 0.5f));
-    
-    CCPoint point = m_obContentSize/2;
-    
-    this->setView(controlState, var, point);
-}
-
-void CAButton::setView(CAControlState controlState, CAView* var, CCPoint point)
-{
-    if (!var)
-        return;
-    
-    var->setAnchorPoint(CCPoint(0.5f, 0.5f));
-    var->setPosition(point);
-    var->retain();
-    
-    CCPoint cPoint = m_obContentSize/2;
-    
-    if (controlState == CAControlStateNormal)
-    {
-        this->removeSubview(m_pSpriteNormal);
-        CC_SAFE_DELETE(m_pSpriteNormal);
-        
-        if (!cPoint.equals(point))
-        {
-            m_tSpriteNPoint = point;
-        }
-        else
-        {
-            m_tSpriteNPoint = CCPointZero;
-        }
-        
-        m_pSpriteNormal = var;
-        
-        return;
-    }
-    else if (controlState == CAControlStateHighlighted)
-    {
-        this->removeSubview(m_pSpriteHighlighted);
-        CC_SAFE_DELETE(m_pSpriteHighlighted);
-        
-        if (!cPoint.equals(point))
-        {
-            m_tSpriteHPoint = point;
-        }
-        else
-        {
-            m_tSpriteHPoint = CCPointZero;
-        }
-        
-        m_pSpriteHighlighted = var;
-    }
-    else if (controlState == CAControlStateDisabled)
-    {
-        this->removeSubview(m_pSpriteDisabled);
-        CC_SAFE_DELETE(m_pSpriteDisabled);
-        
-        if (!cPoint.equals(point))
-        {
-            m_tSpriteDPoint = point;
-        }
-        else
-        {
-            m_tSpriteDPoint = CCPointZero;
-        }
-        
-        m_pSpriteDisabled = var;
-    }
-    else if (controlState == CAControlStateSelected)
-    {
-        this->removeSubview(m_pSpriteSelected);
-        CC_SAFE_DELETE(m_pSpriteSelected);
-        
-        if (!cPoint.equals(point))
-        {
-            m_tSpriteSPoint = point;
-        }
-        else
-        {
-            m_tSpriteSPoint = CCPointZero;
-        }
-        
-        m_pSpriteSelected = var;
-    }
-}
-
-CAView* CAButton::getView(CAControlState controlState)
-{
-    switch (controlState)
-    {
-        case CAControlStateNormal:
-            return m_pSpriteNormal;
-            break;
-        case CAControlStateHighlighted:
-            return m_pSpriteHighlighted;
-            break;
-        case CAControlStateDisabled:
-            return m_pSpriteDisabled;
-            break;
-        case CAControlStateSelected:
-            return m_pSpriteSelected;
-            break;
-        default:
-            return NULL;
-            break;
-    }
-}
-
-void CAButton::updateWithPoint()
-{
-    
-    CCPoint point = m_obContentSize/2;
-    
-    if (m_pSpriteNormal)
-    {
-        if (m_tSpriteNPoint.equals(CCPointZero))
-        {
-            m_pSpriteNormal->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_pSpriteNormal->setPosition(point);
-        }
-        else
-        {
-            m_pSpriteNormal->setPosition(m_tSpriteNPoint);
-        }
-    }
-    
-    if (m_pSpriteHighlighted)
-    {
-        if (m_tSpriteHPoint.equals(CCPointZero))
-        {
-            m_pSpriteHighlighted->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_pSpriteHighlighted->setPosition(point);
-        }
-        else
-        {
-            m_pSpriteHighlighted->setPosition(m_tSpriteHPoint);
-        }
-    }
-    
-    if (m_pSpriteDisabled)
-    {
-        if (m_tSpriteDPoint.equals(CCPointZero))
-        {
-            m_pSpriteDisabled->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_pSpriteDisabled->setPosition(point);
-        }
-        else
-        {
-            m_pSpriteDisabled->setPosition(m_tSpriteDPoint);
-        }
-    }
-    
-    if (m_pSpriteSelected)
-    {
-        if (m_tSpriteSPoint.equals(CCPointZero))
-        {
-            m_pSpriteSelected->setAnchorPoint(CCPoint(0.5f, 0.5f));
-            m_pSpriteSelected->setPosition(point);
-        }
-        else
-        {
-            m_pSpriteSelected->setPosition(m_tSpriteSPoint);
-        }
-    }
 }
 
 NS_CC_END

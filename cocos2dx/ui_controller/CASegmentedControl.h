@@ -65,6 +65,7 @@ public:
     CC_SYNTHESIZE_READONLY(CCSize, m_itemSize, ItemSize);
     void setHighlightedAtIndex(int index);
     void setSelectedAtIndex(int index);
+    void setHighlightedNormal();
     void setSelectedHighlighted();
     int getItemCount() const;
     void layoutSubviews();

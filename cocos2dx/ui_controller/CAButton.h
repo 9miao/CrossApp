@@ -143,40 +143,6 @@ protected:
     void setBackGroundViewRoundedRect();
     
     void setBackGroundViewRounded3DRect();
-    
-/********************************************************************/
-    
-//Ready to give up some functions use...
-    
-public:
-    
-    CC_DEPRECATED_ATTRIBUTE void setView(CAControlState controlState, CAView* var);
-    
-    CC_DEPRECATED_ATTRIBUTE void setView(CAControlState controlState, CAView* var, CCPoint point);
-    
-    CC_DEPRECATED_ATTRIBUTE CAView* getView(CAControlState controlState);
-    
-protected:
-    
-    void updateWithPoint();
-    
-    CCPoint m_tSpriteNPoint;
-    
-    CCPoint m_tSpriteHPoint;
-    
-    CCPoint m_tSpriteDPoint;
-    
-    CCPoint m_tSpriteSPoint;
-    
-    CAView* m_pSpriteNormal;
-    
-    CAView* m_pSpriteHighlighted;
-    
-    CAView* m_pSpriteDisabled;
-    
-    CAView* m_pSpriteSelected;
-    
-/********************************************************************/
 };
 
 NS_CC_END

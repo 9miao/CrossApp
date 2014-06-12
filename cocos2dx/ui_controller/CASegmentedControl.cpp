@@ -242,6 +242,12 @@ bool CASegmentedControl::setTitleAtIndex(const char* title, int index, CAControl
         return false;
     }
     btn->setTitleForState(controlState, title);
+    
+    if (m_bRunning)
+    {
+        this->setSelectedAtIndex(m_selectedIndex);
+    }
+    
     return true;
 }
 
@@ -258,6 +264,12 @@ bool CASegmentedControl::setTitleColorAtIndex(ccColor3B color, int index, CACont
         return false;
     }
     btn->setTitleColorForState(controlState, color);
+    
+    if (m_bRunning)
+    {
+        this->setSelectedAtIndex(m_selectedIndex);
+    }
+    
     return true;
 }
 
@@ -274,6 +286,12 @@ bool CASegmentedControl::setBackgroundImageAtIndex(CAImage *image, int index, CA
         return false;
     }
     btn->setBackGroundViewForState(controlState, CAScale9ImageView::createWithImage(image));
+    
+    if (m_bRunning)
+    {
+        this->setSelectedAtIndex(m_selectedIndex);
+    }
+    
     return true;
 }
 
@@ -290,6 +308,12 @@ bool CASegmentedControl::setImageAtIndex(CAImage *image, int index, CAControlSta
         return false;
     }
     btn->setImageForState(controlState, image);
+    
+    if (m_bRunning)
+    {
+        this->setSelectedAtIndex(m_selectedIndex);
+    }
+    
     return true;
 }
 
@@ -334,33 +358,41 @@ void CASegmentedControl::setHighlightedAtIndex(int index)
         return ;
     }
     
-    std::vector<CAButton*>::iterator itr;
-    for (itr=m_segments.begin(); itr!=m_segments.end(); itr++)
+    this->setHighlightedNormal();
+    if (index != m_selectedIndex)
     {
-        if (itr - m_segments.begin() == index)
+        m_segments.at(index)->setControlStateHighlighted();
+    }
+}
+
+void CASegmentedControl::setHighlightedNormal()
+{
+    for (int i=0; i<m_segments.size(); i++)
+    {
+        if (m_segments.at(i)->getControlState() != CAControlStateSelected)
         {
-            (*itr)->setControlStateHighlighted();
-        }
-        else
-        {
-            (*itr)->setControlStateNormal();
+            m_segments.at(i)->setControlStateNormal();
         }
     }
 }
 
 void CASegmentedControl::setSelectedHighlighted()
 {
-    int index = 0;
+    int index = m_selectedIndex;
 
     for (int i=0; i<m_segments.size(); i++)
     {
         if (m_segments.at(i)->getControlState() == CAControlStateHighlighted)
         {
-            m_segments.at(i)->setControlStateSelected();
             index = i;
-            break;
+        }
+        else if (m_segments.at(i)->getControlState() == CAControlStateSelected)
+        {
+            m_segments.at(i)->setControlStateNormal();
         }
     }
+    
+    m_segments.at(index)->setControlStateSelected();
     
     if (m_selectedIndex != index)
     {
@@ -422,6 +454,10 @@ void CASegmentedControl::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent
     if (getBounds().containsPoint(point))
     {
         this->setHighlightedAtIndex((int)(point.x / m_itemSize.width));
+    }
+    else
+    {
+        this->setHighlightedNormal();
     }
 }
 
