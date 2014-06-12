@@ -973,6 +973,7 @@ void CCDisplayLinkDirector::startAnimation(void)
 #ifndef EMSCRIPTEN
     CCApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
 #endif // EMSCRIPTEN
+    CCDirector::sharedDirector()->updateDraw();
 }
 
 void CCDisplayLinkDirector::mainLoop(void)
