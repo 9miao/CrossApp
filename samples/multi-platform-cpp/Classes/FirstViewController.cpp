@@ -47,7 +47,7 @@ void FirstViewController::viewDidLoad()
     CAButton* btn = CAButton::createWithCenter(CCRect(size.width/2, 600, 200, 50), CAButtonTypeRounded3DRect);
     btn->setTitleForState(CAControlStateAll, "OK");
     this->getView()->addSubview(btn);
-    
+    btn->addTarget(this, CAControl_selector(FirstViewController::diss), CAControlEventTouchUpInSide);
     
     
 }
@@ -67,4 +67,9 @@ void FirstViewController::updateSlider(cocos2d::CAControl *sender, cocos2d::CCPo
     sprintf(str, "%.6f", slider->getValue());
     
     label->setText(str);
+}
+
+void FirstViewController::diss(CAControl* sender, CCPoint point)
+{
+    this->dismissModalViewControllerAnimated(true);
 }

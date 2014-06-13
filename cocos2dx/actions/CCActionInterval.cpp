@@ -1130,6 +1130,161 @@ void CCMoveTo::startWithTarget(CAView *pTarget)
     m_positionDelta = ccpSub( m_endPosition, pTarget->getPosition() );
 }
 
+//
+// FrameTo
+//
+
+CCFrameTo* CCFrameTo::create(float duration, const CCRect& endFrame)
+{
+    CCFrameTo *pRet = new CCFrameTo();
+    pRet->initWithDuration(duration, endFrame);
+    pRet->autorelease();
+    
+    return pRet;
+}
+
+bool CCFrameTo::initWithDuration(float duration, const CCRect& endFrame)
+{
+    if (CCActionInterval::initWithDuration(duration))
+    {
+        m_endFrame = endFrame;
+        return true;
+    }
+    
+    return false;
+}
+
+CCObject* CCFrameTo::copyWithZone(CCZone *pZone)
+{
+    CCZone* pNewZone = NULL;
+    CCFrameTo* pCopy = NULL;
+    if(pZone && pZone->m_pCopyObject)
+    {
+        //in case of being called at sub class
+        pCopy = (CCFrameTo*)(pZone->m_pCopyObject);
+    }
+    else
+    {
+        pCopy = new CCFrameTo();
+        pZone = pNewZone = new CCZone(pCopy);
+    }
+    
+    CCActionInterval::copyWithZone(pZone);
+    
+    pCopy->initWithDuration(m_fDuration, m_endFrame);
+    
+    CC_SAFE_DELETE(pNewZone);
+    return pCopy;
+}
+
+void CCFrameTo::startWithTarget(CAView *pTarget)
+{
+    CCActionInterval::startWithTarget(pTarget);
+    m_startFrame = pTarget->getFrame();
+    m_deltaFrame.origin = ccpSub(m_endFrame.origin, m_startFrame.origin);
+    m_deltaFrame.size = ccpSub(m_endFrame.size, m_startFrame.size);
+}
+
+CCActionInterval* CCFrameTo::reverse(void)
+{
+    return CCFrameTo::create(m_fDuration, m_startFrame);
+}
+
+
+void CCFrameTo::update(float t)
+{
+    if (m_pTarget)
+    {
+#if CC_ENABLE_STACKABLE_ACTIONS
+        CCRect frame = m_deltaFrame;
+        frame.origin = ccpMult(frame.origin, t);
+        frame.size = ccpMult(frame.size, t);
+        frame.origin = ccpAdd(m_startFrame.origin, frame.origin);
+        frame.size = ccpAdd(m_startFrame.size, frame.size);
+        m_pTarget->setFrame(frame);
+#else
+        m_pTarget->setFrame(m_endFrame);
+#endif // CC_ENABLE_STACKABLE_ACTIONS
+    }
+}
+
+//
+// CenterTo
+//
+
+CCCenterTo* CCCenterTo::create(float duration, const CCRect& endCenter)
+{
+    CCCenterTo *pRet = new CCCenterTo();
+    pRet->initWithDuration(duration, endCenter);
+    pRet->autorelease();
+    
+    return pRet;
+}
+
+bool CCCenterTo::initWithDuration(float duration, const CCRect& endCenter)
+{
+    if (CCActionInterval::initWithDuration(duration))
+    {
+        m_endCenter = endCenter;
+        return true;
+    }
+    
+    return false;
+}
+
+CCObject* CCCenterTo::copyWithZone(CCZone *pZone)
+{
+    CCZone* pNewZone = NULL;
+    CCCenterTo* pCopy = NULL;
+    if(pZone && pZone->m_pCopyObject)
+    {
+        //in case of being called at sub class
+        pCopy = (CCCenterTo*)(pZone->m_pCopyObject);
+    }
+    else
+    {
+        pCopy = new CCCenterTo();
+        pZone = pNewZone = new CCZone(pCopy);
+    }
+    
+    CCActionInterval::copyWithZone(pZone);
+    
+    pCopy->initWithDuration(m_fDuration, m_endCenter);
+    
+    CC_SAFE_DELETE(pNewZone);
+    return pCopy;
+}
+
+void CCCenterTo::startWithTarget(CAView *pTarget)
+{
+    CCActionInterval::startWithTarget(pTarget);
+    m_startCenter = pTarget->getCenter();
+    m_deltaCenter.origin = ccpSub(m_startCenter.origin, m_startCenter.origin);
+    m_deltaCenter.size = ccpSub(m_startCenter.size, m_startCenter.size);
+}
+
+CCActionInterval* CCCenterTo::reverse(void)
+{
+    return CCCenterTo::create(m_fDuration, m_startCenter);
+}
+
+
+void CCCenterTo::update(float t)
+{
+    if (m_pTarget)
+    {
+#if CC_ENABLE_STACKABLE_ACTIONS
+        CCRect center = m_deltaCenter;
+        center.origin = ccpMult(center.origin, t);
+        center.size = ccpMult(center.size, t);
+        center.origin = ccpAdd(m_startCenter.origin, center.origin);
+        center.size = ccpAdd(m_startCenter.size, center.size);
+        m_pTarget->setCenter(center);
+#else
+        m_pTarget->setCenter(m_endCenter);
+#endif // CC_ENABLE_STACKABLE_ACTIONS
+    }
+}
 
 //
 // CCSkewTo

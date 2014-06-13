@@ -561,6 +561,7 @@ bool CAView::isVisible()
 void CAView::setVisible(bool var)
 {
     m_bVisible = var;
+    this->updateDraw();
 }
 
 const CCPoint& CAView::getAnchorPointInPoints()

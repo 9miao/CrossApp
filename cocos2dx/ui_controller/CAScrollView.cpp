@@ -149,26 +149,21 @@ CCArray* CAScrollView::getSubviews()
 
 void CAScrollView::setViewSize(cocos2d::CCSize var)
 {
-    do
-    {
-        CC_BREAK_IF(m_obViewSize.equals(var));
-        
-        m_obViewSize = var;
-        m_obViewSize.width = MAX(m_obViewSize.width, m_obContentSize.width);
-        m_obViewSize.height = MAX(m_obViewSize.height, m_obContentSize.height);
-        
-        CC_BREAK_IF(m_pContainer == NULL);
-
-        CCRect rect = CCRectZero;
-        rect.size = m_obViewSize;
-        m_pContainer->setFrame(rect);
-
+    CC_RETURN_IF(m_obViewSize.equals(var));
+    
+    m_obViewSize = var;
+    m_obViewSize.width = MAX(m_obViewSize.width, m_obContentSize.width);
+    m_obViewSize.height = MAX(m_obViewSize.height, m_obContentSize.height);
+    
+    CC_RETURN_IF(m_pContainer == NULL);
+    
+    CCRect rect = CCRectZero;
+    rect.size = m_obViewSize;
+    m_pContainer->setFrame(rect);
+    
 //        CCPoint point = m_pContainer->getCenterOrigin();
 //        point = this->getScrollWindowNotOutPoint(point);
 //        m_pContainer->setCenterOrigin(point);
-    }
-    while (0);
-    
 }
 
 CCSize CAScrollView::getViewSize()
@@ -914,30 +909,26 @@ void CAIndicator::setHide(bool var)
 {
     CAScale9ImageView* indicator = dynamic_cast<CAScale9ImageView*>(m_pIndicator);
     
-    do
+    if (var == false)
     {
-        if (var == false)
-        {
-            CC_BREAK_IF(indicator->getOpacity() == 255);
-            
-            this->stopActionByTag(0xfff);
-            this->setOpacity(255);
-        }
-        else
-        {
-            CC_BREAK_IF(indicator->getActionByTag(0xfff));
-            
-            CC_BREAK_IF(indicator->getOpacity() < 255);
-            
-            CCDelayTime* delayTime = CCDelayTime::create(0.2f);
-            CCFadeOut* fadeOut = CCFadeOut::create(0.3f);
-            CCEaseSineOut* easeSineOut = CCEaseSineOut::create(fadeOut);
-            CCSequence* actions = CCSequence::create(delayTime, easeSineOut, NULL);
-            actions->setTag(0xfff);
-            this->runAction(actions);
-        }
+        CC_RETURN_IF(indicator->getOpacity() == 255);
+        
+        this->stopActionByTag(0xfff);
+        this->setOpacity(255);
     }
-    while (0);
+    else
+    {
+        CC_RETURN_IF(indicator->getActionByTag(0xfff));
+        
+        CC_RETURN_IF(indicator->getOpacity() < 255);
+        
+        CCDelayTime* delayTime = CCDelayTime::create(0.2f);
+        CCFadeOut* fadeOut = CCFadeOut::create(0.3f);
+        CCEaseSineOut* easeSineOut = CCEaseSineOut::create(fadeOut);
+        CCSequence* actions = CCSequence::create(delayTime, easeSineOut, NULL);
+        actions->setTag(0xfff);
+        this->runAction(actions);
+    }
 }
 
 NS_CC_END

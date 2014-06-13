@@ -139,21 +139,17 @@ void CATableView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
     CAScrollView::ccTouchMoved(pTouch, pEvent);
     
-    do
+    if (m_pHighlightedTableCells)
     {
-        if (m_pHighlightedTableCells)
+        this->stopActionByTag(0xffff);
+        
+        if (m_pHighlightedTableCells->getControlState() == CAControlStateHighlighted)
         {
-            this->stopActionByTag(0xffff);
-            
-            if (m_pHighlightedTableCells->getControlState() == CAControlStateHighlighted)
-            {
-                m_pHighlightedTableCells->setControlStateNormal();
-            }
-            
-            m_pHighlightedTableCells = NULL;
+            m_pHighlightedTableCells->setControlStateNormal();
         }
+        
+        m_pHighlightedTableCells = NULL;
     }
-    while (0);
     
 }
 

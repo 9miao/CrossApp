@@ -487,31 +487,27 @@ void CATabBar::showSelectedIndicator()
 
 void CATabBar::setSelectedAtIndex(int index)
 {
-    do
+    CC_RETURN_IF(index < 0);
+    CC_RETURN_IF(index >= m_pItems.size());
+    
+    m_nSelectedIndex = index;
+    m_pSelectedItem = m_pItems.at(m_nSelectedIndex);
+    
+    CC_RETURN_IF(!m_bRunning);
+    
+    if (m_pSelectedIndicator)
     {
-        CC_BREAK_IF(index < 0);
-        CC_BREAK_IF(index >= m_pItems.size());
-        
-        m_nSelectedIndex = index;
-        m_pSelectedItem = m_pItems.at(m_nSelectedIndex);
-        
-        CC_BREAK_IF(!m_bRunning);
-        
-        if (m_pSelectedIndicator)
-        {
-            ((CAScale9ImageView*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
-            m_pSelectedIndicator->stopAllActions();
-            CCPoint p = m_cItemSize;
-            p.x *= m_nSelectedIndex;
-            CCMoveTo* moveTo = CCMoveTo::create(0.3f, p);
-            CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
-            m_pSelectedIndicator->runAction(easeBack);
-        }
-        
-        m_pSegmentedControl->setSelectedAtIndex(index);
-        m_pDelegate->tabBarSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
+        ((CAScale9ImageView*)m_pSelectedIndicator)->setPreferredSize(CCSize(m_cItemSize.width, m_cItemSize.height / 10));
+        m_pSelectedIndicator->stopAllActions();
+        CCPoint p = m_cItemSize;
+        p.x *= m_nSelectedIndex;
+        CCMoveTo* moveTo = CCMoveTo::create(0.3f, p);
+        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
+        m_pSelectedIndicator->runAction(easeBack);
     }
-    while (0);
+    
+    m_pSegmentedControl->setSelectedAtIndex(index);
+    m_pDelegate->tabBarSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
 }
 
 void CATabBar::setTouchSelected(cocos2d::CAControl *control, cocos2d::CCPoint point)

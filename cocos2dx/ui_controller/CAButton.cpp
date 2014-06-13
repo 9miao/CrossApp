@@ -26,7 +26,7 @@ CAButton::CAButton(CAButtonType buttonType)
 ,m_color(ccWHITE)
 ,m_IsRehisterTouchDispatcher(false)
 ,m_eButtonType(buttonType)
-,m_sTitleFontName("fonts/arial.ttf")
+,m_sTitleFontName("Helvetica-Bold")
 ,m_pImageView(NULL)
 ,m_pLabel(NULL)
 {
@@ -244,18 +244,15 @@ void CAButton::setBackGroundViewRounded3DRect()
 void CAButton::setBackGroundViewForState(CAControlState controlState, CAView *var)
 {
     CAControl::setBackGroundViewForState(controlState, var);
-    do
+    
+    CC_RETURN_IF(var == NULL);
+    
+    if (this->getBounds().equals(CCRectZero))
     {
-        CC_BREAK_IF(var == NULL);
-        
-        if (this->getBounds().equals(CCRectZero))
-        {
-            this->setBounds(CCRect(0, 0, var->getFrame().size.width, var->getFrame().size.height));
-        }
-        
-        this->updateWithPreferredSize();
+        this->setBounds(CCRect(0, 0, var->getFrame().size.width, var->getFrame().size.height));
     }
-    while (0);
+    
+    this->updateWithPreferredSize();
 }
 
 void CAButton::setImageForState(CAControlState controlState, CAImage* var)
@@ -481,116 +478,108 @@ void CAButton::setControlState(CAControlState var)
         m_bSelected = false;
     }
     
-    do
+    CAImage* image = NULL;
+    std::string title = "";
+    CCRect imageViewCenter = CCRectZero;
+    CCRect rect = CCRectZero;
+    CCPoint labelCenterOrigin = CCPointZero;
+    float labelSize = 0;
+    
+    image = m_pImage[m_eControlState];
+    title = m_sTitle[m_eControlState];
+    
+    if (image == NULL)
     {
-        CAImage* image = NULL;
-        std::string title = "";
-        CCRect imageViewCenter = CCRectZero;
-        CCRect rect = CCRectZero;
-        CCPoint labelCenterOrigin = CCPointZero;
-        float labelSize = 0;
-        
-        image = m_pImage[m_eControlState];
-        title = m_sTitle[m_eControlState];
-        
-        if (image == NULL)
-        {
-            image = this->isSelected() ? m_pImage[CAControlStateSelected] : m_pImage[CAControlStateNormal];
-        }
-        
-        if (strcmp(title.c_str(), "") == 0)
-        {
-            title = this->isSelected() ? m_sTitle[CAControlStateSelected] : m_sTitle[CAControlStateNormal];
-        }
-        
-        if (image && title.compare("") == 0)
-        {
-            CCSize size = this->getBounds().size;
-            CCSize iSize = image->getContentSize();
-            float scaleX = size.width / iSize.width * 0.75f;
-            float scaleY = size.height / iSize.height * 0.75f;
-            float scale = MIN(scaleX, scaleY);
-            scale = MIN(scale, 1.0f);
-            iSize = ccpMult(iSize, scale);
-            
-            imageViewCenter.origin = size / 2;
-            imageViewCenter.size = iSize;
-        }
-        else if (image == NULL && title.compare("") != 0)
-        {
-            labelSize = this->getBounds().size.height * 0.4f;
-            labelCenterOrigin = this->getBounds().size / 2 ;
-        }
-        else if (image && title.compare("") != 0)
-        {
-            CCSize size = this->getBounds().size;
-            CCSize iSize = image->getContentSize();
-            float scaleX = size.width / iSize.width * 0.5f;
-            float scaleY = size.height / iSize.height * 0.5f;
-            float scale = MIN(scaleX, scaleY);
-            scale = MIN(scale, 1.0f);
-            iSize = ccpMult(iSize, scale);
-            
-            imageViewCenter.size = iSize;
-            imageViewCenter.origin.x = size.width / 2;
-            imageViewCenter.origin.y = size.height * 0.35f;
-
-            labelSize = size.height * 0.25f;
-            labelCenterOrigin.x = size.width / 2;
-            labelCenterOrigin.y = size.height * 0.75f;
-        }
-        
-        if (image)
-        {
-            rect.size = image->getContentSize();
-        }
-        
-        if (image != m_pImageView->getImage())
-        {
-            m_pImageView->setImage(image);
-            m_pImageView->setImageRect(rect);
-        }
-        m_pImageView->setCenter(imageViewCenter);
-        
-        m_pImageView->setColor(m_sImageColor[m_eControlState]);
-        m_pLabel->setColor(m_sTitleColor[m_eControlState]);
-        
-
-        if (strcmp(title.c_str(), m_pLabel->getString().c_str()))
-        {
-            m_pLabel->setString(title.c_str());
-        }
-        
-        if (!title.empty())
-        {
-            m_pLabel->setFontSize(labelSize);
-        }
-        m_pLabel->setCenterOrigin(labelCenterOrigin);
-        
-        float scale = this->getBounds().size.width / m_pLabel->getImage()->getContentSize().width * 0.8f;
-        scale = MIN(scale, 1.0f);
-        m_pLabel->setScale(scale);
+        image = this->isSelected() ? m_pImage[CAControlStateSelected] : m_pImage[CAControlStateNormal];
     }
-    while (0);
+    
+    if (strcmp(title.c_str(), "") == 0)
+    {
+        title = this->isSelected() ? m_sTitle[CAControlStateSelected] : m_sTitle[CAControlStateNormal];
+    }
+    
+    if (image && title.compare("") == 0)
+    {
+        CCSize size = this->getBounds().size;
+        CCSize iSize = image->getContentSize();
+        float scaleX = size.width / iSize.width * 0.75f;
+        float scaleY = size.height / iSize.height * 0.75f;
+        float scale = MIN(scaleX, scaleY);
+        scale = MIN(scale, 1.0f);
+        iSize = ccpMult(iSize, scale);
+        
+        imageViewCenter.origin = size / 2;
+        imageViewCenter.size = iSize;
+    }
+    else if (image == NULL && title.compare("") != 0)
+    {
+        labelSize = this->getBounds().size.height * 0.4f;
+        labelCenterOrigin = this->getBounds().size / 2 ;
+    }
+    else if (image && title.compare("") != 0)
+    {
+        CCSize size = this->getBounds().size;
+        CCSize iSize = image->getContentSize();
+        float scaleX = size.width / iSize.width * 0.5f;
+        float scaleY = size.height / iSize.height * 0.5f;
+        float scale = MIN(scaleX, scaleY);
+        scale = MIN(scale, 1.0f);
+        iSize = ccpMult(iSize, scale);
+        
+        imageViewCenter.size = iSize;
+        imageViewCenter.origin.x = size.width / 2;
+        imageViewCenter.origin.y = size.height * 0.35f;
+        
+        labelSize = size.height * 0.25f;
+        labelCenterOrigin.x = size.width / 2;
+        labelCenterOrigin.y = size.height * 0.75f;
+    }
+    
+    if (image)
+    {
+        rect.size = image->getContentSize();
+    }
+    
+    if (image != m_pImageView->getImage())
+    {
+        m_pImageView->setImage(image);
+        m_pImageView->setImageRect(rect);
+    }
+    m_pImageView->setCenter(imageViewCenter);
+    
+    m_pImageView->setColor(m_sImageColor[m_eControlState]);
+    m_pLabel->setColor(m_sTitleColor[m_eControlState]);
+    
+    
+    if (strcmp(title.c_str(), m_pLabel->getString().c_str()))
+    {
+        m_pLabel->setString(title.c_str());
+    }
+    
+    if (!title.empty())
+    {
+        m_pLabel->setFontSize(labelSize);
+    }
+    m_pLabel->setCenterOrigin(labelCenterOrigin);
+    
+    float scale = this->getBounds().size.width / m_pLabel->getImage()->getContentSize().width * 0.8f;
+    scale = MIN(scale, 1.0f);
+    m_pLabel->setScale(scale);
 }
 
 void CAButton::interruptTouchState()
 {
-	do
-	{
-		CC_BREAK_IF(m_bTouchClick == false);
-		m_bTouchClick = false;
-        CC_BREAK_IF(m_eControlState != CAControlStateHighlighted);
-		if (m_bAllowsSelected && m_bSelected)
-        {
-            this->setControlState(CAControlStateSelected);
-        }
-        else
-        {
-            this->setControlState(CAControlStateNormal);
-        }
-
-	} while (0);
+    CC_RETURN_IF(m_bTouchClick == false);
+    m_bTouchClick = false;
+    CC_RETURN_IF(m_eControlState != CAControlStateHighlighted);
+    if (m_bAllowsSelected && m_bSelected)
+    {
+        this->setControlState(CAControlStateSelected);
+    }
+    else
+    {
+        this->setControlState(CAControlStateNormal);
+    }
 }
 
 bool CAButton::setTouchBegin(CCPoint point)

@@ -40,33 +40,30 @@ CAControl::~CAControl()
 
 void CAControl::setControlState(CAControlState var)
 {
-    do
+    CC_RETURN_IF(var == CAControlStateAll);
+    
+    for (int i=0; i<CAControlStateAll; i++)
     {
-        CC_BREAK_IF(var == CAControlStateAll);
-        
-        for (int i=0; i<CAControlStateAll; i++)
-        {
-            this->removeSubview(m_pBackGroundView[i]);
-        }
-
-        m_eControlState = var;
-        
-        if (m_bControlStateLocked)
-        {
-            m_eControlState = CAControlStateNormal;
-        }
-        
-        if (m_pBackGroundView[m_eControlState] && m_eControlState != CAControlStateNormal)
-        {
-            m_pBackGroundView[m_eControlState]->setFrame(this->getBounds());
-            this->insertSubview(m_pBackGroundView[m_eControlState], -1);
-        }
-        else if (m_pBackGroundView[CAControlStateNormal])
-        {
-            m_pBackGroundView[CAControlStateNormal]->setFrame(this->getBounds());
-            this->insertSubview(m_pBackGroundView[CAControlStateNormal], -1);
-        }
-    } while (0);
+        this->removeSubview(m_pBackGroundView[i]);
+    }
+    
+    m_eControlState = var;
+    
+    if (m_bControlStateLocked)
+    {
+        m_eControlState = CAControlStateNormal;
+    }
+    
+    if (m_pBackGroundView[m_eControlState] && m_eControlState != CAControlStateNormal)
+    {
+        m_pBackGroundView[m_eControlState]->setFrame(this->getBounds());
+        this->insertSubview(m_pBackGroundView[m_eControlState], -1);
+    }
+    else if (m_pBackGroundView[CAControlStateNormal])
+    {
+        m_pBackGroundView[CAControlStateNormal]->setFrame(this->getBounds());
+        this->insertSubview(m_pBackGroundView[CAControlStateNormal], -1);
+    }
 }
 
 CAControlState CAControl::getControlState()

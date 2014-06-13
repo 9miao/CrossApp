@@ -438,6 +438,53 @@ protected:
     CCPoint m_endPosition;
 };
 
+
+class CC_DLL CCFrameTo : public CCActionInterval
+{
+public:
+    /** initializes the action */
+    bool initWithDuration(float duration, const CCRect& endFrame);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual void startWithTarget(CAView *pTarget);
+    virtual CCActionInterval* reverse(void);
+    virtual void update(float time);
+    
+public:
+    /** creates the action */
+    static CCFrameTo* create(float duration, const CCRect& endFrame);
+protected:
+    CCRect m_startFrame;
+    CCRect m_endFrame;
+    CCRect m_deltaFrame;
+};
+
+class CC_DLL CCCenterTo : public CCActionInterval
+{
+public:
+    /** initializes the action */
+    bool initWithDuration(float duration, const CCRect& endCenter);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual void startWithTarget(CAView *pTarget);
+    virtual CCActionInterval* reverse(void);
+    virtual void update(float time);
+    
+public:
+    /** creates the action */
+    static CCCenterTo* create(float duration, const CCRect& endCenter);
+protected:
+    CCRect m_startCenter;
+    CCRect m_endCenter;
+    CCRect m_deltaCenter;
+};
+
 /** Skews a CAView object to given angles by modifying it's skewX and skewY attributes
 @since v1.0
 */

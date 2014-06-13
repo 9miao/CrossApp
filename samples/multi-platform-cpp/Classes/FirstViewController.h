@@ -33,6 +33,8 @@ protected:
 
     void updateSlider(CAControl* sender, CCPoint point);
     
+    void diss(CAControl* sender, CCPoint point);
+    
 };
 
 

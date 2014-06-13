@@ -14,6 +14,7 @@
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionEase.h"
 #include "CAScheduler.h"
+#include "sprite_nodes/CAWindow.h"
 NS_CC_BEGIN
 
 CAViewController::CAViewController()
@@ -160,6 +161,17 @@ void CAViewController::setTabBarItem(CATabBarItem* item)
             m_pTabBarController->updateItem(this);
         }
     }
+}
+
+void CAViewController::presentModalViewController(CAViewController* controller, bool animated)
+{
+    CCDirector::sharedDirector()->getRootWindow()->presentModalViewController(controller, animated);
+}
+
+
+void CAViewController::dismissModalViewControllerAnimated(bool animated)
+{
+    CCDirector::sharedDirector()->getRootWindow()->dismissModalViewControllerAnimated(animated);
 }
 
 #pragma CANavigationController
@@ -482,67 +494,64 @@ void CANavigationController::navigationPopViewController(CANavigationBar* naviga
 
 void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
 {
-    do
+    CC_RETURN_IF(m_bNavigationBarHidden == hidden);
+    m_bNavigationBarHidden = hidden;
+    m_pNavigationBar->stopAllActions();
+    this->unScheduleUpdate();
+    CC_RETURN_IF(this->getView()->getSuperview() == NULL);
+    
+    CCPoint point = CCPointZero;
+    
+    if (m_bNavigationBarHidden)
     {
-        CC_BREAK_IF(m_bNavigationBarHidden == hidden);
-        m_bNavigationBarHidden = hidden;
-        m_pNavigationBar->stopAllActions();
-        this->unScheduleUpdate();
-        CC_BREAK_IF(this->getView()->getSuperview() == NULL);
-        
-        CCPoint point = CCPointZero;
-        
-        if (m_bNavigationBarHidden)
+        switch (m_eNavigationBarVerticalAlignment)
         {
-            switch (m_eNavigationBarVerticalAlignment)
+            case CABarVerticalAlignmentTop:
             {
-                case CABarVerticalAlignmentTop:
-                {
-                    point.y = -m_pNavigationBar->getFrame().size.height;
-                }
-                    break;
-                case CABarVerticalAlignmentBottom:
-                {
-                    point.y = this->getView()->getBounds().size.height;
-                }
-                    break;
-                default:
-                    break;
+                point.y = -m_pNavigationBar->getFrame().size.height;
             }
-        }
-        else
-        {
-            switch (m_eNavigationBarVerticalAlignment)
+                break;
+            case CABarVerticalAlignmentBottom:
             {
-                case CABarVerticalAlignmentTop:
-                {
-                    point.y = 0;
-                }
-                    break;
-                case CABarVerticalAlignmentBottom:
-                {
-                    point.y = this->getView()->getBounds().size.height - m_pNavigationBar->getFrame().size.height;
-                }
-                    break;
-                default:
-                    break;
+                point.y = this->getView()->getBounds().size.height;
             }
-        }
-        
-        if (animated)
-        {
-            CCMoveTo* moveTo = CCMoveTo::create(0.3f, point);
-            CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CANavigationController::scheduleUpdate));
-            CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CANavigationController::unScheduleUpdate));
-            CCSequence* actions = CCSequence::create(begin, moveTo, end, NULL);
-            m_pNavigationBar->runAction(actions);
-        }
-        else
-        {
-            m_pNavigationBar->setFrameOrigin(point);
+                break;
+            default:
+                break;
         }
     }
-    while (0);
+    else
+    {
+        switch (m_eNavigationBarVerticalAlignment)
+        {
+            case CABarVerticalAlignmentTop:
+            {
+                point.y = 0;
+            }
+                break;
+            case CABarVerticalAlignmentBottom:
+            {
+                point.y = this->getView()->getBounds().size.height - m_pNavigationBar->getFrame().size.height;
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    
+    if (animated)
+    {
+        CCMoveTo* moveTo = CCMoveTo::create(0.3f, point);
+        CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CANavigationController::scheduleUpdate));
+        CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CANavigationController::unScheduleUpdate));
+        CCSequence* actions = CCSequence::create(begin, moveTo, end, NULL);
+        m_pNavigationBar->runAction(actions);
+    }
+    else
+    {
+        m_pNavigationBar->setFrameOrigin(point);
+    }
+
 }
 
 void CANavigationController::update(float dt)
@@ -594,6 +603,7 @@ CATabBarController::CATabBarController()
 ,m_pTabBar(NULL)
 ,m_pContainer(NULL)
 ,m_bTabBarHidden(false)
+,m_bTabBarAnimated(false)
 {
 
 }
@@ -797,13 +807,15 @@ bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index, b
         if (animated)
         {
             this->renderingAllViewController();
+            CAScheduler::unschedule(schedule_selector(CATabBarController::renderingSelectedViewController), this);
+            CAScheduler::schedule(schedule_selector(CATabBarController::renderingSelectedViewController), this, 0, 1, 1.0f,false);
         }
         
         CCPoint point = CCPoint(m_pContainer->getFrame().size.width * m_nSelectedIndex, 0);
         
         m_pContainer->setContentOffset(point, animated);
         
-        CAScheduler::schedule(schedule_selector(CATabBarController::renderingSelectedViewController), this, 0, 1, 1.0f,false);
+        this->renderingSelectedViewController();
         
         return true;
     }
@@ -819,7 +831,7 @@ unsigned int CATabBarController::getSelectedViewControllerAtIndex()
 
 void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index)
 {
-    this->showSelectedViewControllerAtIndex(index, true);
+    this->showSelectedViewControllerAtIndex(index, m_bTabBarAnimated);
 }
 
 void CATabBarController::renderingAllViewController(float dt)
@@ -843,71 +855,68 @@ void CATabBarController::renderingSelectedViewController(float dt)
 
 void CATabBarController::setTabBarHidden(bool hidden, bool animated)
 {
-    do
+    CC_RETURN_IF(m_bTabBarHidden == hidden);
+    m_bTabBarHidden = hidden;
+    m_pTabBar->stopAllActions();
+    this->unScheduleUpdate();
+    CC_RETURN_IF(this->getView()->getSuperview() == NULL);
+    
+    CCPoint point = CCPointZero;
+    
+    if (m_bTabBarHidden)
     {
-        CC_BREAK_IF(m_bTabBarHidden == hidden);
-        m_bTabBarHidden = hidden;
-        m_pTabBar->stopAllActions();
-        this->unScheduleUpdate();
-        CC_BREAK_IF(this->getView()->getSuperview() == NULL);
-        
-        CCPoint point = CCPointZero;
-        
-        if (m_bTabBarHidden)
+        switch (m_eTabBarVerticalAlignment)
         {
-            switch (m_eTabBarVerticalAlignment)
+            case CABarVerticalAlignmentTop:
             {
-                case CABarVerticalAlignmentTop:
-                {
-                    point.y = -m_pTabBar->getFrame().size.height;
-                }
-                    break;
-                case CABarVerticalAlignmentBottom:
-                {
-                    point.y = this->getView()->getBounds().size.height;
-                }
-                    break;
-                default:
-                    break;
+                point.y = -m_pTabBar->getFrame().size.height;
             }
-        }
-        else
-        {
-            switch (m_eTabBarVerticalAlignment)
+                break;
+            case CABarVerticalAlignmentBottom:
             {
-                case CABarVerticalAlignmentTop:
-                {
-                    point.y = 0;
-                }
-                    break;
-                case CABarVerticalAlignmentBottom:
-                {
-                    point.y = this->getView()->getBounds().size.height - m_pTabBar->getFrame().size.height;
-                }
-                    break;
-                default:
-                    break;
+                point.y = this->getView()->getBounds().size.height;
             }
-        }
-        
-        if (animated)
-        {
-            CCMoveTo* moveTo = CCMoveTo::create(0.3f, point);
-            CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CATabBarController::scheduleUpdate));
-            CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CATabBarController::unScheduleUpdate));
-            CCSequence* actions = CCSequence::create(begin, moveTo, end, NULL);
-            m_pTabBar->runAction(actions);
-        }
-        else
-        {
-            m_pTabBar->setFrameOrigin(point);
-            if (this->getView()->getSuperview())
-            {
-                this->update(0);
-            }
+                break;
+            default:
+                break;
         }
     }
-    while (0);
+    else
+    {
+        switch (m_eTabBarVerticalAlignment)
+        {
+            case CABarVerticalAlignmentTop:
+            {
+                point.y = 0;
+            }
+                break;
+            case CABarVerticalAlignmentBottom:
+            {
+                point.y = this->getView()->getBounds().size.height - m_pTabBar->getFrame().size.height;
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    
+    if (animated)
+    {
+        CCMoveTo* moveTo = CCMoveTo::create(0.3f, point);
+        CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CATabBarController::scheduleUpdate));
+        CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CATabBarController::unScheduleUpdate));
+        CCSequence* actions = CCSequence::create(begin, moveTo, end, NULL);
+        m_pTabBar->runAction(actions);
+    }
+    else
+    {
+        m_pTabBar->setFrameOrigin(point);
+        if (this->getView()->getSuperview())
+        {
+            this->update(0);
+        }
+    }
+
 }
 
 void CATabBarController::update(float dt)

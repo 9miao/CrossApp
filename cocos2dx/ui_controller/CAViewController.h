@@ -57,6 +57,10 @@ public:
     
     void setTabBarItem(CATabBarItem* item);
     
+    void presentModalViewController(CAViewController* controller, bool animated);
+    
+    void dismissModalViewControllerAnimated(bool animated);
+    
     void clearUp();
     
     virtual bool isKeypadEnabled();
@@ -195,6 +199,8 @@ public:
     unsigned int getSelectedViewControllerAtIndex();
     
     void setTabBarHidden(bool hidden, bool animated);
+    
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bTabBarAnimated, TabBarAnimated);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bTabBarHidden, TabBarHidden);
     

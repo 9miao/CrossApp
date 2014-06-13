@@ -208,24 +208,19 @@ void CATouchController::touchBegan()
 
 void CATouchController::touchMoved()
 {
-    do
-    {
-        CC_BREAK_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < 8.0f);
-        m_tFirstPoint = CCPointZero;
-        
-        if (!m_vWillTouchesViewCache.empty()
-            && CAScheduler::isScheduled(schedule_selector(CATouchController::passingTouchesViewCache), this))
-        {
-            CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViewCache), this);
-            
-            CLEAR_VECTOR(m_vWillTouchesViewCache);
-            TOUCHES_BOOL_VIEW;
-        }
-
-        TOUCHES_VIEW_SEL(ccTouchMoved);
-    }
-    while (0);
+    CC_RETURN_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < 8.0f);
+    m_tFirstPoint = CCPointZero;
     
+    if (!m_vWillTouchesViewCache.empty()
+        && CAScheduler::isScheduled(schedule_selector(CATouchController::passingTouchesViewCache), this))
+    {
+        CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViewCache), this);
+        
+        CLEAR_VECTOR(m_vWillTouchesViewCache);
+        TOUCHES_BOOL_VIEW;
+    }
+    
+    TOUCHES_VIEW_SEL(ccTouchMoved);
 }
 
 void CATouchController::touchEnded()

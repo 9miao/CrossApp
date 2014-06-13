@@ -9,9 +9,7 @@ NS_CC_BEGIN
 
 class CC_DLL CAWindow : public CAView
 {
-    
-    CC_PROPERTY(CAViewController*, m_pRootViewController, RootViewController);
-    
+
 public:
     /**
      *  @js ctor
@@ -25,6 +23,26 @@ public:
     bool init();
 
     static CAWindow *create(void);
+    
+    void presentModalViewController(CAViewController* controller, bool animated);
+    
+    void dismissModalViewControllerAnimated(bool animated);
+    
+protected:
+    
+    void presentStart();
+    
+    void presentEnd();
+    
+    void dismissStart();
+    
+    void dismissEnd();
+    
+protected:
+    
+    CC_PROPERTY(CAViewController*, m_pRootViewController, RootViewController);
+    
+    CC_SYNTHESIZE_READONLY(CAViewController*, m_pModalViewController, ModalViewController);
 };
 
 NS_CC_END

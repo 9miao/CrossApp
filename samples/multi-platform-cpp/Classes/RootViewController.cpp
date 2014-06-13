@@ -7,6 +7,7 @@
 //
 
 #include "RootViewController.h"
+#include "FirstViewController.h"
 
 RootViewController::RootViewController()
 {
@@ -87,7 +88,7 @@ void RootViewController::viewDidUnload()
 void RootViewController::reshapeViewRectDidFinish()
 {
     CCRect rect = this->getView()->getBounds();
-    
+    CCLog("%f",rect.size.height);
     CCRect tableRect = rect;
     tableRect.size.height = rect.size.height - 80;
     
@@ -131,16 +132,22 @@ void RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint p
 //    tableView->reloadData();
     
     
-    if (btn->isSelected())
-    {
-        this->getNavigationController()->getTabBarController()->setTabBarHidden(false, true);
-        this->getNavigationController()->setNavigationBarHidden(false, true);
-    }
-    else
-    {
-        this->getNavigationController()->getTabBarController()->setTabBarHidden(true, true);
-        this->getNavigationController()->setNavigationBarHidden(true, true);
-    }
+//    if (btn->isSelected())
+//    {
+//        this->getNavigationController()->getTabBarController()->setTabBarHidden(false, true);
+//        this->getNavigationController()->setNavigationBarHidden(false, true);
+//    }
+//    else
+//    {
+//        this->getNavigationController()->getTabBarController()->setTabBarHidden(true, true);
+//        this->getNavigationController()->setNavigationBarHidden(true, true);
+//    }
+    
+    FirstViewController* viewController = new FirstViewController();
+    viewController->init();
+    
+    CCDirector::sharedDirector()->getRootWindow()->presentModalViewController(viewController, true);
+    
 }
 
 void RootViewController::scrollViewDidEndDragging(CAScrollView* view)
