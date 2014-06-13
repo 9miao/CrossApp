@@ -18,11 +18,9 @@
 #include "actions/CCActionManager.h"
 #include "shaders/CCGLProgram.h"
 #include "CABatchView.h"
-// externals
 #include "kazmath/GL/matrix.h"
 #include "support/component/CCComponent.h"
 #include "support/component/CCComponentContainer.h"
-
 #include <stdarg.h>
 #include "touch_dispatcher/CATouchDispatcher.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
@@ -145,12 +143,8 @@ CAView::CAView(void)
 
 CAView::~CAView(void)
 {
-    CCLOGINFO( "cocos2d: deallocing" );
-    
     CC_SAFE_RELEASE(m_pActionManager);
-    // attributes
     CC_SAFE_RELEASE(m_pCamera);
-    
     CC_SAFE_RELEASE(m_pGrid);
     CC_SAFE_RELEASE(m_pShaderProgram);
     CC_SAFE_RELEASE(m_pUserObject);
@@ -167,11 +161,8 @@ CAView::~CAView(void)
             }
         }
     }
-    
-    // children
     CC_SAFE_RELEASE_NULL(m_pSubviews);
-    
-    // m_pComsContainer
+
     m_pComponentContainer->removeAll();
     CC_SAFE_DELETE(m_pComponentContainer);
     CC_SAFE_RELEASE(m_pobImage);

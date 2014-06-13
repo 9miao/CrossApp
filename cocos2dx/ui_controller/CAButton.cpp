@@ -274,6 +274,11 @@ void CAButton::setImageForState(CAControlState controlState, CAImage* var)
         CC_SAFE_RELEASE(m_pImage[controlState]);
         m_pImage[controlState] = var;
     }
+    
+    if (m_bRunning)
+    {
+        this->setControlState(m_eControlState);
+    }
 }
 
 void CAButton::setTitleForState(CAControlState controlState, std::string var)
@@ -290,6 +295,11 @@ void CAButton::setTitleForState(CAControlState controlState, std::string var)
     {
         m_sTitle[controlState] = var;
     }
+    
+    if (m_bRunning)
+    {
+        this->setControlState(m_eControlState);
+    }
 }
 
 void CAButton::setImageColorForState(CAControlState controlState, ccColor3B var)
@@ -302,6 +312,11 @@ void CAButton::setImageColorForState(CAControlState controlState, ccColor3B var)
     else
     {
         m_sImageColor[controlState] = var;
+    }
+    
+    if (m_bRunning)
+    {
+        this->setControlState(m_eControlState);
     }
 }
 
@@ -316,6 +331,11 @@ void CAButton::setTitleColorForState(CAControlState controlState, ccColor3B var)
     {
         m_sTitleColor[controlState] = var;
     }
+    
+    if (m_bRunning)
+    {
+        this->setControlState(m_eControlState);
+    }
 }
 
 void CAButton::setTitleFontName(std::string var)
@@ -324,6 +344,11 @@ void CAButton::setTitleFontName(std::string var)
     {
         m_sTitleFontName = var;
         m_pLabel->setFontName(m_sTitleFontName.c_str());
+    }
+    
+    if (m_bRunning)
+    {
+        this->setControlState(m_eControlState);
     }
 }
 
@@ -493,7 +518,7 @@ void CAButton::setControlState(CAControlState var)
         }
         else if (image == NULL && title.compare("") != 0)
         {
-            labelSize = this->getBounds().size.height * 0.667f;
+            labelSize = this->getBounds().size.height * 0.4f;
             labelCenterOrigin = this->getBounds().size / 2 ;
         }
         else if (image && title.compare("") != 0)

@@ -474,7 +474,7 @@ void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
                 }
                 p = p/m_tPointOffset.size();
             }
-            m_tInertia = p;
+            m_tInertia = p * 1.5f;
 			m_tPointOffset.clear();
 
             CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f, false);

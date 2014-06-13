@@ -59,7 +59,7 @@ void RootViewController::viewDidLoad()
     
     tableView->setBackGroundImage(CAImage::create("bg.jpg"));
     
-    button_ = CAButton::createWithFrame(CCRect(200, tableRect.size.height+10, 320, 60), CAButtonTypeRoundedRect);
+    button_ = CAButton::createWithFrame(CCRect(150, tableRect.size.height+10, 200, 60), CAButtonTypeRoundedRect);
     button_->setTitleForState(CAControlStateNormal, "Hide-Bar");
     button_->setTitleForState(CAControlStateSelected, "Show-Bar");
     this->getView()->addSubview(button_);
@@ -93,7 +93,7 @@ void RootViewController::reshapeViewRectDidFinish()
     
     tableView->setFrame(tableRect);
     
-    button_->setFrame(CCRect(200, tableRect.size.height+10, 320, 60));
+    button_->setFrame(CCRect(150, tableRect.size.height+10, 200, 60));
     
     switch_->setFrame(CCRect(10, tableRect.size.height+10, 120, 60));
     

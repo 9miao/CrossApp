@@ -243,11 +243,6 @@ bool CASegmentedControl::setTitleAtIndex(const char* title, int index, CAControl
     }
     btn->setTitleForState(controlState, title);
     
-    if (m_bRunning)
-    {
-        this->setSelectedAtIndex(m_selectedIndex);
-    }
-    
     return true;
 }
 
@@ -264,11 +259,6 @@ bool CASegmentedControl::setTitleColorAtIndex(ccColor3B color, int index, CACont
         return false;
     }
     btn->setTitleColorForState(controlState, color);
-    
-    if (m_bRunning)
-    {
-        this->setSelectedAtIndex(m_selectedIndex);
-    }
     
     return true;
 }
@@ -287,11 +277,6 @@ bool CASegmentedControl::setBackgroundImageAtIndex(CAImage *image, int index, CA
     }
     btn->setBackGroundViewForState(controlState, CAScale9ImageView::createWithImage(image));
     
-    if (m_bRunning)
-    {
-        this->setSelectedAtIndex(m_selectedIndex);
-    }
-    
     return true;
 }
 
@@ -308,11 +293,6 @@ bool CASegmentedControl::setImageAtIndex(CAImage *image, int index, CAControlSta
         return false;
     }
     btn->setImageForState(controlState, image);
-    
-    if (m_bRunning)
-    {
-        this->setSelectedAtIndex(m_selectedIndex);
-    }
     
     return true;
 }

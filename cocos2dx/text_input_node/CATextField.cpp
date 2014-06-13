@@ -96,7 +96,7 @@ CATextField* CATextField::createWithCenter(const CCRect& rect)
 
 bool CATextField::initWithFrame(const CCRect& frame)
 {
-    if (!CAControl::initWithFrame(frame)) {
+    if (!CAControl::initWithFrame(frame, ccc4(255, 255, 255, 255))) {
         return false;
     }
     lengthArr.push_back(0.0f);

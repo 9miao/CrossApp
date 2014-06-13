@@ -643,7 +643,7 @@ void CAScale9ImageView::setOpacity(GLubyte opacity)
     _opacity = opacity;
 
     CCObject* child;
-    CCArray* children = this->getSubviews();
+    CCArray* children = _scale9Image->getSubviews();
     CCARRAY_FOREACH(children, child)
     {
         CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
