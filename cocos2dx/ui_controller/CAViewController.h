@@ -59,7 +59,7 @@ public:
     
     void presentModalViewController(CAViewController* controller, bool animated);
     
-    void dismissModalViewControllerAnimated(bool animated);
+    void dismissModalViewController(bool animated);
     
     void clearUp();
     

@@ -110,7 +110,7 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
     }
 }
 
-void CAWindow::dismissModalViewControllerAnimated(bool animated)
+void CAWindow::dismissModalViewController(bool animated)
 {
     CC_RETURN_IF(m_pModalViewController == NULL);
     if (animated)

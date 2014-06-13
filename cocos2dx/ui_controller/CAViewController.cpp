@@ -169,9 +169,9 @@ void CAViewController::presentModalViewController(CAViewController* controller, 
 }
 
 
-void CAViewController::dismissModalViewControllerAnimated(bool animated)
+void CAViewController::dismissModalViewController(bool animated)
 {
-    CCDirector::sharedDirector()->getRootWindow()->dismissModalViewControllerAnimated(animated);
+    CCDirector::sharedDirector()->getRootWindow()->dismissModalViewController(animated);
 }
 
 #pragma CANavigationController

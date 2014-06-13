@@ -71,5 +71,5 @@ void FirstViewController::updateSlider(cocos2d::CAControl *sender, cocos2d::CCPo
 
 void FirstViewController::diss(CAControl* sender, CCPoint point)
 {
-    this->dismissModalViewControllerAnimated(true);
+    this->dismissModalViewController(true);
 }

@@ -444,6 +444,12 @@
     <ClCompile Include="..\ui_controller\CASlider.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
+    <ClCompile Include="..\images\CAImageAtlas.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sprite_nodes\CABatchView.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCAffineTransform.h">
@@ -900,6 +906,12 @@
     </ClInclude>
     <ClInclude Include="..\ui_controller\CASlider.h">
       <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImageAtlas.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sprite_nodes\CABatchView.h">
+      <Filter>sprite_nodes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

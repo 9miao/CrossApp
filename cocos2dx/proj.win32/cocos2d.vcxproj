@@ -175,6 +175,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionTiledGrid.cpp" />
     <ClCompile Include="..\actions\CCActionTween.cpp" />
     <ClCompile Include="..\images\CAImage.cpp" />
+    <ClCompile Include="..\images\CAImageAtlas.cpp" />
     <ClCompile Include="..\images\CAImageCache.cpp" />
     <ClCompile Include="..\images\CAImageETC.cpp" />
     <ClCompile Include="..\images\CAImagePVR.cpp" />
@@ -205,6 +206,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\shaders\ccGLStateCache.cpp" />
     <ClCompile Include="..\shaders\CCShaderCache.cpp" />
     <ClCompile Include="..\shaders\ccShaders.cpp" />
+    <ClCompile Include="..\sprite_nodes\CABatchView.cpp" />
     <ClCompile Include="..\sprite_nodes\CAImageView.cpp" />
     <ClCompile Include="..\sprite_nodes\CAScale9ImageView.cpp" />
     <ClCompile Include="..\sprite_nodes\CAView.cpp" />
@@ -302,6 +304,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\actions\CCActionTiledGrid.h" />
     <ClInclude Include="..\actions\CCActionTween.h" />
     <ClInclude Include="..\images\CAImage.h" />
+    <ClInclude Include="..\images\CAImageAtlas.h" />
     <ClInclude Include="..\images\CAImageCache.h" />
     <ClInclude Include="..\images\CAImageETC.h" />
     <ClInclude Include="..\images\CAImagePVR.h" />
@@ -359,6 +362,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\shaders\ccShader_PositionTexture_vert.h" />
     <ClInclude Include="..\shaders\ccShader_Position_uColor_frag.h" />
     <ClInclude Include="..\shaders\ccShader_Position_uColor_vert.h" />
+    <ClInclude Include="..\sprite_nodes\CABatchView.h" />
     <ClInclude Include="..\sprite_nodes\CAImageView.h" />
     <ClInclude Include="..\sprite_nodes\CAScale9ImageView.h" />
     <ClInclude Include="..\sprite_nodes\CAView.h" />

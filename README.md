@@ -1,26 +1,59 @@
 
+####CrossApp alpha 0.1.9 更新内容：  
+
+#####1.触摸事件bug修改
+在滑动层上点击按钮瞬间抬起不触发的bug
+
+#####2.CATabBar优化
+对CATabBar进行了体验的优化
+
+#####3.CATabBar与CANavigationBar优化
+可通过ViewController动态更新其显示数据
+
+#####4.CAButton与CASegmentedControl优化
+修改文字显示大小错误的bug
+
+#####6.安卓系统，从后台返回黑屏的bug
+之前，在安卓系统中，如果从后台返回，有几率黑屏
+
+#####5.添加动画相关 CCFrameTo 与 CCCenterTo
+可以动态的修改 frame与center
+
+#####6.添加viewController悬浮抽屉功能
+现在可以调用任何一个viewController的presentModalViewController与dismissModalViewController来显示与撤销。
+
+
 ####CrossApp alpha 0.1.8 更新内容：  
 
-#####1.添加CANavigationController左右button的定制
+#####1.
+添加CANavigationController左右button的定制
 
-#####2.CATextField添加win32输入功能
+#####2.
+CATextField添加win32输入功能
 
-#####3.添加CANavigationController 替换当前CAViewController的功能
+#####3.
+添加CANavigationController 替换当前CAViewController的功能
 
-#####4.修复触摸分发系统在可滑动容器上快速点击按钮无法触发按钮事件的bug
+#####4.
+修复触摸分发系统在可滑动容器上快速点击按钮无法触发按钮事件的bug
 
-#####6.修复在win32由于触摸事件造成的偶尔崩溃的bug
+#####6.
+修复在win32由于触摸事件造成的偶尔崩溃的bug
 
-#####5.优化CASegmentedControl
+#####5.
+优化CASegmentedControl
 
-#####6.优化CANavigationBar在竖屏的高度及布局。
+#####6.
+优化CANavigationBar在竖屏的高度及布局。
 
 
 ####CrossApp alpha 0.1.7 更新内容：  
 
-#####1.修复CATextField在 win32 与mac平台编译报错的问题
+#####1.
+修复CATextField在 win32 与mac平台编译报错的问题
 
-#####2.修复TabBarController当前viewController不是第一项时 显示与隐藏 tabBar时画面出错的问题
+#####2.
+修复TabBarController当前viewController不是第一项时 显示与隐藏 tabBar时画面出错的问题
 
 
 ####CrossApp alpha 0.1.6 更新内容：  

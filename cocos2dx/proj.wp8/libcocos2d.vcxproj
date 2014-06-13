@@ -222,6 +222,7 @@
     <ClCompile Include="..\effects\CCGrabber.cpp" />
     <ClCompile Include="..\effects\CCGrid.cpp" />
     <ClCompile Include="..\images\CAImage.cpp" />
+    <ClCompile Include="..\images\CAImageAtlas.cpp" />
     <ClCompile Include="..\images\CAImageCache.cpp" />
     <ClCompile Include="..\images\CAImageETC.cpp" />
     <ClCompile Include="..\images\CAImagePVR.cpp" />
@@ -338,6 +339,7 @@
     <ClCompile Include="..\shaders\ccGLStateCache.cpp" />
     <ClCompile Include="..\shaders\CCShaderCache.cpp" />
     <ClCompile Include="..\shaders\ccShaders.cpp" />
+    <ClCompile Include="..\sprite_nodes\CABatchView.cpp" />
     <ClCompile Include="..\sprite_nodes\CAImageView.cpp" />
     <ClCompile Include="..\sprite_nodes\CAScale9ImageView.cpp" />
     <ClCompile Include="..\sprite_nodes\CAView.cpp" />
@@ -420,6 +422,7 @@
     <ClInclude Include="..\effects\CCGrabber.h" />
     <ClInclude Include="..\effects\CCGrid.h" />
     <ClInclude Include="..\images\CAImage.h" />
+    <ClInclude Include="..\images\CAImageAtlas.h" />
     <ClInclude Include="..\images\CAImageCache.h" />
     <ClInclude Include="..\images\CAImageETC.h" />
     <ClInclude Include="..\images\CAImagePVR.h" />
@@ -487,6 +490,7 @@
     <ClInclude Include="..\shaders\CCShaderCache.h" />
     <ClInclude Include="..\shaders\ccShaders.h" />
     <ClInclude Include="..\shaders\precompiled\wp8\ccShaders_wp8.h" />
+    <ClInclude Include="..\sprite_nodes\CABatchView.h" />
     <ClInclude Include="..\sprite_nodes\CAImageView.h" />
     <ClInclude Include="..\sprite_nodes\CAScale9ImageView.h" />
     <ClInclude Include="..\sprite_nodes\CAView.h" />
