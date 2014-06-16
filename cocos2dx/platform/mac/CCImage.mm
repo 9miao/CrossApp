@@ -336,7 +336,7 @@ static bool _isValidFontName(const char *fontName)
     return ret;
 }
 
-static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo, cocos2d::ccColor3B* pStrokeColor)
+static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo, cocos2d::CAColor4B* pStrokeColor)
 {
     bool bRet = false;
 

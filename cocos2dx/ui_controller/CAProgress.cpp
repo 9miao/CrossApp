@@ -17,8 +17,8 @@ NS_CC_BEGIN
 
 CAProgress::CAProgress()
 :m_fProgress(0.0f)
-,m_progressTintColor(ccBLUE)
-,m_progresstrackColor(ccGRAY)
+,m_progressTintColor(CAColor_blue)
+,m_progresstrackColor(CAColor_gray)
 ,m_pProgressStyle(CAProgressStyleDefault)
 ,m_pProgressTintImage(NULL)
 ,m_pProgressTrackImage(NULL)
@@ -55,6 +55,7 @@ bool CAProgress::init()
     {
         return false;
     }
+    this->setColor(CAColor_clear);
     return true;
 }
 
@@ -70,7 +71,7 @@ void CAProgress::onEnterTransitionDidFinish()
 		}
 		
 		m_pTarckImageView = CAImageView::createWithImage(this->getImage(m_pProgressTrackImage));
-		m_pTarckImageView->setFrame(CCRectZero);
+		m_pTarckImageView->setFrameOrigin(CCPointZero);
         this->insertSubview(m_pTarckImageView, -1);
 		m_pTarckImageView->setColor(m_progresstrackColor);
 
@@ -81,13 +82,13 @@ void CAProgress::onEnterTransitionDidFinish()
         
 		m_pProgressImageView = CAImageView::createWithImage(this->getImage(m_pProgressTintImage));
 		m_pProgressImageView->setAnchorPoint(CCPointZero);
-		m_pProgressImageView->setFrame(CCRectZero);
+		m_pProgressImageView->setFrameOrigin(CCPointZero);
         this->addSubview(m_pProgressImageView);
 		m_pProgressImageView->setColor(m_progressTintColor);
 
 		CCRect rect = m_pProgressImageView->getBounds();
 		rect.size.width *= m_fProgress;
-		m_pProgressImageView->setImageRect(rect);
+		m_pProgressImageView->setImageRect(rect, false, rect.size);
 
         this->addSubview(m_pIndicator);
     }
@@ -100,13 +101,9 @@ void CAProgress::onExitTransitionDidStart()
 
 CAImage* CAProgress::getImage(CAImage* image)
 {
-    CCRect rect;
-    rect.origin = ccpSub(ccpMult(image->getContentSize(), 0.5f), CCPoint(0.5f, 0.5f));
-    rect.size = CCSize(1, 1);
-    
-	CAScale9ImageView *scale9Image = CAScale9ImageView::createWithImage(rect, image);
+	CAScale9ImageView *scale9Image = CAScale9ImageView::createWithImage(image);
     scale9Image->setAnchorPoint(CCPointZero);
-	scale9Image->setPreferredSize(this->getBounds().size);
+	scale9Image->setFrame(this->getBounds());
     this->addSubview(scale9Image);
     
 	CCRenderTexture* render = CCRenderTexture::create(this->getBounds().size.width, this->getBounds().size.height, kCAImagePixelFormat_RGBA8888);
@@ -135,7 +132,7 @@ void CAProgress::setProgress(float progress, bool animated)
 			this->animatedFinish();
 		}
 		
-		CCMoveTo *moveTo = CCMoveTo::create(time, point);
+		CCFrameOrginTo *moveTo = CCFrameOrginTo::create(time, point);
 		CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CAProgress::animatedBegin));
 		CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CAProgress::animatedFinish));
 		CCSequence* animateds = CCSequence::create(begin, moveTo, finish, NULL);
@@ -159,7 +156,7 @@ void CAProgress::update(float dt)
 {
 	CCRect rect = CCRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
 
-	m_pProgressImageView->setImageRect(rect);
+	m_pProgressImageView->setImageRect(rect, false, rect.size);
     
 	m_fProgress = rect.size.width / this->getBounds().size.width;
 }

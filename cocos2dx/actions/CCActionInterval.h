@@ -385,17 +385,11 @@ protected:
     float m_fStartAngleY;
 };
 
-/**  Moves a CAView object x,y pixels by modifying it's position attribute.
- x and y are relative to the position of the object.
- Several CCMoveBy actions can be concurrently called, and the resulting
- movement will be the sum of individual movements.
- @since v2.1beta2-custom
- */
-class CC_DLL CCMoveBy : public CCActionInterval
+class CC_DLL CCFrameOrginTo : public CCActionInterval
 {
 public:
     /** initializes the action */
-    bool initWithDuration(float duration, const CCPoint& deltaPosition);
+    bool initWithDuration(float duration, const CCPoint& endFrameOrgin);
     /**
      *  @js NA
      *  @lua NA
@@ -404,40 +398,15 @@ public:
     virtual void startWithTarget(CAView *pTarget);
     virtual CCActionInterval* reverse(void);
     virtual void update(float time);
-
+    
 public:
     /** creates the action */
-    static CCMoveBy* create(float duration, const CCPoint& deltaPosition);
+    static CCFrameOrginTo* create(float duration, const CCPoint& endFrameOrgin);
 protected:
-    CCPoint m_positionDelta;
-    CCPoint m_startPosition;
-    CCPoint m_previousPosition;
+    CCPoint m_startFrameOrgin;
+    CCPoint m_endFrameOrgin;
+    CCPoint m_deltaFrameOrgin;
 };
-
-/** Moves a CAView object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
- Several CCMoveTo actions can be concurrently called, and the resulting
- movement will be the sum of individual movements.
- @since v2.1beta2-custom
- */
-class CC_DLL CCMoveTo : public CCMoveBy
-{
-public:
-    /** initializes the action */
-    bool initWithDuration(float duration, const CCPoint& position);
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CAView *pTarget);
-
-public:
-    /** creates the action */
-    static CCMoveTo* create(float duration, const CCPoint& position);
-protected:
-    CCPoint m_endPosition;
-};
-
 
 class CC_DLL CCFrameTo : public CCActionInterval
 {
@@ -460,6 +429,29 @@ protected:
     CCRect m_startFrame;
     CCRect m_endFrame;
     CCRect m_deltaFrame;
+};
+
+class CC_DLL CCCenterOrginTo : public CCActionInterval
+{
+public:
+    /** initializes the action */
+    bool initWithDuration(float duration, const CCPoint& endCenterOrgin);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual void startWithTarget(CAView *pTarget);
+    virtual CCActionInterval* reverse(void);
+    virtual void update(float time);
+    
+public:
+    /** creates the action */
+    static CCCenterOrginTo* create(float duration, const CCPoint& endCenterOrgin);
+protected:
+    CCPoint m_startCenterOrgin;
+    CCPoint m_endCenterOrgin;
+    CCPoint m_deltaCenterOrgin;
 };
 
 class CC_DLL CCCenterTo : public CCActionInterval
@@ -795,7 +787,7 @@ class CC_DLL CCFadeTo : public CCActionInterval
 {
 public:
     /** initializes the action with duration and opacity */
-    bool initWithDuration(float duration, GLubyte opacity);
+    bool initWithDuration(float duration, float alpha);
     /**
      *  @js NA
      *  @lua NA
@@ -806,10 +798,10 @@ public:
 
 public:
     /** creates an action with duration and opacity */
-    static CCFadeTo* create(float duration, GLubyte opacity);
+    static CCFadeTo* create(float duration, float alpha);
 protected:
-    GLubyte m_toOpacity;
-    GLubyte m_fromOpacity;
+    float m_toAlpha;
+    float m_fromAlpha;
 };
 
 /** @brief Tints a CAView that implements the CCNodeRGB protocol from current tint to a custom one.
@@ -833,8 +825,8 @@ public:
     /** creates an action with duration and color */
     static CCTintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
 protected:
-    ccColor3B m_to;
-    ccColor3B m_from;
+    CAColor4B m_to;
+    CAColor4B m_from;
 };
 
 /** @brief Tints a CAView that implements the CCNodeRGB protocol from current tint to a custom one.

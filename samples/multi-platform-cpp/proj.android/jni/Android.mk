@@ -9,6 +9,7 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
 			../../Classes/FirstViewController.cpp \
+			../../Classes/SecondViewController.cpp \
 			../../Classes/RootViewController.cpp \
 			../../Classes/ViewController.cpp \
 			

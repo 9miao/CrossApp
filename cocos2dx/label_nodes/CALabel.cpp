@@ -68,11 +68,11 @@ bool CALabel::initWithFrame(const CCRect& rect)
         return false;
     }
     
-    this->setOpacity(0);
+    this->setColor(CAColor_clear);
     
     m_pTextImage = CAImageView::create();
     
-    m_pTextImage->setFrame(CCRectZero);
+    m_pTextImage->setFrameOrigin(CCPointZero);
     
     this->addSubview(m_pTextImage);
     
@@ -87,7 +87,7 @@ bool CALabel::initWithCenter(const CCRect& rect)
         return false;
     }
     
-    this->setOpacity(0);
+    this->setColor(CAColor_clear);
     
     m_pTextImage = CAImageView::create();
     
@@ -165,13 +165,11 @@ bool CALabel::updateImage()
     
     m_pTextImage->setImage(tex);
 
-    m_pTextImage->setImageRect(rect);
+    m_pTextImage->setImageRect(rect, false, rect.size);
     
-    m_pTextImage->setColor(ccc3(m_nTextcolor.r, m_nTextcolor.g, m_nTextcolor.b));
-    
-    m_pTextImage->setOpacity(m_nTextcolor.a);
+    m_pTextImage->setColor(m_nTextcolor);
 
-    m_pTextImage->CAView::setFrameOrigin(CCPoint(0, (this->getBounds().size.height - rect.size.height)/2));
+    m_pTextImage->setFrameOrigin(CCPoint(0, (this->getBounds().size.height - rect.size.height)/2));
 
     tex->release();
     return true;
@@ -211,12 +209,12 @@ CCTextAlignment CALabel::getTextAlignment()
     return m_nTextAlignment;
 }
 
-ccColor4B CALabel::getTextcolor()
+CAColor4B CALabel::getTextcolor()
 {
     return m_nTextcolor;
 }
 
-//ccColor4B CALabel::getShadowcolor()
+//CAColor4B CALabel::getShadowcolor()
 //{
 //    return m_nShadowcolor;
 //}
@@ -236,14 +234,14 @@ unsigned int CALabel::getNumberOfLine()
     return m_nNumberOfLine;
 }
 
-void CALabel::setTextcolor(ccColor4B var)
+void CALabel::setTextcolor(CAColor4B var)
 {
     m_nTextcolor = var;
   
     this->updateImage();
 }
 
-//void CALabel::setShadowcolor(ccColor4B var)
+//void CALabel::setShadowcolor(CAColor4B var)
 //{
 //    m_nShadowcolor= var;
 //    if (m_nText.size()>0)

@@ -33,11 +33,11 @@ void FirstViewController::viewDidLoad()
     // Do any additional setup after loading the view from its nib.
 	CCRect winRect = this->getView()->getBounds();
     CAImageView* imageView = CAImageView::createWithImage(CAImage::create("HelloWorld.png"));
-    imageView->setFrame(CCRect(0, 0, 0, 0));
+    imageView->setFrame(winRect);
     this->getView()->addSubview(imageView);
     
     CCLabelTTF* ttf = CCLabelTTF::create("Hello World!", "CODE LIGHT", 72);
-    ttf->setColor(ccWHITE);
+	ttf->setColor(CAColor_white);
     ttf->setCenter(CCRect(winRect.size.width*0.5, winRect.size.height*0.5-270, 0, 0));
     this->getView()->insertSubview(ttf,1);
 }

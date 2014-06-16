@@ -34,7 +34,7 @@ public:
     // renering box
     CCSize                  m_dimensions;
     // font color
-    ccColor4B               m_fontFillColor;
+    CAColor4B               m_fontFillColor;
     // font shadow
     
 } caFontDefinition;
@@ -61,7 +61,7 @@ public:
     
     CC_SYNTHESIZE(string, m_nfontName, fontName);
     
-    CC_PROPERTY(ccColor4B, m_nTextcolor, Textcolor);
+    CC_PROPERTY(CAColor4B, m_nTextcolor, Textcolor);
     
     CC_SYNTHESIZE(CCVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
     
@@ -75,7 +75,7 @@ public:
 
     CC_SYNTHESIZE_READONLY(CCSize, m_cLabelSize, LabelSize);
     
-    //    CC_PROPERTY(ccColor4B, m_nShadowcolor, Shadowcolor);
+    //    CC_PROPERTY(CAColor4B, m_nShadowcolor, Shadowcolor);
     //
     //    CC_PROPERTY(CCSize, m_nShadowOffset, ShadowOffset);
     

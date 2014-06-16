@@ -13,7 +13,6 @@ CCCamera.cpp \
 ccFPSImages.c \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
-actions/CCActionCatmullRom.cpp \
 actions/CCActionEase.cpp \
 actions/CCActionGrid.cpp \
 actions/CCActionGrid3D.cpp \
@@ -59,9 +58,6 @@ keypad_dispatcher/CCKeypadDelegate.cpp \
 keypad_dispatcher/CCKeypadDispatcher.cpp \
 label_nodes/CCLabelTTF.cpp \
 label_nodes/CALabel.cpp \
-layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp \
-layers_scenes_transitions_nodes/CCTransition.cpp \
-layers_scenes_transitions_nodes/CCTransitionProgress.cpp \
 misc_nodes/CCClippingNode.cpp \
 misc_nodes/CCMotionStreak.cpp \
 misc_nodes/CCProgressTimer.cpp \

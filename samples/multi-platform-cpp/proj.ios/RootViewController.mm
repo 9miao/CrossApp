@@ -29,8 +29,11 @@
     
     CGRect rect = [[UIScreen mainScreen] bounds];
     rect.size.height -= 20;
-    rect.origin.y = 20;
-    
+    if ( [[UIDevice currentDevice].systemVersion floatValue] > 6.0)
+    {
+        rect.origin.y = 20;
+    }
+
     EAGLView *__glView = [EAGLView viewWithFrame: rect
                                      pixelFormat: kEAGLColorFormatRGB565
                                      depthFormat: GL_DEPTH24_STENCIL8_OES

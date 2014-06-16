@@ -103,18 +103,18 @@ public:
 class CC_DLL CCLens3D : public CCGrid3DAction
 {
 public:
-    /** Get lens center position */
+    /** Get lens center point */
     inline float getLensEffect(void) { return m_fLensEffect; }
-    /** Set lens center position */
+    /** Set lens center point */
     inline void setLensEffect(float fLensEffect) { m_fLensEffect = fLensEffect; }
     /** Set whether lens is concave */
     inline void setConcave(bool bConcave) { m_bConcave = bConcave; }
   
-    inline const CCPoint& getPosition(void) { return m_position; }
-    void setPosition(const CCPoint& position);
+    inline const CCPoint& getPoint(void) { return m_tPoint; }
+    void setPoint(const CCPoint& point);
 
-    /** initializes the action with center position, radius, a grid size and duration */
-    bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius);
+    /** initializes the action with center point, radius, a grid size and duration */
+    bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& point, float radius);
     /**
      *  @js NA
      *  @lua NA
@@ -123,11 +123,11 @@ public:
     virtual void update(float time);
 
 public:
-    /** creates the action with center position, radius, a grid size and duration */
-    static CCLens3D* create(float duration, const CCSize& gridSize, const CCPoint& position, float radius);
+    /** creates the action with center point, radius, a grid size and duration */
+    static CCLens3D* create(float duration, const CCSize& gridSize, const CCPoint& point, float radius);
 protected:
-    /* lens center position */
-    CCPoint m_position;
+    /* lens center point */
+    CCPoint m_tPoint;
     float m_fRadius;
     /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
     float m_fLensEffect;
@@ -141,10 +141,10 @@ protected:
 class CC_DLL CCRipple3D : public CCGrid3DAction
 {
 public:
-    /** get center position */
-    inline const CCPoint& getPosition(void) { return m_position; }
-    /** set center position */
-    void setPosition(const CCPoint& position);
+    /** get center point */
+    inline const CCPoint& getPoint(void) { return m_tPoint; }
+    /** set center point */
+    void setPoint(const CCPoint& point);
 
     inline float getAmplitude(void) { return m_fAmplitude; }
     inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
@@ -153,7 +153,7 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
-    bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius, unsigned int waves, float amplitude);
+    bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& point, float radius, unsigned int waves, float amplitude);
     /**
      *  @js NA
      *  @lua NA
@@ -163,10 +163,10 @@ public:
 
 public:
     /** creates the action with radius, number of waves, amplitude, a grid size and duration */
-    static CCRipple3D* create(float duration, const CCSize& gridSize, const CCPoint& position, float radius, unsigned int waves, float amplitude);
+    static CCRipple3D* create(float duration, const CCSize& gridSize, const CCPoint& point, float radius, unsigned int waves, float amplitude);
 protected:
-    /* center position */
-    CCPoint m_position;
+    /* center point */
+    CCPoint m_tPoint;
     float m_fRadius;
     unsigned int m_nWaves;
     float m_fAmplitude;
@@ -258,9 +258,9 @@ class CC_DLL CCTwirl : public CCGrid3DAction
 {
 public:
     /** get twirl center */
-    inline const CCPoint& getPosition(void) { return m_position; }
+    inline const CCPoint& getPoint(void) { return m_tPoint; }
     /** set twirl center */
-    void setPosition(const CCPoint& position);
+    void setPoint(const CCPoint& point);
 
     inline float getAmplitude(void) { return m_fAmplitude; }
     inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
@@ -268,8 +268,8 @@ public:
     inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
-    /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
-    bool initWithDuration(float duration, const CCSize& gridSize, CCPoint position, unsigned int twirls, float amplitude);
+    /** initializes the action with center point, number of twirls, amplitude, a grid size and duration */
+    bool initWithDuration(float duration, const CCSize& gridSize, CCPoint point, unsigned int twirls, float amplitude);
     /**
      *  @js NA
      *  @lua NA
@@ -278,11 +278,11 @@ public:
     virtual void update(float time);
 
 public:
-    /** creates the action with center position, number of twirls, amplitude, a grid size and duration */
-    static CCTwirl* create(float duration, const CCSize& gridSize, CCPoint position, unsigned int twirls, float amplitude);
+    /** creates the action with center point, number of twirls, amplitude, a grid size and duration */
+    static CCTwirl* create(float duration, const CCSize& gridSize, CCPoint point, unsigned int twirls, float amplitude);
 protected:
     /* twirl center */
-    CCPoint m_position;
+    CCPoint m_tPoint;
     unsigned int m_nTwirls;
     float m_fAmplitude;
     float m_fAmplitudeRate;

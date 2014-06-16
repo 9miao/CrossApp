@@ -1,4 +1,28 @@
 
+####CrossApp alpha 0.1.10 更新内容：  
+
+#####1.CAImageView优化
+优化CAImageView，并修改之前在CAImageView添加子视图显示不正确的bug，现在可随意添加子视图给CAImageView。
+
+#####2.删除ccColor3B，并添加CAColor4B
+删除之前的ccColor3B，以前所有用到ccColor3B的地方统统被CAColor4B替换，增加透明度属性。
+(介于此改动对之前已经基于本引擎的项目带来无法编译的问题，请大家谅解，在这里向大家说声抱歉)
+
+#####3.删除Opacity属性，并添加新的alpha属性
+alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影响所有子视图的透明度。
+
+#####4.彻底删除position属性
+同样 CCMoveTo、CCMoveBy也被引擎所抛弃
+
+#####5.修复Android平台GPS的bug
+修复android平台手机因没有开启gps导致应用程序无法运行的bug
+
+#####6.修复CAScrollView的bug
+修复之前代理回调方法virtual void scrollViewWillBeginDragging(CAScrollView* view){};
+触发时机错误的bug
+
+
+
 ####CrossApp alpha 0.1.9 更新内容：  
 
 #####1.触摸事件bug修改
@@ -13,13 +37,13 @@
 #####4.CAButton与CASegmentedControl优化
 修改文字显示大小错误的bug
 
-#####6.安卓系统，从后台返回黑屏的bug
+#####5.安卓系统，从后台返回黑屏的bug
 之前，在安卓系统中，如果从后台返回，有几率黑屏
 
-#####5.添加动画相关 CCFrameTo 与 CCCenterTo
+#####6.添加动画相关 CCFrameTo 与 CCCenterTo
 可以动态的修改 frame与center
 
-#####6.添加viewController悬浮抽屉功能
+#####7.添加viewController悬浮抽屉功能
 现在可以调用任何一个viewController的presentModalViewController与dismissModalViewController来显示与撤销。
 
 
@@ -37,13 +61,13 @@ CATextField添加win32输入功能
 #####4.
 修复触摸分发系统在可滑动容器上快速点击按钮无法触发按钮事件的bug
 
-#####6.
+#####5.
 修复在win32由于触摸事件造成的偶尔崩溃的bug
 
-#####5.
+#####6.
 优化CASegmentedControl
 
-#####6.
+#####7.
 优化CANavigationBar在竖屏的高度及布局。
 
 

@@ -2,6 +2,7 @@
 #include "RootViewController.h"
 #include "ViewController.h"
 #include "FirstViewController.h"
+#include "SecondViewController.h"
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
@@ -42,7 +43,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     viewController->init();
     viewController->setTitle("设置");
     
-    
     CANavigationController* navigationController = new CANavigationController();
     navigationController->initWithRootViewController(viewController);
     navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("first_1.png"), CAImage::create("first_2.png")));
@@ -63,7 +63,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     viewController3->setTabBarItem(CATabBarItem::create("Third", CAImage::create("third_1.png"), CAImage::create("third_2.png")));
     viewController3->setTitle("view3");
     
-    ViewController* viewController4 = new ViewController();
+    SecondViewController* viewController4 = new SecondViewController();
     viewController4->init();
     viewController4->setTabBarItem(CATabBarItem::create("Fourth", CAImage::create("fourth_1.png"), CAImage::create("fourth_2.png")));
     viewController4->setTitle("view4");

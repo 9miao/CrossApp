@@ -463,7 +463,7 @@ bool CAImage::initWithString(const char *text, const char *fontName, float fontS
         tempDef.m_dimensions    = dimensions;
         tempDef.m_alignment     = hAlignment;
         tempDef.m_vertAlignment = vAlignment;
-        tempDef.m_fontFillColor = ccWHITE;
+        tempDef.m_fontFillColor = CAColor_white;
     
         return initWithString(text, &tempDef);
     

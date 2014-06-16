@@ -40,7 +40,6 @@ THE SOFTWARE.
 #include "touch_dispatcher/CATouchDispatcher.h"
 #include "support/CCPointExtension.h"
 #include "support/CCNotificationCenter.h"
-#include "layers_scenes_transitions_nodes/CCTransition.h"
 #include "images/CAImageCache.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "cocoa/CCAutoreleasePool.h"
@@ -833,19 +832,19 @@ void CCDirector::createStatsLabel()
     m_pFPSLabel->setAnchorPoint(CCPointZero);
     m_pFPSLabel->retain();
     m_pFPSLabel->setScale(factor);
-    m_pFPSLabel->setColor(ccBLUE);
+    m_pFPSLabel->setColor(CAColor_blue);
     
     m_pSPFLabel = CCLabelTTF::create("", "Arial", 24);
     m_pSPFLabel->setAnchorPoint(CCPointZero);
     m_pSPFLabel->retain();
     m_pSPFLabel->setScale(factor);
-    m_pSPFLabel->setColor(ccYELLOW);
+    m_pSPFLabel->setColor(CAColor_yellow);
     
     m_pDrawsLabel = CCLabelTTF::create("", "Arial", 24);
     m_pDrawsLabel->setAnchorPoint(CCPointZero);
     m_pDrawsLabel->retain();
     m_pDrawsLabel->setScale(factor);
-    m_pDrawsLabel->setColor(ccGREEN);
+    m_pDrawsLabel->setColor(CAColor_green);
     
     m_pDrawsLabel->setFrameOrigin(ccpAdd(ccp(0, 64*factor), CC_DIRECTOR_STATS_POSITION));
     m_pSPFLabel->setFrameOrigin(ccpAdd(ccp(0, 32*factor), CC_DIRECTOR_STATS_POSITION));

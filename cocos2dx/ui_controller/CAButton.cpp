@@ -23,7 +23,7 @@ CAButton::CAButton(CAButtonType buttonType)
 ,m_textTag("")
 ,m_closeTapSound(false)
 ,m_bTouchClick(false)
-,m_color(ccWHITE)
+,m_color(CAColor_white)
 ,m_IsRehisterTouchDispatcher(false)
 ,m_eButtonType(buttonType)
 ,m_sTitleFontName("Helvetica-Bold")
@@ -34,8 +34,8 @@ CAButton::CAButton(CAButtonType buttonType)
     {
         m_pImage[i] = NULL;
         m_sTitle[i] = "";
-        m_sImageColor[i] = ccWHITE;
-        m_sTitleColor[i] = ccBLACK;
+        m_sImageColor[i] = CAColor_white;
+        m_sTitleColor[i] = CAColor_black;
     }
     
     m_pImageView = new CAImageView();
@@ -113,7 +113,7 @@ bool CAButton::initWithFrame(const CCRect& rect)
     {
         return false;
     }
-
+    this->setColor(CAColor_clear);
     this->setFrame(rect);
     return true;
 }
@@ -167,12 +167,12 @@ void CAButton::setBackGroundViewSquareRect()
         "btn_square_selected.png"
     };
     
-    ccColor3B color[CAControlStateAll] =
+    CAColor4B color[CAControlStateAll] =
     {
-        ccc3(11, 106, 255),
-        ccc3(11, 106, 255),
-        ccc3(138, 138, 138),
-        ccc3(255, 255, 255)
+        ccc4(11, 106, 255, 255),
+        ccc4(11, 106, 255, 255),
+        ccc4(138, 138, 138, 255),
+        ccc4(255, 255, 255, 255)
         
     };
     
@@ -195,12 +195,12 @@ void CAButton::setBackGroundViewRoundedRect()
         "btn_rounded_selected.png"
     };
     
-    ccColor3B color[CAControlStateAll] =
+    CAColor4B color[CAControlStateAll] =
     {
-        ccc3(11, 106, 255),
-        ccc3(11, 106, 255),
-        ccc3(255, 255, 255),
-        ccc3(255, 255, 255)
+        ccc4(11, 106, 255, 255),
+        ccc4(11, 106, 255, 255),
+        ccc4(255, 255, 255, 255),
+        ccc4(255, 255, 255, 255)
         
     };
     
@@ -223,12 +223,12 @@ void CAButton::setBackGroundViewRounded3DRect()
         "btn_rounded3D_selected.png"
     };
     
-    ccColor3B color[CAControlStateAll] =
+    CAColor4B color[CAControlStateAll] =
     {
-        ccc3(255, 255, 255),
-        ccc3(0, 41, 57),
-        ccc3(255, 255, 255),
-        ccc3(255, 255, 255)
+        ccc4(255, 255, 255, 255),
+        ccc4(0, 41, 57, 255),
+        ccc4(255, 255, 255, 255),
+        ccc4(255, 255, 255, 255)
         
     };
     
@@ -299,7 +299,7 @@ void CAButton::setTitleForState(CAControlState controlState, std::string var)
     }
 }
 
-void CAButton::setImageColorForState(CAControlState controlState, ccColor3B var)
+void CAButton::setImageColorForState(CAControlState controlState, CAColor4B var)
 {
     if (controlState == CAControlStateAll)
     {
@@ -317,7 +317,7 @@ void CAButton::setImageColorForState(CAControlState controlState, ccColor3B var)
     }
 }
 
-void CAButton::setTitleColorForState(CAControlState controlState, ccColor3B var)
+void CAButton::setTitleColorForState(CAControlState controlState, CAColor4B var)
 {
     if (controlState == CAControlStateAll)
     {
@@ -358,7 +358,7 @@ void CAButton::updateWithPreferredSize()
         
         if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pBackGroundView[i]))
         {
-            _var->setPreferredSize(m_obContentSize);
+            _var->setFrame(this->getBounds());
         }
         else
         {
@@ -534,16 +534,10 @@ void CAButton::setControlState(CAControlState var)
         labelCenterOrigin.x = size.width / 2;
         labelCenterOrigin.y = size.height * 0.75f;
     }
-    
-    if (image)
-    {
-        rect.size = image->getContentSize();
-    }
-    
+
     if (image != m_pImageView->getImage())
     {
         m_pImageView->setImage(image);
-        m_pImageView->setImageRect(rect);
     }
     m_pImageView->setCenter(imageViewCenter);
     
@@ -643,47 +637,6 @@ void CAButton::setContentSize(const CCSize & var)
     this->updateWithPreferredSize();
     
     this->setControlState(m_eControlState);
-}
-
-void CAButton::setOpacity(GLubyte opacity)
-{
-    CAView::setOpacity(opacity);
-    
-    if (this->getSubviews())
-    {
-        for (int i=0; i<this->getSubviews()->count(); i++)
-        {
-            CAView* view=(CAView*)this->getSubviews()->objectAtIndex(i);
-            
-            if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(view))
-            {
-                _children->setOpacity(opacity);
-            }
-        }
-    }
-}
-
-void CAButton::setColor(const ccColor3B &color3){
-    
-    m_color=color3;
-    
-    if (this->getSubviews())
-    {
-        for (int i=0; i<this->getSubviews()->count(); i++)
-        {
-            CAView* view=(CAView*)this->getSubviews()->objectAtIndex(i);
-            
-            if (CCRGBAProtocol* _children=dynamic_cast<CCRGBAProtocol*>(view))
-            {
-                _children->setColor(color3);
-            }
-        }
-    }
-}
-
-ccColor3B& CAButton::getColor(){
-    
-    return m_color;
 }
 
 NS_CC_END

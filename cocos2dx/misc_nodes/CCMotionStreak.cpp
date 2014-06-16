@@ -66,7 +66,7 @@ CCMotionStreak::~CCMotionStreak()
     CC_SAFE_FREE(m_pTexCoords);
 }
 
-CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
+CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const CAColor4B& color, const char* path)
 {
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, path))
@@ -79,7 +79,7 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     return NULL;
 }
 
-CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* image)
+CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const CAColor4B& color, CAImage* image)
 {
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, image))
@@ -92,7 +92,7 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     return NULL;
 }
 
-bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
+bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const CAColor4B& color, const char* path)
 {
     CCAssert(path != NULL, "Invalid filename");
 
@@ -100,9 +100,9 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
     return initWithFade(fade, minSeg, stroke, color, image);
 }
 
-bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* image)
+bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const CAColor4B& color, CAImage* image)
 {
-    CAView::setPosition(CCPointZero);
+    CAView::setPoint(CCPointZero);
     setAnchorPoint(CCPointZero);
     m_bStartingPositionInitialized = false;
 
@@ -137,20 +137,20 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const 
     return true;
 }
 
-void CCMotionStreak::setPosition(const CCPoint& position)
+void CCMotionStreak::setPoint(const CCPoint& position)
 {
     m_bStartingPositionInitialized = true;
     m_tPositionR = position;
 }
 
-void CCMotionStreak::tintWithColor(ccColor3B colors)
+void CCMotionStreak::tintWithColor(CAColor4B colors)
 {
     setColor(colors);
 
     // Fast assignation
     for(unsigned int i = 0; i<m_uNuPoints*2; i++) 
     {
-        *((ccColor3B*) (m_pColorPointer+i*4)) = colors;
+        *((CAColor4B*) (m_pColorPointer+i*4)) = colors;
     }
 }
 
@@ -179,25 +179,15 @@ ccBlendFunc CCMotionStreak::getBlendFunc(void)
     return m_tBlendFunc;
 }
 
-void CCMotionStreak::setOpacity(GLubyte opacity)
+void CCMotionStreak::setAlpha(float alpha)
 {
     CCAssert(false, "Set opacity no supported");
 }
 
-GLubyte CCMotionStreak::getOpacity(void)
+float CCMotionStreak::getAlpha(void)
 {
     CCAssert(false, "Opacity no supported");
     return 0;
-}
-
-void CCMotionStreak::setOpacityModifyRGB(bool bValue)
-{
-    CC_UNUSED_PARAM(bValue);
-}
-
-bool CCMotionStreak::isOpacityModifyRGB(void)
-{
-    return false;
 }
 
 void CCMotionStreak::update(float delta)
@@ -280,8 +270,8 @@ void CCMotionStreak::update(float delta)
 
         // Color assignment
         const unsigned int offset = m_uNuPoints*8;
-        *((ccColor3B*)(m_pColorPointer + offset)) = _displayedColor;
-        *((ccColor3B*)(m_pColorPointer + offset+4)) = _displayedColor;
+        *((CAColor4B*)(m_pColorPointer + offset)) = _displayedColor;
+        *((CAColor4B*)(m_pColorPointer + offset+4)) = _displayedColor;
 
         // Opacity
         m_pColorPointer[offset+3] = 255;

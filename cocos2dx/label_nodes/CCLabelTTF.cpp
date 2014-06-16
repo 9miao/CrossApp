@@ -47,7 +47,7 @@ CCLabelTTF::CCLabelTTF()
 , m_string("")
 , m_shadowEnabled(false)
 , m_strokeEnabled(false)
-, m_textFillColor(ccWHITE)
+, m_textFillColor(CAColor_white)
 {
 }
 
@@ -140,7 +140,7 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
         m_pFontName   = new std::string(fontName);
         m_fFontSize   = fontSize;
         
-        this->setColor(ccBLACK);
+        this->setColor(CAColor_black);
         
         this->setString(string);
         
@@ -177,7 +177,10 @@ void CCLabelTTF::setString(std::string string)
 {
     if (string.empty())
     {
-        this->setImageRect(CCRectZero);
+        if (m_pobImage)
+        {
+            this->setImageRect(CCRectZero);
+        }
         return;
     }
     
@@ -338,7 +341,7 @@ bool CCLabelTTF::updateTexture()
     // set the size in the sprite
     CCRect rect = CCRectZero;
     rect.size   = m_pobImage->getContentSize();
-    this->setImageRect(rect);
+    this->setImageRect(rect, false, rect.size);
     
     if (this->isFrame())
     {
@@ -415,7 +418,7 @@ void CCLabelTTF::disableShadow(bool updateTexture)
     #endif
 }
 
-void CCLabelTTF::enableStroke(const ccColor3B &strokeColor, float strokeSize, bool updateTexture)
+void CCLabelTTF::enableStroke(const CAColor4B &strokeColor, float strokeSize, bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -468,7 +471,7 @@ void CCLabelTTF::disableStroke(bool updateTexture)
     
 }
 
-void CCLabelTTF::setFontFillColor(const ccColor3B &tintColor, bool updateTexture)
+void CCLabelTTF::setFontFillColor(const CAColor4B &tintColor, bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         if (m_textFillColor.r != tintColor.r || m_textFillColor.g != tintColor.g || m_textFillColor.b != tintColor.b)

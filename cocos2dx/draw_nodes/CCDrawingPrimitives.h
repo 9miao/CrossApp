@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "ccMacros.h"
 #include "cocoa/CCGeometry.h"    // for CCPoint
+#include <vector>
 
 /**
  @file
@@ -98,7 +99,7 @@ void CC_DLL ccDrawRect( CCPoint origin, CCPoint destination );
 /** draws a solid rectangle given the origin and destination point measured in points.
     @since 1.1
  */
-void CC_DLL ccDrawSolidRect( CCPoint origin, CCPoint destination, ccColor4F color );
+void CC_DLL ccDrawSolidRect( CCPoint origin, CCPoint destination, CAColor4F color );
 
 /** draws a polygon given a pointer to CCPoint coordinates and the number of vertices measured in points.
 The polygon can be closed or open
@@ -107,7 +108,7 @@ void CC_DLL ccDrawPoly( const CCPoint *vertices, unsigned int numOfVertices, boo
 
 /** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
  */
-void CC_DLL ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4F color );
+void CC_DLL ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, CAColor4F color );
 
 /** draws a circle given the center, radius and number of segments. */
 void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
@@ -129,13 +130,15 @@ void CC_DLL ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, co
  @warning This function could be pretty slow. Use it only for debugging purposes.
  @since v2.0
  */
-void CC_DLL ccDrawCatmullRom( CCPointArray *arrayOfControlPoints, unsigned int segments );
+void CC_DLL ccDrawCatmullRom(const std::vector<CCPoint>& arrayOfControlPoints, unsigned int segments );
 
 /** draws a Cardinal Spline path.
  @warning This function could be pretty slow. Use it only for debugging purposes.
  @since v2.0
  */
-void CC_DLL ccDrawCardinalSpline( CCPointArray *config, float tension,  unsigned int segments );
+void CC_DLL ccDrawCardinalSpline(const std::vector<CCPoint>& config, float tension,  unsigned int segments );
+
+extern CC_DLL CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, float tension, float t);
 
 /** set the drawing color with 4 unsigned bytes
  @since v2.0

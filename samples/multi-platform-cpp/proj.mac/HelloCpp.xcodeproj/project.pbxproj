@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04089A9F194C9C8E00923DD9 /* SecondViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04089A9D194C9C8E00923DD9 /* SecondViewController.cpp */; };
 		15C15946168315E500D239F2 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C15904168315E500D239F2 /* HttpClient.cpp */; };
 		15C159531683161A00D239F2 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C156CA1683158700D239F2 /* libcocos2dx.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		15C64823165F391E007D4F18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
@@ -116,6 +117,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04089A9D194C9C8E00923DD9 /* SecondViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SecondViewController.cpp; path = ../Classes/SecondViewController.cpp; sourceTree = "<group>"; };
+		04089A9E194C9C8E00923DD9 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondViewController.h; path = ../Classes/SecondViewController.h; sourceTree = "<group>"; };
 		15C156C21683158700D239F2 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.mac/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15C1580E168315CE00D239F2 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		15C1580F168315CE00D239F2 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				B02B38761932D7C700A7BDF0 /* AppMacros.h */,
 				B02B38771932D7C700A7BDF0 /* FirstViewController.cpp */,
 				B02B38781932D7C700A7BDF0 /* FirstViewController.h */,
+				04089A9D194C9C8E00923DD9 /* SecondViewController.cpp */,
+				04089A9E194C9C8E00923DD9 /* SecondViewController.h */,
 				B02B38791932D7C700A7BDF0 /* RootViewController.cpp */,
 				B02B387A1932D7C700A7BDF0 /* RootViewController.h */,
 				B02B387B1932D7C700A7BDF0 /* ViewController.cpp */,
@@ -762,6 +767,7 @@
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,
 				B02B387E1932D7C700A7BDF0 /* FirstViewController.cpp in Sources */,
 				1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */,
+				04089A9F194C9C8E00923DD9 /* SecondViewController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

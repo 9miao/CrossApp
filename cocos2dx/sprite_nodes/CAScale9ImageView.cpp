@@ -62,7 +62,7 @@ CAScale9ImageView::CAScale9ImageView()
 , _bottomRight(NULL)
 , _opacityModifyRGB(false)
 , _opacity(255)
-, _color(ccWHITE)
+, _color(CAColor_white)
 {
 
 }
@@ -95,8 +95,7 @@ bool CAScale9ImageView::init()
 
 bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, CCRect capInsets)
 {
-    GLubyte opacity = getOpacity();
-    ccColor3B color = getColor();
+    CAColor4B color = getColor();
 
     // Release old sprites
     this->removeAllSubviews();
@@ -135,7 +134,6 @@ bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, CCRect 
     // Set the given rect's size as original size
     m_spriteRect = rect;
     m_originalSize = rect.size;
-    m_preferredSize = m_originalSize;
     m_capInsetsInternal = capInsets;
     
     float w = rect.size.width;
@@ -230,55 +228,64 @@ bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, CCRect 
     
     // Centre
     _centre = new CAImageView();
-    _centre->initWithImage(_scale9Image->getImage(), centerbounds);
+    _centre->initWithImage(_scale9Image->getImage());
+    _centre->setImageRect(centerbounds, false, centerbounds.size);
     _centre->setTag(pCentre);
     _scale9Image->insertSubview(_centre, 0);
     
     // Top
     _top = new CAImageView();
-    _top->initWithImage(_scale9Image->getImage(), centertopbounds);
+    _top->initWithImage(_scale9Image->getImage());
+    _top->setImageRect(centertopbounds, false, centertopbounds.size);
     _top->setTag(pTop);
     _scale9Image->insertSubview(_top, 1);
     
     // Bottom
     _bottom = new CAImageView();
-    _bottom->initWithImage(_scale9Image->getImage(), centerbottombounds);
+    _bottom->initWithImage(_scale9Image->getImage());
+    _bottom->setImageRect(centerbottombounds, false, centerbottombounds.size);
     _bottom->setTag(pBottom);
     _scale9Image->insertSubview(_bottom, 1);
     
     // Left
     _left = new CAImageView();
-    _left->initWithImage(_scale9Image->getImage(), leftcenterbounds);
+    _left->initWithImage(_scale9Image->getImage());
+    _left->setImageRect(leftcenterbounds, false, leftcenterbounds.size);
     _left->setTag(pLeft);
     _scale9Image->insertSubview(_left, 1);
     
     // Right
     _right = new CAImageView();
-    _right->initWithImage(_scale9Image->getImage(), rightcenterbounds);
+    _right->initWithImage(_scale9Image->getImage());
+    _right->setImageRect(rightcenterbounds, false, rightcenterbounds.size);
     _right->setTag(pRight);
     _scale9Image->insertSubview(_right, 1);
     
     // Top left
     _topLeft = new CAImageView();
-    _topLeft->initWithImage(_scale9Image->getImage(), lefttopbounds);
+    _topLeft->initWithImage(_scale9Image->getImage());
+    _topLeft->setImageRect(lefttopbounds, false, lefttopbounds.size);
     _topLeft->setTag(pTopLeft);
     _scale9Image->insertSubview(_topLeft, 2);
     
     // Top right
     _topRight = new CAImageView();
-    _topRight->initWithImage(_scale9Image->getImage(), righttopbounds);
+    _topRight->initWithImage(_scale9Image->getImage());
+    _topRight->setImageRect(righttopbounds, false, righttopbounds.size);
     _topRight->setTag(pTopRight);
     _scale9Image->insertSubview(_topRight, 2);
     
     // Bottom left
     _bottomLeft = new CAImageView();
-    _bottomLeft->initWithImage(_scale9Image->getImage(), leftbottombounds);
+    _bottomLeft->initWithImage(_scale9Image->getImage());
+    _bottomLeft->setImageRect(leftbottombounds, false, leftbottombounds.size);
     _bottomLeft->setTag(pBottomLeft);
     _scale9Image->insertSubview(_bottomLeft, 2);
     
     // Bottom right
     _bottomRight = new CAImageView();
-    _bottomRight->initWithImage(_scale9Image->getImage(), rightbottombounds);
+    _bottomRight->initWithImage(_scale9Image->getImage());
+    _bottomRight->setImageRect(rightbottombounds, false, rightbottombounds.size);
     _bottomRight->setTag(pBottomRight);
     _scale9Image->insertSubview(_bottomRight, 2);
     
@@ -298,7 +305,6 @@ bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, CCRect 
     if (m_bSpritesGenerated)
         {
             // Restore color and opacity
-            this->setOpacity(opacity);
             this->setColor(color);
         }
     m_bSpritesGenerated = true;
@@ -310,7 +316,6 @@ void CAScale9ImageView::setContentSize(const CCSize &size)
 {
     CAView::setContentSize(size);
     this->m_positionsAreDirty = true;
-    this->m_preferredSize = size;
     
     this->updatePositions();
     this->m_positionsAreDirty = false;
@@ -330,41 +335,41 @@ void CAScale9ImageView::updatePositions()
 
     CCSize size = this->m_obContentSize;
 
-    float sizableWidth = size.width - _topLeft->getContentSize().width - _topRight->getContentSize().width;
+    float sizableWidth = size.width - _topLeft->getBounds().size.width - _topRight->getBounds().size.width;
     
-    float sizableHeight = size.height - _topLeft->getContentSize().height - _bottomRight->getContentSize().height;
+    float sizableHeight = size.height - _topLeft->getBounds().size.height - _bottomRight->getBounds().size.height;
     
-    float horizontalScale = sizableWidth/_centre->getContentSize().width;
+    float horizontalScale = sizableWidth/_centre->getBounds().size.width;
     
-    float verticalScale = sizableHeight/_centre->getContentSize().height;
+    float verticalScale = sizableHeight/_centre->getBounds().size.height;
 
     _centre->setScaleX(horizontalScale);
     _centre->setScaleY(verticalScale);
 
-    float rescaledWidth = _centre->getContentSize().width * horizontalScale;
-    float rescaledHeight = _centre->getContentSize().height * verticalScale;
+    float rescaledWidth = _centre->getBounds().size.width * horizontalScale;
+    float rescaledHeight = _centre->getBounds().size.height * verticalScale;
 
-    float leftWidth = _bottomLeft->getContentSize().width;
-    float bottomHeight = _bottomLeft->getContentSize().height;
+    float leftWidth = _bottomLeft->getBounds().size.width;
+    float bottomHeight = _bottomLeft->getBounds().size.height;
 
     // Position corners
-    _bottomLeft->setPosition(CCPoint(0,0));
-    _bottomRight->setPosition(CCPoint(leftWidth+rescaledWidth,0));
-    _topLeft->setPosition(CCPoint(0, bottomHeight+rescaledHeight));
-    _topRight->setPosition(CCPoint(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
+    _bottomLeft->setFrameOrigin(CCPoint(0,0));
+    _bottomRight->setFrameOrigin(CCPoint(leftWidth+rescaledWidth,0));
+    _topLeft->setFrameOrigin(CCPoint(0, bottomHeight+rescaledHeight));
+    _topRight->setFrameOrigin(CCPoint(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
 
     // Scale and position borders
-    _left->setPosition(CCPoint(0, bottomHeight));
+    _left->setFrameOrigin(CCPoint(0, bottomHeight));
     _left->setScaleY(verticalScale);
-    _right->setPosition(CCPoint(leftWidth+rescaledWidth,bottomHeight));
+    _right->setFrameOrigin(CCPoint(leftWidth+rescaledWidth,bottomHeight));
     _right->setScaleY(verticalScale);
-    _bottom->setPosition(CCPoint(leftWidth,0));
+    _bottom->setFrameOrigin(CCPoint(leftWidth,0));
     _bottom->setScaleX(horizontalScale);
-    _top->setPosition(CCPoint(leftWidth,bottomHeight+rescaledHeight));
+    _top->setFrameOrigin(CCPoint(leftWidth,bottomHeight+rescaledHeight));
     _top->setScaleX(horizontalScale);
 
     // Position centre
-    _centre->setPosition(CCPoint(leftWidth, bottomHeight));
+    _centre->setFrameOrigin(CCPoint(leftWidth, bottomHeight));
 }
 
 
@@ -481,21 +486,6 @@ CAScale9ImageView* CAScale9ImageView::create()
  Values goes from 0 to 255, where 255 means fully opaque.
  */
 
-void CAScale9ImageView::setPreferredSize(CCSize preferedSize)
-{
-    if (!m_obContentSize.equals(preferedSize))
-    {
-        this->setContentSize(preferedSize);
-        this->m_preferredSize = preferedSize;
-    }
-    
-}
-
-CCSize CAScale9ImageView::getPreferredSize()
-{
-    return this->m_preferredSize;
-}
-
 void CAScale9ImageView::setCapInsets(CCRect capInsets)
 {
     do
@@ -529,40 +519,7 @@ void CAScale9ImageView::updateCapInset()
     this->setCapInsets(insets);
 }
 
-void CAScale9ImageView::setOpacityModifyRGB(bool var)
-{
-    do
-    {
-        CC_BREAK_IF(_scale9Image == NULL);
-        
-        _opacityModifyRGB = var;
-        CCObject* child;
-        CCArray* children = this->getSubviews();
-        CCARRAY_FOREACH(children, child)
-        {
-            CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
-            if (pNode)
-            {
-                pNode->setOpacityModifyRGB(_opacityModifyRGB);
-            }
-        }
-    }
-    while (0);
-}
-
-
-bool CAScale9ImageView::isOpacityModifyRGB()
-{
-    return _opacityModifyRGB;
-}
-
-void CAScale9ImageView::updateDisplayedOpacity(GLubyte parentOpacity)
-{
-    CAView::updateDisplayedOpacity(parentOpacity);
-    setOpacity(parentOpacity);
-}
-
-void CAScale9ImageView::updateDisplayedColor(const cocos2d::ccColor3B &color)
+void CAScale9ImageView::updateDisplayedColor(const cocos2d::CAColor4B &color)
 {
     CAView::updateDisplayedColor(color);
     setColor(color);
@@ -612,12 +569,7 @@ void CAScale9ImageView::setInsetBottom(float insetBottom)
     this->updateCapInset();
 }
 
-void CAScale9ImageView::visit()
-{
-    CAView::visit();
-}
-
-void CAScale9ImageView::setColor(const ccColor3B& color)
+void CAScale9ImageView::setColor(const CAColor4B& color)
 {
     _color = color;
 
@@ -633,30 +585,9 @@ void CAScale9ImageView::setColor(const ccColor3B& color)
     }
 }
 
-const ccColor3B& CAScale9ImageView::getColor()
+const CAColor4B& CAScale9ImageView::getColor()
 {
 	return _color;
-}
-
-void CAScale9ImageView::setOpacity(GLubyte opacity)
-{
-    _opacity = opacity;
-
-    CCObject* child;
-    CCArray* children = _scale9Image->getSubviews();
-    CCARRAY_FOREACH(children, child)
-    {
-        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
-        if (pNode)
-        {
-            pNode->setOpacity(opacity);
-        }
-    }
-}
-
-GLubyte CAScale9ImageView::getOpacity()
-{
-	return _opacity;
 }
 
 NS_CC_END

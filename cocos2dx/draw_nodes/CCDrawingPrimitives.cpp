@@ -43,7 +43,6 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCShaderCache.h"
 #include "shaders/CCGLProgram.h"
-#include "actions/CCActionCatmullRom.h"
 #include "support/CCPointExtension.h"
 #include <string.h>
 #include <cmath>
@@ -56,7 +55,7 @@ NS_CC_BEGIN
 static bool s_bInitialized = false;
 static CCGLProgram* s_pShader = NULL;
 static int s_nColorLocation = -1;
-static ccColor4F s_tColor = {1.0f,1.0f,1.0f,1.0f};
+static CAColor4F s_tColor = {1.0f,1.0f,1.0f,1.0f};
 static int s_nPointSizeLocation = -1;
 static GLfloat s_fPointSize = 1.0f;
 
@@ -226,7 +225,7 @@ void ccDrawRect( CCPoint origin, CCPoint destination )
     ccDrawLine(CCPointMake(origin.x, destination.y), CCPointMake(origin.x, origin.y));
 }
 
-void ccDrawSolidRect( CCPoint origin, CCPoint destination, ccColor4F color )
+void ccDrawSolidRect( CCPoint origin, CCPoint destination, CAColor4F color )
 {
     CCPoint vertices[] = {
         origin,
@@ -290,7 +289,7 @@ void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePol
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4F color )
+void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, CAColor4F color )
 {
     lazy_init();
 
@@ -417,12 +416,12 @@ void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoi
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawCatmullRom( CCPointArray *points, unsigned int segments )
+void ccDrawCatmullRom(const std::vector<CCPoint>& points, unsigned int segments )
 {
     ccDrawCardinalSpline( points, 0.5f, segments );
 }
 
-void ccDrawCardinalSpline( CCPointArray *config, float tension,  unsigned int segments )
+void ccDrawCardinalSpline(const std::vector<CCPoint>& config, float tension,  unsigned int segments )
 {
     lazy_init();
 
@@ -430,7 +429,7 @@ void ccDrawCardinalSpline( CCPointArray *config, float tension,  unsigned int se
 
     unsigned int p;
     float lt;
-    float deltaT = 1.0f / config->count();
+    float deltaT = 1.0f / config.size();
 
     for( unsigned int i=0; i < segments+1;i++) {
 
@@ -438,7 +437,7 @@ void ccDrawCardinalSpline( CCPointArray *config, float tension,  unsigned int se
 
         // border
         if( dt == 1 ) {
-            p = config->count() - 1;
+            p = config.size() - 1;
             lt = 1;
         } else {
             p = dt / deltaT;
@@ -446,10 +445,10 @@ void ccDrawCardinalSpline( CCPointArray *config, float tension,  unsigned int se
         }
 
         // Interpolate
-        CCPoint pp0 = config->getControlPointAtIndex(p-1);
-        CCPoint pp1 = config->getControlPointAtIndex(p+0);
-        CCPoint pp2 = config->getControlPointAtIndex(p+1);
-        CCPoint pp3 = config->getControlPointAtIndex(p+2);
+        CCPoint pp0 = config.at(p-1);
+        CCPoint pp1 = config.at(p+0);
+        CCPoint pp2 = config.at(p+1);
+        CCPoint pp3 = config.at(p+2);
 
         CCPoint newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
         vertices[i].x = newPos.x;
@@ -472,6 +471,28 @@ void ccDrawCardinalSpline( CCPointArray *config, float tension,  unsigned int se
 
     CC_SAFE_DELETE_ARRAY(vertices);
     CC_INCREMENT_GL_DRAWS(1);
+}
+
+// CatmullRom Spline formula:
+CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, float tension, float t)
+{
+    float t2 = t * t;
+    float t3 = t2 * t;
+    
+	/*
+	 * Formula: s(-ttt + 2tt - t)P1 + s(-ttt + tt)P2 + (2ttt - 3tt + 1)P2 + s(ttt - 2tt + t)P3 + (-2ttt + 3tt)P3 + s(ttt - tt)P4
+	 */
+    float s = (1 - tension) / 2;
+	
+    float b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
+    float b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
+    float b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
+    float b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
+    
+    float x = (p0.x*b1 + p1.x*b2 + p2.x*b3 + p3.x*b4);
+    float y = (p0.y*b1 + p1.y*b2 + p2.y*b3 + p3.y*b4);
+	
+	return ccp(x,y);
 }
 
 void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, unsigned int segments)

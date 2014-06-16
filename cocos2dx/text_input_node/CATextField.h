@@ -118,9 +118,9 @@ public:
     
     CC_SYNTHESIZE_READONLY(int, m_nCharCount, CharCount);
     
-    CC_PROPERTY(ccColor4B, m_cSpaceHolderColor, SpaceHolderColor);
+    CC_PROPERTY(CAColor4B, m_cSpaceHolderColor, SpaceHolderColor);
     
-    CC_PROPERTY(ccColor4B, m_cTextColor, TextColor);
+    CC_PROPERTY(CAColor4B, m_cTextColor, TextColor);
     
     CC_PROPERTY(CCTextAlignment, m_aTextAlignment, TextAlignment);
     

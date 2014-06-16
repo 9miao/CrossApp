@@ -163,7 +163,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\effects\CCGrid.cpp" />
     <ClCompile Include="..\actions\CCAction.cpp" />
     <ClCompile Include="..\actions\CCActionCamera.cpp" />
-    <ClCompile Include="..\actions\CCActionCatmullRom.cpp" />
     <ClCompile Include="..\actions\CCActionEase.cpp" />
     <ClCompile Include="..\actions\CCActionGrid.cpp" />
     <ClCompile Include="..\actions\CCActionGrid3D.cpp" />
@@ -181,9 +180,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\images\CAImagePVR.cpp" />
     <ClCompile Include="..\label_nodes\CALabel.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp" />
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp" />
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp" />
     <ClCompile Include="..\misc_nodes\CCClippingNode.cpp" />
     <ClCompile Include="..\misc_nodes\CCMotionStreak.cpp" />
     <ClCompile Include="..\misc_nodes\CCProgressTimer.cpp" />
@@ -292,7 +288,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\effects\CCGrid.h" />
     <ClInclude Include="..\actions\CCAction.h" />
     <ClInclude Include="..\actions\CCActionCamera.h" />
-    <ClInclude Include="..\actions\CCActionCatmullRom.h" />
     <ClInclude Include="..\actions\CCActionEase.h" />
     <ClInclude Include="..\actions\CCActionGrid.h" />
     <ClInclude Include="..\actions\CCActionGrid3D.h" />
@@ -316,9 +311,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\include\cocos2d.h" />
     <ClInclude Include="..\label_nodes\CALabel.h" />
     <ClInclude Include="..\label_nodes\CCLabelTTF.h" />
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h" />
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.h" />
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.h" />
     <ClInclude Include="..\misc_nodes\CCClippingNode.h" />
     <ClInclude Include="..\misc_nodes\CCMotionStreak.h" />
     <ClInclude Include="..\misc_nodes\CCProgressTimer.h" />

@@ -49,21 +49,19 @@ NS_CC_BEGIN
  *
  * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CAScale9ImageView.html
  */
-class CAScale9ImageView;
-typedef CAScale9ImageView CAScale9ImageView;
+
 class CC_DLL CAScale9ImageView : public CAView
 {
 public:
+    
+    static CAScale9ImageView* create();
+    
     CAScale9ImageView();
     virtual ~CAScale9ImageView();
 
 public:
     /** Original sprite's size. */
     CC_SYNTHESIZE_READONLY(CCSize, m_originalSize, OriginalSize);
-    /** Prefered sprite's size. By default the prefered size is the original size. */
-
-    //if the preferredSize component is given as -1, it is ignored
-    CC_PROPERTY(CCSize, m_preferredSize, PreferredSize); 
     /** 
      * The end-cap insets. 
      * On a non-resizeable sprite, this property is set to CGRectZero; the sprite 
@@ -98,7 +96,7 @@ protected:
 
     bool _opacityModifyRGB;
     GLubyte _opacity;
-    ccColor3B _color;
+    CAColor4B _color;
     
     void updateCapInset();
     void updatePositions();
@@ -110,7 +108,6 @@ public:
     /**
      *  @js NA
      */
-    virtual void visit();
     
     virtual bool init();
 
@@ -154,31 +151,11 @@ public:
      */
     CAScale9ImageView* resizableSpriteWithCapInsets(CCRect capInsets);
     
-    static CAScale9ImageView* create();
-
-    // optional
+    virtual void setColor(const CAColor4B& color);
+	virtual const CAColor4B& getColor();
     
-    /** sets the premultipliedAlphaOpacity property.
-     If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
-     If set to YES then oapcity will be applied as: glColor(opacity, opacity, opacity, opacity );
-     images with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
-     @since v0.8
-     */
-    virtual void setOpacityModifyRGB(bool bValue);
-    
-    /** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
-     @since v0.8
-     */
-    virtual bool isOpacityModifyRGB(void);
-    virtual void setOpacity(GLubyte opacity);
-	virtual GLubyte getOpacity();
-    virtual void setColor(const ccColor3B& color);
-	virtual const ccColor3B& getColor();
-
+    virtual void updateDisplayedColor(const cocos2d::CAColor4B& parentColor);
     virtual bool updateWithImage(CABatchView* batch, CCRect rect, CCRect capInsets);
-
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual void updateDisplayedColor(const cocos2d::ccColor3B& parentColor);
 };
 
 // end of GUI group

@@ -25,13 +25,17 @@ package org.cocos2dx.lib;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
+import android.R.layout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.util.Log;
 import android.widget.FrameLayout;
 
@@ -50,7 +54,11 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	private Cocos2dxHandler mHandler;
 	private static Context sContext = null;
 	AndroidNativeTool actAndroidNativeTool;
-
+	static FrameLayout frame;
+	static View rootview;
+	static int keyboardheight;
+	private static Activity activity;
+	native static void KeyBoardHeightReturn(int height);
 	public static Context getContext() {
 		return sContext;
 	}
@@ -63,13 +71,14 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		sContext = this;
+		activity =this;
     	this.mHandler = new Cocos2dxHandler(this);
     	actAndroidNativeTool = new AndroidNativeTool(this);
     	
     	AndroidPersonList.Init(this);
-    	AndroidGPS.Init(this);
+    	
     	this.init();
-
+    	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
 	}
 	 public void onActivityResult(int requestCode, int resultCode, Intent intent)
@@ -83,7 +92,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
-
+	public static void startGps(){
+		AndroidGPS.Init(activity);
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -126,13 +137,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	public void init() {
 		
+		
+		
     	// FrameLayout
         ViewGroup.LayoutParams framelayout_params =
             new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
                                        ViewGroup.LayoutParams.FILL_PARENT);
         FrameLayout framelayout = new FrameLayout(this);
         framelayout.setLayoutParams(framelayout_params);
-
+        frame = framelayout;
         // Cocos2dxEditText layout
         ViewGroup.LayoutParams edittext_layout_params =
             new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
@@ -156,10 +169,45 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
         this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
+        getKeyBoardHeight();
         // Set framelayout as the content view
 		setContentView(framelayout);
 	}
+	public static int getKeyBoardHeight()
+	{
+		frame.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+                // TODO Auto-generated method stub
+                Rect r = new Rect();
+
+                rootview.getWindowVisibleDisplayFrame(r);
+
+                
+                Rect frame = new Rect();
+                rootview.getWindowVisibleDisplayFrame(frame);
+                int statusBarHeight = frame.top;
+                
+                int screenHeight = rootview.getRootView().getHeight();
+                keyboardheight =screenHeight- (r.bottom - (r.top-statusBarHeight));
+                if (keyboardheight!=0)
+        		{
+        			KeyBoardHeightReturn(keyboardheight);
+        		}
+                //boolean visible = heightDiff > screenHeight / 3;
+            }
+        });
+		
+		return keyboardheight;
+		
+	}
 	
+	public static int dip2px(Context context, float dpValue) {  
+	     final float scale = context.getResources().getDisplayMetrics().density;  
+	     return (int) (dpValue * scale + 0.5f);  
+	}  
+	  
     public Cocos2dxGLSurfaceView onCreateView() {
     	return new Cocos2dxGLSurfaceView(this);
     }

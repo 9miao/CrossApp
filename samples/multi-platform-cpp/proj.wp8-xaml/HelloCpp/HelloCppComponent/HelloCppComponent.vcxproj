@@ -156,6 +156,7 @@
     <ClInclude Include="..\..\..\Classes\AppMacros.h" />
     <ClInclude Include="..\..\..\Classes\FirstViewController.h" />
     <ClInclude Include="..\..\..\Classes\RootViewController.h" />
+    <ClInclude Include="..\..\..\Classes\SecondViewController.h" />
     <ClInclude Include="..\..\..\Classes\ViewController.h" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +174,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\FirstViewController.cpp" />
     <ClCompile Include="..\..\..\Classes\RootViewController.cpp" />
+    <ClCompile Include="..\..\..\Classes\SecondViewController.cpp" />
     <ClCompile Include="..\..\..\Classes\ViewController.cpp" />
   </ItemGroup>
   <ItemGroup>

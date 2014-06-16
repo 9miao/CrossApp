@@ -25,6 +25,7 @@ CAWindow::CAWindow()
 CAWindow::~CAWindow()
 {
     CC_SAFE_RELEASE_NULL(m_pRootViewController);
+    CC_SAFE_RELEASE_NULL(m_pModalViewController);
 }
 
 bool CAWindow::init()
@@ -34,9 +35,10 @@ bool CAWindow::init()
      {
          CCDirector * pDirector;
          CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
-         this->setContentSize(pDirector->getWinSize());
-         this->setFrame(CCRectZero);
-         // success
+         CCRect rect = CCRectZero;
+         rect.size = pDirector->getWinSize();
+         this->setFrame(rect);
+         
          bRet = true;
      } while (0);
      return bRet;

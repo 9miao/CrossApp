@@ -27,14 +27,27 @@ double* ShowDlg()
         
 	}
 }
+void start()
+{
+    JniMethodInfo jmi;
+	if(JniHelper::getStaticMethodInfo(jmi , "org/cocos2dx/lib/Cocos2dxActivity" , "startGps" , "()V"))
+	{
+        jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
+        
+	}
+}
 #else
 double* ShowDlg()
 {
 }
+void start()
+{
+    
+}
 #endif
 CALocationManager::CALocationManager()
 {
-    
+    start();
 }
 CALocationManager::~CALocationManager()
 {

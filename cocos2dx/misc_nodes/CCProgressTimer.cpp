@@ -149,26 +149,15 @@ void CCProgressTimer::setReverseProgress(bool reverse)
     }
 }
 
-void CCProgressTimer::setColor(const ccColor3B& color)
+void CCProgressTimer::setColor(const CAColor4B& color)
 {
     m_pSprite->setColor(color);
     updateColor();
 }
 
-const ccColor3B& CCProgressTimer::getColor() const
+const CAColor4B& CCProgressTimer::getColor() const
 {
     return m_pSprite->getColor();
-}
-
-void CCProgressTimer::setOpacity(GLubyte opacity)
-{
-    m_pSprite->setOpacity(opacity);
-    updateColor();
-}
-
-GLubyte CCProgressTimer::getOpacity() const
-{
-    return m_pSprite->getOpacity();
 }
 
 // Interval
@@ -214,7 +203,7 @@ void CCProgressTimer::updateColor(void)
 
     if (m_pVertexData)
     {
-        ccColor4B sc = m_pSprite->getQuad().tl.colors;
+        CAColor4B sc = m_pSprite->getQuad().tl.colors;
         for (int i = 0; i < m_nVertexDataCount; ++i)
         {
             m_pVertexData[i].colors = sc;
@@ -520,7 +509,7 @@ void CCProgressTimer::draw(void)
     offset += sizeof(ccVertex2F);
     glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
 
-    offset += sizeof(ccColor4B);
+    offset += sizeof(CAColor4B);
     glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
 #else
     glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(m_pVertexData[0]) , &m_pVertexData[0].vertices);

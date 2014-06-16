@@ -237,7 +237,7 @@ void CCDrawNode::draw()
     render();
 }
 
-void CCDrawNode::drawDot(const CCPoint &pos, float radius, const ccColor4F &color)
+void CCDrawNode::drawDot(const CCPoint &pos, float radius, const CAColor4F &color)
 {
     unsigned int vertex_count = 2*3;
     ensureCapacity(vertex_count);
@@ -258,7 +258,7 @@ void CCDrawNode::drawDot(const CCPoint &pos, float radius, const ccColor4F &colo
 	m_bDirty = true;
 }
 
-void CCDrawNode::drawSegment(const CCPoint &from, const CCPoint &to, float radius, const ccColor4F &color)
+void CCDrawNode::drawSegment(const CCPoint &from, const CCPoint &to, float radius, const CAColor4F &color)
 {
     unsigned int vertex_count = 6*3;
     ensureCapacity(vertex_count);
@@ -331,7 +331,7 @@ void CCDrawNode::drawSegment(const CCPoint &from, const CCPoint &to, float radiu
 	m_bDirty = true;
 }
 
-void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor)
+void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const CAColor4F &fillColor, float borderWidth, const CAColor4F &borderColor)
 {
     struct ExtrudeVerts {ccVertex2F offset, n;};
 	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);

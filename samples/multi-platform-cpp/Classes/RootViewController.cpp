@@ -164,14 +164,15 @@ void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
     sprintf(s, "viewController = %ld",this->getNavigationController()->getViewControllerCount());
     
     CANavigationBarItem* item = CANavigationBarItem::create(s);
-    item->setRightButtonItem(CABarButtonItem::create("<返回", NULL, NULL));
+    item->setLeftButtonItem(CABarButtonItem::create("<Back", NULL, NULL));
+    item->setRightButtonItem(CABarButtonItem::create("Menu", NULL, NULL));
     
     RootViewController* viewController = new RootViewController();
     viewController->init();
     viewController->setNavigationBarItem(item);
     viewController->setTitle("view1");
     
-    this->getNavigationController()->replaceViewController(viewController, true);
+    this->getNavigationController()->pushViewController(viewController, true);
     viewController->autorelease();
     
     CCLog("selected = %d %d",section, row);
@@ -195,7 +196,6 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     
     CCString* str = CCString::createWithFormat("CELL - %u", row);
     CCLabelTTF* ttf = CCLabelTTF::create(str->getCString(), "Arial", 40);
-    ttf->setColor(ccBLACK);
     ttf->setFrame(CCRect(10, 60, 0, 0));
     cell->addSubview(ttf);
     
@@ -224,7 +224,7 @@ CAView* RootViewController::tableViewSectionViewForHeaderInSection(CATableView* 
     
     CCString* str = CCString::createWithFormat("Header - %u", section);
     CCLabelTTF* ttf = CCLabelTTF::create(str->getCString(), "Arial", 20);
-    ttf->setColor(ccc3(127, 127, 127));
+    ttf->setColor(ccc4(127, 127, 127, 255));
     ttf->setFrame(CCRect(10, 10, 0, 0));
     view->addSubview(ttf);
     
@@ -237,7 +237,7 @@ CAView* RootViewController::tableViewSectionViewForFooterInSection(CATableView* 
     
     CCString* str = CCString::createWithFormat("Footer - %u", section);
     CCLabelTTF* ttf = CCLabelTTF::create(str->getCString(), "Arial", 20);
-    ttf->setColor(ccc3(127, 127, 127));
+    ttf->setColor(ccc4(127, 127, 127, 255));
     ttf->setFrame(CCRect(10, 10, 0, 0));
     view->addSubview(ttf);
     

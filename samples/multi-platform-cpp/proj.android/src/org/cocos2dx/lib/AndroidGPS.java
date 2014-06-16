@@ -28,14 +28,13 @@ public class AndroidGPS {
             return;
         }
         //Toast.makeText(s_pContext, "请开启GPS！", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         s_pContext.startActivityForResult(intent,10); //此为设置完成后返回到获取界面
     }
 
 	public static double[] getLocation()
     {
         // 获取位置管理服务
-		
         LocationManager locationManager;
         String serviceName = Context.LOCATION_SERVICE;
         locationManager = (LocationManager) s_pContext.getSystemService(serviceName);
@@ -49,24 +48,11 @@ public class AndroidGPS {
        
         String provider = locationManager.getBestProvider(criteria, true); // 获取GPS信息
         Location location = locationManager.getLastKnownLocation(provider); // 通过GPS获取位置
-            
-        while(location ==null)
-        {
-        	locationManager.requestLocationUpdates("network", 100 * 1000, 500, locationListener);
-        }
-        
-        
-        
         // 设置监听器，自动更新的最小时间为间隔N秒(1秒为1*1000，这样写主要为了方便)或最小位移变化超过N米
-        locationManager.requestLocationUpdates(provider, 100 * 1000, 500,locationListener);
-     
-        if ( location == null ) return null;
-       
-        AlertDialog.Builder dialog=new AlertDialog.Builder(s_pContext);
-        String str = "x"+location.getLatitude() + " ,y="+location.getLongitude();
-         dialog.setTitle(str);
-         dialog.show();
-         //location.getLatitude()    location.getLongitude()
+        if (location == null) {
+        	locationManager.requestLocationUpdates(provider, 100 * 1000, 500,locationListener);
+		}
+
         return new double[]{location.getLatitude() , location.getLongitude() };
     }
 	

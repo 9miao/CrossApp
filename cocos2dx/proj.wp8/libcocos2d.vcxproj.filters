@@ -43,9 +43,6 @@
     <Filter Include="label_nodes">
       <UniqueIdentifier>{e32087b3-10c3-4111-b4a5-0009e43f18d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="layers_scenes_transitions_nodes">
-      <UniqueIdentifier>{abf2e324-3571-46b9-b8a0-c3d35ec39886}</UniqueIdentifier>
-    </Filter>
     <Filter Include="misc_nodes">
       <UniqueIdentifier>{23821b0c-f17d-46bb-90a8-efaf2fca8275}</UniqueIdentifier>
     </Filter>
@@ -109,9 +106,6 @@
       <Filter>actions</Filter>
     </ClCompile>
     <ClCompile Include="..\actions\CCActionCamera.cpp">
-      <Filter>actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\actions\CCActionCatmullRom.cpp">
       <Filter>actions</Filter>
     </ClCompile>
     <ClCompile Include="..\actions\CCActionEase.cpp">
@@ -239,15 +233,6 @@
     </ClCompile>
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp">
       <Filter>label_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\misc_nodes\CCClippingNode.cpp">
       <Filter>misc_nodes</Filter>
@@ -491,9 +476,6 @@
     <ClInclude Include="..\actions\CCActionCamera.h">
       <Filter>actions</Filter>
     </ClInclude>
-    <ClInclude Include="..\actions\CCActionCatmullRom.h">
-      <Filter>actions</Filter>
-    </ClInclude>
     <ClInclude Include="..\actions\CCActionEase.h">
       <Filter>actions</Filter>
     </ClInclude>
@@ -655,15 +637,6 @@
     </ClInclude>
     <ClInclude Include="..\label_nodes\CCLabelTTF.h">
       <Filter>label_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.h">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.h">
-      <Filter>layers_scenes_transitions_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\misc_nodes\CCClippingNode.h">
       <Filter>misc_nodes</Filter>

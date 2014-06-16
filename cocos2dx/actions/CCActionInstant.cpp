@@ -369,7 +369,7 @@ CCObject * CCPlace::copyWithZone(CCZone *pZone) {
 
 void CCPlace::update(float time) {
     CC_UNUSED_PARAM(time);
-    m_pTarget->setPosition(m_tPosition);
+    m_pTarget->setFrameOrigin(m_tPosition);
 }
 
 //

@@ -50,7 +50,6 @@ THE SOFTWARE.
 #include "actions/CCActionTiledGrid.h"
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionTween.h"
-#include "actions/CCActionCatmullRom.h"
 
 // cocoa
 #include "cocoa/CCAffineTransform.h"
@@ -95,11 +94,6 @@ THE SOFTWARE.
 // label_nodes
 #include "label_nodes/CALabel.h"
 #include "label_nodes/CCLabelTTF.h"
-
-// layers_scenes_transitions_nodes
-#include "layers_scenes_transitions_nodes/CCTransition.h"
-#include "layers_scenes_transitions_nodes/CCTransitionPageTurn.h"
-#include "layers_scenes_transitions_nodes/CCTransitionProgress.h"
 
 // misc_nodes
 #include "misc_nodes/CCClippingNode.h"

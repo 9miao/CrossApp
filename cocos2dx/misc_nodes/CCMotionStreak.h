@@ -60,23 +60,23 @@ public:
     virtual ~CCMotionStreak();
 
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, Image filename */
-    static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, const CAColor4B& color, const char* path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, Image */
-    static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* image);
+    static CCMotionStreak* create(float fade, float minSeg, float stroke, const CAColor4B& color, CAImage* image);
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and Image filename */
-    bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
+    bool initWithFade(float fade, float minSeg, float stroke, const CAColor4B& color, const char* path);
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and Image  */
-    bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CAImage* image);
+    bool initWithFade(float fade, float minSeg, float stroke, const CAColor4B& color, CAImage* image);
 
     /** color used for the tint */
-    void tintWithColor(ccColor3B colors);
+    void tintWithColor(CAColor4B colors);
 
     /** Remove all living segments of the ribbon */
     void reset();
 
     /** Override super methods */
-    virtual void setPosition(const CCPoint& position);
+    virtual void setPoint(const CCPoint& position);
     virtual void draw();
     virtual void update(float delta);
 
@@ -91,10 +91,9 @@ public:
      * @js NA
      */
     virtual ccBlendFunc getBlendFunc(void);
-    virtual GLubyte getOpacity(void);
-    virtual void setOpacity(GLubyte opacity);
-    virtual void setOpacityModifyRGB(bool bValue);
-    virtual bool isOpacityModifyRGB(void);
+    
+    virtual float getAlpha();
+    virtual void setAlpha(float alpha);
 
     /** When fast mode is enabled, new points are added faster but with lower precision */
     inline bool isFastMode() { return m_bFastMode; }

@@ -69,7 +69,7 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
     {
         return false;
     }
-    
+    this->setColor(CAColor_clear);
     this->setFrame(rect);
     m_selectedIndex = 0;
     
@@ -246,7 +246,7 @@ bool CASegmentedControl::setTitleAtIndex(const char* title, int index, CAControl
     return true;
 }
 
-bool CASegmentedControl::setTitleColorAtIndex(ccColor3B color, int index, CAControlState controlState)
+bool CASegmentedControl::setTitleColorAtIndex(CAColor4B color, int index, CAControlState controlState)
 {
     if (!this->indexIsValid(index))
     {

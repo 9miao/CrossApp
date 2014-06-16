@@ -1,3 +1,8 @@
+C:\USERS\WINDOWS 8\APPDATA\LOCAL\MICROSOFT\WINDOWS\WER\REPORTQUEUE\APPCRASH_CL.EXE_1B73DDE45EFDC29D4D084FC9AE572FE51CC3D5_00000000_CAB_42D0D77F\WER7AC8.TMP.WERINTERNALMETADATA.XML
+C:\USERS\WINDOWS 8\APPDATA\LOCAL\MICROSOFT\WINDOWS\WER\REPORTQUEUE\APPCRASH_CL.EXE_1B73DDE45EFDC29D4D084FC9AE572FE51CC3D5_00000000_CAB_42D0D77F\WERCD4E.TMP.APPCOMPAT.TXT
+C:\USERS\WINDOWS 8\APPDATA\LOCAL\MICROSOFT\WINDOWS\WER\REPORTQUEUE\APPCRASH_CL.EXE_1B73DDE45EFDC29D4D084FC9AE572FE51CC3D5_00000000_CAB_42D0D77F\MEMORY.HDMP
+C:\USERS\WINDOWS 8\APPDATA\LOCAL\MICROSOFT\WINDOWS\WER\REPORTQUEUE\APPCRASH_CL.EXE_1B73DDE45EFDC29D4D084FC9AE572FE51CC3D5_00000000_CAB_42D0D77F\MINIDUMP.MDMP
+C:\USERS\WINDOWS 8\APPDATA\LOCAL\MICROSOFT\WINDOWS\WER\REPORTQUEUE\APPCRASH_CL.EXE_1B73DDE45EFDC29D4D084FC9AE572FE51CC3D5_00000000_CAB_42D0D77F\REPORT.WER
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CATOUCHDISPATCHER.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCTOUCH.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCKEYPADDELEGATE.OBJ
@@ -58,7 +63,11 @@ I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CAVIEW.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CAWINDOW.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCANIMATION.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCANIMATIONCACHE.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONTWEEN.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\VC110.PDB
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCDRAWNODE.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCDRAWINGPRIMITIVES.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCGRABBER.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCGRID.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CAIMAGE.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CAIMAGEATLAS.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CAIMAGECACHE.OBJ
@@ -66,9 +75,6 @@ I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CAIMAGEETC.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CAIMAGEPVR.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CALABEL.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCLABELTTF.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCTRANSITION.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCTRANSITIONPAGETURN.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCTRANSITIONPROGRESS.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCCLIPPINGNODE.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCMOTIONSTREAK.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCPROGRESSTIMER.OBJ
@@ -78,19 +84,6 @@ I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCFILEUTILS.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCIMAGECOMMONWEBP.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCSAXPARSER.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCTHREAD.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCOBJECT.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCSET.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCSTRING.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCZONE.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCDRAWINGPRIMITIVES.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCDRAWNODE.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCGRABBER.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCGRID.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTION.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONCAMERA.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONCATMULLROM.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONEASE.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONGRID.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONGRID3D.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONINSTANT.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONINTERVAL.OBJ
@@ -98,7 +91,7 @@ I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONMANAGER.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONPAGETURN3D.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONPROGRESSTIMER.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONTILEDGRID.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CASCHEDULER.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONTWEEN.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CARESPONDER.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCAFFINETRANSFORM.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCARRAY.OBJ
@@ -107,7 +100,15 @@ I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCDATAVISITOR.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCDICTIONARY.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCGEOMETRY.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCNS.OBJ
-I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\VC110.PDB
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCOBJECT.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCSET.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCSTRING.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCZONE.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CASCHEDULER.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTION.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONCAMERA.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONEASE.OBJ
+I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCACTIONGRID.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\CCFPSIMAGES.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\AABB.OBJ
 I:\引擎\CROSSAPP_\COCOS2DX\PROJ.WIN32\DEBUG.WIN32\MAT3.OBJ
@@ -134,7 +135,6 @@ I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCIMEDispatcher.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCCamera.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCConfiguration.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCDirector.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\cocos2d.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CABar.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CABarItem.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAButton.obj
@@ -186,7 +186,10 @@ I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAView.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAWindow.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCAnimation.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCAnimationCache.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionTween.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCDrawNode.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCDrawingPrimitives.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCGrabber.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCGrid.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAImage.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAImageAtlas.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAImageCache.obj
@@ -194,9 +197,6 @@ I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAImageETC.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAImagePVR.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CALabel.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCLabelTTF.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCTransition.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCTransitionPageTurn.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCTransitionProgress.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCClippingNode.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCMotionStreak.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCProgressTimer.obj
@@ -206,19 +206,6 @@ I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCFileUtils.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCImageCommonWebp.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCSAXParser.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCThread.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCObject.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCSet.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCString.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCZone.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCDrawingPrimitives.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCDrawNode.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCGrabber.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCGrid.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCAction.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionCamera.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionCatmullRom.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionEase.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionGrid.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionGrid3D.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionInstant.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionInterval.obj
@@ -226,7 +213,7 @@ I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionManager.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionPageTurn3D.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionProgressTimer.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionTiledGrid.obj
-I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAScheduler.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionTween.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAResponder.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCAffineTransform.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCArray.obj
@@ -235,6 +222,15 @@ I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCDataVisitor.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCDictionary.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCGeometry.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCNS.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCObject.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCSet.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCString.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCZone.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CAScheduler.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCAction.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionCamera.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionEase.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CCActionGrid.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\ccFPSImages.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\aabb.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\mat3.obj
@@ -249,7 +245,13 @@ I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\vec3.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\vec4.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\mat4stack.obj
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\matrix.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\cocos2d.obj
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CL-DW20-dwwin.read.7.tlog
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CL-DW20-dwwin.read.2.tlog
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CL.read.1.tlog
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CL-DW20-dwwin.write.2.tlog
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CL-DW20-dwwin.read.4.tlog
+I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CL-DW20.read.1.tlog
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\CL.write.1.tlog
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\cl.command.1.tlog
 I:\引擎\CrossApp_\cocos2dx\proj.win32\Debug.win32\link-rc.read.1.tlog

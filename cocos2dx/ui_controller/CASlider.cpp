@@ -84,7 +84,8 @@ void CASlider::onEnterTransitionDidFinish()
     
     if (NULL == m_pThumbTintImageView)
     {
-        m_pThumbTintImageView = CAImageView::createWithImage(this->getImage(m_pThumbTintImage, CCSizeMake(size.height, size.height)));
+        CAImage* image = this->getImage(m_pThumbTintImage, CCSizeMake(size.height, size.height));
+        m_pThumbTintImageView = CAImageView::createWithImage(image);
     }
     if (m_pThumbTintImageView)
     {
@@ -137,7 +138,7 @@ bool CASlider::initWithFrame(const CCRect& rect)
     {
         return false;
     }
-    
+    this->setColor(CAColor_clear);
     this->setFrame(rect);
     return true;
 }
@@ -179,13 +180,9 @@ void CASlider::layoutSubViews()
 
 CAImage* CASlider::getImage(CAImage* image, CCSize size)
 {
-    CCRect rect;
-    rect.origin = ccpSub(ccpMult(image->getContentSize(), 0.5f), CCPoint(0.5f, 0.5f));
-    rect.size = CCSize(1, 1);
-    
-	CAScale9ImageView *scale9Image = CAScale9ImageView::createWithImage(rect, image);
+	CAScale9ImageView *scale9Image = CAScale9ImageView::createWithImage(image);
     scale9Image->setAnchorPoint(CCPointZero);
-	scale9Image->setPreferredSize(size);
+	scale9Image->setFrame(CCRect(0, 0, size.width, size.height));
     this->addSubview(scale9Image);
     
 	CCRenderTexture* render = CCRenderTexture::create(size.width, size.height, kCAImagePixelFormat_RGBA8888);

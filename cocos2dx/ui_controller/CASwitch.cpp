@@ -57,19 +57,18 @@ void CASwitch::onEnterTransitionDidFinish()
         this->setThumbTintImage(CAImage::create("btn_square_normal.png"));
     }
     CCSize size = this->getBounds().size;
-    CCRect bounds = CCRectZero;
     
     m_onImageView = CAImageView::createWithImage(this->getImage(m_onImage, size));
     if (m_onImageView)
     {
-        m_onImageView->setFrame(bounds);
+        m_onImageView->setFrameOrigin(CCPointZero);
         this->addSubview(m_onImageView);
     }
     
     m_offImageView = CAImageView::createWithImage(this->getImage(m_offImage, size));
     if (m_offImageView)
     {
-        m_offImageView->setFrame(bounds);
+        m_offImageView->setFrameOrigin(CCPointZero);
         this->addSubview(m_offImageView);
     }
     
@@ -77,7 +76,7 @@ void CASwitch::onEnterTransitionDidFinish()
     if (m_thumbTintImageView)
     {
         m_thumbTintImageView->setAnchorPoint(CCPointZero);
-        m_thumbTintImageView->setFrame(bounds);
+        m_thumbTintImageView->setFrameOrigin(CCPointZero);
         this->addSubview(m_thumbTintImageView);
     }
     
@@ -86,13 +85,9 @@ void CASwitch::onEnterTransitionDidFinish()
 
 CAImage* CASwitch::getImage(CAImage* image, CCSize size)
 {
-    CCRect rect;
-    rect.origin = ccpSub(ccpMult(image->getContentSize(), 0.5f), CCPoint(0.5f, 0.5f));
-    rect.size = CCSize(1, 1);
-    
-	CAScale9ImageView *scale9Image = CAScale9ImageView::createWithImage(rect, image);
+	CAScale9ImageView *scale9Image = CAScale9ImageView::createWithImage(image);
     scale9Image->setAnchorPoint(CCPointZero);
-	scale9Image->setPreferredSize(size);
+	scale9Image->setFrame(CCRect(0, 0, size.width, size.height));
     this->addSubview(scale9Image);
     
 	CCRenderTexture* render = CCRenderTexture::create(size.width, size.height, kCAImagePixelFormat_RGBA8888);
@@ -210,7 +205,7 @@ bool CASwitch::initWithFrame(const CCRect& rect)
     {
         return false;
     }
-    
+    this->setColor(CAColor_clear);
     this->setFrame(rect);
     return true;
 }

@@ -92,10 +92,8 @@ public:
     virtual void draw(void);
     void setAnchorPoint(CCPoint anchorPoint);
 
-    virtual void setColor(const ccColor3B& color);
-    virtual const ccColor3B& getColor() const;
-    virtual GLubyte getOpacity() const;
-    virtual void setOpacity(GLubyte opacity);
+    virtual void setColor(const CAColor4B& color);
+    virtual const CAColor4B& getColor() const;
     
     inline bool isReverseDirection() { return m_bReverseDirection; };
     inline void setReverseDirection(bool value) { m_bReverseDirection = value; };

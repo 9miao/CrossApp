@@ -57,6 +57,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	static FrameLayout frame;
 	static View rootview;
 	static int keyboardheight;
+	private static Activity activity;
 	native static void KeyBoardHeightReturn(int height);
 	public static Context getContext() {
 		return sContext;
@@ -70,13 +71,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		sContext = this;
+		activity =this;
     	this.mHandler = new Cocos2dxHandler(this);
     	actAndroidNativeTool = new AndroidNativeTool(this);
     	
     	AndroidPersonList.Init(this);
-    	AndroidGPS.Init(this);
-    	this.init();
     	
+    	this.init();
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
 	}
@@ -91,7 +92,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
-
+	public static void startGps(){
+		AndroidGPS.Init(activity);
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();

@@ -77,7 +77,7 @@ bool CAScrollView::initWithFrame(const cocos2d::CCRect &rect)
     {
         return false;
     }
-
+    this->setColor(CAColor_clear);
     this->setDisplayRange(false);
     
     m_pContainer = CAView::createWithFrame(this->getBounds(), ccc4(255, 255, 255, 0));
@@ -269,7 +269,7 @@ void CAScrollView::setContentSize(const cocos2d::CCSize &var)
 
 void CAScrollView::closeToPoint(float delay)
 {
-    CCSize size = this->getContentSize();
+    CCSize size = this->getBounds().size;
     CCPoint point = m_pContainer->getFrameOrigin();
     CCPoint resilience = ccpSub(m_tCloseToPoint, point);
     
@@ -341,10 +341,9 @@ bool CAScrollView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (m_bscrollEnabled == false)
-        return;
+    CC_RETURN_IF(m_bscrollEnabled == false);
     
-    CCPoint p_container = m_pContainer->getCenter().origin;
+    CCPoint p_container = m_pContainer->getCenterOrigin();
     CCPoint p_off = CCPointZero;
     
     if (m_pTouches->count() == 1)
@@ -372,13 +371,15 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
             m_fTouchLength = touch_lenght;
         }
         
-        p_off = ccpSub(this->convertToNodeSpace(mid_point), m_pContainer->getPosition());
+        p_off = ccpSub(this->convertToNodeSpace(mid_point),
+                       ccpAdd(m_pContainer->getFrameOrigin(),
+                              m_pContainer->getAnchorPointInPoints()));
     }
     
     
     if (m_bBounces)
     {
-        CCSize size = this->getContentSize();
+        CCSize size = this->getBounds().size;
         CCRect rect = m_pContainer->getCenter();
         rect.size.width = MAX(rect.size.width, size.width);
         rect.size.height = MAX(rect.size.height, size.height);
@@ -418,12 +419,6 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
         m_tPointOffset.pop_front();
     }
     
-    if (m_pScrollViewDelegate)
-    {
-        m_pScrollViewDelegate->scrollViewWillBeginDragging(this);
-    }
-    m_bTracking = true;
-    
     if (m_bBounces == false)
     {
         p_container = this->getScrollWindowNotOutPoint(p_container);
@@ -441,20 +436,29 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
         }
     }
     
-    if (m_pScrollViewDelegate && p_container.equals(m_pContainer->getCenter().origin) == false)
+    if (p_container.equals(m_pContainer->getCenterOrigin()) == false)
     {
-        m_pScrollViewDelegate->scrollViewDidScroll(this);
+        m_pContainer->setCenterOrigin(p_container);
+        this->showIndicator();
+        
+        if (m_bTracking == false)
+        {
+            if (m_pScrollViewDelegate)
+            {
+                m_pScrollViewDelegate->scrollViewWillBeginDragging(this);
+            }
+            m_bTracking = true;
+        }
+        
+        if (m_pScrollViewDelegate)
+        {
+            m_pScrollViewDelegate->scrollViewDidScroll(this);
+        }
     }
-    
-    m_pContainer->setCenter(CCRect(p_container.x, p_container.y, 0, 0));
-    this->showIndicator();
 }
 
 void CAScrollView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (m_bscrollEnabled == false)
-        return;
-    
     if (m_pTouches->containsObject(pTouch))
     {
         if (m_pTouches->count() == 1)
@@ -593,23 +597,25 @@ void CAScrollView::deaccelerateScrolling(float delay)
         }
     }
     
-    if (m_pScrollViewDelegate && point.equals(m_pContainer->getCenter().origin) == false)
+    m_bDecelerating = true;
+    if (m_pScrollViewDelegate && point.equals(m_pContainer->getCenterOrigin()) == false)
     {
         m_pScrollViewDelegate->scrollViewDidScroll(this);
     }
     
-    
-    m_bDecelerating = true;
-    
     if (speed.getLength() <= 0.5f)
     {
         point = this->getScrollWindowNotOutPoint(point);
+        m_pContainer->setCenterOrigin(point);
+        this->hideIndicator();
         m_bDecelerating = false;
         CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
-        this->hideIndicator();
     }
-    
-    m_pContainer->setCenterOrigin(point);
+    else if (point.equals(m_pContainer->getCenterOrigin()) == false)
+    {
+        this->showIndicator();
+        m_pContainer->setCenterOrigin(point);
+    }
 }
 
 float CAScrollView::maxSpeed(float delay)
@@ -645,6 +651,7 @@ void CAScrollView::showIndicator()
     }
     m_pIndicatorHorizontal->setHide(false);
     m_pIndicatorVertical->setHide(false);
+    this->update(0);
 }
 
 void CAScrollView::hideIndicator()
@@ -676,7 +683,7 @@ const CCPoint& CAScrollView::getScrollWindowNotOutPoint(CCPoint& point)
 
 float CAScrollView::getScrollWindowNotOutHorizontal(float x)
 {
-    CCSize size = this->getContentSize();
+    CCSize size = this->getBounds().size;
     CCSize cSize = m_pContainer->getFrame().size;
     cSize.width = MAX(cSize.width, size.width);
     cSize.height = MAX(cSize.height, size.height);
@@ -689,7 +696,7 @@ float CAScrollView::getScrollWindowNotOutHorizontal(float x)
 
 float CAScrollView::getScrollWindowNotOutVertical(float y)
 {
-    CCSize size = this->getContentSize();
+    CCSize size = this->getBounds().size;
     CCSize cSize = m_pContainer->getFrame().size;
     cSize.width = MAX(cSize.width, size.width);
     cSize.height = MAX(cSize.height, size.height);
@@ -702,7 +709,7 @@ float CAScrollView::getScrollWindowNotOutVertical(float y)
 
 bool CAScrollView::isScrollWindowNotOutSide()
 {
-    CCSize size = this->getContentSize();
+    CCSize size = this->getBounds().size;
     CCRect rect = m_pContainer->getFrame();
     CCPoint point = m_pContainer->getCenter().origin;
     
@@ -732,7 +739,7 @@ bool CAScrollView::isScrollWindowNotOutSide()
 
 bool CAScrollView::isScrollWindowNotMaxOutSide()
 {
-    CCSize size = this->getContentSize();
+    CCSize size = this->getBounds().size;
     CCRect rect = m_pContainer->getFrame();
     CCPoint point = m_pContainer->getCenter().origin;
     
@@ -780,7 +787,7 @@ void CAIndicator::onEnterTransitionDidFinish()
 void CAIndicator::onExitTransitionDidStart()
 {
     CAView::onExitTransitionDidStart();
-    this->setOpacity(0);
+    this->setAlpha(0.0f);
 }
 
 CAIndicator* CAIndicator::createWithFrame(const CCRect& rect, CAIndicatorType type)
@@ -801,20 +808,16 @@ bool CAIndicator::initWithFrame(const CCRect& rect, CAIndicatorType type)
     {
         return false;
     }
+    this->setColor(CAColor_clear);
     this->setFrame(rect);
     
     m_eType = type;
     
     CAImage* image = CAImage::create("indicator.png");
-    
-    CCRect r;
-    r.origin = ccpSub(ccpMult(image->getContentSize(), 0.5f), CCPoint(0.5f, 0.5f));
-    r.size = CCSize(1.0f, 1.0f);
-    
-    m_pIndicator = CAScale9ImageView::createWithImage(r, image);
+
+    m_pIndicator = CAScale9ImageView::createWithImage(image);
     this->addSubview(m_pIndicator);
-    this->setOpacity(0);
-    
+    this->setAlpha(0.0f);
     return true;
 }
 
@@ -833,31 +836,27 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
         float lenght_scale_x = parentSize.width / 2 - childrenFrame.origin.x;
         lenght_scale_x /= childrenFrame.size.width;
         
-        CCSize size = m_obContentSize;
-        size.width *= size_scale_x;
+        CCRect rect;
+        rect.size = m_obContentSize;
+        rect.size.width *= size_scale_x;
         
         if (lenght_scale_x < size_scale_x / 2)
         {
-            size.width *= lenght_scale_x / (size_scale_x / 2);
+            rect.size.width *= lenght_scale_x / (size_scale_x / 2);
         }
         if (1 - lenght_scale_x < size_scale_x / 2)
         {
-            size.width *= (1 - lenght_scale_x) / (size_scale_x / 2);
+            rect.size.width *= (1 - lenght_scale_x) / (size_scale_x / 2);
         }
-        size.width = MAX(size.height, size.width);
+        rect.size.width = MAX(rect.size.height, rect.size.width);
         
-        if (!indicator->getPreferredSize().equals(size))
-        {
-            indicator->setPreferredSize(size);
-        }
+        rect.origin = m_obContentSize;
+        rect.origin.y *= 0.5f;
+        rect.origin.x *= lenght_scale_x;
+        rect.origin.x = MAX(rect.origin.x, rect.size.width/2);
+        rect.origin.x = MIN(rect.origin.x, m_obContentSize.width - rect.size.width/2);
         
-        CCPoint point = m_obContentSize;
-        point.y *= 0.5f;
-        point.x *= lenght_scale_x;
-        point.x = MAX(point.x, size.width/2);
-        point.x = MIN(point.x, m_obContentSize.width - size.width/2);
-        
-        indicator->setCenterOrigin(point);
+        indicator->setCenter(rect);
     }
     else if (m_eType == CAIndicatorTypeVertical)
     {
@@ -867,41 +866,27 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
         float lenght_scale_y = parentSize.height / 2 - childrenFrame.origin.y;
         lenght_scale_y /= childrenFrame.size.height;
         
-        CCSize size = m_obContentSize;
-        size.height *= size_scale_y;
+        CCRect rect;
+        rect.size = m_obContentSize;
+        rect.size.height *= size_scale_y;
         
         if (lenght_scale_y < size_scale_y / 2)
         {
-            size.height *= lenght_scale_y / (size_scale_y / 2);
+            rect.size.height *= lenght_scale_y / (size_scale_y / 2);
         }
         if (1 - lenght_scale_y < size_scale_y / 2)
         {
-            size.height *= (1 - lenght_scale_y) / (size_scale_y / 2);
+            rect.size.height *= (1 - lenght_scale_y) / (size_scale_y / 2);
         }
-        size.height = MAX(size.height, size.width);
-        
-		if (!indicator->getPreferredSize().equals(size))
-        {
-            indicator->setPreferredSize(size);
-        }
-        
-        CCPoint point = m_obContentSize;
-        point.x *= 0.5f;
-        point.y *= lenght_scale_y;
-        point.y = MAX(point.y, size.height/2);
-        point.y = MIN(point.y, m_obContentSize.height - size.height/2);
-        
-        indicator->setCenterOrigin(point);
-    }
-}
+        rect.size.height = MAX(rect.size.height, rect.size.width);
 
-void CAIndicator::setOpacity(GLubyte opacity)
-{
-    CAScale9ImageView* indicator = dynamic_cast<CAScale9ImageView*>(m_pIndicator);
-    if (indicator)
-    {
-        indicator->setOpacity(opacity);
-        indicator->setColor(ccc3(opacity, opacity, opacity));
+        rect.origin = m_obContentSize;
+        rect.origin.x *= 0.5f;
+        rect.origin.y *= lenght_scale_y;
+        rect.origin.y = MAX(rect.origin.y, rect.size.height/2);
+        rect.origin.y = MIN(rect.origin.y, m_obContentSize.height - rect.size.height/2);
+        
+        indicator->setCenter(rect);
     }
 }
 
@@ -911,16 +896,16 @@ void CAIndicator::setHide(bool var)
     
     if (var == false)
     {
-        CC_RETURN_IF(indicator->getOpacity() == 255);
+        CC_RETURN_IF(fabs(1.0f-this->getAlpha()) < FLT_EPSILON);
         
         this->stopActionByTag(0xfff);
-        this->setOpacity(255);
+        this->setAlpha(1.0f);
     }
     else
     {
         CC_RETURN_IF(indicator->getActionByTag(0xfff));
         
-        CC_RETURN_IF(indicator->getOpacity() < 255);
+        CC_RETURN_IF(1.0f-this->getAlpha() > FLT_EPSILON);
         
         CCDelayTime* delayTime = CCDelayTime::create(0.2f);
         CCFadeOut* fadeOut = CCFadeOut::create(0.3f);

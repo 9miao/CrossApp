@@ -131,7 +131,7 @@ protected:
     
     CC_SYNTHESIZE(float, m_fMaximumZoomScale, MaximumZoomScale);
     
-    CC_SYNTHESIZE(float, m_fZoomScale, ZoomScale);
+    CC_SYNTHESIZE_READONLY(float, m_fZoomScale, ZoomScale);
     
     CC_PROPERTY_IS(bool, m_bscrollEnabled, ScrollEnabled);
     
@@ -186,8 +186,6 @@ public:
     virtual bool initWithFrame(const CCRect& rect, CAIndicatorType type);
     
     void setIndicator(const CCSize& parentSize, const CCRect& childrenFrame);
-    
-    void setOpacity(GLubyte opacity);
     
     void setHide(bool var);
     

@@ -23,38 +23,15 @@
 #include "images/CAImage.h"
 #include "cocoa/CCAffineTransform.h"
 #include "support/TransformUtils.h"
-#include "support/CCProfiling.h"
-#include "platform/CCImage.h"
 // external
-#include "kazmath/GL/matrix.h"
 #include <string.h>
 
-using namespace std;
-
 NS_CC_BEGIN
-
-#if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define RENDER_IN_SUBPIXEL
-#else
-#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
-#endif
 
 CAImageView* CAImageView::createWithImage(CAImage* image)
 {
     CAImageView *pobSprite = new CAImageView();
     if (pobSprite && pobSprite->initWithImage(image))
-    {
-        pobSprite->autorelease();
-        return pobSprite;
-    }
-    CC_SAFE_DELETE(pobSprite);
-    return NULL;
-}
-
-CAImageView* CAImageView::createWithImage(CAImage* image, const CCRect& rect)
-{
-    CAImageView *pobSprite = new CAImageView();
-    if (pobSprite && pobSprite->initWithImage(image, rect))
     {
         pobSprite->autorelease();
         return pobSprite;
@@ -75,6 +52,32 @@ CAImageView* CAImageView::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     return NULL;
 }
 
+CAImageView* CAImageView::createWithFrame(const CCRect& rect)
+{
+	CAImageView * pRet = new CAImageView();
+    if (pRet && pRet->init())
+    {
+        pRet->setFrame(rect);
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+	return NULL;
+}
+
+CAImageView* CAImageView::createWithCenter(const CCRect& rect)
+{
+	CAImageView * pRet = new CAImageView();
+    if (pRet && pRet->init())
+    {
+        pRet->setCenter(rect);
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+	return NULL;
+}
+
 CAImageView* CAImageView::create()
 {
     CAImageView *pSprite = new CAImageView();
@@ -89,45 +92,32 @@ CAImageView* CAImageView::create()
 
 bool CAImageView::init(void)
 {
-    return initWithImage(NULL, CCRectZero);
-}
-
-bool CAImageView::initWithImage(CAImage* image, const CCRect& rect, bool rotated)
-{
-    if (!CAView::init())
-        return false;
-
-    this->setImage(image);
-    setImageRect(rect, rotated, rect.size);
-    
-    return true;
-}
-
-bool CAImageView::initWithImage(CAImage* image, const CCRect& rect)
-{
-    return initWithImage(image, rect, false);
+    return CAImageView::initWithImage(NULL);
 }
 
 bool CAImageView::initWithImage(CAImage* image)
 {
-    CCRect rect = CCRectZero;
+    if (!CAView::init())
+        return false;
     
+    CCRect rect = CCRectZero;
     if (image)
     {
         rect.size = image->getContentSize();
     }
+    this->setImage(image);
+    setImageRect(rect, false, rect.size);
     
-    return initWithImage(image, rect);
+    return true;
 }
 
 bool CAImageView::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
-    CCAssert(pSpriteFrame != NULL, "");
-
-    bool bRet = initWithImage(pSpriteFrame->getImage(), pSpriteFrame->getRect());
+    if (!CAView::init())
+        return false;
+    
     setDisplayFrame(pSpriteFrame);
-
-    return bRet;
+    return true;
 }
 
 CAImageView::CAImageView(void)
@@ -140,69 +130,45 @@ CAImageView::~CAImageView(void)
     
 }
 
-void CAImageView::setFrame(const CCRect &rect)
+void CAImageView::setImage(CAImage* image)
 {
-	this->setBounds(rect);
-
-	this->setFrameOrigin(rect.origin);
-}
-
-void CAImageView::setFrameOrigin(const CCPoint& point)
-{
-    CCPoint p = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
-	p = ccpAdd(point, p);
-	this->setPosition(p);
+    if (NULL == image)
+    {
+        image = CAImage::CC_WHITE_IMAGE();
+    }
+    CAView::setImage(image);
     
-    m_bFrame = true;
-}
-
-void CAImageView::setCenter(const CCRect& rect)
-{
-    this->setBounds(rect);
-    
-    this->setCenterOrigin(rect.origin);
-}
-
-CCRect CAImageView::getCenter()
-{
-    CCRect rect = m_obFrameRect;
-    rect.origin = ccpAdd(rect.origin, CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY));
-    return rect;
-}
-
-void CAImageView::setCenterOrigin(const CCPoint& point)
-{
-    CCPoint p = CCPoint(m_obContentSize.width * m_fScaleX, m_obContentSize.height * m_fScaleY);
-    p = ccpSub(point, p/2);
-    p = ccpAdd(CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY), p);
-    this->setPosition(p);
-    
-    m_bFrame = false;
-}
-
-CCPoint CAImageView::getCenterOrigin()
-{
-    return this->getCenter().origin;
+    if (image->isMonochrome() == false)
+    {
+         CCRect rect = CCRectZero;
+        rect.size = image->getContentSize();
+        this->setImageRect(rect, false, m_obContentSize);
+    }
+    else
+    {
+        this->setImageRect(CCRectZero);
+    }
     
 }
-void CAImageView::setBounds(const CCRect& rect)
-{
-	if (!rect.size.equals(CCSizeZero))
-	{
-		CCPoint scale = CCSize(rect.size.width / m_obContentSize.width, rect.size.height / m_obContentSize.height);
-		this->setScale(scale.x, scale.y);
-	}
-}
 
-CCRect CAImageView::getBounds() const
+void CAImageView::updateImageRect()
 {
-    CCRect rect = this->getFrame();
-    rect.origin = CCPointZero;
-    return rect;
+    CCSize size = CCSizeZero;
+    if (m_pobImage && !m_pobImage->isMonochrome())
+    {
+        size = m_obContentSize;
+    }
+    
+    // Don't update Z.
+    m_sQuad.bl.vertices = vertex3(m_obOffsetPoint.x, m_obOffsetPoint.y, 0);
+    m_sQuad.br.vertices = vertex3(size.width, m_obOffsetPoint.y, 0);
+    m_sQuad.tl.vertices = vertex3(m_obOffsetPoint.x, size.height, 0);
+    m_sQuad.tr.vertices = vertex3(size.width, size.height, 0);
 }
 
 void CAImageView::setDisplayFrame(CCSpriteFrame *pNewFrame)
 {
+    CC_RETURN_IF(!pNewFrame);
     m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffset();
 
     CAImage* pNewimage = pNewFrame->getImage();
@@ -213,7 +179,13 @@ void CAImageView::setDisplayFrame(CCSpriteFrame *pNewFrame)
     }
 
     m_bRectRotated = pNewFrame->isRotated();
-    setImageRect(pNewFrame->getRect(), m_bRectRotated, pNewFrame->getOriginalSize());
+    
+    CCSize size = m_obContentSize;
+    if (size.equals(CCSizeZero))
+    {
+        size = pNewFrame->getOriginalSize();
+    }
+    setImageRect(pNewFrame->getRect(), m_bRectRotated, size);
 }
 
 void CAImageView::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
@@ -247,35 +219,6 @@ CCSpriteFrame* CAImageView::displayFrame(void)
                                            m_bRectRotated,
                                            CC_POINT_POINTS_TO_PIXELS(m_obUnflippedOffsetPositionFromCenter),
                                            CC_SIZE_POINTS_TO_PIXELS(m_obContentSize));
-}
-
-void CAImageView::setImage(CAImage* image)
-{
-    if (NULL == image)
-    {
-        image = CAImage::CC_WHITE_IMAGE();
-    }
-
-    CCRect rect;
-    if (this->isFrame())
-    {
-        rect = this->getFrame();
-    }
-    else
-    {
-        rect = this->getCenter();
-    }
-
-    CAView::setImage(image);
-    
-    if (this->isFrame())
-    {
-        this->setFrame(rect);
-    }
-    else
-    {
-        this->setCenter(rect);
-    }
 }
 
 NS_CC_END

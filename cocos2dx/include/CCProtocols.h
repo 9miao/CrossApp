@@ -40,90 +40,58 @@ class CC_DLL CCRGBAProtocol
 {
 public:
     /** 
-     * Changes the color with R,G,B bytes
+     * Changes the color with R,G,B,A bytes
      *
-     * @param color Example: ccc3(255,100,0) means R=255, G=100, B=0
+     * @param color Example: ccc4(255,100,0) means R=255, G=100, B=0
      */
-    virtual void setColor(const ccColor3B& color) = 0;
+    virtual void setColor(const CAColor4B& color) = 0;
 
     /**
      * Returns color that is currently used.
      *
-     * @return The ccColor3B contains R,G,B bytes.
+     * @return The CAColor4B contains R,G,B,A bytes.
      */
-    virtual const ccColor3B& getColor(void) = 0;
+    virtual const CAColor4B& getColor(void) = 0;
     
     /**
      * Returns the displayed color.
      *
-     * @return The ccColor3B contains R,G,B bytes.
+     * @return The CAColor4B contains R,G,B,A bytes.
      */
-    virtual const ccColor3B& getDisplayedColor(void) = 0;
+    virtual const CAColor4B& getDisplayedColor(void) = 0;
     
     /**
-     * Returns the displayed opacity.
+     * Returns the displayed alpha.
      *
-     * @return  The opacity of sprite, from 0 ~ 255
+     * @return  The alpha of image, from 0 ~ 1.0f
      */
-    virtual GLubyte getDisplayedOpacity(void) = 0;
+    virtual float getDisplayedAlpha(void) = 0;
     /**
-     * Returns the opacity.
+     * Returns the alpha.
      *
      * The opacity which indicates how transparent or opaque this node is.
-     * 0 indicates fully transparent and 255 is fully opaque.
+     * 0 indicates fully transparent and 1.0f is fully opaque.
      *
-     * @return  The opacity of sprite, from 0 ~ 255
+     * @return  The opacity of image, from 0 ~ 1.0f
      */
-    virtual GLubyte getOpacity(void) = 0;
+    virtual float getAlpha(void) = 0;
 
     /**
-     * Changes the opacity.
+     * Changes the alpha.
      *
-     * @param   value   Goes from 0 to 255, where 255 means fully opaque and 0 means fully transparent.
+     * @param   value   Goes from 0 to 1.0f, where 1.0f means fully opaque and 0 means fully transparent.
      */
-    virtual void setOpacity(GLubyte opacity) = 0;
+    virtual void setAlpha(float alpha) = 0;
 
-    // optional
-
-    /**
-     * Changes the OpacityModifyRGB property. 
-     * If thie property is set to true, then the rendered color will be affected by opacity.
-     * Normally, r = r * opacity/255, g = g * opacity/255, b = b * opacity/255.
-     *
-     * @param   bValue  true then the opacity will be applied as: glColor(R,G,B,opacity);
-     *                  false then the opacity will be applied as: glColor(opacity, opacity, opacity, opacity);
-     */
-    virtual void setOpacityModifyRGB(bool bValue) = 0;
-
-    /**
-     * Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) 
-     * or glColor(opacity, opacity, opacity, opacity)
-     *
-     * @return  Returns opacity modify flag.
-     */
-    virtual bool isOpacityModifyRGB(void) = 0;
-    
-    /**
-     *  whether or not color should be propagated to its children.
-     */
-    virtual bool isCascadeColorEnabled(void) = 0;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) = 0;
-    
     /** 
      *  recursive method that updates display color 
      */
-    virtual void updateDisplayedColor(const ccColor3B& color) = 0;
-    
-    /** 
-     *  whether or not opacity should be propagated to its children.
-     */
-    virtual bool isCascadeOpacityEnabled(void) = 0;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) = 0;
+    virtual void updateDisplayedColor(const CAColor4B& color) = 0;
     
     /**
-     *  recursive method that updates the displayed opacity.
+     *  recursive method that updates the displayed alpha.
      */
-    virtual void updateDisplayedOpacity(GLubyte opacity) = 0;
+    virtual void updateDisplayedAlpha(float alpha) = 0;
 };
 
 /**

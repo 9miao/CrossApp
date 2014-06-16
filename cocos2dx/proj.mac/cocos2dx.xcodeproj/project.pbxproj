@@ -21,8 +21,6 @@
 		1551A629158F2ADE00E66CFE /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A356158F2ADE00E66CFE /* CCAction.h */; };
 		1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A357158F2ADE00E66CFE /* CCActionCamera.cpp */; };
 		1551A62B158F2ADE00E66CFE /* CCActionCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A358158F2ADE00E66CFE /* CCActionCamera.h */; };
-		1551A62C158F2ADE00E66CFE /* CCActionCatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A359158F2ADE00E66CFE /* CCActionCatmullRom.cpp */; };
-		1551A62D158F2ADE00E66CFE /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A35A158F2ADE00E66CFE /* CCActionCatmullRom.h */; };
 		1551A62E158F2ADE00E66CFE /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A35B158F2ADE00E66CFE /* CCActionEase.cpp */; };
 		1551A62F158F2ADE00E66CFE /* CCActionEase.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A35C158F2ADE00E66CFE /* CCActionEase.h */; };
 		1551A630158F2ADE00E66CFE /* CCActionGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A35D158F2ADE00E66CFE /* CCActionGrid.cpp */; };
@@ -114,12 +112,6 @@
 		1551A6D6158F2ADE00E66CFE /* CCKeypadDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A417158F2ADE00E66CFE /* CCKeypadDispatcher.h */; };
 		1551A6DB158F2ADE00E66CFE /* CCLabelTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A41D158F2ADE00E66CFE /* CCLabelTTF.cpp */; };
 		1551A6DC158F2ADE00E66CFE /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A41E158F2ADE00E66CFE /* CCLabelTTF.h */; };
-		1551A6E1158F2ADE00E66CFE /* CCTransition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A424158F2ADE00E66CFE /* CCTransition.cpp */; };
-		1551A6E2158F2ADE00E66CFE /* CCTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A425158F2ADE00E66CFE /* CCTransition.h */; };
-		1551A6E3158F2ADE00E66CFE /* CCTransitionPageTurn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A426158F2ADE00E66CFE /* CCTransitionPageTurn.cpp */; };
-		1551A6E4158F2ADE00E66CFE /* CCTransitionPageTurn.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A427158F2ADE00E66CFE /* CCTransitionPageTurn.h */; };
-		1551A6E5158F2ADE00E66CFE /* CCTransitionProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A428158F2ADE00E66CFE /* CCTransitionProgress.cpp */; };
-		1551A6E6158F2ADE00E66CFE /* CCTransitionProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A429158F2ADE00E66CFE /* CCTransitionProgress.h */; };
 		1551A6EB158F2ADE00E66CFE /* CCMotionStreak.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A430158F2ADE00E66CFE /* CCMotionStreak.cpp */; };
 		1551A6EC158F2ADE00E66CFE /* CCMotionStreak.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A431158F2ADE00E66CFE /* CCMotionStreak.h */; };
 		1551A6ED158F2ADE00E66CFE /* CCProgressTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A432158F2ADE00E66CFE /* CCProgressTimer.cpp */; };
@@ -319,8 +311,6 @@
 		1551A356158F2ADE00E66CFE /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		1551A357158F2ADE00E66CFE /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
 		1551A358158F2ADE00E66CFE /* CCActionCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCamera.h; sourceTree = "<group>"; };
-		1551A359158F2ADE00E66CFE /* CCActionCatmullRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCatmullRom.cpp; sourceTree = "<group>"; };
-		1551A35A158F2ADE00E66CFE /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
 		1551A35B158F2ADE00E66CFE /* CCActionEase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEase.cpp; sourceTree = "<group>"; };
 		1551A35C158F2ADE00E66CFE /* CCActionEase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEase.h; sourceTree = "<group>"; };
 		1551A35D158F2ADE00E66CFE /* CCActionGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionGrid.cpp; sourceTree = "<group>"; };
@@ -414,12 +404,6 @@
 		1551A417158F2ADE00E66CFE /* CCKeypadDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeypadDispatcher.h; sourceTree = "<group>"; };
 		1551A41D158F2ADE00E66CFE /* CCLabelTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTF.cpp; sourceTree = "<group>"; };
 		1551A41E158F2ADE00E66CFE /* CCLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTF.h; sourceTree = "<group>"; };
-		1551A424158F2ADE00E66CFE /* CCTransition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTransition.cpp; sourceTree = "<group>"; };
-		1551A425158F2ADE00E66CFE /* CCTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransition.h; sourceTree = "<group>"; };
-		1551A426158F2ADE00E66CFE /* CCTransitionPageTurn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTransitionPageTurn.cpp; sourceTree = "<group>"; };
-		1551A427158F2ADE00E66CFE /* CCTransitionPageTurn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionPageTurn.h; sourceTree = "<group>"; };
-		1551A428158F2ADE00E66CFE /* CCTransitionProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTransitionProgress.cpp; sourceTree = "<group>"; };
-		1551A429158F2ADE00E66CFE /* CCTransitionProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionProgress.h; sourceTree = "<group>"; };
 		1551A430158F2ADE00E66CFE /* CCMotionStreak.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMotionStreak.cpp; sourceTree = "<group>"; };
 		1551A431158F2ADE00E66CFE /* CCMotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMotionStreak.h; sourceTree = "<group>"; };
 		1551A432158F2ADE00E66CFE /* CCProgressTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProgressTimer.cpp; sourceTree = "<group>"; };
@@ -675,7 +659,6 @@
 				1551A3F0158F2ADE00E66CFE /* kazmath */,
 				1551A413158F2ADE00E66CFE /* keypad_dispatcher */,
 				1551A418158F2ADE00E66CFE /* label_nodes */,
-				1551A41F158F2ADE00E66CFE /* layers_scenes_transitions_nodes */,
 				1551A42F158F2ADE00E66CFE /* misc_nodes */,
 				1551A43F158F2ADE00E66CFE /* platform */,
 				1551A5C3158F2ADE00E66CFE /* shaders */,
@@ -697,8 +680,6 @@
 				1551A356158F2ADE00E66CFE /* CCAction.h */,
 				1551A357158F2ADE00E66CFE /* CCActionCamera.cpp */,
 				1551A358158F2ADE00E66CFE /* CCActionCamera.h */,
-				1551A359158F2ADE00E66CFE /* CCActionCatmullRom.cpp */,
-				1551A35A158F2ADE00E66CFE /* CCActionCatmullRom.h */,
 				1551A35B158F2ADE00E66CFE /* CCActionEase.cpp */,
 				1551A35C158F2ADE00E66CFE /* CCActionEase.h */,
 				1551A35D158F2ADE00E66CFE /* CCActionGrid.cpp */,
@@ -879,19 +860,6 @@
 				1551A41E158F2ADE00E66CFE /* CCLabelTTF.h */,
 			);
 			path = label_nodes;
-			sourceTree = "<group>";
-		};
-		1551A41F158F2ADE00E66CFE /* layers_scenes_transitions_nodes */ = {
-			isa = PBXGroup;
-			children = (
-				1551A424158F2ADE00E66CFE /* CCTransition.cpp */,
-				1551A425158F2ADE00E66CFE /* CCTransition.h */,
-				1551A426158F2ADE00E66CFE /* CCTransitionPageTurn.cpp */,
-				1551A427158F2ADE00E66CFE /* CCTransitionPageTurn.h */,
-				1551A428158F2ADE00E66CFE /* CCTransitionProgress.cpp */,
-				1551A429158F2ADE00E66CFE /* CCTransitionProgress.h */,
-			);
-			path = layers_scenes_transitions_nodes;
 			sourceTree = "<group>";
 		};
 		1551A42F158F2ADE00E66CFE /* misc_nodes */ = {
@@ -1226,7 +1194,6 @@
 				B0B553B2193480470065053D /* CAImageCache.h in Headers */,
 				B0AD93A8192077C200EA40BB /* CAViewController.h in Headers */,
 				1551A62B158F2ADE00E66CFE /* CCActionCamera.h in Headers */,
-				1551A62D158F2ADE00E66CFE /* CCActionCatmullRom.h in Headers */,
 				B0B553B4193480470065053D /* CAImageETC.h in Headers */,
 				1551A62F158F2ADE00E66CFE /* CCActionEase.h in Headers */,
 				B0B553B6193480470065053D /* CAImagePVR.h in Headers */,
@@ -1285,9 +1252,6 @@
 				1551A6D6158F2ADE00E66CFE /* CCKeypadDispatcher.h in Headers */,
 				B0AD939C192077C200EA40BB /* CABarItem.h in Headers */,
 				1551A6DC158F2ADE00E66CFE /* CCLabelTTF.h in Headers */,
-				1551A6E2158F2ADE00E66CFE /* CCTransition.h in Headers */,
-				1551A6E4158F2ADE00E66CFE /* CCTransitionPageTurn.h in Headers */,
-				1551A6E6158F2ADE00E66CFE /* CCTransitionProgress.h in Headers */,
 				B0AD9383192077B600EA40BB /* CAWindow.h in Headers */,
 				1551A6EC158F2ADE00E66CFE /* CCMotionStreak.h in Headers */,
 				1551A6EE158F2ADE00E66CFE /* CCProgressTimer.h in Headers */,
@@ -1444,7 +1408,6 @@
 				1551A628158F2ADE00E66CFE /* CCAction.cpp in Sources */,
 				B0B553BE193484610065053D /* CAScale9ImageView.cpp in Sources */,
 				1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */,
-				1551A62C158F2ADE00E66CFE /* CCActionCatmullRom.cpp in Sources */,
 				1551A62E158F2ADE00E66CFE /* CCActionEase.cpp in Sources */,
 				1551A630158F2ADE00E66CFE /* CCActionGrid.cpp in Sources */,
 				B0B553B5193480470065053D /* CAImagePVR.cpp in Sources */,
@@ -1499,9 +1462,6 @@
 				1551A6DB158F2ADE00E66CFE /* CCLabelTTF.cpp in Sources */,
 				B0AD93A1192077C200EA40BB /* CAProgress.cpp in Sources */,
 				B020AF791929DE41009FFA81 /* CCIMEDispatcher.cpp in Sources */,
-				1551A6E1158F2ADE00E66CFE /* CCTransition.cpp in Sources */,
-				1551A6E3158F2ADE00E66CFE /* CCTransitionPageTurn.cpp in Sources */,
-				1551A6E5158F2ADE00E66CFE /* CCTransitionProgress.cpp in Sources */,
 				1551A6EB158F2ADE00E66CFE /* CCMotionStreak.cpp in Sources */,
 				1551A6ED158F2ADE00E66CFE /* CCProgressTimer.cpp in Sources */,
 				1551A6EF158F2ADE00E66CFE /* CCRenderTexture.cpp in Sources */,

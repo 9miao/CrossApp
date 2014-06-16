@@ -46,9 +46,9 @@ public:
     
     CC_SYNTHESIZE(CAProgressStyle, m_pProgressStyle, ProgressStyle);
     
-    CC_SYNTHESIZE(ccColor3B, m_progressTintColor, ProgressTintColor);
+    CC_SYNTHESIZE(CAColor4B, m_progressTintColor, ProgressTintColor);
     
-    CC_SYNTHESIZE(ccColor3B, m_progresstrackColor, ProgresstrackColor);
+    CC_SYNTHESIZE(CAColor4B, m_progresstrackColor, ProgresstrackColor);
     
 	CC_SYNTHESIZE_RETAIN(CAImage*, m_pProgressTintImage, ProgressTintImage);
     

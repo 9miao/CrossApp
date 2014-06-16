@@ -239,6 +239,7 @@ void CANavigationController::updateItem(CAViewController* viewController)
     while (index < m_pViewControllers.size())
     {
         CC_BREAK_IF(viewController->isEqual(m_pViewControllers.at(index)));
+        index++;
     };
     
     m_pNavigationBar->replaceItemAtIndex(index, viewController->getNavigationBarItem());
@@ -333,7 +334,7 @@ void CANavigationController::replaceViewController(cocos2d::CAViewController *vi
     float x = m_pContainer->getFrame().size.width;
     
     CAViewController* lastViewController = m_pViewControllers.back();
-    lastViewController->getView()->setFrame(CCRect(-x, 0, 0, 0));
+    lastViewController->getView()->setFrameOrigin(CCPoint(-x, 0));
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.insert(m_pViewControllers.end()-1, viewController);
@@ -342,11 +343,11 @@ void CANavigationController::replaceViewController(cocos2d::CAViewController *vi
     if (animated)
     {
         m_pContainer->stopAllActions();
-        m_pContainer->setFrame(CCRect(x, m_pContainer->getFrame().origin.y, 0, 0));
+        m_pContainer->setFrameOrigin(CCPoint(x, m_pContainer->getFrameOrigin().y));
         
         CCDelayTime* delayTime = CCDelayTime::create(0.2f);
-        CCMoveBy* moveBy = CCMoveBy::create(0.4f, CCPoint(-x, 0));
-        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveBy);
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.4f, CCPoint(0, m_pContainer->getFrameOrigin().y));
+        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::replaceViewControllerFinish));
         CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);
         m_pContainer->runAction(actions);
@@ -361,7 +362,7 @@ void CANavigationController::replaceViewController(cocos2d::CAViewController *vi
 
 void CANavigationController::replaceViewControllerFinish()
 {
-    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
+    m_pContainer->setFrameOrigin(CCPoint(0, m_pContainer->getFrame().origin.y));
     
     CAViewController* lastViewController = m_pViewControllers.back();
     m_pViewControllers.pop_back();
@@ -393,7 +394,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
     float x = m_pContainer->getFrame().size.width;
     
     CAViewController* lastViewController = m_pViewControllers.back();
-    lastViewController->getView()->setFrame(CCRect(-x, 0, 0, 0));
+    lastViewController->getView()->setFrameOrigin(CCPoint(-x, 0));
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
@@ -402,11 +403,11 @@ void CANavigationController::pushViewController(CAViewController* viewController
     if (animated)
     {
         m_pContainer->stopAllActions();
-        m_pContainer->setFrame(CCRect(x, m_pContainer->getFrame().origin.y, 0, 0));
+        m_pContainer->setFrameOrigin(CCPoint(x, m_pContainer->getFrameOrigin().y));
         
         CCDelayTime* delayTime = CCDelayTime::create(0.2f);
-        CCMoveBy* moveBy = CCMoveBy::create(0.4f, CCPoint(-x, 0));
-        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveBy);
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.4f, CCPoint(0, m_pContainer->getFrameOrigin().y));
+        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::pushViewControllerFinish));
         CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);
         m_pContainer->runAction(actions);
@@ -420,7 +421,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
 
 void CANavigationController::pushViewControllerFinish()
 {
-    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
+    m_pContainer->setFrameOrigin(CCPoint(0, m_pContainer->getFrame().origin.y));
     
     CAViewController* viewController = m_pViewControllers.back();
     
@@ -448,22 +449,22 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     
     unsigned int index = m_pViewControllers.size() - 2;
     CAViewController* showViewController = m_pViewControllers.at(index);
-    showViewController->getView()->setFrame(CCRectZero);
+    showViewController->getView()->setFrameOrigin(CCPointZero);
     m_pContainer->addSubview(showViewController->getView());
     
     CAViewController* backViewController = m_pViewControllers.back();
     
     float x = m_pContainer->getFrame().size.width;
-    backViewController->getView()->setFrame(CCRect(x, 0, 0, 0));
+    backViewController->getView()->setFrameOrigin(CCPoint(x, 0));
     
     if (animated)
     {
         m_pContainer->stopAllActions();
-        m_pContainer->setFrame(CCRect(-x, m_pContainer->getFrame().origin.y, 0, 0));
+        m_pContainer->setFrameOrigin(CCPoint(-x, m_pContainer->getFrameOrigin().y));
         
         CCDelayTime* delayTime = CCDelayTime::create(0.2f);
-        CCMoveBy* moveBy = CCMoveBy::create(0.4f, CCPoint(x, 0));
-        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveBy);
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.4f, CCPoint(0, m_pContainer->getFrameOrigin().y));
+        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::popViewControllerFinish));
         CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);
         m_pContainer->runAction(actions);
@@ -484,7 +485,7 @@ void CANavigationController::popViewControllerFinish()
     lastViewController->autorelease();
     m_pViewControllers.pop_back();
     m_pNavigationBar->popItem();
-    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
+    m_pContainer->setFrameOrigin(CCPoint(0, m_pContainer->getFrame().origin.y));
 }
 
 void CANavigationController::navigationPopViewController(CANavigationBar* navigationBar, bool animated)
@@ -541,7 +542,7 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        CCMoveTo* moveTo = CCMoveTo::create(0.3f, point);
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.3f, point);
         CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CANavigationController::scheduleUpdate));
         CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CANavigationController::unScheduleUpdate));
         CCSequence* actions = CCSequence::create(begin, moveTo, end, NULL);
@@ -674,6 +675,7 @@ void CATabBarController::updateItem(CAViewController* viewController)
     while (index < m_pViewControllers.size())
     {
         CC_BREAK_IF(viewController->isEqual(m_pViewControllers.at(index)));
+        index++;
     };
 
     m_pTabBar->replaceItemAtIndex(index, viewController->getTabBarItem());
@@ -902,7 +904,7 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        CCMoveTo* moveTo = CCMoveTo::create(0.3f, point);
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.3f, point);
         CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CATabBarController::scheduleUpdate));
         CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CATabBarController::unScheduleUpdate));
         CCSequence* actions = CCSequence::create(begin, moveTo, end, NULL);

@@ -58,9 +58,9 @@ public:
     
     void setTitleForState(CAControlState controlState, std::string var);
     
-    void setImageColorForState(CAControlState controlState, ccColor3B var);
+    void setImageColorForState(CAControlState controlState, CAColor4B var);
     
-    void setTitleColorForState(CAControlState controlState, ccColor3B var);
+    void setTitleColorForState(CAControlState controlState, CAColor4B var);
     
     void setTitleFontName(std::string var);
     
@@ -82,12 +82,6 @@ public:
     
 	void interruptTouchState();
 
-    virtual void setOpacity(GLubyte opacity);
-
-    virtual void setColor(const ccColor3B &color3);
-    
-    ccColor3B& getColor();
-    
 protected:
     
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
@@ -102,15 +96,15 @@ protected:
 
     CAButtonType m_eButtonType;
     
-    ccColor3B m_color;
+    CAColor4B m_color;
     
     CAImage* m_pImage[CAControlStateAll];
 
     std::string m_sTitle[CAControlStateAll];
 
-    ccColor3B m_sImageColor[CAControlStateAll];
+    CAColor4B m_sImageColor[CAControlStateAll];
     
-    ccColor3B m_sTitleColor[CAControlStateAll];
+    CAColor4B m_sTitleColor[CAControlStateAll];
     
     std::string m_sTitleFontName;
     

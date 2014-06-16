@@ -74,10 +74,6 @@ protected:
     
     void goBack(CAControl* btn, CCPoint point);
     
-    void updateLeftButton();
-    
-    void updateRightButton();
-    
     void updateNavigationBar();
     
 protected:
@@ -128,9 +124,9 @@ public:
     
     CC_SYNTHESIZE(CATabBarDelegate* , m_pDelegate, Delegate);
     
-    CC_SYNTHESIZE(ccColor3B, m_sTitleColor, TitleColorForNormal);
+    CC_SYNTHESIZE(CAColor4B, m_sTitleColor, TitleColorForNormal);
     
-    CC_SYNTHESIZE(ccColor3B, m_sSelectedTitleColor, TitleColorForSelected);
+    CC_SYNTHESIZE(CAColor4B, m_sSelectedTitleColor, TitleColorForSelected);
     
     CC_SYNTHESIZE_READONLY(std::vector<CATabBarItem*>, m_pItems, Items);
     

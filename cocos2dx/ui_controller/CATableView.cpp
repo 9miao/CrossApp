@@ -137,6 +137,8 @@ bool CATableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 void CATableView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
+    CC_RETURN_IF(m_bscrollEnabled == false);
+    
     CAScrollView::ccTouchMoved(pTouch, pEvent);
     
     if (m_pHighlightedTableCells)
@@ -367,7 +369,7 @@ void CATableView::reloadViewSizeData()
     viewHeight += m_nTableHeaderHeight;
     viewHeight += m_nTableFooterHeight;
 
-    CCSize size = this->getContentSize();
+    CCSize size = this->getBounds().size;
     size.height = viewHeight;
     this->setViewSize(size);
 }
@@ -513,7 +515,7 @@ bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
     {
         return false;
     }
-
+    this->setColor(CAColor_clear);
     this->setReuseIdentifier(reuseIdentifier);
     
     this->setBackGroundViewForState(CAControlStateNormal, CAView::createWithFrame(this->getBounds(), ccc4(255, 255, 255, 255)));

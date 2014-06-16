@@ -101,8 +101,7 @@ bool CATextField::initWithFrame(const CCRect& frame)
     }
     lengthArr.push_back(0.0f);
     byteArr.push_back(0);
-    this->setColor(ccYELLOW);
-    this->setOpacity(255);
+    this->setColor(CAColor_yellow);
     m_pText = CALabel::createWithFrame(this->getBounds());
     m_pText->setText("");
     m_sText="";
@@ -124,8 +123,7 @@ bool CATextField::initWithCenter(const CCRect& rect)
     }
     lengthArr.push_back(0.0f);
     byteArr.push_back(0);
-    this->setColor(ccYELLOW);
-    this->setOpacity(255);
+    this->setColor(CAColor_yellow);
     m_pText = CALabel::createWithFrame(this->getBounds());
     m_pText->setText("");
     m_sText="";
@@ -197,25 +195,25 @@ std::string CATextField::getPlaceHolder()
     return m_sPlaceHolder;
 }
 
-void CATextField::setSpaceHolderColor(ccColor4B var)
+void CATextField::setSpaceHolderColor(CAColor4B var)
 {
     m_cSpaceHolderColor = var;
     m_pText->setTextcolor(var);
     
 }
 
-ccColor4B CATextField::getSpaceHolderColor()
+CAColor4B CATextField::getSpaceHolderColor()
 {
     return m_cSpaceHolderColor;
 }
 
-void CATextField::setTextColor(ccColor4B var)
+void CATextField::setTextColor(CAColor4B var)
 {
     m_pText->setTextcolor(var);
     m_cTextColor = var;
 }
 
-ccColor4B CATextField::getTextColor()
+CAColor4B CATextField::getTextColor()
 {
     
     return m_cTextColor;

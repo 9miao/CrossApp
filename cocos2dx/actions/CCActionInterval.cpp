@@ -1001,133 +1001,80 @@ CCActionInterval* CCRotateBy::reverse(void)
     return CCRotateBy::create(m_fDuration, -m_fAngleX, -m_fAngleY);
 }
 
+
+
 //
-// MoveBy
+// FrameOrginTo
 //
 
-CCMoveBy* CCMoveBy::create(float duration, const CCPoint& deltaPosition)
+CCFrameOrginTo* CCFrameOrginTo::create(float duration, const CCPoint& endFrameOrgin)
 {
-    CCMoveBy *pRet = new CCMoveBy();
-    pRet->initWithDuration(duration, deltaPosition);
+    CCFrameOrginTo *pRet = new CCFrameOrginTo();
+    pRet->initWithDuration(duration, endFrameOrgin);
     pRet->autorelease();
-
+    
     return pRet;
 }
 
-bool CCMoveBy::initWithDuration(float duration, const CCPoint& deltaPosition)
+bool CCFrameOrginTo::initWithDuration(float duration, const CCPoint& endFrameOrgin)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
-        m_positionDelta = deltaPosition;
+        m_endFrameOrgin = endFrameOrgin;
         return true;
     }
-
+    
     return false;
 }
 
-CCObject* CCMoveBy::copyWithZone(CCZone *pZone)
+CCObject* CCFrameOrginTo::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
-    CCMoveBy* pCopy = NULL;
-    if(pZone && pZone->m_pCopyObject) 
+    CCFrameOrginTo* pCopy = NULL;
+    if(pZone && pZone->m_pCopyObject)
     {
         //in case of being called at sub class
-        pCopy = (CCMoveBy*)(pZone->m_pCopyObject);
+        pCopy = (CCFrameOrginTo*)(pZone->m_pCopyObject);
     }
     else
     {
-        pCopy = new CCMoveBy();
+        pCopy = new CCFrameOrginTo();
         pZone = pNewZone = new CCZone(pCopy);
     }
-
+    
     CCActionInterval::copyWithZone(pZone);
-
-    pCopy->initWithDuration(m_fDuration, m_positionDelta);
-
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
-void CCMoveBy::startWithTarget(CAView *pTarget)
-{
-    CCActionInterval::startWithTarget(pTarget);
-    m_previousPosition = m_startPosition = pTarget->getPosition();
-}
-
-CCActionInterval* CCMoveBy::reverse(void)
-{
-    return CCMoveBy::create(m_fDuration, ccp( -m_positionDelta.x, -m_positionDelta.y));
-}
-
-
-void CCMoveBy::update(float t)
-{
-    if (m_pTarget)
-    {
-#if CC_ENABLE_STACKABLE_ACTIONS
-        CCPoint currentPos = m_pTarget->getPosition();
-        CCPoint diff = ccpSub(currentPos, m_previousPosition);
-        m_startPosition = ccpAdd( m_startPosition, diff);
-        CCPoint newPos =  ccpAdd( m_startPosition, ccpMult(m_positionDelta, t) );
-        m_pTarget->setPosition(newPos);
-        m_previousPosition = newPos;
-#else
-        m_pTarget->setPosition(ccpAdd( m_startPosition, ccpMult(m_positionDelta, t)));
-#endif // CC_ENABLE_STACKABLE_ACTIONS
-    }
-}
-
-//
-// MoveTo
-//
-
-CCMoveTo* CCMoveTo::create(float duration, const CCPoint& position)
-{
-    CCMoveTo *pRet = new CCMoveTo();
-    pRet->initWithDuration(duration, position);
-    pRet->autorelease();
-
-    return pRet;
-}
-
-bool CCMoveTo::initWithDuration(float duration, const CCPoint& position)
-{
-    if (CCActionInterval::initWithDuration(duration))
-    {
-        m_endPosition = position;
-        return true;
-    }
-
-    return false;
-}
-
-CCObject* CCMoveTo::copyWithZone(CCZone *pZone)
-{
-    CCZone* pNewZone = NULL;
-    CCMoveTo* pCopy = NULL;
-    if(pZone && pZone->m_pCopyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (CCMoveTo*)(pZone->m_pCopyObject);
-    }
-    else
-    {
-        pCopy = new CCMoveTo();
-        pZone = pNewZone = new CCZone(pCopy);
-    }
-
-    CCMoveBy::copyWithZone(pZone);
-
-    pCopy->initWithDuration(m_fDuration, m_endPosition);
+    
+    pCopy->initWithDuration(m_fDuration, m_endFrameOrgin);
     
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
 }
 
-void CCMoveTo::startWithTarget(CAView *pTarget)
+void CCFrameOrginTo::startWithTarget(CAView *pTarget)
 {
-    CCMoveBy::startWithTarget(pTarget);
-    m_positionDelta = ccpSub( m_endPosition, pTarget->getPosition() );
+    CCActionInterval::startWithTarget(pTarget);
+    m_startFrameOrgin = pTarget->getFrameOrigin();
+    m_deltaFrameOrgin = ccpSub(m_endFrameOrgin, m_startFrameOrgin);
+}
+
+CCActionInterval* CCFrameOrginTo::reverse(void)
+{
+    return CCFrameOrginTo::create(m_fDuration, m_startFrameOrgin);
+}
+
+void CCFrameOrginTo::update(float t)
+{
+    if (m_pTarget)
+    {
+#if CC_ENABLE_STACKABLE_ACTIONS
+        CCPoint frameOrgin = m_deltaFrameOrgin;
+        frameOrgin = ccpMult(frameOrgin, t);
+        frameOrgin = ccpAdd(m_startFrameOrgin, frameOrgin);
+        m_pTarget->setFrameOrigin(frameOrgin);
+#else
+        m_pTarget->setFrameOrgin(m_endFrameOrgin);
+#endif // CC_ENABLE_STACKABLE_ACTIONS
+    }
 }
 
 //
@@ -1190,7 +1137,6 @@ CCActionInterval* CCFrameTo::reverse(void)
     return CCFrameTo::create(m_fDuration, m_startFrame);
 }
 
-
 void CCFrameTo::update(float t)
 {
     if (m_pTarget)
@@ -1207,6 +1153,81 @@ void CCFrameTo::update(float t)
 #endif // CC_ENABLE_STACKABLE_ACTIONS
     }
 }
+
+//
+// CenterOrginTo
+//
+
+CCCenterOrginTo* CCCenterOrginTo::create(float duration, const CCPoint& endCenterOrgin)
+{
+    CCCenterOrginTo *pRet = new CCCenterOrginTo();
+    pRet->initWithDuration(duration, endCenterOrgin);
+    pRet->autorelease();
+    
+    return pRet;
+}
+
+bool CCCenterOrginTo::initWithDuration(float duration, const CCPoint& endCenterOrgin)
+{
+    if (CCActionInterval::initWithDuration(duration))
+    {
+        m_endCenterOrgin = endCenterOrgin;
+        return true;
+    }
+    
+    return false;
+}
+
+CCObject* CCCenterOrginTo::copyWithZone(CCZone *pZone)
+{
+    CCZone* pNewZone = NULL;
+    CCCenterOrginTo* pCopy = NULL;
+    if(pZone && pZone->m_pCopyObject)
+    {
+        //in case of being called at sub class
+        pCopy = (CCCenterOrginTo*)(pZone->m_pCopyObject);
+    }
+    else
+    {
+        pCopy = new CCCenterOrginTo();
+        pZone = pNewZone = new CCZone(pCopy);
+    }
+    
+    CCActionInterval::copyWithZone(pZone);
+    
+    pCopy->initWithDuration(m_fDuration, m_endCenterOrgin);
+    
+    CC_SAFE_DELETE(pNewZone);
+    return pCopy;
+}
+
+void CCCenterOrginTo::startWithTarget(CAView *pTarget)
+{
+    CCActionInterval::startWithTarget(pTarget);
+    m_startCenterOrgin = pTarget->getCenterOrigin();
+    m_deltaCenterOrgin = ccpSub(m_endCenterOrgin, m_startCenterOrgin);
+}
+
+CCActionInterval* CCCenterOrginTo::reverse(void)
+{
+    return CCCenterOrginTo::create(m_fDuration, m_startCenterOrgin);
+}
+
+void CCCenterOrginTo::update(float t)
+{
+    if (m_pTarget)
+    {
+#if CC_ENABLE_STACKABLE_ACTIONS
+        CCPoint centerOrgin = m_deltaCenterOrgin;
+        centerOrgin = ccpMult(centerOrgin, t);
+        centerOrgin = ccpAdd(m_startCenterOrgin, centerOrgin);
+        m_pTarget->setCenterOrigin(centerOrgin);
+#else
+        m_pTarget->setCenterOrigin(m_endCenterOrgin);
+#endif // CC_ENABLE_STACKABLE_ACTIONS
+    }
+}
+
 
 //
 // CenterTo
@@ -1515,7 +1536,7 @@ CCObject* CCJumpBy::copyWithZone(CCZone *pZone)
 void CCJumpBy::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-    m_previousPos = m_startPosition = pTarget->getPosition();
+    m_previousPos = m_startPosition = pTarget->getFrameOrigin();
 }
 
 void CCJumpBy::update(float t)
@@ -1529,17 +1550,17 @@ void CCJumpBy::update(float t)
 
         float x = m_delta.x * t;
 #if CC_ENABLE_STACKABLE_ACTIONS
-        CCPoint currentPos = m_pTarget->getPosition();
+        CCPoint currentPos = m_pTarget->getFrameOrigin();
 
         CCPoint diff = ccpSub( currentPos, m_previousPos );
         m_startPosition = ccpAdd( diff, m_startPosition);
 
         CCPoint newPos = ccpAdd( m_startPosition, ccp(x,y));
-        m_pTarget->setPosition(newPos);
+        m_pTarget->setFrameOrigin(newPos);
 
         m_previousPos = newPos;
 #else
-        m_pTarget->setPosition(ccpAdd( m_startPosition, ccp(x,y)));
+        m_pTarget->setFrameOrigin(ccpAdd( m_startPosition, ccp(x,y)));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
@@ -1631,7 +1652,7 @@ bool CCBezierBy::initWithDuration(float t, const ccBezierConfig& c)
 void CCBezierBy::startWithTarget(CAView *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-    m_previousPosition = m_startPosition = pTarget->getPosition();
+    m_previousPosition = m_startPosition = pTarget->getFrameOrigin();
 }
 
 CCObject* CCBezierBy::copyWithZone(CCZone *pZone)
@@ -1675,16 +1696,16 @@ void CCBezierBy::update(float time)
         float y = bezierat(ya, yb, yc, yd, time);
 
 #if CC_ENABLE_STACKABLE_ACTIONS
-        CCPoint currentPos = m_pTarget->getPosition();
+        CCPoint currentPos = m_pTarget->getFrameOrigin();
         CCPoint diff = ccpSub(currentPos, m_previousPosition);
         m_startPosition = ccpAdd( m_startPosition, diff);
 
         CCPoint newPos = ccpAdd( m_startPosition, ccp(x,y));
-        m_pTarget->setPosition(newPos);
+        m_pTarget->setFrameOrigin(newPos);
 
         m_previousPosition = newPos;
 #else
-        m_pTarget->setPosition(ccpAdd( m_startPosition, ccp(x,y)));
+        m_pTarget->setFrameOrigin(ccpAdd( m_startPosition, ccp(x,y)));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
@@ -2021,9 +2042,9 @@ void CCFadeIn::update(float time)
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
     {
-        pRGBAProtocol->setOpacity((GLubyte)(255 * time));
+        pRGBAProtocol->setAlpha(time);
     }
-    /*m_pTarget->setOpacity((GLubyte)(255 * time));*/
+    /*m_pTarget->setAlpha(time);*/
 }
 
 CCActionInterval* CCFadeIn::reverse(void)
@@ -2072,9 +2093,9 @@ void CCFadeOut::update(float time)
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
     {
-        pRGBAProtocol->setOpacity(GLubyte(255 * (1 - time)));
+        pRGBAProtocol->setAlpha((1 - time));
     }
-    /*m_pTarget->setOpacity(GLubyte(255 * (1 - time)));*/    
+    /*m_pTarget->setAlpha((1 - time));*/
 }
 
 CCActionInterval* CCFadeOut::reverse(void)
@@ -2086,20 +2107,20 @@ CCActionInterval* CCFadeOut::reverse(void)
 // FadeTo
 //
 
-CCFadeTo* CCFadeTo::create(float duration, GLubyte opacity)
+CCFadeTo* CCFadeTo::create(float duration, float alpha)
 {
     CCFadeTo *pFadeTo = new CCFadeTo();
-    pFadeTo->initWithDuration(duration, opacity);
+    pFadeTo->initWithDuration(duration, alpha);
     pFadeTo->autorelease();
 
     return pFadeTo;
 }
 
-bool CCFadeTo::initWithDuration(float duration, GLubyte opacity)
+bool CCFadeTo::initWithDuration(float duration, float alpha)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
-        m_toOpacity = opacity;
+        m_toAlpha = alpha;
         return true;
     }
 
@@ -2123,7 +2144,7 @@ CCObject* CCFadeTo::copyWithZone(CCZone *pZone)
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initWithDuration(m_fDuration, m_toOpacity);
+    pCopy->initWithDuration(m_fDuration, m_toAlpha);
     
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -2136,7 +2157,7 @@ void CCFadeTo::startWithTarget(CAView *pTarget)
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pTarget);
     if (pRGBAProtocol)
     {
-        m_fromOpacity = pRGBAProtocol->getOpacity();
+        m_fromAlpha = pRGBAProtocol->getAlpha();
     }
     /*m_fromOpacity = pTarget->getOpacity();*/
 }
@@ -2146,9 +2167,8 @@ void CCFadeTo::update(float time)
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
     {
-        pRGBAProtocol->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));
+        pRGBAProtocol->setAlpha((m_fromAlpha + (m_toAlpha - m_fromAlpha) * time));
     }
-    /*m_pTarget->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));*/
 }
 
 //
@@ -2167,10 +2187,9 @@ bool CCTintTo::initWithDuration(float duration, GLubyte red, GLubyte green, GLub
 {
     if (CCActionInterval::initWithDuration(duration))
     {
-        m_to = ccc3(red, green, blue);
+        m_to = ccc4(red, green, blue, 255);
         return true;
     }
-
     return false;
 }
 
@@ -2213,9 +2232,10 @@ void CCTintTo::update(float time)
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
     {
-        pRGBAProtocol->setColor(ccc3(GLubyte(m_from.r + (m_to.r - m_from.r) * time), 
+        pRGBAProtocol->setColor(ccc4(GLubyte(m_from.r + (m_to.r - m_from.r) * time),
             (GLbyte)(m_from.g + (m_to.g - m_from.g) * time),
-            (GLbyte)(m_from.b + (m_to.b - m_from.b) * time)));
+            (GLbyte)(m_from.b + (m_to.b - m_from.b) * time),
+            (GLbyte)255));
     }    
 }
 
@@ -2276,7 +2296,7 @@ void CCTintBy::startWithTarget(CAView *pTarget)
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pTarget);
     if (pRGBAProtocol)
     {
-        ccColor3B color = pRGBAProtocol->getColor();
+        CAColor4B color = pRGBAProtocol->getColor();
         m_fromR = color.r;
         m_fromG = color.g;
         m_fromB = color.b;
@@ -2288,10 +2308,11 @@ void CCTintBy::update(float time)
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
     {
-        pRGBAProtocol->setColor(ccc3((GLubyte)(m_fromR + m_deltaR * time),
+        pRGBAProtocol->setColor(ccc4((GLubyte)(m_fromR + m_deltaR * time),
             (GLubyte)(m_fromG + m_deltaG * time),
-            (GLubyte)(m_fromB + m_deltaB * time)));
-    }    
+            (GLubyte)(m_fromB + m_deltaB * time),
+            (GLubyte)255));
+    }
 }
 
 CCActionInterval* CCTintBy::reverse(void)

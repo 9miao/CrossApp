@@ -15,35 +15,22 @@ void ViewController::viewDidLoad()
     CAScrollView* scroll = new CAScrollView();
     scroll->initWithFrame(this->getView()->getBounds());
     this->getView()->addSubview(scroll);
-    scroll->setViewSize(scroll->getBounds().size * 2);
+    scroll->setViewSize(scroll->getBounds().size);
     scroll->setMaximumZoomScale(3.0f);
     scroll->setMinimumZoomScale(0.5f);
-    //scroll->setBouncesZoom(false);
     
     CAImageView* v = CAImageView::createWithImage(CAImage::create("bg.jpg"));
     v->setFrame(CCRect(0, 0, scroll->getViewSize().width, scroll->getViewSize().height));
     scroll->addSubview(v);
-    
-    ccColor3B color = ccRED;
-    if (this->getTitle().compare("view3") == 0)
-    {
-        color = ccYELLOW;
-    }
-    else if (this->getTitle().compare("view4") == 0)
-    {
-        color = ccGRAY;
-        
-        scroll->setBounceHorizontal(false);
-    }
-    else if (this->getTitle().compare("view5") == 0)
-    {
-        color = ccRED;
-        
-        scroll->setBounces(false);
-        scroll->setZoomScale(0.5f);
-    }
 
-    this->getView()->setColor(color);
+    if (this->getTitle().compare("view2") == 0)
+    {
+
+    }
+    else if (this->getTitle().compare("view3") == 0)
+    {
+        scroll->setBounces(false);
+    }
 }
 
 void ViewController::setAllowsSelection(CAButton* btn, CCPoint point)

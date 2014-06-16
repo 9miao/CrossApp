@@ -123,13 +123,13 @@ public:
     void disableShadow(bool mustUpdateTexture = true);
     
     /** enable or disable stroke */
-    void enableStroke(const ccColor3B &strokeColor, float strokeSize, bool mustUpdateTexture = true);
+    void enableStroke(const CAColor4B &strokeColor, float strokeSize, bool mustUpdateTexture = true);
     
     /** disable stroke */
     void disableStroke(bool mustUpdateTexture = true);
     
     /** set text tinting */
-    void setFontFillColor(const ccColor3B &tintColor, bool mustUpdateTexture = true);
+    void setFontFillColor(const CAColor4B &tintColor, bool mustUpdateTexture = true);
 
     
     
@@ -192,11 +192,11 @@ protected:
     
     /** font stroke */
     bool        m_strokeEnabled;
-    ccColor3B   m_strokeColor;
+    CAColor4B   m_strokeColor;
     float       m_strokeSize;
         
     /** font tint */
-    ccColor3B   m_textFillColor;
+    CAColor4B   m_textFillColor;
 
     
 };

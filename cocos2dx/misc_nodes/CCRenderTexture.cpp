@@ -164,12 +164,12 @@ void CCRenderTexture::setClearFlags(unsigned int uClearFlags)
     m_uClearFlags = uClearFlags;
 }
 
-const ccColor4F& CCRenderTexture::getClearColor() const
+const CAColor4F& CCRenderTexture::getClearColor() const
 {
     return m_sClearColor;
 }
 
-void CCRenderTexture::setClearColor(const ccColor4F &clearColor)
+void CCRenderTexture::setClearColor(const CAColor4F &clearColor)
 {
     m_sClearColor = clearColor;
 }

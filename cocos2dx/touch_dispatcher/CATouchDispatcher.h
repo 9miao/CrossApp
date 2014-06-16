@@ -104,6 +104,8 @@ public:
      */
     bool init(void);
 
+    virtual void setDispatchEvents(bool dispatchEvents);
+    
 public:
 
     /**
@@ -127,7 +129,7 @@ protected:
 
     CC_SYNTHESIZE_RETAIN(CAResponder*, m_pFirstResponder, FirstResponder);
     
-    CC_SYNTHESIZE_IS(bool, m_bDispatchEvents, DispatchEvents);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bDispatchEvents, DispatchEvents);
     
     bool m_bLocked;
     

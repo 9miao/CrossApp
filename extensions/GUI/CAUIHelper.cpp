@@ -106,7 +106,7 @@ CCObject* CAUIHelper::addButton(CSJson::Value jsonValue, cocos2d::CCRect &uiRect
     mCAButtonType btntype = (mCAButtonType)jsonValue["btnType"].asInt();
     
     btn->setTag(tag);
-    btn->setOpacity(alpha);
+    btn->setAlpha(alpha);
     btn->setControlState(btnState);
     if (btntype == ButtonColor)
     {

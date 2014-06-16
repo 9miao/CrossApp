@@ -25,10 +25,12 @@ public:
 
     static CAImageView* createWithImage(CAImage* image);
 
-    static CAImageView* createWithImage(CAImage* image, const CCRect& rect);
-
     static CAImageView* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 
+    static CAImageView* createWithFrame(const CCRect& rect);
+    
+    static CAImageView* createWithCenter(const CCRect& rect);
+    
     CAImageView(void);
 
     virtual ~CAImageView(void);
@@ -36,38 +38,22 @@ public:
     virtual bool init(void);
 
     virtual bool initWithImage(CAImage* image);
-
-    virtual bool initWithImage(CAImage* image, const CCRect& rect);
-
-    virtual bool initWithImage(CAImage* image, const CCRect& rect, bool rotated);
-
+    
     virtual bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 
+    virtual void setImage(CAImage* image);
+    
     virtual void setDisplayFrame(CCSpriteFrame *pNewFrame);
 
     virtual bool isFrameDisplayed(CCSpriteFrame *pFrame);
 
     virtual CCSpriteFrame* displayFrame(void);
 
-	void setFrame(const CCRect& rect);
-    
-    void setFrameOrigin(const CCPoint& point);
-
-    void setCenter(const CCRect& rect);
-    
-    CCRect getCenter();
-    
-    void setCenterOrigin(const CCPoint& point);
-    
-    CCPoint getCenterOrigin();
-    
-	void setBounds(const CCRect& rect);
-
-    CCRect getBounds() const;
-
     virtual void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
-    virtual void setImage(CAImage* image);
+protected:
+
+    virtual void updateImageRect();
     
     friend class CAScale9ImageView;
 };

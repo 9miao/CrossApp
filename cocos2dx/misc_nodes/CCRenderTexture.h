@@ -147,8 +147,8 @@ public:
     void setClearFlags(unsigned int uClearFlags);
     
     /** Clear color value. Valid only when "autoDraw" is true. */
-    const ccColor4F& getClearColor() const;
-    void setClearColor(const ccColor4F &clearColor);
+    const CAColor4F& getClearColor() const;
+    void setClearColor(const CAColor4F &clearColor);
     
     /** Value for clearDepth. Valid only when autoDraw is true. */
     float getClearDepth() const;
@@ -178,7 +178,7 @@ protected:
     
     // code for "auto" update
     GLbitfield   m_uClearFlags;
-    ccColor4F    m_sClearColor;
+    CAColor4F    m_sClearColor;
     GLclampf     m_fClearDepth;
     GLint        m_nClearStencil;
     bool         m_bAutoDraw;

@@ -138,7 +138,8 @@ void CATouchController::passingTouchesViewCache(float dt)
     
     if (isControl == false)
     {
-        for (std::vector<CAView*>::iterator itr=m_vWillTouchesViewCache.begin();
+        std::vector<CAView*>::iterator itr;
+        for (itr=m_vWillTouchesViewCache.begin();
              itr!=m_vWillTouchesViewCache.end();
              itr++)
         {
@@ -265,90 +266,101 @@ bool CATouchDispatcher::init(void)
     return true;
 }
 
+void CATouchDispatcher::setDispatchEvents(bool dispatchEvents)
+{
+    m_bDispatchEvents = dispatchEvents;
+    if (!m_bDispatchEvents)
+    {
+        std::map<int, CATouchController*>::iterator itr;
+        for (itr=m_vTouchControllers.begin();
+             itr!=m_vTouchControllers.end();
+             itr++)
+        {
+            CATouchController* touchController = itr->second;
+            CC_CONTINUE_IF(!touchController);
+            touchController->touchCancelled();
+            CC_SAFE_RELEASE(touchController);
+            itr->second = NULL;
+        }
+    }
+}
+
 void CATouchDispatcher::touchesBegan(CCSet *touches, CCEvent *pEvent)
 {
-    if (m_bDispatchEvents)
+    CC_RETURN_IF(!m_bDispatchEvents);
+    m_bLocked = true;
+    
+    CCTouch *pTouch;
+    CCSetIterator setIter;
+    for (setIter = touches->begin(); setIter != touches->end(); setIter++)
     {
-        m_bLocked = true;
-
-        CCTouch *pTouch;
-        CCSetIterator setIter;
-        for (setIter = touches->begin(); setIter != touches->end(); setIter++)
-        {
-            pTouch = (CCTouch *)(*setIter);
-            
-            CATouchController* touchController = new CATouchController();
-            touchController->setTouch(pTouch);
-            touchController->setEvent(pEvent);
-            m_vTouchControllers[pTouch->getID()] = touchController;
-            touchController->touchBegan();
-        }
-        m_bLocked = false;
+        pTouch = (CCTouch *)(*setIter);
+        
+        CATouchController* touchController = new CATouchController();
+        touchController->setTouch(pTouch);
+        touchController->setEvent(pEvent);
+        m_vTouchControllers[pTouch->getID()] = touchController;
+        touchController->touchBegan();
     }
+    m_bLocked = false;
 }
 
 void CATouchDispatcher::touchesMoved(CCSet *touches, CCEvent *pEvent)
 {
-    if (m_bDispatchEvents)
+    CC_RETURN_IF(!m_bDispatchEvents);
+    m_bLocked = true;
+    
+    CCTouch *pTouch;
+    CCSetIterator setIter;
+    for (setIter = touches->begin(); setIter != touches->end(); setIter++)
     {
-        m_bLocked = true;
+        pTouch = (CCTouch *)(*setIter);
         
-        CCTouch *pTouch;
-        CCSetIterator setIter;
-        for (setIter = touches->begin(); setIter != touches->end(); setIter++)
-        {
-            pTouch = (CCTouch *)(*setIter);
-         
-            CATouchController* touchController = m_vTouchControllers[pTouch->getID()];
-            touchController->touchMoved();
-        }
-        m_bLocked = false;
+        CATouchController* touchController = m_vTouchControllers[pTouch->getID()];
+        CC_CONTINUE_IF(!touchController);
+        touchController->touchMoved();
     }
+    m_bLocked = false;
 }
 
 void CATouchDispatcher::touchesEnded(CCSet *touches, CCEvent *pEvent)
 {
-    if (m_bDispatchEvents)
+    CC_RETURN_IF(!m_bDispatchEvents);
+    m_bLocked = true;
+    
+    CCTouch *pTouch;
+    CCSetIterator setIter;
+    for (setIter = touches->begin(); setIter != touches->end(); setIter++)
     {
-        m_bLocked = true;
+        pTouch = (CCTouch *)(*setIter);
         
-        CCTouch *pTouch;
-        CCSetIterator setIter;
-        for (setIter = touches->begin(); setIter != touches->end(); setIter++)
-        {
-            pTouch = (CCTouch *)(*setIter);
-            
-            CATouchController* touchController = m_vTouchControllers[pTouch->getID()];
-            touchController->touchEnded();
-            
-            
-            CC_SAFE_RELEASE(touchController);
-            m_vTouchControllers[pTouch->getID()] = NULL;
-        }
-        m_bLocked = false;
+        CATouchController* touchController = m_vTouchControllers[pTouch->getID()];
+        CC_CONTINUE_IF(!touchController);
+        touchController->touchEnded();
+        CC_SAFE_RELEASE(touchController);
+        m_vTouchControllers[pTouch->getID()] = NULL;
     }
+    m_bLocked = false;
 }
 
 void CATouchDispatcher::touchesCancelled(CCSet *touches, CCEvent *pEvent)
 {
-    if (m_bDispatchEvents)
+    CC_RETURN_IF(!m_bDispatchEvents);
+    m_bLocked = true;
+    
+    CCTouch *pTouch;
+    CCSetIterator setIter;
+    for (setIter = touches->begin(); setIter != touches->end(); ++setIter)
     {
-        m_bLocked = true;
+        pTouch = (CCTouch *)(*setIter);
         
-        CCTouch *pTouch;
-        CCSetIterator setIter;
-        for (setIter = touches->begin(); setIter != touches->end(); ++setIter)
-        {
-            pTouch = (CCTouch *)(*setIter);
-            
-            CATouchController* touchController = m_vTouchControllers[pTouch->getID()];
-            touchController->touchEnded();
-            
-            delete touchController;
-            m_vTouchControllers[pTouch->getID()] = NULL;
-        }
-        m_bLocked = false;
+        CATouchController* touchController = m_vTouchControllers[pTouch->getID()];
+        CC_CONTINUE_IF(!touchController);
+        touchController->touchEnded();
+        delete touchController;
+        m_vTouchControllers[pTouch->getID()] = NULL;
     }
+    m_bLocked = false;
 }
 
 

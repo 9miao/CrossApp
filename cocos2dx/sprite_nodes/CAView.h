@@ -70,6 +70,18 @@ class CC_DLL CAView
     
 public:
 
+    static CAView * create(void);
+    
+    static CAView* createWithFrame(const CCRect& rect);
+    
+    static CAView* createWithFrame(const CCRect& rect, const CAColor4B& color4B);
+    
+    static CAView* createWithCenter(const CCRect& rect);
+    
+    static CAView* createWithCenter(const CCRect& rect, const CAColor4B& color4B);
+    
+    static CAView* createWithColor(const CAColor4B& color4B);
+    
     CAView();
     
     virtual ~CAView();
@@ -78,25 +90,13 @@ public:
 
     virtual bool initWithFrame(const CCRect& rect);
     
-    virtual bool initWithFrame(const CCRect& rect, const ccColor4B& color4B);
+    virtual bool initWithFrame(const CCRect& rect, const CAColor4B& color4B);
     
     virtual bool initWithCenter(const CCRect& rect);
     
-    virtual bool initWithCenter(const CCRect& rect, const ccColor4B& color4B);
+    virtual bool initWithCenter(const CCRect& rect, const CAColor4B& color4B);
     
-    virtual bool initWithColor(const ccColor4B& color4B);
-    
-    static CAView * create(void);
-    
-    static CAView* createWithFrame(const CCRect& rect);
-    
-    static CAView* createWithFrame(const CCRect& rect, const ccColor4B& color4B);
-    
-    static CAView* createWithCenter(const CCRect& rect);
-    
-    static CAView* createWithCenter(const CCRect& rect, const ccColor4B& color4B);
-    
-    static CAView* createWithColor(const ccColor4B& color4B);
+    virtual bool initWithColor(const CAColor4B& color4B);
 
     const char* description(void);
 
@@ -123,12 +123,6 @@ public:
     virtual float getScale();
 
     virtual void setScale(float fScaleX,float fScaleY);
-
-    virtual void setPosition(const CCPoint &position);
-
-    virtual const CCPoint& getPosition();
-
-    virtual void getPosition(float* x, float* y);
 
     virtual void setSkewX(float fSkewX);
 
@@ -509,34 +503,22 @@ public:
     
     virtual void setDisplayRange(bool value);
 
-    virtual GLubyte getOpacity();
+    virtual float getAlpha();
     
-    virtual GLubyte getDisplayedOpacity();
+    virtual void setAlpha(float alpha);
     
-    virtual void setOpacity(GLubyte opacity);
+    virtual float getDisplayedAlpha();
     
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual void updateDisplayedAlpha(float parentOpacity);
     
-    virtual bool isCascadeOpacityEnabled();
+    virtual const CAColor4B& getColor(void);
     
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    virtual const CAColor4B& getDisplayedColor();
     
-    virtual const ccColor3B& getColor(void);
+    virtual void setColor(const CAColor4B& color);
     
-    virtual const ccColor3B& getDisplayedColor();
+    virtual void updateDisplayedColor(const CAColor4B& parentColor);
     
-    virtual void setColor(const ccColor3B& color);
-    
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    
-    virtual bool isCascadeColorEnabled();
-    
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    
-    virtual void setOpacityModifyRGB(bool bValue);
-    
-    virtual bool isOpacityModifyRGB();
-
     CCComponent* getComponent(const char *pName) const;
 
     virtual bool addComponent(CCComponent *pComponent);
@@ -577,7 +559,7 @@ public:
     
     inline const CCRect& getImageRect(void) { return m_obRect; }
     
-    inline const CCPoint& getOffsetPosition(void) { return m_obOffsetPosition; }
+    inline const CCPoint& getOffsetPosition(void) { return m_obOffsetPoint; }
     
     bool isFlipX(void);
     
@@ -609,9 +591,9 @@ protected:
 
     void updateColor(void);
     
-    virtual void setContentSize(const CCSize& contentSize);
+    void setPoint(const CCPoint &point);
     
-    virtual const CCSize& getContentSize() const;
+    virtual void setContentSize(const CCSize& contentSize);
     
     virtual void setImageCoords(CCRect rect);
     
@@ -620,6 +602,8 @@ protected:
     virtual void setDirtyRecursively(bool bValue);
 
     virtual void updateBlendFunc(void);
+    
+    virtual void updateImageRect();
     
 protected:
     
@@ -641,7 +625,7 @@ protected:
     
     float m_fVertexZ;                   ///< OpenGL real Z vertex
     
-    CCPoint m_obPosition;               ///< position of the node
+    CCPoint m_obPoint;               ///< position of the node
     
     float m_fSkewX;                     ///< skew angle on x-axis
     float m_fSkewY;                     ///< skew angle on y-axis
@@ -688,12 +672,10 @@ protected:
     
     CCComponentContainer *m_pComponentContainer;        ///< Dictionary of components
     
-    GLubyte		_displayedOpacity;
-    GLubyte     _realOpacity;
-	ccColor3B	_displayedColor;
-    ccColor3B   _realColor;
-	bool		_cascadeColorEnabled;
-    bool        _cascadeOpacityEnabled;
+    float		_displayedAlpha;
+    float     _realAlpha;
+	CAColor4B	_displayedColor;
+    CAColor4B   _realColor;
     
     bool m_bDisplayRange;
 
@@ -711,14 +693,11 @@ protected:
     bool   m_bRectRotated;                      /// Whether the Image is rotated
     
     // Offset Position (used by Zwoptex)
-    CCPoint m_obOffsetPosition;
+    CCPoint m_obOffsetPoint;
     CCPoint m_obUnflippedOffsetPositionFromCenter;
     
     // vertex coords, Image coords and color info
     ccV3F_C4B_T2F_Quad m_sQuad;
-    
-    // opacity and RGB protocol
-    bool m_bOpacityModifyRGB;
     
     // image is flipped
     bool m_bFlipX;                              /// Whether the sprite is flipped horizaontally or not.

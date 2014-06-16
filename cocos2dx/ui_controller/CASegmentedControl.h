@@ -51,7 +51,7 @@ public:
     virtual void removeAllSegments();
     
     virtual bool setTitleAtIndex(const char* title, int index, CAControlState controlState);
-    virtual bool setTitleColorAtIndex(ccColor3B color, int index, CAControlState controlState);
+    virtual bool setTitleColorAtIndex(CAColor4B color, int index, CAControlState controlState);
     virtual bool setBackgroundImageAtIndex(CAImage *image, int index, CAControlState controlState);
     virtual bool setImageAtIndex(CAImage *image, int index, CAControlState controlState);
     

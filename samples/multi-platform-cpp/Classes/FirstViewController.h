@@ -19,6 +19,8 @@ class FirstViewController: public CAViewController
     
     CALabel* label;
     
+    CAProgress* progress;
+    
 public:
 
 	FirstViewController();
