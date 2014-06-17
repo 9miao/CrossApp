@@ -345,6 +345,7 @@ void CAAlertView::showAlertMsg(std::string title, std::string alertMsg, std::vec
 	CCDirector* pDirector = CCDirector::sharedDirector();
 	CCAssert(pDirector != NULL, "");
 	pDirector->getRootWindow()->insertSubview(this, 1);
+	retain();
 }
 
 CATableViewCell* CAAlertView::tableCellAtIndex(CATableView* table, unsigned int section, unsigned int row)

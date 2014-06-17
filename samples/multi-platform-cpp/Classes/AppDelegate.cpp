@@ -100,6 +100,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	vBtnText.push_back("No");
 	CAAlertView* alertView = CAAlertView::create();
 	alertView->showAlertMsg("Alert Window", "Ara you want to contiune?", vBtnText);
+	alertView->release();
 
     return true;
 }
