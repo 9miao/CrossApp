@@ -278,6 +278,7 @@ THE SOFTWARE.
 #include "ui_controller/CASwitch.h"
 #include "ui_controller/CATableView.h"
 #include "ui_controller/CAViewController.h"
+#include "ui_controller/CAAlertView.h"
 
 NS_CC_BEGIN
 

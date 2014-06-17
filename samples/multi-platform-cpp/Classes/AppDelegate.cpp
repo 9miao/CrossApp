@@ -95,6 +95,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     m_pWindow->setRootViewController(tabBarController);
     tabBarController->release();
     
+	std::vector<std::string> vBtnText;
+	vBtnText.push_back("Yes");
+	vBtnText.push_back("No");
+	CAAlertView* alertView = CAAlertView::create();
+	alertView->showAlertMsg("Alert Window", "Ara you want to contiune?", vBtnText);
+	alertView->release();
+
     return true;
 }
 

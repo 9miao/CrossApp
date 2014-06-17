@@ -435,6 +435,9 @@
     <ClCompile Include="..\sprite_nodes\CABatchView.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\ui_controller\CAAlertView.cpp">
+      <Filter>ui_controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCAffineTransform.h">
@@ -885,6 +888,9 @@
     </ClInclude>
     <ClInclude Include="..\sprite_nodes\CABatchView.h">
       <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui_controller\CAAlertView.h">
+      <Filter>ui_controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
