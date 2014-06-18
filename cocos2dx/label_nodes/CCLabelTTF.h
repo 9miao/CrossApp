@@ -47,9 +47,9 @@ NS_CC_BEGIN
  * Custom ttf file can be put in assets/ or external storage that the Application can access.
  * @code
  * CCLabelTTF *label1 = CCLabelTTF::create("alignment left", "A Damn Mess", fontSize, blockSize, 
- *                                          kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+ *                                          CATextAlignmentLeft, CAVerticalTextAlignmentCenter);
  * CCLabelTTF *label2 = CCLabelTTF::create("alignment right", "/mnt/sdcard/Scissor Cuts.ttf", fontSize, blockSize,
- *                                          kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+ *                                          CATextAlignmentLeft, CAVerticalTextAlignmentCenter);
  * @endcode
  *
  */
@@ -80,14 +80,14 @@ public:
      @since v2.0.1
      */
     static CCLabelTTF * create(const char *string, const char *fontName, float fontSize,
-                               const CCSize& dimensions, CCTextAlignment hAlignment);
+                               const CCSize& dimensions, CATextAlignment hAlignment);
   
     /** creates a CCLabel from a fontname, alignment, dimension in points and font size in points
      @since v2.0.1
      */
     static CCLabelTTF * create(const char *string, const char *fontName, float fontSize,
-                               const CCSize& dimensions, CCTextAlignment hAlignment, 
-                               CCVerticalTextAlignment vAlignment);
+                               const CCSize& dimensions, CATextAlignment hAlignment,
+                               CAVerticalTextAlignment vAlignment);
     
     
     /** Create a lable with string and a font definition*/
@@ -98,12 +98,12 @@ public:
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
     bool initWithString(const char *string, const char *fontName, float fontSize,
-                        const CCSize& dimensions, CCTextAlignment hAlignment);
+                        const CCSize& dimensions, CATextAlignment hAlignment);
 
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
     bool initWithString(const char *string, const char *fontName, float fontSize,
-                        const CCSize& dimensions, CCTextAlignment hAlignment, 
-                        CCVerticalTextAlignment vAlignment);
+                        const CCSize& dimensions, CATextAlignment hAlignment, 
+                        CAVerticalTextAlignment vAlignment);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
     bool initWithStringAndTextDefinition(const char *string, ccFontDefinition &textDefinition);
@@ -147,11 +147,11 @@ public:
     
     virtual const std::string& getString(void) const;
     
-    CCTextAlignment getHorizontalAlignment();
-    void setHorizontalAlignment(CCTextAlignment alignment);
+    CATextAlignment getHorizontalAlignment();
+    void setHorizontalAlignment(CATextAlignment alignment);
     
-    CCVerticalTextAlignment getVerticalAlignment();
-    void setVerticalAlignment(CCVerticalTextAlignment verticalAlignment);
+    CAVerticalTextAlignment getVerticalAlignment();
+    void setVerticalAlignment(CAVerticalTextAlignment verticalAlignment);
     
     CCSize getDimensions();
     void setDimensions(const CCSize &dim);
@@ -173,9 +173,9 @@ protected:
     /** Dimensions of the label in Points */
     CCSize m_tDimensions;
     /** The alignment of the label */
-    CCTextAlignment         m_hAlignment;
+    CATextAlignment         m_hAlignment;
     /** The vertical alignment of the label */
-    CCVerticalTextAlignment m_vAlignment;
+    CAVerticalTextAlignment m_vAlignment;
     /** Font name used in the label */
     std::string * m_pFontName;
     /** Font size of the label */

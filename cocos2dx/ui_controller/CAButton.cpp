@@ -136,6 +136,8 @@ bool CAButton::init()
         return false;
     }
     
+    this->setColor(CAColor_clear);
+    
     switch (m_eButtonType)
     {
         case CAButtonTypeSquareRect:
@@ -161,17 +163,17 @@ void CAButton::setBackGroundViewSquareRect()
 {
     const char* fileName[CAControlStateAll] =
     {
-        "btn_square_normal.png",
-        "btn_square_highlighted.png",
-        "btn_square_disabled.png",
-        "btn_square_selected.png"
+        "source_material/btn_square_normal.png",
+        "source_material/btn_square_highlighted.png",
+        "source_material/btn_square_disabled.png",
+        "source_material/btn_square_selected.png"
     };
     
     CAColor4B color[CAControlStateAll] =
     {
-        ccc4(11, 106, 255, 255),
-        ccc4(11, 106, 255, 255),
-        ccc4(138, 138, 138, 255),
+        ccc4( 46, 192, 255, 255),
+        ccc4(255, 255, 255, 255),
+        ccc4(255, 255, 255, 255),
         ccc4(255, 255, 255, 255)
         
     };
@@ -189,16 +191,16 @@ void CAButton::setBackGroundViewRoundedRect()
 {
     const char* fileName[CAControlStateAll] =
     {
-        "btn_rounded_normal.png",
-        "btn_rounded_highlighted.png",
-        "btn_rounded_disabled.png",
-        "btn_rounded_selected.png"
+        "source_material/btn_rounded_normal.png",
+        "source_material/btn_rounded_highlighted.png",
+        "source_material/btn_rounded_disabled.png",
+        "source_material/btn_rounded_selected.png"
     };
     
     CAColor4B color[CAControlStateAll] =
     {
-        ccc4(11, 106, 255, 255),
-        ccc4(11, 106, 255, 255),
+        ccc4( 46, 192, 255, 255),
+        ccc4(255, 255, 255, 255),
         ccc4(255, 255, 255, 255),
         ccc4(255, 255, 255, 255)
         
@@ -217,10 +219,10 @@ void CAButton::setBackGroundViewRounded3DRect()
 {
     const char* fileName[CAControlStateAll] =
     {
-        "btn_rounded3D_normal.png",
-        "btn_rounded3D_highlighted.png",
-        "btn_rounded3D_disabled.png",
-        "btn_rounded3D_selected.png"
+        "source_material/btn_rounded3D_normal.png",
+        "source_material/btn_rounded3D_highlighted.png",
+        "source_material/btn_rounded3D_disabled.png",
+        "source_material/btn_rounded3D_selected.png"
     };
     
     CAColor4B color[CAControlStateAll] =
@@ -632,10 +634,12 @@ bool CAButton::isTextTagEqual(const char *text)
 
 void CAButton::setContentSize(const CCSize & var)
 {
-    CAControl::setContentSize(var);
+    CCSize size = var;
+    size.height = MAX(size.height, 60);
+    size.width = MAX(size.width, size.height);
+    CAControl::setContentSize(size);
     
     this->updateWithPreferredSize();
-    
     this->setControlState(m_eControlState);
 }
 

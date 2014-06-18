@@ -160,9 +160,9 @@ void CAImageView::updateImageRect()
     }
     
     // Don't update Z.
-    m_sQuad.bl.vertices = vertex3(m_obOffsetPoint.x, m_obOffsetPoint.y, 0);
-    m_sQuad.br.vertices = vertex3(size.width, m_obOffsetPoint.y, 0);
-    m_sQuad.tl.vertices = vertex3(m_obOffsetPoint.x, size.height, 0);
+    m_sQuad.bl.vertices = vertex3(0, 0, 0);
+    m_sQuad.br.vertices = vertex3(size.width, 0, 0);
+    m_sQuad.tl.vertices = vertex3(0, size.height, 0);
     m_sQuad.tr.vertices = vertex3(size.width, size.height, 0);
 }
 

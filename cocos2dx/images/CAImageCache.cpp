@@ -90,9 +90,9 @@ typedef struct _AsyncStringStruct
     
     CCSize                dimensions;
     
-    CCTextAlignment       textAlignment;
+    CATextAlignment       textAlignment;
     
-    CCVerticalTextAlignment verticalAlignment;
+    CAVerticalTextAlignment verticalAlignment;
     
     AsyncType             type;
     
@@ -103,8 +103,8 @@ typedef struct _AsyncStringStruct
     ,fontName("")
     ,fontSize(0.0f)
     ,dimensions(CCSizeZero)
-    ,textAlignment(kCCTextAlignmentLeft)
-    ,verticalAlignment(kCCVerticalTextAlignmentTop)
+    ,textAlignment(CATextAlignmentLeft)
+    ,verticalAlignment(CAVerticalTextAlignmentTop)
     {
         
     }
@@ -268,20 +268,20 @@ static void loadStringData(AsyncStringStruct *pAsyncStruct)
 {
     CCImage::ETextAlign eAlign;
     
-    if (kCCVerticalTextAlignmentTop == pAsyncStruct->verticalAlignment)
+    if (CAVerticalTextAlignmentTop == pAsyncStruct->verticalAlignment)
     {
-        eAlign = (kCCTextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignTop
-        : (kCCTextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
+        eAlign = (CATextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignTop
+        : (CATextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
     }
-    else if (kCCVerticalTextAlignmentCenter == pAsyncStruct->verticalAlignment)
+    else if (CAVerticalTextAlignmentCenter == pAsyncStruct->verticalAlignment)
     {
-        eAlign = (kCCTextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignCenter
-        : (kCCTextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
+        eAlign = (CATextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignCenter
+        : (CATextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
     }
-    else if (kCCVerticalTextAlignmentBottom == pAsyncStruct->verticalAlignment)
+    else if (CAVerticalTextAlignmentBottom == pAsyncStruct->verticalAlignment)
     {
-        eAlign = (kCCTextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignBottom
-        : (kCCTextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
+        eAlign = (CATextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignBottom
+        : (CATextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
     }
     else
     {
@@ -905,8 +905,8 @@ VolatileTexture::VolatileTexture(CAImage* t)
 , m_PixelFormat(kImagePixelFormat_RGBA8888)
 , m_strFileName("")
 , m_FmtImage(CCImage::kFmtPng)
-, m_alignment(kCCTextAlignmentCenter)
-, m_vAlignment(kCCVerticalTextAlignmentCenter)
+, m_alignment(CATextAlignmentCenter)
+, m_vAlignment(CAVerticalTextAlignmentCenter)
 , m_strFontName("")
 , m_strText("")
 , uiImage(NULL)
@@ -986,8 +986,8 @@ void VolatileTexture::addDataTexture(CAImage* tt, void* data, CAImagePixelFormat
     vt->m_TextureSize = contentSize;
 }
 
-void VolatileTexture::addStringTexture(CAImage* tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, 
-                                       CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
+void VolatileTexture::addStringTexture(CAImage* tt, const char* text, const CCSize& dimensions, CATextAlignment alignment, 
+                                       CAVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
 {
     if (isReloading)
     {

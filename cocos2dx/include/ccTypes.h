@@ -57,14 +57,14 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 static const CAColor4B CAColor_white   = {255, 255, 255, 255};
 //! Yellow color (255,255,0,255)
 static const CAColor4B CAColor_yellow  = {255, 255,   0, 255};
-//! Blue color (0,0,255,255)
-static const CAColor4B CAColor_blue    = {  0,   0, 255, 255};
-//! Green Color (0,255,0,255)
-static const CAColor4B CAColor_green   = {  0, 255,   0, 255};
-//! Red Color (255,0,0,255)
-static const CAColor4B CAColor_red     = {255,   0,   0, 255};
 //! Magenta Color (255,0,255,255)
 static const CAColor4B CAColor_magenta = {255,   0, 255, 255};
+//! Red Color (255,0,0,255)
+static const CAColor4B CAColor_red     = {255,   0,   0, 255};
+//! Green Color (0,255,0,255)
+static const CAColor4B CAColor_green   = {  0, 255,   0, 255};
+//! Blue color (0,0,255,255)
+static const CAColor4B CAColor_blue    = {  0,   0, 255, 255};
 //! Black Color (0,0,0,255)
 static const CAColor4B CAColor_black   = {  0,   0,   0, 255};
 //! Orange Color (255,127,0,255)
@@ -291,19 +291,19 @@ static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 //! Vertical text alignment type
 typedef enum
 {
-    kCCVerticalTextAlignmentTop,
-    kCCVerticalTextAlignmentCenter,
-    kCCVerticalTextAlignmentBottom,
-} CCVerticalTextAlignment;
+    CAVerticalTextAlignmentTop,
+    CAVerticalTextAlignmentCenter,
+    CAVerticalTextAlignmentBottom,
+} CAVerticalTextAlignment;
 
 // XXX: If any of these enums are edited and/or reordered, update CAImage.m
 //! Horizontal text alignment type
 typedef enum
 {
-    kCCTextAlignmentLeft,
-    kCCTextAlignmentCenter,
-    kCCTextAlignmentRight,
-} CCTextAlignment;
+    CATextAlignmentLeft,
+    CATextAlignmentCenter,
+    CATextAlignmentRight,
+} CATextAlignment;
 
 // types for animation in particle systems
 
@@ -379,8 +379,8 @@ typedef struct _ccFontDefinition
 {
 public:
     
-    _ccFontDefinition():  m_alignment(kCCTextAlignmentCenter),
-    m_vertAlignment(kCCVerticalTextAlignmentTop),
+    _ccFontDefinition():  m_alignment(CATextAlignmentCenter),
+    m_vertAlignment(CAVerticalTextAlignmentTop),
     m_fontFillColor(CAColor_white)
     { m_dimensions = CCSizeMake(0,0); }
     
@@ -389,9 +389,9 @@ public:
     // font size
     int                     m_fontSize;
     // horizontal alignment
-    CCTextAlignment         m_alignment;
+    CATextAlignment         m_alignment;
     // vertical alignment
-    CCVerticalTextAlignment m_vertAlignment;
+    CAVerticalTextAlignment m_vertAlignment;
     // renering box
     CCSize                  m_dimensions;
     // font color

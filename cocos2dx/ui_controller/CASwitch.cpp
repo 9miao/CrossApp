@@ -12,7 +12,8 @@
 #include "sprite_nodes/CAScale9ImageView.h"
 #include "support/CCPointExtension.h"
 #include "misc_nodes/CCRenderTexture.h"
-
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionEase.h"
 NS_CC_BEGIN
 
 CASwitch::CASwitch()
@@ -46,37 +47,38 @@ void CASwitch::onEnterTransitionDidFinish()
     CAControl::onEnterTransitionDidFinish();
     
     if (NULL == m_onImage) {
-        this->setOnImage(CAImage::create("btn_square_selected.png"));
+        this->setOnImage(CAImage::create("source_material/switch_on.png"));
     }
     
     if (NULL == m_offImage) {
-        this->setOffImage(CAImage::create("btn_square_disabled.png"));
+        this->setOffImage(CAImage::create("source_material/switch_off.png"));
     }
     
     if (NULL == m_thumbTintImage) {
-        this->setThumbTintImage(CAImage::create("btn_square_normal.png"));
+        this->setThumbTintImage(CAImage::create("source_material/switch_indicator.png"));
     }
     CCSize size = this->getBounds().size;
+    CCRect bounds = CCRectZero;
     
     m_onImageView = CAImageView::createWithImage(this->getImage(m_onImage, size));
     if (m_onImageView)
     {
-        m_onImageView->setFrameOrigin(CCPointZero);
+        m_onImageView->setFrame(bounds);
         this->addSubview(m_onImageView);
     }
     
     m_offImageView = CAImageView::createWithImage(this->getImage(m_offImage, size));
     if (m_offImageView)
     {
-        m_offImageView->setFrameOrigin(CCPointZero);
+        m_offImageView->setFrame(bounds);
         this->addSubview(m_offImageView);
     }
     
-    m_thumbTintImageView = CAImageView::createWithImage(this->getImage(m_thumbTintImage, CCSize(size.width / 2, size.height)));
+    m_thumbTintImageView = CAImageView::createWithImage(this->getImage(m_thumbTintImage, CCSize(size.height, size.height)));
     if (m_thumbTintImageView)
     {
         m_thumbTintImageView->setAnchorPoint(CCPointZero);
-        m_thumbTintImageView->setFrameOrigin(CCPointZero);
+        m_thumbTintImageView->setFrame(bounds);
         this->addSubview(m_thumbTintImageView);
     }
     
@@ -86,6 +88,11 @@ void CASwitch::onEnterTransitionDidFinish()
 CAImage* CASwitch::getImage(CAImage* image, CCSize size)
 {
 	CAScale9ImageView *scale9Image = CAScale9ImageView::createWithImage(image);
+    CCRect insetRect;
+    insetRect.origin = scale9Image->getBounds().size / 2;
+    insetRect.origin = ccpSub(insetRect.origin, CCPoint(1, 1));
+    insetRect.size = CCPoint(2, 2);
+    scale9Image->setCapInsets(insetRect);
     scale9Image->setAnchorPoint(CCPointZero);
 	scale9Image->setFrame(CCRect(0, 0, size.width, size.height));
     this->addSubview(scale9Image);
@@ -167,7 +174,12 @@ void CASwitch::updateSwitchState()
     
     if (m_thumbTintImageView)
     {
-        m_thumbTintImageView->setFrameOrigin(m_isOn ? CCPoint(point.x, 0) : CCPointZero);
+        CCPoint point = CCPointZero;
+        point.x = m_isOn ? (m_obContentSize.width - m_thumbTintImageView->getBounds().size.width) : 0;
+        m_thumbTintImageView->stopAllActions();
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.1f, point);
+        CCEaseOut* out = CCEaseOut::create(moveTo, 1.5f);
+        m_thumbTintImageView->runAction(out);
     }
 }
 
@@ -273,6 +285,11 @@ void CASwitch::addTarget(CCObject* target, SEL_CAControl selector, CAControlEven
 void CASwitch::removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event)
 {
     CAControl::removeTarget(target, selector, event);
+}
+
+void CASwitch::setContentSize(const CCSize & var)
+{
+    CAControl::setContentSize(CCSize(80, 48));
 }
 
 NS_CC_END

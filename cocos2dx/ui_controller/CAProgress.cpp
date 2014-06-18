@@ -17,8 +17,8 @@ NS_CC_BEGIN
 
 CAProgress::CAProgress()
 :m_fProgress(0.0f)
-,m_progressTintColor(CAColor_blue)
-,m_progresstrackColor(CAColor_gray)
+,m_progressTintColor(CAColor_white)
+,m_progresstrackColor(CAColor_white)
 ,m_pProgressStyle(CAProgressStyleDefault)
 ,m_pProgressTintImage(NULL)
 ,m_pProgressTrackImage(NULL)
@@ -67,22 +67,22 @@ void CAProgress::onEnterTransitionDidFinish()
 	{
 		if (m_pProgressTrackImage == NULL)
 		{
-            this->setProgressTrackImage(CAImage::create("WhiteDots.png"));
+            this->setProgressTrackImage(CAImage::create("source_material/btn_square_disabled.png"));
 		}
 		
 		m_pTarckImageView = CAImageView::createWithImage(this->getImage(m_pProgressTrackImage));
-		m_pTarckImageView->setFrameOrigin(CCPointZero);
+		m_pTarckImageView->setFrame(CCRectZero);
         this->insertSubview(m_pTarckImageView, -1);
 		m_pTarckImageView->setColor(m_progresstrackColor);
 
 		if (m_pProgressTintImage == NULL)
 		{
-            this->setProgressTintImage(CAImage::create("WhiteDots.png"));
+            this->setProgressTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
 		}
         
 		m_pProgressImageView = CAImageView::createWithImage(this->getImage(m_pProgressTintImage));
 		m_pProgressImageView->setAnchorPoint(CCPointZero);
-		m_pProgressImageView->setFrameOrigin(CCPointZero);
+		m_pProgressImageView->setFrame(CCRectZero);
         this->addSubview(m_pProgressImageView);
 		m_pProgressImageView->setColor(m_progressTintColor);
 
@@ -169,6 +169,11 @@ void CAProgress::animatedBegin()
 void CAProgress::animatedFinish()
 {
 	CAScheduler::unschedule(schedule_selector(CAProgress::update), this);
+}
+
+void CAProgress::setContentSize(const CCSize & var)
+{
+    CAView::setContentSize(CCSize(var.width, 6.0f));
 }
 
 NS_CC_END

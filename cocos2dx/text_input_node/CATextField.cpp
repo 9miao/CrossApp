@@ -105,9 +105,8 @@ bool CATextField::initWithFrame(const CCRect& frame)
     m_pText = CALabel::createWithFrame(this->getBounds());
     m_pText->setText("");
     m_sText="";
-    m_pText->setVerticalTextAlignmet(kCCVerticalTextAlignmentCenter);
+    m_pText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     m_pText->setNumberOfLine(1);
-    m_pText->setTextcolor(m_cTextColor);
     
     this->addSubview(m_pText);
     willBg = CAView::createWithFrame(CCRectZero,ccc4(65, 105, 255, 200));
@@ -127,9 +126,8 @@ bool CATextField::initWithCenter(const CCRect& rect)
     m_pText = CALabel::createWithFrame(this->getBounds());
     m_pText->setText("");
     m_sText="";
-    m_pText->setVerticalTextAlignmet(kCCVerticalTextAlignmentCenter);
+    m_pText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     m_pText->setNumberOfLine(1);
-    m_pText->setTextcolor(m_cTextColor);
     
     this->addSubview(m_pText);
     willBg = CAView::createWithFrame(CCRectZero,ccc4(65, 105, 255, 200));
@@ -163,7 +161,7 @@ void CATextField::setFontSize(float var)
 {
     m_fFontSize = var;
     
-    m_pText->setfontSize(var);
+    m_pText->setFontSize(var);
     
     m_pMark->setFrame(CCRect(0, 0, var / 10.0f, var));
 }
@@ -186,7 +184,7 @@ std::string CATextField::getText()
 void CATextField::setPlaceHolder(std::string var)
 {
     m_sPlaceHolder = var;
-    m_pText->setTextcolor(getSpaceHolderColor());
+    m_pText->setColor(getSpaceHolderColor());
     m_pText->setText(var);
 }
 
@@ -198,7 +196,7 @@ std::string CATextField::getPlaceHolder()
 void CATextField::setSpaceHolderColor(CAColor4B var)
 {
     m_cSpaceHolderColor = var;
-    m_pText->setTextcolor(var);
+    m_pText->setColor(var);
     
 }
 
@@ -209,7 +207,7 @@ CAColor4B CATextField::getSpaceHolderColor()
 
 void CATextField::setTextColor(CAColor4B var)
 {
-    m_pText->setTextcolor(var);
+    m_pText->setColor(var);
     m_cTextColor = var;
 }
 
@@ -219,13 +217,13 @@ CAColor4B CATextField::getTextColor()
     return m_cTextColor;
 }
 
-void CATextField::setTextAlignment(CCTextAlignment var)
+void CATextField::setTextAlignment(CATextAlignment var)
 {
     m_pText->setTextAlignment(var);
     m_aTextAlignment = var;
 }
 
-CCTextAlignment CATextField::getTextAlignment()
+CATextAlignment CATextField::getTextAlignment()
 {
     return m_aTextAlignment;
 }
@@ -363,7 +361,7 @@ bool CATextField::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         {
             if (!strcmp(m_pText->getText().c_str(), ""))
             {
-                m_pText->setTextcolor(m_cSpaceHolderColor);
+                m_pText->setColor(m_cSpaceHolderColor);
                 m_pText->setText(m_sPlaceHolder);
                 m_sText="";
                 spaceHolderIsOn=true;
@@ -401,7 +399,7 @@ void CATextField::insertText(const char * text, int len)
         {
             password.append("*");
         }
-        m_pText->setTextcolor(m_cTextColor);
+        m_pText->setColor(m_cTextColor);
         m_pText->setText(password);
         
         CCRect rect = CCRectZero;
@@ -460,7 +458,7 @@ void CATextField::insertText(const char * text, int len)
     {
         m_pText->setText("");
         m_sText="";
-        m_pText->setTextcolor(m_cTextColor);
+        m_pText->setColor(m_cTextColor);
         spaceHolderIsOn=false;
         
     }
@@ -509,19 +507,19 @@ void CATextField::insertText(const char * text, int len)
         m_pText->setText(str);
         
         
-        int numbers = (m_pText->getLabelSize().width-frontWidth)/m_pText->getfontSize();
+        int numbers = (m_pText->getLabelSize().width-frontWidth)/m_pText->getFontSize();
         if (numbers<0)
         {
             numbers=0;
         }
         
-        if (numbers*m_pText->getfontSize()>m_pText->getfontSize())
+        if (numbers*m_pText->getFontSize()>m_pText->getFontSize())
         {
             for (int i =1; i<=numbers; i++)
             {
                 byteCount+=3;
                 bytePos++;
-                lengthArr.push_back(frontWidth+m_pText->getfontSize()*i);
+                lengthArr.push_back(frontWidth+m_pText->getFontSize()*i);
                 byteArr.push_back(byteCount);
             }
         }
@@ -629,8 +627,7 @@ void CATextField::willInsertText(const char *text, int len)
         }
         
         m_pText->setText(sText);
-        
-        m_pText->setTextcolor(ccc4(0, 0, 0, 255));
+        m_pText->setColor(ccc4(0, 0, 0, 255));
         float bglength=m_pText->getLabelSize().width;
         float textlength =0;
         if (lengthArr.size()>0)
@@ -714,7 +711,7 @@ void CATextField::deleteBackward()
 {
     if (m_nInputType==KEY_BOARD_INPUT_PASSWORD)
     {
-        m_pText->setTextcolor(m_cSpaceHolderColor);
+        m_pText->setColor(m_cSpaceHolderColor);
         m_pText->setText(m_sPlaceHolder);
         m_sText="";
         spaceHolderIsOn=true;
@@ -746,7 +743,7 @@ void CATextField::deleteBackward()
     
     if (nStrLen <= nDeleteLen)
     {
-        m_pText->setTextcolor(m_cSpaceHolderColor);
+        m_pText->setColor(m_cSpaceHolderColor);
         m_pText->setText(m_sPlaceHolder);
         m_sText="";
         spaceHolderIsOn=true;

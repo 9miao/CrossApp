@@ -1,4 +1,18 @@
 
+####CrossApp alpha 0.1.11 更新内容：  
+
+#####1.引擎默认主题风格变更
+新的风格将更加漂亮，切适配性更强。
+
+#####2.CAScale9ImageView重写
+由于之前的9宫格有功能缺陷，现重写，新的9宫格可以支持单向缩小。
+
+#####3.CALabel优化
+CALabel结构优化，性能优化。将来还会优化。
+
+
+
+
 ####CrossApp alpha 0.1.10 更新内容：  
 
 #####1.CAImageView优化
@@ -6,7 +20,6 @@
 
 #####2.删除ccColor3B，并添加CAColor4B
 删除之前的ccColor3B，以前所有用到ccColor3B的地方统统被CAColor4B替换，增加透明度属性。
-(介于此改动对之前已经基于本引擎的项目带来无法编译的问题，请大家谅解，在这里向大家说声抱歉)
 
 #####3.删除Opacity属性，并添加新的alpha属性
 alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影响所有子视图的透明度。
@@ -37,13 +50,13 @@ alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影�
 #####4.CAButton与CASegmentedControl优化
 修改文字显示大小错误的bug
 
-#####5.安卓系统，从后台返回黑屏的bug
+#####6.安卓系统，从后台返回黑屏的bug
 之前，在安卓系统中，如果从后台返回，有几率黑屏
 
-#####6.添加动画相关 CCFrameTo 与 CCCenterTo
+#####5.添加动画相关 CCFrameTo 与 CCCenterTo
 可以动态的修改 frame与center
 
-#####7.添加viewController悬浮抽屉功能
+#####6.添加viewController悬浮抽屉功能
 现在可以调用任何一个viewController的presentModalViewController与dismissModalViewController来显示与撤销。
 
 
@@ -61,13 +74,13 @@ CATextField添加win32输入功能
 #####4.
 修复触摸分发系统在可滑动容器上快速点击按钮无法触发按钮事件的bug
 
-#####5.
+#####6.
 修复在win32由于触摸事件造成的偶尔崩溃的bug
 
-#####6.
+#####5.
 优化CASegmentedControl
 
-#####7.
+#####6.
 优化CANavigationBar在竖屏的高度及布局。
 
 

@@ -56,6 +56,8 @@ public:
     
 protected:
 
+    void setContentSize(const CCSize & var);
+    
 	void update(float dt);
     
 	void animatedBegin();

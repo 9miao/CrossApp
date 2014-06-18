@@ -99,7 +99,6 @@ CAView::CAView(void)
 , m_bFlipY(false)
 , m_bRecursiveDirty(false)
 , m_bDirty(false)
-, m_obOffsetPoint(CCPointZero)
 , m_bHasChildren(false)
 , m_pViewDelegate(NULL)
 , m_bFrame(true)
@@ -1631,8 +1630,8 @@ void CAView::updateTransform()
             
             CCSize size = m_obRect.size;
             
-            float x1 = m_obOffsetPoint.x;
-            float y1 = m_obOffsetPoint.y;
+            float x1 = 0;
+            float y1 = 0;
             
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
@@ -1770,10 +1769,7 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
     {
         relativeOffset.y = -relativeOffset.y;
     }
-    
-    m_obOffsetPoint.x = relativeOffset.x;
-    m_obOffsetPoint.y = relativeOffset.y;
-    
+
     if (m_pobBatchView)
     {
         // update dirty_, don't update recursiveDirty_
@@ -1788,9 +1784,9 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
 void CAView::updateImageRect()
 {
     // Don't update Z.
-    m_sQuad.bl.vertices = vertex3(m_obOffsetPoint.x, m_obOffsetPoint.y, 0);
-    m_sQuad.br.vertices = vertex3(m_obContentSize.width, m_obOffsetPoint.y, 0);
-    m_sQuad.tl.vertices = vertex3(m_obOffsetPoint.x, m_obContentSize.height, 0);
+    m_sQuad.bl.vertices = vertex3(0, 0, 0);
+    m_sQuad.br.vertices = vertex3(m_obContentSize.width, 0, 0);
+    m_sQuad.tl.vertices = vertex3(0, m_obContentSize.height, 0);
     m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, 0);
 }
 
@@ -2118,8 +2114,8 @@ void CAView::setBatch(CABatchView *batchView)
         m_bRecursiveDirty = false;
         setDirty(false);
         
-        float x1 = m_obOffsetPoint.x;
-        float y1 = m_obOffsetPoint.y;
+        float x1 = 0;
+        float y1 = 0;
         float x2 = x1 + m_obRect.size.width;
         float y2 = y1 + m_obRect.size.height;
         m_sQuad.bl.vertices = vertex3( x1, y1, 0 );

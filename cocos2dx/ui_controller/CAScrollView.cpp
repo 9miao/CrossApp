@@ -80,15 +80,29 @@ bool CAScrollView::initWithFrame(const cocos2d::CCRect &rect)
     this->setColor(CAColor_clear);
     this->setDisplayRange(false);
     
-    m_pContainer = CAView::createWithFrame(this->getBounds(), ccc4(255, 255, 255, 0));
+    m_pContainer = CAView::createWithFrame(this->getBounds(), CAColor_clear);
     m_pChildInThis->addObject(m_pContainer);
     this->addSubview(m_pContainer);
     
-    m_pIndicatorHorizontal = CAIndicator::createWithFrame(CCRect(12, rect.size.height - 12, rect.size.width - 24, 10), CAIndicator::CAIndicatorTypeHorizontal);
+    const char indicatorSize = 6;
+    const CCRect indicatorHorizontalFrame = CCRect(indicatorSize * 1.5f,
+                                                   rect.size.height - indicatorSize * 1.5f,
+                                                   rect.size.width - indicatorSize * 3.0f,
+                                                   indicatorSize);
+    
+    const CCRect indicatorVerticalFrame = CCRect(rect.size.width - indicatorSize * 1.5f,
+                                                 indicatorSize * 1.5f,
+                                                 indicatorSize,
+                                                 rect.size.height - indicatorSize * 3.0f);
+    
+    m_pIndicatorHorizontal = CAIndicator::createWithFrame(indicatorHorizontalFrame,
+                                                          CAIndicator::CAIndicatorTypeHorizontal);
     m_pChildInThis->addObject(m_pIndicatorHorizontal);
     this->insertSubview(m_pIndicatorHorizontal, 1);
     
-    m_pIndicatorVertical = CAIndicator::createWithFrame(CCRect(rect.size.width - 12, 12, 10, rect.size.height - 24), CAIndicator::CAIndicatorTypeVertical);
+    
+    m_pIndicatorVertical = CAIndicator::createWithFrame(indicatorVerticalFrame,
+                                                        CAIndicator::CAIndicatorTypeVertical);
     m_pChildInThis->addObject(m_pIndicatorVertical);
     this->insertSubview(m_pIndicatorVertical, 1);
     
@@ -157,13 +171,14 @@ void CAScrollView::setViewSize(cocos2d::CCSize var)
     
     CC_RETURN_IF(m_pContainer == NULL);
     
-    CCRect rect = CCRectZero;
+    
+    CCRect rect = m_pContainer->getFrame();
     rect.size = m_obViewSize;
     m_pContainer->setFrame(rect);
     
-//        CCPoint point = m_pContainer->getCenterOrigin();
-//        point = this->getScrollWindowNotOutPoint(point);
-//        m_pContainer->setCenterOrigin(point);
+//    CCPoint point = m_pContainer->getCenterOrigin();
+//    point = this->getScrollWindowNotOutPoint(point);
+//    m_pContainer->setCenterOrigin(point);
 }
 
 CCSize CAScrollView::getViewSize()
@@ -256,13 +271,25 @@ void CAScrollView::setContentSize(const cocos2d::CCSize &var)
 {
     CAView::setContentSize(var);
     
+    const char indicatorSize = 6;
+    
     if (m_pIndicatorHorizontal)
     {
-        m_pIndicatorHorizontal->setFrame(CCRect(12, var.height - 12, var.width - 24, 10));
+        const CCRect indicatorHorizontalFrame = CCRect(indicatorSize * 1.5f,
+                                                       var.height - indicatorSize * 1.5f,
+                                                       var.width - indicatorSize * 3.0f,
+                                                       indicatorSize);
+        
+        m_pIndicatorHorizontal->setFrame(indicatorHorizontalFrame);
     }
     if (m_pIndicatorVertical)
     {
-        m_pIndicatorVertical->setFrame(CCRect(var.width - 12, 12, 10, var.height - 24));
+        const CCRect indicatorVerticalFrame = CCRect(var.width - indicatorSize * 1.5f,
+                                                     indicatorSize * 1.5f,
+                                                     indicatorSize,
+                                                     var.height - indicatorSize * 3.0f);
+        
+        m_pIndicatorVertical->setFrame(indicatorVerticalFrame);
     }
     this->update(0);
 }
@@ -373,7 +400,7 @@ void CAScrollView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
         
         p_off = ccpSub(this->convertToNodeSpace(mid_point),
                        ccpAdd(m_pContainer->getFrameOrigin(),
-                              m_pContainer->getAnchorPointInPoints()));
+                              m_pContainer->getAnchorPointInPoints() * m_fZoomScale));
     }
     
     
@@ -813,7 +840,7 @@ bool CAIndicator::initWithFrame(const CCRect& rect, CAIndicatorType type)
     
     m_eType = type;
     
-    CAImage* image = CAImage::create("indicator.png");
+    CAImage* image = CAImage::create("source_material/indicator.png");
 
     m_pIndicator = CAScale9ImageView::createWithImage(image);
     this->addSubview(m_pIndicator);
