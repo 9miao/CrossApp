@@ -1,7 +1,7 @@
 /*
  
  Copyright (c) 2012 - Zynga Inc.
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 9miao.com
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,10 @@
 
 /*
  Local Storage support for the JS Bindings for iOS.
- Works on cocos2d-iphone and cocos2d-x.
+ Works on CrossApp-iphone and CrossApp-x.
  */
 
-#include "cocos2d.h"
+#include "CrossApp.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
@@ -59,7 +59,7 @@ void localStorageInit( const char *fullpath)
 	if( ! _initialized ) {
 			JniMethodInfo t;
 
-	        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "init", "(Ljava/lang/String;Ljava/lang/String;)Z")) {
+	        if (JniHelper::getStaticMethodInfo(t, "org/CrossApp/lib/Cocos2dxLocalStorage", "init", "(Ljava/lang/String;Ljava/lang/String;)Z")) {
 	        	std::string strDBFilename = fullpath;
 	        	splitFilename(strDBFilename);
 	        	jstring jdbName = t.env->NewStringUTF(strDBFilename.c_str());
@@ -82,7 +82,7 @@ void localStorageFree()
 		
 		JniMethodInfo t;
         
-        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "destory", "()V"))
+        if (JniHelper::getStaticMethodInfo(t, "org/CrossApp/lib/Cocos2dxLocalStorage", "destory", "()V"))
         {
             t.env->CallStaticVoidMethod(t.classID, t.methodID);
         	t.env->DeleteLocalRef(t.classID); 
@@ -99,7 +99,7 @@ void localStorageSetItem( const char *key, const char *value)
 	
     JniMethodInfo t;
 
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "setItem", "(Ljava/lang/String;Ljava/lang/String;)V")) {
+    if (JniHelper::getStaticMethodInfo(t, "org/CrossApp/lib/Cocos2dxLocalStorage", "setItem", "(Ljava/lang/String;Ljava/lang/String;)V")) {
         jstring jkey = t.env->NewStringUTF(key);
         jstring jvalue = t.env->NewStringUTF(value);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, jkey, jvalue);
@@ -115,7 +115,7 @@ const char* localStorageGetItem( const char *key )
 	assert( _initialized );
     JniMethodInfo t;
     CCString* pStr = NULL;
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;")) {
+    if (JniHelper::getStaticMethodInfo(t, "org/CrossApp/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;")) {
         jstring jkey = t.env->NewStringUTF(key);
         jstring ret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, jkey);
         pStr = CCString::create(JniHelper::jstring2string(ret));
@@ -132,7 +132,7 @@ void localStorageRemoveItem( const char *key )
 	assert( _initialized );
     JniMethodInfo t;
 
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "removeItem", "(Ljava/lang/String;)V")) {
+    if (JniHelper::getStaticMethodInfo(t, "org/CrossApp/lib/Cocos2dxLocalStorage", "removeItem", "(Ljava/lang/String;)V")) {
         jstring jkey = t.env->NewStringUTF(key);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, jkey);
         t.env->DeleteLocalRef(jkey);

@@ -1,8 +1,8 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2010-2012 9miao.com
  Copyright (c) 2012 greathqy
  
- http://www.cocos2d-x.org
+ http://www.9miao.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -488,7 +488,7 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
         --s_asyncRequestCount;
         
         CCHttpRequest *request = response->getHttpRequest();
-        CCObject *pTarget = request->getTarget();
+        CAObject *pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
         if (pTarget && pSelector) 

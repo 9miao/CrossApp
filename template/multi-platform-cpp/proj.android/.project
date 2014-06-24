@@ -93,7 +93,6 @@
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
-			<triggers>full,incremental,</triggers>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -110,12 +109,12 @@
 		<link>
 			<name>Classes</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/projects/HelloCpp/Classes</locationURI>
+			<locationURI>COCOS2DX/template/multi-platform-cpp/Classes</locationURI>
 		</link>
 		<link>
-			<name>cocos2dx</name>
+			<name>CrossApp</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/cocos2dx</locationURI>
+			<locationURI>COCOS2DX/CrossApp</locationURI>
 		</link>
 		<link>
 			<name>extensions</name>

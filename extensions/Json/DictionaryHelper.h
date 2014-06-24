@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 9miao.com
  
- http://www.cocos2d-x.org
+ http://www.9miao.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,7 @@
 #ifndef __DICTIONARYHELPER_H__
 #define __DICTIONARYHELPER_H__
 
-#include "cocos2d.h"
-#include "cocos-ext.h"
+#include "CrossAppExt.h"
 #include "ExtensionMacros.h"
 
 #define DICTOOL DictionaryHelper::shareHelper()
@@ -43,18 +42,18 @@ public:
     ~DictionaryHelper();
     static DictionaryHelper* shareHelper();
 	static void purgeDictionaryHelper();
-    cocos2d::CCDictionary* getSubDictionary(cocos2d::CCDictionary* root,const char* key);
-    int getIntValue(cocos2d::CCDictionary* root,const char* key);
-    float getFloatValue(cocos2d::CCDictionary* root,const char* key);
-    const char* getStringValue(cocos2d::CCDictionary* root,const char* key);
-    bool getBooleanValue(cocos2d::CCDictionary* root,const char* key);
-    cocos2d::CCArray* getArrayValue(cocos2d::CCDictionary* root,const char* key);
-    cocos2d::CCObject* checkObjectExist(cocos2d::CCDictionary* root,const char* key);
-    int objectToIntValue(cocos2d::CCObject* obj);
-    float objectToFloatValue(cocos2d::CCObject* obj);
-    const char* objectToStringValue(cocos2d::CCObject* obj);
-    bool objectToBooleanValue(cocos2d::CCObject* obj);
-    cocos2d::CCArray* objectToCCArray(cocos2d::CCObject* obj);
+    CrossApp::CCDictionary* getSubDictionary(CrossApp::CCDictionary* root,const char* key);
+    int getIntValue(CrossApp::CCDictionary* root,const char* key);
+    float getFloatValue(CrossApp::CCDictionary* root,const char* key);
+    const char* getStringValue(CrossApp::CCDictionary* root,const char* key);
+    bool getBooleanValue(CrossApp::CCDictionary* root,const char* key);
+    CrossApp::CCArray* getArrayValue(CrossApp::CCDictionary* root,const char* key);
+    CrossApp::CAObject* checkObjectExist(CrossApp::CCDictionary* root,const char* key);
+    int objectToIntValue(CrossApp::CAObject* obj);
+    float objectToFloatValue(CrossApp::CAObject* obj);
+    const char* objectToStringValue(CrossApp::CAObject* obj);
+    bool objectToBooleanValue(CrossApp::CAObject* obj);
+    CrossApp::CCArray* objectToCCArray(CrossApp::CAObject* obj);
     
     cs::CSJsonDictionary* getSubDictionary_json(cs::CSJsonDictionary* root,const char* key);
     int getIntValue_json(cs::CSJsonDictionary* root,const char* key);

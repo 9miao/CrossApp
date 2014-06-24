@@ -28,7 +28,7 @@ def dumpUsage():
     print "Options:"
     print "  -project   PROJECT_NAME          Project name, for example: MyGame"
     print "  -package   PACKAGE_NAME          Package name, for example: com.MyCompany.MyAwesomeGame"
-    print "  -language  PROGRAMING_LANGUAGE   Major programing lanauge you want to used, should be [cpp | lua | javascript]"
+    print "  -language  PROGRAMING_LANGUAGE   Major programing lanauge you want to used, should be [cpp | javascript]"
     print ""
     print "Sample 1: ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame"
     print "Sample 2: ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame -language javascript"
@@ -79,24 +79,9 @@ def checkParams(context):
         platforms_list = ["ios",
                           "android",
                           "win32",
-                          "winrt",
-                          "wp8",
                           "mac",
-                          "blackberry",
                           "linux",
-                          "marmalade",
-                          "tizen",
                           "wp8-xaml"]
-    elif ("lua" == context["language"]):
-        context["src_project_name"] = "HelloLua"
-        context["src_package_name"] = "org.cocos2dx.hellolua"
-        context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-lua"
-        platforms_list = ["ios",
-                          "android",
-                          "win32",
-                          "blackberry",
-                          "linux",
-                          "marmalade"]
     elif ("javascript" == context["language"]):
         context["src_project_name"] = "HelloJavascript"
         context["src_package_name"] = "org.cocos2dx.hellojavascript"

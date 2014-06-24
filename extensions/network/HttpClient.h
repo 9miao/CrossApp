@@ -1,8 +1,8 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2010-2012 CrossApp-x.org
  Copyright (c) 2012 greathqy
  
- http://www.cocos2d-x.org
+ http://www.CrossApp-x.org
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 #ifndef __CCHTTPREQUEST_H__
 #define __CCHTTPREQUEST_H__
 
-#include "cocos2d.h"
+#include "CrossApp.h"
 #include "ExtensionMacros.h"
 
 #include "HttpRequest.h"
@@ -45,7 +45,7 @@ NS_CC_EXT_BEGIN
  * @js NA
  * @lua NA
  */
-class CCHttpClient : public CCObject
+class CCHttpClient : public CAObject
 {
 public:
     /** Return the shared instance **/

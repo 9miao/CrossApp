@@ -30,15 +30,15 @@ public:
     
     static CAUIHelper* getInstance();
 private:
-    CCObject *addButton(CSJson::Value jsonValue, CCRect &uiRect);
+    CAObject *addButton(CSJson::Value jsonValue, CCRect &uiRect);
     
-    CCObject *addLabel(CSJson::Value jsonValue, CCRect &uiRect);
+    CAObject *addLabel(CSJson::Value jsonValue, CCRect &uiRect);
     
-    CCObject *addImage(CSJson::Value jsonValue, CCRect &uiRect);
+    CAObject *addImage(CSJson::Value jsonValue, CCRect &uiRect);
     
-    CCObject *addScrollView(CSJson::Value jsonValue,CCRect &uiRect);
+    CAObject *addScrollView(CSJson::Value jsonValue,CCRect &uiRect);
     
-    CCObject *addTableView(CSJson::Value jsonValue, CCRect &uiRect);
+    CAObject *addTableView(CSJson::Value jsonValue, CCRect &uiRect);
     
     
 protected:

@@ -1,8 +1,8 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 9miao.com
  Copyright (c) Microsoft Open Technologies, Inc.
 
- http://www.cocos2d-x.org
+ http://www.9miao.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 #ifndef __AssetsManager__
 #define __AssetsManager__
 
-#include "cocos2d.h"
+#include "CrossApp.h"
 #include "ExtensionMacros.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
@@ -162,7 +162,7 @@ private:
         void* obj;
     } Message;
     
-    class Helper : public cocos2d::CCObject
+    class Helper : public CrossApp::CAObject
     {
     public:
         Helper();

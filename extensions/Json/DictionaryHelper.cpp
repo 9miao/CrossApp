@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 9miao.com
  
- http://www.cocos2d-x.org
+ http://www.9miao.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -51,77 +51,77 @@ void DictionaryHelper::purgeDictionaryHelper()
 	 CC_SAFE_DELETE(sharedHelper);
 }
 
-cocos2d::CCDictionary* DictionaryHelper::getSubDictionary(cocos2d::CCDictionary* root,const char* key)
+CrossApp::CCDictionary* DictionaryHelper::getSubDictionary(CrossApp::CCDictionary* root,const char* key)
 {
     if (!root) {
         return NULL;
     }
-    cocos2d::CCObject* obj = root->objectForKey(key);
+    CrossApp::CAObject* obj = root->objectForKey(key);
     if (!obj) {
         return NULL;
     }
-    return (cocos2d::CCDictionary*)(obj);
+    return (CrossApp::CCDictionary*)(obj);
 }
 
-int DictionaryHelper::getIntValue(cocos2d::CCDictionary* root,const char* key)
+int DictionaryHelper::getIntValue(CrossApp::CCDictionary* root,const char* key)
 {
     if (!root) {
         return 0;
     }
-    cocos2d::CCObject* obj = root->objectForKey(key);
+    CrossApp::CAObject* obj = root->objectForKey(key);
     if (!obj) {
         return 0;
     }
     
-    cocos2d::CCString* cstr = (cocos2d::CCString*)(obj);
+    CrossApp::CCString* cstr = (CrossApp::CCString*)(obj);
     return cstr->intValue();
 }
 
-float DictionaryHelper::getFloatValue(cocos2d::CCDictionary* root,const char* key)
+float DictionaryHelper::getFloatValue(CrossApp::CCDictionary* root,const char* key)
 {
     if (!root) {
         return 0.0;
     }
-    cocos2d::CCObject* obj = root->objectForKey(key);
+    CrossApp::CAObject* obj = root->objectForKey(key);
     if (!obj) {
         return 0.0f;
     }
-    cocos2d::CCString* cstr = (cocos2d::CCString*)(obj);
+    CrossApp::CCString* cstr = (CrossApp::CCString*)(obj);
     return cstr->floatValue();
 }
 
-const char* DictionaryHelper::getStringValue(cocos2d::CCDictionary* root,const char* key)
+const char* DictionaryHelper::getStringValue(CrossApp::CCDictionary* root,const char* key)
 {
     if (!root) {
         return NULL;
     }
-    cocos2d::CCObject* obj = root->objectForKey(key);
+    CrossApp::CAObject* obj = root->objectForKey(key);
     if (!obj) {
         return NULL;
     }
-    cocos2d::CCString* cstr = (cocos2d::CCString*)(obj);
+    CrossApp::CCString* cstr = (CrossApp::CCString*)(obj);
     return cstr->m_sString.c_str();
 }
 
-bool DictionaryHelper::getBooleanValue(cocos2d::CCDictionary* root,const char* key)
+bool DictionaryHelper::getBooleanValue(CrossApp::CCDictionary* root,const char* key)
 {
     return this->getIntValue(root, key);
 }
 
-cocos2d::CCArray* DictionaryHelper::getArrayValue(cocos2d::CCDictionary *root, const char *key)
+CrossApp::CCArray* DictionaryHelper::getArrayValue(CrossApp::CCDictionary *root, const char *key)
 {
     if (!root) {
         return NULL;
     }
-    cocos2d::CCObject* obj = root->objectForKey(key);
+    CrossApp::CAObject* obj = root->objectForKey(key);
     if (!obj) {
         return NULL;
     }
-    cocos2d::CCArray* array = (cocos2d::CCArray*)(obj);
+    CrossApp::CCArray* array = (CrossApp::CCArray*)(obj);
     return array;
 }
 
-cocos2d::CCObject* DictionaryHelper::checkObjectExist(cocos2d::CCDictionary *root, const char *key)
+CrossApp::CAObject* DictionaryHelper::checkObjectExist(CrossApp::CCDictionary *root, const char *key)
 {
     if (!root) {
         return NULL;
@@ -129,37 +129,37 @@ cocos2d::CCObject* DictionaryHelper::checkObjectExist(cocos2d::CCDictionary *roo
     return root->objectForKey(key);
 }
 
-int DictionaryHelper::objectToIntValue(cocos2d::CCObject *obj)
+int DictionaryHelper::objectToIntValue(CrossApp::CAObject *obj)
 {
     if (!obj)
     {
         return 0;
     }
-    cocos2d::CCString* cstr = (cocos2d::CCString*)(obj);
+    CrossApp::CCString* cstr = (CrossApp::CCString*)(obj);
     return cstr->intValue();
 }
 
-float DictionaryHelper::objectToFloatValue(cocos2d::CCObject *obj)
+float DictionaryHelper::objectToFloatValue(CrossApp::CAObject *obj)
 {
     if (!obj)
     {
         return 0.0f;
     }
-    cocos2d::CCString* cstr = (cocos2d::CCString*)(obj);
+    CrossApp::CCString* cstr = (CrossApp::CCString*)(obj);
     return cstr->floatValue();
 }
 
-const char* DictionaryHelper::objectToStringValue(cocos2d::CCObject *obj)
+const char* DictionaryHelper::objectToStringValue(CrossApp::CAObject *obj)
 {
     if (!obj)
     {
         return NULL;
     }
-    cocos2d::CCString* cstr = (cocos2d::CCString*)(obj);
+    CrossApp::CCString* cstr = (CrossApp::CCString*)(obj);
     return cstr->m_sString.c_str();
 }
 
-bool DictionaryHelper::objectToBooleanValue(cocos2d::CCObject *obj)
+bool DictionaryHelper::objectToBooleanValue(CrossApp::CAObject *obj)
 {
     if (!obj)
     {
@@ -168,13 +168,13 @@ bool DictionaryHelper::objectToBooleanValue(cocos2d::CCObject *obj)
     return this->objectToIntValue(obj);
 }
 
-cocos2d::CCArray* DictionaryHelper::objectToCCArray(cocos2d::CCObject *obj)
+CrossApp::CCArray* DictionaryHelper::objectToCCArray(CrossApp::CAObject *obj)
 {
     if (!obj)
     {
         return NULL;
     }
-    cocos2d::CCArray* array = (cocos2d::CCArray*)(obj);
+    CrossApp::CCArray* array = (CrossApp::CCArray*)(obj);
     return array;
 }
 

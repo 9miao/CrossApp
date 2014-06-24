@@ -10,7 +10,7 @@
 #define __LocationTest__CAMediaManager__
 
 #include <iostream>
-#include "cocos2d.h"
+#include "CrossApp.h"
 USING_NS_CC;
 
 NS_CC_BEGIN
@@ -21,7 +21,7 @@ public:
     virtual void getSelectedImage(CCImage *image) = 0;
 };
 
-class CAMediaManager:public CCObject
+class CAMediaManager:public CAObject
 {
 public:
     

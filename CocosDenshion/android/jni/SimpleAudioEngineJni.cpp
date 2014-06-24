@@ -5,7 +5,7 @@
 
 #define  LOG_TAG    "libSimpleAudioEngine"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxHelper"
+#define  CLASS_NAME "org/CrossApp/lib/Cocos2dxHelper"
 
 typedef struct JniMethodInfo_
 {
@@ -21,7 +21,7 @@ extern "C"
     static JNIEnv* getJNIEnv(void)
     {
         
-        JavaVM* jvm = cocos2d::JniHelper::getJavaVM();
+        JavaVM* jvm = CrossApp::JniHelper::getJavaVM();
         if (NULL == jvm) {
             LOGD("Failed to get JNIEnv. JniHelper::getJavaVM() is NULL");
             return NULL;

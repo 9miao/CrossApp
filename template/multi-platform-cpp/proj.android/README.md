@@ -58,7 +58,7 @@ There are two ways of building Android projects.
 		![Example](https://lh3.googleusercontent.com/-AVcY8IAT0_g/UUOYltoRobI/AAAAAAAAsdM/22D2J9u3sig/s400/cocos2d-x-eclipse-ndk.png)
 		* Only for Windows: Add new variables **CYGWIN** with value `nodosfilewarning` and **SHELLOPTS** with value `igncr`
 		
-4. Import libcocos2dx library project:
+4. Import libCrossApp library project:
 	1. File->New->Project->Android Project From Existing Code.
 	2. Click **Browse** button and open `cocos2d-x/cocos2dx/platform/android/java` directory.
 	3. Click **Finish** to add project.
@@ -75,7 +75,7 @@ There are two ways of building Android projects.
 
 ### Running project from Command Line
 
-    $ cd cocos2d-x/samples/Cpp/TestCpp/proj.android/
+    $ cd CrossApp/samples/demo/proj.android/
     $ export NDK_ROOT=/path/to/ndk
     $ ./build_native.sh
     $ ant debug install

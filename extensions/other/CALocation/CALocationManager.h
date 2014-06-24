@@ -10,7 +10,7 @@
 #define __iBook__CALocationManager__
 
 #include <iostream>
-#include "cocos2d.h"
+#include "CrossApp.h"
 
 USING_NS_CC;
 class CC_DLL CALocationDelegate
@@ -18,7 +18,7 @@ class CC_DLL CALocationDelegate
 public:
     virtual void getLocations(CCDictionary *locations) = 0;
 };
-class CALocationManager:public CCObject
+class CALocationManager:public CAObject
 {
 public:
     CALocationManager();

@@ -24,7 +24,7 @@
 
 #pragma once
 
-#import "cocos2d.h"
+#import "CrossApp.h"
 #import "EAGLView.h"
 
 @interface AppController : NSObject <NSApplicationDelegate>

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 /*
  Local Storage support for the JS Bindings for iOS.
- Works on cocos2d-iphone and cocos2d-x.
+ Works on CrossApp-iphone and CrossApp-x.
  */
 
 #ifndef __JSB_LOCALSTORAGE_H

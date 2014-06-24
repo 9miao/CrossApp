@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "cocos2d.h"
-using namespace cocos2d;
+#include "CrossApp.h"
+using namespace CrossApp;
 @protocol CACameraDelegate<NSObject>
 @optional
 -(void)setSeletedImage:(UIImage*)_image;

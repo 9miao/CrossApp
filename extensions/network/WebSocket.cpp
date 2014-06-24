@@ -1,8 +1,8 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
+ Copyright (c) 2010-2013 CrossApp-x.org
  Copyright (c) 2013 James Chen
  
- http://www.cocos2d-x.org
+ http://www.CrossApp-x.org
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ public:
 /**
  *  @brief Websocket thread helper, it's used for sending message between UI thread and websocket thread.
  */
-class WsThreadHelper : public cocos2d::CCObject
+class WsThreadHelper : public CrossApp::CAObject
 {
 public:
     WsThreadHelper();

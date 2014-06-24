@@ -178,7 +178,7 @@ typedef struct _sourceInfo {
 {
 }    
 
-/** Fundamentally the same as the corresponding method is CCFileUtils but added to break binding to cocos2d */
+/** Fundamentally the same as the corresponding method is CCFileUtils but added to break binding to CrossApp */
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
 @end

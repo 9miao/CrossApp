@@ -16,7 +16,7 @@ extern "C"
 const char* ShowAddress()
 {
 	JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/cocos2dx/lib/AndroidPersonList" , "CAGetPersonList" , "()Ljava/lang/String;"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidPersonList" , "CAGetPersonList" , "()Ljava/lang/String;"))
 	{
         
 		jstring a = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);

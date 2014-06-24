@@ -1,6 +1,6 @@
 #import "RootViewController.h"
 #import "EAGLView.h"
-#import "cocos2d.h"
+#import "CrossApp.h"
 
 @implementation RootViewController
 
@@ -28,10 +28,11 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     CGRect rect = [[UIScreen mainScreen] bounds];
-    rect.size.height -= 20;
-    if ( [[UIDevice currentDevice].systemVersion floatValue] > 6.0)
+    
+    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 7.0)
     {
-        rect.origin.y = 20;
+        rect.size.height -= 40;
+        rect.origin.y = 40;
     }
     
     EAGLView *__glView = [EAGLView viewWithFrame: rect

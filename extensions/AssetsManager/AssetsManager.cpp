@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 9miao.com
  
- http://www.cocos2d-x.org
+ http://www.9miao.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "AssetsManager.h"
-#include "cocos2d.h"
+#include "CrossApp.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <curl/curl.h>
@@ -40,14 +40,14 @@
 
 #include "support/zip_support/unzip.h"
 
-using namespace cocos2d;
+using namespace CrossApp;
 using namespace std;
 
 NS_CC_EXT_BEGIN;
 
 #define KEY_OF_VERSION   "current-version-code"
 #define KEY_OF_DOWNLOADED_VERSION    "downloaded-version-code"
-#define TEMP_PACKAGE_FILE_NAME    "cocos2dx-update-temp-package.zip"
+#define TEMP_PACKAGE_FILE_NAME    "CrossApp-update-temp-package.zip"
 #define BUFFER_SIZE    8192
 #define MAX_FILENAME   512
 
@@ -142,7 +142,7 @@ bool AssetsManager::checkUpdate()
         return false;
     }
     
-    string recordedVersion = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
+    string recordedVersion = CAUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
     if (recordedVersion == _version)
     {
         sendErrorMessage(kNoNewVersion);
@@ -215,7 +215,7 @@ void AssetsManager::update()
     if (! checkUpdate()) return;
     
     // Is package already downloaded?
-    _downloadedVersion = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_DOWNLOADED_VERSION);
+    _downloadedVersion = CAUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_DOWNLOADED_VERSION);
     
     _tid = new pthread_t();
     pthread_create(&(*_tid), NULL, assetsManagerDownloadAndUncompress, this);
@@ -472,12 +472,12 @@ void AssetsManager::setVersionFileUrl(const char *versionFileUrl)
 
 string AssetsManager::getVersion()
 {
-    return CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
+    return CAUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
 }
 
 void AssetsManager::deleteVersion()
 {
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, "");
+    CAUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, "");
 }
 
 void AssetsManager::setDelegate(AssetsManagerDelegateProtocol *delegate)
@@ -552,9 +552,9 @@ void AssetsManager::Helper::update(float dt)
             
             break;
         case ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION:
-            CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION,
+            CAUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION,
                                                                 ((AssetsManager*)msg->obj)->_version.c_str());
-            CCUserDefault::sharedUserDefault()->flush();
+            CAUserDefault::sharedUserDefault()->flush();
             
             break;
         case ASSETSMANAGER_MESSAGE_PROGRESS:
@@ -588,11 +588,11 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
     AssetsManager* manager = (AssetsManager*)msg->obj;
     
     // Record new version code.
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, manager->_version.c_str());
+    CAUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, manager->_version.c_str());
     
     // Unrecord downloaded version code.
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION, "");
-    CCUserDefault::sharedUserDefault()->flush();
+    CAUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION, "");
+    CAUserDefault::sharedUserDefault()->flush();
     
     // Set resource search path.
     manager->setSearchPath();
