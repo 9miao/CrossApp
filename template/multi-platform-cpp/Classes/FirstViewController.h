@@ -10,7 +10,7 @@
 #define __HelloCpp__ViewController__
 
 #include <iostream>
-#include "cocos2d.h"
+#include "CrossApp.h"
 
 USING_NS_CC;
 
@@ -19,7 +19,7 @@ class FirstViewController: public CAViewController
     
 public:
 
-	static cocos2d::CAWindow* createWindow();
+	static CrossApp::CAWindow* createWindow();
     
 	FirstViewController();
     

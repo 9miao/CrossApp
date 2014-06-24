@@ -1,21 +1,21 @@
 #ifndef  _APP_DELEGATE_H_
 #define  _APP_DELEGATE_H_
 
-#include "cocos2d.h"
+#include "CrossApp.h"
 
 /**
-@brief    The cocos2d Application.
+@brief    The CrossApp Application.
 
-The reason for implement as private inheritance is to hide some interface call by CCDirector.
+The reason for implement as private inheritance is to hide some interface call by CAApplication.
 */
-class  AppDelegate : private cocos2d::CCApplication
+class  AppDelegate : private CrossApp::CCApplication
 {
 public:
     AppDelegate();
     virtual ~AppDelegate();
 
     /**
-    @brief    Implement CCDirector and CCScene init code here.
+    @brief    Implement CAApplication and CCScene init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */

@@ -4,15 +4,15 @@
     <ClCompile Include="..\..\..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEvent.cpp" />
     <ClCompile Include="..\..\..\Classes\FirstViewController.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Cocos2dRenderer.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProvider.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProviderBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DInterop.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\DirectXBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\InputEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Classes\AppDelegate.h">
@@ -21,17 +21,17 @@
     <ClInclude Include="..\..\..\Classes\AppMacros.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXHelper.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEvent.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEventTypes.h" />
     <ClInclude Include="..\..\..\Classes\FirstViewController.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Cocos2dRenderer.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProvider.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProviderBase.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DInterop.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\DirectXBase.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\DirectXHelper.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\InputEvent.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\InputEventTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Classes">

@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2010-2012 9miao.com
  
- http://www.cocos2d-x.org
+ http://www.9miao.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 #ifndef __HTTP_RESPONSE__
 #define __HTTP_RESPONSE__
 
-#include "cocos2d.h"
+#include "CrossApp.h"
 #include "ExtensionMacros.h"
 #include "HttpRequest.h"
 
@@ -38,7 +38,7 @@ NS_CC_EXT_BEGIN
  @js NA
  @lua NA
  */
-class CCHttpResponse : public CCObject
+class CCHttpResponse : public CAObject
 {
 public:
     /** Constructor, it's used by CCHttpClient internal, users don't need to create HttpResponse manually
@@ -69,7 +69,7 @@ public:
     }
     
     /** Override autorelease method to prevent developers from calling it */
-    CCObject* autorelease(void)
+    CAObject* autorelease(void)
     {
         CCAssert(false, "HttpResponse is used between network thread and ui thread \
                         therefore, autorelease is forbidden here");

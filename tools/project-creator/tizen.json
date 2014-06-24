@@ -1,7 +1,0 @@
-{
-    "rename":               [],
-    "remove":               ["bin"],
-    "replace_package_name": [],
-    "replace_project_name": [".cproject",
-                           "manifest.xml"]
-}

@@ -4,7 +4,7 @@
 #include <cstdlib>
 
 #include "MciPlayer.h"
-#include "cocos2d.h"
+#include "CrossApp.h"
 USING_NS_CC;
 
 using namespace std;

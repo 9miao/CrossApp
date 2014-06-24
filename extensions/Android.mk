@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := cocos_extension_static
+LOCAL_MODULE    := CrossApp_extension_static
 
 LOCAL_MODULE_FILENAME := libextension
 
@@ -20,7 +20,7 @@ other/CAAdress/android/CAAddressManager.cpp \
 other/CACamera/android/CAMediaManager.cpp \
 other/CALocation/android/CALocationManager.cpp \
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_WHOLE_STATIC_LIBRARIES := CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
@@ -42,7 +42,7 @@ LOCAL_CFLAGS := -fexceptions
                     
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,cocos2dx)
+$(call import-module,CrossApp)
 $(call import-module,CocosDenshion/android)
-$(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
+$(call import-module,CrossApp/platform/third_party/android/prebuilt/libcurl)
 $(call import-module,external/libwebsockets/android)

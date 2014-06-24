@@ -14,7 +14,7 @@ extern "C"
 double* ShowDlg()
 {
 	JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/cocos2dx/lib/AndroidGPS" , "getLocation" , "()[D"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidGPS" , "getLocation" , "()[D"))
 	{
         
 		jdoubleArray doublearr = (jdoubleArray)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
@@ -30,7 +30,7 @@ double* ShowDlg()
 void start()
 {
     JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/cocos2dx/lib/Cocos2dxActivity" , "startGps" , "()V"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "startGps" , "()V"))
 	{
         jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
         

@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2010-2012 9miao.com
  
- http://www.cocos2d-x.org
+ http://www.9miao.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -25,15 +25,15 @@
 #ifndef __HTTP_REQUEST_H__
 #define __HTTP_REQUEST_H__
 
-#include "cocos2d.h"
+#include "CrossApp.h"
 #include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
 class CCHttpClient;
 class CCHttpResponse;
-typedef void (CCObject::*SEL_HttpResponse)(CCHttpClient* client, CCHttpResponse* response);
-#define httpresponse_selector(_SELECTOR) (cocos2d::extension::SEL_HttpResponse)(&_SELECTOR)
+typedef void (CAObject::*SEL_HttpResponse)(CCHttpClient* client, CCHttpResponse* response);
+#define httpresponse_selector(_SELECTOR) (CrossApp::extension::SEL_HttpResponse)(&_SELECTOR)
 
 /** 
  @brief defines the object which users must packed for CCHttpClient::send(HttpRequest*) method.
@@ -43,7 +43,7 @@ typedef void (CCObject::*SEL_HttpResponse)(CCHttpClient* client, CCHttpResponse*
  @lua NA
  */
 
-class CCHttpRequest : public CCObject
+class CCHttpRequest : public CAObject
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */
@@ -58,7 +58,7 @@ public:
     
     /** Constructor 
         Because HttpRequest object will be used between UI thead and network thread,
-        requestObj->autorelease() is forbidden to avoid crashes in CCAutoreleasePool
+        requestObj->autorelease() is forbidden to avoid crashes in CAAutoreleasePool
         new/retain/release still works, which means you need to release it manually
         Please refer to HttpRequestTest.cpp to find its usage
      */
@@ -83,7 +83,7 @@ public:
     };
     
     /** Override autorelease method to avoid developers to call it */
-    CCObject* autorelease(void)
+    CAObject* autorelease(void)
     {
         CCAssert(false, "HttpResponse is used between network thread and ui thread \
                  therefore, autorelease is forbidden here");
@@ -163,7 +163,14 @@ public:
         return _pUserData;
     };
     
-    inline void setResponseCallback(CCObject* pTarget, SEL_HttpResponse pSelector)
+    /** Required field. You should set the callback selector function at ack the http request completed
+     */
+    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(CAObject* pTarget, SEL_CallFuncND pSelector)
+    {
+        setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
+    }
+
+    inline void setResponseCallback(CAObject* pTarget, SEL_HttpResponse pSelector)
     {
         _pTarget = pTarget;
         _pSelector = pSelector;
@@ -174,7 +181,7 @@ public:
         }
     }    
     /** Get the target of callback selector funtion, mainly used by CCHttpClient */
-    inline CCObject* getTarget()
+    inline CAObject* getTarget()
     {
         return _pTarget;
     }
@@ -217,7 +224,7 @@ protected:
     std::string                 _url;            /// target url that this request is sent to
     std::vector<char>           _requestData;    /// used for POST
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback
-    CCObject*          _pTarget;        /// callback target of pSelector function
+    CAObject*          _pTarget;        /// callback target of pSelector function
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCHttpClient *sender, CCHttpResponse * response)
     void*                       _pUserData;      /// You can add your customed data here 
     std::vector<std::string>    _headers;		      /// custom http headers

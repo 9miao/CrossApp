@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "jni/SimpleAudioEngineJni.h"
 #include "opensl/SimpleAudioEngineOpenSL.h"
 
-#include "cocos2d.h"
+#include "CrossApp.h"
 #include <cstring>
 #include <android/log.h>
 #include <jni/JniHelper.h>
@@ -42,7 +42,7 @@ USING_NS_CC;
 /**********************************************************************************
  *   jni
  **********************************************************************************/
-#define  CLASS_NAME   "org/cocos2dx/lib/Cocos2dxHelper"
+#define  CLASS_NAME   "org/CrossApp/lib/Cocos2dxHelper"
 #define  METHOD_NAME  "getDeviceModel"
 
 namespace CocosDenshion {

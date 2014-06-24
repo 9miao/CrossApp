@@ -53,7 +53,7 @@ CCDictionary* CAUIHelper::createCAWidgetWithJsonFile(const char *filename)
     CSJson::Value root;
     CSJson::Value description;
     CSJson::Value rect;
-    CCObject *ui = new CCObject();
+    CAObject *ui = new CAObject();
     
     if (!reader.parse(des, root))
     {
@@ -92,7 +92,7 @@ CCDictionary* CAUIHelper::createCAWidgetWithJsonFile(const char *filename)
     return m_UIDictionary;
 }
 
-CCObject* CAUIHelper::addButton(CSJson::Value jsonValue, cocos2d::CCRect &uiRect)
+CAObject* CAUIHelper::addButton(CSJson::Value jsonValue, CrossApp::CCRect &uiRect)
 {
     CAButton *btn = CAButton::createWithFrame(uiRect, CAButtonTypeRoundedRect);
     int tag = jsonValue["tag"].asInt();
@@ -131,13 +131,12 @@ CCObject* CAUIHelper::addButton(CSJson::Value jsonValue, cocos2d::CCRect &uiRect
     
     
 }
-CCObject* CAUIHelper::addLabel(CSJson::Value jsonValue, CCRect &uiRect)
+CAObject* CAUIHelper::addLabel(CSJson::Value jsonValue, CCRect &uiRect)
 {
-    CCLabelTTF *label=CCLabelTTF::create("", "黑体", 30);
-    label->setFrame(uiRect);
+
     return NULL;
 }
-CCObject* CAUIHelper::addImage(CSJson::Value jsonValue, CCRect &uiRect)
+CAObject* CAUIHelper::addImage(CSJson::Value jsonValue, CCRect &uiRect)
 {
     CAImageView *imageview = CAImageView::createWithImage(CAImage::create(""));
     imageview->setFrame(uiRect);

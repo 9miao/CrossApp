@@ -24,10 +24,10 @@
 
 /*
  Local Storage support for the JS Bindings for iOS.
- Works on cocos2d-iphone and cocos2d-x.
+ Works on CrossApp-iphone and CrossApp-x.
  */
 
-#include "cocos2d.h"
+#include "CrossApp.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
 

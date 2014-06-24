@@ -30,7 +30,6 @@
     <ClCompile Include="..\network\HttpClient.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp" />
     <ClCompile Include="..\GUI\CAUIHelper.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -43,12 +42,12 @@
     <ClCompile Include="..\other\CALocation\wp8\CALocationManager.cpp">
       <Filter>other\CALocation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\CrossApp\platform\winrt\CCPThreadWinRT.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
       <Filter>AssetsManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\network\HttpClient.h">
       <Filter>network</Filter>
@@ -59,7 +58,6 @@
     <ClInclude Include="..\network\HttpResponse.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
     <ClInclude Include="..\GUI\CAUIHelper.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -72,5 +70,7 @@
     <ClInclude Include="..\other\CALocation\CALocationManager.h">
       <Filter>other\CALocation</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\CrossApp\platform\winrt\CCPThreadWinRT.h" />
+    <ClInclude Include="..\CrossAppExt.h" />
   </ItemGroup>
 </Project>

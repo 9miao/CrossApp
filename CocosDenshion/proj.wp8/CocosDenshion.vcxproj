@@ -173,9 +173,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\CrossApp\platform\wp8-xaml\DirectXHelper.h" />
     <ClInclude Include="..\wp8\Audio.h" />
     <ClInclude Include="..\wp8\corewrappers.h" />
-    <ClInclude Include="..\wp8\DirectXHelper.h" />
     <ClInclude Include="..\wp8\MediaStreamer.h" />
     <ClInclude Include=".\pch.h" />
   </ItemGroup>
@@ -186,6 +186,11 @@
     <ClCompile Include=".\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CrossApp\proj.wp8\CrossApp.vcxproj">
+      <Project>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />

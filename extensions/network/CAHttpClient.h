@@ -1,14 +1,14 @@
 
 //  Copyright (c) 2014 http://9miao.com All rights reserved.
 
-#include "cocos2d.h"
+#include "CrossApp.h"
 #include "ExtensionMacros.h"
 #include <iostream>
 #include <string>
 #include <cctype>
 #include <map>
 #include <fstream>
-#include "cocoa/CCObject.h"
+#include "basics/CAObject.h"
 
 #include "curl/curl.h"
 
@@ -20,7 +20,7 @@ NS_CC_EXT_BEGIN
 size_t lcbak(char *ptr,size_t size,size_t nmemb,void *userdata);
 size_t dcbak(char *ptr,size_t size,size_t nmemb,void *userdata);
 
-class CAHttpClient: public CCObject
+class CAHttpClient: public CAObject
 {
 private:
 	CURL *curl;

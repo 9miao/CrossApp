@@ -38,8 +38,9 @@
 -(CGPoint)getLocation
 {
     
-    
+    return CGPointZero;
 }
+
 #pragma mark Core Location
 
 

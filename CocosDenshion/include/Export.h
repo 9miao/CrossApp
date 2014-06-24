@@ -1,8 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) 2010-2013 9miao.com
 Copyright (c) Microsoft Open Technologies, Inc.
 
-http://www.cocos2d-x.org
+http://www.9miao.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

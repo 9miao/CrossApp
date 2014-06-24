@@ -15,7 +15,7 @@
 void OpenAlbum()
 {
 	JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/cocos2dx/lib/AndroidNativeTool" , "CAImageAlbum" , "()V"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "CAImageAlbum" , "()V"))
 	{
 		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID);
 	}
@@ -23,7 +23,7 @@ void OpenAlbum()
 void OpenCamera()
 {
     JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/cocos2dx/lib/AndroidNativeTool" , "CAImageCapture" , "()V"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "CAImageCapture" , "()V"))
 	{
 		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID);
 	}
@@ -101,7 +101,7 @@ void CAMediaManager::getSelectedImage(const char *path)
 
 extern "C"
 {
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_AndroidNativeTool_NativeReturn
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_AndroidNativeTool_NativeReturn
     ( JNIEnv* env,jobject thiz ,jstring arg1, jobject arg2)
     {
         const char* str = env->GetStringUTFChars(arg1, false);

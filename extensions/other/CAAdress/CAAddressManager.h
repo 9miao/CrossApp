@@ -10,11 +10,11 @@
 #define __iBook__CAAddressManager__
 
 #include <iostream>
-#include "cocos2d.h"
-#include "cocos-ext.h"
+#include "CrossApp.h"
+#include "CrossAppExt.h"
 USING_NS_CC;
 using namespace std;
-class CAAddressBookRecord:public CCObject
+class CAAddressBookRecord:public CAObject
 {
 public:
     string firstName;
@@ -74,7 +74,7 @@ public:
     
 };
 
-class CAAddressManager:public CCObject
+class CAAddressManager:public CAObject
 {
 public:
     CAAddressManager();

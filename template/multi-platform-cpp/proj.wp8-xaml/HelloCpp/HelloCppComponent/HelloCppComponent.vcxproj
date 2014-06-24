@@ -72,7 +72,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\CrossApp;$(ProjectDir)..\..\..\..\..\CrossApp\platform\wp8;$(ProjectDir)..\..\..\..\..\CrossApp\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\CrossApp\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\CrossApp\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\CrossApp\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -144,25 +144,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXHelper.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEvent.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEventTypes.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Cocos2dRenderer.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProvider.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProviderBase.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DInterop.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\DirectXBase.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\DirectXHelper.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\InputEvent.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\InputEventTypes.h" />
     <ClInclude Include="..\..\..\Classes\AppDelegate.h" />
     <ClInclude Include="..\..\..\Classes\AppMacros.h" />
     <ClInclude Include="..\..\..\Classes\FirstViewController.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEvent.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Cocos2dRenderer.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProvider.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProviderBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DInterop.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\DirectXBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\InputEvent.cpp" />
     <ClCompile Include="..\..\..\Classes\AppDelegate.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
@@ -172,20 +172,11 @@
     <ClCompile Include="..\..\..\Classes\FirstViewController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_phone.vcxproj">
-      <Project>{d2d857bf-346e-4014-b9cf-50d5e1f8a357}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libEGL\libEGL_phone.vcxproj">
-      <Project>{ab42a170-e370-4707-8cc6-1c51349c146f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_phone.vcxproj">
-      <Project>{0592f9c3-d727-4d41-bc9e-e43b269ad877}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\cocos2dx\proj.wp8\libcocos2d.vcxproj">
-      <Project>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\CocosDenshion\proj.wp8\CocosDenshion.vcxproj">
       <Project>{72ddd46b-55b1-4531-9eea-72081acbcaa2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\CrossApp\proj.wp8\CrossApp.vcxproj">
+      <Project>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\extensions\proj.wp8\libExtensions.vcxproj">
       <Project>{a5ce59f9-2785-4e08-bd3c-0f370eeca439}</Project>

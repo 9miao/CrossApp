@@ -1,7 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010 CrossApp-x.org
 
-http://www.cocos2d-x.org
+http://www.CrossApp-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "SimpleAudioEngine.h"
 #include "SimpleAudioEngine_objc.h"
-#include "cocos2d.h"
+#include "CrossApp.h"
 USING_NS_CC;
 
 static void static_end()
