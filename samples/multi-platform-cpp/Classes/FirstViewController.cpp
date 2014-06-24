@@ -26,14 +26,14 @@ void FirstViewController::viewDidLoad()
     CCSize size = this->getView()->getBounds().size;
 
     label = CALabel::createWithCenter(CCRect(size.width/2, 60, 200, 50));
-    label->setfontSize(size.width/30);
+    label->setFontSize(size.width/30);
     label->setText("0.000000");
     this->getView()->addSubview(label);
     
     float height = size.width * 0.8f * 0.15f;
     float off_Y = size.width * 0.8f * 0.15f + 10;
     
-    CCRect progress_rect = CCRect(size.width / 2, off_Y + 60, size.width * 0.8f, 20);
+    CCRect progress_rect = CCRect(size.width / 2, off_Y + 60, size.width * 0.8f, 10);
 	progress = CAProgress::create();
 	progress->setCenter(progress_rect);
 	this->getView()->addSubview(progress);
@@ -49,7 +49,7 @@ void FirstViewController::viewDidLoad()
     segmentedControl->insertSegmentWithTitle("3", 3, CAControlStateAll);
     this->getView()->addSubview(segmentedControl);
     
-    CAButton* btn = CAButton::createWithCenter(CCRect(size.width/2, 600, 200, 50), CAButtonTypeRounded3DRect);
+    CAButton* btn = CAButton::createWithCenter(CCRect(size.width/2, 600, 150, 60), CAButtonTypeRoundedRect);
     btn->setTitleForState(CAControlStateAll, "OK");
     this->getView()->addSubview(btn);
     btn->addTarget(this, CAControl_selector(FirstViewController::diss), CAControlEventTouchUpInSide);

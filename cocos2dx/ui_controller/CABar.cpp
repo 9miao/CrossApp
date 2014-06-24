@@ -96,7 +96,7 @@ void CANavigationBar::showBackGround()
     
     if (m_pBackGroundImage == NULL)
     {
-        this->setBackGroundImage(CAImage::create("navigationController_bg.png"));
+        this->setBackGroundImage(CAImage::create("source_material/navigation_bg.png"));
     }
 
     m_pBackGround = CAScale9ImageView::createWithImage(this->getBackGroundImage());
@@ -142,13 +142,15 @@ void CANavigationBar::showLeftButton()
         m_pLeftButton = NULL;
     }
     
+    CABarButtonItem* buttonItem = m_pItems.back()->getLeftButtonItem();
+    
+    CC_RETURN_IF(m_pItems.size() <= 1 && buttonItem == NULL);
+    
     CCRect rect = this->getBounds();
     rect.size.width = rect.size.height;
     
     m_pLeftButton = CAButton::createWithFrame(rect, CAButtonTypeCustom);
     this->addSubview(m_pLeftButton);
-    
-    CABarButtonItem* buttonItem = m_pItems.back()->getLeftButtonItem();
     
     if (buttonItem)
     {
@@ -168,7 +170,7 @@ void CANavigationBar::showLeftButton()
     }
     else
     {
-        m_pLeftButton->setImageForState(CAControlStateNormal, CAImage::create("button_left.png"));
+        m_pLeftButton->setImageForState(CAControlStateNormal, CAImage::create("source_material/btn_left_white.png"));
         m_pLeftButton->setImageColorForState(CAControlStateHighlighted, ccc4(255, 255, 200, 255));
     }
     
@@ -187,16 +189,6 @@ void CANavigationBar::showLeftButton()
         sel = CAControl_selector(CANavigationBar::goBack);
     }
     m_pLeftButton->addTarget(target, sel, CAControlEventTouchUpInSide);
-    
-    if (m_pItems.size() <= 1)
-    {
-        CC_RETURN_IF(buttonItem && buttonItem->getTarget());
-        m_pLeftButton->setVisible(false);
-    }
-    else
-    {
-        m_pLeftButton->setVisible(true);
-    }
 }
 
 void CANavigationBar::showRightButton()
@@ -207,18 +199,16 @@ void CANavigationBar::showRightButton()
         m_pRightButton = NULL;
     }
     
-    CCRect rect = this->getBounds();
-    rect.origin.x = rect.size.width - rect.size.height;
-    rect.size.width = rect.size.height;
-    
-    m_pRightButton = CAButton::createWithFrame(rect, CAButtonTypeCustom);
-    this->addSubview(m_pRightButton);
-    
-    m_pRightButton->removeAllTargets();
     CABarButtonItem* buttonItem = m_pItems.back()->getRightButtonItem();
     
     if (buttonItem)
     {
+        CCRect rect = this->getBounds();
+        rect.origin.x = rect.size.width - rect.size.height;
+        rect.size.width = rect.size.height;
+    
+        m_pRightButton = CAButton::createWithFrame(rect, CAButtonTypeCustom);
+        this->addSubview(m_pRightButton);
         m_pRightButton->setTitleForState(CAControlStateNormal, buttonItem->getTitle());
         m_pRightButton->setTitleColorForState(CAControlStateNormal, CAColor_white);
         m_pRightButton->setTitleForState(CAControlStateHighlighted, buttonItem->getTitle());
@@ -243,17 +233,6 @@ void CANavigationBar::showRightButton()
             sel = buttonItem->getSel();
             m_pRightButton->addTarget(target, sel, CAControlEventTouchUpInSide);
         }
-        
-        
-    }
-    
-    if (buttonItem)
-    {
-        m_pRightButton->setVisible(true);
-    }
-    else
-    {
-        m_pRightButton->setVisible(false);
     }
 }
 
@@ -313,7 +292,7 @@ CATabBar::CATabBar()
 ,m_cItemSize(CCSizeZero)
 ,m_nSelectedIndex(0)
 ,m_sTitleColor(CAColor_white)
-,m_sSelectedTitleColor(CAColor_white)
+,m_sSelectedTitleColor(ccc4(50, 193, 255, 255))
 ,m_pDelegate(NULL)
 {
     
@@ -424,7 +403,7 @@ void CATabBar::showBackGround()
     
     if (m_pBackGroundImage == NULL)
     {
-        m_pBackGroundImage = CAImage::create("tabBarController_bg.png");
+        m_pBackGroundImage = CAImage::create("source_material/tabBar_bg.png");
     }
     
     m_pBackGround = CAScale9ImageView::createWithImage(m_pBackGroundImage);
@@ -442,15 +421,16 @@ void CATabBar::showItems()
     {
         m_pSegmentedControl->setTitleAtIndex(m_pItems.at(i)->getTitle().c_str(), i, CAControlStateAll);
         m_pSegmentedControl->setTitleColorAtIndex(m_sTitleColor, i, CAControlStateAll);
+        m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateHighlighted);
         m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateSelected);
         m_pSegmentedControl->setImageAtIndex(m_pItems.at(i)->getImage(), i, CAControlStateNormal);
-        m_pSegmentedControl->setImageAtIndex(m_pItems.at(i)->getImage(), i, CAControlStateHighlighted);
         CAImage* selectedImage = m_pItems.at(i)->getSelectedImage() ? m_pItems.at(i)->getSelectedImage() : m_pItems.at(i)->getImage();
+        m_pSegmentedControl->setImageAtIndex(selectedImage, i, CAControlStateHighlighted);
         m_pSegmentedControl->setImageAtIndex(selectedImage, i, CAControlStateSelected);
         m_pSegmentedControl->setBackgroundImageAtIndex(NULL, i, CAControlStateNormal);
         if (m_pSelectedBackGroundImage == NULL)
         {
-            m_pSelectedBackGroundImage = CAImage::create("tabBarController_selected_bg.png");
+            m_pSelectedBackGroundImage = CAImage::create("source_material/tabBar_selected_bg.png");
         }
         m_pSegmentedControl->setBackgroundImageAtIndex(m_pSelectedBackGroundImage, i, CAControlStateHighlighted);
         m_pSegmentedControl->setBackgroundImageAtIndex(m_pSelectedBackGroundImage, i, CAControlStateSelected);
@@ -469,7 +449,7 @@ void CATabBar::showSelectedIndicator()
     
     if (m_pSelectedIndicatorImage == NULL)
     {
-        m_pSelectedIndicatorImage = CAImage::create("tabBarController_selected_bottom.png");
+        m_pSelectedIndicatorImage = CAImage::create("source_material/tabBar_selected_indicator.png");
     }
     
     CCRect rect = CCRect(0,
@@ -477,9 +457,15 @@ void CATabBar::showSelectedIndicator()
                          m_cItemSize.width,
                          m_cItemSize.height / 10);
     
-    m_pSelectedIndicator = CAScale9ImageView::createWithImage(m_pSelectedIndicatorImage);
-    ((CAScale9ImageView*)m_pSelectedIndicator)->setFrame(rect);
-    this->insertSubview(m_pSelectedIndicator, 1);
+    CAScale9ImageView* selectedIndicator= CAScale9ImageView::createWithImage(m_pSelectedIndicatorImage);
+    CCRect insetRect;
+    insetRect.origin = selectedIndicator->getBounds().size / 2;
+    insetRect.origin = ccpSub(insetRect.origin, CCPoint(1, 1));
+    insetRect.size = CCPoint(2, 2);
+    selectedIndicator->setCapInsets(insetRect);
+    selectedIndicator->setFrame(rect);
+    this->insertSubview(selectedIndicator, 1);
+    m_pSelectedIndicator = selectedIndicator;
 }
 
 void CATabBar::setSelectedAtIndex(int index)

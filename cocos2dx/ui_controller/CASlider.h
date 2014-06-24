@@ -76,7 +76,7 @@ protected:
     CAImage* getImage(CAImage* image, CCSize size);
     virtual void addTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
     virtual void removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event);
-    
+    void setContentSize(const CCSize & var);
 protected:
     CAImageView *m_pMinTrackTintImageView;
     CAImageView *m_pMaxTrackTintImageView;

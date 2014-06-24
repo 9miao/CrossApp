@@ -163,13 +163,6 @@ public:
         return _pUserData;
     };
     
-    /** Required field. You should set the callback selector function at ack the http request completed
-     */
-    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(CCObject* pTarget, SEL_CallFuncND pSelector)
-    {
-        setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
-    }
-
     inline void setResponseCallback(CCObject* pTarget, SEL_HttpResponse pSelector)
     {
         _pTarget = pTarget;

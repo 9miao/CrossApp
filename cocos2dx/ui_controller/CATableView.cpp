@@ -24,7 +24,7 @@ CATableView::CATableView()
 ,m_pTableFooterView(NULL)
 ,m_pTablePullDownView(NULL)
 ,m_pTablePullUpView(NULL)
-,m_separatorColor(ccc4(127, 127, 127, 255))
+,m_separatorColor(CAColor_gray)
 ,m_nSeparatorViewHeight(1)
 ,m_nTableHeaderHeight(0)
 ,m_nTableFooterHeight(0)
@@ -520,9 +520,9 @@ bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
     
     this->setBackGroundViewForState(CAControlStateNormal, CAView::createWithFrame(this->getBounds(), ccc4(255, 255, 255, 255)));
 
-    this->setBackGroundViewForState(CAControlStateHighlighted, CAView::createWithFrame(this->getBounds(), ccc4(50, 50, 200, 255)));
+    this->setBackGroundViewForState(CAControlStateHighlighted, CAView::createWithFrame(this->getBounds(), ccc4(50, 193, 255, 255)));
     
-    this->setBackGroundViewForState(CAControlStateSelected, CAView::createWithFrame(this->getBounds(), ccc4(50, 50, 200, 255)));
+    this->setBackGroundViewForState(CAControlStateSelected, CAView::createWithFrame(this->getBounds(), ccc4(50, 193, 255, 255)));
     
     this->setControlStateNormal();
     

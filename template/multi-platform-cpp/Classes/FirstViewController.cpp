@@ -36,10 +36,14 @@ void FirstViewController::viewDidLoad()
     imageView->setFrame(winRect);
     this->getView()->addSubview(imageView);
     
-    CCLabelTTF* ttf = CCLabelTTF::create("Hello World!", "CODE LIGHT", 72);
-	ttf->setColor(CAColor_white);
-    ttf->setCenter(CCRect(winRect.size.width*0.5, winRect.size.height*0.5-270, 0, 0));
-    this->getView()->insertSubview(ttf,1);
+    CALabel* label = CALabel::createWithCenter(CCRect(winRect.size.width*0.5, winRect.size.height*0.5-270, winRect.size.width, 200));
+    label->setTextAlignment(CATextAlignmentCenter);
+    label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    label->setFontSize(72);
+    label->setFontName("CODE LIGHT");
+    label->setText("Hello World!");
+    label->setColor(CAColor_white);
+    this->getView()->insertSubview(label, 1);
 }
 
 void FirstViewController::viewDidUnload()

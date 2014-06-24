@@ -445,10 +445,10 @@ bool CAImage::initPremultipliedATextureWithImage(CCImage *image, unsigned int wi
 // implementation CAImage (Text)
 bool CAImage::initWithString(const char *text, const char *fontName, float fontSize)
 {
-    return initWithString(text,  fontName, fontSize, CCSizeMake(0,0), kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop);
+    return initWithString(text,  fontName, fontSize, CCSizeMake(0,0), CATextAlignmentCenter, CAVerticalTextAlignmentTop);
 }
 
-bool CAImage::initWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment)
+bool CAImage::initWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -479,20 +479,20 @@ bool CAImage::initWithString(const char *text, const char *fontName, float fontS
         bool bRet = false;
         CCImage::ETextAlign eAlign;
         
-        if (kCCVerticalTextAlignmentTop == vAlignment)
+        if (CAVerticalTextAlignmentTop == vAlignment)
         {
-            eAlign = (kCCTextAlignmentCenter == hAlignment) ? CCImage::kAlignTop
-            : (kCCTextAlignmentLeft == hAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
+            eAlign = (CATextAlignmentCenter == hAlignment) ? CCImage::kAlignTop
+            : (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
         }
-        else if (kCCVerticalTextAlignmentCenter == vAlignment)
+        else if (CAVerticalTextAlignmentCenter == vAlignment)
         {
-            eAlign = (kCCTextAlignmentCenter == hAlignment) ? CCImage::kAlignCenter
-            : (kCCTextAlignmentLeft == hAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
+            eAlign = (CATextAlignmentCenter == hAlignment) ? CCImage::kAlignCenter
+            : (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
         }
-        else if (kCCVerticalTextAlignmentBottom == vAlignment)
+        else if (CAVerticalTextAlignmentBottom == vAlignment)
         {
-            eAlign = (kCCTextAlignmentCenter == hAlignment) ? CCImage::kAlignBottom
-            : (kCCTextAlignmentLeft == hAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
+            eAlign = (CATextAlignmentCenter == hAlignment) ? CCImage::kAlignBottom
+            : (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
         }
         else
         {
@@ -530,20 +530,20 @@ bool CAImage::initWithString(const char *text, ccFontDefinition *textDefinition)
         bool bRet = false;
         CCImage::ETextAlign eAlign;
         
-        if (kCCVerticalTextAlignmentTop == textDefinition->m_vertAlignment)
+        if (CAVerticalTextAlignmentTop == textDefinition->m_vertAlignment)
         {
-            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignTop
-            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
+            eAlign = (CATextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignTop
+            : (CATextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
         }
-        else if (kCCVerticalTextAlignmentCenter == textDefinition->m_vertAlignment)
+        else if (CAVerticalTextAlignmentCenter == textDefinition->m_vertAlignment)
         {
-            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignCenter
-            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
+            eAlign = (CATextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignCenter
+            : (CATextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
         }
-        else if (kCCVerticalTextAlignmentBottom == textDefinition->m_vertAlignment)
+        else if (CAVerticalTextAlignmentBottom == textDefinition->m_vertAlignment)
         {
-            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignBottom
-            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
+            eAlign = (CATextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignBottom
+            : (CATextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
         }
         else
         {

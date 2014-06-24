@@ -21,7 +21,7 @@ CASlider::CASlider()
     , m_value(0.0f)
     , m_minValue(0.0f)
     , m_maxValue(1.0f)
-    , m_trackHeight(4.0f)
+    , m_trackHeight(3.0f)
     , m_pMinTrackTintImage(NULL)
     , m_pMaxTrackTintImage(NULL)
     , m_pThumbTintImage(NULL)
@@ -53,17 +53,17 @@ void CASlider::onEnterTransitionDidFinish()
     
     if (NULL == m_pMinTrackTintImage)
     {
-        this->setMinTrackTintImage(CAImage::create("btn_square_selected.png"));
+        this->setMinTrackTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
     }
     
     if (NULL == m_pMaxTrackTintImage)
     {
-        this->setMaxTrackTintImage(CAImage::create("btn_square_disabled.png"));
+        this->setMaxTrackTintImage(CAImage::create("source_material/btn_square_disabled.png"));
     }
     
     if (NULL == m_pThumbTintImage)
     {
-        this->setThumbTintImage(CAImage::create("btn_rounded_normal.png"));
+        this->setThumbTintImage(CAImage::create("source_material/slider_indicator.png"));
     }
     
     const CCSize size = this->getBounds().size;
@@ -84,7 +84,7 @@ void CASlider::onEnterTransitionDidFinish()
     
     if (NULL == m_pThumbTintImageView)
     {
-        CAImage* image = this->getImage(m_pThumbTintImage, CCSizeMake(size.height, size.height));
+        CAImage* image = this->getImage(m_pThumbTintImage, CCSize(size.height, size.height));
         m_pThumbTintImageView = CAImageView::createWithImage(image);
     }
     if (m_pThumbTintImageView)
@@ -172,9 +172,9 @@ void CASlider::layoutSubViews()
         const float minRight = centerX - halfThumbWidth;
         const float maxLeft = centerX + halfThumbWidth;
         
-        m_pThumbTintImageView->setCenterOrigin(CCPointMake(centerX, size.height / 2));
-        m_pMinTrackTintImageView->setFrame(CCRectMake(0, trackOriginY, minRight, m_trackHeight));
-        m_pMaxTrackTintImageView->setFrame(CCRectMake(maxLeft, trackOriginY, size.width - maxLeft, m_trackHeight));
+        m_pThumbTintImageView->setCenterOrigin(CCPoint(centerX, size.height / 2));
+        m_pMinTrackTintImageView->setFrame(CCRect(0, trackOriginY, minRight, m_trackHeight));
+        m_pMaxTrackTintImageView->setFrame(CCRect(maxLeft, trackOriginY, size.width - maxLeft, m_trackHeight));
     }
 }
 
@@ -269,7 +269,7 @@ void CASlider::setThumbTintImage(CAImage* image)
         if (m_pThumbTintImageView)
         {
             const CCSize size = this->getBounds().size;
-            m_pThumbTintImageView->setImage(this->getImage(m_pThumbTintImage, CCSizeMake(size.height, size.height)));
+            m_pThumbTintImageView->setImage(this->getImage(m_pThumbTintImage, CCSize(size.height, size.height)));
         }
         this->layoutSubViews();
     }
@@ -343,6 +343,11 @@ void CASlider::addTarget(CCObject* target, SEL_CAControl selector, CAControlEven
 void CASlider::removeTarget(CCObject* target, SEL_CAControl selector, CAControlEvents event)
 {
     CAControl::removeTarget(target, selector, event);
+}
+
+void CASlider::setContentSize(const CCSize & var)
+{
+    CAControl::setContentSize(CCSize(var.width, 36.0f));
 }
 
 NS_CC_END

@@ -35,13 +35,20 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // create a scene. it's an autorelease object
 	m_pWindow = CAWindow::create();
-    
+
     // run
     pDirector->runWindow(m_pWindow);
     
     RootViewController* viewController = new RootViewController();
     viewController->init();
     viewController->setTitle("设置");
+    
+    CANavigationBarItem* item = CANavigationBarItem::create("The Home Page");
+    CABarButtonItem* leftBtnItem = CABarButtonItem::create("left", NULL, NULL);
+    leftBtnItem->setTarget(NULL, NULL);
+    CABarButtonItem* rightBtnItem = CABarButtonItem::create("left", NULL, NULL);
+    rightBtnItem->setTarget(NULL, NULL);
+    viewController->setNavigationBarItem(item);
     
     CANavigationController* navigationController = new CANavigationController();
     navigationController->initWithRootViewController(viewController);

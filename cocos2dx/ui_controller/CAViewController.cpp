@@ -334,7 +334,7 @@ void CANavigationController::replaceViewController(cocos2d::CAViewController *vi
     float x = m_pContainer->getFrame().size.width;
     
     CAViewController* lastViewController = m_pViewControllers.back();
-    lastViewController->getView()->setFrameOrigin(CCPoint(-x, 0));
+    lastViewController->getView()->setFrame(CCRect(-x, 0, 0, 0));
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.insert(m_pViewControllers.end()-1, viewController);
@@ -362,7 +362,7 @@ void CANavigationController::replaceViewController(cocos2d::CAViewController *vi
 
 void CANavigationController::replaceViewControllerFinish()
 {
-    m_pContainer->setFrameOrigin(CCPoint(0, m_pContainer->getFrame().origin.y));
+    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
     
     CAViewController* lastViewController = m_pViewControllers.back();
     m_pViewControllers.pop_back();
@@ -394,7 +394,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
     float x = m_pContainer->getFrame().size.width;
     
     CAViewController* lastViewController = m_pViewControllers.back();
-    lastViewController->getView()->setFrameOrigin(CCPoint(-x, 0));
+    lastViewController->getView()->setFrame(CCRect(-x, 0, 0, 0));
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
@@ -421,7 +421,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
 
 void CANavigationController::pushViewControllerFinish()
 {
-    m_pContainer->setFrameOrigin(CCPoint(0, m_pContainer->getFrame().origin.y));
+    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
     
     CAViewController* viewController = m_pViewControllers.back();
     
@@ -449,13 +449,13 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     
     unsigned int index = m_pViewControllers.size() - 2;
     CAViewController* showViewController = m_pViewControllers.at(index);
-    showViewController->getView()->setFrameOrigin(CCPointZero);
+    showViewController->getView()->setFrame(CCRectZero);
     m_pContainer->addSubview(showViewController->getView());
     
     CAViewController* backViewController = m_pViewControllers.back();
     
     float x = m_pContainer->getFrame().size.width;
-    backViewController->getView()->setFrameOrigin(CCPoint(x, 0));
+    backViewController->getView()->setFrame(CCRect(x, 0, 0, 0));
     
     if (animated)
     {
@@ -485,7 +485,7 @@ void CANavigationController::popViewControllerFinish()
     lastViewController->autorelease();
     m_pViewControllers.pop_back();
     m_pNavigationBar->popItem();
-    m_pContainer->setFrameOrigin(CCPoint(0, m_pContainer->getFrame().origin.y));
+    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
 }
 
 void CANavigationController::navigationPopViewController(CANavigationBar* navigationBar, bool animated)
@@ -497,8 +497,6 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
 {
     CC_RETURN_IF(m_bNavigationBarHidden == hidden);
     m_bNavigationBarHidden = hidden;
-    m_pNavigationBar->stopAllActions();
-    this->unScheduleUpdate();
     CC_RETURN_IF(this->getView()->getSuperview() == NULL);
     
     CCPoint point = CCPointZero;
@@ -542,15 +540,22 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
+        m_pNavigationBar->stopAllActions();
         CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.3f, point);
+        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CANavigationController::scheduleUpdate));
         CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CANavigationController::unScheduleUpdate));
-        CCSequence* actions = CCSequence::create(begin, moveTo, end, NULL);
+        CCDelayTime* delayTime = CCDelayTime::create(0.1f);
+        CCSequence* actions = CCSequence::create(begin, easeBack, delayTime, end, NULL);
         m_pNavigationBar->runAction(actions);
     }
     else
     {
         m_pNavigationBar->setFrameOrigin(point);
+        if (this->getView()->getSuperview())
+        {
+            this->update(0);
+        }
     }
 
 }
@@ -589,6 +594,7 @@ void CANavigationController::update(float dt)
 
 void CANavigationController::scheduleUpdate()
 {
+    CAScheduler::unschedule(schedule_selector(CANavigationController::update), this);
     CAScheduler::schedule(schedule_selector(CANavigationController::update), this, 1/60.0f, false);
 }
 
@@ -859,8 +865,6 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
 {
     CC_RETURN_IF(m_bTabBarHidden == hidden);
     m_bTabBarHidden = hidden;
-    m_pTabBar->stopAllActions();
-    this->unScheduleUpdate();
     CC_RETURN_IF(this->getView()->getSuperview() == NULL);
     
     CCPoint point = CCPointZero;
@@ -904,10 +908,13 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
+        m_pTabBar->stopAllActions();
         CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.3f, point);
+        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CATabBarController::scheduleUpdate));
         CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CATabBarController::unScheduleUpdate));
-        CCSequence* actions = CCSequence::create(begin, moveTo, end, NULL);
+        CCDelayTime* delayTime = CCDelayTime::create(0.1f);
+        CCSequence* actions = CCSequence::create(begin, easeBack, delayTime, end, NULL);
         m_pTabBar->runAction(actions);
     }
     else
@@ -962,6 +969,7 @@ void CATabBarController::update(float dt)
 
 void CATabBarController::scheduleUpdate()
 {
+    CAScheduler::unschedule(schedule_selector(CATabBarController::update), this);
     CAScheduler::schedule(schedule_selector(CATabBarController::update), this, 1/60.0f, false);
 }
 

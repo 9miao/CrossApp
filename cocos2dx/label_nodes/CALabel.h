@@ -17,20 +17,22 @@ using namespace std;
 typedef struct _caFontDefinition
 {
 public:
-    
-    _caFontDefinition():  m_alignment(kCCTextAlignmentCenter),
-    m_vertAlignment(kCCVerticalTextAlignmentTop),
+    _caFontDefinition()
+    : m_alignment(CATextAlignmentCenter),
+    m_vertAlignment(CAVerticalTextAlignmentTop),
     m_fontFillColor(ccc4(255, 255, 255, 255))
-    { m_dimensions = CCSizeMake(0,0); }
+    {
+        m_dimensions = CCSizeMake(0,0);
+    }
     
     // font name
     std::string             m_fontName;
     // font size
     int                     m_fontSize;
     // horizontal alignment
-    CCTextAlignment         m_alignment;
+    CATextAlignment         m_alignment;
     // vertical alignment
-    CCVerticalTextAlignment m_vertAlignment;
+    CAVerticalTextAlignment m_vertAlignment;
     // renering box
     CCSize                  m_dimensions;
     // font color
@@ -51,21 +53,25 @@ public:
     
     static CALabel* createWithCenter(const CCRect& rect);
     
+    virtual bool init();
+    
     virtual bool initWithFrame(const CCRect& rect);
     
     virtual bool initWithCenter(const CCRect& rect);
     
+    virtual void setImageRect(const CCRect& rect);
+    
+    virtual void updateImageRect();
+    
     CC_PROPERTY(string, m_nText, Text);
     
-    CC_SYNTHESIZE(unsigned int, m_nfontSize, fontSize);
+    CC_SYNTHESIZE(unsigned int, m_nfontSize, FontSize);
     
-    CC_SYNTHESIZE(string, m_nfontName, fontName);
+    CC_SYNTHESIZE(string, m_nfontName, FontName);
     
-    CC_PROPERTY(CAColor4B, m_nTextcolor, Textcolor);
+    CC_SYNTHESIZE(CAVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
     
-    CC_SYNTHESIZE(CCVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
-    
-    CC_PROPERTY(CCTextAlignment, m_nTextAlignment, TextAlignment);
+    CC_PROPERTY(CATextAlignment, m_nTextAlignment, TextAlignment);
     
     CC_PROPERTY(CCSize, m_nDimensions, Dimensions);
     
@@ -75,13 +81,12 @@ public:
 
     CC_SYNTHESIZE_READONLY(CCSize, m_cLabelSize, LabelSize);
     
-    //    CC_PROPERTY(CAColor4B, m_nShadowcolor, Shadowcolor);
-    //
-    //    CC_PROPERTY(CCSize, m_nShadowOffset, ShadowOffset);
+    bool isInput;
     
     bool updateImage();
     
 private:
+    CCRect m_rRect;
     
     virtual void onEnterTransitionDidFinish();
     

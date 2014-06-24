@@ -559,8 +559,6 @@ public:
     
     inline const CCRect& getImageRect(void) { return m_obRect; }
     
-    inline const CCPoint& getOffsetPosition(void) { return m_obOffsetPoint; }
-    
     bool isFlipX(void);
     
     void setFlipX(bool bFlipX);
@@ -692,8 +690,7 @@ protected:
     CCRect m_obRect;                            /// Retangle of CAImage
     bool   m_bRectRotated;                      /// Whether the Image is rotated
     
-    // Offset Position (used by Zwoptex)
-    CCPoint m_obOffsetPoint;
+
     CCPoint m_obUnflippedOffsetPositionFromCenter;
     
     // vertex coords, Image coords and color info

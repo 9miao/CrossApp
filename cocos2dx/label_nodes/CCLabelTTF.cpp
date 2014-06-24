@@ -40,8 +40,8 @@ NS_CC_BEGIN
 //CCLabelTTF
 //
 CCLabelTTF::CCLabelTTF()
-: m_hAlignment(kCCTextAlignmentCenter)
-, m_vAlignment(kCCVerticalTextAlignmentTop)
+: m_hAlignment(CATextAlignmentCenter)
+, m_vAlignment(CAVerticalTextAlignmentTop)
 , m_pFontName(NULL)
 , m_fFontSize(0.0)
 , m_string("")
@@ -73,18 +73,18 @@ CCLabelTTF * CCLabelTTF::create()
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize)
 {
     return CCLabelTTF::create(string, fontName, fontSize,
-                              CCSizeZero, kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop);
+                              CCSizeZero, CATextAlignmentCenter, CAVerticalTextAlignmentTop);
 }
 
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
-                                const CCSize& dimensions, CCTextAlignment hAlignment)
+                                const CCSize& dimensions, CATextAlignment hAlignment)
 {
-    return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, kCCVerticalTextAlignmentTop);
+    return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, CAVerticalTextAlignmentTop);
 }
 
 CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
-                               const CCSize &dimensions, CCTextAlignment hAlignment, 
-                               CCVerticalTextAlignment vAlignment)
+                               const CCSize &dimensions, CATextAlignment hAlignment, 
+                               CAVerticalTextAlignment vAlignment)
 {
     CCLabelTTF *pRet = new CCLabelTTF();
     if(pRet && pRet->initWithString(string, fontName, fontSize, dimensions, hAlignment, vAlignment))
@@ -114,20 +114,20 @@ bool CCLabelTTF::init()
 }
 
 bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize, 
-                                const CCSize& dimensions, CCTextAlignment alignment)
+                                const CCSize& dimensions, CATextAlignment alignment)
 {
-    return this->initWithString(label, fontName, fontSize, dimensions, alignment, kCCVerticalTextAlignmentTop);
+    return this->initWithString(label, fontName, fontSize, dimensions, alignment, CAVerticalTextAlignmentTop);
 }
 
 bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 {
     return this->initWithString(label, fontName, fontSize, 
-                                CCSizeZero, kCCTextAlignmentLeft, kCCVerticalTextAlignmentTop);
+                                CCSizeZero, CATextAlignmentLeft, CAVerticalTextAlignmentTop);
 }
 
 bool CCLabelTTF::initWithString(const char *string, const char *fontName, float fontSize,
-                                const cocos2d::CCSize &dimensions, CCTextAlignment hAlignment,
-                                CCVerticalTextAlignment vAlignment)
+                                const cocos2d::CCSize &dimensions, CATextAlignment hAlignment,
+                                CAVerticalTextAlignment vAlignment)
 {
     if (CAImageView::init())
     {
@@ -202,12 +202,12 @@ const char* CCLabelTTF::description()
     return CCString::createWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize)->getCString();
 }
 
-CCTextAlignment CCLabelTTF::getHorizontalAlignment()
+CATextAlignment CCLabelTTF::getHorizontalAlignment()
 {
     return m_hAlignment;
 }
 
-void CCLabelTTF::setHorizontalAlignment(CCTextAlignment alignment)
+void CCLabelTTF::setHorizontalAlignment(CATextAlignment alignment)
 {
     if (alignment != m_hAlignment)
     {
@@ -221,12 +221,12 @@ void CCLabelTTF::setHorizontalAlignment(CCTextAlignment alignment)
     }
 }
 
-CCVerticalTextAlignment CCLabelTTF::getVerticalAlignment()
+CAVerticalTextAlignment CCLabelTTF::getVerticalAlignment()
 {
     return m_vAlignment;
 }
 
-void CCLabelTTF::setVerticalAlignment(CCVerticalTextAlignment verticalAlignment)
+void CCLabelTTF::setVerticalAlignment(CAVerticalTextAlignment verticalAlignment)
 {
     if (verticalAlignment != m_vAlignment)
     {

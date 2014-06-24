@@ -299,17 +299,17 @@ bool CASegmentedControl::setImageAtIndex(CAImage *image, int index, CAControlSta
 
 CAView* CASegmentedControl::getDefaultNormalBackgroundView()
 {
-    return CAScale9ImageView::createWithImage(CAImage::create("btn_square_normal.png"));
+    return CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_square_normal.png"));
 }
 
 CAView* CASegmentedControl::getDefaultHighlightedBackgroundView()
 {
-    return CAScale9ImageView::createWithImage(CAImage::create("btn_square_highlighted.png"));
+    return CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_square_highlighted.png"));
 }
 
 CAView* CASegmentedControl::getDefaultSelectedBackgroundView()
 {
-    return CAScale9ImageView::createWithImage(CAImage::create("btn_square_selected.png"));
+    return CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_square_highlighted.png"));
 }
 
 CAButton* CASegmentedControl::createDefaultSegment()

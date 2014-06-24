@@ -85,9 +85,9 @@ public:
     
     CATableViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
     
-    virtual void setBackGroundImage(CAImage* image);
+    CC_DEPRECATED_ATTRIBUTE virtual void setBackGroundImage(CAImage* image);
     
-    virtual void setBackGroundScale9Image(CAImage* image);
+    CC_DEPRECATED_ATTRIBUTE virtual void setBackGroundScale9Image(CAImage* image);
     
 protected:
 

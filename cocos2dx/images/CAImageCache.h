@@ -113,7 +113,7 @@ public:
     
     void addImageAsync(const char *path, CCObject *target, SEL_CallFuncO selector);
 
-    void addStringImageAsync(const char *text, const char *fontName, float fontSize, cocos2d::CCSize& dimensions, CCTextAlignment textAlignment, CCVerticalTextAlignment verticalAlignment, CCObject *target, SEL_CallFuncO selector);
+    void addStringImageAsync(const char *text, const char *fontName, float fontSize, cocos2d::CCSize& dimensions, CATextAlignment textAlignment, CAVerticalTextAlignment verticalAlignment, CCObject *target, SEL_CallFuncO selector);
     
     /* Returns a Texture2D object given an CGImageRef image
     * If the image was not previously loaded, it will create a new CAImage object and it will return it.
@@ -211,8 +211,8 @@ public:
     ~VolatileTexture();
 
     static void addImageTexture(CAImage* tt, const char* imageFileName, CCImage::EImageFormat format);
-    static void addStringTexture(CAImage* tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, 
-                                 CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize);
+    static void addStringTexture(CAImage* tt, const char* text, const CCSize& dimensions, CATextAlignment alignment, 
+                                 CAVerticalTextAlignment vAlignment, const char *fontName, float fontSize);
     static void addDataTexture(CAImage* tt, void* data, CAImagePixelFormat pixelFormat, const CCSize& contentSize);
     static void addCCImage(CAImage* tt, CCImage *image);
 
@@ -245,8 +245,8 @@ protected:
 
     ccTexParams     m_texParams;
     CCSize          m_size;
-    CCTextAlignment m_alignment;
-    CCVerticalTextAlignment m_vAlignment;
+    CATextAlignment m_alignment;
+    CAVerticalTextAlignment m_vAlignment;
     std::string     m_strFontName;
     std::string     m_strText;
     float           m_fFontSize;

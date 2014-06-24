@@ -122,7 +122,7 @@ public:
     
     CC_PROPERTY(CAColor4B, m_cTextColor, TextColor);
     
-    CC_PROPERTY(CCTextAlignment, m_aTextAlignment, TextAlignment);
+    CC_PROPERTY(CATextAlignment, m_aTextAlignment, TextAlignment);
     
     CC_SYNTHESIZE(CATextFieldDelegate*, m_pDelegate, Delegate);
     
