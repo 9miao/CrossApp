@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
 #include "CAScheduler.h"
+#include "support/CCSTLContainer.h"
 
 NS_CC_BEGIN
 
@@ -45,6 +46,8 @@ CCObject::CCObject(void)
     static unsigned int uObjectCount = 0;
 
     m_uID = ++uObjectCount;
+
+	addToObjPtrSets(this);
 }
 
 CCObject::~CCObject(void)
@@ -57,6 +60,7 @@ CCObject::~CCObject(void)
     {
         CCPoolManager::sharedPoolManager()->removeObject(this);
     }
+	delToObjPtrSets(this);
 }
 
 CCObject* CCObject::copy()

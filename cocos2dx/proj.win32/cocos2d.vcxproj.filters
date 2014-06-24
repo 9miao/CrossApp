@@ -438,6 +438,9 @@
     <ClCompile Include="..\ui_controller\CAAlertView.cpp">
       <Filter>ui_controller</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\CCSTLContainer.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCAffineTransform.h">
@@ -891,6 +894,9 @@
     </ClInclude>
     <ClInclude Include="..\ui_controller\CAAlertView.h">
       <Filter>ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\CCSTLContainer.h">
+      <Filter>support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
