@@ -1,9 +1,14 @@
-﻿生成启动时间为 2014/6/16 12:15:55。
-     1>项目“I:\引擎\CrossApp_\cocos2dx\proj.win32\cocos2d.vcxproj”在节点 2 上(Clean 个目标)。
-     1>_PrepareForClean:
-         正在删除文件“Debug.win32\libcocos2d.lastbuildstate”。
-     1>已完成生成项目“I:\引擎\CrossApp_\cocos2dx\proj.win32\cocos2d.vcxproj”(Clean 个目标)的操作。
-
-生成成功。
-
-已用时间 00:00:00.42
+﻿  CCObject.cpp
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
+          c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
+c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
+          c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
+  正在生成代码...
+  正在编译...
+  CCSTLContainer.cpp
+  正在生成代码...
+  复制了 15 个文件
+CAScheduler.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/OPT:LBR”规范)
+     正在创建库 D:\CrossApp\samples\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.lib 和对象 D:\CrossApp\samples\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.exp
+LINK : warning LNK4098: 默认库“LIBCMT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
+  cocos2d.vcxproj -> D:\CrossApp\samples\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.dll
