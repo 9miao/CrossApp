@@ -363,6 +363,96 @@ private:
 	std::list<T*> m_Container;
 };
 
+template <typename K, typename T>
+class CAMultimap
+{
+public:
+	~CAMultimap()
+	{
+		Clear();
+	}
+	CAMultimap(const CAMultimap& v)
+	{
+		Clear();
+		AddRange(v.m_Container);
+	}
+	const CAMultimap& operator=(const CAMultimap& v)
+	{
+		Clear();
+		AddRange(v.m_Container);
+		return *this;
+	}
+	void AddRange(const std::multimap<K, T*>& v)
+	{
+		std::multimap<K, T*>::iterator it = v.begin();
+		for (; it != v.end(); it++)
+		{
+			Add(it->first, it->second);
+		}
+	}
+	void Add(K key, T* v)
+	{
+		retainObjPtr(v);
+		m_Container.insert(std::make_pair(key, v));
+	}
+	int GetCount()
+	{
+		return m_Container.size();
+	}
+	bool ContainsKey(K key)
+	{
+		std::pair<std::multimap<K, T*>::iterator, std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
+		return pos.first != m_Container.end();
+	}
+	void Remove(K key)
+	{
+		std::pair<std::multimap<K, T*>::iterator, std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
+		if (pos.first == m_Container.end())
+		{
+			return;
+		}
+
+		while (pos.first != pos.second;)
+		{
+			releaseObjPtr(pos.first++->second);
+		}
+		m_Container.erase(key);
+	}
+
+	std::vector<T*> GetValueByKey(const K& key)
+	{
+		std::vector<T*> v;
+		std::pair<std::multimap<K, T*>::iterator, std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
+		while (pos.first != pos.second;)
+		{
+			v.push_back(pos.first++->second);
+		}
+		return v;
+	}
+
+	std::vector<K> getKeys()
+	{
+		std::vector<K> keys;
+		for (std::multimap <K, T*>::iterator it = begin(); it != end(); it++)
+		{
+			keys.push_back(it->first);
+		}
+		return keys;
+	}
+
+	void Clear()
+	{
+		for (std::multimap <K, T*>::iterator it = begin(); it != end(); it++)
+		{
+			releaseObjPtr(it->second);
+		}
+		m_Container.clear();
+	}
+
+private:
+	std::multimap <K, T*> m_Container;
+};
+
 NS_CC_END
 
 #endif
