@@ -1,26 +1,12 @@
-﻿  CAAlertView.cpp
+﻿  CCObject.cpp
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\sal_supp.h(57): warning C4005: “__useHeader”: 宏重定义
           c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2886) : 参见“__useHeader”的前一个定义
 c:\program files (x86)\microsoft sdks\windows\v7.1a\include\specstrings_supp.h(77): warning C4005: “__on_failure”: 宏重定义
           c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2896) : 参见“__on_failure”的前一个定义
-d:\crossapp\cocos2dx\ui_controller\caalertview.h(37): warning C4275: 非 dll 接口 class“cocos2d::CATableViewDataSource”用作 dll 接口 class“cocos2d::CAAlertView”的基
-          d:\crossapp\cocos2dx\ui_controller\catableview.h(47) : 参见“cocos2d::CATableViewDataSource”的声明
-          d:\crossapp\cocos2dx\ui_controller\caalertview.h(35) : 参见“cocos2d::CAAlertView”的声明
-d:\crossapp\cocos2dx\ui_controller\caalertview.h(38): warning C4275: 非 dll 接口 class“cocos2d::CATableViewDelegate”用作 dll 接口 class“cocos2d::CAAlertView”的基
-          d:\crossapp\cocos2dx\ui_controller\catableview.h(33) : 参见“cocos2d::CATableViewDelegate”的声明
-          d:\crossapp\cocos2dx\ui_controller\caalertview.h(35) : 参见“cocos2d::CAAlertView”的声明
-d:\crossapp\cocos2dx\ui_controller\caviewcontroller.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-d:\crossapp\cocos2dx\ui_controller\casegmentedcontrol.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-d:\crossapp\cocos2dx\ui_controller\caviewcontroller.h(33): warning C4275: 非 dll 接口 class“cocos2d::CAViewDelegate”用作 dll 接口 class“cocos2d::CAViewController”的基
-          d:\crossapp\cocos2dx\sprite_nodes\caview.h(712) : 参见“cocos2d::CAViewDelegate”的声明
-          d:\crossapp\cocos2dx\ui_controller\caviewcontroller.h(31) : 参见“cocos2d::CAViewController”的声明
-d:\crossapp\cocos2dx\ui_controller\caalertview.cpp(34): warning C4018: “<”: 有符号/无符号不匹配
-d:\crossapp\cocos2dx\ui_controller\caalertview.cpp(121): warning C4018: “<”: 有符号/无符号不匹配
-d:\crossapp\cocos2dx\ui_controller\caalertview.cpp(133): warning C4018: “<”: 有符号/无符号不匹配
-d:\crossapp\cocos2dx\ui_controller\caalertview.cpp(150): warning C4018: “<”: 有符号/无符号不匹配
-d:\crossapp\cocos2dx\ui_controller\caalertview.cpp(158): warning C4018: “<”: 有符号/无符号不匹配
-d:\crossapp\cocos2dx\ui_controller\caalertview.cpp(281): warning C4018: “<”: 有符号/无符号不匹配
-d:\crossapp\cocos2dx\ui_controller\caalertview.cpp(311): warning C4018: “<”: 有符号/无符号不匹配
+  正在生成代码...
+  正在编译...
+  CCSTLContainer.cpp
+  正在生成代码...
   复制了 15 个文件
 CAScheduler.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/OPT:LBR”规范)
      正在创建库 D:\CrossApp\samples\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.lib 和对象 D:\CrossApp\samples\multi-platform-cpp\proj.win32\Debug.win32\libcocos2d.exp
