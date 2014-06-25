@@ -45,7 +45,11 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    virtual bool initWithFrame(const CrossApp::CCRect &rect);
+    static CAScrollView* createWithFrame(const CCRect& rect);
+    
+    static CAScrollView* createWithCenter(const CCRect& rect);
+    
+    virtual bool init();
 
     void addSubview(CAView* subview);
     
@@ -64,6 +68,10 @@ public:
     void setContentOffset(CCPoint offset, bool animated);
     
     CCPoint getContentOffset();
+    
+    void setBackGroundImage(CAImage* image);
+
+    void setBackGroundColor(const CAColor4B &color);
     
 protected:
  
@@ -139,6 +147,16 @@ protected:
     
     CC_PROPERTY(CCSize, m_obViewSize, ViewSize);
     
+private:
+    
+    using CAView::initWithColor;
+    
+    using CAView::setImage;
+    
+    using CAView::setImageRect;
+    
+    using CAView::setColor;
+    
 protected:
     
     CAView* m_pContainer;
@@ -175,7 +193,7 @@ public:
     
 public:
     
-    CAIndicator();
+    CAIndicator(CAIndicatorType type);
     
     virtual ~CAIndicator();
     
@@ -183,14 +201,14 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    static CAIndicator* createWithFrame(const CCRect& rect, CAIndicatorType type);
+    static CAIndicator* create(CAIndicatorType type);
     
-    virtual bool initWithFrame(const CCRect& rect, CAIndicatorType type);
+    virtual bool init();
     
     void setIndicator(const CCSize& parentSize, const CCRect& childrenFrame);
     
     void setHide(bool var);
-    
+
 private:
 
     CAView* m_pIndicator;

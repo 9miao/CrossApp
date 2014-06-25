@@ -84,6 +84,7 @@
 #include "view/CAClippingView.h"
 #include "view/CAScrollView.h"
 #include "view/CATableView.h"
+#include "view/CAAlertView.h"
 
 // cocoa
 #include "cocoa/CCAffineTransform.h"

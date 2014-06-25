@@ -7,6 +7,13 @@
 #include "controller/CAViewController.h"
 NS_CC_BEGIN
 
+enum
+{
+    CAWindowZoderBottom = 0,
+    CAWindowZoderCenter = 1,
+    CAWindowZoderTop = 0xffff
+};
+
 class CC_DLL CAWindow : public CAView
 {
 

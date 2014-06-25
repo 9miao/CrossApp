@@ -266,6 +266,8 @@
 		1551A874158F2B4700E66CFE /* CrossApp-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 1551A873158F2B4700E66CFE /* CrossApp-Prefix.pch */; };
 		1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A94D34C16C2014900D79D09 /* libwebp.a */; };
 		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
+		B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D3697195AB93900DD4814 /* CAAlertView.cpp */; };
+		B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D3698195AB93900DD4814 /* CAAlertView.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -531,6 +533,8 @@
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1551A873158F2B4700E66CFE /* CrossApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.pch"; sourceTree = "<group>"; };
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
+		B05D3697195AB93900DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
+		B05D3698195AB93900DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1037,6 +1041,8 @@
 		04EAB03F1956D75500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B05D3697195AB93900DD4814 /* CAAlertView.cpp */,
+				B05D3698195AB93900DD4814 /* CAAlertView.h */,
 				04EAB0401956D75500198A8E /* CABatchView.cpp */,
 				04EAB0411956D75500198A8E /* CABatchView.h */,
 				04EAB0421956D75500198A8E /* CAClippingView.cpp */,
@@ -1111,6 +1117,7 @@
 				04EAB0721956D75600198A8E /* CAObject.h in Headers */,
 				04EAB0741956D75600198A8E /* CAResponder.h in Headers */,
 				04EAB0761956D75600198A8E /* CAScheduler.h in Headers */,
+				B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */,
 				04EAB0791956D75600198A8E /* ccConfig.h in Headers */,
 				04EAB07A1956D75600198A8E /* ccMacros.h in Headers */,
 				04EAB07B1956D75600198A8E /* ccTypeInfo.h in Headers */,
@@ -1381,6 +1388,7 @@
 				04EABA7B1956D75A00198A8E /* CCProfiling.cpp in Sources */,
 				04EABA7D1956D75A00198A8E /* ccUTF8.cpp in Sources */,
 				04EABA7F1956D75A00198A8E /* ccUtils.cpp in Sources */,
+				B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */,
 				04EABA811956D75A00198A8E /* CCVertex.cpp in Sources */,
 				04EABA871956D75A00198A8E /* ccCArray.cpp in Sources */,
 				04EABA8B1956D75A00198A8E /* TGAlib.cpp in Sources */,

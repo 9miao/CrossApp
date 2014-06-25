@@ -66,6 +66,7 @@
 		B04C0BB919011ED8009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAE19011ED8009854FD /* sconscript */; };
 		B04C0BD119011F33009854FD /* 9m.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BBB19011F33009854FD /* 9m.jpg */; };
 		B04C0BE719011F42009854FD /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BE619011F42009854FD /* fonts */; };
+		B05D36A6195AEFED00DD4814 /* bg0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B05D36A5195AEFED00DD4814 /* bg0.jpg */; };
 		B0A172E4192DCE3000DBFDB0 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A172E2192DCE3000DBFDB0 /* 2.jpg */; };
 		B0A172E5192DCE3000DBFDB0 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A172E3192DCE3000DBFDB0 /* bg.jpg */; };
 		B0AD93AB192077F900EA40BB /* CAHttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93A9192077F900EA40BB /* CAHttpClient.cpp */; };
@@ -190,6 +191,7 @@
 		B04C0BBB19011F33009854FD /* 9m.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9m.jpg; sourceTree = "<group>"; };
 		B04C0BE619011F42009854FD /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B05637581952735100C63FAA /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
+		B05D36A5195AEFED00DD4814 /* bg0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg0.jpg; sourceTree = "<group>"; };
 		B0A172E2192DCE3000DBFDB0 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		B0A172E3192DCE3000DBFDB0 /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		B0AD93A9192077F900EA40BB /* CAHttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAHttpClient.cpp; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 		B04C0BBA19011F33009854FD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B05D36A5195AEFED00DD4814 /* bg0.jpg */,
 				04211F3F19507BB20017E97B /* fifth_1.png */,
 				04211F4019507BB20017E97B /* fifth_2.png */,
 				04211F4119507BB20017E97B /* first_1.png */,
@@ -614,6 +617,7 @@
 				B015758119504FA000EED010 /* source_material in Resources */,
 				B04C0BB919011ED8009854FD /* sconscript in Resources */,
 				04211F4919507BB20017E97B /* fifth_1.png in Resources */,
+				B05D36A6195AEFED00DD4814 /* bg0.jpg in Resources */,
 				04211F4A19507BB20017E97B /* fifth_2.png in Resources */,
 				04211F4B19507BB20017E97B /* first_1.png in Resources */,
 				04211F4C19507BB20017E97B /* first_2.png in Resources */,

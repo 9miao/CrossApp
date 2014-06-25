@@ -79,4 +79,15 @@ void FirstViewController::updateSlider(CrossApp::CAControl *sender, CrossApp::CC
 void FirstViewController::diss(CAControl* sender, CCPoint point)
 {
     this->dismissModalViewController(true);
+    
+    CAAlertView* alert = CAAlertView::create();
+    std::vector<std::string> s;
+    for (int i = 0; i < CCRANDOM_0_1() * 5; i++)
+    {
+        char str[10];
+        sprintf(str, "button_%d", i);
+        s.push_back(str);
+    }
+    
+    alert->showMessage("title", "message", s);
 }

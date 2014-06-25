@@ -70,42 +70,50 @@ void CAScrollView::onExitTransitionDidStart()
     m_tInertia = CCPointZero;
 }
 
-bool CAScrollView::initWithFrame(const CrossApp::CCRect &rect)
+CAScrollView* CAScrollView::createWithFrame(const CCRect& rect)
 {
-    if (!CAView::initWithFrame(rect))
+    CAScrollView* scrollView = new CAScrollView();
+    if (scrollView && scrollView->initWithFrame(rect))
+    {
+        scrollView->autorelease();
+        return scrollView;
+    }
+    CC_SAFE_DELETE(scrollView);
+    return NULL;
+}
+
+CAScrollView* CAScrollView::createWithCenter(const CCRect& rect)
+{
+    CAScrollView* scrollView = new CAScrollView();
+    if (scrollView && scrollView->initWithCenter(rect))
+    {
+        scrollView->autorelease();
+        return scrollView;
+    }
+    CC_SAFE_DELETE(scrollView);
+    return NULL;
+}
+
+bool CAScrollView::init()
+{
+    if (!CAView::init())
     {
         return false;
     }
-    this->setColor(CAColor_clear);
     this->setDisplayRange(false);
     
     m_pContainer = CAView::createWithFrame(this->getBounds(), CAColor_clear);
     m_pChildInThis->addObject(m_pContainer);
     this->addSubview(m_pContainer);
     
-    const char indicatorSize = 6;
-    const CCRect indicatorHorizontalFrame = CCRect(indicatorSize * 1.5f,
-                                                   rect.size.height - indicatorSize * 1.5f,
-                                                   rect.size.width - indicatorSize * 3.0f,
-                                                   indicatorSize);
-    
-    const CCRect indicatorVerticalFrame = CCRect(rect.size.width - indicatorSize * 1.5f,
-                                                 indicatorSize * 1.5f,
-                                                 indicatorSize,
-                                                 rect.size.height - indicatorSize * 3.0f);
-    
-    m_pIndicatorHorizontal = CAIndicator::createWithFrame(indicatorHorizontalFrame,
-                                                          CAIndicator::CAIndicatorTypeHorizontal);
+    m_pIndicatorHorizontal = CAIndicator::create(CAIndicator::CAIndicatorTypeHorizontal);
     m_pChildInThis->addObject(m_pIndicatorHorizontal);
     this->insertSubview(m_pIndicatorHorizontal, 1);
     
-    
-    m_pIndicatorVertical = CAIndicator::createWithFrame(indicatorVerticalFrame,
-                                                        CAIndicator::CAIndicatorTypeVertical);
+    m_pIndicatorVertical = CAIndicator::create(CAIndicator::CAIndicatorTypeVertical);
     m_pChildInThis->addObject(m_pIndicatorVertical);
     this->insertSubview(m_pIndicatorVertical, 1);
-    
-    
+
     return true;
 }
 
@@ -266,9 +274,27 @@ CCPoint CAScrollView::getContentOffset()
     return ccpMult(m_pContainer->getFrameOrigin(), -1);
 }
 
+void CAScrollView::setBackGroundImage(CAImage* image)
+{
+    CAView::setImage(image);
+    CCRect rect = CCRectZero;
+    rect.size = image->getContentSize();
+    CAView::setImageRect(rect);
+}
+
+void CAScrollView::setBackGroundColor(const CAColor4B &color)
+{
+    CAView::setColor(color);
+}
+
 void CAScrollView::setContentSize(const CrossApp::CCSize &var)
 {
     CAView::setContentSize(var);
+    
+    CCSize viewSize = this->getViewSize();
+    viewSize.width = MAX(m_obContentSize.width, viewSize.width);
+    viewSize.height = max(m_obContentSize.height, viewSize.height);
+    this->setViewSize(viewSize);
     
     const char indicatorSize = 6;
     
@@ -794,10 +820,11 @@ bool CAScrollView::isScrollWindowNotMaxOutSide()
 
 #pragma CAIndicator
 
-CAIndicator::CAIndicator()
+CAIndicator::CAIndicator(CAIndicatorType type)
 :m_pIndicator(NULL)
+,m_eType(type)
 {
-
+    
 }
 
 CAIndicator::~CAIndicator()
@@ -816,10 +843,10 @@ void CAIndicator::onExitTransitionDidStart()
     this->setAlpha(0.0f);
 }
 
-CAIndicator* CAIndicator::createWithFrame(const CCRect& rect, CAIndicatorType type)
+CAIndicator* CAIndicator::create(CAIndicatorType type)
 {
-    CAIndicator* indicator = new CAIndicator();
-    if (indicator && indicator->initWithFrame(rect, type))
+    CAIndicator* indicator = new CAIndicator(type);
+    if (indicator && indicator->init())
     {
         indicator->autorelease();
         return indicator;
@@ -828,22 +855,19 @@ CAIndicator* CAIndicator::createWithFrame(const CCRect& rect, CAIndicatorType ty
     return NULL;
 }
 
-bool CAIndicator::initWithFrame(const CCRect& rect, CAIndicatorType type)
+bool CAIndicator::init()
 {
     if (!CAView::init())
     {
         return false;
     }
     this->setColor(CAColor_clear);
-    this->setFrame(rect);
-    
-    m_eType = type;
-    
     CAImage* image = CAImage::create("source_material/indicator.png");
-
+    
     m_pIndicator = CAScale9ImageView::createWithImage(image);
     this->addSubview(m_pIndicator);
     this->setAlpha(0.0f);
+    
     return true;
 }
 

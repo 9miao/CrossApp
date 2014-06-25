@@ -27,6 +27,9 @@ void SecondViewController::viewDidLoad()
     btn->setTitleForState(CAControlStateAll, "pressenView");
     this->getView()->addSubview(btn);
     btn->addTarget(this, CAControl_selector(SecondViewController::touchUpInSide), CAControlEventTouchUpInSide);
+    
+
+    
 }
 
 void SecondViewController::viewDidUnload()
@@ -39,8 +42,6 @@ void SecondViewController::viewDidUnload()
 
 void SecondViewController::touchUpInSide(CAControl* sender, CCPoint point)
 {
-    //imageView->setImage(CAImage::create("2.jpg"));
-    
     FirstViewController* viewController = new FirstViewController();
     viewController->init();
     

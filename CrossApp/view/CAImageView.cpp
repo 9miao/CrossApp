@@ -23,7 +23,6 @@
 #include "basics/CAGeometry.h"
 #include "cocoa/CCAffineTransform.h"
 #include "support/TransformUtils.h"
-// external
 #include <string.h>
 
 NS_CC_BEGIN

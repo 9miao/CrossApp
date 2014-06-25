@@ -80,18 +80,18 @@ public:
     virtual void onEnterTransitionDidFinish();
     
     virtual void onExitTransitionDidStart();
+
+    static CATableView* createWithFrame(const CCRect& rect);
     
-    virtual bool initWithFrame(const CrossApp::CCRect &rect);
+    static CATableView* createWithCenter(const CCRect& rect);
+    
+    virtual bool init();
     
     void reloadData();
     
     CATableViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
     
     void setSelectRowAtIndexPath(unsigned int section, unsigned int row);
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void setBackGroundImage(CAImage* image);
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void setBackGroundScale9Image(CAImage* image);
     
 protected:
 
@@ -193,6 +193,8 @@ private:
     
     using CAScrollView::getSubviewByTag;
     
+    using CAResponder::setTouchSidingDirection;
+    
 protected:
     
     std::vector<unsigned int> m_nRowsInSections;
@@ -216,8 +218,6 @@ protected:
     CATableViewCell* m_pHighlightedTableCells;
     
     CCDictionary* m_pCellDict;
-    
-    CAView* m_pBackGroundView;
 };
 
 class CC_DLL CATableViewCell: public CAControl

@@ -245,7 +245,7 @@ CAView* CAView::createWithColor(const CAColor4B& color4B)
 
 bool CAView::initWithColor(const CAColor4B& color4B)
 {
-    if (!CAView::init())
+    if (!this->init())
     {
         return false;
     }
@@ -256,7 +256,7 @@ bool CAView::initWithColor(const CAColor4B& color4B)
 
 bool CAView::initWithFrame(const CCRect& rect)
 {
-    if (!CAView::init())
+    if (!this->init())
     {
         return false;
     }
@@ -278,7 +278,7 @@ bool CAView::initWithFrame(const CCRect& rect, const CAColor4B& color4B)
 
 bool CAView::initWithCenter(const CCRect& rect)
 {
-    if (!CAView::init())
+    if (!this->init())
     {
         return false;
     }
@@ -289,7 +289,7 @@ bool CAView::initWithCenter(const CCRect& rect)
 
 bool CAView::initWithCenter(const CCRect& rect, const CAColor4B& color4B)
 {
-    if (!CAView::initWithColor(color4B))
+    if (!this->initWithColor(color4B))
     {
         return false;
     }

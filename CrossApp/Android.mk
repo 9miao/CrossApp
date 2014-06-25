@@ -85,6 +85,7 @@ view/CAScrollView.cpp \
 view/CATableView.cpp \
 view/CAView.cpp \
 view/CAWindow.cpp \
+view/CAAlertView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

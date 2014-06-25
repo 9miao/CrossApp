@@ -15,6 +15,7 @@ NS_CC_BEGIN;
 CAResponder::CAResponder()
 :m_bSlideContainers(false)
 ,m_bControl(false)
+,m_eTouchSidingDirection(CATouchSidingDirectionMultiple)
 {
 
 }

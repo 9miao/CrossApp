@@ -6,12 +6,6 @@
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionEase.h"
 #include "dispatcher/CATouchDispatcher.h"
-enum
-{
-    CAWindowZoderBottom = 0,
-    CAWindowZoderCenter = 1,
-    CAWindowZoderTop = 0xffff
-};
 
 NS_CC_BEGIN
 

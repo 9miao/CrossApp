@@ -21,8 +21,6 @@ RootViewController::~RootViewController()
 
 void RootViewController::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
-    
     CCRect rect = this->getView()->getBounds();
     
     CCRect tableRect = rect;
@@ -34,13 +32,27 @@ void RootViewController::viewDidLoad()
     tableView->setTableViewDelegate(this);
     this->getView()->addSubview(tableView);
     tableView->release();
+    tableView->setBackGroundColor(CAColor_gray);
     
-    CAView* view = CAView::create();
+    CAScrollView* view = CAScrollView::createWithCenter(CCRectZero);
+    view->setViewSize(CCSize(rect.size.width * 2, rect.size.width * 0.5));
+    view->setTouchSidingDirection(CATouchSidingDirectionHorizontal);
+    view->setBounceVertical(false);
+    view->setShowsHorizontalScrollIndicator(false);
+    view->setShowsVerticalScrollIndicator(false);
     
-    CALabel* label = CALabel::createWithFrame(CCRect(0, 0, rect.size.width, rect.size.width * 0.5));
+    CAImageView* imageView = CAImageView::createWithFrame(CCRect(0, 0, view->getViewSize().width, view->getViewSize().height));
+    imageView->setImage(CAImage::create("bg0.jpg"));
+    view->addSubview(imageView);
+    
+    CALabel* label = CALabel::createWithCenter(CCRect(view->getViewSize().width/2,
+                                                      view->getViewSize().height/2,
+                                                      view->getViewSize().width,
+                                                      view->getViewSize().height));
     label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     label->setTextAlignment(CATextAlignmentCenter);
-    label->setText("CrossApp alpha v0.1.11");
+    label->setText("CrossApp beta v0.2.0");
+    label->setFontSize(36);
     view->addSubview(label);
     
     

@@ -31,7 +31,6 @@ CATableView::CATableView()
 ,m_nTablePullViewHeight(0)
 ,m_pTableViewDataSource(NULL)
 ,m_pTableViewDelegate(NULL)
-,m_pBackGroundView(NULL)
 ,m_pHighlightedTableCells(NULL)
 ,m_bAllowsSelection(false)
 ,m_bAllowsMultipleSelection(false)
@@ -48,6 +47,7 @@ CATableView::~CATableView()
     CC_SAFE_RELEASE_NULL(m_pTablePullUpView);
     m_pTableViewDataSource = NULL;
     m_pTableViewDelegate = NULL;
+    CCLog("fdsfdsfdsfdsfdsfdsfd");
 }
 
 void CATableView::onEnterTransitionDidFinish()
@@ -66,17 +66,40 @@ void CATableView::onExitTransitionDidStart()
     CAScrollView::onExitTransitionDidStart();
 }
 
-bool CATableView::initWithFrame(const CrossApp::CCRect &rect)
+CATableView* CATableView::createWithFrame(const CCRect& rect)
 {
-    if (!CAScrollView::initWithFrame(rect))
+    CATableView* tableView = new CATableView();
+    if (tableView && tableView->initWithFrame(rect))
+    {
+        tableView->autorelease();
+        return tableView;
+    }
+    CC_SAFE_DELETE(tableView);
+    return NULL;
+}
+
+CATableView* CATableView::createWithCenter(const CCRect& rect)
+{
+    CATableView* tableView = new CATableView();
+    if (tableView && tableView->initWithCenter(rect))
+    {
+        tableView->autorelease();
+        return tableView;
+    }
+    CC_SAFE_DELETE(tableView);
+    return NULL;
+}
+
+bool CATableView::init()
+{
+    if (!CAScrollView::init())
     {
         return false;
     }
     
-    this->setViewSize(rect.size);
     this->setShowsHorizontalScrollIndicator(false);
     this->setBounceHorizontal(false);
-    
+    this->setTouchSidingDirection(CATouchSidingDirectionVertical);
     return true;
 }
 
@@ -88,10 +111,6 @@ void CATableView::setViewSize(CCSize var)
 void CATableView::setContentSize(const CrossApp::CCSize &var)
 {
     CAScrollView::setContentSize(var);
-    if (m_pBackGroundView)
-    {
-        m_pBackGroundView->setFrame(CCRect(0, 0, var.width, var.height));
-    }
 }
 
 bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -250,32 +269,6 @@ CCPoint CATableView::maxBouncesLenght()
     }
     
     return CCPoint(0, m_obContentSize.height/2);
-}
-
-void CATableView::setBackGroundImage(CAImage* image)
-{
-    if (m_pBackGroundView)
-    {
-        m_pChildInThis->removeObject(m_pBackGroundView);
-        m_pBackGroundView->removeFromSuperview();
-    }
-    m_pBackGroundView = CAImageView::createWithImage(image);
-    m_pBackGroundView->setFrame(this->getBounds());
-    m_pChildInThis->addObject(m_pBackGroundView);
-    this->insertSubview(m_pBackGroundView, -1);
-}
-
-void CATableView::setBackGroundScale9Image(CAImage* image)
-{
-    if (m_pBackGroundView)
-    {
-        m_pChildInThis->removeObject(m_pBackGroundView);
-        m_pBackGroundView->removeFromSuperview();
-    }
-    m_pBackGroundView = CAScale9ImageView::createWithImage(image);
-    m_pBackGroundView->setFrame(this->getBounds());
-    m_pChildInThis->addObject(m_pBackGroundView);
-    this->insertSubview(m_pBackGroundView, -1);
 }
 
 CATableViewCell* CATableView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)

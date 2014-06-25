@@ -19,7 +19,7 @@ void ViewController::viewDidLoad()
     scroll->setMaximumZoomScale(3.0f);
     scroll->setMinimumZoomScale(0.5f);
     
-    CAImageView* v = CAImageView::createWithImage(CAImage::create("bg.jpg"));
+    CAImageView* v = CAImageView::createWithImage(CAImage::create("e.png"));
     v->setFrame(CCRect(0, 0, scroll->getViewSize().width, scroll->getViewSize().height));
     scroll->addSubview(v);
 
