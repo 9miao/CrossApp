@@ -163,7 +163,7 @@ void RootViewController::scrollViewDidEndDragging(CAScrollView* view)
 void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
     char s[32];
-    sprintf(s, "viewController = %ld",this->getNavigationController()->getViewControllerCount());
+    sprintf(s, "The Page No.%ld",this->getNavigationController()->getViewControllerCount());
     
     CANavigationBarItem* item = CANavigationBarItem::create(s);
 

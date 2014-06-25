@@ -4,6 +4,7 @@
 #include "CAAutoreleasePool.h"
 #include "ccMacros.h"
 #include "CAScheduler.h"
+//#include "basics/CCSTLContainer.h"
 
 NS_CC_BEGIN
 
@@ -22,6 +23,8 @@ CAObject::CAObject(void)
     static unsigned int uObjectCount = 0;
 
     m_uID = ++uObjectCount;
+    
+    //addToObjPtrSets(this);
 }
 
 CAObject::~CAObject(void)
@@ -32,6 +35,7 @@ CAObject::~CAObject(void)
     {
         CAPoolManager::sharedPoolManager()->removeObject(this);
     }
+    //delToObjPtrSets(this);
 }
 
 CAObject* CAObject::copy()

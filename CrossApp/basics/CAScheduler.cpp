@@ -689,10 +689,10 @@ void CAScheduler::resumeTargets(CCSet* pTargetsToResume)
 // main loop
 void CAScheduler::update(float dt)
 {
-    if (dt > 0.018)
-    {
-        return;
-    }
+//    if (dt > 0.018)
+//    {
+//        return;
+//    }
 
     //dt = 0.02f;//TEST
     m_bUpdateHashLocked = true;

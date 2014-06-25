@@ -116,7 +116,10 @@ void CATableView::setContentSize(const CrossApp::CCSize &var)
 bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     if (m_pTouches->count() > 0)
+    {
+        m_pTouches->replaceObjectAtIndex(0, pTouch);
         return true;
+    }
     
     if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
         return false;

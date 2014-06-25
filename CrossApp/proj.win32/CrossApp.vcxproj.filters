@@ -385,6 +385,9 @@
     <ClCompile Include="..\images\CAAnimationCache.cpp">
       <Filter>images</Filter>
     </ClCompile>
+    <ClCompile Include="..\view\CAAlertView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCAffineTransform.h">
@@ -790,6 +793,9 @@
     </ClInclude>
     <ClInclude Include="..\images\CAAnimationCache.h">
       <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAAlertView.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

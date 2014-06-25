@@ -10,14 +10,13 @@
 #####3.添加控件CAAlertView
 提示框，按钮个数三个以内横排，超过三个纵向排列，并放入滑动容器中。
 
-#####4.封装C++ STL部分容器
-针对本引擎的内存管理方式，封装C++的STL容器，智能识别继承CAObject而进行retain与release操作
+#####4.优化CALabel
 
-#####5.优化CALabel
+#####5.补全CATextField功能
 
-#####6.补全CATextField功能
+#####6.修复部分bug
 
-#####7.修复部分bug
+
 
 ####CrossApp alpha 0.1.11（重要更新） 更新内容：  
 

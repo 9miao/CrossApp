@@ -237,6 +237,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\kazmath\src\vec4.c" />
     <ClCompile Include="..\kazmath\src\GL\mat4stack.c" />
     <ClCompile Include="..\kazmath\src\GL\matrix.c" />
+    <ClCompile Include="..\view\CAAlertView.cpp" />
     <ClCompile Include="..\view\CABatchView.cpp" />
     <ClCompile Include="..\view\CAClippingView.cpp" />
     <ClCompile Include="..\view\CAImageView.cpp" />
@@ -377,6 +378,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\kazmath\include\kazmath\vec4.h" />
     <ClInclude Include="..\kazmath\include\kazmath\GL\mat4stack.h" />
     <ClInclude Include="..\kazmath\include\kazmath\GL\matrix.h" />
+    <ClInclude Include="..\view\CAAlertView.h" />
     <ClInclude Include="..\view\CABatchView.h" />
     <ClInclude Include="..\view\CAClippingView.h" />
     <ClInclude Include="..\view\CAImageView.h" />

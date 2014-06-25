@@ -347,7 +347,7 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
         m_pContainer->stopAllActions();
         m_pContainer->setFrameOrigin(CCPoint(x, m_pContainer->getFrameOrigin().y));
         
-        CCDelayTime* delayTime = CCDelayTime::create(0.2f);
+        CCDelayTime* delayTime = CCDelayTime::create(0.5f);
         CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.4f, CCPoint(0, m_pContainer->getFrameOrigin().y));
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::replaceViewControllerFinish));
@@ -407,7 +407,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
         m_pContainer->stopAllActions();
         m_pContainer->setFrameOrigin(CCPoint(x, m_pContainer->getFrameOrigin().y));
         
-        CCDelayTime* delayTime = CCDelayTime::create(0.2f);
+        CCDelayTime* delayTime = CCDelayTime::create(0.5f);
         CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.4f, CCPoint(0, m_pContainer->getFrameOrigin().y));
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::pushViewControllerFinish));
