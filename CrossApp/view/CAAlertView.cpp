@@ -2,7 +2,7 @@
 #include "CAAlertView.h"
 #include "view/CAScale9ImageView.h"
 #include "basics/CAApplication.h"
-#include "CAButton.h"
+#include "control/CAButton.h"
 #include "support/CCPointExtension.h"
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionInterval.h"
