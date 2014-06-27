@@ -388,6 +388,9 @@
     <ClCompile Include="..\view\CAAlertView.cpp">
       <Filter>view</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\CCSTLContainer.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCAffineTransform.h">
@@ -796,6 +799,9 @@
     </ClInclude>
     <ClInclude Include="..\view\CAAlertView.h">
       <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\CCSTLContainer.h">
+      <Filter>support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
