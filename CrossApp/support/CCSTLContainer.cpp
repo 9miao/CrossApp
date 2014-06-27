@@ -15,15 +15,16 @@ void addToObjPtrSets(void* ptr)
 		return;
 	}
 
-	std::vector<unsigned __int64>::iterator it = std::lower_bound(g_AllCCObjectPtrs.begin(), g_AllCCObjectPtrs.end(), v);
-	if (it != g_AllCCObjectPtrs.end())
+	if (!g_AllCCObjectPtrs.empty())
 	{
-		g_AllCCObjectPtrs.insert(it, v);
+		std::vector<unsigned __int64>::iterator it = std::lower_bound(g_AllCCObjectPtrs.begin(), g_AllCCObjectPtrs.end(), v);
+		if (it != g_AllCCObjectPtrs.end())
+		{
+			g_AllCCObjectPtrs.insert(it, v);
+			return;
+		}
 	}
-	else
-	{
-		g_AllCCObjectPtrs.push_back(v);
-	}
+	g_AllCCObjectPtrs.push_back(v);
 }
 
 
