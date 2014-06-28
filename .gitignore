@@ -112,3 +112,6 @@ tools/jenkins_scripts/mac/android/userconf.ini
 
 # CTags
 tags
+/CocosDenshion/proj.win32/Debug.win32/*.log
+/CocosDenshion/proj.win32/Debug.win32/CocosDenshion.log
+/extensions/proj.win32/Debug.win32/libExtensions.log
