@@ -5,11 +5,11 @@
 
 NS_CC_BEGIN
 
-static std::vector<unsigned __int64> g_AllCCObjectPtrs;
+static std::vector<unsigned long long> g_AllCCObjectPtrs;
 
 void addToObjPtrSets(void* ptr)
 {
-	unsigned __int64 v = (unsigned __int64)ptr;
+	unsigned long long v = (unsigned long long)ptr;
 	if ( v == 0)
 	{
 		return;
@@ -17,7 +17,7 @@ void addToObjPtrSets(void* ptr)
 
 	if (!g_AllCCObjectPtrs.empty())
 	{
-		std::vector<unsigned __int64>::iterator it = std::lower_bound(g_AllCCObjectPtrs.begin(), g_AllCCObjectPtrs.end(), v);
+		std::vector<unsigned long long>::iterator it = std::lower_bound(g_AllCCObjectPtrs.begin(), g_AllCCObjectPtrs.end(), v);
 		if (it != g_AllCCObjectPtrs.end())
 		{
 			g_AllCCObjectPtrs.insert(it, v);
@@ -30,13 +30,13 @@ void addToObjPtrSets(void* ptr)
 
 void delToObjPtrSets(void* ptr)
 {
-	unsigned __int64 v = (unsigned __int64)ptr;
+	unsigned long long v = (unsigned long long)ptr;
 	if (v == 0)
 	{
 		return;
 	}
 
-	std::vector<unsigned __int64>::iterator it = std::lower_bound(g_AllCCObjectPtrs.begin(), g_AllCCObjectPtrs.end(), v);
+	std::vector<unsigned long long>::iterator it = std::lower_bound(g_AllCCObjectPtrs.begin(), g_AllCCObjectPtrs.end(), v);
 	if (it != g_AllCCObjectPtrs.end())
 	{
 		g_AllCCObjectPtrs.erase(it);
@@ -45,7 +45,7 @@ void delToObjPtrSets(void* ptr)
 
 bool isCCObjectPtr(void* ptr)
 {
-	unsigned __int64 v = (unsigned __int64)ptr;
+	unsigned long long v = (unsigned long long)ptr;
 	if (v == 0)
 	{
 		return false;

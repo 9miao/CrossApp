@@ -18,21 +18,22 @@
 NS_CC_BEGIN
 
 
-void addToObjPtrSets(void* ptr);
+CC_DLL void addToObjPtrSets(void* ptr);
 
-void delToObjPtrSets(void* ptr);
+CC_DLL void delToObjPtrSets(void* ptr);
 
-bool isCCObjectPtr(void* ptr);
+CC_DLL bool isCCObjectPtr(void* ptr);
 
-void retainObjPtr(void* ptr);
+CC_DLL void retainObjPtr(void* ptr);
 
-void releaseObjPtr(void* ptr);
+CC_DLL void releaseObjPtr(void* ptr);
 
 
 template <typename T>
 class CAVector
 {
 public:
+	CAVector() {}
 	~CAVector()
 	{
 		Clear();
@@ -97,20 +98,21 @@ public:
 		releaseObjPtr(m_Container[index]);
 		m_Container.erase(m_Container.begin() + index);
 	}
+
 	void Clear()
 	{
 		for (int i = 0; i < m_Container.size(); i++)
 		{
 			releaseObjPtr(m_Container[i]);
 		}
-		clear();
+		m_Container.clear();
 	}
 	int GetCount()
 	{
 		return m_Container.size();
 	}
 
-private:
+public:
 	std::vector<T*> m_Container;
 };
 
@@ -119,6 +121,7 @@ template <typename T>
 class CADeque
 {
 public:
+	CADeque() {}
 	~CADeque()
 	{
 		Clear();
@@ -136,7 +139,7 @@ public:
 	}
 	void AddRange(std::deque<T*>& v)
 	{
-		std::deque<T*>::iterator it = v.begin();
+		typename std::deque<T*>::iterator it = v.begin();
 		for (; it != v.end(); it++)
 		{
 			push_back(*it);
@@ -185,7 +188,7 @@ public:
 		}
 	}
 
-private:
+public:
 	std::deque <T*> m_Container;
 };
 
@@ -194,6 +197,7 @@ template <typename K, typename T>
 class CAMap
 {
 public:
+	CAMap() {}
 	~CAMap()
 	{
 		Clear();
@@ -211,7 +215,7 @@ public:
 	}
 	void AddRange(const std::map<K, T*>& v)
 	{
-		std::map<K, T*>::iterator it = v.begin();
+		typename std::map<K, T*>::iterator it = v.begin();
 		for (; it != v.end(); it++)
 		{
 			Add(it->first, it->second);
@@ -241,7 +245,7 @@ public:
 	}
 	void Remove(K key)
 	{
-		std::map <K, T*>::iterator it = m_Container.find(key);
+		typename std::map <K, T*>::iterator it = m_Container.find(key);
 		if (it != m_Container.end())
 		{
 			releaseObjPtr(it->second);
@@ -251,7 +255,7 @@ public:
 
 	T* GetValueByKey(const K& key)
 	{
-		std::map <K, T*>::iterator it = m_Container.find(key);
+		typename std::map <K, T*>::iterator it = m_Container.find(key);
 		if (it != m_Container.end())
 		{
 			return it->second;
@@ -262,7 +266,7 @@ public:
 	std::vector<K> getKeys()
 	{
 		std::vector<K> keys;
-		for (std::map <K, T*>::iterator it = begin(); it != end(); it++)
+		for (typename std::map <K, T*>::iterator it = m_Container.begin(); it != m_Container.end(); it++)
 		{
 			keys.push_back(it->first);
 		}
@@ -271,14 +275,14 @@ public:
 
 	void Clear()
 	{
-		for (std::map <K, T*>::iterator it = begin(); it != end(); it++)
+		for (typename std::map <K, T*>::iterator it = m_Container.begin(); it != m_Container.end(); it++)
 		{
 			releaseObjPtr(it->second);
 		}
 		m_Container.clear();
 	}
 
-private:
+public:
 	std::map <K, T*> m_Container;
 };
 
@@ -287,6 +291,7 @@ template <typename T>
 class CAList
 {
 public:
+	CAList() {}
 	~CAList()
 	{
 		Clear();
@@ -352,14 +357,14 @@ public:
 		{
 			releaseObjPtr(m_Container[i]);
 		}
-		clear();
+		m_Container.clear();
 	}
 	int GetCount()
 	{
 		return m_Container.size();
 	}
 
-private:
+public:
 	std::list<T*> m_Container;
 };
 
@@ -367,6 +372,7 @@ template <typename K, typename T>
 class CAMultimap
 {
 public:
+	CAMultimap() {}
 	~CAMultimap()
 	{
 		Clear();
@@ -384,7 +390,7 @@ public:
 	}
 	void AddRange(const std::multimap<K, T*>& v)
 	{
-		std::multimap<K, T*>::iterator it = v.begin();
+		typename std::multimap<K, T*>::iterator it = v.begin();
 		for (; it != v.end(); it++)
 		{
 			Add(it->first, it->second);
@@ -401,18 +407,18 @@ public:
 	}
 	bool ContainsKey(K key)
 	{
-		std::pair<std::multimap<K, T*>::iterator, std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
+		std::pair<typename std::multimap<K, T*>::iterator, typename std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
 		return pos.first != m_Container.end();
 	}
 	void Remove(K key)
 	{
-		std::pair<std::multimap<K, T*>::iterator, std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
+		std::pair<typename std::multimap<K, T*>::iterator, typename std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
 		if (pos.first == m_Container.end())
 		{
 			return;
 		}
 
-		while (pos.first != pos.second;)
+		while (pos.first != pos.second)
 		{
 			releaseObjPtr(pos.first++->second);
 		}
@@ -422,8 +428,8 @@ public:
 	std::vector<T*> GetValueByKey(const K& key)
 	{
 		std::vector<T*> v;
-		std::pair<std::multimap<K, T*>::iterator, std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
-		while (pos.first != pos.second;)
+        std::pair<typename std::multimap<K, T*>::iterator, typename std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
+		while (pos.first != pos.second)
 		{
 			v.push_back(pos.first++->second);
 		}
@@ -433,7 +439,7 @@ public:
 	std::vector<K> getKeys()
 	{
 		std::vector<K> keys;
-		for (std::multimap <K, T*>::iterator it = begin(); it != end(); it++)
+		for (typename std::multimap <K, T*>::iterator it = m_Container.begin(); it != m_Container.end(); it++)
 		{
 			keys.push_back(it->first);
 		}
@@ -442,14 +448,14 @@ public:
 
 	void Clear()
 	{
-		for (std::multimap <K, T*>::iterator it = begin(); it != end(); it++)
+		for (typename std::multimap <K, T*>::iterator it = m_Container.begin(); it != m_Container.end(); it++)
 		{
 			releaseObjPtr(it->second);
 		}
 		m_Container.clear();
 	}
 
-private:
+public:
 	std::multimap <K, T*> m_Container;
 };
 

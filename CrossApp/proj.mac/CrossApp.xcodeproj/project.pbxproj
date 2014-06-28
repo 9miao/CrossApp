@@ -268,6 +268,8 @@
 		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D3697195AB93900DD4814 /* CAAlertView.cpp */; };
 		B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D3698195AB93900DD4814 /* CAAlertView.h */; };
+		B0CB4013195EB7E100F29378 /* CCSTLContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CB4011195EB7E100F29378 /* CCSTLContainer.cpp */; };
+		B0CB4014195EB7E100F29378 /* CCSTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B0CB4012195EB7E100F29378 /* CCSTLContainer.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -535,6 +537,8 @@
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
 		B05D3697195AB93900DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D3698195AB93900DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
+		B0CB4011195EB7E100F29378 /* CCSTLContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSTLContainer.cpp; sourceTree = "<group>"; };
+		B0CB4012195EB7E100F29378 /* CCSTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSTLContainer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -962,6 +966,8 @@
 		04EAB00F1956D75500198A8E /* support */ = {
 			isa = PBXGroup;
 			children = (
+				B0CB4011195EB7E100F29378 /* CCSTLContainer.cpp */,
+				B0CB4012195EB7E100F29378 /* CCSTLContainer.h */,
 				04EAB0101956D75500198A8E /* base64.cpp */,
 				04EAB0111956D75500198A8E /* base64.h */,
 				04EAB0121956D75500198A8E /* CANotificationCenter.cpp */,
@@ -1210,6 +1216,7 @@
 				04EABA661956D75A00198A8E /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				04EABA671956D75A00198A8E /* ccShader_PositionTexture_uColor_vert.h in Headers */,
 				04EABA681956D75A00198A8E /* ccShader_PositionTexture_vert.h in Headers */,
+				B0CB4014195EB7E100F29378 /* CCSTLContainer.h in Headers */,
 				04EABA691956D75A00198A8E /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				04EABA6A1956D75A00198A8E /* ccShader_PositionTextureA8Color_vert.h in Headers */,
 				04EABA6B1956D75A00198A8E /* ccShader_PositionTextureColor_frag.h in Headers */,
@@ -1369,6 +1376,7 @@
 				04EAB1151956D75600198A8E /* CCSAXParser.cpp in Sources */,
 				04EAB1171956D75600198A8E /* CCThread.cpp in Sources */,
 				04EAB1191956D75600198A8E /* CCEGLViewProtocol.cpp in Sources */,
+				B0CB4013195EB7E100F29378 /* CCSTLContainer.cpp in Sources */,
 				04EAB1471956D75600198A8E /* CCApplication.mm in Sources */,
 				04EAB14B1956D75600198A8E /* CCCommon.mm in Sources */,
 				04EAB14C1956D75600198A8E /* CCDevice.mm in Sources */,

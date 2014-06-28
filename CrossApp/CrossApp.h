@@ -123,6 +123,7 @@
 #include "support/user_default/CAUserDefault.h"
 #include "support/CCVertex.h"
 #include "support/tinyxml2/tinyxml2.h"
+#include "support/CCSTLContainer.h"
 
 
 // platform

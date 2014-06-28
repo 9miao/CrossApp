@@ -27,9 +27,7 @@ void SecondViewController::viewDidLoad()
     btn->setTitleForState(CAControlStateAll, "pressenView");
     this->getView()->addSubview(btn);
     btn->addTarget(this, CAControl_selector(SecondViewController::touchUpInSide), CAControlEventTouchUpInSide);
-    
-
-    
+    btn->setTag(100);
 }
 
 void SecondViewController::viewDidUnload()
