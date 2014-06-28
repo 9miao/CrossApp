@@ -44,10 +44,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     viewController->setTitle("设置");
     
     CANavigationBarItem* item = CANavigationBarItem::create("The Home Page");
-    CABarButtonItem* leftBtnItem = CABarButtonItem::create("left", NULL, NULL);
-    leftBtnItem->setTarget(NULL, NULL);
-    CABarButtonItem* rightBtnItem = CABarButtonItem::create("left", NULL, NULL);
-    rightBtnItem->setTarget(NULL, NULL);
+ //   CABarButtonItem* leftBtnItem = CABarButtonItem::create("left", NULL, NULL);
+ //   leftBtnItem->setTarget(NULL, NULL);
+ //   CABarButtonItem* rightBtnItem = CABarButtonItem::create("left", NULL, NULL);
+ //   rightBtnItem->setTarget(NULL, NULL);
     viewController->setNavigationBarItem(item);
     
     CANavigationController* navigationController = new CANavigationController();
