@@ -75,6 +75,7 @@ support/user_default/CAUserDefaultAndroid.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
 support/zip_support/unzip.cpp \
+support/CCSTLContainer.cpp \
 view/CABatchView.cpp \
 view/CAClippingView.cpp \
 view/CAImageView.cpp \

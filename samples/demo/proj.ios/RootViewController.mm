@@ -34,6 +34,10 @@
         rect.size.height -= 40;
         rect.origin.y = 40;
     }
+    else
+    {
+        rect.size.height -= 20;
+    }
 
     EAGLView *__glView = [EAGLView viewWithFrame: rect
                                      pixelFormat: kEAGLColorFormatRGB565
