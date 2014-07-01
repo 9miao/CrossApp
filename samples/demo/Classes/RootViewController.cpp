@@ -166,7 +166,7 @@ void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
     sprintf(s, "The Page No.%ld",this->getNavigationController()->getViewControllerCount());
     
     CANavigationBarItem* item = CANavigationBarItem::create(s);
-
+    //item->setShowGoBackButton(false);
     RootViewController* viewController = new RootViewController();
     viewController->init();
     viewController->setNavigationBarItem(item);

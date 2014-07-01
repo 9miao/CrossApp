@@ -47,7 +47,6 @@ CATableView::~CATableView()
     CC_SAFE_RELEASE_NULL(m_pTablePullUpView);
     m_pTableViewDataSource = NULL;
     m_pTableViewDelegate = NULL;
-    CCLog("fdsfdsfdsfdsfdsfdsfd");
 }
 
 void CATableView::onEnterTransitionDidFinish()

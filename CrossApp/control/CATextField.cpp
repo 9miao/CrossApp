@@ -69,19 +69,20 @@ void CATextField::onExitTransitionDidStart()
 
 bool CATextField::resignFirstResponder()
 {
-    bool result =CAView::resignFirstResponder();
+	bool result = CAView::resignFirstResponder();
     if (result)
     {
-        attachWithIME();
+		detachWithIME();
     }
     return result;
 }
 
 bool CATextField::becomeFirstResponder()
 {
-    bool result = CAView::becomeFirstResponder();
-    if (result) {
-        detachWithIME();
+	bool result = CAView::becomeFirstResponder();
+    if (result) 
+	{
+		attachWithIME();
     }
     return result;
     
@@ -304,8 +305,8 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     
     if (this->getBounds().containsPoint(point))
     {
-        resignFirstResponder();
-        if (isFirstResponder())
+		becomeFirstResponder();
+		if (isFirstResponder())
         {
             
             m_pMark->setVisible(true);
@@ -345,7 +346,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     }
     else
     {
-        if (becomeFirstResponder())
+        if (resignFirstResponder())
         {
             if (!strcmp(m_sText.c_str(), ""))
             {

@@ -138,7 +138,7 @@ void CANavigationBarItem::setShowGoBackButton(bool var)
     }
     else
     {
-        m_pLeftButtonItems->removeObject(0);
+        m_pLeftButtonItems->removeObjectAtIndex(0);
     }
 }
 

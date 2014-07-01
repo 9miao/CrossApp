@@ -11,9 +11,7 @@
 
 #include "basics/CAResponder.h"
 #include "platform/CCPlatformMacros.h"
-#include <vector>
-#include <map>
-
+#include "support/CCSTLContainer.h"
 
 NS_CC_BEGIN
 
@@ -81,9 +79,13 @@ protected:
     
 protected:
     
-    std::vector<CAView*> m_vWillTouchesViewCache;
+    CAVector<CAView> m_vWillTouchesViewCache;
     
-    std::vector<CAView*> m_vTouchesViewCache;
+    CAVector<CAView> m_vTouchesViewCache;
+    
+//    std::vector<CAView*> m_vWillTouchesViewCache;
+//    
+//    std::vector<CAView*> m_vTouchesViewCache;
     
     CCPoint m_tFirstPoint;
 };

@@ -20,6 +20,7 @@
 #include "basics/CAScheduler.h"
 #include "support/CCPointExtension.h"
 
+
 #define TOUCHES_BEGIN_VIEW  for (int i=0; i<m_vTouchesViewCache.size();)                        \
                             {                                                                   \
                                 CAView* view = m_vTouchesViewCache.at(i);                       \
@@ -29,43 +30,29 @@
                                 }                                                               \
                                 else                                                            \
                                 {                                                               \
-                                    m_vTouchesViewCache.erase(m_vTouchesViewCache.begin() + i); \
+                                    m_vTouchesViewCache.erase(i); \
                                 }                                                               \
                             }
 
-#define TOUCHES_MOVED_VIEW  for (std::vector<CAView*>::iterator itr=m_vTouchesViewCache.begin();    \
+#define TOUCHES_MOVED_VIEW  for (std::vector<CAView*>::const_iterator itr=m_vTouchesViewCache.begin();    \
                                 itr!=m_vTouchesViewCache.end();                                     \
                                 itr++)                                                              \
                             {                                                                       \
                                 (*itr)->ccTouchMoved(m_pTouch, m_pEvent);                           \
                             }                                                                       \
 
-#define TOUCHES_ENDED_VIEW  for (std::vector<CAView*>::iterator itr=m_vTouchesViewCache.begin();    \
+#define TOUCHES_ENDED_VIEW  for (std::vector<CAView*>::const_iterator itr=m_vTouchesViewCache.begin();    \
                                 itr!=m_vTouchesViewCache.end();                                     \
                                 itr++)                                                              \
                             {                                                                       \
                                 (*itr)->ccTouchEnded(m_pTouch, m_pEvent);                           \
                             }
 
-#define TOUCHES_CANCELLED_VIEW  for (std::vector<CAView*>::iterator itr=m_vTouchesViewCache.begin();    \
+#define TOUCHES_CANCELLED_VIEW  for (std::vector<CAView*>::const_iterator itr=m_vTouchesViewCache.begin();    \
                                     itr!=m_vTouchesViewCache.end();                                     \
                                     itr++)                                                              \
                                 {                                                                       \
                                     (*itr)->ccTouchCancelled(m_pTouch, m_pEvent);                            \
-                                }
-
-#define CLEAR_VECTOR(VECTOR)    for (std::vector<CAView*>::iterator itr=VECTOR.begin(); itr!=VECTOR.end(); itr++)   \
-                                {                                                                                   \
-                                    CC_SAFE_RELEASE(*itr);                                                          \
-                                }                                                                                   \
-                                VECTOR.clear();                                                                     \
-
-#define PUSH_BACK_IN_VECTOR(VECTOR, VIEW)   ((CAView*)VIEW)->retain();         \
-                                            VECTOR.push_back(((CAView*)VIEW));
-
-#define RETAIN_VECTOR(VECTOR)   for (std::vector<CAView*>::iterator itr=VECTOR.begin(); itr!=VECTOR.end(); itr++)   \
-                                {                                                                                   \
-                                    CC_SAFE_RETAIN(*itr);                                                           \
                                 }
 
 NS_CC_BEGIN
@@ -80,8 +67,8 @@ CATouchController::CATouchController()
 
 CATouchController::~CATouchController()
 {
-    CLEAR_VECTOR(m_vTouchesViewCache);
-    CLEAR_VECTOR(m_vWillTouchesViewCache);
+    m_vTouchesViewCache.clear();
+    m_vWillTouchesViewCache.clear();
     CC_SAFE_RELEASE_NULL(m_pTouch);
     CC_SAFE_RELEASE_NULL(m_pEvent);
 }
@@ -97,7 +84,7 @@ std::vector<CAView*> CATouchController::getEventListener(CATouch* touch, CAView*
     
     do
     {
-        PUSH_BACK_IN_VECTOR(vector, view);
+        vector.push_back(view);
 
         view->sortAllSubviews();
         
@@ -141,11 +128,10 @@ void CATouchController::passingTouchesViewCache(float dt)
                 ||
                 (scroll && scroll->isScrollEnabled()))
             {
-                CLEAR_VECTOR(m_vTouchesViewCache);
-                m_vTouchesViewCache.insert(m_vTouchesViewCache.begin(),
+                m_vTouchesViewCache.clear();
+                m_vTouchesViewCache.insert(0,
                                            m_vWillTouchesViewCache.begin()+i,
                                            m_vWillTouchesViewCache.end());
-                RETAIN_VECTOR(m_vTouchesViewCache);
                 isControl = true;
             }
             break;
@@ -154,15 +140,15 @@ void CATouchController::passingTouchesViewCache(float dt)
     
     if (isControl == false)
     {
-        std::vector<CAView*>::iterator itr;
+        std::vector<CAView*>::const_iterator itr;
         for (itr=m_vWillTouchesViewCache.begin();
              itr!=m_vWillTouchesViewCache.end();
              itr++)
         {
-            PUSH_BACK_IN_VECTOR(m_vTouchesViewCache, *itr);
+            m_vTouchesViewCache.push_back(*itr);
         }
     }
-    CLEAR_VECTOR(m_vWillTouchesViewCache);
+    m_vWillTouchesViewCache.clear();
     
     TOUCHES_BEGIN_VIEW;
 }
@@ -187,13 +173,10 @@ void CATouchController::touchBegan()
     {
         if ((*itr)->isSlideContainers())
         {
-            PUSH_BACK_IN_VECTOR(m_vTouchesViewCache, *itr);
+            m_vTouchesViewCache.push_back(*itr);
             if (itr+1 != vector.end())
             {
-                m_vWillTouchesViewCache.insert(m_vWillTouchesViewCache.begin(),
-                                               itr+1,
-                                               vector.end());
-                RETAIN_VECTOR(m_vWillTouchesViewCache);
+                m_vWillTouchesViewCache.insert(0, itr+1, vector.end());
             }
             break;
         }
@@ -202,17 +185,14 @@ void CATouchController::touchBegan()
             CAControl* control = dynamic_cast<CAControl*>(*itr);
             if (control && control->isTouchEnabled())
             {
-                CLEAR_VECTOR(m_vTouchesViewCache);
-                m_vTouchesViewCache.insert(m_vTouchesViewCache.begin(),
-                                           itr,
-                                           vector.end());
-                RETAIN_VECTOR(m_vTouchesViewCache);
+                m_vTouchesViewCache.clear();
+                m_vTouchesViewCache.insert(0, itr, vector.end());
             }
             break;
         }
         else
         {
-            PUSH_BACK_IN_VECTOR(m_vTouchesViewCache, *itr);
+            m_vTouchesViewCache.push_back(*itr);
         }
     }
 
@@ -223,6 +203,7 @@ void CATouchController::touchBegan()
     }
     else
     {
+
         TOUCHES_BEGIN_VIEW;
     }
 }
@@ -250,7 +231,7 @@ void CATouchController::touchMoved()
             {
                 if (view->getTouchSidingDirection() == CATouchSidingDirectionHorizontal)
                 {
-                    CLEAR_VECTOR(m_vWillTouchesViewCache);
+                    m_vWillTouchesViewCache.clear();
                     TOUCHES_BEGIN_VIEW;
                 }
                 else if (view->getTouchSidingDirection() == CATouchSidingDirectionVertical)
@@ -266,14 +247,14 @@ void CATouchController::touchMoved()
                 }
                 else if (view->getTouchSidingDirection() == CATouchSidingDirectionVertical)
                 {
-                    CLEAR_VECTOR(m_vWillTouchesViewCache);
+                    m_vWillTouchesViewCache.clear();
                     TOUCHES_BEGIN_VIEW;
                 }
             }
 
         }
 
-        CLEAR_VECTOR(m_vWillTouchesViewCache);
+        m_vWillTouchesViewCache.clear();
         TOUCHES_BEGIN_VIEW;
     }
     
