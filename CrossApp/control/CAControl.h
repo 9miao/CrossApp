@@ -60,12 +60,6 @@ public:
     
     void setControlStateSelected();
     
-    virtual void addTarget(CAObject* target, SEL_CAControl selector, CAControlEvents event);
-    
-    virtual void removeTarget(CAObject* target, SEL_CAControl selector, CAControlEvents event);
-    
-    virtual void removeAllTargets();
-    
     CC_PROPERTY_IS(bool, m_bTouchEnabled, TouchEnabled);
     
 protected:
@@ -75,6 +69,12 @@ protected:
     virtual void setBackGroundViewForState(CAControlState controlState, CAView *var);
     
     virtual CAView* getBackGroundViewForState(CAControlState controlState);
+    
+    virtual void addTarget(CAObject* target, SEL_CAControl selector, CAControlEvents event);
+    
+    virtual void removeTarget(CAObject* target, SEL_CAControl selector, CAControlEvents event);
+    
+    virtual void removeAllTargets();
     
 protected:
     

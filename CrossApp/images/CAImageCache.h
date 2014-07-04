@@ -51,25 +51,25 @@ public:
 
     CAImage* addUIImage(CCImage *image, const char *key);
 
-    CAImage* textureForKey(const char* key);
+    CAImage* imageForKey(const char* key);
 
-    bool reloadTexture(const char* fileName);
+    bool reloadImage(const char* fileName);
 
-    void removeAllTextures();
+    void removeAllImages();
 
-    void removeUnusedTextures();
+    void removeUnusedImages();
 
-    void removeTexture(CAImage* texture);
+    void removeImage(CAImage* texture);
 
-    void removeTextureForKey(const char *textureKeyName);
+    void removeImageForKey(const char *textureKeyName);
 
-    void dumpCachedTextureInfo();
+    void dumpCachedImageInfo();
  
     CAImage* addPVRImage(const char* filename);
 
     CAImage* addETCImage(const char* filename);
 
-    static void reloadAllTextures();
+    static void reloadAllImages();
     
 private:
     
@@ -198,9 +198,9 @@ public:
     
     static void setTexParameters(CAImage* t, ccTexParams *texParams);
     
-    static void removeTexture(CAImage* t);
+    static void removeImage(CAImage* t);
     
-    static void reloadAllTextures();
+    static void reloadAllImages();
     
 public:
     

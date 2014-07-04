@@ -296,23 +296,23 @@ void CAScrollView::setContentSize(const CrossApp::CCSize &var)
     viewSize.height = max(m_obContentSize.height, viewSize.height);
     this->setViewSize(viewSize);
     
-    const char indicatorSize = 6;
+    const char indicatorSize = 6 * CROSSAPP_ADPTATION_RATIO;
     
     if (m_pIndicatorHorizontal)
     {
-        const CCRect indicatorHorizontalFrame = CCRect(indicatorSize * 1.5f,
-                                                       var.height - indicatorSize * 1.5f,
-                                                       var.width - indicatorSize * 3.0f,
+        const CCRect indicatorHorizontalFrame = CCRect(indicatorSize * 2,
+                                                       var.height - indicatorSize * 2,
+                                                       var.width - indicatorSize * 4,
                                                        indicatorSize);
         
         m_pIndicatorHorizontal->setFrame(indicatorHorizontalFrame);
     }
     if (m_pIndicatorVertical)
     {
-        const CCRect indicatorVerticalFrame = CCRect(var.width - indicatorSize * 1.5f,
-                                                     indicatorSize * 1.5f,
+        const CCRect indicatorVerticalFrame = CCRect(var.width - indicatorSize * 2,
+                                                     indicatorSize * 2,
                                                      indicatorSize,
-                                                     var.height - indicatorSize * 3.0f);
+                                                     var.height - indicatorSize * 4);
         
         m_pIndicatorVertical->setFrame(indicatorVerticalFrame);
     }

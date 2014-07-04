@@ -694,7 +694,7 @@ CAImage* CAImageCache::addUIImage(CCImage *image, const char *key)
     CCAssert(image != NULL, "ImageCache: image MUST not be nil");
 
     CAImage*  texture = NULL;
-    // textureForKey() use full path,so the key should be full path
+    // imageForKey() use full path,so the key should be full path
     std::string forKey;
     if (key)
     {
@@ -735,7 +735,7 @@ CAImage* CAImageCache::addUIImage(CCImage *image, const char *key)
     return texture;
 }
 
-bool CAImageCache::reloadTexture(const char* fileName)
+bool CAImageCache::reloadImage(const char* fileName)
 {
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
     if (fullpath.size() == 0)
@@ -768,12 +768,12 @@ bool CAImageCache::reloadTexture(const char* fileName)
 
 // ImageCache - Remove
 
-void CAImageCache::removeAllTextures()
+void CAImageCache::removeAllImages()
 {
     m_pTextures->removeAllObjects();
 }
 
-void CAImageCache::removeUnusedTextures()
+void CAImageCache::removeUnusedImages()
 {
     /*
     CCDictElement* pElement = NULL;
@@ -815,7 +815,7 @@ void CAImageCache::removeUnusedTextures()
     }
 }
 
-void CAImageCache::removeTexture(CAImage* texture)
+void CAImageCache::removeImage(CAImage* texture)
 {
     if( ! texture )
     {
@@ -826,7 +826,7 @@ void CAImageCache::removeTexture(CAImage* texture)
     m_pTextures->removeObjectsForKeys(keys);
 }
 
-void CAImageCache::removeTextureForKey(const char *textureKeyName)
+void CAImageCache::removeImageForKey(const char *textureKeyName)
 {
     if (textureKeyName == NULL)
     {
@@ -837,19 +837,19 @@ void CAImageCache::removeTextureForKey(const char *textureKeyName)
     m_pTextures->removeObjectForKey(fullPath);
 }
 
-CAImage* CAImageCache::textureForKey(const char* key)
+CAImage* CAImageCache::imageForKey(const char* key)
 {
     return (CAImage*)m_pTextures->objectForKey(CCFileUtils::sharedFileUtils()->fullPathForFilename(key));
 }
 
-void CAImageCache::reloadAllTextures()
+void CAImageCache::reloadAllImages()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTexture::reloadAllTextures();
+    VolatileTexture::reloadAllImages();
 #endif
 }
 
-void CAImageCache::dumpCachedTextureInfo()
+void CAImageCache::dumpCachedImageInfo()
 {
     unsigned int count = 0;
     unsigned int totalBytes = 0;
@@ -1621,7 +1621,7 @@ void VolatileTexture::setTexParameters(CAImage* t, ccTexParams *texParams)
         vt->m_texParams.wrapT = texParams->wrapT;
 }
 
-void VolatileTexture::removeTexture(CAImage* t)
+void VolatileTexture::removeImage(CAImage* t)
 {
     
     std::list<VolatileTexture *>::iterator i = textures.begin();
@@ -1636,7 +1636,7 @@ void VolatileTexture::removeTexture(CAImage* t)
     }
 }
 
-void VolatileTexture::reloadAllTextures()
+void VolatileTexture::reloadAllImages()
 {
     isReloading = true;
     

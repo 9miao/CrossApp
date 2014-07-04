@@ -17,15 +17,18 @@ NS_CC_BEGIN
 using namespace std;
 
 
-enum eKeyBoardType{
+enum eKeyBoardType
+{
     KEY_BOARD_TYPE_NORMAL = 0,
     KEY_BOARD_TYPE_NUMBER,
     KEY_BOARD_TYPE_ALPHABET,
 };
-enum eKeyBoardInputType{
-    KEY_BOARD_INPUT_NORMAL=1,
+enum eKeyBoardInputType
+{
+    KEY_BOARD_INPUT_NORMAL = 1,
     KEY_BOARD_INPUT_PASSWORD,
 };
+
 class CATextField;
 class CC_DLL CATextFieldDelegate
 {

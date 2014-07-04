@@ -51,6 +51,7 @@
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
 		B00E5122194988DF00400911 /* iphone5.png in Resources */ = {isa = PBXBuildFile; fileRef = B00E5113194988DF00400911 /* iphone5.png */; };
 		B015758119504FA000EED010 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B015758019504FA000EED010 /* source_material */; };
+		B01F650119654461005C14FC /* ThirdViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F64FF19654461005C14FC /* ThirdViewController.cpp */; };
 		B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145A190A6A3700C3633B /* CAUIHelper.cpp */; };
 		B03E9018193897CC00FD9A06 /* CAMediaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E9004193897CC00FD9A06 /* CAMediaManager.mm */; };
 		B03E901C193897CC00FD9A06 /* CALocationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E900E193897CC00FD9A06 /* CALocationManager.mm */; };
@@ -159,6 +160,8 @@
 		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
 		B00E5113194988DF00400911 /* iphone5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone5.png; sourceTree = "<group>"; };
 		B015758019504FA000EED010 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
+		B01F64FF19654461005C14FC /* ThirdViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThirdViewController.cpp; sourceTree = "<group>"; };
+		B01F650019654461005C14FC /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
 		B02A145A190A6A3700C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
 		B02A145B190A6A3700C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
 		B03E8FF4193897CC00FD9A06 /* CAAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressManager.h; sourceTree = "<group>"; };
@@ -236,12 +239,14 @@
 				04EA9F481956BD6700198A8E /* AppDelegate.cpp */,
 				04EA9F491956BD6700198A8E /* AppDelegate.h */,
 				04EA9F4A1956BD6700198A8E /* AppMacros.h */,
-				04EA9F4B1956BD6700198A8E /* FirstViewController.cpp */,
-				04EA9F4C1956BD6700198A8E /* FirstViewController.h */,
 				04EA9F4D1956BD6700198A8E /* RootViewController.cpp */,
 				04EA9F4E1956BD6700198A8E /* RootViewController.h */,
+				04EA9F4B1956BD6700198A8E /* FirstViewController.cpp */,
+				04EA9F4C1956BD6700198A8E /* FirstViewController.h */,
 				04EA9F4F1956BD6700198A8E /* SecondViewController.cpp */,
 				04EA9F501956BD6700198A8E /* SecondViewController.h */,
+				B01F64FF19654461005C14FC /* ThirdViewController.cpp */,
+				B01F650019654461005C14FC /* ThirdViewController.h */,
 				04EA9F511956BD6700198A8E /* ViewController.cpp */,
 				04EA9F521956BD6700198A8E /* ViewController.h */,
 			);
@@ -650,6 +655,7 @@
 				B0AD93AB192077F900EA40BB /* CAHttpClient.cpp in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
+				B01F650119654461005C14FC /* ThirdViewController.cpp in Sources */,
 				B03E9018193897CC00FD9A06 /* CAMediaManager.mm in Sources */,
 				B03E90241938990600FD9A06 /* CAAddressManager.mm in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,

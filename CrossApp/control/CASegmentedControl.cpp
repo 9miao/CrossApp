@@ -10,6 +10,7 @@
 #include "CAButton.h"
 #include "view/CAScale9ImageView.h"
 #include "dispatcher/CATouch.h"
+#include "basics/CAApplication.h"
 
 using namespace std;
 NS_CC_BEGIN
@@ -461,7 +462,10 @@ bool CASegmentedControl::indexIsValid(int index)
 
 void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
 {
-    CAControl::setContentSize(var);
+    CCSize size = var;
+    size.height = MAX(size.height, 60 * CROSSAPP_ADPTATION_RATIO);
+    size.width = MAX(size.width, size.height * 2);
+    CAControl::setContentSize(size);
     this->layoutSubviews();
 }
 

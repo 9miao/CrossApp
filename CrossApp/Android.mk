@@ -84,6 +84,7 @@ view/CARenderImage.cpp \
 view/CAScale9ImageView.cpp \
 view/CAScrollView.cpp \
 view/CATableView.cpp \
+view/CACollectionView.cpp \
 view/CAView.cpp \
 view/CAWindow.cpp \
 view/CAAlertView.cpp \
@@ -106,6 +107,7 @@ platform/CCThread.cpp \
 platform/CCFileUtils.cpp \
 platform/platform.cpp \
 platform/CCEGLViewProtocol.cpp \
+platform/android/CADensityDpi.cpp \
 platform/android/CCDevice.cpp \
 platform/android/CCEGLView.cpp \
 platform/android/CCAccelerometer.cpp \

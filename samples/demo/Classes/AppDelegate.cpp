@@ -3,6 +3,7 @@
 #include "ViewController.h"
 #include "FirstViewController.h"
 #include "SecondViewController.h"
+#include "ThirdViewController.h"
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
@@ -30,8 +31,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60.0f);
-    
-    //pEGLView->setDesignResolutionSize(640, 1136, kResolutionShowAll);
 
     // create a scene. it's an autorelease object
 	m_pWindow = CAWindow::create();
@@ -44,19 +43,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     viewController->setTitle("设置");
     
     CANavigationBarItem* item = CANavigationBarItem::create("The Home Page");
- //   CABarButtonItem* leftBtnItem = CABarButtonItem::create("left", NULL, NULL);
- //   leftBtnItem->setTarget(NULL, NULL);
- //   CABarButtonItem* rightBtnItem = CABarButtonItem::create("left", NULL, NULL);
- //   rightBtnItem->setTarget(NULL, NULL);
     viewController->setNavigationBarItem(item);
     
     CANavigationController* navigationController = new CANavigationController();
     navigationController->initWithRootViewController(viewController);
     navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("first_1.png"), CAImage::create("first_2.png")));
-    //navigationController->setNavigationBarHidden(true, false);
+    
     viewController->setNavigationBarItem(CANavigationBarItem::create("The Home Page"));
-    
-    
     viewController->release();
     
     ViewController* viewController2 = new ViewController();
@@ -65,7 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     viewController2->setNavigationBarItem(CANavigationBarItem::create("viewController2"));
     viewController2->setTitle("view2");
     
-    ViewController* viewController3 = new ViewController();
+    ThirdViewController* viewController3 = new ThirdViewController();
     viewController3->init();
     viewController3->setTabBarItem(CATabBarItem::create("Third", CAImage::create("third_1.png"), CAImage::create("third_2.png")));
     viewController3->setTitle("view3");

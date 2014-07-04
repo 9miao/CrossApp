@@ -12,6 +12,9 @@
 #include "kazmath/mat4.h"
 #include "ccTypeInfo.h"
 #include "view/CALabel.h"
+
+#define CROSSAPP_ADPTATION_RATIO  CAApplication::getApplication()->getAdaptationRatio()
+
 NS_CC_BEGIN
 
 /**
@@ -281,6 +284,8 @@ public:
 
     /* delta time since last tick to main loop */
 	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
+    
+    CC_SYNTHESIZE_READONLY(float, m_fAdaptationRatio, AdaptationRatio);
     
 public:
     /** returns a shared instance of the director 

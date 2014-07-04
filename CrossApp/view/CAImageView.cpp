@@ -220,4 +220,25 @@ CAImageFrame* CAImageView::displayFrame(void)
                                            CC_SIZE_POINTS_TO_PIXELS(m_obContentSize));
 }
 
+bool CAImageView::initWithFrame(const CCRect& rect, const CAColor4B& color4B)
+{
+    return CAView::initWithFrame(rect);
+}
+
+bool CAImageView::initWithCenter(const CCRect& rect, const CAColor4B& color4B)
+{
+    return CAView::initWithCenter(rect);
+}
+
+void CAImageView::setImageAsyncWithFile(const char* fileName)
+{
+    CAImageCache::sharedImageCache()->addImageAsync(fileName, this, callfuncO_selector(CAImageView::asyncFinish));
+}
+
+void CAImageView::asyncFinish(CrossApp::CAObject *var)
+{
+    CAImage* image = dynamic_cast<CAImage*>(var);
+    this->setImage(image);
+}
+
 NS_CC_END

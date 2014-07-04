@@ -50,9 +50,19 @@ public:
 
     virtual void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
+    virtual void setImageAsyncWithFile(const char* fileName);
+    
 protected:
 
+    void asyncFinish(CAObject* var);
+    
     virtual void updateImageRect();
+    
+    virtual bool initWithFrame(const CCRect& rect, const CAColor4B& color4B);
+  
+    virtual bool initWithCenter(const CCRect& rect, const CAColor4B& color4B);
+    
+    using CAView::initWithColor;
 };
 
 NS_CC_END

@@ -65,6 +65,12 @@ public:
     
     void setControlState(CAControlState var);
     
+    using CAControl::addTarget;
+    
+    using CAControl::removeTarget;
+    
+    using CAControl::removeAllTargets;
+    
 public:
     
     CC_SYNTHESIZE(std::string, m_textTag, TextTag);

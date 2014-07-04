@@ -5,6 +5,7 @@ import org.CrossApp.lib.Cocos2dxActivity;
 import org.CrossApp.lib.Cocos2dxGLSurfaceView;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 
 public class HelloCpp extends Cocos2dxActivity{
 	

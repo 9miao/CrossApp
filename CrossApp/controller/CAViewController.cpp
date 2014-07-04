@@ -227,7 +227,7 @@ bool CANavigationController::initWithRootViewController(CAViewController* viewCo
     {
         viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
     }
-
+    viewController->getNavigationBarItem()->setShowGoBackButton(false);
     m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     
     m_eNavigationBarVerticalAlignment = var;

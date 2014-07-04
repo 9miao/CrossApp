@@ -13,6 +13,7 @@
 #include <locale>
 #include <algorithm>
 #include "view/CAScale9ImageView.h"
+
 NS_CC_BEGIN
 static unsigned int getFontHeight(const char *fontName, int fontSize)
 {
@@ -677,13 +678,7 @@ CAImage *CATextField::getBackGroundImage()
 
 void CATextField::setContentSize(const CCSize& var)
 {
-    CCSize size = var;
-    CCSize winSize = CAApplication::getApplication()->getWinSize();
-    if (size.height < winSize.width/10)
-    {
-        size.height = winSize.width/10;
-    }
-    CAControl::setContentSize(size);
+    CAControl::setContentSize(var);
 }
 
 void CATextField::updateImage()

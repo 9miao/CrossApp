@@ -105,22 +105,22 @@ If you need protected or private, please declare.
 */
 #define CC_PROPERTY_IS(varType, varName, funName)\
 protected: varType varName; \
-public: inline virtual varType is##funName(void); \
+public: virtual varType is##funName(void); \
 public: virtual void set##funName(varType var);
 
 #define CC_PROPERTY_IS_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName; \
-public: inline virtual const varType& is##funName(void); \
+public: virtual const varType& is##funName(void); \
 public: virtual void set##funName(const varType& var);
 
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName; \
-public: inline virtual varType get##funName(void); \
+public: virtual varType get##funName(void); \
 public: virtual void set##funName(varType var);
 
 #define CC_PROPERTY_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName; \
-public: inline virtual const varType& get##funName(void); \
+public: virtual const varType& get##funName(void); \
 public: virtual void set##funName(const varType& var);
 
 #define CC_SYNTHESIZE_IS_READONLY(varType, varName, funName)\

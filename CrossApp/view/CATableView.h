@@ -50,11 +50,11 @@ public:
     
     virtual ~CATableViewDataSource(){};
     
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, unsigned int section, unsigned int row) = 0;
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row) = 0;
     
-    virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section){return NULL;}
+    virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section){return NULL;}
     
-    virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, unsigned int section){return NULL;}
+    virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, const CCSize& viewSize, unsigned int section){return NULL;}
     
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section) = 0;
     
@@ -65,6 +65,12 @@ public:
     virtual unsigned int tableViewHeightForHeaderInSection(CATableView* table, unsigned int section){return 0;}
     
     virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section){return 0;}
+    
+    CC_DEPRECATED_ATTRIBUTE virtual CATableViewCell* tableCellAtIndex(CATableView* table, unsigned int section, unsigned int row){return NULL;}
+    
+    CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section){return NULL;}
+    
+    CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, unsigned int section){return NULL;}
 };
 
 
@@ -233,15 +239,31 @@ public:
     
     bool initWithReuseIdentifier(const char* reuseIdentifier);
     
-    void setBackGroundViewForState(CAControlState controlState, CAView *var);
+    using CAControl::setBackGroundViewForState;
+    
+protected:
+    
+    virtual void normalTableViewCell(){};
+    
+    virtual void highlightedTableViewCell(){};
+    
+    virtual void selectedTableViewCell(){};
+    
+    virtual void disabledTableViewCell(){};
+    
+    void setControlState(CAControlState var);
+    
+    using CAControl::setTouchEnabled;
     
 protected:
 
     CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
     
-    CC_SYNTHESIZE(unsigned int, m_nSection, Section);
+    CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
     
-    CC_SYNTHESIZE(unsigned int, m_nRow, Row);
+    CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
+    
+    friend class CATableView;
 
 };
 

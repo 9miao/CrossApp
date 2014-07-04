@@ -59,7 +59,7 @@ CAImage::CAImage()
 CAImage::~CAImage()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTexture::removeTexture(this);
+    VolatileTexture::removeImage(this);
 #endif
 
     CCLOGINFO("CrossApp: deallocing CAImage %u.", m_uName);
@@ -426,6 +426,8 @@ bool CAImage::initWithString(const char *text, const char *fontName, float fontS
 
 bool CAImage::initWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment)
 {
+    fontSize *= CROSSAPP_ADPTATION_RATIO;
+    
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
         ccFontDefinition tempDef;

@@ -12,6 +12,7 @@
 #include "view/CAScale9ImageView.h"
 #include "support/CCPointExtension.h"
 #include "view/CARenderImage.h"
+#include "basics/CAApplication.h"
 
 NS_CC_BEGIN
 
@@ -322,7 +323,7 @@ void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
 
 void CASlider::setContentSize(const CCSize & var)
 {
-    CAControl::setContentSize(CCSize(var.width, 36.0f));
+    CAControl::setContentSize(CCSize(var.width, 36.0f * CROSSAPP_ADPTATION_RATIO));
 }
 
 NS_CC_END

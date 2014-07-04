@@ -59,14 +59,14 @@ void RootViewController::viewDidLoad()
     tableView->setTableHeaderHeight(rect.size.width * 0.5);
     tableView->setTableHeaderView(view);
     
-    CAView* footer = CAView::createWithColor(CAColor_white);
+    CAView* footer = CAView::createWithColor(CAColor_yellow);
     tableView->setTableFooterHeight(120);
     tableView->setTableFooterView(footer);
     
     
-    CAView* s = CAView::createWithFrame(CCRectZero, CAColor_clear);
+    CAView* s = CAView::createWithFrame(CCRectZero, CAColor_white);
     tableView->setTablePullUpView(s);
-    tableView->setTablePullViewHeight(200);
+    tableView->setTablePullViewHeight(100);
     
     button_ = CAButton::createWithFrame(CCRect(150, tableRect.size.height+10, 200, 60), CAButtonTypeRoundedRect);
     button_->setTitleForState(CAControlStateNormal, "Hide-Bar");
@@ -183,7 +183,7 @@ void RootViewController::tableViewDidDeselectRowAtIndexPath(CATableView* table, 
     CCLog("deselected = %d %d",section, row);
 }
 
-CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsigned int section, unsigned int row)
+CATableViewCell* RootViewController::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
     CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("aaa");
     if (cell == NULL)
@@ -193,18 +193,19 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     
     CCString* str = CCString::createWithFormat("CELL - %u", row);
 
-    CCSize size = this->getView()->getBounds().size;
-    
-    CAButton* btn = CAButton::createWithCenter(CCRect(size.width - 30, 40, 100, 60), CAButtonTypeCustom);
-    btn->setImageForState(CAControlStateAll, CAImage::create("source_material/cell_btn_right.png"));
+    CAButton* btn = CAButton::createWithCenter(CCRect(cellSize.width - 30,
+                                                      cellSize.height/2,
+                                                      100 * CROSSAPP_ADPTATION_RATIO,
+                                                      60 * CROSSAPP_ADPTATION_RATIO),
+                                               CAButtonTypeCustom);
+    btn->setImageForState(CAControlStateAll,
+                          CAImage::create("source_material/cell_btn_right.png"));
     btn->setImageColorForState(CAControlStateHighlighted, ccc4(50, 193, 255, 255));
     cell->addSubview(btn);
 
-//    btn->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
-    
-    CALabel* label = CALabel::createWithFrame(CCRect(40, 0, 200, 80));
+    CALabel* label = CALabel::createWithFrame(CCRect(40, 0, 200, cellSize.height));
     label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label->setFontSize(28);
+    label->setFontSize(32);
     label->setText(str->getCString());
     cell->addSubview(label);
     
@@ -212,14 +213,14 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView *table, unsign
     
 }
 
-CAView* RootViewController::tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section)
+CAView* RootViewController::tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
 {
     CAView* view = CAView::createWithFrame(CCRect(0, 0, 0, 0), ccc4(224, 224, 224, 255));
     
     CCString* str = CCString::createWithFormat("Header - %u", section);
-    CALabel* label = CALabel::createWithFrame(CCRect(20, 0, 200, 40));
+    CALabel* label = CALabel::createWithFrame(CCRect(20, 0, 200, viewSize.height));
     label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label->setFontSize(20);
+    label->setFontSize(24);
     label->setText(str->getCString());
     label->setColor(ccc4(127, 127, 127, 255));
     view->addSubview(label);
@@ -227,7 +228,7 @@ CAView* RootViewController::tableViewSectionViewForHeaderInSection(CATableView* 
     return view;
 }
 
-CAView* RootViewController::tableViewSectionViewForFooterInSection(CATableView* table, unsigned int section)
+CAView* RootViewController::tableViewSectionViewForFooterInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
 {
     return CAView::createWithColor(CAColor_clear);
 }
@@ -244,17 +245,17 @@ unsigned int RootViewController::numberOfSections(CATableView *table)
 
 unsigned int RootViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    return 80;
+    return this->getView()->getBounds().size.height/12;
 }
 
 unsigned int RootViewController::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
 {
-    return 40;
+    return this->getView()->getBounds().size.height/24;
 }
 
 unsigned int RootViewController::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
 {
-    return 120;
+    return this->getView()->getBounds().size.height/8;
 }
 
 void RootViewController::tableViewDidShowPullDownView(CATableView* table)

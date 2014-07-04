@@ -50,7 +50,7 @@ void FirstViewController::viewDidLoad()
     segmentedControl->insertSegmentWithTitle("3", 3, CAControlStateAll);
     this->getView()->addSubview(segmentedControl);
     
-    CAButton* btn = CAButton::createWithCenter(CCRect(size.width/2, 600, 150, 60), CAButtonTypeRoundedRect);
+    CAButton* btn = CAButton::createWithCenter(CCRect(size.width/2, size.height - off_Y, 150, 60), CAButtonTypeRoundedRect);
     btn->setTitleForState(CAControlStateAll, "OK");
     this->getView()->addSubview(btn);
     btn->addTarget(this, CAControl_selector(FirstViewController::diss), CAControlEventTouchUpInSide);

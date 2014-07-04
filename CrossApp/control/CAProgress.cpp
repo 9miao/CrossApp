@@ -13,6 +13,8 @@
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "support/CCPointExtension.h"
+#include "basics/CAApplication.h"
+
 NS_CC_BEGIN
 
 CAProgress::CAProgress()
@@ -173,7 +175,7 @@ void CAProgress::animatedFinish()
 
 void CAProgress::setContentSize(const CCSize & var)
 {
-    CAView::setContentSize(CCSize(var.width, 6.0f));
+    CAView::setContentSize(CCSize(var.width, 6.0f * CROSSAPP_ADPTATION_RATIO));
 }
 
 NS_CC_END

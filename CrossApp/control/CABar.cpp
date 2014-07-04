@@ -42,7 +42,8 @@ bool CANavigationBar::init()
     }
     this->setColor(CAColor_clear);
     CCSize winSize = CAApplication::getApplication()->getWinSize();
-    this->setContentSize(CCSize(winSize.width, MIN(winSize.width * 0.15f, winSize.height * 0.1f)));
+    CCSize size = CCSize(winSize.width, 96 * CROSSAPP_ADPTATION_RATIO);
+    this->setContentSize(size);
     
     return true;
 }
@@ -130,7 +131,7 @@ void CANavigationBar::showTitle()
     }
     else
     {
-        int fontSize = this->getBounds().size.height * 0.35f;
+        int fontSize = this->getBounds().size.height * 0.35f / CROSSAPP_ADPTATION_RATIO;
 
         CALabel* title = CALabel::createWithCenter(rect);
         title->setTextAlignment(CATextAlignmentCenter);
@@ -321,8 +322,8 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items)
     this->setColor(CAColor_clear);
     
     CCSize winSize = CAApplication::getApplication()->getWinSize();
-
-    this->setContentSize(CCSize(winSize.width, MIN(winSize.width * 0.15f, winSize.height * 0.1f)));
+    CCSize size = CCSize(winSize.width, 96 * CROSSAPP_ADPTATION_RATIO);
+    this->setContentSize(size);
     
     this->setItems(items);
     

@@ -7,12 +7,13 @@ LOCAL_MODULE := CrossApp_cpp_shared
 LOCAL_MODULE_FILENAME := libCrossApp_cpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
-            ../../Classes/AppDelegate.cpp \
-			../../Classes/FirstViewController.cpp \
-			../../Classes/SecondViewController.cpp \
-			../../Classes/RootViewController.cpp \
-			../../Classes/ViewController.cpp \
-			
+../../Classes/AppDelegate.cpp \
+../../Classes/FirstViewController.cpp \
+../../Classes/SecondViewController.cpp \
+../../Classes/ThirdViewController.cpp \
+../../Classes/RootViewController.cpp \
+../../Classes/ViewController.cpp \
+		
 			
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes

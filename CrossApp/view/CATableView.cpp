@@ -15,6 +15,7 @@
 #include "actions/CCActionInterval.h"
 #include "dispatcher/CATouch.h"
 #include "support/CCPointExtension.h"
+#include "CCEGLView.h"
 NS_CC_BEGIN
 
 #pragma CATableView
@@ -423,10 +424,18 @@ void CATableView::reloadData()
     m_rTableCellRectss.resize(sectionCount);
     for (unsigned int i=0; i<sectionCount; i++)
     {
-        CAView* sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, i);
+        CCRect sectionHeaderRect = CCRect(0, y, width, m_nSectionHeaderHeights.at(i));
+        CAView* sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
+        
+        //CC_DEPRECATED_ATTRIBUTE
+        if (sectionHeaderView == NULL)
+        {
+            sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, i);
+        }
+        
         if (sectionHeaderView)
         {
-            sectionHeaderView->setFrame(CCRect(0, y, width, m_nSectionHeaderHeights.at(i)));
+            sectionHeaderView->setFrame(sectionHeaderRect);
             this->addSubview(sectionHeaderView);
         }
          y += m_nSectionHeaderHeights[i];
@@ -436,11 +445,18 @@ void CATableView::reloadData()
         {
             m_rTableCellRectss[i][j] = CCRect(0, y, width, m_nRowHeightss[i][j]);
             
-            CATableViewCell* cell = m_pTableViewDataSource->tableCellAtIndex(this, i, j);
+            CATableViewCell* cell = m_pTableViewDataSource->tableCellAtIndex(this, m_rTableCellRectss[i][j].size, i, j);
+            
+            //CC_DEPRECATED_ATTRIBUTE
+            if (cell == NULL)
+            {
+                cell = m_pTableViewDataSource->tableCellAtIndex(this, i, j);
+            }
+            
             cell->setFrame(m_rTableCellRectss[i][j]);
             this->addSubview(cell);
-            cell->setSection(i);
-            cell->setRow(j);
+            cell->m_nSection = i;
+            cell->m_nRow = j;
             m_pTableCells.push_back(cell);
             
              y += m_nRowHeightss[i][j];
@@ -453,10 +469,19 @@ void CATableView::reloadData()
             }
         }
         
-        CAView* sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, i);
+        CCRect sectionFooterRect = CCRect(0, y, width, m_nSectionFooterHeights.at(i));
+        
+        CAView* sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
+        
+        //CC_DEPRECATED_ATTRIBUTE
+        if (sectionFooterView == NULL)
+        {
+            sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, i);
+        }
+        
         if (sectionFooterView)
         {
-            sectionFooterView->setFrame(CCRect(0, y, width, m_nSectionFooterHeights.at(i)));
+            sectionFooterView->setFrame(sectionFooterRect);
             this->addSubview(sectionFooterView);
         }
         y += m_nSectionFooterHeights.at(i);
@@ -540,25 +565,43 @@ bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
     this->setReuseIdentifier(reuseIdentifier);
     
     this->setBackGroundViewForState(CAControlStateNormal,
-                                    CAView::createWithFrame(this->getBounds(),
-                                                            ccc4(255, 255, 255, 255)));
+        CAView::createWithFrame(this->getBounds(),
+        ccc4(255, 255, 255, 255)));
 
     this->setBackGroundViewForState(CAControlStateHighlighted,
-                                    CAView::createWithFrame(this->getBounds(),
-                                                            ccc4(50, 193, 255, 255)));
+        CAView::createWithFrame(this->getBounds(),
+        ccc4(50, 193, 255, 255)));
     
     this->setBackGroundViewForState(CAControlStateSelected,
-                                    CAView::createWithFrame(this->getBounds(),
-                                                            ccc4(50, 193, 255, 255)));
+        CAView::createWithFrame(this->getBounds(),
+        ccc4(50, 193, 255, 255)));
     
     this->setControlStateNormal();
     
     return true;
 }
 
-void CATableViewCell::setBackGroundViewForState(CAControlState controlState, CAView *var)
+void CATableViewCell::setControlState(CAControlState var)
 {
-    CAControl::setBackGroundViewForState(controlState, var);
+    CAControl::setControlState(var);
+    
+    switch (m_eControlState)
+    {
+        case CAControlStateNormal:
+            this->normalTableViewCell();
+            break;
+        case CAControlStateHighlighted:
+            this->highlightedTableViewCell();
+            break;
+        case CAControlStateSelected:
+            this->selectedTableViewCell();
+            break;
+        case CAControlStateDisabled:
+            this->disabledTableViewCell();
+            break;
+        default:
+            break;
+    }
 }
 
 NS_CC_END

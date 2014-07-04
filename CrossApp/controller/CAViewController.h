@@ -28,7 +28,7 @@ class CATabBarController;
 class CANavigationController;
 
 class CC_DLL CAViewController
-: public CAView
+: public CAObject
 , public CAViewDelegate
 , public CAKeypadDelegate
 {

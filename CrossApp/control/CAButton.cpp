@@ -13,6 +13,8 @@
 #include "support/CCPointExtension.h"
 #include "cocoa/CCSet.h"
 #include "view/CALabel.h"
+#include "basics/CAApplication.h"
+
 #define PLAYSOUND 
 
 NS_CC_BEGIN
@@ -522,7 +524,7 @@ void CAButton::setControlState(CAControlState var)
     
     if (!title.empty())
     {
-        m_pLabel->setFontSize(labelSize);
+        m_pLabel->setFontSize(labelSize / CROSSAPP_ADPTATION_RATIO);
     }
     
     if (strcmp(title.c_str(), m_pLabel->getText().c_str()))
@@ -603,7 +605,7 @@ bool CAButton::isTextTagEqual(const char *text)
 void CAButton::setContentSize(const CCSize & var)
 {
     CCSize size = var;
-    size.height = MAX(size.height, 60);
+    size.height = MAX(size.height, 60 * CROSSAPP_ADPTATION_RATIO);
     size.width = MAX(size.width, size.height);
     CAControl::setContentSize(size);
     

@@ -33,11 +33,11 @@ CAAlertView::~CAAlertView()
 	{
 		CC_SAFE_RELEASE_NULL(m_vAllBtn[i]);
 	}
-	CC_SAFE_DELETE(m_pTitleLabel);
-	CC_SAFE_DELETE(m_pContentLabel);
-	CC_SAFE_DELETE(m_pTitleImage);
-	CC_SAFE_DELETE(m_pContentBkImage);
-	CC_SAFE_DELETE(m_pBtnTableView);
+	CC_SAFE_RELEASE_NULL(m_pTitleLabel);
+	CC_SAFE_RELEASE_NULL(m_pContentLabel);
+	CC_SAFE_RELEASE_NULL(m_pTitleImage);
+	CC_SAFE_RELEASE_NULL(m_pContentBkImage);
+	CC_SAFE_RELEASE_NULL(m_pBtnTableView);
 }
 
 bool CAAlertView::init()
@@ -284,13 +284,12 @@ void CAAlertView::setTarget(CAObject* target, SEL_CAlertBtnEvent selector)
 
 void CAAlertView::onClickButton(CAControl* btn, CCPoint point)
 {
+    CC_RETURN_IF(m_bRunning == false);
 	if (m_pCAlertBtnEvent && m_pCAlertTarget)
 	{
 		((CAObject*)m_pCAlertTarget->*m_pCAlertBtnEvent)(btn->getTag());
 	}
-	CAApplication* pApplication = CAApplication::getApplication();
-	CCAssert(pApplication != NULL, "");
-	pApplication->getRootWindow()->removeSubview(this);
+    this->removeFromSuperview();
 	autorelease();
 }
 
@@ -315,7 +314,7 @@ void CAAlertView::showMessage(std::string title, std::string alertMsg, std::vect
 	retain();
 }
 
-CATableViewCell* CAAlertView::tableCellAtIndex(CATableView* table, unsigned int section, unsigned int row)
+CATableViewCell* CAAlertView::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
 	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("cellID");
 	if (cell == NULL)

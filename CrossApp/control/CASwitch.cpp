@@ -14,6 +14,8 @@
 #include "view/CARenderImage.h"
 #include "actions/CCActionInterval.h"
 #include "actions/CCActionEase.h"
+#include "basics/CAApplication.h"
+
 NS_CC_BEGIN
 
 CASwitch::CASwitch()
@@ -163,8 +165,7 @@ void CASwitch::updateSwitchState()
         point.x = m_isOn ? (m_obContentSize.width - m_thumbTintImageView->getBounds().size.width) : 0;
         m_thumbTintImageView->stopAllActions();
         CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.2f, point);
-        CCEaseSineOut* out = CCEaseSineOut::create(moveTo);
-        m_thumbTintImageView->runAction(out);
+        m_thumbTintImageView->runAction(moveTo);
     }
 }
 
@@ -264,7 +265,7 @@ void CASwitch::removeTarget(CAObject* target, SEL_CAControl selector)
 
 void CASwitch::setContentSize(const CCSize & var)
 {
-    CAControl::setContentSize(CCSize(80, 48));
+    CAControl::setContentSize(CCSize(80, 48) * CROSSAPP_ADPTATION_RATIO);
 }
 
 NS_CC_END

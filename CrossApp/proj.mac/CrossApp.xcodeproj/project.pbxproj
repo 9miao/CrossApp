@@ -266,6 +266,10 @@
 		1551A874158F2B4700E66CFE /* CrossApp-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 1551A873158F2B4700E66CFE /* CrossApp-Prefix.pch */; };
 		1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A94D34C16C2014900D79D09 /* libwebp.a */; };
 		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
+		B01F64F91964FE2F005C14FC /* CADensityDpi.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F64F71964FE2F005C14FC /* CADensityDpi.h */; };
+		B01F64FB1964FF0D005C14FC /* CADensityDpi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */; };
+		B01F650419657084005C14FC /* CACollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F650219657084005C14FC /* CACollectionView.cpp */; };
+		B01F650519657084005C14FC /* CACollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F650319657084005C14FC /* CACollectionView.h */; };
 		B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D3697195AB93900DD4814 /* CAAlertView.cpp */; };
 		B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D3698195AB93900DD4814 /* CAAlertView.h */; };
 		B0CB4013195EB7E100F29378 /* CCSTLContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CB4011195EB7E100F29378 /* CCSTLContainer.cpp */; };
@@ -535,6 +539,10 @@
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1551A873158F2B4700E66CFE /* CrossApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.pch"; sourceTree = "<group>"; };
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
+		B01F64F71964FE2F005C14FC /* CADensityDpi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADensityDpi.h; sourceTree = "<group>"; };
+		B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADensityDpi.cpp; sourceTree = "<group>"; };
+		B01F650219657084005C14FC /* CACollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACollectionView.cpp; sourceTree = "<group>"; };
+		B01F650319657084005C14FC /* CACollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACollectionView.h; sourceTree = "<group>"; };
 		B05D3697195AB93900DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D3698195AB93900DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
 		B0CB4011195EB7E100F29378 /* CCSTLContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSTLContainer.cpp; sourceTree = "<group>"; };
@@ -817,6 +825,7 @@
 		04EAA0E21956D74D00198A8E /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B01F64F71964FE2F005C14FC /* CADensityDpi.h */,
 				04EAA1201956D74D00198A8E /* CCApplicationProtocol.h */,
 				04EAA1211956D74D00198A8E /* CCAccelerometerDelegate.h */,
 				04EAA1221956D74D00198A8E /* CCCommon.h */,
@@ -845,6 +854,7 @@
 		04EAA15F1956D74D00198A8E /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */,
 				0460ECF01956F97A00D13001 /* CAApplicationCaller.h */,
 				0460ECF11956F97A00D13001 /* CAApplicationCaller.mm */,
 				0460ECF21956F97A00D13001 /* CCEGLView.h */,
@@ -1065,6 +1075,8 @@
 				04EAB04D1956D75500198A8E /* CAScrollView.h */,
 				04EAB04E1956D75500198A8E /* CATableView.cpp */,
 				04EAB04F1956D75500198A8E /* CATableView.h */,
+				B01F650219657084005C14FC /* CACollectionView.cpp */,
+				B01F650319657084005C14FC /* CACollectionView.h */,
 				04EAB0501956D75500198A8E /* CAView.cpp */,
 				04EAB0511956D75500198A8E /* CAView.h */,
 				04EAB0521956D75500198A8E /* CAWindow.cpp */,
@@ -1129,6 +1141,7 @@
 				04EAB07B1956D75600198A8E /* ccTypeInfo.h in Headers */,
 				04EAB07C1956D75600198A8E /* ccTypes.h in Headers */,
 				04EAB07E1956D75600198A8E /* CCAffineTransform.h in Headers */,
+				B01F650519657084005C14FC /* CACollectionView.h in Headers */,
 				04EAB0801956D75600198A8E /* CCArray.h in Headers */,
 				04EAB0811956D75600198A8E /* CCBool.h in Headers */,
 				04EAB0831956D75600198A8E /* CCDataVisitor.h in Headers */,
@@ -1160,6 +1173,7 @@
 				04EAB0B11956D75600198A8E /* CATouchDispatcher.h in Headers */,
 				04EAB0B31956D75600198A8E /* CCDrawingPrimitives.h in Headers */,
 				04EAB0B51956D75600198A8E /* CCDrawNode.h in Headers */,
+				B01F64F91964FE2F005C14FC /* CADensityDpi.h in Headers */,
 				04EAB0B71956D75600198A8E /* CAImage.h in Headers */,
 				04EAB0B91956D75600198A8E /* CAImageCache.h in Headers */,
 				04EAB0BB1956D75600198A8E /* CAImageFrame.h in Headers */,
@@ -1334,6 +1348,7 @@
 				04EAB0891956D75600198A8E /* CCNS.cpp in Sources */,
 				04EAB08B1956D75600198A8E /* CCSet.cpp in Sources */,
 				04EAB08D1956D75600198A8E /* CCString.cpp in Sources */,
+				B01F64FB1964FF0D005C14FC /* CADensityDpi.cpp in Sources */,
 				04EAB08F1956D75600198A8E /* CABar.cpp in Sources */,
 				04EAB0911956D75600198A8E /* CAButton.cpp in Sources */,
 				04EAB0931956D75600198A8E /* CAControl.cpp in Sources */,
@@ -1353,6 +1368,7 @@
 				04EAB0B21956D75600198A8E /* CCDrawingPrimitives.cpp in Sources */,
 				04EAB0B41956D75600198A8E /* CCDrawNode.cpp in Sources */,
 				04EAB0B61956D75600198A8E /* CAImage.cpp in Sources */,
+				B01F650419657084005C14FC /* CACollectionView.cpp in Sources */,
 				04EAB0B81956D75600198A8E /* CAImageCache.cpp in Sources */,
 				04EAB0BA1956D75600198A8E /* CAImageFrame.cpp in Sources */,
 				04EAB0BC1956D75600198A8E /* CAImageFrameCache.cpp in Sources */,

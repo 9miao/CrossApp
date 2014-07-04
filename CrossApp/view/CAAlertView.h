@@ -71,7 +71,7 @@ public:
 
 protected:
     
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, unsigned int section, unsigned int row);
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
     
 	virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     

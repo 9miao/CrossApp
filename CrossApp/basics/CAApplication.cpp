@@ -31,7 +31,7 @@
 #include "support/CCProfiling.h"
 #include "platform/CCImage.h"
 #include "CCEGLView.h"
-
+#include "platform/CADensityDpi.h"
 
 /**
  Position of the FPS
@@ -126,6 +126,8 @@ bool CAApplication::init(void)
     // create autorelease pool
     CAPoolManager::sharedPoolManager()->push();
 
+    m_fAdaptationRatio = CADensityDpi::getDensityDpi() / 320.0f;
+    
     return true;
 }
     
@@ -450,7 +452,7 @@ void CAApplication::purgeCachedData(void)
 {
     if (s_SharedDirector->getOpenGLView())
     {
-        CAImageCache::sharedImageCache()->removeUnusedTextures();
+        CAImageCache::sharedImageCache()->removeUnusedImages();
     }
     CCFileUtils::sharedFileUtils()->purgeCachedEntries();
 }
@@ -760,7 +762,7 @@ void CAApplication::createStatsLabel()
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         CC_SAFE_RELEASE_NULL(m_pSPFLabel);
         CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
-        ImageCache->removeTextureForKey("cc_fps_images");
+        ImageCache->removeImageForKey("cc_fps_images");
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
