@@ -28,10 +28,6 @@ public:
 	virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int row, unsigned int item) {};
 
 	virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int row, unsigned int item) {};
-
-	virtual void collectionViewDidShowPullDownView(CACollectionView *collectionView) {};
-
-	virtual void collectionViewDidShowPullUpView(CACollectionView *collectionView) {};
 };
 
 
@@ -112,15 +108,9 @@ protected:
 
 	CC_SYNTHESIZE_RETAIN(CAView*, m_pCollectionFooterView, CollectionFooterView);
 
-	CC_SYNTHESIZE_RETAIN(CAView*, m_pCollectionPullDownView, CollectionPullDownView);
-
-	CC_SYNTHESIZE_RETAIN(CAView*, m_pCollectionPullUpView, CollectionPullUpView);
-
     CC_SYNTHESIZE(unsigned int, m_nCollectionHeaderHeight, CollectionHeaderHeight);
     
     CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
-    
-	CC_SYNTHESIZE(unsigned int, m_nCollectionPullViewHeight, CollectionPullViewHeight);
 
 	CC_SYNTHESIZE_IS(bool, m_bAllowsSelection, AllowsSelection);
 

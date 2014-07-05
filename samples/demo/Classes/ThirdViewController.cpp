@@ -40,16 +40,24 @@ void ThirdViewController::viewDidLoad()
     
 	m_pCollectionView->setCollectionHeaderView(headView);
     m_pCollectionView->setCollectionHeaderHeight(100);
-	m_pCollectionView->setCollectionFooterView(CAView::createWithColor(CAColor_blue));
+    
+    
+    CAView* footerView = CAView::createWithColor(CAColor_blue);
+    
+    CALabel* pLabel2 = new CALabel();
+	pLabel2->initWithCenter(CCRectMake(sz.width / 2, sz.height / 2, sz.width, sz.height));
+	pLabel2->setTextAlignment(CATextAlignmentCenter);
+	pLabel2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+	pLabel2->setText("Footer View");
+	pLabel2->setFontName("fonts/arial.ttf");
+	pLabel2->setFontSize(28);
+	pLabel2->setColor(CAColor_gray);
+	footerView->addSubview(pLabel2);
+	pLabel2->release();
+    
+	m_pCollectionView->setCollectionFooterView(footerView);
     m_pCollectionView->setCollectionFooterHeight(100);
 
-	CAView* s = CAView::createWithFrame(CCRectZero, CAColor_clear);
-	m_pCollectionView->setCollectionPullUpView(s);
-    CAView* s2 = CAView::createWithFrame(CCRectZero, CAColor_clear);
-	m_pCollectionView->setCollectionPullDownView(s2);
-	m_pCollectionView->setCollectionPullViewHeight(200);
-
-    
 	m_pCollectionView->setAllowsSelection(true);
 
 }
@@ -102,7 +110,17 @@ unsigned int ThirdViewController::collectionViewHeightForHeaderInSection(CAColle
 
 CAView* ThirdViewController::collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section)
 {
-	return CAView::createWithColor(CAColor_gray);
+    CAView* view = CAView::createWithFrame(CCRect(0, 0, 0, 0), ccc4(224, 224, 224, 255));
+    
+    CCString* str = CCString::createWithFormat("Section Header - %u", section);
+    CALabel* label = CALabel::createWithFrame(CCRect(20, 0, 200, viewSize.height));
+    label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    label->setFontSize(24);
+    label->setText(str->getCString());
+    label->setColor(ccc4(127, 127, 127, 255));
+    view->addSubview(label);
+    
+	return view;
 }
 
 unsigned int ThirdViewController::numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)

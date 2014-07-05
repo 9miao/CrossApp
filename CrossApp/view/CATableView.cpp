@@ -562,6 +562,25 @@ void CATableView::update(float dt)
     }
 }
 
+void CATableView::setTablePullDownView(CAView* var)
+{
+    CC_SAFE_RELEASE(m_pTablePullDownView);
+    CC_SAFE_RETAIN(var);
+    m_pTablePullDownView = var;
+}
+
+void CATableView::setTablePullUpView(CAView* var)
+{
+    CC_SAFE_RELEASE(m_pTablePullUpView);
+    CC_SAFE_RETAIN(var);
+    m_pTablePullUpView = var;
+}
+
+void CATableView::setTablePullViewHeight(unsigned int var)
+{
+    m_nTablePullViewHeight = var;
+}
+
 #pragma CATableViewCell
 
 CATableViewCell::CATableViewCell()

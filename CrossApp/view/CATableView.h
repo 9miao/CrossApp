@@ -99,6 +99,12 @@ public:
     
     void setSelectRowAtIndexPath(unsigned int section, unsigned int row);
     
+    CC_DEPRECATED_ATTRIBUTE void setTablePullDownView(CAView* var);
+    
+    CC_DEPRECATED_ATTRIBUTE void setTablePullUpView(CAView* var);
+    
+    CC_DEPRECATED_ATTRIBUTE void setTablePullViewHeight(unsigned int var);
+    
 protected:
 
     inline virtual float maxSpeed(float dt);
@@ -139,23 +145,23 @@ protected:
     
     CC_SYNTHESIZE_RETAIN(CAView*, m_pTableFooterView, TableFooterView);
     
-    CC_SYNTHESIZE_RETAIN(CAView*, m_pTablePullDownView, TablePullDownView);
-    
-    CC_SYNTHESIZE_RETAIN(CAView*, m_pTablePullUpView, TablePullUpView);
-    
     CC_SYNTHESIZE(CAColor4B, m_separatorColor, SeparatorColor);
     
     CC_SYNTHESIZE(unsigned int, m_nTableHeaderHeight, TableHeaderHeight);
     
     CC_SYNTHESIZE(unsigned int, m_nTableFooterHeight, TableFooterHeight);
     
-    CC_SYNTHESIZE(unsigned int, m_nTablePullViewHeight, TablePullViewHeight);
-    
     CC_SYNTHESIZE(unsigned int, m_nSeparatorViewHeight, SeparatorViewHeight);
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelection, AllowsSelection);
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
+    
+    CC_SYNTHESIZE_READONLY(CAView*, m_pTablePullDownView, TablePullDownView);
+    
+    CC_SYNTHESIZE_READONLY(CAView*, m_pTablePullUpView, TablePullUpView);
+    
+    CC_SYNTHESIZE_READONLY(unsigned int, m_nTablePullViewHeight, TablePullViewHeight);
     
 private:
     

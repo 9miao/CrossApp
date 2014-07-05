@@ -17,9 +17,6 @@ CACollectionView::CACollectionView()
 , m_pCollectionViewDelegate(NULL)
 , m_pCollectionHeaderView(NULL)
 , m_pCollectionFooterView(NULL)
-, m_pCollectionPullDownView(NULL)
-, m_pCollectionPullUpView(NULL)
-, m_nCollectionPullViewHeight(0)
 , m_bAllowsSelection(false)
 , m_bAllowsMultipleSelection(false)
 , m_pHighlightedCollectionCells(NULL)
@@ -103,11 +100,7 @@ float CACollectionView::decelerationRatio(float dt)
 
 CCPoint CACollectionView::maxBouncesLenght()
 {
-    if (m_pCollectionPullDownView || m_pCollectionPullUpView)
-    {
-        return CCPoint(0, MIN(m_obContentSize.height/2, m_nCollectionPullViewHeight * 0.8f));
-    }
-    
+    //PULL SHOW VIEW
     return CCPoint(0, m_obContentSize.height/2);
 }
 
@@ -122,12 +115,6 @@ void CACollectionView::reloadData()
 
 	float width = this->getBounds().size.width;
 	int y = 0;
-
-	if (m_pCollectionPullDownView)
-	{
-		m_pCollectionPullDownView->setFrame(CCRect(0, -(float)m_nCollectionPullViewHeight, width, m_nCollectionPullViewHeight));
-		addSubview(m_pCollectionPullDownView);
-	}
 
 	if (m_nCollectionHeaderHeight > 0 && m_pCollectionHeaderView)
 	{
@@ -197,12 +184,6 @@ void CACollectionView::reloadData()
         y += m_nCollectionFooterHeight;
 	}
 
-	if (m_pCollectionPullUpView)
-	{
-		m_pCollectionPullUpView->setFrame(CCRect(0, m_obViewSize.height, width, m_nCollectionPullViewHeight));
-		addSubview(m_pCollectionPullUpView);
-	}
-    
     this->setViewSize(CCSize(width, y));
 }
 
@@ -341,19 +322,6 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				m_pCollectionViewDelegate->collectionViewDidSelectCellAtIndexPath(this, selectedCell->getRow(), selectedCell->getItem());
 			}
-		}
-	}
-
-	if (m_pCollectionViewDelegate)
-	{
-		if (m_pCollectionViewDelegate && m_pContainer->getFrame().origin.y > m_nCollectionPullViewHeight)
-		{
-			m_pCollectionViewDelegate->collectionViewDidShowPullDownView(this);
-		}
-
-		if (m_pCollectionViewDelegate && this->getBounds().size.height - (m_pContainer->getFrame().origin.y + m_pContainer->getFrame().size.height) > m_nCollectionPullViewHeight)
-		{
-			m_pCollectionViewDelegate->collectionViewDidShowPullUpView(this);
 		}
 	}
 }
