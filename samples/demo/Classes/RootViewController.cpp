@@ -55,17 +55,13 @@ void RootViewController::viewDidLoad()
     label->setFontSize(36);
     view->addSubview(label);
     
-    
     tableView->setTableHeaderHeight(rect.size.width * 0.5);
     tableView->setTableHeaderView(view);
     
-    CAView* footer = CAView::createWithColor(CAColor_yellow);
-    tableView->setTableFooterHeight(120);
-    tableView->setTableFooterView(footer);
-    
-    
     CAView* s = CAView::createWithFrame(CCRectZero, CAColor_white);
     tableView->setTablePullUpView(s);
+    CAView* s2 = CAView::createWithFrame(CCRectZero, CAColor_white);
+    tableView->setTablePullDownView(s2);
     tableView->setTablePullViewHeight(100);
     
     button_ = CAButton::createWithFrame(CCRect(150, tableRect.size.height+10, 200, 60), CAButtonTypeRoundedRect);
@@ -84,7 +80,7 @@ void RootViewController::viewDidLoad()
     switch_->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection));
     this->getView()->addSubview(switch_);
     
-    //CAScheduler::schedule(schedule_selector(RootViewController::updateProgress), this, 5, false);
+    //CAScheduler::schedule(schedule_selector(RootViewController::updateProgress), this, 5);
 }
 
 void RootViewController::viewDidUnload()

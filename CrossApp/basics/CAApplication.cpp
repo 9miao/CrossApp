@@ -602,7 +602,7 @@ void CAApplication::runWindow(CAWindow *pWindow)
     
     startAnimation();
  
-    CAScheduler::schedule(schedule_selector(CAApplication::run), this, 0, false);
+    CAScheduler::schedule(schedule_selector(CAApplication::run), this, 0);
 }
 
 void CAApplication::run(float dt)

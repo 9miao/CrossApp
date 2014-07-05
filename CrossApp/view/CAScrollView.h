@@ -16,7 +16,7 @@
 NS_CC_BEGIN
 
 class CAScrollView;
-class CC_DLL CAScrollViewDelegate
+class CAScrollViewDelegate
 {
 public:
 
@@ -85,21 +85,23 @@ protected:
     
     bool isScrollWindowNotMaxOutSide();
     
-    virtual void update(float fDelta);
+    virtual void update(float dt);
     
-    void deaccelerateScrolling(float delay);
+    void deaccelerateScrolling(float dt);
     
-    inline virtual float maxSpeed(float delay);
+    inline virtual float maxSpeed(float dt);
     
-    inline virtual float maxSpeedCache(float delay);
+    inline virtual float maxSpeedCache(float dt);
     
-    inline virtual float decelerationRatio(float delay);
+    inline virtual float decelerationRatio(float dt);
     
     inline virtual CCPoint maxBouncesLenght();
     
-    inline float maxBouncesSpeed(float delay);
+    inline float maxBouncesSpeed(float dt);
     
-    void closeToPoint(float delay);
+    virtual void contentOffsetFinish(){}
+    
+    void closeToPoint(float dt);
     
     void showIndicator();
     

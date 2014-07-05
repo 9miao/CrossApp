@@ -64,11 +64,12 @@ void ThirdViewController::viewDidUnload()
 
 }
 
-CACollectionViewCell* ThirdViewController::collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int row, unsigned int item)
+
+CACollectionViewCell* ThirdViewController::collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
 {
 	CACollectionViewCell* pCell = new CACollectionViewCell();
 	char cIdentifier[1024] = { 0 };
-	sprintf(cIdentifier, "{%d, %d}", row, item);
+	sprintf(cIdentifier, "{%d, %d, %d}" ,section, row, item);
 	pCell->initWithReuseIdentifier(cIdentifier);
 
 	CALabel* label = CALabel::createWithCenter(CCRectMake(cellSize.width / 2, cellSize.height - 30, cellSize.width, cellSize.height));
@@ -84,23 +85,37 @@ CACollectionViewCell* ThirdViewController::collectionCellAtIndex(CACollectionVie
 	return pCell;
 }
 
-
-
-unsigned int ThirdViewController::numberOfRowsInCollectionView(CACollectionView *collectionView)
+unsigned int ThirdViewController::numberOfSectionsInCollectioView()
 {
-	return 6;
+	return 2;
 }
 
-unsigned int ThirdViewController::numberOfItemsInRows(CACollectionView *collectionView, unsigned int row)
+unsigned int ThirdViewController::numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section)
 {
-	return 2 + row % 2;
+	return 3;
 }
 
-unsigned int ThirdViewController::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int row)
+unsigned int ThirdViewController::collectionViewHeightForHeaderInSection(CACollectionView *collectionView, unsigned int section)
+{
+	return 80;
+}
+
+CAView* ThirdViewController::collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section)
+{
+	return CAView::createWithColor(CAColor_gray);
+}
+
+unsigned int ThirdViewController::numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)
+{
+	return 2 + (row % 2);
+}
+
+unsigned int ThirdViewController::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
 {
     int height = this->getView()->getBounds().size.width * 0.75;
 	return height - (row % 2) * height / 3;
 }
+
 
 void ThirdViewController::touchUpInSide()
 {

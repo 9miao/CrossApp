@@ -165,7 +165,7 @@ void CAProgress::update(float dt)
 
 void CAProgress::animatedBegin()
 {
-	CAScheduler::schedule(schedule_selector(CAProgress::update), this, 1 / 60.0f, false);
+	CAScheduler::schedule(schedule_selector(CAProgress::update), this, 1 / 60.0f);
 }
 
 void CAProgress::animatedFinish()

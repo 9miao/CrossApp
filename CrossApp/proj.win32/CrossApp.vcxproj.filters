@@ -388,8 +388,14 @@
     <ClCompile Include="..\view\CAAlertView.cpp">
       <Filter>view</Filter>
     </ClCompile>
-    <ClCompile Include="..\support\CCSTLContainer.cpp">
-      <Filter>support</Filter>
+    <ClCompile Include="..\view\CACollectionView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CADensityDpi.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CASTLContainer.cpp">
+      <Filter>basics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -800,8 +806,14 @@
     <ClInclude Include="..\view\CAAlertView.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="..\support\CCSTLContainer.h">
-      <Filter>support</Filter>
+    <ClInclude Include="..\view\CACollectionView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CADensityDpi.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CASTLContainer.h">
+      <Filter>basics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

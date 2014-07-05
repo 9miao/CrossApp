@@ -400,7 +400,7 @@ CCHttpClient::CCHttpClient()
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
 {
-    CAScheduler::schedule(schedule_selector(CCHttpClient::dispatchResponseCallbacks), this, 0, false);
+    CAScheduler::schedule(schedule_selector(CCHttpClient::dispatchResponseCallbacks), this, 0);
     CAScheduler::getScheduler()->pauseTarget(this);
 }
 

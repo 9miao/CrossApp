@@ -40,13 +40,23 @@ class CACollectionViewDataSource
 public:
 	virtual ~CACollectionViewDataSource(){};
 
-	virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int row, unsigned int item) = 0;
+	virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item) = 0;
 
-	virtual unsigned int numberOfRowsInCollectionView(CACollectionView *collectionView) = 0;
+	virtual unsigned int numberOfSectionsInCollectioView() { return 1; }
 
-	virtual unsigned int numberOfItemsInRows(CACollectionView *collectionView, unsigned int row) = 0;
+	virtual unsigned int numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section) = 0;
 
-	virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int row) { return 0; }
+	virtual unsigned int collectionViewHeightForHeaderInSection(CACollectionView *collectionView, unsigned int section) { return 0; }
+
+	virtual unsigned int collectionViewHeightForFooterInSection(CACollectionView *collectionView, unsigned int section) { return 0; }
+
+	virtual CAView* collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section){ return NULL; }
+
+	virtual CAView* collectionViewSectionViewForFooterInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section){ return NULL; }
+
+	virtual unsigned int numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row) = 0;
+
+	virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row) { return 0; }
 };
 
 
@@ -68,19 +78,19 @@ public:
 
 	void reloadData();
 
-	void setSelectItemAtRow(unsigned int row, unsigned int item);
+	void setSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
 
 protected:
     
-    inline virtual float maxSpeed(float delay);
+    inline virtual float maxSpeed(float dt);
     
-    inline virtual float maxSpeedCache(float delay);
+    inline virtual float maxSpeedCache(float dt);
     
-    inline virtual float decelerationRatio(float delay);
+    inline virtual float decelerationRatio(float dt);
     
     inline virtual CCPoint maxBouncesLenght();
     
-    virtual void update(float fDelta);
+    virtual void update(float dt);
     
 protected:
 
@@ -154,6 +164,8 @@ protected:
 
 	CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
 
+    CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
+    
 	CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
 
 	CC_SYNTHESIZE_READONLY(unsigned int, m_nItem, Item);

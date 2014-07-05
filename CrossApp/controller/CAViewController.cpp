@@ -597,7 +597,7 @@ void CANavigationController::update(float dt)
 void CANavigationController::scheduleUpdate()
 {
     CAScheduler::unschedule(schedule_selector(CANavigationController::update), this);
-    CAScheduler::schedule(schedule_selector(CANavigationController::update), this, 1/60.0f, false);
+    CAScheduler::schedule(schedule_selector(CANavigationController::update), this, 1/60.0f);
 }
 
 void CANavigationController::unScheduleUpdate()
@@ -976,7 +976,7 @@ void CATabBarController::update(float dt)
 void CATabBarController::scheduleUpdate()
 {
     CAScheduler::unschedule(schedule_selector(CATabBarController::update), this);
-    CAScheduler::schedule(schedule_selector(CATabBarController::update), this, 1/60.0f, false);
+    CAScheduler::schedule(schedule_selector(CATabBarController::update), this, 1/60.0f);
 }
 
 void CATabBarController::unScheduleUpdate()

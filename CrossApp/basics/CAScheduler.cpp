@@ -120,6 +120,8 @@ bool CCTimer::initWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector, float 
 
 void CCTimer::update(float dt)
 {
+    dt = MIN(dt, 1/30.0f);
+    dt = MAX(dt, 1/100.0f);
     if (m_fElapsed == -1)
     {
         m_fElapsed = 0;
@@ -689,12 +691,8 @@ void CAScheduler::resumeTargets(CCSet* pTargetsToResume)
 // main loop
 void CAScheduler::update(float dt)
 {
-//    if (dt > 0.018)
-//    {
-//        return;
-//    }
-
-    //dt = 0.02f;//TEST
+    dt = MIN(dt, 1/30.0f);
+    dt = MAX(dt, 1/100.0f);
     m_bUpdateHashLocked = true;
 
     if (m_fTimeScale != 1.0f)

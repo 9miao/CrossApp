@@ -20,13 +20,21 @@ public:
     
     virtual void viewDidUnload();
 
-	virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int row, unsigned int item);
 
-	virtual unsigned int numberOfRowsInCollectionView(CACollectionView *collectionView);
+	virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item);
 
-	virtual unsigned int numberOfItemsInRows(CACollectionView *collectionView, unsigned int row);
+	virtual unsigned int numberOfSectionsInCollectioView();
 
-	virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int row);
+	virtual unsigned int numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section);
+
+	virtual unsigned int collectionViewHeightForHeaderInSection(CACollectionView *collectionView, unsigned int section);
+
+	virtual CAView* collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section);
+
+	virtual unsigned int numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row);
+
+	virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row);
+
     
     void touchUpInSide();
     

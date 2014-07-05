@@ -35,6 +35,7 @@ CATableView::CATableView()
 ,m_pHighlightedTableCells(NULL)
 ,m_bAllowsSelection(false)
 ,m_bAllowsMultipleSelection(false)
+,m_bToUpdate(CATableViewToUpdateNone)
 {
     m_pCellDict = new CCDictionary();
 }
@@ -101,11 +102,6 @@ bool CATableView::init()
     this->setBounceHorizontal(false);
     this->setTouchSidingDirection(CATouchSidingDirectionVertical);
     return true;
-}
-
-void CATableView::setViewSize(CCSize var)
-{
-    CAScrollView::setViewSize(var);
 }
 
 void CATableView::setContentSize(const CrossApp::CCSize &var)
@@ -224,16 +220,34 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         }
     }
     
-    if (m_pTableViewDelegate)
+    if (m_pTableViewDelegate && m_nTablePullViewHeight > 0)
     {
-        if (m_pTablePullDownView && m_pContainer->getFrame().origin.y > m_nTablePullViewHeight)
+        CCPoint point  = m_pContainer->getFrameOrigin();
+        
+        if (m_pTablePullDownView
+            && point.y
+            > m_nTablePullViewHeight)
         {
-            m_pTableViewDelegate->tableViewDidShowPullDownView(this);
+            m_bToUpdate     =   CATableViewToUpdatePullDown;
+            
+            point.y         =   m_nTablePullViewHeight;
+            
+            this->setContentOffset(ccpMult(point, -1), true);
         }
         
-        if (m_pTablePullUpView && this->getBounds().size.height - (m_pContainer->getFrame().origin.y + m_pContainer->getFrame().size.height) > m_nTablePullViewHeight)
+        if (m_pTablePullUpView
+            && point.y
+            < this->getBounds().size.height
+                - m_pContainer->getFrame().size.height
+                - m_nTablePullViewHeight)
         {
-            m_pTableViewDelegate->tableViewDidShowPullUpView(this);
+            m_bToUpdate     =   CATableViewToUpdatePullUp;
+            
+            point.y         =   this->getBounds().size.height
+                                - m_pContainer->getFrame().size.height
+                                - m_nTablePullViewHeight;
+            
+            this->setContentOffset(ccpMult(point, -1), true);
         }
     }
 }
@@ -249,19 +263,19 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     }
 }
 
-float CATableView::maxSpeed(float delay)
+float CATableView::maxSpeed(float dt)
 {
-    return (CCPoint(m_obContentSize).getLength() * 6 * delay);
+    return (CCPoint(m_obContentSize).getLength() * 6 * dt);
 }
 
-float CATableView::maxSpeedCache(float delay)
+float CATableView::maxSpeedCache(float dt)
 {
-    return (maxSpeed(delay) * 3.0f);
+    return (maxSpeed(dt) * 3.0f);
 }
 
-float CATableView::decelerationRatio(float delay)
+float CATableView::decelerationRatio(float dt)
 {
-    return 3.0f * delay;
+    return 3.0f * dt;
 }
 
 CCPoint CATableView::maxBouncesLenght()
@@ -272,6 +286,25 @@ CCPoint CATableView::maxBouncesLenght()
     }
     
     return CCPoint(0, m_obContentSize.height/2);
+}
+
+void CATableView::contentOffsetFinish()
+{
+    CC_RETURN_IF(m_bToUpdate == CATableViewToUpdateNone);
+    switch (m_bToUpdate)
+    {
+        case CATableViewToUpdatePullDown:
+            m_pTableViewDelegate->tableViewDidShowPullDownView(this);
+            break;
+        case CATableViewToUpdatePullUp:
+            m_pTableViewDelegate->tableViewDidShowPullUpView(this);
+            break;
+        default:
+            break;
+    }
+    m_bToUpdate = CATableViewToUpdateNone;
+    this->reloadData();
+    CAScheduler::schedule(schedule_selector(CATableView::deaccelerateScrolling), this, 1/60.0f, kCCRepeatForever, 0.3f);
 }
 
 CATableViewCell* CATableView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
@@ -502,9 +535,9 @@ void CATableView::reloadData()
     }
 }
 
-void CATableView::update(float fDelta)
+void CATableView::update(float dt)
 {
-    CAScrollView::update(fDelta);
+    CAScrollView::update(dt);
     
     CCRect rect = this->getBounds();
     rect.origin.y -= rect.size.height * 0.1f;

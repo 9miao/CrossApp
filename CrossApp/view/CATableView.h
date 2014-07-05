@@ -39,9 +39,9 @@ public:
     
     virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row){};
     
-    virtual void tableViewDidShowPullDownView(CATableView* table){};
+    CC_DEPRECATED_ATTRIBUTE virtual void tableViewDidShowPullDownView(CATableView* table){};
     
-    virtual void tableViewDidShowPullUpView(CATableView* table){};
+    CC_DEPRECATED_ATTRIBUTE virtual void tableViewDidShowPullUpView(CATableView* table){};
 };
 
 class CATableViewDataSource
@@ -101,23 +101,23 @@ public:
     
 protected:
 
-    inline virtual float maxSpeed(float delay);
+    inline virtual float maxSpeed(float dt);
     
-    inline virtual float maxSpeedCache(float delay);
+    inline virtual float maxSpeedCache(float dt);
     
-    inline virtual float decelerationRatio(float delay);
+    inline virtual float decelerationRatio(float dt);
     
     inline virtual CCPoint maxBouncesLenght();
+    
+    virtual void contentOffsetFinish();
     
     void clearData();
     
     void reloadViewSizeData();
     
-    virtual void setViewSize(CCSize var);
-    
     virtual void setContentSize(const CCSize& var);
     
-    virtual void update(float fDelta);
+    virtual void update(float dt);
     
 protected:
     
@@ -224,6 +224,15 @@ protected:
     CATableViewCell* m_pHighlightedTableCells;
     
     CCDictionary* m_pCellDict;
+    
+    typedef enum
+    {
+        CATableViewToUpdatePullUp,
+        CATableViewToUpdatePullDown,
+        CATableViewToUpdateNone
+    }CATableViewToUpdateState;
+    
+    CATableViewToUpdateState m_bToUpdate;
 };
 
 class CC_DLL CATableViewCell: public CAControl

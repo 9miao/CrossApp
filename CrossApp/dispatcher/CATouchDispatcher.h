@@ -11,7 +11,7 @@
 
 #include "basics/CAResponder.h"
 #include "platform/CCPlatformMacros.h"
-#include "support/CCSTLContainer.h"
+#include "basics/CASTLContainer.h"
 
 NS_CC_BEGIN
 

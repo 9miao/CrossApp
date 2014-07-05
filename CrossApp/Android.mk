@@ -24,6 +24,7 @@ basics/CAObject.cpp \
 basics/CAResponder.cpp \
 basics/CAScheduler.cpp \
 basics/CAFPSImages.c \
+basics/CASTLContainer.cpp \
 cocoa/CCAffineTransform.cpp \
 cocoa/CCArray.cpp \
 cocoa/CCDataVisitor.cpp \
@@ -75,7 +76,6 @@ support/user_default/CAUserDefaultAndroid.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
 support/zip_support/unzip.cpp \
-support/CCSTLContainer.cpp \
 view/CABatchView.cpp \
 view/CAClippingView.cpp \
 view/CAImageView.cpp \

@@ -4,7 +4,7 @@
 #include "CAAutoreleasePool.h"
 #include "ccMacros.h"
 #include "CAScheduler.h"
-#include "support/CCSTLContainer.h"
+#include "basics/CASTLContainer.h"
 
 NS_CC_BEGIN
 

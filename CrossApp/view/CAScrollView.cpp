@@ -37,7 +37,7 @@ CAScrollView::CAScrollView()
 ,m_fZoomScale(1.0f)
 ,m_fTouchLength(0.0f)
 ,m_tInertia(CCPointZero)
-,m_tCloseToPoint(CCPoint(-1, -1))
+,m_tCloseToPoint(CCPointZero)
 ,m_pIndicatorHorizontal(NULL)
 ,m_pIndicatorVertical(NULL)
 ,m_bShowsHorizontalScrollIndicator(true)
@@ -178,14 +178,9 @@ void CAScrollView::setViewSize(CrossApp::CCSize var)
     
     CC_RETURN_IF(m_pContainer == NULL);
     
-    
     CCRect rect = m_pContainer->getFrame();
     rect.size = m_obViewSize;
     m_pContainer->setFrame(rect);
-    
-//    CCPoint point = m_pContainer->getCenterOrigin();
-//    point = this->getScrollWindowNotOutPoint(point);
-//    m_pContainer->setCenterOrigin(point);
 }
 
 CCSize CAScrollView::getViewSize()
@@ -261,7 +256,7 @@ void CAScrollView::setContentOffset(CCPoint offset, bool animated)
         m_tCloseToPoint = ccpMult(offset, -1);
         m_tInertia = CCPointZero;
         CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
-        CAScheduler::schedule(schedule_selector(CAScrollView::closeToPoint), this, 1/60.0f, false);
+        CAScheduler::schedule(schedule_selector(CAScrollView::closeToPoint), this, 1/60.0f);
     }
     else
     {
@@ -293,8 +288,12 @@ void CAScrollView::setContentSize(const CrossApp::CCSize &var)
     
     CCSize viewSize = this->getViewSize();
     viewSize.width = MAX(m_obContentSize.width, viewSize.width);
-    viewSize.height = max(m_obContentSize.height, viewSize.height);
+    viewSize.height = MAX(m_obContentSize.height, viewSize.height);
     this->setViewSize(viewSize);
+    
+    CCPoint point = m_pContainer->getCenterOrigin();
+    point = this->getScrollWindowNotOutPoint(point);
+    m_pContainer->setCenterOrigin(point);
     
     const char indicatorSize = 6 * CROSSAPP_ADPTATION_RATIO;
     
@@ -319,7 +318,7 @@ void CAScrollView::setContentSize(const CrossApp::CCSize &var)
     this->update(0);
 }
 
-void CAScrollView::closeToPoint(float delay)
+void CAScrollView::closeToPoint(float dt)
 {
     CCSize size = this->getBounds().size;
     CCPoint point = m_pContainer->getFrameOrigin();
@@ -329,14 +328,15 @@ void CAScrollView::closeToPoint(float delay)
     {
         m_pContainer->setFrameOrigin(m_tCloseToPoint);
         CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
-        m_tCloseToPoint = CCPoint(-1, -1);
+        m_tCloseToPoint = this->getViewSize();
         this->hideIndicator();
+        this->contentOffsetFinish();
     }
     else
     {
         resilience.x /= size.width;
         resilience.y /= size.height;
-        resilience = ccpMult(resilience, maxBouncesSpeed(delay));
+        resilience = ccpMult(resilience, maxBouncesSpeed(dt));
         resilience = ccpAdd(resilience, point);
         m_pContainer->setFrameOrigin(resilience);
     }
@@ -362,7 +362,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
             m_tInertia = CCPointZero;
             CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
-            m_tCloseToPoint = CCPoint(-1, -1);
+            m_tCloseToPoint = this->getViewSize();
             m_pContainer->setAnchorPoint(CCPoint(0.5f, 0.5f));
         }
         else if (m_pTouches->count() == 2)
@@ -528,7 +528,7 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             m_tInertia = p * 1.5f;
 			m_tPointOffset.clear();
 
-            CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f, false);
+            CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
             
             if (m_pScrollViewDelegate)
             {
@@ -566,24 +566,30 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     }
 }
 
-void CAScrollView::deaccelerateScrolling(float delay)
+void CAScrollView::deaccelerateScrolling(float dt)
 {
-    if (m_tInertia.getLength() > maxSpeedCache(delay))
+    dt = MIN(dt, 1/30.0f);
+    dt = MAX(dt, 1/100.0f);
+    
+    if (m_tInertia.getLength() > maxSpeedCache(dt))
     {
-        m_tInertia = ccpMult(m_tInertia, maxSpeedCache(delay) / m_tInertia.getLength());
+        m_tInertia = ccpMult(m_tInertia, maxSpeedCache(dt) / m_tInertia.getLength());
     }
     
-    CCPoint speed;
-    if (m_tInertia.getLength() > maxSpeed(delay))
+    CCPoint speed = CCPointZero;
+    if (m_tInertia.getLength() > maxSpeed(dt))
     {
-        speed = ccpMult(m_tInertia, maxSpeed(delay) / m_tInertia.getLength());
+        speed = ccpMult(m_tInertia, maxSpeed(dt) / m_tInertia.getLength());
     }
     else
     {
         speed = m_tInertia;
     }
     
-    m_tInertia = ccpMult(m_tInertia, 1 - decelerationRatio(delay));
+    if (!m_tInertia.equals(CCPointZero))
+    {
+        m_tInertia = ccpMult(m_tInertia, 1 - decelerationRatio(dt));
+    }
     
     CCPoint point = m_pContainer->getCenterOrigin();
 
@@ -616,7 +622,7 @@ void CAScrollView::deaccelerateScrolling(float delay)
             resilience.y = (point.y + cSize.height / 2 - size.height) / size.height;
         }
         
-        resilience = ccpMult(resilience, maxBouncesSpeed(delay));
+        resilience = ccpMult(resilience, maxBouncesSpeed(dt));
 
         if (speed.getLength() < resilience.getLength())
         {
@@ -670,24 +676,24 @@ void CAScrollView::deaccelerateScrolling(float delay)
     }
 }
 
-float CAScrollView::maxSpeed(float delay)
+float CAScrollView::maxSpeed(float dt)
 {
-    return (CCPoint(m_obContentSize).getLength() * 5 * delay);
+    return (CCPoint(m_obContentSize).getLength() * 5 * dt);
 }
 
-float CAScrollView::maxSpeedCache(float delay)
+float CAScrollView::maxSpeedCache(float dt)
 {
-    return (maxSpeed(delay) * 1.5f);
+    return (maxSpeed(dt) * 1.5f);
 }
 
-float CAScrollView::decelerationRatio(float delay)
+float CAScrollView::decelerationRatio(float dt)
 {
-    return 6 * delay;
+    return 6 * dt;
 }
 
-float CAScrollView::maxBouncesSpeed(float delay)
+float CAScrollView::maxBouncesSpeed(float dt)
 {
-    return (CCPoint(m_obContentSize).getLength() * 6 * delay);
+    return (CCPoint(m_obContentSize).getLength() * 6 * dt);
 }
 
 CCPoint CAScrollView::maxBouncesLenght()
@@ -699,7 +705,7 @@ void CAScrollView::showIndicator()
 {
     if (!CAScheduler::isScheduled(schedule_selector(CAScrollView::update), this))
     {
-        CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f, false);
+        CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f);
     }
     m_pIndicatorHorizontal->setHide(false);
     m_pIndicatorVertical->setHide(false);
@@ -713,7 +719,7 @@ void CAScrollView::hideIndicator()
     m_pIndicatorVertical->setHide(true);
 }
 
-void CAScrollView::update(float fDelta)
+void CAScrollView::update(float dt)
 {
     if (m_pIndicatorHorizontal)
     {

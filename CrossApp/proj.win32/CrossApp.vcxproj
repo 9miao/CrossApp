@@ -152,6 +152,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\basics\CAObject.cpp" />
     <ClCompile Include="..\basics\CAResponder.cpp" />
     <ClCompile Include="..\basics\CAScheduler.cpp" />
+    <ClCompile Include="..\basics\CASTLContainer.cpp" />
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCDataVisitor.cpp" />
@@ -197,6 +198,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
+    <ClCompile Include="..\platform\win32\CADensityDpi.cpp" />
     <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication.cpp" />
     <ClCompile Include="..\platform\win32\CCCommon.cpp" />
@@ -213,7 +215,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\support\CANotificationCenter.cpp" />
     <ClCompile Include="..\support\CCPointExtension.cpp" />
     <ClCompile Include="..\support\CCProfiling.cpp" />
-    <ClCompile Include="..\support\CCSTLContainer.cpp" />
     <ClCompile Include="..\support\ccUTF8.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
     <ClCompile Include="..\support\CCVertex.cpp" />
@@ -241,6 +242,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CAAlertView.cpp" />
     <ClCompile Include="..\view\CABatchView.cpp" />
     <ClCompile Include="..\view\CAClippingView.cpp" />
+    <ClCompile Include="..\view\CACollectionView.cpp" />
     <ClCompile Include="..\view\CAImageView.cpp" />
     <ClCompile Include="..\view\CALabel.cpp" />
     <ClCompile Include="..\view\CARenderImage.cpp" />
@@ -260,6 +262,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\basics\CAObject.h" />
     <ClInclude Include="..\basics\CAResponder.h" />
     <ClInclude Include="..\basics\CAScheduler.h" />
+    <ClInclude Include="..\basics\CASTLContainer.h" />
     <ClInclude Include="..\ccConfig.h" />
     <ClInclude Include="..\ccMacros.h" />
     <ClInclude Include="..\ccTypeInfo.h" />
@@ -309,6 +312,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\images\CAImageCache.h" />
     <ClInclude Include="..\images\CAImageFrame.h" />
     <ClInclude Include="..\images\CAImageFrameCache.h" />
+    <ClInclude Include="..\platform\CADensityDpi.h" />
     <ClInclude Include="..\platform\CCAccelerometerDelegate.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
@@ -352,7 +356,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\support\CANotificationCenter.h" />
     <ClInclude Include="..\support\CCPointExtension.h" />
     <ClInclude Include="..\support\CCProfiling.h" />
-    <ClInclude Include="..\support\CCSTLContainer.h" />
     <ClInclude Include="..\support\ccUTF8.h" />
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
@@ -383,6 +386,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\view\CAAlertView.h" />
     <ClInclude Include="..\view\CABatchView.h" />
     <ClInclude Include="..\view\CAClippingView.h" />
+    <ClInclude Include="..\view\CACollectionView.h" />
     <ClInclude Include="..\view\CAImageView.h" />
     <ClInclude Include="..\view\CALabel.h" />
     <ClInclude Include="..\view\CARenderImage.h" />

@@ -445,7 +445,7 @@ void CAImageCache::addImageAsync(const char *path, CAObject *target, SEL_CallFun
 
     if (0 == s_nAsyncRefCount)
     {
-        CAScheduler::schedule(schedule_selector(CAImageCache::addImageAsyncCallBack), this, 0, false);
+        CAScheduler::schedule(schedule_selector(CAImageCache::addImageAsyncCallBack), this, 0);
     }
 
     ++s_nAsyncRefCount;

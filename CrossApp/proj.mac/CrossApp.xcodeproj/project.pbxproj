@@ -270,10 +270,10 @@
 		B01F64FB1964FF0D005C14FC /* CADensityDpi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */; };
 		B01F650419657084005C14FC /* CACollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F650219657084005C14FC /* CACollectionView.cpp */; };
 		B01F650519657084005C14FC /* CACollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F650319657084005C14FC /* CACollectionView.h */; };
+		B04CF4311967B2EB00BA7030 /* CASTLContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04CF42F1967B2EB00BA7030 /* CASTLContainer.cpp */; };
+		B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B04CF4301967B2EB00BA7030 /* CASTLContainer.h */; };
 		B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D3697195AB93900DD4814 /* CAAlertView.cpp */; };
 		B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D3698195AB93900DD4814 /* CAAlertView.h */; };
-		B0CB4013195EB7E100F29378 /* CCSTLContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CB4011195EB7E100F29378 /* CCSTLContainer.cpp */; };
-		B0CB4014195EB7E100F29378 /* CCSTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B0CB4012195EB7E100F29378 /* CCSTLContainer.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -543,10 +543,10 @@
 		B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADensityDpi.cpp; sourceTree = "<group>"; };
 		B01F650219657084005C14FC /* CACollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACollectionView.cpp; sourceTree = "<group>"; };
 		B01F650319657084005C14FC /* CACollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACollectionView.h; sourceTree = "<group>"; };
+		B04CF42F1967B2EB00BA7030 /* CASTLContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASTLContainer.cpp; sourceTree = "<group>"; };
+		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B05D3697195AB93900DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D3698195AB93900DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
-		B0CB4011195EB7E100F29378 /* CCSTLContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSTLContainer.cpp; sourceTree = "<group>"; };
-		B0CB4012195EB7E100F29378 /* CCSTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSTLContainer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -614,6 +614,8 @@
 		04EAA05D1956D74D00198A8E /* basics */ = {
 			isa = PBXGroup;
 			children = (
+				B04CF42F1967B2EB00BA7030 /* CASTLContainer.cpp */,
+				B04CF4301967B2EB00BA7030 /* CASTLContainer.h */,
 				040665B01956EA2D003E0D62 /* CAConfiguration.cpp */,
 				040665B11956EA2D003E0D62 /* CAConfiguration.h */,
 				04EAA05E1956D74D00198A8E /* CAApplication.cpp */,
@@ -976,8 +978,6 @@
 		04EAB00F1956D75500198A8E /* support */ = {
 			isa = PBXGroup;
 			children = (
-				B0CB4011195EB7E100F29378 /* CCSTLContainer.cpp */,
-				B0CB4012195EB7E100F29378 /* CCSTLContainer.h */,
 				04EAB0101956D75500198A8E /* base64.cpp */,
 				04EAB0111956D75500198A8E /* base64.h */,
 				04EAB0121956D75500198A8E /* CANotificationCenter.cpp */,
@@ -1152,6 +1152,7 @@
 				04EAB08A1956D75600198A8E /* CCNS.h in Headers */,
 				04EAB08C1956D75600198A8E /* CCSet.h in Headers */,
 				04EAB08E1956D75600198A8E /* CCString.h in Headers */,
+				B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */,
 				04EAB0901956D75600198A8E /* CABar.h in Headers */,
 				04EAB0921956D75600198A8E /* CAButton.h in Headers */,
 				04EAB0941956D75600198A8E /* CAControl.h in Headers */,
@@ -1230,7 +1231,6 @@
 				04EABA661956D75A00198A8E /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				04EABA671956D75A00198A8E /* ccShader_PositionTexture_uColor_vert.h in Headers */,
 				04EABA681956D75A00198A8E /* ccShader_PositionTexture_vert.h in Headers */,
-				B0CB4014195EB7E100F29378 /* CCSTLContainer.h in Headers */,
 				04EABA691956D75A00198A8E /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				04EABA6A1956D75A00198A8E /* ccShader_PositionTextureA8Color_vert.h in Headers */,
 				04EABA6B1956D75A00198A8E /* ccShader_PositionTextureColor_frag.h in Headers */,
@@ -1355,6 +1355,7 @@
 				04EAB0951956D75600198A8E /* CADateSpinner.cpp in Sources */,
 				04EAB0971956D75600198A8E /* CAProgress.cpp in Sources */,
 				04EAB0991956D75600198A8E /* CASegmentedControl.cpp in Sources */,
+				B04CF4311967B2EB00BA7030 /* CASTLContainer.cpp in Sources */,
 				04EAB09B1956D75600198A8E /* CASlider.cpp in Sources */,
 				04EAB09D1956D75600198A8E /* CASwitch.cpp in Sources */,
 				04EAB09F1956D75600198A8E /* CATextField.cpp in Sources */,
@@ -1392,7 +1393,6 @@
 				04EAB1151956D75600198A8E /* CCSAXParser.cpp in Sources */,
 				04EAB1171956D75600198A8E /* CCThread.cpp in Sources */,
 				04EAB1191956D75600198A8E /* CCEGLViewProtocol.cpp in Sources */,
-				B0CB4013195EB7E100F29378 /* CCSTLContainer.cpp in Sources */,
 				04EAB1471956D75600198A8E /* CCApplication.mm in Sources */,
 				04EAB14B1956D75600198A8E /* CCCommon.mm in Sources */,
 				04EAB14C1956D75600198A8E /* CCDevice.mm in Sources */,
