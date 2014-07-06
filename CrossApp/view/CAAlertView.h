@@ -30,8 +30,8 @@ class CATableView;
 #define MAX_BUTTON_COUNT_ROW 3
 
 
-typedef void (CAObject::*SEL_CAlertBtnEvent)(int iButtonIndex);
-
+typedef void (CAObject::*SEL_CAAlertBtnEvent)(int iButtonIndex);
+#define CAAlertView_selector(_SELECTOR) (SEL_CAAlertBtnEvent)(&_SELECTOR)
 class CC_DLL CAAlertView 
 	: public CAView
 	, public CATableViewDataSource
@@ -47,7 +47,7 @@ public:
     
     void showMessage(std::string title, std::string alertMsg, std::vector<std::string>& vBtnText);
     
-    void setTarget(CAObject* target, SEL_CAlertBtnEvent selector);
+    void setTarget(CAObject* target, SEL_CAAlertBtnEvent selector);
     
 	void setMessageFontName(std::string var);
 
@@ -101,7 +101,7 @@ private:
 
 	CATableView* m_pBtnTableView;
 
-	SEL_CAlertBtnEvent m_pCAlertBtnEvent;
+	SEL_CAAlertBtnEvent m_pCAlertBtnEvent;
     
 	CAObject* m_pCAlertTarget;
 };

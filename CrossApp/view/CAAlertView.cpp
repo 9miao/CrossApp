@@ -276,7 +276,7 @@ void CAAlertView::calcuCtrlsSize()
 	}
 }
 
-void CAAlertView::setTarget(CAObject* target, SEL_CAlertBtnEvent selector)
+void CAAlertView::setTarget(CAObject* target, SEL_CAAlertBtnEvent selector)
 {
 	m_pCAlertTarget = target;
 	m_pCAlertBtnEvent = selector;
