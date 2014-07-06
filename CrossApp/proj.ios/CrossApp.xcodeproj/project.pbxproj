@@ -379,8 +379,8 @@
 		B04636D51957BBBD00758ABF /* CAAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B04636D11957BBBD00758ABF /* CAAnimationCache.h */; };
 		B05D36AA195AF3CC00DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */; };
 		B05D36AB195AF3CC00DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D36A9195AF3CC00DD4814 /* CAAlertView.h */; };
-		B0A81D3819604E2700FCC450 /* CCSTLContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A81D3619604E2700FCC450 /* CCSTLContainer.cpp */; };
-		B0A81D3919604E2700FCC450 /* CCSTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A81D3719604E2700FCC450 /* CCSTLContainer.h */; };
+		B094652E1969404400D96736 /* CASTLContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B094652C1969404400D96736 /* CASTLContainer.cpp */; };
+		B094652F1969404400D96736 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B094652D1969404400D96736 /* CASTLContainer.h */; };
 		B0B553D6193485BE0065053D /* CAImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553CE193485BE0065053D /* CAImage.cpp */; };
 		B0B553D7193485BE0065053D /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553CF193485BE0065053D /* CAImage.h */; };
 		B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553D0193485BE0065053D /* CAImageCache.cpp */; };
@@ -652,8 +652,8 @@
 		B04636D11957BBBD00758ABF /* CAAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimationCache.h; sourceTree = "<group>"; };
 		B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D36A9195AF3CC00DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
-		B0A81D3619604E2700FCC450 /* CCSTLContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSTLContainer.cpp; sourceTree = "<group>"; };
-		B0A81D3719604E2700FCC450 /* CCSTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSTLContainer.h; sourceTree = "<group>"; };
+		B094652C1969404400D96736 /* CASTLContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASTLContainer.cpp; sourceTree = "<group>"; };
+		B094652D1969404400D96736 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B0B553CE193485BE0065053D /* CAImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImage.cpp; sourceTree = "<group>"; };
 		B0B553CF193485BE0065053D /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
 		B0B553D0193485BE0065053D /* CAImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCache.cpp; sourceTree = "<group>"; };
@@ -676,6 +676,8 @@
 		04EA9F8E1956CE2500198A8E /* basics */ = {
 			isa = PBXGroup;
 			children = (
+				B094652C1969404400D96736 /* CASTLContainer.cpp */,
+				B094652D1969404400D96736 /* CASTLContainer.h */,
 				0460ED0B195700A700D13001 /* CAConfiguration.cpp */,
 				0460ED0C195700A700D13001 /* CAConfiguration.h */,
 				04EA9F8F1956CE2500198A8E /* CAApplication.cpp */,
@@ -1064,8 +1066,6 @@
 		1551A5E7158F2ADE00E66CFE /* support */ = {
 			isa = PBXGroup;
 			children = (
-				B0A81D3619604E2700FCC450 /* CCSTLContainer.cpp */,
-				B0A81D3719604E2700FCC450 /* CCSTLContainer.h */,
 				1551A5E8158F2ADE00E66CFE /* base64.cpp */,
 				154269DA15B5653000712A7F /* CANotificationCenter.cpp */,
 				154269DB15B5653000712A7F /* CANotificationCenter.h */,
@@ -1207,6 +1207,7 @@
 			files = (
 				04EABB081956DAEA00198A8E /* CAApplication.cpp in Headers */,
 				04EABB091956DAEA00198A8E /* CAAutoreleasePool.cpp in Headers */,
+				B094652F1969404400D96736 /* CASTLContainer.h in Headers */,
 				04EABB0A1956DAEA00198A8E /* CACamera.cpp in Headers */,
 				04EABB0B1956DAEA00198A8E /* CAFPSImages.c in Headers */,
 				04EABB0C1956DAEA00198A8E /* CAGeometry.cpp in Headers */,
@@ -1329,7 +1330,6 @@
 				1551A83B158F2ADF00E66CFE /* base64.h in Headers */,
 				1551A83D158F2ADF00E66CFE /* CCPointExtension.h in Headers */,
 				1551A83F158F2ADF00E66CFE /* CCProfiling.h in Headers */,
-				B0A81D3919604E2700FCC450 /* CCSTLContainer.h in Headers */,
 				1551A843158F2ADF00E66CFE /* ccUtils.h in Headers */,
 				1551A845158F2ADF00E66CFE /* CCVertex.h in Headers */,
 				1551A847158F2ADF00E66CFE /* ccCArray.h in Headers */,
@@ -1512,7 +1512,6 @@
 				04EABAF81956DA7A00198A8E /* CCActionTween.h in Sources */,
 				04EABAF91956DA7A00198A8E /* CCAffineTransform.h in Sources */,
 				04EABAFA1956DA7A00198A8E /* CCArray.h in Sources */,
-				B0A81D3819604E2700FCC450 /* CCSTLContainer.cpp in Sources */,
 				04EABAFB1956DA7A00198A8E /* CCBool.h in Sources */,
 				04EABAFC1956DA7A00198A8E /* CCDataVisitor.h in Sources */,
 				04EABAFD1956DA7A00198A8E /* CCDictionary.h in Sources */,
@@ -1587,6 +1586,7 @@
 				469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */,
 				1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */,
 				1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */,
+				B094652E1969404400D96736 /* CASTLContainer.cpp in Sources */,
 				46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */,
 				B01F650819658599005C14FC /* CADensityDpi.mm in Sources */,
 				1A5428FF1720F0650074EC5C /* CCDataVisitor.cpp in Sources */,
