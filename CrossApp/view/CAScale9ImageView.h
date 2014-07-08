@@ -45,6 +45,10 @@ public:
     
     CAScale9ImageView* copy();
     
+    virtual void setImage(CAImage* image);
+    
+    virtual CAImage* getImage(void);
+    
 public:
 
     CC_SYNTHESIZE_READONLY(CCSize, m_obOriginalSize, OriginalSize);

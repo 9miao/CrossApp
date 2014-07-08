@@ -42,6 +42,8 @@ public:
 
     virtual void setImage(CAImage* image);
     
+    virtual CAImage* getImage(void);
+    
     virtual void setDisplayFrame(CAImageFrame *pNewFrame);
 
     virtual bool isFrameDisplayed(CAImageFrame *pFrame);
@@ -51,6 +53,8 @@ public:
     virtual void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
     virtual void setImageAsyncWithFile(const char* fileName);
+    
+    using CAView::setImageRect;
     
 protected:
 

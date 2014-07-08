@@ -52,12 +52,13 @@ public:
     CC_SYNTHESIZE_IS_READONLY(bool, m_isOn, On);
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
     
-    void setIsOn(bool on);
+    void setIsOn(bool on, bool animated);
     virtual void setOnImage(CAImage* onImage);
     virtual void setOffImage(CAImage* offImage);
     void setThumbTintImage(CAImage* thumbTintImage);
 protected:
-    void updateSwitchState();
+    void updateSwitchState(bool animated);
+    void updateValueChanged();
     void setContentSize(const CCSize & var);
     using CAControl::addTarget;
     using CAControl::removeTarget;

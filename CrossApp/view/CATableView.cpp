@@ -206,7 +206,9 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             deselectedCell->setControlStateNormal();
             if (m_pTableViewDelegate)
             {
-                m_pTableViewDelegate->tableViewDidDeselectRowAtIndexPath(this, deselectedCell->getSection(), deselectedCell->getRow());
+                m_pTableViewDelegate->tableViewDidDeselectRowAtIndexPath(this,
+                                                                         deselectedCell->getSection(),
+                                                                         deselectedCell->getRow());
             }
         }
         
@@ -215,7 +217,9 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             selectedCell->setControlStateSelected();
             if (m_pTableViewDelegate)
             {
-                m_pTableViewDelegate->tableViewDidSelectRowAtIndexPath(this, selectedCell->getSection(), selectedCell->getRow());
+                m_pTableViewDelegate->tableViewDidSelectRowAtIndexPath(this,
+                                                                       selectedCell->getSection(),
+                                                                       selectedCell->getRow());
             }
         }
     }
@@ -329,13 +333,14 @@ void CATableView::setSelectRowAtIndexPath(unsigned int section, unsigned int row
     std::deque<CATableViewCell*>::iterator itr;
     for (itr=m_pTableCells.begin(); itr!=m_pTableCells.end(); itr++)
     {
-        CATableViewCell* cell = *itr;
+        cell = *itr;
         CC_BREAK_IF(cell->getSection() == section && cell->getRow() == row);
     }
     
     if (cell)
     {
         cell->setControlState(CAControlStateSelected);
+        m_pSelectedTableCells.insert(cell);
     }
 }
 

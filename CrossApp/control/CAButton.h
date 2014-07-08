@@ -131,12 +131,8 @@ protected:
     
     bool setTouchBegin(CCPoint point);
 
-    bool m_IsRehisterTouchDispatcher;
-
     void setContentSize(const CCSize & var);
-    
-    bool isMutableTouches(void) const;
-    
+
     void setBackGroundViewSquareRect();
     
     void setBackGroundViewRoundedRect();

@@ -378,6 +378,18 @@ const CAColor4B& CAScale9ImageView::getColor()
 	return m_pScale9ImageView ? m_pScale9ImageView->getColor() : CAColor_white;
 }
 
+void CAScale9ImageView::setImage(CrossApp::CAImage *image)
+{
+    if (m_pScale9ImageView)
+    {
+        this->updateWithImage(CABatchView::createWithImage(image), this->getBounds(), m_obCapInsets);
+    }
+}
+
+CAImage* CAScale9ImageView::getImage()
+{
+    return m_pScale9ImageView->getImage();
+}
 
 bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect, CCRect capInsets)
 {

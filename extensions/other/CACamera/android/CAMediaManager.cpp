@@ -77,11 +77,12 @@ void CAMediaManager::initAndroidImage()
 {
     
     CCImage *iamge =new CCImage();
+    image->autorelease();
     if (iamge->initWithImageData((void*)m_pBuffer,n_fileSize,CCImage::kFmtJpg))
     {
         
         this->getMediaDelegate()->getSelectedImage(iamge);
-        CAScheduler::schedule(schedule_selector(CAMediaManager::initAndroidImage), this, 0,false);
+        CAScheduler::unschedule(schedule_selector(CAMediaManager::initAndroidImage), this);
     }
     
     

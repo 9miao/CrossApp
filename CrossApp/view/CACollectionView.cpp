@@ -203,13 +203,14 @@ void CACollectionView::setSelectRowAtIndexPath(unsigned int section, unsigned in
 	CACollectionViewCell* cell = NULL;
 	for (int i = 0; i < m_pCollectionCells.size(); i++)
 	{
-		CACollectionViewCell* cell = m_pCollectionCells[i];
+		cell = m_pCollectionCells[i];
 		CC_BREAK_IF(cell->getSection() == section && cell->getRow() == row && cell->getItem() == item);
 	}
 
 	if (cell)
 	{
 		cell->setControlState(CAControlStateSelected);
+        m_pSelectedCollectionCells.insert(cell);
 	}
 }
 
@@ -311,7 +312,10 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			deselectedCell->setControlStateNormal();
 			if (m_pCollectionViewDelegate)
 			{
-				m_pCollectionViewDelegate->collectionViewDidDeselectCellAtIndexPath(this, deselectedCell->getRow(), deselectedCell->getItem());
+				m_pCollectionViewDelegate->collectionViewDidDeselectCellAtIndexPath(this,
+                                                                                    deselectedCell->getSection(),
+                                                                                    deselectedCell->getRow(),
+                                                                                    deselectedCell->getItem());
 			}
 		}
 
@@ -320,7 +324,10 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			selectedCell->setControlStateSelected();
 			if (m_pCollectionViewDelegate)
 			{
-				m_pCollectionViewDelegate->collectionViewDidSelectCellAtIndexPath(this, selectedCell->getRow(), selectedCell->getItem());
+				m_pCollectionViewDelegate->collectionViewDidSelectCellAtIndexPath(this,
+                                                                                  deselectedCell->getSection(),
+                                                                                  selectedCell->getRow(),
+                                                                                  selectedCell->getItem());
 			}
 		}
 	}

@@ -50,7 +50,9 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    CC_SYNTHESIZE_RETAIN(CAImage*, m_pBackGroundImage, BackGroundImage);
+    virtual void setBackGroundImage(CAImage* var);
+    
+    CC_SYNTHESIZE_READONLY(CAImage*, m_pBackGroundImage, BackGroundImage);
     
     CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
     

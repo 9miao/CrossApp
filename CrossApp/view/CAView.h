@@ -314,19 +314,9 @@ public:
     
     void reViewlayout();
     
-    virtual void setImage(CAImage* image);
-    
-    virtual CAImage* getImage(void);
-    
     inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
     
     inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
-    
-    virtual void setImageRect(const CCRect& rect);
-    
-    virtual void setImageRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
-    
-    virtual void setVertexRect(const CCRect& rect);
     
     inline virtual bool isDirty(void) { return m_bDirty; }
     
@@ -376,7 +366,17 @@ protected:
     
     virtual void setContentSize(const CCSize& contentSize);
     
+    virtual void setImage(CAImage* image);
+    
+    virtual CAImage* getImage(void);
+    
+    virtual void setImageRect(const CCRect& rect);
+    
+    virtual void setImageRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
+    
     virtual void setImageCoords(CCRect rect);
+    
+    virtual void setVertexRect(const CCRect& rect);
     
     virtual void setReorderChildDirtyRecursively(void);
     

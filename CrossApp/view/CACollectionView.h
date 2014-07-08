@@ -25,9 +25,9 @@ class CACollectionViewDelegate
 public:
 	virtual ~CACollectionViewDelegate(){};
 
-	virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int row, unsigned int item) {};
+	virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item) {};
 
-	virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int row, unsigned int item) {};
+	virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item) {};
 };
 
 

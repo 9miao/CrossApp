@@ -13,6 +13,7 @@
 #include "support/CCPointExtension.h"
 #include "view/CARenderImage.h"
 #include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
 #include "actions/CCActionEase.h"
 #include "basics/CAApplication.h"
 
@@ -83,15 +84,15 @@ void CASwitch::onEnterTransitionDidFinish()
         this->addSubview(m_thumbTintImageView);
     }
     
-    this->updateSwitchState();
+    this->updateSwitchState(false);
 }
 
-void CASwitch::setIsOn(bool on)
+void CASwitch::setIsOn(bool on, bool animated)
 {
     if (m_isOn != on)
     {
         m_isOn = on;
-        this->updateSwitchState();
+        this->updateSwitchState(animated);
     }
 }
 
@@ -137,8 +138,15 @@ void CASwitch::setThumbTintImage(CAImage* thumbTintImage)
     }
 }
 
-void CASwitch::updateSwitchState()
+void CASwitch::updateSwitchState(bool animated)
 {
+    float time = 0;
+    
+    if (animated)
+    {
+        time = 0.2f;
+    }
+    
     m_onImageView->setVisible(m_isOn);
     m_offImageView->setVisible(!m_isOn);
     
@@ -146,26 +154,40 @@ void CASwitch::updateSwitchState()
     m_onImageView->setCenterOrigin(point);
     m_offImageView->setCenterOrigin(point);
     
+    m_offImageView->stopAllActions();
     if (m_isOn)
     {
-        CCFadeTo* fadeTo = CCFadeTo::create(0.2f, 0.0f);
+        CCFadeTo* fadeTo = CCFadeTo::create(time, 0.0f);
         CCEaseSineIn* in = CCEaseSineIn::create(fadeTo);
         m_offImageView->runAction(in);
     }
     else
     {
-        CCFadeTo* fadeTo = CCFadeTo::create(0.2f, 1.0f);
+        CCFadeTo* fadeTo = CCFadeTo::create(time, 1.0f);
         CCEaseSineOut* out = CCEaseSineOut::create(fadeTo);
         m_offImageView->runAction(out);
     }
 
     if (m_thumbTintImageView)
     {
+        m_thumbTintImageView->stopAllActions();
         CCPoint point = CCPointZero;
         point.x = m_isOn ? (m_obContentSize.width - m_thumbTintImageView->getBounds().size.width) : 0;
         m_thumbTintImageView->stopAllActions();
-        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.2f, point);
-        m_thumbTintImageView->runAction(moveTo);
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(time, point);
+        CCEaseSineOut* sineTo = CCEaseSineOut::create(moveTo);
+        CCDelayTime* delayTime = CCDelayTime::create(1/60.0f);
+        CCCallFunc* callFunc = CCCallFunc::create(this, callfunc_selector(CASwitch::updateValueChanged));
+        CCSequence* actions = CCSequence::create(sineTo, delayTime, callFunc, NULL);
+        m_thumbTintImageView->runAction(actions);
+    }
+}
+
+void CASwitch::updateValueChanged()
+{
+    if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
+    {
+        ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
     }
 }
 
@@ -244,12 +266,7 @@ void CASwitch::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     if (getBounds().containsPoint(point))
     {
         this->setControlState(CAControlStateNormal);
-        this->setIsOn(!m_isOn);
-
-        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
-        {
-            ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, point);
-        }
+        this->setIsOn(!m_isOn, true);
     }
 }
 

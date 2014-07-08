@@ -225,7 +225,6 @@ void CASegmentedControl::removeAllSegments()
     for (std::vector<CAButton *>::iterator vi = m_segments.begin(); vi != m_segments.end(); ++vi)
     {
         (*vi)->removeFromSuperview();
-        CC_SAFE_RELEASE(*vi);
     }
     m_segments.clear();
 }

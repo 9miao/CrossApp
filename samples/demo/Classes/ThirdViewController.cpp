@@ -105,7 +105,7 @@ unsigned int ThirdViewController::numberOfRowsInSectionCollectionView(CACollecti
 
 unsigned int ThirdViewController::collectionViewHeightForHeaderInSection(CACollectionView *collectionView, unsigned int section)
 {
-	return 80;
+	return 80 * CROSSAPP_ADPTATION_RATIO;
 }
 
 CAView* ThirdViewController::collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section)

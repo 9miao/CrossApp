@@ -78,6 +78,15 @@ void CANavigationBar::replaceItemAtIndex(size_t index, CANavigationBarItem* item
     }
 }
 
+void CANavigationBar::setBackGroundImage(CAImage* var)
+{
+    CC_SAFE_RELEASE_NULL(m_pBackGroundImage);
+    CC_SAFE_RETAIN(var);
+    m_pBackGroundImage = var;
+    CC_RETURN_IF(!m_bRunning);
+    this->showBackGround();
+}
+
 void CANavigationBar::updateNavigationBar()
 {
     this->showBackGround();

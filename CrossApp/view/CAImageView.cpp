@@ -150,6 +150,11 @@ void CAImageView::setImage(CAImage* image)
     
 }
 
+CAImage* CAImageView::getImage()
+{
+    return CAView::getImage();
+}
+
 void CAImageView::updateImageRect()
 {
     CCSize size = CCSizeZero;

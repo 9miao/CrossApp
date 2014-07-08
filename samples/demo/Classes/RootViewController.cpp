@@ -33,6 +33,7 @@ void RootViewController::viewDidLoad()
     this->getView()->addSubview(tableView);
     tableView->release();
     tableView->setBackGroundColor(CAColor_gray);
+    tableView->setAllowsSelection(true);
     
     CAScrollView* view = CAScrollView::createWithCenter(CCRectZero);
     view->setViewSize(CCSize(rect.size.width * 2, rect.size.width * 0.5));
@@ -106,18 +107,19 @@ void RootViewController::reshapeViewRectDidFinish()
 
 void RootViewController::setAllowsSelection(CAControl* sender, CCPoint point)
 {
-    CASwitch* switch_ = (CASwitch*)sender;
-    
-    if (switch_->isOn() == false)
-    {
-        tableView->setAllowsSelection(false);
-    }
-    else
-    {
-        tableView->setAllowsSelection(true);
-    }
-    
-    tableView->reloadData();
+//    CASwitch* switch_ = (CASwitch*)sender;
+//    
+//    if (switch_->isOn() == false)
+//    {
+//        tableView->setAllowsSelection(false);
+//    }
+//    else
+//    {
+//        tableView->setAllowsSelection(true);
+//    }
+//    
+//    tableView->reloadData();
+    tableView->setSelectRowAtIndexPath(1, 1);
 }
 
 void RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint point)
@@ -163,7 +165,7 @@ void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
     
     CANavigationBarItem* item = CANavigationBarItem::create(s);
     //item->setShowGoBackButton(false);
-    RootViewController* viewController = new RootViewController();
+    FirstViewController* viewController = new FirstViewController();
     viewController->init();
     viewController->setNavigationBarItem(item);
     viewController->setTitle("view1");
