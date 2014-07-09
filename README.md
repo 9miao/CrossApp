@@ -209,13 +209,28 @@ CATextField添加win32输入功能
 **b) 内存管理修改：**之前启动定时器，针对pTarget的引用计数会+1，以防止因pTarget的释放造成程序崩溃。现在启用了新的机制，已经可以完全避免以上问题，因此在启动定时器后不再对pTarget的引用计数+1，在pTarget释放后自动停止相关定时器  
 **c) 新特点：**当pTarget为CAViewController或者其派生类型时，CAViewController的view不显示时，定时器会自动暂停，当重新显示时，会自动恢复。除此之外，在pTarget释放前不会有变化  
 #####4. Demo位置变动  
-demo有原来的projects文件夹移到samples  
+demo由原来的projects文件夹移到samples  
 
 
 
 ####贡献者名单：juguanhui，
 
 
+####CrossApp alpha 0.1.4 Update:
+#####1.Power Consumption Optimization:
+A program is continuously redrawing at general 60 frame rates in its life cycle because of the rendering-driven mode of cocos2d-x rendering, but the shortcoming of this mode is the relatively considerable power consumption. Obviously this continuous redraw mode is quite a waste for program, so we change the rendering mechanism into event-driven mode based on application features. In this rendering mode the redraw is only triggered by outside, if not the screen is static and rendering stops, so as to achieve energy saving goal.
+#####2.CAButton Modification:
+Add new attribute AllowsSelected (including set, get), default value is false. If value is true then selected mode is started. In this mode, the button status will switch between selected and default: if current status is default one, press button and release and button will switch to selected status; press and release again and button will switch back to default status. However, we can promptly judge and know current button status by using getSelected () method.
+#####3.CASchedule (modified based on CCSchedule):
+**a)	Simplify usage: ** start, stop and other operation can be acted by calling corresponding static methods.<br/>
+**b) Memory management modification: ** previously when we start timer, reference counting on pTarget will plus 1 for the purpose of avoiding program crashed caused by pTarget release. Now the new mechanism we deployed could completely solve the above problem: this mechanism enables system to stop plus 1 on pTarget reference counting after timer starts and auto-stop related timer after pTarget release.<br/>
+**c) New feature: ** when pTarget is derived type of CAViewController or others and the view of CAViewController is not displayed, timer will auto pause; it will auto recover when the view is displayed. In addition, it will not change before pTarget releases.<br/>
+#####4.Demo Location Change
+Demo location is moved to samples folder from projects.
+
+
+
+####Contributors: juguanhui，
 
 
 ####【9秒实验室自研】
