@@ -226,8 +226,8 @@ demo有原来的projects文件夹移到samples
 
 #### 9miao Lab Original
 
- Click to view CrossApp engine detailed description:
- <http://www.9miao.com/crossapp/list-24-1.html>
+ Click to view CrossApp engine detailed description:<br/>
+<http://www.9miao.com/crossapp/list-24-1.html>
  
 ####近期要做的控件：  
 提示框：CAAlertView  
@@ -235,6 +235,13 @@ demo有原来的projects文件夹移到samples
 大段文字输入控件：CATextView  
 加载状态控制器：CAActivity  
 网页加载控件：CAWebView  
+
+####Recent Controls Writing Plan:
+Reminder: CAAlertView<br/>
+View paging controller: CAPageControl<br/>
+Blocks of text input control: CATextView<br/>
+Load status controller: CAActivity<br/>
+Webpage load control: CAWebView<br/>
 
 ####目前已有控件缺失功能：  
 #####1.	textField：  	
@@ -245,3 +252,13 @@ demo有原来的projects文件夹移到samples
 **a)	**cell的复用  
 **b)	**cell编辑功能（删除、插入等）  
 **c)	**cell的一些模板属性的添加  
+
+####Existed Controls Missing Features:
+#####1.	textField：
+**a) ** free control on text content length<br/>
+**b) ** text editing when cursor is at anywhere of content<br/>
+**c) **line feed input<br/>
+#####2.	tableView：
+**a) **cell Multiplexing<br/>
+**b) **cell editing (delete, insert and others)<br/>
+**c) **add some template attributes of cell<br/>
