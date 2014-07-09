@@ -222,8 +222,13 @@ demo有原来的projects文件夹移到samples
 
  CrossApp引擎详细介绍请点此：
 
- <http://www.9miao.com/crossapp/list-24-1.html>
+<http://www.9miao.com/crossapp/list-24-1.html>
 
+#### 9miao Lab Original
+
+ Click to view CrossApp engine detailed description:
+ <http://www.9miao.com/crossapp/list-24-1.html>
+ 
 ####近期要做的控件：  
 提示框：CAAlertView  
 视图分页控制器：CAPageControl  
