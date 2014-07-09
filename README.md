@@ -199,24 +199,24 @@ CATextField添加win32输入功能
 
 
 ####CrossApp alpha 0.1.5 Update:
-####1. Add CASwitch:
+#####1. Add CASwitch:
 Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us. Juguanhui cannot upload codes via git for some reasons, so this time the controls sources code was submitted and uploaded by 9miao worker.
 
-####2. Touch event dispatch rules modification:
+#####2. Touch event dispatch rules modification:
 The new touch event does not have to be registered, and you can implement cctouchBegin and other functions monitoring by only inheriting all child classes of CAView. In addition, it’s unable to obtain event monitoring outside of view rectangular region when you touch screen.<br/>
 
 The new touch event is dispatched from parent view to child view, so even if your touchBegin event spot is in child view rectangular region, you cannot obtain touch event on condition that the touchBegin event is outside of parent view rectangular region.<br/>
 
-####3. Add GPS location function:
+#####3. Add GPS location function:
 Support iOS and Android for now, no WP8.
 
-####4. Add photo select from album and photo picture data return function:
+#####4. Add photo select from album and photo picture data return function:
 Support iOS and Android for now, no WP8.
 
-####5. Add photo taking from webcam and photo picture data return function:
+#####5. Add photo taking from webcam and photo picture data return function:
 Support iOS and Android for now, no WP8.
 
-####6. Add mobile address book contacts information obtaining function:
+#####6. Add mobile address book contacts information obtaining function:
 Support iOS and Android for now, no WP8.
 
 
