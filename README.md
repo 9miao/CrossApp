@@ -175,6 +175,38 @@ CATextField添加win32输入功能
 
 
 
+####CrossApp alpha 0.1.6 Update:
+#####1. Add CASlider:
+Slider<br/>
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
+
+#####2. Add CASegmentedControl:
+Segmented Controller<br/>
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
+
+#####3. Touch event dispatch rules optimization, add CAResponder class.
+This optimization makes touch event dispatch become more intelligent and development process simple and easy.
+
+#####4. CATextField functions completion:
+1.Add keyboard type selecting on text field<br/>
+2.Add hiding display character ※<br/>
+3.Add cursor movement, insert and delete<br/>
+4.Add functions such as obtaining keyboard height and others<br/>
+5.Only support iOS and Android for now<br/>
+
+#####5. Add new functions of CATabBarController and CANavigationController
+Support tabBarController switching to viewController animation effect<br/>
+Add TabBar and NavigationBar hiding function<br/>
+
+#####6. Fix some bugs
+1.Fix bug: setting ZOder before addSubview in CAView is invalid<br/>
+2.Fix bug: calling setNotificationNode(CAView* view) in CCDirector is invalid<br/>
+3.Fix bug: scrollView indicator's display and hiding timing are wrong<br/>
+
+#####7. Backward compatible to VS2012 on win32 platform
+
+
+
 ####CrossApp alpha 0.1.5 更新内容：  
 #####1. 添加CASwitch：  
 在此特别鸣谢 9秒ID为juguanhui的 美女程序员，为我们提供了优质的控件源码。
