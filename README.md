@@ -134,6 +134,25 @@ CATextField添加win32输入功能
 优化CANavigationBar在竖屏的高度及布局。
 
 
+
+####CrossApp alpha 0.1.8 Update:
+
+#####1.
+Add CANavigationController left and right button customization
+#####2.
+Add win32 input function in CATextField
+#####3.
+Add CANavigationController, and replace current CAViewController’s function
+#####4.
+Fixed bug that quickly clicking button on slidable container of touch dispatch system is unable to trigger button event
+#####5.
+Fixed bug that occasional crashes caused by touch event in win32
+#####6.
+Optimize CASegmentedControl
+#####7.
+Optimize CANavigationBar height and layout in portrait mode
+
+
 ####CrossApp alpha 0.1.7 更新内容：  
 
 #####1.
