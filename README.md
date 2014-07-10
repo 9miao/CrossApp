@@ -146,10 +146,10 @@ CATextField添加win32输入功能
 ####CrossApp alpha 0.1.7 Update:
 
 #####1.
-Fix CATextField compiling error report problem on win32 and Mac platform.
+Fixed CATextField compiling error report problem on win32 and Mac platform.
 
 #####2.
-Fix picture error report problem in displaying and hiding tabBar when current viewController of TabBArController is not the first item.
+Fixed picture error report problem in displaying and hiding tabBar when current viewController of TabBArController is not the first item.
 
 
 ####CrossApp alpha 0.1.6 更新内容：  
@@ -207,10 +207,10 @@ This optimization makes touch event dispatch become more intelligent and develop
 Support tabBarController switching to viewController animation effect<br/>
 Add TabBar and NavigationBar hiding function<br/>
 
-#####6. Fix some bugs
-1.Fix bug: setting ZOder before addSubview in CAView is invalid<br/>
-2.Fix bug: calling setNotificationNode(CAView* view) in CCDirector is invalid<br/>
-3.Fix bug: scrollView indicator's display and hiding timing are wrong<br/>
+#####6. Fixed some bugs
+1.Fixed bug: setting ZOder before addSubview in CAView is invalid<br/>
+2.Fixed bug: calling setNotificationNode(CAView* view) in CCDirector is invalid<br/>
+3.Fixed bug: scrollView indicator's display and hiding timing are wrong<br/>
 
 #####7. Backward compatible to VS2012 on win32 platform
 
