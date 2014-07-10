@@ -143,6 +143,15 @@ CATextField添加win32输入功能
 修复TabBarController当前viewController不是第一项时 显示与隐藏 tabBar时画面出错的问题
 
 
+####CrossApp alpha 0.1.7 Update:
+
+#####1.
+Fix CATextField compiling error report problem on win32 and Mac platform.
+
+#####2.
+Fix picture error report problem in displaying and hiding tabBar when current viewController of TabBArController is not the first item.
+
+
 ####CrossApp alpha 0.1.6 更新内容：  
 #####1. 添加CASlider：  
 滑动条
