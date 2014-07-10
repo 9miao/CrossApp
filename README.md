@@ -110,6 +110,32 @@ alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影�
 现在可以调用任何一个viewController的presentModalViewController与dismissModalViewController来显示与撤销。
 
 
+
+####CrossApp alpha 0.1.9 Update:
+
+#####1.Touch event bug modification
+Fixed bug that Instant release after clicking button on sliding layer is not triggered
+
+#####2.CATabBar optimization
+Experience optimization on CATabBar
+
+#####3.CATabBar and CANavigationBar optimization
+It’s able to dynamic update CATabBar and CANavigationBar display data via ViewController
+
+#####4.CAButton and CASegmentedControl optimization
+Fixed bug that wrong text display size
+
+#####5.Fixed bug that blank screen appears when returning from background in Android system
+Previously, if we return from background in Android system, there is certain of probability that blank screen appears
+
+#####6.Add animation related CCFrameTo and CCCenterTo
+You can dynamically modify frame and center
+
+#####7.Add suspension drawer function of viewController
+You can call any viewController’s presentModalViewController and dismissModalViewController to display and dismiss
+
+
+
 ####CrossApp alpha 0.1.8 更新内容：  
 
 #####1.
