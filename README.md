@@ -86,6 +86,28 @@ alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影�
 
 
 
+####CrossApp alpha 0.1.10 Update:
+
+#####1.CAImageView optimization
+Optimized CAImageView, and fixed bug that wrong display problem when adding sub view in CAImageView, now you are free to add sub view in CAImageView.
+
+#####2.Delete ccColor3B and add CAColor4B
+Delete ccColor3B and replace all ccColor3B with CAColor4B, add transparency attribute.
+
+#####3.Delete Opacity attribute and add new alpha attribute
+Alpha attribute is float type with 0 – 1.0f value range, alpha attribute setting can directly influence all sub views’ transparency.
+
+#####4.Completely delete position attribute
+CCMoveTo and CCMoveBy are also deleted from our engine
+
+#####5.Fixed the GPS bug of Android platform
+Fixed bug that application cannot be started because of Android cellphone did not open GPS
+
+#####6.Fixed CAScrollView bug
+Fixed bug that agent callback method ‘void scrollViewWillBeginDragging(CAScrollView* view){};’ has a wrong trigger timing.
+
+
+
 ####CrossApp alpha 0.1.9 更新内容：  
 
 #####1.触摸事件bug修改
