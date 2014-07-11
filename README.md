@@ -23,6 +23,30 @@
 添加2.0版本丢失的文件
 
 
+####CrossApp beta 0.2.1 Update:
+
+#####1.Add container class
+Add CAVector, CADeque, CAList, CAMap and CAMultimap.
+
+#####2.Add controls
+Add control CACollectionView which is more complicated than CATableView, and its great function could meet many interfaces’ demands.
+
+#####3.Add adaptive corrected parameter
+Add adaptive corrected parameter and take iPhone4 as standard, and this parameter enables all other mobile devices’ displayed view physical size are same with iPhone4.
+
+#####4.Fixed bug
+Fixed bug that touch event’s memory leak.
+
+#####5.Fixed bug
+Fixed bug that CAAlertView had breakdown in particular circumstance.
+
+#####6.Codes optimization
+Optimized CATableView agent method.
+
+#####7.Files completion
+Add lost files of 2.0 versions.
+
+
 **********************************************************************************
 
 
