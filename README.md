@@ -48,6 +48,28 @@
 #####8.添加一件部署安卓环境, 下载地址：http://pan.baidu.com/s/1qW6ql32
 
 
+####CrossApp beta 0.2.0 Update: (Important changes)
+
+#####1.Arranged engine directory structure
+Arranged directory structure and changed some class name
+
+#####2.Touch event dispatch optimization
+We optimized sliding container of touch event dispatch
+
+#####3.Add CAAlertView control
+In prompt box, if button number is less than three, they are arranged in horizontal mode, if the number is greater than three, arranged in vertical mode and put into sliding container.
+
+#####4.CALabel optimization
+
+#####5.Complemented CATextField function
+
+#####6.Fixed some bugs
+
+#####7.Add one-key project building
+
+#####8.Add one-key Android environment deployment, download: http://pan.baidu.com/s/1qW6ql32
+
+
 
 ####CrossApp alpha 0.1.11（重要更新） 更新内容：  
 
