@@ -62,6 +62,18 @@ CALabel结构优化，性能优化。将来还会优化。
 
 
 
+####CrossApp alpha 0.1.11 Update: (Important changes)
+
+#####1.Default engine theme style change
+The new style is more attractive and has a greater suitability.
+
+#####2.CAScale9ImageView rewriting
+We rewrote 9 rectangle gird because of the previous version had function defects, and the new version supports unidirectional zoom-out.
+
+#####3.CALabel optimization
+We optimized CALabel’s structure and performance, and will do it in the future.
+
+
 
 ####CrossApp alpha 0.1.10 更新内容：  
 
