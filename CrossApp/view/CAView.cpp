@@ -966,6 +966,8 @@ void CAView::detachSubview(CAView *subview)
     subview->setSuperview(NULL);
     
     m_pSubviews->removeObject(subview);
+    
+    this->updateDraw();
 }
 
 void CAView::reorderSubview(CAView *subview, int zOrder)
