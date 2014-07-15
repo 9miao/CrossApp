@@ -10,8 +10,8 @@
 #define __project__CALabel__
 
 #include <iostream>
-
 #include "CAView.h"
+
 
 NS_CC_BEGIN
 using namespace std;

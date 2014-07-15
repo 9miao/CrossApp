@@ -24,7 +24,6 @@ CAObject::CAObject(void)
 
     m_uID = ++uObjectCount;
     
-    //addToObjPtrSets(this);
 }
 
 CAObject::~CAObject(void)
@@ -35,7 +34,6 @@ CAObject::~CAObject(void)
     {
         CAPoolManager::sharedPoolManager()->removeObject(this);
     }
-    //delToObjPtrSets(this);
 }
 
 CAObject* CAObject::copy()

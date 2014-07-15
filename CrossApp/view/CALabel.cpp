@@ -12,16 +12,11 @@
 #include "images/CAImageCache.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
+#include "platform/CAFreeTypeFont.h"
 #include <locale>
 #include <cstdlib>
 NS_CC_BEGIN
 
-static unsigned int getFontHeight(const char *fontName, int fontSize)
-{
-    unsigned int result = fontSize;
-
-    return result;
-}
 
 CALabel::CALabel()
 :m_nNumberOfLine(0),
@@ -102,11 +97,7 @@ bool CALabel::initWithCenter(const CCRect& rect)
 
 void CALabel::updateImage()
 {
-    
-    CAImage *tex = new CAImage();
-
-    float fontHeight = getFontHeight(m_nfontName.c_str(), m_nfontSize);
-    
+	float fontHeight = CAFreeTypeFont::getFontHeight(m_nfontName.c_str(), m_nfontSize);
 
     unsigned int linenumber = (int)this->getBounds().size.height/fontHeight;
     CCSize size = CCSizeZero;
@@ -121,13 +112,10 @@ void CALabel::updateImage()
         
     }
 
-    tex->initWithString(m_nText.c_str(),
-                        m_nfontName.c_str(),
-                        m_nfontSize* CC_CONTENT_SCALE_FACTOR(),
-                        size,
-                        m_nTextAlignment,
-                        m_nVerticalTextAlignmet);
-    
+	CAFreeTypeFont cFreeTypeFont;
+	CAImage* tex = cFreeTypeFont.initWithString(m_nText.c_str(), m_nfontName.c_str(), m_nfontSize* CC_CONTENT_SCALE_FACTOR(), size.width, size.height,
+		m_nTextAlignment, m_nVerticalTextAlignmet);
+
     m_cLabelSize = tex->getContentSize();
     
     CCRect rect = CCRectZero;
