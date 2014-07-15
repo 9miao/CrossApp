@@ -397,6 +397,15 @@
     <ClCompile Include="..\basics\CASTLContainer.cpp">
       <Filter>basics</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\CAFreeTypeFont.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\ConvertUTF.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\ConvertUTFWrapper.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCAffineTransform.h">
@@ -814,6 +823,12 @@
     </ClInclude>
     <ClInclude Include="..\basics\CASTLContainer.h">
       <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAFreeTypeFont.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\ConvertUTF.h">
+      <Filter>support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
