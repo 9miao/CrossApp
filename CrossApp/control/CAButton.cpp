@@ -59,12 +59,12 @@ CAButton::~CAButton(void)
 
 void CAButton::onExitTransitionDidStart()
 {
-    CAView::onExitTransitionDidStart();
+    CAControl::onExitTransitionDidStart();
 }
 
 void CAButton::onEnterTransitionDidFinish()
 {
-    CAView::onEnterTransitionDidFinish();
+    CAControl::onEnterTransitionDidFinish();
 
     this->setControlState(m_eControlState);
 }
@@ -138,7 +138,7 @@ bool CAButton::initWithCenter(const CCRect& rect)
 
 bool CAButton::init()
 {
-    if (!CAView::init())
+    if (!CAControl::init())
     {
         return false;
     }
@@ -523,7 +523,7 @@ void CAButton::setControlState(CAControlState var)
     
     if (!title.empty())
     {
-        m_pLabel->setFontSize(labelSize / CROSSAPP_ADPTATION_RATIO);
+        m_pLabel->setFontSize(labelSize);
     }
     
     if (strcmp(title.c_str(), m_pLabel->getText().c_str()))

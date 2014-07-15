@@ -96,8 +96,10 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
         CCRect endFrame = CCRectZero;
         endFrame.size = view->getFrame().size;
         
-        CCCallFunc* start = CCCallFunc::create(this, callfunc_selector(CAWindow::presentStart));
-        CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CAWindow::presentEnd));
+        CCCallFunc* start = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
+                                               callfunc_selector(CATouchDispatcher::setDispatchEventsFalse));
+        CCCallFunc* end = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
+                                             callfunc_selector(CATouchDispatcher::setDispatchEventsTrue));
         CCDelayTime* delayTime = CCDelayTime::create(0.1f);
         CCFrameTo* frameTo = CCFrameTo::create(0.3f, endFrame);
         CCEaseSineOut* easeBack = CCEaseSineOut::create(frameTo);
@@ -116,11 +118,14 @@ void CAWindow::dismissModalViewController(bool animated)
         CCRect endFrame = view->getFrame();
         endFrame.origin.y = endFrame.size.height;
         
-        CCCallFunc* start = CCCallFunc::create(this, callfunc_selector(CAWindow::dismissStart));
-        CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CAWindow::dismissEnd));
+        CCCallFunc* start = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
+                                               callfunc_selector(CATouchDispatcher::setDispatchEventsFalse));
+        CCCallFunc* end = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
+                                             callfunc_selector(CATouchDispatcher::setDispatchEventsTrue));
+        CCCallFunc* dissEnd = CCCallFunc::create(this, callfunc_selector(CAWindow::dismissEnd));
         CCFrameTo* frameTo = CCFrameTo::create(0.3f, endFrame);
         CCEaseSineIn* easeBack = CCEaseSineIn::create(frameTo);
-        CCSequence* allActions = CCSequence::create(start, easeBack, end, NULL);
+        CCSequence* allActions = CCSequence::create(start, easeBack, dissEnd, end, NULL);
         view->runAction(allActions);
     }
     else
@@ -128,21 +133,6 @@ void CAWindow::dismissModalViewController(bool animated)
         this->dismissEnd();
     }
     
-}
-
-void CAWindow::presentStart()
-{
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEvents(false);
-}
-
-void CAWindow::presentEnd()
-{
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEvents(true);
-}
-
-void CAWindow::dismissStart()
-{
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEvents(false);
 }
 
 void CAWindow::dismissEnd()

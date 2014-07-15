@@ -97,6 +97,10 @@ public:
     
     CATableViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
     
+    virtual void setAllowsSelection(bool var);
+    
+    virtual void setAllowsMultipleSelection(bool var);
+    
     void setSelectRowAtIndexPath(unsigned int section, unsigned int row);
     
     CC_DEPRECATED_ATTRIBUTE void setTablePullDownView(CAView* var);
@@ -153,9 +157,9 @@ protected:
     
     CC_SYNTHESIZE(unsigned int, m_nSeparatorViewHeight, SeparatorViewHeight);
     
-    CC_SYNTHESIZE_IS(bool, m_bAllowsSelection, AllowsSelection);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsSelection, AllowsSelection);
     
-    CC_SYNTHESIZE_IS(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
     
     CC_SYNTHESIZE_READONLY(CAView*, m_pTablePullDownView, TablePullDownView);
     

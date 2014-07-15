@@ -525,7 +525,7 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                 }
                 p = p/m_tPointOffset.size();
             }
-            m_tInertia = p * 1.5f;
+            m_tInertia = p * 2.0f;
 			m_tPointOffset.clear();
 
             CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
@@ -633,7 +633,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
     
     point = ccpAdd(point, speed);
     
-    if (this->isScrollWindowNotMaxOutSide())
+    if (this->isScrollWindowNotMaxOutSide(m_pContainer->getCenterOrigin()))
     {
         m_tInertia = CCPointZero;
     }
@@ -698,7 +698,8 @@ float CAScrollView::maxBouncesSpeed(float dt)
 
 CCPoint CAScrollView::maxBouncesLenght()
 {
-    return ccpMult(m_obContentSize, 0.5f);
+    float lenght = CROSSAPP_ADPTATION_RATIO * 10;
+    return CCPoint(lenght, lenght);
 }
 
 void CAScrollView::showIndicator()
@@ -795,11 +796,10 @@ bool CAScrollView::isScrollWindowNotOutSide()
 }
 
 
-bool CAScrollView::isScrollWindowNotMaxOutSide()
+bool CAScrollView::isScrollWindowNotMaxOutSide(const CCPoint& point)
 {
     CCSize size = this->getBounds().size;
     CCRect rect = m_pContainer->getFrame();
-    CCPoint point = m_pContainer->getCenter().origin;
     
     if (point.x - rect.size.width / 2 - maxBouncesLenght().x > 0)
     {

@@ -18,6 +18,7 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+    //initLabelImageThread();
     // initialize director
     CAApplication* pDirector = CAApplication::getApplication();
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();

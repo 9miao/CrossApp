@@ -8,71 +8,47 @@
 
 #include "ViewController.h"
 
+ViewController::ViewController()
+{
+    scroll = NULL;
+    v = NULL;
+}
+
+ViewController::~ViewController()
+{
+
+}
 
 void ViewController::viewDidLoad()
 {
-
-    CAScrollView* scroll = new CAScrollView();
+    scroll = new CAScrollView();
     scroll->initWithFrame(this->getView()->getBounds());
     this->getView()->addSubview(scroll);
     scroll->setViewSize(scroll->getBounds().size);
     scroll->setMaximumZoomScale(3.0f);
     scroll->setMinimumZoomScale(0.5f);
     
-    CAImageView* v = CAImageView::createWithImage(CAImage::create("bg.jpg"));
+    v = CAImageView::createWithImage(CAImage::create("bg.jpg"));
     v->setFrame(CCRect(0, 0, scroll->getViewSize().width, scroll->getViewSize().height));
     scroll->addSubview(v);
 
-    if (this->getTitle().compare("view2") == 0)
-    {
-
-    }
-    else if (this->getTitle().compare("view3") == 0)
-    {
-        scroll->setBounces(false);
-    }
-}
-
-void ViewController::setAllowsSelection(CAButton* btn, CCPoint point)
-{
-    CCLog("%f   %f", point.x, point.y);
+    CAButton* btn = CAButton::createWithCenter(CCRect(100, 100, 150, 60), CAButtonTypeRoundedRect);
+    btn->setTitleForState(CAControlStateAll, "pressenView");
+    this->getView()->addSubview(btn);
+    btn->addTarget(this, CAControl_selector(ViewController::touchUpInSide), CAControlEventTouchUpInSide);
+    btn->setTag(100);
+    
 }
 
 void ViewController::viewDidUnload()
 {
-
+    
 }
 
-void ViewController::touchUpInSide()
+void ViewController::touchUpInSide(CAControl* control, CCPoint point)
 {
-    ViewController* viewController2 = new ViewController();
-    viewController2->init();
-    viewController2->setTabBarItem(CATabBarItem::create("222", CAImage::create("e.png")));
-    viewController2->setNavigationBarItem(CANavigationBarItem::create(CCString::createWithFormat("ViewController %d", 0)->getCString()));
-    viewController2->setTitle("view2");
-
-    if (this->getNavigationController())
-    {
-        this->getNavigationController()->pushViewController(viewController2, true);
-        return;
-    }
-    
-    if (this->getTabBarController())
-    {
-        this->getTabBarController()->getNavigationController()->pushViewController(viewController2, true);
-        return;
-    }
-}
-
-void ViewController::touchUpInSide2()
-{
-    if (this->getNavigationController() && this->getNavigationController()->popViewControllerAnimated(true))
-    {
-        return;
-    }
-    
-    if (this->getTabBarController() && this->getTabBarController()->getNavigationController()->popViewControllerAnimated(true))
-    {
-        return;
-    }
+    CCSize size = scroll->getViewSize();
+    size.height += 100;
+    scroll->setViewSize(size);
+    v->setFrame(CCRect(0, 0, size.width, size.height));
 }

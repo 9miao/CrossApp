@@ -17,19 +17,21 @@ USING_NS_CC;
 class ViewController: public CAViewController, public CAScrollViewDelegate
 {
     
+    CAScrollView* scroll;
+    
+    CAImageView* v;
+    
 public:
+    
+    ViewController();
+    
+    virtual ~ViewController();
     
     virtual void viewDidLoad();
     
     virtual void viewDidUnload();
     
-    void touchUpInSide();
-    
-    void touchUpInSide2();
-    
-    CALabel* ttf;
-    
-    void setAllowsSelection(CAButton* btn, CCPoint point);
+    void touchUpInSide(CAControl* control, CCPoint point);
 };
 
 #endif /* defined(__project__ViewController__) */

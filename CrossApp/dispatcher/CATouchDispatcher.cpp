@@ -324,6 +324,27 @@ void CATouchDispatcher::setDispatchEvents(bool dispatchEvents)
     }
 }
 
+void CATouchDispatcher::setDispatchEventsTrue()
+{
+    m_bDispatchEvents = true;
+}
+
+void CATouchDispatcher::setDispatchEventsFalse()
+{
+    m_bDispatchEvents = false;
+    std::map<int, CATouchController*>::iterator itr;
+    for (itr=m_vTouchControllers.begin();
+         itr!=m_vTouchControllers.end();
+         itr++)
+    {
+        CATouchController* touchController = itr->second;
+        CC_CONTINUE_IF(!touchController);
+        touchController->touchCancelled();
+        CC_SAFE_RELEASE(touchController);
+        itr->second = NULL;
+    }
+}
+
 void CATouchDispatcher::touchesBegan(CCSet *touches, CAEvent *pEvent)
 {
     CC_RETURN_IF(!m_bDispatchEvents);

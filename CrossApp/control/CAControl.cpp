@@ -38,6 +38,11 @@ CAControl::~CAControl()
     }
 }
 
+bool CAControl::init()
+{
+    return true;
+}
+
 void CAControl::setControlState(CAControlState var)
 {
     CC_RETURN_IF(var == CAControlStateAll);

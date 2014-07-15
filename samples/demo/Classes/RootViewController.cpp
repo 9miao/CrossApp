@@ -8,6 +8,7 @@
 
 #include "RootViewController.h"
 #include "FirstViewController.h"
+#include "ThirdViewController.h"
 
 RootViewController::RootViewController()
 {
@@ -24,7 +25,7 @@ void RootViewController::viewDidLoad()
     CCRect rect = this->getView()->getBounds();
     
     CCRect tableRect = rect;
-    tableRect.size.height = rect.size.height - 80;
+    tableRect.size.height = rect.size.height - 80 * CROSSAPP_ADPTATION_RATIO;
 
     tableView = new CATableView();
     tableView->initWithFrame(tableRect);
@@ -65,19 +66,19 @@ void RootViewController::viewDidLoad()
     tableView->setTablePullDownView(s2);
     tableView->setTablePullViewHeight(this->getView()->getBounds().size.height/6);
     
-    button_ = CAButton::createWithFrame(CCRect(150, tableRect.size.height+10, 200, 60), CAButtonTypeRoundedRect);
+    button_ = CAButton::createWithFrame(CCRect(150 * CROSSAPP_ADPTATION_RATIO, tableRect.size.height+10, 200, 60), CAButtonTypeRoundedRect);
     button_->setTitleForState(CAControlStateNormal, "Hide-Bar");
     button_->setTitleForState(CAControlStateSelected, "Show-Bar");
     this->getView()->addSubview(button_);
     button_->addTarget(this, CAControl_selector(RootViewController::setAllowsMultipleSelection), CAControlEventTouchUpInSide);
     button_->setAllowsSelected(true);
-    
+
 //    if (this->getNavigationController()->isNavigationBarHidden())
 //    {
 //        button_->setControlState(CAControlStateSelected);
 //    }
     
-    switch_ = CASwitch::createWithFrame(CCRect(30, tableRect.size.height+20, 80, 48));
+    switch_ = CASwitch::createWithFrame(CCRect(30 * CROSSAPP_ADPTATION_RATIO, tableRect.size.height+20, 80, 48));
     switch_->addTarget(this, CAControl_selector(RootViewController::setAllowsSelection));
     this->getView()->addSubview(switch_);
     
@@ -99,9 +100,15 @@ void RootViewController::reshapeViewRectDidFinish()
     
     tableView->setFrame(tableRect);
     
-    button_->setFrame(CCRect(150, tableRect.size.height+10, 200, 60));
+    button_->setFrame(CCRect(150 * CROSSAPP_ADPTATION_RATIO,
+                             tableRect.size.height+10,
+                             200,
+                             60 * CROSSAPP_ADPTATION_RATIO));
     
-    switch_->setFrame(CCRect(10, tableRect.size.height+10, 120, 60));
+    switch_->setFrame(CCRect(30 * CROSSAPP_ADPTATION_RATIO,
+                             tableRect.size.height+20,
+                             80,
+                             48 * CROSSAPP_ADPTATION_RATIO));
     
 }
 
@@ -117,9 +124,8 @@ void RootViewController::setAllowsSelection(CAControl* sender, CCPoint point)
 //    {
 //        tableView->setAllowsSelection(true);
 //    }
-//    
-//    tableView->reloadData();
-    tableView->setSelectRowAtIndexPath(1, 1);
+
+    tableView->reloadData();
 }
 
 void RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint point)
@@ -134,10 +140,7 @@ void RootViewController::setAllowsMultipleSelection(CAControl* sender, CCPoint p
 //    {
 //        tableView->setAllowsMultipleSelection(true);
 //    }
-//    
-//    tableView->reloadData();
-    
-    
+
     if (btn->isSelected())
     {
         this->getNavigationController()->getTabBarController()->setTabBarHidden(false, true);
@@ -165,7 +168,7 @@ void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
     
     CANavigationBarItem* item = CANavigationBarItem::create(s);
     //item->setShowGoBackButton(false);
-    FirstViewController* viewController = new FirstViewController();
+    RootViewController* viewController = new RootViewController();
     viewController->init();
     viewController->setNavigationBarItem(item);
     viewController->setTitle("view1");
@@ -203,7 +206,7 @@ CATableViewCell* RootViewController::tableCellAtIndex(CATableView* table, const 
 
     CALabel* label = CALabel::createWithFrame(CCRect(40, 0, 200, cellSize.height));
     label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label->setFontSize(32);
+    label->setFontSize(32 * CROSSAPP_ADPTATION_RATIO);
     label->setText(str->getCString());
     cell->addSubview(label);
     
@@ -238,12 +241,12 @@ unsigned int RootViewController::numberOfRowsInSection(CATableView *table, unsig
 
 unsigned int RootViewController::numberOfSections(CATableView *table)
 {
-    return 3;
+    return 4;
 }
 
 unsigned int RootViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    return this->getView()->getBounds().size.height/12;
+    return this->getView()->getBounds().size.height/8;
 }
 
 unsigned int RootViewController::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)

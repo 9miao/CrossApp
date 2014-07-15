@@ -82,6 +82,8 @@ public:
     */
     bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
 
+    
+    static float getTextHeightJAVA(const char *strs, const char* fonts,float width,float height,float fontSize);
     /*
      @brief The same result as with initWithImageFile, but thread safe. It is caused by
             loadImage() in CAImageCache.cpp.

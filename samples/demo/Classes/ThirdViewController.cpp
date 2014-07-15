@@ -50,7 +50,7 @@ void ThirdViewController::viewDidLoad()
 	pLabel2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	pLabel2->setText("Footer View");
 	pLabel2->setFontName("fonts/arial.ttf");
-	pLabel2->setFontSize(28);
+	pLabel2->setFontSize(28 * CROSSAPP_ADPTATION_RATIO);
 	pLabel2->setColor(CAColor_gray);
 	footerView->addSubview(pLabel2);
 	pLabel2->release();
@@ -80,16 +80,23 @@ CACollectionViewCell* ThirdViewController::collectionCellAtIndex(CACollectionVie
 	sprintf(cIdentifier, "{%d, %d, %d}" ,section, row, item);
 	pCell->initWithReuseIdentifier(cIdentifier);
 
-	CALabel* label = CALabel::createWithCenter(CCRectMake(cellSize.width / 2, cellSize.height - 30, cellSize.width, cellSize.height));
-	label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	label->setTextAlignment(CATextAlignmentCenter);
-	label->setFontSize(28);
-	label->setText(pCell->getReuseIdentifier());
-	pCell->addSubview(label);
+//	CALabel* label = CALabel::createWithCenter(CCRectMake(cellSize.width / 2,
+//                                                          cellSize.height - 30,
+//                                                          cellSize.width,
+//                                                          cellSize.height));
+//	label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+//	label->setTextAlignment(CATextAlignmentCenter);
+//	label->setFontSize(28 * CROSSAPP_ADPTATION_RATIO);
+//	label->setText(pCell->getReuseIdentifier());
+//	pCell->addSubview(label);
 
-	CAImageView* pCellImage = CAImageView::createWithCenter(CCRectMake(cellSize.width / 2, cellSize.height / 2 - 20, cellSize.width*0.7f, cellSize.height*0.7f));
+	CAImageView* pCellImage = CAImageView::createWithCenter(CCRectMake(cellSize.width / 2,
+                                                                       cellSize.height / 2 - 20,
+                                                                       cellSize.width*0.7f,
+                                                                       cellSize.height*0.7f));
     pCell->addSubview(pCellImage);
     pCellImage->setImageAsyncWithFile("1.jpg");
+
 	return pCell;
 }
 
@@ -100,7 +107,7 @@ unsigned int ThirdViewController::numberOfSectionsInCollectioView()
 
 unsigned int ThirdViewController::numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section)
 {
-	return 3;
+	return 4;
 }
 
 unsigned int ThirdViewController::collectionViewHeightForHeaderInSection(CACollectionView *collectionView, unsigned int section)
@@ -125,13 +132,13 @@ CAView* ThirdViewController::collectionViewSectionViewForHeaderInSection(CAColle
 
 unsigned int ThirdViewController::numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)
 {
-	return 2 + (row % 2);
+	return 3;
 }
 
 unsigned int ThirdViewController::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
 {
     int height = this->getView()->getBounds().size.width * 0.75;
-	return height - (row % 2) * height / 3;
+	return height - 1 * height / 3;
 }
 
 

@@ -108,6 +108,10 @@ public:
 
     virtual void setDispatchEvents(bool dispatchEvents);
     
+    void setDispatchEventsTrue();
+    
+    void setDispatchEventsFalse();
+    
 public:
 
     /**
@@ -126,7 +130,7 @@ public:
      * @lua NA
      */
     virtual void touchesCancelled(CCSet* touches, CAEvent* pEvent);
-
+    
 protected:
 
     CC_SYNTHESIZE_RETAIN(CAResponder*, m_pFirstResponder, FirstResponder);

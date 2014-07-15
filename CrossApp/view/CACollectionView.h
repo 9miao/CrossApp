@@ -74,6 +74,10 @@ public:
 
 	void reloadData();
 
+    virtual void setAllowsSelection(bool var);
+    
+    virtual void setAllowsMultipleSelection(bool var);
+    
 	void setSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
 
 protected:
@@ -112,9 +116,9 @@ protected:
     
     CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
 
-	CC_SYNTHESIZE_IS(bool, m_bAllowsSelection, AllowsSelection);
+	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsSelection, AllowsSelection);
 
-	CC_SYNTHESIZE_IS(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
+	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
 
 private:
 	std::set<CACollectionViewCell*> m_pSelectedCollectionCells;

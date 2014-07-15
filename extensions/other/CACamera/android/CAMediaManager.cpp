@@ -76,12 +76,12 @@ void CAMediaManager::addAlbumView()
 void CAMediaManager::initAndroidImage()
 {
     
-    CCImage *iamge =new CCImage();
+    CCImage *image =new CCImage();
     image->autorelease();
-    if (iamge->initWithImageData((void*)m_pBuffer,n_fileSize,CCImage::kFmtJpg))
+    if (image->initWithImageData((void*)m_pBuffer,n_fileSize,CCImage::kFmtJpg))
     {
         
-        this->getMediaDelegate()->getSelectedImage(iamge);
+        this->getMediaDelegate()->getSelectedImage(image);
         CAScheduler::unschedule(schedule_selector(CAMediaManager::initAndroidImage), this);
     }
     

@@ -85,7 +85,7 @@ bool CACollectionView::init()
 
 float CACollectionView::maxSpeed(float dt)
 {
-    return (CCPoint(m_obContentSize).getLength() * 6 * dt);
+    return (CCPoint(m_obContentSize).getLength() * 12 * dt);
 }
 
 float CACollectionView::maxSpeedCache(float dt)
@@ -95,13 +95,14 @@ float CACollectionView::maxSpeedCache(float dt)
 
 float CACollectionView::decelerationRatio(float dt)
 {
-    return 3.0f * dt;
+    return 2.0f * dt;
 }
 
 CCPoint CACollectionView::maxBouncesLenght()
 {
+    float height = CROSSAPP_ADPTATION_RATIO * 5;
     //PULL SHOW VIEW
-    return CCPoint(0, m_obContentSize.height/2);
+    return CCPoint(0, height);
 }
 
 void CACollectionView::reloadData()
@@ -187,6 +188,30 @@ void CACollectionView::reloadData()
     this->setViewSize(CCSize(width, y));
 }
 
+void CACollectionView::setAllowsSelection(bool var)
+{
+    m_bAllowsSelection = var;
+    CC_RETURN_IF(!m_bAllowsSelection);
+    CC_RETURN_IF(m_pSelectedCollectionCells.empty());
+    std::set<CACollectionViewCell*>::iterator itr;
+    for (itr = m_pSelectedCollectionCells.begin(); itr != m_pSelectedCollectionCells.end(); itr++)
+    {
+        (*itr)->setControlState(CAControlStateNormal);
+    }
+    m_pSelectedCollectionCells.clear();
+}
+
+void CACollectionView::setAllowsMultipleSelection(bool var)
+{
+    m_bAllowsMultipleSelection = var;
+    CC_RETURN_IF(m_pSelectedCollectionCells.empty());
+    std::set<CACollectionViewCell*>::iterator itr;
+    for (itr = m_pSelectedCollectionCells.begin(); itr != m_pSelectedCollectionCells.end(); itr++)
+    {
+        (*itr)->setControlState(CAControlStateNormal);
+    }
+    m_pSelectedCollectionCells.clear();
+}
 
 void CACollectionView::setSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item)
 {
@@ -325,7 +350,7 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			if (m_pCollectionViewDelegate)
 			{
 				m_pCollectionViewDelegate->collectionViewDidSelectCellAtIndexPath(this,
-                                                                                  deselectedCell->getSection(),
+                                                                                  selectedCell->getSection(),
                                                                                   selectedCell->getRow(),
                                                                                   selectedCell->getItem());
 			}

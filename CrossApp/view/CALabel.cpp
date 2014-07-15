@@ -18,15 +18,8 @@ NS_CC_BEGIN
 
 static unsigned int getFontHeight(const char *fontName, int fontSize)
 {
-    unsigned int result=0;
-    CAImage *image = new CAImage();
-    image->initWithString("9m", fontName, fontSize, CCSizeZero, CATextAlignmentLeft, CAVerticalTextAlignmentTop);
-    
-    CAImage *image1 = new CAImage();
-    image1->initWithString("9\nm", fontName, fontSize, CCSizeZero,  CATextAlignmentLeft, CAVerticalTextAlignmentTop);
-    result = image1->getContentSize().height-image->getContentSize().height;
-    image->release();
-    image1->release();
+    unsigned int result = fontSize;
+
     return result;
 }
 
@@ -79,8 +72,11 @@ CALabel* CALabel::createWithCenter(const CCRect &rect)
 void CALabel::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
-    CC_RETURN_IF(m_nText.empty());
-    this->updateImage();
+    if (m_bUpdateImage)
+    {
+        m_bUpdateImage = false;
+        this->updateImage();
+    }
 }
 
 bool CALabel::initWithFrame(const CCRect& rect)

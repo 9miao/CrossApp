@@ -36,6 +36,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		B01B0F4A196FA7130015859E /* bg0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B01B0F49196FA7130015859E /* bg0.jpg */; };
 		B01DFBF11904B3AD00214AE2 /* ViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01DFBEF1904B3AD00214AE2 /* ViewController.cpp */; };
 		B01DFC2C190513F500214AE2 /* 9m.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B01DFC1E190513F500214AE2 /* 9m.jpg */; };
 		B01DFC3B190513FD00214AE2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B01DFC3A190513FD00214AE2 /* fonts */; };
@@ -148,6 +149,7 @@
 		1D6058910D05DD3D006BFB54 /* HelloCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B01B0F49196FA7130015859E /* bg0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg0.jpg; sourceTree = "<group>"; };
 		B01DFBEF1904B3AD00214AE2 /* ViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ViewController.cpp; path = ../Classes/ViewController.cpp; sourceTree = "<group>"; };
 		B01DFBF01904B3AD00214AE2 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = ../Classes/ViewController.h; sourceTree = "<group>"; };
 		B01DFC1E190513F500214AE2 /* 9m.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9m.jpg; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B01B0F49196FA7130015859E /* bg0.jpg */,
 				B01F71691951691500BA07A6 /* source_material */,
 				B01DFC3A190513FD00214AE2 /* fonts */,
 				04E94DCC194DEAB9000AD114 /* fifth_1.png */,
@@ -612,6 +615,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = PGT5C5TPQV;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HelloCpp" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -660,6 +668,7 @@
 				B01DFC2C190513F500214AE2 /* 9m.jpg in Resources */,
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
 				D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */,
+				B01B0F4A196FA7130015859E /* bg0.jpg in Resources */,
 				B01DFC3B190513FD00214AE2 /* fonts in Resources */,
 				B0AD93EE19207CE300EA40BB /* 1.jpg in Resources */,
 				B04C0C051901207A009854FD /* json_internalarray.inl in Resources */,

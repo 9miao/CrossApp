@@ -35,6 +35,25 @@ public:
             delete [] m_pData;
         }
     }
+    float getLabelTextHeight(const char *strs, const char* fonts,float width,float height,float fontSize)
+    {
+        JniMethodInfo jmi;
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxBitmap" , "getTextHeight" , "(Ljava/lang/String;IILjava/lang/String;II)F"))
+        {
+            
+            
+            jstring jstrText = jmi.env->NewStringUTF(strs);
+            jstring jstrFont = jmi.env->NewStringUTF(fonts);
+            
+            
+            
+            jfloat a = (jfloat)jmi.env->CallStaticFloatMethod(jmi.classID , jmi.methodID,jstrText,(int)width,(int)height,jstrFont,(int)fontSize,1);
+            float b =a;
+            return b;
+            
+        }
+        return 0;
+    }
 
     bool getBitmapFromJavaShadowStroke(	const char *text,
     									int nWidth,
@@ -211,7 +230,12 @@ bool CCImage::initWithStringShadowStroke(
 
 	    return bRet;
 }
+float CCImage::getTextHeightJAVA(const char *strs, const char* fonts,float width,float height,float fontSize)
+{
+    BitmapDC &dc = sharedBitmapDC();
 
+    return dc.getLabelTextHeight(strs,fonts,width,height,fontSize);
+}
 NS_CC_END
 
 // swap the alpha channel in an 32 bit image (from ARGB to RGBA)

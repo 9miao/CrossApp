@@ -269,7 +269,7 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 float CATableView::maxSpeed(float dt)
 {
-    return (CCPoint(m_obContentSize).getLength() * 6 * dt);
+    return (CCPoint(m_obContentSize).getLength() * 12 * dt);
 }
 
 float CATableView::maxSpeedCache(float dt)
@@ -279,17 +279,19 @@ float CATableView::maxSpeedCache(float dt)
 
 float CATableView::decelerationRatio(float dt)
 {
-    return 3.0f * dt;
+    return 2.0f * dt;
 }
 
 CCPoint CATableView::maxBouncesLenght()
 {
+    float height = CROSSAPP_ADPTATION_RATIO * 5;
+    
     if (m_pTablePullDownView || m_pTablePullUpView)
     {
-        return CCPoint(0, MIN(m_obContentSize.height/2, m_nTablePullViewHeight * 0.8f));
+        return CCPoint(0, MIN(height, m_nTablePullViewHeight * 0.8f));
     }
     
-    return CCPoint(0, m_obContentSize.height/2);
+    return CCPoint(0, height);
 }
 
 void CATableView::contentOffsetFinish()
@@ -315,6 +317,31 @@ CATableViewCell* CATableView::dequeueReusableCellWithIdentifier(const char* reus
 {
     
     return NULL;
+}
+
+void CATableView::setAllowsSelection(bool var)
+{
+    m_bAllowsSelection = var;
+    CC_RETURN_IF(!m_bAllowsSelection);
+    CC_RETURN_IF(m_pSelectedTableCells.empty());
+    std::set<CATableViewCell*>::iterator itr;
+    for (itr=m_pSelectedTableCells.begin(); itr!=m_pSelectedTableCells.end(); itr++)
+    {
+        (*itr)->setControlState(CAControlStateNormal);
+    }
+    m_pSelectedTableCells.clear();
+}
+
+void CATableView::setAllowsMultipleSelection(bool var)
+{
+    m_bAllowsMultipleSelection = var;
+    CC_RETURN_IF(m_pSelectedTableCells.empty());
+    std::set<CATableViewCell*>::iterator itr;
+    for (itr=m_pSelectedTableCells.begin(); itr!=m_pSelectedTableCells.end(); itr++)
+    {
+        (*itr)->setControlState(CAControlStateNormal);
+    }
+    m_pSelectedTableCells.clear();
 }
 
 void CATableView::setSelectRowAtIndexPath(unsigned int section, unsigned int row)

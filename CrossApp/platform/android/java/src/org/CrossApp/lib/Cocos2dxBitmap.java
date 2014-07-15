@@ -45,7 +45,19 @@ public class Cocos2dxBitmap {
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
-
+	
+	public static float getTextHeight(String string,final int width,final int height,String fontName,final int fontSize,final int pAlignment)
+	{
+		final int horizontalAlignment = pAlignment & 0x0F;
+		final Paint paint = Cocos2dxBitmap.newPaint(fontName, fontSize, horizontalAlignment);
+		
+		// set the paint color
+		paint.setARGB(255, (int)(255.0 * 1), (int)(255.0 * 1), (int)(255.0 * 1));
+		
+		final TextProperty textProperty = Cocos2dxBitmap.computeTextProperty(string, width, height, paint);
+		return textProperty.mTotalHeight;
+	}
+	
 	public static void setContext(final Context pContext) {
 		Cocos2dxBitmap.sContext = pContext;
 	}
@@ -84,8 +96,8 @@ public class Cocos2dxBitmap {
 													final int pAlignment, final int pWidth, final int pHeight, final boolean shadow,
 													final float shadowDX, final float shadowDY, final float shadowBlur, final boolean stroke,
 													final float strokeR, final float strokeG, final float strokeB, final float strokeSize) {
-
 		
+	
 		final int horizontalAlignment = pAlignment & 0x0F;
 		final int verticalAlignment   = (pAlignment >> 4) & 0x0F;
 
@@ -122,7 +134,8 @@ public class Cocos2dxBitmap {
 				renderTextDeltaY = 	bitmapPaddingY;
 			}
 		}
-		
+		System.out.println(bitmapTotalHeight);
+		System.out.println("--"+(int)bitmapPaddingY);
 		final Bitmap bitmap = Bitmap.createBitmap(textProperty.mMaxWidth + (int)bitmapPaddingX,
 				bitmapTotalHeight + (int)bitmapPaddingY, Bitmap.Config.ARGB_8888);
 		

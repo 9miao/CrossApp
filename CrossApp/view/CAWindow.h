@@ -32,13 +32,7 @@ public:
     void dismissModalViewController(bool animated);
     
 protected:
-    
-    void presentStart();
-    
-    void presentEnd();
-    
-    void dismissStart();
-    
+
     void dismissEnd();
     
 protected:

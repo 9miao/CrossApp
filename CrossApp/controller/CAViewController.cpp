@@ -15,6 +15,8 @@
 #include "actions/CCActionEase.h"
 #include "basics/CAScheduler.h"
 #include "view/CAWindow.h"
+#include "dispatcher/CATouchDispatcher.h"
+
 NS_CC_BEGIN
 
 CAViewController::CAViewController()
@@ -217,7 +219,7 @@ bool CANavigationController::initWithRootViewController(CAViewController* viewCo
     {
         return false;
     }
-        
+    
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
@@ -231,7 +233,7 @@ bool CANavigationController::initWithRootViewController(CAViewController* viewCo
     m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     
     m_eNavigationBarVerticalAlignment = var;
-
+    
     return true;
 }
 
@@ -333,10 +335,8 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
         return;
     }
     
-    float x = m_pContainer->getFrame().size.width;
-    
     CAViewController* lastViewController = m_pViewControllers.back();
-    lastViewController->getView()->setFrame(CCRect(-x, 0, 0, 0));
+    lastViewController->getView()->setAlpha(0);
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.insert(m_pViewControllers.end()-1, viewController);
@@ -345,21 +345,25 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
     if (animated)
     {
         m_pContainer->stopAllActions();
-        m_pContainer->setFrameOrigin(CCPoint(x, m_pContainer->getFrameOrigin().y));
         
-        CCDelayTime* delayTime = CCDelayTime::create(0.5f);
-        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.4f, CCPoint(0, m_pContainer->getFrameOrigin().y));
-        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
+        //CCFadeOut* fadeOut = CCFadeOut::create(0.5f);
+        //lastViewController->getView()->runAction(fadeOut);
+        
+        CCCallFunc* start = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
+                                               callfunc_selector(CATouchDispatcher::setDispatchEventsFalse));
+        CCCallFunc* end = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
+                                             callfunc_selector(CATouchDispatcher::setDispatchEventsTrue));
+        CCFadeIn* fadeIn = CCFadeIn::create(0.5f);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::replaceViewControllerFinish));
-        CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);
-        m_pContainer->runAction(actions);
+        CCSequence* actions = CCSequence::create(start, fadeIn, finish, end, NULL);
+        viewController->getView()->runAction(actions);
         actions->setTag(0);
     }
     else
     {
         this->replaceViewControllerFinish();
     }
-
+    
 }
 
 void CANavigationController::replaceViewControllerFinish()
@@ -387,33 +391,38 @@ void CANavigationController::pushViewController(CAViewController* viewController
     {
         return;
     }
-
+    
     if (m_pContainer->getActionByTag(0))
     {
         return;
     }
-
+    
     float x = m_pContainer->getFrame().size.width;
     
     CAViewController* lastViewController = m_pViewControllers.back();
-    lastViewController->getView()->setFrame(CCRect(-x, 0, 0, 0));
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
     viewController->addViewFromSuperview(m_pContainer);
-    
+    viewController->getView()->setFrameOrigin(CCPoint(x, 0));
     if (animated)
     {
-        m_pContainer->stopAllActions();
-        m_pContainer->setFrameOrigin(CCPoint(x, m_pContainer->getFrameOrigin().y));
+        CCDelayTime* delayTimeLast = CCDelayTime::create(1/60.0f);
+        CCEaseSineOut* scaleTo = CCEaseSineOut::create(CCScaleTo::create(0.25f, 0.5f));
+        CCSequence* actionsLast = CCSequence::create(delayTimeLast, scaleTo, NULL);
+        lastViewController->getView()->runAction(actionsLast);
         
-        CCDelayTime* delayTime = CCDelayTime::create(0.5f);
-        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.4f, CCPoint(0, m_pContainer->getFrameOrigin().y));
+        
+        CCCallFunc* start = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
+                                               callfunc_selector(CATouchDispatcher::setDispatchEventsFalse));
+        CCCallFunc* end = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
+                                             callfunc_selector(CATouchDispatcher::setDispatchEventsTrue));
+        CCDelayTime* delayTime = CCDelayTime::create(0.1f);
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.2f, CCPointZero);
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::pushViewControllerFinish));
-        CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);
-        m_pContainer->runAction(actions);
-        actions->setTag(0);
+        CCSequence* actions = CCSequence::create(start, delayTime, easeBack, finish, end, NULL);
+        viewController->getView()->runAction(actions);
     }
     else
     {
@@ -423,8 +432,6 @@ void CANavigationController::pushViewController(CAViewController* viewController
 
 void CANavigationController::pushViewControllerFinish()
 {
-    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
-    
     CAViewController* viewController = m_pViewControllers.back();
     
     if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
@@ -434,7 +441,9 @@ void CANavigationController::pushViewControllerFinish()
     m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     
     CAViewController* lastViewController = m_pViewControllers.at(m_pViewControllers.size() - 2);
-    lastViewController->getView()->removeFromSuperview();
+    lastViewController->getView()->setScale(1.0f);
+    lastViewController->getView()->setFrameOrigin(CCPointZero);
+    lastViewController->getView()->setVisible(false);
 }
 
 CAViewController* CANavigationController::popViewControllerAnimated(bool animated)
@@ -443,7 +452,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     {
         return NULL;
     }
-
+    
     if (m_pContainer->getActionByTag(0))
     {
         return NULL;
@@ -451,26 +460,33 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     
     unsigned int index = m_pViewControllers.size() - 2;
     CAViewController* showViewController = m_pViewControllers.at(index);
-    showViewController->getView()->setFrame(CCRectZero);
-    m_pContainer->addSubview(showViewController->getView());
+    showViewController->getView()->setScale(0.5f);
+    showViewController->getView()->setVisible(true);
+    if (!showViewController->getView()->getBounds().size.equals(m_pContainer->getBounds().size))
+    {
+        showViewController->getSuperViewRect(m_pContainer->getBounds());
+    }
+    
     
     CAViewController* backViewController = m_pViewControllers.back();
     
     float x = m_pContainer->getFrame().size.width;
-    backViewController->getView()->setFrame(CCRect(x, 0, 0, 0));
     
     if (animated)
     {
-        m_pContainer->stopAllActions();
-        m_pContainer->setFrameOrigin(CCPoint(-x, m_pContainer->getFrameOrigin().y));
+        CCEaseSineOut* scaleTo = CCEaseSineOut::create(CCScaleTo::create(0.25f, 1.0f));
+        showViewController->getView()->runAction(scaleTo);
         
-        CCDelayTime* delayTime = CCDelayTime::create(0.2f);
-        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.4f, CCPoint(0, m_pContainer->getFrameOrigin().y));
+        
+        CCCallFunc* start = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
+                                               callfunc_selector(CATouchDispatcher::setDispatchEventsFalse));
+        CCCallFunc* end = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
+                                             callfunc_selector(CATouchDispatcher::setDispatchEventsTrue));
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.2f, CCPoint(x, 0));
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::popViewControllerFinish));
-        CCSequence* actions = CCSequence::create(delayTime, easeBack, finish, NULL);
-        m_pContainer->runAction(actions);
-        actions->setTag(0);
+        CCSequence* actions = CCSequence::create(start, easeBack, finish, end, NULL);
+        backViewController->getView()->runAction(actions);
     }
     else
     {
@@ -543,7 +559,7 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     if (animated)
     {
         m_pNavigationBar->stopAllActions();
-        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.3f, point);
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.2f, point);
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CANavigationController::scheduleUpdate));
         CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CANavigationController::unScheduleUpdate));
@@ -559,7 +575,7 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
             this->update(0);
         }
     }
-
+    
 }
 
 void CANavigationController::update(float dt)
@@ -585,17 +601,14 @@ void CANavigationController::update(float dt)
     
     m_pContainer->setFrame(rect);
     
-    for (unsigned int i=0; i<m_pViewControllers.size(); i++)
-    {
-        CAViewController* viewController = m_pViewControllers.at(i);
-        rect.origin.x = viewController->getView()->getFrameOrigin().x;
-        rect.origin.y = 0;
-        viewController->getSuperViewRect(rect);
-    }
+    CAViewController* viewController = m_pViewControllers.back();
+    rect.origin = CCPointZero;
+    viewController->getSuperViewRect(rect);
 }
 
 void CANavigationController::scheduleUpdate()
 {
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     CAScheduler::unschedule(schedule_selector(CANavigationController::update), this);
     CAScheduler::schedule(schedule_selector(CANavigationController::update), this, 1/60.0f);
 }
@@ -603,6 +616,7 @@ void CANavigationController::scheduleUpdate()
 void CANavigationController::unScheduleUpdate()
 {
     CAScheduler::unschedule(schedule_selector(CANavigationController::update), this);
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
 #pragma CATabBarController
@@ -612,9 +626,8 @@ CATabBarController::CATabBarController()
 ,m_pTabBar(NULL)
 ,m_pContainer(NULL)
 ,m_bTabBarHidden(false)
-,m_bTabBarAnimated(false)
 {
-
+    
 }
 
 CATabBarController::~CATabBarController()
@@ -661,18 +674,13 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
         m_pTabBar->setAnchorPoint(CCPointZero);
         m_pTabBar->setDelegate(this);
         
-        m_pContainer = new CAScrollView();
-        m_pContainer->initWithFrame(CCRectZero);
-        m_pContainer->setScrollEnabled(false);
-        m_pContainer->setBounces(false);
-        m_pContainer->setShowsHorizontalScrollIndicator(false);
-        m_pContainer->setShowsVerticalScrollIndicator(false);
-        
+        m_pContainer = new CAView();
+        m_pContainer->init();
     }
     while (0);
     
     m_eTabBarVerticalAlignment = var;
-
+    
     return true;
     
 }
@@ -685,7 +693,7 @@ void CATabBarController::updateItem(CAViewController* viewController)
         CC_BREAK_IF(viewController->isEqual(m_pViewControllers.at(index)));
         index++;
     };
-
+    
     m_pTabBar->replaceItemAtIndex(index, viewController->getTabBarItem());
 }
 
@@ -738,17 +746,14 @@ void CATabBarController::viewDidLoad()
     }
     
     m_pContainer->setFrame(container_rect);
-    m_pContainer->setViewSize(container_view_size);
     this->getView()->addSubview(m_pContainer);
-    CCPoint point = CCPoint(m_pContainer->getFrame().size.width * m_nSelectedIndex, 0);
-    m_pContainer->setContentOffset(point, false);
     
     m_pTabBar->setFrame(tab_bar_rect);
     this->getView()->addSubview(m_pTabBar);
     
     unsigned int index = m_nSelectedIndex;
     m_nSelectedIndex = 0xffff;
-    this->showSelectedViewControllerAtIndex(index, false);
+    this->showSelectedViewControllerAtIndex(index);
 }
 
 void CATabBarController::viewDidUnload()
@@ -770,7 +775,7 @@ void CATabBarController::reshapeViewRectDidFinish()
     this->update(0);
 }
 
-bool CATabBarController::showSelectedViewController(CAViewController* viewController, bool animated)
+bool CATabBarController::showSelectedViewController(CAViewController* viewController)
 {
     do
     {
@@ -783,7 +788,7 @@ bool CATabBarController::showSelectedViewController(CAViewController* viewContro
             index++;
         }
         
-        return this->showSelectedViewControllerAtIndex(index, animated);
+        return this->showSelectedViewControllerAtIndex(index);
     }
     while (0);
     
@@ -795,7 +800,7 @@ CAViewController* CATabBarController::getSelectedViewController()
     return m_pViewControllers.at(m_nSelectedIndex);
 }
 
-bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index, bool animated)
+bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index)
 {
     do
     {
@@ -803,20 +808,8 @@ bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index, b
         CC_BREAK_IF(index == m_nSelectedIndex);
         m_nSelectedIndex = index;
         
-        m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
-        
-        if (animated)
-        {
-            this->renderingAllViewController();
-            CAScheduler::unschedule(schedule_selector(CATabBarController::renderingSelectedViewController), this);
-            CAScheduler::schedule(schedule_selector(CATabBarController::renderingSelectedViewController), this, 0, 1, 1.0f,false);
-        }
-        
-        CCPoint point = CCPoint(m_pContainer->getFrame().size.width * m_nSelectedIndex, 0);
-        
-        m_pContainer->setContentOffset(point, animated);
-        
-        this->renderingSelectedViewController();
+        this->getView()->runAction(CCSequence::create(CCDelayTime::create(1/60.0f),
+                                                      CCCallFunc::create(this, callfunc_selector(CATabBarController::renderingSelectedViewController)), NULL));
         
         return true;
     }
@@ -832,38 +825,26 @@ unsigned int CATabBarController::getSelectedViewControllerAtIndex()
 
 void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index)
 {
-    this->showSelectedViewControllerAtIndex(index, m_bTabBarAnimated);
+    this->showSelectedViewControllerAtIndex(index);
 }
 
-void CATabBarController::renderingAllViewController(float dt)
+void CATabBarController::renderingSelectedViewController()
 {
-    std::vector<CAViewController*>::iterator itr;
-    for (itr=m_pViewControllers.begin(); itr!=m_pViewControllers.end(); itr++)
-    {
-        (*itr)->getView()->setVisible(true);
-    }
-}
-
-void CATabBarController::renderingSelectedViewController(float dt)
-{
+    m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
+    
     std::vector<CAViewController*>::iterator itr;
     for (itr=m_pViewControllers.begin(); itr!=m_pViewControllers.end(); itr++)
     {
         (*itr)->getView()->setVisible(false);
     }
-
-    m_pViewControllers.at(m_nSelectedIndex)->getView()->setVisible(true);
     
     if (m_pViewControllers.at(m_nSelectedIndex)->getView()->getSuperview() == NULL)
     {
-        CCRect rect = m_pContainer->getFrame();
-        rect.origin.x = m_nSelectedIndex * rect.size.width;
-        rect.origin.y = 0;
-        CAView* view = CAView::createWithFrame(rect);
-        m_pContainer->addSubview(view);
-        m_pViewControllers.at(m_nSelectedIndex)->getView()->setFrame(view->getBounds());
-        m_pViewControllers.at(m_nSelectedIndex)->addViewFromSuperview(view);
+        m_pViewControllers.at(m_nSelectedIndex)->getView()->setFrame(m_pContainer->getBounds());
+        m_pViewControllers.at(m_nSelectedIndex)->addViewFromSuperview(m_pContainer);
     }
+    
+    m_pViewControllers.at(m_nSelectedIndex)->getView()->setVisible(true);
 }
 
 void CATabBarController::setTabBarHidden(bool hidden, bool animated)
@@ -914,7 +895,7 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
     if (animated)
     {
         m_pTabBar->stopAllActions();
-        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.3f, point);
+        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.2f, point);
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CATabBarController::scheduleUpdate));
         CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CATabBarController::unScheduleUpdate));
@@ -930,13 +911,12 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
             this->update(0);
         }
     }
-
+    
 }
 
 void CATabBarController::update(float dt)
 {
     CCRect rect = m_pContainer->getFrame();
-    CCSize size = m_pContainer->getViewSize();
     
     switch (m_eTabBarVerticalAlignment)
     {
@@ -954,27 +934,19 @@ void CATabBarController::update(float dt)
         default:
             break;
     }
-    size.height = rect.size.height;
     
     m_pContainer->setFrame(rect);
-    CCPoint point = m_pContainer->getContentOffset();
-    m_pContainer->setViewSize(size);
-    m_pContainer->setContentOffset(point, false);
     
     for (unsigned int i=0; i<m_pViewControllers.size(); i++)
     {
         CAViewController* viewController = m_pViewControllers.at(i);
-        CAView* superview = viewController->getView()->getSuperview();
-        CC_CONTINUE_IF(superview == NULL);
-        rect.origin.x = superview->getFrameOrigin().x;
-        rect.origin.y = 0;
-        superview->setFrame(rect);
-        viewController->getSuperViewRect(superview->getBounds());
+        viewController->getSuperViewRect(m_pContainer->getBounds());
     }
 }
 
 void CATabBarController::scheduleUpdate()
 {
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     CAScheduler::unschedule(schedule_selector(CATabBarController::update), this);
     CAScheduler::schedule(schedule_selector(CATabBarController::update), this, 1/60.0f);
 }
@@ -982,6 +954,7 @@ void CATabBarController::scheduleUpdate()
 void CATabBarController::unScheduleUpdate()
 {
     CAScheduler::unschedule(schedule_selector(CATabBarController::update), this);
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
 NS_CC_END;

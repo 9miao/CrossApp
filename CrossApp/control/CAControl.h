@@ -48,6 +48,8 @@ public:
     
     virtual ~CAControl();
     
+    bool init();
+    
     CC_SYNTHESIZE(bool, m_bControlStateLocked, ControlStateLocked);
     
     CC_PROPERTY(CAControlState, m_eControlState, ControlState);

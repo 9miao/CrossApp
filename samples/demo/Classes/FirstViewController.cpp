@@ -25,11 +25,11 @@ void FirstViewController::viewDidLoad()
     // Do any additional setup after loading the view from its nib.
     CCSize size = this->getView()->getBounds().size;
 
-    label = CALabel::createWithCenter(CCRect(size.width/2, 60, 200, 50));
+    label = CALabel::createWithCenter(CCRect(size.width/2, 60, 200, 50 * CROSSAPP_ADPTATION_RATIO));
     label->setTextAlignment(CATextAlignmentCenter);
-    label->setFontSize(size.width/20);
+    label->setFontSize(32 * CROSSAPP_ADPTATION_RATIO);
     label->setText("0.000000");
-    this->getView()->addSubview(label);
+    this->getView()->insertSubview(label, 100);
     
     float height = size.width * 0.8f * 0.15f;
     float off_Y = size.width * 0.8f * 0.15f + 10;

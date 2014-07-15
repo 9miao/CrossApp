@@ -83,7 +83,7 @@ protected:
     
     bool isScrollWindowNotOutSide();
     
-    bool isScrollWindowNotMaxOutSide();
+    bool isScrollWindowNotMaxOutSide(const CCPoint& point);
     
     virtual void update(float dt);
     

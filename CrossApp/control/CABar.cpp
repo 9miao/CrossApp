@@ -140,14 +140,12 @@ void CANavigationBar::showTitle()
     }
     else
     {
-        int fontSize = this->getBounds().size.height * 0.35f / CROSSAPP_ADPTATION_RATIO;
-
         CALabel* title = CALabel::createWithCenter(rect);
         title->setTextAlignment(CATextAlignmentCenter);
         title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         title->setNumberOfLine(1);
         title->setColor(CAColor_white);
-        title->setFontSize(fontSize);
+        title->setFontSize(32 * CROSSAPP_ADPTATION_RATIO);
         this->addSubview(title);
         m_pTitle = title;
     }
