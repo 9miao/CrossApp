@@ -23,6 +23,30 @@
 添加2.0版本丢失的文件
 
 
+####CrossApp beta 0.2.1 Update:
+
+#####1.Add container class
+Add CAVector, CADeque, CAList, CAMap and CAMultimap.
+
+#####2.Add controls
+Add control CACollectionView which is more complicated than CATableView, and its great function could meet many interfaces’ demands.
+
+#####3.Add adaptive corrected parameter
+Add adaptive corrected parameter and take iPhone4 as standard, and this parameter enables all other mobile devices’ displayed view physical size are same with iPhone4.
+
+#####4.Fixed bug
+Fixed bug that touch event’s memory leak.
+
+#####5.Fixed bug
+Fixed bug that CAAlertView had breakdown in particular circumstance.
+
+#####6.Codes optimization
+Optimized CATableView agent method.
+
+#####7.Files completion
+Add lost files of 2.0 versions.
+
+
 **********************************************************************************
 
 
@@ -48,6 +72,28 @@
 #####8.添加一件部署安卓环境, 下载地址：http://pan.baidu.com/s/1qW6ql32
 
 
+####CrossApp beta 0.2.0 Update: (Important changes)
+
+#####1.Arranged engine directory structure
+Arranged directory structure and changed some class name
+
+#####2.Touch event dispatch optimization
+We optimized sliding container of touch event dispatch
+
+#####3.Add CAAlertView control
+In prompt box, if button number is less than three, they are arranged in horizontal mode, if the number is greater than three, arranged in vertical mode and put into sliding container.
+
+#####4.CALabel optimization
+
+#####5.Complemented CATextField function
+
+#####6.Fixed some bugs
+
+#####7.Add one-key project building
+
+#####8.Add one-key Android environment deployment, download: http://pan.baidu.com/s/1qW6ql32
+
+
 
 ####CrossApp alpha 0.1.11（重要更新） 更新内容：  
 
@@ -60,6 +106,18 @@
 #####3.CALabel优化
 CALabel结构优化，性能优化。将来还会优化。
 
+
+
+####CrossApp alpha 0.1.11 Update: (Important changes)
+
+#####1.Default engine theme style change
+The new style is more attractive and has a greater suitability.
+
+#####2.CAScale9ImageView rewriting
+We rewrote 9 rectangle gird because of the previous version had function defects, and the new version supports unidirectional zoom-out.
+
+#####3.CALabel optimization
+We optimized CALabel’s structure and performance, and will do it in the future.
 
 
 
@@ -83,6 +141,28 @@ alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影�
 #####6.修复CAScrollView的bug
 修复之前代理回调方法virtual void scrollViewWillBeginDragging(CAScrollView* view){};
 触发时机错误的bug
+
+
+
+####CrossApp alpha 0.1.10 Update:
+
+#####1.CAImageView optimization
+Optimized CAImageView, and fixed bug that wrong display problem when adding sub view in CAImageView, now you are free to add sub view in CAImageView.
+
+#####2.Delete ccColor3B and add CAColor4B
+Delete ccColor3B and replace all ccColor3B with CAColor4B, add transparency attribute.
+
+#####3.Delete Opacity attribute and add new alpha attribute
+Alpha attribute is float type with 0 – 1.0f value range, alpha attribute setting can directly influence all sub views’ transparency.
+
+#####4.Completely delete position attribute
+CCMoveTo and CCMoveBy are also deleted from our engine
+
+#####5.Fixed the GPS bug of Android platform
+Fixed bug that application cannot be started because of Android cellphone did not open GPS
+
+#####6.Fixed CAScrollView bug
+Fixed bug that agent callback method ‘void scrollViewWillBeginDragging(CAScrollView* view){};’ has a wrong trigger timing.
 
 
 
@@ -110,6 +190,32 @@ alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影�
 现在可以调用任何一个viewController的presentModalViewController与dismissModalViewController来显示与撤销。
 
 
+
+####CrossApp alpha 0.1.9 Update:
+
+#####1.Touch event bug modification
+Fixed bug that Instant release after clicking button on sliding layer is not triggered
+
+#####2.CATabBar optimization
+Experience optimization on CATabBar
+
+#####3.CATabBar and CANavigationBar optimization
+It’s able to dynamic update CATabBar and CANavigationBar display data via ViewController
+
+#####4.CAButton and CASegmentedControl optimization
+Fixed bug that wrong text display size
+
+#####5.Fixed bug that blank screen appears when returning from background in Android system
+Previously, if we return from background in Android system, there is certain of probability that blank screen appears
+
+#####6.Add animation related CCFrameTo and CCCenterTo
+You can dynamically modify frame and center
+
+#####7.Add suspension drawer function of viewController
+You can call any viewController’s presentModalViewController and dismissModalViewController to display and dismiss
+
+
+
 ####CrossApp alpha 0.1.8 更新内容：  
 
 #####1.
@@ -134,6 +240,25 @@ CATextField添加win32输入功能
 优化CANavigationBar在竖屏的高度及布局。
 
 
+
+####CrossApp alpha 0.1.8 Update:
+
+#####1.
+Add CANavigationController left and right button customization
+#####2.
+Add win32 input function in CATextField
+#####3.
+Add CANavigationController, and replace current CAViewController’s function
+#####4.
+Fixed bug that quickly clicking button on slidable container of touch dispatch system is unable to trigger button event
+#####5.
+Fixed bug that occasional crashes caused by touch event in win32
+#####6.
+Optimize CASegmentedControl
+#####7.
+Optimize CANavigationBar height and layout in portrait mode
+
+
 ####CrossApp alpha 0.1.7 更新内容：  
 
 #####1.
@@ -141,6 +266,15 @@ CATextField添加win32输入功能
 
 #####2.
 修复TabBarController当前viewController不是第一项时 显示与隐藏 tabBar时画面出错的问题
+
+
+####CrossApp alpha 0.1.7 Update:
+
+#####1.
+Fixed CATextField compiling error report problem on win32 and Mac platform.
+
+#####2.
+Fixed picture error report problem in displaying and hiding tabBar when current viewController of TabBArController is not the first item.
 
 
 ####CrossApp alpha 0.1.6 更新内容：  
@@ -175,6 +309,38 @@ CATextField添加win32输入功能
 
 
 
+####CrossApp alpha 0.1.6 Update:
+#####1. Add CASlider:
+Slider<br/>
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
+
+#####2. Add CASegmentedControl:
+Segmented Controller<br/>
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
+
+#####3. Touch event dispatch rules optimization, add CAResponder class.
+This optimization makes touch event dispatch become more intelligent and development process simple and easy.
+
+#####4. CATextField functions completion:
+1.Add keyboard type selecting on text field<br/>
+2.Add hiding display character ※<br/>
+3.Add cursor movement, insert and delete<br/>
+4.Add functions such as obtaining keyboard height and others<br/>
+5.Only support iOS and Android for now<br/>
+
+#####5. Add new functions of CATabBarController and CANavigationController
+Support tabBarController switching to viewController animation effect<br/>
+Add TabBar and NavigationBar hiding function<br/>
+
+#####6. Fixed some bugs
+1.Fixed bug: setting ZOder before addSubview in CAView is invalid<br/>
+2.Fixed bug: calling setNotificationNode(CAView* view) in CCDirector is invalid<br/>
+3.Fixed bug: scrollView indicator's display and hiding timing are wrong<br/>
+
+#####7. Backward compatible to VS2012 on win32 platform
+
+
+
 ####CrossApp alpha 0.1.5 更新内容：  
 #####1. 添加CASwitch：  
 在此特别鸣谢 9秒ID为juguanhui的 美女程序员，为我们提供了优质的控件源码。
@@ -198,6 +364,28 @@ CATextField添加win32输入功能
 
 
 
+####CrossApp alpha 0.1.5 Update:
+#####1. Add CASwitch:
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us. Juguanhui cannot upload codes via git for some reasons, so this time the controls sources code was submitted and uploaded by 9miao worker.
+
+#####2. Touch event dispatch rules modification:
+The new touch event does not have to be registered, and you can implement cctouchBegin and other functions monitoring by only inheriting all child classes of CAView. In addition, it’s unable to obtain event monitoring outside of view rectangular region when you touch screen.<br/>
+
+The new touch event is dispatched from parent view to child view, so even if your touchBegin event spot is in child view rectangular region, you cannot obtain touch event on condition that the touchBegin event is outside of parent view rectangular region.<br/>
+
+#####3. Add GPS location function:
+Support iOS and Android for now, no WP8.
+
+#####4. Add photo select from album and photo picture data return function:
+Support iOS and Android for now, no WP8.
+
+#####5. Add photo taking from webcam and photo picture data return function:
+Support iOS and Android for now, no WP8.
+
+#####6. Add mobile address book contacts information obtaining function:
+Support iOS and Android for now, no WP8.
+
+
 
 ####CrossApp alpha 0.1.4 更新内容：  
 #####1. 耗电优化：  
@@ -209,27 +397,54 @@ CATextField添加win32输入功能
 **b) 内存管理修改：**之前启动定时器，针对pTarget的引用计数会+1，以防止因pTarget的释放造成程序崩溃。现在启用了新的机制，已经可以完全避免以上问题，因此在启动定时器后不再对pTarget的引用计数+1，在pTarget释放后自动停止相关定时器  
 **c) 新特点：**当pTarget为CAViewController或者其派生类型时，CAViewController的view不显示时，定时器会自动暂停，当重新显示时，会自动恢复。除此之外，在pTarget释放前不会有变化  
 #####4. Demo位置变动  
-demo有原来的projects文件夹移到samples  
+demo由原来的projects文件夹移到samples  
 
 
 
 ####贡献者名单：juguanhui，
 
 
+####CrossApp alpha 0.1.4 Update:
+#####1.Power Consumption Optimization:
+A program is continuously redrawing at general 60 frame rates in its life cycle because of the rendering-driven mode of cocos2d-x rendering, but the shortcoming of this mode is the relatively considerable power consumption. Obviously this continuous redraw mode is quite a waste for program, so we change the rendering mechanism into event-driven mode based on application features. In this rendering mode the redraw is only triggered by outside, if not the screen is static and rendering stops, so as to achieve energy saving goal.
+#####2.CAButton Modification:
+Add new attribute AllowsSelected (including set, get), default value is false. If value is true then selected mode is started. In this mode, the button status will switch between selected and default: if current status is default one, press button and release and button will switch to selected status; press and release again and button will switch back to default status. However, we can promptly judge and know current button status by using getSelected () method.
+#####3.CASchedule (modified based on CCSchedule):
+**a)	Simplify usage: ** start, stop and other operation can be acted by calling corresponding static methods.<br/>
+**b) Memory management modification: ** previously when we start timer, reference counting on pTarget will plus 1 for the purpose of avoiding program crashed caused by pTarget release. Now the new mechanism we deployed could completely solve the above problem: this mechanism enables system to stop plus 1 on pTarget reference counting after timer starts and auto-stop related timer after pTarget release.<br/>
+**c) New feature: ** when pTarget is derived type of CAViewController or others and the view of CAViewController is not displayed, timer will auto pause; it will auto recover when the view is displayed. In addition, it will not change before pTarget releases.<br/>
+#####4.Demo Location Change
+Demo location is moved to samples folder from projects.
+
+
+
+####Contributors: juguanhui，
 
 
 ####【9秒实验室自研】
 
  CrossApp引擎详细介绍请点此：
 
- <http://www.9miao.com/crossapp/list-24-1.html>
+<http://www.9miao.com/crossapp/list-24-1.html>
 
+#### 9miao Lab Original
+
+ Click to view CrossApp engine detailed description:<br/>
+<http://www.9miao.com/crossapp/list-24-1.html>
+ 
 ####近期要做的控件：  
 提示框：CAAlertView  
 视图分页控制器：CAPageControl  
 大段文字输入控件：CATextView  
 加载状态控制器：CAActivity  
 网页加载控件：CAWebView  
+
+####Recent Controls Writing Plan:
+Reminder: CAAlertView<br/>
+View paging controller: CAPageControl<br/>
+Blocks of text input control: CATextView<br/>
+Load status controller: CAActivity<br/>
+Webpage load control: CAWebView<br/>
 
 ####目前已有控件缺失功能：  
 #####1.	textField：  	
@@ -240,3 +455,13 @@ demo有原来的projects文件夹移到samples
 **a)	**cell的复用  
 **b)	**cell编辑功能（删除、插入等）  
 **c)	**cell的一些模板属性的添加  
+
+####Existed Controls Missing Features:
+#####1.	textField：
+**a) ** free control on text content length<br/>
+**b) ** text editing when cursor is at anywhere of content<br/>
+**c) **line feed input<br/>
+#####2.	tableView：
+**a) **cell Multiplexing<br/>
+**b) **cell editing (delete, insert and others)<br/>
+**c) **add some template attributes of cell<br/>
