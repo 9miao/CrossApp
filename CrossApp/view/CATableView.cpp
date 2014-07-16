@@ -624,7 +624,6 @@ CATableViewCell::CATableViewCell()
 
 CATableViewCell::~CATableViewCell()
 {
-
 }
 
 CATableViewCell* CATableViewCell::create(const char* reuseIdentifier)

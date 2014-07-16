@@ -12,10 +12,19 @@ static map<std::string, FontBufferInfo> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
 
 
-CAFreeTypeFont::CAFreeTypeFont() :
-    m_space(" ")
+CAFreeTypeFont::CAFreeTypeFont()
+:m_space(" ")
+,m_currentLine(NULL)
+,m_face(NULL)
+,m_inWidth(0)
+,m_inHeight(0)
+,m_width(0)
+,m_height(0)
+,m_textWidth(0)
+,m_textHeight(0)
+,m_windowWidth(0)
+,m_lineHeight(0)
 {
-	m_face = NULL;
     CCSize size = CAApplication::getApplication()->getWinSizeInPixels();
     m_windowWidth = (int)size.width;
 }
@@ -26,6 +35,13 @@ CAFreeTypeFont::~CAFreeTypeFont()
 	{
 		FT_Done_Face(m_face);
 	}
+
+    for (int i=0; i<m_lines.size(); i++)
+    {
+        delete m_lines[i];
+    }
+    m_lines.clear();
+    m_currentLine = NULL;
 }
 
 
@@ -44,17 +60,21 @@ int CAFreeTypeFont::getFontHeight(const char* pFontName, unsigned long nSize)
 
 	FT_Face tface = 0;
 	int error = FT_New_Memory_Face(s_FreeTypeLibrary, pBuffer, size, 0, &tface);
+    int iLineHeight = 0;
 	if (error == 0)
 	{
 		FT_Set_Char_Size(tface, nSize << 6, nSize << 6, 72, 72);
-		return ((tface->size->metrics.ascender) >> 6) - ((tface->size->metrics.descender) >> 6);
+		iLineHeight = ((tface->size->metrics.ascender) >> 6) - ((tface->size->metrics.descender) >> 6);
 	}
-	return 0;
+    if(tface)
+    {
+        FT_Done_Face(tface);
+    }
+	return iLineHeight;
 }
 
 
-CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment)
+CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment)
 {
 	FT_Error error = 0;
 	unsigned long size = 0;
@@ -140,6 +160,8 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 		delete pCAImage;
 		return NULL;
 	}
+    pImage->release();
+    pCAImage->autorelease();
 	return pCAImage;
 }
 
@@ -159,7 +181,8 @@ unsigned char* CAFreeTypeFont::getBitmap(CCImage::ETextAlign eAlignMask, int* ou
     }
     memset(pBuffer, 0, size);
 
-	for (std::vector<FTLineInfo*>::iterator line = m_lines.begin(); line != m_lines.end(); ++line)
+    std::vector<FTLineInfo*>::iterator line;
+	for (line = m_lines.begin(); line != m_lines.end(); ++line)
     {
         FT_Vector pen = getPenForAlignment(*line, eAlignMask, lineNumber, totalLines);
         drawText(*line, pBuffer, &pen);
@@ -173,7 +196,6 @@ unsigned char* CAFreeTypeFont::getBitmap(CCImage::ETextAlign eAlignMask, int* ou
 
 FT_Vector CAFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAlign eAlignMask,int lineNumber, int totalLines)
 {
-    FT_Error error = 0;
     FT_Vector pen;
     
     int top;
@@ -432,7 +454,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 
 	glyphs.clear();
 	FT_Bool useKerning = FT_HAS_KERNING(m_face);
-	FT_ULong cTemp = 0;
+
 	for (int n = 0; n < utf16String.size(); n++)
 	{
 		FT_ULong c = utf16String[n];

@@ -1588,25 +1588,6 @@ void VolatileTexture::addDataTexture(CAImage* tt, void* data, CAImagePixelFormat
     vt->m_TextureSize = contentSize;
 }
 
-void VolatileTexture::addStringTexture(CAImage* tt, const char* text, const CCSize& dimensions, CATextAlignment alignment,
-                                       CAVerticalTextAlignment vAlignment, const char *fontName, float fontSize)
-{
-    if (isReloading)
-    {
-        return;
-    }
-    
-    VolatileTexture *vt = findVolotileTexture(tt);
-    
-    vt->m_eCashedImageType = kString;
-    vt->m_size        = dimensions;
-    vt->m_strFontName = fontName;
-    vt->m_alignment   = alignment;
-    vt->m_vAlignment  = vAlignment;
-    vt->m_fFontSize   = fontSize;
-    vt->m_strText     = text;
-}
-
 void VolatileTexture::setTexParameters(CAImage* t, ccTexParams *texParams)
 {
     VolatileTexture *vt = findVolotileTexture(t);
@@ -1691,17 +1672,6 @@ void VolatileTexture::reloadAllImages()
                                           vt->m_TextureSize.width,
                                           vt->m_TextureSize.height,
                                           vt->m_TextureSize);
-            }
-                break;
-            case kString:
-            {
-                vt->texture->initWithString(vt->m_strText.c_str(),
-                                            vt->m_strFontName.c_str(),
-                                            vt->m_fFontSize,
-                                            vt->m_size,
-                                            vt->m_alignment,
-                                            vt->m_vAlignment
-                                            );
             }
                 break;
             case kImage:

@@ -15,19 +15,7 @@
 #include "view/CAScale9ImageView.h"
 
 NS_CC_BEGIN
-static unsigned int getFontHeight(const char *fontName, int fontSize)
-{
-    unsigned int result=0;
-    CAImage *image = new CAImage();
-    image->initWithString("9m", fontName, fontSize, CCSizeZero, CATextAlignmentLeft, CAVerticalTextAlignmentTop);
-    
-    CAImage *image1 = new CAImage();
-    image1->initWithString("9\nm", fontName, fontSize, CCSizeZero,  CATextAlignmentLeft, CAVerticalTextAlignmentTop);
-    result = image1->getContentSize().height-image->getContentSize().height;
-    image->release();
-    image1->release();
-    return result;
-}
+
 CATextField::CATextField()
 :m_pDelegate(0)
 ,m_pMark(NULL)
@@ -683,13 +671,8 @@ void CATextField::setContentSize(const CCSize& var)
 
 void CATextField::updateImage()
 {
-    CAImage *tex = new CAImage();
-    if (!tex)
-    {
-        return ;
-    }
-    
-    float fontHeight =getFontHeight("Arial", m_fFontSize);
+
+    float fontHeight = CAImage::getFontHeight("Arial", m_fFontSize);
     CCSize size = CCSizeZero;
     size = CCSizeMake(0, fontHeight);
     std::string text = "";
@@ -704,27 +687,29 @@ void CATextField::updateImage()
         this->setColor(m_cTextColor);
     }
     
-    tex->initWithString(text.c_str(),
-                        "Arial",
-                        m_fFontSize, size,
-                        m_aTextAlignment,
-                        CAVerticalTextAlignmentCenter);
+    CAImage* image = CAImage::createWithString(m_sText.c_str(),
+                                               "Arial",
+                                               m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
+                                               size,
+                                               m_aTextAlignment,
+                                               CAVerticalTextAlignmentCenter);
+    
     CCRect rect = CCRectZero;
-    rect.size.height = tex->getContentSize().height;
-    m_rLabelRect.size = tex->getContentSize();
+    rect.size.height = image->getContentSize().height;
+    m_rLabelRect.size = image->getContentSize();
     
     if (spaceHolderIsOn)
     {
         m_rLabelRect = CCRectZero;
     }
     
-    float width = MIN(labelWidth,tex->getContentSize().width);
+    float width = MIN(labelWidth,image->getContentSize().width);
     rect.size.width = width;
-    this->setImage(tex);
-    pTextHeight =(this->getBounds().size.height-rect.size.height)/2;
+    this->setImage(image);
+    
+    pTextHeight = (this->getBounds().size.height-rect.size.height)/2;
     rect.origin.x = m_fString_left_offX;
     this->setImageRect(rect);
-    tex->release();
     return ;
 }
 
@@ -833,10 +818,14 @@ std::vector<std::string> CATextField::getStringVector(const std::string &var)
 float CATextField::getStringLength(const std::string &var)
 {
     float length = 0;
-    CAImage *image = new CAImage();
-    image->initWithString(var.c_str(), "Arial", m_fFontSize, CCSizeZero, CATextAlignmentLeft, CAVerticalTextAlignmentTop);
+    CAImage *image = CAImage::createWithString(var.c_str(),
+                                               "Arial",
+                                               m_fFontSize,
+                                               CCSizeZero,
+                                               CATextAlignmentLeft,
+                                               CAVerticalTextAlignmentCenter);
     length = image->getContentSize().width;
-    image->release();
+    
     return length;
 }
 NS_CC_END

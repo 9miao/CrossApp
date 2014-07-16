@@ -955,7 +955,7 @@ void CCDisplayLinkDirector::mainLoop(void)
          
          if (! m_bPaused)
          {
-             CAScheduler::getScheduler()->update(m_fDeltaTime);
+             CAScheduler::getScheduler()->update(1/60.0f);
          }
          
          drawScene();

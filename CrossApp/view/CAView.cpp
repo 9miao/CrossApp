@@ -116,7 +116,7 @@ CAView::CAView(void)
     m_sQuad.tr.colors = tmpColor;
     
     // shader program
-    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
     
     this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     

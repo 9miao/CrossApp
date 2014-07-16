@@ -630,7 +630,6 @@ void CAScrollView::deaccelerateScrolling(float dt)
             m_tInertia = CCPointZero;
         }
     }
-    
     point = ccpAdd(point, speed);
     
     if (this->isScrollWindowNotMaxOutSide(m_pContainer->getCenterOrigin()))

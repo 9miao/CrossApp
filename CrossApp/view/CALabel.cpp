@@ -12,7 +12,6 @@
 #include "images/CAImageCache.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
-#include "platform/CAFreeTypeFont.h"
 #include <locale>
 #include <cstdlib>
 NS_CC_BEGIN
@@ -22,7 +21,7 @@ CALabel::CALabel()
 :m_nNumberOfLine(0),
 m_nTextAlignment(CATextAlignmentLeft),
 m_nText(""),
-m_nfontName("Arial"),
+m_nfontName("fonts/arial.ttf"),
 m_nVerticalTextAlignmet(CAVerticalTextAlignmentTop),
 m_nDimensions(CCSizeZero),
 m_nfontSize(18),
@@ -30,7 +29,7 @@ m_cLabelSize(CCSizeZero),
 m_bUpdateImage(false),
 pTextHeight(0)
 {
-    
+    m_obContentSize = CCSizeZero;
     
 }
 
@@ -97,9 +96,17 @@ bool CALabel::initWithCenter(const CCRect& rect)
 
 void CALabel::updateImage()
 {
-	float fontHeight = CAFreeTypeFont::getFontHeight(m_nfontName.c_str(), m_nfontSize);
-
-    unsigned int linenumber = (int)this->getBounds().size.height/fontHeight;
+	float fontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_nfontSize);
+    unsigned int linenumber = 0;
+    if (this->getBounds().size.height == 0)
+    {
+        linenumber = m_nNumberOfLine;
+    }
+    else
+    {
+        linenumber = (int)this->getBounds().size.height / fontHeight;
+    }
+    
     CCSize size = CCSizeZero;
     if ((m_nNumberOfLine <= linenumber && m_nNumberOfLine != 0))
     {
@@ -109,22 +116,27 @@ void CALabel::updateImage()
     {
         
         size = this->getBounds().size;
+        size.height = linenumber *fontHeight;
         
     }
 
-	CAFreeTypeFont cFreeTypeFont;
-	CAImage* tex = cFreeTypeFont.initWithString(m_nText.c_str(), m_nfontName.c_str(), m_nfontSize* CC_CONTENT_SCALE_FACTOR(), size.width, size.height,
-		m_nTextAlignment, m_nVerticalTextAlignmet);
+	CAImage* image = CAImage::createWithString(m_nText.c_str(),
+                                               m_nfontName.c_str(),
+                                               m_nfontSize,
+                                               size,
+                                               m_nTextAlignment,
+                                               m_nVerticalTextAlignmet);
 
-    m_cLabelSize = tex->getContentSize();
+
+    m_cLabelSize = image->getContentSize();
     
     CCRect rect = CCRectZero;
     rect.size.width = this->getBounds().size.width;
-    rect.size.height = tex->getContentSize().height;
-    float width = MIN(this->getBounds().size.width,tex->getContentSize().width);
+    rect.size.height = image->getContentSize().height;
+    float width = MIN(this->getBounds().size.width,image->getContentSize().width);
     rect.size.width = width;
     
-    this->setImage(tex);
+    this->setImage(image);
     
     switch (m_nVerticalTextAlignmet)
     {
@@ -142,9 +154,6 @@ void CALabel::updateImage()
     }
     
     this->setImageRect(rect);
-    tex->release();
-
-    return ;
 }
 
 
@@ -282,6 +291,12 @@ void CALabel::setVerticalTextAlignmet(CAVerticalTextAlignment var)
 CAVerticalTextAlignment CALabel::getVerticalTextAlignmet()
 {
     return m_nVerticalTextAlignmet;
+}
+
+void CALabel::setContentSize(const CrossApp::CCSize &var)
+{
+    CAView::setContentSize(var);
+    m_bUpdateImage = true;
 }
 
 void CALabel::visit()

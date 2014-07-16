@@ -82,8 +82,6 @@ public:
     */
     bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
 
-    
-    static float getTextHeightJAVA(const char *strs, const char* fonts,float width,float height,float fontSize);
     /*
      @brief The same result as with initWithImageFile, but thread safe. It is caused by
             loadImage() in CAImageCache.cpp.
@@ -128,33 +126,9 @@ public:
         const char *    pFontName = 0,
         int             nSize = 0);
     
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        /**
-         * @js NA
-         * @lua NA
-         */
-        bool initWithStringShadowStroke(
-                                            const char *    pText,
-                                            int             nWidth      = 0,
-                                            int             nHeight     = 0,
-                                            ETextAlign      eAlignMask  = kAlignCenter,
-                                            const char *    pFontName   = 0,
-                                            int             nSize       = 0,
-                                            float           textTintR   = 1,
-                                            float           textTintG   = 1,
-                                            float           textTintB   = 1,
-                                            bool shadow                 = false,
-                                            float shadowOffsetX         = 0.0,
-                                            float shadowOffsetY         = 0.0,
-                                            float shadowOpacity         = 0.0,
-                                            float shadowBlur            = 0.0,
-                                            bool  stroke                =  false,
-                                            float strokeR               = 1,
-                                            float strokeG               = 1,
-                                            float strokeB               = 1,
-                                            float strokeSize            = 1
-                                        
-                                        );
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
+    static int getFontHeight(const char* pFontName, float nSize);
     
     #endif
     

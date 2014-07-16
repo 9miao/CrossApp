@@ -36,6 +36,8 @@ public:
     
     virtual void updateImageRect();
     
+    virtual void onEnterTransitionDidFinish();
+    
     CC_PROPERTY(string, m_nText, Text);
     
     CC_PROPERTY(unsigned int, m_nfontSize, FontSize);
@@ -60,8 +62,11 @@ public:
     
     virtual void visit();
     
-private:
-    virtual void onEnterTransitionDidFinish();
+protected:
+    
+    virtual void setContentSize(const CCSize& var);
+    
+    
 };
 
 NS_CC_END

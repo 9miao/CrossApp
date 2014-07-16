@@ -162,5 +162,5 @@ $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libtiff)
 $(call import-module,libwebp)
-$(call import-module,libfreetype)
+$(call import-module,libfreetype2)
 

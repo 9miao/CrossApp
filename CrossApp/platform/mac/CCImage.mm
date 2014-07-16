@@ -429,7 +429,9 @@ static bool _initWithString(const char * pText, CrossApp::CCImage::ETextAlign eA
 		}
 
 		NSUInteger POTWide = (NSUInteger)dimensions.width;
-		NSUInteger POTHigh = (NSUInteger)(MAX(dimensions.height, realDimensions.height));
+		NSUInteger POTHigh = (NSUInteger)(dimensions.height == 0
+                                          ? realDimensions.height
+                                          : dimensions.height);
 		unsigned char*			data;
 		//Alignment
 			
@@ -912,6 +914,39 @@ bool CCImage::initWithString(
 
     return true;
 }
+
+int CCImage::getFontHeight(const char* pFontName, float nSize)
+{
+    pFontName = "Arial";
+    NSString * string  = [NSString stringWithUTF8String:"9m"];
+    
+    NSFont *font = [[NSFontManager sharedFontManager]
+                    fontWithFamily:[NSString stringWithUTF8String:pFontName]
+                    traits:NSUnboldFontMask | NSUnitalicFontMask
+                    weight:0
+                    size:(CGFloat)nSize];
+    
+    NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+    [paragraphStyle setParagraphStyle:[NSParagraphStyle defaultParagraphStyle]];
+    [paragraphStyle setLineBreakMode:NSLineBreakByCharWrapping];
+    [paragraphStyle setAlignment:NSCenterTextAlignment];
+    
+    NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSColor blackColor],
+                                         NSForegroundColorAttributeName,
+                                         font,
+                                         NSFontAttributeName,
+                                         paragraphStyle,
+                                         NSParagraphStyleAttributeName,
+                                         nil];
+
+    NSAttributedString *stringWithAttributes =[[[NSAttributedString alloc] initWithString:string
+                                                                               attributes:tokenAttributesDict] autorelease];
+    
+
+    return (int)[stringWithAttributes size].height;
+}
+
 
 bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {

@@ -188,10 +188,7 @@ public:
     ~VolatileTexture();
     
     static void addImageTexture(CAImage* tt, const char* imageFileName, CCImage::EImageFormat format);
-    
-    static void addStringTexture(CAImage* tt, const char* text, const CCSize& dimensions, CATextAlignment alignment,
-                                 CAVerticalTextAlignment vAlignment, const char *fontName, float fontSize);
-    
+
     static void addDataTexture(CAImage* tt, void* data, CAImagePixelFormat pixelFormat, const CCSize& contentSize);
     
     static void addCCImage(CAImage* tt, CCImage *image);

@@ -691,8 +691,8 @@ void CAScheduler::resumeTargets(CCSet* pTargetsToResume)
 // main loop
 void CAScheduler::update(float dt)
 {
-    dt = MIN(dt, 1/30.0f);
-    dt = MAX(dt, 1/100.0f);
+//    dt = MIN(dt, 1/30.0f);
+//    dt = MAX(dt, 1/100.0f);
     m_bUpdateHashLocked = true;
 
     if (m_fTimeScale != 1.0f)

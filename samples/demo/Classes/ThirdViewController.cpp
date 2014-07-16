@@ -80,15 +80,15 @@ CACollectionViewCell* ThirdViewController::collectionCellAtIndex(CACollectionVie
 	sprintf(cIdentifier, "{%d, %d, %d}" ,section, row, item);
 	pCell->initWithReuseIdentifier(cIdentifier);
 
-//	CALabel* label = CALabel::createWithCenter(CCRectMake(cellSize.width / 2,
-//                                                          cellSize.height - 30,
-//                                                          cellSize.width,
-//                                                          cellSize.height));
-//	label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-//	label->setTextAlignment(CATextAlignmentCenter);
-//	label->setFontSize(28 * CROSSAPP_ADPTATION_RATIO);
-//	label->setText(pCell->getReuseIdentifier());
-//	pCell->addSubview(label);
+	CALabel* label = CALabel::createWithCenter(CCRectMake(cellSize.width / 2,
+                                                          cellSize.height - 30,
+                                                          cellSize.width,
+                                                          cellSize.height));
+	label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+	label->setTextAlignment(CATextAlignmentCenter);
+	label->setFontSize(28 * CROSSAPP_ADPTATION_RATIO);
+	label->setText(pCell->getReuseIdentifier());
+	pCell->addSubview(label);
 
 	CAImageView* pCellImage = CAImageView::createWithCenter(CCRectMake(cellSize.width / 2,
                                                                        cellSize.height / 2 - 20,

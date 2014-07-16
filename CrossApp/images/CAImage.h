@@ -64,6 +64,10 @@ public:
 
 	static CAImage* create(const char* file);
     
+    static CAImage* createWithString(const char *text,  const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
+    
+    static int getFontHeight(const char* pFontName, unsigned long nSize);
+    
     const char* description(void);
 
     void releaseData(void *data);
@@ -77,12 +81,6 @@ public:
     void drawInRect(const CCRect& rect);
 
     bool initWithImage(CCImage * uiImage);
-
-    bool initWithString(const char *text,  const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
-
-    bool initWithString(const char *text, const char *fontName, float fontSize);
-
-    bool initWithString(const char *text, ccFontDefinition *textDefinition);
 
     bool initWithPVRFile(const char* file);
 

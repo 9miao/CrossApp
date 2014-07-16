@@ -174,68 +174,6 @@ bool CCImage::initWithString(
     return bRet;
 }
 
-bool CCImage::initWithStringShadowStroke(
-                                         const char * pText,
-                                         int         nWidth ,
-                                         int         nHeight ,
-                                         ETextAlign eAlignMask ,
-                                         const char * pFontName ,
-                                         int          nSize ,
-                                         float        textTintR,
-                                         float        textTintG,
-                                         float        textTintB,
-                                         bool shadow,
-                                         float shadowOffsetX,
-                                         float shadowOffsetY,
-                                         float shadowOpacity,
-                                         float shadowBlur,
-                                         bool  stroke,
-                                         float strokeR,
-                                         float strokeG,
-                                         float strokeB,
-                                         float strokeSize)
-{
-	 bool bRet = false;
-	    do
-	    {
-	        CC_BREAK_IF(! pText);
-
-	        BitmapDC &dc = sharedBitmapDC();
-
-
-	        CC_BREAK_IF(! dc.getBitmapFromJavaShadowStroke(pText, nWidth, nHeight, eAlignMask, pFontName,
-	        											   nSize, textTintR, textTintG, textTintB, shadow,
-	        											   shadowOffsetX, shadowOffsetY, shadowBlur, shadowOpacity,
-	        											   stroke, strokeR, strokeG, strokeB, strokeSize ));
-
-
-	        // assign the dc.m_pData to m_pData in order to save time
-	        m_pData = dc.m_pData;
-
-	        CC_BREAK_IF(! m_pData);
-
-	        m_nWidth    = (short)dc.m_nWidth;
-	        m_nHeight   = (short)dc.m_nHeight;
-	        m_bHasAlpha = true;
-	        m_bPreMulti = true;
-	        m_nBitsPerComponent = 8;
-
-	        // swap the alpha channel (ARGB to RGBA)
-	        swapAlphaChannel((unsigned int *)m_pData, (m_nWidth * m_nHeight) );
-
-	        // ok
-	        bRet = true;
-
-	    } while (0);
-
-	    return bRet;
-}
-float CCImage::getTextHeightJAVA(const char *strs, const char* fonts,float width,float height,float fontSize)
-{
-    BitmapDC &dc = sharedBitmapDC();
-
-    return dc.getLabelTextHeight(strs,fonts,width,height,fontSize);
-}
 NS_CC_END
 
 // swap the alpha channel in an 32 bit image (from ARGB to RGBA)

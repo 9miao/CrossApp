@@ -96,7 +96,7 @@ void RootViewController::reshapeViewRectDidFinish()
     CCRect rect = this->getView()->getBounds();
     CCLog("%f",rect.size.height);
     CCRect tableRect = rect;
-    tableRect.size.height = rect.size.height - 80;
+    tableRect.size.height = rect.size.height - 80 * CROSSAPP_ADPTATION_RATIO;
     
     tableView->setFrame(tableRect);
     
