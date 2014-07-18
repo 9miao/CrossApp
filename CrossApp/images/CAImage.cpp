@@ -68,7 +68,7 @@ CAImage::~CAImage()
 
     CCLOGINFO("CrossApp: deallocing CAImage %u.", m_uName);
     CC_SAFE_RELEASE(m_pShaderProgram);
-
+    
     if(m_uName)
     {
         ccGLDeleteTexture(m_uName);
@@ -832,6 +832,7 @@ CAImage* CAImage::CC_WHITE_IMAGE()
         }
         
         CCImage* image = new CCImage();
+        image->autorelease();
         image->initWithImageData(pixels, sizeof(pixels), CCImage::kFmtRawData, 16, 16, 8);
         cc_white_image = CAImageCache::sharedImageCache()->addUIImage(image, "CC_WHITE_IMAGE");
         cc_white_image->retain();

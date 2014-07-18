@@ -269,7 +269,7 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 float CATableView::maxSpeed(float dt)
 {
-    return (CCPoint(m_obContentSize).getLength() * 12 * dt);
+    return (CCPoint(m_obContentSize).getLength() * 8 * dt);
 }
 
 float CATableView::maxSpeedCache(float dt)
@@ -284,7 +284,7 @@ float CATableView::decelerationRatio(float dt)
 
 CCPoint CATableView::maxBouncesLenght()
 {
-    float height = CROSSAPP_ADPTATION_RATIO * 5;
+    float height = this->getBounds().size.height * 0.3f;;
     
     if (m_pTablePullDownView || m_pTablePullUpView)
     {

@@ -323,6 +323,66 @@ void CAFreeTypeFont::newLine()
 }
 
 
+bool CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
+{
+	FT_BBox glyph_bbox, global_bbox;
+	int maxWidth = m_inWidth ? m_inWidth : m_windowWidth;
+	
+	m_currentLine->bbox.xMin = 32000;
+	m_currentLine->bbox.xMax = -32000;
+	m_currentLine->bbox.yMin = (m_face->size->metrics.descender) >> 6;
+	m_currentLine->bbox.yMax = (m_face->size->metrics.ascender) >> 6;
+    
+	int i = 0;
+	for (; i < glyphs.size(); i++)
+	{
+		FT_Glyph_Get_CBox(glyphs[i].image, ft_glyph_bbox_pixels, &glyph_bbox);
+        
+		glyph_bbox.xMin += glyphs[i].pos.x;
+		glyph_bbox.xMax += glyphs[i].pos.x;
+		glyph_bbox.yMin += glyphs[i].pos.y;
+		glyph_bbox.yMax += glyphs[i].pos.y;
+        
+		if (glyph_bbox.xMin < m_currentLine->bbox.xMin)
+			m_currentLine->bbox.xMin = glyph_bbox.xMin;
+        
+		if (glyph_bbox.yMin < m_currentLine->bbox.yMin)
+			m_currentLine->bbox.yMin = glyph_bbox.yMin;
+        
+		if (glyph_bbox.xMax > m_currentLine->bbox.xMax)
+			m_currentLine->bbox.xMax = glyph_bbox.xMax;
+        
+		if (glyph_bbox.yMax > m_currentLine->bbox.yMax)
+			m_currentLine->bbox.yMax = glyph_bbox.yMax;
+        
+		int dtValue = glyph_bbox.xMax - glyph_bbox.xMin;
+		if (glyphs[i].pos.x + dtValue <= maxWidth && m_currentLine->bbox.xMax - m_currentLine->bbox.xMin<=maxWidth)
+		{
+			m_currentLine->glyphs.push_back(glyphs[i]);
+		}
+		else break;
+	}
+    
+	if (i == 0)
+		return false;
+    
+	glyphs.erase(glyphs.begin(), glyphs.begin() + i);
+	m_currentLine->width = m_currentLine->bbox.xMax - m_currentLine->bbox.xMin;
+	endLine();
+	newLine();
+    
+	int start_pos = 0;
+	if (!glyphs.empty())
+	{
+		start_pos = glyphs[0].pos.x;
+	}
+	
+	for (int i = 0; i < glyphs.size(); i++)
+	{
+		glyphs[i].pos.x -= start_pos;
+	}
+	return calcuMultiLines(glyphs);
+}
 FT_Error CAFreeTypeFont::addWord(const std::string& word) 
 {
 	std::vector<TGlyph> glyphs; // glyphs for the word
@@ -343,18 +403,25 @@ FT_Error CAFreeTypeFont::addWord(const std::string& word)
     if(!error) 
 	{
         compute_bbox(glyphs, &bbox);
-        if(m_currentLine->width == 0 || bbox.xMax <= maxWidth)
+		if(m_currentLine->width == 0 || bbox.xMax <= maxWidth)
         {
-            m_currentLine->glyphs.insert(m_currentLine->glyphs.end(),glyphs.begin(),glyphs.end());
-            if(m_currentLine->width == 0)
-            {
-                m_currentLine->bbox = bbox;
-            }
-            else
-            {
-                m_currentLine->bbox.xMax = bbox.xMax;
-            }
-            m_currentLine->width = m_currentLine->bbox.xMax - m_currentLine->bbox.xMin;
+			if (m_currentLine->width == 0 && bbox.xMax-bbox.xMin>maxWidth)
+			{
+				calcuMultiLines(glyphs);
+			}
+			else
+			{
+				m_currentLine->glyphs.insert(m_currentLine->glyphs.end(), glyphs.begin(), glyphs.end());
+				if (m_currentLine->width == 0)
+				{
+					m_currentLine->bbox = bbox;
+				}
+				else
+				{
+					m_currentLine->bbox.xMax = bbox.xMax;
+				}
+				m_currentLine->width = m_currentLine->bbox.xMax - m_currentLine->bbox.xMin;
+			}
         }
         else 
         {
@@ -469,14 +536,14 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
  		if (useKerning && previous && glyph_index)
 		{
 			FT_Vector  delta;
-			FT_Get_Kerning(m_face, previous, glyph_index,
-							FT_KERNING_DEFAULT, &delta);
+			FT_Get_Kerning(m_face, previous, glyph_index, FT_KERNING_DEFAULT, &delta);
 			pen.x += delta.x >> 6;
 		}
 
 		/* store current pen position */
 		glyph->pos = pen;
 		glyph->index = glyph_index;
+		
 
 		/* load glyph image into the slot without rendering */
 		error = FT_Load_Glyph(m_face, glyph_index, FT_LOAD_NO_HINTING | FT_LOAD_NO_BITMAP);
@@ -588,7 +655,31 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 	unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", size);
 	if (pBuffer == NULL)
 	{
-		return NULL;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        char sTTFont[256];
+        GetWindowsDirectory(sTTFont,255);
+        strcat(sTTFont,"\\fonts\\xxx.ttf");
+        pFontName =  = sTTFont;
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        
+        pFontName = "/System/Library/Fonts/Cache/STHeiti-Light.ttc";
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        
+        if (pBuffer == NULL)
+        {
+            pFontName = "/System/Library/Fonts/STHeiti Light.ttc";
+            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        }
+        
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        
+        pFontName = "/system/fonts/DroidSansFallback.ttf";
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        
+#endif
+        
 	}
 
 	FontBufferInfo info;

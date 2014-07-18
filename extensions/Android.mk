@@ -19,6 +19,7 @@ Json/lib_json/json_writer.cpp \
 other/CAAdress/android/CAAddressManager.cpp \
 other/CACamera/android/CAMediaManager.cpp \
 other/CALocation/android/CALocationManager.cpp \
+studio/CAStudioViewController.cpp \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

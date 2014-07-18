@@ -40,15 +40,6 @@ public:
 
     void addImageAsync(const char *path, CAObject *target, SEL_CallFuncO selector);
 
-    void addStringImageAsync(const char *text,
-                             const char *fontName,
-                             float fontSize,
-                             CrossApp::CCSize& dimensions,
-                             CATextAlignment textAlignment,
-                             CAVerticalTextAlignment verticalAlignment,
-                             CAObject *target,
-                             SEL_CallFuncO selector);
-
     CAImage* addUIImage(CCImage *image, const char *key);
 
     CAImage* imageForKey(const char* key);

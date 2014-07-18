@@ -28,6 +28,10 @@ CACollectionView::CACollectionView()
 
 CACollectionView::~CACollectionView()
 {
+    CC_SAFE_RELEASE_NULL(m_pCollectionHeaderView);
+    CC_SAFE_RELEASE_NULL(m_pCollectionFooterView);
+    m_pCollectionViewDataSource = NULL;
+    m_pCollectionViewDelegate = NULL;
 }
 
 void CACollectionView::onEnterTransitionDidFinish()
@@ -85,7 +89,7 @@ bool CACollectionView::init()
 
 float CACollectionView::maxSpeed(float dt)
 {
-    return (CCPoint(m_obContentSize).getLength() * 12 * dt);
+    return (CCPoint(m_obContentSize).getLength() * 8 * dt);
 }
 
 float CACollectionView::maxSpeedCache(float dt)
@@ -100,7 +104,7 @@ float CACollectionView::decelerationRatio(float dt)
 
 CCPoint CACollectionView::maxBouncesLenght()
 {
-    float height = CROSSAPP_ADPTATION_RATIO * 5;
+    float height = this->getBounds().size.height * 0.3f;
     //PULL SHOW VIEW
     return CCPoint(0, height);
 }

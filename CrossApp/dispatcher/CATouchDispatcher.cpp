@@ -30,7 +30,7 @@
                                 }                                                               \
                                 else                                                            \
                                 {                                                               \
-                                    m_vTouchesViewCache.erase(i); \
+                                    m_vTouchesViewCache.erase(i);                               \
                                 }                                                               \
                             }
 

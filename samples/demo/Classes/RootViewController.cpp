@@ -163,17 +163,18 @@ void RootViewController::scrollViewDidEndDragging(CAScrollView* view)
 
 void RootViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
+    CC_RETURN_IF(this->getNavigationController()->getViewControllerCount()>10);
     char s[32];
     sprintf(s, "The Page No.%ld",this->getNavigationController()->getViewControllerCount());
     
     CANavigationBarItem* item = CANavigationBarItem::create(s);
     //item->setShowGoBackButton(false);
-    RootViewController* viewController = new RootViewController();
+    ThirdViewController* viewController = new ThirdViewController();
     viewController->init();
     viewController->setNavigationBarItem(item);
     viewController->setTitle("view1");
     
-    this->getNavigationController()->pushViewController(viewController, true);
+    this->getNavigationController()->replaceViewController(viewController, true);
     viewController->autorelease();
     
     CCLog("selected = %d %d",section, row);

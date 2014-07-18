@@ -381,8 +381,8 @@ const CAColor4B& CAScale9ImageView::getColor()
 
 void CAScale9ImageView::setImage(CrossApp::CAImage *image)
 {
-    CC_SAFE_RELEASE(m_pobImage);
     CC_SAFE_RETAIN(image);
+    CC_SAFE_RELEASE(m_pobImage);
     m_pobImage = image;
     this->updateWithImage(CABatchView::createWithImage(image), this->getBounds(), m_obCapInsets);
 }

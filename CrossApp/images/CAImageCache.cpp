@@ -59,49 +59,6 @@ typedef struct _ImageInfo
     CCImage::EImageFormat imageType;
 } ImageInfo;
 
-typedef struct _AsyncStringStruct
-{
-    CAObject             *target;
-    
-    SEL_CallFuncO        selector;
-    
-    std::string           text;
-    
-    std::string           fontName;
-    
-    float                 fontSize;
-    
-    CCSize                dimensions;
-    
-    CATextAlignment       textAlignment;
-    
-    CAVerticalTextAlignment verticalAlignment;
-    
-    AsyncType             type;
-    
-    _AsyncStringStruct()
-    :target(NULL)
-    ,selector(NULL)
-    ,text("")
-    ,fontName("")
-    ,fontSize(0.0f)
-    ,dimensions(CCSizeZero)
-    ,textAlignment(CATextAlignmentLeft)
-    ,verticalAlignment(CAVerticalTextAlignmentTop)
-    {
-        
-    }
-}AsyncStringStruct;
-
-typedef struct _StringInfo
-{
-    AsyncStringStruct *asyncStruct;
-    CCImage        *image;
-    CCImage::ETextAlign stringType;
-} StringInfo;
-
-static int stringKey = 0;
-
 static pthread_t s_loadingThread;
 
 static pthread_mutex_t		s_SleepMutex;
@@ -110,23 +67,12 @@ static pthread_cond_t		s_SleepCondition;
 static pthread_mutex_t      s_asyncStructQueueMutex;
 static pthread_mutex_t      s_ImageInfoMutex;
 
-//string
-static pthread_t      s_loadingStringThread;
-
-static pthread_mutex_t      s_SleepStringMutex;
-static pthread_cond_t       s_SleepStringCondition;
-
-static pthread_mutex_t      s_asyncStructStringQueueMutex;
-static pthread_mutex_t      s_StringInfoMutex;
-
 #ifdef EMSCRIPTEN
 // Hack to get ASM.JS validation (no undefined symbols allowed).
 #define pthread_cond_signal(_)
 #endif // EMSCRIPTEN
 
 static unsigned long s_nAsyncRefCount = 0;
-
-static unsigned long s_nAsyncStringRefCount = 0;
 
 static bool need_quit = false;
 
@@ -135,10 +81,6 @@ static bool need_quit1 = false;
 static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
 
 static std::queue<ImageInfo*>*   s_pImageQueue = NULL;
-
-static std::queue<AsyncStringStruct*>* s_pAsyncStringStructQueue = NULL;
-
-static std::queue<StringInfo*>*  s_pStringQueue = NULL;
 
 static CCImage::EImageFormat computeImageFormatType(string& filename)
 {
@@ -246,102 +188,6 @@ static void* loadImage(void* data)
     
     return 0;
 }
-
-static void loadStringData(AsyncStringStruct *pAsyncStruct)
-{
-    CCImage::ETextAlign eAlign;
-    
-    if (CAVerticalTextAlignmentTop == pAsyncStruct->verticalAlignment)
-    {
-        eAlign = (CATextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignTop
-        : (CATextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
-    }
-    else if (CAVerticalTextAlignmentCenter == pAsyncStruct->verticalAlignment)
-    {
-        eAlign = (CATextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignCenter
-        : (CATextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
-    }
-    else if (CAVerticalTextAlignmentBottom == pAsyncStruct->verticalAlignment)
-    {
-        eAlign = (CATextAlignmentCenter == pAsyncStruct->textAlignment) ? CCImage::kAlignBottom
-        : (CATextAlignmentLeft == pAsyncStruct->textAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
-    }
-    else
-    {
-        CCAssert(false, "Not supported alignment format!");
-        return ;
-    }
-    CCImage *pImage = new CCImage();
-    if (pImage && !pImage->initWithString(pAsyncStruct->text.c_str(),(int)pAsyncStruct->dimensions.width,(int)pAsyncStruct->dimensions.height,eAlign,pAsyncStruct->fontName.c_str(),(int)pAsyncStruct->fontSize))
-    {
-        CCLog("can not load");
-        CC_SAFE_RELEASE(pImage);
-        return;
-    }
-    // generate image info
-    CCLog("generate image info");
-    StringInfo *pImageInfo = new StringInfo();
-    pImageInfo->asyncStruct = pAsyncStruct;
-    pImageInfo->image = pImage;
-    pImageInfo->stringType = eAlign;
-    // put the image info into the queue
-    pthread_mutex_lock(&s_StringInfoMutex);
-    s_pStringQueue->push(pImageInfo);
-    pthread_mutex_unlock(&s_StringInfoMutex);
-}
-
-static void* loadString(void* data)
-{
-    
-    AsyncStringStruct *pAsyncStruct = NULL;
-    
-    while (true)
-    {
-        // create autorelease pool for iOS
-        CCThread thread;
-        thread.createAutoreleasePool();
-        
-        std::queue<AsyncStringStruct*> *pQueue = s_pAsyncStringStructQueue;
-        pthread_mutex_lock(&s_asyncStructStringQueueMutex);// get async struct from queue
-        CCLog("*-*-*-*-*-%d",pQueue->empty());
-        if (pQueue->empty())
-        {
-            pthread_mutex_unlock(&s_asyncStructStringQueueMutex);
-            CCLog("need_quit1    %d",need_quit1);
-            if (need_quit1) {
-                break;
-            }
-            else {
-                pthread_cond_wait(&s_SleepStringCondition, &s_SleepStringMutex);
-                continue;
-            }
-        }
-        else
-        {
-            pAsyncStruct = pQueue->front();
-            pQueue->pop();
-            pthread_mutex_unlock(&s_asyncStructStringQueueMutex);
-            loadStringData(pAsyncStruct);
-        }
-    }
-    
-    if( s_pAsyncStringStructQueue != NULL )
-    {
-        
-        delete s_pAsyncStringStructQueue;
-        s_pAsyncStringStructQueue = NULL;
-        delete s_pStringQueue;
-        s_pStringQueue = NULL;
-        
-        pthread_mutex_destroy(&s_asyncStructStringQueueMutex);
-        pthread_mutex_destroy(&s_StringInfoMutex);
-        pthread_mutex_destroy(&s_SleepStringMutex);
-        pthread_cond_destroy(&s_SleepStringCondition);
-    }
-    
-    return 0;
-}
-
 
 // implementation CAImageCache
 

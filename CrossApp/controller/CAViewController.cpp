@@ -335,29 +335,43 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
         return;
     }
     
+    float x = m_pContainer->getFrame().size.width;
+    
     CAViewController* lastViewController = m_pViewControllers.back();
-    lastViewController->getView()->setAlpha(0);
     viewController->retain();
     viewController->m_pNavigationController = this;
     m_pViewControllers.insert(m_pViewControllers.end()-1, viewController);
     viewController->addViewFromSuperview(m_pContainer);
+    viewController->getView()->setFrameOrigin(CCPoint(x, 0));
     
     if (animated)
     {
-        m_pContainer->stopAllActions();
+        CCSequence* actionsLast =
+        CCSequence::create(
+                           CCDelayTime::create(0.03f),
+                           
+                           CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))),
+                           
+                           NULL);
         
-        //CCFadeOut* fadeOut = CCFadeOut::create(0.5f);
-        //lastViewController->getView()->runAction(fadeOut);
+        lastViewController->getView()->runAction(actionsLast);
         
-        CCCallFunc* start = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
-                                               callfunc_selector(CATouchDispatcher::setDispatchEventsFalse));
-        CCCallFunc* end = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
-                                             callfunc_selector(CATouchDispatcher::setDispatchEventsTrue));
-        CCFadeIn* fadeIn = CCFadeIn::create(0.5f);
-        CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::replaceViewControllerFinish));
-        CCSequence* actions = CCSequence::create(start, fadeIn, finish, end, NULL);
+        
+        CCSequence* actions =
+        CCSequence::create(
+                           CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(), callfunc_selector(CATouchDispatcher::setDispatchEventsFalse)),
+                           
+                           CCDelayTime::create(0.02f),
+                           
+                           CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)),
+                           
+                           CCCallFunc::create(this, callfunc_selector(CANavigationController::replaceViewControllerFinish)),
+                           
+                           CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)),
+                           
+                           NULL);
+        
         viewController->getView()->runAction(actions);
-        actions->setTag(0);
     }
     else
     {
@@ -405,23 +419,34 @@ void CANavigationController::pushViewController(CAViewController* viewController
     m_pViewControllers.push_back(viewController);
     viewController->addViewFromSuperview(m_pContainer);
     viewController->getView()->setFrameOrigin(CCPoint(x, 0));
+    
     if (animated)
     {
-        CCDelayTime* delayTimeLast = CCDelayTime::create(1/60.0f);
-        CCEaseSineOut* scaleTo = CCEaseSineOut::create(CCScaleTo::create(0.25f, 0.5f));
-        CCSequence* actionsLast = CCSequence::create(delayTimeLast, scaleTo, NULL);
+        CCSequence* actionsLast =
+        CCSequence::create(
+                           CCDelayTime::create(0.03f),
+                           
+                           CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))),
+                           
+                           NULL);
+        
         lastViewController->getView()->runAction(actionsLast);
         
         
-        CCCallFunc* start = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
-                                               callfunc_selector(CATouchDispatcher::setDispatchEventsFalse));
-        CCCallFunc* end = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
-                                             callfunc_selector(CATouchDispatcher::setDispatchEventsTrue));
-        CCDelayTime* delayTime = CCDelayTime::create(0.1f);
-        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.2f, CCPointZero);
-        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
-        CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::pushViewControllerFinish));
-        CCSequence* actions = CCSequence::create(start, delayTime, easeBack, finish, end, NULL);
+        CCSequence* actions =
+        CCSequence::create(
+                           CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(), callfunc_selector(CATouchDispatcher::setDispatchEventsFalse)),
+                           
+                           CCDelayTime::create(0.02f),
+                           
+                           CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)),
+                           
+                           CCCallFunc::create(this, callfunc_selector(CANavigationController::pushViewControllerFinish)),
+                           
+                           CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)),
+                           
+                           NULL);
+        
         viewController->getView()->runAction(actions);
     }
     else
@@ -441,7 +466,6 @@ void CANavigationController::pushViewControllerFinish()
     m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     
     CAViewController* lastViewController = m_pViewControllers.at(m_pViewControllers.size() - 2);
-    lastViewController->getView()->setScale(1.0f);
     lastViewController->getView()->setFrameOrigin(CCPointZero);
     lastViewController->getView()->setVisible(false);
 }
@@ -458,34 +482,46 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
         return NULL;
     }
     
+    float x = m_pContainer->getFrame().size.width;
+    
     unsigned int index = m_pViewControllers.size() - 2;
     CAViewController* showViewController = m_pViewControllers.at(index);
-    showViewController->getView()->setScale(0.5f);
-    showViewController->getView()->setVisible(true);
     if (!showViewController->getView()->getBounds().size.equals(m_pContainer->getBounds().size))
     {
         showViewController->getSuperViewRect(m_pContainer->getBounds());
     }
-    
+    showViewController->getView()->setFrameOrigin(CCPoint(-x/2.0f, 0));
+    showViewController->getView()->setVisible(true);
     
     CAViewController* backViewController = m_pViewControllers.back();
     
-    float x = m_pContainer->getFrame().size.width;
-    
     if (animated)
     {
-        CCEaseSineOut* scaleTo = CCEaseSineOut::create(CCScaleTo::create(0.25f, 1.0f));
-        showViewController->getView()->runAction(scaleTo);
+        CCSequence* actionsLast =
+        CCSequence::create(
+                           CCDelayTime::create(0.02f),
+                           
+                           CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)),
+                           
+                           NULL);
+        
+        showViewController->getView()->runAction(actionsLast);
         
         
-        CCCallFunc* start = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
-                                               callfunc_selector(CATouchDispatcher::setDispatchEventsFalse));
-        CCCallFunc* end = CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),
-                                             callfunc_selector(CATouchDispatcher::setDispatchEventsTrue));
-        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.2f, CCPoint(x, 0));
-        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
-        CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CANavigationController::popViewControllerFinish));
-        CCSequence* actions = CCSequence::create(start, easeBack, finish, end, NULL);
+        CCSequence* actions =
+        CCSequence::create(
+                           CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(), callfunc_selector(CATouchDispatcher::setDispatchEventsFalse)),
+                           
+                           CCDelayTime::create(0.03f),
+                           
+                           CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(x, 0))),
+                           
+                           CCCallFunc::create(this, callfunc_selector(CANavigationController::popViewControllerFinish)),
+                           
+                           CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)),
+                           
+                           NULL);
+        
         backViewController->getView()->runAction(actions);
     }
     else

@@ -1,10 +1,3 @@
-//
-//  ViewController.h
-//  HelloCpp
-//
-//  Created by liyuanfeng on 14-4-21.
-//
-//
 
 #ifndef __HelloCpp__ViewController__
 #define __HelloCpp__ViewController__
@@ -19,8 +12,6 @@ class FirstViewController: public CAViewController
     
 public:
 
-	static CrossApp::CAWindow* createWindow();
-    
 	FirstViewController();
     
 	virtual ~FirstViewController();

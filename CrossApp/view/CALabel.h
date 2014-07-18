@@ -32,10 +32,6 @@ public:
     
     virtual bool initWithCenter(const CCRect& rect);
     
-    virtual void setImageRect(const CCRect& rect);
-    
-    virtual void updateImageRect();
-    
     virtual void onEnterTransitionDidFinish();
     
     CC_PROPERTY(string, m_nText, Text);
@@ -54,18 +50,19 @@ public:
     
     CC_SYNTHESIZE_READONLY(CCSize, m_cLabelSize, LabelSize);
     
-    void updateImage();
-
-    bool m_bUpdateImage;
-    
-    float pTextHeight;
-    
     virtual void visit();
     
 protected:
     
     virtual void setContentSize(const CCSize& var);
     
+    virtual void updateImageRect();
+    
+    void updateImage();
+    
+    bool m_bUpdateImage;
+    
+    float pTextHeight;
     
 };
 

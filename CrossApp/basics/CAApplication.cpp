@@ -95,6 +95,8 @@ bool CAApplication::init(void)
     m_fSecondsPerFrame = 0.0f;
 
     m_nDrawCount = 60;
+    m_dAnimationInterval = 1.0 / 60.0f;
+    m_bDisplayStats = false;
     
     // paused ?
     m_bPaused = false;
@@ -111,7 +113,7 @@ bool CAApplication::init(void)
     // action manager
     m_pActionManager = new CCActionManager();
     
-    CAScheduler::schedule(schedule_selector(CAApplication::update), m_pActionManager, kCCPrioritySystem, false);
+    CAScheduler::schedule(schedule_selector(CAApplication::update), m_pActionManager, kCCPrioritySystem);
     
     // touchDispatcher
     m_pTouchDispatcher = new CATouchDispatcher();
@@ -943,6 +945,9 @@ void CCDisplayLinkDirector::startAnimation(void)
 
 void CCDisplayLinkDirector::mainLoop(void)
 {
+    // calculate "global" dt
+    calculateDeltaTime();
+    
     if (m_bPurgeDirecotorInNextLoop)
     {
         m_bPurgeDirecotorInNextLoop = false;
@@ -950,12 +955,9 @@ void CCDisplayLinkDirector::mainLoop(void)
     }
     else if (! m_bInvalid)
      {
-         // calculate "global" dt
-         calculateDeltaTime();
-         
          if (! m_bPaused)
          {
-             CAScheduler::getScheduler()->update(1/60.0f);
+             CAScheduler::getScheduler()->update(m_fDeltaTime);
          }
          
          drawScene();

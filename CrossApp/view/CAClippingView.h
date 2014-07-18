@@ -7,11 +7,7 @@
 
 NS_CC_BEGIN
 
-/** CAClippingView is a subclass of CCNode.
- It draws its content (childs) clipped using a stencil.
- The stencil is an other CAView that will not be drawn.
- The clipping is done using the alpha part of the stencil (adjusted with an alphaThreshold).
- */
+
 class CC_DLL CAClippingView : public CAView
 {
 protected:

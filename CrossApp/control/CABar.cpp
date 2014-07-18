@@ -80,8 +80,8 @@ void CANavigationBar::replaceItemAtIndex(size_t index, CANavigationBarItem* item
 
 void CANavigationBar::setBackGroundImage(CAImage* var)
 {
-    CC_SAFE_RELEASE_NULL(m_pBackGroundImage);
     CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE_NULL(m_pBackGroundImage);
     m_pBackGroundImage = var;
     CC_RETURN_IF(!m_bRunning);
     this->showBackGround();
@@ -412,6 +412,7 @@ void CATabBar::showBackGround()
     if (m_pBackGroundImage == NULL)
     {
         m_pBackGroundImage = CAImage::create("source_material/tabBar_bg.png");
+        m_pBackGroundImage->retain();
     }
     
     m_pBackGround = CAScale9ImageView::createWithImage(m_pBackGroundImage);
@@ -439,6 +440,7 @@ void CATabBar::showItems()
         if (m_pSelectedBackGroundImage == NULL)
         {
             m_pSelectedBackGroundImage = CAImage::create("source_material/tabBar_selected_bg.png");
+            m_pSelectedBackGroundImage->retain();
         }
         m_pSegmentedControl->setBackgroundImageAtIndex(m_pSelectedBackGroundImage, i, CAControlStateHighlighted);
         m_pSegmentedControl->setBackgroundImageAtIndex(m_pSelectedBackGroundImage, i, CAControlStateSelected);
@@ -458,6 +460,7 @@ void CATabBar::showSelectedIndicator()
     if (m_pSelectedIndicatorImage == NULL)
     {
         m_pSelectedIndicatorImage = CAImage::create("source_material/tabBar_selected_indicator.png");
+        m_pSelectedIndicatorImage->retain();
     }
     
     CCRect rect = CCRect(0,

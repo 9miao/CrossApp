@@ -1,40 +1,36 @@
 #include "AppDelegate.h"
-#include "FirstViewController.h"
+#include "RootWindow.h"
 
 USING_NS_CC;
 
-AppDelegate::AppDelegate() {
+AppDelegate::AppDelegate()
+{
 
 }
 
 AppDelegate::~AppDelegate() 
 {
+    
 }
 
-bool AppDelegate::applicationDidFinishLaunching() {
+bool AppDelegate::applicationDidFinishLaunching()
+{
     // initialize director
     CAApplication* pDirector = CAApplication::getApplication();
+    
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
     pDirector->setOpenGLView(pEGLView);
-	
-    // turn on display FPS
-    pDirector->setDisplayStats(false);
-
-    // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
-
-    // create a scene. it's an autorelease object
-    CAWindow *pWindow = FirstViewController::createWindow();
 
     // run
-    pDirector->runWindow(pWindow);
+    pDirector->runWindow(RootWindow::create());
 
     return true;
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
-void AppDelegate::applicationDidEnterBackground() {
+void AppDelegate::applicationDidEnterBackground()
+{
     CAApplication::getApplication()->stopAnimation();
 
     // if you use SimpleAudioEngine, it must be pause
@@ -42,7 +38,8 @@ void AppDelegate::applicationDidEnterBackground() {
 }
 
 // this function will be called when the app is active again
-void AppDelegate::applicationWillEnterForeground() {
+void AppDelegate::applicationWillEnterForeground()
+{
     CAApplication::getApplication()->startAnimation();
 
     // if you use SimpleAudioEngine, it must resume here

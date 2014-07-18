@@ -7,7 +7,7 @@
 //
 
 #include "ThirdViewController.h"
-
+#include "RootViewController.h"
 
 
 void ThirdViewController::viewDidLoad()
@@ -76,6 +76,7 @@ void ThirdViewController::viewDidUnload()
 CACollectionViewCell* ThirdViewController::collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
 {
 	CACollectionViewCell* pCell = new CACollectionViewCell();
+    pCell->autorelease();
 	char cIdentifier[1024] = { 0 };
 	sprintf(cIdentifier, "{%d, %d, %d}" ,section, row, item);
 	pCell->initWithReuseIdentifier(cIdentifier);
@@ -141,6 +142,31 @@ unsigned int ThirdViewController::collectionViewHeightForRowAtIndexPath(CACollec
 	return height - 1 * height / 3;
 }
 
+
+void ThirdViewController::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
+{
+    CC_RETURN_IF(this->getNavigationBarItem() == NULL);
+    CC_RETURN_IF(this->getNavigationController()->getViewControllerCount()>10);
+    char s[32];
+    sprintf(s, "The Page No.%ld", this->getNavigationController()->getViewControllerCount());
+    
+    CANavigationBarItem* items = CANavigationBarItem::create(s);
+    //item->setShowGoBackButton(false);
+    RootViewController* viewController = new RootViewController();
+    viewController->init();
+    viewController->setNavigationBarItem(items);
+    viewController->setTitle("view1");
+    
+    this->getNavigationController()->replaceViewController(viewController, true);
+    viewController->autorelease();
+    
+    CCLog("selected = %d %d",section, row);
+}
+
+void ThirdViewController::collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
+{
+    
+}
 
 void ThirdViewController::touchUpInSide()
 {

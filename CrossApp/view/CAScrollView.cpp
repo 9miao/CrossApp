@@ -525,7 +525,7 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                 }
                 p = p/m_tPointOffset.size();
             }
-            m_tInertia = p * 2.0f;
+            m_tInertia = p * 1.5f;
 			m_tPointOffset.clear();
 
             CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
@@ -570,7 +570,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
 {
     dt = MIN(dt, 1/30.0f);
     dt = MAX(dt, 1/100.0f);
-    
+
     if (m_tInertia.getLength() > maxSpeedCache(dt))
     {
         m_tInertia = ccpMult(m_tInertia, maxSpeedCache(dt) / m_tInertia.getLength());
@@ -697,8 +697,7 @@ float CAScrollView::maxBouncesSpeed(float dt)
 
 CCPoint CAScrollView::maxBouncesLenght()
 {
-    float lenght = CROSSAPP_ADPTATION_RATIO * 10;
-    return CCPoint(lenght, lenght);
+    return ccpMult(this->getBounds().size, 0.3f);
 }
 
 void CAScrollView::showIndicator()

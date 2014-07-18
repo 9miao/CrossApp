@@ -1661,6 +1661,7 @@ void CAView::setImage(CAImage* image)
         CC_SAFE_RELEASE(m_pobImage);
         m_pobImage = image;
         updateBlendFunc();
+        this->updateDraw();
     }
 }
 

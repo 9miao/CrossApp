@@ -92,7 +92,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;..\Include;"$(ProjectDir)..\..\cocos2dx";"$(ProjectDir)..\..\cocos2dx\include";"$(ProjectDir)..\..\cocos2dx\kazmath\include";"$(ProjectDir)..\..\cocos2dx\platform\win32";"$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES";%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;..\Include;$(ProjectDir)..\..\CrossApp;$(ProjectDir)..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\CrossApp\platform\win32;$(ProjectDir)..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\CrossApp\platform\third_party\win32\freetype;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOSDENSHIONWIN32_EXPORTS;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -102,7 +102,7 @@
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winmm.lib;libcocos2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;libCrossApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>

@@ -132,16 +132,13 @@ void CCTimer::update(float dt)
         if (m_bRunForever && !m_bUseDelay)
         {//standard timer usage
             m_fElapsed += dt;
-            if (m_fElapsed >= m_fInterval)
+            if (m_pTarget && m_pfnSelector)
             {
-                if (m_pTarget && m_pfnSelector)
-                {
-                    (m_pTarget->*m_pfnSelector)(m_fElapsed);
-                }
-
-                m_fElapsed = 0;
+                (m_pTarget->*m_pfnSelector)(m_fElapsed);
             }
-        }    
+            
+            m_fElapsed = 0;
+        }
         else
         {//advanced usage
             m_fElapsed += dt;
@@ -691,8 +688,6 @@ void CAScheduler::resumeTargets(CCSet* pTargetsToResume)
 // main loop
 void CAScheduler::update(float dt)
 {
-//    dt = MIN(dt, 1/30.0f);
-//    dt = MAX(dt, 1/100.0f);
     m_bUpdateHashLocked = true;
 
     if (m_fTimeScale != 1.0f)

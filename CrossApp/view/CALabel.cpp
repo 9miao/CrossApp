@@ -21,7 +21,7 @@ CALabel::CALabel()
 :m_nNumberOfLine(0),
 m_nTextAlignment(CATextAlignmentLeft),
 m_nText(""),
-m_nfontName("fonts/arial.ttf"),
+m_nfontName(""),
 m_nVerticalTextAlignmet(CAVerticalTextAlignmentTop),
 m_nDimensions(CCSizeZero),
 m_nfontSize(18),
@@ -154,23 +154,6 @@ void CALabel::updateImage()
     }
     
     this->setImageRect(rect);
-}
-
-
-void CALabel::setImageRect(const CCRect& rect)
-{
-    m_bRectRotated = false;
-    setVertexRect(rect);
-    setImageCoords(rect);
-    
-    if (m_pobBatchView)
-    {
-        setDirty(true);
-    }
-    else
-    {
-        this->updateImageRect();
-    }
 }
 
 void CALabel::updateImageRect()

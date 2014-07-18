@@ -33,6 +33,9 @@
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E715BF81A5006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70E015BF81A5006A0A6C /* Icon.icns */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
+		B00CC5EE1978B3F600A62E4C /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00CC5EC1978B3F600A62E4C /* RootWindow.cpp */; };
+		B00CC6011978B4F300A62E4C /* libCrossApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B00CC5FC1978B4C200A62E4C /* libCrossApp.a */; };
+		B00CC6161979302E00A62E4C /* CAStudioViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00CC6141979302E00A62E4C /* CAStudioViewController.cpp */; };
 		B01F7164195166F500BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F7163195166F500BA07A6 /* source_material */; };
 		B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145A190A6A3700C3633B /* CAUIHelper.cpp */; };
 		B03E8FD11938876B00FD9A06 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FD01938876B00FD9A06 /* HelloWorld.png */; };
@@ -50,22 +53,21 @@
 		B04C0BB919011ED8009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAE19011ED8009854FD /* sconscript */; };
 		B04C0BE719011F42009854FD /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BE619011F42009854FD /* fonts */; };
 		B04C0BEA19011F80009854FD /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BE819011F80009854FD /* AppDelegate.cpp */; };
-		B05637861952CF2900C63FAA /* libCrossApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B056376E1952AE1D00C63FAA /* libCrossApp.a */; };
 		B0AD93AB192077F900EA40BB /* CAHttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93A9192077F900EA40BB /* CAHttpClient.cpp */; };
 		B0AD93B11920790900EA40BB /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93AD1920790900EA40BB /* FirstViewController.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B056376D1952AE1D00C63FAA /* PBXContainerItemProxy */ = {
+		B00CC5FB1978B4C200A62E4C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = B05637691952AE1D00C63FAA /* CrossApp.xcodeproj */;
+			containerPortal = B00CC5F71978B4C200A62E4C /* CrossApp.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
 			remoteInfo = CrossApp;
 		};
-		B05637831952CF0600C63FAA /* PBXContainerItemProxy */ = {
+		B00CC5FE1978B4EA00A62E4C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = B05637691952AE1D00C63FAA /* CrossApp.xcodeproj */;
+			containerPortal = B00CC5F71978B4C200A62E4C /* CrossApp.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
 			remoteInfo = CrossApp;
@@ -117,6 +119,11 @@
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
+		B00CC5EC1978B3F600A62E4C /* RootWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootWindow.cpp; path = ../Classes/RootWindow.cpp; sourceTree = "<group>"; };
+		B00CC5ED1978B3F600A62E4C /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
+		B00CC5F71978B4C200A62E4C /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.mac/CrossApp.xcodeproj; sourceTree = "<group>"; };
+		B00CC6141979302E00A62E4C /* CAStudioViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStudioViewController.cpp; sourceTree = "<group>"; };
+		B00CC6151979302E00A62E4C /* CAStudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStudioViewController.h; sourceTree = "<group>"; };
 		B01F7163195166F500BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
 		B02A145A190A6A3700C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
 		B02A145B190A6A3700C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
@@ -151,7 +158,6 @@
 		B04C0BE619011F42009854FD /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B04C0BE819011F80009854FD /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		B04C0BE919011F80009854FD /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
-		B05637691952AE1D00C63FAA /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.mac/CrossApp.xcodeproj; sourceTree = "<group>"; };
 		B0AD93A9192077F900EA40BB /* CAHttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAHttpClient.cpp; sourceTree = "<group>"; };
 		B0AD93AA192077F900EA40BB /* CAHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAHttpClient.h; sourceTree = "<group>"; };
 		B0AD93AC1920790900EA40BB /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
@@ -164,7 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B05637861952CF2900C63FAA /* libCrossApp.a in Frameworks */,
+				B00CC6011978B4F300A62E4C /* libCrossApp.a in Frameworks */,
 				1A9CE9A81765A889000E3062 /* libsqlite3.dylib in Frameworks */,
 				15C6498716633E65007D4F18 /* libcurl.a in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
@@ -185,6 +191,8 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B00CC5EC1978B3F600A62E4C /* RootWindow.cpp */,
+				B00CC5ED1978B3F600A62E4C /* RootWindow.h */,
 				B0AD93AC1920790900EA40BB /* AppMacros.h */,
 				B0AD93AD1920790900EA40BB /* FirstViewController.cpp */,
 				B0AD93AE1920790900EA40BB /* FirstViewController.h */,
@@ -217,6 +225,7 @@
 		15C1589C168315E500D239F2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B00CC6131979302E00A62E4C /* studio */,
 				B03E902619389A4C00FD9A06 /* other */,
 				B04C0B9A19011ED8009854FD /* Json */,
 				1A9CE9271765A7FA000E3062 /* AssetsManager */,
@@ -300,7 +309,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				B05637691952AE1D00C63FAA /* CrossApp.xcodeproj */,
+				B00CC5F71978B4C200A62E4C /* CrossApp.xcodeproj */,
 				1A9CE9A71765A889000E3062 /* libsqlite3.dylib */,
 				15AA9C4015B7EC450033D6C2 /* Classes */,
 				15C157F7168315CE00D239F2 /* CocosDenshion */,
@@ -353,6 +362,24 @@
 			);
 			path = en.lproj;
 			sourceTree = SOURCE_ROOT;
+		};
+		B00CC5F81978B4C200A62E4C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B00CC5FC1978B4C200A62E4C /* libCrossApp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B00CC6131979302E00A62E4C /* studio */ = {
+			isa = PBXGroup;
+			children = (
+				B00CC6141979302E00A62E4C /* CAStudioViewController.cpp */,
+				B00CC6151979302E00A62E4C /* CAStudioViewController.h */,
+			);
+			name = studio;
+			path = extensions/studio;
+			sourceTree = "<group>";
 		};
 		B03E902619389A4C00FD9A06 /* other */ = {
 			isa = PBXGroup;
@@ -462,14 +489,6 @@
 			path = ../Resources;
 			sourceTree = "<group>";
 		};
-		B056376A1952AE1D00C63FAA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B056376E1952AE1D00C63FAA /* libCrossApp.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -484,7 +503,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				B05637841952CF0600C63FAA /* PBXTargetDependency */,
+				B00CC5FF1978B4EA00A62E4C /* PBXTargetDependency */,
 			);
 			name = HelloCpp;
 			productName = iphone;
@@ -514,8 +533,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = B056376A1952AE1D00C63FAA /* Products */;
-					ProjectRef = B05637691952AE1D00C63FAA /* CrossApp.xcodeproj */;
+					ProductGroup = B00CC5F81978B4C200A62E4C /* Products */;
+					ProjectRef = B00CC5F71978B4C200A62E4C /* CrossApp.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -526,11 +545,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		B056376E1952AE1D00C63FAA /* libCrossApp.a */ = {
+		B00CC5FC1978B4C200A62E4C /* libCrossApp.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libCrossApp.a;
-			remoteRef = B056376D1952AE1D00C63FAA /* PBXContainerItemProxy */;
+			remoteRef = B00CC5FB1978B4C200A62E4C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -567,6 +586,7 @@
 				B04C0BB819011ED8009854FD /* json_writer.cpp in Sources */,
 				B04C0BB219011ED8009854FD /* DictionaryHelper.cpp in Sources */,
 				B04C0BB619011ED8009854FD /* json_value.cpp in Sources */,
+				B00CC5EE1978B3F600A62E4C /* RootWindow.cpp in Sources */,
 				15C15946168315E500D239F2 /* HttpClient.cpp in Sources */,
 				B04C0BB119011ED8009854FD /* CSContentJsonDictionary.cpp in Sources */,
 				15D8B23E168318C3006C7997 /* CDAudioManager.m in Sources */,
@@ -575,6 +595,7 @@
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
+				B00CC6161979302E00A62E4C /* CAStudioViewController.cpp in Sources */,
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
 				B0AD93B11920790900EA40BB /* FirstViewController.cpp in Sources */,
@@ -590,10 +611,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B05637841952CF0600C63FAA /* PBXTargetDependency */ = {
+		B00CC5FF1978B4EA00A62E4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CrossApp;
-			targetProxy = B05637831952CF0600C63FAA /* PBXContainerItemProxy */;
+			targetProxy = B00CC5FE1978B4EA00A62E4C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

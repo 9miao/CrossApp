@@ -31,13 +31,6 @@ void ViewController::viewDidLoad()
     v = CAImageView::createWithImage(CAImage::create("bg.jpg"));
     v->setFrame(CCRect(0, 0, scroll->getViewSize().width, scroll->getViewSize().height));
     scroll->addSubview(v);
-
-    CAButton* btn = CAButton::createWithCenter(CCRect(100, 100, 150, 60), CAButtonTypeRoundedRect);
-    btn->setTitleForState(CAControlStateAll, "pressenView");
-    this->getView()->addSubview(btn);
-    btn->addTarget(this, CAControl_selector(ViewController::touchUpInSide), CAControlEventTouchUpInSide);
-    btn->setTag(100);
-    
 }
 
 void ViewController::viewDidUnload()
