@@ -78,7 +78,7 @@ void CABatchView::visit(void)
     }
 
     kmGLPushMatrix();
-    sortAllChildren();
+    sortAllSubview();
     transform();
 
     draw();
@@ -138,7 +138,7 @@ void CABatchView::removeAllSubviews()
     m_pobImageAtlas->removeAllQuads();
 }
 
-void CABatchView::sortAllChildren()
+void CABatchView::sortAllSubview()
 {
     if (m_bReorderChildDirty)
     {
@@ -309,12 +309,12 @@ void CABatchView::increaseAtlasCapacity(void)
 
 unsigned int CABatchView::rebuildIndexInOrder(CAView *pobParent, unsigned int uIndex)
 {
-    CCArray *pChildren = pobParent->getSubviews();
+    CCArray *psubview = pobParent->getSubviews();
 
-    if (pChildren && pChildren->count() > 0)
+    if (psubview && psubview->count() > 0)
     {
         CAObject* pObject = NULL;
-        CCARRAY_FOREACH(pChildren, pObject)
+        CCARRAY_FOREACH(psubview, pObject)
         {
             CAView* pChild = (CAView*) pObject;
             if (pChild && (pChild->getZOrder() < 0))
@@ -330,10 +330,10 @@ unsigned int CABatchView::rebuildIndexInOrder(CAView *pobParent, unsigned int uI
         uIndex++;
     }
 
-    if (pChildren && pChildren->count() > 0)
+    if (psubview && psubview->count() > 0)
     {
         CAObject* pObject = NULL;
-        CCARRAY_FOREACH(pChildren, pObject)
+        CCARRAY_FOREACH(psubview, pObject)
         {
             CAView* pChild = (CAView*) pObject;
             if (pChild && (pChild->getZOrder() >= 0))
@@ -348,29 +348,29 @@ unsigned int CABatchView::rebuildIndexInOrder(CAView *pobParent, unsigned int uI
 
 unsigned int CABatchView::highestAtlasIndexInChild(CAView *pSprite)
 {
-    CCArray *pChildren = pSprite->getSubviews();
+    CCArray *psubview = pSprite->getSubviews();
 
-    if (! pChildren || pChildren->count() == 0)
+    if (! psubview || psubview->count() == 0)
     {
         return pSprite->getAtlasIndex();
     }
     else
     {
-        return highestAtlasIndexInChild((CAView*)(pChildren->lastObject()));
+        return highestAtlasIndexInChild((CAView*)(psubview->lastObject()));
     }
 }
 
 unsigned int CABatchView::lowestAtlasIndexInChild(CAView *pSprite)
 {
-    CCArray *pChildren = pSprite->getSubviews();
+    CCArray *psubview = pSprite->getSubviews();
 
-    if (! pChildren || pChildren->count() == 0)
+    if (! psubview || psubview->count() == 0)
     {
         return pSprite->getAtlasIndex();
     }
     else
     {
-        return lowestAtlasIndexInChild((CAView*)(pChildren->objectAtIndex(0)));
+        return lowestAtlasIndexInChild((CAView*)(psubview->objectAtIndex(0)));
     }
 }
 
@@ -509,11 +509,11 @@ void CABatchView::removeSpriteFromAtlas(CAView *pobSprite)
         }
     }
 
-    CCArray *pChildren = pobSprite->getSubviews();
-    if (pChildren && pChildren->count() > 0)
+    CCArray *psubview = pobSprite->getSubviews();
+    if (psubview && psubview->count() > 0)
     {
         CAObject* pObject = NULL;
-        CCARRAY_FOREACH(pChildren, pObject)
+        CCARRAY_FOREACH(psubview, pObject)
         {
             CAView* pChild = (CAView*) pObject;
             if (pChild)
@@ -557,7 +557,7 @@ void CABatchView::setImage(CAImage *image)
 void CABatchView::insertQuadFromSprite(CAView *sprite, unsigned int index)
 {
     CCAssert( sprite != NULL, "Argument must be non-NULL");
-    CCAssert( dynamic_cast<CAView*>(sprite), "CABatchView only supports CAViews as children");
+    CCAssert( dynamic_cast<CAView*>(sprite), "CABatchView only supports CAViews as subview");
 
     while(index >= m_pobImageAtlas->getCapacity() || m_pobImageAtlas->getCapacity() == m_pobImageAtlas->getTotalQuads())
     {
@@ -576,7 +576,7 @@ void CABatchView::insertQuadFromSprite(CAView *sprite, unsigned int index)
 void CABatchView::updateQuadFromSprite(CAView *sprite, unsigned int index)
 {
     CCAssert(sprite != NULL, "Argument must be non-nil");
-    CCAssert(dynamic_cast<CAView*>(sprite) != NULL, "CABatchView only supports CAViews as children");
+    CCAssert(dynamic_cast<CAView*>(sprite) != NULL, "CABatchView only supports CAViews as subview");
     
 	while (index >= m_pobImageAtlas->getCapacity() || m_pobImageAtlas->getCapacity() == m_pobImageAtlas->getTotalQuads())
     {
@@ -592,7 +592,7 @@ void CABatchView::updateQuadFromSprite(CAView *sprite, unsigned int index)
 CABatchView * CABatchView::addSpriteWithoutQuad(CAView*child, unsigned int z, int aTag)
 {
     CCAssert( child != NULL, "Argument must be non-NULL");
-    CCAssert( dynamic_cast<CAView*>(child), "CABatchView only supports CAViews as children");
+    CCAssert( dynamic_cast<CAView*>(child), "CABatchView only supports CAViews as subview");
 
     child->setAtlasIndex(z);
 

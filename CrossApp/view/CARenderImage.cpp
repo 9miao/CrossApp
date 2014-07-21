@@ -1,7 +1,6 @@
 
 
 #include "CARenderImage.h"
-#include "basics/CAConfiguration.h"
 #include "basics/CAApplication.h"
 #include "platform/platform.h"
 #include "platform/CCImage.h"
@@ -240,13 +239,8 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFor
         unsigned int powW = 0;
         unsigned int powH = 0;
 
-        if (CAConfiguration::sharedConfiguration()->supportsNPOT())
         {
-            powW = w;
-            powH = h;
-        }
-        else
-        {
+            //2014.7.21
             powW = ccNextPOT(w);
             powH = ccNextPOT(h);
         }
@@ -269,19 +263,6 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFor
         GLint oldRBO;
         glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
         
-        if (CAConfiguration::sharedConfiguration()->checkForGLExtension("GL_QCOM"))
-        {
-            m_pTextureCopy = new CAImage();
-            if (m_pTextureCopy)
-            {
-                m_pTextureCopy->initWithData(data, (CAImagePixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
-            }
-            else
-            {
-                break;
-            }
-        }
-
         // generate FBO
         glGenFramebuffers(1, &m_uFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
@@ -373,16 +354,6 @@ void CARenderImage::begin()
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
     
-    /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary Image to overcome this. At the end of CARenderImage::begin(), switch the attached Image to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
-     */
-    if (CAConfiguration::sharedConfiguration()->checkForGLExtension("GL_QCOM"))
-    {
-        // -- bind a temporary Image so we can clear the render buffer without losing our texture
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTextureCopy->getName(), 0);
-        CHECK_GL_ERROR_DEBUG();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
-    }
 }
 
 void CARenderImage::beginWithClear(float r, float g, float b, float a)

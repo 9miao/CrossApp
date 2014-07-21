@@ -12,7 +12,7 @@
 #include "basics/CAResponder.h"
 #include "platform/CCPlatformMacros.h"
 #include "basics/CASTLContainer.h"
-
+#include "cocoa/CCSet.h"
 NS_CC_BEGIN
 
 

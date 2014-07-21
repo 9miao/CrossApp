@@ -3,7 +3,7 @@
 #ifndef __CAObject_H__
 #define __CAObject_H__
 
-#include "cocoa/CCDataVisitor.h"
+#include "platform/CCPlatformMacros.h"
 
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
@@ -55,8 +55,6 @@ public:
     unsigned int retainCount(void) const;
     
     virtual bool isEqual(const CAObject* pObject);
-
-    virtual void acceptVisitor(CCDataVisitor &visitor);
 
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     

@@ -657,9 +657,9 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 	{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         char sTTFont[256];
-        GetWindowsDirectory(sTTFont,255);
-        strcat(sTTFont,"\\fonts\\xxx.ttf");
-        pFontName =  = sTTFont;
+        GetWindowsDirectoryA(sTTFont,255);
+        strcat(sTTFont,"\\fonts\\simhei.ttf");
+        pFontName = sTTFont;
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

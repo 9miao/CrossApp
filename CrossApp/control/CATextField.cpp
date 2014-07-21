@@ -112,7 +112,7 @@ bool CATextField::initWithFrame(const CCRect& frame)
     TextAttribute t;
     t.charsize =0;
     t.charlength =0;
-    this->setBackGroundImage(CAImage::create("bg_textfield.png"));
+    this->setBackGroundImage(CAImage::create("source_material/textField_bg.png"));
     m_vByteLengthArr.push_back(t);
     labelOrginX =0.015625*width;
     labelWidth =this->getBounds().size.width-0.03125*width;
@@ -132,7 +132,7 @@ bool CATextField::initWithCenter(const CCRect& rect)
     TextAttribute t;
     t.charsize =0;
     t.charlength =0;
-    this->setBackGroundImage(CAImage::create("bg_textfield.png"));
+    this->setBackGroundImage(CAImage::create("source_material/textField_bg.png"));
     m_vByteLengthArr.push_back(t);
     labelOrginX =0.015625*width;
     labelWidth =this->getBounds().size.width-0.03125*width;
@@ -403,6 +403,7 @@ void CATextField::insertText(const char * text, int len)
             spaceHolderIsOn = false;
             m_sText="";
         }
+        m_sText = m_sPassWord;                                                                                                                                                                                                                                                                             
         m_sText.append(text);
         
         
@@ -819,7 +820,7 @@ float CATextField::getStringLength(const std::string &var)
 {
     float length = 0;
     CAImage *image = CAImage::createWithString(var.c_str(),
-                                               "Arial",
+                                               "",
                                                m_fFontSize,
                                                CCSizeZero,
                                                CATextAlignmentLeft,

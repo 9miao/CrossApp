@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include "ccMacros.h"
-#include "cocoa/CCAffineTransform.h"
+#include "shaders/CATransformation.h"
 #include "cocoa/CCArray.h"
 #include "CCGL.h"
 #include "shaders/ccGLStateCache.h"
@@ -250,13 +250,13 @@ public:
 
     virtual void updateTransform(void);
 
-    virtual CCAffineTransform nodeToParentTransform(void);
+    virtual CATransformation nodeToParentTransform(void);
 
-    virtual CCAffineTransform parentToNodeTransform(void);
+    virtual CATransformation parentToNodeTransform(void);
 
-    virtual CCAffineTransform nodeToWorldTransform(void);
+    virtual CATransformation nodeToWorldTransform(void);
 
-    virtual CCAffineTransform worldToNodeTransform(void);
+    virtual CATransformation worldToNodeTransform(void);
 
     CCRect convertRectToNodeSpace(const CCRect& worldRect);
 
@@ -286,7 +286,7 @@ public:
 
     virtual CAGLProgram* getShaderProgram();
     
-    void setAdditionalTransform(const CCAffineTransform& additionalTransform);
+    void setAdditionalTransform(const CATransformation& additionalTransform);
     
 public:
     
@@ -416,9 +416,9 @@ protected:
     
     CCRect m_obFrameRect;
     
-    CCAffineTransform m_sAdditionalTransform; ///< transform
-    CCAffineTransform m_sTransform;     ///< transform
-    CCAffineTransform m_sInverse;       ///< transform
+    CATransformation m_sAdditionalTransform; ///< transform
+    CATransformation m_sTransform;     ///< transform
+    CATransformation m_sInverse;       ///< transform
     
     CACamera *m_pCamera;                ///< a camera
 
@@ -463,7 +463,7 @@ protected:
     bool                m_bHasChildren;         /// Whether the sprite contains children
     bool                m_bShouldBeHidden;      /// should not be drawn because one of the ancestors
     
-    CCAffineTransform   m_transformToBatch;
+    CATransformation   m_transformToBatch;
 
     CCRect m_obRect;                            /// Retangle of CAImage
     bool   m_bRectRotated;                      /// Whether the Image is rotated

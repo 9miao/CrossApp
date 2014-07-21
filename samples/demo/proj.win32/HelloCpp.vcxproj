@@ -14,6 +14,7 @@
     <ProjectGuid>{76A39BB2-9B84-4C65-98A5-654D86B86F2A}</ProjectGuid>
     <RootNamespace>test_win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>HelloCpp</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -67,7 +68,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\freetype;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..\Classes\ViewController;..\Classes\TextFieldTest;..\Classes\TableViewTest;..\Classes\TabBarTest;..\Classes\SwitchTest;..\Classes\SliderTest;..\Classes\SegmentedControlTest;..\Classes\ScrollViewTest;..\Classes\NavigationBarTest;..\Classes\ProgressTest;..\Classes\LabelTest;..\Classes\ImageViewTest;..\Classes\ExtensionsTest;..\Classes\CollectionViewTest;..\Classes\ButtonTest;..\Classes\AlertViewTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -99,7 +100,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\freetype;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -110,7 +111,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libExtensions.lib;libCrossApp.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libcurl_imp.lib;pthreadVCE2.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libExtensions.lib;libcocos2d.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;pthreadVCE2.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -129,21 +130,54 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Classes\AlertViewTest\AlertViewTest.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\FirstViewController.cpp" />
-    <ClCompile Include="..\Classes\RootViewController.cpp" />
-    <ClCompile Include="..\Classes\SecondViewController.cpp" />
-    <ClCompile Include="..\Classes\ThirdViewController.cpp" />
-    <ClCompile Include="..\Classes\ViewController.cpp" />
+    <ClCompile Include="..\Classes\ButtonTest\ButtonTest.cpp" />
+    <ClCompile Include="..\Classes\CollectionViewTest\CollectionViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\ExtensionsTest.cpp" />
+    <ClCompile Include="..\Classes\ImageViewTest\ImageViewTest.cpp" />
+    <ClCompile Include="..\Classes\LabelTest\LabelTest.cpp" />
+    <ClCompile Include="..\Classes\MainMenu.cpp" />
+    <ClCompile Include="..\Classes\NavigationBarTest\NavigationBarTest.cpp" />
+    <ClCompile Include="..\Classes\ProgressTest\ProgressTest.cpp" />
+    <ClCompile Include="..\Classes\ScrollViewTest\ScrollViewTest.cpp" />
+    <ClCompile Include="..\Classes\SegmentedControlTest\SegmentedControlTest.cpp" />
+    <ClCompile Include="..\Classes\SliderTest\SliderTest.cpp" />
+    <ClCompile Include="..\Classes\SwitchTest\SwitchTest.cpp" />
+    <ClCompile Include="..\Classes\TabBarTest\TabBarTest.cpp" />
+    <ClCompile Include="..\Classes\TableViewTest\TableViewTest.cpp" />
+    <ClCompile Include="..\Classes\TextFieldTest\TextFieldTest.cpp" />
+    <ClCompile Include="..\Classes\ViewController\FifthViewController.cpp" />
+    <ClCompile Include="..\Classes\ViewController\FirstViewController.cpp" />
+    <ClCompile Include="..\Classes\ViewController\FourthViewController.cpp" />
+    <ClCompile Include="..\Classes\ViewController\SecondViewController.cpp" />
+    <ClCompile Include="..\Classes\ViewController\ThirdViewController.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\AlertViewTest\AlertViewTest.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\FirstViewController.h" />
-    <ClInclude Include="..\Classes\RootViewController.h" />
-    <ClInclude Include="..\Classes\SecondViewController.h" />
-    <ClInclude Include="..\Classes\ThirdViewController.h" />
-    <ClInclude Include="..\Classes\ViewController.h" />
+    <ClInclude Include="..\Classes\ButtonTest\ButtonTest.h" />
+    <ClInclude Include="..\Classes\CollectionViewTest\CollectionViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\ExtensionsTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\Info.h" />
+    <ClInclude Include="..\Classes\ImageViewTest\ImageViewTest.h" />
+    <ClInclude Include="..\Classes\LabelTest\LabelTest.h" />
+    <ClInclude Include="..\Classes\MainMenu.h" />
+    <ClInclude Include="..\Classes\NavigationBarTest\NavigationBarTest.h" />
+    <ClInclude Include="..\Classes\ProgressTest\ProgressTest.h" />
+    <ClInclude Include="..\Classes\ScrollViewTest\ScrollViewTest.h" />
+    <ClInclude Include="..\Classes\SegmentedControlTest\SegmentedControlTest.h" />
+    <ClInclude Include="..\Classes\SliderTest\SliderTest.h" />
+    <ClInclude Include="..\Classes\SwitchTest\SwitchTest.h" />
+    <ClInclude Include="..\Classes\TabBarTest\TabBarTest.h" />
+    <ClInclude Include="..\Classes\TableViewTest\TableViewTest.h" />
+    <ClInclude Include="..\Classes\TextFieldTest\TextFieldTest.h" />
+    <ClInclude Include="..\Classes\ViewController\FifthViewController.h" />
+    <ClInclude Include="..\Classes\ViewController\FirstViewController.h" />
+    <ClInclude Include="..\Classes\ViewController\FourthViewController.h" />
+    <ClInclude Include="..\Classes\ViewController\SecondViewController.h" />
+    <ClInclude Include="..\Classes\ViewController\ThirdViewController.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

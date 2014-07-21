@@ -18,16 +18,13 @@ actions/CCActionTween.cpp \
 basics/CAApplication.cpp \
 basics/CAAutoreleasePool.cpp \
 basics/CACamera.cpp \
-basics/CAConfiguration.cpp \
 basics/CAGeometry.cpp \
 basics/CAObject.cpp \
 basics/CAResponder.cpp \
 basics/CAScheduler.cpp \
 basics/CAFPSImages.c \
 basics/CASTLContainer.cpp \
-cocoa/CCAffineTransform.cpp \
 cocoa/CCArray.cpp \
-cocoa/CCDataVisitor.cpp \
 cocoa/CCDictionary.cpp \
 cocoa/CCNS.cpp \
 cocoa/CCSet.cpp \
@@ -56,6 +53,7 @@ images/CAImage.cpp \
 images/CAImageCache.cpp \
 images/CAImageFrame.cpp \
 images/CAImageFrameCache.cpp \
+shaders/CATransformation.cpp \
 shaders/CAGLProgram.cpp \
 shaders/CAShaderCache.cpp \
 shaders/ccGLStateCache.cpp \

@@ -21,7 +21,7 @@
 #include "basics/CAApplication.h"
 #include "support/CCPointExtension.h"
 #include "basics/CAGeometry.h"
-#include "cocoa/CCAffineTransform.h"
+#include "shaders/CATransformation.h"
 #include "support/TransformUtils.h"
 #include <string.h>
 

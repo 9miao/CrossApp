@@ -25,6 +25,8 @@ CANavigationBar::CANavigationBar()
 ,m_pTitle(NULL)
 ,m_pDelegate(NULL)
 ,m_pBackGroundImage(NULL)
+,m_cTitleColor(CAColor_white)
+,m_cButtonColor(CAColor_white)
 {
 
 }
@@ -87,6 +89,21 @@ void CANavigationBar::setBackGroundImage(CAImage* var)
     this->showBackGround();
 }
 
+void CANavigationBar::setTitleColor(CAColor4B color)
+{
+    m_cTitleColor = color;
+    CC_RETURN_IF(!m_bRunning);
+    this->showTitle();
+}
+
+void CANavigationBar::setButtonColor(CAColor4B color)
+{
+    m_cButtonColor = color;
+    CC_RETURN_IF(!m_bRunning);
+    this->showLeftButton();
+    this->showRightButton();
+}
+
 void CANavigationBar::updateNavigationBar()
 {
     this->showBackGround();
@@ -144,7 +161,7 @@ void CANavigationBar::showTitle()
         title->setTextAlignment(CATextAlignmentCenter);
         title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         title->setNumberOfLine(1);
-        title->setColor(CAColor_white);
+        title->setColor(m_cTitleColor);
         title->setFontSize(32 * CROSSAPP_ADPTATION_RATIO);
         this->addSubview(title);
         m_pTitle = title;
@@ -191,9 +208,9 @@ void CANavigationBar::showLeftButton()
         else if (item)
         {
             button->setTitleForState(CAControlStateNormal, item->getTitle());
-            button->setTitleColorForState(CAControlStateNormal, CAColor_white);
+            button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
             button->setTitleForState(CAControlStateHighlighted, item->getTitle());
-            button->setTitleColorForState(CAControlStateHighlighted, ccc4(255, 255, 200, 255));
+            button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             button->setImageForState(CAControlStateNormal, item->getImage());
             if (item->getHighlightedImage())
             {
@@ -236,9 +253,9 @@ void CANavigationBar::showRightButton()
         if (item)
         {
             button->setTitleForState(CAControlStateNormal, item->getTitle());
-            button->setTitleColorForState(CAControlStateNormal, CAColor_white);
+            button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
             button->setTitleForState(CAControlStateHighlighted, item->getTitle());
-            button->setTitleColorForState(CAControlStateHighlighted, ccc4(255, 255, 200, 255));
+            button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             button->setImageForState(CAControlStateNormal, item->getImage());
             if (item->getHighlightedImage())
             {

@@ -8,16 +8,46 @@ LOCAL_MODULE_FILENAME := libCrossApp_cpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/AppDelegate.cpp \
-../../Classes/FirstViewController.cpp \
-../../Classes/SecondViewController.cpp \
-../../Classes/ThirdViewController.cpp \
-../../Classes/RootViewController.cpp \
-../../Classes/ViewController.cpp \
-		
-			
+../../Classes/MainMenu.cpp \
+../../Classes/ViewController/FifthViewController.cpp \
+../../Classes/ViewController/FirstViewController.cpp \
+../../Classes/ViewController/FourthViewController.cpp \
+../../Classes/ViewController/SecondViewController.cpp \
+../../Classes/ViewController/ThirdViewController.cpp \
+../../Classes/AlertViewTest/AlertViewTest.cpp \
+../../Classes/ButtonTest/ButtonTest.cpp \
+../../Classes/CollectionViewTest/CollectionViewTest.cpp \
+../../Classes/ImageViewTest/ImageViewTest.cpp \
+../../Classes/LabelTest/LabelTest.cpp \
+../../Classes/NavigationBarTest/NavigationBarTest.cpp \
+../../Classes/ProgressTest/ProgressTest.cpp \
+../../Classes/ScrollViewTest/ScrollViewTest.cpp \
+../../Classes/SegmentedControlTest/SegmentedControlTest.cpp \
+../../Classes/SliderTest/SliderTest.cpp \
+../../Classes/SwitchTest/SwitchTest.cpp \
+../../Classes/TabBarTest/TabBarTest.cpp \
+../../Classes/TableViewTest/TableViewTest.cpp \
+../../Classes/TextFieldTest/TextFieldTest.cpp \
+../../Classes/ExtensionsTest/ExtensionsTest.cpp \		
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
+$(LOCAL_PATH)/../../Classes/AlertViewTest \
+$(LOCAL_PATH)/../../Classes/ButtonTest \
+$(LOCAL_PATH)/../../Classes/CollectionViewTest \
+$(LOCAL_PATH)/../../Classes/ImageViewTest \
+$(LOCAL_PATH)/../../Classes/LabelTest \
+$(LOCAL_PATH)/../../Classes/NavigationBarTest \
+$(LOCAL_PATH)/../../Classes/ProgressTest \
+$(LOCAL_PATH)/../../Classes/ScrollViewTest \
+$(LOCAL_PATH)/../../Classes/SegmentedControlTest \
+$(LOCAL_PATH)/../../Classes/SliderTest \
+$(LOCAL_PATH)/../../Classes/SwitchTest \
+$(LOCAL_PATH)/../../Classes/TabBarTest \
+$(LOCAL_PATH)/../../Classes/TableViewTest \
+$(LOCAL_PATH)/../../Classes/TextFieldTest \
+$(LOCAL_PATH)/../../Classes/ExtensionsTest \
+$(LOCAL_PATH)/../../Classes/ViewController \
 
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

@@ -84,7 +84,7 @@ public:
     
     virtual void removeAllSubviews();
     
-    virtual void sortAllChildren();
+    virtual void sortAllSubview();
     
     virtual void draw(void);
 

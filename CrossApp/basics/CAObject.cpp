@@ -24,6 +24,7 @@ CAObject::CAObject(void)
 
     m_uID = ++uObjectCount;
     
+    addToObjPtrSets(this);
 }
 
 CAObject::~CAObject(void)
@@ -34,6 +35,8 @@ CAObject::~CAObject(void)
     {
         CAPoolManager::sharedPoolManager()->removeObject(this);
     }
+    
+    delToObjPtrSets(this);
 }
 
 CAObject* CAObject::copy()
@@ -78,11 +81,6 @@ unsigned int CAObject::retainCount(void) const
 bool CAObject::isEqual(const CAObject *pObject)
 {
     return this == pObject;
-}
-
-void CAObject::acceptVisitor(CCDataVisitor &visitor)
-{
-    visitor.visitObject(this);
 }
 
 CAZone::CAZone(CAObject *pObject)

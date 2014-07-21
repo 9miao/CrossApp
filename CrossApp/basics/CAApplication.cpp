@@ -2,7 +2,6 @@
 #include "CAApplication.h"
 #include "CAFPSImages.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
-#include "CAConfiguration.h"
 #include "cocoa/CCNS.h"
 #include "view/CAWindow.h"
 #include "cocoa/CCArray.h"
@@ -18,7 +17,6 @@
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "actions/CCActionManager.h"
-#include "CAConfiguration.h"
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "CCAccelerometer.h"
 #include "images/CAAnimationCache.h"
@@ -95,7 +93,7 @@ bool CAApplication::init(void)
     m_fSecondsPerFrame = 0.0f;
 
     m_nDrawCount = 60;
-    m_dAnimationInterval = 1.0 / 60.0f;
+    m_dAnimationInterval = 1.0 / 100.0f;
     m_bDisplayStats = false;
     
     // paused ?
@@ -160,17 +158,11 @@ CAApplication::~CAApplication(void)
 
 void CAApplication::setDefaultValues(void)
 {
-	CAConfiguration *conf = CAConfiguration::sharedConfiguration();
 
-	// default FPS
-	double fps = conf->getNumber("cocos2d.x.fps", kDefaultFPS);
-	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / fps;
+	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / 100;
 
-	// Display FPS
-	m_bDisplayStats = conf->getBool("cocos2d.x.display_fps", false);
 
-	// GL projection
-	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
+	const char *projection = "3d";
 	if( strcmp(projection, "3d") == 0 )
 		m_eProjection = kCCDirectorProjection3D;
 	else if (strcmp(projection, "2d") == 0)
@@ -180,8 +172,7 @@ void CAApplication::setDefaultValues(void)
 	else
 		CCAssert(false, "Invalid projection value");
 
-	// Default pixel format for PNG images with alpha
-	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
+	const char *pixel_format = "rgba8888";
 	if( strcmp(pixel_format, "rgba8888") == 0 )
 		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGBA8888);
 	else if( strcmp(pixel_format, "rgba4444") == 0 )
@@ -190,7 +181,7 @@ void CAApplication::setDefaultValues(void)
 		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
-	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
+	bool pvr_alpha_premultipled = false;
 	CAImage::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
@@ -341,10 +332,6 @@ void CAApplication::setOpenGLView(CCEGLView *pobOpenGLView)
 
     if (m_pobOpenGLView != pobOpenGLView)
     {
-		// Configuration. Gather GPU info
-		CAConfiguration *conf = CAConfiguration::sharedConfiguration();
-		conf->gatherGPUInfo();
-		conf->dumpInfo();
 
         // EAGLView is not a CAObject
         if(m_pobOpenGLView)
@@ -653,7 +640,6 @@ void CAApplication::purgeDirector()
     CAImageCache::purgeSharedImageCache();
     CAShaderCache::purgeSharedShaderCache();
     CCFileUtils::purgeFileUtils();
-    CAConfiguration::purgeConfiguration();
 
     // cocos2d-x specific data structures
     CAUserDefault::purgeSharedUserDefault();

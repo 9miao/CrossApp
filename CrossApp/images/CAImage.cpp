@@ -2,7 +2,6 @@
 #include "CAImage.h"
 #include "ccConfig.h"
 #include "ccMacros.h"
-#include "basics/CAConfiguration.h"
 #include "platform/platform.h"
 #include "platform/CCImage.h"
 #include "CCGL.h"
@@ -350,9 +349,8 @@ bool CAImage::initWithImage(CCImage *uiImage)
     unsigned int imageWidth = uiImage->getWidth();
     unsigned int imageHeight = uiImage->getHeight();
     
-    CAConfiguration *conf = CAConfiguration::sharedConfiguration();
-    
-    unsigned maxTextureSize = conf->getMaxTextureSize();
+
+    unsigned maxTextureSize = 16384;
     if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) 
     {
         CCLOG("CrossApp: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
@@ -1190,7 +1188,6 @@ bool CAImagePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
         return false;
     }
     
-    CAConfiguration *configuration = CAConfiguration::sharedConfiguration();
     
     flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
     formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
@@ -1200,18 +1197,10 @@ bool CAImagePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
         CCLOG("CrossApp: WARNING: Image is flipped. Regenerate it using PVRTexTool");
     }
     
-    if (! configuration->supportsNPOT() &&
-        (header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height)))
-    {
-        CCLOG("CrossApp: ERROR: Loading an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
-        return false;
-    }
-    
+
     unsigned int pvr2TableElements = PVR2_MAX_TABLE_ELEMENTS;
-    if (! CAConfiguration::sharedConfiguration()->supportsPVRTC())
-    {
-        pvr2TableElements = 9;
-    }
+    
+    pvr2TableElements = 9;
     
     for (unsigned int i = 0; i < pvr2TableElements; i++)
     {
@@ -1260,11 +1249,6 @@ bool CAImagePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
                         heightBlocks = height / 4;
                         break;
                     case kPVR2TexturePixelFormat_BGRA_8888:
-                        if (CAConfiguration::sharedConfiguration()->supportsBGRA8888() == false)
-                        {
-                            CCLOG("CrossApp: TexturePVR. BGRA8888 not supported on this device");
-                            return false;
-                        }
                     default:
                         blockSize = 1;
                         widthBlocks = width;
@@ -1339,10 +1323,8 @@ bool CAImagePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int dataLe
 	bool infoValid = false;
     
     unsigned int pvr3TableElements = PVR3_MAX_TABLE_ELEMENTS;
-    if (! CAConfiguration::sharedConfiguration()->supportsPVRTC())
-    {
-        pvr3TableElements = 9;
-    }
+    
+    pvr3TableElements = 9;
 	
 	for(unsigned int i = 0; i < pvr3TableElements; i++)
     {
@@ -1404,11 +1386,6 @@ bool CAImagePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int dataLe
 				heightBlocks = height / 4;
 				break;
 			case kPVR3TexturePixelFormat_BGRA_8888:
-				if( ! CAConfiguration::sharedConfiguration()->supportsBGRA8888())
-                {
-					CCLOG("CrossApp: TexturePVR. BGRA8888 not supported on this device");
-					return false;
-				}
 			default:
 				blockSize = 1;
 				widthBlocks = width;
@@ -1488,7 +1465,7 @@ bool CAImagePVR::createGLTexture()
     // Generate textures with mipmaps
     for (unsigned int i = 0; i < m_uNumberOfMipmaps; ++i)
     {
-        if (compressed && ! CAConfiguration::sharedConfiguration()->supportsPVRTC())
+        if (compressed)
         {
 			CCLOG("CrossApp: WARNING: PVRTC images are not supported");
 			return false;

@@ -231,9 +231,6 @@ public:
      */
     virtual CAObject* copyWithZone(CAZone* pZone);
 
-    /* override functions */
-    virtual void acceptVisitor(CCDataVisitor &visitor);
-
 public:
     ccArray* data;
     /**

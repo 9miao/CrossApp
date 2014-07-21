@@ -120,8 +120,6 @@ bool CCTimer::initWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector, float 
 
 void CCTimer::update(float dt)
 {
-    dt = MIN(dt, 1/30.0f);
-    dt = MAX(dt, 1/100.0f);
     if (m_fElapsed == -1)
     {
         m_fElapsed = 0;
@@ -132,12 +130,16 @@ void CCTimer::update(float dt)
         if (m_bRunForever && !m_bUseDelay)
         {//standard timer usage
             m_fElapsed += dt;
-            if (m_pTarget && m_pfnSelector)
+            if (m_fElapsed >= m_fInterval || m_fInterval == 1/60.0f)
             {
-                (m_pTarget->*m_pfnSelector)(m_fElapsed);
-            }
+                
+                if (m_pTarget && m_pfnSelector)
+                {
+                    (m_pTarget->*m_pfnSelector)(m_fElapsed);
+                }
             
-            m_fElapsed = 0;
+                m_fElapsed = 0;
+            }
         }
         else
         {//advanced usage

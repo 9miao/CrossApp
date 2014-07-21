@@ -54,6 +54,14 @@ public:
     
     CC_SYNTHESIZE_READONLY(CAImage*, m_pBackGroundImage, BackGroundImage);
     
+    virtual void setTitleColor(CAColor4B color);
+    
+    CC_SYNTHESIZE_READONLY(CAColor4B, m_cTitleColor, TitleColor);
+    
+    virtual void setButtonColor(CAColor4B color);
+    
+    CC_SYNTHESIZE_READONLY(CAColor4B, m_cButtonColor, ButtonColor);
+    
     CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
     
     CC_SYNTHESIZE_READONLY(std::vector<CANavigationBarItem*>, m_pItems, Items);

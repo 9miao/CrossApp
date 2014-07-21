@@ -127,6 +127,7 @@ void CALabel::updateImage()
                                                m_nTextAlignment,
                                                m_nVerticalTextAlignmet);
 
+	CC_RETURN_IF(image == NULL);
 
     m_cLabelSize = image->getContentSize();
     

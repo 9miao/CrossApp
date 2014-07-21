@@ -1,4 +1,35 @@
 
+####CrossApp 0.3.0 更新内容：  
+
+#####1.CrossApp-Design发布
+UI界面编辑器的发布将会使界面的编写更便捷
+
+#####2.大幅优化文字性能
+文字机制重写，android平台文字加载速度提升约80%，iOS平台文字加载速度提升约50%。
+
+#####3.优化渲染性能
+渲染帧率大幅提升，已与原生应用不分伯仲，部分情况比原生更优。
+
+#####4.优化CANavigationController
+优化CANavigationController，提升界面管理效率
+
+#####5.优化CANavigationBar
+添加设置标题与按钮文字颜色的接口
+修复更新背景Image的bug
+
+#####6.优化CASwitch
+CASwitch的用户体验优化
+
+#####7.修复CATableView与CACollectionView
+修复CATableView与CACollectionView设置选中项的bug
+
+#####8.添加对CrossApp-Design导出文件的支持
+
+#####9.添加新demo
+新的demo对CrossApp的每一个控件进行了展示，方便大家参考
+
+
+
 ####CrossApp beta 0.2.1 更新内容：  
 
 #####1.添加容器类

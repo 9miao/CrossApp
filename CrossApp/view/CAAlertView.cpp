@@ -166,7 +166,7 @@ void CAAlertView::setLabel(CALabel*& pLabel, std::string& szTitle, CAColor4B col
 		pLabel->setTextAlignment(CATextAlignmentCenter);
 		pLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         pLabel->setFontName(m_sMsgFontName.c_str());
-        pLabel->setFontSize(36);
+        pLabel->setFontSize(32 * CROSSAPP_ADPTATION_RATIO);
 		insertSubview(pLabel, 1);
 	}
 	pLabel->setText(szTitle);

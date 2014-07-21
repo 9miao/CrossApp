@@ -20,7 +20,6 @@
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "ccTypes.h"
-#include "basics/CAConfiguration.h"
 
 // actions
 #include "actions/CCAction.h"
@@ -89,14 +88,9 @@
 #include "view/CAAlertView.h"
 
 // cocoa
-#include "cocoa/CCAffineTransform.h"
 #include "cocoa/CCDictionary.h"
 #include "cocoa/CCArray.h"
 #include "cocoa/CCSet.h"
-#include "cocoa/CCInteger.h"
-#include "cocoa/CCFloat.h"
-#include "cocoa/CCDouble.h"
-#include "cocoa/CCBool.h"
 #include "cocoa/CCString.h"
 #include "cocoa/CCNS.h"
 
@@ -111,6 +105,7 @@
 
 
 // shaders
+#include "shaders/CATransformation.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAShaderCache.h"

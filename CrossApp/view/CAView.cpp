@@ -68,7 +68,7 @@ CAView::CAView(void)
 , m_obContentSize(kCAViewSizeInvalid)
 , m_obFrameRect(kCAViewRectInvalid)
 , m_obPoint(kCAViewPointInvalid)
-, m_sAdditionalTransform(CCAffineTransformMakeIdentity())
+, m_sAdditionalTransform(CATransformationMakeIdentity())
 , m_pCamera(NULL)
 , m_nZOrder(0)
 , m_pSubviews(NULL)
@@ -1225,7 +1225,7 @@ void CAView::transform()
     kmMat4 transfrom4x4;
     
     // Convert 3x3 into 4x4 matrix
-    CCAffineTransform tmpAffine = this->nodeToParentTransform();
+    CATransformation tmpAffine = this->nodeToParentTransform();
     CGAffineToGL(&tmpAffine, transfrom4x4.mat);
     
     // Update Z vertex manually
@@ -1352,7 +1352,7 @@ void CAView::update(float fDelta)
 
 }
 
-CCAffineTransform CAView::nodeToParentTransform(void)
+CATransformation CAView::nodeToParentTransform(void)
 {
     if (m_bTransformDirty)
     {
@@ -1405,7 +1405,7 @@ CCAffineTransform CAView::nodeToParentTransform(void)
         
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        m_sTransform = CCAffineTransformMake( cy * m_fScaleX,  sy * m_fScaleX,
+        m_sTransform = CATransformationMake( cy * m_fScaleX,  sy * m_fScaleX,
                                              -sx * m_fScaleY, cx * m_fScaleY,
                                              x, y );
         
@@ -1413,10 +1413,10 @@ CCAffineTransform CAView::nodeToParentTransform(void)
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            CCAffineTransform skewMatrix = CCAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
+            CATransformation skewMatrix = CATransformationMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
                                                                  tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1.0f,
                                                                  0.0f, 0.0f );
-            m_sTransform = CCAffineTransformConcat(skewMatrix, m_sTransform);
+            m_sTransform = CATransformationConcat(skewMatrix, m_sTransform);
             
             // adjust anchor point
             CCPoint anchorPointInPoints = CCPoint(m_obAnchorPointInPoints.x,
@@ -1424,13 +1424,13 @@ CCAffineTransform CAView::nodeToParentTransform(void)
             
             if (!anchorPointInPoints.equals(CCPointZero))
             {
-                m_sTransform = CCAffineTransformTranslate(m_sTransform, -anchorPointInPoints.x, -anchorPointInPoints.y);
+                m_sTransform = CATransformationTranslate(m_sTransform, -anchorPointInPoints.x, -anchorPointInPoints.y);
             }
         }
         
         if (m_bAdditionalTransformDirty)
         {
-            m_sTransform = CCAffineTransformConcat(m_sTransform, m_sAdditionalTransform);
+            m_sTransform = CATransformationConcat(m_sTransform, m_sAdditionalTransform);
             m_bAdditionalTransformDirty = false;
         }
         
@@ -1440,36 +1440,36 @@ CCAffineTransform CAView::nodeToParentTransform(void)
     return m_sTransform;
 }
 
-void CAView::setAdditionalTransform(const CCAffineTransform& additionalTransform)
+void CAView::setAdditionalTransform(const CATransformation& additionalTransform)
 {
     m_sAdditionalTransform = additionalTransform;
     m_bTransformDirty = true;
     m_bAdditionalTransformDirty = true;
 }
 
-CCAffineTransform CAView::parentToNodeTransform(void)
+CATransformation CAView::parentToNodeTransform(void)
 {
     if ( m_bInverseDirty ) {
-        m_sInverse = CCAffineTransformInvert(this->nodeToParentTransform());
+        m_sInverse = CATransformationInvert(this->nodeToParentTransform());
         m_bInverseDirty = false;
     }
     
     return m_sInverse;
 }
 
-CCAffineTransform CAView::nodeToWorldTransform()
+CATransformation CAView::nodeToWorldTransform()
 {
-    CCAffineTransform t = this->nodeToParentTransform();
+    CATransformation t = this->nodeToParentTransform();
     
     for (CAView *p = m_pSuperview; p != NULL; p = p->getSuperview())
-        t = CCAffineTransformConcat(t, p->nodeToParentTransform());
+        t = CATransformationConcat(t, p->nodeToParentTransform());
     
     return t;
 }
 
-CCAffineTransform CAView::worldToNodeTransform(void)
+CATransformation CAView::worldToNodeTransform(void)
 {
-    return CCAffineTransformInvert(this->nodeToWorldTransform());
+    return CATransformationInvert(this->nodeToWorldTransform());
 }
 
 CCRect CAView::convertRectToNodeSpace(const CrossApp::CCRect &worldRect)
@@ -1569,7 +1569,7 @@ void CAView::updateTransform()
             else
             {
                 CCAssert( dynamic_cast<CAImageView*>(m_pSuperview), "Logic error in CAImageView. Parent must be a CAImageView");
-                m_transformToBatch = CCAffineTransformConcat( nodeToParentTransform() , ((CAImageView*)m_pSuperview)->m_transformToBatch );
+                m_transformToBatch = CATransformationConcat( nodeToParentTransform() , ((CAImageView*)m_pSuperview)->m_transformToBatch );
             }
             
             //
@@ -2055,7 +2055,7 @@ void CAView::setBatch(CABatchView *batchView)
     } else {
         
         // using batch
-        m_transformToBatch = CCAffineTransformIdentity;
+        m_transformToBatch = CATransformationIdentity;
         setImageAtlas(m_pobBatchView->getImageAtlas()); // weak ref
     }
 }

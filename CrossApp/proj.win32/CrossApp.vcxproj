@@ -146,16 +146,13 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\basics\CAApplication.cpp" />
     <ClCompile Include="..\basics\CAAutoreleasePool.cpp" />
     <ClCompile Include="..\basics\CACamera.cpp" />
-    <ClCompile Include="..\basics\CAConfiguration.cpp" />
     <ClCompile Include="..\basics\CAFPSImages.c" />
     <ClCompile Include="..\basics\CAGeometry.cpp" />
     <ClCompile Include="..\basics\CAObject.cpp" />
     <ClCompile Include="..\basics\CAResponder.cpp" />
     <ClCompile Include="..\basics\CAScheduler.cpp" />
     <ClCompile Include="..\basics\CASTLContainer.cpp" />
-    <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
-    <ClCompile Include="..\cocoa\CCDataVisitor.cpp" />
     <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
     <ClCompile Include="..\cocoa\CCSet.cpp" />
@@ -210,6 +207,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\platform\win32\CCStdC.cpp" />
     <ClCompile Include="..\shaders\CAGLProgram.cpp" />
     <ClCompile Include="..\shaders\CAShaderCache.cpp" />
+    <ClCompile Include="..\shaders\CAtransformation.cpp" />
     <ClCompile Include="..\shaders\ccGLStateCache.cpp" />
     <ClCompile Include="..\shaders\ccShaders.cpp" />
     <ClCompile Include="..\support\base64.cpp" />
@@ -259,7 +257,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\basics\CAApplication.h" />
     <ClInclude Include="..\basics\CAAutoreleasePool.h" />
     <ClInclude Include="..\basics\CACamera.h" />
-    <ClInclude Include="..\basics\CAConfiguration.h" />
     <ClInclude Include="..\basics\CAFPSImages.h" />
     <ClInclude Include="..\basics\CAGeometry.h" />
     <ClInclude Include="..\basics\CAObject.h" />
@@ -270,14 +267,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\ccMacros.h" />
     <ClInclude Include="..\ccTypeInfo.h" />
     <ClInclude Include="..\ccTypes.h" />
-    <ClInclude Include="..\cocoa\CCAffineTransform.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
-    <ClInclude Include="..\cocoa\CCBool.h" />
-    <ClInclude Include="..\cocoa\CCDataVisitor.h" />
     <ClInclude Include="..\cocoa\CCDictionary.h" />
-    <ClInclude Include="..\cocoa\CCDouble.h" />
-    <ClInclude Include="..\cocoa\CCFloat.h" />
-    <ClInclude Include="..\cocoa\CCInteger.h" />
     <ClInclude Include="..\cocoa\CCNS.h" />
     <ClInclude Include="..\cocoa\CCSet.h" />
     <ClInclude Include="..\cocoa\CCString.h" />
@@ -338,6 +329,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\platform\win32\CCStdC.h" />
     <ClInclude Include="..\shaders\CAGLProgram.h" />
     <ClInclude Include="..\shaders\CAShaderCache.h" />
+    <ClInclude Include="..\shaders\CATransformation.h" />
     <ClInclude Include="..\shaders\ccGLStateCache.h" />
     <ClInclude Include="..\shaders\ccShaderEx_SwitchMask_frag.h" />
     <ClInclude Include="..\shaders\ccShaders.h" />

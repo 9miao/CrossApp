@@ -1,9 +1,6 @@
 #include "AppDelegate.h"
-#include "RootViewController.h"
-#include "ViewController.h"
-#include "FirstViewController.h"
-#include "SecondViewController.h"
-#include "ThirdViewController.h"
+#include "MainMenu.h"
+
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
@@ -18,9 +15,9 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    //initLabelImageThread();
     // initialize director
     CAApplication* pDirector = CAApplication::getApplication();
+	CCLog("%f", pDirector->getAdaptationRatio());
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
     
     pDirector->setOpenGLView(pEGLView);
@@ -34,67 +31,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60.0f);
 
     // create a scene. it's an autorelease object
-	m_pWindow = CAWindow::create();
 
+	m_pWindow = MainMenu::createWindow();
     // run
     pDirector->runWindow(m_pWindow);
-    
-    RootViewController* viewController = new RootViewController();
-    viewController->init();
-    viewController->setTitle("设置");
-    
-    CANavigationBarItem* item = CANavigationBarItem::create("The Home Page");
-    viewController->setNavigationBarItem(item);
-    
-    CANavigationController* navigationController = new CANavigationController();
-    navigationController->initWithRootViewController(viewController);
-    navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("first_1.png"), CAImage::create("first_2.png")));
-    
-    viewController->setNavigationBarItem(CANavigationBarItem::create("The Home Page"));
-    viewController->release();
-    
-    ViewController* viewController2 = new ViewController();
-    viewController2->init();
-    viewController2->setTabBarItem(CATabBarItem::create("Second", CAImage::create("second_1.png"), CAImage::create("second_2.png")));
-    viewController2->setNavigationBarItem(CANavigationBarItem::create("viewController2"));
-    viewController2->setTitle("view2");
-    
-    ThirdViewController* viewController3 = new ThirdViewController();
-    viewController3->init();
-    viewController3->setTabBarItem(CATabBarItem::create("Third", CAImage::create("third_1.png"), CAImage::create("third_2.png")));
-    viewController3->setTitle("view3");
-    
-    SecondViewController* viewController4 = new SecondViewController();
-    viewController4->init();
-    viewController4->setTabBarItem(CATabBarItem::create("Fourth", CAImage::create("fourth_1.png"), CAImage::create("fourth_2.png")));
-    viewController4->setTitle("view4");
-    
-    FirstViewController* viewController5 = new FirstViewController();
-    viewController5->init();
-    viewController5->setTabBarItem(CATabBarItem::create("Fifth", CAImage::create("fifth_1.png"), CAImage::create("fifth_2.png")));
-    viewController5->setTitle("view5");
-    
-    std::vector<CAViewController*> views;
-    views.push_back(navigationController);
-    views.push_back(viewController2);
-    views.push_back(viewController3);
-    views.push_back(viewController4);
-    views.push_back(viewController5);
-    
-    CATabBarController* tabBarController = new CATabBarController();
-    tabBarController->initWithViewControllers(views);
-    tabBarController->getTabBar()->showSelectedIndicator();
-    //tabBarController->showSelectedViewControllerAtIndex(4, false);
-    
-    navigationController->release();
-    viewController2->release();
-    viewController3->release();
-    viewController4->release();
-    viewController5->release();
-    
-
-    m_pWindow->setRootViewController(tabBarController);
-    tabBarController->release();
     
     return true;
 }

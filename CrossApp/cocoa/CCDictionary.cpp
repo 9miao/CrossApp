@@ -24,7 +24,6 @@
 
 #include "CCDictionary.h"
 #include "CCString.h"
-#include "CCInteger.h"
 #include "platform/CCFileUtils.h"
 
 using namespace std;
@@ -107,9 +106,8 @@ CCArray* CCDictionary::allKeys()
     {
         HASH_ITER(hh, m_pElements, pElement, tmp) 
         {
-            CCInteger* pOneKey = new CCInteger(pElement->m_iKey);
+            CCString* pOneKey = CCString::createWithFormat("%d", (int)pElement->m_iKey);
             pArray->addObject(pOneKey);
-            CC_SAFE_RELEASE(pOneKey);
         }
     }
     
@@ -142,9 +140,8 @@ CCArray* CCDictionary::allKeysForObject(CAObject* object)
         {
             if (object == pElement->m_pObject)
             {
-                CCInteger* pOneKey = new CCInteger(pElement->m_iKey);
+                CCString* pOneKey = CCString::createWithFormat("%d", (int)pElement->m_iKey);
                 pArray->addObject(pOneKey);
-                CC_SAFE_RELEASE(pOneKey);
             }
         }
     }
@@ -374,7 +371,7 @@ CAObject* CCDictionary::randomObject()
     
     if (m_eDictType == kCCDictInt)
     {
-        return objectForKey(((CCInteger*)key)->getValue());
+        return objectForKey(((CCString*)key)->getCString());
     }
     else if (m_eDictType == kCCDictStr)
     {
@@ -406,11 +403,6 @@ CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
 CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
     return CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(pFileName);
-}
-
-void CCDictionary::acceptVisitor(CCDataVisitor &visitor)
-{
-    return visitor.visit(this);
 }
 
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)

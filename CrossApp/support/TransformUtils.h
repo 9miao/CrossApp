@@ -9,10 +9,10 @@
 
 namespace   CrossApp {
 
-struct CCAffineTransform;
+struct CATransformation;
 
-void CGAffineToGL(const CCAffineTransform *t, GLfloat *m);
-void GLToCGAffine(const GLfloat *m, CCAffineTransform *t);
+void CGAffineToGL(const CATransformation *t, GLfloat *m);
+void GLToCGAffine(const GLfloat *m, CATransformation *t);
 }//namespace   CrossApp 
 
 #endif // __SUPPORT_TRANSFORM_UTILS_H__

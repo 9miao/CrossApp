@@ -83,11 +83,6 @@ public:
     *@brief Return the first element if it contains elements, or null if it doesn't contain any element.
     */
     CAObject* anyObject();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void acceptVisitor(CCDataVisitor &visitor);
 
 private:
     std::set<CAObject *> *m_pSet;

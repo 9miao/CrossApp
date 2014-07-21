@@ -75,9 +75,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\cocoa\CCAffineTransform.cpp">
-      <Filter>cocoa</Filter>
-    </ClCompile>
     <ClCompile Include="..\cocoa\CCArray.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
@@ -246,9 +243,6 @@
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp">
       <Filter>support\tinyxml2</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocoa\CCDataVisitor.cpp">
-      <Filter>cocoa</Filter>
-    </ClCompile>
     <ClCompile Include="..\images\CAImage.cpp">
       <Filter>images</Filter>
     </ClCompile>
@@ -280,9 +274,6 @@
       <Filter>basics</Filter>
     </ClCompile>
     <ClCompile Include="..\basics\CACamera.cpp">
-      <Filter>basics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\basics\CAConfiguration.cpp">
       <Filter>basics</Filter>
     </ClCompile>
     <ClCompile Include="..\basics\CAFPSImages.c">
@@ -406,18 +397,15 @@
     <ClCompile Include="..\support\ConvertUTFWrapper.cpp">
       <Filter>support</Filter>
     </ClCompile>
+    <ClCompile Include="..\shaders\CAtransformation.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\cocoa\CCAffineTransform.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
     <ClInclude Include="..\cocoa\CCArray.h">
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCDictionary.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCInteger.h">
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -654,18 +642,6 @@
     <ClInclude Include="..\support\tinyxml2\tinyxml2.h">
       <Filter>support\tinyxml2</Filter>
     </ClInclude>
-    <ClInclude Include="..\cocoa\CCDataVisitor.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCBool.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCDouble.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCFloat.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
     <ClInclude Include="..\images\CAImage.h">
       <Filter>images</Filter>
     </ClInclude>
@@ -697,9 +673,6 @@
       <Filter>basics</Filter>
     </ClInclude>
     <ClInclude Include="..\basics\CACamera.h">
-      <Filter>basics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\basics\CAConfiguration.h">
       <Filter>basics</Filter>
     </ClInclude>
     <ClInclude Include="..\basics\CAFPSImages.h">
@@ -829,6 +802,9 @@
     </ClInclude>
     <ClInclude Include="..\support\ConvertUTF.h">
       <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\CATransformation.h">
+      <Filter>shaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

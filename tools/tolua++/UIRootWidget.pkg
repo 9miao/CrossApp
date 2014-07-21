@@ -1,8 +1,0 @@
-
-class UIRootWidget : public UILayout
-{
-    UIRootWidget();
-    virtual ~UIRootWidget();
-    static UIRootWidget* create();
-    virtual const char* getDescription() const;
-};
