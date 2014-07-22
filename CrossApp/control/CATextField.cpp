@@ -469,7 +469,8 @@ void CATextField::insertText(const char * text, int len)
         
         this->updateImage();
         
-        m_fString_left_length = left_width;
+		m_fString_left_length = m_rLabelRect.size.width;
+			//left_width;
         m_fString_right_length = m_rLabelRect.size.width - m_fString_left_length;
         
         if (m_fString_left_length + m_fString_left_offX > labelWidth)
@@ -623,7 +624,8 @@ void CATextField::deleteBackward()
     m_sLeft_string = sText.c_str();
     float left_width = getStringLength(m_sLeft_string);
 
-    m_fString_left_length = left_width;
+	m_fString_left_length = m_rLabelRect.size.width;
+		//left_width;
     m_fString_right_length = m_rLabelRect.size.width - m_fString_left_length;
     
     if (m_fString_right_length + getCursorX() < labelWidth)
@@ -688,23 +690,29 @@ void CATextField::updateImage()
         this->setColor(m_cTextColor);
     }
     
-    CAImage* image = CAImage::createWithString(m_sText.c_str(),
+	CAImage* image = CAImage::createWithString(text.c_str(),
                                                "Arial",
                                                m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
                                                size,
                                                m_aTextAlignment,
                                                CAVerticalTextAlignmentCenter);
-    
-    CCRect rect = CCRectZero;
-    rect.size.height = image->getContentSize().height;
-    m_rLabelRect.size = image->getContentSize();
-    
+	CCRect rect = CCRectZero;
+	float imageWidth = 0;
+	if (image != NULL)
+	{
+		rect.size.height = image->getContentSize().height;
+		m_rLabelRect.size = image->getContentSize();
+		imageWidth = image->getContentSize().width;
+	}
+   
+   
+	
     if (spaceHolderIsOn)
     {
         m_rLabelRect = CCRectZero;
     }
     
-    float width = MIN(labelWidth,image->getContentSize().width);
+	float width = MIN(labelWidth, imageWidth);
     rect.size.width = width;
     this->setImage(image);
     

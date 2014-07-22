@@ -36,7 +36,7 @@ SubmissionInfo
 *.hps
 
 # Ignore files build by ndk and eclipse
-libs/
+#libs/
 bin/
 obj/
 gen/
@@ -54,8 +54,6 @@ CrossApp/platform/third_party/wp8/libpng/lpng142
 CrossApp/platform/third_party/wp8/libjpeg/jpeg-8b
 CrossApp/platform/third_party/wp8/libtiff/tiff-4.0.1
 CrossApp/platform/third_party/wp8/zlib/zlib-1.2.5
-samples/demo/proj.wp8/Assets/Resources/
-samples/demo/proj.wp8/Assets/Resources/
 
 
 # Ignore python compiled files
