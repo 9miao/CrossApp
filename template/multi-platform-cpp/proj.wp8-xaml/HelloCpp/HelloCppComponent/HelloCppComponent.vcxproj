@@ -72,7 +72,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\CrossApp;$(ProjectDir)..\..\..\..\..\CrossApp\platform\wp8;$(ProjectDir)..\..\..\..\..\CrossApp\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\CrossApp\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\CrossApp\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\CrossApp\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\CrossApp;$(ProjectDir)..\..\..\..\..\CrossApp\platform\wp8;$(ProjectDir)..\..\..\..\..\CrossApp\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\CrossApp\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\CrossApp\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\CrossApp\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -144,7 +144,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Cocos2dRenderer.h" />
+    <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\CrossAppRenderer.h" />
     <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProvider.h" />
     <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProviderBase.h" />
     <ClInclude Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DInterop.h" />
@@ -157,7 +157,7 @@
     <ClInclude Include="..\..\..\Classes\FirstViewController.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Cocos2dRenderer.cpp" />
+    <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\CrossAppRenderer.cpp" />
     <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProvider.cpp" />
     <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DContentProviderBase.cpp" />
     <ClCompile Include="..\..\..\..\..\CrossApp\platform\wp8-xaml\Direct3DInterop.cpp" />

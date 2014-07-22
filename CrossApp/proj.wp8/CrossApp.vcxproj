@@ -83,7 +83,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../platform/third_party/winrt/angleproject/include;../platform/third_party/winrt/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../platform/third_party/winrt/angleproject/include;../platform/third_party/winrt/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>false</MinimalRebuild>
@@ -191,15 +191,13 @@
     <ClCompile Include="..\basics\CAApplication.cpp" />
     <ClCompile Include="..\basics\CAAutoreleasePool.cpp" />
     <ClCompile Include="..\basics\CACamera.cpp" />
-    <ClCompile Include="..\basics\CAConfiguration.cpp" />
     <ClCompile Include="..\basics\CAFPSImages.c" />
     <ClCompile Include="..\basics\CAGeometry.cpp" />
     <ClCompile Include="..\basics\CAObject.cpp" />
     <ClCompile Include="..\basics\CAResponder.cpp" />
     <ClCompile Include="..\basics\CAScheduler.cpp" />
-    <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
+    <ClCompile Include="..\basics\CASTLContainer.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
-    <ClCompile Include="..\cocoa\CCDataVisitor.cpp" />
     <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
     <ClCompile Include="..\cocoa\CCSet.cpp" />
@@ -307,6 +305,7 @@
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
     </ClCompile>
+    <ClCompile Include="..\platform\CAFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
@@ -317,7 +316,6 @@
     <ClCompile Include="..\platform\winrt\CCCommon.cpp" />
     <ClCompile Include="..\platform\winrt\CCDevice.cpp" />
     <ClCompile Include="..\platform\winrt\CCFileUtilsWinRT.cpp" />
-    <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\winrt\CCImage.cpp" />
     <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp" />
     <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp" />
@@ -338,6 +336,8 @@
     <ClCompile Include="..\support\ccUTF8.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
     <ClCompile Include="..\support\CCVertex.cpp" />
+    <ClCompile Include="..\support\ConvertUTF.cpp" />
+    <ClCompile Include="..\support\ConvertUTFWrapper.cpp" />
     <ClCompile Include="..\support\data_support\ccCArray.cpp" />
     <ClCompile Include="..\support\image_support\TGAlib.cpp" />
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
@@ -368,24 +368,18 @@
     <ClInclude Include="..\basics\CAApplication.h" />
     <ClInclude Include="..\basics\CAAutoreleasePool.h" />
     <ClInclude Include="..\basics\CACamera.h" />
-    <ClInclude Include="..\basics\CAConfiguration.h" />
     <ClInclude Include="..\basics\CAFPSImages.h" />
     <ClInclude Include="..\basics\CAGeometry.h" />
     <ClInclude Include="..\basics\CAObject.h" />
     <ClInclude Include="..\basics\CAResponder.h" />
     <ClInclude Include="..\basics\CAScheduler.h" />
+    <ClInclude Include="..\basics\CASTLContainer.h" />
     <ClInclude Include="..\ccConfig.h" />
     <ClInclude Include="..\ccMacros.h" />
     <ClInclude Include="..\ccTypeInfo.h" />
     <ClInclude Include="..\ccTypes.h" />
-    <ClInclude Include="..\cocoa\CCAffineTransform.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
-    <ClInclude Include="..\cocoa\CCBool.h" />
-    <ClInclude Include="..\cocoa\CCDataVisitor.h" />
     <ClInclude Include="..\cocoa\CCDictionary.h" />
-    <ClInclude Include="..\cocoa\CCDouble.h" />
-    <ClInclude Include="..\cocoa\CCFloat.h" />
-    <ClInclude Include="..\cocoa\CCInteger.h" />
     <ClInclude Include="..\cocoa\CCNS.h" />
     <ClInclude Include="..\cocoa\CCSet.h" />
     <ClInclude Include="..\cocoa\CCString.h" />
@@ -430,6 +424,7 @@
     <ClInclude Include="..\kazmath\include\kazmath\vec2.h" />
     <ClInclude Include="..\kazmath\include\kazmath\vec3.h" />
     <ClInclude Include="..\kazmath\include\kazmath\vec4.h" />
+    <ClInclude Include="..\platform\CAFreeTypeFont.h" />
     <ClInclude Include="..\platform\CCAccelerometerDelegate.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
@@ -446,7 +441,6 @@
     <ClInclude Include="..\platform\winrt\CCAccelerometer.h" />
     <ClInclude Include="..\platform\winrt\CCApplication.h" />
     <ClInclude Include="..\platform\winrt\CCFileUtilsWinRT.h" />
-    <ClInclude Include="..\platform\winrt\CCFreeTypeFont.h" />
     <ClInclude Include="..\platform\winrt\CCGL.h" />
     <ClInclude Include="..\platform\winrt\CCPlatformDefine.h" />
     <ClInclude Include="..\platform\winrt\CCPrecompiledShaders.h" />
@@ -469,6 +463,7 @@
     <ClInclude Include="..\support\ccUTF8.h" />
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
+    <ClInclude Include="..\support\ConvertUTF.h" />
     <ClInclude Include="..\support\data_support\ccCArray.h" />
     <ClInclude Include="..\support\data_support\uthash.h" />
     <ClInclude Include="..\support\data_support\utlist.h" />

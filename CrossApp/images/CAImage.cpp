@@ -20,7 +20,7 @@
 #include <ctype.h>
 #include <cctype>
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "platform/CAFreeTypeFont.h"
 #endif
 
@@ -83,7 +83,7 @@ CAImage*  CAImage::createWithString(const char *text, const char *fontName, floa
 {
     
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
     
     CAFreeTypeFont cFreeTypeFont;
     
@@ -148,7 +148,7 @@ CAImage*  CAImage::createWithString(const char *text, const char *fontName, floa
 
 int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
     
     return CAFreeTypeFont::getFontHeight(pFontName, nSize);
 

@@ -5,7 +5,7 @@
 
 #include "ccMacros.h"
 #include "basics/CAObject.h"
-
+#include <string>
 #include "CCGL.h"
 
 NS_CC_BEGIN
@@ -92,7 +92,7 @@ public:
      */
     bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     /** Initializes the CAGLProgram with precompiled shader program */
     bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
 #endif
@@ -260,8 +260,8 @@ private:
     bool              m_bUsesTime;
     bool              m_hasShaderCompiler;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    std::string       m_shaderId;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+	std::string       m_shaderId;
 #endif
 };
 

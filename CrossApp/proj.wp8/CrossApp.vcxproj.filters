@@ -105,13 +105,7 @@
     <ClCompile Include="..\actions\CCActionTween.cpp">
       <Filter>actions</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocoa\CCAffineTransform.cpp">
-      <Filter>cocoa</Filter>
-    </ClCompile>
     <ClCompile Include="..\cocoa\CCArray.cpp">
-      <Filter>cocoa</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cocoa\CCDataVisitor.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\cocoa\CCDictionary.cpp">
@@ -187,9 +181,6 @@
       <Filter>platform\winrt</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\winrt\CCFileUtilsWinRT.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\winrt\CCImage.cpp">
@@ -319,9 +310,6 @@
     <ClCompile Include="..\basics\CACamera.cpp">
       <Filter>basics</Filter>
     </ClCompile>
-    <ClCompile Include="..\basics\CAConfiguration.cpp">
-      <Filter>basics</Filter>
-    </ClCompile>
     <ClCompile Include="..\basics\CAFPSImages.c">
       <Filter>basics</Filter>
     </ClCompile>
@@ -412,6 +400,18 @@
     <ClCompile Include="..\dispatcher\CATouchDispatcher.cpp">
       <Filter>dispatcher</Filter>
     </ClCompile>
+    <ClCompile Include="..\basics\CASTLContainer.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CAFreeTypeFont.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\ConvertUTF.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\ConvertUTFWrapper.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\actions\CCAction.h">
@@ -435,28 +435,10 @@
     <ClInclude Include="..\actions\CCActionTween.h">
       <Filter>actions</Filter>
     </ClInclude>
-    <ClInclude Include="..\cocoa\CCAffineTransform.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
     <ClInclude Include="..\cocoa\CCArray.h">
       <Filter>cocoa</Filter>
     </ClInclude>
-    <ClInclude Include="..\cocoa\CCBool.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCDataVisitor.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
     <ClInclude Include="..\cocoa\CCDictionary.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCDouble.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCFloat.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCInteger.h">
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -526,9 +508,6 @@
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\CCFileUtilsWinRT.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCFreeTypeFont.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\CCGL.h">
@@ -698,9 +677,6 @@
     <ClInclude Include="..\basics\CACamera.h">
       <Filter>basics</Filter>
     </ClInclude>
-    <ClInclude Include="..\basics\CAConfiguration.h">
-      <Filter>basics</Filter>
-    </ClInclude>
     <ClInclude Include="..\basics\CAFPSImages.h">
       <Filter>basics</Filter>
     </ClInclude>
@@ -796,6 +772,15 @@
     </ClInclude>
     <ClInclude Include="..\dispatcher\CATouchDispatcher.h">
       <Filter>dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CASTLContainer.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAFreeTypeFont.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\ConvertUTF.h">
+      <Filter>support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
