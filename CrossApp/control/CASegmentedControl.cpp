@@ -17,7 +17,7 @@ NS_CC_BEGIN
 
 CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     : CAControl()
-    , m_selectedIndex(0)
+    , m_selectedIndex(-1)
     , m_nItemsCount(itemsCount)
 {
     
@@ -72,7 +72,6 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
     }
     this->setColor(CAColor_clear);
     this->setFrame(rect);
-    m_selectedIndex = 0;
     
     this->removeAllSegments();
     const float elemWidth = rect.size.width / m_nItemsCount;
@@ -91,7 +90,6 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
             btn->setTitleForState(CAControlStateHighlighted, tmp);
             m_segments.push_back(btn);
             this->addSubview(btn);
-            btn->setControlState((m_selectedIndex == i) ? CAControlStateSelected : CAControlStateNormal);
         }
         elemFrame.origin.x += elemWidth;
     }
@@ -106,7 +104,6 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
     }
     
     this->setCenter(rect);
-    m_selectedIndex = 0;
     
     this->removeAllSegments();
     const float elemWidth = rect.size.width / m_nItemsCount;
@@ -125,7 +122,6 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
             btn->setTitleForState(CAControlStateHighlighted, tmp);
             m_segments.push_back(btn);
             this->addSubview(btn);
-            btn->setControlState((m_selectedIndex == i) ? CAControlStateSelected : CAControlStateNormal);
         }
         elemFrame.origin.x += elemWidth;
     }

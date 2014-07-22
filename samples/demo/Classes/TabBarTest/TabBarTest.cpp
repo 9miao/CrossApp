@@ -36,7 +36,7 @@ void TabBarTest::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsign
 
 void TabBarTest::goPrevious(CAControl* btn, CCPoint point)
 {
-	this->getNavigationController()->getTabBarController()->setTabBarHidden(false, true);
+	this->getNavigationController()->getTabBarController()->setTabBarHidden(false, false);
 	this->getNavigationController()->popViewControllerAnimated(true);
 }
 

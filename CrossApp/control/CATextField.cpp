@@ -674,8 +674,7 @@ void CATextField::setContentSize(const CCSize& var)
 
 void CATextField::updateImage()
 {
-
-    float fontHeight = CAImage::getFontHeight("Arial", m_fFontSize);
+    float fontHeight = CAImage::getFontHeight("", m_fFontSize);
     CCSize size = CCSizeZero;
     size = CCSizeMake(0, fontHeight);
     std::string text = "";
@@ -691,7 +690,7 @@ void CATextField::updateImage()
     }
     
 	CAImage* image = CAImage::createWithString(text.c_str(),
-                                               "Arial",
+                                               "",
                                                m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
                                                size,
                                                m_aTextAlignment,

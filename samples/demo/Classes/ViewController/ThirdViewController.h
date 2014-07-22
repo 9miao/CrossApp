@@ -20,11 +20,13 @@ protected:
 public:
 	void stateControl(CAControl* btn, CCPoint point);
 
+    virtual void scrollViewDidScroll(CAScrollView* view);
+    
 private:
 	CCSize size;
 	CAScrollView* scrollView;
 	CASegmentedControl* scrollControl;
-
+    CCSet* set;
 };
 
 #endif

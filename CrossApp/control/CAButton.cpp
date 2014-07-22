@@ -505,7 +505,7 @@ void CAButton::setControlState(CAControlState var)
         imageViewCenter.origin.x = size.width / 2;
         imageViewCenter.origin.y = size.height * 0.35f;
         
-        labelSize = size.height * 0.3f;
+        labelSize = size.height * 0.35f;
         labelCenter.origin.x = size.width / 2;
         labelCenter.origin.y = size.height * 0.75f;
     }
