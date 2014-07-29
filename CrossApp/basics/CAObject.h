@@ -44,7 +44,7 @@ public:
     
     void release(void);
     
-    void retain(void);
+    CAObject* retain(void);
     
     CAObject* autorelease(void);
     

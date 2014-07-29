@@ -28,6 +28,7 @@
 #include "CCEGLView.h"
 #include "cocoa/CCSet.h"
 #include "CAImageView.h"
+#include "actions/CCActionInterval.h"
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -124,7 +125,7 @@ CAView::CAView(void)
     m_pobImageAtlas = NULL;
 
     ++viewCount;
-//    CCLog("CAView = %d\n",viewCount);
+    CCLog("CAView = %d\n",viewCount);
 }
 
 CAView::~CAView(void)
@@ -150,7 +151,7 @@ CAView::~CAView(void)
     CC_SAFE_RELEASE(m_pobImage);
     
     --viewCount;
-//    CCLog("~CAView = %d\n",viewCount);
+    CCLog("~CAView = %d\n",viewCount);
 }
 
 CAView * CAView::create(void)
@@ -1313,6 +1314,7 @@ CCActionManager* CAView::getActionManager()
 CCAction * CAView::runAction(CCAction* action)
 {
     CCAssert( action != NULL, "Argument must be non-nil");
+    action = CCSequence::createWithTwoActions(CCDelayTime::create(1/60.0f), (CCFiniteTimeAction*)action);
     m_pActionManager->addAction(action, this, !m_bRunning);
     return action;
 }

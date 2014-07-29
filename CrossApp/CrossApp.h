@@ -40,6 +40,7 @@
 #include "basics/CAResponder.h"
 #include "basics/CAScheduler.h"
 #include "basics/CASTLContainer.h"
+#include "basics/CAIndexPath.h"
 
 //control
 #include "control/CABar.h"

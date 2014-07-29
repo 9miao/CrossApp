@@ -38,6 +38,8 @@ public:
     
     void removeTarget(CAObject* target, SEL_CAControl selector);
     
+    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
+    
 public:
     
     bool initWithFrame(const CCRect& rect);
@@ -54,6 +56,7 @@ public:
     virtual bool setTitleColorAtIndex(CAColor4B color, int index, CAControlState controlState);
     virtual bool setBackgroundImageAtIndex(CAImage *image, int index, CAControlState controlState);
     virtual bool setImageAtIndex(CAImage *image, int index, CAControlState controlState);
+    virtual bool setImageColorAtIndex(CAColor4B color, int index, CAControlState controlState);
     
     virtual CAView *getDefaultNormalBackgroundView();
     virtual CAView *getDefaultHighlightedBackgroundView();

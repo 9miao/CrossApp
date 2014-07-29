@@ -73,13 +73,41 @@ public:
 
     void setBackGroundColor(const CAColor4B &color);
     
+    CC_SYNTHESIZE(CAScrollViewDelegate*, m_pScrollViewDelegate, ScrollViewDelegate);
+    
+    CC_PROPERTY_IS(bool, m_bBounces, Bounces);
+    
+    CC_SYNTHESIZE_IS(bool, m_bBounceHorizontal, BounceHorizontal);
+    
+    CC_SYNTHESIZE_IS(bool, m_bBounceVertical, BounceVertical);
+    
+	CC_SYNTHESIZE_IS_READONLY(bool, m_bTracking, Tracking);
+    
+	CC_SYNTHESIZE_IS_READONLY(bool, m_bDecelerating, Decelerating);
+    
+    CC_PROPERTY_IS(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);
+    
+    CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);
+    
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bZooming, Zooming);
+    
+    CC_SYNTHESIZE(float, m_fMinimumZoomScale, MinimumZoomScale);
+    
+    CC_SYNTHESIZE(float, m_fMaximumZoomScale, MaximumZoomScale);
+    
+    CC_SYNTHESIZE_READONLY(float, m_fZoomScale, ZoomScale);
+    
+    CC_PROPERTY_IS(bool, m_bscrollEnabled, ScrollEnabled);
+    
+    CC_PROPERTY(CCSize, m_obViewSize, ViewSize);
+    
 protected:
  
     const CCPoint& getScrollWindowNotOutPoint(CCPoint& point);
     
-    float getScrollWindowNotOutHorizontal(float x);
+    virtual float getScrollWindowNotOutHorizontal(float x);
     
-    float getScrollWindowNotOutVertical(float y);
+    virtual float getScrollWindowNotOutVertical(float y);
     
     bool isScrollWindowNotOutSide();
     
@@ -118,36 +146,6 @@ protected:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-    
-protected:
-    
-    CC_SYNTHESIZE(CAScrollViewDelegate*, m_pScrollViewDelegate, ScrollViewDelegate);
-    
-    CC_PROPERTY_IS(bool, m_bBounces, Bounces);
-    
-    CC_SYNTHESIZE_IS(bool, m_bBounceHorizontal, BounceHorizontal);
-    
-    CC_SYNTHESIZE_IS(bool, m_bBounceVertical, BounceVertical);
-    
-	CC_SYNTHESIZE_IS_READONLY(bool, m_bTracking, Tracking);
-    
-	CC_SYNTHESIZE_IS_READONLY(bool, m_bDecelerating, Decelerating);
-    
-    CC_PROPERTY_IS(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);
-    
-    CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);
-    
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bZooming, Zooming);
-    
-    CC_SYNTHESIZE(float, m_fMinimumZoomScale, MinimumZoomScale);
-    
-    CC_SYNTHESIZE(float, m_fMaximumZoomScale, MaximumZoomScale);
-    
-    CC_SYNTHESIZE_READONLY(float, m_fZoomScale, ZoomScale);
-    
-    CC_PROPERTY_IS(bool, m_bscrollEnabled, ScrollEnabled);
-    
-    CC_PROPERTY(CCSize, m_obViewSize, ViewSize);
     
 private:
     

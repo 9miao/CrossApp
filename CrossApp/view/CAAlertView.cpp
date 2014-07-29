@@ -21,7 +21,7 @@ CAAlertView::CAAlertView()
 , m_pCAlertBtnEvent(NULL)
 , m_pCAlertTarget(NULL)
 , m_pBtnTableView(NULL)
-, m_sMsgFontName("fonts/arial.ttf")
+, m_sMsgFontName("")
 {
 
 }
@@ -166,7 +166,7 @@ void CAAlertView::setLabel(CALabel*& pLabel, std::string& szTitle, CAColor4B col
 		pLabel->setTextAlignment(CATextAlignmentCenter);
 		pLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         pLabel->setFontName(m_sMsgFontName.c_str());
-        pLabel->setFontSize(32 * CROSSAPP_ADPTATION_RATIO);
+        pLabel->setFontSize(_px(32));
 		insertSubview(pLabel, 1);
 	}
 	pLabel->setText(szTitle);

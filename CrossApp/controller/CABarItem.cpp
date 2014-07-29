@@ -83,6 +83,7 @@ SEL_CAControl CABarButtonItem::getSel()
 CANavigationBarItem::CANavigationBarItem()
 :m_pTitleViewImage(NULL)
 ,m_bShowGoBackButton(true)
+,m_pTitleView(NULL)
 {
     m_pLeftButtonItems = new CCArray(2);
     m_pLeftButtonItems->addObject(CAView::create());
@@ -91,6 +92,7 @@ CANavigationBarItem::CANavigationBarItem()
 
 CANavigationBarItem::~CANavigationBarItem()
 {
+    CC_SAFE_RELEASE_NULL(m_pTitleView);
     CC_SAFE_RELEASE_NULL(m_pTitleViewImage);
     CC_SAFE_DELETE(m_pLeftButtonItems);
     CC_SAFE_DELETE(m_pRightButtonItems);

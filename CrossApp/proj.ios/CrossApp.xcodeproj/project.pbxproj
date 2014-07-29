@@ -306,6 +306,8 @@
 		B04636D31957BBBD00758ABF /* CAAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B04636CF1957BBBD00758ABF /* CAAnimation.h */; };
 		B04636D41957BBBD00758ABF /* CAAnimationCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04636D01957BBBD00758ABF /* CAAnimationCache.cpp */; };
 		B04636D51957BBBD00758ABF /* CAAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B04636D11957BBBD00758ABF /* CAAnimationCache.h */; };
+		B04BCA841985DE5500CE0BC1 /* CAIndexPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04BCA821985DE5500CE0BC1 /* CAIndexPath.cpp */; };
+		B04BCA851985DE5500CE0BC1 /* CAIndexPath.h in Headers */ = {isa = PBXBuildFile; fileRef = B04BCA831985DE5500CE0BC1 /* CAIndexPath.h */; };
 		B0596A581976287B00B1E8CB /* CAFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */; };
 		B0596A591976287B00B1E8CB /* CAFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596A571976287B00B1E8CB /* CAFreeTypeFont.h */; };
 		B0596ACF197629BE00B1E8CB /* ftconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596A67197629BE00B1E8CB /* ftconfig.h */; };
@@ -414,7 +416,6 @@
 		B0596B431976356C00B1E8CB /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */; };
 		B05D36AA195AF3CC00DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */; };
 		B05D36AB195AF3CC00DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D36A9195AF3CC00DD4814 /* CAAlertView.h */; };
-		B094652E1969404400D96736 /* CASTLContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B094652C1969404400D96736 /* CASTLContainer.cpp */; };
 		B094652F1969404400D96736 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B094652D1969404400D96736 /* CASTLContainer.h */; };
 		B0B553D6193485BE0065053D /* CAImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553CE193485BE0065053D /* CAImage.cpp */; };
 		B0B553D7193485BE0065053D /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553CF193485BE0065053D /* CAImage.h */; };
@@ -677,6 +678,8 @@
 		B04636CF1957BBBD00758ABF /* CAAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimation.h; sourceTree = "<group>"; };
 		B04636D01957BBBD00758ABF /* CAAnimationCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimationCache.cpp; sourceTree = "<group>"; };
 		B04636D11957BBBD00758ABF /* CAAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimationCache.h; sourceTree = "<group>"; };
+		B04BCA821985DE5500CE0BC1 /* CAIndexPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAIndexPath.cpp; sourceTree = "<group>"; };
+		B04BCA831985DE5500CE0BC1 /* CAIndexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIndexPath.h; sourceTree = "<group>"; };
 		B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFreeTypeFont.cpp; sourceTree = "<group>"; };
 		B0596A571976287B00B1E8CB /* CAFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFreeTypeFont.h; sourceTree = "<group>"; };
 		B0596A67197629BE00B1E8CB /* ftconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftconfig.h; sourceTree = "<group>"; };
@@ -785,7 +788,6 @@
 		B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
 		B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D36A9195AF3CC00DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
-		B094652C1969404400D96736 /* CASTLContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASTLContainer.cpp; sourceTree = "<group>"; };
 		B094652D1969404400D96736 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B0B553CE193485BE0065053D /* CAImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImage.cpp; sourceTree = "<group>"; };
 		B0B553CF193485BE0065053D /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
@@ -813,7 +815,8 @@
 		04EA9F8E1956CE2500198A8E /* basics */ = {
 			isa = PBXGroup;
 			children = (
-				B094652C1969404400D96736 /* CASTLContainer.cpp */,
+				B04BCA821985DE5500CE0BC1 /* CAIndexPath.cpp */,
+				B04BCA831985DE5500CE0BC1 /* CAIndexPath.h */,
 				B094652D1969404400D96736 /* CASTLContainer.h */,
 				04EA9F8F1956CE2500198A8E /* CAApplication.cpp */,
 				04EA9F901956CE2500198A8E /* CAApplication.h */,
@@ -1756,6 +1759,7 @@
 				B0596B0E197629BE00B1E8CB /* svgldict.h in Headers */,
 				04EAA0011956CE2500198A8E /* CAIMEDispatcher.h in Headers */,
 				04EAA0031956CE2500198A8E /* CAKeypadDelegate.h in Headers */,
+				B04BCA851985DE5500CE0BC1 /* CAIndexPath.h in Headers */,
 				04EAA0051956CE2500198A8E /* CAKeypadDispatcher.h in Headers */,
 				04EAA0061956CE2500198A8E /* CAProtocols.h in Headers */,
 				04EAA0081956CE2500198A8E /* CATouch.h in Headers */,
@@ -1905,10 +1909,10 @@
 				15FBEE6D164BBF77008CB2C3 /* CCDrawNode.cpp in Sources */,
 				1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */,
 				1A3187F416C0B30600207637 /* CCImageCommonWebp.cpp in Sources */,
+				B04BCA841985DE5500CE0BC1 /* CAIndexPath.cpp in Sources */,
 				469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */,
 				1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */,
 				1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */,
-				B094652E1969404400D96736 /* CASTLContainer.cpp in Sources */,
 				B0596B411976356C00B1E8CB /* ConvertUTF.cpp in Sources */,
 				46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */,
 				B01F650819658599005C14FC /* CADensityDpi.mm in Sources */,

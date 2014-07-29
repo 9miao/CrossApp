@@ -13,9 +13,10 @@
 NS_CC_BEGIN;
 
 CAResponder::CAResponder()
-:m_bSlideContainers(false)
-,m_bControl(false)
-,m_eTouchSidingDirection(CATouchSidingDirectionMultiple)
+:m_bTouchMovedStopSubviews(false)
+,m_bStopSuperviewListenEvents(false)
+,m_bTouchMovedListenHorizontal(true)
+,m_bTouchMovedListenVertical(true)
 {
 
 }

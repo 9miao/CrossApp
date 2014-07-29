@@ -79,9 +79,9 @@ protected:
     
 protected:
     
-    CAVector<CAView> m_vWillTouchesViewCache;
+    CAVector<CAView*> m_vWillTouchesViewCache;
     
-    CAVector<CAView> m_vTouchesViewCache;
+    CAVector<CAView*> m_vTouchesViewCache;
     
 //    std::vector<CAView*> m_vWillTouchesViewCache;
 //    

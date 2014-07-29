@@ -175,7 +175,7 @@ void CAProgress::animatedFinish()
 
 void CAProgress::setContentSize(const CCSize & var)
 {
-    CAView::setContentSize(CCSize(var.width, 6.0f * CROSSAPP_ADPTATION_RATIO));
+    CAView::setContentSize(CCSize(var.width, _px(6)));
 }
 
 NS_CC_END

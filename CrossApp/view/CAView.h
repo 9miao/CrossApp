@@ -487,6 +487,8 @@ class CAViewDelegate
 {
 public:
     
+    virtual ~CAViewDelegate(){};
+    
     virtual void getSuperViewRect(const CCRect& rect) = 0;
     
     virtual void viewOnEnterTransitionDidFinish() = 0;

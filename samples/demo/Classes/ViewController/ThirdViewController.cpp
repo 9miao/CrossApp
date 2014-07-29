@@ -77,21 +77,21 @@ void ThirdViewController::viewDidUnload()
 
 void ThirdViewController::scrollViewDidScroll(CrossApp::CAScrollView *view)
 {
-    if (set->count() > 20)
-    {
-        CALabel* label = ((CALabel*) *set->begin());
-        label->removeFromSuperview();
-        set->removeObject(label);
-    }
-    
-    char order[40] = "sddsfdsfdsdgdfgfdgfdgfdgfdgfdgfdsfds";
-    CALabel* cellText = CALabel::createWithCenter(CCRect(arc4random()%400, arc4random()%400, 150, 50));
-	cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-	cellText->setText(order);
-	cellText->setColor(CAColor_blueStyle);
-	cellText->setTextAlignment(CATextAlignmentCenter);
-	cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	view->addSubview(cellText);
-    
-    set->addObject(cellText);
+//    if (set->count() > 20)
+//    {
+//        CALabel* label = ((CALabel*) *set->begin());
+//        label->removeFromSuperview();
+//        set->removeObject(label);
+//    }
+//    
+//    char order[40] = "sddsfdsfdsdgdfgfdgfdgfdgfdgfdgfdsfds";
+//    CALabel* cellText = CALabel::createWithCenter(CCRect(arc4random()%400, arc4random()%400, 150, 50));
+//	cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+//	cellText->setText(order);
+//	cellText->setColor(CAColor_blueStyle);
+//	cellText->setTextAlignment(CATextAlignmentCenter);
+//	cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+//	view->addSubview(cellText);
+//    
+//    set->addObject(cellText);
 }

@@ -4,7 +4,6 @@
 #include "CAAutoreleasePool.h"
 #include "ccMacros.h"
 #include "CAScheduler.h"
-#include "basics/CASTLContainer.h"
 
 NS_CC_BEGIN
 
@@ -23,8 +22,6 @@ CAObject::CAObject(void)
     static unsigned int uObjectCount = 0;
 
     m_uID = ++uObjectCount;
-    
-    addToObjPtrSets(this);
 }
 
 CAObject::~CAObject(void)
@@ -35,8 +32,6 @@ CAObject::~CAObject(void)
     {
         CAPoolManager::sharedPoolManager()->removeObject(this);
     }
-    
-    delToObjPtrSets(this);
 }
 
 CAObject* CAObject::copy()
@@ -55,11 +50,12 @@ void CAObject::release(void)
     }
 }
 
-void CAObject::retain(void)
+CAObject* CAObject::retain(void)
 {
     CCAssert(m_uReference > 0, "reference count should greater than 0");
 
     ++m_uReference;
+    return this;
 }
 
 CAObject* CAObject::autorelease(void)

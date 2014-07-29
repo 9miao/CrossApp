@@ -23,7 +23,7 @@ basics/CAObject.cpp \
 basics/CAResponder.cpp \
 basics/CAScheduler.cpp \
 basics/CAFPSImages.c \
-basics/CASTLContainer.cpp \
+basics/CAIndexPath.cpp \
 cocoa/CCArray.cpp \
 cocoa/CCDictionary.cpp \
 cocoa/CCNS.cpp \

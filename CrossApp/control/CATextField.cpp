@@ -34,6 +34,8 @@ CATextField::CATextField()
 ,labelWidth(0)
 ,labelOrginX(0)
 ,m_cCursorColor(CAColor_black)
+,m_bUpdateImage(false)
+,m_pBackgroundView(NULL)
 {
    
 }
@@ -47,7 +49,11 @@ void CATextField::onEnterTransitionDidFinish()
 {
     CAControl::onEnterTransitionDidFinish();
     CC_RETURN_IF(m_sPlaceHolder.empty());
-    this->updateImage();
+	if (m_bUpdateImage)
+	{
+		m_bUpdateImage = false;
+		this->updateImage();
+	}
     
 }
 
@@ -163,7 +169,7 @@ void CATextField::setFontSize(float var)
     
     m_pMark->setFrame(CCRect(labelOrginX, 0, var / 10.0f, var));
     
-    this->updateImage();
+	m_bUpdateImage = true;
 }
 
 float CATextField::getFontSize()
@@ -189,7 +195,7 @@ void CATextField::setPlaceHolder(std::string var)
 {
     m_sPlaceHolder = var;
     m_sText = var;
-    this->updateImage();
+	m_bUpdateImage = true;
 }
 
 std::string CATextField::getPlaceHolder()
@@ -200,7 +206,7 @@ std::string CATextField::getPlaceHolder()
 void CATextField::setSpaceHolderColor(CAColor4B var)
 {
     m_cSpaceHolderColor = var;
-    this->updateImage();
+	m_bUpdateImage = true;
 }
 
 CAColor4B CATextField::getSpaceHolderColor()
@@ -211,7 +217,7 @@ CAColor4B CATextField::getSpaceHolderColor()
 void CATextField::setTextColor(CAColor4B var)
 {
     m_cTextColor = var;
-    this->updateImage();
+	m_bUpdateImage = true;
 }
 
 CAColor4B CATextField::getTextColor()
@@ -222,7 +228,7 @@ CAColor4B CATextField::getTextColor()
 void CATextField::setTextAlignment(CATextAlignment var)
 {
     m_aTextAlignment = var;
-    this->updateImage();
+	m_bUpdateImage = true;
 }
 
 CATextAlignment CATextField::getTextAlignment()
@@ -622,7 +628,6 @@ void CATextField::deleteBackward()
     
     m_vByteLengthArr.erase(m_vByteLengthArr.begin()+getStringCharCount(m_sLeft_string));
     m_sLeft_string = sText.c_str();
-    float left_width = getStringLength(m_sLeft_string);
 
 	m_fString_left_length = m_rLabelRect.size.width;
 		//left_width;
@@ -659,21 +664,36 @@ void CATextField::getKeyBoardHeight(int height)
 
 void CATextField::setBackGroundImage(CAImage *image)
 {
-    this->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(image));
+//    if (m_pBackgroundView == NULL)
+//    {
+//        m_pBackgroundView = CAScale9ImageView::create();
+//        m_pBackgroundView->setFrame(this->getBounds());
+//        this->insertSubview(m_pBackgroundView, -1);
+//    }
+//    m_pBackgroundView->setImage(image);
 }
 
 CAImage *CATextField::getBackGroundImage()
 {
-    return  this->getBackGroundImage();
+    if (m_pBackgroundView == NULL)
+    {
+        return NULL;
+    }
+    return m_pBackgroundView->getImage();
 }
 
 void CATextField::setContentSize(const CCSize& var)
 {
     CAControl::setContentSize(var);
+    if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setFrame(this->getBounds());
+    }
 }
 
 void CATextField::updateImage()
 {
+
     float fontHeight = CAImage::getFontHeight("", m_fFontSize);
     CCSize size = CCSizeZero;
     size = CCSizeMake(0, fontHeight);
@@ -703,9 +723,7 @@ void CATextField::updateImage()
 		m_rLabelRect.size = image->getContentSize();
 		imageWidth = image->getContentSize().width;
 	}
-   
-   
-	
+
     if (spaceHolderIsOn)
     {
         m_rLabelRect = CCRectZero;
@@ -832,8 +850,20 @@ float CATextField::getStringLength(const std::string &var)
                                                CCSizeZero,
                                                CATextAlignmentLeft,
                                                CAVerticalTextAlignmentCenter);
-    length = image->getContentSize().width;
+    if(image != NULL)
+    {
+        length = image->getContentSize().width;
+    }
     
     return length;
+}
+void CATextField::visit()
+{
+	CAView::visit();
+	if (m_bUpdateImage)
+	{
+		m_bUpdateImage = false;
+		this->updateImage();
+	}
 }
 NS_CC_END

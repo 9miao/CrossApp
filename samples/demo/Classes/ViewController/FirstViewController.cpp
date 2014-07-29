@@ -182,10 +182,10 @@ CATableViewCell* FirstViewController::tableCellAtIndex(CATableView* table, const
 	test->setTextAlignment(CATextAlignmentCenter);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	test->setFontSize(40*CROSSAPP_ADPTATION_RATIO);
-	test->setText(testList[row]);
 	test->setColor(ccc4(51, 204, 255, 255));
+    test->setText(testList[row]);
 	cell->addSubview(test);
-
+    
 	return cell;
 }
 

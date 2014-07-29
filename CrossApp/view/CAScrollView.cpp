@@ -43,7 +43,7 @@ CAScrollView::CAScrollView()
 ,m_bShowsHorizontalScrollIndicator(true)
 ,m_bShowsVerticalScrollIndicator(true)
 {
-    m_bSlideContainers = true;
+    m_bTouchMovedStopSubviews = true;
     
     m_pTouches = new CCArray(2);
     m_pChildInThis = new CCArray();
@@ -102,9 +102,11 @@ bool CAScrollView::init()
     }
     this->setDisplayRange(false);
     
-    m_pContainer = CAView::createWithFrame(this->getBounds(), CAColor_clear);
+    m_pContainer = new CAView();
+    m_pContainer->setFrame(this->getBounds());
     m_pChildInThis->addObject(m_pContainer);
     this->addSubview(m_pContainer);
+    m_pContainer->release();
     
     m_pIndicatorHorizontal = CAIndicator::create(CAIndicator::CAIndicatorTypeHorizontal);
     m_pChildInThis->addObject(m_pIndicatorHorizontal);
@@ -190,7 +192,7 @@ CCSize CAScrollView::getViewSize()
 
 void CAScrollView::setScrollEnabled(bool var)
 {
-    m_bSlideContainers = m_bscrollEnabled = var;
+    m_bTouchMovedStopSubviews = m_bscrollEnabled = var;
 }
 
 bool CAScrollView::isScrollEnabled()
@@ -295,7 +297,7 @@ void CAScrollView::setContentSize(const CrossApp::CCSize &var)
     point = this->getScrollWindowNotOutPoint(point);
     m_pContainer->setCenterOrigin(point);
     
-    const char indicatorSize = 6 * CROSSAPP_ADPTATION_RATIO;
+    const char indicatorSize = _px(6);
     
     if (m_pIndicatorHorizontal)
     {

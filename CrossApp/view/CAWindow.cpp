@@ -24,6 +24,8 @@ CAWindow::~CAWindow()
 
 bool CAWindow::init()
 {
+    CAView::init();
+    
     bool bRet = false;
      do 
      {

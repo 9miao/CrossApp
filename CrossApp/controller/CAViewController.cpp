@@ -110,6 +110,11 @@ void CAViewController::removeViewFromSuperview()
     m_pView->removeFromSuperview();
 }
 
+bool CAViewController::isViewRunning()
+{
+    return (bool)(m_pView->getSuperview() && m_pView->isVisible());
+}
+
 /// isKeypadEnabled getter
 bool CAViewController::isKeypadEnabled()
 {
@@ -694,7 +699,6 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
         {
             CAViewController* view = m_pViewControllers.at(i);
             view->retain();
-            view->m_pTabBarController = this;
             if (view->getTabBarItem() == NULL)
             {
                 const char* title = CCString::createWithFormat("item%d",i)->getCString();
@@ -703,6 +707,7 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
                 view->setTabBarItem(item);
             }
             items.push_back(view->getTabBarItem());
+            view->m_pTabBarController = this;
         }
         
         m_pTabBar = CATabBar::create(items);
@@ -836,6 +841,16 @@ CAViewController* CATabBarController::getSelectedViewController()
     return m_pViewControllers.at(m_nSelectedIndex);
 }
 
+CAViewController* CATabBarController::getViewControllerAtIndex(unsigned int index)
+{
+    if (index >= m_pViewControllers.size())
+    {
+        return NULL;
+    }
+    
+    return m_pViewControllers.at(index);
+}
+
 bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index)
 {
     do
@@ -844,8 +859,10 @@ bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index)
         CC_BREAK_IF(index == m_nSelectedIndex);
         m_nSelectedIndex = index;
         
-        this->getView()->runAction(CCSequence::create(CCDelayTime::create(1/60.0f),
-                                                      CCCallFunc::create(this, callfunc_selector(CATabBarController::renderingSelectedViewController)), NULL));
+        CAApplication::getApplication()->getRootWindow()->runAction
+        (
+            CCCallFunc::create(this, callfunc_selector(CATabBarController::renderingSelectedViewController))
+        );
         
         return true;
     }

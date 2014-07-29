@@ -44,7 +44,7 @@ bool CANavigationBar::init()
     }
     this->setColor(CAColor_clear);
     CCSize winSize = CAApplication::getApplication()->getWinSize();
-    CCSize size = CCSize(winSize.width, 96 * CROSSAPP_ADPTATION_RATIO);
+    CCSize size = CCSize(winSize.width, _px(96));
     this->setContentSize(size);
     
     return true;
@@ -144,8 +144,14 @@ void CANavigationBar::showTitle()
         m_pTitle = NULL;
     }
     
-    CAImage* image = m_pItems.back()->getTitleViewImage();
-    if (image)
+    if (CAView* titleView = m_pItems.back()->getTitleView())
+    {
+        rect.size.height *= 2/3.0f;
+        titleView->setCenter(rect);
+        this->addSubview(titleView);
+        m_pTitle = titleView;
+    }
+    else if (CAImage* image = m_pItems.back()->getTitleViewImage())
     {
         float height = MIN(image->getContentSize().height, rect.size.height * 0.75f);
         float width =  height * image->getContentSize().width / image->getContentSize().height;
@@ -162,17 +168,16 @@ void CANavigationBar::showTitle()
         title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         title->setNumberOfLine(1);
         title->setColor(m_cTitleColor);
-        title->setFontSize(32 * CROSSAPP_ADPTATION_RATIO);
+        title->setFontSize(_px(32));
         this->addSubview(title);
         m_pTitle = title;
+        
+        if (!m_pItems.empty())
+        {
+            std::string str = m_pItems.back()->getTitle();
+            ((CALabel*)m_pTitle)->setText(str.c_str());
+        }
     }
-    
-    if (!m_pItems.empty())
-    {
-        std::string str = m_pItems.back()->getTitle();
-        ((CALabel*)m_pTitle)->setText(str.c_str());
-    }
-
 }
 
 void CANavigationBar::showLeftButton()
@@ -218,7 +223,8 @@ void CANavigationBar::showLeftButton()
             }
             else
             {
-                button->setImageColorForState(CAControlStateHighlighted, ccc4(255, 255, 200, 255));
+                //button->setImageForState(CAControlStateHighlighted, item->getImage());
+                button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
             }
             button->addTarget(item->getTarget(), item->getSel(), CAControlEventTouchUpInSide);
         }
@@ -263,7 +269,7 @@ void CANavigationBar::showRightButton()
             }
             else
             {
-                button->setImageColorForState(CAControlStateHighlighted, ccc4(255, 255, 200, 255));
+                button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
             }
             button->addTarget(item->getTarget(), item->getSel(), CAControlEventTouchUpInSide);
         }
@@ -346,7 +352,7 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items)
     this->setColor(CAColor_clear);
     
     CCSize winSize = CAApplication::getApplication()->getWinSize();
-    CCSize size = CCSize(winSize.width, 96 * CROSSAPP_ADPTATION_RATIO);
+    CCSize size = CCSize(winSize.width, _px(96));
     this->setContentSize(size);
     
     this->setItems(items);
@@ -363,8 +369,6 @@ void CATabBar::onEnterTransitionDidFinish()
         this->showBackGround();
         
         this->updateTabBar();
-        
-        this->setSelectedAtIndex(m_nSelectedIndex);
     }
 }
 

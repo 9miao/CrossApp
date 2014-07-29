@@ -74,12 +74,30 @@ public:
 
 	void reloadData();
 
+    CACollectionViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier) { return NULL; };
+    
     virtual void setAllowsSelection(bool var);
     
     virtual void setAllowsMultipleSelection(bool var);
     
 	void setSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
 
+    CC_SYNTHESIZE(CACollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
+    
+	CC_SYNTHESIZE(CACollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
+    
+	CC_SYNTHESIZE_RETAIN(CAView*, m_pCollectionHeaderView, CollectionHeaderView);
+    
+	CC_SYNTHESIZE_RETAIN(CAView*, m_pCollectionFooterView, CollectionFooterView);
+    
+    CC_SYNTHESIZE(unsigned int, m_nCollectionHeaderHeight, CollectionHeaderHeight);
+    
+    CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
+    
+	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsSelection, AllowsSelection);
+    
+	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
+    
 protected:
     
     inline virtual float maxSpeed(float dt);
@@ -102,24 +120,6 @@ protected:
 
 	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 
-protected:
-    
-	CC_SYNTHESIZE(CACollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
-
-	CC_SYNTHESIZE(CACollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
-
-	CC_SYNTHESIZE_RETAIN(CAView*, m_pCollectionHeaderView, CollectionHeaderView);
-
-	CC_SYNTHESIZE_RETAIN(CAView*, m_pCollectionFooterView, CollectionFooterView);
-
-    CC_SYNTHESIZE(unsigned int, m_nCollectionHeaderHeight, CollectionHeaderHeight);
-    
-    CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
-
-	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsSelection, AllowsSelection);
-
-	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
-
 private:
 	std::set<CACollectionViewCell*> m_pSelectedCollectionCells;
 
@@ -131,38 +131,46 @@ private:
 class CC_DLL CACollectionViewCell : public CAControl
 {
 public:
+    
 	CACollectionViewCell();
+    
 	virtual ~CACollectionViewCell();
 
 	static CACollectionViewCell* create(const char* reuseIdentifier);
 
-	bool initWithReuseIdentifier(const char* reuseIdentifier);
+	virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
 
-    using CAControl::setBackGroundViewForState;
+    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
-protected:
+    CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
     
-    virtual void normalTableViewCell(){};
-    
-    virtual void highlightedTableViewCell(){};
-    
-    virtual void selectedTableViewCell(){};
-    
-    virtual void disabledTableViewCell(){};
-    
-    void setControlState(CAControlState var);
-    
-    using CAControl::setTouchEnabled;
-    
-protected:
-
-	CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
-
     CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
     
-	CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
-
-	CC_SYNTHESIZE_READONLY(unsigned int, m_nItem, Item);
+    CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
+    
+    CC_SYNTHESIZE_READONLY(unsigned int, m_nItem, Item);
+    
+protected:
+    
+    virtual void setControlState(CAControlState var);
+    
+    virtual void normalTableViewCell();
+    
+    virtual void highlightedTableViewCell();
+    
+    virtual void selectedTableViewCell();
+    
+    virtual void disabledTableViewCell();
+    
+    virtual void setContentSize(const CCSize& var);
+    
+    using CAView::init;
+    
+    using CAView::initWithCenter;
+    
+    using CAView::initWithFrame;
+    
+    using CAView::initWithColor;
     
     friend class CACollectionView;
 };

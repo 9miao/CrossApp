@@ -576,39 +576,7 @@ CCImage::~CCImage()
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
     std::string strTemp = CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath);
-	if (m_bEnabledScale)
-	{
-		if (!isFileExists(strTemp.c_str()))
-		{
-			if (strTemp.rfind("@2x") == std::string::npos)
-			{
-				int t = strTemp.rfind(".");
-				if (t != std::string::npos)
-				{
-					strTemp.insert(t, "@2x");
-				}
-/*				CCSize size = CAApplication::getApplication()->getWinSize();		
-	#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-				m_dScaleX = size.width/800.0f;
-				m_dScaleY = size.height/480.0f;
-	#else
-				m_dScaleX = size.width/960.0f;
-				m_dScaleY = size.height/640.0f;
-				
-	#endif
-*/
-			}
-		}    
-		else
-		{
-//			m_dScaleX = 1.0;
-//			m_dScaleY = 1.0;
-		}
-	}
-	
-//	CCFileData tempData(strTemp.c_str(), "rb");			
-//	return initWithImageData(tempData.getBuffer(), tempData.getSize(), eImgFmt);
-
+    
 	unsigned long fileSize = 0;
 	unsigned char* pFileData = CCFileUtils::sharedFileUtils()->getFileData(strTemp.c_str(), "rb", &fileSize);
 	bool ret = initWithImageData(pFileData, fileSize, eImgFmt);

@@ -15,12 +15,7 @@ CAControl::CAControl()
 ,m_bControlStateLocked(false)
 ,m_bTouchEnabled(true)
 {
-    m_bControl = true;
-    
-    for (int i=0; i<CAControlStateAll; i++)
-    {
-        m_pBackGroundView[i] = NULL;
-    }
+    m_bStopSuperviewListenEvents = true;
     
     for (int i=0; i<7; i++)
     {
@@ -32,48 +27,11 @@ CAControl::CAControl()
 CAControl::~CAControl()
 {
     this->removeAllSubviews();
-    for (int i=0; i<CAControlStateAll; i++)
-    {
-        CC_SAFE_RELEASE_NULL(m_pBackGroundView[i]);
-    }
 }
 
 bool CAControl::init()
 {
     return true;
-}
-
-void CAControl::setControlState(CAControlState var)
-{
-    CC_RETURN_IF(var == CAControlStateAll);
-    
-    for (int i=0; i<CAControlStateAll; i++)
-    {
-        this->removeSubview(m_pBackGroundView[i]);
-    }
-    
-    m_eControlState = var;
-    
-    if (m_bControlStateLocked)
-    {
-        m_eControlState = CAControlStateNormal;
-    }
-    
-    if (m_pBackGroundView[m_eControlState] && m_eControlState != CAControlStateNormal)
-    {
-        m_pBackGroundView[m_eControlState]->setFrame(this->getBounds());
-        this->insertSubview(m_pBackGroundView[m_eControlState], -1);
-    }
-    else if (m_pBackGroundView[CAControlStateNormal])
-    {
-        m_pBackGroundView[CAControlStateNormal]->setFrame(this->getBounds());
-        this->insertSubview(m_pBackGroundView[CAControlStateNormal], -1);
-    }
-}
-
-CAControlState CAControl::getControlState()
-{
-    return m_eControlState;
 }
 
 void CAControl::setControlStateNormal()
@@ -96,36 +54,6 @@ void CAControl::setControlStateSelected()
     this->setControlState(CAControlStateSelected);
 }
 
-void CAControl::setBackGroundViewForState(CAControlState controlState, CAView *var)
-{
-    if (controlState == CAControlStateAll)
-    {
-        for (int i=0; i<CAControlStateAll; i++)
-        {
-            this->setBackGroundViewForState((CAControlState)i, var);
-        }
-        return;
-    }
-    
-    if (m_pBackGroundView[controlState] != var)
-    {
-        CC_SAFE_RETAIN(var);
-        this->removeSubview(m_pBackGroundView[controlState]);
-        CC_SAFE_RELEASE(m_pBackGroundView[controlState]);
-        m_pBackGroundView[controlState] = var;
-        this->setControlState(m_eControlState);
-    }
-}
-
-CAView* CAControl::getBackGroundViewForState(CAControlState controlState)
-{
-    if (controlState == CAControlStateAll)
-    {
-        return NULL;
-    }
-    return m_pBackGroundView[controlState];
-}
-
 void CAControl::addTarget(CAObject *target, SEL_CAControl selector, CAControlEvents event)
 {
     m_pTarget[event] = target;
@@ -146,27 +74,5 @@ void CAControl::removeAllTargets()
         m_selTouch[i] = NULL;
     }
 }
-
-void CAControl::setTouchEnabled(bool enabled)
-{
-    m_bTouchEnabled = enabled;
-}
-
-bool CAControl::isTouchEnabled()
-{
-    return m_bTouchEnabled;
-}
-
-void CAControl::setContentSize(const CCSize& var)
-{
-    CAView::setContentSize(var);
-    
-    for(int i=0; i<CAControlStateAll; i++)
-    {
-        CC_CONTINUE_IF(m_pBackGroundView[i] == NULL);
-        m_pBackGroundView[i]->setFrame(this->getBounds());
-    }
-}
-    
 
 NS_CC_END

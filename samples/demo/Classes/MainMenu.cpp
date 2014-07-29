@@ -27,7 +27,8 @@ CAWindow* MainMenu::createWindow()
 	navigationController->initWithRootViewController(viewController1);
 	navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("first_1.png"), CAImage::create("first_2.png")));
 	viewController1->release();
-
+    navigationController->setNavigationBarHidden(true, false);
+    
 	SecondViewController* viewController2 = new SecondViewController();
 	viewController2->init();
 	viewController2->setTabBarItem(CATabBarItem::create("Second", CAImage::create("second_1.png"), CAImage::create("second_2.png")));

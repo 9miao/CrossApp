@@ -227,6 +227,7 @@ bool CASwitch::initWithFrame(const CCRect& rect)
     }
     this->setColor(CAColor_clear);
     this->setFrame(rect);
+    this->setContentSize(CADipSize(80, 48));
     return true;
 }
 
@@ -236,8 +237,9 @@ bool CASwitch::initWithCenter(const CCRect& rect)
     {
         return false;
     }
-    
+    this->setColor(CAColor_clear);
     this->setCenter(rect);
+    this->setContentSize(CADipSize(80, 48));
     return true;
 }
 
@@ -282,7 +284,7 @@ void CASwitch::removeTarget(CAObject* target, SEL_CAControl selector)
 
 void CASwitch::setContentSize(const CCSize & var)
 {
-    CAControl::setContentSize(CCSize(80, 48) * CROSSAPP_ADPTATION_RATIO);
+    CAControl::setContentSize(CADipSize(80, 48));
 }
 
 NS_CC_END

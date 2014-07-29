@@ -33,6 +33,11 @@ CAButton::CAButton(CAButtonType buttonType)
 {
     for (int i=0; i<CAControlStateAll; i++)
     {
+        m_pBackGroundView[i] = NULL;
+    }
+    
+    for (int i=0; i<CAControlStateAll; i++)
+    {
         m_pImage[i] = NULL;
         m_sTitle[i] = "";
         m_sImageColor[i] = CAColor_white;
@@ -53,6 +58,10 @@ CAButton::CAButton(CAButtonType buttonType)
 
 CAButton::~CAButton(void)
 {
+    for (int i=0; i<CAControlStateAll; i++)
+    {
+        CC_SAFE_RELEASE_NULL(m_pBackGroundView[i]);
+    }
     CC_SAFE_RELEASE_NULL(m_pImageView);
     CC_SAFE_RELEASE_NULL(m_pLabel);
 }
@@ -218,7 +227,23 @@ void CAButton::setBackGroundViewRoundedRect()
 
 void CAButton::setBackGroundViewForState(CAControlState controlState, CAView *var)
 {
-    CAControl::setBackGroundViewForState(controlState, var);
+    if (controlState == CAControlStateAll)
+    {
+        for (int i=0; i<CAControlStateAll; i++)
+        {
+            this->setBackGroundViewForState((CAControlState)i, var);
+        }
+        return;
+    }
+    
+    if (m_pBackGroundView[controlState] != var)
+    {
+        CC_SAFE_RETAIN(var);
+        this->removeSubview(m_pBackGroundView[controlState]);
+        CC_SAFE_RELEASE(m_pBackGroundView[controlState]);
+        m_pBackGroundView[controlState] = var;
+        this->setControlState(m_eControlState);
+    }
     
     CC_RETURN_IF(var == NULL);
     
@@ -228,6 +253,15 @@ void CAButton::setBackGroundViewForState(CAControlState controlState, CAView *va
     }
     
     this->updateWithPreferredSize();
+}
+
+CAView* CAButton::getBackGroundViewForState(CAControlState controlState)
+{
+    if (controlState == CAControlStateAll)
+    {
+        return NULL;
+    }
+    return m_pBackGroundView[controlState];
 }
 
 void CAButton::setImageForState(CAControlState controlState, CAImage* var)
@@ -354,7 +388,7 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         CC_BREAK_IF(!this->isVisible());
         CC_BREAK_IF(!m_bTouchEnabled);
         CC_BREAK_IF(m_eControlState != CAControlStateNormal && m_eControlState != CAControlStateSelected);
-        
+
         return this->setTouchBegin(point);
     }
     while (0);
@@ -366,7 +400,7 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 {
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
-    
+
     if (!this->isTouchClick()) return;
     
     if (getBounds().containsPoint(point))
@@ -392,10 +426,10 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 {
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
-
+    
     if (!this->isTouchClick())
         return;
-
+    
     this->setTouchUpSide(point);
     
     if (getBounds().containsPoint(point))
@@ -444,6 +478,31 @@ void CAButton::setControlState(CAControlState var)
 {
     CAControl::setControlState(var);
 
+    CC_RETURN_IF(var == CAControlStateAll);
+    
+    for (int i=0; i<CAControlStateAll; i++)
+    {
+        this->removeSubview(m_pBackGroundView[i]);
+    }
+    
+    m_eControlState = var;
+    
+    if (m_bControlStateLocked)
+    {
+        m_eControlState = CAControlStateNormal;
+    }
+    
+    if (m_pBackGroundView[m_eControlState] && m_eControlState != CAControlStateNormal)
+    {
+        m_pBackGroundView[m_eControlState]->setFrame(this->getBounds());
+        this->insertSubview(m_pBackGroundView[m_eControlState], -1);
+    }
+    else if (m_pBackGroundView[CAControlStateNormal])
+    {
+        m_pBackGroundView[CAControlStateNormal]->setFrame(this->getBounds());
+        this->insertSubview(m_pBackGroundView[CAControlStateNormal], -1);
+    }
+    
     if (m_eControlState == CAControlStateSelected)
     {
         m_bSelected = true;
@@ -496,7 +555,7 @@ void CAButton::setControlState(CAControlState var)
         CCSize size = this->getBounds().size;
         CCSize iSize = image->getContentSize();
         float scaleX = size.width / iSize.width * 0.5f;
-        float scaleY = size.height / iSize.height * 0.5f;
+        float scaleY = size.height / iSize.height * 0.45f;
         float scale = MIN(scaleX, scaleY);
         scale = MIN(scale, 1.0f);
         iSize = ccpMult(iSize, scale);
@@ -505,7 +564,7 @@ void CAButton::setControlState(CAControlState var)
         imageViewCenter.origin.x = size.width / 2;
         imageViewCenter.origin.y = size.height * 0.35f;
         
-        labelSize = size.height * 0.35f;
+        labelSize = size.height * 0.2f;
         labelCenter.origin.x = size.width / 2;
         labelCenter.origin.y = size.height * 0.75f;
     }
@@ -604,9 +663,14 @@ bool CAButton::isTextTagEqual(const char *text)
 void CAButton::setContentSize(const CCSize & var)
 {
     CCSize size = var;
-    size.height = MAX(size.height, 60 * CROSSAPP_ADPTATION_RATIO);
+    size.height = MAX(size.height, _px(60));
     size.width = MAX(size.width, size.height);
-    CAControl::setContentSize(size);
+    CAView::setContentSize(size);
+    for(int i=0; i<CAControlStateAll; i++)
+    {
+        CC_CONTINUE_IF(m_pBackGroundView[i] == NULL);
+        m_pBackGroundView[i]->setFrame(this->getBounds());
+    }
     
     this->updateWithPreferredSize();
     this->setControlState(m_eControlState);

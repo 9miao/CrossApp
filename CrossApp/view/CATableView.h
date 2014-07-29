@@ -11,12 +11,12 @@
 
 #include <iostream>
 #include "CAScrollView.h"
-#include "control/CAControl.h"
-#include <vector>
-#include <deque>
 #include <set>
+#include "basics/CASTLContainer.h"
 #include "cocoa/CCDictionary.h"
 #include "cocoa/CCArray.h"
+#include "control/CAControl.h"
+#include "basics/CAIndexPath.h"
 
 NS_CC_BEGIN
 
@@ -34,7 +34,7 @@ class CATableViewDelegate
 public:
     
     virtual ~CATableViewDelegate(){};
-    
+
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row){};
     
     virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row){};
@@ -65,8 +65,6 @@ public:
     virtual unsigned int tableViewHeightForHeaderInSection(CATableView* table, unsigned int section){return 0;}
     
     virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section){return 0;}
-    
-    CC_DEPRECATED_ATTRIBUTE virtual CATableViewCell* tableCellAtIndex(CATableView* table, unsigned int section, unsigned int row){return NULL;}
     
     CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section){return NULL;}
     
@@ -103,44 +101,6 @@ public:
     
     void setSelectRowAtIndexPath(unsigned int section, unsigned int row);
     
-    CC_DEPRECATED_ATTRIBUTE void setTablePullDownView(CAView* var);
-    
-    CC_DEPRECATED_ATTRIBUTE void setTablePullUpView(CAView* var);
-    
-    CC_DEPRECATED_ATTRIBUTE void setTablePullViewHeight(unsigned int var);
-    
-protected:
-
-    inline virtual float maxSpeed(float dt);
-    
-    inline virtual float maxSpeedCache(float dt);
-    
-    inline virtual float decelerationRatio(float dt);
-    
-    inline virtual CCPoint maxBouncesLenght();
-    
-    virtual void contentOffsetFinish();
-    
-    void clearData();
-    
-    void reloadViewSizeData();
-    
-    virtual void setContentSize(const CCSize& var);
-    
-    virtual void update(float dt);
-    
-protected:
-    
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    
-    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-    
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-    
-    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-    
-protected:
-    
     CC_SYNTHESIZE(CATableViewDataSource*, m_pTableViewDataSource, TableViewDataSource);
     
     CC_SYNTHESIZE(CATableViewDelegate*, m_pTableViewDelegate, TableViewDelegate);
@@ -167,6 +127,49 @@ protected:
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nTablePullViewHeight, TablePullViewHeight);
     
+    
+    CC_DEPRECATED_ATTRIBUTE void setTablePullDownView(CAView* var);
+    
+    CC_DEPRECATED_ATTRIBUTE void setTablePullUpView(CAView* var);
+    
+    CC_DEPRECATED_ATTRIBUTE void setTablePullViewHeight(unsigned int var);
+    
+protected:
+
+    inline virtual float maxSpeed(float dt);
+    
+    inline virtual float maxSpeedCache(float dt);
+    
+    inline virtual float decelerationRatio(float dt);
+    
+    inline virtual CCPoint maxBouncesLenght();
+    
+    virtual void contentOffsetFinish();
+    
+    void clearData();
+    
+    void reloadViewSizeData();
+    
+    virtual void setContentSize(const CCSize& var);
+    
+    virtual void update(float dt);
+    
+    void recoveryTableCell();
+    
+    void loadTableCell();
+    
+    CAView* dequeueReusableLine();
+    
+protected:
+    
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
 private:
     
     using CAScrollView::setBounceHorizontal;
@@ -182,8 +185,6 @@ private:
     using CAScrollView::isShowsHorizontalScrollIndicator;
     
     using CAScrollView::setViewSize;
-    
-    using CAScrollView::getViewSize;
     
     using CAScrollView::setMinimumZoomScale;
     
@@ -209,9 +210,11 @@ private:
     
     using CAScrollView::getSubviewByTag;
     
-    using CAResponder::setTouchSidingDirection;
+    using CAResponder::setTouchMovedListenHorizontal;
     
 protected:
+    
+    unsigned int m_nSections;
     
     std::vector<unsigned int> m_nRowsInSections;
     
@@ -223,18 +226,22 @@ protected:
     
     std::vector<std::vector<unsigned int> > m_nRowHeightss;
     
-    std::vector<CCRect> m_rSectionRectss;
-    
     std::vector<std::vector<CCRect> > m_rTableCellRectss;
 
-    std::deque<CATableViewCell*> m_pTableCells;
+    std::map<CAIndexPath2E, CATableViewCell*> m_pUsedTableCells;
     
-    std::set<CATableViewCell*> m_pSelectedTableCells;
+    std::map<std::string, CAVector<CATableViewCell*> > m_pFreedTableCells;
+    
+    std::set<CAIndexPath2E> m_pSelectedTableCells;
     
     CATableViewCell* m_pHighlightedTableCells;
     
-    CCDictionary* m_pCellDict;
+    std::vector<std::vector<CCRect> > m_rLineRectss;
     
+    std::map<CAIndexPath2E, CAView*> m_pUsedLines;
+    
+    CAList<CAView*> m_pFreedLines;
+
     typedef enum
     {
         CATableViewToUpdatePullUp,
@@ -256,31 +263,39 @@ public:
     
     static CATableViewCell* create(const char* reuseIdentifier);
     
-    bool initWithReuseIdentifier(const char* reuseIdentifier);
+    virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
     
-    using CAControl::setBackGroundViewForState;
+    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
-protected:
-    
-    virtual void normalTableViewCell(){};
-    
-    virtual void highlightedTableViewCell(){};
-    
-    virtual void selectedTableViewCell(){};
-    
-    virtual void disabledTableViewCell(){};
-    
-    void setControlState(CAControlState var);
-    
-    using CAControl::setTouchEnabled;
-    
-protected:
-
     CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
+    
+protected:
+    
+    virtual void setControlState(CAControlState var);
+    
+    virtual void normalTableViewCell();
+    
+    virtual void highlightedTableViewCell();
+    
+    virtual void selectedTableViewCell();
+    
+    virtual void disabledTableViewCell();
+    
+    virtual void setContentSize(const CCSize& var);
+    
+    using CAView::init;
+    
+    using CAView::initWithCenter;
+    
+    using CAView::initWithFrame;
+    
+    using CAView::initWithColor;
+    
+    void resetTableViewCell();
     
     friend class CATableView;
 

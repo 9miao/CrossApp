@@ -19,6 +19,7 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     : CAControl()
     , m_selectedIndex(-1)
     , m_nItemsCount(itemsCount)
+    , m_pBackgroundView(NULL)
 {
     
 }
@@ -83,13 +84,8 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
         if (btn)
         {
             btn->setFrame(elemFrame);
-            char tmp[8] = {0};
-            snprintf(tmp, 8, "%d", i);
-            btn->setTitleForState(CAControlStateNormal, tmp);
-            btn->setTitleForState(CAControlStateSelected, tmp);
-            btn->setTitleForState(CAControlStateHighlighted, tmp);
             m_segments.push_back(btn);
-            this->addSubview(btn);
+            this->insertSubview(btn, 1);
         }
         elemFrame.origin.x += elemWidth;
     }
@@ -115,13 +111,8 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
         if (btn)
         {
             btn->setFrame(elemFrame);
-            char tmp[8] = {0};
-            snprintf(tmp, 8, "%d", i);
-            btn->setTitleForState(CAControlStateNormal, tmp);
-            btn->setTitleForState(CAControlStateSelected, tmp);
-            btn->setTitleForState(CAControlStateHighlighted, tmp);
             m_segments.push_back(btn);
-            this->addSubview(btn);
+            this->insertSubview(btn, 1);
         }
         elemFrame.origin.x += elemWidth;
     }
@@ -293,6 +284,23 @@ bool CASegmentedControl::setImageAtIndex(CAImage *image, int index, CAControlSta
     return true;
 }
 
+bool CASegmentedControl::setImageColorAtIndex(CAColor4B color, int index, CAControlState controlState)
+{
+    if (!this->indexIsValid(index))
+    {
+        return false;
+    }
+    
+    CAButton *btn = m_segments.at(index);
+    if (NULL == btn)
+    {
+        return false;
+    }
+    btn->setImageColorForState(controlState, color);
+    
+    return true;
+}
+
 CAView* CASegmentedControl::getDefaultNormalBackgroundView()
 {
     return CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_square_normal.png"));
@@ -458,10 +466,14 @@ bool CASegmentedControl::indexIsValid(int index)
 void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
 {
     CCSize size = var;
-    size.height = MAX(size.height, 60 * CROSSAPP_ADPTATION_RATIO);
+    size.height = MAX(size.height, _px(60));
     size.width = MAX(size.width, size.height * 2);
     CAControl::setContentSize(size);
     this->layoutSubviews();
+    if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setFrame(this->getBounds());
+    }
 }
 
 void CASegmentedControl::addTarget(CAObject* target, SEL_CAControl selector)
@@ -472,6 +484,20 @@ void CASegmentedControl::addTarget(CAObject* target, SEL_CAControl selector)
 void CASegmentedControl::removeTarget(CAObject* target, SEL_CAControl selector)
 {
     this->removeTarget(target, selector, CAControlEventTouchValueChanged);
+}
+
+void CASegmentedControl::setBackgroundView(CrossApp::CAView *view)
+{
+    CC_SAFE_RETAIN(view);
+    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
+    m_pBackgroundView = view;
+    m_pBackgroundView->setFrame(this->getBounds());
+    this->insertSubview(m_pBackgroundView, -1);
+}
+
+CAView* CASegmentedControl::getBackgroundView()
+{
+    return m_pBackgroundView;
 }
 
 NS_CC_END

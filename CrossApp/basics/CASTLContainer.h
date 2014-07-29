@@ -1,12 +1,12 @@
 //
-//  CCSTLContainer.h
+//  CASTLContainer.h
 //  CrossApp
 //
 //  Created by Zhujian on 14-6-10.
 //  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
-#ifndef __cocos2dx__CCSTLContainer__
-#define __cocos2dx__CCSTLContainer__
+#ifndef __CASTLContainer__
+#define __CASTLContainer__
 
 #include "ccTypes.h"
 #include "ccMacros.h"
@@ -19,619 +19,732 @@
 NS_CC_BEGIN
 
 
-CC_DLL void addToObjPtrSets(void* ptr);
-
-CC_DLL void delToObjPtrSets(void* ptr);
-
-CC_DLL bool isCCObjectPtr(void* ptr);
-
-CC_DLL void retainObjPtr(void* ptr);
-
-CC_DLL void releaseObjPtr(void* ptr);
-
-
-
-template <typename T>
-class CAVector
+template<class T>
+class CC_DLL CAVector
 {
 public:
-    
-	CAVector() {}
-    
-	~CAVector()
+	typedef typename std::vector<T>::iterator iterator;
+	typedef typename std::vector<T>::const_iterator const_iterator;
+
+	typedef typename std::vector<T>::reverse_iterator reverse_iterator;
+	typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
+
+	iterator begin() { return _data.begin(); }
+	const_iterator begin() const { return _data.begin(); }
+
+	iterator end() { return _data.end(); }
+	const_iterator end() const { return _data.end(); }
+
+	reverse_iterator rbegin() { return _data.rbegin(); }
+	const_reverse_iterator rbegin() const { return _data.rbegin(); }
+
+	reverse_iterator rend() { return _data.rend(); }
+	const_reverse_iterator rend() const { return _data.rend(); }
+
+
+	CAVector<T>() {}
+
+	explicit CAVector<T>(size_t capacity)
+		: _data()
 	{
+		CCLOGINFO("In the default constructor with capacity of Vector.");
+		reserve(capacity);
+	}
+
+	~CAVector<T>()
+	{
+		CCLOGINFO("In the destructor of Vector.");
 		clear();
 	}
-    
-	CAVector(const CAVector& v)
+
+	CAVector<T>(const CAVector<T>& other)
 	{
-		clear();
-		insert((std::vector<T*>&)v.m_Container);
+		CCLOGINFO("In the copy constructor!");
+		_data = other._data;
+		addRefForAllObjects();
 	}
-    
-	const CAVector& operator=(const CAVector& v)
+
+	CAVector<T>& operator=(const CAVector<T>& other)
 	{
-		clear();
-		insert((std::vector<T*>&)v.m_Container);
+		if (this != &other)
+		{
+			CCLOGINFO("In the copy assignment operator!");
+			clear();
+			_data = other._data;
+			addRefForAllObjects();
+		}
 		return *this;
 	}
 
-	void push_back(T* v)
+
+	void reserve(size_t n)
 	{
-		retainObjPtr(v);
-		m_Container.push_back(v);
+		_data.reserve(n);
 	}
-    
-	void insert(int index, T* v)
+
+	size_t capacity() const
 	{
-		CCAssert(index >= 0 && index <= m_Container.size(), "");
-		retainObjPtr(v);
-		m_Container.insert(m_Container.begin() + index, v);
+		return _data.capacity();
 	}
-    
-	void insert(int index, typename std::vector<T*>::iterator itBegin, typename std::vector<T*>::iterator itEnd)
+
+	size_t size() const
 	{
-		CCAssert(index >= 0 && index <= m_Container.size(), "");
-		typename std::vector<T*>::iterator itTemp = itBegin;
-		while (itTemp != itEnd)
-		{
-			retainObjPtr(*itTemp++);
-		}
-		m_Container.insert(m_Container.begin() + index, itBegin, itEnd);
+		return  _data.size();
 	}
-    
-	void insert(int index, std::vector<T*>& v)
+
+	bool empty() const
 	{
-		CCAssert(index >= 0 && index <= m_Container.size(), "");
-		insert(index, v.begin(), v.end());
+		return _data.empty();
 	}
-    
-	void insert(std::vector<T*>& v)
+
+	size_t max_size() const
 	{
-		insert((int)m_Container.size(), v.begin(), v.end());
+		return _data.max_size();
 	}
-    
-    void pop_back()
+
+	size_t getIndex(T object) const
 	{
-		if (m_Container.empty())
-		{
-			return;
-		}
-		releaseObjPtr(back());
-		m_Container.pop_back();
-	}
-    
-	void erase(T* v)
-	{
-		do
-        {
-            int index = indexOf(v);
-            CC_BREAK_IF(index == -1);
-            releaseObjPtr(v);
-            m_Container.erase(m_Container.begin() + index);
-        }
-        while (1);
-	}
-    
-	void erase(int index)
-	{
-		CCAssert(index >= 0 && index < m_Container.size(), "");
-		releaseObjPtr(m_Container[index]);
-		m_Container.erase(m_Container.begin() + index);
-	}
-    
-    int indexOf(T* v)
-	{
-		for (int i = 0; i < m_Container.size(); i++)
-		{
-			if (m_Container[i] == v) return i;
-		}
+		const_iterator iter = std::find(_data.begin(), _data.end(), object);
+		if (iter != _data.end())
+			return iter - _data.begin();
+
 		return -1;
 	}
-    
-	bool contains(T* v)
+
+	const_iterator find(T object) const
 	{
-		return indexOf(v) != -1;
+		return std::find(_data.begin(), _data.end(), object);
 	}
-    
+
+	iterator find(T object)
+	{
+		return std::find(_data.begin(), _data.end(), object);
+	}
+
+	T at(size_t index) const
+	{
+		CCAssert(index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
+		return _data[index];
+	}
+
+	T front() const
+	{
+		return _data.front();
+	}
+
+	T back() const
+	{
+		return _data.back();
+	}
+
+	T getRandomObject() const
+	{
+		if (!_data.empty())
+		{
+			size_t randIdx = rand() % _data.size();
+			return *(_data.begin() + randIdx);
+		}
+		return NULL;
+	}
+
+	bool contains(T object) const
+	{
+		return(std::find(_data.begin(), _data.end(), object) != _data.end());
+	}
+	bool equals(const CAVector<T> &other)
+	{
+		size_t s = this->size();
+		if (s != other.size())
+			return false;
+
+		for (size_t i = 0; i < s; i++)
+		{
+			if (this->at(i) != other.at(i))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	void pushBack(T object)
+	{
+		CCAssert(object != NULL, "The object should not be nullptr");
+		_data.push_back(object);
+		object->retain();
+	}
+	void pushBack(const CAVector<T>& other)
+	{
+		for (int i = 0; i < other.size(); i++)
+		{
+			pushBack(other.at(i));
+		}
+	}
+
+	void insert(size_t index, T object)
+	{
+		CCAssert(index >= 0 && index <= size(), "Invalid index!");
+		CCAssert(object != NULL, "The object should not be nullptr");
+		_data.insert(_data.begin() + index, object);
+		object->retain();
+	}
+
+	void popBack()
+	{
+		CCAssert(!_data.empty(), "no objects added");
+		T last = _data.back();
+		_data.pop_back();
+		last->release();
+	}
+
+	void eraseObject(T object, bool removeAll = false)
+	{
+		CCAssert(object != NULL, "The object should not be nullptr");
+
+		if (removeAll)
+		{
+
+			for (iterator iter = _data.begin(); iter != _data.end();)
+			{
+				if ((*iter) == object)
+				{
+					iter = _data.erase(iter);
+					object->release();
+				}
+				else
+				{
+					++iter;
+				}
+			}
+		}
+		else
+		{
+			iterator iter = std::find(_data.begin(), _data.end(), object);
+			if (iter != _data.end())
+			{
+				_data.erase(iter);
+				object->release();
+			}
+		}
+	}
+
+	iterator erase(iterator position)
+	{
+		CCAssert(position >= _data.begin() && position < _data.end(), "Invalid position!");
+		(*position)->release();
+		return _data.erase(position);
+	}
+
+	iterator erase(iterator first, iterator last)
+	{
+		for (iterator iter = first; iter != last; ++iter)
+		{
+			(*iter)->release();
+		}
+		return _data.erase(first, last);
+	}
+
+	iterator erase(size_t index)
+	{
+		CCAssert(!_data.empty() && index >= 0 && index < size(), "Invalid index!");
+		return erase(_data.begin() + index);
+	}
+
 	void clear()
 	{
-		for (int i = 0; i < m_Container.size(); i++)
+		for (int i = 0; i < _data.size(); i++)
 		{
-			releaseObjPtr(m_Container[i]);
+			_data[i]->release();
 		}
-		m_Container.clear();
-	}
-    
-	int size()
-	{
-		return m_Container.size();
-	}
-    
-    bool empty()
-    {
-        return m_Container.empty();
-    }
-    
-	typename std::vector<T*>::iterator begin()
-	{
-		return m_Container.begin();
-	}
-    
-	typename std::vector<T*>::iterator end()
-	{
-		return m_Container.end();
-	}
-    
-	T* at(int index)
-	{
-		return m_Container.at(index);
-	}
-    
-	T* front()
-	{
-		if (m_Container.empty())
-		{
-			return NULL;
-		}
-		return m_Container.front();
-	}
-    
-	T* back()
-	{
-		if (m_Container.empty())
-		{
-			return NULL;
-		}
-		return m_Container.back();
+		_data.clear();
 	}
 
-private:
-    
-	std::vector<T*> m_Container;
+	void swap(T object1, T object2)
+	{
+		size_t idx1 = getIndex(object1);
+		size_t idx2 = getIndex(object2);
+
+		CCAssert(idx1 >= 0 && idx2 >= 0, "invalid object index");
+		std::swap(_data[idx1], _data[idx2]);
+	}
+
+	void swap(size_t index1, size_t index2)
+	{
+		CCAssert(index1 >= 0 && index1 < size() && index2 >= 0 && index2 < size(), "Invalid indices");
+		std::swap(_data[index1], _data[index2]);
+	}
+
+	void replace(size_t index, T object)
+	{
+		CCAssert(index >= 0 && index < size(), "Invalid index!");
+		CCAssert(object != NULL, "The object should not be nullptr");
+
+		_data[index]->release();
+		_data[index] = object;
+		object->retain();
+	}
+
+	void reverse()
+	{
+		std::reverse(_data.begin(), _data.end());
+	}
+
+
+protected:
+	void addRefForAllObjects()
+	{
+		for (int i = 0; i < _data.size(); i++)
+		{
+			_data[i]->retain();
+		}
+	}
+	std::vector<T> _data;
 };
 
-template <typename T>
+template <class T>
 class CAList
 {
 public:
-    
-	CAList() {}
-    
-	~CAList()
+public:
+	typedef typename std::list<T>::iterator iterator;
+	typedef typename std::list<T>::const_iterator const_iterator;
+
+	typedef typename std::list<T>::reverse_iterator reverse_iterator;
+	typedef typename std::list<T>::const_reverse_iterator const_reverse_iterator;
+
+	iterator begin() { return _data.begin(); }
+	const_iterator begin() const { return _data.begin(); }
+
+	iterator end() { return _data.end(); }
+	const_iterator end() const { return _data.end(); }
+
+	reverse_iterator rbegin() { return _data.rbegin(); }
+	const_reverse_iterator rbegin() const { return _data.rbegin(); }
+
+	reverse_iterator rend() { return _data.rend(); }
+	const_reverse_iterator rend() const { return _data.rend(); }
+
+
+
+	CAList<T>() {}
+
+	~CAList<T>()
 	{
 		clear();
 	}
-    
-	CAList(const CAList& v)
+
+	CAList<T>(const CAList<T>& other)
 	{
-		clear();
-		insert(v.m_Container);
+		_data = other._data;
+		addRefForAllObjects();
 	}
-    
-	const CAList& operator=(const CAList& v)
+
+	CAList<T>& operator=(const CAList<T>& other)
 	{
-		clear();
-		insert(v.m_Container);
+		if (this != &other)
+		{
+			clear();
+			_data = other._data;
+			addRefForAllObjects();
+		}
 		return *this;
 	}
 
-    void push_front(T* v)
+	size_t size() const
 	{
-		retainObjPtr(v);
-		m_Container.push_front(v);
-	}
-    
-	void push_back(T* v)
-	{
-		retainObjPtr(v);
-		m_Container.push_back(v);
-	}
-    
-	void insert(int index, T* v)
-	{
-		CCAssert(index >= 0 && index <= m_Container.size(), "");
-		retainObjPtr(v);
-		m_Container.insert(indexOf(index), v);
-	}
-    
-	void insert(int index, typename std::list<T*>::iterator itBegin, typename std::list<T*>::iterator itEnd)
-	{
-		CCAssert(index >= 0 && index <= m_Container.size(), "");
-		typename std::list<T*>::iterator itTemp = itBegin;
-		while (itTemp != itEnd)
-		{
-			retainObjPtr(*itTemp++);
-		}
-		m_Container.insert(indexOf(index), itBegin, itEnd);
+		return  _data.size();
 	}
 
-	void insert(int index, std::list<T*>& v)
+	bool empty() const
 	{
-		insert(index, v.begin(), v.end());
-	}
-    
-	void insert(const std::list<T*>& v)
-	{
-		typename std::list<T*>::iterator it = v.begin();
-		for (; it != v.end(); it++)
-		{
-			retainObjPtr(*it);
-		}
-		m_Container.insert(m_Container.end(), v.begin(), v.end());
-	}
-    
-    void pop_front()
-	{
-		if (m_Container.empty())
-		{
-			return;
-		}
-		releaseObjPtr(front());
-		m_Container.pop_front();
-	}
-    
-    void pop_back()
-	{
-		if (m_Container.empty())
-		{
-			return;
-		}
-		releaseObjPtr(back());
-		m_Container.pop_back();
-	}
-    
-    void erase(T* v)
-    {
-		do
-        {
-            int index = indexOf(v);
-            CC_BREAK_IF(index == -1);
-            releaseObjPtr(v);
-            m_Container.erase(m_Container.begin() + index);
-        }
-        while (1);
-    }
-    
-	void erase(int index)
-	{
-        CCAssert(index >= 0 && index < m_Container.size(), "");
-		releaseObjPtr(m_Container[index]);
-		m_Container.erase(m_Container.begin() + index);
+		return _data.empty();
 	}
 
-    typename std::list<T*>::iterator indexOf(T* v)
+	const_iterator find(T object) const
 	{
-		typename std::list<T*>::iterator it = m_Container.begin();
-		for (; it != m_Container.end(); it++)
+		return std::find(_data.begin(), _data.end(), object);
+	}
+
+	iterator find(T object)
+	{
+		return std::find(_data.begin(), _data.end(), object);
+	}
+
+	T front() const
+	{
+		return _data.front();
+	}
+
+	T back() const
+	{
+		return _data.back();
+	}
+
+	bool contains(T object) const
+	{
+		return(std::find(_data.begin(), _data.end(), object) != _data.end());
+	}
+	bool equals(const CAList<T> &other)
+	{
+		size_t s = this->size();
+		if (s != other.size())
+			return false;
+
+		const_iterator it1 = this->begin();
+		const_iterator it2 = other.begin();
+		for (int i = 0; i < s; i++, ++it1, ++it2)
 		{
-			if (*it == v) break;
+			if (*it1 != *it2)
+				return false;
 		}
-		return it;
+		return true;
 	}
-    
-	typename std::list<T*>::iterator indexOf(int index)
+
+	void pushBack(T object)
 	{
-		CCAssert(index >= 0 && index <= m_Container.size(), "");
-		typename std::list<T*>::iterator it = m_Container.begin();
-		for (int i = 0; i < index; i++) it++;
-		return it;
+		CCAssert(object != NULL, "The object should not be nullptr");
+		_data.push_back(object);
+		object->retain();
 	}
-    
-	bool contains(T* v)
+	void pushBack(const CAList<T>& other)
 	{
-		return indexOf(v) != -1;
+		for (CAList<T>::const_iterator it = other.begin(); it != other.end(); ++it)
+		{
+			pushBack(*it);
+		}
 	}
-    
+
+	void popBack()
+	{
+		if (_data.empty())
+			return;
+
+		T last = _data.back();
+		_data.pop_back();
+		last->release();
+	}
+
+
+	void pushFront(T object)
+	{
+		CCAssert(object != NULL, "The object should not be nullptr");
+		_data.push_front(object);
+		object->retain();
+	}
+	void pushFront(const CAList<T>& other)
+	{
+		for (CAList<T>::reverse_iterator it = other.rbegin(); it != other.rend(); ++it)
+		{
+			pushFront(*it);
+		}
+	}
+
+	void popFront()
+	{
+		if (_data.empty())
+			return;
+
+		T first = _data.front();
+		_data.pop_front();
+		first->release();
+	}
+
+
+
+	void eraseObject(T object, bool removeAll = false)
+	{
+		CCAssert(object != NULL, "The object should not be nullptr");
+
+		if (removeAll)
+		{
+			for (iterator iter = _data.begin(); iter != _data.end();)
+			{
+				if ((*iter) == object)
+				{
+					iter = _data.erase(iter);
+					object->release();
+				}
+				else
+				{
+					++iter;
+				}
+			}
+		}
+		else
+		{
+			iterator iter = std::find(_data.begin(), _data.end(), object);
+			if (iter != _data.end())
+			{
+				_data.erase(iter);
+				object->release();
+			}
+		}
+	}
+
+	iterator erase(iterator position)
+	{
+		CCAssert(position >= _data.begin() && position < _data.end(), "Invalid position!");
+		(*position)->release();
+		return _data.erase(position);
+	}
+
+	iterator erase(iterator first, iterator last)
+	{
+		for (iterator iter = first; iter != last; ++iter)
+		{
+			(*iter)->release();
+		}
+		return _data.erase(first, last);
+	}
+
 	void clear()
 	{
-		typename std::list<T*>::iterator it = m_Container.begin();
-		for (; it != m_Container.end(); it++)
+		for (iterator iter = _data.begin(); iter != _data.end(); ++iter)
 		{
-			releaseObjPtr(*it);
+			(*iter)->release();
 		}
-		m_Container.clear();
-	}
-    
-	int size()
-	{
-		return m_Container.size();
-	}
-    
-    bool empty()
-    {
-        return m_Container.empty();
-    }
-    
-	typename std::list<T*>::iterator begin()
-	{
-		return m_Container.begin();
-	}
-    
-	typename std::list<T*>::iterator end()
-	{
-		return m_Container.end();
+		_data.clear();
 	}
 
-    T* at(int index)
+	void reverse()
 	{
-		return m_Container.at(index);
-	}
-    
-	T* front()
-	{
-		if (m_Container.empty())
-		{
-			return NULL;
-		}
-		return m_Container.front();
-	}
-    
-	T* back()
-	{
-		if (m_Container.empty())
-		{
-			return NULL;
-		}
-		return m_Container.back();
+		std::reverse(_data.begin(), _data.end());
 	}
 
-private:
-    
-	std::list<T*> m_Container;
+
+protected:
+
+
+	void addRefForAllObjects()
+	{
+		for (iterator it = _data.begin(); it != _data.end(); ++it)
+		{
+			(*it)->retain();
+		}
+	}
+	std::list<T> _data;
 };
 
 
-template <typename T>
+template <class T>
 class CADeque
 {
 public:
-    
-	CADeque() {}
-    
-	~CADeque()
+	typedef typename std::deque<T>::iterator iterator;
+	typedef typename std::deque<T>::const_iterator const_iterator;
+
+	typedef typename std::deque<T>::reverse_iterator reverse_iterator;
+	typedef typename std::deque<T>::const_reverse_iterator const_reverse_iterator;
+
+	iterator begin() { return _data.begin(); }
+	const_iterator begin() const { return _data.begin(); }
+
+	iterator end() { return _data.end(); }
+	const_iterator end() const { return _data.end(); }
+
+	reverse_iterator rbegin() { return _data.rbegin(); }
+	const_reverse_iterator rbegin() const { return _data.rbegin(); }
+
+	reverse_iterator rend() { return _data.rend(); }
+	const_reverse_iterator rend() const { return _data.rend(); }
+
+	CADeque<T>() {}
+
+	~CADeque<T>()
 	{
 		clear();
-	}
-    
-	CADeque(const CADeque& v)
-	{
-		clear();
-		insert(v.m_Container);
-	}
-    
-	const CADeque& operator=(const CADeque& v)
-	{
-		clear();
-		insert(v.m_Container);
-		return *this;
-	}
-    
-    void push_front(T* v)
-	{
-		retainObjPtr(v);
-		m_Container.push_front(v);
-	}
-    
-	void push_back(T* v)
-	{
-		retainObjPtr(v);
-		m_Container.push_back(v);
-	}
-    
-    void insert(int index, typename std::deque<T*>::iterator itBegin, typename std::deque<T*>::iterator itEnd)
-	{
-		CCAssert(index >= 0 && index <= m_Container.size(), "");
-		typename std::deque<T*>::iterator itTemp = itBegin;
-		while (itTemp != itEnd)
-		{
-			retainObjPtr(*itTemp++);
-		}
-		m_Container.insert(indexOf(index), itBegin, itEnd);
-	}
-    
-	void insert(int index, std::deque<T*>& v)
-	{
-		insert(index, v.begin(), v.end());
-	}
-    
-	void insert(std::deque<T*>& v)
-	{
-		typename std::deque<T*>::iterator it = v.begin();
-		for (; it != v.end(); it++)
-		{
-			push_back(*it);
-		}
-	}
-    
-    void pop_front()
-	{
-		if (m_Container.empty())
-		{
-			return;
-		}
-		releaseObjPtr(front());
-		m_Container.pop_front();
-	}
-    
-    void pop_back()
-	{
-		if (m_Container.empty())
-		{
-			return;
-		}
-		releaseObjPtr(back());
-		m_Container.pop_back();
-	}
-    
-	void erase(T* v)
-	{
-        do
-        {
-            int index = indexOf(v);
-            CC_BREAK_IF(index == -1);
-            releaseObjPtr(v);
-            m_Container.erase(m_Container.begin() + index);
-        }
-        while (1);
-	}
-    
-	void erase(int index)
-	{
-		CCAssert(index >= 0 && index < m_Container.size(), "");
-		releaseObjPtr(m_Container[index]);
-		m_Container.erase(m_Container.begin() + index);
-	}
-    
-    int  indexOf(T* v)
-	{
-		for (int i = 0; i < m_Container.size(); i++)
-		{
-			if (m_Container[i] == v) return i;
-		}
-		return -1;
-	}
-    
-	bool contains(T* v)
-	{
-		return indexOf(v) != -1;
-	}
-    
-    void clear()
-	{
-		while (!m_Container.empty())
-		{
-			pop_front();
-		}
-	}
-    
-	int size()
-	{
-		return m_Container.size();
 	}
 
-    bool empty()
-    {
-        return m_Container.empty();
-    }
-    
-    typename std::deque<T*>::iterator begin()
+	CADeque<T>(const CADeque<T>& other)
 	{
-		return m_Container.begin();
+		_data = other._data;
+		addRefForAllObjects();
 	}
-    
-	typename std::deque<T*>::iterator end()
+
+	const CADeque<T>& operator=(const CADeque<T>& other)
 	{
-		return m_Container.end();
-	}
-    
-    T* at(int index)
-	{
-		return m_Container.at(index);
-	}
-    
-    T* front()
-	{
-		if (m_Container.empty())
+		if (this != &other)
 		{
-			return NULL;
+			CCLOGINFO("In the copy assignment operator!");
+			clear();
+			_data = other._data;
+			addRefForAllObjects();
 		}
-		return m_Container.front();
+		return *this;
 	}
-    
-	T* back()
+
+	void pushFront(T object)
 	{
-		if (m_Container.empty())
+		CCAssert(object != NULL, "The object should not be nullptr");
+		_data.push_front(object);
+		object->retain();
+	}
+
+	void pushBack(T object)
+	{
+		CCAssert(object != NULL, "The object should not be nullptr");
+		_data.push_back(object);
+		object->retain();
+	}
+
+
+
+	void popFront()
+	{
+		if (_data.empty())
+			return;
+
+		T first = _data.front();
+		_data.pop_front();
+		first->release();
+	}
+
+	void popBack()
+	{
+		if (_data.empty())
+			return;
+
+		T last = _data.front();
+		_data.pop_back();
+		last->release();
+	}
+
+	void clear()
+	{
+		while (!_data.empty())
 		{
-			return NULL;
+			popFront();
 		}
-		return m_Container.back();
+	}
+
+	int size()
+	{
+		return _data.size();
+	}
+
+	bool empty()
+	{
+		return _data.empty();
+	}
+
+	T at(int index) const
+	{
+		return _data.at(index);
+	}
+
+	T front() const
+	{
+		return _data.front();
+	}
+
+	T back() const
+	{
+		return _data.back();
 	}
 
 private:
-    
-	std::deque <T*> m_Container;
+	void addRefForAllObjects()
+	{
+		for (const_iterator it = _data.begin(); it != _data.end(); ++it)
+		{
+			(*it)->retain();
+		}
+	}
+	std::deque <T> _data;
 };
 
 
-template <typename K, typename T>
+template <class K, class T>
 class CAMap
 {
 public:
-    
-	CAMap() {}
-    
-	~CAMap()
+	typedef typename std::map<K, T>::iterator iterator;
+	typedef typename std::map<K, T>::const_iterator const_iterator;
+
+	typedef typename std::map<K, T>::reverse_iterator reverse_iterator;
+	typedef typename std::map<K, T>::const_reverse_iterator const_reverse_iterator;
+
+	iterator begin() { return _data.begin(); }
+	const_iterator begin() const { return _data.begin(); }
+
+	iterator end() { return _data.end(); }
+	const_iterator end() const { return _data.end(); }
+
+	reverse_iterator rbegin() { return _data.rbegin(); }
+	const_reverse_iterator rbegin() const { return _data.rbegin(); }
+
+	reverse_iterator rend() { return _data.rend(); }
+	const_reverse_iterator rend() const { return _data.rend(); }
+
+	CAMap<K, T>() {}
+
+	~CAMap<K, T>()
 	{
 		clear();
 	}
-    
-	CAMap(const CAMap& v)
+
+	CAMap<K, T>(const CAMap<K, T>& other)
 	{
-		clear();
-		insert(v.m_Container);
+		_data = other._data;
+		addRefForAllObjects();
 	}
-    
-	const CAMap& operator=(const CAMap& v)
+
+	const CAMap<K, T>& operator=(const CAMap<K, T>& other)
 	{
-		clear();
-		insert(v.m_Container);
+		if (this != &other)
+		{
+			CCLOGINFO("In the copy assignment operator!");
+			clear();
+			_data = other._data;
+			addRefForAllObjects();
+		}
 		return *this;
 	}
-    
-	void insert(const std::map<K, T*>& v)
+
+	bool insert(K key, T object)
 	{
-		typename std::map<K, T*>::iterator it = v.begin();
-		for (; it != v.end(); it++)
-		{
-			insert(it->first, it->second);
-		}
-	}
-    
-	bool insert(K key, T* v)
-	{
-		typename std::map <K, T*>::iterator it = m_Container.find(key);
-		if (it != m_Container.end())
+		iterator it = _data.find(key);
+		if (it != _data.end())
 		{
 			return false;
 		}
 
-		if (v)
-		{
-			retainObjPtr(v);
-		}
-		m_Container[key] = v;
-	}
-    
-	int size()
-	{
-		return m_Container.size();
-	}
-    
-    bool empty()
-    {
-        return m_Container.empty();
-    }
-    
-	bool contains(K key)
-	{
-		return m_Container.find(key) != m_Container.end();
-	}
-    
-	void erase(K key)
-	{
-		typename std::map <K, T*>::iterator it = m_Container.find(key);
-		if (it != m_Container.end())
-		{
-			releaseObjPtr(it->second);
-			m_Container.erase(it);
-		}
+		CCAssert(object != NULL, "The object should not be nullptr");
+		object->retain();
+		_data[key] = object;
 	}
 
-	T* getValue(const K& key)
+	size_t size() const
 	{
-		typename std::map <K, T*>::iterator it = m_Container.find(key);
-		if (it != m_Container.end())
+		return _data.size();
+	}
+
+	bool empty() const
+	{
+		return _data.empty();
+	}
+
+	bool contains(K key)
+	{
+		return _data.find(key) != _data.end();
+	}
+
+	bool erase(K key)
+	{
+		iterator it = _data.find(key);
+		if (it != _data.end())
+		{
+			it->second->release();
+			_data.erase(it);
+			return true;
+		}
+		return false;
+	}
+
+	T getValue(K key)
+	{
+		iterator it = _data.find(key);
+		if (it != _data.end())
 		{
 			return it->second;
 		}
@@ -641,7 +754,7 @@ public:
 	std::vector<K> getKeys()
 	{
 		std::vector<K> keys;
-		for (typename std::map <K, T*>::iterator it = m_Container.begin(); it != m_Container.end(); it++)
+		for (iterator it = _data.begin(); it != _data.end(); it++)
 		{
 			keys.push_back(it->first);
 		}
@@ -650,144 +763,24 @@ public:
 
 	void clear()
 	{
-		for (typename std::map <K, T*>::iterator it = m_Container.begin(); it != m_Container.end(); it++)
+		for (iterator it = _data.begin(); it != _data.end(); it++)
 		{
-			releaseObjPtr(it->second);
+			it->second->release();
 		}
-		m_Container.clear();
+		_data.clear();
 	}
 
-	typename std::map <K, T*>::iterator begin()
+protected:
+	void addRefForAllObjects()
 	{
-		return m_Container.begin();
+		for (iterator it = _data.begin(); it != _data.end(); ++it)
+		{
+			it->second->retain();
+		}
 	}
-    
-	typename std::map <K, T*>::iterator end()
-	{
-		return m_Container.end();
-	}
-
-private:
-    
-	std::map <K, T*> m_Container;
+	std::map <K, T> _data;
 };
 
-
-template <typename K, typename T>
-class CAMultimap
-{
-public:
-    
-	CAMultimap() {}
-    
-	~CAMultimap()
-	{
-		clear();
-	}
-    
-	CAMultimap(const CAMultimap& v)
-	{
-		clear();
-		insert(v.m_Container);
-	}
-    
-	const CAMultimap& operator=(const CAMultimap& v)
-	{
-		clear();
-		insert(v.m_Container);
-		return *this;
-	}
-    
-	void insert(const std::multimap<K, T*>& v)
-	{
-		typename std::multimap<K, T*>::iterator it = v.begin();
-		for (; it != v.end(); it++)
-		{
-			insert(it->first, it->second);
-		}
-	}
-    
-	void insert(K key, T* v)
-	{
-		retainObjPtr(v);
-		m_Container.insert(std::make_pair(key, v));
-	}
-    
-	int size()
-	{
-		return m_Container.size();
-	}
-    
-    bool empty()
-    {
-        return m_Container.empty();
-    }
-    
-	bool contains(K key)
-	{
-		std::pair<typename std::multimap<K, T*>::iterator, typename std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
-		return pos.first != m_Container.end();
-	}
-    
-	void erase(K key)
-	{
-		std::pair<typename std::multimap<K, T*>::iterator, typename std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
-		if (pos.first == m_Container.end())
-		{
-			return;
-		}
-
-		while (pos.first != pos.second)
-		{
-			releaseObjPtr(pos.first++->second);
-		}
-		m_Container.erase(key);
-	}
-
-	std::vector<T*> getValueByKey(const K& key)
-	{
-		std::vector<T*> v;
-		std::pair<typename std::multimap<K, T*>::iterator, typename std::multimap<K, T*>::iterator> pos = m_Container.equal_range(key);
-		while (pos.first != pos.second)
-		{
-			v.push_back(pos.first++->second);
-		}
-		return v;
-	}
-
-	std::vector<K> getKeys()
-	{
-		std::vector<K> keys;
-		for (typename std::multimap <K, T*>::iterator it = m_Container.begin(); it != m_Container.end(); it++)
-		{
-			keys.push_back(it->first);
-		}
-		return keys;
-	}
-
-	void clear()
-	{
-		for (typename std::multimap <K, T*>::iterator it = m_Container.begin(); it != m_Container.end(); it++)
-		{
-			releaseObjPtr(it->second);
-		}
-		m_Container.clear();
-	}
-
-	typename std::multimap <K, T*>::iterator begin()
-	{
-		return m_Container.begin();
-	}
-    
-	typename std::multimap <K, T*>::iterator end()
-	{
-		return m_Container.end();
-	}
-    
-private:
-    
-	std::multimap <K, T*> m_Container;
-};
 
 NS_CC_END
 

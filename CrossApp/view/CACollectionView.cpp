@@ -83,7 +83,7 @@ bool CACollectionView::init()
 
 	this->setShowsHorizontalScrollIndicator(false);
     this->setBounceHorizontal(false);
-    this->setTouchSidingDirection(CATouchSidingDirectionVertical);
+    this->setTouchMovedListenHorizontal(false);
 	return true;
 }
 
@@ -276,11 +276,10 @@ bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
 
-				CCDelayTime* delayTime = CCDelayTime::create(0.1f);
+				CCDelayTime* delayTime = CCDelayTime::create(0.05f);
 				CCCallFunc* func = CCCallFunc::create(pCell, callfunc_selector(CACollectionViewCell::setControlStateHighlighted));
 				CCSequence* actions = CCSequence::create(delayTime, func, NULL);
-				actions->setTag(0xffff);
-				this->runAction(actions);
+				m_pContainer->runAction(actions);
 				break;
 			}
 		}
@@ -296,7 +295,7 @@ void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 	if (m_pHighlightedCollectionCells)
 	{
-		this->stopActionByTag(0xffff);
+		m_pContainer->stopAllActions();
 
 		if (m_pHighlightedCollectionCells->getControlState() == CAControlStateHighlighted)
 		{
@@ -314,7 +313,7 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 	if (m_pHighlightedCollectionCells)
 	{
-		this->stopActionByTag(0xffff);
+		m_pContainer->stopAllActions();
 
 		CACollectionViewCell* deselectedCell = NULL;
 		CACollectionViewCell* selectedCell = m_pHighlightedCollectionCells;
@@ -403,11 +402,12 @@ void CACollectionView::update(float dt)
 #pragma CACollectionViewCell
 
 CACollectionViewCell::CACollectionViewCell()
-: m_nSection(0)
-, m_nRow(0)
-, m_nItem(0)
+:m_pBackgroundView(NULL)
+,m_nSection(0xffffffff)
+,m_nRow(0xffffffff)
+,m_nItem(0xffffffff)
 {
-	m_bControl = false;
+    m_bStopSuperviewListenEvents = false;
 }
 
 
@@ -429,35 +429,43 @@ CACollectionViewCell* CACollectionViewCell::create(const char* reuseIdentifier)
 
 bool CACollectionViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
 {
-	if (!CAControl::init())
-	{
-		return false;
-	}
-	this->setColor(CAColor_clear);
-	this->setReuseIdentifier(reuseIdentifier);
+    this->setBackgroundView(CAView::create());
+    this->setColor(CAColor_clear);
+    this->setReuseIdentifier(reuseIdentifier);
+    this->normalTableViewCell();
+    
+    return true;
+}
 
-	this->setBackGroundViewForState(CAControlStateNormal,
-		CAView::createWithFrame(this->getBounds(),
-		ccc4(255, 255, 255, 255)));
+void CACollectionViewCell::setBackgroundView(CrossApp::CAView *var)
+{
+    CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
+    this->removeSubview(m_pBackgroundView);
+    m_pBackgroundView = var;
+    CC_RETURN_IF(m_pBackgroundView == NULL);
+    m_pBackgroundView->setFrame(this->getBounds());
+    this->insertSubview(m_pBackgroundView, -1);
+}
 
-	this->setBackGroundViewForState(CAControlStateHighlighted,
-		CAView::createWithFrame(this->getBounds(),
-		ccc4(50, 193, 255, 255)));
+CAView* CACollectionViewCell::getBackgroundView()
+{
+    return m_pBackgroundView;
+}
 
-	this->setBackGroundViewForState(CAControlStateSelected,
-		CAView::createWithFrame(this->getBounds(),
-		ccc4(50, 193, 255, 255)));
-
-	this->setControlStateNormal();
-
-	return true;
+void CACollectionViewCell::setContentSize(const CrossApp::CCSize &var)
+{
+    CAView::setContentSize(var);
+    if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setFrame(this->getBounds());
+    }
 }
 
 void CACollectionViewCell::setControlState(CAControlState var)
 {
     CAControl::setControlState(var);
-    
-    switch (m_eControlState)
+    switch (var)
     {
         case CAControlStateNormal:
             this->normalTableViewCell();
@@ -474,6 +482,32 @@ void CACollectionViewCell::setControlState(CAControlState var)
         default:
             break;
     }
+}
+
+void CACollectionViewCell::normalTableViewCell()
+{
+    CC_RETURN_IF(m_pBackgroundView == NULL);
+    m_pBackgroundView->setColor(ccc4(255, 255, 255, 255));
+}
+
+void CACollectionViewCell::highlightedTableViewCell()
+{
+    CC_RETURN_IF(m_pBackgroundView == NULL);
+    m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
+}
+
+
+void CACollectionViewCell::selectedTableViewCell()
+{
+    CC_RETURN_IF(m_pBackgroundView == NULL);
+    m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
+}
+
+
+void CACollectionViewCell::disabledTableViewCell()
+{
+    CC_RETURN_IF(m_pBackgroundView == NULL);
+    m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
 }
 
 NS_CC_END

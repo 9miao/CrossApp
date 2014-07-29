@@ -35,6 +35,9 @@ AppPackages
 SubmissionInfo
 *.hps
 
+# Ignore files build
+projects/
+
 # Ignore files build by ndk and eclipse
 libs/
 bin/
@@ -83,10 +86,6 @@ DerivedData/
 .Target-Debug/
 .Target-Release/
 
-# Ignore files built by blackberry
-Simulator/
-Device-Debug/
-Device-Release/
 
 # Ignore vim swaps
 *.swp

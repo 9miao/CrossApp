@@ -53,6 +53,8 @@ public:
     
     CC_SYNTHESIZE_READONLY(CATabBarItem*, m_pTabBarItem, TabBarItem);
     
+    bool isViewRunning();
+    
     void setNavigationBarItem(CANavigationBarItem* item);
     
     void setTabBarItem(CATabBarItem* item);
@@ -83,17 +85,17 @@ protected:
     
     virtual void reshapeViewRectDidFinish(){};
     
-    CAView* getView();
+    virtual CAView* getView();
     
     virtual void keyBackClicked() {}
     
     virtual void keyMenuClicked() {};
     
-private:
+protected:
     
-    void addViewFromSuperview(CAView* node);
+    virtual void addViewFromSuperview(CAView* node);
     
-    void removeViewFromSuperview();
+    virtual void removeViewFromSuperview();
     
 private:
     
@@ -128,15 +130,15 @@ public:
     
 public:
     
-    void replaceViewController(CAViewController* viewController, bool animated);
+    virtual void replaceViewController(CAViewController* viewController, bool animated);
     
-    void pushViewController(CAViewController* viewController, bool animated);
+    virtual void pushViewController(CAViewController* viewController, bool animated);
     
     CAViewController* popViewControllerAnimated(bool animated);
     
     inline unsigned long getViewControllerCount() {return m_pViewControllers.size();}
     
-    void setNavigationBarHidden(bool hidden, bool animated);
+    virtual void setNavigationBarHidden(bool hidden, bool animated);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bNavigationBarHidden, NavigationBarHidden);
     
@@ -154,13 +156,15 @@ protected:
     
     virtual void reshapeViewRectDidFinish();
     
+protected:
+    
     void replaceViewControllerFinish();
     
     void pushViewControllerFinish();
     
     void popViewControllerFinish();
     
-    virtual void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
+    void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
     
     void update(float dt);
     
@@ -168,7 +172,7 @@ protected:
     
     void unScheduleUpdate();
     
-private:
+protected:
     
     std::vector<CAViewController*> m_pViewControllers;
     
@@ -192,13 +196,15 @@ public:
     
     bool showSelectedViewController(CAViewController* viewController);
     
+    CAViewController* getViewControllerAtIndex(unsigned int index);
+    
     CAViewController* getSelectedViewController();
     
-    bool showSelectedViewControllerAtIndex(unsigned int index);
+    virtual bool showSelectedViewControllerAtIndex(unsigned int index);
     
-    unsigned int getSelectedViewControllerAtIndex();
+    virtual unsigned int getSelectedViewControllerAtIndex();
     
-    void setTabBarHidden(bool hidden, bool animated);
+    virtual void setTabBarHidden(bool hidden, bool animated);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bTabBarHidden, TabBarHidden);
     
@@ -216,7 +222,9 @@ protected:
     
     virtual void reshapeViewRectDidFinish();
     
-    virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index);
+protected:
+    
+    void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index);
     
     void renderingSelectedViewController();
     
@@ -226,7 +234,7 @@ protected:
     
     void unScheduleUpdate();
     
-private:
+protected:
     
     std::vector<CAViewController*> m_pViewControllers;
     

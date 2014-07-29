@@ -52,7 +52,9 @@ public:
     virtual bool initWithCenter(const CCRect& rect);
     
     void setBackGroundViewForState(CAControlState controlState, CAView *var);
-
+    
+    CAView* getBackGroundViewForState(CAControlState controlState);
+    
     void setImageForState(CAControlState controlState, CAImage* var);
     
     void setTitleForState(CAControlState controlState, std::string var);
@@ -116,6 +118,8 @@ protected:
     CAImageView* m_pImageView;
     
     CALabel* m_pLabel;
+    
+    CAView* m_pBackGroundView[CAControlStateAll];
     
 protected:
     

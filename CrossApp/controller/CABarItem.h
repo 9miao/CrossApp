@@ -87,6 +87,8 @@ public:
     
     void addRightButtonItem(CABarButtonItem* item);
     
+    CC_SYNTHESIZE_RETAIN(CAView*, m_pTitleView, TitleView);
+    
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pTitleViewImage, TitleViewImage);
     
     CC_SYNTHESIZE_READONLY(CCArray*, m_pLeftButtonItems, LeftButtonItems);

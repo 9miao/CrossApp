@@ -111,7 +111,7 @@ void CAStudioViewController::getItemType(CSJson::Value sender, std::string itemN
     }
     else if(typeId == CA_TYPE_IMAGE)
     {
-        CAView *imageview = CAView::createWithFrame(rect);
+        CAImageView *imageview = CAImageView::createWithFrame(rect);
 		setPropertiesForImageView(imageview, sender);
 		m_pViewDicByName->setObject(imageview,itemName);
     }
@@ -388,11 +388,12 @@ void CAStudioViewController::setPropertiesForTextField(CAObject *sender, CSJson:
 }
 void CAStudioViewController::setPropertiesForImageView(CAObject *sender, CSJson::Value dic)
 {
-    CAView *imageview = (CAView *)sender;
+	CAImageView *imageview = (CAImageView *)sender;
     std::string backGroundImage = dic["BackgroundImage"].asString();
     CSJson::Value backGroundStruct = dic["BackColor"];
     bool bc_isEmpty = backGroundStruct["IsEmpty"].asBool();
     CAColor4B backGroundColor = ccc4(backGroundStruct["R"].asInt(), backGroundStruct["G"].asInt(), backGroundStruct["B"].asInt(), backGroundStruct["A"].asInt());
+	imageview->setImage(CAImage::create(backGroundImage.c_str()));
     if (!bc_isEmpty)
     {
         imageview->setColor(backGroundColor);

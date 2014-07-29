@@ -12,6 +12,7 @@
 #include <iostream>
 #include "dispatcher/CAIMEDispatcher.h"
 #include "control/CAControl.h"
+#include "view/CAScale9ImageView.h"
 #include <vector>
 NS_CC_BEGIN
 using namespace std;
@@ -147,6 +148,9 @@ public:
     virtual void setImageRect(const CCRect& rect);
     
     virtual void updateImageRect();
+    
+    virtual void visit();
+    
 private:
     
     std::vector<TextAttribute> m_vByteLengthArr;
@@ -158,11 +162,13 @@ private:
     float pTextHeight;
     bool  spaceHolderIsOn;
     bool  isEditing;
+    bool   m_bUpdateImage;
     CCRect m_rLabelRect;
     CAView *willBg;
     CCAction *m_pCursorAction;
     CAView *m_pMark;
     eKeyBoardType m_keyboardType;
+    CAScale9ImageView* m_pBackgroundView;
     void updateImage();
 protected:
     float       m_fString_left_offX;

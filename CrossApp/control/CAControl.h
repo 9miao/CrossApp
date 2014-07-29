@@ -50,10 +50,6 @@ public:
     
     bool init();
     
-    CC_SYNTHESIZE(bool, m_bControlStateLocked, ControlStateLocked);
-    
-    CC_PROPERTY(CAControlState, m_eControlState, ControlState);
-    
     void setControlStateNormal();
     
     void setControlStateHighlighted();
@@ -62,15 +58,13 @@ public:
     
     void setControlStateSelected();
     
-    CC_PROPERTY_IS(bool, m_bTouchEnabled, TouchEnabled);
+    CC_SYNTHESIZE(CAControlState, m_eControlState, ControlState);
+    
+    CC_SYNTHESIZE(bool, m_bControlStateLocked, ControlStateLocked);
+
+    CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);
     
 protected:
-    
-    virtual void setContentSize(const CCSize& var);
-    
-    virtual void setBackGroundViewForState(CAControlState controlState, CAView *var);
-    
-    virtual CAView* getBackGroundViewForState(CAControlState controlState);
     
     virtual void addTarget(CAObject* target, SEL_CAControl selector, CAControlEvents event);
     
@@ -79,8 +73,6 @@ protected:
     virtual void removeAllTargets();
     
 protected:
-    
-    CAView* m_pBackGroundView[CAControlStateAll];
     
     CAObject* m_pTarget[7];
     

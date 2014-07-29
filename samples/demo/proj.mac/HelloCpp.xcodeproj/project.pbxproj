@@ -43,7 +43,6 @@
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
-		41BC70E715BF81A5006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70E015BF81A5006A0A6C /* Icon.icns */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
 		B00E5122194988DF00400911 /* iphone5.png in Resources */ = {isa = PBXBuildFile; fileRef = B00E5113194988DF00400911 /* iphone5.png */; };
 		B015758119504FA000EED010 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B015758019504FA000EED010 /* source_material */; };
@@ -88,6 +87,7 @@
 		B02A13C2197CE95400F4F2C5 /* SecondViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A13AB197CE95400F4F2C5 /* SecondViewController.cpp */; };
 		B02A13C3197CE95400F4F2C5 /* ThirdViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A13AD197CE95400F4F2C5 /* ThirdViewController.cpp */; };
 		B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145A190A6A3700C3633B /* CAUIHelper.cpp */; };
+		B0390235198095C10095F2E9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0390234198095C10095F2E9 /* Images.xcassets */; };
 		B03E9018193897CC00FD9A06 /* CAMediaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E9004193897CC00FD9A06 /* CAMediaManager.mm */; };
 		B03E901C193897CC00FD9A06 /* CALocationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E900E193897CC00FD9A06 /* CALocationManager.mm */; };
 		B03E90241938990600FD9A06 /* CAAddressManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E90221938990600FD9A06 /* CAAddressManager.mm */; };
@@ -104,7 +104,6 @@
 		B04C0BE719011F42009854FD /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BE619011F42009854FD /* fonts */; };
 		B0A172E4192DCE3000DBFDB0 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A172E2192DCE3000DBFDB0 /* 2.jpg */; };
 		B0A172E5192DCE3000DBFDB0 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A172E3192DCE3000DBFDB0 /* bg.jpg */; };
-		B0AD93AB192077F900EA40BB /* CAHttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93A9192077F900EA40BB /* CAHttpClient.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,7 +178,6 @@
 		41BC70DA15BF81A5006A0A6C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
 		41BC70DD15BF81A5006A0A6C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		41BC70DF15BF81A5006A0A6C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
-		41BC70E015BF81A5006A0A6C /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = SOURCE_ROOT; };
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
@@ -249,6 +247,7 @@
 		B02A13AE197CE95400F4F2C5 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
 		B02A145A190A6A3700C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
 		B02A145B190A6A3700C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
+		B0390234198095C10095F2E9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HelloCpp/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		B03E8FF4193897CC00FD9A06 /* CAAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressManager.h; sourceTree = "<group>"; };
 		B03E8FFE193897CC00FD9A06 /* CAMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMediaManager.h; sourceTree = "<group>"; };
 		B03E9004193897CC00FD9A06 /* CAMediaManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAMediaManager.mm; sourceTree = "<group>"; };
@@ -281,8 +280,6 @@
 		B05637581952735100C63FAA /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
 		B0A172E2192DCE3000DBFDB0 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		B0A172E3192DCE3000DBFDB0 /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
-		B0AD93A9192077F900EA40BB /* CAHttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAHttpClient.cpp; sourceTree = "<group>"; };
-		B0AD93AA192077F900EA40BB /* CAHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAHttpClient.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -392,8 +389,6 @@
 		15C15903168315E500D239F2 /* network */ = {
 			isa = PBXGroup;
 			children = (
-				B0AD93A9192077F900EA40BB /* CAHttpClient.cpp */,
-				B0AD93AA192077F900EA40BB /* CAHttpClient.h */,
 				15C15904168315E500D239F2 /* HttpClient.cpp */,
 				15C15905168315E500D239F2 /* HttpClient.h */,
 				15C15906168315E500D239F2 /* HttpRequest.h */,
@@ -487,7 +482,6 @@
 				41BC70D915BF81A5006A0A6C /* AppController.h */,
 				41BC70DA15BF81A5006A0A6C /* AppController.mm */,
 				41BC70DB15BF81A5006A0A6C /* en.lproj */,
-				41BC70E015BF81A5006A0A6C /* Icon.icns */,
 				41BC70E115BF81A5006A0A6C /* main.m */,
 				41BC70E215BF81A5006A0A6C /* Info.plist */,
 				41BC70E315BF81A5006A0A6C /* Prefix.pch */,
@@ -774,6 +768,7 @@
 		B04C0BBA19011F33009854FD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B0390234198095C10095F2E9 /* Images.xcassets */,
 				B02A136E197CE94800F4F2C5 /* square_dis.png */,
 				B02A136F197CE94800F4F2C5 /* square_nor.png */,
 				B02A1370197CE94800F4F2C5 /* square_sel.png */,
@@ -902,12 +897,12 @@
 				B04C0BB719011ED8009854FD /* json_valueiterator.inl in Resources */,
 				B0A172E5192DCE3000DBFDB0 /* bg.jpg in Resources */,
 				B02A135C197CE93200F4F2C5 /* btn_rounded3D_normal.png in Resources */,
-				41BC70E715BF81A5006A0A6C /* Icon.icns in Resources */,
 				B02A1358197CE93200F4F2C5 /* blue.png in Resources */,
 				B015758119504FA000EED010 /* source_material in Resources */,
 				B02A136A197CE93F00F4F2C5 /* logo.png in Resources */,
 				B02A135F197CE93200F4F2C5 /* ex1.png in Resources */,
 				B02A1359197CE93200F4F2C5 /* btn_rounded_highlighted.png in Resources */,
+				B0390235198095C10095F2E9 /* Images.xcassets in Resources */,
 				B04C0BB919011ED8009854FD /* sconscript in Resources */,
 				B02A1372197CE94800F4F2C5 /* square_nor.png in Resources */,
 				B02A1371197CE94800F4F2C5 /* square_dis.png in Resources */,
@@ -958,7 +953,6 @@
 				B02A13C1197CE95400F4F2C5 /* FourthViewController.cpp in Sources */,
 				B02A13B3197CE95400F4F2C5 /* ImageViewTest.cpp in Sources */,
 				B02A13BC197CE95400F4F2C5 /* TabBarTest.cpp in Sources */,
-				B0AD93AB192077F900EA40BB /* CAHttpClient.cpp in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
 				B02A13AF197CE95400F4F2C5 /* AlertViewTest.cpp in Sources */,
@@ -1017,6 +1011,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
@@ -1047,7 +1042,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = HelloCpp;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "i386 x86_64";
 			};
@@ -1057,6 +1052,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
@@ -1084,7 +1080,7 @@
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/libraries\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = HelloCpp;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "i386 x86_64";
@@ -1099,7 +1095,8 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				SDKROOT = macosx;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx10.7;
 				VALID_ARCHS = "x86_64 i386";
 			};
 			name = Debug;
@@ -1112,8 +1109,9 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 				VALID_ARCHS = "x86_64 i386";
 			};
 			name = Release;

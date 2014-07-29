@@ -15,13 +15,6 @@
 
 NS_CC_BEGIN;
 
-typedef enum
-{
-    CATouchSidingDirectionMultiple    = 0,
-    CATouchSidingDirectionHorizontal,
-    CATouchSidingDirectionVertical,
-}CATouchSidingDirection;
-
 class CATouch;
 
 class CC_DLL CAResponder: public CAObject
@@ -39,11 +32,13 @@ public:
 
     virtual bool becomeFirstResponder();
     
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bSlideContainers, SlideContainers);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchMovedStopSubviews, TouchMovedStopSubviews);
     
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bControl, Control);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bStopSuperviewListenEvents, StopSuperviewListenEvents);
     
-    CC_SYNTHESIZE(CATouchSidingDirection, m_eTouchSidingDirection, TouchSidingDirection);
+    CC_SYNTHESIZE_IS(bool, m_bTouchMovedListenHorizontal, TouchMovedListenHorizontal);
+    
+    CC_SYNTHESIZE_IS(bool, m_bTouchMovedListenVertical, TouchMovedListenVertical);
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     

@@ -63,17 +63,22 @@ CATableViewCell* SecondViewController::tableCellAtIndex(CATableView* table, cons
 	if (cell == NULL)
 	{
 		cell = CATableViewCell::create("CrossApp");
+        CALabel* cellText = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.3, cellSize.height*0.5));
+        
+        cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+        
+        cellText->setColor(CAColor_blueStyle);
+        cellText->setTextAlignment(CATextAlignmentCenter);
+        cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        cell->addSubview(cellText);
+        cellText->setTag(100);
 	}
-	char order[20] = "";
-	CALabel* cellText = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.3, cellSize.height*0.5));
-	sprintf(order, "cell-%d", row);
-	cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-	cellText->setText(order);
-	cellText->setColor(CAColor_blueStyle);
-	cellText->setTextAlignment(CATextAlignmentCenter);
-	cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	cell->addSubview(cellText);
-
+    
+    CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);
+    char order[20] = "";
+    sprintf(order, "cell-%d", row);
+    cellText->setText(order);
+    
 	return cell;
 
 }

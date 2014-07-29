@@ -47,30 +47,31 @@ CAFreeTypeFont::~CAFreeTypeFont()
 
 int CAFreeTypeFont::getFontHeight(const char* pFontName, unsigned long nSize)
 {
-	unsigned long size = 0;
-	unsigned char* pBuffer = NULL;
-
 	CAFreeTypeFont cFontTemp;
-	pBuffer = cFontTemp.loadFont(pFontName, &size);
-
-	if (!s_FreeTypeLibrary)
+	if (cFontTemp.initFreeTypeFont(pFontName, nSize))
 	{
-		FT_Init_FreeType(&s_FreeTypeLibrary);
+		FT_Face& tface = cFontTemp.m_face;
+		return ((tface->size->metrics.ascender) >> 6) - ((tface->size->metrics.descender) >> 6);
 	}
+	return 0;
+}
 
-	FT_Face tface = 0;
-	int error = FT_New_Memory_Face(s_FreeTypeLibrary, pBuffer, size, 0, &tface);
-    int iLineHeight = 0;
-	if (error == 0)
-	{
-		FT_Set_Char_Size(tface, nSize << 6, nSize << 6, 72, 72);
-		iLineHeight = ((tface->size->metrics.ascender) >> 6) - ((tface->size->metrics.descender) >> 6);
-	}
-    if(tface)
-    {
-        FT_Done_Face(tface);
-    }
-	return iLineHeight;
+int CAFreeTypeFont::getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text)
+{
+	CAFreeTypeFont cFontTemp;
+	if (!cFontTemp.initFreeTypeFont(pFontName, nSize))
+		return 0;
+
+	std::vector<TGlyph> glyphs;
+
+	FT_Vector vt;
+	memset(&vt, 0, sizeof(vt));
+	if (0 != cFontTemp.initWordGlyphs(glyphs, text, vt))
+		return 0;
+
+	FT_BBox bbox;
+	cFontTemp.compute_bbox(glyphs, &bbox);
+	return bbox.xMax - bbox.xMin;
 }
 
 
@@ -323,10 +324,10 @@ void CAFreeTypeFont::newLine()
 }
 
 
-bool CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
+void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 {
 	FT_BBox glyph_bbox, global_bbox;
-	int maxWidth = m_inWidth ? m_inWidth : m_windowWidth;
+	int maxWidth = m_inWidth ? m_inWidth : 0xFFFF;
 	
 	m_currentLine->bbox.xMin = 32000;
 	m_currentLine->bbox.xMax = -32000;
@@ -356,7 +357,8 @@ bool CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 			m_currentLine->bbox.yMax = glyph_bbox.yMax;
         
 		int dtValue = glyph_bbox.xMax - glyph_bbox.xMin;
-		if (glyphs[i].pos.x + dtValue <= maxWidth && m_currentLine->bbox.xMax - m_currentLine->bbox.xMin<=maxWidth)
+		if (m_inWidth == 0xFFFF || 
+			(glyphs[i].pos.x + dtValue <= maxWidth && m_currentLine->bbox.xMax - m_currentLine->bbox.xMin<=maxWidth))
 		{
 			m_currentLine->glyphs.push_back(glyphs[i]);
 		}
@@ -364,25 +366,27 @@ bool CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 	}
     
 	if (i == 0)
-		return false;
-    
+	{
+		return;
+	}
 	glyphs.erase(glyphs.begin(), glyphs.begin() + i);
 	m_currentLine->width = m_currentLine->bbox.xMax - m_currentLine->bbox.xMin;
-	endLine();
-	newLine();
-    
-	int start_pos = 0;
+
 	if (!glyphs.empty())
 	{
-		start_pos = glyphs[0].pos.x;
+		endLine();
+		newLine();
+
+
+		int start_pos = glyphs[0].pos.x;
+		for (int i = 0; i < glyphs.size(); i++)
+		{
+			glyphs[i].pos.x -= start_pos;
+		}
+		calcuMultiLines(glyphs);
 	}
-	
-	for (int i = 0; i < glyphs.size(); i++)
-	{
-		glyphs[i].pos.x -= start_pos;
-	}
-	return calcuMultiLines(glyphs);
 }
+
 FT_Error CAFreeTypeFont::addWord(const std::string& word) 
 {
 	std::vector<TGlyph> glyphs; // glyphs for the word
@@ -618,6 +622,35 @@ void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
   
     /* return string bbox */
     *abbox = bbox;
+}
+
+bool CAFreeTypeFont::initFreeTypeFont(const char* pFontName, unsigned long nSize)
+{
+	unsigned long size = 0;
+	unsigned char* pBuffer = loadFont(pFontName, &size);
+	if (pBuffer == NULL)
+		return false;
+	
+	FT_Error error = 0;
+	if (!s_FreeTypeLibrary)
+	{
+		error = FT_Init_FreeType(&s_FreeTypeLibrary);
+	}
+
+	if (!error && !m_face)
+	{
+		error = FT_New_Memory_Face(s_FreeTypeLibrary, pBuffer, size, 0, &m_face);
+	}
+
+	if (!error)
+	{
+		error = FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
+	}
+
+	if (!error)
+		error = FT_Set_Char_Size(m_face, nSize << 6, nSize << 6, 72, 72);
+
+	return (error==0);
 }
 
 unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *size)

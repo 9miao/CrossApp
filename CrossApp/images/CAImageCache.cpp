@@ -76,8 +76,6 @@ static unsigned long s_nAsyncRefCount = 0;
 
 static bool need_quit = false;
 
-static bool need_quit1 = false;
-
 static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
 
 static std::queue<ImageInfo*>*   s_pImageQueue = NULL;

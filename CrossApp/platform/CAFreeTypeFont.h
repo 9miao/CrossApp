@@ -1,5 +1,5 @@
 //
-//  CCSTLContainer.h
+//  CAFreeTypeFont.h
 //  CrossApp
 //
 //  Created by Zhujian on 14-7-10.
@@ -63,11 +63,14 @@ public:
 	~CAFreeTypeFont();
 
 	static int getFontHeight(const char* pFontName, unsigned long nSize);
+	// text encode with utf8
+	static int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text);
 
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int width, int height, 
 		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
 
 private:
+	bool initFreeTypeFont(const char* pFontName, unsigned long nSize);
 	unsigned char* loadFont(const char *pFontName, unsigned long *size);
 	unsigned char* getBitmap(CCImage::ETextAlign eAlignMask, int* outWidth, int* outHeight);
 
@@ -84,7 +87,7 @@ private:
 
     FT_Vector getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAlign eAlignMask, int lineNumber, int totalLines);
 
-    bool calcuMultiLines(std::vector<TGlyph>& glyphs);
+    void calcuMultiLines(std::vector<TGlyph>& glyphs);
     
     FT_Error addWord(const std::string& word);
     void newLine();
