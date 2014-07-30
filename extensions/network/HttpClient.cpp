@@ -1,30 +1,9 @@
-/****************************************************************************
- Copyright (c) 2010-2012 9miao.com
- Copyright (c) 2012 greathqy
- 
- http://www.9miao.com
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+
 
 #include "HttpClient.h"
 // #include "platform/CCThread.h"
+
+#define MAX_Thread 16
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 
@@ -35,27 +14,67 @@
 
 NS_CC_EXT_BEGIN
 
-static pthread_t        s_networkThread;
-static pthread_mutex_t  s_requestQueueMutex;
-static pthread_mutex_t  s_responseQueueMutex;
+static pthread_t        s_networkThread[MAX_Thread] =
+{
+    pthread_t(),pthread_t(),pthread_t(),pthread_t(),pthread_t(),
+    pthread_t(),pthread_t(),pthread_t(),pthread_t(),pthread_t()
+};
+static pthread_mutex_t  s_requestQueueMutex[MAX_Thread] =
+{
+    pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),
+    pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t()
+};
+static pthread_mutex_t  s_responseQueueMutex[MAX_Thread] =
+{
+    pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),
+    pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t()
+};
+static pthread_mutex_t		s_SleepMutex[MAX_Thread] =
+{
+    pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),
+    pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t(),pthread_mutex_t()
+};
+static pthread_cond_t		s_SleepCondition[MAX_Thread] =
+{
+    pthread_cond_t(),pthread_cond_t(),pthread_cond_t(),pthread_cond_t(),pthread_cond_t(),
+    pthread_cond_t(),pthread_cond_t(),pthread_cond_t(),pthread_cond_t(),pthread_cond_t()
+};
 
-static pthread_mutex_t		s_SleepMutex;
-static pthread_cond_t		s_SleepCondition;
-
-static unsigned long    s_asyncRequestCount = 0;
+static unsigned long    s_asyncRequestCount[MAX_Thread] =
+{
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+};
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 typedef int int32_t;
 #endif
 
-static bool need_quit = false;
+static bool need_quit[MAX_Thread] =
+{
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+};
 
-static CCArray* s_requestQueue = NULL;
-static CCArray* s_responseQueue = NULL;
+static CCArray* s_requestQueue[MAX_Thread] =
+{
+    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
+    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+};
 
-static CCHttpClient *s_pHttpClient = NULL; // pointer to singleton
+static CCArray* s_responseQueue[MAX_Thread] =
+{
+    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
+    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+};
 
-static char s_errorBuffer[CURL_ERROR_SIZE];
+
+static CCHttpClient *s_pHttpClient[MAX_Thread] =
+{
+    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
+    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+};
+ // pointer to singleton
+
+static char s_errorBuffer[MAX_Thread][CURL_ERROR_SIZE];
 
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 
@@ -95,12 +114,14 @@ static int processDeleteTask(CCHttpRequest *request, write_callback callback, vo
 
 // Worker thread
 static void* networkThread(void *data)
-{    
+{
+    int thread = *(int*)data;
+
     CCHttpRequest *request = NULL;
     
     while (true) 
     {
-        if (need_quit)
+        if (need_quit[thread])
         {
             break;
         }
@@ -108,19 +129,19 @@ static void* networkThread(void *data)
         // step 1: send http request if the requestQueue isn't empty
         request = NULL;
         
-        pthread_mutex_lock(&s_requestQueueMutex); //Get request task from queue
-        if (0 != s_requestQueue->count())
+        pthread_mutex_lock(&s_requestQueueMutex[thread]); //Get request task from queue
+        if (0 != s_requestQueue[thread]->count())
         {
-            request = dynamic_cast<CCHttpRequest*>(s_requestQueue->objectAtIndex(0));
-            s_requestQueue->removeObjectAtIndex(0);  
+            request = dynamic_cast<CCHttpRequest*>(s_requestQueue[thread]->objectAtIndex(0));
+            s_requestQueue[thread]->removeObjectAtIndex(0);
             // request's refcount = 1 here
         }
-        pthread_mutex_unlock(&s_requestQueueMutex);
+        pthread_mutex_unlock(&s_requestQueueMutex[thread]);
         
         if (NULL == request)
         {
         	// Wait for http request tasks from main thread
-        	pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
+        	pthread_cond_wait(&s_SleepCondition[thread], &s_SleepMutex[thread]);
             continue;
         }
         
@@ -186,7 +207,7 @@ static void* networkThread(void *data)
         if (retValue != 0) 
         {
             response->setSucceed(false);
-            response->setErrorBuffer(s_errorBuffer);
+            response->setErrorBuffer(s_errorBuffer[thread]);
         }
         else
         {
@@ -195,32 +216,32 @@ static void* networkThread(void *data)
 
         
         // add response packet into queue
-        pthread_mutex_lock(&s_responseQueueMutex);
-        s_responseQueue->addObject(response);
-        pthread_mutex_unlock(&s_responseQueueMutex);
+        pthread_mutex_lock(&s_responseQueueMutex[thread]);
+        s_responseQueue[thread]->addObject(response);
+        pthread_mutex_unlock(&s_responseQueueMutex[thread]);
         
         // resume dispatcher selector
-        CAScheduler::getScheduler()->resumeTarget(CCHttpClient::getInstance());
+        CAScheduler::getScheduler()->resumeTarget(CCHttpClient::getInstance(thread));
     }
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
-    pthread_mutex_lock(&s_requestQueueMutex);
-    s_requestQueue->removeAllObjects();
-    pthread_mutex_unlock(&s_requestQueueMutex);
-    s_asyncRequestCount -= s_requestQueue->count();
+    pthread_mutex_lock(&s_requestQueueMutex[thread]);
+    s_requestQueue[thread]->removeAllObjects();
+    pthread_mutex_unlock(&s_requestQueueMutex[thread]);
+    s_asyncRequestCount[thread] -= s_requestQueue[thread]->count();
     
     if (s_requestQueue != NULL) {
         
-        pthread_mutex_destroy(&s_requestQueueMutex);
-        pthread_mutex_destroy(&s_responseQueueMutex);
+        pthread_mutex_destroy(&s_requestQueueMutex[thread]);
+        pthread_mutex_destroy(&s_responseQueueMutex[thread]);
         
-        pthread_mutex_destroy(&s_SleepMutex);
-        pthread_cond_destroy(&s_SleepCondition);
+        pthread_mutex_destroy(&s_SleepMutex[thread]);
+        pthread_cond_destroy(&s_SleepCondition[thread]);
 
-        s_requestQueue->release();
-        s_requestQueue = NULL;
-        s_responseQueue->release();
-        s_responseQueue = NULL;
+        s_requestQueue[thread]->release();
+        s_requestQueue[thread] = NULL;
+        s_responseQueue[thread]->release();
+        s_responseQueue[thread] = NULL;
     }
 
     pthread_exit(NULL);
@@ -380,25 +401,31 @@ static int processDeleteTask(CCHttpRequest *request, write_callback callback, vo
 }
 
 // HttpClient implementation
-CCHttpClient* CCHttpClient::getInstance()
+CCHttpClient* CCHttpClient::getInstance(int thread)
 {
-    if (s_pHttpClient == NULL) {
-        s_pHttpClient = new CCHttpClient();
+    if (thread >= MAX_Thread)
+    {
+        return NULL;
+    }
+    if (s_pHttpClient[thread] == NULL)
+    {
+        s_pHttpClient[thread] = new CCHttpClient(thread);
     }
     
-    return s_pHttpClient;
+    return s_pHttpClient[thread];
 }
 
-void CCHttpClient::destroyInstance()
+void CCHttpClient::destroyInstance(int thread)
 {
-    CCAssert(s_pHttpClient, "");
-    CAScheduler::unschedule(schedule_selector(CCHttpClient::dispatchResponseCallbacks), s_pHttpClient);
-    s_pHttpClient->release();
+    CCAssert(s_pHttpClient[thread], "");
+    CAScheduler::unschedule(schedule_selector(CCHttpClient::dispatchResponseCallbacks), s_pHttpClient[thread]);
+    s_pHttpClient[thread]->release();
 }
 
-CCHttpClient::CCHttpClient()
+CCHttpClient::CCHttpClient(int thread)
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
+, _threadID(thread)
 {
     CAScheduler::schedule(schedule_selector(CCHttpClient::dispatchResponseCallbacks), this, 0);
     CAScheduler::getScheduler()->pauseTarget(this);
@@ -406,38 +433,38 @@ CCHttpClient::CCHttpClient()
 
 CCHttpClient::~CCHttpClient()
 {
-    need_quit = true;
+    need_quit[_threadID] = true;
     
     if (s_requestQueue != NULL) {
-    	pthread_cond_signal(&s_SleepCondition);
+    	pthread_cond_signal(&s_SleepCondition[_threadID]);
     }
     
-    s_pHttpClient = NULL;
+    s_pHttpClient[_threadID] = NULL;
 }
 
 //Lazy create semaphore & mutex & thread
 bool CCHttpClient::lazyInitThreadSemphore()
 {
-    if (s_requestQueue != NULL) {
+    if (s_requestQueue[_threadID] != NULL) {
         return true;
     } else {
         
-        s_requestQueue = new CCArray();
-        s_requestQueue->init();
+        s_requestQueue[_threadID] = new CCArray();
+        s_requestQueue[_threadID]->init();
         
-        s_responseQueue = new CCArray();
-        s_responseQueue->init();
+        s_responseQueue[_threadID] = new CCArray();
+        s_responseQueue[_threadID]->init();
         
-        pthread_mutex_init(&s_requestQueueMutex, NULL);
-        pthread_mutex_init(&s_responseQueueMutex, NULL);
+        pthread_mutex_init(&s_requestQueueMutex[_threadID], NULL);
+        pthread_mutex_init(&s_responseQueueMutex[_threadID], NULL);
         
-        pthread_mutex_init(&s_SleepMutex, NULL);
-        pthread_cond_init(&s_SleepCondition, NULL);
+        pthread_mutex_init(&s_SleepMutex[_threadID], NULL);
+        pthread_cond_init(&s_SleepCondition[_threadID], NULL);
 
-        pthread_create(&s_networkThread, NULL, networkThread, NULL);
-        pthread_detach(s_networkThread);
+        pthread_create(&s_networkThread[_threadID], NULL, networkThread, (void*)&_threadID);
+        pthread_detach(s_networkThread[_threadID]);
         
-        need_quit = false;
+        need_quit[_threadID] = false;
     }
     
     return true;
@@ -446,26 +473,23 @@ bool CCHttpClient::lazyInitThreadSemphore()
 //Add a get task to queue
 void CCHttpClient::send(CCHttpRequest* request)
 {    
-    if (false == lazyInitThreadSemphore()) 
-    {
-        return;
-    }
+    lazyInitThreadSemphore();
     
     if (!request)
     {
         return;
     }
         
-    ++s_asyncRequestCount;
+    ++s_asyncRequestCount[_threadID];
     
     request->retain();
         
-    pthread_mutex_lock(&s_requestQueueMutex);
-    s_requestQueue->addObject(request);
-    pthread_mutex_unlock(&s_requestQueueMutex);
+    pthread_mutex_lock(&s_requestQueueMutex[_threadID]);
+    s_requestQueue[_threadID]->addObject(request);
+    pthread_mutex_unlock(&s_requestQueueMutex[_threadID]);
     
     // Notify thread start to work
-    pthread_cond_signal(&s_SleepCondition);
+    pthread_cond_signal(&s_SleepCondition[_threadID]);
 }
 
 // Poll and notify main thread if responses exists in queue
@@ -475,17 +499,17 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
     
     CCHttpResponse* response = NULL;
     
-    pthread_mutex_lock(&s_responseQueueMutex);
-    if (s_responseQueue->count())
+    pthread_mutex_lock(&s_responseQueueMutex[_threadID]);
+    if (s_responseQueue[_threadID]->count())
     {
-        response = dynamic_cast<CCHttpResponse*>(s_responseQueue->objectAtIndex(0));
-        s_responseQueue->removeObjectAtIndex(0);
+        response = dynamic_cast<CCHttpResponse*>(s_responseQueue[_threadID]->objectAtIndex(0));
+        s_responseQueue[_threadID]->removeObjectAtIndex(0);
     }
-    pthread_mutex_unlock(&s_responseQueueMutex);
+    pthread_mutex_unlock(&s_responseQueueMutex[_threadID]);
     
     if (response)
     {
-        --s_asyncRequestCount;
+        --s_asyncRequestCount[_threadID];
         
         CCHttpRequest *request = response->getHttpRequest();
         CAObject *pTarget = request->getTarget();

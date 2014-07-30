@@ -199,7 +199,7 @@ void CANavigationBar::showLeftButton()
     
     for (int i=0; i<buttonItems->count(); i++)
     {
-        rect.origin.x += i * rect.size.width * 1.1f;
+        rect.origin.x += i * rect.size.width;
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
         this->addSubview(button);
         

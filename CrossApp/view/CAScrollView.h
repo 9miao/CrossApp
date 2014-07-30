@@ -151,10 +151,6 @@ private:
     
     using CAView::initWithColor;
     
-    using CAView::setImage;
-    
-    using CAView::setImageRect;
-    
     using CAView::setColor;
     
 protected:

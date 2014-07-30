@@ -267,6 +267,8 @@
 		B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B04CF4301967B2EB00BA7030 /* CASTLContainer.h */; };
 		B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D3697195AB93900DD4814 /* CAAlertView.cpp */; };
 		B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D3698195AB93900DD4814 /* CAAlertView.h */; };
+		B0F7E4FE198788010048F46B /* CAPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F7E4FC198788010048F46B /* CAPageView.cpp */; };
+		B0F7E4FF198788010048F46B /* CAPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F7E4FD198788010048F46B /* CAPageView.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -533,6 +535,8 @@
 		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B05D3697195AB93900DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D3698195AB93900DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
+		B0F7E4FC198788010048F46B /* CAPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageView.cpp; sourceTree = "<group>"; };
+		B0F7E4FD198788010048F46B /* CAPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1046,6 +1050,8 @@
 				04EAB0451956D75500198A8E /* CAImageView.h */,
 				04EAB0461956D75500198A8E /* CALabel.cpp */,
 				04EAB0471956D75500198A8E /* CALabel.h */,
+				B0F7E4FC198788010048F46B /* CAPageView.cpp */,
+				B0F7E4FD198788010048F46B /* CAPageView.h */,
 				04EAB0481956D75500198A8E /* CARenderImage.cpp */,
 				04EAB0491956D75500198A8E /* CARenderImage.h */,
 				04EAB04A1956D75500198A8E /* CAScale9ImageView.cpp */,
@@ -1122,6 +1128,7 @@
 				B01F650519657084005C14FC /* CACollectionView.h in Headers */,
 				04EAB0801956D75600198A8E /* CCArray.h in Headers */,
 				04EAB0851956D75600198A8E /* CCDictionary.h in Headers */,
+				B0F7E4FF198788010048F46B /* CAPageView.h in Headers */,
 				04EAB08A1956D75600198A8E /* CCNS.h in Headers */,
 				04EAB08C1956D75600198A8E /* CCSet.h in Headers */,
 				04EAB08E1956D75600198A8E /* CCString.h in Headers */,
@@ -1409,6 +1416,7 @@
 				0460ECF51956F97A00D13001 /* CAApplicationCaller.mm in Sources */,
 				0460ECF71956F97A00D13001 /* CCEGLView.mm in Sources */,
 				04DF7CB01984E6D9007352A8 /* CAIndexPath.cpp in Sources */,
+				B0F7E4FE198788010048F46B /* CAPageView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

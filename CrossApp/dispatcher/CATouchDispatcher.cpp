@@ -183,7 +183,7 @@ void CATouchController::touchBegan()
                 std::vector<CAView*>::iterator itr2 = itr+1;
                 for (; itr2!=vector.end(); itr2++)
                 {
-                    m_vWillTouchesViewCache.insert(0, *itr);
+                    m_vWillTouchesViewCache.pushBack(*itr2);
                 }
             }
             break;
@@ -197,7 +197,7 @@ void CATouchController::touchBegan()
                 std::vector<CAView*>::iterator itr2 = itr;
                 for (; itr2!=vector.end(); itr2++)
                 {
-                    m_vTouchesViewCache.insert(0, *itr);
+                    m_vTouchesViewCache.pushBack(*itr2);
                 }
             }
             break;
@@ -222,7 +222,7 @@ void CATouchController::touchBegan()
 
 void CATouchController::touchMoved()
 {
-    CC_RETURN_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < 8.0f);
+    CC_RETURN_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < _px(8));
     
     bool isScheduledPassing = CAScheduler::isScheduled(schedule_selector(CATouchController::passingTouchesViewCache), this);
     if (   !m_vWillTouchesViewCache.empty()

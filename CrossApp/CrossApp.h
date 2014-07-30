@@ -85,6 +85,7 @@
 #include "view/CAClippingView.h"
 #include "view/CAScrollView.h"
 #include "view/CATableView.h"
+#include "view/CAPageView.h"
 #include "view/CACollectionView.h"
 #include "view/CAAlertView.h"
 

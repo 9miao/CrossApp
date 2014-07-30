@@ -421,6 +421,8 @@
 		B0B553D7193485BE0065053D /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553CF193485BE0065053D /* CAImage.h */; };
 		B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553D0193485BE0065053D /* CAImageCache.cpp */; };
 		B0B553D9193485BE0065053D /* CAImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553D1193485BE0065053D /* CAImageCache.h */; };
+		B0F7E503198792180048F46B /* CAPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F7E501198792180048F46B /* CAPageView.cpp */; };
+		B0F7E504198792180048F46B /* CAPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F7E502198792180048F46B /* CAPageView.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -793,6 +795,8 @@
 		B0B553CF193485BE0065053D /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
 		B0B553D0193485BE0065053D /* CAImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCache.cpp; sourceTree = "<group>"; };
 		B0B553D1193485BE0065053D /* CAImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageCache.h; sourceTree = "<group>"; };
+		B0F7E501198792180048F46B /* CAPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageView.cpp; sourceTree = "<group>"; };
+		B0F7E502198792180048F46B /* CAPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -896,6 +900,8 @@
 		04EA9FC41956CE2500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B0F7E501198792180048F46B /* CAPageView.cpp */,
+				B0F7E502198792180048F46B /* CAPageView.h */,
 				B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */,
 				B05D36A9195AF3CC00DD4814 /* CAAlertView.h */,
 				04EA9FC51956CE2500198A8E /* CABatchView.cpp */,
@@ -1792,6 +1798,7 @@
 				0460ED361957031200D13001 /* CAGLProgram.h in Headers */,
 				B0596AFB197629BE00B1E8CB /* ftxf86.h in Headers */,
 				0460ED381957031200D13001 /* CAShaderCache.h in Headers */,
+				B0F7E504198792180048F46B /* CAPageView.h in Headers */,
 				B0596B0D197629BE00B1E8CB /* svcid.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1871,6 +1878,7 @@
 				1551A6CA158F2ADE00E66CFE /* mat4.c in Sources */,
 				1551A6CB158F2ADE00E66CFE /* neon_matrix_impl.c in Sources */,
 				1551A6CC158F2ADE00E66CFE /* plane.c in Sources */,
+				B0F7E503198792180048F46B /* CAPageView.cpp in Sources */,
 				1551A6CD158F2ADE00E66CFE /* quaternion.c in Sources */,
 				1551A6CE158F2ADE00E66CFE /* ray2.c in Sources */,
 				1551A6CF158F2ADE00E66CFE /* utility.c in Sources */,

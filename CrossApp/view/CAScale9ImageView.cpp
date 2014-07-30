@@ -360,10 +360,8 @@ void CAScale9ImageView::setInsetBottom(float insetBottom)
 
 void CAScale9ImageView::setColor(const CAColor4B& color)
 {
-    m_pScale9ImageView->setColor(color);
-    
     CAObject* child;
-    CCArray* children = this->getSubviews();
+    CCArray* children = m_pScale9ImageView->getSubviews();
     CCARRAY_FOREACH(children, child)
     {
         CARGBAProtocol* pNode = dynamic_cast<CARGBAProtocol*>(child);

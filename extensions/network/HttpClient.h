@@ -1,27 +1,4 @@
-/****************************************************************************
- Copyright (c) 2010-2012 CrossApp-x.org
- Copyright (c) 2012 greathqy
- 
- http://www.CrossApp-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+
 
 #ifndef __CCHTTPREQUEST_H__
 #define __CCHTTPREQUEST_H__
@@ -49,10 +26,10 @@ class CCHttpClient : public CAObject
 {
 public:
     /** Return the shared instance **/
-    static CCHttpClient *getInstance();
+    static CCHttpClient *getInstance(int thread = 0);
     
     /** Relase the shared instance **/
-    static void destroyInstance();
+    static void destroyInstance(int thread = 0);
         
     /**
      * Add a get request to task queue
@@ -93,7 +70,7 @@ public:
     inline int getTimeoutForRead() {return _timeoutForRead;};
         
 private:
-    CCHttpClient();
+    CCHttpClient(int thread);
     virtual ~CCHttpClient();
     bool init(void);
     
@@ -108,7 +85,7 @@ private:
 private:
     int _timeoutForConnect;
     int _timeoutForRead;
-    
+    int _threadID;
     // std::string reqId;
 };
 

@@ -250,11 +250,11 @@ bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		m_pTouches->replaceObjectAtIndex(0, pTouch);
 		return true;
 	}
-
+    bool isInertia = m_tInertia.equals(CCPointZero);
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
 		return false;
 
-	if (m_bAllowsSelection && this->isScrollWindowNotOutSide() == false)
+	if (m_bAllowsSelection && this->isScrollWindowNotOutSide() == false && isInertia)
 	{
 		CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
 
