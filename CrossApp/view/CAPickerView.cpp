@@ -182,7 +182,8 @@ void CAPickerView::reloadAllComponents()
             float start_y = getFrame().size.height/2 - tableHeight/2;
             CATableView* tableView = CATableView::createWithFrame(CCRectMake(start_x, start_y, tableWidth, tableHeight));
             tableView->setTableViewDataSource(this);
-            tableView->setAllowsSeparator(false);
+            tableView->setSeparatorViewHeight(0);
+            tableView->setSeparatorColor(CAColor_clear);
             tableView->setShowsVerticalScrollIndicator(false);
             m_tableViews->addObject(tableView);
             addSubview(tableView);
@@ -273,7 +274,7 @@ CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const CCSize
         CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
         if (cell == NULL) {
             cell = CATableViewCell::create("CrossApp");
-            cell->setBackGroundViewForState(CAControlStateAll, NULL);
+            cell->setBackgroundView(NULL);
         }
         
         int component = m_tableViews->indexOfObject(table);

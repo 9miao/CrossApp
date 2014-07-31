@@ -6,12 +6,15 @@ LOCAL_MODULE := CrossApp_cpp_shared
 
 LOCAL_MODULE_FILENAME := libCrossApp_cpp
 
-define all-cpp-files
+LOCAL_SRC_FILES := hellocpp/main.cpp \
+../../Classes/AppDelegate.cpp \
+../../Classes/RootWindow.cpp \
+../../Classes/FirstViewController.cpp \
 
-$(patsubst jni/%,%, $(shell find $(LOCAL_PATH)/../../Classes/ $(LOCAL_PATH) -name "*.cpp"))  
-endef
-
-LOCAL_SRC_FILES := $(call all-cpp-files)
+#define all-cpp-files
+#$(patsubst jni/%,%, $(shell find $(LOCAL_PATH)/../../Classes/ $(LOCAL_PATH) -name #"*.cpp"))  
+#endef
+#LOCAL_SRC_FILES := $(call all-cpp-files)
 			
 			
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes

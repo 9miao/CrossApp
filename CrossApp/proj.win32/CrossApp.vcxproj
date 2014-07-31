@@ -148,10 +148,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\basics\CACamera.cpp" />
     <ClCompile Include="..\basics\CAFPSImages.c" />
     <ClCompile Include="..\basics\CAGeometry.cpp" />
+    <ClCompile Include="..\basics\CAIndexPath.cpp" />
     <ClCompile Include="..\basics\CAObject.cpp" />
     <ClCompile Include="..\basics\CAResponder.cpp" />
     <ClCompile Include="..\basics\CAScheduler.cpp" />
-    <ClCompile Include="..\basics\CASTLContainer.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
@@ -246,6 +246,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CACollectionView.cpp" />
     <ClCompile Include="..\view\CAImageView.cpp" />
     <ClCompile Include="..\view\CALabel.cpp" />
+    <ClCompile Include="..\view\CAPageView.cpp" />
+    <ClCompile Include="..\view\CAPickerView.cpp" />
     <ClCompile Include="..\view\CARenderImage.cpp" />
     <ClCompile Include="..\view\CAScale9ImageView.cpp" />
     <ClCompile Include="..\view\CAScrollView.cpp" />
@@ -259,6 +261,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\basics\CACamera.h" />
     <ClInclude Include="..\basics\CAFPSImages.h" />
     <ClInclude Include="..\basics\CAGeometry.h" />
+    <ClInclude Include="..\basics\CAIndexPath.h" />
     <ClInclude Include="..\basics\CAObject.h" />
     <ClInclude Include="..\basics\CAResponder.h" />
     <ClInclude Include="..\basics\CAScheduler.h" />
@@ -386,6 +389,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\view\CACollectionView.h" />
     <ClInclude Include="..\view\CAImageView.h" />
     <ClInclude Include="..\view\CALabel.h" />
+    <ClInclude Include="..\view\CAPageView.h" />
+    <ClInclude Include="..\view\CAPickerView.h" />
     <ClInclude Include="..\view\CARenderImage.h" />
     <ClInclude Include="..\view\CAScale9ImageView.h" />
     <ClInclude Include="..\view\CAScrollView.h" />

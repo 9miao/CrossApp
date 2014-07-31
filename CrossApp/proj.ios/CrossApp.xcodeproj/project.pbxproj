@@ -296,6 +296,8 @@
 		469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DF216C24787006FFCB2 /* tinyxml2.h */; };
 		46A393F716E5D01B00210B16 /* CAUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A393F316E5D01B00210B16 /* CAUserDefault.h */; };
 		46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F416E5D01B00210B16 /* CAUserDefault.mm */; };
+		B0090D73198A444500BD8CDA /* CAPickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D71198A444500BD8CDA /* CAPickerView.cpp */; };
+		B0090D74198A444500BD8CDA /* CAPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0090D72198A444500BD8CDA /* CAPickerView.h */; };
 		B01F650819658599005C14FC /* CADensityDpi.mm in Sources */ = {isa = PBXBuildFile; fileRef = B01F650719658599005C14FC /* CADensityDpi.mm */; };
 		B01F650A196585B2005C14FC /* CADensityDpi.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F6509196585B2005C14FC /* CADensityDpi.h */; };
 		B01F650D196585EA005C14FC /* CACollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F650B196585EA005C14FC /* CACollectionView.cpp */; };
@@ -670,6 +672,8 @@
 		469A7DF216C24787006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		46A393F316E5D01B00210B16 /* CAUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUserDefault.h; sourceTree = "<group>"; };
 		46A393F416E5D01B00210B16 /* CAUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAUserDefault.mm; sourceTree = "<group>"; };
+		B0090D71198A444500BD8CDA /* CAPickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPickerView.cpp; sourceTree = "<group>"; };
+		B0090D72198A444500BD8CDA /* CAPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPickerView.h; sourceTree = "<group>"; };
 		B01F650719658599005C14FC /* CADensityDpi.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CADensityDpi.mm; sourceTree = "<group>"; };
 		B01F6509196585B2005C14FC /* CADensityDpi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADensityDpi.h; sourceTree = "<group>"; };
 		B01F650B196585EA005C14FC /* CACollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACollectionView.cpp; sourceTree = "<group>"; };
@@ -900,6 +904,8 @@
 		04EA9FC41956CE2500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B0090D71198A444500BD8CDA /* CAPickerView.cpp */,
+				B0090D72198A444500BD8CDA /* CAPickerView.h */,
 				B0F7E501198792180048F46B /* CAPageView.cpp */,
 				B0F7E502198792180048F46B /* CAPageView.h */,
 				B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */,
@@ -1746,6 +1752,7 @@
 				04EA9FE21956CE2500198A8E /* CAGeometry.h in Headers */,
 				04EA9FE41956CE2500198A8E /* CAObject.h in Headers */,
 				04EA9FE61956CE2500198A8E /* CAResponder.h in Headers */,
+				B0090D74198A444500BD8CDA /* CAPickerView.h in Headers */,
 				04EA9FE81956CE2500198A8E /* CAScheduler.h in Headers */,
 				04EA9FEA1956CE2500198A8E /* CABar.h in Headers */,
 				04EA9FEC1956CE2500198A8E /* CAButton.h in Headers */,
@@ -1864,6 +1871,7 @@
 				1551A634158F2ADE00E66CFE /* CCActionInstant.cpp in Sources */,
 				B04636D21957BBBD00758ABF /* CAAnimation.cpp in Sources */,
 				1551A636158F2ADE00E66CFE /* CCActionInterval.cpp in Sources */,
+				B0090D73198A444500BD8CDA /* CAPickerView.cpp in Sources */,
 				1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */,
 				1551A640158F2ADE00E66CFE /* CCActionTween.cpp in Sources */,
 				1551A652158F2ADE00E66CFE /* CCArray.cpp in Sources */,

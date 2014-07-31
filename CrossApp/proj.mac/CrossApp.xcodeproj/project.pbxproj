@@ -258,6 +258,8 @@
 		1551A874158F2B4700E66CFE /* CrossApp-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 1551A873158F2B4700E66CFE /* CrossApp-Prefix.pch */; };
 		1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A94D34C16C2014900D79D09 /* libwebp.a */; };
 		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
+		B0090D6E198A441800BD8CDA /* CAPickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D6C198A441800BD8CDA /* CAPickerView.cpp */; };
+		B0090D6F198A441800BD8CDA /* CAPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0090D6D198A441800BD8CDA /* CAPickerView.h */; };
 		B01F64F91964FE2F005C14FC /* CADensityDpi.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F64F71964FE2F005C14FC /* CADensityDpi.h */; };
 		B01F64FB1964FF0D005C14FC /* CADensityDpi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */; };
 		B01F650419657084005C14FC /* CACollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F650219657084005C14FC /* CACollectionView.cpp */; };
@@ -526,6 +528,8 @@
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1551A873158F2B4700E66CFE /* CrossApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.pch"; sourceTree = "<group>"; };
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
+		B0090D6C198A441800BD8CDA /* CAPickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPickerView.cpp; sourceTree = "<group>"; };
+		B0090D6D198A441800BD8CDA /* CAPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPickerView.h; sourceTree = "<group>"; };
 		B01F64F71964FE2F005C14FC /* CADensityDpi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADensityDpi.h; sourceTree = "<group>"; };
 		B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADensityDpi.cpp; sourceTree = "<group>"; };
 		B01F650219657084005C14FC /* CACollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACollectionView.cpp; sourceTree = "<group>"; };
@@ -1040,6 +1044,8 @@
 		04EAB03F1956D75500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B0090D6C198A441800BD8CDA /* CAPickerView.cpp */,
+				B0090D6D198A441800BD8CDA /* CAPickerView.h */,
 				B05D3697195AB93900DD4814 /* CAAlertView.cpp */,
 				B05D3698195AB93900DD4814 /* CAAlertView.h */,
 				04EAB0401956D75500198A8E /* CABatchView.cpp */,
@@ -1215,6 +1221,7 @@
 				04EABA691956D75A00198A8E /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				04EABA6A1956D75A00198A8E /* ccShader_PositionTextureA8Color_vert.h in Headers */,
 				04EABA6B1956D75A00198A8E /* ccShader_PositionTextureColor_frag.h in Headers */,
+				B0090D6F198A441800BD8CDA /* CAPickerView.h in Headers */,
 				04EABA6C1956D75A00198A8E /* ccShader_PositionTextureColor_vert.h in Headers */,
 				04EABA6D1956D75A00198A8E /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				04EABA6F1956D75A00198A8E /* CAShaderCache.h in Headers */,
@@ -1313,6 +1320,7 @@
 				04EAB05D1956D75600198A8E /* CCActionInstant.cpp in Sources */,
 				04EAB05F1956D75600198A8E /* CCActionInterval.cpp in Sources */,
 				04EAB0611956D75600198A8E /* CCActionManager.cpp in Sources */,
+				B0090D6E198A441800BD8CDA /* CAPickerView.cpp in Sources */,
 				04EAB0631956D75600198A8E /* CCActionTween.cpp in Sources */,
 				04EAB0671956D75600198A8E /* CAApplication.cpp in Sources */,
 				04EAB0691956D75600198A8E /* CAAutoreleasePool.cpp in Sources */,

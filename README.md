@@ -1,3 +1,24 @@
+####【正式版】CrossApp 0.3.1 更新内容：  #####1.添加CAPickerView列表选择器，该控件是智能手机中比较常用到的一个控件，它通过转轮界面提供一系列多值选项，它向用户显示信息，也收集用户输入。#####2.添加CAPageView翻页滑动容器，该控件是智能手机中比较常用到的一个控件，它通过监听手指滑动手势来体现翻页的效果。
+
+#####3.添加CAIndexPath2E、CAIndexPath3E
+二维、三维索引类
+
+#####4.CATableView，CACollectionView增加cell复用机制
+复用机制使得CATableView，CACollectionView不再担心超大数据量的显示，且提升用户体验
+
+#####5.优化触摸分发系统
+优化触摸分发系统，可更加人性化的分发触摸事件
+
+#####6.httpClient优化
+httpClient由原来的一个单独异步线程改为可实现16个异步线程
+#####6.修复CAList、CADeque的bug
+#####7.修复CATextField在部分机型崩溃的bug
+#####4.优化CANavigationController优化CANavigationController，大幅度的提升界面管理的效率。#####5.优化CANavigationBar添加设置标题与按钮文字颜色的接口。修复更新背景Image的bug。#####6.优化CASwitch针对CASwitch的用户体验进行了优化。#####7.修复CATableView与CACollectionView
+
+
+
+
+
 ####【正式版】CrossApp 0.3.0 更新内容：  #####1.CrossApp-Design发布CrossApp UI界面编辑器正式推出，这将会大大的加快开发者们开发移动应用的速度。#####2.大幅优化文字性能文字机制重写，android平台文字加载速度提升约80%，iOS平台文字加载速度提升约50%。#####3.优化渲染性能渲染帧率大幅提升，几乎与原生应用性能近似，部分情况比原生更优（官网中有详细的测试指标的数值文档下载，请查阅）#####4.优化CANavigationController优化CANavigationController，大幅度的提升界面管理的效率。#####5.优化CANavigationBar添加设置标题与按钮文字颜色的接口。修复更新背景Image的bug。#####6.优化CASwitch针对CASwitch的用户体验进行了优化。#####7.修复CATableView与CACollectionView修复CATableView与CACollectionView设置选中项的bug。#####8.添加对CrossApp-Design导出文件的支持。#####9.添加新的demo（开发者们反应强烈，所以增加）新的demo对CrossApp的每一个控件进行了详细的展示，方便大家参考。#####本版本是CrossApp首次推出正式版本，性能与原生应用近似，已到达可制作商业化产品的开发标准，官方也正式对外准许开发者们使用CrossApp在任何商业移动产品的开发中。开源的跨平台移动应用开发引擎CrossApp基于MIT开源协议，开发者可以毫无顾虑、完全免费的使用CrossApp开发任何商业项目。
 
 

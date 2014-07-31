@@ -17,7 +17,6 @@ Json/lib_json/json_reader.cpp \
 Json/lib_json/json_writer.cpp \
 rapidjson/CocoLoader.cpp \
 rapidjson/CADictionaryHelper.cpp \
-
 other/CAAdress/android/CAAddressManager.cpp \
 other/CACamera/android/CAMediaManager.cpp \
 other/CALocation/android/CALocationManager.cpp \

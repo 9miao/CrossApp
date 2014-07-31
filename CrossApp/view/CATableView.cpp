@@ -401,6 +401,11 @@ void CATableView::setSelectRowAtIndexPath(unsigned int section, unsigned int row
     m_pSelectedTableCells.insert(indexPath);
 }
 
+CATableViewCell* CATableView::cellForRowAtIndexPath(unsigned int section, unsigned int row)
+{
+    return m_pUsedTableCells[CAIndexPath2E(section, row)];
+}
+
 void CATableView::clearData()
 {
     m_nSections = 0;

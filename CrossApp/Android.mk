@@ -89,6 +89,7 @@ view/CAView.cpp \
 view/CAWindow.cpp \
 view/CAAlertView.cpp \
 view/CAPageView.cpp \
+view/CAPickerView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

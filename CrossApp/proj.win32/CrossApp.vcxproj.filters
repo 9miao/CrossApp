@@ -385,9 +385,6 @@
     <ClCompile Include="..\platform\win32\CADensityDpi.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\basics\CASTLContainer.cpp">
-      <Filter>basics</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\CAFreeTypeFont.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -399,6 +396,15 @@
     </ClCompile>
     <ClCompile Include="..\shaders\CAtransformation.cpp">
       <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAIndexPath.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAPageView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAPickerView.cpp">
+      <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -805,6 +811,15 @@
     </ClInclude>
     <ClInclude Include="..\shaders\CATransformation.h">
       <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAIndexPath.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAPageView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAPickerView.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -101,6 +101,8 @@ public:
     
     void setSelectRowAtIndexPath(unsigned int section, unsigned int row);
     
+    CATableViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row);
+    
     CC_SYNTHESIZE(CATableViewDataSource*, m_pTableViewDataSource, TableViewDataSource);
     
     CC_SYNTHESIZE(CATableViewDelegate*, m_pTableViewDelegate, TableViewDelegate);
