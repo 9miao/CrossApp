@@ -99,6 +99,8 @@ CAView::CAView(void)
 , m_bHasChildren(false)
 , m_pViewDelegate(NULL)
 , m_bFrame(true)
+, m_bRestoreScissor(false)
+, m_obRestoreScissorRect(CCRectZero)
 {
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
@@ -1111,7 +1113,13 @@ void CAView::visit()
     
     if (!m_bDisplayRange)
     {
-        glEnable(GL_SCISSOR_TEST);
+        // check parent scissor
+        if (glIsEnabled(GL_SCISSOR_TEST)) {
+            GLfloat params[4];
+            glGetFloatv(GL_SCISSOR_BOX, params);
+            m_bRestoreScissor = true;
+            m_obRestoreScissorRect = CCRectMake(params[0], params[1], params[2], params[3]);
+        }
         
         CCPoint point = this->convertToWorldSpace(CCPoint(0, this->getBounds().size.height));
         point = CAApplication::getApplication()->convertToGL(point);
@@ -1135,12 +1143,22 @@ void CAView::visit()
             parent = parent->getSuperview();
         }
         
-        float x = point.x * glScaleX + off_X;
-        float y = point.y * glScaleY + off_Y;
-        float width = size.width * scaleX * glScaleX;
-        float height = size.height * scaleY * glScaleY;
-        
-		glScissor(x, y, width, height);
+        CCRect frame = CCRectMake(point.x * glScaleX + off_X, 
+                                  point.y * glScaleY + off_Y, 
+                                  size.width * scaleX * glScaleX, 
+                                  size.height * scaleY * glScaleY);        
+        if (m_bRestoreScissor) {
+            if (frame.intersectsRect(m_obRestoreScissorRect)) {
+                float x = MAX(frame.origin.x, m_obRestoreScissorRect.origin.x);
+                float y = MAX(frame.origin.y, m_obRestoreScissorRect.origin.y);
+                float xx = MIN(frame.origin.x+frame.size.width, m_obRestoreScissorRect.origin.x+m_obRestoreScissorRect.size.width);
+                float yy = MIN(frame.origin.y+frame.size.height, m_obRestoreScissorRect.origin.y+m_obRestoreScissorRect.size.height);
+                glScissor(x, y, xx-x, yy-y);
+            }
+        } else {
+            glEnable(GL_SCISSOR_TEST);
+            glScissor(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+        }
     }
 
     CCRect winRect = CCRectZero;
@@ -1206,7 +1224,14 @@ void CAView::visit()
     
     if (!m_bDisplayRange)
     {
-        glDisable(GL_SCISSOR_TEST);
+        if (m_bRestoreScissor) {
+            glScissor(m_obRestoreScissorRect.origin.x, 
+                      m_obRestoreScissorRect.origin.y, 
+                      m_obRestoreScissorRect.size.width, 
+                      m_obRestoreScissorRect.size.height);
+        } else {
+            glDisable(GL_SCISSOR_TEST);
+        }
     }
 
     kmGLPopMatrix();

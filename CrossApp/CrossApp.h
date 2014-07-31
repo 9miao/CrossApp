@@ -88,6 +88,7 @@
 #include "view/CAPageView.h"
 #include "view/CACollectionView.h"
 #include "view/CAAlertView.h"
+#include "view/CAPickerView.h"
 
 // cocoa
 #include "cocoa/CCDictionary.h"
