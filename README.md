@@ -11,8 +11,8 @@
 
 #####6.httpClient优化
 httpClient由原来的一个单独异步线程改为可实现16个异步线程
-#####6.修复CAList、CADeque的bug
-#####7.修复CATextField在部分机型崩溃的bug
+#####7.修复CAList、CADeque的bug
+#####8.修复CATextField在部分机型崩溃的bug
 #####4.优化CANavigationController优化CANavigationController，大幅度的提升界面管理的效率。#####5.优化CANavigationBar添加设置标题与按钮文字颜色的接口。修复更新背景Image的bug。#####6.优化CASwitch针对CASwitch的用户体验进行了优化。#####7.修复CATableView与CACollectionView
 
 
