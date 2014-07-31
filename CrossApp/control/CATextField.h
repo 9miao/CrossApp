@@ -12,8 +12,8 @@
 #include <iostream>
 #include "dispatcher/CAIMEDispatcher.h"
 #include "control/CAControl.h"
-#include "view/CAScale9ImageView.h"
 #include <vector>
+#include "view/CAScale9ImageView.h"
 NS_CC_BEGIN
 using namespace std;
 
@@ -129,8 +129,6 @@ public:
     
     CC_PROPERTY(CAColor4B, m_cTextColor, TextColor);
     
-    CC_PROPERTY(CATextAlignment, m_aTextAlignment, TextAlignment);
-    
     CC_SYNTHESIZE(CATextFieldDelegate*, m_pDelegate, Delegate);
     
     CC_PROPERTY(float, m_fFontSize, FontSize);
@@ -148,9 +146,6 @@ public:
     virtual void setImageRect(const CCRect& rect);
     
     virtual void updateImageRect();
-    
-    virtual void visit();
-    
 private:
     
     std::vector<TextAttribute> m_vByteLengthArr;
@@ -162,13 +157,13 @@ private:
     float pTextHeight;
     bool  spaceHolderIsOn;
     bool  isEditing;
-    bool   m_bUpdateImage;
     CCRect m_rLabelRect;
     CAView *willBg;
+    CAScale9ImageView* m_pBackgroundView;
     CCAction *m_pCursorAction;
     CAView *m_pMark;
     eKeyBoardType m_keyboardType;
-    CAScale9ImageView* m_pBackgroundView;
+    bool m_bIsAny;
     void updateImage();
 protected:
     float       m_fString_left_offX;
@@ -191,6 +186,7 @@ protected:
     virtual bool canDetachWithIME();
     virtual void insertText(const char * text, int len);
     virtual void willInsertText(const char* text,int len);
+    virtual void AndroidWillInsertText(int start,const char* str,int before,int count);
     virtual void getKeyBoardHeight(int height);
     virtual void deleteBackward();
     virtual const char * getContentText();

@@ -1,5 +1,7 @@
 #include "AlertViewTest.h"
 
+#define CAColor_blueStyle ccc4(51,204,255,255)
+
 AlertViewTest::AlertViewTest()
 {
 
@@ -29,6 +31,8 @@ void AlertViewTest::respondTouch(CAControl* btn ,CCPoint point)
 	btnTitle.push_back("yeelow");
 	btnTitle.push_back("orange");
 	alertView->showMessage("ButtonImage", "What kind of background of button do you like?", btnTitle);
+	alertView->setTitle("ButtonImage",CAColor_blueStyle);
+	alertView->setAlertMessage("What kind of background of button do you like?", CAColor_blueStyle);
 	alertView->setTarget(this, CAAlertView_selector(AlertViewTest::alertViewCallback));
 }
 
@@ -36,15 +40,15 @@ void AlertViewTest::alertViewCallback(int btnIndex)
 {
 	if (btnIndex == 0)
 	{
-		imageBtn->setBackGroundViewForState(CAControlStateNormal,CAImageView::createWithImage(CAImage::create("ex1.png")));
+		imageBtn->setBackGroundViewForState(CAControlStateNormal,CAImageView::createWithImage(CAImage::create("source_material/ex1.png")));
 	}
 	else if (btnIndex==1)
 	{
-		imageBtn->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("ex2.png")));
+		imageBtn->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("source_material/ex2.png")));
 	}
 	else
 	{
-		imageBtn->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("ex3.png")));
+		imageBtn->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("source_material/ex3.png")));
 	}
 }
 

@@ -367,7 +367,14 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			}
 		});
 	}
-
+	public void willInsertText(final int start,final String pString,final int before,final int count) {
+		this.queueEvent(new Runnable() {
+			@Override
+			public void run() {
+				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleWillInsertText(start,pString,before,count);
+			}
+		});
+	}
 	public void deleteBackward() {
 		this.queueEvent(new Runnable() {
 			@Override

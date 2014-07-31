@@ -160,7 +160,7 @@ protected:
     
     CAView* dequeueReusableLine();
     
-protected:
+public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     
@@ -272,6 +272,10 @@ public:
     CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
+    
+public:
+    
+    virtual CAResponder* nextResponder();
     
 protected:
     

@@ -16,13 +16,17 @@ FourthViewController::~FourthViewController()
 void FourthViewController::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
-	CALabel* presentViewController = CALabel::createWithCenter(CCRect(size.width*0.5,size.height*0.5,size.width*0.5,size.height*0.05));
-	presentViewController->setText("Drag your finger upward");
+	CALabel* presentViewController = CALabel::createWithCenter(CCRect(size.width*0.5,size.height*0.5,size.width*0.8,size.height*0.05));
+	presentViewController->setText("Drag your finger");
 	presentViewController->setColor(CAColor_blueStyle);
 	presentViewController->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
 	presentViewController->setTextAlignment(CATextAlignmentCenter);
 	presentViewController->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	this->getView()->addSubview(presentViewController);
+	this->getView()->insertSubview(presentViewController,1);
+
+	imageView = CAImageView::createWithImage(CAImage::create("2.jpg"));
+	imageView->setCenterOrigin(CCPoint(size.width*0.5,size.height*0.5));
+	this->getView()->addSubview(imageView);
 }
 
 void FourthViewController::viewDidUnload()

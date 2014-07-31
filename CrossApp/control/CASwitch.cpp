@@ -92,6 +92,7 @@ void CASwitch::setIsOn(bool on, bool animated)
     if (m_isOn != on)
     {
         m_isOn = on;
+        CC_RETURN_IF(!m_bRunning);
         this->updateSwitchState(animated);
     }
 }
@@ -245,9 +246,6 @@ bool CASwitch::initWithCenter(const CCRect& rect)
 
 bool CASwitch::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (!this->isTouchEnabled())
-        return false;
-    
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     

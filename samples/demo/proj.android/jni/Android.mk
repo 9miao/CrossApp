@@ -28,8 +28,10 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/TabBarTest/TabBarTest.cpp \
 ../../Classes/TableViewTest/TableViewTest.cpp \
 ../../Classes/TextFieldTest/TextFieldTest.cpp \
-../../Classes/ExtensionsTest/ExtensionsTest.cpp \		
-
+../../Classes/ExtensionsTest/ExtensionsTest.cpp \
+../../Classes/ExtensionsTest/AddressBookTest.cpp \
+../../Classes/ExtensionsTest/LoadingViewController.cpp \
+../../Classes/ExtensionsTest/HttpRequestTest.cpp \		
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
 $(LOCAL_PATH)/../../Classes/AlertViewTest \
@@ -54,6 +56,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_extension_static
 
 include $(BUILD_SHARED_LIBRARY)
+
+$(call import-add-path, D:/CrossApp)
+$(call import-add-path, D:/CrossApp/CrossApp/platform/third_party/android/prebuilt)
 
 $(call import-module,CrossApp)
 $(call import-module,CrossApp/platform/third_party/android/prebuilt/libcurl)

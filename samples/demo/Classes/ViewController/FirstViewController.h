@@ -55,7 +55,6 @@ public:
 private:
 	CCSize size;
 	CATableView* tableView;
-	CALabel* test;
 	std::string testList[15];
 };
 

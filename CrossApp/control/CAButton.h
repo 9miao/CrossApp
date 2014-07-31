@@ -89,7 +89,7 @@ public:
     
 	void interruptTouchState();
 
-protected:
+public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     

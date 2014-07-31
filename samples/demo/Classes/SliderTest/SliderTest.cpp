@@ -22,9 +22,9 @@ void SliderTest::viewDidLoad()
 
 	CASlider* slider = CASlider::createWithCenter(CCRect(size.width*0.5, size.height*0.4, size.width*0.7, 20));
 	slider->setTrackHeight(20);
-	slider->setMaxTrackTintImage(CAImage::create("ex2.png"));
-	slider->setMinTrackTintImage(CAImage::create("ex3.png"));
-	slider->setThumbTintImage(CAImage::create("blue.png"));
+	slider->setMaxTrackTintImage(CAImage::create("source_material/ex2.png"));
+	slider->setMinTrackTintImage(CAImage::create("source_material/ex3.png"));
+	slider->setThumbTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
 	slider->addTarget(this, CAControl_selector(SliderTest::sliderValueChange));
 	this->getView()->addSubview(slider);
 

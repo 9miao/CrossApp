@@ -32,13 +32,15 @@ public:
 
     virtual bool becomeFirstResponder();
     
+    virtual CAResponder* nextResponder() = 0;
+    
     CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchMovedStopSubviews, TouchMovedStopSubviews);
-    
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bStopSuperviewListenEvents, StopSuperviewListenEvents);
-    
+
     CC_SYNTHESIZE_IS(bool, m_bTouchMovedListenHorizontal, TouchMovedListenHorizontal);
     
     CC_SYNTHESIZE_IS(bool, m_bTouchMovedListenVertical, TouchMovedListenVertical);
+    
+    CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     

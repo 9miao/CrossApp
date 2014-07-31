@@ -15,11 +15,11 @@ NavigationBarTest::~NavigationBarTest()
 void NavigationBarTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
-	
+
 	p_NavigationBar = CANavigationBar::create();
-	p_NavigationBar->setFrame(CCRect(0,0,size.width,100));
-	p_NavigationBar->setBackGroundImage(CAImage::create("btn_rounded3D_selected.png"));
-	p_NavigationBar->pushItem(CANavigationBarItem::create("This is 1 layer"));
+	p_NavigationBar->setFrame(CCRect(0,0,size.width,size.height*0.15));
+	p_NavigationBar->setBackGroundImage(CAImage::create("source_material/btn_rounded3D_selected.png"));
+	p_NavigationBar->pushItem(CANavigationBarItem::create("Number 1"));
 	this->getView()->addSubview(p_NavigationBar);
 
 	CAButton *next = CAButton::createWithCenter(CCRect(p_NavigationBar->getBounds().size.width*0.9, p_NavigationBar->getBounds().size.height*0.5, 100, 80), CAButtonTypeCustom);
@@ -39,7 +39,7 @@ void NavigationBarTest::nextLayer(CAControl* btn, CCPoint point)
 	char num[20] = "";
 	std::vector<CANavigationBarItem*> items;
 	items = p_NavigationBar->getItems();
-	sprintf(num, "This is %d layer", items.size() + 1);
+	sprintf(num, "Number %d", items.size() + 1);
 	p_NavigationBar->pushItem(CANavigationBarItem::create(num));
 }
 

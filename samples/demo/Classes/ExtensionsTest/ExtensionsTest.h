@@ -10,6 +10,14 @@ USING_NS_CC_EXT;
 
 using namespace CSJson;
 
+typedef enum LABELTAG
+{
+	NAME=50,
+	NUM,
+	GENDER,
+	OCCUPATION
+};
+
 class ExtensionsTest :public CAViewController, public CATableViewDelegate, public CATableViewDataSource
 {
 public:
@@ -33,7 +41,7 @@ public:
 	virtual unsigned int tableViewHeightForHeaderInSection(CATableView* table, unsigned int section);
 	virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
 
-public:
+private:
 	void loadJsonData();
 	void nextViewController(CAControl* btn, CCPoint point);
 
@@ -41,7 +49,7 @@ private:
 	CCSize size;
 	CATableView* table;
 	CCDictionary* personList;
-	CAButton *next;
+	CAButton* next;
 
 };
 

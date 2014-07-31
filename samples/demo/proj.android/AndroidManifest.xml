@@ -19,7 +19,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>   
     </application>
     <supports-screens android:largeScreens="true"
                       android:smallScreens="true"
@@ -27,16 +27,7 @@
                       android:normalScreens="true"/>
                          
     <uses-permission android:name="android.permission.INTERNET"/>
-   <!--
-    If you do not locate required permissions  please ignore
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> 
-    
-    
-    -->
-   <!-- 
-    If you don't need permission to contact please ignore
     <uses-permission android:name="android.permission.READ_CONTACTS"/> 
-    
-    
-    -->
+
 </manifest>

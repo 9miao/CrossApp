@@ -260,9 +260,6 @@ void CASlider::setThumbTintImage(CAImage* image)
 
 bool CASlider::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (!this->isTouchEnabled())
-        return false;
-    
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     

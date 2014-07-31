@@ -1,18 +1,13 @@
 package org.CrossApp.lib;
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Nickname;
-import android.provider.ContactsContract.CommonDataKinds.Note;
-import android.provider.ContactsContract.CommonDataKinds.Organization;
+
 import android.provider.ContactsContract.Data;
 
 public class AndroidPersonList
@@ -22,10 +17,10 @@ public class AndroidPersonList
 	{
 		s_pContext = context;
 	}
-	private static class FriendData
+	public static class FriendData
 	{
 		public String name;
-		public ArrayList phoneNumber = new ArrayList();
+		public ArrayList<String> phoneNumber = new ArrayList<String>();
 		public String emailValue;
 		public String address_street;  
         public String address_city;  
@@ -36,10 +31,6 @@ public class AndroidPersonList
 	}
 	public static String CAGetPersonList()
 	{
-		/*Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_PICK);
-        intent.setData(ContactsContract.Contacts.CONTENT_URI);
-        s_pContext.startActivityForResult(intent, 4);*/
 		// 获得所有的联系人  
         Cursor cur = s_pContext.getContentResolver().query(  
                 ContactsContract.Contacts.CONTENT_URI,  
@@ -48,7 +39,7 @@ public class AndroidPersonList
                 null,  
                 ContactsContract.Contacts.DISPLAY_NAME  
                         + " COLLATE LOCALIZED ASC");  
-        ArrayList vecFriend = new ArrayList();
+        ArrayList<FriendData> vecFriend = new ArrayList<FriendData>();
         // 循环遍历  
         if (cur.moveToFirst())
         {
@@ -66,33 +57,26 @@ public class AndroidPersonList
 	                // 获得联系人姓名  
 	                String disPlayName = cur.getString(displayNameColumn);  
 	                data.name = disPlayName;
-	                
-	                // 查看该联系人有多少个电话号码。如果没有这返回值为0  
 	                int phoneCount = cur  
 	                        .getInt(cur  
 	                                .getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));  
-	                //Log.i("username", disPlayName);  
 	                if (phoneCount > 0) {  
-	                    // 获得联系人的电话号码  
 	                    Cursor phones = s_pContext.getContentResolver().query(  
 	                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,  
 	                            null,  
 	                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
 	                                    + " = " + contactId, null, null);  
 	                    if (phones.moveToFirst()) {  
-	                        do {  
-	                            // 遍历所有的电话号码  
+	                        do {   
 	                            String phoneNumber = phones  
 	                                    .getString(phones  
-	                                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));  
-	                            String phoneType = phones  
-	                                    .getString(phones  
-	                                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));  
+	                                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));   
 	                            //Log.i("phoneNumber", phoneNumber);  
 	                            //Log.i("phoneType", phoneType);  
 	                            data.phoneNumber.add( phoneNumber );
 	                        } while (phones.moveToNext());  
-	                    }  
+	                    }
+	                    phones.close();
 	                }  
 	  
 	                // 获取该联系人邮箱  
@@ -103,10 +87,7 @@ public class AndroidPersonList
 	                                + " = " + contactId, null, null);  
 	                if (emails.moveToFirst()) {  
 	                    do {  
-	                        // 遍历所有的电话号码  
-	                        String emailType = emails  
-	                                .getString(emails  
-	                                        .getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE));  
+	                        // 遍历所有的电话号码    
 	                        String emailValue = emails  
 	                                .getString(emails  
 	                                        .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));  
@@ -116,26 +97,8 @@ public class AndroidPersonList
 	                        data.emailValue = emailValue;
 	                    } while (emails.moveToNext());  
 	                }  
-	  
-	                // 获取该联系人IM  
-	                /*Cursor IMs = s_pContext.getContentResolver().query(  
-	                        Data.CONTENT_URI,  
-	                        new String[] { Data._ID, Im.PROTOCOL, Im.DATA },  
-	                        Data.CONTACT_ID + "=?" + " AND " + Data.MIMETYPE + "='"  
-	                                + Im.CONTENT_ITEM_TYPE + "'",  
-	                        new String[] { contactId }, null);  
-	                if (IMs.moveToFirst()) {  
-	                    do {  
-	                        String protocol = IMs.getString(IMs  
-	                                .getColumnIndex(Im.PROTOCOL));  
-	                        String date = IMs  
-	                                .getString(IMs.getColumnIndex(Im.DATA));  
-	                        //Log.i("protocol", protocol);  
-	                        //Log.i("date", date);  
-	                    } while (IMs.moveToNext());  
-	                } */ 
-	  
-	                // 获取该联系人地址  
+	                emails.close();
+	                 //获取该联系人地址  
 	                Cursor address = s_pContext.getContentResolver()  
 	                        .query(  
 	                                ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,  
@@ -167,42 +130,8 @@ public class AndroidPersonList
 	                        data.address_formatAddress = formatAddress;
 	                    } while (address.moveToNext());  
 	                }  
-	  
-	                // 获取该联系人组织  
-	                /*Cursor organizations = s_pContext.getContentResolver().query(  
-	                        Data.CONTENT_URI,  
-	                        new String[] { Data._ID, Organization.COMPANY,  
-	                                Organization.TITLE },  
-	                        Data.CONTACT_ID + "=?" + " AND " + Data.MIMETYPE + "='"  
-	                                + Organization.CONTENT_ITEM_TYPE + "'",  
-	                        new String[] { contactId }, null);  
-	                if (organizations.moveToFirst()) {  
-	                    do {  
-	                        String company = organizations.getString(organizations  
-	                                .getColumnIndex(Organization.COMPANY));  
-	                        String title = organizations.getString(organizations  
-	                                .getColumnIndex(Organization.TITLE));  
-	                        //Log.i("company", company);  
-	                        //Log.i("title", title);  
-	                    } while (organizations.moveToNext());  
-	                }  
-	  
-	                // 获取备注信息  
-	                Cursor notes = s_pContext.getContentResolver().query(  
-	                        Data.CONTENT_URI,  
-	                        new String[] { Data._ID, Note.NOTE },  
-	                        Data.CONTACT_ID + "=?" + " AND " + Data.MIMETYPE + "='"  
-	                                + Note.CONTENT_ITEM_TYPE + "'",  
-	                        new String[] { contactId }, null);  
-	                if (notes.moveToFirst()) {  
-	                    do {  
-	                        String noteinfo = notes.getString(notes  
-	                                .getColumnIndex(Note.NOTE));  
-	                        //Log.i("noteinfo", noteinfo);  
-	                    } while (notes.moveToNext());  
-	                }  */
-	  
-	                // 获取nickname信息  
+	                address.close();
+	                 //获取nickname信息  
 	                Cursor nicknames = s_pContext.getContentResolver().query(  
 	                        Data.CONTENT_URI,  
 	                        new String[] { Data._ID, Nickname.NAME },  
@@ -217,6 +146,7 @@ public class AndroidPersonList
 	                        data.nickname = nickname_;
 	                    } while (nicknames.moveToNext());  
 	                } 
+	                nicknames.close();
 	                if ( data.name != null )
 	                	vecFriend.add(data);
 				}

@@ -40,25 +40,29 @@ void CollectionViewTest::collectionViewDidDeselectCellAtIndexPath(CACollectionVi
 
 CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
 {
-	CACollectionViewCell* p_Cell = new CACollectionViewCell();
-	p_Cell->initWithReuseIdentifier("CrossApp");
-	p_Cell->autorelease();
+	CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
+	if (p_Cell == NULL)
+	{
+		p_Cell = CACollectionViewCell::create("CrossApp");
+		itemView = CAImageView::createWithImage(CAImage::create("logo.png"));
+		itemView->setCenter(CCRect(cellSize.width*0.5,
+			cellSize.height*0.5,
+			cellSize.height * 0.90,
+			cellSize.height * 0.90));
+		p_Cell->addSubview(itemView);
 
-	itemView = CAImageView::createWithImage(CAImage::create("logo.png"));
-	itemView->setCenter(CCRect(cellSize.width*0.5,
-                               cellSize.height*0.5,
-                               cellSize.height * 0.90,
-                               cellSize.height * 0.90));
-	p_Cell->addSubview(itemView);
+		CALabel* itemText = CALabel::createWithCenter(CCRect(itemView->getBounds().size.width*0.5, itemView->getBounds().size.height*0.5, itemView->getBounds().size.width*0.6, itemView->getBounds().size.width*0.5));
+		itemText->setTag(100);
+		itemText->setFontSize(29 * CROSSAPP_ADPTATION_RATIO);
+		itemText->setTextAlignment(CATextAlignmentCenter);
+		itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		itemView->addSubview(itemText);
 
+	}
 	char pos[20] = "";
 	sprintf(pos, "(%d,%d,%d)",section, row, item);
-	itemText = CALabel::createWithCenter(CCRect(itemView->getBounds().size.width*0.5, itemView->getBounds().size.height*0.5, itemView->getBounds().size.width*0.6, itemView->getBounds().size.width*0.5));
+	CALabel* itemText = (CALabel*)itemView->getSubviewByTag(100);
 	itemText->setText(pos);
-	itemText->setFontSize(30*CROSSAPP_ADPTATION_RATIO);
-	itemText->setTextAlignment(CATextAlignmentCenter);
-	itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	itemView->addSubview(itemText);
 
 	return p_Cell;
 }

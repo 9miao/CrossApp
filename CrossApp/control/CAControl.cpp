@@ -13,9 +13,7 @@ NS_CC_BEGIN
 CAControl::CAControl()
 :m_eControlState(CAControlStateNormal)
 ,m_bControlStateLocked(false)
-,m_bTouchEnabled(true)
 {
-    m_bStopSuperviewListenEvents = true;
     
     for (int i=0; i<7; i++)
     {
@@ -32,6 +30,11 @@ CAControl::~CAControl()
 bool CAControl::init()
 {
     return true;
+}
+
+CAResponder* CAControl::nextResponder()
+{
+    return NULL;
 }
 
 void CAControl::setControlStateNormal()

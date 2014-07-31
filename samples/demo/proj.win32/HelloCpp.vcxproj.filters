@@ -123,6 +123,15 @@
     <ClCompile Include="..\Classes\ViewController\FourthViewController.cpp">
       <Filter>Classes\ViewController</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\AddressBookTest.cpp">
+      <Filter>Classes\ExtensionsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\LoadingViewController.cpp">
+      <Filter>Classes\ExtensionsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\HttpRequestTest.cpp">
+      <Filter>Classes\ExtensionsTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\MainMenu.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
@@ -199,6 +208,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ViewController\FourthViewController.h">
       <Filter>Classes\ViewController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\AddressBookTest.h">
+      <Filter>Classes\ExtensionsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\LoadingViewController.h">
+      <Filter>Classes\ExtensionsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\HttpRequestTest.h">
+      <Filter>Classes\ExtensionsTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

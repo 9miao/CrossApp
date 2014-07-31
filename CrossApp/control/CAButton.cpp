@@ -385,8 +385,6 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
     do
     {
-        CC_BREAK_IF(!this->isVisible());
-        CC_BREAK_IF(!m_bTouchEnabled);
         CC_BREAK_IF(m_eControlState != CAControlStateNormal && m_eControlState != CAControlStateSelected);
 
         return this->setTouchBegin(point);

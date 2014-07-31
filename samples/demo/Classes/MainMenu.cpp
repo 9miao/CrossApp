@@ -25,21 +25,20 @@ CAWindow* MainMenu::createWindow()
 
 	CANavigationController* navigationController = new CANavigationController();
 	navigationController->initWithRootViewController(viewController1);
-	navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("first_1.png"), CAImage::create("first_2.png")));
+	navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png")));
 	viewController1->release();
-    navigationController->setNavigationBarHidden(true, false);
-    
+
 	SecondViewController* viewController2 = new SecondViewController();
 	viewController2->init();
-	viewController2->setTabBarItem(CATabBarItem::create("Second", CAImage::create("second_1.png"), CAImage::create("second_2.png")));
+	viewController2->setTabBarItem(CATabBarItem::create("Second", CAImage::create("tabbar_function/second_1.png"), CAImage::create("tabbar_function/second_2.png")));
 
 	ThirdViewController* viewController3 = new ThirdViewController();
 	viewController3->init();
-	viewController3->setTabBarItem(CATabBarItem::create("Third", CAImage::create("third_1.png"), CAImage::create("third_2.png")));
+	viewController3->setTabBarItem(CATabBarItem::create("Third", CAImage::create("tabbar_function/third_1.png"), CAImage::create("tabbar_function/third_2.png")));
 
 	FourthViewController* viewController4 = new FourthViewController();
 	viewController4->init();
-	viewController4->setTabBarItem(CATabBarItem::create("Fourth", CAImage::create("fourth_1.png"), CAImage::create("fourth_2.png")));
+	viewController4->setTabBarItem(CATabBarItem::create("Fourth", CAImage::create("tabbar_function/fourth_1.png"), CAImage::create("tabbar_function/fourth_2.png")));
 
 	std::vector<CAViewController*> controllerItem;
 	controllerItem.push_back(navigationController);

@@ -224,6 +224,8 @@ public:
 
     virtual void visit(void);
 
+    virtual CAResponder* nextResponder();
+    
 public:
 
     virtual void setActionManager(CCActionManager* actionManager);
@@ -494,14 +496,6 @@ public:
     virtual void viewOnEnterTransitionDidFinish() = 0;
     
     virtual void viewOnExitTransitionDidStart() = 0;
-    
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent){ return false; };
-    
-    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent){};
-    
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent){};
-    
-    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent){};
 };
 
 NS_CC_END

@@ -68,7 +68,10 @@ public:
      * @return int
      */
     inline int getTimeoutForRead() {return _timeoutForRead;};
-        
+    
+    
+    int getRequestCount();
+    
 private:
     CCHttpClient(int thread);
     virtual ~CCHttpClient();

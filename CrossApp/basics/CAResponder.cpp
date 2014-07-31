@@ -14,9 +14,9 @@ NS_CC_BEGIN;
 
 CAResponder::CAResponder()
 :m_bTouchMovedStopSubviews(false)
-,m_bStopSuperviewListenEvents(false)
 ,m_bTouchMovedListenHorizontal(true)
 ,m_bTouchMovedListenVertical(true)
+,m_bTouchEnabled(true)
 {
 
 }

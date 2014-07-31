@@ -23,10 +23,9 @@ private:
 	CCSize size;
 	CASegmentedControl* segment;
 	CALabel* segmentText;
+	CALabel* defaultPage;
 	CALabel* label;
-	CAView *firstPage;
-	CAView *secondPage;
-	CAView *thirdPage;
+	CAView* defaultView;
 
 };
 

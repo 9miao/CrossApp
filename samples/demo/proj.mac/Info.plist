@@ -6,6 +6,8 @@
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string>Icon</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.cocos2dx.hellocpp</string>
 	<key>CFBundleInfoDictionaryVersion</key>

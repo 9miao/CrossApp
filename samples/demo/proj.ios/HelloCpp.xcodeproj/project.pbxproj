@@ -8,16 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		04033E13195478A100473756 /* libCrossApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04033E101954789200473756 /* libCrossApp.a */; };
-		04E94DD6194DEAB9000AD114 /* fifth_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E94DCC194DEAB9000AD114 /* fifth_1.png */; };
-		04E94DD7194DEAB9000AD114 /* fifth_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E94DCD194DEAB9000AD114 /* fifth_2.png */; };
-		04E94DD8194DEAB9000AD114 /* first_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E94DCE194DEAB9000AD114 /* first_1.png */; };
-		04E94DD9194DEAB9000AD114 /* first_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E94DCF194DEAB9000AD114 /* first_2.png */; };
-		04E94DDA194DEAB9000AD114 /* fourth_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E94DD0194DEAB9000AD114 /* fourth_1.png */; };
-		04E94DDB194DEAB9000AD114 /* fourth_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E94DD1194DEAB9000AD114 /* fourth_2.png */; };
-		04E94DDC194DEAB9000AD114 /* second_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E94DD2194DEAB9000AD114 /* second_1.png */; };
-		04E94DDD194DEAB9000AD114 /* second_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E94DD3194DEAB9000AD114 /* second_2.png */; };
-		04E94DDE194DEAB9000AD114 /* third_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E94DD4194DEAB9000AD114 /* third_1.png */; };
-		04E94DDF194DEAB9000AD114 /* third_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E94DD5194DEAB9000AD114 /* third_2.png */; };
 		15A3DA5D1682F826002FB0C5 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA1B1682F826002FB0C5 /* HttpClient.cpp */; };
 		15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA861682F8A6002FB0C5 /* CDAudioManager.m */; };
 		15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA891682F8A6002FB0C5 /* CDOpenALSupport.m */; };
@@ -30,54 +20,42 @@
 		1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3624316D4A1E8000847F2 /* AppController.mm */; };
 		1AC3624B16D4A1E8000847F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3624516D4A1E8000847F2 /* main.m */; };
 		1ACB3244164770DE00914215 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACB3243164770DE00914215 /* libcurl.a */; };
-		1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */; };
 		1AFCDA8216D4A25900906EA6 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AFCDA8116D4A25900906EA6 /* RootViewController.mm */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		B0090CE6198A426600BD8CDA /* tabbar_function in Resources */ = {isa = PBXBuildFile; fileRef = B0090CE5198A426600BD8CDA /* tabbar_function */; };
+		B0090D52198A42E200BD8CDA /* AlertViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D0F198A42E200BD8CDA /* AlertViewTest.cpp */; };
+		B0090D53198A42E200BD8CDA /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D11198A42E200BD8CDA /* AppDelegate.cpp */; };
+		B0090D54198A42E200BD8CDA /* ButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D15198A42E200BD8CDA /* ButtonTest.cpp */; };
+		B0090D55198A42E200BD8CDA /* CollectionViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D18198A42E200BD8CDA /* CollectionViewTest.cpp */; };
+		B0090D56198A42E200BD8CDA /* AddressBookTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D1B198A42E200BD8CDA /* AddressBookTest.cpp */; };
+		B0090D57198A42E200BD8CDA /* ExtensionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D1D198A42E200BD8CDA /* ExtensionsTest.cpp */; };
+		B0090D58198A42E200BD8CDA /* HttpRequestTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D1F198A42E200BD8CDA /* HttpRequestTest.cpp */; };
+		B0090D59198A42E200BD8CDA /* LoadingViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D22198A42E200BD8CDA /* LoadingViewController.cpp */; };
+		B0090D5A198A42E200BD8CDA /* ImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D25198A42E200BD8CDA /* ImageViewTest.cpp */; };
+		B0090D5B198A42E200BD8CDA /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D28198A42E200BD8CDA /* LabelTest.cpp */; };
+		B0090D5C198A42E200BD8CDA /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D2A198A42E200BD8CDA /* MainMenu.cpp */; };
+		B0090D5D198A42E200BD8CDA /* NavigationBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D2D198A42E200BD8CDA /* NavigationBarTest.cpp */; };
+		B0090D5E198A42E200BD8CDA /* ProgressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D30198A42E200BD8CDA /* ProgressTest.cpp */; };
+		B0090D5F198A42E200BD8CDA /* ScrollViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D33198A42E200BD8CDA /* ScrollViewTest.cpp */; };
+		B0090D60198A42E200BD8CDA /* SegmentedControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D36198A42E200BD8CDA /* SegmentedControlTest.cpp */; };
+		B0090D61198A42E200BD8CDA /* SliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D39198A42E200BD8CDA /* SliderTest.cpp */; };
+		B0090D62198A42E200BD8CDA /* SwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D3C198A42E200BD8CDA /* SwitchTest.cpp */; };
+		B0090D63198A42E200BD8CDA /* TabBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D3F198A42E200BD8CDA /* TabBarTest.cpp */; };
+		B0090D64198A42E200BD8CDA /* TableViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D42198A42E200BD8CDA /* TableViewTest.cpp */; };
+		B0090D65198A42E200BD8CDA /* TextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D45198A42E200BD8CDA /* TextFieldTest.cpp */; };
+		B0090D66198A42E200BD8CDA /* FifthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D48198A42E200BD8CDA /* FifthViewController.cpp */; };
+		B0090D67198A42E200BD8CDA /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D4A198A42E200BD8CDA /* FirstViewController.cpp */; };
+		B0090D68198A42E200BD8CDA /* FourthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D4C198A42E200BD8CDA /* FourthViewController.cpp */; };
+		B0090D69198A42E200BD8CDA /* SecondViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D4E198A42E200BD8CDA /* SecondViewController.cpp */; };
+		B0090D6A198A42E200BD8CDA /* ThirdViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D50198A42E200BD8CDA /* ThirdViewController.cpp */; };
 		B01DFC2C190513F500214AE2 /* 9m.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B01DFC1E190513F500214AE2 /* 9m.jpg */; };
 		B01DFC3B190513FD00214AE2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B01DFC3A190513FD00214AE2 /* fonts */; };
 		B01F716A1951691500BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71691951691500BA07A6 /* source_material */; };
-		B02A130F197CE4EC00F4F2C5 /* ButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12D7197CE4EC00F4F2C5 /* ButtonTest.cpp */; };
-		B02A1310197CE4EC00F4F2C5 /* CollectionViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12DA197CE4EC00F4F2C5 /* CollectionViewTest.cpp */; };
-		B02A1311197CE4EC00F4F2C5 /* ExtensionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12DD197CE4EC00F4F2C5 /* ExtensionsTest.cpp */; };
-		B02A1312197CE4EC00F4F2C5 /* ImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12E1197CE4EC00F4F2C5 /* ImageViewTest.cpp */; };
-		B02A1313197CE4EC00F4F2C5 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12E4197CE4EC00F4F2C5 /* LabelTest.cpp */; };
-		B02A1314197CE4EC00F4F2C5 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12E6197CE4EC00F4F2C5 /* MainMenu.cpp */; };
-		B02A1315197CE4EC00F4F2C5 /* NavigationBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12E9197CE4EC00F4F2C5 /* NavigationBarTest.cpp */; };
-		B02A1316197CE4EC00F4F2C5 /* ProgressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12EC197CE4EC00F4F2C5 /* ProgressTest.cpp */; };
-		B02A1317197CE4EC00F4F2C5 /* ScrollViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12EF197CE4EC00F4F2C5 /* ScrollViewTest.cpp */; };
-		B02A1318197CE4EC00F4F2C5 /* SegmentedControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12F2197CE4EC00F4F2C5 /* SegmentedControlTest.cpp */; };
-		B02A1319197CE4EC00F4F2C5 /* SliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12F5197CE4EC00F4F2C5 /* SliderTest.cpp */; };
-		B02A131A197CE4EC00F4F2C5 /* SwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12F8197CE4EC00F4F2C5 /* SwitchTest.cpp */; };
-		B02A131B197CE4EC00F4F2C5 /* TabBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12FB197CE4EC00F4F2C5 /* TabBarTest.cpp */; };
-		B02A131C197CE4EC00F4F2C5 /* TableViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12FE197CE4EC00F4F2C5 /* TableViewTest.cpp */; };
-		B02A131D197CE4EC00F4F2C5 /* TextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1301197CE4EC00F4F2C5 /* TextFieldTest.cpp */; };
-		B02A131E197CE4EC00F4F2C5 /* FifthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1304197CE4EC00F4F2C5 /* FifthViewController.cpp */; };
-		B02A131F197CE4EC00F4F2C5 /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1306197CE4EC00F4F2C5 /* FirstViewController.cpp */; };
-		B02A1320197CE4EC00F4F2C5 /* FourthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A1308197CE4EC00F4F2C5 /* FourthViewController.cpp */; };
-		B02A1321197CE4EC00F4F2C5 /* SecondViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A130A197CE4EC00F4F2C5 /* SecondViewController.cpp */; };
-		B02A1322197CE4EC00F4F2C5 /* ThirdViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A130C197CE4EC00F4F2C5 /* ThirdViewController.cpp */; };
-		B02A1336197CE51000F4F2C5 /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1323197CE51000F4F2C5 /* blue.png */; };
-		B02A1337197CE51000F4F2C5 /* btn_rounded_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1324197CE51000F4F2C5 /* btn_rounded_highlighted.png */; };
-		B02A1338197CE51000F4F2C5 /* btn_rounded_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1325197CE51000F4F2C5 /* btn_rounded_normal.png */; };
-		B02A1339197CE51000F4F2C5 /* btn_rounded_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1326197CE51000F4F2C5 /* btn_rounded_selected.png */; };
-		B02A133A197CE51000F4F2C5 /* btn_rounded3D_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1327197CE51000F4F2C5 /* btn_rounded3D_normal.png */; };
-		B02A133B197CE51000F4F2C5 /* btn_rounded3D_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1328197CE51000F4F2C5 /* btn_rounded3D_selected.png */; };
-		B02A133C197CE51000F4F2C5 /* close1.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1329197CE51000F4F2C5 /* close1.png */; };
-		B02A133D197CE51000F4F2C5 /* ex1.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A132A197CE51000F4F2C5 /* ex1.png */; };
-		B02A133E197CE51000F4F2C5 /* ex2.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A132B197CE51000F4F2C5 /* ex2.png */; };
-		B02A133F197CE51000F4F2C5 /* ex3.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A132C197CE51000F4F2C5 /* ex3.png */; };
 		B02A1340197CE51000F4F2C5 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A132D197CE51000F4F2C5 /* icon.png */; };
 		B02A1341197CE51000F4F2C5 /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = B02A132E197CE51000F4F2C5 /* information.json */; };
 		B02A1342197CE51000F4F2C5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A132F197CE51000F4F2C5 /* logo.png */; };
-		B02A1343197CE51000F4F2C5 /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B02A1330197CE51000F4F2C5 /* Marker Felt.ttf */; };
-		B02A1344197CE51000F4F2C5 /* open1.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1331197CE51000F4F2C5 /* open1.png */; };
-		B02A1345197CE51000F4F2C5 /* slider_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1332197CE51000F4F2C5 /* slider_indicator.png */; };
-		B02A1346197CE51000F4F2C5 /* square_dis.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1333197CE51000F4F2C5 /* square_dis.png */; };
-		B02A1347197CE51000F4F2C5 /* square_nor.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1334197CE51000F4F2C5 /* square_nor.png */; };
-		B02A1348197CE51000F4F2C5 /* square_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = B02A1335197CE51000F4F2C5 /* square_sel.png */; };
-		B02A134C197CE55900F4F2C5 /* AlertViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A134A197CE55900F4F2C5 /* AlertViewTest.cpp */; };
 		B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */; };
 		B03E907919389B4700FD9A06 /* CAAddress.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E905E19389B4700FD9A06 /* CAAddress.mm */; };
 		B03E907A19389B4700FD9A06 /* CAAddressManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E905F19389B4700FD9A06 /* CAAddressManager.mm */; };
@@ -98,7 +76,6 @@
 		B04C0C091901207A009854FD /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BFD1901207A009854FD /* json_valueiterator.inl */; };
 		B04C0C0A1901207A009854FD /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BFE1901207A009854FD /* json_writer.cpp */; };
 		B04C0C0B1901207A009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0C001901207A009854FD /* sconscript */; };
-		B0A172E0192DB6B000DBFDB0 /* iphone5.png in Resources */ = {isa = PBXBuildFile; fileRef = B0A172DF192DB6B000DBFDB0 /* iphone5.png */; };
 		B0A172E8192DDAD100DBFDB0 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A172E6192DDAD100DBFDB0 /* 2.jpg */; };
 		B0A172E9192DDAD100DBFDB0 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A172E7192DDAD100DBFDB0 /* bg.jpg */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -134,16 +111,6 @@
 /* Begin PBXFileReference section */
 		04033E081954789100473756 /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.ios/CrossApp.xcodeproj; sourceTree = "<group>"; };
 		04033E2119547A9F00473756 /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
-		04E94DCC194DEAB9000AD114 /* fifth_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fifth_1.png; sourceTree = "<group>"; };
-		04E94DCD194DEAB9000AD114 /* fifth_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fifth_2.png; sourceTree = "<group>"; };
-		04E94DCE194DEAB9000AD114 /* first_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first_1.png; sourceTree = "<group>"; };
-		04E94DCF194DEAB9000AD114 /* first_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first_2.png; sourceTree = "<group>"; };
-		04E94DD0194DEAB9000AD114 /* fourth_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fourth_1.png; sourceTree = "<group>"; };
-		04E94DD1194DEAB9000AD114 /* fourth_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fourth_2.png; sourceTree = "<group>"; };
-		04E94DD2194DEAB9000AD114 /* second_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second_1.png; sourceTree = "<group>"; };
-		04E94DD3194DEAB9000AD114 /* second_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second_2.png; sourceTree = "<group>"; };
-		04E94DD4194DEAB9000AD114 /* third_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = third_1.png; sourceTree = "<group>"; };
-		04E94DD5194DEAB9000AD114 /* third_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = third_2.png; sourceTree = "<group>"; };
 		15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionMacros.h; sourceTree = "<group>"; };
 		15A3DA1B1682F826002FB0C5 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
 		15A3DA1C1682F826002FB0C5 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
@@ -172,79 +139,71 @@
 		1AC3624516D4A1E8000847F2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		1AC3624616D4A1E8000847F2 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
-		1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
-		1AFAF8B416D35DE700DB1158 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
 		1AFCDA8016D4A25900906EA6 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = SOURCE_ROOT; };
 		1AFCDA8116D4A25900906EA6 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = SOURCE_ROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* HelloCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B0090CE5198A426600BD8CDA /* tabbar_function */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tabbar_function; sourceTree = "<group>"; };
+		B0090D0F198A42E200BD8CDA /* AlertViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertViewTest.cpp; sourceTree = "<group>"; };
+		B0090D10198A42E200BD8CDA /* AlertViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewTest.h; sourceTree = "<group>"; };
+		B0090D11198A42E200BD8CDA /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
+		B0090D12198A42E200BD8CDA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
+		B0090D13198A42E200BD8CDA /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
+		B0090D15198A42E200BD8CDA /* ButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonTest.cpp; sourceTree = "<group>"; };
+		B0090D16198A42E200BD8CDA /* ButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTest.h; sourceTree = "<group>"; };
+		B0090D18198A42E200BD8CDA /* CollectionViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollectionViewTest.cpp; sourceTree = "<group>"; };
+		B0090D19198A42E200BD8CDA /* CollectionViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewTest.h; sourceTree = "<group>"; };
+		B0090D1B198A42E200BD8CDA /* AddressBookTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AddressBookTest.cpp; sourceTree = "<group>"; };
+		B0090D1C198A42E200BD8CDA /* AddressBookTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookTest.h; sourceTree = "<group>"; };
+		B0090D1D198A42E200BD8CDA /* ExtensionsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionsTest.cpp; sourceTree = "<group>"; };
+		B0090D1E198A42E200BD8CDA /* ExtensionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionsTest.h; sourceTree = "<group>"; };
+		B0090D1F198A42E200BD8CDA /* HttpRequestTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequestTest.cpp; sourceTree = "<group>"; };
+		B0090D20198A42E200BD8CDA /* HttpRequestTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestTest.h; sourceTree = "<group>"; };
+		B0090D21198A42E200BD8CDA /* Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Info.h; sourceTree = "<group>"; };
+		B0090D22198A42E200BD8CDA /* LoadingViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingViewController.cpp; sourceTree = "<group>"; };
+		B0090D23198A42E200BD8CDA /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
+		B0090D25198A42E200BD8CDA /* ImageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageViewTest.cpp; sourceTree = "<group>"; };
+		B0090D26198A42E200BD8CDA /* ImageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewTest.h; sourceTree = "<group>"; };
+		B0090D28198A42E200BD8CDA /* LabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTest.cpp; sourceTree = "<group>"; };
+		B0090D29198A42E200BD8CDA /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTest.h; sourceTree = "<group>"; };
+		B0090D2A198A42E200BD8CDA /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainMenu.cpp; path = ../Classes/MainMenu.cpp; sourceTree = "<group>"; };
+		B0090D2B198A42E200BD8CDA /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = ../Classes/MainMenu.h; sourceTree = "<group>"; };
+		B0090D2D198A42E200BD8CDA /* NavigationBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavigationBarTest.cpp; sourceTree = "<group>"; };
+		B0090D2E198A42E200BD8CDA /* NavigationBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBarTest.h; sourceTree = "<group>"; };
+		B0090D30198A42E200BD8CDA /* ProgressTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressTest.cpp; sourceTree = "<group>"; };
+		B0090D31198A42E200BD8CDA /* ProgressTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressTest.h; sourceTree = "<group>"; };
+		B0090D33198A42E200BD8CDA /* ScrollViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollViewTest.cpp; sourceTree = "<group>"; };
+		B0090D34198A42E200BD8CDA /* ScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewTest.h; sourceTree = "<group>"; };
+		B0090D36198A42E200BD8CDA /* SegmentedControlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SegmentedControlTest.cpp; sourceTree = "<group>"; };
+		B0090D37198A42E200BD8CDA /* SegmentedControlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlTest.h; sourceTree = "<group>"; };
+		B0090D39198A42E200BD8CDA /* SliderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SliderTest.cpp; sourceTree = "<group>"; };
+		B0090D3A198A42E200BD8CDA /* SliderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderTest.h; sourceTree = "<group>"; };
+		B0090D3C198A42E200BD8CDA /* SwitchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwitchTest.cpp; sourceTree = "<group>"; };
+		B0090D3D198A42E200BD8CDA /* SwitchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchTest.h; sourceTree = "<group>"; };
+		B0090D3F198A42E200BD8CDA /* TabBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabBarTest.cpp; sourceTree = "<group>"; };
+		B0090D40198A42E200BD8CDA /* TabBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarTest.h; sourceTree = "<group>"; };
+		B0090D42198A42E200BD8CDA /* TableViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTest.cpp; sourceTree = "<group>"; };
+		B0090D43198A42E200BD8CDA /* TableViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTest.h; sourceTree = "<group>"; };
+		B0090D45198A42E200BD8CDA /* TextFieldTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextFieldTest.cpp; sourceTree = "<group>"; };
+		B0090D46198A42E200BD8CDA /* TextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldTest.h; sourceTree = "<group>"; };
+		B0090D48198A42E200BD8CDA /* FifthViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FifthViewController.cpp; sourceTree = "<group>"; };
+		B0090D49198A42E200BD8CDA /* FifthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FifthViewController.h; sourceTree = "<group>"; };
+		B0090D4A198A42E200BD8CDA /* FirstViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FirstViewController.cpp; sourceTree = "<group>"; };
+		B0090D4B198A42E200BD8CDA /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		B0090D4C198A42E200BD8CDA /* FourthViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FourthViewController.cpp; sourceTree = "<group>"; };
+		B0090D4D198A42E200BD8CDA /* FourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourthViewController.h; sourceTree = "<group>"; };
+		B0090D4E198A42E200BD8CDA /* SecondViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SecondViewController.cpp; sourceTree = "<group>"; };
+		B0090D4F198A42E200BD8CDA /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		B0090D50198A42E200BD8CDA /* ThirdViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThirdViewController.cpp; sourceTree = "<group>"; };
+		B0090D51198A42E200BD8CDA /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
 		B01DFC1E190513F500214AE2 /* 9m.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9m.jpg; sourceTree = "<group>"; };
 		B01DFC3A190513FD00214AE2 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B01F71691951691500BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
-		B02A12D7197CE4EC00F4F2C5 /* ButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonTest.cpp; sourceTree = "<group>"; };
-		B02A12D8197CE4EC00F4F2C5 /* ButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTest.h; sourceTree = "<group>"; };
-		B02A12DA197CE4EC00F4F2C5 /* CollectionViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollectionViewTest.cpp; sourceTree = "<group>"; };
-		B02A12DB197CE4EC00F4F2C5 /* CollectionViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewTest.h; sourceTree = "<group>"; };
-		B02A12DD197CE4EC00F4F2C5 /* ExtensionsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionsTest.cpp; sourceTree = "<group>"; };
-		B02A12DE197CE4EC00F4F2C5 /* ExtensionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionsTest.h; sourceTree = "<group>"; };
-		B02A12DF197CE4EC00F4F2C5 /* Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Info.h; sourceTree = "<group>"; };
-		B02A12E1197CE4EC00F4F2C5 /* ImageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageViewTest.cpp; sourceTree = "<group>"; };
-		B02A12E2197CE4EC00F4F2C5 /* ImageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewTest.h; sourceTree = "<group>"; };
-		B02A12E4197CE4EC00F4F2C5 /* LabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTest.cpp; sourceTree = "<group>"; };
-		B02A12E5197CE4EC00F4F2C5 /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTest.h; sourceTree = "<group>"; };
-		B02A12E6197CE4EC00F4F2C5 /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainMenu.cpp; path = ../Classes/MainMenu.cpp; sourceTree = "<group>"; };
-		B02A12E7197CE4EC00F4F2C5 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = ../Classes/MainMenu.h; sourceTree = "<group>"; };
-		B02A12E9197CE4EC00F4F2C5 /* NavigationBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavigationBarTest.cpp; sourceTree = "<group>"; };
-		B02A12EA197CE4EC00F4F2C5 /* NavigationBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBarTest.h; sourceTree = "<group>"; };
-		B02A12EC197CE4EC00F4F2C5 /* ProgressTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressTest.cpp; sourceTree = "<group>"; };
-		B02A12ED197CE4EC00F4F2C5 /* ProgressTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressTest.h; sourceTree = "<group>"; };
-		B02A12EF197CE4EC00F4F2C5 /* ScrollViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollViewTest.cpp; sourceTree = "<group>"; };
-		B02A12F0197CE4EC00F4F2C5 /* ScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewTest.h; sourceTree = "<group>"; };
-		B02A12F2197CE4EC00F4F2C5 /* SegmentedControlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SegmentedControlTest.cpp; sourceTree = "<group>"; };
-		B02A12F3197CE4EC00F4F2C5 /* SegmentedControlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlTest.h; sourceTree = "<group>"; };
-		B02A12F5197CE4EC00F4F2C5 /* SliderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SliderTest.cpp; sourceTree = "<group>"; };
-		B02A12F6197CE4EC00F4F2C5 /* SliderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderTest.h; sourceTree = "<group>"; };
-		B02A12F8197CE4EC00F4F2C5 /* SwitchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwitchTest.cpp; sourceTree = "<group>"; };
-		B02A12F9197CE4EC00F4F2C5 /* SwitchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchTest.h; sourceTree = "<group>"; };
-		B02A12FB197CE4EC00F4F2C5 /* TabBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabBarTest.cpp; sourceTree = "<group>"; };
-		B02A12FC197CE4EC00F4F2C5 /* TabBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarTest.h; sourceTree = "<group>"; };
-		B02A12FE197CE4EC00F4F2C5 /* TableViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTest.cpp; sourceTree = "<group>"; };
-		B02A12FF197CE4EC00F4F2C5 /* TableViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTest.h; sourceTree = "<group>"; };
-		B02A1301197CE4EC00F4F2C5 /* TextFieldTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextFieldTest.cpp; sourceTree = "<group>"; };
-		B02A1302197CE4EC00F4F2C5 /* TextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldTest.h; sourceTree = "<group>"; };
-		B02A1304197CE4EC00F4F2C5 /* FifthViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FifthViewController.cpp; sourceTree = "<group>"; };
-		B02A1305197CE4EC00F4F2C5 /* FifthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FifthViewController.h; sourceTree = "<group>"; };
-		B02A1306197CE4EC00F4F2C5 /* FirstViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FirstViewController.cpp; sourceTree = "<group>"; };
-		B02A1307197CE4EC00F4F2C5 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		B02A1308197CE4EC00F4F2C5 /* FourthViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FourthViewController.cpp; sourceTree = "<group>"; };
-		B02A1309197CE4EC00F4F2C5 /* FourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourthViewController.h; sourceTree = "<group>"; };
-		B02A130A197CE4EC00F4F2C5 /* SecondViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SecondViewController.cpp; sourceTree = "<group>"; };
-		B02A130B197CE4EC00F4F2C5 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		B02A130C197CE4EC00F4F2C5 /* ThirdViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThirdViewController.cpp; sourceTree = "<group>"; };
-		B02A130D197CE4EC00F4F2C5 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
-		B02A1323197CE51000F4F2C5 /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue.png; sourceTree = "<group>"; };
-		B02A1324197CE51000F4F2C5 /* btn_rounded_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_rounded_highlighted.png; sourceTree = "<group>"; };
-		B02A1325197CE51000F4F2C5 /* btn_rounded_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_rounded_normal.png; sourceTree = "<group>"; };
-		B02A1326197CE51000F4F2C5 /* btn_rounded_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_rounded_selected.png; sourceTree = "<group>"; };
-		B02A1327197CE51000F4F2C5 /* btn_rounded3D_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_rounded3D_normal.png; sourceTree = "<group>"; };
-		B02A1328197CE51000F4F2C5 /* btn_rounded3D_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_rounded3D_selected.png; sourceTree = "<group>"; };
-		B02A1329197CE51000F4F2C5 /* close1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close1.png; sourceTree = "<group>"; };
-		B02A132A197CE51000F4F2C5 /* ex1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ex1.png; sourceTree = "<group>"; };
-		B02A132B197CE51000F4F2C5 /* ex2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ex2.png; sourceTree = "<group>"; };
-		B02A132C197CE51000F4F2C5 /* ex3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ex3.png; sourceTree = "<group>"; };
 		B02A132D197CE51000F4F2C5 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		B02A132E197CE51000F4F2C5 /* information.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = information.json; sourceTree = "<group>"; };
 		B02A132F197CE51000F4F2C5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		B02A1330197CE51000F4F2C5 /* Marker Felt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt.ttf"; sourceTree = "<group>"; };
-		B02A1331197CE51000F4F2C5 /* open1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = open1.png; sourceTree = "<group>"; };
-		B02A1332197CE51000F4F2C5 /* slider_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_indicator.png; sourceTree = "<group>"; };
-		B02A1333197CE51000F4F2C5 /* square_dis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = square_dis.png; sourceTree = "<group>"; };
-		B02A1334197CE51000F4F2C5 /* square_nor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = square_nor.png; sourceTree = "<group>"; };
-		B02A1335197CE51000F4F2C5 /* square_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = square_sel.png; sourceTree = "<group>"; };
-		B02A134A197CE55900F4F2C5 /* AlertViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertViewTest.cpp; sourceTree = "<group>"; };
-		B02A134B197CE55900F4F2C5 /* AlertViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewTest.h; sourceTree = "<group>"; };
 		B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
 		B02A145F190A6A4B00C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
 		B03E905B19389B4700FD9A06 /* CAAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressManager.h; sourceTree = "<group>"; };
@@ -285,10 +244,8 @@
 		B04C0C001901207A009854FD /* sconscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
 		B04C0C011901207A009854FD /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		B04C0C021901207A009854FD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
-		B0A172DF192DB6B000DBFDB0 /* iphone5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone5.png; sourceTree = "<group>"; };
 		B0A172E6192DDAD100DBFDB0 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		B0A172E7192DDAD100DBFDB0 /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
-		B0AD93E519207CA300EA40BB /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -429,27 +386,27 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				B02A1349197CE55900F4F2C5 /* AlertViewTest */,
-				B02A12D6197CE4EC00F4F2C5 /* ButtonTest */,
-				B02A12D9197CE4EC00F4F2C5 /* CollectionViewTest */,
-				B02A12DC197CE4EC00F4F2C5 /* ExtensionsTest */,
-				B02A12E0197CE4EC00F4F2C5 /* ImageViewTest */,
-				B02A12E3197CE4EC00F4F2C5 /* LabelTest */,
-				B02A12E6197CE4EC00F4F2C5 /* MainMenu.cpp */,
-				B02A12E7197CE4EC00F4F2C5 /* MainMenu.h */,
-				B02A12E8197CE4EC00F4F2C5 /* NavigationBarTest */,
-				B02A12EB197CE4EC00F4F2C5 /* ProgressTest */,
-				B02A12EE197CE4EC00F4F2C5 /* ScrollViewTest */,
-				B02A12F1197CE4EC00F4F2C5 /* SegmentedControlTest */,
-				B02A12F4197CE4EC00F4F2C5 /* SliderTest */,
-				B02A12F7197CE4EC00F4F2C5 /* SwitchTest */,
-				B02A12FA197CE4EC00F4F2C5 /* TabBarTest */,
-				B02A12FD197CE4EC00F4F2C5 /* TableViewTest */,
-				B02A1300197CE4EC00F4F2C5 /* TextFieldTest */,
-				B02A1303197CE4EC00F4F2C5 /* ViewController */,
-				B0AD93E519207CA300EA40BB /* AppMacros.h */,
-				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
-				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
+				B0090D0E198A42E200BD8CDA /* AlertViewTest */,
+				B0090D11198A42E200BD8CDA /* AppDelegate.cpp */,
+				B0090D12198A42E200BD8CDA /* AppDelegate.h */,
+				B0090D13198A42E200BD8CDA /* AppMacros.h */,
+				B0090D14198A42E200BD8CDA /* ButtonTest */,
+				B0090D17198A42E200BD8CDA /* CollectionViewTest */,
+				B0090D1A198A42E200BD8CDA /* ExtensionsTest */,
+				B0090D24198A42E200BD8CDA /* ImageViewTest */,
+				B0090D27198A42E200BD8CDA /* LabelTest */,
+				B0090D2A198A42E200BD8CDA /* MainMenu.cpp */,
+				B0090D2B198A42E200BD8CDA /* MainMenu.h */,
+				B0090D2C198A42E200BD8CDA /* NavigationBarTest */,
+				B0090D2F198A42E200BD8CDA /* ProgressTest */,
+				B0090D32198A42E200BD8CDA /* ScrollViewTest */,
+				B0090D35198A42E200BD8CDA /* SegmentedControlTest */,
+				B0090D38198A42E200BD8CDA /* SliderTest */,
+				B0090D3B198A42E200BD8CDA /* SwitchTest */,
+				B0090D3E198A42E200BD8CDA /* TabBarTest */,
+				B0090D41198A42E200BD8CDA /* TableViewTest */,
+				B0090D44198A42E200BD8CDA /* TextFieldTest */,
+				B0090D47198A42E200BD8CDA /* ViewController */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -546,40 +503,14 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B02A1323197CE51000F4F2C5 /* blue.png */,
-				B02A1324197CE51000F4F2C5 /* btn_rounded_highlighted.png */,
-				B02A1325197CE51000F4F2C5 /* btn_rounded_normal.png */,
-				B02A1326197CE51000F4F2C5 /* btn_rounded_selected.png */,
-				B02A1327197CE51000F4F2C5 /* btn_rounded3D_normal.png */,
-				B02A1328197CE51000F4F2C5 /* btn_rounded3D_selected.png */,
-				B02A1329197CE51000F4F2C5 /* close1.png */,
-				B02A132A197CE51000F4F2C5 /* ex1.png */,
-				B02A132B197CE51000F4F2C5 /* ex2.png */,
-				B02A132C197CE51000F4F2C5 /* ex3.png */,
+				B0090CE5198A426600BD8CDA /* tabbar_function */,
 				B02A132D197CE51000F4F2C5 /* icon.png */,
 				B02A132E197CE51000F4F2C5 /* information.json */,
 				B02A132F197CE51000F4F2C5 /* logo.png */,
-				B02A1330197CE51000F4F2C5 /* Marker Felt.ttf */,
-				B02A1331197CE51000F4F2C5 /* open1.png */,
-				B02A1332197CE51000F4F2C5 /* slider_indicator.png */,
-				B02A1333197CE51000F4F2C5 /* square_dis.png */,
-				B02A1334197CE51000F4F2C5 /* square_nor.png */,
-				B02A1335197CE51000F4F2C5 /* square_sel.png */,
 				B01F71691951691500BA07A6 /* source_material */,
 				B01DFC3A190513FD00214AE2 /* fonts */,
-				04E94DCC194DEAB9000AD114 /* fifth_1.png */,
-				04E94DCD194DEAB9000AD114 /* fifth_2.png */,
-				04E94DCE194DEAB9000AD114 /* first_1.png */,
-				04E94DCF194DEAB9000AD114 /* first_2.png */,
-				04E94DD0194DEAB9000AD114 /* fourth_1.png */,
-				04E94DD1194DEAB9000AD114 /* fourth_2.png */,
-				04E94DD2194DEAB9000AD114 /* second_1.png */,
-				04E94DD3194DEAB9000AD114 /* second_2.png */,
-				04E94DD4194DEAB9000AD114 /* third_1.png */,
-				04E94DD5194DEAB9000AD114 /* third_2.png */,
 				B0A172E6192DDAD100DBFDB0 /* 2.jpg */,
 				B0A172E7192DDAD100DBFDB0 /* bg.jpg */,
-				B0A172DF192DB6B000DBFDB0 /* iphone5.png */,
 				D4EF949B15BD2D8E00D803EB /* Icon-114.png */,
 				D4EF949F15BD2D9800D803EB /* Icon-144.png */,
 				D4EF949915BD2D8B00D803EB /* Icon-57.png */,
@@ -590,173 +521,179 @@
 			path = ../Resources;
 			sourceTree = "<group>";
 		};
-		B02A12D6197CE4EC00F4F2C5 /* ButtonTest */ = {
+		B0090D0E198A42E200BD8CDA /* AlertViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12D7197CE4EC00F4F2C5 /* ButtonTest.cpp */,
-				B02A12D8197CE4EC00F4F2C5 /* ButtonTest.h */,
+				B0090D0F198A42E200BD8CDA /* AlertViewTest.cpp */,
+				B0090D10198A42E200BD8CDA /* AlertViewTest.h */,
+			);
+			name = AlertViewTest;
+			path = ../Classes/AlertViewTest;
+			sourceTree = "<group>";
+		};
+		B0090D14198A42E200BD8CDA /* ButtonTest */ = {
+			isa = PBXGroup;
+			children = (
+				B0090D15198A42E200BD8CDA /* ButtonTest.cpp */,
+				B0090D16198A42E200BD8CDA /* ButtonTest.h */,
 			);
 			name = ButtonTest;
 			path = ../Classes/ButtonTest;
 			sourceTree = "<group>";
 		};
-		B02A12D9197CE4EC00F4F2C5 /* CollectionViewTest */ = {
+		B0090D17198A42E200BD8CDA /* CollectionViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12DA197CE4EC00F4F2C5 /* CollectionViewTest.cpp */,
-				B02A12DB197CE4EC00F4F2C5 /* CollectionViewTest.h */,
+				B0090D18198A42E200BD8CDA /* CollectionViewTest.cpp */,
+				B0090D19198A42E200BD8CDA /* CollectionViewTest.h */,
 			);
 			name = CollectionViewTest;
 			path = ../Classes/CollectionViewTest;
 			sourceTree = "<group>";
 		};
-		B02A12DC197CE4EC00F4F2C5 /* ExtensionsTest */ = {
+		B0090D1A198A42E200BD8CDA /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12DD197CE4EC00F4F2C5 /* ExtensionsTest.cpp */,
-				B02A12DE197CE4EC00F4F2C5 /* ExtensionsTest.h */,
-				B02A12DF197CE4EC00F4F2C5 /* Info.h */,
+				B0090D1B198A42E200BD8CDA /* AddressBookTest.cpp */,
+				B0090D1C198A42E200BD8CDA /* AddressBookTest.h */,
+				B0090D1D198A42E200BD8CDA /* ExtensionsTest.cpp */,
+				B0090D1E198A42E200BD8CDA /* ExtensionsTest.h */,
+				B0090D1F198A42E200BD8CDA /* HttpRequestTest.cpp */,
+				B0090D20198A42E200BD8CDA /* HttpRequestTest.h */,
+				B0090D21198A42E200BD8CDA /* Info.h */,
+				B0090D22198A42E200BD8CDA /* LoadingViewController.cpp */,
+				B0090D23198A42E200BD8CDA /* LoadingViewController.h */,
 			);
 			name = ExtensionsTest;
 			path = ../Classes/ExtensionsTest;
 			sourceTree = "<group>";
 		};
-		B02A12E0197CE4EC00F4F2C5 /* ImageViewTest */ = {
+		B0090D24198A42E200BD8CDA /* ImageViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12E1197CE4EC00F4F2C5 /* ImageViewTest.cpp */,
-				B02A12E2197CE4EC00F4F2C5 /* ImageViewTest.h */,
+				B0090D25198A42E200BD8CDA /* ImageViewTest.cpp */,
+				B0090D26198A42E200BD8CDA /* ImageViewTest.h */,
 			);
 			name = ImageViewTest;
 			path = ../Classes/ImageViewTest;
 			sourceTree = "<group>";
 		};
-		B02A12E3197CE4EC00F4F2C5 /* LabelTest */ = {
+		B0090D27198A42E200BD8CDA /* LabelTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12E4197CE4EC00F4F2C5 /* LabelTest.cpp */,
-				B02A12E5197CE4EC00F4F2C5 /* LabelTest.h */,
+				B0090D28198A42E200BD8CDA /* LabelTest.cpp */,
+				B0090D29198A42E200BD8CDA /* LabelTest.h */,
 			);
 			name = LabelTest;
 			path = ../Classes/LabelTest;
 			sourceTree = "<group>";
 		};
-		B02A12E8197CE4EC00F4F2C5 /* NavigationBarTest */ = {
+		B0090D2C198A42E200BD8CDA /* NavigationBarTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12E9197CE4EC00F4F2C5 /* NavigationBarTest.cpp */,
-				B02A12EA197CE4EC00F4F2C5 /* NavigationBarTest.h */,
+				B0090D2D198A42E200BD8CDA /* NavigationBarTest.cpp */,
+				B0090D2E198A42E200BD8CDA /* NavigationBarTest.h */,
 			);
 			name = NavigationBarTest;
 			path = ../Classes/NavigationBarTest;
 			sourceTree = "<group>";
 		};
-		B02A12EB197CE4EC00F4F2C5 /* ProgressTest */ = {
+		B0090D2F198A42E200BD8CDA /* ProgressTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12EC197CE4EC00F4F2C5 /* ProgressTest.cpp */,
-				B02A12ED197CE4EC00F4F2C5 /* ProgressTest.h */,
+				B0090D30198A42E200BD8CDA /* ProgressTest.cpp */,
+				B0090D31198A42E200BD8CDA /* ProgressTest.h */,
 			);
 			name = ProgressTest;
 			path = ../Classes/ProgressTest;
 			sourceTree = "<group>";
 		};
-		B02A12EE197CE4EC00F4F2C5 /* ScrollViewTest */ = {
+		B0090D32198A42E200BD8CDA /* ScrollViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12EF197CE4EC00F4F2C5 /* ScrollViewTest.cpp */,
-				B02A12F0197CE4EC00F4F2C5 /* ScrollViewTest.h */,
+				B0090D33198A42E200BD8CDA /* ScrollViewTest.cpp */,
+				B0090D34198A42E200BD8CDA /* ScrollViewTest.h */,
 			);
 			name = ScrollViewTest;
 			path = ../Classes/ScrollViewTest;
 			sourceTree = "<group>";
 		};
-		B02A12F1197CE4EC00F4F2C5 /* SegmentedControlTest */ = {
+		B0090D35198A42E200BD8CDA /* SegmentedControlTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12F2197CE4EC00F4F2C5 /* SegmentedControlTest.cpp */,
-				B02A12F3197CE4EC00F4F2C5 /* SegmentedControlTest.h */,
+				B0090D36198A42E200BD8CDA /* SegmentedControlTest.cpp */,
+				B0090D37198A42E200BD8CDA /* SegmentedControlTest.h */,
 			);
 			name = SegmentedControlTest;
 			path = ../Classes/SegmentedControlTest;
 			sourceTree = "<group>";
 		};
-		B02A12F4197CE4EC00F4F2C5 /* SliderTest */ = {
+		B0090D38198A42E200BD8CDA /* SliderTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12F5197CE4EC00F4F2C5 /* SliderTest.cpp */,
-				B02A12F6197CE4EC00F4F2C5 /* SliderTest.h */,
+				B0090D39198A42E200BD8CDA /* SliderTest.cpp */,
+				B0090D3A198A42E200BD8CDA /* SliderTest.h */,
 			);
 			name = SliderTest;
 			path = ../Classes/SliderTest;
 			sourceTree = "<group>";
 		};
-		B02A12F7197CE4EC00F4F2C5 /* SwitchTest */ = {
+		B0090D3B198A42E200BD8CDA /* SwitchTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12F8197CE4EC00F4F2C5 /* SwitchTest.cpp */,
-				B02A12F9197CE4EC00F4F2C5 /* SwitchTest.h */,
+				B0090D3C198A42E200BD8CDA /* SwitchTest.cpp */,
+				B0090D3D198A42E200BD8CDA /* SwitchTest.h */,
 			);
 			name = SwitchTest;
 			path = ../Classes/SwitchTest;
 			sourceTree = "<group>";
 		};
-		B02A12FA197CE4EC00F4F2C5 /* TabBarTest */ = {
+		B0090D3E198A42E200BD8CDA /* TabBarTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12FB197CE4EC00F4F2C5 /* TabBarTest.cpp */,
-				B02A12FC197CE4EC00F4F2C5 /* TabBarTest.h */,
+				B0090D3F198A42E200BD8CDA /* TabBarTest.cpp */,
+				B0090D40198A42E200BD8CDA /* TabBarTest.h */,
 			);
 			name = TabBarTest;
 			path = ../Classes/TabBarTest;
 			sourceTree = "<group>";
 		};
-		B02A12FD197CE4EC00F4F2C5 /* TableViewTest */ = {
+		B0090D41198A42E200BD8CDA /* TableViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12FE197CE4EC00F4F2C5 /* TableViewTest.cpp */,
-				B02A12FF197CE4EC00F4F2C5 /* TableViewTest.h */,
+				B0090D42198A42E200BD8CDA /* TableViewTest.cpp */,
+				B0090D43198A42E200BD8CDA /* TableViewTest.h */,
 			);
 			name = TableViewTest;
 			path = ../Classes/TableViewTest;
 			sourceTree = "<group>";
 		};
-		B02A1300197CE4EC00F4F2C5 /* TextFieldTest */ = {
+		B0090D44198A42E200BD8CDA /* TextFieldTest */ = {
 			isa = PBXGroup;
 			children = (
-				B02A1301197CE4EC00F4F2C5 /* TextFieldTest.cpp */,
-				B02A1302197CE4EC00F4F2C5 /* TextFieldTest.h */,
+				B0090D45198A42E200BD8CDA /* TextFieldTest.cpp */,
+				B0090D46198A42E200BD8CDA /* TextFieldTest.h */,
 			);
 			name = TextFieldTest;
 			path = ../Classes/TextFieldTest;
 			sourceTree = "<group>";
 		};
-		B02A1303197CE4EC00F4F2C5 /* ViewController */ = {
+		B0090D47198A42E200BD8CDA /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				B02A1304197CE4EC00F4F2C5 /* FifthViewController.cpp */,
-				B02A1305197CE4EC00F4F2C5 /* FifthViewController.h */,
-				B02A1306197CE4EC00F4F2C5 /* FirstViewController.cpp */,
-				B02A1307197CE4EC00F4F2C5 /* FirstViewController.h */,
-				B02A1308197CE4EC00F4F2C5 /* FourthViewController.cpp */,
-				B02A1309197CE4EC00F4F2C5 /* FourthViewController.h */,
-				B02A130A197CE4EC00F4F2C5 /* SecondViewController.cpp */,
-				B02A130B197CE4EC00F4F2C5 /* SecondViewController.h */,
-				B02A130C197CE4EC00F4F2C5 /* ThirdViewController.cpp */,
-				B02A130D197CE4EC00F4F2C5 /* ThirdViewController.h */,
+				B0090D48198A42E200BD8CDA /* FifthViewController.cpp */,
+				B0090D49198A42E200BD8CDA /* FifthViewController.h */,
+				B0090D4A198A42E200BD8CDA /* FirstViewController.cpp */,
+				B0090D4B198A42E200BD8CDA /* FirstViewController.h */,
+				B0090D4C198A42E200BD8CDA /* FourthViewController.cpp */,
+				B0090D4D198A42E200BD8CDA /* FourthViewController.h */,
+				B0090D4E198A42E200BD8CDA /* SecondViewController.cpp */,
+				B0090D4F198A42E200BD8CDA /* SecondViewController.h */,
+				B0090D50198A42E200BD8CDA /* ThirdViewController.cpp */,
+				B0090D51198A42E200BD8CDA /* ThirdViewController.h */,
 			);
 			name = ViewController;
 			path = ../Classes/ViewController;
-			sourceTree = "<group>";
-		};
-		B02A1349197CE55900F4F2C5 /* AlertViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				B02A134A197CE55900F4F2C5 /* AlertViewTest.cpp */,
-				B02A134B197CE55900F4F2C5 /* AlertViewTest.h */,
-			);
-			name = AlertViewTest;
-			path = ../Classes/AlertViewTest;
 			sourceTree = "<group>";
 		};
 		B03E905719389B4700FD9A06 /* other */ = {
@@ -935,46 +872,20 @@
 			files = (
 				B0A172E9192DDAD100DBFDB0 /* bg.jpg in Resources */,
 				B02A1340197CE51000F4F2C5 /* icon.png in Resources */,
-				B02A1336197CE51000F4F2C5 /* blue.png in Resources */,
 				B0A172E8192DDAD100DBFDB0 /* 2.jpg in Resources */,
 				B04C0C091901207A009854FD /* json_valueiterator.inl in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
 				B01DFC2C190513F500214AE2 /* 9m.jpg in Resources */,
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
-				B02A1346197CE51000F4F2C5 /* square_dis.png in Resources */,
-				B02A1339197CE51000F4F2C5 /* btn_rounded_selected.png in Resources */,
-				B02A133D197CE51000F4F2C5 /* ex1.png in Resources */,
-				B02A1343197CE51000F4F2C5 /* Marker Felt.ttf in Resources */,
 				D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */,
-				B02A1348197CE51000F4F2C5 /* square_sel.png in Resources */,
 				B01DFC3B190513FD00214AE2 /* fonts in Resources */,
-				B02A1344197CE51000F4F2C5 /* open1.png in Resources */,
 				B04C0C051901207A009854FD /* json_internalarray.inl in Resources */,
 				B04C0C0B1901207A009854FD /* sconscript in Resources */,
 				D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */,
 				B04C0C061901207A009854FD /* json_internalmap.inl in Resources */,
-				B0A172E0192DB6B000DBFDB0 /* iphone5.png in Resources */,
-				B02A1338197CE51000F4F2C5 /* btn_rounded_normal.png in Resources */,
-				B02A133C197CE51000F4F2C5 /* close1.png in Resources */,
-				B02A1347197CE51000F4F2C5 /* square_nor.png in Resources */,
-				B02A133E197CE51000F4F2C5 /* ex2.png in Resources */,
-				B02A1345197CE51000F4F2C5 /* slider_indicator.png in Resources */,
-				B02A133B197CE51000F4F2C5 /* btn_rounded3D_selected.png in Resources */,
-				04E94DD6194DEAB9000AD114 /* fifth_1.png in Resources */,
-				04E94DD7194DEAB9000AD114 /* fifth_2.png in Resources */,
-				B02A133F197CE51000F4F2C5 /* ex3.png in Resources */,
-				04E94DD8194DEAB9000AD114 /* first_1.png in Resources */,
-				04E94DD9194DEAB9000AD114 /* first_2.png in Resources */,
-				B02A133A197CE51000F4F2C5 /* btn_rounded3D_normal.png in Resources */,
-				04E94DDA194DEAB9000AD114 /* fourth_1.png in Resources */,
-				04E94DDB194DEAB9000AD114 /* fourth_2.png in Resources */,
-				B02A1337197CE51000F4F2C5 /* btn_rounded_highlighted.png in Resources */,
+				B0090CE6198A426600BD8CDA /* tabbar_function in Resources */,
 				B02A1341197CE51000F4F2C5 /* information.json in Resources */,
-				04E94DDC194DEAB9000AD114 /* second_1.png in Resources */,
 				B02A1342197CE51000F4F2C5 /* logo.png in Resources */,
-				04E94DDD194DEAB9000AD114 /* second_2.png in Resources */,
-				04E94DDE194DEAB9000AD114 /* third_1.png in Resources */,
-				04E94DDF194DEAB9000AD114 /* third_2.png in Resources */,
 				B01F716A1951691500BA07A6 /* source_material in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -986,52 +897,55 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B02A1316197CE4EC00F4F2C5 /* ProgressTest.cpp in Sources */,
-				B02A131A197CE4EC00F4F2C5 /* SwitchTest.cpp in Sources */,
-				B02A1319197CE4EC00F4F2C5 /* SliderTest.cpp in Sources */,
+				B0090D52198A42E200BD8CDA /* AlertViewTest.cpp in Sources */,
 				B03E907A19389B4700FD9A06 /* CAAddressManager.mm in Sources */,
+				B0090D56198A42E200BD8CDA /* AddressBookTest.cpp in Sources */,
+				B0090D67198A42E200BD8CDA /* FirstViewController.cpp in Sources */,
+				B0090D69198A42E200BD8CDA /* SecondViewController.cpp in Sources */,
 				B04C0C071901207A009854FD /* json_reader.cpp in Sources */,
-				B02A1317197CE4EC00F4F2C5 /* ScrollViewTest.cpp in Sources */,
+				B0090D5B198A42E200BD8CDA /* LabelTest.cpp in Sources */,
 				B04C0C041901207A009854FD /* DictionaryHelper.cpp in Sources */,
-				B02A1321197CE4EC00F4F2C5 /* SecondViewController.cpp in Sources */,
-				B02A1311197CE4EC00F4F2C5 /* ExtensionsTest.cpp in Sources */,
+				B0090D62198A42E200BD8CDA /* SwitchTest.cpp in Sources */,
 				B04C0C031901207A009854FD /* CSContentJsonDictionary.cpp in Sources */,
+				B0090D64198A42E200BD8CDA /* TableViewTest.cpp in Sources */,
+				B0090D5A198A42E200BD8CDA /* ImageViewTest.cpp in Sources */,
 				B04C0C0A1901207A009854FD /* json_writer.cpp in Sources */,
-				B02A1315197CE4EC00F4F2C5 /* NavigationBarTest.cpp in Sources */,
-				B02A131F197CE4EC00F4F2C5 /* FirstViewController.cpp in Sources */,
-				B02A131D197CE4EC00F4F2C5 /* TextFieldTest.cpp in Sources */,
-				B02A1318197CE4EC00F4F2C5 /* SegmentedControlTest.cpp in Sources */,
+				B0090D59198A42E200BD8CDA /* LoadingViewController.cpp in Sources */,
+				B0090D6A198A42E200BD8CDA /* ThirdViewController.cpp in Sources */,
+				B0090D61198A42E200BD8CDA /* SliderTest.cpp in Sources */,
 				B04C0C081901207A009854FD /* json_value.cpp in Sources */,
 				15A3DA5D1682F826002FB0C5 /* HttpClient.cpp in Sources */,
-				B02A134C197CE55900F4F2C5 /* AlertViewTest.cpp in Sources */,
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
+				B0090D66198A42E200BD8CDA /* FifthViewController.cpp in Sources */,
 				B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */,
 				15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */,
 				B03E907919389B4700FD9A06 /* CAAddress.mm in Sources */,
+				B0090D53198A42E200BD8CDA /* AppDelegate.cpp in Sources */,
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
+				B0090D54198A42E200BD8CDA /* ButtonTest.cpp in Sources */,
+				B0090D5C198A42E200BD8CDA /* MainMenu.cpp in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
-				B02A130F197CE4EC00F4F2C5 /* ButtonTest.cpp in Sources */,
 				B03E908219389B4700FD9A06 /* CALocation.mm in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
-				B02A131B197CE4EC00F4F2C5 /* TabBarTest.cpp in Sources */,
-				B02A1312197CE4EC00F4F2C5 /* ImageViewTest.cpp in Sources */,
+				B0090D57198A42E200BD8CDA /* ExtensionsTest.cpp in Sources */,
+				B0090D65198A42E200BD8CDA /* TextFieldTest.cpp in Sources */,
+				B0090D55198A42E200BD8CDA /* CollectionViewTest.cpp in Sources */,
 				B03E907E19389B4700FD9A06 /* CACameraController.mm in Sources */,
-				B02A1310197CE4EC00F4F2C5 /* CollectionViewTest.cpp in Sources */,
-				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
-				B02A131C197CE4EC00F4F2C5 /* TableViewTest.cpp in Sources */,
-				B02A1320197CE4EC00F4F2C5 /* FourthViewController.cpp in Sources */,
 				1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */,
-				B02A1314197CE4EC00F4F2C5 /* MainMenu.cpp in Sources */,
+				B0090D5D198A42E200BD8CDA /* NavigationBarTest.cpp in Sources */,
+				B0090D60198A42E200BD8CDA /* SegmentedControlTest.cpp in Sources */,
 				1AC3624B16D4A1E8000847F2 /* main.m in Sources */,
 				1AFCDA8216D4A25900906EA6 /* RootViewController.mm in Sources */,
-				B02A1313197CE4EC00F4F2C5 /* LabelTest.cpp in Sources */,
 				1AB87035175E0A84005D39BF /* WebSocket.cpp in Sources */,
 				B03E908319389B4700FD9A06 /* CALocationManager.mm in Sources */,
+				B0090D5E198A42E200BD8CDA /* ProgressTest.cpp in Sources */,
 				B03E907F19389B4700FD9A06 /* CAMediaManager.mm in Sources */,
-				B02A1322197CE4EC00F4F2C5 /* ThirdViewController.cpp in Sources */,
+				B0090D68198A42E200BD8CDA /* FourthViewController.cpp in Sources */,
 				B03E907D19389B4700FD9A06 /* CAAlbumController.mm in Sources */,
-				B02A131E197CE4EC00F4F2C5 /* FifthViewController.cpp in Sources */,
 				1A9CE8781765A12C000E3062 /* AssetsManager.cpp in Sources */,
+				B0090D63198A42E200BD8CDA /* TabBarTest.cpp in Sources */,
+				B0090D58198A42E200BD8CDA /* HttpRequestTest.cpp in Sources */,
+				B0090D5F198A42E200BD8CDA /* ScrollViewTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

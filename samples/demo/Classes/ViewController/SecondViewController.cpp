@@ -19,7 +19,7 @@ SecondViewController::~SecondViewController()
 void SecondViewController::viewDidLoad()
 {
     CCSize size = this->getView()->getBounds().size;
-
+	CCLog("%d", this->getTabBarController()->getTabBar()->getSelectedIndex());
 	p_TableView = CATableView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, size.width, size.height));
 	p_TableView->setTableViewDataSource(this);
 	p_TableView->setTableViewDelegate(this);
@@ -29,7 +29,7 @@ void SecondViewController::viewDidLoad()
 
 void SecondViewController::viewDidUnload()
 {
-
+	
 }
 
 void SecondViewController::reshapeViewRectDidFinish()
@@ -63,22 +63,20 @@ CATableViewCell* SecondViewController::tableCellAtIndex(CATableView* table, cons
 	if (cell == NULL)
 	{
 		cell = CATableViewCell::create("CrossApp");
-        CALabel* cellText = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.3, cellSize.height*0.5));
-        
-        cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-        
-        cellText->setColor(CAColor_blueStyle);
-        cellText->setTextAlignment(CATextAlignmentCenter);
-        cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        cell->addSubview(cellText);
-        cellText->setTag(100);
+		CALabel* cellText = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.3, cellSize.height*0.5));
+		cellText->setTag(101);
+		cellText->setColor(CAColor_blueStyle);
+		cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+		cellText->setTextAlignment(CATextAlignmentCenter);
+		cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		cell->addSubview(cellText);
 	}
-    
-    CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);
-    char order[20] = "";
-    sprintf(order, "cell-%d", row);
-    cellText->setText(order);
-    
+	CALabel* cellText = (CALabel*)cell->getSubviewByTag(101);
+	char order[20] = "";
+	sprintf(order, "cell-%d", row);
+
+	cellText->setText(order);
+
 	return cell;
 
 }
@@ -92,11 +90,11 @@ CAView* SecondViewController::tableViewSectionViewForHeaderInSection(CATableView
 	headControl1->setTag(100 + (int)section);
 	if (sect[section] == 8)
 	{
-		headControl1->setImageForState(CAControlStateNormal, CAImage::create("close1.png"));
+		headControl1->setImageForState(CAControlStateNormal, CAImage::create("source_material/close1.png"));
 	}
 	else
 	{
-		headControl1->setImageForState(CAControlStateNormal, CAImage::create("open1.png"));
+		headControl1->setImageForState(CAControlStateNormal, CAImage::create("source_material/open1.png"));
 	}
 	//headControl1->setImageColorForState(CAControlStateHighlighted, ccc4(0, 255, 200, 255));
 	headControl1->addTarget(this, CAControl_selector(SecondViewController::switchCellListInSection), CAControlEventTouchUpInSide);

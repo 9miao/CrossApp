@@ -30,10 +30,11 @@ void TableViewTest::viewDidUnload()
 
 void TableViewTest::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	if (row < 7 && section==1)
-	{
-		p_TableView->setSelectRowAtIndexPath(section,row+1);
-	}
+	CCLog("%d,%d",section,row);
+	//if (row < 6 && section==1)
+	//{
+	//	p_TableView->setSelectRowAtIndexPath(section,row+1);
+	//}
 }
 
 void TableViewTest::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
@@ -57,27 +58,39 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const CCSiz
 	if (cell == NULL)
 	{
 		cell = CATableViewCell::create("CrossApp");
+		CALabel* cellText = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.3, cellSize.height*0.8));
+		cellText->setTag(100);
+		cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+		cellText->setColor(CAColor_blueStyle);
+		cellText->setTextAlignment(CATextAlignmentCenter);
+		cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		cell->addSubview(cellText);
+		if (section == 1 && row == 0)
+		{
+			CALabel* cellDesc = CALabel::createWithCenter(CCRect(cellSize.width*0.5 + 50 * CROSSAPP_ADPTATION_RATIO, cellSize.height*0.5, cellSize.width*0.8, cellSize.height*0.8));
+			cellDesc->setTag(101);
+			cellDesc->setText("When you click on a cell, will select the next cell");
+			cellDesc->setColor(CAColor_blueStyle);
+			cellDesc->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+			cellDesc->setTextAlignment(CATextAlignmentCenter);
+			cellDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+			cell->addSubview(cellDesc);
+		}
 	}
 	char order[20] = "";
-	CALabel* cellText = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.3, cellSize.height*0.8));
 	sprintf(order, "cell-%d", row);
+	CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);
 	cellText->setText(order);
-	cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-	cellText->setColor(CAColor_blueStyle);
-	cellText->setTextAlignment(CATextAlignmentCenter);
-	cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	cell->addSubview(cellText);
 
-	if (section == 1 && row == 0)
-	{
-		CALabel* cellDesc = CALabel::createWithCenter(CCRect(cellSize.width*0.5 + 50 * CROSSAPP_ADPTATION_RATIO, cellSize.height*0.5, cellSize.width*0.8, cellSize.height*0.8));
-		cellDesc->setText("When you click on a cell, will select the next cell");
-		cellDesc->setColor(CAColor_blueStyle);
-		cellDesc->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-		cellDesc->setTextAlignment(CATextAlignmentCenter);
-		cellDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-		cell->addSubview(cellDesc);
-	}
+	//CALabel* cellDesc = (CALabel*)cell->getSubviewByTag(101);
+	//if (section == 1 && row == 0)
+	//{
+	//	if (cellDesc == NULL)
+	//	{
+	//		CCLog("nil...");
+	//	}
+	//	cellDesc->setText("When you click on a cell, will select the next cell");
+	//}
 
 	return cell;
 

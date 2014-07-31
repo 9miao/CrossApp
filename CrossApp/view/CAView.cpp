@@ -1254,6 +1254,14 @@ void CAView::transform()
     
 }
 
+CAResponder* CAView::nextResponder()
+{
+    if (CAResponder* responder = dynamic_cast<CAResponder*>(m_pViewDelegate))
+    {
+        return responder;
+    }
+    return this->getSuperview();
+}
 
 void CAView::onEnter()
 {
@@ -2002,36 +2010,22 @@ bool CAView::isFlipY(void)
 
 bool CAView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pViewDelegate)
-    {
-        return m_pViewDelegate->ccTouchBegan(pTouch, pEvent);
-    }
-    
     return false;
 }
 
 void CAView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pViewDelegate)
-    {
-        m_pViewDelegate->ccTouchMoved(pTouch, pEvent);
-    }
+
 }
 
 void CAView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pViewDelegate)
-    {
-        m_pViewDelegate->ccTouchEnded(pTouch, pEvent);
-    }
+
 }
 
 void CAView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pViewDelegate)
-    {
-        m_pViewDelegate->ccTouchCancelled(pTouch, pEvent);
-    }
+
 }
 
 void CAView::setBatch(CABatchView *batchView)

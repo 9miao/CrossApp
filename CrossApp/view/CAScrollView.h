@@ -103,6 +103,31 @@ public:
     
 protected:
  
+    inline virtual float maxSpeed(float dt)
+    {
+        return (CCPoint(m_obContentSize).getLength() * 5 * dt);
+    }
+    
+    inline virtual float maxSpeedCache(float dt)
+    {
+        return (maxSpeed(dt) * 1.5f);
+    }
+    
+    inline virtual float decelerationRatio(float dt)
+    {
+        return 6 * dt;
+    }
+    
+    inline virtual float maxBouncesSpeed(float dt)
+    {
+        return (CCPoint(m_obContentSize).getLength() * 6 * dt);
+    }
+    
+    inline virtual CCPoint maxBouncesLenght()
+    {
+        return CCPoint(this->getBounds().size.width * 0.3f, this->getBounds().size.height * 0.3f);
+    }
+    
     const CCPoint& getScrollWindowNotOutPoint(CCPoint& point);
     
     virtual float getScrollWindowNotOutHorizontal(float x);
@@ -116,17 +141,7 @@ protected:
     virtual void update(float dt);
     
     void deaccelerateScrolling(float dt);
-    
-    inline virtual float maxSpeed(float dt);
-    
-    inline virtual float maxSpeedCache(float dt);
-    
-    inline virtual float decelerationRatio(float dt);
-    
-    inline virtual CCPoint maxBouncesLenght();
-    
-    inline float maxBouncesSpeed(float dt);
-    
+
     virtual void contentOffsetFinish(){}
     
     void closeToPoint(float dt);
@@ -137,7 +152,7 @@ protected:
 
     virtual void setContentSize(const CCSize& var);
     
-protected:
+public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     
@@ -146,6 +161,8 @@ protected:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual CAResponder* nextResponder();
     
 private:
     

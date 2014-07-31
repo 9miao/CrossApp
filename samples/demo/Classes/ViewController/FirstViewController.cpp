@@ -173,19 +173,20 @@ CATableViewCell* FirstViewController::tableCellAtIndex(CATableView* table, const
 	if (cell == NULL)
 	{
 		cell = CATableViewCell::create("CrossApp");
+		CALabel* test = CALabel::createWithCenter(CCRect(cellSize.width*0.5,
+												cellSize.height*0.5,
+												size.width*0.8,
+												cellSize.height*0.5));
+		test->setColor(ccc4(51, 204, 255, 255));
+		test->setTextAlignment(CATextAlignmentCenter);
+		test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		test->setFontSize(40 * CROSSAPP_ADPTATION_RATIO);
+		test->setTag(100);
+		cell->addSubview(test);
 	}
-
-	test = CALabel::createWithCenter(CCRect(cellSize.width*0.5,
-                                            cellSize.height*0.5,
-                                            size.width*0.6,
-                                            cellSize.height*0.5));
-	test->setTextAlignment(CATextAlignmentCenter);
-    test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	test->setFontSize(40*CROSSAPP_ADPTATION_RATIO);
-	test->setColor(ccc4(51, 204, 255, 255));
-    test->setText(testList[row]);
-	cell->addSubview(test);
-    
+	CALabel* test = (CALabel*)cell->getSubviewByTag(100);
+	test->setText(testList[row]);
+	
 	return cell;
 }
 

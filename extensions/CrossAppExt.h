@@ -10,6 +10,9 @@
 #include "Json/CSContentJsonDictionary.h"
 #include "Json/DictionaryHelper.h"
 
+#include "rapidjson/CocoLoader.h"
+#include "rapidjson/CADictionaryHelper.h"
+
 //other
 #include "other/CAAdress/CAAddressManager.h"
 #include "other/CACamera/CAMediaManager.h"

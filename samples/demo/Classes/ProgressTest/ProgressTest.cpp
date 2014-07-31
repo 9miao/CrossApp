@@ -32,8 +32,8 @@ void ProgressTest::viewDidLoad()
 
 	secondProgress = CAProgress::create();
 	secondProgress->setCenter(CCRect(size.width*0.5, size.height*0.7, size.width*0.4, 50));
-	secondProgress->setProgressTrackImage(CAImage::create("btn_rounded_highlighted.png"));
-	secondProgress->setProgressTintImage(CAImage::create("btn_rounded3D_selected.png"));
+	secondProgress->setProgressTrackImage(CAImage::create("source_material/btn_rounded_highlighted.png"));
+	secondProgress->setProgressTintImage(CAImage::create("source_material/btn_rounded3D_selected.png"));
 	this->getView()->addSubview(secondProgress);
 
 	CAScheduler::schedule(schedule_selector(ProgressTest::secondProgressValueChange), this, 0.01, false);

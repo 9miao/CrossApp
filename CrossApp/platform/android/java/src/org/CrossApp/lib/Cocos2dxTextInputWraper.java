@@ -42,6 +42,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		final TextView textField = this.mCocos2dxGLSurfaceView.getCocos2dxEditText();
 		final InputMethodManager imm = (InputMethodManager) textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 		return imm.isFullscreenMode();
+				//isFullscreenMode();
 	}
 
 	public void setOriginText(final String pOriginText) {
@@ -54,48 +55,58 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public void afterTextChanged(final Editable s) {
-		if (this.isFullScreenEdit()) {
+	
+		if (this.isFullScreenEdit()) 
+		{
 			return;
 		}
-
-		//if (BuildConfig.DEBUG) {
-			//Log.d(TAG, "afterTextChanged: " + s);
-		//}
-		int nModified = s.length() - this.mText.length();
-		if (nModified > 0) {
-			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-			this.mCocos2dxGLSurfaceView.insertText(insertText);
-			/*
-			if (BuildConfig.DEBUG) {
-				Log.d(TAG, "insertText(" + insertText + ")");
-			}
-			*/
-		} else {
-			for (; nModified < 0; ++nModified) {
-				this.mCocos2dxGLSurfaceView.deleteBackward();
-				/*
-				if (BuildConfig.DEBUG) {
-					Log.d(TAG, "deleteBackward");
-				}
-				*/
-			}
-		}
-		this.mText = s.toString();
+//		int nModified = s.length() - this.mText.length();
+//		if (nModified > 0) {
+//			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
+//		
+//			//this.mCocos2dxGLSurfaceView.insertText(insertText);
+//			/*
+//			if (BuildConfig.DEBUG) {
+//				Log.d(TAG, "insertText(" + insertText + ")");
+//			}
+//			*/
+//		} else {
+//			for (; nModified < 0; ++nModified) {
+//				//Tthis.mCocos2dxGLSurfaceView.deleteBackward();
+//				/*
+//				if (BuildConfig.DEBUG) {
+//					Log.d(TAG, "deleteBackward");
+//				}
+//				*/
+//			}
+//		}
+//		this.mText = s.toString();
 	}
 
 	@Override
 	public void beforeTextChanged(final CharSequence pCharSequence, final int start, final int count, final int after) {
+		System.out.println("--start:"+start+"     after:"+after+"    count:"+count);
+		System.out.println("--beforeTextChanged:      "+pCharSequence.toString());
 		/*
 		if (BuildConfig.DEBUG) {
 			Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
 		}
 		*/
+		
+		//System.out.println(pCharSequence.toString());
 		this.mText = pCharSequence.toString();
 	}
 
 	@Override
 	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
-
+		System.out.println("start:"+start+"     before:"+before+"    count:"+count);
+		System.out.println("onTextChanged:      "+pCharSequence.toString());
+		
+		//if(before !=0 && before == count)
+		{
+			this.mCocos2dxGLSurfaceView.willInsertText(start,pCharSequence.toString(),before,count);
+		}
+		
 	}
 
 	@Override

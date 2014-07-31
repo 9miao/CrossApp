@@ -73,12 +73,13 @@ void CAViewController::viewOnEnterTransitionDidFinish()
         this->viewDidLoad();
     }
     while (0);
+
 }
 
 void CAViewController::viewOnExitTransitionDidStart()
 {
     CAScheduler::getScheduler()->pauseTarget(this);
-    
+
     do
     {
         CC_BREAK_IF(m_bLifeLock);
@@ -86,6 +87,7 @@ void CAViewController::viewOnExitTransitionDidStart()
         this->viewDidUnload();
     }
     while (0);
+    
 }
 
 const char* CAViewController::getNibName()
@@ -170,6 +172,32 @@ void CAViewController::setTabBarItem(CATabBarItem* item)
             m_pTabBarController->updateItem(this);
         }
     }
+}
+
+bool CAViewController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
+{
+
+    return false;
+}
+
+void CAViewController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+
+}
+
+void CAViewController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
+{
+
+}
+
+void CAViewController::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
+{
+
+}
+
+CAResponder* CAViewController::nextResponder()
+{
+    return m_pView->getSuperview();
 }
 
 void CAViewController::presentModalViewController(CAViewController* controller, bool animated)
@@ -323,6 +351,16 @@ void CANavigationController::viewDidUnload()
     m_pNavigationBar->removeFromSuperview();
 }
 
+void CANavigationController::viewDidAppear()
+{
+    m_pViewControllers.back()->viewDidAppear();
+}
+
+void CANavigationController::viewDidDisappear()
+{
+    m_pViewControllers.back()->viewDidDisappear();
+}
+
 void CANavigationController::reshapeViewRectDidFinish()
 {
     this->update(0);
@@ -347,6 +385,7 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
     viewController->m_pNavigationController = this;
     m_pViewControllers.insert(m_pViewControllers.end()-1, viewController);
     viewController->addViewFromSuperview(m_pContainer);
+    viewController->viewDidDisappear();
     viewController->getView()->setFrameOrigin(CCPoint(x, 0));
     
     if (animated)
@@ -392,6 +431,7 @@ void CANavigationController::replaceViewControllerFinish()
     CAViewController* lastViewController = m_pViewControllers.back();
     m_pViewControllers.pop_back();
     m_pNavigationBar->popItem();
+    lastViewController->viewDidDisappear();
     lastViewController->removeViewFromSuperview();
     lastViewController->autorelease();
     
@@ -423,6 +463,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
     viewController->m_pNavigationController = this;
     m_pViewControllers.push_back(viewController);
     viewController->addViewFromSuperview(m_pContainer);
+    viewController->viewDidAppear();
     viewController->getView()->setFrameOrigin(CCPoint(x, 0));
     
     if (animated)
@@ -473,6 +514,7 @@ void CANavigationController::pushViewControllerFinish()
     CAViewController* lastViewController = m_pViewControllers.at(m_pViewControllers.size() - 2);
     lastViewController->getView()->setFrameOrigin(CCPointZero);
     lastViewController->getView()->setVisible(false);
+    lastViewController->viewDidDisappear();
 }
 
 CAViewController* CANavigationController::popViewControllerAnimated(bool animated)
@@ -497,6 +539,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     }
     showViewController->getView()->setFrameOrigin(CCPoint(-x/2.0f, 0));
     showViewController->getView()->setVisible(true);
+    showViewController->viewDidAppear();
     
     CAViewController* backViewController = m_pViewControllers.back();
     
@@ -539,6 +582,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
 void CANavigationController::popViewControllerFinish()
 {
     CAViewController* lastViewController = m_pViewControllers.back();
+    lastViewController->viewDidDisappear();
     lastViewController->m_pNavigationController = NULL;
     lastViewController->removeViewFromSuperview();
     lastViewController->autorelease();
@@ -811,6 +855,16 @@ void CATabBarController::viewDidUnload()
     m_pTabBar->removeFromSuperview();
 }
 
+void CATabBarController::viewDidAppear()
+{
+    m_pViewControllers.at(m_nSelectedIndex)->viewDidAppear();
+}
+
+void CATabBarController::viewDidDisappear()
+{
+    m_pViewControllers.at(m_nSelectedIndex)->viewDidDisappear();
+}
+
 void CATabBarController::reshapeViewRectDidFinish()
 {
     this->update(0);
@@ -885,10 +939,11 @@ void CATabBarController::renderingSelectedViewController()
 {
     m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
     
-    std::vector<CAViewController*>::iterator itr;
-    for (itr=m_pViewControllers.begin(); itr!=m_pViewControllers.end(); itr++)
+    for (int i=0; i<m_pViewControllers.size(); i++)
     {
-        (*itr)->getView()->setVisible(false);
+        CC_CONTINUE_IF(!m_pViewControllers.at(i)->getView()->isVisible());
+        m_pViewControllers.at(i)->getView()->setVisible(false);
+        m_pViewControllers.at(i)->viewDidDisappear();
     }
     
     if (m_pViewControllers.at(m_nSelectedIndex)->getView()->getSuperview() == NULL)
@@ -898,6 +953,7 @@ void CATabBarController::renderingSelectedViewController()
     }
     
     m_pViewControllers.at(m_nSelectedIndex)->getView()->setVisible(true);
+    m_pViewControllers.at(m_nSelectedIndex)->viewDidAppear();
 }
 
 void CATabBarController::setTabBarHidden(bool hidden, bool animated)

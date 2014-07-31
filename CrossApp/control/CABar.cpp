@@ -445,7 +445,7 @@ void CATabBar::showItems()
 {
     unsigned int count = MIN(m_nMaxShowCount, m_pItems.size());
     m_pSegmentedControl = CASegmentedControl::createWithFrame(this->getBounds(), count);
-    this->addSubview(m_pSegmentedControl);
+    
     m_pSegmentedControl->addTarget(this, CAControl_selector(CATabBar::setTouchSelected));
     for (int i=0; i<count; i++)
     {
@@ -466,6 +466,7 @@ void CATabBar::showItems()
         m_pSegmentedControl->setBackgroundImageAtIndex(m_pSelectedBackGroundImage, i, CAControlStateHighlighted);
         m_pSegmentedControl->setBackgroundImageAtIndex(m_pSelectedBackGroundImage, i, CAControlStateSelected);
     }
+    this->addSubview(m_pSegmentedControl);
     m_cItemSize = m_pSegmentedControl->getItemSize();
 
 }

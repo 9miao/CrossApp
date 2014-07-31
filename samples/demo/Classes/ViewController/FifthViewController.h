@@ -17,11 +17,26 @@ protected:
 	void viewDidUnload();
 
 public:
-	void defaultSliderValueChange(CAControl* btn, CCPoint point);
+	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+
+public:
 	void hiddenViewController(CAControl* btn,CCPoint point);
+	void isExecuteEndFunc(float intervalTime);
 
 private:
 	CCSize size;
+	CCSize viewOriginalSize;
+	CCPoint originalPoint;
+	CAImageView* gestureView;
+	std::vector<CCPoint> point_Vector;
+	clock_t firstClick, secondClick, invalidClick;
+
+	CCArray* pointSet;
+	float isTouchEnd;
+	float touchTime;
 
 };
 

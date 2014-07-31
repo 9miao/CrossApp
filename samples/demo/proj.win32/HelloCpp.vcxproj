@@ -134,7 +134,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\ButtonTest\ButtonTest.cpp" />
     <ClCompile Include="..\Classes\CollectionViewTest\CollectionViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\AddressBookTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ExtensionsTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\HttpRequestTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\LoadingViewController.cpp" />
     <ClCompile Include="..\Classes\ImageViewTest\ImageViewTest.cpp" />
     <ClCompile Include="..\Classes\LabelTest\LabelTest.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
@@ -159,8 +162,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\ButtonTest\ButtonTest.h" />
     <ClInclude Include="..\Classes\CollectionViewTest\CollectionViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\AddressBookTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ExtensionsTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\HttpRequestTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\Info.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\LoadingViewController.h" />
     <ClInclude Include="..\Classes\ImageViewTest\ImageViewTest.h" />
     <ClInclude Include="..\Classes\LabelTest\LabelTest.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />

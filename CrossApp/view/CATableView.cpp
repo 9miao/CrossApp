@@ -611,9 +611,8 @@ void CATableView::loadTableCell()
         {
             CAIndexPath2E indexPath = CAIndexPath2E(i, j);
             CC_CONTINUE_IF(m_pUsedTableCells.count(indexPath) && m_pUsedTableCells[indexPath]);
-            CCRect cellRect = m_rTableCellRectss.at(i).at(j);
-            cellRect.origin = m_pContainer->convertToWorldSpace(cellRect.origin);
-            cellRect.origin = this->convertToNodeSpace(cellRect.origin);
+            CCRect cellRect = m_rTableCellRectss[i][j];
+            cellRect.origin = ccpAdd(cellRect.origin, m_pContainer->getFrameOrigin());
             CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
             CATableViewCell* cell = m_pTableViewDataSource->tableCellAtIndex(this, m_rTableCellRectss[i][j].size, i, j);
             
@@ -628,13 +627,14 @@ void CATableView::loadTableCell()
             }
             
             CAView* view = this->dequeueReusableLine();
+            CCRect lineRect = m_rLineRectss[i][j];
             if (view == NULL)
             {
-                view = CAView::createWithFrame(m_rLineRectss[i][j], m_separatorColor);
+                view = CAView::createWithFrame(lineRect, m_separatorColor);
             }
             m_pUsedLines[indexPath] = view;
             this->insertSubview(view, 1);
-            view->setFrame(m_rLineRectss[i][j]);
+            view->setFrame(lineRect);
         }
     }
 }
@@ -648,6 +648,7 @@ void CATableView::recoveryTableCell()
     std::map<CAIndexPath2E, CATableViewCell*>::iterator itr;
     for (itr=m_pUsedTableCells.begin(); itr!=m_pUsedTableCells.end(); itr++)
     {
+        
         CATableViewCell* cell = itr->second;
         CC_CONTINUE_IF(cell == NULL);
         CCRect cellRect = cell->getFrame();
@@ -660,9 +661,10 @@ void CATableView::recoveryTableCell()
         cell->resetTableViewCell();
         itr->second = NULL;
         
-        CC_CONTINUE_IF(m_pUsedLines[itr->first] == NULL);
-        m_pFreedLines.pushBack(m_pUsedLines[itr->first]);
-        m_pUsedLines[itr->first]->removeFromSuperview();
+        CAView* line = m_pUsedLines[itr->first];
+        CC_CONTINUE_IF(line == NULL);
+        m_pFreedLines.pushBack(line);
+        line->removeFromSuperview();
         m_pUsedLines[itr->first] = NULL;
     }
 }
@@ -713,7 +715,7 @@ CATableViewCell::CATableViewCell()
 ,m_nSection(0xffffffff)
 ,m_nRow(0xffffffff)
 {
-    m_bStopSuperviewListenEvents = false;
+
 }
 
 CATableViewCell::~CATableViewCell()
@@ -821,6 +823,11 @@ void CATableViewCell::resetTableViewCell()
     m_nRow     = 0xffffffff;
     this->setFrame(CCRect(0xffffffff, 0xffffffff, -1, -1));
     this->normalTableViewCell();
+}
+
+CAResponder* CATableViewCell::nextResponder()
+{
+    return this->getSuperview();
 }
 
 NS_CC_END

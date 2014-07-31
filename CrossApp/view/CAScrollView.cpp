@@ -569,6 +569,11 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     }
 }
 
+CAResponder* CAScrollView::nextResponder()
+{
+    return NULL;
+}
+
 void CAScrollView::deaccelerateScrolling(float dt)
 {
     dt = MIN(dt, 1/30.0f);
@@ -676,31 +681,6 @@ void CAScrollView::deaccelerateScrolling(float dt)
         this->showIndicator();
         m_pContainer->setCenterOrigin(point);
     }
-}
-
-float CAScrollView::maxSpeed(float dt)
-{
-    return (CCPoint(m_obContentSize).getLength() * 5 * dt);
-}
-
-float CAScrollView::maxSpeedCache(float dt)
-{
-    return (maxSpeed(dt) * 1.5f);
-}
-
-float CAScrollView::decelerationRatio(float dt)
-{
-    return 6 * dt;
-}
-
-float CAScrollView::maxBouncesSpeed(float dt)
-{
-    return (CCPoint(m_obContentSize).getLength() * 6 * dt);
-}
-
-CCPoint CAScrollView::maxBouncesLenght()
-{
-    return ccpMult(this->getBounds().size, 0.3f);
 }
 
 void CAScrollView::showIndicator()

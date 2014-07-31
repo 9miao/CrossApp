@@ -530,6 +530,11 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
     
 }
 
+int CCHttpClient::getRequestCount()
+{
+    return s_requestQueue[_threadID] ? s_requestQueue[_threadID]->count() : 0;
+}
+
 NS_CC_EXT_END
 
 #endif // CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)

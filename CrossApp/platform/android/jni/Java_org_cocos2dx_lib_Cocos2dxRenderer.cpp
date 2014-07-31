@@ -31,6 +31,14 @@ extern "C" {
         CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
         env->ReleaseStringUTFChars(text, pszText);
     }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeAndroidWillInsertText(JNIEnv* env, jobject thiz, jint text, jstring str, jint text1, jint text2) {
+
+        const char* pszText = env->GetStringUTFChars(str, NULL);
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchAndroidWillInsertText(text,pszText,text1,text2);
+        env->ReleaseStringUTFChars(str, pszText);
+       // env->ReleaseStringUTFChars(text, pszText);
+    }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
         CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();

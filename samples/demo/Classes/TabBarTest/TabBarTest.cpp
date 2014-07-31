@@ -42,11 +42,11 @@ void TabBarTest::goPrevious(CAControl* btn, CCPoint point)
 
 void TabBarTest::firstTabBar()
 {
-	CATabBarItem* item1 = CATabBarItem::create("Edit", CAImage::create("first_1.png"), CAImage::create("first_2.png"));
-	CATabBarItem* item2 = CATabBarItem::create("Friends", CAImage::create("second_1.png"), CAImage::create("second_2.png"));
-	CATabBarItem* item3 = CATabBarItem::create("Message", CAImage::create("third_1.png"), CAImage::create("third_2.png"));
-	CATabBarItem* item4 = CATabBarItem::create("Search", CAImage::create("fourth_1.png"), CAImage::create("fourth_2.png"));
-	CATabBarItem* item5 = CATabBarItem::create("Setting", CAImage::create("fifth_1.png"), CAImage::create("fifth_2.png"));
+	CATabBarItem* item1 = CATabBarItem::create("Edit", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png"));
+	CATabBarItem* item2 = CATabBarItem::create("Friends", CAImage::create("tabbar_function/second_1.png"), CAImage::create("tabbar_function/second_2.png"));
+	CATabBarItem* item3 = CATabBarItem::create("Message", CAImage::create("tabbar_function/third_1.png"), CAImage::create("tabbar_function/third_2.png"));
+	CATabBarItem* item4 = CATabBarItem::create("Search", CAImage::create("tabbar_function/fourth_1.png"), CAImage::create("tabbar_function/fourth_2.png"));
+	CATabBarItem* item5 = CATabBarItem::create("Setting", CAImage::create("tabbar_function/fifth_1.png"), CAImage::create("tabbar_function/fifth_2.png"));
 
 	std::vector<CATabBarItem*> item;
 	item.push_back(item1);
@@ -65,11 +65,11 @@ void TabBarTest::firstTabBar()
 
 void TabBarTest::secondTabBar()
 {
-	CATabBarItem* item1 = CATabBarItem::create("Edit", CAImage::create("first_1.png"), CAImage::create("first_2.png"));
-	CATabBarItem* item2 = CATabBarItem::create("Friends", CAImage::create("second_1.png"), CAImage::create("second_2.png"));
-	CATabBarItem* item3 = CATabBarItem::create("Message", CAImage::create("third_1.png"), CAImage::create("third_2.png"));
-	CATabBarItem* item4 = CATabBarItem::create("Search", CAImage::create("fourth_1.png"), CAImage::create("fourth_2.png"));
-	CATabBarItem* item5 = CATabBarItem::create("Setting", CAImage::create("fifth_1.png"), CAImage::create("fifth_2.png"));
+	CATabBarItem* item1 = CATabBarItem::create("Edit", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png"));
+	CATabBarItem* item2 = CATabBarItem::create("Friends", CAImage::create("tabbar_function/second_1.png"), CAImage::create("tabbar_function/second_2.png"));
+	CATabBarItem* item3 = CATabBarItem::create("Message", CAImage::create("tabbar_function/third_1.png"), CAImage::create("tabbar_function/third_2.png"));
+	CATabBarItem* item4 = CATabBarItem::create("Search", CAImage::create("tabbar_function/fourth_1.png"), CAImage::create("tabbar_function/fourth_2.png"));
+	CATabBarItem* item5 = CATabBarItem::create("Setting", CAImage::create("tabbar_function/fifth_1.png"), CAImage::create("tabbar_function/fifth_2.png"));
 
 	std::vector<CATabBarItem*> item;
 	item.push_back(item1);
@@ -83,19 +83,19 @@ void TabBarTest::secondTabBar()
 	tabBar->setSelectedAtIndex(3);
 	tabBar->setSelectedIndicatorImage(CAImage::create("source_material/indicator.png"));
 	tabBar->showSelectedIndicator();
-	tabBar->setBackGroundImage(CAImage::create("ex1.png"));
-	tabBar->setSelectedBackGroundImage(CAImage::create("btn_rounded3D_selected.png"));
+	tabBar->setBackGroundImage(CAImage::create("source_material/ex1.png"));
+	tabBar->setSelectedBackGroundImage(CAImage::create("source_material/btn_rounded3D_selected.png"));
 	tabBar->setDelegate(this);
 	this->getView()->addSubview(tabBar);
 }
 
 void TabBarTest::thirdTabBar()
 {
-	CATabBarItem* item1 = CATabBarItem::create("Edit", CAImage::create("first_1.png"), CAImage::create("first_2.png"));
-	CATabBarItem* item2 = CATabBarItem::create("Friends", CAImage::create("second_1.png"), CAImage::create("second_2.png"));
-	CATabBarItem* item3 = CATabBarItem::create("Message", CAImage::create("third_1.png"), CAImage::create("third_2.png"));
-	CATabBarItem* item4 = CATabBarItem::create("Search", CAImage::create("fourth_1.png"), CAImage::create("fourth_2.png"));
-	CATabBarItem* item5 = CATabBarItem::create("Setting", CAImage::create("fifth_1.png"), CAImage::create("fifth_2.png"));
+	CATabBarItem* item1 = CATabBarItem::create("Edit", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png"));
+	CATabBarItem* item2 = CATabBarItem::create("Friends", CAImage::create("tabbar_function/second_1.png"), CAImage::create("tabbar_function/second_2.png"));
+	CATabBarItem* item3 = CATabBarItem::create("Message", CAImage::create("tabbar_function/third_1.png"), CAImage::create("tabbar_function/third_2.png"));
+	CATabBarItem* item4 = CATabBarItem::create("Search", CAImage::create("tabbar_function/fourth_1.png"), CAImage::create("tabbar_function/fourth_2.png"));
+	CATabBarItem* item5 = CATabBarItem::create("Setting", CAImage::create("tabbar_function/fifth_1.png"), CAImage::create("tabbar_function/fifth_2.png"));
 
 	std::vector<CATabBarItem*> item;
 	item.push_back(item1);

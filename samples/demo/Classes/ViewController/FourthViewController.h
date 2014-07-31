@@ -25,6 +25,7 @@ public:
 private:
 	CCSize size;
 	CCPoint originalPoint;
+	CAImageView* imageView;
 
 };
 

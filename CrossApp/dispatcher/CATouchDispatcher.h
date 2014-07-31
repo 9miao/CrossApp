@@ -73,19 +73,15 @@ public:
     
 protected:
     
-    void passingTouchesViewCache(float dt = 0);
+    void passingTouchesViews(float dt = 0);
     
     std::vector<CAView*> getEventListener(CATouch* touch, CAView* view);
-    
+
 protected:
     
-    CAVector<CAView*> m_vWillTouchesViewCache;
+    CAVector<CAResponder*> m_vTouchMovedsViewCache;
     
-    CAVector<CAView*> m_vTouchesViewCache;
-    
-//    std::vector<CAView*> m_vWillTouchesViewCache;
-//    
-//    std::vector<CAView*> m_vTouchesViewCache;
+    CAVector<CAResponder*> m_vTouchesViews;
     
     CCPoint m_tFirstPoint;
 };

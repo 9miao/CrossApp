@@ -31,7 +31,9 @@ public:
 	void buttonCallback(CAControl* btn,CCPoint point);
 
 private:
-	CCSize size;
+	CAScale9ImageView* typeView;
+	CAScale9ImageView* bkgView;
+	CAScale9ImageView* eventView;
 	CALabel* descTest;
 
 };

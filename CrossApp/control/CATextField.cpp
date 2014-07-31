@@ -14,6 +14,11 @@
 #include <algorithm>
 #include "view/CAScale9ImageView.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#include "platform/CAFreeTypeFont.h"
+#include "support/ConvertUTF.h"
+#endif
+
 NS_CC_BEGIN
 
 CATextField::CATextField()
@@ -34,7 +39,7 @@ CATextField::CATextField()
 ,labelWidth(0)
 ,labelOrginX(0)
 ,m_cCursorColor(CAColor_black)
-,m_bUpdateImage(false)
+,m_bIsAny(false)
 ,m_pBackgroundView(NULL)
 {
    
@@ -49,11 +54,7 @@ void CATextField::onEnterTransitionDidFinish()
 {
     CAControl::onEnterTransitionDidFinish();
     CC_RETURN_IF(m_sPlaceHolder.empty());
-	if (m_bUpdateImage)
-	{
-		m_bUpdateImage = false;
-		this->updateImage();
-	}
+    this->updateImage();
     
 }
 
@@ -169,7 +170,7 @@ void CATextField::setFontSize(float var)
     
     m_pMark->setFrame(CCRect(labelOrginX, 0, var / 10.0f, var));
     
-	m_bUpdateImage = true;
+    this->updateImage();
 }
 
 float CATextField::getFontSize()
@@ -195,7 +196,7 @@ void CATextField::setPlaceHolder(std::string var)
 {
     m_sPlaceHolder = var;
     m_sText = var;
-	m_bUpdateImage = true;
+    this->updateImage();
 }
 
 std::string CATextField::getPlaceHolder()
@@ -206,7 +207,7 @@ std::string CATextField::getPlaceHolder()
 void CATextField::setSpaceHolderColor(CAColor4B var)
 {
     m_cSpaceHolderColor = var;
-	m_bUpdateImage = true;
+    this->updateImage();
 }
 
 CAColor4B CATextField::getSpaceHolderColor()
@@ -217,23 +218,12 @@ CAColor4B CATextField::getSpaceHolderColor()
 void CATextField::setTextColor(CAColor4B var)
 {
     m_cTextColor = var;
-	m_bUpdateImage = true;
+    this->updateImage();
 }
 
 CAColor4B CATextField::getTextColor()
 {
     return m_cTextColor;
-}
-
-void CATextField::setTextAlignment(CATextAlignment var)
-{
-    m_aTextAlignment = var;
-	m_bUpdateImage = true;
-}
-
-CATextAlignment CATextField::getTextAlignment()
-{
-    return m_aTextAlignment;
 }
 
 bool CATextField::attachWithIME()
@@ -305,8 +295,6 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         {
             
             m_pMark->setVisible(true);
-            attachWithIME();
-
             if (m_nInputType ==KEY_BOARD_INPUT_PASSWORD)
             {
                 m_pMark->setCenterOrigin(CCPoint(labelOrginX+m_rLabelRect.size.width, this->getBounds().size.height/2));
@@ -317,15 +305,16 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             for (std::vector<TextAttribute>::iterator itr = m_vByteLengthArr.begin(); itr!=m_vByteLengthArr.end(); itr++)
             {
                 TextAttribute t =*(itr);
+
                 m_fString_left_length+=t.charlength;
                 byteCount += t.charsize;
-                if (m_fString_left_length>point.x-m_fString_left_offX)
+                if ( m_fString_left_length>point.x-m_fString_left_offX-labelOrginX)
                 {
                     m_sLeft_string = m_sText.substr(0,byteCount);
                     m_sRight_string = m_sText.substr(byteCount,m_sText.length());
                     m_fString_right_length = m_rLabelRect.size.width-m_fString_left_length;
                     break;
-                }else if(itr == m_vByteLengthArr.end()-1&&!spaceHolderIsOn)
+                }else if(itr == m_vByteLengthArr.end()-1&&!spaceHolderIsOn&&point.x>m_fString_left_length)
                 {
                     m_sLeft_string = m_sText.substr(0,byteCount);
                     m_sRight_string = m_sText.substr(byteCount,m_sText.length());
@@ -334,8 +323,6 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 
              }
              m_pMark->setCenterOrigin(CCPoint(getCursorX()+labelOrginX, this->getBounds().size.height/2));
-
-            
         }
         return true;
     }
@@ -369,37 +356,51 @@ bool CATextField::canDetachWithIME()
 }
 void CATextField::analyzeString(std::string str,int len)
 {
-    
+    m_bIsAny = true;
     for (int i=0; i<len; i++)
     {
         if (str[i]>0&& str[i]<127)
         {
-//            if (str[i]!=32)
+            std::string beforeString = m_sLeft_string;
+            m_sLeft_string.append(str.substr(i,1).c_str());
+            TextAttribute t;
+            t.charlength =getStringLength(m_sLeft_string)-getStringLength(beforeString);
+            
+            t.charsize =1;
+            if (getStringCharCount(m_sLeft_string)>=m_vByteLengthArr.size())
             {
-               insertText(str.substr(i,1).c_str(), 1);
+                m_vByteLengthArr.insert(m_vByteLengthArr.begin()+m_vByteLengthArr.size(), t);
+            }else
+            {
+                m_vByteLengthArr.insert(m_vByteLengthArr.begin()+getStringCharCount(m_sLeft_string), t);
             }
-//            else
-//            {
-//                continue;
-//            }
         }
         else
         {
+            
             std::string ss= str.substr(i,3);
-            insertText(ss.c_str(), 3);
+            std::string beforeString = m_sLeft_string;
+            m_sLeft_string.append(ss.c_str());
+            TextAttribute t;
+            t.charlength =getStringLength(m_sLeft_string)-getStringLength(beforeString);
+            t.charsize =3;
+            if (getStringCharCount(m_sLeft_string)>=m_vByteLengthArr.size())
+            {
+                m_vByteLengthArr.insert(m_vByteLengthArr.begin()+m_vByteLengthArr.size(), t);
+            }else
+            {
+                m_vByteLengthArr.insert(m_vByteLengthArr.begin()+getStringCharCount(m_sLeft_string), t);
+            }
             i+=2;
         }
         
     }
     
+    
 }
+
 void CATextField::insertText(const char * text, int len)
 {
-    if (len>3)
-    {
-        analyzeString(text,len);
-        return;
-    }
     if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
     {
         if (len>=2)
@@ -411,9 +412,6 @@ void CATextField::insertText(const char * text, int len)
         }
         m_sText = m_sPassWord;                                                                                                                                                                                                                                                                             
         m_sText.append(text);
-        
-        
-        
         std::string password="";
         for (int i=0; i<m_sText.length(); i++)
         {
@@ -422,7 +420,6 @@ void CATextField::insertText(const char * text, int len)
         m_sPassWord = m_sText;
         m_sText = password;
         this->updateImage();
-
         CCRect r = m_rLabelRect;
         r.origin.x = 0;
         r.origin.x = MAX(labelWidth-m_rLabelRect.size.width, 0);
@@ -431,15 +428,12 @@ void CATextField::insertText(const char * text, int len)
         this->setImageRect(r);
         float offsetX = MIN(labelWidth, m_rLabelRect.size.width);
         m_pMark->setCenterOrigin(CCPoint(offsetX+labelOrginX,this->getBounds().size.height/2));
-        
         return;
     }
-    
     if (!strcmp(text, "\n"))
     {
         return;
     }
-
     std::string inputstr;
     if (spaceHolderIsOn)
     {
@@ -452,7 +446,6 @@ void CATextField::insertText(const char * text, int len)
         isEditing =false;
     }
     willBg->setVisible(false);
-    
     if (len > 0)
     {
         if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this,text, len))
@@ -460,31 +453,25 @@ void CATextField::insertText(const char * text, int len)
             // delegate doesn't want to insert text
             return;
         }
-        m_sLeft_string.append(text);
-        
+        if (!m_bIsAny)
+        {
+            analyzeString(text,len);
+        }
+        //m_sLeft_string.append(text);
         float left_width = getStringLength(m_sLeft_string);
-        
-        TextAttribute t;
-        t.charlength = left_width - m_fString_left_length;
-        t.charsize = strlen(text);
-        m_vByteLengthArr.insert(m_vByteLengthArr.begin()+getStringCharCount(m_sLeft_string), t);
-        
+        m_bIsAny = false;
         char str[512]="";
         sprintf(str, "%s%s",m_sLeft_string.c_str(),m_sRight_string.c_str());
         m_sText = str;
-        
         this->updateImage();
-        
-		m_fString_left_length = m_rLabelRect.size.width;
-			//left_width;
-        m_fString_right_length = m_rLabelRect.size.width - m_fString_left_length;
-        
+        m_fString_left_length = left_width;                //左侧长度
+        m_fString_right_length = m_rLabelRect.size.width   //右侧长度
+                                - m_fString_left_length;
         if (m_fString_left_length + m_fString_left_offX > labelWidth)
         {
             m_fString_left_offX = labelWidth - m_fString_left_length;
         }
         
-
         CCRect rect = CCRectZero;
         rect.size = this->getBounds().size;
         CCRect r = m_rLabelRect;
@@ -492,27 +479,47 @@ void CATextField::insertText(const char * text, int len)
         r.size.width = getStringViewLength();
         this->setImageRect(r);
     }
-    m_pMark->setCenterOrigin(CCPoint(getCursorX()+labelOrginX,this->getBounds().size.height/2));
+    float mPmarkWidth = MIN(labelWidth+labelOrginX, getCursorX()+labelOrginX);
+    m_pMark->setCenterOrigin(CCPoint(mPmarkWidth,this->getBounds().size.height/2));
     
 }
-
+void CATextField::AndroidWillInsertText(int start,const char* str,int before,int count)
+{
+    if (spaceHolderIsOn)
+    {
+        m_sText = "";
+        spaceHolderIsOn = false;
+    }
+    if (strlen(str)>=m_sText.length())
+    {
+        m_vByteLengthArr.clear();
+        TextAttribute tt;
+        tt.charsize =0;
+        tt.charlength =0;
+        m_vByteLengthArr.push_back(tt);
+        m_sText = "";
+        m_fString_left_length = 0;
+        m_fString_right_length = 0;
+        m_sLeft_string = "";
+        m_sRight_string = "";
+        insertText(str, strlen(str));
+    }else
+    {
+        deleteBackward();
+    }
+}
 void CATextField::willInsertText(const char *text, int len)
 {
-    
-    
-    
     if (m_nInputType ==KEY_BOARD_INPUT_PASSWORD)
         return;
     
     if (len>0)
     {
-       
-        
         if (!strcmp(temporaryString.c_str(), text))
         {
             return;
         }
-         temporaryString =text;
+        temporaryString =text;
         isEditing = true;
         spaceHolderIsOn = false;
         char sText[512]="";
@@ -540,10 +547,9 @@ void CATextField::willInsertText(const char *text, int len)
         r.size.width = m_rLabelRect.size.width;
         //-m_fString_left_length-m_fString_right_length;
         r.size.width = MIN(r.size.width, labelWidth);
-
         this->setImageRect(r);
-
-        m_pMark->setCenterOrigin(CCPoint(left_width+willOffsetX+labelOrginX,this->getBounds().size.height/2));
+        float mPmarkWidth = MIN(labelWidth+labelOrginX, left_width+willOffsetX+labelOrginX);
+        m_pMark->setCenterOrigin(CCPoint(mPmarkWidth,this->getBounds().size.height/2));
 
         return;
     }
@@ -572,6 +578,7 @@ void CATextField::deleteBackward()
     if (m_nInputType==KEY_BOARD_INPUT_PASSWORD)
     {
         m_sText="";
+        m_sPassWord = "";
         spaceHolderIsOn=true;
         this->updateImage();
         m_pMark->setCenterOrigin(CCPoint(labelOrginX+getCursorX(), this->getBounds().size.height/2));
@@ -583,7 +590,6 @@ void CATextField::deleteBackward()
         
         return;
     }
-    
     int nStrLen =m_sLeft_string.length();
 
     int nDeleteLen = 1;    // default, erase 1 byte
@@ -606,6 +612,7 @@ void CATextField::deleteBackward()
     if (m_sText.length() <= nDeleteLen)
     {
         m_sLeft_string="";
+        m_fString_left_length=0;
         spaceHolderIsOn=true;
         m_vByteLengthArr.clear();
         TextAttribute tt;
@@ -619,18 +626,22 @@ void CATextField::deleteBackward()
 
     
     int length = MAX(0, nStrLen - nDeleteLen);
-    
     std::string sText(m_sLeft_string.c_str(), length);
     char str[512]="";
     sprintf(str, "%s%s",sText.c_str(),m_sRight_string.c_str());
     m_sText = str;
     this->updateImage();
+    if (getStringCharCount(m_sLeft_string)>=m_vByteLengthArr.size()) {
+        m_vByteLengthArr.erase(m_vByteLengthArr.begin()+m_vByteLengthArr.size());
+    }
+    else{
+        m_vByteLengthArr.erase(m_vByteLengthArr.begin()+getStringCharCount(m_sLeft_string));
+    }
     
-    m_vByteLengthArr.erase(m_vByteLengthArr.begin()+getStringCharCount(m_sLeft_string));
     m_sLeft_string = sText.c_str();
+    float left_width = getStringLength(m_sLeft_string);
 
-	m_fString_left_length = m_rLabelRect.size.width;
-		//left_width;
+    m_fString_left_length = left_width;
     m_fString_right_length = m_rLabelRect.size.width - m_fString_left_length;
     
     if (m_fString_right_length + getCursorX() < labelWidth)
@@ -650,6 +661,9 @@ void CATextField::deleteBackward()
 
 const char* CATextField::getContentText()
 {
+    if (spaceHolderIsOn) {
+        return "";
+    }
     return m_sText.c_str();
 }
 
@@ -664,31 +678,23 @@ void CATextField::getKeyBoardHeight(int height)
 
 void CATextField::setBackGroundImage(CAImage *image)
 {
-//    if (m_pBackgroundView == NULL)
-//    {
-//        m_pBackgroundView = CAScale9ImageView::create();
-//        m_pBackgroundView->setFrame(this->getBounds());
-//        this->insertSubview(m_pBackgroundView, -1);
-//    }
-//    m_pBackgroundView->setImage(image);
+    if (m_pBackgroundView == NULL)
+    {
+        m_pBackgroundView = CAScale9ImageView::create();
+        m_pBackgroundView->setFrame(this->getBounds());
+        this->insertSubview(m_pBackgroundView, -1);
+    }
+    m_pBackgroundView->setImage(image);
 }
 
 CAImage *CATextField::getBackGroundImage()
 {
-    if (m_pBackgroundView == NULL)
-    {
-        return NULL;
-    }
-    return m_pBackgroundView->getImage();
+    return m_pBackgroundView ? m_pBackgroundView->getImage() : NULL;
 }
 
 void CATextField::setContentSize(const CCSize& var)
 {
     CAControl::setContentSize(var);
-    if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setFrame(this->getBounds());
-    }
 }
 
 void CATextField::updateImage()
@@ -709,27 +715,29 @@ void CATextField::updateImage()
         this->setColor(m_cTextColor);
     }
     
-	CAImage* image = CAImage::createWithString(text.c_str(),
+    CAImage* image = CAImage::createWithString(text.c_str(),
                                                "",
                                                m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
                                                size,
-                                               m_aTextAlignment,
+                                               CATextAlignmentLeft,
                                                CAVerticalTextAlignmentCenter);
-	CCRect rect = CCRectZero;
-	float imageWidth = 0;
-	if (image != NULL)
-	{
-		rect.size.height = image->getContentSize().height;
-		m_rLabelRect.size = image->getContentSize();
-		imageWidth = image->getContentSize().width;
-	}
-
+    
+    CCRect rect = CCRectZero;
+    float imageWidth = 0;
+    if (image != NULL)
+    {
+        rect.size.height = image->getContentSize().height;
+        m_rLabelRect.size = image->getContentSize();
+        imageWidth = image->getContentSize().width;
+    }
+    
+    
     if (spaceHolderIsOn)
     {
         m_rLabelRect = CCRectZero;
     }
     
-	float width = MIN(labelWidth, imageWidth);
+    float width = MIN(labelWidth,imageWidth);
     rect.size.width = width;
     this->setImage(image);
     
@@ -843,6 +851,9 @@ std::vector<std::string> CATextField::getStringVector(const std::string &var)
 }
 float CATextField::getStringLength(const std::string &var)
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+    return CAFreeTypeFont::getStringWidth("", m_fFontSize, var);
+#else
     float length = 0;
     CAImage *image = CAImage::createWithString(var.c_str(),
                                                "",
@@ -850,20 +861,12 @@ float CATextField::getStringLength(const std::string &var)
                                                CCSizeZero,
                                                CATextAlignmentLeft,
                                                CAVerticalTextAlignmentCenter);
-    if(image != NULL)
+    if(image!=NULL)
     {
         length = image->getContentSize().width;
+        return length;
     }
-    
     return length;
-}
-void CATextField::visit()
-{
-	CAView::visit();
-	if (m_bUpdateImage)
-	{
-		m_bUpdateImage = false;
-		this->updateImage();
-	}
+#endif
 }
 NS_CC_END

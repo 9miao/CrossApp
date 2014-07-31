@@ -28,7 +28,7 @@ class CATabBarController;
 class CANavigationController;
 
 class CC_DLL CAViewController
-: public CAObject
+: public CAResponder
 , public CAViewDelegate
 , public CAKeypadDelegate
 {
@@ -71,6 +71,16 @@ public:
     
 public:
     
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual CAResponder* nextResponder();
+    
     friend class CATabBarController;
     
     friend class CANavigationController;
@@ -82,6 +92,10 @@ protected:
     virtual void viewDidLoad() = 0;
     
     virtual void viewDidUnload() = 0;
+    
+    virtual void viewDidAppear(){};
+    
+    virtual void viewDidDisappear(){};
     
     virtual void reshapeViewRectDidFinish(){};
     
@@ -154,6 +168,10 @@ protected:
     
     virtual void viewDidUnload();
     
+    virtual void viewDidAppear();
+    
+    virtual void viewDidDisappear();
+    
     virtual void reshapeViewRectDidFinish();
     
 protected:
@@ -219,6 +237,10 @@ protected:
     virtual void viewDidLoad();
     
     virtual void viewDidUnload();
+    
+    virtual void viewDidAppear();
+    
+    virtual void viewDidDisappear();
     
     virtual void reshapeViewRectDidFinish();
     

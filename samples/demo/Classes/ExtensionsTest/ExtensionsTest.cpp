@@ -1,5 +1,6 @@
 #include "ExtensionsTest.h"
 #include "Info.h"
+#include "AddressBookTest.h"
 
 #define CAColor_blueStyle ccc4(51,204,255,255)
 
@@ -25,7 +26,8 @@ void ExtensionsTest::viewDidLoad()
 	this->getView()->addSubview(table);
 
 	CCSize nSize = this->getNavigationController()->getNavigationBar()->getBounds().size;
-	next = CAButton::createWithCenter(CCRect(nSize.width*0.9, nSize.height*0.5, nSize.width*0.9, nSize.height*0.8), CAButtonTypeCustom);
+	next = CAButton::createWithCenter(CCRect(nSize.width*0.905, nSize.height*0.5, nSize.height*0.9, nSize.height*0.8), CAButtonTypeCustom);
+	next->setTag(1000);
 	next->setImageForState(CAControlStateNormal, CAImage::create("source_material/btn_right_white.png"));
 	next->setImageColorForState(CAControlStateHighlighted, ccc4(0, 255, 200, 255));
 	next->addTarget(this, CAControl_selector(ExtensionsTest::nextViewController), CAControlEventTouchUpInSide);
@@ -61,7 +63,12 @@ void ExtensionsTest::loadJsonData()
 
 void ExtensionsTest::nextViewController(CAControl* btn, CCPoint point)
 {
-	
+	next->setVisible(false);
+	AddressBookTest* addressBookView = new AddressBookTest();
+	addressBookView->init();
+	addressBookView->setNavigationBarItem(CANavigationBarItem::create("AddressBookTest"));
+	addressBookView->autorelease();
+	this->getNavigationController()->pushViewController(addressBookView,true);
 }
 
 void ExtensionsTest::viewDidUnload()
@@ -82,43 +89,55 @@ void ExtensionsTest::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsi
 
 CATableViewCell* ExtensionsTest::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
+	Info* p_List = (Info*)personList->objectForKey(row);
 	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
 	if (cell == NULL)
 	{
 		cell = CATableViewCell::create("CrossApp");
+		CALabel* p_Name = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+		p_Name->setTag(NAME);
+		p_Name->setText(p_List->name.c_str());
+		p_Name->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+		p_Name->setColor(CAColor_blueStyle);
+		p_Name->setTextAlignment(CATextAlignmentCenter);
+		p_Name->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		cell->addSubview(p_Name);
+
+		CALabel* p_Num = CALabel::createWithCenter(CCRect(cellSize.width*0.3, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+		p_Num->setTag(NUM);
+		p_Num->setText(p_List->num.c_str());
+		p_Num->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+		p_Num->setColor(CAColor_blueStyle);
+		p_Num->setTextAlignment(CATextAlignmentCenter);
+		p_Num->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		cell->addSubview(p_Num);
+
+		CALabel* p_Gender = CALabel::createWithCenter(CCRect(cellSize.width*0.5, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+		p_Gender->setTag(GENDER);
+		p_Gender->setText(p_List->gender.c_str());
+		p_Gender->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+		p_Gender->setColor(CAColor_blueStyle);
+		p_Gender->setTextAlignment(CATextAlignmentCenter);
+		p_Gender->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		cell->addSubview(p_Gender);
+
+		CALabel* p_Occupation = CALabel::createWithCenter(CCRect(cellSize.width*0.8, cellSize.height*0.5, cellSize.width*0.3, cellSize.height));
+		p_Occupation->setTag(OCCUPATION);
+		p_Occupation->setText(p_List->occupation.c_str());
+		p_Occupation->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+		p_Occupation->setColor(CAColor_blueStyle);
+		p_Occupation->setTextAlignment(CATextAlignmentCenter);
+		p_Occupation->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		cell->addSubview(p_Occupation);
 	}
-	Info* p_List = (Info*)personList->objectForKey(row);
-	CALabel* p_Name= CALabel::createWithCenter(CCRect(cellSize.width*0.2,cellSize.height*0.5,cellSize.width*0.2,cellSize.height));
+	CALabel* p_Name = (CALabel*)cell->getSubviewByTag(NAME);
 	p_Name->setText(p_List->name.c_str());
-	p_Name->setFontSize(30*CROSSAPP_ADPTATION_RATIO);
-	p_Name->setColor(CAColor_blueStyle);
-	p_Name->setTextAlignment(CATextAlignmentCenter);
-	p_Name->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	cell->addSubview(p_Name);
-
-	CALabel* p_Num = CALabel::createWithCenter(CCRect(cellSize.width*0.4, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+	CALabel* p_Num = (CALabel*)cell->getSubviewByTag(NUM);
 	p_Num->setText(p_List->num.c_str());
-	p_Num->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-	p_Num->setColor(CAColor_blueStyle);
-	p_Num->setTextAlignment(CATextAlignmentCenter);
-	p_Num->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	cell->addSubview(p_Num);
-
-	CALabel* p_Gender = CALabel::createWithCenter(CCRect(cellSize.width*0.6, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+	CALabel* p_Gender = (CALabel*)cell->getSubviewByTag(GENDER);
 	p_Gender->setText(p_List->gender.c_str());
-	p_Gender->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-	p_Gender->setColor(CAColor_blueStyle);
-	p_Gender->setTextAlignment(CATextAlignmentCenter);
-	p_Gender->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	cell->addSubview(p_Gender);
-
-	CALabel* p_Occupation = CALabel::createWithCenter(CCRect(cellSize.width*0.8, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+	CALabel* p_Occupation = (CALabel*)cell->getSubviewByTag(OCCUPATION);
 	p_Occupation->setText(p_List->occupation.c_str());
-	p_Occupation->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-	p_Occupation->setColor(CAColor_blueStyle);
-	p_Occupation->setTextAlignment(CATextAlignmentCenter);
-	p_Occupation->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	cell->addSubview(p_Occupation);
 
 	return cell;
 

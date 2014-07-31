@@ -1,5 +1,5 @@
 //
-//  CAAlertView.h
+//  CACollectionView.h
 //  CrossApp
 //
 //  Created by Zhujian on 14-6-27.
@@ -74,7 +74,7 @@ public:
 
 	void reloadData();
 
-    CACollectionViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier) { return NULL; };
+	CACollectionViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
     
     virtual void setAllowsSelection(bool var);
     
@@ -93,6 +93,10 @@ public:
     CC_SYNTHESIZE(unsigned int, m_nCollectionHeaderHeight, CollectionHeaderHeight);
     
     CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
+
+	CC_SYNTHESIZE(unsigned int, m_nHoriInterval, HoriInterval);
+
+	CC_SYNTHESIZE(unsigned int, m_nVertInterval, VertInterval);
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsSelection, AllowsSelection);
     
@@ -109,8 +113,12 @@ protected:
     inline virtual CCPoint maxBouncesLenght();
     
     virtual void update(float dt);
+
+	void recoveryCollectionCell();
+
+	void loadCollectionCell();
     
-protected:
+public:
 
 	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
 
@@ -121,11 +129,15 @@ protected:
 	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 
 private:
-	std::set<CACollectionViewCell*> m_pSelectedCollectionCells;
+	std::set<CAIndexPath3E> m_pSelectedCollectionCells;
 
 	CACollectionViewCell* m_pHighlightedCollectionCells;
 
-	std::vector<CACollectionViewCell*> m_pCollectionCells;
+	std::map<CAIndexPath3E, CACollectionViewCell*> m_pUsedCollectionCells;
+
+	std::map<CAIndexPath3E, CCRect> m_pUsedCollectionCellRects;
+
+	std::map<std::string, CAVector<CACollectionViewCell*> > m_pFreedCollectionCells;
 };
 
 class CC_DLL CACollectionViewCell : public CAControl
@@ -140,6 +152,10 @@ public:
 
 	virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
 
+	virtual void draw(void);
+
+	virtual void visit(void);
+
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
     CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
@@ -150,17 +166,23 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nItem, Item);
     
+public:
+    
+    virtual CAResponder* nextResponder();
+    
 protected:
     
     virtual void setControlState(CAControlState var);
     
-    virtual void normalTableViewCell();
+	virtual void normalCollectionViewCell();
     
-    virtual void highlightedTableViewCell();
+	virtual void highlightedCollectionViewCell();
     
-    virtual void selectedTableViewCell();
+	virtual void selectedCollectionViewCell();
     
-    virtual void disabledTableViewCell();
+	virtual void disabledCollectionViewCell();
+
+	virtual void resetCollectionViewCell();
     
     virtual void setContentSize(const CCSize& var);
     
@@ -177,4 +199,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__cocos2dx__CACollectionView__) */
+#endif

@@ -62,7 +62,7 @@ public:
     
     CC_SYNTHESIZE(bool, m_bControlStateLocked, ControlStateLocked);
 
-    CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);
+    virtual CAResponder* nextResponder();
     
 protected:
     

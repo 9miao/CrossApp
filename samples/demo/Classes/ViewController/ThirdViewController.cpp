@@ -23,8 +23,7 @@ void ThirdViewController::viewDidLoad()
 	scrollView->setMaximumZoomScale(3.0f);
 	scrollView->setMinimumZoomScale(0.5f);
 	this->getView()->addSubview(scrollView);
-    scrollView->setScrollViewDelegate(this);
-    
+
 	CAImageView* s_Image= CAImageView::createWithImage(CAImage::create("bg.jpg"));
 	s_Image->setFrame(CCRect(0, 0, scrollView->getViewSize().width, scrollView->getViewSize().height));
 	scrollView->addSubview(s_Image);
@@ -39,9 +38,8 @@ void ThirdViewController::viewDidLoad()
 	scrollControl->setTitleColorAtIndex(CAColor_blueStyle, 2, CAControlStateNormal);
 	scrollControl->setTitleColorAtIndex(CAColor_blueStyle, 3, CAControlStateNormal);
 	scrollControl->addTarget(this, CAControl_selector(ThirdViewController::stateControl));
+	scrollControl->setSelectedAtIndex(0);
 	this->getView()->addSubview(scrollControl);
-    
-    set = new CCSet();
 }
 
 void ThirdViewController::stateControl(CAControl* btn, CCPoint point)
@@ -73,25 +71,4 @@ void ThirdViewController::stateControl(CAControl* btn, CCPoint point)
 void ThirdViewController::viewDidUnload()
 {
 
-}
-
-void ThirdViewController::scrollViewDidScroll(CrossApp::CAScrollView *view)
-{
-//    if (set->count() > 20)
-//    {
-//        CALabel* label = ((CALabel*) *set->begin());
-//        label->removeFromSuperview();
-//        set->removeObject(label);
-//    }
-//    
-//    char order[40] = "sddsfdsfdsdgdfgfdgfdgfdgfdgfdgfdsfds";
-//    CALabel* cellText = CALabel::createWithCenter(CCRect(arc4random()%400, arc4random()%400, 150, 50));
-//	cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-//	cellText->setText(order);
-//	cellText->setColor(CAColor_blueStyle);
-//	cellText->setTextAlignment(CATextAlignmentCenter);
-//	cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-//	view->addSubview(cellText);
-//    
-//    set->addObject(cellText);
 }

@@ -11,7 +11,6 @@ class LabelTest :public CAViewController
 public:
 	LabelTest();
 	virtual ~LabelTest();
-
     bool init();
     
 public:
