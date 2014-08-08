@@ -198,7 +198,6 @@ void CAPickerView::reloadAllComponents()
                 addSubview(CAView::createWithFrame(sepRect, m_separateColor));
             } else {
                 select->setCenter(CCRectMake(start_x, getFrame().size.height/2, selectSize.width, selectSize.height));
-                select->
                 addSubview(select);
             }
 
@@ -275,12 +274,15 @@ CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const CCSize
         if (cell == NULL) {
             cell = CATableViewCell::create("CrossApp");
             cell->setBackgroundView(NULL);
+        } else {
+            cell->removeSubviewByTag(100);            
         }
         
         int component = m_tableViews->indexOfObject(table);
         
         CAView* view = viewForRowInComponent(component, row, cellSize);
         if (view) {
+            view->setTag(100);
             cell->addSubview(view);
         }
         
@@ -324,14 +326,11 @@ void CAPickerView::selectRow(unsigned int row, unsigned int component, bool anim
             if (maxRow <= m_displayRow[component]) {
                 m_selected[component] = row + m_displayRow[component]/2;
                 offset.y = row * height;
-                tableView->setContentOffset(offset, false);
+                tableView->setContentOffset(offset, animated);
             } else {
                 m_selected[component] = maxRow + row;
                 offset.y = m_selected[component] * height + height/2 - tableView->getFrame().size.height/2;
-                tableView->setContentOffset(offset, false);
-            }
-            if (m_delegate) {
-                m_delegate->didSelectRow(this, row, component);
+                tableView->setContentOffset(offset, animated);
             }
         }
     }
