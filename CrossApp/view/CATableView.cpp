@@ -757,8 +757,10 @@ void CATableViewCell::setBackgroundView(CrossApp::CAView *var)
     CC_SAFE_RELEASE_NULL(m_pBackgroundView);
     this->removeSubview(m_pBackgroundView);
     m_pBackgroundView = var;
-    m_pBackgroundView->setFrame(this->getBounds());
-    this->insertSubview(m_pBackgroundView, -1);
+    if (m_pBackgroundView) {
+        m_pBackgroundView->setFrame(this->getBounds());
+        this->insertSubview(m_pBackgroundView, -1);        
+    }
 }
 
 CAView* CATableViewCell::getBackgroundView()

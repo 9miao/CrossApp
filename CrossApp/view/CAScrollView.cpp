@@ -253,7 +253,7 @@ bool CAScrollView::isShowsVerticalScrollIndicator()
 
 void CAScrollView::setContentOffset(CCPoint offset, bool animated)
 {
-    CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
+//    CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     
     if (animated)
     {
@@ -531,6 +531,7 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             m_tInertia = p * 1.5f;
 			m_tPointOffset.clear();
 
+            m_bDecelerating = true;
             CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
             
             if (m_pScrollViewDelegate)
