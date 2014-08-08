@@ -76,7 +76,7 @@ bool CADatePickerView::init()
     
     struct timeval tp = {0};
     gettimeofday(&tp,  NULL);
-    time_t time = tp.tv_sec * 1000 + tp.tv_usec;
+    time_t time = tp.tv_sec;
     m_tTM = *localtime(&time);
     
     return true;
@@ -295,7 +295,7 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
                 CACalendar* cal = CACalendar::create(mktime(&m_tTM));
                 int day = row + 1;
                 int dayOfYear = cal->dayOfYear();
-                cal->addDay(dayOfYear - day);
+                cal->addDay(day - dayOfYear);
                 int week = cal->dayOfWeek();
                 int month = cal->monthOfYear();
                 int date = cal->dayOfMonth();
@@ -392,6 +392,25 @@ void CADatePickerView::setMode(CADatePickerMode mode)
     m_eMode = mode;
     if (m_pPickerView) {
         m_pPickerView->reloadAllComponents();
+        switch (m_eMode) {
+            case CADatePickerModeDate:
+                m_pPickerView->selectRow(m_tTM.tm_year, 0);
+                m_pPickerView->selectRow(m_tTM.tm_mon, 1);
+                m_pPickerView->selectRow(m_tTM.tm_mday - 1, 2);
+                break;
+            case CADatePickerModeDateAndTime:
+                m_pPickerView->selectRow(CACalendar::create(mktime(&m_tTM))->dayOfYear() - 1, 0);
+                m_pPickerView->selectRow(m_tTM.tm_hour, 1);
+                m_pPickerView->selectRow(m_tTM.tm_min, 2);
+                break;
+            case CADatePickerModeTime:
+                m_pPickerView->selectRow(m_tTM.tm_hour, 0);
+                m_pPickerView->selectRow(m_tTM.tm_min, 1);
+                break;
+                
+            default:
+                break;
+        }
     }
 }
 

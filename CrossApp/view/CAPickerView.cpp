@@ -201,7 +201,7 @@ void CAPickerView::reloadAllComponents()
                 addSubview(select);
             }
 
-            reloadComponent(i);
+            reloadComponent(i, false);
             
             start_x += m_dataSource->widthForComponent(this, i);
         }
@@ -209,7 +209,7 @@ void CAPickerView::reloadAllComponents()
 }
 
 
-void CAPickerView::reloadComponent(unsigned int component)
+void CAPickerView::reloadComponent(unsigned int component, bool bReloadData)
 {
     // reload component
     int row = m_dataSource->numberOfRowsInComponent(this, component);
@@ -239,6 +239,12 @@ void CAPickerView::reloadComponent(unsigned int component)
         
     // reset selected index
     selectRow(0, component, false);
+    
+    if (bReloadData) {
+        // reload table view
+        CATableView* view = (CATableView*)m_tableViews->objectAtIndex(component);
+        view->reloadData();        
+    }
 }
 
 CAView* CAPickerView::viewForRowInComponent(int component, int row, CCSize size)

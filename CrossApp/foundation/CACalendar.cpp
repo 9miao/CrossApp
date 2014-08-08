@@ -204,7 +204,7 @@ int CACalendar::_dayCountOfMonth(int year, int month)
         case 11:
             return 30;
         case 2:
-            return _isLeapYear(year) ? 28 : 29;
+            return _isLeapYear(year) ? 29 : 28;
         default:
             return 0;
     }
@@ -212,7 +212,7 @@ int CACalendar::_dayCountOfMonth(int year, int month)
 
 int CACalendar::dayCountOfMonth()
 {
-    return _dayCountOfMonth(m_tDateTime.tm_year, m_tDateTime.tm_mon + 1);
+    return _dayCountOfMonth(m_tDateTime.tm_year + 1900, m_tDateTime.tm_mon + 1);
 }
 
 int CACalendar::dayCountOfYear()
