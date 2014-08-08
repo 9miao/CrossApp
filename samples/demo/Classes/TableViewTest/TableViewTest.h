@@ -17,6 +17,9 @@ protected:
 	void viewDidUnload();
 
 public:
+	void cellBtnCallback(CAControl* btn,CCPoint point);
+
+public:
 	virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
 	virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
 	virtual void tableViewDidShowPullDownView(CATableView* table);

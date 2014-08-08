@@ -28,6 +28,7 @@ public:
 	void buttonBackground();
 	void buttonTouchEvent();
 
+	void btnStateChange(CAControl* btn, CCPoint point);
 	void buttonCallback(CAControl* btn,CCPoint point);
 
 private:

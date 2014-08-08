@@ -1,5 +1,4 @@
 #include "AddressBookTest.h"
-#include "LoadingViewController.h"
 #include "HttpRequestTest.h"
 
 #define CAColor_blueStyle ccc4(51,204,255,255)
@@ -25,7 +24,7 @@ void AddressBookTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
 	this->getNavigationBarItem()->setShowGoBackButton(false);
-#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+#if(CC_TARGET_PLATFORM!=CC_PLATFORM_WIN32)
 	loadingView();
 	getAddressBookList();
 #endif
@@ -43,7 +42,6 @@ void AddressBookTest::viewDidLoad()
 	CABarButtonItem* rightButton = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), CAImage::create(""));
 	rightButton->setTarget(this, CAControl_selector(AddressBookTest::nextViewController));
 	this->getNavigationBarItem()->addRightButtonItem(rightButton);
-
 }
 
 void AddressBookTest::loadingView()
@@ -177,9 +175,8 @@ unsigned int AddressBookTest::numberOfRowsInSection(CATableView *table, unsigned
 {
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_WIN32)
 	return 8;
-#elif(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
-	return addressBookList.size();
 #endif
+	return addressBookList.size();
 }
 
 unsigned int AddressBookTest::numberOfSections(CATableView *table)
@@ -191,9 +188,8 @@ unsigned int AddressBookTest::tableViewHeightForRowAtIndexPath(CATableView* tabl
 {
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_WIN32)
 	return this->getView()->getBounds().size.height / 8;
-#elif(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
-	return this->getView()->getBounds().size.height*0.1;
 #endif
+	return this->getView()->getBounds().size.height*0.1;
 	
 }
 

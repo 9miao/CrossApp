@@ -152,6 +152,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\basics\CAObject.cpp" />
     <ClCompile Include="..\basics\CAResponder.cpp" />
     <ClCompile Include="..\basics\CAScheduler.cpp" />
+    <ClCompile Include="..\cocoa\CACalendar.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
@@ -219,6 +220,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\support\CCVertex.cpp" />
     <ClCompile Include="..\support\ConvertUTF.cpp" />
     <ClCompile Include="..\support\ConvertUTFWrapper.cpp" />
+    <ClCompile Include="..\support\md5.cpp" />
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\data_support\ccCArray.cpp" />
@@ -270,6 +272,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\ccMacros.h" />
     <ClInclude Include="..\ccTypeInfo.h" />
     <ClInclude Include="..\ccTypes.h" />
+    <ClInclude Include="..\cocoa\CACalendar.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
     <ClInclude Include="..\cocoa\CCDictionary.h" />
     <ClInclude Include="..\cocoa\CCNS.h" />
@@ -359,6 +362,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
     <ClInclude Include="..\support\ConvertUTF.h" />
+    <ClInclude Include="..\support\md5.h" />
     <ClInclude Include="..\support\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\support\TransformUtils.h" />
     <ClInclude Include="..\support\data_support\ccCArray.h" />

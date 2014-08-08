@@ -1,71 +1,47 @@
-//
-//  PickerViewTest.cpp
-//  HelloCpp
-//
-//  Created by dai xinping on 14-7-24.
-//
-//
-
 #include "PickerViewTest.h"
 
-#define PICKER_VIEW_LINE_HEIGHT 80
-
-#define PICKER_VIEW_LINE_MAX 7
-
-#define PICKER_VIEW_HEIGHT (PICKER_VIEW_LINE_HEIGHT * PICKER_VIEW_LINE_MAX)
+#define CAColor_blueStyle ccc4(51,204,255,255)
 
 PickerViewTest::PickerViewTest()
-: pPickerView(NULL)
+: pickerView(NULL)
+, year("")
+, month("")
+, day("")
+, yearFlag(false)
+, daysOfMonth(30)
 {
     
 }
 
 PickerViewTest::~PickerViewTest()
 {
-    CC_SAFE_RELEASE(pPickerView);
+    CC_SAFE_RELEASE(pickerView);
 }
 
 void PickerViewTest::viewDidLoad()
 {
-//    CAButton* button = CAButton::createWithCenter(CCRectMake(getView()->getFrame().size.width/3,
-//                                                             getView()->getFrame().size.height/3, 
-//                                                             200 * CROSSAPP_ADPTATION_RATIO, 
-//                                                             50 * CROSSAPP_ADPTATION_RATIO), 
-//                                                  CAButtonTypeRoundedRect);
-    CALabel* label1 = CALabel::createWithCenter(CCRectMake(getView()->getFrame().size.width/3,
-                                                          getView()->getFrame().size.height/3, 
-                                                          400 * CROSSAPP_ADPTATION_RATIO, 
-                                                          50 * CROSSAPP_ADPTATION_RATIO));
-    label1->setText("TEXT");
-    label1->setColor(ccc4(0, 0, 0, 255));
-    label1->setTag(100);
-    label1->setFontSize(50 * CROSSAPP_ADPTATION_RATIO);
-    getView()->addSubview(label1);
-    
-    CALabel* label2 = CALabel::createWithCenter(CCRectMake(getView()->getFrame().size.width*2/3,
-                                                          getView()->getFrame().size.height/3, 
-                                                          400 * CROSSAPP_ADPTATION_RATIO, 
-                                                          50 * CROSSAPP_ADPTATION_RATIO));
-    label2->setText("TEXT");
-    label2->setColor(ccc4(0, 0, 0, 255));
-    label2->setTag(101);
-    label2->setFontSize(50 * CROSSAPP_ADPTATION_RATIO);
-    getView()->addSubview(label2);
-    
-    float pickerViewHeight = PICKER_VIEW_HEIGHT * CROSSAPP_ADPTATION_RATIO;
-    CCRect rect = CCRectMake(getView()->getFrame().size.width/2, 
-                             getView()->getFrame().size.height*2/3, 
-                             getView()->getFrame().size.width, 
-                             pickerViewHeight);
-    pPickerView = CAPickerView::createWithCenter(rect);
-    pPickerView->retain();
-    pPickerView->setDelegate(this);
-    pPickerView->setDataSource(this);
-    pPickerView->setFontSizeNormal(50 * CROSSAPP_ADPTATION_RATIO);
-    pPickerView->setFontSizeSelected(50 * CROSSAPP_ADPTATION_RATIO);
-    pPickerView->reloadAllComponents();
-    pPickerView->setDisplayRange(false);
-    getView()->addSubview(pPickerView);
+	size = this->getView()->getBounds().size;
+
+	CALabel* dateTime = CALabel::createWithCenter(CCRect(size.width*0.5, size.height*0.1, size.width, size.height*0.1));
+	dateTime->setTag(100);
+	dateTime->setText(year + "/" + month + "/" + day);
+	dateTime->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+	dateTime->setColor(CAColor_blueStyle);
+	dateTime->setTextAlignment(CATextAlignmentCenter);
+	dateTime->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+	this->getView()->addSubview(dateTime);
+
+	pickerView = CAPickerView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, size.width*0.6, size.height*0.5));
+	pickerView->retain();
+	pickerView->setDelegate(this);
+	pickerView->setDataSource(this);
+	pickerView->setFontSizeNormal(30 * CROSSAPP_ADPTATION_RATIO);
+	pickerView->setFontSizeSelected(30 * CROSSAPP_ADPTATION_RATIO);
+	pickerView->setFontColorNormal(CAColor_blueStyle);
+	pickerView->setFontColorSelected(CAColor_blueStyle);
+	pickerView->setSeparateColor(CAColor_blueStyle);
+	pickerView->reloadAllComponents();
+	this->getView()->addSubview(pickerView);
 }
 
 void PickerViewTest::viewDidUnload()
@@ -75,26 +51,56 @@ void PickerViewTest::viewDidUnload()
 
 void PickerViewTest::didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
-    if (component == 0) {
-        CALabel* label = (CALabel*)getView()->getSubviewByTag(100);
-        label->setText(CCString::createWithFormat("ROW + %d", row)->getCString());        
-    } else {
-        CALabel* label = (CALabel*)getView()->getSubviewByTag(101);
-        label->setText(CCString::createWithFormat("ROW + %d", row)->getCString());                
-    }
+	CALabel* label = (CALabel*)this->getView()->getSubviewByTag(100);
+	if (component == 0)
+	{
+		CCLog("%d",row);
+		if ((((1975 + row) % 4 == 0) && ((1975 + row) % 100 != 0)) || ((1975 + row) % 400 == 0))
+		{
+			yearFlag = true;
+		}
+		year = CCString::createWithFormat("%d", 1975 + row)->getCString();
+	}
+	else if (component == 1)
+	{
+		if (row == 1)
+		{
+			daysOfMonth = yearFlag ? 29 : 28;
+			CCLog("%d",daysOfMonth);
+		}
+		else
+		{
+			int b[7] = { 0, 2, 4, 6, 7, 9, 11 };
+			for (int j = 0; j < 7; j++)
+			{
+				daysOfMonth = (row == b[j]) ? 31 : 30;
+			}
+		}
+		pickerView->reloadComponent(2);
+		month = CCString::createWithFormat("%02d", row + 1)->getCString();
+	}
+	else
+	{
+		day = CCString::createWithFormat("%02d", row + 1)->getCString();
+	}
+	if (month.empty() && day.empty())
+	{
+		month = "01";
+		day = "01";
+	}
+	label->setText(year+"/"+month+"/"+day);
 }
 
 unsigned int PickerViewTest::numberOfComponentsInPickerView(CAPickerView* pickerView)
 {
-    return 2;
+    return 3;
 }
 
 unsigned int PickerViewTest::numberOfRowsInComponent(CAPickerView* pickerView, unsigned int component)
 {
-    if (component == 0) {
-        return 50;
-    }
-    return 2;
+	int rowNum = 0;
+	CCLog("%d", daysOfMonth);
+	return rowNum = component == 0 ? 50 : (component == 1 ? 12 : daysOfMonth);
 }
 
 float PickerViewTest::widthForComponent(CAPickerView* pickerView, unsigned int component)
@@ -104,12 +110,22 @@ float PickerViewTest::widthForComponent(CAPickerView* pickerView, unsigned int c
 
 float PickerViewTest::rowHeightForComponent(CAPickerView* pickerView, unsigned int component)
 {
-    return PICKER_VIEW_LINE_HEIGHT * CROSSAPP_ADPTATION_RATIO;
+	return pickerView->getFrame().size.height / 7;
 }
 
 CCString* PickerViewTest::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
-    return CCString::createWithFormat("ROW + %d", row);
+	char dateValue[20] = "";
+	if (component == 0)
+	{
+		sprintf(dateValue, "%d", 1975 + row);
+	}
+	else
+	{
+		sprintf(dateValue, "%d", row+1);
+	}
+	return CCString::create(dateValue);
 }
+
 
 

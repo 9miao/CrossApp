@@ -31,7 +31,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60.0f);
 
     // create a scene. it's an autorelease object
-
 	m_pWindow = MainMenu::createWindow();
     // run
     pDirector->runWindow(m_pWindow);

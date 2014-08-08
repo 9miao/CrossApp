@@ -16,9 +16,6 @@
     <Filter Include="Classes\CollectionViewTest">
       <UniqueIdentifier>{ee586660-df5d-4b6f-9448-af7aced764ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ImageViewTest">
-      <UniqueIdentifier>{fa45b0a7-b07a-4e32-88df-37d6d7790226}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\LabelTest">
       <UniqueIdentifier>{533da9f5-8f03-4f48-ae7d-8ce9f0aa8053}</UniqueIdentifier>
     </Filter>
@@ -55,6 +52,15 @@
     <Filter Include="Classes\ViewController">
       <UniqueIdentifier>{e1047948-191d-427c-a454-4595f260ac01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\PickerViewTest">
+      <UniqueIdentifier>{bca97b50-8e94-4e3b-8a4b-1c121b9b92e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\PageViewTest">
+      <UniqueIdentifier>{2dd0f1d5-2001-4bc7-9623-3765c8d95ab2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ImageViewTest">
+      <UniqueIdentifier>{fa45b0a7-b07a-4e32-88df-37d6d7790226}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -73,7 +79,7 @@
       <Filter>Classes\CollectionViewTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ImageViewTest\ImageViewTest.cpp">
-      <Filter>Classes\ImageViewTest</Filter>
+      <Filter>Classes\ExtensionsTest\ImageViewTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\LabelTest\LabelTest.cpp">
       <Filter>Classes\LabelTest</Filter>
@@ -126,14 +132,17 @@
     <ClCompile Include="..\Classes\ExtensionsTest\AddressBookTest.cpp">
       <Filter>Classes\ExtensionsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\LoadingViewController.cpp">
-      <Filter>Classes\ExtensionsTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\HttpRequestTest.cpp">
       <Filter>Classes\ExtensionsTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MainMenu.cpp">
       <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PickerViewTest\PickerViewTest.cpp">
+      <Filter>Classes\PickerViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PageViewTest\PageViewTest.cpp">
+      <Filter>Classes\PageViewTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +165,7 @@
       <Filter>Classes\CollectionViewTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ImageViewTest\ImageViewTest.h">
-      <Filter>Classes\ImageViewTest</Filter>
+      <Filter>Classes\ExtensionsTest\ImageViewTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\LabelTest\LabelTest.h">
       <Filter>Classes\LabelTest</Filter>
@@ -212,11 +221,17 @@
     <ClInclude Include="..\Classes\ExtensionsTest\AddressBookTest.h">
       <Filter>Classes\ExtensionsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\LoadingViewController.h">
-      <Filter>Classes\ExtensionsTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\HttpRequestTest.h">
       <Filter>Classes\ExtensionsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PickerViewTest\PickerViewTest.h">
+      <Filter>Classes\PickerViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PageViewTest\PageViewTest.h">
+      <Filter>Classes\PageViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Demo.h">
+      <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

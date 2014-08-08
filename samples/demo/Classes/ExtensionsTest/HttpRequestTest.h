@@ -34,6 +34,7 @@ private:
 	CAImageView* loadImage;
 	CATextField* inputWebsite;
 	CAButton* requestWebsite;
+	CAButton *next;
 
 };
 

@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include "CrossApp.h"
-#include "CAAddressManager.h"
+#include "CrossAppExt.h"
 
-USING_NS_CC;
+USING_NS_CC_EXT;
 
 typedef enum
 {
@@ -49,7 +49,6 @@ private:
 private:
 	CCSize size;
 	CATableView* table;
-	CAButton *next;
 	std::vector<CAAddressBookRecord*> addressBookList;
 	CAImageView* loadIamge;
 	int cout;

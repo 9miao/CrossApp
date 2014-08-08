@@ -44,14 +44,15 @@ CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView
 	if (p_Cell == NULL)
 	{
 		p_Cell = CACollectionViewCell::create("CrossApp");
-		itemView = CAImageView::createWithImage(CAImage::create("logo.png"));
-		itemView->setCenter(CCRect(cellSize.width*0.5,
-			cellSize.height*0.5,
-			cellSize.height * 0.90,
-			cellSize.height * 0.90));
+		CAImageView* itemView = CAImageView::createWithImage(CAImage::create("logo.png"));
+		itemView->setCenter(CCRect(cellSize.width*0.5,cellSize.height*0.5,cellSize.height * 0.90,cellSize.height * 0.90));
+		itemView->setTag(99);
 		p_Cell->addSubview(itemView);
 
-		CALabel* itemText = CALabel::createWithCenter(CCRect(itemView->getBounds().size.width*0.5, itemView->getBounds().size.height*0.5, itemView->getBounds().size.width*0.6, itemView->getBounds().size.width*0.5));
+		CALabel* itemText = CALabel::createWithCenter(CCRect(itemView->getBounds().size.width*0.5, 
+															itemView->getBounds().size.height*0.5, 
+															itemView->getBounds().size.width*0.6, 
+															itemView->getBounds().size.width*0.5));
 		itemText->setTag(100);
 		itemText->setFontSize(29 * CROSSAPP_ADPTATION_RATIO);
 		itemText->setTextAlignment(CATextAlignmentCenter);
@@ -61,7 +62,7 @@ CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView
 	}
 	char pos[20] = "";
 	sprintf(pos, "(%d,%d,%d)",section, row, item);
-	CALabel* itemText = (CALabel*)itemView->getSubviewByTag(100);
+	CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
 	itemText->setText(pos);
 
 	return p_Cell;

@@ -33,7 +33,6 @@ public:
 private:
 	CCSize size;
 	CACollectionView* p_Conllection;
-	CAImageView* itemView;
 
 };
 

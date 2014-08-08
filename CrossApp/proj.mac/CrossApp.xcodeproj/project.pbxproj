@@ -260,8 +260,6 @@
 		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B0090D6E198A441800BD8CDA /* CAPickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D6C198A441800BD8CDA /* CAPickerView.cpp */; };
 		B0090D6F198A441800BD8CDA /* CAPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0090D6D198A441800BD8CDA /* CAPickerView.h */; };
-		B01A293D1994C8D100D42BA0 /* CADatePickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01A293B1994C8D100D42BA0 /* CADatePickerView.cpp */; };
-		B01A293E1994C8D100D42BA0 /* CADatePickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B01A293C1994C8D100D42BA0 /* CADatePickerView.h */; };
 		B01A29411994C95F00D42BA0 /* CACalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01A293F1994C95F00D42BA0 /* CACalendar.cpp */; };
 		B01A29421994C95F00D42BA0 /* CACalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = B01A29401994C95F00D42BA0 /* CACalendar.h */; };
 		B01F64F91964FE2F005C14FC /* CADensityDpi.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F64F71964FE2F005C14FC /* CADensityDpi.h */; };
@@ -536,8 +534,6 @@
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
 		B0090D6C198A441800BD8CDA /* CAPickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPickerView.cpp; sourceTree = "<group>"; };
 		B0090D6D198A441800BD8CDA /* CAPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPickerView.h; sourceTree = "<group>"; };
-		B01A293B1994C8D100D42BA0 /* CADatePickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADatePickerView.cpp; sourceTree = "<group>"; };
-		B01A293C1994C8D100D42BA0 /* CADatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADatePickerView.h; sourceTree = "<group>"; };
 		B01A293F1994C95F00D42BA0 /* CACalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACalendar.cpp; sourceTree = "<group>"; };
 		B01A29401994C95F00D42BA0 /* CACalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACalendar.h; sourceTree = "<group>"; };
 		B01F64F71964FE2F005C14FC /* CADensityDpi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADensityDpi.h; sourceTree = "<group>"; };
@@ -1060,8 +1056,6 @@
 		04EAB03F1956D75500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
-				B01A293B1994C8D100D42BA0 /* CADatePickerView.cpp */,
-				B01A293C1994C8D100D42BA0 /* CADatePickerView.h */,
 				B0090D6C198A441800BD8CDA /* CAPickerView.cpp */,
 				B0090D6D198A441800BD8CDA /* CAPickerView.h */,
 				B05D3697195AB93900DD4814 /* CAAlertView.cpp */,
@@ -1196,7 +1190,6 @@
 				04EAB0C81956D75600198A8E /* neon_matrix_impl.h in Headers */,
 				04EAB0C91956D75600198A8E /* plane.h in Headers */,
 				B03407F91991CA27005DB179 /* md5.h in Headers */,
-				B01A293E1994C8D100D42BA0 /* CADatePickerView.h in Headers */,
 				04EAB0CA1956D75600198A8E /* quaternion.h in Headers */,
 				04EAB0CB1956D75600198A8E /* ray2.h in Headers */,
 				04EAB0CC1956D75600198A8E /* utility.h in Headers */,
@@ -1391,7 +1384,6 @@
 				04EAB0D51956D75600198A8E /* neon_matrix_impl.c in Sources */,
 				04EAB0D61956D75600198A8E /* plane.c in Sources */,
 				04EAB0D71956D75600198A8E /* quaternion.c in Sources */,
-				B01A293D1994C8D100D42BA0 /* CADatePickerView.cpp in Sources */,
 				04EAB0D81956D75600198A8E /* ray2.c in Sources */,
 				04EAB0D91956D75600198A8E /* utility.c in Sources */,
 				04EAB0DA1956D75600198A8E /* vec2.c in Sources */,

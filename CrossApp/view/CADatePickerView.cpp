@@ -11,7 +11,11 @@
 #include "basics/CAApplication.h"
 #include <sstream>
 
+
+
 NS_CC_BEGIN
+
+#pragma execution_character_set("utf-8")
 
 CADatePickerView::CADatePickerView()
 : m_pPickerView(NULL)
@@ -274,19 +278,19 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
     switch (m_eMode) {
         case CADatePickerModeCountDownTimer:
             if (component == 0) { // hour
-                sprintf(buff, "%d小时", row);
+              //  sprintf(buff, "%d小时", row);
             } else { // min
-                sprintf(buff, "%d分钟", row);
+              //  sprintf(buff, "%d分钟", row);
             }
             break;
             
         case CADatePickerModeDate:
             if (component == 0) { // years
-                sprintf(buff, "%d年", row + 1900);
+              //  sprintf(buff, "%d年", row + 1900);
             } else if (component == 1) { // month
-                sprintf(buff, "%d月", row + 1);
+              //  sprintf(buff, "%d月", row + 1);
             } else { // day
-                sprintf(buff, "%d日", row + 1);
+               // sprintf(buff, "%d日", row + 1);
             }
             break;
             
@@ -311,9 +315,9 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
             
         case CADatePickerModeTime:
             if (component == 0) { // hour
-                sprintf(buff, "%02d", row);
+              //  sprintf(buff, "%02d", row);
             } else { // minutes
-                sprintf(buff, "%02d", row);
+              //  sprintf(buff, "%02d", row);
             }
             break;
             

@@ -20,6 +20,8 @@ void TableViewTest::viewDidLoad()
 	p_TableView->setTableViewDataSource(this);
 	p_TableView->setTableViewDelegate(this);
 	p_TableView->setAllowsSelection(true);
+	p_TableView->setAllowsMultipleSelection(true);
+	p_TableView->setBackGroundImage(CAImage::create("bg.jpg"));
 	this->getView()->addSubview(p_TableView);
 }
 
@@ -30,11 +32,17 @@ void TableViewTest::viewDidUnload()
 
 void TableViewTest::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	CCLog("%d,%d",section,row);
-	//if (row < 6 && section==1)
-	//{
-	//	p_TableView->setSelectRowAtIndexPath(section,row+1);
-	//}
+	char s[32];
+	sprintf(s, "The Page No.%ld", this->getNavigationController()->getViewControllerCount());
+
+	CANavigationBarItem* item = CANavigationBarItem::create(s);
+	//item->setShowGoBackButton(false);
+	TableViewTest* viewController = new TableViewTest();
+	viewController->init();
+	viewController->setNavigationBarItem(item);
+
+	this->getNavigationController()->replaceViewController(viewController, true);
+	viewController->autorelease();
 }
 
 void TableViewTest::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
@@ -44,7 +52,7 @@ void TableViewTest::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsig
 
 void TableViewTest::tableViewDidShowPullDownView(CATableView* table)
 {
-	
+	CCLog("Pulldown");
 }
 
 void TableViewTest::tableViewDidShowPullUpView(CATableView* table)
@@ -58,6 +66,8 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const CCSiz
 	if (cell == NULL)
 	{
 		cell = CATableViewCell::create("CrossApp");
+		//cell->setAlpha(0);
+		//cell->setBackgroundView(CAView::createWithFrame(CCRect(0,0,cellSize.width,cellSize.height),CAColor_green));
 		CALabel* cellText = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.3, cellSize.height*0.8));
 		cellText->setTag(100);
 		cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
@@ -65,50 +75,41 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const CCSiz
 		cellText->setTextAlignment(CATextAlignmentCenter);
 		cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 		cell->addSubview(cellText);
-		if (section == 1 && row == 0)
-		{
-			CALabel* cellDesc = CALabel::createWithCenter(CCRect(cellSize.width*0.5 + 50 * CROSSAPP_ADPTATION_RATIO, cellSize.height*0.5, cellSize.width*0.8, cellSize.height*0.8));
-			cellDesc->setTag(101);
-			cellDesc->setText("When you click on a cell, will select the next cell");
-			cellDesc->setColor(CAColor_blueStyle);
-			cellDesc->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-			cellDesc->setTextAlignment(CATextAlignmentCenter);
-			cellDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-			cell->addSubview(cellDesc);
-		}
+
+		CAButton* cellBtn = CAButton::createWithCenter(CCRect(cellSize.width*0.8,cellSize.height*0.5,cellSize.width*0.2,cellSize.height*0.5),CAButtonTypeRoundedRect);
+		cellBtn->setTag(102);
+		cellBtn->setTitleForState(CAControlStateAll,"Touch");
+		cellBtn->addTarget(this, CAControl_selector(TableViewTest::cellBtnCallback), CAControlEventTouchUpInSide);
+		cell->addSubview(cellBtn);
 	}
 	char order[20] = "";
 	sprintf(order, "cell-%d", row);
 	CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);
 	cellText->setText(order);
 
-	//CALabel* cellDesc = (CALabel*)cell->getSubviewByTag(101);
-	//if (section == 1 && row == 0)
-	//{
-	//	if (cellDesc == NULL)
-	//	{
-	//		CCLog("nil...");
-	//	}
-	//	cellDesc->setText("When you click on a cell, will select the next cell");
-	//}
-
 	return cell;
 
 }
 
+void TableViewTest::cellBtnCallback(CAControl* btn, CCPoint point)
+{
+	
+}
+
 CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
 {
-	char head[20] = "";
+	std::string head = "";
+	head = (section == 0) ? "selection-0" : "selection-1";
 	CAView* view = CAView::createWithColor(CAColor_gray);
 
-	CALabel* header = CALabel::createWithCenter(CCRect(viewSize.width*0.5, viewSize.height*0.5, viewSize.width*0.3, viewSize.height));
-	sprintf(head, "Section-%d", section);
+	CALabel* header = CALabel::createWithCenter(CCRect(viewSize.width*0.5, viewSize.height*0.5, viewSize.width*0.8, viewSize.height));
 	header->setText(head);
 	header->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-	header->setColor(CAColor_blueStyle);
+	header->setColor(CAColor_white);
 	header->setTextAlignment(CATextAlignmentCenter);
 	header->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	view->addSubview(header);
+
 
 	return view;
 }

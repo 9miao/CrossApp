@@ -16,6 +16,7 @@ ExtensionsTest::~ExtensionsTest()
 
 void ExtensionsTest::viewDidLoad()
 {
+	this->getNavigationBarItem()->setTitle("Json analysis");
 	size = this->getView()->getBounds().size;
 
 	table = CATableView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, size.width, size.height));

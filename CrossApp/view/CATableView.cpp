@@ -757,7 +757,7 @@ void CATableViewCell::setBackgroundView(CrossApp::CAView *var)
     this->removeSubview(m_pBackgroundView);
     CC_SAFE_RELEASE(m_pBackgroundView);
     m_pBackgroundView = var;
-    CC_RETURN_IF(m_pBackgroundView)
+    CC_RETURN_IF(m_pBackgroundView == NULL)
     m_pBackgroundView->setFrame(this->getBounds());
     this->insertSubview(m_pBackgroundView, -1);
 }

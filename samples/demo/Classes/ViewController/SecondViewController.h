@@ -3,8 +3,12 @@
 
 #include <iostream>
 #include "CrossApp.h"
+#include "CrossAppExt.h"
+#include "Info.h"
 
-USING_NS_CC;
+USING_NS_CC_EXT;
+
+using namespace CSJson;
 #define NUM 5
 class SecondViewController : public CAViewController, public CATableViewDelegate, public CATableViewDataSource
 {   
@@ -15,6 +19,8 @@ public:
 protected:
     void viewDidLoad();
     void viewDidUnload();
+	void loadJsonData();
+	void OnTimer(float time);
 
 public:
 	virtual void reshapeViewRectDidFinish();
@@ -41,6 +47,8 @@ private:
 	CCSize size;
 	CATableView* p_TableView;
 	int sect[NUM];
+	bool flag;
+	CCDictionary* personList;
 
 };
 #endif 

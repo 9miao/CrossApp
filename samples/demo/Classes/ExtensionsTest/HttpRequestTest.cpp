@@ -108,7 +108,7 @@ void HttpRequestTest::requestResult(CCHttpClient* client, CCHttpResponse* respon
 	}
 	if (!strcmp("Getpage", response->getHttpRequest()->getTag()) && (response->getResponseCode() == 200))
 	{
-		string responseRes = "";
+		std::string responseRes = "";
 		std::vector<char> *buffer = response->getResponseData();
 		for (unsigned int i = 0; i < buffer->size(); i++)
 		{

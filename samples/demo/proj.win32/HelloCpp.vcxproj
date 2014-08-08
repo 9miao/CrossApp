@@ -68,7 +68,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..\Classes\ViewController;..\Classes\TextFieldTest;..\Classes\TableViewTest;..\Classes\TabBarTest;..\Classes\SwitchTest;..\Classes\SliderTest;..\Classes\SegmentedControlTest;..\Classes\ScrollViewTest;..\Classes\NavigationBarTest;..\Classes\ProgressTest;..\Classes\LabelTest;..\Classes\ImageViewTest;..\Classes\ExtensionsTest;..\Classes\CollectionViewTest;..\Classes\ButtonTest;..\Classes\AlertViewTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..\Classes\ViewController;..\Classes\TextFieldTest;..\Classes\TableViewTest;..\Classes\TabBarTest;..\Classes\SwitchTest;..\Classes\SliderTest;..\Classes\SegmentedControlTest;..\Classes\ScrollViewTest;..\Classes\NavigationBarTest;..\Classes\ProgressTest;..\Classes\LabelTest;..\Classes\ImageViewTest;..\Classes\ExtensionsTest;..\Classes\CollectionViewTest;..\Classes\ButtonTest;..\Classes\AlertViewTest;..\Classes\PickerViewTest;..\Classes\PageViewTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -93,14 +93,14 @@
     </PostBuildEvent>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\..\extensions\libwebsockets\win32\lib\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..\Classes\ViewController;..\Classes\TextFieldTest;..\Classes\TableViewTest;..\Classes\TabBarTest;..\Classes\SwitchTest;..\Classes\SliderTest;..\Classes\SegmentedControlTest;..\Classes\ScrollViewTest;..\Classes\NavigationBarTest;..\Classes\ProgressTest;..\Classes\LabelTest;..\Classes\ImageViewTest;..\Classes\ExtensionsTest;..\Classes\CollectionViewTest;..\Classes\ButtonTest;..\Classes\AlertViewTest;..\Classes\PickerViewTest;..\Classes\PageViewTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -126,7 +126,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     </PostBuildEvent>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\..\extensions\libwebsockets\win32\lib\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -137,11 +137,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\ExtensionsTest\AddressBookTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ExtensionsTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\HttpRequestTest.cpp" />
-    <ClCompile Include="..\Classes\ExtensionsTest\LoadingViewController.cpp" />
     <ClCompile Include="..\Classes\ImageViewTest\ImageViewTest.cpp" />
     <ClCompile Include="..\Classes\LabelTest\LabelTest.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\NavigationBarTest\NavigationBarTest.cpp" />
+    <ClCompile Include="..\Classes\PageViewTest\PageViewTest.cpp" />
+    <ClCompile Include="..\Classes\PickerViewTest\PickerViewTest.cpp" />
     <ClCompile Include="..\Classes\ProgressTest\ProgressTest.cpp" />
     <ClCompile Include="..\Classes\ScrollViewTest\ScrollViewTest.cpp" />
     <ClCompile Include="..\Classes\SegmentedControlTest\SegmentedControlTest.cpp" />
@@ -162,15 +163,17 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\ButtonTest\ButtonTest.h" />
     <ClInclude Include="..\Classes\CollectionViewTest\CollectionViewTest.h" />
+    <ClInclude Include="..\Classes\Demo.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\AddressBookTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ExtensionsTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\HttpRequestTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\Info.h" />
-    <ClInclude Include="..\Classes\ExtensionsTest\LoadingViewController.h" />
     <ClInclude Include="..\Classes\ImageViewTest\ImageViewTest.h" />
     <ClInclude Include="..\Classes\LabelTest\LabelTest.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\NavigationBarTest\NavigationBarTest.h" />
+    <ClInclude Include="..\Classes\PageViewTest\PageViewTest.h" />
+    <ClInclude Include="..\Classes\PickerViewTest\PickerViewTest.h" />
     <ClInclude Include="..\Classes\ProgressTest\ProgressTest.h" />
     <ClInclude Include="..\Classes\ScrollViewTest\ScrollViewTest.h" />
     <ClInclude Include="..\Classes\SegmentedControlTest\SegmentedControlTest.h" />

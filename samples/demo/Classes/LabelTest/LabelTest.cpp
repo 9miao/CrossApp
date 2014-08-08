@@ -4,7 +4,7 @@
 
 LabelTest::LabelTest()
 {
-	introduce = "CrossApp is a cross platform application development engine,and completely free open source";
+	introduce = "CrossApp is a cross platform application development engine";
 }
 
 LabelTest::~LabelTest()

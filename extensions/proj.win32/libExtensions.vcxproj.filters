@@ -43,6 +43,18 @@
     <Filter Include="rapidjson\rapidjson\internal">
       <UniqueIdentifier>{d2919df5-fcfa-4b31-88c5-e9a2a7687088}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewFilter1">
+      <UniqueIdentifier>{128752d5-9f1d-4552-991c-efb19fae4a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libwebsockets">
+      <UniqueIdentifier>{2fa447a3-897b-4803-ac40-15708e965f2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libwebsockets\win32helpers">
+      <UniqueIdentifier>{7eef16a7-8faa-4e42-a72e-fa025c03b26b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sqlite3">
+      <UniqueIdentifier>{9581e20d-7c68-4b81-8dd6-608eb3840f3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\network\HttpClient.cpp">
@@ -93,9 +105,11 @@
     <ClCompile Include="..\rapidjson\CocoLoader.cpp">
       <Filter>rapidjson</Filter>
     </ClCompile>
+    <ClCompile Include="..\sqlite3\include\sqlite3.c">
+      <Filter>sqlite3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\network\HttpClient.h">
       <Filter>network</Filter>
@@ -199,6 +213,22 @@
     <ClInclude Include="..\rapidjson\rapidjson\internal\strfunc.h">
       <Filter>rapidjson\rapidjson\internal</Filter>
     </ClInclude>
+    <ClInclude Include="..\libwebsockets\win32\include\libwebsockets.h">
+      <Filter>libwebsockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libwebsockets\win32\include\win32helpers\gettimeofday.h">
+      <Filter>libwebsockets\win32helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libwebsockets\win32\include\win32helpers\websock-w32.h">
+      <Filter>libwebsockets\win32helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sqlite3\include\sqlite3.h">
+      <Filter>sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sqlite3\include\sqlite3ext.h">
+      <Filter>sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CrossAppExt.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\network\Websocket.h">

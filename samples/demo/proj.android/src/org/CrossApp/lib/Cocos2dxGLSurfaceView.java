@@ -28,6 +28,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	private final static int KEY_BOARD_TYPE_NORMAL=10;
 	private final static int KEY_BOARD_TYPE_NUMBER=11;
 	private final static int KEY_BOARD_TYPE_ALPHABET=12;
+	private final static int RESET_TEXT=13;
 	// ===========================================================
 	// Fields
 	// ===========================================================
@@ -108,6 +109,20 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					case KEY_BOARD_TYPE_ALPHABET:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+						}
+						break;
+					case RESET_TEXT:
+						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
+							text = Cocos2dxGLSurfaceView.this.mCocos2dxEditText;
+							final String text = (String) msg.obj;
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.append(text);
+							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
+							
+							//
+							//InputType.TYPE_CLASS_NUMBER
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 						}
 						break;
 				}
@@ -223,7 +238,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			xs[i] = pMotionEvent.getX(i);
 			ys[i] = pMotionEvent.getY(i);
 		}
-
+		System.out.println("what the fuck:"+pMotionEvent.getAction());
 		switch (pMotionEvent.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_POINTER_DOWN:
 				final int indexPointerDown = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
@@ -235,6 +250,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run() {
 						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionDown(idPointerDown, xPointerDown, yPointerDown);
+						
 					}
 				});
 				break;
@@ -249,6 +265,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run() {
 						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionDown(idDown, xDown, yDown);
+						
+				
+						
+						final Message msg = new Message();
+						msg.what = Cocos2dxGLSurfaceView.RESET_TEXT;
+						msg.obj = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentText();
+						Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 					}
 				});
 				break;
@@ -367,11 +390,22 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			}
 		});
 	}
-
+	public void willInsertText(final int start,final String pString,final int before,final int count) {
+		this.queueEvent(new Runnable() {
+			@Override
+			public void run() {
+				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleWillInsertText(start,pString,before,count);
+				System.out.println(Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentText());
+				
+				
+			}
+		});
+	}
 	public void deleteBackward() {
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run() {
+				System.out.println("deleteBackward"+"   Runnable");
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleDeleteBackward();
 			}
 		});

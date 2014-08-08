@@ -406,6 +406,12 @@
     <ClCompile Include="..\view\CAPickerView.cpp">
       <Filter>view</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocoa\CACalendar.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\md5.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -820,6 +826,12 @@
     </ClInclude>
     <ClInclude Include="..\view\CAPickerView.h">
       <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocoa\CACalendar.h">
+      <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\md5.h">
+      <Filter>support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

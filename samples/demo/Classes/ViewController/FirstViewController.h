@@ -6,25 +6,6 @@
 
 USING_NS_CC;
 
-enum DemoList
-{
-	AlERTVIEWTEST=0,
-	BUTTONTEST,
-	COLLECTIONVIEWTEST,
-	IMAGEVIEWTEST,
-	LABELTEST,
-	NAVIGATIONBARTEST,
-	PROGRESSTEST,
-	SCROLLVIEWTEST,
-	SEGMENTEDCONTROLTEST,
-	SLIDERTEST,
-	SWITCHTEST,
-	TABBARTEST,
-	TABVIEWTEST,
-	TEXTFIELDTEST,
-	EXTENSIONSTEST
-};
-
 class FirstViewController: public CAViewController,public CATableViewDelegate,CATableViewDataSource
 {  
 public:
@@ -55,7 +36,7 @@ public:
 private:
 	CCSize size;
 	CATableView* tableView;
-	std::string testList[15];
+	std::vector<string> testList;
 };
 
 

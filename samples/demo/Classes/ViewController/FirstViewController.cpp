@@ -1,44 +1,31 @@
-#include "FirstViewController.h"
-#include "AlertViewTest.h"
-#include "ButtonTest.h"
-#include "CollectionViewTest.h"
-#include "ImageViewTest.h"
-#include "LabelTest.h"
-#include "NavigationBarTest.h"
-#include "ProgressTest.h"
-#include "ScrollViewTest.h"
-#include "SegmentedControlTest.h"
-#include "SliderTest.h"
-#include "SwitchTest.h"
-#include "TabBarTest.h"
-#include "TableViewTest.h"
-#include "TextFieldTest.h"
-#include "ExtensionsTest.h"
+#include "Demo.h"
 
-#define VIEWCONTROLLER_JUMP(p_Contrller,title)                                  \
-	p_Contrller* p_ViewContrller = new p_Contrller();                           \
-	p_ViewContrller->init();                                                    \
-	p_ViewContrller->setNavigationBarItem(CANavigationBarItem::create(title));  \
-	p_ViewContrller->autorelease();                                             \
+#define VIEWCONTROLLER_SWITCH(p_Contrller,index)										\
+	p_Contrller* p_ViewContrller = new p_Contrller();									\
+	p_ViewContrller->init();															\
+	p_ViewContrller->setNavigationBarItem(CANavigationBarItem::create(testList[index]));\
+	p_ViewContrller->autorelease();														\
 	this->getNavigationController()->pushViewController(p_ViewContrller, true);
 
 FirstViewController::FirstViewController()
 {
-	testList[0] =  "AlertViewTest" ;
-	testList[1] =  "ButtonTest" ;
-	testList[2] =  "CollectionViewTest" ;
-	testList[3] =  "ImageViewTest" ;
-	testList[4] =  "LabelTest" ;
-	testList[5] =  "NavigationBarTest" ;
-	testList[6] =  "ProgressTest" ;
-	testList[7] =  "ScrollViewTest" ;
-	testList[8] =  "SegmentedControlTest" ;
-	testList[9] =  "SliderTest" ;
-	testList[10] =  "SwitchTest" ;
-	testList[11] =  "TabBarTest" ;
-	testList[12] =  "TableViewTest" ;
-	testList[13] =  "TextFieldTest" ;
-	testList[14] =  "ExtensionsTest" ;
+	testList.push_back("AlertViewTest");
+	testList.push_back("ButtonTest");
+	testList.push_back("CollectionViewTest");
+	testList.push_back("ImageViewTest");
+	testList.push_back("LabelTest");
+	testList.push_back("NavigationBarTest");
+	testList.push_back("PageViewTest");
+	testList.push_back("PickerViewTest");
+	testList.push_back("ProgressTest");
+	testList.push_back("ScrollViewTest");
+	testList.push_back("SegmentedControlTest");
+	testList.push_back("SliderTest");
+	testList.push_back("SwitchTest");
+	testList.push_back("TabBarTest");
+	testList.push_back("TableViewTest");
+	testList.push_back("TextFieldTest");
+	testList.push_back("ExtensionsTest");
 }
 
 FirstViewController::~FirstViewController()
@@ -72,79 +59,89 @@ void FirstViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, u
 	{
 		case AlERTVIEWTEST:
 		{
-			VIEWCONTROLLER_JUMP(AlertViewTest, "AlertViewTest");
+			VIEWCONTROLLER_SWITCH(AlertViewTest, row);
 			break;
 		}
 		case BUTTONTEST:
 		{
-			VIEWCONTROLLER_JUMP(ButtonTest, "ButtonTest");
+			VIEWCONTROLLER_SWITCH(ButtonTest, row);
 			break;
 		}
 		case COLLECTIONVIEWTEST:
 		{
-			VIEWCONTROLLER_JUMP(CollectionViewTest, "CollectionTest");
+			VIEWCONTROLLER_SWITCH(CollectionViewTest, row);
 			break;
 		}
 		case IMAGEVIEWTEST:
 		{
-			VIEWCONTROLLER_JUMP(ImageViewTest, "ImageViewTest");
+			VIEWCONTROLLER_SWITCH(ImageViewTest, row);
 			break;
 		}
 		case LABELTEST:
 		{
-			VIEWCONTROLLER_JUMP(LabelTest, "LabelTest");
+			VIEWCONTROLLER_SWITCH(LabelTest, row);
 			break;
 		}
 		case NAVIGATIONBARTEST:
 		{
-			VIEWCONTROLLER_JUMP(NavigationBarTest, "NavigationBarTest");
+			VIEWCONTROLLER_SWITCH(NavigationBarTest, row);
 			this->getNavigationController()->setNavigationBarHidden(true,true);
+			break;
+		}
+		case PAGEVIEWTEST:
+		{
+			VIEWCONTROLLER_SWITCH(PageViewTest,row);
+			break;
+		}
+		case PICKERVIEWTEST:
+		{
+			VIEWCONTROLLER_SWITCH(PickerViewTest, row);
 			break;
 		}
 		case PROGRESSTEST:
 		{
-			VIEWCONTROLLER_JUMP(ProgressTest,"ProgressTest");
+			VIEWCONTROLLER_SWITCH(ProgressTest, row);
 			break;
 		}
 		case SCROLLVIEWTEST:
 		{
-			VIEWCONTROLLER_JUMP(ScrollViewTest, "ScrollViewTest");
+			VIEWCONTROLLER_SWITCH(ScrollViewTest, row);
 			break;
 		}
 		case SEGMENTEDCONTROLTEST:
 		{
-			VIEWCONTROLLER_JUMP(SegmentedControlTest, "SegmentedTest");
+			VIEWCONTROLLER_SWITCH(SegmentedControlTest, row);
 			break;
 		}	
 		case SLIDERTEST:
 		{
-			VIEWCONTROLLER_JUMP(SliderTest,"SliderTest");
+			VIEWCONTROLLER_SWITCH(SliderTest, row);
 			break;
 		}
 		case SWITCHTEST:
 		{
-			VIEWCONTROLLER_JUMP(SwitchTest, "SwitchTest");
+			VIEWCONTROLLER_SWITCH(SwitchTest, row);
 			break;
 		}
 		case TABBARTEST:
 		{
-			VIEWCONTROLLER_JUMP(TabBarTest, "TabBarTest");
+			VIEWCONTROLLER_SWITCH(TabBarTest, row);
 			this->getNavigationController()->getTabBarController()->setTabBarHidden(true,true);
 			break;
 		}
 		case TABVIEWTEST:
 		{
-			VIEWCONTROLLER_JUMP(TableViewTest, "TableViewTest");
+			VIEWCONTROLLER_SWITCH(TableViewTest, row);
 			break;
 		}
 		case TEXTFIELDTEST:
 		{
-			VIEWCONTROLLER_JUMP(TextFieldTest, "TextFieldTest");
+			VIEWCONTROLLER_SWITCH(TextFieldTest, row);
 			break;
 		}
 		case EXTENSIONSTEST:
 		{
-			VIEWCONTROLLER_JUMP(ExtensionsTest, "JSON analysis");
+			VIEWCONTROLLER_SWITCH(ExtensionsTest, row);
 			break;
 		}
 		default:
@@ -207,7 +204,7 @@ CAView* FirstViewController::tableViewSectionViewForFooterInSection(CATableView*
 
 unsigned int FirstViewController::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-	return 15;
+	return testList.size();
 }
 
 unsigned int FirstViewController::numberOfSections(CATableView *table)

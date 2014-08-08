@@ -1,7 +1,13 @@
-#### CrossApp 0.3.2 更新内容：  #####1.添加CADatePickerView时间日期列表选择器#####2.添加CACalendar时间日期类#####3.添加md5加密类#####4.重写CATextField重写后的textField效率有明显提升
+#### CrossApp 0.3.2 更新内容：  #####1.添加md5加密类
+#####2.添加CACalendar时间日期类#####3.重写CATextField重写后的textField效率有明显提升
 
-#####5.优化CAPageView
+#####4.优化CAPageView
 CAPageView增加可监听选中当前页的回调方法
+
+#####5.优化CALabel
+增加sizetoFit方法，以便于修改label自己的大小为文字实际大小
+
+#####6.其他bug修复
 
 
 **********************************************************************************

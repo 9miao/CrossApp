@@ -20,6 +20,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/ImageViewTest/ImageViewTest.cpp \
 ../../Classes/LabelTest/LabelTest.cpp \
 ../../Classes/NavigationBarTest/NavigationBarTest.cpp \
+../../Classes/PageViewTest/PageViewTest.cpp \
+../../Classes/PickerViewTest/PickerViewTest.cpp \
 ../../Classes/ProgressTest/ProgressTest.cpp \
 ../../Classes/ScrollViewTest/ScrollViewTest.cpp \
 ../../Classes/SegmentedControlTest/SegmentedControlTest.cpp \
@@ -30,8 +32,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/TextFieldTest/TextFieldTest.cpp \
 ../../Classes/ExtensionsTest/ExtensionsTest.cpp \
 ../../Classes/ExtensionsTest/AddressBookTest.cpp \
-../../Classes/ExtensionsTest/LoadingViewController.cpp \
-../../Classes/ExtensionsTest/HttpRequestTest.cpp \		
+../../Classes/ExtensionsTest/HttpRequestTest.cpp \	
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
 $(LOCAL_PATH)/../../Classes/AlertViewTest \
@@ -40,6 +41,8 @@ $(LOCAL_PATH)/../../Classes/CollectionViewTest \
 $(LOCAL_PATH)/../../Classes/ImageViewTest \
 $(LOCAL_PATH)/../../Classes/LabelTest \
 $(LOCAL_PATH)/../../Classes/NavigationBarTest \
+$(LOCAL_PATH)/../../Classes/PageViewTest \
+$(LOCAL_PATH)/../../Classes/PickerViewTest \
 $(LOCAL_PATH)/../../Classes/ProgressTest \
 $(LOCAL_PATH)/../../Classes/ScrollViewTest \
 $(LOCAL_PATH)/../../Classes/SegmentedControlTest \

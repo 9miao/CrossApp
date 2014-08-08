@@ -1,5 +1,7 @@
 #include "ButtonTest.h"
 
+#define CAColor_blueStyle ccc4(51,204,255,255)
+
 ButtonTest::ButtonTest()
 {
 
@@ -35,7 +37,7 @@ void ButtonTest::threeButtonType()
 {
 	CCSize size = typeView->getBounds().size;
 	CALabel* buttonType = CALabel::createWithCenter(CCRect(size.width*0.5, size.height*0.2, size.width*0.4, 50));
-	buttonType->setText("ButtonType");
+	buttonType->setText("DefaultType");
 	buttonType->setFontSize(30*CROSSAPP_ADPTATION_RATIO);
 	buttonType->setTextAlignment(CATextAlignmentCenter);
 	buttonType->setColor(ccc4(51, 204, 255, 255));
@@ -44,7 +46,7 @@ void ButtonTest::threeButtonType()
 	CAButton* defaultBtn = CAButton::create(CAButtonTypeCustom);
 	defaultBtn->setCenter(CCRect(size.width*0.25-50, size.height*0.5, size.width*0.25, size.height*0.1));
 	defaultBtn->setTitleForState(CAControlStateNormal, "Noborder");
-	defaultBtn->setTitleColorForState(CAControlStateNormal, ccc4(51, 204, 255, 255));
+	defaultBtn->setTitleColorForState(CAControlStateNormal, CAColor_blueStyle);
 	typeView->addSubview(defaultBtn);
 
 	CALabel* custom = CALabel::createWithCenter(CCRect(size.width*0.25-50, size.height*0.5+80, size.width*0.3, 50));
@@ -56,24 +58,26 @@ void ButtonTest::threeButtonType()
 
 	CAButton* squareRectBtn = CAButton::create(CAButtonTypeSquareRect);
 	squareRectBtn->setCenter(CCRect(size.width*0.5, size.height*0.5, size.width*0.25, size.height*0.1));
+	squareRectBtn->setTitleForState(CAControlStateAll,"SquareRect");
 	typeView->addSubview(squareRectBtn);
 
 	CALabel* square = CALabel::createWithCenter(CCRect(size.width*0.5, size.height*0.5 + 80, size.width*0.3, 50));
 	square->setText("(SquareRect)");
 	square->setFontSize(20 * CROSSAPP_ADPTATION_RATIO);
 	square->setTextAlignment(CATextAlignmentCenter);
-	square->setColor(ccc4(51, 204, 255, 255));
+	square->setColor(CAColor_blueStyle);
 	typeView->addSubview(square);
 
 	CAButton* roundedRectBtn = CAButton::create(CAButtonTypeRoundedRect);
 	roundedRectBtn->setCenter(CCRect(size.width*0.75 + 50, size.height*0.5, size.width*0.25, size.height*0.1));
+	roundedRectBtn->setTitleForState(CAControlStateAll, "RoundedRect");
 	typeView->addSubview(roundedRectBtn);
 
 	CALabel* rounded = CALabel::createWithCenter(CCRect(size.width*0.75+50, size.height*0.5 + 80, size.width*0.3, 50));
 	rounded->setText("(RoundedRect)");
 	rounded->setFontSize(20 * CROSSAPP_ADPTATION_RATIO);
 	rounded->setTextAlignment(CATextAlignmentCenter);
-	rounded->setColor(ccc4(51, 204, 255, 255));
+	rounded->setColor(CAColor_blueStyle);
 	typeView->addSubview(rounded);
 }
 
@@ -91,32 +95,38 @@ void ButtonTest::buttonBackground()
 	CAButton* defaultBtn = CAButton::create(CAButtonTypeCustom);
 	defaultBtn->setCenter(CCRect(size.width*0.25 - 50, size.height*0.5, size.width*0.25, size.height*0.1));
 	defaultBtn->setTitleForState(CAControlStateNormal, "Normal");
+	defaultBtn->setTitleColorForState(CAControlStateNormal, CAColor_white);
 	defaultBtn->setTitleForState(CAControlStateSelected,"Selected");
 	defaultBtn->setTitleForState(CAControlStateHighlighted, "Highlighted");
 	defaultBtn->setBackGroundViewForState(CAControlStateNormal,CAView::createWithColor(CAColor_green));
 	defaultBtn->setBackGroundViewForState(CAControlStateHighlighted, CAView::createWithColor(CAColor_yellow));
-	defaultBtn->setTitleColorForState(CAControlStateAll, ccc4(51, 204, 255, 255));
 	bkgView->addSubview(defaultBtn);
 
 	CALabel* custom = CALabel::createWithCenter(CCRect(size.width*0.25 - 50, size.height*0.5 + 80, size.width*0.3, 50));
 	custom->setText("(BackgroundView)");
 	custom->setFontSize(20 * CROSSAPP_ADPTATION_RATIO);
 	custom->setTextAlignment(CATextAlignmentCenter);
-	custom->setColor(ccc4(51, 204, 255, 255));
+	custom->setColor(CAColor_blueStyle);
 	bkgView->addSubview(custom);
 
 
 	CAButton* squareRectBtn = CAButton::create(CAButtonTypeSquareRect);
+	squareRectBtn->setAllowsSelected(true);
 	squareRectBtn->setCenter(CCRect(size.width*0.5, size.height*0.5, size.width*0.25, size.height*0.1));
+	squareRectBtn->setTitleForState(CAControlStateNormal, "Normal");
+	squareRectBtn->setTitleColorForState(CAControlStateNormal, CAColor_white);
+	squareRectBtn->setTitleForState(CAControlStateSelected, "Selected");
+	squareRectBtn->setTitleForState(CAControlStateHighlighted, "Highlighted");
 	squareRectBtn->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_normal.png")));
 	squareRectBtn->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/ex4.png")));
+	squareRectBtn->setBackGroundViewForState(CAControlStateSelected, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_selected.png")));
 	bkgView->addSubview(squareRectBtn);
 
 	CALabel* square = CALabel::createWithCenter(CCRect(size.width*0.5, size.height*0.5 + 80, size.width*0.3, 50));
 	square->setText("(StateImage)");
 	square->setFontSize(20 * CROSSAPP_ADPTATION_RATIO);
 	square->setTextAlignment(CATextAlignmentCenter);
-	square->setColor(ccc4(51, 204, 255, 255));
+	square->setColor(CAColor_blueStyle);
 	bkgView->addSubview(square);
 
 	CAButton* roundedRectBtn = CAButton::create(CAButtonTypeRoundedRect);
@@ -129,7 +139,7 @@ void ButtonTest::buttonBackground()
 	rounded->setText("(Disabled)");
 	rounded->setFontSize(20 * CROSSAPP_ADPTATION_RATIO);
 	rounded->setTextAlignment(CATextAlignmentCenter);
-	rounded->setColor(ccc4(51, 204, 255, 255));
+	rounded->setColor(CAColor_blueStyle);
 	bkgView->addSubview(rounded);
 }
 
@@ -141,31 +151,34 @@ void ButtonTest::buttonTouchEvent()
 	buttonTouch->setText("TouchEvent");
 	buttonTouch->setFontSize(35 * CROSSAPP_ADPTATION_RATIO);
 	buttonTouch->setTextAlignment(CATextAlignmentCenter);
-	buttonTouch->setColor(ccc4(51, 204, 255, 255));
+	buttonTouch->setColor(CAColor_blueStyle);
 	eventView->addSubview(buttonTouch);
 
 	CAButton* btnOne = CAButton::create(CAButtonTypeCustom);
 	btnOne->setCenter(CCRect(size.width*0.25 - 50, size.height*0.5, size.width*0.25, size.height*0.1));
 	btnOne->setTag(BUTTONONE);
-	btnOne->setTitleForState(CAControlStateNormal, "Button1");
+	btnOne->setTitleForState(CAControlStateAll, "TouchDown");
+	btnOne->setTitleColorForState(CAControlStateNormal, CAColor_blueStyle);
 	btnOne->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/round1.png")));
 	btnOne->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/round2.png")));
-	btnOne->addTarget(this,CAControl_selector(ButtonTest::buttonCallback),CAControlEventTouchUpInSide);
+	btnOne->addTarget(this, CAControl_selector(ButtonTest::buttonCallback), CAControlEventTouchDown);
 	eventView->addSubview(btnOne);
 
 	CAButton* btnTwo = CAButton::create(CAButtonTypeSquareRect);
 	btnTwo->setCenter(CCRect(size.width*0.5, size.height*0.5, size.width*0.25, size.height*0.1));
 	btnTwo->setTag(BUTTONTWO);
-	btnTwo->setTitleForState(CAControlStateNormal, "Button2");
+	btnTwo->setTitleForState(CAControlStateAll, "TouchMoved");
+	btnTwo->setTitleColorForState(CAControlStateNormal,CAColor_white);
 	btnTwo->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_square_highlighted.png")));
 	btnTwo->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_square_selected.png")));
-	btnTwo->addTarget(this, CAControl_selector(ButtonTest::buttonCallback), CAControlEventTouchUpInSide);
+	btnTwo->addTarget(this, CAControl_selector(ButtonTest::buttonCallback), CAControlEventTouchMoved);
 	eventView->addSubview(btnTwo);
 
 	CAButton* btnThree = CAButton::create(CAButtonTypeRoundedRect);
 	btnThree->setCenter(CCRect(size.width*0.75 + 50, size.height*0.5, size.width*0.25, size.height*0.1));
 	btnThree->setTag(BUTTONTHREE);
-	btnThree->setTitleForState(CAControlStateNormal, "Button3");
+	btnThree->setTitleForState(CAControlStateAll, "TouchUpInSide");
+	btnThree->setTitleColorForState(CAControlStateNormal, CAColor_white);
 	btnThree->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));
 	btnThree->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_selected.png")));
 	btnThree->addTarget(this, CAControl_selector(ButtonTest::buttonCallback), CAControlEventTouchUpInSide);
@@ -174,7 +187,7 @@ void ButtonTest::buttonTouchEvent()
 	descTest = CALabel::createWithCenter(CCRect(size.width*0.5, size.height*0.8, size.width, 50));
 	descTest->setText("Display coordinates");
 	descTest->setFontSize(30*CROSSAPP_ADPTATION_RATIO);
-	descTest->setColor(ccc4(51, 204, 255, 255));
+	descTest->setColor(CAColor_blueStyle);
 	descTest->setTextAlignment(CATextAlignmentCenter);
 	eventView->addSubview(descTest);
 }

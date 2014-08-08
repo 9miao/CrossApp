@@ -7,7 +7,12 @@
 //
 
 #include "CACalendar.h"
+#include <cstdlib>  
+#include <iostream>  
+#include <time.h>  
+#include <stdio.h> 
 
+using namespace std;
 NS_CC_BEGIN
 
 CACalendar::CACalendar()

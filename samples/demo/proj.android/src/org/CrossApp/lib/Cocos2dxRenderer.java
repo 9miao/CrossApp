@@ -128,6 +128,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	}
 
 	private static native void nativeInsertText(final String pText);
+	private static native void nativeAndroidWillInsertText(final int start,final String pString,final int before,final int count);
 	private static native void nativeDeleteBackward();
 	private static native String nativeGetContentText();
 
@@ -135,6 +136,10 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 		Cocos2dxRenderer.nativeInsertText(pText);
 	}
 
+	public void handleWillInsertText(final int start,final String pString,final int before,final int count) {
+		Cocos2dxRenderer.nativeAndroidWillInsertText(start,pString,before,count);
+	}
+	
 	public void handleDeleteBackward() {
 		Cocos2dxRenderer.nativeDeleteBackward();
 	}
