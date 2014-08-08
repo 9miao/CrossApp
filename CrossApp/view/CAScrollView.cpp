@@ -531,7 +531,16 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             m_tInertia = p * 1.5f;
 			m_tPointOffset.clear();
 
-            m_bDecelerating = true;
+            if (!m_tInertia.equals(CCPointZero))
+            {
+                m_bDecelerating = true;
+                if (m_pScrollViewDelegate)
+                {
+                    m_pScrollViewDelegate->scrollViewDidScroll(this);
+                }
+                
+            }
+            
             CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
             
             if (m_pScrollViewDelegate)
@@ -661,12 +670,6 @@ void CAScrollView::deaccelerateScrolling(float dt)
         {
             point.y = this->getScrollWindowNotOutVertical(point.y);
         }
-    }
-    
-    m_bDecelerating = true;
-    if (m_pScrollViewDelegate && point.equals(m_pContainer->getCenterOrigin()) == false)
-    {
-        m_pScrollViewDelegate->scrollViewDidScroll(this);
     }
     
     if (speed.getLength() <= 0.5f)

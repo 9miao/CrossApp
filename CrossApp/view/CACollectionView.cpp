@@ -514,8 +514,8 @@ bool CACollectionViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
 void CACollectionViewCell::setBackgroundView(CrossApp::CAView *var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
     this->removeSubview(m_pBackgroundView);
+    CC_SAFE_RELEASE(m_pBackgroundView);
     m_pBackgroundView = var;
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setFrame(this->getBounds());

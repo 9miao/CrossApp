@@ -29,6 +29,7 @@ cocoa/CCDictionary.cpp \
 cocoa/CCNS.cpp \
 cocoa/CCSet.cpp \
 cocoa/CCString.cpp \
+cocoa/CACalendar.cpp \
 control/CABar.cpp \
 control/CAButton.cpp \
 control/CAControl.cpp \
@@ -91,6 +92,7 @@ view/CAWindow.cpp \
 view/CAAlertView.cpp \
 view/CAPageView.cpp \
 view/CAPickerView.cpp \
+view/CADatePickerView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

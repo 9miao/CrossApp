@@ -754,13 +754,12 @@ bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
 void CATableViewCell::setBackgroundView(CrossApp::CAView *var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
     this->removeSubview(m_pBackgroundView);
+    CC_SAFE_RELEASE(m_pBackgroundView);
     m_pBackgroundView = var;
-    if (m_pBackgroundView) {
-        m_pBackgroundView->setFrame(this->getBounds());
-        this->insertSubview(m_pBackgroundView, -1);        
-    }
+    CC_RETURN_IF(m_pBackgroundView)
+    m_pBackgroundView->setFrame(this->getBounds());
+    this->insertSubview(m_pBackgroundView, -1);
 }
 
 CAView* CATableViewCell::getBackgroundView()

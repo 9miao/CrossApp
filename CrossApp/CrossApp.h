@@ -51,7 +51,6 @@
 #include "control/CASlider.h"
 #include "control/CASegmentedControl.h"
 #include "control/CATextField.h"
-#include "control/CAPageControl.h"
 
 //controller
 #include "controller/CABarItem.h"
@@ -98,6 +97,7 @@
 #include "cocoa/CCSet.h"
 #include "cocoa/CCString.h"
 #include "cocoa/CCNS.h"
+#include "cocoa/CACalendar.h"
 
 // draw nodes
 #include "draw_nodes/CCDrawingPrimitives.h"
