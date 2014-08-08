@@ -37,29 +37,29 @@ public:
     static void purgeSharedImageCache();
 
     CAImage* addImage(const char* fileimage);
-
+    
     void addImageAsync(const char *path, CAObject *target, SEL_CallFuncO selector);
 
     CAImage* addUIImage(CCImage *image, const char *key);
 
-    CAImage* imageForKey(const char* key);
-
-    bool reloadImage(const char* fileName);
-
-    void removeAllImages();
-
-    void removeUnusedImages();
-
-    void removeImage(CAImage* texture);
-
-    void removeImageForKey(const char *textureKeyName);
-
-    void dumpCachedImageInfo();
- 
-    CAImage* addPVRImage(const char* filename);
-
     CAImage* addETCImage(const char* filename);
 
+    CAImage* imageForKey(const std::string& key);
+    
+    void setImageForKey(CAImage* image, const std::string& key);
+    
+    void removeImage(CAImage* image);
+
+    void removeImageForKey(const std::string& textureKeyName);
+
+    void dumpCachedImageInfo();
+    
+    bool reloadImage(const std::string& fileName);
+    
+    void removeAllImages();
+    
+    void removeUnusedImages();
+    
     static void reloadAllImages();
     
 private:

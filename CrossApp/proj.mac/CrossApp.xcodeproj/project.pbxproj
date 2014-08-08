@@ -266,6 +266,8 @@
 		B01F650519657084005C14FC /* CACollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F650319657084005C14FC /* CACollectionView.h */; };
 		B02A12CC197CE15D00F4F2C5 /* CAtransformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12CA197CE15D00F4F2C5 /* CAtransformation.cpp */; };
 		B02A12CD197CE15D00F4F2C5 /* CATransformation.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A12CB197CE15D00F4F2C5 /* CATransformation.h */; };
+		B03407F81991CA27005DB179 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03407F61991CA27005DB179 /* md5.cpp */; };
+		B03407F91991CA27005DB179 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B03407F71991CA27005DB179 /* md5.h */; };
 		B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B04CF4301967B2EB00BA7030 /* CASTLContainer.h */; };
 		B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D3697195AB93900DD4814 /* CAAlertView.cpp */; };
 		B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D3698195AB93900DD4814 /* CAAlertView.h */; };
@@ -536,6 +538,8 @@
 		B01F650319657084005C14FC /* CACollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACollectionView.h; sourceTree = "<group>"; };
 		B02A12CA197CE15D00F4F2C5 /* CAtransformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAtransformation.cpp; sourceTree = "<group>"; };
 		B02A12CB197CE15D00F4F2C5 /* CATransformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATransformation.h; sourceTree = "<group>"; };
+		B03407F61991CA27005DB179 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
+		B03407F71991CA27005DB179 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B05D3697195AB93900DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D3698195AB93900DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
@@ -965,6 +969,8 @@
 		04EAB00F1956D75500198A8E /* support */ = {
 			isa = PBXGroup;
 			children = (
+				B03407F61991CA27005DB179 /* md5.cpp */,
+				B03407F71991CA27005DB179 /* md5.h */,
 				04EAB0101956D75500198A8E /* base64.cpp */,
 				04EAB0111956D75500198A8E /* base64.h */,
 				04EAB0121956D75500198A8E /* CANotificationCenter.cpp */,
@@ -1176,6 +1182,7 @@
 				04EAB0C71956D75600198A8E /* mat4.h in Headers */,
 				04EAB0C81956D75600198A8E /* neon_matrix_impl.h in Headers */,
 				04EAB0C91956D75600198A8E /* plane.h in Headers */,
+				B03407F91991CA27005DB179 /* md5.h in Headers */,
 				04EAB0CA1956D75600198A8E /* quaternion.h in Headers */,
 				04EAB0CB1956D75600198A8E /* ray2.h in Headers */,
 				04EAB0CC1956D75600198A8E /* utility.h in Headers */,
@@ -1424,6 +1431,7 @@
 				0460ECF51956F97A00D13001 /* CAApplicationCaller.mm in Sources */,
 				0460ECF71956F97A00D13001 /* CCEGLView.mm in Sources */,
 				04DF7CB01984E6D9007352A8 /* CAIndexPath.cpp in Sources */,
+				B03407F81991CA27005DB179 /* md5.cpp in Sources */,
 				B0F7E4FE198788010048F46B /* CAPageView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1452,7 +1460,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx10.8;
 			};
 			name = Debug;
@@ -1472,7 +1480,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx10.8;
 				VALIDATE_PRODUCT = YES;
 			};

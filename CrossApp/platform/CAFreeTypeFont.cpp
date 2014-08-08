@@ -24,6 +24,7 @@ CAFreeTypeFont::CAFreeTypeFont()
 ,m_textHeight(0)
 ,m_windowWidth(0)
 ,m_lineHeight(0)
+, m_isForTextField(false)
 {
     CCSize size = CAApplication::getApplication()->getWinSizeInPixels();
     m_windowWidth = (int)size.width;
@@ -344,18 +345,6 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 		glyph_bbox.yMin += glyphs[i].pos.y;
 		glyph_bbox.yMax += glyphs[i].pos.y;
         
-		if (glyph_bbox.xMin < m_currentLine->bbox.xMin)
-			m_currentLine->bbox.xMin = glyph_bbox.xMin;
-        
-		if (glyph_bbox.yMin < m_currentLine->bbox.yMin)
-			m_currentLine->bbox.yMin = glyph_bbox.yMin;
-        
-		if (glyph_bbox.xMax > m_currentLine->bbox.xMax)
-			m_currentLine->bbox.xMax = glyph_bbox.xMax;
-        
-		if (glyph_bbox.yMax > m_currentLine->bbox.yMax)
-			m_currentLine->bbox.yMax = glyph_bbox.yMax;
-        
 		int dtValue = glyph_bbox.xMax - glyph_bbox.xMin;
 		if (m_inWidth == 0xFFFF || 
 			(glyphs[i].pos.x + dtValue <= maxWidth && m_currentLine->bbox.xMax - m_currentLine->bbox.xMin<=maxWidth))
@@ -363,9 +352,21 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 			m_currentLine->glyphs.push_back(glyphs[i]);
 		}
 		else break;
+
+		if (glyph_bbox.xMin < m_currentLine->bbox.xMin)
+			m_currentLine->bbox.xMin = glyph_bbox.xMin;
+
+		if (glyph_bbox.yMin < m_currentLine->bbox.yMin)
+			m_currentLine->bbox.yMin = glyph_bbox.yMin;
+
+		if (glyph_bbox.xMax > m_currentLine->bbox.xMax)
+			m_currentLine->bbox.xMax = glyph_bbox.xMax;
+
+		if (glyph_bbox.yMax > m_currentLine->bbox.yMax)
+			m_currentLine->bbox.yMax = glyph_bbox.yMax;
 	}
     
-	if (i == 0)
+	if (i <= 0)
 	{
 		return;
 	}
@@ -451,6 +452,14 @@ FT_Error CAFreeTypeFont::initGlyphs(const char* text)
     m_lineHeight = ((m_face->size->metrics.ascender) >> 6) - ((m_face->size->metrics.descender) >> 6);
 
     m_lines.clear();
+
+	if (m_isForTextField)
+	{
+		newLine();
+		addWord(text);
+		endLine();
+		return error;
+	}
 
     while(std::getline(stringStream, line) && !error) 
     {
@@ -563,8 +572,10 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		FT_Glyph_Transform(glyph->image, 0, &glyph->pos);
 
 		/* increment pen position */
-		pen.x += slot->advance.x >> 6;
+		FT_UInt d = slot->advance.x >> 6;
+		pen.x += d;
 
+		glyph->slotW = d;
 		/* record current glyph index */
 		previous = glyph_index;
 
@@ -593,6 +604,10 @@ void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
     {
         FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
 
+		if (glyph_bbox.xMin == glyph_bbox.xMax)
+		{
+			glyph_bbox.xMax = glyph_bbox.xMin + glyph->slotW;
+		}
         glyph_bbox.xMin += glyph->pos.x;
         glyph_bbox.xMax += glyph->pos.x;
         glyph_bbox.yMin += glyph->pos.y;

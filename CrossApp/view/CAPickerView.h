@@ -43,7 +43,7 @@ public:
     virtual CAView* viewForSelect(CAPickerView* pickerView, unsigned int component, const CCSize& size) {return NULL;}
 };
 
-class CAPickerView : public CAView, public CATableViewDataSource
+class CC_DLL CAPickerView : public CAView, public CATableViewDataSource
 {
 public:
     static CAPickerView* create();

@@ -224,9 +224,21 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             }
         }
     }
-    page = MIN(page, this->getPageCount() - 1);
-    page = MAX(page, 0);
-    this->setCurrPage(page, true);
+    
+    if (page != this->getCurrPage())
+    {
+        page = MIN(page, this->getPageCount() - 1);
+        page = MAX(page, 0);
+        this->setCurrPage(page, true);
+    }
+    else if (m_tInertia.equals(CCPointZero))
+    {
+        if (m_pPageViewDelegate)
+        {
+            m_pPageViewDelegate->pageViewDidSelectPageAtIndex(this, this->getCurrPage());
+        }
+    }
+    
 }
 
 

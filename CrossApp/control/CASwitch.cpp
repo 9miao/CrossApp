@@ -282,7 +282,7 @@ void CASwitch::removeTarget(CAObject* target, SEL_CAControl selector)
 
 void CASwitch::setContentSize(const CCSize & var)
 {
-    CAControl::setContentSize(CADipSize(80, 48));
+    CAControl::setContentSize(CADipSize(100, 60));
 }
 
 NS_CC_END

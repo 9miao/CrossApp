@@ -58,6 +58,7 @@ shaders/CAGLProgram.cpp \
 shaders/CAShaderCache.cpp \
 shaders/ccGLStateCache.cpp \
 shaders/ccShaders.cpp \
+support/md5.cpp \
 support/CANotificationCenter.cpp \
 support/CCPointExtension.cpp \
 support/CCProfiling.cpp \

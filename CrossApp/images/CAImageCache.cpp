@@ -382,7 +382,7 @@ CAImage*  CAImageCache::addImage(const char * path)
 {
     CCAssert(path != NULL, "ImageCache: fileimage MUST not be NULL");
 
-    CAImage*  texture = NULL;
+    CAImage* image = NULL;
     CCImage* pImage = NULL;
     // Split up directory and filename
     // MUTEX:
@@ -397,27 +397,23 @@ CAImage*  CAImageCache::addImage(const char * path)
     {
         return NULL;
     }
-    texture = (CAImage*)m_pTextures->objectForKey(pathKey.c_str());
+    image = (CAImage*)m_pTextures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
-    if (! texture) 
+    if (!image)
     {
         std::string lowerCase(pathKey);
         for (unsigned int i = 0; i < lowerCase.length(); ++i)
         {
             lowerCase[i] = tolower(lowerCase[i]);
         }
-        // all images are handled by UIImage except PVR extension that is handled by our own handler
+
         do 
         {
-            if (std::string::npos != lowerCase.find(".pvr"))
-            {
-                texture = this->addPVRImage(fullpath.c_str());
-            }
-            else if (std::string::npos != lowerCase.find(".pkm"))
+            if (std::string::npos != lowerCase.find(".pkm"))
             {
                 // ETC1 file format, only supportted on Android
-                texture = this->addETCImage(fullpath.c_str());
+                image = this->addETCImage(fullpath.c_str());
             }
             else
             {
@@ -445,17 +441,17 @@ CAImage*  CAImageCache::addImage(const char * path)
                 bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
                 CC_BREAK_IF(!bRet);
 
-                texture = new CAImage();
+                image = new CAImage();
                 
-                if( texture &&
-                    texture->initWithImage(pImage) )
+                if( image &&
+                    image->initWithImage(pImage) )
                 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                     // cache the texture file name
-                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), eImageFormat);
+                    VolatileTexture::addImageTexture(image, fullpath.c_str(), eImageFormat);
 #endif
-                    m_pTextures->setObject(texture, pathKey.c_str());
-                    texture->release();
+                    m_pTextures->setObject(image, pathKey.c_str());
+                    image->release();
                 }
                 else
                 {
@@ -468,40 +464,7 @@ CAImage*  CAImageCache::addImage(const char * path)
     CC_SAFE_RELEASE(pImage);
 
     //pthread_mutex_unlock(m_pDictLock);
-    return texture;
-}
-
-CAImage*  CAImageCache::addPVRImage(const char* path)
-{
-    CCAssert(path != NULL, "ImageCache: fileimage MUST not be nil");
-
-    CAImage* texture = NULL;
-    std::string key(path);
-    
-    if( (texture = (CAImage*)m_pTextures->objectForKey(key.c_str())) ) 
-    {
-        return texture;
-    }
-
-    // Split up directory and filename
-    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(key.c_str());
-    texture = new CAImage();
-    if(texture != NULL && texture->initWithPVRFile(fullpath.c_str()) )
-    {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-        // cache the texture file name
-        VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtRawData);
-#endif
-        m_pTextures->setObject(texture, key.c_str());
-        texture->autorelease();
-    }
-    else
-    {
-        CCLOG("CrossApp: Couldn't add PVRImage:%s in CAImageCache",key.c_str());
-        CC_SAFE_DELETE(texture);
-    }
-
-    return texture;
+    return image;
 }
 
 CAImage* CAImageCache::addETCImage(const char* path)
@@ -579,9 +542,9 @@ CAImage* CAImageCache::addUIImage(CCImage *image, const char *key)
     return texture;
 }
 
-bool CAImageCache::reloadImage(const char* fileName)
+bool CAImageCache::reloadImage(const std::string& fileName)
 {
-    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName.c_str());
     if (fullpath.size() == 0)
     {
         return false;
@@ -659,31 +622,35 @@ void CAImageCache::removeUnusedImages()
     }
 }
 
-void CAImageCache::removeImage(CAImage* texture)
+void CAImageCache::setImageForKey(CAImage* image, const std::string& key)
 {
-    if( ! texture )
+    if( ! image )
+    {
+        return;
+    }
+    m_pTextures->setObject(image, CCFileUtils::sharedFileUtils()->fullPathForFilename(key.c_str()));
+}
+
+void CAImageCache::removeImage(CAImage* image)
+{
+    if( ! image )
     {
         return;
     }
 
-    CCArray* keys = m_pTextures->allKeysForObject(texture);
+    CCArray* keys = m_pTextures->allKeysForObject(image);
     m_pTextures->removeObjectsForKeys(keys);
 }
 
-void CAImageCache::removeImageForKey(const char *textureKeyName)
+void CAImageCache::removeImageForKey(const std::string& imageKeyName)
 {
-    if (textureKeyName == NULL)
-    {
-        return;
-    }
-
-    string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(textureKeyName);
+    string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(imageKeyName.c_str());
     m_pTextures->removeObjectForKey(fullPath);
 }
 
-CAImage* CAImageCache::imageForKey(const char* key)
+CAImage* CAImageCache::imageForKey(const std::string& key)
 {
-    return (CAImage*)m_pTextures->objectForKey(CCFileUtils::sharedFileUtils()->fullPathForFilename(key));
+    return (CAImage*)m_pTextures->objectForKey(CCFileUtils::sharedFileUtils()->fullPathForFilename(key.c_str()));
 }
 
 void CAImageCache::reloadAllImages()
@@ -1482,31 +1449,20 @@ void VolatileTexture::reloadAllImages()
                     lowerCase[i] = tolower(lowerCase[i]);
                 }
                 
-                if (std::string::npos != lowerCase.find(".pvr"))
+                CCImage* pImage = new CCImage();
+                unsigned long nSize = 0;
+                unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
+                
+                if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
                 {
                     CAImagePixelFormat oldPixelFormat = CAImage::defaultAlphaPixelFormat();
                     CAImage::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
-                    
-                    vt->texture->initWithPVRFile(vt->m_strFileName.c_str());
+                    vt->texture->initWithImage(pImage);
                     CAImage::setDefaultAlphaPixelFormat(oldPixelFormat);
                 }
-                else
-                {
-                    CCImage* pImage = new CCImage();
-                    unsigned long nSize = 0;
-                    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
-                    
-                    if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
-                    {
-                        CAImagePixelFormat oldPixelFormat = CAImage::defaultAlphaPixelFormat();
-                        CAImage::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
-                        vt->texture->initWithImage(pImage);
-                        CAImage::setDefaultAlphaPixelFormat(oldPixelFormat);
-                    }
-                    
-                    CC_SAFE_DELETE_ARRAY(pBuffer);
-                    CC_SAFE_RELEASE(pImage);
-                }
+                
+                CC_SAFE_DELETE_ARRAY(pBuffer);
+                CC_SAFE_RELEASE(pImage);
             }
                 break;
             case kImageData:

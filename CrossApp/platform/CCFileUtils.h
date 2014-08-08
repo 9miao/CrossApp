@@ -101,31 +101,6 @@ public:
      	and set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
      	to resolutions vector by setSearchResolutionsOrder. The "internal_dir" is relative to "Resources/".
 
-		If we have a file named 'sprite.png', the mapping in fileLookup dictionary contains `key: sprite.png -> value: sprite.pvr.gz`.
-     	Firstly, it will replace 'sprite.png' with 'sprite.pvr.gz', then searching the file sprite.pvr.gz as follows:
-
-     	    /mnt/sdcard/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
-     	    /mnt/sdcard/resources-ipad/sprite.pvr.gz        (if not found, search next)
-     	    /mnt/sdcard/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
-     	    /mnt/sdcard/sprite.pvr.gz                       (if not found, search next)
-     	    internal_dir/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
-     	    internal_dir/resources-ipad/sprite.pvr.gz       (if not found, search next)
-     	    internal_dir/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
-     	    internal_dir/sprite.pvr.gz                      (if not found, return "sprite.png")
-
-        If the filename contains relative path like "gamescene/uilayer/sprite.png",
-        and the mapping in fileLookup dictionary contains `key: gamescene/uilayer/sprite.png -> value: gamescene/uilayer/sprite.pvr.gz`.
-        The file search order will be:
-
-     	    /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.pvr.gz        (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/sprite.pvr.gz                       (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-ipad/sprite.pvr.gz       (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
-     	    internal_dir/gamescene/uilayer/sprite.pvr.gz                      (if not found, return "gamescene/uilayer/sprite.png")
-
      If the new file can't be found on the file system, it will return the parameter pszFileName directly.
      
      This method was added to simplify multiplatform support. Whether you are using CrossApp-js or any cross-compilation toolchain like StellaSDK or Apportable,

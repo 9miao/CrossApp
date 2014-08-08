@@ -32,7 +32,6 @@
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
-		41BC70E715BF81A5006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70E015BF81A5006A0A6C /* Icon.icns */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
 		B0090CAA198A3CB800BD8CDA /* AlertViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090C68198A3CB800BD8CDA /* AlertViewTest.cpp */; };
 		B0090CAB198A3CB800BD8CDA /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090C6A198A3CB800BD8CDA /* AppDelegate.cpp */; };
@@ -143,7 +142,6 @@
 		41BC70DA15BF81A5006A0A6C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
 		41BC70DD15BF81A5006A0A6C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		41BC70DF15BF81A5006A0A6C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
-		41BC70E015BF81A5006A0A6C /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = SOURCE_ROOT; };
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
@@ -439,7 +437,6 @@
 				41BC70D915BF81A5006A0A6C /* AppController.h */,
 				41BC70DA15BF81A5006A0A6C /* AppController.mm */,
 				41BC70DB15BF81A5006A0A6C /* en.lproj */,
-				41BC70E015BF81A5006A0A6C /* Icon.icns */,
 				41BC70E115BF81A5006A0A6C /* main.m */,
 				41BC70E215BF81A5006A0A6C /* Info.plist */,
 				41BC70E315BF81A5006A0A6C /* Prefix.pch */,
@@ -826,7 +823,6 @@
 				B04C0BB719011ED8009854FD /* json_valueiterator.inl in Resources */,
 				B0090CDC198A407400BD8CDA /* 2.jpg in Resources */,
 				B0090CDE198A407400BD8CDA /* icon.png in Resources */,
-				41BC70E715BF81A5006A0A6C /* Icon.icns in Resources */,
 				B0090CD4198A405900BD8CDA /* fonts in Resources */,
 				B0090CDF198A407400BD8CDA /* logo.png in Resources */,
 				B0090CD6198A405900BD8CDA /* tabbar_function in Resources */,

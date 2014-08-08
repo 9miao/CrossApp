@@ -17,6 +17,7 @@ Json/lib_json/json_reader.cpp \
 Json/lib_json/json_writer.cpp \
 rapidjson/CocoLoader.cpp \
 rapidjson/CADictionaryHelper.cpp \
+sqlite3/include/sqlite3.c \
 other/CAAdress/android/CAAddressManager.cpp \
 other/CACamera/android/CAMediaManager.cpp \
 other/CALocation/android/CALocationManager.cpp \
@@ -47,4 +48,4 @@ include $(BUILD_STATIC_LIBRARY)
 $(call import-module,CrossApp)
 $(call import-module,CocosDenshion/android)
 $(call import-module,CrossApp/platform/third_party/android/prebuilt/libcurl)
-$(call import-module,external/libwebsockets/android)
+$(call import-module,extensions/libwebsockets/android)

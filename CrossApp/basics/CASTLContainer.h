@@ -20,7 +20,7 @@ NS_CC_BEGIN
 
 
 template<class T>
-class CC_DLL CAVector
+class CAVector
 {
 public:
 	typedef typename std::vector<T>::iterator iterator;

@@ -31,6 +31,7 @@ typedef struct TGlyph_
 	FT_UInt    index;  // glyph index
     FT_Vector  pos;    // glyph origin on the baseline
 	FT_Glyph   image;  // glyph image
+	FT_Pos	   slotW;
 } TGlyph, *PGlyph;
 
 typedef struct FontBufferInfo
@@ -69,6 +70,7 @@ public:
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int width, int height, 
 		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
 
+	void setForTextField(bool on) { m_isForTextField = on; }
 private:
 	bool initFreeTypeFont(const char* pFontName, unsigned long nSize);
 	unsigned char* loadFont(const char *pFontName, unsigned long *size);
@@ -107,6 +109,8 @@ private:
     int             m_windowWidth;  // the width of the window
 
     FTLineInfo*     m_currentLine;  // the current line object to add words to.
+
+	bool m_isForTextField;
 };
 
 NS_CC_END

@@ -24,6 +24,8 @@ public:
     virtual void pageViewDidBeginTurning(CAPageView* pageView){};
     
     virtual void pageViewDidEndTurning(CAPageView* pageView){};
+    
+    virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index){};
 };
 
 class CC_DLL CAPageView: public CAScrollView

@@ -13,6 +13,11 @@
 #include "rapidjson/CocoLoader.h"
 #include "rapidjson/CADictionaryHelper.h"
 
+#include "sqlite3/include/sqlite3.h"
+
+#include "LocalStorage/LocalStorage.h"
+#include "AssetsManager/AssetsManager.h"
+
 //other
 #include "other/CAAdress/CAAddressManager.h"
 #include "other/CACamera/CAMediaManager.h"

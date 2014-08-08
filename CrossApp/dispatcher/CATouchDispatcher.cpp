@@ -82,8 +82,7 @@ std::vector<CAView*> CATouchController::getEventListener(CATouch* touch, CAView*
 void CATouchController::passingTouchesViews(float dt)
 {
     CC_RETURN_IF(m_vTouchesViews.empty());
-    m_vTouchMovedsViewCache.clear();
-    
+
     CAResponder* responder = m_vTouchesViews.front();
     while (responder->nextResponder())
     {
@@ -144,9 +143,19 @@ void CATouchController::touchMoved()
     CC_RETURN_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < _px(8));
     
     bool isScheduledPassing = CAScheduler::isScheduled(schedule_selector(CATouchController::passingTouchesViews), this);
-    if (isScheduledPassing && !CCPointZero.equals(m_tFirstPoint))
+    
+    CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
+    
+    if (m_vTouchMovedsViewCache.size() > 0 && !CCPointZero.equals(m_tFirstPoint))
     {
-        CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
+        if (isScheduledPassing == false)
+        {
+            CAVector<CAResponder*>::iterator itr;
+            for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
+            {
+                (*itr)->ccTouchCancelled(m_pTouch, m_pEvent);
+            }
+        }
 
         for (int i=0; i<m_vTouchMovedsViewCache.size(); i++)
         {
@@ -170,13 +179,9 @@ void CATouchController::touchMoved()
             this->passingTouchesViews();
             break;
         }
+        m_vTouchMovedsViewCache.clear();
     }
-    
-    if (!m_vTouchMovedsViewCache.empty())
-    {
-        this->passingTouchesViews();
-    }
-    
+
     m_tFirstPoint = CCPointZero;
     
     CAVector<CAResponder*>::iterator itr;
@@ -189,10 +194,9 @@ void CATouchController::touchMoved()
 void CATouchController::touchEnded()
 {
     bool isScheduledPassing = CAScheduler::isScheduled(schedule_selector(CATouchController::passingTouchesViews), this);
-    if (!m_vTouchMovedsViewCache.empty() && isScheduledPassing)
+    if (isScheduledPassing)
     {
         CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
-        m_vTouchMovedsViewCache.clear();
         this->passingTouchesViews();
     }
     
@@ -205,12 +209,7 @@ void CATouchController::touchEnded()
 
 void CATouchController::touchCancelled()
 {
-    bool isScheduledPassing = CAScheduler::isScheduled(schedule_selector(CATouchController::passingTouchesViews), this);
-    if (!m_vTouchMovedsViewCache.empty() && isScheduledPassing)
-    {
-        CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
-        return;
-    }
+    CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
     
     CAVector<CAResponder*>::iterator itr;
     for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)

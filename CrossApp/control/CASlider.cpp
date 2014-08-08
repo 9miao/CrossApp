@@ -317,7 +317,7 @@ void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
 
 void CASlider::setContentSize(const CCSize & var)
 {
-    CAControl::setContentSize(CCSize(var.width, _px(48)));
+    CAControl::setContentSize(CCSize(var.width, _px(60)));
 }
 
 NS_CC_END

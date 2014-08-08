@@ -293,6 +293,10 @@ protected:
     
     virtual void setContentSize(const CCSize& var);
     
+    virtual void recoveryTableViewCell(){};
+    
+private:
+    
     using CAView::init;
     
     using CAView::initWithCenter;

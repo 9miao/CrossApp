@@ -1,9 +1,11 @@
 //
 //  CATextField.h
-//  project
+//  CrossApp
 //
 //  Created by lh on 14-5-15.
+//  Modified by zhujian on 14-8-4
 //
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
 #ifndef __project__CATextField__
@@ -14,8 +16,8 @@
 #include "control/CAControl.h"
 #include <vector>
 #include "view/CAScale9ImageView.h"
+#include "support/ccUTF8.h"
 NS_CC_BEGIN
-using namespace std;
 
 
 enum eKeyBoardType
@@ -24,6 +26,7 @@ enum eKeyBoardType
     KEY_BOARD_TYPE_NUMBER,
     KEY_BOARD_TYPE_ALPHABET,
 };
+
 enum eKeyBoardInputType
 {
     KEY_BOARD_INPUT_NORMAL = 1,
@@ -40,18 +43,14 @@ public:
         return false;
     }
     
-    /**
-     @brief    If the sender doesn't want to detach from the IME, return true;
-     */
+	//If the sender doesn't want to detach from the IME, return true;
     virtual bool onTextFieldDetachWithIME(CATextField * sender)
     {
         CC_UNUSED_PARAM(sender);
         return false;
     }
     
-    /**
-     @brief    If the sender doesn't want to insert the text, return true;
-     */
+	//If the sender doesn't want to insert the text, return true;
     virtual bool onTextFieldInsertText(CATextField * sender, const char * text, int nLen)
     {
         CC_UNUSED_PARAM(sender);
@@ -60,9 +59,7 @@ public:
         return false;
     }
     
-    /**
-     @brief    If the sender doesn't want to delete the delText, return true;
-     */
+    //If the sender doesn't want to delete the delText, return true;
     virtual bool onTextFieldDeleteBackward(CATextField * sender, const char * delText, int nLen)
     {
         CC_UNUSED_PARAM(sender);
@@ -70,23 +67,15 @@ public:
         CC_UNUSED_PARAM(nLen);
         return false;
     }
-    
-    /**
-     @brief    If the sender doesn't want to draw, return true.
-     */
-    virtual bool getKeyBoardHeight(int height)
-    {
-        return false;
-    }
 };
 
 typedef struct _TextAttribute
 {
-    unsigned int charsize;
-    
+    int charSize;
     float charlength;
  
 }TextAttribute;
+
 
 class CC_DLL CATextField
 : public CAControl
@@ -109,8 +98,6 @@ public:
     
     CAImage *getBackGroundImage();
     
-public:
-    
     static CATextField* createWithFrame(const CCRect& frame);
     
     static CATextField* createWithCenter(const CCRect& rect);
@@ -131,51 +118,31 @@ public:
     
     CC_SYNTHESIZE(CATextFieldDelegate*, m_pDelegate, Delegate);
     
-    CC_PROPERTY(float, m_fFontSize, FontSize);
+    CC_PROPERTY(int, m_iFontSize, FontSize);
     
     CC_PROPERTY(eKeyBoardInputType, m_nInputType, InputType);
     
     CC_PROPERTY(CAColor4B, m_cCursorColor, CursorColor);
+
+	CC_PROPERTY(int, m_iHoriMargins, HoriMargins);
+	CC_PROPERTY(int, m_iVertMargins, VertMargins);
     
     inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
     
     inline int getKeyboardType () {return m_keyboardType; }
     
-    void analyzeString(std::string str,int len);
+	void analyzeString(const char * text, int len);
     
     virtual void setImageRect(const CCRect& rect);
     
     virtual void updateImageRect();
-private:
-    
-    std::vector<TextAttribute> m_vByteLengthArr;
-    std::string temporaryString;
-    std::string m_sPassWord;
-    float labelOrginX;
-    float labelWidth;
-    float width;
-    float pTextHeight;
-    bool  spaceHolderIsOn;
-    bool  isEditing;
-    CCRect m_rLabelRect;
-    CAView *willBg;
-    CAScale9ImageView* m_pBackgroundView;
-    CCAction *m_pCursorAction;
-    CAView *m_pMark;
-    eKeyBoardType m_keyboardType;
-    bool m_bIsAny;
-    void updateImage();
+
 protected:
-    float       m_fString_left_offX;
-    float       m_fString_left_length;
-    float       m_fString_right_length;
-    float       getCursorX();
-    float       getStringViewLength();
-    std::string m_sLeft_string;
-    std::string m_sRight_string;
-    float       getStringLength(const std::string &var);
-    unsigned int getStringCharCount(const std::string &var);
-    std::vector<std::string> getStringVector(const std::string &var);
+    void updateImage();
+    int getCursorX();
+    int getStringViewLength();
+    int getStringLength(const std::string &var);
+    int getStringCharCount(const std::string &var);
     
     virtual void setContentSize(const CCSize& var);
     virtual bool attachWithIME();
@@ -187,10 +154,22 @@ protected:
     virtual void insertText(const char * text, int len);
     virtual void willInsertText(const char* text,int len);
     virtual void AndroidWillInsertText(int start,const char* str,int before,int count);
-    virtual void getKeyBoardHeight(int height);
     virtual void deleteBackward();
-    virtual const char * getContentText();
-    
+    virtual const char* getContentText();
+private:
+	std::vector<TextAttribute> m_vTextFiledChars;
+	int m_iCurPos;
+	CAScale9ImageView* m_pBackgroundView;
+	int m_iLabelWidth;
+	int m_iString_left_offX;
+	int m_iString_l_length;
+	int m_iString_r_length;
+	int m_iFontHeight;
+
+	CCAction* m_pCursorAction;
+	CAView* m_pCursorMark;
+	CCSize m_cImageSize;
+	eKeyBoardType m_keyboardType;
 };
 
 NS_CC_END

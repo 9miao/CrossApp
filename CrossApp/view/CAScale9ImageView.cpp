@@ -31,7 +31,6 @@ CAScale9ImageView::~CAScale9ImageView()
         CC_SAFE_RELEASE(m_pImageView[i]);
     }
     CC_SAFE_RELEASE(m_pScale9ImageView);
-    CC_SAFE_RELEASE(m_pobImage);
 }
 
 CAScale9ImageView* CAScale9ImageView::create()
@@ -380,9 +379,12 @@ const CAColor4B& CAScale9ImageView::getColor()
 void CAScale9ImageView::setImage(CrossApp::CAImage *image)
 {
     CC_SAFE_RETAIN(image);
-    CC_SAFE_RELEASE(m_pobImage);
+    CC_SAFE_RELEASE_NULL(m_pobImage);
     m_pobImage = image;
-    this->updateWithImage(CABatchView::createWithImage(image), this->getBounds(), m_obCapInsets);
+    if (m_pobImage)
+    {
+        this->updateWithImage(CABatchView::createWithImage(image), this->getBounds(), m_obCapInsets);
+    }
 }
 
 CAImage* CAScale9ImageView::getImage()

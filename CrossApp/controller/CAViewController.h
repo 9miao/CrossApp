@@ -63,8 +63,6 @@ public:
     
     void dismissModalViewController(bool animated);
     
-    void clearUp();
-    
     virtual bool isKeypadEnabled();
     
     virtual void setKeypadEnabled(bool value);

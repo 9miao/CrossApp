@@ -180,9 +180,6 @@ void CAApplication::setDefaultValues(void)
 	else if( strcmp(pixel_format, "rgba5551") == 0 )
 		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGB5A1);
 
-	// PVR v2 has alpha premultiplied ?
-	bool pvr_alpha_premultipled = false;
-	CAImage::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
 void CAApplication::setGLDefaultValues(void)
@@ -770,19 +767,6 @@ void CAApplication::createStatsLabel()
     texture = ImageCache->addUIImage(image, "cc_fps_images");
     CC_SAFE_RELEASE(image);
 
-    /*
-     We want to use an image which is stored in the file named ccFPSImage.c 
-     for any design resolutions and all resource resolutions. 
-     
-     To achieve this,
-     
-     Firstly, we need to ignore 'contentScaleFactor' in 'CCAtlasNode' and 'CCLabelAtlas'.
-     So I added a new method called 'setIgnoreContentScaleFactor' for 'CCAtlasNode',
-     this is not exposed to game developers, it's only used for displaying FPS now.
-     
-     Secondly, the size of this image is 480*320, to display the FPS label with correct size, 
-     a factor of design resolution ratio of 480x320 is also needed.
-     */
     float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 640.0f;
 
     m_pFPSLabel = CALabel::createWithFrame(CCRect(0, 0, 100, 32));

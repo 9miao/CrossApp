@@ -152,10 +152,6 @@ public:
 
 	virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
 
-	virtual void draw(void);
-
-	virtual void visit(void);
-
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
     CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
@@ -185,6 +181,10 @@ protected:
 	virtual void resetCollectionViewCell();
     
     virtual void setContentSize(const CCSize& var);
+    
+    virtual void recoveryCollectionViewCell(){};
+    
+private:
     
     using CAView::init;
     

@@ -304,6 +304,8 @@
 		B01F650E196585EA005C14FC /* CACollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F650C196585EA005C14FC /* CACollectionView.h */; };
 		B02A12D0197CE30A00F4F2C5 /* CAtransformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12CE197CE30A00F4F2C5 /* CAtransformation.cpp */; };
 		B02A12D1197CE30A00F4F2C5 /* CATransformation.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A12CF197CE30A00F4F2C5 /* CATransformation.h */; };
+		B0340826199211B3005DB179 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0340824199211B3005DB179 /* md5.cpp */; };
+		B0340827199211B3005DB179 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B0340825199211B3005DB179 /* md5.h */; };
 		B04636D21957BBBD00758ABF /* CAAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04636CE1957BBBD00758ABF /* CAAnimation.cpp */; };
 		B04636D31957BBBD00758ABF /* CAAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B04636CF1957BBBD00758ABF /* CAAnimation.h */; };
 		B04636D41957BBBD00758ABF /* CAAnimationCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04636D01957BBBD00758ABF /* CAAnimationCache.cpp */; };
@@ -680,6 +682,8 @@
 		B01F650C196585EA005C14FC /* CACollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACollectionView.h; sourceTree = "<group>"; };
 		B02A12CE197CE30A00F4F2C5 /* CAtransformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAtransformation.cpp; sourceTree = "<group>"; };
 		B02A12CF197CE30A00F4F2C5 /* CATransformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATransformation.h; sourceTree = "<group>"; };
+		B0340824199211B3005DB179 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
+		B0340825199211B3005DB179 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		B04636CE1957BBBD00758ABF /* CAAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimation.cpp; sourceTree = "<group>"; };
 		B04636CF1957BBBD00758ABF /* CAAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimation.h; sourceTree = "<group>"; };
 		B04636D01957BBBD00758ABF /* CAAnimationCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimationCache.cpp; sourceTree = "<group>"; };
@@ -1212,6 +1216,8 @@
 		1551A5E7158F2ADE00E66CFE /* support */ = {
 			isa = PBXGroup;
 			children = (
+				B0340824199211B3005DB179 /* md5.cpp */,
+				B0340825199211B3005DB179 /* md5.h */,
 				B0596B3E1976356C00B1E8CB /* ConvertUTF.cpp */,
 				B0596B3F1976356C00B1E8CB /* ConvertUTF.h */,
 				B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */,
@@ -1709,6 +1715,7 @@
 				1551A849158F2ADF00E66CFE /* utlist.h in Headers */,
 				B0596AF4197629BE00B1E8CB /* ftstroke.h in Headers */,
 				B0596B371976343300B1E8CB /* curlrules.h in Headers */,
+				B0340827199211B3005DB179 /* md5.h in Headers */,
 				B0596AF6197629BE00B1E8CB /* ftsystem.h in Headers */,
 				B0596AFC197629BE00B1E8CB /* autohint.h in Headers */,
 				B0596B16197629BE00B1E8CB /* svpscmap.h in Headers */,
@@ -1882,6 +1889,7 @@
 				1551A6C6158F2ADE00E66CFE /* aabb.c in Sources */,
 				1551A6C7158F2ADE00E66CFE /* mat4stack.c in Sources */,
 				1551A6C8158F2ADE00E66CFE /* matrix.c in Sources */,
+				B0340826199211B3005DB179 /* md5.cpp in Sources */,
 				1551A6C9158F2ADE00E66CFE /* mat3.c in Sources */,
 				1551A6CA158F2ADE00E66CFE /* mat4.c in Sources */,
 				1551A6CB158F2ADE00E66CFE /* neon_matrix_impl.c in Sources */,

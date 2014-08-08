@@ -179,7 +179,6 @@ void CATableView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         
         m_pHighlightedTableCells = NULL;
     }
-    
 }
 
 void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
@@ -279,6 +278,8 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_pHighlightedTableCells)
     {
+        m_pContainer->stopAllActions();
+        
         m_pHighlightedTableCells->setControlStateNormal();
         m_pHighlightedTableCells = NULL;
     }
@@ -826,8 +827,9 @@ void CATableViewCell::resetTableViewCell()
 {
     m_nSection = 0xffffffff;
     m_nRow     = 0xffffffff;
-    this->setFrame(CCRect(0xffffffff, 0xffffffff, -1, -1));
+    this->setFrame(CCRect(0, 0, -1, -1));
     this->normalTableViewCell();
+    this->recoveryTableViewCell();
 }
 
 CAResponder* CATableViewCell::nextResponder()

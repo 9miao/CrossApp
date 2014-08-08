@@ -8,10 +8,6 @@
 
 #include "CALabel.h"
 #include "ccMacros.h"
-#include "CCApplication.h"
-#include "images/CAImageCache.h"
-#include "basics/CAApplication.h"
-#include "basics/CAScheduler.h"
 #include <locale>
 #include <cstdlib>
 NS_CC_BEGIN
@@ -27,7 +23,8 @@ m_nDimensions(CCSizeZero),
 m_nfontSize(18),
 m_cLabelSize(CCSizeZero),
 m_bUpdateImage(false),
-pTextHeight(0)
+pTextHeight(0),
+m_bFitFlag(false)
 {
     m_obContentSize = CCSizeZero;
     
@@ -100,7 +97,7 @@ void CALabel::updateImage()
     unsigned int linenumber = 0;
     if (this->getBounds().size.height == 0)
     {
-        linenumber = m_nNumberOfLine;
+        linenumber = 0;
     }
     else
     {
@@ -108,18 +105,28 @@ void CALabel::updateImage()
     }
     
     CCSize size = CCSizeZero;
+    bool bLineFlag = false;
     if ((m_nNumberOfLine <= linenumber && m_nNumberOfLine != 0))
     {
         size = CCSizeMake(this->getBounds().size.width, fontHeight*m_nNumberOfLine);
     }
-    else
+    else 
     {
-        
         size = this->getBounds().size;
-        size.height = linenumber *fontHeight;
-        
+        if (m_nNumberOfLine!=0 && linenumber == 0)
+        {
+            bLineFlag = true;
+            size.height = 0;
+        }
+        else
+        {
+            size.height = linenumber *fontHeight;
+        }
     }
-
+    if (m_bFitFlag && m_nNumberOfLine <= 1)
+    {
+        size = CCSizeMake(0, fontHeight);
+    }
 	CAImage* image = CAImage::createWithString(m_nText.c_str(),
                                                m_nfontName.c_str(),
                                                m_nfontSize,
@@ -135,6 +142,10 @@ void CALabel::updateImage()
     rect.size.width = this->getBounds().size.width;
     rect.size.height = image->getContentSize().height;
     float width = MIN(this->getBounds().size.width,image->getContentSize().width);
+    if (m_bFitFlag)
+    {
+        width = image->getContentSize().width;
+    }
     rect.size.width = width;
     
     this->setImage(image);
@@ -153,7 +164,22 @@ void CALabel::updateImage()
         default:
             break;
     }
-    
+    if (bLineFlag)
+    {
+        rect.size.height = 0;
+        bLineFlag = false;
+    }
+    if (m_bFitFlag)
+    {
+        if (m_nNumberOfLine == 0)
+        {
+            rect.size.height = fontHeight;
+        }else
+        {
+            rect.size.height = m_nNumberOfLine*fontHeight;
+        }
+        
+    }
     this->setImageRect(rect);
 }
 
@@ -185,6 +211,16 @@ void CALabel::setDimensions(CCSize var)
 CCSize CALabel::getDimensions()
 {
     return m_nDimensions;
+}
+
+void CALabel::sizeToFit()
+{
+    m_bFitFlag = true;
+    if(m_nText.empty())
+    {
+        return;
+    }
+    m_bUpdateImage = true;
 }
 
 void CALabel::setText(string var)
@@ -285,12 +321,12 @@ void CALabel::setContentSize(const CrossApp::CCSize &var)
 
 void CALabel::visit()
 {
-    CAView::visit();
     if (m_bUpdateImage)
     {
         m_bUpdateImage = false;
         this->updateImage();
     }
+    CAView::visit();
 }
 
 NS_CC_END

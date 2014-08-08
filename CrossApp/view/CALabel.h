@@ -52,6 +52,7 @@ public:
     
     virtual void visit();
     
+    void sizeToFit();
 protected:
     
     virtual void setContentSize(const CCSize& var);
@@ -63,6 +64,8 @@ protected:
     bool m_bUpdateImage;
     
     float pTextHeight;
+    
+    bool m_bFitFlag;
     
 };
 

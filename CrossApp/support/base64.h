@@ -7,7 +7,8 @@
 extern "C" {
 #endif    
     
-namespace CrossApp {
+namespace CrossApp
+{
 
 /** @file
  base64 helper functions

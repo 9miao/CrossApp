@@ -40,11 +40,9 @@ typedef enum {
 } ccDirectorProjection;
 
 /* Forward declarations. */
-class CCLabelAtlas;
 class CAWindow;
 class CCEGLView;
 class CAApplicationDelegate;
-class CCNode;
 class CAScheduler;
 class CCActionManager;
 class CATouchDispatcher;

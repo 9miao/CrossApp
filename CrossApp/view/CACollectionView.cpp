@@ -259,8 +259,6 @@ void CACollectionView::setSelectRowAtIndexPath(unsigned int section, unsigned in
 		m_pSelectedCollectionCells.clear();
 	}
 
-	CACollectionViewCell* cell = NULL;
-
 	CAIndexPath3E indexPath = CAIndexPath3E(section, row, item);
 	if (CACollectionViewCell* cell = m_pUsedCollectionCells[indexPath])
 	{
@@ -590,18 +588,9 @@ void CACollectionViewCell::resetCollectionViewCell()
 {
 	m_nSection = 0xffffffff;
 	m_nRow = 0xffffffff;
-	this->setFrame(CCRect(0xffffffff, 0xffffffff, -1, -1));
+	this->setFrame(CCRect(0, 0, -1, -1));
 	this->normalCollectionViewCell();
-}
-
-void CACollectionViewCell::draw(void)
-{
-	CAView::draw();
-}
-
-void CACollectionViewCell::visit(void)
-{
-	CAView::visit();
+    this->recoveryCollectionViewCell();
 }
 
 CAResponder* CACollectionViewCell::nextResponder()

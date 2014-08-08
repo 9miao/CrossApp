@@ -322,6 +322,7 @@ void CAStudioViewController::setPropertiesForTableView(CAObject *sender, CSJson:
     {
         tableview->setBackGroundColor(backColor);
     }
+    tableview->setScrollEnabled(ScrollEnabled);
     this->getView()->addSubview(tableview);
     
 }
@@ -345,6 +346,7 @@ void CAStudioViewController::setPropertiesForProgress(CAObject *sender, CSJson::
     }
     progress->setProgressTintImage(CAImage::create(backGroundImage.substr(0,backGroundImage.length()-1).c_str()));
     progress->setProgressTrackImage(CAImage::create(foreImage.substr(0,foreImage.length()-1).c_str()));
+    progress->setProgress(progressPer);
     progress->setTag(100);
     this->getView()->addSubview(progress);
 
