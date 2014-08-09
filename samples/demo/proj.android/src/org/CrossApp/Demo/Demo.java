@@ -1,5 +1,5 @@
 
-package org.CrossApp.hellocpp;
+package org.CrossApp.Demo;
 
 import org.CrossApp.lib.Cocos2dxActivity;
 import org.CrossApp.lib.Cocos2dxGLSurfaceView;
@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
-public class HelloCpp extends Cocos2dxActivity{
+public class Demo extends Cocos2dxActivity{
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);	
