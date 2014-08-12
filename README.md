@@ -66,6 +66,32 @@ httpClient由原来的一个单独异步线程改为可实现16个异步线程
 
 
 
+#### CrossApp 0. 3. 1 Update
+
+##### 1. Add CAPickerView
+List selector, a commonly used control in smartphone, is able to provide a series of multi-value options via rotative sliding menu, display information to users as well as collecting users’ input.<br/>
+
+##### 2. Add CAPageView
+Page turning sliding container, a commonly used control in smartphone, is able to implement page turning effect by monitoring fingers’ swipe gestures.<br/>
+
+##### 3. Add CAIndexPath2E and CAIndexPath3E
+Two and three dimensional index class<br/>
+
+##### 4. Add Cell Multiplexing Mechanism of CATableView and CACollectionView
+Multiplexing mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.<br/>
+
+##### 5. Touch Distributed System Optimization
+We optimized touch distributed system, and now it can distribute touch event in a more humanized style.<br/>
+
+##### 6. httpClient Optimization
+The previous single asynchronous threaded httpClient is changed into a max 16 asynchronous threaded one<br/>
+
+##### 7. Fixed CAList and CADeque’s Bug
+
+##### 8. Fixed bug that CATextField had crash in some phone models
+
+
+
 **********************************************************************************
 
 ####【正式版】CrossApp 0.3.0 更新内容：  
