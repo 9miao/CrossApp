@@ -1,5 +1,12 @@
-#### CrossApp 0.3.2 更新内容：  #####1.添加md5加密类
-#####2.添加CACalendar时间日期类#####3.重写CATextField重写后的textField效率有明显提升
+#### CrossApp 0.3.2 更新内容：  
+
+#####1.添加md5加密类
+
+#####2.添加CACalendar
+时间日期类
+
+#####3.重写CATextField
+重写后的textField效率有明显提升
 
 #####4.优化CAPageView
 CAPageView增加可监听选中当前页的回调方法
@@ -10,10 +17,36 @@ CAPageView增加可监听选中当前页的回调方法
 #####6.其他bug修复
 
 
+
+#### CrossApp 0. 3. 2 Update:
+
+#####1. Add md5 Encryption Class
+
+#####2. Add CACalendar
+Date & Time classes<br/>
+
+#####3. Rewrite CATextField
+Rewrite-version textField has a better efficiency<br/>
+
+#####4. CAPageView Optimization
+Add callmonitoring current selected page of callback method for CAPageView<br/>
+
+#####5. CALabel Optimization
+Add sizetoFit method for modifying label’s own size into text actual size<br/>
+
+#####6. Fixed Other Bugs
+
+
 **********************************************************************************
 
 
-####【正式版】CrossApp 0.3.1 更新内容：  #####1.添加CAPickerView列表选择器，该控件是智能手机中比较常用到的一个控件，它通过转轮界面提供一系列多值选项，它向用户显示信息，也收集用户输入。#####2.添加CAPageView翻页滑动容器，该控件是智能手机中比较常用到的一个控件，它通过监听手指滑动手势来体现翻页的效果。
+####【正式版】CrossApp 0.3.1 更新内容：  
+
+#####1.添加CAPickerView
+列表选择器，该控件是智能手机中比较常用到的一个控件，它通过转轮界面提供一系列多值选项，它向用户显示信息，也收集用户输入。
+
+#####2.添加CAPageView
+翻页滑动容器，该控件是智能手机中比较常用到的一个控件，它通过监听手指滑动手势来体现翻页的效果。
 
 #####3.添加CAIndexPath2E、CAIndexPath3E
 二维、三维索引类
@@ -26,14 +59,81 @@ CAPageView增加可监听选中当前页的回调方法
 
 #####6.httpClient优化
 httpClient由原来的一个单独异步线程改为可实现16个异步线程
-#####7.修复CAList、CADeque的bug
-#####8.修复CATextField在部分机型崩溃的bug
-**********************************************************************************
 
-####【正式版】CrossApp 0.3.0 更新内容：  #####1.CrossApp-Design发布CrossApp UI界面编辑器正式推出，这将会大大的加快开发者们开发移动应用的速度。#####2.大幅优化文字性能文字机制重写，android平台文字加载速度提升约80%，iOS平台文字加载速度提升约50%。#####3.优化渲染性能渲染帧率大幅提升，几乎与原生应用性能近似，部分情况比原生更优（官网中有详细的测试指标的数值文档下载，请查阅）#####4.优化CANavigationController优化CANavigationController，大幅度的提升界面管理的效率。#####5.优化CANavigationBar添加设置标题与按钮文字颜色的接口。修复更新背景Image的bug。#####6.优化CASwitch针对CASwitch的用户体验进行了优化。#####7.修复CATableView与CACollectionView修复CATableView与CACollectionView设置选中项的bug。#####8.添加对CrossApp-Design导出文件的支持。#####9.添加新的demo（开发者们反应强烈，所以增加）新的demo对CrossApp的每一个控件进行了详细的展示，方便大家参考。#####本版本是CrossApp首次推出正式版本，性能与原生应用近似，已到达可制作商业化产品的开发标准，官方也正式对外准许开发者们使用CrossApp在任何商业移动产品的开发中。开源的跨平台移动应用开发引擎CrossApp基于MIT开源协议，开发者可以毫无顾虑、完全免费的使用CrossApp开发任何商业项目。
+#####7.修复CAList、CADeque的bug
+
+#####8.修复CATextField在部分机型崩溃的bug
 
 
-#### CrossApp 0.3.0 Update:  #####1. CrossApp-Design ReleaseCorssApp UI interface editor officially releases, which will significantly improve the mobile application development efficiency of developers.#####2. Great Text Performance OptimizationWe rewrote the text mechanism, and the text loading rate on Android was increased by 80% as well as 50% on iOS.#####3. Rendering Performance OptimizationThe rendering frame rate was greatly improved which is almost on the same level with native application performance, and it’s even better in some circumstances. (our official website has the detailed test index value documents, please download and view)#####4. CANavigationController Optimizationwe optimized CANavigationController, and its interface management efficiency was significantly improved.#####5. CANavigationBar OptimizationAdd port for setting title and button text color.Fixed bug in background Image updating.#####6. CASwitch OptimizationThis CASwitch optimization is specific to UE.#####7. Fixed CATableView and CACollectionViewFixed bug in CATableView and CACollectionView selected item setting.#####8. Add support for CrossApp-Design file exporting.####9. Add New Demo (a response to our developers’ strong demand)For your convenience, our new demo contains detailed demonstration for every CrossApp control.#####Statement: this version is CrossApp’s first official version which is almost on the same level with native application’s performance, and has reached the development standard for making commercial products. Here we officially give permission to developers to produce any commercial mobile products with CrossApp.Mobile application development engine CrossApp, with open source, cross-platform features, is based on MIT open source protocols, and developers could freely use it to produce any business projects without any misgivings whatsoever.
+
+**********************************************************************************
+
+####【正式版】CrossApp 0.3.0 更新内容：  
+
+#####1.CrossApp-Design发布
+CrossApp UI界面编辑器正式推出，这将会大大的加快开发者们开发移动应用的速度。
+
+#####2.大幅优化文字性能
+文字机制重写，android平台文字加载速度提升约80%，iOS平台文字加载速度提升约50%。
+
+#####3.优化渲染性能
+渲染帧率大幅提升，几乎与原生应用性能近似，部分情况比原生更优（官网中有详细的测试指标的数值文档下载，请查阅）
+
+#####4.优化CANavigationController
+优化CANavigationController，大幅度的提升界面管理的效率。
+
+#####5.优化CANavigationBar
+添加设置标题与按钮文字颜色的接口。
+修复更新背景Image的bug。
+
+#####6.优化CASwitch
+针对CASwitch的用户体验进行了优化。
+
+#####7.修复CATableView与CACollectionView
+修复CATableView与CACollectionView设置选中项的bug。
+
+#####8.添加对CrossApp-Design导出文件的支持。
+
+#####9.添加新的demo（开发者们反应强烈，所以增加）
+新的demo对CrossApp的每一个控件进行了详细的展示，方便大家参考。
+
+#####本版本是CrossApp首次推出正式版本，性能与原生应用近似，已到达可制作商业化产品的开发标准，官方也正式对外准许开发者们使用CrossApp在任何商业移动产品的开发中。
+开源的跨平台移动应用开发引擎CrossApp基于MIT开源协议，开发者可以毫无顾虑、完全免费的使用CrossApp开发任何商业项目。
+
+
+
+#### CrossApp 0.3.0 Update:  
+
+#####1. CrossApp-Design Release
+CorssApp UI interface editor officially releases, which will significantly improve the mobile application development efficiency of developers.
+
+#####2. Great Text Performance Optimization
+We rewrote the text mechanism, and the text loading rate on Android was increased by 80% as well as 50% on iOS.
+
+#####3. Rendering Performance Optimization
+The rendering frame rate was greatly improved which is almost on the same level with native application performance, and it’s even better in some circumstances. (our official website has the detailed test index value documents, please download and view)
+
+#####4. CANavigationController Optimization
+we optimized CANavigationController, and its interface management efficiency was significantly improved.
+
+#####5. CANavigationBar Optimization
+Add port for setting title and button text color.
+Fixed bug in background Image updating.
+
+#####6. CASwitch Optimization
+This CASwitch optimization is specific to UE.
+
+#####7. Fixed CATableView and CACollectionView
+Fixed bug in CATableView and CACollectionView selected item setting.
+
+#####8. Add support for CrossApp-Design file exporting.
+
+####9. Add New Demo (a response to our developers’ strong demand)
+For your convenience, our new demo contains detailed demonstration for every CrossApp control.
+
+#####Statement: this version is CrossApp’s first official version which is almost on the same level with native application’s performance, and has reached the development standard for making commercial products. Here we officially give permission to developers to produce any commercial mobile products with CrossApp.
+
+Mobile application development engine CrossApp, with open source, cross-platform features, is based on MIT open source protocols, and developers could freely use it to produce any business projects without any misgivings whatsoever.
 
 
 **********************************************************************************
