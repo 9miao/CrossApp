@@ -41,6 +41,7 @@
 #include "basics/CAScheduler.h"
 #include "basics/CASTLContainer.h"
 #include "basics/CAIndexPath.h"
+#include "basics/CACalendar.h"
 
 //control
 #include "control/CABar.h"
