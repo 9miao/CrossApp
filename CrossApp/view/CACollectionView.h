@@ -118,6 +118,8 @@ protected:
 
 	void loadCollectionCell();
     
+    void updateSectionHeaderAndFooterRects();
+    
 public:
 
 	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -129,13 +131,20 @@ public:
 	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 
 private:
+    
+    std::vector<CCRect> m_rSectionRects;
+    
+    std::map<CAIndexPath3E, CCRect> m_rUsedCollectionCellRects;
+    
+    std::map<int, CAView*> m_pSectionHeaderViews;
+    
+    std::map<int, CAView*> m_pSectionFooterViews;
+    
 	std::set<CAIndexPath3E> m_pSelectedCollectionCells;
 
 	CACollectionViewCell* m_pHighlightedCollectionCells;
 
 	std::map<CAIndexPath3E, CACollectionViewCell*> m_pUsedCollectionCells;
-
-	std::map<CAIndexPath3E, CCRect> m_pUsedCollectionCellRects;
 
 	std::map<std::string, CAVector<CACollectionViewCell*> > m_pFreedCollectionCells;
 };
@@ -148,13 +157,13 @@ public:
     
 	virtual ~CACollectionViewCell();
 
-	static CACollectionViewCell* create(const char* reuseIdentifier);
+	static CACollectionViewCell* create(const std::string& reuseIdentifier);
 
-	virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
+	virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
 
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
-    CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
+    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
     
@@ -162,13 +171,15 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nItem, Item);
     
+    CC_DEPRECATED_ATTRIBUTE virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
+    
 public:
     
     virtual CAResponder* nextResponder();
     
 protected:
     
-    virtual void setControlState(CAControlState var);
+    virtual void setControlState(const CAControlState& var);
     
 	virtual void normalCollectionViewCell();
     

@@ -65,7 +65,7 @@ public:
     
     CCArray* getSubviews();
     
-    void setContentOffset(CCPoint offset, bool animated);
+    void setContentOffset(const CCPoint& offset, bool animated);
     
     CCPoint getContentOffset();
     
@@ -99,7 +99,7 @@ public:
     
     CC_PROPERTY_IS(bool, m_bscrollEnabled, ScrollEnabled);
     
-    CC_PROPERTY(CCSize, m_obViewSize, ViewSize);
+    CC_PROPERTY_PASS_BY_REF(CCSize, m_obViewSize, ViewSize);
     
 protected:
  

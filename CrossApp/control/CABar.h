@@ -108,7 +108,7 @@ class CC_DLL CATabBar
     
 public:
     
-    static CATabBar* create(const std::vector<CATabBarItem*>& items);
+    static CATabBar* create(const std::vector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
     
     void setItems(const std::vector<CATabBarItem*>& items);
     
@@ -118,25 +118,27 @@ public:
     
     virtual ~CATabBar();
     
-    virtual bool init(const std::vector<CATabBarItem*>& items);
+    virtual bool init(const std::vector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
     
-    virtual void onEnterTransitionDidFinish();
+    CC_PROPERTY(CAView*, m_pBackGroundView, BackGroundView);
     
-    virtual void onExitTransitionDidStart();
+    CC_PROPERTY(CAImage*, m_pBackGroundImage, BackGroundImage);
     
-    CC_SYNTHESIZE_RETAIN(CAImage*, m_pBackGroundImage, BackGroundImage);
+    CC_PROPERTY(CAView*, m_pSelectedBackGroundView, SelectedBackGroundView);
     
-    CC_SYNTHESIZE_RETAIN(CAImage*, m_pSelectedBackGroundImage, SelectedBackGroundImage);
+    CC_PROPERTY(CAImage*, m_pSelectedBackGroundImage, SelectedBackGroundImage);
     
-    CC_SYNTHESIZE_RETAIN(CAImage*, m_pSelectedIndicatorImage, SelectedIndicatorImage);
+    CC_PROPERTY(CAView*, m_pSelectedIndicatorView, SelectedIndicatorView);
+    
+    CC_PROPERTY(CAImage*, m_pSelectedIndicatorImage, SelectedIndicatorImage);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTitleColor, TitleColorForNormal);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sSelectedTitleColor, TitleColorForSelected);
     
     CC_SYNTHESIZE(unsigned int, m_nMaxShowCount, MaxShowCount)
     
     CC_SYNTHESIZE(CATabBarDelegate* , m_pDelegate, Delegate);
-    
-    CC_SYNTHESIZE(CAColor4B, m_sTitleColor, TitleColorForNormal);
-    
-    CC_SYNTHESIZE(CAColor4B, m_sSelectedTitleColor, TitleColorForSelected);
     
     CC_SYNTHESIZE_READONLY(std::vector<CATabBarItem*>, m_pItems, Items);
     
@@ -159,10 +161,6 @@ protected:
     void updateTabBar();
     
 protected:
-    
-    CAView* m_pBackGround;
-    
-    CAView* m_pSelectedIndicator;
     
     CATabBarItem* m_pSelectedItem;
     

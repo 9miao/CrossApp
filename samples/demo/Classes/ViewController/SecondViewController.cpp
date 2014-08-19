@@ -2,13 +2,14 @@
 
 #define CAColor_blueStyle ccc4(51,204,255,255)
 
+#define CELL_COUNT 16
 
 SecondViewController::SecondViewController() :
 flag(false)
 {
 	for (int i = 0; i < NUM; i++)
 	{
-		sect[i] = 8;
+		sect[i] = CELL_COUNT;
 	}
 }
 
@@ -43,7 +44,7 @@ void SecondViewController::loadJsonData()
 	if (reader.parse(jsonData->getCString(), value))
 	{
 		int length = value["info"].size();
-		CCLog("-------------");
+
 		for (int index = 0; index < length; index++)
 		{
 			Info* personInfo = new Info();
@@ -58,7 +59,7 @@ void SecondViewController::loadJsonData()
 	}
 	if (flag)
 	{
-		p_TableView->reloadData();
+		//p_TableView->reloadData();
 	}
 }
 
@@ -104,7 +105,7 @@ void SecondViewController::tableViewDidShowPullUpView(CATableView* table)
 
 CATableViewCell* SecondViewController::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
-	Info* p_List = (Info*)personList->objectForKey(row);
+	Info* p_List = (Info*)personList->objectForKey(row%8);
 	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("aaa");
 	std::string str1, str2;
 	if (cell == NULL)
@@ -166,7 +167,7 @@ CAView* SecondViewController::tableViewSectionViewForHeaderInSection(CATableView
 	CAButton* headControl1 = CAButton::createWithCenter(CCRect(viewSize.width*0.1, viewSize.height*0.5, viewSize.height*0.8, viewSize.height*0.8),
 		CAButtonTypeRoundedRect);
 	headControl1->setTag(100 + (int)section);
-	if (sect[section] == 8)
+	if (sect[section] == CELL_COUNT)
 	{
 		headControl1->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("source_material/close1.png")));
 	}
@@ -194,6 +195,16 @@ CAView* SecondViewController::tableViewSectionViewForFooterInSection(CATableView
 {
 	CAView* view = CAView::createWithColor(CAColor_yellow);
 
+    char head[10] = "";
+    CALabel* header = CALabel::createWithCenter(CCRect(viewSize.width*0.5, viewSize.height*0.5, viewSize.width*0.3, viewSize.height));
+	sprintf(head, "Section-%d", section);
+	header->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+	header->setText(head);
+	header->setColor(CAColor_blueStyle);
+	header->setTextAlignment(CATextAlignmentCenter);
+	header->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+	view->addSubview(header);
+    
 	return view;
 }
 
@@ -219,7 +230,7 @@ unsigned int SecondViewController::tableViewHeightForHeaderInSection(CATableView
 
 unsigned int SecondViewController::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
 {
-	return 1;
+	return this->getView()->getBounds().size.height*0.1;
 }
 
 void SecondViewController::switchCellListInSection(CAControl* btn, CCPoint point)
@@ -227,7 +238,7 @@ void SecondViewController::switchCellListInSection(CAControl* btn, CCPoint point
 	CAButton* headerBtn = (CAButton*)btn;
 	int section = btn->getTag() - 100;
 	CC_RETURN_IF(section >= NUM);
-	sect[section] = sect[section] ? 0 : 8;
+	sect[section] = sect[section] ? 0 : CELL_COUNT;
 	btn->retain();
 	p_TableView->reloadData();
 	btn->autorelease();

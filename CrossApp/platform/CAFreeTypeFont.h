@@ -31,7 +31,6 @@ typedef struct TGlyph_
 	FT_UInt    index;  // glyph index
     FT_Vector  pos;    // glyph origin on the baseline
 	FT_Glyph   image;  // glyph image
-	FT_Pos	   slotW;
 } TGlyph, *PGlyph;
 
 typedef struct FontBufferInfo
@@ -39,13 +38,6 @@ typedef struct FontBufferInfo
 	unsigned char*  pBuffer;  
 	unsigned long  size;  
 } FontBufferInfo;
-
-typedef struct FTWordInfo
-{
-	std::vector<TGlyph> glyphs; // glyphs for the word
-	FT_BBox             bbox;   // bounding box containing all of the glyphs in the word
-} FTWordInfo;
-
 
 typedef struct FTLineInfo
 {
@@ -58,23 +50,24 @@ typedef struct FTLineInfo
 
 class CC_DLL CAFreeTypeFont
 {
+	friend class CAFTFontCache;
 public:
 
 	CAFreeTypeFont();
-	~CAFreeTypeFont();
+	virtual ~CAFreeTypeFont();
 
-	static int getFontHeight(const char* pFontName, unsigned long nSize);
-	// text encode with utf8
-	static int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text);
-
-	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int width, int height, 
-		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
+	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
 
 	void setForTextField(bool on) { m_isForTextField = on; }
-private:
+
+protected:
 	bool initFreeTypeFont(const char* pFontName, unsigned long nSize);
+	void finiFreeTypeFont();
 	unsigned char* loadFont(const char *pFontName, unsigned long *size);
 	unsigned char* getBitmap(CCImage::ETextAlign eAlignMask, int* outWidth, int* outHeight);
+	int getFontHeight();
+	int getStringWidth(const std::string& text);
+	void destroyAllLines();
 
 	FT_Error initGlyphs(const char* text);
 	FT_Error initWordGlyphs(std::vector<TGlyph>& glyphs, const std::string& text, FT_Vector& pen);

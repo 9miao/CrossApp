@@ -19,7 +19,7 @@
 
 NS_CC_BEGIN
 
-CAButton::CAButton(CAButtonType buttonType)
+CAButton::CAButton(const CAButtonType& buttonType)
 :m_bAllowsSelected(false)
 ,m_bSelected(false)
 ,m_textTag("")
@@ -78,7 +78,7 @@ void CAButton::onEnterTransitionDidFinish()
     this->setControlState(m_eControlState);
 }
 
-CAButton* CAButton::create(CAButtonType buttonType)
+CAButton* CAButton::create(const CAButtonType& buttonType)
 {
     
     CAButton* btn = new CAButton(buttonType);
@@ -93,7 +93,7 @@ CAButton* CAButton::create(CAButtonType buttonType)
     return NULL;
 }
 
-CAButton* CAButton::createWithFrame(const CCRect& rect, CAButtonType buttonType)
+CAButton* CAButton::createWithFrame(const CCRect& rect, const CAButtonType& buttonType)
 {
 
     CAButton* btn = new CAButton(buttonType);
@@ -108,7 +108,7 @@ CAButton* CAButton::createWithFrame(const CCRect& rect, CAButtonType buttonType)
     return NULL;
 }
 
-CAButton* CAButton::createWithCenter(const CCRect& rect, CAButtonType buttonType)
+CAButton* CAButton::createWithCenter(const CCRect& rect, const CAButtonType& buttonType)
 {
     
     CAButton* btn = new CAButton(buttonType);
@@ -225,7 +225,7 @@ void CAButton::setBackGroundViewRoundedRect()
     }
 }
 
-void CAButton::setBackGroundViewForState(CAControlState controlState, CAView *var)
+void CAButton::setBackGroundViewForState(const CAControlState& controlState, CAView *var)
 {
     if (controlState == CAControlStateAll)
     {
@@ -255,7 +255,7 @@ void CAButton::setBackGroundViewForState(CAControlState controlState, CAView *va
     this->updateWithPreferredSize();
 }
 
-CAView* CAButton::getBackGroundViewForState(CAControlState controlState)
+CAView* CAButton::getBackGroundViewForState(const CAControlState& controlState)
 {
     if (controlState == CAControlStateAll)
     {
@@ -264,7 +264,7 @@ CAView* CAButton::getBackGroundViewForState(CAControlState controlState)
     return m_pBackGroundView[controlState];
 }
 
-void CAButton::setImageForState(CAControlState controlState, CAImage* var)
+void CAButton::setImageForState(const CAControlState& controlState, CAImage* var)
 {
     if (controlState == CAControlStateAll)
     {
@@ -287,7 +287,7 @@ void CAButton::setImageForState(CAControlState controlState, CAImage* var)
     }
 }
 
-void CAButton::setTitleForState(CAControlState controlState, std::string var)
+void CAButton::setTitleForState(const CAControlState& controlState, const std::string& var)
 {
     if (controlState == CAControlStateAll)
     {
@@ -308,7 +308,7 @@ void CAButton::setTitleForState(CAControlState controlState, std::string var)
     }
 }
 
-void CAButton::setImageColorForState(CAControlState controlState, CAColor4B var)
+void CAButton::setImageColorForState(const CAControlState& controlState, const CAColor4B& var)
 {
     if (controlState == CAControlStateAll)
     {
@@ -326,7 +326,7 @@ void CAButton::setImageColorForState(CAControlState controlState, CAColor4B var)
     }
 }
 
-void CAButton::setTitleColorForState(CAControlState controlState, CAColor4B var)
+void CAButton::setTitleColorForState(const CAControlState& controlState, const CAColor4B& var)
 {
     if (controlState == CAControlStateAll)
     {
@@ -344,7 +344,7 @@ void CAButton::setTitleColorForState(CAControlState controlState, CAColor4B var)
     }
 }
 
-void CAButton::setTitleFontName(std::string var)
+void CAButton::setTitleFontName(const std::string& var)
 {
     if (m_sTitleFontName.compare(var))
     {
@@ -472,7 +472,7 @@ void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pE
     }
 }
 
-void CAButton::setControlState(CAControlState var)
+void CAButton::setControlState(const CAControlState& var)
 {
     CAControl::setControlState(var);
 
@@ -604,7 +604,7 @@ void CAButton::interruptTouchState()
     }
 }
 
-bool CAButton::setTouchBegin(CCPoint point)
+bool CAButton::setTouchBegin(const CCPoint& point)
 {
 	m_bTouchClick = true;
 
@@ -621,7 +621,7 @@ bool CAButton::setTouchBegin(CCPoint point)
 	return m_bTouchClick;
 }
 
-void CAButton::setTouchUpInSide(CCPoint point)
+void CAButton::setTouchUpInSide(const CCPoint& point)
 {
     if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
     {
@@ -629,7 +629,7 @@ void CAButton::setTouchUpInSide(CCPoint point)
     }
 }
 
-void CAButton::setTouchUpSide(CCPoint point)
+void CAButton::setTouchUpSide(const CCPoint& point)
 {
     if (m_pTarget[CAControlEventTouchUpSide] && m_selTouch[CAControlEventTouchUpSide])
     {
@@ -637,7 +637,7 @@ void CAButton::setTouchUpSide(CCPoint point)
     }
 }
 
-void CAButton::setTouchMoved(CrossApp::CCPoint point)
+void CAButton::setTouchMoved(const CCPoint& point)
 {
     if (m_pTarget[CAControlEventTouchMoved] && m_selTouch[CAControlEventTouchMoved])
     {
@@ -645,7 +645,7 @@ void CAButton::setTouchMoved(CrossApp::CCPoint point)
     }
 }
 
-void CAButton::setTouchMovedOutSide(CrossApp::CCPoint point)
+void CAButton::setTouchMovedOutSide(const CCPoint& point)
 {
     if (m_pTarget[CAControlEventTouchMovedOutSide] && m_selTouch[CAControlEventTouchMovedOutSide])
     {

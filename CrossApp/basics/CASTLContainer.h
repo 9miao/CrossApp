@@ -18,6 +18,11 @@
 
 NS_CC_BEGIN
 
+template<class T>
+class CADeque;
+
+template<class T>
+class CAList;
 
 template<class T>
 class CAVector
@@ -60,10 +65,43 @@ public:
 	CAVector<T>(const CAVector<T>& other)
 	{
 		CCLOGINFO("In the copy constructor!");
-		_data = other._data;
+		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
 
+    CAVector<T>(const CADeque<T>& other)
+	{
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CAVector<T>(const CAList<T>& other)
+	{
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CAVector<T>(const std::vector<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CAVector<T>(const std::deque<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CAVector<T>(const std::list<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
 	CAVector<T>& operator=(const CAVector<T>& other)
 	{
 		if (this != &other)
@@ -75,7 +113,6 @@ public:
 		}
 		return *this;
 	}
-
 
 	void reserve(size_t n)
 	{
@@ -167,12 +204,21 @@ public:
 		return true;
 	}
 
+    void insert(size_t index, T object)
+	{
+		CCAssert(index >= 0 && index <= size(), "Invalid index!");
+		CCAssert(object != NULL, "The object should not be nullptr");
+		_data.insert(_data.begin() + index, object);
+		object->retain();
+	}
+    
 	void pushBack(T object)
 	{
 		CCAssert(object != NULL, "The object should not be nullptr");
 		_data.push_back(object);
 		object->retain();
 	}
+    
 	void pushBack(const CAVector<T>& other)
 	{
 		for (int i = 0; i < other.size(); i++)
@@ -180,15 +226,7 @@ public:
 			pushBack(other.at(i));
 		}
 	}
-
-	void insert(size_t index, T object)
-	{
-		CCAssert(index >= 0 && index <= size(), "Invalid index!");
-		CCAssert(object != NULL, "The object should not be nullptr");
-		_data.insert(_data.begin() + index, object);
-		object->retain();
-	}
-
+    
 	void popBack()
 	{
 		CCAssert(!_data.empty(), "no objects added");
@@ -339,6 +377,41 @@ public:
 		addRefForAllObjects();
 	}
 
+    CAList<T>(const CAVector<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CAList<T>(const CADeque<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CAList<T>(const std::vector<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CAList<T>(const std::deque<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CAList<T>(const std::list<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
 	CAList<T>& operator=(const CAList<T>& other)
 	{
 		if (this != &other)
@@ -400,6 +473,14 @@ public:
 		return true;
 	}
 
+    void insert(size_t index, T object)
+	{
+		CCAssert(index >= 0 && index <= size(), "Invalid index!");
+		CCAssert(object != NULL, "The object should not be nullptr");
+		_data.insert(_data.begin() + index, object);
+		object->retain();
+	}
+    
 	void pushBack(T object)
 	{
 		CCAssert(object != NULL, "The object should not be nullptr");
@@ -557,10 +638,43 @@ public:
 
 	CADeque<T>(const CADeque<T>& other)
 	{
-		_data = other._data;
+		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
 
+    CADeque<T>(const CAVector<T>& other)
+	{
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CADeque<T>(const CAList<T>& other)
+	{
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CADeque<T>(const std::vector<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CADeque<T>(const std::deque<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
+    CADeque<T>(const std::list<T>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		_data.insert(_data.begin(), other.begin(), other.end());
+		addRefForAllObjects();
+	}
+    
 	const CADeque<T>& operator=(const CADeque<T>& other)
 	{
 		if (this != &other)
@@ -573,6 +687,14 @@ public:
 		return *this;
 	}
 
+    void insert(size_t index, T object)
+	{
+		CCAssert(index >= 0 && index <= size(), "Invalid index!");
+		CCAssert(object != NULL, "The object should not be nullptr");
+		_data.insert(_data.begin() + index, object);
+		object->retain();
+	}
+    
 	void pushFront(T object)
 	{
 		CCAssert(object != NULL, "The object should not be nullptr");
@@ -586,8 +708,6 @@ public:
 		_data.push_back(object);
 		object->retain();
 	}
-
-
 
 	void popFront()
 	{
@@ -604,7 +724,7 @@ public:
 		if (_data.empty())
 			return;
 
-		T last = _data.front();
+		T last = _data.back();
 		_data.pop_back();
 		last->release();
 	}

@@ -34,25 +34,26 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
-    CC_PROPERTY(string, m_nText, Text);
+    CC_PROPERTY_PASS_BY_REF(string, m_nText, Text);
     
     CC_PROPERTY(unsigned int, m_nfontSize, FontSize);
     
-    CC_PROPERTY(string, m_nfontName, FontName);
+    CC_PROPERTY_PASS_BY_REF(string, m_nfontName, FontName);
     
-    CC_PROPERTY(CAVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
+    CC_PROPERTY_PASS_BY_REF(CAVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
     
-    CC_PROPERTY(CATextAlignment, m_nTextAlignment, TextAlignment);
+    CC_PROPERTY_PASS_BY_REF(CATextAlignment, m_nTextAlignment, TextAlignment);
     
-    CC_PROPERTY(CCSize, m_nDimensions, Dimensions);
+    CC_PROPERTY_PASS_BY_REF(CCSize, m_nDimensions, Dimensions);
     
     CC_PROPERTY(unsigned int, m_nNumberOfLine, NumberOfLine);
     
-    CC_SYNTHESIZE_READONLY(CCSize, m_cLabelSize, LabelSize);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_cLabelSize, LabelSize);
     
     virtual void visit();
     
     void sizeToFit();
+    
 protected:
     
     virtual void setContentSize(const CCSize& var);

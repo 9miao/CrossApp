@@ -84,7 +84,7 @@ void CASwitch::onEnterTransitionDidFinish()
         this->addSubview(m_thumbTintImageView);
     }
     
-    this->updateSwitchState(false);
+    this->updateSwitchState(false, false);
 }
 
 void CASwitch::setIsOn(bool on, bool animated)
@@ -93,7 +93,7 @@ void CASwitch::setIsOn(bool on, bool animated)
     {
         m_isOn = on;
         CC_RETURN_IF(!m_bRunning);
-        this->updateSwitchState(animated);
+        this->updateSwitchState(animated, false);
     }
 }
 
@@ -139,7 +139,7 @@ void CASwitch::setThumbTintImage(CAImage* thumbTintImage)
     }
 }
 
-void CASwitch::updateSwitchState(bool animated)
+void CASwitch::updateSwitchState(bool animated, bool callfunced)
 {
     float time = 0;
     
@@ -175,11 +175,17 @@ void CASwitch::updateSwitchState(bool animated)
         CCPoint point = CCPointZero;
         point.x = m_isOn ? (m_obContentSize.width - m_thumbTintImageView->getBounds().size.width) : 0;
         m_thumbTintImageView->stopAllActions();
-        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(time, point);
-        CCEaseSineOut* sineTo = CCEaseSineOut::create(moveTo);
-        CCDelayTime* delayTime = CCDelayTime::create(1/60.0f);
-        CCCallFunc* callFunc = CCCallFunc::create(this, callfunc_selector(CASwitch::updateValueChanged));
-        CCSequence* actions = CCSequence::create(sineTo, delayTime, callFunc, NULL);
+        
+        CCArray* array = CCArray::create();
+        array->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(time, point)));
+        array->addObject(CCDelayTime::create(1/60.0f));
+        
+        if (callfunced)
+        {
+            array->addObject(CCCallFunc::create(this, callfunc_selector(CASwitch::updateValueChanged)));
+        }
+        
+        CCSequence* actions = CCSequence::create(array);
         m_thumbTintImageView->runAction(actions);
     }
 }
@@ -228,7 +234,7 @@ bool CASwitch::initWithFrame(const CCRect& rect)
     }
     this->setColor(CAColor_clear);
     this->setFrame(rect);
-    this->setContentSize(CADipSize(80, 48));
+    this->setContentSize(CADipSize(100, 60));
     return true;
 }
 
@@ -240,7 +246,7 @@ bool CASwitch::initWithCenter(const CCRect& rect)
     }
     this->setColor(CAColor_clear);
     this->setCenter(rect);
-    this->setContentSize(CADipSize(80, 48));
+    this->setContentSize(CADipSize(100, 60));
     return true;
 }
 
@@ -266,7 +272,8 @@ void CASwitch::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     if (getBounds().containsPoint(point))
     {
         this->setControlState(CAControlStateNormal);
-        this->setIsOn(!m_isOn, true);
+        m_isOn = !m_isOn;
+        this->updateSwitchState(true, true);
     }
 }
 

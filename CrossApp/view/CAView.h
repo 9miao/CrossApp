@@ -209,8 +209,6 @@ public:
 
     virtual void onExitTransitionDidStart();
 
-    virtual void cleanup(void);
-
     virtual void* getUserData();
 
     virtual void setUserData(void *pUserData);

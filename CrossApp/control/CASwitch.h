@@ -57,7 +57,7 @@ public:
     virtual void setOffImage(CAImage* offImage);
     void setThumbTintImage(CAImage* thumbTintImage);
 protected:
-    void updateSwitchState(bool animated);
+    void updateSwitchState(bool animated, bool callfunced);
     void updateValueChanged();
     void setContentSize(const CCSize & var);
     using CAControl::addTarget;

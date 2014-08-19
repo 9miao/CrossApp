@@ -126,12 +126,18 @@ CAView::CAView(void)
     m_pobBatchView = NULL;
     m_pobImageAtlas = NULL;
 
+    CAScheduler::getScheduler()->resumeTarget(this);
+    m_pActionManager->resumeTarget(this);
+    
     ++viewCount;
     //CCLog("CAView = %d\n",viewCount);
 }
 
 CAView::~CAView(void)
 {
+    CAScheduler::getScheduler()->pauseTarget(this);
+    m_pActionManager->pauseTarget(this);
+    
     CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pCamera);
     CC_SAFE_RELEASE(m_pShaderProgram);
@@ -764,16 +770,6 @@ void CAView::setShaderProgram(CAGLProgram *pShaderProgram)
     m_pShaderProgram = pShaderProgram;
 }
 
-void CAView::cleanup()
-{
-    // actions
-    this->stopAllActions();
-    
-    // timers
-    arrayMakeObjectsPerformSelector(m_pSubviews, cleanup, CAView*);
-}
-
-
 const char* CAView::description()
 {
     return CCString::createWithFormat("<CAView | Tag = %d>", m_nTag)->getCString();
@@ -936,8 +932,7 @@ void CAView::removeAllSubviews()
                     subview->onExitTransitionDidStart();
                     subview->onExit();
                 }
-                
-                subview->cleanup();
+
                 // set parent nil at the end
                 subview->setSuperview(NULL);
             }
@@ -960,10 +955,6 @@ void CAView::detachSubview(CAView *subview)
         subview->onExitTransitionDidStart();
         subview->onExit();
     }
-    
-    // If you don't do cleanup, the child's actions will not get removed and the
-    // its scheduledSelectors_ dict will not get released!
-    subview->cleanup();
     
     // set parent nil at the end
     subview->setSuperview(NULL);
@@ -1202,24 +1193,6 @@ void CAView::visit()
         this->draw();
     }
     
-//    this->draw();
-//    
-//    if(m_pSubviews && m_pSubviews->count() > 0)
-//    {
-//        this->sortAllSubviews();
-//        // draw children zOrder < 0
-//        ccArray *arrayData = m_pSubviews->data;
-//        
-//        for(unsigned int i = 0 ; i < arrayData->num; i++ )
-//        {
-//            CAView* pNode = (CAView*) arrayData->arr[i];
-//            if (pNode)
-//            {
-//                pNode->visit();
-//            }
-//        }
-//    }
-    
     m_uOrderOfArrival = 0;
     
     if (!m_bDisplayRange)
@@ -1293,9 +1266,6 @@ void CAView::onEnter()
     arrayMakeObjectsPerformSelector(m_pSubviews, onEnter, CAView*);
 
     m_bRunning = true;
-    
-    CAScheduler::getScheduler()->resumeTarget(this);
-    m_pActionManager->resumeTarget(this);
 }
 
 void CAView::onEnterTransitionDidFinish()
@@ -1324,9 +1294,6 @@ void CAView::onExit()
     m_bRunning = false;
     
     arrayMakeObjectsPerformSelector(m_pSubviews, onExit, CAView*);
-    
-    CAScheduler::getScheduler()->pauseTarget(this);
-    m_pActionManager->pauseTarget(this);
 }
 
 void CAView::setActionManager(CCActionManager* actionManager)
@@ -1348,7 +1315,7 @@ CCAction * CAView::runAction(CCAction* action)
 {
     CCAssert( action != NULL, "Argument must be non-nil");
     action = CCSequence::createWithTwoActions(CCDelayTime::create(1/60.0f), (CCFiniteTimeAction*)action);
-    m_pActionManager->addAction(action, this, !m_bRunning);
+    m_pActionManager->addAction(action, this, false);
     return action;
 }
 
@@ -1719,7 +1686,27 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
     
     if (!m_obContentSize.equals(untrimmedSize))
     {
-        setContentSize(untrimmedSize);
+        CCRect rect;
+        if (m_bFrame)
+        {
+            rect = this->getFrame();
+        }
+        else
+        {
+            rect = this->getCenter();
+        }
+        rect.size = untrimmedSize;
+        
+        if (m_bFrame)
+        {
+            this->setFrame(rect);
+        }
+        else
+        {
+            this->setCenter(rect);
+        }
+        
+        
     }
     
     CCPoint relativeOffset = m_obUnflippedOffsetPositionFromCenter;

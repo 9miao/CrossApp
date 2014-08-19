@@ -15,6 +15,7 @@
 #include "view/CAScrollView.h"
 #include "dispatcher/CAKeypadDelegate.h"
 #include "dispatcher/CAKeypadDispatcher.h"
+#include "basics/CASTLContainer.h"
 NS_CC_BEGIN
 
 typedef enum
@@ -43,7 +44,7 @@ public:
     
     const char* getNibName();
     
-    CC_SYNTHESIZE(std::string, m_sTitle, Title);
+    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sTitle, Title);
     
     CC_SYNTHESIZE_READONLY(CANavigationController*, m_pNavigationController, NavigationController);
     
@@ -156,7 +157,7 @@ public:
     
     CC_SYNTHESIZE_READONLY(CANavigationBar*, m_pNavigationBar, NavigationBar);
     
-    CC_SYNTHESIZE_READONLY(CABarVerticalAlignment, m_eNavigationBarVerticalAlignment, NavigationBarVerticalAlignment);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eNavigationBarVerticalAlignment, NavigationBarVerticalAlignment);
     
     void updateItem(CAViewController* viewController);
     
@@ -190,7 +191,7 @@ protected:
     
 protected:
     
-    std::vector<CAViewController*> m_pViewControllers;
+    CAVector<CAViewController*> m_pViewControllers;
     
     CAView* m_pContainer;
     
@@ -226,7 +227,7 @@ public:
     
     CC_SYNTHESIZE_READONLY(CATabBar*, m_pTabBar, TabBar);
     
-    CC_SYNTHESIZE_READONLY(CABarVerticalAlignment, m_eTabBarVerticalAlignment, TabBarVerticalAlignment);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eTabBarVerticalAlignment, TabBarVerticalAlignment);
     
     void updateItem(CAViewController* viewController);
     
@@ -256,7 +257,7 @@ protected:
     
 protected:
     
-    std::vector<CAViewController*> m_pViewControllers;
+    CAVector<CAViewController*> m_pViewControllers;
     
     unsigned int m_nSelectedIndex;
     

@@ -29,7 +29,7 @@ class CC_DLL CAButton : public CAControl
     
 public:
     
-    CAButton(CAButtonType buttonType);
+    CAButton(const CAButtonType& buttonType);
     
     virtual ~CAButton(void);
 
@@ -37,11 +37,11 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
-    static CAButton* create(CAButtonType buttonType);
+    static CAButton* create(const CAButtonType& buttonType);
     
-    static CAButton* createWithFrame(const CCRect& rect, CAButtonType buttonType);
+    static CAButton* createWithFrame(const CCRect& rect, const CAButtonType& buttonType);
 
-    static CAButton* createWithCenter(const CCRect& rect, CAButtonType buttonType);
+    static CAButton* createWithCenter(const CCRect& rect, const CAButtonType& buttonType);
     
 public:
     
@@ -51,21 +51,21 @@ public:
     
     virtual bool initWithCenter(const CCRect& rect);
     
-    void setBackGroundViewForState(CAControlState controlState, CAView *var);
+    void setBackGroundViewForState(const CAControlState& controlState, CAView *var);
     
-    CAView* getBackGroundViewForState(CAControlState controlState);
+    CAView* getBackGroundViewForState(const CAControlState& controlState);
     
-    void setImageForState(CAControlState controlState, CAImage* var);
+    void setImageForState(const CAControlState& controlState, CAImage* var);
     
-    void setTitleForState(CAControlState controlState, std::string var);
+    void setTitleForState(const CAControlState& controlState, const std::string& var);
     
-    void setImageColorForState(CAControlState controlState, CAColor4B var);
+    void setImageColorForState(const CAControlState& controlState, const CAColor4B& var);
     
-    void setTitleColorForState(CAControlState controlState, CAColor4B var);
+    void setTitleColorForState(const CAControlState& controlState, const CAColor4B& var);
     
-    void setTitleFontName(std::string var);
+    void setTitleFontName(const std::string& var);
     
-    void setControlState(CAControlState var);
+    virtual void setControlState(const CAControlState& var);
     
     using CAControl::addTarget;
     
@@ -75,7 +75,7 @@ public:
     
 public:
     
-    CC_SYNTHESIZE(std::string, m_textTag, TextTag);
+    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_textTag, TextTag);
     
     CC_SYNTHESIZE_IS(bool, m_closeTapSound, CloseTapSound);
 
@@ -125,15 +125,15 @@ protected:
     
     void updateWithPreferredSize();
     
-    void setTouchMoved(CCPoint point);
+    void setTouchMoved(const CCPoint& point);
     
-    void setTouchMovedOutSide(CCPoint point);
+    void setTouchMovedOutSide(const CCPoint& point);
     
-    void setTouchUpSide(CCPoint point);
+    void setTouchUpSide(const CCPoint& point);
     
-    void setTouchUpInSide(CCPoint point);
+    void setTouchUpInSide(const CCPoint& point);
     
-    bool setTouchBegin(CCPoint point);
+    bool setTouchBegin(const CCPoint& point);
 
     void setContentSize(const CCSize & var);
 

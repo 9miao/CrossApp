@@ -425,6 +425,8 @@
 		B0B553D7193485BE0065053D /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553CF193485BE0065053D /* CAImage.h */; };
 		B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553D0193485BE0065053D /* CAImageCache.cpp */; };
 		B0B553D9193485BE0065053D /* CAImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553D1193485BE0065053D /* CAImageCache.h */; };
+		B0C512C719A2DF9F00E6934B /* CAFTFontCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */; };
+		B0C512C819A2DF9F00E6934B /* CAFTFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */; };
 		B0F7E503198792180048F46B /* CAPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F7E501198792180048F46B /* CAPageView.cpp */; };
 		B0F7E504198792180048F46B /* CAPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F7E502198792180048F46B /* CAPageView.h */; };
 /* End PBXBuildFile section */
@@ -803,6 +805,8 @@
 		B0B553CF193485BE0065053D /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
 		B0B553D0193485BE0065053D /* CAImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCache.cpp; sourceTree = "<group>"; };
 		B0B553D1193485BE0065053D /* CAImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageCache.h; sourceTree = "<group>"; };
+		B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTFontCache.cpp; sourceTree = "<group>"; };
+		B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTFontCache.h; sourceTree = "<group>"; };
 		B0F7E501198792180048F46B /* CAPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageView.cpp; sourceTree = "<group>"; };
 		B0F7E502198792180048F46B /* CAPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1111,6 +1115,8 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */,
+				B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */,
 				B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */,
 				B0596A571976287B00B1E8CB /* CAFreeTypeFont.h */,
 				B01F6509196585B2005C14FC /* CADensityDpi.h */,
@@ -1575,6 +1581,7 @@
 				B0596AE9197629BE00B1E8CB /* ftlzw.h in Headers */,
 				04EABB2D1956DAEA00198A8E /* CCActionInstant.cpp in Headers */,
 				B0596B3A1976343300B1E8CB /* mprintf.h in Headers */,
+				B0C512C819A2DF9F00E6934B /* CAFTFontCache.h in Headers */,
 				04EABB2E1956DAEA00198A8E /* CCActionInterval.cpp in Headers */,
 				B0596AD6197629BE00B1E8CB /* ftautoh.h in Headers */,
 				B0596AD0197629BE00B1E8CB /* ftheader.h in Headers */,
@@ -1967,6 +1974,7 @@
 				04EAA0021956CE2500198A8E /* CAKeypadDelegate.cpp in Sources */,
 				04EAA0041956CE2500198A8E /* CAKeypadDispatcher.cpp in Sources */,
 				04EAA0071956CE2500198A8E /* CATouch.cpp in Sources */,
+				B0C512C719A2DF9F00E6934B /* CAFTFontCache.cpp in Sources */,
 				04EAA0091956CE2500198A8E /* CATouchDispatcher.cpp in Sources */,
 				04EAA00B1956CE2500198A8E /* CABatchView.cpp in Sources */,
 				04EAA00F1956CE2500198A8E /* CAImageView.cpp in Sources */,

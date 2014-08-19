@@ -38,8 +38,12 @@ public:
 
     CAImage* addImage(const char* fileimage);
     
+    CAImage* addImageFullPath(const char* fileimage);
+    
     void addImageAsync(const char *path, CAObject *target, SEL_CallFuncO selector);
 
+    void addImageFullPathAsync(const char *path, CAObject *target, SEL_CallFuncO selector);
+    
     CAImage* addUIImage(CCImage *image, const char *key);
 
     CAImage* addETCImage(const char* filename);

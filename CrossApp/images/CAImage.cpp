@@ -21,7 +21,7 @@
 #include <cctype>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
-#include "platform/CAFreeTypeFont.h"
+#include "platform/CAFTFontCache.h"
 #endif
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -52,7 +52,10 @@ CAImage::CAImage()
 , m_bHasMipmaps(false)
 , m_pShaderProgram(NULL)
 , m_bMonochrome(false)
+, m_pData(NULL)
+, m_nDataLenght(0)
 {
+    
 }
 
 CAImage::~CAImage()
@@ -103,15 +106,15 @@ CAImage*  CAImage::createWithString(const char *text, const char *fontName, floa
     
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
     
-    CAFreeTypeFont cFreeTypeFont;
-    cFreeTypeFont.setForTextField(isForTextField);
+	g_AFTFontCache.setForTextField(isForTextField);
     
-	CAImage* image = cFreeTypeFont.initWithString(text,
-                                         fontName,
-                                         fontSize,
-                                         dimensions.width,
-                                         dimensions.height,
-                                         hAlignment,vAlignment);
+	CAImage* image = g_AFTFontCache.initWithString(text,
+                                                   fontName,
+                                                   fontSize,
+                                                   dimensions.width,
+                                                   dimensions.height,
+                                                   hAlignment,vAlignment);
+    
     return image;
     
 #else
@@ -169,12 +172,32 @@ int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
 {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
     
-    return CAFreeTypeFont::getFontHeight(pFontName, nSize);
+    return g_AFTFontCache.getFontHeight(pFontName, nSize);
 
 #else
     
     return CCImage::getFontHeight(pFontName, (float)nSize);
     
+#endif
+}
+
+int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const char* pText)
+{
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+    return g_AFTFontCache.getStringWidth(pFontName, nSize, pText);
+#else
+    
+    CAImage *image = CAImage::createWithString(pText,
+                                               pFontName,
+                                               nSize,
+                                               CCSizeZero,
+                                               CATextAlignmentLeft,
+                                               CAVerticalTextAlignmentCenter);
+    if(image != NULL)
+    {
+        return image->getContentSize().width;
+    }
+    return 0;
 #endif
 }
 
@@ -253,7 +276,7 @@ void CAImage::releaseData(void *data)
 void* CAImage::keepData(void *data, unsigned int length)
 {
     CC_UNUSED_PARAM(length);
-    //The texture data mustn't be saved because it isn't a mutable texture.
+    //The image data mustn't be saved because it isn't a mutable image.
     return data;
 }
 
@@ -348,7 +371,8 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
         CCAssert(0, "NSInternalInconsistencyException");
 
     }
-
+    m_pData = ((unsigned char*)const_cast<char*>((const char*)data));
+    m_nDataLenght = (unsigned long)pixelsWide * pixelsHigh;
     m_tContentSize = contentSize;
     m_uPixelsWide = pixelsWide;
     m_uPixelsHigh = pixelsHigh;
@@ -797,6 +821,44 @@ unsigned int CAImage::bitsPerPixelForFormat(CAImagePixelFormat format)
 unsigned int CAImage::bitsPerPixelForFormat()
 {
 	return this->bitsPerPixelForFormat(m_ePixelFormat);
+}
+
+bool CAImage::saveToFile(const std::string& fullPath)
+{
+    FILE *fp = fopen(fullPath.c_str(), "wb+");
+    
+	if (!fp) return false;
+    
+    fwrite(m_pData, sizeof(char), m_nDataLenght, fp);
+	fclose(fp);
+    
+    return true;
+}
+
+const char* CAImage::getImageFileType()
+{
+    const char* text = NULL;
+    
+    unsigned char p = m_pData[0] ;
+    
+    switch (p)
+    {
+        case 0xFF:
+            text = "jpeg";
+            break;
+        case 0x89:
+            text = "png";
+            break;
+        case 0x47:
+            text = "gif";
+            break;
+        case 0x49:
+        case 0x4D:
+            text = "tiff";
+        default:
+            break;
+    }
+    return text;
 }
 
 CAImage* CAImage::CC_WHITE_IMAGE()

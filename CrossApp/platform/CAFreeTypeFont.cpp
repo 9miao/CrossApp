@@ -32,47 +32,7 @@ CAFreeTypeFont::CAFreeTypeFont()
 
 CAFreeTypeFont::~CAFreeTypeFont() 
 {
-	if(m_face)
-	{
-		FT_Done_Face(m_face);
-	}
-
-    for (int i=0; i<m_lines.size(); i++)
-    {
-        delete m_lines[i];
-    }
-    m_lines.clear();
-    m_currentLine = NULL;
-}
-
-
-int CAFreeTypeFont::getFontHeight(const char* pFontName, unsigned long nSize)
-{
-	CAFreeTypeFont cFontTemp;
-	if (cFontTemp.initFreeTypeFont(pFontName, nSize))
-	{
-		FT_Face& tface = cFontTemp.m_face;
-		return ((tface->size->metrics.ascender) >> 6) - ((tface->size->metrics.descender) >> 6);
-	}
-	return 0;
-}
-
-int CAFreeTypeFont::getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text)
-{
-	CAFreeTypeFont cFontTemp;
-	if (!cFontTemp.initFreeTypeFont(pFontName, nSize))
-		return 0;
-
-	std::vector<TGlyph> glyphs;
-
-	FT_Vector vt;
-	memset(&vt, 0, sizeof(vt));
-	if (0 != cFontTemp.initWordGlyphs(glyphs, text, vt))
-		return 0;
-
-	FT_BBox bbox;
-	cFontTemp.compute_bbox(glyphs, &bbox);
-	return bbox.xMax - bbox.xMin;
+	finiFreeTypeFont();
 }
 
 
@@ -81,63 +41,72 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	FT_Error error = 0;
 	unsigned long size = 0;
 	unsigned char* pBuffer = NULL;
-
+    
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
-
+    
+	m_inWidth = inWidth;
+	m_inHeight = inHeight;
+    
+	// attempt to load font from Resources fonts folder
+	pBuffer = loadFont(pFontName, &size);
+    
+	if (!pBuffer) // font not found!
+		return NULL;
+    
+	if (!s_FreeTypeLibrary)
+	{
+		error = FT_Init_FreeType(&s_FreeTypeLibrary);
+	}
+    
+	if (!error && !m_face)
+	{
+		error = FT_New_Memory_Face(s_FreeTypeLibrary, pBuffer, size, 0, &m_face);
+	}
+    
+	if (!error)
+	{
+		error = FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
+	}
+    
+	if (!error)
+		error = FT_Set_Char_Size(m_face, nSize << 6, nSize << 6, 72, 72);
+    
+	if (!error)
+		error = initGlyphs(pText);
+    
+    
 	CCImage::ETextAlign eAlign;
-
+    
+	if (inHeight == nSize && m_inWidth < m_textWidth)
+	{
+		hAlignment = CATextAlignmentLeft;
+	}
+	if (m_inHeight < m_textHeight)
+	{
+		vAlignment = CAVerticalTextAlignmentTop;
+	}
+    
 	if (CAVerticalTextAlignmentTop == vAlignment)
 	{
 		eAlign = (CATextAlignmentCenter == hAlignment) ? CCImage::kAlignTop
-			: (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
+        : (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
 	}
 	else if (CAVerticalTextAlignmentCenter == vAlignment)
 	{
 		eAlign = (CATextAlignmentCenter == hAlignment) ? CCImage::kAlignCenter
-			: (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
+        : (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
 	}
 	else if (CAVerticalTextAlignmentBottom == vAlignment)
 	{
 		eAlign = (CATextAlignmentCenter == hAlignment) ? CCImage::kAlignBottom
-			: (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
+        : (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
 	}
 	else
 	{
 		CCAssert(false, "Not supported alignment format!");
 		return NULL;
 	}
-
-
-	m_inWidth = inWidth;
-	m_inHeight = inHeight;
-
-	// attempt to load font from Resources fonts folder
-	pBuffer = loadFont(pFontName, &size);
-
-	if (!pBuffer) // font not found!
-		return NULL;
-
-	if (!s_FreeTypeLibrary)
-	{
-		error = FT_Init_FreeType(&s_FreeTypeLibrary);
-	}
-
-	if (!error && !m_face)
-	{
-		error = FT_New_Memory_Face(s_FreeTypeLibrary, pBuffer, size, 0, &m_face);
-	}
-
-	if (!error)
-	{
-		error = FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
-	}
-
-	if (!error)
-		error = FT_Set_Char_Size(m_face, nSize << 6, nSize << 6, 72, 72);
-
-	if (!error)
-		error = initGlyphs(pText);
 
 	int width = 0, height = 0;
 	unsigned char* pData = getBitmap(eAlign, &width, &height);
@@ -194,6 +163,40 @@ unsigned char* CAFreeTypeFont::getBitmap(CCImage::ETextAlign eAlignMask, int* ou
     *outHeight = m_height;
 
     return pBuffer;
+}
+
+int CAFreeTypeFont::getFontHeight()
+{
+	if (m_face != NULL)
+	{
+		return ((m_face->size->metrics.ascender) >> 6) - ((m_face->size->metrics.descender) >> 6);
+	}
+	return 0;
+}
+
+// text encode with utf8
+int CAFreeTypeFont::getStringWidth(const std::string& text)
+{
+	std::vector<TGlyph> glyphs;
+
+	FT_Vector vt;
+	memset(&vt, 0, sizeof(vt));
+	if (0 != initWordGlyphs(glyphs, text, vt))
+		return 0;
+
+	FT_BBox bbox;
+	compute_bbox(glyphs, &bbox);
+	return bbox.xMax - bbox.xMin;
+}
+
+void CAFreeTypeFont::destroyAllLines()
+{
+	for (int i = 0; i < m_lines.size(); i++)
+	{
+		delete m_lines[i];
+	}
+	m_lines.clear();
+	m_currentLine = NULL;
 }
 
 FT_Vector CAFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAlign eAlignMask,int lineNumber, int totalLines)
@@ -451,7 +454,7 @@ FT_Error CAFreeTypeFont::initGlyphs(const char* text)
     // the height of a line of text based on the max height of a glyph in the font size
     m_lineHeight = ((m_face->size->metrics.ascender) >> 6) - ((m_face->size->metrics.descender) >> 6);
 
-    m_lines.clear();
+	destroyAllLines();
 
 	if (m_isForTextField)
 	{
@@ -530,7 +533,8 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	
 
 	std::u16string utf16String;
-	StringUtils::UTF8ToUTF16(text, utf16String);
+	if (!StringUtils::UTF8ToUTF16(text, utf16String))
+		return -1;
 
 	glyphs.clear();
 	FT_Bool useKerning = FT_HAS_KERNING(m_face);
@@ -572,10 +576,8 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		FT_Glyph_Transform(glyph->image, 0, &glyph->pos);
 
 		/* increment pen position */
-		FT_UInt d = slot->advance.x >> 6;
-		pen.x += d;
+		pen.x += slot->advance.x >> 6;
 
-		glyph->slotW = d;
 		/* record current glyph index */
 		previous = glyph_index;
 
@@ -589,6 +591,7 @@ void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
 {
     FT_BBox bbox;
     FT_BBox glyph_bbox;
+	FT_GlyphSlot slot = m_face->glyph;
 
     /* initialize string bbox to "empty" values */
     bbox.xMin = 32000;
@@ -606,7 +609,7 @@ void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
 
 		if (glyph_bbox.xMin == glyph_bbox.xMax)
 		{
-			glyph_bbox.xMax = glyph_bbox.xMin + glyph->slotW;
+			glyph_bbox.xMax = glyph_bbox.xMin + slot->advance.x >> 6;
 		}
         glyph_bbox.xMin += glyph->pos.x;
         glyph_bbox.xMax += glyph->pos.x;
@@ -666,6 +669,17 @@ bool CAFreeTypeFont::initFreeTypeFont(const char* pFontName, unsigned long nSize
 		error = FT_Set_Char_Size(m_face, nSize << 6, nSize << 6, 72, 72);
 
 	return (error==0);
+}
+
+void CAFreeTypeFont::finiFreeTypeFont()
+{
+	if (m_face)
+	{
+		FT_Done_Face(m_face);
+	}
+	m_face = NULL;
+
+	destroyAllLines();
 }
 
 unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *size)
