@@ -12,19 +12,11 @@
 #include <iostream>
 #include "basics/CASTLContainer.h"
 #include "CAControl.h"
-#include "view/CAImageView.h"
-#include "images/CAImage.h"
 
 NS_CC_BEGIN
 
-class CAPageControlDelegate {
-    
-public:
-    virtual ~CAPageControlDelegate();
-    
-    virtual void pageTurn(int indexOfPage) = 0;
-};
-
+class CAImage;
+class CAImageView;
 class CAPageControl : public CAControl {
     
 public:
@@ -59,9 +51,7 @@ public:
     
     CC_SYNTHESIZE(CAColor4B, m_pageIndicatorTintColor, PageIndicatorTintColor);
     CC_SYNTHESIZE(CAColor4B, m_currentPageIndicatorTintColor, CurrentPageIndicatorTintColor);
-    
-    CC_SYNTHESIZE(CAPageControlDelegate*, m_delegate, Delegate);
-    
+        
 protected:
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);    
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);

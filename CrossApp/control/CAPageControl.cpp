@@ -7,6 +7,8 @@
 //
 
 #include "CAPageControl.h"
+#include "view/CAImageView.h"
+#include "images/CAImage.h"
 
 NS_CC_BEGIN
 
@@ -19,7 +21,6 @@ CAPageControl::CAPageControl()
 , m_currentPageIndicatorTintColor(ccc4(0, 0, 255, 255))
 , m_pPageImage(NULL)
 , m_pSelectPageImage(NULL)
-, m_delegate(NULL)
 {
     
 }
@@ -189,8 +190,8 @@ void CAPageControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             updateCurrentPageDisplay();
         }
         
-        if (m_delegate) {
-            m_delegate->pageTurn(m_currentPage);
+        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged]) {
+            (m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
         }
     }
 }
