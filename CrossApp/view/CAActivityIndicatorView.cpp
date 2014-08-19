@@ -66,7 +66,7 @@ bool CAActivityIndicatorView::init()
     if (!CAView::init()) {
         return false;
     }
-    
+    this->CAView::setColor(CAColor_clear);
     setStyle(CAActivityIndicatorViewStyleGray);
     
     return true;

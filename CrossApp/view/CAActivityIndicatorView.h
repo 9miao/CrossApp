@@ -46,7 +46,7 @@ public:
     virtual void stopAnimating();
     virtual bool isAnimating();
 
-    CC_SYNTHESIZE(CAColor4B, m_color, Color);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_color, Color);
     
 private:
     float m_duration;
