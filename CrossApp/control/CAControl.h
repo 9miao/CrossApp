@@ -22,7 +22,9 @@ typedef enum
     CAControlEventTouchMovedOutSide,
     CAControlEventTouchUpInSide,
     CAControlEventTouchUpSide,
-    CAControlEventTouchValueChanged
+    CAControlEventTouchValueChanged,
+    
+    CAControlEventMax
 }CAControlEvents;
 
 typedef enum
@@ -74,9 +76,9 @@ protected:
     
 protected:
     
-    CAObject* m_pTarget[7];
+    CAObject* m_pTarget[CAControlEventMax];
     
-    SEL_CAControl m_selTouch[7];
+    SEL_CAControl m_selTouch[CAControlEventMax];
 };
 
 #define CAControlTouchDown (CAControlEventTouchDown)

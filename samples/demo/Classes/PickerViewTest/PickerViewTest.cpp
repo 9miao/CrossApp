@@ -77,6 +77,7 @@ void PickerViewTest::didSelectRow(CAPickerView* pickerView, unsigned int row, un
 			}
 		}
 		pickerView->reloadComponent(2);
+        pickerView->selectRow(0, 2);
 		month = CCString::createWithFormat("%02d", row + 1)->getCString();
 	}
 	else

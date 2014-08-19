@@ -303,7 +303,8 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
                 int week = cal->dayOfWeek();
                 int month = cal->monthOfYear();
                 int date = cal->dayOfMonth();
-                const char* week_s[] = {"日","一","二","三","四","五","六"};
+                // const char* week_s[] = {"日","一","二","三","四","五","六"};
+				const char* week_s[] = {"\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"};
                 
                 sprintf(buff, "%d月%d日  周%s", month, date, week_s[week]);
             } else if (component == 1) { // hour

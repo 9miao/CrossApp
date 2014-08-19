@@ -51,6 +51,8 @@
 #include "control/CASlider.h"
 #include "control/CASegmentedControl.h"
 #include "control/CATextField.h"
+#include "control/CAPageControl.h"
+#include "control/CAStepper.h"
 
 //controller
 #include "controller/CABarItem.h"
@@ -90,6 +92,7 @@
 #include "view/CAAlertView.h"
 #include "view/CAPickerView.h"
 //#include "view/CADatePickerView.h"
+#include "view/CAActivityIndicatorView.h"
 
 // cocoa
 #include "cocoa/CCDictionary.h"
