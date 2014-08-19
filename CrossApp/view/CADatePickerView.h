@@ -30,7 +30,7 @@ public:
     virtual void didSelectRow(const struct tm& tm) {CC_UNUSED_PARAM(tm);}
 };
 
-class CADatePickerView : public CAControl, public CAPickerViewDataSource, public CAPickerViewDelegate {
+class CC_DLL CADatePickerView : public CAControl, public CAPickerViewDataSource, public CAPickerViewDelegate {
     
 public:
     static CADatePickerView* create();

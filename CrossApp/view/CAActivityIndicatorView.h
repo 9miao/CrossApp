@@ -20,7 +20,7 @@ typedef enum {
     CAActivityIndicatorViewStyleGray,
 } CAActivityIndicatorViewStyle;
 
-class CAActivityIndicatorView : public CAView {
+class CC_DLL CAActivityIndicatorView : public CAView {
     
 public:
     CAActivityIndicatorView();
