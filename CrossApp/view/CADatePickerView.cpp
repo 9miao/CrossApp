@@ -148,7 +148,7 @@ void CADatePickerView::setDate(int year, int month, int day, bool animated)
             case CADatePickerModeDateAndTime:
                 m_pPickerView->selectRow(CACalendar::create(mktime(&m_tTM))->dayOfYear() - 1, 0, animated);
                 break;
-                                
+                
             default:
                 break;
         }
@@ -162,7 +162,7 @@ unsigned int CADatePickerView::numberOfComponentsInPickerView(CAPickerView* pick
         case CADatePickerModeCountDownTimer:
             components = 2;
             break;
-        
+            
         case CADatePickerModeDate:
             components = 3;
             break;
@@ -278,19 +278,19 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
     switch (m_eMode) {
         case CADatePickerModeCountDownTimer:
             if (component == 0) { // hour
-              //  sprintf(buff, "%d小时", row);
+                sprintf(buff, "%d\u5c0f\u65f6", row);
             } else { // min
-              //  sprintf(buff, "%d分钟", row);
+                sprintf(buff, "%d\u5206\u949f", row);
             }
             break;
             
         case CADatePickerModeDate:
             if (component == 0) { // years
-              //  sprintf(buff, "%d年", row + 1900);
+                sprintf(buff, "%d\u5e74", row + 1900);
             } else if (component == 1) { // month
-              //  sprintf(buff, "%d月", row + 1);
+                sprintf(buff, "%d\u6708", row + 1);
             } else { // day
-               // sprintf(buff, "%d日", row + 1);
+                sprintf(buff, "%d\u65e5", row + 1);
             }
             break;
             
@@ -306,7 +306,7 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
                 // const char* week_s[] = {"日","一","二","三","四","五","六"};
 				const char* week_s[] = {"\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"};
                 
-                sprintf(buff, "%d月%d日  周%s", month, date, week_s[week]);
+                sprintf(buff, "%d\u6708%d\u65e5  \u5468%s", month, date, week_s[week]);
             } else if (component == 1) { // hour
                 sprintf(buff, "%02d", row);
             } else { // minutes
@@ -316,9 +316,9 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
             
         case CADatePickerModeTime:
             if (component == 0) { // hour
-              //  sprintf(buff, "%02d", row);
+                sprintf(buff, "%02d", row);
             } else { // minutes
-              //  sprintf(buff, "%02d", row);
+                sprintf(buff, "%02d", row);
             }
             break;
             
