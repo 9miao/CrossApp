@@ -124,18 +124,18 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
     
     switch (m_style) {
         case CAActivityIndicatorViewStyleGray:
-            radius_outside = 34 * CAApplication::getApplication()->getAdaptationRatio();
-            radius_inside = 15 * CAApplication::getApplication()->getAdaptationRatio();
+            radius_outside = _px(34);
+            radius_inside = _px(15);
             m_color = ccc4(127, 127, 127, 60);
             break;
         case CAActivityIndicatorViewStyleWhite:
-            radius_outside = 20 * CAApplication::getApplication()->getAdaptationRatio();
-            radius_inside = 8.5 * CAApplication::getApplication()->getAdaptationRatio();
+            radius_outside = _px(20);
+            radius_inside = _px(8.5);
             m_color = ccc4(255, 255, 255, 127);
             break;
         case CAActivityIndicatorViewStyleWhiteLarge:
-            radius_outside = 34 * CAApplication::getApplication()->getAdaptationRatio();
-            radius_inside = 12 * CAApplication::getApplication()->getAdaptationRatio();
+            radius_outside = _px(34);
+            radius_inside = _px(12);
             m_color = ccc4(255, 255, 255, 127);
             break;
             
