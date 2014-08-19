@@ -78,6 +78,8 @@ bool CAActivityIndicatorView::initWithCenter(const CrossApp::CCRect &rect)
         return false;
     }
     
+    setStyle(CAActivityIndicatorViewStyleGray);
+    
     return true;
 }
 
@@ -86,6 +88,8 @@ bool CAActivityIndicatorView::initWithFrame(const CrossApp::CCRect &rect)
     if (!CAView::initWithFrame(rect)) {
         return false;
     }
+    
+    setStyle(CAActivityIndicatorViewStyleGray);
     
     return true;
 }
@@ -129,13 +133,13 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
             m_color = ccc4(127, 127, 127, 60);
             break;
         case CAActivityIndicatorViewStyleWhite:
-            radius_outside = 20 * CAApplication::getApplication()->getAdaptationRatio();
-            radius_inside = 8.5 * CAApplication::getApplication()->getAdaptationRatio();
+            radius_outside = 34 * CAApplication::getApplication()->getAdaptationRatio();
+            radius_inside = 15 * CAApplication::getApplication()->getAdaptationRatio();
             m_color = ccc4(255, 255, 255, 127);
             break;
         case CAActivityIndicatorViewStyleWhiteLarge:
-            radius_outside = 34 * CAApplication::getApplication()->getAdaptationRatio();
-            radius_inside = 12 * CAApplication::getApplication()->getAdaptationRatio();
+            radius_outside = 50 * CAApplication::getApplication()->getAdaptationRatio();
+            radius_inside = 24 * CAApplication::getApplication()->getAdaptationRatio();
             m_color = ccc4(255, 255, 255, 127);
             break;
             
@@ -191,7 +195,10 @@ bool CAActivityIndicatorView::isAnimating()
 
 void CAActivityIndicatorView::draw()
 {
-    CAView::draw();
+//    CAView::draw();
+//    CC_NODE_DRAW_SETUP();
+//    ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+
     
     float start_alpha, end_alpha;
     
