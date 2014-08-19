@@ -99,6 +99,10 @@ bool CAStepper::init()
     
     setTouchEnabled(true);
     
+    setBackgroundImage(CAImage::create("source_material/stepper_bg.png"), CAControlStateAll);
+    setIncrementImage(CAImage::create("source_material/stepper_increase.png"), CAControlStateAll);
+    setDecrementImage(CAImage::create("source_material/stepper_decrease.png"), CAControlStateAll);
+    
     return true;
 }
 
@@ -166,9 +170,9 @@ void CAStepper::setDecrementImage(CrossApp::CAImage *image, CAControlState state
 {
     if (state == CAControlStateAll) {
         for (int i=0; i<CAControlStateAll; i++) {
-            CC_SAFE_RELEASE_NULL(m_pDecrementImage[state]);
-            m_pDecrementImage[state] = image;
-            CC_SAFE_RETAIN(m_pDecrementImage[state]);
+            CC_SAFE_RELEASE_NULL(m_pDecrementImage[i]);
+            m_pDecrementImage[i] = image;
+            CC_SAFE_RETAIN(m_pDecrementImage[i]);
         }
     } else {
         CC_SAFE_RELEASE_NULL(m_pDecrementImage[state]);

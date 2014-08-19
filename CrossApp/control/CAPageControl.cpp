@@ -17,8 +17,8 @@ CAPageControl::CAPageControl()
 , m_currentPage(0)
 , m_bSinglePage(false)
 , m_bDefersCurrentPageDisplay(false)
-, m_pageIndicatorTintColor(ccc4(255, 255, 255, 255))
-, m_currentPageIndicatorTintColor(ccc4(0, 0, 255, 255))
+, m_pageIndicatorTintColor(ccc4(127, 127, 127, 255))
+, m_currentPageIndicatorTintColor(ccc4(51, 204, 255, 255))
 , m_pPageImage(NULL)
 , m_pSelectPageImage(NULL)
 {
@@ -81,10 +81,10 @@ bool CAPageControl::init()
         return false;
     }
     
-    m_pPageImage = CAImage::create("source_material/switch_off.png");
+    m_pPageImage = CAImage::create("source_material/WhiteDots.png");
     m_pPageImage->retain();
     
-    m_pSelectPageImage = CAImage::create("source_material/switch_on.png");
+    m_pSelectPageImage = CAImage::create("source_material/WhiteDots.png");
     m_pSelectPageImage->retain();
     
     setTouchEnabled(true);
@@ -118,8 +118,10 @@ void CAPageControl::updateCurrentPageDisplay()
         CAImageView* view = m_pIndicators.at(i);
         if (i == m_currentPage) {
             view->setImage(m_pSelectPageImage);
+            view->setColor(m_currentPageIndicatorTintColor);
         } else {
-            view->setImage(m_pPageImage);                
+            view->setImage(m_pPageImage);
+            view->setColor(m_pageIndicatorTintColor);
         }
     }
     
@@ -137,8 +139,10 @@ void CAPageControl::onEnter()
             CAImageView* view;
             if (i == m_currentPage) {
                 view = CAImageView::createWithImage(m_pSelectPageImage);
+                view->setColor(m_currentPageIndicatorTintColor);
             } else {
-                view = CAImageView::createWithImage(m_pPageImage);                
+                view = CAImageView::createWithImage(m_pPageImage);        
+                view->setColor(m_pageIndicatorTintColor);
             }
             
             CCRect rect;
