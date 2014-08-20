@@ -745,7 +745,6 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
         
         m_pTabBar = CATabBar::create(items);
         m_pTabBar->retain();
-        m_pTabBar->setAnchorPoint(CCPointZero);
         m_pTabBar->setDelegate(this);
         
         m_pContainer = new CAView();
@@ -774,7 +773,7 @@ void CATabBarController::updateItem(CAViewController* viewController)
 
 void CATabBarController::viewDidLoad()
 {
-    CCRect tab_bar_rect = CCRectZero;
+    CCPoint tab_bar_rectOrgin = CCPointZero;
     
     CCRect container_rect = this->getView()->getBounds();
     
@@ -787,12 +786,12 @@ void CATabBarController::viewDidLoad()
         {
             case CABarVerticalAlignmentBottom:
             {
-                tab_bar_rect.origin.y = container_rect.size.height;
+                tab_bar_rectOrgin.y = container_rect.size.height;
             }
                 break;
             case CABarVerticalAlignmentTop:
             {
-                tab_bar_rect.origin.y = -m_pTabBar->getFrame().size.height;
+                tab_bar_rectOrgin.y = -m_pTabBar->getFrame().size.height;
             }
                 break;
             default:
@@ -806,12 +805,12 @@ void CATabBarController::viewDidLoad()
         {
             case CABarVerticalAlignmentBottom:
             {
-                tab_bar_rect.origin.y = container_rect.size.height;
+                tab_bar_rectOrgin.y = container_rect.size.height;
             }
                 break;
             case CABarVerticalAlignmentTop:
             {
-                container_rect.origin.y = m_pTabBar->getFrame().size.height;
+                tab_bar_rectOrgin.y = m_pTabBar->getFrame().size.height;
             }
                 break;
             default:
@@ -822,12 +821,10 @@ void CATabBarController::viewDidLoad()
     m_pContainer->setFrame(container_rect);
     this->getView()->addSubview(m_pContainer);
     
-    m_pTabBar->setFrame(tab_bar_rect);
+    m_pTabBar->setFrameOrigin(tab_bar_rectOrgin);
     this->getView()->addSubview(m_pTabBar);
     
-    unsigned int index = m_nSelectedIndex;
-    m_nSelectedIndex = 0xffff;
-    this->showSelectedViewControllerAtIndex(index);
+    this->renderingSelectedViewController();
 }
 
 void CATabBarController::viewDidUnload()

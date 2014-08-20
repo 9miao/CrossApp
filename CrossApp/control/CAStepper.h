@@ -15,7 +15,7 @@
 NS_CC_BEGIN
 
 class CAImageView;
-class CAStepper : public CAControl {
+class CC_DLL CAStepper : public CAControl {
     
 public:
     CAStepper();

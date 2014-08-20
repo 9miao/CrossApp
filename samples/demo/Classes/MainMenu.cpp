@@ -21,7 +21,7 @@ CAWindow* MainMenu::createWindow()
 
 	FirstViewController* viewController1 = new FirstViewController();
 	viewController1->init();
-	viewController1->setNavigationBarItem(CANavigationBarItem::create("TestMenu"));
+	viewController1->setNavigationBarItem(CANavigationBarItem::create("TestMenu")); 
 
 	CANavigationController* navigationController = new CANavigationController();
 	navigationController->initWithRootViewController(viewController1);

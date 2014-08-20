@@ -32,14 +32,15 @@ void PageViewTest::viewDidLoad()
 	segmented->addTarget(this,CAControl_selector(PageViewTest::segBtnCallBack));
 	this->getView()->insertSubview(segmented,3);
 
+
 	CAImageView* view1 = CAImageView::createWithImage(CAImage::create("bg.jpg"));
-	CAImageView* view2 = CAImageView::createWithImage(CAImage::create("2.jpg"));
+	CAImageView* view2 = CAImageView::createWithImage(CAImage::create("2.png"));
 	CAView* view3 = CAView::createWithColor(CAColor_green);
 	_view.pushBack(view1);
 	_view.pushBack(view2);
 	_view.pushBack(view3);
 
-	pageViewTest=CAPageView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, size.width, size.height), CAPageView::CAPageViewDirectionHorizontal);
+	pageViewTest = CAPageView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, size.width, size.height), CAPageView::CAPageViewDirectionHorizontal);
 	pageViewTest->setPageViewDelegate(this);
 	pageViewTest->setViews(_view);
 	this->getView()->addSubview(pageViewTest);

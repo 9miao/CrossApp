@@ -158,8 +158,6 @@ protected:
     
     void setTouchSelected(CAControl* control, CCPoint point);
     
-    void updateTabBar();
-    
 protected:
     
     CATabBarItem* m_pSelectedItem;

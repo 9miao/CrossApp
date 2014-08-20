@@ -68,6 +68,8 @@ bool CAPageView::init()
         this->setBounceHorizontal(false);
     }
     
+    this->setBounces(false);
+    
     return true;
 }
 

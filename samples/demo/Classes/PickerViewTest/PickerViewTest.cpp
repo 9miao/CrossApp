@@ -15,7 +15,7 @@ PickerViewTest::PickerViewTest()
 
 PickerViewTest::~PickerViewTest()
 {
-    CC_SAFE_RELEASE(pickerView);
+    //CC_SAFE_RELEASE(pickerView);
 }
 
 void PickerViewTest::viewDidLoad()
@@ -32,7 +32,6 @@ void PickerViewTest::viewDidLoad()
 	this->getView()->addSubview(dateTime);
 
 	pickerView = CAPickerView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, size.width*0.6, size.height*0.5));
-	pickerView->retain();
 	pickerView->setDelegate(this);
 	pickerView->setDataSource(this);
 	pickerView->setFontSizeNormal(30 * CROSSAPP_ADPTATION_RATIO);
@@ -46,7 +45,7 @@ void PickerViewTest::viewDidLoad()
 
 void PickerViewTest::viewDidUnload()
 {
-    
+	this->getView()->removeAllSubviews();
 }
 
 void PickerViewTest::didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
@@ -77,7 +76,6 @@ void PickerViewTest::didSelectRow(CAPickerView* pickerView, unsigned int row, un
 			}
 		}
 		pickerView->reloadComponent(2);
-        pickerView->selectRow(0, 2);
 		month = CCString::createWithFormat("%02d", row + 1)->getCString();
 	}
 	else

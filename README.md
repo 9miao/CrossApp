@@ -1,3 +1,27 @@
+#### CrossApp 0.3.3 更新内容：  
+
+#####1.添加CAActivityIndicatorView
+加载状态视图
+
+#####2.优化文字性能
+增加缓存机制，文字性能再次提升，
+
+#####3.优化CATabBar
+增加一些方法与接口
+
+#####4.优化CATableView与CACollectionView
+增加section的Header与Footer悬停效果
+
+#####5.优化CATextField
+优化并修复一些bug
+
+#####6.其他CAVector，CADeque，CAList
+优化一些接口。增加三个容器之间的相互转化
+
+#####7.其他bug修复与优化
+
+
+
 #### CrossApp 0.3.2 更新内容：  
 
 #####1.添加md5加密类

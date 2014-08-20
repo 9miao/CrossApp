@@ -20,7 +20,6 @@ protected:
     void viewDidLoad();
     void viewDidUnload();
 	void loadJsonData();
-	void OnTimer(float time);
 
 public:
 	virtual void reshapeViewRectDidFinish();
@@ -47,8 +46,6 @@ private:
 	CCSize size;
 	CATableView* p_TableView;
 	int sect[NUM];
-	bool flag;
-	CCDictionary* personList;
-
+	CADeque<Info*> personList;
 };
 #endif 

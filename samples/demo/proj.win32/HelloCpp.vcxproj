@@ -68,7 +68,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..\Classes\ViewController;..\Classes\TextFieldTest;..\Classes\TableViewTest;..\Classes\TabBarTest;..\Classes\SwitchTest;..\Classes\SliderTest;..\Classes\SegmentedControlTest;..\Classes\ScrollViewTest;..\Classes\NavigationBarTest;..\Classes\ProgressTest;..\Classes\LabelTest;..\Classes\ImageViewTest;..\Classes\ExtensionsTest;..\Classes\CollectionViewTest;..\Classes\ButtonTest;..\Classes\AlertViewTest;..\Classes\PickerViewTest;..\Classes\PageViewTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..\Classes\ViewController;..\Classes\TextFieldTest;..\Classes\TableViewTest;..\Classes\TabBarTest;..\Classes\SwitchTest;..\Classes\SliderTest;..\Classes\SegmentedControlTest;..\Classes\ScrollViewTest;..\Classes\ProgressTest;..\Classes\LabelTest;..\Classes\ImageViewTest;..\Classes\ExtensionsTest;..\Classes\CollectionViewTest;..\Classes\ButtonTest;..\Classes\AlertViewTest;..\Classes\PickerViewTest;..\Classes\PageViewTest;..\Classes\ActivityIndicatorViewTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -130,6 +130,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\extensions\libwebsockets\win32\lib\*.*" "$(Ou
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Classes\ActivityIndicatorViewTest\ActivityIndicatorViewTest.cpp" />
     <ClCompile Include="..\Classes\AlertViewTest\AlertViewTest.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\ButtonTest\ButtonTest.cpp" />
@@ -140,7 +141,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\extensions\libwebsockets\win32\lib\*.*" "$(Ou
     <ClCompile Include="..\Classes\ImageViewTest\ImageViewTest.cpp" />
     <ClCompile Include="..\Classes\LabelTest\LabelTest.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
-    <ClCompile Include="..\Classes\NavigationBarTest\NavigationBarTest.cpp" />
     <ClCompile Include="..\Classes\PageViewTest\PageViewTest.cpp" />
     <ClCompile Include="..\Classes\PickerViewTest\PickerViewTest.cpp" />
     <ClCompile Include="..\Classes\ProgressTest\ProgressTest.cpp" />
@@ -159,6 +159,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\extensions\libwebsockets\win32\lib\*.*" "$(Ou
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\ActivityIndicatorViewTest\ActivityIndicatorViewTest.h" />
     <ClInclude Include="..\Classes\AlertViewTest\AlertViewTest.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\ButtonTest\ButtonTest.h" />
@@ -171,7 +172,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\extensions\libwebsockets\win32\lib\*.*" "$(Ou
     <ClInclude Include="..\Classes\ImageViewTest\ImageViewTest.h" />
     <ClInclude Include="..\Classes\LabelTest\LabelTest.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
-    <ClInclude Include="..\Classes\NavigationBarTest\NavigationBarTest.h" />
     <ClInclude Include="..\Classes\PageViewTest\PageViewTest.h" />
     <ClInclude Include="..\Classes\PickerViewTest\PickerViewTest.h" />
     <ClInclude Include="..\Classes\ProgressTest\ProgressTest.h" />

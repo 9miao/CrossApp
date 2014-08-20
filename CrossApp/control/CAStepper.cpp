@@ -7,7 +7,7 @@
 //
 
 #include "CAStepper.h"
-#include "CAScheduler.h"
+#include "basics/CAScheduler.h"
 #include "view/CAImageView.h"
 
 NS_CC_BEGIN

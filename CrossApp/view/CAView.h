@@ -225,6 +225,8 @@ public:
 
     virtual CAResponder* nextResponder();
     
+    virtual CAView* copy();
+    
 public:
 
     virtual void setActionManager(CCActionManager* actionManager);

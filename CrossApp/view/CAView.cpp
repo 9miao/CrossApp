@@ -1252,6 +1252,23 @@ void CAView::transform()
     
 }
 
+CAView* CAView::copy()
+{
+    CAView* view = NULL;
+    if (m_bFrame)
+        
+    {
+        view = CAView::createWithFrame(this->getFrame(), this->getColor());
+    }
+    else
+    {
+        view = CAView::createWithCenter(this->getCenter(), this->getColor());
+    }
+    view->setImage(this->getImage());
+    
+    return view;
+}
+
 CAResponder* CAView::nextResponder()
 {
     if (CAResponder* responder = dynamic_cast<CAResponder*>(m_pViewDelegate))

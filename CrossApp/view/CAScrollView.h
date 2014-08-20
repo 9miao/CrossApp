@@ -103,6 +103,11 @@ public:
     
 protected:
  
+    inline virtual float minSpeed(float dt)
+    {
+        return (30 * dt);
+    }
+    
     inline virtual float maxSpeed(float dt)
     {
         return (CCPoint(m_obContentSize).getLength() * 5 * dt);

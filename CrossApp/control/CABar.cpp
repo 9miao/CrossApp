@@ -364,8 +364,7 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items, const CCSize& size)
     
     this->showBackGround();
     this->showItems();
-    this->updateTabBar();
-    
+
     return true;
 }
 
@@ -405,7 +404,7 @@ void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)
         m_pItems.at(index) = item;
         CC_SAFE_RELEASE(oldItem);
         CC_SAFE_RETAIN(item);
-        this->updateTabBar();
+        this->showItems();
     }
 }
 
@@ -464,7 +463,7 @@ void CATabBar::setSelectedBackGroundView(CrossApp::CAView *var)
             CAImage* selectedImage = m_pItems.at(i)->getSelectedImage() ? m_pItems.at(i)->getSelectedImage() : m_pItems.at(i)->getImage();
             m_pSegmentedControl->setImageAtIndex(selectedImage, i, CAControlStateHighlighted);
             m_pSegmentedControl->setImageAtIndex(selectedImage, i, CAControlStateSelected);
-            m_pSegmentedControl->setBackgroundImageAtIndex(NULL, i, CAControlStateNormal);
+            m_pSegmentedControl->setBackgroundViewAtIndex(CAView::createWithColor(CAColor_clear), i, CAControlStateNormal);
         }
         this->addSubview(m_pSegmentedControl);
         m_cItemSize = m_pSegmentedControl->getItemSize();
@@ -474,12 +473,8 @@ void CATabBar::setSelectedBackGroundView(CrossApp::CAView *var)
     {
         for (int i=0; i<m_pItems.size(); i++)
         {
-            CAView* view1 = new CAView(*var);
-            view1->autorelease();
-            m_pSegmentedControl->setBackgroundViewAtIndex(view1, i, CAControlStateHighlighted);
-            CAView* view2 = new CAView(*var);
-            view2->autorelease();
-            m_pSegmentedControl->setBackgroundViewAtIndex(view2, i, CAControlStateSelected);
+            m_pSegmentedControl->setBackgroundViewAtIndex(m_pSelectedBackGroundView->copy(), i, CAControlStateHighlighted);
+            m_pSegmentedControl->setBackgroundViewAtIndex(m_pSelectedBackGroundView->copy(), i, CAControlStateSelected);
         }
     }
 }
@@ -582,11 +577,6 @@ void CATabBar::setTitleColorForSelected(const CAColor4B &var)
 const CAColor4B& CATabBar::getTitleColorForSelected()
 {
     return m_sSelectedTitleColor;
-}
-
-void CATabBar::updateTabBar()
-{
-    this->showItems();
 }
 
 void CATabBar::showBackGround()

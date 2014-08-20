@@ -163,7 +163,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\control\CABar.cpp" />
     <ClCompile Include="..\control\CAButton.cpp" />
     <ClCompile Include="..\control\CAControl.cpp" />
-    <ClCompile Include="..\control\CADateSpinner.cpp" />
     <ClCompile Include="..\control\CAProgress.cpp" />
     <ClCompile Include="..\control\CASegmentedControl.cpp" />
     <ClCompile Include="..\control\CASlider.cpp" />
@@ -191,6 +190,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\images\CAImageFrame.cpp" />
     <ClCompile Include="..\images\CAImageFrameCache.cpp" />
     <ClCompile Include="..\platform\CAFreeTypeFont.cpp" />
+    <ClCompile Include="..\platform\CAFTFontCache.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\CCImageCommonWebp.cpp" />
@@ -242,6 +242,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\kazmath\src\vec4.c" />
     <ClCompile Include="..\kazmath\src\GL\mat4stack.c" />
     <ClCompile Include="..\kazmath\src\GL\matrix.c" />
+    <ClCompile Include="..\view\CAActivityIndicatorView.cpp" />
     <ClCompile Include="..\view\CAAlertView.cpp" />
     <ClCompile Include="..\view\CABatchView.cpp" />
     <ClCompile Include="..\view\CAClippingView.cpp" />
@@ -283,7 +284,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\control\CABar.h" />
     <ClInclude Include="..\control\CAButton.h" />
     <ClInclude Include="..\control\CAControl.h" />
-    <ClInclude Include="..\control\CADateSpinner.h" />
     <ClInclude Include="..\control\CAProgress.h" />
     <ClInclude Include="..\control\CASegmentedControl.h" />
     <ClInclude Include="..\control\CASlider.h" />
@@ -314,6 +314,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\images\CAImageFrameCache.h" />
     <ClInclude Include="..\platform\CADensityDpi.h" />
     <ClInclude Include="..\platform\CAFreeTypeFont.h" />
+    <ClInclude Include="..\platform\CAFTFontCache.h" />
     <ClInclude Include="..\platform\CCAccelerometerDelegate.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
@@ -387,6 +388,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\kazmath\include\kazmath\vec4.h" />
     <ClInclude Include="..\kazmath\include\kazmath\GL\mat4stack.h" />
     <ClInclude Include="..\kazmath\include\kazmath\GL\matrix.h" />
+    <ClInclude Include="..\view\CAActivityIndicatorView.h" />
     <ClInclude Include="..\view\CAAlertView.h" />
     <ClInclude Include="..\view\CABatchView.h" />
     <ClInclude Include="..\view\CAClippingView.h" />

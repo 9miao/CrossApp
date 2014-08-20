@@ -7,7 +7,7 @@
 //
 
 #include "CAActivityIndicatorView.h"
-#include "CCDrawingPrimitives.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 

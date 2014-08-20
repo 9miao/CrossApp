@@ -19,9 +19,6 @@
     <Filter Include="Classes\LabelTest">
       <UniqueIdentifier>{533da9f5-8f03-4f48-ae7d-8ce9f0aa8053}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\NavigationBarTest">
-      <UniqueIdentifier>{d8aec53c-0af6-4e8d-9b17-30a25cbbc25c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ProgressTest">
       <UniqueIdentifier>{62061b55-1bba-449e-a904-cbce3b2b4996}</UniqueIdentifier>
     </Filter>
@@ -58,8 +55,11 @@
     <Filter Include="Classes\PageViewTest">
       <UniqueIdentifier>{2dd0f1d5-2001-4bc7-9623-3765c8d95ab2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ExtensionsTest\ImageViewTest">
+    <Filter Include="Classes\ImageViewTest">
       <UniqueIdentifier>{fa45b0a7-b07a-4e32-88df-37d6d7790226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ActivityIndicatorViewTest">
+      <UniqueIdentifier>{286c2d86-1936-420f-87b8-6ab475199f7f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,13 +79,10 @@
       <Filter>Classes\CollectionViewTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ImageViewTest\ImageViewTest.cpp">
-      <Filter>Classes\ExtensionsTest\ImageViewTest</Filter>
+      <Filter>Classes\ImageViewTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\LabelTest\LabelTest.cpp">
       <Filter>Classes\LabelTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\NavigationBarTest\NavigationBarTest.cpp">
-      <Filter>Classes\NavigationBarTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ProgressTest\ProgressTest.cpp">
       <Filter>Classes\ProgressTest</Filter>
@@ -144,6 +141,9 @@
     <ClCompile Include="..\Classes\PageViewTest\PageViewTest.cpp">
       <Filter>Classes\PageViewTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ActivityIndicatorViewTest\ActivityIndicatorViewTest.cpp">
+      <Filter>Classes\ActivityIndicatorViewTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -165,13 +165,10 @@
       <Filter>Classes\CollectionViewTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ImageViewTest\ImageViewTest.h">
-      <Filter>Classes\ExtensionsTest\ImageViewTest</Filter>
+      <Filter>Classes\ImageViewTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\LabelTest\LabelTest.h">
       <Filter>Classes\LabelTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\NavigationBarTest\NavigationBarTest.h">
-      <Filter>Classes\NavigationBarTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ProgressTest\ProgressTest.h">
       <Filter>Classes\ProgressTest</Filter>
@@ -232,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Demo.h">
       <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ActivityIndicatorViewTest\ActivityIndicatorViewTest.h">
+      <Filter>Classes\ActivityIndicatorViewTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

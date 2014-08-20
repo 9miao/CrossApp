@@ -33,7 +33,6 @@ cocoa/CACalendar.cpp \
 control/CABar.cpp \
 control/CAButton.cpp \
 control/CAControl.cpp \
-control/CADateSpinner.cpp \
 control/CAProgress.cpp \
 control/CASegmentedControl.cpp \
 control/CASlider.cpp \

@@ -57,10 +57,10 @@ void TabBarTest::firstTabBar()
 
 	CATabBar* tabBar = CATabBar::create(item);
 	tabBar->setCenter(CCRect(size.width*0.5, size.height*0.5 + 200, size.width, 100));
-	tabBar->setSelectedAtIndex(2);
 	tabBar->showSelectedIndicator();
 	tabBar->setDelegate(this);
 	this->getView()->addSubview(tabBar);
+    tabBar->setSelectedAtIndex(2);
 }
 
 void TabBarTest::secondTabBar()
@@ -80,13 +80,13 @@ void TabBarTest::secondTabBar()
 
 	CATabBar* tabBar = CATabBar::create(item);
 	tabBar->setCenter(CCRect(size.width*0.5, size.height*0.5 , size.width, 100));
-	tabBar->setSelectedAtIndex(3);
 	tabBar->setSelectedIndicatorImage(CAImage::create("source_material/indicator.png"));
 	tabBar->showSelectedIndicator();
 	tabBar->setBackGroundImage(CAImage::create("source_material/ex1.png"));
 	tabBar->setSelectedBackGroundImage(CAImage::create("source_material/btn_rounded3D_selected.png"));
 	tabBar->setDelegate(this);
 	this->getView()->addSubview(tabBar);
+    tabBar->setSelectedAtIndex(3);
 }
 
 void TabBarTest::thirdTabBar()
@@ -106,7 +106,6 @@ void TabBarTest::thirdTabBar()
 
 	CATabBar* tabBar = CATabBar::create(item);
 	tabBar->setCenter(CCRect(size.width*0.5, size.height*0.5 - 200, size.width, 100));
-	tabBar->setSelectedAtIndex(1);
 	tabBar->showSelectedIndicator();
 	tabBar->setTitleColorForNormal(CAColor_yellow);
 	tabBar->setTitleColorForSelected(CAColor_orange);
@@ -114,6 +113,7 @@ void TabBarTest::thirdTabBar()
 	tabBar->setMaxShowCount(3);
 	tabBar->setDelegate(this);
 	this->getView()->addSubview(tabBar);
+    tabBar->setSelectedAtIndex(1);
 }
 
 void TabBarTest::viewDidUnload()

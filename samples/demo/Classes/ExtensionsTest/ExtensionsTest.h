@@ -4,6 +4,7 @@
 #include <iostream>
 #include "CrossApp.h"
 #include "CrossAppExt.h"
+#include "Info.h"
 
 USING_NS_CC_EXT;
 
@@ -47,7 +48,7 @@ private:
 private:
 	CCSize size;
 	CATableView* table;
-	CCDictionary* personList;
+	CAMap<int,Info*> personList;
 	CAButton* next;
 
 };

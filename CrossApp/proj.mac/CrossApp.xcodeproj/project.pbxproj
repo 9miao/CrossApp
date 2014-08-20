@@ -65,8 +65,6 @@
 		04EAB0921956D75600198A8E /* CAButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA08B1956D74D00198A8E /* CAButton.h */; };
 		04EAB0931956D75600198A8E /* CAControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA08C1956D74D00198A8E /* CAControl.cpp */; };
 		04EAB0941956D75600198A8E /* CAControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA08D1956D74D00198A8E /* CAControl.h */; };
-		04EAB0951956D75600198A8E /* CADateSpinner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA08E1956D74D00198A8E /* CADateSpinner.cpp */; };
-		04EAB0961956D75600198A8E /* CADateSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA08F1956D74D00198A8E /* CADateSpinner.h */; };
 		04EAB0971956D75600198A8E /* CAProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0901956D74D00198A8E /* CAProgress.cpp */; };
 		04EAB0981956D75600198A8E /* CAProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0911956D74D00198A8E /* CAProgress.h */; };
 		04EAB0991956D75600198A8E /* CASegmentedControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0921956D74D00198A8E /* CASegmentedControl.cpp */; };
@@ -273,10 +271,6 @@
 		B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B04CF4301967B2EB00BA7030 /* CASTLContainer.h */; };
 		B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D3697195AB93900DD4814 /* CAAlertView.cpp */; };
 		B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D3698195AB93900DD4814 /* CAAlertView.h */; };
-		B0C512DE19A3126600E6934B /* CAPageControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512DA19A3126600E6934B /* CAPageControl.cpp */; };
-		B0C512DF19A3126600E6934B /* CAPageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512DB19A3126600E6934B /* CAPageControl.h */; };
-		B0C512E019A3126600E6934B /* CAStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512DC19A3126600E6934B /* CAStepper.cpp */; };
-		B0C512E119A3126600E6934B /* CAStepper.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512DD19A3126600E6934B /* CAStepper.h */; };
 		B0C512E619A3127100E6934B /* CAActivityIndicatorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */; };
 		B0C512E719A3127100E6934B /* CAActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */; };
 		B0C512E819A3127100E6934B /* CADatePickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E419A3127100E6934B /* CADatePickerView.cpp */; };
@@ -344,8 +338,6 @@
 		04EAA08B1956D74D00198A8E /* CAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAButton.h; sourceTree = "<group>"; };
 		04EAA08C1956D74D00198A8E /* CAControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAControl.cpp; sourceTree = "<group>"; };
 		04EAA08D1956D74D00198A8E /* CAControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAControl.h; sourceTree = "<group>"; };
-		04EAA08E1956D74D00198A8E /* CADateSpinner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADateSpinner.cpp; sourceTree = "<group>"; };
-		04EAA08F1956D74D00198A8E /* CADateSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADateSpinner.h; sourceTree = "<group>"; };
 		04EAA0901956D74D00198A8E /* CAProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAProgress.cpp; sourceTree = "<group>"; };
 		04EAA0911956D74D00198A8E /* CAProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAProgress.h; sourceTree = "<group>"; };
 		04EAA0921956D74D00198A8E /* CASegmentedControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASegmentedControl.cpp; sourceTree = "<group>"; };
@@ -555,10 +547,6 @@
 		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B05D3697195AB93900DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D3698195AB93900DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
-		B0C512DA19A3126600E6934B /* CAPageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageControl.cpp; sourceTree = "<group>"; };
-		B0C512DB19A3126600E6934B /* CAPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageControl.h; sourceTree = "<group>"; };
-		B0C512DC19A3126600E6934B /* CAStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStepper.cpp; sourceTree = "<group>"; };
-		B0C512DD19A3126600E6934B /* CAStepper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStepper.h; sourceTree = "<group>"; };
 		B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAActivityIndicatorView.cpp; sourceTree = "<group>"; };
 		B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAActivityIndicatorView.h; sourceTree = "<group>"; };
 		B0C512E419A3127100E6934B /* CADatePickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADatePickerView.cpp; sourceTree = "<group>"; };
@@ -677,18 +665,12 @@
 		04EAA0871956D74D00198A8E /* control */ = {
 			isa = PBXGroup;
 			children = (
-				B0C512DA19A3126600E6934B /* CAPageControl.cpp */,
-				B0C512DB19A3126600E6934B /* CAPageControl.h */,
-				B0C512DC19A3126600E6934B /* CAStepper.cpp */,
-				B0C512DD19A3126600E6934B /* CAStepper.h */,
 				04EAA0881956D74D00198A8E /* CABar.cpp */,
 				04EAA0891956D74D00198A8E /* CABar.h */,
 				04EAA08A1956D74D00198A8E /* CAButton.cpp */,
 				04EAA08B1956D74D00198A8E /* CAButton.h */,
 				04EAA08C1956D74D00198A8E /* CAControl.cpp */,
 				04EAA08D1956D74D00198A8E /* CAControl.h */,
-				04EAA08E1956D74D00198A8E /* CADateSpinner.cpp */,
-				04EAA08F1956D74D00198A8E /* CADateSpinner.h */,
 				04EAA0901956D74D00198A8E /* CAProgress.cpp */,
 				04EAA0911956D74D00198A8E /* CAProgress.h */,
 				04EAA0921956D74D00198A8E /* CASegmentedControl.cpp */,
@@ -1154,7 +1136,6 @@
 				04EAB0601956D75600198A8E /* CCActionInterval.h in Headers */,
 				04EAB0621956D75600198A8E /* CCActionManager.h in Headers */,
 				04EAB0641956D75600198A8E /* CCActionTween.h in Headers */,
-				B0C512E119A3126600E6934B /* CAStepper.h in Headers */,
 				04EAB0681956D75600198A8E /* CAApplication.h in Headers */,
 				04EAB06A1956D75600198A8E /* CAAutoreleasePool.h in Headers */,
 				04EAB06C1956D75600198A8E /* CACamera.h in Headers */,
@@ -1180,7 +1161,6 @@
 				04EAB0901956D75600198A8E /* CABar.h in Headers */,
 				04EAB0921956D75600198A8E /* CAButton.h in Headers */,
 				04EAB0941956D75600198A8E /* CAControl.h in Headers */,
-				04EAB0961956D75600198A8E /* CADateSpinner.h in Headers */,
 				04EAB0981956D75600198A8E /* CAProgress.h in Headers */,
 				04EAB09A1956D75600198A8E /* CASegmentedControl.h in Headers */,
 				04EAB09C1956D75600198A8E /* CASlider.h in Headers */,
@@ -1277,7 +1257,6 @@
 				04EABA801956D75A00198A8E /* ccUtils.h in Headers */,
 				04EABA821956D75A00198A8E /* CCVertex.h in Headers */,
 				04EABA881956D75A00198A8E /* ccCArray.h in Headers */,
-				B0C512DF19A3126600E6934B /* CAPageControl.h in Headers */,
 				04EABA891956D75A00198A8E /* uthash.h in Headers */,
 				04EABA8A1956D75A00198A8E /* utlist.h in Headers */,
 				04EABA8C1956D75A00198A8E /* TGAlib.h in Headers */,
@@ -1381,7 +1360,6 @@
 				04EAB08F1956D75600198A8E /* CABar.cpp in Sources */,
 				04EAB0911956D75600198A8E /* CAButton.cpp in Sources */,
 				04EAB0931956D75600198A8E /* CAControl.cpp in Sources */,
-				04EAB0951956D75600198A8E /* CADateSpinner.cpp in Sources */,
 				04EAB0971956D75600198A8E /* CAProgress.cpp in Sources */,
 				04EAB0991956D75600198A8E /* CASegmentedControl.cpp in Sources */,
 				04EAB09B1956D75600198A8E /* CASlider.cpp in Sources */,
@@ -1408,14 +1386,12 @@
 				04EAB0D01956D75600198A8E /* aabb.c in Sources */,
 				04EAB0D11956D75600198A8E /* mat4stack.c in Sources */,
 				04EAB0D21956D75600198A8E /* matrix.c in Sources */,
-				B0C512E019A3126600E6934B /* CAStepper.cpp in Sources */,
 				04EAB0D31956D75600198A8E /* mat3.c in Sources */,
 				B0C512E819A3127100E6934B /* CADatePickerView.cpp in Sources */,
 				04EAB0D41956D75600198A8E /* mat4.c in Sources */,
 				04EAB0D51956D75600198A8E /* neon_matrix_impl.c in Sources */,
 				04EAB0D61956D75600198A8E /* plane.c in Sources */,
 				04EAB0D71956D75600198A8E /* quaternion.c in Sources */,
-				B0C512DE19A3126600E6934B /* CAPageControl.cpp in Sources */,
 				04EAB0D81956D75600198A8E /* ray2.c in Sources */,
 				04EAB0D91956D75600198A8E /* utility.c in Sources */,
 				04EAB0DA1956D75600198A8E /* vec2.c in Sources */,

@@ -17,7 +17,7 @@ NS_CC_BEGIN
 
 class CAImage;
 class CAImageView;
-class CAPageControl : public CAControl {
+class CC_DLL CAPageControl : public CAControl {
     
 public:
     CAPageControl();

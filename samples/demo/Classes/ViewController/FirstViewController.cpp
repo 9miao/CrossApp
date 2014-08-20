@@ -3,7 +3,7 @@
 #define VIEWCONTROLLER_SWITCH(p_Contrller,index)										\
 	p_Contrller* p_ViewContrller = new p_Contrller();									\
 	p_ViewContrller->init();															\
-	p_ViewContrller->setNavigationBarItem(CANavigationBarItem::create(testList[index]));\
+	p_ViewContrller->setNavigationBarItem(CANavigationBarItem::create(testList.at(index))); \
 	p_ViewContrller->autorelease();														\
 	this->getNavigationController()->pushViewController(p_ViewContrller, true);
 
@@ -13,8 +13,8 @@ FirstViewController::FirstViewController()
 	testList.push_back("ButtonTest");
 	testList.push_back("CollectionViewTest");
 	testList.push_back("ImageViewTest");
+	testList.push_back("IndicatorViewTest");
 	testList.push_back("LabelTest");
-	testList.push_back("NavigationBarTest");
 	testList.push_back("PageViewTest");
 	testList.push_back("PickerViewTest");
 	testList.push_back("ProgressTest");
@@ -77,15 +77,14 @@ void FirstViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, u
 			VIEWCONTROLLER_SWITCH(ImageViewTest, row);
 			break;
 		}
+		case INDICATORVIEWTEST:
+		{
+			VIEWCONTROLLER_SWITCH(ActivityIndicatorViewTest, row);
+			break;
+		}
 		case LABELTEST:
 		{
 			VIEWCONTROLLER_SWITCH(LabelTest, row);
-			break;
-		}
-		case NAVIGATIONBARTEST:
-		{
-			VIEWCONTROLLER_SWITCH(NavigationBarTest, row);
-			this->getNavigationController()->setNavigationBarHidden(true,true);
 			break;
 		}
 		case PAGEVIEWTEST:
@@ -182,7 +181,7 @@ CATableViewCell* FirstViewController::tableCellAtIndex(CATableView* table, const
 		cell->addSubview(test);
 	}
 	CALabel* test = (CALabel*)cell->getSubviewByTag(100);
-	test->setText(testList[row]);
+	test->setText(testList.at(row));
 	
 	return cell;
 }

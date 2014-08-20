@@ -32,17 +32,15 @@ void TableViewTest::viewDidUnload()
 
 void TableViewTest::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	char s[32];
-	sprintf(s, "The Page No.%ld", this->getNavigationController()->getViewControllerCount());
+	//char currentTitle[32]="";
+	//sprintf(currentTitle, "The Page No.%ld", this->getNavigationController()->getViewControllerCount());
 
-	CANavigationBarItem* item = CANavigationBarItem::create(s);
-	//item->setShowGoBackButton(false);
-	TableViewTest* viewController = new TableViewTest();
-	viewController->init();
-	viewController->setNavigationBarItem(item);
-
-	this->getNavigationController()->replaceViewController(viewController, true);
-	viewController->autorelease();
+	//CANavigationBarItem* item = CANavigationBarItem::create(currentTitle);
+	//TableViewTest* viewController = new TableViewTest();
+	//viewController->init();
+	//viewController->setNavigationBarItem(item);
+	//this->getNavigationController()->replaceViewController(viewController, true);
+	//viewController->autorelease();
 }
 
 void TableViewTest::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
@@ -66,8 +64,6 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const CCSiz
 	if (cell == NULL)
 	{
 		cell = CATableViewCell::create("CrossApp");
-		//cell->setAlpha(0);
-		//cell->setBackgroundView(CAView::createWithFrame(CCRect(0,0,cellSize.width,cellSize.height),CAColor_green));
 		CALabel* cellText = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.3, cellSize.height*0.8));
 		cellText->setTag(100);
 		cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
@@ -76,11 +72,21 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const CCSiz
 		cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 		cell->addSubview(cellText);
 
-		CAButton* cellBtn = CAButton::createWithCenter(CCRect(cellSize.width*0.8,cellSize.height*0.5,cellSize.width*0.2,cellSize.height*0.5),CAButtonTypeRoundedRect);
+		CAButton* cellBtn = CAButton::createWithCenter(CCRect(cellSize.width*0.8, cellSize.height*0.5, cellSize.width*0.2, cellSize.height*0.5), CAButtonTypeRoundedRect);
 		cellBtn->setTag(102);
-		cellBtn->setTitleForState(CAControlStateAll,"Touch");
+		cellBtn->setTitleForState(CAControlStateAll, "Touch");
 		cellBtn->addTarget(this, CAControl_selector(TableViewTest::cellBtnCallback), CAControlEventTouchUpInSide);
 		cell->addSubview(cellBtn);
+	}
+	if (section == 1)
+	{
+		CAButton* cellBtn = (CAButton*)cell->getSubviewByTag(102);
+		cellBtn->setVisible(false);
+	}
+	else
+	{
+		CAButton* cellBtn = (CAButton*)cell->getSubviewByTag(102);
+		cellBtn->setVisible(true);
 	}
 	char order[20] = "";
 	sprintf(order, "cell-%d", row);
@@ -99,7 +105,7 @@ void TableViewTest::cellBtnCallback(CAControl* btn, CCPoint point)
 CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
 {
 	std::string head = "";
-	head = (section == 0) ? "selection-0" : "selection-1";
+	head = (section == 0) ? "Selection-0" : "Selection-1";
 	CAView* view = CAView::createWithColor(CAColor_gray);
 
 	CALabel* header = CALabel::createWithCenter(CCRect(viewSize.width*0.5, viewSize.height*0.5, viewSize.width*0.8, viewSize.height));

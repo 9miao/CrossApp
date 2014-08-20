@@ -1,13 +1,13 @@
 #ifndef _Demo_h_
 #define _Demo_h_
 
+#include "ActivityIndicatorViewTest.h"
 #include "FirstViewController.h"
 #include "AlertViewTest.h"
 #include "ButtonTest.h"
 #include "CollectionViewTest.h"
 #include "ImageViewTest.h"
 #include "LabelTest.h"
-#include "NavigationBarTest.h"
 #include "PageViewTest.h"
 #include "PickerViewTest.h"
 #include "ProgressTest.h"
@@ -26,8 +26,8 @@ enum DemoList
 	BUTTONTEST,
 	COLLECTIONVIEWTEST,
 	IMAGEVIEWTEST,
+	INDICATORVIEWTEST,
 	LABELTEST,
-	NAVIGATIONBARTEST,
 	PAGEVIEWTEST,
 	PICKERVIEWTEST,
 	PROGRESSTEST,

@@ -345,9 +345,6 @@
     <ClCompile Include="..\control\CAControl.cpp">
       <Filter>control</Filter>
     </ClCompile>
-    <ClCompile Include="..\control\CADateSpinner.cpp">
-      <Filter>control</Filter>
-    </ClCompile>
     <ClCompile Include="..\control\CAProgress.cpp">
       <Filter>control</Filter>
     </ClCompile>
@@ -411,6 +408,12 @@
     </ClCompile>
     <ClCompile Include="..\support\md5.cpp">
       <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAActivityIndicatorView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CAFTFontCache.cpp">
+      <Filter>platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -762,9 +765,6 @@
     <ClInclude Include="..\control\CAControl.h">
       <Filter>control</Filter>
     </ClInclude>
-    <ClInclude Include="..\control\CADateSpinner.h">
-      <Filter>control</Filter>
-    </ClInclude>
     <ClInclude Include="..\control\CAProgress.h">
       <Filter>control</Filter>
     </ClInclude>
@@ -832,6 +832,12 @@
     </ClInclude>
     <ClInclude Include="..\support\md5.h">
       <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAActivityIndicatorView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAFTFontCache.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,12 +1,11 @@
 #include "ExtensionsTest.h"
-#include "Info.h"
 #include "AddressBookTest.h"
 
 #define CAColor_blueStyle ccc4(51,204,255,255)
 
 ExtensionsTest::ExtensionsTest()
 {
-
+	
 }
 
 ExtensionsTest::~ExtensionsTest()
@@ -39,9 +38,6 @@ void ExtensionsTest::viewDidLoad()
 
 void ExtensionsTest::loadJsonData()
 {
-	personList = CCDictionary::create();
-	personList->retain();
-
 	Reader reader;
 	Value value;
 	string jsonFile = CCFileUtils::sharedFileUtils()->fullPathForFilename("information.json");
@@ -57,7 +53,7 @@ void ExtensionsTest::loadJsonData()
 			personInfo->num = value["info"][index]["num"].asString();
 			personInfo->gender = value["gender"].asString();
 			personInfo->occupation = value["occupation"].asString();
-			personList->setObject(personInfo,index);
+			personList.insert(index,personInfo);
 		}
 	}
 }
@@ -74,7 +70,7 @@ void ExtensionsTest::nextViewController(CAControl* btn, CCPoint point)
 
 void ExtensionsTest::viewDidUnload()
 {
-	personList->release();
+	personList.clear();
 	next->removeFromSuperview();
 }
 
@@ -90,7 +86,7 @@ void ExtensionsTest::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsi
 
 CATableViewCell* ExtensionsTest::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
-	Info* p_List = (Info*)personList->objectForKey(row);
+	Info* p_List = (Info*)personList.getValue(row);
 	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
 	if (cell == NULL)
 	{
@@ -161,7 +157,7 @@ CAView* ExtensionsTest::tableViewSectionViewForFooterInSection(CATableView* tabl
 
 unsigned int ExtensionsTest::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-	return 8;
+	return personList.size();
 }
 
 unsigned int ExtensionsTest::numberOfSections(CATableView *table)
