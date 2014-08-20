@@ -243,7 +243,8 @@ void CAPickerView::reloadComponent(unsigned int component, bool bReloadData)
     if (bReloadData) {
         // reload table view
         CATableView* view = (CATableView*)m_tableViews->objectAtIndex(component);
-        view->reloadData();        
+        view->reloadData();   
+        view->stopDeaccelerateScroll();
     }
 }
 

@@ -101,6 +101,8 @@ public:
     
     CC_PROPERTY(CCSize, m_obViewSize, ViewSize);
     
+    void stopDeaccelerateScroll();
+    
 protected:
  
     inline virtual float maxSpeed(float dt)
@@ -141,7 +143,7 @@ protected:
     virtual void update(float dt);
     
     void deaccelerateScrolling(float dt);
-
+    
     virtual void contentOffsetFinish(){}
     
     void closeToPoint(float dt);

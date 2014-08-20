@@ -184,18 +184,38 @@ void CAPageControl::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 void CAPageControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     if (getBounds().containsPoint(convertToNodeSpace(pTouch->getLocation()))) {
-        
-        m_currentPage++;
-        if (m_currentPage == m_numberOfPages) {
-            m_currentPage = 0;
-        }
 
-        if (!m_bDefersCurrentPageDisplay) {
-            updateCurrentPageDisplay();
-        }
-        
-        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged]) {
-            (m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
+//        m_currentPage++;
+//        if (m_currentPage == m_numberOfPages) {
+//            m_currentPage = 0;
+//        }
+//        if (!m_bDefersCurrentPageDisplay) {
+//            updateCurrentPageDisplay();
+//        }
+//        
+//        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged]) {
+//            (m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
+//        }
+
+        // find touched dot
+        float width = getBounds().size.width/m_numberOfPages;
+        CCRect rect = getBounds();
+        for (int i=0; i<m_numberOfPages; i++) {
+            rect.size.width = width * i + width;
+            if (rect.containsPoint(convertToNodeSpace(pTouch->getLocation()))) {
+                if (m_currentPage != i) {
+                    m_currentPage = i;
+
+                    if (!m_bDefersCurrentPageDisplay) {
+                        updateCurrentPageDisplay();
+                    }
+                    
+                    if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged]) {
+                        (m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
+                    }
+                }
+                break;
+            }
         }
     }
 }
@@ -205,5 +225,11 @@ void CAPageControl::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     
 }
 
+void CAPageControl::setTouchEnabled(bool enable)
+{
+    CAControl::setTouchEnabled(enable);
+    
+    
+}
 
 NS_CC_END

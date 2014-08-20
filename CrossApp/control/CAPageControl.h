@@ -51,6 +51,8 @@ public:
     
     CC_SYNTHESIZE(CAColor4B, m_pageIndicatorTintColor, PageIndicatorTintColor);
     CC_SYNTHESIZE(CAColor4B, m_currentPageIndicatorTintColor, CurrentPageIndicatorTintColor);
+    
+    virtual void setTouchEnabled(bool enable);
         
 protected:
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);    
