@@ -810,7 +810,7 @@ void CATabBarController::viewDidLoad()
                 break;
             case CABarVerticalAlignmentTop:
             {
-                tab_bar_rectOrgin.y = m_pTabBar->getFrame().size.height;
+                container_rect.origin.y = m_pTabBar->getFrame().size.height;
             }
                 break;
             default:
