@@ -21,6 +21,28 @@
 #####7.其他bug修复与优化
 
 
+#### CrossApp 0. 3. 3 Update:
+#####1. Added CAActivityIndicatorView
+Load status view.<br/>
+
+#####2. Text Performance Optimization
+Added cache mechanism, text performance had another improvement.<br/>
+
+#####3. CATabBar Optimization
+Added some methods and interfaces.<br/>
+
+#####4. CATableView and CACollectionView Optimization
+Added section’s Header and Footer’s hovering effect.<br/>
+
+#####5. CATextField Optimization
+Optimized and fixed some bugs.<br/>
+
+#####6. Other CAVector, CADeque, CAList
+Optimized some interfaces. Added the mutual transformation among three containers.<br/>
+
+#####7. Fixed and Optimized other Bugs
+
+
 
 #### CrossApp 0.3.2 更新内容：  
 
