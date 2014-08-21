@@ -66,19 +66,19 @@ CAPageView增加可监听选中当前页的回调方法
 
 #### CrossApp 0. 3. 2 Update:
 
-#####1. Add md5 Encryption Class
+#####1. Added md5 Encryption Class
 
-#####2. Add CACalendar
+#####2. Added CACalendar
 Date & Time classes<br/>
 
 #####3. Rewrite CATextField
 Rewrite-version textField has a better efficiency<br/>
 
 #####4. CAPageView Optimization
-Add callmonitoring current selected page of callback method for CAPageView<br/>
+Added callmonitoring current selected page of callback method for CAPageView<br/>
 
 #####5. CALabel Optimization
-Add sizetoFit method for modifying label’s own size into text actual size<br/>
+Added sizetoFit method for modifying label’s own size into text actual size<br/>
 
 #####6. Fixed Other Bugs
 
@@ -114,16 +114,16 @@ httpClient由原来的一个单独异步线程改为可实现16个异步线程
 
 #### CrossApp 0. 3. 1 Update
 
-##### 1. Add CAPickerView
+##### 1. Added CAPickerView
 List selector, a commonly used control in smartphone, is able to provide a series of multi-value options via rotative sliding menu, display information to users as well as collecting users’ input.<br/>
 
-##### 2. Add CAPageView
+##### 2. Added CAPageView
 Page turning sliding container, a commonly used control in smartphone, is able to implement page turning effect by monitoring fingers’ swipe gestures.<br/>
 
-##### 3. Add CAIndexPath2E and CAIndexPath3E
+##### 3. Added CAIndexPath2E and CAIndexPath3E
 Two and three dimensional index class<br/>
 
-##### 4. Add Cell Multiplexing Mechanism of CATableView and CACollectionView
+##### 4. Added Cell Multiplexing Mechanism of CATableView and CACollectionView
 Multiplexing mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.<br/>
 
 ##### 5. Touch Distributed System Optimization
@@ -189,7 +189,7 @@ The rendering frame rate was greatly improved which is almost on the same level 
 we optimized CANavigationController, and its interface management efficiency was significantly improved.
 
 #####5. CANavigationBar Optimization
-Add port for setting title and button text color.
+Added port for setting title and button text color.
 Fixed bug in background Image updating.
 
 #####6. CASwitch Optimization
@@ -198,9 +198,9 @@ This CASwitch optimization is specific to UE.
 #####7. Fixed CATableView and CACollectionView
 Fixed bug in CATableView and CACollectionView selected item setting.
 
-#####8. Add support for CrossApp-Design file exporting.
+#####8. Added support for CrossApp-Design file exporting.
 
-####9. Add New Demo (a response to our developers’ strong demand)
+####9. Added New Demo (a response to our developers’ strong demand)
 For your convenience, our new demo contains detailed demonstration for every CrossApp control.
 
 #####Statement: this version is CrossApp’s first official version which is almost on the same level with native application’s performance, and has reached the development standard for making commercial products. Here we officially give permission to developers to produce any commercial mobile products with CrossApp.
@@ -237,14 +237,14 @@ Mobile application development engine CrossApp, with open source, cross-platform
 
 ####CrossApp beta 0.2.1 Update:
 
-#####1.Add container class
+#####1.Added container class
 Add CAVector, CADeque, CAList, CAMap and CAMultimap.
 
-#####2.Add controls
+#####2.Added controls
 Add control CACollectionView which is more complicated than CATableView, and its great function could meet many interfaces’ demands.
 
-#####3.Add adaptive corrected parameter
-Add adaptive corrected parameter and take iPhone4 as standard, and this parameter enables all other mobile devices’ displayed view physical size are same with iPhone4.
+#####3.Added adaptive corrected parameter
+Added adaptive corrected parameter and take iPhone4 as standard, and this parameter enables all other mobile devices’ displayed view physical size are same with iPhone4.
 
 #####4.Fixed bug
 Fixed bug that touch event’s memory leak.
@@ -256,7 +256,7 @@ Fixed bug that CAAlertView had breakdown in particular circumstance.
 Optimized CATableView agent method.
 
 #####7.Files completion
-Add lost files of 2.0 versions.
+Added lost files of 2.0 versions.
 
 
 **********************************************************************************
@@ -292,7 +292,7 @@ Arranged directory structure and changed some class name
 #####2.Touch event dispatch optimization
 We optimized sliding container of touch event dispatch
 
-#####3.Add CAAlertView control
+#####3.Added CAAlertView control
 In prompt box, if button number is less than three, they are arranged in horizontal mode, if the number is greater than three, arranged in vertical mode and put into sliding container.
 
 #####4.CALabel optimization
@@ -301,9 +301,9 @@ In prompt box, if button number is less than three, they are arranged in horizon
 
 #####6.Fixed some bugs
 
-#####7.Add one-key project building
+#####7.Added one-key project building
 
-#####8.Add one-key Android environment deployment, download: http://pan.baidu.com/s/1qW6ql32
+#####8.Added one-key Android environment deployment, download: http://pan.baidu.com/s/1qW6ql32
 
 
 
@@ -362,9 +362,9 @@ alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影�
 Optimized CAImageView, and fixed bug that wrong display problem when adding sub view in CAImageView, now you are free to add sub view in CAImageView.
 
 #####2.Delete ccColor3B and add CAColor4B
-Delete ccColor3B and replace all ccColor3B with CAColor4B, add transparency attribute.
+Deleted ccColor3B and replace all ccColor3B with CAColor4B, added transparency attribute.
 
-#####3.Delete Opacity attribute and add new alpha attribute
+#####3.Deleted Opacity attribute and added new alpha attribute
 Alpha attribute is float type with 0 – 1.0f value range, alpha attribute setting can directly influence all sub views’ transparency.
 
 #####4.Completely delete position attribute
@@ -420,10 +420,10 @@ Fixed bug that wrong text display size
 #####5.Fixed bug that blank screen appears when returning from background in Android system
 Previously, if we return from background in Android system, there is certain of probability that blank screen appears
 
-#####6.Add animation related CCFrameTo and CCCenterTo
+#####6.Added animation related CCFrameTo and CCCenterTo
 You can dynamically modify frame and center
 
-#####7.Add suspension drawer function of viewController
+#####7.Added suspension drawer function of viewController
 You can call any viewController’s presentModalViewController and dismissModalViewController to display and dismiss
 
 
@@ -456,11 +456,11 @@ CATextField添加win32输入功能
 ####CrossApp alpha 0.1.8 Update:
 
 #####1.
-Add CANavigationController left and right button customization
+Added CANavigationController left and right button customization
 #####2.
-Add win32 input function in CATextField
+Added win32 input function in CATextField
 #####3.
-Add CANavigationController, and replace current CAViewController’s function
+Added CANavigationController, and replace current CAViewController’s function
 #####4.
 Fixed bug that quickly clicking button on slidable container of touch dispatch system is unable to trigger button event
 #####5.
@@ -522,27 +522,27 @@ Fixed picture error report problem in displaying and hiding tabBar when current 
 
 
 ####CrossApp alpha 0.1.6 Update:
-#####1. Add CASlider:
+#####1. Added CASlider:
 Slider<br/>
 Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
 
-#####2. Add CASegmentedControl:
+#####2. Added CASegmentedControl:
 Segmented Controller<br/>
 Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
 
-#####3. Touch event dispatch rules optimization, add CAResponder class.
+#####3. Touch event dispatch rules optimization, added CAResponder class.
 This optimization makes touch event dispatch become more intelligent and development process simple and easy.
 
 #####4. CATextField functions completion:
-1.Add keyboard type selecting on text field<br/>
-2.Add hiding display character ※<br/>
-3.Add cursor movement, insert and delete<br/>
-4.Add functions such as obtaining keyboard height and others<br/>
+1.Added keyboard type selecting on text field<br/>
+2.Added hiding display character ※<br/>
+3.Added cursor movement, insert and delete<br/>
+4.Added functions such as obtaining keyboard height and others<br/>
 5.Only support iOS and Android for now<br/>
 
-#####5. Add new functions of CATabBarController and CANavigationController
+#####5. Added new functions of CATabBarController and CANavigationController
 Support tabBarController switching to viewController animation effect<br/>
-Add TabBar and NavigationBar hiding function<br/>
+Added TabBar and NavigationBar hiding function<br/>
 
 #####6. Fixed some bugs
 1.Fixed bug: setting ZOder before addSubview in CAView is invalid<br/>
@@ -577,7 +577,7 @@ Add TabBar and NavigationBar hiding function<br/>
 
 
 ####CrossApp alpha 0.1.5 Update:
-#####1. Add CASwitch:
+#####1. Added CASwitch:
 Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us. Juguanhui cannot upload codes via git for some reasons, so this time the controls sources code was submitted and uploaded by 9miao worker.
 
 #####2. Touch event dispatch rules modification:
@@ -585,16 +585,16 @@ The new touch event does not have to be registered, and you can implement cctouc
 
 The new touch event is dispatched from parent view to child view, so even if your touchBegin event spot is in child view rectangular region, you cannot obtain touch event on condition that the touchBegin event is outside of parent view rectangular region.<br/>
 
-#####3. Add GPS location function:
+#####3. Added GPS location function:
 Support iOS and Android for now, no WP8.
 
-#####4. Add photo select from album and photo picture data return function:
+#####4. Added photo select from album and photo picture data return function:
 Support iOS and Android for now, no WP8.
 
-#####5. Add photo taking from webcam and photo picture data return function:
+#####5. Added photo taking from webcam and photo picture data return function:
 Support iOS and Android for now, no WP8.
 
-#####6. Add mobile address book contacts information obtaining function:
+#####6. Added mobile address book contacts information obtaining function:
 Support iOS and Android for now, no WP8.
 
 
@@ -620,7 +620,7 @@ demo由原来的projects文件夹移到samples
 #####1.Power Consumption Optimization:
 A program is continuously redrawing at general 60 frame rates in its life cycle because of the rendering-driven mode of cocos2d-x rendering, but the shortcoming of this mode is the relatively considerable power consumption. Obviously this continuous redraw mode is quite a waste for program, so we change the rendering mechanism into event-driven mode based on application features. In this rendering mode the redraw is only triggered by outside, if not the screen is static and rendering stops, so as to achieve energy saving goal.
 #####2.CAButton Modification:
-Add new attribute AllowsSelected (including set, get), default value is false. If value is true then selected mode is started. In this mode, the button status will switch between selected and default: if current status is default one, press button and release and button will switch to selected status; press and release again and button will switch back to default status. However, we can promptly judge and know current button status by using getSelected () method.
+Added new attribute AllowsSelected (including set, get), default value is false. If value is true then selected mode is started. In this mode, the button status will switch between selected and default: if current status is default one, press button and release and button will switch to selected status; press and release again and button will switch back to default status. However, we can promptly judge and know current button status by using getSelected () method.
 #####3.CASchedule (modified based on CCSchedule):
 **a)	Simplify usage: ** start, stop and other operation can be acted by calling corresponding static methods.<br/>
 **b) Memory management modification: ** previously when we start timer, reference counting on pTarget will plus 1 for the purpose of avoiding program crashed caused by pTarget release. Now the new mechanism we deployed could completely solve the above problem: this mechanism enables system to stop plus 1 on pTarget reference counting after timer starts and auto-stop related timer after pTarget release.<br/>
@@ -676,7 +676,7 @@ Webpage load control: CAWebView<br/>
 #####2.	tableView：
 **a) **cell Multiplexing<br/>
 **b) **cell editing (delete, insert and others)<br/>
-**c) **add some template attributes of cell<br/>
+**c) **added some template attributes of cell<br/>
 =======
 ####【正式版】CrossApp 0.3.1 更新内容：  
 
@@ -705,16 +705,16 @@ httpClient由原来的一个单独异步线程改为可实现16个异步线程
 
 #### CrossApp 0.3.1 Update:
 
-#####1. Add CAPickerView
+#####1. Added CAPickerView
 List selector, a commonly used control in smartphone, is able to provide a series of multi-value options via rotative sliding menu, display information to users as well as collecting users’ input.
 
-#####2. Add CAPageView
+#####2. Added CAPageView
 Page turning sliding container, a commonly used control in smartphone, is able to implement page turning effect by monitoring fingers’ swipe gestures.
 
-#####3. Add CAIndexPath2E and CAIndexPath3E
+#####3. Added CAIndexPath2E and CAIndexPath3E
 Two and three dimensional index class
 
-#####4. Add Cell Multiplexing Mechanism of CATableView and CACollectionView
+#####4. Added Cell Multiplexing Mechanism of CATableView and CACollectionView
 Multiplexing mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.
 
 #####5. Touch Distributed System Optimization
@@ -779,7 +779,7 @@ The rendering frame rate was greatly improved which is almost on the same level 
 we optimized CANavigationController, and its interface management efficiency was significantly improved.
 
 #####5. CANavigationBar Optimization
-Add port for setting title and button text color.
+Added port for setting title and button text color.
 Fixed bug in background Image updating.
 
 #####6. CASwitch Optimization
@@ -788,9 +788,9 @@ This CASwitch optimization is specific to UE.
 #####7. Fixed CATableView and CACollectionView
 Fixed bug in CATableView and CACollectionView selected item setting.
 
-#####8. Add support for CrossApp-Design file exporting.
+#####8. Added support for CrossApp-Design file exporting.
 
-####9. Add New Demo (a response to our developers’ strong demand)
+####9. Added New Demo (a response to our developers’ strong demand)
 For your convenience, our new demo contains detailed demonstration for every CrossApp control.
 
 #####Statement: this version is CrossApp’s first official version which is almost on the same level with native application’s performance, and has reached the development standard for making commercial products. Here we officially give permission to developers to produce any commercial mobile products with CrossApp.
@@ -827,14 +827,14 @@ Mobile application development engine CrossApp, with open source, cross-platform
 
 ####CrossApp beta 0.2.1 Update:
 
-#####1.Add container class
-Add CAVector, CADeque, CAList, CAMap and CAMultimap.
+#####1.Added container class
+Added CAVector, CADeque, CAList, CAMap and CAMultimap.
 
 #####2.Add controls
-Add control CACollectionView which is more complicated than CATableView, and its great function could meet many interfaces’ demands.
+Added control CACollectionView which is more complicated than CATableView, and its great function could meet many interfaces’ demands.
 
-#####3.Add adaptive corrected parameter
-Add adaptive corrected parameter and take iPhone4 as standard, and this parameter enables all other mobile devices’ displayed view physical size are same with iPhone4.
+#####3.Added adaptive corrected parameter
+Added adaptive corrected parameter and take iPhone4 as standard, and this parameter enables all other mobile devices’ displayed view physical size are same with iPhone4.
 
 #####4.Fixed bug
 Fixed bug that touch event’s memory leak.
@@ -846,7 +846,7 @@ Fixed bug that CAAlertView had breakdown in particular circumstance.
 Optimized CATableView agent method.
 
 #####7.Files completion
-Add lost files of 2.0 versions.
+Added lost files of 2.0 versions.
 
 
 **********************************************************************************
@@ -882,7 +882,7 @@ Arranged directory structure and changed some class name
 #####2.Touch event dispatch optimization
 We optimized sliding container of touch event dispatch
 
-#####3.Add CAAlertView control
+#####3.Added CAAlertView control
 In prompt box, if button number is less than three, they are arranged in horizontal mode, if the number is greater than three, arranged in vertical mode and put into sliding container.
 
 #####4.CALabel optimization
@@ -891,9 +891,9 @@ In prompt box, if button number is less than three, they are arranged in horizon
 
 #####6.Fixed some bugs
 
-#####7.Add one-key project building
+#####7.Added one-key project building
 
-#####8.Add one-key Android environment deployment, download: http://pan.baidu.com/s/1qW6ql32
+#####8.Added one-key Android environment deployment, download: http://pan.baidu.com/s/1qW6ql32
 
 
 
@@ -951,10 +951,10 @@ alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影�
 #####1.CAImageView optimization
 Optimized CAImageView, and fixed bug that wrong display problem when adding sub view in CAImageView, now you are free to add sub view in CAImageView.
 
-#####2.Delete ccColor3B and add CAColor4B
-Delete ccColor3B and replace all ccColor3B with CAColor4B, add transparency attribute.
+#####2.Deleted ccColor3B and added CAColor4B
+Deletet ccColor3B and replace all ccColor3B with CAColor4B, added transparency attribute.
 
-#####3.Delete Opacity attribute and add new alpha attribute
+#####3.Deleted Opacity attribute and added new alpha attribute
 Alpha attribute is float type with 0 – 1.0f value range, alpha attribute setting can directly influence all sub views’ transparency.
 
 #####4.Completely delete position attribute
@@ -1010,10 +1010,10 @@ Fixed bug that wrong text display size
 #####5.Fixed bug that blank screen appears when returning from background in Android system
 Previously, if we return from background in Android system, there is certain of probability that blank screen appears
 
-#####6.Add animation related CCFrameTo and CCCenterTo
+#####6.Added animation related CCFrameTo and CCCenterTo
 You can dynamically modify frame and center
 
-#####7.Add suspension drawer function of viewController
+#####7.Added suspension drawer function of viewController
 You can call any viewController’s presentModalViewController and dismissModalViewController to display and dismiss
 
 
@@ -1046,11 +1046,11 @@ CATextField添加win32输入功能
 ####CrossApp alpha 0.1.8 Update:
 
 #####1.
-Add CANavigationController left and right button customization
+Added CANavigationController left and right button customization
 #####2.
-Add win32 input function in CATextField
+Added win32 input function in CATextField
 #####3.
-Add CANavigationController, and replace current CAViewController’s function
+Added CANavigationController, and replace current CAViewController’s function
 #####4.
 Fixed bug that quickly clicking button on slidable container of touch dispatch system is unable to trigger button event
 #####5.
@@ -1112,11 +1112,11 @@ Fixed picture error report problem in displaying and hiding tabBar when current 
 
 
 ####CrossApp alpha 0.1.6 Update:
-#####1. Add CASlider:
+#####1. Added CASlider:
 Slider<br/>
 Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
 
-#####2. Add CASegmentedControl:
+#####2. Added CASegmentedControl:
 Segmented Controller<br/>
 Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
 
@@ -1124,15 +1124,15 @@ Special thanks to a beautiful female programmer (9miao ID: juguanhui) for provid
 This optimization makes touch event dispatch become more intelligent and development process simple and easy.
 
 #####4. CATextField functions completion:
-1.Add keyboard type selecting on text field<br/>
-2.Add hiding display character ※<br/>
-3.Add cursor movement, insert and delete<br/>
-4.Add functions such as obtaining keyboard height and others<br/>
+1.Added keyboard type selecting on text field<br/>
+2.Added hiding display character ※<br/>
+3.Added cursor movement, insert and delete<br/>
+4.Added functions such as obtaining keyboard height and others<br/>
 5.Only support iOS and Android for now<br/>
 
-#####5. Add new functions of CATabBarController and CANavigationController
+#####5. Added new functions of CATabBarController and CANavigationController
 Support tabBarController switching to viewController animation effect<br/>
-Add TabBar and NavigationBar hiding function<br/>
+Added TabBar and NavigationBar hiding function<br/>
 
 #####6. Fixed some bugs
 1.Fixed bug: setting ZOder before addSubview in CAView is invalid<br/>
@@ -1167,7 +1167,7 @@ Add TabBar and NavigationBar hiding function<br/>
 
 
 ####CrossApp alpha 0.1.5 Update:
-#####1. Add CASwitch:
+#####1. Added CASwitch:
 Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us. Juguanhui cannot upload codes via git for some reasons, so this time the controls sources code was submitted and uploaded by 9miao worker.
 
 #####2. Touch event dispatch rules modification:
@@ -1175,16 +1175,16 @@ The new touch event does not have to be registered, and you can implement cctouc
 
 The new touch event is dispatched from parent view to child view, so even if your touchBegin event spot is in child view rectangular region, you cannot obtain touch event on condition that the touchBegin event is outside of parent view rectangular region.<br/>
 
-#####3. Add GPS location function:
+#####3. Added GPS location function:
 Support iOS and Android for now, no WP8.
 
-#####4. Add photo select from album and photo picture data return function:
+#####4. Added photo select from album and photo picture data return function:
 Support iOS and Android for now, no WP8.
 
-#####5. Add photo taking from webcam and photo picture data return function:
+#####5. Added photo taking from webcam and photo picture data return function:
 Support iOS and Android for now, no WP8.
 
-#####6. Add mobile address book contacts information obtaining function:
+#####6. Added mobile address book contacts information obtaining function:
 Support iOS and Android for now, no WP8.
 
 
@@ -1210,7 +1210,7 @@ demo由原来的projects文件夹移到samples
 #####1.Power Consumption Optimization:
 A program is continuously redrawing at general 60 frame rates in its life cycle because of the rendering-driven mode of cocos2d-x rendering, but the shortcoming of this mode is the relatively considerable power consumption. Obviously this continuous redraw mode is quite a waste for program, so we change the rendering mechanism into event-driven mode based on application features. In this rendering mode the redraw is only triggered by outside, if not the screen is static and rendering stops, so as to achieve energy saving goal.
 #####2.CAButton Modification:
-Add new attribute AllowsSelected (including set, get), default value is false. If value is true then selected mode is started. In this mode, the button status will switch between selected and default: if current status is default one, press button and release and button will switch to selected status; press and release again and button will switch back to default status. However, we can promptly judge and know current button status by using getSelected () method.
+Added new attribute AllowsSelected (including set, get), default value is false. If value is true then selected mode is started. In this mode, the button status will switch between selected and default: if current status is default one, press button and release and button will switch to selected status; press and release again and button will switch back to default status. However, we can promptly judge and know current button status by using getSelected () method.
 #####3.CASchedule (modified based on CCSchedule):
 **a)	Simplify usage: ** start, stop and other operation can be acted by calling corresponding static methods.<br/>
 **b) Memory management modification: ** previously when we start timer, reference counting on pTarget will plus 1 for the purpose of avoiding program crashed caused by pTarget release. Now the new mechanism we deployed could completely solve the above problem: this mechanism enables system to stop plus 1 on pTarget reference counting after timer starts and auto-stop related timer after pTarget release.<br/>
@@ -1266,5 +1266,5 @@ Webpage load control: CAWebView<br/>
 #####2.	tableView：
 **a) **cell Multiplexing<br/>
 **b) **cell editing (delete, insert and others)<br/>
-**c) **add some template attributes of cell<br/>
+**c) **added some template attributes of cell<br/>
 >>>>>>> a0fca0f78baf5e0a811792d99d995b5c43b26d7a
