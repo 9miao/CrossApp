@@ -40,6 +40,7 @@ control/CASwitch.cpp \
 control/CATextField.cpp \
 controller/CABarItem.cpp \
 controller/CAViewController.cpp \
+controller/CADrawerController.cpp \
 dispatcher/CAIMEDispatcher.cpp \
 dispatcher/CAKeypadDelegate.cpp \
 dispatcher/CAKeypadDispatcher.cpp \

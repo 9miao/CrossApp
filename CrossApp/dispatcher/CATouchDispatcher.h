@@ -75,7 +75,7 @@ protected:
     
     void passingTouchesViews(float dt = 0);
     
-    std::vector<CAView*> getEventListener(CATouch* touch, CAView* view);
+    std::vector<CAResponder*> getEventListener(CATouch* touch, CAView* view);
 
 protected:
     

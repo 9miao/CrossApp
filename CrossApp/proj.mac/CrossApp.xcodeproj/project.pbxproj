@@ -260,6 +260,8 @@
 		B0090D6F198A441800BD8CDA /* CAPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0090D6D198A441800BD8CDA /* CAPickerView.h */; };
 		B01A29411994C95F00D42BA0 /* CACalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01A293F1994C95F00D42BA0 /* CACalendar.cpp */; };
 		B01A29421994C95F00D42BA0 /* CACalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = B01A29401994C95F00D42BA0 /* CACalendar.h */; };
+		B01D4BF319A5947C0071F6A3 /* CADrawerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01D4BF119A5947C0071F6A3 /* CADrawerController.cpp */; };
+		B01D4BF419A5947C0071F6A3 /* CADrawerController.h in Headers */ = {isa = PBXBuildFile; fileRef = B01D4BF219A5947C0071F6A3 /* CADrawerController.h */; };
 		B01F64F91964FE2F005C14FC /* CADensityDpi.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F64F71964FE2F005C14FC /* CADensityDpi.h */; };
 		B01F64FB1964FF0D005C14FC /* CADensityDpi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */; };
 		B01F650419657084005C14FC /* CACollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F650219657084005C14FC /* CACollectionView.cpp */; };
@@ -536,6 +538,8 @@
 		B0090D6D198A441800BD8CDA /* CAPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPickerView.h; sourceTree = "<group>"; };
 		B01A293F1994C95F00D42BA0 /* CACalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACalendar.cpp; sourceTree = "<group>"; };
 		B01A29401994C95F00D42BA0 /* CACalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACalendar.h; sourceTree = "<group>"; };
+		B01D4BF119A5947C0071F6A3 /* CADrawerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawerController.cpp; sourceTree = "<group>"; };
+		B01D4BF219A5947C0071F6A3 /* CADrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADrawerController.h; sourceTree = "<group>"; };
 		B01F64F71964FE2F005C14FC /* CADensityDpi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADensityDpi.h; sourceTree = "<group>"; };
 		B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADensityDpi.cpp; sourceTree = "<group>"; };
 		B01F650219657084005C14FC /* CACollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACollectionView.cpp; sourceTree = "<group>"; };
@@ -688,6 +692,8 @@
 		04EAA09A1956D74D00198A8E /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				B01D4BF119A5947C0071F6A3 /* CADrawerController.cpp */,
+				B01D4BF219A5947C0071F6A3 /* CADrawerController.h */,
 				04EAA09B1956D74D00198A8E /* CABarItem.cpp */,
 				04EAA09C1956D74D00198A8E /* CABarItem.h */,
 				04EAA09D1956D74D00198A8E /* CAViewController.cpp */,
@@ -1265,6 +1271,7 @@
 				04EABA921956D75B00198A8E /* CAUserDefault.h in Headers */,
 				04EABA961956D75B00198A8E /* ioapi.h in Headers */,
 				04EABA981956D75B00198A8E /* unzip.h in Headers */,
+				B01D4BF419A5947C0071F6A3 /* CADrawerController.h in Headers */,
 				04EABA9A1956D75B00198A8E /* ZipUtils.h in Headers */,
 				04EABA9E1956D75B00198A8E /* CABatchView.h in Headers */,
 				04EABAA01956D75B00198A8E /* CAClippingView.h in Headers */,
@@ -1397,6 +1404,7 @@
 				04EAB0DA1956D75600198A8E /* vec2.c in Sources */,
 				04EAB0DB1956D75600198A8E /* vec3.c in Sources */,
 				04EAB0DC1956D75600198A8E /* vec4.c in Sources */,
+				B01D4BF319A5947C0071F6A3 /* CADrawerController.cpp in Sources */,
 				04EAB10E1956D75600198A8E /* CCFileUtils.cpp in Sources */,
 				04EAB1121956D75600198A8E /* CCImageCommonWebp.cpp in Sources */,
 				04EAB1151956D75600198A8E /* CCSAXParser.cpp in Sources */,

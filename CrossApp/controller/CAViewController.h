@@ -27,6 +27,7 @@ typedef enum
 class CAWindow;
 class CATabBarController;
 class CANavigationController;
+class CADrawerController;
 
 class CC_DLL CAViewController
 : public CAResponder
@@ -68,6 +69,8 @@ public:
     
     virtual void setKeypadEnabled(bool value);
     
+    virtual CAView* getView();
+    
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -84,6 +87,8 @@ public:
     
     friend class CANavigationController;
     
+    friend class CADrawerController;
+    
     friend class CAWindow;
     
 protected:
@@ -97,8 +102,6 @@ protected:
     virtual void viewDidDisappear(){};
     
     virtual void reshapeViewRectDidFinish(){};
-    
-    virtual CAView* getView();
     
     virtual void keyBackClicked() {}
     

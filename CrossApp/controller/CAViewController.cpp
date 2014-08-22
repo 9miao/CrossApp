@@ -8,7 +8,6 @@
 
 #include "CAViewController.h"
 #include "basics/CAApplication.h"
-#include "cocoa/CCString.h"
 #include "support/CCPointExtension.h"
 #include "actions/CCActionInterval.h"
 #include "actions/CCActionInstant.h"
@@ -32,6 +31,7 @@ CAViewController::CAViewController()
 {
     m_pView = CAView::createWithFrame(CCRectZero, ccc4(255, 255, 255, 255));
     m_pView->retain();
+    m_pView->setDisplayRange(false);
     m_pView->setViewDelegate(this);
 }
 
@@ -228,11 +228,7 @@ CANavigationController::CANavigationController()
 CANavigationController::~CANavigationController()
 {
     m_pViewControllers.clear();
-    
-    if (m_pNavigationBar)
-    {
-        CC_SAFE_RELEASE_NULL(m_pNavigationBar);
-    }
+    CC_SAFE_RELEASE_NULL(m_pNavigationBar);
 }
 
 bool CANavigationController::initWithRootViewController(CAViewController* viewController, CABarVerticalAlignment var)
@@ -321,8 +317,10 @@ void CANavigationController::viewDidLoad()
         }
     }
     
-    m_pContainer = CAView::createWithFrame(container_rect);
+    m_pContainer = new CAView();
+    m_pContainer->setFrame(container_rect);
     this->getView()->addSubview(m_pContainer);
+    m_pContainer->release();
     
     CAViewController* viewController = m_pViewControllers.front();
     viewController->addViewFromSuperview(m_pContainer);
@@ -348,11 +346,13 @@ void CANavigationController::viewDidUnload()
 
 void CANavigationController::viewDidAppear()
 {
+    CC_RETURN_IF(m_pViewControllers.empty());
     m_pViewControllers.back()->viewDidAppear();
 }
 
 void CANavigationController::viewDidDisappear()
 {
+    CC_RETURN_IF(m_pViewControllers.empty());
     m_pViewControllers.back()->viewDidDisappear();
 }
 
@@ -713,9 +713,7 @@ CATabBarController::CATabBarController()
 CATabBarController::~CATabBarController()
 {
     m_pViewControllers.clear();
-    
     CC_SAFE_RELEASE_NULL(m_pTabBar);
-    CC_SAFE_RELEASE_NULL(m_pContainer);
 }
 
 bool CATabBarController::initWithViewControllers(const std::vector<CAViewController*>& viewControllers, CABarVerticalAlignment var)
@@ -734,7 +732,8 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
             CAViewController* view = m_pViewControllers.at(i);
             if (view->getTabBarItem() == NULL)
             {
-                const char* title = CCString::createWithFormat("item%d",i)->getCString();
+                char title[8];
+                sprintf(title, "item%d", i);
                 CATabBarItem* item = CATabBarItem::create(title, NULL);
                 item->setTag(i);
                 view->setTabBarItem(item);
@@ -747,8 +746,6 @@ bool CATabBarController::initWithViewControllers(const std::vector<CAViewControl
         m_pTabBar->retain();
         m_pTabBar->setDelegate(this);
         
-        m_pContainer = new CAView();
-        m_pContainer->init();
     }
     while (0);
     
@@ -818,6 +815,8 @@ void CATabBarController::viewDidLoad()
         }
     }
     
+    m_pContainer = new CAView();
+    m_pContainer->autorelease();
     m_pContainer->setFrame(container_rect);
     this->getView()->addSubview(m_pContainer);
     

@@ -654,7 +654,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
 
         if (speed.getLength() < resilience.getLength())
         {
-            speed = ccpSub(speed, resilience);
+            speed = ccpMult(resilience, -1.0f);
             m_tInertia = CCPointZero;
         }
     }
@@ -669,11 +669,6 @@ void CAScrollView::deaccelerateScrolling(float dt)
     }
     else
     {
-        if (speed.getLength() <= minSpeed(dt))
-        {
-            speed = ccpMult(speed, minSpeed(dt) / speed.getLength());
-        }
-        
         point = ccpAdd(point, speed);
         
         if (this->isScrollWindowNotMaxOutSide(m_pContainer->getCenterOrigin()))

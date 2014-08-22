@@ -32,7 +32,7 @@ public:
 
     virtual bool becomeFirstResponder();
     
-    virtual CAResponder* nextResponder() = 0;
+    virtual CAResponder* nextResponder();
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchMovedStopSubviews, TouchMovedStopSubviews);
 

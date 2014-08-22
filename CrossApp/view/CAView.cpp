@@ -1271,9 +1271,9 @@ CAView* CAView::copy()
 
 CAResponder* CAView::nextResponder()
 {
-    if (CAResponder* responder = dynamic_cast<CAResponder*>(m_pViewDelegate))
+    if (m_pViewDelegate)
     {
-        return responder;
+        return dynamic_cast<CAResponder*>(m_pViewDelegate);
     }
     return this->getSuperview();
 }

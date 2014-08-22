@@ -44,37 +44,68 @@ int CATouchController::getTouchID()
     return m_pTouch ? m_pTouch->getID() : -1;
 }
 
-std::vector<CAView*> CATouchController::getEventListener(CATouch* touch, CAView* view)
+std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CAView* view)
 {
-    std::vector<CAView*> vector;
+    CAResponder* responder = view;
+    
+    std::vector<CAResponder*> vector;
     
     do
     {
-        vector.push_back(view);
-
-        view->sortAllSubviews();
+        vector.push_back(responder);
         
-        CAView* nextView = NULL;
+        CAResponder* nextResponder = NULL;
         
-        CAObject* obj;
-        
-        CCARRAY_FOREACH_REVERSE(view->getSubviews(), obj)
+        if (CAView* view = dynamic_cast<CAView*>(responder))
         {
-            CAView* subview = dynamic_cast<CAView*>(obj);
-            if (subview && subview->isVisible() && subview->isTouchEnabled())
+            if (view->getViewDelegate())
             {
-                CCPoint point = subview->convertTouchToNodeSpace(touch);
+                nextResponder = view->nextResponder();
+            }
+            else
+            {
+                view->sortAllSubviews();
                 
-                if (subview->getBounds().containsPoint(point))
+                CAObject* obj;
+                CCARRAY_FOREACH_REVERSE(view->getSubviews(), obj)
                 {
-                    nextView = subview;
-                    break;
+                    CAView* subview = dynamic_cast<CAView*>(obj);
+                    if (subview && subview->isVisible() && subview->isTouchEnabled())
+                    {
+                        CCPoint point = subview->convertTouchToNodeSpace(touch);
+                        
+                        if (subview->getBounds().containsPoint(point))
+                        {
+                            nextResponder = subview;
+                            break;
+                        }
+                    }
+                }
+                
+            }
+        }
+        else if (CAViewController* viewController = dynamic_cast<CAViewController*>(responder))
+        {
+            CAObject* obj;
+            CCARRAY_FOREACH_REVERSE(viewController->getView()->getSubviews(), obj)
+            {
+                CAView* subview = dynamic_cast<CAView*>(obj);
+                if (subview && subview->isVisible() && subview->isTouchEnabled())
+                {
+                    CCPoint point = subview->convertTouchToNodeSpace(touch);
+                    
+                    if (subview->getBounds().containsPoint(point))
+                    {
+                        nextResponder = subview;
+                        break;
+                    }
                 }
             }
         }
-        view = nextView;
+        
+        responder = nextResponder;
     }
-    while (view);
+    while (responder);
     
     return vector;
 }
@@ -107,7 +138,7 @@ void CATouchController::touchBegan()
 {
     m_tFirstPoint = m_pTouch->getLocation();
     
-    std::vector<CAView*> vector;
+    std::vector<CAResponder*> vector;
     
     if (CAView* view = dynamic_cast<CAView*>(CAApplication::getApplication()->getTouchDispatcher()->getFirstResponder()))
     {
@@ -118,7 +149,7 @@ void CATouchController::touchBegan()
         vector = this->getEventListener(m_pTouch, CAApplication::getApplication()->getRootWindow());
     }
 
-    std::vector<CAView*>::iterator itr;
+    std::vector<CAResponder*>::iterator itr;
     for (itr=vector.begin(); itr!=vector.end(); itr++)
     {
         if ((*itr)->isTouchMovedStopSubviews())
@@ -250,10 +281,10 @@ void CATouchDispatcher::setDispatchEvents(bool dispatchEvents)
              itr++)
         {
             CATouchController* touchController = itr->second;
-            CC_CONTINUE_IF(!touchController);
+            CC_CONTINUE_IF(touchController == NULL);
             touchController->touchCancelled();
-            CC_SAFE_RELEASE(touchController);
-            itr->second = NULL;
+            CC_SAFE_DELETE(touchController);
+            m_vTouchControllers[itr->first] = NULL;
         }
     }
 }
@@ -266,17 +297,17 @@ void CATouchDispatcher::setDispatchEventsTrue()
 void CATouchDispatcher::setDispatchEventsFalse()
 {
     m_bDispatchEvents = false;
-    std::map<int, CATouchController*>::iterator itr;
-    for (itr=m_vTouchControllers.begin();
-         itr!=m_vTouchControllers.end();
-         itr++)
-    {
-        CATouchController* touchController = itr->second;
-        CC_CONTINUE_IF(!touchController);
-        touchController->touchCancelled();
-        CC_SAFE_RELEASE(touchController);
-        itr->second = NULL;
-    }
+//    std::map<int, CATouchController*>::iterator itr;
+//    for (itr=m_vTouchControllers.begin();
+//         itr!=m_vTouchControllers.end();
+//         itr++)
+//    {
+//        CATouchController* touchController = itr->second;
+//        CC_CONTINUE_IF(touchController == NULL);
+//        touchController->touchCancelled();
+//        CC_SAFE_DELETE(touchController);
+//        m_vTouchControllers[itr->first] = NULL;
+//    }
 }
 
 void CATouchDispatcher::touchesBegan(CCSet *touches, CAEvent *pEvent)
@@ -311,7 +342,7 @@ void CATouchDispatcher::touchesMoved(CCSet *touches, CAEvent *pEvent)
         pTouch = (CATouch *)(*setIter);
         
         CATouchController* touchController = m_vTouchControllers[pTouch->getID()];
-        CC_CONTINUE_IF(!touchController);
+        CC_CONTINUE_IF(touchController == NULL);
         touchController->touchMoved();
     }
     m_bLocked = false;
@@ -329,7 +360,7 @@ void CATouchDispatcher::touchesEnded(CCSet *touches, CAEvent *pEvent)
         pTouch = (CATouch *)(*setIter);
         
         CATouchController* touchController = m_vTouchControllers[pTouch->getID()];
-        CC_CONTINUE_IF(!touchController);
+        CC_CONTINUE_IF(touchController == NULL);
         touchController->touchEnded();
         CC_SAFE_RELEASE(touchController);
         m_vTouchControllers[pTouch->getID()] = NULL;
@@ -349,7 +380,7 @@ void CATouchDispatcher::touchesCancelled(CCSet *touches, CAEvent *pEvent)
         pTouch = (CATouch *)(*setIter);
         
         CATouchController* touchController = m_vTouchControllers[pTouch->getID()];
-        CC_CONTINUE_IF(!touchController);
+        CC_CONTINUE_IF(touchController == NULL);
         touchController->touchEnded();
         delete touchController;
         m_vTouchControllers[pTouch->getID()] = NULL;

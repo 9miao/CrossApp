@@ -313,7 +313,8 @@ unsigned int CCActionManager::numberOfRunningActionsInTarget(CAObject *pTarget)
 // main loop
 void CCActionManager::update(float dt)
 {
-    dt = 1/60.0f;
+    dt = MIN(dt, 1/30.0f);
+    dt = MAX(dt, 1/100.0f);
     for (tHashElement *elt = m_pTargets; elt != NULL; )
     {
         m_pCurrentTarget = elt;

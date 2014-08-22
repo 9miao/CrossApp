@@ -55,6 +55,11 @@ bool CAResponder::becomeFirstResponder()
     return true;
 }
 
+CAResponder* CAResponder::nextResponder()
+{
+    return NULL;
+}
+
 bool CAResponder::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     CC_UNUSED_PARAM(pTouch);
