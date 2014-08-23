@@ -476,12 +476,13 @@ void CACollectionView::loadCollectionCell()
 		CACollectionViewCell* cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, r.section, r.row, r.item);
         if (cell)
         {
-            addSubview(cell);
             cell->m_nSection = r.section;
             cell->m_nRow = r.row;
             cell->m_nItem = r.item;
-            itr->second = cell;
+            cell->updateDisplayedAlpha(this->getAlpha());
+            this->addSubview(cell);
             cell->setFrame(cellRect);
+            itr->second = cell;
         }
 
 		if (m_pSelectedCollectionCells.count(r))
@@ -555,6 +556,7 @@ CACollectionViewCell::CACollectionViewCell()
 ,m_nSection(0xffffffff)
 ,m_nRow(0xffffffff)
 ,m_nItem(0xffffffff)
+,m_bControlStateEffect(true)
 {
 
 }
@@ -624,6 +626,7 @@ void CACollectionViewCell::setContentSize(const CrossApp::CCSize &var)
 void CACollectionViewCell::setControlState(const CAControlState& var)
 {
     CAControl::setControlState(var);
+    CC_RETURN_IF(m_bControlStateEffect == false);
     switch (var)
     {
         case CAControlStateNormal:

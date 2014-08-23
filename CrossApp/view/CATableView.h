@@ -50,25 +50,58 @@ public:
     
     virtual ~CATableViewDataSource(){};
     
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row) = 0;
+    //Necessary
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
+    {
+        return NULL;
+    }
     
-    virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section){return NULL;}
+    //Necessary
+    virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
+    {
+        return 0;
+    }
     
-    virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, const CCSize& viewSize, unsigned int section){return NULL;}
+    //Necessary
+    virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section)
+    {
+        return 0;
+    }
     
-    virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section) = 0;
+    virtual unsigned int numberOfSections(CATableView *table)
+    {
+        return 1;
+    }
     
-    virtual unsigned int numberOfSections(CATableView *table){return 1;}
+    virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
+    {
+        return NULL;
+    }
     
-    virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row) = 0;
+    virtual unsigned int tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
+    {
+        return 0;
+    }
     
-    virtual unsigned int tableViewHeightForHeaderInSection(CATableView* table, unsigned int section){return 0;}
+    virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
+    {
+        return NULL;
+    }
     
-    virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section){return 0;}
+    virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
+    {
+        return 0;
+    }
     
-    CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section){return NULL;}
+    CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section)
+    {
+        return NULL;
+    }
     
-    CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, unsigned int section){return NULL;}
+    CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, unsigned int section)
+    {
+        return NULL;
+    }
 };
 
 
@@ -271,7 +304,7 @@ public:
     
     virtual ~CATableViewCell();
     
-    static CATableViewCell* create(const std::string&reuseIdentifier);
+    static CATableViewCell* create(const std::string& reuseIdentifier);
     
     virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
     
@@ -283,6 +316,10 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
     
+    CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
+    
+protected:
+    
     CC_DEPRECATED_ATTRIBUTE virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
     
 public:
@@ -290,9 +327,7 @@ public:
     virtual CAResponder* nextResponder();
     
 protected:
-    
-    virtual void setControlState(const CAControlState& var);
-    
+
     virtual void normalTableViewCell();
     
     virtual void highlightedTableViewCell();
@@ -300,12 +335,16 @@ protected:
     virtual void selectedTableViewCell();
     
     virtual void disabledTableViewCell();
-    
-    virtual void setContentSize(const CCSize& var);
-    
+
     virtual void recoveryTableViewCell(){};
     
+    void setControlState(const CAControlState& var);
+    
+    void setContentSize(const CCSize& var);
+    
 private:
+    
+    void resetTableViewCell();
     
     using CAView::init;
     
@@ -314,8 +353,6 @@ private:
     using CAView::initWithFrame;
     
     using CAView::initWithColor;
-    
-    void resetTableViewCell();
     
     friend class CATableView;
 

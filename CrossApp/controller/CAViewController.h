@@ -152,6 +152,8 @@ public:
     
     CAViewController* popViewControllerAnimated(bool animated);
     
+    CAViewController* getViewControllerAtIndex(int index);
+    
     inline unsigned long getViewControllerCount() {return m_pViewControllers.size();}
     
     virtual void setNavigationBarHidden(bool hidden, bool animated);

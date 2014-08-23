@@ -65,46 +65,18 @@ CASegmentedControl* CASegmentedControl::createWithCenter(const CCRect& rect, uns
     return NULL;
 }
 
-bool CASegmentedControl::initWithFrame(const CCRect& rect)
+bool CASegmentedControl::init()
 {
     if (!CAControl::init())
     {
         return false;
     }
     this->setColor(CAColor_clear);
-    this->setFrame(rect);
     
     this->removeAllSegments();
-    const float elemWidth = rect.size.width / m_nItemsCount;
-    m_itemSize = CCSizeMake(elemWidth, rect.size.height);
+    const float elemWidth = this->getBounds().size.width / m_nItemsCount;
+    m_itemSize = CCSizeMake(elemWidth, this->getBounds().size.height);
     CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
-    for (int i = 0; i < m_nItemsCount; ++i)
-    {
-        CAButton *btn = this->createDefaultSegment();
-        if (btn)
-        {
-            btn->setFrame(elemFrame);
-            m_segments.push_back(btn);
-            this->insertSubview(btn, 1);
-        }
-        elemFrame.origin.x += elemWidth;
-    }
-    return true;
-}
-
-bool CASegmentedControl::initWithCenter(const CCRect& rect)
-{
-    if (!CAControl::init())
-    {
-        return false;
-    }
-    
-    this->setCenter(rect);
-    
-    this->removeAllSegments();
-    const float elemWidth = rect.size.width / m_nItemsCount;
-    m_itemSize = CCSize(elemWidth, rect.size.height);
-    CCRect elemFrame = CCRect(0, 0, m_itemSize.width, m_itemSize.height);
     for (int i = 0; i < m_nItemsCount; ++i)
     {
         CAButton *btn = this->createDefaultSegment();

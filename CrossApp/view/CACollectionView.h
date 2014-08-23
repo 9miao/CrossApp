@@ -25,9 +25,9 @@ class CACollectionViewDelegate
 public:
 	virtual ~CACollectionViewDelegate(){};
 
-	virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item) {};
+	virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item){};
 
-	virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item) {};
+	virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item){};
 };
 
 
@@ -36,23 +36,54 @@ class CACollectionViewDataSource
 public:
 	virtual ~CACollectionViewDataSource(){};
 
-	virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item) = 0;
+    //Necessary
+	virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
+    {
+        return NULL;
+    }
 
-	virtual unsigned int numberOfSectionsInCollectioView() { return 1; }
+    //Necessary
+    virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
+    {
+        return 0;
+    }
+    
+	//Necessary
+    virtual unsigned int numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)
+    {
+        return 0;
+    }
+    
+    //Necessary
+	virtual unsigned int numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section)
+    {
+        return 0;
+    }
+    
+    virtual unsigned int numberOfSectionsInCollectioView()
+    {
+        return 1;
+    }
 
-	virtual unsigned int numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section) = 0;
+	virtual CAView* collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section)
+    {
+        return NULL;
+    }
 
-	virtual unsigned int collectionViewHeightForHeaderInSection(CACollectionView *collectionView, unsigned int section) { return 0; }
-
-	virtual unsigned int collectionViewHeightForFooterInSection(CACollectionView *collectionView, unsigned int section) { return 0; }
-
-	virtual CAView* collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section){ return NULL; }
-
-	virtual CAView* collectionViewSectionViewForFooterInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section){ return NULL; }
-
-	virtual unsigned int numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row) = 0;
-
-	virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row) { return 0; }
+    virtual unsigned int collectionViewHeightForHeaderInSection(CACollectionView *collectionView, unsigned int section)
+    {
+        return 0;
+    }
+    
+	virtual CAView* collectionViewSectionViewForFooterInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section)
+    {
+        return NULL;
+    }
+    
+	virtual unsigned int collectionViewHeightForFooterInSection(CACollectionView *collectionView, unsigned int section)
+    {
+        return 0;
+    }
 };
 
 
@@ -171,6 +202,10 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nItem, Item);
     
+    CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
+    
+protected:
+    
     CC_DEPRECATED_ATTRIBUTE virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
     
 public:
@@ -178,8 +213,6 @@ public:
     virtual CAResponder* nextResponder();
     
 protected:
-    
-    virtual void setControlState(const CAControlState& var);
     
 	virtual void normalCollectionViewCell();
     
@@ -189,13 +222,15 @@ protected:
     
 	virtual void disabledCollectionViewCell();
 
-	virtual void resetCollectionViewCell();
-    
-    virtual void setContentSize(const CCSize& var);
-    
     virtual void recoveryCollectionViewCell(){};
     
+    void setControlState(const CAControlState& var);
+    
+    void setContentSize(const CCSize& var);
+    
 private:
+    
+    void resetCollectionViewCell();
     
     using CAView::init;
     

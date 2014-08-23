@@ -123,28 +123,6 @@ CAButton* CAButton::createWithCenter(const CCRect& rect, const CAButtonType& but
     return NULL;
 }
 
-bool CAButton::initWithFrame(const CCRect& rect)
-{
-    if (!CAButton::init())
-    {
-        return false;
-    }
-
-    this->setFrame(rect);
-    return true;
-}
-
-bool CAButton::initWithCenter(const CCRect& rect)
-{
-    if (!CAButton::init())
-    {
-        return false;
-    }
-
-    this->setCenter(rect);
-    return true;
-}
-
 bool CAButton::init()
 {
     if (!CAControl::init())

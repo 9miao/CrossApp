@@ -151,6 +151,8 @@ protected:
     
     void closeToPoint(float dt);
     
+    void updateIndicator();
+    
     void showIndicator();
     
     void hideIndicator();
@@ -206,7 +208,8 @@ public:
     {
         CAIndicatorTypeHorizontal,
         CAIndicatorTypeVertical
-    }CAIndicatorType;
+    }
+    CAIndicatorType;
     
     
 public:

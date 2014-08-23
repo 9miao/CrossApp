@@ -108,7 +108,7 @@ public:
 
      @since v2.1
      */
-    virtual std::string fullPathForFilename(const char* pszFileName);
+    virtual std::string fullPathForFilename(const std::string& pszFileName);
     
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
@@ -305,7 +305,7 @@ protected:
      *  @return The new filename after searching in the filename lookup dictionary.
      *          If the original filename wasn't in the dictionary, it will return the original filename.
      */
-    virtual std::string getNewFilename(const char* pszFileName);
+    virtual std::string getNewFilename(const std::string& pszFileName);
     
     /**
      *  Gets full path for filename, resolution directory and search path.

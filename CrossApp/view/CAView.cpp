@@ -1092,11 +1092,7 @@ void CAView::draw()
 void CAView::visit()
 {
     // quick return if not visible. children won't be drawn.
-    if (!m_bVisible)
-    {
-        return;
-    }
-    
+    CC_RETURN_IF(!m_bVisible);
     
     kmGLPushMatrix();
 
@@ -1112,9 +1108,46 @@ void CAView::visit()
             m_obRestoreScissorRect = CCRectMake(params[0], params[1], params[2], params[3]);
         }
         
-        CCPoint point = this->convertToWorldSpace(CCPoint(0, this->getBounds().size.height));
-        point = CAApplication::getApplication()->convertToGL(point);
+        CCPoint point = CCPointZero;
+        
         CCSize size = this->getBounds().size;
+        
+        {
+            int rotation = this->getRotation();
+            
+            CAView* parent = this->getSuperview();
+            while (parent)
+            {
+                rotation += parent->getRotation();
+                parent = parent->getSuperview();
+            }
+            
+            if (fabsf(rotation % 360 - 90) < FLT_EPSILON)
+            {
+                point = this->getBounds().size;
+                size.width = size.width + size.height;
+                size.height = size.width - size.height;
+                size.width = size.width - size.height;
+            }
+            else if (fabsf(rotation % 360 - 180) < FLT_EPSILON)
+            {
+                point = CCPoint(this->getBounds().size.width, 0);
+            }
+            else if (fabsf(rotation % 360 - 270) < FLT_EPSILON)
+            {
+                point = CCPointZero;
+                size.width = size.width + size.height;
+                size.height = size.width - size.height;
+                size.width = size.width - size.height;
+            }
+            else
+            {
+                point = CCPoint(0, this->getBounds().size.height);
+            }
+        }
+        point = this->convertToWorldSpace(point);
+        point = CAApplication::getApplication()->convertToGL(point);
+        
         
         CCEGLView* pGLView = CCEGLView::sharedOpenGLView();
         float glScaleX = pGLView->getScaleX();

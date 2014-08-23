@@ -591,6 +591,19 @@ void CANavigationController::navigationPopViewController(CANavigationBar* naviga
     this->popViewControllerAnimated(animated);
 }
 
+CAViewController* CANavigationController::getViewControllerAtIndex(int index)
+{
+    do
+    {
+        CC_BREAK_IF(index < 0);
+        CC_BREAK_IF(index >= m_pViewControllers.size());
+        return m_pViewControllers.at(index);
+    }
+    while (0);
+    
+    return NULL;
+}
+
 void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
 {
     CC_RETURN_IF(m_bNavigationBarHidden == hidden);
@@ -697,6 +710,14 @@ void CANavigationController::unScheduleUpdate()
 {
     CAScheduler::unschedule(schedule_selector(CANavigationController::update), this);
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    if (m_bNavigationBarHidden)
+    {
+        m_pNavigationBar->setVisible(false);
+    }
+    else
+    {
+        m_pNavigationBar->setVisible(true);
+    }
 }
 
 #pragma CATabBarController
@@ -1049,6 +1070,14 @@ void CATabBarController::unScheduleUpdate()
 {
     CAScheduler::unschedule(schedule_selector(CATabBarController::update), this);
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    if (m_bTabBarHidden)
+    {
+        m_pTabBar->setVisible(false);
+    }
+    else
+    {
+        m_pTabBar->setVisible(true);
+    }
 }
 
 NS_CC_END;

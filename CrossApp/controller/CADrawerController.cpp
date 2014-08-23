@@ -22,6 +22,7 @@ CADrawerController::CADrawerController()
 ,m_fDivision(0)
 ,m_fCurrDivision(0)
 ,m_bShow(false)
+,m_bTouchMoved(true)
 ,m_fOffX(0)
 ,m_pBackgroundView(NULL)
 {
@@ -228,24 +229,28 @@ void CADrawerController::hideEnded()
 
 void CADrawerController::updateViewFrame()
 {
-    float scale0 = 0.2f + 0.8f * m_fCurrDivision / m_fDivision;
-    float scale1 = 1.0f - 0.2f * m_fCurrDivision / m_fDivision;
-
     CCPoint point[2] =
     {
-        CCPoint(m_fCurrDivision / scale0 - m_fDivision, 0),
+        CCPoint(m_fCurrDivision - m_fDivision, 0),
         CCPoint(m_fCurrDivision, 0)
     };
     
-    point[0].y = this->getView()->getBounds().size.height * (1.0f - scale0) / 2;
-    point[1].y = this->getView()->getBounds().size.height * (1.0f - scale1) / 2;
-    
-    m_pContainer[0]->setScale(scale0);
-    m_pContainer[1]->setScale(scale1);
-    
-    float alpha0 = m_fCurrDivision / m_fDivision;
-    m_pContainer[0]->setAlpha(alpha0);
-    
+    if (1)
+    {
+        float scale0 = 0.2f + 0.8f * m_fCurrDivision / m_fDivision;
+        float scale1 = 1.0f - 0.2f * m_fCurrDivision / m_fDivision;
+        
+        m_pContainer[0]->setScale(scale0);
+        m_pContainer[1]->setScale(scale1);
+        
+        point[0].x = (point[1].x - m_pContainer[0]->getFrame().size.width) / 2;
+        point[0].y = this->getView()->getBounds().size.height * (1.0f - scale0) / 2;
+        point[1].y = this->getView()->getBounds().size.height * (1.0f - scale1) / 2;
+        
+        float alpha0 = m_fCurrDivision / m_fDivision;
+        m_pContainer[0]->setAlpha(alpha0 * alpha0);
+    }
+
     m_pContainer[0]->setFrameOrigin(point[0]);
     m_pContainer[1]->setFrameOrigin(point[1]);
 
@@ -287,6 +292,7 @@ bool CADrawerController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CADrawerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_bTouchMoved == false);
     float offDis = pTouch->getLocation().x - pTouch->getPreviousLocation().x;
     m_fCurrDivision += offDis;
     m_fCurrDivision = MIN(m_fCurrDivision, m_fDivision);

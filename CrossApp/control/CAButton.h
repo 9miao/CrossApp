@@ -47,10 +47,6 @@ public:
     
     virtual bool init();
     
-    virtual bool initWithFrame(const CCRect& rect);
-    
-    virtual bool initWithCenter(const CCRect& rect);
-    
     void setBackGroundViewForState(const CAControlState& controlState, CAView *var);
     
     CAView* getBackGroundViewForState(const CAControlState& controlState);

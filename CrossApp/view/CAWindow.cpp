@@ -34,7 +34,6 @@ bool CAWindow::init()
          CCRect rect = CCRectZero;
          rect.size = pDirector->getWinSize();
          this->setFrame(rect);
-         
          bRet = true;
      } while (0);
      return bRet;

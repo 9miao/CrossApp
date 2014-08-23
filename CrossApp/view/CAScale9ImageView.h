@@ -79,7 +79,7 @@ protected:
 
     CABatchView* m_pScale9ImageView;
     
-    CAImageView* m_pImageView[9];
+    CAView* m_pImageView[9];
     
     CCRect m_rFrame[9];
     

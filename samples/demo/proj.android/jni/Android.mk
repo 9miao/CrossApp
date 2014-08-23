@@ -33,6 +33,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/ExtensionsTest/ExtensionsTest.cpp \
 ../../Classes/ExtensionsTest/AddressBookTest.cpp \
 ../../Classes/ExtensionsTest/HttpRequestTest.cpp \	
+../../../../CrossApp/view/CAActivityIndicatorView.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
 $(LOCAL_PATH)/../../Classes/ActivityIndicatorViewTest \
@@ -53,6 +54,7 @@ $(LOCAL_PATH)/../../Classes/TableViewTest \
 $(LOCAL_PATH)/../../Classes/TextFieldTest \
 $(LOCAL_PATH)/../../Classes/ExtensionsTest \
 $(LOCAL_PATH)/../../Classes/ViewController \
+$(LOCAL_PATH)/../../../../CrossApp/view \
 
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

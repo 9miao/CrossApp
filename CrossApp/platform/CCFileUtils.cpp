@@ -534,16 +534,18 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
     return pBuffer;
 }
 
-std::string CCFileUtils::getNewFilename(const char* pszFileName)
+std::string CCFileUtils::getNewFilename(const std::string& pszFileName)
 {
-    const char* pszNewFileName = NULL;
+    std::string pszNewFileName = "";
     // in Lookup Filename dictionary ?
     CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
-    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+    if( NULL == fileNameFound || fileNameFound->length() == 0)
+    {
         pszNewFileName = pszFileName;
     }
-    else {
-        pszNewFileName = fileNameFound->getCString();
+    else
+    {
+        pszNewFileName = fileNameFound->m_sString;
         //CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
     }
     return pszNewFileName;
@@ -567,16 +569,13 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     
     path = getFullPathForDirectoryAndFilename(path, file);
     
-    //CCLOG("getPathForFilename, fullPath = %s", path.c_str());
     return path;
 }
 
 
-std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
+std::string CCFileUtils::fullPathForFilename(const std::string& pszFileName)
 {
-    CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
-    
-    std::string strFileName = pszFileName;
+    std::string strFileName = std::string(pszFileName);
     if (isAbsolutePath(pszFileName))
     {
         //CCLOG("Return absolute path( %s ) directly.", pszFileName);
@@ -596,10 +595,16 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     
     string fullpath = "";
     
-    for (std::vector<std::string>::iterator searchPathsIter = m_searchPathArray.begin();
-         searchPathsIter != m_searchPathArray.end(); ++searchPathsIter) {
-        for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
-             resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
+    std::vector<std::string>::iterator searchPathsIter;
+    for (searchPathsIter = m_searchPathArray.begin();
+         searchPathsIter != m_searchPathArray.end();
+         ++searchPathsIter)
+    {
+        std::vector<std::string>::iterator resOrderIter;
+        for (resOrderIter = m_searchResolutionsOrderArray.begin();
+             resOrderIter != m_searchResolutionsOrderArray.end();
+             ++resOrderIter)
+        {
             
             //CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
             

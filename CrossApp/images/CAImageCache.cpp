@@ -238,7 +238,7 @@ CCDictionary* CAImageCache::snapshotTextures()
     return pRet;
 }
 
-void CAImageCache::addImageAsync(const char *path, CAObject *target, SEL_CallFuncO selector)
+void CAImageCache::addImageAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector)
 {
     std::string pathKey = path;
     
@@ -247,14 +247,12 @@ void CAImageCache::addImageAsync(const char *path, CAObject *target, SEL_CallFun
     this->addImageFullPathAsync(pathKey.c_str(), target, selector);
 }
 
-void CAImageCache::addImageFullPathAsync(const char *path, CAObject *target, SEL_CallFuncO selector)
+void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector)
 {
 #ifdef EMSCRIPTEN
     CCLOGWARN("Cannot load image %s asynchronously in Emscripten builds.", path);
     return;
 #endif // EMSCRIPTEN
-    
-    CCAssert(path != NULL, "ImageCache: fileimage MUST not be NULL");
     
     CAImage* texture = NULL;
     
@@ -384,11 +382,8 @@ void CAImageCache::addImageAsyncCallBack(float dt)
     }
 }
 
-CAImage*  CAImageCache::addImage(const char * path)
+CAImage*  CAImageCache::addImage(const std::string& path)
 {
-    CCAssert(path != NULL, "ImageCache: fileimage MUST not be NULL");
-
-
     std::string pathKey = path;
 
     pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
@@ -399,7 +394,7 @@ CAImage*  CAImageCache::addImage(const char * path)
     return addImageFullPath(pathKey.c_str());
 }
 
-CAImage* CAImageCache::addImageFullPath(const char *fileimage)
+CAImage* CAImageCache::addImageFullPath(const std::string& fileimage)
 {
     CAImage* image = NULL;
     CCImage* pImage = NULL;
@@ -467,7 +462,7 @@ CAImage* CAImageCache::addImageFullPath(const char *fileimage)
                 }
                 else
                 {
-                    CCLOG("CrossApp: Couldn't create texture for file:%s in CAImageCache", fileimage);
+                    CCLOG("CrossApp: Couldn't create texture for file:%s in CAImageCache", fileimage.c_str());
                 }
             }
         } while (0);
@@ -479,10 +474,8 @@ CAImage* CAImageCache::addImageFullPath(const char *fileimage)
     return image;
 }
 
-CAImage* CAImageCache::addETCImage(const char* path)
+CAImage* CAImageCache::addETCImage(const std::string& path)
 {
-    CCAssert(path != NULL, "ImageCache: fileimage MUST not be nil");
-    
     CAImage* texture = NULL;
     std::string key(path);
     
@@ -508,17 +501,14 @@ CAImage* CAImageCache::addETCImage(const char* path)
     return texture;
 }
 
-CAImage* CAImageCache::addUIImage(CCImage *image, const char *key)
+CAImage* CAImageCache::addUIImage(CCImage *image, const std::string& key)
 {
     CCAssert(image != NULL, "ImageCache: image MUST not be nil");
 
     CAImage*  texture = NULL;
     // imageForKey() use full path,so the key should be full path
     std::string forKey;
-    if (key)
-    {
-        forKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(key);
-    }
+    forKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(key);
 
     // Don't have to lock here, because addImageAsync() will not 
     // invoke opengl function in loading thread.
@@ -526,7 +516,7 @@ CAImage* CAImageCache::addUIImage(CCImage *image, const char *key)
     do 
     {
         // If key is nil, then create a new texture each time
-        if(key && (texture = (CAImage* )m_pTextures->objectForKey(forKey.c_str())))
+        if((texture = (CAImage* )m_pTextures->objectForKey(forKey)))
         {
             break;
         }
@@ -535,9 +525,9 @@ CAImage* CAImageCache::addUIImage(CCImage *image, const char *key)
         texture = new CAImage();
         texture->initWithImage(image);
 
-        if(key && texture)
+        if(texture)
         {
-            m_pTextures->setObject(texture, forKey.c_str());
+            m_pTextures->setObject(texture, forKey);
             texture->autorelease();
         }
         else
@@ -662,7 +652,7 @@ void CAImageCache::removeImageForKey(const std::string& imageKeyName)
 
 CAImage* CAImageCache::imageForKey(const std::string& key)
 {
-    return (CAImage*)m_pTextures->objectForKey(CCFileUtils::sharedFileUtils()->fullPathForFilename(key.c_str()));
+    return (CAImage*)m_pTextures->objectForKey(CCFileUtils::sharedFileUtils()->fullPathForFilename(key));
 }
 
 void CAImageCache::reloadAllImages()

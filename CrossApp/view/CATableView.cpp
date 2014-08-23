@@ -535,7 +535,6 @@ void CATableView::reloadData()
     
     if (m_pTableHeaderView)
     {
-        m_pTableHeaderView->setDisplayRange(true);
         m_pTableHeaderView->setFrame(CCRect(0, y, width, m_nTableHeaderHeight));
         this->addSubview(m_pTableHeaderView);
         y += m_nTableHeaderHeight;
@@ -603,7 +602,6 @@ void CATableView::reloadData()
     
     if (m_pTableFooterView)
     {
-        m_pTableFooterView->setDisplayRange(true);
         m_pTableFooterView->setFrame(CCRect(0, y, width, m_nTableFooterHeight));
         this->addSubview(m_pTableFooterView);
         y += m_nTableFooterHeight;
@@ -635,9 +633,10 @@ void CATableView::loadTableCell()
             CCRect cellRect = m_rTableCellRectss[i][j];
             CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
             CATableViewCell* cell = m_pTableViewDataSource->tableCellAtIndex(this, m_rTableCellRectss[i][j].size, i, j);
-            
+            CC_CONTINUE_IF(cell == NULL);
             cell->m_nSection = i;
             cell->m_nRow = j;
+            cell->updateDisplayedAlpha(this->getAlpha());
             m_pContainer->addSubview(cell);
             cell->setFrame(m_rTableCellRectss[i][j]);
             m_pUsedTableCells[indexPath] = cell;
@@ -776,6 +775,7 @@ CATableViewCell::CATableViewCell()
 :m_pBackgroundView(NULL)
 ,m_nSection(0xffffffff)
 ,m_nRow(0xffffffff)
+,m_bControlStateEffect(true)
 {
 
 }
@@ -799,6 +799,7 @@ CATableViewCell* CATableViewCell::create(const std::string& reuseIdentifier)
 
 bool CATableViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
+    this->setDisplayRange(false);
     this->setBackgroundView(CAView::create());
     this->setColor(CAColor_clear);
     this->setReuseIdentifier(reuseIdentifier);
@@ -809,6 +810,7 @@ bool CATableViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier
 
 bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
 {
+    this->setDisplayRange(false);
     this->setBackgroundView(CAView::create());
     this->setColor(CAColor_clear);
     this->setReuseIdentifier(reuseIdentifier);
@@ -845,6 +847,7 @@ void CATableViewCell::setContentSize(const CrossApp::CCSize &var)
 void CATableViewCell::setControlState(const CAControlState& var)
 {
     CAControl::setControlState(var);
+    CC_RETURN_IF(m_bControlStateEffect == false);
     switch (var)
     {
         case CAControlStateNormal:
