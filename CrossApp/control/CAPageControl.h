@@ -52,6 +52,9 @@ public:
     CC_SYNTHESIZE(CAColor4B, m_pageIndicatorTintColor, PageIndicatorTintColor);
     CC_SYNTHESIZE(CAColor4B, m_currentPageIndicatorTintColor, CurrentPageIndicatorTintColor);
     
+    CC_SYNTHESIZE(CAImage*, m_pPageImage, PageIndicatorImage);
+    CC_SYNTHESIZE(CAImage*, m_pSelectPageImage, CurrIndicatorImage);
+    
     virtual void setTouchEnabled(bool enable);
         
 protected:
@@ -62,8 +65,6 @@ protected:
 
 private:
     CAVector<CAImageView*> m_pIndicators;
-    CAImage* m_pPageImage;
-    CAImage* m_pSelectPageImage;
 };
 
 NS_CC_END

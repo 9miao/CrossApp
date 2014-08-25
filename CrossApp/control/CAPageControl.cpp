@@ -81,13 +81,12 @@ bool CAPageControl::init()
         return false;
     }
     
-    m_pPageImage = CAImage::create("source_material/WhiteDots.png");
-    m_pPageImage->retain();
-    
-    m_pSelectPageImage = CAImage::create("source_material/WhiteDots.png");
-    m_pSelectPageImage->retain();
-    
+    setPageIndicatorImage(CAImage::create("source_material/page_n.png"));
+    setCurrIndicatorImage(CAImage::create("source_material/page_h.png"));
+
     setTouchEnabled(true);
+    
+    setColor(CAColor_clear);
     
     return true;
 }

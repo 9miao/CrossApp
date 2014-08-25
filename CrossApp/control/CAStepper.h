@@ -15,6 +15,7 @@
 NS_CC_BEGIN
 
 class CAImageView;
+class CAScale9ImageView;
 class CC_DLL CAStepper : public CAControl {
     
 public:
@@ -44,6 +45,8 @@ public:
     CC_SYNTHESIZE(double, m_stepValue, StepValue);      // default 1. must be greater than 0
     
 //    CC_SYNTHESIZE(CAColor4B, m_tintColor, TintColor);
+    
+    CC_SYNTHESIZE_IS(bool, m_bTouchEffect, TouchEffect); // default false, alpha
     
 public:
     // a background image which will be 3-way stretched over the whole of the control. Each half of the stepper will paint the image appropriate for its state      
@@ -75,9 +78,10 @@ private:
     CAImage* m_pIncrementImage[CAControlStateAll];
     CAImage* m_pDecrementImage[CAControlStateAll];
     
-    CAImageView* m_pBackgroundImageView;
-    CAImageView* m_pIncrementImageView;
-    CAImageView* m_pDecrementImageView;
+    CAScale9ImageView* m_pBackgroundImageView;
+//    CAImageView* m_pBackgroundImageView;
+    CAScale9ImageView* m_pIncrementImageView;
+    CAScale9ImageView* m_pDecrementImageView;
     
 private:
     enum ActionType{
