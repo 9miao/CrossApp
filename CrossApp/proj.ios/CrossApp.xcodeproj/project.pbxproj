@@ -44,8 +44,6 @@
 		04EA9FEC1956CE2500198A8E /* CAButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FA31956CE2500198A8E /* CAButton.h */; };
 		04EA9FED1956CE2500198A8E /* CAControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9FA41956CE2500198A8E /* CAControl.cpp */; };
 		04EA9FEE1956CE2500198A8E /* CAControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FA51956CE2500198A8E /* CAControl.h */; };
-		04EA9FEF1956CE2500198A8E /* CADateSpinner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9FA61956CE2500198A8E /* CADateSpinner.cpp */; };
-		04EA9FF01956CE2500198A8E /* CADateSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FA71956CE2500198A8E /* CADateSpinner.h */; };
 		04EA9FF11956CE2500198A8E /* CAProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9FA81956CE2500198A8E /* CAProgress.cpp */; };
 		04EA9FF21956CE2500198A8E /* CAProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FA91956CE2500198A8E /* CAProgress.h */; };
 		04EA9FF31956CE2500198A8E /* CASegmentedControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9FAA1956CE2500198A8E /* CASegmentedControl.cpp */; };
@@ -108,7 +106,6 @@
 		04EABB101956DAEA00198A8E /* CABar.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FA01956CE2500198A8E /* CABar.cpp */; };
 		04EABB111956DAEA00198A8E /* CAButton.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FA21956CE2500198A8E /* CAButton.cpp */; };
 		04EABB121956DAEA00198A8E /* CAControl.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FA41956CE2500198A8E /* CAControl.cpp */; };
-		04EABB131956DAEA00198A8E /* CADateSpinner.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FA61956CE2500198A8E /* CADateSpinner.cpp */; };
 		04EABB141956DAEA00198A8E /* CAProgress.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FA81956CE2500198A8E /* CAProgress.cpp */; };
 		04EABB151956DAEA00198A8E /* CASegmentedControl.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FAA1956CE2500198A8E /* CASegmentedControl.cpp */; };
 		04EABB161956DAEA00198A8E /* CASlider.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FAC1956CE2500198A8E /* CASlider.cpp */; };
@@ -425,6 +422,12 @@
 		B0B553D7193485BE0065053D /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553CF193485BE0065053D /* CAImage.h */; };
 		B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553D0193485BE0065053D /* CAImageCache.cpp */; };
 		B0B553D9193485BE0065053D /* CAImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553D1193485BE0065053D /* CAImageCache.h */; };
+		B0C512C719A2DF9F00E6934B /* CAFTFontCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */; };
+		B0C512C819A2DF9F00E6934B /* CAFTFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */; };
+		B0C512D519A30E5D00E6934B /* CAActivityIndicatorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512D119A30E5D00E6934B /* CAActivityIndicatorView.cpp */; };
+		B0C512D619A30E5D00E6934B /* CAActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512D219A30E5D00E6934B /* CAActivityIndicatorView.h */; };
+		B0C512EC19A341B700E6934B /* CACalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512EA19A341B700E6934B /* CACalendar.cpp */; };
+		B0C512ED19A341B700E6934B /* CACalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512EB19A341B700E6934B /* CACalendar.h */; };
 		B0F7E503198792180048F46B /* CAPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F7E501198792180048F46B /* CAPageView.cpp */; };
 		B0F7E504198792180048F46B /* CAPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F7E502198792180048F46B /* CAPageView.h */; };
 /* End PBXBuildFile section */
@@ -467,8 +470,6 @@
 		04EA9FA31956CE2500198A8E /* CAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAButton.h; sourceTree = "<group>"; };
 		04EA9FA41956CE2500198A8E /* CAControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAControl.cpp; sourceTree = "<group>"; };
 		04EA9FA51956CE2500198A8E /* CAControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAControl.h; sourceTree = "<group>"; };
-		04EA9FA61956CE2500198A8E /* CADateSpinner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADateSpinner.cpp; sourceTree = "<group>"; };
-		04EA9FA71956CE2500198A8E /* CADateSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADateSpinner.h; sourceTree = "<group>"; };
 		04EA9FA81956CE2500198A8E /* CAProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAProgress.cpp; sourceTree = "<group>"; };
 		04EA9FA91956CE2500198A8E /* CAProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAProgress.h; sourceTree = "<group>"; };
 		04EA9FAA1956CE2500198A8E /* CASegmentedControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASegmentedControl.cpp; sourceTree = "<group>"; };
@@ -803,6 +804,12 @@
 		B0B553CF193485BE0065053D /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
 		B0B553D0193485BE0065053D /* CAImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCache.cpp; sourceTree = "<group>"; };
 		B0B553D1193485BE0065053D /* CAImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageCache.h; sourceTree = "<group>"; };
+		B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTFontCache.cpp; sourceTree = "<group>"; };
+		B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTFontCache.h; sourceTree = "<group>"; };
+		B0C512D119A30E5D00E6934B /* CAActivityIndicatorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAActivityIndicatorView.cpp; sourceTree = "<group>"; };
+		B0C512D219A30E5D00E6934B /* CAActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAActivityIndicatorView.h; sourceTree = "<group>"; };
+		B0C512EA19A341B700E6934B /* CACalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACalendar.cpp; sourceTree = "<group>"; };
+		B0C512EB19A341B700E6934B /* CACalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACalendar.h; sourceTree = "<group>"; };
 		B0F7E501198792180048F46B /* CAPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageView.cpp; sourceTree = "<group>"; };
 		B0F7E502198792180048F46B /* CAPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -859,8 +866,6 @@
 				04EA9FA31956CE2500198A8E /* CAButton.h */,
 				04EA9FA41956CE2500198A8E /* CAControl.cpp */,
 				04EA9FA51956CE2500198A8E /* CAControl.h */,
-				04EA9FA61956CE2500198A8E /* CADateSpinner.cpp */,
-				04EA9FA71956CE2500198A8E /* CADateSpinner.h */,
 				04EA9FA81956CE2500198A8E /* CAProgress.cpp */,
 				04EA9FA91956CE2500198A8E /* CAProgress.h */,
 				04EA9FAA1956CE2500198A8E /* CASegmentedControl.cpp */,
@@ -908,6 +913,8 @@
 		04EA9FC41956CE2500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B0C512D119A30E5D00E6934B /* CAActivityIndicatorView.cpp */,
+				B0C512D219A30E5D00E6934B /* CAActivityIndicatorView.h */,
 				B0090D71198A444500BD8CDA /* CAPickerView.cpp */,
 				B0090D72198A444500BD8CDA /* CAPickerView.h */,
 				B0F7E501198792180048F46B /* CAPageView.cpp */,
@@ -1018,6 +1025,8 @@
 		1551A37F158F2ADE00E66CFE /* cocoa */ = {
 			isa = PBXGroup;
 			children = (
+				B0C512EA19A341B700E6934B /* CACalendar.cpp */,
+				B0C512EB19A341B700E6934B /* CACalendar.h */,
 				1551A382158F2ADE00E66CFE /* CCArray.cpp */,
 				1551A383158F2ADE00E66CFE /* CCArray.h */,
 				1551A386158F2ADE00E66CFE /* CCDictionary.cpp */,
@@ -1111,6 +1120,8 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */,
+				B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */,
 				B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */,
 				B0596A571976287B00B1E8CB /* CAFreeTypeFont.h */,
 				B01F6509196585B2005C14FC /* CADensityDpi.h */,
@@ -1534,7 +1545,6 @@
 				04EABB101956DAEA00198A8E /* CABar.cpp in Headers */,
 				04EABB111956DAEA00198A8E /* CAButton.cpp in Headers */,
 				04EABB121956DAEA00198A8E /* CAControl.cpp in Headers */,
-				04EABB131956DAEA00198A8E /* CADateSpinner.cpp in Headers */,
 				B0596B11197629BE00B1E8CB /* svmm.h in Headers */,
 				04EABB141956DAEA00198A8E /* CAProgress.cpp in Headers */,
 				B0596AFA197629BE00B1E8CB /* ftwinfnt.h in Headers */,
@@ -1575,7 +1585,9 @@
 				B0596AE9197629BE00B1E8CB /* ftlzw.h in Headers */,
 				04EABB2D1956DAEA00198A8E /* CCActionInstant.cpp in Headers */,
 				B0596B3A1976343300B1E8CB /* mprintf.h in Headers */,
+				B0C512C819A2DF9F00E6934B /* CAFTFontCache.h in Headers */,
 				04EABB2E1956DAEA00198A8E /* CCActionInterval.cpp in Headers */,
+				B0C512D619A30E5D00E6934B /* CAActivityIndicatorView.h in Headers */,
 				B0596AD6197629BE00B1E8CB /* ftautoh.h in Headers */,
 				B0596AD0197629BE00B1E8CB /* ftheader.h in Headers */,
 				B0596B1B197629BE00B1E8CB /* svttglyf.h in Headers */,
@@ -1650,6 +1662,7 @@
 				1551A720158F2ADE00E66CFE /* CCImage.h in Headers */,
 				1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */,
 				B0B553D7193485BE0065053D /* CAImage.h in Headers */,
+				B0C512ED19A341B700E6934B /* CACalendar.h in Headers */,
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
 				B0596AE3197629BE00B1E8CB /* ftgxval.h in Headers */,
 				1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */,
@@ -1764,7 +1777,6 @@
 				04EA9FEA1956CE2500198A8E /* CABar.h in Headers */,
 				04EA9FEC1956CE2500198A8E /* CAButton.h in Headers */,
 				04EA9FEE1956CE2500198A8E /* CAControl.h in Headers */,
-				04EA9FF01956CE2500198A8E /* CADateSpinner.h in Headers */,
 				B0596AF5197629BE00B1E8CB /* ftsynth.h in Headers */,
 				04EA9FF21956CE2500198A8E /* CAProgress.h in Headers */,
 				04EA9FF41956CE2500198A8E /* CASegmentedControl.h in Headers */,
@@ -1949,13 +1961,13 @@
 				04EA9FE11956CE2500198A8E /* CAGeometry.cpp in Sources */,
 				04EA9FE31956CE2500198A8E /* CAObject.cpp in Sources */,
 				04EA9FE51956CE2500198A8E /* CAResponder.cpp in Sources */,
+				B0C512D519A30E5D00E6934B /* CAActivityIndicatorView.cpp in Sources */,
 				B01F650D196585EA005C14FC /* CACollectionView.cpp in Sources */,
 				04EA9FE71956CE2500198A8E /* CAScheduler.cpp in Sources */,
 				04EA9FE91956CE2500198A8E /* CABar.cpp in Sources */,
 				04EA9FEB1956CE2500198A8E /* CAButton.cpp in Sources */,
 				04EA9FED1956CE2500198A8E /* CAControl.cpp in Sources */,
 				B04636D41957BBBD00758ABF /* CAAnimationCache.cpp in Sources */,
-				04EA9FEF1956CE2500198A8E /* CADateSpinner.cpp in Sources */,
 				04EA9FF11956CE2500198A8E /* CAProgress.cpp in Sources */,
 				04EA9FF31956CE2500198A8E /* CASegmentedControl.cpp in Sources */,
 				04EA9FF51956CE2500198A8E /* CASlider.cpp in Sources */,
@@ -1967,11 +1979,13 @@
 				04EAA0021956CE2500198A8E /* CAKeypadDelegate.cpp in Sources */,
 				04EAA0041956CE2500198A8E /* CAKeypadDispatcher.cpp in Sources */,
 				04EAA0071956CE2500198A8E /* CATouch.cpp in Sources */,
+				B0C512C719A2DF9F00E6934B /* CAFTFontCache.cpp in Sources */,
 				04EAA0091956CE2500198A8E /* CATouchDispatcher.cpp in Sources */,
 				04EAA00B1956CE2500198A8E /* CABatchView.cpp in Sources */,
 				04EAA00F1956CE2500198A8E /* CAImageView.cpp in Sources */,
 				04EAA0111956CE2500198A8E /* CALabel.cpp in Sources */,
 				04EAA0131956CE2500198A8E /* CARenderImage.cpp in Sources */,
+				B0C512EC19A341B700E6934B /* CACalendar.cpp in Sources */,
 				04EAA0151956CE2500198A8E /* CAScale9ImageView.cpp in Sources */,
 				04EAA0171956CE2500198A8E /* CAScrollView.cpp in Sources */,
 				04EAA0191956CE2500198A8E /* CATableView.cpp in Sources */,

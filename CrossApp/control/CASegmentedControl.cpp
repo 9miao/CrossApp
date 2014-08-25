@@ -119,7 +119,7 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
     return true;
 }
 
-bool CASegmentedControl::insertSegmentWithTitle(const char* title, int index, CAControlState controlState)
+bool CASegmentedControl::insertSegmentWithTitle(const char* title, int index, const CAControlState& controlState)
 {
     const int curItemCount = m_segments.size();
     if (index < 0)
@@ -144,7 +144,7 @@ bool CASegmentedControl::insertSegmentWithTitle(const char* title, int index, CA
     return true;
 }
 
-bool CASegmentedControl::insertSegmentWithBackgroundImage(CAImage *image, int index, CAControlState controlState)
+bool CASegmentedControl::insertSegmentWithBackgroundImage(CAImage *image, int index, const CAControlState& controlState)
 {
     const int curItemCount = m_segments.size();
     if (index < 0)
@@ -169,7 +169,7 @@ bool CASegmentedControl::insertSegmentWithBackgroundImage(CAImage *image, int in
     return true;
 }
 
-bool CASegmentedControl::insertSegmentWithImage(CAImage *image, int index, CAControlState controlState)
+bool CASegmentedControl::insertSegmentWithImage(CAImage *image, int index, const CAControlState& controlState)
 {
     const int curItemCount = m_segments.size();
     if (index < 0)
@@ -216,7 +216,7 @@ void CASegmentedControl::removeAllSegments()
     m_segments.clear();
 }
 
-bool CASegmentedControl::setTitleAtIndex(const char* title, int index, CAControlState controlState)
+bool CASegmentedControl::setTitleAtIndex(const char* title, int index, const CAControlState& controlState)
 {
     if (!this->indexIsValid(index))
     {
@@ -233,7 +233,7 @@ bool CASegmentedControl::setTitleAtIndex(const char* title, int index, CAControl
     return true;
 }
 
-bool CASegmentedControl::setTitleColorAtIndex(CAColor4B color, int index, CAControlState controlState)
+bool CASegmentedControl::setTitleColorAtIndex(const CAColor4B& color, int index, const CAControlState& controlState)
 {
     if (!this->indexIsValid(index))
     {
@@ -250,7 +250,7 @@ bool CASegmentedControl::setTitleColorAtIndex(CAColor4B color, int index, CACont
     return true;
 }
 
-bool CASegmentedControl::setBackgroundImageAtIndex(CAImage *image, int index, CAControlState controlState)
+bool CASegmentedControl::setBackgroundImageAtIndex(CAImage *image, int index, const CAControlState& controlState)
 {
     if (!this->indexIsValid(index))
     {
@@ -267,7 +267,24 @@ bool CASegmentedControl::setBackgroundImageAtIndex(CAImage *image, int index, CA
     return true;
 }
 
-bool CASegmentedControl::setImageAtIndex(CAImage *image, int index, CAControlState controlState)
+bool CASegmentedControl::setBackgroundViewAtIndex(CAView *view, int index, const CAControlState& controlState)
+{
+    if (!this->indexIsValid(index))
+    {
+        return false;
+    }
+    
+    CAButton *btn = m_segments.at(index);
+    if (NULL == btn)
+    {
+        return false;
+    }
+    btn->setBackGroundViewForState(controlState, view);
+    
+    return true;
+}
+
+bool CASegmentedControl::setImageAtIndex(CAImage *image, int index, const CAControlState& controlState)
 {
     if (!this->indexIsValid(index))
     {
@@ -284,7 +301,7 @@ bool CASegmentedControl::setImageAtIndex(CAImage *image, int index, CAControlSta
     return true;
 }
 
-bool CASegmentedControl::setImageColorAtIndex(CAColor4B color, int index, CAControlState controlState)
+bool CASegmentedControl::setImageColorAtIndex(const CAColor4B& color, int index, const CAControlState& controlState)
 {
     if (!this->indexIsValid(index))
     {
@@ -455,7 +472,7 @@ void CASegmentedControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 void CASegmentedControl::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-    this->ccTouchEnded(pTouch, pEvent);
+    this->setHighlightedNormal();
 }
 
 bool CASegmentedControl::indexIsValid(int index)

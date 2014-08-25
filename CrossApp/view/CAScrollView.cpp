@@ -170,7 +170,7 @@ CCArray* CAScrollView::getSubviews()
     return m_pContainer->getSubviews();
 }
 
-void CAScrollView::setViewSize(CrossApp::CCSize var)
+void CAScrollView::setViewSize(const CCSize& var)
 {
     CC_RETURN_IF(m_obViewSize.equals(var));
     
@@ -183,9 +183,14 @@ void CAScrollView::setViewSize(CrossApp::CCSize var)
     CCRect rect = m_pContainer->getFrame();
     rect.size = m_obViewSize;
     m_pContainer->setFrame(rect);
+    
+    if (!CAScheduler::isScheduled(schedule_selector(CAScrollView::deaccelerateScrolling), this))
+    {
+        CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
+    }
 }
 
-CCSize CAScrollView::getViewSize()
+const CCSize& CAScrollView::getViewSize()
 {
     return m_obViewSize;
 }
@@ -251,7 +256,7 @@ bool CAScrollView::isShowsVerticalScrollIndicator()
     return m_bShowsVerticalScrollIndicator;
 }
 
-void CAScrollView::setContentOffset(CCPoint offset, bool animated)
+void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
 {
 //    CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     
@@ -327,7 +332,7 @@ void CAScrollView::closeToPoint(float dt)
     CCPoint point = m_pContainer->getFrameOrigin();
     CCPoint resilience = ccpSub(m_tCloseToPoint, point);
     
-    if (resilience.getLength() <= 0.5f)
+    if (resilience.getLength() <= minSpeed(dt))
     {
         m_pContainer->setFrameOrigin(m_tCloseToPoint);
         CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
@@ -340,6 +345,10 @@ void CAScrollView::closeToPoint(float dt)
         resilience.x /= size.width;
         resilience.y /= size.height;
         resilience = ccpMult(resilience, maxBouncesSpeed(dt));
+        if (resilience.getLength() <= minSpeed(dt))
+        {
+            resilience = ccpMult(resilience, minSpeed(dt) / resilience.getLength());
+        }
         resilience = ccpAdd(resilience, point);
         m_pContainer->setFrameOrigin(resilience);
     }
@@ -349,7 +358,6 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     do
     {
-        CC_BREAK_IF(!this->isVisible());
         CC_BREAK_IF(m_pTouches->count() > 2);
         
         if (m_bscrollEnabled == false)
@@ -542,6 +550,8 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             }
             
             CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
+            CAScheduler::unschedule(schedule_selector(CAScrollView::update), this);
+            CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f);
             
             if (m_pScrollViewDelegate)
             {
@@ -614,7 +624,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
     {
         m_tInertia = ccpMult(m_tInertia, 1 - decelerationRatio(dt));
     }
-    
+
     CCPoint point = m_pContainer->getCenterOrigin();
 
     if (m_bBounces)
@@ -654,31 +664,8 @@ void CAScrollView::deaccelerateScrolling(float dt)
             m_tInertia = CCPointZero;
         }
     }
-    point = ccpAdd(point, speed);
     
-    if (this->isScrollWindowNotMaxOutSide(m_pContainer->getCenterOrigin()))
-    {
-        m_tInertia = CCPointZero;
-    }
-    
-    if (m_bBounces == false)
-    {
-        point = this->getScrollWindowNotOutPoint(point);
-    }
-    else
-    {
-        if (m_bBounceHorizontal == false)
-        {
-            point.x = this->getScrollWindowNotOutHorizontal(point.x);
-        }
-        
-        if (m_bBounceVertical == false)
-        {
-            point.y = this->getScrollWindowNotOutVertical(point.y);
-        }
-    }
-    
-    if (speed.getLength() <= 0.5f)
+    if (speed.getLength() <= minSpeed(dt) / 2)
     {
         point = this->getScrollWindowNotOutPoint(point);
         m_pContainer->setCenterOrigin(point);
@@ -686,8 +673,38 @@ void CAScrollView::deaccelerateScrolling(float dt)
         m_bDecelerating = false;
         CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     }
-    else if (point.equals(m_pContainer->getCenterOrigin()) == false)
+    else
     {
+        if (speed.getLength() <= minSpeed(dt))
+        {
+            speed = ccpMult(speed, minSpeed(dt) / speed.getLength());
+        }
+        
+        point = ccpAdd(point, speed);
+        
+        if (this->isScrollWindowNotMaxOutSide(m_pContainer->getCenterOrigin()))
+        {
+            m_tInertia = CCPointZero;
+        }
+        
+        if (m_bBounces == false)
+        {
+            point = this->getScrollWindowNotOutPoint(point);
+        }
+        else
+        {
+            if (m_bBounceHorizontal == false)
+            {
+                point.x = this->getScrollWindowNotOutHorizontal(point.x);
+            }
+            
+            if (m_bBounceVertical == false)
+            {
+                point.y = this->getScrollWindowNotOutVertical(point.y);
+            }
+        }
+        
+        
         this->showIndicator();
         m_pContainer->setCenterOrigin(point);
     }

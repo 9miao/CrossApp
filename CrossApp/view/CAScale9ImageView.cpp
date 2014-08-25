@@ -73,17 +73,19 @@ bool CAScale9ImageView::initWithImage(CAImage* image)
 	return true;
 }
 
-CAScale9ImageView* CAScale9ImageView::copy()
+CAView* CAScale9ImageView::copy()
 {
-    CAScale9ImageView* pReturn = new CAScale9ImageView();
-    if (pReturn && pReturn->initWithImage(m_pScale9ImageView->getImage()))
+    CAScale9ImageView* pReturn = CAScale9ImageView::createWithImage(this->getImage());
+    pReturn->setColor(this->getColor());
+    if (m_bFrame)
     {
-        pReturn->updateWithImage(m_pScale9ImageView, this->getBounds(), m_obCapInsets);
-        pReturn->autorelease();
-        return pReturn;
+        pReturn->setFrame(this->getFrame());
     }
-    CC_SAFE_DELETE(pReturn);
-    return NULL;
+    else
+    {
+        pReturn->setCenter(this->getCenter());
+    }
+    return pReturn;
 }
 
 

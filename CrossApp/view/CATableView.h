@@ -111,7 +111,7 @@ public:
     
     CC_SYNTHESIZE_RETAIN(CAView*, m_pTableFooterView, TableFooterView);
     
-    CC_SYNTHESIZE(CAColor4B, m_separatorColor, SeparatorColor);
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_separatorColor, SeparatorColor);
     
     CC_SYNTHESIZE(unsigned int, m_nTableHeaderHeight, TableHeaderHeight);
     
@@ -162,6 +162,8 @@ protected:
     
     CAView* dequeueReusableLine();
     
+    void updateSectionHeaderAndFooterRects();
+
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -228,6 +230,12 @@ protected:
     
     std::vector<std::vector<unsigned int> > m_nRowHeightss;
     
+    std::vector<CCRect> m_rSectionRects;
+    
+    std::map<int, CAView*> m_pSectionHeaderViews;
+    
+    std::map<int, CAView*> m_pSectionFooterViews;
+    
     std::vector<std::vector<CCRect> > m_rTableCellRectss;
 
     std::map<CAIndexPath2E, CATableViewCell*> m_pUsedTableCells;
@@ -263,17 +271,19 @@ public:
     
     virtual ~CATableViewCell();
     
-    static CATableViewCell* create(const char* reuseIdentifier);
+    static CATableViewCell* create(const std::string&reuseIdentifier);
     
-    virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
+    virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
-    CC_SYNTHESIZE(std::string, m_sReuseIdentifier, ReuseIdentifier);
+    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
+    
+    CC_DEPRECATED_ATTRIBUTE virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
     
 public:
     
@@ -281,7 +291,7 @@ public:
     
 protected:
     
-    virtual void setControlState(CAControlState var);
+    virtual void setControlState(const CAControlState& var);
     
     virtual void normalTableViewCell();
     

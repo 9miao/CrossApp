@@ -18,7 +18,7 @@ CAPageControl::CAPageControl()
 , m_bSinglePage(false)
 , m_bDefersCurrentPageDisplay(false)
 , m_pageIndicatorTintColor(ccc4(127, 127, 127, 255))
-, m_currentPageIndicatorTintColor(ccc4(51, 204, 255, 255))
+, m_currentPageIndicatorTintColor(ccc4(255, 255, 255, 255))
 , m_pPageImage(NULL)
 , m_pSelectPageImage(NULL)
 {

@@ -8,11 +8,12 @@
 
 #include "CAPageView.h"
 
-CAPageView::CAPageView(CAPageViewDirection type)
+CAPageView::CAPageView(const CAPageViewDirection& type)
 :m_ePageViewDirection(type)
 ,m_ePageViewState(CAPageViewNone)
 ,m_nCurrPage(0)
 ,m_pPageViewDelegate(NULL)
+,m_bTurning(false)
 {
 
 }
@@ -22,7 +23,7 @@ CAPageView::~CAPageView()
     m_pViews.clear();
 }
 
-CAPageView* CAPageView::createWithFrame(const CCRect& rect, CAPageViewDirection type)
+CAPageView* CAPageView::createWithFrame(const CCRect& rect, const CAPageViewDirection& type)
 {
     CAPageView* view = new CAPageView(type);
     if (view && view->initWithFrame(rect))
@@ -34,7 +35,7 @@ CAPageView* CAPageView::createWithFrame(const CCRect& rect, CAPageViewDirection 
     return NULL;
 }
 
-CAPageView* CAPageView::createWithCenter(const CCRect& rect, CAPageViewDirection type)
+CAPageView* CAPageView::createWithCenter(const CCRect& rect, const CAPageViewDirection& type)
 {
     CAPageView* view = new CAPageView(type);
     if (view && view->initWithCenter(rect))
@@ -67,28 +68,63 @@ bool CAPageView::init()
         this->setBounceHorizontal(false);
     }
     
+    this->setBounces(false);
+    
     return true;
 }
 
-void CAPageView::setViews(CAVector<CAView*> vec)
+void CAPageView::setViews(const CAVector<CAView*>& vec)
 {
     if (!m_pViews.empty())
     {
-        for (int i=0; i<m_pViews.size(); i++)
-        {
-            m_pViews.at(i)->removeFromSuperview();
-        }
+        m_pContainer->removeAllSubviews();
         m_pViews.clear();
     }
-    m_pViews = vec;
+    
+    m_pViews = CADeque<CAView*>(vec);
     
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
-        this->setViewSize(CCSize(m_obViewSize.width * m_pViews.size(), m_obViewSize.height));
+        this->setViewSize(CCSize(this->getBounds().size.width * m_pViews.size(), m_obViewSize.height));
     }
     else
     {
-        this->setViewSize(CCSize(m_obViewSize.width, m_obViewSize.height * m_pViews.size()));
+        this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size()));
+    }
+    
+    for (int i=0; i<m_pViews.size(); i++)
+    {
+        CCRect rect = this->getBounds();
+        if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
+        {
+            rect.origin.x = rect.size.width * i;
+        }
+        else
+        {
+            rect.origin.y = rect.size.height * i;
+        }
+        m_pContainer->addSubview(m_pViews.at(i));
+        m_pViews.at(i)->setFrame(rect);
+    }
+}
+
+void CAPageView::setViews(const CADeque<CAView*>& vec)
+{
+    if (!m_pViews.empty())
+    {
+        m_pContainer->removeAllSubviews();
+        m_pViews.clear();
+    }
+    
+    m_pViews = CADeque<CAView*>(vec);
+    
+    if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
+    {
+        this->setViewSize(CCSize(this->getBounds().size.width * m_pViews.size(), m_obViewSize.height));
+    }
+    else
+    {
+        this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size()));
     }
     
     for (int i=0; i<m_pViews.size(); i++)
@@ -125,11 +161,6 @@ void CAPageView::setCurrPage(int var, bool animated)
     {
         this->setContentOffset(CCPoint(0, m_nCurrPage * this->getBounds().size.height), animated);
     }
-    
-    if (m_pPageViewDelegate)
-    {
-        m_pPageViewDelegate->pageViewDidBeginTurning(this);
-    }
 }
 
 int CAPageView::getCurrPage()
@@ -139,9 +170,10 @@ int CAPageView::getCurrPage()
 
 void CAPageView::contentOffsetFinish()
 {
-    if (m_pPageViewDelegate)
+    if (m_pPageViewDelegate && m_bTurning)
     {
         m_pPageViewDelegate->pageViewDidEndTurning(this);
+        m_bTurning = false;
     }
 }
 
@@ -235,6 +267,13 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     page = MIN(page, this->getPageCount() - 1);
     page = MAX(page, 0);
+    
+    if (m_pPageViewDelegate && m_nCurrPage != page)
+    {
+        m_pPageViewDelegate->pageViewDidBeginTurning(this);
+        m_bTurning = true;
+    }
+    
     this->setCurrPage(page, true);
 }
 

@@ -15,7 +15,7 @@
 #include "view/CAScale9ImageView.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
-#include "platform/CAFreeTypeFont.h"
+#include "platform/CAFTFontCache.h"
 #include "support/ConvertUTF.h"
 #endif
 
@@ -189,8 +189,11 @@ int CATextField::getFontSize()
 
 void CATextField::setText(std::string var)
 {
-    m_sText = var;
-	this->updateImage();
+    CATextFieldDelegate* pTemp = m_pDelegate;
+    m_pDelegate = NULL;
+    m_sText.clear();
+    insertText(var.c_str(), var.length());
+    m_pDelegate = pTemp;
 }
 
 std::string CATextField::getText()
@@ -381,13 +384,10 @@ void CATextField::insertText(const char * text, int len)
 		if (len >= 2)
 			return;
 	}
-	if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this, text, len))
-	{
-		// delegate doesn't want to insert text
-		return;
-	}
-	analyzeString(text, len);
-
+    
+    analyzeString(text, len);
+    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), m_sText.length()));
+    
 	this->updateImage();
 
 	m_iString_l_length = getStringLength(m_sText.substr(0, m_iCurPos));
@@ -460,14 +460,10 @@ void CATextField::deleteBackward()
 	{
 		++nDeleteLen;
 	}
-	if (m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.substr(m_iCurPos - nDeleteLen, nDeleteLen).c_str(), nDeleteLen))
-	{
-		// delegate doesn't wan't to delete backwards
-		return;
-	}
-
-	m_sText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
-	m_iCurPos -= nDeleteLen;
+    
+    m_sText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
+    m_iCurPos -= nDeleteLen;
+    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), m_sText.length()));
 
 	m_vTextFiledChars.erase(m_vTextFiledChars.begin() + getStringCharCount(m_sText.substr(0, m_iCurPos)));
 
@@ -684,7 +680,7 @@ int CATextField::getStringCharCount(const std::string &var)
 int CATextField::getStringLength(const std::string &var)
 {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
-    return CAFreeTypeFont::getStringWidth("", m_iFontSize, var);
+	return g_AFTFontCache.getStringWidth("", m_iFontSize, var);
 #else
     CAImage *image = CAImage::createWithString(var.c_str(),
                                                "",

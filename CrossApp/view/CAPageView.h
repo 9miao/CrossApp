@@ -38,17 +38,17 @@ public:
         CAPageViewDirectionVertical
     }CAPageViewDirection;
     
-    CAPageView(CAPageViewDirection type);
+    CAPageView(const CAPageViewDirection& type);
     
     virtual ~CAPageView();
     
-    static CAPageView* createWithFrame(const CCRect& rect, CAPageViewDirection type);
+    static CAPageView* createWithFrame(const CCRect& rect, const CAPageViewDirection& type);
     
-    static CAPageView* createWithCenter(const CCRect& rect, CAPageViewDirection type);
+    static CAPageView* createWithCenter(const CCRect& rect, const CAPageViewDirection& type);
     
     bool init();
     
-    CC_SYNTHESIZE_READONLY(CAPageViewDirection, m_ePageViewDirection, PageViewDirection);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAPageViewDirection, m_ePageViewDirection, PageViewDirection);
     
     CC_SYNTHESIZE(CAPageViewDelegate* , m_pPageViewDelegate, PageViewDelegate);
     
@@ -58,7 +58,9 @@ public:
     
     int getPageCount();
     
-    void setViews(CAVector<CAView*> vec);
+    void setViews(const CADeque<CAView*>& vec);
+    
+    void setViews(const CAVector<CAView*>& vec);
     
 protected:
 
@@ -66,7 +68,19 @@ protected:
     
     virtual void contentOffsetFinish();
     
+    inline virtual float minSpeed(float dt)
+    {
+        return (3000 * dt);
+    }
+    
+    inline virtual float maxSpeed(float dt)
+    {
+        return (CCPoint(m_obContentSize).getLength() * 3000 * dt);
+    }
+    
 private:
+    
+    using CAScrollView::setBounces;
     
     using CAScrollView::setBounceHorizontal;
     
@@ -121,7 +135,9 @@ private:
     
     CAPageViewState m_ePageViewState;
     
-    CAVector<CAView*> m_pViews;
+    CADeque<CAView*> m_pViews;
+    
+    bool m_bTurning;
 };
 
 

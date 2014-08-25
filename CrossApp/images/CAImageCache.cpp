@@ -240,26 +240,31 @@ CCDictionary* CAImageCache::snapshotTextures()
 
 void CAImageCache::addImageAsync(const char *path, CAObject *target, SEL_CallFuncO selector)
 {
+    std::string pathKey = path;
+    
+    pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
+    
+    this->addImageFullPathAsync(pathKey.c_str(), target, selector);
+}
+
+void CAImageCache::addImageFullPathAsync(const char *path, CAObject *target, SEL_CallFuncO selector)
+{
 #ifdef EMSCRIPTEN
     CCLOGWARN("Cannot load image %s asynchronously in Emscripten builds.", path);
     return;
 #endif // EMSCRIPTEN
-
-    CCAssert(path != NULL, "ImageCache: fileimage MUST not be NULL");    
-
+    
+    CCAssert(path != NULL, "ImageCache: fileimage MUST not be NULL");
+    
     CAImage* texture = NULL;
-
+    
     // optimization
-
-    std::string pathKey = path;
-
-    pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
-
-    texture = (CAImage*)m_pTextures->objectForKey(pathKey.c_str());
-
-    std::string fullpath = pathKey;
-
-
+    
+    texture = (CAImage*)m_pTextures->objectForKey(path);
+    
+    std::string fullpath = path;
+    
+    
     if (texture != NULL)
     {
         if (target && selector)
@@ -269,13 +274,13 @@ void CAImageCache::addImageAsync(const char *path, CAObject *target, SEL_CallFun
         
         return;
     }
-
-
+    
+    
     // lazy init
     if (s_pAsyncStructQueue == NULL)
-    {             
+    {
         s_pAsyncStructQueue = new queue<AsyncStruct*>();
-        s_pImageQueue = new queue<ImageInfo*>();        
+        s_pImageQueue = new queue<ImageInfo*>();
         
         pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
         pthread_mutex_init(&s_ImageInfoMutex, NULL);
@@ -286,25 +291,25 @@ void CAImageCache::addImageAsync(const char *path, CAObject *target, SEL_CallFun
 #endif
         need_quit = false;
     }
-
+    
     if (0 == s_nAsyncRefCount)
     {
         CAScheduler::schedule(schedule_selector(CAImageCache::addImageAsyncCallBack), this, 0);
     }
-
+    
     ++s_nAsyncRefCount;
-
+    
     if (target)
     {
         target->retain();
     }
-
+    
     // generate async struct
     AsyncStruct *data = new AsyncStruct();
     data->filename = fullpath.c_str();
     data->target = target;
     data->selector = selector;
-
+    
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // add async struct into queue
     pthread_mutex_lock(&s_asyncStructQueueMutex);
@@ -313,12 +318,13 @@ void CAImageCache::addImageAsync(const char *path, CAObject *target, SEL_CallFun
     pthread_cond_signal(&s_SleepCondition);
 #else
     // WinRT uses an Async Task to load the image since the ThreadPool has a limited number of threads
-    //std::replace( data->filename.begin(), data->filename.end(), '/', '\\'); 
+    //std::replace( data->filename.begin(), data->filename.end(), '/', '\\');
     create_task([this, data] {
         loadImageData(data);
     });
 #endif
 }
+
 
 void CAImageCache::addImageAsyncCallBack(float dt)
 {
@@ -382,13 +388,6 @@ CAImage*  CAImageCache::addImage(const char * path)
 {
     CCAssert(path != NULL, "ImageCache: fileimage MUST not be NULL");
 
-    CAImage* image = NULL;
-    CCImage* pImage = NULL;
-    // Split up directory and filename
-    // MUTEX:
-    // Needed since addImageAsync calls this method from a different thread
-    
-    //pthread_mutex_lock(m_pDictLock);
 
     std::string pathKey = path;
 
@@ -397,18 +396,31 @@ CAImage*  CAImageCache::addImage(const char * path)
     {
         return NULL;
     }
-    image = (CAImage*)m_pTextures->objectForKey(pathKey.c_str());
+    return addImageFullPath(pathKey.c_str());
+}
 
-    std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
+CAImage* CAImageCache::addImageFullPath(const char *fileimage)
+{
+    CAImage* image = NULL;
+    CCImage* pImage = NULL;
+    // Split up directory and filename
+    // MUTEX:
+    // Needed since addImageAsync calls this method from a different thread
+    
+    //pthread_mutex_lock(m_pDictLock);
+    
+    image = (CAImage*)m_pTextures->objectForKey(fileimage);
+    
+    std::string fullpath = fileimage; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
     if (!image)
     {
-        std::string lowerCase(pathKey);
+        std::string lowerCase(fileimage);
         for (unsigned int i = 0; i < lowerCase.length(); ++i)
         {
             lowerCase[i] = tolower(lowerCase[i]);
         }
-
-        do 
+        
+        do
         {
             if (std::string::npos != lowerCase.find(".pkm"))
             {
@@ -437,32 +449,32 @@ CAImage*  CAImageCache::addImage(const char * path)
                 
                 pImage = new CCImage();
                 CC_BREAK_IF(NULL == pImage);
-
+                
                 bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
                 CC_BREAK_IF(!bRet);
-
+                
                 image = new CAImage();
                 
                 if( image &&
-                    image->initWithImage(pImage) )
+                   image->initWithImage(pImage) )
                 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                     // cache the texture file name
                     VolatileTexture::addImageTexture(image, fullpath.c_str(), eImageFormat);
 #endif
-                    m_pTextures->setObject(image, pathKey.c_str());
+                    m_pTextures->setObject(image, fileimage);
                     image->release();
                 }
                 else
                 {
-                    CCLOG("CrossApp: Couldn't create texture for file:%s in CAImageCache", path);
+                    CCLOG("CrossApp: Couldn't create texture for file:%s in CAImageCache", fileimage);
                 }
             }
         } while (0);
     }
-
+    
     CC_SAFE_RELEASE(pImage);
-
+    
     //pthread_mutex_unlock(m_pDictLock);
     return image;
 }

@@ -46,17 +46,18 @@ public:
 
     bool initWithCenter(const CCRect& rect);
     
-    virtual bool insertSegmentWithTitle(const char* title, int index, CAControlState controlState);
-    virtual bool insertSegmentWithBackgroundImage(CAImage *image, int index, CAControlState controlState);
-    virtual bool insertSegmentWithImage(CAImage *image, int index, CAControlState controlState);
+    virtual bool insertSegmentWithTitle(const char* title, int index, const CAControlState& controlState);
+    virtual bool insertSegmentWithBackgroundImage(CAImage *image, int index, const CAControlState& controlState);
+    virtual bool insertSegmentWithImage(CAImage *image, int index, const CAControlState& controlState);
     virtual void removeSegmentAtIndex(int index);
     virtual void removeAllSegments();
     
-    virtual bool setTitleAtIndex(const char* title, int index, CAControlState controlState);
-    virtual bool setTitleColorAtIndex(CAColor4B color, int index, CAControlState controlState);
-    virtual bool setBackgroundImageAtIndex(CAImage *image, int index, CAControlState controlState);
-    virtual bool setImageAtIndex(CAImage *image, int index, CAControlState controlState);
-    virtual bool setImageColorAtIndex(CAColor4B color, int index, CAControlState controlState);
+    virtual bool setTitleAtIndex(const char* title, int index, const CAControlState& controlState);
+    virtual bool setTitleColorAtIndex(const CAColor4B& color, int index, const CAControlState& controlState);
+    virtual bool setBackgroundImageAtIndex(CAImage *image, int index, const CAControlState& controlState);
+    virtual bool setBackgroundViewAtIndex(CAView *view, int index, const CAControlState& controlState);
+    virtual bool setImageAtIndex(CAImage *image, int index, const CAControlState& controlState);
+    virtual bool setImageColorAtIndex(const CAColor4B& color, int index, const CAControlState& controlState);
     
     virtual CAView *getDefaultNormalBackgroundView();
     virtual CAView *getDefaultHighlightedBackgroundView();
@@ -65,7 +66,7 @@ public:
     virtual CAButton *createDefaultSegment();
     
     CC_SYNTHESIZE_READONLY(int, m_selectedIndex, selectedIndex);       // default 0
-    CC_SYNTHESIZE_READONLY(CCSize, m_itemSize, ItemSize);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_itemSize, ItemSize);
     void setHighlightedAtIndex(int index);
     void setSelectedAtIndex(int index);
     void setHighlightedNormal();

@@ -33,7 +33,6 @@ cocoa/CACalendar.cpp \
 control/CABar.cpp \
 control/CAButton.cpp \
 control/CAControl.cpp \
-control/CADateSpinner.cpp \
 control/CAProgress.cpp \
 control/CASegmentedControl.cpp \
 control/CASlider.cpp \
@@ -112,6 +111,7 @@ platform/CCThread.cpp \
 platform/CCFileUtils.cpp \
 platform/platform.cpp \
 platform/CAFreeTypeFont.cpp \
+platform/CAFTFontCache.cpp \
 platform/CCEGLViewProtocol.cpp \
 platform/android/CADensityDpi.cpp \
 platform/android/CCDevice.cpp \

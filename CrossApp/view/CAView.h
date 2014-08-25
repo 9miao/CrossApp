@@ -209,8 +209,6 @@ public:
 
     virtual void onExitTransitionDidStart();
 
-    virtual void cleanup(void);
-
     virtual void* getUserData();
 
     virtual void setUserData(void *pUserData);
@@ -226,6 +224,8 @@ public:
     virtual void visit(void);
 
     virtual CAResponder* nextResponder();
+    
+    virtual CAView* copy();
     
 public:
 

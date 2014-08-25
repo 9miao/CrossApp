@@ -36,7 +36,7 @@ public:
 private:
 	CCSize size;
 	CATableView* tableView;
-	std::vector<string> testList;
+	std::vector<std::string> testList;
 };
 
 

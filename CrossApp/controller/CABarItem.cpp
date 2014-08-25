@@ -42,7 +42,7 @@ CABarButtonItem::~CABarButtonItem()
     CC_SAFE_RELEASE_NULL(m_pHighlightedImage);
 }
 
-CABarButtonItem* CABarButtonItem::create(std::string title, CAImage* image, CAImage* highlightedImage)
+CABarButtonItem* CABarButtonItem::create(const std::string& title, CAImage* image, CAImage* highlightedImage)
 {
     CABarButtonItem* item = new CABarButtonItem();
     if (item && item->init(title, image, highlightedImage))
@@ -54,7 +54,7 @@ CABarButtonItem* CABarButtonItem::create(std::string title, CAImage* image, CAIm
     return NULL;
 }
 
-bool CABarButtonItem::init(std::string title, CAImage *image, CAImage *highlightedImage)
+bool CABarButtonItem::init(const std::string& title, CAImage *image, CAImage *highlightedImage)
 {
     this->setTitle(title);
     this->setImage(image);
@@ -98,13 +98,13 @@ CANavigationBarItem::~CANavigationBarItem()
     CC_SAFE_DELETE(m_pRightButtonItems);
 }
 
-bool CANavigationBarItem::init(std::string title)
+bool CANavigationBarItem::init(const std::string& title)
 {
     this->setTitle(title);
     return true;
 }
 
-CANavigationBarItem* CANavigationBarItem::create(std::string title)
+CANavigationBarItem* CANavigationBarItem::create(const std::string& title)
 {
     CANavigationBarItem* item = new CANavigationBarItem();
     if (item && item->init(title))
@@ -163,7 +163,7 @@ CATabBarItem::~CATabBarItem()
     CC_SAFE_RELEASE_NULL(m_pSelectedImage);
 }
 
-bool CATabBarItem::init(std::string title, CAImage* image, CAImage* selectedImage)
+bool CATabBarItem::init(const std::string& title, CAImage* image, CAImage* selectedImage)
 {
     this->setTitle(title);
     this->setImage(image);
@@ -171,7 +171,7 @@ bool CATabBarItem::init(std::string title, CAImage* image, CAImage* selectedImag
     return true;
 }
 
-CATabBarItem* CATabBarItem::create(std::string title, CAImage* image, CAImage* selectedImage)
+CATabBarItem* CATabBarItem::create(const std::string& title, CAImage* image, CAImage* selectedImage)
 {
     CATabBarItem* item = new CATabBarItem();
     if (item && item->init(title, image, selectedImage))

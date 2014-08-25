@@ -27,7 +27,7 @@ public:
     
     virtual ~CABarItem();
     
-    CC_SYNTHESIZE(std::string, m_sTitle, Title);
+    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sTitle, Title);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pImage, Image);
     
@@ -42,7 +42,7 @@ class CC_DLL CABarButtonItem
     
 public:
     
-    static CABarButtonItem* create(std::string title, CAImage* image, CAImage* highlightedImage);
+    static CABarButtonItem* create(const std::string& title, CAImage* image, CAImage* highlightedImage);
     
 public:
     
@@ -50,7 +50,7 @@ public:
     
     virtual ~CABarButtonItem();
     
-    bool init(std::string title, CAImage* image, CAImage* highlightedImage);
+    bool init(const std::string& title, CAImage* image, CAImage* highlightedImage);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pHighlightedImage, HighlightedImage);
     
@@ -73,7 +73,7 @@ class CC_DLL CANavigationBarItem
 
 public:
     
-    static CANavigationBarItem* create(std::string title);
+    static CANavigationBarItem* create(const std::string& title);
     
 public:
     
@@ -81,7 +81,7 @@ public:
     
     virtual ~CANavigationBarItem();
     
-    bool init(std::string title);
+    bool init(const std::string& title);
     
     void addLeftButtonItem(CABarButtonItem* item);
     
@@ -104,7 +104,7 @@ class CC_DLL CATabBarItem
     
 public:
     
-    static CATabBarItem* create(std::string title, CAImage* image, CAImage* selectedImage = NULL);
+    static CATabBarItem* create(const std::string& title, CAImage* image, CAImage* selectedImage = NULL);
     
 public:
 
@@ -112,7 +112,7 @@ public:
     
     virtual ~CATabBarItem();
     
-    bool init(std::string title, CAImage* image, CAImage* selectedImage = NULL);
+    bool init(const std::string& title, CAImage* image, CAImage* selectedImage = NULL);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pSelectedImage, SelectedImage);
     

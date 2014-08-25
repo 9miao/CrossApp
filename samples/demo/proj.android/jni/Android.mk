@@ -14,12 +14,12 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/ViewController/FourthViewController.cpp \
 ../../Classes/ViewController/SecondViewController.cpp \
 ../../Classes/ViewController/ThirdViewController.cpp \
+../../Classes/ActivityIndicatorViewTest/ActivityIndicatorViewTest.cpp \
 ../../Classes/AlertViewTest/AlertViewTest.cpp \
 ../../Classes/ButtonTest/ButtonTest.cpp \
 ../../Classes/CollectionViewTest/CollectionViewTest.cpp \
 ../../Classes/ImageViewTest/ImageViewTest.cpp \
 ../../Classes/LabelTest/LabelTest.cpp \
-../../Classes/NavigationBarTest/NavigationBarTest.cpp \
 ../../Classes/PageViewTest/PageViewTest.cpp \
 ../../Classes/PickerViewTest/PickerViewTest.cpp \
 ../../Classes/ProgressTest/ProgressTest.cpp \
@@ -35,12 +35,12 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/ExtensionsTest/HttpRequestTest.cpp \	
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
+$(LOCAL_PATH)/../../Classes/ActivityIndicatorViewTest \
 $(LOCAL_PATH)/../../Classes/AlertViewTest \
 $(LOCAL_PATH)/../../Classes/ButtonTest \
 $(LOCAL_PATH)/../../Classes/CollectionViewTest \
 $(LOCAL_PATH)/../../Classes/ImageViewTest \
 $(LOCAL_PATH)/../../Classes/LabelTest \
-$(LOCAL_PATH)/../../Classes/NavigationBarTest \
 $(LOCAL_PATH)/../../Classes/PageViewTest \
 $(LOCAL_PATH)/../../Classes/PickerViewTest \
 $(LOCAL_PATH)/../../Classes/ProgressTest \
@@ -60,8 +60,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_extension_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-#$(call import-add-path, D:/CrossApp)
-#$(call import-add-path, D:/CrossApp/CrossApp/platform/third_party/android/prebuilt)
+$(call import-add-path, D:/CrossApp)
+$(call import-add-path, D:/CrossApp/CrossApp/platform/third_party/android/prebuilt)
 
 $(call import-module,CrossApp)
 $(call import-module,CrossApp/platform/third_party/android/prebuilt/libcurl)

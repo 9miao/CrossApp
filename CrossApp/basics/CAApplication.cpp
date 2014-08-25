@@ -618,7 +618,6 @@ void CAApplication::purgeDirector()
     {
         m_pRootWindow->onExitTransitionDidStart();
         m_pRootWindow->onExit();
-        m_pRootWindow->cleanup();
         m_pRootWindow->release();
     }
     

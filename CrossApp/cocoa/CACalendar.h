@@ -14,7 +14,7 @@
 
 NS_CC_BEGIN
 
-class CACalendar : public CAObject {
+class CC_DLL CACalendar : public CAObject {
     
 public:
     CACalendar();

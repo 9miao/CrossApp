@@ -88,9 +88,9 @@ public:
     
     CC_SYNTHESIZE(float, m_fontSizeNormal, FontSizeNormal);
     CC_SYNTHESIZE(float, m_fontSizeSelected, FontSizeSelected);
-    CC_SYNTHESIZE(CAColor4B, m_fontColorNormal, FontColorNormal);
-    CC_SYNTHESIZE(CAColor4B, m_fontColorSelected, FontColorSelected);
-    CC_SYNTHESIZE(CAColor4B, m_separateColor, SeparateColor);
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_fontColorNormal, FontColorNormal);
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_fontColorSelected, FontColorSelected);
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_separateColor, SeparateColor);
 
 private:
     float calcTotalWidth(unsigned int component);

@@ -18,9 +18,11 @@ void CollectionViewTest::viewDidLoad()
 
 	p_Conllection = CACollectionView::createWithCenter(CCRect(size.width*0.5,size.height*0.5,size.width,size.height));
 	p_Conllection->setAllowsSelection(true);
+	p_Conllection->setAllowsMultipleSelection(true);
 	p_Conllection->setCollectionViewDelegate(this);
 	p_Conllection->setCollectionViewDataSource(this);
 	this->getView()->addSubview(p_Conllection);
+	
 }
 
 void CollectionViewTest::viewDidUnload()

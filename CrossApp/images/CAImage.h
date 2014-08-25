@@ -64,6 +64,8 @@ public:
     
     static int getFontHeight(const char* pFontName, unsigned long nSize);
     
+    static int getStringWidth(const char* pFontName, unsigned long nSize, const char* pText);
+    
 	static CAImage* create(const char* file);
     
     static CAImage* createWithDataNoCache(void* data, int lenght);
@@ -112,6 +114,10 @@ public:
     
     bool hasMipmaps();
     
+    bool saveToFile(const std::string& fullPath);
+    
+    const char* getImageFileType();
+    
     static CAImage* CC_WHITE_IMAGE();
     
 protected:
@@ -133,6 +139,10 @@ protected:
     CC_PROPERTY(CAGLProgram*, m_pShaderProgram, ShaderProgram);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bMonochrome, Monochrome);
+    
+    CC_SYNTHESIZE_READONLY(unsigned char*, m_pData, Data);
+    
+    CC_SYNTHESIZE_READONLY(unsigned long, m_nDataLenght, DataLenght);
     
 private:
     

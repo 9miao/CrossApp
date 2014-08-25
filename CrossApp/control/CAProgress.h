@@ -44,11 +44,11 @@ public:
 
 public:
     
-    CC_SYNTHESIZE(CAProgressStyle, m_pProgressStyle, ProgressStyle);
+    CC_SYNTHESIZE_PASS_BY_REF(CAProgressStyle, m_pProgressStyle, ProgressStyle);
     
-    CC_SYNTHESIZE(CAColor4B, m_progressTintColor, ProgressTintColor);
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_progressTintColor, ProgressTintColor);
     
-    CC_SYNTHESIZE(CAColor4B, m_progresstrackColor, ProgresstrackColor);
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_progresstrackColor, ProgresstrackColor);
     
 	CC_SYNTHESIZE_RETAIN(CAImage*, m_pProgressTintImage, ProgressTintImage);
     

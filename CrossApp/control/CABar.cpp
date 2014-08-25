@@ -312,16 +312,17 @@ void CANavigationBar::popItem()
 #pragma CATabBar
 
 CATabBar::CATabBar()
-:m_pBackGround(NULL)
+:m_pBackGroundView(NULL)
 ,m_pBackGroundImage(NULL)
 ,m_pSegmentedControl(NULL)
+,m_pSelectedBackGroundView(NULL)
 ,m_pSelectedBackGroundImage(NULL)
-,m_pSelectedIndicator(NULL)
+,m_pSelectedIndicatorView(NULL)
 ,m_pSelectedIndicatorImage(NULL)
 ,m_pSelectedItem(NULL)
 ,m_nMaxShowCount(5)
 ,m_cItemSize(CCSizeZero)
-,m_nSelectedIndex(0)
+,m_nSelectedIndex(-1)
 ,m_sTitleColor(CAColor_white)
 ,m_sSelectedTitleColor(ccc4(50, 193, 255, 255))
 ,m_pDelegate(NULL)
@@ -338,12 +339,16 @@ CATabBar::~CATabBar()
     }
     m_pItems.clear();
     
+    
+    CC_SAFE_RELEASE_NULL(m_pBackGroundView);
+    CC_SAFE_RELEASE_NULL(m_pSelectedBackGroundView);
+    CC_SAFE_RELEASE_NULL(m_pSelectedIndicatorView);
     CC_SAFE_RELEASE_NULL(m_pBackGroundImage);
     CC_SAFE_RELEASE_NULL(m_pSelectedBackGroundImage);
     CC_SAFE_RELEASE_NULL(m_pSelectedIndicatorImage);
 }
 
-bool CATabBar::init(const std::vector<CATabBarItem*>& items)
+bool CATabBar::init(const std::vector<CATabBarItem*>& items, const CCSize& size)
 {
     if (!CAView::init())
     {
@@ -352,32 +357,18 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items)
     this->setColor(CAColor_clear);
     
     CCSize winSize = CAApplication::getApplication()->getWinSize();
-    CCSize size = CCSize(winSize.width, _px(96));
-    this->setContentSize(size);
+    CCSize contentSize = size.equals(CCSizeZero) ? CCSize(winSize.width, _px(96)) : size;
+    this->setContentSize(contentSize);
     
     this->setItems(items);
     
+    this->showBackGround();
+    this->showItems();
+
     return true;
 }
 
-void CATabBar::onEnterTransitionDidFinish()
-{
-    CAView::onEnterTransitionDidFinish();
-    
-    if (m_pBackGround == NULL)
-    {
-        this->showBackGround();
-        
-        this->updateTabBar();
-    }
-}
-
-void CATabBar::onExitTransitionDidStart()
-{
-    CAView::onExitTransitionDidStart();
-}
-
-CATabBar* CATabBar::create(const std::vector<CATabBarItem*>& items)
+CATabBar* CATabBar::create(const std::vector<CATabBarItem*>& items, const CCSize& size)
 {
     CATabBar* tabBar = new CATabBar();
     if (tabBar && tabBar->init(items))
@@ -413,82 +404,130 @@ void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)
         m_pItems.at(index) = item;
         CC_SAFE_RELEASE(oldItem);
         CC_SAFE_RETAIN(item);
-        this->updateTabBar();
+        this->showItems();
     }
 }
 
-void CATabBar::updateTabBar()
+void CATabBar::setBackGroundView(CrossApp::CAView *var)
 {
-    this->showItems();
+    CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE(m_pBackGroundView);
+    this->removeSubview(m_pBackGroundView);
+    m_pBackGroundView = var;
+    if (var)
+    {
+        m_pBackGroundView->setFrame(this->getBounds());
+        this->insertSubview(m_pBackGroundView, -1);
+    }
 }
 
-void CATabBar::showBackGround()
+CAView* CATabBar::getBackGroundView()
 {
-    if (m_pBackGround)
-    {
-        m_pBackGround->removeFromSuperview();
-        m_pBackGround=NULL;
-    }
+    return m_pBackGroundView;
+};
+
+void CATabBar::setBackGroundImage(CrossApp::CAImage *var)
+{
+    CC_SAFE_RELEASE(m_pBackGroundImage);
+    CC_SAFE_RETAIN(var);
+    m_pBackGroundImage = var;
+    CC_RETURN_IF(var == NULL);
     
-    if (m_pBackGroundImage == NULL)
-    {
-        m_pBackGroundImage = CAImage::create("source_material/tabBar_bg.png");
-        m_pBackGroundImage->retain();
-    }
-    
-    m_pBackGround = CAScale9ImageView::createWithImage(m_pBackGroundImage);
-    ((CAScale9ImageView*)m_pBackGround)->setFrame(this->getBounds());
-    this->insertSubview(m_pBackGround, -1);
+    this->setBackGroundView(CAScale9ImageView::createWithImage(m_pBackGroundImage));
 }
 
-void CATabBar::showItems()
+CAImage* CATabBar::getBackGroundImage()
 {
-    unsigned int count = MIN(m_nMaxShowCount, m_pItems.size());
-    m_pSegmentedControl = CASegmentedControl::createWithFrame(this->getBounds(), count);
+    return m_pBackGroundImage;
+}
+
+void CATabBar::setSelectedBackGroundView(CrossApp::CAView *var)
+{
+    CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE(m_pSelectedBackGroundView);
+    m_pSelectedBackGroundView = var;
     
-    m_pSegmentedControl->addTarget(this, CAControl_selector(CATabBar::setTouchSelected));
-    for (int i=0; i<count; i++)
+    if (!m_pSegmentedControl)
     {
-        m_pSegmentedControl->setTitleAtIndex(m_pItems.at(i)->getTitle().c_str(), i, CAControlStateAll);
-        m_pSegmentedControl->setTitleColorAtIndex(m_sTitleColor, i, CAControlStateAll);
-        m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateHighlighted);
-        m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateSelected);
-        m_pSegmentedControl->setImageAtIndex(m_pItems.at(i)->getImage(), i, CAControlStateNormal);
-        CAImage* selectedImage = m_pItems.at(i)->getSelectedImage() ? m_pItems.at(i)->getSelectedImage() : m_pItems.at(i)->getImage();
-        m_pSegmentedControl->setImageAtIndex(selectedImage, i, CAControlStateHighlighted);
-        m_pSegmentedControl->setImageAtIndex(selectedImage, i, CAControlStateSelected);
-        m_pSegmentedControl->setBackgroundImageAtIndex(NULL, i, CAControlStateNormal);
-        if (m_pSelectedBackGroundImage == NULL)
+        unsigned int count = MIN(m_nMaxShowCount, m_pItems.size());
+        m_pSegmentedControl = CASegmentedControl::createWithFrame(this->getBounds(), count);
+        
+        m_pSegmentedControl->addTarget(this, CAControl_selector(CATabBar::setTouchSelected));
+        for (int i=0; i<count; i++)
         {
-            m_pSelectedBackGroundImage = CAImage::create("source_material/tabBar_selected_bg.png");
-            m_pSelectedBackGroundImage->retain();
+            m_pSegmentedControl->setTitleAtIndex(m_pItems.at(i)->getTitle().c_str(), i, CAControlStateAll);
+            m_pSegmentedControl->setTitleColorAtIndex(m_sTitleColor, i, CAControlStateAll);
+            m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateHighlighted);
+            m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateSelected);
+            m_pSegmentedControl->setImageAtIndex(m_pItems.at(i)->getImage(), i, CAControlStateNormal);
+            CAImage* selectedImage = m_pItems.at(i)->getSelectedImage() ? m_pItems.at(i)->getSelectedImage() : m_pItems.at(i)->getImage();
+            m_pSegmentedControl->setImageAtIndex(selectedImage, i, CAControlStateHighlighted);
+            m_pSegmentedControl->setImageAtIndex(selectedImage, i, CAControlStateSelected);
+            m_pSegmentedControl->setBackgroundViewAtIndex(CAView::createWithColor(CAColor_clear), i, CAControlStateNormal);
         }
-        m_pSegmentedControl->setBackgroundImageAtIndex(m_pSelectedBackGroundImage, i, CAControlStateHighlighted);
-        m_pSegmentedControl->setBackgroundImageAtIndex(m_pSelectedBackGroundImage, i, CAControlStateSelected);
+        this->addSubview(m_pSegmentedControl);
+        m_cItemSize = m_pSegmentedControl->getItemSize();
     }
-    this->addSubview(m_pSegmentedControl);
-    m_cItemSize = m_pSegmentedControl->getItemSize();
-
+    
+    if (m_pSegmentedControl)
+    {
+        for (int i=0; i<m_pItems.size(); i++)
+        {
+            m_pSegmentedControl->setBackgroundViewAtIndex(m_pSelectedBackGroundView->copy(), i, CAControlStateHighlighted);
+            m_pSegmentedControl->setBackgroundViewAtIndex(m_pSelectedBackGroundView->copy(), i, CAControlStateSelected);
+        }
+    }
 }
 
-void CATabBar::showSelectedIndicator()
+CAView* CATabBar::getSelectedBackGroundView()
 {
-    if (m_pSelectedIndicator)
-    {
-        m_pSelectedIndicator->removeFromSuperview();
-        m_pSelectedIndicator=NULL;
-    }
+    return m_pSelectedBackGroundView;
+};
+
+void CATabBar::setSelectedBackGroundImage(CrossApp::CAImage *var)
+{
+    CC_SAFE_RELEASE(m_pSelectedBackGroundImage);
+    CC_SAFE_RETAIN(var);
+    m_pSelectedBackGroundImage = var;
+    CC_RETURN_IF(var == NULL);
     
-    if (m_pSelectedIndicatorImage == NULL)
+    this->setSelectedBackGroundView(CAScale9ImageView::createWithImage(m_pSelectedBackGroundImage));
+}
+
+CAImage* CATabBar::getSelectedBackGroundImage()
+{
+    return m_pSelectedBackGroundImage;
+}
+
+void CATabBar::setSelectedIndicatorView(CrossApp::CAView *var)
+{
+    CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE(m_pSelectedIndicatorView);
+    this->removeSubview(m_pSelectedIndicatorView);
+    m_pSelectedIndicatorView = var;
+    if (var)
     {
-        m_pSelectedIndicatorImage = CAImage::create("source_material/tabBar_selected_indicator.png");
-        m_pSelectedIndicatorImage->retain();
+        CCRect rect;
+        rect.size = CCSize(m_cItemSize.width, m_cItemSize.height / 10);
+        rect.origin.x = 0;
+        rect.origin.y = this->getBounds().size.height - rect.size.height;
+        
+        this->insertSubview(m_pSelectedIndicatorView, 1);
+        m_pSelectedIndicatorView->setFrame(rect);
     }
-    
-    CCRect rect = CCRect(0,
-                         this->getBounds().size.height,
-                         m_cItemSize.width,
-                         m_cItemSize.height / 10);
+}
+
+CAView* CATabBar::getSelectedIndicatorView()
+{
+    return m_pSelectedIndicatorView;
+}
+
+void CATabBar::setSelectedIndicatorImage(CrossApp::CAImage *var)
+{
+    CC_SAFE_RELEASE(m_pSelectedIndicatorImage);
+    CC_SAFE_RETAIN(var);
+    m_pSelectedIndicatorImage = var;
+    CC_RETURN_IF(var == NULL);
     
     CAScale9ImageView* selectedIndicator= CAScale9ImageView::createWithImage(m_pSelectedIndicatorImage);
     CCRect insetRect;
@@ -496,9 +535,72 @@ void CATabBar::showSelectedIndicator()
     insetRect.origin = ccpSub(insetRect.origin, CCPoint(1, 1));
     insetRect.size = CCPoint(2, 2);
     selectedIndicator->setCapInsets(insetRect);
-    selectedIndicator->setFrame(rect);
-    this->insertSubview(selectedIndicator, 1);
-    m_pSelectedIndicator = selectedIndicator;
+    
+    this->setSelectedIndicatorView(selectedIndicator);
+}
+
+CAImage* CATabBar::getSelectedIndicatorImage()
+{
+    return m_pSelectedIndicatorImage;
+}
+
+void CATabBar::setTitleColorForNormal(const CAColor4B &var)
+{
+    m_sTitleColor = var;
+    if (m_pSegmentedControl)
+    {
+        for (int i=0; i<m_pItems.size(); i++)
+        {
+            m_pSegmentedControl->setTitleColorAtIndex(m_sTitleColor, i, CAControlStateNormal);
+        }
+    }
+}
+
+const CAColor4B& CATabBar::getTitleColorForNormal()
+{
+    return m_sTitleColor;
+}
+
+void CATabBar::setTitleColorForSelected(const CAColor4B &var)
+{
+    m_sSelectedTitleColor = var;
+    if (m_pSegmentedControl)
+    {
+        for (int i=0; i<m_pItems.size(); i++)
+        {
+            m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateHighlighted);
+            m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateSelected);
+        }
+    }
+}
+
+const CAColor4B& CATabBar::getTitleColorForSelected()
+{
+    return m_sSelectedTitleColor;
+}
+
+void CATabBar::showBackGround()
+{
+    if (m_pBackGroundImage == NULL)
+    {
+        this->setBackGroundImage(CAImage::create("source_material/tabBar_bg.png"));
+    }
+}
+
+void CATabBar::showItems()
+{
+    if (m_pSelectedIndicatorImage == NULL)
+    {
+        this->setSelectedBackGroundImage(CAImage::create("source_material/tabBar_selected_bg.png"));
+    }
+}
+
+void CATabBar::showSelectedIndicator()
+{
+    if (m_pSelectedIndicatorImage == NULL)
+    {
+        this->setSelectedIndicatorImage(CAImage::create("source_material/tabBar_selected_indicator.png"));
+    }
 }
 
 void CATabBar::setSelectedAtIndex(int index)
@@ -509,29 +611,31 @@ void CATabBar::setSelectedAtIndex(int index)
     m_nSelectedIndex = index;
     m_pSelectedItem = m_pItems.at(m_nSelectedIndex);
     
-    CC_RETURN_IF(!m_bRunning);
-    
-    if (m_pSelectedIndicator)
+    if (m_pSelectedIndicatorView)
     {
-        CCRect rect = m_pSelectedIndicator->getFrame();
+        CCRect rect = m_pSelectedIndicatorView->getFrame();
         rect.size = CCSize(m_cItemSize.width, m_cItemSize.height / 10);
-        ((CAScale9ImageView*)m_pSelectedIndicator)->setFrame(rect);
-        m_pSelectedIndicator->stopAllActions();
+        m_pSelectedIndicatorView->setFrame(rect);
+        m_pSelectedIndicatorView->stopAllActions();
         CCPoint p = m_cItemSize;
-        p.y -= m_pSelectedIndicator->getFrame().size.height;
+        p.y -= m_pSelectedIndicatorView->getFrame().size.height;
         p.x *= m_nSelectedIndex;
         CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.3f, p);
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
-        m_pSelectedIndicator->runAction(easeBack);
+        m_pSelectedIndicatorView->runAction(easeBack);
     }
     
     m_pSegmentedControl->setSelectedAtIndex(index);
-    m_pDelegate->tabBarSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
 }
 
 void CATabBar::setTouchSelected(CrossApp::CAControl *control, CrossApp::CCPoint point)
 {
     this->setSelectedAtIndex(m_pSegmentedControl->getselectedIndex());
+    
+    if (m_pDelegate)
+    {
+        m_pDelegate->tabBarSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
+    }
 }
 
 
