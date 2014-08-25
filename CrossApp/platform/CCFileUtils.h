@@ -31,7 +31,8 @@ public:
      *  @js NA
      *  @lua NA
      */
-    virtual long getClassTypeInfo() {
+    virtual long getClassTypeInfo()
+    {
 		static const long id = CrossApp::getHashCodeByString(typeid(CrossApp::CCFileUtils).name());
 		return id;
     }
@@ -283,6 +284,8 @@ public:
     virtual void setPopupNotify(bool bNotify);
     virtual bool isPopupNotify();
 
+    bool createDirectory(const char *path);
+    
 protected:
     /**
      *  The default constructor.

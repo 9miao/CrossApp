@@ -801,5 +801,36 @@ bool CCFileUtils::isPopupNotify()
     return s_bPopupNotify;
 }
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
+#endif
+/*
+ * Create a direcotry is platform depended.
+ */
+bool CCFileUtils::createDirectory(const char *path)
+{
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    mode_t processMask = umask(0);
+    int ret = mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO);
+    umask(processMask);
+    if (ret != 0 && (errno != EEXIST))
+    {
+        return false;
+    }
+    
+    return true;
+#else
+    BOOL ret = CreateDirectoryA(path, NULL);
+	if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
+	{
+		return false;
+	}
+    return true;
+#endif
+}
+
+
 NS_CC_END
 
