@@ -582,6 +582,12 @@ CAResponder* CAScrollView::nextResponder()
     return NULL;
 }
 
+void CAScrollView::stopDeaccelerateScroll()
+{
+    m_bDecelerating = false;
+    CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
+}
+
 void CAScrollView::deaccelerateScrolling(float dt)
 {
     dt = MIN(dt, 1/30.0f);

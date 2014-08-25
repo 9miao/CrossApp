@@ -103,6 +103,8 @@ public:
     
     CC_PROPERTY_PASS_BY_REF(CCSize, m_obViewSize, ViewSize);
     
+    void stopDeaccelerateScroll();
+    
 protected:
  
     inline virtual float minSpeed(float dt)
@@ -148,7 +150,7 @@ protected:
     virtual void update(float dt);
     
     void deaccelerateScrolling(float dt);
-
+    
     virtual void contentOffsetFinish(){}
     
     void closeToPoint(float dt);
