@@ -22,6 +22,8 @@ public:
 
     virtual ~CAScrollViewDelegate(){};
     
+    virtual void scrollViewDidMoved(CAScrollView* view){};
+    
     virtual void scrollViewDidScroll(CAScrollView* view){};
     
     virtual void scrollViewWillBeginDragging(CAScrollView* view){};

@@ -41,11 +41,8 @@ void CACollectionView::onEnterTransitionDidFinish()
 {
 	CAScrollView::onEnterTransitionDidFinish();
 
-	if (m_pUsedCollectionCells.empty())
-	{
-		this->runAction(CCSequence::create(CCDelayTime::create(1 / 60.0f),
-			CCCallFunc::create(this, callfunc_selector(CACollectionView::reloadData)), NULL));
-	}
+	this->runAction(CCSequence::create(CCDelayTime::create(1 / 60.0f),
+                                       CCCallFunc::create(this, callfunc_selector(CACollectionView::firstReloadData)), NULL));
 }
 
 void CACollectionView::onExitTransitionDidStart()
@@ -231,6 +228,12 @@ void CACollectionView::reloadData()
 
     this->setViewSize(CCSize(width, y));
     updateSectionHeaderAndFooterRects();
+}
+
+void CACollectionView::firstReloadData()
+{
+    CC_RETURN_IF(!m_pUsedCollectionCells.empty());
+    this->reloadData();
 }
 
 void CACollectionView::setAllowsSelection(bool var)
@@ -557,6 +560,7 @@ CACollectionViewCell::CACollectionViewCell()
 ,m_nRow(0xffffffff)
 ,m_nItem(0xffffffff)
 ,m_bControlStateEffect(true)
+,m_bAllowsSelected(true)
 {
 
 }
@@ -625,9 +629,17 @@ void CACollectionViewCell::setContentSize(const CrossApp::CCSize &var)
 
 void CACollectionViewCell::setControlState(const CAControlState& var)
 {
-    CAControl::setControlState(var);
+    if (m_bAllowsSelected == false && var == CAControlStateSelected)
+    {
+        CAControl::setControlState(CAControlStateNormal);
+    }
+    else
+    {
+        CAControl::setControlState(var);
+    }
+    
     CC_RETURN_IF(m_bControlStateEffect == false);
-    switch (var)
+    switch (m_eControlState)
     {
         case CAControlStateNormal:
 			this->normalCollectionViewCell();
@@ -674,10 +686,7 @@ void CACollectionViewCell::disabledCollectionViewCell()
 
 void CACollectionViewCell::resetCollectionViewCell()
 {
-	m_nSection = 0xffffffff;
-	m_nRow = 0xffffffff;
     this->setVisible(true);
-	this->setFrame(CCRect(0, 0, -1, -1));
 	this->normalCollectionViewCell();
     this->recoveryCollectionViewCell();
 }

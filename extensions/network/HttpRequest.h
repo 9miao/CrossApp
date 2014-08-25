@@ -54,10 +54,7 @@ public:
     /** Destructor */
     virtual ~CCHttpRequest()
     {
-        if (_pTarget)
-        {
-            _pTarget->release();
-        }
+        CC_SAFE_RELEASE(_pTarget);
     };
     
     /** Override autorelease method to avoid developers to call it */
@@ -195,7 +192,27 @@ public:
    		return _headers;
    	}
 
-
+    virtual bool isEqual(const CAObject* pObject)
+    {
+        CCHttpRequest* request = NULL;
+        if ((request = dynamic_cast<CCHttpRequest*>((CAObject*)pObject)))
+        {
+            return false;
+        }
+        
+        if (strcmp(this->getUrl(), request->getUrl()) != 0)
+        {
+            return false;
+        }
+        
+//        if (this->getTarget() != request->getTarget())
+//        {
+//            return false;
+//        }
+//        
+        return true;
+    }
+    
 protected:
     // properties
     HttpRequestType             _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums

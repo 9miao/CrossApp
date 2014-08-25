@@ -621,8 +621,6 @@ std::string CCFileUtils::fullPathForFilename(const std::string& pszFileName)
     }
     
     //CCLOG("CrossApp: fullPathForFilename: No file found at %s. Possible missing file.", pszFileName);
-
-    // The file wasn't found, return the file name passed in.
     return pszFileName;
 }
 

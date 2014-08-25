@@ -64,11 +64,8 @@ void CATableView::onEnterTransitionDidFinish()
 {
     CAScrollView::onEnterTransitionDidFinish();
     
-    if (m_pUsedTableCells.empty())
-    {
-        this->runAction(CCSequence::create(CCDelayTime::create(1/60.0f),
-                                           CCCallFunc::create(this, callfunc_selector(CATableView::reloadData)), NULL));
-    }
+    this->runAction(CCSequence::create(CCDelayTime::create(1/60.0f),
+                                       CCCallFunc::create(this, callfunc_selector(CATableView::firstReloadData)), NULL));
 }
 
 void CATableView::onExitTransitionDidStart()
@@ -505,7 +502,6 @@ void CATableView::reloadViewSizeData()
             sectionHeight += m_nRowHeightss.at(i).at(j);
             sectionHeight += m_nSeparatorViewHeight;
         }
-        sectionHeight -= m_nSeparatorViewHeight;
         m_nSectionHeights[i] = sectionHeight;
         viewHeight += sectionHeight;
     }
@@ -615,6 +611,12 @@ void CATableView::reloadData()
     
     this->loadTableCell();
     this->updateSectionHeaderAndFooterRects();
+}
+
+void CATableView::firstReloadData()
+{
+    CC_RETURN_IF(!m_pUsedTableCells.empty());
+    this->reloadData();
 }
 
 void CATableView::loadTableCell()
@@ -776,6 +778,7 @@ CATableViewCell::CATableViewCell()
 ,m_nSection(0xffffffff)
 ,m_nRow(0xffffffff)
 ,m_bControlStateEffect(true)
+,m_bAllowsSelected(true)
 {
 
 }
@@ -846,9 +849,17 @@ void CATableViewCell::setContentSize(const CrossApp::CCSize &var)
 
 void CATableViewCell::setControlState(const CAControlState& var)
 {
-    CAControl::setControlState(var);
+    if (m_bAllowsSelected == false && var == CAControlStateSelected)
+    {
+        CAControl::setControlState(CAControlStateNormal);
+    }
+    else
+    {
+        CAControl::setControlState(var);
+    }
+    
     CC_RETURN_IF(m_bControlStateEffect == false);
-    switch (var)
+    switch (m_eControlState)
     {
         case CAControlStateNormal:
             this->normalTableViewCell();
@@ -895,10 +906,7 @@ void CATableViewCell::disabledTableViewCell()
 
 void CATableViewCell::resetTableViewCell()
 {
-    m_nSection = 0xffffffff;
-    m_nRow     = 0xffffffff;
     this->setVisible(true);
-    this->setFrame(CCRect(0, 0, -1, -1));
     this->normalTableViewCell();
     this->recoveryTableViewCell();
 }

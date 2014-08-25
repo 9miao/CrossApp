@@ -22,13 +22,12 @@ CADrawerController::CADrawerController()
 ,m_fDivision(0)
 ,m_fCurrDivision(0)
 ,m_bShow(false)
-,m_bTouchMoved(true)
 ,m_fOffX(0)
 ,m_pBackgroundView(NULL)
 {
     this->getView()->setColor(CAColor_clear);
-    m_bTouchMovedStopSubviews = true;
     this->setTouchMovedListenVertical(false);
+    this->setTouchMoved(true);
 }
 
 CADrawerController::~CADrawerController()
@@ -237,7 +236,7 @@ void CADrawerController::updateViewFrame()
     
     if (1)
     {
-        float scale0 = 0.2f + 0.8f * m_fCurrDivision / m_fDivision;
+        float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
         float scale1 = 1.0f - 0.2f * m_fCurrDivision / m_fDivision;
         
         m_pContainer[0]->setScale(scale0);
@@ -246,9 +245,6 @@ void CADrawerController::updateViewFrame()
         point[0].x = (point[1].x - m_pContainer[0]->getFrame().size.width) / 2;
         point[0].y = this->getView()->getBounds().size.height * (1.0f - scale0) / 2;
         point[1].y = this->getView()->getBounds().size.height * (1.0f - scale1) / 2;
-        
-        float alpha0 = m_fCurrDivision / m_fDivision;
-        m_pContainer[0]->setAlpha(alpha0 * alpha0);
     }
 
     m_pContainer[0]->setFrameOrigin(point[0]);
@@ -354,6 +350,16 @@ void CADrawerController::setBackgroundView(CrossApp::CAView *var)
 CAView* CADrawerController::getBackgroundView()
 {
     return m_pBackgroundView;
+}
+
+void CADrawerController::setTouchMoved(bool var)
+{
+    m_bTouchMovedStopSubviews = m_bTouchMoved = var;
+}
+
+bool CADrawerController::isTouchMoved()
+{
+    return m_bTouchMoved;
 }
 
 NS_CC_END

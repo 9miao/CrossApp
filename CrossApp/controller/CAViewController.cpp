@@ -420,8 +420,6 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
 
 void CANavigationController::replaceViewControllerFinish()
 {
-    m_pContainer->setFrame(CCRect(0, m_pContainer->getFrame().origin.y, 0, 0));
-    
     CAViewController* lastViewController = m_pViewControllers.back();
     lastViewController->retain()->autorelease();
     m_pViewControllers.popBack();
@@ -430,7 +428,7 @@ void CANavigationController::replaceViewControllerFinish()
     lastViewController->removeViewFromSuperview();
     
     CAViewController* viewController = m_pViewControllers.back();
-    
+    viewController->getView()->setFrameOrigin(CCPointZero);
     if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
     {
         viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
@@ -602,6 +600,11 @@ CAViewController* CANavigationController::getViewControllerAtIndex(int index)
     while (0);
     
     return NULL;
+}
+
+CAViewController* CANavigationController::getBackViewController()
+{
+    return m_pViewControllers.back();
 }
 
 void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)

@@ -991,12 +991,11 @@ void CAView::sortAllSubviews()
         CAView ** x = (CAView**)m_pSubviews->data->arr;
         CAView *tempItem;
         
-        // insertion sort
         for(i=1; i<length; i++)
         {
             tempItem = x[i];
             j = i-1;
-            
+            CC_CONTINUE_IF(tempItem == NULL);
             //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
             while(j>=0 && ( tempItem->m_nZOrder < x[j]->m_nZOrder || ( tempItem->m_nZOrder== x[j]->m_nZOrder && tempItem->m_uOrderOfArrival < x[j]->m_uOrderOfArrival ) ) )
             {
@@ -1005,8 +1004,6 @@ void CAView::sortAllSubviews()
             }
             x[j+1] = tempItem;
         }
-        
-        //don't need to check children recursively, that's done in visit of each child
         
         if ( m_pobBatchView)
         {
@@ -1021,13 +1018,8 @@ void CAView::sortAllSubviews()
 
 void CAView::draw()
 {
-    //CCAssert(0);
-    // override me
-    // Only use- this function to draw your stuff.
-    // DON'T draw your stuff outside this method
-    
-    if (m_pobImage == NULL)
-        return;
+
+    CC_RETURN_IF(m_pobImage == NULL);
     
     CC_NODE_DRAW_SETUP();
     
@@ -1602,7 +1594,8 @@ void CAView::updateTransform()
 {
     // Recursively iterate over children
     
-    if(m_pobImage && isDirty() ) {
+    if(m_pobImage && isDirty() )
+    {
         
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !m_bVisible || ( m_pSuperview && m_pSuperview != m_pobBatchView && m_pSuperview->m_bShouldBeHidden) )
@@ -1911,7 +1904,7 @@ void CAView::updateDisplayedAlpha(float parentAlpha)
     CAObject* pObj;
     CCARRAY_FOREACH(m_pSubviews, pObj)
     {
-        CAView* item = dynamic_cast<CAView*>(pObj);
+        CAView* item = (CAView*)pObj;
         if (item)
         {
             item->updateDisplayedAlpha(_displayedAlpha);
@@ -1950,25 +1943,20 @@ void CAView::updateDisplayedColor(const CAColor4B& parentColor)
 
 void CAView::updateColor(void)
 {
-    if (m_pobImage == NULL)
-    {
-        return;
-    }
-    
     CAColor4B color4 = _displayedColor;
     
-    color4.r *= _displayedAlpha;
-    color4.g *= _displayedAlpha;
-    color4.b *= _displayedAlpha;
-    color4.a *= _displayedAlpha;
-    
-    m_sQuad.bl.colors = color4;
-    m_sQuad.br.colors = color4;
-    m_sQuad.tl.colors = color4;
-    m_sQuad.tr.colors = color4;
-    
-    if (m_pobBatchView)
+    if (m_pobImage && m_pobBatchView)
     {
+        color4.r *= _displayedAlpha;
+        color4.g *= _displayedAlpha;
+        color4.b *= _displayedAlpha;
+        color4.a *= _displayedAlpha;
+        
+        m_sQuad.bl.colors = color4;
+        m_sQuad.br.colors = color4;
+        m_sQuad.tl.colors = color4;
+        m_sQuad.tr.colors = color4;
+        
         if (m_uAtlasIndex != 0xffffffff)
         {
             m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
@@ -1980,16 +1968,22 @@ void CAView::updateColor(void)
             setDirty(true);
         }
     }
+    else
+    {
+        color4.a *= _displayedAlpha;
+        
+        m_sQuad.bl.colors = color4;
+        m_sQuad.br.colors = color4;
+        m_sQuad.tl.colors = color4;
+        m_sQuad.tr.colors = color4;
+    }
     
     this->updateDraw();
-    // self render
-    // do nothing
 }
 
 void CAView::updateBlendFunc(void)
 {
-    // it is possible to have an untextured sprite
-    if (! m_pobImage || ! m_pobImage->hasPremultipliedAlpha())
+    if (m_pobImage && ! m_pobImage->hasPremultipliedAlpha())
     {
         m_sBlendFunc.src = GL_SRC_ALPHA;
         m_sBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
@@ -2095,7 +2089,8 @@ void CAView::setBatch(CABatchView *batchView)
     m_pobBatchView = batchView; // weak reference
     
     // self render
-    if( ! m_pobBatchView ) {
+    if( ! m_pobBatchView )
+    {
         m_uAtlasIndex = 0xffffffff;
         setImageAtlas(NULL);
         m_bRecursiveDirty = false;
@@ -2110,7 +2105,9 @@ void CAView::setBatch(CABatchView *batchView)
         m_sQuad.tl.vertices = vertex3( x1, y2, 0 );
         m_sQuad.tr.vertices = vertex3( x2, y2, 0 );
         
-    } else {
+    }
+    else
+    {
         
         // using batch
         m_transformToBatch = CATransformationIdentity;

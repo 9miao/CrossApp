@@ -72,11 +72,8 @@ void CABatchView::visit(void)
 {
     CC_PROFILER_START_CATEGORY(kCCProfilerCategoryBatchSprite, "CABatchView - visit");
 
-    if (! m_bVisible)
-    {
-        return;
-    }
-
+    CC_RETURN_IF(!m_bVisible);
+    
     kmGLPushMatrix();
     sortAllSubview();
     transform();
@@ -276,11 +273,9 @@ void CABatchView::draw(void)
 {
     CC_PROFILER_START("CABatchView - draw");
 
-    if( m_pobImageAtlas->getTotalQuads() == 0 )
-    {
-        return;
-    }
-
+    CC_RETURN_IF(!m_pobImageAtlas);
+    CC_RETURN_IF(m_pobImageAtlas->getTotalQuads() == 0);
+    
     CC_NODE_DRAW_SETUP();
 
     arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAView*);

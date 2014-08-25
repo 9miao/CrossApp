@@ -197,6 +197,8 @@ protected:
     
     void updateSectionHeaderAndFooterRects();
 
+    void firstReloadData();
+    
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -317,6 +319,8 @@ public:
     CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
     
     CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
+    
+    CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
     
 protected:
     

@@ -45,7 +45,7 @@ public:
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
-    CC_SYNTHESIZE_IS(bool, m_bTouchMoved, TouchMoved);
+    CC_PROPERTY_IS(bool, m_bTouchMoved, TouchMoved);
     
 protected:
     

@@ -395,6 +395,14 @@ CAImage* CAScale9ImageView::getImage()
     return m_pScale9ImageView->getImage();
 }
 
+void CAScale9ImageView::updateDisplayedAlpha(float parentOpacity)
+{
+    if (m_pScale9ImageView)
+    {
+        m_pScale9ImageView->updateDisplayedAlpha(parentOpacity);
+    }
+}
+
 bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect, CCRect capInsets)
 {
     if (image)

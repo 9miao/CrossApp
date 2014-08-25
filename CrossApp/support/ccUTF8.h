@@ -11,9 +11,8 @@
 NS_CC_BEGIN
 
 #define UTF8(x) unicode_to_utf8( L##x ).c_str()
-inline int _unicode_to_utf8( const wchar_t *in, char **out , int *poutsize )
+inline int _unicode_to_utf8( const wchar_t *in, std::string& out , int *poutsize )
 {
-    int i = 0;
     int outsize = 0;
     int charscount = 0;
     char *result = NULL;
@@ -24,7 +23,7 @@ inline int _unicode_to_utf8( const wchar_t *in, char **out , int *poutsize )
     memset(result, 0, charscount * 3 + 1);
     tmp = result;
     
-    for (i = 0; i < charscount; i++)
+    for (int i = 0; i < charscount; i++)
     {
         wchar_t unicode = in[i];
         unsigned int i_unicode = (unsigned int)unicode;
@@ -52,12 +51,12 @@ inline int _unicode_to_utf8( const wchar_t *in, char **out , int *poutsize )
             tmp += 1;
             outsize += 3;
         }
-        
     }
-    
+
     *tmp = '\0';
-    *out = result;
-	*poutsize = outsize;
+    out = result;
+    *poutsize = outsize;
+    delete [] result;
     return 1;
 }
 inline int _utf8_to_unicode( const char *in, wchar_t **out, int *outsize )
@@ -197,15 +196,15 @@ std::wstring inline utf8_to_unicode( const char *in )
 	delete[] str;
 	return s;
 }
+
 std::string inline unicode_to_utf8( const wchar_t *in )
 {
-	char *out;
+    std::string s;
 	int outsize;
-	_unicode_to_utf8( in , &out , &outsize );
-	std::string s = out;
-	delete[] out;
+	_unicode_to_utf8( in , s , &outsize );
 	return s;
 }
+
 std::string inline utf8_to_url_string( const char *in )
 {
 	std::string str = in;

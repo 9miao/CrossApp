@@ -262,6 +262,10 @@ void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
     else
     {
         m_pContainer->setFrameOrigin(ccpMult(offset, -1));
+        if (m_pScrollViewDelegate)
+        {
+            m_pScrollViewDelegate->scrollViewDidMoved(this);
+        }
     }
 }
 
@@ -327,6 +331,11 @@ void CAScrollView::closeToPoint(float dt)
         }
         resilience = ccpAdd(resilience, point);
         m_pContainer->setFrameOrigin(resilience);
+    }
+    
+    if (m_pScrollViewDelegate)
+    {
+        m_pScrollViewDelegate->scrollViewDidMoved(this);
     }
 }
 
@@ -495,6 +504,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewDidScroll(this);
+            m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
     }
 }
@@ -525,7 +535,6 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                 {
                     m_pScrollViewDelegate->scrollViewDidScroll(this);
                 }
-                
             }
             
             CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
@@ -675,6 +684,11 @@ void CAScrollView::deaccelerateScrolling(float dt)
         
         this->showIndicator();
         m_pContainer->setCenterOrigin(point);
+    }
+    
+    if (m_pScrollViewDelegate)
+    {
+        m_pScrollViewDelegate->scrollViewDidMoved(this);
     }
 }
 
