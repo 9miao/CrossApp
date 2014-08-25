@@ -15,6 +15,7 @@
 NS_CC_BEGIN
 
 class CAImageView;
+class CAScale9ImageView;
 class CC_DLL CAStepper : public CAControl {
     
 public:
@@ -58,7 +59,8 @@ public:
     void setDecrementImage(CAImage* image, CAControlState state);
     CAImage* getDecrementImageForState(CAControlState state);
 
-    
+
+    CC_SYNTHESIZE(bool, m_bTouchEffect, TouchEffect); // default is false, alpha
 protected:
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);    
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
@@ -75,9 +77,9 @@ private:
     CAImage* m_pIncrementImage[CAControlStateAll];
     CAImage* m_pDecrementImage[CAControlStateAll];
     
-    CAImageView* m_pBackgroundImageView;
-    CAImageView* m_pIncrementImageView;
-    CAImageView* m_pDecrementImageView;
+    CAScale9ImageView* m_pBackgroundImageView;
+    CAScale9ImageView* m_pIncrementImageView;
+    CAScale9ImageView* m_pDecrementImageView;
     
 private:
     enum ActionType{
