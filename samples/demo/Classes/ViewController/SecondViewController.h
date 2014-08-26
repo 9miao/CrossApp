@@ -1,7 +1,6 @@
 #ifndef _Second_ViewController_h_
 #define _Second_ViewController_h_
 
-#include <iostream>
 #include "CrossApp.h"
 #include "CrossAppExt.h"
 #include "Info.h"

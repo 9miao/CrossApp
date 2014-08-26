@@ -1,7 +1,6 @@
 #ifndef _Http_Request_Test_h_
 #define _Http_Request_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 #include "CrossAppExt.h"
 

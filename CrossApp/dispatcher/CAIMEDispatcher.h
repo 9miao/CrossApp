@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CC_IME_DISPATCHER_H__
 #define __CC_IME_DISPATCHER_H__
 
+#include <string>
 #include "CAIMEDelegate.h"
-#include <iostream>
 NS_CC_BEGIN
 
 /**

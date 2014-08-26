@@ -1,7 +1,6 @@
 #ifndef _Extensions_Test_h_
 #define _Extensions_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 #include "CrossAppExt.h"
 #include "Info.h"

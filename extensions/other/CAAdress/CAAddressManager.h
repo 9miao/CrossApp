@@ -9,7 +9,7 @@
 #ifndef __iBook__CAAddressManager__
 #define __iBook__CAAddressManager__
 
-#include <iostream>
+#include <string>
 #include "CrossApp.h"
 #include "CrossAppExt.h"
 USING_NS_CC;

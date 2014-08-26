@@ -1,7 +1,6 @@
 #ifndef _Address_Book_Test_h_
 #define _Address_Book_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 #include "CrossAppExt.h"
 

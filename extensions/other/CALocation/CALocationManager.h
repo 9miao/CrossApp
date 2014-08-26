@@ -9,7 +9,6 @@
 #ifndef __iBook__CALocationManager__
 #define __iBook__CALocationManager__
 
-#include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
