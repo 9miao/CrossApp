@@ -58,7 +58,7 @@ void ExtensionsTest::loadJsonData()
 	}
 }
 
-void ExtensionsTest::nextViewController(CAControl* btn, CCPoint point)
+void ExtensionsTest::nextViewController(CAControl* btn, const CCPoint& point)
 {
 	next->setVisible(false);
 	AddressBookTest* addressBookView = new AddressBookTest();

@@ -13,7 +13,7 @@ public:
 	virtual ~PageViewTest();
 
 public:
-	void segBtnCallBack(CAControl* btn,CCPoint point);
+    void segBtnCallBack(CAControl* btn, const CCPoint& point);
 
 protected:
 	void viewDidLoad();

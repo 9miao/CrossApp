@@ -542,7 +542,7 @@ bool CAScheduler::isScheduledSelector(SEL_SCHEDULE pfnSelector, CAObject *pTarge
     }
     else
     {
-        for (int i = 0; i < pElement->timers->num; ++i)
+        for (unsigned i = 0; i < pElement->timers->num; ++i)
         {
             CCTimer *timer = static_cast<CCTimer*>(pElement->timers->arr[i]);
             

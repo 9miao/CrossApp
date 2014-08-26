@@ -31,7 +31,7 @@ void ScrollViewTest::viewDidLoad()
 	this->getView()->addSubview(zoomView);
 }
 
-void ScrollViewTest::zoomViewBySliderValue(CAControl* btn, CCPoint point)
+void ScrollViewTest::zoomViewBySliderValue(CAControl* btn, const CCPoint &point)
 {
 	float multiple = zoomView->getValue()+1.0;
 	imageView->setScale(multiple);

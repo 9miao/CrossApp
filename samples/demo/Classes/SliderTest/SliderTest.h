@@ -17,8 +17,8 @@ protected:
 	void viewDidUnload();
 
 public:
-	void defaultSliderValueChange(CAControl* btn,CCPoint point);
-	void sliderValueChange(CAControl* btn, CCPoint point);
+	void defaultSliderValueChange(CAControl* btn, const CCPoint& point);
+	void sliderValueChange(CAControl* btn, const CCPoint& point);
 
 private:
 	CCSize size;

@@ -9,8 +9,6 @@
 #ifndef __CrossAppx__CABarItem__
 #define __CrossAppx__CABarItem__
 
-#include <iostream>
-
 #include "images/CAImage.h"
 #include <string>
 #include "control/CAControl.h"

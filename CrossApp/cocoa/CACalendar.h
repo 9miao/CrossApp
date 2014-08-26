@@ -3,13 +3,13 @@
 //  CrossApp
 //
 //  Created by dai xinping on 14-8-5.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
+//  Copyright (c) 2014 cocos2d-x. All rights reserved.
 //
 
 #ifndef __CrossApp__CACalendar__
 #define __CrossApp__CACalendar__
 
-#include <iostream>
+#include <time.h>
 #include "basics/CAObject.h"
 
 NS_CC_BEGIN
@@ -49,8 +49,8 @@ public:
 private:
     bool _isLeapYear(int year);
     int _dayCountOfMonth(int year, int month);
-    int _calcDayCount(tm target);
-    int _compareDate(tm date1, tm date2);
+    int _calcDayCount(const tm& target);
+    int _compareDate(const tm& date1, const tm& date2);
     
 private:
     tm m_tDateTime;

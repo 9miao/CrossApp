@@ -131,7 +131,7 @@ void	stExpCocoNode::ReBuild(char* pCocoNodeAddr,char* pStringMemoryAddr)
 			m_ChildArray = m_ChildArray + (uint64_t)pCocoNodeAddr;
 		
 			stExpCocoNode* tpChildArray = (stExpCocoNode*)m_ChildArray;
-			for(int i = 0 ; i < m_ChildNum ; i++)
+			for(uint32_t i = 0 ; i < m_ChildNum ; i++)
 			{
 				tpChildArray[i].ReBuild(pCocoNodeAddr,pStringMemoryAddr);
 			}
@@ -169,7 +169,7 @@ bool CocoLoader::ReadCocoBinBuff(char* pBinBuff)
 
 	if(1 == m_pFileHeader->m_nFirstUsed)
 	{	
-		for(int i = 0 ; i < m_pFileHeader->m_ObjectCount ; i++)
+		for(uint32_t i = 0 ; i < m_pFileHeader->m_ObjectCount ; i++)
 		{
 			m_pObjectDescArray[i].ReBuild(pAttrAddr,pStringAddr)	;
 		}
@@ -183,7 +183,7 @@ bool CocoLoader::ReadCocoBinBuff(char* pBinBuff)
 
 stExpCocoObjectDesc*	CocoLoader::GetCocoObjectDesc(const char* szObjDesc)
 {
-	for(int i = 0 ; i < m_pFileHeader->m_ObjectCount ; i++)
+	for(uint32_t i = 0 ; i < m_pFileHeader->m_ObjectCount ; i++)
 	{
 		if(0 == strcmp((char*)m_pObjectDescArray[i].m_szName,szObjDesc))
 		{

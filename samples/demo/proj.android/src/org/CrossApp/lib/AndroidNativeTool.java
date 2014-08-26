@@ -30,8 +30,10 @@ public class AndroidNativeTool
 	public AndroidNativeTool( final Activity context )
 	{
 		s_pContext = context;
-		final CharSequence[] items = { "����", "¼��","��Ƶ","���" }; 
-		mDialog = new AlertDialog.Builder(context).setTitle("ѡ��ͼƬ").setItems(items,   
+		//final CharSequence[] items = { "锟斤拷锟斤拷", "录锟斤拷","锟斤拷频","锟斤拷锟� }; 
+		//mDialog = new AlertDialog.Builder(context).setTitle("选锟斤拷图片").setItems(items,   
+		final CharSequence[] items = { "CharSequence0", "CharSequence1","CharSequence2","CharSequence3" }; 
+		mDialog = new AlertDialog.Builder(context).setTitle("123").setItems(items,   
     	new DialogInterface.OnClickListener() {   
         public void onClick(DialogInterface dialog,int item)
         {   
@@ -68,16 +70,16 @@ public class AndroidNativeTool
 	{
 		File sdDir = null; 
 		boolean sdCardExist = Environment.getExternalStorageState() 
-				.equals(android.os.Environment.MEDIA_MOUNTED); //�ж�sd���Ƿ���� 
+				.equals(android.os.Environment.MEDIA_MOUNTED); //锟叫讹拷sd锟斤拷锟角凤拷锟斤拷锟�
 	    if (sdCardExist) 
 		{ 
-	    	sdDir = Environment.getExternalStorageDirectory();//��ȡ��Ŀ¼ 
+	    	sdDir = Environment.getExternalStorageDirectory();//锟斤拷取锟斤拷目录 
 		} 
 		System.out.println("getExternalStorageDirectory(): "+sdDir.toString()); 
 
 		
 		
-		//����ȷ���ļ���·�����ڣ��������պ��޷���ɻص�
+		//锟斤拷锟斤拷确锟斤拷锟侥硷拷锟斤拷路锟斤拷锟斤拷锟节ｏ拷锟斤拷锟斤拷锟斤拷锟秸猴拷锟睫凤拷锟斤拷苫氐锟�
 		String mediapathString =sdDir.toString();
 		
 		System.out.println(mediapathString);
@@ -127,7 +129,7 @@ public class AndroidNativeTool
             switch (requestCode) {  
             case 2:
             case 3:  // Photo
-                //���ͼƬ��uri   
+                //锟斤拷锟酵计拷锟絬ri   
             	//runNativeCallback(requestCode,resultCode,intent);
                 Uri originalUri = intent.getData();  
                 
@@ -136,20 +138,20 @@ public class AndroidNativeTool
 
                 
 
-                //������android��ý����ݿ�ķ�װ�ӿڣ�����Ŀ�Android�ĵ�
+                //锟斤拷锟斤拷锟斤拷android锟斤拷媒锟斤拷锟斤拷菘锟侥凤拷装锟接口ｏ拷锟斤拷锟斤拷目锟紸ndroid锟侥碉拷
 
                 Cursor cursor = s_pContext.managedQuery(originalUri, proj, null, null, null); 
                 		//
 
-                //���Ҹ������ ����ǻ���û�ѡ���ͼƬ������ֵ
+                //锟斤拷锟揭革拷锟斤拷锟斤拷锟�锟斤拷锟斤拷腔锟斤拷锟矫伙拷选锟斤拷锟酵计拷锟斤拷锟斤拷锟街�
 
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
-                //�����������ͷ ���������Ҫ����С�ĺ���������Խ��
+                //锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟酵�锟斤拷锟斤拷锟斤拷锟斤拷锟揭拷锟斤拷锟叫★拷暮锟斤拷锟斤拷锟斤拷锟斤拷锟皆斤拷锟�
 
                 cursor.moveToFirst();
 
-                //���������ֵ��ȡͼƬ·��
+                //锟斤拷锟斤拷锟斤拷锟斤拷锟街碉拷锟饺⊥计凤拷锟�
 
                 String path = cursor.getString(column_index);
                 /*Bitmap bitmap = null;  

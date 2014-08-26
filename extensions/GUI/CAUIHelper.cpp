@@ -61,7 +61,7 @@ CCDictionary* CAUIHelper::createCAWidgetWithJsonFile(const char *filename)
         return NULL;
     }
     CCLog("%s",des);
-    for (int i = 0; i<root.size(); i++)
+    for (CSJson::ArrayIndex i = 0; i<root.size(); i++)
     {
         description = root[i];
         CAType type = (CAType)description["typeMode"].asInt();

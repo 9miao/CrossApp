@@ -3,14 +3,12 @@
 //  CrossApp
 //
 //  Created by MAC on 14-7-27.
-//  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
+//  Copyright (c) 2014. All rights reserved.
 //
 
 #include "CAIndexPath.h"
 
 NS_CC_BEGIN
-
-#pragma CAIndexPath2E
 
 const unsigned int _max_unsigned_int = 0xffffffff;
 
@@ -64,8 +62,6 @@ bool CAIndexPath2E::operator> (const CAIndexPath2E& other) const
 }
 
 
-
-#pragma CAIndexPath3E
 
 CAIndexPath3E::CAIndexPath3E()
 :section(_max_unsigned_int)

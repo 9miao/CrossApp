@@ -37,13 +37,13 @@ void CAFTFontCache::initDefaultFont()
 
 void CAFTFontCache::destroyAllFontData()
 {
-	for (int i = 0; i < m_FontDataVect.size(); i++)
-	{
-		FontDataTable* t = m_FontDataVect[i];
-		t->ftFont.finiFreeTypeFont();
-		delete t;
-	}
-	m_FontDataVect.clear();
+    while (!m_FontDataVect.empty())
+    {
+        FontDataTable* t = m_FontDataVect.back();
+        t->ftFont.finiFreeTypeFont();
+        delete t;
+        m_FontDataVect.pop_back();
+    }
 }
 
 
@@ -56,9 +56,9 @@ void CAFTFontCache::setCurrentFontData(const char* pFontName, int nSize)
 			return;
 	}
 
-	for (int i = 0; i < m_FontDataVect.size(); i++)
+    for (std::vector<FontDataTable *>::iterator it = m_FontDataVect.begin(); it != m_FontDataVect.end(); ++it)
 	{
-		FontDataTable* v = m_FontDataVect[i];
+		FontDataTable* v = *it;
 		if (v->szFontName == pFontName && v->iFontSize == nSize)
 		{
 			m_pCurFontData = v;

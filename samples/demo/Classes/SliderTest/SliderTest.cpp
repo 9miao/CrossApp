@@ -37,7 +37,7 @@ void SliderTest::viewDidLoad()
 	this->getView()->addSubview(sliderValue);
 }
 
-void SliderTest::defaultSliderValueChange(CAControl* btn, CCPoint point)
+void SliderTest::defaultSliderValueChange(CAControl* btn, const CCPoint& point)
 {
 	char value[20] = "";
 	CASlider* p_Slider = (CASlider*)btn;
@@ -45,7 +45,7 @@ void SliderTest::defaultSliderValueChange(CAControl* btn, CCPoint point)
 	sliderValue->setText(value);
 }
 
-void SliderTest::sliderValueChange(CAControl* btn, CCPoint point)
+void SliderTest::sliderValueChange(CAControl* btn, const CCPoint& point)
 {
 	char value[20] = "";
 	CASlider* p_Slider = (CASlider*)btn;

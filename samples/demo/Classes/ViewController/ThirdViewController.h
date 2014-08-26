@@ -18,7 +18,7 @@ protected:
 	void viewDidUnload();
 
 public:
-	void stateControl(CAControl* btn, CCPoint point);
+	void stateControl(CAControl* btn, const CCPoint& point);
 
 private:
 	CCSize size;

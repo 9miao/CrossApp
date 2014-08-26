@@ -9,7 +9,6 @@
 #ifndef __CAView__
 #define __CAView__
 
-#include <iostream>
 #include <vector>
 #include "ccMacros.h"
 #include "shaders/CATransformation.h"
@@ -149,7 +148,7 @@ public:
     
     virtual CCRect getBounds() const;
     
-    virtual void setCenter(CCRect rect);
+    virtual void setCenter(const CCRect& rect);
     
     virtual CCRect getCenter();
     
@@ -377,7 +376,7 @@ protected:
     
     virtual void setImageRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
     
-    virtual void setImageCoords(CCRect rect);
+    virtual void setImageCoords(const CCRect& rect);
     
     virtual void setVertexRect(const CCRect& rect);
     
@@ -488,7 +487,7 @@ protected:
     CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
 };
 
-class CAViewDelegate
+class CC_DLL CAViewDelegate
 {
 public:
     
