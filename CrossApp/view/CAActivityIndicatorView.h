@@ -18,8 +18,10 @@ typedef enum {
     CAActivityIndicatorViewStyleWhiteLarge,
     CAActivityIndicatorViewStyleWhite,
     CAActivityIndicatorViewStyleGray,
+    CAActivityIndicatorViewStyleImage,
 } CAActivityIndicatorViewStyle;
 
+class CAScale9ImageView;
 class CC_DLL CAActivityIndicatorView : public CAView {
     
 public:
@@ -42,6 +44,9 @@ public:
     // sizes the view according to the style
     virtual void setStyle(CAActivityIndicatorViewStyle style);
     
+    // will set CAActivityIndicatorViewStyleImage when call this func
+    virtual void setImage(CAImage* image);
+    
     virtual void startAnimating();
     virtual void stopAnimating();
     virtual bool isAnimating();
@@ -53,7 +58,8 @@ private:
     bool m_animating;
     bool m_hidesWhenStopped; // default is true. calls -setHidden when animating gets set to false
     CAActivityIndicatorViewStyle m_style; // default is CAActivityIndicatorViewStyleWhite
-//    CAActivityIndicatorViewStyle m_actualActivityIndicatorViewStyle;
+    CAImage* m_image; // default is null
+    CAView* m_imageView;
     
 private:
     CCPoint m_vertex[12][2];

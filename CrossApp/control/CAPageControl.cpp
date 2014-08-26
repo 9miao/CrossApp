@@ -21,6 +21,7 @@ CAPageControl::CAPageControl()
 , m_currentPageIndicatorTintColor(ccc4(255, 255, 255, 255))
 , m_pPageImage(NULL)
 , m_pSelectPageImage(NULL)
+, m_style(CAPageControlStyleDot)
 {
     
 }
@@ -229,6 +230,36 @@ void CAPageControl::setTouchEnabled(bool enable)
     CAControl::setTouchEnabled(enable);
     
     
+}
+
+void CAPageControl::setStyle(const CAPageControlStyle &var)
+{
+    if (m_style != var) {
+        m_style = var;
+        
+        switch (m_style) {
+            case CAPageControlStyleDot:
+                setPageIndicatorImage(CAImage::create("source_material/page_n.png"));
+                setCurrIndicatorImage(CAImage::create("source_material/page_h.png"));
+                break;
+            case CAPageControlStyleRound:
+                setPageIndicatorImage(CAImage::create("source_material/page_round_n.png"));
+                setCurrIndicatorImage(CAImage::create("source_material/page_round_h.png"));
+                break;
+            case CAPageControlStyleRectangle:
+                setPageIndicatorImage(CAImage::create("source_material/page_rect_n.png"));
+                setCurrIndicatorImage(CAImage::create("source_material/page_rect_h.png"));
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
+const CAPageControlStyle& CAPageControl::getStyle()
+{
+    return m_style;
 }
 
 NS_CC_END

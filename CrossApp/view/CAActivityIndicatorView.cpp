@@ -10,6 +10,8 @@
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
+#include "CAScale9ImageView.h"
+#include "CCActionInterval.h"
 
 NS_CC_BEGIN
 
@@ -19,13 +21,16 @@ CAActivityIndicatorView::CAActivityIndicatorView()
 , m_style(CAActivityIndicatorViewStyleWhite)
 , m_color(ccc4(255, 255, 255, 255))
 , m_duration(0.1f)
+, m_image(NULL)
+, m_imageView(NULL)
 {
     
 }
 
 CAActivityIndicatorView::~CAActivityIndicatorView()
 {
-
+    CC_SAFE_RELEASE(m_image);
+    CC_SAFE_RELEASE(m_imageView);
 }
 
 CAActivityIndicatorView* CAActivityIndicatorView::create()
@@ -193,6 +198,10 @@ void CAActivityIndicatorView::draw()
 {
     CAView::draw();
     
+    if (m_style == CAActivityIndicatorViewStyleImage) {
+        return;
+    }
+    
     float start_alpha, end_alpha;
     
     switch (m_style) {
@@ -210,6 +219,8 @@ void CAActivityIndicatorView::draw()
             break;
             
         default:
+            start_alpha = 0;
+            end_alpha = 0;
             break;
     }
     
@@ -238,11 +249,42 @@ void CAActivityIndicatorView::draw()
 
 void CAActivityIndicatorView::animation(float dt)
 {
-    m_animationIndex--;
-    if (m_animationIndex < 0) {
-        m_animationIndex = 12 - 1;
+    if (m_style == CAActivityIndicatorViewStyleImage && m_imageView) {
+        float rotate = m_imageView->getRotation();
+        rotate += 20;
+        if (rotate == 360) {
+            rotate = 0;
+        }
+        m_imageView->setRotation(rotate);
+    } else {
+        m_animationIndex--;
+        if (m_animationIndex < 0) {
+            m_animationIndex = 12 - 1;
+        }
     }
     updateDraw();
+}
+
+void CAActivityIndicatorView::setImage(CrossApp::CAImage *image)
+{
+    m_style = CAActivityIndicatorViewStyleImage;
+    CC_SAFE_RELEASE(m_image);
+    m_image = image;
+    CC_SAFE_RETAIN(m_image);
+    
+    if (m_imageView) {
+        removeSubview(m_imageView);
+        m_imageView->release();
+    }
+    
+//    CAScale9ImageView* view = CAScale9ImageView::createWithImage(image);
+    CAImageView* view = CAImageView::createWithImage(image);
+//    view->setFrame(CCRect(0, 0, getBounds().size.width, getBounds().size.height));
+    view->setCenterOrigin(CCPoint(getBounds().size.width/2, getBounds().size.height/2));
+    addSubview(view);
+
+    m_imageView = view;
+    CC_SAFE_RETAIN(m_imageView);
 }
 
 NS_CC_END
