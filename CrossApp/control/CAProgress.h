@@ -9,7 +9,6 @@
 #ifndef __project__CASlider__
 #define __project__CASlider__
 
-#include <iostream>
 #include "view/CAView.h"
 #include "view/CAImageView.h"
 #include "view/CARenderImage.h"
@@ -44,7 +43,7 @@ public:
 
 public:
     
-    CC_SYNTHESIZE_PASS_BY_REF(CAProgressStyle, m_pProgressStyle, ProgressStyle);
+    CC_SYNTHESIZE(CAProgressStyle, m_pProgressStyle, ProgressStyle);
     
     CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_progressTintColor, ProgressTintColor);
     

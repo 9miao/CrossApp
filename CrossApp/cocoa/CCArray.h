@@ -49,6 +49,12 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 #define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
 #endif
 
+#define CCARRAY_FOREACH_WITH_TYPE_CAST(__type__, __obj__, __array__)  \
+    if ((__array__) && (__array__)->data->num > 0)                                                                      \
+    for (CCObject** __arr__ = (__array__)->data->arr, **__end__ = (__array__)->data->arr + (__array__)->data->num - 1;  \
+        __arr__ <= __end__ && (((__object__) = *(__type__*)__arr__) != NULL);                                           \
+        ++__arr__)
+
 #define arrayMakeObjectsPerformSelector(pArray, func, elementType)    \
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \

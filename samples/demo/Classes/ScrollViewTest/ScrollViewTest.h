@@ -1,7 +1,6 @@
 #ifndef _ScrollView_Test_h_
 #define _ScrollView_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
@@ -17,7 +16,7 @@ protected:
 	void viewDidUnload();
 
 public:
-	void zoomViewBySliderValue(CAControl* btn,CCPoint point);
+    void zoomViewBySliderValue(CAControl* btn, const CCPoint& point);
 
 private:
 	CCSize size;

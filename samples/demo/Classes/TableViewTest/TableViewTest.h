@@ -1,7 +1,6 @@
 #ifndef _TableView_Test_h_
 #define _TableView_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
@@ -17,7 +16,7 @@ protected:
 	void viewDidUnload();
 
 public:
-	void cellBtnCallback(CAControl* btn,CCPoint point);
+	void cellBtnCallback(CAControl* btn, const CCPoint &point);
 
 public:
 	virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);

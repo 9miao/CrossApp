@@ -1,7 +1,6 @@
 #ifndef _AlertView_Test_h_
 #define _AlertView_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
@@ -17,7 +16,7 @@ protected:
 	void viewDidUnload();
 
 public:
-	void respondTouch(CAControl* btn, CCPoint point);
+	void respondTouch(CAControl* btn, const CCPoint& point);
 	void alertViewCallback(int btnIndex);
 
 private:

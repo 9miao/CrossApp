@@ -1,7 +1,6 @@
 #ifndef _PageView_Test_h_
 #define _PageView_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
@@ -13,7 +12,7 @@ public:
 	virtual ~PageViewTest();
 
 public:
-	void segBtnCallBack(CAControl* btn,CCPoint point);
+    void segBtnCallBack(CAControl* btn, const CCPoint& point);
 
 protected:
 	void viewDidLoad();

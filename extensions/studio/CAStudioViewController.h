@@ -9,7 +9,6 @@
 #ifndef __Demo__CAStudioManager__
 #define __Demo__CAStudioManager__
 
-#include <iostream>
 #include "CrossApp.h"
 #include "Json/CSContentJsonDictionary.h"
 #include "Json/DictionaryHelper.h"

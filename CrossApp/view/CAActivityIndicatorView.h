@@ -3,13 +3,12 @@
 //  CrossApp
 //
 //  Created by dai xinping on 14-8-18.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
+//  Copyright (c) 2014 cocos2d-x. All rights reserved.
 //
 
 #ifndef __CrossApp__CAActivityIndicatorView__
 #define __CrossApp__CAActivityIndicatorView__
 
-#include <iostream>
 #include "CAView.h"
 
 NS_CC_BEGIN

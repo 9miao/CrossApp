@@ -1,7 +1,6 @@
 #ifndef _Fifth_ViewController_h_
 #define _Fifth_ViewController_h_
 
-#include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;

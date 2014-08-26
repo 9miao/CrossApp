@@ -91,7 +91,7 @@ CAView* CAScale9ImageView::copy()
 
 bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, const CCRect& capInsets)
 {
-    CAColor4B color = getColor();
+    const CAColor4B& color = getColor();
 
     for (int i=0; i<9; i++)
     {
@@ -394,7 +394,7 @@ CAImage* CAScale9ImageView::getImage()
     return m_pScale9ImageView->getImage();
 }
 
-bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect, CCRect capInsets)
+bool CAScale9ImageView::initWithImage(CAImage* image, const CCRect& rect, const CCRect& capInsets)
 {
     if (image)
     {
@@ -405,7 +405,7 @@ bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect, CCRect capIns
 	return true;
 }
 
-CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image, CCRect rect, CCRect capInsets)
+CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image, const CCRect& rect, const CCRect& capInsets)
 {
 	CAScale9ImageView* pReturn = new CAScale9ImageView();
 	if (pReturn && pReturn->initWithImage(image, rect, capInsets))
@@ -417,13 +417,13 @@ CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image, CCRect rec
 	return NULL;
 }
 
-bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect)
+bool CAScale9ImageView::initWithImage(CAImage* image, const CCRect& rect)
 {
 	bool pReturn = this->initWithImage(image, rect, CCRectZero);
 	return pReturn;
 }
 
-CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image, CCRect rect)
+CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image, const CCRect& rect)
 {
 	CAScale9ImageView* pReturn = new CAScale9ImageView();
 	if (pReturn && pReturn->initWithImage(image, rect))
@@ -435,13 +435,13 @@ CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image, CCRect rec
 	return NULL;
 }
 
-bool CAScale9ImageView::initWithImage(CCRect capInsets, CAImage* image)
+bool CAScale9ImageView::initWithImage(const CCRect& capInsets, CAImage* image)
 {
 	bool pReturn = this->initWithImage(image, CCRectZero, capInsets);
 	return pReturn;
 }
 
-CAScale9ImageView* CAScale9ImageView::createWithImage(CCRect capInsets, CAImage* image)
+CAScale9ImageView* CAScale9ImageView::createWithImage(const CCRect& capInsets, CAImage* image)
 {
 	CAScale9ImageView* pReturn = new CAScale9ImageView();
 	if (pReturn && pReturn->initWithImage(capInsets, image))

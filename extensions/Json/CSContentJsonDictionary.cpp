@@ -24,7 +24,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <iostream>
+#include <string>
 #include "CSContentJsonDictionary.h"
 
 namespace cs {

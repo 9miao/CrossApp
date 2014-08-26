@@ -2,14 +2,13 @@
 //  CAPageView.h
 //  HelloCpp
 //
-//  Created by 栗元峰 on 14-7-29.
+//  Created by Li Yuanfeng on 14-7-29.
 //
 //
 
 #ifndef __HelloCpp__CAPageView__
 #define __HelloCpp__CAPageView__
 
-#include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;

@@ -1,7 +1,6 @@
 #ifndef _Extensions_Test_h_
 #define _Extensions_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 #include "CrossAppExt.h"
 #include "Info.h"
@@ -16,7 +15,7 @@ typedef enum LABELTAG
 	NUM,
 	GENDER,
 	OCCUPATION
-};
+} LABELTAG;
 
 class ExtensionsTest :public CAViewController, public CATableViewDelegate, public CATableViewDataSource
 {
@@ -43,7 +42,7 @@ public:
 
 private:
 	void loadJsonData();
-	void nextViewController(CAControl* btn, CCPoint point);
+    void nextViewController(CAControl* btn, const CCPoint& point);
 
 private:
 	CCSize size;

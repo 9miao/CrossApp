@@ -231,4 +231,17 @@ extern unsigned int CC_DLL g_uNumberOfDraws;
  */
 #define CAAnimationFrameDisplayedNotification "CAAnimationFrameDisplayedNotification"
 
+#if defined __cplusplus
+#   if (__cplusplus >= 201103L) || ((defined _MSC_VER) && _MSC_VER > 1600)
+#       define RVAL_REF(__type__)   __type__&&
+#       define STD_MOVE(__val__)    std::move(__val__)
+#   else
+#       define RVAL_REF(__type__)   __type__
+#       define STD_MOVE(__val__)    __val__
+#   endif
+#else
+#   define RVAL_REF(__type__)   __type__
+#   define STD_MOVE(__val__)    __val__
+#endif
+
 #endif // __CCMACROS_H__

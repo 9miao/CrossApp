@@ -12,7 +12,6 @@
 #endif
 static CAAddressManager *manger = NULL;
 CAAddressManager::CAAddressManager()
-:_addressBookArr(NULL)
 {
     RecordArr= CCArray::create();
     RecordArr->retain();

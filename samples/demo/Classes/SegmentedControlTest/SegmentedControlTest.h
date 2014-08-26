@@ -1,7 +1,6 @@
 #ifndef _SegmentedControl_Test_h_
 #define _SegmentedControl_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
@@ -17,7 +16,7 @@ protected:
 	void viewDidUnload();
 
 public:
-	void segmentCallback(CAControl* btn, CCPoint point);
+    void segmentCallback(CAControl* btn, const CCPoint& point);
 
 private:
 	CCSize size;

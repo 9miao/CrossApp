@@ -191,11 +191,11 @@ int CAFreeTypeFont::getStringWidth(const std::string& text)
 
 void CAFreeTypeFont::destroyAllLines()
 {
-	for (int i = 0; i < m_lines.size(); i++)
-	{
-		delete m_lines[i];
+	while (!m_lines.empty())
+    {
+		delete m_lines.back();
+        m_lines.pop_back();
 	}
-	m_lines.clear();
 	m_currentLine = NULL;
 }
 
@@ -330,7 +330,7 @@ void CAFreeTypeFont::newLine()
 
 void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 {
-	FT_BBox glyph_bbox, global_bbox;
+    FT_BBox glyph_bbox;// , global_bbox;
 	int maxWidth = m_inWidth ? m_inWidth : 0xFFFF;
 	
 	m_currentLine->bbox.xMin = 32000;
@@ -338,7 +338,7 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 	m_currentLine->bbox.yMin = (m_face->size->metrics.descender) >> 6;
 	m_currentLine->bbox.yMax = (m_face->size->metrics.ascender) >> 6;
     
-	int i = 0;
+	unsigned i = 0;
 	for (; i < glyphs.size(); i++)
 	{
 		FT_Glyph_Get_CBox(glyphs[i].image, ft_glyph_bbox_pixels, &glyph_bbox);
@@ -383,7 +383,7 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 
 
 		int start_pos = glyphs[0].pos.x;
-		for (int i = 0; i < glyphs.size(); i++)
+        for (std::vector<TGlyph>::size_type i = 0; i < glyphs.size(); ++i)
 		{
 			glyphs[i].pos.x -= start_pos;
 		}
@@ -539,7 +539,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	glyphs.clear();
 	FT_Bool useKerning = FT_HAS_KERNING(m_face);
 
-	for (int n = 0; n < utf16String.size(); n++)
+	for (std::u16string::size_type n = 0; n < utf16String.size(); ++n)
 	{
 		FT_ULong c = utf16String[n];
 
@@ -609,7 +609,7 @@ void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
 
 		if (glyph_bbox.xMin == glyph_bbox.xMax)
 		{
-			glyph_bbox.xMax = glyph_bbox.xMin + slot->advance.x >> 6;
+			glyph_bbox.xMax = glyph_bbox.xMin + slot->advance.x >> 6;//'>>' : check operator precedence for possible error; use parentheses to clarify precedence
 		}
         glyph_bbox.xMin += glyph->pos.x;
         glyph_bbox.xMax += glyph->pos.x;

@@ -1,7 +1,6 @@
 #ifndef _Address_Book_Test_h_
 #define _Address_Book_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 #include "CrossAppExt.h"
 
@@ -40,8 +39,8 @@ public:
 	virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
 
 private:
-	void previousViewController(CAControl* btn, CCPoint point);
-	void nextViewController(CAControl* btn, CCPoint point);
+    void previousViewController(CAControl* btn, const CCPoint& point);
+    void nextViewController(CAControl* btn, const CCPoint& point);
 	void loadingView();
 	void getAddressBookList();
 	void addressBookLoadProgress(float interval);

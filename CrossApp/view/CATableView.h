@@ -9,7 +9,6 @@
 #ifndef __CrossAppx__CATableView__
 #define __CrossAppx__CATableView__
 
-#include <iostream>
 #include "CAScrollView.h"
 #include <set>
 #include "basics/CASTLContainer.h"
@@ -29,7 +28,7 @@ NS_CC_BEGIN
 class CATableViewCell;
 class CATableView;
 
-class CATableViewDelegate
+class CC_DLL CATableViewDelegate
 {
 public:
     
@@ -44,7 +43,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void tableViewDidShowPullUpView(CATableView* table){};
 };
 
-class CATableViewDataSource
+class CC_DLL CATableViewDataSource
 {
 public:
     

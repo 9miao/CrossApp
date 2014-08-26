@@ -9,7 +9,6 @@
 #ifndef __CrossApp__CAResponder__
 #define __CrossApp__CAResponder__
 
-#include <iostream>
 #include "CAObject.h"
 #include "dispatcher/CATouch.h"
 

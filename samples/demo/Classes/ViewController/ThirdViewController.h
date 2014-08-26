@@ -2,7 +2,6 @@
 #ifndef _Third_ViewController_h_
 #define _Third_ViewController_h_
 
-#include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
@@ -18,7 +17,7 @@ protected:
 	void viewDidUnload();
 
 public:
-	void stateControl(CAControl* btn, CCPoint point);
+	void stateControl(CAControl* btn, const CCPoint& point);
 
 private:
 	CCSize size;

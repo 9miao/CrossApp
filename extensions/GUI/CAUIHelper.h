@@ -9,7 +9,6 @@
 #ifndef __iBook__CAUIHelper__
 #define __iBook__CAUIHelper__
 
-#include <iostream>
 #include "Json/DictionaryHelper.h"
 #include "Json/CSContentJsonDictionary.h"
 

@@ -55,16 +55,16 @@ void AddressBookTest::loadingView()
 	loadIamge->setCenterOrigin(CCPoint(size.width*0.5, size.height*0.5));
 	loadIamge->setScale(0.5);
 	loading->addSubview(loadIamge);
-	CAScheduler::schedule(schedule_selector(AddressBookTest::addressBookLoadProgress), this, 0.01, false);
+	CAScheduler::schedule(schedule_selector(AddressBookTest::addressBookLoadProgress), this, 0.01f, false);
 }
 
-void AddressBookTest::previousViewController(CAControl* btn, CCPoint point)
+void AddressBookTest::previousViewController(CAControl* btn, const CCPoint& point)
 {
 	this->getNavigationController()->getNavigationBar()->getSubviewByTag(1000)->setVisible(true);
 	this->getNavigationController()->popViewControllerAnimated(true);
 }
 
-void AddressBookTest::nextViewController(CAControl* btn, CCPoint point)
+void AddressBookTest::nextViewController(CAControl* btn, const CCPoint& point)
 {
 	HttpRequestTest* httpRequestView = new HttpRequestTest();
 	httpRequestView->init();

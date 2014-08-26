@@ -187,7 +187,7 @@ int CATextField::getFontSize()
 	return m_iFontSize;
 }
 
-void CATextField::setText(std::string var)
+void CATextField::setText(const std::string& var)
 {
     CATextFieldDelegate* pTemp = m_pDelegate;
     m_pDelegate = NULL;
@@ -196,40 +196,40 @@ void CATextField::setText(std::string var)
     m_pDelegate = pTemp;
 }
 
-std::string CATextField::getText()
+const std::string& CATextField::getText()
 {
     return m_sText;
 }
 
-void CATextField::setPlaceHolder(std::string var)
+void CATextField::setPlaceHolder(const std::string& var)
 {
     m_sPlaceHolder = var;
     this->updateImage();
 }
 
-std::string CATextField::getPlaceHolder()
+const std::string& CATextField::getPlaceHolder()
 {
     return m_sPlaceHolder;
 }
 
-void CATextField::setSpaceHolderColor(CAColor4B var)
+void CATextField::setSpaceHolderColor(const CAColor4B& var)
 {
     m_cSpaceHolderColor = var;
     this->updateImage();
 }
 
-CAColor4B CATextField::getSpaceHolderColor()
+const CAColor4B& CATextField::getSpaceHolderColor()
 {
     return m_cSpaceHolderColor;
 }
 
-void CATextField::setTextColor(CAColor4B var)
+void CATextField::setTextColor(const CAColor4B& var)
 {
     m_cTextColor = var;
     this->updateImage();
 }
 
-CAColor4B CATextField::getTextColor()
+const CAColor4B& CATextField::getTextColor()
 {
     return m_cTextColor;
 }
@@ -302,9 +302,9 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 			m_iString_l_length = 0;
 			m_iCurPos = 0;
-			for (int i = 0; i < m_vTextFiledChars.size(); i++)
+            for (std::vector<TextAttribute>::iterator it = m_vTextFiledChars.begin(); it != m_vTextFiledChars.end(); ++it)
 			{
-				TextAttribute& t = m_vTextFiledChars[i];
+				TextAttribute& t = *it;
 				if (m_iString_l_length + t.charlength / 2>dtValue && getCursorX() + m_iHoriMargins>0)
 				{
 					break;
@@ -538,7 +538,7 @@ void CATextField::updateImage()
 	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
 	{
 		
-		for (int i = 0; i<m_sText.length(); i++)
+		for (std::string::size_type i = 0; i < m_sText.length(); ++i)
 		{
 			password.append("*");
 		}
@@ -611,7 +611,7 @@ void CATextField::updateImageRect()
     m_sQuad.tr.vertices = vertex3(x2, y2, 0);
 }
 
-void CATextField::setCursorColor(CAColor4B var)
+void CATextField::setCursorColor(const CAColor4B& var)
 {
     m_cCursorColor = var;
     if (m_pCursorMark)
@@ -620,7 +620,7 @@ void CATextField::setCursorColor(CAColor4B var)
     }
 }
 
-CAColor4B CATextField::getCursorColor()
+const CAColor4B& CATextField::getCursorColor()
 {
 	return m_cCursorColor;
 }
@@ -666,7 +666,7 @@ int CATextField::getStringViewLength()
 int CATextField::getStringCharCount(const std::string &var)
 {
 	int count = 0;
-	for (int i = 0; i < var.size(); i++)
+	for (std::string::size_type i = 0; i < var.size(); ++i)
 	{
 		if (var[i] < 0 || var[i]>127)
 		{

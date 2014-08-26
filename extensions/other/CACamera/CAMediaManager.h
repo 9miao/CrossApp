@@ -9,7 +9,6 @@
 #ifndef __LocationTest__CAMediaManager__
 #define __LocationTest__CAMediaManager__
 
-#include <iostream>
 #include "CrossApp.h"
 USING_NS_CC;
 
