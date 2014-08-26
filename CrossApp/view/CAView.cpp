@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-12.
-//  Copyright (c) 2014 http://9miao.com All rights reserved.
+//  Copyright (c) 2014年 http://9miao.com All rights reserved.
 //
 
 #include "CAView.h"
@@ -672,7 +672,7 @@ CCRect CAView::getCenter()
     return rect;
 }
 
-void CAView::setCenter(const CCRect& rect)
+void CAView::setCenter(CCRect rect)
 {
     if ( ! rect.size.equals(CCSizeZero))
     {
@@ -1764,9 +1764,9 @@ void CAView::setVertexRect(const CCRect& rect)
     m_obRect = rect;
 }
 
-void CAView::setImageCoords(const CCRect& rc)
+void CAView::setImageCoords(CCRect rect)
 {
-    CCRect rect = CC_RECT_POINTS_TO_PIXELS(rc);
+    rect = CC_RECT_POINTS_TO_PIXELS(rect);
     
     CAImage* tex = m_pobBatchView ? m_pobImageAtlas->getImage() : m_pobImage;
     if (! tex)

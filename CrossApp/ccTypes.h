@@ -72,13 +72,13 @@ ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
 /** Returns a CAColor4F from a CAColor4B.
  @since v0.99.1
  */
-static inline CAColor4F ccc4FFromccc4B(const CAColor4B& c)
+static inline CAColor4F ccc4FFromccc4B(CAColor4B c)
 {
     CAColor4F c4 = {c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
     return c4;
 }
 
-static inline CAColor4B ccc4BFromccc4F(const CAColor4F& c)
+static inline CAColor4B ccc4BFromccc4F(CAColor4F c)
 {
     CAColor4B ret = {(GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255)};
 	return ret;
@@ -88,7 +88,7 @@ static inline CAColor4B ccc4BFromccc4F(const CAColor4F& c)
 /** returns YES if both CAColor4F are equal. Otherwise it returns NO.
  @since v0.99.1
  */
-static inline bool ccc4FEqual(const CAColor4F& a, const CAColor4F& b)
+static inline bool ccc4FEqual(CAColor4F a, CAColor4F b)
 {
     return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }

@@ -10,6 +10,7 @@
 
 NS_CC_BEGIN
 
+#pragma CABarItem
 
 CABarItem::CABarItem()
 :m_bTouchEnabled(true)
@@ -26,6 +27,7 @@ CABarItem::~CABarItem()
 }
 
 
+#pragma CABarButtonItem
 
 CABarButtonItem::CABarButtonItem()
 :m_pHighlightedImage(NULL)
@@ -76,6 +78,7 @@ SEL_CAControl CABarButtonItem::getSel()
     return m_selCallFunc;
 }
 
+#pragma CANavigationBarItem
 
 CANavigationBarItem::CANavigationBarItem()
 :m_pTitleViewImage(NULL)
@@ -146,6 +149,7 @@ bool CANavigationBarItem::isShowGoBackButton()
     return m_bShowGoBackButton;
 }
 
+#pragma CATabBarItem
 
 
 CATabBarItem::CATabBarItem()

@@ -71,7 +71,7 @@ void SegmentedControlTest::viewDidLoad()
 	defaultView->addSubview(defaultPage);
 }
 
-void SegmentedControlTest::segmentCallback(CAControl* btn, const CCPoint& point)
+void SegmentedControlTest::segmentCallback(CAControl* btn, CCPoint point)
 {
 	int index = segment->getselectedIndex();
 	switch (index)

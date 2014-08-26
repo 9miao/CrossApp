@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by dai xinping on 14-7-22.
-//  Copyright (c) 2014 www.9miao.com. All rights reserved.
+//  Copyright (c) 2014年 www.9miao.com. All rights reserved.
 //
 
 #include "CAPickerView.h"
@@ -138,7 +138,7 @@ CAView* CAPickerView::viewForRow(unsigned int row, unsigned int component)
 float CAPickerView::calcTotalWidth(unsigned int component)
 {
     float total = 0;
-    for (unsigned i=0; i<component; ++i) {
+    for (int i=0; i<component; i++) {
         total += m_dataSource->widthForComponent(this, i);
     }
     return total;
@@ -169,7 +169,7 @@ void CAPickerView::reloadAllComponents()
         float start_x = getFrame().size.width/2 - total_width/2;
         for (int i=0; i<component; i++) {
             m_selected.push_back(0);
-            m_componentsIndex[i].clear();
+            m_componentsIndex[i] = std::vector<int>();
             m_componentOffsetX[i] = start_x;
             m_displayRow[i] = getFrame().size.height/m_dataSource->rowHeightForComponent(this, i);
             if (m_displayRow[i] % 2 == 0) {
@@ -212,13 +212,13 @@ void CAPickerView::reloadAllComponents()
 void CAPickerView::reloadComponent(unsigned int component, bool bReloadData)
 {
     // reload component
-    unsigned row = m_dataSource->numberOfRowsInComponent(this, component);
-    unsigned head = m_displayRow[component]/2;
-    unsigned foot = m_displayRow[component]/2;
+    int row = m_dataSource->numberOfRowsInComponent(this, component);
+    int head = m_displayRow[component]/2;
+    int foot = m_displayRow[component]/2;
     if (row <= m_displayRow[component]) {
         row += (head + foot);
         m_componentsIndex[component].resize(row);
-        for (unsigned i=0; i<row; i++) {
+        for (int i=0; i<row; i++) {
             if (i < head) {
                 m_componentsIndex[component][i] = -1;
             } else if (i >= row - foot) {
@@ -231,7 +231,7 @@ void CAPickerView::reloadComponent(unsigned int component, bool bReloadData)
         int cycle = 3;
         m_componentsIndex[component].resize(row*3);
         while (cycle--) {
-            for (unsigned i=0; i<row; i++) {
+            for (int i=0; i<row; i++) {
                 m_componentsIndex[component][i + cycle*row] = i;
             }
         }
@@ -325,7 +325,7 @@ void CAPickerView::selectRow(unsigned int row, unsigned int component, bool anim
     
     CATableView* tableView = (CATableView*)m_tableViews->objectAtIndex(component);
     if (tableView) {
-        unsigned maxRow = m_dataSource->numberOfRowsInComponent(this, component);
+        int maxRow = m_dataSource->numberOfRowsInComponent(this, component);
         float height = m_dataSource->rowHeightForComponent(this, component);
         if (row < maxRow) {
             CCPoint offset = CCPointZero;
@@ -356,9 +356,9 @@ void CAPickerView::visit()
             // cycle data
             CATableView* tableView = (CATableView*)obj;
             CCPoint offset = tableView->getContentOffset();
-            unsigned component = m_tableViews->indexOfObject(obj);
-            unsigned row = m_dataSource->numberOfRowsInComponent(this, component);
-            float row_height = m_dataSource->rowHeightForComponent(this, component);
+            int component = m_tableViews->indexOfObject(obj);
+            int row = m_dataSource->numberOfRowsInComponent(this, component);
+            int row_height = m_dataSource->rowHeightForComponent(this, component);
             if (row > m_displayRow[component]) {
                 if (offset.y < 0) {
                     offset.y += row * 2 * row_height;
@@ -370,15 +370,13 @@ void CAPickerView::visit()
             }
             
             // set opacity
-            //int offset_y = abs((int)offset.y);
-            //int remainder = offset_y % row_height;
-            //int index = offset_y / row_height;
-            float remainder = fmodf(offset.y, row_height);
-            int index = (int)(offset.y / row_height);
+            int offset_y = abs((int)offset.y);
+            int remainder = offset_y % row_height;
+            int index = offset_y / row_height;
             for (int i=index-1; i<index + m_displayRow[component] + 2; i++) {
                 CATableViewCell* cell = tableView->cellForRowAtIndexPath(0, i);
                 if (cell) {
-                    float y = cell->getFrameOrigin().y - offset.y + cell->getFrame().size.height/2;
+                    float y = cell->getFrameOrigin().y - offset_y + cell->getFrame().size.height/2;
                     float mid = tableView->getFrame().size.height/2;
                     float length = fabs(mid - y);
                     float op = (fabs(length - mid))/mid;

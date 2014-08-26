@@ -29,9 +29,9 @@ CAAlertView::CAAlertView()
 
 CAAlertView::~CAAlertView()
 {
-	for (std::vector<CAButton *>::iterator it =m_vAllBtn.begin(); it != m_vAllBtn.end(); ++it)
+	for (int i = 0; i < m_vAllBtn.size(); i++)
 	{
-		CC_SAFE_RELEASE_NULL(*it);
+		CC_SAFE_RELEASE_NULL(m_vAllBtn[i]);
 	}
 	CC_SAFE_RELEASE_NULL(m_pTitleLabel);
 	CC_SAFE_RELEASE_NULL(m_pContentLabel);
@@ -65,7 +65,7 @@ CAAlertView *CAAlertView::create()
 	return NULL;
 }
 
-void CAAlertView::setMessageFontName(const std::string &var)
+void CAAlertView::setMessageFontName(std::string var)
 {
     CC_RETURN_IF(m_pContentLabel == NULL);
 	if (m_sMsgFontName.compare(var))
@@ -75,7 +75,7 @@ void CAAlertView::setMessageFontName(const std::string &var)
 	}
 }
 
-void CAAlertView::setTitle(const std::string &var, const CAColor4B &col)
+void CAAlertView::setTitle(std::string var, CAColor4B col)
 {
 	setLabel(m_pTitleLabel, var, col);
 }
@@ -85,7 +85,7 @@ void CAAlertView::setTitleImage(CAImage* image)
 	setCtrlImage(m_pTitleImage, image);
 }
 
-void CAAlertView::setAlertMessage(const std::string &var, const CAColor4B &col)
+void CAAlertView::setAlertMessage(std::string var, CAColor4B col)
 {
 	setLabel(m_pContentLabel, var, col);
 }
@@ -95,10 +95,10 @@ void CAAlertView::setContentBackGroundImage(CAImage* image)
 	setCtrlImage(m_pContentBkImage, image);
 }
 
-void CAAlertView::initAllButton(const std::vector<CAButton*>& vbtns)
+void CAAlertView::initAllButton(std::vector<CAButton*>& vbtns)
 {
     CC_RETURN_IF(!m_vAllBtn.empty());
-    for (std::vector<CAButton*>::size_type i = 0; i < vbtns.size(); i++)
+	for (int i = 0; i < vbtns.size(); i++)
 	{
 		vbtns[i]->retain();
 		m_vAllBtn.push_back(vbtns[i]);
@@ -107,10 +107,10 @@ void CAAlertView::initAllButton(const std::vector<CAButton*>& vbtns)
 	}
 }
 
-void CAAlertView::initAllButton(const std::vector<std::string>& vBtnText)
+void CAAlertView::initAllButton(std::vector<std::string>& vBtnText)
 {
 	std::vector<CAButton*> vbtns;
-    for (std::vector<std::string>::size_type i = 0; i < vBtnText.size(); ++i)
+	for (int i = 0; i < vBtnText.size(); i++)
 	{
 		CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
 		CCAssert(btn, "");
@@ -122,17 +122,17 @@ void CAAlertView::initAllButton(const std::vector<std::string>& vBtnText)
 
 void CAAlertView::setAllBtnBackGroundImage(CAControlState controlState, CAImage* image)
 {
-    for (std::vector<CAButton *>::iterator it = m_vAllBtn.begin(); it != m_vAllBtn.end(); ++it)
+	for (int i = 0; i < m_vAllBtn.size(); i++)
 	{
-		(*it)->setBackGroundViewForState(controlState, CAScale9ImageView::createWithImage(image));
+		m_vAllBtn[i]->setBackGroundViewForState(controlState, CAScale9ImageView::createWithImage(image));
 	}
 }
 
-void CAAlertView::setAllBtnTextColor(const CAColor4B& col)
+void CAAlertView::setAllBtnTextColor(CAColor4B col)
 {
-    for (std::vector<CAButton *>::iterator it = m_vAllBtn.begin(); it != m_vAllBtn.end(); ++it)
+	for (int i = 0; i < m_vAllBtn.size(); i++)
 	{
-		(*it)->setTitleColorForState(CAControlStateAll, col);
+		m_vAllBtn[i]->setTitleColorForState(CAControlStateAll, col);
 	}
 }
 
@@ -156,7 +156,7 @@ void CAAlertView::setCtrlImage(CAScale9ImageView*& pImageView, CAImage* image)
 	addSubview(pImageView);
 }
 
-void CAAlertView::setLabel(CALabel*& pLabel, const std::string& szTitle, const CAColor4B &col)
+void CAAlertView::setLabel(CALabel*& pLabel, std::string& szTitle, CAColor4B col)
 {
 	if (pLabel == NULL)
 	{
@@ -257,9 +257,9 @@ void CAAlertView::calcuCtrlsSize()
 		addSubview(m_pBtnTableView);
 	}
 
-    for (std::vector<CAButton *>::size_type i = 0; i < m_vAllBtn.size(); ++i)
+	for (int i = 0; i < m_vAllBtn.size(); i++)
 	{
-		CAButton* pButton = m_vAllBtn.at(i);
+		CAButton* pButton = m_vAllBtn[i];
 		CCAssert(pButton, "");
 
 		if (isHoriBtnArray)
@@ -282,7 +282,7 @@ void CAAlertView::setTarget(CAObject* target, SEL_CAAlertBtnEvent selector)
 	m_pCAlertBtnEvent = selector;
 }
 
-void CAAlertView::onClickButton(CAControl* btn, const CCPoint &point)
+void CAAlertView::onClickButton(CAControl* btn, CCPoint point)
 {
     CC_RETURN_IF(m_bRunning == false);
 	if (m_pCAlertBtnEvent && m_pCAlertTarget)
@@ -294,7 +294,7 @@ void CAAlertView::onClickButton(CAControl* btn, const CCPoint &point)
 }
 
 
-void CAAlertView::showMessage(const std::string &title, const std::string &alertMsg, const std::vector<std::string>& vBtnText)
+void CAAlertView::showMessage(std::string title, std::string alertMsg, std::vector<std::string>& vBtnText)
 {
 	setTitleImage(CAImage::create("source_material/alert_title.png"));
 	setContentBackGroundImage(CAImage::create("source_material/alert_content.png"));

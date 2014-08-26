@@ -1,5 +1,5 @@
 
-#include <utility>
+
 #include "ccUTF8.h"
 #include "platform/CCCommon.h"
 #include "ConvertUTF.h"
@@ -192,20 +192,20 @@ long cc_utf8_strlen (const char * p, int max)
 unsigned int cc_utf8_find_last_not_char(const std::vector<unsigned short>& str, unsigned short c)
 {
     std::vector<char16_t> char16Vector;
-    for (std::vector<unsigned short>::const_iterator it = str.begin(); it != str.end(); ++it)
+	for (int i = 0; i < str.size(); i++)
 	{
-		char16Vector.push_back(*it);
+		char16Vector.push_back(str[i]);
 	}
    
     return StringUtils::getIndexOfLastNotChar16(char16Vector, c);
 }
 
-RVAL_REF(std::vector<unsigned short>) cc_utf16_vec_from_utf16_str(const unsigned short* str)
+std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str)
 {
     std::vector<unsigned short> str_new;
     
 	if (str == NULL)
-        return STD_MOVE(str_new);
+        return str_new;
     
     int len = cc_wcslen(str);
     
@@ -213,7 +213,7 @@ RVAL_REF(std::vector<unsigned short>) cc_utf16_vec_from_utf16_str(const unsigned
     {
         str_new.push_back(str[i]);
     }
-    return STD_MOVE(str_new);
+    return str_new;
 }
 
 unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1*/, int* rUtf16Size/* = NULL*/)

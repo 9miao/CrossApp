@@ -2,7 +2,7 @@
 //  CAPageView.cpp
 //  HelloCpp
 //
-//  Created by Li Yuanfeng on 14-7-29.
+//  Created by 栗元峰 on 14-7-29.
 //
 //
 

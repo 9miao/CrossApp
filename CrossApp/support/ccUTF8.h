@@ -7,7 +7,6 @@
 #include <vector>
 #include <string>
 #include "ConvertUTF.h"
-#include "ccMacros.h"
 
 NS_CC_BEGIN
 
@@ -212,7 +211,7 @@ std::string inline utf8_to_url_string( const char *in )
 	std::string str = in;
 	std::string str2;
 	char buf[64];
-	for (std::string::size_type i = 0 ; i < str.size() ; ++i )
+	for ( int i = 0 ; i < str.size() ; i ++ )
 	{
 		if ( str[i] < 0 )
 		{
@@ -374,7 +373,7 @@ CC_DEPRECATED_ATTRIBUTE unsigned int cc_utf8_find_last_not_char(const std::vecto
  *  @brief Gets `unsigned short` vector from a given utf16 string
  *  @deprecated Please use `StringUtils::getChar16VectorFromUTF16String` instead
  */
-CC_DEPRECATED_ATTRIBUTE RVAL_REF(std::vector<unsigned short>) cc_utf16_vec_from_utf16_str(const unsigned short* str);
+CC_DEPRECATED_ATTRIBUTE std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str);
 
 /**
  * Creates an utf8 string from a c string. The result will be null terminated.

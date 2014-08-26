@@ -3,12 +3,13 @@
 //  CrossApp
 //
 //  Created by dai xinping on 14-8-5.
-//  Copyright (c) 2014 cocos2d-x. All rights reserved.
+//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
 //
 
 #ifndef __CrossApp__CACalendar__
 #define __CrossApp__CACalendar__
 
+#include <iostream>
 #include "basics/CAObject.h"
 
 NS_CC_BEGIN

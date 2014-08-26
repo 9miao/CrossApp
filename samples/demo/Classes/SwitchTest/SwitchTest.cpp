@@ -38,7 +38,7 @@ void SwitchTest::viewDidLoad()
 	this->getView()->addSubview(switchState);
 }
 
-void SwitchTest::switchStateChange(CAControl* btn, const CCPoint& point)
+void SwitchTest::switchStateChange(CAControl* btn, CCPoint point)
 {
 	CASwitch* state = (CASwitch*)btn;
 	if (!state->isOn())

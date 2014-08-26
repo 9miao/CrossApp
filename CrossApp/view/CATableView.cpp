@@ -18,6 +18,8 @@
 #include "CCEGLView.h"
 NS_CC_BEGIN
 
+#pragma CATableView
+
 CATableView::CATableView()
 :m_pTableHeaderView(NULL)
 ,m_pTableFooterView(NULL)
@@ -624,9 +626,9 @@ void CATableView::loadTableCell()
     rect.origin.y -= rect.size.height * 0.1f;
     rect.size.height *= 1.2f;
     
-    for (std::vector<std::vector<CCRect> >::size_type i = 0; i<m_rTableCellRectss.size(); i++)
+    for (int i=0; i<m_rTableCellRectss.size(); i++)
     {
-        for (std::vector<CCRect>::size_type j = 0; j<m_rTableCellRectss.at(i).size(); j++)
+        for (int j=0; j<m_rTableCellRectss.at(i).size(); j++)
         {
             CAIndexPath2E indexPath = CAIndexPath2E(i, j);
             CC_CONTINUE_IF(m_pUsedTableCells.count(indexPath) && m_pUsedTableCells[indexPath]);
@@ -767,6 +769,8 @@ void CATableView::setTablePullViewHeight(unsigned int var)
 {
     m_nTablePullViewHeight = var;
 }
+
+#pragma CATableViewCell
 
 CATableViewCell::CATableViewCell()
 :m_pBackgroundView(NULL)

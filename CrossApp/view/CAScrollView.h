@@ -9,6 +9,7 @@
 #ifndef __CrossAppx__CAScrollView__
 #define __CrossAppx__CAScrollView__
 
+#include <iostream>
 #include "CAView.h"
 #include <deque>
 

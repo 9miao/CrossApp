@@ -17,7 +17,7 @@ protected:
 	void viewDidUnload();
 
 public:
-    void segmentCallback(CAControl* btn, const CCPoint& point);
+	void segmentCallback(CAControl* btn, CCPoint point);
 
 private:
 	CCSize size;

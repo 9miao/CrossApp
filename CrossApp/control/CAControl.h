@@ -9,6 +9,7 @@
 #ifndef __CrossAppx__CAControl__
 #define __CrossAppx__CAControl__
 
+#include <iostream>
 #include "view/CAView.h"
 
 NS_CC_BEGIN
@@ -37,7 +38,7 @@ typedef enum
 
 class CAControl;
 
-typedef void (CAObject::*SEL_CAControl)(CAControl*, const CCPoint&);
+typedef void (CAObject::*SEL_CAControl)(CAControl*, CCPoint);
 #define CAControl_selector(_SELECTOR) (SEL_CAControl)(&_SELECTOR)
 
 class CC_DLL CAControl: public CAView
@@ -59,7 +60,7 @@ public:
     
     void setControlStateSelected();
     
-    CC_SYNTHESIZE(CAControlState, m_eControlState, ControlState);
+    CC_SYNTHESIZE_PASS_BY_REF(CAControlState, m_eControlState, ControlState);
     
     CC_SYNTHESIZE(bool, m_bControlStateLocked, ControlStateLocked);
 

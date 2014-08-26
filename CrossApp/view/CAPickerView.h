@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by dai xinping on 14-7-22.
-//  Copyright (c) 2014 www.9miao.com. All rights reserved.
+//  Copyright (c) 2014年 www.9miao.com. All rights reserved.
 //
 
 #ifndef __CrossApp__CAPickerView__
@@ -23,7 +23,7 @@ public:
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {}
 };
 
-class CC_DLL CAPickerViewDataSource {
+class CAPickerViewDataSource {
     
 public:
     virtual ~CAPickerViewDataSource() {};
@@ -104,10 +104,10 @@ protected:
 private:
     CCArray* m_componentArrays;
     CCArray* m_tableViews;
-    std::vector<unsigned> m_selected;
-    std::vector< std::vector<unsigned> > m_componentsIndex;
+    std::vector<int> m_selected;
+    std::vector< std::vector<int> > m_componentsIndex;
     std::vector<float> m_componentOffsetX;
-    std::vector<unsigned> m_displayRow;
+    std::vector<int> m_displayRow;
 };
 
 NS_CC_END

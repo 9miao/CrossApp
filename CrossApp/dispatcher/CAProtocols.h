@@ -120,7 +120,7 @@ public:
      *
      * @param A null terminated string 
      */
-    virtual void setString(const std::string& label) = 0;
+    virtual void setString(std::string label) = 0;
 
     /** 
      * Returns the string that is currently being used in this label 

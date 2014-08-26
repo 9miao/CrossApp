@@ -3,12 +3,13 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-7-27.
-//  Copyright (c) 2014 http://9miao.com All rights reserved.
+//  Copyright (c) 2014年 http://9miao.com All rights reserved.
 //
 
 #ifndef __CrossApp__CAIndexPath__
 #define __CrossApp__CAIndexPath__
 
+#include <iostream>
 #include "CAObject.h"
 
 NS_CC_BEGIN

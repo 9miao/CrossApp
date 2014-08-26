@@ -28,7 +28,7 @@ void ProgressTest::viewDidLoad()
 	firstProgress->setCenter(CCRect(size.width*0.5, size.height*0.5, size.width*0.4, 50));
 	this->getView()->addSubview(firstProgress);
 
-	CAScheduler::schedule(schedule_selector(ProgressTest::firstProgressValueChange), this, 0.01f, false);
+	CAScheduler::schedule(schedule_selector(ProgressTest::firstProgressValueChange), this, 0.01, false);
 
 	secondProgress = CAProgress::create();
 	secondProgress->setCenter(CCRect(size.width*0.5, size.height*0.7, size.width*0.4, 50));
@@ -36,7 +36,7 @@ void ProgressTest::viewDidLoad()
 	secondProgress->setProgressTintImage(CAImage::create("source_material/btn_rounded3D_selected.png"));
 	this->getView()->addSubview(secondProgress);
 
-	CAScheduler::schedule(schedule_selector(ProgressTest::secondProgressValueChange), this, 0.01f, false);
+	CAScheduler::schedule(schedule_selector(ProgressTest::secondProgressValueChange), this, 0.01, false);
 }
 
 void ProgressTest::firstProgressValueChange(float intevalTime)

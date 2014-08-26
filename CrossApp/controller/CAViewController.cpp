@@ -212,9 +212,11 @@ void CAViewController::dismissModalViewController(bool animated)
     CAApplication::getApplication()->getRootWindow()->dismissModalViewController(animated);
 }
 
+#pragma CANavigationController
 
 CANavigationController::CANavigationController()
-:m_pNavigationBar(NULL)
+:m_pViewControllers(NULL)
+,m_pNavigationBar(NULL)
 ,m_pContainer(NULL)
 ,m_bNavigationBarHidden(false)
 {
@@ -697,6 +699,7 @@ void CANavigationController::unScheduleUpdate()
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
+#pragma CATabBarController
 
 CATabBarController::CATabBarController()
 :m_nSelectedIndex(0)
@@ -922,7 +925,7 @@ void CATabBarController::renderingSelectedViewController()
 {
     m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
     
-    for (unsigned i=0; i<m_pViewControllers.size(); i++)
+    for (int i=0; i<m_pViewControllers.size(); i++)
     {
         CC_CONTINUE_IF(!m_pViewControllers.at(i)->getView()->isVisible());
         m_pViewControllers.at(i)->getView()->setVisible(false);

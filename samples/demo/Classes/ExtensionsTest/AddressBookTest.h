@@ -40,8 +40,8 @@ public:
 	virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
 
 private:
-    void previousViewController(CAControl* btn, const CCPoint& point);
-    void nextViewController(CAControl* btn, const CCPoint& point);
+	void previousViewController(CAControl* btn, CCPoint point);
+	void nextViewController(CAControl* btn, CCPoint point);
 	void loadingView();
 	void getAddressBookList();
 	void addressBookLoadProgress(float interval);

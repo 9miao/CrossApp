@@ -47,7 +47,7 @@ void HttpRequestTest::viewDidLoad()
 	this->getView()->addSubview(requestWebsite);
 }
 
-void HttpRequestTest::requestHttpInfo(CAControl* btn, const CCPoint& point)
+void HttpRequestTest::requestHttpInfo(CAControl* btn, CCPoint point)
 {
 	loading = CAView::createWithColor(ccc4(255, 255, 255, 0));
 	loading->setTag(200);
@@ -58,7 +58,7 @@ void HttpRequestTest::requestHttpInfo(CAControl* btn, const CCPoint& point)
 	loadImage->setCenterOrigin(CCPoint(size.width*0.5, size.height*0.5));
 	loadImage->setScale(0.5);
 	loading->addSubview(loadImage);
-	CAScheduler::schedule(schedule_selector(HttpRequestTest::loadingAnim), this, 0.01f, false);
+	CAScheduler::schedule(schedule_selector(HttpRequestTest::loadingAnim), this, 0.01, false);
 
 	CALabel* msg = CALabel::createWithCenter(CCRect(size.width*0.5, size.height*0.5, loadImage->getFrame().size.width*0.9, 50));
 	msg->setText("Loading");
@@ -142,12 +142,12 @@ void HttpRequestTest::requestResult(CCHttpClient* client, CCHttpResponse* respon
 
 }
 
-void HttpRequestTest::previousViewController(CAControl* btn, const CCPoint& point)
+void HttpRequestTest::previousViewController(CAControl* btn, CCPoint point)
 {
 	this->getNavigationController()->popViewControllerAnimated(true);
 }
 
-void HttpRequestTest::nextViewController(CAControl* btn, const CCPoint& point)
+void HttpRequestTest::nextViewController(CAControl* btn, CCPoint point)
 {
 
 }

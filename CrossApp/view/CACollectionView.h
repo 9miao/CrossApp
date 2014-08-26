@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
-#ifndef __CrossApp__CACollectionView__
-#define __CrossApp__CACollectionView__
+#ifndef __cocos2dx__CACollectionView__
+#define __cocos2dx__CACollectionView__
 
 #include "view/CAView.h"
 #include "view/CAScale9ImageView.h"

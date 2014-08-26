@@ -90,15 +90,15 @@ void CATouchController::passingTouchesViews(float dt)
         responder = responder->nextResponder();
     }
     
-    for (CAVector<CAResponder *>::iterator it = m_vTouchesViews.begin(); it != m_vTouchesViews.end(); )
+    for (int i=0; i<m_vTouchesViews.size();)
     {
-        if (!(*it)->ccTouchBegan(m_pTouch, m_pEvent))
+        if (!m_vTouchesViews.at(i)->ccTouchBegan(m_pTouch, m_pEvent))
         {
-            it = m_vTouchesViews.erase(it);
+            m_vTouchesViews.erase(i);
         }
         else
         {
-            ++it;
+            i++;
         }
     }
 }
@@ -157,9 +157,9 @@ void CATouchController::touchMoved()
             }
         }
 
-        for (std::vector<CAResponder*>::iterator it = m_vTouchMovedsViewCache.begin(); it != m_vTouchMovedsViewCache.end(); ++it)
+        for (int i=0; i<m_vTouchMovedsViewCache.size(); i++)
         {
-            CAResponder* view = *it;
+            CAResponder* view = m_vTouchMovedsViewCache.at(i);
             
             if (    !view->isTouchMovedListenHorizontal()
                 ||  !view->isTouchMovedListenVertical())

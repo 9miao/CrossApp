@@ -19,6 +19,8 @@
 
 NS_CC_BEGIN
 
+#pragma CAScrollView
+
 CAScrollView::CAScrollView()
 :m_pContainer(NULL)
 ,m_obViewSize(CCSizeZero)
@@ -823,6 +825,8 @@ bool CAScrollView::isScrollWindowNotMaxOutSide(const CCPoint& point)
     
     return false;
 }
+
+#pragma CAIndicator
 
 CAIndicator::CAIndicator(CAIndicatorType type)
 :m_pIndicator(NULL)

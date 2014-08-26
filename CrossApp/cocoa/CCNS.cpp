@@ -12,7 +12,7 @@ NS_CC_BEGIN
 typedef std::vector<std::string> strArray;
 
 // string toolkit
-static inline void split(const std::string& src, const char* token, strArray& vect)
+static inline void split(std::string src, const char* token, strArray& vect)
 {
     int nend=0;
     int nbegin=0;

@@ -9,6 +9,7 @@
 #ifndef __CrossAppx__CABar__
 #define __CrossAppx__CABar__
 
+#include <iostream>
 #include "view/CAView.h"
 #include "CAButton.h"
 #include "CASegmentedControl.h"
@@ -53,17 +54,17 @@ public:
     
     CC_SYNTHESIZE_READONLY(CAImage*, m_pBackGroundImage, BackGroundImage);
     
-    virtual void setTitleColor(const CAColor4B &color);
+    virtual void setTitleColor(CAColor4B color);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_cTitleColor, TitleColor);
+    CC_SYNTHESIZE_READONLY(CAColor4B, m_cTitleColor, TitleColor);
     
-    virtual void setButtonColor(const CAColor4B &color);
+    virtual void setButtonColor(CAColor4B color);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_cButtonColor, ButtonColor);
+    CC_SYNTHESIZE_READONLY(CAColor4B, m_cButtonColor, ButtonColor);
     
     CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(std::vector<CANavigationBarItem*>, m_pItems, Items);
+    CC_SYNTHESIZE_READONLY(std::vector<CANavigationBarItem*>, m_pItems, Items);
     
     void replaceItemAtIndex(size_t index, CANavigationBarItem* item);
     
@@ -77,7 +78,7 @@ protected:
     
     void showRightButton();
     
-    void goBack(CAControl* btn, const CCPoint& point);
+    void goBack(CAControl* btn, CCPoint point);
     
     void updateNavigationBar();
     
@@ -139,7 +140,7 @@ public:
     
     CC_SYNTHESIZE(CATabBarDelegate* , m_pDelegate, Delegate);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(std::vector<CATabBarItem*>, m_pItems, Items);
+    CC_SYNTHESIZE_READONLY(std::vector<CATabBarItem*>, m_pItems, Items);
     
     CC_SYNTHESIZE_READONLY(int, m_nSelectedIndex, SelectedIndex);
     
@@ -155,7 +156,7 @@ protected:
     
     void showItems();
     
-    void setTouchSelected(CAControl* control, const CCPoint &point);
+    void setTouchSelected(CAControl* control, CCPoint point);
     
 protected:
     

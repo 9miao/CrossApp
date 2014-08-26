@@ -42,7 +42,7 @@ void ThirdViewController::viewDidLoad()
 	this->getView()->addSubview(scrollControl);
 }
 
-void ThirdViewController::stateControl(CAControl* btn, const CCPoint& point)
+void ThirdViewController::stateControl(CAControl* btn, CCPoint point)
 {
 	int index = scrollControl->getselectedIndex();
 	switch (index)

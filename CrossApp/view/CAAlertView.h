@@ -7,9 +7,10 @@
 //
 
 
-#ifndef __CrossApp__CAAlertView__
-#define __CrossApp__CAAlertView__
+#ifndef __cocos2dx__CAAlertView__
+#define __cocos2dx__CAAlertView__
 
+#include <iostream>
 #include "view/CAView.h"
 #include "view/CAScale9ImageView.h"
 #include "controller/CABarItem.h"
@@ -44,27 +45,27 @@ public:
 
     bool init();
     
-    void showMessage(const std::string &title, const std::string &alertMsg, const std::vector<std::string> &vBtnText);
+    void showMessage(std::string title, std::string alertMsg, std::vector<std::string>& vBtnText);
     
     void setTarget(CAObject* target, SEL_CAAlertBtnEvent selector);
     
-	void setMessageFontName(const std::string &var);
+	void setMessageFontName(std::string var);
 
-	void setTitle(const std::string &var, const CAColor4B &col = CAColor_black);
+	void setTitle(std::string var, CAColor4B col = CAColor_black);
 
 	void setTitleImage(CAImage* image);
 
-	void setAlertMessage(const std::string &var, const CAColor4B &col = CAColor_black);
+	void setAlertMessage(std::string var, CAColor4B col = CAColor_black);
 
 	void setContentBackGroundImage(CAImage* image);
 
-	void initAllButton(const std::vector<CAButton*> &vbtns);
+	void initAllButton(std::vector<CAButton*>& vbtns);
 
-	void initAllButton(const std::vector<std::string> &vBtnText);
+	void initAllButton(std::vector<std::string>& vBtnText);
 
 	void setAllBtnBackGroundImage(CAControlState controlState, CAImage* image);
     
-	void setAllBtnTextColor(const CAColor4B &col = CAColor_white);
+	void setAllBtnTextColor(CAColor4B col = CAColor_white);
 
 	void calcuCtrlsSize();
 
@@ -76,11 +77,11 @@ protected:
     
 	virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     
-	void onClickButton(CAControl* btn, const CCPoint &point);
+	void onClickButton(CAControl* btn, CCPoint point);
 
 	void setCtrlImage(CAScale9ImageView*& pImageView, CAImage* image);
 
-	void setLabel(CALabel*& pLabel, const std::string& szTitle, const CAColor4B &col);
+	void setLabel(CALabel*& pLabel, std::string& szTitle, CAColor4B col);
 
 	CCSize getAlertWinSize();
 

@@ -17,7 +17,7 @@ protected:
 	void viewDidUnload();
 
 public:
-	void respondTouch(CAControl* btn, const CCPoint& point);
+	void respondTouch(CAControl* btn, CCPoint point);
 	void alertViewCallback(int btnIndex);
 
 private:

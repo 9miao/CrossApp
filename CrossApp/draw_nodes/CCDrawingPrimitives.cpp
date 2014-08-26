@@ -181,7 +181,7 @@ void ccDrawLine( const CCPoint& origin, const CCPoint& destination )
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawRect( const CCPoint& origin, const CCPoint& destination )
+void ccDrawRect( CCPoint origin, CCPoint destination )
 {
     ccDrawLine(CCPointMake(origin.x, origin.y), CCPointMake(destination.x, origin.y));
     ccDrawLine(CCPointMake(destination.x, origin.y), CCPointMake(destination.x, destination.y));
@@ -189,7 +189,7 @@ void ccDrawRect( const CCPoint& origin, const CCPoint& destination )
     ccDrawLine(CCPointMake(origin.x, destination.y), CCPointMake(origin.x, origin.y));
 }
 
-void ccDrawSolidRect( const CCPoint& origin, const CCPoint& destination, const CAColor4F& color )
+void ccDrawSolidRect( CCPoint origin, CCPoint destination, CAColor4F color )
 {
     CCPoint vertices[] = {
         origin,
@@ -253,7 +253,7 @@ void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePol
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, const CAColor4F& color )
+void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, CAColor4F color )
 {
     lazy_init();
 

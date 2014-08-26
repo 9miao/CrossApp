@@ -9,6 +9,7 @@
 #ifndef __project__CALabel__
 #define __project__CALabel__
 
+#include <iostream>
 #include "CAView.h"
 
 
@@ -39,9 +40,9 @@ public:
     
     CC_PROPERTY_PASS_BY_REF(string, m_nfontName, FontName);
     
-    CC_PROPERTY(CAVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
+    CC_PROPERTY_PASS_BY_REF(CAVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
     
-    CC_PROPERTY(CATextAlignment, m_nTextAlignment, TextAlignment);
+    CC_PROPERTY_PASS_BY_REF(CATextAlignment, m_nTextAlignment, TextAlignment);
     
     CC_PROPERTY_PASS_BY_REF(CCSize, m_nDimensions, Dimensions);
     

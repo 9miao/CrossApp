@@ -97,7 +97,7 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const CCSiz
 
 }
 
-void TableViewTest::cellBtnCallback(CAControl* btn, const CCPoint& point)
+void TableViewTest::cellBtnCallback(CAControl* btn, CCPoint point)
 {
 	
 }

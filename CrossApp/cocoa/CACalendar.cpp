@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by dai xinping on 14-8-5.
-//  Copyright (c) 2014 cocos2d-x. All rights reserved.
+//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
 //
 
 #include "CACalendar.h"
@@ -68,7 +68,7 @@ void CACalendar::setCalendar(time_t time)
     m_tDateTime = *localtime(&time);
 }
 
-int CACalendar::_compareDate(const tm& date1, const tm& date2)
+int CACalendar::_compareDate(tm date1, tm date2)
 {
     if (date1.tm_year == date2.tm_year) {
         if (date1.tm_mon == date2.tm_mon) {
@@ -86,7 +86,7 @@ int CACalendar::_compareDate(const tm& date1, const tm& date2)
     return 0;
 }
 
-int CACalendar::_calcDayCount(const tm& target)
+int CACalendar::_calcDayCount(tm target)
 {
     int bInc = _compareDate(target, m_tDateTime);
     if (bInc == 0) {

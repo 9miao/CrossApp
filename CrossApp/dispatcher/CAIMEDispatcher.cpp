@@ -224,7 +224,7 @@ void CAIMEDispatcher::dispatchWillInsertText(const char * pText, int nLen)
         m_pImpl->m_DelegateWithIme->willInsertText(pText, nLen);
     } while (0);
 }
-void CAIMEDispatcher::dispatchAndroidWillInsertText(int start,const std::string& str,int before,int count)
+void CAIMEDispatcher::dispatchAndroidWillInsertText(int start,std::string str,int before,int count)
 {
     do
     {

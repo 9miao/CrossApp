@@ -37,6 +37,8 @@ using namespace std;
 
 NS_CC_BEGIN
 
+#pragma CAImageCache
+
 typedef enum _AsyncType
 {
     AsyncImageType=0,
@@ -304,7 +306,7 @@ void CAImageCache::addImageFullPathAsync(const char *path, CAObject *target, SEL
     
     // generate async struct
     AsyncStruct *data = new AsyncStruct();
-    data->filename = fullpath;
+    data->filename = fullpath.c_str();
     data->target = target;
     data->selector = selector;
     
@@ -698,6 +700,8 @@ void CAImageCache::dumpCachedImageInfo()
 }
 
 
+
+#pragma CAImageAtlas
 
 CAImageAtlas::CAImageAtlas()
 :m_pIndices(NULL)
@@ -1312,6 +1316,7 @@ void CAImageAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 }
 
 
+#pragma VolatileTexture
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 

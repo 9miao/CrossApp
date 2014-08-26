@@ -78,7 +78,7 @@ void CAImageFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary, 
     CCDICT_FOREACH(framesDict, pElement)
     {
         CCDictionary* frameDict = (CCDictionary*)pElement->getObject();
-        const std::string& spriteFrameName = pElement->getStrKey();
+        std::string spriteFrameName = pElement->getStrKey();
         CAImageFrame* spriteFrame = (CAImageFrame*)m_pSpriteFrames->objectForKey(spriteFrameName);
         if (spriteFrame)
         {

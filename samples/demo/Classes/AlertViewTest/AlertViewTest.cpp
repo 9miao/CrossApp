@@ -22,7 +22,7 @@ void AlertViewTest::viewDidLoad()
 	this->getView()->addSubview(imageBtn);
 }
 
-void AlertViewTest::respondTouch(CAControl* btn, const CCPoint& point)
+void AlertViewTest::respondTouch(CAControl* btn ,CCPoint point)
 {
 	CCSize size = this->getView()->getBounds().size;
 	std::vector<std::string> btnTitle;
