@@ -290,9 +290,9 @@ public:
 
 	void clear()
 	{
-		for (int i = 0; i < _data.size(); i++)
+		for (iterator it = _data.begin(); it != _data.end(); ++it)
 		{
-			_data[i]->release();
+			(*it)->release();
 		}
 		_data.clear();
 	}
@@ -331,9 +331,9 @@ public:
 protected:
 	void addRefForAllObjects()
 	{
-		for (int i = 0; i < _data.size(); i++)
+		for (iterator it = _data.begin(); it != _data.end(); ++it)
 		{
-			_data[i]->retain();
+			(*it)->retain();
 		}
 	}
 	std::vector<T> _data;
@@ -832,6 +832,7 @@ public:
 		CCAssert(object != NULL, "The object should not be nullptr");
 		object->retain();
 		_data[key] = object;
+        return true;
 	}
 
 	size_t size() const

@@ -66,11 +66,11 @@ bool FifthViewController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 					{
 						if (viewOriginalSize.equals(gestureView->getFrame().size))
 						{
-							gestureView->runAction(CCScaleTo::create(0.2, 0.5));
+							gestureView->runAction(CCScaleTo::create(0.2f, 0.5f));
 						}
 						else
 						{
-							gestureView->runAction(CCScaleTo::create(0.2, 1.0));
+							gestureView->runAction(CCScaleTo::create(0.2f, 1.0f));
 						}
 					}
 					else
@@ -82,7 +82,7 @@ bool FifthViewController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 				point_Vector.push_back(originalPoint);
 				firstClick = clock();
 				
-				CAScheduler::schedule(schedule_selector(FifthViewController::isExecuteEndFunc),this,0.1,false);
+				CAScheduler::schedule(schedule_selector(FifthViewController::isExecuteEndFunc),this,0.1f,false);
 			}
 			if (pointSet->count() == 2)
 			{
@@ -96,6 +96,8 @@ bool FifthViewController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		this->dismissModalViewController(true);
 		return false;
 	}
+
+    return false;
 }
 
 void FifthViewController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
@@ -156,11 +158,11 @@ void FifthViewController::isExecuteEndFunc(float intervalTime)
 		}
 		if (viewOriginalSize.equals(gestureView->getFrame().size))
 		{
-			gestureView->runAction(CCScaleTo::create(0.8, 0.5));
+			gestureView->runAction(CCScaleTo::create(0.8f, 0.5f));
 		}
 		else
 		{
-			gestureView->runAction(CCScaleTo::create(0.8, 1.0));
+			gestureView->runAction(CCScaleTo::create(0.8f, 1.0f));
 		}
 		
 		touchTime = 0;

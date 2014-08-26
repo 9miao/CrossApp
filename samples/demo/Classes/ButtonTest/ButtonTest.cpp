@@ -192,7 +192,7 @@ void ButtonTest::buttonTouchEvent()
 	eventView->addSubview(descTest);
 }
 
-void ButtonTest::buttonCallback(CAControl* btn,CCPoint point)
+void ButtonTest::buttonCallback(CAControl* btn, const CCPoint& point)
 {
 	CAButton* button = (CAButton*)btn;
 	char text[50] = "";

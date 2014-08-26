@@ -11,7 +11,7 @@ typedef enum BTNTAG
 	BUTTONONE = 0,
 	BUTTONTWO,
 	BUTTONTHREE
-};
+} BTNTAG;
 
 class ButtonTest :public CAViewController
 {
@@ -28,8 +28,8 @@ public:
 	void buttonBackground();
 	void buttonTouchEvent();
 
-	void btnStateChange(CAControl* btn, CCPoint point);
-	void buttonCallback(CAControl* btn,CCPoint point);
+	void btnStateChange(CAControl* btn, const CCPoint& point);
+	void buttonCallback(CAControl* btn, const CCPoint& point);
 
 private:
 	CAScale9ImageView* typeView;

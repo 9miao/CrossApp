@@ -3,7 +3,7 @@
 //  CrossAppx
 //
 //  Created by juguanhui on 14-6-3.
-//  Copyright (c) 2014年 CrossApp-x. All rights reserved.
+//  Copyright (c) 2014 CrossApp-x. All rights reserved.
 //
 
 #include "CASegmentedControl.h"
@@ -78,7 +78,7 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
     const float elemWidth = rect.size.width / m_nItemsCount;
     m_itemSize = CCSizeMake(elemWidth, rect.size.height);
     CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
-    for (int i = 0; i < m_nItemsCount; ++i)
+    for (unsigned i = 0; i < m_nItemsCount; ++i)
     {
         CAButton *btn = this->createDefaultSegment();
         if (btn)
@@ -105,7 +105,7 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
     const float elemWidth = rect.size.width / m_nItemsCount;
     m_itemSize = CCSize(elemWidth, rect.size.height);
     CCRect elemFrame = CCRect(0, 0, m_itemSize.width, m_itemSize.height);
-    for (int i = 0; i < m_nItemsCount; ++i)
+    for (unsigned i = 0; i < m_nItemsCount; ++i)
     {
         CAButton *btn = this->createDefaultSegment();
         if (btn)
@@ -368,11 +368,11 @@ void CASegmentedControl::setHighlightedAtIndex(int index)
 
 void CASegmentedControl::setHighlightedNormal()
 {
-    for (int i=0; i<m_segments.size(); i++)
+    for (std::vector<CAButton *>::iterator it = m_segments.begin(); it != m_segments.end(); ++it)
     {
-        if (m_segments.at(i)->getControlState() != CAControlStateSelected)
+        if ((*it)->getControlState() != CAControlStateSelected)
         {
-            m_segments.at(i)->setControlStateNormal();
+            (*it)->setControlStateNormal();
         }
     }
 }
@@ -381,7 +381,7 @@ void CASegmentedControl::setSelectedHighlighted()
 {
     int index = m_selectedIndex;
 
-    for (int i=0; i<m_segments.size(); i++)
+    for (std::vector<CAButton *>::size_type i = 0; i < m_segments.size(); ++i)
     {
         if (m_segments.at(i)->getControlState() == CAControlStateHighlighted)
         {
@@ -477,7 +477,7 @@ void CASegmentedControl::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 bool CASegmentedControl::indexIsValid(int index)
 {
-    return index >= 0 && index < m_segments.size();
+    return index >= 0 && (unsigned)index < m_segments.size();
 }
 
 void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)

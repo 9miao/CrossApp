@@ -39,8 +39,8 @@ public:
 	virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
 
 public:
-	void switchCellListInSection(CAControl* btn,CCPoint point);
-	void closeCellListInSection(CAControl* btn, CCPoint point);
+	void switchCellListInSection(CAControl* btn, const CCPoint& point);
+	void closeCellListInSection(CAControl* btn, const CCPoint& point);
 
 private:
 	CCSize size;

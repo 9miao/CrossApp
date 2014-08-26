@@ -18,7 +18,7 @@
 
 NS_CC_BEGIN
 
-#pragma CANavigationBar
+
 
 CANavigationBar::CANavigationBar()
 :m_pBackGround(NULL)
@@ -89,14 +89,14 @@ void CANavigationBar::setBackGroundImage(CAImage* var)
     this->showBackGround();
 }
 
-void CANavigationBar::setTitleColor(CAColor4B color)
+void CANavigationBar::setTitleColor(const CAColor4B& color)
 {
     m_cTitleColor = color;
     CC_RETURN_IF(!m_bRunning);
     this->showTitle();
 }
 
-void CANavigationBar::setButtonColor(CAColor4B color)
+void CANavigationBar::setButtonColor(const CAColor4B& color)
 {
     m_cButtonColor = color;
     CC_RETURN_IF(!m_bRunning);
@@ -197,7 +197,7 @@ void CANavigationBar::showLeftButton()
     rect.origin.x = rect.size.width * 0.7f;
     rect.origin.y = this->getBounds().size.height / 2;
     
-    for (int i=0; i<buttonItems->count(); i++)
+    for (unsigned i=0; i<buttonItems->count(); ++i)
     {
         rect.origin.x += i * rect.size.width;
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
@@ -249,7 +249,7 @@ void CANavigationBar::showRightButton()
     rect.origin.x = this->getBounds().size.width - rect.size.width * 0.7f;
     rect.origin.y = this->getBounds().size.height / 2;
     
-    for (int i=0; i<buttonItems->count(); i++)
+    for (unsigned i=0; i<buttonItems->count(); ++i)
     {
         rect.origin.x -= i * rect.size.width * 1.1f;
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
@@ -277,7 +277,7 @@ void CANavigationBar::showRightButton()
     }
 }
 
-void CANavigationBar::goBack(CAControl* btn, CCPoint point)
+void CANavigationBar::goBack(CAControl* btn, const CCPoint& point)
 {
     if (m_pDelegate)
     {
@@ -308,8 +308,6 @@ void CANavigationBar::popItem()
         this->updateNavigationBar();
     }
 }
-
-#pragma CATabBar
 
 CATabBar::CATabBar()
 :m_pBackGroundView(NULL)
@@ -441,7 +439,7 @@ CAImage* CATabBar::getBackGroundImage()
     return m_pBackGroundImage;
 }
 
-void CATabBar::setSelectedBackGroundView(CrossApp::CAView *var)
+void CATabBar::setSelectedBackGroundView(CAView *var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pSelectedBackGroundView);
@@ -453,7 +451,7 @@ void CATabBar::setSelectedBackGroundView(CrossApp::CAView *var)
         m_pSegmentedControl = CASegmentedControl::createWithFrame(this->getBounds(), count);
         
         m_pSegmentedControl->addTarget(this, CAControl_selector(CATabBar::setTouchSelected));
-        for (int i=0; i<count; i++)
+        for (unsigned i=0; i<count; ++i)
         {
             m_pSegmentedControl->setTitleAtIndex(m_pItems.at(i)->getTitle().c_str(), i, CAControlStateAll);
             m_pSegmentedControl->setTitleColorAtIndex(m_sTitleColor, i, CAControlStateAll);
@@ -471,7 +469,7 @@ void CATabBar::setSelectedBackGroundView(CrossApp::CAView *var)
     
     if (m_pSegmentedControl)
     {
-        for (int i=0; i<m_pItems.size(); i++)
+        for (std::vector<CATabBarItem *>::size_type i=0; i<m_pItems.size(); ++i)
         {
             m_pSegmentedControl->setBackgroundViewAtIndex(m_pSelectedBackGroundView->copy(), i, CAControlStateHighlighted);
             m_pSegmentedControl->setBackgroundViewAtIndex(m_pSelectedBackGroundView->copy(), i, CAControlStateSelected);
@@ -549,7 +547,7 @@ void CATabBar::setTitleColorForNormal(const CAColor4B &var)
     m_sTitleColor = var;
     if (m_pSegmentedControl)
     {
-        for (int i=0; i<m_pItems.size(); i++)
+        for (std::vector<CATabBarItem *>::size_type i = 0; i<m_pItems.size(); ++i)
         {
             m_pSegmentedControl->setTitleColorAtIndex(m_sTitleColor, i, CAControlStateNormal);
         }
@@ -566,7 +564,7 @@ void CATabBar::setTitleColorForSelected(const CAColor4B &var)
     m_sSelectedTitleColor = var;
     if (m_pSegmentedControl)
     {
-        for (int i=0; i<m_pItems.size(); i++)
+        for (std::vector<CATabBarItem *>::size_type i = 0; i<m_pItems.size(); ++i)
         {
             m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateHighlighted);
             m_pSegmentedControl->setTitleColorAtIndex(m_sSelectedTitleColor, i, CAControlStateSelected);
@@ -606,7 +604,7 @@ void CATabBar::showSelectedIndicator()
 void CATabBar::setSelectedAtIndex(int index)
 {
     CC_RETURN_IF(index < 0);
-    CC_RETURN_IF(index >= m_pItems.size());
+    CC_RETURN_IF((unsigned)index >= m_pItems.size());
     
     m_nSelectedIndex = index;
     m_pSelectedItem = m_pItems.at(m_nSelectedIndex);
@@ -628,7 +626,7 @@ void CATabBar::setSelectedAtIndex(int index)
     m_pSegmentedControl->setSelectedAtIndex(index);
 }
 
-void CATabBar::setTouchSelected(CrossApp::CAControl *control, CrossApp::CCPoint point)
+void CATabBar::setTouchSelected(CAControl *control, const CCPoint& point)
 {
     this->setSelectedAtIndex(m_pSegmentedControl->getselectedIndex());
     

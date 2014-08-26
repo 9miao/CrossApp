@@ -17,7 +17,7 @@ protected:
 	void viewDidUnload();
 
 public:
-	void cellBtnCallback(CAControl* btn,CCPoint point);
+	void cellBtnCallback(CAControl* btn, const CCPoint &point);
 
 public:
 	virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);

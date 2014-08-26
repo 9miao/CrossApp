@@ -31,7 +31,6 @@ const char* ShowAddress()
 }
 #endif
 CAAddressManager::CAAddressManager()
-:_addressBookArr(NULL)
 {
     recArr.clear();
 

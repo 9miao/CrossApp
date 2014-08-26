@@ -3,13 +3,12 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-4-11.
-//  Copyright (c) 2014年 http://9miao.com All rights reserved.
+//  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
 #ifndef __CrossAppx__CAViewController__
 #define __CrossAppx__CAViewController__
 
-#include <iostream>
 #include "view/CAView.h"
 #include "control/CABar.h"
 #include "view/CAScrollView.h"
@@ -157,7 +156,7 @@ public:
     
     CC_SYNTHESIZE_READONLY(CANavigationBar*, m_pNavigationBar, NavigationBar);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eNavigationBarVerticalAlignment, NavigationBarVerticalAlignment);
+    CC_SYNTHESIZE_READONLY(CABarVerticalAlignment, m_eNavigationBarVerticalAlignment, NavigationBarVerticalAlignment);
     
     void updateItem(CAViewController* viewController);
     

@@ -11,7 +11,6 @@
 
 NS_CC_BEGIN
 
-#pragma CACollectionView
 
 CACollectionView::CACollectionView()
 : m_pCollectionViewDataSource(NULL)
@@ -144,7 +143,7 @@ void CACollectionView::reloadData()
 	}
 
 	unsigned int sectionCount = m_pCollectionViewDataSource->numberOfSectionsInCollectioView();
-	for (int i = 0; i < sectionCount; i++)
+	for (unsigned i = 0; i < sectionCount; ++i)
 	{
 		unsigned int iSectionHeaderHeight = m_pCollectionViewDataSource->collectionViewHeightForHeaderInSection(this, i);
         CCRect sectionHeaderRect = CCRect(0, y, width, iSectionHeaderHeight);
@@ -163,7 +162,7 @@ void CACollectionView::reloadData()
 
 		y += m_nVertInterval;
 		unsigned int rowCount = m_pCollectionViewDataSource->numberOfRowsInSectionCollectionView(this, i);
-		for (int j = 0; j < rowCount; j++)
+		for (unsigned j = 0; j < rowCount; ++j)
 		{
 			int iHeight = m_pCollectionViewDataSource->collectionViewHeightForRowAtIndexPath(this, i, j);
 
@@ -174,7 +173,7 @@ void CACollectionView::reloadData()
 			{
 				cellWidth = (width - m_nHoriInterval) / itemCount - m_nHoriInterval;
 			}
-			for (int k = 0; k < itemCount; k++)
+			for (unsigned k = 0; k < itemCount; ++k)
 			{
 				CAIndexPath3E indexPath = CAIndexPath3E(i, j, k);
 				CCRect cellRect = CCRect(m_nHoriInterval + (cellWidth + m_nHoriInterval)*k, y, cellWidth, iHeight);
@@ -548,7 +547,6 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
     }
 }
 
-#pragma CACollectionViewCell
 
 CACollectionViewCell::CACollectionViewCell()
 :m_pBackgroundView(NULL)

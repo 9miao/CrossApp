@@ -1,7 +1,6 @@
 #ifndef _TabBar_Test_h_
 #define _TabBar_Test_h_
 
-#include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
@@ -19,7 +18,7 @@ protected:
 	virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index);
 
 public:
-	void goPrevious(CAControl* btn, CCPoint point);
+	void goPrevious(CAControl* btn, const CCPoint& point);
 
 	void firstTabBar();
 	void secondTabBar();

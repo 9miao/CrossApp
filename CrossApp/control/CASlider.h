@@ -3,7 +3,7 @@
 //  CrossAppx
 //
 //  Created by juguanhui on 14-5-30.
-//  Copyright (c) 2014年 CrossApp-x. All rights reserved.
+//  Copyright (c) 2014 CrossApp-x. All rights reserved.
 //
 
 

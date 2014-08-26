@@ -14,10 +14,10 @@ public:
 	virtual ~HttpRequestTest();
 
 private:
-	void requestHttpInfo(CAControl* btn,CCPoint point);
+    void requestHttpInfo(CAControl* btn, const CCPoint& point);
 	void requestResult(CCHttpClient* client, CCHttpResponse* response);
-	void previousViewController(CAControl* btn, CCPoint point);
-	void nextViewController(CAControl* btn, CCPoint point);
+    void previousViewController(CAControl* btn, const CCPoint& point);
+    void nextViewController(CAControl* btn, const CCPoint& point);
 
 protected:
 	void viewDidLoad();

@@ -10,7 +10,6 @@
 #ifndef __CAButton__
 #define __CAButton__
 
-#include <iostream>
 #include "CAControl.h"
 NS_CC_BEGIN
 

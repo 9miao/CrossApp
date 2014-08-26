@@ -17,7 +17,7 @@ protected:
 	void viewDidUnload();
 
 public:
-	void zoomViewBySliderValue(CAControl* btn,CCPoint point);
+    void zoomViewBySliderValue(CAControl* btn, const CCPoint& point);
 
 private:
 	CCSize size;

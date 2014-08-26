@@ -232,7 +232,7 @@ void CALabel::setText(const string& var)
     m_bUpdateImage = true;
 }
 
-void CALabel::setTextAlignment(const CATextAlignment& var)
+void CALabel::setTextAlignment(CATextAlignment var)
 {
     m_nTextAlignment = var;
     if(m_nText.empty())
@@ -242,7 +242,7 @@ void CALabel::setTextAlignment(const CATextAlignment& var)
     m_bUpdateImage = true;
 }
 
-const CATextAlignment& CALabel::getTextAlignment()
+CATextAlignment CALabel::getTextAlignment()
 {
     return m_nTextAlignment;
 }
@@ -297,7 +297,7 @@ const std::string& CALabel::getFontName()
     return m_nfontName;
 }
 
-void CALabel::setVerticalTextAlignmet(const CAVerticalTextAlignment& var)
+void CALabel::setVerticalTextAlignmet(CAVerticalTextAlignment var)
 {
     m_nVerticalTextAlignmet=var;
     if(m_nText.empty())
@@ -307,7 +307,7 @@ void CALabel::setVerticalTextAlignmet(const CAVerticalTextAlignment& var)
     m_bUpdateImage = true;
 }
 
-const CAVerticalTextAlignment& CALabel::getVerticalTextAlignmet()
+CAVerticalTextAlignment CALabel::getVerticalTextAlignmet()
 {
     return m_nVerticalTextAlignmet;
 }

@@ -51,9 +51,9 @@ public:
     
 public:
 
-    CC_SYNTHESIZE_READONLY(CCSize, m_obOriginalSize, OriginalSize);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_obOriginalSize, OriginalSize);
 
-    CC_SYNTHESIZE_READONLY(CCRect, m_obCapInsets, CapInsets);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCRect, m_obCapInsets, CapInsets);
 
     CC_SYNTHESIZE_READONLY(float, m_fInsetLeft, InsetLeft);
 
@@ -73,7 +73,7 @@ protected:
     
     bool updateWithImage(CABatchView* batch, CCRect rect,const CCRect& capInsets);
     
-    virtual void updateDisplayedColor(const CrossApp::CAColor4B& parentColor);
+    virtual void updateDisplayedColor(const CAColor4B& parentColor);
     
 protected:
 
@@ -85,17 +85,17 @@ protected:
     
 public:
     
-    CC_DEPRECATED_ATTRIBUTE bool initWithImage(CAImage* image, CCRect rect, CCRect capInsets);
+    CC_DEPRECATED_ATTRIBUTE bool initWithImage(CAImage* image, const CCRect& rect, const CCRect& capInsets);
     
-	CC_DEPRECATED_ATTRIBUTE static CAScale9ImageView* createWithImage(CAImage* image, CCRect rect, CCRect capInsets);
+    CC_DEPRECATED_ATTRIBUTE static CAScale9ImageView* createWithImage(CAImage* image, const CCRect& rect, const CCRect& capInsets);
     
-	CC_DEPRECATED_ATTRIBUTE bool initWithImage(CAImage* image, CCRect rect);
+    CC_DEPRECATED_ATTRIBUTE bool initWithImage(CAImage* image, const CCRect& rect);
     
-	CC_DEPRECATED_ATTRIBUTE static CAScale9ImageView* createWithImage(CAImage* image, CCRect rect);
+    CC_DEPRECATED_ATTRIBUTE static CAScale9ImageView* createWithImage(CAImage* image, const CCRect& rect);
     
-	CC_DEPRECATED_ATTRIBUTE bool initWithImage(CCRect capInsets, CAImage* image);
+    CC_DEPRECATED_ATTRIBUTE bool initWithImage(const CCRect& capInsets, CAImage* image);
     
-	CC_DEPRECATED_ATTRIBUTE CAScale9ImageView* createWithImage(CCRect capInsets, CAImage* image);
+    CC_DEPRECATED_ATTRIBUTE CAScale9ImageView* createWithImage(const CCRect& capInsets, CAImage* image);
     
 };
 

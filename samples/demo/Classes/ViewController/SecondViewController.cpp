@@ -206,7 +206,7 @@ unsigned int SecondViewController::tableViewHeightForFooterInSection(CATableView
 	return this->getView()->getBounds().size.height*0.1;
 }
 
-void SecondViewController::switchCellListInSection(CAControl* btn, CCPoint point)
+void SecondViewController::switchCellListInSection(CAControl* btn, const CCPoint& point)
 {
 	CAButton* headerBtn = (CAButton*)btn;
 	int section = btn->getTag() - 100;
@@ -216,7 +216,7 @@ void SecondViewController::switchCellListInSection(CAControl* btn, CCPoint point
 	p_TableView->reloadData();
 }
 
-void SecondViewController::closeCellListInSection(CAControl* btn, CCPoint point)
+void SecondViewController::closeCellListInSection(CAControl* btn, const CCPoint& point)
 {
 
 }
