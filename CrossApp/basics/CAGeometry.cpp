@@ -398,6 +398,13 @@ CADipPoint& CADipPoint::operator= (const CADipPoint& other)
     return *this;
 }
 
+CADipPoint& CADipPoint::operator= (const CADipSize& other)
+{
+    this->x = other.width;
+    this->y = other.height;
+    return *this;
+}
+
 CADipPoint& CADipPoint::operator= (const CCPoint& other)
 {
     this->x = _dip(other.x);

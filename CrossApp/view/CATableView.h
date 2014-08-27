@@ -20,11 +20,6 @@
 
 NS_CC_BEGIN
 
-//typedef enum
-//{
-//    CATableViewOrientationHorizontal,
-//    CATableViewOrientationVertical
-//} CATableViewOrientation;
 
 class CATableViewCell;
 class CATableView;
@@ -144,7 +139,7 @@ public:
     
     CC_SYNTHESIZE_RETAIN(CAView*, m_pTableFooterView, TableFooterView);
     
-    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_separatorColor, SeparatorColor);
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_obSeparatorColor, SeparatorColor);
     
     CC_SYNTHESIZE(unsigned int, m_nTableHeaderHeight, TableHeaderHeight);
     
@@ -156,12 +151,13 @@ public:
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
     
+    
+    
     CC_SYNTHESIZE_READONLY(CAView*, m_pTablePullDownView, TablePullDownView);
     
     CC_SYNTHESIZE_READONLY(CAView*, m_pTablePullUpView, TablePullUpView);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nTablePullViewHeight, TablePullViewHeight);
-    
     
     CC_DEPRECATED_ATTRIBUTE void setTablePullDownView(CAView* var);
     

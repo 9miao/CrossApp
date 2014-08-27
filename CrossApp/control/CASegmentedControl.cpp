@@ -20,6 +20,7 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_selectedIndex(-1)
     , m_nItemsCount(itemsCount)
     , m_pBackgroundView(NULL)
+    , m_sTitleFontName("")
 {
     
 }
@@ -110,6 +111,7 @@ bool CASegmentedControl::insertSegmentWithTitle(const char* title, int index, co
     }
     
     newBtn->setTitleForState(controlState, title);
+    newBtn->setTitleFontName(m_sTitleFontName);
     m_segments.insert(m_segments.begin() + index, newBtn);
     this->addSubview(newBtn);
     this->layoutSubviews();
@@ -288,6 +290,21 @@ bool CASegmentedControl::setImageColorAtIndex(const CAColor4B& color, int index,
     btn->setImageColorForState(controlState, color);
     
     return true;
+}
+
+void CASegmentedControl::setTitleFontName(const std::string& var)
+{
+    CC_RETURN_IF(m_sTitleFontName.compare(var) == 0);
+    m_sTitleFontName = var;
+    for (std::vector<CAButton *>::iterator itr=m_segments.begin(); itr!=m_segments.end(); itr++)
+    {
+        (*itr)->setTitleFontName(m_sTitleFontName);
+    }
+}
+
+const std::string& CASegmentedControl::getTitleFontName()
+{
+    return m_sTitleFontName;
 }
 
 CAView* CASegmentedControl::getDefaultNormalBackgroundView()

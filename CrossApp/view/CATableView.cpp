@@ -25,7 +25,7 @@ CATableView::CATableView()
 ,m_pTableFooterView(NULL)
 ,m_pTablePullDownView(NULL)
 ,m_pTablePullUpView(NULL)
-,m_separatorColor(CAColor_gray)
+,m_obSeparatorColor(CAColor_gray)
 ,m_nSeparatorViewHeight(1)
 ,m_nTableHeaderHeight(0)
 ,m_nTableFooterHeight(0)
@@ -651,7 +651,7 @@ void CATableView::loadTableCell()
             CCRect lineRect = m_rLineRectss[i][j];
             if (view == NULL)
             {
-                view = CAView::createWithFrame(lineRect, m_separatorColor);
+                view = CAView::createWithFrame(lineRect, m_obSeparatorColor);
             }
             m_pUsedLines[indexPath] = view;
             this->insertSubview(view, 1);

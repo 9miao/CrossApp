@@ -63,6 +63,7 @@ public:
     
     virtual CAButton *createDefaultSegment();
     
+    CC_PROPERTY_PASS_BY_REF(std::string, m_sTitleFontName, TitleFontName);
     CC_SYNTHESIZE_READONLY(int, m_selectedIndex, selectedIndex);       // default 0
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_itemSize, ItemSize);
     void setHighlightedAtIndex(int index);

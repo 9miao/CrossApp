@@ -269,7 +269,9 @@ void CACollectionView::setAllowsMultipleSelection(bool var)
 
 void CACollectionView::setSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item)
 {
-	if (!m_pSelectedCollectionCells.empty())
+    CC_RETURN_IF(section >= m_rSectionRects.size());
+    
+	if (!m_pSelectedCollectionCells.empty() && m_bAllowsMultipleSelection == false)
 	{
 		std::set<CAIndexPath3E>::iterator itr;
 		for (itr = m_pSelectedCollectionCells.begin(); itr != m_pSelectedCollectionCells.end(); itr++)
@@ -283,11 +285,23 @@ void CACollectionView::setSelectRowAtIndexPath(unsigned int section, unsigned in
 	}
 
 	CAIndexPath3E indexPath = CAIndexPath3E(section, row, item);
-	if (CACollectionViewCell* cell = m_pUsedCollectionCells[indexPath])
+	if (CACollectionViewCell* cell = m_pUsedCollectionCells.at(indexPath))
 	{
 		cell->setControlStateSelected();
 	}
 	m_pSelectedCollectionCells.insert(indexPath);
+}
+
+void CACollectionView::setUnSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item)
+{
+    CC_RETURN_IF(section >= m_rSectionRects.size());
+
+	CAIndexPath3E indexPath = CAIndexPath3E(section, row, item);
+	if (CACollectionViewCell* cell = m_pUsedCollectionCells.at(indexPath))
+	{
+		cell->setControlStateNormal();
+	}
+	m_pSelectedCollectionCells.erase(indexPath);
 }
 
 bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -486,12 +500,12 @@ void CACollectionView::loadCollectionCell()
             this->addSubview(cell);
             cell->setFrame(cellRect);
             itr->second = cell;
+            
+            if (m_pSelectedCollectionCells.count(r))
+            {
+                cell->setControlStateSelected();
+            }
         }
-
-		if (m_pSelectedCollectionCells.count(r))
-		{
-			cell->setControlStateSelected();
-		}
 	}
 }
 

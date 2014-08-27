@@ -113,6 +113,8 @@ public:
     
 	void setSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
 
+    void setUnSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
+    
     CC_SYNTHESIZE(CACollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
     
 	CC_SYNTHESIZE(CACollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);

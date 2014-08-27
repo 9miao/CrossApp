@@ -371,7 +371,7 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items, const CCSize& size)
 CATabBar* CATabBar::create(const std::vector<CATabBarItem*>& items, const CCSize& size)
 {
     CATabBar* tabBar = new CATabBar();
-    if (tabBar && tabBar->init(items))
+    if (tabBar && tabBar->init(items, size))
     {
         tabBar->autorelease();
         return tabBar;

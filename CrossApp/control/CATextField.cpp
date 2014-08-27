@@ -32,7 +32,6 @@ CATextField::CATextField()
 , m_keyboardType(KEY_BOARD_TYPE_NORMAL)
 , m_sText("")
 , m_cCursorColor(CAColor_black)
-, m_pBackgroundView(NULL)
 , m_iCurPos(0)
 , m_iLabelWidth(0)
 , m_pCursorAction(NULL)
@@ -43,6 +42,7 @@ CATextField::CATextField()
 , m_iFontHeight(0)
 , m_iHoriMargins(0)
 , m_iVertMargins(0)
+, m_pBackgroundView(NULL)
 {
 
 	m_iFontHeight = CAImage::getFontHeight("", m_iFontSize);
@@ -113,43 +113,21 @@ CATextField* CATextField::createWithCenter(const CCRect& rect)
     return NULL;
 }
 
-bool CATextField::initWithFrame(const CCRect& frame)
+bool CATextField::init()
 {
-    if (!CAControl::initWithFrame(frame,CAColor_red))
+    if (!CAControl::init())
 	{
         return false;
     }
 
     float width = CAApplication::getApplication()->getWinSize().width;
-    this->setBackGroundImage(CAImage::create("source_material/textField_bg.png"));
+    this->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png")));
 
 	if (m_iHoriMargins==0)
 	{
 		m_iHoriMargins = BORDER_WIDTH(width);
 	}
 	if (m_iVertMargins==0)
-	{
-		m_iVertMargins = (this->getBounds().size.height - m_iFontHeight) / 2;
-	}
-	m_iLabelWidth = this->getBounds().size.width - 2 * m_iHoriMargins;
-    this->initMarkSprite();
-    return true;
-}
-
-bool CATextField::initWithCenter(const CCRect& rect)
-{
-    if (!CAControl::initWithCenter(rect))
-	{
-        return false;
-    }
-
-	float width = CAApplication::getApplication()->getWinSize().width;
-    this->setBackGroundImage(CAImage::create("source_material/textField_bg.png"));
-	if (m_iHoriMargins == 0)
-	{
-		m_iHoriMargins = BORDER_WIDTH(width);
-	}
-	if (m_iVertMargins == 0)
 	{
 		m_iVertMargins = (this->getBounds().size.height - m_iFontHeight) / 2;
 	}
@@ -500,25 +478,30 @@ const char* CATextField::getContentText()
 {
     return m_sText.c_str();
 }
-void CATextField::setBackGroundImage(CAImage *image)
+
+void CATextField::setBackgroundView(CrossApp::CAView *var)
 {
-	if (m_pBackgroundView == NULL)
-	{
-		m_pBackgroundView = CAScale9ImageView::create();
-		m_pBackgroundView->setFrame(this->getBounds());
+    this->removeSubview(m_pBackgroundView);
+    m_pBackgroundView = var;
+    if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setFrame(this->getBounds());
 		this->insertSubview(m_pBackgroundView, -1);
-	}
-	m_pBackgroundView->setImage(image);
+    }
 }
 
-CAImage *CATextField::getBackGroundImage()
+CAView* CATextField::getBackgroundView()
 {
-    return m_pBackgroundView ? m_pBackgroundView->getImage() : NULL;
+    return m_pBackgroundView;
 }
 
 void CATextField::setContentSize(const CCSize& var)
 {
     CAControl::setContentSize(var);
+    if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setFrame(this->getBounds());
+    }
 }
 
 void CATextField::updateImage()
