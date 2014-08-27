@@ -22,6 +22,7 @@ CAActivityIndicatorView::CAActivityIndicatorView()
 , m_color(ccc4(255, 255, 255, 255))
 , m_duration(0.1f)
 , m_pImageView(NULL)
+, m_pBackView(NULL)
 //, m_fLoadingMinTime(0.0f)
 {
     
@@ -30,6 +31,7 @@ CAActivityIndicatorView::CAActivityIndicatorView()
 CAActivityIndicatorView::~CAActivityIndicatorView()
 {
     CC_SAFE_RELEASE(m_pImageView);
+    CC_SAFE_RELEASE(m_pBackView);
 }
 
 CAActivityIndicatorView* CAActivityIndicatorView::create()
@@ -241,7 +243,7 @@ void CAActivityIndicatorView::animation(float dt)
     if (m_style == CAActivityIndicatorViewStyleImage && m_pImageView)
     {
         float rotate = m_pImageView->getRotation();
-        rotate += 20;
+        rotate += 10;
         if (rotate == 360)
         {
             rotate = 0;
@@ -263,6 +265,8 @@ void CAActivityIndicatorView::setActivityIndicatorView(CrossApp::CAView *var)
 {
     m_style = CAActivityIndicatorViewStyleImage;
     
+    m_duration = 0.05f;
+    
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pImageView);
     this->removeSubview(m_pImageView);
@@ -277,6 +281,26 @@ void CAActivityIndicatorView::setActivityIndicatorView(CrossApp::CAView *var)
 CAView* CAActivityIndicatorView::getActivityIndicatorView()
 {
     return m_pImageView;
+}
+
+void CAActivityIndicatorView::setActivityBackView(CrossApp::CAView *var)
+{
+    if (m_pBackView) {
+        removeSubview(m_pBackView);
+    }
+    CC_SAFE_RELEASE(m_pBackView);
+    m_pBackView = var;
+    CC_SAFE_RETAIN(m_pBackView);
+    
+    if (m_pBackView) {
+        m_pBackView->setCenterOrigin(getBounds().size/2);
+        this->insertSubview(m_pBackView, -1);
+    }
+}
+
+const CrossApp::CAView* CAActivityIndicatorView::getActivityBackView()
+{
+    return m_pBackView;
 }
 
 NS_CC_END
