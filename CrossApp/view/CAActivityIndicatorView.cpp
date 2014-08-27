@@ -21,16 +21,15 @@ CAActivityIndicatorView::CAActivityIndicatorView()
 , m_style(CAActivityIndicatorViewStyleWhite)
 , m_color(ccc4(255, 255, 255, 255))
 , m_duration(0.1f)
-, m_image(NULL)
-, m_imageView(NULL)
+, m_pImageView(NULL)
+//, m_fLoadingMinTime(0.0f)
 {
     
 }
 
 CAActivityIndicatorView::~CAActivityIndicatorView()
 {
-    CC_SAFE_RELEASE(m_image);
-    CC_SAFE_RELEASE(m_imageView);
+    CC_SAFE_RELEASE(m_pImageView);
 }
 
 CAActivityIndicatorView* CAActivityIndicatorView::create()
@@ -68,29 +67,12 @@ CAActivityIndicatorView* CAActivityIndicatorView::createWithCenter(const CCRect&
 
 bool CAActivityIndicatorView::init()
 {
-    if (!CAView::init()) {
+    if (!CAView::init())
+    {
         return false;
     }
     this->CAView::setColor(CAColor_clear);
     setStyle(CAActivityIndicatorViewStyleGray);
-    
-    return true;
-}
-
-bool CAActivityIndicatorView::initWithCenter(const CrossApp::CCRect &rect)
-{
-    if (!CAView::initWithCenter(rect)) {
-        return false;
-    }
-    
-    return true;
-}
-
-bool CAActivityIndicatorView::initWithFrame(const CrossApp::CCRect &rect)
-{
-    if (!CAView::initWithFrame(rect)) {
-        return false;
-    }
     
     return true;
 }
@@ -117,9 +99,12 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
     m_style = style;
     
     CCRect center = getBounds();
-    if (center.size.width > center.size.height) {
+    if (center.size.width > center.size.height)
+    {
         center.size.width = center.size.height;
-    } else {
+    }
+    else
+    {
         center.size.height = center.size.width;
     }
     center.origin.x = center.size.width/2;
@@ -127,7 +112,8 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
     
     float radius_inside, radius_outside;
     
-    switch (m_style) {
+    switch (m_style)
+    {
         case CAActivityIndicatorViewStyleGray:
             radius_outside = _px(34);
             radius_inside = _px(15);
@@ -156,7 +142,8 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
     //  210       330
     //    240   300
     //       270
-    for (int angle=0, index=0; angle<360; angle+=30, index++) {
+    for (int angle=0, index=0; angle<360; angle+=30, index++)
+    {
         
         float radian = 2 * M_PI / 360 * angle;
         
@@ -180,7 +167,7 @@ void CAActivityIndicatorView::startAnimating()
 {
     m_animating = true;
     m_animationIndex = 0;
-    CAScheduler::schedule(schedule_selector(CAActivityIndicatorView::animation), this, 0.1f);
+    CAScheduler::schedule(schedule_selector(CAActivityIndicatorView::animation), this, m_duration);
 }
 
 void CAActivityIndicatorView::stopAnimating()
@@ -198,13 +185,12 @@ void CAActivityIndicatorView::draw()
 {
     CAView::draw();
     
-    if (m_style == CAActivityIndicatorViewStyleImage) {
-        return;
-    }
+    CC_RETURN_IF(m_style == CAActivityIndicatorViewStyleImage);
     
     float start_alpha, end_alpha;
     
-    switch (m_style) {
+    switch (m_style)
+    {
         case CAActivityIndicatorViewStyleGray:
             start_alpha = 120;
             end_alpha = 60;
@@ -228,14 +214,17 @@ void CAActivityIndicatorView::draw()
     float alpha = start_alpha;
     int index = m_animationIndex;
     int count = 12;
-    while (count--) {
+    while (count--)
+    {
         glLineWidth( 5.0f * CAApplication::getApplication()->getAdaptationRatio() );
         ccDrawColor4B(m_color.r, m_color.g, m_color.b, alpha);
         ccDrawLine(m_vertex[index][0], m_vertex[index][1]);
         
-        if (alpha > end_alpha) {
+        if (alpha > end_alpha)
+        {
             alpha -= step;
-            if (alpha < step) {
+            if (alpha < step)
+            {
                 alpha = step;
             }
         }
@@ -249,42 +238,45 @@ void CAActivityIndicatorView::draw()
 
 void CAActivityIndicatorView::animation(float dt)
 {
-    if (m_style == CAActivityIndicatorViewStyleImage && m_imageView) {
-        float rotate = m_imageView->getRotation();
+    if (m_style == CAActivityIndicatorViewStyleImage && m_pImageView)
+    {
+        float rotate = m_pImageView->getRotation();
         rotate += 20;
-        if (rotate == 360) {
+        if (rotate == 360)
+        {
             rotate = 0;
         }
-        m_imageView->setRotation(rotate);
-    } else {
+        m_pImageView->setRotation(rotate);
+    }
+    else
+    {
         m_animationIndex--;
-        if (m_animationIndex < 0) {
+        if (m_animationIndex < 0)
+        {
             m_animationIndex = 12 - 1;
         }
     }
     updateDraw();
 }
 
-void CAActivityIndicatorView::setImage(CrossApp::CAImage *image)
+void CAActivityIndicatorView::setActivityIndicatorView(CrossApp::CAView *var)
 {
     m_style = CAActivityIndicatorViewStyleImage;
-    CC_SAFE_RELEASE(m_image);
-    m_image = image;
-    CC_SAFE_RETAIN(m_image);
     
-    if (m_imageView) {
-        removeSubview(m_imageView);
-        m_imageView->release();
+    CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE(m_pImageView);
+    this->removeSubview(m_pImageView);
+    m_pImageView = var;
+    if (m_pImageView)
+    {
+        m_pImageView->setCenterOrigin(getBounds().size/2);
+        this->addSubview(m_pImageView);
     }
-    
-//    CAScale9ImageView* view = CAScale9ImageView::createWithImage(image);
-    CAImageView* view = CAImageView::createWithImage(image);
-//    view->setFrame(CCRect(0, 0, getBounds().size.width, getBounds().size.height));
-    view->setCenterOrigin(CCPoint(getBounds().size.width/2, getBounds().size.height/2));
-    addSubview(view);
+}
 
-    m_imageView = view;
-    CC_SAFE_RETAIN(m_imageView);
+CAView* CAActivityIndicatorView::getActivityIndicatorView()
+{
+    return m_pImageView;
 }
 
 NS_CC_END

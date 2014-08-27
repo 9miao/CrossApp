@@ -53,6 +53,7 @@
 #include "control/CASegmentedControl.h"
 #include "control/CATextField.h"
 #include "control/CAPageControl.h"
+#include "control/CAStepper.h"
 
 //controller
 #include "controller/CABarItem.h"

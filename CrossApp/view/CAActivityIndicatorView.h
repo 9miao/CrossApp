@@ -14,15 +14,18 @@
 
 NS_CC_BEGIN
 
-typedef enum {
+typedef enum
+{
     CAActivityIndicatorViewStyleWhiteLarge,
     CAActivityIndicatorViewStyleWhite,
     CAActivityIndicatorViewStyleGray,
     CAActivityIndicatorViewStyleImage,
-} CAActivityIndicatorViewStyle;
+}
+CAActivityIndicatorViewStyle;
 
 class CAScale9ImageView;
-class CC_DLL CAActivityIndicatorView : public CAView {
+class CC_DLL CAActivityIndicatorView : public CAView
+{
     
 public:
     CAActivityIndicatorView();
@@ -33,9 +36,7 @@ public:
     static CAActivityIndicatorView* createWithCenter(const CCRect& rect);
     
     virtual bool init();
-    virtual bool initWithFrame(const CCRect& rect);
-    virtual bool initWithCenter(const CCRect& rect);
-    
+
     virtual void onEnter();
     virtual void onExit();
     virtual void visit();
@@ -45,12 +46,14 @@ public:
     virtual void setStyle(CAActivityIndicatorViewStyle style);
     
     // will set CAActivityIndicatorViewStyleImage when call this func
-    virtual void setImage(CAImage* image);
+    CC_PROPERTY(CAView*, m_pImageView, ActivityIndicatorView);
     
     virtual void startAnimating();
     virtual void stopAnimating();
     virtual bool isAnimating();
 
+    //CC_SYNTHESIZE(float, m_fLoadingMinTime, LoadingMinTime);
+    
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_color, Color);
     
 private:
@@ -58,8 +61,6 @@ private:
     bool m_animating;
     bool m_hidesWhenStopped; // default is true. calls -setHidden when animating gets set to false
     CAActivityIndicatorViewStyle m_style; // default is CAActivityIndicatorViewStyleWhite
-    CAImage* m_image; // default is null
-    CAView* m_imageView;
     
 private:
     CCPoint m_vertex[12][2];
