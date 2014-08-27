@@ -52,6 +52,7 @@
 #include "control/CASlider.h"
 #include "control/CASegmentedControl.h"
 #include "control/CATextField.h"
+#include "control/CAPageControl.h"
 
 //controller
 #include "controller/CABarItem.h"

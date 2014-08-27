@@ -17,6 +17,14 @@ NS_CC_BEGIN
 
 class CAImage;
 class CAImageView;
+
+typedef enum {
+    CAPageControlStyleDot,
+    CAPageControlStyleRound,
+    CAPageControlStyleRectangle
+    
+}CAPageControlStyle;
+
 class CC_DLL CAPageControl : public CAControl {
     
 public:
@@ -54,6 +62,8 @@ public:
     
     CC_SYNTHESIZE(CAImage*, m_pPageImage, PageIndicatorImage);
     CC_SYNTHESIZE(CAImage*, m_pSelectPageImage, CurrIndicatorImage);
+    
+    CC_PROPERTY_PASS_BY_REF(CAPageControlStyle, m_style, Style); // default is CAPageControlStyleDot
     
     virtual void setTouchEnabled(bool enable);
         
