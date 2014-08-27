@@ -73,7 +73,7 @@ CAImage::~CAImage()
     }
 }
 
-CAImage* CAImage::create(const char* file)
+CAImage* CAImage::create(const std::string& file)
 {
 	return CAImageCache::sharedImageCache()->addImage(file);
 }
@@ -201,7 +201,7 @@ int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const ch
 #endif
 }
 
-CAImagePixelFormat CAImage::getPixelFormat()
+const CAImagePixelFormat& CAImage::getPixelFormat()
 {
     return m_ePixelFormat;
 }
@@ -833,6 +833,11 @@ bool CAImage::saveToFile(const std::string& fullPath)
 	fclose(fp);
     
     return true;
+}
+
+float CAImage::getAspectRatio()
+{
+    return m_tContentSize.width / m_tContentSize.height;
 }
 
 const char* CAImage::getImageFileType()

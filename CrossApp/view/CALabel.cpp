@@ -228,6 +228,7 @@ void CALabel::sizeToFit()
 
 void CALabel::setText(const string& var)
 {
+    CC_RETURN_IF(m_nText.compare(var) == 0);
     m_nText = var;
     m_bUpdateImage = true;
 }

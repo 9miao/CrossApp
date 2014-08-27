@@ -20,7 +20,7 @@ public:
 	void defaultSliderValueChange(CAControl* btn, CCPoint point);
 
 private:
-	CCSize size;
+	CADipSize size;
 
 };
 

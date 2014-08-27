@@ -17,7 +17,7 @@ protected:
 	void viewDidUnload();
 
 private:
-	CCSize size;
+	CADipSize size;
 
 };
 

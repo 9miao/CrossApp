@@ -21,7 +21,7 @@ public:
 	void alertViewCallback(int btnIndex);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CAButton* imageBtn;
 
 };

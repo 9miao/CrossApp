@@ -21,7 +21,6 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/ImageViewTest/ImageViewTest.cpp \
 ../../Classes/LabelTest/LabelTest.cpp \
 ../../Classes/PageViewTest/PageViewTest.cpp \
-../../Classes/PickerViewTest/PickerViewTest.cpp \
 ../../Classes/ProgressTest/ProgressTest.cpp \
 ../../Classes/ScrollViewTest/ScrollViewTest.cpp \
 ../../Classes/SegmentedControlTest/SegmentedControlTest.cpp \
@@ -29,6 +28,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/SwitchTest/SwitchTest.cpp \
 ../../Classes/TabBarTest/TabBarTest.cpp \
 ../../Classes/TableViewTest/TableViewTest.cpp \
+../../Classes/TableViewTest/MyTableViewCell.cpp \
 ../../Classes/TextFieldTest/TextFieldTest.cpp \
 ../../Classes/ExtensionsTest/ExtensionsTest.cpp \
 ../../Classes/ExtensionsTest/AddressBookTest.cpp \
@@ -42,7 +42,6 @@ $(LOCAL_PATH)/../../Classes/CollectionViewTest \
 $(LOCAL_PATH)/../../Classes/ImageViewTest \
 $(LOCAL_PATH)/../../Classes/LabelTest \
 $(LOCAL_PATH)/../../Classes/PageViewTest \
-$(LOCAL_PATH)/../../Classes/PickerViewTest \
 $(LOCAL_PATH)/../../Classes/ProgressTest \
 $(LOCAL_PATH)/../../Classes/ScrollViewTest \
 $(LOCAL_PATH)/../../Classes/SegmentedControlTest \

@@ -23,25 +23,25 @@ void HttpRequestTest::viewDidLoad()
 	rightButton->setTarget(this, CAControl_selector(HttpRequestTest::nextViewController));
 	this->getNavigationBarItem()->addRightButtonItem(rightButton);
 
-	errorInfo = CALabel::createWithCenter(CCRect(size.width*0.5, size.height*0.1, size.width, size.height*0.2));
+	errorInfo = CALabel::createWithCenter(CADipRect(size.width*0.5, size.height*0.1, size.width, size.height*0.2));
 	errorInfo->setText("");
 	errorInfo->setColor(CAColor_blueStyle);
-	errorInfo->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+	errorInfo->setFontSize(_px(30));
 	errorInfo->setTextAlignment(CATextAlignmentCenter);
 	errorInfo->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	this->getView()->addSubview(errorInfo);
 
-	inputWebsite = CATextField::createWithCenter(CCRect(size.width*0.5, size.height*0.4, size.width*0.6, size.height*0.1));
-	inputWebsite->setBackGroundImage(CAImage::create("source_material/btn_rounded3D_highlighted.png"));
+	inputWebsite = CATextField::createWithCenter(CADipRect(size.width*0.5, size.height*0.4, size.width*0.6, size.height*0.1));
+	inputWebsite->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));
 	inputWebsite->setPlaceHolder("Please enter a website");
-	inputWebsite->setFontSize(24 * CROSSAPP_ADPTATION_RATIO);
+	inputWebsite->setFontSize(_px(24));
 	inputWebsite->setTextColor(CAColor_blueStyle);
 	//inputWebsite->setTextAlignment(CATextAlignmentCenter);
 	inputWebsite->setSpaceHolderColor(CAColor_gray);
 	this->getView()->addSubview(inputWebsite);
 
 	requestWebsite = CAButton::create(CAButtonTypeRoundedRect);
-	requestWebsite->setCenter(CCRect(size.width*0.5, size.height*0.8, size.width*0.2, size.height*0.06));
+	requestWebsite->setCenter(CADipRect(size.width*0.5, size.height*0.8, size.width*0.2, size.height*0.06));
 	requestWebsite->setTitleForState(CAControlStateAll,"Go");
 	requestWebsite->addTarget(this,CAControl_selector(HttpRequestTest::requestHttpInfo),CAControlEventTouchUpInSide);
 	this->getView()->addSubview(requestWebsite);
@@ -55,15 +55,15 @@ void HttpRequestTest::requestHttpInfo(CAControl* btn, CCPoint point)
 	this->getView()->addSubview(loading);
 
 	loadImage = CAImageView::createWithImage(CAImage::create("loading.png"));
-	loadImage->setCenterOrigin(CCPoint(size.width*0.5, size.height*0.5));
+	loadImage->setCenterOrigin(CADipPoint(size.width*0.5, size.height*0.5));
 	loadImage->setScale(0.5);
 	loading->addSubview(loadImage);
 	CAScheduler::schedule(schedule_selector(HttpRequestTest::loadingAnim), this, 0.01, false);
 
-	CALabel* msg = CALabel::createWithCenter(CCRect(size.width*0.5, size.height*0.5, loadImage->getFrame().size.width*0.9, 50));
+	CALabel* msg = CALabel::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, loadImage->getFrame().size.width*0.9, 50));
 	msg->setText("Loading");
 	msg->setColor(CAColor_blueStyle);
-	msg->setFontSize(22 * CROSSAPP_ADPTATION_RATIO);
+	msg->setFontSize(_px(22));
 	msg->setTextAlignment(CATextAlignmentCenter);
 	msg->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	loading->addSubview(msg);

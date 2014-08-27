@@ -1,4 +1,5 @@
 #include "TableViewTest.h"
+#include "MyTableViewCell.h"
 
 #define CAColor_blueStyle ccc4(51,204,255,255)
 
@@ -14,9 +15,9 @@ TableViewTest::~TableViewTest()
 
 void TableViewTest::viewDidLoad()
 {
-	CCSize size = this->getView()->getBounds().size;
+	size = this->getView()->getBounds().size;
 
-	p_TableView = CATableView::createWithCenter(CCRect(size.width*0.5,size.height*0.5,size.width,size.height));
+	p_TableView = CATableView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height));
 	p_TableView->setTableViewDataSource(this);
 	p_TableView->setTableViewDelegate(this);
 	p_TableView->setAllowsSelection(true);
@@ -32,15 +33,7 @@ void TableViewTest::viewDidUnload()
 
 void TableViewTest::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	//char currentTitle[32]="";
-	//sprintf(currentTitle, "The Page No.%ld", this->getNavigationController()->getViewControllerCount());
 
-	//CANavigationBarItem* item = CANavigationBarItem::create(currentTitle);
-	//TableViewTest* viewController = new TableViewTest();
-	//viewController->init();
-	//viewController->setNavigationBarItem(item);
-	//this->getNavigationController()->replaceViewController(viewController, true);
-	//viewController->autorelease();
 }
 
 void TableViewTest::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
@@ -48,35 +41,15 @@ void TableViewTest::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsig
 	
 }
 
-void TableViewTest::tableViewDidShowPullDownView(CATableView* table)
-{
-	CCLog("Pulldown");
-}
-
-void TableViewTest::tableViewDidShowPullUpView(CATableView* table)
-{
-	
-}
-
 CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
-	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
+	CADipSize _size = cellSize;
+	MyTableViewCell* cell = dynamic_cast<MyTableViewCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
 	if (cell == NULL)
 	{
-		cell = CATableViewCell::create("CrossApp");
-		CALabel* cellText = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.3, cellSize.height*0.8));
-		cellText->setTag(100);
-		cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-		cellText->setColor(CAColor_blueStyle);
-		cellText->setTextAlignment(CATextAlignmentCenter);
-		cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-		cell->addSubview(cellText);
-
-		CAButton* cellBtn = CAButton::createWithCenter(CCRect(cellSize.width*0.8, cellSize.height*0.5, cellSize.width*0.2, cellSize.height*0.5), CAButtonTypeRoundedRect);
-		cellBtn->setTag(102);
-		cellBtn->setTitleForState(CAControlStateAll, "Touch");
-		cellBtn->addTarget(this, CAControl_selector(TableViewTest::cellBtnCallback), CAControlEventTouchUpInSide);
-		cell->addSubview(cellBtn);
+		cell = MyTableViewCell::create("CrossApp");
+		cell->setFrame(CADipRect(0, 0, _size.width, _size.height));
+		cell->initCell();
 	}
 	if (section == 1)
 	{
@@ -108,9 +81,10 @@ CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table
 	head = (section == 0) ? "Selection-0" : "Selection-1";
 	CAView* view = CAView::createWithColor(CAColor_gray);
 
-	CALabel* header = CALabel::createWithCenter(CCRect(viewSize.width*0.5, viewSize.height*0.5, viewSize.width*0.8, viewSize.height));
+	CADipSize _size = viewSize;
+	CALabel* header = CALabel::createWithCenter(CADipRect(_size.width*0.5, _size.height*0.5, _size.width*0.8, _size.height));
 	header->setText(head);
-	header->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+	header->setFontSize(_px(30));
 	header->setColor(CAColor_white);
 	header->setTextAlignment(CATextAlignmentCenter);
 	header->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
@@ -130,7 +104,7 @@ CAView* TableViewTest::tableViewSectionViewForFooterInSection(CATableView* table
 
 unsigned int TableViewTest::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-	return 7;
+	return 10;
 }
 
 unsigned int TableViewTest::numberOfSections(CATableView *table)
@@ -140,12 +114,12 @@ unsigned int TableViewTest::numberOfSections(CATableView *table)
 
 unsigned int TableViewTest::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	return this->getView()->getBounds().size.height*0.2;
+	return size.height*0.2;
 }
 
 unsigned int TableViewTest::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
 {
-	return 50 * CROSSAPP_ADPTATION_RATIO;
+	return _px(50);
 }
 
 unsigned int TableViewTest::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)

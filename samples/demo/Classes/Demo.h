@@ -9,7 +9,6 @@
 #include "ImageViewTest.h"
 #include "LabelTest.h"
 #include "PageViewTest.h"
-#include "PickerViewTest.h"
 #include "ProgressTest.h"
 #include "ScrollViewTest.h"
 #include "SegmentedControlTest.h"
@@ -29,7 +28,6 @@ enum DemoList
 	INDICATORVIEWTEST,
 	LABELTEST,
 	PAGEVIEWTEST,
-	PICKERVIEWTEST,
 	PROGRESSTEST,
 	SCROLLVIEWTEST,
 	SEGMENTEDCONTROLTEST,

@@ -24,12 +24,12 @@ protected:
 	void viewDidUnload();
 
 public:
-	void threeButtonType();
-	void buttonBackground();
-	void buttonTouchEvent();
+	void threeButtonType(void);
+	void buttonBackground(void);
+	void buttonTouchEvent(void);
 
 	void btnStateChange(CAControl* btn, CCPoint point);
-	void buttonCallback(CAControl* btn,CCPoint point);
+	void buttonCallback(CAControl* btn, CCPoint point);
 
 private:
 	CAScale9ImageView* typeView;

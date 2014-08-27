@@ -23,10 +23,6 @@ CAWindow* MainMenu::createWindow()
 	viewController1->init();
 	viewController1->setNavigationBarItem(CANavigationBarItem::create("TestMenu")); 
 
-	CANavigationController* navigationController = new CANavigationController();
-	navigationController->initWithRootViewController(viewController1);
-	navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png")));
-	viewController1->release();
 
 	SecondViewController* viewController2 = new SecondViewController();
 	viewController2->init();
@@ -41,7 +37,6 @@ CAWindow* MainMenu::createWindow()
 	viewController4->setTabBarItem(CATabBarItem::create("Fourth", CAImage::create("tabbar_function/fourth_1.png"), CAImage::create("tabbar_function/fourth_2.png")));
 
 	std::vector<CAViewController*> controllerItem;
-	controllerItem.push_back(navigationController);
 	controllerItem.push_back(viewController2);
 	controllerItem.push_back(viewController3);
 	controllerItem.push_back(viewController4);
@@ -49,13 +44,24 @@ CAWindow* MainMenu::createWindow()
 	MainMenu* p_Funtion = new MainMenu();
 	p_Funtion->initWithViewControllers(controllerItem);
 	p_Funtion->getTabBar()->showSelectedIndicator();
-	p_Window->setRootViewController(p_Funtion);
+
+	CANavigationController* navigationController = new CANavigationController();
+	navigationController->initWithRootViewController(p_Funtion);
+	navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png")));
+	
+
+	CADrawerController* drawerController = new CADrawerController();
+	drawerController->initWithController(viewController1, navigationController, _px(500));
+	drawerController->autorelease();
+	viewController1->release();
 
 	navigationController->release();
 	viewController2->release();
 	viewController3->release();
 	viewController4->release();
 	p_Funtion->release();
+
+	p_Window->setRootViewController(drawerController);
 
 	return p_Window;
 }
@@ -70,12 +76,12 @@ void MainMenu::viewDidUnload()
 	CATabBarController::viewDidUnload();
 }
 
-float MainMenu::getTabBarHeight()
+float MainMenu::getTabBarHeight(void)
 {
 	return 0;
 }
 
-float MainMenu::getNavigationBarHeight()
+float MainMenu::getNavigationBarHeight(void)
 {
 	return 0;
 }

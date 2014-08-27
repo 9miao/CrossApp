@@ -16,7 +16,7 @@ void ThirdViewController::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
 
-	scrollView = CAScrollView::createWithFrame(this->getView()->getBounds());
+	scrollView = CAScrollView::createWithFrame(CADipRect(this->getView()->getBounds()));
 	scrollView->setViewSize(scrollView->getBounds().size);
     scrollView->setBounceVertical(false);
     scrollView->setBounceHorizontal(false);
@@ -25,10 +25,10 @@ void ThirdViewController::viewDidLoad()
 	this->getView()->addSubview(scrollView);
 
 	CAImageView* s_Image= CAImageView::createWithImage(CAImage::create("bg.jpg"));
-	s_Image->setFrame(CCRect(0, 0, scrollView->getViewSize().width, scrollView->getViewSize().height));
+	s_Image->setFrame(CADipRect(0, 0, size.width, size.height));
 	scrollView->addSubview(s_Image);
 
-	scrollControl = CASegmentedControl::createWithCenter(CCRect(size.width*0.5, size.height*0.05, size.width*0.8, size.height*0.05), 4);
+	scrollControl = CASegmentedControl::createWithCenter(CADipRect(size.width*0.5, size.height*0.05, size.width*0.8, size.height*0.05), 4);
 	scrollControl->setTitleAtIndex("Forbidden", 0, CAControlStateAll);
 	scrollControl->setTitleAtIndex("Horizontal", 1,CAControlStateAll);
 	scrollControl->setTitleAtIndex("Vertical", 2, CAControlStateAll);

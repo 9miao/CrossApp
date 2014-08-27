@@ -21,6 +21,7 @@ CAPageControl::CAPageControl()
 , m_currentPageIndicatorTintColor(ccc4(255, 255, 255, 255))
 , m_pPageImage(NULL)
 , m_pSelectPageImage(NULL)
+, m_style(CAPageControlStyleDot)
 {
     
 }
@@ -76,19 +77,9 @@ CAPageControl* CAPageControl::createWithCenter(const CCRect& rect)
 
 bool CAPageControl::init()
 {
-    if (!CAControl::init())
-    {
-        return false;
-    }
-    
-    m_pPageImage = CAImage::create("source_material/WhiteDots.png");
-    m_pPageImage->retain();
-    
-    m_pSelectPageImage = CAImage::create("source_material/WhiteDots.png");
-    m_pSelectPageImage->retain();
-    
-    setTouchEnabled(true);
-    
+    setPageIndicatorImage(CAImage::create("source_material/page_n.png"));
+    setCurrIndicatorImage(CAImage::create("source_material/page_h.png"));
+
     return true;
 }
 
@@ -184,18 +175,38 @@ void CAPageControl::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 void CAPageControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     if (getBounds().containsPoint(convertToNodeSpace(pTouch->getLocation()))) {
-        
-        m_currentPage++;
-        if (m_currentPage == m_numberOfPages) {
-            m_currentPage = 0;
-        }
 
-        if (!m_bDefersCurrentPageDisplay) {
-            updateCurrentPageDisplay();
-        }
-        
-        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged]) {
-            (m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
+//        m_currentPage++;
+//        if (m_currentPage == m_numberOfPages) {
+//            m_currentPage = 0;
+//        }
+//        if (!m_bDefersCurrentPageDisplay) {
+//            updateCurrentPageDisplay();
+//        }
+//        
+//        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged]) {
+//            (m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
+//        }
+
+        // find touched dot
+        float width = getBounds().size.width/m_numberOfPages;
+        CCRect rect = getBounds();
+        for (int i=0; i<m_numberOfPages; i++) {
+            rect.size.width = width * i + width;
+            if (rect.containsPoint(convertToNodeSpace(pTouch->getLocation()))) {
+                if (m_currentPage != i) {
+                    m_currentPage = i;
+
+                    if (!m_bDefersCurrentPageDisplay) {
+                        updateCurrentPageDisplay();
+                    }
+                    
+                    if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged]) {
+                        (m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
+                    }
+                }
+                break;
+            }
         }
     }
 }
@@ -205,5 +216,41 @@ void CAPageControl::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     
 }
 
+void CAPageControl::setTouchEnabled(bool enable)
+{
+    CAControl::setTouchEnabled(enable);
+    
+    
+}
+
+void CAPageControl::setStyle(const CAPageControlStyle &var)
+{
+    if (m_style != var) {
+        m_style = var;
+        
+        switch (m_style) {
+            case CAPageControlStyleDot:
+                setPageIndicatorImage(CAImage::create("source_material/page_n.png"));
+                setCurrIndicatorImage(CAImage::create("source_material/page_h.png"));
+                break;
+            case CAPageControlStyleRound:
+                setPageIndicatorImage(CAImage::create("source_material/page_round_n.png"));
+                setCurrIndicatorImage(CAImage::create("source_material/page_round_h.png"));
+                break;
+            case CAPageControlStyleRectangle:
+                setPageIndicatorImage(CAImage::create("source_material/page_rect_n.png"));
+                setCurrIndicatorImage(CAImage::create("source_material/page_rect_h.png"));
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
+const CAPageControlStyle& CAPageControl::getStyle()
+{
+    return m_style;
+}
 
 NS_CC_END

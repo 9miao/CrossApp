@@ -21,7 +21,7 @@ public:
 	void secondProgressValueChange(float intevalTime);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CAProgress* firstProgress;
 	CAProgress* secondProgress;
 	CALabel* progressValue;

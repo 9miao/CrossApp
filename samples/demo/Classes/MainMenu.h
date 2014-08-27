@@ -18,12 +18,13 @@ protected:
 	virtual void viewDidUnload();
 
 public:
-	float getTabBarHeight();
-	float getNavigationBarHeight();
+	float getTabBarHeight(void);
+	float getNavigationBarHeight(void);
 
 private:
 	float m_TabBarHeight;
 	float m_NavigationBarHeight;
+	//static CADrawerController* drawerController;
 
 };
 

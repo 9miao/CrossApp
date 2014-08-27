@@ -159,10 +159,12 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\cocoa\CCSet.cpp" />
     <ClCompile Include="..\cocoa\CCString.cpp" />
     <ClCompile Include="..\controller\CABarItem.cpp" />
+    <ClCompile Include="..\controller\CADrawerController.cpp" />
     <ClCompile Include="..\controller\CAViewController.cpp" />
     <ClCompile Include="..\control\CABar.cpp" />
     <ClCompile Include="..\control\CAButton.cpp" />
     <ClCompile Include="..\control\CAControl.cpp" />
+    <ClCompile Include="..\control\CAPageControl.cpp" />
     <ClCompile Include="..\control\CAProgress.cpp" />
     <ClCompile Include="..\control\CASegmentedControl.cpp" />
     <ClCompile Include="..\control\CASlider.cpp" />
@@ -208,7 +210,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\platform\win32\CCStdC.cpp" />
     <ClCompile Include="..\shaders\CAGLProgram.cpp" />
     <ClCompile Include="..\shaders\CAShaderCache.cpp" />
-    <ClCompile Include="..\shaders\CAtransformation.cpp" />
+    <ClCompile Include="..\shaders\CATransformation.cpp" />
     <ClCompile Include="..\shaders\ccGLStateCache.cpp" />
     <ClCompile Include="..\shaders\ccShaders.cpp" />
     <ClCompile Include="..\support\base64.cpp" />
@@ -247,8 +249,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CABatchView.cpp" />
     <ClCompile Include="..\view\CAClippingView.cpp" />
     <ClCompile Include="..\view\CACollectionView.cpp" />
+    <ClCompile Include="..\view\CADatePickerView.cpp" />
     <ClCompile Include="..\view\CAImageView.cpp" />
     <ClCompile Include="..\view\CALabel.cpp" />
+    <ClCompile Include="..\view\CAListView.cpp" />
     <ClCompile Include="..\view\CAPageView.cpp" />
     <ClCompile Include="..\view\CAPickerView.cpp" />
     <ClCompile Include="..\view\CARenderImage.cpp" />
@@ -280,10 +284,12 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\cocoa\CCSet.h" />
     <ClInclude Include="..\cocoa\CCString.h" />
     <ClInclude Include="..\controller\CABarItem.h" />
+    <ClInclude Include="..\controller\CADrawerController.h" />
     <ClInclude Include="..\controller\CAViewController.h" />
     <ClInclude Include="..\control\CABar.h" />
     <ClInclude Include="..\control\CAButton.h" />
     <ClInclude Include="..\control\CAControl.h" />
+    <ClInclude Include="..\control\CAPageControl.h" />
     <ClInclude Include="..\control\CAProgress.h" />
     <ClInclude Include="..\control\CASegmentedControl.h" />
     <ClInclude Include="..\control\CASlider.h" />
@@ -393,8 +399,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\view\CABatchView.h" />
     <ClInclude Include="..\view\CAClippingView.h" />
     <ClInclude Include="..\view\CACollectionView.h" />
+    <ClInclude Include="..\view\CADatePickerView.h" />
     <ClInclude Include="..\view\CAImageView.h" />
     <ClInclude Include="..\view\CALabel.h" />
+    <ClInclude Include="..\view\CAListView.h" />
     <ClInclude Include="..\view\CAPageView.h" />
     <ClInclude Include="..\view\CAPickerView.h" />
     <ClInclude Include="..\view\CARenderImage.h" />

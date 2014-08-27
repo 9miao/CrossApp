@@ -18,11 +18,10 @@ protected:
 	virtual void keyBackClicked();
 
 private:
-	CCSize size;
+	CADipSize size;
 	CAActivityIndicatorView* whiteLarge;
 	CAActivityIndicatorView* white;
 	CAActivityIndicatorView* gray;
-
 };
 
 #endif

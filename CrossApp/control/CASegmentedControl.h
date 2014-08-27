@@ -42,10 +42,8 @@ public:
     
 public:
     
-    bool initWithFrame(const CCRect& rect);
+    virtual bool init();
 
-    bool initWithCenter(const CCRect& rect);
-    
     virtual bool insertSegmentWithTitle(const char* title, int index, const CAControlState& controlState);
     virtual bool insertSegmentWithBackgroundImage(CAImage *image, int index, const CAControlState& controlState);
     virtual bool insertSegmentWithImage(CAImage *image, int index, const CAControlState& controlState);
@@ -65,6 +63,7 @@ public:
     
     virtual CAButton *createDefaultSegment();
     
+    CC_PROPERTY_PASS_BY_REF(std::string, m_sTitleFontName, TitleFontName);
     CC_SYNTHESIZE_READONLY(int, m_selectedIndex, selectedIndex);       // default 0
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_itemSize, ItemSize);
     void setHighlightedAtIndex(int index);

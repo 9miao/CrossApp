@@ -49,6 +49,8 @@ public:
     
     virtual CAImage* getImage(void);
     
+    virtual void updateDisplayedAlpha(float parentOpacity);
+    
 public:
 
     CC_SYNTHESIZE_READONLY(CCSize, m_obOriginalSize, OriginalSize);
@@ -79,7 +81,7 @@ protected:
 
     CABatchView* m_pScale9ImageView;
     
-    CAImageView* m_pImageView[9];
+    CAView* m_pImageView[9];
     
     CCRect m_rFrame[9];
     

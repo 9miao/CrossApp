@@ -391,9 +391,6 @@
     <ClCompile Include="..\support\ConvertUTFWrapper.cpp">
       <Filter>support</Filter>
     </ClCompile>
-    <ClCompile Include="..\shaders\CAtransformation.cpp">
-      <Filter>shaders</Filter>
-    </ClCompile>
     <ClCompile Include="..\basics\CAIndexPath.cpp">
       <Filter>basics</Filter>
     </ClCompile>
@@ -414,6 +411,21 @@
     </ClCompile>
     <ClCompile Include="..\platform\CAFTFontCache.cpp">
       <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CAPageControl.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\controller\CADrawerController.cpp">
+      <Filter>controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CADatePickerView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAListView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shaders\CATransformation.cpp">
+      <Filter>shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -838,6 +850,18 @@
     </ClInclude>
     <ClInclude Include="..\platform\CAFTFontCache.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CAPageControl.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\controller\CADrawerController.h">
+      <Filter>controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CADatePickerView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAListView.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

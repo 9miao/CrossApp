@@ -17,6 +17,14 @@ NS_CC_BEGIN
 
 class CAImage;
 class CAImageView;
+
+typedef enum {
+    CAPageControlStyleDot,
+    CAPageControlStyleRound,
+    CAPageControlStyleRectangle
+    
+}CAPageControlStyle;
+
 class CC_DLL CAPageControl : public CAControl {
     
 public:
@@ -51,6 +59,13 @@ public:
     
     CC_SYNTHESIZE(CAColor4B, m_pageIndicatorTintColor, PageIndicatorTintColor);
     CC_SYNTHESIZE(CAColor4B, m_currentPageIndicatorTintColor, CurrentPageIndicatorTintColor);
+    
+    CC_SYNTHESIZE(CAImage*, m_pPageImage, PageIndicatorImage);
+    CC_SYNTHESIZE(CAImage*, m_pSelectPageImage, CurrIndicatorImage);
+    
+    CC_PROPERTY_PASS_BY_REF(CAPageControlStyle, m_style, Style); // default is CAPageControlStyleDot
+    
+    virtual void setTouchEnabled(bool enable);
         
 protected:
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);    
@@ -60,8 +75,6 @@ protected:
 
 private:
     CAVector<CAImageView*> m_pIndicators;
-    CAImage* m_pPageImage;
-    CAImage* m_pSelectPageImage;
 };
 
 NS_CC_END

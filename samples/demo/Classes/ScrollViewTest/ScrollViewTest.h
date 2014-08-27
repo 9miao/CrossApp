@@ -20,7 +20,7 @@ public:
 	void zoomViewBySliderValue(CAControl* btn,CCPoint point);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CAScrollView* p_ScrollView;
 	CAImageView* imageView;
 	CASlider* zoomView;

@@ -14,15 +14,15 @@ public:
     bool init();
     
 public:
-	void textSetAlignment();
-	void textSetVerticalAlignment();
+	void textSetAlignment(void);
+	void textSetVerticalAlignment(void);
 
 protected:
 	void viewDidLoad();
 	void viewDidUnload();
 
 private:
-	CCSize size;
+	CADipSize size;
 	std::string introduce;
 
 };

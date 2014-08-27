@@ -1,12 +1,16 @@
 #include "Demo.h"
 
-#define VIEWCONTROLLER_SWITCH(p_Contrller,index)										\
-	p_Contrller* p_ViewContrller = new p_Contrller();									\
-	p_ViewContrller->init();															\
+#define VIEWCONTROLLER_SWITCH(p_Contrller,index)											\
+	p_Contrller* p_ViewContrller = new p_Contrller();										\
+	p_ViewContrller->init();																\
 	p_ViewContrller->setNavigationBarItem(CANavigationBarItem::create(testList.at(index))); \
-	p_ViewContrller->autorelease();														\
-	this->getNavigationController()->pushViewController(p_ViewContrller, true);
-
+	p_ViewContrller->autorelease();\
+	CAWindow* window = CAApplication::getApplication()->getRootWindow();\
+	CADrawerController* drawer = (CADrawerController*)window->getRootViewController();\
+	CANavigationController* nav = (CANavigationController*)drawer->getRightViewController();\
+	nav->pushViewController(p_ViewContrller, false);\
+	drawer->hideLeftViewController(true);
+	
 FirstViewController::FirstViewController()
 {
 	testList.push_back("AlertViewTest");
@@ -16,7 +20,6 @@ FirstViewController::FirstViewController()
 	testList.push_back("IndicatorViewTest");
 	testList.push_back("LabelTest");
 	testList.push_back("PageViewTest");
-	testList.push_back("PickerViewTest");
 	testList.push_back("ProgressTest");
 	testList.push_back("ScrollViewTest");
 	testList.push_back("SegmentedControlTest");
@@ -36,7 +39,7 @@ FirstViewController::~FirstViewController()
 void FirstViewController::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
-	tableView = CATableView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, size.width, size.height));
+	tableView = CATableView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height));
 	tableView->setAllowsSelection(true);
 	tableView->setTableViewDelegate(this);
 	tableView->setTableViewDataSource(this);
@@ -92,11 +95,6 @@ void FirstViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, u
 			VIEWCONTROLLER_SWITCH(PageViewTest,row);
 			break;
 		}
-		case PICKERVIEWTEST:
-		{
-			VIEWCONTROLLER_SWITCH(PickerViewTest, row);
-			break;
-		}
 		case PROGRESSTEST:
 		{
 			VIEWCONTROLLER_SWITCH(ProgressTest, row);
@@ -125,7 +123,6 @@ void FirstViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, u
 		case TABBARTEST:
 		{
 			VIEWCONTROLLER_SWITCH(TabBarTest, row);
-			this->getNavigationController()->getTabBarController()->setTabBarHidden(true,true);
 			break;
 		}
 		case TABVIEWTEST:
@@ -165,18 +162,19 @@ void FirstViewController::tableViewDidShowPullUpView(CATableView* table)
 
 CATableViewCell* FirstViewController::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
+	CADipSize _size = cellSize;
 	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
 	if (cell == NULL)
 	{
 		cell = CATableViewCell::create("CrossApp");
-		CALabel* test = CALabel::createWithCenter(CCRect(cellSize.width*0.5,
-												cellSize.height*0.5,
-												size.width*0.8,
-												cellSize.height*0.5));
+		CALabel* test = CALabel::createWithCenter(CADipRect(_size.width*0.5,
+												_size.height*0.5,
+												_size.width*0.8,
+												_size.height));
 		test->setColor(ccc4(51, 204, 255, 255));
 		test->setTextAlignment(CATextAlignmentCenter);
 		test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-		test->setFontSize(40 * CROSSAPP_ADPTATION_RATIO);
+		test->setFontSize(_px(40));
 		test->setTag(100);
 		cell->addSubview(test);
 	}
@@ -225,5 +223,4 @@ unsigned int FirstViewController::tableViewHeightForFooterInSection(CATableView*
 {
 	return 1;
 }
-
 

@@ -190,23 +190,37 @@ void CATouchController::touchMoved()
 
         for (int i=0; i<m_vTouchMovedsViewCache.size(); i++)
         {
-            CAResponder* view = m_vTouchMovedsViewCache.at(i);
+            CAResponder* responder = m_vTouchMovedsViewCache.at(i);
             
-            if (    !view->isTouchMovedListenHorizontal()
-                ||  !view->isTouchMovedListenVertical())
+            if (    !responder->isTouchMovedListenHorizontal()
+                ||  !responder->isTouchMovedListenVertical())
             {
-                CCPoint pointOffSet = ccpSub(m_pTouch->getLocation(),
-                                             m_pTouch->getPreviousLocation());
+                CCPoint pointOffSet = CCPointZero;
+                if (CAView* v = dynamic_cast<CAView*>(responder))
+                {
+                    pointOffSet = ccpSub(v->convertToNodeSpace(m_pTouch->getLocation()),
+                                         v->convertToNodeSpace(m_pTouch->getPreviousLocation()));
+                }
+                else if (CAViewController* c = dynamic_cast<CAViewController*>(responder))
+                {
+                    pointOffSet = ccpSub(c->getView()->convertToNodeSpace(m_pTouch->getLocation()),
+                                         c->getView()->convertToNodeSpace(m_pTouch->getPreviousLocation()));
+                }
+                else
+                {
+                    pointOffSet = ccpSub(m_pTouch->getLocation(), m_pTouch->getPreviousLocation());
+                }
+                        
                 pointOffSet.x = fabsf(pointOffSet.x);
                 pointOffSet.y = fabsf(pointOffSet.y);
                 
-                CC_CONTINUE_IF(view->isTouchMovedListenVertical()
+                CC_CONTINUE_IF(responder->isTouchMovedListenVertical()
                                && pointOffSet.x >= pointOffSet.y);
-                CC_CONTINUE_IF(view->isTouchMovedListenHorizontal()
+                CC_CONTINUE_IF(responder->isTouchMovedListenHorizontal()
                                && pointOffSet.x < pointOffSet.y);
             }
             m_vTouchesViews.clear();
-            m_vTouchesViews.pushBack(view);
+            m_vTouchesViews.pushBack(responder);
             this->passingTouchesViews();
             break;
         }

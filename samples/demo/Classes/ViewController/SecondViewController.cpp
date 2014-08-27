@@ -17,11 +17,11 @@ SecondViewController::~SecondViewController()
 	personList.clear();
 }
 
-void SecondViewController::viewDidLoad()
+void SecondViewController::viewDidLoad(void)
 {	
 	loadJsonData();
-    CCSize size = this->getView()->getBounds().size;
-	p_TableView = CATableView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, size.width, size.height));
+    size = this->getView()->getBounds().size;
+	p_TableView = CATableView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height));
 	p_TableView->setTableViewDataSource(this);
 	p_TableView->setTableViewDelegate(this);
 	p_TableView->setAllowsSelection(true);
@@ -82,39 +82,40 @@ void SecondViewController::tableViewDidShowPullUpView(CATableView* table)
 
 CATableViewCell* SecondViewController::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
+	CADipSize _size = cellSize;
 	Info* p_List = (Info*)personList.at(row%8);
 	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
 	if (cell == NULL)
 	{
 		CCLog("Cell-%d",row);
 		cell = CATableViewCell::create("CrossApp");
-		CALabel* p_Name = CALabel::createWithCenter(CCRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+		CALabel* p_Name = CALabel::createWithCenter(CADipRect(_size.width*0.1, _size.height*0.5, _size.width*0.2, _size.height));
 		p_Name->setTag(9);
-		p_Name->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+		p_Name->setFontSize(_px(30));
 		p_Name->setColor(CAColor_blueStyle);
 		p_Name->setTextAlignment(CATextAlignmentCenter);
 		p_Name->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 		cell->addSubview(p_Name);
 
-		CALabel* p_Num = CALabel::createWithCenter(CCRect(cellSize.width*0.3, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+		CALabel* p_Num = CALabel::createWithCenter(CADipRect(_size.width*0.3, _size.height*0.5, _size.width*0.2, _size.height));
 		p_Num->setTag(10);
-		p_Num->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+		p_Num->setFontSize(_px(30));
 		p_Num->setColor(CAColor_blueStyle);
 		p_Num->setTextAlignment(CATextAlignmentCenter);
 		p_Num->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 		cell->addSubview(p_Num);
 
-		CALabel* p_Gender = CALabel::createWithCenter(CCRect(cellSize.width*0.5, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+		CALabel* p_Gender = CALabel::createWithCenter(CADipRect(_size.width*0.5, _size.height*0.5, _size.width*0.2, _size.height));
 		p_Gender->setTag(11);
-		p_Gender->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+		p_Gender->setFontSize(_px(30));
 		p_Gender->setColor(CAColor_blueStyle);
 		p_Gender->setTextAlignment(CATextAlignmentCenter);
 		p_Gender->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 		cell->addSubview(p_Gender);
 
-		CALabel* p_Occupation = CALabel::createWithCenter(CCRect(cellSize.width*0.8, cellSize.height*0.5, cellSize.width*0.3, cellSize.height));
+		CALabel* p_Occupation = CALabel::createWithCenter(CADipRect(_size.width*0.8, _size.height*0.5, _size.width*0.3, _size.height));
 		p_Occupation->setTag(12);
-		p_Occupation->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+		p_Occupation->setFontSize(_px(30));
 		p_Occupation->setColor(CAColor_blueStyle);
 		p_Occupation->setTextAlignment(CATextAlignmentCenter);
 		p_Occupation->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
@@ -136,9 +137,10 @@ CATableViewCell* SecondViewController::tableCellAtIndex(CATableView* table, cons
 
 CAView* SecondViewController::tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
 {
+	CADipSize _viewSize = viewSize;
 	char head[10] = "";
 	CAView* view = CAView::createWithColor(CAColor_gray);
-	CAButton* headControl1 = CAButton::createWithCenter(CCRect(viewSize.width*0.1, viewSize.height*0.5, viewSize.height*0.8, viewSize.height*0.8),
+	CAButton* headControl1 = CAButton::createWithCenter(CADipRect(_viewSize.width*0.1, _viewSize.height*0.5, _viewSize.height*0.8, _viewSize.height*0.8),
 		CAButtonTypeRoundedRect);
 	headControl1->setTag(100 + (int)section);
 	if (sect[section] == CELL_COUNT)
@@ -152,9 +154,9 @@ CAView* SecondViewController::tableViewSectionViewForHeaderInSection(CATableView
 	headControl1->addTarget(this, CAControl_selector(SecondViewController::switchCellListInSection), CAControlEventTouchUpInSide);
 	view->addSubview(headControl1);
 
-	CALabel* header = CALabel::createWithCenter(CCRect(viewSize.width*0.5, viewSize.height*0.5, viewSize.width*0.3, viewSize.height));
+	CALabel* header = CALabel::createWithCenter(CADipRect(_viewSize.width*0.5, _viewSize.height*0.5, _viewSize.width*0.3, _viewSize.height));
 	sprintf(head, "Section-%d", section);
-	header->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+	header->setFontSize(_px(30));
 	header->setText(head);
 	header->setColor(CAColor_blueStyle);
 	header->setTextAlignment(CATextAlignmentCenter);
@@ -166,10 +168,10 @@ CAView* SecondViewController::tableViewSectionViewForHeaderInSection(CATableView
 
 CAView* SecondViewController::tableViewSectionViewForFooterInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
 {
+	CADipSize _viewSize = viewSize;
+	char head[10] = "";
 	CAView* view = CAView::createWithColor(CAColor_yellow);
-
-    char head[10] = "";
-    CALabel* header = CALabel::createWithCenter(CCRect(viewSize.width*0.5, viewSize.height*0.5, viewSize.width*0.3, viewSize.height));
+    CALabel* header = CALabel::createWithCenter(CADipRect(_viewSize.width*0.5, _viewSize.height*0.5, _viewSize.width*0.3, _viewSize.height));
 	sprintf(head, "Section-%d", section);
 	header->setFontSize(_px(30));
 	header->setText(head);
@@ -193,17 +195,17 @@ unsigned int SecondViewController::numberOfSections(CATableView *table)
 
 unsigned int SecondViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	return this->getView()->getBounds().size.height*0.1;
+	return size.height*0.1;
 }
 
 unsigned int SecondViewController::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
 {
-	return this->getView()->getBounds().size.height*0.1;
+	return size.height*0.1;
 }
 
 unsigned int SecondViewController::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
 {
-	return this->getView()->getBounds().size.height*0.1;
+	return size.height*0.1;
 }
 
 void SecondViewController::switchCellListInSection(CAControl* btn, CCPoint point)

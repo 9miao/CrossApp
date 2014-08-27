@@ -21,7 +21,7 @@ public:
 	void sliderValueChange(CAControl* btn, CCPoint point);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CALabel* sliderValue;
 
 };

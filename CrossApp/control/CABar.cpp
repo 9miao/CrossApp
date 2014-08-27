@@ -146,7 +146,14 @@ void CANavigationBar::showTitle()
     
     if (CAView* titleView = m_pItems.back()->getTitleView())
     {
+        float aspectRatio = 0;
+        if (!titleView->getFrame().size.equals(CCSizeZero))
+        {
+            aspectRatio = titleView->getFrame().size.width / titleView->getFrame().size.height;
+        }
+        
         rect.size.height *= 2/3.0f;
+        rect.size.width = aspectRatio < FLT_EPSILON ? rect.size.width : aspectRatio * rect.size.height;
         titleView->setCenter(rect);
         this->addSubview(titleView);
         m_pTitle = titleView;
@@ -371,7 +378,7 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items, const CCSize& size)
 CATabBar* CATabBar::create(const std::vector<CATabBarItem*>& items, const CCSize& size)
 {
     CATabBar* tabBar = new CATabBar();
-    if (tabBar && tabBar->init(items))
+    if (tabBar && tabBar->init(items, size))
     {
         tabBar->autorelease();
         return tabBar;

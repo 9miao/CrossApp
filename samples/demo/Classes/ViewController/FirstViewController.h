@@ -34,7 +34,7 @@ public:
 	virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CATableView* tableView;
 	std::vector<std::string> testList;
 };

@@ -475,10 +475,7 @@ void CCHttpClient::send(CCHttpRequest* request)
 {    
     lazyInitThreadSemphore();
     
-    if (!request)
-    {
-        return;
-    }
+    CC_RETURN_IF(!request);
         
     ++s_asyncRequestCount[_threadID];
     
@@ -512,6 +509,7 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
         --s_asyncRequestCount[_threadID];
         
         CCHttpRequest *request = response->getHttpRequest();
+        CC_RETURN_IF(request == NULL);
         CAObject *pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 

@@ -22,9 +22,6 @@
     <Filter Include="Classes\ProgressTest">
       <UniqueIdentifier>{62061b55-1bba-449e-a904-cbce3b2b4996}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ScrollViewTest">
-      <UniqueIdentifier>{1847f26b-2ba7-4d9a-b4e6-c6a7b53c5080}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\SegmentedControlTest">
       <UniqueIdentifier>{2895a2f2-d10f-4b6d-aef3-486efda86c97}</UniqueIdentifier>
     </Filter>
@@ -49,9 +46,6 @@
     <Filter Include="Classes\ViewController">
       <UniqueIdentifier>{e1047948-191d-427c-a454-4595f260ac01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\PickerViewTest">
-      <UniqueIdentifier>{bca97b50-8e94-4e3b-8a4b-1c121b9b92e7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\PageViewTest">
       <UniqueIdentifier>{2dd0f1d5-2001-4bc7-9623-3765c8d95ab2}</UniqueIdentifier>
     </Filter>
@@ -60,6 +54,9 @@
     </Filter>
     <Filter Include="Classes\ActivityIndicatorViewTest">
       <UniqueIdentifier>{286c2d86-1936-420f-87b8-6ab475199f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ScrollViewTest">
+      <UniqueIdentifier>{5ca4ce7e-7b46-4857-84f3-f1aa7887a504}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +83,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ProgressTest\ProgressTest.cpp">
       <Filter>Classes\ProgressTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ScrollViewTest\ScrollViewTest.cpp">
-      <Filter>Classes\ScrollViewTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SegmentedControlTest\SegmentedControlTest.cpp">
       <Filter>Classes\SegmentedControlTest</Filter>
@@ -135,14 +129,17 @@
     <ClCompile Include="..\Classes\MainMenu.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PickerViewTest\PickerViewTest.cpp">
-      <Filter>Classes\PickerViewTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\PageViewTest\PageViewTest.cpp">
       <Filter>Classes\PageViewTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ActivityIndicatorViewTest\ActivityIndicatorViewTest.cpp">
       <Filter>Classes\ActivityIndicatorViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TableViewTest\MyTableViewCell.cpp">
+      <Filter>Classes\TableViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ScrollViewTest\ScrollViewTest.cpp">
+      <Filter>Classes\ScrollViewTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,9 +169,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ProgressTest\ProgressTest.h">
       <Filter>Classes\ProgressTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ScrollViewTest\ScrollViewTest.h">
-      <Filter>Classes\ScrollViewTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SegmentedControlTest\SegmentedControlTest.h">
       <Filter>Classes\SegmentedControlTest</Filter>
@@ -221,9 +215,6 @@
     <ClInclude Include="..\Classes\ExtensionsTest\HttpRequestTest.h">
       <Filter>Classes\ExtensionsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PickerViewTest\PickerViewTest.h">
-      <Filter>Classes\PickerViewTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\PageViewTest\PageViewTest.h">
       <Filter>Classes\PageViewTest</Filter>
     </ClInclude>
@@ -232,6 +223,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ActivityIndicatorViewTest\ActivityIndicatorViewTest.h">
       <Filter>Classes\ActivityIndicatorViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TableViewTest\MyTableViewCell.h">
+      <Filter>Classes\TableViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ScrollViewTest\ScrollViewTest.h">
+      <Filter>Classes\ScrollViewTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

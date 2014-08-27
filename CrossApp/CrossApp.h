@@ -52,6 +52,7 @@
 #include "control/CASlider.h"
 #include "control/CASegmentedControl.h"
 #include "control/CATextField.h"
+#include "control/CAPageControl.h"
 
 //controller
 #include "controller/CABarItem.h"
@@ -86,6 +87,7 @@
 #include "view/CARenderImage.h"
 #include "view/CAClippingView.h"
 #include "view/CAScrollView.h"
+#include "view/CAListView.h"
 #include "view/CATableView.h"
 #include "view/CAPageView.h"
 #include "view/CACollectionView.h"

@@ -66,7 +66,7 @@ public:
     
     static int getStringWidth(const char* pFontName, unsigned long nSize, const char* pText);
     
-	static CAImage* create(const char* file);
+	static CAImage* create(const std::string& file);
     
     static CAImage* createWithDataNoCache(void* data, int lenght);
     
@@ -120,9 +120,11 @@ public:
     
     static CAImage* CC_WHITE_IMAGE();
     
+    float getAspectRatio();
+    
 protected:
     
-    CC_PROPERTY_READONLY(CAImagePixelFormat, m_ePixelFormat, PixelFormat)
+    CC_PROPERTY_READONLY_PASS_BY_REF(CAImagePixelFormat, m_ePixelFormat, PixelFormat)
     
     CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
     

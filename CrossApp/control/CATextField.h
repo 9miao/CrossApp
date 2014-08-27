@@ -94,17 +94,13 @@ public:
     
     virtual bool becomeFirstResponder();
     
-    void setBackGroundImage(CAImage *image);
-    
-    CAImage *getBackGroundImage();
-    
     static CATextField* createWithFrame(const CCRect& frame);
     
     static CATextField* createWithCenter(const CCRect& rect);
     
-    bool initWithFrame(const CCRect& frame);
+    bool init();
     
-    bool initWithCenter(const CCRect& rect);
+    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
     CC_PROPERTY(std::string, m_sPlaceHolder, PlaceHolder);
     
@@ -159,7 +155,7 @@ protected:
 private:
 	std::vector<TextAttribute> m_vTextFiledChars;
 	int m_iCurPos;
-	CAScale9ImageView* m_pBackgroundView;
+
 	int m_iLabelWidth;
 	int m_iString_left_offX;
 	int m_iString_l_length;

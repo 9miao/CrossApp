@@ -36,6 +36,8 @@ public:
     
     void addTarget(CAObject* target, SEL_CAControl selector);
     
+    void addTargetForTouchUpSide(CAObject* target, SEL_CAControl selector);
+    
     void removeTarget(CAObject* target, SEL_CAControl selector);
     
 public:

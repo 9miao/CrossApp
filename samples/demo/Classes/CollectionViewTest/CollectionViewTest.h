@@ -17,8 +17,8 @@ protected:
 	void viewDidUnload();
 
 public:
-	virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int row, unsigned int item);
-	virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int row, unsigned int item);
+	virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item);
+	virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item);
 
 	virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item);
 	virtual unsigned int numberOfSectionsInCollectioView();
@@ -31,7 +31,7 @@ public:
 	virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CACollectionView* p_Conllection;
 
 };

@@ -20,8 +20,9 @@ public:
 	void switchStateChange(CAControl* btn, CCPoint point);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CALabel* switchState;
+	CADrawerController* drawerController;
 
 };
 

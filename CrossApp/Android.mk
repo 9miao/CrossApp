@@ -38,6 +38,7 @@ control/CASegmentedControl.cpp \
 control/CASlider.cpp \
 control/CASwitch.cpp \
 control/CATextField.cpp \
+control/CAPageControl.cpp \
 controller/CABarItem.cpp \
 controller/CAViewController.cpp \
 controller/CADrawerController.cpp \
@@ -85,6 +86,7 @@ view/CALabel.cpp \
 view/CARenderImage.cpp \
 view/CAScale9ImageView.cpp \
 view/CAScrollView.cpp \
+view/CAListView.cpp \
 view/CATableView.cpp \
 view/CACollectionView.cpp \
 view/CAView.cpp \
@@ -93,6 +95,7 @@ view/CAAlertView.cpp \
 view/CAPageView.cpp \
 view/CAPickerView.cpp \
 view/CADatePickerView.cpp \
+view/CAActivityIndicatorView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

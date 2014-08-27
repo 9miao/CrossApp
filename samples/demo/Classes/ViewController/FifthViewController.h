@@ -27,9 +27,9 @@ public:
 	void isExecuteEndFunc(float intervalTime);
 
 private:
-	CCSize size;
-	CCSize viewOriginalSize;
-	CCPoint originalPoint;
+	CADipSize size;
+	CADipSize viewOriginalSize;
+	CADipPoint originalPoint;
 	CAImageView* gestureView;
 	std::vector<CCPoint> point_Vector;
 	clock_t firstClick, secondClick, invalidClick;

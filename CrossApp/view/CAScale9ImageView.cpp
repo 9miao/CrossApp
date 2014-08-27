@@ -11,6 +11,16 @@
 
 NS_CC_BEGIN
 
+class CC_DLL CAScale9Image: public CAView
+{
+    
+public:
+    
+    using CAView::setImage;
+    
+    using CAView::setImageRect;
+};
+
 CAScale9ImageView::CAScale9ImageView()
 : m_fInsetLeft(0)
 , m_fInsetTop(0)
@@ -140,57 +150,48 @@ bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, const C
     m_rFrame[6] = CCRect(0, lenghtY1 + lenghtY2, lenghtX1, lenghtY3);
     m_rFrame[7] = CCRect(lenghtX1, lenghtY1 + lenghtY2, lenghtX2, lenghtY3);
     m_rFrame[8] = CCRect(lenghtX1 + lenghtX2, lenghtY1 + lenghtY2, lenghtX3, lenghtY3);
-       
-    // Centre
-    m_pImageView[4] = new CAImageView();
-    m_pImageView[4]->initWithImage(m_pScale9ImageView->getImage());
-    m_pScale9ImageView->insertSubview(m_pImageView[4], 0);
     
-    // Top
-    m_pImageView[1] = new CAImageView();
-    m_pImageView[1]->initWithImage(m_pScale9ImageView->getImage());
-    m_pScale9ImageView->insertSubview(m_pImageView[1], 1);
+    CAScale9Image* imageView[9] = {};
     
-    // Bottom
-    m_pImageView[7] = new CAImageView();
-    m_pImageView[7]->initWithImage(m_pScale9ImageView->getImage());
-    m_pScale9ImageView->insertSubview(m_pImageView[7], 1);
-    
-    // Left
-    m_pImageView[3] = new CAImageView();
-    m_pImageView[3]->initWithImage(m_pScale9ImageView->getImage());
-    m_pScale9ImageView->insertSubview(m_pImageView[3], 1);
-    
-    // Right
-    m_pImageView[5] = new CAImageView();
-    m_pImageView[5]->initWithImage(m_pScale9ImageView->getImage());
-    m_pScale9ImageView->insertSubview(m_pImageView[5], 1);
-    
-    // Top left
-    m_pImageView[0] = new CAImageView();
-    m_pImageView[0]->initWithImage(m_pScale9ImageView->getImage());
-    m_pScale9ImageView->insertSubview(m_pImageView[0], 2);
-    
-    // Top right
-    m_pImageView[2] = new CAImageView();
-    m_pImageView[2]->initWithImage(m_pScale9ImageView->getImage());
-    m_pScale9ImageView->insertSubview(m_pImageView[2], 2);
-    
-    // Bottom left
-    m_pImageView[6] = new CAImageView();
-    m_pImageView[6]->initWithImage(m_pScale9ImageView->getImage());
-    m_pScale9ImageView->insertSubview(m_pImageView[6], 2);
-    
-    // Bottom right
-    m_pImageView[8] = new CAImageView();
-    m_pImageView[8]->initWithImage(m_pScale9ImageView->getImage());
-    m_pScale9ImageView->insertSubview(m_pImageView[8], 2);
-    
-
     for (int i=0; i<9; i++)
     {
-        m_pImageView[i]->setImageRect(m_rFrame[i], false, m_rFrame[i].size);
-        m_pImageView[i]->setAnchorPoint(CCPointZero);
+        imageView[i] = new CAScale9Image();
+        imageView[i]->setImage(m_pScale9ImageView->getImage());
+    }
+    
+    
+    // Centre
+    m_pScale9ImageView->insertSubview(imageView[4], 0);
+    
+    // Top
+    m_pScale9ImageView->insertSubview(imageView[1], 1);
+    
+    // Bottom
+    m_pScale9ImageView->insertSubview(imageView[7], 1);
+    
+    // Left
+    m_pScale9ImageView->insertSubview(imageView[3], 1);
+    
+    // Right
+    m_pScale9ImageView->insertSubview(imageView[5], 1);
+    
+    // Top left
+    m_pScale9ImageView->insertSubview(imageView[0], 2);
+    
+    // Top right
+    m_pScale9ImageView->insertSubview(imageView[2], 2);
+    
+    // Bottom left
+    m_pScale9ImageView->insertSubview(imageView[6], 2);
+    
+    // Bottom right
+    m_pScale9ImageView->insertSubview(imageView[8], 2);
+    
+    for (int i=0; i<9; i++)
+    {
+        imageView[i]->setImageRect(m_rFrame[i], false, m_rFrame[i].size);
+        imageView[i]->setAnchorPoint(CCPointZero);
+        m_pImageView[i] = imageView[i];
     }
 
     this->addSubview(m_pScale9ImageView);
@@ -392,6 +393,14 @@ void CAScale9ImageView::setImage(CrossApp::CAImage *image)
 CAImage* CAScale9ImageView::getImage()
 {
     return m_pScale9ImageView->getImage();
+}
+
+void CAScale9ImageView::updateDisplayedAlpha(float parentOpacity)
+{
+    if (m_pScale9ImageView)
+    {
+        m_pScale9ImageView->updateDisplayedAlpha(parentOpacity);
+    }
 }
 
 bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect, CCRect capInsets)

@@ -16,7 +16,7 @@ void AlertViewTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
 
-	imageBtn = CAButton::createWithCenter(CCRect(size.width*0.5, size.height*0.5,size.width*0.2,50),CAButtonTypeSquareRect);
+	imageBtn = CAButton::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width*0.2, 50), CAButtonTypeSquareRect);
 	imageBtn->setTitleForState(CAControlStateAll,"Click");
 	imageBtn->addTarget(this,CAControl_selector(AlertViewTest::respondTouch),CAControlEventTouchUpInSide);
 	this->getView()->addSubview(imageBtn);
