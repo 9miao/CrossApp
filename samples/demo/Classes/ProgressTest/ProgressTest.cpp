@@ -16,22 +16,22 @@ void ProgressTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
 
-	progressValue = CALabel::createWithCenter(CCRect(size.width*0.5, size.height*0.3, size.width*0.2, 50));
+	progressValue = CALabel::createWithCenter(CADipRect(size.width*0.5, size.height*0.3, size.width*0.2, 50));
 	progressValue->setText("");
-	progressValue->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+	progressValue->setFontSize(_px(30));
 	progressValue->setColor(CAColor_blueStyle);
 	progressValue->setTextAlignment(CATextAlignmentCenter);
 	progressValue->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	this->getView()->addSubview(progressValue);
 
 	firstProgress = CAProgress::create();
-	firstProgress->setCenter(CCRect(size.width*0.5, size.height*0.5, size.width*0.4, 50));
+	firstProgress->setCenter(CADipRect(size.width*0.5, size.height*0.5, size.width*0.4, 50));
 	this->getView()->addSubview(firstProgress);
 
 	CAScheduler::schedule(schedule_selector(ProgressTest::firstProgressValueChange), this, 0.01, false);
 
 	secondProgress = CAProgress::create();
-	secondProgress->setCenter(CCRect(size.width*0.5, size.height*0.7, size.width*0.4, 50));
+	secondProgress->setCenter(CADipRect(size.width*0.5, size.height*0.7, size.width*0.4, 50));
 	secondProgress->setProgressTrackImage(CAImage::create("source_material/btn_rounded_highlighted.png"));
 	secondProgress->setProgressTintImage(CAImage::create("source_material/btn_rounded3D_selected.png"));
 	this->getView()->addSubview(secondProgress);

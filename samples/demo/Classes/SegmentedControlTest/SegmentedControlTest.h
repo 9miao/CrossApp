@@ -20,7 +20,7 @@ public:
 	void segmentCallback(CAControl* btn, CCPoint point);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CASegmentedControl* segment;
 	CALabel* segmentText;
 	CALabel* defaultPage;

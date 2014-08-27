@@ -17,7 +17,7 @@ void PageViewTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
 
-	segmented = CASegmentedControl::createWithCenter(CCRect(size.width*0.5, size.height*0.05+2, size.width*0.3, size.height*0.1), 2);
+	segmented = CASegmentedControl::createWithCenter(CADipRect(size.width*0.5, size.height*0.05 + 2, size.width*0.3, size.height*0.1), 2);
 	segmented->setBackgroundImageAtIndex(CAImage::create("source_material/seg_highlighted1.png"), 0, CAControlStateNormal);
 	segmented->setBackgroundImageAtIndex(CAImage::create("source_material/seg_normal1.png"), 0, CAControlStateHighlighted);
 	segmented->setBackgroundImageAtIndex(CAImage::create("source_material/seg_selected1.png"), 0, CAControlStateSelected);
@@ -33,14 +33,14 @@ void PageViewTest::viewDidLoad()
 	this->getView()->insertSubview(segmented,3);
 
 
-	CAImageView* view1 = CAImageView::createWithImage(CAImage::create("bg.jpg"));
-	CAImageView* view2 = CAImageView::createWithImage(CAImage::create("2.png"));
-	CAView* view3 = CAView::createWithColor(CAColor_green);
+	CAImageView* view1 = CAImageView::createWithImage(CAImage::create("1.jpg"));
+	CAImageView* view2 = CAImageView::createWithImage(CAImage::create("2.jpg"));
+	CAImageView* view3 = CAImageView::createWithImage(CAImage::create("3.jpg"));
 	_view.pushBack(view1);
 	_view.pushBack(view2);
 	_view.pushBack(view3);
 
-	pageViewTest = CAPageView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, size.width, size.height), CAPageView::CAPageViewDirectionHorizontal);
+	pageViewTest = CAPageView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height), CAPageView::CAPageViewDirectionHorizontal);
 	pageViewTest->setPageViewDelegate(this);
 	pageViewTest->setViews(_view);
 	this->getView()->addSubview(pageViewTest);
@@ -77,7 +77,6 @@ void PageViewTest::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned i
 		this->getNavigationController()->getTabBarController()->setTabBarHidden(false, true);
 		fullScreen = false;
 	}
-	reshapeViewRectDidFinish();
 }
 
 void PageViewTest::viewDidUnload()
@@ -88,8 +87,8 @@ void PageViewTest::viewDidUnload()
 
 void PageViewTest::reshapeViewRectDidFinish()
 {
-	CCSize currentSize = this->getView()->getBounds().size;
+	CADipSize currentSize = this->getView()->getBounds().size;
 	float scaleY = fullScreen ? (currentSize.height / size.height) : (size.height / currentSize.height);
 	pageViewTest->setScaleY(scaleY);
-	pageViewTest->setCenterOrigin(CCPoint(currentSize.width*0.5, currentSize.height*0.5));
+	pageViewTest->setCenterOrigin(CADipPoint(currentSize.width*0.5, currentSize.height*0.5));
 }

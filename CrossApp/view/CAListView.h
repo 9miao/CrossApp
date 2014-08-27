@@ -121,7 +121,7 @@ protected:
 
 	void loadCollectionCell();
     
-    void updateHeaderAndFooterRects();
+    CAView* dequeueReusableLine();
     
 public:
 
@@ -191,6 +191,10 @@ private:
 
 	std::map<std::string, CAVector<CAListViewCell*> > m_pFreedListCells;
     
+    std::map<unsigned int, CAView*> m_pUsedLines;
+    
+    CAList<CAView*> m_pFreedLines;
+    
     CAListViewCell* m_pHighlightedListCells;
     
     std::set<unsigned int> m_pSelectedListCells;
@@ -214,29 +218,33 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nIndex, Index);
     
+    CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
+    
+    CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
+    
 public:
     
     virtual CAResponder* nextResponder();
     
 protected:
     
-    virtual void setControlState(const CAControlState& var);
+    virtual void normalListViewCell();
     
-	virtual void normalListViewCell();
+    virtual void highlightedListViewCell();
     
-	virtual void highlightedListViewCell();
+    virtual void selectedListViewCell();
     
-	virtual void selectedListViewCell();
-    
-	virtual void disabledListViewCell();
-
-	virtual void resetListViewCell();
-    
-    virtual void setContentSize(const CCSize& var);
+    virtual void disabledListViewCell();
     
     virtual void recoveryListViewCell(){};
     
+    void setControlState(const CAControlState& var);
+    
+    void setContentSize(const CCSize& var);
+    
 private:
+    
+    void resetListViewCell();
     
     using CAView::init;
     

@@ -27,7 +27,7 @@ private:
 	void loadingAnim(float interval);
 
 private:
-	CCSize size;
+	CADipSize size;
 	int cout;
 	CALabel* errorInfo;
 	CAView* loading;

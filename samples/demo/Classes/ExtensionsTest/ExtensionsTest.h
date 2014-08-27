@@ -42,11 +42,11 @@ public:
 	virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
 
 private:
-	void loadJsonData();
+	void loadJsonData(void);
 	void nextViewController(CAControl* btn, CCPoint point);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CATableView* table;
 	CAMap<int,Info*> personList;
 	CAButton* next;

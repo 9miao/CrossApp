@@ -120,33 +120,25 @@ bool CATextField::init()
         return false;
     }
 
-    float width = CAApplication::getApplication()->getWinSize().width;
+    
     this->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png")));
 
-	if (m_iHoriMargins==0)
-	{
-		m_iHoriMargins = BORDER_WIDTH(width);
-	}
-	if (m_iVertMargins==0)
-	{
-		m_iVertMargins = (this->getBounds().size.height - m_iFontHeight) / 2;
-	}
-	m_iLabelWidth = this->getBounds().size.width - 2 * m_iHoriMargins;
-    this->initMarkSprite();
     return true;
 }
 
 void CATextField::initMarkSprite()
 {
-    m_pCursorMark = CAView::create();
-	m_pCursorMark->setColor(m_cCursorColor);
-	m_pCursorMark->setVisible(false);
-
-	m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, 2, CAImage::getFontHeight("", m_iFontSize)));
-	this->addSubview(m_pCursorMark);
-    
-    m_pCursorAction = CCRepeatForever::create((CCActionInterval *) CCSequence::create(CCFadeOut::create(0.5f), CCFadeIn::create(0.5f), NULL));
-	m_pCursorMark->runAction(m_pCursorAction);
+    if (m_pCursorMark == NULL)
+    {
+        m_pCursorMark = CAView::create();
+        m_pCursorMark->setColor(m_cCursorColor);
+        m_pCursorMark->setVisible(false);
+        this->addSubview(m_pCursorMark);
+        
+        m_pCursorAction = CCRepeatForever::create((CCActionInterval *) CCSequence::create(CCFadeOut::create(0.5f), CCFadeIn::create(0.5f), NULL));
+        m_pCursorMark->runAction(m_pCursorAction);
+    }
+    m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, 2, CAImage::getFontHeight("", m_iFontSize)));
 }
 
 void CATextField::setFontSize(int var)
@@ -502,6 +494,18 @@ void CATextField::setContentSize(const CCSize& var)
     {
         m_pBackgroundView->setFrame(this->getBounds());
     }
+    
+    float width = CAApplication::getApplication()->getWinSize().width;
+	if (m_iHoriMargins==0)
+	{
+		m_iHoriMargins = BORDER_WIDTH(width);
+	}
+	if (m_iVertMargins==0)
+	{
+		m_iVertMargins = (this->getBounds().size.height - m_iFontHeight) / 2;
+	}
+	m_iLabelWidth = this->getBounds().size.width - 2 * m_iHoriMargins;
+    this->initMarkSprite();
 }
 
 void CATextField::updateImage()
@@ -509,7 +513,7 @@ void CATextField::updateImage()
 	std::string text = "";
     if (m_sText.empty())
     {
-        text = m_sPlaceHolder;
+        //text = m_sPlaceHolder;
         this->setColor(m_cSpaceHolderColor);
     }
 	else

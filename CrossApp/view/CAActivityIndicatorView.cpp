@@ -11,19 +11,19 @@
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "CAScale9ImageView.h"
-#include "CCActionInterval.h"
 
 NS_CC_BEGIN
 
 CAActivityIndicatorView::CAActivityIndicatorView()
-: m_animating(false)
+: m_bStopAnimation(false)
 , m_hidesWhenStopped(true)
 , m_style(CAActivityIndicatorViewStyleWhite)
 , m_color(ccc4(255, 255, 255, 255))
 , m_duration(0.1f)
 , m_pImageView(NULL)
 , m_pBackView(NULL)
-//, m_fLoadingMinTime(0.0f)
+, m_fLoadingMinTime(0.0f)
+, m_fLoadingTime(0.0f)
 {
     
 }
@@ -167,20 +167,22 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
 
 void CAActivityIndicatorView::startAnimating()
 {
-    m_animating = true;
+    m_bStopAnimation = false;
+    m_fLoadingTime = 0.0f;
     m_animationIndex = 0;
+    this->setVisible(true);
     CAScheduler::schedule(schedule_selector(CAActivityIndicatorView::animation), this, m_duration);
 }
 
 void CAActivityIndicatorView::stopAnimating()
 {
-    m_animating = false;
-    CAScheduler::unschedule(schedule_selector(CAActivityIndicatorView::animation), this);
+    m_bStopAnimation = true;
+    this->setVisible(false);
 }
 
 bool CAActivityIndicatorView::isAnimating()
 {
-    return m_animating;
+    return CAScheduler::isScheduled(schedule_selector(CAActivityIndicatorView::animation), this);
 }
 
 void CAActivityIndicatorView::draw()
@@ -240,9 +242,10 @@ void CAActivityIndicatorView::draw()
 
 void CAActivityIndicatorView::animation(float dt)
 {
+    
     if (m_style == CAActivityIndicatorViewStyleImage && m_pImageView)
     {
-        float rotate = m_pImageView->getRotation();
+        static float rotate = 0;
         rotate += 10;
         if (rotate == 360)
         {
@@ -258,6 +261,16 @@ void CAActivityIndicatorView::animation(float dt)
             m_animationIndex = 12 - 1;
         }
     }
+    m_fLoadingTime += dt;
+    do
+    {
+        CC_BREAK_IF(m_fLoadingMinTime < FLT_EPSILON);
+        CC_BREAK_IF(m_fLoadingTime < m_fLoadingMinTime);
+        CC_BREAK_IF(m_bStopAnimation == false);
+        CAScheduler::unschedule(schedule_selector(CAActivityIndicatorView::animation), this);
+    }
+    while (0);
+
     updateDraw();
 }
 
@@ -265,7 +278,7 @@ void CAActivityIndicatorView::setActivityIndicatorView(CrossApp::CAView *var)
 {
     m_style = CAActivityIndicatorViewStyleImage;
     
-    m_duration = 0.05f;
+    m_duration = 1 / 30.0f;
     
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pImageView);
@@ -298,7 +311,7 @@ void CAActivityIndicatorView::setActivityBackView(CrossApp::CAView *var)
     }
 }
 
-const CrossApp::CAView* CAActivityIndicatorView::getActivityBackView()
+CAView* CAActivityIndicatorView::getActivityBackView()
 {
     return m_pBackView;
 }

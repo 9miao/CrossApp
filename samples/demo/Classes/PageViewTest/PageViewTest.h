@@ -16,7 +16,7 @@ public:
 	void segBtnCallBack(CAControl* btn,CCPoint point);
 
 protected:
-	void viewDidLoad();
+	void viewDidLoad(); 
 	void viewDidUnload();
 
 	virtual void reshapeViewRectDidFinish();
@@ -26,7 +26,7 @@ protected:
 	virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CASegmentedControl* segmented;
 	CAVector<CAView*> _view;
 	CAPageView* pageViewTest;

@@ -16,11 +16,11 @@ void SliderTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
 	
-	CASlider* defaultSlider = CASlider::createWithCenter(CCRect(size.width*0.5,size.height*0.2,size.width*0.7,20));
+	CASlider* defaultSlider = CASlider::createWithCenter(CADipRect(size.width*0.5,size.height*0.2,size.width*0.7,20));
 	defaultSlider->addTarget(this, CAControl_selector(SliderTest::defaultSliderValueChange));
 	this->getView()->addSubview(defaultSlider);
 
-	CASlider* slider = CASlider::createWithCenter(CCRect(size.width*0.5, size.height*0.4, size.width*0.7, 20));
+	CASlider* slider = CASlider::createWithCenter(CADipRect(size.width*0.5, size.height*0.4, size.width*0.7, 20));
 	slider->setTrackHeight(20);
 	slider->setMaxTrackTintImage(CAImage::create("source_material/ex2.png"));
 	slider->setMinTrackTintImage(CAImage::create("source_material/ex3.png"));
@@ -28,10 +28,10 @@ void SliderTest::viewDidLoad()
 	slider->addTarget(this, CAControl_selector(SliderTest::sliderValueChange));
 	this->getView()->addSubview(slider);
 
-	sliderValue = CALabel::createWithCenter(CCRect(size.width*0.5, size.height*0.6, size.width*0.3, 50));
+	sliderValue = CALabel::createWithCenter(CADipRect(size.width*0.5, size.height*0.6, size.width*0.3, 50));
 	sliderValue->setColor(CAColor_blueStyle);
 	sliderValue->setText("");
-	sliderValue->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+	sliderValue->setFontSize(_px(30));
 	sliderValue->setTextAlignment(CATextAlignmentCenter);
 	sliderValue->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	this->getView()->addSubview(sliderValue);

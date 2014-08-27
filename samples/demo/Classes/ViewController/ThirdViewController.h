@@ -21,7 +21,7 @@ public:
 	void stateControl(CAControl* btn, CCPoint point);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CAScrollView* scrollView;
 	CASegmentedControl* scrollControl;
 

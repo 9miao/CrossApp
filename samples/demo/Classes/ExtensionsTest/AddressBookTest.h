@@ -42,12 +42,12 @@ public:
 private:
 	void previousViewController(CAControl* btn, CCPoint point);
 	void nextViewController(CAControl* btn, CCPoint point);
-	void loadingView();
-	void getAddressBookList();
+	void loadingView(void);
+	void getAddressBookList(void);
 	void addressBookLoadProgress(float interval);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CATableView* table;
 	std::vector<CAAddressBookRecord*> addressBookList;
 	CAImageView* loadIamge;

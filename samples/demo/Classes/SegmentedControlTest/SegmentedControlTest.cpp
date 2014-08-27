@@ -20,22 +20,22 @@ void SegmentedControlTest::viewDidLoad()
 	char pages[10] = "";
 	size = this->getView()->getBounds().size;
 	
-	CALabel* defaultStyle = CALabel::createWithCenter(CCRect(size.width*0.5,size.height*0.05,size.width*0.5,50));
+	CALabel* defaultStyle = CALabel::createWithCenter(CADipRect(size.width*0.5,size.height*0.05,size.width*0.5,50));
 	defaultStyle->setText("Default Style");
-	defaultStyle->setFontSize(30*CROSSAPP_ADPTATION_RATIO);
+	defaultStyle->setFontSize(_px(30));
 	defaultStyle->setColor(CAColor_blueStyle);
 	defaultStyle->setTextAlignment(CATextAlignmentCenter);
 	defaultStyle->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	this->getView()->addSubview(defaultStyle);
 
-	CASegmentedControl* defaultSegment = CASegmentedControl::createWithCenter(CCRect(size.width*0.5, 
+	CASegmentedControl* defaultSegment = CASegmentedControl::createWithCenter(CADipRect(size.width*0.5,
 																					size.height*0.15, 
 																					size.width*0.8, 
 																					size.height*0.1), 3);
 	defaultSegment->setSelectedAtIndex(1);
 	this->getView()->addSubview(defaultSegment);
 	CCLog("%f",size.height);
-	segment = CASegmentedControl::createWithCenter(CCRect(size.width*0.5, 
+	segment = CASegmentedControl::createWithCenter(CADipRect(size.width*0.5,
 														size.height*0.3, 
 														size.width*0.8, 
 														size.height*0.1), 3);
@@ -58,14 +58,15 @@ void SegmentedControlTest::viewDidLoad()
 	this->getView()->addSubview(segment);
 	
 	defaultView = CAView::createWithColor(ccc4(150,150,150,150));
-	defaultView->setCenter(CCRect(size.width*0.5, size.height*0.6+1, size.width*0.8, size.height*0.5));
+	defaultView->setCenter(CADipRect(size.width*0.5, size.height*0.6 + 1, size.width*0.8, size.height*0.5));
 	this->getView()->addSubview(defaultView);
 
-	defaultPage = CALabel::createWithCenter(CCRect(defaultView->getFrame().size.width*0.5, 
-												   defaultView->getFrame().size.height*0.5, 
-												   size.width*0.4, 50));
+	CADipSize viewSize = defaultView->getFrame().size;
+	defaultPage = CALabel::createWithCenter(CADipRect(viewSize.width*0.5, 
+												   viewSize.height*0.5, 
+												   viewSize.width*0.4, 50));
 	defaultPage->setText("The second page");
-	defaultPage->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
+	defaultPage->setFontSize(_px(30));
 	defaultPage->setColor(CAColor_white);
 	defaultPage->setTextAlignment(CATextAlignmentCenter);
 	defaultView->addSubview(defaultPage);
@@ -73,8 +74,7 @@ void SegmentedControlTest::viewDidLoad()
 
 void SegmentedControlTest::segmentCallback(CAControl* btn, CCPoint point)
 {
-	int index = segment->getselectedIndex();
-	switch (index)
+	switch (segment->getselectedIndex())
 	{
 		case 0:
 		{

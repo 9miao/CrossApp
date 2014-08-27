@@ -21,12 +21,12 @@ protected:
 public:
 	void goPrevious(CAControl* btn, CCPoint point);
 
-	void firstTabBar();
-	void secondTabBar();
-	void thirdTabBar();
+	void firstTabBar(void);
+	void secondTabBar(void);
+	void thirdTabBar(void);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CAButton* returnBtn;
 };
 

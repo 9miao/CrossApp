@@ -1,3 +1,34 @@
+#### CrossApp 0.3.4 更新内容：  
+
+#####1.添加CADrawerController
+抽屉视图管理器
+
+#####3.添加CAListView
+CATableView的简化版，并添加横向排列功能
+
+#####2.添加CAPageControl
+pageView页面进度指示器
+
+#####3.优化CAActivityIndicatorView
+增加自定义图片接口
+增加自定义背景图片接口
+
+#####4.优化CAImageView
+添加图片适配方式接口，可支持(铺满、铺满不变形并裁减多余部分、显示全部不变形并居中、显示全部不变形并保持高度不变、显示全部不变形并保持宽度不变)
+
+#####5.优化CATextField
+修改设置背景接口
+
+#####6.优化CASegmentedControl
+添加接口并修复一些bug
+
+#####7.优化CAPickerView
+添加接口并修复一些bug
+
+#####8.其他bug修复与优化
+
+**********************************************************************************
+
 #### CrossApp 0.3.3 更新内容：  
 
 #####1.添加CAActivityIndicatorView
@@ -43,6 +74,7 @@ Optimized some interfaces. Added the mutual transformation among three container
 #####7. Fixed and Optimized other Bugs
 
 
+**********************************************************************************
 
 #### CrossApp 0.3.2 更新内容：  
 

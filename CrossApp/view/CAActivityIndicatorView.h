@@ -55,13 +55,14 @@ public:
     virtual void stopAnimating();
     virtual bool isAnimating();
 
-    //CC_SYNTHESIZE(float, m_fLoadingMinTime, LoadingMinTime);
+    CC_SYNTHESIZE(float, m_fLoadingMinTime, LoadingMinTime);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_color, Color);
     
 private:
+    float m_fLoadingTime;
     float m_duration;
-    bool m_animating;
+    bool m_bStopAnimation;
     bool m_hidesWhenStopped; // default is true. calls -setHidden when animating gets set to false
     CAActivityIndicatorViewStyle m_style; // default is CAActivityIndicatorViewStyleWhite
     

@@ -100,8 +100,6 @@ bool CAStepper::init()
         return false;
     }
     
-    setTouchEnabled(true);
-    
     setIncrementImage(CAImage::create("source_material/stepper_inc_h.png"), CAControlStateAll);
     setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
     setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);

@@ -34,7 +34,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	m_pWindow = MainMenu::createWindow();
     // run
     pDirector->runWindow(m_pWindow);
-    
+
     return true;
 }
 

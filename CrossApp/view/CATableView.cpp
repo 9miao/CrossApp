@@ -232,7 +232,8 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             {
                 m_pTableViewDelegate->tableViewDidSelectRowAtIndexPath(this,
                                                                        selectedIndexPath.section,
-                                                                       selectedIndexPath.row);
+
+																	   selectedIndexPath.row);
             }
         }
     }

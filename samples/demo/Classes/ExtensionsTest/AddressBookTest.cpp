@@ -6,7 +6,7 @@
 #define LABEL_PROPERTY(label,num)									\
 	label->setTag(num);												\
 	label->setColor(CAColor_blueStyle);								\
-	label->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);				\
+	label->setFontSize(_px(30));				\
 	label->setTextAlignment(CATextAlignmentCenter);					\
 	label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 
@@ -28,7 +28,7 @@ void AddressBookTest::viewDidLoad()
 	loadingView();
 	getAddressBookList();
 #endif
-	table = CATableView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, size.width, size.height));
+	table = CATableView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height));
 	table->setTableViewDataSource(this);
 	table->setTableViewDelegate(this);
 	table->setAllowsSelection(true);
@@ -44,15 +44,15 @@ void AddressBookTest::viewDidLoad()
 	this->getNavigationBarItem()->addRightButtonItem(rightButton);
 }
 
-void AddressBookTest::loadingView()
+void AddressBookTest::loadingView(void)
 {
 	CAView* loading = CAView::createWithColor(ccc4(255, 255, 255, 0));
 	loading->setTag(MAXZORDER);
-	loading->setFrame(this->getView()->getBounds());
+	loading->setFrame(CADipRect(this->getView()->getBounds()));
 	this->getView()->addSubview(loading);
 
 	loadIamge = CAImageView::createWithImage(CAImage::create("loading.png"));
-	loadIamge->setCenterOrigin(CCPoint(size.width*0.5, size.height*0.5));
+	loadIamge->setCenterOrigin(CADipPoint(size.width*0.5, size.height*0.5));
 	loadIamge->setScale(0.5);
 	loading->addSubview(loadIamge);
 	CAScheduler::schedule(schedule_selector(AddressBookTest::addressBookLoadProgress), this, 0.01, false);
@@ -73,17 +73,14 @@ void AddressBookTest::nextViewController(CAControl* btn, CCPoint point)
 	this->getNavigationController()->pushViewController(httpRequestView,true);
 }
 
-void AddressBookTest::getAddressBookList()
+void AddressBookTest::getAddressBookList(void)
 {
-#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
 	addressBookList=CAAddressManager::shareAddressManager()->getAddressBook();
 	if(addressBookList.size()>0)
 	{
-		//CCLog("Size is %d",addressBookList.size());
 		CAScheduler::unschedule(schedule_selector(AddressBookTest::addressBookLoadProgress), this);
 		this->getView()->removeSubviewByTag(MAXZORDER);
 	}
-#endif
 }
 
 void AddressBookTest::addressBookLoadProgress(float interval)
@@ -109,6 +106,7 @@ void AddressBookTest::tableViewDidDeselectRowAtIndexPath(CATableView* table, uns
 
 CATableViewCell* AddressBookTest::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
+	CADipSize _size = cellSize;
 	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
 	if (cell == NULL)
 	{
@@ -116,30 +114,30 @@ CATableViewCell* AddressBookTest::tableCellAtIndex(CATableView* table, const CCS
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_WIN32)
 		if (row == 3)
 		{
-			CALabel* notice = CALabel::createWithCenter(CCRect(cellSize.width*0.5,cellSize.height*0.5,cellSize.width,cellSize.height));
+			CALabel* notice = CALabel::createWithCenter(CADipRect(_size.width*0.5, _size.height*0.5, _size.width, _size.height));
 			notice->setText("You need a mobile device to access address book");
 			LABEL_PROPERTY(notice,NOTICE);
 			cell->addSubview(notice);
 		}
-#elif(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
-		CALabel* fullName = CALabel::createWithFrame(CCRect(cellSize.width*0.01, 0, cellSize.width*0.3, cellSize.height));
+#else
+		CALabel* fullName = CALabel::createWithFrame(CADipRect(_size.width*0.01, 0, _size.width*0.3, _size.height));
 		LABEL_PROPERTY(fullName, FULLNAME);
 		cell->addSubview(fullName);
 
-		CALabel* phoneNumber = CALabel::createWithFrame(CCRect(cellSize.width*0.3, 0, cellSize.width*0.3, cellSize.height));
+		CALabel* phoneNumber = CALabel::createWithFrame(CADipRect(_size.width*0.3, 0, _size.width*0.3, _size.height));
 		LABEL_PROPERTY(phoneNumber, NUMBER);
 		cell->addSubview(phoneNumber);
 
-		CALabel* province = CALabel::createWithCenter(CCRect(cellSize.width*0.7, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+		CALabel* province = CALabel::createWithCenter(CADipRect(_size.width*0.7, _size.height*0.5, _size.width*0.2, _size.height));
 		LABEL_PROPERTY(province, PROVINCE);
 		cell->addSubview(province);
 
-		CALabel* nickName = CALabel::createWithCenter(CCRect(cellSize.width*0.9, cellSize.height*0.5, cellSize.width*0.2, cellSize.height));
+		CALabel* nickName = CALabel::createWithCenter(CADipRect(_size.width*0.9, _size.height*0.5, _size.width*0.2, _size.height));
 		LABEL_PROPERTY(nickName, NICKNAME);
 		cell->addSubview(nickName);
 #endif
 	}
-#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+#if(CC_TARGET_PLATFORM!=CC_PLATFORM_WIN32)
 	CALabel* fullName = (CALabel*)cell->getSubviewByTag(FULLNAME);
 	fullName->setText(addressBookList[row]->fullname.c_str());
 
@@ -187,9 +185,9 @@ unsigned int AddressBookTest::numberOfSections(CATableView *table)
 unsigned int AddressBookTest::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_WIN32)
-	return this->getView()->getBounds().size.height / 8;
+	return size.height / 8;
 #endif
-	return this->getView()->getBounds().size.height*0.1;
+	return size.height*0.1;
 	
 }
 

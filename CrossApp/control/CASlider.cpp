@@ -135,7 +135,9 @@ bool CASlider::initWithFrame(const CCRect& rect)
     {
         return false;
     }
-    this->setColor(CAColor_clear);
+    this->setTouchMovedListenHorizontal(true);
+    this->setTouchMovedListenVertical(false);
+    m_bTouchMovedStopSubviews = true;
     this->setFrame(rect);
     return true;
 }
@@ -146,7 +148,9 @@ bool CASlider::initWithCenter(const CCRect& rect)
     {
         return false;
     }
-    
+    this->setTouchMovedListenHorizontal(true);
+    this->setTouchMovedListenVertical(false);
+    m_bTouchMovedStopSubviews = true;
     this->setCenter(rect);
     return true;
 }

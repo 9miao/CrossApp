@@ -17,19 +17,19 @@ void ActivityIndicatorViewTest::viewDidLoad()
 	size = this->getView()->getBounds().size;
 	this->getView()->setColor(ccc4(58,210,129,255));
 
-	whiteLarge = CAActivityIndicatorView::createWithCenter(CCRect(size.width*0.5, size.height*0.25,
+	whiteLarge = CAActivityIndicatorView::createWithCenter(CADipRect(size.width*0.5, size.height*0.25,
 		size.width*0.2, size.width*0.2));
 	whiteLarge->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
 	this->getView()->addSubview(whiteLarge);
 	whiteLarge->startAnimating();
 
-	white = CAActivityIndicatorView::createWithCenter(CCRect(size.width*0.5, size.height*0.5, 
+	white = CAActivityIndicatorView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5,
 		size.width*0.2,size.width*0.2));
 	white->setStyle(CAActivityIndicatorViewStyleWhite);
 	this->getView()->addSubview(white);
 	white->startAnimating();
 
-	gray = CAActivityIndicatorView::createWithCenter(CCRect(size.width*0.5, size.height*0.75,
+	gray = CAActivityIndicatorView::createWithCenter(CADipRect(size.width*0.5, size.height*0.75,
 		size.width*0.2, size.width*0.2));
 	gray->setStyle(CAActivityIndicatorViewStyleGray);
 	this->getView()->addSubview(gray);
@@ -47,4 +47,7 @@ void ActivityIndicatorViewTest::viewDidUnload()
 void ActivityIndicatorViewTest::keyBackClicked()
 {
 	CCLog("------------------");
+	whiteLarge->stopAnimating();
+	white->stopAnimating();
+	gray->stopAnimating();
 }

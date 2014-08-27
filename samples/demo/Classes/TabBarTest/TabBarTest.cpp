@@ -17,8 +17,8 @@ void TabBarTest::viewDidLoad()
 	size = this->getView()->getBounds().size;
 	this->getNavigationBarItem()->setShowGoBackButton(false);
 
-	CCSize navigationBarSize = this->getNavigationController()->getNavigationBar()->getBounds().size;
-	returnBtn = CAButton::createWithCenter(CCRect(navigationBarSize.width*0.1, navigationBarSize.height*0.5, 100, 40), CAButtonTypeCustom);
+	CADipSize navigationBarSize = this->getNavigationController()->getNavigationBar()->getBounds().size;
+	returnBtn = CAButton::createWithCenter(CADipRect(navigationBarSize.width*0.1, navigationBarSize.height*0.5, 100, 40), CAButtonTypeCustom);
 	returnBtn->setImageForState(CAControlStateAll,CAImage::create("source_material/btn_left_white.png"));
 	returnBtn->setImageColorForState(CAControlStateHighlighted, ccc4(0, 255, 200, 255));
 	returnBtn->addTarget(this, CAControl_selector(TabBarTest::goPrevious), CAControlEventTouchUpInSide);
@@ -36,11 +36,10 @@ void TabBarTest::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsign
 
 void TabBarTest::goPrevious(CAControl* btn, CCPoint point)
 {
-	this->getNavigationController()->getTabBarController()->setTabBarHidden(false, false);
 	this->getNavigationController()->popViewControllerAnimated(true);
 }
 
-void TabBarTest::firstTabBar()
+void TabBarTest::firstTabBar(void)
 {
 	CATabBarItem* item1 = CATabBarItem::create("Edit", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png"));
 	CATabBarItem* item2 = CATabBarItem::create("Friends", CAImage::create("tabbar_function/second_1.png"), CAImage::create("tabbar_function/second_2.png"));
@@ -56,14 +55,14 @@ void TabBarTest::firstTabBar()
 	item.push_back(item5);
 
 	CATabBar* tabBar = CATabBar::create(item);
-	tabBar->setCenter(CCRect(size.width*0.5, size.height*0.5 + 200, size.width, 100));
+	tabBar->setCenter(CADipRect(size.width*0.5, size.height*0.5 + 200, size.width, 100));
 	tabBar->showSelectedIndicator();
 	tabBar->setDelegate(this);
 	this->getView()->addSubview(tabBar);
     tabBar->setSelectedAtIndex(2);
 }
 
-void TabBarTest::secondTabBar()
+void TabBarTest::secondTabBar(void)
 {
 	CATabBarItem* item1 = CATabBarItem::create("Edit", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png"));
 	CATabBarItem* item2 = CATabBarItem::create("Friends", CAImage::create("tabbar_function/second_1.png"), CAImage::create("tabbar_function/second_2.png"));
@@ -79,7 +78,7 @@ void TabBarTest::secondTabBar()
 	item.push_back(item5);
 
 	CATabBar* tabBar = CATabBar::create(item);
-	tabBar->setCenter(CCRect(size.width*0.5, size.height*0.5 , size.width, 100));
+	tabBar->setCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, 100));
 	tabBar->setSelectedIndicatorImage(CAImage::create("source_material/indicator.png"));
 	tabBar->showSelectedIndicator();
 	tabBar->setBackGroundImage(CAImage::create("source_material/ex1.png"));
@@ -89,7 +88,7 @@ void TabBarTest::secondTabBar()
     tabBar->setSelectedAtIndex(3);
 }
 
-void TabBarTest::thirdTabBar()
+void TabBarTest::thirdTabBar(void)
 {
 	CATabBarItem* item1 = CATabBarItem::create("Edit", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png"));
 	CATabBarItem* item2 = CATabBarItem::create("Friends", CAImage::create("tabbar_function/second_1.png"), CAImage::create("tabbar_function/second_2.png"));
@@ -105,7 +104,7 @@ void TabBarTest::thirdTabBar()
 	item.push_back(item5);
 
 	CATabBar* tabBar = CATabBar::create(item);
-	tabBar->setCenter(CCRect(size.width*0.5, size.height*0.5 - 200, size.width, 100));
+	tabBar->setCenter(CADipRect(size.width*0.5, size.height*0.5 - 200, size.width, 100));
 	tabBar->showSelectedIndicator();
 	tabBar->setTitleColorForNormal(CAColor_yellow);
 	tabBar->setTitleColorForSelected(CAColor_orange);

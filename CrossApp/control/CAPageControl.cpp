@@ -77,18 +77,9 @@ CAPageControl* CAPageControl::createWithCenter(const CCRect& rect)
 
 bool CAPageControl::init()
 {
-    if (!CAControl::init())
-    {
-        return false;
-    }
-    
     setPageIndicatorImage(CAImage::create("source_material/page_n.png"));
     setCurrIndicatorImage(CAImage::create("source_material/page_h.png"));
 
-    setTouchEnabled(true);
-    
-    setColor(CAColor_clear);
-    
     return true;
 }
 

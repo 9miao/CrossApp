@@ -19,7 +19,7 @@ public:
 protected:
     void viewDidLoad();
     void viewDidUnload();
-	void loadJsonData();
+	void loadJsonData(void);
 
 public:
 	virtual void reshapeViewRectDidFinish();
@@ -43,7 +43,7 @@ public:
 	void closeCellListInSection(CAControl* btn, CCPoint point);
 
 private:
-	CCSize size;
+	CADipSize size;
 	CATableView* p_TableView;
 	int sect[NUM];
 	CADeque<Info*> personList;
