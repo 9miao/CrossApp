@@ -28,6 +28,35 @@ pageView页面进度指示器
 #####8.其他bug修复与优化
 
 
+
+#### CrossApp 0. 3. 4 Update:
+##### 1. Added CADrawerController
+Drawer view controller<br/>
+
+##### 2. Added CAListView
+CATableView’s simplified version, and added horizontal arrangement functionality<br/>
+
+##### 3. Added CAPageControl
+pageView page progress indicator<br/>
+
+##### 4. CAActivityIndicatorView Optimization
+Added customized image interface, and added customized background image interface<br/>
+
+##### 5. CAImageView Optimization
+Added image adaptation mode interface which supports: fully-stretched, fully-stretched with no distortion and cut excess part, fully-displayed with no distortion and centered, fully-displayed with no distortion and stay same height, fully-displayed with no distortion and stay same width.<br/>
+
+##### 6. CATextField Optimization
+Modified background setting interface<br/>
+
+##### 7. CASegmentedControl Optimization
+Added interfaces and fixed some bugs<br/>
+
+##### 8. CAPickerView Optimization
+Added interfaces and fixed some bugs<br/>
+
+##### 9. Fixed and Optimized Other Bugs
+
+
 **********************************************************************************
 
 
