@@ -740,6 +740,8 @@ Webpage load control: CAWebView<br/>
 **a) **cell Multiplexing<br/>
 **b) **cell editing (delete, insert and others)<br/>
 **c) **added some template attributes of cell<br/>
+
+
 =======
 ####【正式版】CrossApp 0.3.1 更新内容：  
 
