@@ -186,8 +186,8 @@ Page turning sliding container, a commonly used control in smartphone, is able t
 ##### 3. Added CAIndexPath2E and CAIndexPath3E
 Two and three dimensional index class<br/>
 
-##### 4. Added Cell Multiplexing Mechanism of CATableView and CACollectionView
-Multiplexing mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.<br/>
+##### 4. Added Cell Reuse Mechanism of CATableView and CACollectionView
+Reuse mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.<br/>
 
 ##### 5. Touch Distributed System Optimization
 We optimized touch distributed system, and now it can distribute touch event in a more humanized style.<br/>
@@ -737,7 +737,7 @@ Webpage load control: CAWebView<br/>
 **b) ** text editing when cursor is at anywhere of content<br/>
 **c) **line feed input<br/>
 #####2.	tableView：
-**a) **cell Multiplexing<br/>
+**a) **cell reuse<br/>
 **b) **cell editing (delete, insert and others)<br/>
 **c) **added some template attributes of cell<br/>
 
@@ -779,8 +779,8 @@ Page turning sliding container, a commonly used control in smartphone, is able t
 #####3. Added CAIndexPath2E and CAIndexPath3E
 Two and three dimensional index class
 
-#####4. Added Cell Multiplexing Mechanism of CATableView and CACollectionView
-Multiplexing mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.
+#####4. Added Cell Reuse Mechanism of CATableView and CACollectionView
+Reuse mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.
 
 #####5. Touch Distributed System Optimization
 We optimized touch distributed system, and now it can distribute touch event in a more humanized style.
@@ -1329,7 +1329,7 @@ Webpage load control: CAWebView<br/>
 **b) ** text editing when cursor is at anywhere of content<br/>
 **c) **line feed input<br/>
 #####2.	tableView：
-**a) **cell Multiplexing<br/>
+**a) **cell Reuse<br/>
 **b) **cell editing (delete, insert and others)<br/>
 **c) **added some template attributes of cell<br/>
 >>>>>>> a0fca0f78baf5e0a811792d99d995b5c43b26d7a
