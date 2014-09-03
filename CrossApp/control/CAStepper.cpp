@@ -28,10 +28,12 @@ CAStepper::CAStepper()
 , m_pBackgroundImageView(NULL)
 , m_actionType(ActionNone)
 , m_bTouchEffect(false)
+, m_pDividerImageView(NULL)
 {
     memset(m_pBackgroundImage, 0x00, sizeof(m_pBackgroundImage));
     memset(m_pIncrementImage, 0x00, sizeof(m_pIncrementImage));
     memset(m_pDecrementImage, 0x00, sizeof(m_pDecrementImage));
+    memset(m_pDividerImage, 0x00, sizeof(m_pDividerImage));
 }
 
 CAStepper::~CAStepper()
@@ -45,10 +47,14 @@ CAStepper::~CAStepper()
     for (int i=0; i<CAControlStateAll; i++) {
         CC_SAFE_RELEASE(m_pDecrementImage[i]);
     }
+    for (int i=0; i<CAControlStateAll; i++) {
+        CC_SAFE_RELEASE(m_pDividerImage[i]);
+    }
     
     CC_SAFE_RELEASE(m_pBackgroundImageView);
     CC_SAFE_RELEASE(m_pIncrementImageView);
     CC_SAFE_RELEASE(m_pDecrementImageView);
+    CC_SAFE_RELEASE(m_pDividerImageView);
 }
 
 CAStepper* CAStepper::create()
@@ -104,6 +110,7 @@ bool CAStepper::init()
     setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
     setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);
     setDecrementImage(CAImage::create("source_material/stepper_dec_n.png"), CAControlStateNormal);
+    setDividerImage(CAImage::create("source_material/stepper_divider.png"), CAControlStateAll);
     
     return true;
 }
@@ -188,6 +195,21 @@ CAImage* CAStepper::getDecrementImageForState(CAControlState state)
     return m_pDecrementImage[state];
 }
 
+void CAStepper::setDividerImage(CrossApp::CAImage *image, CAControlState state)
+{
+    if (state == CAControlStateAll) {
+        for (int i=0; i<CAControlStateAll; i++) {
+            CC_SAFE_RELEASE_NULL(m_pDividerImage[i]);
+            m_pDividerImage[i] = image;
+            CC_SAFE_RETAIN(m_pDividerImage[i]);
+        }
+    } else {
+        CC_SAFE_RELEASE_NULL(m_pDividerImage[state]);
+        m_pDividerImage[state] = image;
+        CC_SAFE_RETAIN(m_pDividerImage[state]);
+    }    
+}
+
 bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     m_actionType = ActionNone; // lazy init;
@@ -199,8 +221,8 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         
         switch (m_actionType) {
             case ActionDecrease:
-                m_pDecrementImageView->initWithImage(m_pDecrementImage[CAControlStateHighlighted]);
-                m_pIncrementImageView->initWithImage(m_pIncrementImage[CAControlStateNormal]);
+                m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateHighlighted]);
+                m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
                 if (m_bTouchEffect) {
                     m_pDecrementImageView->setAlpha(0.7);
                     m_pIncrementImageView->setAlpha(1.0);
@@ -208,8 +230,8 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 break;
                 
             case ActionIncrease:
-                m_pDecrementImageView->initWithImage(m_pDecrementImage[CAControlStateNormal]);
-                m_pIncrementImageView->initWithImage(m_pIncrementImage[CAControlStateHighlighted]);
+                m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
+                m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateHighlighted]);
                 if (m_bTouchEffect) {
                     m_pDecrementImageView->setAlpha(1.0);
                     m_pIncrementImageView->setAlpha(0.7);
@@ -217,8 +239,8 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 break;
                 
             case ActionNone:
-                m_pDecrementImageView->initWithImage(m_pDecrementImage[CAControlStateNormal]);
-                m_pIncrementImageView->initWithImage(m_pIncrementImage[CAControlStateNormal]);
+                m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
+                m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
                 if (m_bTouchEffect) {
                     m_pDecrementImageView->setAlpha(1.0);
                     m_pIncrementImageView->setAlpha(1.0);
@@ -227,13 +249,6 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             default:
                 break;
         }
-        
-        m_pIncrementImageView->setFrame(CCRect(getBounds().size.width/2, 0, 
-                                               getBounds().size.width/2, 
-                                               getBounds().size.height));
-        m_pDecrementImageView->setFrame(CCRect(0, 0, 
-                                               getBounds().size.width/2, 
-                                               getBounds().size.height));
 
         CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 2.0f);
         return true;
@@ -253,8 +268,9 @@ void CAStepper::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         if (prevAction != m_actionType) {
             switch (m_actionType) {
                 case ActionDecrease:
-                    m_pDecrementImageView->initWithImage(m_pDecrementImage[CAControlStateHighlighted]);
-                    m_pIncrementImageView->initWithImage(m_pIncrementImage[CAControlStateNormal]);
+                    m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateHighlighted]);
+                    m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
+                    m_pDividerImageView->setImage(m_pDividerImage[CAControlStateHighlighted]);
                     if (m_bTouchEffect) {
                         m_pDecrementImageView->setAlpha(0.7);
                         m_pIncrementImageView->setAlpha(1.0);
@@ -262,8 +278,9 @@ void CAStepper::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
                     break;
                     
                 case ActionIncrease:
-                    m_pDecrementImageView->initWithImage(m_pDecrementImage[CAControlStateNormal]);
-                    m_pIncrementImageView->initWithImage(m_pIncrementImage[CAControlStateHighlighted]);
+                    m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
+                    m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateHighlighted]);
+                    m_pDividerImageView->setImage(m_pDividerImage[CAControlStateHighlighted]);
                     if (m_bTouchEffect) {
                         m_pDecrementImageView->setAlpha(1.0);
                         m_pIncrementImageView->setAlpha(0.7);
@@ -271,8 +288,9 @@ void CAStepper::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
                     break;
                     
                 case ActionNone:
-                    m_pDecrementImageView->initWithImage(m_pDecrementImage[CAControlStateNormal]);
-                    m_pIncrementImageView->initWithImage(m_pIncrementImage[CAControlStateNormal]);
+                    m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
+                    m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
+                    m_pDividerImageView->setImage(m_pDividerImage[CAControlStateNormal]);
                     if (m_bTouchEffect) {
                         m_pDecrementImageView->setAlpha(1.0);
                         m_pIncrementImageView->setAlpha(1.0);
@@ -283,30 +301,18 @@ void CAStepper::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
             }
         }
     }
-    m_pIncrementImageView->setFrame(CCRect(getBounds().size.width/2, 0, 
-                                           getBounds().size.width/2, 
-                                           getBounds().size.height));
-    m_pDecrementImageView->setFrame(CCRect(0, 0, 
-                                           getBounds().size.width/2, 
-                                           getBounds().size.height));
 
     m_actionType = ActionNone;
 }
 
 void CAStepper::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    m_pDecrementImageView->initWithImage(m_pDecrementImage[CAControlStateNormal]);
-    m_pIncrementImageView->initWithImage(m_pIncrementImage[CAControlStateNormal]);
+    m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
+    m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
     if (m_bTouchEffect) {
         m_pDecrementImageView->setAlpha(1.0);
         m_pIncrementImageView->setAlpha(1.0);
     }
-    m_pIncrementImageView->setFrame(CCRect(getBounds().size.width/2, 0, 
-                                           getBounds().size.width/2, 
-                                           getBounds().size.height));
-    m_pDecrementImageView->setFrame(CCRect(0, 0, 
-                                           getBounds().size.width/2, 
-                                           getBounds().size.height));
 
     CAScheduler::unschedule(schedule_selector(CAStepper::repeat), this);
 }
@@ -322,29 +328,43 @@ void CAStepper::onEnter()
     
     // init background
     if (!m_pBackgroundImageView && m_pBackgroundImage[CAControlStateNormal]) {
-        m_pBackgroundImageView = CAScale9ImageView::createWithImage(m_pBackgroundImage[CAControlStateNormal]);
+        m_pBackgroundImageView = CAImageView::createWithImage(m_pBackgroundImage[CAControlStateNormal]);
         m_pBackgroundImageView->retain();
-        m_pBackgroundImageView->setFrame(this->getBounds());
         m_pBackgroundImageView->setCenterOrigin(CCPoint(getFrame().size.width/2, getFrame().size.height/2));
         addSubview(m_pBackgroundImageView);
     }
     
+    // init divider
+    if (!m_pDividerImageView && m_pDividerImage[CAControlStateNormal]) {
+        m_pDividerImageView = CAImageView::createWithImage(m_pDividerImage[CAControlStateNormal]);
+        m_pDividerImageView->retain();
+        float scale = getBounds().size.height / m_pDividerImage[CAControlStateNormal]->getContentSize().height;
+        m_pDividerImageView->setCenter(CCRect(getBounds().size.width/2, 
+                                              getBounds().size.height/2,
+//                                              getBounds().size.width,
+                                              m_pDividerImage[CAControlStateNormal]->getContentSize().width * scale, 
+                                              getBounds().size.height));
+        addSubview(m_pDividerImageView);
+    }
+    
+    float div = (m_pDividerImageView) ? m_pDividerImageView->getBounds().size.width/2 : 0;
+    
     // init increment
     if (!m_pIncrementImageView && m_pIncrementImage[CAControlStateNormal]) {
-        m_pIncrementImageView = CAScale9ImageView::createWithImage(m_pIncrementImage[CAControlStateNormal]);
+        m_pIncrementImageView = CAImageView::createWithImage(m_pIncrementImage[CAControlStateNormal]);
         m_pIncrementImageView->retain();
-        m_pIncrementImageView->setFrame(CCRect(getBounds().size.width/2, 0, 
-                                               getBounds().size.width/2, 
+        m_pIncrementImageView->setFrame(CCRect(getBounds().size.width/2 + div, 0, 
+                                               getBounds().size.width/2 - div, 
                                                getBounds().size.height));
         addSubview(m_pIncrementImageView);
     }
     
     // init decrement
     if (!m_pDecrementImageView && m_pDecrementImage[CAControlStateNormal]) {
-        m_pDecrementImageView = CAScale9ImageView::createWithImage(m_pDecrementImage[CAControlStateNormal]);
+        m_pDecrementImageView = CAImageView::createWithImage(m_pDecrementImage[CAControlStateNormal]);
         m_pDecrementImageView->retain();
         m_pDecrementImageView->setFrame(CCRect(0, 0,
-                                               getBounds().size.width/2, 
+                                               getBounds().size.width/2 - div, 
                                                getBounds().size.height));
         addSubview(m_pDecrementImageView);
     }
