@@ -150,6 +150,8 @@ public:
     
     void replaceItemAtIndex(size_t index, CATabBarItem* item);
     
+    const CCRect& getSegmentedControlFrame();
+    
 protected:
     
     void showBackGround();

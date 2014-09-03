@@ -7,8 +7,8 @@
 //
 
 
-#ifndef __cocos2dx__CAAlertView__
-#define __cocos2dx__CAAlertView__
+#ifndef __CrossAppx__CAAlertView__
+#define __CrossAppx__CAAlertView__
 
 #include <iostream>
 #include "view/CAView.h"
@@ -43,9 +43,13 @@ public:
 
 	static CAAlertView *create();
 
-    bool init();
+	static CAAlertView *createWithButtonText(const std::string& pszTitle, const std::string& pszAlertMsg, const std::string& pszBtnText, ...);
+
+	bool init();
+
+	bool initWithButtonText(const std::string& szTitle, const std::string& szAlertMsg, const std::string& pszBtnText, ...);
     
-    void showMessage(std::string title, std::string alertMsg, std::vector<std::string>& vBtnText);
+    void show();
     
     void setTarget(CAObject* target, SEL_CAAlertBtnEvent selector);
     
@@ -59,15 +63,13 @@ public:
 
 	void setContentBackGroundImage(CAImage* image);
 
-	void initAllButton(std::vector<CAButton*>& vbtns);
+	void addButton(const std::string& btnText, CAColor4B col = CAColor_white, CAImage* pNormalImage = NULL, CAImage* pHighlightedImage = NULL);
 
-	void initAllButton(std::vector<std::string>& vBtnText);
+	void addButton(CAButton* pBtn);
 
 	void setAllBtnBackGroundImage(CAControlState controlState, CAImage* image);
     
 	void setAllBtnTextColor(CAColor4B col = CAColor_white);
-
-	void calcuCtrlsSize();
 
 protected:
     
@@ -85,6 +87,8 @@ protected:
 
 	CCSize getAlertWinSize();
 
+	void calcuCtrlsSize();
+
 private:
     
 	std::string m_sMsgFontName;
@@ -97,7 +101,7 @@ private:
 
 	CAScale9ImageView* m_pContentBkImage;
 
-	std::vector<CAButton*> m_vAllBtn;
+	CAVector<CAButton*> m_vAllBtn;
 
 	CATableView* m_pBtnTableView;
 

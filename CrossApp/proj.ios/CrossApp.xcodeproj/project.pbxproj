@@ -1005,7 +1005,6 @@
 				04EA9F9F1956CE2500198A8E /* control */,
 				04EA9FB21956CE2500198A8E /* controller */,
 				04EA9FB71956CE2500198A8E /* dispatcher */,
-				04EA9FC41956CE2500198A8E /* view */,
 				1551A354158F2ADE00E66CFE /* actions */,
 				1551A37F158F2ADE00E66CFE /* cocoa */,
 				15FBEE65164BBA97008CB2C3 /* draw_nodes */,
@@ -1014,6 +1013,7 @@
 				1551A43F158F2ADE00E66CFE /* platform */,
 				1551A5C3158F2ADE00E66CFE /* shaders */,
 				1551A5E7158F2ADE00E66CFE /* support */,
+				04EA9FC41956CE2500198A8E /* view */,
 			);
 			name = CrossApp;
 			path = ..;

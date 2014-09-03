@@ -33,6 +33,13 @@ enum eKeyBoardInputType
     KEY_BOARD_INPUT_PASSWORD,
 };
 
+enum eKeyBoardReturnType
+{
+    KEY_BOARD_RETURN_DONE = 21,
+    KEY_BOARD_RETURN_SEARCH,
+    KEY_BOARD_RETURN_SEND,
+};
+
 class CATextField;
 class CC_DLL CATextFieldDelegate
 {
@@ -65,6 +72,16 @@ public:
         CC_UNUSED_PARAM(sender);
         CC_UNUSED_PARAM(delText);
         CC_UNUSED_PARAM(nLen);
+        return false;
+    }
+    
+    virtual bool getKeyBoardHeight(int height)
+    {
+        return false;
+    }
+    
+    virtual bool keyBoardCallBack(CATextField *sender)
+    {
         return false;
     }
 };
@@ -127,30 +144,37 @@ public:
     
     inline int getKeyboardType () {return m_keyboardType; }
     
+    inline void setKeyboardReturnType (eKeyBoardReturnType type) {m_keyBoardReturnType = type; }
+    
+    inline int getKeyboardReturnType () {return m_keyBoardReturnType; }
+    
 	void analyzeString(const char * text, int len);
     
     virtual void setImageRect(const CCRect& rect);
     
     virtual void updateImageRect();
+    
+
 
 protected:
     void updateImage();
     int getCursorX();
     int getStringViewLength();
-    int getStringLength(const std::string &var);
-    int getStringCharCount(const std::string &var);
-    
-    virtual void setContentSize(const CCSize& var);
     virtual bool attachWithIME();
     virtual bool detachWithIME();
-    void         initMarkSprite();
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     virtual bool canAttachWithIME();
     virtual bool canDetachWithIME();
+    int getStringLength(const std::string &var);
+    int getStringCharCount(const std::string &var);
+    virtual void setContentSize(const CCSize& var);
+    void         initMarkSprite();
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     virtual void insertText(const char * text, int len);
     virtual void willInsertText(const char* text,int len);
     virtual void AndroidWillInsertText(int start,const char* str,int before,int count);
     virtual void deleteBackward();
+    virtual void getKeyBoardHeight(int height);
+    virtual void getKeyBoradReturnCallBack();
     virtual const char* getContentText();
 private:
 	std::vector<TextAttribute> m_vTextFiledChars;
@@ -166,6 +190,7 @@ private:
 	CAView* m_pCursorMark;
 	CCSize m_cImageSize;
 	eKeyBoardType m_keyboardType;
+    eKeyBoardReturnType m_keyBoardReturnType;
 };
 
 NS_CC_END

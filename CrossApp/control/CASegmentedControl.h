@@ -42,8 +42,9 @@ public:
     
 public:
     
-    virtual bool init();
-
+    virtual bool initWithFrame(const CCRect& rect);
+    virtual bool initWithCenter(const CCRect& rect);
+    
     virtual bool insertSegmentWithTitle(const char* title, int index, const CAControlState& controlState);
     virtual bool insertSegmentWithBackgroundImage(CAImage *image, int index, const CAControlState& controlState);
     virtual bool insertSegmentWithImage(CAImage *image, int index, const CAControlState& controlState);

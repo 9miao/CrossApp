@@ -53,6 +53,12 @@ public:
     
     virtual void setIMEKeyboardAlphabet();
     
+    virtual void setIMEKeyboardReturnSend();
+    
+    virtual void setIMEKeyboardReturnSearch();
+    
+    virtual void setIMEKeyboardReturnDone();
+    
     static CCEGLView* sharedOpenGLView();
 
 };

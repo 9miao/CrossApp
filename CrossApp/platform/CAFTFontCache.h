@@ -37,6 +37,8 @@ public:
 
 	int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text);
 
+	int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth);
+
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int width, int height,
 		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
 

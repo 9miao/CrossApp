@@ -210,6 +210,11 @@ void CADrawerController::hideLeftViewController(bool animated)
     }
 }
 
+bool CADrawerController::isShowLeftViewController()
+{
+    return m_pContainer[0]->isVisible();
+}
+
 void CADrawerController::showBegin()
 {
     m_pContainer[0]->setVisible(true);

@@ -366,7 +366,7 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items, const CCSize& size)
     CCSize winSize = CAApplication::getApplication()->getWinSize();
     CCSize contentSize = size.equals(CCSizeZero) ? CCSize(winSize.width, _px(96)) : size;
     this->setContentSize(contentSize);
-    
+
     this->setItems(items);
     
     this->showBackGround();
@@ -415,6 +415,11 @@ void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)
     }
 }
 
+const CCRect& CATabBar::getSegmentedControlFrame()
+{
+    return m_pSegmentedControl->getFrame();
+}
+
 void CATabBar::setBackGroundView(CrossApp::CAView *var)
 {
     CC_SAFE_RETAIN(var);
@@ -457,7 +462,10 @@ void CATabBar::setSelectedBackGroundView(CrossApp::CAView *var)
     if (!m_pSegmentedControl)
     {
         unsigned int count = MIN(m_nMaxShowCount, m_pItems.size());
-        m_pSegmentedControl = CASegmentedControl::createWithFrame(this->getBounds(), count);
+        CADipRect rect = this->getBounds();
+        rect.origin = rect.size / 2;
+        rect.size.width = MIN(rect.size.width, 1024);
+        m_pSegmentedControl = CASegmentedControl::createWithCenter(rect, count);
         
         m_pSegmentedControl->addTarget(this, CAControl_selector(CATabBar::setTouchSelected));
         for (int i=0; i<count; i++)
@@ -627,6 +635,7 @@ void CATabBar::setSelectedAtIndex(int index)
         CCPoint p = m_cItemSize;
         p.y -= m_pSelectedIndicatorView->getFrame().size.height;
         p.x *= m_nSelectedIndex;
+        p = ccpAdd(m_pSegmentedControl->getFrameOrigin(), p);
         CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.3f, p);
         CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
         m_pSelectedIndicatorView->runAction(easeBack);

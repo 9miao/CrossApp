@@ -47,6 +47,8 @@ public:
     
     CC_PROPERTY_IS(bool, m_bTouchMoved, TouchMoved);
     
+    bool isShowLeftViewController();
+    
 protected:
     
     void showBegin();

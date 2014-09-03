@@ -83,8 +83,6 @@
 		04EAB0A61956D75600198A8E /* CAIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0A11956D74D00198A8E /* CAIMEDelegate.h */; };
 		04EAB0A71956D75600198A8E /* CAIMEDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0A21956D74D00198A8E /* CAIMEDispatcher.cpp */; };
 		04EAB0A81956D75600198A8E /* CAIMEDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0A31956D74D00198A8E /* CAIMEDispatcher.h */; };
-		04EAB0A91956D75600198A8E /* CAKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0A41956D74D00198A8E /* CAKeypadDelegate.cpp */; };
-		04EAB0AA1956D75600198A8E /* CAKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0A51956D74D00198A8E /* CAKeypadDelegate.h */; };
 		04EAB0AB1956D75600198A8E /* CAKeypadDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0A61956D74D00198A8E /* CAKeypadDispatcher.cpp */; };
 		04EAB0AC1956D75600198A8E /* CAKeypadDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0A71956D74D00198A8E /* CAKeypadDispatcher.h */; };
 		04EAB0AD1956D75600198A8E /* CAProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0A81956D74D00198A8E /* CAProtocols.h */; };
@@ -275,6 +273,8 @@
 		B03407F81991CA27005DB179 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03407F61991CA27005DB179 /* md5.cpp */; };
 		B03407F91991CA27005DB179 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B03407F71991CA27005DB179 /* md5.h */; };
 		B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B04CF4301967B2EB00BA7030 /* CASTLContainer.h */; };
+		B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */; };
+		B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */; };
 		B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D3697195AB93900DD4814 /* CAAlertView.cpp */; };
 		B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D3698195AB93900DD4814 /* CAAlertView.h */; };
 		B0C512E619A3127100E6934B /* CAActivityIndicatorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */; };
@@ -362,8 +362,6 @@
 		04EAA0A11956D74D00198A8E /* CAIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIMEDelegate.h; sourceTree = "<group>"; };
 		04EAA0A21956D74D00198A8E /* CAIMEDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAIMEDispatcher.cpp; sourceTree = "<group>"; };
 		04EAA0A31956D74D00198A8E /* CAIMEDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIMEDispatcher.h; sourceTree = "<group>"; };
-		04EAA0A41956D74D00198A8E /* CAKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDelegate.cpp; sourceTree = "<group>"; };
-		04EAA0A51956D74D00198A8E /* CAKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDelegate.h; sourceTree = "<group>"; };
 		04EAA0A61956D74D00198A8E /* CAKeypadDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDispatcher.cpp; sourceTree = "<group>"; };
 		04EAA0A71956D74D00198A8E /* CAKeypadDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDispatcher.h; sourceTree = "<group>"; };
 		04EAA0A81956D74D00198A8E /* CAProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAProtocols.h; sourceTree = "<group>"; };
@@ -557,6 +555,8 @@
 		B03407F61991CA27005DB179 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
 		B03407F71991CA27005DB179 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
+		B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDelegate.cpp; sourceTree = "<group>"; };
+		B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDelegate.h; sourceTree = "<group>"; };
 		B05D3697195AB93900DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D3698195AB93900DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
 		B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAActivityIndicatorView.cpp; sourceTree = "<group>"; };
@@ -715,11 +715,11 @@
 		04EAA0A01956D74D00198A8E /* dispatcher */ = {
 			isa = PBXGroup;
 			children = (
+				B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */,
+				B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */,
 				04EAA0A11956D74D00198A8E /* CAIMEDelegate.h */,
 				04EAA0A21956D74D00198A8E /* CAIMEDispatcher.cpp */,
 				04EAA0A31956D74D00198A8E /* CAIMEDispatcher.h */,
-				04EAA0A41956D74D00198A8E /* CAKeypadDelegate.cpp */,
-				04EAA0A51956D74D00198A8E /* CAKeypadDelegate.h */,
 				04EAA0A61956D74D00198A8E /* CAKeypadDispatcher.cpp */,
 				04EAA0A71956D74D00198A8E /* CAKeypadDispatcher.h */,
 				04EAA0A81956D74D00198A8E /* CAProtocols.h */,
@@ -1155,6 +1155,7 @@
 				04EAB0621956D75600198A8E /* CCActionManager.h in Headers */,
 				04EAB0641956D75600198A8E /* CCActionTween.h in Headers */,
 				04EAB0681956D75600198A8E /* CAApplication.h in Headers */,
+				B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */,
 				04EAB06A1956D75600198A8E /* CAAutoreleasePool.h in Headers */,
 				04EAB06C1956D75600198A8E /* CACamera.h in Headers */,
 				04EAB06E1956D75600198A8E /* CAFPSImages.h in Headers */,
@@ -1189,7 +1190,6 @@
 				04EAB0A51956D75600198A8E /* CrossApp.h in Headers */,
 				04EAB0A61956D75600198A8E /* CAIMEDelegate.h in Headers */,
 				04EAB0A81956D75600198A8E /* CAIMEDispatcher.h in Headers */,
-				04EAB0AA1956D75600198A8E /* CAKeypadDelegate.h in Headers */,
 				04EAB0AC1956D75600198A8E /* CAKeypadDispatcher.h in Headers */,
 				04EAB0AD1956D75600198A8E /* CAProtocols.h in Headers */,
 				04EAB0AF1956D75600198A8E /* CATouch.h in Headers */,
@@ -1381,6 +1381,7 @@
 				04EAB08F1956D75600198A8E /* CABar.cpp in Sources */,
 				04EAB0911956D75600198A8E /* CAButton.cpp in Sources */,
 				04EAB0931956D75600198A8E /* CAControl.cpp in Sources */,
+				B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */,
 				04EAB0971956D75600198A8E /* CAProgress.cpp in Sources */,
 				04EAB0991956D75600198A8E /* CASegmentedControl.cpp in Sources */,
 				04EAB09B1956D75600198A8E /* CASlider.cpp in Sources */,
@@ -1390,7 +1391,6 @@
 				04EAB0A11956D75600198A8E /* CABarItem.cpp in Sources */,
 				04EAB0A31956D75600198A8E /* CAViewController.cpp in Sources */,
 				04EAB0A71956D75600198A8E /* CAIMEDispatcher.cpp in Sources */,
-				04EAB0A91956D75600198A8E /* CAKeypadDelegate.cpp in Sources */,
 				04EAB0AB1956D75600198A8E /* CAKeypadDispatcher.cpp in Sources */,
 				04EAB0AE1956D75600198A8E /* CATouch.cpp in Sources */,
 				04EAB0B01956D75600198A8E /* CATouchDispatcher.cpp in Sources */,

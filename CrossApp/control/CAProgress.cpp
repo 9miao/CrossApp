@@ -19,7 +19,7 @@ NS_CC_BEGIN
 
 CAProgress::CAProgress()
 :m_fProgress(0.0f)
-,m_progressTintColor(CAColor_white)
+,m_progressTintColor(CAColor_blue)
 ,m_progresstrackColor(CAColor_white)
 ,m_pProgressStyle(CAProgressStyleDefault)
 ,m_pProgressTintImage(NULL)
@@ -58,6 +58,24 @@ bool CAProgress::init()
         return false;
     }
     this->setColor(CAColor_clear);
+    
+    
+    m_pTarckImageView = CAScale9ImageView::createWithImage(NULL);
+    m_pTarckImageView->setFrame(this->getBounds());
+    this->insertSubview(m_pTarckImageView, -1);
+    m_pTarckImageView->setColor(m_progresstrackColor);
+    
+    m_pProgressImageView = CAScale9ImageView::createWithImage(NULL);
+    m_pProgressImageView->setFrame(this->getBounds());
+    this->addSubview(m_pProgressImageView);
+    m_pProgressImageView->setColor(m_progressTintColor);
+    
+    CCRect rect = m_pProgressImageView->getBounds();
+    rect.size.width *= m_fProgress;
+    m_pProgressImageView->setFrame(rect);
+    
+    this->addSubview(m_pIndicator);
+    
     return true;
 }
 
@@ -65,35 +83,20 @@ void CAProgress::onEnterTransitionDidFinish()
 { 
     CAView::onEnterTransitionDidFinish();
     
-    if (m_pTarckImageView == NULL ) 
-	{
-		if (m_pProgressTrackImage == NULL)
-		{
-            this->setProgressTrackImage(CAImage::create("source_material/btn_square_disabled.png"));
-		}
-		
-		m_pTarckImageView = CAImageView::createWithImage(this->getImage(m_pProgressTrackImage));
-		m_pTarckImageView->setFrame(CCRectZero);
-        this->insertSubview(m_pTarckImageView, -1);
-		m_pTarckImageView->setColor(m_progresstrackColor);
-
-		if (m_pProgressTintImage == NULL)
-		{
-            this->setProgressTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
-		}
-        
-		m_pProgressImageView = CAImageView::createWithImage(this->getImage(m_pProgressTintImage));
-		m_pProgressImageView->setAnchorPoint(CCPointZero);
-		m_pProgressImageView->setFrame(CCRectZero);
-        this->addSubview(m_pProgressImageView);
-		m_pProgressImageView->setColor(m_progressTintColor);
-
-		CCRect rect = m_pProgressImageView->getBounds();
-		rect.size.width *= m_fProgress;
-		m_pProgressImageView->setImageRect(rect, false, rect.size);
-
-        this->addSubview(m_pIndicator);
+    if (m_pProgressTrackImage == NULL)
+    {
+        this->setProgressTrackImage(CAImage::create("source_material/btn_square_disabled.png"));
     }
+    
+    
+    if (m_pProgressTintImage == NULL)
+    {
+        this->setProgressTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
+    }
+    m_pTarckImageView->setImage(m_pProgressTrackImage);
+    m_pTarckImageView->setColor(m_progresstrackColor);
+    m_pProgressImageView->setImage(m_pProgressTintImage);
+    m_pProgressImageView->setColor(m_progressTintColor);
 }
 
 void CAProgress::onExitTransitionDidStart()
@@ -101,24 +104,8 @@ void CAProgress::onExitTransitionDidStart()
 	CAView::onExitTransitionDidStart();
 }
 
-CAImage* CAProgress::getImage(CAImage* image)
-{
-	CAScale9ImageView *scale9Image = CAScale9ImageView::createWithImage(image);
-    scale9Image->setAnchorPoint(CCPointZero);
-	scale9Image->setFrame(this->getBounds());
-    this->addSubview(scale9Image);
-    
-	CARenderImage* render = CARenderImage::create(this->getBounds().size.width, this->getBounds().size.height, kCAImagePixelFormat_RGBA8888);
-	render->beginWithClear(0, 0, 0, 0);
-    scale9Image->visit();
-	render->end();
-    scale9Image->removeFromSuperview();
-	return render->getSprite()->getImage();
-}
-
 void CAProgress::setProgress(float progress, bool animated)
 {
-
 	progress = MIN(1.0f, progress);
 	progress = MAX(0.0f, progress);
 
@@ -158,7 +145,7 @@ void CAProgress::update(float dt)
 {
 	CCRect rect = CCRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
 
-	m_pProgressImageView->setImageRect(rect, false, rect.size);
+	m_pProgressImageView->setFrame(rect);
     
 	m_fProgress = rect.size.width / this->getBounds().size.width;
 }
@@ -176,6 +163,10 @@ void CAProgress::animatedFinish()
 void CAProgress::setContentSize(const CCSize & var)
 {
     CAView::setContentSize(CCSize(var.width, _px(6)));
+    
+    m_pTarckImageView->setFrame(this->getBounds());
+    CCRect rect = CCRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
+    m_pProgressImageView->setFrame(rect);
 }
 
 NS_CC_END

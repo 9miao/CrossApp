@@ -15,8 +15,6 @@ Json/CSContentJsonDictionary.cpp \
 Json/lib_json/json_value.cpp \
 Json/lib_json/json_reader.cpp \
 Json/lib_json/json_writer.cpp \
-rapidjson/CocoLoader.cpp \
-rapidjson/CADictionaryHelper.cpp \
 sqlite3/include/sqlite3.c \
 other/CAAdress/android/CAAddressManager.cpp \
 other/CACamera/android/CAMediaManager.cpp \

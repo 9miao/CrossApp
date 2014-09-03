@@ -29,10 +29,6 @@ CAAlertView::CAAlertView()
 
 CAAlertView::~CAAlertView()
 {
-	for (int i = 0; i < m_vAllBtn.size(); i++)
-	{
-		CC_SAFE_RELEASE_NULL(m_vAllBtn[i]);
-	}
 	CC_SAFE_RELEASE_NULL(m_pTitleLabel);
 	CC_SAFE_RELEASE_NULL(m_pContentLabel);
 	CC_SAFE_RELEASE_NULL(m_pTitleImage);
@@ -47,9 +43,12 @@ bool CAAlertView::init()
 		return false;
 	}
 
-    this->setColor(CAColor_clear);
+	this->setColor(CAColor_clear);
 	CCSize sz = CAApplication::getApplication()->getWinSize();
 	setCenter(CCRectMake(sz.width / 2, sz.height / 2, sz.width, sz.height));
+
+	setTitleImage(CAImage::create("source_material/alert_title.png"));
+	setContentBackGroundImage(CAImage::create("source_material/alert_content.png"));
 	return true;
 }
 
@@ -62,12 +61,72 @@ CAAlertView *CAAlertView::create()
 		return pAlert;
 	}
 	CC_SAFE_DELETE(pAlert);
+	return pAlert;
+}
+
+
+bool CAAlertView::initWithButtonText(const std::string& szTitle, const std::string& szAlertMsg, const std::string& pszBtnText, ...)
+{
+	if (!CAView::init())
+	{
+		return false;
+	}
+
+	this->setColor(CAColor_clear);
+	CCSize sz = CAApplication::getApplication()->getWinSize();
+	setCenter(CCRectMake(sz.width / 2, sz.height / 2, sz.width, sz.height));
+
+	va_list args;
+	va_start(args, pszBtnText);
+
+	addButton(pszBtnText);
+	const char* pszText = va_arg(args, const char*);
+	while (pszText)
+	{
+		addButton(pszText);
+		pszText = va_arg(args, const char*);
+	}
+	va_end(args);
+
+	setTitle(szTitle.c_str(), CAColor_white);
+	setAlertMessage(szAlertMsg.c_str());
+
+	setTitleImage(CAImage::create("source_material/alert_title.png"));
+	setContentBackGroundImage(CAImage::create("source_material/alert_content.png"));
+	return true;
+}
+
+
+CAAlertView *CAAlertView::createWithButtonText(const std::string& pszTitle, const std::string& pszAlertMsg, const std::string& pszBtnText, ...)
+{
+	va_list args;
+	va_start(args, pszBtnText);
+
+	CAAlertView *pAlert = new CAAlertView();
+	if (pAlert && pAlert->init())
+	{
+		pAlert->addButton(pszBtnText);
+		const char* pszText = va_arg(args, const char*);
+		while (pszText)
+		{
+			pAlert->addButton(pszText);
+			pszText = va_arg(args, const char*);
+		}
+		va_end(args);
+
+		pAlert->setTitle(pszTitle, CAColor_white);
+		pAlert->setAlertMessage(pszAlertMsg);
+
+		pAlert->autorelease();
+		return pAlert;
+	}
+	CC_SAFE_DELETE(pAlert);
 	return NULL;
 }
 
 void CAAlertView::setMessageFontName(std::string var)
 {
-    CC_RETURN_IF(m_pContentLabel == NULL);
+	CC_RETURN_IF(m_pContentLabel == NULL);
 	if (m_sMsgFontName.compare(var))
 	{
 		m_sMsgFontName = var;
@@ -95,36 +154,39 @@ void CAAlertView::setContentBackGroundImage(CAImage* image)
 	setCtrlImage(m_pContentBkImage, image);
 }
 
-void CAAlertView::initAllButton(std::vector<CAButton*>& vbtns)
+void CAAlertView::addButton(const std::string& btnText, CAColor4B col, CAImage* pNormalImage, CAImage* pHighlightedImage)
 {
-    CC_RETURN_IF(!m_vAllBtn.empty());
-	for (int i = 0; i < vbtns.size(); i++)
+	CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
+	CCAssert(btn, "");
+	btn->setTitleForState(CAControlStateAll, btnText.c_str());
+	btn->setTitleColorForState(CAControlStateAll, col);
+	if (pNormalImage == NULL)
 	{
-		vbtns[i]->retain();
-		m_vAllBtn.push_back(vbtns[i]);
-		vbtns[i]->setTag(i);
-		vbtns[i]->addTarget(this, CAControl_selector(CAAlertView::onClickButton), CAControlEventTouchUpInSide);
+		pNormalImage = CAImage::create("source_material/alert_btn.png");
 	}
+	btn->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(pNormalImage));
+	if (pHighlightedImage == NULL)
+	{
+		pHighlightedImage = CAImage::create("source_material/alert_btn_sel.png");
+	}
+	btn->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(pHighlightedImage));
+	addButton(btn);
 }
 
-void CAAlertView::initAllButton(std::vector<std::string>& vBtnText)
+void CAAlertView::addButton(CAButton* pBtn)
 {
-	std::vector<CAButton*> vbtns;
-	for (int i = 0; i < vBtnText.size(); i++)
-	{
-		CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
-		CCAssert(btn, "");
-		btn->setTitleForState(CAControlStateAll, vBtnText[i].c_str());
-		vbtns.push_back(btn);
-	}
-	initAllButton(vbtns);
+	CCAssert(pBtn != NULL, "");
+	m_vAllBtn.pushBack(pBtn);
+	pBtn->setTag(m_vAllBtn.size() - 1);
+	pBtn->addTarget(this, CAControl_selector(CAAlertView::onClickButton), CAControlEventTouchUpInSide);
 }
+
 
 void CAAlertView::setAllBtnBackGroundImage(CAControlState controlState, CAImage* image)
 {
 	for (int i = 0; i < m_vAllBtn.size(); i++)
 	{
-		m_vAllBtn[i]->setBackGroundViewForState(controlState, CAScale9ImageView::createWithImage(image));
+		m_vAllBtn.at(i)->setBackGroundViewForState(controlState, CAScale9ImageView::createWithImage(image));
 	}
 }
 
@@ -132,7 +194,7 @@ void CAAlertView::setAllBtnTextColor(CAColor4B col)
 {
 	for (int i = 0; i < m_vAllBtn.size(); i++)
 	{
-		m_vAllBtn[i]->setTitleColorForState(CAControlStateAll, col);
+		m_vAllBtn.at(i)->setTitleColorForState(CAControlStateAll, col);
 	}
 }
 
@@ -146,8 +208,8 @@ void CAAlertView::setCtrlImage(CAScale9ImageView*& pImageView, CAImage* image)
 
 	pImageView = new CAScale9ImageView();
 
-    CC_RETURN_IF(pImageView == NULL);
-    
+	CC_RETURN_IF(pImageView == NULL);
+
 	if (!pImageView->initWithImage(image))
 	{
 		CC_SAFE_DELETE(pImageView);
@@ -161,12 +223,12 @@ void CAAlertView::setLabel(CALabel*& pLabel, std::string& szTitle, CAColor4B col
 	if (pLabel == NULL)
 	{
 		pLabel = new CALabel();
-        CC_RETURN_IF(pLabel == NULL);
+		CC_RETURN_IF(pLabel == NULL);
 		pLabel->init();
 		pLabel->setTextAlignment(CATextAlignmentCenter);
 		pLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        pLabel->setFontName(m_sMsgFontName.c_str());
-        pLabel->setFontSize(_px(32));
+		pLabel->setFontName(m_sMsgFontName.c_str());
+		pLabel->setFontSize(_px(32));
 		insertSubview(pLabel, 1);
 	}
 	pLabel->setText(szTitle);
@@ -199,11 +261,11 @@ void CAAlertView::calcuCtrlsSize()
 		{
 			m_pTitleImage->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 - ertSize.height * 5 / 12, ertSize.width, ertSize.height / 6));
 		}
-        if (m_pTitleLabel)
-        {
-            m_pTitleLabel->setBounds(CCRectZero);
-            
-        }
+		if (m_pTitleLabel)
+		{
+			m_pTitleLabel->setBounds(CCRectZero);
+
+		}
 	}
 	if (m_pTitleLabel)
 	{
@@ -215,11 +277,11 @@ void CAAlertView::calcuCtrlsSize()
 		{
 			m_pTitleLabel->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 - ertSize.height * 5 / 12, ertSize.width, ertSize.height / 6));
 		}
-        float size = m_pTitleImage->getBounds().size.height / 2;
-        m_pTitleLabel->setFontSize(size);
+		float size = m_pTitleImage->getBounds().size.height / 2;
+		m_pTitleLabel->setFontSize(size);
 	}
 
-	
+
 	if (m_pContentBkImage)
 	{
 		if (isHoriBtnArray)
@@ -228,7 +290,7 @@ void CAAlertView::calcuCtrlsSize()
 		}
 		else
 		{
-			m_pContentBkImage->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 - ertSize.height/6, ertSize.width, ertSize.height * 1 / 3));
+			m_pContentBkImage->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 - ertSize.height / 6, ertSize.width, ertSize.height * 1 / 3));
 		}
 	}
 	if (m_pContentLabel)
@@ -241,8 +303,8 @@ void CAAlertView::calcuCtrlsSize()
 		{
 			m_pContentLabel->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 - ertSize.height / 6, ertSize.width, ertSize.height * 1 / 3));
 		}
-        float size = m_pTitleImage->getBounds().size.height / 2;
-        m_pContentLabel->setFontSize(size);
+		float size = m_pTitleImage->getBounds().size.height / 2;
+		m_pContentLabel->setFontSize(size);
 	}
 
 	if (!isHoriBtnArray)
@@ -251,7 +313,7 @@ void CAAlertView::calcuCtrlsSize()
 		CCAssert(m_pBtnTableView != NULL, "");
 
 		m_pBtnTableView->initWithFrame(CCRectMake(0, 0, 0, 0));
-		m_pBtnTableView->setCenter(CCRectMake(winSize.width/2, winSize.height/2+ertSize.height/4, ertSize.width, ertSize.height/2));
+		m_pBtnTableView->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 + ertSize.height / 4, ertSize.width, ertSize.height / 2));
 		m_pBtnTableView->setTableViewDataSource(this);
 		m_pBtnTableView->setTableViewDelegate(this);
 		addSubview(m_pBtnTableView);
@@ -259,7 +321,7 @@ void CAAlertView::calcuCtrlsSize()
 
 	for (int i = 0; i < m_vAllBtn.size(); i++)
 	{
-		CAButton* pButton = m_vAllBtn[i];
+		CAButton* pButton = m_vAllBtn.at(i);
 		CCAssert(pButton, "");
 
 		if (isHoriBtnArray)
@@ -284,27 +346,19 @@ void CAAlertView::setTarget(CAObject* target, SEL_CAAlertBtnEvent selector)
 
 void CAAlertView::onClickButton(CAControl* btn, CCPoint point)
 {
-    CC_RETURN_IF(m_bRunning == false);
+	CC_RETURN_IF(m_bRunning == false);
 	if (m_pCAlertBtnEvent && m_pCAlertTarget)
 	{
 		((CAObject*)m_pCAlertTarget->*m_pCAlertBtnEvent)(btn->getTag());
 	}
-    this->removeFromSuperview();
+	this->removeFromSuperview();
 	autorelease();
 }
 
-
-void CAAlertView::showMessage(std::string title, std::string alertMsg, std::vector<std::string>& vBtnText)
+void CAAlertView::show()
 {
-	setTitleImage(CAImage::create("source_material/alert_title.png"));
-	setContentBackGroundImage(CAImage::create("source_material/alert_content.png"));
-	setTitle(title.c_str(), CAColor_white);
-	setAlertMessage(alertMsg.c_str());
-	
-	initAllButton(vBtnText);
-	setAllBtnBackGroundImage(CAControlStateNormal, CAImage::create("source_material/alert_btn.png"));
-	setAllBtnBackGroundImage(CAControlStateHighlighted, CAImage::create("source_material/alert_btn_sel.png"));
-	setAllBtnTextColor();
+	if (getSuperview() != NULL)
+		return;
 
 	calcuCtrlsSize();
 
@@ -321,8 +375,8 @@ CATableViewCell* CAAlertView::tableCellAtIndex(CATableView* table, const CCSize&
 	{
 		cell = CATableViewCell::create("cellID");
 
-		cell->addSubview(m_vAllBtn[row]);
-		m_vAllBtn[row]->setCenterOrigin(m_vAllBtn[row]->getBounds().size / 2);
+		cell->addSubview(m_vAllBtn.at(row));
+		m_vAllBtn.at(row)->setCenterOrigin(m_vAllBtn.at(row)->getBounds().size / 2);
 	}
 	return cell;
 }

@@ -1159,10 +1159,10 @@ void CAView::visit()
             parent = parent->getSuperview();
         }
         
-        CCRect frame = CCRectMake(point.x * glScaleX + off_X, 
-                                  point.y * glScaleY + off_Y, 
-                                  size.width * scaleX * glScaleX, 
-                                  size.height * scaleY * glScaleY);        
+        CCRect frame = CCRectMake((point.x- 1) * glScaleX + off_X,
+                                  (point.y - 1) * glScaleY + off_Y,
+                                  (size.width + 2) * scaleX * glScaleX,
+                                  (size.height + 2) * scaleY * glScaleY);
         if (m_bRestoreScissor) {
             if (frame.intersectsRect(m_obRestoreScissorRect)) {
                 float x = MAX(frame.origin.x, m_obRestoreScissorRect.origin.x);

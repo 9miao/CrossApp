@@ -654,14 +654,12 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        m_pNavigationBar->stopAllActions();
-        CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.2f, point);
-        CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
-        CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CANavigationController::scheduleUpdate));
-        CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CANavigationController::unScheduleUpdate));
-        CCDelayTime* delayTime = CCDelayTime::create(0.1f);
-        CCSequence* actions = CCSequence::create(begin, easeBack, delayTime, end, NULL);
-        m_pNavigationBar->runAction(actions);
+        CCArray* array = CCArray::create();
+        array->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.2f, point)));
+        array->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::scheduleUpdate)));
+        array->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::unScheduleUpdate)));
+        array->addObject(CCDelayTime::create(0.1f));
+        m_pNavigationBar->runAction(CCSequence::create(array));
     }
     else
     {

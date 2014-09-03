@@ -25,7 +25,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 	private final Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
 	private String mText;
 	private String mOriginText;
-
+	native static void KeyBoardReturnCallBack();
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -69,7 +69,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 //			if (BuildConfig.DEBUG) {
 //				Log.d(TAG, "insertText(" + insertText + ")");
 //			}
-//			*/
+//			*/ 
 //		} else {
 //			for (; nModified < 0; ++nModified) {
 //				//Tthis.mCocos2dxGLSurfaceView.deleteBackward();
@@ -85,8 +85,6 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public void beforeTextChanged(final CharSequence pCharSequence, final int start, final int count, final int after) {
-		System.out.println("--start:"+start+"     after:"+after+"    count:"+count);
-		System.out.println("--beforeTextChanged:      "+pCharSequence.toString());
 		/*
 		if (BuildConfig.DEBUG) {
 			Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
@@ -99,8 +97,6 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
-		System.out.println("start:"+start+"     before:"+before+"    count:"+count);
-		System.out.println("onTextChanged:      "+pCharSequence.toString());
 		
 		//if(before !=0 && before == count)
 		{
@@ -109,6 +105,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		
 	}
 
+	
 	@Override
 	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
 		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit()) {
@@ -127,7 +124,6 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			if (text.compareTo("") == 0) {
 				text = "\n";
 			}
-
 			if ('\n' != text.charAt(text.length() - 1)) {
 				text += '\n';
 			}
@@ -140,13 +136,20 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			}
 			*/
 		}
+
+		  
 		
 		if (pActionID == EditorInfo.IME_ACTION_DONE) {
-			this.mCocos2dxGLSurfaceView.requestFocus();
+				KeyBoardReturnCallBack();	
 		}
-		return false;
+		if (pActionID == EditorInfo.IME_ACTION_SEARCH) {
+			KeyBoardReturnCallBack();
+		}
+		if (pActionID == EditorInfo.IME_ACTION_SEND) {
+			KeyBoardReturnCallBack();		
+		}
+		return true;
 	}
-
 	// ===========================================================
 	// Methods
 	// ===========================================================

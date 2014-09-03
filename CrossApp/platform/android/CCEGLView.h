@@ -26,6 +26,12 @@ public:
     virtual void setIMEKeyboardDefault();
     
     virtual void setIMEKeyboardAlphabet();
+    
+    virtual void setIMEKeyboardReturnSend();
+    
+    virtual void setIMEKeyboardReturnSearch();
+    
+    virtual void setIMEKeyboardReturnDone();
     // static function
     /**
     @brief    get the shared main open gl window

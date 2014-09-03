@@ -68,6 +68,8 @@ public:
     void dispatchDeleteBackward();
 
     void dispatchGetKeyBoardHeight(int height);
+    
+    void dispatchGetKeyBoradReturnCallBack();
     /**
     @brief Get the content text from CAIMEDelegate, retrieved previously from IME.
     */

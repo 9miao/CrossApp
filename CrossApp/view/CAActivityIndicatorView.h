@@ -51,10 +51,12 @@ public:
     // 
     CC_PROPERTY(CAView*, m_pBackView, ActivityBackView);
     
-    virtual void startAnimating();
-    virtual void stopAnimating();
-    virtual bool isAnimating();
+    void startAnimating();
+    void stopAnimating();
+    bool isAnimating();
 
+    void setTargetOnCancel(CAObject* target, SEL_CallFunc callBack);
+    
     CC_SYNTHESIZE(float, m_fLoadingMinTime, LoadingMinTime);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_color, Color);
@@ -65,6 +67,9 @@ private:
     bool m_bStopAnimation;
     bool m_hidesWhenStopped; // default is true. calls -setHidden when animating gets set to false
     CAActivityIndicatorViewStyle m_style; // default is CAActivityIndicatorViewStyleWhite
+    
+    CAObject* m_pTarget;
+    SEL_CallFunc m_pCallFunc;
     
 private:
     CCPoint m_vertex[12][2];

@@ -37,8 +37,6 @@
 		B00CC6161979302E00A62E4C /* CAStudioViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00CC6141979302E00A62E4C /* CAStudioViewController.cpp */; };
 		B01F7164195166F500BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F7163195166F500BA07A6 /* source_material */; };
 		B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145A190A6A3700C3633B /* CAUIHelper.cpp */; };
-		B03408211992115D005DB179 /* CADictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03408111992115D005DB179 /* CADictionaryHelper.cpp */; };
-		B03408221992115D005DB179 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03408131992115D005DB179 /* CocoLoader.cpp */; };
 		B03E8FD11938876B00FD9A06 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FD01938876B00FD9A06 /* HelloWorld.png */; };
 		B03E904919389A4C00FD9A06 /* CAAddressManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E902E19389A4C00FD9A06 /* CAAddressManager.mm */; };
 		B03E904E19389A4C00FD9A06 /* CAMediaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E903A19389A4C00FD9A06 /* CAMediaManager.mm */; };
@@ -128,20 +126,6 @@
 		B02A145B190A6A3700C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
 		B034080519920FD1005DB179 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		B034080619920FD1005DB179 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
-		B03408111992115D005DB179 /* CADictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADictionaryHelper.cpp; sourceTree = "<group>"; };
-		B03408121992115D005DB179 /* CADictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADictionaryHelper.h; sourceTree = "<group>"; };
-		B03408131992115D005DB179 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
-		B03408141992115D005DB179 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
-		B03408161992115D005DB179 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
-		B03408171992115D005DB179 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
-		B03408191992115D005DB179 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
-		B034081A1992115D005DB179 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
-		B034081B1992115D005DB179 /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
-		B034081C1992115D005DB179 /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
-		B034081D1992115D005DB179 /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
-		B034081E1992115D005DB179 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
-		B034081F1992115D005DB179 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
-		B03408201992115D005DB179 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		B03E8FD01938876B00FD9A06 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		B03E902A19389A4C00FD9A06 /* CAAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressManager.h; sourceTree = "<group>"; };
 		B03E902E19389A4C00FD9A06 /* CAAddressManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddressManager.mm; sourceTree = "<group>"; };
@@ -238,7 +222,6 @@
 		15C1589C168315E500D239F2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
-				B03408101992115D005DB179 /* rapidjson */,
 				B034080219920FD1005DB179 /* sqlite3 */,
 				B00CC6131979302E00A62E4C /* studio */,
 				B03E902619389A4C00FD9A06 /* other */,
@@ -408,43 +391,6 @@
 				B034080619920FD1005DB179 /* sqlite3ext.h */,
 			);
 			path = include;
-			sourceTree = "<group>";
-		};
-		B03408101992115D005DB179 /* rapidjson */ = {
-			isa = PBXGroup;
-			children = (
-				B03408111992115D005DB179 /* CADictionaryHelper.cpp */,
-				B03408121992115D005DB179 /* CADictionaryHelper.h */,
-				B03408131992115D005DB179 /* CocoLoader.cpp */,
-				B03408141992115D005DB179 /* CocoLoader.h */,
-				B03408151992115D005DB179 /* rapidjson */,
-			);
-			path = rapidjson;
-			sourceTree = "<group>";
-		};
-		B03408151992115D005DB179 /* rapidjson */ = {
-			isa = PBXGroup;
-			children = (
-				B03408161992115D005DB179 /* document.h */,
-				B03408171992115D005DB179 /* filestream.h */,
-				B03408181992115D005DB179 /* internal */,
-				B034081C1992115D005DB179 /* prettywriter.h */,
-				B034081D1992115D005DB179 /* rapidjson.h */,
-				B034081E1992115D005DB179 /* reader.h */,
-				B034081F1992115D005DB179 /* stringbuffer.h */,
-				B03408201992115D005DB179 /* writer.h */,
-			);
-			path = rapidjson;
-			sourceTree = "<group>";
-		};
-		B03408181992115D005DB179 /* internal */ = {
-			isa = PBXGroup;
-			children = (
-				B03408191992115D005DB179 /* pow10.h */,
-				B034081A1992115D005DB179 /* stack.h */,
-				B034081B1992115D005DB179 /* strfunc.h */,
-			);
-			path = internal;
 			sourceTree = "<group>";
 		};
 		B03E902619389A4C00FD9A06 /* other */ = {
@@ -648,7 +594,6 @@
 				41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */,
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
 				B04C0BB519011ED8009854FD /* json_reader.cpp in Sources */,
-				B03408221992115D005DB179 /* CocoLoader.cpp in Sources */,
 				B04C0BB819011ED8009854FD /* json_writer.cpp in Sources */,
 				B04C0BB219011ED8009854FD /* DictionaryHelper.cpp in Sources */,
 				B04C0BB619011ED8009854FD /* json_value.cpp in Sources */,
@@ -664,7 +609,6 @@
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
 				B0AD93B11920790900EA40BB /* FirstViewController.cpp in Sources */,
-				B03408211992115D005DB179 /* CADictionaryHelper.cpp in Sources */,
 				1A9CE9821765A7FA000E3062 /* AssetsManager.cpp in Sources */,
 				B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */,
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,

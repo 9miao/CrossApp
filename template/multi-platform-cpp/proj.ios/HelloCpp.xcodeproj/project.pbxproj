@@ -30,8 +30,6 @@
 		B01DFC3B190513FD00214AE2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B01DFC3A190513FD00214AE2 /* fonts */; };
 		B01F71671951682600BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71661951682600BA07A6 /* source_material */; };
 		B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */; };
-		B0340839199211C1005DB179 /* CADictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0340829199211C1005DB179 /* CADictionaryHelper.cpp */; };
-		B034083A199211C1005DB179 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B034082B199211C1005DB179 /* CocoLoader.cpp */; };
 		B034086E19921255005DB179 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B034085819921255005DB179 /* libwebsockets.a */; };
 		B036EB5D19406C7F000434DD /* icon in Resources */ = {isa = PBXBuildFile; fileRef = B036EB5C19406C7F000434DD /* icon */; };
 		B03E8FEC1938879200FD9A06 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FDF1938879200FD9A06 /* HelloWorld.png */; };
@@ -130,20 +128,6 @@
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
 		B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
 		B02A145F190A6A4B00C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
-		B0340829199211C1005DB179 /* CADictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADictionaryHelper.cpp; sourceTree = "<group>"; };
-		B034082A199211C1005DB179 /* CADictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADictionaryHelper.h; sourceTree = "<group>"; };
-		B034082B199211C1005DB179 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
-		B034082C199211C1005DB179 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
-		B034082E199211C1005DB179 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
-		B034082F199211C1005DB179 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
-		B0340831199211C1005DB179 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
-		B0340832199211C1005DB179 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
-		B0340833199211C1005DB179 /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
-		B0340834199211C1005DB179 /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
-		B0340835199211C1005DB179 /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
-		B0340836199211C1005DB179 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
-		B0340837199211C1005DB179 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
-		B0340838199211C1005DB179 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		B034083E199211CC005DB179 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		B034083F199211CC005DB179 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		B034085619921255005DB179 /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
@@ -253,7 +237,6 @@
 			children = (
 				B034084819921255005DB179 /* libwebsockets */,
 				B034083B199211CC005DB179 /* sqlite3 */,
-				B0340828199211C1005DB179 /* rapidjson */,
 				B00CC60D19792FF800A62E4C /* CrossAppExt.h */,
 				B00CC60E19792FF800A62E4C /* studio */,
 				EB1818A619387F67002856FF /* other */,
@@ -416,43 +399,6 @@
 				B00CC61019792FF800A62E4C /* CAStudioViewController.h */,
 			);
 			path = studio;
-			sourceTree = "<group>";
-		};
-		B0340828199211C1005DB179 /* rapidjson */ = {
-			isa = PBXGroup;
-			children = (
-				B0340829199211C1005DB179 /* CADictionaryHelper.cpp */,
-				B034082A199211C1005DB179 /* CADictionaryHelper.h */,
-				B034082B199211C1005DB179 /* CocoLoader.cpp */,
-				B034082C199211C1005DB179 /* CocoLoader.h */,
-				B034082D199211C1005DB179 /* rapidjson */,
-			);
-			path = rapidjson;
-			sourceTree = "<group>";
-		};
-		B034082D199211C1005DB179 /* rapidjson */ = {
-			isa = PBXGroup;
-			children = (
-				B034082E199211C1005DB179 /* document.h */,
-				B034082F199211C1005DB179 /* filestream.h */,
-				B0340830199211C1005DB179 /* internal */,
-				B0340834199211C1005DB179 /* prettywriter.h */,
-				B0340835199211C1005DB179 /* rapidjson.h */,
-				B0340836199211C1005DB179 /* reader.h */,
-				B0340837199211C1005DB179 /* stringbuffer.h */,
-				B0340838199211C1005DB179 /* writer.h */,
-			);
-			path = rapidjson;
-			sourceTree = "<group>";
-		};
-		B0340830199211C1005DB179 /* internal */ = {
-			isa = PBXGroup;
-			children = (
-				B0340831199211C1005DB179 /* pow10.h */,
-				B0340832199211C1005DB179 /* stack.h */,
-				B0340833199211C1005DB179 /* strfunc.h */,
-			);
-			path = internal;
 			sourceTree = "<group>";
 		};
 		B034083B199211CC005DB179 /* sqlite3 */ = {
@@ -721,10 +667,8 @@
 				15A3DA5D1682F826002FB0C5 /* HttpClient.cpp in Sources */,
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
 				B0AD93EA19207CA300EA40BB /* FirstViewController.cpp in Sources */,
-				B034083A199211C1005DB179 /* CocoLoader.cpp in Sources */,
 				B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */,
 				15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */,
-				B0340839199211C1005DB179 /* CADictionaryHelper.cpp in Sources */,
 				EB1818C919387F67002856FF /* CAAddressManager.mm in Sources */,
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
@@ -759,8 +703,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zheng liu (34HNZGFJNZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zheng liu (34HNZGFJNZ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -805,8 +749,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zheng liu (34HNZGFJNZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zheng liu (34HNZGFJNZ)";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;

@@ -101,6 +101,22 @@ CCEGLView* CCEGLView::sharedOpenGLView()
     static CCEGLView instance;
     return &instance;
 }
+void CCEGLView::setIMEKeyboardReturnSend()
+{
+    EAGLView * view = [EAGLView sharedEGLView];
+    view.returnKeyType =UIReturnKeySend;
+}
 
+void CCEGLView::setIMEKeyboardReturnSearch()
+{
+    EAGLView * view = [EAGLView sharedEGLView];
+    view.returnKeyType =UIReturnKeySearch;
+}
+
+void CCEGLView::setIMEKeyboardReturnDone()
+{
+    EAGLView * view = [EAGLView sharedEGLView];
+    view.returnKeyType =UIReturnKeyDone;
+}
 NS_CC_END
 

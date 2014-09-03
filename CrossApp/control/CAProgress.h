@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include "view/CAView.h"
-#include "view/CAImageView.h"
+#include "view/CAScale9ImageView.h"
 #include "view/CARenderImage.h"
 
 NS_CC_BEGIN
@@ -64,11 +64,9 @@ protected:
 
 	void animatedFinish();
 
-	CAImage* getImage(CAImage*);
-
-    CAImageView* m_pTarckImageView;
+    CAScale9ImageView* m_pTarckImageView;
     
-	CAImageView* m_pProgressImageView;
+	CAScale9ImageView* m_pProgressImageView;
 
 	float m_fProgress;
 

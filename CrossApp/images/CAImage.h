@@ -66,6 +66,8 @@ public:
     
     static int getStringWidth(const char* pFontName, unsigned long nSize, const char* pText);
     
+    static int getStringHeight(const char* pFontName, unsigned long nSize, const char* pText, int iLimitWidth);
+    
 	static CAImage* create(const std::string& file);
     
     static CAImage* createWithDataNoCache(void* data, int lenght);

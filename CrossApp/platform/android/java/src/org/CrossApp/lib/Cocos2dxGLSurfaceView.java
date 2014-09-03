@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 
 public class Cocos2dxGLSurfaceView extends GLSurfaceView {
@@ -28,6 +29,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	private final static int KEY_BOARD_TYPE_NORMAL=10;
 	private final static int KEY_BOARD_TYPE_NUMBER=11;
 	private final static int KEY_BOARD_TYPE_ALPHABET=12;
+	
+	private final static int KEY_BOARD_RETURNTYPE_DONE=21;
+	private final static int KEY_BOARD_RETURNTYPE_SEARCH=22;
+	private final static int KEY_BOARD_RETURNTYPE_SEND=23;
 	private final static int RESET_TEXT=13;
 	// ===========================================================
 	// Fields
@@ -125,6 +130,24 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 						}
 						break;
+					case KEY_BOARD_RETURNTYPE_DONE:
+						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
+						{
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+						}
+						break;
+					case KEY_BOARD_RETURNTYPE_SEARCH:
+						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
+						{
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+						}
+						break;
+					case KEY_BOARD_RETURNTYPE_SEND:
+						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
+						{
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
+						}
+						break;
 				}
 			}
 		};
@@ -145,22 +168,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     	   final Message msg = new Message();
    			msg.what = type;
    			Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
-//    	   System.out.println(type);
-//    	   switch (type) {
-//		case KEY_BOARD_TYPE_NORMAL:
-//			this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-//			break;
-//		case KEY_BOARD_TYPE_NUMBER:
-//			this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
-//			break;
-//		case KEY_BOARD_TYPE_ALPHABET:
-//			this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-//			break;
-//		default:
-//			break;
-//		}
        }
-       
+       public void setKeyBoardRetrunType(int type)
+       {
+    	   final Message msg = new Message();
+  			msg.what = type;
+  			Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
+       }
        public static void queueAccelerometer(final float x, final float y, final float z, final long timestamp) {	
 	   mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
 		@Override
@@ -238,7 +252,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			xs[i] = pMotionEvent.getX(i);
 			ys[i] = pMotionEvent.getY(i);
 		}
-		System.out.println("what the fuck:"+pMotionEvent.getAction());
 		switch (pMotionEvent.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_POINTER_DOWN:
 				final int indexPointerDown = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
@@ -395,7 +408,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			@Override
 			public void run() {
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleWillInsertText(start,pString,before,count);
-				System.out.println(Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentText());
 				
 				
 			}
@@ -405,7 +417,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("deleteBackward"+"   Runnable");
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleDeleteBackward();
 			}
 		});

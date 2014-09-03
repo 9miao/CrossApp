@@ -259,6 +259,17 @@ void CAIMEDispatcher::dispatchGetKeyBoardHeight(int height)
         
     
 }
+void CAIMEDispatcher::dispatchGetKeyBoradReturnCallBack()
+{
+    do
+    {
+        CC_BREAK_IF(! m_pImpl);
+        
+        CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
+        
+        m_pImpl->m_DelegateWithIme->getKeyBoradReturnCallBack();
+    }while (0);
+}
 void CAIMEDispatcher::dispatchDeleteBackward()
 {
     do 

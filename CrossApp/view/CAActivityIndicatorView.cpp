@@ -24,6 +24,8 @@ CAActivityIndicatorView::CAActivityIndicatorView()
 , m_pBackView(NULL)
 , m_fLoadingMinTime(0.0f)
 , m_fLoadingTime(0.0f)
+, m_pTarget(NULL)
+, m_pCallFunc(NULL)
 {
     
 }
@@ -32,6 +34,7 @@ CAActivityIndicatorView::~CAActivityIndicatorView()
 {
     CC_SAFE_RELEASE(m_pImageView);
     CC_SAFE_RELEASE(m_pBackView);
+    CC_SAFE_RELEASE(m_pTarget);
 }
 
 CAActivityIndicatorView* CAActivityIndicatorView::create()
@@ -177,12 +180,19 @@ void CAActivityIndicatorView::startAnimating()
 void CAActivityIndicatorView::stopAnimating()
 {
     m_bStopAnimation = true;
-    this->setVisible(false);
 }
 
 bool CAActivityIndicatorView::isAnimating()
 {
     return CAScheduler::isScheduled(schedule_selector(CAActivityIndicatorView::animation), this);
+}
+
+void CAActivityIndicatorView::setTargetOnCancel(CAObject* target, SEL_CallFunc callBack)
+{
+    CC_SAFE_RETAIN(target);
+    CC_SAFE_RELEASE(m_pTarget);
+    m_pTarget = target;
+    m_pCallFunc = callBack;
 }
 
 void CAActivityIndicatorView::draw()
@@ -268,6 +278,11 @@ void CAActivityIndicatorView::animation(float dt)
         CC_BREAK_IF(m_fLoadingTime < m_fLoadingMinTime);
         CC_BREAK_IF(m_bStopAnimation == false);
         CAScheduler::unschedule(schedule_selector(CAActivityIndicatorView::animation), this);
+        this->setVisible(false);
+        if (m_pTarget && m_pCallFunc)
+        {
+            ((CAObject*)m_pTarget->*m_pCallFunc)();
+        }
     }
     while (0);
 
@@ -287,7 +302,7 @@ void CAActivityIndicatorView::setActivityIndicatorView(CrossApp::CAView *var)
     if (m_pImageView)
     {
         m_pImageView->setCenterOrigin(getBounds().size/2);
-        this->addSubview(m_pImageView);
+        this->insertSubview(m_pImageView, 1);
     }
 }
 
@@ -307,7 +322,7 @@ void CAActivityIndicatorView::setActivityBackView(CrossApp::CAView *var)
     
     if (m_pBackView) {
         m_pBackView->setCenterOrigin(getBounds().size/2);
-        this->insertSubview(m_pBackView, -1);
+        this->insertSubview(m_pBackView, 0);
     }
 }
 

@@ -87,6 +87,12 @@ int CAFTFontCache::getStringWidth(const char* pFontName, unsigned long nSize, co
 	return m_pCurFontData->ftFont.getStringWidth(text);
 }
 
+int CAFTFontCache::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth)
+{
+	setCurrentFontData(pFontName, nSize);
+	return m_pCurFontData->ftFont.getStringHeight(text, iLimitWidth);
+}
+
 CAImage* CAFTFontCache::initWithString(const char* pText, const char* pFontName, int nSize, int width, int height, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment)
 {
 	if (pText == NULL || pFontName == NULL)

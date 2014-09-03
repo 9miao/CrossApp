@@ -66,14 +66,36 @@ CASegmentedControl* CASegmentedControl::createWithCenter(const CCRect& rect, uns
     return NULL;
 }
 
-bool CASegmentedControl::init()
+bool CASegmentedControl::initWithFrame(const CCRect& rect)
 {
-    if (!CAControl::init())
+    if (!CAControl::initWithFrame(rect))
     {
         return false;
     }
-    this->setColor(CAColor_clear);
-    
+    this->removeAllSegments();
+    const float elemWidth = this->getBounds().size.width / m_nItemsCount;
+    m_itemSize = CCSizeMake(elemWidth, this->getBounds().size.height);
+    CCRect elemFrame = CCRectMake(0, 0, m_itemSize.width, m_itemSize.height);
+    for (int i = 0; i < m_nItemsCount; ++i)
+    {
+        CAButton *btn = this->createDefaultSegment();
+        if (btn)
+        {
+            btn->setFrame(elemFrame);
+            m_segments.push_back(btn);
+            this->insertSubview(btn, 1);
+        }
+        elemFrame.origin.x += elemWidth;
+    }
+    return true;
+}
+
+bool CASegmentedControl::initWithCenter(const CCRect& rect)
+{
+    if (!CAControl::initWithCenter(rect))
+    {
+        return false;
+    }
     this->removeAllSegments();
     const float elemWidth = this->getBounds().size.width / m_nItemsCount;
     m_itemSize = CCSizeMake(elemWidth, this->getBounds().size.height);
@@ -386,7 +408,11 @@ void CASegmentedControl::setSelectedHighlighted()
     
     if (m_selectedIndex != index)
     {
+        int lastSelectedIndex = m_selectedIndex;
+        
         m_selectedIndex = index;
+        
+        CC_RETURN_IF(lastSelectedIndex < 0);
         
         if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
         {
@@ -480,6 +506,8 @@ void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
     {
         m_pBackgroundView->setFrame(this->getBounds());
     }
+    
+    this->layoutSubviews();
 }
 
 void CASegmentedControl::addTarget(CAObject* target, SEL_CAControl selector)

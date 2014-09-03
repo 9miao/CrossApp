@@ -38,42 +38,13 @@ CAFreeTypeFont::~CAFreeTypeFont()
 
 CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment)
 {
-	FT_Error error = 0;
-	unsigned long size = 0;
-	unsigned char* pBuffer = NULL;
-    
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
     
 	m_inWidth = inWidth;
 	m_inHeight = inHeight;
     
-	// attempt to load font from Resources fonts folder
-	pBuffer = loadFont(pFontName, &size);
-    
-	if (!pBuffer) // font not found!
-		return NULL;
-    
-	if (!s_FreeTypeLibrary)
-	{
-		error = FT_Init_FreeType(&s_FreeTypeLibrary);
-	}
-    
-	if (!error && !m_face)
-	{
-		error = FT_New_Memory_Face(s_FreeTypeLibrary, pBuffer, size, 0, &m_face);
-	}
-    
-	if (!error)
-	{
-		error = FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
-	}
-    
-	if (!error)
-		error = FT_Set_Char_Size(m_face, nSize << 6, nSize << 6, 72, 72);
-    
-	if (!error)
-		error = initGlyphs(pText);
+	initGlyphs(pText);
     
     
 	CCImage::ETextAlign eAlign;
@@ -187,6 +158,16 @@ int CAFreeTypeFont::getStringWidth(const std::string& text)
 	FT_BBox bbox;
 	compute_bbox(glyphs, &bbox);
 	return bbox.xMax - bbox.xMin;
+}
+
+// text encode with utf8
+int CAFreeTypeFont::getStringHeight(const std::string& text, int iLimitWidth)
+{
+	m_inWidth = iLimitWidth;
+	m_inHeight = 0;
+
+	initGlyphs(text.c_str());
+	return m_textHeight;
 }
 
 void CAFreeTypeFont::destroyAllLines()

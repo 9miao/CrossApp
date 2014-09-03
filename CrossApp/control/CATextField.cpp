@@ -31,6 +31,7 @@ CATextField::CATextField()
 , m_nInputType(KEY_BOARD_INPUT_NORMAL)
 , m_keyboardType(KEY_BOARD_TYPE_NORMAL)
 , m_sText("")
+, m_sPlaceHolder("")
 , m_cCursorColor(CAColor_black)
 , m_iCurPos(0)
 , m_iLabelWidth(0)
@@ -51,7 +52,7 @@ CATextField::CATextField()
 
 CATextField::~CATextField()
 {
-}
+} 
 
 void CATextField::onEnterTransitionDidFinish()
 {
@@ -147,7 +148,8 @@ void CATextField::setFontSize(int var)
     
 	m_iFontSize = var;
 	m_iFontHeight = CAImage::getFontHeight("", m_iFontSize);
-
+    m_iVertMargins = (this->getBounds().size.height - m_iFontHeight) / 2;
+    
 	m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, var / 10.0f, var));
     this->updateImage();
 }
@@ -162,6 +164,11 @@ void CATextField::setText(std::string var)
     CATextFieldDelegate* pTemp = m_pDelegate;
     m_pDelegate = NULL;
     m_sText.clear();
+	m_iCurPos = 0;
+	m_iString_left_offX = 0;
+	m_iString_l_length = 0;
+	m_iString_r_length = 0;
+	m_vTextFiledChars.clear();
     insertText(var.c_str(), var.length());
     m_pDelegate = pTemp;
 }
@@ -226,7 +233,21 @@ bool CATextField::attachWithIME()
             {
                 pGlView->setIMEKeyboardAlphabet();
             }
+            
+            if (getKeyboardReturnType() ==KEY_BOARD_RETURN_SEND)
+            {
+                pGlView->setIMEKeyboardReturnSend();
+            }
+            else if (getKeyboardReturnType() ==KEY_BOARD_RETURN_SEARCH)
+            {
+                pGlView->setIMEKeyboardReturnSearch();
+            }
+            else if(getKeyboardReturnType() ==KEY_BOARD_RETURN_DONE)
+            {
+                pGlView->setIMEKeyboardReturnDone();
+            }
 #endif
+            m_pCursorMark->setVisible(true);
             pGlView->setIMEKeyboardState(true);
         }
     }
@@ -240,9 +261,11 @@ bool CATextField::detachWithIME()
     {
         // close keyboard
         CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+        
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(false);
+            m_pCursorMark->setVisible(false);
         }
     }
     return bRet;
@@ -349,6 +372,10 @@ void CATextField::insertText(const char * text, int len)
 {
 	CCAssert(text != NULL, "");
 	CCAssert(len > 0, "");
+    if (!strcmp(text, "\n")) {
+        getKeyBoradReturnCallBack();
+        return;
+    }
     if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
 	{
 		if (len >= 2)
@@ -437,6 +464,7 @@ void CATextField::deleteBackward()
 
 	m_vTextFiledChars.erase(m_vTextFiledChars.begin() + getStringCharCount(m_sText.substr(0, m_iCurPos)));
 
+
 	this->updateImage();
 
 	m_iString_l_length = getStringLength(m_sText.substr(0, m_iCurPos));
@@ -461,10 +489,10 @@ void CATextField::deleteBackward()
 	float mPmarkWidth = MIN(this->getBounds().size.width, getCursorX());
 	m_pCursorMark->setCenterOrigin(CCPoint(mPmarkWidth + m_iHoriMargins, this->getBounds().size.height / 2));
 
-	if (m_sText.empty())
-	{
-		updateImage();
-	}
+//	if (m_sText.empty())
+//	{
+//		updateImage();
+//	}
 }
 const char* CATextField::getContentText()
 {
@@ -513,7 +541,7 @@ void CATextField::updateImage()
 	std::string text = "";
     if (m_sText.empty())
     {
-        //text = m_sPlaceHolder;
+        text = m_sPlaceHolder;
         this->setColor(m_cSpaceHolderColor);
     }
 	else
@@ -524,36 +552,38 @@ void CATextField::updateImage()
     std::string password("");
 	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
 	{
-		
 		for (int i = 0; i<m_sText.length(); i++)
 		{
 			password.append("*");
 		}
-		
-		if (m_sText.length() == 0)
-		{
-			password = m_sPlaceHolder;
-		}
 		text = password;
-		this->setColor(m_cSpaceHolderColor);
 	}
+
+    
 	CCSize size = CCSizeMake(0, m_iFontHeight);
     CAImage* image = CAImage::createWithString(text.c_str(),
                                                "",
                                                m_iFontSize * CC_CONTENT_SCALE_FACTOR(),
                                                size,
                                                CATextAlignmentLeft,
-                                               CAVerticalTextAlignmentCenter, true);
-
-	if (image == NULL)
+                                               CAVerticalTextAlignmentCenter,
+                                               true);
+    
+    CCRect rect = CCRectZero;
+    if (m_sPlaceHolder.length() == 0)
+    {
+        this->setImage(image);
+        this->setImageRect(rect);
+    }
+	if (image == NULL )
 		return;
 
  
-	CCRect rect = CCRectZero;
+	
 	rect.size.height = image->getContentSize().height;
 	rect.size.width = MIN(m_iLabelWidth, image->getContentSize().width);
 
-	if (m_sText.empty())
+	if (text.empty())
 	{
 		m_cImageSize = CCSizeZero;
 	}
@@ -662,6 +692,26 @@ int CATextField::getStringCharCount(const std::string &var)
 		count++;
 	}
 	return count;
+}
+
+void CATextField::getKeyBoardHeight(int height)
+{
+    if( m_pDelegate && m_pDelegate->getKeyBoardHeight(height) )
+    {
+        return;
+    }
+}
+
+void CATextField::getKeyBoradReturnCallBack()
+{
+    if( m_pDelegate && m_pDelegate->keyBoardCallBack(this) )
+    {
+        return;
+    }
+    else
+    {
+        this->resignFirstResponder();
+    }
 }
 
 int CATextField::getStringLength(const std::string &var)

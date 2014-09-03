@@ -67,6 +67,7 @@ protected:
 	unsigned char* getBitmap(CCImage::ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text);
+	int getStringHeight(const std::string& text, int iLimitWidth);
 	void destroyAllLines();
 
 	FT_Error initGlyphs(const char* text);

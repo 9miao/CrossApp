@@ -201,6 +201,26 @@ int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const ch
 #endif
 }
 
+int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const char* pText, int iLimitWidth)
+{
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+    return g_AFTFontCache.getStringHeight(pFontName, nSize, pText, iLimitWidth);
+#else
+    
+    CAImage *image = CAImage::createWithString(pText,
+                                               pFontName,
+                                               nSize,
+                                               CCSize(iLimitWidth, 0),
+                                               CATextAlignmentLeft,
+                                               CAVerticalTextAlignmentTop);
+    if(image != NULL)
+    {
+        return image->getContentSize().height;
+    }
+    return 0;
+#endif
+}
+
 const CAImagePixelFormat& CAImage::getPixelFormat()
 {
     return m_ePixelFormat;

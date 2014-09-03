@@ -6,6 +6,8 @@
 #include "CrossAppExt.h"
 #include "ExtensionMacros.h"
 
+#define DICTOOL DictionaryHelper::shareHelper()
+
 NS_CC_EXT_BEGIN
 /**
 *   @js NA

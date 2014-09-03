@@ -56,5 +56,7 @@ extern "C" {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_KeyBoardHeightReturn(JNIEnv* env, jobject thiz, jint height) {
         CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchGetKeyBoardHeight(height);
     }
-    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxTextInputWraper_KeyBoardReturnCallBack(JNIEnv* env, jobject thiz) {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchGetKeyBoradReturnCallBack();
+    }
 }

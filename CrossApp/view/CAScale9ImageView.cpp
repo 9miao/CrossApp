@@ -362,21 +362,25 @@ void CAScale9ImageView::setInsetBottom(float insetBottom)
 
 void CAScale9ImageView::setColor(const CAColor4B& color)
 {
-    CAObject* child;
-    CCArray* children = m_pScale9ImageView->getSubviews();
-    CCARRAY_FOREACH(children, child)
+    CAView::setColor(color);
+    if (m_pScale9ImageView)
     {
-        CARGBAProtocol* pNode = dynamic_cast<CARGBAProtocol*>(child);
-        if (pNode)
+        CAObject* child;
+        CCArray* children = m_pScale9ImageView->getSubviews();
+        CCARRAY_FOREACH(children, child)
         {
-            pNode->setColor(color);
+            CARGBAProtocol* pNode = dynamic_cast<CARGBAProtocol*>(child);
+            if (pNode)
+            {
+                pNode->setColor(color);
+            }
         }
     }
 }
 
 const CAColor4B& CAScale9ImageView::getColor()
 {
-	return m_pScale9ImageView ? m_pScale9ImageView->getColor() : CAColor_white;
+	return CAView::getColor();
 }
 
 void CAScale9ImageView::setImage(CrossApp::CAImage *image)

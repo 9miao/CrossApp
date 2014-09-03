@@ -65,6 +65,7 @@ CCEGLView* CCEGLView::sharedOpenGLView()
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
+    CCLog("setIMEKeyboardState %d",bOpen);
     setKeyboardStateJNI((int)bOpen);
 }
 void CCEGLView::setIMEKeyboardNumber()
@@ -80,6 +81,20 @@ void CCEGLView::setIMEKeyboardDefault()
 void CCEGLView::setIMEKeyboardAlphabet()
 {
     setKeyboardType(12);
+}
+void CCEGLView::setIMEKeyboardReturnSend()
+{
+    setKeyboardReturnType(23);
+}
+
+void CCEGLView::setIMEKeyboardReturnSearch()
+{
+    setKeyboardReturnType(22);
+}
+
+void CCEGLView::setIMEKeyboardReturnDone()
+{
+    setKeyboardReturnType(21);
 }
 NS_CC_END
 

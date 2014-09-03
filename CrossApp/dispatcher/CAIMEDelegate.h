@@ -93,6 +93,8 @@ protected:
     virtual void deleteBackward() {}
 
     virtual void getKeyBoardHeight(int height) {}
+    
+    virtual void getKeyBoradReturnCallBack() {}
     /**
     @brief    Called by CAIMEDispatcher for text stored in delegate.
     */

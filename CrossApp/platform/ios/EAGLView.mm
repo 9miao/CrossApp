@@ -90,6 +90,7 @@ static EAGLView *view = 0;
 @synthesize multiSampling=multiSampling_;
 @synthesize isKeyboardShown=isKeyboardShown_;
 @synthesize keyboardShowNotification = keyboardShowNotification_;
+@synthesize returnKeyType;
 + (Class) layerClass
 {
     return [CAEAGLLayer class];
