@@ -58,7 +58,10 @@ public:
     // the glyph image for the minus/decrease button
     void setDecrementImage(CAImage* image, CAControlState state);
     CAImage* getDecrementImageForState(CAControlState state);
-
+    
+    // an image which will be painted in between the two stepper segments. The image is selected depending both segments' state
+    void setDividerImage(CAImage* image, CAControlState state);
+    CAImage* getDividerImageForState(CAControlState state);
 
     CC_SYNTHESIZE(bool, m_bTouchEffect, TouchEffect); // default is false, alpha
 protected:
@@ -76,10 +79,12 @@ private:
     CAImage* m_pBackgroundImage[CAControlStateAll];
     CAImage* m_pIncrementImage[CAControlStateAll];
     CAImage* m_pDecrementImage[CAControlStateAll];
+    CAImage* m_pDividerImage[CAControlStateAll];
     
-    CAScale9ImageView* m_pBackgroundImageView;
-    CAScale9ImageView* m_pIncrementImageView;
-    CAScale9ImageView* m_pDecrementImageView;
+    CAImageView* m_pBackgroundImageView;
+    CAImageView* m_pIncrementImageView;
+    CAImageView* m_pDecrementImageView;
+    CAImageView* m_pDividerImageView;
     
 private:
     enum ActionType{
