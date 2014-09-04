@@ -210,11 +210,6 @@ void CAStepper::setDividerImage(CrossApp::CAImage *image, CAControlState state)
     }    
 }
 
-CAImage* CAStepper::getDividerImageForState(CAControlState state)
-{
-    return m_pDividerImage[state];
-}
-
 bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     m_actionType = ActionNone; // lazy init;
