@@ -255,7 +255,7 @@ void CAActivityIndicatorView::animation(float dt)
     
     if (m_style == CAActivityIndicatorViewStyleImage && m_pImageView)
     {
-        static float rotate = 0;
+        float rotate = m_pImageView->getRotation();
         rotate += 10;
         if (rotate == 360)
         {

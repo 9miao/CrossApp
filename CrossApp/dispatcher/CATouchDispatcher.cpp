@@ -1,4 +1,4 @@
-//
+    //
 //  CATouchDispatcher.h
 //  CrossApp
 //
@@ -287,20 +287,20 @@ bool CATouchDispatcher::init(void)
 void CATouchDispatcher::setDispatchEvents(bool dispatchEvents)
 {
     m_bDispatchEvents = dispatchEvents;
-    if (!m_bDispatchEvents)
-    {
-        std::map<int, CATouchController*>::iterator itr;
-        for (itr=m_vTouchControllers.begin();
-             itr!=m_vTouchControllers.end();
-             itr++)
-        {
-            CATouchController* touchController = itr->second;
-            CC_CONTINUE_IF(touchController == NULL);
-            touchController->touchCancelled();
-            CC_SAFE_DELETE(touchController);
-            m_vTouchControllers[itr->first] = NULL;
-        }
-    }
+//    if (!m_bDispatchEvents)
+//    {
+//        std::map<int, CATouchController*>::iterator itr;
+//        for (itr=m_vTouchControllers.begin();
+//             itr!=m_vTouchControllers.end();
+//             itr++)
+//        {
+//            CATouchController* touchController = itr->second;
+//            CC_CONTINUE_IF(touchController == NULL);
+//            touchController->touchCancelled();
+//            CC_SAFE_DELETE(touchController);
+//            m_vTouchControllers[itr->first] = NULL;
+//        }
+//    }
 }
 
 void CATouchDispatcher::setDispatchEventsTrue()
@@ -311,17 +311,6 @@ void CATouchDispatcher::setDispatchEventsTrue()
 void CATouchDispatcher::setDispatchEventsFalse()
 {
     m_bDispatchEvents = false;
-//    std::map<int, CATouchController*>::iterator itr;
-//    for (itr=m_vTouchControllers.begin();
-//         itr!=m_vTouchControllers.end();
-//         itr++)
-//    {
-//        CATouchController* touchController = itr->second;
-//        CC_CONTINUE_IF(touchController == NULL);
-//        touchController->touchCancelled();
-//        CC_SAFE_DELETE(touchController);
-//        m_vTouchControllers[itr->first] = NULL;
-//    }
 }
 
 void CATouchDispatcher::touchesBegan(CCSet *touches, CAEvent *pEvent)
@@ -346,7 +335,6 @@ void CATouchDispatcher::touchesBegan(CCSet *touches, CAEvent *pEvent)
 
 void CATouchDispatcher::touchesMoved(CCSet *touches, CAEvent *pEvent)
 {
-    CC_RETURN_IF(!m_bDispatchEvents);
     m_bLocked = true;
     
     CATouch *pTouch;
@@ -364,7 +352,6 @@ void CATouchDispatcher::touchesMoved(CCSet *touches, CAEvent *pEvent)
 
 void CATouchDispatcher::touchesEnded(CCSet *touches, CAEvent *pEvent)
 {
-    CC_RETURN_IF(!m_bDispatchEvents);
     m_bLocked = true;
     
     CATouch *pTouch;
@@ -384,7 +371,6 @@ void CATouchDispatcher::touchesEnded(CCSet *touches, CAEvent *pEvent)
 
 void CATouchDispatcher::touchesCancelled(CCSet *touches, CAEvent *pEvent)
 {
-    CC_RETURN_IF(!m_bDispatchEvents);
     m_bLocked = true;
     
     CATouch *pTouch;

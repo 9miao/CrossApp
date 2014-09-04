@@ -221,11 +221,7 @@ public:
     CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
-    
-public:
-    
-    virtual CAResponder* nextResponder();
-    
+
 protected:
     
     virtual void normalListViewCell();

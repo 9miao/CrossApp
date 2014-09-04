@@ -559,7 +559,7 @@ CAListViewCell::CAListViewCell()
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
 {
-
+    this->setHaveNextResponder(true);
 }
 
 
@@ -677,11 +677,6 @@ void CAListViewCell::resetListViewCell()
     this->setVisible(true);
     this->normalListViewCell();
     this->recoveryListViewCell();
-}
-
-CAResponder* CAListViewCell::nextResponder()
-{
-    return this->getSuperview();
 }
 
 NS_CC_END

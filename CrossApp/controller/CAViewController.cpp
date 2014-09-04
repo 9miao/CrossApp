@@ -29,6 +29,7 @@ CAViewController::CAViewController()
 ,m_bLifeLock(false)
 ,m_bKeypadEnabled(false)
 {
+    this->setHaveNextResponder(true);
     m_pView = CAView::createWithFrame(CCRectZero, ccc4(255, 255, 255, 255));
     m_pView->retain();
     m_pView->setDisplayRange(false);

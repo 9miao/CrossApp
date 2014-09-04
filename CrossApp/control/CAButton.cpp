@@ -640,7 +640,7 @@ void CAButton::setContentSize(const CCSize & var)
 {
     CCSize size = var;
     size.height = MAX(size.height, _px(60));
-    size.width = MAX(size.width, size.height);
+    size.width = MAX(size.width, _px(60));
     CAView::setContentSize(size);
     for(int i=0; i<CAControlStateAll; i++)
     {

@@ -173,8 +173,6 @@ public:
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
-    virtual CAResponder* nextResponder();
-    
 private:
     
     using CAView::initWithColor;

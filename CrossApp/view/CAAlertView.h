@@ -43,11 +43,11 @@ public:
 
 	static CAAlertView *create();
 
-	static CAAlertView *createWithButtonText(const std::string& pszTitle, const std::string& pszAlertMsg, const std::string& pszBtnText, ...);
+	static CAAlertView *createWithText(const std::string& pszTitle, const std::string& pszAlertMsg, const std::string& pszBtnText, ...);
 
 	bool init();
 
-	bool initWithButtonText(const std::string& szTitle, const std::string& szAlertMsg, const std::string& pszBtnText, ...);
+	bool initWithText(const std::string& szTitle, const std::string& szAlertMsg, const std::string& pszBtnText, ...);
     
     void show();
     
@@ -61,7 +61,7 @@ public:
 
 	void setAlertMessage(std::string var, CAColor4B col = CAColor_black);
 
-	void setContentBackGroundImage(CAImage* image);
+	void setBackGroundImage(CAImage* image);
 
 	void addButton(const std::string& btnText, CAColor4B col = CAColor_white, CAImage* pNormalImage = NULL, CAImage* pHighlightedImage = NULL);
 

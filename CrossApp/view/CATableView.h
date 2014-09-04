@@ -322,10 +322,6 @@ protected:
     
     CC_DEPRECATED_ATTRIBUTE virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
     
-public:
-    
-    virtual CAResponder* nextResponder();
-    
 protected:
 
     virtual void normalTableViewCell();

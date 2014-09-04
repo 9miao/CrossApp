@@ -25,7 +25,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 	private final Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
 	private String mText;
 	private String mOriginText;
-
+	native static void KeyBoardReturnCallBack();
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -42,6 +42,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		final TextView textField = this.mCocos2dxGLSurfaceView.getCocos2dxEditText();
 		final InputMethodManager imm = (InputMethodManager) textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 		return imm.isFullscreenMode();
+				//isFullscreenMode();
 	}
 
 	public void setOriginText(final String pOriginText) {
@@ -54,33 +55,32 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public void afterTextChanged(final Editable s) {
-		if (this.isFullScreenEdit()) {
+	
+		if (this.isFullScreenEdit()) 
+		{
 			return;
 		}
-
-		//if (BuildConfig.DEBUG) {
-			//Log.d(TAG, "afterTextChanged: " + s);
-		//}
-		int nModified = s.length() - this.mText.length();
-		if (nModified > 0) {
-			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-			this.mCocos2dxGLSurfaceView.insertText(insertText);
-			/*
-			if (BuildConfig.DEBUG) {
-				Log.d(TAG, "insertText(" + insertText + ")");
-			}
-			*/
-		} else {
-			for (; nModified < 0; ++nModified) {
-				this.mCocos2dxGLSurfaceView.deleteBackward();
-				/*
-				if (BuildConfig.DEBUG) {
-					Log.d(TAG, "deleteBackward");
-				}
-				*/
-			}
-		}
-		this.mText = s.toString();
+//		int nModified = s.length() - this.mText.length();
+//		if (nModified > 0) {
+//			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
+//		
+//			//this.mCocos2dxGLSurfaceView.insertText(insertText);
+//			/*
+//			if (BuildConfig.DEBUG) {
+//				Log.d(TAG, "insertText(" + insertText + ")");
+//			}
+//			*/ 
+//		} else {
+//			for (; nModified < 0; ++nModified) {
+//				//Tthis.mCocos2dxGLSurfaceView.deleteBackward();
+//				/*
+//				if (BuildConfig.DEBUG) {
+//					Log.d(TAG, "deleteBackward");
+//				}
+//				*/
+//			}
+//		}
+//		this.mText = s.toString();
 	}
 
 	@Override
@@ -90,14 +90,22 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
 		}
 		*/
+		
+		//System.out.println(pCharSequence.toString());
 		this.mText = pCharSequence.toString();
 	}
 
 	@Override
 	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
-
+		
+		//if(before !=0 && before == count)
+		{
+			this.mCocos2dxGLSurfaceView.willInsertText(start,pCharSequence.toString(),before,count);
+		}
+		
 	}
 
+	
 	@Override
 	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
 		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit()) {
@@ -116,7 +124,6 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			if (text.compareTo("") == 0) {
 				text = "\n";
 			}
-
 			if ('\n' != text.charAt(text.length() - 1)) {
 				text += '\n';
 			}
@@ -129,13 +136,20 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			}
 			*/
 		}
+
+		  
 		
 		if (pActionID == EditorInfo.IME_ACTION_DONE) {
-			this.mCocos2dxGLSurfaceView.requestFocus();
+				KeyBoardReturnCallBack();	
 		}
-		return false;
+		if (pActionID == EditorInfo.IME_ACTION_SEARCH) {
+			KeyBoardReturnCallBack();
+		}
+		if (pActionID == EditorInfo.IME_ACTION_SEND) {
+			KeyBoardReturnCallBack();		
+		}
+		return true;
 	}
-
 	// ===========================================================
 	// Methods
 	// ===========================================================

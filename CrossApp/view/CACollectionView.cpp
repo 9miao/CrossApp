@@ -576,7 +576,7 @@ CACollectionViewCell::CACollectionViewCell()
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
 {
-
+    this->setHaveNextResponder(true);
 }
 
 
@@ -703,11 +703,6 @@ void CACollectionViewCell::resetCollectionViewCell()
     this->setVisible(true);
 	this->normalCollectionViewCell();
     this->recoveryCollectionViewCell();
-}
-
-CAResponder* CACollectionViewCell::nextResponder()
-{
-    return this->getSuperview();
 }
 
 NS_CC_END

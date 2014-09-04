@@ -9,7 +9,7 @@ NS_CC_BEGIN
 
 static CATouch* s_pTouches[CC_MAX_TOUCHES] = { NULL };
 static unsigned int s_indexBitsUsed = 0;
-static CCDictionary s_TouchesIntergerDict;
+static std::map<int, int> s_TouchesIntergerDict;
 
 static int getUnUsedIndex()
 {
@@ -202,16 +202,16 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
         float x = xs[i];
         float y = ys[i];
 
-        CCString* pIndex = dynamic_cast<CCString*>(s_TouchesIntergerDict.objectForKey(id));
         int nUnusedIndex = 0;
 
         // it is a new touch
-        if (pIndex == NULL)
+        if (s_TouchesIntergerDict.find(id) == s_TouchesIntergerDict.end())
         {
             nUnusedIndex = getUnUsedIndex();
 
             // The touches is more than MAX_TOUCHES ?
-            if (nUnusedIndex == -1) {
+            if (nUnusedIndex == -1)
+            {
                 CCLOG("The touches is more than MAX_TOUCHES, nUnusedIndex = %d", nUnusedIndex);
                 continue;
             }
@@ -222,8 +222,7 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
                                  (y - m_obViewPortRect.origin.y) / m_fScaleY);
             
             
-            CCString* pInterObj = CCString::createWithFormat("%d", nUnusedIndex);
-            s_TouchesIntergerDict.setObject(pInterObj, id);
+            s_TouchesIntergerDict.insert(std::make_pair(id, nUnusedIndex));
             set.addObject(pTouch);
         }
     }
@@ -246,18 +245,16 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
         float x = xs[i];
         float y = ys[i];
 
-        CCString* pIndex = dynamic_cast<CCString*>(s_TouchesIntergerDict.objectForKey(id));
-        if (pIndex == NULL) {
-            CCLOG("if the index doesn't exist, it is an error");
-            continue;
-        }
-
+        CC_CONTINUE_IF(s_TouchesIntergerDict.find(id) == s_TouchesIntergerDict.end());
+        int index = s_TouchesIntergerDict.at(id);
+        
         CCLOGINFO("Moving touches with id: %d, x=%f, y=%f", id, x, y);
-        CATouch* pTouch = s_pTouches[atoi(pIndex->getCString())];
+        CATouch* pTouch = s_pTouches[index];
         if (pTouch)
         {
-			pTouch->setTouchInfo(atoi(pIndex->getCString()), (x - m_obViewPortRect.origin.x) / m_fScaleX,
-								(y - m_obViewPortRect.origin.y) / m_fScaleY);
+			pTouch->setTouchInfo(index,
+                                 (x - m_obViewPortRect.origin.x) / m_fScaleX,
+                                 (y - m_obViewPortRect.origin.y) / m_fScaleY);
             
             set.addObject(pTouch);
         }
@@ -286,28 +283,26 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
         float x = xs[i];
         float y = ys[i];
 
-        CCString* pIndex = dynamic_cast<CCString*>(s_TouchesIntergerDict.objectForKey(id));
-        if (pIndex == NULL)
-        {
-            CCLOG("if the index doesn't exist, it is an error");
-            continue;
-        }
+        CC_CONTINUE_IF(s_TouchesIntergerDict.find(id) == s_TouchesIntergerDict.end());
+        int index = s_TouchesIntergerDict.at(id);
+        
         /* Add to the set to send to the director */
-        CATouch* pTouch = s_pTouches[atoi(pIndex->getCString())];
+        CATouch* pTouch = s_pTouches[index];
         if (pTouch)
         {
             CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
-			pTouch->setTouchInfo(atoi(pIndex->getCString()), (x - m_obViewPortRect.origin.x) / m_fScaleX,
-								(y - m_obViewPortRect.origin.y) / m_fScaleY);
+			pTouch->setTouchInfo(index,
+                                 (x - m_obViewPortRect.origin.x) / m_fScaleX,
+                                 (y - m_obViewPortRect.origin.y) / m_fScaleY);
 
             set.addObject(pTouch);
 
             // release the object
             pTouch->release();
-            s_pTouches[atoi(pIndex->getCString())] = NULL;
-            removeUsedIndexBit(atoi(pIndex->getCString()));
+            s_pTouches[index] = NULL;
+            removeUsedIndexBit(index);
 
-            s_TouchesIntergerDict.removeObjectForKey(id);
+            s_TouchesIntergerDict.erase(id);
 
         } 
         else

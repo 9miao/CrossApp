@@ -25,7 +25,7 @@ public:
     
     virtual void pageViewDidEndTurning(CAPageView* pageView){};
     
-    virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index){};
+    virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point){};
 };
 
 class CC_DLL CAPageView: public CAScrollView
@@ -54,7 +54,7 @@ public:
     
     CC_PROPERTY_READONLY(int, m_nCurrPage, CurrPage);
     
-    void setCurrPage(int var, bool animated);
+    void setCurrPage(int var, bool animated, bool listener = false);
     
     int getPageCount();
     
@@ -137,7 +137,7 @@ private:
     
     CADeque<CAView*> m_pViews;
     
-    bool m_bTurning;
+    bool m_bListener;
 };
 
 

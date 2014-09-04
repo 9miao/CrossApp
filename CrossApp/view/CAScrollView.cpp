@@ -44,7 +44,7 @@ CAScrollView::CAScrollView()
 ,m_bShowsVerticalScrollIndicator(true)
 {
     m_bTouchMovedStopSubviews = true;
-    
+    this->setHaveNextResponder(false);
     m_pTouches = new CCArray(2);
     m_pChildInThis = new CCArray();
 }
@@ -262,6 +262,7 @@ void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
     else
     {
         m_pContainer->setFrameOrigin(ccpMult(offset, -1));
+        this->update(1/60.0f);
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewDidMoved(this);
@@ -317,6 +318,7 @@ void CAScrollView::closeToPoint(float dt)
         m_pContainer->setFrameOrigin(m_tCloseToPoint);
         CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
         m_tCloseToPoint = this->getViewSize();
+        this->update(1/60.0f);
         this->hideIndicator();
         this->contentOffsetFinish();
     }
@@ -332,6 +334,8 @@ void CAScrollView::closeToPoint(float dt)
         resilience = ccpAdd(resilience, point);
         m_pContainer->setFrameOrigin(resilience);
     }
+    
+    
     
     if (m_pScrollViewDelegate)
     {
@@ -575,11 +579,6 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         }
         m_pTouches->removeObject(pTouch);
     }
-}
-
-CAResponder* CAScrollView::nextResponder()
-{
-    return NULL;
 }
 
 void CAScrollView::stopDeaccelerateScroll()

@@ -13,7 +13,7 @@ CAPageView::CAPageView(const CAPageViewDirection& type)
 ,m_ePageViewState(CAPageViewNone)
 ,m_nCurrPage(0)
 ,m_pPageViewDelegate(NULL)
-,m_bTurning(false)
+,m_bListener(false)
 {
 
 }
@@ -148,11 +148,19 @@ int CAPageView::getPageCount()
     return m_pViews.size();
 }
 
-void CAPageView::setCurrPage(int var, bool animated)
+void CAPageView::setCurrPage(int var, bool animated, bool listener)
 {
+    m_bListener = listener;
     var = MIN(var, this->getPageCount() - 1);
     var = MAX(var, 0);
+
+    if (m_pPageViewDelegate && m_nCurrPage != var)
+    {
+        m_pPageViewDelegate->pageViewDidBeginTurning(this);
+    }
+    
     m_nCurrPage = var;
+    
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
         this->setContentOffset(CCPoint(m_nCurrPage * this->getBounds().size.width, 0), animated);
@@ -161,6 +169,7 @@ void CAPageView::setCurrPage(int var, bool animated)
     {
         this->setContentOffset(CCPoint(0, m_nCurrPage * this->getBounds().size.height), animated);
     }
+    
 }
 
 int CAPageView::getCurrPage()
@@ -170,10 +179,10 @@ int CAPageView::getCurrPage()
 
 void CAPageView::contentOffsetFinish()
 {
-    if (m_pPageViewDelegate && m_bTurning)
+    if (m_pPageViewDelegate && m_bListener)
     {
         m_pPageViewDelegate->pageViewDidEndTurning(this);
-        m_bTurning = false;
+        m_bListener = false;
     }
 }
 
@@ -261,20 +270,17 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         if (m_pPageViewDelegate)
         {
-            m_pPageViewDelegate->pageViewDidSelectPageAtIndex(this, this->getCurrPage());
+            CCPoint point = this->convertTouchToNodeSpace(pTouch);
+            m_pPageViewDelegate->pageViewDidSelectPageAtIndex(this, this->getCurrPage(), point);
         }
     }
-    
-    page = MIN(page, this->getPageCount() - 1);
-    page = MAX(page, 0);
-    
-    if (m_pPageViewDelegate && m_nCurrPage != page)
+    else
     {
-        m_pPageViewDelegate->pageViewDidBeginTurning(this);
-        m_bTurning = true;
+        page = MIN(page, this->getPageCount() - 1);
+        page = MAX(page, 0);
+        
+        this->setCurrPage(page, true, true);
     }
-    
-    this->setCurrPage(page, true);
 }
 
 

@@ -63,8 +63,6 @@ public:
     CC_SYNTHESIZE_PASS_BY_REF(CAControlState, m_eControlState, ControlState);
     
     CC_SYNTHESIZE(bool, m_bControlStateLocked, ControlStateLocked);
-
-    virtual CAResponder* nextResponder();
     
 protected:
     

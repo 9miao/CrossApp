@@ -781,7 +781,7 @@ CATableViewCell::CATableViewCell()
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
 {
-
+    this->setHaveNextResponder(true);
 }
 
 CATableViewCell::~CATableViewCell()
@@ -910,11 +910,6 @@ void CATableViewCell::resetTableViewCell()
     this->setVisible(true);
     this->normalTableViewCell();
     this->recoveryTableViewCell();
-}
-
-CAResponder* CATableViewCell::nextResponder()
-{
-    return this->getSuperview();
 }
 
 NS_CC_END

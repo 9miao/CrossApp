@@ -48,7 +48,7 @@ bool CAAlertView::init()
 	setCenter(CCRectMake(sz.width / 2, sz.height / 2, sz.width, sz.height));
 
 	setTitleImage(CAImage::create("source_material/alert_title.png"));
-	setContentBackGroundImage(CAImage::create("source_material/alert_content.png"));
+	setBackGroundImage(CAImage::create("source_material/alert_content.png"));
 	return true;
 }
 
@@ -65,7 +65,7 @@ CAAlertView *CAAlertView::create()
 }
 
 
-bool CAAlertView::initWithButtonText(const std::string& szTitle, const std::string& szAlertMsg, const std::string& pszBtnText, ...)
+bool CAAlertView::initWithText(const std::string& szTitle, const std::string& szAlertMsg, const std::string& pszBtnText, ...)
 {
 	if (!CAView::init())
 	{
@@ -92,12 +92,12 @@ bool CAAlertView::initWithButtonText(const std::string& szTitle, const std::stri
 	setAlertMessage(szAlertMsg.c_str());
 
 	setTitleImage(CAImage::create("source_material/alert_title.png"));
-	setContentBackGroundImage(CAImage::create("source_material/alert_content.png"));
+	setBackGroundImage(CAImage::create("source_material/alert_content.png"));
 	return true;
 }
 
 
-CAAlertView *CAAlertView::createWithButtonText(const std::string& pszTitle, const std::string& pszAlertMsg, const std::string& pszBtnText, ...)
+CAAlertView *CAAlertView::createWithText(const std::string& pszTitle, const std::string& pszAlertMsg, const std::string& pszBtnText, ...)
 {
 	va_list args;
 	va_start(args, pszBtnText);
@@ -149,7 +149,7 @@ void CAAlertView::setAlertMessage(std::string var, CAColor4B col)
 	setLabel(m_pContentLabel, var, col);
 }
 
-void CAAlertView::setContentBackGroundImage(CAImage* image)
+void CAAlertView::setBackGroundImage(CAImage* image)
 {
 	setCtrlImage(m_pContentBkImage, image);
 }

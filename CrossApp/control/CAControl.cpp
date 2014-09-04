@@ -14,7 +14,7 @@ CAControl::CAControl()
 :m_eControlState(CAControlStateNormal)
 ,m_bControlStateLocked(false)
 {
-    
+    this->setHaveNextResponder(false);
     for (int i=0; i<7; i++)
     {
         m_selTouch[i] = NULL;
@@ -30,11 +30,6 @@ CAControl::~CAControl()
 bool CAControl::init()
 {
     return true;
-}
-
-CAResponder* CAControl::nextResponder()
-{
-    return NULL;
 }
 
 void CAControl::setControlStateNormal()

@@ -42,6 +42,8 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);
     
+    CC_SYNTHESIZE_IS(bool, m_bHaveNextResponder, HaveNextResponder);
+    
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);

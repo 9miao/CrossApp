@@ -129,6 +129,7 @@ CAView::CAView(void)
     CAScheduler::getScheduler()->resumeTarget(this);
     m_pActionManager->resumeTarget(this);
     
+    this->setHaveNextResponder(true);
     ++viewCount;
     //CCLog("CAView = %d\n",viewCount);
 }
@@ -1296,6 +1297,11 @@ CAView* CAView::copy()
 
 CAResponder* CAView::nextResponder()
 {
+    if (m_bHaveNextResponder == false)
+    {
+        return NULL;
+    }
+    
     if (m_pViewDelegate)
     {
         return dynamic_cast<CAResponder*>(m_pViewDelegate);

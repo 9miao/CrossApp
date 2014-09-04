@@ -17,6 +17,7 @@ CAResponder::CAResponder()
 ,m_bTouchMovedListenHorizontal(true)
 ,m_bTouchMovedListenVertical(true)
 ,m_bTouchEnabled(true)
+,m_bHaveNextResponder(false)
 {
 
 }
