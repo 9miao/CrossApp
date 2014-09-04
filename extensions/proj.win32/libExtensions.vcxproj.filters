@@ -34,18 +34,6 @@
     <Filter Include="studio">
       <UniqueIdentifier>{9d686e1b-4252-47d1-b28a-5715f049857e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="rapidjson">
-      <UniqueIdentifier>{bb6705f1-9057-4722-9bda-2d8be8465ae0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="rapidjson\rapidjson">
-      <UniqueIdentifier>{9cf2905f-0733-420c-8c6d-0c4507a5519f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="rapidjson\rapidjson\internal">
-      <UniqueIdentifier>{d2919df5-fcfa-4b31-88c5-e9a2a7687088}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewFilter1">
-      <UniqueIdentifier>{128752d5-9f1d-4552-991c-efb19fae4a3c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="libwebsockets">
       <UniqueIdentifier>{2fa447a3-897b-4803-ac40-15708e965f2b}</UniqueIdentifier>
     </Filter>
@@ -98,12 +86,6 @@
     </ClCompile>
     <ClCompile Include="..\studio\CAStudioViewController.cpp">
       <Filter>studio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\rapidjson\CADictionaryHelper.cpp">
-      <Filter>rapidjson</Filter>
-    </ClCompile>
-    <ClCompile Include="..\rapidjson\CocoLoader.cpp">
-      <Filter>rapidjson</Filter>
     </ClCompile>
     <ClCompile Include="..\sqlite3\include\sqlite3.c">
       <Filter>sqlite3</Filter>
@@ -176,42 +158,6 @@
     </ClInclude>
     <ClInclude Include="..\studio\CAStudioViewController.h">
       <Filter>studio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\CADictionaryHelper.h">
-      <Filter>rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\CocoLoader.h">
-      <Filter>rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson\document.h">
-      <Filter>rapidjson\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson\filestream.h">
-      <Filter>rapidjson\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson\prettywriter.h">
-      <Filter>rapidjson\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson\rapidjson.h">
-      <Filter>rapidjson\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson\reader.h">
-      <Filter>rapidjson\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson\stringbuffer.h">
-      <Filter>rapidjson\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson\writer.h">
-      <Filter>rapidjson\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson\internal\pow10.h">
-      <Filter>rapidjson\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson\internal\stack.h">
-      <Filter>rapidjson\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson\internal\strfunc.h">
-      <Filter>rapidjson\rapidjson\internal</Filter>
     </ClInclude>
     <ClInclude Include="..\libwebsockets\win32\include\libwebsockets.h">
       <Filter>libwebsockets</Filter>

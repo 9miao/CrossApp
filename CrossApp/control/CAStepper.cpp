@@ -250,7 +250,7 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 break;
         }
 
-        CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 2.0f);
+        CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 0.5f);
         return true;
     }
     
@@ -456,5 +456,21 @@ void CAStepper::click(CATouch* pTouch)
         m_actionType = ActionNone;
     }
 }
+
+void CAStepper::addTarget(CAObject* target, SEL_CAControl selector)
+{
+	CAControl::addTarget(target, selector, CAControlEventTouchValueChanged);
+}
+
+void CAStepper::removeTarget(CAObject* target, SEL_CAControl selector)
+{
+	CAControl::removeTarget(target, selector, CAControlEventTouchValueChanged);
+}
+
+void CAStepper::removeAllTargets()
+{
+	CAControl::removeAllTargets();
+}
+
 
 NS_CC_END

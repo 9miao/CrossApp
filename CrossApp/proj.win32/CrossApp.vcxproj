@@ -168,6 +168,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\control\CAProgress.cpp" />
     <ClCompile Include="..\control\CASegmentedControl.cpp" />
     <ClCompile Include="..\control\CASlider.cpp" />
+    <ClCompile Include="..\control\CAStepper.cpp" />
     <ClCompile Include="..\control\CASwitch.cpp" />
     <ClCompile Include="..\control\CATextField.cpp" />
     <ClCompile Include="..\CrossApp.cpp" />
@@ -293,6 +294,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\control\CAProgress.h" />
     <ClInclude Include="..\control\CASegmentedControl.h" />
     <ClInclude Include="..\control\CASlider.h" />
+    <ClInclude Include="..\control\CAStepper.h" />
     <ClInclude Include="..\control\CASwitch.h" />
     <ClInclude Include="..\control\CATextField.h" />
     <ClInclude Include="..\CrossApp.h" />

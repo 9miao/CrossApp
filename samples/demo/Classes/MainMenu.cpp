@@ -23,7 +23,6 @@ CAWindow* MainMenu::createWindow()
 	viewController1->init();
 	viewController1->setNavigationBarItem(CANavigationBarItem::create("TestMenu")); 
 
-
 	SecondViewController* viewController2 = new SecondViewController();
 	viewController2->init();
 	viewController2->setTabBarItem(CATabBarItem::create("Second", CAImage::create("tabbar_function/second_1.png"), CAImage::create("tabbar_function/second_2.png")));
@@ -46,22 +45,21 @@ CAWindow* MainMenu::createWindow()
 	p_Funtion->getTabBar()->showSelectedIndicator();
 
 	CANavigationController* navigationController = new CANavigationController();
-	navigationController->initWithRootViewController(p_Funtion);
-	navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png")));
+	navigationController->initWithRootViewController(viewController1);
+	//navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png")));
 	
-
+	float winWidth = p_Window->getBounds().size.width;
 	CADrawerController* drawerController = new CADrawerController();
-	drawerController->initWithController(viewController1, navigationController, _px(500));
+	drawerController->initWithController(navigationController, p_Funtion, winWidth);
 	drawerController->autorelease();
-	viewController1->release();
 
-	navigationController->release();
+	p_Window->setRootViewController(drawerController);
+	viewController1->release();
 	viewController2->release();
 	viewController3->release();
 	viewController4->release();
+	navigationController->release();
 	p_Funtion->release();
-
-	p_Window->setRootViewController(drawerController);
 
 	return p_Window;
 }

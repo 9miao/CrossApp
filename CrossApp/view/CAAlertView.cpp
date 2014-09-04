@@ -65,7 +65,7 @@ CAAlertView *CAAlertView::create()
 }
 
 
-bool CAAlertView::initWithText(const std::string& szTitle, const std::string& szAlertMsg, const std::string& pszBtnText, ...)
+bool CAAlertView::initWithText(const char* szTitle, const char* szAlertMsg, const char* pszBtnText, ...)
 {
 	if (!CAView::init())
 	{
@@ -88,8 +88,8 @@ bool CAAlertView::initWithText(const std::string& szTitle, const std::string& sz
 	}
 	va_end(args);
 
-	setTitle(szTitle.c_str(), CAColor_white);
-	setAlertMessage(szAlertMsg.c_str());
+	setTitle(szTitle, CAColor_white);
+	setAlertMessage(szAlertMsg);
 
 	setTitleImage(CAImage::create("source_material/alert_title.png"));
 	setBackGroundImage(CAImage::create("source_material/alert_content.png"));
@@ -97,7 +97,7 @@ bool CAAlertView::initWithText(const std::string& szTitle, const std::string& sz
 }
 
 
-CAAlertView *CAAlertView::createWithText(const std::string& pszTitle, const std::string& pszAlertMsg, const std::string& pszBtnText, ...)
+CAAlertView *CAAlertView::createWithText(const char* pszTitle, const char* pszAlertMsg, const char* pszBtnText, ...)
 {
 	va_list args;
 	va_start(args, pszBtnText);

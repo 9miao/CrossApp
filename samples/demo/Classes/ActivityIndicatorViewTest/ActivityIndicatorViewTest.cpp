@@ -16,9 +16,6 @@ void ActivityIndicatorViewTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
 	this->getView()->setColor(ccc4(58,210,129,255));
-    
-    CAStepper* stepper = CAStepper::createWithCenter(CCRectMake(500, 100, 400, 120));
-    this->getView()->addSubview(stepper);
 
 	whiteLarge = CAActivityIndicatorView::createWithCenter(CADipRect(size.width*0.5, size.height*0.25,
 		size.width*0.2, size.width*0.2));

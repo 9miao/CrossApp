@@ -266,6 +266,8 @@
 		B01F650519657084005C14FC /* CACollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F650319657084005C14FC /* CACollectionView.h */; };
 		B02A12CC197CE15D00F4F2C5 /* CAtransformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12CA197CE15D00F4F2C5 /* CAtransformation.cpp */; };
 		B02A12CD197CE15D00F4F2C5 /* CATransformation.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A12CB197CE15D00F4F2C5 /* CATransformation.h */; };
+		B02A776E19B82F9100C4A5EF /* CAStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A776C19B82F9100C4A5EF /* CAStepper.cpp */; };
+		B02A776F19B82F9100C4A5EF /* CAStepper.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A776D19B82F9100C4A5EF /* CAStepper.h */; };
 		B02CE47C19AD769700B905FB /* CAListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02CE47A19AD769700B905FB /* CAListView.cpp */; };
 		B02CE47D19AD769700B905FB /* CAListView.h in Headers */ = {isa = PBXBuildFile; fileRef = B02CE47B19AD769700B905FB /* CAListView.h */; };
 		B02CE48319AD869600B905FB /* CAPageControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02CE47F19AD869600B905FB /* CAPageControl.cpp */; };
@@ -548,6 +550,8 @@
 		B01F650319657084005C14FC /* CACollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACollectionView.h; sourceTree = "<group>"; };
 		B02A12CA197CE15D00F4F2C5 /* CAtransformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAtransformation.cpp; sourceTree = "<group>"; };
 		B02A12CB197CE15D00F4F2C5 /* CATransformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATransformation.h; sourceTree = "<group>"; };
+		B02A776C19B82F9100C4A5EF /* CAStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStepper.cpp; sourceTree = "<group>"; };
+		B02A776D19B82F9100C4A5EF /* CAStepper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStepper.h; sourceTree = "<group>"; };
 		B02CE47A19AD769700B905FB /* CAListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAListView.cpp; sourceTree = "<group>"; };
 		B02CE47B19AD769700B905FB /* CAListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAListView.h; sourceTree = "<group>"; };
 		B02CE47F19AD869600B905FB /* CAPageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageControl.cpp; sourceTree = "<group>"; };
@@ -677,6 +681,8 @@
 		04EAA0871956D74D00198A8E /* control */ = {
 			isa = PBXGroup;
 			children = (
+				B02A776C19B82F9100C4A5EF /* CAStepper.cpp */,
+				B02A776D19B82F9100C4A5EF /* CAStepper.h */,
 				B02CE47F19AD869600B905FB /* CAPageControl.cpp */,
 				B02CE48019AD869600B905FB /* CAPageControl.h */,
 				04EAA0881956D74D00198A8E /* CABar.cpp */,
@@ -1265,6 +1271,7 @@
 				04EABA6D1956D75A00198A8E /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				04EABA6F1956D75A00198A8E /* CAShaderCache.h in Headers */,
 				04EABA701956D75A00198A8E /* ccShaderEx_SwitchMask_frag.h in Headers */,
+				B02A776F19B82F9100C4A5EF /* CAStepper.h in Headers */,
 				04EABA721956D75A00198A8E /* ccShaders.h in Headers */,
 				04EABA731956D75A00198A8E /* precompiledshaders.h in Headers */,
 				04EABA741956D75A00198A8E /* precompiledshaders.h in Headers */,
@@ -1393,6 +1400,7 @@
 				04EAB0A71956D75600198A8E /* CAIMEDispatcher.cpp in Sources */,
 				04EAB0AB1956D75600198A8E /* CAKeypadDispatcher.cpp in Sources */,
 				04EAB0AE1956D75600198A8E /* CATouch.cpp in Sources */,
+				B02A776E19B82F9100C4A5EF /* CAStepper.cpp in Sources */,
 				04EAB0B01956D75600198A8E /* CATouchDispatcher.cpp in Sources */,
 				04EAB0B21956D75600198A8E /* CCDrawingPrimitives.cpp in Sources */,
 				04EAB0B41956D75600198A8E /* CCDrawNode.cpp in Sources */,

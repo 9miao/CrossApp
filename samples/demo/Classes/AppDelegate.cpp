@@ -17,7 +17,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     CAApplication* pDirector = CAApplication::getApplication();
-	CCLog("%f", pDirector->getAdaptationRatio());
+
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
     
     pDirector->setOpenGLView(pEGLView);

@@ -39,6 +39,7 @@ control/CASlider.cpp \
 control/CASwitch.cpp \
 control/CATextField.cpp \
 control/CAPageControl.cpp \
+control/CAStepper.cpp \
 controller/CABarItem.cpp \
 controller/CAViewController.cpp \
 controller/CADrawerController.cpp \

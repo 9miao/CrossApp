@@ -6,7 +6,7 @@
 
 USING_NS_CC;
 
-typedef enum BTNTAG
+enum BTNTAG
 {
 	BUTTONONE = 0,
 	BUTTONTWO,

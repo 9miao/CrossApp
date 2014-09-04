@@ -18,12 +18,14 @@ protected:
 
 public:
 	void zoomViewBySliderValue(CAControl* btn,CCPoint point);
+	void stepperValueChange(CAControl* btn, CCPoint point);
 
 private:
 	CADipSize size;
 	CAScrollView* p_ScrollView;
 	CAImageView* imageView;
 	CASlider* zoomView;
+	CAStepper* stepper;
 
 };
 

@@ -427,6 +427,9 @@
     <ClCompile Include="..\shaders\CATransformation.cpp">
       <Filter>shaders</Filter>
     </ClCompile>
+    <ClCompile Include="..\control\CAStepper.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -862,6 +865,9 @@
     </ClInclude>
     <ClInclude Include="..\view\CAListView.h">
       <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CAStepper.h">
+      <Filter>control</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

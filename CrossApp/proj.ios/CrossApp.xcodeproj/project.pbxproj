@@ -303,6 +303,8 @@
 		B01F650E196585EA005C14FC /* CACollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F650C196585EA005C14FC /* CACollectionView.h */; };
 		B02A12D0197CE30A00F4F2C5 /* CAtransformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12CE197CE30A00F4F2C5 /* CAtransformation.cpp */; };
 		B02A12D1197CE30A00F4F2C5 /* CATransformation.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A12CF197CE30A00F4F2C5 /* CATransformation.h */; };
+		B02A776919B82F7300C4A5EF /* CAStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A776719B82F7300C4A5EF /* CAStepper.cpp */; };
+		B02A776A19B82F7300C4A5EF /* CAStepper.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A776819B82F7300C4A5EF /* CAStepper.h */; };
 		B02CE48B19AD8CFE00B905FB /* CAPageControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02CE48719AD8CFE00B905FB /* CAPageControl.cpp */; };
 		B02CE48C19AD8CFE00B905FB /* CAPageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B02CE48819AD8CFE00B905FB /* CAPageControl.h */; };
 		B02CE49119AD8D0D00B905FB /* CAListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02CE48F19AD8D0D00B905FB /* CAListView.cpp */; };
@@ -691,6 +693,8 @@
 		B01F650C196585EA005C14FC /* CACollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACollectionView.h; sourceTree = "<group>"; };
 		B02A12CE197CE30A00F4F2C5 /* CAtransformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAtransformation.cpp; sourceTree = "<group>"; };
 		B02A12CF197CE30A00F4F2C5 /* CATransformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATransformation.h; sourceTree = "<group>"; };
+		B02A776719B82F7300C4A5EF /* CAStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStepper.cpp; sourceTree = "<group>"; };
+		B02A776819B82F7300C4A5EF /* CAStepper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStepper.h; sourceTree = "<group>"; };
 		B02CE48719AD8CFE00B905FB /* CAPageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageControl.cpp; sourceTree = "<group>"; };
 		B02CE48819AD8CFE00B905FB /* CAPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageControl.h; sourceTree = "<group>"; };
 		B02CE48F19AD8D0D00B905FB /* CAListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAListView.cpp; sourceTree = "<group>"; };
@@ -872,6 +876,8 @@
 		04EA9F9F1956CE2500198A8E /* control */ = {
 			isa = PBXGroup;
 			children = (
+				B02A776719B82F7300C4A5EF /* CAStepper.cpp */,
+				B02A776819B82F7300C4A5EF /* CAStepper.h */,
 				B02CE48719AD8CFE00B905FB /* CAPageControl.cpp */,
 				B02CE48819AD8CFE00B905FB /* CAPageControl.h */,
 				04EA9FA01956CE2500198A8E /* CABar.cpp */,
@@ -1692,6 +1698,7 @@
 				1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */,
 				B0596AE8197629BE00B1E8CB /* ftlist.h in Headers */,
 				B0596AFD197629BE00B1E8CB /* ftcalc.h in Headers */,
+				B02A776A19B82F7300C4A5EF /* CAStepper.h in Headers */,
 				B01F650A196585B2005C14FC /* CADensityDpi.h in Headers */,
 				1551A72F158F2ADE00E66CFE /* CAApplicationCaller.h in Headers */,
 				1551A733158F2ADE00E66CFE /* CCES2Renderer.h in Headers */,
@@ -1928,6 +1935,7 @@
 				1551A6CB158F2ADE00E66CFE /* neon_matrix_impl.c in Sources */,
 				1551A6CC158F2ADE00E66CFE /* plane.c in Sources */,
 				B0F7E503198792180048F46B /* CAPageView.cpp in Sources */,
+				B02A776919B82F7300C4A5EF /* CAStepper.cpp in Sources */,
 				1551A6CD158F2ADE00E66CFE /* quaternion.c in Sources */,
 				1551A6CE158F2ADE00E66CFE /* ray2.c in Sources */,
 				1551A6CF158F2ADE00E66CFE /* utility.c in Sources */,

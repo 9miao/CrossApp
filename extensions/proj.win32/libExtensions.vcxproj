@@ -106,8 +106,6 @@
     <ClCompile Include="..\other\CAAdress\wp8\CAAddressManager.cpp" />
     <ClCompile Include="..\other\CACamera\wp8\CAMediaManager.cpp" />
     <ClCompile Include="..\other\CALocation\wp8\CALocationManager.cpp" />
-    <ClCompile Include="..\rapidjson\CADictionaryHelper.cpp" />
-    <ClCompile Include="..\rapidjson\CocoLoader.cpp" />
     <ClCompile Include="..\sqlite3\include\sqlite3.c" />
     <ClCompile Include="..\studio\CAStudioViewController.cpp" />
   </ItemGroup>
@@ -139,18 +137,6 @@
     <ClInclude Include="..\other\CAAdress\CAAddressManager.h" />
     <ClInclude Include="..\other\CACamera\CAMediaManager.h" />
     <ClInclude Include="..\other\CALocation\CALocationManager.h" />
-    <ClInclude Include="..\rapidjson\CADictionaryHelper.h" />
-    <ClInclude Include="..\rapidjson\CocoLoader.h" />
-    <ClInclude Include="..\rapidjson\rapidjson\document.h" />
-    <ClInclude Include="..\rapidjson\rapidjson\filestream.h" />
-    <ClInclude Include="..\rapidjson\rapidjson\internal\pow10.h" />
-    <ClInclude Include="..\rapidjson\rapidjson\internal\stack.h" />
-    <ClInclude Include="..\rapidjson\rapidjson\internal\strfunc.h" />
-    <ClInclude Include="..\rapidjson\rapidjson\prettywriter.h" />
-    <ClInclude Include="..\rapidjson\rapidjson\rapidjson.h" />
-    <ClInclude Include="..\rapidjson\rapidjson\reader.h" />
-    <ClInclude Include="..\rapidjson\rapidjson\stringbuffer.h" />
-    <ClInclude Include="..\rapidjson\rapidjson\writer.h" />
     <ClInclude Include="..\sqlite3\include\sqlite3.h" />
     <ClInclude Include="..\sqlite3\include\sqlite3ext.h" />
     <ClInclude Include="..\studio\CAStudioViewController.h" />

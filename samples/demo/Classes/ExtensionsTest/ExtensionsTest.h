@@ -10,7 +10,7 @@ USING_NS_CC_EXT;
 
 using namespace CSJson;
 
-typedef enum LABELTAG
+enum LABELTAG
 {
 	NAME=50,
 	NUM,

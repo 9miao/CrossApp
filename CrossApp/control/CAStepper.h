@@ -64,6 +64,15 @@ public:
     CAImage* getDividerImageForState(CAControlState state);
 
     CC_SYNTHESIZE(bool, m_bTouchEffect, TouchEffect); // default is false, alpha
+
+public:
+
+	virtual void addTarget(CAObject* target, SEL_CAControl selector);
+
+	virtual void removeTarget(CAObject* target, SEL_CAControl selector);
+
+	virtual void removeAllTargets();
+
 protected:
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);    
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);

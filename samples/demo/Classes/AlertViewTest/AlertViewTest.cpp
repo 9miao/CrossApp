@@ -25,14 +25,17 @@ void AlertViewTest::viewDidLoad()
 void AlertViewTest::respondTouch(CAControl* btn ,CCPoint point)
 {
 	CCSize size = this->getView()->getBounds().size;
-	std::vector<std::string> btnTitle;
-	CAAlertView* alertView = CAAlertView::create();
-	btnTitle.push_back("green");
-	btnTitle.push_back("yeelow");
-	btnTitle.push_back("orange");
-	alertView->showMessage("ButtonImage", "What kind of background of button do you like?", btnTitle);
-	alertView->setTitle("ButtonImage",CAColor_blueStyle);
-	alertView->setAlertMessage("What kind of background of button do you like?", CAColor_blueStyle);
+	CAAlertView* alertView = CAAlertView::createWithText("ButtonImage", "What kind of background of button do you like?", "green", "yellow", NULL);
+	float randNum = CCRANDOM_0_1();
+	if (randNum > 0.333f)
+	{
+		alertView->addButton("orange");
+	}
+	if (randNum> 0.666f)
+	{
+		alertView->addButton("blue");
+	}
+	alertView->show();
 	alertView->setTarget(this, CAAlertView_selector(AlertViewTest::alertViewCallback));
 }
 
@@ -42,9 +45,13 @@ void AlertViewTest::alertViewCallback(int btnIndex)
 	{
 		imageBtn->setBackGroundViewForState(CAControlStateNormal,CAImageView::createWithImage(CAImage::create("source_material/ex1.png")));
 	}
-	else if (btnIndex==1)
+	else if (btnIndex == 1)
 	{
 		imageBtn->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("source_material/ex2.png")));
+	}
+	else if (btnIndex == 2)
+	{
+		imageBtn->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("source_material/ex3.png")));
 	}
 	else
 	{

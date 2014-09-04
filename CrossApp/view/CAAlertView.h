@@ -43,11 +43,11 @@ public:
 
 	static CAAlertView *create();
 
-	static CAAlertView *createWithText(const std::string& pszTitle, const std::string& pszAlertMsg, const std::string& pszBtnText, ...);
+	static CAAlertView *createWithText(const char* pszTitle, const char* pszAlertMsg, const char* pszBtnText, ...);
 
 	bool init();
 
-	bool initWithText(const std::string& szTitle, const std::string& szAlertMsg, const std::string& pszBtnText, ...);
+	bool initWithText(const char* szTitle, const char* szAlertMsg, const char* pszBtnText, ...);
     
     void show();
     

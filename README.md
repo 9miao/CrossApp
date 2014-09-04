@@ -1,3 +1,30 @@
+#### CrossApp 0.3.5 更新内容：  
+
+#####1.添加CAStepper
+一个数字输入控件,它可以递进式输入数量。
+
+#####2.修改CAAlertView接口
+接口重写
+
+#####3.优化CATextField
+修改bug，并增加代理监听方法
+
+#####4.优化CAProgress
+
+#####5.优化CASegmentedControl
+
+#####6.优化文字显示
+
+#####7.删除rapidjson
+
+####升级建议：
+#1.重新拷贝java文件到android工程中，
+#2.xcode需删除extensions目录中rapidjson文件夹
+#3.从demo中拷贝新控件默认素材
+
+**********************************************************************************
+
+
 #### CrossApp 0.3.4 更新内容：  
 
 #####1.添加CADrawerController

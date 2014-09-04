@@ -66,15 +66,21 @@ void PageViewTest::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned i
 	if (!fullScreen)
 	{
 		segmented->setVisible(false);
-		this->getNavigationController()->setNavigationBarHidden(true, true);
-		this->getNavigationController()->getTabBarController()->setTabBarHidden(true, true);
+		CAWindow* window = CAApplication::getApplication()->getRootWindow(); 
+		CADrawerController* drawer = (CADrawerController*)window->getRootViewController(); 
+		CANavigationController* nav = (CANavigationController*)drawer->getLeftViewController(); 
+		nav->setNavigationBarHidden(true, true);
+		//drawer->hideLeftViewController(true);
 		fullScreen = true;
 	}
 	else
 	{
 		segmented->setVisible(true);
-		this->getNavigationController()->setNavigationBarHidden(false, true);
-		this->getNavigationController()->getTabBarController()->setTabBarHidden(false, true);
+		CAWindow* window = CAApplication::getApplication()->getRootWindow();
+		CADrawerController* drawer = (CADrawerController*)window->getRootViewController();
+		CANavigationController* nav = (CANavigationController*)drawer->getLeftViewController();
+		nav->setNavigationBarHidden(false, true);
+		//drawer->hideLeftViewController(true);
 		fullScreen = false;
 	}
 }

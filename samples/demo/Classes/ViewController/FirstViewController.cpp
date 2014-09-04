@@ -4,12 +4,11 @@
 	p_Contrller* p_ViewContrller = new p_Contrller();										\
 	p_ViewContrller->init();																\
 	p_ViewContrller->setNavigationBarItem(CANavigationBarItem::create(testList.at(index))); \
-	p_ViewContrller->autorelease();\
-	CAWindow* window = CAApplication::getApplication()->getRootWindow();\
-	CADrawerController* drawer = (CADrawerController*)window->getRootViewController();\
-	CANavigationController* nav = (CANavigationController*)drawer->getRightViewController();\
-	nav->pushViewController(p_ViewContrller, false);\
-	drawer->hideLeftViewController(true);
+	p_ViewContrller->autorelease();															\
+	CAWindow* window = CAApplication::getApplication()->getRootWindow();					\
+	CADrawerController* drawer = (CADrawerController*)window->getRootViewController();		\
+	CANavigationController* nav = (CANavigationController*)drawer->getLeftViewController(); \
+	nav->pushViewController(p_ViewContrller, false);										\
 	
 FirstViewController::FirstViewController()
 {
