@@ -28,6 +28,35 @@ pageView页面进度指示器
 #####8.其他bug修复与优化
 
 
+
+#### CrossApp 0. 3. 4 Update:
+##### 1. Added CADrawerController
+Drawer view controller<br/>
+
+##### 2. Added CAListView
+CATableView’s simplified version, and added horizontal arrangement functionality<br/>
+
+##### 3. Added CAPageControl
+pageView page progress indicator<br/>
+
+##### 4. CAActivityIndicatorView Optimization
+Added customized image interface, and added customized background image interface<br/>
+
+##### 5. CAImageView Optimization
+Added image adaptation mode interface which supports: fully-stretched, fully-stretched with no distortion and cut excess part, fully-displayed with no distortion and centered, fully-displayed with no distortion and stay same height, fully-displayed with no distortion and stay same width.<br/>
+
+##### 6. CATextField Optimization
+Modified background setting interface<br/>
+
+##### 7. CASegmentedControl Optimization
+Added interfaces and fixed some bugs<br/>
+
+##### 8. CAPickerView Optimization
+Added interfaces and fixed some bugs<br/>
+
+##### 9. Fixed and Optimized Other Bugs
+
+
 **********************************************************************************
 
 
@@ -157,8 +186,8 @@ Page turning sliding container, a commonly used control in smartphone, is able t
 ##### 3. Added CAIndexPath2E and CAIndexPath3E
 Two and three dimensional index class<br/>
 
-##### 4. Added Cell Multiplexing Mechanism of CATableView and CACollectionView
-Multiplexing mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.<br/>
+##### 4. Added Cell Reuse Mechanism of CATableView and CACollectionView
+Reuse mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.<br/>
 
 ##### 5. Touch Distributed System Optimization
 We optimized touch distributed system, and now it can distribute touch event in a more humanized style.<br/>
@@ -708,9 +737,11 @@ Webpage load control: CAWebView<br/>
 **b) ** text editing when cursor is at anywhere of content<br/>
 **c) **line feed input<br/>
 #####2.	tableView：
-**a) **cell Multiplexing<br/>
+**a) **cell reuse<br/>
 **b) **cell editing (delete, insert and others)<br/>
 **c) **added some template attributes of cell<br/>
+
+
 =======
 ####【正式版】CrossApp 0.3.1 更新内容：  
 
@@ -748,8 +779,8 @@ Page turning sliding container, a commonly used control in smartphone, is able t
 #####3. Added CAIndexPath2E and CAIndexPath3E
 Two and three dimensional index class
 
-#####4. Added Cell Multiplexing Mechanism of CATableView and CACollectionView
-Multiplexing mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.
+#####4. Added Cell Reuse Mechanism of CATableView and CACollectionView
+Reuse mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.
 
 #####5. Touch Distributed System Optimization
 We optimized touch distributed system, and now it can distribute touch event in a more humanized style.
@@ -1298,7 +1329,7 @@ Webpage load control: CAWebView<br/>
 **b) ** text editing when cursor is at anywhere of content<br/>
 **c) **line feed input<br/>
 #####2.	tableView：
-**a) **cell Multiplexing<br/>
+**a) **cell Reuse<br/>
 **b) **cell editing (delete, insert and others)<br/>
 **c) **added some template attributes of cell<br/>
 >>>>>>> a0fca0f78baf5e0a811792d99d995b5c43b26d7a
