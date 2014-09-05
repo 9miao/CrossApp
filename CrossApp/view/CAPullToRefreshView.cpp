@@ -96,14 +96,14 @@ void CAPullToRefreshView::startLayout()
     if (m_eLayoutLinearType == CALayoutLinearHorizontal)
     {
         imageViewAndLoadingCenter.size = CADipSize(25, 120);
-        imageViewAndLoadingCenter.origin = CADipPoint(170, viewSize.height/2);
+        imageViewAndLoadingCenter.origin = CADipPoint(viewSize.width / 2 - 160, viewSize.height/2);
         labelCenter.size = CADipSize(256, 80);
         labelCenter.origin = viewSize/2;
     }
     else
     {
         imageViewAndLoadingCenter.size = CADipSize(120, 25);
-        imageViewAndLoadingCenter.origin = CADipPoint(viewSize.width/2, 170);
+        imageViewAndLoadingCenter.origin = CADipPoint(viewSize.width / 2 - 160, 170);
         labelCenter.size = CADipSize(80, 256);
         labelCenter.origin = viewSize/2;
     }

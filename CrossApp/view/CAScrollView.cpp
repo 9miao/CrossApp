@@ -992,7 +992,7 @@ void CAScrollView::detectionFromPullToRefreshView()
     {
         this->setTouchEnabled(false);
         this->stopDeaccelerateScroll();
-        this->setContentOffset(CCPoint(0, -128), true);
+        this->setContentOffset(CCPoint(0, -_px(128)), true);
         m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateRefreshing);
         if (m_pScrollViewDelegate)
         {
@@ -1004,7 +1004,7 @@ void CAScrollView::detectionFromPullToRefreshView()
     {
         this->setTouchEnabled(false);
         this->stopDeaccelerateScroll();
-        this->setContentOffset(CCPoint(0, this->getViewSize().height - this->getBounds().size.height + 128), true);
+        this->setContentOffset(CCPoint(0, this->getViewSize().height - this->getBounds().size.height + _px(128)), true);
         m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateRefreshing);
         
         if (m_pScrollViewDelegate)

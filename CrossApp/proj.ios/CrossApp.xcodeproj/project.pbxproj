@@ -303,6 +303,10 @@
 		B01F650E196585EA005C14FC /* CACollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F650C196585EA005C14FC /* CACollectionView.h */; };
 		B02A12D0197CE30A00F4F2C5 /* CAtransformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12CE197CE30A00F4F2C5 /* CAtransformation.cpp */; };
 		B02A12D1197CE30A00F4F2C5 /* CATransformation.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A12CF197CE30A00F4F2C5 /* CATransformation.h */; };
+		B02A51CD19B9625B00470D57 /* CADatePickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A51CB19B9625B00470D57 /* CADatePickerView.cpp */; };
+		B02A51CE19B9625B00470D57 /* CADatePickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A51CC19B9625B00470D57 /* CADatePickerView.h */; };
+		B02A51D119B962B500470D57 /* CAPullToRefreshView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A51CF19B962B500470D57 /* CAPullToRefreshView.cpp */; };
+		B02A51D219B962B500470D57 /* CAPullToRefreshView.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A51D019B962B500470D57 /* CAPullToRefreshView.h */; };
 		B02A776919B82F7300C4A5EF /* CAStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A776719B82F7300C4A5EF /* CAStepper.cpp */; };
 		B02A776A19B82F7300C4A5EF /* CAStepper.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A776819B82F7300C4A5EF /* CAStepper.h */; };
 		B02CE48B19AD8CFE00B905FB /* CAPageControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02CE48719AD8CFE00B905FB /* CAPageControl.cpp */; };
@@ -693,6 +697,10 @@
 		B01F650C196585EA005C14FC /* CACollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACollectionView.h; sourceTree = "<group>"; };
 		B02A12CE197CE30A00F4F2C5 /* CAtransformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAtransformation.cpp; sourceTree = "<group>"; };
 		B02A12CF197CE30A00F4F2C5 /* CATransformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATransformation.h; sourceTree = "<group>"; };
+		B02A51CB19B9625B00470D57 /* CADatePickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADatePickerView.cpp; sourceTree = "<group>"; };
+		B02A51CC19B9625B00470D57 /* CADatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADatePickerView.h; sourceTree = "<group>"; };
+		B02A51CF19B962B500470D57 /* CAPullToRefreshView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPullToRefreshView.cpp; sourceTree = "<group>"; };
+		B02A51D019B962B500470D57 /* CAPullToRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPullToRefreshView.h; sourceTree = "<group>"; };
 		B02A776719B82F7300C4A5EF /* CAStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStepper.cpp; sourceTree = "<group>"; };
 		B02A776819B82F7300C4A5EF /* CAStepper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStepper.h; sourceTree = "<group>"; };
 		B02CE48719AD8CFE00B905FB /* CAPageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageControl.cpp; sourceTree = "<group>"; };
@@ -935,6 +943,8 @@
 		04EA9FC41956CE2500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B02A51CB19B9625B00470D57 /* CADatePickerView.cpp */,
+				B02A51CC19B9625B00470D57 /* CADatePickerView.h */,
 				B0C512D119A30E5D00E6934B /* CAActivityIndicatorView.cpp */,
 				B0C512D219A30E5D00E6934B /* CAActivityIndicatorView.h */,
 				B0090D71198A444500BD8CDA /* CAPickerView.cpp */,
@@ -963,6 +973,8 @@
 				04EA9FD41956CE2500198A8E /* CATableView.h */,
 				B01F650B196585EA005C14FC /* CACollectionView.cpp */,
 				B01F650C196585EA005C14FC /* CACollectionView.h */,
+				B02A51CF19B962B500470D57 /* CAPullToRefreshView.cpp */,
+				B02A51D019B962B500470D57 /* CAPullToRefreshView.h */,
 				04EA9FD51956CE2500198A8E /* CAView.cpp */,
 				04EA9FD61956CE2500198A8E /* CAView.h */,
 				04EA9FD71956CE2500198A8E /* CAWindow.cpp */,
@@ -1609,6 +1621,7 @@
 				04EABB2C1956DAEA00198A8E /* CCActionEase.cpp in Headers */,
 				B0596AE9197629BE00B1E8CB /* ftlzw.h in Headers */,
 				04EABB2D1956DAEA00198A8E /* CCActionInstant.cpp in Headers */,
+				B02A51D219B962B500470D57 /* CAPullToRefreshView.h in Headers */,
 				B0596B3A1976343300B1E8CB /* mprintf.h in Headers */,
 				B0C512C819A2DF9F00E6934B /* CAFTFontCache.h in Headers */,
 				04EABB2E1956DAEA00198A8E /* CCActionInterval.cpp in Headers */,
@@ -1748,6 +1761,7 @@
 				1551A843158F2ADF00E66CFE /* ccUtils.h in Headers */,
 				B0596B1F197629BE00B1E8CB /* t1types.h in Headers */,
 				B0596B22197629BE00B1E8CB /* ttnameid.h in Headers */,
+				B02A51CE19B9625B00470D57 /* CADatePickerView.h in Headers */,
 				1551A845158F2ADF00E66CFE /* CCVertex.h in Headers */,
 				B02CE48C19AD8CFE00B905FB /* CAPageControl.h in Headers */,
 				1551A847158F2ADF00E66CFE /* ccCArray.h in Headers */,
@@ -1912,6 +1926,7 @@
 				B02A12D0197CE30A00F4F2C5 /* CAtransformation.cpp in Sources */,
 				B0596A581976287B00B1E8CB /* CAFreeTypeFont.cpp in Sources */,
 				1551A628158F2ADE00E66CFE /* CCAction.cpp in Sources */,
+				B02A51CD19B9625B00470D57 /* CADatePickerView.cpp in Sources */,
 				B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */,
 				1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */,
 				1551A62E158F2ADE00E66CFE /* CCActionEase.cpp in Sources */,
@@ -1967,6 +1982,7 @@
 				1551A844158F2ADF00E66CFE /* CCVertex.cpp in Sources */,
 				1551A846158F2ADF00E66CFE /* ccCArray.cpp in Sources */,
 				1551A84A158F2ADF00E66CFE /* TGAlib.cpp in Sources */,
+				B02A51D119B962B500470D57 /* CAPullToRefreshView.cpp in Sources */,
 				1551A84C158F2ADF00E66CFE /* TransformUtils.cpp in Sources */,
 				1551A84E158F2ADF00E66CFE /* ioapi.cpp in Sources */,
 				1551A850158F2ADF00E66CFE /* unzip.cpp in Sources */,
