@@ -171,9 +171,9 @@ static EAGLView *view = 0;
     NSDictionary *userInfo = [aNotification userInfo];
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
-    int height = keyboardRect.size.height;
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    int height = keyboardRect.size.height * scale;
     CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchGetKeyBoardHeight(height);
-    NSLog(@"%d",height);
 }
 -(id) initWithCoder:(NSCoder *)aDecoder
 {

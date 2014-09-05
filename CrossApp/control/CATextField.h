@@ -175,6 +175,7 @@ protected:
     virtual void deleteBackward();
     virtual void getKeyBoardHeight(int height);
     virtual void getKeyBoradReturnCallBack();
+    virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
     virtual const char* getContentText();
 private:
 	std::vector<TextAttribute> m_vTextFiledChars;

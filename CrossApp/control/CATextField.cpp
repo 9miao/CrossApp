@@ -713,7 +713,10 @@ void CATextField::getKeyBoradReturnCallBack()
         this->resignFirstResponder();
     }
 }
-
+void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
+{
+    this->resignFirstResponder();
+}
 int CATextField::getStringLength(const std::string &var)
 {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
