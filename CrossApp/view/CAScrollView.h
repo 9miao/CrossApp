@@ -12,6 +12,7 @@
 #include <iostream>
 #include "CAView.h"
 #include <deque>
+#include "CAPullToRefreshView.h"
 
 NS_CC_BEGIN
 
@@ -31,6 +32,10 @@ public:
     virtual void scrollViewDidEndDragging(CAScrollView* view){};
     
     virtual void scrollViewDidZoom(CAScrollView* view){};
+    
+    virtual void scrollViewHeaderBeginRefreshing(CAScrollView* view){};
+    
+    virtual void scrollViewFooterBeginRefreshing(CAScrollView* view){};
 };
 
 class CAIndicator;
@@ -103,7 +108,13 @@ public:
     
     CC_PROPERTY_PASS_BY_REF(CCSize, m_obViewSize, ViewSize);
     
+    CC_SYNTHESIZE_RETAIN(CAPullToRefreshView*, m_pHeaderRefreshView, HeaderRefreshView);
+    
+    CC_SYNTHESIZE_RETAIN(CAPullToRefreshView*, m_pFooterRefreshView, FooterRefreshView);
+    
     void stopDeaccelerateScroll();
+    
+    void startDeaccelerateScroll();
     
 protected:
  
@@ -132,9 +143,9 @@ protected:
         return (CCPoint(m_obContentSize).getLength() * 6 * dt);
     }
     
-    inline virtual CCPoint maxBouncesLenght()
+    virtual float maxBouncesLenght()
     {
-        return CCPoint(this->getBounds().size.width * 0.3f, this->getBounds().size.height * 0.3f);
+        return 120.0f;
     }
     
     const CCPoint& getScrollWindowNotOutPoint(CCPoint& point);
@@ -161,6 +172,12 @@ protected:
     
     void hideIndicator();
 
+    void layoutPullToRefreshView();
+    
+    void changedFromPullToRefreshView();
+    
+    void detectionFromPullToRefreshView();
+    
     virtual void setContentSize(const CCSize& var);
     
 public:
@@ -238,6 +255,7 @@ private:
     
     CAIndicatorType m_eType;
 };
+
 
 NS_CC_END
 #endif /* defined(__CrossAppx__CAScrollView__) */

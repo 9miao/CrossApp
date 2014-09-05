@@ -102,13 +102,6 @@ float CACollectionView::decelerationRatio(float dt)
     return 2.0f * dt;
 }
 
-CCPoint CACollectionView::maxBouncesLenght()
-{
-    float height = this->getBounds().size.height * 0.3f;
-    //PULL SHOW VIEW
-    return CCPoint(0, height);
-}
-
 void CACollectionView::reloadData()
 {
 	if (m_pCollectionViewDataSource == NULL)
@@ -227,7 +220,9 @@ void CACollectionView::reloadData()
 	}
 
     this->setViewSize(CCSize(width, y));
+    this->layoutPullToRefreshView();
     updateSectionHeaderAndFooterRects();
+    this->startDeaccelerateScroll();
 }
 
 void CACollectionView::firstReloadData()

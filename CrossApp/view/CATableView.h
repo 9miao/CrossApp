@@ -33,10 +33,6 @@ public:
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row){};
     
     virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row){};
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void tableViewDidShowPullDownView(CATableView* table){};
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void tableViewDidShowPullUpView(CATableView* table){};
 };
 
 class CATableViewDataSource
@@ -151,20 +147,6 @@ public:
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
     
-    
-    
-    CC_SYNTHESIZE_READONLY(CAView*, m_pTablePullDownView, TablePullDownView);
-    
-    CC_SYNTHESIZE_READONLY(CAView*, m_pTablePullUpView, TablePullUpView);
-    
-    CC_SYNTHESIZE_READONLY(unsigned int, m_nTablePullViewHeight, TablePullViewHeight);
-    
-    CC_DEPRECATED_ATTRIBUTE void setTablePullDownView(CAView* var);
-    
-    CC_DEPRECATED_ATTRIBUTE void setTablePullUpView(CAView* var);
-    
-    CC_DEPRECATED_ATTRIBUTE void setTablePullViewHeight(unsigned int var);
-    
 protected:
 
     inline virtual float maxSpeed(float dt);
@@ -172,8 +154,6 @@ protected:
     inline virtual float maxSpeedCache(float dt);
     
     inline virtual float decelerationRatio(float dt);
-    
-    inline virtual CCPoint maxBouncesLenght();
     
     virtual void contentOffsetFinish();
     
@@ -282,15 +262,6 @@ protected:
     std::map<CAIndexPath2E, CAView*> m_pUsedLines;
     
     CAList<CAView*> m_pFreedLines;
-
-    typedef enum
-    {
-        CATableViewToUpdatePullUp,
-        CATableViewToUpdatePullDown,
-        CATableViewToUpdateNone
-    }CATableViewToUpdateState;
-    
-    CATableViewToUpdateState m_bToUpdate;
 };
 
 class CC_DLL CATableViewCell: public CAControl

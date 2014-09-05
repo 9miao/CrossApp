@@ -274,7 +274,6 @@ void CAActivityIndicatorView::animation(float dt)
     m_fLoadingTime += dt;
     do
     {
-        CC_BREAK_IF(m_fLoadingMinTime < FLT_EPSILON);
         CC_BREAK_IF(m_fLoadingTime < m_fLoadingMinTime);
         CC_BREAK_IF(m_bStopAnimation == false);
         CAScheduler::unschedule(schedule_selector(CAActivityIndicatorView::animation), this);

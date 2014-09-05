@@ -1,6 +1,5 @@
 //
 //  CADrawerController.h
-//  CartoonHouse
 //
 //  Created by 栗元峰 on 14-8-20.
 //

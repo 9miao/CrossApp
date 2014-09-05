@@ -23,20 +23,16 @@ NS_CC_BEGIN
 CATableView::CATableView()
 :m_pTableHeaderView(NULL)
 ,m_pTableFooterView(NULL)
-,m_pTablePullDownView(NULL)
-,m_pTablePullUpView(NULL)
 ,m_obSeparatorColor(CAColor_gray)
 ,m_nSeparatorViewHeight(1)
 ,m_nTableHeaderHeight(0)
 ,m_nTableFooterHeight(0)
-,m_nTablePullViewHeight(0)
 ,m_nSections(0)
 ,m_pTableViewDataSource(NULL)
 ,m_pTableViewDelegate(NULL)
 ,m_pHighlightedTableCells(NULL)
 ,m_bAllowsSelection(false)
 ,m_bAllowsMultipleSelection(false)
-,m_bToUpdate(CATableViewToUpdateNone)
 {
 
 }
@@ -54,8 +50,6 @@ CATableView::~CATableView()
     
     CC_SAFE_RELEASE_NULL(m_pTableHeaderView);
     CC_SAFE_RELEASE_NULL(m_pTableFooterView);
-    CC_SAFE_RELEASE_NULL(m_pTablePullDownView);
-    CC_SAFE_RELEASE_NULL(m_pTablePullUpView);
     m_pTableViewDataSource = NULL;
     m_pTableViewDelegate = NULL;
 }
@@ -238,36 +232,6 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         }
     }
     
-    if (m_pTableViewDelegate && m_nTablePullViewHeight > 0)
-    {
-        CCPoint point  = m_pContainer->getFrameOrigin();
-        
-        if (m_pTablePullDownView
-            && point.y
-            >= m_nTablePullViewHeight)
-        {
-            m_bToUpdate     =   CATableViewToUpdatePullDown;
-            
-            point.y         =   m_nTablePullViewHeight;
-            
-            this->setContentOffset(ccpMult(point, -1), true);
-        }
-        
-        if (m_pTablePullUpView
-            && point.y
-            <= this->getBounds().size.height
-                - m_pContainer->getFrame().size.height
-                - m_nTablePullViewHeight)
-        {
-            m_bToUpdate     =   CATableViewToUpdatePullUp;
-            
-            point.y         =   this->getBounds().size.height
-                                - m_pContainer->getFrame().size.height
-                                - m_nTablePullViewHeight;
-            
-            this->setContentOffset(ccpMult(point, -1), true);
-        }
-    }
 }
 
 void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
@@ -298,35 +262,9 @@ float CATableView::decelerationRatio(float dt)
     return 2.0f * dt;
 }
 
-CCPoint CATableView::maxBouncesLenght()
-{
-    float height = this->getBounds().size.height * 0.3f;;
-    
-    if (m_pTablePullDownView || m_pTablePullUpView)
-    {
-        return CCPoint(0, MIN(height, m_nTablePullViewHeight * 0.8f));
-    }
-    
-    return CCPoint(0, height);
-}
-
 void CATableView::contentOffsetFinish()
 {
-    CC_RETURN_IF(m_bToUpdate == CATableViewToUpdateNone);
-    switch (m_bToUpdate)
-    {
-        case CATableViewToUpdatePullDown:
-            m_pTableViewDelegate->tableViewDidShowPullDownView(this);
-            break;
-        case CATableViewToUpdatePullUp:
-            m_pTableViewDelegate->tableViewDidShowPullUpView(this);
-            break;
-        default:
-            break;
-    }
-    m_bToUpdate = CATableViewToUpdateNone;
-    this->reloadData();
-    CAScheduler::schedule(schedule_selector(CATableView::deaccelerateScrolling), this, 1/60.0f, kCCRepeatForever, 0.3f);
+    
 }
 
 CATableViewCell* CATableView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
@@ -524,12 +462,6 @@ void CATableView::reloadData()
     float width = this->getBounds().size.width;
     int y = 0;
     
-    if (m_pTablePullDownView)
-    {
-        m_pTablePullDownView->setFrame(CCRect(0, -(float)m_nTablePullViewHeight, width, m_nTablePullViewHeight));
-        this->addSubview(m_pTablePullDownView);
-    }
-    
     if (m_pTableHeaderView)
     {
         m_pTableHeaderView->setFrame(CCRect(0, y, width, m_nTableHeaderHeight));
@@ -603,13 +535,7 @@ void CATableView::reloadData()
         this->addSubview(m_pTableFooterView);
         y += m_nTableFooterHeight;
     }
-    
-    if (m_pTablePullUpView)
-    {
-        m_pTablePullUpView->setFrame(CCRect(0, m_obViewSize.height, width, m_nTablePullViewHeight));
-        this->addSubview(m_pTablePullUpView);
-    }
-    
+
     this->loadTableCell();
     this->updateSectionHeaderAndFooterRects();
 }
@@ -751,25 +677,6 @@ void CATableView::update(float dt)
     this->recoveryTableCell();
     this->loadTableCell();
     this->updateSectionHeaderAndFooterRects();
-}
-
-void CATableView::setTablePullDownView(CAView* var)
-{
-    CC_SAFE_RELEASE(m_pTablePullDownView);
-    CC_SAFE_RETAIN(var);
-    m_pTablePullDownView = var;
-}
-
-void CATableView::setTablePullUpView(CAView* var)
-{
-    CC_SAFE_RELEASE(m_pTablePullUpView);
-    CC_SAFE_RETAIN(var);
-    m_pTablePullUpView = var;
-}
-
-void CATableView::setTablePullViewHeight(unsigned int var)
-{
-    m_nTablePullViewHeight = var;
 }
 
 #pragma CATableViewCell

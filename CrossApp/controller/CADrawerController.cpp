@@ -182,6 +182,7 @@ void CADrawerController::showLeftViewController(bool animated)
         this->showBegin();
         m_fCurrDivision = m_pContainer[1]->getFrameOrigin().x;
         CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+        CAScheduler::unscheduleAllForTarget(this);
         CAScheduler::schedule(schedule_selector(CADrawerController::scheduleShowAction), this, 1/60.0f);
     }
     else
@@ -200,6 +201,7 @@ void CADrawerController::hideLeftViewController(bool animated)
     {
         m_fCurrDivision = m_pContainer[1]->getFrameOrigin().x;
         CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+        CAScheduler::unscheduleAllForTarget(this);
         CAScheduler::schedule(schedule_selector(CADrawerController::scheduleHideAction), this, 1/60.0f);
     }
     else

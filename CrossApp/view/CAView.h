@@ -51,6 +51,13 @@ enum {
     kCAViewOnCleanup
 };
 
+typedef enum
+{
+    CALayoutLinearHorizontal = 0,
+    CALayoutLinearVertical
+}
+CALayoutLinearType;
+
 #define kCAViewPointInvalid CCPoint(-0xffffffff, -0xffffffff)
 #define kCAViewSizeInvalid CCPoint(0, 0)
 #define kCAViewRectInvalid CCRect(0, 0, 0, 0)

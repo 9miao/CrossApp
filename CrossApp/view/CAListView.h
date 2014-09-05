@@ -113,8 +113,6 @@ protected:
     
     inline virtual float decelerationRatio(float dt);
     
-    inline virtual CCPoint maxBouncesLenght();
-    
     virtual void update(float dt);
 
 	void recoveryCollectionCell();

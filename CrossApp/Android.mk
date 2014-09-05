@@ -97,6 +97,7 @@ view/CAPageView.cpp \
 view/CAPickerView.cpp \
 view/CADatePickerView.cpp \
 view/CAActivityIndicatorView.cpp \
+view/CAPullToRefreshView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

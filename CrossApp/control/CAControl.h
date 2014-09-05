@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
-#ifndef __CrossAppx__CAControl__
-#define __CrossAppx__CAControl__
+#ifndef __CrossApp__CAControl__
+#define __CrossApp__CAControl__
 
 #include <iostream>
 #include "view/CAView.h"

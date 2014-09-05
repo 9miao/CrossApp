@@ -78,7 +78,7 @@ bool CAClippingView::init(CAView *pStencil)
     
     m_fAlphaThreshold = 1;
     m_bInverted = false;
-    // get (only once) the number of bits of the stencil buffer
+
     static bool once = true;
     if (once)
     {

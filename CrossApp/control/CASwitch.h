@@ -1,6 +1,6 @@
 //
 //  CASwitch.h
-//  CrossAppx
+//  CrossApp
 //
 //  Created by juguanhui on 14-5-29.
 //  Copyright (c) 2014 http://9miao.com All rights reserved.

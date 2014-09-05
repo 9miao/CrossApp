@@ -95,6 +95,7 @@
 #include "view/CAAlertView.h"
 #include "view/CAPickerView.h"
 #include "view/CAActivityIndicatorView.h"
+#include "view/CAPullToRefreshView.h"
 
 // cocoa
 #include "cocoa/CCDictionary.h"

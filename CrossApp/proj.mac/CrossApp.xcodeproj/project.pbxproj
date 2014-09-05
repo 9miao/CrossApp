@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		040665C21956F40E003E0D62 /* CAGLProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 040665C11956F40D003E0D62 /* CAGLProgram.cpp */; };
 		040665C41956F45A003E0D62 /* CCEGLViewProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 040665C31956F45A003E0D62 /* CCEGLViewProtocol.h */; };
+		0446097E19B8D73200E73CA6 /* CAPullToRefreshView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0446097C19B8D73100E73CA6 /* CAPullToRefreshView.cpp */; };
+		0446097F19B8D73200E73CA6 /* CAPullToRefreshView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0446097D19B8D73200E73CA6 /* CAPullToRefreshView.h */; };
 		0460ECF41956F97A00D13001 /* CAApplicationCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 0460ECF01956F97A00D13001 /* CAApplicationCaller.h */; };
 		0460ECF51956F97A00D13001 /* CAApplicationCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0460ECF11956F97A00D13001 /* CAApplicationCaller.mm */; };
 		0460ECF61956F97A00D13001 /* CCEGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0460ECF21956F97A00D13001 /* CCEGLView.h */; };
@@ -290,6 +292,8 @@
 /* Begin PBXFileReference section */
 		040665C11956F40D003E0D62 /* CAGLProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGLProgram.cpp; sourceTree = "<group>"; };
 		040665C31956F45A003E0D62 /* CCEGLViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLViewProtocol.h; sourceTree = "<group>"; };
+		0446097C19B8D73100E73CA6 /* CAPullToRefreshView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPullToRefreshView.cpp; sourceTree = "<group>"; };
+		0446097D19B8D73200E73CA6 /* CAPullToRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPullToRefreshView.h; sourceTree = "<group>"; };
 		0460ECF01956F97A00D13001 /* CAApplicationCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAApplicationCaller.h; sourceTree = "<group>"; };
 		0460ECF11956F97A00D13001 /* CAApplicationCaller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAApplicationCaller.mm; sourceTree = "<group>"; };
 		0460ECF21956F97A00D13001 /* CCEGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLView.h; sourceTree = "<group>"; };
@@ -1090,7 +1094,6 @@
 				B05D3698195AB93900DD4814 /* CAAlertView.h */,
 				04EAB0401956D75500198A8E /* CABatchView.cpp */,
 				04EAB0411956D75500198A8E /* CABatchView.h */,
-				04EAB0421956D75500198A8E /* CAClippingView.cpp */,
 				04EAB0431956D75500198A8E /* CAClippingView.h */,
 				04EAB0441956D75500198A8E /* CAImageView.cpp */,
 				04EAB0451956D75500198A8E /* CAImageView.h */,
@@ -1100,6 +1103,7 @@
 				B0F7E4FD198788010048F46B /* CAPageView.h */,
 				04EAB0481956D75500198A8E /* CARenderImage.cpp */,
 				04EAB0491956D75500198A8E /* CARenderImage.h */,
+				04EAB0421956D75500198A8E /* CAClippingView.cpp */,
 				04EAB04A1956D75500198A8E /* CAScale9ImageView.cpp */,
 				04EAB04B1956D75500198A8E /* CAScale9ImageView.h */,
 				04EAB04C1956D75500198A8E /* CAScrollView.cpp */,
@@ -1114,6 +1118,8 @@
 				04EAB0511956D75500198A8E /* CAView.h */,
 				04EAB0521956D75500198A8E /* CAWindow.cpp */,
 				04EAB0531956D75500198A8E /* CAWindow.h */,
+				0446097C19B8D73100E73CA6 /* CAPullToRefreshView.cpp */,
+				0446097D19B8D73200E73CA6 /* CAPullToRefreshView.h */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1309,6 +1315,7 @@
 				0460ECF41956F97A00D13001 /* CAApplicationCaller.h in Headers */,
 				0460ECF61956F97A00D13001 /* CCEGLView.h in Headers */,
 				04DF7CB11984E6D9007352A8 /* CAIndexPath.h in Headers */,
+				0446097F19B8D73200E73CA6 /* CAPullToRefreshView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1481,6 +1488,7 @@
 				04DF7CB01984E6D9007352A8 /* CAIndexPath.cpp in Sources */,
 				B03407F81991CA27005DB179 /* md5.cpp in Sources */,
 				B0F7E4FE198788010048F46B /* CAPageView.cpp in Sources */,
+				0446097E19B8D73200E73CA6 /* CAPullToRefreshView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

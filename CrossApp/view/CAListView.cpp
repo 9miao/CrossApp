@@ -108,13 +108,6 @@ float CAListView::decelerationRatio(float dt)
     return 2.0f * dt;
 }
 
-CCPoint CAListView::maxBouncesLenght()
-{
-    float height = this->getBounds().size.height * 0.3f;
-    //PULL SHOW VIEW
-    return CCPoint(0, height);
-}
-
 void CAListView::reloadViewSizeData()
 {
 	CCRect winRect = this->getBounds();
