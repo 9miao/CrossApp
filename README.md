@@ -22,6 +22,32 @@
 #2.xcode需删除extensions目录中rapidjson文件夹
 #3.从demo中拷贝新控件默认素材
 
+
+#### CrossApp 0. 3. 5 Update:
+
+##### 1. Added CAStepper
+A number input control which is able to progressively input number.<br/>
+
+##### 2. Modified CAAlertView Interface
+Rewrote the interface.<br/>
+
+##### 3. CATextField Optimization
+Fixed bug and added agent monitoring method.<br/>
+
+##### 4. CAProgress Optimization
+
+##### 5. CASegmentedControl Optimization
+
+##### 6. Text display Optimization
+
+##### 7. Deleted rapidjson
+
+#### Suggestion:
+#1. Recopy java files into android project
+#2. In xcode, you need to delete rapidjson folder of extensions directory
+#3. Copy default material of new control from demo
+
+
 **********************************************************************************
 
 
