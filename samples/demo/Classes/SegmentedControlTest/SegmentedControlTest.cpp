@@ -74,7 +74,7 @@ void SegmentedControlTest::viewDidLoad()
 
 void SegmentedControlTest::segmentCallback(CAControl* btn, CCPoint point)
 {
-	switch (segment->getselectedIndex())
+	switch (segment->getSelectedIndex())
 	{
 		case 0:
 		{

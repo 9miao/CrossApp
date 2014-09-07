@@ -726,9 +726,11 @@ void CANavigationController::unScheduleUpdate()
 
 CATabBarController::CATabBarController()
 :m_nSelectedIndex(0)
+,m_nLastSelectedIndex(0xffffffff)
 ,m_pTabBar(NULL)
 ,m_pContainer(NULL)
 ,m_bTabBarHidden(false)
+,m_bscrollEnabled(false)
 {
     
 }
@@ -739,14 +741,14 @@ CATabBarController::~CATabBarController()
     CC_SAFE_RELEASE_NULL(m_pTabBar);
 }
 
-bool CATabBarController::initWithViewControllers(const std::vector<CAViewController*>& viewControllers, CABarVerticalAlignment var)
+bool CATabBarController::initWithViewControllers(const CAVector<CAViewController*>& viewControllers, CABarVerticalAlignment var)
 {
     CAViewController::init();
     
     do
     {
         CC_BREAK_IF(viewControllers.size() == 0);
-        m_pViewControllers = CAVector<CAViewController*>(viewControllers);
+        m_pViewControllers = viewControllers;
         
         std::vector<CATabBarItem*> items;
         
@@ -838,10 +840,21 @@ void CATabBarController::viewDidLoad()
         }
     }
     
-    m_pContainer = new CAView();
-    m_pContainer->autorelease();
-    m_pContainer->setFrame(container_rect);
+    m_pContainer = CAPageView::createWithFrame(container_rect, CAPageView::CAPageViewDirectionHorizontal);
+    m_pContainer->setBackGroundColor(CAColor_clear);
+    m_pContainer->setPageViewDelegate(this);
+    m_pContainer->setScrollViewDelegate(this);
+    m_pContainer->setScrollEnabled(m_bscrollEnabled);
     this->getView()->addSubview(m_pContainer);
+    
+    CAVector<CAView*> views;
+    for (int i=0; i<m_pViewControllers.size(); i++)
+    {
+        CAView* view = new CAView();
+        views.pushBack(view);
+        view->release();
+    }
+    m_pContainer->setViews(views);
     
     m_pTabBar->setFrameOrigin(tab_bar_rectOrgin);
     this->getView()->addSubview(m_pTabBar);
@@ -851,16 +864,7 @@ void CATabBarController::viewDidLoad()
 
 void CATabBarController::viewDidUnload()
 {
-    std::vector<CAViewController*>::iterator itr;
-    for (itr=m_pViewControllers.begin(); itr!=m_pViewControllers.end(); itr++)
-    {
-        (*itr)->removeViewFromSuperview();
-    }
-    
-    m_pContainer->removeAllSubviews();
-    m_pContainer->removeFromSuperview();
     m_pContainer = NULL;
-    m_pTabBar->removeFromSuperview();
 }
 
 void CATabBarController::viewDidAppear()
@@ -919,6 +923,12 @@ bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index)
     {
         CC_BREAK_IF(index >= m_pViewControllers.size());
         CC_BREAK_IF(index == m_nSelectedIndex);
+
+        if (m_pTabBar->getSelectedIndex() != index)
+        {
+            m_pTabBar->setSelectedAtIndex(index);
+        }
+        m_nLastSelectedIndex = m_nSelectedIndex;
         m_nSelectedIndex = index;
         
         CAApplication::getApplication()->getRootWindow()->runAction
@@ -940,28 +950,75 @@ unsigned int CATabBarController::getSelectedViewControllerAtIndex()
 
 void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index)
 {
-    this->showSelectedViewControllerAtIndex(index);
+    CC_RETURN_IF(m_nSelectedIndex == index);
+    m_pContainer->setCurrPage(index, false, true);
+}
+
+void CATabBarController::pageViewDidEndTurning(CAPageView* pageView)
+{
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    for (int i = MAX((int)m_nSelectedIndex - 1, 0);
+         i < MIN((int)m_nSelectedIndex + 2, m_pViewControllers.size());
+         i++)
+    {
+        CC_CONTINUE_IF(i == pageView->getCurrPage());
+        m_pViewControllers.at(i)->getView()->setVisible(false);
+    }
+    
+    this->showSelectedViewControllerAtIndex(pageView->getCurrPage());
+}
+
+void CATabBarController::scrollViewWillBeginDragging(CAScrollView* view)
+{
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+    for (int i = MAX((int)m_nSelectedIndex - 1, 0);
+         i < MIN((int)m_nSelectedIndex + 2, m_pViewControllers.size());
+         i++)
+    {
+        if (!m_pViewControllers.at(i)->getView()->getSuperview())
+        {
+            CAView* view = m_pContainer->getSubViewAtIndex(i);
+            m_pViewControllers.at(i)->getView()->setFrame(view->getBounds());
+            m_pViewControllers.at(i)->addViewFromSuperview(view);
+        }
+        
+        m_pViewControllers.at(i)->getView()->setVisible(true);
+    }
 }
 
 void CATabBarController::renderingSelectedViewController()
 {
     m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
     
-    for (int i=0; i<m_pViewControllers.size(); i++)
+    if (m_nLastSelectedIndex < m_pViewControllers.size())
     {
-        CC_CONTINUE_IF(!m_pViewControllers.at(i)->getView()->isVisible());
-        m_pViewControllers.at(i)->getView()->setVisible(false);
-        m_pViewControllers.at(i)->viewDidDisappear();
+        m_pViewControllers.at(m_nLastSelectedIndex)->getView()->setVisible(false);
+        m_pViewControllers.at(m_nLastSelectedIndex)->viewDidDisappear();
     }
     
-    if (m_pViewControllers.at(m_nSelectedIndex)->getView()->getSuperview() == NULL)
+    if (!m_pViewControllers.at(m_nSelectedIndex)->getView()->getSuperview())
     {
-        m_pViewControllers.at(m_nSelectedIndex)->getView()->setFrame(m_pContainer->getBounds());
-        m_pViewControllers.at(m_nSelectedIndex)->addViewFromSuperview(m_pContainer);
+        CAView* view = m_pContainer->getSubViewAtIndex(m_nSelectedIndex);
+        m_pViewControllers.at(m_nSelectedIndex)->getView()->setFrame(view->getBounds());
+        m_pViewControllers.at(m_nSelectedIndex)->addViewFromSuperview(view);
     }
     
     m_pViewControllers.at(m_nSelectedIndex)->getView()->setVisible(true);
     m_pViewControllers.at(m_nSelectedIndex)->viewDidAppear();
+}
+
+void CATabBarController::setScrollEnabled(bool var)
+{
+    m_bscrollEnabled = var;
+    if (m_pContainer)
+    {
+        m_pContainer->setScrollEnabled(m_bscrollEnabled);
+    }
+}
+
+bool CATabBarController::isScrollEnabled()
+{
+    return m_bscrollEnabled;
 }
 
 void CATabBarController::setTabBarHidden(bool hidden, bool animated)

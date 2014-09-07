@@ -48,7 +48,7 @@ void PageViewTest::viewDidLoad()
 
 void PageViewTest::segBtnCallBack(CAControl* btn, CCPoint point)
 {
-	pageViewTest->setCurrPage(segmented->getselectedIndex(), true);
+	pageViewTest->setCurrPage(segmented->getSelectedIndex(), true);
 }
 
 void PageViewTest::pageViewDidBeginTurning(CAPageView* pageView)

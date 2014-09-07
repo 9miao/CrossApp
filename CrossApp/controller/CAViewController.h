@@ -10,12 +10,11 @@
 #define __CrossAppx__CAViewController__
 
 #include <iostream>
-#include "view/CAView.h"
 #include "control/CABar.h"
-#include "view/CAScrollView.h"
+#include "view/CAPageView.h"
 #include "dispatcher/CAKeypadDelegate.h"
 #include "dispatcher/CAKeypadDispatcher.h"
-#include "basics/CASTLContainer.h"
+
 NS_CC_BEGIN
 
 typedef enum
@@ -93,9 +92,9 @@ public:
     
 protected:
     
-    virtual void viewDidLoad() = 0;
+    virtual void viewDidLoad(){};
     
-    virtual void viewDidUnload() = 0;
+    virtual void viewDidUnload(){};
     
     virtual void viewDidAppear(){};
     
@@ -207,6 +206,8 @@ protected:
 class CC_DLL CATabBarController
 : public CAViewController
 , public CATabBarDelegate
+, public CAPageViewDelegate
+, public CAScrollViewDelegate
 {
     
 public:
@@ -215,7 +216,7 @@ public:
     
     virtual ~CATabBarController();
     
-    virtual bool initWithViewControllers(const std::vector<CAViewController*>& viewControllers,
+    virtual bool initWithViewControllers(const CAVector<CAViewController*>& viewControllers,
                                          CABarVerticalAlignment var = CABarVerticalAlignmentBottom);
     
     bool showSelectedViewController(CAViewController* viewController);
@@ -229,6 +230,8 @@ public:
     virtual unsigned int getSelectedViewControllerAtIndex();
     
     virtual void setTabBarHidden(bool hidden, bool animated);
+    
+    CC_PROPERTY_IS(bool, m_bscrollEnabled, ScrollEnabled);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bTabBarHidden, TabBarHidden);
     
@@ -252,7 +255,11 @@ protected:
     
 protected:
     
-    void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index);
+    virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index);
+
+    virtual void pageViewDidEndTurning(CAPageView* pageView);
+    
+    virtual void scrollViewWillBeginDragging(CAScrollView* view);
     
     void renderingSelectedViewController();
     
@@ -268,7 +275,9 @@ protected:
     
     unsigned int m_nSelectedIndex;
     
-    CAView* m_pContainer;
+    unsigned int m_nLastSelectedIndex;
+    
+    CAPageView* m_pContainer;
 };
 
 

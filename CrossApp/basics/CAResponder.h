@@ -44,6 +44,14 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bHaveNextResponder, HaveNextResponder);
     
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bSlidingMinX, SlidingMinX);
+    
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bSlidingMaxX, SlidingMaxX);
+    
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bSlidingMinY, SlidingMinY);
+    
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bSlidingMaxY, SlidingMaxY);
+    
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);

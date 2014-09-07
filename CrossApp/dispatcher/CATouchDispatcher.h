@@ -79,6 +79,8 @@ protected:
 
 protected:
     
+    CAVector<CAResponder*> m_vTouchMovedsView;
+    
     CAVector<CAResponder*> m_vTouchMovedsViewCache;
     
     CAVector<CAResponder*> m_vTouchesViews;

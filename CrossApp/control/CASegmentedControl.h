@@ -11,7 +11,7 @@
 
 #include "CAControl.h"
 #include <vector>
-
+#include <set>
 NS_CC_BEGIN
 
 class CAButton;
@@ -37,6 +37,14 @@ public:
     void addTarget(CAObject* target, SEL_CAControl selector);
     
     void removeTarget(CAObject* target, SEL_CAControl selector);
+    
+    void addTargetAtForbidSelected(CAObject* target, SEL_CAControl selector);
+    
+    void removeTargetAtForbidSelected(CAObject* target, SEL_CAControl selector);
+    
+    void setForbidSelectedAtIndex(int index);
+    
+    void setAllowSelectedAtIndex(int index);
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
@@ -65,7 +73,8 @@ public:
     virtual CAButton *createDefaultSegment();
     
     CC_PROPERTY_PASS_BY_REF(std::string, m_sTitleFontName, TitleFontName);
-    CC_SYNTHESIZE_READONLY(int, m_selectedIndex, selectedIndex);       // default 0
+    CC_SYNTHESIZE_READONLY(int, m_nSelectedIndex, SelectedIndex);       // default -1
+    CC_SYNTHESIZE_READONLY(int, m_nClickToForbidSelectedAtIndex, ClickToForbidSelectedAtIndex); // default -1
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_itemSize, ItemSize);
     void setHighlightedAtIndex(int index);
     void setSelectedAtIndex(int index);
@@ -87,6 +96,8 @@ protected:
     using CAControl::removeTarget;
     
 protected:
+    
+    std::set<int> m_nForbidSelectedIndexs;
     
     unsigned int m_nItemsCount;
     std::vector<CAButton *> m_segments;

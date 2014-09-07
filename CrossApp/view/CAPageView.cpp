@@ -143,6 +143,21 @@ void CAPageView::setViews(const CADeque<CAView*>& vec)
     }
 }
 
+CAView* CAPageView::getSubViewAtIndex(int index)
+{
+    CAView* view = NULL;
+    
+    do
+    {
+        CC_BREAK_IF(index < 0);
+        CC_BREAK_IF(index >= m_pViews.size());
+        view = m_pViews.at(index);
+    }
+    while (0);
+    
+    return view;
+}
+
 int CAPageView::getPageCount()
 {
     return m_pViews.size();

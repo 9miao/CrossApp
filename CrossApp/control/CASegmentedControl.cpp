@@ -17,7 +17,8 @@ NS_CC_BEGIN
 
 CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     : CAControl()
-    , m_selectedIndex(-1)
+    , m_nSelectedIndex(-1)
+    , m_nClickToForbidSelectedAtIndex(-1)
     , m_nItemsCount(itemsCount)
     , m_pBackgroundView(NULL)
     , m_sTitleFontName("")
@@ -212,6 +213,16 @@ void CASegmentedControl::removeAllSegments()
     m_segments.clear();
 }
 
+void CASegmentedControl::setForbidSelectedAtIndex(int index)
+{
+    m_nForbidSelectedIndexs.insert(index);
+}
+
+void CASegmentedControl::setAllowSelectedAtIndex(int index)
+{
+    m_nForbidSelectedIndexs.erase(index);
+}
+
 bool CASegmentedControl::setTitleAtIndex(const char* title, int index, const CAControlState& controlState)
 {
     if (!this->indexIsValid(index))
@@ -371,7 +382,7 @@ void CASegmentedControl::setHighlightedAtIndex(int index)
     }
     
     this->setHighlightedNormal();
-    if (index != m_selectedIndex)
+    if (index != m_nSelectedIndex)
     {
         m_segments.at(index)->setControlStateHighlighted();
     }
@@ -390,7 +401,7 @@ void CASegmentedControl::setHighlightedNormal()
 
 void CASegmentedControl::setSelectedHighlighted()
 {
-    int index = m_selectedIndex;
+    int index = m_nSelectedIndex;
 
     for (int i=0; i<m_segments.size(); i++)
     {
@@ -398,25 +409,42 @@ void CASegmentedControl::setSelectedHighlighted()
         {
             index = i;
         }
-        else if (m_segments.at(i)->getControlState() == CAControlStateSelected)
-        {
-            m_segments.at(i)->setControlStateNormal();
-        }
     }
     
-    m_segments.at(index)->setControlStateSelected();
-    
-    if (m_selectedIndex != index)
+    if (m_nForbidSelectedIndexs.count(index) == 0)
     {
-        int lastSelectedIndex = m_selectedIndex;
-        
-        m_selectedIndex = index;
-        
-        CC_RETURN_IF(lastSelectedIndex < 0);
-        
-        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
+        for (int i=0; i<m_segments.size(); i++)
         {
-            ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
+            if (m_segments.at(i)->getControlState() == CAControlStateSelected)
+            {
+                m_segments.at(i)->setControlStateNormal();
+            }
+        }
+        
+        m_segments.at(index)->setControlStateSelected();
+        
+        if (m_nSelectedIndex != index)
+        {
+            int lastSelectedIndex = m_nSelectedIndex;
+            
+            m_nSelectedIndex = index;
+            
+            CC_RETURN_IF(lastSelectedIndex < 0);
+            
+            if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
+            {
+                ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
+            }
+        }
+    }
+    else
+    {
+        m_segments.at(index)->setControlStateNormal();
+        m_nClickToForbidSelectedAtIndex = index;
+        
+        if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
+        {
+            ((CAObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this, CCPointZero);
         }
     }
 }
@@ -446,7 +474,7 @@ void CASegmentedControl::layoutSubviews()
         if (btn)
         {
             btn->setFrame(elemFrame);
-            btn->setControlState((m_selectedIndex == i) ? CAControlStateSelected : CAControlStateNormal);
+            btn->setControlState((m_nSelectedIndex == i) ? CAControlStateSelected : CAControlStateNormal);
         }
         elemFrame.origin.x += elemWidth;
     }
@@ -457,6 +485,7 @@ bool CASegmentedControl::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
+    m_nClickToForbidSelectedAtIndex = -1;
     this->setHighlightedAtIndex((int)(point.x / m_itemSize.width));
     
     return true;
@@ -518,6 +547,16 @@ void CASegmentedControl::addTarget(CAObject* target, SEL_CAControl selector)
 void CASegmentedControl::removeTarget(CAObject* target, SEL_CAControl selector)
 {
     this->removeTarget(target, selector, CAControlEventTouchValueChanged);
+}
+
+void CASegmentedControl::addTargetAtForbidSelected(CAObject* target, SEL_CAControl selector)
+{
+    this->addTarget(target, selector, CAControlEventTouchUpInSide);
+}
+
+void CASegmentedControl::removeTargetAtForbidSelected(CAObject* target, SEL_CAControl selector)
+{
+    this->removeTarget(target, selector, CAControlEventTouchUpInSide);
 }
 
 void CASegmentedControl::setBackgroundView(CrossApp::CAView *view)

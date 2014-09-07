@@ -644,13 +644,26 @@ void CATabBar::setSelectedAtIndex(int index)
     m_pSegmentedControl->setSelectedAtIndex(index);
 }
 
+void CATabBar::setForbidSelectedAtIndex(int index)
+{
+    m_pSegmentedControl->setForbidSelectedAtIndex(index);
+}
+
 void CATabBar::setTouchSelected(CrossApp::CAControl *control, CrossApp::CCPoint point)
 {
-    this->setSelectedAtIndex(m_pSegmentedControl->getselectedIndex());
+    this->setSelectedAtIndex(m_pSegmentedControl->getSelectedIndex());
     
     if (m_pDelegate)
     {
         m_pDelegate->tabBarSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
+    }
+}
+
+void CATabBar::setTouchUpInSide(CAControl* control, CCPoint point)
+{
+    if (m_pDelegate)
+    {
+        m_pDelegate->tabBarClickToForbidSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
     }
 }
 

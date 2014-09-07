@@ -371,7 +371,7 @@ protected:
 
     void updateColor(void);
     
-    void setPoint(const CCPoint &point);
+    virtual void setPoint(const CCPoint &point);
     
     virtual void setContentSize(const CCSize& contentSize);
     

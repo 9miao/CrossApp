@@ -44,7 +44,7 @@ void ThirdViewController::viewDidLoad()
 
 void ThirdViewController::stateControl(CAControl* btn, CCPoint point)
 {
-	int index = scrollControl->getselectedIndex();
+	int index = scrollControl->getSelectedIndex();
 	switch (index)
 	{
 	case 0:

@@ -100,6 +100,8 @@ public:
     
     virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index) = 0;
     
+    virtual void tabBarClickToForbidSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index){};
+    
 };
 
 class CC_DLL CATabBar
@@ -146,6 +148,8 @@ public:
     
     void setSelectedAtIndex(int index);
     
+    void setForbidSelectedAtIndex(int index);
+    
     void showSelectedIndicator();
     
     void replaceItemAtIndex(size_t index, CATabBarItem* item);
@@ -159,6 +163,8 @@ protected:
     void showItems();
     
     void setTouchSelected(CAControl* control, CCPoint point);
+    
+    void setTouchUpInSide(CAControl* control, CCPoint point);
     
 protected:
     

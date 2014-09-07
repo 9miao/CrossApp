@@ -13,6 +13,7 @@
 #include "CAView.h"
 #include <deque>
 #include "CAPullToRefreshView.h"
+#include "basics/CAApplication.h"
 
 NS_CC_BEGIN
 
@@ -145,7 +146,7 @@ protected:
     
     virtual float maxBouncesLenght()
     {
-        return 120.0f;
+        return _px(120.0f);
     }
     
     const CCPoint& getScrollWindowNotOutPoint(CCPoint& point);
@@ -177,6 +178,8 @@ protected:
     void changedFromPullToRefreshView();
     
     void detectionFromPullToRefreshView();
+
+    void setContainerFrame(const CCPoint& point, const CCSize& size = CCSizeZero);
     
     virtual void setContentSize(const CCSize& var);
     
@@ -216,6 +219,7 @@ protected:
     
     CCPoint m_tCloseToPoint;
     
+    CCPoint m_tCloseToSpeed;
 };
 
 

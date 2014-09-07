@@ -246,6 +246,7 @@ void CCRect::setRect(float x, float y, float width, float height)
 CCRect& CCRect::operator= (const CCRect& other)
 {
     setRect(other.origin.x, other.origin.y, other.size.width, other.size.height);
+    m_bCenter = other.isCenter();
     return *this;
 }
 
@@ -253,6 +254,7 @@ CCRect& CCRect::operator= (const CADipRect& other)
 {
     origin = other.origin;
     size = other.size;
+    m_bCenter = other.isCenter();
     return *this;
 }
 
@@ -274,54 +276,57 @@ CCRect CCRect::operator/(float a) const
 
 bool CCRect::equals(const CCRect& rect) const
 {
-    return (origin.equals(rect.origin) && 
-            size.equals(rect.size));
+    if (fabsf(this->getMinX() - rect.getMinX()) >= FLT_EPSILON)
+    {
+        return false;
+    }
+    
+    if (fabsf(this->getMaxX() - rect.getMaxX()) >= FLT_EPSILON)
+    {
+        return false;
+    }
+    
+    if (fabsf(this->getMinY() - rect.getMinY()) >= FLT_EPSILON)
+    {
+        return false;
+    }
+    
+    if (fabsf(this->getMaxY() - rect.getMaxY()) >= FLT_EPSILON)
+    {
+        return false;
+    }
+    
+    return true;
 }
 
 float CCRect::getMaxX() const
 {
-    return (float)(origin.x + size.width);
+    return m_bCenter ? (float)(origin.x + size.width/2) : (float)(origin.x + size.width);
 }
 
 float CCRect::getMidX() const
 {
-    if (m_bCenter)
-    {
-        return origin.x;
-    }
-    return (float)(origin.x + size.width / 2.0);
+    return m_bCenter ? (float)origin.x : (float)(origin.x + size.width / 2.0);
 }
 
 float CCRect::getMinX() const
 {
-    if (m_bCenter)
-    {
-        return (float)(origin.x - size.width / 2.0);
-    }
-    return origin.x;
+    return m_bCenter ? (float)(origin.x - size.width/2) : (float)origin.x;
 }
 
 float CCRect::getMaxY() const
 {
-    return origin.y + size.height;
+    return m_bCenter ? (float)(origin.y + size.height/2) : (float)(origin.y + size.height);
 }
 
 float CCRect::getMidY() const
 {
-    if (m_bCenter)
-    {
-        return origin.y;
-    }
-    return (float)(origin.y + size.height / 2.0);
+    return m_bCenter ? (float)origin.y : (float)(origin.y + size.height / 2.0);
 }
 
 float CCRect::getMinY() const
 {
-    if (m_bCenter)
-    {
-        return (float)(origin.y - size.height / 2.0);
-    }
-    return origin.y;
+    return m_bCenter ? (float)(origin.y - size.height/2) : (float)origin.y;
 }
 
 bool CCRect::containsPoint(const CCPoint& point) const
@@ -576,6 +581,7 @@ CADipRect& CADipRect::operator= (const CADipRect& other)
 {
     origin = other.origin;
     size = other.size;
+    m_bCenter = other.isCenter();
     return *this;
 }
 
@@ -583,6 +589,7 @@ CADipRect& CADipRect::operator= (const CCRect& other)
 {
     origin = other.origin;
     size = other.size;
+    m_bCenter = other.isCenter();
     return *this;
 }
 
@@ -604,54 +611,57 @@ CADipRect CADipRect::operator/(float a) const
 
 bool CADipRect::equals(const CADipRect& rect) const
 {
-    return (origin.equals(rect.origin) &&
-            size.equals(rect.size));
+    if (fabsf(this->getMinX() - rect.getMinX()) >= FLT_EPSILON)
+    {
+        return false;
+    }
+    
+    if (fabsf(this->getMaxX() - rect.getMaxX()) >= FLT_EPSILON)
+    {
+        return false;
+    }
+    
+    if (fabsf(this->getMinY() - rect.getMinY()) >= FLT_EPSILON)
+    {
+        return false;
+    }
+    
+    if (fabsf(this->getMaxY() - rect.getMaxY()) >= FLT_EPSILON)
+    {
+        return false;
+    }
+    
+    return true;
 }
 
 float CADipRect::getMaxX() const
 {
-    return (float)(origin.x + size.width);
+    return m_bCenter ? (float)(origin.x + size.width/2) : (float)(origin.x + size.width);
 }
 
 float CADipRect::getMidX() const
 {
-    if (m_bCenter)
-    {
-        return origin.x;
-    }
-    return (float)(origin.x + size.width / 2.0);
+    return m_bCenter ? (float)origin.x : (float)(origin.x + size.width / 2.0);
 }
 
 float CADipRect::getMinX() const
 {
-    if (m_bCenter)
-    {
-        return (float)(origin.x - size.width / 2.0);
-    }
-    return origin.x;
+    return m_bCenter ? (float)(origin.x - size.width/2) : (float)origin.x;
 }
 
 float CADipRect::getMaxY() const
 {
-    return origin.y + size.height;
+    return m_bCenter ? (float)(origin.y + size.height/2) : (float)(origin.y + size.height);
 }
 
 float CADipRect::getMidY() const
 {
-    if (m_bCenter)
-    {
-        return origin.y;
-    }
-    return (float)(origin.y + size.height / 2.0);
+    return m_bCenter ? (float)origin.y : (float)(origin.y + size.height / 2.0);
 }
 
 float CADipRect::getMinY() const
 {
-    if (m_bCenter)
-    {
-        return (float)(origin.y - size.height / 2.0);
-    }
-    return origin.y;
+    return m_bCenter ? (float)(origin.y - size.height/2) : (float)origin.y;
 }
 
 bool CADipRect::containsPoint(const CADipPoint& point) const

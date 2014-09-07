@@ -10,7 +10,8 @@
 #define __HelloCpp__CAPageView__
 
 #include <iostream>
-#include "CrossApp.h"
+#include "CAScrollView.h"
+#include "basics/CASTLContainer.h"
 
 USING_NS_CC;
 class CC_DLL CAPageView;
@@ -61,6 +62,8 @@ public:
     void setViews(const CADeque<CAView*>& vec);
     
     void setViews(const CAVector<CAView*>& vec);
+    
+    CAView* getSubViewAtIndex(int index);
     
 protected:
 

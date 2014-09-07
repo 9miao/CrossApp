@@ -18,6 +18,10 @@ CAResponder::CAResponder()
 ,m_bTouchMovedListenVertical(true)
 ,m_bTouchEnabled(true)
 ,m_bHaveNextResponder(false)
+,m_bSlidingMinX(false)
+,m_bSlidingMaxX(false)
+,m_bSlidingMinY(false)
+,m_bSlidingMaxY(false)
 {
 
 }
