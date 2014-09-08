@@ -300,9 +300,15 @@ void CADrawerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     m_fCurrDivision += offDis;
     m_fCurrDivision = MIN(m_fCurrDivision, m_fDivision);
     m_fCurrDivision = MAX(m_fCurrDivision, 0);
-    this->updateViewFrame();
-    this->showBegin();
     
+    this->updateViewFrame();
+    
+    if (!m_pContainer[0]->isVisible())
+    {
+        m_pContainer[0]->setVisible(true);
+        m_pContainer[1]->setTouchEnabled(false);
+    }
+
     m_fOffX = offDis;
 }
 

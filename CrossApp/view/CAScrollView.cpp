@@ -597,6 +597,8 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
             m_bZooming = false;
         }
         m_pTouches->removeObject(pTouch);
+        this->stopDeaccelerateScroll();
+        this->hideIndicator();
     }
 }
 
