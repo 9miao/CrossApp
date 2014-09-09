@@ -277,10 +277,10 @@ void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
 void CAScrollView::closeToPoint(float dt)
 {
     CCPoint point = m_pContainer->getFrameOrigin();
-    
-    if (fabsf(m_tCloseToPoint.x - point.x) < fabsf(m_tCloseToSpeed.x * 60 * dt)
-        ||
-        fabsf(m_tCloseToPoint.y - point.y) < fabsf(m_tCloseToSpeed.y * 60 * dt))
+    CCLog("---%f, %f", fabsf(m_tCloseToPoint.x - point.x), fabsf(m_tCloseToSpeed.x * 60 * dt));
+    if (fabsf(m_tCloseToPoint.x - point.x) <= fabsf(m_tCloseToSpeed.x * 60 * dt)
+        &&
+        fabsf(m_tCloseToPoint.y - point.y) <= fabsf(m_tCloseToSpeed.y * 60 * dt))
     {
         this->setContainerFrame(m_tCloseToPoint);
         CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
