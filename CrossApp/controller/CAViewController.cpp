@@ -32,7 +32,6 @@ CAViewController::CAViewController()
     this->setHaveNextResponder(true);
     m_pView = CAView::createWithFrame(CCRectZero, ccc4(255, 255, 255, 255));
     m_pView->retain();
-    m_pView->setDisplayRange(false);
     m_pView->setViewDelegate(this);
 }
 
@@ -221,6 +220,8 @@ CANavigationController::CANavigationController()
 ,m_pContainer(NULL)
 ,m_bNavigationBarHidden(false)
 {
+    m_pView->setDisplayRange(false);
+    
     m_pNavigationBar = CANavigationBar::create();
     m_pNavigationBar->retain();
     m_pNavigationBar->setAnchorPoint(CCPointZero);
@@ -732,7 +733,7 @@ CATabBarController::CATabBarController()
 ,m_bTabBarHidden(false)
 ,m_bscrollEnabled(false)
 {
-    
+    m_pView->setDisplayRange(false);
 }
 
 CATabBarController::~CATabBarController()
@@ -924,6 +925,7 @@ bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index)
         CC_BREAK_IF(index >= m_pViewControllers.size());
         CC_BREAK_IF(index == m_nSelectedIndex);
 
+        m_pContainer->setCurrPage(index, false);
         if (m_pTabBar->getSelectedIndex() != index)
         {
             m_pTabBar->setSelectedAtIndex(index);
@@ -951,11 +953,12 @@ unsigned int CATabBarController::getSelectedViewControllerAtIndex()
 void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index)
 {
     CC_RETURN_IF(m_nSelectedIndex == index);
-    m_pContainer->setCurrPage(index, false, true);
+    this->showSelectedViewControllerAtIndex(index);
 }
 
 void CATabBarController::pageViewDidEndTurning(CAPageView* pageView)
 {
+    
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
     for (int i = MAX((int)m_nSelectedIndex - 1, 0);
          i < MIN((int)m_nSelectedIndex + 2, m_pViewControllers.size());
@@ -964,7 +967,7 @@ void CATabBarController::pageViewDidEndTurning(CAPageView* pageView)
         CC_CONTINUE_IF(i == pageView->getCurrPage());
         m_pViewControllers.at(i)->getView()->setVisible(false);
     }
-    
+    CC_RETURN_IF(m_nSelectedIndex == pageView->getCurrPage());
     this->showSelectedViewControllerAtIndex(pageView->getCurrPage());
 }
 
@@ -988,8 +991,6 @@ void CATabBarController::scrollViewWillBeginDragging(CAScrollView* view)
 
 void CATabBarController::renderingSelectedViewController()
 {
-    m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
-    
     if (m_nLastSelectedIndex < m_pViewControllers.size())
     {
         m_pViewControllers.at(m_nLastSelectedIndex)->getView()->setVisible(false);

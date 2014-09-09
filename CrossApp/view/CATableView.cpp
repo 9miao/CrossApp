@@ -33,6 +33,8 @@ CATableView::CATableView()
 ,m_pHighlightedTableCells(NULL)
 ,m_bAllowsSelection(false)
 ,m_bAllowsMultipleSelection(false)
+,m_bAlwaysTopSectionHeader(true)
+,m_bAlwaysBottomSectionFooter(true)
 {
 
 }
@@ -651,7 +653,7 @@ void CATableView::updateSectionHeaderAndFooterRects()
         {
             footer = m_pSectionFooterViews[i];
         }
-        if (header)
+        if (header && m_bAlwaysTopSectionHeader)
         {
             CCPoint p1 = rect.origin;
             p1.y = MAX(p1.y, itr->origin.y);
@@ -659,7 +661,7 @@ void CATableView::updateSectionHeaderAndFooterRects()
                        - headerHeight - footerHeight);
             header->setFrameOrigin(p1);
         }
-        if (footer)
+        if (footer && m_bAlwaysBottomSectionFooter)
         {
             CCPoint p2 = CCPointZero;
             p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,

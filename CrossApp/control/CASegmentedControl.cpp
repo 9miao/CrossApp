@@ -269,7 +269,13 @@ bool CASegmentedControl::setBackgroundImageAtIndex(CAImage *image, int index, co
     {
         return false;
     }
-    btn->setBackGroundViewForState(controlState, CAScale9ImageView::createWithImage(image));
+    CAScale9ImageView* bg = CAScale9ImageView::createWithImage(image);
+    if (image)
+    {
+        CCSize size = image->getContentSize();
+        bg->setCapInsets(CCRect(size.width / 2 - 1.0f, size.height / 2 - 1.0f, 2.0f, 2.0f));
+    }
+    btn->setBackGroundViewForState(controlState, bg);
     
     return true;
 }

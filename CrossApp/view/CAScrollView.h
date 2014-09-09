@@ -109,9 +109,9 @@ public:
     
     CC_PROPERTY_PASS_BY_REF(CCSize, m_obViewSize, ViewSize);
     
-    CC_SYNTHESIZE_RETAIN(CAPullToRefreshView*, m_pHeaderRefreshView, HeaderRefreshView);
+    CC_PROPERTY(CAPullToRefreshView*, m_pHeaderRefreshView, HeaderRefreshView);
     
-    CC_SYNTHESIZE_RETAIN(CAPullToRefreshView*, m_pFooterRefreshView, FooterRefreshView);
+    CC_PROPERTY(CAPullToRefreshView*, m_pFooterRefreshView, FooterRefreshView);
     
     void stopDeaccelerateScroll();
     

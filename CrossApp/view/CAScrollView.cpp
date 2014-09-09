@@ -277,7 +277,7 @@ void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
 void CAScrollView::closeToPoint(float dt)
 {
     CCPoint point = m_pContainer->getFrameOrigin();
-    CCLog("---%f, %f", fabsf(m_tCloseToPoint.x - point.x), fabsf(m_tCloseToSpeed.x * 60 * dt));
+
     if (fabsf(m_tCloseToPoint.x - point.x) <= fabsf(m_tCloseToSpeed.x * 60 * dt)
         &&
         fabsf(m_tCloseToPoint.y - point.y) <= fabsf(m_tCloseToSpeed.y * 60 * dt))
@@ -878,6 +878,32 @@ bool CAScrollView::isScrollWindowNotMaxOutSide(const CCPoint& point)
     }
     
     return false;
+}
+
+void CAScrollView::setHeaderRefreshView(CrossApp::CAPullToRefreshView *var)
+{
+    this->removeSubview(m_pHeaderRefreshView);
+    CC_SAFE_RELEASE(m_pHeaderRefreshView);
+    CC_SAFE_RETAIN(var);
+    m_pHeaderRefreshView = var;
+}
+
+CAPullToRefreshView* CAScrollView::getHeaderRefreshView()
+{
+    return m_pHeaderRefreshView;
+}
+
+void CAScrollView::setFooterRefreshView(CrossApp::CAPullToRefreshView *var)
+{
+    this->removeSubview(m_pFooterRefreshView);
+    CC_SAFE_RELEASE(m_pFooterRefreshView);
+    CC_SAFE_RETAIN(var);
+    m_pFooterRefreshView = var;
+}
+
+CAPullToRefreshView* CAScrollView::getFooterRefreshView()
+{
+    return m_pFooterRefreshView;
 }
 
 void CAScrollView::layoutPullToRefreshView()

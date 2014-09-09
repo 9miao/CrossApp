@@ -26,11 +26,14 @@ CAScale9ImageView::CAScale9ImageView()
 , m_fInsetTop(0)
 , m_fInsetRight(0)
 , m_fInsetBottom(0)
+, m_obCapInsets(CCRectZero)
+, m_obOriginalSize(CCSizeZero)
 , m_pScale9ImageView(NULL)
 {
     for (int i=0; i<9; i++)
     {
         m_pImageView[i] = NULL;
+        m_obFrameRect = CCRectZero;
     }
 }
 
@@ -76,8 +79,7 @@ bool CAScale9ImageView::initWithImage(CAImage* image)
 {
     if (image)
     {
-        this->updateWithImage(CABatchView::createWithImage(image), CCRectZero, CCRectZero);
-        this->updatePositions();
+        this->setImage(image);
     }
     
 	return true;
@@ -103,6 +105,8 @@ bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, const C
 {
     CAColor4B color = getColor();
 
+    this->removeSubview(m_pScale9ImageView);
+    
     for (int i=0; i<9; i++)
     {
         CC_SAFE_RELEASE(m_pImageView[i]);
@@ -111,11 +115,9 @@ bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, const C
     if(m_pScale9ImageView != batch)
     {
         CC_SAFE_RELEASE(m_pScale9ImageView);
+        CC_SAFE_RETAIN(batch);
         m_pScale9ImageView = batch;
-        CC_SAFE_RETAIN(m_pScale9ImageView);
     }
-    
-    this->removeAllSubviews();
     
     m_obCapInsets = capInsets;
     
@@ -126,30 +128,7 @@ bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, const C
         rect = CCRect(0, 0, m_obOriginalSize.width, m_obOriginalSize.height);
     }
     
-    float w = m_obOriginalSize.width;
-    float h = m_obOriginalSize.height;
-
-    if ( m_obCapInsets.equals(CCRectZero) )
-    {
-        m_obCapInsets = CCRect(w/3, h/3, w/3, h/3);
-    }
-
-    const float lenghtX1 = m_obCapInsets.origin.x;
-    const float lenghtX2 = m_obCapInsets.size.width;
-    const float lenghtX3 = w - lenghtX1 - lenghtX2;
-    const float lenghtY1 = m_obCapInsets.origin.y;
-    const float lenghtY2 = m_obCapInsets.size.height;
-    const float lenghtY3 = h - lenghtY1 - lenghtY2;
-    
-    m_rFrame[0] = CCRect(0, 0, lenghtX1, lenghtY1);
-    m_rFrame[1] = CCRect(lenghtX1, 0, lenghtX2, lenghtY1);
-    m_rFrame[2] = CCRect(lenghtX1 + lenghtX2, 0, lenghtX3, lenghtY1);
-    m_rFrame[3] = CCRect(0, lenghtY1, lenghtX1, lenghtY2);
-    m_rFrame[4] = CCRect(lenghtX1, lenghtY1, lenghtX2, lenghtY2);
-    m_rFrame[5] = CCRect(lenghtX1 + lenghtX2, lenghtY1, lenghtX3, lenghtY2);
-    m_rFrame[6] = CCRect(0, lenghtY1 + lenghtY2, lenghtX1, lenghtY3);
-    m_rFrame[7] = CCRect(lenghtX1, lenghtY1 + lenghtY2, lenghtX2, lenghtY3);
-    m_rFrame[8] = CCRect(lenghtX1 + lenghtX2, lenghtY1 + lenghtY2, lenghtX3, lenghtY3);
+    this->updateCapInset();
     
     CAScale9Image* imageView[9] = {};
     
@@ -299,35 +278,64 @@ void CAScale9ImageView::setContentSize(const CCSize &size)
     this->updatePositions();
 }
 
+void CAScale9ImageView::visit(void)
+{
+    if (m_pScale9ImageView)
+    {
+        m_pScale9ImageView->visit();
+    }
+}
+
+void CAScale9ImageView::draw(void)
+{
+
+}
+
 void CAScale9ImageView::setCapInsets(const CCRect& capInsets)
 {
-    do
-    {
-        CC_BREAK_IF(m_pScale9ImageView == NULL);
-        this->updateWithImage(m_pScale9ImageView, this->getBounds(), capInsets);
-    }
-    while (0);
-    
+    CC_RETURN_IF(m_obCapInsets.equals(capInsets));
+    m_obCapInsets = capInsets;
+    this->updateCapInset();
 }
 
 void CAScale9ImageView::updateCapInset()
 {
-    CCRect insets;
-    if (   m_fInsetLeft == 0
-        && m_fInsetTop == 0
-        && m_fInsetRight == 0
-        && m_fInsetBottom == 0)
+    float w = m_obOriginalSize.width;
+    float h = m_obOriginalSize.height;
+    
+    if ( m_obCapInsets.equals(CCRectZero) )
     {
-        insets = CCRectZero;
+        m_obCapInsets = CCRect(w/3, h/3, w/3, h/3);
     }
-    else
+    
+    const float lenghtX1 = m_obCapInsets.origin.x;
+    const float lenghtX2 = m_obCapInsets.size.width;
+    const float lenghtX3 = w - lenghtX1 - lenghtX2;
+    const float lenghtY1 = m_obCapInsets.origin.y;
+    const float lenghtY2 = m_obCapInsets.size.height;
+    const float lenghtY3 = h - lenghtY1 - lenghtY2;
+    
+    m_rFrame[0] = CCRect(0, 0, lenghtX1, lenghtY1);
+    m_rFrame[1] = CCRect(lenghtX1, 0, lenghtX2, lenghtY1);
+    m_rFrame[2] = CCRect(lenghtX1 + lenghtX2, 0, lenghtX3, lenghtY1);
+    m_rFrame[3] = CCRect(0, lenghtY1, lenghtX1, lenghtY2);
+    m_rFrame[4] = CCRect(lenghtX1, lenghtY1, lenghtX2, lenghtY2);
+    m_rFrame[5] = CCRect(lenghtX1 + lenghtX2, lenghtY1, lenghtX3, lenghtY2);
+    m_rFrame[6] = CCRect(0, lenghtY1 + lenghtY2, lenghtX1, lenghtY3);
+    m_rFrame[7] = CCRect(lenghtX1, lenghtY1 + lenghtY2, lenghtX2, lenghtY3);
+    m_rFrame[8] = CCRect(lenghtX1 + lenghtX2, lenghtY1 + lenghtY2, lenghtX3, lenghtY3);
+    
+    if (m_pScale9ImageView)
     {
-        insets = CCRect(m_fInsetLeft,
-                            m_fInsetTop,
-                            m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
-                            m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
+        for (int i=0; i<9; i++)
+        {
+            if (CAScale9Image* imageView = dynamic_cast<CAScale9Image*>(m_pImageView[i]))
+            {
+                imageView->setImageRect(m_rFrame[i], false, m_rFrame[i].size);
+            }
+        }
+        this->updatePositions();
     }
-    this->setCapInsets(insets);
 }
 
 void CAScale9ImageView::updateDisplayedColor(const CrossApp::CAColor4B &color)
@@ -339,25 +347,57 @@ void CAScale9ImageView::updateDisplayedColor(const CrossApp::CAColor4B &color)
 void CAScale9ImageView::setInsetLeft(float insetLeft)
 {
     this->m_fInsetLeft = insetLeft;
-    this->updateCapInset();
+    CCRect insets = m_obCapInsets;
+    if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
+    {
+        insets = CCRect(m_fInsetLeft,
+                        m_fInsetTop,
+                        m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
+                        m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
+        this->updateCapInset();
+    }
 }
 
 void CAScale9ImageView::setInsetTop(float insetTop)
 {
     this->m_fInsetTop = insetTop;
-    this->updateCapInset();
+    CCRect insets = m_obCapInsets;
+    if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
+    {
+        insets = CCRect(m_fInsetLeft,
+                        m_fInsetTop,
+                        m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
+                        m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
+        this->updateCapInset();
+    }
 }
 
 void CAScale9ImageView::setInsetRight(float insetRight)
 {
     this->m_fInsetRight = insetRight;
-    this->updateCapInset();
+    CCRect insets = m_obCapInsets;
+    if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
+    {
+        insets = CCRect(m_fInsetLeft,
+                        m_fInsetTop,
+                        m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
+                        m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
+        this->updateCapInset();
+    }
 }
 
 void CAScale9ImageView::setInsetBottom(float insetBottom)
 {
     this->m_fInsetBottom = insetBottom;
-    this->updateCapInset();
+    CCRect insets = m_obCapInsets;
+    if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
+    {
+        insets = CCRect(m_fInsetLeft,
+                        m_fInsetTop,
+                        m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
+                        m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
+        this->updateCapInset();
+    }
 }
 
 void CAScale9ImageView::setColor(const CAColor4B& color)
@@ -391,6 +431,7 @@ void CAScale9ImageView::setImage(CrossApp::CAImage *image)
     if (m_pobImage)
     {
         this->updateWithImage(CABatchView::createWithImage(image), this->getBounds(), m_obCapInsets);
+        this->updatePositions();
     }
 }
 
@@ -407,63 +448,5 @@ void CAScale9ImageView::updateDisplayedAlpha(float parentOpacity)
     }
 }
 
-bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect, CCRect capInsets)
-{
-    if (image)
-    {
-        this->updateWithImage(CABatchView::createWithImage(image), rect, capInsets);
-        this->updatePositions();
-    }
-    
-	return true;
-}
-
-CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image, CCRect rect, CCRect capInsets)
-{
-	CAScale9ImageView* pReturn = new CAScale9ImageView();
-	if (pReturn && pReturn->initWithImage(image, rect, capInsets))
-	{
-		pReturn->autorelease();
-		return pReturn;
-	}
-	CC_SAFE_DELETE(pReturn);
-	return NULL;
-}
-
-bool CAScale9ImageView::initWithImage(CAImage* image, CCRect rect)
-{
-	bool pReturn = this->initWithImage(image, rect, CCRectZero);
-	return pReturn;
-}
-
-CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image, CCRect rect)
-{
-	CAScale9ImageView* pReturn = new CAScale9ImageView();
-	if (pReturn && pReturn->initWithImage(image, rect))
-	{
-		pReturn->autorelease();
-		return pReturn;
-	}
-	CC_SAFE_DELETE(pReturn);
-	return NULL;
-}
-
-bool CAScale9ImageView::initWithImage(CCRect capInsets, CAImage* image)
-{
-	bool pReturn = this->initWithImage(image, CCRectZero, capInsets);
-	return pReturn;
-}
-
-CAScale9ImageView* CAScale9ImageView::createWithImage(CCRect capInsets, CAImage* image)
-{
-	CAScale9ImageView* pReturn = new CAScale9ImageView();
-	if (pReturn && pReturn->initWithImage(capInsets, image))
-	{
-		pReturn->autorelease();
-		return pReturn;
-	}
-	CC_SAFE_DELETE(pReturn);
-	return NULL;
-}
 
 NS_CC_END

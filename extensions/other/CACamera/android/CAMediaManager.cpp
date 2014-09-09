@@ -80,8 +80,10 @@ void CAMediaManager::initAndroidImage()
     image->autorelease();
     if (image->initWithImageData((void*)m_pBuffer,n_fileSize,CCImage::kFmtJpg))
     {
-        
-        this->getMediaDelegate()->getSelectedImage(image);
+        if (this->getMediaDelegate())
+        {
+            this->getMediaDelegate()->getSelectedImage(image);
+        }
         CAScheduler::unschedule(schedule_selector(CAMediaManager::initAndroidImage), this);
     }
     

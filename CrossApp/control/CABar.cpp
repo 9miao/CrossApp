@@ -468,6 +468,7 @@ void CATabBar::setSelectedBackGroundView(CrossApp::CAView *var)
         m_pSegmentedControl = CASegmentedControl::createWithCenter(rect, count);
         
         m_pSegmentedControl->addTarget(this, CAControl_selector(CATabBar::setTouchSelected));
+        m_pSegmentedControl->addTargetAtForbidSelected(this, CAControl_selector(CATabBar::setTouchUpInSide));
         for (int i=0; i<count; i++)
         {
             m_pSegmentedControl->setTitleAtIndex(m_pItems.at(i)->getTitle().c_str(), i, CAControlStateAll);

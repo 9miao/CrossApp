@@ -25,6 +25,8 @@ CACollectionView::CACollectionView()
 , m_nCollectionFooterHeight(0)
 , m_nHoriInterval(0)
 , m_nVertInterval(0)
+,m_bAlwaysTopSectionHeader(true)
+,m_bAlwaysBottomSectionFooter(true)
 {
 }
 
@@ -542,7 +544,7 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
             footer = m_pSectionFooterViews[i];
             footerHeight = m_pSectionFooterViews[i]->getFrame().size.height;
         }
-        if (header)
+        if (header && m_bAlwaysTopSectionHeader)
         {
             CCPoint p1 = rect.origin;
             p1.y = MAX(p1.y, itr->origin.y);
@@ -550,7 +552,7 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
                        - headerHeight - footerHeight);
             header->setFrameOrigin(p1);
         }
-        if (footer)
+        if (footer && m_bAlwaysBottomSectionFooter)
         {
             CCPoint p2 = CCPointZero;
             p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,

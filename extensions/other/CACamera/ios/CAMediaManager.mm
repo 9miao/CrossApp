@@ -13,6 +13,7 @@
 #endif
 static CAMediaManager *pCamera = NULL;
 CAMediaManager::CAMediaManager()
+:m_pMediaDelegate(NULL)
 {
     
 }

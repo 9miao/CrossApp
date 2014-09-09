@@ -51,6 +51,10 @@ public:
     
     virtual void updateDisplayedAlpha(float parentOpacity);
     
+    virtual void visit(void);
+    
+    virtual void draw(void);
+    
 public:
 
     CC_SYNTHESIZE_READONLY(CCSize, m_obOriginalSize, OriginalSize);
@@ -84,20 +88,6 @@ protected:
     CAView* m_pImageView[9];
     
     CCRect m_rFrame[9];
-    
-public:
-    
-    CC_DEPRECATED_ATTRIBUTE bool initWithImage(CAImage* image, CCRect rect, CCRect capInsets);
-    
-	CC_DEPRECATED_ATTRIBUTE static CAScale9ImageView* createWithImage(CAImage* image, CCRect rect, CCRect capInsets);
-    
-	CC_DEPRECATED_ATTRIBUTE bool initWithImage(CAImage* image, CCRect rect);
-    
-	CC_DEPRECATED_ATTRIBUTE static CAScale9ImageView* createWithImage(CAImage* image, CCRect rect);
-    
-	CC_DEPRECATED_ATTRIBUTE bool initWithImage(CCRect capInsets, CAImage* image);
-    
-	CC_DEPRECATED_ATTRIBUTE CAScale9ImageView* createWithImage(CCRect capInsets, CAImage* image);
     
 };
 

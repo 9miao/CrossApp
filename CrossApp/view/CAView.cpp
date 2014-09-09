@@ -1620,7 +1620,7 @@ void CAView::updateTransform()
             else
             {
                 CCAssert( dynamic_cast<CAImageView*>(m_pSuperview), "Logic error in CAImageView. Parent must be a CAImageView");
-                m_transformToBatch = CATransformationConcat( nodeToParentTransform() , ((CAImageView*)m_pSuperview)->m_transformToBatch );
+                m_transformToBatch = CATransformationConcat( nodeToParentTransform() , m_pSuperview->m_transformToBatch );
             }
             
             //

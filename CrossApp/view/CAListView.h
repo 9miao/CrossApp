@@ -104,7 +104,7 @@ public:
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsSelection, AllowsSelection);
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
-    
+
 protected:
     
     inline virtual float maxSpeed(float dt);
