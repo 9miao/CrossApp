@@ -164,9 +164,12 @@ void CAPullToRefreshView::startLayout()
 void CAPullToRefreshView::setPullToRefreshStateType(const CAPullToRefreshStateType& stateType)
 {
     CC_RETURN_IF(m_eStateType == stateType);
+    
+    CC_RETURN_IF(stateType != CAPullToRefreshStateNone && m_eStateType == CAPullToRefreshStateRefreshing);
     m_eStateType = stateType;
     switch (m_eStateType)
     {
+        case CAPullToRefreshStateNone:
         case CAPullToRefreshStateNormal:
         {
             if (m_pLoadingView)
@@ -221,6 +224,11 @@ void CAPullToRefreshView::setPullToRefreshStateType(const CAPullToRefreshStateTy
 bool CAPullToRefreshView::isCanRefresh()
 {
     return m_eStateType == CAPullToRefreshStatePulling;
+}
+
+bool CAPullToRefreshView::isRefreshing()
+{
+    return m_eStateType == CAPullToRefreshStateRefreshing;
 }
 
 NS_CC_END

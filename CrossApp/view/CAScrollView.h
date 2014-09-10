@@ -113,6 +113,10 @@ public:
     
     CC_PROPERTY(CAPullToRefreshView*, m_pFooterRefreshView, FooterRefreshView);
     
+    void endHeaderRefresh();
+    
+    void endFooterRefresh();
+    
     void stopDeaccelerateScroll();
     
     void startDeaccelerateScroll();
@@ -179,6 +183,10 @@ protected:
     
     void detectionFromPullToRefreshView();
 
+    bool isHeaderRefreshing();
+    
+    bool isFooterRefreshing();
+    
     void setContainerFrame(const CCPoint& point, const CCSize& size = CCSizeZero);
     
     virtual void setContentSize(const CCSize& var);

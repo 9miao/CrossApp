@@ -50,9 +50,7 @@ public:
     virtual CAImage* getImage(void);
     
     virtual void updateDisplayedAlpha(float parentOpacity);
-    
-    virtual void visit(void);
-    
+
     virtual void draw(void);
     
 public:

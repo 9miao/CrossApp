@@ -74,6 +74,8 @@ protected:
     
     bool isCanRefresh();
     
+    bool isRefreshing();
+    
     friend class CAScrollView;
     
 protected:

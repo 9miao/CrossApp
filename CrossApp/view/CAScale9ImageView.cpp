@@ -278,14 +278,6 @@ void CAScale9ImageView::setContentSize(const CCSize &size)
     this->updatePositions();
 }
 
-void CAScale9ImageView::visit(void)
-{
-    if (m_pScale9ImageView)
-    {
-        m_pScale9ImageView->visit();
-    }
-}
-
 void CAScale9ImageView::draw(void)
 {
 

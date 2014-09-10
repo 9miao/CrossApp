@@ -652,6 +652,9 @@ void CAScrollView::deaccelerateScrolling(float dt)
         cSize.width = MAX(cSize.width, size.width);
         cSize.height = MAX(cSize.height, size.height);
         
+        float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
+        float y_min = this->isFooterRefreshing() ? size.height - cSize.height - _px(128) : size.height - cSize.height;
+        
         CCPoint resilience = CCPointZero;
         
         if (point.x > 0)
@@ -659,9 +662,9 @@ void CAScrollView::deaccelerateScrolling(float dt)
             resilience.x = (point.x) / size.width;
         }
         
-        if (point.y > 0)
+        if (point.y - y_max > 0)
         {
-            resilience.y = (point.y) / size.height;
+            resilience.y = (point.y - y_max) / size.height;
         }
         
         if ((point.x + cSize.width - size.width) < 0)
@@ -669,9 +672,9 @@ void CAScrollView::deaccelerateScrolling(float dt)
             resilience.x = (point.x + cSize.width - size.width) / size.width;
         }
         
-        if ((point.y + cSize.height - size.height) < 0)
+        if ((point.y - y_min) < 0)
         {
-            resilience.y = (point.y + cSize.height - size.height) / size.height;
+            resilience.y = (point.y - y_min) / size.height;
         }
         
         resilience = ccpMult(resilience, maxBouncesSpeed(dt));
@@ -817,8 +820,11 @@ float CAScrollView::getScrollWindowNotOutVertical(float y)
     cSize.width = MAX(cSize.width, size.width);
     cSize.height = MAX(cSize.height, size.height);
     
-    y = MIN(y, 0);
-    y = MAX(y, size.height - cSize.height);
+    float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
+    float y_min = this->isFooterRefreshing() ? size.height - cSize.height - _px(128) : size.height - cSize.height;
+
+    y = MIN(y, y_max);
+    y = MAX(y, y_min);
 
     return y;
 }
@@ -838,12 +844,15 @@ bool CAScrollView::isScrollWindowNotOutSide()
         return true;
     }
     
-    if (rect.getMinY() > 0.5f)
+    float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
+    float y_min = (this->isFooterRefreshing() ? _px(128) : 0.0f) - size.height;
+    
+    if (rect.getMinY() + y_max > 0.5f)
     {
         return true;
     }
     
-    if ((rect.getMaxY() - size.height) < -0.5f)
+    if (rect.getMaxY() + y_min < -0.5f)
     {
         return true;
     }
@@ -867,12 +876,15 @@ bool CAScrollView::isScrollWindowNotMaxOutSide(const CCPoint& point)
         return true;
     }
     
-    if (point.y - maxBouncesLenght() > 0)
+    float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
+    float y_min = (this->isFooterRefreshing() ? _px(128) : 0.0f);
+    
+    if (point.y - maxBouncesLenght() - y_max > 0)
     {
         return true;
     }
     
-    if ((point.y + rect.size.height - size.height + maxBouncesLenght()) < 0)
+    if ((point.y + rect.size.height - size.height + maxBouncesLenght() + y_min) < 0)
     {
         return true;
     }
@@ -906,6 +918,22 @@ CAPullToRefreshView* CAScrollView::getFooterRefreshView()
     return m_pFooterRefreshView;
 }
 
+void CAScrollView::endHeaderRefresh()
+{
+    if (m_pHeaderRefreshView)
+    {
+        m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNone);
+    }
+}
+
+void CAScrollView::endFooterRefresh()
+{
+    if (m_pFooterRefreshView)
+    {
+        m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNone);
+    }
+}
+
 void CAScrollView::layoutPullToRefreshView()
 {
     CADipSize windowSize = this->getBounds().size;
@@ -922,7 +950,9 @@ void CAScrollView::layoutPullToRefreshView()
         {
             this->addSubview(m_pHeaderRefreshView);
         }
+        this->endHeaderRefresh();
     }
+
     if (m_pFooterRefreshView)
     {
         CADipRect rect = CADipRect(0, viewSize.height, windowSize.width, 128);
@@ -935,9 +965,8 @@ void CAScrollView::layoutPullToRefreshView()
         {
             this->addSubview(m_pFooterRefreshView);
         }
+        this->endFooterRefresh();
     }
-    this->setTouchEnabled(true);
-    
 }
 
 void CAScrollView::changedFromPullToRefreshView()
@@ -971,10 +1000,8 @@ void CAScrollView::changedFromPullToRefreshView()
 
 void CAScrollView::detectionFromPullToRefreshView()
 {
-    
     if (m_pHeaderRefreshView && m_pHeaderRefreshView->isCanRefresh())
     {
-        this->setTouchEnabled(false);
         this->stopDeaccelerateScroll();
         this->setContentOffset(CCPoint(0, -_px(128)), true);
         m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateRefreshing);
@@ -986,7 +1013,6 @@ void CAScrollView::detectionFromPullToRefreshView()
     
     if (m_pFooterRefreshView && m_pFooterRefreshView->isCanRefresh())
     {
-        this->setTouchEnabled(false);
         this->stopDeaccelerateScroll();
         this->setContentOffset(CCPoint(0, this->getViewSize().height - this->getBounds().size.height + _px(128)), true);
         m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateRefreshing);
@@ -996,6 +1022,16 @@ void CAScrollView::detectionFromPullToRefreshView()
             m_pScrollViewDelegate->scrollViewFooterBeginRefreshing(this);
         }
     }
+}
+
+bool CAScrollView::isHeaderRefreshing()
+{
+    return m_pHeaderRefreshView && m_pHeaderRefreshView->isRefreshing();
+}
+
+bool CAScrollView::isFooterRefreshing()
+{
+    return m_pFooterRefreshView && m_pFooterRefreshView->isRefreshing();
 }
 
 #pragma CAIndicator
