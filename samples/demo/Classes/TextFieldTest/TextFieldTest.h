@@ -1,0 +1,27 @@
+#ifndef _TextField_Test_h_
+#define _TextField_Test_h_
+
+#include <iostream>
+#include "CrossApp.h"
+
+USING_NS_CC;
+
+class TextFieldTest :public CAViewController
+{
+public:
+	TextFieldTest();
+	virtual ~TextFieldTest();
+
+protected:
+	void viewDidLoad();
+	void viewDidUnload();
+
+public:
+	void defaultSliderValueChange(CAControl* btn, CCPoint point);
+
+private:
+	CADipSize size;
+
+};
+
+#endif
