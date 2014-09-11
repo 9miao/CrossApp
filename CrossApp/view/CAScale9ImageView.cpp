@@ -70,6 +70,30 @@ CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image)
 	return NULL;
 }
 
+CAScale9ImageView* CAScale9ImageView::createWithFrame(const CCRect& rect)
+{
+	CAScale9ImageView* pReturn = new CAScale9ImageView();
+	if (pReturn && pReturn->CAView::initWithFrame(rect))
+	{
+		pReturn->autorelease();
+		return pReturn;
+	}
+	CC_SAFE_DELETE(pReturn);
+	return NULL;
+}
+
+CAScale9ImageView* CAScale9ImageView::createWithCenter(const CCRect& rect)
+{
+    CAScale9ImageView* pReturn = new CAScale9ImageView();
+	if (pReturn && pReturn->CAView::initWithCenter(rect))
+	{
+		pReturn->autorelease();
+		return pReturn;
+	}
+	CC_SAFE_DELETE(pReturn);
+	return NULL;
+}
+
 bool CAScale9ImageView::init()
 {
     return this->initWithImage(NULL);
@@ -317,6 +341,11 @@ void CAScale9ImageView::updateCapInset()
     m_rFrame[7] = CCRect(lenghtX1, lenghtY1 + lenghtY2, lenghtX2, lenghtY3);
     m_rFrame[8] = CCRect(lenghtX1 + lenghtX2, lenghtY1 + lenghtY2, lenghtX3, lenghtY3);
     
+    for (int i=0; i<9; i++)
+    {
+        CC_RETURN_IF(m_pImageView[i] == NULL);
+    }
+    
     if (m_pScale9ImageView)
     {
         for (int i=0; i<9; i++)
@@ -417,6 +446,7 @@ const CAColor4B& CAScale9ImageView::getColor()
 
 void CAScale9ImageView::setImage(CrossApp::CAImage *image)
 {
+    CC_RETURN_IF(m_pobImage == image);
     CC_SAFE_RETAIN(image);
     CC_SAFE_RELEASE_NULL(m_pobImage);
     m_pobImage = image;
@@ -439,6 +469,17 @@ void CAScale9ImageView::updateDisplayedAlpha(float parentOpacity)
         m_pScale9ImageView->updateDisplayedAlpha(parentOpacity);
     }
 }
+
+bool CAScale9ImageView::initWithFrame(const CCRect& rect, const CAColor4B& color4B)
+{
+    return CAView::initWithFrame(rect);
+}
+
+bool CAScale9ImageView::initWithCenter(const CCRect& rect, const CAColor4B& color4B)
+{
+    return CAView::initWithCenter(rect);
+}
+
 
 
 NS_CC_END

@@ -50,12 +50,8 @@ dispatcher/CATouch.cpp \
 dispatcher/CATouchDispatcher.cpp \
 draw_nodes/CCDrawNode.cpp \
 draw_nodes/CCDrawingPrimitives.cpp \
-images/CAAnimation.cpp \
-images/CAAnimationCache.cpp \
 images/CAImage.cpp \
 images/CAImageCache.cpp \
-images/CAImageFrame.cpp \
-images/CAImageFrameCache.cpp \
 shaders/CATransformation.cpp \
 shaders/CAGLProgram.cpp \
 shaders/CAShaderCache.cpp \

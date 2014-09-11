@@ -23,9 +23,6 @@ typedef enum
 }
 CAImageViewScaleType;
 
-class CAImageFrame;
-class CAAnimation;
-
 class CC_DLL CAImageView : public CAView
 {
 public:
@@ -33,8 +30,6 @@ public:
     static CAImageView* create();
 
     static CAImageView* createWithImage(CAImage* image);
-
-    static CAImageView* createWithSpriteFrame(CAImageFrame *pSpriteFrame);
 
     static CAImageView* createWithFrame(const CCRect& rect);
     
@@ -48,19 +43,9 @@ public:
 
     virtual bool initWithImage(CAImage* image);
     
-    virtual bool initWithSpriteFrame(CAImageFrame *pSpriteFrame);
-
     virtual void setImage(CAImage* image);
     
     virtual CAImage* getImage(void);
-    
-    virtual void setDisplayFrame(CAImageFrame *pNewFrame);
-
-    virtual bool isFrameDisplayed(CAImageFrame *pFrame);
-
-    virtual CAImageFrame* displayFrame(void);
-
-    virtual void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
     virtual void setImageAsyncWithFile(const char* fileName);
     

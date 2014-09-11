@@ -26,8 +26,8 @@ public:
     {
         CAPullToRefreshTypeHeader = 0,
         CAPullToRefreshTypeFooter,
-        CAPullToRefreshTypeLeftHeader,
-        CAPullToRefreshTypeRightFooter,
+//        CAPullToRefreshTypeLeftHeader,
+//        CAPullToRefreshTypeRightFooter,
         CAPullToRefreshTypeCustom
     }CAPullToRefreshType;
     

@@ -5,8 +5,6 @@
 
 #include "view/CAView.h"
 #include "CCAction.h"
-#include "images/CAImageFrame.h"
-#include "images/CAAnimation.h"
 #include <vector>
 
 NS_CC_BEGIN
@@ -892,44 +890,6 @@ protected:
     CCFiniteTimeAction *m_pOther;
 };
 
-class CAImage;
-/** @brief Animates a sprite given the name of an Animation */
-class CC_DLL CCAnimate : public CCActionInterval
-{
-public:
-    /**
-     *  @js ctor
-     */
-    CCAnimate();
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    ~CCAnimate();
-
-    /** initializes the action with an Animation and will restore the original frame when the animation is over */
-    bool initWithAnimation(CAAnimation *pAnimation);
-
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    virtual CAObject* copyWithZone(CAZone* pZone);
-    virtual void startWithTarget(CAView *pTarget);
-    virtual void stop(void);
-    virtual void update(float t);
-    virtual CCActionInterval* reverse(void);
-
-public:
-    /** creates the action with an Animation and will restore the original frame when the animation is over */
-    static CCAnimate* create(CAAnimation *pAnimation);
-    CC_SYNTHESIZE_RETAIN(CAAnimation*, m_pAnimation, Animation)
-protected:
-    std::vector<float>* m_pSplitTimes;
-    int                m_nNextFrame;
-    CAImageFrame*  m_pOrigFrame;
-       unsigned int    m_uExecutedLoops;
-};
 
 /** Overrides the target of an action so that it always runs on the target
  * specified at action creation rather than the one specified by runAction.

@@ -169,7 +169,7 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
     var = MIN(var, this->getPageCount() - 1);
     var = MAX(var, 0);
 
-    if (m_pPageViewDelegate && m_nCurrPage != var)
+    if (m_pPageViewDelegate && m_nCurrPage != var && m_bListener)
     {
         m_pPageViewDelegate->pageViewDidBeginTurning(this);
     }

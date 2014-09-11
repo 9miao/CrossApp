@@ -100,14 +100,6 @@
 		04EAB0B71956D75600198A8E /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0B41956D74D00198A8E /* CAImage.h */; };
 		04EAB0B81956D75600198A8E /* CAImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0B51956D74D00198A8E /* CAImageCache.cpp */; };
 		04EAB0B91956D75600198A8E /* CAImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0B61956D74D00198A8E /* CAImageCache.h */; };
-		04EAB0BA1956D75600198A8E /* CAImageFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0B71956D74D00198A8E /* CAImageFrame.cpp */; };
-		04EAB0BB1956D75600198A8E /* CAImageFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0B81956D74D00198A8E /* CAImageFrame.h */; };
-		04EAB0BC1956D75600198A8E /* CAImageFrameCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0B91956D74D00198A8E /* CAImageFrameCache.cpp */; };
-		04EAB0BD1956D75600198A8E /* CAImageFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0BA1956D74D00198A8E /* CAImageFrameCache.h */; };
-		04EAB0BE1956D75600198A8E /* CAAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0BB1956D74D00198A8E /* CAAnimation.cpp */; };
-		04EAB0BF1956D75600198A8E /* CAAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0BC1956D74D00198A8E /* CAAnimation.h */; };
-		04EAB0C01956D75600198A8E /* CAAnimationCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0BD1956D74D00198A8E /* CAAnimationCache.cpp */; };
-		04EAB0C11956D75600198A8E /* CAAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0BE1956D74D00198A8E /* CAAnimationCache.h */; };
 		04EAB0C21956D75600198A8E /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0C21956D74D00198A8E /* aabb.h */; };
 		04EAB0C31956D75600198A8E /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0C41956D74D00198A8E /* mat4stack.h */; };
 		04EAB0C41956D75600198A8E /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0C51956D74D00198A8E /* matrix.h */; };
@@ -383,14 +375,6 @@
 		04EAA0B41956D74D00198A8E /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
 		04EAA0B51956D74D00198A8E /* CAImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCache.cpp; sourceTree = "<group>"; };
 		04EAA0B61956D74D00198A8E /* CAImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageCache.h; sourceTree = "<group>"; };
-		04EAA0B71956D74D00198A8E /* CAImageFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageFrame.cpp; sourceTree = "<group>"; };
-		04EAA0B81956D74D00198A8E /* CAImageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageFrame.h; sourceTree = "<group>"; };
-		04EAA0B91956D74D00198A8E /* CAImageFrameCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageFrameCache.cpp; sourceTree = "<group>"; };
-		04EAA0BA1956D74D00198A8E /* CAImageFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageFrameCache.h; sourceTree = "<group>"; };
-		04EAA0BB1956D74D00198A8E /* CAAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimation.cpp; sourceTree = "<group>"; };
-		04EAA0BC1956D74D00198A8E /* CAAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimation.h; sourceTree = "<group>"; };
-		04EAA0BD1956D74D00198A8E /* CAAnimationCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimationCache.cpp; sourceTree = "<group>"; };
-		04EAA0BE1956D74D00198A8E /* CAAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimationCache.h; sourceTree = "<group>"; };
 		04EAA0C21956D74D00198A8E /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
 		04EAA0C41956D74D00198A8E /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
 		04EAA0C51956D74D00198A8E /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
@@ -759,14 +743,6 @@
 				04EAA0B41956D74D00198A8E /* CAImage.h */,
 				04EAA0B51956D74D00198A8E /* CAImageCache.cpp */,
 				04EAA0B61956D74D00198A8E /* CAImageCache.h */,
-				04EAA0B71956D74D00198A8E /* CAImageFrame.cpp */,
-				04EAA0B81956D74D00198A8E /* CAImageFrame.h */,
-				04EAA0B91956D74D00198A8E /* CAImageFrameCache.cpp */,
-				04EAA0BA1956D74D00198A8E /* CAImageFrameCache.h */,
-				04EAA0BB1956D74D00198A8E /* CAAnimation.cpp */,
-				04EAA0BC1956D74D00198A8E /* CAAnimation.h */,
-				04EAA0BD1956D74D00198A8E /* CAAnimationCache.cpp */,
-				04EAA0BE1956D74D00198A8E /* CAAnimationCache.h */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -1211,10 +1187,6 @@
 				B01F64F91964FE2F005C14FC /* CADensityDpi.h in Headers */,
 				04EAB0B71956D75600198A8E /* CAImage.h in Headers */,
 				04EAB0B91956D75600198A8E /* CAImageCache.h in Headers */,
-				04EAB0BB1956D75600198A8E /* CAImageFrame.h in Headers */,
-				04EAB0BD1956D75600198A8E /* CAImageFrameCache.h in Headers */,
-				04EAB0BF1956D75600198A8E /* CAAnimation.h in Headers */,
-				04EAB0C11956D75600198A8E /* CAAnimationCache.h in Headers */,
 				04EAB0C21956D75600198A8E /* aabb.h in Headers */,
 				04EAB0C31956D75600198A8E /* mat4stack.h in Headers */,
 				04EAB0C41956D75600198A8E /* matrix.h in Headers */,
@@ -1415,11 +1387,7 @@
 				B0C512E619A3127100E6934B /* CAActivityIndicatorView.cpp in Sources */,
 				B01F650419657084005C14FC /* CACollectionView.cpp in Sources */,
 				04EAB0B81956D75600198A8E /* CAImageCache.cpp in Sources */,
-				04EAB0BA1956D75600198A8E /* CAImageFrame.cpp in Sources */,
-				04EAB0BC1956D75600198A8E /* CAImageFrameCache.cpp in Sources */,
 				B01A29411994C95F00D42BA0 /* CACalendar.cpp in Sources */,
-				04EAB0BE1956D75600198A8E /* CAAnimation.cpp in Sources */,
-				04EAB0C01956D75600198A8E /* CAAnimationCache.cpp in Sources */,
 				04EAB0D01956D75600198A8E /* aabb.c in Sources */,
 				04EAB0D11956D75600198A8E /* mat4stack.c in Sources */,
 				04EAB0D21956D75600198A8E /* matrix.c in Sources */,

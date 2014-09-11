@@ -18,10 +18,6 @@
 		0460ED361957031200D13001 /* CAGLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = 0460ED321957031200D13001 /* CAGLProgram.h */; };
 		0460ED371957031200D13001 /* CAShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0460ED331957031200D13001 /* CAShaderCache.cpp */; };
 		0460ED381957031200D13001 /* CAShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 0460ED341957031200D13001 /* CAShaderCache.h */; };
-		04EA9F861956CDFB00198A8E /* CAImageFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9F7E1956CDFB00198A8E /* CAImageFrame.cpp */; };
-		04EA9F871956CDFB00198A8E /* CAImageFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9F7F1956CDFB00198A8E /* CAImageFrame.h */; };
-		04EA9F881956CDFB00198A8E /* CAImageFrameCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9F801956CDFB00198A8E /* CAImageFrameCache.cpp */; };
-		04EA9F891956CDFB00198A8E /* CAImageFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9F811956CDFB00198A8E /* CAImageFrameCache.h */; };
 		04EA9FD91956CE2500198A8E /* CAApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9F8F1956CE2500198A8E /* CAApplication.cpp */; };
 		04EA9FDA1956CE2500198A8E /* CAApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9F901956CE2500198A8E /* CAApplication.h */; };
 		04EA9FDB1956CE2500198A8E /* CAAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9F911956CE2500198A8E /* CAAutoreleasePool.cpp */; };
@@ -315,10 +311,6 @@
 		B02CE49219AD8D0D00B905FB /* CAListView.h in Headers */ = {isa = PBXBuildFile; fileRef = B02CE49019AD8D0D00B905FB /* CAListView.h */; };
 		B0340826199211B3005DB179 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0340824199211B3005DB179 /* md5.cpp */; };
 		B0340827199211B3005DB179 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B0340825199211B3005DB179 /* md5.h */; };
-		B04636D21957BBBD00758ABF /* CAAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04636CE1957BBBD00758ABF /* CAAnimation.cpp */; };
-		B04636D31957BBBD00758ABF /* CAAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B04636CF1957BBBD00758ABF /* CAAnimation.h */; };
-		B04636D41957BBBD00758ABF /* CAAnimationCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04636D01957BBBD00758ABF /* CAAnimationCache.cpp */; };
-		B04636D51957BBBD00758ABF /* CAAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B04636D11957BBBD00758ABF /* CAAnimationCache.h */; };
 		B04BCA841985DE5500CE0BC1 /* CAIndexPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04BCA821985DE5500CE0BC1 /* CAIndexPath.cpp */; };
 		B04BCA851985DE5500CE0BC1 /* CAIndexPath.h in Headers */ = {isa = PBXBuildFile; fileRef = B04BCA831985DE5500CE0BC1 /* CAIndexPath.h */; };
 		B0596A581976287B00B1E8CB /* CAFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */; };
@@ -456,10 +448,6 @@
 		0460ED321957031200D13001 /* CAGLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGLProgram.h; sourceTree = "<group>"; };
 		0460ED331957031200D13001 /* CAShaderCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAShaderCache.cpp; sourceTree = "<group>"; };
 		0460ED341957031200D13001 /* CAShaderCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAShaderCache.h; sourceTree = "<group>"; };
-		04EA9F7E1956CDFB00198A8E /* CAImageFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageFrame.cpp; sourceTree = "<group>"; };
-		04EA9F7F1956CDFB00198A8E /* CAImageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageFrame.h; sourceTree = "<group>"; };
-		04EA9F801956CDFB00198A8E /* CAImageFrameCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageFrameCache.cpp; sourceTree = "<group>"; };
-		04EA9F811956CDFB00198A8E /* CAImageFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageFrameCache.h; sourceTree = "<group>"; };
 		04EA9F8F1956CE2500198A8E /* CAApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAApplication.cpp; sourceTree = "<group>"; };
 		04EA9F901956CE2500198A8E /* CAApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAApplication.h; sourceTree = "<group>"; };
 		04EA9F911956CE2500198A8E /* CAAutoreleasePool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAutoreleasePool.cpp; sourceTree = "<group>"; };
@@ -711,10 +699,6 @@
 		B02CE49019AD8D0D00B905FB /* CAListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAListView.h; sourceTree = "<group>"; };
 		B0340824199211B3005DB179 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
 		B0340825199211B3005DB179 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
-		B04636CE1957BBBD00758ABF /* CAAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimation.cpp; sourceTree = "<group>"; };
-		B04636CF1957BBBD00758ABF /* CAAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimation.h; sourceTree = "<group>"; };
-		B04636D01957BBBD00758ABF /* CAAnimationCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimationCache.cpp; sourceTree = "<group>"; };
-		B04636D11957BBBD00758ABF /* CAAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimationCache.h; sourceTree = "<group>"; };
 		B04BCA821985DE5500CE0BC1 /* CAIndexPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAIndexPath.cpp; sourceTree = "<group>"; };
 		B04BCA831985DE5500CE0BC1 /* CAIndexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIndexPath.h; sourceTree = "<group>"; };
 		B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFreeTypeFont.cpp; sourceTree = "<group>"; };
@@ -1545,14 +1529,6 @@
 		B0B553CD193485BE0065053D /* images */ = {
 			isa = PBXGroup;
 			children = (
-				B04636CE1957BBBD00758ABF /* CAAnimation.cpp */,
-				B04636CF1957BBBD00758ABF /* CAAnimation.h */,
-				B04636D01957BBBD00758ABF /* CAAnimationCache.cpp */,
-				B04636D11957BBBD00758ABF /* CAAnimationCache.h */,
-				04EA9F7E1956CDFB00198A8E /* CAImageFrame.cpp */,
-				04EA9F7F1956CDFB00198A8E /* CAImageFrame.h */,
-				04EA9F801956CDFB00198A8E /* CAImageFrameCache.cpp */,
-				04EA9F811956CDFB00198A8E /* CAImageFrameCache.h */,
 				B0B553CE193485BE0065053D /* CAImage.cpp */,
 				B0B553CF193485BE0065053D /* CAImage.h */,
 				B0B553D0193485BE0065053D /* CAImageCache.cpp */,
@@ -1670,7 +1646,6 @@
 				1551A660158F2ADE00E66CFE /* CCSet.h in Headers */,
 				B0596B381976343300B1E8CB /* curlver.h in Headers */,
 				B0596AE5197629BE00B1E8CB /* ftimage.h in Headers */,
-				B04636D51957BBBD00758ABF /* CAAnimationCache.h in Headers */,
 				1551A662158F2ADE00E66CFE /* CCString.h in Headers */,
 				1551A6B8158F2ADE00E66CFE /* aabb.h in Headers */,
 				1551A6B9158F2ADE00E66CFE /* mat4stack.h in Headers */,
@@ -1732,7 +1707,6 @@
 				B0596B421976356C00B1E8CB /* ConvertUTF.h in Headers */,
 				1551A74C158F2ADE00E66CFE /* AccelerometerSimulation.h in Headers */,
 				1551A74F158F2ADE00E66CFE /* platform.h in Headers */,
-				B04636D31957BBBD00758ABF /* CAAnimation.h in Headers */,
 				B0596AF0197629BE00B1E8CB /* ftpfr.h in Headers */,
 				1551A81B158F2ADF00E66CFE /* ccGLStateCache.h in Headers */,
 				1551A81C158F2ADF00E66CFE /* ccShader_Position_uColor_frag.h in Headers */,
@@ -1804,9 +1778,7 @@
 				1A2802B116DF1C5B00189CBF /* ccUTF8.h in Headers */,
 				46A393F716E5D01B00210B16 /* CAUserDefault.h in Headers */,
 				B0596ADC197629BE00B1E8CB /* ftcffdrv.h in Headers */,
-				04EA9F871956CDFB00198A8E /* CAImageFrame.h in Headers */,
 				B0596AEF197629BE00B1E8CB /* ftoutln.h in Headers */,
-				04EA9F891956CDFB00198A8E /* CAImageFrameCache.h in Headers */,
 				04EA9FDA1956CE2500198A8E /* CAApplication.h in Headers */,
 				B0596B19197629BE00B1E8CB /* svttcmap.h in Headers */,
 				B0596B23197629BE00B1E8CB /* tttables.h in Headers */,
@@ -1935,7 +1907,6 @@
 				1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */,
 				1551A62E158F2ADE00E66CFE /* CCActionEase.cpp in Sources */,
 				1551A634158F2ADE00E66CFE /* CCActionInstant.cpp in Sources */,
-				B04636D21957BBBD00758ABF /* CAAnimation.cpp in Sources */,
 				1551A636158F2ADE00E66CFE /* CCActionInterval.cpp in Sources */,
 				B0090D73198A444500BD8CDA /* CAPickerView.cpp in Sources */,
 				1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */,
@@ -2004,8 +1975,6 @@
 				B0596B411976356C00B1E8CB /* ConvertUTF.cpp in Sources */,
 				46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */,
 				B01F650819658599005C14FC /* CADensityDpi.mm in Sources */,
-				04EA9F861956CDFB00198A8E /* CAImageFrame.cpp in Sources */,
-				04EA9F881956CDFB00198A8E /* CAImageFrameCache.cpp in Sources */,
 				04EA9FD91956CE2500198A8E /* CAApplication.cpp in Sources */,
 				04EA9FDB1956CE2500198A8E /* CAAutoreleasePool.cpp in Sources */,
 				04EA9FDD1956CE2500198A8E /* CACamera.cpp in Sources */,
@@ -2019,7 +1988,6 @@
 				04EA9FE91956CE2500198A8E /* CABar.cpp in Sources */,
 				04EA9FEB1956CE2500198A8E /* CAButton.cpp in Sources */,
 				04EA9FED1956CE2500198A8E /* CAControl.cpp in Sources */,
-				B04636D41957BBBD00758ABF /* CAAnimationCache.cpp in Sources */,
 				04EA9FF11956CE2500198A8E /* CAProgress.cpp in Sources */,
 				04EA9FF31956CE2500198A8E /* CASegmentedControl.cpp in Sources */,
 				04EA9FF51956CE2500198A8E /* CASlider.cpp in Sources */,

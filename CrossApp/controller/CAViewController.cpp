@@ -30,7 +30,7 @@ CAViewController::CAViewController()
 ,m_bKeypadEnabled(false)
 {
     this->setHaveNextResponder(true);
-    m_pView = CAView::createWithFrame(CCRectZero, ccc4(255, 255, 255, 255));
+    m_pView = CAView::createWithColor(CAColor_white);
     m_pView->retain();
     m_pView->setViewDelegate(this);
 }
@@ -220,6 +220,7 @@ CANavigationController::CANavigationController()
 ,m_pContainer(NULL)
 ,m_bNavigationBarHidden(false)
 {
+    m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
     
     m_pNavigationBar = CANavigationBar::create();
@@ -733,6 +734,7 @@ CATabBarController::CATabBarController()
 ,m_bTabBarHidden(false)
 ,m_bscrollEnabled(false)
 {
+    m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
 }
 
@@ -846,6 +848,7 @@ void CATabBarController::viewDidLoad()
     m_pContainer->setPageViewDelegate(this);
     m_pContainer->setScrollViewDelegate(this);
     m_pContainer->setScrollEnabled(m_bscrollEnabled);
+    m_pContainer->setDisplayRange(true);
     this->getView()->addSubview(m_pContainer);
     
     CAVector<CAView*> views;

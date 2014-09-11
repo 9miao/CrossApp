@@ -9,11 +9,7 @@
 #include "CAImageView.h"
 #include "ccConfig.h"
 #include "images/CAImage.h"
-#include "images/CAImageFrame.h"
-#include "images/CAImageFrameCache.h"
 #include "images/CAImageCache.h"
-#include "images/CAAnimation.h"
-#include "images/CAAnimationCache.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "shaders/CAShaderCache.h"
 #include "shaders/ccGLStateCache.h"
@@ -31,18 +27,6 @@ CAImageView* CAImageView::createWithImage(CAImage* image)
 {
     CAImageView *pobSprite = new CAImageView();
     if (pobSprite && pobSprite->initWithImage(image))
-    {
-        pobSprite->autorelease();
-        return pobSprite;
-    }
-    CC_SAFE_DELETE(pobSprite);
-    return NULL;
-}
-
-CAImageView* CAImageView::createWithSpriteFrame(CAImageFrame *pSpriteFrame)
-{
-    CAImageView *pobSprite = new CAImageView();
-    if (pSpriteFrame && pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
     {
         pobSprite->autorelease();
         return pobSprite;
@@ -96,20 +80,8 @@ bool CAImageView::init(void)
 
 bool CAImageView::initWithImage(CAImage* image)
 {
-    if (!CAView::init())
-        return false;
-    
     this->setImage(image);
     
-    return true;
-}
-
-bool CAImageView::initWithSpriteFrame(CAImageFrame *pSpriteFrame)
-{
-    if (!CAView::init())
-        return false;
-    
-    setDisplayFrame(pSpriteFrame);
     return true;
 }
 
@@ -228,61 +200,6 @@ void CAImageView::updateImageRect()
     m_sQuad.br.vertices = vertex3(m_fRight, m_fTop, 0);
     m_sQuad.tl.vertices = vertex3(m_fLeft, m_fBottom, 0);
     m_sQuad.tr.vertices = vertex3(m_fRight, m_fBottom, 0);
-}
-
-void CAImageView::setDisplayFrame(CAImageFrame *pNewFrame)
-{
-    CC_RETURN_IF(!pNewFrame);
-    m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffset();
-
-    CAImage* pNewimage = pNewFrame->getImage();
-
-    if (pNewimage != m_pobImage)
-    {
-        setImage(pNewimage);
-    }
-
-    m_bRectRotated = pNewFrame->isRotated();
-    
-    CCSize size = m_obContentSize;
-    if (size.equals(CCSizeZero))
-    {
-        size = pNewFrame->getOriginalSize();
-    }
-    setImageRect(pNewFrame->getRect(), m_bRectRotated, size);
-}
-
-void CAImageView::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
-{
-    CCAssert(animationName, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
-
-    CAAnimation *a = CAAnimationCache::sharedAnimationCache()->animationByName(animationName);
-
-    CCAssert(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
-
-    CAAnimationFrame* frame = (CAAnimationFrame*)a->getFrames()->objectAtIndex(frameIndex);
-
-    CCAssert(frame, "CCSprite#setDisplayFrame. Invalid frame");
-
-    setDisplayFrame(frame->getSpriteFrame());
-}
-
-bool CAImageView::isFrameDisplayed(CAImageFrame *pFrame)
-{
-    CCRect r = pFrame->getRect();
-
-    return (r.equals(m_obRect) &&
-            pFrame->getImage()->getName() == m_pobImage->getName() &&
-            pFrame->getOffset().equals(m_obUnflippedOffsetPositionFromCenter));
-}
-
-CAImageFrame* CAImageView::displayFrame(void)
-{
-    return CAImageFrame::createWithImage(m_pobImage,
-                                           CC_RECT_POINTS_TO_PIXELS(m_obRect),
-                                           m_bRectRotated,
-                                           CC_POINT_POINTS_TO_PIXELS(m_obUnflippedOffsetPositionFromCenter),
-                                           CC_SIZE_POINTS_TO_PIXELS(m_obContentSize));
 }
 
 bool CAImageView::initWithFrame(const CCRect& rect, const CAColor4B& color4B)

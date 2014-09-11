@@ -222,8 +222,8 @@ void CACollectionView::reloadData()
 	}
 
     this->setViewSize(CCSize(width, y));
+    this->updateSectionHeaderAndFooterRects();
     this->layoutPullToRefreshView();
-    updateSectionHeaderAndFooterRects();
     this->startDeaccelerateScroll();
 }
 

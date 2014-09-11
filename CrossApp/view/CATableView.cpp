@@ -540,6 +540,8 @@ void CATableView::reloadData()
 
     this->loadTableCell();
     this->updateSectionHeaderAndFooterRects();
+    this->layoutPullToRefreshView();
+    this->startDeaccelerateScroll();
 }
 
 void CATableView::firstReloadData()

@@ -175,6 +175,8 @@ void CAListView::reloadData()
 	if (m_pListViewDataSource == NULL)
 		return;
     
+    this->removeAllSubviews();
+    
 	m_pUsedListCells.clear();
 	m_pFreedListCells.clear();
     m_pSelectedListCells.clear();
@@ -182,10 +184,8 @@ void CAListView::reloadData()
 	CCRect winRect = this->getBounds();
     winRect.origin = this->getContentOffset();
     
-	reloadViewSizeData();
+	this->reloadViewSizeData();
     
-	removeAllSubviews();
-
 	if (m_nListHeaderHeight > 0)
 	{
 		if (m_pListHeaderView)
@@ -231,6 +231,8 @@ void CAListView::reloadData()
 			addSubview(m_pListFooterView);
 		}
 	}
+    this->layoutPullToRefreshView();
+    this->startDeaccelerateScroll();
 }
 
 void CAListView::setAllowsSelection(bool var)

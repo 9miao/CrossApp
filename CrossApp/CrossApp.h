@@ -73,10 +73,7 @@
 // images
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
-#include "images/CAImageFrame.h"
-#include "images/CAImageFrameCache.h"
-#include "images/CAAnimation.h"
-#include "images/CAAnimationCache.h"
+
 
 //view
 #include "view/CAView.h"

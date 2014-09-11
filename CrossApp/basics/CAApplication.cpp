@@ -11,7 +11,6 @@
 #include "support/CCPointExtension.h"
 #include "support/CANotificationCenter.h"
 #include "images/CAImageCache.h"
-#include "images/CAImageFrameCache.h"
 #include "basics/CAAutoreleasePool.h"
 #include "platform/platform.h"
 #include "platform/CCFileUtils.h"
@@ -19,7 +18,6 @@
 #include "actions/CCActionManager.h"
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "CCAccelerometer.h"
-#include "images/CAAnimationCache.h"
 #include "dispatcher/CATouch.h"
 #include "support/user_default/CAUserDefault.h"
 #include "shaders/ccGLStateCache.h"
@@ -631,8 +629,6 @@ void CAApplication::purgeDirector()
 
     // purge all managed caches
     ccDrawFree();
-    CAAnimationCache::purgeSharedAnimationCache();
-    CAImageFrameCache::purgeSharedSpriteFrameCache();
     CAImageCache::purgeSharedImageCache();
     CAShaderCache::purgeSharedShaderCache();
     CCFileUtils::purgeFileUtils();
