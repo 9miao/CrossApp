@@ -4,12 +4,14 @@
 
 ProgressTest::ProgressTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(false);
 }
 
 ProgressTest::~ProgressTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(true);
 }
 
 void ProgressTest::viewDidLoad()

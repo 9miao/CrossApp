@@ -63,9 +63,9 @@ protected:
     
     typedef enum
     {
-        CAPullToRefreshStateNormal = 1, // 普通状态
-        CAPullToRefreshStatePulling, // 松开就可以进行刷新的状态
-        CAPullToRefreshStateRefreshing, // 正在刷新中的状态
+        CAPullToRefreshStateNormal = 1,
+        CAPullToRefreshStatePulling,
+        CAPullToRefreshStateRefreshing,
         CAPullToRefreshStateNone
     }
     CAPullToRefreshStateType;

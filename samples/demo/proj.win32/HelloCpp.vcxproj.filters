@@ -58,6 +58,9 @@
     <Filter Include="Classes\ScrollViewTest">
       <UniqueIdentifier>{5ca4ce7e-7b46-4857-84f3-f1aa7887a504}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ListViewTest">
+      <UniqueIdentifier>{588d9d63-103c-4108-b6d7-d370973187b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ScrollViewTest\ScrollViewTest.cpp">
       <Filter>Classes\ScrollViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ListViewTest\ListViewTest.cpp">
+      <Filter>Classes\ListViewTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ScrollViewTest\ScrollViewTest.h">
       <Filter>Classes\ScrollViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ListViewTest\ListViewTest.h">
+      <Filter>Classes\ListViewTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

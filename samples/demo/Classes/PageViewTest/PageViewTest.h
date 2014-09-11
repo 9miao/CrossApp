@@ -23,7 +23,7 @@ protected:
 
 	virtual void pageViewDidBeginTurning(CAPageView* pageView);
 	virtual void pageViewDidEndTurning(CAPageView* pageView);
-	virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index);
+	virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point);
 
 private:
 	CADipSize size;

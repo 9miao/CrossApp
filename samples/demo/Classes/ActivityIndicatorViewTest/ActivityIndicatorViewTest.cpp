@@ -4,12 +4,14 @@
 
 ActivityIndicatorViewTest::ActivityIndicatorViewTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(false);
 }
 
 ActivityIndicatorViewTest::~ActivityIndicatorViewTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(true);
 }
 
 void ActivityIndicatorViewTest::viewDidLoad()

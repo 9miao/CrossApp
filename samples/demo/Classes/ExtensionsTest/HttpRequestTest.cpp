@@ -7,12 +7,14 @@
 
 HttpRequestTest::HttpRequestTest() :cout(0)
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(false);
 }
 
 HttpRequestTest::~HttpRequestTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(true);
 }
 
 void HttpRequestTest::viewDidLoad()

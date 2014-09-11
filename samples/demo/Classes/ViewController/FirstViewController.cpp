@@ -7,27 +7,30 @@
 	p_ViewContrller->autorelease();															\
 	CAWindow* window = CAApplication::getApplication()->getRootWindow();					\
 	CADrawerController* drawer = (CADrawerController*)window->getRootViewController();		\
-	CANavigationController* nav = (CANavigationController*)drawer->getLeftViewController(); \
-	nav->pushViewController(p_ViewContrller, false);										\
+	CANavigationController* nav = (CANavigationController*)drawer->getRightViewController();\
+	drawer->hideLeftViewController(true);													\
+	nav->pushViewController(p_ViewContrller, false);										
 	
+
 FirstViewController::FirstViewController()
 {
-	testList.push_back("AlertViewTest");
-	testList.push_back("ButtonTest");
-	testList.push_back("CollectionViewTest");
-	testList.push_back("ImageViewTest");
-	testList.push_back("IndicatorViewTest");
-	testList.push_back("LabelTest");
-	testList.push_back("PageViewTest");
-	testList.push_back("ProgressTest");
-	testList.push_back("ScrollViewTest");
-	testList.push_back("SegmentedControlTest");
-	testList.push_back("SliderTest");
-	testList.push_back("SwitchTest");
-	testList.push_back("TabBarTest");
-	testList.push_back("TableViewTest");
-	testList.push_back("TextFieldTest");
-	testList.push_back("ExtensionsTest");
+	testList.push_back("AlertView");
+	testList.push_back("Button");
+	testList.push_back("CollectionView");
+	testList.push_back("ImageView");
+	testList.push_back("IndicatorView");
+	testList.push_back("Label");
+	testList.push_back("ListView");
+	testList.push_back("PageView");
+	testList.push_back("Progress");
+	testList.push_back("ScrollView");
+	testList.push_back("SegmentedControl");
+	testList.push_back("Slider");
+	testList.push_back("Switch");
+	testList.push_back("TabBar");
+	testList.push_back("TableView");
+	testList.push_back("TextField");
+	testList.push_back("Extensions");
 }
 
 FirstViewController::~FirstViewController()
@@ -37,11 +40,13 @@ FirstViewController::~FirstViewController()
 
 void FirstViewController::viewDidLoad()
 {
+	this->getView()->setColor(CAColor_clear);
 	size = this->getView()->getBounds().size;
 	tableView = CATableView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height));
 	tableView->setAllowsSelection(true);
 	tableView->setTableViewDelegate(this);
 	tableView->setTableViewDataSource(this);
+	tableView->setBackGroundColor(CAColor_clear);
 	this->getView()->addSubview(tableView);
 }
 
@@ -59,88 +64,93 @@ void FirstViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, u
 {
 	switch (row)
 	{
-		case AlERTVIEWTEST:
-		{
-			VIEWCONTROLLER_SWITCH(AlertViewTest, row);
-			break;
-		}
-		case BUTTONTEST:
-		{
-			VIEWCONTROLLER_SWITCH(ButtonTest, row);
-			break;
-		}
-		case COLLECTIONVIEWTEST:
-		{
-			VIEWCONTROLLER_SWITCH(CollectionViewTest, row);
-			break;
-		}
-		case IMAGEVIEWTEST:
-		{
-			VIEWCONTROLLER_SWITCH(ImageViewTest, row);
-			break;
-		}
-		case INDICATORVIEWTEST:
-		{
-			VIEWCONTROLLER_SWITCH(ActivityIndicatorViewTest, row);
-			break;
-		}
-		case LABELTEST:
-		{
-			VIEWCONTROLLER_SWITCH(LabelTest, row);
-			break;
-		}
-		case PAGEVIEWTEST:
-		{
-			VIEWCONTROLLER_SWITCH(PageViewTest,row);
-			break;
-		}
-		case PROGRESSTEST:
-		{
-			VIEWCONTROLLER_SWITCH(ProgressTest, row);
-			break;
-		}
-		case SCROLLVIEWTEST:
-		{
-			VIEWCONTROLLER_SWITCH(ScrollViewTest, row);
-			break;
-		}
-		case SEGMENTEDCONTROLTEST:
-		{
-			VIEWCONTROLLER_SWITCH(SegmentedControlTest, row);
-			break;
-		}	
-		case SLIDERTEST:
-		{
-			VIEWCONTROLLER_SWITCH(SliderTest, row);
-			break;
-		}
-		case SWITCHTEST:
-		{
-			VIEWCONTROLLER_SWITCH(SwitchTest, row);
-			break;
-		}
-		case TABBARTEST:
-		{
-			VIEWCONTROLLER_SWITCH(TabBarTest, row);
-			break;
-		}
-		case TABVIEWTEST:
-		{
-			VIEWCONTROLLER_SWITCH(TableViewTest, row);
-			break;
-		}
-		case TEXTFIELDTEST:
-		{
-			VIEWCONTROLLER_SWITCH(TextFieldTest, row);
-			break;
-		}
-		case EXTENSIONSTEST:
-		{
-			VIEWCONTROLLER_SWITCH(ExtensionsTest, row);
-			break;
-		}
-		default:
-			break;
+	case AlERTVIEWTEST:
+	{
+		VIEWCONTROLLER_SWITCH(AlertViewTest, row);
+		break;
+	}
+	case BUTTONTEST:
+	{
+		VIEWCONTROLLER_SWITCH(ButtonTest, row);
+		break;
+	}
+	case COLLECTIONVIEWTEST:
+	{
+		VIEWCONTROLLER_SWITCH(CollectionViewTest, row);
+		break;
+	}
+	case IMAGEVIEWTEST:
+	{
+		VIEWCONTROLLER_SWITCH(ImageViewTest, row);
+		break;
+	}
+	case INDICATORVIEWTEST:
+	{
+		VIEWCONTROLLER_SWITCH(ActivityIndicatorViewTest, row);
+		break;
+	}
+	case LABELTEST:
+	{
+		VIEWCONTROLLER_SWITCH(LabelTest, row);
+		break;
+	}
+	case LISTVIEWTEST:
+	{
+		VIEWCONTROLLER_SWITCH(ListViewTest, row);
+		break;
+	}
+	case PAGEVIEWTEST:
+	{
+		VIEWCONTROLLER_SWITCH(PageViewTest, row);
+		break;
+	}
+	case PROGRESSTEST:
+	{
+		VIEWCONTROLLER_SWITCH(ProgressTest, row);
+		break;
+	}
+	case SCROLLVIEWTEST:
+	{
+		VIEWCONTROLLER_SWITCH(ScrollViewTest, row);
+		break;
+	}
+	case SEGMENTEDCONTROLTEST:
+	{
+		VIEWCONTROLLER_SWITCH(SegmentedControlTest, row);
+		break;
+	}
+	case SLIDERTEST:
+	{
+		VIEWCONTROLLER_SWITCH(SliderTest, row);
+		break;
+	}
+	case SWITCHTEST:
+	{
+		VIEWCONTROLLER_SWITCH(SwitchTest, row);
+		break;
+	}
+	case TABBARTEST:
+	{
+		VIEWCONTROLLER_SWITCH(TabBarTest, row);
+		break;
+	}
+	case TABVIEWTEST:
+	{
+		VIEWCONTROLLER_SWITCH(TableViewTest, row);
+		break;
+	}
+	case TEXTFIELDTEST:
+	{
+		VIEWCONTROLLER_SWITCH(TextFieldTest, row);
+		break;
+	}
+	case EXTENSIONSTEST:
+	{
+		VIEWCONTROLLER_SWITCH(ExtensionsTest, row);
+		break;
+	}
+	default:
+		break;
 	}
 }
 
@@ -166,20 +176,21 @@ CATableViewCell* FirstViewController::tableCellAtIndex(CATableView* table, const
 	if (cell == NULL)
 	{
 		cell = CATableViewCell::create("CrossApp");
+		cell->setBackgroundView(NULL);
 		CALabel* test = CALabel::createWithCenter(CADipRect(_size.width*0.5,
-												_size.height*0.5,
-												_size.width*0.8,
-												_size.height));
-		test->setColor(ccc4(51, 204, 255, 255));
+			_size.height*0.5,
+			_size.width*0.8,
+			_size.height));
+		test->setColor(ccc4(220, 227, 115, 255));
 		test->setTextAlignment(CATextAlignmentCenter);
 		test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-		test->setFontSize(_px(40));
+		test->setFontSize(_px(33));
 		test->setTag(100);
 		cell->addSubview(test);
 	}
 	CALabel* test = (CALabel*)cell->getSubviewByTag(100);
 	test->setText(testList.at(row));
-	
+
 	return cell;
 }
 

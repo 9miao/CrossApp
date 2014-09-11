@@ -12,12 +12,14 @@
 
 AddressBookTest::AddressBookTest():cout(0)
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(false);
 }
 
 AddressBookTest::~AddressBookTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(true);
 }
 
 void AddressBookTest::viewDidLoad()

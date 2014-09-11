@@ -5,12 +5,14 @@
 
 ExtensionsTest::ExtensionsTest()
 {
-	
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(false);
 }
 
 ExtensionsTest::~ExtensionsTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(true);
 }
 
 void ExtensionsTest::viewDidLoad()

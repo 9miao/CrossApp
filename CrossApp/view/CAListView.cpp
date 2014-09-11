@@ -175,6 +175,8 @@ void CAListView::reloadData()
 	if (m_pListViewDataSource == NULL)
 		return;
     
+    this->reloadViewSizeData();
+    
     this->removeAllSubviews();
     
 	m_pUsedListCells.clear();
@@ -183,8 +185,6 @@ void CAListView::reloadData()
 	
 	CCRect winRect = this->getBounds();
     winRect.origin = this->getContentOffset();
-    
-	this->reloadViewSizeData();
     
 	if (m_nListHeaderHeight > 0)
 	{
@@ -297,6 +297,8 @@ void CAListView::setListViewOrientation(CAListViewOrientation var)
 	setBounceVertical(bVertScroll);
 	setShowsHorizontalScrollIndicator(!bVertScroll);
 	setBounceHorizontal(!bVertScroll);
+	setTouchMovedListenHorizontal(!bVertScroll);
+	setTouchMovedListenVertical(bVertScroll);
 }
 
 CAListViewOrientation CAListView::getListViewOrientation()

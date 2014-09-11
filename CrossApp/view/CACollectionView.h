@@ -55,16 +55,16 @@ public:
     }
     
     //Necessary
-	virtual unsigned int numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section)
+	virtual unsigned int numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)
     {
         return 0;
     }
     
-    virtual unsigned int numberOfSectionsInCollectioView()
+    virtual unsigned int numberOfSections(CACollectionView *collectionView)
     {
         return 1;
     }
-
+    
 	virtual CAView* collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section)
     {
         return NULL;
@@ -147,6 +147,8 @@ protected:
     
     inline virtual float decelerationRatio(float dt);
     
+    void reloadViewSizeData();
+    
     virtual void update(float dt);
 
 	void recoveryCollectionCell();
@@ -168,6 +170,18 @@ public:
 	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 
 private:
+    
+    unsigned int m_nSections;
+    
+    std::vector<unsigned int> m_nRowsInSections;
+    
+    std::vector<unsigned int> m_nSectionHeights;
+    
+    std::vector<unsigned int> m_nSectionHeaderHeights;
+    
+    std::vector<unsigned int> m_nSectionFooterHeights;
+    
+    std::vector<std::vector<unsigned int> > m_nRowHeightss;
     
     std::vector<CCRect> m_rSectionRects;
     

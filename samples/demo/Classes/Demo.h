@@ -8,6 +8,7 @@
 #include "CollectionViewTest.h"
 #include "ImageViewTest.h"
 #include "LabelTest.h"
+#include "ListViewTest.h"
 #include "PageViewTest.h"
 #include "ProgressTest.h"
 #include "ScrollViewTest.h"
@@ -27,6 +28,7 @@ enum DemoList
 	IMAGEVIEWTEST,
 	INDICATORVIEWTEST,
 	LABELTEST,
+	LISTVIEWTEST,
 	PAGEVIEWTEST,
 	PROGRESSTEST,
 	SCROLLVIEWTEST,

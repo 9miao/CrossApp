@@ -311,6 +311,7 @@ void CAFreeTypeFont::newLine()
 
 void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 {
+	FT_GlyphSlot slot = m_face->glyph;
 	FT_BBox glyph_bbox, global_bbox;
 	int maxWidth = m_inWidth ? m_inWidth : 0xFFFF;
 	
@@ -324,28 +325,35 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 	{
 		FT_Glyph_Get_CBox(glyphs[i].image, ft_glyph_bbox_pixels, &glyph_bbox);
         
+		if (glyph_bbox.xMin == glyph_bbox.xMax)
+		{
+			glyph_bbox.xMax = glyph_bbox.xMin + slot->advance.x >> 6;
+		}
+        
 		glyph_bbox.xMin += glyphs[i].pos.x;
 		glyph_bbox.xMax += glyphs[i].pos.x;
 		glyph_bbox.yMin += glyphs[i].pos.y;
 		glyph_bbox.yMax += glyphs[i].pos.y;
         
-		int dtValue = glyph_bbox.xMax - glyph_bbox.xMin;
-		if (m_inWidth == 0xFFFF || 
-			(glyphs[i].pos.x + dtValue <= maxWidth && m_currentLine->bbox.xMax - m_currentLine->bbox.xMin<=maxWidth))
+		if (m_inWidth == 0xFFFF ||
+			(glyph_bbox.xMax <= maxWidth && m_currentLine->bbox.xMax - m_currentLine->bbox.xMin <= maxWidth))
 		{
 			m_currentLine->glyphs.push_back(glyphs[i]);
 		}
-		else break;
-
+		else
+		{
+			break;
+		}
+        
 		if (glyph_bbox.xMin < m_currentLine->bbox.xMin)
 			m_currentLine->bbox.xMin = glyph_bbox.xMin;
-
+        
 		if (glyph_bbox.yMin < m_currentLine->bbox.yMin)
 			m_currentLine->bbox.yMin = glyph_bbox.yMin;
-
+        
 		if (glyph_bbox.xMax > m_currentLine->bbox.xMax)
 			m_currentLine->bbox.xMax = glyph_bbox.xMax;
-
+        
 		if (glyph_bbox.yMax > m_currentLine->bbox.yMax)
 			m_currentLine->bbox.yMax = glyph_bbox.yMax;
 	}
@@ -356,13 +364,12 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 	}
 	glyphs.erase(glyphs.begin(), glyphs.begin() + i);
 	m_currentLine->width = m_currentLine->bbox.xMax - m_currentLine->bbox.xMin;
-
+    
 	if (!glyphs.empty())
 	{
 		endLine();
 		newLine();
-
-
+        
 		int start_pos = glyphs[0].pos.x;
 		for (int i = 0; i < glyphs.size(); i++)
 		{

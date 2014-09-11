@@ -21,7 +21,7 @@ CAWindow* MainMenu::createWindow()
 
 	FirstViewController* viewController1 = new FirstViewController();
 	viewController1->init();
-	viewController1->setNavigationBarItem(CANavigationBarItem::create("TestMenu")); 
+	//viewController1->setNavigationBarItem(CANavigationBarItem::create("TestMenu"));
 
 	SecondViewController* viewController2 = new SecondViewController();
 	viewController2->init();
@@ -43,14 +43,17 @@ CAWindow* MainMenu::createWindow()
 	MainMenu* p_Funtion = new MainMenu();
 	p_Funtion->initWithViewControllers(controllerItem);
 	p_Funtion->getTabBar()->showSelectedIndicator();
+	p_Funtion->setScrollEnabled(true);
+	p_Funtion->setNavigationBarItem(CANavigationBarItem::create("ViewController"));
 
 	CANavigationController* navigationController = new CANavigationController();
-	navigationController->initWithRootViewController(viewController1);
-	//navigationController->setTabBarItem(CATabBarItem::create("First", CAImage::create("tabbar_function/first_1.png"), CAImage::create("tabbar_function/first_2.png")));
-	
+	navigationController->initWithRootViewController(p_Funtion);
+	navigationController->getView()->setColor(CAColor_clear);
+
 	float winWidth = p_Window->getBounds().size.width;
 	CADrawerController* drawerController = new CADrawerController();
-	drawerController->initWithController(navigationController, p_Funtion, winWidth);
+	drawerController->initWithController(viewController1, navigationController, winWidth*0.7);
+	drawerController->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("background/1.jpg")));
 	drawerController->autorelease();
 
 	p_Window->setRootViewController(drawerController);

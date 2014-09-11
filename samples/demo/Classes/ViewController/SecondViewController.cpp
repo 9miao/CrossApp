@@ -2,7 +2,7 @@
 
 #define CAColor_blueStyle ccc4(51,204,255,255)
 
-#define CELL_COUNT personList.size()
+#define CELL_COUNT 16
 
 SecondViewController::SecondViewController()
 {
@@ -20,8 +20,8 @@ SecondViewController::~SecondViewController()
 void SecondViewController::viewDidLoad(void)
 {	
 	loadJsonData();
-    size = this->getView()->getBounds().size;
-	p_TableView = CATableView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height));
+
+	p_TableView = CATableView::createWithFrame(this->getView()->getBounds());
 	p_TableView->setTableViewDataSource(this);
 	p_TableView->setTableViewDelegate(this);
 	p_TableView->setAllowsSelection(true);
@@ -37,6 +37,7 @@ void SecondViewController::loadJsonData()
 	if (reader.parse(jsonData->getCString(), value))
 	{
 		int length = value["info"].size();
+		CCLog("%d",length);
 		for (int index = 0; index < length; index++)
 		{
 			Info* personInfo = new Info();
@@ -83,7 +84,7 @@ void SecondViewController::tableViewDidShowPullUpView(CATableView* table)
 CATableViewCell* SecondViewController::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
 	CADipSize _size = cellSize;
-	Info* p_List = (Info*)personList.at(row%8);
+	Info* p_List = (Info*)personList.at(row);
 	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
 	if (cell == NULL)
 	{
@@ -139,8 +140,8 @@ CAView* SecondViewController::tableViewSectionViewForHeaderInSection(CATableView
 {
 	CADipSize _viewSize = viewSize;
 	char head[10] = "";
-	CAView* view = CAView::createWithColor(CAColor_gray);
-	CAButton* headControl1 = CAButton::createWithCenter(CADipRect(_viewSize.width*0.1, _viewSize.height*0.5, _viewSize.height*0.8, _viewSize.height*0.8),
+	CAView* view = CAView::createWithColor(ccc4(239,242,243,255));
+	CAButton* headControl1 = CAButton::createWithCenter(CADipRect(60, _viewSize.height*0.5, 80, 80),
 		CAButtonTypeRoundedRect);
 	headControl1->setTag(100 + (int)section);
 	if (sect[section] == CELL_COUNT)
@@ -154,7 +155,7 @@ CAView* SecondViewController::tableViewSectionViewForHeaderInSection(CATableView
 	headControl1->addTarget(this, CAControl_selector(SecondViewController::switchCellListInSection), CAControlEventTouchUpInSide);
 	view->addSubview(headControl1);
 
-	CALabel* header = CALabel::createWithCenter(CADipRect(_viewSize.width*0.5, _viewSize.height*0.5, _viewSize.width*0.3, _viewSize.height));
+	CALabel* header = CALabel::createWithCenter(CADipRect(_viewSize.width*0.5, _viewSize.height*0.5, 300, 50));
 	sprintf(head, "Section-%d", section);
 	header->setFontSize(_px(30));
 	header->setText(head);
@@ -170,7 +171,7 @@ CAView* SecondViewController::tableViewSectionViewForFooterInSection(CATableView
 {
 	CADipSize _viewSize = viewSize;
 	char head[10] = "";
-	CAView* view = CAView::createWithColor(CAColor_yellow);
+	CAView* view = CAView::createWithColor(CAColor_blueStyle);
     CALabel* header = CALabel::createWithCenter(CADipRect(_viewSize.width*0.5, _viewSize.height*0.5, _viewSize.width*0.3, _viewSize.height));
 	sprintf(head, "Section-%d", section);
 	header->setFontSize(_px(30));
@@ -178,7 +179,7 @@ CAView* SecondViewController::tableViewSectionViewForFooterInSection(CATableView
 	header->setColor(CAColor_blueStyle);
 	header->setTextAlignment(CATextAlignmentCenter);
 	header->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	view->addSubview(header);
+	//view->addSubview(header);
     
 	return view;
 }
@@ -195,22 +196,21 @@ unsigned int SecondViewController::numberOfSections(CATableView *table)
 
 unsigned int SecondViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	return size.height*0.1;
+	return _px(100);
 }
 
 unsigned int SecondViewController::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
 {
-	return size.height*0.1;
+	return _px(100);
 }
 
 unsigned int SecondViewController::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
 {
-	return size.height*0.1;
+	return 1;
 }
 
 void SecondViewController::switchCellListInSection(CAControl* btn, CCPoint point)
 {
-	CAButton* headerBtn = (CAButton*)btn;
 	int section = btn->getTag() - 100;
 	CC_RETURN_IF(section >= NUM);
 	sect[section] = sect[section] ? 0 : CELL_COUNT;

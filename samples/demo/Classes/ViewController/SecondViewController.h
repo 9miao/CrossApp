@@ -9,7 +9,7 @@
 USING_NS_CC_EXT;
 
 using namespace CSJson;
-#define NUM 5
+#define NUM 8
 class SecondViewController : public CAViewController, public CATableViewDelegate, public CATableViewDataSource
 {   
 public:

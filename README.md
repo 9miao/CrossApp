@@ -1,3 +1,40 @@
+
+#### CrossApp 0.3.6 更新内容：  
+
+#####1.添加CAPullToRefreshView
+CAListView、CATableView、CACollectionView等上拉、下拉刷新插件，用法见demo中CollectionViewTest。
+CATableView老版上下拉刷新监听代理已移除
+
+#####2.CATabBarController添加左右滑动手势换页效果
+需手动设置相关属性开启
+
+#####3.优化触摸事件分发系统
+增加支持同方向滑动容器嵌套时子容器滑到头自动切换监听父容器的功能
+
+#####4.优化CAProgress
+
+#####5.优化CAScale9ImageView
+
+#####6.删减CAImageView接口
+
+#####7.修正CACollectionViewDataSource 的代理方法命名
+
+##virtual unsigned int numberOfSectionsInCollectioView()
+##改为
+##virtual unsigned int numberOfSections(CACollectionView *collectionView)
+
+##virtual unsigned int numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section)
+##改为
+##virtual unsigned int numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)
+
+
+####升级建议：
+注意第7条的修改，如果用到该代理方法需改名与其一致
+
+
+**********************************************************************************
+
+
 #### CrossApp 0.3.5 更新内容：  
 
 #####1.添加CAStepper

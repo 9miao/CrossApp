@@ -11,11 +11,9 @@ class LabelTest :public CAViewController
 public:
 	LabelTest();
 	virtual ~LabelTest();
-    bool init();
     
 public:
-	void textSetAlignment(void);
-	void textSetVerticalAlignment(void);
+	void numberChange(float interval);
 
 protected:
 	void viewDidLoad();
@@ -23,7 +21,10 @@ protected:
 
 private:
 	CADipSize size;
-	std::string introduce;
+	CALabel* number1;
+	CALabel* number2;
+	CALabel* number3;
+	int sum;
 
 };
 

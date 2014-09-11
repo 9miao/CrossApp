@@ -186,12 +186,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionInterval.cpp" />
     <ClCompile Include="..\actions\CCActionManager.cpp" />
     <ClCompile Include="..\actions\CCActionTween.cpp" />
-    <ClCompile Include="..\images\CAAnimation.cpp" />
-    <ClCompile Include="..\images\CAAnimationCache.cpp" />
     <ClCompile Include="..\images\CAImage.cpp" />
     <ClCompile Include="..\images\CAImageCache.cpp" />
-    <ClCompile Include="..\images\CAImageFrame.cpp" />
-    <ClCompile Include="..\images\CAImageFrameCache.cpp" />
     <ClCompile Include="..\platform\CAFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\CAFTFontCache.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
@@ -256,6 +252,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CAListView.cpp" />
     <ClCompile Include="..\view\CAPageView.cpp" />
     <ClCompile Include="..\view\CAPickerView.cpp" />
+    <ClCompile Include="..\view\CAPullToRefreshView.cpp" />
     <ClCompile Include="..\view\CARenderImage.cpp" />
     <ClCompile Include="..\view\CAScale9ImageView.cpp" />
     <ClCompile Include="..\view\CAScrollView.cpp" />
@@ -314,12 +311,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\actions\CCActionInterval.h" />
     <ClInclude Include="..\actions\CCActionManager.h" />
     <ClInclude Include="..\actions\CCActionTween.h" />
-    <ClInclude Include="..\images\CAAnimation.h" />
-    <ClInclude Include="..\images\CAAnimationCache.h" />
     <ClInclude Include="..\images\CAImage.h" />
     <ClInclude Include="..\images\CAImageCache.h" />
-    <ClInclude Include="..\images\CAImageFrame.h" />
-    <ClInclude Include="..\images\CAImageFrameCache.h" />
     <ClInclude Include="..\platform\CADensityDpi.h" />
     <ClInclude Include="..\platform\CAFreeTypeFont.h" />
     <ClInclude Include="..\platform\CAFTFontCache.h" />
@@ -407,6 +400,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\view\CAListView.h" />
     <ClInclude Include="..\view\CAPageView.h" />
     <ClInclude Include="..\view\CAPickerView.h" />
+    <ClInclude Include="..\view\CAPullToRefreshView.h" />
     <ClInclude Include="..\view\CARenderImage.h" />
     <ClInclude Include="..\view\CAScale9ImageView.h" />
     <ClInclude Include="..\view\CAScrollView.h" />

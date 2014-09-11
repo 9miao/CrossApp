@@ -4,18 +4,19 @@
 
 AlertViewTest::AlertViewTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(false);
 }
 
 AlertViewTest::~AlertViewTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(true);
 }
 
 void AlertViewTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
-
 	imageBtn = CAButton::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width*0.2, 50), CAButtonTypeSquareRect);
 	imageBtn->setTitleForState(CAControlStateAll,"Click");
 	imageBtn->addTarget(this,CAControl_selector(AlertViewTest::respondTouch),CAControlEventTouchUpInSide);

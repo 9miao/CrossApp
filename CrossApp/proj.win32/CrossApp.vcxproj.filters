@@ -255,12 +255,6 @@
     <ClCompile Include="..\shaders\CAShaderCache.cpp">
       <Filter>shaders</Filter>
     </ClCompile>
-    <ClCompile Include="..\images\CAImageFrame.cpp">
-      <Filter>images</Filter>
-    </ClCompile>
-    <ClCompile Include="..\images\CAImageFrameCache.cpp">
-      <Filter>images</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\CANotificationCenter.cpp">
       <Filter>support</Filter>
     </ClCompile>
@@ -367,12 +361,6 @@
       <Filter>controller</Filter>
     </ClCompile>
     <ClCompile Include="..\CrossApp.cpp" />
-    <ClCompile Include="..\images\CAAnimation.cpp">
-      <Filter>images</Filter>
-    </ClCompile>
-    <ClCompile Include="..\images\CAAnimationCache.cpp">
-      <Filter>images</Filter>
-    </ClCompile>
     <ClCompile Include="..\view\CAAlertView.cpp">
       <Filter>view</Filter>
     </ClCompile>
@@ -429,6 +417,9 @@
     </ClCompile>
     <ClCompile Include="..\control\CAStepper.cpp">
       <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAPullToRefreshView.cpp">
+      <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -684,12 +675,6 @@
     <ClInclude Include="..\shaders\CAShaderCache.h">
       <Filter>shaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\images\CAImageFrame.h">
-      <Filter>images</Filter>
-    </ClInclude>
-    <ClInclude Include="..\images\CAImageFrameCache.h">
-      <Filter>images</Filter>
-    </ClInclude>
     <ClInclude Include="..\support\CANotificationCenter.h">
       <Filter>support</Filter>
     </ClInclude>
@@ -806,12 +791,6 @@
     <ClInclude Include="..\ccTypeInfo.h" />
     <ClInclude Include="..\ccTypes.h" />
     <ClInclude Include="..\CrossApp.h" />
-    <ClInclude Include="..\images\CAAnimation.h">
-      <Filter>images</Filter>
-    </ClInclude>
-    <ClInclude Include="..\images\CAAnimationCache.h">
-      <Filter>images</Filter>
-    </ClInclude>
     <ClInclude Include="..\view\CAAlertView.h">
       <Filter>view</Filter>
     </ClInclude>
@@ -868,6 +847,9 @@
     </ClInclude>
     <ClInclude Include="..\control\CAStepper.h">
       <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAPullToRefreshView.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

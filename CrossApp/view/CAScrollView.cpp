@@ -936,34 +936,31 @@ void CAScrollView::endFooterRefresh()
 
 void CAScrollView::layoutPullToRefreshView()
 {
-    CADipSize windowSize = this->getBounds().size;
     CADipSize viewSize = this->getViewSize();
     if (m_pHeaderRefreshView)
     {
-        CADipRect rect = CADipRect(0, -128, windowSize.width, 128);
-        m_pHeaderRefreshView->setFrame(rect);
+        m_pHeaderRefreshView->setFrame(CADipRect(0, -128.0f, viewSize.width, 128.0f));
+        if (m_pHeaderRefreshView->getSuperview() == NULL)
+        {
+            m_pContainer->addSubview(m_pHeaderRefreshView);
+        }
         if (m_pHeaderRefreshView->isLayoutFinish() == false)
         {
             m_pHeaderRefreshView->startLayout();
-        }
-        if (m_pHeaderRefreshView->getSuperview() == NULL)
-        {
-            this->addSubview(m_pHeaderRefreshView);
         }
         this->endHeaderRefresh();
     }
 
     if (m_pFooterRefreshView)
     {
-        CADipRect rect = CADipRect(0, viewSize.height, windowSize.width, 128);
-        m_pFooterRefreshView->setFrame(rect);
+        m_pFooterRefreshView->setFrame(CADipRect(0, viewSize.height, viewSize.width, 128.0f));
+        if (m_pFooterRefreshView->getSuperview() == NULL)
+        {
+            m_pContainer->addSubview(m_pFooterRefreshView);
+        }
         if (m_pFooterRefreshView->isLayoutFinish() == false)
         {
             m_pFooterRefreshView->startLayout();
-        }
-        if (m_pFooterRefreshView->getSuperview() == NULL)
-        {
-            this->addSubview(m_pFooterRefreshView);
         }
         this->endFooterRefresh();
     }

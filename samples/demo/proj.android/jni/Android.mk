@@ -20,6 +20,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 ../../Classes/CollectionViewTest/CollectionViewTest.cpp \
 ../../Classes/ImageViewTest/ImageViewTest.cpp \
 ../../Classes/LabelTest/LabelTest.cpp \
+../../Classes/ListViewTest/ListViewTest.cpp \
 ../../Classes/PageViewTest/PageViewTest.cpp \
 ../../Classes/ProgressTest/ProgressTest.cpp \
 ../../Classes/ScrollViewTest/ScrollViewTest.cpp \
@@ -41,6 +42,7 @@ $(LOCAL_PATH)/../../Classes/ButtonTest \
 $(LOCAL_PATH)/../../Classes/CollectionViewTest \
 $(LOCAL_PATH)/../../Classes/ImageViewTest \
 $(LOCAL_PATH)/../../Classes/LabelTest \
+$(LOCAL_PATH)/../../Classes/ListViewTest \
 $(LOCAL_PATH)/../../Classes/PageViewTest \
 $(LOCAL_PATH)/../../Classes/ProgressTest \
 $(LOCAL_PATH)/../../Classes/ScrollViewTest \
@@ -59,8 +61,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_extension_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-add-path, D:/CrossApp)
-$(call import-add-path, D:/CrossApp/CrossApp/platform/third_party/android/prebuilt)
+$(call import-add-path,D:/CrossApp)
+$(call import-add-path,D:/CrossApp/CrossApp/platform/third_party/android/prebuilt)
 
 $(call import-module,CrossApp)
 $(call import-module,CrossApp/platform/third_party/android/prebuilt/libcurl)

@@ -4,12 +4,14 @@
 
 ScrollViewTest::ScrollViewTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(false);
 }
 
 ScrollViewTest::~ScrollViewTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(true);
 }
 
 void ScrollViewTest::viewDidLoad()
@@ -17,8 +19,8 @@ void ScrollViewTest::viewDidLoad()
 	size = this->getView()->getBounds().size;
 	
 	p_ScrollView = CAScrollView::createWithCenter(CADipRect(size.width*0.5,size.height*0.5,size.width,size.height));
-	p_ScrollView->setMinimumZoomScale(5.0f);
-	p_ScrollView->setMaximumZoomScale(2.0f);
+	p_ScrollView->setMinimumZoomScale(0.2f);
+	p_ScrollView->setMaximumZoomScale(5.0f);
 	this->getView()->addSubview(p_ScrollView);
 
 	CADipSize _size = p_ScrollView->getBounds().size;

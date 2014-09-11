@@ -33,9 +33,9 @@ void PageViewTest::viewDidLoad()
 	this->getView()->insertSubview(segmented,3);
 
 
-	CAImageView* view1 = CAImageView::createWithImage(CAImage::create("1.jpg"));
-	CAImageView* view2 = CAImageView::createWithImage(CAImage::create("2.jpg"));
-	CAImageView* view3 = CAImageView::createWithImage(CAImage::create("3.jpg"));
+	CAImageView* view1 = CAImageView::createWithImage(CAImage::create("background/5.jpg"));
+	CAImageView* view2 = CAImageView::createWithImage(CAImage::create("background/6.jpg"));
+	CAImageView* view3 = CAImageView::createWithImage(CAImage::create("background/7.jpg"));
 	_view.pushBack(view1);
 	_view.pushBack(view2);
 	_view.pushBack(view3);
@@ -61,40 +61,41 @@ void PageViewTest::pageViewDidEndTurning(CAPageView* pageView)
 	segmented->setSelectedAtIndex(pageView->getCurrPage());
 }
 
-void PageViewTest::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index)
+void PageViewTest::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point)
 {
+	CAWindow* window = CAApplication::getApplication()->getRootWindow();
+	CADrawerController* drawer = (CADrawerController*)window->getRootViewController();
+	CANavigationController* nav = (CANavigationController*)drawer->getRightViewController();
 	if (!fullScreen)
 	{
 		segmented->setVisible(false);
-		CAWindow* window = CAApplication::getApplication()->getRootWindow(); 
-		CADrawerController* drawer = (CADrawerController*)window->getRootViewController(); 
-		CANavigationController* nav = (CANavigationController*)drawer->getLeftViewController(); 
 		nav->setNavigationBarHidden(true, true);
-		//drawer->hideLeftViewController(true);
 		fullScreen = true;
 	}
 	else
 	{
 		segmented->setVisible(true);
-		CAWindow* window = CAApplication::getApplication()->getRootWindow();
-		CADrawerController* drawer = (CADrawerController*)window->getRootViewController();
-		CANavigationController* nav = (CANavigationController*)drawer->getLeftViewController();
 		nav->setNavigationBarHidden(false, true);
-		//drawer->hideLeftViewController(true);
 		fullScreen = false;
 	}
+	//reshapeViewRectDidFinish();
 }
 
 void PageViewTest::viewDidUnload()
 {
 
-
 }
 
 void PageViewTest::reshapeViewRectDidFinish()
 {
+	//CAWindow* window = CAApplication::getApplication()->getRootWindow();
+	//CADrawerController* drawer = (CADrawerController*)window->getRootViewController();
+	//CANavigationController* nav = (CANavigationController*)drawer->getLeftViewController();
 	CADipSize currentSize = this->getView()->getBounds().size;
+	//currentSize.height = currentSize.height + nav->getNavigationBar()->getBounds().size.height;
+	CCLog("%f",currentSize.height);
 	float scaleY = fullScreen ? (currentSize.height / size.height) : (size.height / currentSize.height);
+	CCLog("%f", scaleY);
 	pageViewTest->setScaleY(scaleY);
 	pageViewTest->setCenterOrigin(CADipPoint(currentSize.width*0.5, currentSize.height*0.5));
 }
