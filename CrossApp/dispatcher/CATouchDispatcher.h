@@ -110,6 +110,8 @@ public:
     
     void setDispatchEventsFalse();
     
+    int getTouchCount();
+    
 public:
 
     /**
