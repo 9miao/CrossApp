@@ -261,6 +261,7 @@ void CATouchController::touchMoved()
                         CC_CONTINUE_IF(responder->isSlidingMinY() && pointOffSet.y > 0);
                         CC_CONTINUE_IF(responder->isSlidingMaxY() && pointOffSet.y < 0);
                     }
+                    
                     m_vTouchesViews.pushBack(responder);
                     this->passingTouchesViews();
                     break;
@@ -397,7 +398,7 @@ void CATouchDispatcher::touchesEnded(CCSet *touches, CAEvent *pEvent)
         CC_CONTINUE_IF(touchController == NULL);
         touchController->touchEnded();
         delete touchController;
-        m_vTouchControllers[pTouch->getID()] = NULL;
+        m_vTouchControllers.erase(pTouch->getID());
     }
     m_bLocked = false;
 }
@@ -416,11 +417,14 @@ void CATouchDispatcher::touchesCancelled(CCSet *touches, CAEvent *pEvent)
         CC_CONTINUE_IF(touchController == NULL);
         touchController->touchEnded();
         delete touchController;
-        m_vTouchControllers[pTouch->getID()] = NULL;
+        m_vTouchControllers.erase(pTouch->getID());
     }
     m_bLocked = false;
 }
 
-
+int CATouchDispatcher::getTouchCount()
+{
+    return (int)m_vTouchControllers.size();
+}
 
 NS_CC_END

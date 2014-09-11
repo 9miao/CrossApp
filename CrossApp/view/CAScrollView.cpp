@@ -11,6 +11,7 @@
 #include "actions/CCActionInterval.h"
 #include "actions/CCActionEase.h"
 #include "basics/CAApplication.h"
+#include "dispatcher/CATouchDispatcher.h"
 #include "basics/CAScheduler.h"
 #include "dispatcher/CATouch.h"
 #include "support/CCPointExtension.h"
@@ -332,7 +333,7 @@ void CAScrollView::setContentSize(const CrossApp::CCSize &var)
     CC_RETURN_IF(m_pContainer == NULL);
     
     CCPoint point = m_pContainer->getFrameOrigin();
-    point = this->getScrollWindowNotOutPoint(point);
+    this->getScrollWindowNotOutPoint(point);
     this->setContainerFrame(point);
     
     this->updateIndicator();
@@ -353,15 +354,66 @@ void CAScrollView::setContainerFrame(const CCPoint& point, const CCSize& size)
         m_pContainer->setFrameOrigin(point);
     }
     
-    if (m_pTouches->count() < 2 || m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON)
+    CCRect rect = m_pContainer->getFrame();
+    
+    m_bSlidingMinX = rect.getMinX() >= 0.0f;
+    m_bSlidingMaxX = rect.getMaxX() - this->getBounds().size.width < FLT_EPSILON;
+    m_bSlidingMinY = rect.getMinY() >= 0.0f;
+    m_bSlidingMaxY = rect.getMaxY() - this->getBounds().size.height < FLT_EPSILON;
+    
+    
+}
+
+bool CAScrollView::isSlidingMinX(void) const
+{
+    do
     {
-        CCRect rect = m_pContainer->getFrame();
-        
-        m_bSlidingMinX = fabsf(rect.getMinX()) < FLT_EPSILON;
-        m_bSlidingMaxX = fabsf(rect.getMaxX() - this->getBounds().size.width) < FLT_EPSILON;
-        m_bSlidingMinY = fabsf(rect.getMinY()) < FLT_EPSILON;
-        m_bSlidingMaxY = fabsf(rect.getMaxY() - this->getBounds().size.height) < FLT_EPSILON;
+        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
+        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
+        return false;
     }
+    while (0);
+    
+    return m_bSlidingMinX;
+}
+
+bool CAScrollView::isSlidingMaxX(void) const
+{
+    do
+    {
+        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
+        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
+        return false;
+    }
+    while (0);
+    
+    return m_bSlidingMaxX;
+}
+
+bool CAScrollView::isSlidingMinY(void) const
+{
+    do
+    {
+        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
+        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
+        return false;
+    }
+    while (0);
+    
+    return m_bSlidingMinY;
+}
+
+bool CAScrollView::isSlidingMaxY(void) const
+{
+    do
+    {
+        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
+        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
+        return false;
+    }
+    while (0);
+    
+    return m_bSlidingMaxY;
 }
 
 bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -455,32 +507,24 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     if (m_bBounces)
     {
         CCSize size = this->getBounds().size;
-        CCRect rect = m_pContainer->getFrame();
-        rect.size.width = MAX(rect.size.width, size.width);
-        rect.size.height = MAX(rect.size.height, size.height);
+        CCPoint curr_point = m_pContainer->getFrameOrigin();
+        CCPoint relust_point = curr_point;
+        this->getScrollWindowNotOutPoint(relust_point);
+        
+        float lenght_x = fabsf(curr_point.x - relust_point.x);
+        float lenght_y = fabsf(curr_point.y - relust_point.y);
+        
         CCPoint scale = CCPoint(1.0f, 1.0f);
         
-        if (p_container.x > 0)
+        if (!(lenght_x < FLT_EPSILON))
         {
-            scale.x = MAX(0, 0.5f - rect.getMinX() / size.width);
+            scale.x = (0.5f - MIN(lenght_x / size.width, 0.5f));
             p_off.x *= scale.x;
         }
         
-        if (p_container.y > 0)
+        if (!(lenght_y < FLT_EPSILON))
         {
-            scale.y = MAX(0, 0.5f - rect.getMinY() / size.height);
-            p_off.y *= scale.y;
-        }
-        
-        if ((p_container.x + rect.size.width - size.width) < 0)
-        {
-            scale.x = MAX(0, rect.getMaxX() / size.width - 0.5f);
-            p_off.x *= scale.x;
-        }
-        
-        if ((p_container.y + rect.size.height - size.height) < 0)
-        {
-            scale.y = MAX(0, rect.getMaxY() / size.height - 0.5f);
+            scale.y = (0.5f - MIN(lenght_y / size.height, 0.5f));
             p_off.y *= scale.y;
         }
     }
@@ -496,7 +540,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_bBounces == false)
     {
-        p_container = this->getScrollWindowNotOutPoint(p_container);
+        this->getScrollWindowNotOutPoint(p_container);
     }
     else
     {
@@ -650,34 +694,22 @@ void CAScrollView::deaccelerateScrolling(float dt)
 
     if (m_bBounces)
     {
-        CCSize size = this->getBounds().size;
-        CCSize cSize = m_pContainer->getFrame().size;
-        cSize.width = MAX(cSize.width, size.width);
-        cSize.height = MAX(cSize.height, size.height);
-        
-        float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
-        float y_min = this->isFooterRefreshing() ? size.height - cSize.height - _px(128) : size.height - cSize.height;
-        
         CCPoint resilience = CCPointZero;
+        CCSize size = this->getBounds().size;
+        CCPoint curr_point = m_pContainer->getFrameOrigin();
+        CCPoint relust_point = curr_point;
+        this->getScrollWindowNotOutPoint(relust_point);
+        float off_x = curr_point.x - relust_point.x;
+        float off_y = curr_point.y - relust_point.y;
         
-        if (point.x > 0)
+        if (!(fabsf(off_x) < FLT_EPSILON))
         {
-            resilience.x = (point.x) / size.width;
+            resilience.x = off_x / size.width;
         }
         
-        if (point.y - y_max > 0)
+        if (!(fabsf(off_y) < FLT_EPSILON))
         {
-            resilience.y = (point.y - y_max) / size.height;
-        }
-        
-        if ((point.x + cSize.width - size.width) < 0)
-        {
-            resilience.x = (point.x + cSize.width - size.width) / size.width;
-        }
-        
-        if ((point.y - y_min) < 0)
-        {
-            resilience.y = (point.y - y_min) / size.height;
+            resilience.y = off_y / size.height;
         }
         
         resilience = ccpMult(resilience, maxBouncesSpeed(dt));
@@ -691,10 +723,9 @@ void CAScrollView::deaccelerateScrolling(float dt)
 
     if (speed.getLength() <= minSpeed(dt) / 2)
     {
-        point = this->getScrollWindowNotOutPoint(point);
+        this->getScrollWindowNotOutPoint(point);
         this->setContainerFrame(point);
         this->hideIndicator();
-        //this->detectionFromPullToRefreshView();
         this->stopDeaccelerateScroll();
     }
     else
@@ -708,7 +739,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
         
         if (m_bBounces == false)
         {
-            point = this->getScrollWindowNotOutPoint(point);
+            this->getScrollWindowNotOutPoint(point);
         }
         else
         {
@@ -722,8 +753,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
                 point.y = this->getScrollWindowNotOutVertical(point.y);
             }
         }
-        
-        //this->changedFromPullToRefreshView();
+
         this->showIndicator();
         this->setContainerFrame(point);
     }
@@ -795,23 +825,26 @@ void CAScrollView::update(float dt)
     }
 }
 
-const CCPoint& CAScrollView::getScrollWindowNotOutPoint(CCPoint& point)
+void CAScrollView::getScrollWindowNotOutPoint(CCPoint& point)
 {
     point.x = this->getScrollWindowNotOutHorizontal(point.x);
     point.y = this->getScrollWindowNotOutVertical(point.y);
-    
-    return point;
 }
 
 float CAScrollView::getScrollWindowNotOutHorizontal(float x)
 {
     CCSize size = this->getBounds().size;
     CCSize cSize = m_pContainer->getFrame().size;
-    cSize.width = MAX(cSize.width, size.width);
-    cSize.height = MAX(cSize.height, size.height);
     
-    x = MIN(x, 0) ;
-    x = MAX(x, size.width - cSize.width);
+    if (cSize.width >= size.width)
+    {
+        x = MIN(x, 0) ;
+        x = MAX(x, size.width - cSize.width);
+    }
+    else
+    {
+        x = size.width/2 - cSize.width/2;
+    }
     
     return x;
 }
@@ -820,79 +853,40 @@ float CAScrollView::getScrollWindowNotOutVertical(float y)
 {
     CCSize size = this->getBounds().size;
     CCSize cSize = m_pContainer->getFrame().size;
-    cSize.width = MAX(cSize.width, size.width);
-    cSize.height = MAX(cSize.height, size.height);
     
-    float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
-    float y_min = this->isFooterRefreshing() ? size.height - cSize.height - _px(128) : size.height - cSize.height;
-
-    y = MIN(y, y_max);
-    y = MAX(y, y_min);
+    if (cSize.height >= size.height)
+    {
+        float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
+        float y_min = this->isFooterRefreshing() ? size.height - cSize.height - _px(128) : size.height - cSize.height;
+        
+        y = MIN(y, y_max);
+        y = MAX(y, y_min);
+    }
+    else
+    {
+        y = size.height/2 - cSize.height/2;
+    }
 
     return y;
 }
 
 bool CAScrollView::isScrollWindowNotOutSide()
 {
-    CCSize size = this->getBounds().size;
-    CCRect rect = m_pContainer->getFrame();
+    CCPoint point = m_pContainer->getFrameOrigin();
+    this->getScrollWindowNotOutPoint(point);
     
-    if (rect.getMinX() > 0.5f)
-    {
-        return true;
-    }
-    
-    if ((rect.getMaxX() - size.width) < -0.5f)
-    {
-        return true;
-    }
-    
-    float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
-    float y_min = (this->isFooterRefreshing() ? _px(128) : 0.0f) - size.height;
-    
-    if (rect.getMinY() + y_max > 0.5f)
-    {
-        return true;
-    }
-    
-    if (rect.getMaxY() + y_min < -0.5f)
-    {
-        return true;
-    }
-    
-    return false;
+    return !point.equals(m_pContainer->getFrameOrigin());
 }
 
 
 bool CAScrollView::isScrollWindowNotMaxOutSide(const CCPoint& point)
 {
-    CCSize size = this->getBounds().size;
-    CCRect rect = m_pContainer->getFrame();
+    CCPoint p = point;
+    this->getScrollWindowNotOutPoint(p);
     
-    if (point.x - maxBouncesLenght() > 0)
-    {
-        return true;
-    }
-    
-    if ((point.x + rect.size.width - size.width + maxBouncesLenght()) < 0)
-    {
-        return true;
-    }
-    
-    float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
-    float y_min = (this->isFooterRefreshing() ? _px(128) : 0.0f);
-    
-    if (point.y - maxBouncesLenght() - y_max > 0)
-    {
-        return true;
-    }
-    
-    if ((point.y + rect.size.height - size.height + maxBouncesLenght() + y_min) < 0)
-    {
-        return true;
-    }
-    
-    return false;
+    return (fabsf(p.x - point.x) > maxBouncesLenght()
+            ||
+            fabsf(p.y - point.y) > maxBouncesLenght());
 }
 
 void CAScrollView::setHeaderRefreshView(CrossApp::CAPullToRefreshView *var)

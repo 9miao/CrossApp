@@ -121,6 +121,14 @@ public:
     
     void startDeaccelerateScroll();
     
+    virtual bool isSlidingMinX(void) const;
+    
+    virtual bool isSlidingMaxX(void) const;
+    
+    virtual bool isSlidingMinY(void) const;
+    
+    virtual bool isSlidingMaxY(void) const;
+    
 protected:
  
     inline virtual float minSpeed(float dt)
@@ -153,7 +161,7 @@ protected:
         return _px(120.0f);
     }
     
-    const CCPoint& getScrollWindowNotOutPoint(CCPoint& point);
+    void getScrollWindowNotOutPoint(CCPoint& point);
     
     virtual float getScrollWindowNotOutHorizontal(float x);
     
