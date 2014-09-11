@@ -353,12 +353,15 @@ void CAScrollView::setContainerFrame(const CCPoint& point, const CCSize& size)
         m_pContainer->setFrameOrigin(point);
     }
     
-    CCRect rect = m_pContainer->getFrame();
-    
-    m_bSlidingMinX = fabsf(rect.getMinX()) < FLT_EPSILON;
-    m_bSlidingMaxX = fabsf(rect.getMaxX() - this->getBounds().size.width) < FLT_EPSILON;
-    m_bSlidingMinY = fabsf(rect.getMinY()) < FLT_EPSILON;
-    m_bSlidingMaxY = fabsf(rect.getMaxY() - this->getBounds().size.height) < FLT_EPSILON;
+    if (m_pTouches->count() < 2 || m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON)
+    {
+        CCRect rect = m_pContainer->getFrame();
+        
+        m_bSlidingMinX = fabsf(rect.getMinX()) < FLT_EPSILON;
+        m_bSlidingMaxX = fabsf(rect.getMaxX() - this->getBounds().size.width) < FLT_EPSILON;
+        m_bSlidingMinY = fabsf(rect.getMinY()) < FLT_EPSILON;
+        m_bSlidingMaxY = fabsf(rect.getMaxY() - this->getBounds().size.height) < FLT_EPSILON;
+    }
 }
 
 bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
