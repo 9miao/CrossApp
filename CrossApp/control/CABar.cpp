@@ -89,14 +89,14 @@ void CANavigationBar::setBackGroundImage(CAImage* var)
     this->showBackGround();
 }
 
-void CANavigationBar::setTitleColor(CAColor4B color)
+void CANavigationBar::setTitleColor(const CAColor4B& color)
 {
     m_cTitleColor = color;
     CC_RETURN_IF(!m_bRunning);
     this->showTitle();
 }
 
-void CANavigationBar::setButtonColor(CAColor4B color)
+void CANavigationBar::setButtonColor(const CAColor4B& color)
 {
     m_cButtonColor = color;
     CC_RETURN_IF(!m_bRunning);
