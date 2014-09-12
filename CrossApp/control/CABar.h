@@ -54,17 +54,17 @@ public:
     
     CC_SYNTHESIZE_READONLY(CAImage*, m_pBackGroundImage, BackGroundImage);
     
-    virtual void setTitleColor(CAColor4B color);
+    virtual void setTitleColor(const CAColor4B& color);
     
-    CC_SYNTHESIZE_READONLY(CAColor4B, m_cTitleColor, TitleColor);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_cTitleColor, TitleColor);
     
-    virtual void setButtonColor(CAColor4B color);
+    virtual void setButtonColor(const CAColor4B& color);
     
-    CC_SYNTHESIZE_READONLY(CAColor4B, m_cButtonColor, ButtonColor);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_cButtonColor, ButtonColor);
     
     CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
     
-    CC_SYNTHESIZE_READONLY(std::vector<CANavigationBarItem*>, m_pItems, Items);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(std::vector<CANavigationBarItem*>, m_pItems, Items);
     
     void replaceItemAtIndex(size_t index, CANavigationBarItem* item);
     
@@ -142,7 +142,7 @@ public:
     
     CC_SYNTHESIZE(CATabBarDelegate* , m_pDelegate, Delegate);
     
-    CC_SYNTHESIZE_READONLY(std::vector<CATabBarItem*>, m_pItems, Items);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(std::vector<CATabBarItem*>, m_pItems, Items);
     
     CC_SYNTHESIZE_READONLY(int, m_nSelectedIndex, SelectedIndex);
     
