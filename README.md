@@ -32,6 +32,38 @@ CATableView老版上下拉刷新监听代理已移除
 注意第7条的修改，如果用到该代理方法需改名与其一致
 
 
+#### CrossApp.0 3. 6 Update:
+
+##### 1. Added CAPullToRefreshView
+Added pull up and pull down refresh plug-ins of CAListView, CATableView and CACollectionView, please view their usage in CollectionViewTest of demo. Removed pull up and pull down refresh monitoring agent of older version CATableView.<br/>
+
+##### 2. Added page turning effect of left and right swipe gestures
+You are required to manually set relative properties to launch this effect.<br/>
+
+##### 3. Touch Event Distributed System Optimization
+Added functionality that supports system auto switching to monitor parent container after child container slides to end when same direction sliding container is nested.<br/>
+
+##### 4. CAProgress Optimization
+
+##### 5. CAScale9ImageView Optimization
+
+##### 6. Deleted CAImageView Interface
+
+##### 7. Amended Agent Method Naming of CACollectionViewDataSource
+
+##virtual unsigned int numberOfSectionsInCollectioView()<br/>
+##is changed as<br/>
+##virtual unsigned int numberOfSections(CACollectionView *collectionView)<br/>
+
+##virtual unsigned int numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section)<br/>
+##is changed as<br/>
+##virtual unsigned int numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)<br/>
+
+#### Suggestion:
+Note seventh item’s amendment, if you use this agent method, you should follow the same name of it.<br/>
+
+
+
 **********************************************************************************
 
 
