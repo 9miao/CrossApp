@@ -936,10 +936,7 @@ bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index)
         m_nLastSelectedIndex = m_nSelectedIndex;
         m_nSelectedIndex = index;
         
-        CAApplication::getApplication()->getRootWindow()->runAction
-        (
-            CCCallFunc::create(this, callfunc_selector(CATabBarController::renderingSelectedViewController))
-        );
+        this->renderingSelectedViewController();
         
         return true;
     }

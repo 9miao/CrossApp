@@ -81,6 +81,8 @@ public:
 
     void setBackGroundColor(const CAColor4B &color);
     
+    void setZoomScale(float zoom);
+    
     CC_SYNTHESIZE(CAScrollViewDelegate*, m_pScrollViewDelegate, ScrollViewDelegate);
     
     CC_PROPERTY_IS(bool, m_bBounces, Bounces);

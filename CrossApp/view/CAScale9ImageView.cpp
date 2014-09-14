@@ -133,7 +133,7 @@ bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, const C
     
     for (int i=0; i<9; i++)
     {
-        CC_SAFE_RELEASE(m_pImageView[i]);
+        CC_SAFE_RELEASE_NULL(m_pImageView[i]);
     }
 
     if(m_pScale9ImageView != batch)
