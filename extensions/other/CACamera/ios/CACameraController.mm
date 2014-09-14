@@ -84,6 +84,7 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:NULL];
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEvents(true);
 }
 
 @end

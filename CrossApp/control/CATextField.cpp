@@ -181,7 +181,8 @@ std::string CATextField::getText()
 void CATextField::setPlaceHolder(std::string var)
 {
     m_sPlaceHolder = var;
-    this->updateImage();
+
+  //  this->updateImage();
 }
 
 std::string CATextField::getPlaceHolder()
@@ -450,7 +451,16 @@ void CATextField::deleteBackward()
     }
 
 	if (m_iCurPos==0 || m_sText.empty())
-		return;
+    {
+        m_sText.clear();
+        this->updateImage();
+		m_iString_l_length = 0;
+		m_iString_r_length = 0;
+        m_iString_left_offX= 0;
+		m_iCurPos = 0;
+        return;
+    }
+    
 
 	int nDeleteLen = 1;
 	while (0x80 == (0xC0 & m_sText.at(m_iCurPos - nDeleteLen)))
@@ -496,6 +506,7 @@ void CATextField::deleteBackward()
 }
 const char* CATextField::getContentText()
 {
+    CCLog("CATextField::getContentText()   %s",m_sText.c_str());
     return m_sText.c_str();
 }
 
@@ -558,8 +569,6 @@ void CATextField::updateImage()
 		}
 		text = password;
 	}
-
-    
 	CCSize size = CCSizeMake(0, m_iFontHeight);
     CAImage* image = CAImage::createWithString(text.c_str(),
                                                "",

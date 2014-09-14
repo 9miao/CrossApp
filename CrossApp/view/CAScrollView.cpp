@@ -321,6 +321,14 @@ void CAScrollView::setBackGroundColor(const CAColor4B &color)
     CAView::setColor(color);
 }
 
+void CAScrollView::setZoomScale(float zoom)
+{
+    zoom = MAX(zoom, m_fMinimumZoomScale);
+    zoom = MIN(zoom, m_fMaximumZoomScale);
+    m_fZoomScale = zoom;
+    m_pContainer->setScale(m_fZoomScale);
+}
+
 void CAScrollView::setContentSize(const CrossApp::CCSize &var)
 {
     CAView::setContentSize(var);
@@ -487,7 +495,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         if (m_fMinimumZoomScale < m_fMaximumZoomScale)
         {
             float touch_lenght = ccpDistance(touch0->getLocation(), touch1->getLocation());
-            float scale_off = _px(touch_lenght - m_fTouchLength) * 0.0015f;
+            float scale_off = _px(touch_lenght - m_fTouchLength) * 0.0020f;
             
             m_fZoomScale = m_pContainer->getScale();
             m_fZoomScale += m_fZoomScale * scale_off;
