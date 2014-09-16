@@ -424,42 +424,4 @@ static BitmapDC& sharedBitmapDC()
 	return s_BmpDC;
 }
 
-bool CCImage::initWithString(
-		const char * pText,
-		int nWidth/* = 0*/,
-		int nHeight/* = 0*/,
-		ETextAlign eAlignMask/* = kAlignCenter*/,
-		const char * pFontName/* = nil*/,
-		int nSize/* = 0*/)
-{
-	bool bRet = false;
-	do
-	{
-		CC_BREAK_IF(! pText);
-
-		BitmapDC &dc = sharedBitmapDC();
-
-		//const char* pFullFontName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);
-
-		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
-
-		// assign the dc.m_pData to m_pData in order to save time
-		m_pData = dc.m_pData;
-		CC_BREAK_IF(! m_pData);
-
-		m_nWidth = (short)dc.iMaxLineWidth;
-		m_nHeight = (short)dc.iMaxLineHeight;
-		m_bHasAlpha = true;
-		m_bPreMulti = true;
-		m_nBitsPerComponent = 8;
-
-		bRet = true;
-
-		dc.reset();
-	}while (0);
-
-	//do nothing
-	return bRet;
-}
-
 NS_CC_END

@@ -1,26 +1,4 @@
-/****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
 
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
 #define __CC_PLATFORM_IMAGE_CPP__
 #include "platform/CCImageCommon_cpp.h"
 
@@ -364,73 +342,6 @@ static BitmapDC& sharedBitmapDC()
 {
     static BitmapDC s_BmpDC;
     return s_BmpDC;
-}
-
-bool CCImage::initWithString(
-                               const char *    pText, 
-                               int             nWidth/* = 0*/, 
-                               int             nHeight/* = 0*/,
-                               ETextAlign      eAlignMask/* = kAlignCenter*/,
-                               const char *    pFontName/* = nil*/,
-                               int             nSize/* = 0*/)
-{
-    bool bRet = false;
-    do 
-    {
-        CC_BREAK_IF(! pText);       
-
-        BitmapDC& dc = sharedBitmapDC();
-
-        if (! dc.setFont(pFontName, nSize))
-        {
-            CCLog("Can't found font(%s), use system default", pFontName);
-        }
-
-        // draw text
-        SIZE size = {nWidth, nHeight};
-        CC_BREAK_IF(! dc.drawText(pText, size, eAlignMask));
-
-        m_pData = new unsigned char[size.cx * size.cy * 4];
-        CC_BREAK_IF(! m_pData);
-
-        struct
-        {
-            BITMAPINFOHEADER bmiHeader;
-            int mask[4];
-        } bi = {0};
-        bi.bmiHeader.biSize = sizeof(bi.bmiHeader);
-        CC_BREAK_IF(! GetDIBits(dc.getDC(), dc.getBitmap(), 0, 0, 
-            NULL, (LPBITMAPINFO)&bi, DIB_RGB_COLORS));
-
-        m_nWidth    = (short)size.cx;
-        m_nHeight   = (short)size.cy;
-        m_bHasAlpha = true;
-        m_bPreMulti = false;
-        m_nBitsPerComponent = 8;
-        // copy pixed data
-        bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)
-           ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;
-        GetDIBits(dc.getDC(), dc.getBitmap(), 0, m_nHeight, m_pData, 
-            (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
-
-        // change pixel's alpha value to 255, when it's RGB != 0
-        COLORREF * pPixel = NULL;
-        for (int y = 0; y < m_nHeight; ++y)
-        {
-            pPixel = (COLORREF *)m_pData + y * m_nWidth;
-            for (int x = 0; x < m_nWidth; ++x)
-            {
-                COLORREF& clr = *pPixel;
-
-                clr |= (0xffffff | (GetRValue(clr) << 24));
-                ++pPixel;
-            }
-        }
-
-        bRet = true;
-    } while (0);
-
-    return bRet;
 }
 
 NS_CC_END
