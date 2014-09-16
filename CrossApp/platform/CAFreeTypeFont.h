@@ -12,6 +12,8 @@
 #include "platform/CCCommon.h"
 #include "platform/CCImage.h"
 #include "view/CAImageView.h"
+#include "control/CATextField.h"
+#include "view/CATextView.h"
 #include <map>
 #include <string>
 #include <sstream>
@@ -31,6 +33,7 @@ typedef struct TGlyph_
 	FT_UInt    index;  // glyph index
     FT_Vector  pos;    // glyph origin on the baseline
 	FT_Glyph   image;  // glyph image
+	FT_ULong   c;
 } TGlyph, *PGlyph;
 
 typedef struct FontBufferInfo
@@ -58,6 +61,8 @@ public:
 
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
 
+	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, std::vector<TextViewLineInfo>& linesText);
+
 	void setForTextField(bool on) { m_isForTextField = on; }
 
 protected:
@@ -71,15 +76,16 @@ protected:
 	void destroyAllLines();
 
 	FT_Error initGlyphs(const char* text);
+	FT_Error initGlyphsLine(const std::string& line);
 	FT_Error initWordGlyphs(std::vector<TGlyph>& glyphs, const std::string& text, FT_Vector& pen);
-
+	FT_Error initTextView(const char* pText, std::vector<TextViewLineInfo>& linesText);
+	
 	void compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox);
+	void compute_bbox2(TGlyph& glyph, FT_BBox& bbox);
 
     void drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vector *pen);
 
     void draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap,FT_Int x,FT_Int y);
-
-    void initWords(const char* text);
 
     FT_Vector getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAlign eAlignMask, int lineNumber, int totalLines);
 
