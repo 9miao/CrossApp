@@ -24,7 +24,7 @@ CAControl::CAControl()
 
 CAControl::~CAControl()
 {
-    this->removeAllSubviews();
+
 }
 
 bool CAControl::init()

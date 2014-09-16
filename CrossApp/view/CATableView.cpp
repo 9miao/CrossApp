@@ -264,11 +264,6 @@ float CATableView::decelerationRatio(float dt)
     return 2.0f * dt;
 }
 
-void CATableView::contentOffsetFinish()
-{
-    
-}
-
 CATableViewCell* CATableView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
 {
     CATableViewCell* cell = NULL;

@@ -177,7 +177,7 @@ protected:
     
     void deaccelerateScrolling(float dt);
     
-    virtual void contentOffsetFinish(){}
+    virtual void contentOffsetFinish(float dt){}
     
     void closeToPoint(float dt);
     

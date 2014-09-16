@@ -473,7 +473,7 @@ void CACollectionView::reloadData()
 			y += (iHeight + m_nVertInterval);
 		}
         
-		unsigned int iSectionFooterHeight = m_nSectionHeaderHeights.at(i);
+		unsigned int iSectionFooterHeight = m_nSectionFooterHeights.at(i);
 		CCRect sectionFooterRect = CCRectMake(0, y, width, iSectionFooterHeight);
 		if (iSectionFooterHeight > 0)
 		{

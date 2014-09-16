@@ -69,7 +69,7 @@ protected:
 
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
-    virtual void contentOffsetFinish();
+    virtual void contentOffsetFinish(float dt);
     
     inline virtual float minSpeed(float dt)
     {

@@ -207,16 +207,14 @@ public:
     void insert(size_t index, T object)
 	{
 		CCAssert(index >= 0 && index <= size(), "Invalid index!");
-		CCAssert(object != NULL, "The object should not be nullptr");
 		_data.insert(_data.begin() + index, object);
-		object->retain();
+        CC_SAFE_RETAIN(object);
 	}
     
 	void pushBack(T object)
 	{
-		CCAssert(object != NULL, "The object should not be nullptr");
 		_data.push_back(object);
-		object->retain();
+        CC_SAFE_RETAIN(object);
 	}
     
 	void pushBack(const CAVector<T>& other)
@@ -232,13 +230,11 @@ public:
 		CCAssert(!_data.empty(), "no objects added");
 		T last = _data.back();
 		_data.pop_back();
-		last->release();
+        CC_SAFE_RELEASE(last);
 	}
 
 	void eraseObject(T object, bool removeAll = false)
 	{
-		CCAssert(object != NULL, "The object should not be nullptr");
-
 		if (removeAll)
 		{
 
@@ -247,7 +243,7 @@ public:
 				if ((*iter) == object)
 				{
 					iter = _data.erase(iter);
-					object->release();
+                    CC_SAFE_RELEASE(object);
 				}
 				else
 				{
@@ -261,7 +257,7 @@ public:
 			if (iter != _data.end())
 			{
 				_data.erase(iter);
-				object->release();
+				CC_SAFE_RELEASE(object);
 			}
 		}
 	}
@@ -269,7 +265,7 @@ public:
 	iterator erase(iterator position)
 	{
 		CCAssert(position >= _data.begin() && position < _data.end(), "Invalid position!");
-		(*position)->release();
+        CC_SAFE_RELEASE(*position);
 		return _data.erase(position);
 	}
 
@@ -277,7 +273,7 @@ public:
 	{
 		for (iterator iter = first; iter != last; ++iter)
 		{
-			(*iter)->release();
+            CC_SAFE_RELEASE((*iter));
 		}
 		return _data.erase(first, last);
 	}
@@ -292,7 +288,7 @@ public:
 	{
 		for (int i = 0; i < _data.size(); i++)
 		{
-			_data[i]->release();
+            CC_SAFE_RELEASE(_data[i]);
 		}
 		_data.clear();
 	}
@@ -315,11 +311,10 @@ public:
 	void replace(size_t index, T object)
 	{
 		CCAssert(index >= 0 && index < size(), "Invalid index!");
-		CCAssert(object != NULL, "The object should not be nullptr");
 
-		_data[index]->release();
+        CC_SAFE_RELEASE(_data[index]);
 		_data[index] = object;
-		object->retain();
+        CC_SAFE_RETAIN(object);
 	}
 
 	void reverse()
@@ -333,7 +328,7 @@ protected:
 	{
 		for (int i = 0; i < _data.size(); i++)
 		{
-			_data[i]->retain();
+            CC_SAFE_RETAIN(_data[i]);
 		}
 	}
 	std::vector<T> _data;
@@ -476,16 +471,14 @@ public:
     void insert(size_t index, T object)
 	{
 		CCAssert(index >= 0 && index <= size(), "Invalid index!");
-		CCAssert(object != NULL, "The object should not be nullptr");
 		_data.insert(_data.begin() + index, object);
-		object->retain();
+        CC_SAFE_RETAIN(object);
 	}
     
 	void pushBack(T object)
 	{
-		CCAssert(object != NULL, "The object should not be nullptr");
 		_data.push_back(object);
-		object->retain();
+        CC_SAFE_RETAIN(object);
 	}
 	void pushBack(const CAList<T>& other)
 	{
@@ -502,15 +495,14 @@ public:
 
 		T last = _data.back();
 		_data.pop_back();
-		last->release();
+        CC_SAFE_RELEASE(last);
 	}
 
 
 	void pushFront(T object)
 	{
-		CCAssert(object != NULL, "The object should not be nullptr");
 		_data.push_front(object);
-		object->retain();
+        CC_SAFE_RETAIN(object);
 	}
 	void pushFront(const CAList<T>& other)
 	{
@@ -527,15 +519,13 @@ public:
 
 		T first = _data.front();
 		_data.pop_front();
-		first->release();
+        CC_SAFE_RELEASE(first);
 	}
 
 
 
 	void eraseObject(T object, bool removeAll = false)
 	{
-		CCAssert(object != NULL, "The object should not be nullptr");
-
 		if (removeAll)
 		{
 			for (iterator iter = _data.begin(); iter != _data.end();)
@@ -543,7 +533,7 @@ public:
 				if ((*iter) == object)
 				{
 					iter = _data.erase(iter);
-					object->release();
+                    CC_SAFE_RELEASE(object);
 				}
 				else
 				{
@@ -557,7 +547,7 @@ public:
 			if (iter != _data.end())
 			{
 				_data.erase(iter);
-				object->release();
+				CC_SAFE_RELEASE(object);
 			}
 		}
 	}
@@ -565,7 +555,7 @@ public:
 	iterator erase(iterator position)
 	{
 		CCAssert(position >= _data.begin() && position < _data.end(), "Invalid position!");
-		(*position)->release();
+        CC_SAFE_RELEASE(*position);
 		return _data.erase(position);
 	}
 
@@ -573,7 +563,7 @@ public:
 	{
 		for (iterator iter = first; iter != last; ++iter)
 		{
-			(*iter)->release();
+            CC_SAFE_RELEASE(*iter);
 		}
 		return _data.erase(first, last);
 	}
@@ -582,7 +572,7 @@ public:
 	{
 		for (iterator iter = _data.begin(); iter != _data.end(); ++iter)
 		{
-			(*iter)->release();
+			CC_SAFE_RELEASE((*iter));
 		}
 		_data.clear();
 	}
@@ -600,7 +590,7 @@ protected:
 	{
 		for (iterator it = _data.begin(); it != _data.end(); ++it)
 		{
-			(*it)->retain();
+            CC_SAFE_RETAIN(*it);
 		}
 	}
 	std::list<T> _data;
@@ -690,23 +680,20 @@ public:
     void insert(size_t index, T object)
 	{
 		CCAssert(index >= 0 && index <= size(), "Invalid index!");
-		CCAssert(object != NULL, "The object should not be nullptr");
 		_data.insert(_data.begin() + index, object);
-		object->retain();
+        CC_SAFE_RETAIN(object);
 	}
     
 	void pushFront(T object)
 	{
-		CCAssert(object != NULL, "The object should not be nullptr");
 		_data.push_front(object);
-		object->retain();
+        CC_SAFE_RETAIN(object);
 	}
 
 	void pushBack(T object)
 	{
-		CCAssert(object != NULL, "The object should not be nullptr");
 		_data.push_back(object);
-		object->retain();
+		CC_SAFE_RETAIN(object);
 	}
 
 	void popFront()
@@ -716,7 +703,7 @@ public:
 
 		T first = _data.front();
 		_data.pop_front();
-		first->release();
+        CC_SAFE_RELEASE(first);
 	}
 
 	void popBack()
@@ -726,7 +713,7 @@ public:
 
 		T last = _data.back();
 		_data.pop_back();
-		last->release();
+		CC_SAFE_RELEASE(last);
 	}
 
 	void clear()
@@ -767,7 +754,7 @@ private:
 	{
 		for (const_iterator it = _data.begin(); it != _data.end(); ++it)
 		{
-			(*it)->retain();
+            CC_SAFE_RETAIN(*it);
 		}
 	}
 	std::deque <T> _data;
@@ -828,10 +815,9 @@ public:
 		{
 			return false;
 		}
-
-		CCAssert(object != NULL, "The object should not be nullptr");
-		object->retain();
+        CC_SAFE_RETAIN(object);
 		_data[key] = object;
+        return true;
 	}
 
 	size_t size() const
@@ -854,7 +840,7 @@ public:
 		iterator it = _data.find(key);
 		if (it != _data.end())
 		{
-			it->second->release();
+            CC_SAFE_RELEASE_NULL(it->second);
 			_data.erase(it);
 			return true;
 		}
@@ -885,7 +871,7 @@ public:
 	{
 		for (iterator it = _data.begin(); it != _data.end(); it++)
 		{
-			it->second->release();
+            CC_SAFE_RELEASE_NULL(it->second);
 		}
 		_data.clear();
 	}
@@ -895,7 +881,7 @@ protected:
 	{
 		for (iterator it = _data.begin(); it != _data.end(); ++it)
 		{
-			it->second->retain();
+            CC_SAFE_RETAIN(it->second);
 		}
 	}
 	std::map <K, T> _data;
