@@ -876,6 +876,11 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
         pFontName = sTTFont;
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        
+        pFontName = "/System/Library/Fonts/STHeiti Light.ttc";
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         
         pFontName = "/System/Library/Fonts/Cache/STHeiti-Light.ttc";
