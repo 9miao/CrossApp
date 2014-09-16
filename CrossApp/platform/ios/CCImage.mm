@@ -173,12 +173,6 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
 
-static bool _initWithString(const char * pText, CrossApp::CCImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
-{
-
-    return NULL;
-}
-
 NS_CC_BEGIN
 
 CCImage::CCImage()
@@ -319,18 +313,6 @@ bool CCImage::_saveImageToJPG(const char *pszFilePath)
     assert(0);
 	return false;
 }
-
-bool CCImage::initWithString(
-                            const char * pText,
-                            int         nWidth /* = 0 */,
-                            int         nHeight /* = 0 */,
-                            ETextAlign eAlignMask /* = kAlignCenter */,
-                            const char * pFontName /* = nil */,
-                            int         nSize /* = 0 */)
-{
-    return false;
-}
-
 
 bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {

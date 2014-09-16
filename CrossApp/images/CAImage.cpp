@@ -19,10 +19,7 @@
 #include "shaders/CAShaderCache.h"
 #include <ctype.h>
 #include <cctype>
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "platform/CAFTFontCache.h"
-#endif
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "CAImageCache.h"
@@ -102,10 +99,6 @@ CAImage* CAImage::createWithData(void* data, int lenght, const std::string& key)
 
 CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool isForTextField)
 {
-    
-    
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
-    
 	g_AFTFontCache.setForTextField(isForTextField);
     
 	CAImage* image = g_AFTFontCache.initWithString(text,
@@ -117,108 +110,21 @@ CAImage*  CAImage::createWithString(const char *text, const char *fontName, floa
     
     return image;
     
-#else
-    
-    CAImage* image = new CAImage();
-    image->autorelease();
-    
-    bool bRet = false;
-    
-    CCImage::ETextAlign eAlign;
-    
-    if (CAVerticalTextAlignmentTop == vAlignment)
-    {
-        eAlign = (CATextAlignmentCenter == hAlignment) ? CCImage::kAlignTop
-        : (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
-    }
-    else if (CAVerticalTextAlignmentCenter == vAlignment)
-    {
-        eAlign = (CATextAlignmentCenter == hAlignment) ? CCImage::kAlignCenter
-        : (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
-    }
-    else if (CAVerticalTextAlignmentBottom == vAlignment)
-    {
-        eAlign = (CATextAlignmentCenter == hAlignment) ? CCImage::kAlignBottom
-        : (CATextAlignmentLeft == hAlignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
-    }
-    else
-    {
-        CCAssert(false, "Not supported alignment format!");
-        return false;
-    }
-    
-    do
-    {
-        CCImage* pImage = new CCImage();
-        CC_BREAK_IF(NULL == pImage);
-        bRet = pImage->initWithString(text,
-                                      (int)dimensions.width,
-                                      (int)dimensions.height,
-                                      eAlign,
-                                      fontName,
-                                      (int)fontSize);
-        CC_BREAK_IF(!bRet);
-        image->initWithImage(pImage);
-        CC_SAFE_RELEASE(pImage);
-        
-    } while (0);
-    
-    return image;
-    
-#endif
 }
 
 int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
-    
     return g_AFTFontCache.getFontHeight(pFontName, nSize);
-
-#else
-    
-    return CCImage::getFontHeight(pFontName, (float)nSize);
-    
-#endif
 }
 
 int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const char* pText)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
     return g_AFTFontCache.getStringWidth(pFontName, nSize, pText);
-#else
-    
-    CAImage *image = CAImage::createWithString(pText,
-                                               pFontName,
-                                               nSize,
-                                               CCSizeZero,
-                                               CATextAlignmentLeft,
-                                               CAVerticalTextAlignmentCenter);
-    if(image != NULL)
-    {
-        return image->getContentSize().width;
-    }
-    return 0;
-#endif
 }
 
 int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const char* pText, int iLimitWidth)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
     return g_AFTFontCache.getStringHeight(pFontName, nSize, pText, iLimitWidth);
-#else
-    
-    CAImage *image = CAImage::createWithString(pText,
-                                               pFontName,
-                                               nSize,
-                                               CCSize(iLimitWidth, 0),
-                                               CATextAlignmentLeft,
-                                               CAVerticalTextAlignmentTop);
-    if(image != NULL)
-    {
-        return image->getContentSize().height;
-    }
-    return 0;
-#endif
 }
 
 const CAImagePixelFormat& CAImage::getPixelFormat()

@@ -96,21 +96,7 @@ public:
     @param  nSize       the font size, if 0, use the system default size.
     @js NA
     */
-    bool initWithString(
-        const char *    pText, 
-        int             nWidth = 0, 
-        int             nHeight = 0,
-        ETextAlign      eAlignMask = kAlignCenter,
-        const char *    pFontName = 0,
-        int             nSize = 0);
     
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-
-    static int getFontHeight(const char* pFontName, float nSize);
-    
-    #endif
-    
-
     unsigned char *   getData()               { return m_pData; }
     int               getDataLen()            { return m_nWidth * m_nHeight; }
 
