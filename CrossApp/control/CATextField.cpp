@@ -181,8 +181,7 @@ std::string CATextField::getText()
 void CATextField::setPlaceHolder(std::string var)
 {
     m_sPlaceHolder = var;
-
-  //  this->updateImage();
+    this->updateImage();
 }
 
 std::string CATextField::getPlaceHolder()
@@ -423,7 +422,8 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
         m_iString_l_length = 0;
         m_iString_r_length = 0;
         insertText(str, strlen(str));
-    }else
+    }
+    else
     {
         deleteBackward();
     }
@@ -437,18 +437,18 @@ void CATextField::willInsertText(const char *text, int len)
 
 void CATextField::deleteBackward()
 {
-    if (m_nInputType==KEY_BOARD_INPUT_PASSWORD)
-    {
-        m_sText.clear();
-		this->updateImage();
-		m_iString_l_length = 0;
-		m_iString_r_length = 0;
-        m_iString_left_offX= 0;
-		m_iCurPos = 0;
-		m_pCursorMark->setCenterOrigin(CCPoint(m_iHoriMargins + getCursorX(), this->getBounds().size.height / 2));
-        
-        return;
-    }
+    if (m_nInputType==KEY_BOARD_INPUT_PASSWORD) return;
+//    {
+//        m_sText.clear();
+//		this->updateImage();
+//		m_iString_l_length = 0;
+//		m_iString_r_length = 0;
+//        m_iString_left_offX= 0;
+//		m_iCurPos = 0;
+//		m_pCursorMark->setCenterOrigin(CCPoint(m_iHoriMargins + getCursorX(), this->getBounds().size.height / 2));
+//        
+//        return;
+//    }
 
 	if (m_iCurPos==0 || m_sText.empty())
     {
@@ -506,7 +506,6 @@ void CATextField::deleteBackward()
 }
 const char* CATextField::getContentText()
 {
-    CCLog("CATextField::getContentText()   %s",m_sText.c_str());
     return m_sText.c_str();
 }
 

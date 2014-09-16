@@ -86,6 +86,7 @@ void CAViewController::viewOnExitTransitionDidStart()
         CC_BREAK_IF(m_bLifeLock);
         m_bLifeLock = true;
         this->viewDidUnload();
+        m_pView->removeAllSubviews();
     }
     while (0);
     
@@ -341,8 +342,6 @@ void CANavigationController::viewDidUnload()
     {
         (*itr)->removeViewFromSuperview();
     }
-    
-    m_pContainer->removeFromSuperview();
     m_pContainer = NULL;
     m_pNavigationBar->removeFromSuperview();
 }

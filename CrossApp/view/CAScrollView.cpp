@@ -271,7 +271,7 @@ void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
         {
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
-        this->contentOffsetFinish();
+        CAScheduler::schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
     }
 }
 
@@ -289,7 +289,7 @@ void CAScrollView::closeToPoint(float dt)
         m_tCloseToSpeed = CCPointZero;
         this->update(1/60.0f);
         this->hideIndicator();
-        this->contentOffsetFinish();
+        CAScheduler::schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
     }
     else
     {

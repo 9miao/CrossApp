@@ -192,7 +192,7 @@ int CAPageView::getCurrPage()
     return m_nCurrPage;
 }
 
-void CAPageView::contentOffsetFinish()
+void CAPageView::contentOffsetFinish(float dt)
 {
     if (m_pPageViewDelegate && m_bListener)
     {

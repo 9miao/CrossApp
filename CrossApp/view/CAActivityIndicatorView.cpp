@@ -34,7 +34,6 @@ CAActivityIndicatorView::~CAActivityIndicatorView()
 {
     CC_SAFE_RELEASE(m_pImageView);
     CC_SAFE_RELEASE(m_pBackView);
-    CC_SAFE_RELEASE(m_pTarget);
 }
 
 CAActivityIndicatorView* CAActivityIndicatorView::create()
@@ -189,8 +188,6 @@ bool CAActivityIndicatorView::isAnimating()
 
 void CAActivityIndicatorView::setTargetOnCancel(CAObject* target, SEL_CallFunc callBack)
 {
-    CC_SAFE_RETAIN(target);
-    CC_SAFE_RELEASE(m_pTarget);
     m_pTarget = target;
     m_pCallFunc = callBack;
 }

@@ -159,8 +159,6 @@ protected:
     
     inline virtual float decelerationRatio(float dt);
     
-    virtual void contentOffsetFinish();
-    
     void clearData();
     
     void reloadViewSizeData();
