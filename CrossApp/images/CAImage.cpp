@@ -20,7 +20,7 @@
 #include <ctype.h>
 #include <cctype>
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "platform/CAFTFontCache.h"
 #endif
 
@@ -104,7 +104,7 @@ CAImage*  CAImage::createWithString(const char *text, const char *fontName, floa
 {
     
     
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
     
 	g_AFTFontCache.setForTextField(isForTextField);
     
@@ -170,7 +170,7 @@ CAImage*  CAImage::createWithString(const char *text, const char *fontName, floa
 
 int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
     
     return g_AFTFontCache.getFontHeight(pFontName, nSize);
 
@@ -183,7 +183,7 @@ int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
 
 int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const char* pText)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
     return g_AFTFontCache.getStringWidth(pFontName, nSize, pText);
 #else
     
@@ -203,7 +203,7 @@ int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const ch
 
 int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const char* pText, int iLimitWidth)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
     return g_AFTFontCache.getStringHeight(pFontName, nSize, pText, iLimitWidth);
 #else
     

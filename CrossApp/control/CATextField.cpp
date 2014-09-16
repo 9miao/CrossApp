@@ -14,7 +14,7 @@
 #include <algorithm>
 #include "view/CAScale9ImageView.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "platform/CAFTFontCache.h"
 #include "support/ConvertUTF.h"
 #endif
@@ -220,7 +220,7 @@ bool CATextField::attachWithIME()
         CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
         if (pGlView)
         {
-#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID||CC_TARGET_PLATFORM==CC_PLATFORM_IOS)        
+#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
             if (getKeyboardType() ==KEY_BOARD_TYPE_NORMAL)
             {
                 pGlView->setIMEKeyboardDefault();
@@ -725,22 +725,9 @@ void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
     this->resignFirstResponder();
 }
+
 int CATextField::getStringLength(const std::string &var)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
-	return g_AFTFontCache.getStringWidth("", m_iFontSize, var);
-#else
-    CAImage *image = CAImage::createWithString(var.c_str(),
-                                               "",
-                                               m_iFontSize,
-                                               CCSizeZero,
-                                               CATextAlignmentLeft,
-                                               CAVerticalTextAlignmentCenter);
-    if(image!=NULL)
-    {
-        return image->getContentSize().width;
-    }
-    return 0;
-#endif
+    return g_AFTFontCache.getStringWidth("", m_iFontSize, var);
 }
 NS_CC_END

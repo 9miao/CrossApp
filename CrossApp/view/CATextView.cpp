@@ -1,10 +1,19 @@
+
+
+
+
+
+
 #include "CATextView.h"
 #include "basics/CAApplication.h"
 #include "view/CAWindow.h"
 #include "actions/CCActionInterval.h"
-#include "platform/CAFTFontCache.h"
 #include "CCEGLView.h"
 #include <utility>
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#include "platform/CAFTFontCache.h"
+#endif
 
 NS_CC_BEGIN
 
@@ -145,7 +154,7 @@ void CATextView::updateImage()
 	CCSize size = CCSizeMake(width, 0);
 
 	CAImage* image = NULL;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 
 	image = g_AFTFontCache.initWithStringEx(m_szText.c_str(),
 		m_szFontName.c_str(),
@@ -434,7 +443,7 @@ bool CATextView::detachWithIME()
 
 int CATextView::getStringLength(const std::string &var)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 	return g_AFTFontCache.getStringWidth(m_szFontName.c_str(), m_iFontSize, var);
 #else
 	CAImage *image = CAImage::createWithString(var.c_str(),

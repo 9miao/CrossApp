@@ -278,6 +278,11 @@
 		B08F4BB719C7D2EF008DE306 /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BB419C7D2EF008DE306 /* ConvertUTFWrapper.cpp */; };
 		B08F4BC719C7DCD6008DE306 /* CATextView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BC519C7DCD6008DE306 /* CATextView.cpp */; };
 		B08F4BC819C7DCD6008DE306 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B08F4BC619C7DCD6008DE306 /* CATextView.h */; };
+		B08F4BCD19C7E66C008DE306 /* CAFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BC919C7E66C008DE306 /* CAFreeTypeFont.cpp */; };
+		B08F4BCE19C7E66C008DE306 /* CAFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B08F4BCA19C7E66C008DE306 /* CAFreeTypeFont.h */; };
+		B08F4BCF19C7E66C008DE306 /* CAFTFontCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BCB19C7E66C008DE306 /* CAFTFontCache.cpp */; };
+		B08F4BD019C7E66C008DE306 /* CAFTFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B08F4BCC19C7E66C008DE306 /* CAFTFontCache.h */; };
+		B08F4BD219C7EBAF008DE306 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08F4BD119C7EBAF008DE306 /* libfreetype.a */; };
 		B0C512E619A3127100E6934B /* CAActivityIndicatorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */; };
 		B0C512E719A3127100E6934B /* CAActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */; };
 		B0C512E819A3127100E6934B /* CADatePickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E419A3127100E6934B /* CADatePickerView.cpp */; };
@@ -561,6 +566,11 @@
 		B08F4BB419C7D2EF008DE306 /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
 		B08F4BC519C7DCD6008DE306 /* CATextView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextView.cpp; sourceTree = "<group>"; };
 		B08F4BC619C7DCD6008DE306 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
+		B08F4BC919C7E66C008DE306 /* CAFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFreeTypeFont.cpp; sourceTree = "<group>"; };
+		B08F4BCA19C7E66C008DE306 /* CAFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFreeTypeFont.h; sourceTree = "<group>"; };
+		B08F4BCB19C7E66C008DE306 /* CAFTFontCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTFontCache.cpp; sourceTree = "<group>"; };
+		B08F4BCC19C7E66C008DE306 /* CAFTFontCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTFontCache.h; sourceTree = "<group>"; };
+		B08F4BD119C7EBAF008DE306 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../platform/third_party/mac/libraries/libfreetype.a; sourceTree = "<group>"; };
 		B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAActivityIndicatorView.cpp; sourceTree = "<group>"; };
 		B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAActivityIndicatorView.h; sourceTree = "<group>"; };
 		B0C512E419A3127100E6934B /* CADatePickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADatePickerView.cpp; sourceTree = "<group>"; };
@@ -574,6 +584,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B08F4BD219C7EBAF008DE306 /* libfreetype.a in Frameworks */,
 				1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */,
 				1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */,
 				04EAB2801956D75700198A8E /* libwebp.a in Frameworks */,
@@ -836,6 +847,10 @@
 		04EAA0E21956D74D00198A8E /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B08F4BC919C7E66C008DE306 /* CAFreeTypeFont.cpp */,
+				B08F4BCA19C7E66C008DE306 /* CAFreeTypeFont.h */,
+				B08F4BCB19C7E66C008DE306 /* CAFTFontCache.cpp */,
+				B08F4BCC19C7E66C008DE306 /* CAFTFontCache.h */,
 				B01F64F71964FE2F005C14FC /* CADensityDpi.h */,
 				04EAA1201956D74D00198A8E /* CCApplicationProtocol.h */,
 				04EAA1211956D74D00198A8E /* CCAccelerometerDelegate.h */,
@@ -1136,6 +1151,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B08F4BD119C7EBAF008DE306 /* libfreetype.a */,
 				1A94D34C16C2014900D79D09 /* libwebp.a */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
 			);
@@ -1157,6 +1173,7 @@
 				04EAB0601956D75600198A8E /* CCActionInterval.h in Headers */,
 				04EAB0621956D75600198A8E /* CCActionManager.h in Headers */,
 				04EAB0641956D75600198A8E /* CCActionTween.h in Headers */,
+				B08F4BD019C7E66C008DE306 /* CAFTFontCache.h in Headers */,
 				04EAB0681956D75600198A8E /* CAApplication.h in Headers */,
 				B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */,
 				04EAB06A1956D75600198A8E /* CAAutoreleasePool.h in Headers */,
@@ -1237,6 +1254,7 @@
 				04EAB14D1956D75600198A8E /* CCEventDispatcher.h in Headers */,
 				04EAB14F1956D75600198A8E /* CCFileUtilsMac.h in Headers */,
 				04EAB1511956D75600198A8E /* CCGL.h in Headers */,
+				B08F4BCE19C7E66C008DE306 /* CAFreeTypeFont.h in Headers */,
 				04EAB1531956D75600198A8E /* CCPlatformDefine.h in Headers */,
 				04EAB1541956D75600198A8E /* CCStdC.h in Headers */,
 				04EAB1561956D75600198A8E /* CCWindow.h in Headers */,
@@ -1382,6 +1400,7 @@
 				04EAB08D1956D75600198A8E /* CCString.cpp in Sources */,
 				B01F64FB1964FF0D005C14FC /* CADensityDpi.cpp in Sources */,
 				04EAB08F1956D75600198A8E /* CABar.cpp in Sources */,
+				B08F4BCD19C7E66C008DE306 /* CAFreeTypeFont.cpp in Sources */,
 				04EAB0911956D75600198A8E /* CAButton.cpp in Sources */,
 				04EAB0931956D75600198A8E /* CAControl.cpp in Sources */,
 				B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */,
@@ -1417,6 +1436,7 @@
 				04EAB0D51956D75600198A8E /* neon_matrix_impl.c in Sources */,
 				04EAB0D61956D75600198A8E /* plane.c in Sources */,
 				04EAB0D71956D75600198A8E /* quaternion.c in Sources */,
+				B08F4BCF19C7E66C008DE306 /* CAFTFontCache.cpp in Sources */,
 				04EAB0D81956D75600198A8E /* ray2.c in Sources */,
 				04EAB0D91956D75600198A8E /* utility.c in Sources */,
 				04EAB0DA1956D75600198A8E /* vec2.c in Sources */,
@@ -1546,45 +1566,12 @@
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
+					"\"$(SRCROOT)/../platform/third_party/mac/freetype\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/third_party/mac/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libwebp/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libwebp/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libwebp/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/blackberry/libraries/armle-v7\"",
-					"\"$(SRCROOT)/../platform/third_party/blackberry/libraries/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/emscripten/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/linux/libraries/lib64\"",
-					"\"$(SRCROOT)/../platform/third_party/linux/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/tizen/prebuilt/libwebp/libs/armv7l\"",
-					"\"$(SRCROOT)/../platform/third_party/tizen/prebuilt/libwebp/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/win32/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2012/ARM/Debug\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2012/ARM/Release\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2012/Win32/Debug\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2012/Win32/Release\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2013/ARM/Debug\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2013/ARM/Release\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2013/Win32/Debug\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2013/Win32/Release\"",
-					"\"$(SRCROOT)/../platform/third_party/wp8/libraries/arm\"",
-					"\"$(SRCROOT)/../platform/third_party/wp8/libraries/x86\"",
-					"\"$(SRCROOT)/../proj.win32/Debug.win32\"",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/platform/third_party/mac/libraries",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -1610,45 +1597,12 @@
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
+					"\"$(SRCROOT)/../platform/third_party/mac/freetype\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/third_party/mac/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libwebp/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libwebp/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libwebp/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/blackberry/libraries/armle-v7\"",
-					"\"$(SRCROOT)/../platform/third_party/blackberry/libraries/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/emscripten/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/linux/libraries/lib64\"",
-					"\"$(SRCROOT)/../platform/third_party/linux/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/tizen/prebuilt/libwebp/libs/armv7l\"",
-					"\"$(SRCROOT)/../platform/third_party/tizen/prebuilt/libwebp/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/win32/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2012/ARM/Debug\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2012/ARM/Release\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2012/Win32/Debug\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2012/Win32/Release\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2013/ARM/Debug\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2013/ARM/Release\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2013/Win32/Debug\"",
-					"\"$(SRCROOT)/../platform/third_party/winrt/libraries/vs2013/Win32/Release\"",
-					"\"$(SRCROOT)/../platform/third_party/wp8/libraries/arm\"",
-					"\"$(SRCROOT)/../platform/third_party/wp8/libraries/x86\"",
-					"\"$(SRCROOT)/../proj.win32/Debug.win32\"",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/platform/third_party/mac/libraries",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
