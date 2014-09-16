@@ -42,6 +42,9 @@ public:
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int width, int height,
 		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
 
+	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
+		std::vector<TextViewLineInfo>& linesText);
+
 	void setForTextField(bool on) { m_isForTextField = on; }
 
 protected:

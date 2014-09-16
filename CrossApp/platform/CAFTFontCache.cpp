@@ -104,5 +104,16 @@ CAImage* CAFTFontCache::initWithString(const char* pText, const char* pFontName,
 	return pImage;
 }
 
+CAImage* CAFTFontCache::initWithStringEx(const char* pText, const char* pFontName, int nSize, int width, int height, std::vector<TextViewLineInfo>& linesText)
+{
+	if (pText == NULL || pFontName == NULL)
+		return NULL;
+
+	setCurrentFontData(pFontName, nSize);
+	CAImage* pImage = m_pCurFontData->ftFont.initWithStringEx(pText, pFontName, nSize, width, height, linesText);
+	setForTextField(false);
+	return pImage;
+}
+
 NS_CC_END
 
