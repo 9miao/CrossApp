@@ -64,9 +64,9 @@ public:
     
     static int getFontHeight(const char* pFontName, unsigned long nSize);
     
-    static int getStringWidth(const char* pFontName, unsigned long nSize, const char* pText);
+    static int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& pText);
     
-    static int getStringHeight(const char* pFontName, unsigned long nSize, const char* pText, int iLimitWidth);
+    static int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth);
     
 	static CAImage* create(const std::string& file);
     
