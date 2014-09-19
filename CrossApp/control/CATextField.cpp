@@ -121,7 +121,6 @@ bool CATextField::init()
         return false;
     }
 
-    
     this->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png")));
 
     return true;
@@ -292,25 +291,29 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         {
 			m_pCursorMark->setVisible(true);
 			int dtValue = point.x - m_iString_left_offX - m_iHoriMargins;
-
+            float width = CAApplication::getApplication()->getWinSize().width;
+            if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+            {
+                if (m_sText.empty())
+                {
+                    m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + BORDER_WIDTH(width), this->getBounds().size.height / 2));
+                }
+                return true;
+            }
 			m_iString_l_length = 0;
 			m_iCurPos = 0;
 			for (int i = 0; i < m_vTextFiledChars.size(); i++)
 			{
 				TextAttribute& t = m_vTextFiledChars[i];
-				if (m_iString_l_length + t.charlength / 2>dtValue && getCursorX() + m_iHoriMargins>0)
-				{
-					break;
-				}
+                CC_BREAK_IF(m_iString_l_length + t.charlength / 2 > dtValue && getCursorX() + m_iHoriMargins > 0);
 				m_iString_l_length += t.charlength;
 				m_iCurPos += t.charSize;
 			}
-
+            
 			m_iString_r_length = m_cImageSize.width - m_iString_l_length;
-
+            
 			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, this->getBounds().size.height / 2));
         }
-        return true;
     }
     else
     {
@@ -318,7 +321,6 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         {
 			m_pCursorMark->setVisible(false);
 			this->updateImage();
-            return false;
         }
         return false;
     }
@@ -377,25 +379,23 @@ void CATextField::insertText(const char * text, int len)
         getKeyBoradReturnCallBack();
         return;
     }
-    if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
-	{
-		if (len >= 2)
-			return;
-	}
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    CC_RETURN_IF(m_nInputType == KEY_BOARD_INPUT_PASSWORD && len >= 2);
+#endif
     
     analyzeString(text, len);
     CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), m_sText.length()));
     
 	this->updateImage();
-
+    
 	m_iString_l_length = getStringLength(m_sText.substr(0, m_iCurPos));
 	m_iString_r_length = m_cImageSize.width - m_iString_l_length;
-
+    
 	if (m_iString_l_length + m_iString_left_offX > m_iLabelWidth)
 	{
 		m_iString_left_offX = m_iLabelWidth - m_iString_l_length;
 	}
-
+    
 	CCRect r = CCRectMake(0, 0, m_cImageSize.width, m_cImageSize.height);
 	r.origin.x = -m_iString_left_offX;
 	r.size.width = getStringViewLength();
@@ -404,12 +404,14 @@ void CATextField::insertText(const char * text, int len)
     {
         //float mPmarkWidth = MIN(this->getBounds().size.width, getCursorX());
         m_pCursorMark->setCenterOrigin(CCPoint(this->getImageRect().size.width + m_iHoriMargins, this->getBounds().size.height / 2));
-    }else
+    }
+    else
     {
         float mPmarkWidth = MIN(this->getBounds().size.width, getCursorX());
         m_pCursorMark->setCenterOrigin(CCPoint(mPmarkWidth + m_iHoriMargins, this->getBounds().size.height / 2));
     }
 }
+
 void CATextField::AndroidWillInsertText(int start,const char* str,int before,int count)
 {
     CCAssert(str != NULL, "");
@@ -417,7 +419,6 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
     if (strlen(str)>=m_sText.length())
     {
         m_vTextFiledChars.clear();
-        
         m_sText = "";
         m_iCurPos = 0;
         m_iString_l_length = 0;
@@ -438,18 +439,18 @@ void CATextField::willInsertText(const char *text, int len)
 
 void CATextField::deleteBackward()
 {
-    if (m_nInputType==KEY_BOARD_INPUT_PASSWORD) return;
-//    {
-//        m_sText.clear();
-//		this->updateImage();
-//		m_iString_l_length = 0;
-//		m_iString_r_length = 0;
-//        m_iString_left_offX= 0;
-//		m_iCurPos = 0;
-//		m_pCursorMark->setCenterOrigin(CCPoint(m_iHoriMargins + getCursorX(), this->getBounds().size.height / 2));
-//        
-//        return;
-//    }
+    if (m_nInputType==KEY_BOARD_INPUT_PASSWORD)
+    {
+        m_sText.clear();
+		this->updateImage();
+		m_iString_l_length = 0;
+		m_iString_r_length = 0;
+        m_iString_left_offX= 0;
+		m_iCurPos = 0;
+		m_pCursorMark->setCenterOrigin(CCPoint(m_iHoriMargins + getCursorX(), this->getBounds().size.height / 2));
+        
+        return;
+    }
 
 	if (m_iCurPos==0 || m_sText.empty())
     {
@@ -472,15 +473,15 @@ void CATextField::deleteBackward()
     m_sText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
     m_iCurPos -= nDeleteLen;
     CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), m_sText.length()));
-
+    
 	m_vTextFiledChars.erase(m_vTextFiledChars.begin() + getStringCharCount(m_sText.substr(0, m_iCurPos)));
-
-
+    
+    
 	this->updateImage();
-
+    
 	m_iString_l_length = getStringLength(m_sText.substr(0, m_iCurPos));
 	m_iString_r_length = m_cImageSize.width - m_iString_l_length;
-
+    
 	if (getCursorX() <= 0)
 	{
 		m_iString_left_offX = -m_iString_l_length;
@@ -496,15 +497,11 @@ void CATextField::deleteBackward()
 	r.origin.x = -m_iString_left_offX;
 	r.size.width = getStringViewLength();
 	this->setImageRect(r);
-
+    
 	float mPmarkWidth = MIN(this->getBounds().size.width, getCursorX());
 	m_pCursorMark->setCenterOrigin(CCPoint(mPmarkWidth + m_iHoriMargins, this->getBounds().size.height / 2));
-
-//	if (m_sText.empty())
-//	{
-//		updateImage();
-//	}
 }
+
 const char* CATextField::getContentText()
 {
     return m_sText.c_str();
@@ -668,8 +665,7 @@ int CATextField::getHoriMargins()
 void CATextField::setVertMargins(int var)
 {
 	int height = this->getBounds().size.height;
-	if (2 * var > height)
-		return;
+	CC_RETURN_IF(2 * var > height);
 	m_iVertMargins = var;
 	setFontSize(height - 2 * var - 2);
 }
