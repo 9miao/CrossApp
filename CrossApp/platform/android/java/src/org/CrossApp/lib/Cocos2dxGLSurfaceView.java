@@ -400,6 +400,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			@Override
 			public void run() {
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleInsertText(pText);
+//				final Message msg = new Message();
+//				msg.what = Cocos2dxGLSurfaceView.RESET_TEXT;
+//				msg.obj = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentText();
+//				Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 			}
 		});
 	}
@@ -408,7 +412,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			@Override
 			public void run() {
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleWillInsertText(start,pString,before,count);
-				
+
+
 				
 			}
 		});
@@ -418,6 +423,11 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			@Override
 			public void run() {
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleDeleteBackward();
+				final Message msg = new Message();
+				msg.what = Cocos2dxGLSurfaceView.RESET_TEXT;
+				msg.obj = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentText();
+				Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
+
 			}
 		});
 	}
