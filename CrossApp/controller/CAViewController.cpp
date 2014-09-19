@@ -726,7 +726,7 @@ void CANavigationController::unScheduleUpdate()
 #pragma CATabBarController
 
 CATabBarController::CATabBarController()
-:m_nSelectedIndex(0)
+:m_nSelectedIndex(0xffffffff)
 ,m_nLastSelectedIndex(0xffffffff)
 ,m_pTabBar(NULL)
 ,m_pContainer(NULL)
@@ -862,7 +862,7 @@ void CATabBarController::viewDidLoad()
     m_pTabBar->setFrameOrigin(tab_bar_rectOrgin);
     this->getView()->addSubview(m_pTabBar);
     
-    this->renderingSelectedViewController();
+    this->showSelectedViewControllerAtIndex(0);
 }
 
 void CATabBarController::viewDidUnload()

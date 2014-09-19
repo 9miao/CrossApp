@@ -14,17 +14,17 @@ NS_CC_BEGIN
 
 
 CALabel::CALabel()
-:m_nNumberOfLine(0),
-m_nTextAlignment(CATextAlignmentLeft),
-m_nText(""),
-m_nfontName(""),
-m_nVerticalTextAlignmet(CAVerticalTextAlignmentTop),
-m_nDimensions(CCSizeZero),
-m_nfontSize(18),
-m_cLabelSize(CCSizeZero),
-m_bUpdateImage(false),
-pTextHeight(0),
-m_bFitFlag(false)
+:m_nNumberOfLine(0)
+,m_nTextAlignment(CATextAlignmentLeft)
+,m_nText("")
+,m_nfontName("")
+,m_nVerticalTextAlignmet(CAVerticalTextAlignmentTop)
+,m_nDimensions(CCSizeZero)
+,m_nfontSize(18)
+,m_cLabelSize(CCSizeZero)
+,m_bUpdateImage(false)
+,pTextHeight(0)
+,m_bFitFlag(false)
 {
     m_obContentSize = CCSizeZero;
     
@@ -100,17 +100,27 @@ void CALabel::updateImage()
     CCSize size = CCSizeZero;
     if (m_bFitFlag)
     {
-        if (m_nNumberOfLine > 1)
+        float width = CAImage::getStringWidth(m_nfontName.c_str(), m_nfontSize, m_nText);
+        if (width > m_obContentSize.width)
         {
-            size = CCSize(this->getBounds().size.width, fontHeight * m_nNumberOfLine);
-        }
-        else if (m_nNumberOfLine == 1)
-        {
-            size = CCSize(CAImage::getStringWidth(m_nfontName.c_str(), m_nfontSize, m_nText.c_str()), fontHeight);
+            if (m_nNumberOfLine > 1)
+            {
+                size = CCSize(this->getBounds().size.width, fontHeight * m_nNumberOfLine);
+            }
+            else if (m_nNumberOfLine == 1)
+            {
+                size = CCSize(CAImage::getStringWidth(m_nfontName.c_str(), m_nfontSize, m_nText.c_str()), fontHeight);
+            }
+            else
+            {
+                size.width = this->getBounds().size.width;
+                size.height = CAImage::getStringHeight(m_nfontName.c_str(), m_nfontSize, m_nText, size.width);
+            }
         }
         else
         {
-            size = CCSize(this->getBounds().size.width, fontHeight * linenumber);
+            size.height = fontHeight;
+            size.width = CAImage::getStringWidth(m_nfontName.c_str(), m_nfontSize, m_nText);
         }
     }
     else
@@ -130,7 +140,7 @@ void CALabel::updateImage()
 	CAImage* image = CAImage::createWithString(m_nText.c_str(),
                                                m_nfontName.c_str(),
                                                m_nfontSize,
-                                               CCSize(size),
+                                               size,
                                                m_nTextAlignment,
                                                m_nVerticalTextAlignmet);
 
@@ -168,22 +178,12 @@ void CALabel::updateImage()
 
     if (m_bFitFlag)
     {
-        if (m_nNumberOfLine == 0)
-        {
-            rect.size.height = fontHeight;
-        }
-        else
-        {
-            rect.size.height = m_nNumberOfLine * fontHeight;
-        }
-        this->setImageRect(rect, false, rect.size);
+        this->setImageRect(rect, false, size);
     }
     else
     {
         this->setImageRect(rect);
     }
-    
-    
 }
 
 void CALabel::updateImageRect()

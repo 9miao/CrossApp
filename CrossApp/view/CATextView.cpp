@@ -407,18 +407,18 @@ bool CATextView::attachWithIME()
 		if (pGlView)
 		{
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID||CC_TARGET_PLATFORM==CC_PLATFORM_IOS)        
-			if (getKeyboardType() == KEY_BOARD_TYPE_NORMAL)
-			{
-				pGlView->setIMEKeyboardDefault();
-			}
-			else if (getKeyboardType() == KEY_BOARD_TYPE_NUMBER)
-			{
-				pGlView->setIMEKeyboardNumber();
-			}
-			else if (getKeyboardType() == KEY_BOARD_TYPE_ALPHABET)
-			{
-				pGlView->setIMEKeyboardAlphabet();
-			}
+//			if (getKeyboardType() == KEY_BOARD_TYPE_NORMAL)
+//			{
+//				pGlView->setIMEKeyboardDefault();
+//			}
+//			else if (getKeyboardType() == KEY_BOARD_TYPE_NUMBER)
+//			{
+//				pGlView->setIMEKeyboardNumber();
+//			}
+//			else if (getKeyboardType() == KEY_BOARD_TYPE_ALPHABET)
+//			{
+//				pGlView->setIMEKeyboardAlphabet();
+//			}
 #endif
 			pGlView->setIMEKeyboardState(true);
 		}

@@ -117,12 +117,12 @@ int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
     return g_AFTFontCache.getFontHeight(pFontName, nSize);
 }
 
-int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const char* pText)
+int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const std::string& pText)
 {
     return g_AFTFontCache.getStringWidth(pFontName, nSize, pText);
 }
 
-int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const char* pText, int iLimitWidth)
+int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth)
 {
     return g_AFTFontCache.getStringHeight(pFontName, nSize, pText, iLimitWidth);
 }
