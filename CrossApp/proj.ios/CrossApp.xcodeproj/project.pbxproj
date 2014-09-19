@@ -421,8 +421,6 @@
 		B0596B431976356C00B1E8CB /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */; };
 		B05D36AA195AF3CC00DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */; };
 		B05D36AB195AF3CC00DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D36A9195AF3CC00DD4814 /* CAAlertView.h */; };
-		B08F4BC219C7DCAF008DE306 /* CATextView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BC019C7DCAF008DE306 /* CATextView.cpp */; };
-		B08F4BC319C7DCAF008DE306 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B08F4BC119C7DCAF008DE306 /* CATextView.h */; };
 		B094652F1969404400D96736 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B094652D1969404400D96736 /* CASTLContainer.h */; };
 		B0B553D6193485BE0065053D /* CAImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553CE193485BE0065053D /* CAImage.cpp */; };
 		B0B553D7193485BE0065053D /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553CF193485BE0065053D /* CAImage.h */; };
@@ -811,8 +809,6 @@
 		B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
 		B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D36A9195AF3CC00DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
-		B08F4BC019C7DCAF008DE306 /* CATextView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextView.cpp; sourceTree = "<group>"; };
-		B08F4BC119C7DCAF008DE306 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
 		B094652D1969404400D96736 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B0B553CE193485BE0065053D /* CAImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImage.cpp; sourceTree = "<group>"; };
 		B0B553CF193485BE0065053D /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
@@ -933,8 +929,6 @@
 		04EA9FC41956CE2500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
-				B08F4BC019C7DCAF008DE306 /* CATextView.cpp */,
-				B08F4BC119C7DCAF008DE306 /* CATextView.h */,
 				B02A51CB19B9625B00470D57 /* CADatePickerView.cpp */,
 				B02A51CC19B9625B00470D57 /* CADatePickerView.h */,
 				B0C512D119A30E5D00E6934B /* CAActivityIndicatorView.cpp */,
@@ -1717,7 +1711,6 @@
 				1551A81B158F2ADF00E66CFE /* ccGLStateCache.h in Headers */,
 				1551A81C158F2ADF00E66CFE /* ccShader_Position_uColor_frag.h in Headers */,
 				B0596B07197629BE00B1E8CB /* fttrace.h in Headers */,
-				B08F4BC319C7DCAF008DE306 /* CATextView.h in Headers */,
 				B0596B18197629BE00B1E8CB /* svsfnt.h in Headers */,
 				1551A81D158F2ADF00E66CFE /* ccShader_Position_uColor_vert.h in Headers */,
 				B0596B03197629BE00B1E8CB /* ftpic.h in Headers */,
@@ -1910,7 +1903,6 @@
 				B0596A581976287B00B1E8CB /* CAFreeTypeFont.cpp in Sources */,
 				1551A628158F2ADE00E66CFE /* CCAction.cpp in Sources */,
 				B02A51CD19B9625B00470D57 /* CADatePickerView.cpp in Sources */,
-				B08F4BC219C7DCAF008DE306 /* CATextView.cpp in Sources */,
 				B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */,
 				1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */,
 				1551A62E158F2ADE00E66CFE /* CCActionEase.cpp in Sources */,
