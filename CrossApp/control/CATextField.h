@@ -12,13 +12,18 @@
 #define __project__CATextField__
 
 #include <iostream>
+#include <vector>
 #include "dispatcher/CAIMEDispatcher.h"
 #include "control/CAControl.h"
-#include <vector>
 #include "view/CAScale9ImageView.h"
 #include "support/ccUTF8.h"
-NS_CC_BEGIN
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#include "platform/CAFTFontCache.h"
+#include "support/ConvertUTF.h"
+#endif
+
+NS_CC_BEGIN
 
 enum eKeyBoardType
 {
@@ -85,13 +90,6 @@ public:
         return false;
     }
 };
-
-typedef struct _TextAttribute
-{
-    int charSize;
-    float charlength;
- 
-}TextAttribute;
 
 
 class CC_DLL CATextField

@@ -11,9 +11,7 @@
 
 #include "platform/CCCommon.h"
 #include "platform/CCImage.h"
-#include "view/CAImageView.h"
-#include "control/CATextField.h"
-#include "view/CATextView.h"
+#include "images/CAImage.h"
 #include <map>
 #include <string>
 #include <sstream>
@@ -25,8 +23,22 @@
 #include <freetype/ftoutln.h>
 #include <freetype/fttrigon.h>
 
-
 NS_CC_BEGIN
+
+typedef struct _TextAttribute
+{
+    int charSize;
+    float charlength;
+    
+}TextAttribute;
+
+typedef struct _TextViewLineInfo
+{
+	std::vector<TextAttribute> TextAttrVect;
+	int iStartCharPos;
+	int iEndCharPos;
+    
+}TextViewLineInfo;
 
 typedef struct TGlyph_
 {

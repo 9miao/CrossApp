@@ -14,11 +14,6 @@
 #include <algorithm>
 #include "view/CAScale9ImageView.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
-#include "platform/CAFTFontCache.h"
-#include "support/ConvertUTF.h"
-#endif
-
 NS_CC_BEGIN
 
 #define BORDER_WIDTH(w) (0.01125*w)
