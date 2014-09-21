@@ -11,7 +11,6 @@
 
 
 #include "platform/CAFreeTypeFont.h"
-#include "view/CATextView.h"
 
 NS_CC_BEGIN
 

@@ -18,15 +18,6 @@
 NS_CC_BEGIN
 
 
-typedef struct _TextViewLineInfo
-{
-	std::vector<TextAttribute> TextAttrVect;
-	int iStartCharPos;
-	int iEndCharPos;
-
-}TextViewLineInfo;
-
-
 class CATextView;
 
 class CATextViewDelegate

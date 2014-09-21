@@ -1018,6 +1018,7 @@
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
 					"\"$(SRCROOT)/../../../Classes\"",
+					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/freetype\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/libraries\"";
@@ -1055,6 +1056,7 @@
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
 					"\"$(SRCROOT)/../../../Classes\"",
+					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/freetype\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/libraries\"";
