@@ -1517,7 +1517,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -1537,7 +1537,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1567,7 +1567,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1598,7 +1598,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;

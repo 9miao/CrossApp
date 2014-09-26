@@ -7,9 +7,7 @@ NS_CC_BEGIN
 
 float CADensityDpi::getDensityDpi()
 {
-    float relust = 240.0f;
-    
-    return relust;
+    return 320.0f;
 }
 
 
