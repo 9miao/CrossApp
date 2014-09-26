@@ -140,8 +140,6 @@
 		04EAB1141956D75600198A8E /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA12A1956D74D00198A8E /* CCPlatformMacros.h */; };
 		04EAB1151956D75600198A8E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA12B1956D74D00198A8E /* CCSAXParser.cpp */; };
 		04EAB1161956D75600198A8E /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA12C1956D74D00198A8E /* CCSAXParser.h */; };
-		04EAB1171956D75600198A8E /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA12D1956D74D00198A8E /* CCThread.cpp */; };
-		04EAB1181956D75600198A8E /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA12E1956D74D00198A8E /* CCThread.h */; };
 		04EAB1191956D75600198A8E /* CCEGLViewProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA12F1956D74D00198A8E /* CCEGLViewProtocol.cpp */; };
 		04EAB1461956D75600198A8E /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1601956D74D00198A8E /* CCApplication.h */; };
 		04EAB1471956D75600198A8E /* CCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA1611956D74D00198A8E /* CCApplication.mm */; };
@@ -281,6 +279,12 @@
 		B08F4BCF19C7E66C008DE306 /* CAFTFontCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BCB19C7E66C008DE306 /* CAFTFontCache.cpp */; };
 		B08F4BD019C7E66C008DE306 /* CAFTFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B08F4BCC19C7E66C008DE306 /* CAFTFontCache.h */; };
 		B08F4BD219C7EBAF008DE306 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08F4BD119C7EBAF008DE306 /* libfreetype.a */; };
+		B09205B919D554A800CB99C1 /* CACalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205B419D554A800CB99C1 /* CACalendar.cpp */; };
+		B09205BA19D554A800CB99C1 /* CACalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B519D554A800CB99C1 /* CACalendar.h */; };
+		B09205BB19D554A800CB99C1 /* CASyncQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B619D554A800CB99C1 /* CASyncQueue.h */; };
+		B09205BC19D554A800CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205B719D554A800CB99C1 /* CAThread.cpp */; };
+		B09205BD19D554A800CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B819D554A800CB99C1 /* CAThread.h */; };
+		B09205BF19D555B100CB99C1 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205BE19D555B100CB99C1 /* CCThread.h */; };
 		B0C512E619A3127100E6934B /* CAActivityIndicatorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */; };
 		B0C512E719A3127100E6934B /* CAActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */; };
 		B0C512E819A3127100E6934B /* CADatePickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E419A3127100E6934B /* CADatePickerView.cpp */; };
@@ -425,8 +429,6 @@
 		04EAA12A1956D74D00198A8E /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
 		04EAA12B1956D74D00198A8E /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		04EAA12C1956D74D00198A8E /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
-		04EAA12D1956D74D00198A8E /* CCThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCThread.cpp; sourceTree = "<group>"; };
-		04EAA12E1956D74D00198A8E /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
 		04EAA12F1956D74D00198A8E /* CCEGLViewProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEGLViewProtocol.cpp; sourceTree = "<group>"; };
 		04EAA1601956D74D00198A8E /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
 		04EAA1611956D74D00198A8E /* CCApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCApplication.mm; sourceTree = "<group>"; };
@@ -567,6 +569,12 @@
 		B08F4BCB19C7E66C008DE306 /* CAFTFontCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTFontCache.cpp; sourceTree = "<group>"; };
 		B08F4BCC19C7E66C008DE306 /* CAFTFontCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTFontCache.h; sourceTree = "<group>"; };
 		B08F4BD119C7EBAF008DE306 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../platform/third_party/mac/libraries/libfreetype.a; sourceTree = "<group>"; };
+		B09205B419D554A800CB99C1 /* CACalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACalendar.cpp; sourceTree = "<group>"; };
+		B09205B519D554A800CB99C1 /* CACalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACalendar.h; sourceTree = "<group>"; };
+		B09205B619D554A800CB99C1 /* CASyncQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASyncQueue.h; sourceTree = "<group>"; };
+		B09205B719D554A800CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
+		B09205B819D554A800CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
+		B09205BE19D555B100CB99C1 /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
 		B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAActivityIndicatorView.cpp; sourceTree = "<group>"; };
 		B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAActivityIndicatorView.h; sourceTree = "<group>"; };
 		B0C512E419A3127100E6934B /* CADatePickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADatePickerView.cpp; sourceTree = "<group>"; };
@@ -641,6 +649,11 @@
 		04EAA05D1956D74D00198A8E /* basics */ = {
 			isa = PBXGroup;
 			children = (
+				B09205B419D554A800CB99C1 /* CACalendar.cpp */,
+				B09205B519D554A800CB99C1 /* CACalendar.h */,
+				B09205B619D554A800CB99C1 /* CASyncQueue.h */,
+				B09205B719D554A800CB99C1 /* CAThread.cpp */,
+				B09205B819D554A800CB99C1 /* CAThread.h */,
 				B04CF4301967B2EB00BA7030 /* CASTLContainer.h */,
 				04EAA05E1956D74D00198A8E /* CAApplication.cpp */,
 				04EAA05F1956D74D00198A8E /* CAApplication.h */,
@@ -843,6 +856,7 @@
 		04EAA0E21956D74D00198A8E /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B09205BE19D555B100CB99C1 /* CCThread.h */,
 				B08F4BC919C7E66C008DE306 /* CAFreeTypeFont.cpp */,
 				B08F4BCA19C7E66C008DE306 /* CAFreeTypeFont.h */,
 				B08F4BCB19C7E66C008DE306 /* CAFTFontCache.cpp */,
@@ -861,8 +875,6 @@
 				04EAA12A1956D74D00198A8E /* CCPlatformMacros.h */,
 				04EAA12B1956D74D00198A8E /* CCSAXParser.cpp */,
 				04EAA12C1956D74D00198A8E /* CCSAXParser.h */,
-				04EAA12D1956D74D00198A8E /* CCThread.cpp */,
-				04EAA12E1956D74D00198A8E /* CCThread.h */,
 				04EAA12F1956D74D00198A8E /* CCEGLViewProtocol.cpp */,
 				040665C31956F45A003E0D62 /* CCEGLViewProtocol.h */,
 				04EAA15F1956D74D00198A8E /* mac */,
@@ -1167,6 +1179,7 @@
 				04EAB0601956D75600198A8E /* CCActionInterval.h in Headers */,
 				04EAB0621956D75600198A8E /* CCActionManager.h in Headers */,
 				04EAB0641956D75600198A8E /* CCActionTween.h in Headers */,
+				B09205BA19D554A800CB99C1 /* CACalendar.h in Headers */,
 				B08F4BD019C7E66C008DE306 /* CAFTFontCache.h in Headers */,
 				04EAB0681956D75600198A8E /* CAApplication.h in Headers */,
 				B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */,
@@ -1188,9 +1201,11 @@
 				04EAB0851956D75600198A8E /* CCDictionary.h in Headers */,
 				B0F7E4FF198788010048F46B /* CAPageView.h in Headers */,
 				04EAB08A1956D75600198A8E /* CCNS.h in Headers */,
+				B09205BF19D555B100CB99C1 /* CCThread.h in Headers */,
 				04EAB08C1956D75600198A8E /* CCSet.h in Headers */,
 				04EAB08E1956D75600198A8E /* CCString.h in Headers */,
 				B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */,
+				B09205BB19D554A800CB99C1 /* CASyncQueue.h in Headers */,
 				04EAB0901956D75600198A8E /* CABar.h in Headers */,
 				04EAB0921956D75600198A8E /* CAButton.h in Headers */,
 				04EAB0941956D75600198A8E /* CAControl.h in Headers */,
@@ -1242,7 +1257,6 @@
 				04EAB1131956D75600198A8E /* CCPlatformConfig.h in Headers */,
 				04EAB1141956D75600198A8E /* CCPlatformMacros.h in Headers */,
 				04EAB1161956D75600198A8E /* CCSAXParser.h in Headers */,
-				04EAB1181956D75600198A8E /* CCThread.h in Headers */,
 				04EAB1461956D75600198A8E /* CCApplication.h in Headers */,
 				04EAB14A1956D75600198A8E /* CCAccelerometer.h in Headers */,
 				04EAB14D1956D75600198A8E /* CCEventDispatcher.h in Headers */,
@@ -1261,6 +1275,7 @@
 				04EABA5E1956D75A00198A8E /* ccGLStateCache.h in Headers */,
 				04EABA5F1956D75A00198A8E /* ccShader_Position_uColor_frag.h in Headers */,
 				04EABA601956D75A00198A8E /* ccShader_Position_uColor_vert.h in Headers */,
+				B09205BD19D554A800CB99C1 /* CAThread.h in Headers */,
 				04EABA611956D75A00198A8E /* ccShader_PositionColor_frag.h in Headers */,
 				04EABA621956D75A00198A8E /* ccShader_PositionColor_vert.h in Headers */,
 				04EABA631956D75A00198A8E /* ccShader_PositionColorLengthTexture_frag.h in Headers */,
@@ -1438,12 +1453,12 @@
 				04EAB10E1956D75600198A8E /* CCFileUtils.cpp in Sources */,
 				04EAB1121956D75600198A8E /* CCImageCommonWebp.cpp in Sources */,
 				04EAB1151956D75600198A8E /* CCSAXParser.cpp in Sources */,
-				04EAB1171956D75600198A8E /* CCThread.cpp in Sources */,
 				04EAB1191956D75600198A8E /* CCEGLViewProtocol.cpp in Sources */,
 				04EAB1471956D75600198A8E /* CCApplication.mm in Sources */,
 				04EAB14B1956D75600198A8E /* CCCommon.mm in Sources */,
 				04EAB14C1956D75600198A8E /* CCDevice.mm in Sources */,
 				04EAB14E1956D75600198A8E /* CCEventDispatcher.mm in Sources */,
+				B09205BC19D554A800CB99C1 /* CAThread.cpp in Sources */,
 				04EAB1501956D75600198A8E /* CCFileUtilsMac.mm in Sources */,
 				04EAB1521956D75600198A8E /* CCImage.mm in Sources */,
 				04EAB1551956D75600198A8E /* CCThread.mm in Sources */,
@@ -1452,6 +1467,7 @@
 				04EAB1591956D75600198A8E /* EAGLView.mm in Sources */,
 				04EAB15C1956D75600198A8E /* platform.cpp in Sources */,
 				04EABA5D1956D75A00198A8E /* ccGLStateCache.cpp in Sources */,
+				B09205B919D554A800CB99C1 /* CACalendar.cpp in Sources */,
 				04EABA6E1956D75A00198A8E /* CAShaderCache.cpp in Sources */,
 				04EABA711956D75A00198A8E /* ccShaders.cpp in Sources */,
 				B02CE48319AD869600B905FB /* CAPageControl.cpp in Sources */,

@@ -132,10 +132,6 @@ protected:
     bool m_bHasAlpha;
     bool m_bPreMulti;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    CCFreeTypeFont* m_ft;
-#endif
-
 private:
     // noncopyable
     CCImage(const CCImage&    rImg);
