@@ -121,14 +121,14 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	return pCAImage;
 }
 
-CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, std::vector<TextViewLineInfo>& linesText, bool bWordWrap)
+CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, std::vector<TextViewLineInfo>& linesText, int iLineSpace, bool bWordWrap)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
 
 	m_inWidth = inWidth;
 	m_inHeight = inHeight;
-	m_lineSpacing = 0;
+	m_lineSpacing = iLineSpace;
 	m_bWordWrap = bWordWrap;
 
 	linesText.clear();

@@ -104,13 +104,13 @@ CAImage* CAFTFontCache::initWithString(const char* pText, const char* pFontName,
 	return pImage;
 }
 
-CAImage* CAFTFontCache::initWithStringEx(const char* pText, const char* pFontName, int nSize, int width, int height, std::vector<TextViewLineInfo>& linesText, bool bWordWrap)
+CAImage* CAFTFontCache::initWithStringEx(const char* pText, const char* pFontName, int nSize, int width, int height, std::vector<TextViewLineInfo>& linesText, int iLineSpace, bool bWordWrap)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
 
 	setCurrentFontData(pFontName, nSize);
-	CAImage* pImage = m_pCurFontData->ftFont.initWithStringEx(pText, pFontName, nSize, width, height, linesText, bWordWrap);
+	CAImage* pImage = m_pCurFontData->ftFont.initWithStringEx(pText, pFontName, nSize, width, height, linesText, iLineSpace, bWordWrap);
 	return pImage;
 }
 
