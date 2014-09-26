@@ -292,6 +292,29 @@ unsigned int CALabel::getFontSize()
     return m_nfontSize;
 }
 
+void CALabel::setLineSpacing(unsigned int var)
+{
+	m_iLineSpacing = var;
+	m_bUpdateImage = true;
+}
+
+unsigned int CALabel::getLineSpacing()
+{
+	return m_iLineSpacing;
+}
+
+void CALabel::setWordWrap(bool var)
+{
+	m_bWordWrap = var;
+	m_bUpdateImage = true;
+}
+
+bool CALabel::getWordWrap()
+{
+	return m_bWordWrap;
+}
+
+
 void CALabel::setFontName(const string& var)
 {
     m_nfontName=var;

@@ -38,7 +38,9 @@ public:
     
     CC_PROPERTY(unsigned int, m_nfontSize, FontSize);
     
-	CC_SYNTHESIZE(bool, m_bWordWrap, WordWrap);
+	CC_PROPERTY(bool, m_bWordWrap, WordWrap);
+
+	CC_PROPERTY(unsigned int, m_iLineSpacing, LineSpacing);
     
     CC_PROPERTY_PASS_BY_REF(string, m_nfontName, FontName);
     
@@ -69,9 +71,6 @@ protected:
     float pTextHeight;
     
     bool m_bFitFlag;
-    
-	int m_iLineSpacing;
-    
 };
 
 NS_CC_END
