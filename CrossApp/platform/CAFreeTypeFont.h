@@ -71,12 +71,12 @@ public:
 	CAFreeTypeFont();
 	virtual ~CAFreeTypeFont();
 
-	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
+	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
+		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap=true, int iLineSpacing = 0);
 
-	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, std::vector<TextViewLineInfo>& linesText);
+	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, std::vector<TextViewLineInfo>& linesText, bool bWordWrap=true);
 
-	void setForTextField(bool on) { m_isForTextField = on; }
-
+	static void destroyAllFontBuff();
 protected:
 	bool initFreeTypeFont(const char* pFontName, unsigned long nSize);
 	void finiFreeTypeFont();
@@ -84,7 +84,7 @@ protected:
 	unsigned char* getBitmap(CCImage::ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text);
-	int getStringHeight(const std::string& text, int iLimitWidth);
+	int getStringHeight(const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 	void destroyAllLines();
 
 	FT_Error initGlyphs(const char* text);
@@ -118,11 +118,12 @@ protected:
     int             m_textWidth;    // width of text text after word wrapping and line breaks    
     int             m_textHeight;   // height of text text after word wrapping and line breaks  
     int             m_lineHeight;   // height of a line for the font size
+	int				m_lineSpacing;
     int             m_windowWidth;  // the width of the window
 
     FTLineInfo*     m_currentLine;  // the current line object to add words to.
 
-	bool m_isForTextField;
+	bool m_bWordWrap;
 };
 
 NS_CC_END

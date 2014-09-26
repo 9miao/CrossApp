@@ -42,6 +42,8 @@
 #include "basics/CASTLContainer.h"
 #include "basics/CAIndexPath.h"
 #include "basics/CACalendar.h"
+#include "basics/CAThread.h"
+#include "basics/CASyncQueue.h"
 
 //control
 #include "control/CABar.h"
@@ -93,6 +95,7 @@
 #include "view/CAPickerView.h"
 #include "view/CAActivityIndicatorView.h"
 #include "view/CAPullToRefreshView.h"
+#include "view/CATextView.h"
 
 // cocoa
 #include "cocoa/CCDictionary.h"
@@ -136,7 +139,6 @@
 #include "platform/CCFileUtils.h"
 #include "platform/CCImage.h"
 #include "platform/CCSAXParser.h"
-#include "platform/CCThread.h"
 #include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformMacros.h"

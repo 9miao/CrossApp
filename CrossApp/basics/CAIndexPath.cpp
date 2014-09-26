@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by MAC on 14-7-27.
-//  Copyright (c) 2014年 厦门雅基软件有限公司. All rights reserved.
+//  Copyright (c) 2014�?厦门雅基软件有限公司. All rights reserved.
 //
 
 #include "CAIndexPath.h"
@@ -24,13 +24,6 @@ CAIndexPath2E::CAIndexPath2E()
 CAIndexPath2E::CAIndexPath2E(unsigned int section, unsigned int row)
 :section(section)
 ,row(row)
-{
-    
-}
-
-CAIndexPath2E::CAIndexPath2E(const CAIndexPath2E& other)
-:section(other.section)
-,row(other.row)
 {
     
 }
@@ -83,13 +76,6 @@ CAIndexPath3E::CAIndexPath3E(unsigned int section, unsigned int row, unsigned in
     
 }
 
-CAIndexPath3E::CAIndexPath3E(const CAIndexPath3E& other)
-:section(other.section)
-,row(other.row)
-,item(other.item)
-{
-    
-}
 
 bool CAIndexPath3E::operator!= (const CAIndexPath3E& other) const
 {

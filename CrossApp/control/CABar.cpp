@@ -69,10 +69,8 @@ void CANavigationBar::replaceItemAtIndex(size_t index, CANavigationBarItem* item
 {
     if (index < m_pItems.size())
     {
-        CANavigationBarItem* oldItem = m_pItems.at(index);
-        m_pItems.at(index) = item;
-        CC_SAFE_RELEASE(oldItem);
-        CC_SAFE_RETAIN(item);
+		m_pItems.replace(index, item);
+
         if (index == m_pItems.size() - 1)
         {
             this->updateNavigationBar();
@@ -298,17 +296,14 @@ void CANavigationBar::pushItem(CANavigationBarItem* item)
     {
         item = CANavigationBarItem::create(CCString::createWithFormat("item%ld",m_pItems.size())->getCString());
     }
-
-    item->retain();
-    m_pItems.push_back(item);
+	m_pItems.pushBack(item);
     
     this->updateNavigationBar();
 }
 
 void CANavigationBar::popItem()
 {
-    m_pItems.back()->autorelease();
-    m_pItems.pop_back();
+	m_pItems.popBack();
     
     if (!m_pItems.empty())
     {
@@ -391,26 +386,31 @@ void CATabBar::setItems(const std::vector<CATabBarItem*>& items)
 {
     do
     {
-        CC_BREAK_IF(items.size() == 0);
-        m_pItems = items;
-        
-        std::vector<CATabBarItem*>::iterator itr;
-        for (itr=m_pItems.begin(); itr!=m_pItems.end(); itr++)
-        {
-            (*itr)->retain();
-        }
+        CC_BREAK_IF(items.empty());
+
+		m_pItems.clear();
+		for (int i = 0; i < items.size(); i++)
+		{
+			m_pItems.pushBack(items[i]);
+		}
     }
     while (0);
+}
+
+void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
+{
+	do
+	{
+		CC_BREAK_IF(items.empty());
+		m_pItems = items;
+	} while (0);
 }
 
 void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)
 {
     if (index < m_pItems.size())
     {
-        CATabBarItem* oldItem = m_pItems.at(index);
-        m_pItems.at(index) = item;
-        CC_SAFE_RELEASE(oldItem);
-        CC_SAFE_RETAIN(item);
+		m_pItems.replace(index, item);
         this->showItems();
     }
 }

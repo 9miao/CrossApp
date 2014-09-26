@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-7-27.
-//  Copyright (c) 2014å¹´ http://9miao.com All rights reserved.
+//  Copyright (c) 2014å¹?http://9miao.com All rights reserved.
 //
 
 #ifndef __CrossApp__CAIndexPath__
@@ -21,7 +21,6 @@ struct CC_DLL CAIndexPath2E
     
     CAIndexPath2E();
     CAIndexPath2E(unsigned int section, unsigned int row);
-    CAIndexPath2E(const CAIndexPath2E& other);
     
     bool operator!= (const CAIndexPath2E& other) const;
     bool operator== (const CAIndexPath2E& other) const;
@@ -37,7 +36,6 @@ struct CC_DLL CAIndexPath3E
     
     CAIndexPath3E();
     CAIndexPath3E(unsigned int section, unsigned int row, unsigned int item);
-    CAIndexPath3E(const CAIndexPath3E& other);
     
     bool operator!= (const CAIndexPath3E& other) const;
     bool operator== (const CAIndexPath3E& other) const;

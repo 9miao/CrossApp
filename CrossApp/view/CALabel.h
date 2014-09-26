@@ -38,6 +38,8 @@ public:
     
     CC_PROPERTY(unsigned int, m_nfontSize, FontSize);
     
+	CC_SYNTHESIZE(bool, m_bWordWrap, WordWrap);
+    
     CC_PROPERTY_PASS_BY_REF(string, m_nfontName, FontName);
     
     CC_PROPERTY_PASS_BY_REF(CAVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
@@ -67,6 +69,8 @@ protected:
     float pTextHeight;
     
     bool m_bFitFlag;
+    
+	int m_iLineSpacing;
     
 };
 

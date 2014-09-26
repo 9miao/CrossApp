@@ -14,7 +14,8 @@
 #include "CAButton.h"
 #include "CASegmentedControl.h"
 #include "controller/CABarItem.h"
-#include <vector>
+#include "basics/CASTLContainer.h"
+
 NS_CC_BEGIN
 
 class CANavigationBar;
@@ -64,7 +65,7 @@ public:
     
     CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(std::vector<CANavigationBarItem*>, m_pItems, Items);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CANavigationBarItem*>, m_pItems, Items);
     
     void replaceItemAtIndex(size_t index, CANavigationBarItem* item);
     
@@ -113,6 +114,8 @@ public:
     static CATabBar* create(const std::vector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
     
     void setItems(const std::vector<CATabBarItem*>& items);
+
+	void setItems(const CAVector<CATabBarItem*>& items);
     
 public:
 
@@ -142,7 +145,7 @@ public:
     
     CC_SYNTHESIZE(CATabBarDelegate* , m_pDelegate, Delegate);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(std::vector<CATabBarItem*>, m_pItems, Items);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CATabBarItem*>, m_pItems, Items);
     
     CC_SYNTHESIZE_READONLY(int, m_nSelectedIndex, SelectedIndex);
     

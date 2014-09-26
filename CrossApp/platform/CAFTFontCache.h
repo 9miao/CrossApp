@@ -36,15 +36,13 @@ public:
 
 	int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text);
 
-	int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth);
+	int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int width, int height,
-		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment);
+		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap=true, int iLineSpacing = 0);
 
 	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-		std::vector<TextViewLineInfo>& linesText);
-
-	void setForTextField(bool on) { m_isForTextField = on; }
+		std::vector<TextViewLineInfo>& linesText, bool bWordWrap = true);
 
 protected:
 	void initDefaultFont();
@@ -57,8 +55,6 @@ private:
 	FontDataTable* m_pCurFontData;
 
 	std::vector<FontDataTable*> m_FontDataVect;
-
-	bool m_isForTextField;
 };
 
 
