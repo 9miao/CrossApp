@@ -15,22 +15,6 @@
 重新拷贝java文件到android工程中
 
 
-#### CrossApp 0. 3. 7 Update:
-
-##### 1. Touch Distributed System Optimization
-
-##### 2. Fixed CATabBarController’s Bug
-
-##### 3. Fixed CATextField’s Bug
-
-##### 4. Fixed text loading mechanism in Mac platform
-
-##### 5. Other details tweaking
-
-#### Suggestion:
-Recopy java files into android project<br/>
-
-
 **********************************************************************************
 
 
