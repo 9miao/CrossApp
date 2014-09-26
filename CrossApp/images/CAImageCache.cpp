@@ -6,7 +6,6 @@
 #include "basics/CAApplication.h"
 #include "platform/platform.h"
 #include "platform/CCFileUtils.h"
-#include "platform/CCThread.h"
 #include "platform/CCImage.h"
 #include "support/ccUtils.h"
 #include "basics/CAScheduler.h"
@@ -145,10 +144,6 @@ static void* loadImage(void* data)
 
     while (true)
     {
-        // create autorelease pool for iOS
-        CCThread thread;
-        thread.createAutoreleasePool();
-
         std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
         pthread_mutex_lock(&s_asyncStructQueueMutex);// get async struct from queue
         if (pQueue->empty())

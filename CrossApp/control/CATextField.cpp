@@ -437,6 +437,7 @@ void CATextField::deleteBackward()
     if (m_nInputType==KEY_BOARD_INPUT_PASSWORD)
     {
         m_sText.clear();
+		m_vTextFiledChars.clear();
 		this->updateImage();
 		m_iString_l_length = 0;
 		m_iString_r_length = 0;
@@ -448,16 +449,7 @@ void CATextField::deleteBackward()
     }
 
 	if (m_iCurPos==0 || m_sText.empty())
-    {
-        m_sText.clear();
-        this->updateImage();
-		m_iString_l_length = 0;
-		m_iString_r_length = 0;
-        m_iString_left_offX= 0;
-		m_iCurPos = 0;
-        return;
-    }
-    
+		return;
 
 	int nDeleteLen = 1;
 	while (0x80 == (0xC0 & m_sText.at(m_iCurPos - nDeleteLen)))

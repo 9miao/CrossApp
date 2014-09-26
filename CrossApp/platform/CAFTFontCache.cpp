@@ -11,7 +11,6 @@ NS_CC_BEGIN
 
 CAFTFontCache::CAFTFontCache()
 : m_pCurFontData(NULL)
-, m_isForTextField(false)
 {
 	initDefaultFont();
 }
@@ -19,6 +18,7 @@ CAFTFontCache::CAFTFontCache()
 CAFTFontCache::~CAFTFontCache()
 {
 	destroyAllFontData();
+	CAFreeTypeFont::destroyAllFontBuff();
 }
 
 CAFTFontCache& CAFTFontCache::getAFTFontCache()
@@ -87,31 +87,30 @@ int CAFTFontCache::getStringWidth(const char* pFontName, unsigned long nSize, co
 	return m_pCurFontData->ftFont.getStringWidth(text);
 }
 
-int CAFTFontCache::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth)
+int CAFTFontCache::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap)
 {
 	setCurrentFontData(pFontName, nSize);
-	return m_pCurFontData->ftFont.getStringHeight(text, iLimitWidth);
+	return m_pCurFontData->ftFont.getStringHeight(text, iLimitWidth, iLineSpace, bWordWrap);
 }
 
-CAImage* CAFTFontCache::initWithString(const char* pText, const char* pFontName, int nSize, int width, int height, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment)
+CAImage* CAFTFontCache::initWithString(const char* pText, const char* pFontName, int nSize, int width, int height, 
+	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
 
 	setCurrentFontData(pFontName, nSize);
-	CAImage* pImage = m_pCurFontData->ftFont.initWithString(pText, pFontName, nSize, width, height, hAlignment, vAlignment);
-	setForTextField(false);
+	CAImage* pImage = m_pCurFontData->ftFont.initWithString(pText, pFontName, nSize, width, height, hAlignment, vAlignment, bWordWrap, iLineSpacing);
 	return pImage;
 }
 
-CAImage* CAFTFontCache::initWithStringEx(const char* pText, const char* pFontName, int nSize, int width, int height, std::vector<TextViewLineInfo>& linesText)
+CAImage* CAFTFontCache::initWithStringEx(const char* pText, const char* pFontName, int nSize, int width, int height, std::vector<TextViewLineInfo>& linesText, bool bWordWrap)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
 
 	setCurrentFontData(pFontName, nSize);
-	CAImage* pImage = m_pCurFontData->ftFont.initWithStringEx(pText, pFontName, nSize, width, height, linesText);
-	setForTextField(false);
+	CAImage* pImage = m_pCurFontData->ftFont.initWithStringEx(pText, pFontName, nSize, width, height, linesText, bWordWrap);
 	return pImage;
 }
 

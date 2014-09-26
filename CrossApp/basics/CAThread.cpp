@@ -1,0 +1,123 @@
+
+#include "CAThread.h"
+
+
+NS_CC_BEGIN
+
+
+
+CALock::CALock()
+{
+	pthread_mutex_init(&m_cMutex, NULL);
+}
+
+CALock::~CALock()
+{
+	pthread_mutex_destroy(&m_cMutex);
+}
+
+void CALock::Lock()
+{
+	pthread_mutex_lock(&m_cMutex);
+}
+
+void CALock::UnLock()
+{
+	pthread_mutex_unlock(&m_cMutex);
+}
+
+
+CAThread::CAThread()
+: m_bIsRunning(false)
+, m_pThreadFunc(NULL)
+{
+	pthread_mutex_init(&m_SleepMutex, NULL);
+	pthread_cond_init(&m_SleepCondition, NULL);
+}
+
+CAThread::~CAThread()
+{
+	close();
+	pthread_mutex_destroy(&m_SleepMutex);
+	pthread_cond_destroy(&m_SleepCondition);
+}
+
+void CAThread::start()
+{
+	m_ThreadRunType = ThreadRunDirectly;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+	pthread_create(&m_hThread, NULL, _ThreadProc, this);
+#endif
+}
+
+void CAThread::startAndWait(ThreadProcFunc func)
+{
+	m_ThreadRunType = ThreadRunNotify;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+	pthread_create(&m_hThread, NULL, _ThreadProc, this);
+#endif
+	m_pThreadFunc = func;
+}
+
+void CAThread::notifyRun(void* param)
+{
+	m_ThreadDataQueue.AddElement(param);
+	pthread_cond_signal(&m_SleepCondition);
+}
+
+void CAThread::close()
+{
+	m_bIsRunning = false;
+	pthread_cond_wait(&m_SleepCondition, &m_SleepMutex);
+	pthread_detach(m_hThread);
+}
+
+void CAThread::closeAtOnce()
+{
+	m_ThreadDataQueue.Clear();
+	close();
+}
+
+bool CAThread::isRunning()
+{
+	return m_bIsRunning;
+}
+
+void* CAThread::_ThreadProc(void* lpParameter)
+{
+	CAThread *pAThread = (CAThread*)lpParameter;
+	CCAssert(pAThread != NULL, "");
+	
+	pAThread->m_bIsRunning = true;
+	pAThread->OnInitInstance();
+	while (pAThread->m_bIsRunning)
+	{
+		if (pAThread->m_ThreadRunType == ThreadRunDirectly)
+		{
+			pAThread->OnRunning();
+		}
+		else if (pAThread->m_ThreadRunType == ThreadRunDirectly)
+		{
+			void* param = NULL;
+			if (pAThread->m_ThreadDataQueue.PopElement(param))
+			{
+				if (pAThread->m_pThreadFunc)
+				{
+					if (!pAThread->m_pThreadFunc(param))
+						break;
+				}
+			}
+			else
+			{
+				pthread_cond_wait(&pAThread->m_SleepCondition, &pAThread->m_SleepMutex);
+			}
+		}
+		else break;
+	}
+	pAThread->OnExitInstance();
+	pAThread->m_bIsRunning = false;
+	pthread_cond_signal(&pAThread->m_SleepCondition);
+	return 0;
+}
+
+NS_CC_END

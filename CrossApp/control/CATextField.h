@@ -17,11 +17,9 @@
 #include "control/CAControl.h"
 #include "view/CAScale9ImageView.h"
 #include "support/ccUTF8.h"
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "platform/CAFTFontCache.h"
 #include "support/ConvertUTF.h"
-#endif
+
 
 NS_CC_BEGIN
 

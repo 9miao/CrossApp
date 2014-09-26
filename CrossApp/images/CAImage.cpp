@@ -97,19 +97,9 @@ CAImage* CAImage::createWithData(void* data, int lenght, const std::string& key)
     return image;
 }
 
-CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool isForTextField)
+CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing)
 {
-	g_AFTFontCache.setForTextField(isForTextField);
-    
-	CAImage* image = g_AFTFontCache.initWithString(text,
-                                                   fontName,
-                                                   fontSize,
-                                                   dimensions.width,
-                                                   dimensions.height,
-                                                   hAlignment,vAlignment);
-    
-    return image;
-    
+	return g_AFTFontCache.initWithString(text, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing);
 }
 
 int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
@@ -122,9 +112,9 @@ int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const st
     return g_AFTFontCache.getStringWidth(pFontName, nSize, pText);
 }
 
-int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth)
+int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth, int iLineSpace, bool bWordWrap)
 {
-    return g_AFTFontCache.getStringHeight(pFontName, nSize, pText, iLimitWidth);
+	return g_AFTFontCache.getStringHeight(pFontName, nSize, pText, iLimitWidth, iLineSpace, bWordWrap);
 }
 
 const CAImagePixelFormat& CAImage::getPixelFormat()

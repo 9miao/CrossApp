@@ -25,6 +25,8 @@ CALabel::CALabel()
 ,m_bUpdateImage(false)
 ,pTextHeight(0)
 ,m_bFitFlag(false)
+,m_iLineSpacing(0)
+,m_bWordWrap(true)
 {
     m_obContentSize = CCSizeZero;
     
@@ -93,7 +95,7 @@ bool CALabel::initWithCenter(const CCRect& rect)
 
 void CALabel::updateImage()
 {
-	float fontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_nfontSize);
+	int fontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_nfontSize);
     
     unsigned int linenumber = (int)this->getBounds().size.height / fontHeight;
 
@@ -105,34 +107,41 @@ void CALabel::updateImage()
         {
             if (m_nNumberOfLine > 1)
             {
-                size = CCSize(this->getBounds().size.width, fontHeight * m_nNumberOfLine);
+				size = CCSize(this->getBounds().size.width, (m_iLineSpacing + fontHeight) * m_nNumberOfLine);
             }
             else if (m_nNumberOfLine == 1)
             {
-                size = CCSize(CAImage::getStringWidth(m_nfontName.c_str(), m_nfontSize, m_nText.c_str()), fontHeight);
+				size = CCSize(width, fontHeight);
             }
             else
             {
                 size.width = this->getBounds().size.width;
-                size.height = CAImage::getStringHeight(m_nfontName.c_str(), m_nfontSize, m_nText, size.width);
+				size.height = CAImage::getStringHeight(m_nfontName.c_str(), m_nfontSize, m_nText, size.width, m_iLineSpacing, m_bWordWrap);
             }
         }
         else
         {
             size.height = fontHeight;
-            size.width = CAImage::getStringWidth(m_nfontName.c_str(), m_nfontSize, m_nText);
+			size.width = width;
         }
     }
     else
     {
-        if (m_nNumberOfLine > 0)
-        {
-            size = CCSize(this->getBounds().size.width, fontHeight * MIN(m_nNumberOfLine, linenumber));
-        }
-        else
-        {
-            size = CCSize(this->getBounds().size.width, fontHeight * linenumber);
-        }
+        if (linenumber == 0)
+		{
+			size = this->getBounds().size;
+		}
+		else
+		{
+			if (m_nNumberOfLine > 0)
+			{
+				size = CCSize(this->getBounds().size.width, (m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
+			}
+			else
+			{
+				size = CCSize(this->getBounds().size.width, (m_iLineSpacing + fontHeight) * linenumber);
+			}
+		}
     }
     
     
@@ -142,7 +151,7 @@ void CALabel::updateImage()
                                                m_nfontSize,
                                                size,
                                                m_nTextAlignment,
-                                               m_nVerticalTextAlignmet);
+											   m_nVerticalTextAlignmet, m_bWordWrap, m_iLineSpacing);
 
 	CC_RETURN_IF(image == NULL);
 

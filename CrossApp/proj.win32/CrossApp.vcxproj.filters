@@ -117,9 +117,6 @@
     <ClCompile Include="..\platform\CCSAXParser.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CCThread.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\platform.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -421,6 +418,12 @@
     <ClCompile Include="..\view\CAPullToRefreshView.cpp">
       <Filter>view</Filter>
     </ClCompile>
+    <ClCompile Include="..\basics\CAThread.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CATextView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -487,9 +490,6 @@
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCSAXParser.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCThread.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\platform.h">
@@ -849,6 +849,15 @@
       <Filter>control</Filter>
     </ClInclude>
     <ClInclude Include="..\view\CAPullToRefreshView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CASyncQueue.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAThread.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CATextView.h">
       <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
