@@ -75,7 +75,8 @@ public:
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
 		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap=true, int iLineSpacing = 0);
 
-	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, std::vector<TextViewLineInfo>& linesText, bool bWordWrap=true);
+	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
+		std::vector<TextViewLineInfo>& linesText, int iLineSpace=0, bool bWordWrap = true);
 
 	static void destroyAllFontBuff();
 protected:

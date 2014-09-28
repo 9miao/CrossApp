@@ -67,6 +67,7 @@ public:
 	virtual void willInsertText(const char* text, int len);
 	virtual void AndroidWillInsertText(int start, const char* str, int before, int count);
 	virtual void deleteBackward();
+	virtual void visit();
 
     
 	CC_SYNTHESIZE(CATextViewDelegate*, m_pTextViewDelegate, TextViewDelegate);
@@ -74,6 +75,10 @@ public:
 	CC_PROPERTY(CAColor4B, m_cCursorColor, CursorColor);
 
 	CC_PROPERTY(int, m_iFontSize, FontSize);
+
+	CC_PROPERTY(bool, m_bWordWrap, WordWrap);
+
+	CC_PROPERTY(unsigned int, m_iLineSpacing, LineSpacing);
 
 	CC_PROPERTY_PASS_BY_REF(std::string, m_szFontName, FontName);
     
@@ -113,6 +118,8 @@ private:
 
 	int m_iLineHeight;
 	std::vector<TextViewLineInfo> m_vLinesTextView;
+
+	bool m_bUpdateImage;
 };
 
 

@@ -28,6 +28,9 @@ CATextView::CATextView()
 , m_szFontName("")
 , m_iFontSize(24)
 , m_iCurPos(0)
+, m_bUpdateImage(false)
+, m_iLineSpacing(0)
+, m_bWordWrap(true)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 }
@@ -161,7 +164,9 @@ void CATextView::updateImage()
 		m_iFontSize,
 		width,
 		0,
-		m_vLinesTextView);
+		m_vLinesTextView,
+		m_iLineSpacing,
+		m_bWordWrap);
 #endif
 
 	if (image == NULL)
@@ -236,6 +241,29 @@ int CATextView::getFontSize()
 {
 	return m_iFontSize;
 }
+
+void CATextView::setLineSpacing(unsigned int var)
+{
+	m_iLineSpacing = var;
+	m_bUpdateImage = true;
+}
+
+unsigned int CATextView::getLineSpacing()
+{
+	return m_iLineSpacing;
+}
+
+void CATextView::setWordWrap(bool var)
+{
+	m_bWordWrap = var;
+	m_bUpdateImage = true;
+}
+
+bool CATextView::getWordWrap()
+{
+	return m_bWordWrap;
+}
+
 
 void CATextView::setFontName(const std::string& var)
 {
@@ -458,6 +486,17 @@ int CATextView::getStringLength(const std::string &var)
 	}
 	return 0;
 #endif
+}
+
+
+void CATextView::visit()
+{
+	if (m_bUpdateImage)
+	{
+		m_bUpdateImage = false;
+		this->updateImage();
+	}
+	CAScrollView::visit();
 }
 
 NS_CC_END

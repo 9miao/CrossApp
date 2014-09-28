@@ -42,7 +42,7 @@ public:
 		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap=true, int iLineSpacing = 0);
 
 	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-		std::vector<TextViewLineInfo>& linesText, bool bWordWrap = true);
+		std::vector<TextViewLineInfo>& linesText, int iLineSpace=0, bool bWordWrap = true);
 
 protected:
 	void initDefaultFont();
