@@ -21,7 +21,6 @@ NS_CC_BEGIN
 
 CATextView::CATextView()
 : m_pTextViewDelegate(NULL)
-, m_pBackgroundView(NULL)
 , m_pCursorMark(NULL)
 , m_pImageView(NULL)
 , m_cCursorColor(CAColor_black)
@@ -132,22 +131,6 @@ void CATextView::initMarkSprite()
 	m_pCursorMark->setFrame(CCRect(0, 0, 2, m_iLineHeight));
 	addSubview(m_pCursorMark);
 	m_pCursorMark->runAction(CCRepeatForever::create((CCActionInterval *)CCSequence::create(CCFadeOut::create(0.5f), CCFadeIn::create(0.5f), NULL)));
-}
-
-void CATextView::setBackGroundImage(CAImage *image)
-{
-	if (m_pBackgroundView == NULL)
-	{
-		m_pBackgroundView = CAScale9ImageView::create();
-		m_pBackgroundView->setFrame(this->getBounds());
-		this->insertSubview(m_pBackgroundView, -1);
-	}
-	m_pBackgroundView->setImage(image);
-}
-
-CAImage *CATextView::getBackGroundImage()
-{
-	return m_pBackgroundView ? m_pBackgroundView->getImage() : NULL;
 }
 
 void CATextView::updateImage()
@@ -434,19 +417,8 @@ bool CATextView::attachWithIME()
 		CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
 		if (pGlView)
 		{
-#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID||CC_TARGET_PLATFORM==CC_PLATFORM_IOS)        
-//			if (getKeyboardType() == KEY_BOARD_TYPE_NORMAL)
-//			{
-//				pGlView->setIMEKeyboardDefault();
-//			}
-//			else if (getKeyboardType() == KEY_BOARD_TYPE_NUMBER)
-//			{
-//				pGlView->setIMEKeyboardNumber();
-//			}
-//			else if (getKeyboardType() == KEY_BOARD_TYPE_ALPHABET)
-//			{
-//				pGlView->setIMEKeyboardAlphabet();
-//			}
+#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+			pGlView->setIMEKeyboardDefault();
 #endif
 			pGlView->setIMEKeyboardState(true);
 		}

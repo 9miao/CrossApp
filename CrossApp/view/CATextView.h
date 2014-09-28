@@ -56,20 +56,10 @@ public:
 
 	bool initWithCenter(const CCRect& rect);
 
-	void setBackGroundImage(CAImage *image);
-
-	CAImage *getBackGroundImage();
-
 	virtual bool init();
-	virtual bool canAttachWithIME();
-	virtual bool canDetachWithIME();
-	virtual void insertText(const char * text, int len);
-	virtual void willInsertText(const char* text, int len);
-	virtual void AndroidWillInsertText(int start, const char* str, int before, int count);
-	virtual void deleteBackward();
+	
 	virtual void visit();
 
-    
 	CC_SYNTHESIZE(CATextViewDelegate*, m_pTextViewDelegate, TextViewDelegate);
 
 	CC_PROPERTY(CAColor4B, m_cCursorColor, CursorColor);
@@ -90,6 +80,18 @@ protected:
 
 	void calcCursorPosition();
 
+    virtual bool canAttachWithIME();
+    
+    virtual bool canDetachWithIME();
+    
+    virtual void insertText(const char * text, int len);
+    
+    virtual void willInsertText(const char* text, int len);
+    
+    virtual void AndroidWillInsertText(int start, const char* str, int before, int count);
+    
+    virtual void deleteBackward();
+    
 	int getStringLength(const std::string &var);
 
     inline virtual float maxSpeed(float dt);
@@ -107,16 +109,17 @@ public:
 	virtual bool detachWithIME();
 
 private:
+    
 	CAView* m_pCursorMark;
-
-	CAScale9ImageView* m_pBackgroundView;
 
 	CAImageView* m_pImageView;
 
 	std::string m_szText;
+    
 	int m_iCurPos;
 
 	int m_iLineHeight;
+    
 	std::vector<TextViewLineInfo> m_vLinesTextView;
 
 	bool m_bUpdateImage;

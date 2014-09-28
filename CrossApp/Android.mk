@@ -95,6 +95,7 @@ view/CAPickerView.cpp \
 view/CADatePickerView.cpp \
 view/CAActivityIndicatorView.cpp \
 view/CAPullToRefreshView.cpp \
+view/CATextView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
