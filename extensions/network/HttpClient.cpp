@@ -1,7 +1,6 @@
 
 
 #include "HttpClient.h"
-// #include "platform/CCThread.h"
 
 #define MAX_Thread 16
 

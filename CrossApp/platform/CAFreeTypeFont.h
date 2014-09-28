@@ -25,6 +25,7 @@
 
 NS_CC_BEGIN
 
+
 typedef struct _TextAttribute
 {
     int charSize;

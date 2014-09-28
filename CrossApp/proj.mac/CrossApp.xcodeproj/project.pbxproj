@@ -289,6 +289,8 @@
 		B0C512E719A3127100E6934B /* CAActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */; };
 		B0C512E819A3127100E6934B /* CADatePickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E419A3127100E6934B /* CADatePickerView.cpp */; };
 		B0C512E919A3127100E6934B /* CADatePickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512E519A3127100E6934B /* CADatePickerView.h */; };
+		B0DA93F919D79B1A00E66E11 /* CATextView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DA93F719D79B1A00E66E11 /* CATextView.cpp */; };
+		B0DA93FA19D79B1A00E66E11 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0DA93F819D79B1A00E66E11 /* CATextView.h */; };
 		B0F7E4FE198788010048F46B /* CAPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F7E4FC198788010048F46B /* CAPageView.cpp */; };
 		B0F7E4FF198788010048F46B /* CAPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F7E4FD198788010048F46B /* CAPageView.h */; };
 /* End PBXBuildFile section */
@@ -579,6 +581,8 @@
 		B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAActivityIndicatorView.h; sourceTree = "<group>"; };
 		B0C512E419A3127100E6934B /* CADatePickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADatePickerView.cpp; sourceTree = "<group>"; };
 		B0C512E519A3127100E6934B /* CADatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADatePickerView.h; sourceTree = "<group>"; };
+		B0DA93F719D79B1A00E66E11 /* CATextView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextView.cpp; sourceTree = "<group>"; };
+		B0DA93F819D79B1A00E66E11 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
 		B0F7E4FC198788010048F46B /* CAPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageView.cpp; sourceTree = "<group>"; };
 		B0F7E4FD198788010048F46B /* CAPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1096,6 +1100,8 @@
 		04EAB03F1956D75500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B0DA93F719D79B1A00E66E11 /* CATextView.cpp */,
+				B0DA93F819D79B1A00E66E11 /* CATextView.h */,
 				B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */,
 				B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */,
 				B0C512E419A3127100E6934B /* CADatePickerView.cpp */,
@@ -1198,6 +1204,7 @@
 				B01F650519657084005C14FC /* CACollectionView.h in Headers */,
 				04EAB0801956D75600198A8E /* CCArray.h in Headers */,
 				B01A29421994C95F00D42BA0 /* CACalendar.h in Headers */,
+				B0DA93FA19D79B1A00E66E11 /* CATextView.h in Headers */,
 				04EAB0851956D75600198A8E /* CCDictionary.h in Headers */,
 				B0F7E4FF198788010048F46B /* CAPageView.h in Headers */,
 				04EAB08A1956D75600198A8E /* CCNS.h in Headers */,
@@ -1444,6 +1451,7 @@
 				04EAB0D61956D75600198A8E /* plane.c in Sources */,
 				04EAB0D71956D75600198A8E /* quaternion.c in Sources */,
 				B08F4BCF19C7E66C008DE306 /* CAFTFontCache.cpp in Sources */,
+				B0DA93F919D79B1A00E66E11 /* CATextView.cpp in Sources */,
 				04EAB0D81956D75600198A8E /* ray2.c in Sources */,
 				04EAB0D91956D75600198A8E /* utility.c in Sources */,
 				04EAB0DA1956D75600198A8E /* vec2.c in Sources */,
@@ -1579,7 +1587,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/third_party/mac/libraries\"",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/platform/third_party/mac/libraries",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -1610,7 +1617,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/third_party/mac/libraries\"",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/platform/third_party/mac/libraries",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

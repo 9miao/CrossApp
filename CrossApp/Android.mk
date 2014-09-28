@@ -24,6 +24,7 @@ basics/CAResponder.cpp \
 basics/CAScheduler.cpp \
 basics/CAFPSImages.c \
 basics/CAIndexPath.cpp \
+basics/CAThread.cpp \
 cocoa/CCArray.cpp \
 cocoa/CCDictionary.cpp \
 cocoa/CCNS.cpp \
@@ -109,7 +110,6 @@ kazmath/src/GL/mat4stack.c \
 kazmath/src/GL/matrix.c \
 platform/CCImageCommonWebp.cpp \
 platform/CCSAXParser.cpp \
-platform/CCThread.cpp \
 platform/CCFileUtils.cpp \
 platform/platform.cpp \
 platform/CAFreeTypeFont.cpp \
@@ -135,12 +135,11 @@ platform/android/jni/DPIJni.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/kazmath/include \
-                    $(LOCAL_PATH)/platform/android
-
+                    $(LOCAL_PATH)/platform/android \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/kazmath/include \
-                    $(LOCAL_PATH)/platform/android
+                    $(LOCAL_PATH)/platform/android \
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -llog \

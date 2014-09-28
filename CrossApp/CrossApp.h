@@ -142,6 +142,8 @@
 #include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformMacros.h"
+#include "platform/CAFreeTypeFont.h"
+#include "platform/CAFTFontCache.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCAccelerometer.h"

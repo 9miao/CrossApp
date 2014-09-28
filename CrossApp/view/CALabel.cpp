@@ -294,6 +294,7 @@ unsigned int CALabel::getFontSize()
 
 void CALabel::setLineSpacing(unsigned int var)
 {
+    CC_RETURN_IF(m_iLineSpacing == var);
 	m_iLineSpacing = var;
 	m_bUpdateImage = true;
 }
