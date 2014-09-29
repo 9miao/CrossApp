@@ -1,9 +1,3 @@
-
-
-
-
-
-
 #include "CATextView.h"
 #include "basics/CAApplication.h"
 #include "view/CAWindow.h"
@@ -17,7 +11,7 @@
 
 NS_CC_BEGIN
 
-#pragma CAListView
+#pragma CATextView
 
 CATextView::CATextView()
 : m_pTextViewDelegate(NULL)
@@ -25,6 +19,9 @@ CATextView::CATextView()
 , m_pCursorMark(NULL)
 , m_pImageView(NULL)
 , m_cCursorColor(CAColor_black)
+, m_nInputType(KEY_BOARD_INPUT_NORMAL)
+, m_keyboardType(KEY_BOARD_TYPE_NORMAL)
+, m_keyBoardReturnType(KEY_BOARD_RETURN_DONE)
 , m_szFontName("")
 , m_iFontSize(24)
 , m_iCurPos(0)
@@ -97,10 +94,11 @@ bool CATextView::init()
 	this->setBounceHorizontal(false);
 	this->setTouchMovedListenHorizontal(false);
 
-	m_pImageView = new CAImageView();
+	m_pImageView = CAImageView::create();
 	this->addSubview(m_pImageView);
 	return true;
 }
+
 
 bool CATextView::initWithFrame(const CCRect& frame)
 {
@@ -124,14 +122,16 @@ bool CATextView::initWithCenter(const CCRect& rect)
 
 void CATextView::initMarkSprite()
 {
-	CC_SAFE_DELETE(m_pCursorMark);
-	m_pCursorMark = CAView::create();
-	m_pCursorMark->setColor(m_cCursorColor);
-	m_pCursorMark->setVisible(false);
+	if (m_pCursorMark == NULL)
+	{
+		m_pCursorMark = CAView::create();
+		m_pCursorMark->setColor(m_cCursorColor);
+		m_pCursorMark->setVisible(false);
+		this->addSubview(m_pCursorMark);
 
+		m_pCursorMark->runAction(CCRepeatForever::create((CCActionInterval *)CCSequence::create(CCFadeOut::create(0.5f), CCFadeIn::create(0.5f), NULL)));
+	}
 	m_pCursorMark->setFrame(CCRect(0, 0, 2, m_iLineHeight));
-	addSubview(m_pCursorMark);
-	m_pCursorMark->runAction(CCRepeatForever::create((CCActionInterval *)CCSequence::create(CCFadeOut::create(0.5f), CCFadeIn::create(0.5f), NULL)));
 }
 
 void CATextView::setBackGroundImage(CAImage *image)
@@ -234,7 +234,7 @@ void CATextView::setFontSize(int var)
 	m_iFontSize = var;
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 	initMarkSprite();
-	updateImage();
+	m_bUpdateImage = true;
 }
 
 int CATextView::getFontSize()
@@ -270,7 +270,7 @@ void CATextView::setFontName(const std::string& var)
 	m_szFontName = var;
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 	initMarkSprite();
-	updateImage();
+	m_bUpdateImage = true;
 }
 
 const std::string& CATextView::getFontName()
@@ -290,6 +290,21 @@ void CATextView::setCursorColor(CAColor4B var)
 CAColor4B CATextView::getCursorColor()
 {
 	return m_cCursorColor;
+}
+
+void CATextView::setFontColor(CAColor4B var)
+{
+	m_cFontColor = var;
+	if (m_pImageView)
+	{
+		m_pImageView->setColor(m_cFontColor);
+	}
+	m_bUpdateImage = true;
+}
+
+CAColor4B CATextView::getFontColor()
+{
+	return m_cFontColor;
 }
 
 bool CATextView::canAttachWithIME()
@@ -435,18 +450,31 @@ bool CATextView::attachWithIME()
 		if (pGlView)
 		{
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID||CC_TARGET_PLATFORM==CC_PLATFORM_IOS)        
-//			if (getKeyboardType() == KEY_BOARD_TYPE_NORMAL)
-//			{
-//				pGlView->setIMEKeyboardDefault();
-//			}
-//			else if (getKeyboardType() == KEY_BOARD_TYPE_NUMBER)
-//			{
-//				pGlView->setIMEKeyboardNumber();
-//			}
-//			else if (getKeyboardType() == KEY_BOARD_TYPE_ALPHABET)
-//			{
-//				pGlView->setIMEKeyboardAlphabet();
-//			}
+			if (getKeyboardType() ==KEY_BOARD_TYPE_NORMAL)
+			{
+				pGlView->setIMEKeyboardDefault();
+			}
+			else if (getKeyboardType() ==KEY_BOARD_TYPE_NUMBER)
+			{
+				pGlView->setIMEKeyboardNumber();
+			}
+			else if(getKeyboardType() ==KEY_BOARD_TYPE_ALPHABET)
+			{
+				pGlView->setIMEKeyboardAlphabet();
+			}
+
+			if (getKeyboardReturnType() == KEY_BOARD_RETURN_SEND)
+			{
+				pGlView->setIMEKeyboardReturnSend();
+			}
+			else if (getKeyboardReturnType() == KEY_BOARD_RETURN_SEARCH)
+			{
+				pGlView->setIMEKeyboardReturnSearch();
+			}
+			else if (getKeyboardReturnType() == KEY_BOARD_RETURN_DONE)
+			{
+				pGlView->setIMEKeyboardReturnDone();
+			}
 #endif
 			pGlView->setIMEKeyboardState(true);
 		}
