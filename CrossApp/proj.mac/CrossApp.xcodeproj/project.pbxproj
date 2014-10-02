@@ -1570,7 +1570,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
-				DSTROOT = /tmp/cocos2dx.dst;
+				DSTROOT = /tmp/CrossApp.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1600,7 +1600,7 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/cocos2dx.dst;
+				DSTROOT = /tmp/CrossApp.dst;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";

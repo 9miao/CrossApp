@@ -11,7 +11,8 @@ sum(30)
 
 LabelTest::~LabelTest()
 {
-
+	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+	drawer->setTouchMoved(true);
 }
 
 void LabelTest::viewDidLoad()
@@ -19,7 +20,7 @@ void LabelTest::viewDidLoad()
 	size = this->getView()->getBounds().size;
     
 	CALabel* currentValue = CALabel::createWithCenter(CADipRect(size.width*0.5, size.height*0.1, size.width*0.5, size.height*0.1));
-	currentValue->setText("60 seconds countdown");
+	currentValue->setText("30 seconds countdown");
 	currentValue->setColor(CAColor_blueStyle);
 	currentValue->setFontSize((_px(30)));
 	currentValue->setTextAlignment(CATextAlignmentCenter);

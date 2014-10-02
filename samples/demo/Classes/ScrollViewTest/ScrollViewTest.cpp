@@ -36,6 +36,7 @@ void ScrollViewTest::viewDidLoad()
 	stepper->setMinValue(-0.9);
 	stepper->setMaxValue(1);
 	stepper->setStepValue(0.1);
+	stepper->setTouchEffect(true);
 	stepper->addTarget(this, CAControl_selector(ScrollViewTest::stepperValueChange));
 	this->getView()->addSubview(stepper);
 	

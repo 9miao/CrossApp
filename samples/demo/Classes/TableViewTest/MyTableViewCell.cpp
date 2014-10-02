@@ -1,7 +1,5 @@
 #include "MyTableViewCell.h"
 
-#define CAColor_blueStyle ccc4(51,204,255,255)
-
 MyTableViewCell::MyTableViewCell()
 {
 
@@ -12,12 +10,12 @@ MyTableViewCell::~MyTableViewCell()
 
 }
 
-MyTableViewCell* MyTableViewCell::create(const std::string& identifier)
+MyTableViewCell* MyTableViewCell::create(const std::string& identifier, const CADipRect& _rect)
 {
-	//CATableViewCell* tableViewCell = new CATableViewCell();
 	MyTableViewCell* tableViewCell = new MyTableViewCell();
 	if(tableViewCell&&tableViewCell->initWithReuseIdentifier(identifier))
 	{
+		tableViewCell->setFrame(_rect);
 		tableViewCell->autorelease();
 		return tableViewCell;
 	}
@@ -25,25 +23,44 @@ MyTableViewCell* MyTableViewCell::create(const std::string& identifier)
 	return NULL;
 }
 
-void MyTableViewCell::initCell()
+void MyTableViewCell::initWithCell()
 {
-	CADipSize cellSize = this->getFrame().size;
-	CALabel* cellText = CALabel::createWithCenter(CADipRect(cellSize.width*0.1, cellSize.height*0.5, cellSize.width*0.3, cellSize.height*0.8));
+	CADipSize m_size = this->getFrame().size;
+	CALabel* cellText = CALabel::createWithCenter(CADipRect(m_size.width*0.1, m_size.height*0.5, m_size.width*0.3, m_size.height*0.8));
 	cellText->setTag(100);
-	cellText->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
-	cellText->setColor(CAColor_blueStyle);
+	cellText->setFontSize(_px(30));
 	cellText->setTextAlignment(CATextAlignmentCenter);
 	cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	this->addSubview(cellText);
 
-	CAButton* cellBtn = CAButton::createWithCenter(CADipRect(cellSize.width*0.8, cellSize.height*0.5, cellSize.width*0.2, cellSize.height*0.5), CAButtonTypeRoundedRect);
-	cellBtn->setTag(102);
-	cellBtn->setTitleForState(CAControlStateAll, "Touch");
-	cellBtn->addTarget(this, CAControl_selector(MyTableViewCell::cellBtnCallback), CAControlEventTouchUpInSide);
-	this->addSubview(cellBtn);
+	CAButton* btnOnCell = CAButton::createWithCenter(CADipRect(m_size.width*0.85, m_size.height*0.5, m_size.width*0.2, m_size.height*0.7), CAButtonTypeRoundedRect);
+	btnOnCell->setTag(102);
+	btnOnCell->setTitleForState(CAControlStateAll, "Touch");
+	btnOnCell->addTarget(this, CAControl_selector(MyTableViewCell::cellBtnCallback), CAControlEventTouchUpInSide);
+	this->addSubview(btnOnCell);
 }
 
 void MyTableViewCell::cellBtnCallback(CAControl* btn, CCPoint point)
 {
+	
+}
 
+void MyTableViewCell::normalTableViewCell()
+{
+	this->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/cell_bkg4.png")));
+}
+
+void MyTableViewCell::highlightedTableViewCell()
+{
+	this->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_normal.png")));
+}
+
+void MyTableViewCell::selectedTableViewCell()
+{
+	this->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/cell_bkg3.png")));
+}
+
+void MyTableViewCell::disabledTableViewCell()
+{
+	this->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_disabled.png")));
 }

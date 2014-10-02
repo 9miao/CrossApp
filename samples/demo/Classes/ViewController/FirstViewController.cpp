@@ -42,20 +42,16 @@ void FirstViewController::viewDidLoad()
 {
 	this->getView()->setColor(CAColor_clear);
 	size = this->getView()->getBounds().size;
-	tableView = CATableView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height));
+	tableView = CATableView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height*0.6));
 	tableView->setAllowsSelection(true);
 	tableView->setTableViewDelegate(this);
 	tableView->setTableViewDataSource(this);
 	tableView->setBackGroundColor(CAColor_clear);
+	tableView->setShowsVerticalScrollIndicator(false);
 	this->getView()->addSubview(tableView);
 }
 
 void FirstViewController::viewDidUnload()
-{
-
-}
-
-void FirstViewController::reshapeViewRectDidFinish()
 {
 
 }
@@ -154,21 +150,6 @@ void FirstViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, u
 	}
 }
 
-void FirstViewController::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
-{
-
-}
-
-void FirstViewController::tableViewDidShowPullDownView(CATableView* table)
-{
-
-}
-
-void FirstViewController::tableViewDidShowPullUpView(CATableView* table)
-{
-
-}
-
 CATableViewCell* FirstViewController::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
 	CADipSize _size = cellSize;
@@ -179,7 +160,7 @@ CATableViewCell* FirstViewController::tableCellAtIndex(CATableView* table, const
 		cell->setBackgroundView(NULL);
 		CALabel* test = CALabel::createWithCenter(CADipRect(_size.width*0.5,
 			_size.height*0.5,
-			_size.width*0.8,
+			_size.width,
 			_size.height));
 		test->setColor(ccc4(220, 227, 115, 255));
 		test->setTextAlignment(CATextAlignmentCenter);
@@ -194,21 +175,6 @@ CATableViewCell* FirstViewController::tableCellAtIndex(CATableView* table, const
 	return cell;
 }
 
-
-CAView* FirstViewController::tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section)
-{
-	CAView* headerView = CAView::createWithColor(CAColor_gray);
-
-	return headerView;
-}
-
-CAView* FirstViewController::tableViewSectionViewForFooterInSection(CATableView* table, unsigned int section)
-{
-	CAView* footerView = CAView::createWithColor(CAColor_gray);
-
-	return footerView;
-}
-
 unsigned int FirstViewController::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
 	return testList.size();
@@ -221,16 +187,6 @@ unsigned int FirstViewController::numberOfSections(CATableView *table)
 
 unsigned int FirstViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	return size.width*0.2;
-}
-
-unsigned int FirstViewController::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
-{
-	return 1;
-}
-
-unsigned int FirstViewController::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
-{
-	return 1;
+	return _px(150);
 }
 

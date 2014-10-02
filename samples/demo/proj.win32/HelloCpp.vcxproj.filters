@@ -147,6 +147,9 @@
     <ClCompile Include="..\Classes\ListViewTest\ListViewTest.cpp">
       <Filter>Classes\ListViewTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ListViewTest\MyListViewCell.cpp">
+      <Filter>Classes\ListViewTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -237,6 +240,9 @@
       <Filter>Classes\ScrollViewTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ListViewTest\ListViewTest.h">
+      <Filter>Classes\ListViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ListViewTest\MyListViewCell.h">
       <Filter>Classes\ListViewTest</Filter>
     </ClInclude>
   </ItemGroup>

@@ -27,9 +27,9 @@ protected:
 
 private:
 	CADipSize size;
-	CASegmentedControl* segmented;
 	CAVector<CAView*> _view;
 	CAPageView* pageViewTest;
+	CAPageControl* pageControl;
 	CCPoint currentPoint;
 	CCPoint terminalPoint;
 	bool fullScreen;

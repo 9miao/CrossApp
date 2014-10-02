@@ -26,7 +26,9 @@ void AlertViewTest::viewDidLoad()
 void AlertViewTest::respondTouch(CAControl* btn ,CCPoint point)
 {
 	CCSize size = this->getView()->getBounds().size;
-	CAAlertView* alertView = CAAlertView::createWithText("ButtonImage", "What kind of background of button do you like?", "green", "yellow", NULL);
+	CAAlertView* alertView = CAAlertView::createWithText("ButtonImage", "What kind of background of button do you like?", "green", "yellow",NULL);
+	//alertView->setTitleImage(CAImage::create("source_material/ex1.png"));
+	//alertView->setBackGroundImage(CAImage::create("source_material/ex2.png"));
 	float randNum = CCRANDOM_0_1();
 	if (randNum > 0.333f)
 	{
@@ -56,7 +58,7 @@ void AlertViewTest::alertViewCallback(int btnIndex)
 	}
 	else
 	{
-		imageBtn->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("source_material/ex3.png")));
+		imageBtn->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("source_material/ex6.png")));
 	}
 }
 

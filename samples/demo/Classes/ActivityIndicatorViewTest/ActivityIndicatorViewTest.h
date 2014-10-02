@@ -11,11 +11,13 @@ class ActivityIndicatorViewTest :public CAViewController
 public:
 	ActivityIndicatorViewTest();
 	virtual ~ActivityIndicatorViewTest();
+	
+	void cancelCallback();
+	void stopAllActivity(CAControl* btn,CCPoint point);
 
 protected:
 	void viewDidLoad();
 	void viewDidUnload();
-	virtual void keyBackClicked();
 
 private:
 	CADipSize size;

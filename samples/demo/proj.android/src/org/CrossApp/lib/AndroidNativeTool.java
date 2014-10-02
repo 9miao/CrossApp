@@ -30,8 +30,8 @@ public class AndroidNativeTool
 	public AndroidNativeTool( final Activity context )
 	{
 		s_pContext = context;
-		final CharSequence[] items = { "����", "¼��","��Ƶ","���" }; 
-		mDialog = new AlertDialog.Builder(context).setTitle("ѡ��ͼƬ").setItems(items,   
+		final CharSequence[] items = { "相机", "视频","视频库","相册" }; 
+		mDialog = new AlertDialog.Builder(context).setTitle("相册").setItems(items,   
     	new DialogInterface.OnClickListener() {   
         public void onClick(DialogInterface dialog,int item)
         {   
@@ -68,19 +68,13 @@ public class AndroidNativeTool
 	{
 		File sdDir = null; 
 		boolean sdCardExist = Environment.getExternalStorageState() 
-				.equals(android.os.Environment.MEDIA_MOUNTED); //�ж�sd���Ƿ���� 
+				.equals(android.os.Environment.MEDIA_MOUNTED);//获取sd卡路径
 	    if (sdCardExist) 
 		{ 
-	    	sdDir = Environment.getExternalStorageDirectory();//��ȡ��Ŀ¼ 
+	    	sdDir = Environment.getExternalStorageDirectory();
 		} 
-		System.out.println("getExternalStorageDirectory(): "+sdDir.toString()); 
 
-		
-		
-		//����ȷ���ļ���·�����ڣ��������պ��޷���ɻص�
 		String mediapathString =sdDir.toString();
-		
-		System.out.println(mediapathString);
 		s=mediapathString+"/img.jpg";
 		File vFile = new File(s);
 		
@@ -127,37 +121,19 @@ public class AndroidNativeTool
             switch (requestCode) {  
             case 2:
             case 3:  // Photo
-                //���ͼƬ��uri   
-            	//runNativeCallback(requestCode,resultCode,intent);
+
                 Uri originalUri = intent.getData();  
                 
                 
                 String[] proj = {MediaStore.Images.Media.DATA};
 
-                
-
-                //������android��ý����ݿ�ķ�װ�ӿڣ�����Ŀ�Android�ĵ�
-
                 Cursor cursor = s_pContext.managedQuery(originalUri, proj, null, null, null); 
-                		//
-
-                //���Ҹ������ ����ǻ���û�ѡ���ͼƬ������ֵ
 
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-                //�����������ͷ ���������Ҫ����С�ĺ���������Խ��
-
+                
                 cursor.moveToFirst();
-
-                //���������ֵ��ȡͼƬ·��
-
                 String path = cursor.getString(column_index);
-                /*Bitmap bitmap = null;  
-                try {  
-                    Bitmap originalBitmap = BitmapFactory.decodeStream(resolver.openInputStream(originalUri));  
-                } catch (FileNotFoundException e) {  
-                    e.printStackTrace();  
-                }*/
+            
                 System.out.println(path);
                 NativeReturn( path , null );
                 break;  

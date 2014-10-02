@@ -165,6 +165,7 @@ void CATextField::setText(std::string var)
 	m_vTextFiledChars.clear();
     insertText(var.c_str(), var.length());
     m_pDelegate = pTemp;
+    this->updateImage();
 }
 
 std::string CATextField::getText()

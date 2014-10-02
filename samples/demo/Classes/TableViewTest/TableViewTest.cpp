@@ -24,7 +24,7 @@ void TableViewTest::viewDidLoad()
 	p_TableView->setTableViewDelegate(this);
 	p_TableView->setAllowsSelection(true);
 	p_TableView->setAllowsMultipleSelection(true);
-	p_TableView->setBackGroundImage(CAImage::create("bg.jpg"));
+	p_TableView->setSeparatorColor(CAColor_clear);
 	this->getView()->addSubview(p_TableView);
 }
 
@@ -49,9 +49,8 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const CCSiz
 	MyTableViewCell* cell = dynamic_cast<MyTableViewCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
 	if (cell == NULL)
 	{
-		cell = MyTableViewCell::create("CrossApp");
-		cell->setFrame(CADipRect(0, 0, _size.width, _size.height));
-		cell->initCell();
+		cell = MyTableViewCell::create("CrossApp", CADipRect(0, 0, _size.width, _size.height));
+		cell->initWithCell();
 	}
 	if (section == 1)
 	{
@@ -64,17 +63,12 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const CCSiz
 		cellBtn->setVisible(true);
 	}
 	char order[20] = "";
-	sprintf(order, "cell-%d", row);
+	sprintf(order, "Cell-%d", row);
 	CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);
 	cellText->setText(order);
 
 	return cell;
 
-}
-
-void TableViewTest::cellBtnCallback(CAControl* btn, CCPoint point)
-{
-	
 }
 
 CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
@@ -91,7 +85,6 @@ CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table
 	header->setTextAlignment(CATextAlignmentCenter);
 	header->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	view->addSubview(header);
-
 
 	return view;
 }
@@ -116,7 +109,7 @@ unsigned int TableViewTest::numberOfSections(CATableView *table)
 
 unsigned int TableViewTest::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	return size.height*0.2;
+	return _px(130);
 }
 
 unsigned int TableViewTest::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)

@@ -17,11 +17,12 @@ ActivityIndicatorViewTest::~ActivityIndicatorViewTest()
 void ActivityIndicatorViewTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
-	this->getView()->setColor(ccc4(58,210,129,255));
+	this->getView()->setColor(ccc4(58,150,200,255));
 
 	whiteLarge = CAActivityIndicatorView::createWithCenter(CADipRect(size.width*0.5, size.height*0.25,
 		size.width*0.2, size.width*0.2));
 	whiteLarge->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
+	whiteLarge->setTargetOnCancel(this, callfunc_selector(ActivityIndicatorViewTest::cancelCallback));
 	this->getView()->addSubview(whiteLarge);
 	whiteLarge->startAnimating();
 
@@ -36,6 +37,10 @@ void ActivityIndicatorViewTest::viewDidLoad()
 	gray->setStyle(CAActivityIndicatorViewStyleGray);
 	this->getView()->addSubview(gray);
 	gray->startAnimating();
+
+	CAButton* activityControl = CAButton::createWithCenter(CADipRect(size.width*0.5,size.height*0.85,_px(150),_px(100)),CAButtonTypeRoundedRect);
+	activityControl->addTarget(this, CAControl_selector(ActivityIndicatorViewTest::stopAllActivity), CAControlEventTouchUpInSide);
+	this->getView()->addSubview(activityControl);
 }
 
 void ActivityIndicatorViewTest::viewDidUnload()
@@ -43,13 +48,14 @@ void ActivityIndicatorViewTest::viewDidUnload()
 	whiteLarge->stopAnimating();
 	white->stopAnimating();
 	gray->stopAnimating();
-	this->getView()->removeAllSubviews();
 }
 
-void ActivityIndicatorViewTest::keyBackClicked()
+void ActivityIndicatorViewTest::cancelCallback()
 {
-	CCLog("------------------");
-	whiteLarge->stopAnimating();
-	white->stopAnimating();
-	gray->stopAnimating();
+
+}
+
+void ActivityIndicatorViewTest::stopAllActivity(CAControl* btn, CCPoint point)
+{
+
 }

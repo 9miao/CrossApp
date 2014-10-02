@@ -10,7 +10,7 @@ USING_NS_CC_EXT;
 
 using namespace CSJson;
 #define NUM 8
-class SecondViewController : public CAViewController, public CATableViewDelegate, public CATableViewDataSource
+class SecondViewController : public CAViewController, CATableViewDelegate, CATableViewDataSource,CAScrollViewDelegate
 {   
 public:
 	SecondViewController();
@@ -26,8 +26,6 @@ public:
 
 	virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
 	virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
-	virtual void tableViewDidShowPullDownView(CATableView* table);
-	virtual void tableViewDidShowPullUpView(CATableView* table);
 
 	virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
 	virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section);
@@ -38,7 +36,11 @@ public:
 	virtual unsigned int tableViewHeightForHeaderInSection(CATableView* table, unsigned int section);
 	virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
 
+	virtual void scrollViewHeaderBeginRefreshing(CAScrollView* view);
+	virtual void scrollViewFooterBeginRefreshing(CAScrollView* view);
+
 public:
+	void refreshTableViewData(float interval);
 	void switchCellListInSection(CAControl* btn,CCPoint point);
 	void closeCellListInSection(CAControl* btn, CCPoint point);
 
@@ -47,5 +49,6 @@ private:
 	CATableView* p_TableView;
 	int sect[NUM];
 	CADeque<Info*> personList;
+	bool isPullUpRefresh;
 };
 #endif 

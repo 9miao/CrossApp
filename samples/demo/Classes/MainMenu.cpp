@@ -5,7 +5,7 @@
 #include "FourthViewController.h"
 #include "FifthViewController.h"
 
-MainMenu::MainMenu() :m_TabBarHeight(0.00), m_NavigationBarHeight(0.00)
+MainMenu::MainMenu()
 {
 
 }
@@ -21,7 +21,6 @@ CAWindow* MainMenu::createWindow()
 
 	FirstViewController* viewController1 = new FirstViewController();
 	viewController1->init();
-	//viewController1->setNavigationBarItem(CANavigationBarItem::create("TestMenu"));
 
 	SecondViewController* viewController2 = new SecondViewController();
 	viewController2->init();
@@ -43,6 +42,8 @@ CAWindow* MainMenu::createWindow()
 	MainMenu* p_Funtion = new MainMenu();
 	p_Funtion->initWithViewControllers(controllerItem);
 	p_Funtion->getTabBar()->showSelectedIndicator();
+	//p_Funtion->showSelectedViewController(viewController2);
+	//p_Funtion->showSelectedViewControllerAtIndex(1);
 	p_Funtion->setScrollEnabled(true);
 	p_Funtion->setNavigationBarItem(CANavigationBarItem::create("ViewController"));
 
@@ -75,14 +76,4 @@ void MainMenu::viewDidLoad()
 void MainMenu::viewDidUnload()
 {
 	CATabBarController::viewDidUnload();
-}
-
-float MainMenu::getTabBarHeight(void)
-{
-	return 0;
-}
-
-float MainMenu::getNavigationBarHeight(void)
-{
-	return 0;
 }

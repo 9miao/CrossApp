@@ -1,7 +1,5 @@
 #include "CollectionViewTest.h"
 
-#define CAColor_blueStyle ccc4(51,204,255,255)
-
 CollectionViewTest::CollectionViewTest()
 {
 	CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
@@ -49,12 +47,12 @@ void CollectionViewTest::viewDidUnload()
 
 void CollectionViewTest::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
 {
-	
+
 }
 
 void CollectionViewTest::collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
 {
-	
+
 }
 
 CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
@@ -87,7 +85,7 @@ CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView
 	CCLog("%d", row * 3 + item);
 
 	char pos[20] = "";
-	sprintf(pos, "(%d,%d,%d)",section, row, item);
+	sprintf(pos, "(%d,%d,%d)", section, row, item);
 	CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
 	itemText->setText(pos);
 
@@ -127,7 +125,7 @@ void CollectionViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 
 void CollectionViewTest::refreshData(float interval)
 {
-    for (int i = 0; i < 40; i++)
+	for (int i = 0; i < 40; i++)
 	{
 		char r = CCRANDOM_0_1() * 255;
 		char g = CCRANDOM_0_1() * 255;

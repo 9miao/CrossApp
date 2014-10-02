@@ -30,7 +30,6 @@ public:
 	virtual void scrollViewFooterBeginRefreshing(CAScrollView* view);
 
 public:
-
 	void refreshData(float interval);
 
 private:

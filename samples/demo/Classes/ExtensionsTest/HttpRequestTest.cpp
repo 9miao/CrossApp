@@ -38,7 +38,6 @@ void HttpRequestTest::viewDidLoad()
 	inputWebsite->setPlaceHolder("Please enter a website");
 	inputWebsite->setFontSize(_px(24));
 	inputWebsite->setTextColor(CAColor_blueStyle);
-	//inputWebsite->setTextAlignment(CATextAlignmentCenter);
 	inputWebsite->setSpaceHolderColor(CAColor_gray);
 	this->getView()->addSubview(inputWebsite);
 

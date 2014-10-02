@@ -12,11 +12,17 @@ public:
 	MyTableViewCell();
 	virtual ~MyTableViewCell();
 
-	static MyTableViewCell* create(const std::string& identifier);
+	static MyTableViewCell* create(const std::string& identifier, const CADipRect& _rect = CADipRectZero);
 
 public:
-	void initCell();
+	void initWithCell();
 	void cellBtnCallback(CAControl* btn, CCPoint point);
+
+protected:
+	virtual void normalTableViewCell();
+	virtual void highlightedTableViewCell();
+	virtual void selectedTableViewCell();
+	virtual void disabledTableViewCell();
 
 private:
 
