@@ -15,6 +15,8 @@
 #include "dispatcher/CAIMEDispatcher.h"
 #include "control/CATextField.h"
 
+#include <vector>
+
 NS_CC_BEGIN
 
 
@@ -64,6 +66,8 @@ public:
 
 	CC_PROPERTY(CAColor4B, m_cCursorColor, CursorColor);
 
+	CC_PROPERTY(CAColor4B, m_cFontColor, FontColor);
+
 	CC_PROPERTY(int, m_iFontSize, FontSize);
 
 	CC_PROPERTY(bool, m_bWordWrap, WordWrap);
@@ -71,6 +75,16 @@ public:
 	CC_PROPERTY(unsigned int, m_iLineSpacing, LineSpacing);
 
 	CC_PROPERTY_PASS_BY_REF(std::string, m_szFontName, FontName);
+    
+    CC_SYNTHESIZE(eKeyBoardInputType, m_nInputType, InputType);
+    
+    inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
+    
+    inline int getKeyboardType () {return m_keyboardType; }
+    
+    inline void setKeyboardReturnType (eKeyBoardReturnType type) {m_keyBoardReturnType = type; }
+    
+    inline int getKeyboardReturnType () {return m_keyBoardReturnType; }
     
 protected:
 
@@ -123,6 +137,8 @@ private:
 	std::vector<TextViewLineInfo> m_vLinesTextView;
 
 	bool m_bUpdateImage;
+    eKeyBoardType m_keyboardType;
+    eKeyBoardReturnType m_keyBoardReturnType;
 };
 
 

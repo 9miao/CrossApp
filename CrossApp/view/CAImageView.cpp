@@ -80,8 +80,17 @@ bool CAImageView::init(void)
 
 bool CAImageView::initWithImage(CAImage* image)
 {
-    this->setImage(image);
-    
+	if (!CAView::init())
+		return false;
+
+	CCRect rect = CCRectZero;
+	if (image)
+	{
+		rect.size = image->getContentSize();
+	}
+	this->setImage(image);
+	setImageRect(rect, false, rect.size);
+
     return true;
 }
 
