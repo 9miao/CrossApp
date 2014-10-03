@@ -495,7 +495,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         if (m_fMinimumZoomScale < m_fMaximumZoomScale)
         {
             float touch_lenght = ccpDistance(touch0->getLocation(), touch1->getLocation());
-            float scale_off = _px(touch_lenght - m_fTouchLength) * 0.0020f;
+            float scale_off = _dip(touch_lenght - m_fTouchLength) * 0.0020f;
             
             m_fZoomScale = m_pContainer->getScale();
             m_fZoomScale += m_fZoomScale * scale_off;

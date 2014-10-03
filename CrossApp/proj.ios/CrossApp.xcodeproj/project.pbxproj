@@ -310,6 +310,8 @@
 		B02CE49219AD8D0D00B905FB /* CAListView.h in Headers */ = {isa = PBXBuildFile; fileRef = B02CE49019AD8D0D00B905FB /* CAListView.h */; };
 		B0340826199211B3005DB179 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0340824199211B3005DB179 /* md5.cpp */; };
 		B0340827199211B3005DB179 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B0340825199211B3005DB179 /* md5.h */; };
+		B03919C319DD61D70026A9BE /* CATextView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03919C119DD61D70026A9BE /* CATextView.cpp */; };
+		B03919C419DD61D70026A9BE /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B03919C219DD61D70026A9BE /* CATextView.h */; };
 		B04BCA841985DE5500CE0BC1 /* CAIndexPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04BCA821985DE5500CE0BC1 /* CAIndexPath.cpp */; };
 		B04BCA851985DE5500CE0BC1 /* CAIndexPath.h in Headers */ = {isa = PBXBuildFile; fileRef = B04BCA831985DE5500CE0BC1 /* CAIndexPath.h */; };
 		B0596A581976287B00B1E8CB /* CAFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */; };
@@ -703,6 +705,8 @@
 		B02CE49019AD8D0D00B905FB /* CAListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAListView.h; sourceTree = "<group>"; };
 		B0340824199211B3005DB179 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
 		B0340825199211B3005DB179 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		B03919C119DD61D70026A9BE /* CATextView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextView.cpp; sourceTree = "<group>"; };
+		B03919C219DD61D70026A9BE /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
 		B04BCA821985DE5500CE0BC1 /* CAIndexPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAIndexPath.cpp; sourceTree = "<group>"; };
 		B04BCA831985DE5500CE0BC1 /* CAIndexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIndexPath.h; sourceTree = "<group>"; };
 		B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFreeTypeFont.cpp; sourceTree = "<group>"; };
@@ -944,6 +948,8 @@
 		04EA9FC41956CE2500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B03919C119DD61D70026A9BE /* CATextView.cpp */,
+				B03919C219DD61D70026A9BE /* CATextView.h */,
 				B02A51CB19B9625B00470D57 /* CADatePickerView.cpp */,
 				B02A51CC19B9625B00470D57 /* CADatePickerView.h */,
 				B0C512D119A30E5D00E6934B /* CAActivityIndicatorView.cpp */,
@@ -1661,6 +1667,7 @@
 				B0596AE7197629BE00B1E8CB /* ftlcdfil.h in Headers */,
 				1551A660158F2ADE00E66CFE /* CCSet.h in Headers */,
 				B0596B381976343300B1E8CB /* curlver.h in Headers */,
+				B03919C419DD61D70026A9BE /* CATextView.h in Headers */,
 				B0596AE5197629BE00B1E8CB /* ftimage.h in Headers */,
 				1551A662158F2ADE00E66CFE /* CCString.h in Headers */,
 				1551A6B8158F2ADE00E66CFE /* aabb.h in Headers */,
@@ -2003,6 +2010,7 @@
 				04EA9FE51956CE2500198A8E /* CAResponder.cpp in Sources */,
 				B0C512D519A30E5D00E6934B /* CAActivityIndicatorView.cpp in Sources */,
 				B01F650D196585EA005C14FC /* CACollectionView.cpp in Sources */,
+				B03919C319DD61D70026A9BE /* CATextView.cpp in Sources */,
 				04EA9FE71956CE2500198A8E /* CAScheduler.cpp in Sources */,
 				04EA9FE91956CE2500198A8E /* CABar.cpp in Sources */,
 				04EA9FEB1956CE2500198A8E /* CAButton.cpp in Sources */,

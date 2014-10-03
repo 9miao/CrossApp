@@ -43,7 +43,9 @@ public:
 class CC_DLL CATextView : public CAScrollView, public CAIMEDelegate
 {
 public:
+    
 	CATextView();
+    
 	virtual ~CATextView();
 
 	virtual bool resignFirstResponder();

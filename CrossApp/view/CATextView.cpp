@@ -15,7 +15,6 @@ NS_CC_BEGIN
 
 CATextView::CATextView()
 : m_pTextViewDelegate(NULL)
-, m_pBackgroundView(NULL)
 , m_pCursorMark(NULL)
 , m_pImageView(NULL)
 , m_cCursorColor(CAColor_black)
@@ -134,27 +133,12 @@ void CATextView::initMarkSprite()
 	m_pCursorMark->setFrame(CCRect(0, 0, 2, m_iLineHeight));
 }
 
-void CATextView::setBackGroundImage(CAImage *image)
-{
-	if (m_pBackgroundView == NULL)
-	{
-		m_pBackgroundView = CAScale9ImageView::create();
-		m_pBackgroundView->setFrame(this->getBounds());
-		this->insertSubview(m_pBackgroundView, -1);
-	}
-	m_pBackgroundView->setImage(image);
-}
-
-CAImage *CATextView::getBackGroundImage()
-{
-	return m_pBackgroundView ? m_pBackgroundView->getImage() : NULL;
-}
 
 void CATextView::updateImage()
 {
 	float width = this->getBounds().size.width;
 	float height = this->getBounds().size.height;
-	CCSize size = CCSizeMake(width, 0);
+	CCSize size = CCSize(width, 0);
 
 	CAImage* image = NULL;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
