@@ -46,7 +46,7 @@ CAUIHelper *CAUIHelper::getInstance()
 CCDictionary* CAUIHelper::createCAWidgetWithJsonFile(const char *filename)
 {
     std::string fullpath= CCFileUtils::sharedFileUtils()->fullPathForFilename(filename);
-    CCLog("%s",fullpath.c_str());
+
     unsigned long size = 0;
     char *des = (char*) CCFileUtils::sharedFileUtils()->getFileData(filename, "r", &size);
     CSJson::Reader reader;
@@ -57,10 +57,9 @@ CCDictionary* CAUIHelper::createCAWidgetWithJsonFile(const char *filename)
     
     if (!reader.parse(des, root))
     {
-        CCLog("error");
         return NULL;
     }
-    CCLog("%s",des);
+
     for (int i = 0; i<root.size(); i++)
     {
         description = root[i];

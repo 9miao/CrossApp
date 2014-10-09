@@ -135,7 +135,7 @@ protected:
  
     inline virtual float minSpeed(float dt)
     {
-        return (30 * dt);
+        return (60 * dt);
     }
     
     inline virtual float maxSpeed(float dt)
@@ -200,6 +200,8 @@ protected:
     void setContainerFrame(const CCPoint& point, const CCSize& size = CCSizeZero);
     
     virtual void setContentSize(const CCSize& var);
+    
+    void updatePointOffset(float dt = 0);
     
 public:
     

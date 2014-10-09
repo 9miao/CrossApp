@@ -444,6 +444,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             this->stopDeaccelerateScroll();
             m_tCloseToPoint = this->getViewSize();
             m_pContainer->setAnchorPoint(CCPoint(0.5f, 0.5f));
+            CAScheduler::schedule(schedule_selector(CAScrollView::updatePointOffset), this, 0);
         }
         else if (m_pTouches->count() == 2)
         {
@@ -464,6 +465,8 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 m_pScrollViewDelegate->scrollViewDidZoom(this);
             }
             m_bZooming = true;
+            
+            CAScheduler::unschedule(schedule_selector(CAScrollView::updatePointOffset), this);
         }
         
         return true;
@@ -511,6 +514,13 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
                                          m_pContainer->getAnchorPointInPoints() * m_fZoomScale));
     }
     
+    CCPoint off = p_off;
+    if (off.getLength() <= _px(5))
+    {
+        off = CCPointZero;
+    }
+    
+    m_tPointOffset.push_back(off);
     
     if (m_bBounces)
     {
@@ -538,14 +548,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     }
     
     p_container = ccpAdd(p_container, p_off);
-    
-    m_tPointOffset.push_back(p_off);
 
-    if (m_tPointOffset.size() > 3)
-    {
-        m_tPointOffset.pop_front();
-    }
-    
     if (m_bBounces == false)
     {
         this->getScrollWindowNotOutPoint(p_container);
@@ -594,7 +597,7 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         if (m_pTouches->count() == 1)
         {
             CCPoint p = CCPointZero;
-            
+            CAScheduler::unschedule(schedule_selector(CAScrollView::updatePointOffset), this);
             if (m_tPointOffset.size() > 0)
             {
                 for (unsigned int i=0; i<m_tPointOffset.size(); i++)
@@ -655,6 +658,27 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         this->stopDeaccelerateScroll();
         this->hideIndicator();
     }
+}
+
+void CAScrollView::updatePointOffset(float dt)
+{
+    CC_RETURN_IF(m_pTouches->count() == 0);
+    CATouch* pTouch = dynamic_cast<CATouch*>(m_pTouches->objectAtIndex(0));
+    CCPoint p_off = ccpSub(this->convertToNodeSpace(pTouch->getLocation()),
+                   this->convertToNodeSpace(pTouch->getPreviousLocation()));
+
+    if (p_off.getLength() <= _px(5))
+    {
+        p_off = CCPointZero;
+    }
+    
+    m_tPointOffset.push_back(p_off);
+    
+    while (m_tPointOffset.size() > 3)
+    {
+        m_tPointOffset.pop_front();
+    }
+    CCLog("%lu------%f",m_tPointOffset.size(), p_off.y);
 }
 
 void CAScrollView::stopDeaccelerateScroll()

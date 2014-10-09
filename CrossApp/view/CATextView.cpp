@@ -133,12 +133,11 @@ void CATextView::initMarkSprite()
 	m_pCursorMark->setFrame(CCRect(0, 0, 2, m_iLineHeight));
 }
 
-
 void CATextView::updateImage()
 {
 	float width = this->getBounds().size.width;
 	float height = this->getBounds().size.height;
-	CCSize size = CCSize(width, 0);
+	CCSize size = CCSizeMake(width, 0);
 
 	CAImage* image = NULL;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
@@ -315,7 +314,19 @@ void CATextView::willInsertText(const char* text, int len)
 
 void CATextView::AndroidWillInsertText(int start, const char* str, int before, int count)
 {
-
+	CCAssert(str != NULL, "");
+	CCAssert(count > 0, "");
+	if (strlen(str) >= m_szText.length())
+	{
+		m_vLinesTextView.clear();
+		m_iCurPos = 0;
+		m_szText.clear();
+		insertText(str, strlen(str));
+	}
+	else
+	{
+		deleteBackward();
+	}
 }
 
 void CATextView::deleteBackward()

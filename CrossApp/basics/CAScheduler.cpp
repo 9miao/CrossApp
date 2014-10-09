@@ -276,7 +276,8 @@ void CAScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CAObject *pTarget, 
 {
     CCAssert(pfnSelector, "Argument selector must be non-NULL");
     CCAssert(pTarget, "Argument target must be non-NULL");
-
+    
+    delay = MAX(delay, 1/60.0f);
     fInterval = MAX(fInterval, 1/60.0f);
     
     tHashTimerEntry *pElement = NULL;

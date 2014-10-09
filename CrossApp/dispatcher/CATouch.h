@@ -20,17 +20,20 @@ public:
      * @js ctor
      */
     CATouch()
-        : m_nId(0),
-        m_startPointCaptured(false)
+        : m_nId(0)
+        ,m_startPointCaptured(false)
+        ,m_startPoint(CCPointZero)
+        ,m_point(CCPointZero)
+        ,m_prevPoint(CCPointZero)
     {}
 
-    /** returns the current touch location in OpenGL coordinates */
+
     CCPoint getLocation() const;
-    /** returns the previous touch location in OpenGL coordinates */
+
     CCPoint getPreviousLocation() const;
-    /** returns the start touch location in OpenGL coordinates */
+
     CCPoint getStartLocation() const;
-    /** returns the delta of 2 current touches locations in screen coordinates */
+
     CCPoint getDelta() const;
     
     void setTouchInfo(int id, float x, float y)

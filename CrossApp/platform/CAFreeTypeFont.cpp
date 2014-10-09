@@ -108,7 +108,7 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 		delete pImage;
 		return NULL;
 	}
-	
+
 	CAImage* pCAImage = new CAImage();
 	if (!pCAImage->initWithImage(pImage))
 	{
@@ -450,6 +450,7 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 	}
 	glyphs.erase(glyphs.begin(), glyphs.begin() + i);
 	m_currentLine->width = m_currentLine->bbox.xMax - m_currentLine->bbox.xMin;
+	m_currentLine->pen.x = m_currentLine->bbox.xMax;
 
 	unsigned int iLastWidth = m_currentLine->bbox.xMax;
 	if (!glyphs.empty())
