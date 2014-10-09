@@ -129,10 +129,10 @@ void CATextField::initMarkSprite()
         m_pCursorMark->setColor(m_cCursorColor);
         m_pCursorMark->setVisible(false);
         this->addSubview(m_pCursorMark);
-        
         m_pCursorAction = CCRepeatForever::create((CCActionInterval *) CCSequence::create(CCFadeOut::create(0.5f), CCFadeIn::create(0.5f), NULL));
         m_pCursorMark->runAction(m_pCursorAction);
     }
+
     m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, 2, CAImage::getFontHeight("", m_iFontSize)));
 }
 
@@ -292,7 +292,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             {
                 if (m_sText.empty())
                 {
-                    m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + BORDER_WIDTH(width), this->getBounds().size.height / 2));
+                    m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, this->getBounds().size.height / 2));
                 }
                 return true;
             }
@@ -552,7 +552,15 @@ void CATextField::updateImage()
 		{
 			password.append("*");
 		}
-		text = password;
+        if (m_sText.empty())
+        {
+            text = m_sPlaceHolder;
+        }
+        else
+        {
+            text = password;
+        }
+		
 	}
 	CCSize size = CCSizeMake(0, m_iFontHeight);
     CAImage* image = CAImage::createWithString(text.c_str(),
