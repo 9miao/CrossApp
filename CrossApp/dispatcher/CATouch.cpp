@@ -30,4 +30,14 @@ CCPoint CATouch::getDelta() const
     return ccpSub(getLocation(), getPreviousLocation()); 
 }
 
+CCPoint CATouch::getDeltaFromAToZ() const
+{
+    return ccpSub(getLocation(), getStartLocation());
+}
+
+bool CATouch::isDelta() const
+{
+    return m_bDelta;
+}
+
 NS_CC_END

@@ -158,7 +158,7 @@ bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 void CATableView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
     CC_RETURN_IF(m_bscrollEnabled == false);
-    
+    CC_RETURN_IF(m_pTouches->containsObject(pTouch) == false);
     CAScrollView::ccTouchMoved(pTouch, pEvent);
     
     if (m_pHighlightedTableCells)
@@ -176,6 +176,7 @@ void CATableView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_pTouches->containsObject(pTouch) == false);
     CAScrollView::ccTouchEnded(pTouch, pEvent);
     
     if (m_pHighlightedTableCells)
@@ -238,6 +239,7 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_pTouches->containsObject(pTouch) == false);
     CAScrollView::ccTouchCancelled(pTouch, pEvent);
     
     if (m_pHighlightedTableCells)

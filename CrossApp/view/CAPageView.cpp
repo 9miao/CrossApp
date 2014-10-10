@@ -201,6 +201,17 @@ void CAPageView::contentOffsetFinish(float dt)
     }
 }
 
+bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
+{
+    if (m_pTouches->count() > 0)
+    {
+        m_pTouches->replaceObjectAtIndex(0, pTouch);
+        return true;
+    }
+    
+    return CAScrollView::ccTouchBegan(pTouch, pEvent);
+}
+
 void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     CAScrollView::ccTouchEnded(pTouch, pEvent);
@@ -209,11 +220,11 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         float off_x = -m_tInertia.x;
         
-        if (off_x > _px(8))
+        if (off_x > 0)
         {
             m_ePageViewState = CAPageViewNext;
         }
-        else if (off_x < -_px(8))
+        else if (off_x < 0)
         {
             m_ePageViewState = CAPageViewLast;
         }
@@ -226,11 +237,11 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         float off_y = -m_tInertia.y;
         
-        if (off_y > _px(8))
+        if (off_y > 0)
         {
             m_ePageViewState = CAPageViewNext;
         }
-        else if (off_y < -_px(8))
+        else if (off_y < 0)
         {
             m_ePageViewState = CAPageViewLast;
         }
@@ -281,7 +292,7 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         }
     }
     
-    if (m_tInertia.equals(CCPointZero))
+    if (!pTouch->isDelta())
     {
         if (m_pPageViewDelegate)
         {

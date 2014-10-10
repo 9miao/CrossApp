@@ -172,7 +172,7 @@ void CATouchController::touchBegan()
 
 void CATouchController::touchMoved()
 {
-    CC_RETURN_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < _px(16));
+    CC_RETURN_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < _px(32));
     
     m_tFirstPoint = CCPointZero;
     
@@ -309,7 +309,7 @@ void CATouchController::touchCancelled()
     CAVector<CAResponder*>::iterator itr;
     for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
     {
-        (*itr)->ccTouchMoved(m_pTouch, m_pEvent);
+        (*itr)->ccTouchCancelled(m_pTouch, m_pEvent);
     }
 }
 
@@ -341,12 +341,12 @@ void CATouchDispatcher::setDispatchEvents(bool dispatchEvents)
 
 void CATouchDispatcher::setDispatchEventsTrue()
 {
-    m_bDispatchEvents = true;
+    this->setDispatchEvents(true);
 }
 
 void CATouchDispatcher::setDispatchEventsFalse()
 {
-    m_bDispatchEvents = false;
+    this->setDispatchEvents(false);
 }
 
 void CATouchDispatcher::touchesBegan(CCSet *touches, CAEvent *pEvent)

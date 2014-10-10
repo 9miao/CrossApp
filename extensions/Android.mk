@@ -5,8 +5,7 @@ LOCAL_MODULE    := CrossApp_extension_static
 
 LOCAL_MODULE_FILENAME := libextension
 
-LOCAL_SRC_FILES := AssetsManager/AssetsManager.cpp \
-GUI/CAUIHelper.cpp \
+LOCAL_SRC_FILES := GUI/CAUIHelper.cpp \
 network/HttpClient.cpp \
 network/WebSocket.cpp \
 LocalStorage/LocalStorageAndroid.cpp \

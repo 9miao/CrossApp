@@ -393,9 +393,8 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
                            CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))),
                            
                            NULL);
-        
+        lastViewController->getView()->stopAllActions();
         lastViewController->getView()->runAction(actionsLast);
-        
         
         CCSequence* actions =
         CCSequence::create(
@@ -410,7 +409,7 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
                            CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)),
                            
                            NULL);
-        
+        viewController->getView()->stopAllActions();
         viewController->getView()->runAction(actions);
     }
     else
@@ -468,7 +467,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
                            CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))),
                            
                            NULL);
-        
+        lastViewController->getView()->stopAllActions();
         lastViewController->getView()->runAction(actionsLast);
         
         
@@ -485,7 +484,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
                            CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)),
                            
                            NULL);
-        
+        viewController->getView()->stopAllActions();
         viewController->getView()->runAction(actions);
     }
     else
@@ -546,7 +545,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
                            CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)),
                            
                            NULL);
-        
+        showViewController->getView()->stopAllActions();
         showViewController->getView()->runAction(actionsLast);
         
         
@@ -563,7 +562,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
                            CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)),
                            
                            NULL);
-        
+        backViewController->getView()->stopAllActions();
         backViewController->getView()->runAction(actions);
     }
     else
@@ -958,7 +957,6 @@ void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item
 
 void CATabBarController::pageViewDidEndTurning(CAPageView* pageView)
 {
-    
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
     for (int i = MAX((int)m_nSelectedIndex - 1, 0);
          i < MIN((int)m_nSelectedIndex + 2, m_pViewControllers.size());

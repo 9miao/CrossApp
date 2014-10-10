@@ -915,7 +915,6 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         
 #endif
-        
 	}
 
 	FontBufferInfo info;

@@ -67,6 +67,8 @@ public:
     
 protected:
 
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void contentOffsetFinish(float dt);

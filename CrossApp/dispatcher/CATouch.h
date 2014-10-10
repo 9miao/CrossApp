@@ -22,9 +22,10 @@ public:
     CATouch()
         : m_nId(0)
         ,m_startPointCaptured(false)
-        ,m_startPoint(CCPointZero)
-        ,m_point(CCPointZero)
-        ,m_prevPoint(CCPointZero)
+        ,m_bDelta(false)
+        ,m_startPoint(CCPoint(0xffffffff, 0xffffffff))
+        ,m_point(CCPoint(0xffffffff, 0xffffffff))
+        ,m_prevPoint(CCPoint(0xffffffff, 0xffffffff))
     {}
 
 
@@ -36,16 +37,24 @@ public:
 
     CCPoint getDelta() const;
     
+    CCPoint getDeltaFromAToZ() const;
+    
+    bool isDelta() const;
+    
     void setTouchInfo(int id, float x, float y)
     {
         m_nId = id;
-        m_prevPoint = m_point;
+        m_prevPoint = m_point.equals(CCPoint(0xffffffff, 0xffffffff)) ? CCPoint(x, y) : m_point;
         m_point.x   = x;
         m_point.y   = y;
         if (!m_startPointCaptured)
         {
             m_startPoint = m_point;
             m_startPointCaptured = true;
+        }
+        if (!m_prevPoint.equals(m_point))
+        {
+            m_bDelta = true;
         }
     }
     /**
@@ -59,6 +68,7 @@ public:
 private:
     int m_nId;
     bool m_startPointCaptured;
+    bool m_bDelta;
     CCPoint m_startPoint;
     CCPoint m_point;
     CCPoint m_prevPoint;

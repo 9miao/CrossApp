@@ -131,6 +131,10 @@ public:
     
     virtual bool isSlidingMaxY(void) const;
     
+    void setTouchEnabledAtSubviews(bool var);
+    
+    bool isTouchEnabledAtSubviews();
+    
 protected:
  
     inline virtual float minSpeed(float dt)
