@@ -229,7 +229,7 @@ void CATouchController::touchMoved()
             {
                 m_vTouchesViews.clear();
                 
-                for (int i=0; i<m_vTouchMovedsView.size() - 1; i++)
+                for (int i=0; i<m_vTouchMovedsView.size(); i++)
                 {
                     CAResponder* responder = m_vTouchMovedsView.at(i);
                     CCPoint pointOffSet = CCPointZero;
@@ -263,7 +263,6 @@ void CATouchController::touchMoved()
                     }
                     
                     m_vTouchesViews.pushBack(responder);
-                    //this->passingTouchesViews();
                     responder->ccTouchBegan(m_pTouch, m_pEvent);
                     break;
                 }
@@ -271,7 +270,6 @@ void CATouchController::touchMoved()
                 if (m_vTouchesViews.empty())
                 {
                     m_vTouchesViews.pushBack(m_vTouchMovedsView.front());
-                    //this->passingTouchesViews();
                     m_vTouchesViews.back()->ccTouchBegan(m_pTouch, m_pEvent);
                 }
             }

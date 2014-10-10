@@ -191,6 +191,8 @@ void CADrawerController::showLeftViewController(bool animated)
         this->updateViewFrame();
         this->hideEnded();
     }
+    m_bSlidingMaxX = false;
+    m_bSlidingMinX = true;
 }
 
 void CADrawerController::hideLeftViewController(bool animated)
@@ -210,6 +212,8 @@ void CADrawerController::hideLeftViewController(bool animated)
         this->updateViewFrame();
         this->hideEnded();
     }
+    m_bSlidingMaxX = true;
+    m_bSlidingMinX = false;
 }
 
 bool CADrawerController::isShowLeftViewController()
