@@ -270,9 +270,9 @@ void CATouchController::touchMoved()
                 
                 if (m_vTouchesViews.empty())
                 {
-                    m_vTouchesViews.pushBack(m_vTouchMovedsView.back());
+                    m_vTouchesViews.pushBack(m_vTouchMovedsView.front());
                     //this->passingTouchesViews();
-                    m_vTouchMovedsView.back()->ccTouchBegan(m_pTouch, m_pEvent);
+                    m_vTouchesViews.back()->ccTouchBegan(m_pTouch, m_pEvent);
                 }
             }
         }
