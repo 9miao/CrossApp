@@ -27,10 +27,11 @@ public:
     /** Use this enum type as param in setReqeustType(param) */
     typedef enum
     {
-        kHttpGet,
-        kHttpPost,
-        kHttpPut,
-        kHttpDelete,
+		kHttpGet,
+		kHttpPost,
+		kHttpPut,
+		kHttpDelete,
+		kHttpPostFile ,
         kHttpUnkown,
     } HttpRequestType;
     
@@ -66,6 +67,14 @@ public:
     }
             
     // setter/getters for properties
+	inline void setFileNameToPost(const std::string& fileName)
+	{
+		_fileNameToPost = fileName;
+	}
+	inline const char* getFileNameToPost()
+	{
+		return _fileNameToPost.c_str();
+	}
      
     /** Required field for HttpRequest object before being sent.
         kHttpGet & kHttpPost is currently supported
@@ -140,11 +149,6 @@ public:
     
     /** Required field. You should set the callback selector function at ack the http request completed
      */
-    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(CAObject* pTarget, SEL_CallFuncND pSelector)
-    {
-        setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
-    }
-
     inline void setResponseCallback(CAObject* pTarget, SEL_HttpResponse pSelector)
     {
         _pTarget = pTarget;
@@ -169,7 +173,6 @@ public:
         _prxy( SEL_HttpResponse cb ) :_cb(cb) {}
         ~_prxy(){};
         operator SEL_HttpResponse() const { return _cb; }
-        CC_DEPRECATED_ATTRIBUTE operator SEL_CallFuncND()   const { return (SEL_CallFuncND) _cb; }
     protected:
         SEL_HttpResponse _cb;
     };
@@ -223,6 +226,7 @@ protected:
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCHttpClient *sender, CCHttpResponse * response)
     void*                       _pUserData;      /// You can add your customed data here 
     std::vector<std::string>    _headers;		      /// custom http headers
+	std::string					_fileNameToPost;
 };
 
 NS_CC_EXT_END

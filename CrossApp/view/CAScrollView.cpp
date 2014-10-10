@@ -475,7 +475,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 m_pScrollViewDelegate->scrollViewDidZoom(this);
             }
             m_bZooming = true;
-            
+            m_tPointOffset.clear();
             CAScheduler::unschedule(schedule_selector(CAScrollView::updatePointOffset), this);
         }
         
@@ -497,6 +497,14 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     {
         p_off = ccpSub(this->convertToNodeSpace(pTouch->getLocation()),
                        this->convertToNodeSpace(pTouch->getPreviousLocation()));
+        
+        CCPoint off = p_off;
+        if (off.getLength() <= _px(5))
+        {
+            off = CCPointZero;
+        }
+        
+        m_tPointOffset.push_back(off);
     }
     else if (m_pTouches->count() == 2)
     {
@@ -523,14 +531,6 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         p_off = ccpSub(mid_point, ccpAdd(m_pContainer->getFrameOrigin(),
                                          m_pContainer->getAnchorPointInPoints() * m_fZoomScale));
     }
-    
-    CCPoint off = p_off;
-    if (off.getLength() <= _px(5))
-    {
-        off = CCPointZero;
-    }
-    
-    m_tPointOffset.push_back(off);
     
     if (m_bBounces)
     {

@@ -108,6 +108,7 @@ static int processGetTask(CCHttpRequest *request, write_callback callback, void 
 static int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
 static int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
 static int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processPostFileTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
@@ -194,7 +195,16 @@ static void* networkThread(void *data)
                                              writeHeaderData,
                                              response->getResponseHeader());
                 break;
-            
+
+			case CCHttpRequest::kHttpPostFile:
+				retValue = processPostFileTask(request,
+											writeData,
+											response->getResponseData(),
+											&responseCode,
+											writeHeaderData,
+											response->getResponseHeader());
+				break;
+
             default:
                 CCAssert(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
                 break;
@@ -398,6 +408,34 @@ static int processDeleteTask(CCHttpRequest *request, write_callback callback, vo
             && curl.perform(responseCode);
     return ok ? 0 : 1;
 }
+
+//Process POST FILE Request
+static int processPostFileTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+{
+	CURLRaii curl;
+	bool ok = curl.init(request, callback, stream, headerCallback, headerStream);
+	if (!ok)
+		return 1;
+
+	curl_httppost* pFormPost = NULL;
+	curl_httppost* pLastElem = NULL;
+
+	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "filepath", CURLFORM_FILE, 
+		request->getFileNameToPost(), CURLFORM_CONTENTTYPE, "application/octet-stream", CURLFORM_END);
+
+	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "submit", CURLFORM_COPYCONTENTS, "upload", CURLFORM_END);
+	
+	ok = curl.setOption(CURLOPT_HTTPPOST, pFormPost)
+		&& curl.perform(responseCode);
+
+	if (pFormPost)
+	{
+		curl_formfree(pFormPost);
+		pFormPost = NULL;
+	}
+	return ok ? 0 : 1;
+}
+
 
 // HttpClient implementation
 CCHttpClient* CCHttpClient::getInstance(int thread)
