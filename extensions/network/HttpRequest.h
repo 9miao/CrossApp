@@ -29,9 +29,9 @@ public:
     {
 		kHttpGet,
 		kHttpPost,
+        kHttpPostFile,
 		kHttpPut,
 		kHttpDelete,
-		kHttpPostFile ,
         kHttpUnkown,
     } HttpRequestType;
     

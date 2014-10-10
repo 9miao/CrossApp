@@ -15,6 +15,7 @@ NS_CC_BEGIN
 
 CATextView::CATextView()
 : m_pTextViewDelegate(NULL)
+, m_pBackgroundView(NULL)
 , m_pCursorMark(NULL)
 , m_pImageView(NULL)
 , m_cCursorColor(CAColor_black)
@@ -101,7 +102,7 @@ bool CATextView::init()
 
 bool CATextView::initWithFrame(const CCRect& frame)
 {
-	if (!CAScrollView::initWithFrame(frame, CAColor_red))
+	if (!CAScrollView::initWithFrame(frame))
 	{
 		return false;
 	}
@@ -223,6 +224,22 @@ void CATextView::setFontSize(int var)
 int CATextView::getFontSize()
 {
 	return m_iFontSize;
+}
+
+void CATextView::setText(const std::string& var)
+{
+	CATextViewDelegate* pTemp = m_pTextViewDelegate;
+	m_pTextViewDelegate = NULL;
+	m_szText.clear();
+	m_iCurPos = 0;
+	m_vLinesTextView.clear();
+	insertText(var.c_str(), var.length());
+	m_pTextViewDelegate = pTemp;
+}
+
+const std::string& CATextView::getText()
+{
+	return m_szText;
 }
 
 void CATextView::setLineSpacing(unsigned int var)

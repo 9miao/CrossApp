@@ -8,17 +8,11 @@
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup input
- * @{
- */
 
 class CC_DLL CATouch : public CAObject
 {
 public:
-    /**
-     * @js ctor
-     */
+
     CATouch()
         : m_nId(0)
         ,m_startPointCaptured(false)

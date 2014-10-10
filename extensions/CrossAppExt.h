@@ -6,6 +6,7 @@
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
+#include "network/DownloadManager.h"
 
 #include "Json/CSContentJsonDictionary.h"
 #include "Json/DictionaryHelper.h"
