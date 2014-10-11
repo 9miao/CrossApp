@@ -26,12 +26,11 @@
 
 
 // cocos2d + chipmunk registration files
-#include "js_bindings_chipmunk_registration.h"
 
 
 //#pragma mark - Hash
 
-using namespace cocos2d;
+using namespace CrossApp;
 
 typedef struct _hashJSObject
 {
@@ -74,6 +73,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 
 // Hash of JSObject -> proxy
+/*
 void* jsb_get_proxy_for_jsobject(JSObject *obj)
 {
 	tHashJSObject *element = NULL;
@@ -147,7 +147,7 @@ void jsb_del_jsobject_for_proxy(void* proxy)
 
 //#pragma mark
 
-
+*/
 //#pragma mark "C" proxy functions
 
 struct jsb_c_proxy_s* jsb_get_c_proxy_for_jsobject( JSObject *jsobj )
@@ -172,6 +172,7 @@ void jsb_set_c_proxy_for_jsobject( JSObject *jsobj, void *handle, unsigned long 
 	CCAssert(proxy, "No memory for proxy");
 	
 	proxy->handle = handle;
+
 	proxy->flags = flags;
 	proxy->jsobj = jsobj;
 	

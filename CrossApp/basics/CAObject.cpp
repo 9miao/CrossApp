@@ -4,7 +4,7 @@
 #include "CAAutoreleasePool.h"
 #include "ccMacros.h"
 #include "CAScheduler.h"
-
+#include "script_support/CCScriptSupport.h"
 NS_CC_BEGIN
 
 CAObject* CACopying::copyWithZone(CAZone *pZone)
@@ -31,6 +31,11 @@ CAObject::~CAObject(void)
     if (m_uAutoReleaseCount > 0)
     {
         CAPoolManager::sharedPoolManager()->removeObject(this);
+    }
+    CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+    if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
+    {
+        pEngine->removeScriptObjectByCCObject(this);
     }
 }
 

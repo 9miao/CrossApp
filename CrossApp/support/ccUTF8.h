@@ -384,7 +384,7 @@ CC_DEPRECATED_ATTRIBUTE std::vector<unsigned short> cc_utf16_vec_from_utf16_str(
  * @returns the newly created utf16 string, it must be released with `delete[]`,
  *          If an error occurs, %NULL will be returned.
  * */
-CC_DEPRECATED_ATTRIBUTE unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, int* rUtf16Size = NULL);
+CC_DEPRECATED_ATTRIBUTE CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, int* rUtf16Size = NULL);
 
 /**
  * Converts a string from UTF-16 to UTF-8. The result will be null terminated.
@@ -397,7 +397,7 @@ CC_DEPRECATED_ATTRIBUTE unsigned short* cc_utf8_to_utf16(const char* str_old, in
  * @returns a pointer to a newly allocated UTF-8 string. This value must be
  *          released with `delete[]`. If an error occurs, %NULL will be returned.
  **/
-CC_DEPRECATED_ATTRIBUTE char * cc_utf16_to_utf8 (const unsigned short  *str,
+CC_DEPRECATED_ATTRIBUTE CC_DLL char * cc_utf16_to_utf8 (const unsigned short  *str,
                   int             len = -1,
 				  long            *items_read = NULL,
                   long            *items_written = NULL);

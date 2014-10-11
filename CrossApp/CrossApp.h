@@ -145,6 +145,11 @@
 #include "platform/CAFreeTypeFont.h"
 #include "platform/CAFTFontCache.h"
 
+//script_support
+#include "script_support/CCScriptSupport.h"
+#include "script_support/JSViewController.h"
+
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCAccelerometer.h"
     #include "platform/ios/CCApplication.h"

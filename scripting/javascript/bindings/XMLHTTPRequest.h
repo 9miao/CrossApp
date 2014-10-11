@@ -36,7 +36,7 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "jsb_helper.h"
-
+#include <sstream>
 enum MinXmlHttpRequestResponseType {
     kRequestResponseTypeString,
     kRequestResponseTypeArrayBuffer,
@@ -52,7 +52,7 @@ const unsigned short HEADERS_RECEIVED = 2;
 const unsigned short LOADING = 3;
 const unsigned short DONE = 4;
 
-class MinXmlHttpRequest : public cocos2d::CCObject
+class MinXmlHttpRequest : public CAObject
 {
     std::string url;
     JSContext *cx;
@@ -67,7 +67,7 @@ class MinXmlHttpRequest : public cocos2d::CCObject
 	int responseType;
     unsigned timeout;
 	bool isAsync;
-    cocos2d::extension::CCHttpRequest* cc_request;
+    extension::CCHttpRequest* cc_request;
 
 	bool isNetwork;
     bool withCredentialsValue;
@@ -104,7 +104,7 @@ public:
     JS_BINDED_FUNC(MinXmlHttpRequest, setRequestHeader);
     JS_BINDED_FUNC(MinXmlHttpRequest, overrideMimeType);
 
-    void handle_requestResponse(cocos2d::extension::CCHttpClient *sender, cocos2d::extension::CCHttpResponse *response);
+    void handle_requestResponse(extension::CCHttpClient *sender, extension::CCHttpResponse *response);
 
 };
 

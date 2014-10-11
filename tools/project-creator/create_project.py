@@ -83,8 +83,8 @@ def checkParams(context):
                           "linux",
                           "wp8-xaml"]
     elif ("javascript" == context["language"]):
-        context["src_project_name"] = "HelloJavascript"
-        context["src_package_name"] = "org.cocos2dx.hellojavascript"
+        context["src_project_name"] = "HelloCpp"
+        context["src_package_name"] = "org.CrossApp.hellocpp"
         context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-js"
         platforms_list = ["ios",
                           "android",

@@ -26,8 +26,7 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "cocos2d.h"
-#include "chipmunk.h"
+#include "CrossApp.h"
 #include "SimpleAudioEngine.h"
 
 // Globals

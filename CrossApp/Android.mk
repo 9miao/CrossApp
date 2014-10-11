@@ -132,7 +132,8 @@ platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \
 platform/android/jni/TouchesJni.cpp \
 platform/android/jni/DPIJni.cpp \
-
+script_support/JSViewController.cpp \
+script_support/CCScriptSupport.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/kazmath/include \
