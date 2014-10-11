@@ -53,7 +53,7 @@ void JSB_register_opengl(JSContext *_cx, JSObject *object)
 		JS_ValueToObject(_cx, nsval, &ccns);
 	}
     
-    js_register_cocos2dx_GLNode(_cx, ccns);
+//    js_register_cocos2dx_GLNode(_cx, ccns);
     
 	// New WebGL functions, not present on OpenGL ES 2.0
 	JS_DefineFunction(_cx, opengl, "getSupportedExtensions", JSB_glGetSupportedExtensions, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );

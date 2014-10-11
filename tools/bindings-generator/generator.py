@@ -176,7 +176,7 @@ class NativeType(object):
 
     @staticmethod
     def from_string(displayname):
-        displayname = displayname.replace("cocos2d::", "")
+        displayname = displayname.replace("CrossApp::", "")
         displayname = displayname.replace(" *", "*")
 
         nt = NativeType()
@@ -810,7 +810,6 @@ def main():
 
         print "\n.... Generating bindings for target", t
         for s in sections:
-            print "\n.... .... Processing section", s, "\n"
             gen_opts = {
                 'prefix': config.get(s, 'prefix'),
                 'headers':    (config.get(s, 'headers'        , 0, dict(userconfig.items('DEFAULT')))),

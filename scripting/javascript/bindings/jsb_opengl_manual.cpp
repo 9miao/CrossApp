@@ -31,7 +31,6 @@
 
 #include "jsb_opengl_manual.h"
 #include "js_manual_conversions.h"
-#include "cocosjs_manual_conversions.h"
 #include "js_bindings_core.h"
 #include "jsb_opengl_functions.h"
 
@@ -249,11 +248,6 @@ JSBool JSB_glGetShaderSource(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-//	interface WebGLActiveInfo {
-//		readonly attribute GLint size;
-//		readonly attribute GLenum type;
-//		readonly attribute DOMString name;
-// WebGLActiveInfo? getActiveAttrib(WebGLProgram? program, GLuint index);
 JSBool JSB_glGetActiveAttrib(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSB_PRECONDITION2( argc == 2, cx, JS_FALSE, "Invalid number of arguments" );
@@ -290,13 +284,6 @@ JSBool JSB_glGetActiveAttrib(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-
-//	interface WebGLActiveInfo {
-//		readonly attribute GLint size;
-//		readonly attribute GLenum type;
-//		readonly attribute DOMString name;
-//	};
-// WebGLActiveInfo? getActiveUniform(WebGLProgram? program, GLuint index);
 JSBool JSB_glGetActiveUniform(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSB_PRECONDITION2( argc == 2, cx, JS_FALSE, "Invalid number of arguments" );

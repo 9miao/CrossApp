@@ -1,9 +1,4 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
-Copyright (c) 2013 James Chen
-
-http://www.cocos2d-x.org
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -24,11 +19,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "jsb_websocket.h"
-#include "cocos2d.h"
+#include "CrossApp.h"
 #include "WebSocket.h"
 #include "spidermonkey_specifics.h"
 #include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
+#include "CrossApp_specifics.hpp"
 
 USING_NS_CC_EXT;
 
@@ -148,14 +143,14 @@ private:
     JSObject* m_pJSDelegate;
 };
 
-JSClass  *js_cocos2dx_websocket_class;
-JSObject *js_cocos2dx_websocket_prototype;
+JSClass  *js_CrossApp_websocket_class;
+JSObject *js_CrossApp_websocket_prototype;
 
-void js_cocos2dx_WebSocket_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_CrossApp_WebSocket_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (WebSocket)", obj);
 }
 
-JSBool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_CrossApp_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -210,7 +205,7 @@ JSBool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval 
 	return JS_TRUE;
 }
 
-JSBool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *vp){
+JSBool js_CrossApp_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *vp){
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
@@ -225,7 +220,7 @@ JSBool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval
 	return JS_FALSE;
 }
 
-JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_CrossApp_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     
@@ -239,10 +234,10 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 			JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error processing arguments");
 		} while (0);
         
-		JSObject *obj = JS_NewObject(cx, js_cocos2dx_websocket_class, js_cocos2dx_websocket_prototype, NULL);
+		JSObject *obj = JS_NewObject(cx, js_CrossApp_websocket_class, js_CrossApp_websocket_prototype, NULL);
 		
         
-		cocos2d::extension::WebSocket* cobj = new cocos2d::extension::WebSocket();
+		extension::WebSocket* cobj = new extension::WebSocket();
         JSB_WebSocketDelegate* delegate = new JSB_WebSocketDelegate();
         delegate->setJSDelegate(obj);
         
@@ -308,7 +303,7 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 	return JS_FALSE;
 }
 
-static JSBool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, JSHandleObject obj, JSHandleId id, JSMutableHandleValue vp)
+static JSBool js_CrossApp_extension_WebSocket_get_readyState(JSContext *cx, JSHandleObject obj, JSHandleId id, JSMutableHandleValue vp)
 {
     JSObject* jsobj = obj.get();
 	js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
@@ -326,26 +321,26 @@ static JSBool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, JSHa
 
 void register_jsb_websocket(JSContext *cx, JSObject *global) {
     
-    js_cocos2dx_websocket_class = (JSClass *)calloc(1, sizeof(JSClass));
-    js_cocos2dx_websocket_class->name = "WebSocket";
-    js_cocos2dx_websocket_class->addProperty = JS_PropertyStub;
-    js_cocos2dx_websocket_class->delProperty = JS_PropertyStub;
-    js_cocos2dx_websocket_class->getProperty = JS_PropertyStub;
-    js_cocos2dx_websocket_class->setProperty = JS_StrictPropertyStub;
-    js_cocos2dx_websocket_class->enumerate = JS_EnumerateStub;
-    js_cocos2dx_websocket_class->resolve = JS_ResolveStub;
-    js_cocos2dx_websocket_class->convert = JS_ConvertStub;
-    js_cocos2dx_websocket_class->finalize = js_cocos2dx_WebSocket_finalize;
-    js_cocos2dx_websocket_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+    js_CrossApp_websocket_class = (JSClass *)calloc(1, sizeof(JSClass));
+    js_CrossApp_websocket_class->name = "WebSocket";
+    js_CrossApp_websocket_class->addProperty = JS_PropertyStub;
+    js_CrossApp_websocket_class->delProperty = JS_PropertyStub;
+    js_CrossApp_websocket_class->getProperty = JS_PropertyStub;
+    js_CrossApp_websocket_class->setProperty = JS_StrictPropertyStub;
+    js_CrossApp_websocket_class->enumerate = JS_EnumerateStub;
+    js_CrossApp_websocket_class->resolve = JS_ResolveStub;
+    js_CrossApp_websocket_class->convert = JS_ConvertStub;
+    js_CrossApp_websocket_class->finalize = js_CrossApp_WebSocket_finalize;
+    js_CrossApp_websocket_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
     
     static JSPropertySpec properties[] = {
-        {"readyState", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_cocos2dx_extension_WebSocket_get_readyState), NULL},
+        {"readyState", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, JSOP_WRAPPER(js_CrossApp_extension_WebSocket_get_readyState), NULL},
         {0, 0, 0, 0, 0}
     };
     
     static JSFunctionSpec funcs[] = {
-        JS_FN("send",js_cocos2dx_extension_WebSocket_send, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("close",js_cocos2dx_extension_WebSocket_close, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("send",js_CrossApp_extension_WebSocket_send, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("close",js_CrossApp_extension_WebSocket_close, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
     
@@ -353,11 +348,11 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
         JS_FS_END
     };
     
-    js_cocos2dx_websocket_prototype = JS_InitClass(
+    js_CrossApp_websocket_prototype = JS_InitClass(
                                                 cx, global,
                                                 NULL,
-                                                js_cocos2dx_websocket_class,
-                                                js_cocos2dx_extension_WebSocket_constructor, 0, // constructor
+                                                js_CrossApp_websocket_class,
+                                                js_CrossApp_extension_WebSocket_constructor, 0, // constructor
                                                 properties,
                                                 funcs,
                                                 NULL, // no static properties

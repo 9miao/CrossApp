@@ -11,22 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\cocos2d_specifics.cpp" />
-    <ClCompile Include="..\cocosjs_manual_conversions.cpp" />
-    <ClCompile Include="..\generated\jsb_cocos2dx_auto.cpp" />
-    <ClCompile Include="..\generated\jsb_cocos2dx_extension_auto.cpp" />
-    <ClCompile Include="..\generated\jsb_cocos2dx_studio_auto.cpp" />
-    <ClCompile Include="..\jsb_cocos2dx_extension_manual.cpp" />
-    <ClCompile Include="..\jsb_cocos2dx_studio_manual.cpp" />
+    <ClCompile Include="..\CrossApp_specifics.cpp" />
+    <ClCompile Include="..\generated\jsb_CrossApp_auto.cpp" />
     <ClCompile Include="..\jsb_opengl_functions.cpp" />
     <ClCompile Include="..\jsb_opengl_manual.cpp" />
     <ClCompile Include="..\jsb_opengl_registration.cpp" />
     <ClCompile Include="..\jsb_websocket.cpp" />
-    <ClCompile Include="..\js_bindings_ccbreader.cpp" />
-    <ClCompile Include="..\js_bindings_chipmunk_auto_classes.cpp" />
-    <ClCompile Include="..\js_bindings_chipmunk_functions.cpp" />
-    <ClCompile Include="..\js_bindings_chipmunk_manual.cpp" />
-    <ClCompile Include="..\js_bindings_chipmunk_registration.cpp" />
     <ClCompile Include="..\js_bindings_core.cpp" />
     <ClCompile Include="..\js_bindings_opengl.cpp" />
     <ClCompile Include="..\js_bindings_system_functions.cpp" />
@@ -36,25 +26,13 @@
     <ClCompile Include="..\XMLHTTPRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\cocos2d_specifics.hpp" />
-    <ClInclude Include="..\cocosjs_manual_conversions.h" />
-    <ClInclude Include="..\generated\jsb_cocos2dx_auto.hpp" />
-    <ClInclude Include="..\generated\jsb_cocos2dx_extension_auto.hpp" />
-    <ClInclude Include="..\generated\jsb_cocos2dx_studio_auto.hpp" />
-    <ClInclude Include="..\jsb_cocos2dx_extension_manual.h" />
-    <ClInclude Include="..\jsb_cocos2dx_studio_manual.h" />
+    <ClInclude Include="..\CrossApp_specifics.hpp" />
+    <ClInclude Include="..\generated\jsb_CrossApp_auto.hpp" />
     <ClInclude Include="..\jsb_helper.h" />
     <ClInclude Include="..\jsb_opengl_functions.h" />
     <ClInclude Include="..\jsb_opengl_manual.h" />
     <ClInclude Include="..\jsb_opengl_registration.h" />
     <ClInclude Include="..\jsb_websocket.h" />
-    <ClInclude Include="..\js_bindings_ccbreader.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_auto_classes.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_auto_classes_registration.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_functions.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_functions_registration.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_manual.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_registration.h" />
     <ClInclude Include="..\js_bindings_config.h" />
     <ClInclude Include="..\js_bindings_core.h" />
     <ClInclude Include="..\js_bindings_opengl.h" />
@@ -67,9 +45,7 @@
     <ClInclude Include="..\XMLHTTPRequest.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\generated\jsb_cocos2dx_auto_api.js" />
-    <None Include="..\generated\jsb_cocos2dx_extension_auto_api.js" />
-    <None Include="..\generated\jsb_cocos2dx_studio_auto_api.js" />
+    <None Include="..\generated\jsb_CrossApp_auto_api.js" />
     <None Include="..\js\jsb.js" />
     <None Include="..\js\jsb_chipmunk.js" />
     <None Include="..\js\jsb_cocos2d.js" />
@@ -136,7 +112,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;DEBUG;COCOS2D_DEBUG=1;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;$(ProjectDir)..\..\..\..\extensions\network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\CrossApp;$(ProjectDir)..\..\..\..\CrossApp\include;$(ProjectDir)..\..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\..\CrossApp\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\..\extensions\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\extensions\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;$(ProjectDir)..\..\..\..\extensions\network;$(ProjectDir)..\..\..\..\CrossApp\platform\third_party\win32\freetype;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4996;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -145,7 +121,7 @@
     </Link>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\extensions\sqlite3\libraries\win32\*.*" "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

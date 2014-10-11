@@ -205,6 +205,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp" />
     <ClCompile Include="..\platform\win32\CCImage.cpp" />
     <ClCompile Include="..\platform\win32\CCStdC.cpp" />
+    <ClCompile Include="..\script_support\CCScriptSupport.cpp" />
+    <ClCompile Include="..\script_support\JSViewController.cpp" />
     <ClCompile Include="..\shaders\CAGLProgram.cpp" />
     <ClCompile Include="..\shaders\CAShaderCache.cpp" />
     <ClCompile Include="..\shaders\CATransformation.cpp" />
@@ -337,6 +339,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\platform\win32\CCGL.h" />
     <ClInclude Include="..\platform\win32\CCPlatformDefine.h" />
     <ClInclude Include="..\platform\win32\CCStdC.h" />
+    <ClInclude Include="..\script_support\CCScriptSupport.h" />
+    <ClInclude Include="..\script_support\JSViewController.h" />
     <ClInclude Include="..\shaders\CAGLProgram.h" />
     <ClInclude Include="..\shaders\CAShaderCache.h" />
     <ClInclude Include="..\shaders\CATransformation.h" />

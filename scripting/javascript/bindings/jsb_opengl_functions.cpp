@@ -12,7 +12,6 @@
 //#include "jsb_config.h"
 #include "js_bindings_core.h"
 #include "js_manual_conversions.h"
-#include "cocosjs_manual_conversions.h"
 #include "jsb_opengl_functions.h"
 
 // Arguments: GLenum

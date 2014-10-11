@@ -44,8 +44,8 @@
 #else
 #define JSB_PRECONDITION( condition, ...) do {							\
 	if( ! (condition) ) {														\
-        cocos2d::CCLog("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
-        cocos2d::CCLog(__VA_ARGS__);                                        \
+        CrossApp::CCLog("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
+        CrossApp::CCLog(__VA_ARGS__);                                        \
 		JSContext* globalContext = ScriptingCore::getInstance()->getGlobalContext();	\
 		if( ! JS_IsExceptionPending( globalContext ) ) {						\
 			JS_ReportError( globalContext, __VA_ARGS__ );							\
@@ -55,8 +55,8 @@
 } while(0)
 #define JSB_PRECONDITION2( condition, context, ret_value, ...) do {             \
     if( ! (condition) ) {														\
-        cocos2d::CCLog("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
-        cocos2d::CCLog(__VA_ARGS__);                                        \
+        CrossApp::CCLog("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
+        CrossApp::CCLog(__VA_ARGS__);                                        \
         if( ! JS_IsExceptionPending( context ) ) {							\
             JS_ReportError( context, __VA_ARGS__ );								\
         }																		\
@@ -98,20 +98,20 @@
 #endif // JSB_INCLUDE_NS
 
 
-/** @def JSB_INCLUDE_COCOS2D
- Whether or not it should include JS bindings for cocos2d.
+/** @def JSB_INCLUDE_CrossApp
+ Whether or not it should include JS bindings for CrossApp.
  */
-#ifndef JSB_INCLUDE_COCOS2D
-#define JSB_INCLUDE_COCOS2D 1
+#ifndef JSB_INCLUDE_CrossApp
+#define JSB_INCLUDE_CrossApp 1
 
-#include "cocos2d.h"
+#include "CrossApp.h"
 #if defined(__CC_PLATFORM_IOS)
-#define JSB_INCLUDE_COCOS2D_IOS 1
+#define JSB_INCLUDE_CrossApp_IOS 1
 #elif defined(__CC_PLATFORM_MAC)
-#define JSB_INCLUDE_COCOS2D_MAC 1
+#define JSB_INCLUDE_CrossApp_MAC 1
 #endif
 
-#endif // JSB_INCLUDE_COCOS2D
+#endif // JSB_INCLUDE_CrossApp
 
 
 /** @def JSB_INCLUDE_CHIPMUNK
