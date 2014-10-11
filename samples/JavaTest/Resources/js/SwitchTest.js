@@ -7,9 +7,9 @@ ctor:function () {
 viewDidLoad:function(){
     var rect1 = this.getView().getBounds();
     var size = cc.size(rect1.width,rect1.height);
-	var switchlabel  = ca.Label.createWithCenter(cc.rect(size.width/2,size.width/8,400,80));
+	var switchlabel  = ca.Label.createWithCenter(cc.rect(size.width/2,size.width/8,400,_px(80)));
 	switchlabel.setText("Switch is off");
-    switchlabel.setFontSize(50);
+    switchlabel.setFontSize(_px(50));
     switchlabel.setTextAlignment(ca.TextAlignmentCenter);
     switchlabel.setColor(cc.c4b(0,0,0,255));
 	switchlabel.setTag(500);
@@ -23,7 +23,7 @@ viewDidLoad:function(){
     var label = ca.Label.createWithCenter(cc.rect(size.width/2,size.height*3/4,0.3125*size.height,size.width/8));
     label.setText("0.0");
     label.setTextAlignment(ca.TextAlignmentCenter);
-    label.setFontSize(50);
+    label.setFontSize(_px(50));
     label.setTag(300);
     label.setColor(cc.c4b(255,0,0,255));
     this.getView().addSubview(label);

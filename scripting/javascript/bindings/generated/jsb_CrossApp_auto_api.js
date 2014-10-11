@@ -244,6 +244,8 @@ setDefaultAlphaPixelFormat : function () {},
  * @param {unsigned long}
  * @param {std::string}
  * @param {int}
+ * @param {int}
+ * @param {bool}
  */
 getStringHeight : function () {},
 
@@ -281,6 +283,7 @@ defaultAlphaPixelFormat : function () {},
  * @param {CrossApp::CATextAlignment}
  * @param {CrossApp::CAVerticalTextAlignment}
  * @param {bool}
+ * @param {int}
  */
 createWithString : function () {},
 
@@ -1259,12 +1262,6 @@ ca.Label = {
 setTextAlignment : function () {},
 
 /**
- * @method setFontName
- * @param {std::string}
- */
-setFontName : function () {},
-
-/**
  * @method setDimensions
  * @param {CrossApp::CCSize}
  */
@@ -1282,9 +1279,64 @@ getFontSize : function () {},
 sizeToFit : function () {},
 
 /**
+ * @method getText
+ * @return A value converted from C/C++ "std::string"
+ */
+getText : function () {},
+
+/**
+ * @method initWithCenter
+ * @return A value converted from C/C++ "bool"
+ * @param {CrossApp::CCRect}
+ */
+initWithCenter : function () {},
+
+/**
+ * @method setFontName
+ * @param {std::string}
+ */
+setFontName : function () {},
+
+/**
+ * @method setLineSpacing
+ * @param {unsigned int}
+ */
+setLineSpacing : function () {},
+
+/**
  * @method visit
  */
 visit : function () {},
+
+/**
+ * @method getLabelSize
+ * @return A value converted from C/C++ "CrossApp::CCSize"
+ */
+getLabelSize : function () {},
+
+/**
+ * @method setWordWrap
+ * @param {bool}
+ */
+setWordWrap : function () {},
+
+/**
+ * @method setNumberOfLine
+ * @param {unsigned int}
+ */
+setNumberOfLine : function () {},
+
+/**
+ * @method getLineSpacing
+ * @return A value converted from C/C++ "unsigned int"
+ */
+getLineSpacing : function () {},
+
+/**
+ * @method setVerticalTextAlignmet
+ * @param {CrossApp::CAVerticalTextAlignment}
+ */
+setVerticalTextAlignmet : function () {},
 
 /**
  * @method getVerticalTextAlignmet
@@ -1300,47 +1352,10 @@ getVerticalTextAlignmet : function () {},
 initWithFrame : function () {},
 
 /**
- * @method setNumberOfLine
- * @param {unsigned int}
- */
-setNumberOfLine : function () {},
-
-/**
- * @method setText
- * @param {std::string}
- */
-setText : function () {},
-
-/**
- * @method setFontSize
- * @param {unsigned int}
- */
-setFontSize : function () {},
-
-/**
- * @method getTextAlignment
- * @return A value converted from C/C++ "CrossApp::CATextAlignment"
- */
-getTextAlignment : function () {},
-
-/**
- * @method getLabelSize
+ * @method getDimensions
  * @return A value converted from C/C++ "CrossApp::CCSize"
  */
-getLabelSize : function () {},
-
-/**
- * @method getText
- * @return A value converted from C/C++ "std::string"
- */
-getText : function () {},
-
-/**
- * @method initWithCenter
- * @return A value converted from C/C++ "bool"
- * @param {CrossApp::CCRect}
- */
-initWithCenter : function () {},
+getDimensions : function () {},
 
 /**
  * @method getNumberOfLine
@@ -1349,16 +1364,28 @@ initWithCenter : function () {},
 getNumberOfLine : function () {},
 
 /**
- * @method setVerticalTextAlignmet
- * @param {CrossApp::CAVerticalTextAlignment}
+ * @method setFontSize
+ * @param {unsigned int}
  */
-setVerticalTextAlignmet : function () {},
+setFontSize : function () {},
 
 /**
- * @method getDimensions
- * @return A value converted from C/C++ "CrossApp::CCSize"
+ * @method setText
+ * @param {std::string}
  */
-getDimensions : function () {},
+setText : function () {},
+
+/**
+ * @method getWordWrap
+ * @return A value converted from C/C++ "bool"
+ */
+getWordWrap : function () {},
+
+/**
+ * @method getTextAlignment
+ * @return A value converted from C/C++ "CrossApp::CATextAlignment"
+ */
+getTextAlignment : function () {},
 
 /**
  * @method getFontName
@@ -3228,6 +3255,12 @@ setShowsVerticalScrollIndicator : function () {},
 setShowsHorizontalScrollIndicator : function () {},
 
 /**
+ * @method setTouchEnabledAtSubviews
+ * @param {bool}
+ */
+setTouchEnabledAtSubviews : function () {},
+
+/**
  * @method isScrollEnabled
  * @return A value converted from C/C++ "bool"
  */
@@ -3471,6 +3504,12 @@ isSlidingMinX : function () {},
  * @param {CrossApp::CAEvent*}
  */
 ccTouchCancelled : function () {},
+
+/**
+ * @method isTouchEnabledAtSubviews
+ * @return A value converted from C/C++ "bool"
+ */
+isTouchEnabledAtSubviews : function () {},
 
 /**
  * @method setMinimumZoomScale

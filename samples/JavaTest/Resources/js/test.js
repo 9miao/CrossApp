@@ -24,7 +24,7 @@ viewDidUnload:function(){
     
 },
 tableViewHeightForRowAtIndexPath:function(table,section,row){
-    return 640*0.2;
+    return _px(640*0.2);
 },
 tableCellAtIndex:function(table,cellSize,section,row){
     var cell = table.dequeueReusableCellWithIdentifier("abc");
@@ -37,10 +37,10 @@ tableCellAtIndex:function(table,cellSize,section,row){
         label = ca.Label.createWithCenter(cc.rect(size.width/2
                                                   ,64
                                                   ,400
-                                                  ,50));
+                                                  ,_px(50)));
         label.setTag(1);
         label.setTextAlignment(ca.TextAlignmentCenter);
-        label.setFontSize(40);
+        label.setFontSize(_px(40));
         label.setColor(cc.c4b(51,204,255,255));
         
         label.setText(titleArr[row]);

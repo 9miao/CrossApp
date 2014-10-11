@@ -14,7 +14,7 @@ viewDidLoad:function(){
     														,size.width/2 + 30));
     textalignleft.setTag(100);
     textalignleft.setTextAlignment(ca.TextAlignmentLeft);
-    textalignleft.setFontSize(40);
+    textalignleft.setFontSize(_px(40));
     textalignleft.setColor(cc.c4b(0,20,255,255));
     textalignleft.setText("Please Pay attention to me!,My Name is CrossApp-js!");
     this.getView().addSubview(textalignleft);
@@ -25,7 +25,7 @@ viewDidLoad:function(){
                                                            ,size.width/2 + 30 ));
    textaligncenter.setTag(200);
    textaligncenter.setTextAlignment(ca.TextAlignmentCenter);
-   textaligncenter.setFontSize(40);
+   textaligncenter.setFontSize(_px(40));
    textaligncenter.setColor(cc.c4b(130,20,255,255));
    textaligncenter.setText("Please Pay attention to me!,My Name is CrossApp-js!");
    this.getView().addSubview(textaligncenter);                                                   
@@ -36,7 +36,7 @@ viewDidLoad:function(){
     														,size.width/2 + 30));
     textalignright.setTag(200);
     textalignright.setTextAlignment(ca.TextAlignmentRight);
-    textalignright.setFontSize(40);
+    textalignright.setFontSize(_px(40));
     textalignright.setColor(cc.c4b(130,20,255,255));
     textalignright.setText("Please Pay attention to me!,My Name is CrossApp-js!");
     this.getView().addSubview(textalignright);

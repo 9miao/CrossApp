@@ -167,7 +167,10 @@ cc._reuse_rect = {x:0, y:0, width:0, height:0};
 //cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 cc.log = cc._cocosplayerLog || cc.log || log;
 
-
+_px = function(p)
+{
+    return p * ca.Application.getApplication().getAdaptationRatio();
+};
  //Color 3B
 
 cc.c3b = function( r, g, b )

@@ -55,6 +55,6 @@ var drawer = new DrawerController();
 drawer.init();
 
 var drawerController = new ca.DrawerController();
-drawerController.initWithController(drawer,tabbar,300);
+drawerController.initWithController(drawer,tabbar,_px(300));
 window.setRootViewController(drawerController);
 dir.runWindow(window);

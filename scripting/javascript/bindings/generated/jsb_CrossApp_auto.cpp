@@ -853,6 +853,44 @@ JSBool js_CrossApp_CAImage_getStringHeight(JSContext *cx, uint32_t argc, jsval *
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
+	if (argc == 5) {
+		const char* arg0;
+		unsigned long arg1;
+		std::string arg2;
+		int arg3;
+		int arg4;
+		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+		#pragma warning NO CONVERSION TO NATIVE FOR unsigned long;
+		ok &= jsval_to_std_string(cx, argv[2], &arg2);
+		ok &= jsval_to_int32(cx, argv[3], (int32_t *)&arg3);
+		ok &= jsval_to_int32(cx, argv[4], (int32_t *)&arg4);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		int ret = CrossApp::CAImage::getStringHeight(arg0, arg1, arg2, arg3, arg4);
+		jsval jsret;
+		jsret = int32_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+	if (argc == 6) {
+		const char* arg0;
+		unsigned long arg1;
+		std::string arg2;
+		int arg3;
+		int arg4;
+		JSBool arg5;
+		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+		#pragma warning NO CONVERSION TO NATIVE FOR unsigned long;
+		ok &= jsval_to_std_string(cx, argv[2], &arg2);
+		ok &= jsval_to_int32(cx, argv[3], (int32_t *)&arg3);
+		ok &= jsval_to_int32(cx, argv[4], (int32_t *)&arg4);
+		ok &= JS_ValueToBoolean(cx, argv[5], &arg5);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		int ret = CrossApp::CAImage::getStringHeight(arg0, arg1, arg2, arg3, arg4, arg5);
+		jsval jsret;
+		jsret = int32_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
 	JS_ReportError(cx, "wrong number of arguments");
 	return JS_FALSE;
 }
@@ -969,6 +1007,37 @@ JSBool js_CrossApp_CAImage_createWithString(JSContext *cx, uint32_t argc, jsval 
 		ok &= JS_ValueToBoolean(cx, argv[6], &arg6);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		CrossApp::CAImage* ret = CrossApp::CAImage::createWithString(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+		jsval jsret;
+		do {
+		if (ret) {
+			js_proxy_t *proxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, ret);
+			jsret = OBJECT_TO_JSVAL(proxy->obj);
+		} else {
+			jsret = JSVAL_NULL;
+		}
+	} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+	if (argc == 8) {
+		const char* arg0;
+		const char* arg1;
+		double arg2;
+		CrossApp::CADipSize arg3;
+		CrossApp::CATextAlignment arg4;
+		CrossApp::CAVerticalTextAlignment arg5;
+		JSBool arg6;
+		int arg7;
+		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+		std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
+		ok &= JS_ValueToNumber(cx, argv[2], &arg2);
+		ok &= jsval_to_ccsize(cx, argv[3], &arg3);
+		ok &= jsval_to_int32(cx, argv[4], (int32_t *)&arg4);
+		ok &= jsval_to_int32(cx, argv[5], (int32_t *)&arg5);
+		ok &= JS_ValueToBoolean(cx, argv[6], &arg6);
+		ok &= jsval_to_int32(cx, argv[7], (int32_t *)&arg7);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		CrossApp::CAImage* ret = CrossApp::CAImage::createWithString(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		jsval jsret;
 		do {
 		if (ret) {
@@ -4868,26 +4937,6 @@ JSBool js_CrossApp_CALabel_setTextAlignment(JSContext *cx, uint32_t argc, jsval 
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
-JSBool js_CrossApp_CALabel_setFontName(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 1) {
-		std::string arg0;
-		ok &= jsval_to_std_string(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cobj->setFontName(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-	return JS_FALSE;
-}
 JSBool js_CrossApp_CALabel_setDimensions(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -4940,6 +4989,85 @@ JSBool js_CrossApp_CALabel_sizeToFit(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
 	return JS_FALSE;
 }
+JSBool js_CrossApp_CALabel_getText(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 0) {
+		std::string ret = cobj->getText();
+		jsval jsret;
+		jsret = std_string_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+	return JS_FALSE;
+}
+JSBool js_CrossApp_CALabel_initWithCenter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+		CrossApp::CADipRect arg0;
+		ok &= jsval_to_ccrect(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		bool ret = cobj->initWithCenter(arg0);
+		jsval jsret;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+JSBool js_CrossApp_CALabel_setFontName(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+		std::string arg0;
+		ok &= jsval_to_std_string(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->setFontName(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+JSBool js_CrossApp_CALabel_setLineSpacing(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+		unsigned int arg0;
+		ok &= jsval_to_uint32(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->setLineSpacing(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
 JSBool js_CrossApp_CALabel_visit(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -4953,6 +5081,100 @@ JSBool js_CrossApp_CALabel_visit(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+	return JS_FALSE;
+}
+JSBool js_CrossApp_CALabel_getLabelSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 0) {
+		CrossApp::CADipSize ret = cobj->getLabelSize();
+		jsval jsret;
+		jsret = ccsize_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+	return JS_FALSE;
+}
+JSBool js_CrossApp_CALabel_setWordWrap(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+		JSBool arg0;
+		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->setWordWrap(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+JSBool js_CrossApp_CALabel_setNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+		unsigned int arg0;
+		ok &= jsval_to_uint32(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->setNumberOfLine(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+JSBool js_CrossApp_CALabel_getLineSpacing(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 0) {
+		unsigned int ret = cobj->getLineSpacing();
+		jsval jsret;
+		jsret = uint32_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+	return JS_FALSE;
+}
+JSBool js_CrossApp_CALabel_setVerticalTextAlignmet(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+		CrossApp::CAVerticalTextAlignment arg0;
+		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->setVerticalTextAlignmet(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
 JSBool js_CrossApp_CALabel_getVerticalTextAlignmet(JSContext *cx, uint32_t argc, jsval *vp)
@@ -4994,7 +5216,41 @@ JSBool js_CrossApp_CALabel_initWithFrame(JSContext *cx, uint32_t argc, jsval *vp
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
-JSBool js_CrossApp_CALabel_setNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_CrossApp_CALabel_getDimensions(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 0) {
+		CrossApp::CADipSize ret = cobj->getDimensions();
+		jsval jsret;
+		jsret = ccsize_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+	return JS_FALSE;
+}
+JSBool js_CrossApp_CALabel_getNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 0) {
+		unsigned int ret = cobj->getNumberOfLine();
+		jsval jsret;
+		jsret = uint32_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+	return JS_FALSE;
+}
+JSBool js_CrossApp_CALabel_setFontSize(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
@@ -5006,7 +5262,7 @@ JSBool js_CrossApp_CALabel_setNumberOfLine(JSContext *cx, uint32_t argc, jsval *
 		unsigned int arg0;
 		ok &= jsval_to_uint32(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cobj->setNumberOfLine(arg0);
+		cobj->setFontSize(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return JS_TRUE;
 	}
@@ -5034,24 +5290,21 @@ JSBool js_CrossApp_CALabel_setText(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
-JSBool js_CrossApp_CALabel_setFontSize(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_CrossApp_CALabel_getWordWrap(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 1) {
-		unsigned int arg0;
-		ok &= jsval_to_uint32(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cobj->setFontSize(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	if (argc == 0) {
+		bool ret = cobj->getWordWrap();
+		jsval jsret;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
 
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
 	return JS_FALSE;
 }
 JSBool js_CrossApp_CALabel_getTextAlignment(JSContext *cx, uint32_t argc, jsval *vp)
@@ -5064,116 +5317,6 @@ JSBool js_CrossApp_CALabel_getTextAlignment(JSContext *cx, uint32_t argc, jsval 
 		CrossApp::CATextAlignment ret = cobj->getTextAlignment();
 		jsval jsret;
 		jsret = int32_to_jsval(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return JS_FALSE;
-}
-JSBool js_CrossApp_CALabel_getLabelSize(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 0) {
-		CrossApp::CADipSize ret = cobj->getLabelSize();
-		jsval jsret;
-		jsret = ccsize_to_jsval(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return JS_FALSE;
-}
-JSBool js_CrossApp_CALabel_getText(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 0) {
-		std::string ret = cobj->getText();
-		jsval jsret;
-		jsret = std_string_to_jsval(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return JS_FALSE;
-}
-JSBool js_CrossApp_CALabel_initWithCenter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 1) {
-		CrossApp::CADipRect arg0;
-		ok &= jsval_to_ccrect(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		bool ret = cobj->initWithCenter(arg0);
-		jsval jsret;
-		jsret = BOOLEAN_TO_JSVAL(ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-	return JS_FALSE;
-}
-JSBool js_CrossApp_CALabel_getNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 0) {
-		unsigned int ret = cobj->getNumberOfLine();
-		jsval jsret;
-		jsret = uint32_to_jsval(cx, ret);
-		JS_SET_RVAL(cx, vp, jsret);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return JS_FALSE;
-}
-JSBool js_CrossApp_CALabel_setVerticalTextAlignmet(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 1) {
-		CrossApp::CAVerticalTextAlignment arg0;
-		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cobj->setVerticalTextAlignmet(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-	return JS_FALSE;
-}
-JSBool js_CrossApp_CALabel_getDimensions(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 0) {
-		CrossApp::CADipSize ret = cobj->getDimensions();
-		jsval jsret;
-		jsret = ccsize_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
@@ -5326,23 +5469,27 @@ void js_register_CrossApp_CALabel(JSContext *cx, JSObject *global) {
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("setTextAlignment", js_CrossApp_CALabel_setTextAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setFontName", js_CrossApp_CALabel_setFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setDimensions", js_CrossApp_CALabel_setDimensions, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getFontSize", js_CrossApp_CALabel_getFontSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("sizeToFit", js_CrossApp_CALabel_sizeToFit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("visit", js_CrossApp_CALabel_visit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getVerticalTextAlignmet", js_CrossApp_CALabel_getVerticalTextAlignmet, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("initWithFrame", js_CrossApp_CALabel_initWithFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setNumberOfLine", js_CrossApp_CALabel_setNumberOfLine, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setText", js_CrossApp_CALabel_setText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setFontSize", js_CrossApp_CALabel_setFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getTextAlignment", js_CrossApp_CALabel_getTextAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getLabelSize", js_CrossApp_CALabel_getLabelSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getText", js_CrossApp_CALabel_getText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("initWithCenter", js_CrossApp_CALabel_initWithCenter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getNumberOfLine", js_CrossApp_CALabel_getNumberOfLine, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setFontName", js_CrossApp_CALabel_setFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setLineSpacing", js_CrossApp_CALabel_setLineSpacing, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("visit", js_CrossApp_CALabel_visit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getLabelSize", js_CrossApp_CALabel_getLabelSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setWordWrap", js_CrossApp_CALabel_setWordWrap, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setNumberOfLine", js_CrossApp_CALabel_setNumberOfLine, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getLineSpacing", js_CrossApp_CALabel_getLineSpacing, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setVerticalTextAlignmet", js_CrossApp_CALabel_setVerticalTextAlignmet, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getVerticalTextAlignmet", js_CrossApp_CALabel_getVerticalTextAlignmet, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("initWithFrame", js_CrossApp_CALabel_initWithFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getDimensions", js_CrossApp_CALabel_getDimensions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getNumberOfLine", js_CrossApp_CALabel_getNumberOfLine, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setFontSize", js_CrossApp_CALabel_setFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setText", js_CrossApp_CALabel_setText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getWordWrap", js_CrossApp_CALabel_getWordWrap, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getTextAlignment", js_CrossApp_CALabel_getTextAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getFontName", js_CrossApp_CALabel_getFontName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("onEnterTransitionDidFinish", js_CrossApp_CALabel_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_CrossApp_CALabel_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -12703,6 +12850,26 @@ JSBool js_CrossApp_CAScrollView_setShowsHorizontalScrollIndicator(JSContext *cx,
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
+JSBool js_CrossApp_CAScrollView_setTouchEnabledAtSubviews(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+		JSBool arg0;
+		ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->setTouchEnabledAtSubviews(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
 JSBool js_CrossApp_CAScrollView_isScrollEnabled(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -13566,6 +13733,23 @@ JSBool js_CrossApp_CAScrollView_ccTouchCancelled(JSContext *cx, uint32_t argc, j
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
+JSBool js_CrossApp_CAScrollView_isTouchEnabledAtSubviews(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 0) {
+		bool ret = cobj->isTouchEnabledAtSubviews();
+		jsval jsret;
+		jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+	return JS_FALSE;
+}
 JSBool js_CrossApp_CAScrollView_setMinimumZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -13792,6 +13976,7 @@ void js_register_CrossApp_CAScrollView(JSContext *cx, JSObject *global) {
 		JS_FN("isBounceVertical", js_CrossApp_CAScrollView_isBounceVertical, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setShowsVerticalScrollIndicator", js_CrossApp_CAScrollView_setShowsVerticalScrollIndicator, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setShowsHorizontalScrollIndicator", js_CrossApp_CAScrollView_setShowsHorizontalScrollIndicator, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setTouchEnabledAtSubviews", js_CrossApp_CAScrollView_setTouchEnabledAtSubviews, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isScrollEnabled", js_CrossApp_CAScrollView_isScrollEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getZoomScale", js_CrossApp_CAScrollView_getZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isDecelerating", js_CrossApp_CAScrollView_isDecelerating, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -13832,6 +14017,7 @@ void js_register_CrossApp_CAScrollView(JSContext *cx, JSObject *global) {
 		JS_FN("removeSubview", js_CrossApp_CAScrollView_removeSubview, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isSlidingMinX", js_CrossApp_CAScrollView_isSlidingMinX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("ccTouchCancelled", js_CrossApp_CAScrollView_ccTouchCancelled, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("isTouchEnabledAtSubviews", js_CrossApp_CAScrollView_isTouchEnabledAtSubviews, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setMinimumZoomScale", js_CrossApp_CAScrollView_setMinimumZoomScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("endHeaderRefresh", js_CrossApp_CAScrollView_endHeaderRefresh, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getMinimumZoomScale", js_CrossApp_CAScrollView_getMinimumZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
