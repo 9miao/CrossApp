@@ -102,7 +102,7 @@ bool CATextView::init()
 
 bool CATextView::initWithFrame(const CCRect& frame)
 {
-	if (!CAScrollView::initWithFrame(frame))
+	if (!CAScrollView::initWithFrame(frame, CAColor_red))
 	{
 		return false;
 	}
