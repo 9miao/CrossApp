@@ -120,9 +120,6 @@
     <ClCompile Include="..\platform\CCSAXParser.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CCThread.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\platform.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -430,6 +427,10 @@
     <ClCompile Include="..\script_support\JSViewController.cpp">
       <Filter>script_support</Filter>
     </ClCompile>
+    <ClCompile Include="..\basics\CAThread.cpp" />
+    <ClCompile Include="..\view\CATextView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -496,9 +497,6 @@
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCSAXParser.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCThread.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\platform.h">
@@ -865,6 +863,11 @@
     </ClInclude>
     <ClInclude Include="..\script_support\JSViewController.h">
       <Filter>script_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CASyncQueue.h" />
+    <ClInclude Include="..\basics\CAThread.h" />
+    <ClInclude Include="..\view\CATextView.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

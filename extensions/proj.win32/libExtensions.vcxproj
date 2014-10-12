@@ -93,7 +93,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
     <ClCompile Include="..\GUI\CAUIHelper.cpp" />
     <ClCompile Include="..\Json\CSContentJsonDictionary.cpp" />
     <ClCompile Include="..\Json\DictionaryHelper.cpp" />
@@ -101,6 +100,7 @@
     <ClCompile Include="..\Json\lib_json\json_value.cpp" />
     <ClCompile Include="..\Json\lib_json\json_writer.cpp" />
     <ClCompile Include="..\LocalStorage\LocalStorage.cpp" />
+    <ClCompile Include="..\network\DownloadManager.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\Websocket.cpp" />
     <ClCompile Include="..\other\CAAdress\wp8\CAAddressManager.cpp" />
@@ -110,7 +110,6 @@
     <ClCompile Include="..\studio\CAStudioViewController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\AssetsManager\AssetsManager.h" />
     <ClInclude Include="..\CrossAppExt.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\GUI\CAUIHelper.h" />
@@ -130,6 +129,7 @@
     <ClInclude Include="..\libwebsockets\win32\include\win32helpers\gettimeofday.h" />
     <ClInclude Include="..\libwebsockets\win32\include\win32helpers\websock-w32.h" />
     <ClInclude Include="..\LocalStorage\LocalStorage.h" />
+    <ClInclude Include="..\network\DownloadManager.h" />
     <ClInclude Include="..\network\HttpClient.h" />
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
