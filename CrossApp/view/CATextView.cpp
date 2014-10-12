@@ -19,6 +19,8 @@ CATextView::CATextView()
 , m_pCursorMark(NULL)
 , m_pImageView(NULL)
 , m_cCursorColor(CAColor_black)
+, m_cTextColor(ccc4(0, 0, 0, 255))
+, m_cSpaceHolderColor(ccc4(193, 193, 193, 255))
 , m_nInputType(KEY_BOARD_INPUT_NORMAL)
 , m_keyboardType(KEY_BOARD_TYPE_NORMAL)
 , m_keyBoardReturnType(KEY_BOARD_RETURN_DONE)
@@ -38,6 +40,13 @@ CATextView::~CATextView()
     m_pTextViewDelegate = NULL;
 }
 
+void CATextView::onEnterTransitionDidFinish()
+{
+	CAScrollView::onEnterTransitionDidFinish();
+	CC_RETURN_IF(m_sPlaceHolder.empty());
+	this->updateImage();
+
+}
 
 bool CATextView::resignFirstResponder()
 {
@@ -102,7 +111,7 @@ bool CATextView::init()
 
 bool CATextView::initWithFrame(const CCRect& frame)
 {
-	if (!CAScrollView::initWithFrame(frame, CAColor_red))
+	if (!CAScrollView::initWithFrame(frame))
 	{
 		return false;
 	}
@@ -136,6 +145,18 @@ void CATextView::initMarkSprite()
 
 void CATextView::updateImage()
 {
+	std::string text;
+	if (m_szText.empty())
+	{
+		text = m_sPlaceHolder;
+		this->setFontColor(m_cSpaceHolderColor);
+	}
+	else
+	{
+		text = m_szText;
+		this->setFontColor(m_cTextColor);
+	}
+
 	float width = this->getBounds().size.width;
 	float height = this->getBounds().size.height;
 	CCSize size = CCSizeMake(width, 0);
@@ -143,7 +164,7 @@ void CATextView::updateImage()
 	CAImage* image = NULL;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 
-	image = g_AFTFontCache.initWithStringEx(m_szText.c_str(),
+	image = g_AFTFontCache.initWithStringEx(text.c_str(),
 		m_szFontName.c_str(),
 		m_iFontSize,
 		width,
@@ -153,7 +174,7 @@ void CATextView::updateImage()
 		m_bWordWrap);
 #endif
 
-	if (image == NULL)
+	if (image == NULL || m_szText.empty())
 	{
 		m_vLinesTextView.clear();
 	}
@@ -242,6 +263,28 @@ const std::string& CATextView::getText()
 	return m_szText;
 }
 
+void CATextView::setPlaceHolder(const std::string& var)
+{
+	m_sPlaceHolder = var;
+	this->updateImage();
+}
+
+const std::string& CATextView::getPlaceHolder()
+{
+	return m_sPlaceHolder;
+}
+
+void CATextView::setSpaceHolderColor(CAColor4B var)
+{
+	m_cSpaceHolderColor = var;
+	this->updateImage();
+}
+
+CAColor4B CATextView::getSpaceHolderColor()
+{
+	return m_cSpaceHolderColor;
+}
+
 void CATextView::setLineSpacing(unsigned int var)
 {
 	m_iLineSpacing = var;
@@ -290,6 +333,17 @@ void CATextView::setCursorColor(CAColor4B var)
 CAColor4B CATextView::getCursorColor()
 {
 	return m_cCursorColor;
+}
+
+void CATextView::setTextColor(CAColor4B var)
+{
+	m_cTextColor = var;
+	this->updateImage();
+}
+
+CAColor4B CATextView::getTextColor()
+{
+	return m_cTextColor;
 }
 
 void CATextView::setFontColor(CAColor4B var)

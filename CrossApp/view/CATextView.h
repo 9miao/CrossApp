@@ -46,6 +46,8 @@ public:
 	CATextView();
 	virtual ~CATextView();
 
+	virtual void onEnterTransitionDidFinish();
+
 	virtual bool resignFirstResponder();
 
 	virtual bool becomeFirstResponder();
@@ -69,6 +71,12 @@ public:
 
     
 	CC_SYNTHESIZE(CATextViewDelegate*, m_pTextViewDelegate, TextViewDelegate);
+
+	CC_PROPERTY_PASS_BY_REF(std::string, m_sPlaceHolder, PlaceHolder);
+
+	CC_PROPERTY(CAColor4B, m_cSpaceHolderColor, SpaceHolderColor);
+
+	CC_PROPERTY(CAColor4B, m_cTextColor, TextColor);
 
 	CC_PROPERTY(CAColor4B, m_cCursorColor, CursorColor);
 

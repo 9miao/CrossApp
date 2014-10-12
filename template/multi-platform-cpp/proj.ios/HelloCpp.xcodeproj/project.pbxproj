@@ -240,14 +240,14 @@
 		15A3D9B31682F826002FB0C5 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B00CC60D19792FF800A62E4C /* CrossAppExt.h */,
+				15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */,
 				B0405FEF19CC03A100947287 /* LocalStorage */,
 				B034084819921255005DB179 /* libwebsockets */,
 				B034083B199211CC005DB179 /* sqlite3 */,
-				B00CC60D19792FF800A62E4C /* CrossAppExt.h */,
 				B00CC60E19792FF800A62E4C /* studio */,
 				EB1818A619387F67002856FF /* other */,
 				B04C0BEC19012079009854FD /* Json */,
-				15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */,
 				15A3D9EC1682F826002FB0C5 /* GUI */,
 				15A3DA1A1682F826002FB0C5 /* network */,
 			);

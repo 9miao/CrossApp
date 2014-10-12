@@ -274,15 +274,14 @@ unsigned long DownloadManager::insertDownload(const std::string& downloadUrl, co
 		, today->tm_sec
 		);
 
-    unsigned long download_id = sqlite3_last_insert_rowid((sqlite3*)m_mpSqliteDB);
     unsigned long fileSize = this->getDownloadFileSize(downloadUrl.c_str());
-    
 	char cszSql[4096] = { 0 };
 	char* szError = 0;
-	sprintf(cszSql, "INSERT INTO [T_DownloadMgr](url, filePath, fileSize, startTime, isFinished) values('%s', '%s', %lu, %s, 0)",
+	sprintf(cszSql, "INSERT INTO [T_DownloadMgr](url, filePath, fileSize, startTime) values('%s', '%s', %lu, %s)",
 		downloadUrl.c_str(), fileName.c_str(), fileSize, startTime);
 	int nRet = sqlite3_exec((sqlite3*)m_mpSqliteDB, cszSql, 0, 0, &szError);
 	CCAssert(nRet == SQLITE_OK, "");
+	unsigned long download_id = sqlite3_last_insert_rowid((sqlite3*)m_mpSqliteDB);
 
     DownloadRecord v;
     v.download_id = download_id;
@@ -322,6 +321,26 @@ void DownloadManager::loadDownloadTasks()
         m_mDownloadRecords.insert(std::map<unsigned long, DownloadRecord>::value_type(v.download_id, v));
 	}
 	sqlite3_free_table(paszResults);
+}
+
+void DownloadManager::deleteTaskFromDb(unsigned long download_id)
+{
+	char szSql[256] = { 0 };
+	sprintf(szSql, "DELETE * FROM [T_DownloadMgr] WHERE id=%lu", download_id);
+
+	char* szError = 0;
+	int nRet = sqlite3_exec((sqlite3*)m_mpSqliteDB, szSql, 0, 0, &szError);
+	CCAssert(nRet == SQLITE_OK, "");
+}
+
+void DownloadManager::setTaskFinished(unsigned long download_id)
+{
+	char szSql[256] = { 0 };
+	sprintf(szSql, "UPDATE [T_DownloadMgr] SET isFinished=1 WHERE id=%lu", download_id);
+
+	char* szError = 0;
+	int nRet = sqlite3_exec((sqlite3*)m_mpSqliteDB, szSql, 0, 0, &szError);
+	CCAssert(nRet == SQLITE_OK, "");
 }
 
 unsigned long DownloadManager::enqueueDownload(const std::string& downloadUrl, const std::string& fileName)
@@ -415,18 +434,13 @@ void DownloadManager::eraseDownload(unsigned long download_id)
             m_vPauseDownloadRequests.eraseObject(pDownloadReq);
         }
     }
-    //(需添加内容)释放 DownloadRequest
+    
+	//(需添加内容)释放 DownloadRequest
     {
     
     }
-    
-    //(需添加内容) 删除数据库...
-    {
-    
-    }
-    
-    m_mDownloadRecords.erase(download_id);
-    
+	deleteTaskFromDb(download_id);
+	m_mDownloadRecords.erase(download_id);
 }
 
 const char* DownloadManager::getDownloadUrl(unsigned long download_id)
@@ -466,8 +480,8 @@ void DownloadManager::clearOnSuccessDownloadAllRecord()
     {
         if (itr->second.isFinished)
         {
-            m_mDownloadRecords.erase(itr);
-            //(需添加内容)删除对应数据库...
+			deleteTaskFromDb(itr->second.download_id);
+			m_mDownloadRecords.erase(itr);
         }
         else
         {
@@ -481,8 +495,8 @@ void DownloadManager::clearOnSuccessDownloadRecord(unsigned long download_id)
     std::map<unsigned long, DownloadRecord>::iterator itr = m_mDownloadRecords.find(download_id);
     if (itr != m_mDownloadRecords.end() && itr->second.isFinished)
     {
+		deleteTaskFromDb(itr->second.download_id);
         m_mDownloadRecords.erase(itr);
-        //(需添加内容)删除对应数据库...
     }
 }
 
@@ -504,6 +518,7 @@ void DownloadManager::onSuccess(DownloadRequest* request)
     m_mDownloadRecords.at(request->getDownloadID()).isFinished = true;
     
     //(需添加内容)更新对应数据库...
+	setTaskFinished(request->getDownloadID());
     
     if (!m_dWaitDownloadRequests.empty())
     {

@@ -79,6 +79,10 @@ protected:
 	void checkSqliteDB();
 
     void loadDownloadTasks();
+
+	void deleteTaskFromDb(unsigned long download_id);
+
+	void setTaskFinished(unsigned long download_id);
     
 	unsigned long getDownloadFileSize(const char *url);
 

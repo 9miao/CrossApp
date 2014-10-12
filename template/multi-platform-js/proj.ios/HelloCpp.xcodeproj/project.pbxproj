@@ -293,14 +293,14 @@
 		15A3D9B31682F826002FB0C5 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B00CC60D19792FF800A62E4C /* CrossAppExt.h */,
+				15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */,
 				EBA78E9819C6B5A8001072DA /* LocalStorage */,
 				B034084819921255005DB179 /* libwebsockets */,
 				B034083B199211CC005DB179 /* sqlite3 */,
-				B00CC60D19792FF800A62E4C /* CrossAppExt.h */,
 				B00CC60E19792FF800A62E4C /* studio */,
 				EB1818A619387F67002856FF /* other */,
 				B04C0BEC19012079009854FD /* Json */,
-				15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */,
 				15A3D9EC1682F826002FB0C5 /* GUI */,
 				15A3DA1A1682F826002FB0C5 /* network */,
 			);
@@ -394,7 +394,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				EBA78E2319C6B493001072DA /* bindings */,
 				B056375B195276CF00C63FAA /* CrossApp.xcodeproj */,
 				15AA9C4015B7EC450033D6C2 /* Classes */,
 				15A3DA6B1682F8A6002FB0C5 /* CocosDenshion */,
@@ -403,6 +402,7 @@
 				080E96DDFE201D6D7F000001 /* ios */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				78C7DDAA14EBA5050085D0C2 /* Resources */,
+				EBA78E2319C6B493001072DA /* bindings */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";

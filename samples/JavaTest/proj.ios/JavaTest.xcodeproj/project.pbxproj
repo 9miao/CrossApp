@@ -38,6 +38,7 @@
 		B04C0C091901207A009854FD /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BFD1901207A009854FD /* json_valueiterator.inl */; };
 		B04C0C0A1901207A009854FD /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BFE1901207A009854FD /* json_writer.cpp */; };
 		B04C0C0B1901207A009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0C001901207A009854FD /* sconscript */; };
+		B04F456019EA7F3500505E17 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04F455E19EA7F3500505E17 /* DownloadManager.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -166,6 +167,8 @@
 		B04C0C001901207A009854FD /* sconscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
 		B04C0C011901207A009854FD /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		B04C0C021901207A009854FD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		B04F455E19EA7F3500505E17 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
+		B04F455F19EA7F3500505E17 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
 		B056375B195276CF00C63FAA /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.ios/CrossApp.xcodeproj; sourceTree = "<group>"; };
 		B0AD93E519207CA300EA40BB /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -289,13 +292,13 @@
 		15A3D9B31682F826002FB0C5 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B00CC60D19792FF800A62E4C /* CrossAppExt.h */,
+				15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */,
 				EBA5903819A199F5004B6DD1 /* LocalStorage */,
 				B034083B199211CC005DB179 /* sqlite3 */,
-				B00CC60D19792FF800A62E4C /* CrossAppExt.h */,
 				B00CC60E19792FF800A62E4C /* studio */,
 				EB1818A619387F67002856FF /* other */,
 				B04C0BEC19012079009854FD /* Json */,
-				15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */,
 				15A3D9EC1682F826002FB0C5 /* GUI */,
 				15A3DA1A1682F826002FB0C5 /* network */,
 			);
@@ -315,6 +318,8 @@
 		15A3DA1A1682F826002FB0C5 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				B04F455E19EA7F3500505E17 /* DownloadManager.cpp */,
+				B04F455F19EA7F3500505E17 /* DownloadManager.h */,
 				EBBE334A19D7B0BF00999A31 /* WebSocket.cpp */,
 				EBBE334B19D7B0BF00999A31 /* WebSocket.h */,
 				15A3DA1B1682F826002FB0C5 /* HttpClient.cpp */,
@@ -383,8 +388,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				EBEDED3819D7EBA400290454 /* libwebsockets */,
-				EBA58F9F19A195A4004B6DD1 /* bindings */,
 				B056375B195276CF00C63FAA /* CrossApp.xcodeproj */,
 				15AA9C4015B7EC450033D6C2 /* Classes */,
 				15A3D9B31682F826002FB0C5 /* extensions */,
@@ -392,6 +395,8 @@
 				080E96DDFE201D6D7F000001 /* ios */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				15A3DA6B1682F8A6002FB0C5 /* CocosDenshion */,
+				EBA58F9F19A195A4004B6DD1 /* bindings */,
+				EBEDED3819D7EBA400290454 /* libwebsockets */,
 				78C7DDAA14EBA5050085D0C2 /* Resources */,
 			);
 			name = CustomTemplate;
@@ -795,6 +800,7 @@
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
 				EBEB331F19ADBF6200EF5D12 /* jsb_opengl_manual.cpp in Sources */,
 				EBA5903C19A199F5004B6DD1 /* LocalStorage.cpp in Sources */,
+				B04F456019EA7F3500505E17 /* DownloadManager.cpp in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */,
 				1AC3624B16D4A1E8000847F2 /* main.m in Sources */,
