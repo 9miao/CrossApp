@@ -46,17 +46,19 @@ public:
 
     unsigned long enqueueDownload(const std::string& downloadUrl, const std::string& fileName);
 
+    void resumeDownload(unsigned long download_id);
+    
 	void pauseDownload(unsigned long download_id);
 
-	void resumeDownload(unsigned long download_id);
+	void eraseDownload(unsigned long download_id);
     
-    const std::string& getDownloadUrl(unsigned long download_id);
+    const char* getDownloadUrl(unsigned long download_id);
     
-    const std::string& getFilePath(unsigned long download_id);
+    const char* getFilePath(unsigned long download_id);
     
     unsigned long getFileSize(unsigned long download_id);
     
-    const std::string& getStartTime(unsigned long download_id);
+    const char* getStartTime(unsigned long download_id);
     
     bool isFinished(unsigned long download_id);
     
@@ -86,7 +88,7 @@ protected:
 
     void onError(DownloadRequest* request, DownloadManager::ErrorCode errorCode);
     
-    void onProgress(DownloadRequest* request, int percent);
+    void onProgress(DownloadRequest* request, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded);
     
     void onSuccess(DownloadRequest* request);
 
@@ -104,6 +106,8 @@ private:
     
     CADeque<DownloadRequest*> m_dWaitDownloadRequests;
     
+    CAVector<DownloadRequest*> m_vPauseDownloadRequests;
+    
 };
 
 class DownloadManagerDelegate
@@ -112,7 +116,7 @@ public:
     
     void onError(unsigned long requestID, DownloadManager::ErrorCode errorCode){};
     
-    void onProgress(unsigned long requestID, int percent){};
+    void onProgress(unsigned long requestID, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded){};
     
     void onSuccess(unsigned long requestID){};
 };

@@ -677,79 +677,232 @@ public:
 		return *this;
 	}
 
-    void insert(size_t index, T object)
-	{
-		CCAssert(index >= 0 && index <= size(), "Invalid index!");
-		_data.insert(_data.begin() + index, object);
-        CC_SAFE_RETAIN(object);
-	}
+    void reserve(size_t n)
+    {
+        _data.reserve(n);
+    }
     
-	void pushFront(T object)
-	{
-		_data.push_front(object);
+    size_t capacity() const
+    {
+        return _data.capacity();
+    }
+    
+    size_t size() const
+    {
+        return _data.size();
+    }
+    
+    bool empty() const
+    {
+        return _data.empty();
+    }
+    
+    size_t max_size() const
+    {
+        return _data.max_size();
+    }
+    
+    size_t getIndex(T object) const
+    {
+        const_iterator iter = std::find(_data.begin(), _data.end(), object);
+        if (iter != _data.end())
+            return iter - _data.begin();
+        
+        return -1;
+    }
+    
+    const_iterator find(T object) const
+    {
+        return std::find(_data.begin(), _data.end(), object);
+    }
+    
+    iterator find(T object)
+    {
+        return std::find(_data.begin(), _data.end(), object);
+    }
+    
+    T at(size_t index) const
+    {
+        CCAssert(index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
+        return _data[index];
+    }
+    
+    T front() const
+    {
+        return _data.front();
+    }
+    
+    T back() const
+    {
+        return _data.back();
+    }
+    
+    T getRandomObject() const
+    {
+        if (!_data.empty())
+        {
+            size_t randIdx = rand() % _data.size();
+            return *(_data.begin() + randIdx);
+        }
+        return NULL;
+    }
+    
+    bool contains(T object) const
+    {
+        return(std::find(_data.begin(), _data.end(), object) != _data.end());
+    }
+    bool equals(const CAVector<T> &other)
+    {
+        size_t s = this->size();
+        if (s != other.size())
+            return false;
+        
+        for (size_t i = 0; i < s; i++)
+        {
+            if (this->at(i) != other.at(i))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    void insert(size_t index, T object)
+    {
+        CCAssert(index >= 0 && index <= size(), "Invalid index!");
+        _data.insert(_data.begin() + index, object);
         CC_SAFE_RETAIN(object);
-	}
-
-	void pushBack(T object)
-	{
-		_data.push_back(object);
-		CC_SAFE_RETAIN(object);
-	}
-
-	void popFront()
-	{
-		if (_data.empty())
-			return;
-
-		T first = _data.front();
-		_data.pop_front();
+    }
+    
+    void pushBack(T object)
+    {
+        _data.push_back(object);
+        CC_SAFE_RETAIN(object);
+    }
+    
+    void pushFront(T object)
+    {
+        _data.push_front(object);
+        CC_SAFE_RETAIN(object);
+    }
+    
+    void pushBack(const CADeque<T>& other)
+    {
+        for (int i = 0; i < other.size(); i++)
+        {
+            pushBack(other.at(i));
+        }
+    }
+    
+    void popFront()
+    {
+        if (_data.empty())
+            return;
+        
+        T first = _data.front();
+        _data.pop_front();
         CC_SAFE_RELEASE(first);
-	}
-
-	void popBack()
-	{
-		if (_data.empty())
-			return;
-
-		T last = _data.back();
-		_data.pop_back();
-		CC_SAFE_RELEASE(last);
-	}
-
-	void clear()
-	{
-		while (!_data.empty())
-		{
-			popFront();
-		}
-	}
-
-	int size()
-	{
-		return _data.size();
-	}
-
-	bool empty()
-	{
-		return _data.empty();
-	}
-
-	T at(int index) const
-	{
-		return _data.at(index);
-	}
-
-	T front() const
-	{
-		return _data.front();
-	}
-
-	T back() const
-	{
-		return _data.back();
-	}
+    }
+    
+    void popBack()
+    {
+        CCAssert(!_data.empty(), "no objects added");
+        T last = _data.back();
+        _data.pop_back();
+        CC_SAFE_RELEASE(last);
+    }
+    
+    void eraseObject(T object, bool removeAll = false)
+    {
+        if (removeAll)
+        {
+            
+            for (iterator iter = _data.begin(); iter != _data.end();)
+            {
+                if ((*iter) == object)
+                {
+                    iter = _data.erase(iter);
+                    CC_SAFE_RELEASE(object);
+                }
+                else
+                {
+                    ++iter;
+                }
+            }
+        }
+        else
+        {
+            iterator iter = std::find(_data.begin(), _data.end(), object);
+            if (iter != _data.end())
+            {
+                _data.erase(iter);
+                CC_SAFE_RELEASE(object);
+            }
+        }
+    }
+    
+    iterator erase(iterator position)
+    {
+        CCAssert(position >= _data.begin() && position < _data.end(), "Invalid position!");
+        CC_SAFE_RELEASE(*position);
+        return _data.erase(position);
+    }
+    
+    iterator erase(iterator first, iterator last)
+    {
+        for (iterator iter = first; iter != last; ++iter)
+        {
+            CC_SAFE_RELEASE((*iter));
+        }
+        return _data.erase(first, last);
+    }
+    
+    iterator erase(size_t index)
+    {
+        CCAssert(!_data.empty() && index >= 0 && index < size(), "Invalid index!");
+        return erase(_data.begin() + index);
+    }
+    
+    void clear()
+    {
+        for (int i = 0; i < _data.size(); i++)
+        {
+            CC_SAFE_RELEASE(_data[i]);
+        }
+        _data.clear();
+    }
+    
+    void swap(T object1, T object2)
+    {
+        size_t idx1 = getIndex(object1);
+        size_t idx2 = getIndex(object2);
+        
+        CCAssert(idx1 >= 0 && idx2 >= 0, "invalid object index");
+        std::swap(_data[idx1], _data[idx2]);
+    }
+    
+    void swap(size_t index1, size_t index2)
+    {
+        CCAssert(index1 >= 0 && index1 < size() && index2 >= 0 && index2 < size(), "Invalid indices");
+        std::swap(_data[index1], _data[index2]);
+    }
+    
+    void replace(size_t index, T object)
+    {
+        CCAssert(index >= 0 && index < size(), "Invalid index!");
+        
+        CC_SAFE_RELEASE(_data[index]);
+        _data[index] = object;
+        CC_SAFE_RETAIN(object);
+    }
+    
+    void reverse()
+    {
+        std::reverse(_data.begin(), _data.end());
+    }
 
 private:
+    
 	void addRefForAllObjects()
 	{
 		for (const_iterator it = _data.begin(); it != _data.end(); ++it)

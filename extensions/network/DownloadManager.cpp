@@ -44,6 +44,8 @@ struct ErrorMessage
 struct ProgressMessage
 {
     int percent;
+    unsigned long nowDownloaded;
+    unsigned long totalToDownload;
     DownloadRequest* request;
 };
 
@@ -77,7 +79,7 @@ public:
     
     bool startDownload();
     
-    bool isDownloading();
+    bool isDownloaded();
 
 	void setDownloadCmd(int cmd);
     
@@ -237,7 +239,7 @@ void DownloadManager::checkSqliteDB()
 }
 
 
-unsigned long getDownloadFileSize(const char *url)
+unsigned long DownloadManager::getDownloadFileSize(const char *url)
 {
 	unsigned long downloadFileSize = 0;
 
@@ -351,54 +353,147 @@ unsigned long DownloadManager::enqueueDownload(DownloadRequest* request)
 	return request->getDownloadID();
 }
 
-void DownloadManager::pauseDownload(unsigned long download_id)
-{
-	DownloadRequest* pDownloadReq = m_mDownloadRequests.getValue(download_id);
-	if (pDownloadReq)
-	{
-		pDownloadReq->setDownloadCmd(DownloadCmd_Pause);
-	}
-}
-
 void DownloadManager::resumeDownload(unsigned long download_id)
 {
 	DownloadRequest* pDownloadReq = m_mDownloadRequests.getValue(download_id);
-	if (pDownloadReq)
+	if (pDownloadReq && m_vPauseDownloadRequests.contains(pDownloadReq))
 	{
-		pDownloadReq->setDownloadCmd(DownloadCmd_resume);
+        //如果暂停列表里包含此下载id
+        if (m_vDownloadingRequests.size() < m_nDownloadMaxCount)
+        {
+            //如果正在下载个数未达到下载上限
+            pDownloadReq->setDownloadCmd(DownloadCmd_resume);
+            m_vDownloadingRequests.pushBack(pDownloadReq);
+        }
+        else
+        {
+            //如果正在下载个数达到下载上限,放在等待队列里
+            m_dWaitDownloadRequests.pushBack(pDownloadReq);
+        }
+        m_vPauseDownloadRequests.eraseObject(pDownloadReq);
 	}
     else if (m_mDownloadRecords.count(download_id))
     {
+        //如果暂停列表里不包含此下载id，而下载信息中包含
         const DownloadRecord& record = m_mDownloadRecords.at(download_id);
         this->enqueueDownload(DownloadRequest::create(record.download_Url, record.filePath, download_id));
     }
 }
 
-const std::string& DownloadManager::getDownloadUrl(unsigned long download_id)
+void DownloadManager::pauseDownload(unsigned long download_id)
 {
-
+    DownloadRequest* pDownloadReq = m_mDownloadRequests.getValue(download_id);
+    if (pDownloadReq && m_vDownloadingRequests.contains(pDownloadReq))
+    {
+        //如果下载列表里包含此下载id
+        pDownloadReq->setDownloadCmd(DownloadCmd_Pause);
+        m_vPauseDownloadRequests.pushBack(pDownloadReq);
+        m_vDownloadingRequests.eraseObject(pDownloadReq);
+    }
+    
 }
 
-const std::string& DownloadManager::getFilePath(unsigned long download_id);
+void DownloadManager::eraseDownload(unsigned long download_id)
+{
+    DownloadRequest* pDownloadReq = m_mDownloadRequests.getValue(download_id);
+    if (pDownloadReq)
+    {
+        pDownloadReq->setDownloadCmd(DownloadCmd_Pause);
+        if (m_vDownloadingRequests.contains(pDownloadReq))
+        {
+            //如果下载列表里包含此下载id
+            m_vDownloadingRequests.eraseObject(pDownloadReq);
+        }
+        else if (m_dWaitDownloadRequests.contains(pDownloadReq))
+        {
+            //如果等待下载列表里包含此下载id
+            m_dWaitDownloadRequests.eraseObject(pDownloadReq);
+        }
+        else if (m_vPauseDownloadRequests.contains(pDownloadReq))
+        {
+            //如果暂停下载列表里包含此下载id
+            m_vPauseDownloadRequests.eraseObject(pDownloadReq);
+        }
+    }
+    //(需添加内容)释放 DownloadRequest
+    {
+    
+    }
+    
+    //(需添加内容) 删除数据库...
+    {
+    
+    }
+    
+    m_mDownloadRecords.erase(download_id);
+    
+}
 
-unsigned long DownloadManager::getFileSize(unsigned long download_id);
+const char* DownloadManager::getDownloadUrl(unsigned long download_id)
+{
+    std::map<unsigned long, DownloadRecord>::iterator itr = m_mDownloadRecords.find(download_id);
+    return itr == m_mDownloadRecords.end() ? NULL : itr->second.download_Url.c_str();
+}
 
-const std::string& DownloadManager::getStartTime(unsigned long download_id);
+const char* DownloadManager::getFilePath(unsigned long download_id)
+{
+    std::map<unsigned long, DownloadRecord>::iterator itr = m_mDownloadRecords.find(download_id);
+    return itr == m_mDownloadRecords.end() ? NULL : itr->second.filePath.c_str();
+}
 
-bool DownloadManager::isFinished(unsigned long download_id);
+unsigned long DownloadManager::getFileSize(unsigned long download_id)
+{
+    std::map<unsigned long, DownloadRecord>::iterator itr = m_mDownloadRecords.find(download_id);
+    return itr == m_mDownloadRecords.end() ? 0 : itr->second.fileSize;
+}
 
-void DownloadManager::clearOnSuccessDownloadAllRecord();
+const char* DownloadManager::getStartTime(unsigned long download_id)
+{
+    std::map<unsigned long, DownloadRecord>::iterator itr = m_mDownloadRecords.find(download_id);
+    return itr == m_mDownloadRecords.end() ? NULL : itr->second.startTime.c_str();
+}
 
-void DownloadManager::clearOnSuccessDownloadRecord(unsigned long download_id);
+bool DownloadManager::isFinished(unsigned long download_id)
+{
+    std::map<unsigned long, DownloadRecord>::iterator itr = m_mDownloadRecords.find(download_id);
+    return itr == m_mDownloadRecords.end() ? false : itr->second.isFinished;
+}
+
+void DownloadManager::clearOnSuccessDownloadAllRecord()
+{
+    std::map<unsigned long, DownloadRecord>::iterator itr = m_mDownloadRecords.begin();
+    while (itr!=m_mDownloadRecords.end())
+    {
+        if (itr->second.isFinished)
+        {
+            m_mDownloadRecords.erase(itr);
+            //(需添加内容)删除对应数据库...
+        }
+        else
+        {
+            itr++;
+        }
+    }
+}
+
+void DownloadManager::clearOnSuccessDownloadRecord(unsigned long download_id)
+{
+    std::map<unsigned long, DownloadRecord>::iterator itr = m_mDownloadRecords.find(download_id);
+    if (itr != m_mDownloadRecords.end() && itr->second.isFinished)
+    {
+        m_mDownloadRecords.erase(itr);
+        //(需添加内容)删除对应数据库...
+    }
+}
 
 void DownloadManager::onError(DownloadRequest* request, DownloadManager::ErrorCode errorCode)
 {
     m_pDelegate->onError(request->getDownloadID(), errorCode);
 }
 
-void DownloadManager::onProgress(DownloadRequest* request, int percent)
+void DownloadManager::onProgress(DownloadRequest* request, int percent, unsigned long nowDownloaded, unsigned long totalToDownload)
 {
-    m_pDelegate->onProgress(request->getDownloadID(), percent);
+    m_pDelegate->onProgress(request->getDownloadID(), percent, nowDownloaded, totalToDownload);
 }
 
 void DownloadManager::onSuccess(DownloadRequest* request)
@@ -406,12 +501,24 @@ void DownloadManager::onSuccess(DownloadRequest* request)
     m_pDelegate->onSuccess(request->getDownloadID());
     m_mDownloadRequests.erase(request->getDownloadID());
     m_vDownloadingRequests.eraseObject(request);
+    m_mDownloadRecords.at(request->getDownloadID()).isFinished = true;
+    
+    //(需添加内容)更新对应数据库...
     
     if (!m_dWaitDownloadRequests.empty())
     {
+        //如果等待下载列表有内容
         DownloadRequest* request = m_dWaitDownloadRequests.front();
-        if (request->startDownload())
+        if (request->isDownloaded())
         {
+            //如果此下载已经启动下载
+            request->setDownloadCmd(DownloadCmd_resume);
+            m_vDownloadingRequests.pushBack(request);
+            m_dWaitDownloadRequests.popFront();
+        }
+        else if (request->startDownload())
+        {
+            //如果此下载没有启动下载且启动成功
             m_vDownloadingRequests.pushBack(request);
             m_dWaitDownloadRequests.popFront();
         }
@@ -510,7 +617,7 @@ bool DownloadRequest::startDownload()
 	return true;
 }
 
-bool DownloadRequest::isDownloading()
+bool DownloadRequest::isDownloaded()
 {
     return (_tid != NULL);
 }
@@ -689,6 +796,8 @@ int DownloadRequestProgressFunc(void *ptr, double totalToDownload, double nowDow
     msg->what = DownloadRequest_PROGRESS;
     
     ProgressMessage *progressData = new ProgressMessage();
+    progressData->nowDownloaded = nowDownloaded;
+    progressData->totalToDownload = totalToDownload;
 	if (totalToDownload > 0)
 	{
 		progressData->percent = (int)(nowDownloaded / totalToDownload * 100);
@@ -697,6 +806,7 @@ int DownloadRequestProgressFunc(void *ptr, double totalToDownload, double nowDow
 	{
 		progressData->percent = 0;
 	}
+    
     progressData->request = request;
     msg->obj = progressData;
 
@@ -846,7 +956,8 @@ void DownloadRequest::Helper::update(float dt)
 
         case DownloadRequest_PROGRESS:
         {
-            DownloadManager::getInstance()->onProgress(((ProgressMessage*)msg->obj)->request, ((ProgressMessage*)msg->obj)->percent);
+            ProgressMessage* message = static_cast<ProgressMessage*>(msg->obj);
+            DownloadManager::getInstance()->onProgress(message->request, message->percent, message->nowDownloaded, message->totalToDownload);
             delete (ProgressMessage*)msg->obj;
         }
 		break;
