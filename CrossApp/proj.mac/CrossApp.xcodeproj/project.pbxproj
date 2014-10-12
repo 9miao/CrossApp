@@ -265,6 +265,10 @@
 		B02CE48419AD869600B905FB /* CAPageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B02CE48019AD869600B905FB /* CAPageControl.h */; };
 		B03407F81991CA27005DB179 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03407F61991CA27005DB179 /* md5.cpp */; };
 		B03407F91991CA27005DB179 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B03407F71991CA27005DB179 /* md5.h */; };
+		B047B91619E9181800F24BE6 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B91219E9181800F24BE6 /* CCScriptSupport.cpp */; };
+		B047B91719E9181800F24BE6 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B047B91319E9181800F24BE6 /* CCScriptSupport.h */; };
+		B047B91819E9181800F24BE6 /* JSViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B91419E9181800F24BE6 /* JSViewController.cpp */; };
+		B047B91919E9181800F24BE6 /* JSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B047B91519E9181800F24BE6 /* JSViewController.h */; };
 		B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B04CF4301967B2EB00BA7030 /* CASTLContainer.h */; };
 		B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */; };
 		B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */; };
@@ -555,6 +559,10 @@
 		B02CE48019AD869600B905FB /* CAPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageControl.h; sourceTree = "<group>"; };
 		B03407F61991CA27005DB179 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
 		B03407F71991CA27005DB179 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		B047B91219E9181800F24BE6 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
+		B047B91319E9181800F24BE6 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
+		B047B91419E9181800F24BE6 /* JSViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSViewController.cpp; sourceTree = "<group>"; };
+		B047B91519E9181800F24BE6 /* JSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSViewController.h; sourceTree = "<group>"; };
 		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDelegate.cpp; sourceTree = "<group>"; };
 		B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDelegate.h; sourceTree = "<group>"; };
@@ -607,6 +615,7 @@
 				04EAA0711956D74D00198A8E /* ccMacros.h */,
 				04EAA0721956D74D00198A8E /* ccTypeInfo.h */,
 				04EAA0731956D74D00198A8E /* ccTypes.h */,
+				B047B91119E9181800F24BE6 /* script_support */,
 				04EAA04A1956D74D00198A8E /* actions */,
 				04EAA05D1956D74D00198A8E /* basics */,
 				04EAA0741956D74D00198A8E /* cocoa */,
@@ -1164,6 +1173,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B047B91119E9181800F24BE6 /* script_support */ = {
+			isa = PBXGroup;
+			children = (
+				B047B91219E9181800F24BE6 /* CCScriptSupport.cpp */,
+				B047B91319E9181800F24BE6 /* CCScriptSupport.h */,
+				B047B91419E9181800F24BE6 /* JSViewController.cpp */,
+				B047B91519E9181800F24BE6 /* JSViewController.h */,
+			);
+			path = script_support;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1258,6 +1278,7 @@
 				04EAB1141956D75600198A8E /* CCPlatformMacros.h in Headers */,
 				04EAB1161956D75600198A8E /* CCSAXParser.h in Headers */,
 				04EAB1461956D75600198A8E /* CCApplication.h in Headers */,
+				B047B91719E9181800F24BE6 /* CCScriptSupport.h in Headers */,
 				04EAB14A1956D75600198A8E /* CCAccelerometer.h in Headers */,
 				04EAB14D1956D75600198A8E /* CCEventDispatcher.h in Headers */,
 				04EAB14F1956D75600198A8E /* CCFileUtilsMac.h in Headers */,
@@ -1296,6 +1317,7 @@
 				04EABA721956D75A00198A8E /* ccShaders.h in Headers */,
 				04EABA731956D75A00198A8E /* precompiledshaders.h in Headers */,
 				04EABA741956D75A00198A8E /* precompiledshaders.h in Headers */,
+				B047B91919E9181800F24BE6 /* JSViewController.h in Headers */,
 				04EABA761956D75A00198A8E /* base64.h in Headers */,
 				04EABA781956D75A00198A8E /* CANotificationCenter.h in Headers */,
 				04EABA7A1956D75A00198A8E /* CCPointExtension.h in Headers */,
@@ -1392,6 +1414,7 @@
 				04EAB05F1956D75600198A8E /* CCActionInterval.cpp in Sources */,
 				04EAB0611956D75600198A8E /* CCActionManager.cpp in Sources */,
 				B0090D6E198A441800BD8CDA /* CAPickerView.cpp in Sources */,
+				B047B91819E9181800F24BE6 /* JSViewController.cpp in Sources */,
 				04EAB0631956D75600198A8E /* CCActionTween.cpp in Sources */,
 				04EAB0671956D75600198A8E /* CAApplication.cpp in Sources */,
 				04EAB0691956D75600198A8E /* CAAutoreleasePool.cpp in Sources */,
@@ -1406,6 +1429,7 @@
 				04EAB0891956D75600198A8E /* CCNS.cpp in Sources */,
 				04EAB08B1956D75600198A8E /* CCSet.cpp in Sources */,
 				04EAB08D1956D75600198A8E /* CCString.cpp in Sources */,
+				B047B91619E9181800F24BE6 /* CCScriptSupport.cpp in Sources */,
 				B01F64FB1964FF0D005C14FC /* CADensityDpi.cpp in Sources */,
 				04EAB08F1956D75600198A8E /* CABar.cpp in Sources */,
 				B08F4BCD19C7E66C008DE306 /* CAFreeTypeFont.cpp in Sources */,

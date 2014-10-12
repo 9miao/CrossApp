@@ -131,7 +131,7 @@ FT_BEGIN_HEADER
   /* so guess the system version by maximum errno before inclusion */
 #include <errno.h>
 #ifdef ECANCELED /* defined since 10.2 */
-//#include "AvailabilityMacros.h"
+#include "AvailabilityMacros.h"
 #endif
 #if defined( __LP64__ ) && \
     ( MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_4 )

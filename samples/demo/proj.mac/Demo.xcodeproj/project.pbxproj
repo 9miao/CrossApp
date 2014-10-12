@@ -25,7 +25,6 @@
 		15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23A168318C3006C7997 /* CocosDenshion.m */; };
 		15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23B168318C3006C7997 /* SimpleAudioEngine.mm */; };
 		15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */; };
-		1A9CE9821765A7FA000E3062 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE9281765A7FA000E3062 /* AssetsManager.cpp */; };
 		1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */; };
 		1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */; };
 		1A9CE9A81765A889000E3062 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9CE9A71765A889000E3062 /* libsqlite3.dylib */; };
@@ -45,6 +44,7 @@
 		B03E9018193897CC00FD9A06 /* CAMediaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E9004193897CC00FD9A06 /* CAMediaManager.mm */; };
 		B03E901C193897CC00FD9A06 /* CALocationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E900E193897CC00FD9A06 /* CALocationManager.mm */; };
 		B03E90241938990600FD9A06 /* CAAddressManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E90221938990600FD9A06 /* CAAddressManager.mm */; };
+		B047B92D19E91DAF00F24BE6 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B92B19E91DAF00F24BE6 /* DownloadManager.cpp */; };
 		B04C0BB119011ED8009854FD /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0B9B19011ED8009854FD /* CSContentJsonDictionary.cpp */; };
 		B04C0BB219011ED8009854FD /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0B9D19011ED8009854FD /* DictionaryHelper.cpp */; };
 		B04C0BB319011ED8009854FD /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BA519011ED8009854FD /* json_internalarray.inl */; };
@@ -132,8 +132,6 @@
 		15D8B23B168318C3006C7997 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		15D8B23C168318C3006C7997 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		1A9CE9281765A7FA000E3062 /* AssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManager.cpp; sourceTree = "<group>"; };
-		1A9CE9291765A7FA000E3062 /* AssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManager.h; sourceTree = "<group>"; };
 		1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1A9CE9801765A7FA000E3062 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
@@ -165,6 +163,8 @@
 		B03E900A193897CC00FD9A06 /* CALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocationManager.h; sourceTree = "<group>"; };
 		B03E900E193897CC00FD9A06 /* CALocationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocationManager.mm; sourceTree = "<group>"; };
 		B03E90221938990600FD9A06 /* CAAddressManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddressManager.mm; sourceTree = "<group>"; };
+		B047B92B19E91DAF00F24BE6 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
+		B047B92C19E91DAF00F24BE6 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
 		B04C0B9B19011ED8009854FD /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
 		B04C0B9C19011ED8009854FD /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		B04C0B9D19011ED8009854FD /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
@@ -339,7 +339,6 @@
 				15C158D4168315E500D239F2 /* ExtensionMacros.h */,
 				B03E8FF0193897CC00FD9A06 /* other */,
 				B04C0B9A19011ED8009854FD /* Json */,
-				1A9CE9271765A7FA000E3062 /* AssetsManager */,
 				15C158D5168315E500D239F2 /* GUI */,
 				1A9CE97E1765A7FA000E3062 /* LocalStorage */,
 				15C15903168315E500D239F2 /* network */,
@@ -360,6 +359,8 @@
 		15C15903168315E500D239F2 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				B047B92B19E91DAF00F24BE6 /* DownloadManager.cpp */,
+				B047B92C19E91DAF00F24BE6 /* DownloadManager.h */,
 				15C15904168315E500D239F2 /* HttpClient.cpp */,
 				15C15905168315E500D239F2 /* HttpClient.h */,
 				15C15906168315E500D239F2 /* HttpRequest.h */,
@@ -393,15 +394,6 @@
 				1D6058910D05DD3D006BFB54 /* Demo.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		1A9CE9271765A7FA000E3062 /* AssetsManager */ = {
-			isa = PBXGroup;
-			children = (
-				1A9CE9281765A7FA000E3062 /* AssetsManager.cpp */,
-				1A9CE9291765A7FA000E3062 /* AssetsManager.h */,
-			);
-			path = AssetsManager;
 			sourceTree = "<group>";
 		};
 		1A9CE97E1765A7FA000E3062 /* LocalStorage */ = {
@@ -949,6 +941,7 @@
 				B0ABEB8D19D8F778003CB9D8 /* TextFieldTest.cpp in Sources */,
 				B0ABEB8219D8F778003CB9D8 /* MyListViewCell.cpp in Sources */,
 				B0ABEB8A19D8F778003CB9D8 /* TabBarTest.cpp in Sources */,
+				B047B92D19E91DAF00F24BE6 /* DownloadManager.cpp in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				B0ABEB7819D8F778003CB9D8 /* AlertViewTest.cpp in Sources */,
@@ -959,7 +952,6 @@
 				B0ABEB8019D8F778003CB9D8 /* LabelTest.cpp in Sources */,
 				B0ABEB8419D8F778003CB9D8 /* PageViewTest.cpp in Sources */,
 				B0ABEB9019D8F778003CB9D8 /* FourthViewController.cpp in Sources */,
-				1A9CE9821765A7FA000E3062 /* AssetsManager.cpp in Sources */,
 				B0ABEB7919D8F778003CB9D8 /* AppDelegate.cpp in Sources */,
 				B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */,
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,

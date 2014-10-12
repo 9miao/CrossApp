@@ -14,7 +14,6 @@
 		15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA8B1682F8A6002FB0C5 /* CocosDenshion.m */; };
 		15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA8C1682F8A6002FB0C5 /* SimpleAudioEngine.mm */; };
 		15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA8E1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m */; };
-		1A9CE8781765A12C000E3062 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE8221765A12C000E3062 /* AssetsManager.cpp */; };
 		1AB87035175E0A84005D39BF /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB87033175E0A84005D39BF /* WebSocket.cpp */; };
 		1AB8703C175E0A92005D39BF /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8703B175E0A92005D39BF /* libwebsockets.a */; };
 		1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3624316D4A1E8000847F2 /* AppController.mm */; };
@@ -42,6 +41,7 @@
 		B03E909F19389CB500FD9A06 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03E909E19389CB500FD9A06 /* AddressBook.framework */; };
 		B03E90A119389CBE00FD9A06 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03E90A019389CBE00FD9A06 /* AddressBookUI.framework */; };
 		B03E90A319389CCB00FD9A06 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03E90A219389CCB00FD9A06 /* CoreLocation.framework */; };
+		B047B93119E91F0600F24BE6 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B92F19E91F0600F24BE6 /* DownloadManager.cpp */; };
 		B04C0C031901207A009854FD /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BED19012079009854FD /* CSContentJsonDictionary.cpp */; };
 		B04C0C041901207A009854FD /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BEF19012079009854FD /* DictionaryHelper.cpp */; };
 		B04C0C051901207A009854FD /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BF71901207A009854FD /* json_internalarray.inl */; };
@@ -130,8 +130,6 @@
 		15A3DA8C1682F8A6002FB0C5 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		15A3DA8D1682F8A6002FB0C5 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		15A3DA8E1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		1A9CE8221765A12C000E3062 /* AssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManager.cpp; sourceTree = "<group>"; };
-		1A9CE8231765A12C000E3062 /* AssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManager.h; sourceTree = "<group>"; };
 		1AB87033175E0A84005D39BF /* WebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocket.cpp; sourceTree = "<group>"; };
 		1AB87034175E0A84005D39BF /* WebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocket.h; sourceTree = "<group>"; };
 		1AB87039175E0A92005D39BF /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
@@ -176,6 +174,8 @@
 		B03E909E19389CB500FD9A06 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		B03E90A019389CBE00FD9A06 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		B03E90A219389CCB00FD9A06 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B047B92F19E91F0600F24BE6 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
+		B047B93019E91F0600F24BE6 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
 		B04C0BED19012079009854FD /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
 		B04C0BEE19012079009854FD /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		B04C0BEF19012079009854FD /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
@@ -330,7 +330,6 @@
 				B01A29831994E2D900D42BA0 /* sqlite3 */,
 				B03E905719389B4700FD9A06 /* other */,
 				B04C0BEC19012079009854FD /* Json */,
-				1A9CE8211765A12C000E3062 /* AssetsManager */,
 				15A3D9EC1682F826002FB0C5 /* GUI */,
 				15A3DA1A1682F826002FB0C5 /* network */,
 			);
@@ -350,6 +349,8 @@
 		15A3DA1A1682F826002FB0C5 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				B047B92F19E91F0600F24BE6 /* DownloadManager.cpp */,
+				B047B93019E91F0600F24BE6 /* DownloadManager.h */,
 				15A3DA1B1682F826002FB0C5 /* HttpClient.cpp */,
 				15A3DA1C1682F826002FB0C5 /* HttpClient.h */,
 				15A3DA1D1682F826002FB0C5 /* HttpRequest.h */,
@@ -434,15 +435,6 @@
 				1D6058910D05DD3D006BFB54 /* Demo.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		1A9CE8211765A12C000E3062 /* AssetsManager */ = {
-			isa = PBXGroup;
-			children = (
-				1A9CE8221765A12C000E3062 /* AssetsManager.cpp */,
-				1A9CE8231765A12C000E3062 /* AssetsManager.h */,
-			);
-			path = AssetsManager;
 			sourceTree = "<group>";
 		};
 		1AB87036175E0A92005D39BF /* libwebsockets */ = {
@@ -998,6 +990,7 @@
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
 				B03E908219389B4700FD9A06 /* CALocation.mm in Sources */,
 				B0ABEBE519D8F8C5003CB9D8 /* CollectionViewTest.cpp in Sources */,
+				B047B93119E91F0600F24BE6 /* DownloadManager.cpp in Sources */,
 				B0ABEBE719D8F8C5003CB9D8 /* ExtensionsTest.cpp in Sources */,
 				B0ABEBF419D8F8C5003CB9D8 /* TabBarTest.cpp in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
@@ -1021,7 +1014,6 @@
 				B0ABEBED19D8F8C5003CB9D8 /* MainMenu.cpp in Sources */,
 				B0ABEBF519D8F8C5003CB9D8 /* MyTableViewCell.cpp in Sources */,
 				B0ABEBF719D8F8C5003CB9D8 /* TextFieldTest.cpp in Sources */,
-				1A9CE8781765A12C000E3062 /* AssetsManager.cpp in Sources */,
 				B0ABEBFB19D8F8C5003CB9D8 /* SecondViewController.cpp in Sources */,
 				B0ABEBF319D8F8C5003CB9D8 /* SwitchTest.cpp in Sources */,
 				B0ABEBEF19D8F8C5003CB9D8 /* ProgressTest.cpp in Sources */,
