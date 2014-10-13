@@ -42,6 +42,8 @@ public:
 
     virtual ~CAObject(void);
     
+    bool init() { return true; }
+    
     void release(void);
     
     CAObject* retain(void);

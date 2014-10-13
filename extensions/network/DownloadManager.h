@@ -28,6 +28,7 @@ class DownloadManager
         unsigned long   fileSize;
         std::string     startTime;
         bool            isFinished;
+        std::string     textTag;
     } DownloadRecord;
     
 public:
@@ -44,7 +45,7 @@ public:
     
     static void destroyInstance();
 
-    unsigned long enqueueDownload(const std::string& downloadUrl, const std::string& fileName);
+    unsigned long enqueueDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag = "");
 
     void resumeDownload(unsigned long download_id);
     
@@ -66,6 +67,8 @@ public:
     
     void clearOnSuccessDownloadRecord(unsigned long download_id);
     
+    std::vector<unsigned long> getDownloadIdsFromTextTag(const std::string& textTag);
+    
     CC_SYNTHESIZE(DownloadManagerDelegate*, m_pDelegate, DownloadManagerDelegate);
     
     CC_SYNTHESIZE(int, m_nDownloadMaxCount, DownloadMaxCount);
@@ -84,9 +87,11 @@ protected:
 
 	void setTaskFinished(unsigned long download_id);
     
+    std::vector<unsigned long> selectIdFromTextTag(const std::string& textTag);
+    
 	unsigned long getDownloadFileSize(const char *url);
 
-	unsigned long insertDownload(const std::string& downloadUrl, const std::string& fileName);
+	unsigned long insertDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag);
 
 	unsigned long enqueueDownload(DownloadRequest* request);
 
@@ -118,11 +123,15 @@ class DownloadManagerDelegate
 {
 public:
     
-    void onError(unsigned long requestID, DownloadManager::ErrorCode errorCode){};
+    virtual void onError(unsigned long download_id, DownloadManager::ErrorCode errorCode){};
     
-    void onProgress(unsigned long requestID, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded){};
+    virtual void onProgress(unsigned long download_id, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded){};
     
-    void onSuccess(unsigned long requestID){};
+    virtual void onPauseDownload(unsigned long download_id){};
+    
+    virtual void onResumeDownload(unsigned long download_id){};
+    
+    virtual void onSuccess(unsigned long download_id){};
 };
 
 
