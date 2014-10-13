@@ -25,7 +25,7 @@ class DownloadManager
         unsigned long   download_id;
         std::string     download_Url;
         std::string     filePath;
-        unsigned long   fileSize;
+        double			fileSize;
         std::string     startTime;
         bool            isFinished;
         std::string     textTag;
@@ -89,11 +89,11 @@ protected:
     
     std::vector<unsigned long> selectIdFromTextTag(const std::string& textTag);
     
-	unsigned long getDownloadFileSize(const char *url);
+    double getDownloadFileSize(const std::string& downloadUrl);
 
 	unsigned long insertDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag);
 
-	unsigned long enqueueDownload(DownloadRequest* request);
+	void enqueueDownload(DownloadRequest* request);
 
     void onError(DownloadRequest* request, DownloadManager::ErrorCode errorCode);
     
