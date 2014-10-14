@@ -479,13 +479,9 @@ void CAButton::setControlState(const CAControlState& var)
         this->insertSubview(m_pBackGroundView[CAControlStateNormal], -1);
     }
     
-    if (m_eControlState == CAControlStateSelected)
+    if (m_eControlState != CAControlStateHighlighted)
     {
-        m_bSelected = true;
-    }
-    else if(m_eControlState != CAControlStateHighlighted)
-    {
-        m_bSelected = false;
+        m_bSelected = m_eControlState == CAControlStateSelected ? true : false;
     }
     
     CAImage* image = NULL;

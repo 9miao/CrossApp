@@ -47,6 +47,8 @@ public:
 
     unsigned long enqueueDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag = "");
 
+	unsigned long enqueueDownloadEx(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag = "");
+
     void resumeDownload(unsigned long download_id);
     
 	void pauseDownload(unsigned long download_id);
@@ -57,7 +59,9 @@ public:
     
     const char* getFilePath(unsigned long download_id);
     
-    unsigned long getFileSize(unsigned long download_id);
+    unsigned long getTotalFileSize(unsigned long download_id);
+    
+    unsigned long getLocalFileSize(unsigned long download_id);
     
     const char* getStartTime(unsigned long download_id);
     
@@ -84,6 +88,8 @@ protected:
     void loadDownloadTasks();
 
 	void deleteTaskFromDb(unsigned long download_id);
+
+	void deleteTaskFromDb(const std::string& cszUrl);
 
 	void setTaskFinished(unsigned long download_id);
     

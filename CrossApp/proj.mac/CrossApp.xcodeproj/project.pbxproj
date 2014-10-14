@@ -282,8 +282,6 @@
 		B08F4BCF19C7E66C008DE306 /* CAFTFontCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BCB19C7E66C008DE306 /* CAFTFontCache.cpp */; };
 		B08F4BD019C7E66C008DE306 /* CAFTFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B08F4BCC19C7E66C008DE306 /* CAFTFontCache.h */; };
 		B08F4BD219C7EBAF008DE306 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08F4BD119C7EBAF008DE306 /* libfreetype.a */; };
-		B09205B919D554A800CB99C1 /* CACalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205B419D554A800CB99C1 /* CACalendar.cpp */; };
-		B09205BA19D554A800CB99C1 /* CACalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B519D554A800CB99C1 /* CACalendar.h */; };
 		B09205BB19D554A800CB99C1 /* CASyncQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B619D554A800CB99C1 /* CASyncQueue.h */; };
 		B09205BC19D554A800CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205B719D554A800CB99C1 /* CAThread.cpp */; };
 		B09205BD19D554A800CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B819D554A800CB99C1 /* CAThread.h */; };
@@ -576,8 +574,6 @@
 		B08F4BCB19C7E66C008DE306 /* CAFTFontCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTFontCache.cpp; sourceTree = "<group>"; };
 		B08F4BCC19C7E66C008DE306 /* CAFTFontCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTFontCache.h; sourceTree = "<group>"; };
 		B08F4BD119C7EBAF008DE306 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../platform/third_party/mac/libraries/libfreetype.a; sourceTree = "<group>"; };
-		B09205B419D554A800CB99C1 /* CACalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACalendar.cpp; sourceTree = "<group>"; };
-		B09205B519D554A800CB99C1 /* CACalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACalendar.h; sourceTree = "<group>"; };
 		B09205B619D554A800CB99C1 /* CASyncQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASyncQueue.h; sourceTree = "<group>"; };
 		B09205B719D554A800CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
 		B09205B819D554A800CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
@@ -658,8 +654,6 @@
 		04EAA05D1956D74D00198A8E /* basics */ = {
 			isa = PBXGroup;
 			children = (
-				B09205B419D554A800CB99C1 /* CACalendar.cpp */,
-				B09205B519D554A800CB99C1 /* CACalendar.h */,
 				B09205B619D554A800CB99C1 /* CASyncQueue.h */,
 				B09205B719D554A800CB99C1 /* CAThread.cpp */,
 				B09205B819D554A800CB99C1 /* CAThread.h */,
@@ -1199,7 +1193,6 @@
 				04EAB0601956D75600198A8E /* CCActionInterval.h in Headers */,
 				04EAB0621956D75600198A8E /* CCActionManager.h in Headers */,
 				04EAB0641956D75600198A8E /* CCActionTween.h in Headers */,
-				B09205BA19D554A800CB99C1 /* CACalendar.h in Headers */,
 				B08F4BD019C7E66C008DE306 /* CAFTFontCache.h in Headers */,
 				04EAB0681956D75600198A8E /* CAApplication.h in Headers */,
 				B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */,
@@ -1491,7 +1484,6 @@
 				04EAB1591956D75600198A8E /* EAGLView.mm in Sources */,
 				04EAB15C1956D75600198A8E /* platform.cpp in Sources */,
 				04EABA5D1956D75A00198A8E /* ccGLStateCache.cpp in Sources */,
-				B09205B919D554A800CB99C1 /* CACalendar.cpp in Sources */,
 				04EABA6E1956D75A00198A8E /* CAShaderCache.cpp in Sources */,
 				04EABA711956D75A00198A8E /* ccShaders.cpp in Sources */,
 				B02CE48319AD869600B905FB /* CAPageControl.cpp in Sources */,

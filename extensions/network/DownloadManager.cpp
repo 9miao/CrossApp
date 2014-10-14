@@ -62,7 +62,6 @@ enum
 	DownloadCmd_resume,
 };
 
-
 class DownloadRequest : public CAObject
 {
 public:
@@ -97,9 +96,13 @@ public:
 
 	bool checkDownloadStatus();
     
-protected:
+    CC_SYNTHESIZE_READONLY(double, _initialFileSize, InitialFileSize);
     
-    unsigned long getLocalFileLenth(const std::string& fileName);
+    CC_SYNTHESIZE(double, _localFileSize, LocalFileSize);
+    
+    CC_SYNTHESIZE(double, _totalFileSize, TotalFileSize);
+    
+protected:
     
     bool downLoad();
     
@@ -163,13 +166,32 @@ private:
 	int _downloadCmd;
     
 	int _downloadStatus;
-    
+
     unsigned int _connectionTimeout;
     
     unsigned long _download_id;
 };
 
-
+static unsigned long _getLocalFileSize(const std::string& fileName)
+{
+    unsigned long lCurFileSize = 0;
+    
+    FILE* fp = fopen(fileName.c_str(), "r");
+    if (fp != NULL)
+    {
+        fseek(fp, 0L, SEEK_END);
+        lCurFileSize = ftell(fp);
+        fclose(fp);
+    }
+    fp = fopen(std::string(fileName + ".tmp").c_str(), "r");
+    if (fp != NULL)
+    {
+        fseek(fp, 0L, SEEK_END);
+        lCurFileSize = ftell(fp);
+        fclose(fp);
+    }
+    return lCurFileSize;
+}
 
 #pragma DownloadManager
 
@@ -238,6 +260,10 @@ void DownloadManager::checkSqliteDB()
 		cszSql = "CREATE TABLE [T_DownloadMgr] ([id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,[url] NVARCHAR(1024) NOT NULL,[filePath] NVARCHAR(512) NOT NULL,[fileSize] REAL NOT NULL,[startTime] NVARCHAR(64) NOT NULL,[isFinished] INT DEFAULT (0) NOT NULL,[textTag] NVARCHAR(1024) DEFAULT NULL NOT NULL)";
 		nRet = sqlite3_exec((sqlite3*)m_mpSqliteDB, cszSql.c_str(), 0, 0, &szError);
 		CCAssert(nRet == SQLITE_OK, "");
+
+		cszSql = "CREATE UNIQUE INDEX idx_T_DownloadMgr ON [T_DownloadMgr] (url);";
+		nRet = sqlite3_exec((sqlite3*)m_mpSqliteDB, cszSql.c_str(), 0, 0, &szError);
+		CCAssert(nRet == SQLITE_OK, "");
 	}
 }
 
@@ -293,9 +319,17 @@ unsigned long DownloadManager::insertDownload(const std::string& downloadUrl, co
 	sprintf(cszSql, "INSERT INTO [T_DownloadMgr] (url, filePath, fileSize, startTime, textTag) values ('%s', '%s', %.0f, '%s', '%s');",
 		downloadUrl.c_str(), fileName.c_str(), fileSize, startTime, textTag.c_str());
 	int nRet = sqlite3_exec((sqlite3*)m_mpSqliteDB, cszSql, 0, 0, &szError);
-	CCAssert(nRet == SQLITE_OK, "");
+
+    if (nRet != SQLITE_OK)
+    {
+        return 0;
+    }
     
 	unsigned long download_id = sqlite3_last_insert_rowid((sqlite3*)m_mpSqliteDB);
+	if (download_id == 0)
+	{
+		return 0;
+	}
 
     DownloadRecord v;
     v.download_id = download_id;
@@ -348,6 +382,26 @@ void DownloadManager::deleteTaskFromDb(unsigned long download_id)
 	CCAssert(nRet == SQLITE_OK, "");
 }
 
+void DownloadManager::deleteTaskFromDb(const std::string& cszUrl)
+{
+	char szSql[256] = { 0 };
+	sprintf(szSql, "DELETE * FROM [T_DownloadMgr] WHERE url=%s", cszUrl.c_str());
+
+	char* szError = 0;
+	int nRet = sqlite3_exec((sqlite3*)m_mpSqliteDB, szSql, 0, 0, &szError);
+	CCAssert(nRet == SQLITE_OK, "");
+
+	for (int i = 0; i < m_vDownloadingRequests.size(); i++)
+	{
+		DownloadRequest* pDownReq = m_vDownloadingRequests.at(i);
+		if (pDownReq->getDownloadUrl() == cszUrl)
+		{
+			eraseDownload(pDownReq->getDownloadID());
+			return;
+		}
+	}
+}
+
 void DownloadManager::setTaskFinished(unsigned long download_id)
 {
 	char szSql[256] = { 0 };
@@ -385,9 +439,18 @@ std::vector<unsigned long> DownloadManager::selectIdFromTextTag(const std::strin
 unsigned long DownloadManager::enqueueDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag)
 {
     unsigned long download_id = insertDownload(downloadUrl, fileName, textTag);
-    DownloadRequest* quest = DownloadRequest::create(downloadUrl, fileName, download_id);
-	this->enqueueDownload(quest);
-    return  download_id;
+	if (download_id > 0)
+	{
+		DownloadRequest* quest = DownloadRequest::create(downloadUrl, fileName, download_id);
+		this->enqueueDownload(quest);
+	}
+    return download_id;
+}
+
+unsigned long DownloadManager::enqueueDownloadEx(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag)
+{
+	deleteTaskFromDb(downloadUrl);
+	return enqueueDownload(downloadUrl, fileName, textTag);
 }
 
 void DownloadManager::enqueueDownload(DownloadRequest* request)
@@ -502,10 +565,21 @@ const char* DownloadManager::getFilePath(unsigned long download_id)
     return itr == m_mDownloadRecords.end() ? NULL : itr->second.filePath.c_str();
 }
 
-unsigned long DownloadManager::getFileSize(unsigned long download_id)
+unsigned long DownloadManager::getTotalFileSize(unsigned long download_id)
 {
     std::map<unsigned long, DownloadRecord>::iterator itr = m_mDownloadRecords.find(download_id);
     return itr == m_mDownloadRecords.end() ? 0 : (unsigned long)(itr->second.fileSize);
+}
+unsigned long DownloadManager::getLocalFileSize(unsigned long download_id)
+{
+    if (m_mDownloadRequests.contains(download_id))
+    {
+        return (unsigned long)m_mDownloadRequests.getValue(download_id)->getLocalFileSize();
+    }
+    else
+    {
+        return (unsigned long)_getLocalFileSize(this->getFilePath(download_id));
+    }
 }
 
 const char* DownloadManager::getStartTime(unsigned long download_id)
@@ -649,6 +723,9 @@ DownloadRequest::DownloadRequest(const std::string& downloadUrl, const std::stri
 , _curl(NULL)
 , _tid(NULL)
 , _connectionTimeout(0)
+, _initialFileSize(0)
+, _localFileSize(0)
+, _totalFileSize(0)
 , _schedule(NULL)
 , _downloadCmd(DownloadCmd_Null)
 , _downloadStatus(DownloadStatus_Running)
@@ -893,6 +970,7 @@ static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userda
 {
     FILE *fp = (FILE*)userdata;
     size_t written = fwrite(ptr, size, nmemb, fp);
+    fflush(fp);
     return written;
 }
 
@@ -903,7 +981,12 @@ int DownloadRequestProgressFunc(void *ptr, double totalToDownload, double nowDow
 	{
 		return 0;
 	}
-	
+    nowDownloaded += request->getInitialFileSize();
+	totalToDownload += request->getInitialFileSize();
+    
+    request->setLocalFileSize(nowDownloaded);
+    request->setTotalFileSize(totalToDownload);
+    
     DownloadRequest::Message *msg = new DownloadRequest::Message();
     msg->what = DownloadRequest_PROGRESS;
     
@@ -929,25 +1012,11 @@ int DownloadRequestProgressFunc(void *ptr, double totalToDownload, double nowDow
     return 0;
 }
 
-unsigned long DownloadRequest::getLocalFileLenth(const std::string& fileName)
-{
-	unsigned long lCurFileSize = 0;
-
-	FILE* fp = fopen(fileName.c_str(), "r");
-	if (fp != NULL)
-	{
-		fseek(fp, 0L, SEEK_END);
-		lCurFileSize = ftell(fp);
-		fclose(fp);
-	}
-	return lCurFileSize;
-}
-
 bool DownloadRequest::downLoad()
 {
     // Create a file to save package.
     string outFileName = _fileName+".tmp";
-	unsigned long _curFileLength = getLocalFileLenth(outFileName.c_str());
+	_initialFileSize = _getLocalFileSize(outFileName.c_str());
     FILE *fp = fopen(outFileName.c_str(), "ab+");
     if (! fp)
     {
@@ -971,9 +1040,9 @@ bool DownloadRequest::downLoad()
     curl_easy_setopt(_curl, CURLOPT_URL, _downloadUrl.c_str());
 
 	char cRange[32] = { 0 };
-	sprintf(cRange, "%lu-", _curFileLength);
+	sprintf(cRange, "%.0f-", _initialFileSize);
 	curl_easy_setopt(_curl, CURLOPT_RANGE, cRange);
-	curl_easy_setopt(_curl, CURLOPT_RESUME_FROM, _curFileLength);
+	curl_easy_setopt(_curl, CURLOPT_RESUME_FROM, _initialFileSize);
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, downLoadPackage);
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
     curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
@@ -1057,51 +1126,55 @@ void DownloadRequest::Helper::sendMessage(Message *msg)
 
 void DownloadRequest::Helper::update(float dt)
 {
-    Message *msg = NULL;
+    std::list<Message*> MsgListTemp;
     
     pthread_mutex_lock(&_messageQueueMutex);
-    if (_messageQueue->empty())
-    {
-        pthread_mutex_unlock(&_messageQueueMutex);
-        return;
-    }
-
-    msg = _messageQueue->front();
-    _messageQueue->pop_front();
+    MsgListTemp = *_messageQueue;
+    _messageQueue->clear();
     pthread_mutex_unlock(&_messageQueueMutex);
     
-    switch (msg->what)
+    for (std::list<Message*>::iterator it = MsgListTemp.begin(); it != MsgListTemp.end(); ++it)
     {
-        case DownloadRequest_DOWNLOAD_FINISH:
+        Message *msg = *it;
+        
+        switch (msg->what)
         {
-            this->handleUpdateSucceed(msg);
-            DownloadRequest* request = static_cast<DownloadRequest*>(msg->obj);
-            _manager->onSuccess(request);
+            case DownloadRequest_DOWNLOAD_FINISH:
+            {
+                this->handleUpdateSucceed(msg);
+                DownloadRequest* request = static_cast<DownloadRequest*>(msg->obj);
+                _manager->onSuccess(request);
+            }
+                break;
+                
+            case DownloadRequest_PROGRESS:
+            {
+                ProgressMessage* message = static_cast<ProgressMessage*>(msg->obj);
+                std::list<Message*>::iterator it2 = it;
+                ++it2;
+                if (++it2== MsgListTemp.end())
+                {
+                    _manager->onProgress(message->request, message->percent, message->nowDownloaded, message->totalToDownload);
+                }
+                
+                delete (ProgressMessage*)msg->obj;
+            }
+                break;
+                
+            case DownloadRequest_ERROR:
+            {
+                ErrorMessage* message = static_cast<ErrorMessage*>(msg->obj);
+                _manager->onError(message->request, message->code);
+                delete message;
+            }
+                break;
+                
+            default: break;
         }
-		break;
-
-        case DownloadRequest_PROGRESS:
-        {
-            ProgressMessage* message = static_cast<ProgressMessage*>(msg->obj);
-            _manager->onProgress(message->request, message->percent, message->nowDownloaded, message->totalToDownload);
-            delete (ProgressMessage*)msg->obj;
-        }
-		break;
-
-        case DownloadRequest_ERROR:
-        {
-            ErrorMessage* message = static_cast<ErrorMessage*>(msg->obj);
-            _manager->onError(message->request, message->code);
-            delete message;
-        }
-		break;
-
-        default: break;
+        
+        delete msg;
     }
-    
-    delete msg;
 }
-
 void DownloadRequest::Helper::handleUpdateSucceed(Message *msg)
 {
     DownloadRequest* manager = (DownloadRequest*)msg->obj;

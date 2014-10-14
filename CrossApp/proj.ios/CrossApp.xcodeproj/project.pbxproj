@@ -421,8 +421,6 @@
 		B0596B431976356C00B1E8CB /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */; };
 		B05D36AA195AF3CC00DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */; };
 		B05D36AB195AF3CC00DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D36A9195AF3CC00DD4814 /* CAAlertView.h */; };
-		B09205DA19D5645300CB99C1 /* CACalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205D519D5645300CB99C1 /* CACalendar.cpp */; };
-		B09205DB19D5645300CB99C1 /* CACalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D619D5645300CB99C1 /* CACalendar.h */; };
 		B09205DC19D5645300CB99C1 /* CASyncQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D719D5645300CB99C1 /* CASyncQueue.h */; };
 		B09205DD19D5645300CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205D819D5645300CB99C1 /* CAThread.cpp */; };
 		B09205DE19D5645300CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D919D5645300CB99C1 /* CAThread.h */; };
@@ -818,8 +816,6 @@
 		B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
 		B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D36A9195AF3CC00DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
-		B09205D519D5645300CB99C1 /* CACalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACalendar.cpp; sourceTree = "<group>"; };
-		B09205D619D5645300CB99C1 /* CACalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACalendar.h; sourceTree = "<group>"; };
 		B09205D719D5645300CB99C1 /* CASyncQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASyncQueue.h; sourceTree = "<group>"; };
 		B09205D819D5645300CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
 		B09205D919D5645300CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
@@ -862,8 +858,6 @@
 		04EA9F8E1956CE2500198A8E /* basics */ = {
 			isa = PBXGroup;
 			children = (
-				B09205D519D5645300CB99C1 /* CACalendar.cpp */,
-				B09205D619D5645300CB99C1 /* CACalendar.h */,
 				B09205D719D5645300CB99C1 /* CASyncQueue.h */,
 				B09205D819D5645300CB99C1 /* CAThread.cpp */,
 				B09205D919D5645300CB99C1 /* CAThread.h */,
@@ -1789,7 +1783,6 @@
 				B0596AF6197629BE00B1E8CB /* ftsystem.h in Headers */,
 				B0596AFC197629BE00B1E8CB /* autohint.h in Headers */,
 				B0596B16197629BE00B1E8CB /* svpscmap.h in Headers */,
-				B09205DB19D5645300CB99C1 /* CACalendar.h in Headers */,
 				1551A84B158F2ADF00E66CFE /* TGAlib.h in Headers */,
 				1551A84D158F2ADF00E66CFE /* TransformUtils.h in Headers */,
 				1551A84F158F2ADF00E66CFE /* ioapi.h in Headers */,
@@ -1986,7 +1979,6 @@
 				1551A739158F2ADE00E66CFE /* CCLock.cpp in Sources */,
 				1551A73F158F2ADE00E66CFE /* EAGLView.mm in Sources */,
 				1551A74D158F2ADE00E66CFE /* AccelerometerSimulation.m in Sources */,
-				B09205DA19D5645300CB99C1 /* CACalendar.cpp in Sources */,
 				1551A74E158F2ADE00E66CFE /* platform.cpp in Sources */,
 				1551A81A158F2ADF00E66CFE /* ccGLStateCache.cpp in Sources */,
 				1551A82C158F2ADF00E66CFE /* ccShaders.cpp in Sources */,
