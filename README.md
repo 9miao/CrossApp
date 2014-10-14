@@ -21,6 +21,30 @@
 ####升级建议：
 重新创建工程，并拷贝Classes与Resources中文件
 
+
+#### CrossApp 0. 3. 8 Update:
+
+#####1. CrossApp-javascript version integration
+Basic support for all functionalities of CrossApp 0. 3. 8<br/>
+
+#####2. Added CATextView
+multi-line text input control, its usage is similar with CATextField<br/>
+
+#####3. Added DownloadManager
+file download management system<br/>
+
+#####4. Added text line spacing interface
+
+#####5. Text raw edge issue optimization
+
+#####6. Touch experience optimization of CAScrollView and other slide containers control
+
+#####7. Other details tweaking
+
+####Suggestion:
+rebuild project and copy files in Classes and Resources<br/>
+
+
 **********************************************************************************
 
 
