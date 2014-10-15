@@ -210,7 +210,7 @@ unsigned char* CAFreeTypeFont::getBitmap(CCImage::ETextAlign eAlignMask, int* ou
     {
 		return NULL;
     }
-    //memset(pBuffer, 0, size);
+    
     unsigned int* pxBuf = (unsigned int*)pBuffer;
     for (int i = 0; i < m_width * m_height; i++)
     {

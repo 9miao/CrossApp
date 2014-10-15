@@ -762,6 +762,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
     {
         this->getScrollWindowNotOutPoint(point);
         this->setContainerFrame(point);
+        this->update(0);
         this->hideIndicator();
         this->stopDeaccelerateScroll();
     }
@@ -840,7 +841,7 @@ void CAScrollView::showIndicator()
     }
     m_pIndicatorHorizontal->setHide(false);
     m_pIndicatorVertical->setHide(false);
-    this->update(0);
+    CAScrollView::update(0);
 }
 
 void CAScrollView::hideIndicator()

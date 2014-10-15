@@ -163,8 +163,9 @@ void CACollectionView::setSelectRowAtIndexPath(unsigned int section, unsigned in
 void CACollectionView::setUnSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item)
 {
 	CC_RETURN_IF(section >= m_rSectionRects.size());
-
+    
 	CAIndexPath3E indexPath = CAIndexPath3E(section, row, item);
+    CC_RETURN_IF(m_pSelectedCollectionCells.find(indexPath) == m_pSelectedCollectionCells.end());
 	if (CACollectionViewCell* cell = m_pUsedCollectionCells.at(indexPath))
 	{
 		cell->setControlStateNormal();
@@ -529,7 +530,6 @@ void CACollectionView::recoveryCollectionCell()
 		CCRect cellRect = cell->getFrame();
 		CC_CONTINUE_IF(rect.intersectsRect(cellRect));
 
-		CAIndexPath3E r = itr->first;
 		m_pFreedCollectionCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
 		cell->resetCollectionViewCell();

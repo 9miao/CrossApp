@@ -338,6 +338,7 @@ unsigned long DownloadManager::insertDownload(const std::string& downloadUrl, co
     v.fileSize = fileSize;
     v.startTime = startTime;
     v.isFinished = 0;
+    v.textTag = textTag;
     m_mDownloadRecords.insert(std::map<unsigned long, DownloadRecord>::value_type(v.download_id, v));
     
     return download_id;
@@ -456,7 +457,8 @@ unsigned long DownloadManager::enqueueDownloadEx(const std::string& downloadUrl,
 void DownloadManager::enqueueDownload(DownloadRequest* request)
 {
     CC_RETURN_IF(request == NULL);
-    CC_RETURN_IF(!m_mDownloadRequests.insert(request->getDownloadID(), request));
+    m_mDownloadRequests.insert(request->getDownloadID(), request);
+    CC_RETURN_IF(m_vDownloadingRequests.contains(request));
 
 	if (m_vDownloadingRequests.size() < m_nDownloadMaxCount)
 	{
@@ -480,6 +482,10 @@ void DownloadManager::resumeDownload(unsigned long download_id)
         if (m_vDownloadingRequests.size() < m_nDownloadMaxCount)
         {
             //如果正在下载个数未达到下载上限
+            if (!pDownloadReq->isDownloaded())
+            {
+                pDownloadReq->startDownload();
+            }
             pDownloadReq->setDownloadCmd(DownloadCmd_resume);
             m_vDownloadingRequests.pushBack(pDownloadReq);
         }
@@ -509,12 +515,13 @@ void DownloadManager::resumeDownload(unsigned long download_id)
 void DownloadManager::pauseDownload(unsigned long download_id)
 {
     DownloadRequest* pDownloadReq = m_mDownloadRequests.getValue(download_id);
-    if (pDownloadReq && m_vDownloadingRequests.contains(pDownloadReq))
+    if (pDownloadReq)
     {
-        //如果下载列表里包含此下载id
+        m_vDownloadingRequests.eraseObject(pDownloadReq);
+        m_dWaitDownloadRequests.eraseObject(pDownloadReq);
         pDownloadReq->setDownloadCmd(DownloadCmd_Pause);
         m_vPauseDownloadRequests.pushBack(pDownloadReq);
-        m_vDownloadingRequests.eraseObject(pDownloadReq);
+        
         if (m_pDelegate)
         {
             m_pDelegate->onPauseDownload(download_id);

@@ -5,6 +5,7 @@
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionInterval.h"
 #include "actions/CCActionEase.h"
+#include "basics/CAScheduler.h"
 #include "dispatcher/CATouch.h"
 #include "view/CAWindow.h"
 #include <utility>
@@ -179,6 +180,7 @@ void CAListView::reloadData()
     
     this->removeAllSubviews();
     
+    m_pUsedLines.clear();
 	m_pUsedListCells.clear();
 	m_pFreedListCells.clear();
     m_pSelectedListCells.clear();
