@@ -210,8 +210,14 @@ unsigned char* CAFreeTypeFont::getBitmap(CCImage::ETextAlign eAlignMask, int* ou
     {
 		return NULL;
     }
-    memset(pBuffer, 0, size);
-
+    //memset(pBuffer, 0, size);
+    unsigned int* pxBuf = (unsigned int*)pBuffer;
+    for (int i = 0; i < m_width * m_height; i++)
+    {
+        pxBuf[i] = 0x00ffffff;
+    }
+    
+    
     std::vector<FTLineInfo*>::iterator line;
 	for (line = m_lines.begin(); line != m_lines.end(); ++line)
     {
