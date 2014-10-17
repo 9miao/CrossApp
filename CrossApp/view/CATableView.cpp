@@ -246,7 +246,10 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     {
         m_pContainer->stopAllActions();
         
-        m_pHighlightedTableCells->setControlStateNormal();
+        if (m_pHighlightedTableCells->getControlState() == CAControlStateHighlighted)
+        {
+            m_pHighlightedTableCells->setControlStateNormal();
+        }
         m_pHighlightedTableCells = NULL;
     }
 }
@@ -336,6 +339,20 @@ void CATableView::setSelectRowAtIndexPath(unsigned int section, unsigned int row
     
     m_pSelectedTableCells.insert(indexPath);
 }
+
+void CATableView::setUnSelectRowAtIndexPath(unsigned int section, unsigned int row)
+{
+    CC_RETURN_IF(section >= m_rSectionRects.size());
+    
+    CAIndexPath2E indexPath = CAIndexPath2E(section, row);
+    CC_RETURN_IF(m_pSelectedTableCells.find(indexPath) == m_pSelectedTableCells.end());
+    if (CATableViewCell* cell = m_pUsedTableCells.at(indexPath))
+    {
+        cell->setControlStateNormal();
+    }
+    m_pSelectedTableCells.erase(indexPath);
+}
+
 
 CATableViewCell* CATableView::cellForRowAtIndexPath(unsigned int section, unsigned int row)
 {

@@ -302,7 +302,10 @@ void CACollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 	{
 		m_pContainer->stopAllActions();
 
-		m_pHighlightedCollectionCells->setControlStateNormal();
+        if (m_pHighlightedCollectionCells->getControlState() == CAControlStateHighlighted)
+        {
+            m_pHighlightedCollectionCells->setControlStateNormal();
+        }
 		m_pHighlightedCollectionCells = NULL;
 	}
 }

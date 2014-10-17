@@ -446,7 +446,10 @@ void CAListView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 	{
         m_pContainer->stopAllActions();
         
-		m_pHighlightedListCells->setControlStateNormal();
+        if (m_pHighlightedListCells->getControlState() == CAControlStateHighlighted)
+        {
+            m_pHighlightedListCells->setControlStateNormal();
+        }
 		m_pHighlightedListCells = NULL;
 	}
 }

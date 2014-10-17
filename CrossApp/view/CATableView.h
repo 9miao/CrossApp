@@ -125,6 +125,8 @@ public:
     
     void setSelectRowAtIndexPath(unsigned int section, unsigned int row);
     
+    void setUnSelectRowAtIndexPath(unsigned int section, unsigned int row);
+    
     CATableViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row);
     
     CC_SYNTHESIZE(CATableViewDataSource*, m_pTableViewDataSource, TableViewDataSource);
