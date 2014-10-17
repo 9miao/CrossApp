@@ -81,6 +81,8 @@ public:
     
 	void setSelectAtIndex(unsigned int index);
 
+    void setUnSelectAtIndex(unsigned int index);
+    
 	CC_PROPERTY(CAListViewOrientation, m_pListViewOrientation, ListViewOrientation);
 
     CC_SYNTHESIZE(CAListViewDataSource*, m_pListViewDataSource, ListViewDataSource);

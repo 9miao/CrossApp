@@ -294,7 +294,7 @@ void CADrawerController::scheduleHideAction(float dt)
 
 bool CADrawerController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    return true;
+    return false;
 }
 
 void CADrawerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)

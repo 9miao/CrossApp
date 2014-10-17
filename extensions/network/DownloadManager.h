@@ -6,18 +6,18 @@
 //  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
-#ifndef __DownloadManager__
-#define __DownloadManager__
+#ifndef __CADownloadManager__
+#define __CADownloadManager__
 
 #include "CrossApp.h"
 #include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
-class DownloadManagerDelegate;
-class DownloadRequest;
+class CADownloadManagerDelegate;
+class CADownloadRequest;
 
-class DownloadManager
+class CADownloadManager
 {
 
     typedef struct _DownloadRecord
@@ -41,7 +41,7 @@ public:
         kUncompress,
     };
     
-    static DownloadManager* getInstance();
+    static CADownloadManager* getInstance();
     
     static void destroyInstance();
 
@@ -67,21 +67,23 @@ public:
     
     bool isFinished(unsigned long download_id);
     
+    bool isDownloading(unsigned long download_id);
+
     void clearOnSuccessDownloadAllRecord();
     
     void clearOnSuccessDownloadRecord(unsigned long download_id);
     
     std::vector<unsigned long> getDownloadIdsFromTextTag(const std::string& textTag);
     
-    CC_SYNTHESIZE(DownloadManagerDelegate*, m_pDelegate, DownloadManagerDelegate);
+    CC_SYNTHESIZE(CADownloadManagerDelegate*, m_pDelegate, DownloadManagerDelegate);
     
     CC_SYNTHESIZE(int, m_nDownloadMaxCount, DownloadMaxCount);
     
 protected:
     
-    DownloadManager();
+    CADownloadManager();
     
-    virtual ~DownloadManager();
+    virtual ~CADownloadManager();
 
 	void checkSqliteDB();
 
@@ -99,37 +101,37 @@ protected:
 
 	unsigned long insertDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag);
 
-	void enqueueDownload(DownloadRequest* request);
+	void enqueueDownload(CADownloadRequest* request);
 
-    void onError(DownloadRequest* request, DownloadManager::ErrorCode errorCode);
+    void onError(CADownloadRequest* request, CADownloadManager::ErrorCode errorCode);
     
-    void onProgress(DownloadRequest* request, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded);
+    void onProgress(CADownloadRequest* request, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded);
     
-    void onSuccess(DownloadRequest* request);
+    void onSuccess(CADownloadRequest* request);
 
-    friend class DownloadRequest;
+    friend class CADownloadRequest;
     
 private:
     
 	void* m_mpSqliteDB;
     
-    CAMap<unsigned long, DownloadRequest*> m_mDownloadRequests;
+    CAMap<unsigned long, CADownloadRequest*> m_mCADownloadRequests;
     
     std::map<unsigned long, DownloadRecord> m_mDownloadRecords;
     
-    CAVector<DownloadRequest*> m_vDownloadingRequests;
+    CAVector<CADownloadRequest*> m_vDownloadingRequests;
     
-    CADeque<DownloadRequest*> m_dWaitDownloadRequests;
+    CADeque<CADownloadRequest*> m_dWaitCADownloadRequests;
     
-    CAVector<DownloadRequest*> m_vPauseDownloadRequests;
+    CAVector<CADownloadRequest*> m_vPauseCADownloadRequests;
     
 };
 
-class DownloadManagerDelegate
+class CADownloadManagerDelegate
 {
 public:
     
-    virtual void onError(unsigned long download_id, DownloadManager::ErrorCode errorCode){};
+    virtual void onError(unsigned long download_id, CADownloadManager::ErrorCode errorCode){};
     
     virtual void onProgress(unsigned long download_id, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded){};
     
@@ -143,4 +145,4 @@ public:
 
 NS_CC_EXT_END;
 
-#endif /* defined(__DownloadManager__) */
+#endif /* defined(__CADownloadManager__) */

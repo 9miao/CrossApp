@@ -270,7 +270,7 @@ void CAListView::setAllowsMultipleSelection(bool var)
 
 void CAListView::setSelectAtIndex(unsigned int index)
 {
-	if (!m_pSelectedListCells.empty())
+	if (!m_pSelectedListCells.empty() && m_bAllowsMultipleSelection == false)
 	{
 		std::set<unsigned int>::iterator itr;
 		for (itr = m_pSelectedListCells.begin(); itr != m_pSelectedListCells.end(); itr++)
@@ -288,6 +288,18 @@ void CAListView::setSelectAtIndex(unsigned int index)
 		cell->setControlStateSelected();
 	}
 	m_pSelectedListCells.insert(index);
+}
+
+void CAListView::setUnSelectAtIndex(unsigned int index)
+{
+    CC_RETURN_IF(index >= m_rIndexRects.size());
+    
+    CC_RETURN_IF(m_pSelectedListCells.find(index) == m_pSelectedListCells.end());
+    if (CAListViewCell* cell = m_pUsedListCells.at(index))
+    {
+        cell->setControlStateNormal();
+    }
+    m_pSelectedListCells.erase(index);
 }
 
 void CAListView::setListViewOrientation(CAListViewOrientation var)
@@ -337,7 +349,6 @@ bool CAListView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 				{
 					m_pHighlightedListCells->setControlStateNormal();
 				}
-
 				m_pHighlightedListCells = pCell;
 
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
