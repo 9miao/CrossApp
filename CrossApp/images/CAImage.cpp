@@ -112,6 +112,11 @@ int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const st
     return g_AFTFontCache.getStringWidth(pFontName, nSize, pText);
 }
 
+int CAImage::getStringCountInWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth)
+{
+	return g_AFTFontCache.getStringCountInWidth(pFontName, nSize, text, iLimitWidth);
+}
+
 int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth, int iLineSpace, bool bWordWrap)
 {
 	return g_AFTFontCache.getStringHeight(pFontName, nSize, pText, iLimitWidth, iLineSpace, bWordWrap);
@@ -804,7 +809,6 @@ CAImage* CAImage::CC_WHITE_IMAGE()
     }
     return cc_white_image;
 }
-
 
 
 

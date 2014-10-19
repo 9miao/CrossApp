@@ -87,6 +87,12 @@ int CAFTFontCache::getStringWidth(const char* pFontName, unsigned long nSize, co
 	return m_pCurFontData->ftFont.getStringWidth(text);
 }
 
+int CAFTFontCache::getStringCountInWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth)
+{
+	setCurrentFontData(pFontName, nSize);
+	return m_pCurFontData->ftFont.getStringCountInWidth(text, iLimitWidth);
+}
+
 int CAFTFontCache::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap)
 {
 	setCurrentFontData(pFontName, nSize);

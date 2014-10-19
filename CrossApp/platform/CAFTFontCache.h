@@ -36,6 +36,8 @@ public:
 
 	int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text);
 
+	int getStringCountInWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth);
+
 	int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int width, int height,

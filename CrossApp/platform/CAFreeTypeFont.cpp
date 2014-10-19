@@ -255,6 +255,81 @@ int CAFreeTypeFont::getStringWidth(const std::string& text)
 	return bbox.xMax - bbox.xMin;
 }
 
+int CAFreeTypeFont::getStringCountInWidth(const std::string& text, int iLimitWidth)
+{
+    std::vector<TGlyph> glyphs;
+    
+    FT_Vector vt;
+    memset(&vt, 0, sizeof(vt));
+    if (0 != initWordGlyphs(glyphs, text, vt))
+        return 0;
+    
+    FT_BBox bbox;
+    FT_BBox glyph_bbox;
+    FT_GlyphSlot slot = m_face->glyph;
+    
+    /* initialize string bbox to "empty" values */
+    bbox.xMin = 32000;
+    bbox.xMax = -32000;
+    
+    // use the max and min values for the entire font face
+    bbox.yMin = (m_face->size->metrics.descender) >> 6;
+    bbox.yMax = (m_face->size->metrics.ascender) >> 6;
+    
+    /* for each glyph image, compute its bounding box, */
+    /* translate it, and grow the string bbox          */
+    
+    int nWordPos = 0;
+    for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
+    {
+        FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
+        
+        if (glyph_bbox.xMin == glyph_bbox.xMax)
+        {
+            glyph_bbox.xMax = (glyph_bbox.xMin + slot->advance.x) >> 6;
+        }
+        glyph_bbox.xMin += glyph->pos.x;
+        glyph_bbox.xMax += glyph->pos.x;
+        glyph_bbox.yMin += glyph->pos.y;
+        glyph_bbox.yMax += glyph->pos.y;
+        
+        if (glyph_bbox.xMin < bbox.xMin)
+            bbox.xMin = glyph_bbox.xMin;
+        
+        if (glyph_bbox.yMin < bbox.yMin)
+            bbox.yMin = glyph_bbox.yMin;
+        
+        if (glyph_bbox.xMax > bbox.xMax)
+            bbox.xMax = glyph_bbox.xMax;
+        
+        if (glyph_bbox.yMax > bbox.yMax)
+            bbox.yMax = glyph_bbox.yMax;
+        
+        int width = bbox.xMax - bbox.xMin;
+        
+		if (width > iLimitWidth)
+			break;
+
+		nWordPos++;
+    }
+    
+	int nCharPos = 0;
+	for (int i = 0; i < nWordPos; i++)
+	{
+		char ch = text[nCharPos];
+		if ((ch & 0x80) == 0x00)			// 0xxxxxxx
+			nCharPos += 1;
+		else if ((ch & 0xE0) == 0xC0)		// 110xxxxx
+			nCharPos += 2;
+		else if ((ch & 0xF0) == 0xE0)		// 1110xxxx
+			nCharPos += 3;
+		else
+			nCharPos += 4;
+	}
+
+	return nCharPos;
+}
+
 // text encode with utf8
 int CAFreeTypeFont::getStringHeight(const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap)
 {
