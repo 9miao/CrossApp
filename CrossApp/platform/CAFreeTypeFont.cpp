@@ -255,7 +255,7 @@ int CAFreeTypeFont::getStringWidth(const std::string& text)
 	return bbox.xMax - bbox.xMin;
 }
 
-int CAFreeTypeFont::getStringCountInWidth(const std::string& text, int iLimitWidth)
+int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth)
 {
     std::vector<TGlyph> glyphs;
     
@@ -280,35 +280,39 @@ int CAFreeTypeFont::getStringCountInWidth(const std::string& text, int iLimitWid
     /* translate it, and grow the string bbox          */
     
     int nWordPos = 0;
-    for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
-    {
-        FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
-        
-        if (glyph_bbox.xMin == glyph_bbox.xMax)
-        {
-            glyph_bbox.xMax = (glyph_bbox.xMin + slot->advance.x) >> 6;
-        }
-        glyph_bbox.xMin += glyph->pos.x;
-        glyph_bbox.xMax += glyph->pos.x;
-        glyph_bbox.yMin += glyph->pos.y;
-        glyph_bbox.yMax += glyph->pos.y;
-        
-        if (glyph_bbox.xMin < bbox.xMin)
-            bbox.xMin = glyph_bbox.xMin;
-        
-        if (glyph_bbox.yMin < bbox.yMin)
-            bbox.yMin = glyph_bbox.yMin;
-        
-        if (glyph_bbox.xMax > bbox.xMax)
-            bbox.xMax = glyph_bbox.xMax;
-        
-        if (glyph_bbox.yMax > bbox.yMax)
-            bbox.yMax = glyph_bbox.yMax;
-        
-        int width = bbox.xMax - bbox.xMin;
-        
+	cutWidth = 0;
+	for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
+	{
+		FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
+
+		if (glyph_bbox.xMin == glyph_bbox.xMax)
+		{
+			glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6);
+		}
+		glyph_bbox.xMin += glyph->pos.x;
+		glyph_bbox.xMax += glyph->pos.x;
+		glyph_bbox.yMin += glyph->pos.y;
+		glyph_bbox.yMax += glyph->pos.y;
+
+		if (glyph_bbox.xMin < bbox.xMin)
+			bbox.xMin = glyph_bbox.xMin;
+
+		if (glyph_bbox.yMin < bbox.yMin)
+			bbox.yMin = glyph_bbox.yMin;
+
+		if (glyph_bbox.xMax > bbox.xMax)
+			bbox.xMax = glyph_bbox.xMax;
+
+		if (glyph_bbox.yMax > bbox.yMax)
+			bbox.yMax = glyph_bbox.yMax;
+
+		int width = bbox.xMax - bbox.xMin;
+		cutWidth = glyph->pos.x - bbox.xMin + (slot->advance.x >> 6);
 		if (width > iLimitWidth)
+		{
+			cutWidth = glyph->pos.x - bbox.xMin;
 			break;
+		}
 
 		nWordPos++;
     }

@@ -86,7 +86,7 @@ protected:
 	unsigned char* getBitmap(CCImage::ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text);
-    int getStringCountInWidth(const std::string& text, int iLimitWidth);
+	int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth);
 	int getStringHeight(const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 	void destroyAllLines();
 

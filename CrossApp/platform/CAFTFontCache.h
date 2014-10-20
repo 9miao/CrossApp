@@ -36,7 +36,7 @@ public:
 
 	int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text);
 
-	int getStringCountInWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth);
+	int cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth);
 
 	int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 
