@@ -393,7 +393,6 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
                            CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))),
                            
                            NULL);
-        lastViewController->getView()->stopAllActions();
         lastViewController->getView()->runAction(actionsLast);
         
         CCSequence* actions =
@@ -409,7 +408,6 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
                            CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)),
                            
                            NULL);
-        viewController->getView()->stopAllActions();
         viewController->getView()->runAction(actions);
     }
     else
@@ -467,7 +465,6 @@ void CANavigationController::pushViewController(CAViewController* viewController
                            CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))),
                            
                            NULL);
-        lastViewController->getView()->stopAllActions();
         lastViewController->getView()->runAction(actionsLast);
         
         
@@ -484,7 +481,6 @@ void CANavigationController::pushViewController(CAViewController* viewController
                            CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)),
                            
                            NULL);
-        viewController->getView()->stopAllActions();
         viewController->getView()->runAction(actions);
     }
     else
@@ -545,7 +541,6 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
                            CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)),
                            
                            NULL);
-        showViewController->getView()->stopAllActions();
         showViewController->getView()->runAction(actionsLast);
         
         
@@ -562,7 +557,6 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
                            CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)),
                            
                            NULL);
-        backViewController->getView()->stopAllActions();
         backViewController->getView()->runAction(actions);
     }
     else
