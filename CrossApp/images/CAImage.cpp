@@ -97,14 +97,15 @@ CAImage* CAImage::createWithData(void* data, int lenght, const std::string& key)
     return image;
 }
 
-CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing)
+CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, 
+	CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
 {
-	return g_AFTFontCache.initWithString(text, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing);
+	return g_AFTFontCache.initWithString(text, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics);
 }
 
 int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
 {
-    return g_AFTFontCache.getFontHeight(pFontName, nSize);
+	return g_AFTFontCache.getFontHeight(pFontName, nSize);
 }
 
 int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const std::string& pText)

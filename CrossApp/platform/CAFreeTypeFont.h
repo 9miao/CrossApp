@@ -73,10 +73,10 @@ public:
 	virtual ~CAFreeTypeFont();
 
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap=true, int iLineSpacing = 0);
+		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics=false);
 
 	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-		std::vector<TextViewLineInfo>& linesText, int iLineSpace=0, bool bWordWrap = true);
+		std::vector<TextViewLineInfo>& linesText, int iLineSpace = 0, bool bWordWrap = true);
 
 	static void destroyAllFontBuff();
 protected:
@@ -85,7 +85,7 @@ protected:
 	unsigned char* loadFont(const char *pFontName, unsigned long *size);
 	unsigned char* getBitmap(CCImage::ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
-	int getStringWidth(const std::string& text);
+	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);
 	int getStringHeight(const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 	void destroyAllLines();
 
@@ -112,6 +112,7 @@ protected:
     const std::string m_space;
 	FT_Face			m_face;
 	std::vector<FTLineInfo*> m_lines;
+	FT_Matrix		m_ItalicMatrix;
 
     int             m_inWidth;      // requested width of text box
     int             m_inHeight;     // requested height of text box
@@ -126,6 +127,8 @@ protected:
     FTLineInfo*     m_currentLine;  // the current line object to add words to.
 
 	bool m_bWordWrap;
+	bool m_bBold;
+	bool m_bItalics;
 };
 
 NS_CC_END
