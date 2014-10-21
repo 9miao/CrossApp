@@ -81,10 +81,10 @@ int CAFTFontCache::getFontHeight(const char* pFontName, unsigned long nSize)
 	return m_pCurFontData->iFontHeight;
 }
 
-int CAFTFontCache::getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text)
+int CAFTFontCache::getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text, bool bBold, bool bItalics)
 {
 	setCurrentFontData(pFontName, nSize);
-	return m_pCurFontData->ftFont.getStringWidth(text);
+	return m_pCurFontData->ftFont.getStringWidth(text, bBold, bItalics);
 }
 
 int CAFTFontCache::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap)
@@ -94,13 +94,13 @@ int CAFTFontCache::getStringHeight(const char* pFontName, unsigned long nSize, c
 }
 
 CAImage* CAFTFontCache::initWithString(const char* pText, const char* pFontName, int nSize, int width, int height, 
-	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing)
+	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
 
 	setCurrentFontData(pFontName, nSize);
-	CAImage* pImage = m_pCurFontData->ftFont.initWithString(pText, pFontName, nSize, width, height, hAlignment, vAlignment, bWordWrap, iLineSpacing);
+	CAImage* pImage = m_pCurFontData->ftFont.initWithString(pText, pFontName, nSize, width, height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics);
 	return pImage;
 }
 

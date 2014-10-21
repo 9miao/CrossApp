@@ -60,9 +60,10 @@ public:
 
     virtual ~CAImage();
 
-	static CAImage* createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool isForTextField = false, int iLineSpacing = 0);
+	static CAImage* createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, 
+		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool isForTextField = false, int iLineSpacing = 0, bool bBold = false, bool bItalics=false);
     
-    static int getFontHeight(const char* pFontName, unsigned long nSize);
+	static int getFontHeight(const char* pFontName, unsigned long nSize);
     
     static int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& pText);
     

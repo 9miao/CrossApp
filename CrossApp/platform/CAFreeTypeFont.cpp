@@ -11,6 +11,7 @@ NS_CC_BEGIN
 static map<std::string, FontBufferInfo> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
 
+#define ITALIC_LEAN_VALUE (0.3f)
 
 CAFreeTypeFont::CAFreeTypeFont()
 :m_space(" ")
@@ -26,7 +27,14 @@ CAFreeTypeFont::CAFreeTypeFont()
 ,m_lineHeight(0)
 , m_lineSpacing(0)
 , m_bWordWrap(true)
+, m_bBold(false)
+, m_bItalics(false)
 {
+	m_ItalicMatrix.xx = 0x10000L;
+	m_ItalicMatrix.xy = ITALIC_LEAN_VALUE * 0x10000L;
+	m_ItalicMatrix.yx = 0;
+	m_ItalicMatrix.yy = 0x10000L;
+
     CCSize size = CAApplication::getApplication()->getWinSizeInPixels();
     m_windowWidth = (int)size.width;
 }
@@ -48,7 +56,7 @@ void CAFreeTypeFont::destroyAllFontBuff()
 
 
 CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing)
+	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
@@ -57,10 +65,13 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	m_inHeight = inHeight;
 	m_lineSpacing = iLineSpacing;
 	m_bWordWrap = bWordWrap;
+	m_bBold = bBold;
+	m_bItalics = bItalics;
 	initGlyphs(pText);
 	m_lineSpacing = 0;
 	m_bWordWrap = false;
-    
+	m_bBold = false;
+	m_bItalics = false;
     
 	CCImage::ETextAlign eAlign;
     
@@ -121,7 +132,8 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	return pCAImage;
 }
 
-CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, std::vector<TextViewLineInfo>& linesText, int iLineSpace, bool bWordWrap)
+CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
+	std::vector<TextViewLineInfo>& linesText, int iLineSpace, bool bWordWrap)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
@@ -130,6 +142,8 @@ CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontNa
 	m_inHeight = inHeight;
 	m_lineSpacing = iLineSpace;
 	m_bWordWrap = bWordWrap;
+	m_bBold = false;
+	m_bItalics = false;
 
 	linesText.clear();
 	initTextView(pText, linesText);
@@ -235,18 +249,27 @@ int CAFreeTypeFont::getFontHeight()
 }
 
 // text encode with utf8
-int CAFreeTypeFont::getStringWidth(const std::string& text)
+int CAFreeTypeFont::getStringWidth(const std::string& text, bool bBold, bool bItalics)
 {
+	int iStrWidth = 0;
 	std::vector<TGlyph> glyphs;
 
 	FT_Vector vt;
 	memset(&vt, 0, sizeof(vt));
-	if (0 != initWordGlyphs(glyphs, text, vt))
-		return 0;
 
-	FT_BBox bbox;
-	compute_bbox(glyphs, &bbox);
-	return bbox.xMax - bbox.xMin;
+	m_bBold = bBold;
+	m_bItalics = bItalics;
+	if (0 == initWordGlyphs(glyphs, text, vt))
+	{
+		FT_BBox bbox;
+		compute_bbox(glyphs, &bbox);
+		iStrWidth = bbox.xMax - bbox.xMin;
+	}
+	m_bBold = false;
+	m_bItalics = false;
+	return iStrWidth;
+
+	
 }
 
 // text encode with utf8
@@ -592,7 +615,8 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	FT_Error		error = 0;
 	PGlyph			glyph;
     unsigned int    numGlyphs = 0;
-	
+
+
 	std::u16string utf16String;
 	if (!StringUtils::UTF8ToUTF16(text, utf16String))
 		return -1;
@@ -633,16 +657,28 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		if (error)
 			continue;  /* ignore errors, jump to next glyph */
 
+		if (m_bBold)
+		{
+			FT_Outline_Embolden(&slot->outline, 1 << 6);
+		}
+
 		/* extract glyph image and store it in our table */
 		error = FT_Get_Glyph(m_face->glyph, &glyph->image);
 		if (error)
 			continue;  /* ignore errors, jump to next glyph */
 
+		FT_Matrix* pFTMat = m_bItalics ? &m_ItalicMatrix : NULL;
+
 		 /* translate the glyph image now */
-		FT_Glyph_Transform(glyph->image, 0, &glyph->pos);
+		FT_Glyph_Transform(glyph->image, pFTMat, &glyph->pos);
 
 		/* increment pen position */
 		pen.x += slot->advance.x >> 6;
+
+		if (pFTMat)
+		{
+			pen.x += m_lineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
+		}
 
 		/* record current glyph index */
 		previous = glyph_index;

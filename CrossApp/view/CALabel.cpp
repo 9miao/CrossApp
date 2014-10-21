@@ -10,6 +10,7 @@
 #include "ccMacros.h"
 #include <locale>
 #include <cstdlib>
+
 NS_CC_BEGIN
 
 
@@ -27,6 +28,8 @@ CALabel::CALabel()
 ,m_bFitFlag(false)
 ,m_iLineSpacing(0)
 ,m_bWordWrap(true)
+,m_bBold(false)
+, m_bItalics(false)
 {
     m_obContentSize = CCSizeZero;
     
@@ -151,7 +154,11 @@ void CALabel::updateImage()
                                                m_nfontSize,
                                                size,
                                                m_nTextAlignment,
-											   m_nVerticalTextAlignmet, m_bWordWrap, m_iLineSpacing);
+											   m_nVerticalTextAlignmet, 
+											   m_bWordWrap, 
+											   m_iLineSpacing, 
+											   m_bBold, 
+											   m_bItalics);
 
 	CC_RETURN_IF(image == NULL);
 
@@ -315,6 +322,27 @@ bool CALabel::getWordWrap()
 	return m_bWordWrap;
 }
 
+void CALabel::setBold(bool var)
+{
+	m_bBold = var;
+	m_bUpdateImage = true;
+}
+
+bool CALabel::getBold()
+{
+	return m_bBold;
+}
+
+void CALabel::setItalics(bool var)
+{
+	m_bItalics = var;
+	m_bUpdateImage = true;
+}
+
+bool CALabel::getItalics()
+{
+	return m_bItalics;
+}
 
 void CALabel::setFontName(const string& var)
 {
