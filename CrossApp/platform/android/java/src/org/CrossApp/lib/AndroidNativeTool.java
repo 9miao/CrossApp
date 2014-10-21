@@ -118,6 +118,24 @@ public class AndroidNativeTool
         Intent wrapperIntent2 = Intent.createChooser(getImage, null);
         s_pContext.startActivityForResult(wrapperIntent2, 3);
 	}
+    
+    public static int getScreenBrightness() {
+        int value = 0;
+        ContentResolver cr = s_pContext.getContentResolver();
+        try {
+            
+            value = Settings.System.getInt(cr, Settings.System.SCREEN_BRIGHTNESS);
+        } catch (SettingNotFoundException e) {
+            
+        }
+        return value;
+    }
+    public static void setScreenBrightness( int value) {
+        
+        Cocos2dxActivity mActivity = (Cocos2dxActivity)s_pContext;
+        mActivity.mLightHandler.sendEmptyMessage(value);
+    }
+    
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {  
     	System.out.println("~~~||||");
