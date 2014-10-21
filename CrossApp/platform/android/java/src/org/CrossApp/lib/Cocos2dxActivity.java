@@ -67,6 +67,29 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
 	}
+    private void exeHandler(){
+        if(mLightHandler ==null){
+            mLightHandler = new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    int value = msg.what;
+                    WindowManager.LayoutParams lp = (Cocos2dxActivity.activity).getWindow().getAttributes();
+                    lp.screenBrightness = value/255.0f;
+                    (Cocos2dxActivity.activity).getWindow().setAttributes(lp);
+                }
+            };
+        }
+    }
+    public static void setScreenBrightness(int value) {
+        try {
+            // System.putInt(s_pContext.getContentResolver(),android.provider.Settings.System.SCREEN_BRIGHTNESS,value);
+            WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+            lp.screenBrightness = (value<=0?1:value) / 255f;
+            activity.getWindow().setAttributes(lp);
+        } catch (Exception e) {
+            Toast.makeText(activity,"Œﬁ∑®∏ƒ±‰¡¡∂»",Toast.LENGTH_SHORT).show();
+        } 
+    }
 	 public void onActivityResult(int requestCode, int resultCode, Intent intent)
 	 {
 		 actAndroidNativeTool.onActivityResult(requestCode, resultCode, intent);

@@ -72,7 +72,7 @@ private:
     
 protected:
     
-    CCDictionary* m_pTextures;
+    CCDictionary* m_pImages;
     //pthread_mutex_t                *m_pDictLock;
 };
 

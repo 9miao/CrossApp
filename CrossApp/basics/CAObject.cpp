@@ -46,7 +46,6 @@ CAObject* CAObject::copy()
 
 void CAObject::release(void)
 {
-    CCAssert(m_uReference > 0, "reference count should greater than 0");
     --m_uReference;
 
     if (m_uReference == 0)
@@ -57,8 +56,6 @@ void CAObject::release(void)
 
 CAObject* CAObject::retain(void)
 {
-    CCAssert(m_uReference > 0, "reference count should greater than 0");
-
     ++m_uReference;
     return this;
 }

@@ -15,7 +15,7 @@
 NS_CC_EXT_BEGIN
 
 class CADownloadManagerDelegate;
-class CADownloadRequest;
+class CADownloadResponse;
 
 class CADownloadManager
 {
@@ -75,6 +75,8 @@ public:
     
     std::vector<unsigned long> getDownloadIdsFromTextTag(const std::string& textTag);
     
+    std::vector<std::string> getDownloadAllTextTags();
+    
     CC_SYNTHESIZE(CADownloadManagerDelegate*, m_pDelegate, DownloadManagerDelegate);
     
     CC_SYNTHESIZE(int, m_nDownloadMaxCount, DownloadMaxCount);
@@ -101,29 +103,29 @@ protected:
 
 	unsigned long insertDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag);
 
-	void enqueueDownload(CADownloadRequest* request);
+	void enqueueDownload(CADownloadResponse* request);
 
-    void onError(CADownloadRequest* request, CADownloadManager::ErrorCode errorCode);
+    void onError(CADownloadResponse* request, CADownloadManager::ErrorCode errorCode);
     
-    void onProgress(CADownloadRequest* request, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded);
+    void onProgress(CADownloadResponse* request, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded);
     
-    void onSuccess(CADownloadRequest* request);
+    void onSuccess(CADownloadResponse* request);
 
-    friend class CADownloadRequest;
+    friend class CADownloadResponse;
     
 private:
     
 	void* m_mpSqliteDB;
     
-    CAMap<unsigned long, CADownloadRequest*> m_mCADownloadRequests;
+    CAMap<unsigned long, CADownloadResponse*> m_mCADownloadResponses;
     
     std::map<unsigned long, DownloadRecord> m_mDownloadRecords;
     
-    CAVector<CADownloadRequest*> m_vDownloadingRequests;
+    CAVector<CADownloadResponse*> m_vDownloadingRequests;
     
-    CADeque<CADownloadRequest*> m_dWaitCADownloadRequests;
+    CADeque<CADownloadResponse*> m_dWaitCADownloadResponses;
     
-    CAVector<CADownloadRequest*> m_vPauseCADownloadRequests;
+    CAVector<CADownloadResponse*> m_vPauseCADownloadResponses;
     
 };
 

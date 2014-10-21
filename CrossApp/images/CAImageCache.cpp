@@ -113,9 +113,8 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
     CCImage::EImageFormat imageType = computeImageFormatType(pAsyncStruct->filename);
     if (imageType == CCImage::kFmtUnKnown)
     {
-        CCLOG("unsupported format %s",filename);
-        delete pAsyncStruct;
-        return;
+        //CCLOG("unsupported format %s",filename);
+        //delete pAsyncStruct;
     }
         
     // generate image            
@@ -200,7 +199,7 @@ CAImageCache::CAImageCache()
 {
     CCAssert(g_sharedImageCache == NULL, "Attempted to allocate a second instance of a singleton.");
     
-    m_pTextures = new CCDictionary();
+    m_pImages = new CCDictionary();
 }
 
 CAImageCache::~CAImageCache()
@@ -208,7 +207,7 @@ CAImageCache::~CAImageCache()
     CCLOGINFO("CrossApp: deallocing CAImageCache.");
     need_quit = true;
     pthread_cond_signal(&s_SleepCondition);
-    CC_SAFE_RELEASE(m_pTextures);
+    CC_SAFE_RELEASE(m_pImages);
 }
 
 void CAImageCache::purgeSharedImageCache()
@@ -218,14 +217,14 @@ void CAImageCache::purgeSharedImageCache()
 
 const char* CAImageCache::description()
 {
-    return CCString::createWithFormat("<CAImageCache | Number of textures = %u>", m_pTextures->count())->getCString();
+    return CCString::createWithFormat("<CAImageCache | Number of textures = %u>", m_pImages->count())->getCString();
 }
 
 CCDictionary* CAImageCache::snapshotTextures()
 { 
     CCDictionary* pRet = new CCDictionary();
     CCDictElement* pElement = NULL;
-    CCDICT_FOREACH(m_pTextures, pElement)
+    CCDICT_FOREACH(m_pImages, pElement)
     {
         pRet->setObject(pElement->getObject(), pElement->getStrKey());
     }
@@ -249,20 +248,20 @@ void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *targ
     return;
 #endif // EMSCRIPTEN
     
-    CAImage* texture = NULL;
+    CAImage* image = NULL;
     
     // optimization
     
-    texture = (CAImage*)m_pTextures->objectForKey(path);
+    image = (CAImage*)m_pImages->objectForKey(path);
     
     std::string fullpath = path;
     
     
-    if (texture != NULL)
+    if (image != NULL)
     {
         if (target && selector)
         {
-            (target->*selector)(texture);
+            (target->*selector)(image);
         }
         
         return;
@@ -279,7 +278,7 @@ void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *targ
         pthread_mutex_init(&s_ImageInfoMutex, NULL);
         pthread_mutex_init(&s_SleepMutex, NULL);
         pthread_cond_init(&s_SleepCondition, NULL);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
         pthread_create(&s_loadingThread, NULL, loadImage, NULL);
 #endif
         need_quit = false;
@@ -291,11 +290,8 @@ void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *targ
     }
     
     ++s_nAsyncRefCount;
-    
-    if (target)
-    {
-        target->retain();
-    }
+
+    CC_SAFE_RETAIN(target);
     
     // generate async struct
     AsyncStruct *data = new AsyncStruct();
@@ -303,7 +299,7 @@ void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *targ
     data->target = target;
     data->selector = selector;
     
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // add async struct into queue
     pthread_mutex_lock(&s_asyncStructQueueMutex);
     s_pAsyncStructQueue->push(data);
@@ -343,25 +339,21 @@ void CAImageCache::addImageAsyncCallBack(float dt)
         const char* filename = pAsyncStruct->filename.c_str();
 
         // generate texture in render thread
-        CAImage* texture = new CAImage();
-#if 0 //TODO: (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        texture->initWithImage(pImage, kCCResolutioniPhone);
-#else
-        texture->initWithImage(pImage);
-#endif
+        CAImage* image = new CAImage();
+        image->initWithImage(pImage);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-       // cache the texture file name
-       VolatileTexture::addImageTexture(texture, filename, pImageInfo->imageType);
+       // cache the image file name
+       VolatileTexture::addImageTexture(image, filename, pImageInfo->imageType);
 #endif
 
-        // cache the texture
-        m_pTextures->setObject(texture, filename);
-        texture->autorelease();
+        // cache the image
+        m_pImages->setObject(image, filename);
+        image->autorelease();
 
         if (target && selector)
         {
-            (target->*selector)(texture);
+            (target->*selector)(image);
             target->release();
         }        
 
@@ -399,7 +391,7 @@ CAImage* CAImageCache::addImageFullPath(const std::string& fileimage)
     
     //pthread_mutex_lock(m_pDictLock);
     
-    image = (CAImage*)m_pTextures->objectForKey(fileimage);
+    image = (CAImage*)m_pImages->objectForKey(fileimage);
     
     std::string fullpath = fileimage; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
     if (!image)
@@ -452,7 +444,7 @@ CAImage* CAImageCache::addImageFullPath(const std::string& fileimage)
                     // cache the texture file name
                     VolatileTexture::addImageTexture(image, fullpath.c_str(), eImageFormat);
 #endif
-                    m_pTextures->setObject(image, fileimage);
+                    m_pImages->setObject(image, fileimage);
                     image->release();
                 }
                 else
@@ -474,7 +466,7 @@ CAImage* CAImageCache::addETCImage(const std::string& path)
     CAImage* texture = NULL;
     std::string key(path);
     
-    if( (texture = (CAImage*)m_pTextures->objectForKey(key.c_str())) )
+    if( (texture = (CAImage*)m_pImages->objectForKey(key.c_str())) )
     {
         return texture;
     }
@@ -484,7 +476,7 @@ CAImage* CAImageCache::addETCImage(const std::string& path)
     texture = new CAImage();
     if(texture != NULL && texture->initWithETCFile(fullpath.c_str()))
     {
-        m_pTextures->setObject(texture, key.c_str());
+        m_pImages->setObject(texture, key.c_str());
         texture->autorelease();
     }
     else
@@ -511,7 +503,7 @@ CAImage* CAImageCache::addUIImage(CCImage *image, const std::string& key)
     do 
     {
         // If key is nil, then create a new texture each time
-        if((texture = (CAImage* )m_pTextures->objectForKey(forKey)))
+        if((texture = (CAImage* )m_pImages->objectForKey(forKey)))
         {
             break;
         }
@@ -522,7 +514,7 @@ CAImage* CAImageCache::addUIImage(CCImage *image, const std::string& key)
 
         if(texture)
         {
-            m_pTextures->setObject(texture, forKey);
+            m_pImages->setObject(texture, forKey);
             texture->autorelease();
         }
         else
@@ -547,7 +539,7 @@ bool CAImageCache::reloadImage(const std::string& fileName)
         return false;
     }
     
-    CAImage*  texture = (CAImage*) m_pTextures->objectForKey(fullpath);
+    CAImage*  texture = (CAImage*) m_pImages->objectForKey(fullpath);
     
     bool ret = false;
     if (! texture) {
@@ -574,33 +566,33 @@ bool CAImageCache::reloadImage(const std::string& fileName)
 
 void CAImageCache::removeAllImages()
 {
-    m_pTextures->removeAllObjects();
+    m_pImages->removeAllObjects();
 }
 
 void CAImageCache::removeUnusedImages()
 {
     /*
     CCDictElement* pElement = NULL;
-    CCDICT_FOREACH(m_pTextures, pElement)
+    CCDICT_FOREACH(m_pImages, pElement)
     {
         CCLOG("CrossApp: CAImageCache: texture: %s", pElement->getStrKey());
         CAImage* value = (CAImage*)pElement->getObject();
         if (value->retainCount() == 1)
         {
             CCLOG("CrossApp: CAImageCache: removing unused texture: %s", pElement->getStrKey());
-            m_pTextures->removeObjectForElememt(pElement);
+            m_pImages->removeObjectForElememt(pElement);
         }
     }
      */
     
     /** Inter engineer zhuoshi sun finds that this way will get better performance
      */    
-    if (m_pTextures->count())
+    if (m_pImages->count())
     {   
         // find elements to be removed
         CCDictElement* pElement = NULL;
         list<CCDictElement*> elementToRemove;
-        CCDICT_FOREACH(m_pTextures, pElement)
+        CCDICT_FOREACH(m_pImages, pElement)
         {
             CCLOG("CrossApp: CAImageCache: texture: %s", pElement->getStrKey());
             CAImage* value = (CAImage*)pElement->getObject();
@@ -614,7 +606,7 @@ void CAImageCache::removeUnusedImages()
         for (list<CCDictElement*>::iterator iter = elementToRemove.begin(); iter != elementToRemove.end(); ++iter)
         {
             CCLOG("CrossApp: CAImageCache: removing unused texture: %s", (*iter)->getStrKey());
-            m_pTextures->removeObjectForElememt(*iter);
+            m_pImages->removeObjectForElememt(*iter);
         }
     }
 }
@@ -625,7 +617,7 @@ void CAImageCache::setImageForKey(CAImage* image, const std::string& key)
     {
         return;
     }
-    m_pTextures->setObject(image, CCFileUtils::sharedFileUtils()->fullPathForFilename(key.c_str()));
+    m_pImages->setObject(image, CCFileUtils::sharedFileUtils()->fullPathForFilename(key.c_str()));
 }
 
 void CAImageCache::removeImage(CAImage* image)
@@ -635,19 +627,19 @@ void CAImageCache::removeImage(CAImage* image)
         return;
     }
 
-    CCArray* keys = m_pTextures->allKeysForObject(image);
-    m_pTextures->removeObjectsForKeys(keys);
+    CCArray* keys = m_pImages->allKeysForObject(image);
+    m_pImages->removeObjectsForKeys(keys);
 }
 
 void CAImageCache::removeImageForKey(const std::string& imageKeyName)
 {
     string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(imageKeyName.c_str());
-    m_pTextures->removeObjectForKey(fullPath);
+    m_pImages->removeObjectForKey(fullPath);
 }
 
 CAImage* CAImageCache::imageForKey(const std::string& key)
 {
-    return (CAImage*)m_pTextures->objectForKey(CCFileUtils::sharedFileUtils()->fullPathForFilename(key));
+    return (CAImage*)m_pImages->objectForKey(CCFileUtils::sharedFileUtils()->fullPathForFilename(key));
 }
 
 void CAImageCache::reloadAllImages()
@@ -663,7 +655,7 @@ void CAImageCache::dumpCachedImageInfo()
     unsigned int totalBytes = 0;
 
     CCDictElement* pElement = NULL;
-    CCDICT_FOREACH(m_pTextures, pElement)
+    CCDICT_FOREACH(m_pImages, pElement)
     {
         CAImage* tex = (CAImage*)pElement->getObject();
         unsigned int bpp = tex->bitsPerPixelForFormat();
