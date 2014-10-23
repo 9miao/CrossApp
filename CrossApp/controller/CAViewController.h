@@ -167,6 +167,16 @@ public:
     
     void updateItem(CAViewController* viewController);
     
+    CC_PROPERTY_IS(bool, m_bTouchMoved, TouchMoved);
+    
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
 protected:
     
     virtual void viewDidLoad();
@@ -187,6 +197,8 @@ protected:
     
     void popViewControllerFinish();
     
+    void homingViewControllerFinish();
+    
     void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
     
     void update(float dt);
@@ -200,7 +212,8 @@ protected:
     CAVector<CAViewController*> m_pViewControllers;
     
     CAView* m_pContainer;
-    
+
+    bool m_bPopViewController;
 };
 
 class CC_DLL CATabBarController
