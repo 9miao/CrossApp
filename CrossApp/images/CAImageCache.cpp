@@ -349,14 +349,15 @@ void CAImageCache::addImageAsyncCallBack(float dt)
 
         // cache the image
         m_pImages->setObject(image, filename);
-        image->autorelease();
+        
 
         if (target && selector)
         {
             (target->*selector)(image);
             target->release();
-        }        
-
+        }
+        
+        image->release();
         pImage->release();
         delete pAsyncStruct;
         delete pImageInfo;
