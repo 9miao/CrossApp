@@ -267,9 +267,7 @@ int CAFreeTypeFont::getStringWidth(const std::string& text, bool bBold, bool bIt
 	m_bItalics = bItalics;
 	if (0 == initWordGlyphs(glyphs, text, vt))
 	{
-		FT_BBox bbox;
-		compute_bbox(glyphs, &bbox);
-		iStrWidth = bbox.xMax - bbox.xMin;
+		iStrWidth = vt.x;
 	}
 	m_bBold = false;
 	m_bItalics = false;
@@ -732,10 +730,6 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		glyph->index = glyph_index;
 		glyph->c = c;
 
-		if (c == 10)
-		{
-			continue;
-		}
 
 		/* load glyph image into the slot without rendering */
 		error = FT_Load_Glyph(m_face, glyph_index, FT_LOAD_NO_HINTING | FT_LOAD_NO_BITMAP);
@@ -747,6 +741,11 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 			FT_Outline_Embolden(&slot->outline, 1 << 6);
 		}
 
+		if (c == 10)
+		{
+			continue;
+		}
+
 		/* extract glyph image and store it in our table */
 		error = FT_Get_Glyph(m_face->glyph, &glyph->image);
 		if (error)
@@ -755,7 +754,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		FT_Matrix* pFTMat = m_bItalics ? &m_ItalicMatrix : NULL;
 
 		 /* translate the glyph image now */
-		FT_Glyph_Transform(glyph->image, pFTMat, &glyph->pos);
+		FT_Glyph_Transform(glyph->image, pFTMat, NULL);//&glyph->pos
 
 		/* increment pen position */
 		pen.x += slot->advance.x >> 6;
@@ -930,7 +929,6 @@ void CAFreeTypeFont::compute_bbox2(TGlyph& glyph, FT_BBox& bbox)
 		bbox.yMax = 0;
 	}
 }
-
 
 bool CAFreeTypeFont::initFreeTypeFont(const char* pFontName, unsigned long nSize)
 {
