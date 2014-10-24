@@ -72,8 +72,8 @@ public:
 	CAFreeTypeFont();
 	virtual ~CAFreeTypeFont();
 
-	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics=false);
+	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight,
+		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false);
 
 	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
 		std::vector<TextViewLineInfo>& linesText, int iLineSpace = 0, bool bWordWrap = true);
@@ -100,6 +100,7 @@ protected:
     void drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vector *pen);
 
     void draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap,FT_Int x,FT_Int y);
+	void draw_line(unsigned char* pBuffer, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
 
     FT_Vector getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAlign eAlignMask, int lineNumber, int totalLines);
 
@@ -129,6 +130,7 @@ protected:
 	bool m_bWordWrap;
 	bool m_bBold;
 	bool m_bItalics;
+	bool m_bUnderLine;
 };
 
 NS_CC_END

@@ -29,7 +29,8 @@ CALabel::CALabel()
 ,m_iLineSpacing(0)
 ,m_bWordWrap(true)
 ,m_bBold(false)
-, m_bItalics(false)
+,m_bItalics(false)
+, m_bUnderLine(false)
 {
     m_obContentSize = CCSizeZero;
     
@@ -99,7 +100,7 @@ bool CALabel::initWithCenter(const CCRect& rect)
 void CALabel::updateImage()
 {
 	int fontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_nfontSize);
-    
+ 
     unsigned int linenumber = (int)this->getBounds().size.height / fontHeight;
 
     CCSize size = CCSizeZero;
@@ -158,7 +159,8 @@ void CALabel::updateImage()
 											   m_bWordWrap, 
 											   m_iLineSpacing, 
 											   m_bBold, 
-											   m_bItalics);
+											   m_bItalics,
+											   m_bUnderLine);
 
 	CC_RETURN_IF(image == NULL);
 
@@ -331,6 +333,17 @@ void CALabel::setBold(bool var)
 bool CALabel::getBold()
 {
 	return m_bBold;
+}
+
+void CALabel::setUnderLine(bool var)
+{
+	m_bUnderLine = var;
+	m_bUpdateImage = true;
+}
+
+bool CALabel::getUnderLine()
+{
+	return m_bUnderLine;
 }
 
 void CALabel::setItalics(bool var)

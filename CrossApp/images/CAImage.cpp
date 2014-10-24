@@ -98,9 +98,9 @@ CAImage* CAImage::createWithData(void* data, int lenght, const std::string& key)
 }
 
 CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment, 
-	CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
+	CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine)
 {
-	return g_AFTFontCache.initWithString(text, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics);
+	return g_AFTFontCache.initWithString(text, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine);
 }
 
 int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
