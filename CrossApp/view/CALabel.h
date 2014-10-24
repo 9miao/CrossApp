@@ -42,6 +42,8 @@ public:
 
 	CC_PROPERTY(bool, m_bBold, Bold);
 
+	CC_PROPERTY(bool, m_bUnderLine, UnderLine);
+
 	CC_PROPERTY(bool, m_bItalics, Italics);
 
 	CC_PROPERTY(unsigned int, m_iLineSpacing, LineSpacing);

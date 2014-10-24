@@ -60,8 +60,8 @@ public:
 
     virtual ~CAImage();
 
-	static CAImage* createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, 
-		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool isForTextField = false, int iLineSpacing = 0, bool bBold = false, bool bItalics=false);
+	static CAImage* createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions,
+		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool isForTextField = false, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false);
     
 	static int getFontHeight(const char* pFontName, unsigned long nSize);
     
