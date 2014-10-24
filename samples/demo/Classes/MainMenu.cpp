@@ -25,14 +25,23 @@ CAWindow* MainMenu::createWindow()
 	SecondViewController* viewController2 = new SecondViewController();
 	viewController2->init();
 	viewController2->setTabBarItem(CATabBarItem::create("Second", CAImage::create("tabbar_function/second_1.png"), CAImage::create("tabbar_function/second_2.png")));
+	//viewController2->setNavigationBarItem(CANavigationBarItem::create("ViewController2"));
+	//CANavigationController* navigationController2 = new CANavigationController();
+	//navigationController2->initWithRootViewController(viewController2);
 
 	ThirdViewController* viewController3 = new ThirdViewController();
 	viewController3->init();
 	viewController3->setTabBarItem(CATabBarItem::create("Third", CAImage::create("tabbar_function/third_1.png"), CAImage::create("tabbar_function/third_2.png")));
+	//viewController3->setNavigationBarItem(CANavigationBarItem::create("ViewController3"));
+	//CANavigationController* navigationController3 = new CANavigationController();
+	//navigationController3->initWithRootViewController(viewController3);
 
 	FourthViewController* viewController4 = new FourthViewController();
 	viewController4->init();
 	viewController4->setTabBarItem(CATabBarItem::create("Fourth", CAImage::create("tabbar_function/fourth_1.png"), CAImage::create("tabbar_function/fourth_2.png")));
+	//viewController4->setNavigationBarItem(CANavigationBarItem::create("ViewController4"));
+	//CANavigationController* navigationController4 = new CANavigationController();
+	//navigationController4->initWithRootViewController(viewController4);
 
 	std::vector<CAViewController*> controllerItem;
 	controllerItem.push_back(viewController2);
@@ -42,10 +51,7 @@ CAWindow* MainMenu::createWindow()
 	MainMenu* p_Funtion = new MainMenu();
 	p_Funtion->initWithViewControllers(controllerItem);
 	p_Funtion->getTabBar()->showSelectedIndicator();
-	//p_Funtion->showSelectedViewController(viewController2);
-	//p_Funtion->showSelectedViewControllerAtIndex(1);
 	p_Funtion->setScrollEnabled(true);
-	p_Funtion->setNavigationBarItem(CANavigationBarItem::create("ViewController"));
 
 	CANavigationController* navigationController = new CANavigationController();
 	navigationController->initWithRootViewController(p_Funtion);
@@ -62,7 +68,9 @@ CAWindow* MainMenu::createWindow()
 	viewController2->release();
 	viewController3->release();
 	viewController4->release();
-	navigationController->release();
+	//navigationController2->release();
+	//navigationController3->release();
+	//navigationController4->release();
 	p_Funtion->release();
 
 	return p_Window;

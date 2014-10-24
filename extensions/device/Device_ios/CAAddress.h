@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-#include "../CAAddressManager.h"
+#include "../CADevice.h"
 
 @interface CAAddress : NSObject
 {
     
 }
--(std::vector<CAAddressBookRecord*>)getAddressBook;
+-(std::vector<CAAddressBookRecord>)getAddressBook;
 @end

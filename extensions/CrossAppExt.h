@@ -16,8 +16,5 @@
 #include "LocalStorage/LocalStorage.h"
 
 //other
-#include "other/CAAdress/CAAddressManager.h"
-#include "other/CACamera/CAMediaManager.h"
-#include "other/CALocation/CALocationManager.h"
-#include "studio/CAStudioViewController.h"
+#include "device/CADevice.h"
 #endif /* __CrossApp_EXT_H__ */

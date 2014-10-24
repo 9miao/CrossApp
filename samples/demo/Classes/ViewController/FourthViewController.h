@@ -15,6 +15,7 @@ public:
 protected:
 	void viewDidLoad();
 	void viewDidUnload();
+	virtual void viewDidAppear();
 
 public:
 	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -23,8 +24,8 @@ public:
 	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 
 private:
-	CCSize size;
-	CCPoint originalPoint;
+	CADipSize size;
+	CADipPoint originalPoint;
 	CAImageView* imageView;
 
 };

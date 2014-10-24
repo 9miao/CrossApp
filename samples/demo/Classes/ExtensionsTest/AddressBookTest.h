@@ -49,7 +49,7 @@ private:
 private:
 	CADipSize size;
 	CATableView* table;
-	std::vector<CAAddressBookRecord*> addressBookList;
+	std::vector<CAAddressBookRecord> addressBookList;
 	CAImageView* loadIamge;
 	int cout;
 };

@@ -1163,17 +1163,21 @@ void CAView::visit()
                                   (point.y - 0) * glScaleY + off_Y,
                                   (size.width + 0) * scaleX * glScaleX,
                                   (size.height + 0) * scaleY * glScaleY);
-        if (m_bRestoreScissor) {
-            if (frame.intersectsRect(m_obRestoreScissorRect)) {
+        if (m_bRestoreScissor)
+        {
+            if (frame.intersectsRect(m_obRestoreScissorRect))
+            {
                 float x = MAX(frame.origin.x, m_obRestoreScissorRect.origin.x);
                 float y = MAX(frame.origin.y, m_obRestoreScissorRect.origin.y);
                 float xx = MIN(frame.origin.x+frame.size.width, m_obRestoreScissorRect.origin.x+m_obRestoreScissorRect.size.width);
                 float yy = MIN(frame.origin.y+frame.size.height, m_obRestoreScissorRect.origin.y+m_obRestoreScissorRect.size.height);
-                glScissor(x, y, xx-x, yy-y);
+                glScissor(x, y, xx-x + 1.0f, yy-y + 1.0f);
             }
-        } else {
+        }
+        else
+        {
             glEnable(GL_SCISSOR_TEST);
-            glScissor(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+            glScissor(frame.origin.x, frame.origin.y, frame.size.width + 1.0f, frame.size.height + 1.0f);
         }
     }
 

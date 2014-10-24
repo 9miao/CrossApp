@@ -31,7 +31,7 @@ void PageViewTest::viewDidLoad()
 	pageViewTest->setViews(_view);
 	this->getView()->addSubview(pageViewTest);
 
-	pageControl = CAPageControl::createWithCenter(CADipRect(size.width*0.5,size.height*0.5,_px(100),_px(50)));
+	pageControl = CAPageControl::createWithCenter(CADipRect(size.width*0.5,size.height*0.5,100,50));
 	//pageControl->init();
 	pageControl->setNumberOfPages(_view.size());
 	//pageControl->setPageIndicatorTintColor(CAColor_gray);

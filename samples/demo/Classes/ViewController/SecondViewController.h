@@ -19,6 +19,7 @@ public:
 protected:
     void viewDidLoad();
     void viewDidUnload();
+	virtual void viewDidAppear();
 	void loadJsonData(void);
 
 public:

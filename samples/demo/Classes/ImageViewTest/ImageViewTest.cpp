@@ -34,7 +34,7 @@ void ImageViewTest::viewDidLoad()
 	thirdImage->setCenter(CADipRect(size.width*0.8, size.height*0.15,48,48));
 	this->getView()->addSubview(thirdImage);
 
-	CALabel* imageView = CALabel::createWithCenter(CADipRect(size.width*0.25, size.height*0.4, size.width*0.4, _px(50)));
+	CALabel* imageView = CALabel::createWithCenter(CADipRect(size.width*0.25, size.height*0.4, size.width*0.4, 50));
 	imageView->setText("ImageView");
 	imageView->setFontSize(_px(30));
 	imageView->setColor(ccc4(51, 204, 255, 255));

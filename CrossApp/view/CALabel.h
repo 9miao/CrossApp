@@ -62,6 +62,8 @@ public:
     
     void sizeToFit();
     
+    void unsizeToFit();
+    
 protected:
     
     virtual void setContentSize(const CCSize& var);

@@ -7,7 +7,7 @@
 //
 
 #import "CALocation.h"
-#include "CALocationManager.h"
+#include "../CADevice.h"
 @implementation CALocation
 
 -(id)init
@@ -63,7 +63,7 @@
                       currLocation.altitude];
     
 
-    CALocationManager *_locations = (CALocationManager *)self.location;
+    CALocationDelegate *_locations = (CALocationDelegate *)self.location;
     
     if(_locations == NULL)
     {
@@ -82,7 +82,7 @@
     dic->setObject(_str1, "longitude");
     dic->setObject(_str2, "altitude");
 
-    _locations->getLocationDelegate()->getLocations(dic);
+    _locations->getLocations(dic);
     [self stopUpdatingLocation];
 
 }

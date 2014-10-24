@@ -41,10 +41,37 @@
 		B0090CE3198A41F000BD8CDA /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0090CE2198A41F000BD8CDA /* bg.jpg */; };
 		B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145A190A6A3700C3633B /* CAUIHelper.cpp */; };
 		B0352A7C19C18263005D85D0 /* background in Resources */ = {isa = PBXBuildFile; fileRef = B0352A7B19C18263005D85D0 /* background */; };
-		B03E9018193897CC00FD9A06 /* CAMediaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E9004193897CC00FD9A06 /* CAMediaManager.mm */; };
-		B03E901C193897CC00FD9A06 /* CALocationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E900E193897CC00FD9A06 /* CALocationManager.mm */; };
-		B03E90241938990600FD9A06 /* CAAddressManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E90221938990600FD9A06 /* CAAddressManager.mm */; };
 		B047B92D19E91DAF00F24BE6 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B92B19E91DAF00F24BE6 /* DownloadManager.cpp */; };
+		B048219119FA3D890019F1A7 /* CADevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B048218119FA3D890019F1A7 /* CADevice.cpp */; };
+		B04821EA19FA3E930019F1A7 /* ActivityIndicatorViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B048219B19FA3E930019F1A7 /* ActivityIndicatorViewTest.cpp */; };
+		B04821EB19FA3E930019F1A7 /* AlertViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B048219E19FA3E930019F1A7 /* AlertViewTest.cpp */; };
+		B04821EC19FA3E930019F1A7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821A019FA3E930019F1A7 /* AppDelegate.cpp */; };
+		B04821ED19FA3E930019F1A7 /* ButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821A419FA3E930019F1A7 /* ButtonTest.cpp */; };
+		B04821EE19FA3E930019F1A7 /* CollectionViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821A719FA3E930019F1A7 /* CollectionViewTest.cpp */; };
+		B04821EF19FA3E930019F1A7 /* AddressBookTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821AB19FA3E930019F1A7 /* AddressBookTest.cpp */; };
+		B04821F019FA3E930019F1A7 /* ExtensionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821AD19FA3E930019F1A7 /* ExtensionsTest.cpp */; };
+		B04821F119FA3E930019F1A7 /* HttpRequestTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821AF19FA3E930019F1A7 /* HttpRequestTest.cpp */; };
+		B04821F219FA3E930019F1A7 /* ImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821B319FA3E930019F1A7 /* ImageViewTest.cpp */; };
+		B04821F319FA3E930019F1A7 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821B619FA3E930019F1A7 /* LabelTest.cpp */; };
+		B04821F419FA3E930019F1A7 /* ListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821B919FA3E930019F1A7 /* ListViewTest.cpp */; };
+		B04821F519FA3E930019F1A7 /* MyListViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821BB19FA3E930019F1A7 /* MyListViewCell.cpp */; };
+		B04821F619FA3E930019F1A7 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821BD19FA3E930019F1A7 /* MainMenu.cpp */; };
+		B04821F719FA3E930019F1A7 /* PageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821C019FA3E930019F1A7 /* PageViewTest.cpp */; };
+		B04821F819FA3E930019F1A7 /* ProgressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821C319FA3E930019F1A7 /* ProgressTest.cpp */; };
+		B04821F919FA3E930019F1A7 /* ScrollViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821C619FA3E930019F1A7 /* ScrollViewTest.cpp */; };
+		B04821FA19FA3E930019F1A7 /* SegmentedControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821C919FA3E930019F1A7 /* SegmentedControlTest.cpp */; };
+		B04821FB19FA3E930019F1A7 /* SliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821CC19FA3E930019F1A7 /* SliderTest.cpp */; };
+		B04821FC19FA3E930019F1A7 /* SwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821CF19FA3E930019F1A7 /* SwitchTest.cpp */; };
+		B04821FD19FA3E930019F1A7 /* TabBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821D219FA3E930019F1A7 /* TabBarTest.cpp */; };
+		B04821FE19FA3E930019F1A7 /* MyTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821D519FA3E930019F1A7 /* MyTableViewCell.cpp */; };
+		B04821FF19FA3E930019F1A7 /* TableViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821D719FA3E930019F1A7 /* TableViewTest.cpp */; };
+		B048220019FA3E930019F1A7 /* TextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821DA19FA3E930019F1A7 /* TextFieldTest.cpp */; };
+		B048220119FA3E930019F1A7 /* TextViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821DD19FA3E930019F1A7 /* TextViewTest.cpp */; };
+		B048220219FA3E930019F1A7 /* FifthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821E019FA3E930019F1A7 /* FifthViewController.cpp */; };
+		B048220319FA3E930019F1A7 /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821E219FA3E930019F1A7 /* FirstViewController.cpp */; };
+		B048220419FA3E930019F1A7 /* FourthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821E419FA3E930019F1A7 /* FourthViewController.cpp */; };
+		B048220519FA3E930019F1A7 /* SecondViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821E619FA3E930019F1A7 /* SecondViewController.cpp */; };
+		B048220619FA3E930019F1A7 /* ThirdViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04821E819FA3E930019F1A7 /* ThirdViewController.cpp */; };
 		B04C0BB119011ED8009854FD /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0B9B19011ED8009854FD /* CSContentJsonDictionary.cpp */; };
 		B04C0BB219011ED8009854FD /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0B9D19011ED8009854FD /* DictionaryHelper.cpp */; };
 		B04C0BB319011ED8009854FD /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BA519011ED8009854FD /* json_internalarray.inl */; };
@@ -54,34 +81,6 @@
 		B04C0BB719011ED8009854FD /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAB19011ED8009854FD /* json_valueiterator.inl */; };
 		B04C0BB819011ED8009854FD /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BAC19011ED8009854FD /* json_writer.cpp */; };
 		B04C0BB919011ED8009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAE19011ED8009854FD /* sconscript */; };
-		B0ABEB7719D8F778003CB9D8 /* ActivityIndicatorViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB2B19D8F778003CB9D8 /* ActivityIndicatorViewTest.cpp */; };
-		B0ABEB7819D8F778003CB9D8 /* AlertViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB2E19D8F778003CB9D8 /* AlertViewTest.cpp */; };
-		B0ABEB7919D8F778003CB9D8 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB3019D8F778003CB9D8 /* AppDelegate.cpp */; };
-		B0ABEB7A19D8F778003CB9D8 /* ButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB3419D8F778003CB9D8 /* ButtonTest.cpp */; };
-		B0ABEB7B19D8F778003CB9D8 /* CollectionViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB3719D8F778003CB9D8 /* CollectionViewTest.cpp */; };
-		B0ABEB7C19D8F778003CB9D8 /* AddressBookTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB3B19D8F778003CB9D8 /* AddressBookTest.cpp */; };
-		B0ABEB7D19D8F778003CB9D8 /* ExtensionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB3D19D8F778003CB9D8 /* ExtensionsTest.cpp */; };
-		B0ABEB7E19D8F778003CB9D8 /* HttpRequestTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB3F19D8F778003CB9D8 /* HttpRequestTest.cpp */; };
-		B0ABEB7F19D8F778003CB9D8 /* ImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB4319D8F778003CB9D8 /* ImageViewTest.cpp */; };
-		B0ABEB8019D8F778003CB9D8 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB4619D8F778003CB9D8 /* LabelTest.cpp */; };
-		B0ABEB8119D8F778003CB9D8 /* ListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB4919D8F778003CB9D8 /* ListViewTest.cpp */; };
-		B0ABEB8219D8F778003CB9D8 /* MyListViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB4B19D8F778003CB9D8 /* MyListViewCell.cpp */; };
-		B0ABEB8319D8F778003CB9D8 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB4D19D8F778003CB9D8 /* MainMenu.cpp */; };
-		B0ABEB8419D8F778003CB9D8 /* PageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB5019D8F778003CB9D8 /* PageViewTest.cpp */; };
-		B0ABEB8519D8F778003CB9D8 /* ProgressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB5319D8F778003CB9D8 /* ProgressTest.cpp */; };
-		B0ABEB8619D8F778003CB9D8 /* ScrollViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB5619D8F778003CB9D8 /* ScrollViewTest.cpp */; };
-		B0ABEB8719D8F778003CB9D8 /* SegmentedControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB5919D8F778003CB9D8 /* SegmentedControlTest.cpp */; };
-		B0ABEB8819D8F778003CB9D8 /* SliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB5C19D8F778003CB9D8 /* SliderTest.cpp */; };
-		B0ABEB8919D8F778003CB9D8 /* SwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB5F19D8F778003CB9D8 /* SwitchTest.cpp */; };
-		B0ABEB8A19D8F778003CB9D8 /* TabBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB6219D8F778003CB9D8 /* TabBarTest.cpp */; };
-		B0ABEB8B19D8F778003CB9D8 /* MyTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB6519D8F778003CB9D8 /* MyTableViewCell.cpp */; };
-		B0ABEB8C19D8F778003CB9D8 /* TableViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB6719D8F778003CB9D8 /* TableViewTest.cpp */; };
-		B0ABEB8D19D8F778003CB9D8 /* TextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB6A19D8F778003CB9D8 /* TextFieldTest.cpp */; };
-		B0ABEB8E19D8F778003CB9D8 /* FifthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB6D19D8F778003CB9D8 /* FifthViewController.cpp */; };
-		B0ABEB8F19D8F778003CB9D8 /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB6F19D8F778003CB9D8 /* FirstViewController.cpp */; };
-		B0ABEB9019D8F778003CB9D8 /* FourthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB7119D8F778003CB9D8 /* FourthViewController.cpp */; };
-		B0ABEB9119D8F778003CB9D8 /* SecondViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB7319D8F778003CB9D8 /* SecondViewController.cpp */; };
-		B0ABEB9219D8F778003CB9D8 /* ThirdViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ABEB7519D8F778003CB9D8 /* ThirdViewController.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,14 +156,71 @@
 		B02A145A190A6A3700C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
 		B02A145B190A6A3700C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
 		B0352A7B19C18263005D85D0 /* background */ = {isa = PBXFileReference; lastKnownFileType = folder; path = background; sourceTree = "<group>"; };
-		B03E8FF4193897CC00FD9A06 /* CAAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressManager.h; sourceTree = "<group>"; };
-		B03E8FFE193897CC00FD9A06 /* CAMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMediaManager.h; sourceTree = "<group>"; };
-		B03E9004193897CC00FD9A06 /* CAMediaManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAMediaManager.mm; sourceTree = "<group>"; };
-		B03E900A193897CC00FD9A06 /* CALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocationManager.h; sourceTree = "<group>"; };
-		B03E900E193897CC00FD9A06 /* CALocationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocationManager.mm; sourceTree = "<group>"; };
-		B03E90221938990600FD9A06 /* CAAddressManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddressManager.mm; sourceTree = "<group>"; };
 		B047B92B19E91DAF00F24BE6 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
 		B047B92C19E91DAF00F24BE6 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
+		B048218119FA3D890019F1A7 /* CADevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADevice.cpp; sourceTree = "<group>"; };
+		B048218219FA3D890019F1A7 /* CADevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADevice.h; sourceTree = "<group>"; };
+		B048219B19FA3E930019F1A7 /* ActivityIndicatorViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActivityIndicatorViewTest.cpp; sourceTree = "<group>"; };
+		B048219C19FA3E930019F1A7 /* ActivityIndicatorViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityIndicatorViewTest.h; sourceTree = "<group>"; };
+		B048219E19FA3E930019F1A7 /* AlertViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertViewTest.cpp; sourceTree = "<group>"; };
+		B048219F19FA3E930019F1A7 /* AlertViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewTest.h; sourceTree = "<group>"; };
+		B04821A019FA3E930019F1A7 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
+		B04821A119FA3E930019F1A7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
+		B04821A219FA3E930019F1A7 /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
+		B04821A419FA3E930019F1A7 /* ButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonTest.cpp; sourceTree = "<group>"; };
+		B04821A519FA3E930019F1A7 /* ButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTest.h; sourceTree = "<group>"; };
+		B04821A719FA3E930019F1A7 /* CollectionViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollectionViewTest.cpp; sourceTree = "<group>"; };
+		B04821A819FA3E930019F1A7 /* CollectionViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewTest.h; sourceTree = "<group>"; };
+		B04821A919FA3E930019F1A7 /* Demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Demo.h; path = ../Classes/Demo.h; sourceTree = "<group>"; };
+		B04821AB19FA3E930019F1A7 /* AddressBookTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AddressBookTest.cpp; sourceTree = "<group>"; };
+		B04821AC19FA3E930019F1A7 /* AddressBookTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookTest.h; sourceTree = "<group>"; };
+		B04821AD19FA3E930019F1A7 /* ExtensionsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionsTest.cpp; sourceTree = "<group>"; };
+		B04821AE19FA3E930019F1A7 /* ExtensionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionsTest.h; sourceTree = "<group>"; };
+		B04821AF19FA3E930019F1A7 /* HttpRequestTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequestTest.cpp; sourceTree = "<group>"; };
+		B04821B019FA3E930019F1A7 /* HttpRequestTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestTest.h; sourceTree = "<group>"; };
+		B04821B119FA3E930019F1A7 /* Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Info.h; sourceTree = "<group>"; };
+		B04821B319FA3E930019F1A7 /* ImageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageViewTest.cpp; sourceTree = "<group>"; };
+		B04821B419FA3E930019F1A7 /* ImageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewTest.h; sourceTree = "<group>"; };
+		B04821B619FA3E930019F1A7 /* LabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTest.cpp; sourceTree = "<group>"; };
+		B04821B719FA3E930019F1A7 /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTest.h; sourceTree = "<group>"; };
+		B04821B919FA3E930019F1A7 /* ListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListViewTest.cpp; sourceTree = "<group>"; };
+		B04821BA19FA3E930019F1A7 /* ListViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewTest.h; sourceTree = "<group>"; };
+		B04821BB19FA3E930019F1A7 /* MyListViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyListViewCell.cpp; sourceTree = "<group>"; };
+		B04821BC19FA3E930019F1A7 /* MyListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyListViewCell.h; sourceTree = "<group>"; };
+		B04821BD19FA3E930019F1A7 /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainMenu.cpp; path = ../Classes/MainMenu.cpp; sourceTree = "<group>"; };
+		B04821BE19FA3E930019F1A7 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = ../Classes/MainMenu.h; sourceTree = "<group>"; };
+		B04821C019FA3E930019F1A7 /* PageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PageViewTest.cpp; sourceTree = "<group>"; };
+		B04821C119FA3E930019F1A7 /* PageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewTest.h; sourceTree = "<group>"; };
+		B04821C319FA3E930019F1A7 /* ProgressTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressTest.cpp; sourceTree = "<group>"; };
+		B04821C419FA3E930019F1A7 /* ProgressTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressTest.h; sourceTree = "<group>"; };
+		B04821C619FA3E930019F1A7 /* ScrollViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollViewTest.cpp; sourceTree = "<group>"; };
+		B04821C719FA3E930019F1A7 /* ScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewTest.h; sourceTree = "<group>"; };
+		B04821C919FA3E930019F1A7 /* SegmentedControlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SegmentedControlTest.cpp; sourceTree = "<group>"; };
+		B04821CA19FA3E930019F1A7 /* SegmentedControlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlTest.h; sourceTree = "<group>"; };
+		B04821CC19FA3E930019F1A7 /* SliderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SliderTest.cpp; sourceTree = "<group>"; };
+		B04821CD19FA3E930019F1A7 /* SliderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderTest.h; sourceTree = "<group>"; };
+		B04821CF19FA3E930019F1A7 /* SwitchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwitchTest.cpp; sourceTree = "<group>"; };
+		B04821D019FA3E930019F1A7 /* SwitchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchTest.h; sourceTree = "<group>"; };
+		B04821D219FA3E930019F1A7 /* TabBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabBarTest.cpp; sourceTree = "<group>"; };
+		B04821D319FA3E930019F1A7 /* TabBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarTest.h; sourceTree = "<group>"; };
+		B04821D519FA3E930019F1A7 /* MyTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyTableViewCell.cpp; sourceTree = "<group>"; };
+		B04821D619FA3E930019F1A7 /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
+		B04821D719FA3E930019F1A7 /* TableViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTest.cpp; sourceTree = "<group>"; };
+		B04821D819FA3E930019F1A7 /* TableViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTest.h; sourceTree = "<group>"; };
+		B04821DA19FA3E930019F1A7 /* TextFieldTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextFieldTest.cpp; sourceTree = "<group>"; };
+		B04821DB19FA3E930019F1A7 /* TextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldTest.h; sourceTree = "<group>"; };
+		B04821DD19FA3E930019F1A7 /* TextViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextViewTest.cpp; sourceTree = "<group>"; };
+		B04821DE19FA3E930019F1A7 /* TextViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewTest.h; sourceTree = "<group>"; };
+		B04821E019FA3E930019F1A7 /* FifthViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FifthViewController.cpp; sourceTree = "<group>"; };
+		B04821E119FA3E930019F1A7 /* FifthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FifthViewController.h; sourceTree = "<group>"; };
+		B04821E219FA3E930019F1A7 /* FirstViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FirstViewController.cpp; sourceTree = "<group>"; };
+		B04821E319FA3E930019F1A7 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		B04821E419FA3E930019F1A7 /* FourthViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FourthViewController.cpp; sourceTree = "<group>"; };
+		B04821E519FA3E930019F1A7 /* FourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourthViewController.h; sourceTree = "<group>"; };
+		B04821E619FA3E930019F1A7 /* SecondViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SecondViewController.cpp; sourceTree = "<group>"; };
+		B04821E719FA3E930019F1A7 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		B04821E819FA3E930019F1A7 /* ThirdViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThirdViewController.cpp; sourceTree = "<group>"; };
+		B04821E919FA3E930019F1A7 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
 		B04C0B9B19011ED8009854FD /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
 		B04C0B9C19011ED8009854FD /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		B04C0B9D19011ED8009854FD /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
@@ -187,65 +243,6 @@
 		B04C0BAF19011ED8009854FD /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		B04C0BB019011ED8009854FD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		B05637581952735100C63FAA /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
-		B0ABEB2B19D8F778003CB9D8 /* ActivityIndicatorViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActivityIndicatorViewTest.cpp; sourceTree = "<group>"; };
-		B0ABEB2C19D8F778003CB9D8 /* ActivityIndicatorViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityIndicatorViewTest.h; sourceTree = "<group>"; };
-		B0ABEB2E19D8F778003CB9D8 /* AlertViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertViewTest.cpp; sourceTree = "<group>"; };
-		B0ABEB2F19D8F778003CB9D8 /* AlertViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewTest.h; sourceTree = "<group>"; };
-		B0ABEB3019D8F778003CB9D8 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
-		B0ABEB3119D8F778003CB9D8 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
-		B0ABEB3219D8F778003CB9D8 /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
-		B0ABEB3419D8F778003CB9D8 /* ButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonTest.cpp; sourceTree = "<group>"; };
-		B0ABEB3519D8F778003CB9D8 /* ButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTest.h; sourceTree = "<group>"; };
-		B0ABEB3719D8F778003CB9D8 /* CollectionViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollectionViewTest.cpp; sourceTree = "<group>"; };
-		B0ABEB3819D8F778003CB9D8 /* CollectionViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewTest.h; sourceTree = "<group>"; };
-		B0ABEB3919D8F778003CB9D8 /* Demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Demo.h; path = ../Classes/Demo.h; sourceTree = "<group>"; };
-		B0ABEB3B19D8F778003CB9D8 /* AddressBookTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AddressBookTest.cpp; sourceTree = "<group>"; };
-		B0ABEB3C19D8F778003CB9D8 /* AddressBookTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookTest.h; sourceTree = "<group>"; };
-		B0ABEB3D19D8F778003CB9D8 /* ExtensionsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionsTest.cpp; sourceTree = "<group>"; };
-		B0ABEB3E19D8F778003CB9D8 /* ExtensionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionsTest.h; sourceTree = "<group>"; };
-		B0ABEB3F19D8F778003CB9D8 /* HttpRequestTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequestTest.cpp; sourceTree = "<group>"; };
-		B0ABEB4019D8F778003CB9D8 /* HttpRequestTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestTest.h; sourceTree = "<group>"; };
-		B0ABEB4119D8F778003CB9D8 /* Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Info.h; sourceTree = "<group>"; };
-		B0ABEB4319D8F778003CB9D8 /* ImageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageViewTest.cpp; sourceTree = "<group>"; };
-		B0ABEB4419D8F778003CB9D8 /* ImageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewTest.h; sourceTree = "<group>"; };
-		B0ABEB4619D8F778003CB9D8 /* LabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTest.cpp; sourceTree = "<group>"; };
-		B0ABEB4719D8F778003CB9D8 /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTest.h; sourceTree = "<group>"; };
-		B0ABEB4919D8F778003CB9D8 /* ListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListViewTest.cpp; sourceTree = "<group>"; };
-		B0ABEB4A19D8F778003CB9D8 /* ListViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewTest.h; sourceTree = "<group>"; };
-		B0ABEB4B19D8F778003CB9D8 /* MyListViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyListViewCell.cpp; sourceTree = "<group>"; };
-		B0ABEB4C19D8F778003CB9D8 /* MyListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyListViewCell.h; sourceTree = "<group>"; };
-		B0ABEB4D19D8F778003CB9D8 /* MainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainMenu.cpp; path = ../Classes/MainMenu.cpp; sourceTree = "<group>"; };
-		B0ABEB4E19D8F778003CB9D8 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = ../Classes/MainMenu.h; sourceTree = "<group>"; };
-		B0ABEB5019D8F778003CB9D8 /* PageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PageViewTest.cpp; sourceTree = "<group>"; };
-		B0ABEB5119D8F778003CB9D8 /* PageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewTest.h; sourceTree = "<group>"; };
-		B0ABEB5319D8F778003CB9D8 /* ProgressTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressTest.cpp; sourceTree = "<group>"; };
-		B0ABEB5419D8F778003CB9D8 /* ProgressTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressTest.h; sourceTree = "<group>"; };
-		B0ABEB5619D8F778003CB9D8 /* ScrollViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollViewTest.cpp; sourceTree = "<group>"; };
-		B0ABEB5719D8F778003CB9D8 /* ScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewTest.h; sourceTree = "<group>"; };
-		B0ABEB5919D8F778003CB9D8 /* SegmentedControlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SegmentedControlTest.cpp; sourceTree = "<group>"; };
-		B0ABEB5A19D8F778003CB9D8 /* SegmentedControlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlTest.h; sourceTree = "<group>"; };
-		B0ABEB5C19D8F778003CB9D8 /* SliderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SliderTest.cpp; sourceTree = "<group>"; };
-		B0ABEB5D19D8F778003CB9D8 /* SliderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderTest.h; sourceTree = "<group>"; };
-		B0ABEB5F19D8F778003CB9D8 /* SwitchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwitchTest.cpp; sourceTree = "<group>"; };
-		B0ABEB6019D8F778003CB9D8 /* SwitchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchTest.h; sourceTree = "<group>"; };
-		B0ABEB6219D8F778003CB9D8 /* TabBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabBarTest.cpp; sourceTree = "<group>"; };
-		B0ABEB6319D8F778003CB9D8 /* TabBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarTest.h; sourceTree = "<group>"; };
-		B0ABEB6519D8F778003CB9D8 /* MyTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyTableViewCell.cpp; sourceTree = "<group>"; };
-		B0ABEB6619D8F778003CB9D8 /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
-		B0ABEB6719D8F778003CB9D8 /* TableViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTest.cpp; sourceTree = "<group>"; };
-		B0ABEB6819D8F778003CB9D8 /* TableViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTest.h; sourceTree = "<group>"; };
-		B0ABEB6A19D8F778003CB9D8 /* TextFieldTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextFieldTest.cpp; sourceTree = "<group>"; };
-		B0ABEB6B19D8F778003CB9D8 /* TextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldTest.h; sourceTree = "<group>"; };
-		B0ABEB6D19D8F778003CB9D8 /* FifthViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FifthViewController.cpp; sourceTree = "<group>"; };
-		B0ABEB6E19D8F778003CB9D8 /* FifthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FifthViewController.h; sourceTree = "<group>"; };
-		B0ABEB6F19D8F778003CB9D8 /* FirstViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FirstViewController.cpp; sourceTree = "<group>"; };
-		B0ABEB7019D8F778003CB9D8 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		B0ABEB7119D8F778003CB9D8 /* FourthViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FourthViewController.cpp; sourceTree = "<group>"; };
-		B0ABEB7219D8F778003CB9D8 /* FourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourthViewController.h; sourceTree = "<group>"; };
-		B0ABEB7319D8F778003CB9D8 /* SecondViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SecondViewController.cpp; sourceTree = "<group>"; };
-		B0ABEB7419D8F778003CB9D8 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		B0ABEB7519D8F778003CB9D8 /* ThirdViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThirdViewController.cpp; sourceTree = "<group>"; };
-		B0ABEB7619D8F778003CB9D8 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,30 +279,31 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				B0ABEB2A19D8F778003CB9D8 /* ActivityIndicatorViewTest */,
-				B0ABEB2D19D8F778003CB9D8 /* AlertViewTest */,
-				B0ABEB3019D8F778003CB9D8 /* AppDelegate.cpp */,
-				B0ABEB3119D8F778003CB9D8 /* AppDelegate.h */,
-				B0ABEB3219D8F778003CB9D8 /* AppMacros.h */,
-				B0ABEB3319D8F778003CB9D8 /* ButtonTest */,
-				B0ABEB3619D8F778003CB9D8 /* CollectionViewTest */,
-				B0ABEB3919D8F778003CB9D8 /* Demo.h */,
-				B0ABEB3A19D8F778003CB9D8 /* ExtensionsTest */,
-				B0ABEB4219D8F778003CB9D8 /* ImageViewTest */,
-				B0ABEB4519D8F778003CB9D8 /* LabelTest */,
-				B0ABEB4819D8F778003CB9D8 /* ListViewTest */,
-				B0ABEB4D19D8F778003CB9D8 /* MainMenu.cpp */,
-				B0ABEB4E19D8F778003CB9D8 /* MainMenu.h */,
-				B0ABEB4F19D8F778003CB9D8 /* PageViewTest */,
-				B0ABEB5219D8F778003CB9D8 /* ProgressTest */,
-				B0ABEB5519D8F778003CB9D8 /* ScrollViewTest */,
-				B0ABEB5819D8F778003CB9D8 /* SegmentedControlTest */,
-				B0ABEB5B19D8F778003CB9D8 /* SliderTest */,
-				B0ABEB5E19D8F778003CB9D8 /* SwitchTest */,
-				B0ABEB6119D8F778003CB9D8 /* TabBarTest */,
-				B0ABEB6419D8F778003CB9D8 /* TableViewTest */,
-				B0ABEB6919D8F778003CB9D8 /* TextFieldTest */,
-				B0ABEB6C19D8F778003CB9D8 /* ViewController */,
+				B048219A19FA3E930019F1A7 /* ActivityIndicatorViewTest */,
+				B048219D19FA3E930019F1A7 /* AlertViewTest */,
+				B04821A019FA3E930019F1A7 /* AppDelegate.cpp */,
+				B04821A119FA3E930019F1A7 /* AppDelegate.h */,
+				B04821A219FA3E930019F1A7 /* AppMacros.h */,
+				B04821A319FA3E930019F1A7 /* ButtonTest */,
+				B04821A619FA3E930019F1A7 /* CollectionViewTest */,
+				B04821A919FA3E930019F1A7 /* Demo.h */,
+				B04821AA19FA3E930019F1A7 /* ExtensionsTest */,
+				B04821B219FA3E930019F1A7 /* ImageViewTest */,
+				B04821B519FA3E930019F1A7 /* LabelTest */,
+				B04821B819FA3E930019F1A7 /* ListViewTest */,
+				B04821BD19FA3E930019F1A7 /* MainMenu.cpp */,
+				B04821BE19FA3E930019F1A7 /* MainMenu.h */,
+				B04821BF19FA3E930019F1A7 /* PageViewTest */,
+				B04821C219FA3E930019F1A7 /* ProgressTest */,
+				B04821C519FA3E930019F1A7 /* ScrollViewTest */,
+				B04821C819FA3E930019F1A7 /* SegmentedControlTest */,
+				B04821CB19FA3E930019F1A7 /* SliderTest */,
+				B04821CE19FA3E930019F1A7 /* SwitchTest */,
+				B04821D119FA3E930019F1A7 /* TabBarTest */,
+				B04821D419FA3E930019F1A7 /* TableViewTest */,
+				B04821D919FA3E930019F1A7 /* TextFieldTest */,
+				B04821DC19FA3E930019F1A7 /* TextViewTest */,
+				B04821DF19FA3E930019F1A7 /* ViewController */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -333,11 +331,11 @@
 		15C1589C168315E500D239F2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
-				B01A29561994E26200D42BA0 /* libwebsockets */,
-				B01A29481994E24B00D42BA0 /* sqlite3 */,
 				B05637581952735100C63FAA /* CrossAppExt.h */,
 				15C158D4168315E500D239F2 /* ExtensionMacros.h */,
-				B03E8FF0193897CC00FD9A06 /* other */,
+				B048218019FA3D890019F1A7 /* device */,
+				B01A29561994E26200D42BA0 /* libwebsockets */,
+				B01A29481994E24B00D42BA0 /* sqlite3 */,
 				B04C0B9A19011ED8009854FD /* Json */,
 				15C158D5168315E500D239F2 /* GUI */,
 				1A9CE97E1765A7FA000E3062 /* LocalStorage */,
@@ -503,65 +501,220 @@
 			path = include;
 			sourceTree = "<group>";
 		};
-		B03E8FF0193897CC00FD9A06 /* other */ = {
+		B048218019FA3D890019F1A7 /* device */ = {
 			isa = PBXGroup;
 			children = (
-				B03E8FF1193897CC00FD9A06 /* CAAdress */,
-				B03E8FFB193897CC00FD9A06 /* CACamera */,
-				B03E9007193897CC00FD9A06 /* CALocation */,
+				B048218119FA3D890019F1A7 /* CADevice.cpp */,
+				B048218219FA3D890019F1A7 /* CADevice.h */,
 			);
-			path = other;
+			path = device;
 			sourceTree = "<group>";
 		};
-		B03E8FF1193897CC00FD9A06 /* CAAdress */ = {
+		B048219A19FA3E930019F1A7 /* ActivityIndicatorViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				B03E901F1938990600FD9A06 /* ios */,
-				B03E8FF4193897CC00FD9A06 /* CAAddressManager.h */,
+				B048219B19FA3E930019F1A7 /* ActivityIndicatorViewTest.cpp */,
+				B048219C19FA3E930019F1A7 /* ActivityIndicatorViewTest.h */,
 			);
-			path = CAAdress;
+			name = ActivityIndicatorViewTest;
+			path = ../Classes/ActivityIndicatorViewTest;
 			sourceTree = "<group>";
 		};
-		B03E8FFB193897CC00FD9A06 /* CACamera */ = {
+		B048219D19FA3E930019F1A7 /* AlertViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				B03E8FFE193897CC00FD9A06 /* CAMediaManager.h */,
-				B03E8FFF193897CC00FD9A06 /* ios */,
+				B048219E19FA3E930019F1A7 /* AlertViewTest.cpp */,
+				B048219F19FA3E930019F1A7 /* AlertViewTest.h */,
 			);
-			path = CACamera;
+			name = AlertViewTest;
+			path = ../Classes/AlertViewTest;
 			sourceTree = "<group>";
 		};
-		B03E8FFF193897CC00FD9A06 /* ios */ = {
+		B04821A319FA3E930019F1A7 /* ButtonTest */ = {
 			isa = PBXGroup;
 			children = (
-				B03E9004193897CC00FD9A06 /* CAMediaManager.mm */,
+				B04821A419FA3E930019F1A7 /* ButtonTest.cpp */,
+				B04821A519FA3E930019F1A7 /* ButtonTest.h */,
 			);
-			path = ios;
+			name = ButtonTest;
+			path = ../Classes/ButtonTest;
 			sourceTree = "<group>";
 		};
-		B03E9007193897CC00FD9A06 /* CALocation */ = {
+		B04821A619FA3E930019F1A7 /* CollectionViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				B03E900A193897CC00FD9A06 /* CALocationManager.h */,
-				B03E900B193897CC00FD9A06 /* ios */,
+				B04821A719FA3E930019F1A7 /* CollectionViewTest.cpp */,
+				B04821A819FA3E930019F1A7 /* CollectionViewTest.h */,
 			);
-			path = CALocation;
+			name = CollectionViewTest;
+			path = ../Classes/CollectionViewTest;
 			sourceTree = "<group>";
 		};
-		B03E900B193897CC00FD9A06 /* ios */ = {
+		B04821AA19FA3E930019F1A7 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
-				B03E900E193897CC00FD9A06 /* CALocationManager.mm */,
+				B04821AB19FA3E930019F1A7 /* AddressBookTest.cpp */,
+				B04821AC19FA3E930019F1A7 /* AddressBookTest.h */,
+				B04821AD19FA3E930019F1A7 /* ExtensionsTest.cpp */,
+				B04821AE19FA3E930019F1A7 /* ExtensionsTest.h */,
+				B04821AF19FA3E930019F1A7 /* HttpRequestTest.cpp */,
+				B04821B019FA3E930019F1A7 /* HttpRequestTest.h */,
+				B04821B119FA3E930019F1A7 /* Info.h */,
 			);
-			path = ios;
+			name = ExtensionsTest;
+			path = ../Classes/ExtensionsTest;
 			sourceTree = "<group>";
 		};
-		B03E901F1938990600FD9A06 /* ios */ = {
+		B04821B219FA3E930019F1A7 /* ImageViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				B03E90221938990600FD9A06 /* CAAddressManager.mm */,
+				B04821B319FA3E930019F1A7 /* ImageViewTest.cpp */,
+				B04821B419FA3E930019F1A7 /* ImageViewTest.h */,
 			);
-			path = ios;
+			name = ImageViewTest;
+			path = ../Classes/ImageViewTest;
+			sourceTree = "<group>";
+		};
+		B04821B519FA3E930019F1A7 /* LabelTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821B619FA3E930019F1A7 /* LabelTest.cpp */,
+				B04821B719FA3E930019F1A7 /* LabelTest.h */,
+			);
+			name = LabelTest;
+			path = ../Classes/LabelTest;
+			sourceTree = "<group>";
+		};
+		B04821B819FA3E930019F1A7 /* ListViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821B919FA3E930019F1A7 /* ListViewTest.cpp */,
+				B04821BA19FA3E930019F1A7 /* ListViewTest.h */,
+				B04821BB19FA3E930019F1A7 /* MyListViewCell.cpp */,
+				B04821BC19FA3E930019F1A7 /* MyListViewCell.h */,
+			);
+			name = ListViewTest;
+			path = ../Classes/ListViewTest;
+			sourceTree = "<group>";
+		};
+		B04821BF19FA3E930019F1A7 /* PageViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821C019FA3E930019F1A7 /* PageViewTest.cpp */,
+				B04821C119FA3E930019F1A7 /* PageViewTest.h */,
+			);
+			name = PageViewTest;
+			path = ../Classes/PageViewTest;
+			sourceTree = "<group>";
+		};
+		B04821C219FA3E930019F1A7 /* ProgressTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821C319FA3E930019F1A7 /* ProgressTest.cpp */,
+				B04821C419FA3E930019F1A7 /* ProgressTest.h */,
+			);
+			name = ProgressTest;
+			path = ../Classes/ProgressTest;
+			sourceTree = "<group>";
+		};
+		B04821C519FA3E930019F1A7 /* ScrollViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821C619FA3E930019F1A7 /* ScrollViewTest.cpp */,
+				B04821C719FA3E930019F1A7 /* ScrollViewTest.h */,
+			);
+			name = ScrollViewTest;
+			path = ../Classes/ScrollViewTest;
+			sourceTree = "<group>";
+		};
+		B04821C819FA3E930019F1A7 /* SegmentedControlTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821C919FA3E930019F1A7 /* SegmentedControlTest.cpp */,
+				B04821CA19FA3E930019F1A7 /* SegmentedControlTest.h */,
+			);
+			name = SegmentedControlTest;
+			path = ../Classes/SegmentedControlTest;
+			sourceTree = "<group>";
+		};
+		B04821CB19FA3E930019F1A7 /* SliderTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821CC19FA3E930019F1A7 /* SliderTest.cpp */,
+				B04821CD19FA3E930019F1A7 /* SliderTest.h */,
+			);
+			name = SliderTest;
+			path = ../Classes/SliderTest;
+			sourceTree = "<group>";
+		};
+		B04821CE19FA3E930019F1A7 /* SwitchTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821CF19FA3E930019F1A7 /* SwitchTest.cpp */,
+				B04821D019FA3E930019F1A7 /* SwitchTest.h */,
+			);
+			name = SwitchTest;
+			path = ../Classes/SwitchTest;
+			sourceTree = "<group>";
+		};
+		B04821D119FA3E930019F1A7 /* TabBarTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821D219FA3E930019F1A7 /* TabBarTest.cpp */,
+				B04821D319FA3E930019F1A7 /* TabBarTest.h */,
+			);
+			name = TabBarTest;
+			path = ../Classes/TabBarTest;
+			sourceTree = "<group>";
+		};
+		B04821D419FA3E930019F1A7 /* TableViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821D519FA3E930019F1A7 /* MyTableViewCell.cpp */,
+				B04821D619FA3E930019F1A7 /* MyTableViewCell.h */,
+				B04821D719FA3E930019F1A7 /* TableViewTest.cpp */,
+				B04821D819FA3E930019F1A7 /* TableViewTest.h */,
+			);
+			name = TableViewTest;
+			path = ../Classes/TableViewTest;
+			sourceTree = "<group>";
+		};
+		B04821D919FA3E930019F1A7 /* TextFieldTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821DA19FA3E930019F1A7 /* TextFieldTest.cpp */,
+				B04821DB19FA3E930019F1A7 /* TextFieldTest.h */,
+			);
+			name = TextFieldTest;
+			path = ../Classes/TextFieldTest;
+			sourceTree = "<group>";
+		};
+		B04821DC19FA3E930019F1A7 /* TextViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				B04821DD19FA3E930019F1A7 /* TextViewTest.cpp */,
+				B04821DE19FA3E930019F1A7 /* TextViewTest.h */,
+			);
+			name = TextViewTest;
+			path = ../Classes/TextViewTest;
+			sourceTree = "<group>";
+		};
+		B04821DF19FA3E930019F1A7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B04821E019FA3E930019F1A7 /* FifthViewController.cpp */,
+				B04821E119FA3E930019F1A7 /* FifthViewController.h */,
+				B04821E219FA3E930019F1A7 /* FirstViewController.cpp */,
+				B04821E319FA3E930019F1A7 /* FirstViewController.h */,
+				B04821E419FA3E930019F1A7 /* FourthViewController.cpp */,
+				B04821E519FA3E930019F1A7 /* FourthViewController.h */,
+				B04821E619FA3E930019F1A7 /* SecondViewController.cpp */,
+				B04821E719FA3E930019F1A7 /* SecondViewController.h */,
+				B04821E819FA3E930019F1A7 /* ThirdViewController.cpp */,
+				B04821E919FA3E930019F1A7 /* ThirdViewController.h */,
+			);
+			name = ViewController;
+			path = ../Classes/ViewController;
 			sourceTree = "<group>";
 		};
 		B04C0B9A19011ED8009854FD /* Json */ = {
@@ -614,203 +767,6 @@
 			);
 			name = Resources;
 			path = ../Resources;
-			sourceTree = "<group>";
-		};
-		B0ABEB2A19D8F778003CB9D8 /* ActivityIndicatorViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB2B19D8F778003CB9D8 /* ActivityIndicatorViewTest.cpp */,
-				B0ABEB2C19D8F778003CB9D8 /* ActivityIndicatorViewTest.h */,
-			);
-			name = ActivityIndicatorViewTest;
-			path = ../Classes/ActivityIndicatorViewTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB2D19D8F778003CB9D8 /* AlertViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB2E19D8F778003CB9D8 /* AlertViewTest.cpp */,
-				B0ABEB2F19D8F778003CB9D8 /* AlertViewTest.h */,
-			);
-			name = AlertViewTest;
-			path = ../Classes/AlertViewTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB3319D8F778003CB9D8 /* ButtonTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB3419D8F778003CB9D8 /* ButtonTest.cpp */,
-				B0ABEB3519D8F778003CB9D8 /* ButtonTest.h */,
-			);
-			name = ButtonTest;
-			path = ../Classes/ButtonTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB3619D8F778003CB9D8 /* CollectionViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB3719D8F778003CB9D8 /* CollectionViewTest.cpp */,
-				B0ABEB3819D8F778003CB9D8 /* CollectionViewTest.h */,
-			);
-			name = CollectionViewTest;
-			path = ../Classes/CollectionViewTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB3A19D8F778003CB9D8 /* ExtensionsTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB3B19D8F778003CB9D8 /* AddressBookTest.cpp */,
-				B0ABEB3C19D8F778003CB9D8 /* AddressBookTest.h */,
-				B0ABEB3D19D8F778003CB9D8 /* ExtensionsTest.cpp */,
-				B0ABEB3E19D8F778003CB9D8 /* ExtensionsTest.h */,
-				B0ABEB3F19D8F778003CB9D8 /* HttpRequestTest.cpp */,
-				B0ABEB4019D8F778003CB9D8 /* HttpRequestTest.h */,
-				B0ABEB4119D8F778003CB9D8 /* Info.h */,
-			);
-			name = ExtensionsTest;
-			path = ../Classes/ExtensionsTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB4219D8F778003CB9D8 /* ImageViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB4319D8F778003CB9D8 /* ImageViewTest.cpp */,
-				B0ABEB4419D8F778003CB9D8 /* ImageViewTest.h */,
-			);
-			name = ImageViewTest;
-			path = ../Classes/ImageViewTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB4519D8F778003CB9D8 /* LabelTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB4619D8F778003CB9D8 /* LabelTest.cpp */,
-				B0ABEB4719D8F778003CB9D8 /* LabelTest.h */,
-			);
-			name = LabelTest;
-			path = ../Classes/LabelTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB4819D8F778003CB9D8 /* ListViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB4919D8F778003CB9D8 /* ListViewTest.cpp */,
-				B0ABEB4A19D8F778003CB9D8 /* ListViewTest.h */,
-				B0ABEB4B19D8F778003CB9D8 /* MyListViewCell.cpp */,
-				B0ABEB4C19D8F778003CB9D8 /* MyListViewCell.h */,
-			);
-			name = ListViewTest;
-			path = ../Classes/ListViewTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB4F19D8F778003CB9D8 /* PageViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB5019D8F778003CB9D8 /* PageViewTest.cpp */,
-				B0ABEB5119D8F778003CB9D8 /* PageViewTest.h */,
-			);
-			name = PageViewTest;
-			path = ../Classes/PageViewTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB5219D8F778003CB9D8 /* ProgressTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB5319D8F778003CB9D8 /* ProgressTest.cpp */,
-				B0ABEB5419D8F778003CB9D8 /* ProgressTest.h */,
-			);
-			name = ProgressTest;
-			path = ../Classes/ProgressTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB5519D8F778003CB9D8 /* ScrollViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB5619D8F778003CB9D8 /* ScrollViewTest.cpp */,
-				B0ABEB5719D8F778003CB9D8 /* ScrollViewTest.h */,
-			);
-			name = ScrollViewTest;
-			path = ../Classes/ScrollViewTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB5819D8F778003CB9D8 /* SegmentedControlTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB5919D8F778003CB9D8 /* SegmentedControlTest.cpp */,
-				B0ABEB5A19D8F778003CB9D8 /* SegmentedControlTest.h */,
-			);
-			name = SegmentedControlTest;
-			path = ../Classes/SegmentedControlTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB5B19D8F778003CB9D8 /* SliderTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB5C19D8F778003CB9D8 /* SliderTest.cpp */,
-				B0ABEB5D19D8F778003CB9D8 /* SliderTest.h */,
-			);
-			name = SliderTest;
-			path = ../Classes/SliderTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB5E19D8F778003CB9D8 /* SwitchTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB5F19D8F778003CB9D8 /* SwitchTest.cpp */,
-				B0ABEB6019D8F778003CB9D8 /* SwitchTest.h */,
-			);
-			name = SwitchTest;
-			path = ../Classes/SwitchTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB6119D8F778003CB9D8 /* TabBarTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB6219D8F778003CB9D8 /* TabBarTest.cpp */,
-				B0ABEB6319D8F778003CB9D8 /* TabBarTest.h */,
-			);
-			name = TabBarTest;
-			path = ../Classes/TabBarTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB6419D8F778003CB9D8 /* TableViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB6519D8F778003CB9D8 /* MyTableViewCell.cpp */,
-				B0ABEB6619D8F778003CB9D8 /* MyTableViewCell.h */,
-				B0ABEB6719D8F778003CB9D8 /* TableViewTest.cpp */,
-				B0ABEB6819D8F778003CB9D8 /* TableViewTest.h */,
-			);
-			name = TableViewTest;
-			path = ../Classes/TableViewTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB6919D8F778003CB9D8 /* TextFieldTest */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB6A19D8F778003CB9D8 /* TextFieldTest.cpp */,
-				B0ABEB6B19D8F778003CB9D8 /* TextFieldTest.h */,
-			);
-			name = TextFieldTest;
-			path = ../Classes/TextFieldTest;
-			sourceTree = "<group>";
-		};
-		B0ABEB6C19D8F778003CB9D8 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				B0ABEB6D19D8F778003CB9D8 /* FifthViewController.cpp */,
-				B0ABEB6E19D8F778003CB9D8 /* FifthViewController.h */,
-				B0ABEB6F19D8F778003CB9D8 /* FirstViewController.cpp */,
-				B0ABEB7019D8F778003CB9D8 /* FirstViewController.h */,
-				B0ABEB7119D8F778003CB9D8 /* FourthViewController.cpp */,
-				B0ABEB7219D8F778003CB9D8 /* FourthViewController.h */,
-				B0ABEB7319D8F778003CB9D8 /* SecondViewController.cpp */,
-				B0ABEB7419D8F778003CB9D8 /* SecondViewController.h */,
-				B0ABEB7519D8F778003CB9D8 /* ThirdViewController.cpp */,
-				B0ABEB7619D8F778003CB9D8 /* ThirdViewController.h */,
-			);
-			name = ViewController;
-			path = ../Classes/ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -907,55 +863,54 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B04821F819FA3E930019F1A7 /* ProgressTest.cpp in Sources */,
+				B04821FC19FA3E930019F1A7 /* SwitchTest.cpp in Sources */,
+				B048220619FA3E930019F1A7 /* ThirdViewController.cpp in Sources */,
+				B04821FB19FA3E930019F1A7 /* SliderTest.cpp in Sources */,
 				41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */,
+				B048219119FA3D890019F1A7 /* CADevice.cpp in Sources */,
+				B04821F919FA3E930019F1A7 /* ScrollViewTest.cpp in Sources */,
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
+				B048220319FA3E930019F1A7 /* FirstViewController.cpp in Sources */,
+				B04821F719FA3E930019F1A7 /* PageViewTest.cpp in Sources */,
 				B04C0BB519011ED8009854FD /* json_reader.cpp in Sources */,
-				B0ABEB8F19D8F778003CB9D8 /* FirstViewController.cpp in Sources */,
-				B0ABEB9119D8F778003CB9D8 /* SecondViewController.cpp in Sources */,
-				B0ABEB8319D8F778003CB9D8 /* MainMenu.cpp in Sources */,
-				B0ABEB8719D8F778003CB9D8 /* SegmentedControlTest.cpp in Sources */,
-				B0ABEB7D19D8F778003CB9D8 /* ExtensionsTest.cpp in Sources */,
-				B0ABEB7719D8F778003CB9D8 /* ActivityIndicatorViewTest.cpp in Sources */,
-				B0ABEB7B19D8F778003CB9D8 /* CollectionViewTest.cpp in Sources */,
-				B0ABEB8C19D8F778003CB9D8 /* TableViewTest.cpp in Sources */,
+				B048220419FA3E930019F1A7 /* FourthViewController.cpp in Sources */,
 				B04C0BB819011ED8009854FD /* json_writer.cpp in Sources */,
+				B048220519FA3E930019F1A7 /* SecondViewController.cpp in Sources */,
 				B04C0BB219011ED8009854FD /* DictionaryHelper.cpp in Sources */,
+				B04821EE19FA3E930019F1A7 /* CollectionViewTest.cpp in Sources */,
+				B04821FA19FA3E930019F1A7 /* SegmentedControlTest.cpp in Sources */,
+				B048220019FA3E930019F1A7 /* TextFieldTest.cpp in Sources */,
 				B04C0BB619011ED8009854FD /* json_value.cpp in Sources */,
-				B0ABEB9219D8F778003CB9D8 /* ThirdViewController.cpp in Sources */,
-				B0ABEB8519D8F778003CB9D8 /* ProgressTest.cpp in Sources */,
+				B04821EA19FA3E930019F1A7 /* ActivityIndicatorViewTest.cpp in Sources */,
+				B048220219FA3E930019F1A7 /* FifthViewController.cpp in Sources */,
 				15C15946168315E500D239F2 /* HttpClient.cpp in Sources */,
+				B04821FF19FA3E930019F1A7 /* TableViewTest.cpp in Sources */,
 				B04C0BB119011ED8009854FD /* CSContentJsonDictionary.cpp in Sources */,
-				B03E901C193897CC00FD9A06 /* CALocationManager.mm in Sources */,
-				B0ABEB8E19D8F778003CB9D8 /* FifthViewController.cpp in Sources */,
-				B0ABEB7A19D8F778003CB9D8 /* ButtonTest.cpp in Sources */,
+				B04821F019FA3E930019F1A7 /* ExtensionsTest.cpp in Sources */,
+				B04821F219FA3E930019F1A7 /* ImageViewTest.cpp in Sources */,
+				B04821EB19FA3E930019F1A7 /* AlertViewTest.cpp in Sources */,
 				15D8B23E168318C3006C7997 /* CDAudioManager.m in Sources */,
-				B0ABEB8919D8F778003CB9D8 /* SwitchTest.cpp in Sources */,
-				B0ABEB8619D8F778003CB9D8 /* ScrollViewTest.cpp in Sources */,
-				B0ABEB8B19D8F778003CB9D8 /* MyTableViewCell.cpp in Sources */,
+				B04821FE19FA3E930019F1A7 /* MyTableViewCell.cpp in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
+				B04821F419FA3E930019F1A7 /* ListViewTest.cpp in Sources */,
+				B04821F519FA3E930019F1A7 /* MyListViewCell.cpp in Sources */,
+				B04821FD19FA3E930019F1A7 /* TabBarTest.cpp in Sources */,
+				B04821ED19FA3E930019F1A7 /* ButtonTest.cpp in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
-				B03E9018193897CC00FD9A06 /* CAMediaManager.mm in Sources */,
-				B0ABEB7E19D8F778003CB9D8 /* HttpRequestTest.cpp in Sources */,
-				B0ABEB7F19D8F778003CB9D8 /* ImageViewTest.cpp in Sources */,
-				B03E90241938990600FD9A06 /* CAAddressManager.mm in Sources */,
-				B0ABEB8D19D8F778003CB9D8 /* TextFieldTest.cpp in Sources */,
-				B0ABEB8219D8F778003CB9D8 /* MyListViewCell.cpp in Sources */,
-				B0ABEB8A19D8F778003CB9D8 /* TabBarTest.cpp in Sources */,
+				B04821F119FA3E930019F1A7 /* HttpRequestTest.cpp in Sources */,
 				B047B92D19E91DAF00F24BE6 /* DownloadManager.cpp in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
+				B04821F619FA3E930019F1A7 /* MainMenu.cpp in Sources */,
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
-				B0ABEB7819D8F778003CB9D8 /* AlertViewTest.cpp in Sources */,
-				B0ABEB7C19D8F778003CB9D8 /* AddressBookTest.cpp in Sources */,
-				B0ABEB8819D8F778003CB9D8 /* SliderTest.cpp in Sources */,
-				B0ABEB8119D8F778003CB9D8 /* ListViewTest.cpp in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
-				B0ABEB8019D8F778003CB9D8 /* LabelTest.cpp in Sources */,
-				B0ABEB8419D8F778003CB9D8 /* PageViewTest.cpp in Sources */,
-				B0ABEB9019D8F778003CB9D8 /* FourthViewController.cpp in Sources */,
-				B0ABEB7919D8F778003CB9D8 /* AppDelegate.cpp in Sources */,
+				B04821EC19FA3E930019F1A7 /* AppDelegate.cpp in Sources */,
 				B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */,
+				B04821F319FA3E930019F1A7 /* LabelTest.cpp in Sources */,
+				B048220119FA3E930019F1A7 /* TextViewTest.cpp in Sources */,
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,
 				1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */,
+				B04821EF19FA3E930019F1A7 /* AddressBookTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

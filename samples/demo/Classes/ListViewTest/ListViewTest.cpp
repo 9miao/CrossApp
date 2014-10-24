@@ -32,14 +32,14 @@ void ListViewTest::viewDidLoad()
 	listView->setListFooterView(CAView::createWithColor(CAColor_gray));
 	this->getView()->addSubview(listView);
 
-	CALabel* header = CALabel::createWithCenter(CADipRect(50, size.height*0.5, _px(100), size.height));
+	CALabel* header = CALabel::createWithCenter(CADipRect(50, size.height*0.5, 100, size.height));
 	header->setText("Header");
 	header->setFontSize(35);
 	header->setTextAlignment(CATextAlignmentCenter);
 	header->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 	listView->getListHeaderView()->addSubview(header);
 
-	CALabel* footer = CALabel::createWithCenter(CADipRect(50, size.height*0.5, _px(100), size.height));
+	CALabel* footer = CALabel::createWithCenter(CADipRect(50, size.height*0.5, 100, size.height));
 	footer->setText("Footer");
 	footer->setFontSize(35);
 	footer->setTextAlignment(CATextAlignmentCenter);

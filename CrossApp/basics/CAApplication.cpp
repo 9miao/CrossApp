@@ -250,6 +250,8 @@ void CAApplication::drawScene(float dt)
         
         kmGLPushMatrix();
         
+        kmGLTranslatef(0.5, -0.5, 0);
+        
         // draw the scene
         if (m_pRootWindow)
         {

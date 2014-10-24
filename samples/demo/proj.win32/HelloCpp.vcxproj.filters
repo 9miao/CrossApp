@@ -61,6 +61,9 @@
     <Filter Include="Classes\ListViewTest">
       <UniqueIdentifier>{588d9d63-103c-4108-b6d7-d370973187b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\TextViewTest">
+      <UniqueIdentifier>{eed45ea1-8417-4b17-9490-2bed5c118916}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -149,6 +152,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ListViewTest\MyListViewCell.cpp">
       <Filter>Classes\ListViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TextViewTest\TextViewTest.cpp">
+      <Filter>Classes\TextViewTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ListViewTest\MyListViewCell.h">
       <Filter>Classes\ListViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TextViewTest\TextViewTest.h">
+      <Filter>Classes\TextViewTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

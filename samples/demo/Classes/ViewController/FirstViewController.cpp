@@ -30,6 +30,7 @@ FirstViewController::FirstViewController()
 	testList.push_back("TabBar");
 	testList.push_back("TableView");
 	testList.push_back("TextField");
+	testList.push_back("TextView");
 	testList.push_back("Extensions");
 }
 
@@ -138,6 +139,11 @@ void FirstViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, u
 	case TEXTFIELDTEST:
 	{
 		VIEWCONTROLLER_SWITCH(TextFieldTest, row);
+		break;
+	}
+	case TEXTVIEWTEST:
+	{
+		VIEWCONTROLLER_SWITCH(TextViewTest, row);
 		break;
 	}
 	case EXTENSIONSTEST:

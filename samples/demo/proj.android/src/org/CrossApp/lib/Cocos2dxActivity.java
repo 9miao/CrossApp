@@ -4,20 +4,25 @@ package org.CrossApp.lib;
 import org.CrossApp.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import android.R.layout;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+@SuppressLint("HandlerLeak")
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
 	// ===========================================================
 	// Constants
@@ -42,7 +47,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	public static Context getContext() {
 		return sContext;
 	}
-	
+	public static Handler mLightHandler;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -66,6 +71,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	this.init();
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
+		exeHandler();
 	}
 	 public void onActivityResult(int requestCode, int resultCode, Intent intent)
 	 {
@@ -81,7 +87,29 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	public static float getDensitDpi() {
 		return densityDpi;
 	}
-	 
+	public static void setScreenBrightness(int value) {
+		try {
+			// System.putInt(s_pContext.getContentResolver(),android.provider.Settings.System.SCREEN_BRIGHTNESS,value); 
+			WindowManager.LayoutParams lp = activity.getWindow().getAttributes(); 
+			lp.screenBrightness = (value<=0?1:value) / 255f;
+			activity.getWindow().setAttributes(lp);
+		} catch (Exception e) {
+			Toast.makeText(activity,"error",Toast.LENGTH_SHORT).show();
+		} 
+	}
+	private void exeHandler(){
+		if(mLightHandler ==null){
+			mLightHandler = new Handler(){
+				 @Override
+				public void handleMessage(Message msg) {
+					int value = msg.what;
+					 WindowManager.LayoutParams lp = (Cocos2dxActivity.activity).getWindow().getAttributes();  
+					 lp.screenBrightness = value/255.0f;
+				        (Cocos2dxActivity.activity).getWindow().setAttributes(lp);  
+				}
+			 };
+		 }
+	}
 	public static void startGps() {
 		AndroidGPS.Init(activity);
 	}

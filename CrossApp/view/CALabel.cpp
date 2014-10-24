@@ -242,6 +242,11 @@ void CALabel::sizeToFit()
     m_bUpdateImage = true;
 }
 
+void CALabel::unsizeToFit()
+{
+    m_bFitFlag = false;
+}
+
 void CALabel::setText(const string& var)
 {
     CC_RETURN_IF(m_nText.compare(var) == 0);

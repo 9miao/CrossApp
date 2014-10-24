@@ -25,7 +25,7 @@ void ScrollViewTest::viewDidLoad()
 
 	CADipSize _size = p_ScrollView->getBounds().size;
 	imageView = CAImageView::createWithImage(CAImage::create("bg.jpg"));
-	imageView->setCenter(CADipRect(_size.width*0.5, _size.height*0.5,_px(800),_px(1200)));
+	imageView->setCenter(CADipRect(_size.width*0.5, _size.height*0.5,800,1200));
 	p_ScrollView->addSubview(imageView);
 
 	zoomView = CASlider::createWithCenter(CADipRect(size.width*0.5, size.height*0.9, size.width*0.8, 10));
