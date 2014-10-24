@@ -307,7 +307,7 @@ void CADrawerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     
     this->updateViewFrame();
     
-    if (!m_pContainer[0]->isVisible())
+    if (m_bShow == false)
     {
         m_pContainer[0]->setVisible(true);
         m_pContainer[1]->setTouchEnabled(false);
@@ -318,7 +318,9 @@ void CADrawerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CADrawerController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_bShow && m_pContainer[1]->getFrame().containsPoint(this->getView()->convertTouchToNodeSpace(pTouch)))
+    if (m_bShow
+        && !(m_fOffX > FLT_EPSILON)
+        && m_pContainer[1]->getFrame().containsPoint(this->getView()->convertTouchToNodeSpace(pTouch)))
     {
         this->hideLeftViewController(true);
     }

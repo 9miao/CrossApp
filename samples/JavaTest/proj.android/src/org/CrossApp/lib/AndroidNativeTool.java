@@ -2,6 +2,12 @@ package org.CrossApp.lib;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import org.CrossApp.lib.Cocos2dxGLSurfaceView;
 
@@ -10,6 +16,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -19,6 +26,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.MediaStore.Images.Media;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+import android.text.format.DateFormat;
+import android.util.Log;
+import android.widget.Toast;
 
 @SuppressLint("SdCardPath")
 public class AndroidNativeTool
@@ -30,27 +43,6 @@ public class AndroidNativeTool
 	public AndroidNativeTool( final Activity context )
 	{
 		s_pContext = context;
-		final CharSequence[] items = { "����", "¼��","��Ƶ","���" }; 
-		mDialog = new AlertDialog.Builder(context).setTitle("ѡ��ͼƬ").setItems(items,   
-    	new DialogInterface.OnClickListener() {   
-        public void onClick(DialogInterface dialog,int item)
-        {   
-	        switch( item )
-	        {
-	        case 0:
-	        	CAImageCapture();
-	            break;
-	        case 1:
-	        	CAVideoCapture();
-	            break;
-	        case 2:
-	        	CAVideoAlbum();
-	        	break;
-	        case 3:
-	        	CAImageAlbum();
-	            break;
-	        }
-        } } ).create();
 	}
 	public static void ShowDlg( String[] args )
     {
@@ -61,40 +53,24 @@ public class AndroidNativeTool
             	mDialog.show();
             }
         });
-    }
+     }
 	
 	static String s;
+	public static Uri photoUri;
 	public static void CAImageCapture()
 	{
-		File sdDir = null; 
-		boolean sdCardExist = Environment.getExternalStorageState() 
-				.equals(android.os.Environment.MEDIA_MOUNTED); //�ж�sd���Ƿ���� 
-	    if (sdCardExist) 
-		{ 
-	    	sdDir = Environment.getExternalStorageDirectory();//��ȡ��Ŀ¼ 
-		} 
-		System.out.println("getExternalStorageDirectory(): "+sdDir.toString()); 
-
-		
-		
-		//����ȷ���ļ���·�����ڣ��������պ��޷���ɻص�
-		String mediapathString =sdDir.toString();
-		
-		System.out.println(mediapathString);
-		s=mediapathString+"/img.jpg";
-		File vFile = new File(s);
-		
-		if(!vFile.exists())
-		{
-			File vDirPath = vFile.getParentFile(); //new File(vFile.getParent());
-			vDirPath.mkdirs();
-		}
-		Uri uri = Uri.fromFile(vFile);
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//
+		SimpleDateFormat timeStampFormat = new SimpleDateFormat(
+				"yyyy_MM_dd_HH_mm_ss");
+				String filename = timeStampFormat.format(new Date(0));
+				ContentValues values = new ContentValues();
+				values.put(Media.TITLE, filename);
+
+				photoUri = s_pContext.getContentResolver().insert(
+				MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+				intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 		s_pContext.startActivityForResult(intent,0);
-//		Intent getImageByCamera= new Intent("android.media.action.IMAGE_CAPTURE");     
-//		s_pContext.startActivityForResult(getImageByCamera,0);
 	}
 	public static void CAVideoCapture()
 	{
@@ -104,7 +80,7 @@ public class AndroidNativeTool
 	public static void CAVideoAlbum()
 	{
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-    	intent.setType("video/*"); //String VIDEO_UNSPECIFIED = "video/*";
+    	intent.setType("video/*");
     	Intent wrapperIntent = Intent.createChooser(intent, null);
     	s_pContext.startActivityForResult(wrapperIntent, 2);
 	}
@@ -112,62 +88,120 @@ public class AndroidNativeTool
 	{
 		Intent getImage = new Intent(Intent.ACTION_GET_CONTENT);   
 		
-        //getImage.addCategory(Intent.CATEGORY_OPENABLE);   
         getImage.setType("image/*");  
         
         Intent wrapperIntent2 = Intent.createChooser(getImage, null);
         s_pContext.startActivityForResult(wrapperIntent2, 3);
 	}
+	
+	
+	public static int getScreenBrightness() {
+	    int value = 0;
+	    ContentResolver cr = s_pContext.getContentResolver();
+	    try {
+	    	
+	        value = Settings.System.getInt(cr, Settings.System.SCREEN_BRIGHTNESS);
+	    } catch (SettingNotFoundException e) {
+	        
+	    }
+	    return value;
+	}
+
+	public static void setScreenBrightness( int value) {
+		 
+	   Cocos2dxActivity mActivity = (Cocos2dxActivity)s_pContext;
+	   mActivity.mLightHandler.sendEmptyMessage(value);
+	}
+	private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode){
+		 Intent intent = new Intent("com.android.camera.action.CROP");
+
+		 intent.setDataAndType(uri, "image/*");
+		 intent.putExtra("crop", "true");
+		 intent.putExtra("aspectX", 1);
+		 intent.putExtra("aspectY", 1);
+		 intent.putExtra("outputX", outputX);
+		 intent.putExtra("outputY", outputY);
+		 intent.putExtra("scale", true);
+		 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+		 intent.putExtra("return-data", false);
+		 intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+		 intent.putExtra("noFaceDetection", true); // no face detection
+		 SimpleDateFormat timeStampFormat = new SimpleDateFormat(
+					"yyyy_MM_dd_HH_mm_ss");
+		String filename = timeStampFormat.format(new Date(0));
+		ContentValues values = new ContentValues();
+		values.put(Media.TITLE, filename);
+
+		photoUri = s_pContext.getContentResolver().insert(
+		MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+		 s_pContext.startActivityForResult(intent, 1);
+		}
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {  
-    	System.out.println("~~~||||");
-    	ContentResolver resolver = s_pContext.getContentResolver();   
-    	System.out.println(resultCode);
         if (resultCode == -1) {  
             switch (requestCode) {  
             case 2:
             case 3:  // Photo
-                //���ͼƬ��uri   
-            	//runNativeCallback(requestCode,resultCode,intent);
                 Uri originalUri = intent.getData();  
-                
-                
+
                 String[] proj = {MediaStore.Images.Media.DATA};
-
                 
-
-                //������android��ý����ݿ�ķ�װ�ӿڣ�����Ŀ�Android�ĵ�
-
                 Cursor cursor = s_pContext.managedQuery(originalUri, proj, null, null, null); 
-                		//
-
-                //���Ҹ������ ����ǻ���û�ѡ���ͼƬ������ֵ
 
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
-                //�����������ͷ ���������Ҫ����С�ĺ���������Խ��
-
                 cursor.moveToFirst();
 
-                //���������ֵ��ȡͼƬ·��
-
                 String path = cursor.getString(column_index);
-                /*Bitmap bitmap = null;  
-                try {  
-                    Bitmap originalBitmap = BitmapFactory.decodeStream(resolver.openInputStream(originalUri));  
-                } catch (FileNotFoundException e) {  
-                    e.printStackTrace();  
-                }*/
-                System.out.println(path);
+
                 NativeReturn( path , null );
                 break;  
             case 1:
-            case 0:  // camera image
-                /*Bundle extras = intent.getExtras();   
-                Bitmap originalBitmap1 = (Bitmap) extras.get("data");  */
-     
-                NativeReturn( s , null );
-                break;  
+            	Uri originalUri1;
+            	if (intent != null && intent.getData() != null) 
+            	{
+            		originalUri1= intent.getData();  
+            	}
+            	else
+            	{
+            		originalUri1= photoUri;
+            	}
+            	
+            	//1414136613714.jpg
+                String[] proj1 = {MediaStore.Images.Media.DATA};
+
+                Cursor cursor1 = s_pContext.managedQuery(originalUri1, proj1, null, null, null); 
+
+                int column_index1 = cursor1.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                cursor1.moveToFirst();
+
+                String path1 = cursor1.getString(column_index1);
+
+                NativeReturn( path1 , null );
+
+            	break;
+            case 0: 
+            	 Uri takePhoto;
+            	 
+            	// Uri photoUri = s_pContext. getContentResolver().insert(
+            		//	 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+            			// intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            	if (intent != null && intent.getData() != null) 
+            	{
+            		takePhoto= intent.getData();  
+            		cropImageUri(takePhoto, 640, 640, 1);
+            	}else {
+            		cropImageUri(photoUri, 640, 640, 1);
+				}
+            	
+            	 
+            	 
+            	break;
+ 
             default:  
                 break;  
             }  

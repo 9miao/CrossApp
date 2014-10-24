@@ -859,6 +859,8 @@
 		04EAA0E21956D74D00198A8E /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				04EAA1771956D74D00198A8E /* platform.h */,
+				04EAA1761956D74D00198A8E /* platform.cpp */,
 				B08F4BC919C7E66C008DE306 /* CAFreeTypeFont.cpp */,
 				B08F4BCA19C7E66C008DE306 /* CAFreeTypeFont.h */,
 				B08F4BCB19C7E66C008DE306 /* CAFTFontCache.cpp */,
@@ -880,8 +882,6 @@
 				04EAA12F1956D74D00198A8E /* CCEGLViewProtocol.cpp */,
 				040665C31956F45A003E0D62 /* CCEGLViewProtocol.h */,
 				04EAA15F1956D74D00198A8E /* mac */,
-				04EAA1761956D74D00198A8E /* platform.cpp */,
-				04EAA1771956D74D00198A8E /* platform.h */,
 				04EAA1781956D74D00198A8E /* third_party */,
 			);
 			path = platform;

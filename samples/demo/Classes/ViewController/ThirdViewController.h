@@ -16,6 +16,7 @@ public:
 protected:
 	void viewDidLoad();
 	void viewDidUnload();
+	virtual void viewDidAppear();
 
 public:
 	void stateControl(CAControl* btn, CCPoint point);

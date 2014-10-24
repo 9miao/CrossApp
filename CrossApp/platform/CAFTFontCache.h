@@ -41,7 +41,7 @@ public:
 	int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int width, int height,
-		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold=false, bool bItalics=false);
+		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false);
 
 	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
 		std::vector<TextViewLineInfo>& linesText, int iLineSpace=0, bool bWordWrap = true);

@@ -16,9 +16,7 @@ Json/lib_json/json_value.cpp \
 Json/lib_json/json_reader.cpp \
 Json/lib_json/json_writer.cpp \
 sqlite3/include/sqlite3.c \
-other/CAAdress/android/CAAddressManager.cpp \
-other/CACamera/android/CAMediaManager.cpp \
-other/CALocation/android/CALocationManager.cpp \
+device/Device_android/CADevice.cpp \
 studio/CAStudioViewController.cpp \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := CrossApp_static

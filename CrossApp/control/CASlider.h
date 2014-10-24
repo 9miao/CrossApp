@@ -80,7 +80,7 @@ protected:
 protected:
     CAScale9ImageView *m_pMinTrackTintImageView;
     CAScale9ImageView *m_pMaxTrackTintImageView;
-    CAScale9ImageView *m_pThumbTintImageView;
+    CAImageView *m_pThumbTintImageView;
     
 };
 

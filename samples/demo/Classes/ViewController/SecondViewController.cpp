@@ -35,6 +35,12 @@ void SecondViewController::viewDidLoad(void)
 	this->getView()->addSubview(p_TableView);
 }
 
+void SecondViewController::viewDidAppear()
+{
+	CANavigationBarItem* item = CANavigationBarItem::create("ViewController2");
+	this->getTabBarController()->setNavigationBarItem(item);
+}
+
 void SecondViewController::loadJsonData()
 {
 	Reader reader;

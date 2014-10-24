@@ -29,6 +29,12 @@
 		B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */; };
 		B036EB5D19406C7F000434DD /* icon in Resources */ = {isa = PBXBuildFile; fileRef = B036EB5C19406C7F000434DD /* icon */; };
 		B03E8FEC1938879200FD9A06 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FDF1938879200FD9A06 /* HelloWorld.png */; };
+		B04822A219FA41D00019F1A7 /* CAAddress.mm in Sources */ = {isa = PBXBuildFile; fileRef = B048229619FA41D00019F1A7 /* CAAddress.mm */; };
+		B04822A319FA41D00019F1A7 /* CAAlbumController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B048229819FA41D00019F1A7 /* CAAlbumController.mm */; };
+		B04822A419FA41D00019F1A7 /* CABrightness_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = B048229A19FA41D00019F1A7 /* CABrightness_iOS.mm */; };
+		B04822A519FA41D00019F1A7 /* CACameraController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B048229C19FA41D00019F1A7 /* CACameraController.mm */; };
+		B04822A619FA41D00019F1A7 /* CADevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = B048229D19FA41D00019F1A7 /* CADevice.mm */; };
+		B04822A719FA41D00019F1A7 /* CALocation.mm in Sources */ = {isa = PBXBuildFile; fileRef = B048229F19FA41D00019F1A7 /* CALocation.mm */; };
 		B04C0C031901207A009854FD /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BED19012079009854FD /* CSContentJsonDictionary.cpp */; };
 		B04C0C041901207A009854FD /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BEF19012079009854FD /* DictionaryHelper.cpp */; };
 		B04C0C051901207A009854FD /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BF71901207A009854FD /* json_internalarray.inl */; };
@@ -51,13 +57,6 @@
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
 		EB15452E19CFF58A0068D5B2 /* XMLHTTPRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB15452C19CFF58A0068D5B2 /* XMLHTTPRequest.cpp */; };
-		EB1818C819387F67002856FF /* CAAddress.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818AD19387F67002856FF /* CAAddress.mm */; };
-		EB1818C919387F67002856FF /* CAAddressManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818AE19387F67002856FF /* CAAddressManager.mm */; };
-		EB1818CC19387F67002856FF /* CAAlbumController.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818B719387F67002856FF /* CAAlbumController.mm */; };
-		EB1818CD19387F67002856FF /* CACameraController.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818B919387F67002856FF /* CACameraController.mm */; };
-		EB1818CE19387F67002856FF /* CAMediaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818BA19387F67002856FF /* CAMediaManager.mm */; };
-		EB1818D119387F67002856FF /* CALocation.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818C319387F67002856FF /* CALocation.mm */; };
-		EB1818D219387F67002856FF /* CALocationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB1818C419387F67002856FF /* CALocationManager.mm */; };
 		EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D519387FFA002856FF /* CoreLocation.framework */; };
 		EB1818D819388001002856FF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D719388001002856FF /* AddressBook.framework */; };
 		EB1818DA19388005002856FF /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D919388005002856FF /* AddressBookUI.framework */; };
@@ -146,6 +145,18 @@
 		B034083F199211CC005DB179 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		B036EB5C19406C7F000434DD /* icon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icon; sourceTree = "<group>"; };
 		B03E8FDF1938879200FD9A06 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
+		B048229119FA41D00019F1A7 /* CADevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADevice.h; sourceTree = "<group>"; };
+		B048229519FA41D00019F1A7 /* CAAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddress.h; sourceTree = "<group>"; };
+		B048229619FA41D00019F1A7 /* CAAddress.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddress.mm; sourceTree = "<group>"; };
+		B048229719FA41D00019F1A7 /* CAAlbumController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlbumController.h; sourceTree = "<group>"; };
+		B048229819FA41D00019F1A7 /* CAAlbumController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAlbumController.mm; sourceTree = "<group>"; };
+		B048229919FA41D00019F1A7 /* CABrightness_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABrightness_iOS.h; sourceTree = "<group>"; };
+		B048229A19FA41D00019F1A7 /* CABrightness_iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CABrightness_iOS.mm; sourceTree = "<group>"; };
+		B048229B19FA41D00019F1A7 /* CACameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACameraController.h; sourceTree = "<group>"; };
+		B048229C19FA41D00019F1A7 /* CACameraController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CACameraController.mm; sourceTree = "<group>"; };
+		B048229D19FA41D00019F1A7 /* CADevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CADevice.mm; sourceTree = "<group>"; };
+		B048229E19FA41D00019F1A7 /* CALocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocation.h; sourceTree = "<group>"; };
+		B048229F19FA41D00019F1A7 /* CALocation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocation.mm; sourceTree = "<group>"; };
 		B04C0BED19012079009854FD /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
 		B04C0BEE19012079009854FD /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		B04C0BEF19012079009854FD /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
@@ -185,20 +196,6 @@
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		EB15452C19CFF58A0068D5B2 /* XMLHTTPRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLHTTPRequest.cpp; sourceTree = "<group>"; };
 		EB15452D19CFF58A0068D5B2 /* XMLHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLHTTPRequest.h; sourceTree = "<group>"; };
-		EB1818AA19387F67002856FF /* CAAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressManager.h; sourceTree = "<group>"; };
-		EB1818AC19387F67002856FF /* CAAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddress.h; sourceTree = "<group>"; };
-		EB1818AD19387F67002856FF /* CAAddress.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddress.mm; sourceTree = "<group>"; };
-		EB1818AE19387F67002856FF /* CAAddressManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddressManager.mm; sourceTree = "<group>"; };
-		EB1818B419387F67002856FF /* CAMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMediaManager.h; sourceTree = "<group>"; };
-		EB1818B619387F67002856FF /* CAAlbumController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlbumController.h; sourceTree = "<group>"; };
-		EB1818B719387F67002856FF /* CAAlbumController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAlbumController.mm; sourceTree = "<group>"; };
-		EB1818B819387F67002856FF /* CACameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACameraController.h; sourceTree = "<group>"; };
-		EB1818B919387F67002856FF /* CACameraController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CACameraController.mm; sourceTree = "<group>"; };
-		EB1818BA19387F67002856FF /* CAMediaManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAMediaManager.mm; sourceTree = "<group>"; };
-		EB1818C019387F67002856FF /* CALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocationManager.h; sourceTree = "<group>"; };
-		EB1818C219387F67002856FF /* CALocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocation.h; sourceTree = "<group>"; };
-		EB1818C319387F67002856FF /* CALocation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocation.mm; sourceTree = "<group>"; };
-		EB1818C419387F67002856FF /* CALocationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocationManager.mm; sourceTree = "<group>"; };
 		EB1818D519387FFA002856FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EB1818D719388001002856FF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		EB1818D919388005002856FF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -294,10 +291,10 @@
 			children = (
 				B00CC60D19792FF800A62E4C /* CrossAppExt.h */,
 				15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */,
+				B048228F19FA41CF0019F1A7 /* device */,
 				EBA5903819A199F5004B6DD1 /* LocalStorage */,
 				B034083B199211CC005DB179 /* sqlite3 */,
 				B00CC60E19792FF800A62E4C /* studio */,
-				EB1818A619387F67002856FF /* other */,
 				B04C0BEC19012079009854FD /* Json */,
 				15A3D9EC1682F826002FB0C5 /* GUI */,
 				15A3DA1A1682F826002FB0C5 /* network */,
@@ -473,6 +470,33 @@
 			path = include;
 			sourceTree = "<group>";
 		};
+		B048228F19FA41CF0019F1A7 /* device */ = {
+			isa = PBXGroup;
+			children = (
+				B048229119FA41D00019F1A7 /* CADevice.h */,
+				B048229419FA41D00019F1A7 /* Device_ios */,
+			);
+			path = device;
+			sourceTree = "<group>";
+		};
+		B048229419FA41D00019F1A7 /* Device_ios */ = {
+			isa = PBXGroup;
+			children = (
+				B048229519FA41D00019F1A7 /* CAAddress.h */,
+				B048229619FA41D00019F1A7 /* CAAddress.mm */,
+				B048229719FA41D00019F1A7 /* CAAlbumController.h */,
+				B048229819FA41D00019F1A7 /* CAAlbumController.mm */,
+				B048229919FA41D00019F1A7 /* CABrightness_iOS.h */,
+				B048229A19FA41D00019F1A7 /* CABrightness_iOS.mm */,
+				B048229B19FA41D00019F1A7 /* CACameraController.h */,
+				B048229C19FA41D00019F1A7 /* CACameraController.mm */,
+				B048229D19FA41D00019F1A7 /* CADevice.mm */,
+				B048229E19FA41D00019F1A7 /* CALocation.h */,
+				B048229F19FA41D00019F1A7 /* CALocation.mm */,
+			);
+			path = Device_ios;
+			sourceTree = "<group>";
+		};
 		B04C0BEC19012079009854FD /* Json */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,75 +539,6 @@
 				B0563760195276D000C63FAA /* libCrossApp.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		EB1818A619387F67002856FF /* other */ = {
-			isa = PBXGroup;
-			children = (
-				EB1818A719387F67002856FF /* CAAdress */,
-				EB1818B119387F67002856FF /* CACamera */,
-				EB1818BD19387F67002856FF /* CALocation */,
-			);
-			path = other;
-			sourceTree = "<group>";
-		};
-		EB1818A719387F67002856FF /* CAAdress */ = {
-			isa = PBXGroup;
-			children = (
-				EB1818AA19387F67002856FF /* CAAddressManager.h */,
-				EB1818AB19387F67002856FF /* ios */,
-			);
-			path = CAAdress;
-			sourceTree = "<group>";
-		};
-		EB1818AB19387F67002856FF /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				EB1818AC19387F67002856FF /* CAAddress.h */,
-				EB1818AD19387F67002856FF /* CAAddress.mm */,
-				EB1818AE19387F67002856FF /* CAAddressManager.mm */,
-			);
-			path = ios;
-			sourceTree = "<group>";
-		};
-		EB1818B119387F67002856FF /* CACamera */ = {
-			isa = PBXGroup;
-			children = (
-				EB1818B419387F67002856FF /* CAMediaManager.h */,
-				EB1818B519387F67002856FF /* ios */,
-			);
-			path = CACamera;
-			sourceTree = "<group>";
-		};
-		EB1818B519387F67002856FF /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				EB1818B619387F67002856FF /* CAAlbumController.h */,
-				EB1818B719387F67002856FF /* CAAlbumController.mm */,
-				EB1818B819387F67002856FF /* CACameraController.h */,
-				EB1818B919387F67002856FF /* CACameraController.mm */,
-				EB1818BA19387F67002856FF /* CAMediaManager.mm */,
-			);
-			path = ios;
-			sourceTree = "<group>";
-		};
-		EB1818BD19387F67002856FF /* CALocation */ = {
-			isa = PBXGroup;
-			children = (
-				EB1818C019387F67002856FF /* CALocationManager.h */,
-				EB1818C119387F67002856FF /* ios */,
-			);
-			path = CALocation;
-			sourceTree = "<group>";
-		};
-		EB1818C119387F67002856FF /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				EB1818C219387F67002856FF /* CALocation.h */,
-				EB1818C319387F67002856FF /* CALocation.mm */,
-				EB1818C419387F67002856FF /* CALocationManager.mm */,
-			);
-			path = ios;
 			sourceTree = "<group>";
 		};
 		EBA58F9F19A195A4004B6DD1 /* bindings */ = {
@@ -773,18 +728,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B04822A319FA41D00019F1A7 /* CAAlbumController.mm in Sources */,
 				B04C0C071901207A009854FD /* json_reader.cpp in Sources */,
 				B04C0C041901207A009854FD /* DictionaryHelper.cpp in Sources */,
-				EB1818D119387F67002856FF /* CALocation.mm in Sources */,
 				B04C0C031901207A009854FD /* CSContentJsonDictionary.cpp in Sources */,
 				B04C0C0A1901207A009854FD /* json_writer.cpp in Sources */,
 				EB15452E19CFF58A0068D5B2 /* XMLHTTPRequest.cpp in Sources */,
-				EB1818CD19387F67002856FF /* CACameraController.mm in Sources */,
 				EBA5903D19A199F5004B6DD1 /* LocalStorageAndroid.cpp in Sources */,
 				B01A293A1994C6D200D42BA0 /* sqlite3.c in Sources */,
 				B04C0C081901207A009854FD /* json_value.cpp in Sources */,
 				15A3DA5D1682F826002FB0C5 /* HttpClient.cpp in Sources */,
 				EBEB332419ADC03000EF5D12 /* js_bindings_opengl.cpp in Sources */,
+				B04822A519FA41D00019F1A7 /* CACameraController.mm in Sources */,
 				EBBE334919D7B0A100999A31 /* jsb_websocket.cpp in Sources */,
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
 				EBEB331B19ADBF6200EF5D12 /* js_bindings_system_registration.cpp in Sources */,
@@ -792,27 +747,26 @@
 				B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */,
 				15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */,
 				EBA5902419A19795004B6DD1 /* jsb_CrossApp_auto.cpp in Sources */,
+				B04822A719FA41D00019F1A7 /* CALocation.mm in Sources */,
+				B04822A619FA41D00019F1A7 /* CADevice.mm in Sources */,
 				EBEB331819ADBF6200EF5D12 /* js_bindings_core.cpp in Sources */,
-				EB1818C919387F67002856FF /* CAAddressManager.mm in Sources */,
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
-				EB1818CE19387F67002856FF /* CAMediaManager.mm in Sources */,
+				B04822A219FA41D00019F1A7 /* CAAddress.mm in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
 				EBEB331F19ADBF6200EF5D12 /* jsb_opengl_manual.cpp in Sources */,
+				B04822A419FA41D00019F1A7 /* CABrightness_iOS.mm in Sources */,
 				EBA5903C19A199F5004B6DD1 /* LocalStorage.cpp in Sources */,
 				B04F456019EA7F3500505E17 /* DownloadManager.cpp in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */,
 				1AC3624B16D4A1E8000847F2 /* main.m in Sources */,
 				EBA5901D19A195A4004B6DD1 /* ScriptingCore.cpp in Sources */,
-				EB1818D219387F67002856FF /* CALocationManager.mm in Sources */,
 				EBEB331C19ADBF6200EF5D12 /* js_manual_conversions.cpp in Sources */,
 				B00CC61119792FF800A62E4C /* CAStudioViewController.cpp in Sources */,
 				EBEB331A19ADBF6200EF5D12 /* js_bindings_system_functions.cpp in Sources */,
 				EBEB332019ADBF6200EF5D12 /* jsb_opengl_registration.cpp in Sources */,
-				EB1818C819387F67002856FF /* CAAddress.mm in Sources */,
 				EBEB331E19ADBF6200EF5D12 /* jsb_opengl_functions.cpp in Sources */,
-				EB1818CC19387F67002856FF /* CAAlbumController.mm in Sources */,
 				1AFCDA8216D4A25900906EA6 /* RootViewController.mm in Sources */,
 				EBBE334C19D7B0BF00999A31 /* WebSocket.cpp in Sources */,
 			);

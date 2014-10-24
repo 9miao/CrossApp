@@ -77,7 +77,7 @@ void AddressBookTest::nextViewController(CAControl* btn, CCPoint point)
 
 void AddressBookTest::getAddressBookList(void)
 {
-	addressBookList=CAAddressManager::shareAddressManager()->getAddressBook();
+	addressBookList = CADevice::getAddressBook();
 	if(addressBookList.size()>0)
 	{
 		CAScheduler::unschedule(schedule_selector(AddressBookTest::addressBookLoadProgress), this);
@@ -141,16 +141,16 @@ CATableViewCell* AddressBookTest::tableCellAtIndex(CATableView* table, const CCS
 	}
 #if(CC_TARGET_PLATFORM!=CC_PLATFORM_WIN32)
 	CALabel* fullName = (CALabel*)cell->getSubviewByTag(FULLNAME);
-	fullName->setText(addressBookList[row]->fullname.c_str());
+	fullName->setText(addressBookList[row].fullname.c_str());
 
 	CALabel* phoneNumber = (CALabel*)cell->getSubviewByTag(NUMBER);
-	phoneNumber->setText(addressBookList[row]->phoneNumber.c_str());
+	phoneNumber->setText(addressBookList[row].phoneNumber.c_str());
 
 	CALabel* province = (CALabel*)cell->getSubviewByTag(PROVINCE);
-	province->setText(addressBookList[row]->province.c_str());
+	province->setText(addressBookList[row].province.c_str());
 
 	CALabel* nickName = (CALabel*)cell->getSubviewByTag(NICKNAME);
-	nickName->setText(addressBookList[row]->nickname.c_str());
+	nickName->setText(addressBookList[row].nickname.c_str());
 #endif
 
 	return cell;

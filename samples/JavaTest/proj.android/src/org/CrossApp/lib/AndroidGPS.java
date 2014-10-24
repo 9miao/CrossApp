@@ -1,10 +1,15 @@
 package org.CrossApp.lib;
 
+import java.util.Iterator;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
+import android.location.GpsSatellite;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,6 +20,8 @@ import android.widget.Toast;
 
 public class AndroidGPS {
 	private static Activity s_pContext;
+	public static LocationManager locationManager;
+	public static String provider;
 	public static void Init( final Activity context )
 	{
 		s_pContext = context;
@@ -22,41 +29,16 @@ public class AndroidGPS {
 	}
 	public static void openGPSSettings()
 	{
-        LocationManager alm = (LocationManager) s_pContext.getSystemService(Context.LOCATION_SERVICE);
-        if (alm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
-            //Toast.makeText(s_pContext, "GPSÄ£¿éÕı³£", Toast.LENGTH_SHORT).show();
+		locationManager = (LocationManager) s_pContext.getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+        	 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+             s_pContext.startActivityForResult(intent,10);
             return;
         }
-        //Toast.makeText(s_pContext, "Çë¿ªÆôGPS£¡", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        s_pContext.startActivityForResult(intent,10); //´ËÎªÉèÖÃÍê³Éºó·µ»Øµ½»ñÈ¡½çÃæ
-    }
-
-	public static double[] getLocation()
-    {
-        // »ñÈ¡Î»ÖÃ¹ÜÀí·şÎñ
-        LocationManager locationManager;
-        String serviceName = Context.LOCATION_SERVICE;
-        locationManager = (LocationManager) s_pContext.getSystemService(serviceName);
-        // ²éÕÒµ½·şÎñĞÅÏ¢
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE); // ¸ß¾«¶È
-        criteria.setAltitudeRequired(false);
-        criteria.setBearingRequired(false);
-        criteria.setCostAllowed(true);
-        criteria.setPowerRequirement(Criteria.POWER_LOW); // µÍ¹¦ºÄ
        
-        String provider = locationManager.getBestProvider(criteria, true); // »ñÈ¡GPSĞÅÏ¢
-        Location location = locationManager.getLastKnownLocation(provider); // Í¨¹ıGPS»ñÈ¡Î»ÖÃ
-        // ÉèÖÃ¼àÌıÆ÷£¬×Ô¶¯¸üĞÂµÄ×îĞ¡Ê±¼äÎª¼ä¸ôNÃë(1ÃëÎª1*1000£¬ÕâÑùĞ´Ö÷ÒªÎªÁË·½±ã)»ò×îĞ¡Î»ÒÆ±ä»¯³¬¹ıNÃ×
-        if (location == null) {
-        	locationManager.requestLocationUpdates(provider, 100 * 1000, 500,locationListener);
-		}
-
-        return new double[]{location.getLatitude() , location.getLongitude() };
     }
 	
-	private static final LocationListener locationListener = new LocationListener() { 
+	public static final LocationListener locationListener = new LocationListener() { 
 		@Override 
 		public void onStatusChanged(String provider, int status, Bundle extras) { 
 		} 
@@ -66,22 +48,109 @@ public class AndroidGPS {
 		@Override 
 		public void onProviderDisabled(String provider) { 
 		} 
-		//µ±Î»ÖÃ±ä»¯Ê±´¥·¢ 
 		@Override 
 		public void onLocationChanged(Location location) { 
-		//Ê¹ÓÃĞÂµÄlocation¸üĞÂTextViewÏÔÊ¾ 
-			System.out.println("en here!!!!");
-		//updateToNewLocation(location); 
+			Log.i("onLocationChanged", "come in");
+            if (location != null)
+            {
+                Log.w("Location", "Current altitude = "
+                        + location.getAltitude());
+                Log.w("Location", "Current latitude = "
+                        + location.getLatitude());
+            }
+            locationManager.removeUpdates(this);
+            locationManager.setTestProviderEnabled(provider, false);
 		}
-		}; 
+	};
+	static GpsStatus.Listener listener = new GpsStatus.Listener() {
+        public void onGpsStatusChanged(int event) {
+            switch (event) {
+            //ç¬¬ä¸€æ¬¡å®šä½
+            case GpsStatus.GPS_EVENT_FIRST_FIX:
+                break;
+            //å«æ˜ŸçŠ¶æ€æ”¹å˜
+            case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+                //è·å–å½“å‰çŠ¶æ€
+                GpsStatus gpsStatus=locationManager.getGpsStatus(null);
+                //è·å–å«æ˜Ÿé¢—æ•°çš„é»˜è®¤æœ€å¤§å€¼
+                int maxSatellites = gpsStatus.getMaxSatellites();
+                //åˆ›å»ºä¸€ä¸ªè¿­ä»£å™¨ä¿å­˜æ‰€æœ‰å«æ˜Ÿ 
+                Iterator<GpsSatellite> iters = gpsStatus.getSatellites().iterator();
+                int count = 0;     
+                while (iters.hasNext() && count <= maxSatellites) {     
+                    GpsSatellite s = iters.next();     
+                    count++;     
+                }   
+                System.out.println("æœç´¢åˆ°ï¼š"+count+"é¢—å«æ˜Ÿ");
+                break;
+            //å®šä½å¯åŠ¨
+            case GpsStatus.GPS_EVENT_STARTED:
+                break;
+            //å®šä½ç»“æŸ
+            case GpsStatus.GPS_EVENT_STOPPED:
+                break;
+            }
+        };
+    };
+	public static double[] getLocation()
+    {
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE); 
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setCostAllowed(true);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        
+        
+		String serviceName = Context.LOCATION_SERVICE;
+        locationManager = (LocationManager) s_pContext.getSystemService(serviceName);
+
+       // locationManager.setTestProviderEnabled("gps",true); 
+        provider = locationManager.getBestProvider(criteria, true); 
+       // locationManager.requestLocationUpdates(provider, 100 * 1000, 500,locationListener);
+        Location location =  getLastKnownLocation();
+        		//locationManager.getLastKnownLocation(provider);
+       // locationManager.requestLocationUpdates(provider, 1000, (float) 1000.0, locationListener);
+//        		// 
+//        while(location  == null)  
+//        {  
+//        	locationManager.requestLocationUpdates("gps", 60000, 1, locationListener);  
+//        } 
+        
+        if (location != null) {
+        	return new double[]{location.getLatitude() , location.getLongitude() };
+        	
+		}else {
+			
+			return new double[]{0,0};
+		}
+        
+
+    }
+	
+	private static Location getLastKnownLocation() {
+	//	locationManager = (LocationManager) s_pContext.getSystemService(serviceName);
+	    List<String> providers = locationManager.getProviders(true);
+	    Location bestLocation = null;
+	    for (String provider : providers) {
+	        Location l = locationManager.getLastKnownLocation(provider);
+	        if (l == null) {
+	            continue;
+	        }
+	        if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+	            // Found best last known location: %s", l);
+	            bestLocation = l;
+	        }
+	    }
+	    return bestLocation;
+	}
+
 	private static void updateToNewLocation(Location location) {
 
         if (location != null) {
             double  latitude = location.getLatitude();
             double longitude= location.getLongitude();
-            //tv1.setText("Î¬¶È£º" +  latitude+ "\n¾­¶È" + longitude);
         } else {
-            //tv1.setText("ÎŞ·¨»ñÈ¡µØÀíĞÅÏ¢");
         }
 
     }

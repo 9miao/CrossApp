@@ -18,6 +18,7 @@
 #include "TabBarTest.h"
 #include "TableViewTest.h"
 #include "TextFieldTest.h"
+#include "TextViewTest.h"
 #include "ExtensionsTest.h"
 
 enum DemoList
@@ -38,6 +39,7 @@ enum DemoList
 	TABBARTEST,
 	TABVIEWTEST,
 	TEXTFIELDTEST,
+	TEXTVIEWTEST,
 	EXTENSIONSTEST
 };
 

@@ -18,7 +18,7 @@ void FifthViewController::viewDidLoad()
 	size = this->getView()->getBounds().size;
 	this->getView()->setColor(CAColor_gray);
 	gestureView = CAImageView::createWithImage(CAImage::create("bg.jpg"));
-	gestureView->setCenter(CADipRect(size.width*0.5,size.height*0.5,_px(800),_px(1200)));
+	gestureView->setCenter(CADipRect(size.width*0.5,size.height*0.5,800,1200));
 	viewOriginalSize = gestureView->getFrame().size;
 	this->getView()->addSubview(gestureView);
 }

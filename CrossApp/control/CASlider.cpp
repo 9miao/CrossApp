@@ -82,7 +82,9 @@ void CASlider::onEnterTransitionDidFinish()
     
     if (NULL == m_pThumbTintImageView)
     {
-        m_pThumbTintImageView = CAScale9ImageView::createWithImage(m_pThumbTintImage);
+        m_pThumbTintImageView = CAImageView::createWithImage(m_pThumbTintImage);
+        const CCSize size = this->getBounds().size;
+        m_pThumbTintImageView->setFrame(CCRect(0, 0, size.height, size.height));
     }
     if (m_pThumbTintImageView)
     {
@@ -254,9 +256,9 @@ void CASlider::setThumbTintImage(CAImage* image)
         m_pThumbTintImage = image;
         if (m_pThumbTintImageView)
         {
-            const CCSize size = this->getBounds().size;
             ((CAScale9ImageView*)m_pMinTrackTintImageView)->setImage(m_pThumbTintImage);
-            m_pThumbTintImageView->setBounds(CCRect(0, 0, size.height, size.height));
+            const CCSize size = this->getBounds().size;
+            m_pThumbTintImageView->setFrame(CCRect(0, 0, size.height, size.height));
         }
         this->layoutSubViews();
     }
@@ -331,7 +333,7 @@ void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
 
 void CASlider::setContentSize(const CCSize & var)
 {
-    CAControl::setContentSize(CCSize(var.width, _px(60)));
+    CAControl::setContentSize(var);
 }
 
 NS_CC_END

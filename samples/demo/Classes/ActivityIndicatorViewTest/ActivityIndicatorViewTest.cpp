@@ -38,9 +38,9 @@ void ActivityIndicatorViewTest::viewDidLoad()
 	this->getView()->addSubview(gray);
 	gray->startAnimating();
 
-	CAButton* activityControl = CAButton::createWithCenter(CADipRect(size.width*0.5,size.height*0.85,_px(150),_px(100)),CAButtonTypeRoundedRect);
+	CAButton* activityControl = CAButton::createWithCenter(CADipRect(size.width*0.5,size.height*0.85,150,100),CAButtonTypeRoundedRect);
 	activityControl->addTarget(this, CAControl_selector(ActivityIndicatorViewTest::stopAllActivity), CAControlEventTouchUpInSide);
-	this->getView()->addSubview(activityControl);
+	//this->getView()->addSubview(activityControl);
 }
 
 void ActivityIndicatorViewTest::viewDidUnload()

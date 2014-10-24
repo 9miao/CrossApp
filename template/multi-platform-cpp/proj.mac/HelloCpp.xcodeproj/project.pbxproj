@@ -37,10 +37,8 @@
 		B01F7164195166F500BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F7163195166F500BA07A6 /* source_material */; };
 		B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145A190A6A3700C3633B /* CAUIHelper.cpp */; };
 		B03E8FD11938876B00FD9A06 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FD01938876B00FD9A06 /* HelloWorld.png */; };
-		B03E904919389A4C00FD9A06 /* CAAddressManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E902E19389A4C00FD9A06 /* CAAddressManager.mm */; };
-		B03E904E19389A4C00FD9A06 /* CAMediaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E903A19389A4C00FD9A06 /* CAMediaManager.mm */; };
-		B03E905219389A4C00FD9A06 /* CALocationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B03E904419389A4C00FD9A06 /* CALocationManager.mm */; };
 		B047B92819E91D2A00F24BE6 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B92619E91D2A00F24BE6 /* DownloadManager.cpp */; };
+		B04822D419FA42170019F1A7 /* CADevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04822C419FA42170019F1A7 /* CADevice.cpp */; };
 		B04C0BB119011ED8009854FD /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0B9B19011ED8009854FD /* CSContentJsonDictionary.cpp */; };
 		B04C0BB219011ED8009854FD /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0B9D19011ED8009854FD /* DictionaryHelper.cpp */; };
 		B04C0BB319011ED8009854FD /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BA519011ED8009854FD /* json_internalarray.inl */; };
@@ -125,15 +123,11 @@
 		B034080519920FD1005DB179 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		B034080619920FD1005DB179 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		B03E8FD01938876B00FD9A06 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
-		B03E902A19389A4C00FD9A06 /* CAAddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressManager.h; sourceTree = "<group>"; };
-		B03E902E19389A4C00FD9A06 /* CAAddressManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddressManager.mm; sourceTree = "<group>"; };
-		B03E903419389A4C00FD9A06 /* CAMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMediaManager.h; sourceTree = "<group>"; };
-		B03E903A19389A4C00FD9A06 /* CAMediaManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAMediaManager.mm; sourceTree = "<group>"; };
-		B03E904019389A4C00FD9A06 /* CALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocationManager.h; sourceTree = "<group>"; };
-		B03E904419389A4C00FD9A06 /* CALocationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocationManager.mm; sourceTree = "<group>"; };
 		B047B92519E91D2000F24BE6 /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
 		B047B92619E91D2A00F24BE6 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
 		B047B92719E91D2A00F24BE6 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
+		B04822C419FA42170019F1A7 /* CADevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADevice.cpp; sourceTree = "<group>"; };
+		B04822C519FA42170019F1A7 /* CADevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADevice.h; sourceTree = "<group>"; };
 		B04C0B9B19011ED8009854FD /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
 		B04C0B9C19011ED8009854FD /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		B04C0B9D19011ED8009854FD /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
@@ -225,9 +219,9 @@
 			children = (
 				B047B92519E91D2000F24BE6 /* CrossAppExt.h */,
 				15C158D4168315E500D239F2 /* ExtensionMacros.h */,
+				B04822C319FA42170019F1A7 /* device */,
 				B034080219920FD1005DB179 /* sqlite3 */,
 				B00CC6131979302E00A62E4C /* studio */,
-				B03E902619389A4C00FD9A06 /* other */,
 				B04C0B9A19011ED8009854FD /* Json */,
 				15C158D5168315E500D239F2 /* GUI */,
 				1A9CE97E1765A7FA000E3062 /* LocalStorage */,
@@ -387,65 +381,13 @@
 			path = include;
 			sourceTree = "<group>";
 		};
-		B03E902619389A4C00FD9A06 /* other */ = {
+		B04822C319FA42170019F1A7 /* device */ = {
 			isa = PBXGroup;
 			children = (
-				B03E902719389A4C00FD9A06 /* CAAdress */,
-				B03E903119389A4C00FD9A06 /* CACamera */,
-				B03E903D19389A4C00FD9A06 /* CALocation */,
+				B04822C419FA42170019F1A7 /* CADevice.cpp */,
+				B04822C519FA42170019F1A7 /* CADevice.h */,
 			);
-			path = other;
-			sourceTree = "<group>";
-		};
-		B03E902719389A4C00FD9A06 /* CAAdress */ = {
-			isa = PBXGroup;
-			children = (
-				B03E902A19389A4C00FD9A06 /* CAAddressManager.h */,
-				B03E902B19389A4C00FD9A06 /* ios */,
-			);
-			path = CAAdress;
-			sourceTree = "<group>";
-		};
-		B03E902B19389A4C00FD9A06 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				B03E902E19389A4C00FD9A06 /* CAAddressManager.mm */,
-			);
-			path = ios;
-			sourceTree = "<group>";
-		};
-		B03E903119389A4C00FD9A06 /* CACamera */ = {
-			isa = PBXGroup;
-			children = (
-				B03E903419389A4C00FD9A06 /* CAMediaManager.h */,
-				B03E903519389A4C00FD9A06 /* ios */,
-			);
-			path = CACamera;
-			sourceTree = "<group>";
-		};
-		B03E903519389A4C00FD9A06 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				B03E903A19389A4C00FD9A06 /* CAMediaManager.mm */,
-			);
-			path = ios;
-			sourceTree = "<group>";
-		};
-		B03E903D19389A4C00FD9A06 /* CALocation */ = {
-			isa = PBXGroup;
-			children = (
-				B03E904019389A4C00FD9A06 /* CALocationManager.h */,
-				B03E904119389A4C00FD9A06 /* ios */,
-			);
-			path = CALocation;
-			sourceTree = "<group>";
-		};
-		B03E904119389A4C00FD9A06 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				B03E904419389A4C00FD9A06 /* CALocationManager.mm */,
-			);
-			path = ios;
+			path = device;
 			sourceTree = "<group>";
 		};
 		B04C0B9A19011ED8009854FD /* Json */ = {
@@ -584,7 +526,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B03E904919389A4C00FD9A06 /* CAAddressManager.mm in Sources */,
 				41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */,
 				B047B92819E91D2A00F24BE6 /* DownloadManager.cpp in Sources */,
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
@@ -605,9 +546,8 @@
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
 				B0AD93B11920790900EA40BB /* FirstViewController.cpp in Sources */,
 				B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */,
+				B04822D419FA42170019F1A7 /* CADevice.cpp in Sources */,
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,
-				B03E905219389A4C00FD9A06 /* CALocationManager.mm in Sources */,
-				B03E904E19389A4C00FD9A06 /* CAMediaManager.mm in Sources */,
 				1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

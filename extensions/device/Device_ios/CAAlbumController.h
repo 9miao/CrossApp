@@ -19,6 +19,6 @@ using namespace CrossApp;
 @interface CAAlbumController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @property (assign,nonatomic)void *sender;
--(void)openCameraView;
+-(void)openAlbumView;
 @end
 #endif /* defined(__LocationTest__CAAlbumController__) */

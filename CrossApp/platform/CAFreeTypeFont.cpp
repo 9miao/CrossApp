@@ -29,6 +29,7 @@ CAFreeTypeFont::CAFreeTypeFont()
 , m_bWordWrap(true)
 , m_bBold(false)
 , m_bItalics(false)
+, m_bUnderLine(false)
 {
 	m_ItalicMatrix.xx = 0x10000L;
 	m_ItalicMatrix.xy = ITALIC_LEAN_VALUE * 0x10000L;
@@ -56,7 +57,7 @@ void CAFreeTypeFont::destroyAllFontBuff()
 
 
 CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
+	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
@@ -67,6 +68,7 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	m_bWordWrap = bWordWrap;
 	m_bBold = bBold;
 	m_bItalics = bItalics;
+	m_bUnderLine = bUnderLine;
 	initGlyphs(pText);
 	m_lineSpacing = 0;
 	m_bWordWrap = false;
@@ -111,6 +113,7 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	{
 		return NULL;
 	}
+	m_bUnderLine = false;
 
 	CCImage* pImage = new CCImage();
 	if (!pImage->initWithImageData(pData, width*height * 4, CCImage::kFmtRawData, width, height, 8, false))
@@ -144,6 +147,7 @@ CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontNa
 	m_bWordWrap = bWordWrap;
 	m_bBold = false;
 	m_bItalics = false;
+	m_bUnderLine = false;
 
 	linesText.clear();
 	initTextView(pText, linesText);
@@ -224,19 +228,21 @@ unsigned char* CAFreeTypeFont::getBitmap(CCImage::ETextAlign eAlignMask, int* ou
     {
 		return NULL;
     }
-    
-    unsigned int* pxBuf = (unsigned int*)pBuffer;
-    for (int i = 0; i < m_width * m_height; i++)
-    {
-        pxBuf[i] = 0x00ffffff;
-    }
-    
-    
+	unsigned int* pxBuf = (unsigned int*)pBuffer;
+	for (int i = 0; i < m_width * m_height; i++)
+	{
+		pxBuf[i] = 0x00ffffff;
+	}
+
     std::vector<FTLineInfo*>::iterator line;
 	for (line = m_lines.begin(); line != m_lines.end(); ++line)
     {
         FT_Vector pen = getPenForAlignment(*line, eAlignMask, lineNumber, totalLines);
         drawText(*line, pBuffer, &pen);
+		if (m_bUnderLine)
+		{
+			draw_line(pBuffer, pen.x, pen.y, pen.x + (*line)->width, pen.y);
+		}
         lineNumber++;
     }
     *outWidth = m_width;
@@ -271,9 +277,8 @@ int CAFreeTypeFont::getStringWidth(const std::string& text, bool bBold, bool bIt
 	}
 	m_bBold = false;
 	m_bItalics = false;
+	m_bUnderLine = false;
 	return iStrWidth;
-
-	
 }
 
 int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth)
@@ -301,59 +306,60 @@ int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, i
     /* translate it, and grow the string bbox          */
     
     int nWordPos = 0;
-	cutWidth = 0;
-	for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
-	{
-		FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
-
-		if (glyph_bbox.xMin == glyph_bbox.xMax)
-		{
-			glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6);
-		}
-		glyph_bbox.xMin += glyph->pos.x;
-		glyph_bbox.xMax += glyph->pos.x;
-		glyph_bbox.yMin += glyph->pos.y;
-		glyph_bbox.yMax += glyph->pos.y;
-
-		if (glyph_bbox.xMin < bbox.xMin)
-			bbox.xMin = glyph_bbox.xMin;
-
-		if (glyph_bbox.yMin < bbox.yMin)
-			bbox.yMin = glyph_bbox.yMin;
-
-		if (glyph_bbox.xMax > bbox.xMax)
-			bbox.xMax = glyph_bbox.xMax;
-
-		if (glyph_bbox.yMax > bbox.yMax)
-			bbox.yMax = glyph_bbox.yMax;
-
-		int width = bbox.xMax - bbox.xMin;
-		cutWidth = glyph->pos.x - bbox.xMin + (slot->advance.x >> 6);
-		if (width > iLimitWidth)
-		{
-			cutWidth = glyph->pos.x - bbox.xMin;
-			break;
-		}
-
-		nWordPos++;
+    cutWidth = 0;
+    for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
+    {
+        FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
+        
+        if (glyph_bbox.xMin == glyph_bbox.xMax)
+        {
+            glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6);
+        }
+        glyph_bbox.xMin += glyph->pos.x;
+        glyph_bbox.xMax += glyph->pos.x;
+        glyph_bbox.yMin += glyph->pos.y;
+        glyph_bbox.yMax += glyph->pos.y;
+        
+        if (glyph_bbox.xMin < bbox.xMin)
+            bbox.xMin = glyph_bbox.xMin;
+        
+        if (glyph_bbox.yMin < bbox.yMin)
+            bbox.yMin = glyph_bbox.yMin;
+        
+        if (glyph_bbox.xMax > bbox.xMax)
+            bbox.xMax = glyph_bbox.xMax;
+        
+        if (glyph_bbox.yMax > bbox.yMax)
+            bbox.yMax = glyph_bbox.yMax;
+        
+        int width = bbox.xMax - bbox.xMin;
+        cutWidth = glyph->pos.x - bbox.xMin + (slot->advance.x >> 6);
+        if (width > iLimitWidth)
+        {
+            cutWidth = glyph->pos.x - bbox.xMin;
+            break;
+        }
+        
+        nWordPos++;
     }
     
-	int nCharPos = 0;
-	for (int i = 0; i < nWordPos; i++)
-	{
-		char ch = text[nCharPos];
-		if ((ch & 0x80) == 0x00)			// 0xxxxxxx
-			nCharPos += 1;
-		else if ((ch & 0xE0) == 0xC0)		// 110xxxxx
-			nCharPos += 2;
-		else if ((ch & 0xF0) == 0xE0)		// 1110xxxx
-			nCharPos += 3;
-		else
-			nCharPos += 4;
-	}
-
-	return nCharPos;
+    int nCharPos = 0;
+    for (int i = 0; i < nWordPos; i++)
+    {
+        char ch = text[nCharPos];
+        if ((ch & 0x80) == 0x00)			// 0xxxxxxx
+            nCharPos += 1;
+        else if ((ch & 0xE0) == 0xC0)		// 110xxxxx
+            nCharPos += 2;
+        else if ((ch & 0xF0) == 0xE0)		// 1110xxxx
+            nCharPos += 3;
+        else
+            nCharPos += 4;
+    }
+    
+    return nCharPos;
 }
+
 
 // text encode with utf8
 int CAFreeTypeFont::getStringHeight(const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap)
@@ -473,13 +479,28 @@ void CAFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
             if (i < 0 || j < 0 || i >= m_width || j >= m_height)
                 continue;
 
-                FT_Int index = (j * m_width * 4) + (i * 4);
-                pBuffer[index++] = 0xff;
-                pBuffer[index++] = 0xff;
-                pBuffer[index++] = 0xff;
+			FT_Int index = (j * m_width * 4) + (i * 4);
+			pBuffer[index++] = 0xff;
+			pBuffer[index++] = 0xff;
+			pBuffer[index++] = 0xff;
 			pBuffer[index++] = bitmap->buffer[q * bitmap->width + p];
         }
     }  
+}
+
+void CAFreeTypeFont::draw_line(unsigned char* pBuffer, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2)
+{
+	for (FT_Int i = y1; i <= y2; i++)
+	{
+		for (FT_Int j = x1; j <= x2; j++)
+		{
+			FT_Int index = (i * m_width * 4) + (j * 4);
+			pBuffer[index++] = 0xff;
+			pBuffer[index++] = 0xff;
+			pBuffer[index++] = 0xff;
+			pBuffer[index++] = 0xff;
+		}
+	}
 }
 
 void CAFreeTypeFont::endLine() 

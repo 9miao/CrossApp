@@ -16,7 +16,7 @@ FourthViewController::~FourthViewController()
 void FourthViewController::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
-	CALabel* presentViewController = CALabel::createWithCenter(CCRect(size.width*0.5,size.height*0.5,size.width*0.8,size.height*0.05));
+	CALabel* presentViewController = CALabel::createWithCenter(CADipRect(size.width*0.5,size.height*0.5,size.width*0.8,500));
 	presentViewController->setText("Drag your finger");
 	presentViewController->setColor(CAColor_blueStyle);
 	presentViewController->setFontSize(30 * CROSSAPP_ADPTATION_RATIO);
@@ -25,8 +25,14 @@ void FourthViewController::viewDidLoad()
 	this->getView()->insertSubview(presentViewController,1);
 
 	imageView = CAImageView::createWithImage(CAImage::create("2.jpg"));
-	imageView->setCenterOrigin(CCPoint(size.width*0.5,size.height*0.5));
+	imageView->setCenterOrigin(CADipPoint(size.width*0.5,size.height*0.5));
 	this->getView()->addSubview(imageView);
+}
+
+void FourthViewController::viewDidAppear()
+{
+	CANavigationBarItem* item = CANavigationBarItem::create("ViewController4");
+	this->getTabBarController()->setNavigationBarItem(item);
 }
 
 void FourthViewController::viewDidUnload()

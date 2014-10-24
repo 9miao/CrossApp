@@ -42,6 +42,12 @@ void ThirdViewController::viewDidLoad()
 	this->getView()->addSubview(scrollControl);
 }
 
+void ThirdViewController::viewDidAppear()
+{
+	CANavigationBarItem* item = CANavigationBarItem::create("ViewController3");
+	this->getTabBarController()->setNavigationBarItem(item);
+}
+
 void ThirdViewController::stateControl(CAControl* btn, CCPoint point)
 {
 	int index = scrollControl->getSelectedIndex();
