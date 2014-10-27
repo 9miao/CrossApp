@@ -19,8 +19,8 @@ void LabelTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
     
-	CALabel* currentValue = CALabel::createWithCenter(CADipRect(size.width*0.5, size.height*0.1, size.width*0.5, size.height*0.1));
-	currentValue->setText("30 seconds countdown");
+	CALabel* currentValue = CALabel::createWithCenter(CADipRect(size.width*0.5, size.height*0.2, size.width*0.5, size.height*0.4));
+	currentValue->setText(UTF8("阿斯顿是电饭锅电饭锅风光好刚回家很健康空间里水电费问儿童语认同与刚回家电饭锅风光好刚回家撒地方30 seconds countdown"));
 	currentValue->setColor(CAColor_blueStyle);
 	currentValue->setFontSize((_px(30)));
 	currentValue->setTextAlignment(CATextAlignmentCenter);
