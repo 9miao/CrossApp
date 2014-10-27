@@ -76,6 +76,9 @@
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -93,6 +96,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\device\CADevice.cpp" />
     <ClCompile Include="..\GUI\CAUIHelper.cpp" />
     <ClCompile Include="..\Json\CSContentJsonDictionary.cpp" />
     <ClCompile Include="..\Json\DictionaryHelper.cpp" />
@@ -103,14 +107,12 @@
     <ClCompile Include="..\network\DownloadManager.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\Websocket.cpp" />
-    <ClCompile Include="..\other\CAAdress\wp8\CAAddressManager.cpp" />
-    <ClCompile Include="..\other\CACamera\wp8\CAMediaManager.cpp" />
-    <ClCompile Include="..\other\CALocation\wp8\CALocationManager.cpp" />
     <ClCompile Include="..\sqlite3\include\sqlite3.c" />
     <ClCompile Include="..\studio\CAStudioViewController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CrossAppExt.h" />
+    <ClInclude Include="..\device\CADevice.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\GUI\CAUIHelper.h" />
     <ClInclude Include="..\Json\CSContentJsonDictionary.h" />
@@ -134,9 +136,6 @@
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
     <ClInclude Include="..\network\Websocket.h" />
-    <ClInclude Include="..\other\CAAdress\CAAddressManager.h" />
-    <ClInclude Include="..\other\CACamera\CAMediaManager.h" />
-    <ClInclude Include="..\other\CALocation\CALocationManager.h" />
     <ClInclude Include="..\sqlite3\include\sqlite3.h" />
     <ClInclude Include="..\sqlite3\include\sqlite3ext.h" />
     <ClInclude Include="..\studio\CAStudioViewController.h" />

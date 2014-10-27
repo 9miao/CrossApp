@@ -10,6 +10,7 @@
 #include "ccMacros.h"
 #include <locale>
 #include <cstdlib>
+#include "CALabelStyle.h"
 
 NS_CC_BEGIN
 
@@ -406,6 +407,25 @@ void CALabel::visit()
         this->updateImage();
     }
     CAView::visit();
+}
+
+void CALabel::applyStyle(const string& sStyleName)
+{
+	const CALabelStyle* pStyle = CALabelStyleCache::sharedStyleCache()->getStyle(sStyleName);
+	applyStyle(pStyle);
+}
+
+void CALabel::applyStyle(const CALabelStyle* pLabelStyle)
+{
+	CC_RETURN_IF(!pLabelStyle);
+
+	setFontName(pLabelStyle->getFontName());
+	setFontSize(pLabelStyle->getFontSize());
+	setColor(pLabelStyle->getFontColor());
+	setLineSpacing(pLabelStyle->getLineSpace());
+	setBold(pLabelStyle->isBold());
+	setItalics(pLabelStyle->isItalics());
+	setWordWrap(pLabelStyle->isWordWrap());
 }
 
 NS_CC_END

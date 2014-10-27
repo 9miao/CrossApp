@@ -251,6 +251,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CADatePickerView.cpp" />
     <ClCompile Include="..\view\CAImageView.cpp" />
     <ClCompile Include="..\view\CALabel.cpp" />
+    <ClCompile Include="..\view\CALabelStyle.cpp" />
     <ClCompile Include="..\view\CAListView.cpp" />
     <ClCompile Include="..\view\CAPageView.cpp" />
     <ClCompile Include="..\view\CAPickerView.cpp" />
@@ -403,6 +404,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\view\CADatePickerView.h" />
     <ClInclude Include="..\view\CAImageView.h" />
     <ClInclude Include="..\view\CALabel.h" />
+    <ClInclude Include="..\view\CALabelStyle.h" />
     <ClInclude Include="..\view\CAListView.h" />
     <ClInclude Include="..\view\CAPageView.h" />
     <ClInclude Include="..\view\CAPickerView.h" />

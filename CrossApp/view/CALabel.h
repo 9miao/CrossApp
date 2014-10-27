@@ -12,9 +12,9 @@
 #include <iostream>
 #include "CAView.h"
 
-
 NS_CC_BEGIN
 using namespace std;
+class CALabelStyle;
 
 class CC_DLL CALabel: public CAView
 {
@@ -65,6 +65,10 @@ public:
     void sizeToFit();
     
     void unsizeToFit();
+
+	void applyStyle(const string& sStyleName);
+
+	void applyStyle(const CALabelStyle* pLabelStyle);
     
 protected:
     
