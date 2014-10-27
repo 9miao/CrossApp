@@ -10,9 +10,6 @@
     <Filter Include="network">
       <UniqueIdentifier>{2a7741ff-87a5-41c8-8e51-d7a1cf0c8e4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="other">
-      <UniqueIdentifier>{2cec268f-4602-45c2-94df-b4b41e5c7127}</UniqueIdentifier>
-    </Filter>
     <Filter Include="json">
       <UniqueIdentifier>{231d1242-516f-4183-86f7-020feb7befd1}</UniqueIdentifier>
     </Filter>
@@ -30,6 +27,9 @@
     </Filter>
     <Filter Include="sqlite3">
       <UniqueIdentifier>{9581e20d-7c68-4b81-8dd6-608eb3840f3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="device">
+      <UniqueIdentifier>{e5072c29-86ef-45ca-95e0-fa5f5d83e37c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,7 +70,7 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\device\CADevice.cpp">
-      <Filter>other</Filter>
+      <Filter>device</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,7 +149,7 @@
       <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\device\CADevice.h">
-      <Filter>other</Filter>
+      <Filter>device</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
