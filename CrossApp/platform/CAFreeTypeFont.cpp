@@ -654,6 +654,7 @@ FT_Error CAFreeTypeFont::initGlyphs(const char* text)
     m_textHeight = 0;
     // the height of a line of text based on the max height of a glyph in the font size
     m_lineHeight = ((m_face->size->metrics.ascender) >> 6) - ((m_face->size->metrics.descender) >> 6);
+	m_lineHeight += m_lineHeight / 4;
 	m_lineHeight += m_lineSpacing;
 
 	destroyAllLines();

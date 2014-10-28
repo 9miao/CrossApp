@@ -10,18 +10,6 @@
     <Filter Include="network">
       <UniqueIdentifier>{2a7741ff-87a5-41c8-8e51-d7a1cf0c8e4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="other">
-      <UniqueIdentifier>{2cec268f-4602-45c2-94df-b4b41e5c7127}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="other\CAAdress">
-      <UniqueIdentifier>{f317b8a7-8edf-4b6a-bda1-2e89dc54d9de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="other\CACamera">
-      <UniqueIdentifier>{f67029b8-4cbe-48d4-aed5-aa6e3823e84b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="other\CALocation">
-      <UniqueIdentifier>{ae036374-c639-48e9-9402-573f93af97e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="json">
       <UniqueIdentifier>{231d1242-516f-4183-86f7-020feb7befd1}</UniqueIdentifier>
     </Filter>
@@ -40,6 +28,9 @@
     <Filter Include="sqlite3">
       <UniqueIdentifier>{9581e20d-7c68-4b81-8dd6-608eb3840f3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="device">
+      <UniqueIdentifier>{e5072c29-86ef-45ca-95e0-fa5f5d83e37c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\network\HttpClient.cpp">
@@ -53,15 +44,6 @@
     </ClCompile>
     <ClCompile Include="..\GUI\CAUIHelper.cpp">
       <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\other\CAAdress\wp8\CAAddressManager.cpp">
-      <Filter>other\CAAdress</Filter>
-    </ClCompile>
-    <ClCompile Include="..\other\CACamera\wp8\CAMediaManager.cpp">
-      <Filter>other\CACamera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\other\CALocation\wp8\CALocationManager.cpp">
-      <Filter>other\CALocation</Filter>
     </ClCompile>
     <ClCompile Include="..\Json\CSContentJsonDictionary.cpp">
       <Filter>json</Filter>
@@ -87,6 +69,9 @@
     <ClCompile Include="..\network\DownloadManager.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="..\device\CADevice.cpp">
+      <Filter>device</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ExtensionMacros.h" />
@@ -104,15 +89,6 @@
     </ClInclude>
     <ClInclude Include="..\GUI\CAUIHelper.h">
       <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\other\CAAdress\CAAddressManager.h">
-      <Filter>other\CAAdress</Filter>
-    </ClInclude>
-    <ClInclude Include="..\other\CACamera\CAMediaManager.h">
-      <Filter>other\CACamera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\other\CALocation\CALocationManager.h">
-      <Filter>other\CALocation</Filter>
     </ClInclude>
     <ClInclude Include="..\Json\CSContentJsonDictionary.h">
       <Filter>json</Filter>
@@ -171,6 +147,9 @@
     <ClInclude Include="..\CrossAppExt.h" />
     <ClInclude Include="..\network\DownloadManager.h">
       <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\device\CADevice.h">
+      <Filter>device</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

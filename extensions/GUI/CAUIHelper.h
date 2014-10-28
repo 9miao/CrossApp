@@ -27,6 +27,8 @@ public:
     void init();
     
     CCDictionary *createCAWidgetWithJsonFile(const char *filename);
+
+	bool loadLabelStyle(const string& sFileName);
     
     static CAUIHelper* getInstance();
 private:

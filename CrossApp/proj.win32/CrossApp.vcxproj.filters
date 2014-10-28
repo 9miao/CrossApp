@@ -431,6 +431,9 @@
     <ClCompile Include="..\view\CATextView.cpp">
       <Filter>view</Filter>
     </ClCompile>
+    <ClCompile Include="..\view\CALabelStyle.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -867,6 +870,9 @@
     <ClInclude Include="..\basics\CASyncQueue.h" />
     <ClInclude Include="..\basics\CAThread.h" />
     <ClInclude Include="..\view\CATextView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CALabelStyle.h">
       <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
