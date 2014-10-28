@@ -30,7 +30,7 @@ const char* ShowAddress()
 }
 extern "C"
 {
-    int JAVAgetBrightness()
+    float JAVAgetBrightness()
     {
         JniMethodInfo jmi;
         if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "getScreenBrightness" , "()I"))
@@ -38,7 +38,7 @@ extern "C"
             
             jint a = (jint)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
             int b = a;
-            return b;
+            return (float)b/255.0f;
             
         }
     }
@@ -201,7 +201,7 @@ void startLocation(CALocationDelegate* target)
 
 float getScreenBrightness()
 {
-    float percent = (float)JAVAgetBrightness()/255.0f;
+    float percent = JAVAgetBrightness();
     return percent;
 }
     
