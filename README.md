@@ -24,6 +24,31 @@
 重新创建工程，并拷贝Classes与Resources中文件
 
 
+#### CrossApp 0. 3. 9 Update:
+
+#####1. Added text bold functionality on CALabel
+
+#####2. Added text bold italic functionality on CALabel
+
+#####3. Added text underline functionality on CALabel
+
+#####4. Optimized DownloadManager
+Optimized file download management system and fixed header file reference bug from previous release<br/>
+
+#####5. Rearranged device related system interface
+For example: GPS info obtaining, camera and photo album calling and address book obtaining etc.<br/>
+
+#####6. Added sliding right on secondary interface to return upper-level interface functionality on CANavigationController
+
+#####7. Optimized OpenGL clipping functionality’s slight error
+
+#####8. Optimized OpenGL imaging coordinates’s slight error
+
+#####9. Other details tweaking
+
+####Suggestion:
+rebuild project and copy files in Classes and Resources<br/>
+
 
 **********************************************************************************
 
