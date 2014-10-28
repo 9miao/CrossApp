@@ -147,6 +147,10 @@ bool CAUIHelper::loadLabelStyle(const string& sFileName)
 {
 	unsigned long size = 0;
 	char *des = (char*)CCFileUtils::sharedFileUtils()->getFileData(sFileName.c_str(), "r", &size);
+	if (!des)
+	{
+		return false;
+	}
 	CSJson::Reader reader;
 	CSJson::Value root;
 

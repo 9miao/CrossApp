@@ -14,9 +14,11 @@ CALabelStyle::CALabelStyle()
 
 }
 
-const CALabelStyle* CALabelStyle::getStyle(const string& sStyleName)
+CALabelStyle* CALabelStyle::create()
 {
-	return CALabelStyleCache::sharedStyleCache()->getStyle(sStyleName);
+	CALabelStyle* pStyle = new CALabelStyle();
+	pStyle->autorelease();
+	return pStyle;
 }
 
 int CALabelStyle::getFontHeight() const
@@ -42,7 +44,7 @@ int CALabelStyle::getStringHeight(const std::string& text, int iLimitWidth) cons
 void CALabelStyleCache::addStyle(const string& sStyleName, const string& sFontName, int nFontSize, int nLineSpace, 
 	const CAColor4B& cFontColor, bool bBold, bool bItalics, bool bWordWrap)
 {
-	CALabelStyle* pStyle = new CALabelStyle();
+	CALabelStyle* pStyle = CALabelStyle::create();
 	pStyle->setStyleName(sStyleName);
 	pStyle->setFontName(sFontName);
 	pStyle->setFontSize(nFontSize);
@@ -52,28 +54,18 @@ void CALabelStyleCache::addStyle(const string& sStyleName, const string& sFontNa
 	pStyle->setItalics(bItalics);
 	pStyle->setWordWrap(bWordWrap);
 
-	pStyle->autorelease();
-
-	map<string, CALabelStyle*>::iterator it = m_StyleMap.find(sStyleName);
-	if (it != m_StyleMap.end())
+	if (m_StyleMap.contains(sStyleName))
 	{
-		CC_SAFE_RELEASE_NULL(it->second);
-		it->second = pStyle;
+		m_StyleMap.erase(sStyleName);
 	}
-	else
-	{
-		m_StyleMap[sStyleName] = pStyle;
-		pStyle->retain();
-	}
+	
+	m_StyleMap.insert(sStyleName, pStyle);
+	
 }
 
 const CALabelStyle* CALabelStyleCache::getStyle(const string& sStyleName)
 {
-	map<string, CALabelStyle*>::iterator it = m_StyleMap.find(sStyleName);
-	if (it != m_StyleMap.end())
-		return it->second;
-
-	return NULL;
+	return m_StyleMap.getValue(sStyleName);
 }
 
 CALabelStyleCache::CALabelStyleCache()
@@ -83,11 +75,7 @@ CALabelStyleCache::CALabelStyleCache()
 
 CALabelStyleCache::~CALabelStyleCache()
 {
-	map<string, CALabelStyle*>::iterator it = m_StyleMap.begin();
-	for (; it != m_StyleMap.end(); it++)
-	{
-		CC_SAFE_RELEASE_NULL(it->second);
-	}
+	m_StyleMap.clear();
 }
 
 static CALabelStyleCache *g_sharedLabelStyleCache = NULL;
