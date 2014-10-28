@@ -19,22 +19,22 @@ const CALabelStyle* CALabelStyle::getStyle(const string& sStyleName)
 	return CALabelStyleCache::sharedStyleCache()->getStyle(sStyleName);
 }
 
-int CALabelStyle::getFontHeight()
+int CALabelStyle::getFontHeight() const
 {
 	return g_AFTFontCache.getFontHeight(m_sFontName.c_str(), m_nFontSize);
 }
 
-int CALabelStyle::getStringWidth(const std::string& text)
+int CALabelStyle::getStringWidth(const std::string& text) const
 {
 	return g_AFTFontCache.getStringWidth(m_sFontName.c_str(), m_nFontSize, text, m_bBold, m_bItalics);
 }
 
-int CALabelStyle::cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth)
+int CALabelStyle::cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth) const
 {
 	return g_AFTFontCache.cutStringByWidth(m_sFontName.c_str(), m_nFontSize, text, iLimitWidth, cutWidth, m_bBold, m_bItalics);
 }
 
-int CALabelStyle::getStringHeight(const std::string& text, int iLimitWidth)
+int CALabelStyle::getStringHeight(const std::string& text, int iLimitWidth) const
 {
 	return g_AFTFontCache.getStringHeight(m_sFontName.c_str(), m_nFontSize, text, iLimitWidth, m_nLineSpace, m_bWordWrap);
 }

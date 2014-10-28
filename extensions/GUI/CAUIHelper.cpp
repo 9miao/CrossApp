@@ -158,7 +158,7 @@ bool CAUIHelper::loadLabelStyle(const string& sFileName)
 	if (!root.isArray())
 		return false;
 
-	for (size_t i = 0; i < root.size(); i++)
+	for (int i = 0; i < root.size(); i++)
 	{
 		CSJson::Value& style = root[i];
 		string sStyleName = style["StyleName"].asString();

@@ -15,13 +15,13 @@ public:
 
 	static const CALabelStyle* getStyle(const string& sStyleName);
 
-	int getFontHeight();
+	int getFontHeight() const;
 
-	int getStringWidth( const std::string& text);
+	int getStringWidth( const std::string& text) const;
 
-	int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth);
+	int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth) const;
 
-	int getStringHeight(const std::string& text, int iLimitWidth);
+	int getStringHeight(const std::string& text, int iLimitWidth) const;
 
 protected:
 	CC_SYNTHESIZE_PASS_BY_REF(string, m_sStyleName, StyleName);

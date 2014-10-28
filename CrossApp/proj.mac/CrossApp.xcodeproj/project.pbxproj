@@ -242,6 +242,8 @@
 		04EABAAF1956D75B00198A8E /* CAWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAB0521956D75500198A8E /* CAWindow.cpp */; };
 		04EABAB01956D75B00198A8E /* CAWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAB0531956D75500198A8E /* CAWindow.h */; };
 		04EABB441956DD8E00198A8E /* CrossApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EABB431956DD8E00198A8E /* CrossApp.cpp */; };
+		0FDC4EB719FE55FD00621A1B /* CALabelStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0FDC4EB519FE55FD00621A1B /* CALabelStyle.cpp */; };
+		0FDC4EB819FE55FD00621A1B /* CALabelStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDC4EB619FE55FD00621A1B /* CALabelStyle.h */; };
 		1551A874158F2B4700E66CFE /* CrossApp-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 1551A873158F2B4700E66CFE /* CrossApp-Prefix.pch */; };
 		1A94D35016C2072800D79D09 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A94D34C16C2014900D79D09 /* libwebp.a */; };
 		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
@@ -533,6 +535,8 @@
 		04EAB0521956D75500198A8E /* CAWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWindow.cpp; sourceTree = "<group>"; };
 		04EAB0531956D75500198A8E /* CAWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWindow.h; sourceTree = "<group>"; };
 		04EABB431956DD8E00198A8E /* CrossApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CrossApp.cpp; sourceTree = "<group>"; };
+		0FDC4EB519FE55FD00621A1B /* CALabelStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALabelStyle.cpp; sourceTree = "<group>"; };
+		0FDC4EB619FE55FD00621A1B /* CALabelStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALabelStyle.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libCrossApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCrossApp.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1551A873158F2B4700E66CFE /* CrossApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.pch"; sourceTree = "<group>"; };
@@ -1097,6 +1101,8 @@
 		04EAB03F1956D75500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				0FDC4EB519FE55FD00621A1B /* CALabelStyle.cpp */,
+				0FDC4EB619FE55FD00621A1B /* CALabelStyle.h */,
 				B0DA93F719D79B1A00E66E11 /* CATextView.cpp */,
 				B0DA93F819D79B1A00E66E11 /* CATextView.h */,
 				B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */,
@@ -1322,6 +1328,7 @@
 				04EABA891956D75A00198A8E /* uthash.h in Headers */,
 				04EABA8A1956D75A00198A8E /* utlist.h in Headers */,
 				04EABA8C1956D75A00198A8E /* TGAlib.h in Headers */,
+				0FDC4EB819FE55FD00621A1B /* CALabelStyle.h in Headers */,
 				04EABA8E1956D75A00198A8E /* tinyxml2.h in Headers */,
 				04EABA901956D75A00198A8E /* TransformUtils.h in Headers */,
 				B02CE48419AD869600B905FB /* CAPageControl.h in Headers */,
@@ -1518,6 +1525,7 @@
 				0460ECF51956F97A00D13001 /* CAApplicationCaller.mm in Sources */,
 				0460ECF71956F97A00D13001 /* CCEGLView.mm in Sources */,
 				04DF7CB01984E6D9007352A8 /* CAIndexPath.cpp in Sources */,
+				0FDC4EB719FE55FD00621A1B /* CALabelStyle.cpp in Sources */,
 				B03407F81991CA27005DB179 /* md5.cpp in Sources */,
 				B0F7E4FE198788010048F46B /* CAPageView.cpp in Sources */,
 				0446097E19B8D73200E73CA6 /* CAPullToRefreshView.cpp in Sources */,
