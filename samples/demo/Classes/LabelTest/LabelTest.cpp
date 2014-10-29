@@ -19,13 +19,22 @@ void LabelTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
     
-	CALabel* currentValue = CALabel::createWithCenter(CADipRect(size.width*0.5, size.height*0.1, size.width*0.5, size.height*0.1));
-	currentValue->setText("30 seconds countdown");
+
+	CAView* pView = CAView::createWithCenter(CADipRect(size.width*0.5, size.height*0.3, size.width*0.5, size.height*0.2));
+	pView->setColor(CAColor_gray);
+
+	CCSize size1 = pView->getBounds().size;
+
+
+	CALabel* currentValue = CALabel::createWithCenter(CADipRect(size1.width*0.5, size1.height*0.5, size1.width, size1.height));
+	currentValue->setText(UTF8("阿斯顿是电饭锅电饭"));
 	currentValue->setColor(CAColor_blueStyle);
-	currentValue->setFontSize((_px(30)));
+	currentValue->setFontSize((_px(36)));
 	currentValue->setTextAlignment(CATextAlignmentCenter);
 	currentValue->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-	this->getView()->addSubview(currentValue);
+
+	pView->addSubview(currentValue);
+	this->getView()->addSubview(pView);
 
 	number1 = CALabel::createWithCenter(CADipRect(size.width*0.5, size.height*0.2, size.width*0.5, size.height*0.1));
 	number1->setTag(10);
