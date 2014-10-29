@@ -399,7 +399,7 @@ FT_Vector CAFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAl
     {
         case CCImage::kAlignTop: // Horizontal center and vertical top.
             pen.x = ((m_width  - stringWidth) / 2) - pInfo->bbox.xMin;
-            pen.y = pInfo->bbox.yMax + (lineNumber * m_lineHeight);		    
+            pen.y = pInfo->bbox.yMax + (lineNumber * m_lineHeight);	
  		    break;
 			
         case CCImage::kAlignTopLeft: // Horizontal left and vertical top.
@@ -432,23 +432,24 @@ FT_Vector CAFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAl
             pen.x = ((m_width  - stringWidth) / 2) - pInfo->bbox.xMin;
             top = (m_height - m_textHeight) / 2;
             pen.y = top + (lineNumber * m_lineHeight) + pInfo->bbox.yMax;		    
+			pen.y += m_lineSpacing / 2;
             break;
 
 	    case CCImage::kAlignRight: // Horizontal right and vertical center.
             pen.x = m_width - stringWidth - pInfo->bbox.xMin;
             top = (m_height - m_textHeight) / 2;
             pen.y = top + (lineNumber * m_lineHeight) + pInfo->bbox.yMax;		    
+			pen.y += m_lineSpacing / 2;
   		    break;
 
 	    case CCImage::kAlignLeft: // Horizontal left and vertical center.
 	    default:
             pen.x -=pInfo->bbox.xMin;
             top = (m_height - m_textHeight) / 2;
-            pen.y = top + (lineNumber * m_lineHeight) + pInfo->bbox.yMax;		    
+            pen.y = top + (lineNumber * m_lineHeight) + pInfo->bbox.yMax;
+			pen.y += m_lineSpacing / 2;
   		    break;
     }
-
-	pen.y += m_lineSpacing / 2;
     return pen;
 }
 
