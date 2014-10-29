@@ -158,23 +158,23 @@ bool CAUIHelper::loadLabelStyle(const string& sFileName)
 	if (!root.isArray())
 		return false;
 
-	for (size_t i = 0; i < root.size(); i++)
-	{
-		CSJson::Value& style = root[i];
-		string sStyleName = style["StyleName"].asString();
-		string sFontName = style["FontName"].asString();
-		int nFontSize = style["FontSize"].asInt();
-		int nLineSpace = style["LineSpace"].asInt();
-		string sColor = style["FontColor"].asString();
-		int r = 0, g = 0, b = 0, a = 0xff;
-		sscanf(sColor.c_str(), "%02x%02x%02x%02x", &r, &g, &b, &a);
-		CAColor4B cFontColor = ccc4(r, g, b, a);
-		bool bBold = style["Bold"].asBool();
-		bool bItalics = style["Italics"].asBool();
-		bool bWordWrap = style["WordWrap"].asBool();
-
-		CALabelStyleCache::sharedStyleCache()->addStyle(sStyleName, sFontName, _px(nFontSize), _px(nLineSpace), cFontColor, bBold, bItalics, bWordWrap);
-	}
+//	for (size_t i = 0; i < root.size(); i++)
+//	{
+//		CSJson::Value& style = root[i];
+//		string sStyleName = style["StyleName"].asString();
+//		string sFontName = style["FontName"].asString();
+//		int nFontSize = style["FontSize"].asInt();
+//		int nLineSpace = style["LineSpace"].asInt();
+//		string sColor = style["FontColor"].asString();
+//		int r = 0, g = 0, b = 0, a = 0xff;
+//		sscanf(sColor.c_str(), "%02x%02x%02x%02x", &r, &g, &b, &a);
+//		CAColor4B cFontColor = ccc4(r, g, b, a);
+//		bool bBold = style["Bold"].asBool();
+//		bool bItalics = style["Italics"].asBool();
+//		bool bWordWrap = style["WordWrap"].asBool();
+//
+//		CALabelStyleCache::sharedStyleCache()->addStyle(sStyleName, sFontName, _px(nFontSize), _px(nLineSpace), cFontColor, bBold, bItalics, bWordWrap);
+//	}
 
 	return true;
 }

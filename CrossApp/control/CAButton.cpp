@@ -511,7 +511,6 @@ void CAButton::setControlState(const CAControlState& var)
         float scaleX = size.width / iSize.width * 0.75f;
         float scaleY = size.height / iSize.height * 0.75f;
         float scale = MIN(scaleX, scaleY);
-        scale = MIN(scale, 1.0f);
         iSize = ccpMult(iSize, scale);
         
         imageViewCenter.origin = size / 2;
@@ -529,7 +528,6 @@ void CAButton::setControlState(const CAControlState& var)
         float scaleX = size.width / iSize.width * 0.5f;
         float scaleY = size.height / iSize.height * 0.45f;
         float scale = MIN(scaleX, scaleY);
-        scale = MIN(scale, 1.0f);
         iSize = ccpMult(iSize, scale);
         
         imageViewCenter.size = iSize;

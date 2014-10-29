@@ -382,21 +382,22 @@ void CADownloadManager::loadDownloadTasks()
 void CADownloadManager::deleteTaskFromDb(unsigned long download_id)
 {
 	char szSql[256] = { 0 };
-	sprintf(szSql, "DELETE * FROM [T_DownloadMgr] WHERE id=%lu", download_id);
+	sprintf(szSql, "DELETE FROM [T_DownloadMgr] WHERE id=%lu", download_id);
 
 	char* szError = 0;
 	int nRet = sqlite3_exec((sqlite3*)m_mpSqliteDB, szSql, 0, 0, &szError);
-	CCAssert(nRet == SQLITE_OK, "");
+	CCAssert(nRet == SQLITE_OK || nRet == SQLITE_DONE, "");
+    
 }
 
 void CADownloadManager::deleteTaskFromDb(const std::string& cszUrl)
-{
+{//error
 	char szSql[256] = { 0 };
-	sprintf(szSql, "DELETE * FROM [T_DownloadMgr] WHERE url=%s", cszUrl.c_str());
+	sprintf(szSql, "DELETE FROM [T_DownloadMgr] WHERE url=%s", cszUrl.c_str());
 
 	char* szError = 0;
 	int nRet = sqlite3_exec((sqlite3*)m_mpSqliteDB, szSql, 0, 0, &szError);
-	CCAssert(nRet == SQLITE_OK, "");
+	CCAssert(nRet == SQLITE_OK || nRet == SQLITE_DONE, "");
 
 	for (int i = 0; i < m_vDownloadingRequests.size(); i++)
 	{
@@ -541,6 +542,7 @@ void CADownloadManager::eraseDownload(unsigned long download_id)
     if (pDownloadReq)
     {
         pDownloadReq->setDownloadCmd(DownloadCmd_Pause);
+        pDownloadReq->retain()->autorelease();
         if (m_vDownloadingRequests.contains(pDownloadReq))
         {
             //如果下载列表里包含此下载id
@@ -562,8 +564,20 @@ void CADownloadManager::eraseDownload(unsigned long download_id)
     {
         m_mCADownloadResponses.erase(download_id);
     }
-	deleteTaskFromDb(download_id);
-	m_mDownloadRecords.erase(download_id);
+    deleteTaskFromDb(download_id);
+    
+    std::map<unsigned long, DownloadRecord>::iterator itr = m_mDownloadRecords.find(download_id);
+    if (itr != m_mDownloadRecords.end())
+    {
+        const std::string& filePath = m_mDownloadRecords.at(download_id).filePath;
+        
+        if (remove(filePath.c_str()) != 0)
+        {
+            remove(std::string(filePath + ".tmp").c_str());
+        }
+        
+        m_mDownloadRecords.erase(download_id);
+    }
 }
 
 const char* CADownloadManager::getDownloadUrl(unsigned long download_id)
@@ -1028,7 +1042,11 @@ static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userda
 int CADownloadResponseProgressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
     CADownloadResponse* request = (CADownloadResponse*)ptr;
-    
+    if (request == NULL)
+    {
+        return 0;
+    }
+
     if (!request->isDelayNotLessThan60())
     {
         return 0;
@@ -1239,11 +1257,11 @@ void CADownloadResponse::Helper::handleUpdateSucceed(Message *msg)
 
     manager->setSearchPath();
 
-    string zipfileName = manager->_fileName;
-    if (remove(zipfileName.c_str()) != 0)
-    {
-        CCLOG("can not remove downloaded zip file %s", zipfileName.c_str());
-    }
+//    string zipfileName = manager->_fileName;
+//    if (remove(zipfileName.c_str()) != 0)
+//    {
+//        CCLOG("can not remove downloaded zip file %s", zipfileName.c_str());
+//    }
 }
 
 NS_CC_EXT_END;

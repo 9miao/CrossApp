@@ -46,7 +46,7 @@ public:
 
 	CC_PROPERTY(bool, m_bItalics, Italics);
 
-	CC_PROPERTY(unsigned int, m_iLineSpacing, LineSpacing);
+	CC_PROPERTY(int, m_iLineSpacing, LineSpacing);
     
     CC_PROPERTY_PASS_BY_REF(string, m_nfontName, FontName);
     

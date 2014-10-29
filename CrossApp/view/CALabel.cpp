@@ -307,14 +307,14 @@ unsigned int CALabel::getFontSize()
     return m_nfontSize;
 }
 
-void CALabel::setLineSpacing(unsigned int var)
+void CALabel::setLineSpacing(int var)
 {
     CC_RETURN_IF(m_iLineSpacing == var);
 	m_iLineSpacing = var;
 	m_bUpdateImage = true;
 }
 
-unsigned int CALabel::getLineSpacing()
+int CALabel::getLineSpacing()
 {
 	return m_iLineSpacing;
 }
