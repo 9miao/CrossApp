@@ -2,9 +2,8 @@
 #define CALabelStyle_h__
 
 #include "CAView.h"
-#include <map>
+#include "basics/CASTLContainer.h"
 using std::string;
-using std::map;
 
 NS_CC_BEGIN
 
@@ -13,15 +12,15 @@ class CC_DLL CALabelStyle : public CAObject
 public:
 	CALabelStyle();
 
-	static const CALabelStyle* getStyle(const string& sStyleName);
+	static CALabelStyle* create();
 
-	int getFontHeight();
+	int getFontHeight() const;
 
-	int getStringWidth( const std::string& text);
+	int getStringWidth( const std::string& text) const;
 
-	int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth);
+	int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth) const;
 
-	int getStringHeight(const std::string& text, int iLimitWidth);
+	int getStringHeight(const std::string& text, int iLimitWidth) const;
 
 protected:
 	CC_SYNTHESIZE_PASS_BY_REF(string, m_sStyleName, StyleName);
@@ -50,8 +49,10 @@ private:
 	CALabelStyleCache();
 	~CALabelStyleCache();
 
-	map<string, CALabelStyle*> m_StyleMap;
+	CAMap<string, CALabelStyle*> m_StyleMap;
 };
+
+#define g_CALabelStyleCache CALabelStyleCache::sharedStyleCache()
 
 NS_CC_END
 

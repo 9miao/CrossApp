@@ -283,67 +283,43 @@ int CAFreeTypeFont::getStringWidth(const std::string& text, bool bBold, bool bIt
 
 int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth)
 {
-    std::vector<TGlyph> glyphs;
+
     
-    FT_Vector vt;
-    memset(&vt, 0, sizeof(vt));
-    if (0 != initWordGlyphs(glyphs, text, vt))
-        return 0;
-    
-    FT_BBox bbox;
-    FT_BBox glyph_bbox;
-    FT_GlyphSlot slot = m_face->glyph;
-    
-    /* initialize string bbox to "empty" values */
-    bbox.xMin = 32000;
-    bbox.xMax = -32000;
-    
-    // use the max and min values for the entire font face
-    bbox.yMin = (m_face->size->metrics.descender) >> 6;
-    bbox.yMax = (m_face->size->metrics.ascender) >> 6;
-    
-    /* for each glyph image, compute its bounding box, */
-    /* translate it, and grow the string bbox          */
-    
-    int nWordPos = 0;
-    cutWidth = 0;
-    for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
-    {
-        FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
-        
-        if (glyph_bbox.xMin == glyph_bbox.xMax)
-        {
-            glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6);
-        }
-        glyph_bbox.xMin += glyph->pos.x;
-        glyph_bbox.xMax += glyph->pos.x;
-        glyph_bbox.yMin += glyph->pos.y;
-        glyph_bbox.yMax += glyph->pos.y;
-        
-        if (glyph_bbox.xMin < bbox.xMin)
-            bbox.xMin = glyph_bbox.xMin;
-        
-        if (glyph_bbox.yMin < bbox.yMin)
-            bbox.yMin = glyph_bbox.yMin;
-        
-        if (glyph_bbox.xMax > bbox.xMax)
-            bbox.xMax = glyph_bbox.xMax;
-        
-        if (glyph_bbox.yMax > bbox.yMax)
-            bbox.yMax = glyph_bbox.yMax;
-        
-        int width = bbox.xMax - bbox.xMin;
-        cutWidth = glyph->pos.x - bbox.xMin + (slot->advance.x >> 6);
-        if (width > iLimitWidth)
-        {
-            cutWidth = glyph->pos.x - bbox.xMin;
-            break;
-        }
-        
-        nWordPos++;
-    }
+	FT_GlyphSlot	slot = m_face->glyph;
+	FT_UInt			glyph_index;
+	FT_Error		error = 0;
+	unsigned int    numGlyphs = 0;
+	int				text_width = 0;
+
+	std::u16string utf16String;
+	if (!StringUtils::UTF8ToUTF16(text, utf16String))
+		return 0;
+
+	int n = 0;
+	for (n = 0; n < utf16String.size(); n++)
+	{
+		FT_ULong c = utf16String[n];
+
+		glyph_index = FT_Get_Char_Index(m_face, c);
+
+		/* load glyph image into the slot without rendering */
+		error = FT_Load_Glyph(m_face, glyph_index, FT_LOAD_NO_HINTING | FT_LOAD_NO_BITMAP);
+		if (error)
+			continue;  /* ignore errors, jump to next glyph */
+
+		if (c == 10)
+			continue;
+
+		/* increment pen position */
+		text_width += slot->advance.x >> 6;
+		if (text_width > iLimitWidth)
+			break;
+
+		cutWidth = text_width;
+	}
     
     int nCharPos = 0;
+	int nWordPos = n;
     for (int i = 0; i < nWordPos; i++)
     {
         char ch = text[nCharPos];
@@ -911,6 +887,8 @@ void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
         bbox.xMax = 0;
         bbox.yMax = 0;
     }
+
+	bbox.xMin = 0;
   
     /* return string bbox */
     *abbox = bbox;
