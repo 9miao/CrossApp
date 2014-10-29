@@ -70,10 +70,7 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	m_bItalics = bItalics;
 	m_bUnderLine = bUnderLine;
 	initGlyphs(pText);
-	m_lineSpacing = 0;
-	m_bWordWrap = false;
-	m_bBold = false;
-	m_bItalics = false;
+
     
 	CCImage::ETextAlign eAlign;
     
@@ -113,7 +110,12 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	{
 		return NULL;
 	}
+	m_lineSpacing = 0;
+	m_bWordWrap = false;
+	m_bBold = false;
+	m_bItalics = false;
 	m_bUnderLine = false;
+
 
 	CCImage* pImage = new CCImage();
 	if (!pImage->initWithImageData(pData, width*height * 4, CCImage::kFmtRawData, width, height, 8, false))
@@ -446,6 +448,7 @@ FT_Vector CAFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAl
   		    break;
     }
 
+	pen.y += m_lineSpacing / 2;
     return pen;
 }
 
@@ -507,7 +510,6 @@ void CAFreeTypeFont::endLine()
 {
     if(m_currentLine)
     {
-		m_currentLine->bbox.yMax += m_lineSpacing;
         m_lines.push_back(m_currentLine);
 		m_textWidth = MAX(m_textWidth, m_currentLine->bbox.xMax - m_currentLine->bbox.xMin);
         m_textHeight += m_lineHeight;
