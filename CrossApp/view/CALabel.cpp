@@ -100,6 +100,7 @@ bool CALabel::initWithCenter(const CCRect& rect)
 void CALabel::updateImage()
 {
 	int fontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_nfontSize);
+	int defaultLineSpace = fontHeight / 4;
  
     unsigned int linenumber = (int)this->getBounds().size.height / fontHeight;
 
@@ -111,7 +112,7 @@ void CALabel::updateImage()
         {
             if (m_nNumberOfLine > 1)
             {
-				size = CCSize(this->getBounds().size.width, (m_iLineSpacing + fontHeight) * m_nNumberOfLine);
+				size = CCSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * m_nNumberOfLine);
             }
             else if (m_nNumberOfLine == 1)
             {
@@ -139,11 +140,11 @@ void CALabel::updateImage()
 		{
 			if (m_nNumberOfLine > 0)
 			{
-				size = CCSize(this->getBounds().size.width, (m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
+				size = CCSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
 			}
 			else
 			{
-				size = CCSize(this->getBounds().size.width, (m_iLineSpacing + fontHeight) * linenumber);
+				size = CCSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * linenumber);
 			}
 		}
     }
