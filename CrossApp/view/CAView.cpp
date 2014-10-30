@@ -1078,8 +1078,6 @@ void CAView::draw()
     CC_INCREMENT_GL_DRAWS(1);
     
     CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAImageView - draw");
-
-    
 }
 
 void CAView::visit()
@@ -1098,7 +1096,7 @@ void CAView::visit()
             GLfloat params[4];
             glGetFloatv(GL_SCISSOR_BOX, params);
             m_bRestoreScissor = true;
-            m_obRestoreScissorRect = CCRectMake(params[0], params[1], params[2], params[3]);
+            m_obRestoreScissorRect = CCRectMake(params[0], params[1], params[2] + 1.0f, params[3] + 1.0f);
         }
         
         CCPoint point = CCPointZero;
@@ -1172,13 +1170,13 @@ void CAView::visit()
                 float y = MAX(frame.origin.y, m_obRestoreScissorRect.origin.y);
                 float xx = MIN(frame.origin.x+frame.size.width, m_obRestoreScissorRect.origin.x+m_obRestoreScissorRect.size.width);
                 float yy = MIN(frame.origin.y+frame.size.height, m_obRestoreScissorRect.origin.y+m_obRestoreScissorRect.size.height);
-                glScissor(x, y, xx-x + 1.0f, yy-y + 1.0f);
+                glScissor(x, y, xx-x, yy-y);
             }
         }
         else
         {
             glEnable(GL_SCISSOR_TEST);
-            glScissor(frame.origin.x, frame.origin.y, frame.size.width + 1.0f, frame.size.height + 1.0f);
+            glScissor(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
         }
     }
 

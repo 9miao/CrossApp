@@ -792,10 +792,10 @@ CAImage* CAImage::CC_WHITE_IMAGE()
 {
     if (cc_white_image == NULL)
     {
-        int pixels[16][16];
-        for (int i=0; i<16; i++)
+        int pixels[2][2];
+        for (int i=0; i<2; i++)
         {
-            for (int j=0; j<16; j++)
+            for (int j=0; j<2; j++)
             {
                 pixels[i][j] = 0xffffffff;
             }
@@ -803,7 +803,7 @@ CAImage* CAImage::CC_WHITE_IMAGE()
         
         CCImage* image = new CCImage();
         image->autorelease();
-        image->initWithImageData(pixels, sizeof(pixels), CCImage::kFmtRawData, 16, 16, 8);
+        image->initWithImageData(pixels, sizeof(pixels), CCImage::kFmtRawData, 2, 2, 8);
         cc_white_image = CAImageCache::sharedImageCache()->addUIImage(image, "CC_WHITE_IMAGE");
         cc_white_image->retain();
         cc_white_image->m_bMonochrome = true;
