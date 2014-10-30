@@ -115,14 +115,6 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	}
 	m_bUnderLine = false;
 
-	//CCImage* pImage = new CCImage();
-	//if (!pImage->initWithImageData(pData, width*height * 4, CCImage::kFmtRawData, width, height, 8, false))
-	//{
-	//	delete []pData;
-	//	delete pImage;
-	//	return NULL;
-	//}
-
 	CAImage* pCAImage = new CAImage();
 	if (!pCAImage->initWithData(pData, kCAImagePixelFormat_A8, width, height, CCSize(width, height)))
 	{
@@ -192,22 +184,12 @@ CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontNa
 		return NULL;
 	}
 
-	CCImage* pImage = new CCImage();
-	if (!pImage->initWithImageData(pData, width*height * 4, CCImage::kFmtRawData, width, height, 8, false))
-	{
-		delete[]pData;
-		delete pImage;
-		return NULL;
-	}
-
 	CAImage* pCAImage = new CAImage();
-	if (!pCAImage->initWithImage(pImage))
+	if (!pCAImage->initWithData(pData, kCAImagePixelFormat_A8, width, height, CCSize(width, height)))
 	{
-		delete pImage;
 		delete pCAImage;
 		return NULL;
 	}
-	pImage->release();
 	pCAImage->autorelease();
 	return pCAImage;
 }
@@ -227,11 +209,6 @@ unsigned char* CAFreeTypeFont::getBitmap(CCImage::ETextAlign eAlignMask, int* ou
     {
 		return NULL;
     }
-	//unsigned int* pxBuf = (unsigned int*)pBuffer;
-	//for (int i = 0; i < m_width * m_height; i++)
-	//{
-	//	pxBuf[i] = 0x00ffffff;
-	//}
 	memset(pBuffer, 0, size);
 
     std::vector<FTLineInfo*>::iterator line;
@@ -455,11 +432,6 @@ void CAFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
             if (i < 0 || j < 0 || i >= m_width || j >= m_height)
                 continue;
 
-			//FT_Int index = (j * m_width * 4) + (i * 4);
-			//pBuffer[index++] = 0xff;
-			//pBuffer[index++] = 0xff;
-			//pBuffer[index++] = 0xff;
-			//pBuffer[index++] = bitmap->buffer[q * bitmap->width + p];
 			FT_Int index = j * m_width + i;
 			pBuffer[index] = bitmap->buffer[q * bitmap->width + p];
         }
@@ -472,11 +444,6 @@ void CAFreeTypeFont::draw_line(unsigned char* pBuffer, FT_Int x1, FT_Int y1, FT_
 	{
 		for (FT_Int j = x1; j <= x2; j++)
 		{
-			//FT_Int index = (i * m_width * 4) + (j * 4);
-			//pBuffer[index++] = 0xff;
-			//pBuffer[index++] = 0xff;
-			//pBuffer[index++] = 0xff;
-			//pBuffer[index++] = 0xff;
 			FT_Int index = j * m_width + i;
 			pBuffer[index] = 0xff;
 		}

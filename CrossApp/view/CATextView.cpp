@@ -4,6 +4,7 @@
 #include "actions/CCActionInterval.h"
 #include "CCEGLView.h"
 #include <utility>
+#include "shaders/CAShaderCache.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "platform/CAFTFontCache.h"
@@ -32,6 +33,8 @@ CATextView::CATextView()
 , m_bWordWrap(true)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
+	// shader program
+	this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
 }
 
 
