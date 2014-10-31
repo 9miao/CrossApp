@@ -61,7 +61,10 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
-    
+
+	std::string cszNewText = pText;
+
+_AgaginInitGlyphs:
 	m_inWidth = inWidth;
 	m_inHeight = inHeight;
 	m_lineSpacing = iLineSpacing;
@@ -69,20 +72,52 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	m_bBold = bBold;
 	m_bItalics = bItalics;
 	m_bUnderLine = bUnderLine;
-	initGlyphs(pText);
+	
+	initGlyphs(cszNewText.c_str());
 
-    
-	CCImage::ETextAlign eAlign;
-    
-	if (inHeight == nSize && m_inWidth < m_textWidth)
-	{
-		hAlignment = CATextAlignmentLeft;
-	}
 	if (m_inHeight < m_textHeight)
 	{
-		vAlignment = CAVerticalTextAlignmentTop;
+		int totalLines = m_inHeight / m_lineHeight;
+
+		std::u16string cszTemp1;
+		std::u16string cszTemp2;
+		for (int i = 0; i < m_lines.size(); i++)
+		{
+			if (i < totalLines)
+			{
+				cszTemp1 += cszTemp2;
+				cszTemp2.clear();
+
+				std::vector<TGlyph>& v = m_lines[i]->glyphs;
+				for (int j = 0; j < v.size(); j++)
+				{
+					cszTemp2 += v[j].c;
+				}
+			}
+			else break;
+		}
+
+		while (!cszTemp2.empty())
+		{
+			cszNewText.clear();
+			StringUtils::UTF16ToUTF8(cszTemp2, cszNewText);
+			cszNewText += UTF8("...");
+
+			int iTempWidth = getStringWidth(cszNewText, bBold, bItalics);
+			if (iTempWidth<inWidth)
+			{
+				break;
+			}
+			cszTemp2.erase(cszTemp2.end() - 1);
+		}
+
+		cszNewText.clear();
+		StringUtils::UTF16ToUTF8(cszTemp1+cszTemp2, cszNewText);
+		cszNewText += UTF8("...");
+		goto _AgaginInitGlyphs;
 	}
-    
+
+	CCImage::ETextAlign eAlign;
 	if (CAVerticalTextAlignmentTop == vAlignment)
 	{
 		eAlign = (CATextAlignmentCenter == hAlignment) ? CCImage::kAlignTop
@@ -148,10 +183,10 @@ CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontNa
 
 	CATextAlignment hAlignment = CATextAlignmentLeft;
 	CAVerticalTextAlignment vAlignment = CAVerticalTextAlignmentTop;
-	if (inHeight == nSize && m_inWidth < m_textWidth)
-	{
-		hAlignment = CATextAlignmentLeft;
-	}
+//	if (m_inWidth < m_textWidth)
+//	{
+//		hAlignment = CATextAlignmentLeft;
+//	}
 	if (m_inHeight < m_textHeight)
 	{
 		vAlignment = CAVerticalTextAlignmentTop;
