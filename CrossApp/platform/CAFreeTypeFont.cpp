@@ -101,7 +101,7 @@ _AgaginInitGlyphs:
 		{
 			cszNewText.clear();
 			StringUtils::UTF16ToUTF8(cszTemp2, cszNewText);
-			cszNewText += UTF8("...");
+			cszNewText += "...";
 
 			int iTempWidth = getStringWidth(cszNewText, bBold, bItalics);
 			if (iTempWidth<inWidth)
@@ -113,7 +113,7 @@ _AgaginInitGlyphs:
 
 		cszNewText.clear();
 		StringUtils::UTF16ToUTF8(cszTemp1+cszTemp2, cszNewText);
-		cszNewText += UTF8("...");
+		cszNewText += "...";
 		goto _AgaginInitGlyphs;
 	}
 
