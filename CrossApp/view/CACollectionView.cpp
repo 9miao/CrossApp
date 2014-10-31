@@ -640,11 +640,13 @@ CACollectionViewCell::CACollectionViewCell()
 , m_bAllowsSelected(true)
 {
 	this->setHaveNextResponder(true);
+
 }
 
 
 CACollectionViewCell::~CACollectionViewCell()
 {
+    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
 }
 
 CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdentifier)

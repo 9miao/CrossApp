@@ -53,7 +53,6 @@ NS_CC_BEGIN;
 
 static int viewCount = 0;
 
-// XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
 
 CAView::CAView(void)
@@ -101,37 +100,27 @@ CAView::CAView(void)
 , m_bFrame(true)
 , m_bRestoreScissor(false)
 , m_obRestoreScissorRect(CCRectZero)
+, m_pobBatchView(NULL)
+, m_pobImageAtlas(NULL)
 {
+    m_pActionManager = CAApplication::getApplication()->getActionManager();
+    m_pActionManager->retain();
+    
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
-    CAApplication *director = CAApplication::getApplication();
-    m_pActionManager = director->getActionManager();
-    m_pActionManager->retain();
-
-    // clean the Quad
     memset(&m_sQuad, 0, sizeof(m_sQuad));
     
-    // Atlas: Color
-    CAColor4B tmpColor = { 255, 255, 255, 255 };
+    CAColor4B tmpColor = CAColor_white;
     m_sQuad.bl.colors = tmpColor;
     m_sQuad.br.colors = tmpColor;
     m_sQuad.tl.colors = tmpColor;
     m_sQuad.tr.colors = tmpColor;
     
-    // shader program
-    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-    
     this->setAnchorPoint(CCPoint(0.5f, 0.5f));
-    
-    m_pobBatchView = NULL;
-    m_pobImageAtlas = NULL;
-
-    CAScheduler::getScheduler()->resumeTarget(this);
-    m_pActionManager->resumeTarget(this);
-    
     this->setHaveNextResponder(true);
+    
     ++viewCount;
-    //CCLog("CAView = %d\n",viewCount);
+    CCLog("CAView = %d\n",viewCount);
 }
 
 CAView::~CAView(void)
@@ -160,7 +149,7 @@ CAView::~CAView(void)
     CC_SAFE_RELEASE(m_pobImage);
     
     --viewCount;
-    //CCLog("~CAView = %d\n",viewCount);
+    CCLog("~CAView = %d\n",viewCount);
 }
 
 CAView * CAView::create(void)
@@ -179,6 +168,8 @@ CAView * CAView::create(void)
 
 bool CAView::init()
 {
+    // shader program
+    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
     this->setImage(CAImage::CC_WHITE_IMAGE());
     return true;
 }
@@ -1021,13 +1012,14 @@ void CAView::draw()
 {
 
     CC_RETURN_IF(m_pobImage == NULL);
+    CC_RETURN_IF(m_pShaderProgram == NULL);
     
     CC_NODE_DRAW_SETUP();
     
-    ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
+    ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
     
-    ccGLBindTexture2D( m_pobImage->getName() );
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+    ccGLBindTexture2D(m_pobImage->getName());
+    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
     
 #define kQuadSize sizeof(m_sQuad.bl)
 #ifdef EMSCRIPTEN
@@ -1096,7 +1088,7 @@ void CAView::visit()
             GLfloat params[4];
             glGetFloatv(GL_SCISSOR_BOX, params);
             m_bRestoreScissor = true;
-            m_obRestoreScissorRect = CCRectMake(params[0], params[1], params[2] + 1.0f, params[3] + 1.0f);
+            m_obRestoreScissorRect = CCRectMake(params[0] - 1.0f, params[1], params[2] + 1.0f, params[3] + 1.0f);
         }
         
         CCPoint point = CCPointZero;
@@ -1176,7 +1168,7 @@ void CAView::visit()
         else
         {
             glEnable(GL_SCISSOR_TEST);
-            glScissor(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+            glScissor(frame.origin.x, frame.origin.y, frame.size.width + 1.0f, frame.size.height);
         }
     }
 

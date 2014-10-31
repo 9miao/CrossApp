@@ -4,6 +4,7 @@
 #include "actions/CCActionInterval.h"
 #include "CCEGLView.h"
 #include <utility>
+#include "shaders/CAShaderCache.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "platform/CAFTFontCache.h"

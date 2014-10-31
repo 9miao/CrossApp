@@ -578,6 +578,7 @@ CAListViewCell::CAListViewCell()
 
 CAListViewCell::~CAListViewCell()
 {
+    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
 }
 
 CAListViewCell* CAListViewCell::create(const std::string& reuseIdentifier)

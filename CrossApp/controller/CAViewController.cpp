@@ -561,7 +561,7 @@ void CANavigationController::popViewControllerFinish()
     m_pNavigationBar->popItem();
     CAViewController* showViewController = m_pViewControllers.back();
     showViewController->getView()->setFrameOrigin(CCPointZero);
-    
+
     m_bSlidingMinX = m_pViewControllers.size() <= 1;
 }
 
@@ -758,7 +758,7 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     unsigned int index = m_pViewControllers.size() - 2;
     CAViewController* lastViewController = m_pViewControllers.at(index);
     lastViewController->getView()->setVisible(true);
-    
+    lastViewController->viewDidAppear();
     CAViewController* backViewController = m_pViewControllers.back();
     
     if (m_bPopViewController)

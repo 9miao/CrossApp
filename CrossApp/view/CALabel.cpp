@@ -11,6 +11,7 @@
 #include <locale>
 #include <cstdlib>
 #include "CALabelStyle.h"
+#include "shaders/CAShaderCache.h"
 
 NS_CC_BEGIN
 
@@ -34,7 +35,7 @@ CALabel::CALabel()
 , m_bUnderLine(false)
 {
     m_obContentSize = CCSizeZero;
-    
+
 }
 
 CALabel::~CALabel()
@@ -79,7 +80,6 @@ void CALabel::onEnterTransitionDidFinish()
 
 bool CALabel::initWithFrame(const CCRect& rect)
 {
-   
     if (!CAView::initWithFrame(rect,CAColor_black))
     {
         return false;
