@@ -62,8 +62,7 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
 
-	bool isAddDotsFlag = false;
-
+	std::u16string cszTemp;
 	std::string cszNewText = pText;
 
 _AgaginInitGlyphs:
@@ -79,22 +78,23 @@ _AgaginInitGlyphs:
 
 	if (m_inHeight < m_textHeight)
 	{
-		int totalLines = m_inHeight / m_lineHeight;
-
-		std::u16string cszTemp;
-		for (int i = 0; i < m_lines.size(); i++)
+		if (cszTemp.empty())
 		{
-			if (i < totalLines)
-			{
-				std::vector<TGlyph>& v = m_lines[i]->glyphs;
-				for (int j = 0; j < v.size(); j++)
-				{
-					cszTemp += v[j].c;
-				}
-			}
-			else break;
-		}
+			int totalLines = m_inHeight / m_lineHeight;
 
+			for (int i = 0; i < m_lines.size(); i++)
+			{
+				if (i < totalLines)
+				{
+					std::vector<TGlyph>& v = m_lines[i]->glyphs;
+					for (int j = 0; j < v.size(); j++)
+					{
+						cszTemp += v[j].c;
+					}
+				}
+				else break;
+			}
+		}
 		if (cszTemp.empty())
 		{
 			vAlignment = CAVerticalTextAlignmentTop;
@@ -102,14 +102,10 @@ _AgaginInitGlyphs:
 		else
 		{
 			cszTemp.erase(cszTemp.end() - 1);
+
 			cszNewText.clear();
 			StringUtils::UTF16ToUTF8(cszTemp, cszNewText);
-
-			if (!isAddDotsFlag)
-			{
-				cszNewText += UTF8("бн");
-				isAddDotsFlag = true;
-			}
+			cszNewText += UTF8("бн");
 			goto _AgaginInitGlyphs;
 		}
 	}
