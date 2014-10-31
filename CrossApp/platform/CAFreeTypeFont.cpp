@@ -62,6 +62,8 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
 
+	bool isAddDotsFlag = false;
+
 	std::string cszNewText = pText;
 
 _AgaginInitGlyphs:
@@ -102,7 +104,12 @@ _AgaginInitGlyphs:
 			cszTemp.erase(cszTemp.end() - 1);
 			cszNewText.clear();
 			StringUtils::UTF16ToUTF8(cszTemp, cszNewText);
-			cszNewText += "...";
+
+			if (!isAddDotsFlag)
+			{
+				cszNewText += "...";
+				isAddDotsFlag = true;
+			}
 			goto _AgaginInitGlyphs;
 		}
 	}
