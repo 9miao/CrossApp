@@ -29,10 +29,10 @@ CALabel::CALabel()
 ,pTextHeight(0)
 ,m_bFitFlag(false)
 ,m_iLineSpacing(0)
-,m_bWordWrap(true)
+,m_bWordWrap(false)
 ,m_bBold(false)
 ,m_bItalics(false)
-, m_bUnderLine(false)
+,m_bUnderLine(false)
 {
     m_obContentSize = CCSizeZero;
 
