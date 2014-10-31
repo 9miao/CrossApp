@@ -79,41 +79,24 @@ _AgaginInitGlyphs:
 	{
 		int totalLines = m_inHeight / m_lineHeight;
 
-		std::u16string cszTemp1;
-		std::u16string cszTemp2;
+		std::u16string cszTemp;
 		for (int i = 0; i < m_lines.size(); i++)
 		{
 			if (i < totalLines)
 			{
-				cszTemp1 += cszTemp2;
-				cszTemp2.clear();
-
 				std::vector<TGlyph>& v = m_lines[i]->glyphs;
 				for (int j = 0; j < v.size(); j++)
 				{
-					cszTemp2 += v[j].c;
+					cszTemp += v[j].c;
 				}
 			}
 			else break;
 		}
-
-		while (!cszTemp2.empty())
-		{
-			cszNewText.clear();
-			StringUtils::UTF16ToUTF8(cszTemp2, cszNewText);
-			cszNewText += UTF8("...");
-
-			int iTempWidth = getStringWidth(cszNewText, bBold, bItalics);
-			if (iTempWidth<inWidth)
-			{
-				break;
-			}
-			cszTemp2.erase(cszTemp2.end() - 1);
-		}
+		cszTemp.erase(cszTemp.end()-1);
 
 		cszNewText.clear();
-		StringUtils::UTF16ToUTF8(cszTemp1+cszTemp2, cszNewText);
-		cszNewText += UTF8("...");
+		StringUtils::UTF16ToUTF8(cszTemp, cszNewText);
+		cszNewText += 'бн';
 		goto _AgaginInitGlyphs;
 	}
 
