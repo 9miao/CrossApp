@@ -92,12 +92,19 @@ _AgaginInitGlyphs:
 			}
 			else break;
 		}
-		cszTemp.erase(cszTemp.end()-1);
 
-		cszNewText.clear();
-		StringUtils::UTF16ToUTF8(cszTemp, cszNewText);
-		cszNewText += "...";
-		goto _AgaginInitGlyphs;
+		if (cszTemp.empty())
+		{
+			vAlignment = CAVerticalTextAlignmentTop;
+		}
+		else
+		{
+			cszTemp.erase(cszTemp.end() - 1);
+			cszNewText.clear();
+			StringUtils::UTF16ToUTF8(cszTemp, cszNewText);
+			cszNewText += "...";
+			goto _AgaginInitGlyphs;
+		}
 	}
 
 	CCImage::ETextAlign eAlign;
