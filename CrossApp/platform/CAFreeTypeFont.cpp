@@ -107,7 +107,7 @@ _AgaginInitGlyphs:
 
 			if (!isAddDotsFlag)
 			{
-				cszNewText += 'бн';
+				cszNewText += UTF8("бн");
 				isAddDotsFlag = true;
 			}
 			goto _AgaginInitGlyphs;
