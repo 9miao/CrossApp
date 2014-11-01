@@ -704,13 +704,18 @@ FT_Error CAFreeTypeFont::initGlyphs(const char* text)
 
 	if (!line.empty())
 	{
-		size_t first = line.find('\n');
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+		char c = '\r';
+#else
+		char c = '\n';
+#endif
+		size_t first = line.find(c);
 		while (first != std::string::npos)
 		{
-			initGlyphsLine(line.substr(pos, first - pos)+"\n");
+			initGlyphsLine(line.substr(pos, first - pos)+c);
 
 			pos = first + 1;
-			first = line.find('\n', pos);
+			first = line.find(c, pos);
 		}
 		initGlyphsLine(line.substr(pos, line.size() - pos));
     }
