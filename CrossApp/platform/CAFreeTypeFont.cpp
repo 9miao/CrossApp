@@ -105,7 +105,7 @@ _AgaginInitGlyphs:
 
 			cszNewText.clear();
 			StringUtils::UTF16ToUTF8(cszTemp, cszNewText);
-			cszNewText += UTF8("...");
+			cszNewText += "...";
 			goto _AgaginInitGlyphs;
 		}
 	}
@@ -691,17 +691,6 @@ FT_Error CAFreeTypeFont::initGlyphs(const char* text)
 
 	destroyAllLines();
 
-	if (line.empty())
-		return 0;
-
-	if (!m_bWordWrap)
-	{
-		newLine();
-		addWord(text);
-		endLine();
-		return 0;
-	}
-
 	if (!line.empty())
 	{
 		size_t first = line.find('\n');
@@ -723,18 +712,25 @@ FT_Error CAFreeTypeFont::initGlyphsLine(const std::string& line)
 
 	if (!line.empty())
 	{
-		std::size_t prev = 0, pos;
-		while ((pos = line.find_first_of(" ", prev)) != std::string::npos)
+		if (!m_bWordWrap)
 		{
-			if (pos >= prev)
-			{
-				addWord(line.substr(prev, pos - prev));
-			}
-			prev = pos > prev ? pos : pos + 1;
+			addWord(line);
 		}
-		if (prev <= line.length())
+		else
 		{
-			addWord(line.substr(prev, std::string::npos));
+			std::size_t prev = 0, pos;
+			while ((pos = line.find_first_of(" ", prev)) != std::string::npos)
+			{
+				if (pos >= prev)
+				{
+					addWord(line.substr(prev, pos - prev));
+				}
+				prev = pos > prev ? pos : pos + 1;
+			}
+			if (prev <= line.length())
+			{
+				addWord(line.substr(prev, std::string::npos));
+			}
 		}
 	}
 
