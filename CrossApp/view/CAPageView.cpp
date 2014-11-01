@@ -7,6 +7,7 @@
 //
 
 #include "CAPageView.h"
+#include "basics/CAScheduler.h"
 
 CAPageView::CAPageView(const CAPageViewDirection& type)
 :m_ePageViewDirection(type)
@@ -210,6 +211,11 @@ bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     }
     
     return CAScrollView::ccTouchBegan(pTouch, pEvent);
+}
+
+void CAPageView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+    CAScrollView::ccTouchMoved(pTouch, pEvent);
 }
 
 void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
