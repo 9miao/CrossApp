@@ -13,6 +13,7 @@
 #include <locale>
 #include <algorithm>
 #include "view/CAScale9ImageView.h"
+#include "shaders/CAShaderCache.h"
 
 NS_CC_BEGIN
 
@@ -42,7 +43,6 @@ CATextField::CATextField()
 {
 
 	m_iFontHeight = CAImage::getFontHeight("", m_iFontSize);
-
 }
 
 CATextField::~CATextField()

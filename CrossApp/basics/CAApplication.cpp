@@ -28,6 +28,7 @@
 #include "platform/CCImage.h"
 #include "CCEGLView.h"
 #include "platform/CADensityDpi.h"
+#include "view/CALabelStyle.h"
 
 /**
  Position of the FPS
@@ -634,6 +635,7 @@ void CAApplication::purgeDirector()
     CAImageCache::purgeSharedImageCache();
     CAShaderCache::purgeSharedShaderCache();
     CCFileUtils::purgeFileUtils();
+	CALabelStyleCache::purgeSharedStyleCache();
 
     // cocos2d-x specific data structures
     CAUserDefault::purgeSharedUserDefault();
