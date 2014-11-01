@@ -105,7 +105,7 @@ _AgaginInitGlyphs:
 
 			cszNewText.clear();
 			StringUtils::UTF16ToUTF8(cszTemp, cszNewText);
-			cszNewText += "...";
+			cszNewText += UTF8("...");
 			goto _AgaginInitGlyphs;
 		}
 	}
@@ -704,18 +704,13 @@ FT_Error CAFreeTypeFont::initGlyphs(const char* text)
 
 	if (!line.empty())
 	{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-		char c = '\r';
-#else
-		char c = '\n';
-#endif
-		size_t first = line.find(c);
+		size_t first = line.find('\n');
 		while (first != std::string::npos)
 		{
-			initGlyphsLine(line.substr(pos, first - pos)+c);
+			initGlyphsLine(line.substr(pos, first - pos)+"\n");
 
 			pos = first + 1;
-			first = line.find(c, pos);
+			first = line.find('\n', pos);
 		}
 		initGlyphsLine(line.substr(pos, line.size() - pos));
     }
