@@ -412,7 +412,8 @@ void CCCallFunc::update(float time)
 
 void CCCallFunc::execute()
 {
-    if (m_pCallFunc) {
+    if (m_pCallFunc)
+    {
         (m_pSelectorTarget->*m_pCallFunc)();
     }
 }

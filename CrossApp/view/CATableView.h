@@ -153,6 +153,20 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bAlwaysBottomSectionFooter, AlwaysBottomSectionFooter);
     
+public:
+    
+    unsigned int getNumberOfSections();
+    
+    unsigned int getNumberOfRowsInSection(unsigned int section);
+    
+    float getSectionHeightInSection(unsigned int section);
+    
+    float getSectionHeaderHeightInSection(unsigned int section);
+    
+    float getSectionFooterHeightInSection(unsigned int section);
+    
+    float getRowHeightInSectionInRow(unsigned int section, unsigned int row);
+
 protected:
 
     inline virtual float maxSpeed(float dt);

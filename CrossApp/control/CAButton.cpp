@@ -22,7 +22,6 @@ NS_CC_BEGIN
 CAButton::CAButton(const CAButtonType& buttonType)
 :m_bAllowsSelected(false)
 ,m_bSelected(false)
-,m_textTag("")
 ,m_closeTapSound(false)
 ,m_bTouchClick(false)
 ,m_color(CAColor_white)
@@ -623,11 +622,6 @@ void CAButton::setTouchMovedOutSide(const CCPoint& point)
     {
         ((CAObject *)m_pTarget[CAControlEventTouchMovedOutSide]->*m_selTouch[CAControlEventTouchMovedOutSide])(this,point);
     }
-}
-
-bool CAButton::isTextTagEqual(const char *text)
-{
-    return (m_textTag.compare(text)==0);
 }
 
 void CAButton::setContentSize(const CCSize & var)

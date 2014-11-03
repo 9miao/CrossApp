@@ -4,7 +4,9 @@
 #define __CAObject_H__
 
 #include "platform/CCPlatformMacros.h"
-
+#include <string>
+#include <vector>
+#include <deque>
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
 #endif // EMSCRIPTEN
@@ -61,6 +63,8 @@ public:
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     
     CC_SYNTHESIZE(int, m_nTag, Tag);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sTextTag, TextTag);
     
     friend class CAAutoreleasePool;
 };

@@ -10,7 +10,6 @@
 #define __CAView__
 
 #include <iostream>
-#include <vector>
 #include "ccMacros.h"
 #include "shaders/CATransformation.h"
 #include "cocoa/CCArray.h"

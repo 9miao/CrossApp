@@ -71,8 +71,6 @@ public:
     
 public:
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_textTag, TextTag);
-    
     CC_SYNTHESIZE_IS(bool, m_closeTapSound, CloseTapSound);
 
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
@@ -80,9 +78,7 @@ public:
     CC_SYNTHESIZE_IS_READONLY(bool, m_bSelected, Selected);
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
-    
-    bool isTextTagEqual(const char* text);
-    
+
 	void interruptTouchState();
 
 public:

@@ -57,7 +57,7 @@ public:
     
 protected:
 
-    void asyncFinish(CAObject* var);
+    virtual void asyncFinish(CAObject* var);
     
     virtual void setContentSize(const CCSize& size);
     

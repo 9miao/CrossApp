@@ -24,6 +24,7 @@ class CADownloadManager
     {
         unsigned long   download_id;
         std::string     download_Url;
+		std::string		download_header;
         std::string     filePath;
         double			fileSize;
         std::string     startTime;
@@ -45,9 +46,9 @@ public:
     
     static void destroyInstance();
 
-    unsigned long enqueueDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag = "");
+    unsigned long enqueueDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& headers = "", const std::string& textTag = "");
 
-	unsigned long enqueueDownloadEx(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag = "");
+	unsigned long enqueueDownloadEx(const std::string& downloadUrl, const std::string& fileName, const std::string& headers = "", const std::string& textTag = "");
 
     void resumeDownload(unsigned long download_id);
     
@@ -56,6 +57,8 @@ public:
 	void eraseDownload(unsigned long download_id);
     
     const char* getDownloadUrl(unsigned long download_id);
+
+	const char* getDownloadHeader(unsigned long download_id);
     
     const char* getFilePath(unsigned long download_id);
     
@@ -99,9 +102,9 @@ protected:
     
     std::vector<unsigned long> selectIdFromTextTag(const std::string& textTag);
     
-    double getDownloadFileSize(const std::string& downloadUrl);
+	double getDownloadFileSize(const std::string& downloadUrl, const std::string& downloadHeader);
 
-	unsigned long insertDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& textTag);
+	unsigned long insertDownload(const std::string& downloadUrl, const std::string& downloadHeader, const std::string& fileName, const std::string& textTag);
 
 	void enqueueDownload(CADownloadResponse* request);
 
