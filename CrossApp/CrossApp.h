@@ -92,6 +92,7 @@
 #include "view/CACollectionView.h"
 #include "view/CAAlertView.h"
 #include "view/CAPickerView.h"
+#include "view/CADatePickerView.h"
 #include "view/CAActivityIndicatorView.h"
 #include "view/CAPullToRefreshView.h"
 #include "view/CATextView.h"
