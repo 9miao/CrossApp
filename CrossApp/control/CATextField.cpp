@@ -111,7 +111,7 @@ CATextField* CATextField::createWithCenter(const CCRect& rect)
 
 bool CATextField::init()
 {
-    if (!CAControl::init())
+    if (!CAView::init())
 	{
         return false;
     }
