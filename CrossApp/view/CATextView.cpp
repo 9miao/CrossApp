@@ -4,6 +4,7 @@
 #include "actions/CCActionInterval.h"
 #include "CCEGLView.h"
 #include <utility>
+#include "shaders/CAShaderCache.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "platform/CAFTFontCache.h"
@@ -201,6 +202,7 @@ void CATextView::calcCursorPosition()
 	}
 
 	float fHalfLineHeight = m_iLineHeight / 2.0f;
+	float fLineSpaceValue = m_iLineHeight / 4.0f;
 
 	CCPoint cCurPosition;
 	if (iCurLine == -1)
@@ -216,7 +218,7 @@ void CATextView::calcCursorPosition()
 			s.erase(0, 1);
 		}
 		cCurPosition.x = getStringLength(s);
-		cCurPosition.y = (iCurLine * 2 + 1) * fHalfLineHeight;
+		cCurPosition.y = (m_iLineHeight + fLineSpaceValue)*iCurLine + fHalfLineHeight;
 	}
 
 	if (m_pCursorMark)
@@ -454,7 +456,7 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 			m_pCursorMark->setVisible(true);
 
 			point.y += getContentOffset().y;
-			int iCurLine = point.y / m_iLineHeight;
+			int iCurLine = point.y / (m_iLineHeight*1.25f);
 			if (m_vLinesTextView.empty())
 			{
 				iCurLine = 0;
@@ -489,7 +491,7 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 			{
 				s.erase(0, 1);
 			}
-			m_pCursorMark->setCenterOrigin(CCPoint(getStringLength(s), (iCurLine * 2 + 1) * (m_iLineHeight / 2)));
+			m_pCursorMark->setCenterOrigin(CCPoint(getStringLength(s), m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
 		}
 		return true;
 	}
