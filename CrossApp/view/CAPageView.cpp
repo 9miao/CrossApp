@@ -166,6 +166,7 @@ int CAPageView::getPageCount()
 
 void CAPageView::setCurrPage(int var, bool animated, bool listener)
 {
+    CC_RETURN_IF(m_pViews.empty());
     m_bListener = listener;
     var = MIN(var, this->getPageCount() - 1);
     var = MAX(var, 0);
@@ -195,6 +196,7 @@ int CAPageView::getCurrPage()
 
 void CAPageView::contentOffsetFinish(float dt)
 {
+    CAScrollView::contentOffsetFinish(dt);
     if (m_pPageViewDelegate && m_bListener)
     {
         m_pPageViewDelegate->pageViewDidEndTurning(this);
@@ -215,13 +217,14 @@ bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CAPageView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_pViews.empty());
     CAScrollView::ccTouchMoved(pTouch, pEvent);
 }
 
 void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     CAScrollView::ccTouchEnded(pTouch, pEvent);
-    
+
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
         float off_x = -m_tInertia.x;

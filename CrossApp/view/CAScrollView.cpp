@@ -300,17 +300,29 @@ void CAScrollView::closeToPoint(float dt)
         this->update(1/60.0f);
         this->hideIndicator();
         CAScheduler::schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
+        
+        if (m_pScrollViewDelegate)
+        {
+            m_pScrollViewDelegate->scrollViewStopMoved(this);
+        }
     }
     else
     {
         point = ccpAdd(point, m_tCloseToSpeed * 60 * dt);
         this->setContainerFrame(point);
+        
+        if (m_pScrollViewDelegate)
+        {
+            m_pScrollViewDelegate->scrollViewDidMoved(this);
+        }
     }
     
-    if (m_pScrollViewDelegate)
-    {
-        m_pScrollViewDelegate->scrollViewDidMoved(this);
-    }
+    
+}
+
+void CAScrollView::contentOffsetFinish(float dt)
+{
+    
 }
 
 CCPoint CAScrollView::getContentOffset()
@@ -688,9 +700,9 @@ void CAScrollView::updatePointOffset(float dt)
 
 void CAScrollView::stopDeaccelerateScroll()
 {
+    CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     m_tInertia = CCPointZero;
     m_bDecelerating = false;
-    CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
 }
 
 void CAScrollView::startDeaccelerateScroll()
@@ -765,6 +777,10 @@ void CAScrollView::deaccelerateScrolling(float dt)
         this->update(0);
         this->hideIndicator();
         this->stopDeaccelerateScroll();
+        if (m_pScrollViewDelegate)
+        {
+            m_pScrollViewDelegate->scrollViewStopMoved(this);
+        }
     }
     else
     {
