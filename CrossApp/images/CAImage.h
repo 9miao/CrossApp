@@ -124,6 +124,8 @@ public:
     
     float getAspectRatio();
     
+    virtual CAImage* copy();
+
 protected:
     
     CC_PROPERTY_READONLY_PASS_BY_REF(CAImagePixelFormat, m_ePixelFormat, PixelFormat)
@@ -153,6 +155,7 @@ private:
     bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
 
 protected:
+    
     
     bool m_bHasPremultipliedAlpha;
     

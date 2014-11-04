@@ -68,6 +68,11 @@ CAImage::~CAImage()
     {
         ccGLDeleteTexture(m_uName);
     }
+    
+    if (m_pData)
+    {
+        free(m_pData);
+    }
 }
 
 CAImage* CAImage::create(const std::string& file)
@@ -287,8 +292,54 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
         CCAssert(0, "NSInternalInconsistencyException");
 
     }
-    m_pData = ((unsigned char*)const_cast<char*>((const char*)data));
+    if (m_pData)
+    {
+        free(m_pData);
+    }
+
+    unsigned char* pData = ((unsigned char*)const_cast<char*>((const char*)data));
     m_nDataLenght = (unsigned long)pixelsWide * pixelsHigh;
+    if (pixelFormat == kCAImagePixelFormat_RGBA8888 || pixelFormat == kCAImagePixelFormat_Default || pixelFormat == kImagePixelFormat_RGBA8888 || pixelFormat == kCAImagePixelFormat_RGBA4444 || pixelFormat == kImagePixelFormat_RGBA4444 || pixelFormat == kImagePixelFormat_Default)
+    {
+        
+        m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * 4);
+        
+        for(int j= 0; j < pixelsHigh; j ++)
+            for(int i = 0; i < pixelsWide; i ++)
+            {
+                unsigned char r = pData[(j * pixelsWide + i) * 4 + 0];
+                unsigned char g = pData[(j * pixelsWide + i) * 4 + 1];
+                unsigned char b = pData[(j * pixelsWide + i) * 4 + 2];
+                m_pData[(j * pixelsWide + i) * 4 + 0] = r;
+                m_pData[(j * pixelsWide + i) * 4 + 1] = g;
+                m_pData[(j * pixelsWide + i) * 4 + 2] = b;
+                m_pData[(j * pixelsWide + i) * 4 + 3] = 255;
+                
+            }
+        
+    }else
+    {
+        m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * 3);
+        
+        for(int j= 0; j < pixelsHigh; j ++)
+            for(int i = 0; i < pixelsWide; i ++)
+            {
+                unsigned char r = pData[(j * pixelsWide + i) * 3 + 0];
+                unsigned char g = pData[(j * pixelsWide + i) * 3 + 1];
+                unsigned char b = pData[(j * pixelsWide + i) * 3 + 2];
+                m_pData[(j * pixelsWide + i) * 3 + 0] = r;
+                m_pData[(j * pixelsWide + i) * 3 + 1] = g;
+                m_pData[(j * pixelsWide + i) * 3 + 2] = b;
+            }
+    }
+    
+    
+
+//    for (int i=0; i<m_nDataLenght; i++)
+//    {
+//        m_pData[i] = pData[i];
+//    }
+//    m_pData = pData;
     m_tContentSize = contentSize;
     m_uPixelsWide = pixelsWide;
     m_uPixelsHigh = pixelsHigh;
@@ -317,7 +368,6 @@ bool CAImage::initWithImage(CCImage *uiImage)
         CCLOG("CrossApp: CAImage. Can't create Texture. UIImage is nil");
         return false;
     }
-    
     unsigned int imageWidth = uiImage->getWidth();
     unsigned int imageHeight = uiImage->getHeight();
     
@@ -755,7 +805,61 @@ float CAImage::getAspectRatio()
 {
     return m_tContentSize.width / m_tContentSize.height;
 }
+CAImage* CAImage::copy()
+{
+    CAImage *copyImage = new CAImage();
+    
+    copyImage->m_ePixelFormat = this->m_ePixelFormat;
+    copyImage->m_uPixelsWide = this->m_uPixelsWide;
+    copyImage->m_uPixelsHigh = this->m_uPixelsHigh;
+    copyImage->m_uName = this->m_uName;
+    copyImage->m_fMaxS = this->m_fMaxS;
+    copyImage->m_fMaxT = this->m_fMaxT;
+    copyImage->m_tContentSize = this->m_tContentSize;
+    copyImage->m_pShaderProgram = this->m_pShaderProgram;
+    copyImage->m_bMonochrome = this->m_bMonochrome;
+    copyImage->m_bHasMipmaps = this->m_bHasMipmaps;
+    copyImage->m_bHasPremultipliedAlpha = this->m_bHasPremultipliedAlpha;
+    copyImage->m_nDataLenght = this->m_nDataLenght;
+    
 
+    if (copyImage->m_ePixelFormat == kCAImagePixelFormat_RGBA8888 || copyImage->m_ePixelFormat == kCAImagePixelFormat_Default || copyImage->m_ePixelFormat == kImagePixelFormat_RGBA8888 || copyImage->m_ePixelFormat == kCAImagePixelFormat_RGBA4444 || copyImage->m_ePixelFormat == kImagePixelFormat_RGBA4444 || copyImage->m_ePixelFormat == kImagePixelFormat_Default)
+    {
+        copyImage->m_pData = (unsigned char*)malloc(copyImage->m_nDataLenght * sizeof(unsigned char)* 4);
+        for(int j= 0; j < this->m_uPixelsHigh; j ++)
+            for(int i = 0; i < this->m_uPixelsWide; i ++)
+            {
+                unsigned char r = this->m_pData[(j * this->m_uPixelsWide + i) * 4 + 0];
+                unsigned char g = this->m_pData[(j * this->m_uPixelsWide + i) * 4 + 1];
+                unsigned char b = this->m_pData[(j * this->m_uPixelsWide + i) * 4 + 2];
+                
+                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 0] = r;
+                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 1] = g;
+                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 2] = b;
+                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 3] = 255;
+                
+            }
+    }
+    else
+    {
+        copyImage->m_pData = (unsigned char*)malloc(copyImage->m_nDataLenght * sizeof(unsigned char)* 3);
+        for(int j= 0; j < this->m_uPixelsHigh; j ++)
+            for(int i = 0; i < this->m_uPixelsWide; i ++)
+            {
+                unsigned char r = this->m_pData[(j * this->m_uPixelsWide + i) * 3 + 0];
+                unsigned char g = this->m_pData[(j * this->m_uPixelsWide + i) * 3 + 1];
+                unsigned char b = this->m_pData[(j * this->m_uPixelsWide + i) * 3 + 2];
+                
+                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 3 + 0] = r;
+                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 3 + 1] = g;
+                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 3 + 2] = b;
+                
+            }
+    }
+    
+    
+    return copyImage;
+}
 const char* CAImage::getImageFileType()
 {
     const char* text = NULL;
