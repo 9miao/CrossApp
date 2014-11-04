@@ -23,7 +23,6 @@ CAFreeTypeFont::CAFreeTypeFont()
 ,m_height(0)
 ,m_textWidth(0)
 ,m_textHeight(0)
-,m_windowWidth(0)
 ,m_lineHeight(0)
 , m_lineSpacing(0)
 , m_bWordWrap(true)
@@ -35,9 +34,6 @@ CAFreeTypeFont::CAFreeTypeFont()
 	m_ItalicMatrix.xy = ITALIC_LEAN_VALUE * 0x10000L;
 	m_ItalicMatrix.yx = 0;
 	m_ItalicMatrix.yy = 0x10000L;
-
-    CCSize size = CAApplication::getApplication()->getWinSizeInPixels();
-    m_windowWidth = (int)size.width;
 }
 
 CAFreeTypeFont::~CAFreeTypeFont() 
@@ -629,7 +625,7 @@ FT_Error CAFreeTypeFont::addWord(const std::string& word)
 {
 	std::vector<TGlyph> glyphs; // glyphs for the word
 	FT_BBox             bbox;   // bounding box containing all of the glyphs in the word
-    int maxWidth = m_inWidth ? m_inWidth : m_windowWidth;
+    int maxWidth = m_inWidth ? m_inWidth : 0xFFFFFF;
     std::string newWord;
 
     if (word.empty()) 

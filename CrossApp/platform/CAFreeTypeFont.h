@@ -125,9 +125,8 @@ protected:
     int             m_textHeight;   // height of text text after word wrapping and line breaks  
     int             m_lineHeight;   // height of a line for the font size
 	int				m_lineSpacing;
-    int             m_windowWidth;  // the width of the window
 
-    FTLineInfo*     m_currentLine;  // the current line object to add words to.
+	FTLineInfo*     m_currentLine;  // the current line object to add words to.
 
 	bool m_bWordWrap;
 	bool m_bBold;
