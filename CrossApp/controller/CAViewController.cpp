@@ -568,12 +568,6 @@ void CANavigationController::popViewControllerFinish()
 void CANavigationController::homingViewControllerFinish()
 {
     CAViewController* viewController = m_pViewControllers.back();
-    
-    if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
-    {
-        viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
-    }
-    m_pNavigationBar->pushItem(viewController->getNavigationBarItem());
     viewController->getView()->setFrameOrigin(CCPointZero);
     
     CAViewController* lastViewController = m_pViewControllers.at(m_pViewControllers.size() - 2);
