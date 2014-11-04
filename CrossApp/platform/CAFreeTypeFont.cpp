@@ -982,8 +982,8 @@ void CAFreeTypeFont::compute_bbox2(TGlyph& glyph, FT_BBox& bbox)
 
 bool CAFreeTypeFont::initFreeTypeFont(const char* pFontName, unsigned long nSize)
 {
-	unsigned long size = 0;
-	unsigned char* pBuffer = loadFont(pFontName, &size);
+	unsigned long size = 0; int face_index = 0;
+	unsigned char* pBuffer = loadFont(pFontName, &size, face_index);
 	if (pBuffer == NULL)
 		return false;
 	
@@ -995,7 +995,7 @@ bool CAFreeTypeFont::initFreeTypeFont(const char* pFontName, unsigned long nSize
 
 	if (!error && !m_face)
 	{
-		error = FT_New_Memory_Face(s_FreeTypeLibrary, pBuffer, size, 0, &m_face);
+		error = FT_New_Memory_Face(s_FreeTypeLibrary, pBuffer, size, face_index, &m_face);
 	}
 
 	if (!error)
@@ -1020,7 +1020,7 @@ void CAFreeTypeFont::finiFreeTypeFont()
 	destroyAllLines();
 }
 
-unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *size)
+unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *size, int& ttfIndex)
 {
 	std::string path;
 	std::string lowerCase(pFontName);
@@ -1047,9 +1047,12 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 	std::map<std::string, FontBufferInfo>::iterator ittFontNames = s_fontsNames.find(path.c_str());
 	if (ittFontNames != s_fontsNames.end())
 	{
+		ttfIndex = ittFontNames->second.face_index;
 		*size = ittFontNames->second.size;
 		return ittFontNames->second.pBuffer;
 	}
+
+	ttfIndex = 0;
 
 	std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(path.c_str());
 	unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", size);
@@ -1066,6 +1069,7 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
         
         pFontName = "/System/Library/Fonts/STHeiti Light.ttc";
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+		ttfIndex = 1;
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         
@@ -1077,6 +1081,7 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
             pFontName = "/System/Library/Fonts/STHeiti Light.ttc";
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         }
+		ttfIndex = 1;
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         
@@ -1089,6 +1094,7 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 	FontBufferInfo info;
 	info.pBuffer = pBuffer;
 	info.size = *size;
+	info.face_index = ttfIndex;
 	s_fontsNames[path] = info;
 	return pBuffer;
 }
