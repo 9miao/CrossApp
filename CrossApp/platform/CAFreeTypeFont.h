@@ -52,7 +52,8 @@ typedef struct TGlyph_
 typedef struct FontBufferInfo
 {
 	unsigned char*  pBuffer;  
-	unsigned long  size;  
+	unsigned long  size;
+	int face_index;
 } FontBufferInfo;
 
 typedef struct FTLineInfo
@@ -82,7 +83,7 @@ public:
 protected:
 	bool initFreeTypeFont(const char* pFontName, unsigned long nSize);
 	void finiFreeTypeFont();
-	unsigned char* loadFont(const char *pFontName, unsigned long *size);
+	unsigned char* loadFont(const char *pFontName, unsigned long *size, int& ttfIndex);
 	unsigned char* getBitmap(CCImage::ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);
