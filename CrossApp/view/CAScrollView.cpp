@@ -476,11 +476,10 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             m_fTouchLength = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
                                          this->convertToNodeSpace(touch1->getLocation()));
             
-            CCPoint mid_point = ccpMidpoint(this->convertToNodeSpace(touch0->getLocation()),
-                                            this->convertToNodeSpace(touch1->getLocation()));
+            CCPoint mid_point = ccpMidpoint(m_pContainer->convertToNodeSpace(touch0->getLocation()),
+                                            m_pContainer->convertToNodeSpace(touch1->getLocation()));
             
-            CCPoint p = m_pContainer->convertToNodeSpace(mid_point);
-            m_pContainer->setAnchorPointInPoints(p);
+            m_pContainer->setAnchorPointInPoints(mid_point);
 
             if (m_pScrollViewDelegate)
             {
@@ -524,10 +523,12 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         CATouch* touch1 = dynamic_cast<CATouch*>(m_pTouches->objectAtIndex(1));
         CCPoint mid_point = ccpMidpoint(this->convertToNodeSpace(touch0->getLocation()),
                                         this->convertToNodeSpace(touch1->getLocation()));
+        p_off = ccpSub(mid_point, ccpAdd(p_container, m_pContainer->getAnchorPointInPoints() * m_fZoomScale));
         
         if (m_fMinimumZoomScale < m_fMaximumZoomScale)
         {
-            float touch_lenght = ccpDistance(touch0->getLocation(), touch1->getLocation());
+            float touch_lenght = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
+                                             this->convertToNodeSpace(touch1->getLocation()));
             float scale_off = _dip(touch_lenght - m_fTouchLength) * 0.0020f;
             
             m_fZoomScale = m_pContainer->getScale();
@@ -539,11 +540,8 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
             m_pContainer->setScale(m_fZoomScale);
             m_fTouchLength = touch_lenght;
         }
-        
-        p_off = ccpSub(mid_point, ccpAdd(m_pContainer->getFrameOrigin(),
-                                         m_pContainer->getAnchorPointInPoints() * m_fZoomScale));
     }
-    
+
     if (m_bBounces)
     {
         CCSize size = this->getBounds().size;
