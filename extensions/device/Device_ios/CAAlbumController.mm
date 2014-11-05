@@ -79,7 +79,11 @@
    
     caimage->initWithImageData(_data, [data length], CCImage::kFmtPng, image.size.height, image.size.width);
     
-    cam->getSelectedImage(caimage);
+    CAImage *__image = new CAImage();
+    __image->initWithImage(caimage);
+    
+    
+    cam->getSelectedImage(__image);
     
     [picker dismissViewControllerAnimated:YES completion:^
         {

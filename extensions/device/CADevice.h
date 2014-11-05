@@ -18,7 +18,7 @@ class CAMediaDelegate
 public:
     virtual ~CAMediaDelegate(){};
     
-    virtual void getSelectedImage(CCImage *image) = 0;
+    virtual void getSelectedImage(CAImage *image) = 0;
 };
 
 class CALocationDelegate
