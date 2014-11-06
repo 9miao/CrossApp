@@ -489,7 +489,7 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
             FT_BitmapGlyph  bit = (FT_BitmapGlyph)image;
 
 			int dtValue = 0;
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_IOS || CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
 			dtValue = (glyph->c > 0x80) ? 0 : (m_lineHeight / 12);
 #endif
 			draw_bitmap(pBuffer, &bit->bitmap, pen->x + glyph->pos.x + bit->left, pen->y - bit->top + dtValue);
