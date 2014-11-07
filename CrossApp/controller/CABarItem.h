@@ -31,8 +31,6 @@ public:
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pImage, Image);
     
-    CC_SYNTHESIZE(int, m_nTag, Tag);
-    
     CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);
 };
 
