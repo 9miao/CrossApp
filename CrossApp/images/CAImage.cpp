@@ -857,42 +857,7 @@ CAImage* CAImage::copy()
     
     for (long i=0; i<m_nDataLenght * pixelWidth/8; i++)
         copyImage->m_pData[i] = this->m_pData[i];
-    
-    if (copyImage->m_ePixelFormat == kCAImagePixelFormat_RGBA8888 || copyImage->m_ePixelFormat == kCAImagePixelFormat_Default || copyImage->m_ePixelFormat == kImagePixelFormat_RGBA8888 || copyImage->m_ePixelFormat == kCAImagePixelFormat_RGBA4444 || copyImage->m_ePixelFormat == kImagePixelFormat_RGBA4444 || copyImage->m_ePixelFormat == kImagePixelFormat_Default)
-    {
-        copyImage->m_pData = (unsigned char*)malloc(copyImage->m_nDataLenght * sizeof(unsigned char)* 4);
-        for(int j= 0; j < this->m_uPixelsHigh; j ++)
-            for(int i = 0; i < this->m_uPixelsWide; i ++)
-            {
-                unsigned char r = this->m_pData[(j * this->m_uPixelsWide + i) * 4 + 0];
-                unsigned char g = this->m_pData[(j * this->m_uPixelsWide + i) * 4 + 1];
-                unsigned char b = this->m_pData[(j * this->m_uPixelsWide + i) * 4 + 2];
-                
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 0] = r;
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 1] = g;
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 2] = b;
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 3] = 255;
-                
-            }
-    }
-    else
-    {
-        copyImage->m_pData = (unsigned char*)malloc(copyImage->m_nDataLenght * sizeof(unsigned char)* 3);
-        for(int j= 0; j < this->m_uPixelsHigh; j ++)
-            for(int i = 0; i < this->m_uPixelsWide; i ++)
-            {
-                unsigned char r = this->m_pData[(j * this->m_uPixelsWide + i) * 3 + 0];
-                unsigned char g = this->m_pData[(j * this->m_uPixelsWide + i) * 3 + 1];
-                unsigned char b = this->m_pData[(j * this->m_uPixelsWide + i) * 3 + 2];
-                
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 3 + 0] = r;
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 3 + 1] = g;
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 3 + 2] = b;
-                
-            }
-    }
-    
-    
+
     return copyImage;
 }
 const char* CAImage::getImageFileType()
