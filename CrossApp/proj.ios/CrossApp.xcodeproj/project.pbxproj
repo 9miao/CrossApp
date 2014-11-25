@@ -1026,13 +1026,13 @@
 		1551A353158F2ADE00E66CFE /* CrossApp */ = {
 			isa = PBXGroup;
 			children = (
-				EB9D561D19E8DC2D0072BE8E /* script_support */,
 				04EAA01F1956CE3800198A8E /* ccConfig.h */,
 				04EAA0201956CE3800198A8E /* ccMacros.h */,
 				04EAA0211956CE3800198A8E /* ccTypeInfo.h */,
 				04EAA0221956CE3900198A8E /* ccTypes.h */,
 				04EABB491956DE7100198A8E /* CrossApp.cpp */,
 				04EAA0231956CE3A00198A8E /* CrossApp.h */,
+				EB9D561D19E8DC2D0072BE8E /* script_support */,
 				04EA9F8E1956CE2500198A8E /* basics */,
 				04EA9F9F1956CE2500198A8E /* control */,
 				04EA9FB21956CE2500198A8E /* controller */,

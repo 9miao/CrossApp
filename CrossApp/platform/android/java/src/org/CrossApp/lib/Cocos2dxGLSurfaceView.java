@@ -278,13 +278,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run() {
 						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionDown(idDown, xDown, yDown);
-						
-				
-						
-						final Message msg = new Message();
-						msg.what = Cocos2dxGLSurfaceView.RESET_TEXT;
-						msg.obj = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentText();
-						Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 					}
 				});
 				break;

@@ -1017,7 +1017,6 @@ void CAView::draw()
     CC_NODE_DRAW_SETUP();
     
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
-    
     ccGLBindTexture2D(m_pobImage->getName());
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
     
@@ -1040,7 +1039,6 @@ void CAView::draw()
     // color
     diff = offsetof( ccV3F_C4B_T2F, colors);
     glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
@@ -1084,11 +1082,12 @@ void CAView::visit()
     if (!m_bDisplayRange)
     {
         // check parent scissor
-        if (glIsEnabled(GL_SCISSOR_TEST)) {
+        if (glIsEnabled(GL_SCISSOR_TEST))
+        {
             GLfloat params[4];
             glGetFloatv(GL_SCISSOR_BOX, params);
             m_bRestoreScissor = true;
-            m_obRestoreScissorRect = CCRectMake(params[0] - 1.0f, params[1], params[2] + 1.0f, params[3] + 1.0f);
+            m_obRestoreScissorRect = CCRect(params[0] - 1.0f, params[1], params[2] + 1.0f, params[3] + 1.0f);
         }
         
         CCPoint point = CCPointZero;
@@ -1150,7 +1149,7 @@ void CAView::visit()
             parent = parent->getSuperview();
         }
         
-        CCRect frame = CCRectMake((point.x - 0) * glScaleX + off_X,
+        CCRect frame = CCRect((point.x - 0) * glScaleX + off_X,
                                   (point.y - 0) * glScaleY + off_Y,
                                   (size.width + 0) * scaleX * glScaleX,
                                   (size.height + 0) * scaleY * glScaleY);
@@ -1162,13 +1161,13 @@ void CAView::visit()
                 float y = MAX(frame.origin.y, m_obRestoreScissorRect.origin.y);
                 float xx = MIN(frame.origin.x+frame.size.width, m_obRestoreScissorRect.origin.x+m_obRestoreScissorRect.size.width);
                 float yy = MIN(frame.origin.y+frame.size.height, m_obRestoreScissorRect.origin.y+m_obRestoreScissorRect.size.height);
-                glScissor(x, y, xx-x, yy-y);
+                glScissor(x - 0.5f, y + 0.5f, xx-x + 1.0f, yy-y);
             }
         }
         else
         {
             glEnable(GL_SCISSOR_TEST);
-            glScissor(frame.origin.x, frame.origin.y, frame.size.width + 1.0f, frame.size.height);
+            glScissor(frame.origin.x - 0.5f, frame.origin.y + 0.5f, frame.size.width + 1.0f, frame.size.height);
         }
     }
 
@@ -1446,7 +1445,6 @@ CATransformation CAView::nodeToParentTransform(void)
             y += sy * -anchorPointInPoints.x * m_fScaleX +  cx * -anchorPointInPoints.y * m_fScaleY;
         }
         
-        
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
         m_sTransform = CATransformationMake( cy * m_fScaleX,  sy * m_fScaleX,
@@ -1480,7 +1478,6 @@ CATransformation CAView::nodeToParentTransform(void)
         
         m_bTransformDirty = false;
     }
-    
     return m_sTransform;
 }
 
@@ -1519,11 +1516,7 @@ CATransformation CAView::worldToNodeTransform(void)
 CCRect CAView::convertRectToNodeSpace(const CrossApp::CCRect &worldRect)
 {
     CCRect ret = worldRect;
-    ret.origin.y += ret.size.height;
-    ret.origin = CAApplication::getApplication()->convertToGL(ret.origin);
     ret.origin = this->convertToNodeSpace(ret.origin);
-    ret.origin.y = this->getBounds().size.height - ret.size.height - ret.origin.y;
-    
     CAView*  view = this;
     while (view)
     {
@@ -1536,10 +1529,7 @@ CCRect CAView::convertRectToNodeSpace(const CrossApp::CCRect &worldRect)
 CCRect CAView::convertRectToWorldSpace(const CrossApp::CCRect &nodeRect)
 {
     CCRect ret = nodeRect;
-    ret.origin.y = this->getBounds().size.height - ret.size.height - ret.origin.y;
     ret.origin = this->convertToWorldSpace(ret.origin);
-    ret.origin = CAApplication::getApplication()->convertToUI(ret.origin);
-    ret.origin.y -= ret.size.height;
     CAView*  view = this;
     while (view)
     {
@@ -1563,6 +1553,7 @@ CCPoint CAView::convertToWorldSpace(const CCPoint& nodePoint)
     p.y = this->getBounds().size.height - p.y;
     CCPoint ret = CCPointApplyAffineTransform(p, nodeToWorldTransform());
     ret = CAApplication::getApplication()->convertToUI(ret);
+    ret = ccpAdd(ret, CCPoint(0.5f, 0.5f));
     return ret;
 }
 
@@ -1635,6 +1626,7 @@ void CAView::updateTransform()
             float sr = m_transformToBatch.b;
             float cr2 = m_transformToBatch.d;
             float sr2 = -m_transformToBatch.c;
+            
             float ax = x1 * cr - y1 * sr2 + x;
             float ay = x1 * sr + y1 * cr2 + y;
             
@@ -1675,7 +1667,8 @@ void CAView::updateTransform()
     
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
-    CCPoint vertices[4] = {
+    CCPoint vertices[4] =
+    {
         ccp( m_sQuad.bl.vertices.x, m_sQuad.bl.vertices.y ),draw
         ccp( m_sQuad.br.vertices.x, m_sQuad.br.vertices.y ),
         ccp( m_sQuad.tr.vertices.x, m_sQuad.tr.vertices.y ),
@@ -1696,7 +1689,6 @@ void CAView::setDisplayRange(bool value)
     m_bDisplayRange = value;
 }
 
-//Image...
 
 void CAView::setImage(CAImage* image)
 {

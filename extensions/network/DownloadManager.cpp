@@ -665,12 +665,16 @@ std::vector<unsigned long> CADownloadManager::getDownloadIdsFromTextTag(const st
 
 std::vector<std::string> CADownloadManager::getDownloadAllTextTags()
 {
+    std::set<std::string> download_textTagSet;
     std::vector<std::string> download_textTags;
     std::map<unsigned long, DownloadRecord>::iterator itr;
     for (itr=m_mDownloadRecords.begin(); itr!=m_mDownloadRecords.end(); itr++)
     {
+        CC_CONTINUE_IF(download_textTagSet.count(itr->second.textTag) > 0);
+        download_textTagSet.insert(itr->second.textTag);
         download_textTags.push_back(itr->second.textTag);
     }
+    download_textTagSet.clear();
     return download_textTags;
 }
 

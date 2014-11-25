@@ -22,8 +22,8 @@ NS_CC_BEGIN
 CATextField::CATextField()
 : m_pDelegate(NULL)
 , m_cTextColor(ccc4(0, 0, 0, 255))
-, m_cSpaceHolderColor(ccc4(193, 193, 193, 255))
-, m_iFontSize(24)
+, m_cSpaceHolderColor(ccc4(127, 127, 127, 255))
+, m_iFontSize(_px(24))
 , m_nInputType(KEY_BOARD_INPUT_NORMAL)
 , m_keyboardType(KEY_BOARD_TYPE_NORMAL)
 , m_sText("")
@@ -243,6 +243,7 @@ bool CATextField::attachWithIME()
             }
 #endif
             m_pCursorMark->setVisible(true);
+            m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, this->getBounds().size.height / 2));
             pGlView->setIMEKeyboardState(true);
         }
     }

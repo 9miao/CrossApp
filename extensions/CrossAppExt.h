@@ -15,6 +15,8 @@
 
 #include "LocalStorage/LocalStorage.h"
 
-//other
 #include "device/CADevice.h"
+
+#include "studio/CAStudioViewController.h"
+
 #endif /* __CrossApp_EXT_H__ */

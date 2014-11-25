@@ -15,7 +15,7 @@ NS_CC_BEGIN
 float CADensityDpi::getDensityDpi()
 {
     float relust = 320;
-    
+
     struct utsname systemInfo;
     uname(&systemInfo);
     NSString *deviceString = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
