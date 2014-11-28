@@ -42,6 +42,9 @@ float CADensityDpi::getDensityDpi()
                             @"iPhone6,1",
                             @"iPhone6,2",
                             
+                            @"iPhone7,1",
+                            @"iPhone7,2",
+                            
                             @"iPod1,1",
                             @"iPod2,1",
                             @"iPod3,1",
@@ -95,6 +98,9 @@ float CADensityDpi::getDensityDpi()
                                 @"iPhone 5C",
                                 @"iphone 5S",
                                 @"iphone 5S",
+                                
+                                @"iphone 6 Plus",
+                                @"iphone 6",
                                 
                                 @"iPod Touch 1G",
                                 @"iPod Touch 2G",
@@ -151,6 +157,9 @@ float CADensityDpi::getDensityDpi()
     densityDpis.push_back(320);//@"iPhone 5C"
     densityDpis.push_back(320);//@"iphone 5S"
     densityDpis.push_back(320);//@"iphone 5S"
+    
+    densityDpis.push_back(400);//@"iphone 6 Plus"
+    densityDpis.push_back(320);//@"iphone 6"
     
     densityDpis.push_back(160);//@"iPod Touch 1G"
     densityDpis.push_back(160);//@"iPod Touch 2G"

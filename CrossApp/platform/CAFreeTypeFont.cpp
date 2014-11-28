@@ -912,7 +912,7 @@ void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
 
 		if (glyph_bbox.xMin == glyph_bbox.xMax)
 		{
-			glyph_bbox.xMax = glyph_bbox.xMin + slot->advance.x >> 6;
+			glyph_bbox.xMax = (glyph_bbox.xMin + slot->advance.x) >> 6;
 		}
         glyph_bbox.xMin += glyph->pos.x;
         glyph_bbox.xMax += glyph->pos.x;
@@ -953,7 +953,7 @@ void CAFreeTypeFont::compute_bbox2(TGlyph& glyph, FT_BBox& bbox)
 
 	if (glyph_bbox.xMin == glyph_bbox.xMax)
 	{
-		glyph_bbox.xMax = glyph_bbox.xMin + slot->advance.x >> 6;
+		glyph_bbox.xMax = (glyph_bbox.xMin + slot->advance.x) >> 6;
 	}
 	glyph_bbox.xMin += glyph.pos.x;
 	glyph_bbox.xMax += glyph.pos.x;

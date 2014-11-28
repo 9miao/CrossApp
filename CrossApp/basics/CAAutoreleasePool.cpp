@@ -129,24 +129,15 @@ void CAPoolManager::push()
 
 void CAPoolManager::pop()
 {
-    if (! m_pCurReleasePool)
-    {
-        return;
-    }
-
-     int nCount = m_pReleasePoolStack->count();
+    CC_RETURN_IF(! m_pCurReleasePool);
+    
+    int nCount = m_pReleasePoolStack->count();
 
     m_pCurReleasePool->clear();
  
-      if(nCount > 1)
-      {
+    if(nCount > 1)
+    {
         m_pReleasePoolStack->removeObjectAtIndex(nCount-1);
-
-//         if(nCount > 1)
-//         {
-//             m_pCurReleasePool = m_pReleasePoolStack->objectAtIndex(nCount - 2);
-//             return;
-//         }
         m_pCurReleasePool = (CAAutoreleasePool*)m_pReleasePoolStack->objectAtIndex(nCount - 2);
     }
 

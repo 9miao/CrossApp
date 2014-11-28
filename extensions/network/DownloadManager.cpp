@@ -833,7 +833,6 @@ void CADownloadResponse::checkStoragePath()
 void* CADownloadResponseDownloadAndUncompress(void *data)
 {
     CADownloadResponse* self = static_cast<CADownloadResponse*>(data);
-	unsigned download_id = self->getDownloadID();
     do
     {
 		bool bDSucc = self->downLoad();

@@ -31,7 +31,6 @@ CATextField::CATextField()
 , m_cCursorColor(CAColor_black)
 , m_iCurPos(0)
 , m_iLabelWidth(0)
-, m_pCursorAction(NULL)
 , m_pCursorMark(NULL)
 , m_iString_left_offX(0)
 , m_iString_l_length(0)
@@ -129,11 +128,9 @@ void CATextField::initMarkSprite()
         m_pCursorMark->setColor(m_cCursorColor);
         m_pCursorMark->setVisible(false);
         this->addSubview(m_pCursorMark);
-        m_pCursorAction = CCRepeatForever::create((CCActionInterval *) CCSequence::create(CCFadeOut::create(0.5f), CCFadeIn::create(0.5f), NULL));
-        m_pCursorMark->runAction(m_pCursorAction);
     }
 
-    m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, 2, CAImage::getFontHeight("", m_iFontSize)));
+    m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, _px(2), CAImage::getFontHeight("", m_iFontSize)));
 }
 
 void CATextField::setFontSize(int var)
@@ -144,7 +141,7 @@ void CATextField::setFontSize(int var)
 	m_iFontHeight = CAImage::getFontHeight("", m_iFontSize);
     m_iVertMargins = (this->getBounds().size.height - m_iFontHeight) / 2;
     
-	m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, var / 10.0f, var));
+	m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, _px(2), var));
     this->updateImage();
 }
 
@@ -243,6 +240,7 @@ bool CATextField::attachWithIME()
             }
 #endif
             m_pCursorMark->setVisible(true);
+            m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
             m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, this->getBounds().size.height / 2));
             pGlView->setIMEKeyboardState(true);
         }
@@ -261,6 +259,7 @@ bool CATextField::detachWithIME()
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(false);
+            m_pCursorMark->stopAllActions();
             m_pCursorMark->setVisible(false);
         }
     }
@@ -287,8 +286,8 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		if (isFirstResponder())
         {
 			m_pCursorMark->setVisible(true);
+            m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
 			int dtValue = point.x - m_iString_left_offX - m_iHoriMargins;
-            float width = CAApplication::getApplication()->getWinSize().width;
             if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
             {
                 if (m_sText.empty())
@@ -316,6 +315,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     {
         if (resignFirstResponder())
         {
+            m_pCursorMark->stopAllActions();
 			m_pCursorMark->setVisible(false);
 			this->updateImage();
         }

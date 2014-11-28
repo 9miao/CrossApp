@@ -183,7 +183,6 @@ private:
 	int m_iString_r_length;
 	int m_iFontHeight;
 
-	CCAction* m_pCursorAction;
 	CAView* m_pCursorMark;
 	CCSize m_cImageSize;
 	eKeyBoardType m_keyboardType;
