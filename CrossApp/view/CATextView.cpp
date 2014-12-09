@@ -104,7 +104,8 @@ bool CATextView::init()
 	this->setBounceHorizontal(false);
 	this->setTouchMovedListenHorizontal(false);
 
-	m_pImageView = CAImageView::create();
+    m_pImageView = new CAImageView();
+    m_pImageView->autorelease();
 	this->addSubview(m_pImageView);
 	return true;
 }
@@ -178,7 +179,7 @@ void CATextView::updateImage()
 		m_vLinesTextView.clear();
 	}
 
-	m_pImageView->initWithImage(image);
+	m_pImageView->setImage(image);
 	setViewSize(m_pImageView->getBounds().size);
 	calcCursorPosition();
 }

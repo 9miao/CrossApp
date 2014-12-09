@@ -194,16 +194,13 @@ static void* networkThread(void *data)
 
         // write data to HttpResponse
         response->setResponseCode(responseCode);
-        CCLog("11111111111111111");
         if (retValue != 0)
         {
-            CCLog("2222222222222222222");
             response->setSucceed(false);
             response->setErrorBuffer(s_errorBuffer[thread]);
         }
         else
         {
-            CCLog("333333333333333333");
             response->setSucceed(true);
         }
 
