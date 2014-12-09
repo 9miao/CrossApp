@@ -36,7 +36,21 @@
     
 	// Do any additional setup after loading the view.
 }
+-(void)writeImageToPhoto:(std::string)sender
+{
 
+    UIImage *newImage = [[UIImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%s",sender.c_str()]];
+    if (newImage == nil)
+    {
+        NSLog(@"Save image have some error");
+    }
+    UIImageWriteToSavedPhotosAlbum(newImage, self, nil, nil);
+    [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%s",sender.c_str()] error:nil];
+}
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    NSLog(@"%@",error.domain);
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -63,7 +77,17 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-
+    UIImage *newfixImage = [self fixOrientation:image];
+    CGSize size ;
+    if ([newfixImage size].width>[newfixImage size].height)
+    {
+        size = CGSizeMake([newfixImage size].width/([newfixImage size].height/640), 640);
+    }
+    else
+    {
+        size = CGSizeMake(640, [newfixImage size].height/([newfixImage size].width/640));
+    }
+    UIImage *fiximage = [self scaleFromImage:newfixImage toSize:size];
     CAMediaDelegate *cam = (CAMediaDelegate *)self.sender;
     
     if(cam == NULL)
@@ -71,17 +95,16 @@
         return ;
     }
     
-    NSData *data = UIImageJPEGRepresentation(image,0.5);
+    NSData *data = UIImageJPEGRepresentation(fiximage,0.5);
     void* _data =malloc([data length]);
     [data getBytes:_data];
     
     CCImage *caimage = new CCImage();
    
-    caimage->initWithImageData(_data, [data length], CCImage::kFmtPng, image.size.height, image.size.width);
+    caimage->initWithImageData(_data, [data length], CCImage::kFmtPng, fiximage.size.height, fiximage.size.width);
     
     CAImage *__image = new CAImage();
     __image->initWithImage(caimage);
-    
     
     cam->getSelectedImage(__image);
     
@@ -92,7 +115,14 @@
         }
     ];
 }
-
+- (UIImage *) scaleFromImage: (UIImage *) image toSize: (CGSize) size
+{
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:^
@@ -102,5 +132,73 @@
         }
      ];
 }
-
+- (UIImage *)fixOrientation:(UIImage *)srcImg {
+    if (srcImg.imageOrientation == UIImageOrientationUp) return srcImg;
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    switch (srcImg.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, srcImg.size.width, srcImg.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, srcImg.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, srcImg.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        case UIImageOrientationUp:
+        case UIImageOrientationUpMirrored:
+            break;
+    }
+    
+    switch (srcImg.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, srcImg.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, srcImg.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        case UIImageOrientationUp:
+        case UIImageOrientationDown:
+        case UIImageOrientationLeft:
+        case UIImageOrientationRight:
+            break;
+    }
+    
+    CGContextRef ctx = CGBitmapContextCreate(NULL, srcImg.size.width, srcImg.size.height,
+                                             CGImageGetBitsPerComponent(srcImg.CGImage), 0,
+                                             CGImageGetColorSpace(srcImg.CGImage),
+                                             CGImageGetBitmapInfo(srcImg.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (srcImg.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            CGContextDrawImage(ctx, CGRectMake(0,0,srcImg.size.height,srcImg.size.width), srcImg.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,srcImg.size.width,srcImg.size.height), srcImg.CGImage);
+            break;
+    }
+    
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
+}
 @end
