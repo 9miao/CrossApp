@@ -36,7 +36,7 @@
     
 	// Do any additional setup after loading the view.
 }
--(void)writeImageToPhoto:(std::string)sender
+-(void)writeImageToPhoto:(const std::string&)sender
 {
 
     UIImage *newImage = [[UIImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%s",sender.c_str()]];
