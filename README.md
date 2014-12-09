@@ -20,6 +20,28 @@
 
 #####8.其他一些细节调整
 
+
+#### CrossApp 0. 3. 10 Update:
+
+#####1. Added CrossAppStyle
+Text message model class, supports to obtain corresponding height, width and other info after CALabel text rendering.<br/>
+
+#####2. Optimized Text Memory Usage
+
+#####3. Optimized Text Default Line Spacing
+
+#####4. Optimized Text Uses Traditional Chinese Character Library by Default on iOS and Mac Platform
+
+#####5. Optimized Text Performance Second Time
+
+#####6. Optimized DownloadManager
+Optimized DownloadManager, fixed bug that user cannot instant stop and delete download order<br/>
+
+#####7. Fixed Bug That CADevice Was Not Correctly Added to VS in Previous Release
+
+#####8. Other Details Tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 0.3.9 更新内容：  

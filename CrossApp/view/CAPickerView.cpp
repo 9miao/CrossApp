@@ -146,7 +146,8 @@ float CAPickerView::calcTotalWidth(unsigned int component)
 
 void CAPickerView::reloadAllComponents()
 {
-    if (m_delegate && m_dataSource) {
+    if (m_delegate && m_dataSource)
+    {
         
         // clear old data        
         CC_SAFE_RELEASE_NULL(m_tableViews);
@@ -167,12 +168,14 @@ void CAPickerView::reloadAllComponents()
         m_componentOffsetX.resize(component);
         m_displayRow.resize(component);
         float start_x = getFrame().size.width/2 - total_width/2;
-        for (int i=0; i<component; i++) {
+        for (int i=0; i<component; i++)
+        {
             m_selected.push_back(0);
             m_componentsIndex[i] = std::vector<int>();
             m_componentOffsetX[i] = start_x;
             m_displayRow[i] = getFrame().size.height/m_dataSource->rowHeightForComponent(this, i);
-            if (m_displayRow[i] % 2 == 0) {
+            if (m_displayRow[i] % 2 == 0)
+            {
                 m_displayRow[i] += 1;
             }
 
@@ -191,17 +194,20 @@ void CAPickerView::reloadAllComponents()
             // create highlight
             CCSize selectSize = CCSizeMake(tableWidth, m_dataSource->rowHeightForComponent(this, i));
             CAView* select = m_dataSource->viewForSelect(this, i, selectSize);
-            if (!select) {
+            if (!select)
+            {
                 CCRect sepRect = CCRectMake(start_x, getFrame().size.height/2 - m_dataSource->rowHeightForComponent(this, i)/2, tableWidth, 1);
                 addSubview(CAView::createWithFrame(sepRect, m_separateColor));               
                 sepRect.origin.y += m_dataSource->rowHeightForComponent(this, i);
                 addSubview(CAView::createWithFrame(sepRect, m_separateColor));
-            } else {
+            }
+            else
+            {
                 select->setCenter(CCRectMake(start_x, getFrame().size.height/2, selectSize.width, selectSize.height));
                 addSubview(select);
             }
 
-            reloadComponent(i, false);
+            reloadComponent(i, true);
             
             start_x += m_dataSource->widthForComponent(this, i);
         }
@@ -350,9 +356,11 @@ int CAPickerView::selectedRowInComponent(unsigned int component)
 
 void CAPickerView::visit()
 {
-    if (m_dataSource) {
+    if (m_dataSource)
+    {
         CAObject* obj = NULL;
-        CCARRAY_FOREACH(m_tableViews, obj) {
+        CCARRAY_FOREACH(m_tableViews, obj)
+        {
             
             // cycle data
             CATableView* tableView = (CATableView*)obj;
@@ -360,11 +368,15 @@ void CAPickerView::visit()
             int component = m_tableViews->indexOfObject(obj);
             int row = m_dataSource->numberOfRowsInComponent(this, component);
             int row_height = m_dataSource->rowHeightForComponent(this, component);
-            if (row > m_displayRow[component]) {
-                if (offset.y < 0) {
+            if (row > m_displayRow[component])
+            {
+                if (offset.y < 0)
+                {
                     offset.y += row * 2 * row_height;
                     tableView->setContentOffset(offset, false);
-                } else if (offset.y > row_height * m_componentsIndex[component].size() - tableView->getFrame().size.height) {
+                }
+                else if (offset.y > row_height * m_componentsIndex[component].size() - tableView->getFrame().size.height)
+                {
                     offset.y -= row * 2 * row_height;
                     tableView->setContentOffset(offset, false);
                 }
@@ -374,18 +386,17 @@ void CAPickerView::visit()
             int offset_y = abs((int)offset.y);
             int remainder = offset_y % row_height;
             int index = offset_y / row_height;
-            for (int i=index-1; i<index + m_displayRow[component] + 2; i++) {
+            for (int i=index-1; i<index + m_displayRow[component] + 2; i++)
+            {
                 CATableViewCell* cell = tableView->cellForRowAtIndexPath(0, i);
-                if (cell) {
+                if (cell)
+                {
                     float y = cell->getFrameOrigin().y - offset_y + cell->getFrame().size.height/2;
                     float mid = tableView->getFrame().size.height/2;
                     float length = fabs(mid - y);
                     float op = (fabs(length - mid))/mid;
                     op = powf(op, 2);
-                    if (op < 0.1f) {
-                        op = 0.1f;
-                    }
-                    
+                    op = MAX(op, 0.1f);
                     cell->setAlpha(op);
                     
 //                    float scale = length/mid * 0.1;
@@ -394,19 +405,30 @@ void CAPickerView::visit()
             }
             
             // fixed position in the middle 
-            if (!tableView->isDecelerating() && !tableView->isTracking()) {
-                if (remainder > row_height/2) {
+            if (!tableView->isDecelerating() && !tableView->isTracking())
+            {
+                if (remainder > row_height/2)
+                {
                     index++;
                     offset.y = index * row_height;
                     tableView->setContentOffset(offset, true);
-                } else if (remainder > 0) {
+                }
+                else if (remainder > 0)
+                {
                     offset.y = index * row_height;
                     tableView->setContentOffset(offset, true);
-                } else {
+                }
+                else
+                {
                     // set selected when stop scrolling.
-                    if (m_selected[component] != index + m_displayRow[component]/2) {
-                        m_selected[component] = index + m_displayRow[component]/2;
-                        if (m_delegate) {
+                    
+                    int selected = index + m_displayRow[component]/2;
+                    
+                    if (m_selected[component] != selected)
+                    {
+                        m_selected[component] = selected;
+                        if (m_delegate)
+                        {
                             m_delegate->didSelectRow(this, m_componentsIndex[component][m_selected[component]], component);
                         }                    
                     }                    

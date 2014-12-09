@@ -12,7 +12,7 @@
 #include <iostream>
 #include "controller/CAViewController.h"
 
-class CC_DLL JSViewController:public CrossApp::CAViewController
+class CC_DLL JSViewController: public CrossApp::CAViewController
 {
 public:
     

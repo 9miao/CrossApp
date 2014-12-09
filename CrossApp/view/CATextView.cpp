@@ -104,7 +104,8 @@ bool CATextView::init()
 	this->setBounceHorizontal(false);
 	this->setTouchMovedListenHorizontal(false);
 
-	m_pImageView = CAImageView::create();
+    m_pImageView = new CAImageView();
+    m_pImageView->autorelease();
 	this->addSubview(m_pImageView);
 	return true;
 }
@@ -159,8 +160,6 @@ void CATextView::updateImage()
 	}
 
 	float width = this->getBounds().size.width;
-	float height = this->getBounds().size.height;
-	CCSize size = CCSizeMake(width, 0);
 
 	CAImage* image = NULL;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
@@ -180,7 +179,7 @@ void CATextView::updateImage()
 		m_vLinesTextView.clear();
 	}
 
-	m_pImageView->initWithImage(image);
+	m_pImageView->setImage(image);
 	setViewSize(m_pImageView->getBounds().size);
 	calcCursorPosition();
 }
@@ -442,7 +441,7 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		m_pTouches->replaceObjectAtIndex(0, pTouch);
 		return true;
 	}
-	bool isInertia = m_tInertia.getLength() < 1.0f;
+
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
 		return false;
 

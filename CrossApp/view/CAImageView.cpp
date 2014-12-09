@@ -239,7 +239,7 @@ bool CAImageView::initWithCenter(const CCRect& rect, const CAColor4B& color4B)
 
 void CAImageView::setImageAsyncWithFile(const std::string& path)
 {
-    CAImageCache::sharedImageCache()->addImageAsync(path, this, callfuncO_selector(CAImageView::asyncFinish));
+    CAImageCache::sharedImageCache()->addImageFullPathAsync(path, this, callfuncO_selector(CAImageView::asyncFinish));
 }
 
 void CAImageView::asyncFinish(CrossApp::CAObject *var)

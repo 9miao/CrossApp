@@ -196,11 +196,11 @@ void CANavigationBar::showLeftButton()
     
     CCArray* buttonItems = m_pItems.back()->getLeftButtonItems();
 
-    CCRect rect = this->getBounds();
-    rect.size.width = rect.size.height * 0.9f;
-    rect.size.height *= 0.8f;
+    CCRect rect;
+    rect.size.width = this->getBounds().size.height * 0.9f;
+    rect.size.height = this->getBounds().size.height * 0.8f;
     rect.origin.x = rect.size.width * 0.7f;
-    rect.origin.y = this->getBounds().size.height / 2;
+    rect.origin.y = this->getBounds().size.height * 0.5f;
     
     for (int i=0; i<buttonItems->count(); i++)
     {
@@ -248,12 +248,12 @@ void CANavigationBar::showRightButton()
     
     CCArray* buttonItems = m_pItems.back()->getRightButtonItems();
     
-    CCRect rect = this->getBounds();
-    rect.size.width = rect.size.height * 0.9f;
-    rect.size.height *= 0.8f;
+    CCRect rect;
+    rect.size.width = this->getBounds().size.height * 0.9f;
+    rect.size.height = this->getBounds().size.height * 0.8f;
     rect.origin.x = this->getBounds().size.width - rect.size.width * 0.7f;
-    rect.origin.y = this->getBounds().size.height / 2;
-    
+    rect.origin.y = this->getBounds().size.height * 0.5f;
+
     for (int i=0; i<buttonItems->count(); i++)
     {
         rect.origin.x -= i * rect.size.width * 1.1f;

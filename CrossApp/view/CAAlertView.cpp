@@ -44,10 +44,10 @@ bool CAAlertView::init()
 	}
 
 	this->setColor(CAColor_clear);
-	CCSize sz = CAApplication::getApplication()->getWinSize();
-	setCenter(CCRectMake(sz.width / 2, sz.height / 2, sz.width, sz.height));
+    CCRect rect = CCRectZero;
+    rect.size = CAApplication::getApplication()->getWinSize();
+    this->setFrame(rect);
 
-	setTitleImage(CAImage::create("source_material/alert_title.png"));
 	setBackGroundImage(CAImage::create("source_material/alert_content.png"));
 	return true;
 }
@@ -67,14 +67,10 @@ CAAlertView *CAAlertView::create()
 
 bool CAAlertView::initWithText(const char* szTitle, const char* szAlertMsg, const char* pszBtnText, ...)
 {
-	if (!CAView::init())
+	if (!this->init())
 	{
 		return false;
 	}
-
-	this->setColor(CAColor_clear);
-	CCSize sz = CAApplication::getApplication()->getWinSize();
-	setCenter(CCRectMake(sz.width / 2, sz.height / 2, sz.width, sz.height));
 
 	va_list args;
 	va_start(args, pszBtnText);
@@ -90,9 +86,6 @@ bool CAAlertView::initWithText(const char* szTitle, const char* szAlertMsg, cons
 
 	setTitle(szTitle, CAColor_white);
 	setAlertMessage(szAlertMsg);
-
-	setTitleImage(CAImage::create("source_material/alert_title.png"));
-	setBackGroundImage(CAImage::create("source_material/alert_content.png"));
 	return true;
 }
 
@@ -136,7 +129,12 @@ void CAAlertView::setMessageFontName(std::string var)
 
 void CAAlertView::setTitle(std::string var, CAColor4B col)
 {
+    CC_RETURN_IF(var.compare("") == 0);
 	setLabel(m_pTitleLabel, var, col);
+    if (m_pTitleImage == NULL)
+    {
+        setTitleImage(CAImage::create("source_material/alert_title.png"));
+    }
 }
 
 void CAAlertView::setTitleImage(CAImage* image)
@@ -237,13 +235,12 @@ void CAAlertView::setLabel(CALabel*& pLabel, std::string& szTitle, CAColor4B col
 
 CCSize CAAlertView::getAlertWinSize()
 {
-	CCSize sz = CAApplication::getApplication()->getWinSize();
-	return CCSizeMake(sz.width*ALERT_WINDOW_SIZEX, sz.height*ALERT_WINDOW_SIZEY);
+	return CADipSize(640 * ALERT_WINDOW_SIZEX, 960 * ALERT_WINDOW_SIZEY);
 }
 
 void CAAlertView::calcuCtrlsSize()
 {
-	CCSize winSize = CAApplication::getApplication()->getWinSize();
+	CCSize winSize = this->getBounds().size;
 	CCSize ertSize = getAlertWinSize();
 
 	bool isHoriBtnArray = m_vAllBtn.size() <= MAX_BUTTON_COUNT_ROW;
@@ -251,7 +248,7 @@ void CAAlertView::calcuCtrlsSize()
 	{
 		ertSize.height += ertSize.height / 5;
 	}
-	if (m_pTitleImage)
+	if (m_pTitleLabel && m_pTitleImage)
 	{
 		if (isHoriBtnArray)
 		{
@@ -266,21 +263,18 @@ void CAAlertView::calcuCtrlsSize()
 			m_pTitleLabel->setBounds(CCRectZero);
 
 		}
+        
+        if (isHoriBtnArray)
+        {
+            m_pTitleLabel->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 - ertSize.height * 2 / 5, ertSize.width, ertSize.height / 5));
+        }
+        else
+        {
+            m_pTitleLabel->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 - ertSize.height * 5 / 12, ertSize.width, ertSize.height / 6));
+        }
+        float size = m_pTitleImage->getBounds().size.height / 2;
+        m_pTitleLabel->setFontSize(size);
 	}
-	if (m_pTitleLabel)
-	{
-		if (isHoriBtnArray)
-		{
-			m_pTitleLabel->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 - ertSize.height * 2 / 5, ertSize.width, ertSize.height / 5));
-		}
-		else
-		{
-			m_pTitleLabel->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 - ertSize.height * 5 / 12, ertSize.width, ertSize.height / 6));
-		}
-		float size = m_pTitleImage->getBounds().size.height / 2;
-		m_pTitleLabel->setFontSize(size);
-	}
-
 
 	if (m_pContentBkImage)
 	{
@@ -303,7 +297,7 @@ void CAAlertView::calcuCtrlsSize()
 		{
 			m_pContentLabel->setCenter(CCRectMake(winSize.width / 2, winSize.height / 2 - ertSize.height / 6, ertSize.width, ertSize.height * 1 / 3));
 		}
-		float size = m_pTitleImage->getBounds().size.height / 2;
+		float size = ertSize.height / 10;
 		m_pContentLabel->setFontSize(size);
 	}
 

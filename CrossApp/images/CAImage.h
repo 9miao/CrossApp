@@ -130,7 +130,7 @@ public:
     virtual CAImage* copy();
 
 protected:
-    
+
     CC_PROPERTY_READONLY_PASS_BY_REF(CAImagePixelFormat, m_ePixelFormat, PixelFormat)
     
     CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)

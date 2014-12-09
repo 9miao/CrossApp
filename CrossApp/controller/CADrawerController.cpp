@@ -248,12 +248,12 @@ void CADrawerController::updateViewFrame()
     if (1)
     {
         float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
-        float scale1 = 1.0f - 0.2f * m_fCurrDivision / m_fDivision;
+        float scale1 = 1.0f - powf(m_fCurrDivision / m_fDivision, 2) * 0.2f;
         
         m_pContainer[0]->setScale(scale0);
         m_pContainer[1]->setScale(scale1);
         
-        point[0].x = (point[1].x - m_pContainer[0]->getFrame().size.width) / 2;
+        point[0].x = (point[1].x - m_pContainer[0]->getFrame().size.width) / 3;
         point[0].y = this->getView()->getBounds().size.height * (1.0f - scale0) / 2;
         point[1].y = this->getView()->getBounds().size.height * (1.0f - scale1) / 2;
     }

@@ -9,6 +9,7 @@
 #include "support/zip_support/unzip.h"
 #include <stack>
 #include <algorithm>
+#include <dirent.h>
 
 using namespace std;
 
@@ -811,6 +812,10 @@ bool CCFileUtils::isPopupNotify()
  */
 bool CCFileUtils::createDirectory(const char *path)
 {
+    DIR *dir=NULL;
+    dir = opendir(path);
+    if (dir) return false;
+    
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     mode_t processMask = umask(0);
     int ret = mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO);
@@ -819,7 +824,6 @@ bool CCFileUtils::createDirectory(const char *path)
     {
         return false;
     }
-    
     return true;
 #else
     BOOL ret = CreateDirectoryA(path, NULL);

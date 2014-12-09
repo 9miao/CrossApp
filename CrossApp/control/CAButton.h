@@ -32,7 +32,7 @@ public:
     CAButton(const CAButtonType& buttonType);
     
     virtual ~CAButton(void);
-
+    
     virtual void onExitTransitionDidStart();
     
     virtual void onEnterTransitionDidFinish();
@@ -40,7 +40,7 @@ public:
     static CAButton* create(const CAButtonType& buttonType);
     
     static CAButton* createWithFrame(const CCRect& rect, const CAButtonType& buttonType);
-
+    
     static CAButton* createWithCenter(const CCRect& rect, const CAButtonType& buttonType);
     
 public:

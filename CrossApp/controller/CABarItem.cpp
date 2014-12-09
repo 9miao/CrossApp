@@ -14,7 +14,6 @@ NS_CC_BEGIN
 
 CABarItem::CABarItem()
 :m_bTouchEnabled(true)
-,m_nTag(0)
 ,m_pImage(NULL)
 ,m_sTitle("")
 {

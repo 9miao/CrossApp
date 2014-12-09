@@ -303,49 +303,44 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
         free(m_pData);
     }
 
-    unsigned char* pData = ((unsigned char*)const_cast<char*>((const char*)data));
-    m_nDataLenght = (unsigned long)pixelsWide * pixelsHigh;
-    if (pixelFormat == kCAImagePixelFormat_RGBA8888 || pixelFormat == kCAImagePixelFormat_Default || pixelFormat == kImagePixelFormat_RGBA8888 || pixelFormat == kCAImagePixelFormat_RGBA4444 || pixelFormat == kImagePixelFormat_RGBA4444 || pixelFormat == kImagePixelFormat_Default)
+    
+    int pixelWidth = 0;
+    switch (pixelFormat)
     {
-        
-        m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * 4);
-        
-        for(int j= 0; j < pixelsHigh; j ++)
-            for(int i = 0; i < pixelsWide; i ++)
-            {
-                unsigned char r = pData[(j * pixelsWide + i) * 4 + 0];
-                unsigned char g = pData[(j * pixelsWide + i) * 4 + 1];
-                unsigned char b = pData[(j * pixelsWide + i) * 4 + 2];
-                m_pData[(j * pixelsWide + i) * 4 + 0] = r;
-                m_pData[(j * pixelsWide + i) * 4 + 1] = g;
-                m_pData[(j * pixelsWide + i) * 4 + 2] = b;
-                m_pData[(j * pixelsWide + i) * 4 + 3] = 255;
-                
-            }
-        
-    }else
-    {
-        m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * 3);
-        
-        for(int j= 0; j < pixelsHigh; j ++)
-            for(int i = 0; i < pixelsWide; i ++)
-            {
-                unsigned char r = pData[(j * pixelsWide + i) * 3 + 0];
-                unsigned char g = pData[(j * pixelsWide + i) * 3 + 1];
-                unsigned char b = pData[(j * pixelsWide + i) * 3 + 2];
-                m_pData[(j * pixelsWide + i) * 3 + 0] = r;
-                m_pData[(j * pixelsWide + i) * 3 + 1] = g;
-                m_pData[(j * pixelsWide + i) * 3 + 2] = b;
-            }
+        case kCAImagePixelFormat_RGBA8888:
+            pixelWidth = 32;
+            break;
+        case kCAImagePixelFormat_RGB888:
+            pixelWidth = 24;
+            break;
+        case kCAImagePixelFormat_RGB565:
+            pixelWidth = 16;
+            break;
+        case kCAImagePixelFormat_A8:
+            pixelWidth = 8;
+            break;
+        case kCAImagePixelFormat_I8:
+            pixelWidth = 8;
+            break;
+        case kCAImagePixelFormat_AI88:
+            pixelWidth = 16;
+            break;
+        case kCAImagePixelFormat_RGBA4444:
+            pixelWidth = 16;
+            break;
+        case kCAImagePixelFormat_RGB5A1:
+            pixelWidth = 16;
+            break;
+        default:
+            break;
     }
+    m_nDataLenght = (unsigned long)pixelsWide * pixelsHigh;
+    m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * pixelWidth/8);
+    unsigned char* pData = ((unsigned char*)const_cast<char*>((const char*)data));
     
-    
+    for (long i=0; i<m_nDataLenght * pixelWidth/8; i++)
+        m_pData[i] = pData[i];
 
-//    for (int i=0; i<m_nDataLenght; i++)
-//    {
-//        m_pData[i] = pData[i];
-//    }
-//    m_pData = pData;
     m_tContentSize = contentSize;
     m_uPixelsWide = pixelsWide;
     m_uPixelsHigh = pixelsHigh;
@@ -826,44 +821,43 @@ CAImage* CAImage::copy()
     copyImage->m_bMonochrome = this->m_bMonochrome;
     copyImage->m_bHasMipmaps = this->m_bHasMipmaps;
     copyImage->m_bHasPremultipliedAlpha = this->m_bHasPremultipliedAlpha;
+    
+    int pixelWidth = 0;
+    switch (this->m_ePixelFormat)
+    {
+        case kCAImagePixelFormat_RGBA8888:
+            pixelWidth = 32;
+            break;
+        case kCAImagePixelFormat_RGB888:
+            pixelWidth = 24;
+            break;
+        case kCAImagePixelFormat_RGB565:
+            pixelWidth = 16;
+            break;
+        case kCAImagePixelFormat_A8:
+            pixelWidth = 8;
+            break;
+        case kCAImagePixelFormat_I8:
+            pixelWidth = 8;
+            break;
+        case kCAImagePixelFormat_AI88:
+            pixelWidth = 16;
+            break;
+        case kCAImagePixelFormat_RGBA4444:
+            pixelWidth = 16;
+            break;
+        case kCAImagePixelFormat_RGB5A1:
+            pixelWidth = 16;
+            break;
+        default:
+            break;
+    }
     copyImage->m_nDataLenght = this->m_nDataLenght;
+    copyImage->m_pData = (unsigned char*)malloc(this->m_nDataLenght * sizeof(unsigned char) * pixelWidth/8);
     
+    for (long i=0; i<m_nDataLenght * pixelWidth/8; i++)
+        copyImage->m_pData[i] = this->m_pData[i];
 
-    if (copyImage->m_ePixelFormat == kCAImagePixelFormat_RGBA8888 || copyImage->m_ePixelFormat == kCAImagePixelFormat_Default || copyImage->m_ePixelFormat == kImagePixelFormat_RGBA8888 || copyImage->m_ePixelFormat == kCAImagePixelFormat_RGBA4444 || copyImage->m_ePixelFormat == kImagePixelFormat_RGBA4444 || copyImage->m_ePixelFormat == kImagePixelFormat_Default)
-    {
-        copyImage->m_pData = (unsigned char*)malloc(copyImage->m_nDataLenght * sizeof(unsigned char)* 4);
-        for(int j= 0; j < this->m_uPixelsHigh; j ++)
-            for(int i = 0; i < this->m_uPixelsWide; i ++)
-            {
-                unsigned char r = this->m_pData[(j * this->m_uPixelsWide + i) * 4 + 0];
-                unsigned char g = this->m_pData[(j * this->m_uPixelsWide + i) * 4 + 1];
-                unsigned char b = this->m_pData[(j * this->m_uPixelsWide + i) * 4 + 2];
-                
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 0] = r;
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 1] = g;
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 2] = b;
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 4 + 3] = 255;
-                
-            }
-    }
-    else
-    {
-        copyImage->m_pData = (unsigned char*)malloc(copyImage->m_nDataLenght * sizeof(unsigned char)* 3);
-        for(int j= 0; j < this->m_uPixelsHigh; j ++)
-            for(int i = 0; i < this->m_uPixelsWide; i ++)
-            {
-                unsigned char r = this->m_pData[(j * this->m_uPixelsWide + i) * 3 + 0];
-                unsigned char g = this->m_pData[(j * this->m_uPixelsWide + i) * 3 + 1];
-                unsigned char b = this->m_pData[(j * this->m_uPixelsWide + i) * 3 + 2];
-                
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 3 + 0] = r;
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 3 + 1] = g;
-                copyImage->m_pData[(j * this->m_uPixelsWide + i) * 3 + 2] = b;
-                
-            }
-    }
-    
-    
     return copyImage;
 }
 const char* CAImage::getImageFileType()
