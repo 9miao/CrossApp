@@ -68,7 +68,9 @@ namespace CADevice
     float getScreenBrightness();
     
     void setScreenBrightness(float brightness);
-
+    
+    void writeToSavedPhotosAlbum(const std::string &s);
+    
     std::vector<CAAddressBookRecord> getAddressBook();
 };
 #endif /* defined(__PublishPhoto__CADevice__) */

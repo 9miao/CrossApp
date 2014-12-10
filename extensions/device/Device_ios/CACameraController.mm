@@ -37,7 +37,17 @@
 {
     [super didReceiveMemoryWarning];
 }
-
+-(void)writeImageToPhoto:(std::string)sender
+{
+    
+    UIImage *newImage = [[UIImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%s",sender.c_str()]];
+    if (newImage == nil)
+    {
+        NSLog(@"Save image have some error");
+    }
+    UIImageWriteToSavedPhotosAlbum(newImage, self, nil, nil);
+    [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%s",sender.c_str()] error:nil];
+}
 -(void)openCameraView
 {
 

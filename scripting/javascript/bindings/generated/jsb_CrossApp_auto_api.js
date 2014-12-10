@@ -77,6 +77,12 @@ getPixelsHigh : function () {},
 setTexParameters : function () {},
 
 /**
+ * @method getPixelsWide
+ * @return A value converted from C/C++ "unsigned int"
+ */
+getPixelsWide : function () {},
+
+/**
  * @method getName
  * @return A value converted from C/C++ "unsigned int"
  */
@@ -167,10 +173,10 @@ keepData : function () {},
 getContentSizeInPixels : function () {},
 
 /**
- * @method getPixelsWide
- * @return A value converted from C/C++ "unsigned int"
+ * @method copy
+ * @return A value converted from C/C++ "CrossApp::CAImage*"
  */
-getPixelsWide : function () {},
+copy : function () {},
 
 /**
  * @method getImageFileType
@@ -232,6 +238,17 @@ createWithDataNoCache : function () {},
 create : function () {},
 
 /**
+ * @method cutStringByWidth
+ * @return A value converted from C/C++ "int"
+ * @param {const char*}
+ * @param {unsigned long}
+ * @param {std::string}
+ * @param {int}
+ * @param {}
+ */
+cutStringByWidth : function () {},
+
+/**
  * @method setDefaultAlphaPixelFormat
  * @param {CrossApp::CAImagePixelFormat}
  */
@@ -284,6 +301,9 @@ defaultAlphaPixelFormat : function () {},
  * @param {CrossApp::CAVerticalTextAlignment}
  * @param {bool}
  * @param {int}
+ * @param {bool}
+ * @param {bool}
+ * @param {bool}
  */
 createWithString : function () {},
 
@@ -1274,9 +1294,21 @@ setDimensions : function () {},
 getFontSize : function () {},
 
 /**
+ * @method getItalics
+ * @return A value converted from C/C++ "bool"
+ */
+getItalics : function () {},
+
+/**
  * @method sizeToFit
  */
 sizeToFit : function () {},
+
+/**
+ * @method getBold
+ * @return A value converted from C/C++ "bool"
+ */
+getBold : function () {},
 
 /**
  * @method getText
@@ -1292,6 +1324,12 @@ getText : function () {},
 initWithCenter : function () {},
 
 /**
+ * @method setUnderLine
+ * @param {bool}
+ */
+setUnderLine : function () {},
+
+/**
  * @method setFontName
  * @param {std::string}
  */
@@ -1299,9 +1337,15 @@ setFontName : function () {},
 
 /**
  * @method setLineSpacing
- * @param {unsigned int}
+ * @param {int}
  */
 setLineSpacing : function () {},
+
+/**
+ * @method setBold
+ * @param {bool}
+ */
+setBold : function () {},
 
 /**
  * @method visit
@@ -1321,14 +1365,14 @@ getLabelSize : function () {},
 setWordWrap : function () {},
 
 /**
- * @method setNumberOfLine
- * @param {unsigned int}
+ * @method getFontName
+ * @return A value converted from C/C++ "std::string"
  */
-setNumberOfLine : function () {},
+getFontName : function () {},
 
 /**
  * @method getLineSpacing
- * @return A value converted from C/C++ "unsigned int"
+ * @return A value converted from C/C++ "int"
  */
 getLineSpacing : function () {},
 
@@ -1337,6 +1381,12 @@ getLineSpacing : function () {},
  * @param {CrossApp::CAVerticalTextAlignment}
  */
 setVerticalTextAlignmet : function () {},
+
+/**
+ * @method getUnderLine
+ * @return A value converted from C/C++ "bool"
+ */
+getUnderLine : function () {},
 
 /**
  * @method getVerticalTextAlignmet
@@ -1350,6 +1400,12 @@ getVerticalTextAlignmet : function () {},
  * @param {CrossApp::CCRect}
  */
 initWithFrame : function () {},
+
+/**
+ * @method setItalics
+ * @param {bool}
+ */
+setItalics : function () {},
 
 /**
  * @method getDimensions
@@ -1370,6 +1426,11 @@ getNumberOfLine : function () {},
 setFontSize : function () {},
 
 /**
+ * @method unsizeToFit
+ */
+unsizeToFit : function () {},
+
+/**
  * @method setText
  * @param {std::string}
  */
@@ -1388,10 +1449,10 @@ getWordWrap : function () {},
 getTextAlignment : function () {},
 
 /**
- * @method getFontName
- * @return A value converted from C/C++ "std::string"
+ * @method setNumberOfLine
+ * @param {unsigned int}
  */
-getFontName : function () {},
+setNumberOfLine : function () {},
 
 /**
  * @method onEnterTransitionDidFinish
@@ -1956,12 +2017,6 @@ ccTouchMoved : function () {},
 isCloseTapSound : function () {},
 
 /**
- * @method getTextTag
- * @return A value converted from C/C++ "std::string"
- */
-getTextTag : function () {},
-
-/**
  * @method setTitleFontName
  * @param {std::string}
  */
@@ -1984,12 +2039,6 @@ setTitleColorForState : function () {},
  * @param {bool}
  */
 setCloseTapSound : function () {},
-
-/**
- * @method setTextTag
- * @param {std::string}
- */
-setTextTag : function () {},
 
 /**
  * @method interruptTouchState
@@ -2015,13 +2064,6 @@ setImageForState : function () {},
  * @param {CrossApp::CAEvent*}
  */
 ccTouchCancelled : function () {},
-
-/**
- * @method isTextTagEqual
- * @return A value converted from C/C++ "bool"
- * @param {const char*}
- */
-isTextTagEqual : function () {},
 
 /**
  * @method setAllowsSelected
@@ -2071,12 +2113,6 @@ ca.BarItem = {
 setTouchEnabled : function () {},
 
 /**
- * @method setTag
- * @param {int}
- */
-setTag : function () {},
-
-/**
  * @method setImage
  * @param {CrossApp::CAImage*}
  */
@@ -2099,12 +2135,6 @@ isTouchEnabled : function () {},
  * @return A value converted from C/C++ "std::string"
  */
 getTitle : function () {},
-
-/**
- * @method getTag
- * @return A value converted from C/C++ "int"
- */
-getTag : function () {},
 
 /**
  * @method getImage
@@ -2169,6 +2199,12 @@ CATabBarItem : function () {},
 ca.ImageView = {
 
 /**
+ * @method copy
+ * @return A value converted from C/C++ "CrossApp::CAView*"
+ */
+copy : function () {},
+
+/**
  * @method setImage
  * @param {CrossApp::CAImage*}
  */
@@ -2183,7 +2219,7 @@ initWithImage : function () {},
 
 /**
  * @method setImageAsyncWithFile
- * @param {const char*}
+ * @param {std::string}
  */
 setImageAsyncWithFile : function () {},
 
@@ -3799,6 +3835,19 @@ pushViewController : function () {},
 updateItem : function () {},
 
 /**
+ * @method ccTouchCancelled
+ * @param {CrossApp::CATouch*}
+ * @param {CrossApp::CAEvent*}
+ */
+ccTouchCancelled : function () {},
+
+/**
+ * @method setTouchMoved
+ * @param {bool}
+ */
+setTouchMoved : function () {},
+
+/**
  * @method setNavigationBarHidden
  * @param {bool}
  * @param {bool}
@@ -3839,11 +3888,31 @@ initWithRootViewController : function () {},
 getViewControllerAtIndex : function () {},
 
 /**
+ * @method ccTouchEnded
+ * @param {CrossApp::CATouch*}
+ * @param {CrossApp::CAEvent*}
+ */
+ccTouchEnded : function () {},
+
+/**
  * @method popViewControllerAnimated
  * @return A value converted from C/C++ "CrossApp::CAViewController*"
  * @param {bool}
  */
 popViewControllerAnimated : function () {},
+
+/**
+ * @method isTouchMoved
+ * @return A value converted from C/C++ "bool"
+ */
+isTouchMoved : function () {},
+
+/**
+ * @method ccTouchMoved
+ * @param {CrossApp::CATouch*}
+ * @param {CrossApp::CAEvent*}
+ */
+ccTouchMoved : function () {},
 
 /**
  * @method replaceViewController
@@ -3857,6 +3926,14 @@ replaceViewController : function () {},
  * @return A value converted from C/C++ "CrossApp::CABarVerticalAlignment"
  */
 getNavigationBarVerticalAlignment : function () {},
+
+/**
+ * @method ccTouchBegan
+ * @return A value converted from C/C++ "bool"
+ * @param {CrossApp::CATouch*}
+ * @param {CrossApp::CAEvent*}
+ */
+ccTouchBegan : function () {},
 
 /**
  * @method getViewControllerCount
@@ -4310,6 +4387,12 @@ getListFooterView : function () {},
 ccTouchCancelled : function () {},
 
 /**
+ * @method setUnSelectAtIndex
+ * @param {unsigned int}
+ */
+setUnSelectAtIndex : function () {},
+
+/**
  * @method dequeueReusableCellWithIdentifier
  * @return A value converted from C/C++ "CrossApp::CAListViewCell*"
  * @param {const char*}
@@ -4487,10 +4570,24 @@ setAlwaysTopSectionHeader : function () {},
 isAlwaysBottomSectionFooter : function () {},
 
 /**
+ * @method getRowHeightInSectionInRow
+ * @return A value converted from C/C++ "float"
+ * @param {unsigned int}
+ * @param {unsigned int}
+ */
+getRowHeightInSectionInRow : function () {},
+
+/**
  * @method setTableHeaderView
  * @param {CrossApp::CAView*}
  */
 setTableHeaderView : function () {},
+
+/**
+ * @method getNumberOfSections
+ * @return A value converted from C/C++ "unsigned int"
+ */
+getNumberOfSections : function () {},
 
 /**
  * @method getSeparatorViewHeight
@@ -4516,6 +4613,13 @@ setSelectRowAtIndexPath : function () {},
  * @return A value converted from C/C++ "CrossApp::CATableViewDataSource*"
  */
 getTableViewDataSource : function () {},
+
+/**
+ * @method getSectionHeightInSection
+ * @return A value converted from C/C++ "float"
+ * @param {unsigned int}
+ */
+getSectionHeightInSection : function () {},
 
 /**
  * @method isAllowsMultipleSelection
@@ -4622,9 +4726,37 @@ setTableViewDataSource : function () {},
 ccTouchCancelled : function () {},
 
 /**
+ * @method getNumberOfRowsInSection
+ * @return A value converted from C/C++ "unsigned int"
+ * @param {unsigned int}
+ */
+getNumberOfRowsInSection : function () {},
+
+/**
+ * @method setUnSelectRowAtIndexPath
+ * @param {unsigned int}
+ * @param {unsigned int}
+ */
+setUnSelectRowAtIndexPath : function () {},
+
+/**
  * @method onEnterTransitionDidFinish
  */
 onEnterTransitionDidFinish : function () {},
+
+/**
+ * @method getSectionHeaderHeightInSection
+ * @return A value converted from C/C++ "float"
+ * @param {unsigned int}
+ */
+getSectionHeaderHeightInSection : function () {},
+
+/**
+ * @method getSectionFooterHeightInSection
+ * @return A value converted from C/C++ "float"
+ * @param {unsigned int}
+ */
+getSectionFooterHeightInSection : function () {},
 
 /**
  * @method dequeueReusableCellWithIdentifier
