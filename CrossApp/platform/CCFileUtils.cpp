@@ -9,7 +9,10 @@
 #include "support/zip_support/unzip.h"
 #include <stack>
 #include <algorithm>
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 #include <dirent.h>
+#endif
 
 using namespace std;
 
@@ -812,11 +815,11 @@ bool CCFileUtils::isPopupNotify()
  */
 bool CCFileUtils::createDirectory(const char *path)
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     DIR *dir=NULL;
     dir = opendir(path);
     if (dir) return false;
     
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     mode_t processMask = umask(0);
     int ret = mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO);
     umask(processMask);
