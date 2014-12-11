@@ -304,36 +304,8 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
     }
 
     
-    int pixelWidth = 0;
-    switch (pixelFormat)
-    {
-        case kCAImagePixelFormat_RGBA8888:
-            pixelWidth = 32;
-            break;
-        case kCAImagePixelFormat_RGB888:
-            pixelWidth = 24;
-            break;
-        case kCAImagePixelFormat_RGB565:
-            pixelWidth = 16;
-            break;
-        case kCAImagePixelFormat_A8:
-            pixelWidth = 8;
-            break;
-        case kCAImagePixelFormat_I8:
-            pixelWidth = 8;
-            break;
-        case kCAImagePixelFormat_AI88:
-            pixelWidth = 16;
-            break;
-        case kCAImagePixelFormat_RGBA4444:
-            pixelWidth = 16;
-            break;
-        case kCAImagePixelFormat_RGB5A1:
-            pixelWidth = 16;
-            break;
-        default:
-            break;
-    }
+    unsigned int pixelWidth = this->bitsPerPixelForFormat(pixelFormat);
+    
     m_nDataLenght = (unsigned long)pixelsWide * pixelsHigh;
     m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * pixelWidth/8);
     unsigned char* pData = ((unsigned char*)const_cast<char*>((const char*)data));
@@ -822,36 +794,7 @@ CAImage* CAImage::copy()
     copyImage->m_bHasMipmaps = this->m_bHasMipmaps;
     copyImage->m_bHasPremultipliedAlpha = this->m_bHasPremultipliedAlpha;
     
-    int pixelWidth = 0;
-    switch (this->m_ePixelFormat)
-    {
-        case kCAImagePixelFormat_RGBA8888:
-            pixelWidth = 32;
-            break;
-        case kCAImagePixelFormat_RGB888:
-            pixelWidth = 24;
-            break;
-        case kCAImagePixelFormat_RGB565:
-            pixelWidth = 16;
-            break;
-        case kCAImagePixelFormat_A8:
-            pixelWidth = 8;
-            break;
-        case kCAImagePixelFormat_I8:
-            pixelWidth = 8;
-            break;
-        case kCAImagePixelFormat_AI88:
-            pixelWidth = 16;
-            break;
-        case kCAImagePixelFormat_RGBA4444:
-            pixelWidth = 16;
-            break;
-        case kCAImagePixelFormat_RGB5A1:
-            pixelWidth = 16;
-            break;
-        default:
-            break;
-    }
+    unsigned int pixelWidth = this->bitsPerPixelForFormat(pixelFormat);
     copyImage->m_nDataLenght = this->m_nDataLenght;
     copyImage->m_pData = (unsigned char*)malloc(this->m_nDataLenght * sizeof(unsigned char) * pixelWidth/8);
     
