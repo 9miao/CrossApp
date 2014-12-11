@@ -794,7 +794,7 @@ CAImage* CAImage::copy()
     copyImage->m_bHasMipmaps = this->m_bHasMipmaps;
     copyImage->m_bHasPremultipliedAlpha = this->m_bHasPremultipliedAlpha;
     
-    unsigned int pixelWidth = this->bitsPerPixelForFormat(pixelFormat);
+    unsigned int pixelWidth = this->bitsPerPixelForFormat(this->m_ePixelFormat);
     copyImage->m_nDataLenght = this->m_nDataLenght;
     copyImage->m_pData = (unsigned char*)malloc(this->m_nDataLenght * sizeof(unsigned char) * pixelWidth/8);
     
