@@ -10,7 +10,7 @@
 #include <stack>
 #include <algorithm>
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <dirent.h>
 #endif
 
