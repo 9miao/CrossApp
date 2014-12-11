@@ -13,6 +13,21 @@
 #####5.优化一些细节
 
 
+#### CrossApp 0.4.1 Update:
+
+##### 1. Added Umeng statistics sdk (third-party library)
+iOS and Android platform support
+
+##### 2. Added Share SDK social share (third-party library)
+iOS and Android platform support
+
+##### 3. CrossApp-js version update
+
+##### 4. Fixed some bugs
+
+##### 5. Optimized some details
+
+
 
 #### CrossApp 0.3.10 更新内容：  
 
@@ -35,7 +50,7 @@
 #####8.其他一些细节调整
 
 
-#### CrossApp 0. 3. 10 Update:
+#### CrossApp 0.3.10 Update:
 
 #####1. Added CrossAppStyle
 Text message model class, supports to obtain corresponding height, width and other info after CALabel text rendering.<br/>
