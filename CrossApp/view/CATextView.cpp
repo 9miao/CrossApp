@@ -105,6 +105,7 @@ bool CATextView::init()
 	this->setTouchMovedListenHorizontal(false);
 
     m_pImageView = new CAImageView();
+    m_pImageView->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
     m_pImageView->autorelease();
 	this->addSubview(m_pImageView);
 	return true;
@@ -178,9 +179,13 @@ void CATextView::updateImage()
 	{
 		m_vLinesTextView.clear();
 	}
-
+    m_pImageView->setColor(CAColor_black);
 	m_pImageView->setImage(image);
-	setViewSize(m_pImageView->getBounds().size);
+    CCRect rect = CCRectZero;
+    rect.size = image->getContentSize();
+    m_pImageView->setImageRect(rect);
+    m_pImageView->setFrame(rect);
+	setViewSize(rect.size);
 	calcCursorPosition();
 }
 

@@ -209,23 +209,13 @@ CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontNa
 		return NULL;
 	}
 
-	CCImage* pImage = new CCImage();
-	if (!pImage->initWithImageData(pData, width*height * 4, CCImage::kFmtRawData, width, height, 8, false))
-	{
-		delete[]pData;
-		delete pImage;
-		return NULL;
-	}
-
-	CAImage* pCAImage = new CAImage();
-	if (!pCAImage->initWithImage(pImage))
-	{
-		delete pImage;
-		delete pCAImage;
-		return NULL;
-	}
-	pImage->release();
-	pCAImage->autorelease();
+    CAImage* pCAImage = new CAImage();
+    if (!pCAImage->initWithData(pData, kCAImagePixelFormat_A8, width, height, CCSize(width, height)))
+    {
+        delete pCAImage;
+        return NULL;
+    }
+    pCAImage->autorelease();
 	return pCAImage;
 }
 

@@ -305,12 +305,11 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
 
     
     unsigned int pixelWidth = this->bitsPerPixelForFormat(pixelFormat);
-    
     m_nDataLenght = (unsigned long)pixelsWide * pixelsHigh;
     m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * pixelWidth/8);
     unsigned char* pData = ((unsigned char*)const_cast<char*>((const char*)data));
     
-    for (long i=0; i<m_nDataLenght * pixelWidth/8; i++)
+    for (unsigned int i=0; i<m_nDataLenght * pixelWidth/8; i++)
         m_pData[i] = pData[i];
 
     m_tContentSize = contentSize;
@@ -798,7 +797,7 @@ CAImage* CAImage::copy()
     copyImage->m_nDataLenght = this->m_nDataLenght;
     copyImage->m_pData = (unsigned char*)malloc(this->m_nDataLenght * sizeof(unsigned char) * pixelWidth/8);
     
-    for (long i=0; i<m_nDataLenght * pixelWidth/8; i++)
+    for (unsigned int i=0; i<m_nDataLenght * pixelWidth/8; i++)
         copyImage->m_pData[i] = this->m_pData[i];
 
     return copyImage;
