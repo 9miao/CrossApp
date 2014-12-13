@@ -84,8 +84,7 @@ public:
                            EImageFormat eFmt = kFmtUnKnown,
                            int nWidth = 0,
                            int nHeight = 0,
-                           int nBitsPerComponent = 8,
-						   bool bDeepCopy = true);
+						   int nBitsPerComponent = 8);
 
     /**
     @brief    Create image with specified string.
@@ -123,7 +122,7 @@ protected:
     bool _initWithTiffData(void *pData, int nDataLen);
     bool _initWithWebpData(void *pData, int nDataLen);
     // @warning kFmtRawData only support RGBA8888
-	bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti, bool bDeepCopy);
+	bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti);
 
     bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
     bool _saveImageToJPG(const char *pszFilePath);

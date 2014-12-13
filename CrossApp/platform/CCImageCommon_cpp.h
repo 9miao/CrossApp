@@ -147,8 +147,7 @@ bool CCImage::initWithImageData(void * pData,
                                 EImageFormat eFmt/* = eSrcFmtPng*/, 
                                 int nWidth/* = 0*/,
                                 int nHeight/* = 0*/,
-                                int nBitsPerComponent/* = 8*/,
-								bool bDeepCopy /*= true*/)
+                                int nBitsPerComponent/* = 8*/)
 {
     bool bRet = false;
     do 
@@ -179,7 +178,7 @@ bool CCImage::initWithImageData(void * pData,
 #endif
         else if (kFmtRawData == eFmt)
         {
-			bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false, bDeepCopy);
+			bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
             break;
         }
         else
@@ -680,7 +679,7 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
     return bRet;
 }
 
-bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti, bool bDeepCopy)
+bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 
@@ -694,18 +693,11 @@ bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeig
         m_bPreMulti = bPreMulti;
 
         // only RGBA8888 supported
-		if (bDeepCopy)
-		{
         int nBytesPerComponent = 4;
         int nSize = nHeight * nWidth * nBytesPerComponent;
         m_pData = new unsigned char[nSize];
         CC_BREAK_IF(! m_pData);
         memcpy(m_pData, pData, nSize);
-		}
-		else
-		{
-			m_pData = (unsigned char*)pData;
-		}
         bRet = true;
     } while (0);
 
