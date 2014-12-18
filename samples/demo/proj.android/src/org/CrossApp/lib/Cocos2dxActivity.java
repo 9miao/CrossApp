@@ -33,7 +33,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	
+    private Cocos2dxWebViewHelper mWebViewHelper = null;
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
 	private static Context sContext = null;
@@ -72,6 +72,11 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
 		exeHandler();
+		
+		 if(mWebViewHelper == null)
+		 {
+			 mWebViewHelper = new Cocos2dxWebViewHelper(frame);
+		 }
 	}
 	 public void onActivityResult(int requestCode, int resultCode, Intent intent)
 	 {
@@ -154,8 +159,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// Methods
 	// ===========================================================
 	public void init() {
-		
-		
 		
     	// FrameLayout
         ViewGroup.LayoutParams framelayout_params =
