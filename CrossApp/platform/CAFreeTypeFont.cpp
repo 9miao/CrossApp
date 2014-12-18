@@ -143,9 +143,11 @@ _AgaginInitGlyphs:
 	CAImage* pCAImage = new CAImage();
 	if (!pCAImage->initWithData(pData, kCAImagePixelFormat_A8, width, height, CCSize(width, height)))
 	{
+		delete[]pData;
 		delete pCAImage;
 		return NULL;
 	}
+	delete[]pData;
     pCAImage->autorelease();
 	return pCAImage;
 }
@@ -172,10 +174,7 @@ CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontNa
 
 	CATextAlignment hAlignment = CATextAlignmentLeft;
 	CAVerticalTextAlignment vAlignment = CAVerticalTextAlignmentTop;
-//	if (m_inWidth < m_textWidth)
-//	{
-//		hAlignment = CATextAlignmentLeft;
-//	}
+
 	if (m_inHeight < m_textHeight)
 	{
 		vAlignment = CAVerticalTextAlignmentTop;
@@ -209,13 +208,16 @@ CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontNa
 		return NULL;
 	}
 
-    CAImage* pCAImage = new CAImage();
-    if (!pCAImage->initWithData(pData, kCAImagePixelFormat_A8, width, height, CCSize(width, height)))
-    {
-        delete pCAImage;
-        return NULL;
-    }
-    pCAImage->autorelease();
+	CAImage* pCAImage = new CAImage();
+	if (!pCAImage->initWithData(pData, kCAImagePixelFormat_A8, width, height, CCSize(width, height)))
+	{
+		delete[]pData;
+		delete pCAImage;
+		return NULL;
+	}
+	delete[]pData;
+	pCAImage->autorelease();
+
 	return pCAImage;
 }
 
@@ -234,11 +236,6 @@ unsigned char* CAFreeTypeFont::getBitmap(CCImage::ETextAlign eAlignMask, int* ou
 		return NULL;
     }
 	memset(pBuffer, 0, size);
-	//unsigned int* pxBuf = (unsigned int*)pBuffer;
-	//for (int i = 0; i < m_width * m_height; i++)
-	//{
-	//	pxBuf[i] = 0x00ffffff;
-	//}
 
     std::vector<FTLineInfo*>::iterator line;
 	for (line = m_lines.begin(); line != m_lines.end(); ++line)

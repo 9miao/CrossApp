@@ -434,6 +434,12 @@
     <ClCompile Include="..\view\CALabelStyle.cpp">
       <Filter>view</Filter>
     </ClCompile>
+    <ClCompile Include="..\view\CAWebView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAWebViewImpl.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -874,6 +880,12 @@
     </ClInclude>
     <ClInclude Include="..\view\CALabelStyle.h">
       <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAWebView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAWebViewImpl.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

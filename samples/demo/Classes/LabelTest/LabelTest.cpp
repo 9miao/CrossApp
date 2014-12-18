@@ -15,10 +15,16 @@ LabelTest::~LabelTest()
 	drawer->setTouchMoved(true);
 }
 
+
 void LabelTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
-    
+
+//	CAWebView* m_pWebView = CAWebView::createWithCenter(CCRect(size.width*0.5f, size.height*0.5f, size.width*0.8f, size.height*0.8f));
+//	m_pWebView->setColor(CAColor_gray);
+//	m_pWebView->loadURL("http://www.baidu.com");
+//	this->getView()->insertSubview(m_pWebView, 10);
+//	return;
 
 	CAView* pView = CAView::createWithCenter(CADipRect(size.width*0.5, size.height*0.3, size.width*0.5, size.height*0.2));
 	pView->setColor(CAColor_gray);
@@ -27,7 +33,7 @@ void LabelTest::viewDidLoad()
 
 
 	CALabel* currentValue = CALabel::createWithCenter(CADipRect(size1.width*0.5, size1.height*0.5, size1.width, size1.height));
-	currentValue->setText(UTF8("阿斯顿是电饭锅电饭"));
+	currentValue->setText(UTF8("Hello World"));
 	currentValue->setColor(CAColor_blueStyle);
 	currentValue->setFontSize((_px(36)));
 	currentValue->setTextAlignment(CATextAlignmentCenter);
