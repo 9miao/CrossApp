@@ -304,12 +304,11 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
     }
 
     
-    unsigned int pixelWidth = this->bitsPerPixelForFormat(pixelFormat)/8;
     m_nDataLenght = (unsigned long)pixelsWide * pixelsHigh;
-    m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * pixelWidth);
+    m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * bitsPerPixel);
     unsigned char* pData = ((unsigned char*)const_cast<char*>((const char*)data));
     
-    for (unsigned int i=0; i<m_nDataLenght * pixelWidth; i++)
+    for (unsigned int i=0; i<m_nDataLenght * bitsPerPixel; i++)
         m_pData[i] = pData[i];
 
     m_tContentSize = contentSize;
@@ -793,11 +792,21 @@ CAImage* CAImage::copy()
     copyImage->m_bHasMipmaps = this->m_bHasMipmaps;
     copyImage->m_bHasPremultipliedAlpha = this->m_bHasPremultipliedAlpha;
     
-    unsigned int pixelWidth = this->bitsPerPixelForFormat(this->m_ePixelFormat);
-    copyImage->m_nDataLenght = this->m_nDataLenght;
-    copyImage->m_pData = (unsigned char*)malloc(this->m_nDataLenght * sizeof(unsigned char) * pixelWidth/8);
+    unsigned int bitsPerPixel;
+    //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
+    if(this->m_ePixelFormat == kCAImagePixelFormat_RGB888)
+    {
+        bitsPerPixel = 24;
+    }
+    else
+    {
+        bitsPerPixel = bitsPerPixelForFormat(this->m_ePixelFormat);
+    }
     
-    for (unsigned int i=0; i<m_nDataLenght * pixelWidth/8; i++)
+    copyImage->m_nDataLenght = this->m_nDataLenght;
+    copyImage->m_pData = (unsigned char*)malloc(this->m_nDataLenght * sizeof(unsigned char) * bitsPerPixel/8);
+    
+    for (unsigned int i=0; i<m_nDataLenght * bitsPerPixel/8; i++)
         copyImage->m_pData[i] = this->m_pData[i];
 
     return copyImage;

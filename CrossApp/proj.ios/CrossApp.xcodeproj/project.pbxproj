@@ -443,7 +443,6 @@
 		EB9D562319E8DC2D0072BE8E /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */; };
 		EB9D562419E8DC2D0072BE8E /* JSViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */; };
 		EB9D562519E8DC2D0072BE8E /* JSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EB9D562119E8DC2D0072BE8E /* JSViewController.h */; };
-		EE5C65F01A1BF8A30065A06D /* CAWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = EE5C65EF1A1BF8A30065A06D /* CAWebView.h */; };
 		EE5C65F41A1BF8FA0065A06D /* CAWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE5C65F11A1BF8FA0065A06D /* CAWebView.mm */; };
 		EE5C65F51A1BF8FA0065A06D /* CAWebViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = EE5C65F21A1BF8FA0065A06D /* CAWebViewImpl.h */; };
 		EE5C65F61A1BF8FA0065A06D /* CAWebViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE5C65F31A1BF8FA0065A06D /* CAWebViewImpl.mm */; };
@@ -844,7 +843,6 @@
 		EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSViewController.cpp; sourceTree = "<group>"; };
 		EB9D562119E8DC2D0072BE8E /* JSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSViewController.h; sourceTree = "<group>"; };
-		EE5C65EF1A1BF8A30065A06D /* CAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebView.h; sourceTree = "<group>"; };
 		EE5C65F11A1BF8FA0065A06D /* CAWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAWebView.mm; sourceTree = "<group>"; };
 		EE5C65F21A1BF8FA0065A06D /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
 		EE5C65F31A1BF8FA0065A06D /* CAWebViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAWebViewImpl.mm; sourceTree = "<group>"; };
@@ -958,7 +956,6 @@
 		04EA9FC41956CE2500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
-				EE5C65EF1A1BF8A30065A06D /* CAWebView.h */,
 				B093B4211A021E05005F6DA4 /* CALabelStyle.cpp */,
 				B093B4221A021E05005F6DA4 /* CALabelStyle.h */,
 				B03919C119DD61D70026A9BE /* CATextView.cpp */,
@@ -1663,7 +1660,6 @@
 				04EABB301956DAEA00198A8E /* CCActionTween.cpp in Headers */,
 				04EABB321956DAEA00198A8E /* CCArray.cpp in Headers */,
 				B0596B0B197629BE00B1E8CB /* pshints.h in Headers */,
-				EE5C65F01A1BF8A30065A06D /* CAWebView.h in Headers */,
 				04EABB341956DAEA00198A8E /* CCDictionary.cpp in Headers */,
 				04EABB351956DAEA00198A8E /* CCNS.cpp in Headers */,
 				04EABB361956DAEA00198A8E /* CCSet.cpp in Headers */,

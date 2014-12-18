@@ -112,9 +112,5 @@ void CAWebView::setVisible(bool visible)
 	_impl->setVisible(visible);
 }
 
-CAImageView* CAWebView::getWebViewImage()
-{
-	return _impl->getWebViewImage();
-}
 
 NS_CC_END
