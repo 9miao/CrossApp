@@ -229,8 +229,7 @@ bool CCImage::initWithImageData(void * pData,
                                 EImageFormat eFmt,
                                 int nWidth,
                                 int nHeight,
-                                int nBitsPerComponent,
-				bool bDeepCopy)
+                                int nBitsPerComponent)
 {
     bool bRet = false;
     tImageInfo info = {0};
@@ -243,7 +242,7 @@ bool CCImage::initWithImageData(void * pData,
         CC_BREAK_IF(! pData || nDataLen <= 0);
         if (eFmt == kFmtRawData)
         {
-            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false, bDeepCopy);
+            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
         }
         else if (eFmt == kFmtWebp)
         {
@@ -267,7 +266,7 @@ bool CCImage::initWithImageData(void * pData,
     return bRet;
 }
 
-bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti, bool bDeepCopy)
+bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
 {
     bool bRet = false;
     do 
@@ -280,18 +279,11 @@ bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeigh
         m_bHasAlpha = true;
 
         // only RGBA8888 supported
-        if (bDeepCopy)
-		{
-			int nBytesPerComponent = 4;
-			int nSize = nHeight * nWidth * nBytesPerComponent;
-			m_pData = new unsigned char[nSize];
-			CC_BREAK_IF(!m_pData);
-			memcpy(m_pData, pData, nSize);
-		}
-		else
-		{
-			m_pData = (unsigned char*)pData;
-		}
+				int nBytesPerComponent = 4;
+				int nSize = nHeight * nWidth * nBytesPerComponent;
+				m_pData = new unsigned char[nSize];
+				CC_BREAK_IF(!m_pData);
+				memcpy(m_pData, pData, nSize);
 
         bRet = true;
     } while (0);
