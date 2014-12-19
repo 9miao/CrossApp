@@ -13,7 +13,7 @@
 NS_CC_BEGIN
 
 
-class CC_DLL CAWebViewImpl
+class CC_DLL CAWebViewImpl : public CAObject
 {
 public:
 	CAWebViewImpl(CAWebView *webView);
@@ -44,7 +44,7 @@ public:
 
     void setScalesPageToFit(const bool scalesPageToFit);
 
-	virtual void visit();
+    virtual void update(float dt);
 
     virtual void setVisible(bool visible);
 

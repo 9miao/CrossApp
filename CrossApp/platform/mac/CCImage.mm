@@ -478,7 +478,14 @@ bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeigh
         m_nWidth    = (short)nWidth;
         m_bHasAlpha = true;
         
-    m_pData = (unsigned char*)pData;
+        m_pData = (unsigned char*)pData;
+
+        // only RGBA8888 supported
+				int nBytesPerComponent = 4;
+				int nSize = nHeight * nWidth * nBytesPerComponent;
+				m_pData = new unsigned char[nSize];
+				CC_BREAK_IF(!m_pData);
+				memcpy(m_pData, pData, nSize);
         
         bRet = true;
     } while (0);

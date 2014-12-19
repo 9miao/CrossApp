@@ -8,6 +8,8 @@
 
 USING_NS_CC;
 
+#define WebViewWrapper ((UIWebViewWrapper*)m_pWebViewWrapper)
+
 @interface UIWebViewWrapper : NSObject
 
 @property(nonatomic, readonly, getter=canGoBack) BOOL canGoBack;
@@ -19,7 +21,7 @@ USING_NS_CC;
 
 - (UIImage*)getWebViewImage;
 
-- (void)setFrameWithX:(float)x y:(float)y width:(float)width height:(float)height;
+- (void)setFrameWith_X:(float)x Y:(float)y Width:(float)width Height:(float)height;
 
 - (void)setJavascriptInterfaceScheme:(const std::string &)scheme;
 
@@ -43,56 +45,67 @@ USING_NS_CC;
 @end
 
 
-
 @interface UIWebViewWrapper () <UIWebViewDelegate>
 @property(nonatomic, retain) UIWebView *uiWebView;
 @property(nonatomic, copy) NSString *jsScheme;
 @end
 
-@implementation UIWebViewWrapper {
+@implementation UIWebViewWrapper
+{
     
 }
 
-+ (instancetype)webViewWrapper {
++ (instancetype)webViewWrapper
+{
     return [[[self alloc] init] autorelease];
 }
 
-- (instancetype)init {
+- (instancetype)init
+{
     self = [super init];
-    if (self) {
+    if (self)
+    {
         self.uiWebView = nil;
     }
     return self;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     self.uiWebView.delegate = nil;
     [self.uiWebView removeFromSuperview];
     self.jsScheme = nil;
     [super dealloc];
 }
 
-- (void)setupWebView {
-    if (!self.uiWebView) {
+- (void)setupWebView
+{
+    if (!self.uiWebView)
+    {
         self.uiWebView = [[[UIWebView alloc] init] autorelease];
         self.uiWebView.delegate = self;
     }
-    if (!self.uiWebView.superview) {
+    if (!self.uiWebView.superview)
+    {
         EAGLView * eaglview = [EAGLView sharedEGLView];
         [eaglview addSubview:self.uiWebView];
         [eaglview bringSubviewToFront: self.uiWebView];
     }
 }
 
-- (void)setVisible:(bool)visible {
+- (void)setVisible:(bool)visible
+{
     self.uiWebView.hidden = !visible;
 }
 
-- (UIImage*)getWebViewImage{
-    if (UIGraphicsBeginImageContextWithOptions!=NULL) {
+- (UIImage*)getWebViewImage
+{
+    if (UIGraphicsBeginImageContextWithOptions!=NULL)
+    {
         UIGraphicsBeginImageContextWithOptions(self.uiWebView.frame.size, NO, 0);
     }
-    else{
+    else
+    {
         UIGraphicsBeginImageContext(self.uiWebView.frame.size);
     }
     
@@ -101,89 +114,117 @@ USING_NS_CC;
 }
 
 
-- (void)setFrameWithX:(float)x y:(float)y width:(float)width height:(float)height {
-    if (!self.uiWebView) {[self setupWebView];}
-    CGRect newFrame = CGRectMake(x, y, width, height);
-    if (!CGRectEqualToRect(self.uiWebView.frame, newFrame)) {
-        self.uiWebView.frame = CGRectMake(x, y, width, height);
+- (void)setFrameWith_X:(float)x Y:(float)y Width:(float)width Height:(float)height
+{
+    if (!self.uiWebView)
+    {
+        [self setupWebView];
     }
+    
+    CGRect newFrame = CGRectMake(x, y, width, height);
+    self.uiWebView.frame = newFrame;
 }
 
-- (void)setJavascriptInterfaceScheme:(const std::string &)scheme {
+- (void)setJavascriptInterfaceScheme:(const std::string &)scheme
+{
     self.jsScheme = @(scheme.c_str());
 }
 
 
-- (void)loadHTMLString:(const std::string &)string baseURL:(const std::string &)baseURL {
+- (void)loadHTMLString:(const std::string &)string baseURL:(const std::string &)baseURL
+{
     [self.uiWebView loadHTMLString:@(string.c_str()) baseURL:[NSURL URLWithString:@(baseURL.c_str())]];
 }
 
-- (void)loadUrl:(const std::string &)urlString {
-    if (!self.uiWebView) {[self setupWebView];}
+- (void)loadUrl:(const std::string &)urlString
+{
+    if (!self.uiWebView)
+    {
+        [self setupWebView];
+    }
+    
     NSURL *url = [NSURL URLWithString:@(urlString.c_str())];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.uiWebView loadRequest:request];
 }
 
-- (void)loadFile:(const std::string &)filePath {
-    if (!self.uiWebView) {[self setupWebView];}
+- (void)loadFile:(const std::string &)filePath
+{
+    if (!self.uiWebView)
+    {
+        [self setupWebView];
+    }
+    
     NSURL *url = [NSURL fileURLWithPath:@(filePath.c_str())];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.uiWebView loadRequest:request];
 }
 
-- (void)stopLoading {
+- (void)stopLoading
+{
     [self.uiWebView stopLoading];
 }
 
-- (void)reload {
+- (void)reload
+{
     [self.uiWebView reload];
 }
 
-- (BOOL)canGoForward {
+- (BOOL)canGoForward
+{
     return self.uiWebView.canGoForward;
 }
 
-- (BOOL)canGoBack {
+- (BOOL)canGoBack
+{
     return self.uiWebView.canGoBack;
 }
 
-- (void)goBack {
+- (void)goBack
+{
     [self.uiWebView goBack];
 }
 
-- (void)goForward {
+- (void)goForward
+{
     [self.uiWebView goForward];
 }
 
-- (void)evaluateJS:(const std::string &)js {
+- (void)evaluateJS:(const std::string &)js
+{
     if (!self.uiWebView) {[self setupWebView];}
     [self.uiWebView stringByEvaluatingJavaScriptFromString:@(js.c_str())];
 }
 
-- (void)setScalesPageToFit:(const bool)scalesPageToFit {
+- (void)setScalesPageToFit:(const bool)scalesPageToFit
+{
     self.uiWebView.scalesPageToFit = scalesPageToFit;
 }
 
 #pragma mark - UIWebViewDelegate
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
     NSString *url = [[request URL] absoluteString];
-    if ([[[request URL] scheme] isEqualToString:self.jsScheme]) {
+    if ([[[request URL] scheme] isEqualToString:self.jsScheme])
+    {
         CAWebViewImpl::onJsCallback(self, [url UTF8String]);
         return NO;
     }
-    if (url) {
+    if (url)
+    {
         return CAWebViewImpl::shouldStartLoading(self, [url UTF8String]);
     }
     return YES;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
     NSString *url = [[webView.request URL] absoluteString];
     CAWebViewImpl::didFinishLoading(self, [url UTF8String]);
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
     NSString *url = error.userInfo[NSURLErrorFailingURLStringErrorKey];
     if (url) {
         CAWebViewImpl::didFailLoading(self, [url UTF8String]);
@@ -200,134 +241,168 @@ NS_CC_BEGIN
 std::map<UIWebViewWrapper*, CAWebViewImpl*> s_WebViewImpls;
 
 CAWebViewImpl::CAWebViewImpl(CAWebView *webView)
-        : _uiWebViewWrapper([UIWebViewWrapper webViewWrapper]),
-          _webView(webView) {
-    [_uiWebViewWrapper retain];
-    [_uiWebViewWrapper setVisible:true];
-    s_WebViewImpls [_uiWebViewWrapper] = this;
-}
-
-CAWebViewImpl::~CAWebViewImpl(){
-    s_WebViewImpls.erase(_uiWebViewWrapper);
-    [_uiWebViewWrapper release];
-    _uiWebViewWrapper = NULL;
-}
-
-bool CAWebViewImpl::shouldStartLoading(UIWebViewWrapper* pWebViewWrapper, const std::string &url)
+:m_pWebViewWrapper([UIWebViewWrapper webViewWrapper])
+,m_pWebView(webView)
 {
-    std::map<UIWebViewWrapper*, CAWebViewImpl*>::iterator it=s_WebViewImpls.find(pWebViewWrapper);
-    if (it != s_WebViewImpls.end()) {
-        CAWebView* webView = it->second->_webView;
-        if (webView && webView->m_pWebViewDelegate) {
+    [WebViewWrapper retain];
+    [WebViewWrapper setVisible:true];
+    s_WebViewImpls [WebViewWrapper] = this;
+}
+
+CAWebViewImpl::~CAWebViewImpl()
+{
+    s_WebViewImpls.erase(WebViewWrapper);
+    [WebViewWrapper release];
+    m_pWebViewWrapper = NULL;
+}
+
+typedef std::map<UIWebViewWrapper*, CAWebViewImpl*>::iterator WEB_MAP;
+
+bool CAWebViewImpl::shouldStartLoading(void* pWebViewWrapper, const std::string &url)
+{
+    WEB_MAP it = s_WebViewImpls.find((UIWebViewWrapper*)pWebViewWrapper);
+    if (it != s_WebViewImpls.end())
+    {
+        CAWebView* webView = it->second->m_pWebView;
+        if (webView && webView->m_pWebViewDelegate)
+        {
             return webView->m_pWebViewDelegate->onShouldStartLoading(webView, url);
         }
     }
     return true;
 }
 
-void CAWebViewImpl::didFinishLoading(UIWebViewWrapper* pWebViewWrapper, const std::string &url)
+void CAWebViewImpl::didFinishLoading(void* pWebViewWrapper, const std::string &url)
 {
-    std::map<UIWebViewWrapper*, CAWebViewImpl*>::iterator it=s_WebViewImpls.find(pWebViewWrapper);
+    WEB_MAP it=s_WebViewImpls.find((UIWebViewWrapper*)pWebViewWrapper);
+    
     if (it != s_WebViewImpls.end()) {
-        CAWebView* webView = it->second->_webView;
-        if (webView && webView->m_pWebViewDelegate) {
+        
+        CAWebView* webView = it->second->m_pWebView;
+        if (webView && webView->m_pWebViewDelegate)
+        {
             webView->m_pWebViewDelegate->onDidFinishLoading(webView, url);
         }
     }
 }
 
-void CAWebViewImpl::didFailLoading(UIWebViewWrapper* pWebViewWrapper, const std::string &url)
+void CAWebViewImpl::didFailLoading(void* pWebViewWrapper, const std::string &url)
 {
-    std::map<UIWebViewWrapper*, CAWebViewImpl*>::iterator it=s_WebViewImpls.find(pWebViewWrapper);
-    if (it != s_WebViewImpls.end()) {
-        CAWebView* webView = it->second->_webView;
-        if (webView && webView->m_pWebViewDelegate) {
+    WEB_MAP it=s_WebViewImpls.find((UIWebViewWrapper*)pWebViewWrapper);
+    if (it != s_WebViewImpls.end())
+    {
+        CAWebView* webView = it->second->m_pWebView;
+        if (webView && webView->m_pWebViewDelegate)
+        {
             webView->m_pWebViewDelegate->onDidFailLoading(webView, url);
         }
     }
 }
 
-void CAWebViewImpl::onJsCallback(UIWebViewWrapper* pWebViewWrapper, const std::string &message)
+void CAWebViewImpl::onJsCallback(void* pWebViewWrapper, const std::string &message)
 {
-    std::map<UIWebViewWrapper*, CAWebViewImpl*>::iterator it=s_WebViewImpls.find(pWebViewWrapper);
-    if (it != s_WebViewImpls.end()) {
-        CAWebView* webView = it->second->_webView;
-        if (webView && webView->m_pWebViewDelegate) {
+    WEB_MAP it=s_WebViewImpls.find((UIWebViewWrapper*)pWebViewWrapper);
+    
+    if (it != s_WebViewImpls.end())
+    {
+        CAWebView* webView = it->second->m_pWebView;
+        if (webView && webView->m_pWebViewDelegate)
+        {
             webView->m_pWebViewDelegate->onJSCallback(webView, message);
         }
     }
 }
 
-void CAWebViewImpl::setJavascriptInterfaceScheme(const std::string &scheme) {
-    [_uiWebViewWrapper setJavascriptInterfaceScheme:scheme];
+void CAWebViewImpl::setJavascriptInterfaceScheme(const std::string &scheme)
+{
+    [WebViewWrapper setJavascriptInterfaceScheme:scheme];
 }
 
 
-void CAWebViewImpl::loadHTMLString(const std::string &string, const std::string &baseURL) {
-    [_uiWebViewWrapper loadHTMLString:string baseURL:baseURL];
+void CAWebViewImpl::loadHTMLString(const std::string &string, const std::string &baseURL)
+{
+    [WebViewWrapper loadHTMLString:string baseURL:baseURL];
 }
 
-void CAWebViewImpl::loadURL(const std::string &url) {
-    [_uiWebViewWrapper loadUrl:url];
+void CAWebViewImpl::loadURL(const std::string &url)
+{
+    [WebViewWrapper loadUrl:url];
 }
 
-void CAWebViewImpl::loadFile(const std::string &fileName) {
+void CAWebViewImpl::loadFile(const std::string &fileName)
+{
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
-    [_uiWebViewWrapper loadFile:fullPath];
+    [WebViewWrapper loadFile:fullPath];
 }
 
-void CAWebViewImpl::stopLoading() {
-    [_uiWebViewWrapper stopLoading];
+void CAWebViewImpl::stopLoading()
+{
+    [WebViewWrapper stopLoading];
 }
 
-void CAWebViewImpl::reload() {
-    [_uiWebViewWrapper reload];
+void CAWebViewImpl::reload()
+{
+    [WebViewWrapper reload];
 }
 
-bool CAWebViewImpl::canGoBack() {
-    return _uiWebViewWrapper.canGoBack;
+bool CAWebViewImpl::canGoBack()
+{
+    return WebViewWrapper.canGoBack;
 }
 
-bool CAWebViewImpl::canGoForward() {
-    return _uiWebViewWrapper.canGoForward;
+bool CAWebViewImpl::canGoForward()
+{
+    return WebViewWrapper.canGoForward;
 }
 
-void CAWebViewImpl::goBack() {
-    [_uiWebViewWrapper goBack];
+void CAWebViewImpl::goBack()
+{
+    [WebViewWrapper goBack];
 }
 
-void CAWebViewImpl::goForward() {
-    [_uiWebViewWrapper goForward];
+void CAWebViewImpl::goForward()
+{
+    [WebViewWrapper goForward];
 }
 
-void CAWebViewImpl::evaluateJS(const std::string &js) {
-    [_uiWebViewWrapper evaluateJS:js];
+void CAWebViewImpl::evaluateJS(const std::string &js)
+{
+    [WebViewWrapper evaluateJS:js];
 }
 
-void CAWebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
-    [_uiWebViewWrapper setScalesPageToFit:scalesPageToFit];
+void CAWebViewImpl::setScalesPageToFit(const bool scalesPageToFit)
+{
+    [WebViewWrapper setScalesPageToFit:scalesPageToFit];
 }
 
-void CAWebViewImpl::visit() {
-    
-    CCRect cRect = _webView->convertRectToWorldSpace(_webView->getBounds());
-    
+void CAWebViewImpl::update(float dt)
+{
+    CCRect cRect = m_pWebView->convertRectToWorldSpace(m_pWebView->getBounds());
     CGFloat scale = [[UIScreen mainScreen] scale];
-
-    [_uiWebViewWrapper setFrameWithX:cRect.origin.x/scale y:cRect.origin.y/scale width:cRect.size.width/scale height:cRect.size.height/scale];
+    CGFloat x = cRect.origin.x/scale;
+    CGFloat y = cRect.origin.y/scale;
+    CGFloat width = cRect.size.width/scale;
+    CGFloat height = cRect.size.height/scale;
+    
+    [WebViewWrapper setFrameWith_X:x Y:y Width:width Height:height];
 }
 
-void CAWebViewImpl::setVisible(bool visible){
-    [_uiWebViewWrapper setVisible:visible];
+void CAWebViewImpl::setVisible(bool visible)
+{
+    [WebViewWrapper setVisible:visible];
 }
 
-CAImageView* CAWebViewImpl::getWebViewImage(){
-	UIImage* image = [_uiWebViewWrapper getWebViewImage];
-    if (image != NULL) {
+CAImageView* CAWebViewImpl::getWebViewImage()
+{
+	UIImage* image = [WebViewWrapper getWebViewImage];
+    if (image != NULL)
+    {
         NSData* data = UIImagePNGRepresentation(image);
-        if (data != NULL) {
+        if (data != NULL)
+        {
             Byte* bytesData = (Byte*)[data bytes];
-            if (bytesData != NULL) {
+            if (bytesData != NULL)
+            {
                 return CAImageView::createWithImage(CAImage::createWithData(bytesData, data.length, ""));
             }
         }

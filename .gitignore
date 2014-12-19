@@ -38,13 +38,6 @@ SubmissionInfo
 # Ignore files build
 projects/
 
-# Ignore files build by ndk and eclipse
-libs/
-bin/
-obj/
-gen/
-assets/
-local.properties
 
 # Ignore specific winrt files 
 CrossApp/platform/third_party/winrt/freetype/src

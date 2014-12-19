@@ -1030,15 +1030,30 @@ void CAView::draw()
     
     // vertex
     int diff = offsetof( ccV3F_C4B_T2F, vertices);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    glVertexAttribPointer(kCCVertexAttrib_Position,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          kQuadSize,
+                          (void*) (offset + diff));
     
     // texCoods
     diff = offsetof( ccV3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords,
+                          2,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          kQuadSize,
+                          (void*) (offset + diff));
     
     // color
     diff = offsetof( ccV3F_C4B_T2F, colors);
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    glVertexAttribPointer(kCCVertexAttrib_Color,
+                          4,
+                          GL_UNSIGNED_BYTE,
+                          GL_TRUE,
+                          kQuadSize,
+                          (void*)(offset + diff));
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
@@ -1047,7 +1062,8 @@ void CAView::draw()
     
 #if CC_SPRITE_DEBUG_DRAW == 1
     // draw bounding box
-    CCPoint vertices[4]={
+    CCPoint vertices[4]=
+    {
         ccp(m_sQuad.tl.vertices.x,m_sQuad.tl.vertices.y),
         ccp(m_sQuad.bl.vertices.x,m_sQuad.bl.vertices.y),
         ccp(m_sQuad.br.vertices.x,m_sQuad.br.vertices.y),
@@ -1058,9 +1074,12 @@ void CAView::draw()
     // draw Image box
     CCSize s = this->getImageRect().size;
     CCPoint offsetPix = this->getOffsetPoint();
-    CCPoint vertices[4] = {
-        ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
-        ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
+    CCPoint vertices[4] =
+    {
+        ccp(offsetPix.x,            offsetPix.y),
+        ccp(offsetPix.x + s.width,  offsetPix.y),
+        ccp(offsetPix.x + s.width,  offsetPix.y + s.height),
+        ccp(offsetPix.x,            offsetPix.y + s.height)
     };
     ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
@@ -1170,9 +1189,6 @@ void CAView::visit()
             glScissor(frame.origin.x - 0.5f, frame.origin.y + 0.5f, frame.size.width + 1.0f, frame.size.height);
         }
     }
-
-    CCRect winRect = CCRectZero;
-    winRect.size = CAApplication::getApplication()->getWinSize();
     
     CAView* pNode = NULL;
     unsigned int i = 0;
@@ -1517,12 +1533,7 @@ CCRect CAView::convertRectToNodeSpace(const CrossApp::CCRect &worldRect)
 {
     CCRect ret = worldRect;
     ret.origin = this->convertToNodeSpace(ret.origin);
-    CAView*  view = this;
-    while (view)
-    {
-        ret.size = CCSize(ret.size.width / view->getScaleX(), ret.size.height / view->getScaleY());
-        view = view->getSuperview();
-    }
+    ret.size = CCSizeApplyAffineTransform(ret.size, nodeToParentTransform());
     return ret;
 }
 
@@ -1530,12 +1541,7 @@ CCRect CAView::convertRectToWorldSpace(const CrossApp::CCRect &nodeRect)
 {
     CCRect ret = nodeRect;
     ret.origin = this->convertToWorldSpace(ret.origin);
-    CAView*  view = this;
-    while (view)
-    {
-        ret.size = CCSize(ret.size.width * view->getScaleX(), ret.size.height * view->getScaleY());
-        view = view->getSuperview();
-    }
+    ret.size = CCSizeApplyAffineTransform(ret.size, worldToNodeTransform());
     return ret;
 }
 
@@ -1553,7 +1559,6 @@ CCPoint CAView::convertToWorldSpace(const CCPoint& nodePoint)
     p.y = this->getBounds().size.height - p.y;
     CCPoint ret = CCPointApplyAffineTransform(p, nodeToWorldTransform());
     ret = CAApplication::getApplication()->convertToUI(ret);
-    ret = ccpAdd(ret, CCPoint(0.5f, 0.5f));
     return ret;
 }
 
