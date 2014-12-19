@@ -84,6 +84,7 @@ USING_NS_CC;
     {
         self.uiWebView = [[[UIWebView alloc] init] autorelease];
         self.uiWebView.delegate = self;
+        self.uiWebView.scalesPageToFit = YES;
     }
     if (!self.uiWebView.superview)
     {
@@ -245,7 +246,7 @@ CAWebViewImpl::CAWebViewImpl(CAWebView *webView)
 ,m_pWebView(webView)
 {
     [WebViewWrapper retain];
-    [WebViewWrapper setVisible:true];
+    [WebViewWrapper setVisible:YES];
     s_WebViewImpls [WebViewWrapper] = this;
 }
 

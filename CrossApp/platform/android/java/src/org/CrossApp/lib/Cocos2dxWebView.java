@@ -35,9 +35,12 @@ public class Cocos2dxWebView extends WebView {
         this.setFocusableInTouchMode(true);
 
         this.getSettings().setSupportZoom(false);
-
+        this.getSettings().setBuiltInZoomControls(true);
         this.getSettings().setJavaScriptEnabled(true);
 
+        
+     
+        
         // `searchBoxJavaBridge_` has big security risk. http://jvn.jp/en/jp/JVN53768697
         try {
             Method method = this.getClass().getMethod("removeJavascriptInterface", new Class[]{String.class});
