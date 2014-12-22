@@ -1,13 +1,16 @@
 #### CrossApp 0.4.2 更新内容：  
 
 #####1.添加WebView控件
+WebView基于原生内置浏览器控件封装而成，该控件功能强大，除了具有一般View的属性和设置外，还可以对url请求、页面加载、渲染、页面交互进行强大的处理。不仅可以通过loadUrl方法设置当前webView需要访问的网址，还可以加载绝⼤部分的常见文件 html\htm pdf、doc、ppt、txt等等。
 
 #####2.修改上版本CAImage崩溃的bug
 
 #####3.其他一些细节修改
 
-**********************************************************************************
 
+#### CrossApp 0.4.2 Update:  #####1. Added WebView ControlsWebView is an encapsulation based on native built-in browser control. It has great functionalities, aside from possessing normal View attributes and set, WebView is fully capable of dealing with url request, page load, rendering, page interacitve. And it’s not only able to set current webView desirable access url via loadUrl method, but also capable of loading most of common file types such as html\htm, pdf, doc, ppt, txt etc.#####2. Fixed CAImage breakdown bug in previous version#####3. Other Details Tweaking
+
+**********************************************************************************
 
 #### CrossApp 0.4.1 更新内容：  
 
