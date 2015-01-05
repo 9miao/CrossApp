@@ -138,7 +138,7 @@ CAView* CAPickerView::viewForRow(unsigned int row, unsigned int component)
 float CAPickerView::calcTotalWidth(unsigned int component)
 {
     float total = 0;
-    for (int i=0; i<component; i++) {
+    for (unsigned i=0; i<component; i++) {
         total += m_dataSource->widthForComponent(this, i);
     }
     return total;
@@ -332,7 +332,7 @@ void CAPickerView::selectRow(unsigned int row, unsigned int component, bool anim
     
     CATableView* tableView = (CATableView*)m_tableViews->objectAtIndex(component);
     if (tableView) {
-        int maxRow = m_dataSource->numberOfRowsInComponent(this, component);
+        unsigned maxRow = m_dataSource->numberOfRowsInComponent(this, component);
         float height = m_dataSource->rowHeightForComponent(this, component);
         if (row < maxRow) {
             CCPoint offset = CCPointZero;

@@ -571,9 +571,9 @@ void CATableView::loadTableCell()
     rect.origin.y -= rect.size.height * 0.1f;
     rect.size.height *= 1.2f;
     
-    for (int i=0; i<m_rTableCellRectss.size(); i++)
+    for (size_t i=0; i<m_rTableCellRectss.size(); i++)
     {
-        for (int j=0; j<m_rTableCellRectss.at(i).size(); j++)
+        for (size_t j=0; j<m_rTableCellRectss.at(i).size(); j++)
         {
             CAIndexPath2E indexPath = CAIndexPath2E(i, j);
             CC_CONTINUE_IF(m_pUsedTableCells.count(indexPath) && m_pUsedTableCells[indexPath]);

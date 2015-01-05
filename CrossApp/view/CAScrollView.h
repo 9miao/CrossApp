@@ -18,7 +18,7 @@
 NS_CC_BEGIN
 
 class CAScrollView;
-class CAScrollViewDelegate
+class CC_DLL CAScrollViewDelegate
 {
 public:
 

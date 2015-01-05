@@ -421,8 +421,7 @@ void CACollectionView::reloadData()
 		y += m_nCollectionHeaderHeight;
 	}
     
-;
-	for (int i = 0; i < m_nSections; i++)
+	for (unsigned i = 0; i < m_nSections; i++)
 	{
 		unsigned int iSectionHeaderHeight = m_nSectionHeaderHeights.at(i);
 		CCRect sectionHeaderRect = CCRect(0, y, width, iSectionHeaderHeight);
@@ -441,7 +440,7 @@ void CACollectionView::reloadData()
         
 		y += m_nVertInterval;
 		unsigned int rowCount = m_nRowsInSections.at(i);
-		for (int j = 0; j < rowCount; j++)
+		for (unsigned j = 0; j < rowCount; j++)
 		{
 			int iHeight = m_nRowHeightss.at(i).at(j);
             
@@ -452,7 +451,7 @@ void CACollectionView::reloadData()
 			{
 				cellWidth = (width - m_nHoriInterval) / itemCount - m_nHoriInterval;
 			}
-			for (int k = 0; k < itemCount; k++)
+			for (unsigned k = 0; k < itemCount; k++)
 			{
 				CAIndexPath3E indexPath = CAIndexPath3E(i, j, k);
 				CCRect cellRect = CCRect(m_nHoriInterval + (cellWidth + m_nHoriInterval)*k, y, cellWidth, iHeight);

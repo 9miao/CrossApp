@@ -93,7 +93,7 @@ void CAPageView::setViews(const CAVector<CAView*>& vec)
         this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size()));
     }
     
-    for (int i=0; i<m_pViews.size(); i++)
+    for (size_t i = 0; i<m_pViews.size(); i++)
     {
         CCRect rect = this->getBounds();
         if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
@@ -128,7 +128,7 @@ void CAPageView::setViews(const CADeque<CAView*>& vec)
         this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size()));
     }
     
-    for (int i=0; i<m_pViews.size(); i++)
+    for (size_t i=0; i<m_pViews.size(); i++)
     {
         CCRect rect = this->getBounds();
         if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
@@ -151,7 +151,7 @@ CAView* CAPageView::getSubViewAtIndex(int index)
     do
     {
         CC_BREAK_IF(index < 0);
-        CC_BREAK_IF(index >= m_pViews.size());
+        CC_BREAK_IF((size_t)index >= m_pViews.size());
         view = m_pViews.at(index);
     }
     while (0);
