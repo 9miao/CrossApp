@@ -460,7 +460,7 @@ public:
 
 		const_iterator it1 = this->begin();
 		const_iterator it2 = other.begin();
-        for (size_t i = 0; i < s; i++, ++it1, ++it2)
+		for (size_t i = 0; i < s; i++, ++it1, ++it2)
 		{
 			if (*it1 != *it2)
 				return false;
