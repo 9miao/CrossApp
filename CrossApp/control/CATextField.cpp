@@ -305,7 +305,6 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 				m_iString_l_length += t.charlength;
 				m_iCurPos += t.charSize;
 			}
-            
 			m_iString_r_length = m_cImageSize.width - m_iString_l_length;
             
 			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, this->getBounds().size.height / 2));
@@ -413,19 +412,12 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
 {
     CCAssert(str != NULL, "");
 	CCAssert(count > 0, "");
-    if (strlen(str)>=m_sText.length())
-    {
-        m_vTextFiledChars.clear();
-        m_sText = "";
-        m_iCurPos = 0;
-        m_iString_l_length = 0;
-        m_iString_r_length = 0;
-        insertText(str, strlen(str));
-    }
-    else
-    {
-        deleteBackward();
-    }
+	std::string cszNewStr = str;
+	if (cszNewStr.size() >= m_sText.size())
+	{
+		cszNewStr = cszNewStr.substr(m_sText.size(), cszNewStr.size());
+		insertText(cszNewStr.c_str(), cszNewStr.size());
+	}
 }
 
 void CATextField::willInsertText(const char *text, int len)

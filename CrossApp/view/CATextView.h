@@ -37,6 +37,10 @@ public:
 
 	//If the sender doesn't want to delete the delText, return true;
 	virtual bool onTextViewDeleteBackward(CATextView* sender, const char * delText, int nLen) { return false; }
+
+	virtual bool getKeyBoardHeight(int height) { return false; }
+
+	virtual bool keyBoardCallBack(CATextView *sender) { return false; }
 };
 
 
@@ -67,6 +71,10 @@ public:
 	virtual void willInsertText(const char* text, int len);
 	virtual void AndroidWillInsertText(int start, const char* str, int before, int count);
 	virtual void deleteBackward();
+	virtual void getKeyBoardHeight(int height);
+	virtual void getKeyBoradReturnCallBack();
+	virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
+	virtual const char* getContentText();
 	virtual void visit();
 
     
