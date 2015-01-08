@@ -5,6 +5,9 @@
 /** @file ccUtils.h
 Misc free functions
 */
+#include "platform/CCPlatformMacros.h"
+#include <vector>
+#include <string>
 
 namespace CrossApp {
 /*
@@ -21,7 +24,10 @@ Examples:
 @since v0.99.5
 */
 
-unsigned long ccNextPOT( unsigned long value );
+CC_DLL unsigned long ccNextPOT(unsigned long value);
+
+CC_DLL std::vector<std::string> Parse2StrVector(const std::string& str, const std::string& strDelimiter);
+
 
 }
 

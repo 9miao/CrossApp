@@ -533,7 +533,7 @@ bool CASegmentedControl::indexIsValid(int index)
 void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
 {
     CCSize size = var;
-    size.height = MAX(size.height, _px(60));
+    size.height = MAX(size.height, _px(58));
     size.width = MAX(size.width, size.height * 2);
     CAControl::setContentSize(size);
     this->layoutSubviews();

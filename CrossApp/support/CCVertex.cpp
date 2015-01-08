@@ -78,10 +78,7 @@ void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, 
     }
 }
 
-bool ccVertexLineIntersect(float Ax, float Ay,
-                               float Bx, float By,
-                               float Cx, float Cy,
-                               float Dx, float Dy, float *T)
+bool ccVertexLineIntersect(float Ax, float Ay, float Bx, float By, float Cx, float Cy, float Dx, float Dy, float *T)
 {
     float  distAB, theCos, theSin, newX;
 

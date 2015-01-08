@@ -26,7 +26,7 @@ CAButton::CAButton(const CAButtonType& buttonType)
 ,m_bTouchClick(false)
 ,m_color(CAColor_white)
 ,m_eButtonType(buttonType)
-,m_sTitleFontName("Helvetica-Bold")
+,m_sTitleFontName("")
 ,m_pImageView(NULL)
 ,m_pLabel(NULL)
 {
@@ -264,6 +264,11 @@ void CAButton::setImageForState(const CAControlState& controlState, CAImage* var
     }
 }
 
+CAImage* CAButton::getImageForState(const CAControlState& controlState)
+{
+    return m_pImage[controlState];
+}
+
 void CAButton::setTitleForState(const CAControlState& controlState, const std::string& var)
 {
     if (controlState == CAControlStateAll)
@@ -283,6 +288,11 @@ void CAButton::setTitleForState(const CAControlState& controlState, const std::s
     {
         this->setControlState(m_eControlState);
     }
+}
+
+const std::string& CAButton::getTitleForState(const CAControlState& controlState)
+{
+    return m_sTitle[controlState];
 }
 
 void CAButton::setImageColorForState(const CAControlState& controlState, const CAColor4B& var)

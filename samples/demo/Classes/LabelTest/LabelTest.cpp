@@ -30,7 +30,6 @@ void LabelTest::viewDidLoad()
 
 	CCSize size1 = pView->getBounds().size;
 
-
 	CALabel* currentValue = CALabel::createWithCenter(CADipRect(size1.width*0.5, size1.height*0.5, size1.width, size1.height));
 	currentValue->setText(UTF8("Hello World"));
 	currentValue->setColor(CAColor_blueStyle);
@@ -38,6 +37,7 @@ void LabelTest::viewDidLoad()
 	currentValue->setTextAlignment(CATextAlignmentCenter);
 	currentValue->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 
+    
 	pView->addSubview(currentValue);
 	this->getView()->addSubview(pView);
 

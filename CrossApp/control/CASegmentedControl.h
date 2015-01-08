@@ -94,7 +94,7 @@ protected:
     void setContentSize(const CCSize & var);
     using CAControl::addTarget;
     using CAControl::removeTarget;
-    
+
 protected:
     
     std::set<int> m_nForbidSelectedIndexs;

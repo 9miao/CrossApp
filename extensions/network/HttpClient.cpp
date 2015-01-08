@@ -422,7 +422,17 @@ static int processPostFileTask(CCHttpRequest *request, write_callback callback, 
 	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "filepath", CURLFORM_FILE, 
 		request->getFileNameToPost(), CURLFORM_CONTENTTYPE, "application/octet-stream", CURLFORM_END);
 
-	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "submit", CURLFORM_COPYCONTENTS, "upload", CURLFORM_END);
+	std::string strReq = request->getRequestData();
+	std::vector<std::string> vv = Parse2StrVector(strReq, "&");
+	for (int i = 0; i < vv.size(); i++)
+	{
+		std::vector<std::string> v = Parse2StrVector(vv[i], "=");
+		if (v.size() == 2)
+		{
+			curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, v[0].c_str(), CURLFORM_COPYCONTENTS, v[1].c_str(), CURLFORM_END);
+		}
+	}
+	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "act", CURLFORM_COPYCONTENTS, "end", CURLFORM_END);
 	
 	ok = curl.setOption(CURLOPT_HTTPPOST, pFormPost)
 		&& curl.perform(responseCode);

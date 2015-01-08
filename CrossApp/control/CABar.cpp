@@ -44,7 +44,7 @@ bool CANavigationBar::init()
     }
     this->setColor(CAColor_clear);
     CCSize winSize = CAApplication::getApplication()->getWinSize();
-    CCSize size = CCSize(winSize.width, _px(96));
+    CCSize size = CCSize(winSize.width, _px(88));
     this->setContentSize(size);
     
     return true;
@@ -359,7 +359,7 @@ bool CATabBar::init(const std::vector<CATabBarItem*>& items, const CCSize& size)
     this->setColor(CAColor_clear);
     
     CCSize winSize = CAApplication::getApplication()->getWinSize();
-    CCSize contentSize = size.equals(CCSizeZero) ? CCSize(winSize.width, _px(96)) : size;
+    CCSize contentSize = size.equals(CCSizeZero) ? CCSize(winSize.width, _px(98)) : size;
     this->setContentSize(contentSize);
 
     this->setItems(items);

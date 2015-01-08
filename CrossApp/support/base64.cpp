@@ -3,96 +3,153 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "base64.h"
+#include <string.h>
 
 namespace CrossApp {
 
-unsigned char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    /**********
+     This library is free software; you can redistribute it and/or modify it under
+     the terms of the GNU Lesser General Public License as published by the
+     Free Software Foundation; either version 2.1 of the License, or (at your
+     option) any later version. (See <http://www.gnu.org/copyleft/lesser.html>.)
+     
+     This library is distributed in the hope that it will be useful, but WITHOUT
+     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+     FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+     more details.
+     
+     You should have received a copy of the GNU Lesser General Public License
+     along with this library; if not, write to the Free Software Foundation, Inc.,
+     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+     **********/
+    // "liveMedia"
+    // Copyright (c) 1996-2010 Live Networks, Inc.  All rights reserved.
+    // Base64 encoding and decoding
+    // implementation
 
-int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len );
-
-int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len )
-{
-    static char inalphabet[256], decoder[256];
-    int i, bits, c = 0, char_count, errors = 0;
-    unsigned int input_idx = 0;
-    unsigned int output_idx = 0;
-
-    for (i = (sizeof alphabet) - 1; i >= 0 ; i--) {
-        inalphabet[alphabet[i]] = 1;
-        decoder[alphabet[i]] = i;
-    }
-
-    char_count = 0;
-    bits = 0;
-    for( input_idx=0; input_idx < input_len ; input_idx++ ) {
-        c = input[ input_idx ];
-        if (c == '=')
-            break;
-        if (c > 255 || ! inalphabet[c])
-            continue;
-        bits += decoder[c];
-        char_count++;
-        if (char_count == 4) {
-            output[ output_idx++ ] = (bits >> 16);
-            output[ output_idx++ ] = ((bits >> 8) & 0xff);
-            output[ output_idx++ ] = ( bits & 0xff);
-            bits = 0;
-            char_count = 0;
-        } else {
-            bits <<= 6;
-        }
-    }
     
-    if( c == '=' ) {
-        switch (char_count) {
-            case 1:
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-                std::fprintf(stderr, "base64Decode: encoding incomplete: at least 2 bits missing");
-#endif
-                errors++;
-                break;
-            case 2:
-                output[ output_idx++ ] = ( bits >> 10 );
-                break;
-            case 3:
-                output[ output_idx++ ] = ( bits >> 16 );
-                output[ output_idx++ ] = (( bits >> 8 ) & 0xff);
-                break;
-            }
-    } else if ( input_idx < input_len ) {
-        if (char_count) {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-            std::fprintf(stderr, "base64 encoding incomplete: at least %d bits truncated",
-                    ((4 - char_count) * 6));
-#endif
-            errors++;
-        }
-    }
+    static char base64DecodeTable[256];
     
-    *output_len = output_idx;
-    return errors;
-}
-
-int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out)
-{
-    unsigned int outLength = 0;
     
-    //should be enough to store 6-bit buffers in 8-bit buffers
-    *out = new unsigned char[(size_t)(inLength * 3.0f / 4.0f + 1)];
-    if( *out ) {
-        int ret = _base64Decode(in, inLength, *out, &outLength);
+    char* strDup(char const* str)
+    {
+        if (str == NULL) return NULL;
+        size_t len = strlen(str) + 1;
+        char* copy = new char[len];
         
-        if (ret > 0 )
+        if (copy != NULL)
         {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-            printf("Base64Utils: error decoding");
-#endif
-            delete [] *out;
-            *out = NULL;            
-            outLength = 0;
+            memcpy(copy, str, len);
         }
+        return copy;
     }
-    return outLength;
-}
+    
+    char* strDupSize(char const* str)
+    {
+        if (str == NULL) return NULL;
+        size_t len = strlen(str) + 1;
+        char* copy = new char[len];
+        
+        return copy;
+    }
+    
+    
+    
+    static void initBase64DecodeTable()
+    {
+        int i;
+        for (i = 0; i < 256; ++i) base64DecodeTable[i] = (char)0x80;
+        // default value: invalid
+        
+        for (i = 'A'; i <= 'Z'; ++i) base64DecodeTable[i] = 0 + (i - 'A');
+        for (i = 'a'; i <= 'z'; ++i) base64DecodeTable[i] = 26 + (i - 'a');
+        for (i = '0'; i <= '9'; ++i) base64DecodeTable[i] = 52 + (i - '0');
+        base64DecodeTable[(unsigned char)'+'] = 62;
+        base64DecodeTable[(unsigned char)'/'] = 63;
+        base64DecodeTable[(unsigned char)'='] = 0;
+    }
+    
+    unsigned char* base64Decode(char* in, unsigned int& resultSize, bool trimTrailingZeros)
+    {
+        static bool haveInitedBase64DecodeTable = false;
+        if (!haveInitedBase64DecodeTable)
+        {
+            initBase64DecodeTable();
+            haveInitedBase64DecodeTable = true;
+        }
+        
+        unsigned char* out = (unsigned char*)strDupSize(in); // ensures we have enough space
+        int k = 0;
+        int const jMax = strlen(in) - 3;
+        // in case "in" is not a multiple of 4 bytes (although it should be)
+        for (int j = 0; j < jMax; j += 4)
+        {
+            char inTmp[4], outTmp[4];
+            for (int i = 0; i < 4; ++i)
+            {
+                inTmp[i] = in[i+j];
+                outTmp[i] = base64DecodeTable[(unsigned char)inTmp[i]];
+                if ((outTmp[i]&0x80) != 0) outTmp[i] = 0; // pretend the input was 'A'
+            }
+            
+            out[k++] = (outTmp[0]<<2) | (outTmp[1]>>4);
+            out[k++] = (outTmp[1]<<4) | (outTmp[2]>>2);
+            out[k++] = (outTmp[2]<<6) | outTmp[3];
+        }
+        
+        if (trimTrailingZeros)
+        {
+            while (k > 0 && out[k-1] == '\0') --k;
+        }
+        resultSize = k;
+        unsigned char* result = new unsigned char[resultSize];
+        memmove(result, out, resultSize);
+        delete[] out;
+        
+        return result;
+    }
+    
+    static const char base64Char[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    
+    char* base64Encode(char const* origSigned, unsigned origLength)
+    {
+        unsigned char const* orig = (unsigned char const*)origSigned; // in case any input bytes have the MSB set
+        if (orig == NULL) return NULL;
+        
+        unsigned const numOrig24BitValues = origLength/3;
+        bool havePadding = origLength > numOrig24BitValues*3;
+//        bool havePadding2 = origLength == numOrig24BitValues*3 + 2;
+        unsigned const numResultBytes = 4*(numOrig24BitValues + havePadding);
+        char* result = new char[numResultBytes + 1]; // allow for trailing '/0'
+        
+        // Map each full group of 3 input bytes into 4 output base-64 characters:
+        unsigned i;
+        for (i = 0; i < numOrig24BitValues; ++i)
+        {
+            result[4*i+0] = base64Char[(orig[3*i]>>2)&0x3F];
+            result[4*i+1] = base64Char[(((orig[3*i]&0x3)<<4) | (orig[3*i+1]>>4))&0x3F];
+            result[4*i+2] = base64Char[((orig[3*i+1]<<2) | (orig[3*i+2]>>6))&0x3F];
+            result[4*i+3] = base64Char[orig[3*i+2]&0x3F];  
+        }  
+        
+        // Now, take padding into account.  (Note: i == numOrig24BitValues)
+        int mod = origLength % 3;
+        if (mod == 1)
+        {
+            result[4*i+0] = base64Char[(orig[3*i]>>2)&0x3F];
+            result[4*i+1] = base64Char[((orig[3*i]&0x3)<<4)&0x3F];
+            result[4*i+2] = '=';
+            result[4*i+3] = '=';
+        }
+        else if (mod == 2)
+        {
+            result[4*i+0] = base64Char[(orig[3*i]>>2)&0x3F];
+            result[4*i+1] = base64Char[(((orig[3*i]&0x3)<<4) | (orig[3*i+1]>>4))&0x3F];
+            result[4*i+2] = base64Char[(orig[3*i+1]<<2)&0x3F];
+            result[4*i+3] = '=';
+        }
 
+        result[numResultBytes] = '\0';
+        return result;  
+    }
 }//namespace   CrossApp 

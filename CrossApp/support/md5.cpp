@@ -38,7 +38,7 @@ documentation and/or software.
 #include <stdio.h>
 #include <string.h>
 
-
+NS_CC_BEGIN
 // Constants for MD5Transform routine.
 #define S11 7
 #define S12 12
@@ -360,3 +360,6 @@ std::ostream& operator<<(std::ostream& out, MD5 md5)
   return out << md5.hexdigest();
 }
 //////////////////////////////
+NS_CC_END
+
+

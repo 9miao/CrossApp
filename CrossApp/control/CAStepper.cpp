@@ -477,5 +477,11 @@ void CAStepper::removeAllTargets()
 	CAControl::removeAllTargets();
 }
 
+void CAStepper::setContentSize(const CCSize & var)
+{
+    CAControl::setContentSize(CADipSize(188, 58));
+}
+
+
 
 NS_CC_END

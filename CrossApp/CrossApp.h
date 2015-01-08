@@ -133,6 +133,9 @@
 #include "support/CCVertex.h"
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/md5.h"
+#include "support/base64.h"
+#include "support/ccUtils.h"
+
 
 // platform
 #include "platform/CCDevice.h"

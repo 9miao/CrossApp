@@ -53,7 +53,11 @@ public:
     
     void setImageForState(const CAControlState& controlState, CAImage* var);
     
+    CAImage* getImageForState(const CAControlState& controlState);
+    
     void setTitleForState(const CAControlState& controlState, const std::string& var);
+    
+    const std::string& getTitleForState(const CAControlState& controlState);
     
     void setImageColorForState(const CAControlState& controlState, const CAColor4B& var);
     

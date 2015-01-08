@@ -235,7 +235,7 @@ void CAAlertView::setLabel(CALabel*& pLabel, std::string& szTitle, CAColor4B col
 
 CCSize CAAlertView::getAlertWinSize()
 {
-	return CADipSize(640 * ALERT_WINDOW_SIZEX, 960 * ALERT_WINDOW_SIZEY);
+	return CADipSize(540, 420);
 }
 
 void CAAlertView::calcuCtrlsSize()

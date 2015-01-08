@@ -96,7 +96,7 @@ void* CAThread::_ThreadProc(void* lpParameter)
 		{
 			pAThread->OnRunning();
 		}
-		else if (pAThread->m_ThreadRunType == ThreadRunDirectly)
+		else if (pAThread->m_ThreadRunType == ThreadRunNotify)
 		{
 			void* param = NULL;
 			if (pAThread->m_ThreadDataQueue.PopElement(param))
