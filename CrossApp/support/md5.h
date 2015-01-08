@@ -33,8 +33,6 @@ documentation and/or software.
 #ifndef BZF_MD5_H
 #define BZF_MD5_H
 
-#include "platform/CCPlatformConfig.h"
-#include "platform/CCFileUtils.h"
 #include <string>
 #include <iostream>
 
@@ -49,7 +47,7 @@ documentation and/or software.
 //      MD5(std::string).hexdigest()
 //
 // assumes that char is 8 bit and int is 32 bit
-class CC_DLL MD5
+class MD5
 {
 public:
   typedef unsigned int size_type; // must be 32bit
