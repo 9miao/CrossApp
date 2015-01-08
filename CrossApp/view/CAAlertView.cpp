@@ -182,7 +182,7 @@ void CAAlertView::addButton(CAButton* pBtn)
 
 void CAAlertView::setAllBtnBackGroundImage(CAControlState controlState, CAImage* image)
 {
-	for (int i = 0; i < m_vAllBtn.size(); i++)
+	for (size_t i = 0; i < m_vAllBtn.size(); i++)
 	{
 		m_vAllBtn.at(i)->setBackGroundViewForState(controlState, CAScale9ImageView::createWithImage(image));
 	}
@@ -190,7 +190,7 @@ void CAAlertView::setAllBtnBackGroundImage(CAControlState controlState, CAImage*
 
 void CAAlertView::setAllBtnTextColor(CAColor4B col)
 {
-	for (int i = 0; i < m_vAllBtn.size(); i++)
+	for (size_t i = 0; i < m_vAllBtn.size(); i++)
 	{
 		m_vAllBtn.at(i)->setTitleColorForState(CAControlStateAll, col);
 	}
@@ -313,7 +313,7 @@ void CAAlertView::calcuCtrlsSize()
 		addSubview(m_pBtnTableView);
 	}
 
-	for (int i = 0; i < m_vAllBtn.size(); i++)
+	for (size_t i = 0; i < m_vAllBtn.size(); i++)
 	{
 		CAButton* pButton = m_vAllBtn.at(i);
 		CCAssert(pButton, "");

@@ -408,7 +408,7 @@ void CADownloadManager::deleteTaskFromDb(const std::string& cszUrl)
 	int nRet = sqlite3_exec((sqlite3*)m_mpSqliteDB, szSql, 0, 0, &szError);
 	CCAssert(nRet == SQLITE_OK || nRet == SQLITE_DONE, "");
 
-	for (int i = 0; i < m_vDownloadingRequests.size(); i++)
+	for (size_t i = 0; i < m_vDownloadingRequests.size(); i++)
 	{
 		CADownloadResponse* pDownReq = m_vDownloadingRequests.at(i);
 		if (pDownReq->getDownloadUrl() == cszUrl)
@@ -476,7 +476,7 @@ void CADownloadManager::enqueueDownload(CADownloadResponse* request)
     m_mCADownloadResponses.insert(request->getDownloadID(), request);
     CC_RETURN_IF(m_vDownloadingRequests.contains(request));
 
-	if (m_vDownloadingRequests.size() < m_nDownloadMaxCount)
+	if (m_vDownloadingRequests.size() < (size_t)m_nDownloadMaxCount)
 	{
 		if (request->startDownload())
 		{
@@ -494,7 +494,7 @@ void CADownloadManager::resumeDownload(unsigned long download_id)
 	CADownloadResponse* pDownloadReq = m_mCADownloadResponses.getValue(download_id);
 	if (pDownloadReq && m_vPauseCADownloadResponses.contains(pDownloadReq))
 	{
-        if (m_vDownloadingRequests.size() < m_nDownloadMaxCount)
+        if (m_vDownloadingRequests.size() < (size_t)m_nDownloadMaxCount)
         {
             if (!pDownloadReq->isDownloaded())
             {
