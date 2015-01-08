@@ -493,7 +493,7 @@ protected:
     CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
 };
 
-class CAViewDelegate
+class CC_DLL CAViewDelegate
 {
 public:
     

@@ -24,7 +24,7 @@ NS_CC_BEGIN
 class CATableViewCell;
 class CATableView;
 
-class CATableViewDelegate
+class CC_DLL CATableViewDelegate
 {
 public:
     
@@ -35,7 +35,7 @@ public:
     virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row){};
 };
 
-class CATableViewDataSource
+class CC_DLL CATableViewDataSource
 {
 public:
     

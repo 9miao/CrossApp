@@ -133,7 +133,7 @@ void CAListView::reloadViewSizeData()
 	m_nIndexs = m_pListViewDataSource->numberOfIndex(this);
     m_rIndexRects.resize(m_nIndexs);
     m_rLineRects.resize(m_nIndexs);
-	for (int i = 0; i < m_nIndexs; i++)
+	for (unsigned i = 0; i < m_nIndexs; i++)
 	{
 		unsigned int cellHeight = m_pListViewDataSource->listViewHeightForIndex(this, i);
 		if (cellHeight > 0)
@@ -198,7 +198,7 @@ void CAListView::reloadData()
 	}
 
 	unsigned int cellCount = m_pListViewDataSource->numberOfIndex(this);
-	for (int i = 0; i < cellCount; i++)
+	for (unsigned i = 0; i < cellCount; i++)
 	{
 		if (m_nIndexs > 0)
 		{
