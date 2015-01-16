@@ -22,7 +22,7 @@ typedef enum
     CADatePickerModeCountDownTimer, // Displays hour and minute (e.g. 1 | 53)
 }CADatePickerMode;
 
-class CC_DLL CADatePickerViewDelegate {
+class CADatePickerViewDelegate {
     
 public:
     virtual ~CADatePickerViewDelegate() {};
