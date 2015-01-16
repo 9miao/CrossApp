@@ -33,10 +33,12 @@ documentation and/or software.
 #ifndef BZF_MD5_H
 #define BZF_MD5_H
 
+#include "platform/CCPlatformMacros.h"
 #include <string>
 #include <iostream>
-#include "CCPlatformDefine.h"
 
+
+NS_CC_BEGIN
 // a small class for calculating MD5 hashes of strings or byte arrays
 // it is not meant to be fast or secure
 //
@@ -90,3 +92,5 @@ private:
 };
 
 #endif
+
+NS_CC_END
