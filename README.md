@@ -17,6 +17,26 @@
 #####7.修复触摸事件分发有时会执行2次touchBegin的bug
 在此，特别鸣谢CrossApp官方群名为 觉今是而昨非 的网友为我们提交的优化
 
+
+#### CrossApp 0. 4. 3 Update:
+
+#####1. Fixed bug that md5 cannot be compiled in win32
+
+#####2. Added HttpClient’s support to postData in post file
+
+#####3. Fixed bug that text insert error in CATextView and CATextField
+
+#####4. Fixed bug that CATextView’s cursor does not blink
+
+#####5. Optimized the default dimensions of some controls and components
+
+#####6. Fix some compiling warnings in win32
+Here, special thanks to Jeff from Github and a friend naming "Canton - 201103L" from CrossApp official QQ group for their submitted optimizations.<br/>
+
+#####7. Fixed bug that system act touchBegin two times when touch event dispatch sometimes<br/>
+Here, special thanks to a friend naming “Juejinshierzuofei” from CrossApp official QQ group for his submitted optimization.<br/>
+
+
 **********************************************************************************
 
 #### CrossApp 0.4.2 更新内容：  
@@ -29,7 +49,14 @@ WebView基于原生内置浏览器控件封装而成，该控件功能强大，�
 #####3.其他一些细节修改
 
 
-#### CrossApp 0.4.2 Update:  #####1. Added WebView ControlsWebView is an encapsulation based on native built-in browser control. It has great functionalities, aside from possessing normal View attributes and set, WebView is fully capable of dealing with url request, page load, rendering, page interacitve. And it’s not only able to set current webView desirable access url via loadUrl method, but also capable of loading most of common file types such as html\htm, pdf, doc, ppt, txt etc.#####2. Fixed CAImage breakdown bug in previous version#####3. Other Details Tweaking
+#### CrossApp 0.4.2 Update:  
+
+#####1. Added WebView Controls
+WebView is an encapsulation based on native built-in browser control. It has great functionalities, aside from possessing normal View attributes and set, WebView is fully capable of dealing with url request, page load, rendering, page interacitve. And it’s not only able to set current webView desirable access url via loadUrl method, but also capable of loading most of common file types such as html\htm, pdf, doc, ppt, txt etc.
+
+#####2. Fixed CAImage breakdown bug in previous version
+
+#####3. Other Details Tweaking
 
 **********************************************************************************
 
