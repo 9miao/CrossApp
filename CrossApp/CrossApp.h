@@ -125,6 +125,7 @@
 
 
 // support
+#include "support/ccUtils.h"
 #include "support/ccUTF8.h"
 #include "support/CANotificationCenter.h"
 #include "support/CCPointExtension.h"

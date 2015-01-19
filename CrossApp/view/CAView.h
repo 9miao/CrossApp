@@ -57,7 +57,7 @@ typedef enum
 }
 CALayoutLinearType;
 
-#define kCAViewPointInvalid CCPoint(-0xffffffff, -0xffffffff)
+#define kCAViewPointInvalid CCPoint(FLT_MIN, FLT_MIN)
 #define kCAViewSizeInvalid CCPoint(0, 0)
 #define kCAViewRectInvalid CCRect(0, 0, 0, 0)
 

@@ -1,3 +1,29 @@
+#### CrossApp 0.5.0 更新内容：  
+
+#####1.修改优化CANavigationController
+1.修改所管理的navigationBar为多个
+2.并将之前navigationBar的属性移植在CANavigationController中
+
+#####2.修改优化CATabBarController
+并将之前tabBar的属性移植在CATabBarController中
+
+#####3.修复优化CAPickerView
+1.修改有时选不中的bug
+2.性能优化
+
+#####4.修改优化base64
+1.win32不能编译的bug
+2.增加Encode方法
+
+#####5.修改优化触摸事件分发机制
+修改之前多个CATextField之间切换编辑状态要点2次的问题
+
+#####6.其他一些细节的优化
+在本C++引擎中移除掉JavaScript版本，将来会有单独的JavaScript版本发布
+
+##本次更新影响到了CANavigationController与CATabBarController一些接口，为您带来的不便尽请谅解。
+
+**********************************************************************************
 
 #### CrossApp 0.4.3 更新内容：  
 
