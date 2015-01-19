@@ -62,7 +62,7 @@ void AddressBookTest::loadingView(void)
 
 void AddressBookTest::previousViewController(CAControl* btn, CCPoint point)
 {
-	this->getNavigationController()->getNavigationBar()->getSubviewByTag(1000)->setVisible(true);
+//	this->getNavigationController()->getNavigationBar()->getSubviewByTag(1000)->setVisible(true);
 	this->getNavigationController()->popViewControllerAnimated(true);
 }
 

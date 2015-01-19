@@ -9,6 +9,7 @@
 #include "CAButton.h"
 #include "view/CAScale9ImageView.h"
 #include "view/CAView.h"
+#include "view/CAScrollView.h"
 #include "dispatcher/CATouch.h"
 #include "support/CCPointExtension.h"
 #include "cocoa/CCSet.h"
@@ -204,6 +205,9 @@ void CAButton::setBackGroundViewRoundedRect()
 
 void CAButton::setBackGroundViewForState(const CAControlState& controlState, CAView *var)
 {
+    CCAssert(dynamic_cast<CAControl*>(var) == NULL, "Not allowed to inherit from the CAControl");
+    CCAssert(dynamic_cast<CAScrollView*>(var) == NULL, "Not allowed to inherit from the CAScrollView");
+    
     if (controlState == CAControlStateAll)
     {
         for (int i=0; i<CAControlStateAll; i++)

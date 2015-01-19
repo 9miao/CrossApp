@@ -34,11 +34,7 @@ class CC_DLL CANavigationBar
 public:
     
     CREATE_FUNC(CANavigationBar);
-    
-    void pushItem(CANavigationBarItem* item);
-    
-    void popItem();
-    
+
 public:
     
     CANavigationBar();
@@ -51,10 +47,10 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    virtual void setBackGroundImage(CAImage* var);
+    virtual void setBackGroundView(CAView* var);
     
-    CC_SYNTHESIZE_READONLY(CAImage*, m_pBackGroundImage, BackGroundImage);
-    
+    CC_SYNTHESIZE_READONLY(CAView*, m_pBackGroundView, BackGroundView);
+
     virtual void setTitleColor(const CAColor4B& color);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_cTitleColor, TitleColor);
@@ -65,10 +61,10 @@ public:
     
     CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CANavigationBarItem*>, m_pItems, Items);
+    virtual void setItem(CANavigationBarItem* item);
     
-    void replaceItemAtIndex(size_t index, CANavigationBarItem* item);
-    
+    CC_SYNTHESIZE_READONLY(CANavigationBarItem*, m_pItem, Item);
+
 protected:
     
     void showBackGround();
@@ -84,8 +80,6 @@ protected:
     void updateNavigationBar();
     
 protected:
-    
-    CAView* m_pBackGround;
     
     CAView* m_pTitle;
     
@@ -126,8 +120,6 @@ public:
     virtual bool init(const std::vector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
     
     CC_PROPERTY(CAView*, m_pBackGroundView, BackGroundView);
-    
-    CC_PROPERTY(CAImage*, m_pBackGroundImage, BackGroundImage);
     
     CC_PROPERTY(CAView*, m_pSelectedBackGroundView, SelectedBackGroundView);
     

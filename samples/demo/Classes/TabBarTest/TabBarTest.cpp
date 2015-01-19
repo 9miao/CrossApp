@@ -19,12 +19,12 @@ void TabBarTest::viewDidLoad()
 	size = this->getView()->getBounds().size;
 	this->getNavigationBarItem()->setShowGoBackButton(false);
 
-	CADipSize navigationBarSize = this->getNavigationController()->getNavigationBar()->getBounds().size;
-	returnBtn = CAButton::createWithCenter(CADipRect(navigationBarSize.width*0.1, navigationBarSize.height*0.5, 100, 40), CAButtonTypeCustom);
-	returnBtn->setImageForState(CAControlStateAll,CAImage::create("source_material/btn_left_white.png"));
-	returnBtn->setImageColorForState(CAControlStateHighlighted, ccc4(0, 255, 200, 255));
-	returnBtn->addTarget(this, CAControl_selector(TabBarTest::goPrevious), CAControlEventTouchUpInSide);
-	this->getNavigationController()->getNavigationBar()->addSubview(returnBtn);
+//	CADipSize navigationBarSize = this->getNavigationController()->getNavigationBar()->getBounds().size;
+//	returnBtn = CAButton::createWithCenter(CADipRect(navigationBarSize.width*0.1, navigationBarSize.height*0.5, 100, 40), CAButtonTypeCustom);
+//	returnBtn->setImageForState(CAControlStateAll,CAImage::create("source_material/btn_left_white.png"));
+//	returnBtn->setImageColorForState(CAControlStateHighlighted, ccc4(0, 255, 200, 255));
+//	returnBtn->addTarget(this, CAControl_selector(TabBarTest::goPrevious), CAControlEventTouchUpInSide);
+//	this->getNavigationController()->getNavigationBar()->addSubview(returnBtn);
 
 	firstTabBar();
 	secondTabBar();
@@ -83,7 +83,7 @@ void TabBarTest::secondTabBar(void)
 	tabBar->setCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, 100));
 	tabBar->setSelectedIndicatorImage(CAImage::create("source_material/indicator.png"));
 	tabBar->showSelectedIndicator();
-	tabBar->setBackGroundImage(CAImage::create("source_material/ex1.png"));
+    tabBar->setBackGroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/ex1.png")));
 	tabBar->setSelectedBackGroundImage(CAImage::create("source_material/btn_rounded3D_selected.png"));
 	tabBar->setDelegate(this);
 	this->getView()->addSubview(tabBar);
@@ -119,5 +119,5 @@ void TabBarTest::thirdTabBar(void)
 
 void TabBarTest::viewDidUnload()
 {
-	returnBtn->removeFromSuperview();
+
 }

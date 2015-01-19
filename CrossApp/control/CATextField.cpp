@@ -142,6 +142,7 @@ void CATextField::setFontSize(int var)
     m_iVertMargins = (this->getBounds().size.height - m_iFontHeight) / 2;
     
 	m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, _px(2), var));
+    setText(m_sText);
     this->updateImage();
 }
 
@@ -160,6 +161,8 @@ void CATextField::setText(std::string var)
 	m_iString_l_length = 0;
 	m_iString_r_length = 0;
 	m_vTextFiledChars.clear();
+    CCPoint p = CCPoint(this->getCursorX() + m_iHoriMargins, this->getBounds().size.height / 2);
+    m_pCursorMark->setCenterOrigin(p);
     insertText(var.c_str(), var.length());
     m_pDelegate = pTemp;
     this->updateImage();
