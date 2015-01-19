@@ -126,7 +126,6 @@
 
 // support
 #include "support/ccUTF8.h"
-#include "support/ccUtils.h"
 #include "support/CANotificationCenter.h"
 #include "support/CCPointExtension.h"
 #include "support/CCProfiling.h"
@@ -135,8 +134,6 @@
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/md5.h"
 #include "support/base64.h"
-#include "support/ccUtils.h"
-
 
 // platform
 #include "platform/CCDevice.h"

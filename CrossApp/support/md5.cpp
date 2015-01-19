@@ -57,8 +57,7 @@ documentation and/or software.
 #define S43 15
 #define S44 21
 
-namespace CrossApp
-{
+NS_CC_BEGIN
 
 ///////////////////////////////////////////////
 // F, G, H and I are basic MD5 functions.
@@ -363,4 +362,5 @@ std::ostream& operator<<(std::ostream& out, MD5 md5)
   return out << md5.hexdigest();
 }
 //////////////////////////////
-}
+
+NS_CC_END
