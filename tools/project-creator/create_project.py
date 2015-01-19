@@ -1,4 +1,6 @@
 #!/usr/bin/python
+# 2015.01.18 modified by GuKaiqiang copy java/src/* into proj.android/src/
+# -----------------------------------------
 # create_project.py
 # Create cross-platform cocos2d-x project
 # Copyright (c) 2012 cocos2d-x.org
