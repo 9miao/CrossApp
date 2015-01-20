@@ -161,13 +161,19 @@ public:
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bNavigationBarHidden, NavigationBarHidden);
     
-    CC_SYNTHESIZE_READONLY(CANavigationBar*, m_pNavigationBar, NavigationBar);
-    
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eNavigationBarVerticalAlignment, NavigationBarVerticalAlignment);
     
     void updateItem(CAViewController* viewController);
     
     CC_PROPERTY_IS(bool, m_bTouchMoved, TouchMoved);
+
+    CC_PROPERTY(CAImage*, m_pNavigationBarBackGroundImage, NavigationBarBackGroundImage);
+
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarBackGroundColor, NavigationBarBackGroundColor);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_sNavigationBarTitleColor, NavigationBarTitleColor);
+
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_sNavigationBarButtonColor, NavigationBarButtonColor);
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     
@@ -191,6 +197,12 @@ protected:
     
 protected:
     
+    void createWithContainer(CAViewController* viewController);
+    
+    void layoutNewContainer();
+    
+    void popBack();
+    
     void replaceViewControllerFinish();
     
     void pushViewControllerFinish();
@@ -201,6 +213,8 @@ protected:
     
     void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
     
+    void updateNavigationBarHidden(int index);
+    
     void update(float dt);
     
     void scheduleUpdate();
@@ -208,12 +222,18 @@ protected:
     void unScheduleUpdate();
     
 protected:
-    
+
     CAVector<CAViewController*> m_pViewControllers;
     
-    CAView* m_pContainer;
+    CAVector<CANavigationBar*> m_pNavigationBars;
+    
+    CAVector<CAView*> m_pContainers;
 
+    CAVector<CAView*> m_pSecondContainers;
+    
     bool m_bPopViewController;
+    
+    CCSize m_tNavigationBarSize;
 };
 
 class CC_DLL CATabBarController
@@ -248,11 +268,27 @@ public:
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bTabBarHidden, TabBarHidden);
     
-    CC_SYNTHESIZE_READONLY(CATabBar*, m_pTabBar, TabBar);
-    
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eTabBarVerticalAlignment, TabBarVerticalAlignment);
     
+    CC_PROPERTY(CAImage*, m_pTabBarBackGroundImage, TabBarBackGroundImage);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarBackGroundColor, TabBarBackGroundColor);
+    
+    CC_PROPERTY(CAImage*, m_pTabBarSelectedBackGroundImage, TabBarSelectedBackGroundImage);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedBackGroundColor, TabBarSelectedBackGroundColor);
+    
+    CC_PROPERTY(CAImage*, m_pTabBarSelectedIndicatorImage, TabBarSelectedIndicatorImage);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedIndicatorColor, TabBarSelectedIndicatorColor);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_sTabBarTitleColor, TabBarTitleColorForNormal);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_sTabBarSelectedTitleColor, TabBarTitleColorForSelected);
+    
     void updateItem(CAViewController* viewController);
+    
+    void showTabBarSelectedIndicator();
     
 protected:
     
@@ -284,6 +320,8 @@ protected:
     
 protected:
     
+    bool m_bShowTabBarSelectedIndicator;
+    
     CAVector<CAViewController*> m_pViewControllers;
     
     unsigned int m_nSelectedIndex;
@@ -291,6 +329,8 @@ protected:
     unsigned int m_nLastSelectedIndex;
     
     CAPageView* m_pContainer;
+    
+    CATabBar* m_pTabBar;
 };
 
 

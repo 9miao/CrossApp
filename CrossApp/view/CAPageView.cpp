@@ -93,7 +93,7 @@ void CAPageView::setViews(const CAVector<CAView*>& vec)
         this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size()));
     }
     
-    for (size_t i = 0; i<m_pViews.size(); i++)
+    for (size_t i=0; i<m_pViews.size(); i++)
     {
         CCRect rect = this->getBounds();
         if (m_ePageViewDirection == CAPageViewDirectionHorizontal)

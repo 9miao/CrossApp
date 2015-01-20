@@ -132,7 +132,7 @@ public:
     CC_PROPERTY(eKeyBoardInputType, m_nInputType, InputType);
     
     CC_PROPERTY(CAColor4B, m_cCursorColor, CursorColor);
-
+    
 	CC_PROPERTY(int, m_iHoriMargins, HoriMargins);
 	CC_PROPERTY(int, m_iVertMargins, VertMargins);
     

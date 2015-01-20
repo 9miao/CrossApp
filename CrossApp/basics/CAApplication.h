@@ -25,7 +25,8 @@ NS_CC_BEGIN
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director
  */
-typedef enum {
+typedef enum
+{
     /// sets a 2D projection (orthogonal projection)
     kCCDirectorProjection2D,
     

@@ -9,6 +9,7 @@
 #include "CAButton.h"
 #include "view/CAScale9ImageView.h"
 #include "view/CAView.h"
+#include "view/CAScrollView.h"
 #include "dispatcher/CATouch.h"
 #include "support/CCPointExtension.h"
 #include "cocoa/CCSet.h"
@@ -26,7 +27,7 @@ CAButton::CAButton(const CAButtonType& buttonType)
 ,m_bTouchClick(false)
 ,m_color(CAColor_white)
 ,m_eButtonType(buttonType)
-,m_sTitleFontName("Helvetica-Bold")
+,m_sTitleFontName("")
 ,m_pImageView(NULL)
 ,m_pLabel(NULL)
 {
@@ -204,6 +205,9 @@ void CAButton::setBackGroundViewRoundedRect()
 
 void CAButton::setBackGroundViewForState(const CAControlState& controlState, CAView *var)
 {
+    CCAssert(dynamic_cast<CAControl*>(var) == NULL, "Not allowed to inherit from the CAControl");
+    CCAssert(dynamic_cast<CAScrollView*>(var) == NULL, "Not allowed to inherit from the CAScrollView");
+    
     if (controlState == CAControlStateAll)
     {
         for (int i=0; i<CAControlStateAll; i++)
@@ -264,6 +268,11 @@ void CAButton::setImageForState(const CAControlState& controlState, CAImage* var
     }
 }
 
+CAImage* CAButton::getImageForState(const CAControlState& controlState)
+{
+    return m_pImage[controlState];
+}
+
 void CAButton::setTitleForState(const CAControlState& controlState, const std::string& var)
 {
     if (controlState == CAControlStateAll)
@@ -283,6 +292,11 @@ void CAButton::setTitleForState(const CAControlState& controlState, const std::s
     {
         this->setControlState(m_eControlState);
     }
+}
+
+const std::string& CAButton::getTitleForState(const CAControlState& controlState)
+{
+    return m_sTitle[controlState];
 }
 
 void CAButton::setImageColorForState(const CAControlState& controlState, const CAColor4B& var)

@@ -50,7 +50,7 @@ CAWindow* MainMenu::createWindow()
 
 	MainMenu* p_Funtion = new MainMenu();
 	p_Funtion->initWithViewControllers(controllerItem);
-	p_Funtion->getTabBar()->showSelectedIndicator();
+	p_Funtion->showTabBarSelectedIndicator();
 	p_Funtion->setScrollEnabled(true);
 
 	CANavigationController* navigationController = new CANavigationController();

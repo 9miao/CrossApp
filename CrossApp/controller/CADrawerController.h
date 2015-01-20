@@ -5,8 +5,8 @@
 //
 //
 
-#ifndef __CartoonHouse__CADrawerController__
-#define __CartoonHouse__CADrawerController__
+#ifndef __CADrawerController__
+#define __CADrawerController__
 
 #include <iostream>
 #include "CAViewController.h"

@@ -25,8 +25,6 @@ class CAButton;
 class CAObject;
 class CATableView;
 
-#define ALERT_WINDOW_SIZEX 0.8
-#define ALERT_WINDOW_SIZEY 0.4
 #define MAX_BUTTON_COUNT_ROW 3
 
 

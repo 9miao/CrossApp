@@ -27,7 +27,7 @@ void ButtonTest::viewDidLoad()
 	this->getView()->addSubview(bkgView);
 
 	eventView = CAScale9ImageView::createWithImage(CAImage::create("source_material/round3.png"));
-	eventView->setFrame(CADipRect(-200, size.height * 2 / 3, size.width - 1, size.height / 3));
+	eventView->setFrame(CADipRect(1, size.height * 2 / 3, size.width - 1, size.height / 3));
 	this->getView()->addSubview(eventView);
 
 	threeButtonType();

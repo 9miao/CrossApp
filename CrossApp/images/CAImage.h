@@ -21,7 +21,7 @@ class CCImage;
 
 typedef enum
 {
-    kCAImagePixelFormat_RGBA8888,
+    kCAImagePixelFormat_RGBA8888 = 0,
     kCAImagePixelFormat_RGB888,
     kCAImagePixelFormat_RGB565,
     kCAImagePixelFormat_A8,

@@ -1,3 +1,96 @@
+#### CrossApp 0.5.0 更新内容：  
+
+#####1.修改优化CANavigationController
+1.修改所管理的navigationBar为多个
+2.并将之前navigationBar的属性移植在CANavigationController中
+
+#####2.修改优化CATabBarController
+并将之前tabBar的属性移植在CATabBarController中
+
+#####3.修复优化CAPickerView
+1.修改有时选不中的bug
+2.性能优化
+
+#####4.修改优化base64
+1.win32不能编译的bug
+2.增加Encode方法
+
+#####5.修改优化触摸事件分发机制
+修改之前多个CATextField之间切换编辑状态要点2次的问题
+
+#####6.其他一些细节的优化
+在本C++引擎中移除掉JavaScript版本，将来会有单独的JavaScript版本发布
+
+##本次更新影响到了CANavigationController与CATabBarController一些接口，为您带来的不便尽请谅解。
+
+
+#### CrossApp 0.5.0 Update:
+
+#####1. Optimized CANavigationController
+1. Modified the controlled navigationBar into multiple ones 
+2. And port the properties of previous navigationBar to CANavigationController
+
+#####2. Optimized CATabBarController
+Port the properties of previous tabBar to CATabBarController
+
+#####3. Optimized CAPickerView
+1. Fixed bug that sometimes system does not have a return value for the selected result 
+2. Optimized performance
+
+#####4. Optimized base64
+1. Fixed bug that base64 cannot be compiled in win32 
+2. Added Encode method
+
+#####5. Optimized touch event distributed mechanism
+Fixed bug that user needs to click two times to switch edit status between multiple CATextField
+
+#####6. Other Details Tweaking
+We removed the JavaScript version of this C++ engine, and will release a separate JavaScript version in the future
+
+##This update affects some interfaces in CANavigationController and CATabBarController, and we offer our apologies to you for the inconvenience has caused you.
+
+**********************************************************************************
+
+#### CrossApp 0.4.3 更新内容：  
+
+#####1.修复md5在win32不能编译的bug
+
+#####2.增加HttpClient在post文件的同时postData的支持
+
+#####3.修复CATextView与CATextField某种情况插入文字的bug
+
+#####4.修复CATextView光标不闪的bug
+
+#####5.优化一些控件与组建的默认尺寸
+
+#####6.修复一些在win32编译的警告
+在此，特别鸣谢github为 Jeff ，CrossApp官方群名为 广州－201103L 的网友为我们提交的优化
+
+#####7.修复触摸事件分发有时会执行2次touchBegin的bug
+在此，特别鸣谢CrossApp官方群名为 觉今是而昨非 的网友为我们提交的优化
+
+
+#### CrossApp 0. 4. 3 Update:
+
+#####1. Fixed bug that md5 cannot be compiled in win32
+
+#####2. Added HttpClient’s support to postData in post file
+
+#####3. Fixed bug that text insert error in CATextView and CATextField
+
+#####4. Fixed bug that CATextView’s cursor does not blink
+
+#####5. Optimized the default dimensions of some controls and components
+
+#####6. Fix some compiling warnings in win32
+Here, special thanks to Jeff from Github and a friend naming "Canton - 201103L" from CrossApp official QQ group for their submitted optimizations.<br/>
+
+#####7. Fixed bug that system act touchBegin two times when touch event dispatch sometimes<br/>
+Here, special thanks to a friend naming “Juejinshierzuofei” from CrossApp official QQ group for his submitted optimization.<br/>
+
+
+**********************************************************************************
+
 #### CrossApp 0.4.2 更新内容：  
 
 #####1.添加WebView控件
@@ -8,7 +101,14 @@ WebView基于原生内置浏览器控件封装而成，该控件功能强大，�
 #####3.其他一些细节修改
 
 
-#### CrossApp 0.4.2 Update:  #####1. Added WebView ControlsWebView is an encapsulation based on native built-in browser control. It has great functionalities, aside from possessing normal View attributes and set, WebView is fully capable of dealing with url request, page load, rendering, page interacitve. And it’s not only able to set current webView desirable access url via loadUrl method, but also capable of loading most of common file types such as html\htm, pdf, doc, ppt, txt etc.#####2. Fixed CAImage breakdown bug in previous version#####3. Other Details Tweaking
+#### CrossApp 0.4.2 Update:  
+
+#####1. Added WebView Controls
+WebView is an encapsulation based on native built-in browser control. It has great functionalities, aside from possessing normal View attributes and set, WebView is fully capable of dealing with url request, page load, rendering, page interacitve. And it’s not only able to set current webView desirable access url via loadUrl method, but also capable of loading most of common file types such as html\htm, pdf, doc, ppt, txt etc.
+
+#####2. Fixed CAImage breakdown bug in previous version
+
+#####3. Other Details Tweaking
 
 **********************************************************************************
 

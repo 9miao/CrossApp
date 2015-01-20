@@ -219,7 +219,7 @@ public:
     
 	void pushBack(const CAVector<T>& other)
 	{
-        for (size_t i = 0; i < other.size(); i++)
+		for (size_t i = 0; i < other.size(); i++)
 		{
 			pushBack(other.at(i));
 		}
@@ -286,7 +286,7 @@ public:
 
 	void clear()
 	{
-        for (size_t i = 0; i < _data.size(); i++)
+		for (size_t i = 0; i < _data.size(); i++)
 		{
             CC_SAFE_RELEASE(_data[i]);
 		}
@@ -326,7 +326,7 @@ public:
 protected:
 	void addRefForAllObjects()
 	{
-        for (size_t i = 0; i < _data.size(); i++)
+		for (size_t i = 0; i < _data.size(); i++)
 		{
             CC_SAFE_RETAIN(_data[i]);
 		}
@@ -460,7 +460,7 @@ public:
 
 		const_iterator it1 = this->begin();
 		const_iterator it2 = other.begin();
-        for (size_t i = 0; i < s; i++, ++it1, ++it2)
+		for (size_t i = 0; i < s; i++, ++it1, ++it2)
 		{
 			if (*it1 != *it2)
 				return false;

@@ -83,7 +83,7 @@ protected:
     void repeat(float dt);
     void click(CATouch* pTouch);
     void action();
-    
+    void setContentSize(const CCSize & var);
 private:
     CAImage* m_pBackgroundImage[CAControlStateAll];
     CAImage* m_pIncrementImage[CAControlStateAll];
