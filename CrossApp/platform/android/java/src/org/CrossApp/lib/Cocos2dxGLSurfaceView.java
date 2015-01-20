@@ -108,7 +108,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 						break;
 					case KEY_BOARD_TYPE_NUMBER:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 						}
 						break;
 					case KEY_BOARD_TYPE_ALPHABET:
