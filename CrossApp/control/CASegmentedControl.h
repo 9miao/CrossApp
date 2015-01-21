@@ -1,9 +1,9 @@
 //
 //  CASegmentedControl.h
-//  CrossAppx
+//  CrossApp
 //
-//  Created by juguanhui on 14-6-3.
-//  Copyright (c) 2014年 CrossApp-x. All rights reserved.
+//  Created by qiaoxin on 14-6-3.
+//  Copyright (c) 2014年 CrossApp. All rights reserved.
 //
 
 #ifndef CrossAppx_CASegmentedControl_h
@@ -17,6 +17,8 @@ NS_CC_BEGIN
 class CAButton;
 class CAImage;
 class CAImageView;
+class CAScale9ImageView;
+class CAClippingView;
 
 class CC_DLL CASegmentedControl : public CAControl
 {
@@ -47,6 +49,16 @@ public:
     void setAllowSelectedAtIndex(int index);
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
+    
+    void setBackgroundImage(const std::string &file);
+    
+    void setSeparateImage(const std::string &file);
+    
+    void setSeparateWidth(float width);
+    
+    float getSeparateWidth();
+    
+    void setSegmentImage(const CAControlState& controlState, std::string imagePath);
     
 public:
     
@@ -95,13 +107,21 @@ protected:
     using CAControl::addTarget;
     using CAControl::removeTarget;
 
+    std::string getDefaultmSeparateImagePath();
+    void createSeparate();
+    void cleanAllSeparate();
+    CAView* getTailorImageAtIndex(int index, std::string imagePath);
+    
 protected:
     
-    std::set<int> m_nForbidSelectedIndexs;
+    std::set<int>                       m_nForbidSelectedIndexs;
     
-    unsigned int m_nItemsCount;
-    std::vector<CAButton *> m_segments;
-    CAImageView *m_backGroundImage;
+    unsigned int                        m_nItemsCount;
+    std::vector<CAButton *>             m_segments;
+    CAScale9ImageView*                  m_backGroundImage;
+    std::vector<CAScale9ImageView *>    m_separateImage;
+    std::string                         m_sSeparateImagePath;
+    float                               m_fSeparateWidth;
 };
 
 NS_CC_END
