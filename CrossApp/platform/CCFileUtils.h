@@ -109,6 +109,9 @@ public:
 
      @since v2.1
      */
+    
+    virtual std::string getFileString(const char* pszFilePath);
+    
     virtual std::string fullPathForFilename(const std::string& pszFileName);
     
     /**

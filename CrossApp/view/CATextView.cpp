@@ -314,7 +314,6 @@ bool CATextView::getWordWrap()
 	return m_bWordWrap;
 }
 
-
 void CATextView::setFontName(const std::string& var)
 {
 	m_szFontName = var;
