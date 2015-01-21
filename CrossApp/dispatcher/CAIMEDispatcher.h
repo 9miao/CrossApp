@@ -3,8 +3,8 @@
 #ifndef __CC_IME_DISPATCHER_H__
 #define __CC_IME_DISPATCHER_H__
 
+#include <string>
 #include "CAIMEDelegate.h"
-#include <iostream>
 NS_CC_BEGIN
 
 /**
@@ -39,7 +39,7 @@ public:
 
     void dispatchWillInsertText(const char * pText, int nLen);
     
-    void dispatchAndroidWillInsertText(int start,std::string str,int before,int count);
+    void dispatchAndroidWillInsertText(int start,const std::string &str,int before,int count);
     /**
     @brief Dispatches the delete-backward operation.
     */
@@ -48,6 +48,18 @@ public:
     void dispatchGetKeyBoardHeight(int height);
     
     void dispatchGetKeyBoradReturnCallBack();
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    void dispatchDeleteForward();
+    void dispatchCursorMoveBackward(bool selected);
+    void dispatchCursorMoveForward(bool selected);
+
+    void dispatchCopyToClipboard(std::string *content);
+    void dispatchCutToClipboard(std::string *content);
+    void dispatchPasteFromClipboard(const char *content);
+    void dispatchSelectAll();
+#endif
+
     /**
     @brief Get the content text from CAIMEDelegate, retrieved previously from IME.
     */

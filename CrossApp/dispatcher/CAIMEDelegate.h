@@ -3,6 +3,7 @@
 #ifndef __CC_IME_DELEGATE_H__
 #define __CC_IME_DELEGATE_H__
 
+#include <string>
 #include "basics/CAGeometry.h"
 
 NS_CC_BEGIN
@@ -69,6 +70,17 @@ protected:
     @brief    Called by CAIMEDispatcher after the user clicks the backward key.
     */
     virtual void deleteBackward() {}
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    virtual void deleteForward() {}
+    virtual void cursorMoveBackward(bool selected) {CC_UNUSED_PARAM(selected);}
+    virtual void cursorMoveForward(bool selected) {CC_UNUSED_PARAM(selected);}
+
+    virtual void copyToClipboard(std::string *content) {CC_UNUSED_PARAM(content);}
+    virtual void cutToClipboard(std::string *content) {CC_UNUSED_PARAM(content);}
+    virtual void pasteFromClipboard(const char *content) {CC_UNUSED_PARAM(content);}
+    virtual void selectAll() {}
+#endif
 
     virtual void getKeyBoardHeight(int height) {}
     
