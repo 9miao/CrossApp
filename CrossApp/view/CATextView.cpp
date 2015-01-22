@@ -153,12 +153,16 @@ void CATextView::updateImage()
 	if (m_szText.empty())
 	{
 		text = m_sPlaceHolder;
-		this->setFontColor(m_cSpaceHolderColor);
 	}
 	else
 	{
 		text = m_szText;
-		this->setFontColor(m_cTextColor);
+	}
+
+	m_cFontColor = m_szText.empty() ? m_cSpaceHolderColor : m_cTextColor;
+	if (m_pImageView)
+	{
+		m_pImageView->setColor(m_cFontColor);
 	}
 
 	float width = this->getBounds().size.width;
