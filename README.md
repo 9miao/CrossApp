@@ -23,6 +23,32 @@
 
 ##本次更新影响到了CANavigationController与CATabBarController一些接口，为您带来的不便尽请谅解。
 
+
+#### CrossApp 0.5.0 Update:
+
+#####1. Optimized CANavigationController
+1. Modified the controlled navigationBar into multiple ones 
+2. And port the properties of previous navigationBar to CANavigationController
+
+#####2. Optimized CATabBarController
+Port the properties of previous tabBar to CATabBarController
+
+#####3. Optimized CAPickerView
+1. Fixed bug that sometimes system does not have a return value for the selected result 
+2. Optimized performance
+
+#####4. Optimized base64
+1. Fixed bug that base64 cannot be compiled in win32 
+2. Added Encode method
+
+#####5. Optimized touch event distributed mechanism
+Fixed bug that user needs to click two times to switch edit status between multiple CATextField
+
+#####6. Other Details Tweaking
+We removed the JavaScript version of this C++ engine, and will release a separate JavaScript version in the future
+
+##This update affects some interfaces in CANavigationController and CATabBarController, and we offer our apologies to you for the inconvenience has caused you.
+
 **********************************************************************************
 
 #### CrossApp 0.4.3 更新内容：  
