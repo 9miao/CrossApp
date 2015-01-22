@@ -79,6 +79,7 @@ CAWindow* MainMenu::createWindow()
 void MainMenu::viewDidLoad()
 {
 	CATabBarController::viewDidLoad();
+    this->setScrollEnabled(false);
 }
 
 void MainMenu::viewDidUnload()

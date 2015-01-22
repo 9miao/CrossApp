@@ -424,14 +424,12 @@ void CAScale9ImageView::setColor(const CAColor4B& color)
     if (m_pScale9ImageView)
     {
         CAObject* child;
-        CCArray* children = m_pScale9ImageView->getSubviews();
-        CCARRAY_FOREACH(children, child)
+        const CAVector<CAView*>& subview = m_pScale9ImageView->getSubviews();
+
+        CAVector<CAView*>::const_iterator itr;
+        for (itr=subview.begin(); itr!=subview.end(); itr++)
         {
-            CARGBAProtocol* pNode = dynamic_cast<CARGBAProtocol*>(child);
-            if (pNode)
-            {
-                pNode->setColor(color);
-            }
+            (*itr)->setColor(color);
         }
     }
 }
