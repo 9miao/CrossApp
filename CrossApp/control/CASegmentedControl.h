@@ -2,8 +2,8 @@
 //  CASegmentedControl.h
 //  CrossApp
 //
-//  Created by qiaoxin on 14-6-3.
-//  Copyright (c) 2014年 CrossApp. All rights reserved.
+//  Created by qiaoxin on 15-1-20.
+//  Copyright (c) 2015年 CrossApp. All rights reserved.
 //
 
 #ifndef CrossAppx_CASegmentedControl_h
@@ -50,9 +50,11 @@ public:
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
-    void setBackgroundImage(const std::string &file);
+    void setBackgroundImageView(CAImage* image);
     
     void setSeparateImage(const std::string &file);
+    
+    void setSeparateImageVisible(bool isVisible);
     
     void setSeparateWidth(float width);
     
@@ -118,8 +120,8 @@ protected:
     
     unsigned int                        m_nItemsCount;
     std::vector<CAButton *>             m_segments;
-    CAScale9ImageView*                  m_backGroundImage;
-    std::vector<CAScale9ImageView *>    m_separateImage;
+    CAScale9ImageView*                  m_pBackGroundImageView;
+    std::vector<CAScale9ImageView *>    m_vSeparateImage;
     std::string                         m_sSeparateImagePath;
     float                               m_fSeparateWidth;
 };

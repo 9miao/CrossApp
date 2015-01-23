@@ -1,9 +1,9 @@
 //
 //  CASegmentedControl.cpp
-//  CrossAppx
+//  CrossApp
 //
-//  Created by qiaoxin on 14-6-3.
-//  Copyright (c) 2014年 CrossApp-x. All rights reserved.
+//  Created by qiaoxin on 15-1-20.
+//  Copyright (c) 2015年 CrossApp. All rights reserved.
 //
 
 #include "CASegmentedControl.h"
@@ -11,9 +11,9 @@
 #include "view/CAScale9ImageView.h"
 #include "dispatcher/CATouch.h"
 #include "basics/CAApplication.h"
-#include "CAClippingView.h"
-#include "CCDrawNode.h"
-#include "CARenderImage.h"
+#include "view/CAClippingView.h"
+#include "draw_nodes/CCDrawNode.h"
+#include "view/CARenderImage.h"
 
 using namespace std;
 NS_CC_BEGIN
@@ -25,11 +25,11 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_nItemsCount(itemsCount)
     , m_pBackgroundView(NULL)
     , m_sTitleFontName("")
-    , m_backGroundImage(NULL)
+    , m_pBackGroundImageView(NULL)
     , m_sSeparateImagePath("")
     , m_fSeparateWidth(1)
 {
-    m_separateImage.clear();
+    m_vSeparateImage.clear();
 }
 
 CASegmentedControl::~CASegmentedControl()
@@ -79,7 +79,8 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
     {
         return false;
     }
-    this->setBackgroundImage("source_material/btn_rounded_normal.png");
+    this->setBackgroundImageView( CAImage::create("source_material/btn_rounded_normal.png") );
+    m_pBackGroundImageView->setVisible(false);
     this->removeAllSegments();
     const float elemWidth = this->getBounds().size.width / m_nItemsCount;
     m_itemSize = CCSizeMake(elemWidth, this->getBounds().size.height);
@@ -107,7 +108,8 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
     {
         return false;
     }
-    this->setBackgroundImage("source_material/btn_rounded_normal.png");
+    this->setBackgroundImageView( CAImage::create("source_material/btn_rounded_normal.png") );
+    m_pBackGroundImageView->setVisible(false);
     this->removeAllSegments();
     const float elemWidth = this->getBounds().size.width / m_nItemsCount;
     m_itemSize = CCSizeMake(elemWidth, this->getBounds().size.height);
@@ -576,6 +578,10 @@ void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
     {
         m_pBackgroundView->setFrame(this->getBounds());
     }
+    if(m_pBackGroundImageView)
+    {
+        m_pBackGroundImageView->setFrame(this->getBounds());
+    }
     
     this->layoutSubviews();
 }
@@ -609,13 +615,14 @@ void CASegmentedControl::setBackgroundView(CrossApp::CAView *view)
     this->insertSubview(m_pBackgroundView, -1);
 }
 
-void CASegmentedControl::setBackgroundImage(const std::string &file)
+void CASegmentedControl::setBackgroundImageView(CAImage* image)
 {
-    CC_SAFE_RELEASE_NULL(m_backGroundImage);
+    CC_SAFE_RELEASE_NULL(m_pBackGroundImageView);
 
-    m_backGroundImage = CAScale9ImageView::createWithFrame(this->getBounds());
-    m_backGroundImage->setImage(CAImage::create(file));
-    this->insertSubview(m_backGroundImage, -1);
+    m_pBackGroundImageView = CAScale9ImageView::createWithFrame(this->getBounds());
+    m_pBackGroundImageView->setImage(image);
+    m_pBackGroundImageView->setVisible(true);
+    this->insertSubview(m_pBackGroundImageView, -1);
 }
 
 void CASegmentedControl::createSeparate()
@@ -639,18 +646,18 @@ void CASegmentedControl::createSeparate()
         }
         elemFrame.origin.x += elemWidth;
         this->insertSubview(separateImage, 100);
-        m_separateImage.push_back(separateImage);
+        m_vSeparateImage.push_back(separateImage);
     }
 }
 
 void CASegmentedControl::cleanAllSeparate()
 {
-    std::vector<CAScale9ImageView *>::iterator itr = m_separateImage.begin();
-    for(; itr != m_separateImage.end(); ++itr)
+    std::vector<CAScale9ImageView *>::iterator itr = m_vSeparateImage.begin();
+    for(; itr != m_vSeparateImage.end(); ++itr)
     {
         (*itr)->removeFromSuperview();
     }
-    m_separateImage.clear();
+    m_vSeparateImage.clear();
 }
 
 void CASegmentedControl::setSeparateImage(const std::string &file)
@@ -658,6 +665,17 @@ void CASegmentedControl::setSeparateImage(const std::string &file)
     cleanAllSeparate();
     m_sSeparateImagePath = file;
     createSeparate();
+    setSeparateImageVisible(true);
+}
+void CASegmentedControl::setSeparateImageVisible(bool isVisible)
+{
+    std::vector<CAScale9ImageView *>::iterator itr = m_vSeparateImage.begin();
+    for(; itr != m_vSeparateImage.end(); ++itr)
+    {
+        (*itr)->setVisible(isVisible);
+    }
+    m_vSeparateImage.clear();
+
 }
 
 void CASegmentedControl::setSeparateWidth(float width)
@@ -674,19 +692,39 @@ float CASegmentedControl::getSeparateWidth()
 
 void CASegmentedControl::setSegmentImage(const CAControlState& controlState, std::string imagePath)
 {
-    std::vector<CAButton *>::iterator itr = m_segments.begin();
-    
-    for (int i=0; itr != m_segments.end(); ++itr, ++i) {
+    if(m_pBackGroundImageView && m_pBackGroundImageView->isVisible())
+    {
+        std::vector<CAButton *>::iterator itr = m_segments.begin();
         
-        (*itr)->setBackGroundViewForState(controlState,getTailorImageAtIndex(i, imagePath));
+        for (int i=0; itr != m_segments.end(); ++itr, ++i) {
+            
+            (*itr)->setBackGroundViewForState(controlState,getTailorImageAtIndex(i, imagePath));
+        }
     }
+    else if(m_pBackGroundImageView && !m_pBackGroundImageView->isVisible())
+    {
+        m_pBackGroundImageView->setVisible(true);
+        std::vector<CAButton *>::iterator itr = m_segments.begin();
+        
+        for (int i=0; itr != m_segments.end(); ++itr, ++i) {
+            
+            (*itr)->setBackGroundViewForState(controlState,getTailorImageAtIndex(i, imagePath));
+        }
+        m_pBackGroundImageView->setVisible(false);
+    }
+
 }
 
 CAView* CASegmentedControl::getTailorImageAtIndex(int index, std::string imagePath)
 {
-    CAScale9ImageView* clipNode = CAScale9ImageView::createWithFrame(m_backGroundImage->getBounds());
+    CAImageView* imageView = NULL;
+    if (NULL ==m_pBackGroundImageView) {
+        imageView = CAImageView::createWithImage(CAImage::create(NULL));
+        return imageView;
+    }
+    CAScale9ImageView* clipNode = CAScale9ImageView::createWithFrame(m_pBackGroundImageView->getBounds());
     clipNode->setImage(CAImage::create(imagePath));
-    CAClippingView* clip = CAClippingView::create(m_backGroundImage);
+    CAClippingView* clip = CAClippingView::create(m_pBackGroundImageView);
     clip->addSubview(clipNode);
     clip->setInverted(false);
     clip->setAlphaThreshold(0);
@@ -697,13 +735,13 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, std::string imagePa
     {
         x +=m_segments.at(i)->getBounds().size.width;
     }
-    CAImageView* imageView = NULL;
+    
     CAButton* button = m_segments.at(index);
     if(button)
     {
         clip->setFrame(this->getBounds());
         this->addSubview(clip);
-        CARenderImage* render = CARenderImage::create(m_backGroundImage->getBounds().size.width, m_backGroundImage->getBounds().size.height, kCAImagePixelFormat_RGBA8888);
+        CARenderImage* render = CARenderImage::create(m_pBackGroundImageView->getBounds().size.width, m_pBackGroundImageView->getBounds().size.height, kCAImagePixelFormat_RGBA8888);
         render->beginWithClear(0, 0, 0, 0);
         clip->visit();
         render->end();
