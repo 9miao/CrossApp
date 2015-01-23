@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "dispatcher/CAIMEDispatcher.h"
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "support/CCPointExtension.h"
+#include "support/ccUTF8.h"
 #include "CCApplication.h"
 
 NS_CC_BEGIN
@@ -449,15 +450,89 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_KEYDOWN:
-        if (wParam == VK_F1 || wParam == VK_F2)
+        switch (wParam)
         {
-			CAApplication* pDirector = CAApplication::getApplication();
+        case VK_F1:
+            if (GetKeyState(VK_LSHIFT) < 0 || GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
+                CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+            break;
+        case VK_F2:
             if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
-                pDirector->getKeypadDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
-        }
-        else if (wParam == VK_ESCAPE)
-        {
+                CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+            break;
+        case VK_ESCAPE:
 			CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+            break;
+        case VK_DELETE:
+            CAIMEDispatcher::sharedDispatcher()->dispatchDeleteForward();
+            break;
+        case VK_LEFT:
+            CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveBackward(GetKeyState(VK_CONTROL) < 0 && GetKeyState(VK_SHIFT) < 0);
+            break;
+        case VK_RIGHT:
+            CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveForward(GetKeyState(VK_CONTROL) < 0 && GetKeyState(VK_SHIFT) < 0);
+            break;
+        case 'C':
+        case 'X':
+            if (GetKeyState(VK_CONTROL) < 0 && OpenClipboard(m_hWnd))
+            {
+                do
+                {
+                    CC_BREAK_IF(!EmptyClipboard());
+                    std::string content;
+                    if (wParam == 'C')
+                    {
+                        CAIMEDispatcher::sharedDispatcher()->dispatchCopyToClipboard(&content);
+                    }
+                    else
+                    {
+                        CAIMEDispatcher::sharedDispatcher()->dispatchCutToClipboard(&content);
+                    }
+                    CC_BREAK_IF(content.length() == 0);
+
+                    std::wstring str = utf8_to_unicode(content.c_str());
+                    HGLOBAL hGlobal = GlobalAlloc(GMEM_MOVEABLE, (str.length() + 1) * sizeof(wchar_t));
+                    CC_BREAK_IF(hGlobal == NULL);
+
+                    LPVOID lpVoid = GlobalLock(hGlobal);
+                    if (lpVoid != NULL)
+                    {
+                        wcscpy((wchar_t *)lpVoid, str.c_str());
+                        ((wchar_t *)lpVoid)[str.length()] = L'\0';
+                    }
+                    GlobalUnlock(hGlobal);
+
+                    SetClipboardData(CF_UNICODETEXT, hGlobal);
+                } while (0);
+                CloseClipboard();
+            }
+            break;
+        case 'V':
+            if (GetKeyState(VK_CONTROL) < 0 && IsClipboardFormatAvailable(CF_UNICODETEXT) && OpenClipboard(m_hWnd))
+            {
+                do
+                {
+                    HANDLE hGlobal = GetClipboardData(CF_UNICODETEXT);
+                    CC_BREAK_IF(hGlobal == NULL);
+                    LPVOID lpVoid = GlobalLock(hGlobal);
+                    if (lpVoid != NULL)
+                    {
+                        std::string content = unicode_to_utf8((wchar_t *)lpVoid);
+                        CAIMEDispatcher::sharedDispatcher()->dispatchPasteFromClipboard(content.c_str());
+                    }
+                    GlobalUnlock(hGlobal);
+                } while (0);
+                CloseClipboard();
+            }
+            break;
+        case 'A':
+            if (GetKeyState(VK_CONTROL) < 0)
+            {
+                CAIMEDispatcher::sharedDispatcher()->dispatchSelectAll();
+            }
+            break;
+        default:
+            break;
         }
 
         if ( m_lpfnAccelerometerKeyHook!=NULL )
