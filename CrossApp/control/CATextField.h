@@ -11,8 +11,8 @@
 #ifndef __project__CATextField__
 #define __project__CATextField__
 
-#include <iostream>
 #include <vector>
+#include <utility>
 #include "dispatcher/CAIMEDispatcher.h"
 #include "control/CAControl.h"
 #include "view/CAScale9ImageView.h"
@@ -115,15 +115,15 @@ public:
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
-    CC_PROPERTY(std::string, m_sPlaceHolder, PlaceHolder);
+    CC_PROPERTY_PASS_BY_REF(std::string, m_sPlaceHolder, PlaceHolder);
     
-    CC_PROPERTY(std::string, m_sText, Text);
+    CC_PROPERTY_PASS_BY_REF(std::string, m_sText, Text);
     
     CC_SYNTHESIZE_READONLY(int, m_nCharCount, CharCount);
     
-    CC_PROPERTY(CAColor4B, m_cSpaceHolderColor, SpaceHolderColor);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cSpaceHolderColor, SpaceHolderColor);
     
-    CC_PROPERTY(CAColor4B, m_cTextColor, TextColor);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cTextColor, TextColor);
     
     CC_SYNTHESIZE(CATextFieldDelegate*, m_pDelegate, Delegate);
     
@@ -131,7 +131,7 @@ public:
     
     CC_PROPERTY(eKeyBoardInputType, m_nInputType, InputType);
     
-    CC_PROPERTY(CAColor4B, m_cCursorColor, CursorColor);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cCursorColor, CursorColor);
     
 	CC_PROPERTY(int, m_iHoriMargins, HoriMargins);
 	CC_PROPERTY(int, m_iVertMargins, VertMargins);
@@ -172,10 +172,26 @@ protected:
     virtual void getKeyBoardHeight(int height);
     virtual void getKeyBoradReturnCallBack();
     virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
+
+    void adjustCursorMoveBackward();
+    void adjustCursorMoveForward();
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    virtual void deleteForward();
+    virtual void cursorMoveBackward(bool selected);
+    virtual void cursorMoveForward(bool selected);
+
+    virtual void copyToClipboard(std::string *content);
+    virtual void cutToClipboard(std::string *content);
+    virtual void pasteFromClipboard(const char *content);
+    virtual void selectAll();
+#endif
+
     virtual const char* getContentText();
 private:
 	std::vector<TextAttribute> m_vTextFiledChars;
 	int m_iCurPos;
+	std::pair<int, int> m_charRange;
 
 	int m_iLabelWidth;
 	int m_iString_left_offX;
