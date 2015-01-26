@@ -1,46 +1,87 @@
-//
-//  CAStudioViewController.cpp
-//  Demo
-//
-//  Created by lh on 14-6-30.
-//
-//
+#include "CAStudioViewParser.h"
+#include "json/CSContentJsonDictionary.h"
 
-#include "CAStudioViewController.h"
-CAStudioViewController::CAStudioViewController()
-:m_pDelegateTarget(NULL)
-,m_pDataSourceTarget(this)
-, m_sJsonName("")
+NS_CC_EXT_BEGIN;
+
+static CAStudioViewParser* s_pCAStudioParser = NULL;
+
+
+CAStudioViewParser::CAStudioViewParser()
 {
-	m_pViewDicByName = CCDictionary::create();
-	m_pViewDicByName->retain();
 }
 
-CAStudioViewController::~CAStudioViewController()
+CAStudioViewParser::~CAStudioViewParser()
 {
     
 }
-void CAStudioViewController::viewDidLoad()
-{
-	
-	
-}
-void CAStudioViewController::viewDidUnload()
-{
 
-}
-bool CAStudioViewController::init()
+CAStudioViewParser* CAStudioViewParser::getInstance()
 {
+	if (s_pCAStudioParser == NULL)
+	{
+		s_pCAStudioParser = new CAStudioViewParser();
+	}
+	return s_pCAStudioParser;
+}
 
-	return true;
-}
-bool CAStudioViewController::initWithJson(CSJson::Value var)
+void CAStudioViewParser::destroyInstance()
 {
-	CAViewController::init();
-	sendStudioJson(var);
-	return true;
+	if (s_pCAStudioParser)
+	{
+		delete s_pCAStudioParser;
+		s_pCAStudioParser = NULL;
+	}
 }
-void CAStudioViewController::sendStudioJson(CSJson::Value var)
+
+CAView* CAStudioViewParser::initWithFile(const char* file)
+{
+	unsigned long size = 0;
+	unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(file, "r", &size);
+	if (data == NULL || size <= 0)
+		return NULL;
+
+	std::string strDoc;
+	strDoc.append((char*)data, size);
+	delete []data;
+	
+	return initWithData(strDoc);
+}
+
+CAView* CAStudioViewParser::initWithData(const std::string& strDoc)
+{
+	CSJson::Value value;
+	CSJson::Reader cReader;
+	if (!cReader.parse(strDoc, value, false))
+		return NULL;
+
+	return initWithJson(value);
+}
+
+CAView* CAStudioViewParser::initWithJson(CSJson::Value& var)
+{
+	CSJsonDictionary csJson;
+	csJson.initWithValue(var);
+
+	eItemsType eType = (eItemsType)csJson.getItemIntValue("type", -1);
+	switch (eType)
+	{
+	case CAType_View:
+		return ParseJsonForView(csJson);
+	}
+	return NULL;
+}
+
+CAView* CAStudioViewParser::ParseJsonForView(const CSJsonDictionary& csJson)
+{
+	return NULL;
+}
+
+
+NS_CC_EXT_END
+
+
+/*
+void CAStudioViewParser::sendStudioJson(CSJson::Value var)
 {
 
 	BaseAnalyze *analyze = new BaseAnalyze();
@@ -400,24 +441,4 @@ void CAStudioViewController::setPropertiesForImageView(CAObject *sender, CSJson:
     this->getView()->addSubview(imageview);
     
 }
-void CAStudioViewController::setDataSourceTarget(CrossApp::CATableViewDataSource *var)
-{
-    m_pDataSourceTarget = var;
-}
-CrossApp::CATableViewDataSource *CAStudioViewController::getDataSourceTarget()
-{
-    return m_pDataSourceTarget;
-}
-void CAStudioViewController::setDelegateTarget(CrossApp::CATableViewDelegate *var)
-{
-    m_pDelegateTarget = var;
-}
-
-CrossApp::CATableViewDelegate *CAStudioViewController::getDelegateTarget()
-{
-    return m_pDelegateTarget;
-}
-void CAStudioViewController::reshapeViewRectDidFinish()
-{
-
-}
+*/
