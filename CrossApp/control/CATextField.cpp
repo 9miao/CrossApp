@@ -80,7 +80,6 @@ bool CATextField::becomeFirstResponder()
 		attachWithIME();
     }
     return result;
-    
 }
 
 CATextField* CATextField::createWithFrame(const CCRect& frame)
@@ -315,6 +314,12 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             
 			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
         }
+
+#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
+        CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+        pGlView->setIMECursorPos(getCursorPos());
+#endif
+
     }
     else
     {
@@ -509,7 +514,7 @@ void CATextField::adjustCursorMoveForward()
     }
 }
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 void CATextField::deleteForward()
 {
     if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
@@ -608,7 +613,8 @@ void CATextField::cursorMoveForward(bool selected)
 
     adjustCursorMoveForward();
 }
-
+#endif
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 void CATextField::copyToClipboard(std::string *content)
 {
     if (m_nInputType == KEY_BOARD_INPUT_PASSWORD || m_charRange.first == m_charRange.second)
@@ -673,6 +679,17 @@ void CATextField::selectAll()
 const char* CATextField::getContentText()
 {
     return m_sText.c_str();
+}
+
+int CATextField::getCursorPos()
+{
+    return getStringCharCount(m_sText.substr(0, m_iCurPos));
+}
+
+std::pair<int, int> CATextField::getCharRange()
+{
+    return std::make_pair(getStringCharCount(m_sText.substr(0, m_charRange.first)),
+        getStringCharCount(m_sText.substr(0, m_charRange.second)));
 }
 
 void CATextField::setBackgroundView(CrossApp::CAView *var)
