@@ -31,7 +31,7 @@ CAScale9ImageView::CAScale9ImageView()
 , m_pScale9ImageView(NULL)
 {
     m_obFrameRect = CCRectZero;
-    memset(m_pImageView, NULL, sizeof(m_pImageView));
+    memset(m_pImageView, 0, sizeof(m_pImageView));
 }
 
 CAScale9ImageView::~CAScale9ImageView()
