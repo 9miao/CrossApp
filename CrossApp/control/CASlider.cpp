@@ -241,7 +241,7 @@ void CASlider::setMaxTrackTintImage(CAImage* image)
         m_pMaxTrackTintImage = image;
         if (m_pMaxTrackTintImageView)
         {
-            ((CAScale9ImageView*)m_pMinTrackTintImageView)->setImage(m_pMaxTrackTintImage);
+            ((CAScale9ImageView*)m_pMaxTrackTintImageView)->setImage(m_pMaxTrackTintImage);
         }
         this->layoutSubViews();
     }
@@ -256,7 +256,7 @@ void CASlider::setThumbTintImage(CAImage* image)
         m_pThumbTintImage = image;
         if (m_pThumbTintImageView)
         {
-            ((CAScale9ImageView*)m_pMinTrackTintImageView)->setImage(m_pThumbTintImage);
+            ((CAScale9ImageView*)m_pThumbTintImageView)->setImage(m_pThumbTintImage);
             const CCSize size = this->getBounds().size;
             m_pThumbTintImageView->setFrame(CCRect(0, 0, size.height, size.height));
         }

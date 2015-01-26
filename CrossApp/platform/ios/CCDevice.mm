@@ -26,4 +26,14 @@ int CCDevice::getDPI()
     return dpi;
 }
 
+CCDeviceIdiom CCDevice::getIdiom()
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return CCDeviceIdiomPad;
+    } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        return CCDeviceIdiomPhone;
+    }
+    return CCDeviceIdiomPhone;
+}
+
 NS_CC_END

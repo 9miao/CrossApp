@@ -248,7 +248,6 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 		CAIndexPath3E deselectedIndexPath = CAIndexPath3EZero;
 		CAIndexPath3E selectedIndexPath = CAIndexPath3E(m_pHighlightedCollectionCells->getSection(), m_pHighlightedCollectionCells->getRow(), m_pHighlightedCollectionCells->getItem());
-		m_pHighlightedCollectionCells = NULL;
 
 		if (m_pSelectedCollectionCells.count(selectedIndexPath) > 0 && m_bAllowsMultipleSelection)
 		{
@@ -291,6 +290,8 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 					selectedIndexPath.section, selectedIndexPath.row, selectedIndexPath.item);
 			}
 		}
+        
+        m_pHighlightedCollectionCells = NULL;
 	}
 }
 
@@ -422,6 +423,8 @@ void CACollectionView::reloadData()
 	}
     
 ;
+    int begin = m_rSectionRects.size();
+    m_rSectionRects.resize(m_rSectionRects.size() + m_nSections);
 	for (int i = 0; i < m_nSections; i++)
 	{
 		unsigned int iSectionHeaderHeight = m_nSectionHeaderHeights.at(i);
@@ -496,7 +499,8 @@ void CACollectionView::reloadData()
 		sectionRect.size.height = sectionFooterRect.origin.y
         + sectionFooterRect.size.height
         - sectionHeaderRect.origin.y;
-		m_rSectionRects.push_back(sectionRect);
+//		m_rSectionRects.push_back(sectionRect);
+        m_rSectionRects[begin + i] = sectionRect;
 	}
     
 	if (m_nCollectionFooterHeight > 0 && m_pCollectionHeaderView)
@@ -629,6 +633,11 @@ void CACollectionView::update(float dt)
 	updateSectionHeaderAndFooterRects();
 }
 
+CACollectionViewCell* CACollectionView::getHighlightCollectionCell()
+{
+    return m_pHighlightedCollectionCells;
+}
+
 #pragma CACollectionViewCell
 
 CACollectionViewCell::CACollectionViewCell()
@@ -645,6 +654,7 @@ CACollectionViewCell::CACollectionViewCell()
 
 CACollectionViewCell::~CACollectionViewCell()
 {
+    CC_SAFE_RELEASE(m_pBackgroundView);
 }
 
 CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdentifier)

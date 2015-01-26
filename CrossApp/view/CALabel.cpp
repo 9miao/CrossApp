@@ -394,8 +394,11 @@ const CAVerticalTextAlignment& CALabel::getVerticalTextAlignmet()
 
 void CALabel::setContentSize(const CrossApp::CCSize &var)
 {
+    CCSize originSize = getFrame().size;
     CAView::setContentSize(var);
-    m_bUpdateImage = true;
+    if (originSize.width != var.width || originSize.height != var.height) {
+        m_bUpdateImage = true;
+    }
 }
 
 void CALabel::visit()
