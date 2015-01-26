@@ -886,7 +886,7 @@ void CAView::removeSubviewByTag(int tag)
     
     if (subview == NULL)
     {
-        CCLOG("CrossApp: removeChildByTag(tag = %d): child not found!", tag);
+        CCLOG("CrossApp: removeSubviewByTag(tag = %d): child not found!", tag);
     }
     else
     {
@@ -902,7 +902,7 @@ void CAView::removeSubviewByTextTag(const std::string& textTag)
     
     if (subview == NULL)
     {
-        CCLOG("CrossApp: removeChildByTag(textTag = %s): child not found!", textTag.c_str());
+        CCLOG("CrossApp: removeSubviewByTextTag(textTag = %s): child not found!", textTag.c_str());
     }
     else
     {
@@ -1079,7 +1079,7 @@ void CAView::draw()
     
     CC_INCREMENT_GL_DRAWS(1);
     
-    CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAImageView - draw");
+    CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAView - draw");
 }
 
 void CAView::visit()
@@ -1199,14 +1199,14 @@ void CAView::visit()
         itr++;
     }
     
-    m_uOrderOfArrival = 0;
+    //m_uOrderOfArrival = 0;
     
     if (!m_bDisplayRange)
     {
         if (m_bRestoreScissor)
         {
-            glScissor(m_obRestoreScissorRect.origin.x, 
-                      m_obRestoreScissorRect.origin.y, 
+            glScissor(m_obRestoreScissorRect.origin.x,
+                      m_obRestoreScissorRect.origin.y,
                       m_obRestoreScissorRect.size.width, 
                       m_obRestoreScissorRect.size.height);
         }
@@ -1251,12 +1251,16 @@ void CAView::transform()
         bool translate = (anchorPointInPoints.x != 0.0f || anchorPointInPoints.y != 0.0f);
 
         if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(anchorPointInPoints.x), RENDER_IN_SUBPIXEL(anchorPointInPoints.y), 0 );
+            kmGLTranslatef(RENDER_IN_SUBPIXEL(anchorPointInPoints.x),
+                           RENDER_IN_SUBPIXEL(anchorPointInPoints.y),
+                           0 );
         
         m_pCamera->locate();
         
         if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-anchorPointInPoints.y), 0 );
+            kmGLTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPoints.x),
+                           RENDER_IN_SUBPIXEL(-anchorPointInPoints.y),
+                           0 );
     }
     
 }
@@ -1457,17 +1461,24 @@ CATransformation CAView::nodeToParentTransform(void)
         
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        m_sTransform = CATransformationMake( cy * m_fScaleX,  sy * m_fScaleX,
-                                             -sx * m_fScaleY, cx * m_fScaleY,
-                                             x, y );
+        m_sTransform = CATransformationMake(cy * m_fScaleX,
+                                            sy * m_fScaleX,
+                                            -sx * m_fScaleY,
+                                            cx * m_fScaleY,
+                                            x,
+                                            y );
         
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            CATransformation skewMatrix = CATransformationMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
-                                                                 tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1.0f,
-                                                                 0.0f, 0.0f );
+            CATransformation skewMatrix = CATransformationMake(1.0f,
+                                                               tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
+                                                               tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)),
+                                                               1.0f,
+                                                               0.0f,
+                                                               0.0f );
+            
             m_sTransform = CATransformationConcat(skewMatrix, m_sTransform);
             
             // adjust anchor point
@@ -1476,7 +1487,9 @@ CATransformation CAView::nodeToParentTransform(void)
             
             if (!anchorPointInPoints.equals(CCPointZero))
             {
-                m_sTransform = CATransformationTranslate(m_sTransform, -anchorPointInPoints.x, -anchorPointInPoints.y);
+                m_sTransform = CATransformationTranslate(m_sTransform,
+                                                         -anchorPointInPoints.x,
+                                                         -anchorPointInPoints.y);
             }
         }
         
@@ -1500,7 +1513,8 @@ void CAView::setAdditionalTransform(const CATransformation& additionalTransform)
 
 CATransformation CAView::parentToNodeTransform(void)
 {
-    if ( m_bInverseDirty ) {
+    if ( m_bInverseDirty )
+    {
         m_sInverse = CATransformationInvert(this->nodeToParentTransform());
         m_bInverseDirty = false;
     }
@@ -1603,7 +1617,7 @@ void CAView::updateTransform()
             }
             else
             {
-                CCAssert( dynamic_cast<CAImageView*>(m_pSuperview), "Logic error in CAImageView. Parent must be a CAImageView");
+                CCAssert( dynamic_cast<CAImageView*>(m_pSuperview), "Logic error in CAView. Parent must be a CAView");
                 m_transformToBatch = CATransformationConcat( nodeToParentTransform() , m_pSuperview->m_transformToBatch );
             }
             
@@ -1770,6 +1784,7 @@ void CAView::updateImageRect()
     m_sQuad.br.vertices = vertex3(m_obContentSize.width, 0, 0);
     m_sQuad.tl.vertices = vertex3(0, m_obContentSize.height, 0);
     m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, 0);
+    m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, 0);
 }
 
 // override this method to generate "double scale" sprites
@@ -1796,15 +1811,19 @@ void CAView::setImageCoords(CCRect rect)
     if (m_bRectRotated)
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left+(rect.size.height*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top+(rect.size.width*2-2)/(2*atlasHeight);
+        
+        left   = (2 * rect.origin.x + 1) / (2 * atlasWidth);
+        right  = left + (rect.size.height * 2 - 2) / (2 * atlasWidth);
+        top    = (2 * rect.origin.y + 1) / (2 * atlasHeight);
+        bottom = top + (rect.size.width * 2 - 2) / (2 * atlasHeight);
+        
 #else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x+rect.size.height) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y+rect.size.width) / atlasHeight;
+        
+        left   = rect.origin.x / atlasWidth;
+        right  = (rect.origin.x + rect.size.height) / atlasWidth;
+        top    = rect.origin.y / atlasHeight;
+        bottom = (rect.origin.y + rect.size.width) / atlasHeight;
+        
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
         
         if (m_bFlipX)
@@ -1829,15 +1848,15 @@ void CAView::setImageCoords(CCRect rect)
     else
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left + (rect.size.width*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top + (rect.size.height*2-2)/(2*atlasHeight);
+        left   = (2 * rect.origin.x + 1) / (2 * atlasWidth);
+        right  = left + (rect.size.width * 2 - 2) / (2 * atlasWidth);
+        top    = (2 * rect.origin.y + 1) / (2 * atlasHeight);
+        bottom = top + (rect.size.height * 2 - 2) / (2 * atlasHeight);
 #else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x + rect.size.width) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
+        left   = rect.origin.x / atlasWidth;
+        right  = (rect.origin.x + rect.size.width) / atlasWidth;
+        top    = rect.origin.y / atlasHeight;
+        bottom = (rect.origin.y + rect.size.height) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
         
         if(m_bFlipX)
@@ -2086,11 +2105,9 @@ void CAView::setBatch(CABatchView *batchView)
         m_sQuad.br.vertices = vertex3( x2, y1, 0 );
         m_sQuad.tl.vertices = vertex3( x1, y2, 0 );
         m_sQuad.tr.vertices = vertex3( x2, y2, 0 );
-        
     }
     else
     {
-        
         // using batch
         m_transformToBatch = CATransformationIdentity;
         setImageAtlas(m_pobBatchView->getImageAtlas()); // weak ref
