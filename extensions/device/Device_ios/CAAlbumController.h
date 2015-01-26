@@ -20,5 +20,6 @@ using namespace CrossApp;
 
 @property (assign,nonatomic)void *sender;
 -(void)openAlbumView;
+-(void)writeImageToPhoto:(const std::string&)sender;
 @end
 #endif /* defined(__LocationTest__CAAlbumController__) */

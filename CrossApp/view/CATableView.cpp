@@ -571,9 +571,9 @@ void CATableView::loadTableCell()
     rect.origin.y -= rect.size.height * 0.1f;
     rect.size.height *= 1.2f;
     
-    for (int i=0; i<m_rTableCellRectss.size(); i++)
+    for (size_t i=0; i<m_rTableCellRectss.size(); i++)
     {
-        for (int j=0; j<m_rTableCellRectss.at(i).size(); j++)
+        for (size_t j=0; j<m_rTableCellRectss.at(i).size(); j++)
         {
             CAIndexPath2E indexPath = CAIndexPath2E(i, j);
             CC_CONTINUE_IF(m_pUsedTableCells.count(indexPath) && m_pUsedTableCells[indexPath]);
@@ -695,6 +695,60 @@ void CATableView::update(float dt)
     this->recoveryTableCell();
     this->loadTableCell();
     this->updateSectionHeaderAndFooterRects();
+}
+
+unsigned int CATableView::getNumberOfSections()
+{
+    return m_nSections;
+}
+
+unsigned int CATableView::getNumberOfRowsInSection(unsigned int section)
+{
+    if (section >= m_nRowsInSections.size())
+    {
+        return 0;
+    }
+    return m_nRowsInSections.at(section);
+}
+
+float CATableView::getSectionHeightInSection(unsigned int section)
+{
+    if (section >= m_nSectionHeights.size())
+    {
+        return 0.0f;
+    }
+    return (float)m_nSectionHeights.at(section);
+}
+
+float CATableView::getSectionHeaderHeightInSection(unsigned int section)
+{
+    if (section >= m_nSectionHeaderHeights.size())
+    {
+        return 0.0f;
+    }
+    return (float)m_nSectionHeaderHeights.at(section);
+}
+
+float CATableView::getSectionFooterHeightInSection(unsigned int section)
+{
+    if (section >= m_nSectionFooterHeights.size())
+    {
+        return 0.0f;
+    }
+    return (float)m_nSectionFooterHeights.at(section);
+}
+
+float CATableView::getRowHeightInSectionInRow(unsigned int section, unsigned int row)
+{
+    if (section >= m_nRowHeightss.size())
+    {
+        return 0.0f;
+    }
+    if (row >= m_nRowHeightss[section].size())
+    {
+        return 0.0f;
+    }
+    return (float)m_nRowHeightss[section][row];
 }
 
 #pragma CATableViewCell

@@ -12,9 +12,9 @@
 #include <iostream>
 #include "CAView.h"
 
-
 NS_CC_BEGIN
 using namespace std;
+class CALabelStyle;
 
 class CC_DLL CALabel: public CAView
 {
@@ -46,7 +46,7 @@ public:
 
 	CC_PROPERTY(bool, m_bItalics, Italics);
 
-	CC_PROPERTY(unsigned int, m_iLineSpacing, LineSpacing);
+	CC_PROPERTY(int, m_iLineSpacing, LineSpacing);
     
     CC_PROPERTY_PASS_BY_REF(string, m_nfontName, FontName);
     
@@ -65,6 +65,10 @@ public:
     void sizeToFit();
     
     void unsizeToFit();
+
+	void applyStyle(const string& sStyleName);
+
+	void applyStyle(const CALabelStyle* pLabelStyle);
     
     void updateImage();
     

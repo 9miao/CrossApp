@@ -53,7 +53,6 @@ NS_CC_BEGIN;
 
 static int viewCount = 0;
 
-// XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
 
 CAView::CAView(void)
@@ -101,35 +100,25 @@ CAView::CAView(void)
 , m_bFrame(true)
 , m_bRestoreScissor(false)
 , m_obRestoreScissorRect(CCRectZero)
+, m_pobBatchView(NULL)
+, m_pobImageAtlas(NULL)
 {
+    m_pActionManager = CAApplication::getApplication()->getActionManager();
+    m_pActionManager->retain();
+    
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
-    CAApplication *director = CAApplication::getApplication();
-    m_pActionManager = director->getActionManager();
-    m_pActionManager->retain();
-
-    // clean the Quad
     memset(&m_sQuad, 0, sizeof(m_sQuad));
     
-    // Atlas: Color
-    CAColor4B tmpColor = { 255, 255, 255, 255 };
+    CAColor4B tmpColor = CAColor_white;
     m_sQuad.bl.colors = tmpColor;
     m_sQuad.br.colors = tmpColor;
     m_sQuad.tl.colors = tmpColor;
     m_sQuad.tr.colors = tmpColor;
     
-    // shader program
-    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-    
     this->setAnchorPoint(CCPoint(0.5f, 0.5f));
-    
-    m_pobBatchView = NULL;
-    m_pobImageAtlas = NULL;
-
-    CAScheduler::getScheduler()->resumeTarget(this);
-    m_pActionManager->resumeTarget(this);
-    
     this->setHaveNextResponder(true);
+    
     ++viewCount;
     //CCLog("CAView = %d\n",viewCount);
 }
@@ -179,6 +168,8 @@ CAView * CAView::create(void)
 
 bool CAView::init()
 {
+    // shader program
+    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
     this->setImage(CAImage::CC_WHITE_IMAGE());
     return true;
 }
@@ -1021,13 +1012,13 @@ void CAView::draw()
 {
 
     CC_RETURN_IF(m_pobImage == NULL);
+    CC_RETURN_IF(m_pShaderProgram == NULL);
     
     CC_NODE_DRAW_SETUP();
     
-    ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
-    
-    ccGLBindTexture2D( m_pobImage->getName() );
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+    ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+    ccGLBindTexture2D(m_pobImage->getName());
+    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
     
 #define kQuadSize sizeof(m_sQuad.bl)
 #ifdef EMSCRIPTEN
@@ -1039,16 +1030,30 @@ void CAView::draw()
     
     // vertex
     int diff = offsetof( ccV3F_C4B_T2F, vertices);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    glVertexAttribPointer(kCCVertexAttrib_Position,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          kQuadSize,
+                          (void*) (offset + diff));
     
     // texCoods
     diff = offsetof( ccV3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords,
+                          2,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          kQuadSize,
+                          (void*) (offset + diff));
     
     // color
     diff = offsetof( ccV3F_C4B_T2F, colors);
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    
+    glVertexAttribPointer(kCCVertexAttrib_Color,
+                          4,
+                          GL_UNSIGNED_BYTE,
+                          GL_TRUE,
+                          kQuadSize,
+                          (void*)(offset + diff));
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
@@ -1057,7 +1062,8 @@ void CAView::draw()
     
 #if CC_SPRITE_DEBUG_DRAW == 1
     // draw bounding box
-    CCPoint vertices[4]={
+    CCPoint vertices[4]=
+    {
         ccp(m_sQuad.tl.vertices.x,m_sQuad.tl.vertices.y),
         ccp(m_sQuad.bl.vertices.x,m_sQuad.bl.vertices.y),
         ccp(m_sQuad.br.vertices.x,m_sQuad.br.vertices.y),
@@ -1068,9 +1074,12 @@ void CAView::draw()
     // draw Image box
     CCSize s = this->getImageRect().size;
     CCPoint offsetPix = this->getOffsetPoint();
-    CCPoint vertices[4] = {
-        ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
-        ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
+    CCPoint vertices[4] =
+    {
+        ccp(offsetPix.x,            offsetPix.y),
+        ccp(offsetPix.x + s.width,  offsetPix.y),
+        ccp(offsetPix.x + s.width,  offsetPix.y + s.height),
+        ccp(offsetPix.x,            offsetPix.y + s.height)
     };
     ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
@@ -1078,8 +1087,6 @@ void CAView::draw()
     CC_INCREMENT_GL_DRAWS(1);
     
     CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAImageView - draw");
-
-    
 }
 
 void CAView::visit()
@@ -1094,11 +1101,12 @@ void CAView::visit()
     if (!m_bDisplayRange)
     {
         // check parent scissor
-        if (glIsEnabled(GL_SCISSOR_TEST)) {
+        if (glIsEnabled(GL_SCISSOR_TEST))
+        {
             GLfloat params[4];
             glGetFloatv(GL_SCISSOR_BOX, params);
             m_bRestoreScissor = true;
-            m_obRestoreScissorRect = CCRectMake(params[0], params[1], params[2], params[3]);
+            m_obRestoreScissorRect = CCRect(params[0] - 1.0f, params[1], params[2] + 1.0f, params[3] + 1.0f);
         }
         
         CCPoint point = CCPointZero;
@@ -1160,7 +1168,7 @@ void CAView::visit()
             parent = parent->getSuperview();
         }
         
-        CCRect frame = CCRectMake((point.x - 0) * glScaleX + off_X,
+        CCRect frame = CCRect((point.x - 0) * glScaleX + off_X,
                                   (point.y - 0) * glScaleY + off_Y,
                                   (size.width + 0) * scaleX * glScaleX,
                                   (size.height + 0) * scaleY * glScaleY);
@@ -1172,18 +1180,15 @@ void CAView::visit()
                 float y = MAX(frame.origin.y, m_obRestoreScissorRect.origin.y);
                 float xx = MIN(frame.origin.x+frame.size.width, m_obRestoreScissorRect.origin.x+m_obRestoreScissorRect.size.width);
                 float yy = MIN(frame.origin.y+frame.size.height, m_obRestoreScissorRect.origin.y+m_obRestoreScissorRect.size.height);
-                glScissor(x, y, xx-x + 1.0f, yy-y + 1.0f);
+                glScissor(x - 0.5f, y + 0.5f, xx-x + 1.0f, yy-y);
             }
         }
         else
         {
             glEnable(GL_SCISSOR_TEST);
-            glScissor(frame.origin.x, frame.origin.y, frame.size.width + 1.0f, frame.size.height + 1.0f);
+            glScissor(frame.origin.x - 0.5f, frame.origin.y + 0.5f, frame.size.width + 1.0f, frame.size.height);
         }
     }
-
-    CCRect winRect = CCRectZero;
-    winRect.size = CAApplication::getApplication()->getWinSize();
     
     CAView* pNode = NULL;
     unsigned int i = 0;
@@ -1456,7 +1461,6 @@ CATransformation CAView::nodeToParentTransform(void)
             y += sy * -anchorPointInPoints.x * m_fScaleX +  cx * -anchorPointInPoints.y * m_fScaleY;
         }
         
-        
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
         m_sTransform = CATransformationMake( cy * m_fScaleX,  sy * m_fScaleX,
@@ -1490,7 +1494,6 @@ CATransformation CAView::nodeToParentTransform(void)
         
         m_bTransformDirty = false;
     }
-    
     return m_sTransform;
 }
 
@@ -1529,33 +1532,16 @@ CATransformation CAView::worldToNodeTransform(void)
 CCRect CAView::convertRectToNodeSpace(const CrossApp::CCRect &worldRect)
 {
     CCRect ret = worldRect;
-    ret.origin.y += ret.size.height;
-    ret.origin = CAApplication::getApplication()->convertToGL(ret.origin);
     ret.origin = this->convertToNodeSpace(ret.origin);
-    ret.origin.y = this->getBounds().size.height - ret.size.height - ret.origin.y;
-    
-    CAView*  view = this;
-    while (view)
-    {
-        ret.size = CCSize(ret.size.width / view->getScaleX(), ret.size.height / view->getScaleY());
-        view = view->getSuperview();
-    }
+    ret.size = CCSizeApplyAffineTransform(ret.size, nodeToParentTransform());
     return ret;
 }
 
 CCRect CAView::convertRectToWorldSpace(const CrossApp::CCRect &nodeRect)
 {
     CCRect ret = nodeRect;
-    ret.origin.y = this->getBounds().size.height - ret.size.height - ret.origin.y;
     ret.origin = this->convertToWorldSpace(ret.origin);
-    ret.origin = CAApplication::getApplication()->convertToUI(ret.origin);
-    ret.origin.y -= ret.size.height;
-    CAView*  view = this;
-    while (view)
-    {
-        ret.size = CCSize(ret.size.width * view->getScaleX(), ret.size.height * view->getScaleY());
-        view = view->getSuperview();
-    }
+    ret.size = CCSizeApplyAffineTransform(ret.size, worldToNodeTransform());
     return ret;
 }
 
@@ -1645,6 +1631,7 @@ void CAView::updateTransform()
             float sr = m_transformToBatch.b;
             float cr2 = m_transformToBatch.d;
             float sr2 = -m_transformToBatch.c;
+            
             float ax = x1 * cr - y1 * sr2 + x;
             float ay = x1 * sr + y1 * cr2 + y;
             
@@ -1685,7 +1672,8 @@ void CAView::updateTransform()
     
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
-    CCPoint vertices[4] = {
+    CCPoint vertices[4] =
+    {
         ccp( m_sQuad.bl.vertices.x, m_sQuad.bl.vertices.y ),draw
         ccp( m_sQuad.br.vertices.x, m_sQuad.br.vertices.y ),
         ccp( m_sQuad.tr.vertices.x, m_sQuad.tr.vertices.y ),
@@ -1706,7 +1694,6 @@ void CAView::setDisplayRange(bool value)
     m_bDisplayRange = value;
 }
 
-//Image...
 
 void CAView::setImage(CAImage* image)
 {

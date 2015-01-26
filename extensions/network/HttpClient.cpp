@@ -39,38 +39,20 @@ static pthread_cond_t		s_SleepCondition[MAX_Thread] =
     pthread_cond_t(),pthread_cond_t(),pthread_cond_t(),pthread_cond_t(),pthread_cond_t()
 };
 
-static unsigned long    s_asyncRequestCount[MAX_Thread] =
-{
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-};
+static unsigned long    s_asyncRequestCount[MAX_Thread] = {0};
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 typedef int int32_t;
 #endif
 
-static bool need_quit[MAX_Thread] =
-{
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-};
+static bool need_quit[MAX_Thread] = {0};
 
-static CCArray* s_requestQueue[MAX_Thread] =
-{
-    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
-    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
-};
+static CCArray* s_requestQueue[MAX_Thread] = {0};
 
-static CCArray* s_responseQueue[MAX_Thread] =
-{
-    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
-    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
-};
+static CCArray* s_responseQueue[MAX_Thread] = {0};
 
 
-static CCHttpClient *s_pHttpClient[MAX_Thread] =
-{
-    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
-    NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
-};
+static CCHttpClient *s_pHttpClient[MAX_Thread] = {0};
  // pointer to singleton
 
 static char s_errorBuffer[MAX_Thread][CURL_ERROR_SIZE];
@@ -209,11 +191,10 @@ static void* networkThread(void *data)
                 CCAssert(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
                 break;
         }
-                
+
         // write data to HttpResponse
         response->setResponseCode(responseCode);
-        
-        if (retValue != 0) 
+        if (retValue != 0)
         {
             response->setSucceed(false);
             response->setErrorBuffer(s_errorBuffer[thread]);
@@ -352,7 +333,9 @@ public:
     /// @param responseCode Null not allowed
     bool perform(int *responseCode)
     {
-        if (CURLE_OK != curl_easy_perform(m_curl))
+        int ss = curl_easy_perform(m_curl);
+        CCLog("---%d", ss);
+        if (CURLE_OK != ss)
             return false;
         CURLcode code = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, responseCode);
         if (code != CURLE_OK || *responseCode != 200)
@@ -368,9 +351,25 @@ public:
 static int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
-    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
-            && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
-            && curl.perform(responseCode);
+    bool ok = 0;
+    if (curl.init(request, callback, stream, headerCallback, headerStream))
+    {
+        ok = 1;
+        CCLog("----------------- 1");
+    }
+    if (curl.setOption(CURLOPT_FOLLOWLOCATION, true))
+    {
+        ok = 1;
+        CCLog("----------------- 2");
+    }
+    if (curl.perform(responseCode))
+    {
+        ok = 1;
+        CCLog("----------------- 3");
+    }
+//    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
+//            && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
+//            && curl.perform(responseCode);
     return ok ? 0 : 1;
 }
 
@@ -423,7 +422,17 @@ static int processPostFileTask(CCHttpRequest *request, write_callback callback, 
 	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "filepath", CURLFORM_FILE, 
 		request->getFileNameToPost(), CURLFORM_CONTENTTYPE, "application/octet-stream", CURLFORM_END);
 
-	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "submit", CURLFORM_COPYCONTENTS, "upload", CURLFORM_END);
+	std::string strReq = request->getRequestData();
+    std::vector<std::string> vv = CrossApp::Parse2StrVector(strReq, "&");
+	for (int i = 0; i < vv.size(); i++)
+	{
+		std::vector<std::string> v = CrossApp::Parse2StrVector(vv[i], "=");
+		if (v.size() == 2)
+		{
+			curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, v[0].c_str(), CURLFORM_COPYCONTENTS, v[1].c_str(), CURLFORM_END);
+		}
+	}
+	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "act", CURLFORM_COPYCONTENTS, "end", CURLFORM_END);
 	
 	ok = curl.setOption(CURLOPT_HTTPPOST, pFormPost)
 		&& curl.perform(responseCode);

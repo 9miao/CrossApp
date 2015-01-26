@@ -132,7 +132,7 @@ public:
     CC_PROPERTY(eKeyBoardInputType, m_nInputType, InputType);
     
     CC_PROPERTY(CAColor4B, m_cCursorColor, CursorColor);
-
+    
 	CC_PROPERTY(int, m_iHoriMargins, HoriMargins);
 	CC_PROPERTY(int, m_iVertMargins, VertMargins);
     
@@ -183,7 +183,6 @@ private:
 	int m_iString_r_length;
 	int m_iFontHeight;
 
-	CCAction* m_pCursorAction;
 	CAView* m_pCursorMark;
 	CCSize m_cImageSize;
 	eKeyBoardType m_keyboardType;

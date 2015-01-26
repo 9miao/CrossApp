@@ -1,1 +1,0 @@
-require('JSBinding/jsb.js');

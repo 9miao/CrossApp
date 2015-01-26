@@ -1,10 +1,173 @@
+#### CrossApp 0.5.0 更新内容：  
+
+#####1.修改优化CANavigationController
+1.修改所管理的navigationBar为多个
+2.并将之前navigationBar的属性移植在CANavigationController中
+
+#####2.修改优化CATabBarController
+并将之前tabBar的属性移植在CATabBarController中
+
+#####3.修复优化CAPickerView
+1.修改有时选不中的bug
+2.性能优化
+
+#####4.修改优化base64
+1.win32不能编译的bug
+2.增加Encode方法
+
+#####5.修改优化触摸事件分发机制
+修改之前多个CATextField之间切换编辑状态要点2次的问题
+
+#####6.其他一些细节的优化
+在本C++引擎中移除掉JavaScript版本，将来会有单独的JavaScript版本发布
+
+##本次更新影响到了CANavigationController与CATabBarController一些接口，为您带来的不便尽请谅解。
+
+**********************************************************************************
+
+#### CrossApp 0.4.3 更新内容：  
+
+#####1.修复md5在win32不能编译的bug
+
+#####2.增加HttpClient在post文件的同时postData的支持
+
+#####3.修复CATextView与CATextField某种情况插入文字的bug
+
+#####4.修复CATextView光标不闪的bug
+
+#####5.优化一些控件与组建的默认尺寸
+
+#####6.修复一些在win32编译的警告
+在此，特别鸣谢github为 Jeff ，CrossApp官方群名为 广州－201103L 的网友为我们提交的优化
+
+#####7.修复触摸事件分发有时会执行2次touchBegin的bug
+在此，特别鸣谢CrossApp官方群名为 觉今是而昨非 的网友为我们提交的优化
+
+
+#### CrossApp 0. 4. 3 Update:
+
+#####1. Fixed bug that md5 cannot be compiled in win32
+
+#####2. Added HttpClient’s support to postData in post file
+
+#####3. Fixed bug that text insert error in CATextView and CATextField
+
+#####4. Fixed bug that CATextView’s cursor does not blink
+
+#####5. Optimized the default dimensions of some controls and components
+
+#####6. Fix some compiling warnings in win32
+Here, special thanks to Jeff from Github and a friend naming "Canton - 201103L" from CrossApp official QQ group for their submitted optimizations.<br/>
+
+#####7. Fixed bug that system act touchBegin two times when touch event dispatch sometimes<br/>
+Here, special thanks to a friend naming “Juejinshierzuofei” from CrossApp official QQ group for his submitted optimization.<br/>
+
+
+**********************************************************************************
+
+#### CrossApp 0.4.2 更新内容：  
+
+#####1.添加WebView控件
+WebView基于原生内置浏览器控件封装而成，该控件功能强大，除了具有一般View的属性和设置外，还可以对url请求、页面加载、渲染、页面交互进行强大的处理。不仅可以通过loadUrl方法设置当前webView需要访问的网址，还可以加载绝⼤部分的常见文件 html\htm pdf、doc、ppt、txt等等。
+
+#####2.修改上版本CAImage崩溃的bug
+
+#####3.其他一些细节修改
+
+
+#### CrossApp 0.4.2 Update:  
+
+#####1. Added WebView Controls
+WebView is an encapsulation based on native built-in browser control. It has great functionalities, aside from possessing normal View attributes and set, WebView is fully capable of dealing with url request, page load, rendering, page interacitve. And it’s not only able to set current webView desirable access url via loadUrl method, but also capable of loading most of common file types such as html\htm, pdf, doc, ppt, txt etc.
+
+#####2. Fixed CAImage breakdown bug in previous version
+
+#####3. Other Details Tweaking
+
+**********************************************************************************
+
+#### CrossApp 0.4.1 更新内容：  
+
+#####1.添加友盟统计sdk三方库
+支持iOS、android平台
+
+#####2.添加shareSDK社会化分享三方库
+支持iOS、android平台
+
+#####3.更新js版本
+
+#####4.修改部分bug
+
+#####5.优化一些细节
+
+
+#### CrossApp 0.4.1 Update:
+
+##### 1. Added Umeng statistics sdk (third-party library)
+iOS and Android platform support
+
+##### 2. Added Share SDK social share (third-party library)
+iOS and Android platform support
+
+##### 3. CrossApp-js version update
+
+##### 4. Fixed some bugs
+
+##### 5. Optimized some details
+
+**********************************************************************************
+
+#### CrossApp 0.3.10 更新内容：  
+
+#####1.添加CrossAppStyle
+文字信息模型类，并支持获取对应CALabel文字渲染后的高度、宽度等信息。
+
+#####2.优化文字内存占用
+
+#####3.优化文字默认行距
+
+#####4.优化文字在iOS与Mac平台默认使用繁体字库的问题
+
+#####5.文字性能再次优化
+
+#####6.优化DownloadManager
+优化DownloadManager，修复下载中不能立即停止并删除下载命令的bug
+
+#####7.修复上版本在vs没有正确添加CADevice的bug
+
+#####8.其他一些细节调整
+
+
+#### CrossApp 0.3.10 Update:
+
+#####1. Added CrossAppStyle
+Text message model class, supports to obtain corresponding height, width and other info after CALabel text rendering.<br/>
+
+#####2. Optimized Text Memory Usage
+
+#####3. Optimized Text Default Line Spacing
+
+#####4. Optimized Text Uses Traditional Chinese Character Library by Default on iOS and Mac Platform
+
+#####5. Optimized Text Performance Second Time
+
+#####6. Optimized DownloadManager
+Optimized DownloadManager, fixed bug that user cannot instant stop and delete download order<br/>
+
+#####7. Fixed Bug That CADevice Was Not Correctly Added to VS in Previous Release
+
+#####8. Other Details Tweaking
+
+
+**********************************************************************************
+
 #### CrossApp 0.3.9 更新内容：  
 
 #####1.CALabel添加文字加粗功能
 
-#####2.CALabel添加文字加粗斜体功能
+#####2.CALabel添加文字斜体功能
 
-#####3.CALabel添加文字加下划线功能
+#####3.CALabel添加文字下划线功能
 
 #####4.优化DownloadManager
 文件下载管理系统优化，并修正上版本头文件引用错误
@@ -23,6 +186,31 @@
 ####升级建议：
 重新创建工程，并拷贝Classes与Resources中文件
 
+
+#### CrossApp 0. 3. 9 Update:
+
+#####1. Added text bold functionality on CALabel
+
+#####2. Added text bold italic functionality on CALabel
+
+#####3. Added text underline functionality on CALabel
+
+#####4. Optimized DownloadManager
+Optimized file download management system and fixed header file reference bug from previous release<br/>
+
+#####5. Rearranged device related system interface
+For example: GPS info obtaining, camera and photo album calling and address book obtaining etc.<br/>
+
+#####6. Added sliding right on secondary interface to return upper-level interface functionality on CANavigationController
+
+#####7. Optimized OpenGL clipping functionality’s slight error
+
+#####8. Optimized OpenGL imaging coordinates’s slight error
+
+#####9. Other details tweaking
+
+####Suggestion:
+rebuild project and copy files in Classes and Resources<br/>
 
 
 **********************************************************************************

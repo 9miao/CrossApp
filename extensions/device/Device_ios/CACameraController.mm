@@ -37,7 +37,17 @@
 {
     [super didReceiveMemoryWarning];
 }
-
+-(void)writeImageToPhoto:(std::string)sender
+{
+    
+    UIImage *newImage = [[UIImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%s",sender.c_str()]];
+    if (newImage == nil)
+    {
+        NSLog(@"Save image have some error");
+    }
+    UIImageWriteToSavedPhotosAlbum(newImage, self, nil, nil);
+    [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%s",sender.c_str()] error:nil];
+}
 -(void)openCameraView
 {
 
@@ -58,7 +68,8 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    UIImage *fiximage = [self fixOrientation:image];
+    UIImage *newfixImage = [self fixOrientation:image];
+    UIImage *fiximage = [self scaleFromImage:newfixImage toSize:CGSizeMake(640, [newfixImage size].height/([newfixImage size].width/640))];
     CAMediaDelegate *cam = (CAMediaDelegate *)self.sender;
     CC_RETURN_IF(!cam);
 
@@ -69,9 +80,12 @@
     caimage->initWithImageData(_data, [data length], CCImage::kFmtJpg, 640, 640);
     CC_RETURN_IF(!caimage);
     
+    CAImage *__image = new CAImage();
+    __image->initWithImage(caimage);
+    
     if (cam)
     {
-        cam->getSelectedImage(caimage);
+        cam->getSelectedImage(__image);
     }
     
     [picker dismissViewControllerAnimated:YES completion:^
@@ -81,7 +95,14 @@
         }
     ];
 }
-
+- (UIImage *) scaleFromImage: (UIImage *) image toSize: (CGSize) size
+{
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:^

@@ -21,7 +21,7 @@ class CCImage;
 
 typedef enum
 {
-    kCAImagePixelFormat_RGBA8888,
+    kCAImagePixelFormat_RGBA8888 = 0,
     kCAImagePixelFormat_RGB888,
     kCAImagePixelFormat_RGB565,
     kCAImagePixelFormat_A8,
@@ -127,8 +127,10 @@ public:
     
     float getAspectRatio();
     
+    virtual CAImage* copy();
+
 protected:
-    
+
     CC_PROPERTY_READONLY_PASS_BY_REF(CAImagePixelFormat, m_ePixelFormat, PixelFormat)
     
     CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
@@ -156,6 +158,7 @@ private:
     bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
 
 protected:
+    
     
     bool m_bHasPremultipliedAlpha;
     

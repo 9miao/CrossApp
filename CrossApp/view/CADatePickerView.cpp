@@ -72,8 +72,8 @@ bool CADatePickerView::init()
     
     m_pPickerView = CAPickerView::create();
     m_pPickerView->retain();
-    m_pPickerView->setDataSource(this);
-    m_pPickerView->setDelegate(this);
+    m_pPickerView->setPickerViewDelegate(this);
+    m_pPickerView->setPickerViewDataSource(this);
     m_pPickerView->setFontSizeNormal(40 * CAApplication::getApplication()->getAdaptationRatio());
     m_pPickerView->setFontSizeSelected(40 * CAApplication::getApplication()->getAdaptationRatio());
     addSubview(m_pPickerView);

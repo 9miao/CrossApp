@@ -87,7 +87,7 @@ int CAFTFontCache::getStringWidth(const char* pFontName, unsigned long nSize, co
 	return m_pCurFontData->ftFont.getStringWidth(text, bBold, bItalics);
 }
 
-int CAFTFontCache::cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth)
+int CAFTFontCache::cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth, bool bBold, bool bItalics)
 {
 	setCurrentFontData(pFontName, nSize);
 	return m_pCurFontData->ftFont.cutStringByWidth(text, iLimitWidth, cutWidth);

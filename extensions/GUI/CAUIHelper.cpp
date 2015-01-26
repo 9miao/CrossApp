@@ -7,6 +7,7 @@
 //
 
 #include "CAUIHelper.h"
+#include "view//CALabelStyle.h"
 
 NS_CC_EXT_BEGIN
 
@@ -140,6 +141,46 @@ CAObject* CAUIHelper::addImage(CSJson::Value jsonValue, CCRect &uiRect)
     CAImageView *imageview = CAImageView::createWithImage(CAImage::create(""));
     imageview->setFrame(uiRect);
     return NULL;
+}
+
+bool CAUIHelper::loadLabelStyle(const string& sFileName)
+{
+	unsigned long size = 0;
+	char *des = (char*)CCFileUtils::sharedFileUtils()->getFileData(sFileName.c_str(), "r", &size);
+	if (!des)
+	{
+		return false;
+	}
+	CSJson::Reader reader;
+	CSJson::Value root;
+
+	if (!reader.parse(des, root))
+	{
+		return false;
+	}
+
+	if (!root.isArray())
+		return false;
+
+    for (int i = 0; i < root.size(); i++)
+	{
+		CSJson::Value& style = root[i];
+		string sStyleName = style["StyleName"].asString();
+		string sFontName = style["FontName"].asString();
+		int nFontSize = style["FontSize"].asInt();
+		int nLineSpace = style["LineSpace"].asInt();
+		string sColor = style["FontColor"].asString();
+		int r = 0, g = 0, b = 0, a = 0xff;
+		sscanf(sColor.c_str(), "%02x%02x%02x%02x", &r, &g, &b, &a);
+		CAColor4B cFontColor = ccc4(r, g, b, a);
+		bool bBold = style["Bold"].asBool();
+		bool bItalics = style["Italics"].asBool();
+		bool bWordWrap = style["WordWrap"].asBool();
+
+		CALabelStyleCache::sharedStyleCache()->addStyle(sStyleName, sFontName, _px(nFontSize), _px(nLineSpace), cFontColor, bBold, bItalics, bWordWrap);
+	}
+
+	return true;
 }
 
 NS_CC_EXT_END

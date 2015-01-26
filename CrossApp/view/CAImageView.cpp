@@ -80,8 +80,7 @@ bool CAImageView::init(void)
 
 bool CAImageView::initWithImage(CAImage* image)
 {
-	if (!CAView::init())
-		return false;
+	this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 
 	CCRect rect = CCRectZero;
 	if (image)
@@ -211,6 +210,23 @@ void CAImageView::updateImageRect()
     m_sQuad.tr.vertices = vertex3(m_fRight, m_fBottom, 0);
 }
 
+CAView* CAImageView::copy()
+{
+    CAImageView* pReturn = CAImageView::create();
+    if (m_bFrame)
+    {
+        pReturn->setFrame(this->getFrame());
+    }
+    else
+    {
+        pReturn->setCenter(this->getCenter());
+    }
+    pReturn->setImageViewScaleType(this->getImageViewScaleType());
+    pReturn->setImage(this->getImage());
+    pReturn->setColor(this->getColor());
+    return pReturn;
+}
+
 bool CAImageView::initWithFrame(const CCRect& rect, const CAColor4B& color4B)
 {
     return CAView::initWithFrame(rect);
@@ -221,9 +237,9 @@ bool CAImageView::initWithCenter(const CCRect& rect, const CAColor4B& color4B)
     return CAView::initWithCenter(rect);
 }
 
-void CAImageView::setImageAsyncWithFile(const char* fileName)
+void CAImageView::setImageAsyncWithFile(const std::string& path)
 {
-    CAImageCache::sharedImageCache()->addImageAsync(fileName, this, callfuncO_selector(CAImageView::asyncFinish));
+    CAImageCache::sharedImageCache()->addImageFullPathAsync(path, this, callfuncO_selector(CAImageView::asyncFinish));
 }
 
 void CAImageView::asyncFinish(CrossApp::CAObject *var)

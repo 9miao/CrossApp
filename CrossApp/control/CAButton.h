@@ -32,7 +32,7 @@ public:
     CAButton(const CAButtonType& buttonType);
     
     virtual ~CAButton(void);
-
+    
     virtual void onExitTransitionDidStart();
     
     virtual void onEnterTransitionDidFinish();
@@ -40,7 +40,7 @@ public:
     static CAButton* create(const CAButtonType& buttonType);
     
     static CAButton* createWithFrame(const CCRect& rect, const CAButtonType& buttonType);
-
+    
     static CAButton* createWithCenter(const CCRect& rect, const CAButtonType& buttonType);
     
 public:
@@ -53,7 +53,11 @@ public:
     
     void setImageForState(const CAControlState& controlState, CAImage* var);
     
+    CAImage* getImageForState(const CAControlState& controlState);
+    
     void setTitleForState(const CAControlState& controlState, const std::string& var);
+    
+    const std::string& getTitleForState(const CAControlState& controlState);
     
     void setImageColorForState(const CAControlState& controlState, const CAColor4B& var);
     
@@ -71,8 +75,6 @@ public:
     
 public:
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_textTag, TextTag);
-    
     CC_SYNTHESIZE_IS(bool, m_closeTapSound, CloseTapSound);
 
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
@@ -80,9 +82,7 @@ public:
     CC_SYNTHESIZE_IS_READONLY(bool, m_bSelected, Selected);
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
-    
-    bool isTextTagEqual(const char* text);
-    
+
 	void interruptTouchState();
 
 public:

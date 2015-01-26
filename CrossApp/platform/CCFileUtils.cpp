@@ -10,6 +10,10 @@
 #include <stack>
 #include <algorithm>
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#include <dirent.h>
+#endif
+
 using namespace std;
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
@@ -812,6 +816,10 @@ bool CCFileUtils::isPopupNotify()
 bool CCFileUtils::createDirectory(const char *path)
 {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    DIR *dir=NULL;
+    dir = opendir(path);
+    if (dir) return false;
+    
     mode_t processMask = umask(0);
     int ret = mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO);
     umask(processMask);
@@ -819,7 +827,6 @@ bool CCFileUtils::createDirectory(const char *path)
     {
         return false;
     }
-    
     return true;
 #else
     BOOL ret = CreateDirectoryA(path, NULL);

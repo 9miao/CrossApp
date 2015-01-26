@@ -14,13 +14,14 @@
 		// create the window
 		// note that using NSResizableWindowMask causes the window to be a little
 		// smaller and therefore ipad graphics are not loaded
-        NSRect rect = NSMakeRect(200, 100, 640, 800);
+        NSRect rect = NSMakeRect(200, 100, 640, 960);
 		window = [[NSWindow alloc] initWithContentRect:rect
 			styleMask:( NSClosableWindowMask | NSTitledWindowMask )
 			backing:NSBackingStoreBuffered
 			defer:YES];
         
-        NSOpenGLPixelFormatAttribute attributes[] = {
+        NSOpenGLPixelFormatAttribute attributes[] =
+        {
             NSOpenGLPFADoubleBuffer,
             NSOpenGLPFADepthSize, 24,
             NSOpenGLPFAStencilSize, 8,
@@ -36,7 +37,7 @@
 		// set window parameters
 		[window becomeFirstResponder];
 		[window setContentView:glView];
-		[window setTitle:@"HelloCpp"];
+		[window setTitle:@"CrossApp-Demo"];
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
 

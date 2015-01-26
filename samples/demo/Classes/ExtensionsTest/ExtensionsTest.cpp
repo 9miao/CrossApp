@@ -27,14 +27,6 @@ void ExtensionsTest::viewDidLoad()
 	table->setSeparatorViewHeight(1);
 	this->getView()->addSubview(table);
 
-	CADipSize nSize = this->getNavigationController()->getNavigationBar()->getBounds().size;
-	next = CAButton::createWithCenter(CADipRect(nSize.width*0.905, nSize.height*0.5, nSize.height*0.9, nSize.height*0.8), CAButtonTypeCustom);
-	next->setTag(1000);
-	next->setImageForState(CAControlStateNormal, CAImage::create("source_material/btn_right_white.png"));
-	next->setImageColorForState(CAControlStateHighlighted, ccc4(0, 255, 200, 255));
-	next->addTarget(this, CAControl_selector(ExtensionsTest::nextViewController), CAControlEventTouchUpInSide);
-	this->getNavigationController()->getNavigationBar()->addSubview(next);
-
 	loadJsonData();
 }
 
@@ -73,7 +65,6 @@ void ExtensionsTest::nextViewController(CAControl* btn, CCPoint point)
 void ExtensionsTest::viewDidUnload()
 {
 	personList.clear();
-	next->removeFromSuperview();
 }
 
 void ExtensionsTest::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)

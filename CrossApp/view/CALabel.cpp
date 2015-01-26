@@ -10,6 +10,8 @@
 #include "ccMacros.h"
 #include <locale>
 #include <cstdlib>
+#include "CALabelStyle.h"
+#include "shaders/CAShaderCache.h"
 
 NS_CC_BEGIN
 
@@ -27,13 +29,13 @@ CALabel::CALabel()
 ,pTextHeight(0)
 ,m_bFitFlag(false)
 ,m_iLineSpacing(0)
-,m_bWordWrap(true)
+,m_bWordWrap(false)
 ,m_bBold(false)
 ,m_bItalics(false)
-, m_bUnderLine(false)
+,m_bUnderLine(false)
 {
     m_obContentSize = CCSizeZero;
-    
+
 }
 
 CALabel::~CALabel()
@@ -78,7 +80,6 @@ void CALabel::onEnterTransitionDidFinish()
 
 bool CALabel::initWithFrame(const CCRect& rect)
 {
-   
     if (!CAView::initWithFrame(rect,CAColor_black))
     {
         return false;
@@ -100,6 +101,7 @@ bool CALabel::initWithCenter(const CCRect& rect)
 void CALabel::updateImage()
 {
 	int fontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_nfontSize);
+	int defaultLineSpace = fontHeight / 4;
  
     unsigned int linenumber = (int)this->getBounds().size.height / fontHeight;
 
@@ -111,7 +113,7 @@ void CALabel::updateImage()
         {
             if (m_nNumberOfLine > 1)
             {
-				size = CCSize(this->getBounds().size.width, (m_iLineSpacing + fontHeight) * m_nNumberOfLine);
+				size = CCSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * m_nNumberOfLine);
             }
             else if (m_nNumberOfLine == 1)
             {
@@ -139,11 +141,11 @@ void CALabel::updateImage()
 		{
 			if (m_nNumberOfLine > 0)
 			{
-				size = CCSize(this->getBounds().size.width, (m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
+				size = CCSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
 			}
 			else
 			{
-				size = CCSize(this->getBounds().size.width, (m_iLineSpacing + fontHeight) * linenumber);
+				size = CCSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * linenumber);
 			}
 		}
     }
@@ -306,14 +308,14 @@ unsigned int CALabel::getFontSize()
     return m_nfontSize;
 }
 
-void CALabel::setLineSpacing(unsigned int var)
+void CALabel::setLineSpacing(int var)
 {
     CC_RETURN_IF(m_iLineSpacing == var);
 	m_iLineSpacing = var;
 	m_bUpdateImage = true;
 }
 
-unsigned int CALabel::getLineSpacing()
+int CALabel::getLineSpacing()
 {
 	return m_iLineSpacing;
 }
@@ -409,6 +411,25 @@ void CALabel::visit()
         this->updateImage();
     }
     CAView::visit();
+}
+
+void CALabel::applyStyle(const string& sStyleName)
+{
+	const CALabelStyle* pStyle = CALabelStyleCache::sharedStyleCache()->getStyle(sStyleName);
+	applyStyle(pStyle);
+}
+
+void CALabel::applyStyle(const CALabelStyle* pLabelStyle)
+{
+	CC_RETURN_IF(!pLabelStyle);
+
+	setFontName(pLabelStyle->getFontName());
+	setFontSize(pLabelStyle->getFontSize());
+	setColor(pLabelStyle->getFontColor());
+	setLineSpacing(pLabelStyle->getLineSpace());
+	setBold(pLabelStyle->isBold());
+	setItalics(pLabelStyle->isItalics());
+	setWordWrap(pLabelStyle->isWordWrap());
 }
 
 NS_CC_END

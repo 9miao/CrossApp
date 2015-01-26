@@ -10,7 +10,6 @@
 #define __CAView__
 
 #include <iostream>
-#include <vector>
 #include "ccMacros.h"
 #include "shaders/CATransformation.h"
 #include "cocoa/CCArray.h"
@@ -58,7 +57,7 @@ typedef enum
 }
 CALayoutLinearType;
 
-#define kCAViewPointInvalid CCPoint(-0xffffffff, -0xffffffff)
+#define kCAViewPointInvalid CCPoint(FLT_MIN, FLT_MIN)
 #define kCAViewSizeInvalid CCPoint(0, 0)
 #define kCAViewRectInvalid CCRect(0, 0, 0, 0)
 
@@ -494,7 +493,7 @@ protected:
     CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
 };
 
-class CAViewDelegate
+class CC_DLL CAViewDelegate
 {
 public:
     

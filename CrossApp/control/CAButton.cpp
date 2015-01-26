@@ -9,6 +9,7 @@
 #include "CAButton.h"
 #include "view/CAScale9ImageView.h"
 #include "view/CAView.h"
+#include "view/CAScrollView.h"
 #include "dispatcher/CATouch.h"
 #include "support/CCPointExtension.h"
 #include "cocoa/CCSet.h"
@@ -22,12 +23,11 @@ NS_CC_BEGIN
 CAButton::CAButton(const CAButtonType& buttonType)
 :m_bAllowsSelected(false)
 ,m_bSelected(false)
-,m_textTag("")
 ,m_closeTapSound(false)
 ,m_bTouchClick(false)
 ,m_color(CAColor_white)
 ,m_eButtonType(buttonType)
-,m_sTitleFontName("Helvetica-Bold")
+,m_sTitleFontName("")
 ,m_pImageView(NULL)
 ,m_pLabel(NULL)
 {
@@ -205,6 +205,9 @@ void CAButton::setBackGroundViewRoundedRect()
 
 void CAButton::setBackGroundViewForState(const CAControlState& controlState, CAView *var)
 {
+    CCAssert(dynamic_cast<CAControl*>(var) == NULL, "Not allowed to inherit from the CAControl");
+    CCAssert(dynamic_cast<CAScrollView*>(var) == NULL, "Not allowed to inherit from the CAScrollView");
+    
     if (controlState == CAControlStateAll)
     {
         for (int i=0; i<CAControlStateAll; i++)
@@ -265,6 +268,11 @@ void CAButton::setImageForState(const CAControlState& controlState, CAImage* var
     }
 }
 
+CAImage* CAButton::getImageForState(const CAControlState& controlState)
+{
+    return m_pImage[controlState];
+}
+
 void CAButton::setTitleForState(const CAControlState& controlState, const std::string& var)
 {
     if (controlState == CAControlStateAll)
@@ -284,6 +292,11 @@ void CAButton::setTitleForState(const CAControlState& controlState, const std::s
     {
         this->setControlState(m_eControlState);
     }
+}
+
+const std::string& CAButton::getTitleForState(const CAControlState& controlState)
+{
+    return m_sTitle[controlState];
 }
 
 void CAButton::setImageColorForState(const CAControlState& controlState, const CAColor4B& var)
@@ -511,7 +524,6 @@ void CAButton::setControlState(const CAControlState& var)
         float scaleX = size.width / iSize.width * 0.75f;
         float scaleY = size.height / iSize.height * 0.75f;
         float scale = MIN(scaleX, scaleY);
-        scale = MIN(scale, 1.0f);
         iSize = ccpMult(iSize, scale);
         
         imageViewCenter.origin = size / 2;
@@ -529,7 +541,6 @@ void CAButton::setControlState(const CAControlState& var)
         float scaleX = size.width / iSize.width * 0.5f;
         float scaleY = size.height / iSize.height * 0.45f;
         float scale = MIN(scaleX, scaleY);
-        scale = MIN(scale, 1.0f);
         iSize = ccpMult(iSize, scale);
         
         imageViewCenter.size = iSize;
@@ -625,11 +636,6 @@ void CAButton::setTouchMovedOutSide(const CCPoint& point)
     {
         ((CAObject *)m_pTarget[CAControlEventTouchMovedOutSide]->*m_selTouch[CAControlEventTouchMovedOutSide])(this,point);
     }
-}
-
-bool CAButton::isTextTagEqual(const char *text)
-{
-    return (m_textTag.compare(text)==0);
 }
 
 void CAButton::setContentSize(const CCSize & var)

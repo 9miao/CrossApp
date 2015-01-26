@@ -68,6 +68,11 @@ CAImage::~CAImage()
     {
         ccGLDeleteTexture(m_uName);
     }
+    
+    if (m_pData)
+    {
+        free(m_pData);
+    }
 }
 
 CAImage* CAImage::create(const std::string& file)
@@ -293,8 +298,19 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
         CCAssert(0, "NSInternalInconsistencyException");
 
     }
-    m_pData = ((unsigned char*)const_cast<char*>((const char*)data));
+    if (m_pData)
+    {
+        free(m_pData);
+    }
+    CCLog("---------- %d ---- %d", pixelFormat, bitsPerPixel);
+    
     m_nDataLenght = (unsigned long)pixelsWide * pixelsHigh;
+    m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * bitsPerPixel/8);
+    unsigned char* pData = ((unsigned char*)const_cast<char*>((const char*)data));
+    
+    for (unsigned int i=0; i<m_nDataLenght * bitsPerPixel/8; i++)
+        m_pData[i] = pData[i];
+
     m_tContentSize = contentSize;
     m_uPixelsWide = pixelsWide;
     m_uPixelsHigh = pixelsHigh;
@@ -323,7 +339,6 @@ bool CAImage::initWithImage(CCImage *uiImage)
         CCLOG("CrossApp: CAImage. Can't create Texture. UIImage is nil");
         return false;
     }
-    
     unsigned int imageWidth = uiImage->getWidth();
     unsigned int imageHeight = uiImage->getHeight();
     
@@ -761,7 +776,41 @@ float CAImage::getAspectRatio()
 {
     return m_tContentSize.width / m_tContentSize.height;
 }
+CAImage* CAImage::copy()
+{
+    CAImage *copyImage = new CAImage();
+    
+    copyImage->m_ePixelFormat = this->m_ePixelFormat;
+    copyImage->m_uPixelsWide = this->m_uPixelsWide;
+    copyImage->m_uPixelsHigh = this->m_uPixelsHigh;
+    copyImage->m_uName = this->m_uName;
+    copyImage->m_fMaxS = this->m_fMaxS;
+    copyImage->m_fMaxT = this->m_fMaxT;
+    copyImage->m_tContentSize = this->m_tContentSize;
+    copyImage->m_pShaderProgram = this->m_pShaderProgram;
+    copyImage->m_bMonochrome = this->m_bMonochrome;
+    copyImage->m_bHasMipmaps = this->m_bHasMipmaps;
+    copyImage->m_bHasPremultipliedAlpha = this->m_bHasPremultipliedAlpha;
+    
+    unsigned int bitsPerPixel;
+    //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
+    if(this->m_ePixelFormat == kCAImagePixelFormat_RGB888)
+    {
+        bitsPerPixel = 24;
+    }
+    else
+    {
+        bitsPerPixel = bitsPerPixelForFormat(this->m_ePixelFormat);
+    }
+    
+    copyImage->m_nDataLenght = this->m_nDataLenght;
+    copyImage->m_pData = (unsigned char*)malloc(this->m_nDataLenght * sizeof(unsigned char) * bitsPerPixel/8);
+    
+    for (unsigned int i=0; i<m_nDataLenght * bitsPerPixel/8; i++)
+        copyImage->m_pData[i] = this->m_pData[i];
 
+    return copyImage;
+}
 const char* CAImage::getImageFileType()
 {
     const char* text = NULL;
@@ -792,10 +841,10 @@ CAImage* CAImage::CC_WHITE_IMAGE()
 {
     if (cc_white_image == NULL)
     {
-        int pixels[16][16];
-        for (int i=0; i<16; i++)
+        int pixels[2][2];
+        for (int i=0; i<2; i++)
         {
-            for (int j=0; j<16; j++)
+            for (int j=0; j<2; j++)
             {
                 pixels[i][j] = 0xffffffff;
             }
@@ -803,7 +852,7 @@ CAImage* CAImage::CC_WHITE_IMAGE()
         
         CCImage* image = new CCImage();
         image->autorelease();
-        image->initWithImageData(pixels, sizeof(pixels), CCImage::kFmtRawData, 16, 16, 8);
+        image->initWithImageData(pixels, sizeof(pixels), CCImage::kFmtRawData, 2, 2, 8);
         cc_white_image = CAImageCache::sharedImageCache()->addUIImage(image, "CC_WHITE_IMAGE");
         cc_white_image->retain();
         cc_white_image->m_bMonochrome = true;

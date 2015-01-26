@@ -101,6 +101,8 @@ view/CADatePickerView.cpp \
 view/CAActivityIndicatorView.cpp \
 view/CAPullToRefreshView.cpp \
 view/CATextView.cpp \
+view/CALabelStyle.cpp \
+view/CAWebView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -129,6 +131,7 @@ platform/android/CCApplication.cpp \
 platform/android/CCCommon.cpp \
 platform/android/CCFileUtilsAndroid.cpp \
 platform/android/CCImage.cpp \
+platform/android/CAWebViewImpl.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \

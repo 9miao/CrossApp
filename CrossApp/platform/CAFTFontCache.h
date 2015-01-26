@@ -36,7 +36,7 @@ public:
 
 	int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text, bool bBold = false, bool bItalics = false);
 
-	int cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth);
+	int cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth, bool bBold = false, bool bItalics = false);
 
 	int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 

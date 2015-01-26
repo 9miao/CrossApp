@@ -60,8 +60,8 @@ public:
     CC_SYNTHESIZE(CAColor4B, m_pageIndicatorTintColor, PageIndicatorTintColor);
     CC_SYNTHESIZE(CAColor4B, m_currentPageIndicatorTintColor, CurrentPageIndicatorTintColor);
     
-    CC_SYNTHESIZE(CAImage*, m_pPageImage, PageIndicatorImage);
-    CC_SYNTHESIZE(CAImage*, m_pSelectPageImage, CurrIndicatorImage);
+    CC_SYNTHESIZE_RETAIN(CAImage*, m_pPageImage, PageIndicatorImage);
+    CC_SYNTHESIZE_RETAIN(CAImage*, m_pSelectPageImage, CurrIndicatorImage);
     
     CC_PROPERTY_PASS_BY_REF(CAPageControlStyle, m_style, Style); // default is CAPageControlStyleDot
     

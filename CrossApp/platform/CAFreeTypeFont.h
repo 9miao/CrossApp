@@ -52,7 +52,8 @@ typedef struct TGlyph_
 typedef struct FontBufferInfo
 {
 	unsigned char*  pBuffer;  
-	unsigned long  size;  
+	unsigned long  size;
+	int face_index;
 } FontBufferInfo;
 
 typedef struct FTLineInfo
@@ -82,7 +83,7 @@ public:
 protected:
 	bool initFreeTypeFont(const char* pFontName, unsigned long nSize);
 	void finiFreeTypeFont();
-	unsigned char* loadFont(const char *pFontName, unsigned long *size);
+	unsigned char* loadFont(const char *pFontName, unsigned long *size, int& ttfIndex);
 	unsigned char* getBitmap(CCImage::ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);
@@ -124,9 +125,8 @@ protected:
     int             m_textHeight;   // height of text text after word wrapping and line breaks  
     int             m_lineHeight;   // height of a line for the font size
 	int				m_lineSpacing;
-    int             m_windowWidth;  // the width of the window
 
-    FTLineInfo*     m_currentLine;  // the current line object to add words to.
+	FTLineInfo*     m_currentLine;  // the current line object to add words to.
 
 	bool m_bWordWrap;
 	bool m_bBold;

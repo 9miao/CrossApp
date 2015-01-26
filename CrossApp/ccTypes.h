@@ -28,6 +28,13 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
     return c;
 }
 
+static inline CAColor4B
+ccint(int rgba)
+{
+    CAColor4B c;
+    return c;
+}
+
 //CAColor4B predefined colors
 //! White color (255,255,255,255)
 static const CAColor4B CAColor_white   = {255, 255, 255, 255};
@@ -85,10 +92,18 @@ static inline CAColor4B ccc4BFromccc4F(CAColor4F c)
 }
 
 
+/** returns YES if both CAColor4B are equal. Otherwise it returns NO.
+ @since v0.99.1
+ */
+static inline bool CAColor4BEqual(CAColor4B a, CAColor4B b)
+{
+    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+}
+
 /** returns YES if both CAColor4F are equal. Otherwise it returns NO.
  @since v0.99.1
  */
-static inline bool ccc4FEqual(CAColor4F a, CAColor4F b)
+static inline bool CAColor4FEqual(CAColor4F a, CAColor4F b)
 {
     return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }

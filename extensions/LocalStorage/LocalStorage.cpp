@@ -4,8 +4,6 @@
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <assert.h>
 #include <sqlite3.h>
 
@@ -35,7 +33,6 @@ void localStorageInit( const char *fullpath)
 {
 	if( ! _initialized )
     {
-
 		int ret = 0;
 		
 		if (!fullpath)

@@ -196,9 +196,10 @@ void ButtonTest::buttonTouchEvent(void)
 
 void ButtonTest::buttonCallback(CAControl* btn,CCPoint point)
 {
+    point = btn->convertToWorldSpace(point);
 	CAButton* button = (CAButton*)btn;
 	char text[50] = "";
-	sprintf(text, "Button %d--Touch point(%.02f,%.02f)", button->getTag()+1,point.x, point.y);
+	sprintf(text, "Button %d--Touch point(x: %.0f, y: %.0f)", button->getTag()+1,point.x, point.y);
 	descTest->setText(text);
 }
 

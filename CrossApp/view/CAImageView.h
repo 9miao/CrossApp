@@ -47,15 +47,17 @@ public:
     
     virtual CAImage* getImage(void);
 
-    virtual void setImageAsyncWithFile(const char* fileName);
+    virtual void setImageAsyncWithFile(const std::string& path);
     
     using CAView::setImageRect;
     
     CC_SYNTHESIZE_PASS_BY_REF(CAImageViewScaleType, m_eImageViewScaleType, ImageViewScaleType);
     
+    virtual CAView* copy();
+    
 protected:
 
-    void asyncFinish(CAObject* var);
+    virtual void asyncFinish(CAObject* var);
     
     virtual void setContentSize(const CCSize& size);
     

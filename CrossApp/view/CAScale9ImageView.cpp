@@ -30,11 +30,8 @@ CAScale9ImageView::CAScale9ImageView()
 , m_obOriginalSize(CCSizeZero)
 , m_pScale9ImageView(NULL)
 {
-    for (int i=0; i<9; i++)
-    {
-        m_pImageView[i] = NULL;
-        m_obFrameRect = CCRectZero;
-    }
+    m_obFrameRect = CCRectZero;
+    memset(m_pImageView, NULL, sizeof(m_pImageView));
 }
 
 CAScale9ImageView::~CAScale9ImageView()

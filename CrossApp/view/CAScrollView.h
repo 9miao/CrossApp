@@ -18,13 +18,15 @@
 NS_CC_BEGIN
 
 class CAScrollView;
-class CAScrollViewDelegate
+class CC_DLL CAScrollViewDelegate
 {
 public:
 
     virtual ~CAScrollViewDelegate(){};
-    
+
     virtual void scrollViewDidMoved(CAScrollView* view){};
+    
+    virtual void scrollViewStopMoved(CAScrollView* view){};
     
     virtual void scrollViewDidScroll(CAScrollView* view){};
     
@@ -181,7 +183,7 @@ protected:
     
     void deaccelerateScrolling(float dt);
     
-    virtual void contentOffsetFinish(float dt){}
+    virtual void contentOffsetFinish(float dt);
     
     void closeToPoint(float dt);
     

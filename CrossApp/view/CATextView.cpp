@@ -4,6 +4,7 @@
 #include "actions/CCActionInterval.h"
 #include "CCEGLView.h"
 #include <utility>
+#include "shaders/CAShaderCache.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "platform/CAFTFontCache.h"
@@ -103,7 +104,9 @@ bool CATextView::init()
 	this->setBounceHorizontal(false);
 	this->setTouchMovedListenHorizontal(false);
 
-	m_pImageView = CAImageView::create();
+    m_pImageView = new CAImageView();
+    m_pImageView->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
+    m_pImageView->autorelease();
 	this->addSubview(m_pImageView);
 	return true;
 }
@@ -136,6 +139,7 @@ void CATextView::initMarkSprite()
 		m_pCursorMark = CAView::create();
 		m_pCursorMark->setColor(m_cCursorColor);
 		m_pCursorMark->setVisible(false);
+		m_pCursorMark->stopAllActions();
 		this->addSubview(m_pCursorMark);
 
 		m_pCursorMark->runAction(CCRepeatForever::create((CCActionInterval *)CCSequence::create(CCFadeOut::create(0.5f), CCFadeIn::create(0.5f), NULL)));
@@ -158,8 +162,6 @@ void CATextView::updateImage()
 	}
 
 	float width = this->getBounds().size.width;
-	float height = this->getBounds().size.height;
-	CCSize size = CCSizeMake(width, 0);
 
 	CAImage* image = NULL;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
@@ -178,9 +180,13 @@ void CATextView::updateImage()
 	{
 		m_vLinesTextView.clear();
 	}
-
-	m_pImageView->initWithImage(image);
-	setViewSize(m_pImageView->getBounds().size);
+    m_pImageView->setColor(CAColor_black);
+	m_pImageView->setImage(image);
+    CCRect rect = CCRectZero;
+    rect.size = image->getContentSize();
+    m_pImageView->setImageRect(rect);
+    m_pImageView->setFrame(rect);
+	setViewSize(rect.size);
 	calcCursorPosition();
 }
 
@@ -201,6 +207,7 @@ void CATextView::calcCursorPosition()
 	}
 
 	float fHalfLineHeight = m_iLineHeight / 2.0f;
+	float fLineSpaceValue = m_iLineHeight / 4.0f;
 
 	CCPoint cCurPosition;
 	if (iCurLine == -1)
@@ -216,7 +223,7 @@ void CATextView::calcCursorPosition()
 			s.erase(0, 1);
 		}
 		cCurPosition.x = getStringLength(s);
-		cCurPosition.y = (iCurLine * 2 + 1) * fHalfLineHeight;
+		cCurPosition.y = (m_iLineHeight + fLineSpaceValue)*iCurLine + fHalfLineHeight;
 	}
 
 	if (m_pCursorMark)
@@ -387,16 +394,11 @@ void CATextView::AndroidWillInsertText(int start, const char* str, int before, i
 {
 	CCAssert(str != NULL, "");
 	CCAssert(count > 0, "");
-	if (strlen(str) >= m_szText.length())
+	std::string cszNewStr = str;
+	if (cszNewStr.size() >= m_szText.size())
 	{
-		m_vLinesTextView.clear();
-		m_iCurPos = 0;
-		m_szText.clear();
-		insertText(str, strlen(str));
-	}
-	else
-	{
-		deleteBackward();
+		cszNewStr = cszNewStr.substr(m_szText.size(), cszNewStr.size());
+		insertText(cszNewStr.c_str(), cszNewStr.size());
 	}
 }
 
@@ -416,6 +418,36 @@ void CATextView::deleteBackward()
 	m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
 	m_iCurPos -= nDeleteLen;
 	updateImage();
+}
+
+void CATextView::getKeyBoardHeight(int height)
+{
+	if (m_pTextViewDelegate && m_pTextViewDelegate->getKeyBoardHeight(height))
+	{
+		return;
+	}
+}
+
+void CATextView::getKeyBoradReturnCallBack()
+{
+	if (m_pTextViewDelegate && m_pTextViewDelegate->keyBoardCallBack(this))
+	{
+		return;
+	}
+	else
+	{
+		this->resignFirstResponder();
+	}
+}
+
+void CATextView::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
+{
+	this->resignFirstResponder();
+}
+
+const char* CATextView::getContentText()
+{
+	return m_szText.c_str();
 }
 
 float CATextView::maxSpeed(float dt)
@@ -438,9 +470,8 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	if (m_pTouches->count() > 0)
 	{
 		m_pTouches->replaceObjectAtIndex(0, pTouch);
-		return true;
 	}
-	bool isInertia = m_tInertia.getLength() < 1.0f;
+
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
 		return false;
 
@@ -452,9 +483,10 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		if (isFirstResponder())
 		{
 			m_pCursorMark->setVisible(true);
+			m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
 
 			point.y += getContentOffset().y;
-			int iCurLine = point.y / m_iLineHeight;
+			int iCurLine = point.y / (m_iLineHeight*1.25f);
 			if (m_vLinesTextView.empty())
 			{
 				iCurLine = 0;
@@ -489,7 +521,7 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 			{
 				s.erase(0, 1);
 			}
-			m_pCursorMark->setCenterOrigin(CCPoint(getStringLength(s), (iCurLine * 2 + 1) * (m_iLineHeight / 2)));
+			m_pCursorMark->setCenterOrigin(CCPoint(getStringLength(s), m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
 		}
 		return true;
 	}
@@ -498,6 +530,7 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		if (resignFirstResponder())
 		{
 			m_pCursorMark->setVisible(false);
+			m_pCursorMark->stopAllActions();
 			return false;
 		}
 		return false;
@@ -542,6 +575,8 @@ bool CATextView::attachWithIME()
 				pGlView->setIMEKeyboardReturnDone();
 			}
 #endif
+			m_pCursorMark->setVisible(true);
+			m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
 			pGlView->setIMEKeyboardState(true);
 		}
 	}
@@ -558,6 +593,8 @@ bool CATextView::detachWithIME()
 		if (pGlView)
 		{
 			pGlView->setIMEKeyboardState(false);
+			m_pCursorMark->setVisible(false);
+			m_pCursorMark->stopAllActions();
 		}
 	}
 	return bRet;

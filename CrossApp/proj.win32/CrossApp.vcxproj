@@ -197,6 +197,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
     <ClCompile Include="..\platform\win32\CADensityDpi.cpp" />
+    <ClCompile Include="..\platform\win32\CAWebViewImpl.cpp" />
     <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication.cpp" />
     <ClCompile Include="..\platform\win32\CCCommon.cpp" />
@@ -251,6 +252,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CADatePickerView.cpp" />
     <ClCompile Include="..\view\CAImageView.cpp" />
     <ClCompile Include="..\view\CALabel.cpp" />
+    <ClCompile Include="..\view\CALabelStyle.cpp" />
     <ClCompile Include="..\view\CAListView.cpp" />
     <ClCompile Include="..\view\CAPageView.cpp" />
     <ClCompile Include="..\view\CAPickerView.cpp" />
@@ -261,6 +263,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CATableView.cpp" />
     <ClCompile Include="..\view\CATextView.cpp" />
     <ClCompile Include="..\view\CAView.cpp" />
+    <ClCompile Include="..\view\CAWebView.cpp" />
     <ClCompile Include="..\view\CAWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -332,6 +335,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\platform.h" />
+    <ClInclude Include="..\platform\win32\CAWebViewImpl.h" />
     <ClInclude Include="..\platform\win32\CCAccelerometer.h" />
     <ClInclude Include="..\platform\win32\CCApplication.h" />
     <ClInclude Include="..\platform\win32\CCEGLView.h" />
@@ -403,6 +407,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\view\CADatePickerView.h" />
     <ClInclude Include="..\view\CAImageView.h" />
     <ClInclude Include="..\view\CALabel.h" />
+    <ClInclude Include="..\view\CALabelStyle.h" />
     <ClInclude Include="..\view\CAListView.h" />
     <ClInclude Include="..\view\CAPageView.h" />
     <ClInclude Include="..\view\CAPickerView.h" />
@@ -413,6 +418,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\view\CATableView.h" />
     <ClInclude Include="..\view\CATextView.h" />
     <ClInclude Include="..\view\CAView.h" />
+    <ClInclude Include="..\view\CAWebView.h" />
     <ClInclude Include="..\view\CAWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
