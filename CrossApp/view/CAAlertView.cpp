@@ -362,9 +362,9 @@ void CAAlertView::calcuAlerViewSize()
 	} 
 
 	if (m_fAlertViewMessageHeight > alertViewMessageHeight) {
-		m_fAlertViewLineHeight = alertViewSpaceHeight * 2 + m_fAlertViewTitleHeight + alertViewMessageHeight;
+		m_fAlertViewLineHeight = alertViewSpaceHeight * 2.5 + m_fAlertViewTitleHeight + alertViewMessageHeight;
 	} else {
-		m_fAlertViewLineHeight = alertViewSpaceHeight * 2 + m_fAlertViewTitleHeight + m_fAlertViewMessageHeight;
+		m_fAlertViewLineHeight = alertViewSpaceHeight * 2.5 + m_fAlertViewTitleHeight + m_fAlertViewMessageHeight;
 	}
 
 }
