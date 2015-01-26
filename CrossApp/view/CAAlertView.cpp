@@ -126,7 +126,7 @@ void CAAlertView::setMessageFontName(std::string &var)
 void CAAlertView::setTitle(std::string var, CAColor4B col)
 {
     CC_RETURN_IF(var.compare("") == 0);
-	setLabel(m_pTitleLabel, var.c_str(),"fonts/HelveticaNeue-Bold.ttf", col);
+	setLabel(m_pTitleLabel, var.c_str(),"", col);
 }
 
 void CAAlertView::setAlertMessage(std::string var, CAColor4B col)
@@ -201,16 +201,16 @@ void CAAlertView::showAlertView() {
 	back->setImage(CAImage::create("source_material/alert_back.png"));
 	m_pBackView->addSubview(back);
 
-	int alertViewSpaceHeight = 40;
+	float alertViewSpaceHeight = 40;
 
-	//CCAssert(m_pTitleLabel, "");
 	if (m_pTitleLabel && !m_pTitleLabel->getText().empty()) {
-		m_pTitleLabel->setCenter(CADipRect(ALERT_VIEW_WIDTH / 2, alertViewSpaceHeight + m_fAlertViewTitleHeight / 2, ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
+
+		m_pTitleLabel->setFrame(CADipRect(0, alertViewSpaceHeight , ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
 		m_pTitleLabel->setFontSize(_px(ALERT_VIEW_TITLE_FONT));
 		m_pBackView->addSubview(m_pTitleLabel);
 	}
 
-	int alertViewMessageHeight = 150;
+	float alertViewMessageHeight = 150;
 
 	if (m_fAlertViewMessageHeight > alertViewMessageHeight) {
 	
@@ -220,25 +220,26 @@ void CAAlertView::showAlertView() {
 		scrollView->setShowsHorizontalScrollIndicator(false);
 		scrollView->setShowsVerticalScrollIndicator(true);
 		scrollView->setBounceHorizontal(false);
-		scrollView->setViewSize(CCSizeMake(ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight*1.1 + m_fAlertViewTitleHeight + alertViewSpaceHeight));
+		scrollView->setViewSize(CCSizeMake(ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight * 1.1 + m_fAlertViewTitleHeight + alertViewSpaceHeight* 1.5));
 		m_pBackView->addSubview(scrollView);
 
 		CCAssert(m_pTitleLabel, "");
 		if (m_pTitleLabel && !m_pTitleLabel->getText().empty()) {
 			m_pTitleLabel->removeFromSuperview();
 			m_pTitleLabel->setFontSize(_px(ALERT_VIEW_TITLE_FONT));
-			m_pTitleLabel->setCenter(CADipRect(ALERT_VIEW_WIDTH / 2, alertViewSpaceHeight + m_fAlertViewTitleHeight / 2, ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
+			m_pTitleLabel->setFrame(CADipRect(0, alertViewSpaceHeight, ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
 			scrollView->addSubview(m_pTitleLabel);
 		}
 
 		CCAssert(m_pContentLabel, "");
-		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
+		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
 		scrollView->addSubview(m_pContentLabel);
 	
 	} else {
 		
+		CCAssert(m_pContentLabel, "");
 		alertViewMessageHeight = m_fAlertViewMessageHeight;
-		m_pContentLabel->setCenter(CADipRect(ALERT_VIEW_WIDTH / 2, alertViewSpaceHeight + m_fAlertViewTitleHeight + m_fAlertViewMessageHeight /2, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
+		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight  + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
 		m_pBackView->addSubview(m_pContentLabel);
 	}
 
@@ -249,7 +250,7 @@ void CAAlertView::showAlertView() {
  
 void CAAlertView::adjustButtonView() {
 
-	int alertViewButtonHeight = 88;
+	float alertViewButtonHeight = 88;
 
 	int btnCount = m_vAllBtn.size();
 
@@ -317,20 +318,22 @@ void CAAlertView::addGrayLine(int y) {
 
 void CAAlertView::calcuAlerViewSize()
 {
-	int alertViewSpaceHeight = 40;
+	float alertViewSpaceHeight = 40;
 
-	int alertViewButtonHeight = 88;
+	float alertViewButtonHeight = 88;
 
-	int alertViewMessageHeight = 150;
+	float alertViewMessageHeight = 150;
 
 	m_fAlertViewHeight += alertViewSpaceHeight;
 
 	if (m_pTitleLabel && !m_pTitleLabel->getText().empty()) {
 
-		m_fAlertViewTitleHeight = CAImage::getFontHeight("fonts/HelveticaNeue-Bold.ttf", _px(ALERT_VIEW_TITLE_FONT));
+		m_fAlertViewTitleHeight = CAImage::getFontHeight("", _px(ALERT_VIEW_TITLE_FONT));
 		
 		m_fAlertViewHeight += m_fAlertViewTitleHeight;
 	}
+
+	m_fAlertViewHeight += alertViewSpaceHeight / 2;
 
 	if (m_pContentLabel && !m_pContentLabel->getText().empty()) {
 		
