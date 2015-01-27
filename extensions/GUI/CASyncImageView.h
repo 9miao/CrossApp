@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include "view/CAImageView.h"
-#include "network/HttpClient.h"
+#include "network/CAHttpClient.h"
 #include "images/CAImage.h"
 
 using namespace CrossApp;
@@ -42,15 +42,15 @@ protected:
     using CAImageView::setImageAsyncWithFile;
     
     virtual void setImage(CAImage* image);
-    virtual void onGetImageRsp(CCHttpClient* client, CCHttpResponse* response);
+    virtual void onGetImageRsp(CAHttpClient* client, CAHttpResponse* response);
     virtual void onCheckIdleHttpClient(float dt);
     virtual void onDecodeImageSelector(CAObject* pSender);
     virtual bool findIdleAndSendReq();
     
 private:
     string m_URL;
-    CCHttpClient* m_httpClient;
-    CCHttpRequest* m_httpReq;
+    CAHttpClient* m_httpClient;
+    CAHttpRequest* m_httpReq;
     CAImage* m_loadingImage;
     CAImage* m_decodeImage;
 };

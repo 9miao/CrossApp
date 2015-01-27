@@ -10,17 +10,30 @@
 #include "basics/CAScheduler.h"
 #include "support/md5.h"
 
-static CCHttpClient* findIdleHttpClient()
+#define THREAD_COUNT 5
+
+static CAHttpClient* findIdleHttpClient()
 {
-    CCHttpClient* c = NULL;
+    static CAHttpClient* http_table[THREAD_COUNT] = {NULL};
     int thread = 0;
-    while ((c = CCHttpClient::getInstance(thread++))) {
-        if (c->getRequestCount() == 0) {
+    int targetThread = 0;
+    while (thread < THREAD_COUNT) {
+        if (http_table[thread] == NULL) {
+            http_table[thread] = CAHttpClient::create();
+            http_table[thread]->retain();
+            targetThread = thread;
             break;
         }
+        
+        if (http_table[thread]->getRequestCount() < 
+            http_table[targetThread]->getRequestCount()) {
+            targetThread = thread;
+        }
+        
+        thread++;
     }
     
-    return c;
+    return http_table[targetThread];
 }
 
 static bool writeImageData(const char* data, int size, const char* name)
@@ -163,7 +176,7 @@ const string& CASyncImageView::getUrl()
 }
 
 
-void CASyncImageView::onGetImageRsp(CCHttpClient* client, CCHttpResponse* response)
+void CASyncImageView::onGetImageRsp(CAHttpClient* client, CAHttpResponse* response)
 {
     if (response->getHttpRequest() != m_httpReq) {
         return;
@@ -198,11 +211,11 @@ bool CASyncImageView::findIdleAndSendReq()
     
     if (m_httpClient) {
         CCLog("%s, %s", __FUNCTION__, m_URL.c_str());
-        CCHttpRequest* req = new CCHttpRequest();
+        CAHttpRequest* req = new CAHttpRequest();
         req->autorelease();
-        req->setRequestType(CCHttpRequest::kHttpGet);
+        req->setRequestType(CAHttpRequest::kHttpGet);
         req->setUrl(m_URL.c_str());
-        req->setResponseCallback(this, httpresponse_selector(CASyncImageView::onGetImageRsp));
+        req->setResponseCallback(this, httprsp_selector(CASyncImageView::onGetImageRsp));
         req->setTag(m_URL.c_str());
         m_httpClient->send(req);
         

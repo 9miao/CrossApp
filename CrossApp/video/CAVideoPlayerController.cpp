@@ -259,7 +259,7 @@ bool CAVideoPlayerController::setMovieDecoder()
         if (!decoder->isValidVideo())
             _minBufferedDuration *= 10.0; // increase for audio
         
-        _decoder        = decoder;
+        _decoder = decoder;
         
         CCLog("buffered limit: %.1f - %.1f", _minBufferedDuration, _maxBufferedDuration);        
         

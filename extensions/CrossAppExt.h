@@ -8,6 +8,10 @@
 #include "network/HttpClient.h"
 #include "network/DownloadManager.h"
 
+#include "network/CAHttpRequest.h"
+#include "network/CAHttpResponse.h"
+#include "network/CAHttpClient.h"
+
 #include "Json/CSContentJsonDictionary.h"
 #include "Json/DictionaryHelper.h"
 
