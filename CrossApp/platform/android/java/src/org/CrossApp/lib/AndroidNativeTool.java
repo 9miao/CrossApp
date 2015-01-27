@@ -112,6 +112,23 @@ public class AndroidNativeTool
 	   Cocos2dxActivity mActivity = (Cocos2dxActivity)s_pContext;
 	   mActivity.mLightHandler.sendEmptyMessage(value);
 	}
+	public static void browserOpenURL(final String url) {
+		s_pContext.runOnUiThread(new Runnable() {
+			public void run() {
+				try {
+					if (s_pContext == null)
+						return;
+					Intent intent = new Intent();
+					intent.setAction("android.intent.action.VIEW");
+					Uri content_url = Uri.parse(url);
+					intent.setData(content_url);
+					s_pContext.startActivity(intent);
+				} catch (Exception e) {
+					Log.d("CrossApp", "browserOpenURL", e);
+				}
+			}
+		});
+	}
 	private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode){
 		 Intent intent = new Intent("com.android.camera.action.CROP");
 

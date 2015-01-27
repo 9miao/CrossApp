@@ -30,6 +30,7 @@ extern "C" {
     extern void closeKeyboardJNI();
     void setKeyboardType(int type);
     void setKeyboardReturnType(int type);
+    void setCursorPos(int pos);
 }
 
 #endif // __ANDROID_IME_JNI_H__

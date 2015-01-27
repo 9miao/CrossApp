@@ -326,7 +326,8 @@ void CAAlertView::calcuAlerViewSize()
 
 	m_fAlertViewHeight += alertViewSpaceHeight;
 
-	if (m_pTitleLabel && !m_pTitleLabel->getText().empty()) {
+	if (m_pTitleLabel && !m_pTitleLabel->getText().empty())
+    {
 
 		m_fAlertViewTitleHeight = CAImage::getFontHeight("", _px(ALERT_VIEW_TITLE_FONT));
 		
@@ -335,13 +336,17 @@ void CAAlertView::calcuAlerViewSize()
 
 	m_fAlertViewHeight += alertViewSpaceHeight / 2;
 
-	if (m_pContentLabel && !m_pContentLabel->getText().empty()) {
+	if (m_pContentLabel && !m_pContentLabel->getText().empty())
+    {
 		
 		m_fAlertViewMessageHeight = CAImage::getStringHeight(m_sMsgFontName.c_str(), _px(ALERT_VIEW_MESG_FONT), m_pContentLabel->getText(), _px(ALERT_VIEW_MESG_WIDTH));
 
-		if (m_fAlertViewMessageHeight > alertViewMessageHeight) {
+		if (m_fAlertViewMessageHeight > alertViewMessageHeight)
+        {
 			m_fAlertViewHeight += alertViewMessageHeight;
-		} else {
+		}
+        else
+        {
 			m_fAlertViewHeight += m_fAlertViewMessageHeight;
 		}
 	}
@@ -352,17 +357,23 @@ void CAAlertView::calcuAlerViewSize()
 	int btnCount = m_vAllBtn.size();
 	CCAssert(btnCount,"");
 
-	if (btnCount == 1 || btnCount == 2) {
+	if (btnCount == 1 || btnCount == 2)
+    {
 		
 		m_fAlertViewHeight += alertViewButtonHeight;
-	} else  {
+	}
+    else
+    {
 
 		m_fAlertViewHeight += alertViewButtonHeight * 3;
 	} 
 
-	if (m_fAlertViewMessageHeight > alertViewMessageHeight) {
+	if (m_fAlertViewMessageHeight > alertViewMessageHeight)
+    {
 		m_fAlertViewLineHeight = alertViewSpaceHeight * 2.5 + m_fAlertViewTitleHeight + alertViewMessageHeight;
-	} else {
+	}
+    else
+    {
 		m_fAlertViewLineHeight = alertViewSpaceHeight * 2.5 + m_fAlertViewTitleHeight + m_fAlertViewMessageHeight;
 	}
 

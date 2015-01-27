@@ -4,6 +4,7 @@
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "dispatcher/CATouch.h"
 #include "dispatcher/CATouchDispatcher.h"
+#include "dispatcher/CAIMEDispatcher.h"
 #include <android/log.h>
 #include <jni.h>
 #include "platform/android/CCEGLView.h"
@@ -49,6 +50,8 @@ extern "C" {
 
     #define KEYCODE_BACK 0x04
     #define KEYCODE_MENU 0x52
+    #define KEYCODE_DPAD_LEFT 0x15
+    #define KEYCODE_DPAD_RIGHT 0x16
 
     JNIEXPORT jboolean JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeKeyDown(JNIEnv * env, jobject thiz, jint keyCode) {
         CAApplication* pDirector = CAApplication::getApplication();
@@ -61,6 +64,12 @@ extern "C" {
                 if (pDirector->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked))
                     return JNI_TRUE;
                 break;
+            case KEYCODE_DPAD_LEFT:
+                CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveBackward(false);
+                return JNI_TRUE;
+            case KEYCODE_DPAD_RIGHT:
+                CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveForward(false);
+                return JNI_TRUE;
             default:
                 return JNI_FALSE;
         }

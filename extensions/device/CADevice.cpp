@@ -38,4 +38,41 @@ namespace CADevice
     {
         
     }
+    
+    void updateVersion(const std::string &url
+                       ,unsigned int versionNumber
+                       ,const std::string &appId)
+    {
+        
+    }
+    
+    CANetWorkType getNetWorkType()
+    {
+        
+    }
+    
+    void setVolume(float sender,int type)
+    {
+        
+    }
+    
+    float getVolume(int type)
+    {
+        
+    }
+    
+    void OpenURL(const std::string &url)
+    {
+        
+    }
+    
+    float getBatteryLevel()
+    {
+        
+    }
+    
+    bool isNetWorkAvailble()
+    {
+        
+    }
 }

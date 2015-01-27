@@ -261,8 +261,7 @@ void CAIMEDispatcher::dispatchDeleteBackward()
     } while (0);
 }
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 void CAIMEDispatcher::dispatchDeleteForward()
 {
     do
@@ -301,7 +300,8 @@ void CAIMEDispatcher::dispatchCursorMoveForward(bool selected)
         m_pImpl->m_DelegateWithIme->cursorMoveForward(selected);
     } while (0);
 }
-
+#endif
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 void CAIMEDispatcher::dispatchCopyToClipboard(std::string *content)
 {
     do
@@ -364,6 +364,24 @@ const char * CAIMEDispatcher::getContentText()
         pszContentText = m_pImpl->m_DelegateWithIme->getContentText();
     }
     return (pszContentText) ? pszContentText : "";
+}
+
+int CAIMEDispatcher::getCursorPos()
+{
+    if (m_pImpl && m_pImpl->m_DelegateWithIme)
+    {
+        return m_pImpl->m_DelegateWithIme->getCursorPos();
+    }
+    return 0;
+}
+
+std::pair<int, int> CAIMEDispatcher::getCharRange()
+{
+    if (m_pImpl && m_pImpl->m_DelegateWithIme)
+    {
+        return m_pImpl->m_DelegateWithIme->getCharRange();
+    }
+    return std::pair<int, int>(0, 0);
 }
 
 //////////////////////////////////////////////////////////////////////////
