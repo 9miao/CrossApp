@@ -161,7 +161,7 @@ protected:
     virtual bool canAttachWithIME();
     virtual bool canDetachWithIME();
     int getStringLength(const std::string &var);
-    int getStringCharCount(const std::string &var);
+    static int getStringCharCount(const std::string &var);
     virtual void setContentSize(const CCSize& var);
     void         initMarkSprite();
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -176,11 +176,12 @@ protected:
     void adjustCursorMoveBackward();
     void adjustCursorMoveForward();
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     virtual void deleteForward();
     virtual void cursorMoveBackward(bool selected);
     virtual void cursorMoveForward(bool selected);
-
+#endif
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
     virtual void copyToClipboard(std::string *content);
     virtual void cutToClipboard(std::string *content);
     virtual void pasteFromClipboard(const char *content);
@@ -188,6 +189,9 @@ protected:
 #endif
 
     virtual const char* getContentText();
+    virtual int getCursorPos();
+    virtual std::pair<int, int> getCharRange();
+
 private:
 	std::vector<TextAttribute> m_vTextFiledChars;
 	int m_iCurPos;
