@@ -10,13 +10,9 @@
 
 #include "Json/CSContentJsonDictionary.h"
 #include "Json/DictionaryHelper.h"
-
 #include "sqlite3/include/sqlite3.h"
-
 #include "LocalStorage/LocalStorage.h"
-
 #include "device/CADevice.h"
-
-#include "studio/CAStudioViewController.h"
+#include "studio/CAStudioViewParser.h"
 
 #endif /* __CrossApp_EXT_H__ */

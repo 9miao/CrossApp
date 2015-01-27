@@ -45,12 +45,6 @@
     <ClCompile Include="..\GUI\CAUIHelper.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Json\CSContentJsonDictionary.cpp">
-      <Filter>json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Json\DictionaryHelper.cpp">
-      <Filter>json</Filter>
-    </ClCompile>
     <ClCompile Include="..\Json\lib_json\json_reader.cpp">
       <Filter>json\lib_json</Filter>
     </ClCompile>
@@ -60,9 +54,6 @@
     <ClCompile Include="..\Json\lib_json\json_writer.cpp">
       <Filter>json\lib_json</Filter>
     </ClCompile>
-    <ClCompile Include="..\studio\CAStudioViewController.cpp">
-      <Filter>studio</Filter>
-    </ClCompile>
     <ClCompile Include="..\sqlite3\include\sqlite3.c">
       <Filter>sqlite3</Filter>
     </ClCompile>
@@ -71,6 +62,15 @@
     </ClCompile>
     <ClCompile Include="..\device\CADevice.cpp">
       <Filter>device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Json\CSContentJsonDictionary.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Json\DictionaryHelper.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\studio\CAStudioViewParser.cpp">
+      <Filter>studio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,12 +89,6 @@
     </ClInclude>
     <ClInclude Include="..\GUI\CAUIHelper.h">
       <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\CSContentJsonDictionary.h">
-      <Filter>json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\DictionaryHelper.h">
-      <Filter>json</Filter>
     </ClInclude>
     <ClInclude Include="..\Json\lib_json\autolink.h">
       <Filter>json\lib_json</Filter>
@@ -126,9 +120,6 @@
     <ClInclude Include="..\Json\lib_json\writer.h">
       <Filter>json\lib_json</Filter>
     </ClInclude>
-    <ClInclude Include="..\studio\CAStudioViewController.h">
-      <Filter>studio</Filter>
-    </ClInclude>
     <ClInclude Include="..\libwebsockets\win32\include\libwebsockets.h">
       <Filter>libwebsockets</Filter>
     </ClInclude>
@@ -150,6 +141,15 @@
     </ClInclude>
     <ClInclude Include="..\device\CADevice.h">
       <Filter>device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\CSContentJsonDictionary.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Json\DictionaryHelper.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\studio\CAStudioViewParser.h">
+      <Filter>studio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

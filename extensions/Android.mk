@@ -17,7 +17,7 @@ Json/lib_json/json_reader.cpp \
 Json/lib_json/json_writer.cpp \
 sqlite3/include/sqlite3.c \
 device/Device_android/CADevice.cpp \
-studio/CAStudioViewController.cpp \
+studio/CAStudioViewParser.cpp \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
