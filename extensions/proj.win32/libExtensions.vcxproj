@@ -97,7 +97,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\device\CADevice.cpp" />
-    <ClCompile Include="..\GUI\CAUIHelper.cpp" />
     <ClCompile Include="..\Json\CSContentJsonDictionary.cpp" />
     <ClCompile Include="..\Json\DictionaryHelper.cpp" />
     <ClCompile Include="..\Json\lib_json\json_reader.cpp" />
@@ -114,7 +113,6 @@
     <ClInclude Include="..\CrossAppExt.h" />
     <ClInclude Include="..\device\CADevice.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
-    <ClInclude Include="..\GUI\CAUIHelper.h" />
     <ClInclude Include="..\Json\CSContentJsonDictionary.h" />
     <ClInclude Include="..\Json\DictionaryHelper.h" />
     <ClInclude Include="..\Json\lib_json\autolink.h" />

@@ -12,10 +12,8 @@
 #include "Json/DictionaryHelper.h"
 
 #include "sqlite3/include/sqlite3.h"
-
 #include "LocalStorage/LocalStorage.h"
 
-#include "GUI/CASyncImageView.h"
 
 //other
 #include "device/CADevice.h"

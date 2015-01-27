@@ -80,7 +80,7 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
         return false;
     }
     this->setBackgroundImage( CAImage::create("source_material/btn_rounded_normal.png") );
-    m_pBackgroundView->setVisible(false);
+    //m_pBackgroundView->setVisible(false);
     this->removeAllSegments();
     const float elemWidth = this->getBounds().size.width / m_nItemsCount;
     m_itemSize = CCSizeMake(elemWidth, this->getBounds().size.height);
@@ -109,7 +109,7 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
         return false;
     }
     this->setBackgroundImage(CAImage::create("source_material/btn_rounded_normal.png"));
-    m_pBackgroundView->setVisible(false);
+    //m_pBackgroundView->setVisible(false);
     this->removeAllSegments();
     const float elemWidth = this->getBounds().size.width / m_nItemsCount;
     m_itemSize = CCSizeMake(elemWidth, this->getBounds().size.height);
@@ -606,8 +606,11 @@ void CASegmentedControl::setBackgroundView(CrossApp::CAView *view)
     CC_SAFE_RETAIN(view);
     CC_SAFE_RELEASE_NULL(m_pBackgroundView);
     m_pBackgroundView = view;
-    m_pBackgroundView->setFrame(this->getBounds());
-    this->insertSubview(m_pBackgroundView, -1);
+    if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setFrame(this->getBounds());
+        this->insertSubview(m_pBackgroundView, -1);
+    }
 }
 
 void CASegmentedControl::setBackgroundImage(CAImage* image)
@@ -634,7 +637,8 @@ void CASegmentedControl::createSeparate()
         CAScale9ImageView* separateImage = CAScale9ImageView::createWithFrame(elemFrame);
         if(m_pSeparateImage == NULL)
         {
-            separateImage->setImage(CAImage::create(getDefaultmSeparateImagePath().c_str()));
+            separateImage->setImage(CAImage::CC_WHITE_IMAGE());
+            separateImage->setColor(ccc4(50, 193, 255, 255));
         }
         else
         {

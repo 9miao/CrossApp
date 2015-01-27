@@ -23,18 +23,22 @@
     
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
-    _locationManager.distanceFilter = 1000.0f;
-    
+    //_locationManager.distanceFilter = 1000.0f;
+    _locationManager.distanceFilter = kCLDistanceFilterNone;
+    [_locationManager startUpdatingLocation];
     return self;
 }
+
 -(void)startUpdatingLocation
 {
-    [_locationManager startUpdatingLocation];
+    
 }
+
 -(void)stopUpdatingLocation
 {
     [_locationManager stopUpdatingLocation];
 }
+
 -(CGPoint)getLocation
 {
     
@@ -43,9 +47,7 @@
 
 #pragma mark Core Location
 
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-
 {
     
     CLLocation * currLocation = [locations lastObject];
@@ -86,11 +88,29 @@
     [self stopUpdatingLocation];
 
 }
-
-
-
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    
+    switch (status) {
+            
+        case kCLAuthorizationStatusNotDetermined:
+            
+            if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+                
+                [_locationManager requestWhenInUseAuthorization];
+                
+            }
+            
+            break;
+            
+        default:  
+            
+            break;  
+            
+    }  
+    
+    
+}
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-
 {
     
     NSLog(@"error: %@",error);
