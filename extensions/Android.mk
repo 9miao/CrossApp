@@ -18,6 +18,7 @@ Json/lib_json/json_writer.cpp \
 sqlite3/include/sqlite3.c \
 device/Device_android/CADevice.cpp \
 studio/CAStudioViewController.cpp \
+GUI/CASyncImageView.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
@@ -32,8 +33,9 @@ LOCAL_EXPORT_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/network \
                            $(LOCAL_PATH)/LocalStorage \
-				$(LOCAL_PATH)/Json \
-				$(LOCAL_PATH)/Json/lib_json \
+						   $(LOCAL_PATH)/Json \
+						   $(LOCAL_PATH)/Json/lib_json \
+						   $(LOCAL_PATH)/GUI
 
 
 

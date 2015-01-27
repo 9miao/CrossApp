@@ -8,6 +8,11 @@ LOCAL_MODULE_FILENAME := libCrossApp
 
 LOCAL_SRC_FILES := \
 CrossApp.cpp \
+video/CAVideoPlayerAudioManager.cpp \
+video/CAVideoPlayerController.cpp \
+video/CAVideoPlayerDecoder.cpp \
+video/CAVideoPlayerRender.cpp \
+video/CAVideoPlayerView.cpp \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
 actions/CCActionEase.cpp \
@@ -131,12 +136,14 @@ platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
+platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxSDL.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \
 platform/android/jni/TouchesJni.cpp \
 platform/android/jni/DPIJni.cpp \
 script_support/JSViewController.cpp \
 script_support/CCScriptSupport.cpp \
+
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/kazmath/include \
@@ -148,11 +155,13 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -llog \
-                -lz
+                -lz \
+                -landroid
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
-                       -lz
+                       -lz \
+                       -landroid
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
@@ -161,9 +170,23 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype2_static
 
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ffmpeg_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avcodec_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avformat_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avutil_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swresample_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swscale_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ass_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_vo-aacenc_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_vo-amrwbenc_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libsdl_static
+LOCAL_SHARED_LIBRARIES += cocos_ffmpeg_shared
+
 # define the macro to compile through support/zip_support/ioapi.c
-LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API
-LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API
+LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
+LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
+
+LOCAL_EXPORT_SHARED_LIBRARIES += cocos_ffmpeg_shared
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -172,4 +195,7 @@ $(call import-module,libpng)
 $(call import-module,libtiff)
 $(call import-module,libwebp)
 $(call import-module,libfreetype2)
+$(call import-module,libffmpeg)
+$(call import-module,libsdl)
+
 
