@@ -33,6 +33,7 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
 
 CASegmentedControl::~CASegmentedControl()
 {
+    CC_SAFE_RELEASE_NULL(m_pSeparateImage);
     this->removeAllSegments();
 }
 
@@ -107,7 +108,7 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
     {
         return false;
     }
-    this->setBackgroundImage( CAImage::create("source_material/btn_rounded_normal.png") );
+    this->setBackgroundImage(CAImage::create("source_material/btn_rounded_normal.png"));
     m_pBackgroundView->setVisible(false);
     this->removeAllSegments();
     const float elemWidth = this->getBounds().size.width / m_nItemsCount;
@@ -658,6 +659,8 @@ void CASegmentedControl::cleanAllSeparate()
 void CASegmentedControl::setSeparateImage(CAImage* image)
 {
     cleanAllSeparate();
+    CC_SAFE_RELEASE_NULL(m_pSeparateImage);
+    CC_SAFE_RETAIN(image);
     m_pSeparateImage = image;
     createSeparate();
     setSeparateImageVisible(true);
@@ -685,7 +688,7 @@ float CASegmentedControl::getSeparateWidth()
     return m_fSeparateWidth;
 }
 
-void CASegmentedControl::setSegmentImage(const CAControlState& controlState,  CAImage* image)
+void CASegmentedControl::setSegmentImage(const CAControlState& controlState, CAImage* image)
 {
     if(m_pBackgroundView && m_pBackgroundView->isVisible())
     {
