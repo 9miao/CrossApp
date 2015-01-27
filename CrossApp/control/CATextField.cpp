@@ -3,8 +3,8 @@
 //  project
 //
 //  Created by lh on 14-5-15.
-//
-//
+//  
+//  Modify by Zhujian on 14-8-4
 
 #include "CATextField.h"
 #include "basics/CAApplication.h"
@@ -14,10 +14,34 @@
 #include <algorithm>
 #include "view/CAScale9ImageView.h"
 #include "shaders/CAShaderCache.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/jni/JniHelper.h"
+#endif
 
 NS_CC_BEGIN
 
 #define BORDER_WIDTH(w) (0.01125*w)
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+extern "C"
+{
+	void setSelectionPosition(int sender)
+	{
+		const char* class_name = "org/CrossApp/lib/Cocos2dxGLSurfaceView";
+		JniMethodInfo info;
+		jobject dthero;
+		if (JniHelper::getStaticMethodInfo(info, class_name, "getInstance", "()Lorg/CrossApp/lib/Cocos2dxGLSurfaceView;"))
+		{
+			dthero = info.env->CallStaticObjectMethod(info.classID, info.methodID);
+		}
+
+		if (dthero && JniHelper::getMethodInfo(info, class_name, "changeSelectionPosition", "(I)V"))
+		{
+			info.env->CallVoidMethod(dthero, info.methodID, sender);
+		}
+	}
+}
+#endif
 
 CATextField::CATextField()
 : m_pDelegate(NULL)
@@ -40,7 +64,6 @@ CATextField::CATextField()
 , m_iVertMargins(0)
 , m_pBackgroundView(NULL)
 {
-
 	m_iFontHeight = CAImage::getFontHeight("", m_iFontSize);
 }
 
@@ -311,6 +334,10 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 			m_iString_r_length = m_cImageSize.width - m_iString_l_length;
             
 			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, this->getBounds().size.height / 2));
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+			setSelectionPosition(getStringCharCount(m_sText.substr(0, m_iCurPos)));
+#endif
         }
     }
     else
@@ -401,7 +428,6 @@ void CATextField::insertText(const char * text, int len)
 	this->setImageRect(r);
     if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
     {
-        //float mPmarkWidth = MIN(this->getBounds().size.width, getCursorX());
         m_pCursorMark->setCenterOrigin(CCPoint(this->getImageRect().size.width + m_iHoriMargins, this->getBounds().size.height / 2));
     }
     else
@@ -418,8 +444,15 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
 	std::string cszNewStr = str;
 	if (cszNewStr.size() >= m_sText.size())
 	{
-		cszNewStr = cszNewStr.substr(m_sText.size(), cszNewStr.size());
-		insertText(cszNewStr.c_str(), cszNewStr.size());
+		for (int i=0; i < start; i++)
+		{
+			if (cszNewStr[i] < 0 || cszNewStr[i]>127)
+			{
+				start += 2; i += 2;
+			}
+		}
+		std::string cszStrInsert=cszNewStr.substr(start, cszNewStr.size()-m_sText.size());
+		insertText(cszStrInsert.c_str(), cszStrInsert.size());
 	}
 }
 
