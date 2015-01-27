@@ -39,22 +39,18 @@ public:
     static CAVideoPlayerController* create(const string& path, const string& title);
     
     virtual bool init(const string& path, const string& title);
-    virtual void viewDidLoad();
-    virtual void viewDidUnload();
     
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-    
-    virtual void prepare();
     virtual void play();
     virtual void pause();
     virtual bool isPlaying();
     virtual void displayHUD(bool bDisp);
     
-    virtual void didReceiveMemoryWarning();
-        
+    virtual float getDuration();
+    virtual float getPosition();
+    virtual void setPosition(float pos);
+    
+    CC_SYNTHESIZE(CAVideoPlayerControllerDelegate*, _delegate, Delegate);
+            
 protected:
     enum {
         
@@ -104,6 +100,15 @@ protected:
     CALabel             *_playTime;
     
 protected:
+    virtual void viewDidLoad();
+    virtual void viewDidUnload();
+    virtual void prepare();
+    
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
     bool interruptDecoder();
     bool setMovieDecoder();
     void freeBufferedFrames();
@@ -127,14 +132,14 @@ protected:
     
     void dispearHUDView();
     void showHUDView();
+    
+    virtual void didReceiveMemoryWarning();
 
     //    HUD
 protected:
     CASlider            *_slider;
     CAView              *_HUDView;
-    
-    CC_SYNTHESIZE(CAVideoPlayerControllerDelegate*, _delegate, Delegate);
-    
+        
 protected:
     void onButtonBack(CAControl* control, CCPoint point);
     void onButtonPause(CAControl* control, CCPoint point);

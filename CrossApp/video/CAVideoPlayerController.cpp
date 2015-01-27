@@ -1112,3 +1112,21 @@ void CAVideoPlayerController::showHUDView()
     _HUDView->stopAllActions();
     _HUDView->runAction(CCFadeIn::create(0.3f));
 }
+
+float CAVideoPlayerController::getDuration()
+{
+    return _decoder->getDuration();
+}
+
+float CAVideoPlayerController::getPosition()
+{
+    return _moviePosition - _decoder->getStartTime();
+}
+
+void CAVideoPlayerController::setPosition(float pos)
+{
+    setMoviePosition(pos);
+}
+
+
+

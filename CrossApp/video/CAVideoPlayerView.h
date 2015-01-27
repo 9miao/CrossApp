@@ -57,8 +57,6 @@ private:
     };
     
 private:
-    GLint           _backingWidth;
-    GLint           _backingHeight;
     GLuint          _program;
     GLint           _uniformMatrix;
     GLfloat         _vertices[8];

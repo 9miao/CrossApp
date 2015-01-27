@@ -77,10 +77,7 @@ bool CAVideoPlayerView::init()
     } else {
         _renderer = new VPFrameRenderRGB();
     }
-    
-//    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
-//    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
-        
+            
     if (!_renderer->loadShaders()) {
         delete _renderer;
         return false;
