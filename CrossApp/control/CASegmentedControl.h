@@ -50,9 +50,9 @@ public:
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
-    void setBackgroundImageView(CAImage* image);
+    void setBackgroundImage(CAImage* image);
     
-    void setSeparateImage(const std::string &file);
+    void setSeparateImage(CAImage* image);
     
     void setSeparateImageVisible(bool isVisible);
     
@@ -60,7 +60,7 @@ public:
     
     float getSeparateWidth();
     
-    void setSegmentImage(const CAControlState& controlState, std::string imagePath);
+    void setSegmentImage(const CAControlState& controlState, CAImage* image);
     
 public:
     
@@ -112,17 +112,14 @@ protected:
     std::string getDefaultmSeparateImagePath();
     void createSeparate();
     void cleanAllSeparate();
-    CAView* getTailorImageAtIndex(int index, std::string imagePath);
+    CAView* getTailorImageAtIndex(int index,  CAImage* image);
     
 protected:
-    
     std::set<int>                       m_nForbidSelectedIndexs;
-    
     unsigned int                        m_nItemsCount;
     std::vector<CAButton *>             m_segments;
-    CAScale9ImageView*                  m_pBackGroundImageView;
     std::vector<CAScale9ImageView *>    m_vSeparateImage;
-    std::string                         m_sSeparateImagePath;
+    CAImage*                            m_pSeparateImage;
     float                               m_fSeparateWidth;
 };
 
