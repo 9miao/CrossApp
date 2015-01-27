@@ -4,6 +4,14 @@
 #include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
+
+typedef enum {
+    CCDeviceIdiomUnknown = -1,
+    
+    CCDeviceIdiomPad = 0,
+    CCDeviceIdiomPhone = 1
+}CCDeviceIdiom;
+
 /**
  @js NA
  @lua NA
@@ -18,6 +26,15 @@ public:
      *  @return The DPI of device.
      */
     static int getDPI();
+    
+    /**
+     *  Gets the User Interface Idiom of device
+     *  @return The User Interface Idiom of device.
+     *  
+     *  0 -- pad 
+     *  1 -- phone
+     */    
+    static CCDeviceIdiom getIdiom();
 };
 
 

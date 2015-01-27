@@ -49,6 +49,7 @@ void FirstViewController::viewDidLoad()
 	tableView->setTableViewDataSource(this);
 	tableView->setBackGroundColor(CAColor_clear);
 	tableView->setShowsVerticalScrollIndicator(false);
+    tableView->setBounces(false);
 	this->getView()->addSubview(tableView);
 }
 

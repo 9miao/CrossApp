@@ -25,7 +25,6 @@
 		15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23B168318C3006C7997 /* SimpleAudioEngine.mm */; };
 		15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */; };
 		1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */; };
-		1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */; };
 		1A9CE9A81765A889000E3062 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9CE9A71765A889000E3062 /* libsqlite3.dylib */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
@@ -34,7 +33,6 @@
 		B00CC5EE1978B3F600A62E4C /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00CC5EC1978B3F600A62E4C /* RootWindow.cpp */; };
 		B00CC6011978B4F300A62E4C /* libCrossApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B00CC5FC1978B4C200A62E4C /* libCrossApp.a */; };
 		B01F7164195166F500BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F7163195166F500BA07A6 /* source_material */; };
-		B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145A190A6A3700C3633B /* CAUIHelper.cpp */; };
 		B03E8FD11938876B00FD9A06 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FD01938876B00FD9A06 /* HelloWorld.png */; };
 		B047B92819E91D2A00F24BE6 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B92619E91D2A00F24BE6 /* DownloadManager.cpp */; };
 		B04822D419FA42170019F1A7 /* CADevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04822C419FA42170019F1A7 /* CADevice.cpp */; };
@@ -49,8 +47,8 @@
 		B04C0BB919011ED8009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAE19011ED8009854FD /* sconscript */; };
 		B04C0BE719011F42009854FD /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BE619011F42009854FD /* fonts */; };
 		B04C0BEA19011F80009854FD /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BE819011F80009854FD /* AppDelegate.cpp */; };
-		B0A625661A773A9D008D51BB /* CAStudioViewParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A625641A773A9D008D51BB /* CAStudioViewParser.cpp */; };
 		B0AD93B11920790900EA40BB /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93AD1920790900EA40BB /* FirstViewController.cpp */; };
+		B0CA59EB1A77738B00BECD89 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA59B01A77738B00BECD89 /* libwebsockets.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,7 +100,6 @@
 		15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1A9CE9801765A7FA000E3062 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
-		1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
 		1A9CE9A71765A889000E3062 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* HelloCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41BC70D915BF81A5006A0A6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
@@ -116,8 +113,6 @@
 		B00CC5ED1978B3F600A62E4C /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
 		B00CC5F71978B4C200A62E4C /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.mac/CrossApp.xcodeproj; sourceTree = "<group>"; };
 		B01F7163195166F500BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
-		B02A145A190A6A3700C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
-		B02A145B190A6A3700C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
 		B034080519920FD1005DB179 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		B034080619920FD1005DB179 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		B03E8FD01938876B00FD9A06 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
@@ -150,11 +145,11 @@
 		B04C0BE619011F42009854FD /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B04C0BE819011F80009854FD /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		B04C0BE919011F80009854FD /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
-		B0A625641A773A9D008D51BB /* CAStudioViewParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAStudioViewParser.cpp; path = ../../studio/CAStudioViewParser.cpp; sourceTree = "<group>"; };
-		B0A625651A773A9D008D51BB /* CAStudioViewParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAStudioViewParser.h; path = ../../studio/CAStudioViewParser.h; sourceTree = "<group>"; };
 		B0AD93AC1920790900EA40BB /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
 		B0AD93AD1920790900EA40BB /* FirstViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FirstViewController.cpp; path = ../Classes/FirstViewController.cpp; sourceTree = "<group>"; };
 		B0AD93AE1920790900EA40BB /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstViewController.h; path = ../Classes/FirstViewController.h; sourceTree = "<group>"; };
+		B0CA59AE1A77738B00BECD89 /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
+		B0CA59B01A77738B00BECD89 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +169,7 @@
 				15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */,
 				15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */,
 				15C64823165F391E007D4F18 /* Cocoa.framework in Frameworks */,
+				B0CA59EB1A77738B00BECD89 /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +215,7 @@
 			children = (
 				B047B92519E91D2000F24BE6 /* CrossAppExt.h */,
 				15C158D4168315E500D239F2 /* ExtensionMacros.h */,
+				B0CA59A01A77738B00BECD89 /* libwebsockets */,
 				B04822C319FA42170019F1A7 /* device */,
 				B034080219920FD1005DB179 /* sqlite3 */,
 				B00CC6131979302E00A62E4C /* studio */,
@@ -234,8 +231,6 @@
 		15C158D5168315E500D239F2 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				B02A145A190A6A3700C3633B /* CAUIHelper.cpp */,
-				B02A145B190A6A3700C3633B /* CAUIHelper.h */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -285,7 +280,6 @@
 			children = (
 				1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */,
 				1A9CE9801765A7FA000E3062 /* LocalStorage.h */,
-				1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */,
 			);
 			path = LocalStorage;
 			sourceTree = "<group>";
@@ -357,8 +351,6 @@
 		B00CC6131979302E00A62E4C /* studio */ = {
 			isa = PBXGroup;
 			children = (
-				B0A625641A773A9D008D51BB /* CAStudioViewParser.cpp */,
-				B0A625651A773A9D008D51BB /* CAStudioViewParser.h */,
 			);
 			name = studio;
 			path = extensions/studio;
@@ -435,6 +427,39 @@
 			);
 			name = Resources;
 			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		B0CA59A01A77738B00BECD89 /* libwebsockets */ = {
+			isa = PBXGroup;
+			children = (
+				B0CA59AC1A77738B00BECD89 /* ios */,
+			);
+			path = libwebsockets;
+			sourceTree = "<group>";
+		};
+		B0CA59AC1A77738B00BECD89 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B0CA59AD1A77738B00BECD89 /* include */,
+				B0CA59AF1A77738B00BECD89 /* lib */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		B0CA59AD1A77738B00BECD89 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				B0CA59AE1A77738B00BECD89 /* libwebsockets.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		B0CA59AF1A77738B00BECD89 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				B0CA59B01A77738B00BECD89 /* libwebsockets.a */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -528,7 +553,6 @@
 			files = (
 				41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */,
 				B047B92819E91D2A00F24BE6 /* DownloadManager.cpp in Sources */,
-				B0A625661A773A9D008D51BB /* CAStudioViewParser.cpp in Sources */,
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
 				B04C0BB519011ED8009854FD /* json_reader.cpp in Sources */,
 				B04C0BB819011ED8009854FD /* json_writer.cpp in Sources */,
@@ -545,10 +569,8 @@
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
 				B0AD93B11920790900EA40BB /* FirstViewController.cpp in Sources */,
-				B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */,
 				B04822D419FA42170019F1A7 /* CADevice.cpp in Sources */,
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,
-				1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,6 +637,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/libraries\"",
 					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/sqlite3/libraries/win32",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/libwebsockets/android/lib/armeabi",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/libwebsockets/android/lib/armeabi-v7a",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/libwebsockets/android/lib/x86",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/libwebsockets/ios/lib",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/libwebsockets/win32/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = "-O2";
@@ -656,6 +683,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/libraries\"",
 					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/sqlite3/libraries/win32",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/libwebsockets/android/lib/armeabi",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/libwebsockets/android/lib/armeabi-v7a",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/libwebsockets/android/lib/x86",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/libwebsockets/ios/lib",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/extensions/libwebsockets/win32/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = HelloCpp;

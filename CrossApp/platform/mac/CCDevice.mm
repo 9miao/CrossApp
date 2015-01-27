@@ -8,4 +8,9 @@ int CCDevice::getDPI()
     return 160;
 }
 
+CCDeviceIdiom CCDevice::getIdiom()
+{
+	return CCDeviceIdiomPhone;
+}
+
 NS_CC_END

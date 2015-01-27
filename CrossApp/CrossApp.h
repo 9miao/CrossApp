@@ -148,6 +148,9 @@
 #include "platform/CAFreeTypeFont.h"
 #include "platform/CAFTFontCache.h"
 
+// video
+#include "video/CAVideoPlayerController.h"
+
 //script_support
 #include "script_support/CCScriptSupport.h"
 #include "script_support/JSViewController.h"

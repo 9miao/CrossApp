@@ -27,7 +27,6 @@
 		B01A293A1994C6D200D42BA0 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = B01A29391994C6D200D42BA0 /* sqlite3.c */; };
 		B01DFC3B190513FD00214AE2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B01DFC3A190513FD00214AE2 /* fonts */; };
 		B01F71671951682600BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71661951682600BA07A6 /* source_material */; };
-		B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */; };
 		B034086E19921255005DB179 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B034085819921255005DB179 /* libwebsockets.a */; };
 		B036EB5D19406C7F000434DD /* icon in Resources */ = {isa = PBXBuildFile; fileRef = B036EB5C19406C7F000434DD /* icon */; };
 		B03E8FEC1938879200FD9A06 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FDF1938879200FD9A06 /* HelloWorld.png */; };
@@ -126,8 +125,6 @@
 		B01A29391994C6D200D42BA0 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		B01DFC3A190513FD00214AE2 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
-		B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
-		B02A145F190A6A4B00C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
 		B034083E199211CC005DB179 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		B034083F199211CC005DB179 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		B034085619921255005DB179 /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
@@ -264,8 +261,6 @@
 		15A3D9EC1682F826002FB0C5 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */,
-				B02A145F190A6A4B00C3633B /* CAUIHelper.h */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -367,9 +362,6 @@
 				EB1818D919388005002856FF /* AddressBookUI.framework */,
 				EB1818D719388001002856FF /* AddressBook.framework */,
 				EB1818D519387FFA002856FF /* CoreLocation.framework */,
-				1ACB3243164770DE00914215 /* libcurl.a */,
-				BF170DB212928DE900B8313A /* libxml2.dylib */,
-				BF170DB412928DE900B8313A /* libz.dylib */,
 				D44C620F132DFF4E0009C878 /* AudioToolbox.framework */,
 				D44C620D132DFF430009C878 /* AVFoundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -378,6 +370,9 @@
 				BF170DB012928DE900B8313A /* OpenGLES.framework */,
 				BF1C47EA1293683800B63C5D /* QuartzCore.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				BF170DB412928DE900B8313A /* libz.dylib */,
+				BF170DB212928DE900B8313A /* libxml2.dylib */,
+				1ACB3243164770DE00914215 /* libcurl.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -646,7 +641,6 @@
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
 				B0A625511A7731CD008D51BB /* Reachability.m in Sources */,
 				B0AD93EA19207CA300EA40BB /* FirstViewController.cpp in Sources */,
-				B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */,
 				15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */,
 				B04822BC19FA41F70019F1A7 /* CAAddress.mm in Sources */,
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
