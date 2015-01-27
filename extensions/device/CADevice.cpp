@@ -48,7 +48,7 @@ namespace CADevice
     
     CANetWorkType getNetWorkType()
     {
-        return CANetWorkTypeNone;
+		return CANetWorkTypeNone;
     }
     
     void setVolume(float sender,int type)
@@ -58,7 +58,7 @@ namespace CADevice
     
     float getVolume(int type)
     {
-        return 1.0f;
+		return 1.0f;
     }
     
     void OpenURL(const std::string &url)
@@ -68,11 +68,11 @@ namespace CADevice
     
     float getBatteryLevel()
     {
-        return 1.0;
+		return 1.0f;
     }
     
     bool isNetWorkAvailble()
     {
-        return false;
+		return false;
     }
 }
