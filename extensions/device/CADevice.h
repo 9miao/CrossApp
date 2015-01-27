@@ -86,8 +86,8 @@ namespace CADevice
     void updateVersion(const std::string &url
                       ,unsigned int versionNumber
                       ,const std::string &appId);
-    CANetWorkType getNetWorkType();
     
+    CANetWorkType getNetWorkType();
     
     void setVolume(float sender,int type);
     

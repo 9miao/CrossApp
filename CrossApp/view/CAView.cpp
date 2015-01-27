@@ -71,7 +71,6 @@ CAView::CAView(void)
 , m_sAdditionalTransform(CATransformationMakeIdentity())
 , m_pCamera(NULL)
 , m_nZOrder(0)
-, m_pSubviews(NULL)
 , m_pSuperview(NULL)
 , m_pUserData(NULL)
 , m_pUserObject(NULL)
@@ -133,19 +132,15 @@ CAView::~CAView(void)
     CC_SAFE_RELEASE(m_pShaderProgram);
     CC_SAFE_RELEASE(m_pUserObject);
     
-    if(m_pSubviews && m_pSubviews->count() > 0)
+    if(!m_obSubviews.empty())
     {
-        CAObject* subview;
-        CCARRAY_FOREACH(m_pSubviews, subview)
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
         {
-            CAView* pChild = (CAView*) subview;
-            if (pChild)
-            {
-                pChild->m_pSuperview = NULL;
-            }
+            (*itr)->m_pSuperview = NULL;
         }
     }
-    CC_SAFE_RELEASE_NULL(m_pSubviews);
+    m_obSubviews.clear();
     CC_SAFE_RELEASE(m_pobImage);
     
     --viewCount;
@@ -485,14 +480,14 @@ void CAView::setPoint(const CCPoint& newPoint)
 }
 
 /// children getter
-CCArray* CAView::getSubviews()
+const CAVector<CAView*>& CAView::getSubviews()
 {
-    return m_pSubviews;
+    return m_obSubviews;
 }
 
 unsigned int CAView::getSubviewsCount(void) const
 {
-    return m_pSubviews ? m_pSubviews->count() : 0;
+    return (unsigned int)m_obSubviews.size();
 }
 
 /// camera getter: lazy alloc
@@ -605,7 +600,14 @@ void CAView::setContentSize(const CCSize & size)
 
         this->updateImageRect();
         
-        arrayMakeObjectsPerformSelector(m_pSubviews, reViewlayout, CAView*);
+        if(!m_obSubviews.empty())
+        {
+            CAVector<CAView*>::iterator itr;
+            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            {
+                (*itr)->reViewlayout();
+            }
+        }
         
         this->updateDraw();
     }
@@ -782,29 +784,41 @@ void CAView::updateDraw()
     }
 }
 
-// lazy allocs
-void CAView::childrenAlloc(void)
-{
-    m_pSubviews = new CCArray(4);
-}
-
 CAView* CAView::getSubviewByTag(int aTag)
 {
     CCAssert( aTag != kCAObjectTagInvalid, "Invalid tag");
     
-    if(m_pSubviews && m_pSubviews->count() > 0)
+    if(!m_obSubviews.empty())
     {
-        CAObject* subview;
-        CCARRAY_FOREACH(m_pSubviews, subview)
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
         {
-            CAView* pNode = (CAView*) subview;
-            if(pNode && pNode->m_nTag == aTag)
-                return pNode;
+            if ((*itr)->m_nTag == aTag)
+            {
+                return *itr;
+            }
         }
     }
     return NULL;
 }
 
+CAView* CAView::getSubviewByTextTag(const std::string& textTag)
+{
+    CCAssert( !textTag.empty(), "Invalid tag");
+    
+    if(!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+        {
+            if ((*itr)->m_sTextTag.compare(textTag) == 0)
+            {
+                return *itr;
+            }
+        }
+    }
+    return NULL;
+}
 
 void CAView::addSubview(CAView *subview)
 {
@@ -819,7 +833,7 @@ void CAView::insertSubview(CAView* subview, int z)
     
     if (m_pobBatchView)
     {
-        m_pobBatchView->appendChild(subview);
+        m_pobBatchView->appendSubview(subview);
         
         if (!m_bReorderChildDirty)
         {
@@ -827,13 +841,8 @@ void CAView::insertSubview(CAView* subview, int z)
         }
     }
     
-    if(m_pSubviews == NULL)
-    {
-        this->childrenAlloc();
-    }
-    
     m_bReorderChildDirty = true;
-    ccArrayAppendObjectWithResize(m_pSubviews->data, subview);
+    m_obSubviews.pushBack(subview);
     subview->_setZOrder(z);
     
     subview->setSuperview(this);
@@ -858,23 +867,16 @@ void CAView::removeFromSuperview()
 
 void CAView::removeSubview(CAView* subview)
 {
-    // explicit nil handling
-    if (m_pSubviews == NULL)
-    {
-        return;
-    }
-    
     if (m_pobBatchView)
     {
-        m_pobBatchView->removeSpriteFromAtlas(subview);
+        m_pobBatchView->removeViewFromAtlas(subview);
     }
     
-    if ( m_pSubviews->containsObject(subview) )
+    if ( m_obSubviews.contains(subview))
     {
         this->detachSubview(subview);
     }
 }
-
 
 void CAView::removeSubviewByTag(int tag)
 {
@@ -884,7 +886,23 @@ void CAView::removeSubviewByTag(int tag)
     
     if (subview == NULL)
     {
-        CCLOG("CrossApp: removeChildByTag(tag = %d): child not found!", tag);
+        CCLOG("CrossApp: removeSubviewByTag(tag = %d): child not found!", tag);
+    }
+    else
+    {
+        this->removeSubview(subview);
+    }
+}
+
+void CAView::removeSubviewByTextTag(const std::string& textTag)
+{
+    CCAssert( !textTag.empty(), "Invalid tag");
+    
+    CAView *subview = this->getSubviewByTextTag(textTag);
+    
+    if (subview == NULL)
+    {
+        CCLOG("CrossApp: removeSubviewByTextTag(textTag = %s): child not found!", textTag.c_str());
     }
     else
     {
@@ -894,45 +912,33 @@ void CAView::removeSubviewByTag(int tag)
 
 void CAView::removeAllSubviews()
 {
-    // not using detachChild improves speed here
-    if ( m_pSubviews && m_pSubviews->count() > 0 )
+    // not using detachSubview improves speed here
+    if (!m_obSubviews.empty())
     {
         if (m_pobBatchView)
         {
-            CAObject* obj = NULL;
-            CCARRAY_FOREACH(m_pSubviews, obj)
+            CAVector<CAView*>::iterator itr;
+            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
             {
-                CAView* subview = dynamic_cast<CAView*>(obj);
-                if (subview)
-                {
-                    m_pobBatchView->removeSpriteFromAtlas(subview);
-                }
+                m_pobBatchView->removeViewFromAtlas(*itr);
             }
         }
-        
-        CAObject* obj;
-        CCARRAY_FOREACH(m_pSubviews, obj)
-        {
-            CAView* subview = dynamic_cast<CAView*>(obj);
-            if (subview)
-            {
-                // IMPORTANT:
-                //  -1st do onExit
-                //  -2nd cleanup
-                if(m_bRunning)
-                {
-                    subview->onExitTransitionDidStart();
-                    subview->onExit();
-                }
 
-                // set parent nil at the end
-                subview->setSuperview(NULL);
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+        {
+            if(m_bRunning)
+            {
+                (*itr)->onExitTransitionDidStart();
+                (*itr)->onExit();
             }
+            
+            (*itr)->m_pSuperview = NULL;
         }
         
-        m_pSubviews->removeAllObjects();
+        m_obSubviews.clear();
     }
-    
+
     m_bHasChildren = false;
 }
 
@@ -951,7 +957,7 @@ void CAView::detachSubview(CAView *subview)
     // set parent nil at the end
     subview->setSuperview(NULL);
     
-    m_pSubviews->removeObject(subview);
+    m_obSubviews.eraseObject(subview);
     
     this->updateDraw();
 }
@@ -969,7 +975,7 @@ void CAView::reorderSubview(CAView *subview, int zOrder)
         m_pobBatchView->reorderBatch(true);
     }
     
-    CCAssert( subview != NULL, "Child must be non-nil");
+    CCAssert( subview != NULL, "Subview must be non-nil");
     m_bReorderChildDirty = true;
     subview->setOrderOfArrival(s_globalOrderOfArrival++);
     subview->_setZOrder(zOrder);
@@ -977,40 +983,23 @@ void CAView::reorderSubview(CAView *subview, int zOrder)
 
 void CAView::sortAllSubviews()
 {
-    if (m_bReorderChildDirty)
+    if (m_bReorderChildDirty && !m_obSubviews.empty())
     {
-        int i,j,length = m_pSubviews->data->num;
-        CAView ** x = (CAView**)m_pSubviews->data->arr;
-        CAView *tempItem;
-        
-        for(i=1; i<length; i++)
+        std::sort(m_obSubviews.begin(), m_obSubviews.end(), compareSubviewZOrder);
+    
+        if (m_pobBatchView)
         {
-            tempItem = x[i];
-            j = i-1;
-            CC_CONTINUE_IF(tempItem == NULL);
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempItem->m_nZOrder < x[j]->m_nZOrder || ( tempItem->m_nZOrder== x[j]->m_nZOrder && tempItem->m_uOrderOfArrival < x[j]->m_uOrderOfArrival ) ) )
-            {
-                x[j+1] = x[j];
-                j = j-1;
-            }
-            x[j+1] = tempItem;
-        }
-        
-        if ( m_pobBatchView)
-        {
-            arrayMakeObjectsPerformSelector(m_pSubviews, sortAllSubviews, CAView*);
+            CAVector<CAView*>::iterator itr;
+            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+                if(m_bRunning) (*itr)->sortAllSubviews();
         }
         
         m_bReorderChildDirty = false;
     }
 }
 
-#include "CAImageView.h"
-
 void CAView::draw()
 {
-
     CC_RETURN_IF(m_pobImage == NULL);
     CC_RETURN_IF(m_pShaderProgram == NULL);
     
@@ -1022,11 +1011,15 @@ void CAView::draw()
     
 #define kQuadSize sizeof(m_sQuad.bl)
 #ifdef EMSCRIPTEN
+    
     long offset = 0;
     setGLBufferData(&m_sQuad, 4 * kQuadSize, 0);
+    
 #else
+    
     long offset = (long)&m_sQuad;
-#endif // EMSCRIPTEN
+    
+#endif
     
     // vertex
     int diff = offsetof( ccV3F_C4B_T2F, vertices);
@@ -1086,12 +1079,11 @@ void CAView::draw()
     
     CC_INCREMENT_GL_DRAWS(1);
     
-    CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAImageView - draw");
+    CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAView - draw");
 }
 
 void CAView::visit()
 {
-    // quick return if not visible. children won't be drawn.
     CC_RETURN_IF(!m_bVisible);
     
     kmGLPushMatrix();
@@ -1100,7 +1092,6 @@ void CAView::visit()
     
     if (!m_bDisplayRange)
     {
-        // check parent scissor
         if (glIsEnabled(GL_SCISSOR_TEST))
         {
             GLfloat params[4];
@@ -1189,55 +1180,38 @@ void CAView::visit()
             glScissor(frame.origin.x - 0.5f, frame.origin.y + 0.5f, frame.size.width + 1.0f, frame.size.height);
         }
     }
+
+    this->sortAllSubviews();
     
-    CAView* pNode = NULL;
-    unsigned int i = 0;
-    if(m_pSubviews && m_pSubviews->count() > 0)
+    CAVector<CAView*>::iterator itr=m_obSubviews.begin();
+    while (itr!=m_obSubviews.end())
     {
-        this->sortAllSubviews();
-        // draw children zOrder < 0
-        ccArray *arrayData = m_pSubviews->data;
-
-        for( ; i < arrayData->num; i++ )
-        {
-            pNode = (CAView*) arrayData->arr[i];
-
-            if ( pNode && pNode->m_nZOrder < 0 )
-            {
-                pNode->visit();
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        this->draw();
-
-        for( ; i < arrayData->num; i++ )
-        {
-            pNode = (CAView*) arrayData->arr[i];
-            if (pNode && pNode->m_nZOrder >= 0)
-            {
-                pNode->visit();
-            }
-        }
-    }
-    else
-    {
-        this->draw();
+        CC_BREAK_IF((*itr)->m_nZOrder >= 0);
+        (*itr)->visit();
+        itr++;
     }
     
-    m_uOrderOfArrival = 0;
+    this->draw();
+    
+    while (itr!=m_obSubviews.end())
+    {
+        (*itr)->visit();
+        itr++;
+    }
+    
+    //m_uOrderOfArrival = 0;
     
     if (!m_bDisplayRange)
     {
-        if (m_bRestoreScissor) {
-            glScissor(m_obRestoreScissorRect.origin.x, 
-                      m_obRestoreScissorRect.origin.y, 
+        if (m_bRestoreScissor)
+        {
+            glScissor(m_obRestoreScissorRect.origin.x,
+                      m_obRestoreScissorRect.origin.y,
                       m_obRestoreScissorRect.size.width, 
                       m_obRestoreScissorRect.size.height);
-        } else {
+        }
+        else
+        {
             glDisable(GL_SCISSOR_TEST);
         }
     }
@@ -1277,12 +1251,16 @@ void CAView::transform()
         bool translate = (anchorPointInPoints.x != 0.0f || anchorPointInPoints.y != 0.0f);
 
         if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(anchorPointInPoints.x), RENDER_IN_SUBPIXEL(anchorPointInPoints.y), 0 );
+            kmGLTranslatef(RENDER_IN_SUBPIXEL(anchorPointInPoints.x),
+                           RENDER_IN_SUBPIXEL(anchorPointInPoints.y),
+                           0 );
         
         m_pCamera->locate();
         
         if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-anchorPointInPoints.y), 0 );
+            kmGLTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPoints.x),
+                           RENDER_IN_SUBPIXEL(-anchorPointInPoints.y),
+                           0 );
     }
     
 }
@@ -1320,14 +1298,24 @@ CAResponder* CAView::nextResponder()
 
 void CAView::onEnter()
 {
-    arrayMakeObjectsPerformSelector(m_pSubviews, onEnter, CAView*);
-
+    if (!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->onEnter();
+    }
+    
     m_bRunning = true;
 }
 
 void CAView::onEnterTransitionDidFinish()
 {
-    arrayMakeObjectsPerformSelector(m_pSubviews, onEnterTransitionDidFinish, CAView*);
+    if (!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->onEnterTransitionDidFinish();
+    }
     
     if (m_pViewDelegate)
     {
@@ -1338,7 +1326,12 @@ void CAView::onEnterTransitionDidFinish()
 
 void CAView::onExitTransitionDidStart()
 {
-    arrayMakeObjectsPerformSelector(m_pSubviews, onExitTransitionDidStart, CAView*);
+    if (!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->onExitTransitionDidStart();
+    }
     
     if (m_pViewDelegate)
     {
@@ -1350,7 +1343,12 @@ void CAView::onExit()
 {
     m_bRunning = false;
     
-    arrayMakeObjectsPerformSelector(m_pSubviews, onExit, CAView*);
+    if (!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->onExit();
+    }
 }
 
 void CAView::setActionManager(CCActionManager* actionManager)
@@ -1463,17 +1461,24 @@ CATransformation CAView::nodeToParentTransform(void)
         
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        m_sTransform = CATransformationMake( cy * m_fScaleX,  sy * m_fScaleX,
-                                             -sx * m_fScaleY, cx * m_fScaleY,
-                                             x, y );
+        m_sTransform = CATransformationMake(cy * m_fScaleX,
+                                            sy * m_fScaleX,
+                                            -sx * m_fScaleY,
+                                            cx * m_fScaleY,
+                                            x,
+                                            y );
         
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            CATransformation skewMatrix = CATransformationMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
-                                                                 tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1.0f,
-                                                                 0.0f, 0.0f );
+            CATransformation skewMatrix = CATransformationMake(1.0f,
+                                                               tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
+                                                               tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)),
+                                                               1.0f,
+                                                               0.0f,
+                                                               0.0f );
+            
             m_sTransform = CATransformationConcat(skewMatrix, m_sTransform);
             
             // adjust anchor point
@@ -1482,7 +1487,9 @@ CATransformation CAView::nodeToParentTransform(void)
             
             if (!anchorPointInPoints.equals(CCPointZero))
             {
-                m_sTransform = CATransformationTranslate(m_sTransform, -anchorPointInPoints.x, -anchorPointInPoints.y);
+                m_sTransform = CATransformationTranslate(m_sTransform,
+                                                         -anchorPointInPoints.x,
+                                                         -anchorPointInPoints.y);
             }
         }
         
@@ -1506,7 +1513,8 @@ void CAView::setAdditionalTransform(const CATransformation& additionalTransform)
 
 CATransformation CAView::parentToNodeTransform(void)
 {
-    if ( m_bInverseDirty ) {
+    if ( m_bInverseDirty )
+    {
         m_sInverse = CATransformationInvert(this->nodeToParentTransform());
         m_bInverseDirty = false;
     }
@@ -1609,7 +1617,7 @@ void CAView::updateTransform()
             }
             else
             {
-                CCAssert( dynamic_cast<CAImageView*>(m_pSuperview), "Logic error in CAImageView. Parent must be a CAImageView");
+                CCAssert( dynamic_cast<CAImageView*>(m_pSuperview), "Logic error in CAView. Parent must be a CAView");
                 m_transformToBatch = CATransformationConcat( nodeToParentTransform() , m_pSuperview->m_transformToBatch );
             }
             
@@ -1660,15 +1668,12 @@ void CAView::updateTransform()
         setDirty(false);
     }
     
-    // MARMALADE CHANGED
-    // recursively iterate over children
-    /*    if( m_bHasChildren )
-     {
-     // MARMALADE: CHANGED TO USE CCNode*
-     // NOTE THAT WE HAVE ALSO DEFINED virtual CAView::updateTransform()
-     arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAImageView*);
-     }*/
-    arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAView*);
+    if (!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->updateTransform();
+    }
     
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
@@ -1680,7 +1685,7 @@ void CAView::updateTransform()
         ccp( m_sQuad.tl.vertices.x, m_sQuad.tl.vertices.y ),
     };
     ccDrawPoly(vertices, 4, true);
-#endif // CC_SPRITE_DEBUG_DRAW
+#endif
 
 }
 
@@ -1779,6 +1784,7 @@ void CAView::updateImageRect()
     m_sQuad.br.vertices = vertex3(m_obContentSize.width, 0, 0);
     m_sQuad.tl.vertices = vertex3(0, m_obContentSize.height, 0);
     m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, 0);
+    m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, 0);
 }
 
 // override this method to generate "double scale" sprites
@@ -1805,15 +1811,19 @@ void CAView::setImageCoords(CCRect rect)
     if (m_bRectRotated)
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left+(rect.size.height*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top+(rect.size.width*2-2)/(2*atlasHeight);
+        
+        left   = (2 * rect.origin.x + 1) / (2 * atlasWidth);
+        right  = left + (rect.size.height * 2 - 2) / (2 * atlasWidth);
+        top    = (2 * rect.origin.y + 1) / (2 * atlasHeight);
+        bottom = top + (rect.size.width * 2 - 2) / (2 * atlasHeight);
+        
 #else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x+rect.size.height) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y+rect.size.width) / atlasHeight;
+        
+        left   = rect.origin.x / atlasWidth;
+        right  = (rect.origin.x + rect.size.height) / atlasWidth;
+        top    = rect.origin.y / atlasHeight;
+        bottom = (rect.origin.y + rect.size.width) / atlasHeight;
+        
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
         
         if (m_bFlipX)
@@ -1838,15 +1848,15 @@ void CAView::setImageCoords(CCRect rect)
     else
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left + (rect.size.width*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top + (rect.size.height*2-2)/(2*atlasHeight);
+        left   = (2 * rect.origin.x + 1) / (2 * atlasWidth);
+        right  = left + (rect.size.width * 2 - 2) / (2 * atlasWidth);
+        top    = (2 * rect.origin.y + 1) / (2 * atlasHeight);
+        bottom = top + (rect.size.height * 2 - 2) / (2 * atlasHeight);
 #else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x + rect.size.width) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
+        left   = rect.origin.x / atlasWidth;
+        right  = (rect.origin.x + rect.size.width) / atlasWidth;
+        top    = rect.origin.y / atlasHeight;
+        bottom = (rect.origin.y + rect.size.height) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
         
         if(m_bFlipX)
@@ -1898,16 +1908,13 @@ void CAView::updateDisplayedAlpha(float parentAlpha)
 {
 	_displayedAlpha = _realAlpha * parentAlpha;
 	
-    CAObject* pObj;
-    CCARRAY_FOREACH(m_pSubviews, pObj)
+    if (!m_obSubviews.empty())
     {
-        CAView* item = (CAView*)pObj;
-        if (item)
-        {
-            item->updateDisplayedAlpha(_displayedAlpha);
-        }
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->updateDisplayedAlpha(_displayedAlpha);
     }
-    
+
     this->updateColor();
 }
 
@@ -2015,14 +2022,11 @@ void CAView::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (m_bHasChildren)
     {
-        CAObject* pObject = NULL;
-        CCARRAY_FOREACH(m_pSubviews, pObject)
+        if (!m_obSubviews.empty())
         {
-            CAImageView* pChild = dynamic_cast<CAImageView*>(pObject);
-            if (pChild)
-            {
-                pChild->setDirtyRecursively(true);
-            }
+            CAVector<CAView*>::iterator itr;
+            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+                (*itr)->setDirtyRecursively(bValue);
         }
     }
 }
@@ -2101,11 +2105,9 @@ void CAView::setBatch(CABatchView *batchView)
         m_sQuad.br.vertices = vertex3( x2, y1, 0 );
         m_sQuad.tl.vertices = vertex3( x1, y2, 0 );
         m_sQuad.tr.vertices = vertex3( x2, y2, 0 );
-        
     }
     else
     {
-        
         // using batch
         m_transformToBatch = CATransformationIdentity;
         setImageAtlas(m_pobBatchView->getImageAtlas()); // weak ref

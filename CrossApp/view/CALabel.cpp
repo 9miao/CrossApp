@@ -295,7 +295,7 @@ void CALabel::setNumberOfLine(unsigned int var)
 
 void CALabel::setFontSize(unsigned int var)
 {
-    m_nfontSize=var;
+    m_nfontSize = var;
     if(m_nText.empty())
     {
         return;

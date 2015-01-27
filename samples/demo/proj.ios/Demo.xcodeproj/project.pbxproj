@@ -79,6 +79,9 @@
 		B04C0C0A1901207A009854FD /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BFE1901207A009854FD /* json_writer.cpp */; };
 		B04C0C0B1901207A009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0C001901207A009854FD /* sconscript */; };
 		B0A172E9192DDAD100DBFDB0 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A172E7192DDAD100DBFDB0 /* bg.jpg */; };
+		B0CA5A341A77A84100BECD89 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A331A77A84100BECD89 /* Reachability.m */; };
+		B0CA5A361A77A85300BECD89 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A351A77A85300BECD89 /* SystemConfiguration.framework */; };
+		B0CA5A381A77A85A00BECD89 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A371A77A85A00BECD89 /* MediaPlayer.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -254,6 +257,10 @@
 		B04C0C011901207A009854FD /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		B04C0C021901207A009854FD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		B0A172E7192DDAD100DBFDB0 /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
+		B0CA5A321A77A84100BECD89 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		B0CA5A331A77A84100BECD89 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		B0CA5A351A77A85300BECD89 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B0CA5A371A77A85A00BECD89 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -273,6 +280,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0CA5A381A77A85A00BECD89 /* MediaPlayer.framework in Frameworks */,
+				B0CA5A361A77A85300BECD89 /* SystemConfiguration.framework in Frameworks */,
 				04033E13195478A100473756 /* libCrossApp.a in Frameworks */,
 				B03E90A319389CCB00FD9A06 /* CoreLocation.framework in Frameworks */,
 				B03E90A119389CBE00FD9A06 /* AddressBookUI.framework in Frameworks */,
@@ -486,6 +495,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0CA5A371A77A85A00BECD89 /* MediaPlayer.framework */,
+				B0CA5A351A77A85300BECD89 /* SystemConfiguration.framework */,
 				B03E90A219389CCB00FD9A06 /* CoreLocation.framework */,
 				B03E90A019389CBE00FD9A06 /* AddressBookUI.framework */,
 				B03E909E19389CB500FD9A06 /* AddressBook.framework */,
@@ -577,6 +588,8 @@
 		B048220D19FA402F0019F1A7 /* Device_ios */ = {
 			isa = PBXGroup;
 			children = (
+				B0CA5A321A77A84100BECD89 /* Reachability.h */,
+				B0CA5A331A77A84100BECD89 /* Reachability.m */,
 				B048220E19FA402F0019F1A7 /* CAAddress.h */,
 				B048220F19FA402F0019F1A7 /* CAAddress.mm */,
 				B048221019FA402F0019F1A7 /* CAAlbumController.h */,
@@ -978,6 +991,7 @@
 				B048227D19FA40DF0019F1A7 /* MainMenu.cpp in Sources */,
 				1AB87035175E0A84005D39BF /* WebSocket.cpp in Sources */,
 				B048228C19FA40DF0019F1A7 /* SecondViewController.cpp in Sources */,
+				B0CA5A341A77A84100BECD89 /* Reachability.m in Sources */,
 				B048221D19FA402F0019F1A7 /* CABrightness_iOS.mm in Sources */,
 				B048227619FA40DF0019F1A7 /* AddressBookTest.cpp in Sources */,
 				B048228419FA40DF0019F1A7 /* TabBarTest.cpp in Sources */,

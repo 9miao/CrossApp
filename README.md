@@ -19,9 +19,23 @@
 2.代码结构优化
 
 #####5.修改优化CAView
+优化子视图管理性能
 
-#####6.其他一些细节的优化
-在本C++引擎中移除掉JavaScript版本，将来会有单独的JavaScript版本发布
+#####6.修改优化CATextField输入文字有时光标位置不对的bug
+
+#####7.文件目录变动
+删除extensions/GUI/CAUIHelper 文件
+删除extensions/studio/CAStudioViewController 文件
+增加extensions/studio/CAStudioViewParser 文件
+
+在iOS平台，增加extensions/device/Device_ios/Reachability 文件
+添加Frameworks ： MediaPlayer 与 SystemConfiguration
+
+android平台java文件有变动
+
+#####8.其他一些细节的优化
+
+本次更新文件有多处变动，旧版本更新请参考更新内容7手动增删文件，给您带来的不便请谅解。
 
 **********************************************************************************
 

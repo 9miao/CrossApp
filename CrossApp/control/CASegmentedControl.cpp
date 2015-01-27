@@ -603,8 +603,7 @@ void CASegmentedControl::removeTargetAtForbidSelected(CAObject* target, SEL_CACo
 
 void CASegmentedControl::setBackgroundView(CrossApp::CAView *view)
 {
-    CC_SAFE_RETAIN(view);
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
+    this->removeSubview(m_pBackgroundView);
     m_pBackgroundView = view;
     if (m_pBackgroundView)
     {
@@ -615,13 +614,7 @@ void CASegmentedControl::setBackgroundView(CrossApp::CAView *view)
 
 void CASegmentedControl::setBackgroundImage(CAImage* image)
 {
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
-
-    CAScale9ImageView* backGroundImageView = CAScale9ImageView::createWithFrame(this->getBounds());
-    backGroundImageView->setImage(image);
-    backGroundImageView->setVisible(true);
-    m_pBackgroundView = backGroundImageView;
-    this->insertSubview(m_pBackgroundView, -1);
+    this->setBackgroundView(CAScale9ImageView::createWithImage(image));
 }
 
 void CASegmentedControl::createSeparate()
