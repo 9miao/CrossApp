@@ -39,6 +39,7 @@
 		B0090CDD198A407400BD8CDA /* 9m.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0090CD9198A407400BD8CDA /* 9m.jpg */; };
 		B0090CE1198A41B800BD8CDA /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = B0090CE0198A41B800BD8CDA /* information.json */; };
 		B0090CE3198A41F000BD8CDA /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0090CE2198A41F000BD8CDA /* bg.jpg */; };
+		B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145A190A6A3700C3633B /* CAUIHelper.cpp */; };
 		B0352A7C19C18263005D85D0 /* background in Resources */ = {isa = PBXBuildFile; fileRef = B0352A7B19C18263005D85D0 /* background */; };
 		B047B92D19E91DAF00F24BE6 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B92B19E91DAF00F24BE6 /* DownloadManager.cpp */; };
 		B048219119FA3D890019F1A7 /* CADevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B048218119FA3D890019F1A7 /* CADevice.cpp */; };
@@ -152,6 +153,8 @@
 		B01A294C1994E24B00D42BA0 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		B01A294D1994E24B00D42BA0 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		B01A29641994E26200D42BA0 /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
+		B02A145A190A6A3700C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
+		B02A145B190A6A3700C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
 		B0352A7B19C18263005D85D0 /* background */ = {isa = PBXFileReference; lastKnownFileType = folder; path = background; sourceTree = "<group>"; };
 		B047B92B19E91DAF00F24BE6 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
 		B047B92C19E91DAF00F24BE6 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
@@ -345,6 +348,8 @@
 		15C158D5168315E500D239F2 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				B02A145A190A6A3700C3633B /* CAUIHelper.cpp */,
+				B02A145B190A6A3700C3633B /* CAUIHelper.h */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -900,6 +905,7 @@
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
 				B0A715611A43F5BA00A85FB9 /* AppDelegate.cpp in Sources */,
+				B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */,
 				B0A715681A43F5BA00A85FB9 /* LabelTest.cpp in Sources */,
 				B0A715761A43F5BA00A85FB9 /* TextViewTest.cpp in Sources */,
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,

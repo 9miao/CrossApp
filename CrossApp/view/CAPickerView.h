@@ -18,13 +18,13 @@ NS_CC_BEGIN
 
 class CAPickerView;
 
-class CC_DLL CAPickerViewDelegate {
+class CAPickerViewDelegate {
 
 public:
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {}
 };
 
-class CC_DLL CAPickerViewDataSource {
+class CAPickerViewDataSource {
     
 public:
     virtual ~CAPickerViewDataSource() {};

@@ -536,12 +536,17 @@ void CARenderImage::draw()
 		//! make sure all children are drawn
         sortAllSubviews();
 		
-        CAVector<CAView*>::const_iterator itr;
-        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+		CAObject *pElement;
+		CCARRAY_FOREACH(m_pSubviews, pElement)
         {
-            (*itr)->visit();
-        }
+            CAView *pChild = (CAView*)pElement;
 
+            if (pChild != m_pSprite)
+            {
+                pChild->visit();
+            }
+		}
+        
         end();
 	}
 }

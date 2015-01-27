@@ -199,7 +199,7 @@ void CATextView::calcCursorPosition()
 {
 	int iCurLine = -1, iCurLineCharPos = 0;
 
-	for (unsigned i = 0; i < m_vLinesTextView.size(); i++)
+	for (int i = 0; i < m_vLinesTextView.size(); i++)
 	{
 		TextViewLineInfo& t = m_vLinesTextView[i];
 
@@ -285,13 +285,13 @@ const std::string& CATextView::getPlaceHolder()
 	return m_sPlaceHolder;
 }
 
-void CATextView::setSpaceHolderColor(const CAColor4B &var)
+void CATextView::setSpaceHolderColor(CAColor4B var)
 {
 	m_cSpaceHolderColor = var;
 	this->updateImage();
 }
 
-const CAColor4B &CATextView::getSpaceHolderColor()
+CAColor4B CATextView::getSpaceHolderColor()
 {
 	return m_cSpaceHolderColor;
 }
@@ -318,6 +318,7 @@ bool CATextView::getWordWrap()
 	return m_bWordWrap;
 }
 
+
 void CATextView::setFontName(const std::string& var)
 {
 	m_szFontName = var;
@@ -331,7 +332,7 @@ const std::string& CATextView::getFontName()
 	return m_szFontName;
 }
 
-void CATextView::setCursorColor(const CAColor4B &var)
+void CATextView::setCursorColor(CAColor4B var)
 {
 	m_cCursorColor = var;
 	if (m_pCursorMark)
@@ -340,23 +341,23 @@ void CATextView::setCursorColor(const CAColor4B &var)
 	}
 }
 
-const CAColor4B &CATextView::getCursorColor()
+CAColor4B CATextView::getCursorColor()
 {
 	return m_cCursorColor;
 }
 
-void CATextView::setTextColor(const CAColor4B &var)
+void CATextView::setTextColor(CAColor4B var)
 {
 	m_cTextColor = var;
 	this->updateImage();
 }
 
-const CAColor4B &CATextView::getTextColor()
+CAColor4B CATextView::getTextColor()
 {
 	return m_cTextColor;
 }
 
-void CATextView::setFontColor(const CAColor4B &var)
+void CATextView::setFontColor(CAColor4B var)
 {
 	m_cFontColor = var;
 	if (m_pImageView)
@@ -366,7 +367,7 @@ void CATextView::setFontColor(const CAColor4B &var)
 	m_bUpdateImage = true;
 }
 
-const CAColor4B &CATextView::getFontColor()
+CAColor4B CATextView::getFontColor()
 {
 	return m_cFontColor;
 }
@@ -447,43 +448,6 @@ void CATextView::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
 	this->resignFirstResponder();
 }
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-void CATextView::deleteForward()
-{
-
-}
-
-void CATextView::cursorMoveBackward(bool selected)
-{
-
-}
-
-void CATextView::cursorMoveForward(bool selected)
-{
-
-}
-
-void CATextView::copyToClipboard(std::string *content)
-{
-
-}
-
-void CATextView::cutToClipboard(std::string *content)
-{
-
-}
-
-void CATextView::pasteFromClipboard(const char *content)
-{
-
-}
-
-void CATextView::selectAll()
-{
-
-}
-#endif
 
 const char* CATextView::getContentText()
 {

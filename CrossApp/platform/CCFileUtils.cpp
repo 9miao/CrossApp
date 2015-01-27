@@ -538,23 +538,6 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
     return pBuffer;
 }
 
-std::string CCFileUtils::getFileString(const char* pszFilePath)
-{
-    std::string data;
-    
-    unsigned long pSize = 0;
-    unsigned char* pData = this->getFileData(pszFilePath, "r", &pSize);
-    
-    data.resize(pSize, sizeof(char));
-    for (int i=0; i<data.size(); i++)
-    {
-        data[i] = pData[i];
-    }
-    data += '\0';
-    
-    return data;
-}
-
 std::string CCFileUtils::getNewFilename(const std::string& pszFileName)
 {
     std::string pszNewFileName = "";

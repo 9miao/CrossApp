@@ -96,7 +96,6 @@ bool FifthViewController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		this->dismissModalViewController(true);
 		return false;
 	}
-    return false;
 }
 
 void FifthViewController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)

@@ -55,10 +55,10 @@ CCRect CCRectApplyAffineTransform(const CCRect& rect, const CATransformation& an
     float right  = rect.getMaxX();
     float bottom = rect.getMaxY();
     
-    CCPoint topLeft = CCPointApplyAffineTransform(CCPoint(left, top), anAffineTransform);
-    CCPoint topRight = CCPointApplyAffineTransform(CCPoint(right, top), anAffineTransform);
-    CCPoint bottomLeft = CCPointApplyAffineTransform(CCPoint(left, bottom), anAffineTransform);
-    CCPoint bottomRight = CCPointApplyAffineTransform(CCPoint(right, bottom), anAffineTransform);
+    CCPoint topLeft = CCPointApplyAffineTransform(CCPointMake(left, top), anAffineTransform);
+    CCPoint topRight = CCPointApplyAffineTransform(CCPointMake(right, top), anAffineTransform);
+    CCPoint bottomLeft = CCPointApplyAffineTransform(CCPointMake(left, bottom), anAffineTransform);
+    CCPoint bottomRight = CCPointApplyAffineTransform(CCPointMake(right, bottom), anAffineTransform);
 
     float minX = min(min(topLeft.x, topRight.x), min(bottomLeft.x, bottomRight.x));
     float maxX = max(max(topLeft.x, topRight.x), max(bottomLeft.x, bottomRight.x));
@@ -88,7 +88,7 @@ CATransformation CATransformationRotate(const CATransformation& t, float anAngle
     float fSin = sin(anAngle);
     float fCos = cos(anAngle);
 
-    return __CATransformationMake(  t.a * fCos + t.c * fSin,
+    return __CATransformationMake(    t.a * fCos + t.c * fSin,
                                     t.b * fCos + t.d * fSin,
                                     t.c * fCos - t.a * fSin,
                                     t.d * fCos - t.b * fSin,

@@ -61,26 +61,8 @@ extern "C" {
         }
     }
     
-    void setCursorPos(int pos)
-    {
-        JniMethodInfo t;
-        jobject jobj;
-        bool isHave;
-        if (JniHelper::getStaticMethodInfo(t, "org/CrossApp/lib/Cocos2dxGLSurfaceView", "getInstance", "()Lorg/CrossApp/lib/Cocos2dxGLSurfaceView;")) {
-            jobj=t.env->CallStaticObjectMethod(t.classID, t.methodID);
-            isHave = JniHelper::getMethodInfo(t,
-                                              "org/CrossApp/lib/Cocos2dxGLSurfaceView",
-                                              "setCursorPos",
-                                              "(I)V");
-            if (isHave) {
-                t.env->CallVoidMethod(jobj, t.methodID,pos);
-            }
-            t.env->DeleteLocalRef(t.classID);
-        }
-    }
     
-    void closeKeyboardJNI()
-    {
+    void closeKeyboardJNI() {
         JniMethodInfo t;
 
         if (JniHelper::getStaticMethodInfo(t, "org/CrossApp/lib/Cocos2dxGLSurfaceView", "closeIMEKeyboard", "()V")) {
@@ -88,5 +70,4 @@ extern "C" {
             t.env->DeleteLocalRef(t.classID);
         }
     }
-
 }

@@ -22,7 +22,6 @@ CADrawerController::CADrawerController()
 ,m_fDivision(0)
 ,m_fCurrDivision(0)
 ,m_bShow(false)
-,m_bEffect3D(false)
 ,m_fOffX(0)
 ,m_pBackgroundView(NULL)
 {
@@ -246,7 +245,7 @@ void CADrawerController::updateViewFrame()
         CCPoint(m_fCurrDivision, 0)
     };
     
-    if (m_bEffect3D)
+    if (1)
     {
         float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
         float scale1 = 1.0f - powf(m_fCurrDivision / m_fDivision, 2) * 0.2f;

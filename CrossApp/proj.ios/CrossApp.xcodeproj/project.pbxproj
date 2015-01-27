@@ -454,8 +454,6 @@
 		B0C512D619A30E5D00E6934B /* CAActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512D219A30E5D00E6934B /* CAActivityIndicatorView.h */; };
 		B0C512EC19A341B700E6934B /* CACalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512EA19A341B700E6934B /* CACalendar.cpp */; };
 		B0C512ED19A341B700E6934B /* CACalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512EB19A341B700E6934B /* CACalendar.h */; };
-		B0CA596E1A776FFB00BECD89 /* CAWebViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = B0CA596C1A776FFB00BECD89 /* CAWebViewImpl.h */; };
-		B0CA596F1A776FFB00BECD89 /* CAWebViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0CA596D1A776FFB00BECD89 /* CAWebViewImpl.mm */; };
 		B0F7E503198792180048F46B /* CAPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F7E501198792180048F46B /* CAPageView.cpp */; };
 		B0F7E504198792180048F46B /* CAPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F7E502198792180048F46B /* CAPageView.h */; };
 		EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */; };
@@ -876,8 +874,6 @@
 		B0C512D219A30E5D00E6934B /* CAActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAActivityIndicatorView.h; sourceTree = "<group>"; };
 		B0C512EA19A341B700E6934B /* CACalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACalendar.cpp; sourceTree = "<group>"; };
 		B0C512EB19A341B700E6934B /* CACalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACalendar.h; sourceTree = "<group>"; };
-		B0CA596C1A776FFB00BECD89 /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
-		B0CA596D1A776FFB00BECD89 /* CAWebViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAWebViewImpl.mm; sourceTree = "<group>"; };
 		B0F7E501198792180048F46B /* CAPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageView.cpp; sourceTree = "<group>"; };
 		B0F7E502198792180048F46B /* CAPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageView.h; sourceTree = "<group>"; };
 		EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
@@ -1255,8 +1251,6 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				B0CA596C1A776FFB00BECD89 /* CAWebViewImpl.h */,
-				B0CA596D1A776FFB00BECD89 /* CAWebViewImpl.mm */,
 				B01F650719658599005C14FC /* CADensityDpi.mm */,
 				0460ED291957019600D13001 /* CCApplication.h */,
 				0460ED2A1957019600D13001 /* CCApplication.mm */,
@@ -1945,7 +1939,6 @@
 				04EAA00C1956CE2500198A8E /* CABatchView.h in Headers */,
 				04EAA00D1956CE2500198A8E /* CAClippingView.h in Headers */,
 				04EAA0101956CE2500198A8E /* CAImageView.h in Headers */,
-				B0CA596E1A776FFB00BECD89 /* CAWebViewImpl.h in Headers */,
 				04EAA0121956CE2500198A8E /* CALabel.h in Headers */,
 				04EAA0141956CE2500198A8E /* CARenderImage.h in Headers */,
 				04EAA0161956CE2500198A8E /* CAScale9ImageView.h in Headers */,
@@ -2034,7 +2027,6 @@
 				B02A51CD19B9625B00470D57 /* CADatePickerView.cpp in Sources */,
 				B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */,
 				1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */,
-				B0CA596F1A776FFB00BECD89 /* CAWebViewImpl.mm in Sources */,
 				1551A62E158F2ADE00E66CFE /* CCActionEase.cpp in Sources */,
 				1551A634158F2ADE00E66CFE /* CCActionInstant.cpp in Sources */,
 				372C37F21A03799E0010A376 /* CAVideoPlayerView.cpp in Sources */,

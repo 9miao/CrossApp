@@ -22,9 +22,7 @@ public:
     
     virtual ~CADrawerController();
     
-    virtual bool initWithController(CAViewController* leftViewController,
-                                    CAViewController* rightViewController,
-                                    float division);
+    virtual bool initWithController(CAViewController* leftViewController, CAViewController* rightViewController, float division);
     
     void replaceRightViewController(CAViewController* rightViewController);
     
@@ -47,8 +45,6 @@ public:
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
     CC_PROPERTY_IS(bool, m_bTouchMoved, TouchMoved);
-    
-    CC_SYNTHESIZE(bool, m_bEffect3D, Effect3D);
     
     bool isShowLeftViewController();
     

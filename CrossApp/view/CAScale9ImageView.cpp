@@ -31,7 +31,7 @@ CAScale9ImageView::CAScale9ImageView()
 , m_pScale9ImageView(NULL)
 {
     m_obFrameRect = CCRectZero;
-    memset(m_pImageView, 0, sizeof(m_pImageView));
+    memset(m_pImageView, NULL, sizeof(m_pImageView));
 }
 
 CAScale9ImageView::~CAScale9ImageView()
@@ -424,12 +424,14 @@ void CAScale9ImageView::setColor(const CAColor4B& color)
     if (m_pScale9ImageView)
     {
         CAObject* child;
-        const CAVector<CAView*>& subview = m_pScale9ImageView->getSubviews();
-
-        CAVector<CAView*>::const_iterator itr;
-        for (itr=subview.begin(); itr!=subview.end(); itr++)
+        CCArray* children = m_pScale9ImageView->getSubviews();
+        CCARRAY_FOREACH(children, child)
         {
-            (*itr)->setColor(color);
+            CARGBAProtocol* pNode = dynamic_cast<CARGBAProtocol*>(child);
+            if (pNode)
+            {
+                pNode->setColor(color);
+            }
         }
     }
 }

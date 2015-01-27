@@ -9,7 +9,6 @@
 #include "CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
 
-#define CROSSAPP_UTF8 execution_character_set("utf-8")
 
 #define CREATE_FUNC(__TYPE__)           \
 static __TYPE__* create()               \

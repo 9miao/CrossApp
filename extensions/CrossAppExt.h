@@ -10,11 +10,12 @@
 
 #include "Json/CSContentJsonDictionary.h"
 #include "Json/DictionaryHelper.h"
+
 #include "sqlite3/include/sqlite3.h"
+
 #include "LocalStorage/LocalStorage.h"
-#include "device/CADevice.h"
-#include "studio/CAStudioViewParser.h"
-//#include "GUI/CASyncImageView.h"
+
+#include "GUI/CASyncImageView.h"
 
 //other
 #include "device/CADevice.h"

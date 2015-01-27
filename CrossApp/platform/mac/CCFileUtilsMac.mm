@@ -305,7 +305,7 @@ bool CCFileUtilsMac::writeToFile(CCDictionary *dict, const std::string &fullPath
 
 CCArray* CCFileUtilsMac::createCCArrayWithContentsOfFile(const std::string& filename)
 {
-    //    NSString* pPath = [NSStr56ing stringWithUTF8String:pFileName];
+    //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
     //    NSString* pathExtension= [pPath pathExtension];
     //    pPath = [pPath stringByDeletingPathExtension];
     //    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];

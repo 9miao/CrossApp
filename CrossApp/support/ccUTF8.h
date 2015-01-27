@@ -210,7 +210,7 @@ std::string inline utf8_to_url_string( const char *in )
 	std::string str = in;
 	std::string str2;
 	char buf[64];
-	for ( std::string::size_type i = 0 ; i < str.size() ; i ++ )
+	for ( int i = 0 ; i < str.size() ; i ++ )
 	{
 		if ( str[i] < 0 )
 		{

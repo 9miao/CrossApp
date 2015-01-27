@@ -74,18 +74,6 @@ public:
 	virtual void getKeyBoardHeight(int height);
 	virtual void getKeyBoradReturnCallBack();
 	virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-	virtual void deleteForward();
-	virtual void cursorMoveBackward(bool selected);
-	virtual void cursorMoveForward(bool selected);
-
-	virtual void copyToClipboard(std::string *content);
-	virtual void cutToClipboard(std::string *content);
-	virtual void pasteFromClipboard(const char *content);
-	virtual void selectAll();
-#endif
-
 	virtual const char* getContentText();
 	virtual void visit();
 
@@ -94,13 +82,13 @@ public:
 
 	CC_PROPERTY_PASS_BY_REF(std::string, m_sPlaceHolder, PlaceHolder);
 
-	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cSpaceHolderColor, SpaceHolderColor);
+	CC_PROPERTY(CAColor4B, m_cSpaceHolderColor, SpaceHolderColor);
 
-	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cTextColor, TextColor);
+	CC_PROPERTY(CAColor4B, m_cTextColor, TextColor);
 
-	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cCursorColor, CursorColor);
+	CC_PROPERTY(CAColor4B, m_cCursorColor, CursorColor);
 
-	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cFontColor, FontColor);
+	CC_PROPERTY(CAColor4B, m_cFontColor, FontColor);
 
 	CC_PROPERTY_PASS_BY_REF(std::string, m_szText, Text);
 

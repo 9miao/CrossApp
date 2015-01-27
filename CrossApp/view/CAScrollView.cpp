@@ -164,7 +164,7 @@ CAView* CAScrollView::getSubviewByTag(int aTag)
     return m_pContainer->getSubviewByTag(aTag);
 }
 
-const CAVector<CAView*>& CAScrollView::getSubviews()
+CCArray* CAScrollView::getSubviews()
 {
     return m_pContainer->getSubviews();
 }

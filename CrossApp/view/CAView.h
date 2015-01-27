@@ -12,6 +12,7 @@
 #include <iostream>
 #include "ccMacros.h"
 #include "shaders/CATransformation.h"
+#include "cocoa/CCArray.h"
 #include "CCGL.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAGLProgram.h"
@@ -19,7 +20,6 @@
 #include "dispatcher/CAProtocols.h"
 #include "platform/CCAccelerometerDelegate.h"
 #include "basics/CAResponder.h"
-#include "basics/CASTLContainer.h"
 #include "images/CAImageCache.h"
 
 #ifdef EMSCRIPTEN
@@ -184,9 +184,7 @@ public:
 
     virtual CAView * getSubviewByTag(int tag);
 
-    virtual CAView * getSubviewByTextTag(const std::string& textTag);
-    
-    virtual const CAVector<CAView*>& getSubviews();
+    virtual CCArray* getSubviews();
 
     virtual unsigned int getSubviewsCount(void) const;
 
@@ -200,8 +198,6 @@ public:
 
     virtual void removeSubviewByTag(int tag);
 
-    virtual void removeSubviewByTextTag(const std::string& textTag);
-    
     virtual void removeAllSubviews();
 
     virtual void reorderSubview(CAView * child, int zOrder);
@@ -366,6 +362,8 @@ public:
     
 protected:
 
+    void childrenAlloc(void);
+
     void detachSubview(CAView *subview);
 
     void updateDraw();
@@ -434,7 +432,7 @@ protected:
 
     int m_nZOrder;                      ///< z-order value that affects the draw order
     
-    CAVector<CAView*> m_obSubviews;               ///< array of children nodes              ///< weak reference to parent node
+    CCArray *m_pSubviews;               ///< array of children nodes              ///< weak reference to parent node
     CAView* m_pSuperview;
     
     
@@ -507,19 +505,6 @@ public:
     
     virtual void viewOnExitTransitionDidStart() = 0;
 };
-
-static bool compareSubviewZOrder(CAView* one, CAView* two)
-{
-    if (one->getZOrder() < two->getZOrder())
-    {
-        return true;
-    }
-    else if (one->getZOrder() == two->getZOrder())
-    {
-        return (bool)(one->getOrderOfArrival() < two->getOrderOfArrival());
-    }
-    return false;
-}
 
 NS_CC_END
 

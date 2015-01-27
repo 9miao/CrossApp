@@ -1,7 +1,7 @@
 
 
-#ifndef __CAHttpRequest_H__
-#define __CAHttpRequest_H__
+#ifndef __CCHTTPREQUEST_H__
+#define __CCHTTPREQUEST_H__
 
 #include "CrossApp.h"
 #include "ExtensionMacros.h"
@@ -11,23 +11,33 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup Network
+ * @{
+ */
 
-class CAHttpClient : public CAObject
+
+/** @brief Singleton that handles asynchrounous http requests
+ * Once the request completed, a callback will issued in main thread when it provided during make request
+ * @js NA
+ * @lua NA
+ */
+class CCHttpClient : public CAObject
 {
 public:
     /** Return the shared instance **/
-    static CAHttpClient *getInstance(int thread = 0);
+    static CCHttpClient *getInstance(int thread = 0);
     
     /** Relase the shared instance **/
     static void destroyInstance(int thread = 0);
         
     /**
      * Add a get request to task queue
-     * @param request a CAHttpRequest object, which includes url, response callback etc.
+     * @param request a CCHttpRequest object, which includes url, response callback etc.
                       please make sure request->_requestData is clear before calling "send" here.
      * @return NULL
      */
-    void send(CAHttpRequest* request);
+    void send(CCHttpRequest* request);
   
     
     /**
@@ -60,11 +70,11 @@ public:
     inline int getTimeoutForRead() {return _timeoutForRead;};
     
     
-    unsigned int getRequestCount();
+    int getRequestCount();
     
 private:
-    CAHttpClient(int thread);
-    virtual ~CAHttpClient();
+    CCHttpClient(int thread);
+    virtual ~CCHttpClient();
     bool init(void);
     
     /**
@@ -85,9 +95,6 @@ private:
 // end of Network group
 /// @}
 
-CC_DEPRECATED_ATTRIBUTE typedef CAHttpClient CCHttpClient;
-CC_DEPRECATED_ATTRIBUTE typedef CAHttpResponse CCHttpResponse;
-CC_DEPRECATED_ATTRIBUTE typedef CAHttpRequest CCHttpRequest;
 NS_CC_EXT_END
 
-#endif //__CAHttpRequest_H__
+#endif //__CCHTTPREQUEST_H__

@@ -11,9 +11,8 @@
 
 #include <iostream>
 #include "CrossApp.h"
-#include "CrossAppExt.h"
 USING_NS_CC;
-USING_NS_CC_EXT;
+
 class CAMediaDelegate
 {
 public:
@@ -58,17 +57,8 @@ struct CAAddressBookRecord
     string fullname;
 };
 
-typedef enum
-{
-    CANetWorkTypeWifi=0,
-    CANetWorkType3G,
-    CANetWorkTypeNone
-    
-}CANetWorkType;
-
 namespace CADevice
 {
-   
     void openCamera(CAMediaDelegate* target);
     
     void openAlbum(CAMediaDelegate* target);
@@ -82,21 +72,5 @@ namespace CADevice
     void writeToSavedPhotosAlbum(const std::string &s);
     
     std::vector<CAAddressBookRecord> getAddressBook();
-    
-    void updateVersion(const std::string &url
-                      ,unsigned int versionNumber
-                      ,const std::string &appId);
-    
-    CANetWorkType getNetWorkType();
-    
-    void setVolume(float sender,int type);
-    
-    float getVolume(int type);
-    
-    void OpenURL(const std::string &url);
-    
-    float getBatteryLevel();
-    
-    bool isNetWorkAvailble();
 };
 #endif /* defined(__PublishPhoto__CADevice__) */

@@ -156,7 +156,7 @@ CrossApp::CCArray* DictionaryHelper::objectToCCArray(CrossApp::CAObject *obj)
     return array;
 }
 
-CSJsonDictionary* DictionaryHelper::getSubDictionary_json(CSJsonDictionary* root,const char* key)
+cs::CSJsonDictionary* DictionaryHelper::getSubDictionary_json(cs::CSJsonDictionary* root,const char* key)
 {
     if (!root)
     {
@@ -165,7 +165,7 @@ CSJsonDictionary* DictionaryHelper::getSubDictionary_json(CSJsonDictionary* root
     return root->getSubDictionary(key);
 }
 
-int DictionaryHelper::getIntValue_json(CSJsonDictionary* root,const char* key)
+int DictionaryHelper::getIntValue_json(cs::CSJsonDictionary* root,const char* key)
 {
     if (!root)
     {
@@ -174,7 +174,7 @@ int DictionaryHelper::getIntValue_json(CSJsonDictionary* root,const char* key)
     return root->getItemIntValue(key, 0);
 }
 
-float DictionaryHelper::getFloatValue_json(CSJsonDictionary* root,const char* key)
+float DictionaryHelper::getFloatValue_json(cs::CSJsonDictionary* root,const char* key)
 {
     if (!root)
     {
@@ -183,7 +183,7 @@ float DictionaryHelper::getFloatValue_json(CSJsonDictionary* root,const char* ke
     return root->getItemFloatValue(key, 0.0);
 }
 
-const char* DictionaryHelper::getStringValue_json(CSJsonDictionary* root,const char* key)
+const char* DictionaryHelper::getStringValue_json(cs::CSJsonDictionary* root,const char* key)
 {
     if (!root)
     {
@@ -192,7 +192,7 @@ const char* DictionaryHelper::getStringValue_json(CSJsonDictionary* root,const c
     return root->getItemStringValue(key);
 }
 
-bool DictionaryHelper::getBooleanValue_json(CSJsonDictionary* root,const char* key)
+bool DictionaryHelper::getBooleanValue_json(cs::CSJsonDictionary* root,const char* key)
 {
     if (!root)
     {
@@ -201,7 +201,7 @@ bool DictionaryHelper::getBooleanValue_json(CSJsonDictionary* root,const char* k
     return root->getItemBoolvalue(key, false);
 }
 
-int DictionaryHelper::getArrayCount_json(CSJsonDictionary* root,const char* key)
+int DictionaryHelper::getArrayCount_json(cs::CSJsonDictionary* root,const char* key)
 {
     if (!root)
     {
@@ -210,7 +210,7 @@ int DictionaryHelper::getArrayCount_json(CSJsonDictionary* root,const char* key)
     return root->getArrayItemCount(key);
 }
 
-int DictionaryHelper::getIntValueFromArray_json(CSJsonDictionary* root,const char* arrayKey,int idx)
+int DictionaryHelper::getIntValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx)
 {
     if (!root)
     {
@@ -219,7 +219,7 @@ int DictionaryHelper::getIntValueFromArray_json(CSJsonDictionary* root,const cha
     return root->getIntValueFromArray(arrayKey, idx, 0);
 }
 
-float DictionaryHelper::getFloatValueFromArray_json(CSJsonDictionary* root,const char* arrayKey,int idx)
+float DictionaryHelper::getFloatValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx)
 {
     if (!root)
     {
@@ -228,7 +228,7 @@ float DictionaryHelper::getFloatValueFromArray_json(CSJsonDictionary* root,const
     return root->getFloatValueFromArray(arrayKey, idx, 0.0);
 }
 
-bool DictionaryHelper::getBoolValueFromArray_json(CSJsonDictionary* root,const char* arrayKey,int idx)
+bool DictionaryHelper::getBoolValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx)
 {
     if (!root)
     {
@@ -237,7 +237,7 @@ bool DictionaryHelper::getBoolValueFromArray_json(CSJsonDictionary* root,const c
     return root->getBoolValueFromArray(arrayKey, idx, false);
 }
 
-const char* DictionaryHelper::getStringValueFromArray_json(CSJsonDictionary *root, const char *arrayKey, int idx)
+const char* DictionaryHelper::getStringValueFromArray_json(cs::CSJsonDictionary *root, const char *arrayKey, int idx)
 {
     if (!root)
     {
@@ -246,7 +246,7 @@ const char* DictionaryHelper::getStringValueFromArray_json(CSJsonDictionary *roo
     return root->getStringValueFromArray(arrayKey, idx);
 }
 
-CSJsonDictionary* DictionaryHelper::getDictionaryFromArray_json(CSJsonDictionary* root,const char* arrayKey,int idx)
+cs::CSJsonDictionary* DictionaryHelper::getDictionaryFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx)
 {
     if (!root)
     {
@@ -255,7 +255,7 @@ CSJsonDictionary* DictionaryHelper::getDictionaryFromArray_json(CSJsonDictionary
     return root->getSubItemFromArray(arrayKey, idx);
 }
 
-bool DictionaryHelper::checkObjectExist_json(CSJsonDictionary *root, const char *key)
+bool DictionaryHelper::checkObjectExist_json(cs::CSJsonDictionary *root, const char *key)
 {
     if (!root)
     {

@@ -4,81 +4,77 @@
 #define COCOSTUDIO_CSCONTENTJSONDICTIONARY_H
 
 
+
 #include "lib_json/json_lib.h"
 #include <vector>
 #include <string>
-#include "ExtensionMacros.h"
-#include "CrossApp.h"
 
+namespace cs {
 
-NS_CC_EXT_BEGIN
+    typedef enum _DicItemType
+    {
+        EDIC_TYPENULL = 0,
+        EDIC_TYPEINT,
+        EDIC_TYPEUINT,
+        EDIC_TYPEFLOAT,
+        EDIC_TYPESTRING,
+        EDIC_TYPEBOOLEN,
+        EDIC_TYPEARRAY,
+        EDIC_TYPEOBJECT
+    }DicItemType;
 
-typedef enum _DicItemType
-{
-    EDIC_TYPENULL = 0,
-    EDIC_TYPEINT,
-    EDIC_TYPEUINT,
-    EDIC_TYPEFLOAT,
-    EDIC_TYPESTRING,
-    EDIC_TYPEBOOLEN,
-    EDIC_TYPEARRAY,
-    EDIC_TYPEOBJECT
-}DicItemType;
+    class CSJsonDictionary
+    {
+    public:
+        CSJsonDictionary();
+        ~CSJsonDictionary();
 
+    public:
+        void    initWithDescription(const char *pszDescription);
+        void    insertItem(const char *pszKey, int nValue);
+        void    insertItem(const char *pszKey, double fValue);
+        void    insertItem(const char *pszKey, const char * pszValue);
+        void    insertItem(const char *pszKey, CSJsonDictionary * subDictionary);
+        void    insertItem(const char *pszKey, bool bValue);
+        bool    deleteItem(const char *pszKey);
+        void    cleanUp();
+        bool    isKeyValidate(const char *pszKey);
 
-class CSJsonDictionary
-{
-public:
-    CSJsonDictionary();
-    ~CSJsonDictionary();
+        int             getItemIntValue(const char *pszKey, int nDefaultValue);
+        double          getItemFloatValue(const char *pszKey, double fDefaultValue);
+        const char *    getItemStringValue(const char *pszKey);
+        bool            getItemBoolvalue(const char *pszKey, bool bDefaultValue);
+        CSJsonDictionary *   getSubDictionary(const char *pszKey);
 
-public:
-    void    initWithDescription(const char *pszDescription);
-	void	initWithValue(CSJson::Value& value);
+        std::string          getDescription();
 
-    void    insertItem(const char *pszKey, int nValue);
-    void    insertItem(const char *pszKey, double fValue);
-    void    insertItem(const char *pszKey, const char * pszValue);
-    void    insertItem(const char *pszKey, CSJsonDictionary * subDictionary);
-    void    insertItem(const char *pszKey, bool bValue);
-    bool    deleteItem(const char *pszKey);
-    void    cleanUp();
-    bool    isKeyValidate(const char *pszKey);
+        bool    insertItemToArray(const char *pszArrayKey, int nValue);
+        bool    insertItemToArray(const char *pszArrayKey, double fValue);
+        bool    insertItemToArray(const char *pszArrayKey, const char * pszValue);
+        bool    insertItemToArray(const char *pszArrayKey, CSJsonDictionary * subDictionary);
 
-    int             getItemIntValue(const char *pszKey, int nDefaultValue);
-    double          getItemFloatValue(const char *pszKey, double fDefaultValue);
-    const char *    getItemStringValue(const char *pszKey);
-    bool            getItemBoolvalue(const char *pszKey, bool bDefaultValue);
-    CSJsonDictionary *   getSubDictionary(const char *pszKey);
+        int getArrayItemCount(const char *pszArrayKey);
+        int getIntValueFromArray(const char *pszArrayKey, int nIndex, int nDefaultValue);
+        double getFloatValueFromArray(const char *pszArrayKey, int nIndex, double fDefaultValue);
+        bool getBoolValueFromArray(const char *pszArrayKey, int nIndex, bool bDefaultValue);
+        const char * getStringValueFromArray(const char *pszArrayKey, int nIndex);
+        CSJsonDictionary *getSubItemFromArray(const char *pszArrayKey, int nIndex);
+        DicItemType getItemTypeFromArray(const char *pszArrayKey, int nIndex);
 
-    std::string          getDescription();
+        int         getItemCount();
+        DicItemType getItemType(int nIndex);
+        DicItemType getItemType(const char *pszKey);
+        std::vector<std::string> getAllMemberNames();
 
-    bool    insertItemToArray(const char *pszArrayKey, int nValue);
-    bool    insertItemToArray(const char *pszArrayKey, double fValue);
-    bool    insertItemToArray(const char *pszArrayKey, const char * pszValue);
-    bool    insertItemToArray(const char *pszArrayKey, CSJsonDictionary * subDictionary);
+    protected:
+        CSJson::Value m_cValue;
 
-    int getArrayItemCount(const char *pszArrayKey);
-    int getIntValueFromArray(const char *pszArrayKey, int nIndex, int nDefaultValue);
-    double getFloatValueFromArray(const char *pszArrayKey, int nIndex, double fDefaultValue);
-    bool getBoolValueFromArray(const char *pszArrayKey, int nIndex, bool bDefaultValue);
-    const char * getStringValueFromArray(const char *pszArrayKey, int nIndex);
-    CSJsonDictionary *getSubItemFromArray(const char *pszArrayKey, int nIndex);
-    DicItemType getItemTypeFromArray(const char *pszArrayKey, int nIndex);
+    private:
+        void initWithValue(CSJson::Value& value);
+        inline bool isKeyValidate(const char *pszKey, CSJson::Value& root);
+        inline CSJson::Value * validateArrayItem(const char *pszArrayKey, int nIndex);
+    };
 
-    int         getItemCount();
-    DicItemType getItemType(int nIndex);
-    DicItemType getItemType(const char *pszKey);
-    std::vector<std::string> getAllMemberNames();
-
-protected:
-    CSJson::Value m_cValue;
-
-private:
-    inline bool isKeyValidate(const char *pszKey, CSJson::Value& root);
-    inline CSJson::Value * validateArrayItem(const char *pszArrayKey, int nIndex);
-};
-
-NS_CC_EXT_END
+}
 
 #endif

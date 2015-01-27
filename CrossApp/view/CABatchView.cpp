@@ -15,16 +15,16 @@
 
 NS_CC_BEGIN
 
-CABatchView* CABatchView::createWithImage(CAImage* image, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
+CABatchView* CABatchView::createWithImage(CAImage* tex, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
 {
     CABatchView *batchNode = new CABatchView();
-    batchNode->initWithImage(image, capacity);
+    batchNode->initWithImage(tex, capacity);
     batchNode->autorelease();
 
     return batchNode;
 }
 
-bool CABatchView::initWithImage(CAImage *image, unsigned int capacity)
+bool CABatchView::initWithImage(CAImage *tex, unsigned int capacity)
 {
     m_blendFunc.src = CC_BLEND_SRC;
     m_blendFunc.dst = CC_BLEND_DST;
@@ -35,9 +35,15 @@ bool CABatchView::initWithImage(CAImage *image, unsigned int capacity)
         capacity = kDefaultSpriteBatchCapacity;
     }
     
-    m_pobImageAtlas->initWithImage(image, capacity);
+    m_pobImageAtlas->initWithImage(tex, capacity);
 
     updateBlendFunc();
+
+    m_pSubviews = new CCArray();
+    m_pSubviews->initWithCapacity(capacity);
+
+    m_pobDescendants = new CCArray();
+    m_pobDescendants->initWithCapacity(capacity);
 
     setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
     return true;
@@ -52,13 +58,14 @@ bool CABatchView::init()
 
 CABatchView::CABatchView()
 : m_pobImageAtlas(NULL)
+, m_pobDescendants(NULL)
 {
-    
 }
 
 CABatchView::~CABatchView()
 {
     CC_SAFE_RELEASE(m_pobImageAtlas);
+    CC_SAFE_RELEASE(m_pobDescendants);
 }
 
 void CABatchView::visit(void)
@@ -82,8 +89,9 @@ void CABatchView::visit(void)
 
 void CABatchView::insertSubview(CAView *subview, int zOrder)
 {
+
     CAView::insertSubview(subview, zOrder);
-    appendSubview(subview);
+    appendChild(dynamic_cast<CAView*>(subview));
 }
 
 void CABatchView::addSubview(CAView *subview)
@@ -110,14 +118,14 @@ void CABatchView::removeSubview(CAView* subview)
         return;
     }
 
-    removeViewFromAtlas(pSprite);
+    removeSpriteFromAtlas(pSprite);
 
     CAView::removeSubview(pSprite);
 }
 
 void CABatchView::removeSubviewAtIndex(unsigned int uIndex)
 {
-    removeSubview(m_obSubviews.at(uIndex));
+    removeSubview((CAView*)(m_pSubviews->objectAtIndex(uIndex)));
 }
 
 void CABatchView::removeAllSubviews()
@@ -131,87 +139,108 @@ void CABatchView::sortAllSubview()
 {
     if (m_bReorderChildDirty)
     {
-        std::sort(m_obSubviews.begin(), m_obSubviews.end(), compareSubviewZOrder);
-        
-        if (!m_obSubviews.empty())
+        int i = 0,j = 0,length = m_pSubviews->data->num;
+        CAView ** x = (CAView**)m_pSubviews->data->arr;
+        CAView *tempItem = NULL;
+
+        for(i=1; i<length; i++)
         {
-            CAVector<CAView*>::iterator itr;
-            
-            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-                if(m_bRunning) (*itr)->sortAllSubviews();
-            
-            int index=0;
-            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-                updateAtlasIndex(*itr, &index);
+            tempItem = x[i];
+            j = i-1;
+
+
+            while(j>=0 && ( tempItem->getZOrder() < x[j]->getZOrder() || ( tempItem->getZOrder() == x[j]->getZOrder() && tempItem->getOrderOfArrival() < x[j]->getOrderOfArrival() ) ) )
+            {
+                x[j+1] = x[j];
+                j--;
+            }
+
+            x[j+1] = tempItem;
         }
+
+        if (m_pSubviews->count() > 0)
+        {
+            arrayMakeObjectsPerformSelector(m_pSubviews, sortAllSubviews, CAView*);
+
+            int index=0;
+
+            CAObject* pObj = NULL;
+            CCARRAY_FOREACH(m_pSubviews, pObj)
+            {
+                CAView* pChild = (CAView*)pObj;
+                updateAtlasIndex(pChild, &index);
+            }
+        }
+
         m_bReorderChildDirty=false;
     }
 }
 
-void CABatchView::updateAtlasIndex(CAView* view, int* curIndex)
+void CABatchView::updateAtlasIndex(CAView* sprite, int* curIndex)
 {
-    const CAVector<CAView*> pVector = view->getSubviews();
-    unsigned int count = (unsigned int)pVector.size();
-
+    unsigned int count = 0;
+    CCArray* pArray = sprite->getSubviews();
+    if (pArray != NULL)
+    {
+        count = pArray->count();
+    }
+    
     int oldIndex = 0;
 
     if( count == 0 )
     {
-        oldIndex = view->getAtlasIndex();
-        view->setAtlasIndex(*curIndex);
-        view->setOrderOfArrival(0);
-        if (oldIndex != *curIndex)
-        {
+        oldIndex = sprite->getAtlasIndex();
+        sprite->setAtlasIndex(*curIndex);
+        sprite->setOrderOfArrival(0);
+        if (oldIndex != *curIndex){
             swap(oldIndex, *curIndex);
         }
         (*curIndex)++;
     }
     else
     {
-        bool needNewIndex = true;
+        bool needNewIndex=true;
 
-        if (pVector.front()->getZOrder() >= 0)
+        if (((CAView*) (pArray->data->arr[0]))->getZOrder() >= 0)
         {
-            oldIndex = view->getAtlasIndex();
-            view->setAtlasIndex(*curIndex);
-            view->setOrderOfArrival(0);
+            oldIndex = sprite->getAtlasIndex();
+            sprite->setAtlasIndex(*curIndex);
+            sprite->setOrderOfArrival(0);
             if (oldIndex != *curIndex)
             {
                 swap(oldIndex, *curIndex);
             }
             (*curIndex)++;
-            
+
             needNewIndex = false;
         }
-        
-        CAVector<CAView*>::const_iterator itr;
-        for (itr=pVector.begin(); itr!=pVector.end(); itr++)
+
+        CAObject* pObj = NULL;
+        CCARRAY_FOREACH(pArray,pObj)
         {
-            CAView* subview = *itr;
-            if (needNewIndex && subview->getZOrder() >= 0)
+            CAView* child = (CAView*)pObj;
+            if (needNewIndex && child->getZOrder() >= 0)
             {
-                oldIndex = view->getAtlasIndex();
-                view->setAtlasIndex(*curIndex);
-                view->setOrderOfArrival(0);
-                if (oldIndex != *curIndex)
-                {
+                oldIndex = sprite->getAtlasIndex();
+                sprite->setAtlasIndex(*curIndex);
+                sprite->setOrderOfArrival(0);
+                if (oldIndex != *curIndex) {
                     this->swap(oldIndex, *curIndex);
                 }
                 (*curIndex)++;
                 needNewIndex = false;
-                
+
             }
-            
-            updateAtlasIndex(subview, curIndex);
+
+            updateAtlasIndex(child, curIndex);
         }
 
         if (needNewIndex)
         {
-            oldIndex = view->getAtlasIndex();
-            view->setAtlasIndex(*curIndex);
-            view->setOrderOfArrival(0);
-            if (oldIndex!=*curIndex)
-            {
+            oldIndex=sprite->getAtlasIndex();
+            sprite->setAtlasIndex(*curIndex);
+            sprite->setOrderOfArrival(0);
+            if (oldIndex!=*curIndex) {
                 swap(oldIndex, *curIndex);
             }
             (*curIndex)++;
@@ -221,13 +250,17 @@ void CABatchView::updateAtlasIndex(CAView* view, int* curIndex)
 
 void CABatchView::swap(int oldIndex, int newIndex)
 {
+    CAObject** x = m_pobDescendants->data->arr;
     ccV3F_C4B_T2F_Quad* quads = m_pobImageAtlas->getQuads();
 
+    CAObject* tempItem = x[oldIndex];
     ccV3F_C4B_T2F_Quad tempItemQuad=quads[oldIndex];
 
-    m_obDescendants.at(newIndex)->setAtlasIndex(oldIndex);
-    m_obDescendants.swap(oldIndex, newIndex);
+    ((CAView*) x[newIndex])->setAtlasIndex(oldIndex);
+
+    x[oldIndex]=x[newIndex];
     quads[oldIndex]=quads[newIndex];
+    x[newIndex]=tempItem;
     quads[newIndex]=tempItemQuad;
 }
 
@@ -245,9 +278,7 @@ void CABatchView::draw(void)
     
     CC_NODE_DRAW_SETUP();
 
-    CAVector<CAView*>::const_iterator itr;
-    for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-        (*itr)->updateTransform();
+    arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAView*);
 
     ccGLBlendFunc( m_blendFunc.src, m_blendFunc.dst );
 
@@ -271,86 +302,99 @@ void CABatchView::increaseAtlasCapacity(void)
     }
 }
 
-unsigned int CABatchView::rebuildIndexInOrder(CAView *superview, unsigned int uIndex)
+unsigned int CABatchView::rebuildIndexInOrder(CAView *pobParent, unsigned int uIndex)
 {
-    const CAVector<CAView*> pVector = superview->getSubviews();
-    
-    CAVector<CAView*>::const_iterator itr=m_obSubviews.begin();
-    while (itr!=m_obSubviews.end())
+    CCArray *psubview = pobParent->getSubviews();
+
+    if (psubview && psubview->count() > 0)
     {
-        CC_BREAK_IF((*itr)->getZOrder() >= 0);
-        uIndex = rebuildIndexInOrder((*itr), uIndex);
-        itr++;
-    }
-    
-    if (!superview->isEqual(this))
+        CAObject* pObject = NULL;
+        CCARRAY_FOREACH(psubview, pObject)
+        {
+            CAView* pChild = (CAView*) pObject;
+            if (pChild && (pChild->getZOrder() < 0))
+            {
+                uIndex = rebuildIndexInOrder(pChild, uIndex);
+            }
+        }
+    }    
+
+    if (! pobParent->isEqual(this))
     {
-        superview->setAtlasIndex(uIndex);
+        pobParent->setAtlasIndex(uIndex);
         uIndex++;
     }
 
-    while (itr!=m_obSubviews.end())
+    if (psubview && psubview->count() > 0)
     {
-        uIndex = rebuildIndexInOrder((*itr), uIndex);
+        CAObject* pObject = NULL;
+        CCARRAY_FOREACH(psubview, pObject)
+        {
+            CAView* pChild = (CAView*) pObject;
+            if (pChild && (pChild->getZOrder() >= 0))
+            {
+                uIndex = rebuildIndexInOrder(pChild, uIndex);
+            }
+        }
     }
 
     return uIndex;
 }
 
-unsigned int CABatchView::highestAtlasIndexInSubview(CAView *view)
+unsigned int CABatchView::highestAtlasIndexInChild(CAView *pSprite)
 {
-    const CAVector<CAView*>& pSubview = view->getSubviews();
+    CCArray *psubview = pSprite->getSubviews();
 
-    if (pSubview.empty())
+    if (! psubview || psubview->count() == 0)
     {
-        return view->getAtlasIndex();
+        return pSprite->getAtlasIndex();
     }
     else
     {
-        return highestAtlasIndexInSubview(pSubview.back());
+        return highestAtlasIndexInChild((CAView*)(psubview->lastObject()));
     }
 }
 
-unsigned int CABatchView::lowestAtlasIndexInSubview(CAView *view)
+unsigned int CABatchView::lowestAtlasIndexInChild(CAView *pSprite)
 {
-    const CAVector<CAView*>& pSubview = view->getSubviews();
-    
-    if (pSubview.empty())
+    CCArray *psubview = pSprite->getSubviews();
+
+    if (! psubview || psubview->count() == 0)
     {
-        return view->getAtlasIndex();
+        return pSprite->getAtlasIndex();
     }
     else
     {
-        return lowestAtlasIndexInSubview(pSubview.front());
+        return lowestAtlasIndexInChild((CAView*)(psubview->objectAtIndex(0)));
     }
 }
 
-unsigned int CABatchView::atlasIndexForSubview(CAView *view, int nZ)
+unsigned int CABatchView::atlasIndexForChild(CAView *pobSprite, int nZ)
 {
-    const CAVector<CAView*>& pBrothers = view->getSuperview()->getSubviews();
-    
-    unsigned int uSubviewIndex = (unsigned int)pBrothers.getIndex(view);
+    CCArray *pBrothers = pobSprite->getSuperview()->getSubviews();
+    unsigned int uChildIndex = pBrothers->indexOfObject(pobSprite);
 
-    bool bIgnoreParent = (CABatchView*)(view->getSuperview()) == this;
+    bool bIgnoreParent = (CABatchView*)(pobSprite->getSuperview()) == this;
     CAView *pPrevious = NULL;
-    if (uSubviewIndex > 0 && uSubviewIndex < UINT_MAX)
+    if (uChildIndex > 0 &&
+        uChildIndex < UINT_MAX)
     {
-        pPrevious = (CAView*)(pBrothers.at(uSubviewIndex - 1));
+        pPrevious = (CAView*)(pBrothers->objectAtIndex(uChildIndex - 1));
     }
 
     if (bIgnoreParent)
     {
-        if (uSubviewIndex == 0)
+        if (uChildIndex == 0)
         {
             return 0;
         }
 
-        return highestAtlasIndexInSubview(pPrevious) + 1;
+        return highestAtlasIndexInChild(pPrevious) + 1;
     }
 
-    if (uSubviewIndex == 0)
+    if (uChildIndex == 0)
     {
-        CAView *p = (CAView*)(view->getSuperview());
+        CAView *p = (CAView*)(pobSprite->getSuperview());
 
         if (nZ < 0)
         {
@@ -365,10 +409,10 @@ unsigned int CABatchView::atlasIndexForSubview(CAView *view, int nZ)
     {
         if ((pPrevious->getZOrder() < 0 && nZ < 0) || (pPrevious->getZOrder() >= 0 && nZ >= 0))
         {
-            return highestAtlasIndexInSubview(pPrevious) + 1;
+            return highestAtlasIndexInChild(pPrevious) + 1;
         }
 
-        CAView *p = (CAView*)(view->getSuperview());
+        CAView *p = (CAView*)(pobSprite->getSuperview());
         return p->getAtlasIndex() + 1;
     }
 
@@ -376,92 +420,102 @@ unsigned int CABatchView::atlasIndexForSubview(CAView *view, int nZ)
     return 0;
 }
 
-void CABatchView::insertSubview(CAView *subview, unsigned int uIndex)
+void CABatchView::insertChild(CAView *pSprite, unsigned int uIndex)
 {
-    subview->setBatch(this);
-    subview->setAtlasIndex(uIndex);
-    subview->setDirty(true);
+    pSprite->setBatch(this);
+    pSprite->setAtlasIndex(uIndex);
+    pSprite->setDirty(true);
 
     if(m_pobImageAtlas->getTotalQuads() == m_pobImageAtlas->getCapacity())
     {
         increaseAtlasCapacity();
     }
 
-    ccV3F_C4B_T2F_Quad quad = subview->getQuad();
+    ccV3F_C4B_T2F_Quad quad = pSprite->getQuad();
     m_pobImageAtlas->insertQuad(&quad, uIndex);
-    m_obDescendants.insert(uIndex, subview);
 
+    ccArray *descendantsData = m_pobDescendants->data;
+
+    ccArrayInsertObjectAtIndex(descendantsData, pSprite, uIndex);
+
+    unsigned int i = uIndex+1;
     
-    if (m_obDescendants.size() > uIndex + 1)
-    {
-        for (CAVector<CAView*>::const_iterator itr=m_obDescendants.begin() + uIndex + 1;
-             itr!=m_obDescendants.end();
-             itr++)
-        {
-            (*itr)->setAtlasIndex(subview->getAtlasIndex() + 1);
-        }
+    CAView* pChild = NULL;
+    for(; i<descendantsData->num; i++){
+        pChild = (CAView*)descendantsData->arr[i];
+        pChild->setAtlasIndex(pChild->getAtlasIndex() + 1);
     }
 
-    for (CAVector<CAView*>::const_iterator itr=subview->getSubviews().begin();
-         itr!=subview->getSubviews().end();
-         itr++)
+    CAObject* pObj = NULL;
+    CCARRAY_FOREACH(pSprite->getSubviews(), pObj)
     {
-        unsigned int idx = atlasIndexForSubview(*itr, (*itr)->getZOrder());
-        insertSubview(*itr, idx);
+        pChild = (CAView*)pObj;
+        unsigned int idx = atlasIndexForChild(pChild, pChild->getZOrder());
+        insertChild(pChild, idx);
     }
 }
 
-void CABatchView::appendSubview(CAView* subview)
+void CABatchView::appendChild(CAView* sprite)
 {
     m_bReorderChildDirty=true;
-    subview->setBatch(this);
-    subview->setDirty(true);
+    sprite->setBatch(this);
+    sprite->setDirty(true);
 
     if(m_pobImageAtlas->getTotalQuads() == m_pobImageAtlas->getCapacity()) {
         increaseAtlasCapacity();
     }
 
-    m_obDescendants.pushBack(subview);
-    
-    unsigned int index = (unsigned int)m_obDescendants.size() - 1;
+    ccArray *descendantsData = m_pobDescendants->data;
 
-    subview->setAtlasIndex(index);
+    ccArrayAppendObjectWithResize(descendantsData, sprite);
 
-    ccV3F_C4B_T2F_Quad quad = subview->getQuad();
+    unsigned int index=descendantsData->num-1;
+
+    sprite->setAtlasIndex(index);
+
+    ccV3F_C4B_T2F_Quad quad = sprite->getQuad();
     m_pobImageAtlas->insertQuad(&quad, index);
     
-    CAVector<CAView*>::const_iterator itr;
-    for (itr=subview->getSubviews().begin(); itr!=subview->getSubviews().end(); itr++)
+    CAObject* pObj = NULL;
+    CCARRAY_FOREACH(sprite->getSubviews(), pObj)
     {
-        appendSubview(*itr);
+        CAView* child = (CAView*)pObj;
+        appendChild(child);
     }
 }
 
-void CABatchView::removeViewFromAtlas(CAView *view)
+void CABatchView::removeSpriteFromAtlas(CAView *pobSprite)
 {
-    m_pobImageAtlas->removeQuadAtIndex(view->getAtlasIndex());
+    m_pobImageAtlas->removeQuadAtIndex(pobSprite->getAtlasIndex());
 
-    view->setBatch(NULL);
+    pobSprite->setBatch(NULL);
 
-    
-    
-    unsigned int uIndex = (unsigned int)m_obDescendants.getIndex(view);
+    unsigned int uIndex = m_pobDescendants->indexOfObject(pobSprite);
     if (uIndex != UINT_MAX)
     {
-        m_obDescendants.erase(uIndex);
-        unsigned int count = m_obDescendants.size();
+        m_pobDescendants->removeObjectAtIndex(uIndex);
+
+        unsigned int count = m_pobDescendants->count();
         
         for(; uIndex < count; ++uIndex)
         {
-            CAView* s = m_obDescendants.at(uIndex);
-            s->setAtlasIndex(s->getAtlasIndex() - 1);
+            CAView* s = (CAView*)(m_pobDescendants->objectAtIndex(uIndex));
+            s->setAtlasIndex( s->getAtlasIndex() - 1 );
         }
     }
 
-    CAVector<CAView*>::const_iterator itr;
-    for (itr=view->getSubviews().begin(); itr!=view->getSubviews().end(); itr++)
+    CCArray *psubview = pobSprite->getSubviews();
+    if (psubview && psubview->count() > 0)
     {
-        removeViewFromAtlas(*itr);
+        CAObject* pObject = NULL;
+        CCARRAY_FOREACH(psubview, pObject)
+        {
+            CAView* pChild = (CAView*) pObject;
+            if (pChild)
+            {
+                removeSpriteFromAtlas(pChild);
+            }
+        }
     }
 }
 
@@ -495,57 +549,64 @@ void CABatchView::setImage(CAImage *image)
     updateBlendFunc();
 }
 
-void CABatchView::insertQuadFromView(CrossApp::CAView *view, unsigned int index)
+void CABatchView::insertQuadFromSprite(CAView *sprite, unsigned int index)
 {
-    CCAssert( view != NULL, "Argument must be non-NULL");
+    CCAssert( sprite != NULL, "Argument must be non-NULL");
+    CCAssert( dynamic_cast<CAView*>(sprite), "CABatchView only supports CAViews as subview");
 
     while(index >= m_pobImageAtlas->getCapacity() || m_pobImageAtlas->getCapacity() == m_pobImageAtlas->getTotalQuads())
     {
         this->increaseAtlasCapacity();
     }
-    view->setBatch(this);
-    view->setAtlasIndex(index);
+    sprite->setBatch(this);
+    sprite->setAtlasIndex(index);
 
-    ccV3F_C4B_T2F_Quad quad = view->getQuad();
+    ccV3F_C4B_T2F_Quad quad = sprite->getQuad();
     m_pobImageAtlas->insertQuad(&quad, index);
 
-    view->setDirty(true);
-    view->updateTransform();
+    sprite->setDirty(true);
+    sprite->updateTransform();
 }
 
-void CABatchView::updateQuadFromView(CrossApp::CAView *view, unsigned int index)
+void CABatchView::updateQuadFromSprite(CAView *sprite, unsigned int index)
 {
-    CCAssert(view != NULL, "Argument must be non-nil");
+    CCAssert(sprite != NULL, "Argument must be non-nil");
+    CCAssert(dynamic_cast<CAView*>(sprite) != NULL, "CABatchView only supports CAViews as subview");
     
 	while (index >= m_pobImageAtlas->getCapacity() || m_pobImageAtlas->getCapacity() == m_pobImageAtlas->getTotalQuads())
     {
 		this->increaseAtlasCapacity();
     }
 
-	view->setBatch(this);
-    view->setAtlasIndex(index);
-	view->setDirty(true);
-    view->updateTransform();
+	sprite->setBatch(this);
+    sprite->setAtlasIndex(index);
+	sprite->setDirty(true);
+    sprite->updateTransform();
 }
 
-CABatchView * CABatchView::addViewWithoutQuad(CAView* view, unsigned int z, int aTag)
+CABatchView * CABatchView::addSpriteWithoutQuad(CAView*child, unsigned int z, int aTag)
 {
-    CCAssert( view != NULL, "Argument must be non-NULL");
+    CCAssert( child != NULL, "Argument must be non-NULL");
+    CCAssert( dynamic_cast<CAView*>(child), "CABatchView only supports CAViews as subview");
 
-    view->setAtlasIndex(z);
+    child->setAtlasIndex(z);
 
     int i=0;
  
-    CAVector<CAView*>::iterator itr;
-    for (itr=m_obDescendants.begin(); itr!=m_obDescendants.end(); itr++)
+    CAObject* pObject = NULL;
+    CCARRAY_FOREACH(m_pobDescendants, pObject)
     {
-        CC_CONTINUE_IF((*itr)->getAtlasIndex() < z);
-        ++i;
+        CAView* pChild = (CAView*) pObject;
+        if (pChild && (pChild->getAtlasIndex() >= z))
+        {
+            ++i;
+        }
     }
-    m_obDescendants.insert(i, view);
+    
+    m_pobDescendants->insertObject(child, i);
 
-    CAView::insertSubview(view, z);
-    view->setTag(aTag);
+    CAView::insertSubview(child, z);
+    child->setTag(aTag);
     reorderBatch(false);
 
     return this;

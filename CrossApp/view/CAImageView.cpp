@@ -184,14 +184,7 @@ void CAImageView::setContentSize(const CCSize & size)
         
         this->updateByImageViewScaleType();
         
-        if(!m_obSubviews.empty())
-        {
-            CAVector<CAView*>::iterator itr;
-            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-            {
-                (*itr)->reViewlayout();
-            }
-        }
+        arrayMakeObjectsPerformSelector(m_pSubviews, reViewlayout, CAView*);
         
         this->updateDraw();
     }

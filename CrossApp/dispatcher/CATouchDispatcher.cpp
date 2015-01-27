@@ -67,11 +67,11 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
             {
                 view->sortAllSubviews();
                 
-                CAVector<CAView*>::const_reverse_iterator itr;
-                for (itr=view->getSubviews().rbegin(); itr!=view->getSubviews().rend(); itr++)
+                CAObject* obj;
+                CCARRAY_FOREACH_REVERSE(view->getSubviews(), obj)
                 {
-                    CAView* subview = *itr;
-                    if (subview->isVisible() && subview->isTouchEnabled())
+                    CAView* subview = dynamic_cast<CAView*>(obj);
+                    if (subview && subview->isVisible() && subview->isTouchEnabled())
                     {
                         CCPoint point = subview->convertTouchToNodeSpace(touch);
                         
@@ -82,17 +82,16 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
                         }
                     }
                 }
+                
             }
         }
         else if (CAViewController* viewController = dynamic_cast<CAViewController*>(responder))
         {
-            CAVector<CAView*>::const_reverse_iterator itr;
-            for (itr=viewController->getView()->getSubviews().rbegin();
-                 itr!=viewController->getView()->getSubviews().rend();
-                 itr++)
+            CAObject* obj;
+            CCARRAY_FOREACH_REVERSE(viewController->getView()->getSubviews(), obj)
             {
-                CAView* subview = *itr;
-                if (subview->isVisible() && subview->isTouchEnabled())
+                CAView* subview = dynamic_cast<CAView*>(obj);
+                if (subview && subview->isVisible() && subview->isTouchEnabled())
                 {
                     CCPoint point = subview->convertTouchToNodeSpace(touch);
                     
@@ -108,7 +107,7 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
         responder = nextResponder;
     }
     while (responder);
-
+    
     return vector;
 }
 
