@@ -107,7 +107,7 @@
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\Websocket.cpp" />
     <ClCompile Include="..\sqlite3\include\sqlite3.c" />
-    <ClCompile Include="..\studio\CAStudioViewController.cpp" />
+    <ClCompile Include="..\studio\CAStudioViewParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CrossAppExt.h" />
@@ -136,7 +136,7 @@
     <ClInclude Include="..\network\Websocket.h" />
     <ClInclude Include="..\sqlite3\include\sqlite3.h" />
     <ClInclude Include="..\sqlite3\include\sqlite3ext.h" />
-    <ClInclude Include="..\studio\CAStudioViewController.h" />
+    <ClInclude Include="..\studio\CAStudioViewParser.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Json\lib_json\json_internalarray.inl" />
