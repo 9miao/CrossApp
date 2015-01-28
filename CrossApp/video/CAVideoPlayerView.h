@@ -15,10 +15,7 @@
 #include "CAVideoPlayerRender.h"
 #include "CAVideoPlayerDecoder.h"
 
-using namespace CrossApp;
-using namespace CAVideoPlayer;
-using namespace std;
-
+NS_CC_BEGIN
 
 class CAVideoPlayerView : public CAView {
         
@@ -76,6 +73,8 @@ private:
     double m_elapsed;               // 用于帧率控制
 
 };
+
+NS_CC_END
 
 
 #endif /* defined(__CrossApp__CAVideoPlayerView__) */

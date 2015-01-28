@@ -12,11 +12,12 @@
 #include <map>
 #include <vector>
 
-#include "CAVideoPlayerMacros.h"
 #include "basics/CAObject.h"
 #include "cocoa/CCArray.h"
 #include "cocoa/CCDictionary.h"
 #include "images/CAImage.h"
+
+NS_CC_BEGIN
 
 extern "C" {
     struct AVFormatContext;
@@ -27,11 +28,6 @@ extern "C" {
     struct AVSubtitle;
     struct SwsContext;
 }
-
-using namespace CrossApp;
-using namespace std;
-
-CA_VP_BEGIN
 
 typedef enum {
     
@@ -172,7 +168,7 @@ public:
     
     bool setupVideoFrameFormat(VPVideoFrameFormat format);
     
-    vector<VPFrame*> decodeFrames(float minDuration); // VPFrame
+    std::vector<VPFrame*> decodeFrames(float minDuration); // VPFrame
     
     bool interruputDecoder();
     
@@ -215,7 +211,7 @@ public:
     bool isValidAudio();
     bool isValidVideo();
     bool isValidSubtitles();
-    const map<string, string>& getInfo();
+    const std::map<std::string, std::string>& getInfo();
     std::string getVideoStreamFormatName();
     float getStartTime();
     bool getIsNetwork();
@@ -241,13 +237,13 @@ private:
     float               _videoTimeBase;
     float               _audioTimeBase;
     float               _position;
-    vector<int>         _videoStreams;
-    vector<int>         _audioStreams;
-    vector<int>         _subtitleStreams;
+    std::vector<int>         _videoStreams;
+    std::vector<int>         _audioStreams;
+    std::vector<int>         _subtitleStreams;
     SwrContext          *_swrContext;
     void                *_swrBuffer;
     unsigned int        _swrBufferSize;
-    map<string, string> _info;
+    std::map<std::string, std::string> _info;
     VPVideoFrameFormat  _videoFrameFormat;
     unsigned int        _artworkStream;
     int                 _subtitleASSEvents;
@@ -286,6 +282,6 @@ public:
     static std::string removeCommandsFromEventText(std::string text);
 };
 
-CA_VP_END
+NS_CC_END
 
 #endif /* defined(__CrossApp__CAVideoPlayerDecoder__) */
