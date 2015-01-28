@@ -14,15 +14,11 @@
 #include "basics/CAObject.h"
 #include "basics/CAGeometry.h"
 #include "CCGL.h"
-#include "CAVideoPlayerMacros.h"
 
-using namespace CrossApp;
-
-CA_VP_BEGIN
+NS_CC_BEGIN
 
 class VPVideoFrame;
-class VPFrameRender {
-    
+class VPFrameRender {    
 public:
     VPFrameRender();
     virtual ~VPFrameRender();
@@ -88,6 +84,6 @@ public:
     virtual const char* key();
 };
 
-CA_VP_END
+NS_CC_END
 
 #endif /* defined(__CrossApp__CAVideoPlayerRender__) */

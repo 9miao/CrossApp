@@ -16,6 +16,8 @@
 
 #include "SDL.h"
 
+NS_CC_BEGIN
+
 //static bool            m_inited = false;
 //static bool            m_bNeedExit = false;
 //static pthread_t       m_thread;
@@ -1129,4 +1131,4 @@ void CAVideoPlayerController::setPosition(float pos)
 }
 
 
-
+NS_CC_END

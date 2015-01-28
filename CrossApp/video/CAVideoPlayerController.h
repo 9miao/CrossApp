@@ -20,10 +20,6 @@
 
 NS_CC_BEGIN
 
-using namespace std;
-
-using namespace CAVideoPlayer;
-
 class CAVideoPlayerControllerDelegate
 {
 public:
