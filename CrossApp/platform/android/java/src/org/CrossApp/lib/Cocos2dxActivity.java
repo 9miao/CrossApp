@@ -3,6 +3,7 @@ package org.CrossApp.lib;
 
 import org.CrossApp.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -94,9 +95,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         @Override  
         public void onReceive(Context context, Intent intent) {  
             // TODO Auto-generated method stub  
+            //�ж����Ƿ���Ϊ�����仯��Broadcast Action  
             if(Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())){  
+                //��ȡ��ǰ����  
                 int level = intent.getIntExtra("level", 0);  
+                //�������̶ܿ�  
                 int scale = intent.getIntExtra("scale", 100);  
+                //����ת�ɰٷֱ�    
                 currentBattery =level*100/ scale;
             }  
         }  
