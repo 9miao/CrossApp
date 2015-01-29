@@ -186,8 +186,6 @@ LOCAL_SHARED_LIBRARIES += cocos_ffmpeg_shared
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
 LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
 
-LOCAL_EXPORT_SHARED_LIBRARIES += cocos_ffmpeg_shared
-
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,libjpeg)
