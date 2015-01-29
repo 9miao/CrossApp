@@ -372,7 +372,7 @@ void CAVideoPlayerController::prepare()
             getView()->addSubview(_glView);
         }
     }
-    
+
     
 //    if (_HUDView->getSuperview()) {
 //        getView()->removeSubview(_HUDView);
@@ -427,6 +427,7 @@ void CAVideoPlayerController::pause()
     if (!this->isPlaying()) {
         return;
     }
+
 
     _playing = false;
     this->enableAudio(false);
@@ -778,11 +779,13 @@ void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int 
                     
                     pthread_mutex_lock(&m_vp_data_mutex);
                     _audioFrames->removeObjectAtIndex(0);
-                    pthread_mutex_unlock(&m_vp_data_mutex);                    
+                    pthread_mutex_unlock(&m_vp_data_mutex);
                     
-                    if (delta > 0.1 && count > 1) {
+                    if (delta > 0.1 && count > 1)
+                    {
                         continue;
                     }
+                    
                 } else {
                     _audioFrames->removeObjectAtIndex(0);
                     _moviePosition = frame->getPosition();
@@ -1002,7 +1005,6 @@ void CAVideoPlayerController::displayHUD(bool bDisp)
         buildHUD();
     }
     
-   
     if (bDisp && _HUDView && !_HUDView->getSuperview()) {
         getView()->addSubview(_HUDView);
     } else if (!bDisp) {
