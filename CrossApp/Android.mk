@@ -6,9 +6,9 @@ LOCAL_MODULE := CrossApp_static
 
 LOCAL_MODULE_FILENAME := libCrossApp
 
+
 LOCAL_SRC_FILES := \
 CrossApp.cpp \
-video/CAVideoPlayerAudioManager.cpp \
 video/CAVideoPlayerController.cpp \
 video/CAVideoPlayerDecoder.cpp \
 video/CAVideoPlayerRender.cpp \

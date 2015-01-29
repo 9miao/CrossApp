@@ -233,7 +233,6 @@ void CAVideoPlayerView::draw()
 
 void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
 {
-//    CCLog(__FUNCTION__);
     CC_SAFE_RELEASE_NULL(_currFrame);
     _currFrame = frame;
     CC_SAFE_RETAIN(_currFrame);
