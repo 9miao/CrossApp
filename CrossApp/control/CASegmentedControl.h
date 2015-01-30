@@ -44,15 +44,15 @@ public:
   
     void setBackgroundImage(CAImage* image);
  
-    void addTargetAtSelected(CAObject* target, SEL_CASegmentedControl selector);
+    void addTarget(CAObject* target, SEL_CASegmentedControl selector);
     
-    void setSelectedSegmentIndex(int index);
-    int  getSelectedSegmentIndex();
+    void setSelectedAtIndex(int index);
+    int  getSelectedAtIndex();
     
     int  getNumberOfSegments();
     
-    void setColorOfText(const CAColor4B& color);
-    CAColor4B getColorOfText();
+    void setTitleColor(const CAColor4B& color);
+    const CAColor4B& getTitleColor();
     
     void insertSegmentWithTitleAtIndex(const std::string title, int index);
     void insertSegmentWithImageAtIndex(CAImage* image, int index);

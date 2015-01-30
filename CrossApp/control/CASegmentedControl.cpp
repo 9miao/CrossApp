@@ -21,7 +21,7 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_fSeparateWidth(1)
     , m_iSelectedIndex(-1)
     , m_iTouchIndex(0)
-    , m_cTextColor(CAColor_blue)
+    , m_cTextColor(ccc4(50, 190, 250, 255))
     , m_pTarget(NULL)
     , m_pCallFunc(NULL)
 {
@@ -139,7 +139,7 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
 }
 
 #pragma mark --
-void CASegmentedControl::setColorOfText(const CAColor4B& color)
+void CASegmentedControl::setTitleColor(const CAColor4B& color)
 {
     m_cTextColor = color;
     for(int index=0; index<m_vSegments.size(); ++index)
@@ -152,18 +152,18 @@ void CASegmentedControl::setColorOfText(const CAColor4B& color)
     createSeparate();
 }
 
-CAColor4B CASegmentedControl::getColorOfText()
+const CAColor4B& CASegmentedControl::getTitleColor()
 {
     return m_cTextColor;
 }
 
-void CASegmentedControl::setSelectedSegmentIndex(int index)
+void CASegmentedControl::setSelectedAtIndex(int index)
 {
     m_iSelectedIndex = index;
     refreshSegmentItemByIndex(index, CAControlStateSelected);
 }
 
-int CASegmentedControl::getSelectedSegmentIndex()
+int CASegmentedControl::getSelectedAtIndex()
 {
     return m_iSelectedIndex;
 }
@@ -606,7 +606,7 @@ CAObject* CASegmentedControl::getObjectByIndex(int index, CAControlState control
     return object;
 }
 
-void CASegmentedControl::addTargetAtSelected(CAObject* target, SEL_CASegmentedControl selector)
+void CASegmentedControl::addTarget(CAObject* target, SEL_CASegmentedControl selector)
 {
     m_pTarget = target;
     m_pCallFunc = selector;
