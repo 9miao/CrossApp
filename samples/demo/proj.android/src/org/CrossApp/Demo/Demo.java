@@ -31,6 +31,12 @@ public class Demo extends Cocos2dxActivity{
     }
 
     static {
-        System.loadLibrary("CrossApp_cpp");
+    	try {
+    		System.loadLibrary("ffmpeg");
+    		System.loadLibrary("CrossApp_cpp");    		
+    	} catch(Exception e) {
+    		e.printStackTrace(System.out);
+    	}
+        
     }     
 }
