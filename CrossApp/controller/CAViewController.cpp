@@ -984,6 +984,10 @@ const CAColor4B& CATabBarController::getTabBarSelectedIndicatorColor()
 void CATabBarController::showTabBarSelectedIndicator()
 {
     m_bShowTabBarSelectedIndicator = true;
+    if (m_pTabBar)
+    {
+        m_pTabBar->showSelectedIndicator();
+    }
 }
 
 bool CATabBarController::initWithViewControllers(const CAVector<CAViewController*>& viewControllers, CABarVerticalAlignment var)
@@ -1104,34 +1108,31 @@ void CATabBarController::viewDidLoad()
     
     if (m_pTabBarBackGroundImage)
     {
-        m_pTabBar->setBackGroundView(CAScale9ImageView::createWithImage(m_pTabBarBackGroundImage));
+        m_pTabBar->setBackGroundImage(m_pTabBarBackGroundImage);
     }
     else
     {
-        m_pTabBar->setBackGroundView(CAView::create());
-        m_pTabBar->getBackGroundView()->setColor(m_sTabBarSelectedBackGroundColor);
+        m_pTabBar->setBackGroundColor(m_sTabBarBackGroundColor);
     }
     
     
     if (m_pTabBarSelectedBackGroundImage)
     {
-        m_pTabBar->setSelectedBackGroundView(CAScale9ImageView::createWithImage(m_pTabBarSelectedBackGroundImage));
+        m_pTabBar->setSelectedBackGroundImage(m_pTabBarSelectedBackGroundImage);
     }
     else
     {
-        m_pTabBar->setSelectedBackGroundView(CAView::create());
-        m_pTabBar->getSelectedBackGroundView()->setColor(m_sTabBarSelectedBackGroundColor);
+        m_pTabBar->setSelectedBackGroundColor(m_sTabBarSelectedBackGroundColor);
     }
     
     
     if (m_pTabBarSelectedIndicatorImage)
     {
-        m_pTabBar->setSelectedIndicatorView(CAScale9ImageView::createWithImage(m_pTabBarSelectedIndicatorImage));
+        m_pTabBar->setSelectedIndicatorImage(m_pTabBarSelectedIndicatorImage);
     }
     else
     {
-        m_pTabBar->setSelectedIndicatorView(CAView::create());
-        m_pTabBar->getSelectedIndicatorView()->setColor(m_sTabBarSelectedBackGroundColor);
+        m_pTabBar->setSelectedIndicatorColor(m_sTabBarSelectedBackGroundColor);
     }
     
     

@@ -118,6 +118,11 @@ public:
 	{
 		_data.reserve(n);
 	}
+    
+    void resize(size_t n)
+    {
+        _data.resize(n);
+    }
 
 	size_t capacity() const
 	{
@@ -680,6 +685,11 @@ public:
     void reserve(size_t n)
     {
         _data.reserve(n);
+    }
+    
+    void resize(size_t n)
+    {
+        _data.resize(n);
     }
     
     size_t capacity() const

@@ -16,14 +16,11 @@
 #include "view/CALabel.h"
 #include "basics/CAApplication.h"
 
-#define PLAYSOUND 
-
 NS_CC_BEGIN
 
 CAButton::CAButton(const CAButtonType& buttonType)
 :m_bAllowsSelected(false)
 ,m_bSelected(false)
-,m_closeTapSound(false)
 ,m_bTouchClick(false)
 ,m_color(CAColor_white)
 ,m_eButtonType(buttonType)

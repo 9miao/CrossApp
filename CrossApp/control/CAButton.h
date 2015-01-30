@@ -75,8 +75,6 @@ public:
     
 public:
     
-    CC_SYNTHESIZE_IS(bool, m_closeTapSound, CloseTapSound);
-
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
 
     CC_SYNTHESIZE_IS_READONLY(bool, m_bSelected, Selected);
