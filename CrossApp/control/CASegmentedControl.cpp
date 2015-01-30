@@ -7,13 +7,9 @@
 //
 
 #include "CASegmentedControl.h"
-#include "CAButton.h"
 #include "view/CAScale9ImageView.h"
 #include "dispatcher/CATouch.h"
 #include "basics/CAApplication.h"
-#include "view/CAClippingView.h"
-#include "draw_nodes/CCDrawNode.h"
-#include "view/CARenderImage.h"
 
 using namespace std;
 NS_CC_BEGIN
@@ -76,7 +72,6 @@ CASegmentedControl* CASegmentedControl::createWithFrame(const CCRect& rect, unsi
         segmentedControl->autorelease();
         return segmentedControl;
     }
-    
     CC_SAFE_DELETE(segmentedControl);
     return NULL;
 }
@@ -89,7 +84,6 @@ CASegmentedControl* CASegmentedControl::createWithCenter(const CCRect& rect, uns
         segmentedControl->autorelease();
         return segmentedControl;
     }
-    
     CC_SAFE_DELETE(segmentedControl);
     return NULL;
 }
@@ -103,7 +97,6 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
     this->setBackgroundImage( CAImage::create("source_material/btn_rounded_normal.png") );
     this->removeAllSegments();
     const float elemWidth = rect.size.width / m_nItemsCount;
-    //CCSize itemSize = CCSizeMake(elemWidth, rect.size.height);
     CCRect elemFrame = CCRectMake(0, 0, rect.size.width/m_nItemsCount, rect.size.height);
     for (int i = 0; i < m_nItemsCount; ++i)
     {
@@ -128,9 +121,8 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
     }
     this->setBackgroundImage( CAImage::create("source_material/btn_rounded_normal.png") );
     this->removeAllSegments();
-    const float elemWidth = this->getBounds().size.width / m_nItemsCount;
-    CCSize itemSize = CCSizeMake(elemWidth, this->getBounds().size.height);
-    CCRect elemFrame = CCRectMake(0, 0, itemSize.width, itemSize.height);
+    const float elemWidth = rect.size.width / m_nItemsCount;
+    CCRect elemFrame = CCRectMake(0, 0, rect.size.width/m_nItemsCount, rect.size.height);
     for (int i = 0; i < m_nItemsCount; ++i)
     {
         CAView *segment = this->createDefaultSegment(i);
@@ -150,7 +142,6 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
 void CASegmentedControl::setColorOfText(const CAColor4B& color)
 {
     m_cTextColor = color;
-    
     for(int index=0; index<m_vSegments.size(); ++index)
     {
         CALabel* label = m_vTitles.at(index);
@@ -402,8 +393,8 @@ void CASegmentedControl::removeSegmentAtIndex(int index)
 void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
 {
     CCSize size = var;
-    //    size.height = MAX(size.height, _px(58));
-    //    size.width = MAX(size.width, size.height * 2);
+    size.height = MAX(size.height, _px(58));
+    size.width = MAX(size.width, size.height * 2);
     CAControl::setContentSize(size);
     if (m_pBackgroundView)
     {
@@ -497,9 +488,9 @@ void CASegmentedControl::refreshAllSegmentItemBound()
             segmentWidth = (this->getBounds().size.width - setWidth)/(m_vSegmentWidth.size()-setWidthCount);
         }
         (*itr_segment)->setBounds(CCRectMake((*itr_segment)->getBounds().origin.x,
-                                     (*itr_segment)->getBounds().origin.y,
-                                     segmentWidth,
-                                     (*itr_segment)->getBounds().size.height));
+                                             (*itr_segment)->getBounds().origin.y,
+                                             segmentWidth,
+                                             (*itr_segment)->getBounds().size.height));
     }
 }
 
@@ -514,7 +505,7 @@ void CASegmentedControl::refreshAllSegmentItemPosition()
         (*itr)->setFrame(rect);
     }
     this->setFrame(CCRectMake(this->getFrameOrigin().x, this->getFrameOrigin().y, length, this->getBounds().size.height));
-    //this->setContentSize(CCSize(length, this->getBounds().size.height));
+    /*this->setContentSize(CCSize(length, this->getBounds().size.height));*/
 }
 
 void CASegmentedControl::refreshSegmentItemByPoint(CCPoint point, CAControlState controlState)
@@ -533,7 +524,7 @@ void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState con
     {
         m_vSegments.at(index)->removeAllSubviews();
         label->setCenter(CCRectMake(segmentSize.width*0.5f + contentOffset.width,
-                                           segmentSize.height*0.5f + contentOffset.height,
+                                    segmentSize.height*0.5f + contentOffset.height,
                                     segmentSize.width,
                                     segmentSize.height));
         m_vSegments.at(index)->addSubview(label);
@@ -553,9 +544,9 @@ void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState con
         m_vSegments.at(index)->removeAllSubviews();
         CAImageView* imageView = CAImageView::createWithImage(image);
         imageView->setCenter(CCRectMake(segmentSize.width*0.5f + contentOffset.width,
-                                    segmentSize.height*0.5f + contentOffset.height,
-                                    width,
-                                    height));
+                                        segmentSize.height*0.5f + contentOffset.height,
+                                        width,
+                                        height));
         m_vSegments.at(index)->addSubview(imageView);
     }
     setSegmentStateWithColor(controlState, index);
@@ -690,7 +681,6 @@ void CASegmentedControl::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEve
         if(m_iTouchIndex != index && m_iTouchIndex != -1)
         {
             refreshSegmentItemByIndex(m_iTouchIndex, CAControlStateNormal);
-
         }
         if(index != m_iSelectedIndex)
         {
