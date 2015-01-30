@@ -97,7 +97,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\device\CADevice.cpp" />
-    <ClCompile Include="..\GUI\CAUIHelper.cpp" />
     <ClCompile Include="..\Json\CSContentJsonDictionary.cpp" />
     <ClCompile Include="..\Json\DictionaryHelper.cpp" />
     <ClCompile Include="..\Json\lib_json\json_reader.cpp" />
@@ -108,13 +107,12 @@
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\Websocket.cpp" />
     <ClCompile Include="..\sqlite3\include\sqlite3.c" />
-    <ClCompile Include="..\studio\CAStudioViewController.cpp" />
+    <ClCompile Include="..\studio\CAStudioViewParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CrossAppExt.h" />
     <ClInclude Include="..\device\CADevice.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
-    <ClInclude Include="..\GUI\CAUIHelper.h" />
     <ClInclude Include="..\Json\CSContentJsonDictionary.h" />
     <ClInclude Include="..\Json\DictionaryHelper.h" />
     <ClInclude Include="..\Json\lib_json\autolink.h" />
@@ -138,7 +136,7 @@
     <ClInclude Include="..\network\Websocket.h" />
     <ClInclude Include="..\sqlite3\include\sqlite3.h" />
     <ClInclude Include="..\sqlite3\include\sqlite3ext.h" />
-    <ClInclude Include="..\studio\CAStudioViewController.h" />
+    <ClInclude Include="..\studio\CAStudioViewParser.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Json\lib_json\json_internalarray.inl" />

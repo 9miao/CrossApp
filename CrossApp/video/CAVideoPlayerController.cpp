@@ -16,6 +16,8 @@
 
 #include "SDL.h"
 
+NS_CC_BEGIN
+
 //static bool            m_inited = false;
 //static bool            m_bNeedExit = false;
 //static pthread_t       m_thread;
@@ -191,7 +193,6 @@ bool CAVideoPlayerController::init(const string& path, const string& title)
 
 void CAVideoPlayerController::viewDidLoad()
 {
-    CCLog(__FUNCTION__);
     
     lazyInit();
     
@@ -372,7 +373,6 @@ void CAVideoPlayerController::prepare()
         }
     }
     
-    CCLog(__FUNCTION__);
     
 //    if (_HUDView->getSuperview()) {
 //        getView()->removeSubview(_HUDView);
@@ -427,8 +427,6 @@ void CAVideoPlayerController::pause()
     if (!this->isPlaying()) {
         return;
     }
-    
-    CCLog(__FUNCTION__);
 
     _playing = false;
     this->enableAudio(false);
@@ -567,7 +565,6 @@ void CAVideoPlayerController::tick(float dt)
         _activityView->stopAnimating();
     }
     
-//    CCLog(__FUNCTION__);
     
     float interval = 0;
     if (!_buffered && _playing)
@@ -830,7 +827,6 @@ void CAVideoPlayerController::onCheckExit(float dt)
 
 void CAVideoPlayerController::onButtonBack(CrossApp::CAControl *control, CrossApp::CCPoint point)
 {
-    CCLog(__FUNCTION__);
     pause();
     CCLog("%s, SDL_Quilt", __FUNCTION__);
     SDL_Quit();
@@ -1006,8 +1002,7 @@ void CAVideoPlayerController::displayHUD(bool bDisp)
         buildHUD();
     }
     
-    CCLog(__FUNCTION__);
-    
+   
     if (bDisp && _HUDView && !_HUDView->getSuperview()) {
         getView()->addSubview(_HUDView);
     } else if (!bDisp) {
@@ -1129,4 +1124,4 @@ void CAVideoPlayerController::setPosition(float pos)
 }
 
 
-
+NS_CC_END

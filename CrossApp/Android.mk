@@ -6,9 +6,9 @@ LOCAL_MODULE := CrossApp_static
 
 LOCAL_MODULE_FILENAME := libCrossApp
 
+
 LOCAL_SRC_FILES := \
 CrossApp.cpp \
-video/CAVideoPlayerAudioManager.cpp \
 video/CAVideoPlayerController.cpp \
 video/CAVideoPlayerDecoder.cpp \
 video/CAVideoPlayerRender.cpp \
@@ -185,8 +185,6 @@ LOCAL_SHARED_LIBRARIES += cocos_ffmpeg_shared
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
 LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
-
-LOCAL_EXPORT_SHARED_LIBRARIES += cocos_ffmpeg_shared
 
 include $(BUILD_STATIC_LIBRARY)
 

@@ -8,12 +8,12 @@
 
 #include "CAVideoPlayerRender.h"
 
-using namespace CAVideoPlayer;
-
 #include "CAVideoPlayerDecoder.h"
 #include "shaders/CAShaderCache.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
+
+NS_CC_BEGIN
 
 #pragma mark - shaders
 
@@ -613,3 +613,4 @@ CCRect VPFrameRender::updateVertices(float width, float height, float screen_w, 
     return CCRect((screen_w - w * screen_w)/2, (screen_h - screen_h * h)/2, w * screen_w, screen_h * h);
 }
 
+NS_CC_END

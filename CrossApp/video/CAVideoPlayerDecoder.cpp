@@ -13,9 +13,10 @@
 #include <stdio.h>
 
 #include "CAVideoPlayerDecoder.h"
-#include "CAVideoPlayerAudioManager.h"
 
 #include "SDL.h"
+
+NS_CC_BEGIN
 
 extern "C" {
 #include "libavformat/avformat.h"
@@ -24,8 +25,6 @@ extern "C" {
 #include "libswresample/swresample.h"
 #include "libavutil/pixdesc.h"
 }
-
-USING_CA_VP
 
 #pragma mark - static
 
@@ -63,16 +62,6 @@ static const char* errorMessage(VPError errorCode)
         case kErrorUnknown:
             return "Unknown";
     }
-}
-
-static bool audioCodecIsSupported(AVCodecContext *audio)
-{
-    if (audio->sample_fmt == AV_SAMPLE_FMT_S16) {
-        VPAudioManager* audioManager = VPAudioManager::getInstance();
-        return ((int)audioManager->getSamplingRate() == audio->sample_rate) && 
-                (audioManager->getNumOutputChannels() == audio->channels);
-    }
-    return false;
 }
 
 #ifdef DEBUG
@@ -605,14 +594,14 @@ bool VPDecoder::isValidSubtitles()
     return _subtitleStream != -1;
 }
 
-const map<string, string>& VPDecoder::getInfo()
+const std::map<std::string, std::string>& VPDecoder::getInfo()
 {
     if (_info.empty()) {
         if (_formatCtx) {
-            _info.insert(make_pair("format", _formatCtx->iformat->name));
+            _info.insert(std::make_pair("format", _formatCtx->iformat->name));
             
             if (_formatCtx->bit_rate) {
-                stringstream ss;
+                std::stringstream ss;
                 ss << _formatCtx->bit_rate;
                 _info.insert(make_pair("bitrate", ss.str()));
             }
@@ -630,12 +619,12 @@ const map<string, string>& VPDecoder::getInfo()
             char buf[256];
             
             if (_videoStreams.size()) {
-                vector<int>::iterator iter = _videoStreams.begin();
+                std::vector<int>::iterator iter = _videoStreams.begin();
                 int index = 0;
                 while (iter != _videoStreams.end()) {
                     AVStream *st = _formatCtx->streams[*iter];
                     avcodec_string(buf, sizeof(buf), st->codec, 1);
-                    stringstream ss;
+                    std::stringstream ss;
                     ss << "video_" << index;
                     _info.insert(make_pair(ss.str(), buf));
                     index++;
@@ -643,11 +632,11 @@ const map<string, string>& VPDecoder::getInfo()
             }
             
             if (_audioStreams.size()) {
-                vector<int>::iterator iter = _audioStreams.begin();
+                std::vector<int>::iterator iter = _audioStreams.begin();
                 int index = 0;
                 while (iter != _audioStreams.end()) {
                     AVStream *st = _formatCtx->streams[*iter];
-                    stringstream ss;
+                    std::stringstream ss;
                     
                     AVDictionaryEntry *lang = av_dict_get(st->metadata, "language", NULL, 0);
                     if (lang && lang->value) {
@@ -664,11 +653,11 @@ const map<string, string>& VPDecoder::getInfo()
             }
             
             if (_subtitleStreams.size()) {
-                vector<int>::iterator iter = _subtitleStreams.begin();
+                std::vector<int>::iterator iter = _subtitleStreams.begin();
                 int index = 0;
                 while (iter != _subtitleStreams.end()) {
                     AVStream *st = _formatCtx->streams[*iter];
-                    stringstream ss;
+                    std::stringstream ss;
                     
                     AVDictionaryEntry *lang = av_dict_get(st->metadata, "language", NULL, 0);
                     if (lang && lang->value) {
@@ -688,7 +677,7 @@ const map<string, string>& VPDecoder::getInfo()
     return _info;
 }
 
-string VPDecoder::getVideoStreamFormatName()
+std::string VPDecoder::getVideoStreamFormatName()
 {
     if (!_videoCodecCtx) {
         return "NULL";
@@ -795,8 +784,7 @@ bool VPDecoder::openFile(const std::string& path, std::string& perror)
 
 VPError VPDecoder::openInput(std::string path)
 {
-    CCLog(__FUNCTION__);
-    
+   
     AVFormatContext *formatCtx = NULL;
     
     if (m_interruptCallback) {
@@ -843,7 +831,7 @@ VPError VPDecoder::openVideoStream()
     _videoStream = -1;
     _artworkStream = -1;
     _videoStreams = collectStreams(_formatCtx, AVMEDIA_TYPE_VIDEO);
-    vector<int>::iterator iter = _videoStreams.begin();
+    std::vector<int>::iterator iter = _videoStreams.begin();
     while (iter != _videoStreams.end()) {
         if (0 == (_formatCtx->streams[*iter]->disposition & AV_DISPOSITION_ATTACHED_PIC)) {
             errCode = openVideoStream(*iter);
@@ -913,7 +901,7 @@ VPError VPDecoder::openAudioStream()
     VPError errCode = kErrorStreamNotFound;
     _audioStream = -1;
     _audioStreams = collectStreams(_formatCtx, AVMEDIA_TYPE_AUDIO);
-    vector<int>::iterator iter = _audioStreams.begin();
+    std::vector<int>::iterator iter = _audioStreams.begin();
     while (iter != _audioStreams.end()) {
         errCode = openAudioStream(*iter);
         if (errCode == kErrorNone) {
@@ -998,7 +986,7 @@ VPError VPDecoder::openAudioStream(int audioStream)
     
     s_audioSpec = spec;
 
-    if (1) {//(!audioCodecIsSupported(codecCtx)) {
+    if (1) {
         swrContext = swr_alloc_set_opts(NULL,
                                         av_get_default_channel_layout(spec.channels),
                                         AV_SAMPLE_FMT_S16,
@@ -1076,7 +1064,7 @@ VPError VPDecoder::openSubtitleStream(int subtitleStream)
     
     if (codecCtx->subtitle_header_size) {
         
-        string s = "";
+        std::string s = "";
         s.append((char*)codecCtx->subtitle_header, codecCtx->subtitle_header_size);   
 //        TODO: parse subtitle
 //        if (s.length) {
@@ -1098,9 +1086,9 @@ void VPDecoder::closeFile()
     this->closeVideoStream();
     this->closeSubtitleStream();
     
-    vector<int>().swap(_videoStreams);
-    vector<int>().swap(_audioStreams);
-    vector<int>().swap(_subtitleStreams);
+    std::vector<int>().swap(_videoStreams);
+    std::vector<int>().swap(_audioStreams);
+    std::vector<int>().swap(_subtitleStreams);
     
     if (_formatCtx) {
         
@@ -1312,9 +1300,6 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
     if (!_audioFrame->data[0])
         return NULL;
     
-//    VPAudioManager* audioManager = VPAudioManager::getInstance();
-    
-//    const unsigned int numChannels = audioManager->getNumOutputChannels();
     const unsigned int numChannels = s_audioSpec.channels;
     int numFrames;
     
@@ -1412,7 +1397,7 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
 
 VPSubtitleFrame* VPDecoder::handleSubtitle(AVSubtitle *pSubtitle)
 {
-    string ms = "";
+    std::string ms = "";
     
     for (int i = 0; i < pSubtitle->num_rects; ++i) {
         
@@ -1480,9 +1465,9 @@ bool VPDecoder::setupVideoFrameFormat(VPVideoFrameFormat format)
     return false;
 }
 
-vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
+std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
 {
-    vector<VPFrame*> result;
+    std::vector<VPFrame*> result;
 
     if (_videoStream == -1 &&
         _audioStream == -1)
@@ -1670,3 +1655,5 @@ std::string VPSubtitleASSParser::removeCommandsFromEventText(std::string text)
 {
     return "";
 }
+
+NS_CC_END

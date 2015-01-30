@@ -217,8 +217,7 @@ void CAViewController::dismissModalViewController(bool animated)
 #pragma CANavigationController
 
 CANavigationController::CANavigationController()
-:m_pViewControllers(NULL)
-,m_bNavigationBarHidden(false)
+:m_bNavigationBarHidden(false)
 ,m_bPopViewController(false)
 ,m_pNavigationBarBackGroundImage(NULL)
 ,m_sNavigationBarBackGroundColor(CAColor_white)

@@ -15,13 +15,11 @@ static GLint g_sStencilBits = -1;
 static void setProgram(CAView *n, CAGLProgram *p)
 {
     n->setShaderProgram(p);
-    if (!n->getSubviews()) return;
-    
-    CAObject* pObj = NULL;
-    CCARRAY_FOREACH(n->getSubviews(), pObj)
-    {
-        setProgram((CAView*)pObj, p);
-    }
+    CC_RETURN_IF(n->getSubviews().empty());
+
+    CAVector<CAView*>::const_iterator itr;
+    for (itr=n->getSubviews().begin(); itr!=n->getSubviews().end(); itr++)
+        setProgram(*itr, p);
 }
 
 CAClippingView::CAClippingView()

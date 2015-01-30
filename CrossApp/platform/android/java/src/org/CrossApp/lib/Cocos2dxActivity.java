@@ -3,11 +3,12 @@ package org.CrossApp.lib;
 
 import org.CrossApp.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
-import android.R.layout;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +22,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
+import org.CrossApp.lib.AndroidVolumeControl;
+import org.CrossApp.lib.AndroidNetWorkManager;
 @SuppressLint("HandlerLeak")
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
 	// ===========================================================
@@ -38,10 +40,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	private Cocos2dxHandler mHandler;
 	private static Context sContext = null;
 	AndroidNativeTool actAndroidNativeTool;
+	AndroidVolumeControl androidVolumeControl;
 	static FrameLayout frame;
 	static View rootview;
 	static int keyboardheight;
 	static float densityDpi;
+	public static int currentBattery=0;
 	private static Activity activity;
 	native static void KeyBoardHeightReturn(int height);
 	public static Context getContext() {
@@ -67,20 +71,47 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	actAndroidNativeTool = new AndroidNativeTool(this);
     	
     	AndroidPersonList.Init(this);
-    	
+    	AndroidNetWorkManager.setContext(this);
     	this.init();
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
 		exeHandler();
-		
+		AndroidVolumeControl.setContext(sContext);
 		 if(mWebViewHelper == null)
 		 {
 			 mWebViewHelper = new Cocos2dxWebViewHelper(frame);
 		 }
+		 IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);  
+
+	     BatteryReceiver batteryReceiver = new BatteryReceiver();  
+
+	     registerReceiver(batteryReceiver, intentFilter);
+	     
 	}
+	
+	class BatteryReceiver extends BroadcastReceiver{  
+		  
+        @Override  
+        public void onReceive(Context context, Intent intent) {  
+            // TODO Auto-generated method stub  
+            if(Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())){  
+                int level = intent.getIntExtra("level", 0);  
+                int scale = intent.getIntExtra("scale", 100);  
+                currentBattery =level*100/ scale;
+            }  
+        }  
+          
+    }
+	
+	public static int getBatteryLevel()
+	{
+		return currentBattery;
+	}
+	
 	 public void onActivityResult(int requestCode, int resultCode, Intent intent)
 	 {
 		 actAndroidNativeTool.onActivityResult(requestCode, resultCode, intent);
+		 
 	 }
 	// ===========================================================
 	// Getter & Setter
@@ -117,6 +148,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	}
 	public static void startGps() {
 		AndroidGPS.Init(activity);
+		
 	}
 	@Override
 	protected void onResume() {
@@ -124,6 +156,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
 		Cocos2dxHelper.onResume();
 		this.mGLSurfaceView.onResume();
+		if (AndroidGPS.locationManager!=null) 
+		{
+			AndroidGPS.locationManager.requestLocationUpdates(AndroidGPS.locationManager.GPS_PROVIDER, 1000, 1, AndroidGPS.locationListener);
+		}
 	}
 
 	@Override
@@ -132,6 +168,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
 		Cocos2dxHelper.onPause();
 		this.mGLSurfaceView.onPause();
+		if (AndroidGPS.locationManager!=null) 
+		{
+			AndroidGPS.locationManager.removeUpdates(AndroidGPS.locationListener);
+		}
 	}
 
 	@Override
@@ -205,7 +245,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
                 rootview.getWindowVisibleDisplayFrame(r);
 
-                
                 Rect frame = new Rect();
                 rootview.getWindowVisibleDisplayFrame(frame);
                 int statusBarHeight = frame.top;

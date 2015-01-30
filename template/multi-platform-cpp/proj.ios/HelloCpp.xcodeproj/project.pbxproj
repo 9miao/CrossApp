@@ -24,11 +24,9 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		B00CC6051978B5CE00A62E4C /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00CC6031978B5CE00A62E4C /* RootWindow.cpp */; };
-		B00CC61119792FF800A62E4C /* CAStudioViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00CC60F19792FF800A62E4C /* CAStudioViewController.cpp */; };
 		B01A293A1994C6D200D42BA0 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = B01A29391994C6D200D42BA0 /* sqlite3.c */; };
 		B01DFC3B190513FD00214AE2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B01DFC3A190513FD00214AE2 /* fonts */; };
 		B01F71671951682600BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71661951682600BA07A6 /* source_material */; };
-		B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */; };
 		B034086E19921255005DB179 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B034085819921255005DB179 /* libwebsockets.a */; };
 		B036EB5D19406C7F000434DD /* icon in Resources */ = {isa = PBXBuildFile; fileRef = B036EB5C19406C7F000434DD /* icon */; };
 		B03E8FEC1938879200FD9A06 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FDF1938879200FD9A06 /* HelloWorld.png */; };
@@ -51,6 +49,10 @@
 		B04C0C0A1901207A009854FD /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BFE1901207A009854FD /* json_writer.cpp */; };
 		B04C0C0B1901207A009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0C001901207A009854FD /* sconscript */; };
 		B0AD93EA19207CA300EA40BB /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93E619207CA300EA40BB /* FirstViewController.cpp */; };
+		B0CA5A291A77A77B00BECD89 /* CAStudioViewParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A271A77A77B00BECD89 /* CAStudioViewParser.cpp */; };
+		B0CA5A2B1A77A79900BECD89 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */; };
+		B0CA5A2D1A77A7A000BECD89 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2C1A77A7A000BECD89 /* MediaPlayer.framework */; };
+		B0CA5A301A77A80B00BECD89 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A2F1A77A80B00BECD89 /* Reachability.m */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -120,13 +122,9 @@
 		B00CC6031978B5CE00A62E4C /* RootWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootWindow.cpp; path = ../Classes/RootWindow.cpp; sourceTree = "<group>"; };
 		B00CC6041978B5CE00A62E4C /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
 		B00CC60D19792FF800A62E4C /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
-		B00CC60F19792FF800A62E4C /* CAStudioViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStudioViewController.cpp; sourceTree = "<group>"; };
-		B00CC61019792FF800A62E4C /* CAStudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStudioViewController.h; sourceTree = "<group>"; };
 		B01A29391994C6D200D42BA0 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		B01DFC3A190513FD00214AE2 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
-		B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
-		B02A145F190A6A4B00C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
 		B034083E199211CC005DB179 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		B034083F199211CC005DB179 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		B034085619921255005DB179 /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
@@ -175,6 +173,12 @@
 		B0AD93E519207CA300EA40BB /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
 		B0AD93E619207CA300EA40BB /* FirstViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FirstViewController.cpp; path = ../Classes/FirstViewController.cpp; sourceTree = "<group>"; };
 		B0AD93E719207CA300EA40BB /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstViewController.h; path = ../Classes/FirstViewController.h; sourceTree = "<group>"; };
+		B0CA5A271A77A77B00BECD89 /* CAStudioViewParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStudioViewParser.cpp; sourceTree = "<group>"; };
+		B0CA5A281A77A77B00BECD89 /* CAStudioViewParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStudioViewParser.h; sourceTree = "<group>"; };
+		B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B0CA5A2C1A77A7A000BECD89 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		B0CA5A2E1A77A80B00BECD89 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		B0CA5A2F1A77A80B00BECD89 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -197,6 +201,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0CA5A2D1A77A7A000BECD89 /* MediaPlayer.framework in Frameworks */,
+				B0CA5A2B1A77A79900BECD89 /* SystemConfiguration.framework in Frameworks */,
 				04033E2E1954849600473756 /* libCrossApp.a in Frameworks */,
 				EB1818DA19388005002856FF /* AddressBookUI.framework in Frameworks */,
 				EB1818D819388001002856FF /* AddressBook.framework in Frameworks */,
@@ -255,8 +261,6 @@
 		15A3D9EC1682F826002FB0C5 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				B02A145E190A6A4B00C3633B /* CAUIHelper.cpp */,
-				B02A145F190A6A4B00C3633B /* CAUIHelper.h */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -353,12 +357,14 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF170DB412928DE900B8313A /* libz.dylib */,
+				BF170DB212928DE900B8313A /* libxml2.dylib */,
+				1ACB3243164770DE00914215 /* libcurl.a */,
+				B0CA5A2C1A77A7A000BECD89 /* MediaPlayer.framework */,
+				B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */,
 				EB1818D919388005002856FF /* AddressBookUI.framework */,
 				EB1818D719388001002856FF /* AddressBook.framework */,
 				EB1818D519387FFA002856FF /* CoreLocation.framework */,
-				1ACB3243164770DE00914215 /* libcurl.a */,
-				BF170DB212928DE900B8313A /* libxml2.dylib */,
-				BF170DB412928DE900B8313A /* libz.dylib */,
 				D44C620F132DFF4E0009C878 /* AudioToolbox.framework */,
 				D44C620D132DFF430009C878 /* AVFoundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -390,8 +396,8 @@
 		B00CC60E19792FF800A62E4C /* studio */ = {
 			isa = PBXGroup;
 			children = (
-				B00CC60F19792FF800A62E4C /* CAStudioViewController.cpp */,
-				B00CC61019792FF800A62E4C /* CAStudioViewController.h */,
+				B0CA5A271A77A77B00BECD89 /* CAStudioViewParser.cpp */,
+				B0CA5A281A77A77B00BECD89 /* CAStudioViewParser.h */,
 			);
 			path = studio;
 			sourceTree = "<group>";
@@ -469,6 +475,8 @@
 		B04822AE19FA41F70019F1A7 /* Device_ios */ = {
 			isa = PBXGroup;
 			children = (
+				B0CA5A2E1A77A80B00BECD89 /* Reachability.h */,
+				B0CA5A2F1A77A80B00BECD89 /* Reachability.m */,
 				B04822AF19FA41F70019F1A7 /* CAAddress.h */,
 				B04822B019FA41F70019F1A7 /* CAAddress.mm */,
 				B04822B119FA41F70019F1A7 /* CAAlbumController.h */,
@@ -623,6 +631,7 @@
 				B04822BE19FA41F70019F1A7 /* CABrightness_iOS.mm in Sources */,
 				B04C0C041901207A009854FD /* DictionaryHelper.cpp in Sources */,
 				B04C0C031901207A009854FD /* CSContentJsonDictionary.cpp in Sources */,
+				B0CA5A301A77A80B00BECD89 /* Reachability.m in Sources */,
 				B04C0C0A1901207A009854FD /* json_writer.cpp in Sources */,
 				B01A293A1994C6D200D42BA0 /* sqlite3.c in Sources */,
 				B04C0C081901207A009854FD /* json_value.cpp in Sources */,
@@ -631,20 +640,19 @@
 				B04822BD19FA41F70019F1A7 /* CAAlbumController.mm in Sources */,
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
 				B0AD93EA19207CA300EA40BB /* FirstViewController.cpp in Sources */,
-				B02A1460190A6A4B00C3633B /* CAUIHelper.cpp in Sources */,
 				15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */,
 				B04822BC19FA41F70019F1A7 /* CAAddress.mm in Sources */,
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
 				B04822C119FA41F70019F1A7 /* CALocation.mm in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
 				B04822C019FA41F70019F1A7 /* CADevice.mm in Sources */,
+				B0CA5A291A77A77B00BECD89 /* CAStudioViewParser.cpp in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
 				B00CC6051978B5CE00A62E4C /* RootWindow.cpp in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */,
 				1AC3624B16D4A1E8000847F2 /* main.m in Sources */,
 				B047B92319E91CFA00F24BE6 /* DownloadManager.cpp in Sources */,
-				B00CC61119792FF800A62E4C /* CAStudioViewController.cpp in Sources */,
 				1AFCDA8216D4A25900906EA6 /* RootViewController.mm in Sources */,
 				1AB87035175E0A84005D39BF /* WebSocket.cpp in Sources */,
 				B04822BF19FA41F70019F1A7 /* CACameraController.mm in Sources */,
@@ -694,7 +702,7 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/ios/freetype\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"",
@@ -739,7 +747,7 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/ios/freetype\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"",

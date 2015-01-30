@@ -202,7 +202,7 @@ void CAIMEDispatcher::dispatchWillInsertText(const char * pText, int nLen)
         m_pImpl->m_DelegateWithIme->willInsertText(pText, nLen);
     } while (0);
 }
-void CAIMEDispatcher::dispatchAndroidWillInsertText(int start,std::string str,int before,int count)
+void CAIMEDispatcher::dispatchAndroidWillInsertText(int start,const std::string &str,int before,int count)
 {
     do
     {
@@ -261,6 +261,101 @@ void CAIMEDispatcher::dispatchDeleteBackward()
     } while (0);
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+void CAIMEDispatcher::dispatchDeleteForward()
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+
+        m_pImpl->m_DelegateWithIme->deleteForward();
+    } while (0);
+}
+
+void CAIMEDispatcher::dispatchCursorMoveBackward(bool selected)
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+
+        m_pImpl->m_DelegateWithIme->cursorMoveBackward(selected);
+    } while (0);
+}
+
+void CAIMEDispatcher::dispatchCursorMoveForward(bool selected)
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+
+        m_pImpl->m_DelegateWithIme->cursorMoveForward(selected);
+    } while (0);
+}
+#endif
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+void CAIMEDispatcher::dispatchCopyToClipboard(std::string *content)
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+
+        m_pImpl->m_DelegateWithIme->copyToClipboard(content);
+    } while (0);
+}
+
+void CAIMEDispatcher::dispatchCutToClipboard(std::string *content)
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+
+        m_pImpl->m_DelegateWithIme->cutToClipboard(content);
+    } while (0);
+}
+
+void CAIMEDispatcher::dispatchPasteFromClipboard(const char *content)
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+
+        m_pImpl->m_DelegateWithIme->pasteFromClipboard(content);
+    } while (0);
+}
+
+void CAIMEDispatcher::dispatchSelectAll()
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+
+        m_pImpl->m_DelegateWithIme->selectAll();
+    } while (0);
+}
+
+#endif
+
 const char * CAIMEDispatcher::getContentText()
 {
     const char * pszContentText = 0;
@@ -269,6 +364,24 @@ const char * CAIMEDispatcher::getContentText()
         pszContentText = m_pImpl->m_DelegateWithIme->getContentText();
     }
     return (pszContentText) ? pszContentText : "";
+}
+
+int CAIMEDispatcher::getCursorPos()
+{
+    if (m_pImpl && m_pImpl->m_DelegateWithIme)
+    {
+        return m_pImpl->m_DelegateWithIme->getCursorPos();
+    }
+    return 0;
+}
+
+std::pair<int, int> CAIMEDispatcher::getCharRange()
+{
+    if (m_pImpl && m_pImpl->m_DelegateWithIme)
+    {
+        return m_pImpl->m_DelegateWithIme->getCharRange();
+    }
+    return std::pair<int, int>(0, 0);
 }
 
 //////////////////////////////////////////////////////////////////////////

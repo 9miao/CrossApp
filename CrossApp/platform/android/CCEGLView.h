@@ -32,6 +32,8 @@ public:
     virtual void setIMEKeyboardReturnSearch();
     
     virtual void setIMEKeyboardReturnDone();
+
+    void setIMECursorPos(int pos);
     // static function
     /**
     @brief    get the shared main open gl window

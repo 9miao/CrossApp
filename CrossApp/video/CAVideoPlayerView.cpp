@@ -10,6 +10,8 @@
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
 
+NS_CC_BEGIN
+
 CAVideoPlayerView::CAVideoPlayerView(VPDecoder* decoder)
 : _renderer(NULL)
 , _currFrame(NULL)
@@ -38,7 +40,7 @@ CAVideoPlayerView* CAVideoPlayerView::create(VPDecoder* decoder)
     return NULL;
 }
 
-CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const CrossApp::CCRect &rect, VPDecoder* decoder)
+CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const CCRect &rect, VPDecoder* decoder)
 {
     CAVideoPlayerView* view = new CAVideoPlayerView(decoder);
     if (view && view->initWithCenter(rect)) {
@@ -50,7 +52,7 @@ CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const CrossApp::CCRect &r
     return NULL;
 }
 
-CAVideoPlayerView* CAVideoPlayerView::createWithFrame(const CrossApp::CCRect &rect, VPDecoder* decoder)
+CAVideoPlayerView* CAVideoPlayerView::createWithFrame(const CCRect &rect, VPDecoder* decoder)
 {
     CAVideoPlayerView* view = new CAVideoPlayerView(decoder);
     if (view && view->initWithFrame(rect)) {
@@ -88,7 +90,7 @@ bool CAVideoPlayerView::init()
     return true;
 }
 
-bool CAVideoPlayerView::initWithFrame(const CrossApp::CCRect &rect)
+bool CAVideoPlayerView::initWithFrame(const CCRect &rect)
 {
     if (!CAView::initWithFrame(rect)) {
         return false;
@@ -97,7 +99,7 @@ bool CAVideoPlayerView::initWithFrame(const CrossApp::CCRect &rect)
     return true;
 }
 
-bool CAVideoPlayerView::initWithCenter(const CrossApp::CCRect &rect)
+bool CAVideoPlayerView::initWithCenter(const CCRect &rect)
 {
     if (!CAView::initWithFrame(rect)) {
         return false;
@@ -231,7 +233,6 @@ void CAVideoPlayerView::draw()
 
 void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
 {
-//    CCLog(__FUNCTION__);
     CC_SAFE_RELEASE_NULL(_currFrame);
     _currFrame = frame;
     CC_SAFE_RETAIN(_currFrame);
@@ -242,23 +243,25 @@ void CAVideoPlayerView::setDecoder(VPDecoder *decoder)
     _decoder = decoder;
 }
 
-bool CAVideoPlayerView::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
+bool CAVideoPlayerView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     return false;
 }
 
-void CAVideoPlayerView::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
+void CAVideoPlayerView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
     
 }
 
-void CAVideoPlayerView::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
+void CAVideoPlayerView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     
 }
 
-void CAVideoPlayerView::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
+void CAVideoPlayerView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
     
 }
 
+
+NS_CC_END

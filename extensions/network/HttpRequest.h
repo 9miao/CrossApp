@@ -8,20 +8,12 @@
 
 NS_CC_EXT_BEGIN
 
-class CCHttpClient;
-class CCHttpResponse;
-typedef void (CAObject::*SEL_HttpResponse)(CCHttpClient* client, CCHttpResponse* response);
+class CAHttpClient;
+class CAHttpResponse;
+typedef void (CAObject::*SEL_HttpResponse)(CAHttpClient* client, CAHttpResponse* response);
 #define httpresponse_selector(_SELECTOR) (CrossApp::extension::SEL_HttpResponse)(&_SELECTOR)
 
-/** 
- @brief defines the object which users must packed for CCHttpClient::send(HttpRequest*) method.
- Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
- @since v2.0.2
- @js NA
- @lua NA
- */
-
-class CCHttpRequest : public CAObject
+class CAHttpRequest : public CAObject
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */
@@ -41,7 +33,7 @@ public:
         new/retain/release still works, which means you need to release it manually
         Please refer to HttpRequestTest.cpp to find its usage
      */
-    CCHttpRequest()
+    CAHttpRequest()
     {
         _requestType = kHttpUnkown;
         _url.clear();
@@ -53,7 +45,7 @@ public:
     };
     
     /** Destructor */
-    virtual ~CCHttpRequest()
+    virtual ~CAHttpRequest()
     {
         CC_SAFE_RELEASE(_pTarget);
     };
@@ -197,8 +189,8 @@ public:
 
     virtual bool isEqual(const CAObject* pObject)
     {
-        CCHttpRequest* request = NULL;
-        if ((request = dynamic_cast<CCHttpRequest*>((CAObject*)pObject)))
+        CAHttpRequest* request = NULL;
+        if ((request = dynamic_cast<CAHttpRequest*>((CAObject*)pObject)))
         {
             return false;
         }

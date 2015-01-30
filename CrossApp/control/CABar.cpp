@@ -445,6 +445,7 @@ void CATabBar::setSelectedBackGroundView(CrossApp::CAView *var)
             m_pSegmentedControl->setSeparateImageVisible(false);
         }
         this->addSubview(m_pSegmentedControl);
+        m_pSegmentedControl->setBackgroundView(NULL);
         m_cItemSize = m_pSegmentedControl->getItemSize();
     }
     

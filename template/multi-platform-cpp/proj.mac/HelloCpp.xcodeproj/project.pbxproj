@@ -33,9 +33,7 @@
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
 		B00CC5EE1978B3F600A62E4C /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00CC5EC1978B3F600A62E4C /* RootWindow.cpp */; };
 		B00CC6011978B4F300A62E4C /* libCrossApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B00CC5FC1978B4C200A62E4C /* libCrossApp.a */; };
-		B00CC6161979302E00A62E4C /* CAStudioViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B00CC6141979302E00A62E4C /* CAStudioViewController.cpp */; };
 		B01F7164195166F500BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F7163195166F500BA07A6 /* source_material */; };
-		B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A145A190A6A3700C3633B /* CAUIHelper.cpp */; };
 		B03E8FD11938876B00FD9A06 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E8FD01938876B00FD9A06 /* HelloWorld.png */; };
 		B047B92819E91D2A00F24BE6 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B92619E91D2A00F24BE6 /* DownloadManager.cpp */; };
 		B04822D419FA42170019F1A7 /* CADevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04822C419FA42170019F1A7 /* CADevice.cpp */; };
@@ -51,6 +49,7 @@
 		B04C0BE719011F42009854FD /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BE619011F42009854FD /* fonts */; };
 		B04C0BEA19011F80009854FD /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BE819011F80009854FD /* AppDelegate.cpp */; };
 		B0AD93B11920790900EA40BB /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AD93AD1920790900EA40BB /* FirstViewController.cpp */; };
+		B0CA5A261A77A76E00BECD89 /* CAStudioViewParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A241A77A76E00BECD89 /* CAStudioViewParser.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,11 +114,7 @@
 		B00CC5EC1978B3F600A62E4C /* RootWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootWindow.cpp; path = ../Classes/RootWindow.cpp; sourceTree = "<group>"; };
 		B00CC5ED1978B3F600A62E4C /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
 		B00CC5F71978B4C200A62E4C /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.mac/CrossApp.xcodeproj; sourceTree = "<group>"; };
-		B00CC6141979302E00A62E4C /* CAStudioViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStudioViewController.cpp; sourceTree = "<group>"; };
-		B00CC6151979302E00A62E4C /* CAStudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStudioViewController.h; sourceTree = "<group>"; };
 		B01F7163195166F500BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
-		B02A145A190A6A3700C3633B /* CAUIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIHelper.cpp; sourceTree = "<group>"; };
-		B02A145B190A6A3700C3633B /* CAUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIHelper.h; sourceTree = "<group>"; };
 		B034080519920FD1005DB179 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		B034080619920FD1005DB179 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		B03E8FD01938876B00FD9A06 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
@@ -155,6 +150,8 @@
 		B0AD93AC1920790900EA40BB /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
 		B0AD93AD1920790900EA40BB /* FirstViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FirstViewController.cpp; path = ../Classes/FirstViewController.cpp; sourceTree = "<group>"; };
 		B0AD93AE1920790900EA40BB /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstViewController.h; path = ../Classes/FirstViewController.h; sourceTree = "<group>"; };
+		B0CA5A241A77A76E00BECD89 /* CAStudioViewParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAStudioViewParser.cpp; path = ../../studio/CAStudioViewParser.cpp; sourceTree = "<group>"; };
+		B0CA5A251A77A76E00BECD89 /* CAStudioViewParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAStudioViewParser.h; path = ../../studio/CAStudioViewParser.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,8 +231,6 @@
 		15C158D5168315E500D239F2 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				B02A145A190A6A3700C3633B /* CAUIHelper.cpp */,
-				B02A145B190A6A3700C3633B /* CAUIHelper.h */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -357,8 +352,8 @@
 		B00CC6131979302E00A62E4C /* studio */ = {
 			isa = PBXGroup;
 			children = (
-				B00CC6141979302E00A62E4C /* CAStudioViewController.cpp */,
-				B00CC6151979302E00A62E4C /* CAStudioViewController.h */,
+				B0CA5A241A77A76E00BECD89 /* CAStudioViewParser.cpp */,
+				B0CA5A251A77A76E00BECD89 /* CAStudioViewParser.h */,
 			);
 			name = studio;
 			path = extensions/studio;
@@ -541,11 +536,10 @@
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
-				B00CC6161979302E00A62E4C /* CAStudioViewController.cpp in Sources */,
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
+				B0CA5A261A77A76E00BECD89 /* CAStudioViewParser.cpp in Sources */,
 				B0AD93B11920790900EA40BB /* FirstViewController.cpp in Sources */,
-				B02A145C190A6A3700C3633B /* CAUIHelper.cpp in Sources */,
 				B04822D419FA42170019F1A7 /* CADevice.cpp in Sources */,
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,
 				1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */,

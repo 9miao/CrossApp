@@ -290,8 +290,6 @@
 		372C37EF1A03799E0010A376 /* CAVideoPlayerDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 372C37E71A03799E0010A376 /* CAVideoPlayerDecoder.h */; };
 		372C37F21A03799E0010A376 /* CAVideoPlayerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 372C37EA1A03799E0010A376 /* CAVideoPlayerView.cpp */; };
 		372C37F31A03799E0010A376 /* CAVideoPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 372C37EB1A03799E0010A376 /* CAVideoPlayerView.h */; };
-		372C4E7C1A0380B60010A376 /* CAVideoPlayerAudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 372C4E7A1A0380B60010A376 /* CAVideoPlayerAudioManager.cpp */; };
-		372C4E7D1A0380B60010A376 /* CAVideoPlayerAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 372C4E7B1A0380B60010A376 /* CAVideoPlayerAudioManager.h */; };
 		372E63F01A0B1E0E00582042 /* CAVideoPlayerRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 372E63EE1A0B1E0E00582042 /* CAVideoPlayerRender.cpp */; };
 		372E63F11A0B1E0E00582042 /* CAVideoPlayerRender.h in Headers */ = {isa = PBXBuildFile; fileRef = 372E63EF1A0B1E0E00582042 /* CAVideoPlayerRender.h */; };
 		372E63FA1A0B60A800582042 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F21A0B60A800582042 /* libavcodec.a */; };
@@ -454,6 +452,8 @@
 		B0C512D619A30E5D00E6934B /* CAActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512D219A30E5D00E6934B /* CAActivityIndicatorView.h */; };
 		B0C512EC19A341B700E6934B /* CACalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512EA19A341B700E6934B /* CACalendar.cpp */; };
 		B0C512ED19A341B700E6934B /* CACalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512EB19A341B700E6934B /* CACalendar.h */; };
+		B0CA5A3B1A77A8B400BECD89 /* CAWebViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = B0CA5A391A77A8B400BECD89 /* CAWebViewImpl.h */; };
+		B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */; };
 		B0F7E503198792180048F46B /* CAPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F7E501198792180048F46B /* CAPageView.cpp */; };
 		B0F7E504198792180048F46B /* CAPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F7E502198792180048F46B /* CAPageView.h */; };
 		EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */; };
@@ -706,9 +706,6 @@
 		372C37E71A03799E0010A376 /* CAVideoPlayerDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerDecoder.h; sourceTree = "<group>"; };
 		372C37EA1A03799E0010A376 /* CAVideoPlayerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerView.cpp; sourceTree = "<group>"; };
 		372C37EB1A03799E0010A376 /* CAVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerView.h; sourceTree = "<group>"; };
-		372C4E7A1A0380B60010A376 /* CAVideoPlayerAudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerAudioManager.cpp; sourceTree = "<group>"; };
-		372C4E7B1A0380B60010A376 /* CAVideoPlayerAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerAudioManager.h; sourceTree = "<group>"; };
-		372C4E7F1A0381D90010A376 /* CAVideoPlayerMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerMacros.h; sourceTree = "<group>"; };
 		372E63DF1A07572C00582042 /* FFmpeg */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FFmpeg; sourceTree = "<group>"; };
 		372E63EE1A0B1E0E00582042 /* CAVideoPlayerRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerRender.cpp; sourceTree = "<group>"; };
 		372E63EF1A0B1E0E00582042 /* CAVideoPlayerRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerRender.h; sourceTree = "<group>"; };
@@ -874,6 +871,8 @@
 		B0C512D219A30E5D00E6934B /* CAActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAActivityIndicatorView.h; sourceTree = "<group>"; };
 		B0C512EA19A341B700E6934B /* CACalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACalendar.cpp; sourceTree = "<group>"; };
 		B0C512EB19A341B700E6934B /* CACalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACalendar.h; sourceTree = "<group>"; };
+		B0CA5A391A77A8B400BECD89 /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
+		B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAWebViewImpl.mm; sourceTree = "<group>"; };
 		B0F7E501198792180048F46B /* CAPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageView.cpp; sourceTree = "<group>"; };
 		B0F7E502198792180048F46B /* CAPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageView.h; sourceTree = "<group>"; };
 		EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
@@ -1076,14 +1075,14 @@
 		1551A353158F2ADE00E66CFE /* CrossApp */ = {
 			isa = PBXGroup;
 			children = (
-				3724C63C19FDF88000300E42 /* video */,
-				EB9D561D19E8DC2D0072BE8E /* script_support */,
 				04EAA01F1956CE3800198A8E /* ccConfig.h */,
 				04EAA0201956CE3800198A8E /* ccMacros.h */,
 				04EAA0211956CE3800198A8E /* ccTypeInfo.h */,
 				04EAA0221956CE3900198A8E /* ccTypes.h */,
 				04EABB491956DE7100198A8E /* CrossApp.cpp */,
 				04EAA0231956CE3A00198A8E /* CrossApp.h */,
+				EB9D561D19E8DC2D0072BE8E /* script_support */,
+				3724C63C19FDF88000300E42 /* video */,
 				04EA9F8E1956CE2500198A8E /* basics */,
 				04EA9F9F1956CE2500198A8E /* control */,
 				04EA9FB21956CE2500198A8E /* controller */,
@@ -1251,6 +1250,8 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				B0CA5A391A77A8B400BECD89 /* CAWebViewImpl.h */,
+				B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */,
 				B01F650719658599005C14FC /* CADensityDpi.mm */,
 				0460ED291957019600D13001 /* CCApplication.h */,
 				0460ED2A1957019600D13001 /* CCApplication.mm */,
@@ -1440,9 +1441,6 @@
 				372C37E71A03799E0010A376 /* CAVideoPlayerDecoder.h */,
 				372C37EA1A03799E0010A376 /* CAVideoPlayerView.cpp */,
 				372C37EB1A03799E0010A376 /* CAVideoPlayerView.h */,
-				372C4E7A1A0380B60010A376 /* CAVideoPlayerAudioManager.cpp */,
-				372C4E7B1A0380B60010A376 /* CAVideoPlayerAudioManager.h */,
-				372C4E7F1A0381D90010A376 /* CAVideoPlayerMacros.h */,
 				372E63EE1A0B1E0E00582042 /* CAVideoPlayerRender.cpp */,
 				372E63EF1A0B1E0E00582042 /* CAVideoPlayerRender.h */,
 			);
@@ -1923,7 +1921,6 @@
 				3779E8ED1A75EE950012E0B7 /* CAWebView.h in Headers */,
 				04EA9FFE1956CE2500198A8E /* CAViewController.h in Headers */,
 				B02A12D1197CE30A00F4F2C5 /* CATransformation.h in Headers */,
-				372C4E7D1A0380B60010A376 /* CAVideoPlayerAudioManager.h in Headers */,
 				B0596AF9197629BE00B1E8CB /* fttypes.h in Headers */,
 				04EA9FFF1956CE2500198A8E /* CAIMEDelegate.h in Headers */,
 				B0596B0E197629BE00B1E8CB /* svgldict.h in Headers */,
@@ -1939,6 +1936,7 @@
 				04EAA00C1956CE2500198A8E /* CABatchView.h in Headers */,
 				04EAA00D1956CE2500198A8E /* CAClippingView.h in Headers */,
 				04EAA0101956CE2500198A8E /* CAImageView.h in Headers */,
+				B0CA5A3B1A77A8B400BECD89 /* CAWebViewImpl.h in Headers */,
 				04EAA0121956CE2500198A8E /* CALabel.h in Headers */,
 				04EAA0141956CE2500198A8E /* CARenderImage.h in Headers */,
 				04EAA0161956CE2500198A8E /* CAScale9ImageView.h in Headers */,
@@ -2027,6 +2025,7 @@
 				B02A51CD19B9625B00470D57 /* CADatePickerView.cpp in Sources */,
 				B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */,
 				1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */,
+				B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */,
 				1551A62E158F2ADE00E66CFE /* CCActionEase.cpp in Sources */,
 				1551A634158F2ADE00E66CFE /* CCActionInstant.cpp in Sources */,
 				372C37F21A03799E0010A376 /* CAVideoPlayerView.cpp in Sources */,
@@ -2065,7 +2064,6 @@
 				1551A72E158F2ADE00E66CFE /* CCCommon.mm in Sources */,
 				1551A730158F2ADE00E66CFE /* CAApplicationCaller.mm in Sources */,
 				1551A734158F2ADE00E66CFE /* CCES2Renderer.m in Sources */,
-				372C4E7C1A0380B60010A376 /* CAVideoPlayerAudioManager.cpp in Sources */,
 				3779E8EE1A75EE950012E0B7 /* CAWebView.cpp in Sources */,
 				1551A736158F2ADE00E66CFE /* CCFileUtilsIOS.mm in Sources */,
 				1551A738158F2ADE00E66CFE /* CCImage.mm in Sources */,
