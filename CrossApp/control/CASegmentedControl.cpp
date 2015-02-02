@@ -170,7 +170,7 @@ void CASegmentedControl::setTitleSelectedColor(const CAColor4B& color)
     m_cTextSelectedColor = color;
 }
 
-void CASegmentedControl::setColorOfBackView(const CAColor4B& color)
+void CASegmentedControl::setTintColor(const CAColor4B& color)
 {
     m_cTintColor = color;
     cleanAllSeparate();

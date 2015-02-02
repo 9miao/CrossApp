@@ -58,7 +58,7 @@ public:
     
     void setTitleSelectedColor(const CAColor4B& color);
     
-    void setColorOfBackView(const CAColor4B& color);
+    void setTintColor(const CAColor4B& color);
     
     void insertSegmentWithTitleAtIndex(const std::string title, int index);
     void insertSegmentWithImageAtIndex(CAImage* image, int index, CAControlState controlState);
