@@ -25,18 +25,15 @@ CAWindow::~CAWindow()
 bool CAWindow::init()
 {
     CAView::init();
-    
     bool bRet = false;
-     do 
-     {
-         CAApplication * pDirector;
-         CC_BREAK_IF( ! (pDirector = CAApplication::getApplication()) );
-         CCRect rect = CCRectZero;
-         rect.size = pDirector->getWinSize();
-         this->setFrame(rect);
-         
-         bRet = true;
-     } while (0);
+    if (CAApplication* pApplication = CAApplication::getApplication())
+    {
+        CCRect rect = CCRectZero;
+        rect.size = pApplication->getWinSize();
+        this->setFrame(rect);
+        bRet = true;
+    }
+    
      return bRet;
 }
 
@@ -60,8 +57,7 @@ void CAWindow::setRootViewController(CrossApp::CAViewController *var)
     if (m_pRootViewController)
     {
         m_pRootViewController->removeViewFromSuperview();
-        m_pRootViewController->release();
-        m_pRootViewController = NULL;
+        CC_SAFE_RELEASE_NULL(m_pRootViewController);
     }
     
     if (var)

@@ -19,7 +19,7 @@ protected:
 	virtual void viewDidAppear();
 
 public:
-	void stateControl(CAControl* btn, CCPoint point);
+	void stateControl(CASegmentedControl* btn, int index);
 
 private:
 	CADipSize size;

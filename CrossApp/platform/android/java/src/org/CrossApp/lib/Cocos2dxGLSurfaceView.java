@@ -186,36 +186,36 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	// ===========================================================
 
 
-       public static Cocos2dxGLSurfaceView getInstance() {
-	   return mCocos2dxGLSurfaceView;
-       }
-       
+	public static Cocos2dxGLSurfaceView getInstance() {
+		return mCocos2dxGLSurfaceView;
+	}
+
 	public void setKeyBoardType(int type) {
 		final Message msg = new Message();
 		msg.what = type;
 		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 	}
-    	   
+
 	public void setKeyBoardRetrunType(int type) {
-    	   final Message msg = new Message();
-   			msg.what = type;
-   			Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
-       }
+		final Message msg = new Message();
+		msg.what = type;
+		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
+	}
 
 	public void setCursorPos(int pos) {
-    	   final Message msg = new Message();
+		final Message msg = new Message();
 		msg.what = SET_CURSOR_POS;
 		msg.arg1 = pos;
-  			Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
-       }
+		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
+	}
 
-       public static void queueAccelerometer(final float x, final float y, final float z, final long timestamp) {	
-	   mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
-		@Override
-		    public void run() {
-			    Cocos2dxAccelerometer.onSensorChanged(x, y, z, timestamp);
-		}
-	    });
+	public static void queueAccelerometer(final float x, final float y, final float z, final long timestamp) {
+		mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
+			@Override
+			public void run() {
+				Cocos2dxAccelerometer.onSensorChanged(x, y, z, timestamp);
+			}
+		});
 	}
 
 	public void setCocos2dxRenderer(final Cocos2dxRenderer renderer) {
@@ -224,7 +224,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	}
 	public void changeSelectionPosition(int pos)
 	{
-
+		
 		final Message msg = new Message();
 		msg.what = Cocos2dxGLSurfaceView.RESET_SELECTION_POSITION;
 		msg.arg1 =pos;

@@ -33,6 +33,7 @@ LOCAL_C_INCLUDES := $(MY_ALL_DIRS)
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_extension_static
+LOCAL_SHARED_LIBRARIES += cocos_ffmpeg_shared
 
 include $(BUILD_SHARED_LIBRARY)
 

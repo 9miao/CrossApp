@@ -784,7 +784,6 @@ bool VPDecoder::openFile(const std::string& path, std::string& perror)
 
 VPError VPDecoder::openInput(std::string path)
 {
-   
     AVFormatContext *formatCtx = NULL;
     
     if (m_interruptCallback) {

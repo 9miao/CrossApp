@@ -105,10 +105,8 @@ class CC_DLL CATabBar
     
 public:
     
-    static CATabBar* create(const std::vector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
+    static CATabBar* create(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
     
-    void setItems(const std::vector<CATabBarItem*>& items);
-
 	void setItems(const CAVector<CATabBarItem*>& items);
     
 public:
@@ -116,58 +114,68 @@ public:
     CATabBar();
     
     virtual ~CATabBar();
+
+    virtual bool init(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
     
-    virtual bool init(const std::vector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
+    CC_PROPERTY(CAImage*, m_pBackGroundImage, BackGroundImage);
     
-    CC_PROPERTY(CAView*, m_pBackGroundView, BackGroundView);
-    
-    CC_PROPERTY(CAView*, m_pSelectedBackGroundView, SelectedBackGroundView);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sBackGroundColor, BackGroundColor);
     
     CC_PROPERTY(CAImage*, m_pSelectedBackGroundImage, SelectedBackGroundImage);
     
-    CC_PROPERTY(CAView*, m_pSelectedIndicatorView, SelectedIndicatorView);
-    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sSelectedBackGroundColor, SelectedBackGroundColor);
+
     CC_PROPERTY(CAImage*, m_pSelectedIndicatorImage, SelectedIndicatorImage);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sSelectedIndicatorColor, SelectedIndicatorColor);
     
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTitleColor, TitleColorForNormal);
     
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sSelectedTitleColor, TitleColorForSelected);
-    
-    CC_SYNTHESIZE(unsigned int, m_nMaxShowCount, MaxShowCount)
-    
+        
     CC_SYNTHESIZE(CATabBarDelegate* , m_pDelegate, Delegate);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CATabBarItem*>, m_pItems, Items);
+    
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CADipSize, m_cItemSize, ItemSize);
     
     CC_SYNTHESIZE_READONLY(int, m_nSelectedIndex, SelectedIndex);
     
     void setSelectedAtIndex(int index);
     
-    void setForbidSelectedAtIndex(int index);
+    CC_SYNTHESIZE_READONLY(std::set<int>, m_sForbidSelectedIndexs, ForbidSelectedIndexs);
+    
+    void addForbidSelectedAtIndex(int index);
     
     void showSelectedIndicator();
     
     void replaceItemAtIndex(size_t index, CATabBarItem* item);
     
-    const CCRect& getSegmentedControlFrame();
-    
+    const CCRect& getContentViewFrame();
+
 protected:
     
     void showBackGround();
     
-    void showItems();
+    void showSelectedBackGround();
+    
+    void showSelectedIndicatorView();
     
     void setTouchSelected(CAControl* control, CCPoint point);
-    
-    void setTouchUpInSide(CAControl* control, CCPoint point);
-    
+
 protected:
     
-    CATabBarItem* m_pSelectedItem;
+    bool m_bShowIndicator;
     
-    CCSize m_cItemSize;
+    CATabBarItem* m_pSelectedItem;
 
-    CASegmentedControl* m_pSegmentedControl;
+    CAView* m_pBackGroundView;
+    
+    CAView* m_pContentView;
+    
+    CAView* m_pSelectedIndicatorView;
+    
+    CAVector<CAButton*> m_pButtons;
 };
 
 

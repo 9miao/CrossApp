@@ -6,7 +6,6 @@ LOCAL_MODULE := CrossApp_static
 
 LOCAL_MODULE_FILENAME := libCrossApp
 
-
 LOCAL_SRC_FILES := \
 CrossApp.cpp \
 actions/CCAction.cpp \
