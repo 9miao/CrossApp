@@ -60,7 +60,7 @@ struct CAAddressBookRecord
 
 typedef enum
 {
-    CANetWorkTypeWifi=0,
+    CANetWorkTypeWifi = 0,
     CANetWorkType3G,
     CANetWorkTypeNone
     
