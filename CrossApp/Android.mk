@@ -155,13 +155,11 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -llog \
-                -lz \
-                -landroid
+                -lz
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
-                       -lz \
-                       -landroid
+                       -lz
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
@@ -170,17 +168,17 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype2_static
 
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ffmpeg_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avcodec_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avformat_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avutil_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swresample_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swscale_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ass_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avcodec_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avformat_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avresample_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avutil_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swresample_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swscale_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_vo-aacenc_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_vo-amrwbenc_static
+
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libsdl_static
-LOCAL_SHARED_LIBRARIES += cocos_ffmpeg_shared
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
@@ -194,6 +192,6 @@ $(call import-module,libtiff)
 $(call import-module,libwebp)
 $(call import-module,libfreetype2)
 $(call import-module,libffmpeg)
-$(call import-module,libsdl)
+$(call import-module,libSDL)
 
 
