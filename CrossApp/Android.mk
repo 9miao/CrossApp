@@ -9,10 +9,6 @@ LOCAL_MODULE_FILENAME := libCrossApp
 
 LOCAL_SRC_FILES := \
 CrossApp.cpp \
-video/CAVideoPlayerController.cpp \
-video/CAVideoPlayerDecoder.cpp \
-video/CAVideoPlayerRender.cpp \
-video/CAVideoPlayerView.cpp \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
 actions/CCActionEase.cpp \
@@ -168,15 +164,22 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype2_static
 
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ass_static
+ifeq ($(VIDEO_ENABLE),1)
+LOCAL_SRC_FILES += video/CAVideoPlayerController.cpp \
+                   video/CAVideoPlayerDecoder.cpp \
+                   video/CAVideoPlayerRender.cpp \
+                   video/CAVideoPlayerView.cpp
+
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avcodec_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avformat_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avresample_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avutil_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swresample_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swscale_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ass_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_vo-aacenc_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_vo-amrwbenc_static
+endif
 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libsdl_static
 
