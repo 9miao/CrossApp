@@ -43,6 +43,8 @@ public:
     static CASegmentedControl* createWithCenter(const CCRect& rect, unsigned int itemsCount);
   
     void setBackgroundImage(CAImage* image);
+    
+    void setSegmentItemBackgroundImage(CAImage* image);
  
     void addTarget(CAObject* target, SEL_CASegmentedControl selector);
     
@@ -54,8 +56,12 @@ public:
     void setTitleColor(const CAColor4B& color);
     const CAColor4B& getTitleColor();
     
+    void setTitleSelectedColor(const CAColor4B& color);
+    
+    void setColorOfBackView(const CAColor4B& color);
+    
     void insertSegmentWithTitleAtIndex(const std::string title, int index);
-    void insertSegmentWithImageAtIndex(CAImage* image, int index);
+    void insertSegmentWithImageAtIndex(CAImage* image, int index, CAControlState controlState);
     
     void removeSegmentAtIndex(int index);
     void removeAllSegments();
@@ -63,7 +69,7 @@ public:
     void setTitleForSegmentAtIndex(const std::string title, int index);
     std::string getTitleForSegmentAtIndex(int index);
     
-    void setImageForSegmentAtIndex(CAImage* image, int index);
+    void setImageForSegmentAtIndex(CAImage* image, int index, CAControlState controlState);
     CAImage* getImageForSegmentAtIndex(int index);
     
     void setWidthForSegmentAtIndex(float width, int index);
@@ -101,6 +107,8 @@ protected:
     
     void refreshAllSegmentItemPosition();
     
+    void refreshAllSegmentItemBackgroundPosition();
+    
     void refreshSegmentItemByPoint(CCPoint point, CAControlState controlState);
     
     void refreshSegmentItemByIndex(int index, CAControlState controlState);
@@ -115,12 +123,18 @@ protected:
     
     void callFunc(CAObject* object, int index);
     
+    CAView* getTailorImageAtIndex(int index, CAImage* image);
+    
+    void setSegmentItemBackgroundVisibleWithIndex(bool isVisible, int index);
+    
 protected:
     unsigned int                     m_nItemsCount;
 
     CAVector<CALabel*>               m_vTitles;
     
     CAVector<CAImage*>               m_vNormalImages;
+    
+    CAVector<CAImage*>               m_vSelectedImages;
     
     std::vector<bool>                m_vIsEnabled;
     
@@ -140,11 +154,17 @@ protected:
     
     CAColor4B                        m_cTextColor;
     
+    CAColor4B                        m_cTextSelectedColor;
+    
+    CAColor4B                        m_cTintColor;
+    
     CAObject*                        m_pTarget;
     
     SEL_CASegmentedControl           m_pCallFunc;
     
+    CAVector<CAView*>                m_vSegmentItemBackground;
     
+    CAImage*                         m_pSegmentItemBackgroundImage;
 };
 
 NS_CC_END
