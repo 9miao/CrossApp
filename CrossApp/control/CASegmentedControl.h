@@ -64,7 +64,6 @@ public:
     void insertSegmentWithImageAtIndex(CAImage* image, int index, CAControlState controlState);
     
     void removeSegmentAtIndex(int index);
-    void removeAllSegments();
     
     void setTitleForSegmentAtIndex(const std::string title, int index);
     std::string getTitleForSegmentAtIndex(int index);
@@ -97,6 +96,8 @@ protected:
     
     void setContentSize(const CCSize & var);
     
+    void removeAllSegments();
+    
     void createSeparate();
     
     void cleanAllSeparate();
@@ -118,8 +119,6 @@ protected:
     int  getSegmentItemIndexByPoint(CCPoint point);
     
     CAObject* getObjectByIndex(int index, CAControlState controlState);
-    
-    void setSegmentStateWithColor( CAControlState controlState, int index);
     
     void callFunc(CAObject* object, int index);
     
