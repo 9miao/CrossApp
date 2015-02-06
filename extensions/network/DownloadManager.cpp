@@ -3,7 +3,7 @@
 #include "DownloadManager.h"
 #include "CrossApp.h"
 #include "../sqlite3/include/sqlite3.h"
-
+#include "support/zip_support/unzip.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <curl/curl.h>
@@ -14,13 +14,12 @@
 #include <list>
 #include <vector>
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM != CC_PLATORM_WIN32)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 #endif
 
-#include "support/zip_support/unzip.h"
 
 using namespace CrossApp;
 using namespace std;

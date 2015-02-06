@@ -1,3 +1,51 @@
+#### CrossApp 0.6.1 更新内容： 
+#####修复0.6.0不能编译以及不稳定的bug
+
+
+
+**********************************************************************************
+
+#### CrossApp 0.6.0 更新内容：  
+
+#####1.增加视频播放器CAVideoPlayerController类
+支持播放流媒体视频、MP4、flv、avi、mpeg、mov等视频格式
+目前不支持win32平台
+
+#####2.增加设备API
+1.获取网络状态，wifi或3g的判断以及网络是否可用  
+2.获取当前电池电量  
+3.获取、设置当前音量  
+4.更新版本，Android自动下载并添加到通知栏内，ios跳转到appstore
+
+#####3.修改优化CAAlertView
+1.UI改为模仿iOS风格
+2.代码结构优化
+
+#####4.修改优化CASegmentControl
+1.UI改为模仿iOS风格
+2.代码结构优化
+
+#####5.修改优化CAView
+优化子视图管理性能
+
+#####6.修改优化CATextField输入文字有时光标位置不对的bug
+
+#####7.文件目录变动
+删除extensions/GUI/CAUIHelper 文件
+删除extensions/studio/CAStudioViewController 文件
+增加extensions/studio/CAStudioViewParser 文件
+
+在iOS平台，增加extensions/device/Device_ios/Reachability 文件
+添加Frameworks ： MediaPlayer 与 SystemConfiguration
+
+android平台java文件有变动
+
+#####8.其他一些细节的优化
+
+本次更新文件有多处变动，旧版本更新请参考更新内容7手动增删文件，给您带来的不便请谅解。
+
+**********************************************************************************
+
 #### CrossApp 0.5.0 更新内容：  
 
 #####1.修改优化CANavigationController
@@ -22,32 +70,6 @@
 在本C++引擎中移除掉JavaScript版本，将来会有单独的JavaScript版本发布
 
 ##本次更新影响到了CANavigationController与CATabBarController一些接口，为您带来的不便尽请谅解。
-
-
-#### CrossApp 0.5.0 Update:
-
-#####1. Optimized CANavigationController
-1. Modified the controlled navigationBar into multiple ones 
-2. And port the properties of previous navigationBar to CANavigationController
-
-#####2. Optimized CATabBarController
-Port the properties of previous tabBar to CATabBarController
-
-#####3. Optimized CAPickerView
-1. Fixed bug that sometimes system does not have a return value for the selected result 
-2. Optimized performance
-
-#####4. Optimized base64
-1. Fixed bug that base64 cannot be compiled in win32 
-2. Added Encode method
-
-#####5. Optimized touch event distributed mechanism
-Fixed bug that user needs to click two times to switch edit status between multiple CATextField
-
-#####6. Other Details Tweaking
-We removed the JavaScript version of this C++ engine, and will release a separate JavaScript version in the future
-
-##This update affects some interfaces in CANavigationController and CATabBarController, and we offer our apologies to you for the inconvenience has caused you.
 
 **********************************************************************************
 

@@ -47,16 +47,12 @@ void SegmentedControlTest::viewDidLoad()
 		sprintf(segHighlighted,"source_material/seg_highlighted%d.png",i+1);
 		sprintf(segSelected,"source_material/seg_selected%d.png",i+1);
 		sprintf(pages, "Number%d", i + 1);
-		segment->setTitleAtIndex(pages, i, CAControlStateAll);
-		segment->setBackgroundImageAtIndex(CAImage::create(segNormal), i, CAControlStateNormal);
-		segment->setBackgroundImageAtIndex(CAImage::create(segHighlighted), i, CAControlStateHighlighted);
-		segment->setBackgroundImageAtIndex(CAImage::create(segSelected), i, CAControlStateSelected);
+		segment->setTitleForSegmentAtIndex(pages, i);
+		segment->setBackgroundImage(CAImage::create(segNormal));
 	}
-	segment->setTitleColorAtIndex(CAColor_white, 0, CAControlStateAll);
-	segment->setTitleColorAtIndex(CAColor_gray, 1, CAControlStateAll);
-	segment->setTitleColorAtIndex(CAColor_yellow, 2, CAControlStateAll);
+	segment->setTitleColor(CAColor_white);
 	segment->setSelectedAtIndex(1);
-	segment->addTarget(this, CAControl_selector(SegmentedControlTest::segmentCallback));
+	segment->addTarget(this, CASegmentedControl_selector(SegmentedControlTest::segmentCallback));
 	this->getView()->addSubview(segment);
 	
 	defaultView = CAView::createWithColor(ccc4(150,150,150,150));
@@ -74,9 +70,9 @@ void SegmentedControlTest::viewDidLoad()
 	defaultView->addSubview(defaultPage);
 }
 
-void SegmentedControlTest::segmentCallback(CAControl* btn, CCPoint point)
+void SegmentedControlTest::segmentCallback(CASegmentedControl* btn, int index)
 {
-	switch (segment->getSelectedIndex())
+	switch (index)
 	{
 		case 0:
 		{

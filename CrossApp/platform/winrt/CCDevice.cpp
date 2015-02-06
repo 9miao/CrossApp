@@ -33,4 +33,10 @@ int CCDevice::getDPI()
 	return floor(Windows::Graphics::Display::DisplayProperties::LogicalDpi / dipsPerInch + 0.5f); // Round to nearest integer.
 }
 
+CCDeviceIdiom CCDevice::getIdiom()
+{
+	return CCDeviceIdiomPhone;
+}
+
+
 NS_CC_END

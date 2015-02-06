@@ -46,9 +46,10 @@ public:
 	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
 		std::vector<TextViewLineInfo>& linesText, int iLineSpace=0, bool bWordWrap = true);
 
+    void destroyAllFontData();
+
 protected:
 	void initDefaultFont();
-	void destroyAllFontData();
 
 
 	void setCurrentFontData(const char* pFontName, int nSize);

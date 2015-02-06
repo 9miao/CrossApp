@@ -1,22 +1,30 @@
 //
 //  CASegmentedControl.h
-//  CrossAppx
+//  CrossApp
 //
-//  Created by juguanhui on 14-6-3.
-//  Copyright (c) 2014年 CrossApp-x. All rights reserved.
+//  Created by qiaoxin on 15-1-20.
+//  Copyright (c) 2015年 CrossApp. All rights reserved.
 //
 
 #ifndef CrossAppx_CASegmentedControl_h
 #define CrossAppx_CASegmentedControl_h
 
 #include "CAControl.h"
-#include <vector>
+#include "basics/CASTLContainer.h"
 #include <set>
 NS_CC_BEGIN
 
 class CAButton;
 class CAImage;
 class CAImageView;
+class CAScale9ImageView;
+class CALabel;
+
+
+class CASegmentedControl;
+
+typedef void (CAObject::*SEL_CASegmentedControl)(CASegmentedControl*, int index);
+#define CASegmentedControl_selector(_SELECTOR) (SEL_CASegmentedControl)(&_SELECTOR)
 
 class CC_DLL CASegmentedControl : public CAControl
 {
@@ -33,75 +41,110 @@ public:
     static CASegmentedControl* createWithFrame(const CCRect& rect, unsigned int itemsCount);
     
     static CASegmentedControl* createWithCenter(const CCRect& rect, unsigned int itemsCount);
+  
+    void setBackgroundImage(CAImage* image);
+ 
+    void addTarget(CAObject* target, SEL_CASegmentedControl selector);
     
-    void addTarget(CAObject* target, SEL_CAControl selector);
+    void setSelectedAtIndex(int index);
+    int  getSelectedAtIndex();
     
-    void removeTarget(CAObject* target, SEL_CAControl selector);
+    int  getNumberOfSegments();
     
-    void addTargetAtForbidSelected(CAObject* target, SEL_CAControl selector);
+    void setTitleColor(const CAColor4B& color);
+    const CAColor4B& getTitleColor();
     
-    void removeTargetAtForbidSelected(CAObject* target, SEL_CAControl selector);
+    void insertSegmentWithTitleAtIndex(const std::string title, int index);
+    void insertSegmentWithImageAtIndex(CAImage* image, int index);
     
-    void setForbidSelectedAtIndex(int index);
+    void removeSegmentAtIndex(int index);
+    void removeAllSegments();
     
-    void setAllowSelectedAtIndex(int index);
+    void setTitleForSegmentAtIndex(const std::string title, int index);
+    std::string getTitleForSegmentAtIndex(int index);
+    
+    void setImageForSegmentAtIndex(CAImage* image, int index);
+    CAImage* getImageForSegmentAtIndex(int index);
+    
+    void setWidthForSegmentAtIndex(float width, int index);
+    float getWidthForSegmentAtIndex(int index);
+    
+    void setContentOffsetForSegmentAtIndex(CCSize offset, int index);
+    CCSize getContentOffsetForSegmentAtIndex(int index);
+    
+    void setEnabledForSegmentAtIndex(bool isEnable, int index);
+    bool isEnabledForSegmentAtIndex(int index);
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
-    
-public:
-    
+
+protected:
     virtual bool initWithFrame(const CCRect& rect);
+    
     virtual bool initWithCenter(const CCRect& rect);
     
-    virtual bool insertSegmentWithTitle(const char* title, int index, const CAControlState& controlState);
-    virtual bool insertSegmentWithBackgroundImage(CAImage *image, int index, const CAControlState& controlState);
-    virtual bool insertSegmentWithImage(CAImage *image, int index, const CAControlState& controlState);
-    virtual void removeSegmentAtIndex(int index);
-    virtual void removeAllSegments();
-    
-    virtual bool setTitleAtIndex(const char* title, int index, const CAControlState& controlState);
-    virtual bool setTitleColorAtIndex(const CAColor4B& color, int index, const CAControlState& controlState);
-    virtual bool setBackgroundImageAtIndex(CAImage *image, int index, const CAControlState& controlState);
-    virtual bool setBackgroundViewAtIndex(CAView *view, int index, const CAControlState& controlState);
-    virtual bool setImageAtIndex(CAImage *image, int index, const CAControlState& controlState);
-    virtual bool setImageColorAtIndex(const CAColor4B& color, int index, const CAControlState& controlState);
-    
-    virtual CAView *getDefaultNormalBackgroundView();
-    virtual CAView *getDefaultHighlightedBackgroundView();
-    virtual CAView *getDefaultSelectedBackgroundView();
-    
-    virtual CAButton *createDefaultSegment();
-    
-    CC_PROPERTY_PASS_BY_REF(std::string, m_sTitleFontName, TitleFontName);
-    CC_SYNTHESIZE_READONLY(int, m_nSelectedIndex, SelectedIndex);       // default -1
-    CC_SYNTHESIZE_READONLY(int, m_nClickToForbidSelectedAtIndex, ClickToForbidSelectedAtIndex); // default -1
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_itemSize, ItemSize);
-    void setHighlightedAtIndex(int index);
-    void setSelectedAtIndex(int index);
-    void setHighlightedNormal();
-    void setSelectedHighlighted();
-    int getItemCount() const;
-    void layoutSubviews();
-    
-protected:
+    virtual CAView* createDefaultSegment(int index);
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
-    bool indexIsValid(int index);
     void setContentSize(const CCSize & var);
-    using CAControl::addTarget;
-    using CAControl::removeTarget;
+    
+    void createSeparate();
+    
+    void cleanAllSeparate();
 
+    void removeAllSeparateImage();
+    
+    void refreshAllSegmentItemBound();
+    
+    void refreshAllSegmentItemPosition();
+    
+    void refreshSegmentItemByPoint(CCPoint point, CAControlState controlState);
+    
+    void refreshSegmentItemByIndex(int index, CAControlState controlState);
+    
+    void refreshAllSegmentItemByState(CAControlState controlState);
+    
+    int  getSegmentItemIndexByPoint(CCPoint point);
+    
+    CAObject* getObjectByIndex(int index, CAControlState controlState);
+    
+    void setSegmentStateWithColor( CAControlState controlState, int index);
+    
+    void callFunc(CAObject* object, int index);
+    
 protected:
+    unsigned int                     m_nItemsCount;
+
+    CAVector<CALabel*>               m_vTitles;
     
-    std::set<int> m_nForbidSelectedIndexs;
+    CAVector<CAImage*>               m_vNormalImages;
     
-    unsigned int m_nItemsCount;
-    std::vector<CAButton *> m_segments;
-    CAImageView *m_backGroundImage;
+    std::vector<bool>                m_vIsEnabled;
+    
+    std::vector<CCSize>              m_vContentOffset;
+    
+    std::vector<float>               m_vSegmentWidth;
+    
+    CAVector<CAView*>                m_vSegments;
+    
+    CAVector<CAView*>                m_vSeparateView;
+    
+    float                            m_fSeparateWidth;
+    
+    int                              m_iSelectedIndex;
+    
+    int                              m_iTouchIndex;
+    
+    CAColor4B                        m_cTextColor;
+    
+    CAObject*                        m_pTarget;
+    
+    SEL_CASegmentedControl           m_pCallFunc;
+    
+    
 };
 
 NS_CC_END

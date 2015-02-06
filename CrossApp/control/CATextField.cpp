@@ -400,13 +400,20 @@ void CATextField::insertText(const char * text, int len)
 void CATextField::AndroidWillInsertText(int start,const char* str,int before,int count)
 {
     CCAssert(str != NULL, "");
-	CCAssert(count > 0, "");
-	std::string cszNewStr = str;
-	if (cszNewStr.size() >= m_sText.size())
-	{
-		cszNewStr = cszNewStr.substr(m_sText.size(), cszNewStr.size());
-		insertText(cszNewStr.c_str(), cszNewStr.size());
-	}
+    CCAssert(count > 0, "");
+    std::string cszNewStr = str;
+    if (cszNewStr.size() >= m_sText.size())
+    {
+        for (int i = 0; i < start; i++)
+        {
+            if (cszNewStr[i] < 0 || cszNewStr[i]>127)
+            {
+                start += 2; i += 2;
+            }
+        }
+        std::string cszStrInsert = cszNewStr.substr(start, cszNewStr.size() - m_sText.size());
+        insertText(cszStrInsert.c_str(), cszStrInsert.size());
+    }
 }
 
 void CATextField::willInsertText(const char *text, int len)

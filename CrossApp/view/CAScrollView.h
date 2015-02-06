@@ -73,7 +73,7 @@ public:
     
     CAView* getSubviewByTag(int aTag);
     
-    CCArray* getSubviews();
+    const CAVector<CAView*>& getSubviews();
     
     void setContentOffset(const CCPoint& offset, bool animated);
     

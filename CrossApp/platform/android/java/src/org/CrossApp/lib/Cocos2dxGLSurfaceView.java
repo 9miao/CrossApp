@@ -1,12 +1,15 @@
 
 package org.CrossApp.lib;
 
+import android.R.integer;
 import android.content.Context;
 import android.graphics.Rect;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
+import android.text.Selection;
+import android.text.Spannable;
 import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -33,6 +36,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	private final static int KEY_BOARD_RETURNTYPE_DONE=21;
 	private final static int KEY_BOARD_RETURNTYPE_SEARCH=22;
 	private final static int KEY_BOARD_RETURNTYPE_SEND=23;
+	private final static int RESET_SELECTION_POSITION =24;
 	private final static int RESET_TEXT=13;
 
 	private final static int SET_CURSOR_POS = 33;
@@ -86,13 +90,21 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText(text);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(msg.arg1);
 							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
-							
+						//	
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().length());
+//							CharSequence text1 = Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText();
+//							
+//							if (text1 instanceof Spannable) {
+//							     Spannable spanText = (Spannable)text1;
+//							     Selection.setSelection(spanText, text1.length());
+//							 }
 							//
 							//InputType.TYPE_CLASS_NUMBER
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0);
 							Log.d("GLSurfaceView", "showSoftInput");
+							
 						}
 						break;
 					case SET_CURSOR_POS:
@@ -117,7 +129,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 						break;
 					case KEY_BOARD_TYPE_NUMBER:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 						}
 						break;
 					case KEY_BOARD_TYPE_ALPHABET:
@@ -155,6 +167,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
 						{
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
+						}
+						break;
+					case RESET_SELECTION_POSITION:
+						if (Cocos2dxGLSurfaceView.this.mCocos2dxEditText !=null) 
+						{
+							int a= (int)msg.arg1;
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(a);
 						}
 						break;
 				}
@@ -203,8 +222,17 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		this.mCocos2dxRenderer = renderer;
 		this.setRenderer(this.mCocos2dxRenderer);
 	}
+	public void changeSelectionPosition(int pos)
+	{
+		
+		final Message msg = new Message();
+		msg.what = Cocos2dxGLSurfaceView.RESET_SELECTION_POSITION;
+		msg.arg1 =pos;
+		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 
-	private String getContentText() {
+
+	}
+	public String getContentText() {
 		return this.mCocos2dxRenderer.getContentText();
 	}
 

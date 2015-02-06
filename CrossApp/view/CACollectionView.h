@@ -139,6 +139,8 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bAlwaysBottomSectionFooter, AlwaysBottomSectionFooter);
     
+    CACollectionViewCell* getHighlightCollectionCell();
+    
 protected:
     
     inline virtual float maxSpeed(float dt);

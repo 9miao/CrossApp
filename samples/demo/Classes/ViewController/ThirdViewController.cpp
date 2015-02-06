@@ -29,15 +29,12 @@ void ThirdViewController::viewDidLoad()
 	scrollView->addSubview(s_Image);
 
 	scrollControl = CASegmentedControl::createWithCenter(CADipRect(size.width*0.5, size.height*0.05, size.width*0.8, size.height*0.05), 4);
-	scrollControl->setTitleAtIndex("Forbidden", 0, CAControlStateAll);
-	scrollControl->setTitleAtIndex("Horizontal", 1,CAControlStateAll);
-	scrollControl->setTitleAtIndex("Vertical", 2, CAControlStateAll);
-	scrollControl->setTitleAtIndex("Unlimited", 3, CAControlStateAll);
-	scrollControl->setTitleColorAtIndex(CAColor_blueStyle,0,CAControlStateNormal);
-	scrollControl->setTitleColorAtIndex(CAColor_blueStyle, 1, CAControlStateNormal);
-	scrollControl->setTitleColorAtIndex(CAColor_blueStyle, 2, CAControlStateNormal);
-	scrollControl->setTitleColorAtIndex(CAColor_blueStyle, 3, CAControlStateNormal);
-	scrollControl->addTarget(this, CAControl_selector(ThirdViewController::stateControl));
+	scrollControl->setTitleForSegmentAtIndex("Forbidden", 0);
+	scrollControl->setTitleForSegmentAtIndex("Horizontal", 1);
+	scrollControl->setTitleForSegmentAtIndex("Vertical", 2);
+	scrollControl->setTitleForSegmentAtIndex("Unlimited", 3);
+	scrollControl->setTitleColor(CAColor_blueStyle);
+	scrollControl->addTarget(this, CASegmentedControl_selector(ThirdViewController::stateControl));
 	scrollControl->setSelectedAtIndex(0);
 	this->getView()->addSubview(scrollControl);
 }
@@ -48,9 +45,8 @@ void ThirdViewController::viewDidAppear()
 	this->getTabBarController()->setNavigationBarItem(item);
 }
 
-void ThirdViewController::stateControl(CAControl* btn, CCPoint point)
+void ThirdViewController::stateControl(CASegmentedControl* btn, int index)
 {
-	int index = scrollControl->getSelectedIndex();
 	switch (index)
 	{
 	case 0:

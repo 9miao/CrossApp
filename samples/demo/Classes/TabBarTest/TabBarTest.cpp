@@ -83,7 +83,7 @@ void TabBarTest::secondTabBar(void)
 	tabBar->setCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, 100));
 	tabBar->setSelectedIndicatorImage(CAImage::create("source_material/indicator.png"));
 	tabBar->showSelectedIndicator();
-    tabBar->setBackGroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/ex1.png")));
+    tabBar->setBackGroundImage(CAImage::create("source_material/ex1.png"));
 	tabBar->setSelectedBackGroundImage(CAImage::create("source_material/btn_rounded3D_selected.png"));
 	tabBar->setDelegate(this);
 	this->getView()->addSubview(tabBar);
@@ -111,7 +111,6 @@ void TabBarTest::thirdTabBar(void)
 	tabBar->setTitleColorForNormal(CAColor_yellow);
 	tabBar->setTitleColorForSelected(CAColor_orange);
 	tabBar->setSelectedBackGroundImage(CAImage::create("source_material/alert_btn.png"));
-	tabBar->setMaxShowCount(3);
 	tabBar->setDelegate(this);
 	this->getView()->addSubview(tabBar);
     tabBar->setSelectedAtIndex(1);

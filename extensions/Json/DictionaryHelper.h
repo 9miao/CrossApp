@@ -3,8 +3,7 @@
 #ifndef __DICTIONARYHELPER_H__
 #define __DICTIONARYHELPER_H__
 
-#include "CrossAppExt.h"
-#include "ExtensionMacros.h"
+#include "CSContentJsonDictionary.h"
 
 #define DICTOOL DictionaryHelper::shareHelper()
 
@@ -33,18 +32,18 @@ public:
     bool objectToBooleanValue(CrossApp::CAObject* obj);
     CrossApp::CCArray* objectToCCArray(CrossApp::CAObject* obj);
     
-    cs::CSJsonDictionary* getSubDictionary_json(cs::CSJsonDictionary* root,const char* key);
-    int getIntValue_json(cs::CSJsonDictionary* root,const char* key);
-    float getFloatValue_json(cs::CSJsonDictionary* root,const char* key);
-    const char* getStringValue_json(cs::CSJsonDictionary* root,const char* key);
-    bool getBooleanValue_json(cs::CSJsonDictionary* root,const char* key);
-    int getArrayCount_json(cs::CSJsonDictionary* root,const char* key);
-    int getIntValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx);
-    float getFloatValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx);
-    bool getBoolValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx);
-    const char* getStringValueFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx);
-    cs::CSJsonDictionary* getDictionaryFromArray_json(cs::CSJsonDictionary* root,const char* arrayKey,int idx);
-    bool checkObjectExist_json(cs::CSJsonDictionary* root,const char* key);
+    CSJsonDictionary* getSubDictionary_json(CSJsonDictionary* root,const char* key);
+    int getIntValue_json(CSJsonDictionary* root,const char* key);
+    float getFloatValue_json(CSJsonDictionary* root,const char* key);
+    const char* getStringValue_json(CSJsonDictionary* root,const char* key);
+    bool getBooleanValue_json(CSJsonDictionary* root,const char* key);
+    int getArrayCount_json(CSJsonDictionary* root,const char* key);
+    int getIntValueFromArray_json(CSJsonDictionary* root,const char* arrayKey,int idx);
+    float getFloatValueFromArray_json(CSJsonDictionary* root,const char* arrayKey,int idx);
+    bool getBoolValueFromArray_json(CSJsonDictionary* root,const char* arrayKey,int idx);
+    const char* getStringValueFromArray_json(CSJsonDictionary* root,const char* arrayKey,int idx);
+    CSJsonDictionary* getDictionaryFromArray_json(CSJsonDictionary* root,const char* arrayKey,int idx);
+    bool checkObjectExist_json(CSJsonDictionary* root,const char* key);
 };
 
 NS_CC_EXT_END

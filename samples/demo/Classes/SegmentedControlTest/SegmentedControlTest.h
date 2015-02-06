@@ -17,7 +17,7 @@ protected:
 	void viewDidUnload();
 
 public:
-	void segmentCallback(CAControl* btn, CCPoint point);
+	void segmentCallback(CASegmentedControl* btn, int index);
 
 private:
 	CADipSize size;

@@ -295,7 +295,7 @@ void CALabel::setNumberOfLine(unsigned int var)
 
 void CALabel::setFontSize(unsigned int var)
 {
-    m_nfontSize=var;
+    m_nfontSize = var;
     if(m_nText.empty())
     {
         return;
@@ -396,8 +396,11 @@ const CAVerticalTextAlignment& CALabel::getVerticalTextAlignmet()
 
 void CALabel::setContentSize(const CrossApp::CCSize &var)
 {
+    CCSize originSize = getFrame().size;
     CAView::setContentSize(var);
-    m_bUpdateImage = true;
+    if (originSize.width != var.width || originSize.height != var.height) {
+        m_bUpdateImage = true;
+    }
 }
 
 void CALabel::visit()
