@@ -43,6 +43,28 @@ extern "C" {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
         CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
     }
+ 
+    JNIEXPORT jint JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeGetCursorPos() {
+        JNIEnv * env = 0;
+
+        if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
+            return 0;
+        }
+        return CrossApp::CAIMEDispatcher::sharedDispatcher()->getCursorPos();
+    }
+
+    JNIEXPORT jintArray JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeGetCharRange() {
+        JNIEnv * env = 0;
+
+        if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
+            return 0;
+        }
+        std::pair<int, int> ret = CrossApp::CAIMEDispatcher::sharedDispatcher()->getCharRange();
+        jintArray iarr = env->NewIntArray(2);
+        int temp[2] = {ret.first, ret.second};
+        env->SetIntArrayRegion(iarr, 0, 2, temp);
+        return iarr;
+    }
 
     JNIEXPORT jstring JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeGetContentText() {
         JNIEnv * env = 0;
