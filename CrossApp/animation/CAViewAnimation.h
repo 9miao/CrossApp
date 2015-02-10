@@ -49,9 +49,9 @@ public:
     
     static void commitAnimations();
     
-    static void setAnimationDuration(float duration);// default(0.2
+    static void setAnimationDuration(float duration);// default(0.2)
     
-    static void setAnimationDelay(float delay);// default(0
+    static void setAnimationDelay(float delay);// default(0)
     
     static void setAnimationCurve(const CAViewAnimationCurve& curve);// default(CAViewAnimationCurveLinear
     

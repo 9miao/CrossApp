@@ -67,27 +67,27 @@ CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView
 	if (p_Cell == NULL)
 	{
 		p_Cell = CACollectionViewCell::create("CrossApp");
-//
-//		CAView* itemImage = CAView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
-//		itemImage->setTag(99);
-//		p_Cell->addSubview(itemImage);
-//
-//		CADipSize itemSize = itemImage->getBounds().size;
-//		CALabel* itemText = CALabel::createWithCenter(CADipRect(itemSize.width*0.5, itemSize.height*0.5, 150, 40));
-//		itemText->setTag(100);
-//		itemText->setFontSize(_px(29));
-//		itemText->setTextAlignment(CATextAlignmentCenter);
-//		itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-//		itemImage->addSubview(itemText);
+
+		CAView* itemImage = CAView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
+		itemImage->setTag(99);
+		p_Cell->addSubview(itemImage);
+
+		CADipSize itemSize = itemImage->getBounds().size;
+		CALabel* itemText = CALabel::createWithCenter(CADipRect(itemSize.width*0.5, itemSize.height*0.5, 150, 40));
+		itemText->setTag(100);
+		itemText->setFontSize(_px(29));
+		itemText->setTextAlignment(CATextAlignmentCenter);
+		itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		itemImage->addSubview(itemText);
 	}
-//	CAView* itemImageView = p_Cell->getSubviewByTag(99);
-//	itemImageView->setColor(colorArr.at(row * 3 + item));
-//	CCLog("%d", row * 3 + item);
-//
-//	char pos[20] = "";
-//	sprintf(pos, "(%d,%d,%d)", section, row, item);
-//	CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
-//	itemText->setText(pos);
+	CAView* itemImageView = p_Cell->getSubviewByTag(99);
+	itemImageView->setColor(colorArr.at(row * 3 + item));
+	CCLog("%d", row * 3 + item);
+
+	char pos[20] = "";
+	sprintf(pos, "(%d,%d,%d)", section, row, item);
+	CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
+	itemText->setText(pos);
 
 	return p_Cell;
 }

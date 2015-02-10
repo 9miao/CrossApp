@@ -322,6 +322,10 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
 
     setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
 
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    VolatileTexture::addDataTexture(this, m_pData, m_ePixelFormat, CCSize(m_uPixelsWide, m_uPixelsHigh));
+#endif
+    
     return true;
 }
 

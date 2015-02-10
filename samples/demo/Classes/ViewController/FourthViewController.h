@@ -27,7 +27,7 @@ private:
 	CADipSize size;
 	CADipPoint originalPoint;
 	CAImageView* imageView;
-
+    CAImageView* imageView2;
 };
 
 #endif

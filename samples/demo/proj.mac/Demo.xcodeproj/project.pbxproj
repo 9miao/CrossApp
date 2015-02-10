@@ -50,9 +50,6 @@
 		B04C0BB719011ED8009854FD /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAB19011ED8009854FD /* json_valueiterator.inl */; };
 		B04C0BB819011ED8009854FD /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BAC19011ED8009854FD /* json_writer.cpp */; };
 		B04C0BB919011ED8009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAE19011ED8009854FD /* sconscript */; };
-		B06805101A83099700F6BE00 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = B068050F1A83099700F6BE00 /* 0.png */; };
-		B06805121A83099E00F6BE00 /* 8.png in Resources */ = {isa = PBXBuildFile; fileRef = B06805111A83099E00F6BE00 /* 8.png */; };
-		B06805141A8309A200F6BE00 /* 9.png in Resources */ = {isa = PBXBuildFile; fileRef = B06805131A8309A200F6BE00 /* 9.png */; };
 		B0A7155F1A43F5BA00A85FB9 /* ActivityIndicatorViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A715101A43F5BA00A85FB9 /* ActivityIndicatorViewTest.cpp */; };
 		B0A715601A43F5BA00A85FB9 /* AlertViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A715131A43F5BA00A85FB9 /* AlertViewTest.cpp */; };
 		B0A715611A43F5BA00A85FB9 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A715151A43F5BA00A85FB9 /* AppDelegate.cpp */; };
@@ -180,9 +177,6 @@
 		B04C0BAF19011ED8009854FD /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		B04C0BB019011ED8009854FD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		B05637581952735100C63FAA /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
-		B068050F1A83099700F6BE00 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
-		B06805111A83099E00F6BE00 /* 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 8.png; sourceTree = "<group>"; };
-		B06805131A8309A200F6BE00 /* 9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 9.png; sourceTree = "<group>"; };
 		B0A715101A43F5BA00A85FB9 /* ActivityIndicatorViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActivityIndicatorViewTest.cpp; sourceTree = "<group>"; };
 		B0A715111A43F5BA00A85FB9 /* ActivityIndicatorViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityIndicatorViewTest.h; sourceTree = "<group>"; };
 		B0A715131A43F5BA00A85FB9 /* AlertViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertViewTest.cpp; sourceTree = "<group>"; };
@@ -752,9 +746,6 @@
 		B0A715541A43F5BA00A85FB9 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				B06805131A8309A200F6BE00 /* 9.png */,
-				B06805111A83099E00F6BE00 /* 8.png */,
-				B068050F1A83099700F6BE00 /* 0.png */,
 				B0A715551A43F5BA00A85FB9 /* FifthViewController.cpp */,
 				B0A715561A43F5BA00A85FB9 /* FifthViewController.h */,
 				B0A715571A43F5BA00A85FB9 /* FirstViewController.cpp */,
@@ -840,16 +831,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B06805121A83099E00F6BE00 /* 8.png in Resources */,
 				B0090CDD198A407400BD8CDA /* 9m.jpg in Resources */,
 				B04C0BB319011ED8009854FD /* json_internalarray.inl in Resources */,
 				B04C0BB419011ED8009854FD /* json_internalmap.inl in Resources */,
 				41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */,
 				41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */,
 				B0090CD5198A405900BD8CDA /* source_material in Resources */,
-				B06805101A83099700F6BE00 /* 0.png in Resources */,
 				B0352A7C19C18263005D85D0 /* background in Resources */,
-				B06805141A8309A200F6BE00 /* 9.png in Resources */,
 				B04C0BB719011ED8009854FD /* json_valueiterator.inl in Resources */,
 				B0090CD4198A405900BD8CDA /* fonts in Resources */,
 				B0090CD6198A405900BD8CDA /* tabbar_function in Resources */,
