@@ -26,7 +26,6 @@
 		15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23B168318C3006C7997 /* SimpleAudioEngine.mm */; };
 		15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */; };
 		1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */; };
-		1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */; };
 		1A9CE9A81765A889000E3062 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9CE9A71765A889000E3062 /* libsqlite3.dylib */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
@@ -51,6 +50,9 @@
 		B04C0BB719011ED8009854FD /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAB19011ED8009854FD /* json_valueiterator.inl */; };
 		B04C0BB819011ED8009854FD /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BAC19011ED8009854FD /* json_writer.cpp */; };
 		B04C0BB919011ED8009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAE19011ED8009854FD /* sconscript */; };
+		B06805101A83099700F6BE00 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = B068050F1A83099700F6BE00 /* 0.png */; };
+		B06805121A83099E00F6BE00 /* 8.png in Resources */ = {isa = PBXBuildFile; fileRef = B06805111A83099E00F6BE00 /* 8.png */; };
+		B06805141A8309A200F6BE00 /* 9.png in Resources */ = {isa = PBXBuildFile; fileRef = B06805131A8309A200F6BE00 /* 9.png */; };
 		B0A7155F1A43F5BA00A85FB9 /* ActivityIndicatorViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A715101A43F5BA00A85FB9 /* ActivityIndicatorViewTest.cpp */; };
 		B0A715601A43F5BA00A85FB9 /* AlertViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A715131A43F5BA00A85FB9 /* AlertViewTest.cpp */; };
 		B0A715611A43F5BA00A85FB9 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A715151A43F5BA00A85FB9 /* AppDelegate.cpp */; };
@@ -132,7 +134,6 @@
 		15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1A9CE9801765A7FA000E3062 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
-		1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
 		1A9CE9A71765A889000E3062 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41BC70D915BF81A5006A0A6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
@@ -179,6 +180,9 @@
 		B04C0BAF19011ED8009854FD /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		B04C0BB019011ED8009854FD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		B05637581952735100C63FAA /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
+		B068050F1A83099700F6BE00 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
+		B06805111A83099E00F6BE00 /* 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 8.png; sourceTree = "<group>"; };
+		B06805131A8309A200F6BE00 /* 9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 9.png; sourceTree = "<group>"; };
 		B0A715101A43F5BA00A85FB9 /* ActivityIndicatorViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActivityIndicatorViewTest.cpp; sourceTree = "<group>"; };
 		B0A715111A43F5BA00A85FB9 /* ActivityIndicatorViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityIndicatorViewTest.h; sourceTree = "<group>"; };
 		B0A715131A43F5BA00A85FB9 /* AlertViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertViewTest.cpp; sourceTree = "<group>"; };
@@ -394,7 +398,6 @@
 			children = (
 				1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */,
 				1A9CE9801765A7FA000E3062 /* LocalStorage.h */,
-				1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */,
 			);
 			path = LocalStorage;
 			sourceTree = "<group>";
@@ -749,6 +752,9 @@
 		B0A715541A43F5BA00A85FB9 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				B06805131A8309A200F6BE00 /* 9.png */,
+				B06805111A83099E00F6BE00 /* 8.png */,
+				B068050F1A83099700F6BE00 /* 0.png */,
 				B0A715551A43F5BA00A85FB9 /* FifthViewController.cpp */,
 				B0A715561A43F5BA00A85FB9 /* FifthViewController.h */,
 				B0A715571A43F5BA00A85FB9 /* FirstViewController.cpp */,
@@ -834,13 +840,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B06805121A83099E00F6BE00 /* 8.png in Resources */,
 				B0090CDD198A407400BD8CDA /* 9m.jpg in Resources */,
 				B04C0BB319011ED8009854FD /* json_internalarray.inl in Resources */,
 				B04C0BB419011ED8009854FD /* json_internalmap.inl in Resources */,
 				41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */,
 				41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */,
 				B0090CD5198A405900BD8CDA /* source_material in Resources */,
+				B06805101A83099700F6BE00 /* 0.png in Resources */,
 				B0352A7C19C18263005D85D0 /* background in Resources */,
+				B06805141A8309A200F6BE00 /* 9.png in Resources */,
 				B04C0BB719011ED8009854FD /* json_valueiterator.inl in Resources */,
 				B0090CD4198A405900BD8CDA /* fonts in Resources */,
 				B0090CD6198A405900BD8CDA /* tabbar_function in Resources */,
@@ -903,7 +912,6 @@
 				B0A715681A43F5BA00A85FB9 /* LabelTest.cpp in Sources */,
 				B0A715761A43F5BA00A85FB9 /* TextViewTest.cpp in Sources */,
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,
-				1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */,
 				B0A715641A43F5BA00A85FB9 /* AddressBookTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

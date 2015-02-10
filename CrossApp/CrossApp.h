@@ -75,6 +75,7 @@
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
 
+#include "animation/CAViewAnimation.h"
 
 //view
 #include "view/CAView.h"

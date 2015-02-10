@@ -2,7 +2,7 @@
 
 #include "CrossApp.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
 #include <assert.h>
 #include <sqlite3.h>

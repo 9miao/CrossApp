@@ -242,7 +242,6 @@ public:
 	{
 		if (removeAll)
 		{
-
 			for (iterator iter = _data.begin(); iter != _data.end();)
 			{
 				if ((*iter) == object)

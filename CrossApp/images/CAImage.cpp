@@ -302,7 +302,6 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
     {
         free(m_pData);
     }
-    CCLog("---------- %d ---- %d", pixelFormat, bitsPerPixel);
     
     m_nDataLenght = (unsigned long)pixelsWide * pixelsHigh;
     m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * bitsPerPixel/8);

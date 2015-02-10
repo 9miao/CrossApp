@@ -98,6 +98,7 @@ view/CAPullToRefreshView.cpp \
 view/CATextView.cpp \
 view/CALabelStyle.cpp \
 view/CAWebView.cpp \
+animation/CAViewAnimation.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

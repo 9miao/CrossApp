@@ -1060,6 +1060,12 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
         pFontName = "/system/fonts/DroidSansFallback.ttf";
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         
+        if (pBuffer == NULL)
+        {
+            pFontName = "/system/fonts/NotoSansHans-Regular.otf";
+            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        }
+        
 #endif
 	}
 

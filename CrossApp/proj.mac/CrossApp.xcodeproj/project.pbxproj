@@ -276,6 +276,8 @@
 		B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D3698195AB93900DD4814 /* CAAlertView.h */; };
 		B06A8CFF19FF27990010A24C /* CALabelStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06A8CFD19FF27990010A24C /* CALabelStyle.cpp */; };
 		B06A8D0019FF27990010A24C /* CALabelStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = B06A8CFE19FF27990010A24C /* CALabelStyle.h */; };
+		B074A8B71A722B5200F34F79 /* CAViewAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B074A8B51A722B5200F34F79 /* CAViewAnimation.cpp */; };
+		B074A8B81A722B5200F34F79 /* CAViewAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B074A8B61A722B5200F34F79 /* CAViewAnimation.h */; };
 		B08F4BB519C7D2EF008DE306 /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BB219C7D2EF008DE306 /* ConvertUTF.cpp */; };
 		B08F4BB619C7D2EF008DE306 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = B08F4BB319C7D2EF008DE306 /* ConvertUTF.h */; };
 		B08F4BB719C7D2EF008DE306 /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BB419C7D2EF008DE306 /* ConvertUTFWrapper.cpp */; };
@@ -574,6 +576,8 @@
 		B05D3698195AB93900DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
 		B06A8CFD19FF27990010A24C /* CALabelStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALabelStyle.cpp; sourceTree = "<group>"; };
 		B06A8CFE19FF27990010A24C /* CALabelStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALabelStyle.h; sourceTree = "<group>"; };
+		B074A8B51A722B5200F34F79 /* CAViewAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewAnimation.cpp; sourceTree = "<group>"; };
+		B074A8B61A722B5200F34F79 /* CAViewAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAViewAnimation.h; sourceTree = "<group>"; };
 		B08F4BB219C7D2EF008DE306 /* ConvertUTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTF.cpp; sourceTree = "<group>"; };
 		B08F4BB319C7D2EF008DE306 /* ConvertUTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertUTF.h; sourceTree = "<group>"; };
 		B08F4BB419C7D2EF008DE306 /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
@@ -623,6 +627,7 @@
 				04EAA0711956D74D00198A8E /* ccMacros.h */,
 				04EAA0721956D74D00198A8E /* ccTypeInfo.h */,
 				04EAA0731956D74D00198A8E /* ccTypes.h */,
+				B074A8B41A722B1600F34F79 /* animation */,
 				B047B91119E9181800F24BE6 /* script_support */,
 				04EAA04A1956D74D00198A8E /* actions */,
 				04EAA05D1956D74D00198A8E /* basics */,
@@ -1196,6 +1201,15 @@
 			path = script_support;
 			sourceTree = "<group>";
 		};
+		B074A8B41A722B1600F34F79 /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				B074A8B51A722B5200F34F79 /* CAViewAnimation.cpp */,
+				B074A8B61A722B5200F34F79 /* CAViewAnimation.h */,
+			);
+			path = animation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1332,6 +1346,7 @@
 				04EABA741956D75A00198A8E /* precompiledshaders.h in Headers */,
 				B047B91919E9181800F24BE6 /* JSViewController.h in Headers */,
 				04EABA761956D75A00198A8E /* base64.h in Headers */,
+				B074A8B81A722B5200F34F79 /* CAViewAnimation.h in Headers */,
 				04EABA781956D75A00198A8E /* CANotificationCenter.h in Headers */,
 				04EABA7A1956D75A00198A8E /* CCPointExtension.h in Headers */,
 				04EABA7C1956D75A00198A8E /* CCProfiling.h in Headers */,
@@ -1433,6 +1448,7 @@
 				04EAB0671956D75600198A8E /* CAApplication.cpp in Sources */,
 				04EAB0691956D75600198A8E /* CAAutoreleasePool.cpp in Sources */,
 				04EAB06B1956D75600198A8E /* CACamera.cpp in Sources */,
+				B074A8B71A722B5200F34F79 /* CAViewAnimation.cpp in Sources */,
 				04EAB06D1956D75600198A8E /* CAFPSImages.c in Sources */,
 				04EAB06F1956D75600198A8E /* CAGeometry.cpp in Sources */,
 				04EAB0711956D75600198A8E /* CAObject.cpp in Sources */,
