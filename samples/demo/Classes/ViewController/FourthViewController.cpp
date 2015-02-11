@@ -44,7 +44,17 @@ void FourthViewController::viewDidAppear()
 
 void FourthViewController::viewDidUnload()
 {
-	
+    
+}
+
+void FourthViewController::start(const std::string& s, void* context)
+{
+    CCLog("1111");
+}
+
+void FourthViewController::stop(const std::string& s, void* context)
+{
+    CCLog("2222");
 }
 
 bool FourthViewController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -87,13 +97,14 @@ void FourthViewController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDuration(1.0f);
     //CAViewAnimation::setAnimationDelay(0.3f);
-    
-//    imageView->setFrame(CADipRect(400, 400, 100, 100));
+    CAViewAnimation::setAnimationWillStartSelector(this, CAViewAnimation_selector(FourthViewController::start));
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation_selector(FourthViewController::stop));
+    imageView->setFrame(CADipRect(400, 400, 100, 100));
 //    imageView->setScale(0.3f);
 //    imageView->setColor(ccc4(128, 20, 70, 128));
 //    imageView->setSkewX(180);
 //    imageView->setSkewY(-180);
-//    imageView->setRotation(720);
+    imageView->setRotation(720);
 //    imageView->setVertexZ(300);
 //    imageView->setAlpha(1.0f);
     
@@ -102,22 +113,18 @@ void FourthViewController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     CAViewAnimation::setAnimationDuration(1.0f);
 //    CAViewAnimation::setAnimationDelay(1.0f);
     
-//    imageView2->setFrame(CADipRect(140, 400, 100, 100));
+    imageView2->setFrame(CADipRect(140, 400, 100, 100));
 //    imageView2->setScale(0.3f);
 //    imageView2->setColor(ccc4(128, 20, 70, 128));
 //    imageView2->setSkewX(-180);
 //    imageView2->setSkewY(180);
     //imageView2->setRotation(-3240);
-    imageView2->setRotationY(180);
-//    imageView2->setVertexZ(300);
-    
-    
+    imageView2->setRotationY(360);
+
     
     CAViewAnimation::commitAnimations();
     
     CAViewAnimation::commitAnimations();
-    
-    imageView->runAction(CCOrbitCamera::create(1.0, 1.0, 1, 0, 180, 0, 0));
 }
 
 void FourthViewController::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)

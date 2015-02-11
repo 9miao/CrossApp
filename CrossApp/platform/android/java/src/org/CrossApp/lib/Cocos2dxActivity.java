@@ -84,9 +84,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		 }
 		 IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);  
 
-	     BatteryReceiver batteryReceiver = new BatteryReceiver();  
-
-	     registerReceiver(batteryReceiver, intentFilter);
+//	     BatteryReceiver batteryReceiver = new BatteryReceiver();  
+//
+//	     registerReceiver(batteryReceiver, intentFilter);
 	     
 	}
 	

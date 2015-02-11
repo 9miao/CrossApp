@@ -18,7 +18,6 @@ extern "C" {
 	
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxSDL_nativeInit(JNIEnv* env, jclass cls, jobject obj) {
     	int ret = SDL_JNI_OnLoad(JniHelper::getJavaVM(), NULL);
-    	CCLog("%s, %d", __FUNCTION__, ret);
 	    SDL_Android_Init(env, cls);
     }
 }

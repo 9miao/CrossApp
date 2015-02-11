@@ -35,6 +35,19 @@ public:
         CAViewAnimationCurve curve;
         float time;
         CAMap<CAView*, CAObject*> animations;
+        
+        CAObject* willStartTarget;
+        CAObject* didStopTarget;
+        
+        SEL_CAViewAnimation willStartSel;
+        SEL_CAViewAnimation didStopSel;
+        
+        CAViewAnimationModule()
+        :willStartTarget(NULL)
+        ,didStopTarget(NULL)
+        ,willStartSel(NULL)
+        ,didStopSel(NULL)
+        {}
     };
     
 private:
