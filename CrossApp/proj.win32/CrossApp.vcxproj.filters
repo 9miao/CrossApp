@@ -76,6 +76,9 @@
     <Filter Include="script_support">
       <UniqueIdentifier>{35ff7a6b-396a-40d7-8836-75ea0a2bbaf2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="animation">
+      <UniqueIdentifier>{9a11cabc-ff1b-4ddb-8450-fcc2fed59407}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\cocoa\CCArray.cpp">
@@ -439,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="..\platform\win32\CAWebViewImpl.cpp">
       <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\animation\CAViewAnimation.cpp">
+      <Filter>animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -886,6 +892,9 @@
     </ClInclude>
     <ClInclude Include="..\platform\win32\CAWebViewImpl.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\animation\CAViewAnimation.h">
+      <Filter>animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
