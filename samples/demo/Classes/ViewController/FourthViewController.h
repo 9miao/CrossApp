@@ -16,7 +16,10 @@ protected:
 	void viewDidLoad();
 	void viewDidUnload();
 	virtual void viewDidAppear();
-
+    
+    void start(const std::string& s, void* context);
+    void stop(const std::string& s, void* context);
+    
 public:
 	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
