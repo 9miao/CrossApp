@@ -14,18 +14,17 @@ NS_CC_BEGIN
 
 typedef void (CAObject::*SEL_CAViewAnimation)(const std::string&, void*);
 #define CAViewAnimation_selector(_SELECTOR) (SEL_CAViewAnimation)(&_SELECTOR)
+
+typedef enum
+{
+    CAViewAnimationCurveLinear = 0,
+    CAViewAnimationCurveEaseOut,          // slow at end
+    CAViewAnimationCurveEaseIn,           // slow at beginning
+    CAViewAnimationCurveEaseInOut         // slow at beginning and end
+}CAViewAnimationCurve;
+
 class CC_DLL CAViewAnimation: public CAObject
 {
-public:
-    
-    typedef enum
-    {
-        CAViewAnimationCurveLinear,
-        CAViewAnimationCurveEaseOut,          // slow at end
-        CAViewAnimationCurveEaseIn,           // slow at beginning
-        CAViewAnimationCurveEaseInOut         // slow at beginning and end
-    }CAViewAnimationCurve;
-    
     struct CAViewAnimationModule
     {
         std::string animationID;
@@ -49,9 +48,7 @@ public:
         ,didStopSel(NULL)
         {}
     };
-    
-private:
-    
+
     std::deque<CAViewAnimation::CAViewAnimationModule> m_vWillModules;
     
     std::vector<CAViewAnimation::CAViewAnimationModule> m_vModules;

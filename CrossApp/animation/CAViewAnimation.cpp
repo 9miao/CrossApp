@@ -253,7 +253,7 @@ void CAViewAnimation::update(float dt)
         CAViewAnimationModule& module = *itr_module;
         module.time += dt;
         float time = module.time - module.delay;
-
+ 
         if (time > -FLT_MIN)
         {
             if (module.willStartTarget && module.willStartSel)
@@ -265,7 +265,29 @@ void CAViewAnimation::update(float dt)
             
             float s = time / module.duration;
             s = MIN(s, 1.0f);
+
+            switch (module.curve)
+            {
+                case CAViewAnimationCurveEaseOut:
+                {
+                    s = -1/3.0f * s * s + 4/3.0f * s;
+                }
+                    break;
+                case CAViewAnimationCurveEaseIn:
+                {
+                    s = 2 - sqrtf(4 - 3.0f * s);
+                }
+                    break;
+                case CAViewAnimationCurveEaseInOut:
+                {
+                    s = (s <= 0.5f) ? (-2 * s * s + 2 * s) : (1 - sqrtf((1 - s) / 2));
+                }
+                    break;
+                default:
+                    break;
+            }
             
+
             CAMap<CAView*, CAObject*>& animations = itr_module->animations;
             CAMap<CAView*, CAObject*>::iterator itr_animation = animations.begin();
             while (itr_animation != animations.end())

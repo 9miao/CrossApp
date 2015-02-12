@@ -9,14 +9,15 @@
 #include "CAViewController.h"
 #include "basics/CAApplication.h"
 #include "support/CCPointExtension.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionEase.h"
 #include "basics/CAScheduler.h"
 #include "view/CAWindow.h"
 #include "view/CAScale9ImageView.h"
 #include "dispatcher/CATouchDispatcher.h"
+#include "animation/CAViewAnimation.h"
 
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
+#include "actions/CCActionEase.h"
 
 NS_CC_BEGIN
 
@@ -466,15 +467,24 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
     
     if (animated)
     {
-        CCArray* lastActions = CCArray::create();
-        lastActions->addObject(CCDelayTime::create(0.03f));
-        lastActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))));
-        lastContainer->runAction(CCSequence::create(lastActions));
+        CAViewAnimation::beginAnimations("navigation_lastContainer_replace", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
+        lastContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
+        CAViewAnimation::commitAnimations();
         
+        CAViewAnimation::beginAnimations("navigation_newContainer_replace", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
+        newContainer->setFrameOrigin(CCPointZero);
+        CAViewAnimation::commitAnimations();
+        
+
         CCArray* newActions = CCArray::create();
         newActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(), callfunc_selector(CATouchDispatcher::setDispatchEventsFalse)));
-        newActions->addObject(CCDelayTime::create(0.02f));
-        newActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)));
+        newActions->addObject(CCDelayTime::create(0.27f));
         newActions->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::replaceViewControllerFinish)));
         newActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)));
         newContainer->runAction(CCSequence::create(newActions));
@@ -523,18 +533,28 @@ void CANavigationController::pushViewController(CAViewController* viewController
     
     if (animated)
     {
-        CCArray* lastActions = CCArray::create();
-        lastActions->addObject(CCDelayTime::create(0.03f));
-        lastActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))));
-        lastContainer->runAction(CCSequence::create(lastActions));
+        CAViewAnimation::beginAnimations("navigation_lastContainer_replace", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        lastContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
+        CAViewAnimation::commitAnimations();
+        
+        CAViewAnimation::beginAnimations("navigation_newContainer_replace", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        newContainer->setFrameOrigin(CCPointZero);
+        CAViewAnimation::commitAnimations();
+        
         
         CCArray* newActions = CCArray::create();
         newActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(), callfunc_selector(CATouchDispatcher::setDispatchEventsFalse)));
-        newActions->addObject(CCDelayTime::create(0.02f));
-        newActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)));
+        newActions->addObject(CCDelayTime::create(0.27f));
         newActions->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::pushViewControllerFinish)));
         newActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)));
         newContainer->runAction(CCSequence::create(newActions));
+        
     }
     else
     {
