@@ -1,7 +1,8 @@
 #### CrossApp 0.6.1 更新内容： 
 #####修复0.6.0不能编译以及不稳定的bug
 
-
+#### CrossApp 0.6.1 Update:
+#####Fixed bug that user cannot compile and engine unstable in 0.6.0 version
 
 **********************************************************************************
 
