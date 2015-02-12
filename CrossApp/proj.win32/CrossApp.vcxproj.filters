@@ -446,6 +446,9 @@
     <ClCompile Include="..\animation\CAViewAnimation.cpp">
       <Filter>animation</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\CATempTypeFont.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -895,6 +898,9 @@
     </ClInclude>
     <ClInclude Include="..\animation\CAViewAnimation.h">
       <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CATempTypeFont.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

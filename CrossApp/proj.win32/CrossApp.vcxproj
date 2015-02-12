@@ -192,6 +192,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\images\CAImageCache.cpp" />
     <ClCompile Include="..\platform\CAFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\CAFTFontCache.cpp" />
+    <ClCompile Include="..\platform\CATempTypeFont.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\CCImageCommonWebp.cpp" />
@@ -326,6 +327,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\platform\CADensityDpi.h" />
     <ClInclude Include="..\platform\CAFreeTypeFont.h" />
     <ClInclude Include="..\platform\CAFTFontCache.h" />
+    <ClInclude Include="..\platform\CATempTypeFont.h" />
     <ClInclude Include="..\platform\CCAccelerometerDelegate.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
