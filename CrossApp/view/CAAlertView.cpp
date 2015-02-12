@@ -3,10 +3,6 @@
 #include "view/CAScale9ImageView.h"
 #include "basics/CAApplication.h"
 #include "control/CAButton.h"
-#include "support/CCPointExtension.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionEase.h"
 #include "dispatcher/CATouch.h"
 #include "view/CAWindow.h"
 

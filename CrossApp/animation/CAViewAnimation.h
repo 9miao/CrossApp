@@ -10,10 +10,15 @@
 #define __CrossApp__CAViewAnimation__
 
 #include "view/CAView.h"
+#include "view/CAImageView.h"
+#include "view/CAScale9ImageView.h"
 NS_CC_BEGIN
 
-typedef void (CAObject::*SEL_CAViewAnimation)(const std::string&, void*);
-#define CAViewAnimation_selector(_SELECTOR) (SEL_CAViewAnimation)(&_SELECTOR)
+typedef void (CAObject::*SEL_CAViewAnimation2)(const std::string&, void*);
+#define CAViewAnimation2_selector(_SELECTOR) (SEL_CAViewAnimation2)(&_SELECTOR)
+
+typedef void (CAObject::*SEL_CAViewAnimation0)();
+#define CAViewAnimation0_selector(_SELECTOR) (SEL_CAViewAnimation0)(&_SELECTOR)
 
 typedef enum
 {
@@ -38,14 +43,19 @@ class CC_DLL CAViewAnimation: public CAObject
         CAObject* willStartTarget;
         CAObject* didStopTarget;
         
-        SEL_CAViewAnimation willStartSel;
-        SEL_CAViewAnimation didStopSel;
+        SEL_CAViewAnimation0 willStartSel0;
+        SEL_CAViewAnimation0 didStopSel0;
+
+        SEL_CAViewAnimation2 willStartSel2;
+        SEL_CAViewAnimation2 didStopSel2;
         
         CAViewAnimationModule()
         :willStartTarget(NULL)
         ,didStopTarget(NULL)
-        ,willStartSel(NULL)
-        ,didStopSel(NULL)
+        ,willStartSel0(NULL)
+        ,didStopSel0(NULL)
+        ,willStartSel2(NULL)
+        ,didStopSel2(NULL)
         {}
     };
 
@@ -65,9 +75,13 @@ public:
     
     static void setAnimationCurve(const CAViewAnimationCurve& curve);// default(CAViewAnimationCurveLinear
     
-    static void setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation selector);
+    static void setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation0 selector);
     
-    static void setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation selector);
+    static void setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation2 selector);
+    
+    static void setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation0 selector);
+    
+    static void setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation2 selector);
     
     static void setAnimationsEnabled(bool enabled);
     
@@ -122,6 +136,10 @@ protected:
     bool m_bBeginAnimations;
     
     friend class CAView;
+    
+    friend class CAImageView;
+    
+    friend class CAScale9ImageView;
 };
 
 NS_CC_END

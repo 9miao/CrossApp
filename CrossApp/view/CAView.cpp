@@ -611,8 +611,7 @@ void CAView::setAnchorPoint(const CCPoint& point)
         m_obAnchorPoint = point;
         m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x,
                                       m_obContentSize.height * m_obAnchorPoint.y );
-        //m_obFrameRect.origin = ccpSub(m_obPoint, m_obAnchorPointInPoints);
-        
+      
         if (m_bFrame)
         {
             this->setFrameOrigin(p);
@@ -628,33 +627,30 @@ void CAView::setAnchorPoint(const CCPoint& point)
 
 void CAView::setContentSize(const CCSize & size)
 {
-    if (!size.equals(m_obContentSize))
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
     {
-        if (CAViewAnimation::areAnimationsEnabled()
-            && CAViewAnimation::areBeginAnimations())
+        CAViewAnimation::getInstance()->setContentSize(size, this);
+    }
+    else if (!size.equals(m_obContentSize))
+    {
+        m_obContentSize = size;
+        
+        m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x, m_obContentSize.height * m_obAnchorPoint.y );
+        m_obFrameRect.size = CCSize(m_obContentSize.width * m_fScaleX, m_obContentSize.height * m_fScaleY);
+        
+        this->updateImageRect();
+        
+        if(!m_obSubviews.empty())
         {
-            CAViewAnimation::getInstance()->setContentSize(size, this);
-        }
-        else
-        {
-            m_obContentSize = size;
-            
-            m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x, m_obContentSize.height * m_obAnchorPoint.y );
-            m_obFrameRect.size = CCSize(m_obContentSize.width * m_fScaleX, m_obContentSize.height * m_fScaleY);
-            
-            this->updateImageRect();
-            
-            if(!m_obSubviews.empty())
+            CAVector<CAView*>::iterator itr;
+            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
             {
-                CAVector<CAView*>::iterator itr;
-                for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-                {
-                    (*itr)->reViewlayout();
-                }
+                (*itr)->reViewlayout();
             }
-            
-            this->updateDraw();
         }
+        
+        this->updateDraw();
     }
 }
 
@@ -665,7 +661,7 @@ const CCRect& CAView::getFrame() const
 
 void CAView::setFrame(const CCRect &rect)
 {
-    if ( ! rect.size.equals(CCSizeZero))
+    if (!rect.size.equals(CCSizeZero))
     {
         this->setContentSize(CCSize(rect.size.width / m_fScaleX, rect.size.height / m_fScaleY));
     }

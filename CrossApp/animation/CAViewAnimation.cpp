@@ -194,6 +194,7 @@ void CAViewAnimation::setAnimationDuration(float duration)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
+    duration = MAX(1/60.0f, duration);
     animation->m_vWillModules.back().duration = duration;
 }
 
@@ -201,6 +202,7 @@ void CAViewAnimation::setAnimationDelay(float delay)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
+    delay = MAX(0, delay);
     animation->m_vWillModules.back().delay = delay;
 }
 
@@ -211,21 +213,38 @@ void CAViewAnimation::setAnimationCurve(const CAViewAnimationCurve& curve)
     animation->m_vWillModules.back().curve = curve;
 }
 
-void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation selector)
+void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation0 selector)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
     animation->m_vWillModules.back().willStartTarget = target;
-    animation->m_vWillModules.back().willStartSel = selector;
+    animation->m_vWillModules.back().willStartSel0 = selector;
 
 }
 
-void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation selector)
+void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation2 selector)
+{
+    CAViewAnimation* animation = CAViewAnimation::getInstance();
+    CC_RETURN_IF(animation->m_vWillModules.empty());
+    animation->m_vWillModules.back().willStartTarget = target;
+    animation->m_vWillModules.back().willStartSel2 = selector;
+    
+}
+
+void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation0 selector)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
     animation->m_vWillModules.back().didStopTarget = target;
-    animation->m_vWillModules.back().didStopSel = selector;
+    animation->m_vWillModules.back().didStopSel0 = selector;
+}
+
+void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation2 selector)
+{
+    CAViewAnimation* animation = CAViewAnimation::getInstance();
+    CC_RETURN_IF(animation->m_vWillModules.empty());
+    animation->m_vWillModules.back().didStopTarget = target;
+    animation->m_vWillModules.back().didStopSel2 = selector;
 }
 
 void CAViewAnimation::setAnimationsEnabled(bool enabled)
@@ -256,13 +275,21 @@ void CAViewAnimation::update(float dt)
  
         if (time > -FLT_MIN)
         {
-            if (module.willStartTarget && module.willStartSel)
+            if (module.willStartTarget)
             {
-                ((CAObject *)module.willStartTarget->*module.willStartSel)(module.animationID, module.context);
+                if (module.willStartSel0)
+                {
+                    ((CAObject *)module.willStartTarget->*module.willStartSel0)();
+                    module.willStartSel0 = NULL;
+                }
+                if (module.willStartSel2)
+                {
+                    ((CAObject *)module.willStartTarget->*module.willStartSel2)(module.animationID, module.context);
+                    module.willStartSel2 = NULL;
+                }
                 module.willStartTarget = NULL;
-                module.willStartSel = NULL;
             }
-            
+
             float s = time / module.duration;
             s = MIN(s, 1.0f);
 
@@ -326,9 +353,16 @@ void CAViewAnimation::update(float dt)
             
             if (time >= module.duration)
             {
-                if (module.didStopTarget && module.didStopSel)
+                if (module.didStopTarget)
                 {
-                    ((CAObject *)module.didStopTarget->*module.didStopSel)(module.animationID, module.context);
+                    if (module.didStopSel0)
+                    {
+                        ((CAObject *)module.didStopTarget->*module.didStopSel0)();
+                    }
+                    if (module.didStopSel2)
+                    {
+                        ((CAObject *)module.didStopTarget->*module.didStopSel2)(module.animationID, module.context);
+                    }
                 }
                 itr_module->animations.clear();
                 itr_module = m_vModules.erase(itr_module);
@@ -357,7 +391,10 @@ void CAViewAnimation::setContentSize(const CCSize& size, CAView* view)
     CAViewAnimation::allocCAViewModel(view);
     CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
     model->endContentSize = size;
-    model->deltaContentSize = size - model->startContentSize;
+    model->deltaContentSize.width = size.width - model->startContentSize.width;
+    model->deltaContentSize.height = size.height - model->startContentSize.height;
+    CCLog("11--- %f", model->deltaContentSize.width);
+    CCLog("22--- %f", model->deltaContentSize.height);
 }
 
 void CAViewAnimation::setScaleX(float scaleX, CAView* view)

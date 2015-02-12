@@ -244,7 +244,7 @@ bool CATextField::attachWithIME()
             }
 #endif
             m_pCursorMark->setVisible(true);
-            m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
+            //m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
             m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
             pGlView->setIMEKeyboardState(true);
         }
@@ -263,7 +263,7 @@ bool CATextField::detachWithIME()
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(false);
-            m_pCursorMark->stopAllActions();
+            //m_pCursorMark->stopAllActions();
             m_pCursorMark->setVisible(false);
         }
     }
@@ -290,7 +290,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		if (isFirstResponder())
         {
 			m_pCursorMark->setVisible(true);
-            m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
+            //m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
             if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
             {
                 if (m_sText.empty())
@@ -325,7 +325,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     {
         if (resignFirstResponder())
         {
-            m_pCursorMark->stopAllActions();
+            //m_pCursorMark->stopAllActions();
 			m_pCursorMark->setVisible(false);
 			this->updateImage();
         }

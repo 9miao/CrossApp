@@ -12,11 +12,8 @@
 #include "view/CAScrollView.h"
 #include "basics/CAApplication.h"
 #include "support/CCPointExtension.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionEase.h"
 #include "dispatcher/CATouch.h"
-
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
@@ -658,12 +655,14 @@ void CATabBar::setSelectedAtIndex(int index)
         if (m_pSelectedIndicatorView)
         {
             m_pSelectedIndicatorView->setVisible(m_bShowIndicator);
-            m_pSelectedIndicatorView->stopAllActions();
             CADipPoint p = m_pSelectedIndicatorView->getFrameOrigin();
             p.x = m_nSelectedIndex * m_cItemSize.width;
-            CCFrameOrginTo* moveTo = CCFrameOrginTo::create(0.3f, p);
-            CCEaseSineOut* easeBack = CCEaseSineOut::create(moveTo);
-            m_pSelectedIndicatorView->runAction(easeBack);
+            
+            CAViewAnimation::beginAnimations("", NULL);
+            CAViewAnimation::setAnimationDuration(0.3f);
+            CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+            m_pSelectedIndicatorView->setFrameOrigin(p);
+            CAViewAnimation::commitAnimations();
         }
     }
     else

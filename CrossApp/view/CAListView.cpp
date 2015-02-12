@@ -2,13 +2,11 @@
 #include "basics/CAApplication.h"
 #include "control/CAButton.h"
 #include "support/CCPointExtension.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionEase.h"
 #include "basics/CAScheduler.h"
 #include "dispatcher/CATouch.h"
-#include "view/CAWindow.h"
-#include <utility>
+#include "animation/CAViewAnimation.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
 
 NS_CC_BEGIN
 
@@ -47,8 +45,10 @@ void CAListView::onEnterTransitionDidFinish()
 
 	if (m_pUsedListCells.empty())
 	{
-		this->runAction(CCSequence::create(CCDelayTime::create(1 / 60.0f),
-			CCCallFunc::create(this, callfunc_selector(CAListView::reloadData)), NULL));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAListView::reloadData));
+        CAViewAnimation::commitAnimations();
 	}
 }
 
