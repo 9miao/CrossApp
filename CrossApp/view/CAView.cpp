@@ -501,19 +501,11 @@ void CAView::setScaleY(float newScaleY)
 /// position setter
 void CAView::setPoint(const CCPoint& newPoint)
 {
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
-    {
-        CAViewAnimation::getInstance()->setPoint(newPoint, this);
-    }
-    else
-    {
-        m_obPoint = newPoint;
-        CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX,
-                                m_obAnchorPointInPoints.y * m_fScaleY);
-        m_obFrameRect.origin = ccpSub(m_obPoint, point);
-        this->updateDraw();
-    }
+    m_obPoint = newPoint;
+    CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX,
+                            m_obAnchorPointInPoints.y * m_fScaleY);
+    m_obFrameRect.origin = ccpSub(m_obPoint, point);
+    this->updateDraw();
 }
 
 /// children getter
@@ -671,12 +663,21 @@ void CAView::setFrame(const CCRect &rect)
 
 void CAView::setFrameOrigin(const CCPoint& point)
 {
-    CCPoint p = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX,
-                        m_obAnchorPointInPoints.y * m_fScaleY);
-    p = ccpAdd(p, point);
-    this->setPoint(p);
-    
-    m_bFrame = true;
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setFrameOrgin(point, this);
+        m_bFrame = true;
+    }
+    else
+    {
+        CCPoint p = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX,
+                            m_obAnchorPointInPoints.y * m_fScaleY);
+        p = ccpAdd(p, point);
+        this->setPoint(p);
+        
+        m_bFrame = true;
+    }
 }
 
 const CCPoint& CAView::getFrameOrigin()
@@ -724,12 +725,21 @@ CCPoint CAView::getCenterOrigin()
 
 void CAView::setCenterOrigin(const CCPoint& point)
 {
-    CCPoint p = ccpSub(ccpMult(m_obContentSize, 0.5f), m_obAnchorPointInPoints);
-    p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
-    p = ccpSub(point, p);
-    this->setPoint(p);
-    
-    m_bFrame = false;
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setCenterOrgin(point, this);
+        m_bFrame = false;
+    }
+    else
+    {
+        CCPoint p = ccpSub(ccpMult(m_obContentSize, 0.5f), m_obAnchorPointInPoints);
+        p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
+        p = ccpSub(point, p);
+        this->setPoint(p);
+        
+        m_bFrame = false;
+    }
 }
 
 // isRunning getter
