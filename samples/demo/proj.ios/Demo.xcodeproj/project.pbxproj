@@ -78,6 +78,8 @@
 		B04C0C091901207A009854FD /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BFD1901207A009854FD /* json_valueiterator.inl */; };
 		B04C0C0A1901207A009854FD /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BFE1901207A009854FD /* json_writer.cpp */; };
 		B04C0C0B1901207A009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0C001901207A009854FD /* sconscript */; };
+		B0A02FF41A8E04450005CB8F /* CABlueTooth.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FF31A8E04450005CB8F /* CABlueTooth.mm */; };
+		B0A02FFA1A8E05240005CB8F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A02FF91A8E05240005CB8F /* CoreBluetooth.framework */; };
 		B0A172E9192DDAD100DBFDB0 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A172E7192DDAD100DBFDB0 /* bg.jpg */; };
 		B0CA5A341A77A84100BECD89 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A331A77A84100BECD89 /* Reachability.m */; };
 		B0CA5A361A77A85300BECD89 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A351A77A85300BECD89 /* SystemConfiguration.framework */; };
@@ -256,6 +258,9 @@
 		B04C0C001901207A009854FD /* sconscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
 		B04C0C011901207A009854FD /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		B04C0C021901207A009854FD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		B0A02FF21A8E04450005CB8F /* CABlueTooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABlueTooth.h; sourceTree = "<group>"; };
+		B0A02FF31A8E04450005CB8F /* CABlueTooth.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CABlueTooth.mm; sourceTree = "<group>"; };
+		B0A02FF91A8E05240005CB8F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		B0A172E7192DDAD100DBFDB0 /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		B0CA5A321A77A84100BECD89 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		B0CA5A331A77A84100BECD89 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -280,24 +285,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04033E13195478A100473756 /* libCrossApp.a in Frameworks */,
+				1ACB3244164770DE00914215 /* libcurl.a in Frameworks */,
+				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
+				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
+				1AB8703C175E0A92005D39BF /* libwebsockets.a in Frameworks */,
+				B0A02FFA1A8E05240005CB8F /* CoreBluetooth.framework in Frameworks */,
 				B0CA5A381A77A85A00BECD89 /* MediaPlayer.framework in Frameworks */,
 				B0CA5A361A77A85300BECD89 /* SystemConfiguration.framework in Frameworks */,
-				04033E13195478A100473756 /* libCrossApp.a in Frameworks */,
 				B03E90A319389CCB00FD9A06 /* CoreLocation.framework in Frameworks */,
 				B03E90A119389CBE00FD9A06 /* AddressBookUI.framework in Frameworks */,
 				B03E909F19389CB500FD9A06 /* AddressBook.framework in Frameworks */,
-				1ACB3244164770DE00914215 /* libcurl.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */,
-				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
-				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
-				1AB8703C175E0A92005D39BF /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +501,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0A02FF91A8E05240005CB8F /* CoreBluetooth.framework */,
 				B0CA5A371A77A85A00BECD89 /* MediaPlayer.framework */,
 				B0CA5A351A77A85300BECD89 /* SystemConfiguration.framework */,
 				B03E90A219389CCB00FD9A06 /* CoreLocation.framework */,
@@ -588,6 +595,8 @@
 		B048220D19FA402F0019F1A7 /* Device_ios */ = {
 			isa = PBXGroup;
 			children = (
+				B0A02FF21A8E04450005CB8F /* CABlueTooth.h */,
+				B0A02FF31A8E04450005CB8F /* CABlueTooth.mm */,
 				B0CA5A321A77A84100BECD89 /* Reachability.h */,
 				B0CA5A331A77A84100BECD89 /* Reachability.m */,
 				B048220E19FA402F0019F1A7 /* CAAddress.h */,
@@ -968,6 +977,7 @@
 				15A3DA5D1682F826002FB0C5 /* HttpClient.cpp in Sources */,
 				B048227E19FA40DF0019F1A7 /* PageViewTest.cpp in Sources */,
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
+				B0A02FF41A8E04450005CB8F /* CABlueTooth.mm in Sources */,
 				B048227819FA40DF0019F1A7 /* HttpRequestTest.cpp in Sources */,
 				B048228919FA40DF0019F1A7 /* FifthViewController.cpp in Sources */,
 				B048227319FA40DF0019F1A7 /* AppDelegate.cpp in Sources */,
@@ -1048,6 +1058,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/samples/cocos2dx/platform/third_party/ios/libraries",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/external/libwebsockets/ios/lib",
 				);
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = Demo;
@@ -1097,6 +1109,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/samples/cocos2dx/platform/third_party/ios/libraries",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/external/libwebsockets/ios/lib",
 				);
 				PRODUCT_NAME = Demo;
 				PROVISIONING_PROFILE = "";

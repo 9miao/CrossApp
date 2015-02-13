@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -389,7 +390,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         if(!this.isInEditMode()) {
             Log.e("SUN", "SurfaceView onSizeChanged ..."+pNewSurfaceWidth+"."+pNewSurfaceHeight+" old "+pOldSurfaceWidth+"."+pOldSurfaceHeight);
             
-            LayoutParams lp = getLayoutParams();
+            ViewGroup.LayoutParams lp = getLayoutParams();
             lp.width = pNewSurfaceWidth;
             lp.height = pNewSurfaceHeight;
             setLayoutParams(lp);

@@ -14,12 +14,66 @@
 #include "CrossAppExt.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
+struct CAWifiInfo
+{
+    std::string ssid;
+    int level;
+    std::string mac;
+};
+
+typedef enum
+{
+    CABLUETOOTHOEPNSUCCESS=0,
+    CABLUETOOTHISOEPN,
+    CABLUETOOTHOPENING,
+    CABLUETOOTHCLOSESUCCESS,
+    CABLUETOOTHCLOSED,
+    CABLUETOOTHCLOSEFAILD
+}CABlueToothState;
+
+typedef enum
+{
+    CABLUETOOTHOPEN = 0,
+    CABLUETOOTHCLOSE,
+    CABLUETOOTHDISCOVERY = 3 ,
+    CABLUETOOTHCANCELDISCOVERY
+    
+}CABlueToothType;
+
+struct CABlueToothUnit
+{
+    string address;
+    string name;
+};
+
 class CAMediaDelegate
 {
 public:
     virtual ~CAMediaDelegate(){};
     
     virtual void getSelectedImage(CAImage *image) = 0;
+};
+
+class CABlueToothDelegate
+{
+public:
+    virtual ~CABlueToothDelegate(){};
+    
+    virtual void getBlueToothState(CABlueToothState state) {};
+    
+    virtual void getSearchBlueToothDevice(CABlueToothUnit unit){};
+    
+    virtual void startDiscoveryBlueToothDevice(){};
+    
+    virtual void finishedDiscoveryBlueToothDevice(){};
+};
+
+class CAWifiDelegate
+{
+public:
+    virtual ~CAWifiDelegate(){};
+    
+    virtual void getWifiListFunc(std::vector<CAWifiInfo> _wifiInfoList) = 0;
 };
 
 class CALocationDelegate
@@ -29,6 +83,8 @@ public:
     
     virtual void getLocations(CCDictionary *locations) = 0;
 };
+
+
 
 struct CAAddressBookRecord
 {
@@ -60,7 +116,7 @@ struct CAAddressBookRecord
 
 typedef enum
 {
-    CANetWorkTypeWifi = 0,
+    CANetWorkTypeWifi=0,
     CANetWorkType3G,
     CANetWorkTypeNone
     
@@ -89,6 +145,8 @@ namespace CADevice
     
     CANetWorkType getNetWorkType();
     
+    void getWifiList(CAWifiDelegate *target);
+    
     void setVolume(float sender,int type);
     
     float getVolume(int type);
@@ -98,5 +156,13 @@ namespace CADevice
     float getBatteryLevel();
     
     bool isNetWorkAvailble();
+    
+    void sendLocalNotification(const char* title,const char* content,unsigned long time);
+    
+    CAWifiInfo getWifiConnectionInfo();
+
+    void initBlueTooth(CABlueToothDelegate *target);
+    
+    void setBlueToothType(CABlueToothType type);
 };
 #endif /* defined(__PublishPhoto__CADevice__) */

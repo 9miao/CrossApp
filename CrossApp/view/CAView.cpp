@@ -348,10 +348,18 @@ void CAView::_setZOrder(int z)
 
 void CAView::setZOrder(int z)
 {
-    _setZOrder(z);
-    if (m_pSuperview)
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
     {
-        m_pSuperview->reorderSubview(this, z);
+        CAViewAnimation::getInstance()->setZOrder(z, this);
+    }
+    else
+    {
+        _setZOrder(z);
+        if (m_pSuperview)
+        {
+            m_pSuperview->reorderSubview(this, z);
+        }
     }
 }
 

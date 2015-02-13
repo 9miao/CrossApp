@@ -296,7 +296,6 @@
 		372E63FB1A0B60A800582042 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F31A0B60A800582042 /* libavformat.a */; };
 		372E63FC1A0B60A800582042 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F41A0B60A800582042 /* libavutil.a */; };
 		372E63FD1A0B60A800582042 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F51A0B60A800582042 /* libcurl.a */; };
-		372E63FE1A0B60A800582042 /* libfreetype_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F61A0B60A800582042 /* libfreetype_arm64.a */; };
 		372E63FF1A0B60A800582042 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F71A0B60A800582042 /* libfreetype.a */; };
 		372E64001A0B60A800582042 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F81A0B60A800582042 /* libswresample.a */; };
 		372E64011A0B60A800582042 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F91A0B60A800582042 /* libswscale.a */; };
@@ -445,6 +444,8 @@
 		B09205DD19D5645300CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205D819D5645300CB99C1 /* CAThread.cpp */; };
 		B09205DE19D5645300CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D919D5645300CB99C1 /* CAThread.h */; };
 		B094652F1969404400D96736 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B094652D1969404400D96736 /* CASTLContainer.h */; };
+		B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */; };
+		B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */; };
 		B0B553D6193485BE0065053D /* CAImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553CE193485BE0065053D /* CAImage.cpp */; };
 		B0B553D7193485BE0065053D /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553CF193485BE0065053D /* CAImage.h */; };
 		B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553D0193485BE0065053D /* CAImageCache.cpp */; };
@@ -867,6 +868,8 @@
 		B09205D819D5645300CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
 		B09205D919D5645300CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
 		B094652D1969404400D96736 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
+		B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATempTypeFont.cpp; sourceTree = "<group>"; };
+		B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATempTypeFont.h; sourceTree = "<group>"; };
 		B0B553CE193485BE0065053D /* CAImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImage.cpp; sourceTree = "<group>"; };
 		B0B553CF193485BE0065053D /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
 		B0B553D0193485BE0065053D /* CAImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCache.cpp; sourceTree = "<group>"; };
@@ -901,7 +904,6 @@
 				372E63FB1A0B60A800582042 /* libavformat.a in Frameworks */,
 				372E64011A0B60A800582042 /* libswscale.a in Frameworks */,
 				372E63FD1A0B60A800582042 /* libcurl.a in Frameworks */,
-				372E63FE1A0B60A800582042 /* libfreetype_arm64.a in Frameworks */,
 				372E63FF1A0B60A800582042 /* libfreetype.a in Frameworks */,
 				37147ED71A15F68C00EBE03E /* libSDL2.a in Frameworks */,
 			);
@@ -1229,6 +1231,8 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */,
+				B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */,
 				B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */,
 				B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */,
 				B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */,
@@ -1729,6 +1733,7 @@
 				04EABB2A1956DAEA00198A8E /* CCAction.cpp in Headers */,
 				04EABB2B1956DAEA00198A8E /* CCActionCamera.cpp in Headers */,
 				04EABB2C1956DAEA00198A8E /* CCActionEase.cpp in Headers */,
+				B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */,
 				B0596AE9197629BE00B1E8CB /* ftlzw.h in Headers */,
 				04EABB2D1956DAEA00198A8E /* CCActionInstant.cpp in Headers */,
 				B02A51D219B962B500470D57 /* CAPullToRefreshView.h in Headers */,
@@ -2053,6 +2058,7 @@
 				1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */,
 				1551A640158F2ADE00E66CFE /* CCActionTween.cpp in Sources */,
 				1551A652158F2ADE00E66CFE /* CCArray.cpp in Sources */,
+				B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */,
 				1551A656158F2ADE00E66CFE /* CCDictionary.cpp in Sources */,
 				1551A65B158F2ADE00E66CFE /* CCNS.cpp in Sources */,
 				1551A65F158F2ADE00E66CFE /* CCSet.cpp in Sources */,

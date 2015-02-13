@@ -119,6 +119,7 @@ platform/platform.cpp \
 platform/CAFreeTypeFont.cpp \
 platform/CAFTFontCache.cpp \
 platform/CCEGLViewProtocol.cpp \
+platform/CATempTypeFont.cpp \
 platform/android/CADensityDpi.cpp \
 platform/android/CCDevice.cpp \
 platform/android/CCEGLView.cpp \

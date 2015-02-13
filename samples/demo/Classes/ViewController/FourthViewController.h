@@ -9,28 +9,37 @@ USING_NS_CC;
 class FourthViewController :public CAViewController
 {
 public:
+    
 	FourthViewController();
 	virtual ~FourthViewController();
 
 protected:
+    
 	void viewDidLoad();
 	void viewDidUnload();
 	virtual void viewDidAppear();
-    
-    void start(const std::string& s, void* context);
-    void stop(const std::string& s, void* context);
+    void doAction();
+    void refreshView(bool animation);
+    void willStartAction(const string& animationID, void* context);
+    void didStopAction(const string& animationID, void* context);
     
 public:
-	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 
+    void buttonCallback(CAControl* btn, CCPoint point);
+    void playAnimation(CAControl* btn, CCPoint point);
 private:
 	CADipSize size;
+    CADipSize viewSize;
 	CADipPoint originalPoint;
-	CAImageView* imageView;
-    CAImageView* imageView2;
+	CAView* animationView1;
+    CAScale9ImageView* animationView2;
+    int action_index;
+    bool flag;
+    CAView* defaultView;
+    CALabel* defaultLable;
+    bool isDoAction;
+    CAButton* defaultBtnL;
+    CAButton* defaultBtnR;
+    CAButton* playAnimationBtn;
 };
-
 #endif
