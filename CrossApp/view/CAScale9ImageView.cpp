@@ -297,13 +297,7 @@ void CAScale9ImageView::setContentSize(const CCSize &size)
 {
     CAView::setContentSize(size);
     
-    if (!CAViewAnimation::areAnimationsEnabled()
-        || !CAViewAnimation::areBeginAnimations())
-    {
-        this->updatePositions();
-    }
-    
-    
+    this->updatePositions();
 }
 
 void CAScale9ImageView::draw(void)
