@@ -1,7 +1,8 @@
 #### CrossApp 0.6.1 更新内容： 
 #####修复0.6.0不能编译以及不稳定的bug
 
-
+#### CrossApp 0.6.1 Update:
+#####Fixed bug that user cannot compile and engine unstable in 0.6.0 version
 
 **********************************************************************************
 
@@ -44,6 +45,43 @@ android平台java文件有变动
 
 本次更新文件有多处变动，旧版本更新请参考更新内容7手动增删文件，给您带来的不便请谅解。
 
+
+####CrossApp 0.6.0 Update
+
+#####1. Added video player CAVideoPlayerController class
+Streaming video, MP4, flv, avi, mpeg, mov and other video formats support, not available on win32 platform for now.
+
+#####2. Added API of device
+1. Obtain network status, wifi or 3g judgement and if network is available or not
+2. Obtain current battery level
+3. Obtain and set current volume
+4. When user updates their app version, system will auto download and add into notification bar in Android; their current interface will jump to AppStore in iOS
+
+#####3. Optimized CAAlertView
+1. UI was changed into iOS style 2. Optimized code structure
+
+#####4. Optimized CASegmentControl
+1. UI was changed into iOS style 2. Optimized code structure
+
+#####5. Optimized CAView
+Optimized sub view management performance
+
+#####6. Fixed bug that sometimes cursor is in wrong position when typing text in CATextField
+
+#####7. File directory change
+Deleted extensions/GUI/CAUIHelper; 
+Deleted extensions/studio/CAStudioViewController; 
+Added extensions/studio/CAStudioViewParser
+
+In iOS platform, added extensions/device/Device_ios/Reachability and Frameworks : MediaPlayer and SystemConfiguration
+
+Java files alteration in Android platform
+
+#####8. Other Details Tweaking
+
+This update contains many file changes, for previous version users, please manually add and delete files referring to update item 7. And CrossApp team offers our applogies to you for the inconvenience has caused you.
+
+
 **********************************************************************************
 
 #### CrossApp 0.5.0 更新内容：  
@@ -70,6 +108,32 @@ android平台java文件有变动
 在本C++引擎中移除掉JavaScript版本，将来会有单独的JavaScript版本发布
 
 ##本次更新影响到了CANavigationController与CATabBarController一些接口，为您带来的不便尽请谅解。
+
+
+####CrossApp 0.5.0 Update:
+
+#####1. Optimized CANavigationController
+1. Modified the controlled navigationBar into multiple ones 
+2. And port the properties of previous navigationBar to CANavigationController.
+
+#####2. Optimized CATabBarController
+Port the properties of previous tabBar to CATabBarController.
+
+#####3. Optimized CAPickerView
+1. Fixed bug that sometimes system does not have a return value for the selected result 
+2. Optimized performance
+
+#####4. Optimized base64
+1. Fixed bug that base64 cannot be compiled in win32 
+2. Added Encode method
+
+#####5. Optimized touch event distributed mechanism
+Fixed bug that user needs to click two times to switch edit status between multiple CATextField.
+
+#####6. Other Details Tweaking
+We removed the JavaScript version of this C++ engine, and will release a separate JavaScript version in the future.
+
+##This update affects some interfaces in CANavigationController and CATabBarController, and we offer our apologies to you for the inconvenience has caused you.
 
 **********************************************************************************
 
