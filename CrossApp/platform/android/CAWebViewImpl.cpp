@@ -120,7 +120,7 @@ void loadHTMLStringJNI(const int index, const std::string &string, const std::st
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadHTMLString", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V")) {
         jstring jString = t.env->NewStringUTF(string.c_str());
         jstring jBaseURL = t.env->NewStringUTF(baseURL.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL,NULL);
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL);
 
         t.env->DeleteLocalRef(jString);
         t.env->DeleteLocalRef(jBaseURL);

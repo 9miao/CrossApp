@@ -1111,7 +1111,7 @@ bool CADownloadResponse::downLoad()
         return false;
     }
     
-#if (CC_TARGET_PLATFORM != CC_PLATORM_WIN32)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     chmod(outFileName.c_str(), 0x666);
 #endif
     

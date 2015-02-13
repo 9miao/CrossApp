@@ -133,13 +133,13 @@ public class Cocos2dxWebViewHelper {
 
 
     @SuppressWarnings("unused")
-    public static void loadHTMLString(final int index, final String htmlString, final String mimeType, final String encoding) {
+    public static void loadHTMLString(final int index, final String htmlString, final String data, final String baseUrl) {
         cocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
-                    webView.loadData(htmlString, mimeType, encoding);
+                    webView.loadDataWithBaseURL(baseUrl, data, null,null,null);
                 }
             }
         });
