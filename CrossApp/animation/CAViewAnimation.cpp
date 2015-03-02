@@ -313,7 +313,7 @@ void CAViewAnimation::update(float dt)
                     break;
                 case CAViewAnimationCurveEaseInOut:
                 {
-                    s = (s <= 0.5f) ? (-2 * s * s + 2 * s) : (1 - sqrtf((1 - s) / 2));
+                    s = (s < 0.5f) ? ((1 - sqrtf(1 - 2 * s)) / 2) : (-2 * s * s + 4 * s - 1);
                 }
                     break;
                 default:
@@ -418,8 +418,6 @@ void CAViewAnimation::setContentSize(const CCSize& size, CAView* view)
     model->endContentSize = size;
     model->deltaContentSize.width = size.width - model->startContentSize.width;
     model->deltaContentSize.height = size.height - model->startContentSize.height;
-    CCLog("11--- %f", model->deltaContentSize.width);
-    CCLog("22--- %f", model->deltaContentSize.height);
 }
 
 void CAViewAnimation::setScaleX(float scaleX, CAView* view)

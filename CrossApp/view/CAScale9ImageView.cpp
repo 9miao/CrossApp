@@ -12,16 +12,6 @@
 
 NS_CC_BEGIN
 
-class CC_DLL CAScale9Image: public CAView
-{
-    
-public:
-    
-    using CAView::setImage;
-    
-    using CAView::setImageRect;
-};
-
 CAScale9ImageView::CAScale9ImageView()
 : m_fInsetLeft(0)
 , m_fInsetTop(0)
@@ -37,11 +27,7 @@ CAScale9ImageView::CAScale9ImageView()
 
 CAScale9ImageView::~CAScale9ImageView()
 {
-    for (int i=0; i<9; i++)
-    {
-        CC_SAFE_RELEASE(m_pImageView[i]);
-    }
-    CC_SAFE_RELEASE(m_pScale9ImageView);
+
 }
 
 CAScale9ImageView* CAScale9ImageView::create()
@@ -123,93 +109,62 @@ CAView* CAScale9ImageView::copy()
 }
 
 
-bool CAScale9ImageView::updateWithImage(CABatchView* batch, CCRect rect, const CCRect& capInsets)
+void CAScale9ImageView::updateWithImage()
 {
-    CAColor4B color = getColor();
+    CAColor4B color = this->getColor();
 
     this->removeSubview(m_pScale9ImageView);
+    m_pScale9ImageView = NULL;
     
-    for (int i=0; i<9; i++)
-    {
-        CC_SAFE_RELEASE_NULL(m_pImageView[i]);
-    }
+    memset(m_pImageView, 0, sizeof(m_pImageView));
 
-    if(m_pScale9ImageView != batch)
-    {
-        CC_SAFE_RELEASE(m_pScale9ImageView);
-        CC_SAFE_RETAIN(batch);
-        m_pScale9ImageView = batch;
-    }
-    
-    m_obCapInsets = capInsets;
+    CC_RETURN_IF(!m_pobImage);
+
+    m_pScale9ImageView = CABatchView::createWithImage(m_pobImage);
+    this->addSubview(m_pScale9ImageView);
     
     m_obOriginalSize = m_pScale9ImageView->getImageAtlas()->getImage()->getContentSize();
     
-    if ( rect.equals(CCRectZero) )
+    for (int i=0; i<9; i++)
     {
-        rect = CCRect(0, 0, m_obOriginalSize.width, m_obOriginalSize.height);
+        m_pImageView[i] = CAImageView::createWithImage(m_pScale9ImageView->getImage());
     }
+    
+    // Centre
+    m_pScale9ImageView->insertSubview(m_pImageView[4], 0);
+    
+    // Top
+    m_pScale9ImageView->insertSubview(m_pImageView[1], 1);
+    
+    // Bottom
+    m_pScale9ImageView->insertSubview(m_pImageView[7], 1);
+    
+    // Left
+    m_pScale9ImageView->insertSubview(m_pImageView[3], 1);
+    
+    // Right
+    m_pScale9ImageView->insertSubview(m_pImageView[5], 1);
+    
+    // Top left
+    m_pScale9ImageView->insertSubview(m_pImageView[0], 2);
+    
+    // Top right
+    m_pScale9ImageView->insertSubview(m_pImageView[2], 2);
+    
+    // Bottom left
+    m_pScale9ImageView->insertSubview(m_pImageView[6], 2);
+    
+    // Bottom right
+    m_pScale9ImageView->insertSubview(m_pImageView[8], 2);
     
     this->updateCapInset();
     
-    CAScale9Image* imageView[9] = {};
-    
-    for (int i=0; i<9; i++)
-    {
-        imageView[i] = new CAScale9Image();
-        imageView[i]->setImage(m_pScale9ImageView->getImage());
-    }
-    
-    
-    // Centre
-    m_pScale9ImageView->insertSubview(imageView[4], 0);
-    
-    // Top
-    m_pScale9ImageView->insertSubview(imageView[1], 1);
-    
-    // Bottom
-    m_pScale9ImageView->insertSubview(imageView[7], 1);
-    
-    // Left
-    m_pScale9ImageView->insertSubview(imageView[3], 1);
-    
-    // Right
-    m_pScale9ImageView->insertSubview(imageView[5], 1);
-    
-    // Top left
-    m_pScale9ImageView->insertSubview(imageView[0], 2);
-    
-    // Top right
-    m_pScale9ImageView->insertSubview(imageView[2], 2);
-    
-    // Bottom left
-    m_pScale9ImageView->insertSubview(imageView[6], 2);
-    
-    // Bottom right
-    m_pScale9ImageView->insertSubview(imageView[8], 2);
-    
-    for (int i=0; i<9; i++)
-    {
-        imageView[i]->setImageRect(m_rFrame[i], false, m_rFrame[i].size);
-        imageView[i]->setAnchorPoint(CCPointZero);
-        m_pImageView[i] = imageView[i];
-    }
-
-    this->addSubview(m_pScale9ImageView);
-
-    this->setBounds(rect);
-    
     this->setColor(color);
-    
-    return true;
 }
 
 void CAScale9ImageView::updatePositions()
 {
-    for (int i=0; i<9; i++)
-    {
-        CC_RETURN_IF(m_pImageView[i] == NULL);
-    }
+    CC_RETURN_IF(m_pobImage == NULL);
 
     CCSize size = this->m_obContentSize;
     
@@ -226,20 +181,20 @@ void CAScale9ImageView::updatePositions()
         const float lenghtX3 = m_rFrame[2].size.width;
         const float lenghtX2 = size.width - lenghtX1 - lenghtX3;
         
-        newRect[1].origin.x =
-        newRect[4].origin.x =
+        newRect[1].origin.x = lenghtX1;
+        newRect[4].origin.x = lenghtX1;
         newRect[7].origin.x = lenghtX1;
         
-        newRect[1].size.width =
-        newRect[4].size.width =
+        newRect[1].size.width = lenghtX2;
+        newRect[4].size.width = lenghtX2;
         newRect[7].size.width = lenghtX2;
         
-        newRect[2].origin.x =
-        newRect[5].origin.x =
+        newRect[2].origin.x = lenghtX1 + lenghtX2;
+        newRect[5].origin.x = lenghtX1 + lenghtX2;
         newRect[8].origin.x = lenghtX1 + lenghtX2;
         
-        newRect[2].size.width =
-        newRect[5].size.width =
+        newRect[2].size.width = lenghtX3;
+        newRect[5].size.width = lenghtX3;
         newRect[8].size.width = lenghtX3;
     }
     else
@@ -258,20 +213,20 @@ void CAScale9ImageView::updatePositions()
         const float lenghtY3 = m_rFrame[6].size.height;
         const float lenghtY2 = size.height - lenghtY1 - lenghtY3;
         
-        newRect[3].origin.y =
-        newRect[4].origin.y =
+        newRect[3].origin.y = lenghtY1;
+        newRect[4].origin.y = lenghtY1;
         newRect[5].origin.y = lenghtY1;
         
-        newRect[3].size.height =
-        newRect[4].size.height =
+        newRect[3].size.height = lenghtY2;
+        newRect[4].size.height = lenghtY2;
         newRect[5].size.height = lenghtY2;
         
-        newRect[6].origin.y =
-        newRect[7].origin.y =
+        newRect[6].origin.y = lenghtY1 + lenghtY2;
+        newRect[7].origin.y = lenghtY1 + lenghtY2;
         newRect[8].origin.y = lenghtY1 + lenghtY2;
         
-        newRect[6].size.height =
-        newRect[7].size.height =
+        newRect[6].size.height = lenghtY3;
+        newRect[7].size.height = lenghtY3;
         newRect[8].size.height = lenghtY3;
     }
     else
@@ -282,14 +237,11 @@ void CAScale9ImageView::updatePositions()
             newRect[i].origin.y *= scaleY;
             newRect[i].size.height *= scaleY;
         }
-
     }
     
     for (int i=0; i<9; i++)
     {
-        m_pImageView[i]->setFrameOrigin(newRect[i].origin);
-        m_pImageView[i]->setScaleX(newRect[i].size.width / m_rFrame[i].size.width);
-        m_pImageView[i]->setScaleY(newRect[i].size.height / m_rFrame[i].size.height);
+        m_pImageView[i]->setFrame(newRect[i]);
     }
 }
 
@@ -339,19 +291,13 @@ void CAScale9ImageView::updateCapInset()
     m_rFrame[7] = CCRect(lenghtX1, lenghtY1 + lenghtY2, lenghtX2, lenghtY3);
     m_rFrame[8] = CCRect(lenghtX1 + lenghtX2, lenghtY1 + lenghtY2, lenghtX3, lenghtY3);
     
-    for (int i=0; i<9; i++)
-    {
-        CC_RETURN_IF(m_pImageView[i] == NULL);
-    }
+    CC_RETURN_IF(m_pobImage == NULL);
     
     if (m_pScale9ImageView)
     {
         for (int i=0; i<9; i++)
         {
-            if (CAScale9Image* imageView = dynamic_cast<CAScale9Image*>(m_pImageView[i]))
-            {
-                imageView->setImageRect(m_rFrame[i], false, m_rFrame[i].size);
-            }
+            m_pImageView[i]->setImageRect(m_rFrame[i], false, m_rFrame[i].size);
         }
         this->updatePositions();
     }
@@ -456,20 +402,12 @@ void CAScale9ImageView::setAlpha(float alpha)
 
 void CAScale9ImageView::setImage(CrossApp::CAImage *image)
 {
-    CC_RETURN_IF(m_pobImage == image);
-    CC_SAFE_RETAIN(image);
-    CC_SAFE_RELEASE_NULL(m_pobImage);
-    m_pobImage = image;
+    CAView::setImage(image);
     if (m_pobImage)
     {
-        this->updateWithImage(CABatchView::createWithImage(image), this->getBounds(), m_obCapInsets);
+        this->updateWithImage();
         this->updatePositions();
     }
-}
-
-CAImage* CAScale9ImageView::getImage()
-{
-    return m_pScale9ImageView->getImage();
 }
 
 void CAScale9ImageView::updateDisplayedAlpha(float parentOpacity)

@@ -828,10 +828,10 @@ void CATextField::updateImageRect()
 	y1 = m_iVertMargins;
     x2=x1+m_obRect.size.width;
     y2=y1+m_obRect.size.height;
-    m_sQuad.bl.vertices = vertex3(x1, y1, 0);
-    m_sQuad.br.vertices = vertex3(x2, y1, 0);
-    m_sQuad.tl.vertices = vertex3(x1, y2, 0);
-    m_sQuad.tr.vertices = vertex3(x2, y2, 0);
+    m_sQuad.bl.vertices = vertex3(x1, y1, m_fVertexZ);
+    m_sQuad.br.vertices = vertex3(x2, y1, m_fVertexZ);
+    m_sQuad.tl.vertices = vertex3(x1, y2, m_fVertexZ);
+    m_sQuad.tr.vertices = vertex3(x2, y2, m_fVertexZ);
 }
 
 void CATextField::setCursorColor(const CAColor4B &var)

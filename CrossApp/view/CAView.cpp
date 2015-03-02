@@ -69,6 +69,7 @@ CAView::CAView(void)
 , m_obContentSize(kCAViewSizeInvalid)
 , m_obFrameRect(kCAViewRectInvalid)
 , m_obPoint(kCAViewPointInvalid)
+, m_obRect(CCRectZero)
 , m_sAdditionalTransform(CATransformationMakeIdentity())
 , m_pCamera(NULL)
 , m_nZOrder(0)
@@ -704,7 +705,7 @@ void CAView::setBounds(const CCRect& rect)
 {
     if ( ! rect.size.equals(CCSizeZero))
     {
-        this->setContentSize(CCSize(rect.size.width, rect.size.height));
+        this->setContentSize(rect.size);
     }
 }
 
@@ -1670,27 +1671,20 @@ void CAView::updateTransform()
         {
             m_bShouldBeHidden = false;
             
-            if( ! m_pSuperview || m_pSuperview == m_pobBatchView)
+            if( !m_pSuperview || m_pSuperview == m_pobBatchView)
             {
                 m_transformToBatch = nodeToParentTransform();
             }
             else
             {
-                CCAssert( dynamic_cast<CAImageView*>(m_pSuperview), "Logic error in CAView. Parent must be a CAView");
                 m_transformToBatch = CATransformationConcat( nodeToParentTransform() , m_pSuperview->m_transformToBatch );
             }
-            
-            //
-            // calculate the Quad based on the Affine Matrix
-            //
-            
-            CCSize size = m_obRect.size;
+
+            CCSize size = m_obContentSize;
             
             float x1 = 0;
             float y1 = 0;
             
-            float x2 = x1 + size.width;
-            float y2 = y1 + size.height;
             float x = m_transformToBatch.tx;
             float y = m_transformToBatch.ty;
             
@@ -1699,25 +1693,21 @@ void CAView::updateTransform()
             float cr2 = m_transformToBatch.d;
             float sr2 = -m_transformToBatch.c;
             
-            float ax = x1 * cr - y1 * sr2 + x;
-            float ay = x1 * sr + y1 * cr2 + y;
+            x1 = x1 * cr - y1 * sr2 + x;
+            y1 = x1 * sr + y1 * cr2 + y;
             
-            float bx = x2 * cr - y1 * sr2 + x;
-            float by = x2 * sr + y1 * cr2 + y;
+            x1 = RENDER_IN_SUBPIXEL(x1);
+            y1 = RENDER_IN_SUBPIXEL(y1);
             
-            float cx = x2 * cr - y2 * sr2 + x;
-            float cy = x2 * sr + y2 * cr2 + y;
+            float x2 = x1 + size.width;
+            float y2 = y1 + size.height;
             
-            float dx = x1 * cr - y2 * sr2 + x;
-            float dy = x1 * sr + y2 * cr2 + y;
-            
-            m_sQuad.bl.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ );
-            m_sQuad.br.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
-            m_sQuad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
-            m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
+            m_sQuad.bl.vertices = vertex3( x1, y1, m_fVertexZ );
+            m_sQuad.br.vertices = vertex3( x2, y1, m_fVertexZ );
+            m_sQuad.tl.vertices = vertex3( x1, y2, m_fVertexZ );
+            m_sQuad.tr.vertices = vertex3( x2, y2, m_fVertexZ );
         }
         
-        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / Image ATLAS
         if (m_pobImageAtlas)
 		{
             m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
@@ -1785,8 +1775,8 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
 {
     m_bRectRotated = rotated;
     
-    setVertexRect(rect);
-    setImageCoords(rect);
+    this->setVertexRect(rect);
+    this->setImageCoords(rect);
     
     if (!m_obContentSize.equals(untrimmedSize))
     {
@@ -1800,7 +1790,6 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
             rect = this->getCenter();
         }
         rect.size = untrimmedSize;
-        
         if (m_bFrame)
         {
             this->setFrame(rect);
@@ -1809,8 +1798,6 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
         {
             this->setCenter(rect);
         }
-        
-        
     }
     
     CCPoint relativeOffset = m_obUnflippedOffsetPositionFromCenter;
@@ -1839,11 +1826,10 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
 void CAView::updateImageRect()
 {
     // Don't update Z.
-    m_sQuad.bl.vertices = vertex3(0, 0, 0);
-    m_sQuad.br.vertices = vertex3(m_obContentSize.width, 0, 0);
-    m_sQuad.tl.vertices = vertex3(0, m_obContentSize.height, 0);
-    m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, 0);
-    m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, 0);
+    m_sQuad.bl.vertices = vertex3(0, 0, m_fVertexZ);
+    m_sQuad.br.vertices = vertex3(m_obContentSize.width, 0, m_fVertexZ);
+    m_sQuad.tl.vertices = vertex3(0, m_obContentSize.height, m_fVertexZ);
+    m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, m_fVertexZ);
 }
 
 // override this method to generate "double scale" sprites
@@ -1920,12 +1906,12 @@ void CAView::setImageCoords(CCRect rect)
         
         if(m_bFlipX)
         {
-            CC_SWAP(left,right,float);
+            CC_SWAP(left, right, float);
         }
         
         if(m_bFlipY)
         {
-            CC_SWAP(top,bottom,float);
+            CC_SWAP(top, bottom, float);
         }
         
         m_sQuad.bl.texCoords.u = left;
@@ -2048,6 +2034,9 @@ void CAView::updateColor(void)
     }
     else
     {
+//        color4.r *= _displayedAlpha;
+//        color4.g *= _displayedAlpha;
+//        color4.b *= _displayedAlpha;
         color4.a *= _displayedAlpha;
         
         m_sQuad.bl.colors = color4;

@@ -198,7 +198,7 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], 
     CCSet set;
     for (int i = 0; i < num; ++i)
     {
-        int id = ids[i];
+        intptr_t id = ids[i];
         float x = xs[i];
         float y = ys[i];
 

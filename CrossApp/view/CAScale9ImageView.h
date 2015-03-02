@@ -52,9 +52,7 @@ public:
     virtual CAView* copy();
     
     virtual void setImage(CAImage* image);
-    
-    virtual CAImage* getImage(void);
-    
+
     virtual void updateDisplayedAlpha(float parentOpacity);
 
     virtual void draw(void);
@@ -79,10 +77,10 @@ protected:
     
     void updatePositions();
 
+    void updateWithImage();
+    
     virtual void setContentSize(const CCSize & size);
-    
-    bool updateWithImage(CABatchView* batch, CCRect rect,const CCRect& capInsets);
-    
+
     virtual void updateDisplayedColor(const CrossApp::CAColor4B& parentColor);
     
     virtual bool initWithFrame(const CCRect& rect, const CAColor4B& color4B);
@@ -95,7 +93,7 @@ protected:
 
     CABatchView* m_pScale9ImageView;
     
-    CAView* m_pImageView[9];
+    CAImageView* m_pImageView[9];
     
     CCRect m_rFrame[9];
     

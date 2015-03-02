@@ -71,6 +71,8 @@ protected:
     
     using CAView::initWithColor;
     
+    bool m_bUpdateByImageViewScaleType;
+    
     float m_fLeft;
     
     float m_fRight;
