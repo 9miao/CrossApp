@@ -42,6 +42,76 @@ extern "C"
             
         }
     }
+    
+    void JAVAgetWifiList()
+    {
+        JniMethodInfo jmi;
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getWifiList" , "()V"))
+        {
+            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID);
+        }
+    }
+    CAWifiInfo JAVAgetWifiConnection()
+    {
+        JniMethodInfo jmi;
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getWifiConnectionInfo" , "()Lorg/CrossApp/lib/CustomScanResult;"))
+        {
+            jobject obj = (jobject)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
+            jclass cls_arraylist = jmi.env->GetObjectClass(obj);
+            jmethodID user_getssid = jmi.env->GetMethodID(cls_arraylist,"getssid","()Ljava/lang/String;");
+            jmethodID user_getmac = jmi.env->GetMethodID(cls_arraylist,"getmac","()Ljava/lang/String;");
+            
+            jstring ssid = (jstring)jmi.env->CallObjectMethod(obj,user_getssid);
+            jstring mac = (jstring)jmi.env->CallObjectMethod(obj,user_getmac);
+            
+            const char *ssidPtr = jmi.env->GetStringUTFChars(ssid,0);
+            const char *macPtr = jmi.env->GetStringUTFChars(mac,0);
+        
+            CAWifiInfo wifiinfo;
+            wifiinfo.mac = macPtr;
+            wifiinfo.ssid = ssidPtr;
+            wifiinfo.level = 0;
+            return wifiinfo;
+        }
+    }
+    
+    void JAVABlueToothManager()
+    {
+        JniMethodInfo jmi;
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getContext" , "()Lorg/CrossApp/lib/Cocos2dxActivity;"))
+        {
+            jobject obj = jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
+            
+            bool isHave =JniHelper::getMethodInfo(jmi,"org/CrossApp/lib/Cocos2dxActivity","initBlueTooth","()V");
+            if (isHave) {
+                jmi.env->CallVoidMethod(obj, jmi.methodID);
+            }
+        }
+    }
+    
+    void JAVABlueSetType(int type)
+    {
+        JniMethodInfo jmi;
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getContext" , "()Lorg/CrossApp/lib/Cocos2dxActivity;"))
+        {
+            jobject obj = jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
+            bool isHave =JniHelper::getMethodInfo(jmi,"org/CrossApp/lib/Cocos2dxActivity","setBlueToothActionType","(I)V");
+            if (isHave)
+            {
+                jmi.env->CallVoidMethod(obj, jmi.methodID,type);
+            }
+        }
+    }
+    
+    void JAVAsendLocalNotification(const char* title,const char* content,unsigned long time)
+    {
+        JniMethodInfo jmi;
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "sendLocalNotification" , "(Ljava/lang/String;Ljava/lang/String;J)V"))
+        {
+            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(title),jmi.env->NewStringUTF(content),time);
+            
+        }
+    }
     void setJAVABrightness(int sender)
     {
         JniMethodInfo jmi;
@@ -83,7 +153,6 @@ extern "C"
         JniMethodInfo jmi;
         if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getBatteryLevel" , "()I"))
         {
-            
             jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
             int b = a;
             return (float)b/100.0f;
@@ -134,18 +203,16 @@ extern "C"
                     networkType = CANetWorkType3G;
                     break;
             }
-            
         }
         return networkType;
     }
-    
 }
+    
 double* getGPSLocation()
 {
 	JniMethodInfo jmi;
 	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidGPS" , "getLocation" , "()[D"))
 	{
-        
 		jdoubleArray doublearr = (jdoubleArray)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
         if (doublearr==NULL) {
             double arr[2]={0.0f,0.0f};
@@ -153,9 +220,9 @@ double* getGPSLocation()
         }
         double *b = jmi.env->GetDoubleArrayElements( doublearr , NULL );
         return b;
-        
 	}
 }
+
 void start()
 {
     JniMethodInfo jmi;
@@ -166,10 +233,20 @@ void start()
 	}
 }
 
+void sendLocalNotification(const char* title,const char* content,unsigned long time)
+{
+    JAVAsendLocalNotification(title,content,time);
+}
+
 void setVolume(float sender,int type)
 {
         
     JAVAsetVolume(sender,type);
+}
+
+CAWifiInfo getWifiConnectionInfo()
+{
+    return JAVAgetWifiConnection();
 }
     
 float getVolume(int type)
@@ -181,16 +258,31 @@ float getBatteryLevel()
 {
     return JAVAgetBattery();
 }
-    
-int getBlueToothState()
+void openBlueTooth()
 {
-    return 0;
+    JAVABlueToothManager();
+}
+static CABlueToothDelegate *bluetoothdelegate =NULL;
+    
+void initBlueTooth(CABlueToothDelegate *target)
+{
+    bluetoothdelegate = target;
+    openBlueTooth();
+}
+
+
+    
+void setBlueToothType(CABlueToothType type)
+{
+    int intType = (int)type;
+    JAVABlueSetType(intType);
 }
     
 bool isNetWorkAvailble()
 {
     return JAVAisNetWorkAvailble();
 }
+    
 void updateVersion(const std::string &url
                        ,unsigned int versionNumber
                        ,const std::string &appId)
@@ -198,6 +290,7 @@ void updateVersion(const std::string &url
     JAVAgetNewVersion(url,versionNumber,appId);
     
 }
+    
 void OpenAlbum()
 {
 	JniMethodInfo jmi;
@@ -247,11 +340,12 @@ public:
     
 #endif
     
-    
+
 static CAMediaDelegate *delegate = NULL;
 static ToMainThread *main = NULL;
 static const char *_path = NULL;
 static CALocationDelegate *locationDelegate = NULL;
+static CAWifiDelegate *wifidelegate = NULL;
 static std::vector<CAAddressBookRecord> _addressBookArr;
 
 void openCamera(CAMediaDelegate* target)
@@ -259,7 +353,13 @@ void openCamera(CAMediaDelegate* target)
     delegate = target;
     OpenCamera();
 }
-
+    
+void getWifiList(CAWifiDelegate *target)
+{
+    wifidelegate = target;
+    JAVAgetWifiList();
+}
+    
 void openAlbum(CAMediaDelegate* target)
 {
     delegate = target;
@@ -396,6 +496,88 @@ extern "C"
     {
         const char* str = env->GetStringUTFChars(arg1, false);
         ToMainThread::sharedMain()->getPath(str);
+    }
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_returnBlueToothState(JNIEnv *env,jobject obj,jint sender)
+    {
+        int type = sender;
+        
+        if(bluetoothdelegate)
+        {
+            bluetoothdelegate->getBlueToothState((CABlueToothState)type);
+        }
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_returnStartedDiscoveryDevice(JNIEnv *env,jobject obj)
+    {
+        if(bluetoothdelegate)
+        {
+            bluetoothdelegate->startDiscoveryBlueToothDevice();
+        }
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_returnFinfishedDiscoveryDevice(JNIEnv *env,jobject obj)
+    {
+        if(bluetoothdelegate)
+        {
+            bluetoothdelegate->finishedDiscoveryBlueToothDevice();
+        }
+    }
+    
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_returnDiscoveryDevice(JNIEnv *env,jobject obj,jobject sender)
+    {
+        jclass bluetoothtype = env->GetObjectClass(sender);
+        jmethodID getaddress = env->GetMethodID(bluetoothtype,"getAddress","()Ljava/lang/String;");
+        jmethodID getname = env->GetMethodID(bluetoothtype,"getName","()Ljava/lang/String;");
+        
+        jstring address = (jstring)env->CallObjectMethod(sender,getaddress);
+        jstring name = (jstring)env->CallObjectMethod(sender,getname);
+        
+        const char *addressCStr = env->GetStringUTFChars(address,0);
+        const char *nameCStr = env->GetStringUTFChars(name,0);
+        
+        CABlueToothUnit unit;
+        unit.address = addressCStr;
+        unit.name = nameCStr;
+        
+        if(bluetoothdelegate)
+        {
+            bluetoothdelegate->getSearchBlueToothDevice(unit);
+        }
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_getWifiList(JNIEnv *env,jobject obj,jobject obj_wifiArray)
+    {
+        jclass cls_arraylist = env->GetObjectClass(obj_wifiArray);
+        jmethodID   mGetID      = env->GetMethodID(cls_arraylist,"get","(I)Ljava/lang/Object;");
+        jmethodID   mSizeID         = env->GetMethodID(cls_arraylist,"size","()I");
+        int len = env->CallIntMethod(obj_wifiArray,mSizeID);
+        std::vector<CAWifiInfo> wfinfo;
+        for (int i=0; i<len; i++)
+        {
+            jobject obj_user = env->CallObjectMethod(obj_wifiArray,mGetID,i);
+            jclass cls_user = env->GetObjectClass(obj_user);
+            jmethodID user_getlevel = env->GetMethodID(cls_user,"getlevel","()I");
+            jmethodID user_getssid = env->GetMethodID(cls_user,"getssid","()Ljava/lang/String;");
+            jmethodID user_getmac = env->GetMethodID(cls_user,"getmac","()Ljava/lang/String;");
+            
+            jstring ssid = (jstring)env->CallObjectMethod(obj_user,user_getssid);
+            jstring mac = (jstring)env->CallObjectMethod(obj_user,user_getmac);
+            const char *ssidPtr = env->GetStringUTFChars(ssid,0);
+            const char *macPtr = env->GetStringUTFChars(mac,0);
+            CAWifiInfo wifiInfo;
+            wifiInfo.ssid = ssidPtr;
+            wifiInfo.mac = macPtr;
+            wifiInfo.level = 0;
+            wfinfo.push_back(wifiInfo);
+        }
+        
+        if (wifidelegate)
+        {
+            wifidelegate->getWifiListFunc(wfinfo);
+        }
+        
+        
     }
 }
 

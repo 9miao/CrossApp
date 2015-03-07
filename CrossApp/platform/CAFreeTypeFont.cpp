@@ -2,6 +2,7 @@
 #include "basics/CAApplication.h"
 #include "platform/CCFileUtils.h"
 #include "support/ccUTF8.h"
+#include "CATempTypeFont.h"
 
 
 using namespace std;
@@ -10,6 +11,7 @@ NS_CC_BEGIN
 
 static map<std::string, FontBufferInfo> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
+static CATempTypeFont s_TempFont;
 
 #define ITALIC_LEAN_VALUE (0.3f)
 
@@ -29,6 +31,7 @@ CAFreeTypeFont::CAFreeTypeFont()
 , m_bBold(false)
 , m_bItalics(false)
 , m_bUnderLine(false)
+, m_bOpenTypeFont(false)
 {
 	m_ItalicMatrix.xx = 0x10000L;
 	m_ItalicMatrix.xy = ITALIC_LEAN_VALUE * 0x10000L;
@@ -61,6 +64,10 @@ CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName
 	std::u16string cszTemp;
 	std::string cszNewText = pText;
 
+	if (m_bOpenTypeFont)
+	{
+		s_TempFont.initTempTypeFont(nSize);
+	}
 _AgaginInitGlyphs:
 	m_inWidth = inWidth;
 	m_inHeight = inHeight;
@@ -459,6 +466,10 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
 	std::vector<TGlyph>& glyphs = pInfo->glyphs;
 	for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
     {
+		if (glyph->index == 0)
+		{
+		//	continue;
+		}
         FT_Glyph image = glyph->image;
         FT_Error error = FT_Glyph_To_Bitmap(&image, FT_RENDER_MODE_NORMAL, 0, 1);
         if (!error)
@@ -714,13 +725,11 @@ FT_Error CAFreeTypeFont::initGlyphsLine(const std::string& line)
 
 FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::string& text, FT_Vector& pen) 
 {
-	FT_GlyphSlot	slot = m_face->glyph; 
 	FT_UInt			glyph_index;
 	FT_UInt			previous = 0;
 	FT_Error		error = 0;
 	PGlyph			glyph;
     unsigned int    numGlyphs = 0;
-
 
 	std::u16string utf16String;
 	if (!StringUtils::UTF8ToUTF16(text, utf16String))
@@ -739,11 +748,19 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 
 		
 		glyph_index = FT_Get_Char_Index(m_face, c);
+		glyph->isOpenType = (glyph_index == 0);
+		if (glyph_index == 0)
+		{
+			glyph_index = FT_Get_Char_Index(s_TempFont.m_CurFontFace, c);
+		}
+
+		FT_Face curFace = glyph->isOpenType ? s_TempFont.m_CurFontFace : m_face;
+		FT_GlyphSlot slot = curFace->glyph;
 
  		if (useKerning && previous && glyph_index)
 		{
 			FT_Vector  delta;
-			FT_Get_Kerning(m_face, previous, glyph_index, FT_KERNING_DEFAULT, &delta);
+			FT_Get_Kerning(curFace, previous, glyph_index, FT_KERNING_DEFAULT, &delta);
 			pen.x += delta.x >> 6;
 		}
 
@@ -754,7 +771,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 
 
 		/* load glyph image into the slot without rendering */
-		error = FT_Load_Glyph(m_face, glyph_index, FT_LOAD_NO_HINTING | FT_LOAD_NO_BITMAP);
+		error = FT_Load_Glyph(curFace, glyph_index, FT_LOAD_NO_HINTING | FT_LOAD_NO_BITMAP);
 		if (error)
 			continue;  /* ignore errors, jump to next glyph */
 
@@ -769,7 +786,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		}
 
 		/* extract glyph image and store it in our table */
-		error = FT_Get_Glyph(m_face->glyph, &glyph->image);
+		error = FT_Get_Glyph(curFace->glyph, &glyph->image);
 		if (error)
 			continue;  /* ignore errors, jump to next glyph */
 
@@ -1021,6 +1038,7 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 	{
 		ttfIndex = ittFontNames->second.face_index;
 		*size = ittFontNames->second.size;
+		m_bOpenTypeFont = ittFontNames->second.isOpenTypeFont;
 		return ittFontNames->second.pBuffer;
 	}
 
@@ -1060,6 +1078,12 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
         pFontName = "/system/fonts/DroidSansFallback.ttf";
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         
+        if (pBuffer == NULL)
+        {
+            pFontName = "/system/fonts/NotoSansHans-Regular.otf";
+            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+			m_bOpenTypeFont = true;
+        }
 #endif
 	}
 
@@ -1067,6 +1091,7 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 	info.pBuffer = pBuffer;
 	info.size = *size;
 	info.face_index = ttfIndex;
+	info.isOpenTypeFont = m_bOpenTypeFont;
 	s_fontsNames[path] = info;
 	return pBuffer;
 }

@@ -6,11 +6,8 @@ LOCAL_MODULE := CrossApp_static
 
 LOCAL_MODULE_FILENAME := libCrossApp
 
-LOCAL_SRC_FILES := CrossApp.cpp \
-video/CAVideoPlayerController.cpp \
-video/CAVideoPlayerDecoder.cpp \
-video/CAVideoPlayerRender.cpp \
-video/CAVideoPlayerView.cpp \
+LOCAL_SRC_FILES := \
+CrossApp.cpp \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
 actions/CCActionEase.cpp \
@@ -101,6 +98,7 @@ view/CAPullToRefreshView.cpp \
 view/CATextView.cpp \
 view/CALabelStyle.cpp \
 view/CAWebView.cpp \
+animation/CAViewAnimation.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -121,6 +119,7 @@ platform/platform.cpp \
 platform/CAFreeTypeFont.cpp \
 platform/CAFTFontCache.cpp \
 platform/CCEGLViewProtocol.cpp \
+platform/CATempTypeFont.cpp \
 platform/android/CADensityDpi.cpp \
 platform/android/CCDevice.cpp \
 platform/android/CCEGLView.cpp \
@@ -153,13 +152,11 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -llog \
-                -lz \
-                -landroid
+                -lz
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
-                       -lz \
-                       -landroid
+                       -lz
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
@@ -168,17 +165,24 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype2_static
 
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ffmpeg_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avcodec_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avformat_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avutil_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swresample_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swscale_static
+ifeq ($(VIDEO_ENABLE),1)
+LOCAL_SRC_FILES += video/CAVideoPlayerController.cpp \
+                   video/CAVideoPlayerDecoder.cpp \
+                   video/CAVideoPlayerRender.cpp \
+                   video/CAVideoPlayerView.cpp
+
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avcodec_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avformat_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avresample_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avutil_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swresample_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swscale_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ass_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_vo-aacenc_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_vo-amrwbenc_static
+endif
+
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libsdl_static
-LOCAL_SHARED_LIBRARIES += cocos_ffmpeg_shared
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
@@ -192,6 +196,6 @@ $(call import-module,libtiff)
 $(call import-module,libwebp)
 $(call import-module,libfreetype2)
 $(call import-module,libffmpeg)
-$(call import-module,libsdl)
+$(call import-module,libSDL)
 
 

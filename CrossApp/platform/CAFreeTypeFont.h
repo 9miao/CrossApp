@@ -47,6 +47,7 @@ typedef struct TGlyph_
     FT_Vector  pos;    // glyph origin on the baseline
 	FT_Glyph   image;  // glyph image
 	FT_ULong   c;
+	FT_Bool	   isOpenType;
 } TGlyph, *PGlyph;
 
 typedef struct FontBufferInfo
@@ -54,6 +55,7 @@ typedef struct FontBufferInfo
 	unsigned char*  pBuffer;  
 	unsigned long  size;
 	int face_index;
+	bool isOpenTypeFont;
 } FontBufferInfo;
 
 typedef struct FTLineInfo
@@ -132,6 +134,7 @@ protected:
 	bool m_bBold;
 	bool m_bItalics;
 	bool m_bUnderLine;
+	bool m_bOpenTypeFont;
 };
 
 NS_CC_END

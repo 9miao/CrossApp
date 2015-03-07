@@ -8,8 +8,6 @@
 
 #include "CAScrollView.h"
 #include "CAScale9ImageView.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionEase.h"
 #include "basics/CAApplication.h"
 #include "dispatcher/CATouchDispatcher.h"
 #include "basics/CAScheduler.h"
@@ -17,6 +15,7 @@
 #include "support/CCPointExtension.h"
 #include "kazmath/GL/matrix.h"
 #include "CCEGLView.h"
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
@@ -1210,7 +1209,6 @@ void CAIndicator::setHide(bool var)
     {
         CC_RETURN_IF(fabs(1.0f-this->getAlpha()) < FLT_EPSILON);
         
-        this->stopActionByTag(0xfff);
         this->setAlpha(1.0f);
     }
     else
@@ -1218,13 +1216,11 @@ void CAIndicator::setHide(bool var)
         CC_RETURN_IF(indicator->getActionByTag(0xfff));
         
         CC_RETURN_IF(1.0f-this->getAlpha() > FLT_EPSILON);
-        
-        CCDelayTime* delayTime = CCDelayTime::create(0.2f);
-        CCFadeOut* fadeOut = CCFadeOut::create(0.3f);
-        CCEaseSineOut* easeSineOut = CCEaseSineOut::create(fadeOut);
-        CCSequence* actions = CCSequence::create(delayTime, easeSineOut, NULL);
-        actions->setTag(0xfff);
-        this->runAction(actions);
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.3f);
+        CAViewAnimation::setAnimationDelay(0.2f);
+        this->setAlpha(0.0f);
+        CAViewAnimation::commitAnimations();
     }
 }
 

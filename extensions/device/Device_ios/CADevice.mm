@@ -13,6 +13,8 @@
 #include "CALocation.h"
 #include "CABrightness_iOS.h"
 #import <MediaPlayer/MPMusicPlayerController.h>
+#import <SystemConfiguration/CaptiveNetwork.h>
+#import "CABlueTooth.h"
 #import "Reachability.h"
 namespace CADevice
 {
@@ -71,7 +73,62 @@ void startLocation(CALocationDelegate* target)
     [location startUpdatingLocation];
 #endif
 }
+   
+void sendLocalNotification(const char* title,const char* content,unsigned long time)
+{
+//    let _app = UIApplication.sharedApplication()
+//    _app.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert|UIUserNotificationType.Badge|UIUserNotificationType.Sound, categories: nil));
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:[]]
+    
+    
 
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        
+        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
+        
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        
+    }
+    else
+    {
+        
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
+        
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+        
+    }
+    
+    UILocalNotification *notification = [[[UILocalNotification alloc] init] autorelease];
+//    设置10秒之后
+    NSDate *pushDate = [NSDate dateWithTimeIntervalSinceNow:10];
+    if (notification != nil) {
+        // 设置推送时间
+        notification.fireDate = pushDate;
+        // 设置时区
+        notification.timeZone = [NSTimeZone defaultTimeZone];
+        // 设置重复间隔
+        notification.repeatInterval = kCFCalendarUnitDay;
+        // 推送声音
+        notification.soundName = UILocalNotificationDefaultSoundName;
+        // 推送内容
+        notification.alertBody = [NSString stringWithCString:content encoding:NSUTF8StringEncoding];
+        //显示在icon上的红色圈中的数子
+        notification.applicationIconBadgeNumber = 1;
+        //设置userinfo 方便在之后需要撤销的时候使用
+        NSDictionary *info = [NSDictionary dictionaryWithObject:@"name"forKey:@"key"];
+        notification.userInfo = info;
+        //添加推送到UIApplication
+        UIApplication *app = [UIApplication sharedApplication];
+        [app scheduleLocalNotification:notification]; 
+        
+    }
+    
+}
+
+    
 float getScreenBrightness()
 {
     float percent = 0;
@@ -127,6 +184,7 @@ float getVolume(int type)
 void setVolume(float sender,int type)
 {
     [MPMusicPlayerController applicationMusicPlayer].volume = sender;
+    //[MPMusicPlayerController applicationMusicPlayer]
 }
     
 float getBatteryLevel()
@@ -134,6 +192,43 @@ float getBatteryLevel()
     [UIDevice currentDevice].batteryMonitoringEnabled = YES;
     double deviceLevel = [UIDevice currentDevice].batteryLevel;
     return deviceLevel;
+}
+void getWifiList(CAWifiDelegate *target)
+{
+    
+    
+}
+CAWifiInfo getWifiConnectionInfo()
+{
+    NSArray *ifs = (id)CNCopySupportedInterfaces();
+    id info = nil;
+    for (NSString *ifnam in ifs) {
+        info = (id)CNCopyCurrentNetworkInfo((CFStringRef)ifnam);
+        if (info && [info count]) {
+            
+            break;
+        }
+        [info release];
+    }
+    [ifs release];
+    NSDictionary *dic = info;
+    NSString *ssid = [[dic objectForKey:@"SSID"] lowercaseString];
+    NSString *mac = [[dic objectForKey:@"BSSID"] lowercaseString];
+    CAWifiInfo wifiInfo;
+    wifiInfo.ssid = [ssid cStringUsingEncoding:NSUTF8StringEncoding];
+    wifiInfo.mac = [mac cStringUsingEncoding:NSUTF8StringEncoding];
+    wifiInfo.level = 0;
+    return wifiInfo;
+}
+ 
+void initBlueTooth(CABlueToothDelegate *target)
+{
+        
+}
+
+void setBlueToothType(CABlueToothType type)
+{
+        
 }
     
 }

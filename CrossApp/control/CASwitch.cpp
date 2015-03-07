@@ -12,10 +12,8 @@
 #include "view/CAScale9ImageView.h"
 #include "support/CCPointExtension.h"
 #include "view/CARenderImage.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionEase.h"
 #include "basics/CAApplication.h"
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
@@ -154,39 +152,33 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
     CCPoint point = m_obContentSize/2;
     m_onImageView->setCenterOrigin(point);
     m_offImageView->setCenterOrigin(point);
-    
-    m_offImageView->stopAllActions();
+
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0.2f);
     if (m_isOn)
     {
-        CCFadeTo* fadeTo = CCFadeTo::create(time, 0.0f);
-        CCEaseSineIn* in = CCEaseSineIn::create(fadeTo);
-        m_offImageView->runAction(in);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
+        m_offImageView->setAlpha(0.0f);
     }
     else
     {
-        CCFadeTo* fadeTo = CCFadeTo::create(time, 1.0f);
-        CCEaseSineOut* out = CCEaseSineOut::create(fadeTo);
-        m_offImageView->runAction(out);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        m_offImageView->setAlpha(1.0f);
     }
+    CAViewAnimation::commitAnimations();
 
     if (m_thumbTintImageView)
     {
-        m_thumbTintImageView->stopAllActions();
         CCPoint point = CCPointZero;
         point.x = m_isOn ? (m_obContentSize.width - m_thumbTintImageView->getBounds().size.width) : 0;
-        m_thumbTintImageView->stopAllActions();
         
-        CCArray* array = CCArray::create();
-        array->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(time, point)));
-        array->addObject(CCDelayTime::create(1/60.0f));
-        
-        if (callfunced)
-        {
-            array->addObject(CCCallFunc::create(this, callfunc_selector(CASwitch::updateValueChanged)));
-        }
-        
-        CCSequence* actions = CCSequence::create(array);
-        m_thumbTintImageView->runAction(actions);
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.2f);
+        CAViewAnimation::setAnimationDelay(1/60.0f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CASwitch::updateValueChanged));
+        m_thumbTintImageView->setFrameOrigin(point);
+        CAViewAnimation::commitAnimations();
     }
 }
 

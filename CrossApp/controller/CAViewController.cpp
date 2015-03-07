@@ -9,13 +9,11 @@
 #include "CAViewController.h"
 #include "basics/CAApplication.h"
 #include "support/CCPointExtension.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionEase.h"
 #include "basics/CAScheduler.h"
 #include "view/CAWindow.h"
 #include "view/CAScale9ImageView.h"
 #include "dispatcher/CATouchDispatcher.h"
+#include "animation/CAViewAnimation.h"
 
 
 NS_CC_BEGIN
@@ -466,18 +464,20 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
     
     if (animated)
     {
-        CCArray* lastActions = CCArray::create();
-        lastActions->addObject(CCDelayTime::create(0.03f));
-        lastActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))));
-        lastContainer->runAction(CCSequence::create(lastActions));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
+        lastContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
+        CAViewAnimation::commitAnimations();
         
-        CCArray* newActions = CCArray::create();
-        newActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(), callfunc_selector(CATouchDispatcher::setDispatchEventsFalse)));
-        newActions->addObject(CCDelayTime::create(0.02f));
-        newActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)));
-        newActions->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::replaceViewControllerFinish)));
-        newActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)));
-        newContainer->runAction(CCSequence::create(newActions));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::replaceViewControllerFinish));
+        newContainer->setFrameOrigin(CCPointZero);
+        CAViewAnimation::commitAnimations();
     }
     else
     {
@@ -504,6 +504,7 @@ void CANavigationController::replaceViewControllerFinish()
     m_pContainers.erase(index);
     
     m_pNavigationBars.erase(index);
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
 void CANavigationController::pushViewController(CAViewController* viewController, bool animated)
@@ -521,20 +522,25 @@ void CANavigationController::pushViewController(CAViewController* viewController
     CAView* newContainer = m_pContainers.back();
     newContainer->setFrameOrigin(CCPoint(x, 0));
     
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+    
     if (animated)
     {
-        CCArray* lastActions = CCArray::create();
-        lastActions->addObject(CCDelayTime::create(0.03f));
-        lastActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))));
-        lastContainer->runAction(CCSequence::create(lastActions));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        lastContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
+        CAViewAnimation::commitAnimations();
         
-        CCArray* newActions = CCArray::create();
-        newActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(), callfunc_selector(CATouchDispatcher::setDispatchEventsFalse)));
-        newActions->addObject(CCDelayTime::create(0.02f));
-        newActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)));
-        newActions->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::pushViewControllerFinish)));
-        newActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)));
-        newContainer->runAction(CCSequence::create(newActions));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::pushViewControllerFinish));
+        newContainer->setFrameOrigin(CCPointZero);
+        CAViewAnimation::commitAnimations();
+        
     }
     else
     {
@@ -557,6 +563,7 @@ void CANavigationController::pushViewControllerFinish()
     lastViewController->viewDidDisappear();
     
     m_bSlidingMinX = m_pViewControllers.size() <= 1;
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
 CAViewController* CANavigationController::popViewControllerAnimated(bool animated)
@@ -581,20 +588,24 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     CAView* backContainer = m_pContainers.back();
     backContainer->setFrameOrigin(CCPointZero);
     
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+    
     if (animated)
     {
-        CCArray* showActions = CCArray::create();
-        showActions->addObject(CCDelayTime::create(0.02f));
-        showActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)));
-        showContainer->runAction(CCSequence::create(showActions));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        showContainer->setFrameOrigin(CCPointZero);
+        CAViewAnimation::commitAnimations();
         
-        CCArray* backActions = CCArray::create();
-        backActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(), callfunc_selector(CATouchDispatcher::setDispatchEventsFalse)));
-        backActions->addObject(CCDelayTime::create(0.03f));
-        backActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(x, 0))));
-        backActions->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::popViewControllerFinish)));
-        backActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)));
-        backContainer->runAction(CCSequence::create(backActions));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::popViewControllerFinish));
+        backContainer->setFrameOrigin(CCPoint(x, 0));
+        CAViewAnimation::commitAnimations();
     }
     else
     {
@@ -619,6 +630,7 @@ void CANavigationController::popViewControllerFinish()
     m_pNavigationBars.popBack();
     
     m_bSlidingMinX = m_pViewControllers.size() <= 1;
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
 void CANavigationController::homingViewControllerFinish()
@@ -629,6 +641,7 @@ void CANavigationController::homingViewControllerFinish()
     
     CAView* lastContainer = m_pContainers.at(index);
     lastContainer->setVisible(false);
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
 void CANavigationController::navigationPopViewController(CANavigationBar* navigationBar, bool animated)
@@ -707,14 +720,13 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        m_pNavigationBars.back()->stopAllActions();
         m_pNavigationBars.back()->setVisible(true);
-        CCArray* array = CCArray::create();
-        array->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::scheduleUpdate)));
-        array->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.2f, point)));
-        array->addObject(CCDelayTime::create(0.1f));
-        array->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::unScheduleUpdate)));
-        m_pNavigationBars.back()->runAction(CCSequence::create(array));
+        this->scheduleUpdate();
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.2f);
+        CAViewAnimation::setAnimationDelay(0.1f);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::unScheduleUpdate));
+        CAViewAnimation::commitAnimations();
     }
     else
     {
@@ -829,35 +841,41 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     CAView* backContainer = m_pContainers.back();
     
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+    
     if (m_bPopViewController)
     {
-        CCArray* laseActions = CCArray::create();
-        laseActions->addObject(CCDelayTime::create(0.02f));
-        laseActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)));
-        lastContainer->runAction(CCSequence::create(laseActions));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        lastContainer->setFrameOrigin(CCPointZero);
+        CAViewAnimation::commitAnimations();
         
-        CCArray* backActions = CCArray::create();
-        backActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(), callfunc_selector(CATouchDispatcher::setDispatchEventsFalse)));
-        backActions->addObject(CCDelayTime::create(0.03f));
-        backActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(x, 0))));
-        backActions->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::popViewControllerFinish)));
-        backActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)));
-        backContainer->runAction(CCSequence::create(backActions));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::popViewControllerFinish));
+        backContainer->setFrameOrigin(CCPoint(x, 0));
+        CAViewAnimation::commitAnimations();
     }
     else
     {
-        CCArray* lastActions = CCArray::create();
-        lastActions->addObject(CCDelayTime::create(0.03f));
-        lastActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPoint(-x/2.0f, 0))));
-        lastContainer->runAction(CCSequence::create(lastActions));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        lastContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
+        CAViewAnimation::commitAnimations();
         
-        CCArray* newActions = CCArray::create();
-        newActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(), callfunc_selector(CATouchDispatcher::setDispatchEventsFalse)));
-        newActions->addObject(CCDelayTime::create(0.02f));
-        newActions->addObject(CCEaseSineOut::create(CCFrameOrginTo::create(0.25f, CCPointZero)));
-        newActions->addObject(CCCallFunc::create(this, callfunc_selector(CANavigationController::homingViewControllerFinish)));
-        newActions->addObject(CCCallFunc::create(CAApplication::getApplication()->getTouchDispatcher(),callfunc_selector(CATouchDispatcher::setDispatchEventsTrue)));
-        backContainer->runAction(CCSequence::create(newActions));
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::homingViewControllerFinish));
+        backContainer->setFrameOrigin(CCPointZero);
+        CAViewAnimation::commitAnimations();
     }
 }
 
@@ -1353,14 +1371,13 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        m_pTabBar->stopAllActions();
         m_pTabBar->setVisible(true);
-        CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CATabBarController::scheduleUpdate));
-        CCEaseSineOut* easeBack = CCEaseSineOut::create(CCFrameOrginTo::create(0.2f, point));
-        CCDelayTime* delayTime = CCDelayTime::create(0.1f);
-        CCCallFunc* end = CCCallFunc::create(this, callfunc_selector(CATabBarController::unScheduleUpdate));
-        CCSequence* actions = CCSequence::create(begin, easeBack, delayTime, end, NULL);
-        m_pTabBar->runAction(actions);
+        this->scheduleUpdate();
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.2f);
+        CAViewAnimation::setAnimationDelay(0.1f);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATabBarController::unScheduleUpdate));
+        CAViewAnimation::commitAnimations();
     }
     else
     {

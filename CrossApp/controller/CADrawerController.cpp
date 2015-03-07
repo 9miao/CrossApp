@@ -7,9 +7,6 @@
 //
 
 #include "CADrawerController.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionEase.h"
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
 #include "dispatcher/CATouchDispatcher.h"

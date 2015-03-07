@@ -26,7 +26,6 @@
 		15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23B168318C3006C7997 /* SimpleAudioEngine.mm */; };
 		15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */; };
 		1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */; };
-		1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */; };
 		1A9CE9A81765A889000E3062 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9CE9A71765A889000E3062 /* libsqlite3.dylib */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
@@ -132,7 +131,6 @@
 		15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1A9CE9801765A7FA000E3062 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
-		1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
 		1A9CE9A71765A889000E3062 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41BC70D915BF81A5006A0A6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
@@ -394,7 +392,6 @@
 			children = (
 				1A9CE97F1765A7FA000E3062 /* LocalStorage.cpp */,
 				1A9CE9801765A7FA000E3062 /* LocalStorage.h */,
-				1A9CE9811765A7FA000E3062 /* LocalStorageAndroid.cpp */,
 			);
 			path = LocalStorage;
 			sourceTree = "<group>";
@@ -903,7 +900,6 @@
 				B0A715681A43F5BA00A85FB9 /* LabelTest.cpp in Sources */,
 				B0A715761A43F5BA00A85FB9 /* TextViewTest.cpp in Sources */,
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,
-				1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */,
 				B0A715641A43F5BA00A85FB9 /* AddressBookTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
