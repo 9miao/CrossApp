@@ -1,1224 +1,1875 @@
-cocos2d-x-2.2.3 @Mar.14 2014
-[All]
-     [NEW]    Adds Dutch Language support.
-     [FIX]    CocoStudio: SceneTest crash after switching to another scene.
-     [FIX]    CocoStudio: Logic error in 'TriggerObj::detect'.
-     [FIX]    CCControlSwitch behaves wrongly when there are two instances of CCControlSwitch exist in the same scene
-     [FIX]    Reload a picture though it is cached in TextureCache 
 
-[Android]
-     [FIX]    Screen would be flickering when switching to a new activity.
-     [FIX]    Initialize CCDirectory::m_fSecondsPerFrame to avoid crash
+**********************************************************************************
 
-[WP8 | WinRT]
-     [FIX]    Added Lua bindings support for Wp8 and WinRT.
-     [FIX]    Added CCEditBox support for wp8.
-     [FIX]    Used the correct resolution policy in CCEGLView::UpdateWindowSize.
-     [FIX]    Added lost XAML project template
-     [FIX]    Added documents for the usage of WP8 & WinRT port 
+#### CrossApp 1.0.0 更新内容：  
 
-[JSBindings]
-     [NEW]    Added 'setTimeout' and 'setInterval' for JSB.
+#####1.增加动画系统CAViewAnimation
+demo有动画示例
 
-[Emscripten]
-     [NEW]    Added emscripten support for Windows Host.
+#####2.完美支持iOS 64位
 
-[LuaBindings]
-     [NEW]    Added more test cases for CocoStuidoTest/SceneTest.
-     [FIX]    CCComponent class wasn't exposed to LUA.
-     [FIX]    The setFrameEventCallFunc and setMovementEventCallFunc of CCArmature called at the same time in lua script would lead to crash
+#####3.完美支持android 5.0+
 
-cocos2d-x-2.2.2 @Jan.07 2014
-[Windows8 & WinPhone8]
-     [FIX]    Updated WinRT and WP8 to pass App Certification tests
-     [FIX]    Updated to latest version of ANGLE
-     [FIX]    Fixed type that was preventing loading of precompiled shaders in Windows 8 WinRT builds
-     [FIX]    Fixed CCEGLView::SetScissorInPoints() on WP8 to fixed libextensions CCScollView bug
-     [NEW]    Added Trim() support for app Suspend() in Windows 8.1 WinRT
-     [FIX]    A memory leak fix when loading JSC(JS bytecode) file.
-     [NEW]    WP8 XAML support
-     [FIX]    cc.BuilderReader.load( path, null, parentSize ); was not allowed.
-     [FIX]    Fixes the font rendering on Windows
+#####4.优化CASegmentControl接口
 
-cocos2d-x-2.2.1 @Nov.19 2013
-[All platforms]
-     [NEW]    Supports CocoStudio v1.1
-     [NEW]    CCUserDefault: pass size to XMLDocument::Parse()
-[Javascript binding]
-     [NEW]    Supports CocoStudio v1.1
-[Lua binding]
-     [FIX]    Clean up peertable after object is deleted
-[WinPhone8 & Windows8]
-     [FIX]    Use "PMingLiu" to show Chinese characters
-     [NEW]    Add "SimpleGame" project
-     [NEW]    Add VS2013 project
-     [FIX]    Many bugs fixed
+#####5.修改0.6.1由于视频播放器动态链接库的问题
 
-cocos2d-x-2.2.0 @Sep.25 2013
-[All platforms]
-     [NEW]    CocoStudio GUI
-     [NEW]    CocoStudio parser
-[Android]
-     [FIX]    Cocos2dxBitmap.java: divideStringWithMaxWidth method index out of range
-[iOS]
-     [FIX]    Can not hide status bar on iOS 7
-     [FIX]    Missing iOS 7 icons
-[Javascript binding]
-     [NEW]    XMLHttpRequest support reading binary data
-     [NEW]    Binded CCControlColourPicker  CCControlHuePicker CCControlPotentiometer CCControlSlider CCControlStepper CCControlSwitch CCControlUtils 
-              CCControlSaturationBrightnessPicker  CCTextFieldTTF
-     [NEW]    Binded these functions: CCNode::setScale(float, float) CCBAnimationManager::addDocumentCallbackControlEvents/getDocumentCallbackControlEvents
-              CCBReader::getOwnerCallbackControlEvents/addDocumentCallbackControlEvents
-     [NEW]    Supported Armature
-[Lua binding]
-     [NEW]    Binded CCTableView and CCScrollView
-[Windows8]
-     [NEW]    Initial version of Windows8
-[WinPhone8]
-     [NEW]    Initial version of WinPhone8
+#####6.修改0.6.1安卓CATextField崩溃的bug
 
-cocos2d-x-2.1.5 @Aug.23 2013 hotfix for v2.1.4
-[All platforms]
-     [FIX]    CCLabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads sometimes
-     [FIX]    Crash caused by improper deletion of VBOs and VAO in ParticleSystemQuad
-     [FIX]    Sprite becomes white block in CCControlSwitchTest
-[Android]
-     [FIX]    Black screen when application resumes from background
-[Javascript binding]
-     [FIX]    EditBox doesn't show any text in TestJavascript/ExtensionsTest/EditBoxTest on iOS
-     [FIX]    Crash appears when extending cc.ScrollView in JS
+#####8.增加获取当前连接的wifi的信息（包括名称 mac地址 等级）
 
-2.1rc0-x-2.1.4 @Jnue.12 2013
-[all platforms]
-     Bug      #2098: fix TouchPriority issue of CCScrollView
-     Bug      #2107: fix crash in HttpClient request on 64Bit
-     Bug      #2115: fix linking errors for TestCPP with libcurl
-     Bug      #2128: remove setting ignoreAnchorPoint for child CCB files and fix crash while trying to load sprite frame when the file is missing
-     Bug      #2140: fix a bug that the displayed color of CCDrawNode is incorrect when VAO is disabled
-     Bug      #2142: adding CCDataVisitor and implementing CCPrettyPrinter
-     Bug      #2143: fix a crash caused by ScrollView.setDelegate(tmp function)
-     Bug      #2146: unpack texture data correctly
-     Bug      #2147: fix null pointer access in CCBAnimationManager::getRunningSequenceName()
-     Bug      #2150: fix a bug that setColor and setOpacity of CCControlButton and CCScale9Sprite are broken
-     Bug      #2251: fix a logical error in CCDrawNode::drawPolygon()
-     Bug      #2271: fix memory leak as possible
-     Feature  #1859: make AssetsManager download resources in a new thread
-     Feature  #2086: make CCLabelTTF supports shadows and stroke
-     Feature  #2100: add CCDirector::popToSceneStackLevel(int level)
-     Feature  #2105: add Travis build support
-     Feature  #2108: add example for russian language in TestCpp
-     Feature  #2111: add CC_DISABLE_COPY macro
-     Feature  #2114: add __attribute__(__format__()) for CCLog and CCString
-     Feature  #2116: support negative node scales for CCScrollView
-     Feature  #2117: implement CCDictionary::writeToFile()
-     Feature  #2122: add method to create a CCMenuItemToggle from a CCArray with a target selector
-     Feature  #2132: add encrypted PVR.CCZ support to ZipUtils + Tests
-     Feature  #2157: add Mingw-crt Support without breaking VS SDK
-     Feature  #2265: add CCLabelTTF::createWithFontDefinition()
-     Feature  #2270: add Armature(CocoStudio runtime) support
-     Refactor #2109: add const modifier for classes CCArray, CCObject
-     Refactor #2118: move ccpX functions to CCPoint methods and operators
-     Refactor #2119: use httpresponse_selector instead of callfuncND_selector for the callback function of CCHttpRequest
-     Refactor #2123: refactor network extension, fixing unlikely memory leaks, adding PUT/DELETE methods
-     Refactor #2127: add CCLOG before original path is returned in CCFileUtils::fullPathForFileName to aid in debugging
-     Refactor #2149: add const qualification to some CCNode's getters
-     Refactor #2189: CCLabelTTF::enableShadow() const update
-     Refactor #2215: refactor CCConfiguration
-     Refactor #2217: use CCLabelAtlas instead of CCLabelTTF to show FPS
-     Refactor #2231: implement a format of CCConfiguration
-     Refactor #2233: add support for "CCString" types for boolean and integers in CCConfiguration
-     Refactor #2236: fix memory hot spot of CCTextureAtlas::updateQuad()
-[android]
-     Bug      #1284: fix a bug that SimpleAudioEngine may cause crash on i9100
-     Bug      #2151: fix custom font loading on Android for resource mapped font files
-     Bug      #2190: updat .classpath of Android project to latest ADT 22 build tool compatibility
-     Bug      #2266: fix a bug that CCFileUtils::getFileData() may not get file data correctly on Android
-     Feature  #2161: add ETC1 image format
-[iOS]
-     Bug      #2102: fix missing protocol method warning for iOS 6.0 addition
-     Bug      #2104: fix a bug that JPEG picture not displayed correctly on iOS 4.3
-     Bug      #2260: fix a bug that CCDirectory::createWithContentsOfFile() returns a valid pointer though the file is missing on iOS
-     Refactor #2101: update cocos2dx Xcode project to detect more warnings
-     Refactor #2253: add UITextField only when keyboard was opened, removing it when keyboard was closed
-[mac]
-     Bug      #2249: fix linebreaks on Mac OSX
-[win32]
-     Bug      #2131: fix memory leak of SimpleAudioEngine::preloadEffect()
-     Bug      #2145: center the window correctly on windows
-[emscripten]
-     Feature  #2120: compile c++ to js
-     Bug      #2159: use browser font rendering instead of FreeType
-     Refactor #2133: compile for Emscripten in asm.js mode
-     Document #2121: write a document to describe the usage of emscriptenate port
-[tizen]
-     Feature  #2185: add support for Tizen
-[javascript binding]
-     Bug      #2099: fix a bug in ScriptingCore::evalString() not setting the outval
-     Bug      #2179: fix a bug that pointQueryFirst returns invalid Shape when a shape is not found
-     Bug      #2186: fix a bug that new PivotJoint can't access 4 parameters like in html5 version
-     Bug      #2187: JavaScript debugger improved and bug fixed
-     Bug      #2243: fix a bug that XMLHttpRequest dones't support non-ascii characters
-     Bug      #2244: fix a bug that cc.Camera.getEyeXYZ, cc.Camera.getCenterXYZ, cc.Camera.getUpXYZ return bad values
-     Feature  #1647: Bind websocket to javascript
-     Feature  #2092: add XMLHttpRequest and bind it to JSB
-     Feature  #2106: add support for javascript byte code
-     Feature  #2162: add command line tool for generating javascript bytecode
-     Feature  #2214: upgrade Spidermonkey to Firefox v21
-     Refactor #2152: log assert messages to the console and renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert
-     Refactor #2247: use functions instead of macros to speeding up building for JSB project
-[lua binding]
-     Feature  #2103: implement most test cases
+#####7.增加获取wifi列表包括名称 mac地址 等级
+仅安卓有此功能
 
-cocos2d-2.1rc0-x-2.1.3 @May.01 2013
-[all platforms]
-     Bug      #1853: use SHELLOPTS instead of "-o igncr" for Android Eclipse project
-     Bug      #1860: fix a bug that onNodeLoaded will be called twice if ccb was added as a CCBFile
-     Bug      #1862: fix a bug that CCScrollView::setContainer may cause dangling pointer when NULL is passed into
-     Bug      #1876: fix a bug that CCScale9Sprite::setColor() & setOpacity() are broken
-     Bug      #1935: fix a bug that use "==" for float comparison of CCPoint and CCSize
-     Bug      #1937: fix a bug that CCControl's touch priority is not set correctly, m_nDefaultTouchPriority is never used
-     Bug      #1943: added some missing function for setting integer shader uniforms in CCGLProgram
-     Bug      #1999: allowing to set fontName and fontSize separately for CCEditBox
-     Bug      #2003: fix a potential crash in CCScheduler::removeHashElement()
-     Bug      #2030: fix a bug that scissor rectangle in nested CCScrollView is wrong
-     Bug      #2031: make CCFileUtils::createXXXXWithContentsOfFile() support relative path
-     Bug      #2035: fix a potential crash in CCSaxParser
-     Bug      #2037: fix a wrong logic in CCArray::initWithObjects()
-     Bug      #2040: get scale property from sub-ccb node may trigger an assert
-     Bug      #2054: fix a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader
-     Bug      #2055: enable easy switching between Box2D and chipmunk
-     Bug      #2058: properly resets the tile's Y flipping
-     Bug      #2061: fix a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function
-     Bug      #2073: fix a memory leak in CCUserDefault
-     Bug      #2080: fix a bug that _realOpacity isn't assigned in CCLayerColor::initWithColor
-     Feature  #2001: add CCRemoveSelf Action
-     Feature  #2048: support variable cell sizes in CCTableView
-     Feature  #2065: adding kResolutionFixedHeight and kResolutionFixedWidth resolution policy
-     Feature  #2068: adding a secureTextEntry property to CCTextFieldTTF
-     Feature  #2069: adding new macro CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK to CCBMemberVariableAssigner.h
-     Feature  #2075: support spine editor
-     Feature  #2076: adding a method CCBReader::setResolutionScale for setting resolution scale manually
-     Refactor #1592: updating UTHASH to v1.9.8
-     Refactor #2042: remove libxml2
-     Refactor #2097: use pthread mutex and condition variable instead of pthread semaphore to load image asynchronizely 
-[android]  
-     Bug      #1996: adding missing JNIEXPORT / JNICALL declarations
-     Bug      #2028: fix a bug taht application can not run correctly on Android simulator
-     Bug      #2045: some small fixes to CocosPlayer
-     Bug      #2062: fix for spaces at the beginning of wrapped lines
-     Bug      #2083: fix a bug that Bytecode of LuaJIT can't work on android
-     Refactor #1613: not reload resources when coming from background on Android
-     Refactor #1861: CocosPlayer Android update
-     Refactor #1904: strip libcurl.a on x86 architecture
-     Refactor #2027: reduce function call in nativeInitBitmapDC to improve performance
-     Refactor #2047: clean up linked libraries for android
-[iOS]
-     Bug      #1863: fix a bug that CCUserDefault on iOS may not save immediately
-     Feature  #2096: adding Cocosplayer for iOS and bug fixes
-[linux]
-     Bug      #1932: fix a bug that font rendering crashed for certain fonts
-     Bug      #2036: correct passed buffer size to readlink
-     Bug      #2044: link libpthread and libGL
-     Bug      #2046: strip newlines from log message and fixing linux library location
-     Bug      #2052: fix a bug that [-Werror=array-bounds] error appears when compiling Box2dTestBed
-     Feature  #2032: Linux OpenAL support
-     Refactor #2000: improve font rendering performance for linux platform
-     Refactor #2053: set writable path to "<user's home>/.config/<app name>"
-[mac]
-     Bug      #2051: fix a bug that TestCpp/ExtensionsTest/CocosbuilderTest crashes under x86_64 target
-     Feature  #1856: adding 64bit target for Mac project
-[javascript binding]
-     Bug      #1855: fix a bug that std_string_to_jsval generates messy js string when passed a non-ascii UTF8 std::string
-     Bug      #2057: adding response for back and menu keypad event for Android
-     Bug      #2059: fix a bug that cc.FileUtils.getInstance().getStringFromFile(filename) doesn't return a whole string
-     Bug      #2071: fix a bug that cc.TMXLayer.getTiles() can't work
-     Feature  #1841: find a way to obfuscate javascript code on the top of JSB
-     Feature  #1936: adding OpenGL Bindings to Javascript
-     Feature  #2043: upgrading SpiderMonkey to Firefox20.0
-     Feature  #2060: support for cc.FileUtils.getInstance().getByteArrayFromFile(filename)
-     Feature  #2064: exposing cc.Node.nodeTo***Transform to JS
-     Refactor #1944: subclass of cc.Sprite,cc.Layer... doesn't need cc.associateWithNative anymore
-[lua binding]
-     Feature  #1814: add menutest 
-     Feature  #1941: add TileMapTest
-     Feature  #1942: add LayerTest
-     Feature  #1945: use CCLOG to implement print() function
-     Feature  #1993: add ParallaxTest
-     Feature  #1994: add ActionManagerTest
-     Feature  #1997: add IntervalTest
-     Feature  #1998: add SceneTest
-     Feature  #2002: add Texture2dTest, RenderTexture, ZwoptexTest, FontTest, CocosDenshionTest and EffectsAdvancedTest
-     Feature  #2004: add UserDefaultTest
-     Feature  #2005: add CurrentLanguageTest
-     Refactor #1847: use luajit
-     Refactor #2084: unify the method of loading lua files on all platforms
+#####9.打开关闭蓝牙设备，开始搜索蓝牙设备，停止搜索蓝牙设备，获取蓝牙设备信息包括名称地址
+仅安卓有此功能
 
-cocos2d-2.1rc0-x-2.1.2 @Mar.20 2013
-[all platforms]
-     Bug      #1529: use NSUserDefaults on iOS and SharedPreferences on Android implement CCUserDefault
-     Bug      #1672: fix a bug that CCTableView is too sensitive on some devices with high density display
-     Bug      #1689: support horizontal alignment for Custom TTF fonts
-     Bug      #1691: fix a bug that CCControlSwitch::setOn(isOn,false) doesn't work
-     Bug      #1692: add TMX polygon parsing
-     Bug      #1697: fix a logical error in CCRenderTexture::initWithWidthAndHeight()
-     Bug      #1710: add simpler,correct handling of spritesheet sources for CCScale9Sprite
-     Bug      #1711: fix a bug that clipping rectangle of CCScrollView is wrong when the scale of its ancestors isn't equal to 1
-     Bug      #1731: change declaration of CCSize, CCPoint and CCRect in pkg file
-     Bug      #1751: fix a bug that clicking outside of CCTableViewCell will also get response when container size is smaller than view size
-     Bug      #1754: fix a bug that offset of the container is wrong in CCTableView
-     Bug      #1821: fix a bug that the display result is wrong when invoking CCControlButton::setHighlighted()
-     Feature  #1686: synchronize to cocos2d-iphone v2.1rc0
-     Feature  #1708: adding Portuguese and Arabic language support
-     Feature  #1712: add an interface to get DPI
-     Feature  #1741: CCLens3d can be concave
-     Feature  #1742: add 'rotationIsDir' property to ParticleSystem
-     Feature  #1761: implement setVisible() for CCEditBox
-     Feature  #1807: add getStartLocationInView() and getStartLocation() methods in CCTouch
-     Feature  #1822: add CCNotificationCenter::removeAllObservers(CCObject *target)
-     Feature  #1838: synchronize CCBReader to the lastest version
-     Feature  #1489: add AssetsManager
-     Refactor #1687: refactor CCFileUtils and CCImage
-     Refactor #1700: add webp image format support
-     Refactor #1702: change return value of CCFileUtils::getWritablePath()
-     Refactor #1703: replace libxml2 with tinyxml2
-     Refactor #1749: add 'setFont' and 'setAnchorPoint' to CCEditBox
-[android]
-     Bug      #1752: fix a bug that libcurl.a causes link error after being stripped
-     Bug      #1760: fix a bug that cpufeatures module is redefined
-     Bug      #1775: fix a bug that OpenSLEngine can not load resources from SD card
-     Bug      #1812: fix a warning of getStringWithEllipsisJni() function when compiling it with clang
-     Feature  #1827: support building android project, including native codes, in Eclipse
-[iOS]
-     Bug      #1750: fix a bug that CCEditBox's position is incorrect when it's added to a non-fullscreen CCNode
-     Bug      #1804: fix for loading custom fonts on iOS when referenced from a CCB file
-     Feature  #1842: support kEditBoxInputFlagSensitive setting for CCEditBox on iOS
-     Refactor #1755: add CocosDenshion xcode project
-     Refactor #1825: use CCLabelTTF to show text for CCEditBox
-[javascript binding]
-     Bug      #1707: fix a crash caused by unaligned memory access in CCBReader::readFloat()
-     Bug      #1726: fix crash of JSB application on android device with armv6 architecture
-     Bug      #1729: fix compiling error of ScriptingCore.cpp with C++11 on iOS
-     Bug      #1747: fix a crash when passing null to cc.AnimationFrame.initWithSpriteFrame()
-     Bug      #1823: use shared NodeLoaderLibrary in CCBReader bindings
-     Feature  #1724: add HelloJS sample
-     Feature  #1730: bind CCScrollView and CCTableView to js
-     Feature  #1748: separate chipmunk and sqlite from js_binding_core.cpp
-     Feature  #1753: upgrade SpiderMonkey to Firefox19.
-     Feature  #1808: make cxx_generator support parsing functions that have default parameters
-     Feature  #1811: add a method to get file data for JSB
-     Feature  #1824: bind CCEditBox to JS
-     Refactor #1682: add ScriptingCore::getGlobalObject() function
-     Refactor #1740: add cleanup and reset methods to ScriptingCore
-     Refactor #1830: use JS::CompileOptions::setUTF8(true) to compile script
-     Refactor #1836: make js target of "cc.Scheduler().scheduleCallbackForTarget()" accept a object that not depend on CCNode or its subclass
-     Refactor #1837: refactor schedule binding codes
-[lua binding]
-     Bug      #1745: fix a bug that CCRepeat:create() receives error argument
-     Feature  #1425: fix errors in lua test cases and add more test cases
-     Feature  #1698: add CCLuaObjcBridge
-     Feature  #1802: add TouchesTest for lua binding
-     Refactor #1818: cleanup the tolua++ bindings build system
-[win32]
-     Feature  #1634: CCEditBox support
-     Feature  #1746: add VS2012 Express template installing support
-[linux]
-     Bug      #1688: fix a bug that truetype fonts from resource directory can't be found
-     Bug      #1810: fix a bug that SimpleAudioEngine::playEffect() and playBackgroundMusic() play twice on linux
-     Bug      #1819: fix a bug that building script exits when missing packages
-     Bug      #1834: fix the size calculations for true type fonts (especially for italic fonts)
-     Refactor #1806: refactor linux build system
-     Refactor #1820: add 'make run' target for linux projects
-[mac os]
-     Bug      #1637: fix a bug that CCLabelTTF & CCMenuItemLabel cannot display on Mac Retina
-[black berry]
-     Refactor #1709: add support for multiple background music sources
-[chrome native client]
-     Feature  #1762: add Native Client support
+#####10.增加mac下一键创建工程图形工具
 
-
-cocos2d-2.1beta3-x-2.1.1 @Jan.29 2013
-[ all platforms]
-     Bug      #1547: fix a bug that when CCMenuItem is removed before touch ended, application will crash if keeping moving
-     Bug      #1553: fix a memory leak in CCControllButton
-     Bug      #1604: fix a bug that the enum values in ccPVR3TexturePixelFormat are truncated to 32bit
-     Bug      #1605: fix a crash that when adding just one action to CCSequence
-     Bug      #1639: fix a bug that CCBReader miss parsing some properties  
-     Bug      #1659: fix a bug that invoking runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed will cause crash
-     Bug      #1662: fix a bug that returns wrong full path if texture name in the plist doesn't contain relative path 
-     Bug      #1664: fix a logical error in CCAtlasNode::setOpacityModifyRGB
-     Bug      #1670: fix a memory leak in CCBReader
-     Bug      #1674: fix a logical error in CCScale9Sprite constructor
-     Bug      #1680: fix a bug that can't set touch priority by invoking CCMenu::setTouchPriority()
-     Bug      #1681: fix a bug that CCTableView crashes if CCTableViewDelegate is not provided
-     Feature  #1598: add japanese language support
-     Feature  #1625: add stackable action support and exchange the order of parameters for 3d relative actions
-     Feature  #1667: add file name lookup support
-     Refactor #1593: remove all deprecated methods
-     Refactor #1599: do some improvements of CCScrollView and CCTableView
-     Refactor #1602: add randomObject to CCDictionary
-     Refactor #1603: adjust samples directory structure
-     Refactor #1606: return CCSequence pointer for CCSequence::create
-     Refactor #1648: make CCPoint, CCRect and CCSize not inherit from CCObject
-     Refactor #1649: change return type to const reference for member variable accessing
-     Refactor #1654: report function and line number for CCAssert
-     Refactor #1683: refactor CCFileUtils to make it be compatible with the resource searching strategy of cocos2d-iphone
-     Document #1650: add detailed comments for CCDictionary
-     Document #1678: add detailed doxygen comments for CCNode
-[android]
-     Bug      #1544: fix a bug that CCRenderTexture works wrong after coming back to foreground
-     Bug      #1580: fix a bug that application may lost focus after popping up keyboard
-     Bug      #1607: fix a bug that the path CCUserDefault saves in may cause issue
-     Bug      #1610: fix a bug that CCLabelTTF will lost a character at the end of a line
-     Bug      #1623: fix a bug that SimpleAudioEngine::playBackgroundMusic() may not take effect
-     Bug      #1679: upload unstripped prebuilt libraries for armeabi-v7a architectures
-     Refactor #1673: add <uses-feature android:glEsVersion="0x00020000"/> to AndroidManifest.xml
-[iOS]
-     Bug      #1600: fix a bug that application created by xCode template will crash after coming to foreground
-     Bug      #1612: fix some compilation errors when using c++11 compiler
-     Bug      #1657: fix a memory leak in CCTextureCache::addImageAsync()
-     Refactor #1636: refactor CCEditBox
-[win32]
-     Refactor #1627: add VS version check in project file
-[marmalade]
-     Bug      #1631: make SimpleGame force landscape
-     Refactor #1629: add marmalade third party cleanup
-     Refactor #1630: add TestLua post-build script
-     Refactor #1632: remove grskia dependency and add in freetype support to the builds.
-[linux]
-     Feature  #1611: add lua support
-     Refactor #1621: add linux 64bit target for eclipse project
-     Refactor #1676: refactor makefile and eclipse project configuration
-[javascript binding]
-     Bug      #1550: fix some memory leaks in JSBinding
-     Bug      #1614: fix a crash caused by DrawNodeTest
-     Bug      #1622: fix a crash when cc.Node.getChildren is invoked if it has no children
-     Bug      #1641: fix a bug that the coins in WatermelonWithMe don't animate
-     Bug      #1644: fix a crash caused by passing NULL parameter to ccdictionary_to_jsval
-     Bug      #1645: fix a bug that JS Project created by xXode template doesn't work correctly
-     Bug      #1653: handle correctly when parsing int value in JSB
-     Feature  #1620: add sys.localStorage support for JSB
-     Feature  #1642: add tools for generating js-binding codes on windows
-     Feature  #1646: update SpiderMonkey to v18.0
-     Feature  #1660: add js-debugger for js-binding
-     Feature  #1661: add jsb sample game CrystalCraze
-     Refactor #1530: do some improvements to JS Bindings
-     Refactor #1633: implement sys.capabilities for JSB
-[lua binding]
-     Refactor #1608: add CCNode::scheduleUpdateWithPriorityLua() for LuaBinding
-     Refactor #1626: add CCDirector::setDisplayStats() for luabinding
-
-cocos2d-2.1beta3-x-2.1.0 @Dec.5 2012
- [all platforms]
-     Bug      #1556: set a default texture for CCParticleFire, CCParticleFireworks, etc
-     Feature  #1555: update to cocos2d-iphone v2.1 beta3
-     Feature  #1564: update tests to cocos2d-iphone v2.1beta3
-     Feature  #1572: add sample game WatermelonWithMe
-     Feature  #1573: add sample game CocosDragonJS
-     Refactor #1545: remove the usage of NODE_FUNC and CREATE_FUNC
-     Refactor #1565: remove VS2008 support
-     Refactor #1576: update CCBReader to latest version of CocosBuilder
-     Refactor #1589: add CCBReader::setCCBRootPath()
- [iOS]
-     Bug      #1548: update libcurl header files to 7.26.0 on iOS 
- [android]
-     Bug      #1551: add error handler when reading image data using libjpeg
-     Refactor #1558: improve the speed of accessing to files from apk
- [marmalade]
-     Bug      #1559: fix a bug that if a file in resource directory doesn't exist, it will not search from root directory
-     Bug      #1571: add box2d rope to marmalade project
-     Bug      #1590: JPEG and File fixes for marmalade
-     Feature  #1557: Marmalade support
-     Refactor #1574: update marmalade languages
-     Refactor #1575: update samples/TestCpp to compatible with marmalade
-     Refactor #1578: create cocos2dx-ext marmalade project
-     Refactor #1591: add TestLua marmalade project 
- [javascript binding]
-     Bug      #1577: fix a bug that touch events lost on Win32 when using JSBinding
-     Bug      #1586: fix a crash in WatermelonWithMe
-     Bug      #1588: rescheduleCallback support for JSBinding
-     Refactor #1570: improve the debugger for JSBinding
- [lua binding]
-     Bug      #1587: remove lua script handler in CCCallFunc's destructor
-
-cocos2d-2.0-x-2.0.4 @Nov.2 2012
- [all platforms]
-    Bug       #1473: fix a bug that CCScale9Sprite does not support rotated spriteframe in atlas 
-    Bug       #1494: fix a bug that missing removing auto-release object from AutoReleasePool if it invokes 'autorelease' method more than one time
-    Bug       #1495: fix a bug that CCScrollView display area and touch area are wrong if its parent's postion isn't at CCPointZero in world
-    Bug       #1508: fix a bug that potential observer array modification while it's traversed in CCNotificationCenter
-    Bug       #1510: fix a bug that application will freeze when 'numberOfCellsInTableView' returns zero
-    Bug       #1516: fix a bug that the font size of labels for displaying FPS,SPF,DrawCount is incorrect in different design resolutions
-    Bug       #1536: CCControl* should not respond to touches if the control is not visible
-    Bug       #1538: fix a logic error in CCControlHuePicker::checkSliderPosition()
-    Bug       #1543: fix a bug that CCLayerGradient background of CocosBuilderTest can't be shown
-    Feature   #1515: add a zoom function for debugging large resolution (e.g.new ipad) app on desktop
-    Refactor  #1312: upgrade libcurl to 7.26.0  
-    Refactor  #1486: apply multi-resolution mechanic on iOS, especially for iphone5
-    Refactor  #1520: add comments to describe the usage of multiresolution in HelloCpp
-    Refactor  #1521: use relative coordinates in TestCpp
-    Document  #1532: write a document describes how to debug games for ipad3 on low-resolution PC 
-    Document  #1493: add doxygen comments in CCNotificationCenter.h
- [android]
-    Bug       #1466: reload shader for test case "ShaderTest" after it comes from background
-    Bug       #1500: fix a bug that CCRenderTexture cannot render properly on some Qualcomm Adreno GPUs
-    Bug       #1507: fix a bug that can not play effect for the first time without pre-load effect
- [iOS]
-    Bug       #1527: fix a bug that MoonWarriors can not run on iOS simulator sometimes
-    Refactor  #1491: remove dependency of FontLabel lib
- [javascript binding]
-    Bug       #1526: fix a bug that javascript binding related samples will crash on iOS devices
-    Feature   #1469: add MoonWarriors as a sample game
-    Refactor  #1487: use shared javascript test cases with cocos2d-html5 and cocos2d-iphone
-    Refactor  #1517: upgrade SpiderMonkey to FF 17.0 beta3
- [lua binding]
-    Bug       #1506: fix a compilation error of TestLua if the path of cocos2d-x contains spaces  
- [win32]
-    Bug       #1496: fix an error of comparing font's face name in CCImage of win32 port
-    Bug       #1511: fix openGL framebuffer access violation
-    Bug       #1540: fix win32 CCLuaLog memory leaks and invalid console UTF8 output
-    Feature   #1513: add Multi-Touch support for win7/8 tablet or ultrabook
-    Refactor  #1512: change writable directory to "C:\Documents and Settings\username\Local Settings\Application Data\your app name" if the app be built in release mode
-
-cocos2d-2.0-x-2.0.3 @Sep.26 2012
- [all platforms]
-    Bug       #1452: change CCRGBAProtocol to public in order for actions like CCTintTo to have an affect on the CCScale9Sprite
-    Bug       #1454: make javascript binding work together with lua binding and c++ codes
-    Bug       #1464: fix a crash caused by CCLabelBMFont
-    Bug       #1478: fix a bug that TMX parser causes tileset images not to be loaded
-    Bug       #1479: fix a bug that CCNotificationCenter does not check whether the object is valid before post notification
-    Bug       #1485: fix potential memory leak in CCNotificationObserver
-    Feature   #1458: add CCTableView
-    Feature   #1460: min/max allowed value for CCControlSlider
-    Feature   #1470: update CCBReader to cocosbuilder v2.1 beta
-    Feature   #1483: synchronize CCControlExtension to newest version
-    Refactor  #1477: abstracts Lua and JS binding protocol, some bugs fixes in lua-binding, adding custom menu on win32 and mac for switching resolutions
- [iOS]
-    Bug       #1482: fix a bug that orientation is wrong on iOS 6 SDK
-    Bug       #1453: fix a bug that CCGL.h includes wrong path of a header file
-    Bug       #1484: fix a minor memory-logic error in EditBoxImplIOS.mm
-    Feature   #1455: add Xcode template for cocos2dx-js
- [android]
-    Refactor  #1481: refactor android Java+JNI
- [mac os]
-    Bug       #1456: remove code signing from MAC TestCpp project
- [linux]
- [win32]
-    Feature   #1457: Add vs2012 sln
-    Feature   #1474: popup a warning dialog instead of crash directly when OpenGL version is too old to run 2dx
- [js-binding]
-    Feature   #1451: merge new js-binding codes
-    Refactor  #1476: update location of spidermonkey-android makefile
- [lua]
-    Refactor  #1480: Update lua-binding for overloaded functions
- [tools]
-    Feature   #1404: add scripts for jenkins-ci
-
-cocos2d-2.0-x-2.0.2 @Aug.30 2012
- [all platforms]
-    Bug       #1298: fix a logical error of CCSequence
-    Bug       #1371: fix a particle crashes if setAutoRemoveOnFinish(true)
-    Bug       #1379: fix a typo error of comment in CCNode.cpp
-    Bug       #1381: fix a bug that CCLayerColor::setContentSize() declared differently with CCNode::setContentSize()
-    Bug       #1382: fix a crash of CCBReader caused by null pointer
-    Bug       #1384: fix an error when loading CCControlButton from ccbi
-    Bug       #1385: fix a logic error in BitmapFontMultiLineAlignment
-    Bug       #1386: fix a crash of PauseResumeActionsTest
-    Bug       #1395: fix a bug that CCTextureCache::addImage ignores error in CCTexture2D::initWithImage()
-    Bug       #1400: re-assign texture rect of CCControlSlider to consider SpriteFrame orientation
-    Bug       #1403: fix a bug that do not support png8 format
-    Bug       #1408: fix a bug that CCMenuItemImage is not loaded when the target and selector are empty in CCBReader
-    Bug       #1409: fix a bug that loading CCControlButton from ccbi failed
-    Bug       #1427: fix a bug that CCArray::randomObject() may use index that out of range
-    Bug       #1430: fix a bug that can not compute correct label's width or height when its value is 0
-    Bug       #1440: fix a bug that CCSprite::displayFrame() uses wrong offset to create a sprite frame
-    Feature   #1416: add object-oriented API of CCGeometry
-    Feature   #1405: implement multi-resolution adaption solution
-    Feature   #1424: add a simple wrapper of http access
-    Feature   #1429: add CCEditBox which wraps system edit control
-    Feature   #1439: synchronize to cocos2d-iphone 2.0 stable version
-    Refactor  #1399: adjust directory structure
-    Refactor  #1402: improve static creator function names to avoid confusion
-    Refactor  #1413: improve CCTouch::getLocation(), getDelta() which returns OpenGL coordinates directly
-    Refactor  #1437: change the return type of CCApplication::sharedApplication() and CCEGLView::sharedOpenGLView() to a pointer
-    Refactor  #1441: put hd and iPad resources of TestCpp into separate directories
-    Refactor  #1442: use CREATE_FUNC to replace LAYER_CREATE_FUNC and SCENE_CREATE_FUNC
- [iOS]
-    Bug       #1389: fix a Xcode 4.5-specific compiling errors that can not convert -1 to unsigned int
-    Bug       #1432: fix a bug that "MutiTouchTest" crashes on IOS if putting more than 5 fingers on the screen
-    Refactor  #1383: change the file path that CCUserDefault saves xml file in
-    Refactor  #1433: remove fpsxxx.png in template
-    Refactor  #1443: Fix some warnings
- [android]
-    Bug       #1284: use OpenSL ES to play effects when the device is i9100
-    Bug       #1372: fix a typo error in platform/android/CCEGLView.h
-    Bug       #1377: fix TMX Tile cracks in the Test App
-    Refactor  #1407: cleaner build script
-    Refactor  #1438: make android template use its own source files
- [mac os]
-    Bug       #1417: fix a compiling error when building TestCpp for mac port using command line
-    Feature   #1401: add mac port
- [win32]
-    Bug       #1390: fix a win32 error says "The application failed to initialize properly"
- [linux]
-    Bug       #1445: fix compiling errors on linux
-    Feature   #1419: add linux port
- [blackberry]
-    Feature   #1420: add blackberry port
-
-cocos2d-2.0-rc2-x-2.0.1 @Jun.28 2012
- [all platforms]
-    Bug       #1257: synchronize CCGrabber.cpp 
-    Bug       #1280: fix a bug that BitmapFontMultiLineAlignment test doesn't work correctly
-    Bug       #1286: fix the declaration of tgaLoadRLEImageData()
-    Bug       #1293: fix a bug that CCDirector::getFrames() returns wrong value
-    Bug       #1296: fix a logical error in CCTMXTiledMap::tilesetForLayer()
-    Bug       #1300: fix a typo of CC_ENABLE_CACHE_TEXTTURE_DATA
-    Bug       #1301: apply scissor with points in CCEGLView::sharedOpenGLView().setScissorInPoints()
-    Bug       #1302: change the parameter type of CCMenu::setHandlerPriority to signed int
-    Bug       #1308: fix a logical bug in CCTouchDispatcher
-    Bug       #1326: fix a bug that the compilation of Hellolua and testjs project was broken after synchronizing to rc2
-    Bug       #1330: fix bugs of CCBIReader
-    Bug       #1335: fix memory leaks in cocos2dx and CCBReader
-    Bug       #1368: implement a test case(Effect4) in EffectsAdvancedTest
-    Feature   #1202: remove CCFileData
-    Feature   #1310: synchronize to rc2
-    Feature   #1323: support  CCBIReader
-    Feature   #1324: add create() for static member functions that new an autorelease object
-    Feature   #1332: add macro COCOS2D_VERSION in cocos2d.h
-    Feature   #1333: support CCScrollView
-    Feature   #1334: add ScrollViewTest to CocosBuilderTest
-    Refactor  #1181: refactor CCRenderTexture
-    Refactor  #1283: use relative path in cocos2d.h
-    Refactor  #1288: enhances CCTransitionScene to work even if there is no running scene
-    Refactor  #1289: update CCControlButton: add zoomOnTouchDown property and setPreferredSize
-    Refactor  #1292: modify some function names to make them more readable
-    Refactor  #1336: use CC_DEPRECATED_ATTRIBUTE macro to mark deprecated interfaces
-    Refactor  #1367: change some function names that start with "createWith" to "create"
- [iOS]
-    Bug       #1290: fix a bug that a project generated by template can not find Shaders folder
-    Bug       #1297: fix a bug that the effect is wrong when using projection 2d and enabling retina
-    Bug       #1299: fix a bug that SimpleAudioEngine::resumeEffect and SimpleAudioEngine::resumeAllEffects will play effects that are played previously
-    Bug       #1315: fix wrong effect of TileMapTest when enabling retina
-    Bug       #1338: fix a crash of CocosdenshionTest when playing effect then clicking HOME menu
-    Bug       #1343: fix a bug of Xcode template
-    Bug       #1364: fix a bug that can not resume background music after pausing it
-    Refactor  #1269: generate project for cocos2dx, then HelloWorld, tests, HelloLua and testjs can refer it
- [android]
-    Bug       #1239: fix a bug that can not stop effect if play effect with loop mode twice
-    Bug       #1278: fix a  bug that CocosDenshion::unloadEffect() can not stop playing effect
-    Bug       #1322: make CCLabelTTF support vertical alignment
-    Refactor  #1287: make android template's build_native.sh automatically copy new icons
-    Refactor  #1329: move all java files part of engine into a certain directory, then all projects refer them
- [win32]
-    Bug       #1282: fix a crash that if the display card is ATI
-    Bug       #1344: fix a bug of win32 template
-    Bug       #1365: fix a bug that some files of Resources folder which is copied by build_native.sh will lost authority in cygwin
-    Bug       #1366: fix a crash of tests
- [lua]
-    Bug       #1369: fix a crash when invoking CCLabelTTF:setPosition(x,y)
-    Feature   #1327: export 'create' method for lua bindings
-
-cocos2d-2.0-rc0a-x-2.0 @May.31 2012
- [all platforms]
-    Bug       #1094: fix a bug that nothing will be shown when using CCParticleBatchNode
-    Bug       #1115: fix a bug that CCFileUtils::fullPathFromRelativePath() with resolution parameter return error value with empty string
-    Bug       #1137: fix a memory leak in CCLabelBMFont and sync the implementation of CCLabelBMFont to gles20 branch
-    Bug       #1138: fix a memory leak in CCTextureCache::addPVRImage.
-    Bug       #1155: revert CCDirector singleton to original implementation
-    Bug       #1157: fix a bug that nothing is shown in TMX Orthogonal Test
-    Bug       #1158: fix a bug in CCParticleSystemQuad
-    Bug       #1159: update "CallFuncND + auto remove" test demo
-    Bug       #1160: rename 'CGFloat' to 'CCFloat'
-    Bug       #1164: add the render mode which uses VBO without VAO in CCParticleSystemQuad
-    Bug       #1165: merge pull request #842
-    Bug       #1187: fix a bug that spanish(Buen día) cannot be shown completely in CCLabelBMFont unicode test
-    Bug       #1189: CCLabelBMFont updateLabel() optimizations and fixes
-    Bug       #1212: fix a bug that TMXBug787Test crash.
-    Bug       #1217: fix a bug that EaseActions reverse broken
-    Bug       #1232: fix a bug that CCLayerGradient::updateColor() assign wrong value to m_pSquareColors
-    Bug       #1244: fix memory leak in CCParticleSystem::initWithDictionary()
-    Bug       #1273: fix a bug that app will crash after clicking closed button in TextureCacheTest
-    Bug       #1275: fix memory leaks in tests project
-    Bug       #1277: implement CCToggleVisibility::copyWithZone()
-    Feature   #1114: integrate CCControlExtension and implement corresponding tests
-    Feature   #1180: synchronize CCConfiguration
-    Feature   #1194: merge texturewatcher contributed by NetGragon
-    Feature   #1205: add ccbreader and test case for CocosBuilder
-    Feature   #1240: support TIFF format picture
-    Feature   #1258: merge Rolando's testjs into gles20 branch
-    Refactor  #1156: synchronize CCDirector
-    Refactor  #1166: improve CCString and CCArray, optimize CCDictionary
-    Refactor  #1176: change linebreak symbol to UNIX format ('\n'), replace 'tab' with four spaces
-    Refactor  #1177: refactor platform
-    Refactor  #1178: use macro NS_CC_BEGIN instead of "namespace cocos2d {", NS_CC_END instead of "}"
-    Refactor  #1188: refactor directory structure
-    Refactor  #1191: update templates for all platforms
-    Refactor  #1198: optimize CCTextureCache::removeUnusedTextures()
-    Refactor  #1203: remove CCFileUtils::setResource(const char* pszZipFileName) and SimpleAudioEngine::setResource
-    Refactor  #1204: refactor AppDelegate::initInstance()
-    Refactor  #1206: remove some unused files, only supports iOS, win32 and android
-    Refactor  #1211: translate Chinese comments to English for CCTextureWatcher and CCListView
-    Refactor  #1246: fix CCDirector using CCLabelBMFont instead of CCLabelTTF
-    Refactor  #1252: add CCEGLViewProtocol::getFrameSize() method for getting the real screen size of device
-    Refactor  #1253: add static method "purgeConfiguration" for CCConfiguration to avoid memory leak
- [iOS]   
-    Bug       #1109: add parentheses to remove Xcode warnings 
-    Bug       #1230: fix a bug that Calculation of string width may be wrong on iOS
-    Bug       #1266: fix a bug that CCTextureCahce::addImageAsync() don't work correctly on iOS
-    Feature   #1095: IOS screen resolution support
- [android]
-    Bug       #1139: fix a bug that screen becomes black when backing from background
-    Bug       #1140: fix a bug that ParticleTest crashed
-    Bug       #1141: fix a bug that NodeTest crashed in StressTest1 and StressTest2
-    Bug       #1142: fix a bug that TouchesTest crashed
-    Bug       #1143: fix a bug that MenuTest crashed
-    Bug       #1144: fix a bug that ParallaxTest crashed
-    Bug       #1145: fix a bug that TileMap crashed
-    Bug       #1146: fix a bug that IntervalTest crashed
-    Bug       #1147: fix a bug that ChipmunkAccelTouchTest crashed
-    Bug       #1148: fix a bug that LabelTest crashed
-    Bug       #1149: fix a bug that SpriteTest crashed when go to second test case
-    Bug       #1150: fix a bug that RenderTextureTest crashed at second test case
-    Bug       #1151: fix a bug that Box2DTest crashed
-    Bug       #1152: fix a bug that PerformanceTest crashed at 1, 2, 5 test cases
-    Bug       #1185: fix a bug that when backing to foreground, will lost texture if it uses sprite batch node
-    Bug       #1216: fix JNI memory leaks
-    Bug       #1229: fix a bug that android port can not be compiled on ndk android-8 level
-    Bug       #1236: fix a bug that JniHelper::jstring2string may crash when parameter is null
-    Bug       #1237: fix a bug that line number message printed by CCAssert is wrong
-    Bug       #1279: fix a bug that NodeNonOpaqueTest can't be shown correctly
-    Feature   #1247: add profiler support for android
-    Feature   #1265: build dynamic library of spidermonkey for Android, and implement testjs for android
-    Refactor  #1179: popup a message box when invoking CCAssert() on Android
-    Refactor  #1201: simplify the usage of writing Android.mk
- [windows]
-    Bug       #1215: fix a bug that Win32 retina cannot work
-    Bug       #1251: add CocosBuilderTest to the test project for VS2008
-    Bug       #1264: fix wrong string alignment when using utf-8 encoded text with CCLabelTTF
-    Bug       #1268: fix a bug that Testjs will crash after clicking the close button on win32
-    Bug       #1270: fix some warning on win32
-    Feature   #1186: add console window for Win32 application, all debug message output to this console window
-    Feature   #1263: build dynamic library of spidermonkey for win32, and add testjs project to solution
-    Refactor  #1170: remove win32 template of wophone
- [lua]
-    Refactor  #1190: update lua binding to 2.0
-    Refactor  #1220: using CCString::stringWithContentsOfFile to get string from lua script files
-    
-
-cocos2d-1.0.1-x-0.12.0 @ Mar.5 2012
- [all platforms]
-     Bug      #925: rename HelloWorld/Resource to HelloWorld/Resources
-     Bug      #948: fix a bug that CCMutableArray::getIndexOfObject returns 0 on both "index 0" and "not existing"
-     Bug      #951: remove definition of NSMutableSet
-     Bug      #961: fix mad behaviour in second stage of CCEaseBackInOut
-     Bug      #965: remove some dynamic_cast calling since selector_protocol.h was removed
-     Bug      #967: fix a bug that PVR Textures cannot be reloaded after GL context lost
-     Bug      #986: add init() funciton in CCMenu class
-     Feature  #952: make CCLabelBMFont supports other languages, include Chinese, Korean, Janpanese and so on.
-     Feature  #972: add Support for CCNotificationCenter
-     Refactor #933: refactor CCUserDefault
-     Refactor #958: move the implement of SelectorProtocol to CCObject
-     Document #975: add comment for CCTMXTiledMap::getMapSize and more methods
- [iOS]
-     Bug      #946: fix a bug that can not load HD image for both Retina and Normal correctly
-     Bug      #762: fix a bug that CCLabelTTF is in different position (higher) than in previous version on iphone
-     Refactor #985: remove template for xcode3
- [android]
-     Bug      #947:  fix a bug that long chinese string causes closed loop on android
-     Bug      #950:  fix a crash when touching the screen because of RTTI
-     Bug      #954:  fix a bug that accelerometer axes inverted on android tablet when setting orientation to portrait
-     Bug      #957:  fix a bug that when running textInputTest, application enters background after input character and click back key on android devices
-     Bug      #959:  fix a bug that get wrong multitouch id
-     Bug      #964:  fix a bug that can not show whole charactor
-     Bug      #971:  fix dynamic_cast error on android
-     Feature  #982:  make android template supports box2d, chipmunk and lua
-     Refactor #970:  use modules in the Android NDK build
-     Bug      #1008: fix a bug that missing "return" in SimpleAudioEngine::getEffectsVolume() method on android platform
- [bada]
-     Bug      #984: use static library for cocos2dx project on bada and qnx platform
- [blackberry]
-     Bug      #960: detect when the application goes and return from background in QNX (Black Berry Playbook)
-     Bug      #962: fix some bugs on qnx port
-     Bug      #963: fix a bug that applicationWillEnterForeground will be invoked twice when application is launched
-     Bug      #968: fix a bug about "Out of bound" in CCFileUtils::getWriteablePath() for BlackBerry
-     Feature  #994: add support for bbndk2.0
- [marmalade]
-     Bug      #995: modify project configure for marmalade port after adding extension support and refactor resource folder
- [win32]
-     Feature  #969: implement Accelerometer Simulation for Win32.
- [lua]
-     Bug      #942: fix a crash when invoking CCScheduler:sharedScheduler():scheduleScriptFunc in lua
-     Bug      #953: add tolua++ for Mac
-     Refactor #973: refactor lua support
-
-cocos2d-1.0.1-x-0.11.0 @ Jan.13 2012
- [blackberry] 
-     Feature  #907: support blackberry playbook
- [all platforms]
-     Bug      #752: fix a bug that enable and disable touch more times in touch handler callback function may cause memory leak
-     Bug      #911: fix a bug that TextureCache::addUIImage() cannot create texture when key is null
-     Bug      #920: export export functions in CCAffineTransform with CC_DLL
-     Bug      #922: make CCTexture2D::setPVRImagesHavePremultipliedAlpha() to be a static function
-     Bug      #926: fix a crash caused by RTTI when running TouchesTest
-     Bug      #936: fix a bug that touch menu item may crash when selector is null
-     Feature  #892: use RTTI to simplify the codes
-     Feature  #903: add touch index for CCTouch
-     Refactor #934: add 'isEqual' function for CCString, make CCObject::isEqual to a virtual function
-     Refactor #940: use new icons and new background pictures with new logo of cocos2d-x
- [android]
-     Bug      #923: fix a bug that CCTextureCache::addImageAsync() crashes when a game enters foreground from background
-     Bug      #906: remove unneeded codes in CCImage_android.cpp
-     Bug      #910: fix a bug that create-android-project.bat may erase exist folder with appointed name
-     Bug      #884: fix a crash error caused by CocosDenshion on android simulator
-     Bug      #921: fix a bug that accelerometer axes inverted in Motorola Xoom tablet
-     Bug      #928: fix a bug that 16-bit texture is changed to 32-bit after application enter foreground
-     Bug      #935: fix a bug that terminateProcessJNI() invoke wrong jni function
-     Bug      #937: fix a compiling error on android x86
-     Bug      #941: fix a bug that volume of background music may not in [0, 1.0]
-     Feature  #887: define GL_GLEXT_PROTOTYPES = 1 automatically when compile on ndk r7
-     Feature  #919: improve build_native.sh and create-android-project.sh
-     Refactor #924: make loading music resources thread safe
-     Document #837: Write a document describes how to use jni
-     Document #914: update document to fit android r5~r7
- [iOS]
-     Bug      #917: implement CCFileUtils::getFileDataFromZip()
-     Feature  #893: remove cached data when receiving memory warning on iOS
- [bada]
-     Bug      #918: fix a compiling error after renaming airplay to marmalade
-     Bug      #927: fix a crash caused by invoking unloadEffect after invoking stopEffect
-     Bug      #938: fix a bug that glGenFramebuffersOES isn't supported on wave m device
-     Bug      #943: fix a bug that box2d can't be compiled successfully on bada sdk 1.2.1
-     Refactor #904: Recreate bada 2.0 projects
- [win32]
-     Bug      #915: fix a bug that msvc template uses old version of .cpp files
- [linux]
-     Bug      #888: fix compiling error with eclipse
-     Bug      #930: fix a crash caused by load jpg format files
- [marmalade]
-     Refactor #908: merge marmalade to latest cocos2d-x source
-
-cocos2d-1.0.1-x-0.10.0 @ Dec.2 2011
- [bada]
-    Feature  #223  integrate cocos2d-bada branch to master
-    Bug      #852  fix a bug that CCSpriteBatchNode cannot be drawn correctly
- [all platforms]
-    Feature  #854  integrate pthread and write a test case on all platforms
-    Feature  #465  implement CCTextureCache::addImageAsync()
-    Feature  #850  upgrade box2d from 2.1.2 to last 2.2.1
-    Feature  #781  add functions for effects
-    Feature  #760  add methods to get/set CCDirector::m_pNotificationNode
-    Bug      #883  fix the crash of SpriteTest
-    Refactor #879  use CCAssert() instead of assert() 
-    Document #882  Write a document describes some cautions about using pthread
- [android]
-    Feature  #838  support android x86 platform
-    Bug      #758  fix a bug that custom TTF fonts causing low memory
-    Bug      #848  fix a bug that accelerometer values are wrong if the content is scaled
-    Bug      #885  fix a bug that SimpleAudioEngine::setEffectVolume() don't take effect immediately
-    Document #864  write a describe how to build on sdk 4.0 & ndk-r7
-    Document #878  write a document describe how to build project for x86 android
-    Document #881  write a document describes building android ndk project with ndk-r7
- [linux]
-    Bug      #780  fix build error on ubuntu 11.0
-    Bug      #776  fix a bug in the audio player
-
-cocos2d-1.0.1-x-0.9.2 @ Oct.20,2011
- [linux]
-    Feature  #728  Linux port is born! http://www.cocos2d-x.org/projects/cocos2d-x/wiki/How_to_run_HelloWorld_and_tests_on_linux
- [all platforms]
-    Feature  #672  Implements copyWithZone() for CCShow & CCHide
-    Feature  #676  add more languages into CCApplication::getCurrentLanguage()
-    Feature  #678  add private constructor for CCArray
-    Feature  #684  add test case for CCApplication::getCurrentLanguage()
-    Feature  #685  add test case in LabelTest to display Chinese charactors
-    Bug      #675  Fix memory leak in CCLayer when using accelerometer
-    Bug      #686  CCTMXLayer::appendTileForGID() not setting Z index tag causes the first screen of tiles to be re-created
-    Bug      #689  CCRect should assert the width and height is positive
-    Bug      #698  CCSprite::init() is excited twice in all CCSprite's static methods
-    Bug      #700  CC_SWAP32 marco has a typo with leads to error swap result
-    Bug      #701  CCZHeader.version should be unsigned short
-    Bug      #715  CCFadeOut causes a crash when applied to CCMenuItem and m_pSelectedImage is NULL
-    Bug      #718  fix a typo in method CCMenu::alignItemsInRows
-    Bug      #749  CCSpriteTest crashes at the test case SpriteNilTexture
-    Bug      #750  CCTextureCache::textureForKey() can't find textures added by function addUIImage()
-    Refactor #677  Pass arguments by reference instead of pointer if possible
-    Refactor #703  Refactor Accelerometer. Because it only sends data to one delegate, so it needs only one setDelegate()
-    Document #692  Describe the usage of view orientation http://www.cocos2d-x.org/projects/cocos2d-x/wiki/About_device_orientation
- [android]
-    Feature #670  Pause & resume effect playing when activity is paused & resumed
-    Feature #687  Implement preloadBackgroundMusic to android
-    Feature #688  Support reading resources not only from apk
-    Feature #726  use external storage on android
-    Feature #746  add a helper method to draw filled polygons
-    Bug     #683  getPackagenameJNI() and getCurrentLanguageJNI() mustn't return invalid pointer
-    Bug     #696  Some android devices may crash at CCRenderTexture::end(bool)
-    Bug     #719  CocosDenshionTest crashes when start the test case on android
-    Bug     #714  CCLabelTTF has different visual result between Android & Windows
-    Bug     #727  Memory leak of NewStringUTF
-    Bug     #736  Remove android:installLocation in AndroidManifest.xml
-    Bug     #743  nativeInit is called with wrong screen size when running on device with software android buttons
-    Bug     #744  CCUserDefault crashes in v0.9.1
-    Bug     #755  Multi-touch causes crash on sum sung devices
- [ios]
-    Bug     #660  CCLabelBMFont image error in retina display
-    Bug     #693  CCLabelTTF can not break line by '\n' on iOS
-    Bug     #716  subbing & adding volume of sound effects don't change volume little by little on iOS
-    Bug     #738  Passing CCSize(width,0) to CCLabelTTF causes the label invisible
-    Bug     #753  visual orientation is wrong on ios5 simulator
-    Bug     #754  Missing png file for CCLabelAtlas cause crashes on iOS 4.3.3 & 5.0
- [win32]
-    Feature #731  add ability of simulating android back/menu key on win32  
-    Feature #735  add ability of simulating android enter/resume background on win32. Shift+F1=android Back, Shift+F2 =android Menu
-    Feature #745  export CCTime to all
-    Bug     #747  Win32 templates should put all resources into "Resources" folder
-    Bug     #748  build error in win32 release version
- [wophone]
-    Bug     #702  tests crash at the start on wophone devices
- [lua]
-    Feature #704  Print error descriptions ad pop error code in CCLuaScriptModule::executeString & CCLuaScriptModule::executeScriptFile
-    Feature #707  Support 'require' for lua on android
-    Feature #732  Add particle systems to lua bindings
-    Feature #733  Use ant to generate a lua project, refer to http://www.cocos2d-x.org/boards/11/topics/3957
-    Feature #734  Use ant to generate LuaCocos2d.cpp
-    
-
-cocos2d-1.0.1-x-0.9.1 @ Aug.17,2011
- [all platforms]
-    Feature  #347  Support custom TTF fonts
-    Feature  #536  Support PVR Texture
-    Feature  #645  update to cocos2d-iphone v1.0.1
-    Feature  #633  allow SimpleAudioEngine::playEffect repeatly
-    Feature  #630  implement CCRenderTexture::saveBuffer method
-    Feature  #613  Call executeCallFuncN instead of executeCallFunc in CCMenuItem::active()
-    Feature  #620  add Texture2d test case
-    Feature  #638  Add support for per ccz format
-    Feature  #641  users can CCRenderTexture::saveBuffer to any path
-    Feature  #643  swap Accelerometer input x/y according to the orientation
-    Feature  #665  add test case for CCRenderTexture::saveBuffer
-    Bug      #513  CCProgressTimer doesn't work with CCspriteFrameCache
-    Bug      #609  Retain & Release CCObject in CCSet
-    Bug      #628  CCMutableArray::arrayWithObjects should autorelease array object
-    Bug      #629  pass eImgFmt to initWithImageData in initWithImageFile
-    Bug      #636  CCTextureCache::textureForKey() can't find the right texture
-    Bug      #639  m_PositionInPixels isn't correctly initialized
-    Bug      #640  the image read from render texture is upseted
-    Bug      #644  CCSpriteBatchNode::removeAllChildrenWithCleanup() not work as expected
-    Bug      #680  CCtouchDispatcher::rearrangeHandlers() crash
-    Refactor #623  refactor Cocos2dJni.cpp
-    Refactor #652  refactor char* JniHelper::jstringtochar()
-    Document #622  comment CCUserDefault in doxygen format
-    Document #651  add CCFileUtils to oxygen api document
- [lua]
-    Feature  #679  bind lua to CocosDenshion
-    Feature  #647  add a method to set search path of lua script
-    Feature  #611  Add some methods in CCMenuItemLabel & CCMenuItemToggle for lua
-    Feature  #612  Export CCNode::getContentSizeInPixels & setContentSizeInPixels to lua
-    Feature  #653  add CCScheduler::unscheduleScriptFunc
-    Bug      #615  CCLOG may crash in LuaEngineImpl
- [android]
-    Feature  #610  Remove the support of ndk-r4 crystax.net version 
-    Bug      #608  CCRenderTexture cannot show textures after sleep and wake-up
-    Bug      #618  HelloWorld & Tests crash when X is clicked
-    Bug      #619  CCFadeTo may crash on android
-    Bug      #624  CCLabelTTF::setString("\n\n\n") crashes on android
-    Bug      #625  test_image_rgba4444.pvr.gz can not packed into app
-    Bug      #631  TextInputTest crash when input nothing
-    Bug      #637  Create resources folder instead of resource in create-android-project.sh
-    Bug      #648  CCRenderTexture::saveBuffer may crash on some devices like Moto Defy
-    Bug      #655  CCLabelTTF doesn't draw all characters, it may lost the last char
-    Refactor #656  refactor CCFileUtils, make it support reading data from directory other than assets 
- [ios]
-    Feature  #642  CCImage_ios.mm should be modified for saving image
-    Feature  #658  xcode3 template should create AppDelegate.cpp/.h instead of ${PROJECT_NAME}AppDelegate.cpp/.h
-    Feature  #661  fix TMXTiledMap for iPhone Retina mode
-    Bug      #667  AppDelegate::applicationDidEnterBackground isn't invoked on iOS
-    Bug      #668  CCLabelBMFont display 4 characters in a square per character block in retina mode
- [win32]
-    Feature  #620  change lua library to static lib 
-    Feature  #632  Update visual studio template for lua support
-
-   
-cocos2d-1.0.0-x-0.9.0 @ Jul.14,2011
- [all platforms]
-    Feature  #584  sync with cocos2d-iphone v1.0.0
-    Feature  #601  use Chipmunk v5.3.5
-    Feature  #581  change return types of xxxAction::reverse() to its own type
-    Bug      #522  CCSpriteFrameCache::addSpriteFramesWithFile(const char* pszPlist) crashed if the param have no '/'
-    Bug      #522  CCTextureCache::removeTextureForKey(const char*) cache the image path incorrectly
-    Bug      #573  CCLayerColor does not init its m_tColor, which will result to a random color
-    Bug      #576  some CCMutableDictionary methods must return _KeyT instead of std::string
-    Bug      #577  CCReverseTime may crash
-    Bug      #578  Debian & LavaFlow of ParticleTest have not picture, the effect of ParticleFire is wrong
-    Bug      #580  ShuffleTilesTest of EffectText may crash
- [ios]
-    Bug      #546  CCLabelTTF::labelWithString() works incorrectly when height = 0
-    Bug      #604  test.xcodeproject miss Summary & Info in xcode4 since v0.8.5
- [android]
-    Feature  #547  deal with line wrap of CCLabelTTF::initWithString(...) 
- [win32]
-    Bug      #659  ChipmunkTest Sensors crashes in a few seconds
-    Bug      #583  SimpleAudioEngine::playBackgroundMusic(const char*, true) have no sound on win32
-    Bug      #605  export C methods in CCNS.h to dll interfaces
-    Bug      #548  export CCConfiguration to dll interfaces
- [marmalade/airplay]
-    Bug      #600  incorrect memory allocation in marmalade port
-    Refactor #582  use libpng instead of CIwImage in CCImage_airplay.cpp
- [wophone]
-    Bug      #545  fix the wrong effect of ChipmunkTest
-    Bug      #606  PageTransitionForward in TransitionsTest has wrong visual effect
+#####11.其他细节的优化
 
 
 
-cocos2d-0.99.5-x-0.8.5 @ Jun.28,2011
- [all platforms]
-    Feature  #577  Lua Support! We export all the cocos2d-x classes & methods to lua! 
-                   Please compile and run HelloLua, and read HelloLua/Resource/hello.lua for more details. 
-                   And the lua new project template/wizard is ready on xcode3, xcode4 and VisualStudio2008 & 2010 
-    Feature  #398  Xcode4 templates! Run install-template-xcode.sh to do the magic
-    Feature  #323  Internationalization support! Add CCApplication::getCurrentLanguage() method on all platforms
-    Feature  #529  add static node() method to CCLayerColor & CCLayerGradient
-    Bug      #534  don't raise compile error if ios project includes CCImage.cpp & CCFileUtils.cpp
-    Bug      #429  Effect is wrong when the value of defaultAlphaPixelFormet=kCCTexture2DPixelFormat_A8 in CCTexture2D
-    Bug      #491  Unsafe cycle in CCScheduler::unscheduleAllSelectors
-    Bug      #502  Refactor the singleton mode of CCConfiguration
-    Bug      #512,#525  fix warnings in /Wall flag
-    Bug      #516  Undefined behavious in ccCArray.h (signed / unsigned conversion)
-    Bug      #518  CCScheduler::unscheduleAllSelectors() uses tHashSelectorEntry in wrong way
-    Bug      #521  the effect of PageTurn3D is curious
-    Bug      #523  CCParticleSystemQuad::particleWithFile() can't work correctly
-    Bug      #524  CCFileUtils::dictionaryWithContentsOfFile() can't parse special plist format
-    Bug      #526  glScissior can't work correctly when use autoscale function
-    Bug      #543  EffectTest renders x4 scale when use auto-scale on android/win32/wophone
-    Bug      #544  some test cases of TransitionTest renders x4 scale when use auto-scale on android/win32/wophone 
- [android]
-    Bug      #490  TextInputTest show words on soft keyboard detach instead of each key pressed
-    Bug      #507  RenderTextureTest failed on some android devices
-    Bug      #532  GLSurface has no response when tap screen frequently for a long time
-    Bug      #542  SimpleAudioEngine::setBackgroundMusicVolume() not work when background music changed
-    Refactor #535  remove skia dependence when drawing strings, which cause bug #507
- [ios]
-    Feature  #540  Add RootViewController into xcode3/xcode4 templates. Games can use ios rotation mechanism
- [win32]
-    Feature  #537  Update PVRFrame lib to version 2.8 for ATI graphic card new driver
- [wophone]
-    Bug      #539  games on wophone wva devices probably failed on reading resource from zip package
+####CrossApp 1.0.0 Update:#####1. Added animation system CAViewAnimationDemo contains animation sample#####2. Support 64-bit#####3. Support Android 5. 0+#####4. Optimized CASegmentControl interface#####5. Fixed bug that's caused by video player DLL in 0.6.1 version#####6. Fixed bug that CATextField crashed in Android platform in 0.6.1 version#####8. Added obtaining the info of current connected wifi (Including name, mac address and level)#####7. Added obtaining wifi list (Including name, mac address and level)Only available on Android platform#####9. Turning on/off Bluetooth devices, starting to search Bluetooth devices, stopping to search Bluetooth devices and obtaining the info of Bluetooth devices including name and addressOnly available on Android platform#####10. Added one-key to create project graphic tool in mac#####11. Other Details Tweaking
+
+
+**********************************************************************************
+
+#### CrossApp 0.6.1 更新内容： 
+#####修复0.6.0不能编译以及不稳定的bug
+
+#### CrossApp 0.6.1 Update:
+#####Fixed bug that user cannot compile and engine unstable in 0.6.0 version
+
+**********************************************************************************
+
+#### CrossApp 0.6.0 更新内容：  
+
+#####1.增加视频播放器CAVideoPlayerController类
+支持播放流媒体视频、MP4、flv、avi、mpeg、mov等视频格式
+目前不支持win32平台
+
+#####2.增加设备API
+1.获取网络状态，wifi或3g的判断以及网络是否可用  
+2.获取当前电池电量  
+3.获取、设置当前音量  
+4.更新版本，Android自动下载并添加到通知栏内，ios跳转到appstore
+
+#####3.修改优化CAAlertView
+1.UI改为模仿iOS风格
+2.代码结构优化
+
+#####4.修改优化CASegmentControl
+1.UI改为模仿iOS风格
+2.代码结构优化
+
+#####5.修改优化CAView
+优化子视图管理性能
+
+#####6.修改优化CATextField输入文字有时光标位置不对的bug
+
+#####7.文件目录变动
+删除extensions/GUI/CAUIHelper 文件
+删除extensions/studio/CAStudioViewController 文件
+增加extensions/studio/CAStudioViewParser 文件
+
+在iOS平台，增加extensions/device/Device_ios/Reachability 文件
+添加Frameworks ： MediaPlayer 与 SystemConfiguration
+
+android平台java文件有变动
+
+#####8.其他一些细节的优化
+
+本次更新文件有多处变动，旧版本更新请参考更新内容7手动增删文件，给您带来的不便请谅解。
+
+
+####CrossApp 0.6.0 Update
+
+#####1. Added video player CAVideoPlayerController class
+Streaming video, MP4, flv, avi, mpeg, mov and other video formats support, not available on win32 platform for now.
+
+#####2. Added API of device
+1. Obtain network status, wifi or 3g judgement and if network is available or not
+2. Obtain current battery level
+3. Obtain and set current volume
+4. When user updates their app version, system will auto download and add into notification bar in Android; their current interface will jump to AppStore in iOS
+
+#####3. Optimized CAAlertView
+1. UI was changed into iOS style 2. Optimized code structure
+
+#####4. Optimized CASegmentControl
+1. UI was changed into iOS style 2. Optimized code structure
+
+#####5. Optimized CAView
+Optimized sub view management performance
+
+#####6. Fixed bug that sometimes cursor is in wrong position when typing text in CATextField
+
+#####7. File directory change
+Deleted extensions/GUI/CAUIHelper; 
+Deleted extensions/studio/CAStudioViewController; 
+Added extensions/studio/CAStudioViewParser
+
+In iOS platform, added extensions/device/Device_ios/Reachability and Frameworks : MediaPlayer and SystemConfiguration
+
+Java files alteration in Android platform
+
+#####8. Other Details Tweaking
+
+This update contains many file changes, for previous version users, please manually add and delete files referring to update item 7. And CrossApp team offers our applogies to you for the inconvenience has caused you.
+
+
+**********************************************************************************
+
+#### CrossApp 0.5.0 更新内容：  
+
+#####1.修改优化CANavigationController
+1.修改所管理的navigationBar为多个
+2.并将之前navigationBar的属性移植在CANavigationController中
+
+#####2.修改优化CATabBarController
+并将之前tabBar的属性移植在CATabBarController中
+
+#####3.修复优化CAPickerView
+1.修改有时选不中的bug
+2.性能优化
+
+#####4.修改优化base64
+1.win32不能编译的bug
+2.增加Encode方法
+
+#####5.修改优化触摸事件分发机制
+修改之前多个CATextField之间切换编辑状态要点2次的问题
+
+#####6.其他一些细节的优化
+在本C++引擎中移除掉JavaScript版本，将来会有单独的JavaScript版本发布
+
+##本次更新影响到了CANavigationController与CATabBarController一些接口，为您带来的不便尽请谅解。
+
+
+####CrossApp 0.5.0 Update:
+
+#####1. Optimized CANavigationController
+1. Modified the controlled navigationBar into multiple ones 
+2. And port the properties of previous navigationBar to CANavigationController.
+
+#####2. Optimized CATabBarController
+Port the properties of previous tabBar to CATabBarController.
+
+#####3. Optimized CAPickerView
+1. Fixed bug that sometimes system does not have a return value for the selected result 
+2. Optimized performance
+
+#####4. Optimized base64
+1. Fixed bug that base64 cannot be compiled in win32 
+2. Added Encode method
+
+#####5. Optimized touch event distributed mechanism
+Fixed bug that user needs to click two times to switch edit status between multiple CATextField.
+
+#####6. Other Details Tweaking
+We removed the JavaScript version of this C++ engine, and will release a separate JavaScript version in the future.
+
+##This update affects some interfaces in CANavigationController and CATabBarController, and we offer our apologies to you for the inconvenience has caused you.
+
+**********************************************************************************
+
+#### CrossApp 0.4.3 更新内容：  
+
+#####1.修复md5在win32不能编译的bug
+
+#####2.增加HttpClient在post文件的同时postData的支持
+
+#####3.修复CATextView与CATextField某种情况插入文字的bug
+
+#####4.修复CATextView光标不闪的bug
+
+#####5.优化一些控件与组建的默认尺寸
+
+#####6.修复一些在win32编译的警告
+在此，特别鸣谢github为 Jeff ，CrossApp官方群名为 广州－201103L 的网友为我们提交的优化
+
+#####7.修复触摸事件分发有时会执行2次touchBegin的bug
+在此，特别鸣谢CrossApp官方群名为 觉今是而昨非 的网友为我们提交的优化
+
+
+#### CrossApp 0. 4. 3 Update:
+
+#####1. Fixed bug that md5 cannot be compiled in win32
+
+#####2. Added HttpClient’s support to postData in post file
+
+#####3. Fixed bug that text insert error in CATextView and CATextField
+
+#####4. Fixed bug that CATextView’s cursor does not blink
+
+#####5. Optimized the default dimensions of some controls and components
+
+#####6. Fix some compiling warnings in win32
+Here, special thanks to Jeff from Github and a friend naming "Canton - 201103L" from CrossApp official QQ group for their submitted optimizations.<br/>
+
+#####7. Fixed bug that system act touchBegin two times when touch event dispatch sometimes<br/>
+Here, special thanks to a friend naming “Juejinshierzuofei” from CrossApp official QQ group for his submitted optimization.<br/>
+
+
+**********************************************************************************
+
+#### CrossApp 0.4.2 更新内容：  
+
+#####1.添加WebView控件
+WebView基于原生内置浏览器控件封装而成，该控件功能强大，除了具有一般View的属性和设置外，还可以对url请求、页面加载、渲染、页面交互进行强大的处理。不仅可以通过loadUrl方法设置当前webView需要访问的网址，还可以加载绝⼤部分的常见文件 html\htm pdf、doc、ppt、txt等等。
+
+#####2.修改上版本CAImage崩溃的bug
+
+#####3.其他一些细节修改
+
+
+#### CrossApp 0.4.2 Update:  
+
+#####1. Added WebView Controls
+WebView is an encapsulation based on native built-in browser control. It has great functionalities, aside from possessing normal View attributes and set, WebView is fully capable of dealing with url request, page load, rendering, page interacitve. And it’s not only able to set current webView desirable access url via loadUrl method, but also capable of loading most of common file types such as html\htm, pdf, doc, ppt, txt etc.
+
+#####2. Fixed CAImage breakdown bug in previous version
+
+#####3. Other Details Tweaking
+
+**********************************************************************************
+
+#### CrossApp 0.4.1 更新内容：  
+
+#####1.添加友盟统计sdk三方库
+支持iOS、android平台
+
+#####2.添加shareSDK社会化分享三方库
+支持iOS、android平台
+
+#####3.更新js版本
+
+#####4.修改部分bug
+
+#####5.优化一些细节
+
+
+#### CrossApp 0.4.1 Update:
+
+##### 1. Added Umeng statistics sdk (third-party library)
+iOS and Android platform support
+
+##### 2. Added Share SDK social share (third-party library)
+iOS and Android platform support
+
+##### 3. CrossApp-js version update
+
+##### 4. Fixed some bugs
+
+##### 5. Optimized some details
+
+**********************************************************************************
+
+#### CrossApp 0.3.10 更新内容：  
+
+#####1.添加CrossAppStyle
+文字信息模型类，并支持获取对应CALabel文字渲染后的高度、宽度等信息。
+
+#####2.优化文字内存占用
+
+#####3.优化文字默认行距
+
+#####4.优化文字在iOS与Mac平台默认使用繁体字库的问题
+
+#####5.文字性能再次优化
+
+#####6.优化DownloadManager
+优化DownloadManager，修复下载中不能立即停止并删除下载命令的bug
+
+#####7.修复上版本在vs没有正确添加CADevice的bug
+
+#####8.其他一些细节调整
+
+
+#### CrossApp 0.3.10 Update:
+
+#####1. Added CrossAppStyle
+Text message model class, supports to obtain corresponding height, width and other info after CALabel text rendering.<br/>
+
+#####2. Optimized Text Memory Usage
+
+#####3. Optimized Text Default Line Spacing
+
+#####4. Optimized Text Uses Traditional Chinese Character Library by Default on iOS and Mac Platform
+
+#####5. Optimized Text Performance Second Time
+
+#####6. Optimized DownloadManager
+Optimized DownloadManager, fixed bug that user cannot instant stop and delete download order<br/>
+
+#####7. Fixed Bug That CADevice Was Not Correctly Added to VS in Previous Release
+
+#####8. Other Details Tweaking
+
+
+**********************************************************************************
+
+#### CrossApp 0.3.9 更新内容：  
+
+#####1.CALabel添加文字加粗功能
+
+#####2.CALabel添加文字斜体功能
+
+#####3.CALabel添加文字下划线功能
+
+#####4.优化DownloadManager
+文件下载管理系统优化，并修正上版本头文件引用错误
+
+#####5.重新整理设备相关系统接口
+如：GPS获取、摄像头与相册调用、通讯录获取等
+
+#####6.CANavigationController增加二级界面向右划返回上一级界面功能
+
+#####7.优化openGl裁剪功能错位问题
+
+#####8.优化openGl显示图像微差问题
+
+#####9.其他一些细节调整
+
+####升级建议：
+重新创建工程，并拷贝Classes与Resources中文件
+
+
+#### CrossApp 0. 3. 9 Update:
+
+#####1. Added text bold functionality on CALabel
+
+#####2. Added text bold italic functionality on CALabel
+
+#####3. Added text underline functionality on CALabel
+
+#####4. Optimized DownloadManager
+Optimized file download management system and fixed header file reference bug from previous release<br/>
+
+#####5. Rearranged device related system interface
+For example: GPS info obtaining, camera and photo album calling and address book obtaining etc.<br/>
+
+#####6. Added sliding right on secondary interface to return upper-level interface functionality on CANavigationController
+
+#####7. Optimized OpenGL clipping functionality’s slight error
+
+#####8. Optimized OpenGL imaging coordinates’s slight error
+
+#####9. Other details tweaking
+
+####Suggestion:
+rebuild project and copy files in Classes and Resources<br/>
+
+
+**********************************************************************************
+
+
+#### CrossApp 0.3.8 更新内容：  
+
+#####1.融合CrossApp-javascript版
+基本支持CrossApp 0.3.8的所有功能
+
+#####2.增加CATextView
+多行输入控件，用法与CATextField类似
+
+#####3.增加DownloadManager
+文件下载管理系统
+
+#####4.增加文字行距接口
+
+#####5.优化文字边缘毛边问题
+
+#####6.优化CAScrollView等滑动容器控件触摸体验
+
+#####7.其他一些细节调整
+
+####升级建议：
+重新创建工程，并拷贝Classes与Resources中文件
+
+
+#### CrossApp 0. 3. 8 Update:
+
+#####1. CrossApp-javascript version integration
+Basic support for all functionalities of CrossApp 0. 3. 8<br/>
+
+#####2. Added CATextView
+multi-line text input control, its usage is similar with CATextField<br/>
+
+#####3. Added DownloadManager
+file download management system<br/>
+
+#####4. Added text line spacing interface
+
+#####5. Text raw edge issue optimization
+
+#####6. Touch experience optimization of CAScrollView and other slide containers control
+
+#####7. Other details tweaking
+
+####Suggestion:
+rebuild project and copy files in Classes and Resources<br/>
+
+
+**********************************************************************************
+
+
+#### CrossApp 0.3.7 更新内容：  
+
+#####1.优化触摸分发系统
+
+#####2.修复CATabBarController的bug
+
+#####3.修复CATextField的bug
+
+#####4.修改mac平台文字加载机制
+
+#####5.其他一些细节调整
+
+####升级建议：
+重新拷贝java文件到android工程中
+
+
+#### CrossApp 0. 3. 7 Update:
+
+#####1. Touch Distributed System Optimization
+
+#####2. Fixed CATabBarController’s Bug
+
+#####3. Fixed CATextField’s Bug
+
+#####4. Fixed text loading mechanism in Mac platform
+
+#####5. Other details tweaking
+
+####Suggestion:
+Recopy java files into android project
+
+
+**********************************************************************************
+
+
+#### CrossApp 0.3.6 更新内容：  
+
+#####1.添加CAPullToRefreshView
+CAListView、CATableView、CACollectionView等上拉、下拉刷新插件，用法见demo中CollectionViewTest。
+CATableView老版上下拉刷新监听代理已移除
+
+#####2.CATabBarController添加左右滑动手势换页效果
+需手动设置相关属性开启
+
+#####3.优化触摸事件分发系统
+增加支持同方向滑动容器嵌套时子容器滑到头自动切换监听父容器的功能
+
+#####4.优化CAProgress
+
+#####5.优化CAScale9ImageView
+
+#####6.删减CAImageView接口
+
+#####7.修正CACollectionViewDataSource 的代理方法命名
+
+##virtual unsigned int numberOfSectionsInCollectioView()
+##改为
+##virtual unsigned int numberOfSections(CACollectionView *collectionView)
+
+##virtual unsigned int numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section)
+##改为
+##virtual unsigned int numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)
+
+
+####升级建议：
+注意第7条的修改，如果用到该代理方法需改名与其一致
+
+
+#### CrossApp.0 3. 6 Update:
+
+##### 1. Added CAPullToRefreshView
+Added pull up and pull down refresh plug-ins of CAListView, CATableView and CACollectionView, please view their usage in CollectionViewTest of demo. Removed pull up and pull down refresh monitoring agent of older version CATableView.<br/>
+
+##### 2. Added page turning effect of left and right swipe gestures
+You are required to manually set relative properties to launch this effect.<br/>
+
+##### 3. Touch Event Distributed System Optimization
+Added functionality that supports system auto switching to monitor parent container after child container slides to end when same direction sliding container is nested.<br/>
+
+##### 4. CAProgress Optimization
+
+##### 5. CAScale9ImageView Optimization
+
+##### 6. Deleted CAImageView Interface
+
+##### 7. Amended Agent Method Naming of CACollectionViewDataSource
+
+##virtual unsigned int numberOfSectionsInCollectioView()<br/>
+##is changed as<br/>
+##virtual unsigned int numberOfSections(CACollectionView *collectionView)<br/>
+
+##virtual unsigned int numberOfRowsInSectionCollectionView(CACollectionView *collectionView, unsigned int section)<br/>
+##is changed as<br/>
+##virtual unsigned int numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)<br/>
+
+#### Suggestion:
+Note seventh item’s amendment, if you use this agent method, you should follow the same name of it.<br/>
 
 
 
-cocos2d-0.99.5-x-0.8.4 @ May.26,2011
- [android]
-    Feature  #496  SUPPORT ANDROID 3.0! We test it on both Motorola XOOM & Samsung Galaxy Tab 10.1 (Highlight!!!!!)
-    Bug      #494  typo fixed, Cocos2dxActivity::setPackgeName() to setPackageName()
-    Bug      #495  Memory leak of CCFileUtils::getWriteablePath()
-    Bug      #497  soft keyboard stays shown on some devices while the project includes CCTextFieldTTF
-    Bug      #501  projects creaed by android template have the same package name
-    Bug      #510  Tests progress is killed at the power down phase
- [all platforms]
-    Feature  #503  upgrade chipmunk from 5.1 to 5.3.4, keep sync with cocos2d-iphone (Highlight!)
-    Feature  #509  For integrting IME, we had to rotate UI to landscape by default
-    Bug      #499  CCRGBAProtocol isn't inherited and implemented in CCMenuItemSprite
- [ios]
-    Bug      #493  the return value of CCFileUtils::getWriteablePath() is not end with '/'
-    Bug      #508  Problem in running Tests in Retina resolution since 0.8.2
- [win32]
-    Bug      #492  CCFileUtils::fullPathFromRelativeFile forget to consider the path separated by '\'
-    Feature  #489  Use GetCurrentDirectory instead of GetModuleFileName in CCFileUtils_win32.cpp
+**********************************************************************************
+
+
+#### CrossApp 0.3.5 更新内容：  
+
+#####1.添加CAStepper
+一个数字输入控件,它可以递进式输入数量。
+
+#####2.修改CAAlertView接口
+接口重写
+
+#####3.优化CATextField
+修改bug，并增加代理监听方法
+
+#####4.优化CAProgress
+
+#####5.优化CASegmentedControl
+
+#####6.优化文字显示
+
+#####7.删除rapidjson
+
+####升级建议：
+#1.重新拷贝java文件到android工程中，
+#2.xcode需删除extensions目录中rapidjson文件夹
+#3.从demo中拷贝新控件默认素材
+
+
+#### CrossApp 0. 3. 5 Update:
+
+##### 1. Added CAStepper
+A number input control which is able to progressively input number.<br/>
+
+##### 2. Modified CAAlertView Interface
+Rewrote the interface.<br/>
+
+##### 3. CATextField Optimization
+Fixed bug and added agent monitoring method.<br/>
+
+##### 4. CAProgress Optimization
+
+##### 5. CASegmentedControl Optimization
+
+##### 6. Text display Optimization
+
+##### 7. Deleted rapidjson
+
+#### Suggestion:
+#1. Recopy java files into android project
+#2. In xcode, you need to delete rapidjson folder of extensions directory
+#3. Copy default material of new control from demo
+
+
+**********************************************************************************
+
+
+#### CrossApp 0.3.4 更新内容：  
+
+#####1.添加CADrawerController
+抽屉视图管理器
+
+#####3.添加CAListView
+CATableView的简化版，并添加横向排列功能
+
+#####2.添加CAPageControl
+pageView页面进度指示器
+
+#####3.优化CAActivityIndicatorView
+增加自定义图片接口
+增加自定义背景图片接口
+
+#####4.优化CAImageView
+添加图片适配方式接口，可支持(铺满、铺满不变形并裁减多余部分、显示全部不变形并居中、显示全部不变形并保持高度不变、显示全部不变形并保持宽度不变)
+
+#####5.优化CATextField
+修改设置背景接口
+
+#####6.优化CASegmentedControl
+添加接口并修复一些bug
+
+#####7.优化CAPickerView
+添加接口并修复一些bug
+
+#####8.其他bug修复与优化
 
 
 
-cocos2d-0.99.5-x-0.8.3 @ May.12,2011
- [all platforms]
-    Feature  #317  wrap input box for game dev, CCTextFieldTTF. (Highlight!)
-    Feature  #455  implement CCUserDefault for data persistence (Highlight!)
-    Feature  #456  integrate libcurl for network access (Highlight!)
-    Feature  #468  implement CCProfiler & CCProfilingTimer
-    Feature  #450  can set default pixel format other than RGBA888
-    Feature  #449  Remove the sources for mac platform. We plan to focus on mobile platforms & reduce the complexity
-    Refactor #451  Remove the event dispatcher and refactor CCLayer & CCMenu & CCParticleSystemPoint.
-    Refactor #452  Refactor CCDirector CCGrid CCNode, reduce the complexity
-    Refactor #472  Refactor duplicated modules under cocos2dx/platform, reduce the complexity
-    Bug      #341  CCTMXFiledMap crashed when a child is not the obj of CCTMXLayer
-    Bug      #371  A layer can't registered as a StandardTouchDelegate when touch event is handling
-    Bug      #428  Function addChild low efficiency
-    Bug      #448  CCCallFuncO crashes
-    Bug      #467  CCLayer:m_eTouchDelegateType = ccTouchDeletateAllBit all the time
-    Bug      #471  invoke CCFileUtils::setResourcePath may cause loading texture for ParticleSystem failed
-    Bug      #484  CCTextureAtlas::initWithTexture() may cause memory leak
-    Bug      #486  transition test FlipX, FlipY, FlipAngular, ZoomFlipXxx flickers on ios simulator & device
- [ios]
-    Bug      #447  really exit application when "x" button is clicked
-    Bug      #460  cocos2dx + box2d template cannot find libxml2.dylib
- [android]
-    Feature  #393  use full version of libxml2, with xmlXPath.. serial methods
-    Feature  #477  Set compilation default ndk version to r5
-    Bug      #374  replace the method for EGL rendering context lost
-    Bug      #453  Android Cocosdenshion can't replace background music
-    Bug      #462  no applicationDidEnterBackground / applicationWillEnterBackground on Android
-    Bug      #470  use GAME_ROOT or other words instead of HELLOWORLD_ROOT in anroid new projects
-    Bug      #475  CCImage::initWithString return true even if the bitmap hasn't been initialized
- [win32]
-    Feature  #454  Modify the including path of Box2D genereated by win32 template
-    Bug      #459  the project create by template for vs use the RuntimeLibrary MTd, different with other project
- [wophone] 
-    Feature  #482  Modify the resource data path for the new WoPhone SDK
-    Feature  #487  Implement the function CCFiltUtils::getWriteablePath() on wophone
-    Refactor #466  Refactor CCFileUtils for the new packing approach on wophone
-    Bug      #481  After power down & up, backlight will turn off automaticlly if there's no operation
-    Bug      #485  reduce the CPU occupation, modify the approach of FPS control on wophone
- [airplay]
-    Feature  #480  add template for airplay
+#### CrossApp 0. 3. 4 Update:
+##### 1. Added CADrawerController
+Drawer view controller<br/>
+
+##### 2. Added CAListView
+CATableView’s simplified version, and added horizontal arrangement functionality<br/>
+
+##### 3. Added CAPageControl
+pageView page progress indicator<br/>
+
+##### 4. CAActivityIndicatorView Optimization
+Added customized image interface, and added customized background image interface<br/>
+
+##### 5. CAImageView Optimization
+Added image adaptation mode interface which supports: fully-stretched, fully-stretched with no distortion and cut excess part, fully-displayed with no distortion and centered, fully-displayed with no distortion and stay same height, fully-displayed with no distortion and stay same width.<br/>
+
+##### 6. CATextField Optimization
+Modified background setting interface<br/>
+
+##### 7. CASegmentedControl Optimization
+Added interfaces and fixed some bugs<br/>
+
+##### 8. CAPickerView Optimization
+Added interfaces and fixed some bugs<br/>
+
+##### 9. Fixed and Optimized Other Bugs
+
+
+**********************************************************************************
+
+
+#### CrossApp 0.3.3 更新内容：  
+
+#####1.添加CAActivityIndicatorView
+加载状态视图
+
+#####2.优化文字性能
+增加缓存机制，文字性能再次提升，
+
+#####3.优化CATabBar
+增加一些方法与接口
+
+#####4.优化CATableView与CACollectionView
+增加section的Header与Footer悬停效果
+
+#####5.优化CATextField
+优化并修复一些bug
+
+#####6.其他CAVector，CADeque，CAList
+优化一些接口。增加三个容器之间的相互转化
+
+#####7.其他bug修复与优化
+
+
+#### CrossApp 0. 3. 3 Update:
+#####1. Added CAActivityIndicatorView
+Load status view.<br/>
+
+#####2. Text Performance Optimization
+Added cache mechanism, text performance had another improvement.<br/>
+
+#####3. CATabBar Optimization
+Added some methods and interfaces.<br/>
+
+#####4. CATableView and CACollectionView Optimization
+Added section’s Header and Footer’s hovering effect.<br/>
+
+#####5. CATextField Optimization
+Optimized and fixed some bugs.<br/>
+
+#####6. Other CAVector, CADeque, CAList
+Optimized some interfaces. Added the mutual transformation among three containers.<br/>
+
+#####7. Fixed and Optimized other Bugs
+
+
+**********************************************************************************
+
+
+#### CrossApp 0.3.2 更新内容：  
+
+#####1.添加md5加密类
+
+#####2.添加CACalendar
+时间日期类
+
+#####3.重写CATextField
+重写后的textField效率有明显提升
+
+#####4.优化CAPageView
+CAPageView增加可监听选中当前页的回调方法
+
+#####5.优化CALabel
+增加sizetoFit方法，以便于修改label自己的大小为文字实际大小
+
+#####6.其他bug修复
+
+
+#### CrossApp 0. 3. 2 Update:
+
+#####1. Added md5 Encryption Class
+
+#####2. Added CACalendar
+Date & Time classes<br/>
+
+#####3. Rewrite CATextField
+Rewrite-version textField has a better efficiency<br/>
+
+#####4. CAPageView Optimization
+Added callmonitoring current selected page of callback method for CAPageView<br/>
+
+#####5. CALabel Optimization
+Added sizetoFit method for modifying label’s own size into text actual size<br/>
+
+#####6. Fixed Other Bugs
+
+
+**********************************************************************************
+
+
+####【正式版】CrossApp 0.3.1 更新内容：  
+
+#####1.添加CAPickerView
+列表选择器，该控件是智能手机中比较常用到的一个控件，它通过转轮界面提供一系列多值选项，它向用户显示信息，也收集用户输入。
+
+#####2.添加CAPageView
+翻页滑动容器，该控件是智能手机中比较常用到的一个控件，它通过监听手指滑动手势来体现翻页的效果。
+
+#####3.添加CAIndexPath2E、CAIndexPath3E
+二维、三维索引类
+
+#####4.CATableView，CACollectionView增加cell复用机制
+复用机制使得CATableView，CACollectionView不再担心超大数据量的显示，且提升用户体验
+
+#####5.优化触摸分发系统
+优化触摸分发系统，可更加人性化的分发触摸事件
+
+#####6.httpClient优化
+httpClient由原来的一个单独异步线程改为可实现16个异步线程
+
+#####7.修复CAList、CADeque的bug
+
+#####8.修复CATextField在部分机型崩溃的bug
 
 
 
-cocos2d-0.99.5-x-0.8.2 @ Apr.7,2011
- [all platforms]
-    390    Feature    Implement performance test
-    411    Feature    support .plist format outputed by the last version of Zwoptex 
-    415    Feature    Make all xxxFromFile methods can accept relative path
-    439    Feature    all file reading must pass though CCFileUtils::getFileData
-    441    Feature    Initialize pointers in construction & detect them in destruction
-    427    Refactor   refactor CCTMXXMLParser with multi-platform CCSAXParser design
-    434    Refactor   refactor class CCFileUtils
-    396    Refactor   remove ccxScopedPtr & ccxScopedArray, use STL instead
-    350    Bug        TransitionFade flickers
-    391    Bug        CCSpriteFrameCache doesn't support .plist files which format isn't equal to 0
-    420    Bug        CCSprite::spriteWithFile() returns a valid object when the image file isn't present
-    440    Bug        Can't show MessageBox when imageFromFile can't find the image
- [ios]
-    349    Bug        deal with plist files in binary format
-    435    Bug        CocosDenshion crashes at foreground/background switching
-    438    Bug        MotionStreak Test crashes on device
- [android]
-    421    Feature    Add a template & new project script for android
-    443    Feature    implement CCKeypadDelegate on android
-    367    Bug        Android.mk of HelloWorld and Tests depends on alphabet order
-    422    Bug        the 2nd point in multi-touch isn't located to the correct coordinate
-    430    Bug        replace glColor4ub with glColor4f to avoid "called unimplement OpenGL ES API" on some android devices
-    431    Bug        ParticleFlower on G3 can't show the particles correctly
- [win32]
-    417    Bug        No touchEnd when the mouse move out from the window
-    424    Bug        open vs2010.sln says cannot open CCamera.cpp
- [airplay]
-    379    Feature    integrate airplay sdk port
-    442    feature    implement CocosDenshion on airplay port
-	
-	
-	
-cocos2d-0.99.5-x-0.8.1 @ Mar.21,2011
- [all platforms]
-    400    Bug        typo, rename CCamera.cpp to CCCamera
-    403    Feature    rename cocos2d::UIEvent to cocos2d::CCEvent, to avoid class name conflict on ios
-    405	   Bug        CCConfiguration::checkForGLExtension(const string&) sometimes may crashes
-    407    Bug        replace "CCGL.h" with "CCGL.h" in CCCamera.cpp, for case-sensitive systems
-    408    Bug        memory leak in CCImage::_initWithPngData
-    409    Feature    rename cocos2d::NSArray to cocos2d::CCArray, to avoid the conflict on ios
-    418    Feature    add copyright of cocos2d-iphone original authors to each file
-    423    Bug        fix compilation warnings when COCOS2D_DEBUG == 2
- [ios]
-    404    Bug        HiResTest isnot prerfect on HVGA/Retina yet
-    410    Bug        xcode3 template, cannot find libxml from header searh paths in release build
-    419    Bug        test case TMXIsoVertexZ in TileMapTst has wrong effect on ios
- [android]
-    399    Bug        HelloWorld crashes when the screen is touched
-    405    Bug        CocosDenshion test, BGM isn't paused after HOME key tapped
- [win32]
-    395    Bug        make AppDelegate.cpp created by VS wizard portable without any modification
-    401    Bug        VisualStudio template for 2010 OutputDir errors
+#### CrossApp 0. 3. 1 Update
+
+##### 1. Added CAPickerView
+List selector, a commonly used control in smartphone, is able to provide a series of multi-value options via rotative sliding menu, display information to users as well as collecting users’ input.<br/>
+
+##### 2. Added CAPageView
+Page turning sliding container, a commonly used control in smartphone, is able to implement page turning effect by monitoring fingers’ swipe gestures.<br/>
+
+##### 3. Added CAIndexPath2E and CAIndexPath3E
+Two and three dimensional index class<br/>
+
+##### 4. Added Cell Reuse Mechanism of CATableView and CACollectionView
+Reuse mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.<br/>
+
+##### 5. Touch Distributed System Optimization
+We optimized touch distributed system, and now it can distribute touch event in a more humanized style.<br/>
+
+##### 6. httpClient Optimization
+The previous single asynchronous threaded httpClient is changed into a max 16 asynchronous threaded one<br/>
+
+##### 7. Fixed CAList and CADeque’s Bug
+
+##### 8. Fixed bug that CATextField had crash in some phone models
 
 
 
-cocos2d-0.99.5-x-0.8.0 @ Mar.15,2011
- [all platforms]
-    316    Feature    Resolution auto adjustment, auto scale HVGA resource to WVGA or any other resolutions
-    336    Refactor   refactor platform porting layer
-    253    Bug        xml parser sometimes crashes
-    375    Feature    Rename NS,CG,UI prefix classes/definitions to CC prefix, avoid the crash at ios dev
-    332    Feature    upgrade tests from 0.99.4 to 0.99.5
- [ios]
-    363    Bug        CCLabelTTF can't treat line breaks and wrapping correctly.
-    351    Feature    CCLabelTTF cannot automatic line break on iphone
-    352    Bug        ccRemoveHDSuffixFromFile & CCFileUtils::getDoubleResolutionImage isnot work
-    392    Bug        border of sprite debug draw isn't scaled if enableRetinaDisplay(true)
-    385    Feature    implement ccos2d::CCLog
-    388    Feature    update the template for iOS
- [android]
-    247    Feature    support multitouch
-    242    Feature    support accelerometer on android
-    353    Feature    support jpg on android
-    344    Feature    add APP_ABI := armeabi armeabi-v7a to improve the performance on some devices
-    356    Bug        CCLabelTTF::initWithString crashed
- [wophone]
-    386    Bug        resolve the compile conflict on wophone sdk
-    383    Bug        The approach which handle left soft-key clicked is not work
-    377    Feature    Replace the word "uphone" with "wophone"
-    357    Bug        CCLabelTTF doesn't support words contain line breaks.
-    348    Bug        CCLabelTTF blur if color = white and fontSize < 24
- [win32]
-    373    Feature    Disable PVRFrame window when cocos2d running
-    355    Bug        CCLabelTTF doesn't support line breaks and wrapping words
-    300    Feature    wizard for Visual C++ 2008 Express & VS2010 Express/Professional
-	
+**********************************************************************************
+
+####【正式版】CrossApp 0.3.0 更新内容：  
+
+#####1.CrossApp-Design发布
+CrossApp UI界面编辑器正式推出，这将会大大的加快开发者们开发移动应用的速度。
+
+#####2.大幅优化文字性能
+文字机制重写，android平台文字加载速度提升约80%，iOS平台文字加载速度提升约50%。
+
+#####3.优化渲染性能
+渲染帧率大幅提升，几乎与原生应用性能近似，部分情况比原生更优（官网中有详细的测试指标的数值文档下载，请查阅）
+
+#####4.优化CANavigationController
+优化CANavigationController，大幅度的提升界面管理的效率。
+
+#####5.优化CANavigationBar
+添加设置标题与按钮文字颜色的接口。
+修复更新背景Image的bug。
+
+#####6.优化CASwitch
+针对CASwitch的用户体验进行了优化。
+
+#####7.修复CATableView与CACollectionView
+修复CATableView与CACollectionView设置选中项的bug。
+
+#####8.添加对CrossApp-Design导出文件的支持。
+
+#####9.添加新的demo（开发者们反应强烈，所以增加）
+新的demo对CrossApp的每一个控件进行了详细的展示，方便大家参考。
+
+#####本版本是CrossApp首次推出正式版本，性能与原生应用近似，已到达可制作商业化产品的开发标准，官方也正式对外准许开发者们使用CrossApp在任何商业移动产品的开发中。
+开源的跨平台移动应用开发引擎CrossApp基于MIT开源协议，开发者可以毫无顾虑、完全免费的使用CrossApp开发任何商业项目。
 
 
-cocos2d-0.99.5-x-0.7.2 @ Jan.26,2011
- [all platforms]
-    - upgrade engine logic internal & interfaces to 0.99.5
-    - the list of menu items in tests is showing how to scroll now
-    - lots of bugs fixed
- [iphone]
-    - add new project templates for Xcode
-    - add the c++ wrapper for CocosDenshion::SimpleAudioEngine
-    - support UTF8 charactors in text renderring, such as CCLabelTTF, CCMenuItemFont
- [android]
-    - add CocosDenshion::SimpleAudioEngine implement on android
-    - the engine can adjust the apk filename automatically
-    - the engine will not crash at surface recreate, especially at background-to-foreground switching
- [wophone]
-    - switch the game to background, then press power key will not cause the background music play again
-    - remove the methods of using resouce map in cocos2d-wophone & SimpleAudioEngine. 
-      Only zip resource is recommended and suppported.
-    - can auto find the installed path of your game, and load zip resource file from the current folder. 
-      No absolute path in code any more. Do this to support installing games to micro-SD card
-      
-      
 
-cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010
- [all platforms]
-    - add CCKeypadDelegate class, which enable CCLayer to respond "back" key in wophone & android
-    - Add namespace for CocosDenshion
-    - fix compile errors when enable CC_XXX_DEBUG_DRAW switchs in ccConfig.h
-    - fix memory leaks on each platform
-    - more details: http://www.cocos2d-x.org/versions/show/5
- [android] 
-    - Run through all the test cases of cocos2d, support ndk r4,r5, sdk higher than 2.0. Tested on HTC G2,G3,G6,G7
-    - HelloWorld integrate all platforms in one directory now
-    - WANRNING: this version isn't ready for android games porting yet. The CocosDenshion isn't ported to android,
-      and this version will crashes when screen orientation changes or the game gack to foreground 
-      look more on this bug http://www.cocos2d-x.org/boards/10/topics/202
- [iphone]  
-    - Add support of loading textureImageData from the ParticleDesign plist file
-    - Fix more then 3000 complie warnings
-    - You can try to use this version to develop your iOS game now. It's much more stable than the previous version
- [wophone]  
-    - Games can easily read resources from zip file now. This will drastically reduce the memory usage
-    - Add power management: pause the message loop when cocos2d-x game is switched to background or backlight down
-    - Multi-touch support
- [win32]
-    - SimpleAudioEngine can play background musci with repeating now
-  
+#### CrossApp 0.3.0 Update:  
+
+#####1. CrossApp-Design Release
+CorssApp UI interface editor officially releases, which will significantly improve the mobile application development efficiency of developers.
+
+#####2. Great Text Performance Optimization
+We rewrote the text mechanism, and the text loading rate on Android was increased by 80% as well as 50% on iOS.
+
+#####3. Rendering Performance Optimization
+The rendering frame rate was greatly improved which is almost on the same level with native application performance, and it’s even better in some circumstances. (our official website has the detailed test index value documents, please download and view)
+
+#####4. CANavigationController Optimization
+we optimized CANavigationController, and its interface management efficiency was significantly improved.
+
+#####5. CANavigationBar Optimization
+Added port for setting title and button text color.
+Fixed bug in background Image updating.
+
+#####6. CASwitch Optimization
+This CASwitch optimization is specific to UE.
+
+#####7. Fixed CATableView and CACollectionView
+Fixed bug in CATableView and CACollectionView selected item setting.
+
+#####8. Added support for CrossApp-Design file exporting.
+
+####9. Added New Demo (a response to our developers’ strong demand)
+For your convenience, our new demo contains detailed demonstration for every CrossApp control.
+
+#####Statement: this version is CrossApp’s first official version which is almost on the same level with native application’s performance, and has reached the development standard for making commercial products. Here we officially give permission to developers to produce any commercial mobile products with CrossApp.
+
+Mobile application development engine CrossApp, with open source, cross-platform features, is based on MIT open source protocols, and developers could freely use it to produce any business projects without any misgivings whatsoever.
 
 
-cocos2d-0.99.4-x-0.7.0 @ Nov.29,2010
-* cocos2d-iphone-cpp port ready! include accelerometer & multi-touch
-* refactor the directory structure of HelloWorld & tests
-* cocos2d-wophone supports accelerometer
-* add cocos2d-x wizard for cocos2d-win32 & cocos2d-wophone for VisualStudio2008
-* jump out a message box when load texture failed (win32 & wophone)
-* more details: 	http://www.cocos2d-x.org/versions/show/4
+**********************************************************************************
 
-cocos2d-0.99.4-wophone-win32-stable-rc1
-	http://www.cocos2d-x.org/versions/show/1
-	http://www.cocos2d-x.org/versions/show/2
-	http://www.cocos2d-x.org/versions/show/3
+
+####CrossApp beta 0.2.1 更新内容：  
+
+#####1.添加容器类
+添加CAVector、CADeque、CAList、CAMap、CAMultimap。
+
+#####2.添加控件
+添加控件CACollectionView,比CATalbeView 更加复杂的控件诞生，强大的功能可满足很多界面需求。
+
+#####3.添加适配修正参数
+添加适配修正参数，以iphone4屏幕为基准，可使其他所有移动设备所表现的视图物理尺寸与iphone4完全一致。
+
+#####4.修复bug
+修复触摸事件内存泄露的bug
+
+#####5.修复bug
+修复CAAlertView特定情况崩溃的bug
+
+#####6.代码优化
+优化CATableView代理方法
+
+#####7.文件补全
+添加2.0版本丢失的文件
+
+
+####CrossApp beta 0.2.1 Update:
+
+#####1.Added container class
+Add CAVector, CADeque, CAList, CAMap and CAMultimap.
+
+#####2.Added controls
+Add control CACollectionView which is more complicated than CATableView, and its great function could meet many interfaces’ demands.
+
+#####3.Added adaptive corrected parameter
+Added adaptive corrected parameter and take iPhone4 as standard, and this parameter enables all other mobile devices’ displayed view physical size are same with iPhone4.
+
+#####4.Fixed bug
+Fixed bug that touch event’s memory leak.
+
+#####5.Fixed bug
+Fixed bug that CAAlertView had breakdown in particular circumstance.
+
+#####6.Codes optimization
+Optimized CATableView agent method.
+
+#####7.Files completion
+Added lost files of 2.0 versions.
+
+
+**********************************************************************************
+
+
+####CrossApp beta 0.2.0（重要更新） 更新内容：  
+
+#####1.整理引擎目录结构
+整理目录结构，改名部分类名。
+
+#####2.触摸事件分发优化
+触摸事件分发 现在针对滑动容器优化
+
+#####3.添加控件CAAlertView
+提示框，按钮个数三个以内横排，超过三个纵向排列，并放入滑动容器中。
+
+#####4.优化CALabel
+
+#####5.补全CATextField功能
+
+#####6.修复部分bug
+
+#####7.添加一键创建工程
+
+#####8.添加一件部署安卓环境, 下载地址：http://pan.baidu.com/s/1qW6ql32
+
+
+####CrossApp beta 0.2.0 Update: (Important changes)
+
+#####1.Arranged engine directory structure
+Arranged directory structure and changed some class name
+
+#####2.Touch event dispatch optimization
+We optimized sliding container of touch event dispatch
+
+#####3.Added CAAlertView control
+In prompt box, if button number is less than three, they are arranged in horizontal mode, if the number is greater than three, arranged in vertical mode and put into sliding container.
+
+#####4.CALabel optimization
+
+#####5.Complemented CATextField function
+
+#####6.Fixed some bugs
+
+#####7.Added one-key project building
+
+#####8.Added one-key Android environment deployment, download: http://pan.baidu.com/s/1qW6ql32
+
+
+
+####CrossApp alpha 0.1.11（重要更新） 更新内容：  
+
+#####1.引擎默认主题风格变更
+新的风格将更加漂亮，切适配性更强。
+
+#####2.CAScale9ImageView重写
+由于之前的9宫格有功能缺陷，现重写，新的9宫格可以支持单向缩小。
+
+#####3.CALabel优化
+CALabel结构优化，性能优化。将来还会优化。
+
+
+
+####CrossApp alpha 0.1.11 Update: (Important changes)
+
+#####1.Default engine theme style change
+The new style is more attractive and has a greater suitability.
+
+#####2.CAScale9ImageView rewriting
+We rewrote 9 rectangle gird because of the previous version had function defects, and the new version supports unidirectional zoom-out.
+
+#####3.CALabel optimization
+We optimized CALabel’s structure and performance, and will do it in the future.
+
+
+
+####CrossApp alpha 0.1.10 更新内容：  
+
+#####1.CAImageView优化
+优化CAImageView，并修改之前在CAImageView添加子视图显示不正确的bug，现在可随意添加子视图给CAImageView。
+
+#####2.删除ccColor3B，并添加CAColor4B
+删除之前的ccColor3B，以前所有用到ccColor3B的地方统统被CAColor4B替换，增加透明度属性。
+
+#####3.删除Opacity属性，并添加新的alpha属性
+alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影响所有子视图的透明度。
+
+#####4.彻底删除position属性
+同样 CCMoveTo、CCMoveBy也被引擎所抛弃
+
+#####5.修复Android平台GPS的bug
+修复android平台手机因没有开启gps导致应用程序无法运行的bug
+
+#####6.修复CAScrollView的bug
+修复之前代理回调方法virtual void scrollViewWillBeginDragging(CAScrollView* view){};
+触发时机错误的bug
+
+
+
+####CrossApp alpha 0.1.10 Update:
+
+#####1.CAImageView optimization
+Optimized CAImageView, and fixed bug that wrong display problem when adding sub view in CAImageView, now you are free to add sub view in CAImageView.
+
+#####2.Delete ccColor3B and add CAColor4B
+Deleted ccColor3B and replace all ccColor3B with CAColor4B, added transparency attribute.
+
+#####3.Deleted Opacity attribute and added new alpha attribute
+Alpha attribute is float type with 0 – 1.0f value range, alpha attribute setting can directly influence all sub views’ transparency.
+
+#####4.Completely delete position attribute
+CCMoveTo and CCMoveBy are also deleted from our engine
+
+#####5.Fixed the GPS bug of Android platform
+Fixed bug that application cannot be started because of Android cellphone did not open GPS
+
+#####6.Fixed CAScrollView bug
+Fixed bug that agent callback method ‘void scrollViewWillBeginDragging(CAScrollView* view){};’ has a wrong trigger timing.
+
+
+
+####CrossApp alpha 0.1.9 更新内容：  
+
+#####1.触摸事件bug修改
+在滑动层上点击按钮瞬间抬起不触发的bug
+
+#####2.CATabBar优化
+对CATabBar进行了体验的优化
+
+#####3.CATabBar与CANavigationBar优化
+可通过ViewController动态更新其显示数据
+
+#####4.CAButton与CASegmentedControl优化
+修改文字显示大小错误的bug
+
+#####6.安卓系统，从后台返回黑屏的bug
+之前，在安卓系统中，如果从后台返回，有几率黑屏
+
+#####5.添加动画相关 CCFrameTo 与 CCCenterTo
+可以动态的修改 frame与center
+
+#####6.添加viewController悬浮抽屉功能
+现在可以调用任何一个viewController的presentModalViewController与dismissModalViewController来显示与撤销。
+
+
+
+####CrossApp alpha 0.1.9 Update:
+
+#####1.Touch event bug modification
+Fixed bug that Instant release after clicking button on sliding layer is not triggered
+
+#####2.CATabBar optimization
+Experience optimization on CATabBar
+
+#####3.CATabBar and CANavigationBar optimization
+It’s able to dynamic update CATabBar and CANavigationBar display data via ViewController
+
+#####4.CAButton and CASegmentedControl optimization
+Fixed bug that wrong text display size
+
+#####5.Fixed bug that blank screen appears when returning from background in Android system
+Previously, if we return from background in Android system, there is certain of probability that blank screen appears
+
+#####6.Added animation related CCFrameTo and CCCenterTo
+You can dynamically modify frame and center
+
+#####7.Added suspension drawer function of viewController
+You can call any viewController’s presentModalViewController and dismissModalViewController to display and dismiss
+
+
+
+####CrossApp alpha 0.1.8 更新内容：  
+
+#####1.
+添加CANavigationController左右button的定制
+
+#####2.
+CATextField添加win32输入功能
+
+#####3.
+添加CANavigationController 替换当前CAViewController的功能
+
+#####4.
+修复触摸分发系统在可滑动容器上快速点击按钮无法触发按钮事件的bug
+
+#####6.
+修复在win32由于触摸事件造成的偶尔崩溃的bug
+
+#####5.
+优化CASegmentedControl
+
+#####6.
+优化CANavigationBar在竖屏的高度及布局。
+
+
+
+####CrossApp alpha 0.1.8 Update:
+
+#####1.
+Added CANavigationController left and right button customization
+#####2.
+Added win32 input function in CATextField
+#####3.
+Added CANavigationController, and replace current CAViewController’s function
+#####4.
+Fixed bug that quickly clicking button on slidable container of touch dispatch system is unable to trigger button event
+#####5.
+Fixed bug that occasional crashes caused by touch event in win32
+#####6.
+Optimize CASegmentedControl
+#####7.
+Optimize CANavigationBar height and layout in portrait mode
+
+
+####CrossApp alpha 0.1.7 更新内容：  
+
+#####1.
+修复CATextField在 win32 与mac平台编译报错的问题
+
+#####2.
+修复TabBarController当前viewController不是第一项时 显示与隐藏 tabBar时画面出错的问题
+
+
+####CrossApp alpha 0.1.7 Update:
+
+#####1.
+Fixed CATextField compiling error report problem on win32 and Mac platform.
+
+#####2.
+Fixed picture error report problem in displaying and hiding tabBar when current viewController of TabBArController is not the first item.
+
+
+####CrossApp alpha 0.1.6 更新内容：  
+#####1. 添加CASlider：  
+滑动条
+在此特别鸣谢 9秒ID为juguanhui的 美女程序员，为我们提供了优质的控件源码。
+
+#####2. 添加CASegmentedControl：  
+分段选项器
+在此特别鸣谢 9秒ID为juguanhui的 美女程序员，为我们提供了优质的控件源码。
+
+#####3. 触摸事件分发规则优化，添加CAResponder类  
+经过此次优化，触摸事件分发更加智能，使开发过程变得简单容易。
+
+#####4. CATextField功能补全：  
+1.添加输入框选择键盘类型
+2.添加遮蔽显示字符为※
+3.添加光标移动以及插入删除
+4.添加获取键盘高度等功能。
+5.目前只支持iOS与Android。
+
+#####5. 添加CATabBarController 、CANavigationController新功能
+支持tabBarControll切换viewController动画效果功能
+增加 CATabBarController 、CANavigationController 隐藏 其Bar的功能
+
+#####6. 修改部分bug 
+1.修正CAView在addSubview之前设置ZOder不起作用的bug
+2.修正调用CCDirector中setNotificationNode(CAView* view)不起作用的bug
+3.scrollView指示条显示隐藏时机错误的bug
+
+#####7. win32平台向下兼容至VS2012
+
+
+
+####CrossApp alpha 0.1.6 Update:
+#####1. Added CASlider:
+Slider<br/>
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
+
+#####2. Added CASegmentedControl:
+Segmented Controller<br/>
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
+
+#####3. Touch event dispatch rules optimization, added CAResponder class.
+This optimization makes touch event dispatch become more intelligent and development process simple and easy.
+
+#####4. CATextField functions completion:
+1.Added keyboard type selecting on text field<br/>
+2.Added hiding display character ※<br/>
+3.Added cursor movement, insert and delete<br/>
+4.Added functions such as obtaining keyboard height and others<br/>
+5.Only support iOS and Android for now<br/>
+
+#####5. Added new functions of CATabBarController and CANavigationController
+Support tabBarController switching to viewController animation effect<br/>
+Added TabBar and NavigationBar hiding function<br/>
+
+#####6. Fixed some bugs
+1.Fixed bug: setting ZOder before addSubview in CAView is invalid<br/>
+2.Fixed bug: calling setNotificationNode(CAView* view) in CCDirector is invalid<br/>
+3.Fixed bug: scrollView indicator's display and hiding timing are wrong<br/>
+
+#####7. Backward compatible to VS2012 on win32 platform
+
+
+
+####CrossApp alpha 0.1.5 更新内容：  
+#####1. 添加CASwitch：  
+在此特别鸣谢 9秒ID为juguanhui的 美女程序员，为我们提供了优质的控件源码。
+由于一些原因，juguanhui无法通过git上传代码，所以此次控件源码提交是通过9秒内部上传的。
+
+#####2. 触摸事件分发规则修改：  
+新的触摸事件无需注册，只要继承CAView的所有子类，均可通过实现cctouchBegin等函数监听.而且在touchbegin时的视图矩形区域外是无法获得事件监听的。
+新的触摸事件是由父视图分发给子视图的，所以当在父视图矩形区域外的touchBegin事件，即使其子视图矩形区域包含这个点，也是无法获取到触摸事件的。
+
+#####3. 增加GPS定位功能：  
+目前支持iOS与android平台，wp8无功能
+
+#####4. 增加相册选择照片并返回照片图片数据功能：  
+目前支持iOS与android平台，wp8无功能
+
+#####5. 增加从摄像头拍照并返回照片图片数据功能：  
+目前支持iOS与android平台，wp8无功能
+
+#####6. 增加获取手机通讯录联系人信息的功能：  
+目前支持iOS与android平台，wp8无功能
+
+
+
+####CrossApp alpha 0.1.5 Update:
+#####1. Added CASwitch:
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us. Juguanhui cannot upload codes via git for some reasons, so this time the controls sources code was submitted and uploaded by 9miao worker.
+
+#####2. Touch event dispatch rules modification:
+The new touch event does not have to be registered, and you can implement cctouchBegin and other functions monitoring by only inheriting all child classes of CAView. In addition, it’s unable to obtain event monitoring outside of view rectangular region when you touch screen.<br/>
+
+The new touch event is dispatched from parent view to child view, so even if your touchBegin event spot is in child view rectangular region, you cannot obtain touch event on condition that the touchBegin event is outside of parent view rectangular region.<br/>
+
+#####3. Added GPS location function:
+Support iOS and Android for now, no WP8.
+
+#####4. Added photo select from album and photo picture data return function:
+Support iOS and Android for now, no WP8.
+
+#####5. Added photo taking from webcam and photo picture data return function:
+Support iOS and Android for now, no WP8.
+
+#####6. Added mobile address book contacts information obtaining function:
+Support iOS and Android for now, no WP8.
+
+
+
+####CrossApp alpha 0.1.4 更新内容：  
+#####1. 耗电优化：  
+由于cocos2d-x的渲染用的渲染驱动模式，程序生命周期中，在不断地重绘，帧数一般在60帧。渲染驱动模式的缺点就是耗电。显而易见，这种不断的重绘方式对于应用程序来说太浪费了。因此，我们针对应用程序的特性，将渲染机制改为事件驱动模式。这种模式的渲染要有外界触发才会重绘，在没有外界触发的时候画面静止，渲染停止，以达到节能的效果  
+#####2. CAButton修改：  
+增加新的属性 AllowsSelected（包含set，get），默认为false。如果为true，则开启选中模式。在这种模式下。按钮会在选中与默认状态之间切换。即，如果当前为默认状态，按下按钮并抬起，按钮切换到选中状态，再次按下并抬起，则按钮又切换回普通状态。同时，我们可以用getSelected（）方法来及时的获取当前按钮属于2种状态中的哪一种
+#####3. CASchedule（经原有CCSchedule修改）：  
+**a) 简化用法：**启动停止等操作只需调用相应静态方法即可  
+**b) 内存管理修改：**之前启动定时器，针对pTarget的引用计数会+1，以防止因pTarget的释放造成程序崩溃。现在启用了新的机制，已经可以完全避免以上问题，因此在启动定时器后不再对pTarget的引用计数+1，在pTarget释放后自动停止相关定时器  
+**c) 新特点：**当pTarget为CAViewController或者其派生类型时，CAViewController的view不显示时，定时器会自动暂停，当重新显示时，会自动恢复。除此之外，在pTarget释放前不会有变化  
+#####4. Demo位置变动  
+demo由原来的projects文件夹移到samples  
+
+
+
+####贡献者名单：juguanhui，
+
+
+####CrossApp alpha 0.1.4 Update:
+#####1.Power Consumption Optimization:
+A program is continuously redrawing at general 60 frame rates in its life cycle because of the rendering-driven mode of cocos2d-x rendering, but the shortcoming of this mode is the relatively considerable power consumption. Obviously this continuous redraw mode is quite a waste for program, so we change the rendering mechanism into event-driven mode based on application features. In this rendering mode the redraw is only triggered by outside, if not the screen is static and rendering stops, so as to achieve energy saving goal.
+#####2.CAButton Modification:
+Added new attribute AllowsSelected (including set, get), default value is false. If value is true then selected mode is started. In this mode, the button status will switch between selected and default: if current status is default one, press button and release and button will switch to selected status; press and release again and button will switch back to default status. However, we can promptly judge and know current button status by using getSelected () method.
+#####3.CASchedule (modified based on CCSchedule):
+**a)	Simplify usage: ** start, stop and other operation can be acted by calling corresponding static methods.<br/>
+**b) Memory management modification: ** previously when we start timer, reference counting on pTarget will plus 1 for the purpose of avoiding program crashed caused by pTarget release. Now the new mechanism we deployed could completely solve the above problem: this mechanism enables system to stop plus 1 on pTarget reference counting after timer starts and auto-stop related timer after pTarget release.<br/>
+**c) New feature: ** when pTarget is derived type of CAViewController or others and the view of CAViewController is not displayed, timer will auto pause; it will auto recover when the view is displayed. In addition, it will not change before pTarget releases.<br/>
+#####4.Demo Location Change
+Demo location is moved to samples folder from projects.
+
+
+
+####Contributors: juguanhui，
+
+
+####【9秒实验室自研】
+
+ CrossApp引擎详细介绍请点此：
+
+<http://www.9miao.com/crossapp/list-24-1.html>
+
+#### 9miao Lab Original
+
+ Click to view CrossApp engine detailed description:<br/>
+<http://www.9miao.com/crossapp/list-24-1.html>
+ 
+####近期要做的控件：  
+提示框：CAAlertView  
+视图分页控制器：CAPageControl  
+大段文字输入控件：CATextView  
+加载状态控制器：CAActivity  
+网页加载控件：CAWebView  
+
+####Recent Controls Writing Plan:
+Reminder: CAAlertView<br/>
+View paging controller: CAPageControl<br/>
+Blocks of text input control: CATextView<br/>
+Load status controller: CAActivity<br/>
+Webpage load control: CAWebView<br/>
+
+####目前已有控件缺失功能：  
+#####1.	textField：  	
+**a)	**文字内容长度自由限制  
+**b)	**光标移动到文字内容任意位置编辑功能  
+**c)	**换行输入功能
+#####2.	tableView：
+**a)	**cell的复用  
+**b)	**cell编辑功能（删除、插入等）  
+**c)	**cell的一些模板属性的添加  
+
+####Existed Controls Missing Features:
+#####1.	textField：
+**a) ** free control on text content length<br/>
+**b) ** text editing when cursor is at anywhere of content<br/>
+**c) **line feed input<br/>
+#####2.	tableView：
+**a) **cell reuse<br/>
+**b) **cell editing (delete, insert and others)<br/>
+**c) **added some template attributes of cell<br/>
+
+
+=======
+####【正式版】CrossApp 0.3.1 更新内容：  
+
+#####1.添加CAPickerView
+列表选择器，该控件是智能手机中比较常用到的一个控件，它通过转轮界面提供一系列多值选项，它向用户显示信息，也收集用户输入。
+
+#####2.添加CAPageView
+翻页滑动容器，该控件是智能手机中比较常用到的一个控件，它通过监听手指滑动手势来体现翻页的效果。
+
+#####3.添加CAIndexPath2E、CAIndexPath3E
+二维、三维索引类
+
+#####4.CATableView，CACollectionView增加cell复用机制
+复用机制使得CATableView，CACollectionView不再担心超大数据量的显示，且提升用户体验
+
+#####5.优化触摸分发系统
+优化触摸分发系统，可更加人性化的分发触摸事件
+
+#####6.httpClient优化
+httpClient由原来的一个单独异步线程改为可实现16个异步线程
+
+#####7.修复CAList、CADeque的bug
+
+#####8.修复CATextField在部分机型崩溃的bug
+
+
+#### CrossApp 0.3.1 Update:
+
+#####1. Added CAPickerView
+List selector, a commonly used control in smartphone, is able to provide a series of multi-value options via rotative sliding menu, display information to users as well as collecting users’ input.
+
+#####2. Added CAPageView
+Page turning sliding container, a commonly used control in smartphone, is able to implement page turning effect by monitoring fingers’ swipe gestures.
+
+#####3. Added CAIndexPath2E and CAIndexPath3E
+Two and three dimensional index class
+
+#####4. Added Cell Reuse Mechanism of CATableView and CACollectionView
+Reuse mechanism enables CATableView and CACollectionView to bear mass data volume display pressure, and improve UE.
+
+#####5. Touch Distributed System Optimization
+We optimized touch distributed system, and now it can distribute touch event in a more humanized style.
+
+#####6. httpClient Optimization
+The previous single asynchronous threaded httpClient is changed into a max 16 asynchronous threaded one
+
+#####7. Fixed CAList and CADeque’s Bug
+
+#####8. Fixed bug that CATextField had crash in some phone models
+
+
+
+
+####【正式版】CrossApp 0.3.0 更新内容：  
+
+#####1.CrossApp-Design发布
+CrossApp UI界面编辑器正式推出，这将会大大的加快开发者们开发移动应用的速度。
+
+#####2.大幅优化文字性能
+文字机制重写，android平台文字加载速度提升约80%，iOS平台文字加载速度提升约50%。
+
+#####3.优化渲染性能
+渲染帧率大幅提升，几乎与原生应用性能近似，部分情况比原生更优（官网中有详细的测试指标的数值文档下载，请查阅）
+
+#####4.优化CANavigationController
+优化CANavigationController，大幅度的提升界面管理的效率。
+
+#####5.优化CANavigationBar
+添加设置标题与按钮文字颜色的接口。
+修复更新背景Image的bug。
+
+#####6.优化CASwitch
+针对CASwitch的用户体验进行了优化。
+
+#####7.修复CATableView与CACollectionView
+修复CATableView与CACollectionView设置选中项的bug。
+
+#####8.添加对CrossApp-Design导出文件的支持。
+
+#####9.添加新的demo（开发者们反应强烈，所以增加）
+新的demo对CrossApp的每一个控件进行了详细的展示，方便大家参考。
+
+#####本版本是CrossApp首次推出正式版本，性能与原生应用近似，已到达可制作商业化产品的开发标准，官方也正式对外准许开发者们使用CrossApp在任何商业移动产品的开发中。
+开源的跨平台移动应用开发引擎CrossApp基于MIT开源协议，开发者可以毫无顾虑、完全免费的使用CrossApp开发任何商业项目。
+
+
+
+#### CrossApp 0.3.0 Update:  
+
+#####1. CrossApp-Design Release
+CorssApp UI interface editor officially releases, which will significantly improve the mobile application development efficiency of developers.
+
+#####2. Great Text Performance Optimization
+We rewrote the text mechanism, and the text loading rate on Android was increased by 80% as well as 50% on iOS.
+
+#####3. Rendering Performance Optimization
+The rendering frame rate was greatly improved which is almost on the same level with native application performance, and it’s even better in some circumstances. (our official website has the detailed test index value documents, please download and view)
+
+#####4. CANavigationController Optimization
+we optimized CANavigationController, and its interface management efficiency was significantly improved.
+
+#####5. CANavigationBar Optimization
+Added port for setting title and button text color.
+Fixed bug in background Image updating.
+
+#####6. CASwitch Optimization
+This CASwitch optimization is specific to UE.
+
+#####7. Fixed CATableView and CACollectionView
+Fixed bug in CATableView and CACollectionView selected item setting.
+
+#####8. Added support for CrossApp-Design file exporting.
+
+####9. Added New Demo (a response to our developers’ strong demand)
+For your convenience, our new demo contains detailed demonstration for every CrossApp control.
+
+#####Statement: this version is CrossApp’s first official version which is almost on the same level with native application’s performance, and has reached the development standard for making commercial products. Here we officially give permission to developers to produce any commercial mobile products with CrossApp.
+
+Mobile application development engine CrossApp, with open source, cross-platform features, is based on MIT open source protocols, and developers could freely use it to produce any business projects without any misgivings whatsoever.
+
+
+**********************************************************************************
+
+
+####CrossApp beta 0.2.1 更新内容：  
+
+#####1.添加容器类
+添加CAVector、CADeque、CAList、CAMap、CAMultimap。
+
+#####2.添加控件
+添加控件CACollectionView,比CATalbeView 更加复杂的控件诞生，强大的功能可满足很多界面需求。
+
+#####3.添加适配修正参数
+添加适配修正参数，以iphone4屏幕为基准，可使其他所有移动设备所表现的视图物理尺寸与iphone4完全一致。
+
+#####4.修复bug
+修复触摸事件内存泄露的bug
+
+#####5.修复bug
+修复CAAlertView特定情况崩溃的bug
+
+#####6.代码优化
+优化CATableView代理方法
+
+#####7.文件补全
+添加2.0版本丢失的文件
+
+
+####CrossApp beta 0.2.1 Update:
+
+#####1.Added container class
+Added CAVector, CADeque, CAList, CAMap and CAMultimap.
+
+#####2.Add controls
+Added control CACollectionView which is more complicated than CATableView, and its great function could meet many interfaces’ demands.
+
+#####3.Added adaptive corrected parameter
+Added adaptive corrected parameter and take iPhone4 as standard, and this parameter enables all other mobile devices’ displayed view physical size are same with iPhone4.
+
+#####4.Fixed bug
+Fixed bug that touch event’s memory leak.
+
+#####5.Fixed bug
+Fixed bug that CAAlertView had breakdown in particular circumstance.
+
+#####6.Codes optimization
+Optimized CATableView agent method.
+
+#####7.Files completion
+Added lost files of 2.0 versions.
+
+
+**********************************************************************************
+
+
+####CrossApp beta 0.2.0（重要更新） 更新内容：  
+
+#####1.整理引擎目录结构
+整理目录结构，改名部分类名。
+
+#####2.触摸事件分发优化
+触摸事件分发 现在针对滑动容器优化
+
+#####3.添加控件CAAlertView
+提示框，按钮个数三个以内横排，超过三个纵向排列，并放入滑动容器中。
+
+#####4.优化CALabel
+
+#####5.补全CATextField功能
+
+#####6.修复部分bug
+
+#####7.添加一键创建工程
+
+#####8.添加一件部署安卓环境, 下载地址：http://pan.baidu.com/s/1qW6ql32
+
+
+####CrossApp beta 0.2.0 Update: (Important changes)
+
+#####1.Arranged engine directory structure
+Arranged directory structure and changed some class name
+
+#####2.Touch event dispatch optimization
+We optimized sliding container of touch event dispatch
+
+#####3.Added CAAlertView control
+In prompt box, if button number is less than three, they are arranged in horizontal mode, if the number is greater than three, arranged in vertical mode and put into sliding container.
+
+#####4.CALabel optimization
+
+#####5.Complemented CATextField function
+
+#####6.Fixed some bugs
+
+#####7.Added one-key project building
+
+#####8.Added one-key Android environment deployment, download: http://pan.baidu.com/s/1qW6ql32
+
+
+
+####CrossApp alpha 0.1.11（重要更新） 更新内容：  
+
+#####1.引擎默认主题风格变更
+新的风格将更加漂亮，切适配性更强。
+
+#####2.CAScale9ImageView重写
+由于之前的9宫格有功能缺陷，现重写，新的9宫格可以支持单向缩小。
+
+#####3.CALabel优化
+CALabel结构优化，性能优化。将来还会优化。
+
+
+
+####CrossApp alpha 0.1.11 Update: (Important changes)
+
+#####1.Default engine theme style change
+The new style is more attractive and has a greater suitability.
+
+#####2.CAScale9ImageView rewriting
+We rewrote 9 rectangle gird because of the previous version had function defects, and the new version supports unidirectional zoom-out.
+
+#####3.CALabel optimization
+We optimized CALabel’s structure and performance, and will do it in the future.
+
+
+
+####CrossApp alpha 0.1.10 更新内容：  
+
+#####1.CAImageView优化
+优化CAImageView，并修改之前在CAImageView添加子视图显示不正确的bug，现在可随意添加子视图给CAImageView。
+
+#####2.删除ccColor3B，并添加CAColor4B
+删除之前的ccColor3B，以前所有用到ccColor3B的地方统统被CAColor4B替换，增加透明度属性。
+
+#####3.删除Opacity属性，并添加新的alpha属性
+alpha属性为float型，数值范围为0-1.0f，设置alpha属性可直接影响所有子视图的透明度。
+
+#####4.彻底删除position属性
+同样 CCMoveTo、CCMoveBy也被引擎所抛弃
+
+#####5.修复Android平台GPS的bug
+修复android平台手机因没有开启gps导致应用程序无法运行的bug
+
+#####6.修复CAScrollView的bug
+修复之前代理回调方法virtual void scrollViewWillBeginDragging(CAScrollView* view){};
+触发时机错误的bug
+
+
+
+####CrossApp alpha 0.1.10 Update:
+
+#####1.CAImageView optimization
+Optimized CAImageView, and fixed bug that wrong display problem when adding sub view in CAImageView, now you are free to add sub view in CAImageView.
+
+#####2.Deleted ccColor3B and added CAColor4B
+Deletet ccColor3B and replace all ccColor3B with CAColor4B, added transparency attribute.
+
+#####3.Deleted Opacity attribute and added new alpha attribute
+Alpha attribute is float type with 0 – 1.0f value range, alpha attribute setting can directly influence all sub views’ transparency.
+
+#####4.Completely delete position attribute
+CCMoveTo and CCMoveBy are also deleted from our engine
+
+#####5.Fixed the GPS bug of Android platform
+Fixed bug that application cannot be started because of Android cellphone did not open GPS
+
+#####6.Fixed CAScrollView bug
+Fixed bug that agent callback method ‘void scrollViewWillBeginDragging(CAScrollView* view){};’ has a wrong trigger timing.
+
+
+
+####CrossApp alpha 0.1.9 更新内容：  
+
+#####1.触摸事件bug修改
+在滑动层上点击按钮瞬间抬起不触发的bug
+
+#####2.CATabBar优化
+对CATabBar进行了体验的优化
+
+#####3.CATabBar与CANavigationBar优化
+可通过ViewController动态更新其显示数据
+
+#####4.CAButton与CASegmentedControl优化
+修改文字显示大小错误的bug
+
+#####6.安卓系统，从后台返回黑屏的bug
+之前，在安卓系统中，如果从后台返回，有几率黑屏
+
+#####5.添加动画相关 CCFrameTo 与 CCCenterTo
+可以动态的修改 frame与center
+
+#####6.添加viewController悬浮抽屉功能
+现在可以调用任何一个viewController的presentModalViewController与dismissModalViewController来显示与撤销。
+
+
+
+####CrossApp alpha 0.1.9 Update:
+
+#####1.Touch event bug modification
+Fixed bug that Instant release after clicking button on sliding layer is not triggered
+
+#####2.CATabBar optimization
+Experience optimization on CATabBar
+
+#####3.CATabBar and CANavigationBar optimization
+It’s able to dynamic update CATabBar and CANavigationBar display data via ViewController
+
+#####4.CAButton and CASegmentedControl optimization
+Fixed bug that wrong text display size
+
+#####5.Fixed bug that blank screen appears when returning from background in Android system
+Previously, if we return from background in Android system, there is certain of probability that blank screen appears
+
+#####6.Added animation related CCFrameTo and CCCenterTo
+You can dynamically modify frame and center
+
+#####7.Added suspension drawer function of viewController
+You can call any viewController’s presentModalViewController and dismissModalViewController to display and dismiss
+
+
+
+####CrossApp alpha 0.1.8 更新内容：  
+
+#####1.
+添加CANavigationController左右button的定制
+
+#####2.
+CATextField添加win32输入功能
+
+#####3.
+添加CANavigationController 替换当前CAViewController的功能
+
+#####4.
+修复触摸分发系统在可滑动容器上快速点击按钮无法触发按钮事件的bug
+
+#####6.
+修复在win32由于触摸事件造成的偶尔崩溃的bug
+
+#####5.
+优化CASegmentedControl
+
+#####6.
+优化CANavigationBar在竖屏的高度及布局。
+
+
+
+####CrossApp alpha 0.1.8 Update:
+
+#####1.
+Added CANavigationController left and right button customization
+#####2.
+Added win32 input function in CATextField
+#####3.
+Added CANavigationController, and replace current CAViewController’s function
+#####4.
+Fixed bug that quickly clicking button on slidable container of touch dispatch system is unable to trigger button event
+#####5.
+Fixed bug that occasional crashes caused by touch event in win32
+#####6.
+Optimize CASegmentedControl
+#####7.
+Optimize CANavigationBar height and layout in portrait mode
+
+
+####CrossApp alpha 0.1.7 更新内容：  
+
+#####1.
+修复CATextField在 win32 与mac平台编译报错的问题
+
+#####2.
+修复TabBarController当前viewController不是第一项时 显示与隐藏 tabBar时画面出错的问题
+
+
+####CrossApp alpha 0.1.7 Update:
+
+#####1.
+Fixed CATextField compiling error report problem on win32 and Mac platform.
+
+#####2.
+Fixed picture error report problem in displaying and hiding tabBar when current viewController of TabBArController is not the first item.
+
+
+####CrossApp alpha 0.1.6 更新内容：  
+#####1. 添加CASlider：  
+滑动条
+在此特别鸣谢 9秒ID为juguanhui的 美女程序员，为我们提供了优质的控件源码。
+
+#####2. 添加CASegmentedControl：  
+分段选项器
+在此特别鸣谢 9秒ID为juguanhui的 美女程序员，为我们提供了优质的控件源码。
+
+#####3. 触摸事件分发规则优化，添加CAResponder类  
+经过此次优化，触摸事件分发更加智能，使开发过程变得简单容易。
+
+#####4. CATextField功能补全：  
+1.添加输入框选择键盘类型
+2.添加遮蔽显示字符为※
+3.添加光标移动以及插入删除
+4.添加获取键盘高度等功能。
+5.目前只支持iOS与Android。
+
+#####5. 添加CATabBarController 、CANavigationController新功能
+支持tabBarControll切换viewController动画效果功能
+增加 CATabBarController 、CANavigationController 隐藏 其Bar的功能
+
+#####6. 修改部分bug 
+1.修正CAView在addSubview之前设置ZOder不起作用的bug
+2.修正调用CCDirector中setNotificationNode(CAView* view)不起作用的bug
+3.scrollView指示条显示隐藏时机错误的bug
+
+#####7. win32平台向下兼容至VS2012
+
+
+
+####CrossApp alpha 0.1.6 Update:
+#####1. Added CASlider:
+Slider<br/>
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
+
+#####2. Added CASegmentedControl:
+Segmented Controller<br/>
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us.
+
+#####3. Touch event dispatch rules optimization, add CAResponder class.
+This optimization makes touch event dispatch become more intelligent and development process simple and easy.
+
+#####4. CATextField functions completion:
+1.Added keyboard type selecting on text field<br/>
+2.Added hiding display character ※<br/>
+3.Added cursor movement, insert and delete<br/>
+4.Added functions such as obtaining keyboard height and others<br/>
+5.Only support iOS and Android for now<br/>
+
+#####5. Added new functions of CATabBarController and CANavigationController
+Support tabBarController switching to viewController animation effect<br/>
+Added TabBar and NavigationBar hiding function<br/>
+
+#####6. Fixed some bugs
+1.Fixed bug: setting ZOder before addSubview in CAView is invalid<br/>
+2.Fixed bug: calling setNotificationNode(CAView* view) in CCDirector is invalid<br/>
+3.Fixed bug: scrollView indicator's display and hiding timing are wrong<br/>
+
+#####7. Backward compatible to VS2012 on win32 platform
+
+
+
+####CrossApp alpha 0.1.5 更新内容：  
+#####1. 添加CASwitch：  
+在此特别鸣谢 9秒ID为juguanhui的 美女程序员，为我们提供了优质的控件源码。
+由于一些原因，juguanhui无法通过git上传代码，所以此次控件源码提交是通过9秒内部上传的。
+
+#####2. 触摸事件分发规则修改：  
+新的触摸事件无需注册，只要继承CAView的所有子类，均可通过实现cctouchBegin等函数监听.而且在touchbegin时的视图矩形区域外是无法获得事件监听的。
+新的触摸事件是由父视图分发给子视图的，所以当在父视图矩形区域外的touchBegin事件，即使其子视图矩形区域包含这个点，也是无法获取到触摸事件的。
+
+#####3. 增加GPS定位功能：  
+目前支持iOS与android平台，wp8无功能
+
+#####4. 增加相册选择照片并返回照片图片数据功能：  
+目前支持iOS与android平台，wp8无功能
+
+#####5. 增加从摄像头拍照并返回照片图片数据功能：  
+目前支持iOS与android平台，wp8无功能
+
+#####6. 增加获取手机通讯录联系人信息的功能：  
+目前支持iOS与android平台，wp8无功能
+
+
+
+####CrossApp alpha 0.1.5 Update:
+#####1. Added CASwitch:
+Special thanks to a beautiful female programmer (9miao ID: juguanhui) for providing superior controls source codes for us. Juguanhui cannot upload codes via git for some reasons, so this time the controls sources code was submitted and uploaded by 9miao worker.
+
+#####2. Touch event dispatch rules modification:
+The new touch event does not have to be registered, and you can implement cctouchBegin and other functions monitoring by only inheriting all child classes of CAView. In addition, it’s unable to obtain event monitoring outside of view rectangular region when you touch screen.<br/>
+
+The new touch event is dispatched from parent view to child view, so even if your touchBegin event spot is in child view rectangular region, you cannot obtain touch event on condition that the touchBegin event is outside of parent view rectangular region.<br/>
+
+#####3. Added GPS location function:
+Support iOS and Android for now, no WP8.
+
+#####4. Added photo select from album and photo picture data return function:
+Support iOS and Android for now, no WP8.
+
+#####5. Added photo taking from webcam and photo picture data return function:
+Support iOS and Android for now, no WP8.
+
+#####6. Added mobile address book contacts information obtaining function:
+Support iOS and Android for now, no WP8.
+
+
+
+####CrossApp alpha 0.1.4 更新内容：  
+#####1. 耗电优化：  
+由于cocos2d-x的渲染用的渲染驱动模式，程序生命周期中，在不断地重绘，帧数一般在60帧。渲染驱动模式的缺点就是耗电。显而易见，这种不断的重绘方式对于应用程序来说太浪费了。因此，我们针对应用程序的特性，将渲染机制改为事件驱动模式。这种模式的渲染要有外界触发才会重绘，在没有外界触发的时候画面静止，渲染停止，以达到节能的效果  
+#####2. CAButton修改：  
+增加新的属性 AllowsSelected（包含set，get），默认为false。如果为true，则开启选中模式。在这种模式下。按钮会在选中与默认状态之间切换。即，如果当前为默认状态，按下按钮并抬起，按钮切换到选中状态，再次按下并抬起，则按钮又切换回普通状态。同时，我们可以用getSelected（）方法来及时的获取当前按钮属于2种状态中的哪一种
+#####3. CASchedule（经原有CCSchedule修改）：  
+**a) 简化用法：**启动停止等操作只需调用相应静态方法即可  
+**b) 内存管理修改：**之前启动定时器，针对pTarget的引用计数会+1，以防止因pTarget的释放造成程序崩溃。现在启用了新的机制，已经可以完全避免以上问题，因此在启动定时器后不再对pTarget的引用计数+1，在pTarget释放后自动停止相关定时器  
+**c) 新特点：**当pTarget为CAViewController或者其派生类型时，CAViewController的view不显示时，定时器会自动暂停，当重新显示时，会自动恢复。除此之外，在pTarget释放前不会有变化  
+#####4. Demo位置变动  
+demo由原来的projects文件夹移到samples  
+
+
+
+####贡献者名单：juguanhui，
+
+
+####CrossApp alpha 0.1.4 Update:
+#####1.Power Consumption Optimization:
+A program is continuously redrawing at general 60 frame rates in its life cycle because of the rendering-driven mode of cocos2d-x rendering, but the shortcoming of this mode is the relatively considerable power consumption. Obviously this continuous redraw mode is quite a waste for program, so we change the rendering mechanism into event-driven mode based on application features. In this rendering mode the redraw is only triggered by outside, if not the screen is static and rendering stops, so as to achieve energy saving goal.
+#####2.CAButton Modification:
+Added new attribute AllowsSelected (including set, get), default value is false. If value is true then selected mode is started. In this mode, the button status will switch between selected and default: if current status is default one, press button and release and button will switch to selected status; press and release again and button will switch back to default status. However, we can promptly judge and know current button status by using getSelected () method.
+#####3.CASchedule (modified based on CCSchedule):
+**a)	Simplify usage: ** start, stop and other operation can be acted by calling corresponding static methods.<br/>
+**b) Memory management modification: ** previously when we start timer, reference counting on pTarget will plus 1 for the purpose of avoiding program crashed caused by pTarget release. Now the new mechanism we deployed could completely solve the above problem: this mechanism enables system to stop plus 1 on pTarget reference counting after timer starts and auto-stop related timer after pTarget release.<br/>
+**c) New feature: ** when pTarget is derived type of CAViewController or others and the view of CAViewController is not displayed, timer will auto pause; it will auto recover when the view is displayed. In addition, it will not change before pTarget releases.<br/>
+#####4.Demo Location Change
+Demo location is moved to samples folder from projects.
+
+
+
+####Contributors: juguanhui，
+
+
+####【9秒实验室自研】
+
+ CrossApp引擎详细介绍请点此：
+
+<http://www.9miao.com/crossapp/list-24-1.html>
+
+#### 9miao Lab Original
+
+ Click to view CrossApp engine detailed description:<br/>
+<http://www.9miao.com/crossapp/list-24-1.html>
+ 
 
 

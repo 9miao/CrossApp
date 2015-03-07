@@ -296,7 +296,6 @@
 		372E63FB1A0B60A800582042 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F31A0B60A800582042 /* libavformat.a */; };
 		372E63FC1A0B60A800582042 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F41A0B60A800582042 /* libavutil.a */; };
 		372E63FD1A0B60A800582042 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F51A0B60A800582042 /* libcurl.a */; };
-		372E63FE1A0B60A800582042 /* libfreetype_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F61A0B60A800582042 /* libfreetype_arm64.a */; };
 		372E63FF1A0B60A800582042 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F71A0B60A800582042 /* libfreetype.a */; };
 		372E64001A0B60A800582042 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F81A0B60A800582042 /* libswresample.a */; };
 		372E64011A0B60A800582042 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372E63F91A0B60A800582042 /* libswscale.a */; };
@@ -310,6 +309,7 @@
 		46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F416E5D01B00210B16 /* CAUserDefault.mm */; };
 		B0090D73198A444500BD8CDA /* CAPickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D71198A444500BD8CDA /* CAPickerView.cpp */; };
 		B0090D74198A444500BD8CDA /* CAPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0090D72198A444500BD8CDA /* CAPickerView.h */; };
+		B0194B451A87934800ECC68F /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0194B441A87934800ECC68F /* libpng.a */; };
 		B01D4BF819A5E8240071F6A3 /* CADrawerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */; };
 		B01D4BF919A5E8240071F6A3 /* CADrawerController.h in Headers */ = {isa = PBXBuildFile; fileRef = B01D4BF719A5E8240071F6A3 /* CADrawerController.h */; };
 		B01F650819658599005C14FC /* CADensityDpi.mm in Sources */ = {isa = PBXBuildFile; fileRef = B01F650719658599005C14FC /* CADensityDpi.mm */; };
@@ -438,10 +438,14 @@
 		B0596B431976356C00B1E8CB /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */; };
 		B05D36AA195AF3CC00DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */; };
 		B05D36AB195AF3CC00DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D36A9195AF3CC00DD4814 /* CAAlertView.h */; };
+		B06805231A833DF700F6BE00 /* CAViewAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06805211A833DF700F6BE00 /* CAViewAnimation.cpp */; };
+		B06805241A833DF700F6BE00 /* CAViewAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B06805221A833DF700F6BE00 /* CAViewAnimation.h */; };
 		B09205DC19D5645300CB99C1 /* CASyncQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D719D5645300CB99C1 /* CASyncQueue.h */; };
 		B09205DD19D5645300CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205D819D5645300CB99C1 /* CAThread.cpp */; };
 		B09205DE19D5645300CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D919D5645300CB99C1 /* CAThread.h */; };
 		B094652F1969404400D96736 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B094652D1969404400D96736 /* CASTLContainer.h */; };
+		B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */; };
+		B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */; };
 		B0B553D6193485BE0065053D /* CAImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553CE193485BE0065053D /* CAImage.cpp */; };
 		B0B553D7193485BE0065053D /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553CF193485BE0065053D /* CAImage.h */; };
 		B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553D0193485BE0065053D /* CAImageCache.cpp */; };
@@ -727,6 +731,7 @@
 		46A393F416E5D01B00210B16 /* CAUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAUserDefault.mm; sourceTree = "<group>"; };
 		B0090D71198A444500BD8CDA /* CAPickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPickerView.cpp; sourceTree = "<group>"; };
 		B0090D72198A444500BD8CDA /* CAPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPickerView.h; sourceTree = "<group>"; };
+		B0194B441A87934800ECC68F /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../platform/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
 		B01B29A519BADA1E00CBF581 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		B01B29A819BADA1E00CBF581 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawerController.cpp; sourceTree = "<group>"; };
@@ -857,10 +862,14 @@
 		B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
 		B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D36A9195AF3CC00DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
+		B06805211A833DF700F6BE00 /* CAViewAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewAnimation.cpp; sourceTree = "<group>"; };
+		B06805221A833DF700F6BE00 /* CAViewAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAViewAnimation.h; sourceTree = "<group>"; };
 		B09205D719D5645300CB99C1 /* CASyncQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASyncQueue.h; sourceTree = "<group>"; };
 		B09205D819D5645300CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
 		B09205D919D5645300CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
 		B094652D1969404400D96736 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
+		B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATempTypeFont.cpp; sourceTree = "<group>"; };
+		B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATempTypeFont.h; sourceTree = "<group>"; };
 		B0B553CE193485BE0065053D /* CAImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImage.cpp; sourceTree = "<group>"; };
 		B0B553CF193485BE0065053D /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
 		B0B553D0193485BE0065053D /* CAImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCache.cpp; sourceTree = "<group>"; };
@@ -886,6 +895,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0194B451A87934800ECC68F /* libpng.a in Frameworks */,
 				372E63FC1A0B60A800582042 /* libavutil.a in Frameworks */,
 				372E64001A0B60A800582042 /* libswresample.a in Frameworks */,
 				1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */,
@@ -894,7 +904,6 @@
 				372E63FB1A0B60A800582042 /* libavformat.a in Frameworks */,
 				372E64011A0B60A800582042 /* libswscale.a in Frameworks */,
 				372E63FD1A0B60A800582042 /* libcurl.a in Frameworks */,
-				372E63FE1A0B60A800582042 /* libfreetype_arm64.a in Frameworks */,
 				372E63FF1A0B60A800582042 /* libfreetype.a in Frameworks */,
 				37147ED71A15F68C00EBE03E /* libSDL2.a in Frameworks */,
 			);
@@ -1061,6 +1070,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0194B441A87934800ECC68F /* libpng.a */,
 				3727122F1A1C78D400FB827E /* CoreAudio.framework */,
 				3727122D1A1C78AD00FB827E /* ExternalAccessory.framework */,
 				3727122B1A1C785D00FB827E /* Accelerate.framework */,
@@ -1081,6 +1091,7 @@
 				04EAA0221956CE3900198A8E /* ccTypes.h */,
 				04EABB491956DE7100198A8E /* CrossApp.cpp */,
 				04EAA0231956CE3A00198A8E /* CrossApp.h */,
+				B06805201A833DF700F6BE00 /* animation */,
 				EB9D561D19E8DC2D0072BE8E /* script_support */,
 				3724C63C19FDF88000300E42 /* video */,
 				04EA9F8E1956CE2500198A8E /* basics */,
@@ -1220,6 +1231,8 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */,
+				B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */,
 				B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */,
 				B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */,
 				B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */,
@@ -1624,6 +1637,15 @@
 			path = curl;
 			sourceTree = "<group>";
 		};
+		B06805201A833DF700F6BE00 /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				B06805211A833DF700F6BE00 /* CAViewAnimation.cpp */,
+				B06805221A833DF700F6BE00 /* CAViewAnimation.h */,
+			);
+			path = animation;
+			sourceTree = "<group>";
+		};
 		B0B553CD193485BE0065053D /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -1711,6 +1733,7 @@
 				04EABB2A1956DAEA00198A8E /* CCAction.cpp in Headers */,
 				04EABB2B1956DAEA00198A8E /* CCActionCamera.cpp in Headers */,
 				04EABB2C1956DAEA00198A8E /* CCActionEase.cpp in Headers */,
+				B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */,
 				B0596AE9197629BE00B1E8CB /* ftlzw.h in Headers */,
 				04EABB2D1956DAEA00198A8E /* CCActionInstant.cpp in Headers */,
 				B02A51D219B962B500470D57 /* CAPullToRefreshView.h in Headers */,
@@ -1803,6 +1826,7 @@
 				B0596B1D197629BE00B1E8CB /* svxf86nm.h in Headers */,
 				1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */,
 				B0596AE8197629BE00B1E8CB /* ftlist.h in Headers */,
+				B06805241A833DF700F6BE00 /* CAViewAnimation.h in Headers */,
 				B0596AFD197629BE00B1E8CB /* ftcalc.h in Headers */,
 				B02A776A19B82F7300C4A5EF /* CAStepper.h in Headers */,
 				372C37F31A03799E0010A376 /* CAVideoPlayerView.h in Headers */,
@@ -2034,6 +2058,7 @@
 				1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */,
 				1551A640158F2ADE00E66CFE /* CCActionTween.cpp in Sources */,
 				1551A652158F2ADE00E66CFE /* CCArray.cpp in Sources */,
+				B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */,
 				1551A656158F2ADE00E66CFE /* CCDictionary.cpp in Sources */,
 				1551A65B158F2ADE00E66CFE /* CCNS.cpp in Sources */,
 				1551A65F158F2ADE00E66CFE /* CCSet.cpp in Sources */,
@@ -2045,6 +2070,7 @@
 				B0340826199211B3005DB179 /* md5.cpp in Sources */,
 				1551A6C9158F2ADE00E66CFE /* mat3.c in Sources */,
 				1551A6CA158F2ADE00E66CFE /* mat4.c in Sources */,
+				B06805231A833DF700F6BE00 /* CAViewAnimation.cpp in Sources */,
 				1551A6CB158F2ADE00E66CFE /* neon_matrix_impl.c in Sources */,
 				1551A6CC158F2ADE00E66CFE /* plane.c in Sources */,
 				B0F7E503198792180048F46B /* CAPageView.cpp in Sources */,
@@ -2159,7 +2185,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -2187,7 +2213,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -2216,24 +2242,24 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					COCOS2D_JAVASCRIPT,
+					CROSSAPP_JAVASCRIPT,
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
-					"COCOS2D_DEBUG=1",
+					"CROSSAPP_DEBUG=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"\"$(SRCROOT)/../platform/third_party/ios/freetype\"",
+					"\"$(SRCROOT)/../../CocosDenshion/include\"",
 					"\"$(SRCROOT)/../platform/third_party/ios/FFmpeg\"",
-					"$(SRCROOT)/../../CocosDenshion/include",
 					"\"$(SRCROOT)/../platform/third_party/ios/SDL\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
-					/Users/dxpxw/Develop/9miao/source/CrossApp/CrossApp/platform/third_party/ios/libraries,
+					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/platform/third_party/ios/libraries",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2248,7 +2274,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					COCOS2D_JAVASCRIPT,
+					CROSSAPP_JAVASCRIPT,
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
 				);
@@ -2257,14 +2283,14 @@
 					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"\"$(SRCROOT)/../platform/third_party/ios/freetype\"",
+					"\"$(SRCROOT)/../../CocosDenshion/include\"",
 					"\"$(SRCROOT)/../platform/third_party/ios/FFmpeg\"",
-					"$(SRCROOT)/../../CocosDenshion/include",
 					"\"$(SRCROOT)/../platform/third_party/ios/SDL\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
-					/Users/dxpxw/Develop/9miao/source/CrossApp/CrossApp/platform/third_party/ios/libraries,
+					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/platform/third_party/ios/libraries",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

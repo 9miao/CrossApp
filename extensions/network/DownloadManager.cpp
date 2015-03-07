@@ -86,9 +86,9 @@ public:
     
     unsigned long getDownloadID() const;
     
-    const char* getDownloadUrl() const;
+    const string& getDownloadUrl() const;
     
-    const char* getFileName() const;
+    const string& getFileName() const;
     
     unsigned int getConnectionTimeout();
     
@@ -1111,6 +1111,10 @@ bool CADownloadResponse::downLoad()
         return false;
     }
     
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    chmod(outFileName.c_str(), 0x666);
+#endif
+    
 	_curl = curl_easy_init();
 	if (_curl == NULL)
 	{
@@ -1132,7 +1136,7 @@ bool CADownloadResponse::downLoad()
 	char cRange[32] = { 0 };
 	sprintf(cRange, "%.0f-", _initialFileSize);
 	curl_easy_setopt(_curl, CURLOPT_RANGE, cRange);
-	curl_easy_setopt(_curl, CURLOPT_RESUME_FROM, _initialFileSize);
+	curl_easy_setopt(_curl, CURLOPT_RESUME_FROM, (long)_initialFileSize);
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, downLoadPackage);
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
     curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
@@ -1148,7 +1152,10 @@ bool CADownloadResponse::downLoad()
     }
 
 	if (isDownloadAbort())
-		return false;
+    {
+        fclose(fp);
+        return false;
+    }
     
     if (res != 0)
     {
@@ -1168,14 +1175,14 @@ unsigned long CADownloadResponse::getDownloadID() const
     return _download_id;
 }
 
-const char* CADownloadResponse::getDownloadUrl() const
+const string& CADownloadResponse::getDownloadUrl() const
 {
-    return _downloadUrl.c_str();
+    return _downloadUrl;
 }
 
-const char* CADownloadResponse::getFileName() const
+const string& CADownloadResponse::getFileName() const
 {
-    return _fileName.c_str();
+    return _fileName;
 }
 
 unsigned int CADownloadResponse::getConnectionTimeout()

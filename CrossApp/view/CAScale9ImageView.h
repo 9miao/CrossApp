@@ -47,6 +47,8 @@ public:
     
     virtual const CAColor4B& getColor();
     
+    virtual void setAlpha(float alpha);
+    
     virtual CAView* copy();
     
     virtual void setImage(CAImage* image);

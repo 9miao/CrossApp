@@ -1,5 +1,5 @@
 #include "CAStudioViewParser.h"
-#include "json/CSContentJsonDictionary.h"
+#include "Json/CSContentJsonDictionary.h"
 
 NS_CC_EXT_BEGIN;
 

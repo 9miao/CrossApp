@@ -8,6 +8,7 @@
 
 #include "CAScale9ImageView.h"
 #include "CABatchView.h"
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
@@ -423,7 +424,6 @@ void CAScale9ImageView::setColor(const CAColor4B& color)
     CAView::setColor(color);
     if (m_pScale9ImageView)
     {
-        CAObject* child;
         const CAVector<CAView*>& subview = m_pScale9ImageView->getSubviews();
 
         CAVector<CAView*>::const_iterator itr;
@@ -437,6 +437,21 @@ void CAScale9ImageView::setColor(const CAColor4B& color)
 const CAColor4B& CAScale9ImageView::getColor()
 {
 	return CAView::getColor();
+}
+
+void CAScale9ImageView::setAlpha(float alpha)
+{
+    CAView::setAlpha(alpha);
+    if (m_pScale9ImageView)
+    {
+        const CAVector<CAView*>& subview = m_pScale9ImageView->getSubviews();
+        
+        CAVector<CAView*>::const_iterator itr;
+        for (itr=subview.begin(); itr!=subview.end(); itr++)
+        {
+            (*itr)->setAlpha(alpha);
+        }
+    }
 }
 
 void CAScale9ImageView::setImage(CrossApp::CAImage *image)

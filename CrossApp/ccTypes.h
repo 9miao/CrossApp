@@ -29,9 +29,16 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 }
 
 static inline CAColor4B
-ccint(int rgba)
+ccc4Int(int rgba)
 {
     CAColor4B c;
+    c.r = rgba % 256;
+    rgba /= 256;
+    c.g = rgba % 256;
+    rgba /= 256;
+    c.b = rgba % 256;
+    rgba /= 256;
+    c.a = rgba % 256;
     return c;
 }
 

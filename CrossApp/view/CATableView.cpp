@@ -11,11 +11,13 @@
 #include "CAScale9ImageView.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionInterval.h"
 #include "dispatcher/CATouch.h"
 #include "support/CCPointExtension.h"
 #include "CCEGLView.h"
+#include "animation/CAViewAnimation.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
+
 NS_CC_BEGIN
 
 #pragma CATableView
@@ -60,8 +62,10 @@ void CATableView::onEnterTransitionDidFinish()
 {
     CAScrollView::onEnterTransitionDidFinish();
     
-    this->runAction(CCSequence::create(CCDelayTime::create(1/60.0f),
-                                       CCCallFunc::create(this, callfunc_selector(CATableView::firstReloadData)), NULL));
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATableView::firstReloadData));
+    CAViewAnimation::commitAnimations();
 }
 
 void CATableView::onExitTransitionDidStart()

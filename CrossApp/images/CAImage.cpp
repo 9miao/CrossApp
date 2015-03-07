@@ -302,7 +302,6 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
     {
         free(m_pData);
     }
-    CCLog("---------- %d ---- %d", pixelFormat, bitsPerPixel);
     
     m_nDataLenght = (unsigned long)pixelsWide * pixelsHigh;
     m_pData = (unsigned char*)malloc(m_nDataLenght * sizeof(unsigned char) * bitsPerPixel/8);
@@ -323,6 +322,10 @@ bool CAImage::initWithData(const void *data, CAImagePixelFormat pixelFormat, uns
 
     setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
 
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    VolatileTexture::addDataTexture(this, m_pData, m_ePixelFormat, CCSize(m_uPixelsWide, m_uPixelsHigh));
+#endif
+    
     return true;
 }
 

@@ -2,12 +2,10 @@
 #include "basics/CAApplication.h"
 #include "control/CAButton.h"
 #include "support/CCPointExtension.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionEase.h"
 #include "dispatcher/CATouch.h"
-#include "view/CAWindow.h"
-#include <utility>
+#include "animation/CAViewAnimation.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
 
 NS_CC_BEGIN
 
@@ -43,8 +41,10 @@ void CACollectionView::onEnterTransitionDidFinish()
 {
 	CAScrollView::onEnterTransitionDidFinish();
 
-	this->runAction(CCSequence::create(CCDelayTime::create(1 / 60.0f),
-		CCCallFunc::create(this, callfunc_selector(CACollectionView::firstReloadData)), NULL));
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CACollectionView::firstReloadData));
+    CAViewAnimation::commitAnimations();
 }
 
 void CACollectionView::onExitTransitionDidStart()

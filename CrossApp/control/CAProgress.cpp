@@ -7,13 +7,12 @@
 //
 
 #include "CAProgress.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
 #include "view/CAScale9ImageView.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "support/CCPointExtension.h"
 #include "basics/CAApplication.h"
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
@@ -113,20 +112,13 @@ void CAProgress::setProgress(float progress, bool animated)
 
 	if (animated)
 	{
+        this->animatedBegin();
 		float time = fabsf(progress - m_fProgress) * 0.3f;
-
-		if (m_pIndicator->getActionByTag(0xffff))
-		{
-			m_pIndicator->stopAllActions();
-			this->animatedFinish();
-		}
-		
-		CCFrameOrginTo *moveTo = CCFrameOrginTo::create(time, point);
-		CCCallFunc* begin = CCCallFunc::create(this, callfunc_selector(CAProgress::animatedBegin));
-		CCCallFunc* finish = CCCallFunc::create(this, callfunc_selector(CAProgress::animatedFinish));
-		CCSequence* animateds = CCSequence::create(begin, moveTo, finish, NULL);
-		animateds->setTag(0xffff);
-		m_pIndicator->runAction(animateds);
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(time);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAProgress::animatedFinish));
+        m_pIndicator->setFrameOrigin(point);
+        CAViewAnimation::commitAnimations();
 	}
 	else
 	{
@@ -152,6 +144,7 @@ void CAProgress::update(float dt)
 
 void CAProgress::animatedBegin()
 {
+    CAScheduler::unschedule(schedule_selector(CAProgress::update), this);
 	CAScheduler::schedule(schedule_selector(CAProgress::update), this, 1 / 60.0f);
 }
 

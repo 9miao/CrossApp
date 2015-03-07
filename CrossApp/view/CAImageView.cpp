@@ -19,7 +19,8 @@
 #include "basics/CAGeometry.h"
 #include "shaders/CATransformation.h"
 #include "support/TransformUtils.h"
-#include <string.h>
+#include <string>
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
@@ -175,7 +176,12 @@ void CAImageView::updateByImageViewScaleType()
 
 void CAImageView::setContentSize(const CCSize & size)
 {
-    if ( ! size.equals(m_obContentSize))
+    if (CAViewAnimation::areAnimationsEnabled()
+         && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setContentSize(size, this);
+    }
+    else if (!size.equals(m_obContentSize))
     {
         m_obContentSize = size;
         

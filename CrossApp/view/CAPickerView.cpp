@@ -8,7 +8,7 @@
 
 #include "CAPickerView.h"
 #include "CALabel.h"
-
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
@@ -100,11 +100,14 @@ void CAPickerView::onExit()
     CAView::onExit();
 }
 
-void CAPickerView::onEnterTransitionDidFinish() {
-	
+void CAPickerView::onEnterTransitionDidFinish()
+{
 	CAView::onEnterTransitionDidFinish();
-	this->runAction(CCSequence::create(CCDelayTime::create(1 / 60.0f),
-		CCCallFunc::create(this, callfunc_selector(CAPickerView::reloadAllComponents)), NULL));
+    
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAPickerView::reloadAllComponents));
+    CAViewAnimation::commitAnimations();
 }
 
 void CAPickerView::onExitTransitionDidStart() {

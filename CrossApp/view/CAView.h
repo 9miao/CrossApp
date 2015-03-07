@@ -39,6 +39,7 @@ class CCDictionary;
 class CAImage;
 class CAViewDelegate;
 class CABatchView;
+class CAViewAnimation;
 struct transformValues_;
 
 
@@ -493,6 +494,8 @@ protected:
     ccBlendFunc        m_sBlendFunc;            /// It's required for CAImageProtocol inheritance
     
     CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
+    
+    friend class CAViewAnimation;
 };
 
 class CC_DLL CAViewDelegate
