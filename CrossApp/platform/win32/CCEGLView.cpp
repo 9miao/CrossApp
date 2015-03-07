@@ -457,11 +457,11 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
             break;
         case VK_F2:
-            if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
+            if (GetKeyState(VK_LSHIFT) < 0 || GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
                 CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
             break;
         case VK_ESCAPE:
-			CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+            CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
             break;
         case VK_DELETE:
             CAIMEDispatcher::sharedDispatcher()->dispatchDeleteForward();

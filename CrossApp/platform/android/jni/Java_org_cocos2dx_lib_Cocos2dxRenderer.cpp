@@ -43,17 +43,7 @@ extern "C" {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
         CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
     }
-
-    JNIEXPORT jstring JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeGetContentText() {
-        JNIEnv * env = 0;
-
-        if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
-            return 0;
-        }
-        const char * pszText = CrossApp::CAIMEDispatcher::sharedDispatcher()->getContentText();
-        return env->NewStringUTF(pszText);
-    }
-
+ 
     JNIEXPORT jint JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeGetCursorPos() {
         JNIEnv * env = 0;
 
@@ -76,6 +66,15 @@ extern "C" {
         return iarr;
     }
 
+    JNIEXPORT jstring JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeGetContentText() {
+        JNIEnv * env = 0;
+
+        if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
+            return 0;
+        }
+        const char * pszText = CrossApp::CAIMEDispatcher::sharedDispatcher()->getContentText();
+        return env->NewStringUTF(pszText);
+    }
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_KeyBoardHeightReturn(JNIEnv* env, jobject thiz, jint height) {
         CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchGetKeyBoardHeight(height);
     }
