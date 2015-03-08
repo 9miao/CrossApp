@@ -614,6 +614,96 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     return backViewController;
 }
 
+// sprhawk@163.com: 2015-03-08
+void CANavigationController::popToRootViewControllerAnimated(bool animated)
+{
+    if (m_pViewControllers.size() == 1)
+    {
+        return ;
+    }
+    
+    float x = this->getView()->getBounds().size.width;
+    
+    size_t index = 0;
+    CAViewController* showViewController = m_pViewControllers.at(index);
+    showViewController->viewDidAppear();
+    
+    //    CAViewController* backViewController = m_pViewControllers.back();
+    
+    CAView* showContainer = m_pContainers.at(index);
+    showContainer->setVisible(true);
+    showContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
+    
+    CAView* backContainer = m_pContainers.back();
+    backContainer->setFrameOrigin(CCPointZero);
+    
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+    
+    if (animated)
+    {
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        showContainer->setFrameOrigin(CCPointZero);
+        CAViewAnimation::commitAnimations();
+        
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::popToRootViewControllerFinish));
+        backContainer->setFrameOrigin(CCPoint(x, 0));
+        CAViewAnimation::commitAnimations();
+    }
+    else
+    {
+        this->popToRootViewControllerFinish();
+    }
+}
+
+// sprhawk@163.com: 2015-03-08
+void CANavigationController::popToRootViewControllerFinish()
+{
+    CAViewController* backViewController = m_pViewControllers.back();
+    backViewController->viewDidDisappear();
+    backViewController->m_pNavigationController = NULL;
+    backViewController->removeViewFromSuperview();
+    backViewController->retain()->autorelease();
+    m_pViewControllers.popBack();
+    if (m_pViewControllers.size() > 1) {
+        for (CAVector<CAViewController*>::iterator i = m_pViewControllers.begin() + 1; i != m_pViewControllers.end(); i ++) {
+            backViewController = *i;
+            backViewController->m_pNavigationController = NULL;
+            backViewController->removeViewFromSuperview();
+            backViewController->retain()->autorelease();
+            m_pViewControllers.erase(i);
+        }
+    }
+
+    CAView* backContainer = m_pContainers.back();
+    backContainer->removeFromSuperview();
+    m_pContainers.popBack();
+    
+    if (m_pContainers.size() > 1) {
+        for (CAVector<CAView *>::iterator i = m_pContainers.begin() + 1; i != m_pContainers.end(); i ++) {
+            CAView* backContainer = *i;
+            backContainer->removeFromSuperview();
+            m_pContainers.erase(i);
+        }
+    }
+    
+    m_pNavigationBars.popBack();
+    if (m_pNavigationBars.size() > 1) {
+        for (CAVector<CANavigationBar *>::iterator i = m_pNavigationBars.begin() + 1; i != m_pNavigationBars.end(); i ++) {
+            m_pNavigationBars.erase(i);            
+        }
+    }
+    
+    m_bSlidingMinX = m_pViewControllers.size() <= 1;
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+}
+
 void CANavigationController::popViewControllerFinish()
 {
     CAViewController* backViewController = m_pViewControllers.back();
