@@ -255,7 +255,7 @@
 		B01F64FB1964FF0D005C14FC /* CADensityDpi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */; };
 		B01F650419657084005C14FC /* CACollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F650219657084005C14FC /* CACollectionView.cpp */; };
 		B01F650519657084005C14FC /* CACollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F650319657084005C14FC /* CACollectionView.h */; };
-		B02A12CC197CE15D00F4F2C5 /* CAtransformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12CA197CE15D00F4F2C5 /* CAtransformation.cpp */; };
+		B02A12CC197CE15D00F4F2C5 /* CATransformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A12CA197CE15D00F4F2C5 /* CATransformation.cpp */; };
 		B02A12CD197CE15D00F4F2C5 /* CATransformation.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A12CB197CE15D00F4F2C5 /* CATransformation.h */; };
 		B02A776E19B82F9100C4A5EF /* CAStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B02A776C19B82F9100C4A5EF /* CAStepper.cpp */; };
 		B02A776F19B82F9100C4A5EF /* CAStepper.h in Headers */ = {isa = PBXBuildFile; fileRef = B02A776D19B82F9100C4A5EF /* CAStepper.h */; };
@@ -557,7 +557,7 @@
 		B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADensityDpi.cpp; sourceTree = "<group>"; };
 		B01F650219657084005C14FC /* CACollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACollectionView.cpp; sourceTree = "<group>"; };
 		B01F650319657084005C14FC /* CACollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACollectionView.h; sourceTree = "<group>"; };
-		B02A12CA197CE15D00F4F2C5 /* CAtransformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAtransformation.cpp; sourceTree = "<group>"; };
+		B02A12CA197CE15D00F4F2C5 /* CATransformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATransformation.cpp; sourceTree = "<group>"; };
 		B02A12CB197CE15D00F4F2C5 /* CATransformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATransformation.h; sourceTree = "<group>"; };
 		B02A776C19B82F9100C4A5EF /* CAStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStepper.cpp; sourceTree = "<group>"; };
 		B02A776D19B82F9100C4A5EF /* CAStepper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStepper.h; sourceTree = "<group>"; };
@@ -979,7 +979,7 @@
 		04EAAFF11956D75500198A8E /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				B02A12CA197CE15D00F4F2C5 /* CAtransformation.cpp */,
+				B02A12CA197CE15D00F4F2C5 /* CATransformation.cpp */,
 				B02A12CB197CE15D00F4F2C5 /* CATransformation.h */,
 				04EAB0051956D75500198A8E /* CAShaderCache.cpp */,
 				04EAB0061956D75500198A8E /* CAShaderCache.h */,
@@ -1527,7 +1527,7 @@
 				04EAB1501956D75600198A8E /* CCFileUtilsMac.mm in Sources */,
 				04EAB1521956D75600198A8E /* CCImage.mm in Sources */,
 				04EAB1571956D75600198A8E /* CCWindow.m in Sources */,
-				B02A12CC197CE15D00F4F2C5 /* CAtransformation.cpp in Sources */,
+				B02A12CC197CE15D00F4F2C5 /* CATransformation.cpp in Sources */,
 				04EAB1591956D75600198A8E /* EAGLView.mm in Sources */,
 				04EAB15C1956D75600198A8E /* platform.cpp in Sources */,
 				04EABA5D1956D75A00198A8E /* ccGLStateCache.cpp in Sources */,
