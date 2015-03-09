@@ -290,7 +290,6 @@ void FourthViewController::doAction()
     CAViewAnimation::setAnimationWillStartSelector(this, CAViewAnimation2_selector(FourthViewController::willStartAction));
     //动画完成回调(两参数)
     CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation2_selector(FourthViewController::didStopAction));
-    playAnimationBtn->setScale(1.5f);
     
     this->refreshView(true);
     

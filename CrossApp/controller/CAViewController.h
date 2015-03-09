@@ -171,9 +171,9 @@ public:
 
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarBackGroundColor, NavigationBarBackGroundColor);
     
-    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_sNavigationBarTitleColor, NavigationBarTitleColor);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarTitleColor, NavigationBarTitleColor);
 
-    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_sNavigationBarButtonColor, NavigationBarButtonColor);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarButtonColor, NavigationBarButtonColor);
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     
@@ -282,9 +282,9 @@ public:
     
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedIndicatorColor, TabBarSelectedIndicatorColor);
     
-    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_sTabBarTitleColor, TabBarTitleColorForNormal);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarTitleColor, TabBarTitleColorForNormal);
     
-    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_sTabBarSelectedTitleColor, TabBarTitleColorForSelected);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedTitleColor, TabBarTitleColorForSelected);
     
     void updateItem(CAViewController* viewController);
     

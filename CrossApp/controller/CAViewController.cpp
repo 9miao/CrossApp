@@ -251,6 +251,23 @@ void CANavigationController::setNavigationBarBackGroundImage(CrossApp::CAImage *
     CC_SAFE_RELEASE_NULL(m_pNavigationBarBackGroundImage);
     m_pNavigationBarBackGroundImage = var;
     m_sNavigationBarBackGroundColor = CAColor_white;
+    
+    if (!m_pNavigationBars.empty())
+    {
+        CAVector<CANavigationBar*>::iterator itr;
+        for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
+        {
+            if (m_pNavigationBarBackGroundImage)
+            {
+                (*itr)->setBackGroundView(CAScale9ImageView::createWithImage(m_pNavigationBarBackGroundImage));
+            }
+            else
+            {
+                (*itr)->setBackGroundView(CAView::create());
+            }
+            (*itr)->getBackGroundView()->setColor(m_sNavigationBarBackGroundColor);
+        }
+    }
 }
 
 CAImage* CANavigationController::getNavigationBarBackGroundImage()
@@ -262,11 +279,66 @@ void CANavigationController::setNavigationBarBackGroundColor(const CAColor4B &va
 {
     m_sNavigationBarBackGroundColor = var;
     CC_SAFE_RELEASE_NULL(m_pNavigationBarBackGroundImage);
+    
+    if (!m_pNavigationBars.empty())
+    {
+        CAVector<CANavigationBar*>::iterator itr;
+        for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
+        {
+            if (m_pNavigationBarBackGroundImage)
+            {
+                (*itr)->setBackGroundView(CAScale9ImageView::createWithImage(m_pNavigationBarBackGroundImage));
+            }
+            else
+            {
+                (*itr)->setBackGroundView(CAView::create());
+            }
+            (*itr)->getBackGroundView()->setColor(m_sNavigationBarBackGroundColor);
+        }
+    }
 }
 
 const CAColor4B& CANavigationController::getNavigationBarBackGroundColor()
 {
     return m_sNavigationBarBackGroundColor;
+}
+
+void CANavigationController::setNavigationBarTitleColor(const CAColor4B &var)
+{
+    m_sNavigationBarTitleColor = var;
+    
+    if (!m_pNavigationBars.empty())
+    {
+        CAVector<CANavigationBar*>::iterator itr;
+        for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
+        {
+            (*itr)->setTitleColor(m_sNavigationBarTitleColor);
+        }
+    }
+}
+
+const CAColor4B& CANavigationController::getNavigationBarTitleColor()
+{
+    return m_sNavigationBarTitleColor;
+}
+
+void CANavigationController::setNavigationBarButtonColor(const CAColor4B &var)
+{
+    m_sNavigationBarButtonColor = var;
+    
+    if (!m_pNavigationBars.empty())
+    {
+        CAVector<CANavigationBar*>::iterator itr;
+        for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
+        {
+            (*itr)->setButtonColor(m_sNavigationBarButtonColor);
+        }
+    }
+}
+
+const CAColor4B& CANavigationController::getNavigationBarButtonColor()
+{
+    return m_sNavigationBarButtonColor;
 }
 
 bool CANavigationController::initWithRootViewController(CAViewController* viewController, CABarVerticalAlignment var)
@@ -933,6 +1005,11 @@ void CATabBarController::setTabBarBackGroundImage(CrossApp::CAImage *var)
     CC_SAFE_RELEASE_NULL(m_pTabBarBackGroundImage);
     m_pTabBarBackGroundImage = var;
     m_sTabBarBackGroundColor = CAColor_white;
+    
+    if (m_pTabBar)
+    {
+        m_pTabBar->setBackGroundImage(m_pTabBarBackGroundImage);
+    }
 }
 
 CAImage* CATabBarController::getTabBarBackGroundImage()
@@ -944,6 +1021,11 @@ void CATabBarController::setTabBarBackGroundColor(const CAColor4B &var)
 {
     m_sTabBarBackGroundColor = var;
     CC_SAFE_RELEASE_NULL(m_pTabBarBackGroundImage);
+    
+    if (m_pTabBar)
+    {
+        m_pTabBar->setBackGroundColor(m_sTabBarBackGroundColor);
+    }
 }
 
 const CAColor4B& CATabBarController::getTabBarBackGroundColor()
@@ -957,6 +1039,11 @@ void CATabBarController::setTabBarSelectedBackGroundImage(CrossApp::CAImage *var
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedBackGroundImage);
     m_pTabBarSelectedBackGroundImage = var;
     m_sTabBarSelectedBackGroundColor = CAColor_white;
+    
+    if (m_pTabBar)
+    {
+        m_pTabBar->setSelectedBackGroundImage(m_pTabBarSelectedBackGroundImage);
+    }
 }
 
 CAImage* CATabBarController::getTabBarSelectedBackGroundImage()
@@ -968,6 +1055,11 @@ void CATabBarController::setTabBarSelectedBackGroundColor(const CAColor4B &var)
 {
     m_sTabBarSelectedBackGroundColor = var;
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedBackGroundImage);
+    
+    if (m_pTabBar)
+    {
+        m_pTabBar->setSelectedBackGroundColor(m_sTabBarSelectedBackGroundColor);
+    }
 }
 
 const CAColor4B& CATabBarController::getTabBarSelectedBackGroundColor()
@@ -981,6 +1073,11 @@ void CATabBarController::setTabBarSelectedIndicatorImage(CrossApp::CAImage *var)
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedIndicatorImage);
     m_pTabBarSelectedIndicatorImage = var;
     m_sTabBarSelectedIndicatorColor = CAColor_white;
+    
+    if (m_pTabBar)
+    {
+        m_pTabBar->setSelectedIndicatorImage(m_pTabBarSelectedIndicatorImage);
+    }
 }
 
 CAImage* CATabBarController::getTabBarSelectedIndicatorImage()
@@ -992,12 +1089,48 @@ void CATabBarController::setTabBarSelectedIndicatorColor(const CAColor4B &var)
 {
     m_sTabBarSelectedIndicatorColor = var;
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedIndicatorImage);
+    
+    if (m_pTabBar)
+    {
+        m_pTabBar->setSelectedIndicatorColor(m_sTabBarSelectedIndicatorColor);
+    }
 }
 
 const CAColor4B& CATabBarController::getTabBarSelectedIndicatorColor()
 {
     return m_sTabBarSelectedIndicatorColor;
 }
+
+void CATabBarController::setTabBarTitleColorForNormal(const CAColor4B &var)
+{
+    m_sTabBarTitleColor = var;
+    
+    if (m_pTabBar)
+    {
+        m_pTabBar->setTitleColorForNormal(m_sTabBarTitleColor);
+    }
+}
+
+const CAColor4B& CATabBarController::getTabBarTitleColorForNormal()
+{
+    return m_sTabBarTitleColor;
+}
+
+void CATabBarController::setTabBarTitleColorForSelected(const CAColor4B &var)
+{
+    m_sTabBarSelectedTitleColor = var;
+    
+    if (m_pTabBar)
+    {
+        m_pTabBar->setTitleColorForSelected(m_sTabBarSelectedTitleColor);
+    }
+}
+
+const CAColor4B& CATabBarController::getTabBarTitleColorForSelected()
+{
+    return m_sTabBarSelectedTitleColor;
+}
+
 
 void CATabBarController::showTabBarSelectedIndicator()
 {
