@@ -151,6 +151,9 @@ public:
     
     CAViewController* popViewControllerAnimated(bool animated);
     
+    // sprhawk@163.com: 2015-03-08
+    void popToRootViewControllerAnimated(bool animated);
+    
     CAViewController* getViewControllerAtIndex(int index);
     
     CAViewController* getBackViewController();
@@ -209,9 +212,13 @@ protected:
     
     void popViewControllerFinish();
     
+    
+    void popToRootViewControllerFinish();
+    
     void homingViewControllerFinish();
     
     void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
+    
     
     void updateNavigationBarHidden(int index);
     
@@ -310,7 +317,7 @@ protected:
     
     virtual void scrollViewWillBeginDragging(CAScrollView* view);
     
-    void renderingSelectedViewController();
+    virtual void renderingSelectedViewController();
     
     void update(float dt);
     
