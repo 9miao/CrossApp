@@ -317,7 +317,7 @@ protected:
     
     virtual void scrollViewWillBeginDragging(CAScrollView* view);
     
-    void renderingSelectedViewController();
+    virtual void renderingSelectedViewController();
     
     void update(float dt);
     
