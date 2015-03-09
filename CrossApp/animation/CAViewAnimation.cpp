@@ -139,6 +139,44 @@ public:
     }
 };
 
+class CAViewAnimationModule : public CAObject
+{
+public:
+    
+    std::string animationID;
+    void* context;
+    float duration;
+    float delay;
+    CAViewAnimationCurve curve;
+    float time;
+    CAMap<CAView*, CAObject*> animations;
+    
+    CAObject* willStartTarget;
+    CAObject* didStopTarget;
+    
+    SEL_CAViewAnimation0 willStartSel0;
+    SEL_CAViewAnimation0 didStopSel0;
+    
+    SEL_CAViewAnimation2 willStartSel2;
+    SEL_CAViewAnimation2 didStopSel2;
+    
+    CAViewAnimationModule()
+    :willStartTarget(NULL)
+    ,didStopTarget(NULL)
+    ,willStartSel0(NULL)
+    ,didStopSel0(NULL)
+    ,willStartSel2(NULL)
+    ,didStopSel2(NULL)
+    ,animationID("")
+    ,context(NULL)
+    ,duration(0.2f)
+    ,delay(0.0f)
+    ,time(0.0f)
+    ,curve(CAViewAnimationCurveLinear)
+    {
+        
+    }
+};
 
 static CAViewAnimation* _viewAnimation = NULL;
 
@@ -166,14 +204,9 @@ CAViewAnimation::~CAViewAnimation()
 void CAViewAnimation::beginAnimations(const std::string& animationID, void* context)
 {
     CAViewAnimation::getInstance()->m_bBeginAnimations = true;
-    CAViewAnimationModule module;
-    module.animationID = animationID;
-    module.context = context;
-    module.duration = 0.2f;
-    module.delay = 0;
-    module.time = 0;
-    module.curve = CAViewAnimationCurveLinear;
-    CAViewAnimation::getInstance()->m_vWillModules.push_back(module);
+    CAViewAnimationModule* module = new CAViewAnimationModule();
+    module->autorelease();
+    CAViewAnimation::getInstance()->m_vWillModules.pushBack(module);
 }
 
 void CAViewAnimation::commitAnimations()
@@ -183,8 +216,8 @@ void CAViewAnimation::commitAnimations()
     
     if (!manager->m_vWillModules.empty())
     {
-        manager->m_vModules.push_back(manager->m_vWillModules.front());
-        manager->m_vWillModules.pop_front();
+        manager->m_vModules.pushBack(manager->m_vWillModules.front());
+        manager->m_vWillModules.popFront();
     }
     
     do
@@ -201,7 +234,7 @@ void CAViewAnimation::setAnimationDuration(float duration)
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
     duration = MAX(1/60.0f, duration);
-    animation->m_vWillModules.back().duration = duration;
+    animation->m_vWillModules.back()->duration = duration;
 }
 
 void CAViewAnimation::setAnimationDelay(float delay)
@@ -209,22 +242,22 @@ void CAViewAnimation::setAnimationDelay(float delay)
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
     delay = MAX(0, delay);
-    animation->m_vWillModules.back().delay = delay;
+    animation->m_vWillModules.back()->delay = delay;
 }
 
 void CAViewAnimation::setAnimationCurve(const CAViewAnimationCurve& curve)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
-    animation->m_vWillModules.back().curve = curve;
+    animation->m_vWillModules.back()->curve = curve;
 }
 
 void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation0 selector)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
-    animation->m_vWillModules.back().willStartTarget = target;
-    animation->m_vWillModules.back().willStartSel0 = selector;
+    animation->m_vWillModules.back()->willStartTarget = target;
+    animation->m_vWillModules.back()->willStartSel0 = selector;
 
 }
 
@@ -232,8 +265,8 @@ void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAView
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
-    animation->m_vWillModules.back().willStartTarget = target;
-    animation->m_vWillModules.back().willStartSel2 = selector;
+    animation->m_vWillModules.back()->willStartTarget = target;
+    animation->m_vWillModules.back()->willStartSel2 = selector;
     
 }
 
@@ -241,16 +274,16 @@ void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAn
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
-    animation->m_vWillModules.back().didStopTarget = target;
-    animation->m_vWillModules.back().didStopSel0 = selector;
+    animation->m_vWillModules.back()->didStopTarget = target;
+    animation->m_vWillModules.back()->didStopSel0 = selector;
 }
 
 void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation2 selector)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
-    animation->m_vWillModules.back().didStopTarget = target;
-    animation->m_vWillModules.back().didStopSel2 = selector;
+    animation->m_vWillModules.back()->didStopTarget = target;
+    animation->m_vWillModules.back()->didStopSel2 = selector;
 }
 
 void CAViewAnimation::setAnimationsEnabled(bool enabled)
@@ -272,34 +305,36 @@ bool CAViewAnimation::areBeginAnimations()
 
 void CAViewAnimation::update(float dt)
 {
-    std::vector<CAViewAnimation::CAViewAnimationModule>::iterator itr_module = m_vModules.begin();
-    while (itr_module != m_vModules.end())
+    CAVector<CAViewAnimationModule*> modules = CAVector<CAViewAnimationModule*>(m_vModules);
+    m_vModules.clear();
+    CAVector<CAViewAnimationModule*>::iterator itr_module = modules.begin();
+    while (itr_module != modules.end())
     {
-        CAViewAnimationModule& module = *itr_module;
-        module.time += dt;
-        float time = module.time - module.delay;
+        CAViewAnimationModule* module = *itr_module;
+        module->time += dt;
+        float time = module->time - module->delay;
  
         if (time > -FLT_MIN)
         {
-            if (module.willStartTarget)
+            if (module->willStartTarget)
             {
-                if (module.willStartSel0)
+                if (module->willStartSel2)
                 {
-                    ((CAObject *)module.willStartTarget->*module.willStartSel0)();
-                    module.willStartSel0 = NULL;
+                    ((CAObject *)module->willStartTarget->*module->willStartSel2)(module->animationID, module->context);
+                    module->willStartSel2 = NULL;
                 }
-                if (module.willStartSel2)
+                else if (module->willStartSel0)
                 {
-                    ((CAObject *)module.willStartTarget->*module.willStartSel2)(module.animationID, module.context);
-                    module.willStartSel2 = NULL;
+                    ((CAObject *)module->willStartTarget->*module->willStartSel0)();
+                    module->willStartSel0 = NULL;
                 }
-                module.willStartTarget = NULL;
+                module->willStartTarget = NULL;
             }
 
-            float s = time / module.duration;
+            float s = time / module->duration;
             s = MIN(s, 1.0f);
 
-            switch (module.curve)
+            switch (module->curve)
             {
                 case CAViewAnimationCurveEaseOut:
                 {
@@ -321,7 +356,7 @@ void CAViewAnimation::update(float dt)
             }
             
 
-            CAMap<CAView*, CAObject*>& animations = itr_module->animations;
+            CAMap<CAView*, CAObject*>& animations = (*itr_module)->animations;
             CAMap<CAView*, CAObject*>::iterator itr_animation = animations.begin();
             while (itr_animation != animations.end())
             {
@@ -355,7 +390,7 @@ void CAViewAnimation::update(float dt)
                 rect.size = model->startImageRect.size + model->deltaImageRect.size * s;
                 view->setImageRect(rect);
 
-                if (time >= module.duration)
+                if (time >= module->duration)
                 {
                     view->setFlipX(model->endFlipX);
                     view->setFlipY(model->endFlipY);
@@ -364,27 +399,29 @@ void CAViewAnimation::update(float dt)
                 ++itr_animation;
             }
             
-            if (time >= module.duration)
+            if (time >= module->duration)
             {
-                if (module.didStopTarget)
+                if (module->didStopTarget)
                 {
-                    if (module.didStopSel0)
+                    if (module->didStopSel2)
                     {
-                        ((CAObject *)module.didStopTarget->*module.didStopSel0)();
+                        ((CAObject *)module->didStopTarget->*module->didStopSel2)(module->animationID, module->context);
                     }
-                    if (module.didStopSel2)
+                    else if (module->didStopSel0)
                     {
-                        ((CAObject *)module.didStopTarget->*module.didStopSel2)(module.animationID, module.context);
+                        ((CAObject *)module->didStopTarget->*module->didStopSel0)();
                     }
                 }
-                itr_module->animations.clear();
-                itr_module = m_vModules.erase(itr_module);
+                (*itr_module)->animations.clear();
+                ++itr_module;
                 continue;
             }
-
         }
+        m_vModules.pushBack(*itr_module);
         ++itr_module;
     }
+    modules.clear();
+    
     if (m_vModules.empty())
     {
         CAScheduler::unschedule(schedule_selector(CAViewAnimation::update), this);
@@ -394,7 +431,7 @@ void CAViewAnimation::update(float dt)
 void CAViewAnimation::setFrameOrgin(const CCPoint& point, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endFrameOrgin = point;
     model->deltaFrameOrgin = point - model->startFrameOrgin;
     model->endCenterOrgin = model->startCenterOrgin;
@@ -404,7 +441,7 @@ void CAViewAnimation::setFrameOrgin(const CCPoint& point, CAView* view)
 void CAViewAnimation::setCenterOrgin(const CCPoint& point, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endCenterOrgin = point;
     model->deltaCenterOrgin = point - model->startCenterOrgin;
     model->endFrameOrgin = model->startFrameOrgin;
@@ -414,7 +451,7 @@ void CAViewAnimation::setCenterOrgin(const CCPoint& point, CAView* view)
 void CAViewAnimation::setContentSize(const CCSize& size, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endContentSize = size;
     model->deltaContentSize.width = size.width - model->startContentSize.width;
     model->deltaContentSize.height = size.height - model->startContentSize.height;
@@ -423,7 +460,7 @@ void CAViewAnimation::setContentSize(const CCSize& size, CAView* view)
 void CAViewAnimation::setScaleX(float scaleX, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endScaleX = scaleX;
     model->deltaScaleX = scaleX - model->startScaleX;
 }
@@ -431,7 +468,7 @@ void CAViewAnimation::setScaleX(float scaleX, CAView* view)
 void CAViewAnimation::setScaleY(float scaleY, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endScaleY = scaleY;
     model->deltaScaleY = scaleY - model->startScaleY;
 }
@@ -439,7 +476,7 @@ void CAViewAnimation::setScaleY(float scaleY, CAView* view)
 void CAViewAnimation::setZOrder(int zOrder, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endZOrder = zOrder;
     model->deltaZOrder = zOrder - model->startZOrder;
 }
@@ -447,7 +484,7 @@ void CAViewAnimation::setZOrder(int zOrder, CAView* view)
 void CAViewAnimation::setVertexZ(float vertexZ, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endVertexZ = vertexZ;
     model->deltaVertexZ = vertexZ - model->startVertexZ;
 }
@@ -455,7 +492,7 @@ void CAViewAnimation::setVertexZ(float vertexZ, CAView* view)
 void CAViewAnimation::setSkewX(float skewX, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endSkewX = skewX;
     model->deltaSkewX = skewX - model->startSkewX;
 }
@@ -463,7 +500,7 @@ void CAViewAnimation::setSkewX(float skewX, CAView* view)
 void CAViewAnimation::setSkewY(float skewY, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endSkewY = skewY;
     model->deltaSkewY = skewY - model->startSkewY;
 }
@@ -471,7 +508,7 @@ void CAViewAnimation::setSkewY(float skewY, CAView* view)
 void CAViewAnimation::setRotationX(float rotationX, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endRotationX = rotationX;
     model->deltaRotationX = rotationX - model->startRotationX;
 }
@@ -479,7 +516,7 @@ void CAViewAnimation::setRotationX(float rotationX, CAView* view)
 void CAViewAnimation::setRotationY(float rotationY, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endRotationY = rotationY;
     model->deltaRotationY = rotationY - model->startRotationY;
 }
@@ -487,7 +524,7 @@ void CAViewAnimation::setRotationY(float rotationY, CAView* view)
 void CAViewAnimation::setColor(const CAColor4B& color, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endColor = color;
     model->deltaColorR = (short)color.r - (short)view->_realColor.r;
     model->deltaColorG = (short)color.g - (short)view->_realColor.g;
@@ -498,7 +535,7 @@ void CAViewAnimation::setColor(const CAColor4B& color, CAView* view)
 void CAViewAnimation::setAlpha(float alpha, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endAlpha = alpha;
     model->deltaAlpha = alpha - model->startAlpha;
 }
@@ -506,7 +543,7 @@ void CAViewAnimation::setAlpha(float alpha, CAView* view)
 void CAViewAnimation::setImageRect(const CCRect& imageRect, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endImageRect = imageRect;
     model->deltaImageRect.origin = imageRect.origin - model->startImageRect.origin;
     model->deltaImageRect.size = imageRect.size - model->startImageRect.size;
@@ -515,23 +552,23 @@ void CAViewAnimation::setImageRect(const CCRect& imageRect, CAView* view)
 void CAViewAnimation::setFlipX(bool flipX, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endFlipX = flipX;
 }
 
 void CAViewAnimation::setFlipY(bool flipY, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back().animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endFlipY = flipY;
 }
 
 void CAViewAnimation::allocCAViewModel(CAView* view)
 {
-    CAViewAnimationModule& module = m_vWillModules.back();
-    if (module.animations.getValue(view) == NULL)
+    CAViewAnimationModule* module = m_vWillModules.back();
+    if (module->animations.getValue(view) == NULL)
     {
-        module.animations.insert(view, CAViewModel::create(view));
+        module->animations.insert(view, CAViewModel::create(view));
     }
 
 }

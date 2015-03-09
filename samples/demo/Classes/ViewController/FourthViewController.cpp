@@ -1,6 +1,7 @@
 #include "FourthViewController.h"
 #include "FifthViewController.h"
 
+#pragma execution_character_set("utf-8")
 
 #define CAColor_blueStyle ccc4(51,204,255,255)
 
@@ -124,6 +125,7 @@ void FourthViewController::refreshView(bool animation)
 {
     if (flag)
     {
+        flag = false;
         if (animation)
         {
             switch (action_index)
@@ -173,6 +175,7 @@ void FourthViewController::refreshView(bool animation)
     }
     else
     {
+        flag = true;
         switch (action_index)
         {
             case 0:
@@ -270,13 +273,13 @@ void FourthViewController::refreshView(bool animation)
                 break;
         }
     }
-    flag = !flag;
+    
 }
 
 void FourthViewController::doAction()
 {
     //开始执行动画
-    CAViewAnimation::beginAnimations("Rotation", NULL);
+    CAViewAnimation::beginAnimations("", NULL);
     //动画时长
     CAViewAnimation::setAnimationDuration(1.0f);
     //动画延迟时长执行
@@ -287,7 +290,7 @@ void FourthViewController::doAction()
     CAViewAnimation::setAnimationWillStartSelector(this, CAViewAnimation2_selector(FourthViewController::willStartAction));
     //动画完成回调(两参数)
     CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation2_selector(FourthViewController::didStopAction));
-    
+    playAnimationBtn->setScale(1.5f);
     
     this->refreshView(true);
     

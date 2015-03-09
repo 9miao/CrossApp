@@ -248,7 +248,7 @@ void CAAlertView::adjustButtonView() {
 
 	float alertViewButtonHeight = 88;
 
-	int btnCount = m_vAllBtn.size();
+	size_t btnCount = m_vAllBtn.size();
 
 	CC_RETURN_IF(btnCount <= 0);
 

@@ -898,7 +898,6 @@
 				B0194B451A87934800ECC68F /* libpng.a in Frameworks */,
 				372E63FC1A0B60A800582042 /* libavutil.a in Frameworks */,
 				372E64001A0B60A800582042 /* libswresample.a in Frameworks */,
-				1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */,
 				1A3199AE16C0E3A200207637 /* libwebp.a in Frameworks */,
 				372E63FA1A0B60A800582042 /* libavcodec.a in Frameworks */,
 				372E63FB1A0B60A800582042 /* libavformat.a in Frameworks */,
@@ -906,6 +905,7 @@
 				372E63FD1A0B60A800582042 /* libcurl.a in Frameworks */,
 				372E63FF1A0B60A800582042 /* libfreetype.a in Frameworks */,
 				37147ED71A15F68C00EBE03E /* libSDL2.a in Frameworks */,
+				1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

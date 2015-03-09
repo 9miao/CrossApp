@@ -81,6 +81,7 @@
 		B0A02FF41A8E04450005CB8F /* CABlueTooth.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FF31A8E04450005CB8F /* CABlueTooth.mm */; };
 		B0A02FFA1A8E05240005CB8F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A02FF91A8E05240005CB8F /* CoreBluetooth.framework */; };
 		B0A172E9192DDAD100DBFDB0 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A172E7192DDAD100DBFDB0 /* bg.jpg */; };
+		B0ACECA31AA5BCFB00BCE84F /* SetViewController3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ACECA11AA5BCFB00BCE84F /* SetViewController3.cpp */; };
 		B0CA5A341A77A84100BECD89 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A331A77A84100BECD89 /* Reachability.m */; };
 		B0CA5A361A77A85300BECD89 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A351A77A85300BECD89 /* SystemConfiguration.framework */; };
 		B0CA5A381A77A85A00BECD89 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A371A77A85A00BECD89 /* MediaPlayer.framework */; };
@@ -262,6 +263,8 @@
 		B0A02FF31A8E04450005CB8F /* CABlueTooth.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CABlueTooth.mm; sourceTree = "<group>"; };
 		B0A02FF91A8E05240005CB8F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		B0A172E7192DDAD100DBFDB0 /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
+		B0ACECA11AA5BCFB00BCE84F /* SetViewController3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetViewController3.cpp; sourceTree = "<group>"; };
+		B0ACECA21AA5BCFB00BCE84F /* SetViewController3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetViewController3.h; sourceTree = "<group>"; };
 		B0CA5A321A77A84100BECD89 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		B0CA5A331A77A84100BECD89 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		B0CA5A351A77A85300BECD89 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -806,6 +809,8 @@
 		B048226619FA40DF0019F1A7 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				B0ACECA11AA5BCFB00BCE84F /* SetViewController3.cpp */,
+				B0ACECA21AA5BCFB00BCE84F /* SetViewController3.h */,
 				B048226719FA40DF0019F1A7 /* FifthViewController.cpp */,
 				B048226819FA40DF0019F1A7 /* FifthViewController.h */,
 				B048226919FA40DF0019F1A7 /* FirstViewController.cpp */,
@@ -987,6 +992,7 @@
 				B048221C19FA402F0019F1A7 /* CAAlbumController.mm in Sources */,
 				B048228D19FA40DF0019F1A7 /* ThirdViewController.cpp in Sources */,
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
+				B0ACECA31AA5BCFB00BCE84F /* SetViewController3.cpp in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
 				B048228519FA40DF0019F1A7 /* MyTableViewCell.cpp in Sources */,
 				B047B93119E91F0600F24BE6 /* DownloadManager.cpp in Sources */,
@@ -1066,7 +1072,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
@@ -1116,7 +1122,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 			};

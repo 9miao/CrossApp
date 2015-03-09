@@ -28,40 +28,13 @@ typedef enum
     CAViewAnimationCurveEaseInOut         // slow at beginning and end
 }CAViewAnimationCurve;
 
+class CAViewAnimationModule;
+
 class CC_DLL CAViewAnimation: public CAObject
 {
-    struct CAViewAnimationModule
-    {
-        std::string animationID;
-        void* context;
-        float duration;
-        float delay;
-        CAViewAnimationCurve curve;
-        float time;
-        CAMap<CAView*, CAObject*> animations;
-        
-        CAObject* willStartTarget;
-        CAObject* didStopTarget;
-        
-        SEL_CAViewAnimation0 willStartSel0;
-        SEL_CAViewAnimation0 didStopSel0;
-
-        SEL_CAViewAnimation2 willStartSel2;
-        SEL_CAViewAnimation2 didStopSel2;
-        
-        CAViewAnimationModule()
-        :willStartTarget(NULL)
-        ,didStopTarget(NULL)
-        ,willStartSel0(NULL)
-        ,didStopSel0(NULL)
-        ,willStartSel2(NULL)
-        ,didStopSel2(NULL)
-        {}
-    };
-
-    std::deque<CAViewAnimation::CAViewAnimationModule> m_vWillModules;
+    CADeque<CAViewAnimationModule*> m_vWillModules;
     
-    std::vector<CAViewAnimation::CAViewAnimationModule> m_vModules;
+    CAVector<CAViewAnimationModule*> m_vModules;
     
 public:
     

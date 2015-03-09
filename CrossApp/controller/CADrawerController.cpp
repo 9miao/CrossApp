@@ -250,12 +250,11 @@ void CADrawerController::updateViewFrame()
         
         m_pContainer[0]->setScale(scale0);
         m_pContainer[1]->setScale(scale1);
-        
         point[0].x = (point[1].x - m_pContainer[0]->getFrame().size.width) / 3;
         point[0].y = this->getView()->getBounds().size.height * (1.0f - scale0) / 2;
         point[1].y = this->getView()->getBounds().size.height * (1.0f - scale1) / 2;
     }
-
+    
     m_pContainer[0]->setFrameOrigin(point[0]);
     m_pContainer[1]->setFrameOrigin(point[1]);
 

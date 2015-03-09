@@ -466,14 +466,14 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
     {
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
-        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationDelay(1/30.0f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
         lastContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
         CAViewAnimation::commitAnimations();
         
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
-        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationDelay(1/60.0f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::replaceViewControllerFinish));
         newContainer->setFrameOrigin(CCPointZero);
@@ -528,14 +528,14 @@ void CANavigationController::pushViewController(CAViewController* viewController
     {
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
-        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationDelay(1/30.0f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
         lastContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
         CAViewAnimation::commitAnimations();
         
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
-        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationDelay(1/60.0f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::pushViewControllerFinish));
         newContainer->setFrameOrigin(CCPointZero);
@@ -594,14 +594,14 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     {
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
-        CAViewAnimation::setAnimationDelay(0.02f);
+        CAViewAnimation::setAnimationDelay(1/30.0f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
         showContainer->setFrameOrigin(CCPointZero);
         CAViewAnimation::commitAnimations();
         
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
-        CAViewAnimation::setAnimationDelay(0.03f);
+        CAViewAnimation::setAnimationDelay(1/60.0f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::popViewControllerFinish));
         backContainer->setFrameOrigin(CCPoint(x, 0));
@@ -635,7 +635,7 @@ void CANavigationController::popViewControllerFinish()
 
 void CANavigationController::homingViewControllerFinish()
 {
-    unsigned int index = m_pViewControllers.size() - 2;
+    size_t index = m_pViewControllers.size() - 2;
     CAViewController* lastViewController = m_pViewControllers.at(index);
     lastViewController->viewDidDisappear();
     
@@ -770,7 +770,7 @@ void CANavigationController::updateNavigationBarHidden(int index)
 
 void CANavigationController::update(float dt)
 {
-    this->updateNavigationBarHidden(m_pNavigationBars.size() - 1);
+    this->updateNavigationBarHidden((unsigned int)m_pNavigationBars.size() - 1);
 }
 
 void CANavigationController::scheduleUpdate()
@@ -832,7 +832,7 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     CC_RETURN_IF(m_pViewControllers.size() <= 1);
     
     float x = this->getView()->getBounds().size.width;
-    unsigned int index = m_pViewControllers.size() - 2;
+    size_t index = m_pViewControllers.size() - 2;
     CAViewController* lastViewController = m_pViewControllers.at(index);
     lastViewController->viewDidAppear();
 

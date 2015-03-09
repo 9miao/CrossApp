@@ -478,7 +478,7 @@ void CAView::setScaleX(float newScaleX)
         m_fScaleX = newScaleX;
         m_obFrameRect.size.width = m_fScaleX * m_obContentSize.width;
         float x = m_obAnchorPointInPoints.x * m_fScaleX;
-        m_obFrameRect.origin.x = m_obPoint.y - x;
+        m_obFrameRect.origin.x = m_obPoint.x - x;
         this->updateDraw();
     }
 }
