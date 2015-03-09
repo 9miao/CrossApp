@@ -97,6 +97,17 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
+	    int calcStart = 0;
+	    for (int i = 0; i < pCharSequence.length(); i++) {
+	        if (mText.length() <= 0 || i >= mText.length()) {
+	            calcStart = i;
+                break;
+            }
+            if (pCharSequence.charAt(i) != mText.charAt(i)) {
+                calcStart = i;
+                break;
+            }
+        }
 		int nModified = pCharSequence.length() - this.mText.length();
 		{
 			if(nModified<0)
@@ -105,7 +116,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			}
 			else
 			{
-				this.mCocos2dxGLSurfaceView.willInsertText(start,pCharSequence.toString(),before,count);
+				this.mCocos2dxGLSurfaceView.willInsertText(calcStart,pCharSequence.toString(),before,count);
 			}
 			
 		}
