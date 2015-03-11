@@ -672,12 +672,12 @@ void CANavigationController::popToRootViewControllerFinish()
     backViewController->retain()->autorelease();
     m_pViewControllers.popBack();
     if (m_pViewControllers.size() > 1) {
-        for (CAVector<CAViewController*>::iterator i = m_pViewControllers.begin() + 1; i != m_pViewControllers.end(); i ++) {
+        for (CAVector<CAViewController*>::iterator i = m_pViewControllers.begin() + 1; i != m_pViewControllers.end(); ) {
             backViewController = *i;
             backViewController->m_pNavigationController = NULL;
             backViewController->removeViewFromSuperview();
             backViewController->retain()->autorelease();
-            m_pViewControllers.erase(i);
+            i = m_pViewControllers.erase(i);
         }
     }
 
@@ -686,17 +686,22 @@ void CANavigationController::popToRootViewControllerFinish()
     m_pContainers.popBack();
     
     if (m_pContainers.size() > 1) {
-        for (CAVector<CAView *>::iterator i = m_pContainers.begin() + 1; i != m_pContainers.end(); i ++) {
+        for (CAVector<CAView *>::iterator i = m_pContainers.begin() + 1; i != m_pContainers.end(); ) {
             CAView* backContainer = *i;
             backContainer->removeFromSuperview();
-            m_pContainers.erase(i);
+            i = m_pContainers.erase(i);
         }
     }
     
+    CANavigationBar *bar = m_pNavigationBars.back();
+    bar->removeFromSuperview();
     m_pNavigationBars.popBack();
+    
     if (m_pNavigationBars.size() > 1) {
-        for (CAVector<CANavigationBar *>::iterator i = m_pNavigationBars.begin() + 1; i != m_pNavigationBars.end(); i ++) {
-            m_pNavigationBars.erase(i);            
+        for (CAVector<CANavigationBar *>::iterator i = m_pNavigationBars.begin() + 1; i != m_pNavigationBars.end(); ) {
+            CANavigationBar *bar = *i;
+            bar->removeFromSuperview();
+            i = m_pNavigationBars.erase(i);
         }
     }
     
@@ -725,7 +730,7 @@ void CANavigationController::popViewControllerFinish()
 
 void CANavigationController::homingViewControllerFinish()
 {
-    unsigned int index = m_pViewControllers.size() - 2;
+    unsigned int index = (unsigned int)m_pViewControllers.size() - 2;
     CAViewController* lastViewController = m_pViewControllers.at(index);
     lastViewController->viewDidDisappear();
     
