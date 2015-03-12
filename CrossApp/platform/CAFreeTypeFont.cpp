@@ -760,6 +760,8 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		}
 
 		FT_Face curFace = glyph->isOpenType ? s_TempFont.m_CurFontFace : m_face;
+		if (curFace == NULL)
+			continue;
 		FT_GlyphSlot slot = curFace->glyph;
 
  		if (useKerning && previous && glyph_index)
