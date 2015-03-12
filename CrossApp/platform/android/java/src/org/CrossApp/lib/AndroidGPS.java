@@ -22,11 +22,13 @@ public class AndroidGPS {
 	private static Activity s_pContext;
 	public static LocationManager locationManager;
 	public static String provider;
+	
 	public static void Init( final Activity context )
 	{
 		s_pContext = context;
 		openGPSSettings();
 	}
+	
 	public static void openGPSSettings()
 	{
 		locationManager = (LocationManager) s_pContext.getSystemService(Context.LOCATION_SERVICE);
@@ -39,17 +41,25 @@ public class AndroidGPS {
     }
 	
 	public static final LocationListener locationListener = new LocationListener() { 
+		
 		@Override 
-		public void onStatusChanged(String provider, int status, Bundle extras) { 
+		public void onStatusChanged(String provider, int status, Bundle extras)
+		{ 
 		} 
+		
 		@Override 
-		public void onProviderEnabled(String provider) { 
+		public void onProviderEnabled(String provider) 
+		{ 
 		} 
+		
 		@Override 
-		public void onProviderDisabled(String provider) { 
+		public void onProviderDisabled(String provider)
+		{ 
 		} 
+		
 		@Override 
-		public void onLocationChanged(Location location) { 
+		public void onLocationChanged(Location location) 
+		{ 
 			Log.i("onLocationChanged", "come in");
             if (location != null)
             {
@@ -62,9 +72,13 @@ public class AndroidGPS {
             locationManager.setTestProviderEnabled(provider, false);
 		}
 	};
-	static GpsStatus.Listener listener = new GpsStatus.Listener() {
-        public void onGpsStatusChanged(int event) {
-            switch (event) {
+	
+	static GpsStatus.Listener listener = new GpsStatus.Listener()
+	{
+        public void onGpsStatusChanged(int event)
+        {
+            switch (event)
+            {
             //第一次定位
             case GpsStatus.GPS_EVENT_FIRST_FIX:
                 break;
@@ -77,7 +91,8 @@ public class AndroidGPS {
                 //创建一个迭代器保存所有卫星 
                 Iterator<GpsSatellite> iters = gpsStatus.getSatellites().iterator();
                 int count = 0;     
-                while (iters.hasNext() && count <= maxSatellites) {     
+                while (iters.hasNext() && count <= maxSatellites)
+                {     
                     GpsSatellite s = iters.next();     
                     count++;     
                 }   
@@ -92,6 +107,7 @@ public class AndroidGPS {
             }
         };
     };
+    
 	public static double[] getLocation()
     {
         Criteria criteria = new Criteria();
@@ -117,27 +133,32 @@ public class AndroidGPS {
 //        	locationManager.requestLocationUpdates("gps", 60000, 1, locationListener);  
 //        } 
         
-        if (location != null) {
+        if (location != null)
+        {
         	return new double[]{location.getLatitude() , location.getLongitude() };
         	
-		}else {
+		}
+        else 
+        {
 			
 			return new double[]{0,0};
 		}
-        
-
     }
 	
-	private static Location getLastKnownLocation() {
+	private static Location getLastKnownLocation()
+	{
 	//	locationManager = (LocationManager) s_pContext.getSystemService(serviceName);
 	    List<String> providers = locationManager.getProviders(true);
 	    Location bestLocation = null;
-	    for (String provider : providers) {
+	    for (String provider : providers)
+	    {
 	        Location l = locationManager.getLastKnownLocation(provider);
-	        if (l == null) {
+	        if (l == null)
+	        {
 	            continue;
 	        }
-	        if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+	        if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy())
+	        {
 	            // Found best last known location: %s", l);
 	            bestLocation = l;
 	        }
@@ -145,12 +166,16 @@ public class AndroidGPS {
 	    return bestLocation;
 	}
 
-	private static void updateToNewLocation(Location location) {
+	private static void updateToNewLocation(Location location)
+	{
 
-        if (location != null) {
-            double  latitude = location.getLatitude();
+        if (location != null)
+        {
+            double latitude = location.getLatitude();
             double longitude= location.getLongitude();
-        } else {
+        }
+        else
+        {
         }
 
     }

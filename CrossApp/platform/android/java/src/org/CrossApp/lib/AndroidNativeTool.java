@@ -44,6 +44,7 @@ public class AndroidNativeTool
 	{
 		s_pContext = context;
 	}
+	
 	public static void ShowDlg( String[] args )
     {
 		s_pContext.runOnUiThread(new Runnable() {
@@ -72,11 +73,13 @@ public class AndroidNativeTool
 				intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 		s_pContext.startActivityForResult(intent,0);
 	}
+	
 	public static void CAVideoCapture()
 	{
 		Intent getImageByCamera2= new Intent("android.media.action.VIDEO_CAPTURE");     
 		s_pContext.startActivityForResult(getImageByCamera2, 1);  
 	}
+	
 	public static void CAVideoAlbum()
 	{
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -84,6 +87,7 @@ public class AndroidNativeTool
     	Intent wrapperIntent = Intent.createChooser(intent, null);
     	s_pContext.startActivityForResult(wrapperIntent, 2);
 	}
+	
 	public static void CAImageAlbum()
 	{
 		Intent getImage = new Intent(Intent.ACTION_GET_CONTENT);   
@@ -94,28 +98,37 @@ public class AndroidNativeTool
         s_pContext.startActivityForResult(wrapperIntent2, 3);
 	}
 	
-	
-	public static int getScreenBrightness() {
+	public static int getScreenBrightness() 
+	{
 	    int value = 0;
 	    ContentResolver cr = s_pContext.getContentResolver();
-	    try {
+	    try 
+	    {
 	    	
 	        value = Settings.System.getInt(cr, Settings.System.SCREEN_BRIGHTNESS);
-	    } catch (SettingNotFoundException e) {
+	    } 
+	    catch (SettingNotFoundException e)
+	    {
 	        
 	    }
 	    return value;
 	}
 
-	public static void setScreenBrightness( int value) {
+	public static void setScreenBrightness( int value) 
+	{
 		 
 	   Cocos2dxActivity mActivity = (Cocos2dxActivity)s_pContext;
 	   mActivity.mLightHandler.sendEmptyMessage(value);
 	}
-	public static void browserOpenURL(final String url) {
-		s_pContext.runOnUiThread(new Runnable() {
-			public void run() {
-				try {
+	
+	public static void browserOpenURL(final String url)
+	{
+		s_pContext.runOnUiThread(new Runnable()
+		{
+			public void run() 
+			{
+				try
+				{
 					if (s_pContext == null)
 						return;
 					Intent intent = new Intent();
@@ -123,13 +136,17 @@ public class AndroidNativeTool
 					Uri content_url = Uri.parse(url);
 					intent.setData(content_url);
 					s_pContext.startActivity(intent);
-				} catch (Exception e) {
+				} 
+				catch (Exception e) 
+				{
 					Log.d("CrossApp", "browserOpenURL", e);
 				}
 			}
 		});
 	}
-	private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode){
+	
+	private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode)
+	{
 		 Intent intent = new Intent("com.android.camera.action.CROP");
 
 		 intent.setDataAndType(uri, "image/*");
@@ -154,11 +171,14 @@ public class AndroidNativeTool
 
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 		 s_pContext.startActivityForResult(intent, 1);
-		}
+	}
+	
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {  
-        if (resultCode == -1) {  
-            switch (requestCode) {  
+        if (resultCode == -1)
+        {  
+            switch (requestCode) 
+            {  
             case 2:
             case 3:  // Photo
                 Uri originalUri = intent.getData();  

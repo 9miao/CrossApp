@@ -804,22 +804,22 @@ void CAApplication::setContentScaleFactor(float scaleFactor)
     }
 }
 
-CAView* CAApplication::getNotificationNode()
+CAView* CAApplication::getNotificationView()
 { 
     return m_pNotificationNode; 
 }
 
-void CAApplication::setNotificationNode(CAView *node)
+void CAApplication::setNotificationView(CAView *view)
 {
     if (m_pNotificationNode)
     {
-        m_pNotificationNode->becomeFirstResponder();
+        m_pNotificationNode->resignFirstResponder();
     }
     CC_SAFE_RELEASE(m_pNotificationNode);
-    m_pNotificationNode = node;
+    m_pNotificationNode = view;
     if (m_pNotificationNode)
     {
-        m_pNotificationNode->resignFirstResponder();
+        m_pNotificationNode->becomeFirstResponder();
     }
     CC_SAFE_RETAIN(m_pNotificationNode);
     this->updateDraw();

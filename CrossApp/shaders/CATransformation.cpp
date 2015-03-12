@@ -101,7 +101,7 @@ CATransformation CATransformationConcat(const CATransformation& t1, const CATran
     return __CATransformationMake( t1.a * t2.a + t1.b * t2.c,
                                     t1.a * t2.b + t1.b * t2.d,                  //a,b
                                     t1.c * t2.a + t1.d * t2.c,
-                                    t1.c * t2.b + t1.d * t2.d,                  //c,d
+                                    t1.c * t2. b + t1.d * t2.d,                  //c,d
                                     t1.tx * t2.a + t1.ty * t2.c + t2.tx,        //tx
                                     t1.tx * t2.b + t1.ty * t2.d + t2.ty);       //ty
 }

@@ -201,7 +201,7 @@ int CASegmentedControl::getNumberOfSegments()
     return m_vSegments.size();
 }
 
-void CASegmentedControl::insertSegmentWithTitleAtIndex(const std::string title, int index)
+void CASegmentedControl::insertSegmentWithTitleAtIndex(const std::string& title, int index)
 {
     if(index >= 0 && index <= m_vSegments.size())
     {
@@ -253,7 +253,7 @@ void CASegmentedControl::insertSegmentWithImageAtIndex(CAImage* image, int index
     refreshSegmentItemByIndex(m_iSelectedIndex, CAControlStateSelected);
 }
 
-void CASegmentedControl::setTitleForSegmentAtIndex(const std::string title, int index)
+void CASegmentedControl::setTitleForSegmentAtIndex(const std::string& title, int index)
 {
     if(index < m_vSegments.size())
     {
@@ -278,7 +278,7 @@ void CASegmentedControl::setTitleForSegmentAtIndex(const std::string title, int 
         refreshSegmentItemByIndex(m_iSelectedIndex, CAControlStateSelected);
 }
 
-std::string CASegmentedControl::getTitleForSegmentAtIndex(int index)
+const std::string& CASegmentedControl::getTitleForSegmentAtIndex(int index)
 {
     std::string str = "";
     if(index >= 0 && index < m_vSegments.size())

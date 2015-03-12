@@ -741,13 +741,18 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	for (int n = 0; n < utf16String.size(); n++)
 	{
 		FT_ULong c = utf16String[n];
-
+		
 		/* convert character code to glyph index */
 		glyphs.resize(glyphs.size() + 1);
 		glyph = &glyphs[numGlyphs];
-
-		
 		glyph_index = FT_Get_Char_Index(m_face, c);
+
+		glyph->index = glyph_index;
+		glyph->c = c;
+
+		if (c == 13||c == 10)
+			continue;
+
 		glyph->isOpenType = (glyph_index == 0);
 		if (glyph_index == 0)
 		{
@@ -766,9 +771,6 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 
 		/* store current pen position */
 		glyph->pos = pen;
-		glyph->index = glyph_index;
-		glyph->c = c;
-
 
 		/* load glyph image into the slot without rendering */
 		error = FT_Load_Glyph(curFace, glyph_index, FT_LOAD_NO_HINTING | FT_LOAD_NO_BITMAP);

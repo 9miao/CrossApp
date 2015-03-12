@@ -133,8 +133,8 @@ public:
      Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
      @since v0.99.5
      */
-    CAView* getNotificationNode();
-    void setNotificationNode(CAView *node);
+    CAView* getNotificationView();
+    void setNotificationView(CAView *view);
     
     /** CAApplication delegate. It shall implemente the CCDirectorDelegate protocol
      @since v0.99.5

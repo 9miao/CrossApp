@@ -89,7 +89,6 @@ bool CALabel::initWithFrame(const CCRect& rect)
 
 bool CALabel::initWithCenter(const CCRect& rect)
 {
-    
     if (!CAView::initWithCenter(rect,CAColor_black))
     {
         return false;

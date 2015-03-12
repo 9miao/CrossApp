@@ -60,13 +60,13 @@ public:
     
     void setTintColor(const CAColor4B& color);
     
-    void insertSegmentWithTitleAtIndex(const std::string title, int index);
+    void insertSegmentWithTitleAtIndex(const std::string& title, int index);
     void insertSegmentWithImageAtIndex(CAImage* image, int index, CAControlState controlState);
     
     void removeSegmentAtIndex(int index);
     
-    void setTitleForSegmentAtIndex(const std::string title, int index);
-    std::string getTitleForSegmentAtIndex(int index);
+    void setTitleForSegmentAtIndex(const std::string& title, int index);
+    const std::string& getTitleForSegmentAtIndex(int index);
     
     void setImageForSegmentAtIndex(CAImage* image, int index, CAControlState controlState);
     CAImage* getImageForSegmentAtIndex(int index);

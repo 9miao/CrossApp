@@ -23,7 +23,8 @@ public class AndroidVolumeControl extends Service{
 		int max = 0;
 		float current =0.0f;
 		int type = 0;
-		switch (ringtype) {
+		switch (ringtype) 
+		{
 		case 0:
 			type = AudioManager.STREAM_MUSIC;
 			break;
@@ -50,10 +51,12 @@ public class AndroidVolumeControl extends Service{
 	    current = (float)audioManager.getStreamVolume( AudioManager.STREAM_VOICE_CALL )/(float)max;
 		return current;
 	}
+	
 	public static void setVolum(float sender,int type)
 	{
 		int ringType=0;
-		switch (type) {
+		switch (type) 
+		{
 		case 0:
 			ringType = AudioManager.STREAM_MUSIC;
 			break;
@@ -79,7 +82,8 @@ public class AndroidVolumeControl extends Service{
 	}
 
 	@Override
-	public IBinder onBind(Intent intent) {
+	public IBinder onBind(Intent intent) 
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
