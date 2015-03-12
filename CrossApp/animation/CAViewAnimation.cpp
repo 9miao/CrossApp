@@ -11,7 +11,7 @@
 
 NS_CC_BEGIN
 
-class CAViewModel : public CAObject
+class CC_DLL CAViewModel : public CAObject
 {
 public:
     
@@ -136,45 +136,6 @@ public:
             model->autorelease();
         }
         return model;
-    }
-};
-
-class CAViewAnimationModule : public CAObject
-{
-public:
-    
-    std::string animationID;
-    void* context;
-    float duration;
-    float delay;
-    CAViewAnimationCurve curve;
-    float time;
-    CAMap<CAView*, CAObject*> animations;
-    
-    CAObject* willStartTarget;
-    CAObject* didStopTarget;
-    
-    SEL_CAViewAnimation0 willStartSel0;
-    SEL_CAViewAnimation0 didStopSel0;
-    
-    SEL_CAViewAnimation2 willStartSel2;
-    SEL_CAViewAnimation2 didStopSel2;
-    
-    CAViewAnimationModule()
-    :willStartTarget(NULL)
-    ,didStopTarget(NULL)
-    ,willStartSel0(NULL)
-    ,didStopSel0(NULL)
-    ,willStartSel2(NULL)
-    ,didStopSel2(NULL)
-    ,animationID("")
-    ,context(NULL)
-    ,duration(0.2f)
-    ,delay(0.0f)
-    ,time(0.0f)
-    ,curve(CAViewAnimationCurveLinear)
-    {
-        
     }
 };
 

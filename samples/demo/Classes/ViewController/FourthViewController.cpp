@@ -38,7 +38,7 @@ void FourthViewController::viewDidLoad()
     defaultLable->setTextAlignment(CATextAlignmentCenter);
     defaultLable->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     defaultView->insertSubview(defaultLable, 10);
-    defaultLable->setText("演示动画1");
+    defaultLable->setText("play animation 1");
     
     animationView1 = CAView::createWithFrame(defaultView->getBounds());
     defaultView->insertSubview(animationView1, 0);
@@ -49,14 +49,14 @@ void FourthViewController::viewDidLoad()
     defaultView->insertSubview(animationView2, 1);
 
     defaultBtnL = CAButton::createWithCenter(CADipRect(60, 50, 100, 60), CAButtonTypeRoundedRect);
-    defaultBtnL->setTitleForState(CAControlStateNormal, "上一个");
+    defaultBtnL->setTitleForState(CAControlStateNormal, "last");
     defaultBtnL->addTarget(this, CAControl_selector(FourthViewController::buttonCallback), CAControlEventTouchUpInSide);
     defaultBtnL->setTag(1);
     defaultView->insertSubview(defaultBtnL, 11);
     defaultBtnL->setVisible(action_index > 0);
     
     defaultBtnR = CAButton::createWithCenter(CADipRect(viewSize.width-60, 40, 100, 60), CAButtonTypeRoundedRect);
-    defaultBtnR->setTitleForState(CAControlStateNormal, "下一个");
+    defaultBtnR->setTitleForState(CAControlStateNormal, "next");
     defaultBtnR->addTarget(this, CAControl_selector(FourthViewController::buttonCallback), CAControlEventTouchUpInSide);
     defaultBtnR->setTag(2);
     defaultView->insertSubview(defaultBtnR, 11);
@@ -102,18 +102,18 @@ void FourthViewController::buttonCallback(CrossApp::CAControl *btn, CrossApp::CC
     if (action_index < 6)
     {
         char str[32];
-        sprintf(str, "演示动画%d", action_index+1);
+        sprintf(str, "play animation %d", action_index+1);
         defaultLable->setText(str);
     }
     else if (action_index < 9)
     {
         char str[32];
-        sprintf(str, "演示动画频率控制%d", action_index+1 - 6);
+        sprintf(str, "play animation %d", action_index+1 - 6);
         defaultLable->setText(str);
     }
     else
     {
-        defaultLable->setText("演示动画延迟执行");
+        defaultLable->setText("play animation delay");
     }
     
     
