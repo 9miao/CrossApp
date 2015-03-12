@@ -48,7 +48,7 @@ namespace CADevice
     
     CANetWorkType getNetWorkType()
     {
-        return CANetWorkTypeWifi;
+        
     }
     
     void setVolume(float sender,int type)
@@ -58,7 +58,7 @@ namespace CADevice
     
     float getVolume(int type)
     {
-        return 1.0f;
+        
     }
     
     void OpenURL(const std::string &url)
@@ -68,12 +68,12 @@ namespace CADevice
     
     float getBatteryLevel()
     {
-        return 0.0f;
+        
     }
     
     bool isNetWorkAvailble()
     {
-        return 0;
+        
     }
     
     void sendLocalNotification(const char* title,const char* content,unsigned long time)
@@ -83,7 +83,7 @@ namespace CADevice
     
     CAWifiInfo getWifiConnectionInfo()
     {
-        return CAWifiInfo();
+        
     }
     
     void initBlueTooth(CABlueToothDelegate *target)
