@@ -24,6 +24,23 @@
 
 #####10.其他细节的优化
 
+
+
+#### CrossApp 1. 0. 2 Update:  
+
+#####1. Optimized CAScale9ImageView
+#####2. Fixed bug that touch fails to respond in iOS 64 bit system
+#####3. Added popToRootViewControllerAnimated method in CANavigationController,
+it enables you to directly back to homepage
+#####4. Fixed a system crash caused by animation system in a particular condition
+#####5. Fixed a display error caused by setScaleX in a particular condition
+#####6. Fixed bug that some methods in CANavigationController cannot be called after init
+#####7. Fixed a crash problem when obtaining network status
+#####8. Fixed a crash problem caused by text contents that include '\n'
+#####9. Fixed bug that system cannot display texts in iOS 8.2 or higher version
+#####10. Other Details Tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 1.0.0 更新内容：  
@@ -55,7 +72,32 @@ demo有动画示例
 
 
 
-####CrossApp 1.0.0 Update:#####1. Added animation system CAViewAnimationDemo contains animation sample#####2. Support 64-bit#####3. Support Android 5. 0+#####4. Optimized CASegmentControl interface#####5. Fixed bug that's caused by video player DLL in 0.6.1 version#####6. Fixed bug that CATextField crashed in Android platform in 0.6.1 version#####8. Added obtaining the info of current connected wifi (Including name, mac address and level)#####7. Added obtaining wifi list (Including name, mac address and level)Only available on Android platform#####9. Turning on/off Bluetooth devices, starting to search Bluetooth devices, stopping to search Bluetooth devices and obtaining the info of Bluetooth devices including name and addressOnly available on Android platform#####10. Added one-key to create project graphic tool in mac#####11. Other Details Tweaking
+####CrossApp 1.0.0 Update:
+
+#####1. Added animation system CAViewAnimation
+Demo contains animation sample
+
+#####2. Support 64-bit
+
+#####3. Support Android 5. 0+
+
+#####4. Optimized CASegmentControl interface
+
+#####5. Fixed bug that's caused by video player DLL in 0.6.1 version
+
+#####6. Fixed bug that CATextField crashed in Android platform in 0.6.1 version
+
+#####8. Added obtaining the info of current connected wifi (Including name, mac address and level)
+
+#####7. Added obtaining wifi list (Including name, mac address and level)
+Only available on Android platform
+
+#####9. Turning on/off Bluetooth devices, starting to search Bluetooth devices, stopping to search Bluetooth devices and obtaining the info of Bluetooth devices including name and address
+Only available on Android platform
+
+#####10. Added one-key to create project graphic tool in mac
+
+#####11. Other Details Tweaking
 
 
 **********************************************************************************
