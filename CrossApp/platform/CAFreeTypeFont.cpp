@@ -1075,7 +1075,12 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
             pFontName = "/System/Library/Fonts/STHeiti Light.ttc";
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         }
-		ttfIndex = 1;
+        if (pBuffer == NULL)
+        {
+            pFontName = "/System/Library/Fonts/Core/STHeiti-Light.ttc";
+            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        }
+        ttfIndex = 1;
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         

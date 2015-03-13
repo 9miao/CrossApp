@@ -66,7 +66,7 @@ public:
     void removeSegmentAtIndex(int index);
     
     void setTitleForSegmentAtIndex(const std::string& title, int index);
-    const std::string& getTitleForSegmentAtIndex(int index);
+    std::string getTitleForSegmentAtIndex(int index);
     
     void setImageForSegmentAtIndex(CAImage* image, int index, CAControlState controlState);
     CAImage* getImageForSegmentAtIndex(int index);
@@ -95,16 +95,14 @@ protected:
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
     void setContentSize(const CCSize & var);
-    
-    void removeAllSegments();
-    
+        
     void createSeparate();
     
     void cleanAllSeparate();
 
     void removeAllSeparateImage();
     
-    void refreshAllSegmentItemBound();
+    void refreshAllSegmentItemBounds();
     
     void refreshAllSegmentItemPosition();
     

@@ -398,8 +398,9 @@ void CAAlertView::show()
 
 	showAlertView();
 
-	if (CAView *rootWindow = CAApplication::getApplication()->getRootWindow()) {
-		rootWindow->addSubview(this);
+	if (CAWindow *rootWindow = CAApplication::getApplication()->getRootWindow())
+    {
+		rootWindow->insertSubview(this, CAWindowZoderTop);
 	}
 }
 
