@@ -32,7 +32,9 @@ CAWebView::~CAWebView()
 	CC_SAFE_DELETE(_impl);
 }
 
-
+///栗元峰傻乎乎的创建方法
+///一个笨笨的参数
+///返回各种逗比视图
 CAWebView *CAWebView::createWithFrame(const CCRect& rect)
 {
 	CAWebView* webView = new CAWebView();

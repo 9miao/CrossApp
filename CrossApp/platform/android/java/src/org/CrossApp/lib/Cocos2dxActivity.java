@@ -53,7 +53,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	static FrameLayout frame;
 	static View rootview;
 	static int keyboardheight;
-	static float densityDpi;
 	public static int currentBattery=0;
 	private static Activity activity;
 	private static Cocos2dxActivity cocos2dxActivity;
@@ -84,10 +83,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		sContext = this;
 		activity =this;
 		cocos2dxActivity = this;
-		DisplayMetrics metric = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metric);
-        float density = metric.density;
-        densityDpi = metric.densityDpi; 
 		
     	this.mHandler = new Cocos2dxHandler(this);
     	actAndroidNativeTool = new AndroidNativeTool(this);
@@ -98,7 +93,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
 		exeHandler();
-		AndroidNetWorkManager.setContext(this);
+		//AndroidNetWorkManager.setContext(this);
 		
 		 if(mWebViewHelper == null)
 		 {
@@ -370,9 +365,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
-	public static float getDensitDpi() {
-		return densityDpi;
-	}
+
 	public static void setScreenBrightness(int value) {
 		try {
 			// System.putInt(s_pContext.getContentResolver(),android.provider.Settings.System.SCREEN_BRIGHTNESS,value); 

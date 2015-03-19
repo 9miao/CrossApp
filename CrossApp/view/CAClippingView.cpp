@@ -70,9 +70,7 @@ bool CAClippingView::init()
 
 bool CAClippingView::init(CAView *pStencil)
 {
-    CC_SAFE_RELEASE(m_pStencil);
-    m_pStencil = pStencil;
-    CC_SAFE_RETAIN(m_pStencil);
+    this->setStencil(pStencil);
     
     m_fAlphaThreshold = 1;
     m_bInverted = false;
@@ -343,9 +341,11 @@ CAView* CAClippingView::getStencil() const
 
 void CAClippingView::setStencil(CAView *pStencil)
 {
+    if (m_pStencil) m_pStencil->setSuperview(NULL);
     CC_SAFE_RELEASE(m_pStencil);
     m_pStencil = pStencil;
     CC_SAFE_RETAIN(m_pStencil);
+    if (m_pStencil) m_pStencil->setSuperview(this);
 }
 
 GLfloat CAClippingView::getAlphaThreshold() const

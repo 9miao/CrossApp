@@ -637,8 +637,13 @@ void CAView::setContentSize(const CCSize & size)
     {
         m_obContentSize = size;
         
-        m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x, m_obContentSize.height * m_obAnchorPoint.y );
-        m_obFrameRect.size = CCSize(m_obContentSize.width * m_fScaleX, m_obContentSize.height * m_fScaleY);
+        float anchorPointInPointsX = m_obContentSize.width * m_obAnchorPoint.x;
+        float anchorPointInPointsY = m_obContentSize.height * m_obAnchorPoint.y;
+        m_obAnchorPointInPoints = CCPoint(anchorPointInPointsX, anchorPointInPointsY);
+        
+        float frameRectWidth = m_obContentSize.width * m_fScaleX;
+        float frameRectHeight = m_obContentSize.height * m_fScaleY;
+        m_obFrameRect.size = CCSize(frameRectWidth, frameRectHeight);
         
         this->updateImageRect();
         
@@ -664,7 +669,9 @@ void CAView::setFrame(const CCRect &rect)
 {
     if (!rect.size.equals(CCSizeZero))
     {
-        this->setContentSize(CCSize(rect.size.width / m_fScaleX, rect.size.height / m_fScaleY));
+        float width = rect.size.width / m_fScaleX;
+        float height = rect.size.height / m_fScaleY;
+        this->setContentSize(CCSize(width, height));
     }
     
     this->setFrameOrigin(rect.origin);
@@ -680,8 +687,10 @@ void CAView::setFrameOrigin(const CCPoint& point)
     }
     else
     {
-        CCPoint p = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX,
-                            m_obAnchorPointInPoints.y * m_fScaleY);
+        float x = m_obAnchorPointInPoints.x * m_fScaleX;
+        float y = m_obAnchorPointInPoints.y * m_fScaleY;
+        
+        CCPoint p = CCPoint(x, y);
         p = ccpAdd(p, point);
         this->setPoint(p);
         
@@ -721,7 +730,9 @@ void CAView::setCenter(CCRect rect)
 {
     if ( ! rect.size.equals(CCSizeZero))
     {
-        this->setContentSize(CCSize(rect.size.width / m_fScaleX, rect.size.height / m_fScaleY));
+        float width = rect.size.width / m_fScaleX;
+        float height = rect.size.height / m_fScaleY;
+        this->setContentSize(CCSize(width, height));
     }
     
     this->setCenterOrigin(rect.origin);
@@ -742,7 +753,8 @@ void CAView::setCenterOrigin(const CCPoint& point)
     }
     else
     {
-        CCPoint p = ccpSub(ccpMult(m_obContentSize, 0.5f), m_obAnchorPointInPoints);
+        CCPoint p = ccpMult(m_obContentSize, 0.5f);
+        p = ccpSub(p, m_obAnchorPointInPoints);
         p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
         p = ccpSub(point, p);
         this->setPoint(p);

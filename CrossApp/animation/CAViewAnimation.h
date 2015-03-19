@@ -32,25 +32,27 @@ class CC_DLL CAViewAnimationModule : public CAObject
 {
 public:
 
-	std::string animationID;
-	void* context;
-	float duration;
-	float delay;
-	CAViewAnimationCurve curve;
-	float time;
-	CAMap<CAView*, CAObject*> animations;
+	std::string                 animationID;
+	void*                       context;
+	float                       duration;
+	float                       delay;
+    float                       repeatCount;
+    bool                        repeatAutoreverses;
+	CAViewAnimationCurve        curve;
+	float                       time;
+	CAMap<CAView*, CAObject*>   animations;
 
-	CAObject* willStartTarget;
-	CAObject* didStopTarget;
+	CAObject*                   willStartTarget;
+	CAObject*                   didStopTarget;
 
-	SEL_CAViewAnimation0 willStartSel0;
-	SEL_CAViewAnimation0 didStopSel0;
+	SEL_CAViewAnimation0        willStartSel0;
+	SEL_CAViewAnimation0        didStopSel0;
 
-	SEL_CAViewAnimation2 willStartSel2;
-	SEL_CAViewAnimation2 didStopSel2;
+	SEL_CAViewAnimation2        willStartSel2;
+	SEL_CAViewAnimation2        didStopSel2;
 
 	CAViewAnimationModule()
-		:willStartTarget(NULL)
+		: willStartTarget(NULL)
 		, didStopTarget(NULL)
 		, willStartSel0(NULL)
 		, didStopSel0(NULL)
@@ -61,6 +63,8 @@ public:
 		, duration(0.2f)
 		, delay(0.0f)
 		, time(0.0f)
+        , repeatCount(1.0f)
+        , repeatAutoreverses(false)
 		, curve(CAViewAnimationCurveLinear)
 	{
 
@@ -83,7 +87,11 @@ public:
     
     static void setAnimationDelay(float delay);// default(0)
     
-    static void setAnimationCurve(const CAViewAnimationCurve& curve);// default(CAViewAnimationCurveLinear
+    static void setAnimationCurve(const CAViewAnimationCurve& curve);// default(CAViewAnimationCurveLinear)
+    
+    static void setAnimationRepeatCount(float repeatCount);// default(1.0)
+    
+    static void setAnimationRepeatAutoreverses(bool repeatAutoreverses);// default(false)
     
     static void setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation0 selector);
     

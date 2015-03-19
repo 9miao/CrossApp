@@ -286,6 +286,10 @@ void FourthViewController::doAction()
     //CAViewAnimation::setAnimationDelay(0.3f);
     //动画波频控制
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
+
+    CAViewAnimation::setAnimationRepeatCount(1.5);
+
+    CAViewAnimation::setAnimationRepeatAutoreverses(true);
     //动画开始前回调(两参数)
     CAViewAnimation::setAnimationWillStartSelector(this, CAViewAnimation2_selector(FourthViewController::willStartAction));
     //动画完成回调(两参数)

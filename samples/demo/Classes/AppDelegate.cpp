@@ -32,6 +32,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // create a scene. it's an autorelease object
 	m_pWindow = MainMenu::createWindow();
+    
     // run
     pDirector->runWindow(m_pWindow);
     

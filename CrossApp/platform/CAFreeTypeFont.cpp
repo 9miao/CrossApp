@@ -679,7 +679,7 @@ FT_Error CAFreeTypeFont::initGlyphs(const char* text)
 		size_t first = line.find('\n');
 		while (first != std::string::npos)
 		{
-			initGlyphsLine(line.substr(pos, first - pos)+"\n");
+			initGlyphsLine(line.substr(pos, first - pos));
 
 			pos = first + 1;
 			first = line.find('\n', pos);
@@ -741,6 +741,9 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	for (int n = 0; n < utf16String.size(); n++)
 	{
 		FT_ULong c = utf16String[n];
+
+		if (c == '\r' || c == '\n')
+			continue;
 		
 		/* convert character code to glyph index */
 		glyphs.resize(glyphs.size() + 1);
@@ -750,9 +753,6 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		glyph->index = glyph_index;
 		glyph->c = c;
 
-		if (c == 13||c == 10)
-			continue;
-
 		glyph->isOpenType = (glyph_index == 0);
 		if (glyph_index == 0)
 		{
@@ -760,10 +760,10 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		}
 
 		FT_Face curFace = glyph->isOpenType ? s_TempFont.m_CurFontFace : m_face;
-		if (curFace == NULL)
+		if (curFace==NULL)
 			continue;
+		
 		FT_GlyphSlot slot = curFace->glyph;
-
  		if (useKerning && previous && glyph_index)
 		{
 			FT_Vector  delta;
@@ -1075,12 +1075,12 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
             pFontName = "/System/Library/Fonts/STHeiti Light.ttc";
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         }
-        if (pBuffer == NULL)
-        {
-            pFontName = "/System/Library/Fonts/Core/STHeiti-Light.ttc";
-            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
-        }
-        ttfIndex = 1;
+		if (pBuffer == NULL)
+		{
+			pFontName = "/System/Library/Fonts/Core/STHeiti-Light.ttc";
+			pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+		}
+		ttfIndex = 1;
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         

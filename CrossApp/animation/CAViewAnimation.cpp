@@ -213,6 +213,21 @@ void CAViewAnimation::setAnimationCurve(const CAViewAnimationCurve& curve)
     animation->m_vWillModules.back()->curve = curve;
 }
 
+void CAViewAnimation::setAnimationRepeatCount(float repeatCount)
+{
+    CAViewAnimation* animation = CAViewAnimation::getInstance();
+    CC_RETURN_IF(animation->m_vWillModules.empty());
+    repeatCount = MAX(0.0f, repeatCount);
+    animation->m_vWillModules.back()->repeatCount = repeatCount;
+}
+
+void CAViewAnimation::setAnimationRepeatAutoreverses(bool repeatAutoreverses)
+{
+    CAViewAnimation* animation = CAViewAnimation::getInstance();
+    CC_RETURN_IF(animation->m_vWillModules.empty());
+    animation->m_vWillModules.back()->repeatAutoreverses = repeatAutoreverses;
+}
+
 void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation0 selector)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
@@ -263,7 +278,6 @@ bool CAViewAnimation::areBeginAnimations()
 }
 
 
-
 void CAViewAnimation::update(float dt)
 {
     CAVector<CAViewAnimationModule*> modules = CAVector<CAViewAnimationModule*>(m_vModules);
@@ -273,8 +287,8 @@ void CAViewAnimation::update(float dt)
     {
         CAViewAnimationModule* module = *itr_module;
         module->time += dt;
-        float time = module->time - module->delay;
- 
+        float time = module->time  - module->delay;
+
         if (time > -FLT_MIN)
         {
             if (module->willStartTarget)
@@ -292,29 +306,64 @@ void CAViewAnimation::update(float dt)
                 module->willStartTarget = NULL;
             }
 
-            float s = time / module->duration;
-            s = MIN(s, 1.0f);
+            float times = 0;
+            do
+            {
+                CC_BREAK_IF(time < module->duration);
+                CC_BREAK_IF(time - dt < module->duration);
+                time -= module->duration;
+                times += 1.0f;
+            }
+            while (true);
+            
+            bool isReverses = module->repeatAutoreverses ? ((int)times) % 2 == 1 : false;
+            float s = MIN(time / module->duration, 1.0f);
+            times += s;
+            times = module->repeatAutoreverses ? times / 2 : times;
+            s = isReverses ? 1.0f - s : s;
 
             switch (module->curve)
             {
                 case CAViewAnimationCurveEaseOut:
                 {
-                    s = -1/3.0f * s * s + 4/3.0f * s;
+                    s = (s + sqrtf(1 - powf(1 - s, 2))) / 2;
                 }
                     break;
                 case CAViewAnimationCurveEaseIn:
                 {
-                    s = 2 - sqrtf(4 - 3.0f * s);
+                    s = (s + 1 - sqrtf(1 - powf(s, 2))) / 2;
                 }
                     break;
                 case CAViewAnimationCurveEaseInOut:
                 {
-                    s = (s < 0.5f) ? ((1 - sqrtf(1 - 2 * s)) / 2) : (-2 * s * s + 4 * s - 1);
+                    s = (s < 0.5f)
+                        ? (s + 0.5f - sqrtf(0.25f - powf(s, 2))) / 2
+                        : (s + sqrtf(0.25 - powf(1 - s, 2)) + 0.5f) / 2;
                 }
                     break;
                 default:
                     break;
             }
+            
+//            switch (module->curve)
+//            {
+//                case CAViewAnimationCurveEaseOut:
+//                {
+//                    s = -1/3.0f * s * s + 4/3.0f * s;
+//                }
+//                    break;
+//                case CAViewAnimationCurveEaseIn:
+//                {
+//                    s = 2 - sqrtf(4 - 3.0f * s);
+//                }
+//                    break; 额  9//                case CAViewAnimationCurveEaseInOut:
+//                {
+//                    s = (s < 0.5f) ? ((1 - sqrtf(1 - 2 * s)) / 2) : (-2 * s * s + 4 * s - 1);
+//                }
+//                    break;
+//                default:
+//                    break;
+//            }
             
 
             CAMap<CAView*, CAObject*>& animations = (*itr_module)->animations;
@@ -360,7 +409,7 @@ void CAViewAnimation::update(float dt)
                 ++itr_animation;
             }
             
-            if (time >= module->duration)
+            if (times >= module->repeatCount)
             {
                 if (module->didStopTarget)
                 {

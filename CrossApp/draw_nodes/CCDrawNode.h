@@ -71,6 +71,7 @@ public:
      */
     void listenBackToForeground(CAObject *obj);
 private:
+    virtual void setContentSize(const CCSize& contentSize);
     void ensureCapacity(unsigned int count);
     void render();
 };

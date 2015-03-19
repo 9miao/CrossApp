@@ -124,7 +124,6 @@
 #include "shaders/CAShaderCache.h"
 #include "shaders/ccShaders.h"
 
-
 // support
 #include "support/ccUtils.h"
 #include "support/ccUTF8.h"
@@ -138,7 +137,6 @@
 #include "support/base64.h"
 
 // platform
-#include "platform/CCDevice.h"
 #include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCImage.h"

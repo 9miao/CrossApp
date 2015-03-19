@@ -440,4 +440,9 @@ void CCDrawNode::listenBackToForeground(CAObject *obj)
     init();
 }
 
+void CCDrawNode::setContentSize(const CCSize& contentSize)
+{
+    CAView::setContentSize(CCSize(0, 0));
+}
+
 NS_CC_END

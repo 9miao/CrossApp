@@ -278,8 +278,6 @@
 		1A31963116C0DDE800207637 /* encode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3191B716C0DDE700207637 /* encode.h */; };
 		1A31963216C0DDE800207637 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3191B816C0DDE700207637 /* types.h */; };
 		1A3199AE16C0E3A200207637 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3199AD16C0E3A200207637 /* libwebp.a */; };
-		1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6225F16CF6BD00028C05E /* CCDevice.mm */; };
-		1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA6226116CF6BDF0028C05E /* CCDevice.h */; };
 		1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */; };
 		1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */; };
 		1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8716B910CD00330EFD /* CCFileUtils.h */; };
@@ -694,8 +692,6 @@
 		1A3191B716C0DDE700207637 /* encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encode.h; sourceTree = "<group>"; };
 		1A3191B816C0DDE700207637 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		1A3199AD16C0E3A200207637 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/ios/libraries/libwebp.a; sourceTree = "<group>"; };
-		1AA6225F16CF6BD00028C05E /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
-		1AA6226116CF6BDF0028C05E /* CCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDevice.h; sourceTree = "<group>"; };
 		1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsIOS.h; sourceTree = "<group>"; };
 		1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		1AC6CE8716B910CD00330EFD /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
@@ -1243,7 +1239,6 @@
 				0460ED1A195700EE00D13001 /* CCEGLViewProtocol.h */,
 				1551A46C158F2ADE00E66CFE /* CCAccelerometerDelegate.h */,
 				1551A46E158F2ADE00E66CFE /* CCCommon.h */,
-				1AA6226116CF6BDF0028C05E /* CCDevice.h */,
 				1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */,
 				1AC6CE8716B910CD00330EFD /* CCFileUtils.h */,
 				1551A473158F2ADE00E66CFE /* CCImage.h */,
@@ -1275,7 +1270,6 @@
 				1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */,
 				1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */,
 				1551A482158F2ADE00E66CFE /* CCCommon.mm */,
-				1AA6225F16CF6BD00028C05E /* CCDevice.mm */,
 				1551A483158F2ADE00E66CFE /* CAApplicationCaller.h */,
 				1551A484158F2ADE00E66CFE /* CAApplicationCaller.mm */,
 				1551A487158F2ADE00E66CFE /* CCES2Renderer.h */,
@@ -1913,7 +1907,6 @@
 				1A31963116C0DDE800207637 /* encode.h in Headers */,
 				1A31963216C0DDE800207637 /* types.h in Headers */,
 				469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */,
-				1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */,
 				B0596B14197629BE00B1E8CB /* svpostnm.h in Headers */,
 				1A2802B116DF1C5B00189CBF /* ccUTF8.h in Headers */,
 				46A393F716E5D01B00210B16 /* CAUserDefault.h in Headers */,
@@ -2123,7 +2116,6 @@
 				1A3187F416C0B30600207637 /* CCImageCommonWebp.cpp in Sources */,
 				B04BCA841985DE5500CE0BC1 /* CAIndexPath.cpp in Sources */,
 				469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */,
-				1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */,
 				1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */,
 				B0596B411976356C00B1E8CB /* ConvertUTF.cpp in Sources */,
 				46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */,
