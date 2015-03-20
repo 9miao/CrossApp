@@ -353,6 +353,18 @@ bool CCRect::intersectsRect(const CCRect& rect) const
 }
 
 
+void CCRect::InflateRect(float v)
+{
+	size.width += 2 * v;
+	size.height += 2 * v;
+
+	if (!m_bCenter)
+	{
+		origin.x -= v;
+		origin.y -= v;
+	}
+}
+
 
 CADipPoint::CADipPoint()
 :x(0.0f)

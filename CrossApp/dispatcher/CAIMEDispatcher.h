@@ -50,24 +50,20 @@ public:
     
     void dispatchGetKeyBoradReturnCallBack();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    void dispatchDeleteForward();
-    void dispatchCursorMoveBackward(bool selected);
-    void dispatchCursorMoveForward(bool selected);
-#endif
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-    void dispatchCopyToClipboard(std::string *content);
-    void dispatchCutToClipboard(std::string *content);
-    void dispatchPasteFromClipboard(const char *content);
+	void dispatchCursorMoveBackward();
+	void dispatchCursorMoveForward();
+	void dispatchMoveSelectChars(bool isLeftBtn, const CCPoint& pt);
+	void dispatchMoveSelectCharsCancel(const CCPoint& pt);
+	void dispatchCopyToClipboard();
+	void dispatchCutToClipboard();
+	void dispatchPasteFromClipboard();
     void dispatchSelectAll();
-#endif
+	int getCursorPos();
 
     /**
     @brief Get the content text from CAIMEDelegate, retrieved previously from IME.
     */
     const char * getContentText();
-    int getCursorPos();
-    std::pair<int, int> getCharRange();
 
     //////////////////////////////////////////////////////////////////////////
     // dispatch keyboard notification

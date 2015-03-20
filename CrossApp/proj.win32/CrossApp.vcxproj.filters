@@ -354,9 +354,6 @@
     <ClCompile Include="..\control\CASwitch.cpp">
       <Filter>control</Filter>
     </ClCompile>
-    <ClCompile Include="..\control\CATextField.cpp">
-      <Filter>control</Filter>
-    </ClCompile>
     <ClCompile Include="..\controller\CABarItem.cpp">
       <Filter>controller</Filter>
     </ClCompile>
@@ -448,6 +445,13 @@
     </ClCompile>
     <ClCompile Include="..\platform\CATempTypeFont.cpp">
       <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAClipboard.cpp" />
+    <ClCompile Include="..\view\CATextEditHelper.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CATextField.cpp">
+      <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -802,9 +806,6 @@
     <ClInclude Include="..\control\CASwitch.h">
       <Filter>control</Filter>
     </ClInclude>
-    <ClInclude Include="..\control\CATextField.h">
-      <Filter>control</Filter>
-    </ClInclude>
     <ClInclude Include="..\controller\CABarItem.h">
       <Filter>controller</Filter>
     </ClInclude>
@@ -901,6 +902,13 @@
     </ClInclude>
     <ClInclude Include="..\platform\CATempTypeFont.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAClipboard.h" />
+    <ClInclude Include="..\view\CATextEditHelper.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CATextField.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

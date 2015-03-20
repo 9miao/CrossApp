@@ -64,6 +64,7 @@ typedef struct FTLineInfo
 	FT_BBox             bbox;       // bounding box containing all of the glyphs in the line
     unsigned int        width;      // width of the line     
     FT_Vector           pen;        // current pen position
+	bool				includeRet;
 } FTLineInfo;
 
 

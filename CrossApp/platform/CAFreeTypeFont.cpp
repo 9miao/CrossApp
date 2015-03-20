@@ -85,7 +85,7 @@ _AgaginInitGlyphs:
 		{
 			int totalLines = m_inHeight / m_lineHeight;
 
-			for (int i = 0; i < m_lines.size(); i++)
+			for (int i = 0; i < m_lines.size(); i++, cszTemp+='\n')
 			{
 				if (i < totalLines)
 				{
@@ -534,6 +534,7 @@ void CAFreeTypeFont::newLine()
     m_currentLine->width = 0;
     m_currentLine->pen.x = 0;
     m_currentLine->pen.y = 0;
+	m_currentLine->includeRet = false;
 }
 
 
@@ -679,7 +680,8 @@ FT_Error CAFreeTypeFont::initGlyphs(const char* text)
 		size_t first = line.find('\n');
 		while (first != std::string::npos)
 		{
-			initGlyphsLine(line.substr(pos, first - pos)+"\n");
+			initGlyphsLine(line.substr(pos, first - pos));
+			m_currentLine->includeRet = true;
 
 			pos = first + 1;
 			first = line.find('\n', pos);
@@ -742,17 +744,15 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	{
 		FT_ULong c = utf16String[n];
 		
+		if (c == '\r' || c == '\n')
+			continue;
+
 		/* convert character code to glyph index */
 		glyphs.resize(glyphs.size() + 1);
 		glyph = &glyphs[numGlyphs];
-		glyph_index = FT_Get_Char_Index(m_face, c);
-
-		glyph->index = glyph_index;
 		glyph->c = c;
-
-		if (c == 13||c == 10)
-			continue;
-
+		glyph_index = FT_Get_Char_Index(m_face, c);
+		glyph->index = glyph_index;
 		glyph->isOpenType = (glyph_index == 0);
 		if (glyph_index == 0)
 		{
@@ -762,8 +762,8 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		FT_Face curFace = glyph->isOpenType ? s_TempFont.m_CurFontFace : m_face;
 		if (curFace == NULL)
 			continue;
+		
 		FT_GlyphSlot slot = curFace->glyph;
-
  		if (useKerning && previous && glyph_index)
 		{
 			FT_Vector  delta;
@@ -847,10 +847,6 @@ FT_Error CAFreeTypeFont::initTextView(const char* pText, std::vector<TextViewLin
 		for (int j = 0; j < m_lines[i]->glyphs.size(); j++)
 		{
 			TGlyph& g = m_lines[i]->glyphs[j];
-			
-			bIncludeReturn = (g.c == 10);
-			if (bIncludeReturn)
-				continue;
 
 			FT_BBox temp_bbox = bbox;
 			compute_bbox2(g, bbox);
@@ -878,6 +874,8 @@ FT_Error CAFreeTypeFont::initTextView(const char* pText, std::vector<TextViewLin
 		}
 		cTextViewLine.iEndCharPos = iCurCharPos;
 		linesText.push_back(cTextViewLine);
+
+		bIncludeReturn = m_lines[i]->includeRet;
 	}
 	return 0;
 }
@@ -900,7 +898,7 @@ void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
     /* translate it, and grow the string bbox          */
 	for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
     {
-        FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
+		FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
 
 		if (glyph_bbox.xMin == glyph_bbox.xMax)
 		{
@@ -1075,6 +1073,11 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
             pFontName = "/System/Library/Fonts/STHeiti Light.ttc";
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         }
+		if (pBuffer == NULL)
+		{
+			pFontName = "/System/Library/Fonts/Core/STHeiti-Light.ttc";
+			pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+		}
 		ttfIndex = 1;
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

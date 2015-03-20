@@ -38,7 +38,6 @@ control/CAProgress.cpp \
 control/CASegmentedControl.cpp \
 control/CASlider.cpp \
 control/CASwitch.cpp \
-control/CATextField.cpp \
 control/CAPageControl.cpp \
 control/CAStepper.cpp \
 controller/CABarItem.cpp \
@@ -96,6 +95,8 @@ view/CADatePickerView.cpp \
 view/CAActivityIndicatorView.cpp \
 view/CAPullToRefreshView.cpp \
 view/CATextView.cpp \
+view/CATextField.cpp \
+view/CATextEditHelper.cpp \
 view/CALabelStyle.cpp \
 view/CAWebView.cpp \
 animation/CAViewAnimation.cpp \
@@ -129,6 +130,7 @@ platform/android/CCCommon.cpp \
 platform/android/CCFileUtilsAndroid.cpp \
 platform/android/CCImage.cpp \
 platform/android/CAWebViewImpl.cpp \
+platform/android/CAClipboard.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \

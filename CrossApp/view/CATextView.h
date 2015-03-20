@@ -12,8 +12,9 @@
 #include "view/CAView.h"
 #include "view/CAScrollView.h"
 #include "view/CAScale9ImageView.h"
+#include "view/CATextField.h"
 #include "dispatcher/CAIMEDispatcher.h"
-#include "control/CATextField.h"
+
 
 #include <vector>
 
@@ -74,18 +75,6 @@ public:
 	virtual void getKeyBoardHeight(int height);
 	virtual void getKeyBoradReturnCallBack();
 	virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-	virtual void deleteForward();
-	virtual void cursorMoveBackward(bool selected);
-	virtual void cursorMoveForward(bool selected);
-
-	virtual void copyToClipboard(std::string *content);
-	virtual void cutToClipboard(std::string *content);
-	virtual void pasteFromClipboard(const char *content);
-	virtual void selectAll();
-#endif
-
 	virtual const char* getContentText();
 	virtual void visit();
 

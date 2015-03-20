@@ -365,7 +365,10 @@ public:
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
+	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
+    
 protected:
+	void ccTouchTimer(float interval);
 
     void detachSubview(CAView *subview);
 
@@ -494,6 +497,9 @@ protected:
     ccBlendFunc        m_sBlendFunc;            /// It's required for CAImageProtocol inheritance
     
     CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
+    
+	CATouch *m_pCurTouch;
+	CAEvent *m_pCurEvent;
     
     friend class CAViewAnimation;
 };

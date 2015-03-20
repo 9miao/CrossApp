@@ -448,43 +448,6 @@ void CATextView::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 	this->resignFirstResponder();
 }
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-void CATextView::deleteForward()
-{
-
-}
-
-void CATextView::cursorMoveBackward(bool selected)
-{
-
-}
-
-void CATextView::cursorMoveForward(bool selected)
-{
-
-}
-
-void CATextView::copyToClipboard(std::string *content)
-{
-
-}
-
-void CATextView::cutToClipboard(std::string *content)
-{
-
-}
-
-void CATextView::pasteFromClipboard(const char *content)
-{
-
-}
-
-void CATextView::selectAll()
-{
-
-}
-#endif
-
 const char* CATextView::getContentText()
 {
 	return m_szText.c_str();

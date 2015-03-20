@@ -342,6 +342,7 @@ public:
     bool equals(const CCRect& rect) const;   
     bool containsPoint(const CCPoint& point) const;
     bool intersectsRect(const CCRect& rect) const;
+    void InflateRect(float v);
     
     CC_SYNTHESIZE_IS(bool, m_bCenter, Center);
 };
