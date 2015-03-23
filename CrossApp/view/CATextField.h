@@ -183,7 +183,7 @@ protected:
     void adjustCursorMoveForward();
 	CCRect getZZCRect(bool& l, bool& r);
 	void startSelect();
-	void execCurSelCharRange();
+	bool execCurSelCharRange();
 	
 	virtual void selectAll();
 	virtual void cursorMoveBackward();

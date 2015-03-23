@@ -471,6 +471,7 @@ void CATextField::analyzeString(const char * text, int len)
 
 void CATextField::insertText(const char * text, int len)
 {
+	execCurSelCharRange();
     CC_RETURN_IF(len <= 0);
     CC_RETURN_IF(text == 0);
     
@@ -532,6 +533,9 @@ void CATextField::deleteBackward()
 	if (m_iCurPos==0 || m_sText.empty())
 		return;
 
+	if (execCurSelCharRange())
+		return;
+
 	int nDeleteLen = 1;
 	while (0x80 == (0xC0 & m_sText.at(m_iCurPos - nDeleteLen)))
 	{
@@ -544,7 +548,6 @@ void CATextField::deleteBackward()
     CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), m_sText.length()));
 	
 	m_vTextFiledChars.erase(m_vTextFiledChars.begin() + getStringCharCount(m_sText.substr(0, m_iCurPos)));
-	
     adjustCursorMoveBackward();
 }
 
@@ -778,11 +781,9 @@ void CATextField::cutToClipboard()
 	execCurSelCharRange();
 }
 
-// 还有问题
+
 void CATextField::pasteFromClipboard()
 {
-	execCurSelCharRange();
-
 	std::string cszText = CAClipboard::GetText();
 	insertText(cszText.c_str(), cszText.size());
 
@@ -792,10 +793,10 @@ void CATextField::pasteFromClipboard()
 #endif
 }
 
-void CATextField::execCurSelCharRange()
+bool CATextField::execCurSelCharRange()
 {
 	if (m_curSelCharRange.first == m_curSelCharRange.second)
-		return;
+		return false;
 
 	int iOldCurPos = m_curSelCharRange.first;
 	std::string cszText = m_sText.erase(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
@@ -806,6 +807,7 @@ void CATextField::execCurSelCharRange()
 	m_iCurPos = iOldCurPos;
 	m_pCursorMark->setVisible(true);
 	adjustCursorMoveBackward();
+	return true;
 }
 
 const char* CATextField::getContentText()

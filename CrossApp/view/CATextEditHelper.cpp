@@ -93,7 +93,7 @@ bool CATextToolBar::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		{
 			hideTextEditView();
 		}
-		return false;
+		return true;
 	}
 	return CAView::ccTouchBegan(pTouch, pEvent);
 }
@@ -257,8 +257,14 @@ bool CATextSelectView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		return true;
 	}
 
-	resignFirstResponder();
-	hideTextSelView();
+	if (resignFirstResponder())
+	{
+		hideTextSelView();
+	}
+	else
+	{
+		becomeFirstResponder();
+	}
 	return false;
 }
 
