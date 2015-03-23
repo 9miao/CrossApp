@@ -14,6 +14,7 @@
 #include <algorithm>
 #include "shaders/CAShaderCache.h"
 #include "platform/CAClipboard.h"
+#include "basics/CAScheduler.h"
 
 NS_CC_BEGIN
 
@@ -41,6 +42,8 @@ CATextField::CATextField()
 , m_iVertMargins(0)
 , m_pBackgroundView(NULL)
 , m_pSelCharsView(NULL)
+, m_pCurTouch(NULL)
+, m_pCurEvent(NULL)
 {
 	m_iFontHeight = CAImage::getFontHeight("", m_iFontSize);
 }
@@ -301,6 +304,12 @@ _CalcuAgain:
 	}
 }
 
+void CATextField::ccTouchTimer(float interval)
+{
+	CAScheduler::unschedule(schedule_selector(CATextField::ccTouchTimer), this);
+	ccTouchPress(m_pCurTouch, m_pCurEvent);
+}
+
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     CCPoint point = this->convertTouchToNodeSpace(pTouch);
@@ -343,8 +352,29 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         return false;
     }
     
-	return CAView::ccTouchBegan(pTouch, pEvent);
+	CAScheduler::schedule(schedule_selector(CATextField::ccTouchTimer), this, 0, 0, 1.5f);
+
+	m_pCurTouch = pTouch;
+	m_pCurEvent = pEvent;
+
+	return true;
 }
+
+void CATextField::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+	CAScheduler::unschedule(schedule_selector(CATextField::ccTouchTimer), this);
+}
+
+void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
+{
+	CAScheduler::unschedule(schedule_selector(CATextField::ccTouchTimer), this);
+}
+
+void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
+{
+	CAScheduler::unschedule(schedule_selector(CATextField::ccTouchTimer), this);
+}
+
 
 void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 {

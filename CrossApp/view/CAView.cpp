@@ -103,8 +103,6 @@ CAView::CAView(void)
 , m_obRestoreScissorRect(CCRectZero)
 , m_pobBatchView(NULL)
 , m_pobImageAtlas(NULL)
-, m_pCurTouch(NULL)
-, m_pCurEvent(NULL)
 {
     m_pActionManager = CAApplication::getApplication()->getActionManager();
     m_pActionManager->retain();
@@ -2148,38 +2146,19 @@ bool CAView::isFlipY(void)
 
 bool CAView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::schedule(schedule_selector(CAView::ccTouchTimer), this, 0, 0, 1.5f);
-
-	m_pCurTouch = pTouch;
-	m_pCurEvent = pEvent;
-
-    return true;
+    return false;
 }
 
 void CAView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::unschedule(schedule_selector(CAView::ccTouchTimer), this);
 }
 
 void CAView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::unschedule(schedule_selector(CAView::ccTouchTimer), this);
 }
 
 void CAView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::unschedule(schedule_selector(CAView::ccTouchTimer), this);
-}
-
-void CAView::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
-{
-
-}
-
-void CAView::ccTouchTimer(float interval)
-{
-	CAScheduler::unschedule(schedule_selector(CAView::ccTouchTimer), this);
-	ccTouchPress(m_pCurTouch, m_pCurEvent);
 }
 
 void CAView::setBatch(CABatchView *batchView)

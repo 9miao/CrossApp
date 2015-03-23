@@ -164,7 +164,11 @@ protected:
     virtual void setContentSize(const CCSize& var);
     void initMarkSprite();
 	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
+	void ccTouchTimer(float interval);
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
     virtual void insertText(const char * text, int len);
     virtual void willInsertText(const char* text,int len);
@@ -210,6 +214,9 @@ private:
 	eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;
 	CATextSelectView* m_pSelCharsView;
+
+	CATouch *m_pCurTouch;
+	CAEvent *m_pCurEvent;
 };
 
 NS_CC_END
