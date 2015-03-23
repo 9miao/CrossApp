@@ -44,6 +44,19 @@ CATextToolBar *CATextToolBar::createWithText(const char* pszBtnText, ...)
 	return NULL;
 }
 
+void CATextToolBar::hideTextToolBar()
+{
+	CATextToolBar* pTextToolBar = NULL;
+	if (CAView *rootWindow = CAApplication::getApplication()->getRootWindow())
+	{
+		pTextToolBar = (CATextToolBar*)rootWindow->getSubviewByTextTag("CATextToolBar");
+	}
+	if (pTextToolBar)
+	{
+		pTextToolBar->hideTextEditView();
+	}
+}
+
 void CATextToolBar::addButton(const std::string& btnText, CAColor4B col, CAImage* pNormalImage, CAImage* pHighlightedImage)
 {
 	CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
@@ -80,7 +93,6 @@ void CATextToolBar::onClickButton(CAControl* btn, CCPoint point)
 	{
 		((CAObject*)m_pCATextTarget->*m_pCAEditBtnEvent)(btn->getTag());
 	}
-	hideTextEditView();
 }
 
 
@@ -111,9 +123,11 @@ void CATextToolBar::showTextEditView(const CCPoint& point)
 
 	if (getSuperview() != NULL)
 		return;
+	CATextToolBar::hideTextToolBar();
 
 	setFrame(CADipRect(point.x, point.y, fBtnWidth*m_vAllBtn.size(), fBtnHeight));
 	setColor(CAColor_red);
+	setTextTag("CATextToolBar");
 
 	for (int i = 0; i < m_vAllBtn.size(); i++) 
 	{
@@ -199,12 +213,30 @@ CATextSelectView *CATextSelectView::create()
 	return pTextSelView;
 }
 
+void CATextSelectView::hideTextSelectView()
+{
+	CATextSelectView* pTextSelectView = NULL;
+	if (CAView *rootWindow = CAApplication::getApplication()->getRootWindow())
+	{
+		pTextSelectView = (CATextSelectView*)rootWindow->getSubviewByTextTag("CATextSelectView");
+	}
+	if (pTextSelectView)
+	{
+		pTextSelectView->hideTextSelView();
+	}
+}
+
 
 void CATextSelectView::showTextSelView(const CCRect& rect, bool showLeft, bool showRight)
 {
+	if (getSuperview() != NULL)
+		return;
+	CATextSelectView::hideTextSelectView();
+
 	CCSize winSize = CAApplication::getApplication()->getWinSize();
 	setFrame(CCRect(0, 0, winSize.width, winSize.height));
 	setColor(CAColor_clear);
+	setTextTag("CATextSelectView");
 
 	CCRect newRect = rect;
 	if (showLeft)

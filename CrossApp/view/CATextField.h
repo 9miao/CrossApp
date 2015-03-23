@@ -213,7 +213,6 @@ private:
 	CCSize m_cImageSize;
 	eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;
-	CATextSelectView* m_pSelCharsView;
 
 	CATouch *m_pCurTouch;
 	CAEvent *m_pCurEvent;

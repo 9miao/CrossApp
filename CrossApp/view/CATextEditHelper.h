@@ -31,6 +31,7 @@ public:
 	virtual ~CATextToolBar();
 
 	static CATextToolBar *createWithText(const char* pszBtnText, ...);
+	static void hideTextToolBar();
 
 protected:
 	void setTarget(CAObject* target, SEL_CATextEditBtnEvent selector);
@@ -58,6 +59,7 @@ public:
 	virtual ~CATextSelectView();
 	
 	static CATextSelectView *create();
+	static void hideTextSelectView();
 
 protected:
 	virtual bool init();

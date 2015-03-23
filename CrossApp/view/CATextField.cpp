@@ -41,7 +41,6 @@ CATextField::CATextField()
 , m_iHoriMargins(0)
 , m_iVertMargins(0)
 , m_pBackgroundView(NULL)
-, m_pSelCharsView(NULL)
 , m_pCurTouch(NULL)
 , m_pCurEvent(NULL)
 {
@@ -381,21 +380,23 @@ void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
 		return;
 
-	CATextToolBar* pCATextEditView = NULL;
+	CATextToolBar* pTextEditView = NULL;
 	if (m_sText.empty())
 	{
-		pCATextEditView = CATextToolBar::createWithText(UTF8("粘贴"), NULL);
+		pTextEditView = CATextToolBar::createWithText(UTF8("粘贴"), NULL);
 	}
 	else
 	{
-		pCATextEditView = CATextToolBar::createWithText(UTF8("粘贴"), UTF8("全选"), UTF8("选择"), NULL);
+		pTextEditView = CATextToolBar::createWithText(UTF8("粘贴"), UTF8("全选"), UTF8("选择"), NULL);
 	}
-	pCATextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent));
-	pCATextEditView->showTextEditView(pTouch->getLocation());
+	pTextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent));
+	pTextEditView->showTextEditView(pTouch->getLocation());
 }
 
 void CATextField::CATextEditBtnEvent(int iButtonIndex)
 {
+	CATextToolBar::hideTextToolBar();
+
 	if (iButtonIndex == 0)
 	{
 		pasteFromClipboard();
@@ -408,10 +409,13 @@ void CATextField::CATextEditBtnEvent(int iButtonIndex)
 	{
 		startSelect();
 	}
+	
 }
 
 void CATextField::CATextEditBtnEvent2(int iButtonIndex)
 {
+	CATextToolBar::hideTextToolBar();
+
 	if (iButtonIndex == 0)
 	{
 		cutToClipboard();
@@ -661,11 +665,10 @@ void CATextField::startSelect()
 		m_curSelCharRange.second = m_iCurPos;
 	}
 
-	CCAssert(m_pSelCharsView == NULL, "");
-	m_pSelCharsView = CATextSelectView::create();
+	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool l, r;
 	CCRect cc = getZZCRect(l, r);
-	m_pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), l, r);
+	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), l, r);
 	m_pCursorMark->setVisible(false);
 }
 
@@ -678,16 +681,15 @@ void CATextField::selectAll()
 	m_curSelCharRange.second = m_iCurPos = m_sText.length();
 
 
-	CCAssert(m_pSelCharsView == NULL, "");
-	m_pSelCharsView = CATextSelectView::create();
+	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool l, r;
 	CCRect cc = getZZCRect(l, r);
-	m_pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), l, r);
+	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), l, r);
 	m_pCursorMark->setVisible(false);
 
-	CATextToolBar* pCATextEditView = CATextToolBar::createWithText(UTF8("剪切"), UTF8("拷贝"), UTF8("粘贴"), NULL);
-	pCATextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
-	pCATextEditView->showTextEditView(cc.origin);
+	CATextToolBar* pTextToolBar = CATextToolBar::createWithText(UTF8("剪切"), UTF8("拷贝"), UTF8("粘贴"), NULL);
+	pTextToolBar->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
+	pTextToolBar->showTextEditView(cc.origin);
 }
 
 void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
@@ -719,20 +721,18 @@ void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 		adjustCursorMoveForward();
 	}
 
-	CCAssert(m_pSelCharsView != NULL, "");
-	m_pSelCharsView->hideTextSelView();
-	m_pSelCharsView = CATextSelectView::create();
+	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool ll, rr;
 	CCRect cc = convertRectToWorldSpace(getZZCRect(ll, rr));
-	m_pSelCharsView->showTextSelView(cc, ll, rr);
+	pSelCharsView->showTextSelView(cc, ll, rr);
 	m_pCursorMark->setVisible(false);
 }
 
 void CATextField::moveSelectCharsCancel(const CCPoint& pt)
 {
-	CATextToolBar* pCATextEditView = CATextToolBar::createWithText(UTF8("剪切"), UTF8("拷贝"), UTF8("粘贴"), NULL);
-	pCATextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
-	pCATextEditView->showTextEditView(pt);
+	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("剪切"), UTF8("拷贝"), UTF8("粘贴"), NULL);
+	pTextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
+	pTextEditView->showTextEditView(pt);
 }
 
 void CATextField::cursorMoveBackward()
@@ -802,8 +802,9 @@ bool CATextField::execCurSelCharRange()
 	std::string cszText = m_sText.erase(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
 	setText(cszText);
 
-	CCAssert(m_pSelCharsView != NULL, "");
-	m_pSelCharsView->hideTextSelView();
+	CATextSelectView::hideTextSelectView();
+	CATextToolBar::hideTextToolBar();
+
 	m_iCurPos = iOldCurPos;
 	m_pCursorMark->setVisible(true);
 	adjustCursorMoveBackward();
