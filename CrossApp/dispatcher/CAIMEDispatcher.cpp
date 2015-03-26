@@ -314,6 +314,19 @@ void CAIMEDispatcher::dispatchMoveSelectCharsCancel(const CCPoint& pt)
     } while (0);
 }
 
+void CAIMEDispatcher::dispatchMoveArrowBtn(const CCPoint& pt)
+{
+	do
+	{
+		CC_BREAK_IF(!m_pImpl);
+
+		// there is no delegate attached to IME
+		CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+
+		return m_pImpl->m_DelegateWithIme->moveArrowBtn(pt);
+	} while (0);
+}
+
 void CAIMEDispatcher::dispatchCopyToClipboard()
 {
     do

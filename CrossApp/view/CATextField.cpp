@@ -267,6 +267,8 @@ bool CATextField::detachWithIME()
             pGlView->setIMEKeyboardState(false);
             //m_pCursorMark->stopAllActions();
             m_pCursorMark->setVisible(false);
+
+			CATextArrowView::hideTextArrowView();
         }
     }
     return bRet;
@@ -319,6 +321,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		if (isFirstResponder())
         {
 			m_pCursorMark->setVisible(true);
+
             //m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
             if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
             {
@@ -332,6 +335,9 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 			m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
            
 			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+
+			CATextArrowView* pTextArrowView = CATextArrowView::create();
+			pTextArrowView->showTextArrView(convertToWorldSpace(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2 + 25)));
         }
 
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
@@ -346,6 +352,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         {
             //m_pCursorMark->stopAllActions();
 			m_pCursorMark->setVisible(false);
+			CATextArrowView::hideTextArrowView();
 			this->updateImage();
         }
         return false;
@@ -490,6 +497,8 @@ void CATextField::insertText(const char * text, int len)
     analyzeString(text, len);
     CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), m_sText.length()));
     adjustCursorMoveForward();
+
+	CATextArrowView::hideTextArrowView();
 }
 
 void CATextField::AndroidWillInsertText(int start,const char* str,int before,int count)
@@ -553,6 +562,7 @@ void CATextField::deleteBackward()
 	
 	m_vTextFiledChars.erase(m_vTextFiledChars.begin() + getStringCharCount(m_sText.substr(0, m_iCurPos)));
     adjustCursorMoveBackward();
+	CATextArrowView::hideTextArrowView();
 }
 
 void CATextField::adjustCursorMoveBackward()
@@ -670,6 +680,7 @@ void CATextField::startSelect()
 	CCRect cc = getZZCRect(l, r);
 	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), l, r);
 	m_pCursorMark->setVisible(false);
+	CATextArrowView::hideTextArrowView();
 }
 
 void CATextField::selectAll()
@@ -686,6 +697,7 @@ void CATextField::selectAll()
 	CCRect cc = getZZCRect(l, r);
 	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), l, r);
 	m_pCursorMark->setVisible(false);
+	CATextArrowView::hideTextArrowView();
 
 	CATextToolBar* pTextToolBar = CATextToolBar::createWithText(UTF8("剪切"), UTF8("拷贝"), UTF8("粘贴"), NULL);
 	pTextToolBar->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
@@ -726,6 +738,7 @@ void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 	CCRect cc = convertRectToWorldSpace(getZZCRect(ll, rr));
 	pSelCharsView->showTextSelView(cc, ll, rr);
 	m_pCursorMark->setVisible(false);
+	CATextArrowView::hideTextArrowView();
 }
 
 void CATextField::moveSelectCharsCancel(const CCPoint& pt)
@@ -733,6 +746,38 @@ void CATextField::moveSelectCharsCancel(const CCPoint& pt)
 	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("剪切"), UTF8("拷贝"), UTF8("粘贴"), NULL);
 	pTextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
 	pTextEditView->showTextEditView(pt);
+}
+
+void CATextField::moveArrowBtn(const CCPoint& pt)
+{
+	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+		return;
+
+
+	m_pCursorMark->setVisible(true);
+	//m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
+	
+	int l, r, p;
+	calculateSelChars(convertToNodeSpace(pt), l, r, p);
+	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
+
+	m_iString_l_length = l;
+	m_iString_r_length = r;
+	bool isBackward = p < m_iCurPos;
+	m_iCurPos = p;
+	if (isBackward)
+	{
+		adjustCursorMoveBackward();
+	}
+	else
+	{
+		adjustCursorMoveForward();
+	}
+
+	m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+
+	CATextArrowView* pTextArrowView = CATextArrowView::create();
+	pTextArrowView->showTextArrView(convertToWorldSpace(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2 + 25)));
 }
 
 void CATextField::cursorMoveBackward()

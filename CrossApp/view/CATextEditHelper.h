@@ -76,9 +76,33 @@ private:
 	CAView* m_pCursorMarkR;
 	CAImageView* m_pTextMask;
 	int m_iSelViewTouchPos;
-	CCPoint m_TouchPoint;
 };
 
+
+class CATextArrowView : public CAView
+{
+	friend class CATextField;
+public:
+	CATextArrowView();
+	virtual ~CATextArrowView();
+
+	static CATextArrowView *create();
+	static void hideTextArrowView();
+
+protected:
+	virtual bool init();
+	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+	void showTextArrView(const CCPoint& pt);
+	void hideTextArrView();
+	void ccTouchTimer(float interval);
+
+private:
+	bool m_isBtnPress;
+	CAImageView* m_pArrowView;
+
+};
 
 NS_CC_END
 

@@ -269,7 +269,7 @@ void CATextSelectView::showTextSelView(const CCRect& rect, bool showLeft, bool s
 
 bool CATextSelectView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	m_TouchPoint = this->convertTouchToNodeSpace(pTouch);
+	CCPoint cTouchPoint = this->convertTouchToNodeSpace(pTouch);
 	
 	CCRect newRectL = m_pDotViewL->getFrame();
 	newRectL.InflateRect(5);
@@ -277,13 +277,13 @@ bool CATextSelectView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	newRectR.InflateRect(5);
 
 	m_iSelViewTouchPos = 0;
-	if (newRectL.containsPoint(m_TouchPoint))
+	if (newRectL.containsPoint(cTouchPoint))
 	{
 		m_iSelViewTouchPos = 1;
 		return true;
 	}
 	
-	if (newRectR.containsPoint(m_TouchPoint))
+	if (newRectR.containsPoint(cTouchPoint))
 	{
 		m_iSelViewTouchPos = 2;
 		return true;
@@ -323,6 +323,130 @@ void CATextSelectView::hideTextSelView()
 	removeFromSuperview();
 
 	CAApplication::getApplication()->updateDraw();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+CATextArrowView::CATextArrowView()
+: m_pArrowView(NULL)
+, m_isBtnPress(false)
+{
+
+}
+
+CATextArrowView::~CATextArrowView()
+{
+
+}
+
+
+bool CATextArrowView::init()
+{
+	if (!CAView::init())
+		return false;
+
+	m_pArrowView = CAImageView::createWithImage(CAImage::create("source_material/arrow.png"));
+	addSubview(m_pArrowView);
+	m_pArrowView->setVisible(false);
+	m_pArrowView->setFrame(CCRect(0, 0, 12, 25));
+	m_pArrowView->setAlpha(0.5f);
+
+	return true;
+}
+
+
+CATextArrowView *CATextArrowView::create()
+{
+	CATextArrowView *pTextArrowView = new CATextArrowView();
+	if (pTextArrowView && pTextArrowView->init())
+	{
+		pTextArrowView->autorelease();
+		return pTextArrowView;
+	}
+	CC_SAFE_DELETE(pTextArrowView);
+	return pTextArrowView;
+}
+
+void CATextArrowView::hideTextArrowView()
+{
+	CATextArrowView* pTextArrowView = NULL;
+	if (CAView *rootWindow = CAApplication::getApplication()->getRootWindow())
+	{
+		pTextArrowView = (CATextArrowView*)rootWindow->getSubviewByTextTag("CATextArrowView");
+	}
+	if (pTextArrowView)
+	{
+		pTextArrowView->hideTextArrView();
+	}
+}
+
+bool CATextArrowView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
+{
+	CCPoint point = this->convertTouchToNodeSpace(pTouch);
+
+	CCRect newRectR = m_pArrowView->getFrame();
+	newRectR.InflateRect(5);
+
+	if (!newRectR.containsPoint(point))
+	{
+		if (resignFirstResponder())
+		{
+			hideTextArrView();
+		}
+	}
+	else
+	{
+		m_isBtnPress = true;
+	}
+	return true;
+}
+
+void CATextArrowView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+	if (m_isBtnPress)
+	{
+		CAIMEDispatcher::sharedDispatcher()->dispatchMoveArrowBtn(pTouch->getLocation());
+	}
+
+	CAView::ccTouchMoved(pTouch, pEvent);
+}
+
+void CATextArrowView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
+{
+	m_isBtnPress = false;
+}
+
+void CATextArrowView::showTextArrView(const CCPoint& pt)
+{
+	if (getSuperview() != NULL)
+		return;
+	CATextArrowView::hideTextArrowView();
+	setFrame(m_pArrowView->getFrame());
+	setCenterOrigin(pt);
+	setColor(CAColor_clear);
+	setTextTag("CATextArrowView");
+	m_pArrowView->setVisible(true);
+
+	if (CAView *rootWindow = CAApplication::getApplication()->getRootWindow())
+	{
+		rootWindow->addSubview(this);
+	}
+	becomeFirstResponder();
+
+	CAScheduler::schedule(schedule_selector(CATextArrowView::ccTouchTimer), this, 0, 0, 3);
+}
+
+void CATextArrowView::hideTextArrView()
+{
+	resignFirstResponder();
+	removeFromSuperview();
+
+	CAApplication::getApplication()->updateDraw();
+}
+
+void CATextArrowView::ccTouchTimer(float interval)
+{
+	CAScheduler::unschedule(schedule_selector(CATextArrowView::ccTouchTimer), this);
+	hideTextArrView();
 }
 
 NS_CC_END
