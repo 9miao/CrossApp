@@ -19,7 +19,7 @@ NS_CC_EXT_BEGIN;
 
 enum eItemsType
 {
-	CAType_View,
+	CAType_View = 0,
 	CAType_ActivityIndicatorView,
 	CAType_AlertView,
 	CAType_ImageView,

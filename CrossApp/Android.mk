@@ -112,7 +112,6 @@ kazmath/src/vec3.c \
 kazmath/src/vec4.c \
 kazmath/src/GL/mat4stack.c \
 kazmath/src/GL/matrix.c \
-platform/CCImageCommonWebp.cpp \
 platform/CCSAXParser.cpp \
 platform/CCFileUtils.cpp \
 platform/platform.cpp \
@@ -126,9 +125,7 @@ platform/android/CCAccelerometer.cpp \
 platform/android/CCApplication.cpp \
 platform/android/CCCommon.cpp \
 platform/android/CCFileUtilsAndroid.cpp \
-platform/android/CCImage.cpp \
 platform/android/CAWebViewImpl.cpp \
-platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
@@ -157,12 +154,12 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
                        -lz
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype2_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_tiff_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_webp_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype_static
+
 
 ifeq ($(VIDEO_ENABLE),1)
 LOCAL_SRC_FILES += video/CAVideoPlayerController.cpp \
@@ -189,12 +186,10 @@ LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,libjpeg)
-$(call import-module,libpng)
-$(call import-module,libtiff)
-$(call import-module,libwebp)
-$(call import-module,libfreetype2)
-$(call import-module,libffmpeg)
-$(call import-module,libSDL)
-
-
+$(call import-module,jpeg/prebuilt/android)
+$(call import-module,png/prebuilt/android)
+$(call import-module,tiff/prebuilt/android)
+$(call import-module,webp/prebuilt/android)
+$(call import-module,freetype/prebuilt/android)
+$(call import-module,SDL/prebuilt/android)
+$(call import-module,FFmpeg/prebuilt/android)

@@ -10,7 +10,6 @@
 #define __CC_PLATFORM_CAFREETYPEFONT_H
 
 #include "platform/CCCommon.h"
-#include "platform/CCImage.h"
 #include "images/CAImage.h"
 #include <map>
 #include <string>
@@ -66,6 +65,18 @@ typedef struct FTLineInfo
     FT_Vector           pen;        // current pen position
 } FTLineInfo;
 
+typedef enum
+{
+    kAlignCenter        = 0x33, ///< Horizontal center and vertical center.
+    kAlignTop           = 0x13, ///< Horizontal center and vertical top.
+    kAlignTopRight      = 0x12, ///< Horizontal right and vertical top.
+    kAlignRight         = 0x32, ///< Horizontal right and vertical center.
+    kAlignBottomRight   = 0x22, ///< Horizontal right and vertical bottom.
+    kAlignBottom        = 0x23, ///< Horizontal center and vertical bottom.
+    kAlignBottomLeft    = 0x21, ///< Horizontal left and vertical bottom.
+    kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
+    kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
+}ETextAlign;
 
 class CC_DLL CAFreeTypeFont
 {
@@ -86,7 +97,7 @@ protected:
 	bool initFreeTypeFont(const char* pFontName, unsigned long nSize);
 	void finiFreeTypeFont();
 	unsigned char* loadFont(const char *pFontName, unsigned long *size, int& ttfIndex);
-	unsigned char* getBitmap(CCImage::ETextAlign eAlignMask, int* outWidth, int* outHeight);
+	unsigned char* getBitmap(ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);
     int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth);
@@ -106,7 +117,7 @@ protected:
     void draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap,FT_Int x,FT_Int y);
 	void draw_line(unsigned char* pBuffer, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
 
-    FT_Vector getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAlign eAlignMask, int lineNumber, int totalLines);
+    FT_Vector getPenForAlignment(FTLineInfo* pInfo, ETextAlign eAlignMask, int lineNumber, int totalLines);
 
     void calcuMultiLines(std::vector<TGlyph>& glyphs);
     

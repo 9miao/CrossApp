@@ -1,44 +1,22 @@
-
+//
+//  CAImage.h
+//  CrossApp
+//
+//  Created by 栗元峰 on 15-3-23.
+//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
+//
 
 #ifndef __CAIMAGE_H__
 #define __CAIMAGE_H__
 
-#include <string>
 #include "basics/CAObject.h"
 #include "basics/CAGeometry.h"
 #include "ccTypes.h"
 #include "platform/CCPlatformMacros.h"
 #include "CCGL.h"
 #include "CCStdC.h"
-#include "cocoa/CCArray.h"
-#ifdef EMSCRIPTEN
-#include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
-
-class CCImage;
-
-typedef enum
-{
-    kCAImagePixelFormat_RGBA8888 = 0,
-    kCAImagePixelFormat_RGB888,
-    kCAImagePixelFormat_RGB565,
-    kCAImagePixelFormat_A8,
-    kCAImagePixelFormat_I8,
-    kCAImagePixelFormat_AI88,
-    kCAImagePixelFormat_RGBA4444,
-    kCAImagePixelFormat_RGB5A1,
-    kCAImagePixelFormat_Default = kCAImagePixelFormat_RGBA8888,
-    kImagePixelFormat_RGBA8888 = kCAImagePixelFormat_RGBA8888,
-    kImagePixelFormat_RGB888 = kCAImagePixelFormat_RGB888,
-    kImagePixelFormat_RGB565 = kCAImagePixelFormat_RGB565,
-    kImagePixelFormat_A8 = kCAImagePixelFormat_A8,
-    kImagePixelFormat_RGBA4444 = kCAImagePixelFormat_RGBA4444,
-    kImagePixelFormat_RGB5A1 = kCAImagePixelFormat_RGB5A1,
-    kImagePixelFormat_Default = kCAImagePixelFormat_Default
-
-} CAImagePixelFormat;
 
 class CAGLProgram;
 
@@ -50,11 +28,42 @@ typedef struct _ccTexParams {
 } ccTexParams;
 
 class CC_DLL CAImage : public CAObject
-#ifdef EMSCRIPTEN
-, public CCGLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
+
+    typedef enum
+    {
+        PixelFormat_RGBA8888 = 0,
+        PixelFormat_RGB888,
+        PixelFormat_RGB565,
+        PixelFormat_A8,
+        PixelFormat_I8,
+        PixelFormat_AI88,
+        PixelFormat_RGBA4444,
+        PixelFormat_RGB5A1,
+        PixelFormat_Default = PixelFormat_RGBA8888,
+    } PixelFormat;
+    
+    /** Supported formats for Image */
+    typedef enum
+    {
+        //! JPEG
+        JPG,
+        //! PNG
+        PNG,
+        //! TIFF
+        TIFF,
+        //! WebP
+        WEBP,
+        //! ETC
+        ETC,
+        //! TGA
+        TGA,
+        //! Raw Data
+        RAW_DATA,
+        //! Unknown format
+        UNKOWN
+    } Format;
 
     CAImage();
 
@@ -72,27 +81,41 @@ public:
 	static int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth, int iLineSpace = 0, bool bWordWrap = true);
     
 	static CAImage* create(const std::string& file);
+
+    static CAImage* createWithImageDataNoCache(const unsigned char * data, unsigned long lenght);
     
-    static CAImage* createWithDataNoCache(void* data, int lenght);
+    static CAImage* createWithImageData(const unsigned char * data, unsigned long lenght, const std::string& key);
     
-    static CAImage* createWithData(void* data, int lenght, const std::string& key);
+    static CAImage* createWithRawDataNoCache(const unsigned char * data,
+                                             const CAImage::PixelFormat& pixelFormat,
+                                             unsigned int pixelsWide,
+                                             unsigned int pixelsHigh);
+    
+    static CAImage* createWithRawData(const unsigned char * data,
+                                      const CAImage::PixelFormat& pixelFormat,
+                                      unsigned int pixelsWide,
+                                      unsigned int pixelsHigh,
+                                      const std::string& key);
+    
+    bool initWithImageFile(const std::string& file);
+    
+    bool initWithImageFileThreadSafe(const std::string& fullPath);
+    
+    bool initWithImageData(const unsigned char * data, unsigned long dataLen);
+    
+    bool initWithRawData(const unsigned char * data,
+                         const CAImage::PixelFormat& pixelFormat,
+                         unsigned int pixelsWide,
+                         unsigned int pixelsHigh);
     
     const char* description(void);
 
     void releaseData(void *data);
 
-    void* keepData(void *data, unsigned int length);
-
-    bool initWithData(const void* data, CAImagePixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize);
-
-    bool initWithData(void* data, int lenght);
-    
     void drawAtPoint(const CCPoint& point);
 
     void drawInRect(const CCRect& rect);
-
-    bool initWithImage(CCImage * uiImage);
-
+    
     bool initWithETCFile(const char* file);
 
     void setTexParameters(ccTexParams* texParams);
@@ -107,11 +130,11 @@ public:
 
     unsigned int bitsPerPixelForFormat();  
 
-    unsigned int bitsPerPixelForFormat(CAImagePixelFormat format);
+    unsigned int bitsPerPixelForFormat(CAImage::PixelFormat format);
 
-    static void setDefaultAlphaPixelFormat(CAImagePixelFormat format);
+    static void setDefaultAlphaPixelFormat(CAImage::PixelFormat format);
 
-    static CAImagePixelFormat defaultAlphaPixelFormat();
+    static CAImage::PixelFormat defaultAlphaPixelFormat();
 
     const CCSize& getContentSizeInPixels();
     
@@ -119,7 +142,7 @@ public:
     
     bool hasMipmaps();
     
-    bool saveToFile(const std::string& fullPath);
+    bool saveToFile(const std::string& fullPath, bool bIsToRGB = false);
     
     const char* getImageFileType();
     
@@ -128,10 +151,18 @@ public:
     float getAspectRatio();
     
     virtual CAImage* copy();
+    
+    bool hasAlpha() { return m_bHasAlpha; }
+    
+    CAImage::Format detectFormat(const unsigned char * data, unsigned long dataLen);
+    bool isPng(const unsigned char * data, unsigned long dataLen);
+    bool isJpg(const unsigned char * data, unsigned long dataLen);
+    bool isTiff(const unsigned char * data, unsigned long dataLen);
+    bool isWebp(const unsigned char * data, unsigned long dataLen);
+    bool isPvr(const unsigned char * data, unsigned long dataLen);
+    bool isEtc(const unsigned char * data, unsigned long dataLen);
 
-protected:
-
-    CC_PROPERTY_READONLY_PASS_BY_REF(CAImagePixelFormat, m_ePixelFormat, PixelFormat)
+    CC_PROPERTY_READONLY_PASS_BY_REF(CAImage::PixelFormat, m_ePixelFormat, PixelFormat)
     
     CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
     
@@ -153,38 +184,31 @@ protected:
     
     CC_SYNTHESIZE_READONLY(unsigned long, m_nDataLenght, DataLenght);
     
-private:
-    
-    bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
-
 protected:
     
+    bool initWithJpgData(const unsigned char *  data, unsigned long dataLen);
+    bool initWithPngData(const unsigned char * data, unsigned long dataLen);
+    bool initWithTiffData(const unsigned char * data, unsigned long dataLen);
+    bool initWithWebpData(const unsigned char * data, unsigned long dataLen);
+    bool initWithETCData(const unsigned char * data, unsigned long dataLen);
+
+    bool initPremultipliedATextureWithImage();
+
+    void premultipliedAlpha();
+
+    bool saveImageToPNG(const std::string& filePath, bool isToRGB);
+    
+    bool saveImageToJPG(const std::string& filePath);
+
+protected:
     
     bool m_bHasPremultipliedAlpha;
     
     bool m_bHasMipmaps;
-};
-
-
-class CC_DLL CAImageETC : public CAObject
-{
-public:
-    CAImageETC();
-    virtual ~CAImageETC();
     
-    bool initWithFile(const char* file);
+    bool m_bHasAlpha;
     
-    unsigned int getName() const;
-    unsigned int getWidth() const;
-    unsigned int getHeight() const;
-    
-private:
-    bool loadTexture(const char* file);
-    
-private:
-    GLuint _name;
-    unsigned int _width;
-    unsigned int _height;
+    int  m_nBitsPerComponent;
 };
 
 NS_CC_END

@@ -234,7 +234,7 @@ public class Cocos2dxHelper {
 		}
 	}
 
-    public static int getDPI()
+    public static float getDPI()
     {
 		if (sContext != null)
 		{
@@ -246,11 +246,11 @@ public class Cocos2dxHelper {
 				if (d != null)
 				{
 					d.getMetrics(metrics);
-					return (int)(metrics.density*160.0f);
+					return (metrics.density*160.0f);
 				}
 			}
 		}
-		return -1;
+		return -1.0f;
     }
     
     // ===========================================================

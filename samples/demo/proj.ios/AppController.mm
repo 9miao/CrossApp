@@ -7,7 +7,7 @@
 #pragma mark -
 #pragma mark Application lifecycle
 
-// cocos2d application instance
+// CrossApp application instance
 static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    

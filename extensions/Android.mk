@@ -43,5 +43,5 @@ include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,CrossApp)
 $(call import-module,CocosDenshion/android)
-$(call import-module,CrossApp/platform/third_party/android/prebuilt/libcurl)
+$(call import-module,CrossApp/the_third_party/curl/prebuilt/android)
 $(call import-module,extensions/libwebsockets/android)

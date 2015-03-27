@@ -1,7 +1,9 @@
 #include "Movie.h"
 // We should never see this in normal operation since our time values are
 // 0-based. So we use it as a sentinal.
-#define UNINITIALIZED_MSEC ((uint32_t)-1)
+#define UNINITIALIZED_MSEC ((GLubyte)-1)
+
+NS_CC_BEGIN
 
 Movie::Movie()
 {
@@ -16,7 +18,7 @@ void Movie::ensureInfo()
         memset(&fInfo, 0, sizeof(fInfo));   // failure
 }
 
-uint32_t Movie::duration()
+GLubyte Movie::duration()
 {
     this->ensureInfo();
     return fInfo.fDuration;
@@ -40,9 +42,9 @@ int Movie::isOpaque()
     return fInfo.fIsOpaque;
 }
 
-bool Movie::setTime(uint32_t time)
+bool Movie::setTime(GLubyte time)
 {
-    uint32_t dur = this->duration();
+    GLubyte dur = this->duration();
     if (time > dur)
         time = time % dur;
         
@@ -56,9 +58,9 @@ bool Movie::setTime(uint32_t time)
     return changed;
 }
 
-bool Movie::appendTime(uint32_t time)
+bool Movie::appendTime(GLubyte time)
 {
-	uint32_t allTime = fCurrTime + time;
+	GLubyte allTime = fCurrTime + time;
 	return setTime(allTime);
 }
 
@@ -78,3 +80,5 @@ Bitmap* Movie::bitmap()
     }
     return &m_bitmap;
 }
+
+NS_CC_END

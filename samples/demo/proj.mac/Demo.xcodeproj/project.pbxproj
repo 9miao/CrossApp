@@ -18,7 +18,6 @@
 		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15C64831165F39AB007D4F18 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64830165F39AB007D4F18 /* libxml2.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
-		15C6498716633E65007D4F18 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6498616633E65007D4F18 /* libcurl.a */; };
 		15D8B23E168318C3006C7997 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B233168318C3006C7997 /* CDAudioManager.m */; };
 		15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B236168318C3006C7997 /* CDOpenALSupport.m */; };
 		15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B238168318C3006C7997 /* CDXMacOSXSupport.mm */; };
@@ -50,6 +49,7 @@
 		B04C0BB719011ED8009854FD /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAB19011ED8009854FD /* json_valueiterator.inl */; };
 		B04C0BB819011ED8009854FD /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04C0BAC19011ED8009854FD /* json_writer.cpp */; };
 		B04C0BB919011ED8009854FD /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = B04C0BAE19011ED8009854FD /* sconscript */; };
+		B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */; };
 		B0A7155F1A43F5BA00A85FB9 /* ActivityIndicatorViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A715101A43F5BA00A85FB9 /* ActivityIndicatorViewTest.cpp */; };
 		B0A715601A43F5BA00A85FB9 /* AlertViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A715131A43F5BA00A85FB9 /* AlertViewTest.cpp */; };
 		B0A715611A43F5BA00A85FB9 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A715151A43F5BA00A85FB9 /* AppDelegate.cpp */; };
@@ -177,6 +177,7 @@
 		B04C0BAF19011ED8009854FD /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		B04C0BB019011ED8009854FD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		B05637581952735100C63FAA /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
+		B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		B0A715101A43F5BA00A85FB9 /* ActivityIndicatorViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActivityIndicatorViewTest.cpp; sourceTree = "<group>"; };
 		B0A715111A43F5BA00A85FB9 /* ActivityIndicatorViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityIndicatorViewTest.h; sourceTree = "<group>"; };
 		B0A715131A43F5BA00A85FB9 /* AlertViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertViewTest.cpp; sourceTree = "<group>"; };
@@ -245,9 +246,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */,
 				04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */,
 				1A9CE9A81765A889000E3062 /* libsqlite3.dylib in Frameworks */,
-				15C6498716633E65007D4F18 /* libcurl.a in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
 				15C64831165F39AB007D4F18 /* libxml2.dylib in Frameworks */,
 				15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */,
@@ -415,6 +416,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */,
 				15C6498616633E65007D4F18 /* libcurl.a */,
 				15C64830165F39AB007D4F18 /* libxml2.dylib */,
 				15C6482E165F399D007D4F18 /* libz.dylib */,
@@ -961,11 +963,15 @@
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
 					"\"$(SRCROOT)/../../../Classes\"",
-					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/freetype\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include/mac/\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/png/include/mac/\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/jpeg/include/mac/\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/tiff/include/mac/\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/webp/include/mac/\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/libraries\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = Demo;
 				SDKROOT = macosx;
@@ -999,11 +1005,15 @@
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
 					"\"$(SRCROOT)/../../../Classes\"",
-					"\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/freetype\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include/mac/\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/png/include/mac/\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/jpeg/include/mac/\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/tiff/include/mac/\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/webp/include/mac/\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../CrossApp/platform/third_party/mac/libraries\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = Demo;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1015,7 +1025,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1028,7 +1038,7 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

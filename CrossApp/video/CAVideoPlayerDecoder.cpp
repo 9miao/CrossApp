@@ -544,7 +544,7 @@ void VPDecoder::setSelectedAudioStream(int selected)
 
 unsigned int VPDecoder::getSubtitleStreamsCount()
 {
-    return _subtitleStreams.size();
+    return (unsigned int)_subtitleStreams.size();
 }
 
 int VPDecoder::getSelectedSubtitleStream()

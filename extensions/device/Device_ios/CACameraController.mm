@@ -76,12 +76,7 @@
     NSData *data = UIImageJPEGRepresentation(fiximage,0.3);
     void* _data =malloc([data length]);
     [data getBytes:_data];
-    CCImage *caimage = new CCImage();
-    caimage->initWithImageData(_data, [data length], CCImage::kFmtJpg, 640, 640);
-    CC_RETURN_IF(!caimage);
-    
-    CAImage *__image = new CAImage();
-    __image->initWithImage(caimage);
+    CAImage *__image = CAImage::createWithRawDataNoCache((const unsigned char*)_data, CAImage::PixelFormat_RGBA8888, fiximage.size.height, fiximage.size.width);
     
     if (cam)
     {

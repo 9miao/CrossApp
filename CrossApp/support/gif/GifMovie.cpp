@@ -1,12 +1,14 @@
 #include "GIFMovie.h"
-#include "CrossApp.h"
-static void packARGB32(Rgba* pixel, GifByteType alpha, GifByteType red,
+
+NS_CC_BEGIN
+
+static void packARGB32(CAColor4B* pixel, GifByteType alpha, GifByteType red,
 	GifByteType green, GifByteType blue)
 {
-	pixel->alpha = alpha;
-	pixel->red = red;
-	pixel->green = green;
-	pixel->blue = blue;
+	pixel->a = alpha;
+	pixel->r = red;
+	pixel->g = green;
+	pixel->b = blue;
 }
 
 //static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int size)
@@ -14,6 +16,7 @@ static void packARGB32(Rgba* pixel, GifByteType alpha, GifByteType red,
 //	FILE* file = (FILE*) gif->UserData;
 //	return fread(bytes, 1, size, file);
 //}
+
 static const char *filepath;
 static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int size)
 {
@@ -27,7 +30,7 @@ static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int size)
     offset += size;
     return size;
 }
-static void getColorFromTable(int idx, Rgba* dst, const ColorMapObject* cmap)
+static void getColorFromTable(int idx, CAColor4B* dst, const ColorMapObject* cmap)
 {
 	char colIdx = idx >= cmap->ColorCount ? 0 : idx;
 	GifColorType* col = &cmap->Colors[colIdx];
@@ -65,9 +68,9 @@ GIFMovie::~GIFMovie()
         DGifCloseFile(fGIF);
 }
  
-static uint32_t savedimage_duration(const SavedImage* image)
+static GLubyte savedimage_duration(const SavedImage* image)
 {
-	uint32_t duration = 0;
+	GLubyte duration = 0;
     for (int j = 0; j < image->ExtensionBlockCount; j++)
     {
         if (image->ExtensionBlocks[j].Function == GRAPHICS_EXT_FUNC_CODE)
@@ -108,7 +111,7 @@ bool GIFMovie::onGetInfo(Info* info)
     if (NULL == fGIF)
         return false;
  
-    uint32_t dur = 0;
+    GLubyte dur = 0;
     for (int i = 0; i < fGIF->ImageCount; i++)
         dur += savedimage_duration(&fGIF->SavedImages[i]);
  
@@ -119,12 +122,12 @@ bool GIFMovie::onGetInfo(Info* info)
     return true;
 }
  
-bool GIFMovie::onSetTime(uint32_t time)
+bool GIFMovie::onSetTime(GLubyte time)
 {
 	if (NULL == fGIF)
 		return false;
 
-	uint32_t dur = 0;
+	GLubyte dur = 0;
 	for (int i = 0; i < fGIF->ImageCount; i++)
 	{
 		dur += savedimage_duration(&fGIF->SavedImages[i]);
@@ -138,16 +141,16 @@ bool GIFMovie::onSetTime(uint32_t time)
     return true;
 }
 
-static void copyLine(Rgba* dst, const unsigned char* src, const ColorMapObject* cmap,
+static void copyLine(CAColor4B* dst, const unsigned char* src, const ColorMapObject* cmap,
                     int transparent, int width)
 {
 	for (; width > 0; width--, src++, dst++) {
 		if (*src != transparent) {
 			const GifColorType& col = cmap->Colors[*src];
-            dst->red = col.Red;
-            dst->green = col.Green;
-            dst->blue = col.Blue;
-            dst->alpha = 0xFF;
+            dst->r = col.Red;
+            dst->g = col.Green;
+            dst->b = col.Blue;
+            dst->a = 0xFF;
 		}
 	}
 }
@@ -158,7 +161,7 @@ static void blitNormal(Bitmap* bm, const SavedImage* frame, const ColorMapObject
 	GifWord width = bm->m_width;
 	GifWord height = bm->m_hight;
     const unsigned char* src = (unsigned char*)frame->RasterBits;
-	Rgba* dst = bm->getAddr(frame->ImageDesc.Left, frame->ImageDesc.Top);
+	CAColor4B* dst = bm->getAddr(frame->ImageDesc.Left, frame->ImageDesc.Top);
 
     GifWord copyWidth = frame->ImageDesc.Width;
     if (frame->ImageDesc.Left + copyWidth > width) {
@@ -178,11 +181,11 @@ static void blitNormal(Bitmap* bm, const SavedImage* frame, const ColorMapObject
 }
  
 static void fillRect(Bitmap* bm, GifWord left, GifWord top, GifWord width, GifWord height,
-                    Rgba col)
+                    const CAColor4B& col)
 {
 	int bmWidth = bm->m_width;
 	int bmHeight = bm->m_hight;
-	Rgba* dst = bm->getAddr(left, top);
+	CAColor4B* dst = bm->getAddr(left, top);
 	GifWord copyWidth = width;
     if (left + copyWidth > bmWidth) {
         copyWidth = bmWidth - left;
@@ -275,7 +278,7 @@ static bool checkIfCover(const SavedImage* target, const SavedImage* covered)
 }
  
 static void disposeFrameIfNeeded(Bitmap* bm, const SavedImage* cur, const SavedImage* next,
-                                Bitmap* backup, Rgba color)
+                                Bitmap* backup, const CAColor4B& color)
 {
     // We can skip disposal process if next frame is not transparent
     // and completely covers current area
@@ -315,7 +318,7 @@ static void disposeFrameIfNeeded(Bitmap* bm, const SavedImage* cur, const SavedI
  
     // Save current image if next frame's disposal method == 3
 	if (nextDisposal == 3)
-		memcpy(backup->getAddr(0,0), bm->getAddr(0,0), bm->getPixelLenth() * sizeof(Rgba));
+		memcpy(backup->getAddr(0,0), bm->getAddr(0,0), bm->getPixelLenth() * sizeof(CAColor4B));
 }
 
 bool GIFMovie::onGetBitmap(Bitmap* bm)
@@ -360,13 +363,13 @@ bool GIFMovie::onGetBitmap(Bitmap* bm)
         lastIndex = fGIF->ImageCount - 1;
     }
  
-	Rgba bgColor;
+	CAColor4B bgColor;
     if (gif->SColorMap != NULL) {
         const GifColorType& col = gif->SColorMap->Colors[fGIF->SBackGroundColor];
-		bgColor.setColor(0xFF, col.Red, col.Green, col.Blue);
+		bgColor = ccc4(col.Red, col.Green, col.Blue, 0xFF);
     }
  
-	static Rgba paintingColor;
+	static CAColor4B paintingColor;
     // draw each frames - not intelligent way
 	for (int i = startIndex; i <= lastIndex; i++) {
 		const SavedImage* cur = &fGIF->SavedImages[i];
@@ -400,3 +403,5 @@ bool GIFMovie::onGetBitmap(Bitmap* bm)
 
     return true;
 }
+
+NS_CC_END

@@ -3,7 +3,6 @@
 #include "CARenderImage.h"
 #include "basics/CAApplication.h"
 #include "platform/platform.h"
-#include "platform/CCImage.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "support/ccUtils.h"
@@ -26,27 +25,14 @@ CARenderImage::CARenderImage()
 , m_nOldFBO(0)
 , m_pTexture(0)
 , m_pTextureCopy(0)
-, m_pUITextureImage(NULL)
-, m_ePixelFormat(kCAImagePixelFormat_RGBA8888)
+, m_ePixelFormat(CAImage::PixelFormat_RGBA8888)
 , m_uClearFlags(0)
 , m_sClearColor(ccc4f(0,0,0,0))
 , m_fClearDepth(0.0f)
 , m_nClearStencil(0)
 , m_bAutoDraw(false)
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    // Listen this event to save render Image before come to background.
-    // Then it can be restored after coming to foreground on Android.
-    CANotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                  callfuncO_selector(CARenderImage::listenToBackground),
-                                                                  EVENT_COME_TO_BACKGROUND,
-                                                                  NULL);
     
-    CANotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                  callfuncO_selector(CARenderImage::listenToForeground),
-                                                                  EVENT_COME_TO_FOREGROUND, // this is misspelt
-                                                                  NULL);
-#endif
 }
 
 CARenderImage::~CARenderImage()
@@ -59,61 +45,17 @@ CARenderImage::~CARenderImage()
     {
         glDeleteRenderbuffers(1, &m_uDepthRenderBufffer);
     }
-    CC_SAFE_DELETE(m_pUITextureImage);
 
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    CANotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
-    CANotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
-#endif
 }
 
 void CARenderImage::listenToBackground(CrossApp::CAObject *obj)
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    CC_SAFE_DELETE(m_pUITextureImage);
-    
-    // to get the rendered Image data
-    m_pUITextureImage = newCCImage(false);
 
-    if (m_pUITextureImage)
-    {
-        const CCSize& s = m_pTexture->getContentSizeInPixels();
-        VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kImagePixelFormat_RGBA8888, s);
-        
-        if ( m_pTextureCopy )
-        {
-            VolatileTexture::addDataTexture(m_pTextureCopy, m_pUITextureImage->getData(), kImagePixelFormat_RGBA8888, s);
-        }
-    }
-    else
-    {
-        CCLOG("Cache rendertexture failed!");
-    }
-    
-    glDeleteFramebuffers(1, &m_uFBO);
-    m_uFBO = 0;
-#endif
 }
 
 void CARenderImage::listenToForeground(CrossApp::CAObject *obj)
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    // -- regenerate frame buffer object and attach the texture
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
-    
-    glGenFramebuffers(1, &m_uFBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
-    
-    m_pTexture->setAliasTexParameters();
-    
-    if ( m_pTextureCopy )
-    {
-        m_pTextureCopy->setAliasTexParameters();
-    }
-    
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
-#endif
+
 }
 
 CAImageView * CARenderImage::getSprite()
@@ -178,7 +120,7 @@ void CARenderImage::setAutoDraw(bool bAutoDraw)
     m_bAutoDraw = bAutoDraw;
 }
 
-CARenderImage * CARenderImage::create(int w, int h, CAImagePixelFormat eFormat)
+CARenderImage * CARenderImage::create(int w, int h, CAImage::PixelFormat eFormat)
 {
     CARenderImage *pRet = new CARenderImage();
 
@@ -191,7 +133,7 @@ CARenderImage * CARenderImage::create(int w, int h, CAImagePixelFormat eFormat)
     return NULL;
 }
 
-CARenderImage * CARenderImage::create(int w ,int h, CAImagePixelFormat eFormat, GLuint uDepthStencilFormat)
+CARenderImage * CARenderImage::create(int w ,int h, CAImage::PixelFormat eFormat, GLuint uDepthStencilFormat)
 {
     CARenderImage *pRet = new CARenderImage();
 
@@ -208,7 +150,7 @@ CARenderImage * CARenderImage::create(int w, int h)
 {
     CARenderImage *pRet = new CARenderImage();
 
-    if(pRet && pRet->initWithWidthAndHeight(w, h, kCAImagePixelFormat_RGBA8888, 0))
+    if(pRet && pRet->initWithWidthAndHeight(w, h, CAImage::PixelFormat_RGBA8888, 0))
     {
         pRet->autorelease();
         return pRet;
@@ -217,17 +159,17 @@ CARenderImage * CARenderImage::create(int w, int h)
     return NULL;
 }
 
-bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFormat)
+bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eFormat)
 {
     return initWithWidthAndHeight(w, h, eFormat, 0);
 }
 
-bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFormat, GLuint uDepthStencilFormat)
+bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eFormat, GLuint uDepthStencilFormat)
 {
-    CCAssert(eFormat != kCAImagePixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
+    CCAssert(eFormat != CAImage::PixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool bRet = false;
-    void *data = NULL;
+    unsigned char *data = NULL;
     do 
     {
         w = (int)(w * CC_CONTENT_SCALE_FACTOR());
@@ -245,7 +187,7 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFor
             powH = ccNextPOT(h);
         }
 
-        data = malloc((int)(powW * powH * 4));
+        data = (unsigned char *)malloc((int)(powW * powH * 4));
         CC_BREAK_IF(! data);
 
         memset(data, 0, (int)(powW * powH * 4));
@@ -254,7 +196,7 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFor
         m_pTexture = new CAImage();
         if (m_pTexture)
         {
-            m_pTexture->initWithData(data, (CAImagePixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+            m_pTexture->initWithRawData(data, (CAImage::PixelFormat)m_ePixelFormat, powW, powH);
         }
         else
         {
@@ -550,96 +492,12 @@ bool CARenderImage::saveToFile(const char *szFilePath)
 {
     bool bRet = false;
 
-    CCImage *pImage = newCCImage(true);
+    CAImage *pImage = m_pSprite->getImage();
     if (pImage)
     {
-        bRet = pImage->saveToFile(szFilePath, kCCImageFormatJPEG);
+        bRet = pImage->saveToFile(szFilePath);
     }
-
-    CC_SAFE_DELETE(pImage);
     return bRet;
-}
-bool CARenderImage::saveToFile(const char *fileName, tCCImageFormat format)
-{
-    bool bRet = false;
-    CCAssert(format == kCCImageFormatJPEG || format == kCCImageFormatPNG,
-             "the image can only be saved as JPG or PNG format");
-
-    CCImage *pImage = newCCImage(true);
-    if (pImage)
-    {
-        std::string fullpath = CCFileUtils::sharedFileUtils()->getWritablePath() + fileName;
-        
-        bRet = pImage->saveToFile(fullpath.c_str(), true);
-    }
-
-    CC_SAFE_DELETE(pImage);
-
-    return bRet;
-}
-
-/* get buffer as CCImage */
-CCImage* CARenderImage::newCCImage(bool flipImage)
-{
-    CCAssert(m_ePixelFormat == kCAImagePixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
-
-    if (NULL == m_pTexture)
-    {
-        return NULL;
-    }
-
-    const CCSize& s = m_pTexture->getContentSizeInPixels();
-
-    // to get the image size to save
-    //        if the saving image domain exceeds the buffer Image domain,
-    //        it should be cut
-    int nSavedBufferWidth = (int)s.width;
-    int nSavedBufferHeight = (int)s.height;
-
-    GLubyte *pBuffer = NULL;
-    GLubyte *pTempData = NULL;
-    CCImage *pImage = new CCImage();
-
-    do
-    {
-        CC_BREAK_IF(! (pBuffer = new GLubyte[nSavedBufferWidth * nSavedBufferHeight * 4]));
-
-        if(! (pTempData = new GLubyte[nSavedBufferWidth * nSavedBufferHeight * 4]))
-        {
-            delete[] pBuffer;
-            pBuffer = NULL;
-            break;
-        }
-
-        this->begin();
-        glPixelStorei(GL_PACK_ALIGNMENT, 1);
-        glReadPixels(0,0,nSavedBufferWidth, nSavedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
-        this->end();
-
-        if ( flipImage ) // -- flip is only required when saving image to file
-        {
-            // to get the actual Image data
-            // #640 the image read from rendertexture is dirty
-            for (int i = 0; i < nSavedBufferHeight; ++i)
-            {
-                memcpy(&pBuffer[i * nSavedBufferWidth * 4], 
-                       &pTempData[(nSavedBufferHeight - i - 1) * nSavedBufferWidth * 4], 
-                       nSavedBufferWidth * 4);
-            }
-
-            pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, CCImage::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
-        }
-        else
-        {
-            pImage->initWithImageData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, CCImage::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
-        }
-        
-    } while (0);
-
-    CC_SAFE_DELETE_ARRAY(pBuffer);
-    CC_SAFE_DELETE_ARRAY(pTempData);
-
-    return pImage;
 }
 
 NS_CC_END

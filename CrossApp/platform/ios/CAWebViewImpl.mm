@@ -404,7 +404,7 @@ CAImageView* CAWebViewImpl::getWebViewImage()
             Byte* bytesData = (Byte*)[data bytes];
             if (bytesData != NULL)
             {
-                return CAImageView::createWithImage(CAImage::createWithData(bytesData, data.length, ""));
+                return CAImageView::createWithImage(CAImage::createWithImageData(bytesData, data.length, ""));
             }
         }
     }

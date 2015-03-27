@@ -473,18 +473,14 @@ void ToMainThread::getPath(const char* path)
     
 void ToMainThread::runDelegate()
 {
-    CCImage *image = new CCImage();
-    if (image->initWithImageFileThreadSafe(_path,CCImage::kFmtJpg))
+    if (delegate)
     {
-        if (delegate)
+        CAImage *image = new CAImage();
+        if (image->initWithImageFileThreadSafe(_path))
         {
             CAScheduler::unschedule(schedule_selector(ToMainThread::runDelegate), this);
-            CAImage* img = new CAImage();
-            img->initWithImage(image);
-            delegate->getSelectedImage(img);
+            delegate->getSelectedImage(image);
             image->release();
-            img->release();
-            
         }
     }
 }

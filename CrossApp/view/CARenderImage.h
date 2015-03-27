@@ -51,19 +51,19 @@ public:
     virtual void draw();
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    static CARenderImage * create(int w ,int h, CAImagePixelFormat eFormat, GLuint uDepthStencilFormat);
+    static CARenderImage * create(int w ,int h, CAImage::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    static CARenderImage * create(int w, int h, CAImagePixelFormat eFormat);
+    static CARenderImage * create(int w, int h, CAImage::PixelFormat eFormat);
 
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static CARenderImage * create(int w, int h);
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    bool initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFormat);
+    bool initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eFormat);
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    bool initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFormat, GLuint uDepthStencilFormat);
+    bool initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** starts grabbing */
     void begin();
@@ -94,21 +94,12 @@ public:
 
     /** clears the Image with a specified stencil value */
     void clearStencil(int stencilValue);
-    /* creates a new CCImage from with the texture's data.
-       Caller is responsible for releasing it by calling delete.
-     */
-    CCImage* newCCImage(bool flipImage = true);
 
     /** saves the Image into a file using JPEG format. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
      */
     bool saveToFile(const char *szFilePath);
 
-    /** saves the Image into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
-        Returns YES if the operation is successful.
-     */
-    bool saveToFile(const char *name, tCCImageFormat format);
-    
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
      */
@@ -150,7 +141,7 @@ protected:
     GLint        m_nOldFBO;
     CAImage* m_pTexture;
     CAImage* m_pTextureCopy;    // a copy of m_pTexture
-    CCImage*     m_pUITextureImage;
+
     GLenum       m_ePixelFormat;
     
     // code for "auto" update

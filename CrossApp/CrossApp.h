@@ -139,7 +139,6 @@
 // platform
 #include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"
-#include "platform/CCImage.h"
 #include "platform/CCSAXParser.h"
 #include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"

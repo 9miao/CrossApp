@@ -1,4 +1,5 @@
 #include "Bitmap.h"
+NS_CC_BEGIN
 
 Bitmap::Bitmap()
 {
@@ -15,7 +16,7 @@ Bitmap::~Bitmap()
 void Bitmap::allocateBitmap()
 {
 	assert(m_data == NULL && m_width * m_hight > 0);
-	m_data = (Rgba*)malloc(m_width * m_hight * sizeof(Rgba));
+	m_data = (CAColor4B*)malloc(m_width * m_hight * sizeof(CAColor4B));
 };
 
 void Bitmap::resetBitmap()
@@ -37,32 +38,41 @@ bool Bitmap::isValid()
 	return m_width > 0 && m_hight >0 && hasData();
 }
 
-uint32_t Bitmap::getPixelLenth()
+GLubyte Bitmap::getPixelLenth()
 {
 	return m_width*m_hight;
 };
 
-const uint32_t* Bitmap::getRGBA()
+const GLubyte* Bitmap::getRGBA()
 {
 	if(m_data == NULL)
 	{
 		return NULL;
 	}
-	return (uint32_t *) m_data;
+	return (GLubyte *) m_data;
 }
 
-void Bitmap::eraseColor(Rgba color)
+void Bitmap::eraseColor(const CAColor4B& color)
 {
-	Rgba paintColor = color;
-
+    unsigned int r, g, b;
+    
 	// make rgb premultiplied
-	if (255 != color.alpha) {
-		paintColor.red = AlphaMul(color.red, color.alpha);
-		paintColor.green = AlphaMul(color.green, color.alpha);
-		paintColor.blue = AlphaMul(color.blue, color.alpha);
+	if (255 != color.a)
+    {
+		r = AlphaMul(color.r, color.a);
+		g = AlphaMul(color.g, color.a);
+		b = AlphaMul(color.b, color.a);
 	}
+    else
+    {
+        r = color.r;
+        g = color.g;
+        b = color.b;
+    }
 
-	for (uint32_t i = 0; i < m_width * m_hight; i++)
+    CAColor4B paintColor = ccc4(r, g, b, color.a);
+    
+	for (GLubyte i = 0; i < m_width * m_hight; i++)
 		*(m_data + i) = paintColor;
 }
 
@@ -73,30 +83,32 @@ Bitmap* Bitmap::getDebugBitmap()
 	bitmap->m_hight = 64;
 
 	bitmap->allocateBitmap();
-	for(uint32_t hight =0; hight < bitmap->m_hight; hight++ )
+	for(GLubyte hight =0; hight < bitmap->m_hight; hight++ )
 	{
-		Rgba color ;
-		color.alpha = 255;
+		CAColor4B color ;
+		color.a = 255;
 		if(hight < 20)
 		{
-			color.red = 255;
-			color.green = 0;
-			color.blue = 0;
-		}else if(hight >= 20 && hight < 40)
+			color.r = 255;
+			color.g = 0;
+			color.b = 0;
+		}
+        else if(hight >= 20 && hight < 40)
 		{
-			color.red = 0;
-			color.green = 255;
-			color.blue = 0;
-		}else
+			color.r = 0;
+			color.g = 255;
+			color.b = 0;
+		}
+        else
 		{
-			color.red = 0;
-			color.green = 0;
-			color.blue = 255;
+			color.r = 0;
+			color.g = 0;
+			color.b = 255;
 		}
 
-		for(uint32_t width = 0; width < bitmap->m_width; width++)
+		for(GLubyte width = 0; width < bitmap->m_width; width++)
 		{
-			Rgba& colorPixel = bitmap->m_data[hight*bitmap->m_width + width];
+			CAColor4B& colorPixel = bitmap->m_data[hight*bitmap->m_width + width];
 			colorPixel = color;
 		}
 
@@ -105,7 +117,7 @@ Bitmap* Bitmap::getDebugBitmap()
 	return bitmap;
 }
 
-Rgba* Bitmap::getAddr(int left, int top)
+CAColor4B* Bitmap::getAddr(int left, int top)
 {
 	return m_data + top * m_width + left;
 }
@@ -116,3 +128,5 @@ void Bitmap::swap(Bitmap* toSwap)
 	TSwap(this->m_width, toSwap->m_width);
 	TSwap(this->m_hight, toSwap->m_hight);
 }
+
+NS_CC_END

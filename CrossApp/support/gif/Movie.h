@@ -6,9 +6,11 @@
 #include <string.h>
 #include "Bitmap.h"
 
+NS_CC_BEGIN
+
 class Movie{
 public:
-    uint32_t  duration();
+    GLubyte  duration();
     int     width();
     int     height();
     int     isOpaque();
@@ -18,23 +20,23 @@ public:
         bitmap/frame from the previous state (i.e. true means you need to
         redraw).
     */
-    bool setTime(uint32_t);
+    bool setTime(GLubyte);
 
-	bool appendTime(uint32_t time);
+	bool appendTime(GLubyte time);
 
     // return the right bitmap for the current time code
     Bitmap* bitmap();
     
 protected:
     struct Info {
-        uint32_t  fDuration;
+        GLubyte  fDuration;
         int     fWidth;
         int     fHeight;
         bool    fIsOpaque;
     };
 
     virtual bool onGetInfo(Info*) = 0;
-    virtual bool onSetTime(uint32_t) = 0;
+    virtual bool onSetTime(GLubyte) = 0;
     virtual bool onGetBitmap(Bitmap*) = 0;
 
     // visible for subclasses
@@ -42,11 +44,13 @@ protected:
 	Bitmap m_bitmap;
 private:
     Info        fInfo;
-    uint32_t    fCurrTime;
+    GLubyte    fCurrTime;
     bool        fNeedBitmap;
     
     void ensureInfo();
 	
 };
+
+NS_CC_END
 
 #endif

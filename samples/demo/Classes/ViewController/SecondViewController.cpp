@@ -91,7 +91,6 @@ CATableViewCell* SecondViewController::tableCellAtIndex(CATableView* table, cons
 	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
 	if (cell == NULL)
 	{
-		CCLog("Cell-%d",row);
 		cell = CATableViewCell::create("CrossApp");
 		CALabel* p_Name = CALabel::createWithCenter(CADipRect(_size.width*0.2, _size.height*0.5, _size.width*0.2, _size.height));
 		p_Name->setTag(9);

@@ -39,7 +39,7 @@
     {
         rect.size = [[UIScreen mainScreen]applicationFrame].size;
     }
-
+    
     EAGLView *__glView = [EAGLView viewWithFrame: rect
                                      pixelFormat: kEAGLColorFormatRGB565
                                      depthFormat: GL_DEPTH24_STENCIL8_OES

@@ -366,23 +366,14 @@ CAImageView* CAWebViewImpl::getWebViewImage()
 	{
 		CCSize size = _webView->getBounds().size;
 
-		CCImage* pImage = new CCImage();
-		if (!pImage->initWithImageData(&s_cszWebViewImageData[0], s_cszWebViewImageData.size(), CCImage::kFmtRawData, size.width, size.height))
+		CAImage* pImage = new CAImage();
+		if (!pImage->initWithImageData((const unsigned char*)&s_cszWebViewImageData[0], s_cszWebViewImageData.size()))
 		{
 			delete pImage;
 			return NULL;
 		}
-
-		CAImage* pCAImage = new CAImage();
-		if (!pCAImage->initWithImage(pImage))
-		{
-			delete pImage;
-			delete pCAImage;
-			return NULL;
-		}
-		pImage->release();
-		pCAImage->autorelease();
-		return CAImageView::createWithImage(pCAImage);
+		pImage->autorelease();
+		return CAImageView::createWithImage(pImage);
 	}
   	return NULL;
 }

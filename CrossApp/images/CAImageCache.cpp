@@ -6,7 +6,6 @@
 #include "basics/CAApplication.h"
 #include "platform/platform.h"
 #include "platform/CCFileUtils.h"
-#include "platform/CCImage.h"
 #include "support/ccUtils.h"
 #include "basics/CAScheduler.h"
 #include "cocoa/CCString.h"
@@ -54,8 +53,8 @@ typedef struct _AsyncStruct
 typedef struct _ImageInfo
 {
     AsyncStruct *asyncStruct;
-    CCImage        *image;
-    CCImage::EImageFormat imageType;
+    CAImage        *image;
+    CAImage::Format imageType;
 } ImageInfo;
 
 static pthread_t s_loadingThread;
@@ -79,26 +78,26 @@ static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
 
 static std::queue<ImageInfo*>*   s_pImageQueue = NULL;
 
-static CCImage::EImageFormat computeImageFormatType(string& filename)
+static CAImage::Format computeImageFormatType(string& filename)
 {
-    CCImage::EImageFormat ret = CCImage::kFmtUnKnown;
+    CAImage::Format ret = CAImage::UNKOWN;
 
     if ((std::string::npos != filename.find(".jpg")) || (std::string::npos != filename.find(".jpeg")))
     {
-        ret = CCImage::kFmtJpg;
+        ret = CAImage::JPG;
     }
     else if ((std::string::npos != filename.find(".png")) || (std::string::npos != filename.find(".PNG")))
     {
-        ret = CCImage::kFmtPng;
+        ret = CAImage::PNG;
     }
     else if ((std::string::npos != filename.find(".tiff")) || (std::string::npos != filename.find(".TIFF")))
     {
-        ret = CCImage::kFmtTiff;
+        ret = CAImage::TIFF;
     }
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     else if ((std::string::npos != filename.find(".webp")) || (std::string::npos != filename.find(".WEBP")))
     {
-        ret = CCImage::kFmtWebp;
+        ret = CAImage::WEBP;
     }
 #endif
    
@@ -110,26 +109,19 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
     const char *filename = pAsyncStruct->filename.c_str();
 
     // compute image type
-    CCImage::EImageFormat imageType = computeImageFormatType(pAsyncStruct->filename);
-    if (imageType == CCImage::kFmtUnKnown)
+    CAImage::Format imageType = computeImageFormatType(pAsyncStruct->filename);
+    if (imageType == CAImage::UNKOWN)
     {
         //CCLOG("unsupported format %s",filename);
         //delete pAsyncStruct;
     }
-        
-    // generate image            
-    CCImage *pImage = new CCImage();
-    if (pImage && !pImage->initWithImageFileThreadSafe(filename, imageType))
-    {
-        CC_SAFE_RELEASE(pImage);
-        CCLOG("can not load %s", filename);
-        return;
-    }
+    
+    CAImage* image = CAImageCache::sharedImageCache()->addImageFullPath(filename);
 
     // generate image info
     ImageInfo *pImageInfo = new ImageInfo();
     pImageInfo->asyncStruct = pAsyncStruct;
-    pImageInfo->image = pImage;
+    pImageInfo->image = image;
     pImageInfo->imageType = imageType;
     // put the image info into the queue
     pthread_mutex_lock(&s_ImageInfoMutex);
@@ -332,20 +324,13 @@ void CAImageCache::addImageAsyncCallBack(float dt)
         pthread_mutex_unlock(&s_ImageInfoMutex);
 
         AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
-        CCImage *pImage = pImageInfo->image;
+        CAImage *image = pImageInfo->image;
 
         CAObject *target = pAsyncStruct->target;
         SEL_CallFuncO selector = pAsyncStruct->selector;
         const char* filename = pAsyncStruct->filename.c_str();
 
-        // generate texture in render thread
-        CAImage* image = new CAImage();
-        image->initWithImage(pImage);
 
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-       // cache the image file name
-       VolatileTexture::addImageTexture(image, filename, pImageInfo->imageType);
-#endif
 
         // cache the image
         m_pImages->setObject(image, filename);
@@ -358,7 +343,6 @@ void CAImageCache::addImageAsyncCallBack(float dt)
         }
         
         image->release();
-        pImage->release();
         delete pAsyncStruct;
         delete pImageInfo;
 
@@ -385,11 +369,7 @@ CAImage*  CAImageCache::addImage(const std::string& path)
 CAImage* CAImageCache::addImageFullPath(const std::string& fileimage)
 {
     CAImage* image = NULL;
-    CCImage* pImage = NULL;
-    // Split up directory and filename
-    // MUTEX:
-    // Needed since addImageAsync calls this method from a different thread
-    
+
     //pthread_mutex_lock(m_pDictLock);
     
     image = (CAImage*)m_pImages->objectForKey(fileimage);
@@ -412,51 +392,23 @@ CAImage* CAImageCache::addImageFullPath(const std::string& fileimage)
             }
             else
             {
-                CCImage::EImageFormat eImageFormat = CCImage::kFmtUnKnown;
-                if (std::string::npos != lowerCase.find(".png"))
+                unsigned long pSize = 0;
+                unsigned char* data = NULL;
+                FILE* fp = fopen(fileimage.c_str(), "r");
+                if (fp)
                 {
-                    eImageFormat = CCImage::kFmtPng;
+                    fseek(fp, 0L, SEEK_END);
+                    pSize = ftell(fp);
+                    fseek(fp,0,SEEK_SET);
+                    data = new unsigned char[pSize];
+                    pSize = fread(data, sizeof(unsigned char), pSize, fp);
+                    fclose(fp);
                 }
-                else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
-                {
-                    eImageFormat = CCImage::kFmtJpg;
-                }
-                else if (std::string::npos != lowerCase.find(".tif") || std::string::npos != lowerCase.find(".tiff"))
-                {
-                    eImageFormat = CCImage::kFmtTiff;
-                }
-                else if (std::string::npos != lowerCase.find(".webp"))
-                {
-                    eImageFormat = CCImage::kFmtWebp;
-                }
-                
-                pImage = new CCImage();
-                CC_BREAK_IF(NULL == pImage);
-                
-                bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
-                CC_BREAK_IF(!bRet);
-                
-                image = new CAImage();
-                
-                if( image &&
-                   image->initWithImage(pImage) )
-                {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-                    // cache the texture file name
-                    VolatileTexture::addImageTexture(image, fullpath.c_str(), eImageFormat);
-#endif
-                    m_pImages->setObject(image, fileimage);
-                    image->release();
-                }
-                else
-                {
-                    CCLOG("CrossApp: Couldn't create texture for file:%s in CAImageCache", fileimage.c_str());
-                }
+
+                image = CAImage::createWithImageDataNoCache(data, pSize);
             }
         } while (0);
     }
-    
-    CC_SAFE_RELEASE(pImage);
     
     //pthread_mutex_unlock(m_pDictLock);
     return image;
@@ -489,49 +441,6 @@ CAImage* CAImageCache::addETCImage(const std::string& path)
     return texture;
 }
 
-CAImage* CAImageCache::addUIImage(CCImage *image, const std::string& key)
-{
-    CCAssert(image != NULL, "ImageCache: image MUST not be nil");
-
-    CAImage*  texture = NULL;
-    // imageForKey() use full path,so the key should be full path
-    std::string forKey;
-    forKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(key);
-
-    // Don't have to lock here, because addImageAsync() will not 
-    // invoke opengl function in loading thread.
-
-    do 
-    {
-        // If key is nil, then create a new texture each time
-        if((texture = (CAImage* )m_pImages->objectForKey(forKey)))
-        {
-            break;
-        }
-
-        // prevents overloading the autorelease pool
-        texture = new CAImage();
-        texture->initWithImage(image);
-
-        if(texture)
-        {
-            m_pImages->setObject(texture, forKey);
-            texture->autorelease();
-        }
-        else
-        {
-            CCLOG("CrossApp: Couldn't add UIImage in CAImageCache");
-        }
-
-    } while (0);
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTexture::addCCImage(texture, image);
-#endif
-    
-    return texture;
-}
-
 bool CAImageCache::reloadImage(const std::string& fileName)
 {
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName.c_str());
@@ -540,26 +449,15 @@ bool CAImageCache::reloadImage(const std::string& fileName)
         return false;
     }
     
-    CAImage*  texture = (CAImage*) m_pImages->objectForKey(fullpath);
+    CAImage*  image = (CAImage*) m_pImages->objectForKey(fullpath);
     
     bool ret = false;
-    if (! texture) {
-        texture = this->addImage(fullpath.c_str());
-        ret = (texture != NULL);
-    }
-    else
+    if (! image)
     {
-        do {
-            CCImage* image = new CCImage();
-            CC_BREAK_IF(NULL == image);
-            
-            bool bRet = image->initWithImageFile(fullpath.c_str());
-            CC_BREAK_IF(!bRet);
-            
-            ret = texture->initWithImage(image);
-        } while (0);
+        image = this->addImage(fullpath.c_str());
+        ret = (image != NULL);
     }
-    
+
     return ret;
 }
 
@@ -645,9 +543,7 @@ CAImage* CAImageCache::imageForKey(const std::string& key)
 
 void CAImageCache::reloadAllImages()
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTexture::reloadAllImages();
-#endif
+
 }
 
 void CAImageCache::dumpCachedImageInfo()
@@ -702,10 +598,6 @@ CAImageAtlas::~CAImageAtlas()
     ccGLBindVAO(0);
 #endif
     CC_SAFE_RELEASE(m_pImage);
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    CANotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
-#endif
 }
 
 unsigned int CAImageAtlas::getTotalQuads()
@@ -784,14 +676,6 @@ bool CAImageAtlas::initWithImage(CAImage *image, unsigned int capacity)
     
     memset( m_pQuads, 0, m_uCapacity * sizeof(ccV3F_C4B_T2F_Quad) );
     memset( m_pIndices, 0, m_uCapacity * 6 * sizeof(GLushort) );
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    // listen the event when app go to background
-    CANotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                  callfuncO_selector(CAImageAtlas::listenBackToForeground),
-                                                                  EVENT_COME_TO_FOREGROUND,
-                                                                  NULL);
-#endif
     
     this->setupIndices();
     
@@ -1292,194 +1176,6 @@ void CAImageAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     CC_INCREMENT_GL_DRAWS(1);
     CHECK_GL_ERROR_DEBUG();
 }
-
-
-#pragma VolatileTexture
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-
-std::list<VolatileTexture*> VolatileTexture::textures;
-bool VolatileTexture::isReloading = false;
-
-VolatileTexture::VolatileTexture(CAImage* t)
-: texture(t)
-, m_eCashedImageType(kInvalid)
-, m_pTextureData(NULL)
-, m_PixelFormat(kImagePixelFormat_RGBA8888)
-, m_strFileName("")
-, m_FmtImage(CCImage::kFmtPng)
-, m_alignment(CATextAlignmentCenter)
-, m_vAlignment(CAVerticalTextAlignmentCenter)
-, m_strFontName("")
-, m_strText("")
-, uiImage(NULL)
-, m_fFontSize(0.0f)
-{
-    m_size = CCSizeMake(0, 0);
-    m_texParams.minFilter = GL_LINEAR;
-    m_texParams.magFilter = GL_LINEAR;
-    m_texParams.wrapS = GL_CLAMP_TO_EDGE;
-    m_texParams.wrapT = GL_CLAMP_TO_EDGE;
-    textures.push_back(this);
-}
-
-VolatileTexture::~VolatileTexture()
-{
-    textures.remove(this);
-    CC_SAFE_RELEASE(uiImage);
-}
-
-void VolatileTexture::addImageTexture(CAImage* tt, const char* imageFileName, CCImage::EImageFormat format)
-{
-    if (isReloading)
-    {
-        return;
-    }
-    
-    VolatileTexture *vt = findVolotileTexture(tt);
-    
-    vt->m_eCashedImageType = kImageFile;
-    vt->m_strFileName = imageFileName;
-    vt->m_FmtImage    = format;
-    vt->m_PixelFormat = tt->getPixelFormat();
-}
-
-void VolatileTexture::addCCImage(CAImage* tt, CCImage *image)
-{
-    VolatileTexture *vt = findVolotileTexture(tt);
-    image->retain();
-    vt->uiImage = image;
-    vt->m_eCashedImageType = kImage;
-}
-
-VolatileTexture* VolatileTexture::findVolotileTexture(CAImage* tt)
-{
-    VolatileTexture *vt = 0;
-    std::list<VolatileTexture *>::iterator i = textures.begin();
-    while (i != textures.end())
-    {
-        VolatileTexture *v = *i++;
-        if (v->texture == tt)
-        {
-            vt = v;
-            break;
-        }
-    }
-    
-    if (! vt)
-    {
-        vt = new VolatileTexture(tt);
-    }
-    
-    return vt;
-}
-
-void VolatileTexture::addDataTexture(CAImage* tt, void* data, CAImagePixelFormat pixelFormat, const CCSize& contentSize)
-{
-    if (isReloading)
-    {
-        return;
-    }
-    
-    VolatileTexture *vt = findVolotileTexture(tt);
-    
-    vt->m_eCashedImageType = kImageData;
-    vt->m_pTextureData = data;
-    vt->m_PixelFormat = pixelFormat;
-    vt->m_TextureSize = contentSize;
-}
-
-void VolatileTexture::setTexParameters(CAImage* t, ccTexParams *texParams)
-{
-    VolatileTexture *vt = findVolotileTexture(t);
-    
-    if (texParams->minFilter != GL_NONE)
-        vt->m_texParams.minFilter = texParams->minFilter;
-    if (texParams->magFilter != GL_NONE)
-        vt->m_texParams.magFilter = texParams->magFilter;
-    if (texParams->wrapS != GL_NONE)
-        vt->m_texParams.wrapS = texParams->wrapS;
-    if (texParams->wrapT != GL_NONE)
-        vt->m_texParams.wrapT = texParams->wrapT;
-}
-
-void VolatileTexture::removeImage(CAImage* t)
-{
-    
-    std::list<VolatileTexture *>::iterator i = textures.begin();
-    while (i != textures.end())
-    {
-        VolatileTexture *vt = *i++;
-        if (vt->texture == t)
-        {
-            delete vt;
-            break;
-        }
-    }
-}
-
-void VolatileTexture::reloadAllImages()
-{
-    isReloading = true;
-    
-    CCLOG("reload all texture");
-    std::list<VolatileTexture *>::iterator iter = textures.begin();
-    
-    while (iter != textures.end())
-    {
-        VolatileTexture *vt = *iter++;
-        
-        switch (vt->m_eCashedImageType)
-        {
-            case kImageFile:
-            {
-                std::string lowerCase(vt->m_strFileName.c_str());
-                for (unsigned int i = 0; i < lowerCase.length(); ++i)
-                {
-                    lowerCase[i] = tolower(lowerCase[i]);
-                }
-                
-                CCImage* pImage = new CCImage();
-                unsigned long nSize = 0;
-                unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
-                
-                if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
-                {
-                    CAImagePixelFormat oldPixelFormat = CAImage::defaultAlphaPixelFormat();
-                    CAImage::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
-                    vt->texture->initWithImage(pImage);
-                    CAImage::setDefaultAlphaPixelFormat(oldPixelFormat);
-                }
-                
-                CC_SAFE_DELETE_ARRAY(pBuffer);
-                CC_SAFE_RELEASE(pImage);
-            }
-                break;
-            case kImageData:
-            {
-                vt->texture->initWithData(vt->m_pTextureData,
-                                          vt->m_PixelFormat,
-                                          vt->m_TextureSize.width,
-                                          vt->m_TextureSize.height,
-                                          vt->m_TextureSize);
-            }
-                break;
-            case kImage:
-            {
-                vt->texture->initWithImage(vt->uiImage);
-            }
-                break;
-            default:
-                break;
-        }
-        vt->texture->setTexParameters(&vt->m_texParams);
-    }
-    
-    isReloading = false;
-}
-
-
-#endif // CC_ENABLE_CACHE_TEXTURE_DATA
 
 NS_CC_END
 

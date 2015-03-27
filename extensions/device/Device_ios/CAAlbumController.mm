@@ -96,16 +96,11 @@
     }
     
     NSData *data = UIImageJPEGRepresentation(fiximage,0.5);
-    void* _data =malloc([data length]);
+    void* _data = malloc([data length]);
     [data getBytes:_data];
     
-    CCImage *caimage = new CCImage();
-   
-    caimage->initWithImageData(_data, [data length], CCImage::kFmtPng, fiximage.size.height, fiximage.size.width);
-    
-    CAImage *__image = new CAImage();
-    __image->initWithImage(caimage);
-    
+
+    CAImage *__image = CAImage::createWithRawDataNoCache((const unsigned char*)_data, CAImage::PixelFormat_RGBA8888, fiximage.size.height, fiximage.size.width);
     cam->getSelectedImage(__image);
     
     [picker dismissViewControllerAnimated:YES completion:^

@@ -63,11 +63,10 @@ CAView* CAStudioViewParser::initWithJson(CSJson::Value& var)
 	csJson.initWithValue(var);
 
 	eItemsType eType = (eItemsType)csJson.getItemIntValue("type", -1);
-	switch (eType)
-	{
-	case CAType_View:
-		return ParseJsonForView(csJson);
-	}
+    if (eType == CAType_View)
+    {
+        return ParseJsonForView(csJson);
+    }
 	return NULL;
 }
 

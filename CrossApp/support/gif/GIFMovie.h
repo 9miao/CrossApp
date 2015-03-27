@@ -8,6 +8,8 @@
 #include <assert.h>
 #include "GifUtils.h"
 
+NS_CC_BEGIN
+
 class GIFMovie : public Movie {
 public:
 	virtual ~GIFMovie();
@@ -29,7 +31,7 @@ public:
     static const char *_filename;
 protected:
 	virtual bool onGetInfo(Info*);
-	virtual bool onSetTime(uint32_t);
+	virtual bool onSetTime(GLubyte);
 	virtual bool onGetBitmap(Bitmap*);
 
 public:
@@ -38,5 +40,7 @@ public:
 	int fLastDrawIndex;
 	Bitmap fBackup;
 };
+
+NS_CC_END
 
 #endif

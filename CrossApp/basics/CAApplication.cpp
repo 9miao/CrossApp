@@ -25,7 +25,6 @@
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
 #include "support/CCProfiling.h"
-#include "platform/CCImage.h"
 #include "CCEGLView.h"
 #include "platform/CADensityDpi.h"
 #include "view/CALabelStyle.h"
@@ -173,11 +172,11 @@ void CAApplication::setDefaultValues(void)
 
 	const char *pixel_format = "rgba8888";
 	if( strcmp(pixel_format, "rgba8888") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGBA8888);
+		CAImage::setDefaultAlphaPixelFormat(CAImage::PixelFormat_RGBA8888);
 	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGBA4444);
+		CAImage::setDefaultAlphaPixelFormat(CAImage::PixelFormat_RGBA4444);
 	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGB5A1);
+		CAImage::setDefaultAlphaPixelFormat(CAImage::PixelFormat_RGB5A1);
 
 }
 
@@ -738,7 +737,7 @@ void CAApplication::getFPSImageData(unsigned char** datapointer, unsigned int* l
 
 void CAApplication::createStatsLabel()
 {
-    CAImage* texture = NULL;
+    CAImage* image = NULL;
     CAImageCache *ImageCache = CAImageCache::sharedImageCache();
 
     if( m_pFPSLabel && m_pSPFLabel )
@@ -750,22 +749,14 @@ void CAApplication::createStatsLabel()
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
-    CAImagePixelFormat currentFormat = CAImage::defaultAlphaPixelFormat();
-    CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGBA4444);
+    CAImage::PixelFormat currentFormat = CAImage::defaultAlphaPixelFormat();
+    CAImage::setDefaultAlphaPixelFormat(CAImage::PixelFormat_RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);
 
-    CCImage* image = new CCImage();
-    bool isOK = image->initWithImageData(data, data_len);
-    if (!isOK) {
-        CCLOGERROR("%s", "Fails: init fps_images");
-        return;
-    }
-
-    texture = ImageCache->addUIImage(image, "cc_fps_images");
-    CC_SAFE_RELEASE(image);
-
+    image = CAImage::createWithImageData(data, data_len, "cc_fps_images");
+    
     float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 640.0f;
 
     m_pFPSLabel = CALabel::createWithFrame(CCRect(0, 0, 100, 32));

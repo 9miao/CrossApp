@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
-#ifndef __CC_PLATFORM_CATEMPFONT_H
-#define __CC_PLATFORM_CATEMPFONT_H
+#ifndef __PLATFORM_CATEMPFONT_H
+#define __PLATFORM_CATEMPFONT_H
 
 #include "CAFreeTypeFont.h"
 

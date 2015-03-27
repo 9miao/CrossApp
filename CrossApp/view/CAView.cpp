@@ -2019,20 +2019,20 @@ void CAView::updateDisplayedColor(const CAColor4B& parentColor)
 
 void CAView::updateColor(void)
 {
-    CAColor4B color4 = _displayedColor;
+    unsigned int r = _displayedColor.r * _displayedAlpha;
+    unsigned int g = _displayedColor.g * _displayedAlpha;
+    unsigned int b = _displayedColor.b * _displayedAlpha;
+    unsigned int a = _displayedColor.a * _displayedAlpha;
+    
+    CAColor4B color4 = ccc4(r, g, b, a);
+    
+    m_sQuad.bl.colors = color4;
+    m_sQuad.br.colors = color4;
+    m_sQuad.tl.colors = color4;
+    m_sQuad.tr.colors = color4;
     
     if (m_pobImage && m_pobBatchView)
     {
-        color4.r *= _displayedAlpha;
-        color4.g *= _displayedAlpha;
-        color4.b *= _displayedAlpha;
-        color4.a *= _displayedAlpha;
-        
-        m_sQuad.bl.colors = color4;
-        m_sQuad.br.colors = color4;
-        m_sQuad.tl.colors = color4;
-        m_sQuad.tr.colors = color4;
-        
         if (m_uAtlasIndex != 0xffffffff)
         {
             m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
@@ -2044,19 +2044,7 @@ void CAView::updateColor(void)
             setDirty(true);
         }
     }
-    else
-    {
-//        color4.r *= _displayedAlpha;
-//        color4.g *= _displayedAlpha;
-//        color4.b *= _displayedAlpha;
-        color4.a *= _displayedAlpha;
-        
-        m_sQuad.bl.colors = color4;
-        m_sQuad.br.colors = color4;
-        m_sQuad.tl.colors = color4;
-        m_sQuad.tr.colors = color4;
-    }
-    
+
     this->updateDraw();
 }
 
