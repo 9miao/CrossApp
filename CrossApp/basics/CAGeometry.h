@@ -484,8 +484,8 @@ const CADipRect CADipRectZero = CADipRect();
 #define CCSizeMake(width, height) CCSize((float)(width), (float)(height))
 #define CCRectMake(x, y, width, height) CCRect((float)(x), (float)(y), (float)(width), (float)(height))
 
-#define CADipPointMake(x, y) CADipPoint((float)(x), (float)(y)
-#define CADipSizeMake(x, y) CADipSize((float)(x), (float)(y)
+#define CADipPointMake(x, y) CADipPoint((float)(x), (float)(y))
+#define CADipSizeMake(x, y) CADipSize((float)(x), (float)(y))
 #define CADipRectMake(x, y, width, height) CADipRect((float)(x), (float)(y), (float)(width), (float)(height))
 
 

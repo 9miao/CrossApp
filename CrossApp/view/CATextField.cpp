@@ -337,7 +337,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
 
 			CATextArrowView* pTextArrowView = CATextArrowView::create();
-			pTextArrowView->showTextArrView(convertToWorldSpace(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2 + 25)));
+			pTextArrowView->showTextArrView(convertToWorldSpace(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height + CATextArrowViewHeight/2)));
         }
 
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
@@ -777,7 +777,7 @@ void CATextField::moveArrowBtn(const CCPoint& pt)
 	m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
 
 	CATextArrowView* pTextArrowView = CATextArrowView::create();
-	pTextArrowView->showTextArrView(convertToWorldSpace(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2 + 25)));
+	pTextArrowView->showTextArrView(convertToWorldSpace(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height + CATextArrowViewHeight/2)));
 }
 
 void CATextField::cursorMoveBackward()

@@ -16,6 +16,10 @@
 #include "control/CAButton.h"
 
 
+#define CATextArrowViewWidth 30
+#define CATextArrowViewHeight 62
+
+
 NS_CC_BEGIN
 
 typedef void (CAObject::*SEL_CATextEditBtnEvent)(int iButtonIndex);

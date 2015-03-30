@@ -347,7 +347,7 @@ bool CATextArrowView::init()
 	m_pArrowView = CAImageView::createWithImage(CAImage::create("source_material/arrow.png"));
 	addSubview(m_pArrowView);
 	m_pArrowView->setVisible(false);
-	m_pArrowView->setFrame(CCRect(0, 0, 12, 25));
+	m_pArrowView->setFrame(CCRectMake(0, 0, CATextArrowViewWidth, CATextArrowViewHeight));
 	m_pArrowView->setAlpha(0.5f);
 
 	return true;
@@ -420,8 +420,8 @@ void CATextArrowView::showTextArrView(const CCPoint& pt)
 	if (getSuperview() != NULL)
 		return;
 	CATextArrowView::hideTextArrowView();
-	setFrame(m_pArrowView->getFrame());
-	setCenterOrigin(pt);
+	setFrame(CADipRect(m_pArrowView->getFrame()));
+	setCenterOrigin(CADipPoint(pt));
 	setColor(CAColor_clear);
 	setTextTag("CATextArrowView");
 	m_pArrowView->setVisible(true);
