@@ -424,11 +424,6 @@
 		B05D36AA195AF3CC00DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D36A8195AF3CC00DD4814 /* CAAlertView.cpp */; };
 		B05D36AB195AF3CC00DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D36A9195AF3CC00DD4814 /* CAAlertView.h */; };
 		B0621BEC1AC3C1C9005EBCA7 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BEB1AC3C1C9005EBCA7 /* libcurl.a */; };
-		B0621BF21AC3C1D7005EBCA7 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BED1AC3C1D7005EBCA7 /* libavcodec.a */; };
-		B0621BF31AC3C1D7005EBCA7 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BEE1AC3C1D7005EBCA7 /* libavformat.a */; };
-		B0621BF41AC3C1D7005EBCA7 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BEF1AC3C1D7005EBCA7 /* libavutil.a */; };
-		B0621BF51AC3C1D7005EBCA7 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BF01AC3C1D7005EBCA7 /* libswresample.a */; };
-		B0621BF61AC3C1D7005EBCA7 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BF11AC3C1D7005EBCA7 /* libswscale.a */; };
 		B0621BF81AC3C1E5005EBCA7 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BF71AC3C1E5005EBCA7 /* libfreetype.a */; };
 		B0621BFA1AC3C1F0005EBCA7 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BF91AC3C1F0005EBCA7 /* libjpeg.a */; };
 		B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BFB1AC3C1FA005EBCA7 /* libpng.a */; };
@@ -437,6 +432,11 @@
 		B0621E271AC3EF5E005EBCA7 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BFD1AC3C210005EBCA7 /* libSDL2.a */; };
 		B06805231A833DF700F6BE00 /* CAViewAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06805211A833DF700F6BE00 /* CAViewAnimation.cpp */; };
 		B06805241A833DF700F6BE00 /* CAViewAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B06805221A833DF700F6BE00 /* CAViewAnimation.h */; };
+		B06E0C971AC8F7BF004F12F2 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B06E0C921AC8F7BF004F12F2 /* libavcodec.a */; };
+		B06E0C981AC8F7BF004F12F2 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B06E0C931AC8F7BF004F12F2 /* libavformat.a */; };
+		B06E0C991AC8F7BF004F12F2 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B06E0C941AC8F7BF004F12F2 /* libavutil.a */; };
+		B06E0C9A1AC8F7BF004F12F2 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B06E0C951AC8F7BF004F12F2 /* libswresample.a */; };
+		B06E0C9B1AC8F7BF004F12F2 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B06E0C961AC8F7BF004F12F2 /* libswscale.a */; };
 		B09205DC19D5645300CB99C1 /* CASyncQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D719D5645300CB99C1 /* CASyncQueue.h */; };
 		B09205DD19D5645300CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205D819D5645300CB99C1 /* CAThread.cpp */; };
 		B09205DE19D5645300CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D919D5645300CB99C1 /* CAThread.h */; };
@@ -868,6 +868,11 @@
 		B0621C011AC3C229005EBCA7 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../the_third_party/webp/prebuilt/ios/libwebp.a; sourceTree = "<group>"; };
 		B06805211A833DF700F6BE00 /* CAViewAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewAnimation.cpp; sourceTree = "<group>"; };
 		B06805221A833DF700F6BE00 /* CAViewAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAViewAnimation.h; sourceTree = "<group>"; };
+		B06E0C921AC8F7BF004F12F2 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libavcodec.a; sourceTree = "<group>"; };
+		B06E0C931AC8F7BF004F12F2 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libavformat.a; sourceTree = "<group>"; };
+		B06E0C941AC8F7BF004F12F2 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libavutil.a; sourceTree = "<group>"; };
+		B06E0C951AC8F7BF004F12F2 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libswresample.a; sourceTree = "<group>"; };
+		B06E0C961AC8F7BF004F12F2 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libswscale.a; sourceTree = "<group>"; };
 		B09205D719D5645300CB99C1 /* CASyncQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASyncQueue.h; sourceTree = "<group>"; };
 		B09205D819D5645300CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
 		B09205D919D5645300CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
@@ -899,17 +904,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B06E0C971AC8F7BF004F12F2 /* libavcodec.a in Frameworks */,
+				B06E0C981AC8F7BF004F12F2 /* libavformat.a in Frameworks */,
+				B06E0C991AC8F7BF004F12F2 /* libavutil.a in Frameworks */,
+				B06E0C9A1AC8F7BF004F12F2 /* libswresample.a in Frameworks */,
+				B06E0C9B1AC8F7BF004F12F2 /* libswscale.a in Frameworks */,
 				B0621E271AC3EF5E005EBCA7 /* libSDL2.a in Frameworks */,
 				B0621C021AC3C229005EBCA7 /* libwebp.a in Frameworks */,
 				B0621C001AC3C21E005EBCA7 /* libtiff.a in Frameworks */,
 				B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */,
 				B0621BFA1AC3C1F0005EBCA7 /* libjpeg.a in Frameworks */,
 				B0621BF81AC3C1E5005EBCA7 /* libfreetype.a in Frameworks */,
-				B0621BF21AC3C1D7005EBCA7 /* libavcodec.a in Frameworks */,
-				B0621BF31AC3C1D7005EBCA7 /* libavformat.a in Frameworks */,
-				B0621BF41AC3C1D7005EBCA7 /* libavutil.a in Frameworks */,
-				B0621BF51AC3C1D7005EBCA7 /* libswresample.a in Frameworks */,
-				B0621BF61AC3C1D7005EBCA7 /* libswscale.a in Frameworks */,
 				B0621BEC1AC3C1C9005EBCA7 /* libcurl.a in Frameworks */,
 				1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */,
 			);
@@ -1076,6 +1081,11 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B06E0C921AC8F7BF004F12F2 /* libavcodec.a */,
+				B06E0C931AC8F7BF004F12F2 /* libavformat.a */,
+				B06E0C941AC8F7BF004F12F2 /* libavutil.a */,
+				B06E0C951AC8F7BF004F12F2 /* libswresample.a */,
+				B06E0C961AC8F7BF004F12F2 /* libswscale.a */,
 				B0621C011AC3C229005EBCA7 /* libwebp.a */,
 				B0621BFF1AC3C21E005EBCA7 /* libtiff.a */,
 				B0621BFD1AC3C210005EBCA7 /* libSDL2.a */,
@@ -2211,7 +2221,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
 			};
@@ -2236,7 +2246,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
@@ -2281,6 +2291,7 @@
 					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/sdl/prebuilt/ios",
 					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/tiff/prebuilt/ios",
 					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/webp/prebuilt/ios",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/FFmpeg/prebuilt/ios",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2325,6 +2336,7 @@
 					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/sdl/prebuilt/ios",
 					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/tiff/prebuilt/ios",
 					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/webp/prebuilt/ios",
+					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/FFmpeg/prebuilt/ios",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

@@ -65,13 +65,8 @@ if [ -f "$file" ]; then
 fi
 done
 
-# run ndk-build
-if [[ "$buildexternalsfromsource" ]]; then
-    echo "Building external dependencies from source"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-        "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/CrossApp/platform/third_party/android/source"
-else
-    echo "Using prebuilt externals"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-        "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/CrossApp/platform/third_party/android/prebuilt"
-fi
+echo "Using prebuilt externals"
+"$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
+"NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/CrossApp/the_third_party/"
+
+

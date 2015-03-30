@@ -602,7 +602,6 @@ std::string CCFileUtils::fullPathForFilename(const std::string& pszFileName)
         //CCLOG("Return absolute path( %s ) directly.", pszFileName);
         return pszFileName;
     }
-    
     // Already Cached ?
     std::map<std::string, std::string>::iterator cacheIter = m_fullPathCache.find(pszFileName);
     if (cacheIter != m_fullPathCache.end())
@@ -610,7 +609,6 @@ std::string CCFileUtils::fullPathForFilename(const std::string& pszFileName)
         //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
         return cacheIter->second;
     }
-    
     // Get the new file name.
     std::string newFilename = getNewFilename(pszFileName);
     
@@ -795,7 +793,13 @@ void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
 
 std::string CCFileUtils::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
 {
-    std::string ret = strDirectory+strFilename;
+    std::string ret = strDirectory;
+    if (strDirectory.size() && strDirectory[strDirectory.size()-1] != '/')
+    {
+        ret += '/';
+    }
+    ret += strFilename;
+    
     if (!isFileExist(ret)) {
         ret = "";
     }

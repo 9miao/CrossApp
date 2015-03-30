@@ -476,7 +476,7 @@ void ToMainThread::runDelegate()
     if (delegate)
     {
         CAImage *image = new CAImage();
-        if (image->initWithImageFileThreadSafe(_path))
+        if (image->initWithImageFile(_path))
         {
             CAScheduler::unschedule(schedule_selector(ToMainThread::runDelegate), this);
             delegate->getSelectedImage(image);

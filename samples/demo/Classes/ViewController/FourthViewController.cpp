@@ -44,12 +44,7 @@ void FourthViewController::viewDidLoad()
     defaultView->insertSubview(animationView1, 0);
     animationView1->setColor(ccc4(80, 200, 255, 255));
     
-    std::string path1 = CCFileUtils::sharedFileUtils()->fullPathForFilename("");
-    std::string path2 = CCFileUtils::sharedFileUtils()->getWritablePath();
-    
-    CCLog(">>>>>>>>>>>>1 %s", path1.c_str());
-    CCLog(">>>>>>>>>>>>2 %s", path2.c_str());
-    
+
     animationView2 = CAScale9ImageView::createWithCenter(CADipRect(100, 100, 50, 50));
     animationView2->setImage(CAImage::create("source_material/btn_rounded_normal.png"));
     defaultView->insertSubview(animationView2, 1);

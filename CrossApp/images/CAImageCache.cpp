@@ -116,7 +116,7 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
         //delete pAsyncStruct;
     }
     
-    CAImage* image = CAImageCache::sharedImageCache()->addImageFullPath(filename);
+    CAImage* image = CAImageCache::sharedImageCache()->addImage(filename);
 
     // generate image info
     ImageInfo *pImageInfo = new ImageInfo();
@@ -227,9 +227,7 @@ CCDictionary* CAImageCache::snapshotTextures()
 void CAImageCache::addImageAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector)
 {
     std::string pathKey = path;
-    
-    pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
-    
+
     this->addImageFullPathAsync(pathKey.c_str(), target, selector);
 }
 
@@ -356,28 +354,15 @@ void CAImageCache::addImageAsyncCallBack(float dt)
 
 CAImage*  CAImageCache::addImage(const std::string& path)
 {
-    std::string pathKey = path;
-
-    pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
-    if (pathKey.size() == 0)
-    {
-        return NULL;
-    }
-    return addImageFullPath(pathKey.c_str());
-}
-
-CAImage* CAImageCache::addImageFullPath(const std::string& fileimage)
-{
     CAImage* image = NULL;
-
+    
     //pthread_mutex_lock(m_pDictLock);
     
-    image = (CAImage*)m_pImages->objectForKey(fileimage);
-    
-    std::string fullpath = fileimage; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
+    image = (CAImage*)m_pImages->objectForKey(path);
+
     if (!image)
     {
-        std::string lowerCase(fileimage);
+        std::string lowerCase(path);
         for (unsigned int i = 0; i < lowerCase.length(); ++i)
         {
             lowerCase[i] = tolower(lowerCase[i]);
@@ -388,24 +373,20 @@ CAImage* CAImageCache::addImageFullPath(const std::string& fileimage)
             if (std::string::npos != lowerCase.find(".pkm"))
             {
                 // ETC1 file format, only supportted on Android
-                image = this->addETCImage(fullpath.c_str());
+                image = this->addETCImage(path.c_str());
             }
             else
             {
-                unsigned long pSize = 0;
-                unsigned char* data = NULL;
-                FILE* fp = fopen(fileimage.c_str(), "r");
-                if (fp)
+                image = new CAImage();
+                if(image != NULL && image->initWithImageFile(path.c_str()))
                 {
-                    fseek(fp, 0L, SEEK_END);
-                    pSize = ftell(fp);
-                    fseek(fp,0,SEEK_SET);
-                    data = new unsigned char[pSize];
-                    pSize = fread(data, sizeof(unsigned char), pSize, fp);
-                    fclose(fp);
+                    m_pImages->setObject(image, path);
+                    image->release();
                 }
-
-                image = CAImage::createWithImageDataNoCache(data, pSize);
+                else
+                {
+                    CC_SAFE_DELETE(image);
+                }
             }
         } while (0);
     }
@@ -416,45 +397,42 @@ CAImage* CAImageCache::addImageFullPath(const std::string& fileimage)
 
 CAImage* CAImageCache::addETCImage(const std::string& path)
 {
-    CAImage* texture = NULL;
+    CAImage* image = NULL;
     std::string key(path);
     
-    if( (texture = (CAImage*)m_pImages->objectForKey(key.c_str())) )
+    if( (image = (CAImage*)m_pImages->objectForKey(key)))
     {
-        return texture;
+        return image;
     }
     
-    // Split up directory and filename
-    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(key.c_str());
-    texture = new CAImage();
-    if(texture != NULL && texture->initWithETCFile(fullpath.c_str()))
+
+    image = new CAImage();
+    if(image != NULL && image->initWithETCFile(path.c_str()))
     {
-        m_pImages->setObject(texture, key.c_str());
-        texture->autorelease();
+        m_pImages->setObject(image, key.c_str());
+        image->release();
     }
     else
     {
-        CCLOG("CrossApp: Couldn't add ETCImage:%s in CAImageCache",key.c_str());
-        CC_SAFE_DELETE(texture);
+        CC_SAFE_DELETE(image);
     }
     
-    return texture;
+    return image;
 }
 
 bool CAImageCache::reloadImage(const std::string& fileName)
 {
-    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName.c_str());
-    if (fullpath.size() == 0)
+    if (fileName.size() == 0)
     {
         return false;
     }
     
-    CAImage*  image = (CAImage*) m_pImages->objectForKey(fullpath);
+    CAImage*  image = (CAImage*) m_pImages->objectForKey(fileName);
     
     bool ret = false;
     if (! image)
     {
-        image = this->addImage(fullpath.c_str());
+        image = this->addImage(fileName.c_str());
         ret = (image != NULL);
     }
 
@@ -516,7 +494,7 @@ void CAImageCache::setImageForKey(CAImage* image, const std::string& key)
     {
         return;
     }
-    m_pImages->setObject(image, CCFileUtils::sharedFileUtils()->fullPathForFilename(key.c_str()));
+    m_pImages->setObject(image, key.c_str());
 }
 
 void CAImageCache::removeImage(CAImage* image)
@@ -532,13 +510,12 @@ void CAImageCache::removeImage(CAImage* image)
 
 void CAImageCache::removeImageForKey(const std::string& imageKeyName)
 {
-    string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(imageKeyName.c_str());
-    m_pImages->removeObjectForKey(fullPath);
+    m_pImages->removeObjectForKey(imageKeyName.c_str());
 }
 
 CAImage* CAImageCache::imageForKey(const std::string& key)
 {
-    return (CAImage*)m_pImages->objectForKey(CCFileUtils::sharedFileUtils()->fullPathForFilename(key));
+    return (CAImage*)m_pImages->objectForKey(key);
 }
 
 void CAImageCache::reloadAllImages()

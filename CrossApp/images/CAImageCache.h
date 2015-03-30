@@ -31,9 +31,7 @@ public:
     static void purgeSharedImageCache();
 
     CAImage* addImage(const std::string& fileimage);
-    
-    CAImage* addImageFullPath(const std::string& fileimage);
-    
+
     void addImageAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector);
 
     void addImageFullPathAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector);
