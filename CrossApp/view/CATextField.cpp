@@ -358,7 +358,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         return false;
     }
     
-//	CAScheduler::schedule(schedule_selector(CATextField::ccTouchTimer), this, 0, 0, 1.5f);
+	CAScheduler::schedule(schedule_selector(CATextField::ccTouchTimer), this, 0, 0, 1.5f);
 
 	m_pCurTouch = pTouch;
 	m_pCurEvent = pEvent;
