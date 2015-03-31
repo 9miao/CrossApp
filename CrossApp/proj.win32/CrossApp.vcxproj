@@ -73,7 +73,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\platform\third_party\win32\iconv;$(ProjectDir)..\platform\third_party\win32\zlib;$(ProjectDir)..\platform\third_party\win32\libpng;$(ProjectDir)..\platform\third_party\win32\libjpeg;$(ProjectDir)..\platform\third_party\win32\libtiff;$(ProjectDir)..\platform\third_party\win32\libwebp;$(ProjectDir)..\platform\third_party\win32\pthread;$(ProjectDir)..\platform\third_party\win32\OGLES;$(ProjectDir)..\platform\third_party\win32\freetype;..\include;$(ProjectDir)..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include\win32;..\include;$(ProjectDir)..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -86,8 +86,13 @@
     </ClCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir)"
-</Command>
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\win32\libraries\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\png\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\jpeg\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\tiff\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\webp\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\freetype\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype250.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -111,7 +116,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\platform\third_party\win32\iconv;$(ProjectDir)..\platform\third_party\win32\zlib;$(ProjectDir)..\platform\third_party\win32\libpng;$(ProjectDir)..\platform\third_party\win32\libjpeg;$(ProjectDir)..\platform\third_party\win32\libtiff;$(ProjectDir)..\platform\third_party\win32\libwebp;$(ProjectDir)..\platform\third_party\win32\pthread;$(ProjectDir)..\platform\third_party\win32\OGLES;$(ProjectDir)..\platform\third_party\win32\freetype;..\include;$(ProjectDir)..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include\win32;..\include;$(ProjectDir)..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -195,7 +200,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\platform\CATempTypeFont.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
-    <ClCompile Include="..\platform\CCImageCommonWebp.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
     <ClCompile Include="..\platform\win32\CADensityDpi.cpp" />
@@ -203,10 +207,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication.cpp" />
     <ClCompile Include="..\platform\win32\CCCommon.cpp" />
-    <ClCompile Include="..\platform\win32\CCDevice.cpp" />
     <ClCompile Include="..\platform\win32\CCEGLView.cpp" />
     <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp" />
-    <ClCompile Include="..\platform\win32\CCImage.cpp" />
     <ClCompile Include="..\platform\win32\CCStdC.cpp" />
     <ClCompile Include="..\script_support\CCScriptSupport.cpp" />
     <ClCompile Include="..\script_support\JSViewController.cpp" />
@@ -333,8 +335,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCEGLViewProtocol.h" />
     <ClInclude Include="..\platform\CCFileUtils.h" />
-    <ClInclude Include="..\platform\CCImage.h" />
-    <ClInclude Include="..\platform\CCImageCommon_cpp.h" />
     <ClInclude Include="..\platform\CCPlatformConfig.h" />
     <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />

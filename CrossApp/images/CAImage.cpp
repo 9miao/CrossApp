@@ -99,7 +99,7 @@ namespace
     typedef struct
     {
         const unsigned char * data;
-        ssize_t size;
+        unsigned long size;
         int offset;
     }tImageSource;
     
@@ -1644,7 +1644,7 @@ bool CAImage::saveImageToJPG(const std::string& filePath)
 
 bool CAImage::saveToFile(const std::string& fullPath, bool bIsToRGB)
 {
-    if (m_ePixelFormat != CAImage::CAImage::PixelFormat_RGBA8888
+    if (m_ePixelFormat != CAImage::PixelFormat_RGBA8888
         && m_ePixelFormat != CAImage::PixelFormat_RGB888)
     {
         return false;
