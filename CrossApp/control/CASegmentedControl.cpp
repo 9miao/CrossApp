@@ -785,7 +785,7 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
         clip->setFrame(this->getBounds());
         this->addSubview(clip);
         CCSize size = m_pBackgroundView->getBounds().size;
-        CARenderImage* render = CARenderImage::create(size.width, size.height, CAImage::CAImage::PixelFormat_RGBA8888);
+        CARenderImage* render = CARenderImage::create(size.width, size.height, CAImage::PixelFormat_RGBA8888);
         render->beginWithClear(0, 0, 0, 0);
         clip->visit();
         render->end();

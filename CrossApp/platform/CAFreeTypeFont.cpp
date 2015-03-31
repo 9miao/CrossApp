@@ -148,7 +148,7 @@ _AgaginInitGlyphs:
 	m_bUnderLine = false;
 
 	CAImage* pCAImage = new CAImage();
-	if (!pCAImage->initWithRawData(pData, CAImage::CAImage::PixelFormat_A8, width, height))
+	if (!pCAImage->initWithRawData(pData, CAImage::PixelFormat_A8, width, height))
 	{
 		delete[]pData;
 		delete pCAImage;
@@ -216,7 +216,7 @@ CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontNa
 	}
 
 	CAImage* pCAImage = new CAImage();
-	if (!pCAImage->initWithRawData(pData, CAImage::CAImage::PixelFormat_A8, width, height))
+	if (!pCAImage->initWithRawData(pData, CAImage::PixelFormat_A8, width, height))
 	{
 		delete[]pData;
 		delete pCAImage;
