@@ -12,6 +12,7 @@ NS_CC_BEGIN
 CATextToolBar::CATextToolBar()
 : m_pCATextTarget(NULL)
 , m_pCAEditBtnEvent(NULL)
+, m_pControlView(NULL)
 {
 }
 
@@ -116,7 +117,7 @@ void CATextToolBar::setTarget(CAObject* target, SEL_CATextEditBtnEvent selector)
 	m_pCAEditBtnEvent = selector;
 }
 
-void CATextToolBar::showTextEditView(const CCPoint& point)
+void CATextToolBar::showTextEditView(const CCPoint& point, CAView* pControlView)
 {
 	const float fBtnWidth = 80;
 	const float fBtnHeight= 50;
@@ -124,6 +125,7 @@ void CATextToolBar::showTextEditView(const CCPoint& point)
 	if (getSuperview() != NULL)
 		return;
 	CATextToolBar::hideTextToolBar();
+	CATextArrowView::hideTextArrowView();
 
 	setFrame(CADipRect(point.x, point.y, fBtnWidth*m_vAllBtn.size(), fBtnHeight));
 	setColor(CAColor_red);
@@ -134,19 +136,26 @@ void CATextToolBar::showTextEditView(const CCPoint& point)
 		m_vAllBtn.at(i)->setFrame(CADipRect(fBtnWidth * i, 0, fBtnWidth, fBtnHeight));
 		addSubview(m_vAllBtn.at(i));
 	}
-	
 
 	if (CAView *rootWindow = CAApplication::getApplication()->getRootWindow()) 
 	{
 		rootWindow->addSubview(this);
 	}
 	becomeFirstResponder();
+	m_pControlView = pControlView;
 }
 
 void CATextToolBar::hideTextEditView()
 {
 	//
 	resignFirstResponder();
+
+	if (m_pControlView)
+	{
+		m_pControlView->becomeFirstResponder();
+		m_pControlView = NULL;
+	}
+
 	removeFromSuperview();
 
 	CAApplication::getApplication()->updateDraw();
@@ -161,6 +170,7 @@ CATextSelectView::CATextSelectView()
 , m_pCursorMarkL(NULL)
 , m_pCursorMarkR(NULL)
 , m_pTextMask(NULL)
+, m_pControlView(NULL)
 , m_iSelViewTouchPos(0)
 {
 
@@ -227,7 +237,7 @@ void CATextSelectView::hideTextSelectView()
 }
 
 
-void CATextSelectView::showTextSelView(const CCRect& rect, bool showLeft, bool showRight)
+void CATextSelectView::showTextSelView(const CCRect& rect, CAView* pControlView, bool showLeft, bool showRight)
 {
 	if (getSuperview() != NULL)
 		return;
@@ -264,6 +274,7 @@ void CATextSelectView::showTextSelView(const CCRect& rect, bool showLeft, bool s
 		rootWindow->addSubview(this);
 	}
 	becomeFirstResponder();
+	m_pControlView = pControlView;
 }
 
 
@@ -320,6 +331,13 @@ void CATextSelectView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 void CATextSelectView::hideTextSelView()
 {
 	resignFirstResponder();
+
+	if (m_pControlView)
+	{
+		m_pControlView->becomeFirstResponder();
+		m_pControlView = NULL;
+	}
+
 	removeFromSuperview();
 
 	CAApplication::getApplication()->updateDraw();
@@ -336,7 +354,7 @@ CATextArrowView::CATextArrowView()
 
 CATextArrowView::~CATextArrowView()
 {
-
+	CAScheduler::unschedule(schedule_selector(CATextArrowView::ccTouchTimer), this);
 }
 
 

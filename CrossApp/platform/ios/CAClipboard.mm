@@ -1,7 +1,7 @@
 
 #include "platform/CAClipboard.h"
 #include "basics/CAApplication.h"
-
+#import <UIKit/UIKit.h>
 
 NS_CC_BEGIN
 
@@ -14,7 +14,7 @@ std::string CAClipboard::GetText()
 void CAClipboard::SetText(const std::string& cszStrText)
 {
 	UIPasteboard *pastBoard = [UIPasteboard generalPasteboard];
-	pastBoard.string = [NSString stringWithUTF8String:str];
+	pastBoard.string = [NSString stringWithUTF8String:cszStrText.c_str()];
 }
 
 NS_CC_END

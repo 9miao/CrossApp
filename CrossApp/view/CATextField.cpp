@@ -362,8 +362,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 	m_pCurTouch = pTouch;
 	m_pCurEvent = pEvent;
-
-	return CAView::ccTouchBegan(pTouch, pEvent);
+	return true;
 }
 
 void CATextField::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
@@ -397,7 +396,7 @@ void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 		pTextEditView = CATextToolBar::createWithText(UTF8("粘贴"), UTF8("全选"), UTF8("选择"), NULL);
 	}
 	pTextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent));
-	pTextEditView->showTextEditView(pTouch->getLocation());
+	pTextEditView->showTextEditView(pTouch->getLocation(), this);
 }
 
 void CATextField::CATextEditBtnEvent(int iButtonIndex)
@@ -678,7 +677,7 @@ void CATextField::startSelect()
 	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool l, r;
 	CCRect cc = getZZCRect(l, r);
-	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), l, r);
+	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), this, l, r);
 	m_pCursorMark->setVisible(false);
 	CATextArrowView::hideTextArrowView();
 }
@@ -695,13 +694,13 @@ void CATextField::selectAll()
 	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool l, r;
 	CCRect cc = getZZCRect(l, r);
-	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), l, r);
+	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), this, l, r);
 	m_pCursorMark->setVisible(false);
 	CATextArrowView::hideTextArrowView();
 
 	CATextToolBar* pTextToolBar = CATextToolBar::createWithText(UTF8("剪切"), UTF8("拷贝"), UTF8("粘贴"), NULL);
 	pTextToolBar->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
-	pTextToolBar->showTextEditView(cc.origin);
+	pTextToolBar->showTextEditView(cc.origin, this);
 }
 
 void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
@@ -736,7 +735,7 @@ void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool ll, rr;
 	CCRect cc = convertRectToWorldSpace(getZZCRect(ll, rr));
-	pSelCharsView->showTextSelView(cc, ll, rr);
+	pSelCharsView->showTextSelView(cc, this, ll, rr);
 	m_pCursorMark->setVisible(false);
 	CATextArrowView::hideTextArrowView();
 }
@@ -745,7 +744,7 @@ void CATextField::moveSelectCharsCancel(const CCPoint& pt)
 {
 	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("剪切"), UTF8("拷贝"), UTF8("粘贴"), NULL);
 	pTextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
-	pTextEditView->showTextEditView(pt);
+	pTextEditView->showTextEditView(pt, this);
 }
 
 void CATextField::moveArrowBtn(const CCPoint& pt)
