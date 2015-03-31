@@ -353,27 +353,11 @@ CAImage* CAImage::createWithRawData(const unsigned char * data,
 
 bool CAImage::initWithImageFile(const std::string& file)
 {
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(file.c_str());
-    return initWithImageFileThreadSafe(fullPath);
-}
-
-bool CAImage::initWithImageFileThreadSafe(const std::string& fullPath)
-{
     unsigned long pSize = 0;
-    unsigned char* data = NULL;
-    FILE* fp = fopen(fullPath.c_str(), "r");
-    if (fp)
-    {
-            fseek(fp, 0L, SEEK_END);
-            pSize = ftell(fp);
-            fseek(fp,0,SEEK_SET);
-            data = new unsigned char[pSize];
-            pSize = fread(data, sizeof(unsigned char), pSize, fp);
-            fclose(fp);
-    }
+    unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(file.c_str(), "r", &pSize);
+    
     return initWithImageData(data, pSize);
 }
-
 
 bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLen)
 {

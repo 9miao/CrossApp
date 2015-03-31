@@ -624,22 +624,17 @@ std::string CCFileUtils::fullPathForFilename(const std::string& pszFileName)
              resOrderIter != m_searchResolutionsOrderArray.end();
              ++resOrderIter)
         {
-            
-            //CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
-            
             fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
             
             if (fullpath.length() > 0)
             {
                 // Using the filename passed in as key.
                 m_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
-                //CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
     }
     
-    //CCLOG("CrossApp: fullPathForFilename: No file found at %s. Possible missing file.", pszFileName);
     return pszFileName;
 }
 

@@ -98,9 +98,7 @@ public:
                                       const std::string& key);
     
     bool initWithImageFile(const std::string& file);
-    
-    bool initWithImageFileThreadSafe(const std::string& fullPath);
-    
+
     bool initWithImageData(const unsigned char * data, unsigned long dataLen);
     
     bool initWithRawData(const unsigned char * data,
