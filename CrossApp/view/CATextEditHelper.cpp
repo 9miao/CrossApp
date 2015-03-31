@@ -328,6 +328,7 @@ void CATextSelectView::hideTextSelView()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 CATextArrowView::CATextArrowView()
 : m_pArrowView(NULL)
+, m_pControlView(NULL)
 , m_isBtnPress(false)
 {
 
@@ -415,7 +416,7 @@ void CATextArrowView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 	m_isBtnPress = false;
 }
 
-void CATextArrowView::showTextArrView(const CCPoint& pt)
+void CATextArrowView::showTextArrView(const CCPoint& pt, CAView* pControlView)
 {
 	if (getSuperview() != NULL)
 		return;
@@ -431,6 +432,7 @@ void CATextArrowView::showTextArrView(const CCPoint& pt)
 		rootWindow->addSubview(this);
 	}
 	becomeFirstResponder();
+	m_pControlView = pControlView;
 
 	CAScheduler::schedule(schedule_selector(CATextArrowView::ccTouchTimer), this, 0, 0, 3);
 }
@@ -438,6 +440,13 @@ void CATextArrowView::showTextArrView(const CCPoint& pt)
 void CATextArrowView::hideTextArrView()
 {
 	resignFirstResponder();
+
+	if (m_pControlView)
+	{
+		m_pControlView->becomeFirstResponder();
+		m_pControlView = NULL;
+	}
+	
 	removeFromSuperview();
 
 	CAApplication::getApplication()->updateDraw();
