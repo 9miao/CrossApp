@@ -313,51 +313,6 @@ void CATextField::ccTouchTimer(float interval)
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    CCPoint point = this->convertTouchToNodeSpace(pTouch);
-    
-    if (this->getBounds().containsPoint(point))
-    {
-		becomeFirstResponder();
-		if (isFirstResponder())
-        {
-			m_pCursorMark->setVisible(true);
-
-            //m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
-            if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
-            {
-                if (m_sText.empty())
-                {
-                    m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
-                }
-                return true;
-            }
-			calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
-			m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
-           
-			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
-
-			CATextArrowView* pTextArrowView = CATextArrowView::create();
-			pTextArrowView->showTextArrView(convertToWorldSpace(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height + CATextArrowViewHeight/2)), this);
-        }
-
-#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
-        CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
-        pGlView->setIMECursorPos(getCursorPos(),getContentText());
-#endif
-
-    }
-    else
-    {
-        if (resignFirstResponder())
-        {
-            //m_pCursorMark->stopAllActions();
-			m_pCursorMark->setVisible(false);
-			CATextArrowView::hideTextArrowView();
-			this->updateImage();
-        }
-        return false;
-    }
-    
 	CAScheduler::schedule(schedule_selector(CATextField::ccTouchTimer), this, 0, 0, 1.5f);
 
 	m_pCurTouch = pTouch;
@@ -373,6 +328,53 @@ void CATextField::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
 	CAScheduler::unschedule(schedule_selector(CATextField::ccTouchTimer), this);
+
+	CCPoint point = this->convertTouchToNodeSpace(pTouch);
+
+	if (this->getBounds().containsPoint(point))
+	{
+		becomeFirstResponder();
+		if (isFirstResponder())
+		{
+			m_pCursorMark->setVisible(true);
+
+			//m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
+			if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+			{
+				if (m_sText.empty())
+				{
+					m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+				}
+				return;
+			}
+			calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
+			m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
+
+			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+
+			CATextArrowView* pTextArrowView = CATextArrowView::create();
+			pTextArrowView->showTextArrView(convertToWorldSpace(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height + CATextArrowViewHeight / 2)), this);
+		}
+
+#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
+		CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+		pGlView->setIMECursorPos(getCursorPos(), getContentText());
+#endif
+
+	}
+	else
+	{
+		CATextArrowView::hideTextArrowView();
+		CATextToolBar::hideTextToolBar();
+		CATextSelectView::hideTextSelectView();
+
+		if (resignFirstResponder())
+		{
+			//m_pCursorMark->stopAllActions();
+			m_pCursorMark->setVisible(false);
+			this->updateImage();
+		}
+	}
 }
 
 void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
