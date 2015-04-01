@@ -354,7 +354,7 @@ CAImage* CAImage::createWithRawData(const unsigned char * data,
 bool CAImage::initWithImageFile(const std::string& file)
 {
     unsigned long pSize = 0;
-    unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(file.c_str(), "r", &pSize);
+    unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(file.c_str(), "rb", &pSize);
     
     return initWithImageData(data, pSize);
 }
@@ -580,12 +580,11 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         {
             png_set_strip_16(png_ptr);
         }
-        
-        // Expanded earlier for grayscale, now take care of palette and rgb
         if (bit_depth < 8)
         {
             png_set_packing(png_ptr);
         }
+
         // update info
         png_read_update_info(png_ptr, info_ptr);
         bit_depth = png_get_bit_depth(png_ptr, info_ptr);
@@ -610,12 +609,12 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         }
         
         // read png data
+        m_nBitsPerComponent = bit_depth;
         png_size_t rowbytes;
         png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * m_uPixelsHigh);
         
         rowbytes = png_get_rowbytes(png_ptr, info_ptr);
         
-        m_nBitsPerComponent = bit_depth;
         m_nDataLenght = rowbytes * m_uPixelsHigh;
         m_pData = static_cast<unsigned char*>(malloc(m_nDataLenght * sizeof(unsigned char)));
         if(!m_pData)
@@ -635,11 +634,23 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         
         png_read_end(png_ptr, NULL);
         
+        png_uint_32 channel = rowbytes/m_uPixelsWide;
+        
         // premultiplied alpha for RGBA8888
-        if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
+        if (channel == 4)
         {
             m_bHasAlpha = true;
-            premultipliedAlpha();
+            unsigned int* fourBytes = (unsigned int*)m_pData;
+            for(unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
+            {
+                unsigned char* p = m_pData + i * 4;
+                fourBytes[i] = (unsigned)(((unsigned)((unsigned char)(p[0]) * ((unsigned char)(p[3]) + 1)) >> 8) |
+                                          ((unsigned)((unsigned char)(p[1]) * ((unsigned char)(p[3]) + 1) >> 8) << 8) |
+                                          ((unsigned)((unsigned char)(p[2]) * ((unsigned char)(p[3]) + 1) >> 8) << 16) |
+                                          ((unsigned)(unsigned char)(p[3]) << 24));
+            }
+            
+            m_bHasPremultipliedAlpha = true;
         }
         else
         {
@@ -1160,12 +1171,9 @@ bool CAImage::initPremultipliedATextureWithImage()
     m_fMaxS = 1;
     m_fMaxT = 1;
     
-    m_bHasPremultipliedAlpha = false;
     m_bHasMipmaps = false;
     
     setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
-    
-    
     
     return true;
 }
@@ -1851,24 +1859,6 @@ bool CAImage::isWebp(const unsigned char * data, unsigned long dataLen)
     
     return memcmp(data, WEBP_RIFF, 4) == 0
     && memcmp(static_cast<const unsigned char*>(data) + 8, WEBP_WEBP, 4) == 0;
-}
-
-void CAImage::premultipliedAlpha()
-{
-    if (m_ePixelFormat == CAImage::PixelFormat_RGBA8888)
-    {
-        unsigned int* fourBytes = (unsigned int*)m_pData;
-        for(unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
-        {
-            unsigned char* p = m_pData + i * 4;
-            fourBytes[i] = (unsigned)(((unsigned)((unsigned char)(p[0]) * ((unsigned char)(p[3]) + 1)) >> 8) |
-                                      ((unsigned)((unsigned char)(p[1]) * ((unsigned char)(p[3]) + 1) >> 8) << 8) |
-                                      ((unsigned)((unsigned char)(p[2]) * ((unsigned char)(p[3]) + 1) >> 8) << 16) |
-                                      ((unsigned)(unsigned char)(p[3]) << 24));
-        }
-        
-        m_bHasPremultipliedAlpha = true;
-    }
 }
 
 NS_CC_END

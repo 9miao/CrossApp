@@ -2276,6 +2276,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include/ios\"",
+					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2283,15 +2284,9 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/ios\"",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/curl/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/FFmpeg/prebuilt",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/freetype/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/jpeg/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/png/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/sdl/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/tiff/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/webp/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/FFmpeg/prebuilt/ios",
+					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2321,6 +2316,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include/ios\"",
+					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2328,15 +2324,9 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/ios\"",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/curl/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/FFmpeg/prebuilt",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/freetype/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/jpeg/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/png/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/sdl/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/tiff/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/webp/prebuilt/ios",
-					"/Users/liynfg/项目/引擎/CrossApp_beta/CrossApp/the_third_party/FFmpeg/prebuilt/ios",
+					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

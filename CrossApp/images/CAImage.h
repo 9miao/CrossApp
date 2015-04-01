@@ -192,8 +192,6 @@ protected:
 
     bool initPremultipliedATextureWithImage();
 
-    void premultipliedAlpha();
-
     bool saveImageToPNG(const std::string& filePath, bool isToRGB);
     
     bool saveImageToJPG(const std::string& filePath);

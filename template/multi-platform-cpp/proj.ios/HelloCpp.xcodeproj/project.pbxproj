@@ -171,6 +171,7 @@
 		B0A030051A8E07050005CB8F /* CABlueTooth.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CABlueTooth.mm; sourceTree = "<group>"; };
 		B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		B0A030091A8E08500005CB8F /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../../CrossApp/platform/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
+		B0ABA50B1ACBD3FA00B0DEC5 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../CrossApp/the_third_party/curl/prebuilt/ios/libcurl.a; sourceTree = "<group>"; };
 		B0AD93E519207CA300EA40BB /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
 		B0CA5A271A77A77B00BECD89 /* CAStudioViewParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStudioViewParser.cpp; sourceTree = "<group>"; };
 		B0CA5A281A77A77B00BECD89 /* CAStudioViewParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStudioViewParser.h; sourceTree = "<group>"; };
@@ -352,6 +353,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0ABA50B1ACBD3FA00B0DEC5 /* libcurl.a */,
 				B0A030091A8E08500005CB8F /* libpng.a */,
 				B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */,
 				BF170DB412928DE900B8313A /* libz.dylib */,
@@ -666,8 +668,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Danyi Feng (VE83T3M7CV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Danyi Feng (VE83T3M7CV)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -691,10 +693,14 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
+					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
+				);
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = HelloCpp;
 				PROVISIONING_PROFILE = "";
@@ -711,8 +717,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Danyi Feng (VE83T3M7CV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Danyi Feng (VE83T3M7CV)";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -734,10 +740,14 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
+					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
+				);
 				PRODUCT_NAME = HelloCpp;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
