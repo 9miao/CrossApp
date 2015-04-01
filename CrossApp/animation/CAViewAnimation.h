@@ -107,6 +107,8 @@ public:
 
     static bool areBeginAnimations();
     
+    static bool areBeginAnimationsWithID(const std::string& animationID);
+    
 protected:
 
     static CAViewAnimation* getInstance();

@@ -166,8 +166,10 @@ void CAViewAnimation::beginAnimations(const std::string& animationID, void* cont
 {
     CAViewAnimation::getInstance()->m_bBeginAnimations = true;
     CAViewAnimationModule* module = new CAViewAnimationModule();
-    module->autorelease();
+    module->animationID = animationID;
+    module->context = context;
     CAViewAnimation::getInstance()->m_vWillModules.pushBack(module);
+    module->release();
 }
 
 void CAViewAnimation::commitAnimations()
@@ -277,6 +279,38 @@ bool CAViewAnimation::areBeginAnimations()
     return CAViewAnimation::getInstance()->m_bBeginAnimations;
 }
 
+bool CAViewAnimation::areBeginAnimationsWithID(const std::string& animationID)
+{
+    bool bRet = false;
+    
+    CADeque<CAViewAnimationModule*>* willModule = &CAViewAnimation::getInstance()->m_vWillModules;
+    CADeque<CAViewAnimationModule*>::const_iterator itr = willModule->begin();
+    for (; itr!=willModule->end(); itr++)
+    {
+        if ((*itr)->animationID.compare(animationID) == 0)
+        {
+            bRet = true;
+            break;
+        }
+        
+    }
+    
+    if (bRet == false)
+    {
+        CAVector<CAViewAnimationModule*>* module = &CAViewAnimation::getInstance()->m_vModules;
+        CAVector<CAViewAnimationModule*>::const_iterator itr2 = module->begin();
+        for (; itr2!=module->end(); itr2++)
+        {
+            if ((*itr2)->animationID.compare(animationID) == 0)
+            {
+                bRet = true;
+                break;
+            }
+            
+        }
+    }
+    return bRet;
+}
 
 void CAViewAnimation::update(float dt)
 {

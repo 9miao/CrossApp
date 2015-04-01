@@ -991,6 +991,7 @@ void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(CAViewAnimation::areBeginAnimationsWithID("navigation_animation"));
     CC_RETURN_IF(m_pViewControllers.size() <= 1);
     
     float x = this->getView()->getBounds().size.width;
@@ -1007,14 +1008,14 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_bPopViewController)
     {
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("navigation_animation", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.02f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
         lastContainer->setFrameOrigin(CCPointZero);
         CAViewAnimation::commitAnimations();
         
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("navigation_animation2", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.03f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
@@ -1024,14 +1025,14 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     }
     else
     {
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("navigation_animation", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.03f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
         lastContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
         CAViewAnimation::commitAnimations();
         
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("navigation_animation2", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.02f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
