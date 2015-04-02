@@ -700,6 +700,7 @@ void CAScrollView::stopDeaccelerateScroll()
     CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     m_tInertia = CCPointZero;
     m_bDecelerating = false;
+    this->setAllowIntercepted(true);
 }
 
 void CAScrollView::startDeaccelerateScroll()
@@ -709,6 +710,7 @@ void CAScrollView::startDeaccelerateScroll()
     CAScheduler::unschedule(schedule_selector(CAScrollView::update), this);
     CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
     CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f);
+    this->setAllowIntercepted(false);
 }
 
 void CAScrollView::deaccelerateScrolling(float dt)

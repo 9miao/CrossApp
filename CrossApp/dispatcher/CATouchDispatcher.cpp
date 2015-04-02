@@ -55,6 +55,8 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
     {
         vector.push_back(responder);
         
+        CC_BREAK_IF(responder->isAllowIntercepted() == false);
+        
         CAResponder* nextResponder = NULL;
         
         if (CAView* view = dynamic_cast<CAView*>(responder))
