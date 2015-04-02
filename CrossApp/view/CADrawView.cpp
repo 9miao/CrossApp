@@ -1,6 +1,6 @@
 
 
-#include "CCDrawNode.h"
+#include "CADrawView.h"
 #include "support/CCPointExtension.h"
 #include "shaders/CAShaderCache.h"
 #include "CCGL.h"
@@ -74,9 +74,9 @@ static inline ccTex2F __t(const ccVertex2F &v)
 	return *(ccTex2F*)&v;
 }
 
-// implementation of CCDrawNode
+// implementation of CADrawView
 
-CCDrawNode::CCDrawNode()
+CADrawView::CADrawView()
 : m_uVao(0)
 , m_uVbo(0)
 , m_uBufferCapacity(0)
@@ -88,7 +88,7 @@ CCDrawNode::CCDrawNode()
     m_sBlendFunc.dst = CC_BLEND_DST;
 }
 
-CCDrawNode::~CCDrawNode()
+CADrawView::~CADrawView()
 {
     free(m_pBuffer);
     m_pBuffer = NULL;
@@ -104,9 +104,9 @@ CCDrawNode::~CCDrawNode()
 
 }
 
-CCDrawNode* CCDrawNode::create()
+CADrawView* CADrawView::create()
 {
-    CCDrawNode* pRet = new CCDrawNode();
+    CADrawView* pRet = new CADrawView();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -119,7 +119,7 @@ CCDrawNode* CCDrawNode::create()
     return pRet;
 }
 
-void CCDrawNode::ensureCapacity(unsigned int count)
+void CADrawView::ensureCapacity(unsigned int count)
 {
     if(m_nBufferCount + count > m_uBufferCapacity)
     {
@@ -128,7 +128,7 @@ void CCDrawNode::ensureCapacity(unsigned int count)
 	}
 }
 
-bool CCDrawNode::init()
+bool CADrawView::init()
 {
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
@@ -168,7 +168,7 @@ bool CCDrawNode::init()
     return true;
 }
 
-void CCDrawNode::render()
+void CADrawView::render()
 {
     if (m_bDirty)
     {
@@ -198,7 +198,7 @@ void CCDrawNode::render()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void CCDrawNode::draw()
+void CADrawView::draw()
 {
     CC_NODE_DRAW_SETUP();
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
@@ -206,7 +206,7 @@ void CCDrawNode::draw()
     render();
 }
 
-void CCDrawNode::drawDot(const CCPoint &pos, float radius, const CAColor4F &color)
+void CADrawView::drawDot(const CCPoint &pos, float radius, const CAColor4F &color)
 {
     unsigned int vertex_count = 2*3;
     ensureCapacity(vertex_count);
@@ -227,7 +227,7 @@ void CCDrawNode::drawDot(const CCPoint &pos, float radius, const CAColor4F &colo
 	m_bDirty = true;
 }
 
-void CCDrawNode::drawSegment(const CCPoint &from, const CCPoint &to, float radius, const CAColor4F &color)
+void CADrawView::drawSegment(const CCPoint &from, const CCPoint &to, float radius, const CAColor4F &color)
 {
     unsigned int vertex_count = 6*3;
     ensureCapacity(vertex_count);
@@ -300,7 +300,7 @@ void CCDrawNode::drawSegment(const CCPoint &from, const CCPoint &to, float radiu
 	m_bDirty = true;
 }
 
-void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const CAColor4F &fillColor, float borderWidth, const CAColor4F &borderColor)
+void CADrawView::drawPolygon(CCPoint *verts, unsigned int count, const CAColor4F &fillColor, float borderWidth, const CAColor4F &borderColor)
 {
     struct ExtrudeVerts {ccVertex2F offset, n;};
 	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
@@ -406,30 +406,30 @@ void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const CAColor4F
     free(extrude);
 }
 
-void CCDrawNode::clear()
+void CADrawView::clear()
 {
     m_nBufferCount = 0;
     m_bDirty = true;
 }
 
-ccBlendFunc CCDrawNode::getBlendFunc() const
+ccBlendFunc CADrawView::getBlendFunc() const
 {
     return m_sBlendFunc;
 }
 
-void CCDrawNode::setBlendFunc(const ccBlendFunc &blendFunc)
+void CADrawView::setBlendFunc(const ccBlendFunc &blendFunc)
 {
     m_sBlendFunc = blendFunc;
 }
 
 /** listen the event that coming to foreground on Android
  */
-void CCDrawNode::listenBackToForeground(CAObject *obj)
+void CADrawView::listenBackToForeground(CAObject *obj)
 {
     init();
 }
 
-void CCDrawNode::setContentSize(const CCSize& contentSize)
+void CADrawView::setContentSize(const CCSize& contentSize)
 {
     CAView::setContentSize(CCSize(0, 0));
 }

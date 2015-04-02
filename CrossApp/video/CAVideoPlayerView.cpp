@@ -215,7 +215,7 @@ void CAVideoPlayerView::visit()
     updateDraw();
 }
 
-#include "draw_nodes/CCDrawingPrimitives.h"
+#include "view/CADrawingPrimitives.h"
 void CAVideoPlayerView::draw()
 {
 //    CC_RETURN_IF(m_pobImage == NULL);

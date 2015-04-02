@@ -10,7 +10,7 @@
 #include "ccConfig.h"
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
-#include "draw_nodes/CCDrawingPrimitives.h"
+#include "view/CADrawingPrimitives.h"
 #include "shaders/CAShaderCache.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAGLProgram.h"

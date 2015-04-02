@@ -11,7 +11,7 @@
 #include "dispatcher/CATouch.h"
 #include "basics/CAApplication.h"
 #include "view/CAClippingView.h"
-#include "draw_nodes/CCDrawNode.h"
+#include "view/CADrawView.h"
 #include "view/CARenderImage.h"
 
 using namespace std;

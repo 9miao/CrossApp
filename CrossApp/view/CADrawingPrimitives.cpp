@@ -1,5 +1,5 @@
 
-#include "CCDrawingPrimitives.h"
+#include "CADrawingPrimitives.h"
 #include "ccTypes.h"
 #include "ccMacros.h"
 #include "CCGL.h"

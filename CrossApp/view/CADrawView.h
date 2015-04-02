@@ -1,21 +1,21 @@
 
 
-#ifndef __CCDRAWNODES_CCDRAW_NODE_H__
-#define __CCDRAWNODES_CCDRAW_NODE_H__
+#ifndef __CADrawViewS_CCDRAW_NODE_H__
+#define __CADrawViewS_CCDRAW_NODE_H__
 
 #include "view/CAView.h"
 #include "ccTypes.h"
 
 NS_CC_BEGIN
 
-/** CCDrawNode
+/** CADrawView
  Node that draws dots, segments and polygons.
  Faster than the "drawing primitives" since they it draws everything in one single batch.
  
  @since v2.1
  @lua NA
  */
-class CC_DLL CCDrawNode : public CAView
+class CC_DLL CADrawView : public CAView
 {
 protected:
     GLuint      m_uVao;
@@ -30,8 +30,8 @@ protected:
     bool            m_bDirty;
     
 public:
-    static CCDrawNode* create();
-    virtual ~CCDrawNode();
+    static CADrawView* create();
+    virtual ~CADrawView();
     
     virtual bool init();
     virtual void draw();
@@ -64,7 +64,7 @@ public:
      */
     void setBlendFunc(const ccBlendFunc &blendFunc);
     
-    CCDrawNode();
+    CADrawView();
 
     /** listen the event that coming to foreground on Android  
      * @js NA
@@ -76,6 +76,8 @@ private:
     void render();
 };
 
+CC_DEPRECATED_ATTRIBUTE typedef CADrawView CCDrawNode;
+
 NS_CC_END
 
-#endif // __CCDRAWNODES_CCDRAW_NODE_H__
+#endif // __CADrawViewS_CCDRAW_NODE_H__

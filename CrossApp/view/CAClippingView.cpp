@@ -6,7 +6,7 @@
 #include "shaders/CAShaderCache.h"
 #include "basics/CAApplication.h"
 #include "support/CCPointExtension.h"
-#include "draw_nodes/CCDrawingPrimitives.h"
+#include "view/CADrawingPrimitives.h"
 
 NS_CC_BEGIN
 

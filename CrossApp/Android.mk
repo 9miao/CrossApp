@@ -49,8 +49,6 @@ dispatcher/CAKeypadDelegate.cpp \
 dispatcher/CAKeypadDispatcher.cpp \
 dispatcher/CATouch.cpp \
 dispatcher/CATouchDispatcher.cpp \
-draw_nodes/CCDrawNode.cpp \
-draw_nodes/CCDrawingPrimitives.cpp \
 images/CAImage.cpp \
 images/CAImageCache.cpp \
 shaders/CATransformation.cpp \
@@ -98,6 +96,8 @@ view/CAPullToRefreshView.cpp \
 view/CATextView.cpp \
 view/CALabelStyle.cpp \
 view/CAWebView.cpp \
+view/CADrawView.cpp \
+view/CADrawingPrimitives.cpp \
 animation/CAViewAnimation.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \

@@ -498,12 +498,6 @@ void CATableView::reloadData()
         CCRect sectionHeaderRect = CCRect(0, y, width, m_nSectionHeaderHeights.at(i));
         CAView* sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
         
-        //CC_DEPRECATED_ATTRIBUTE
-        if (sectionHeaderView == NULL)
-        {
-            sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, i);
-        }
-        
         if (sectionHeaderView)
         {
             sectionHeaderView->setFrame(sectionHeaderRect);
@@ -526,12 +520,6 @@ void CATableView::reloadData()
         CCRect sectionFooterRect = CCRect(0, y, width, m_nSectionFooterHeights.at(i));
         
         CAView* sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
-        
-        //CC_DEPRECATED_ATTRIBUTE
-        if (sectionFooterView == NULL)
-        {
-            sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, i);
-        }
         
         if (sectionFooterView)
         {
@@ -792,17 +780,6 @@ bool CATableViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier
     this->setReuseIdentifier(reuseIdentifier);
     this->normalTableViewCell();
 
-    return true;
-}
-
-bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
-{
-    this->setDisplayRange(false);
-    this->setBackgroundView(CAView::create());
-    this->setColor(CAColor_clear);
-    this->setReuseIdentifier(reuseIdentifier);
-    this->normalTableViewCell();
-    
     return true;
 }
 

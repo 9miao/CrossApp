@@ -38,7 +38,7 @@ LOCAL_SHARED_LIBRARIES += cocos_ffmpeg_shared
 include $(BUILD_SHARED_LIBRARY)
 
 #$(call import-add-path,D:/CrossApp)
-#$(call import-add-path,D:/CrossApp/CrossApp/platform/third_party/android/prebuilt)
+#$(call import-add-path,D:/CrossApp/CrossApp/the_third_party/)
 
 $(call import-module,CrossApp)
 $(call import-module,CrossApp/the_third_party/curl/prebuilt/android)

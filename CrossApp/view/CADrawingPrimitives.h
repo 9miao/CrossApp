@@ -16,7 +16,6 @@ NS_CC_BEGIN
  * @{
  */
 
-class CCPointArray;
 
 /** Initializes the drawing primitives */
 void CC_DLL ccDrawInit();

@@ -92,10 +92,6 @@
 		04EAB0AF1956D75600198A8E /* CATouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0AA1956D74D00198A8E /* CATouch.h */; };
 		04EAB0B01956D75600198A8E /* CATouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0AB1956D74D00198A8E /* CATouchDispatcher.cpp */; };
 		04EAB0B11956D75600198A8E /* CATouchDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0AC1956D74D00198A8E /* CATouchDispatcher.h */; };
-		04EAB0B21956D75600198A8E /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0AE1956D74D00198A8E /* CCDrawingPrimitives.cpp */; };
-		04EAB0B31956D75600198A8E /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0AF1956D74D00198A8E /* CCDrawingPrimitives.h */; };
-		04EAB0B41956D75600198A8E /* CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0B01956D74D00198A8E /* CCDrawNode.cpp */; };
-		04EAB0B51956D75600198A8E /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0B11956D74D00198A8E /* CCDrawNode.h */; };
 		04EAB0B61956D75600198A8E /* CAImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0B31956D74D00198A8E /* CAImage.cpp */; };
 		04EAB0B71956D75600198A8E /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0B41956D74D00198A8E /* CAImage.h */; };
 		04EAB0B81956D75600198A8E /* CAImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0B51956D74D00198A8E /* CAImageCache.cpp */; };
@@ -272,6 +268,10 @@
 		B06A8D0019FF27990010A24C /* CALabelStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = B06A8CFE19FF27990010A24C /* CALabelStyle.h */; };
 		B074A8B71A722B5200F34F79 /* CAViewAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B074A8B51A722B5200F34F79 /* CAViewAnimation.cpp */; };
 		B074A8B81A722B5200F34F79 /* CAViewAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B074A8B61A722B5200F34F79 /* CAViewAnimation.h */; };
+		B07608451ACCDE6C0005F878 /* CADrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07608411ACCDE6C0005F878 /* CADrawingPrimitives.cpp */; };
+		B07608461ACCDE6C0005F878 /* CADrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = B07608421ACCDE6C0005F878 /* CADrawingPrimitives.h */; };
+		B07608471ACCDE6C0005F878 /* CADrawView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07608431ACCDE6C0005F878 /* CADrawView.cpp */; };
+		B07608481ACCDE6C0005F878 /* CADrawView.h in Headers */ = {isa = PBXBuildFile; fileRef = B07608441ACCDE6C0005F878 /* CADrawView.h */; };
 		B08F4BB519C7D2EF008DE306 /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BB219C7D2EF008DE306 /* ConvertUTF.cpp */; };
 		B08F4BB619C7D2EF008DE306 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = B08F4BB319C7D2EF008DE306 /* ConvertUTF.h */; };
 		B08F4BB719C7D2EF008DE306 /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BB419C7D2EF008DE306 /* ConvertUTFWrapper.cpp */; };
@@ -384,10 +384,6 @@
 		04EAA0AA1956D74D00198A8E /* CATouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATouch.h; sourceTree = "<group>"; };
 		04EAA0AB1956D74D00198A8E /* CATouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATouchDispatcher.cpp; sourceTree = "<group>"; };
 		04EAA0AC1956D74D00198A8E /* CATouchDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATouchDispatcher.h; sourceTree = "<group>"; };
-		04EAA0AE1956D74D00198A8E /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
-		04EAA0AF1956D74D00198A8E /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
-		04EAA0B01956D74D00198A8E /* CCDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawNode.cpp; sourceTree = "<group>"; };
-		04EAA0B11956D74D00198A8E /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
 		04EAA0B31956D74D00198A8E /* CAImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImage.cpp; sourceTree = "<group>"; };
 		04EAA0B41956D74D00198A8E /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
 		04EAA0B51956D74D00198A8E /* CAImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCache.cpp; sourceTree = "<group>"; };
@@ -567,6 +563,10 @@
 		B06A8CFE19FF27990010A24C /* CALabelStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALabelStyle.h; sourceTree = "<group>"; };
 		B074A8B51A722B5200F34F79 /* CAViewAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewAnimation.cpp; sourceTree = "<group>"; };
 		B074A8B61A722B5200F34F79 /* CAViewAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAViewAnimation.h; sourceTree = "<group>"; };
+		B07608411ACCDE6C0005F878 /* CADrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawingPrimitives.cpp; sourceTree = "<group>"; };
+		B07608421ACCDE6C0005F878 /* CADrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADrawingPrimitives.h; sourceTree = "<group>"; };
+		B07608431ACCDE6C0005F878 /* CADrawView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawView.cpp; sourceTree = "<group>"; };
+		B07608441ACCDE6C0005F878 /* CADrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADrawView.h; sourceTree = "<group>"; };
 		B08F4BB219C7D2EF008DE306 /* ConvertUTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTF.cpp; sourceTree = "<group>"; };
 		B08F4BB319C7D2EF008DE306 /* ConvertUTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertUTF.h; sourceTree = "<group>"; };
 		B08F4BB419C7D2EF008DE306 /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
@@ -632,7 +632,6 @@
 				04EAA0871956D74D00198A8E /* control */,
 				04EAA09A1956D74D00198A8E /* controller */,
 				04EAA0A01956D74D00198A8E /* dispatcher */,
-				04EAA0AD1956D74D00198A8E /* draw_nodes */,
 				04EAA0B21956D74D00198A8E /* images */,
 				04EAA0BF1956D74D00198A8E /* kazmath */,
 				04EAA0E21956D74D00198A8E /* platform */,
@@ -770,17 +769,6 @@
 				04EAA0AC1956D74D00198A8E /* CATouchDispatcher.h */,
 			);
 			path = dispatcher;
-			sourceTree = "<group>";
-		};
-		04EAA0AD1956D74D00198A8E /* draw_nodes */ = {
-			isa = PBXGroup;
-			children = (
-				04EAA0AE1956D74D00198A8E /* CCDrawingPrimitives.cpp */,
-				04EAA0AF1956D74D00198A8E /* CCDrawingPrimitives.h */,
-				04EAA0B01956D74D00198A8E /* CCDrawNode.cpp */,
-				04EAA0B11956D74D00198A8E /* CCDrawNode.h */,
-			);
-			path = draw_nodes;
 			sourceTree = "<group>";
 		};
 		04EAA0B21956D74D00198A8E /* images */ = {
@@ -1073,6 +1061,10 @@
 		04EAB03F1956D75500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B07608411ACCDE6C0005F878 /* CADrawingPrimitives.cpp */,
+				B07608421ACCDE6C0005F878 /* CADrawingPrimitives.h */,
+				B07608431ACCDE6C0005F878 /* CADrawView.cpp */,
+				B07608441ACCDE6C0005F878 /* CADrawView.h */,
 				B0A7150B1A43F56600A85FB9 /* CAWebView.cpp */,
 				B0A7150C1A43F56600A85FB9 /* CAWebView.h */,
 				B06A8CFD19FF27990010A24C /* CALabelStyle.cpp */,
@@ -1234,8 +1226,6 @@
 				04EAB0AD1956D75600198A8E /* CAProtocols.h in Headers */,
 				04EAB0AF1956D75600198A8E /* CATouch.h in Headers */,
 				04EAB0B11956D75600198A8E /* CATouchDispatcher.h in Headers */,
-				04EAB0B31956D75600198A8E /* CCDrawingPrimitives.h in Headers */,
-				04EAB0B51956D75600198A8E /* CCDrawNode.h in Headers */,
 				B01F64F91964FE2F005C14FC /* CADensityDpi.h in Headers */,
 				04EAB0B71956D75600198A8E /* CAImage.h in Headers */,
 				04EAB0B91956D75600198A8E /* CAImageCache.h in Headers */,
@@ -1327,7 +1317,9 @@
 				B01D4BF419A5947C0071F6A3 /* CADrawerController.h in Headers */,
 				04EABA9A1956D75B00198A8E /* ZipUtils.h in Headers */,
 				04EABA9E1956D75B00198A8E /* CABatchView.h in Headers */,
+				B07608481ACCDE6C0005F878 /* CADrawView.h in Headers */,
 				04EABAA01956D75B00198A8E /* CAClippingView.h in Headers */,
+				B07608461ACCDE6C0005F878 /* CADrawingPrimitives.h in Headers */,
 				04EABAA21956D75B00198A8E /* CAImageView.h in Headers */,
 				04EABAA41956D75B00198A8E /* CALabel.h in Headers */,
 				04EABAA61956D75B00198A8E /* CARenderImage.h in Headers */,
@@ -1408,6 +1400,7 @@
 				04EAB0671956D75600198A8E /* CAApplication.cpp in Sources */,
 				04EAB0691956D75600198A8E /* CAAutoreleasePool.cpp in Sources */,
 				04EAB06B1956D75600198A8E /* CACamera.cpp in Sources */,
+				B07608471ACCDE6C0005F878 /* CADrawView.cpp in Sources */,
 				B074A8B71A722B5200F34F79 /* CAViewAnimation.cpp in Sources */,
 				04EAB06D1956D75600198A8E /* CAFPSImages.c in Sources */,
 				04EAB06F1956D75600198A8E /* CAGeometry.cpp in Sources */,
@@ -1416,6 +1409,7 @@
 				04EAB0731956D75600198A8E /* CAResponder.cpp in Sources */,
 				04EAB0751956D75600198A8E /* CAScheduler.cpp in Sources */,
 				04EAB07F1956D75600198A8E /* CCArray.cpp in Sources */,
+				B07608451ACCDE6C0005F878 /* CADrawingPrimitives.cpp in Sources */,
 				04EAB0841956D75600198A8E /* CCDictionary.cpp in Sources */,
 				04EAB0891956D75600198A8E /* CCNS.cpp in Sources */,
 				04EAB08B1956D75600198A8E /* CCSet.cpp in Sources */,
@@ -1442,8 +1436,6 @@
 				04EAB0AE1956D75600198A8E /* CATouch.cpp in Sources */,
 				B02A776E19B82F9100C4A5EF /* CAStepper.cpp in Sources */,
 				04EAB0B01956D75600198A8E /* CATouchDispatcher.cpp in Sources */,
-				04EAB0B21956D75600198A8E /* CCDrawingPrimitives.cpp in Sources */,
-				04EAB0B41956D75600198A8E /* CCDrawNode.cpp in Sources */,
 				04EAB0B61956D75600198A8E /* CAImage.cpp in Sources */,
 				B0C512E619A3127100E6934B /* CAActivityIndicatorView.cpp in Sources */,
 				B01F650419657084005C14FC /* CACollectionView.cpp in Sources */,

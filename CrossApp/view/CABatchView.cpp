@@ -2,7 +2,7 @@
 #include "CABatchView.h"
 #include "ccConfig.h"
 #include "CAView.h"
-#include "draw_nodes/CCDrawingPrimitives.h"
+#include "view/CADrawingPrimitives.h"
 #include "images/CAImageCache.h"
 #include "support/CCPointExtension.h"
 #include "shaders/CAShaderCache.h"

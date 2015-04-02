@@ -1,7 +1,7 @@
 #include <string>
 #include "CAApplication.h"
 #include "CAFPSImages.h"
-#include "draw_nodes/CCDrawingPrimitives.h"
+#include "view/CADrawingPrimitives.h"
 #include "cocoa/CCNS.h"
 #include "view/CAWindow.h"
 #include "cocoa/CCArray.h"

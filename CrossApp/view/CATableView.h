@@ -83,16 +83,6 @@ public:
     {
         return 0;
     }
-    
-    CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section)
-    {
-        return NULL;
-    }
-    
-    CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, unsigned int section)
-    {
-        return NULL;
-    }
 };
 
 
@@ -306,10 +296,6 @@ public:
     CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
-    
-protected:
-    
-    CC_DEPRECATED_ATTRIBUTE virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
     
 protected:
 
