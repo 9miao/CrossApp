@@ -16,7 +16,7 @@ Bitmap::~Bitmap()
 void Bitmap::allocateBitmap()
 {
 	assert(m_data == NULL && m_width * m_hight > 0);
-	m_data = (CAColor4B*)malloc(m_width * m_hight * sizeof(CAColor4B));
+    m_data = static_cast<unsigned char*>(malloc(m_width * m_hight * sizeof(unsigned int)));
 };
 
 void Bitmap::resetBitmap()
@@ -38,26 +38,26 @@ bool Bitmap::isValid()
 	return m_width > 0 && m_hight >0 && hasData();
 }
 
-GLubyte Bitmap::getPixelLenth()
+unsigned long Bitmap::getPixelLenth()
 {
 	return m_width*m_hight;
 };
 
-const GLubyte* Bitmap::getRGBA()
+const unsigned char* Bitmap::getRGBA()
 {
 	if(m_data == NULL)
 	{
 		return NULL;
 	}
-	return (GLubyte *) m_data;
+	return m_data;
 }
 
 void Bitmap::eraseColor(const CAColor4B& color)
 {
-    unsigned int r, g, b;
+    unsigned short r, g, b, a = color.a;
     
 	// make rgb premultiplied
-	if (255 != color.a)
+	if (255 != a)
     {
 		r = AlphaMul(color.r, color.a);
 		g = AlphaMul(color.g, color.a);
@@ -70,10 +70,13 @@ void Bitmap::eraseColor(const CAColor4B& color)
         b = color.b;
     }
 
-    CAColor4B paintColor = ccc4(r, g, b, color.a);
-    
-	for (GLubyte i = 0; i < m_width * m_hight; i++)
-		*(m_data + i) = paintColor;
+	for (unsigned long i = 0; i < m_width * m_hight * 4; i+=4)
+    {
+        *(m_data + i * 4) = r;
+        *(m_data + i * 4 + 1) = g;
+        *(m_data + i * 4 + 2) = b;
+        *(m_data + i * 4 + 3) = a;
+    }
 }
 
 Bitmap* Bitmap::getDebugBitmap()
@@ -83,7 +86,7 @@ Bitmap* Bitmap::getDebugBitmap()
 	bitmap->m_hight = 64;
 
 	bitmap->allocateBitmap();
-	for(GLubyte hight =0; hight < bitmap->m_hight; hight++ )
+	for(unsigned int hight =0; hight < bitmap->m_hight; hight++ )
 	{
 		CAColor4B color ;
 		color.a = 255;
@@ -106,10 +109,13 @@ Bitmap* Bitmap::getDebugBitmap()
 			color.b = 255;
 		}
 
-		for(GLubyte width = 0; width < bitmap->m_width; width++)
+		for(unsigned int width = 0; width < bitmap->m_width; width++)
 		{
-			CAColor4B& colorPixel = bitmap->m_data[hight*bitmap->m_width + width];
-			colorPixel = color;
+            int index = (hight * bitmap->m_width + width) * 4;
+            bitmap->m_data[index] = color.r;
+            bitmap->m_data[index + 1] = color.r;
+            bitmap->m_data[index + 2] = color.r;
+            bitmap->m_data[index + 3] = color.r;
 		}
 
 	}
@@ -117,9 +123,9 @@ Bitmap* Bitmap::getDebugBitmap()
 	return bitmap;
 }
 
-CAColor4B* Bitmap::getAddr(int left, int top)
+unsigned char* Bitmap::getAddr(int left, int top, int offset)
 {
-	return m_data + top * m_width + left;
+	return &m_data[(top * m_width + left) * 4 + offset];
 }
 
 void Bitmap::swap(Bitmap* toSwap)

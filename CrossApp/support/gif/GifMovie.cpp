@@ -141,16 +141,18 @@ bool GIFMovie::onSetTime(GLubyte time)
     return true;
 }
 
-static void copyLine(CAColor4B* dst, const unsigned char* src, const ColorMapObject* cmap,
+static void copyLine(unsigned char* dst_r, unsigned char* dst_g, unsigned char* dst_b, unsigned char* dst_a, const unsigned char* src, const ColorMapObject* cmap,
                     int transparent, int width)
 {
-	for (; width > 0; width--, src++, dst++) {
-		if (*src != transparent) {
+	for (; width > 0; width--, src++, dst_r+=4,dst_g+=4,dst_b+=4,dst_a+=4)
+    {
+		if (*src != transparent)
+        {
 			const GifColorType& col = cmap->Colors[*src];
-            dst->r = col.Red;
-            dst->g = col.Green;
-            dst->b = col.Blue;
-            dst->a = 0xFF;
+            *dst_r = col.Red;
+            *dst_g = col.Green;
+            *dst_b = col.Blue;
+            *dst_a = 0xFF;
 		}
 	}
 }
@@ -161,7 +163,11 @@ static void blitNormal(Bitmap* bm, const SavedImage* frame, const ColorMapObject
 	GifWord width = bm->m_width;
 	GifWord height = bm->m_hight;
     const unsigned char* src = (unsigned char*)frame->RasterBits;
-	CAColor4B* dst = bm->getAddr(frame->ImageDesc.Left, frame->ImageDesc.Top);
+    
+    unsigned char* r = bm->getAddr(frame->ImageDesc.Left, frame->ImageDesc.Top, 0);
+    unsigned char* g = bm->getAddr(frame->ImageDesc.Left, frame->ImageDesc.Top, 1);
+    unsigned char* b = bm->getAddr(frame->ImageDesc.Left, frame->ImageDesc.Top, 2);
+    unsigned char* a = bm->getAddr(frame->ImageDesc.Left, frame->ImageDesc.Top, 3);
 
     GifWord copyWidth = frame->ImageDesc.Width;
     if (frame->ImageDesc.Left + copyWidth > width) {
@@ -173,10 +179,14 @@ static void blitNormal(Bitmap* bm, const SavedImage* frame, const ColorMapObject
         copyHeight = height - frame->ImageDesc.Top;
     }
 
-    for (; copyHeight > 0; copyHeight--) {
-        copyLine(dst, src, cmap, transparent, copyWidth);
+    for (; copyHeight > 0; copyHeight--)
+    {
+        copyLine(r,g,b,a, src, cmap, transparent, copyWidth);
         src += frame->ImageDesc.Width;
-        dst += width;
+        r += width;
+        g += width;
+        b += width;
+        a += width;
     }
 }
  
@@ -185,22 +195,32 @@ static void fillRect(Bitmap* bm, GifWord left, GifWord top, GifWord width, GifWo
 {
 	int bmWidth = bm->m_width;
 	int bmHeight = bm->m_hight;
-	CAColor4B* dst = bm->getAddr(left, top);
+    
+    unsigned char* r = bm->getAddr(left, top, 0);
+    unsigned char* g = bm->getAddr(left, top, 1);
+    unsigned char* b = bm->getAddr(left, top, 2);
+    unsigned char* a = bm->getAddr(left, top, 3);
+
 	GifWord copyWidth = width;
-    if (left + copyWidth > bmWidth) {
+    if (left + copyWidth > bmWidth)
+    {
         copyWidth = bmWidth - left;
     }
  
     GifWord copyHeight = height;
-    if (top + copyHeight > bmHeight) {
+    if (top + copyHeight > bmHeight)
+    {
         copyHeight = bmHeight - top;
     }
  
 	for (; copyHeight > 0; copyHeight--)
 	{
-		for(int wIndex = 0; wIndex < bmWidth; wIndex++, dst++)
+		for(int wIndex = 0; wIndex < bmWidth; wIndex++, r+=4,g+=4,b+=4,a+=4)
 		{
-			*dst = col;
+			*r = col.r;
+            *g = col.r;
+            *b = col.r;
+            *a = col.r;
 		}
 	}
 }
@@ -318,7 +338,7 @@ static void disposeFrameIfNeeded(Bitmap* bm, const SavedImage* cur, const SavedI
  
     // Save current image if next frame's disposal method == 3
 	if (nextDisposal == 3)
-		memcpy(backup->getAddr(0,0), bm->getAddr(0,0), bm->getPixelLenth() * sizeof(CAColor4B));
+		memcpy(backup->getAddr(0,0,0), bm->getAddr(0,0,0), bm->getPixelLenth() * sizeof(unsigned int));
 }
 
 bool GIFMovie::onGetBitmap(Bitmap* bm)

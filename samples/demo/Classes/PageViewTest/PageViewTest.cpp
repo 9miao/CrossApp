@@ -31,15 +31,13 @@ void PageViewTest::viewDidLoad()
 	pageViewTest->setViews(_view);
 	this->getView()->addSubview(pageViewTest);
 
-	pageControl = CAPageControl::createWithCenter(CADipRect(size.width*0.5,size.height*0.5,100,50));
-	//pageControl->init();
+	pageControl = CAPageControl::createWithCenter(CADipRect(size.width*0.5, 50, 100, 50));
 	pageControl->setNumberOfPages(_view.size());
-	//pageControl->setPageIndicatorTintColor(CAColor_gray);
-	//pageControl->setCurrentPageIndicatorTintColor(CAColor_green);
-	//pageControl->setPageIndicatorImage(CAImage::create("source_material/ex1.png"));
-	//pageControl->setCurrIndicatorImage(CAImage::create("source_material/ex2.png"));
-	//this->getView()->addSubview(pageControl);
-	pageControl->insertSubview(pageControl,5);
+	pageControl->setPageIndicatorTintColor(CAColor_gray);
+	pageControl->setCurrentPageIndicatorTintColor(CAColor_green);
+	pageControl->setPageIndicatorImage(CAImage::create("source_material/ex1.png"));
+	pageControl->setCurrIndicatorImage(CAImage::create("source_material/ex2.png"));
+	this->getView()->addSubview(pageControl);
 }
 
 
@@ -50,24 +48,13 @@ void PageViewTest::pageViewDidBeginTurning(CAPageView* pageView)
 
 void PageViewTest::pageViewDidEndTurning(CAPageView* pageView)
 {
-	//pageControl->setCurrentPage(pageViewTest->getCurrPage());
+	pageControl->setCurrentPage(pageView->getCurrPage());
+    pageControl->updateCurrentPageDisplay();
 }
 
 void PageViewTest::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point)
 {
-	//CAWindow* window = CAApplication::getApplication()->getRootWindow();
-	//CADrawerController* drawer = (CADrawerController*)window->getRootViewController();
-	//CANavigationController* nav = (CANavigationController*)drawer->getRightViewController();
-	//if (!fullScreen)
-	//{
-	//	nav->setNavigationBarHidden(true, true);
-	//	fullScreen = true;
-	//}
-	//else
-	//{
-	//	nav->setNavigationBarHidden(false, true);
-	//	fullScreen = false;
-	//}
+
 }
 
 void PageViewTest::viewDidUnload()

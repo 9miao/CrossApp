@@ -32,9 +32,6 @@ CAWebView::~CAWebView()
 	CC_SAFE_DELETE(_impl);
 }
 
-///栗元峰傻乎乎的创建方法
-///一个笨笨的参数
-///返回各种逗比视图
 CAWebView *CAWebView::createWithFrame(const CCRect& rect)
 {
 	CAWebView* webView = new CAWebView();
@@ -61,7 +58,7 @@ CAWebView *CAWebView::createWithCenter(const CCRect& rect)
 
 bool CAWebView::init()
 {
-    CAScheduler::schedule(schedule_selector(CAWebViewImpl::update), _impl, 1/60.0f);
+    CAScheduler::schedule(schedule_selector(CAWebView::update), this, 1/60.0f);
     
     return true;
 }
@@ -153,11 +150,18 @@ void CAWebView::draw()
 	}
 }
 
-
 void CAWebView::setVisible(bool visible)
 {
 	CAView::setVisible(visible);
 	_impl->setVisible(visible);
+}
+
+void CAWebView::update(float dt)
+{
+    if (m_bDirty)
+    {
+        _impl->update(dt);
+    }
 }
 
 NS_CC_END

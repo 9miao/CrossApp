@@ -596,6 +596,7 @@ void CATabBar::showSelectedBackGround()
             btn->setBackGroundViewForState(CAControlStateSelected,
                                            CAView::createWithColor(m_sSelectedBackGroundColor));
         }
+        btn->setAllowsSelected(true);
     }
 }
 

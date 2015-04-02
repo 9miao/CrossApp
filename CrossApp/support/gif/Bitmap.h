@@ -16,9 +16,9 @@ class CC_DLL Bitmap
 
 public:
 	
-	GLubyte m_width;
+	unsigned int m_width;
     
-	GLubyte m_hight;
+	unsigned int m_hight;
 
 	Bitmap();
     
@@ -32,11 +32,11 @@ public:
     
 	bool isValid();
     
-	GLubyte getPixelLenth();
+	unsigned long getPixelLenth();
     
-	const GLubyte* getRGBA();
+	const unsigned char* getRGBA();
     
-	CAColor4B* getAddr(int left, int top);
+	unsigned char* getAddr(int left, int top, int offset);
     
 	void swap(Bitmap*);
     
@@ -46,14 +46,14 @@ public:
     
 private:
     
-	CAColor4B* m_data;
+	unsigned char* m_data;
 };
 
 struct FrameData
 {
-	GLubyte m_duration;
-	GLubyte m_index;
-	FrameData(GLubyte duration, GLubyte index)
+	unsigned int m_duration;
+	unsigned int m_index;
+	FrameData(unsigned int duration, unsigned int index)
 	{
 		m_duration = duration;
 		m_index = index;

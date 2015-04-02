@@ -119,12 +119,14 @@ public:
 
 	void showNativeWeb();
     
+    virtual void update(float dt);
+    
 	virtual void draw();
 
 	virtual void setVisible(bool visible);
     
 	CC_SYNTHESIZE(CAWebViewDelegate*, m_pWebViewDelegate, WebViewDelegate);
-
+    
 private:
     
     CAWebViewImpl *_impl;
