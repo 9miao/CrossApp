@@ -21,6 +21,22 @@
 温馨提示：
 本次更新由于改动较大，项目升级引擎建议重新创建工程并导入项目代码，否则会出现无法编译的问题
 
+
+#### CrossApp 1.1.0 Update:  
+
+#####1. Fixed CASegmentedControl breakdown bug
+#####2. Fixed CAAlertView displays layers and its clipping bug
+#####3. Fixed bug that text ‘\n’ is wrong displayed
+#####4. Animation system newly added functionalities: more animation plays and animation play backward
+#####5. Added CAImageView’s functionality that plays sequential frames
+#####6. Rewrited CAImage to increase image read efficiency
+#####7. Fixed navigationController bug when users back to previous interface by multi-touch
+#####8. Optimized touch distributed system bug
+
+Note:
+Due to the massive overhaul of this update, we advise you to create a new project and import project codes when updating your project engine, otherwise compiling errors will appear.
+
+
 **********************************************************************************
 
 #### CrossApp 1.0.2 更新内容：  
