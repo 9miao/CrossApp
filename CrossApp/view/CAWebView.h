@@ -135,6 +135,10 @@ private:
     
     CAImageView* m_pImageView;
     
+    CCPoint m_obLastPoint;
+    
+    CCSize m_obLastContentSize;
+    
 	friend class CAWebViewImpl;
     
 };

@@ -1,6 +1,7 @@
 
 #include "CAWebView.h"
 #include "basics/CAScheduler.h"
+#include "basics/CAApplication.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "platform/ios/CAWebViewImpl.h"
@@ -23,6 +24,8 @@ CAWebView::CAWebView()
 , m_bHideNativeWeCmd(false)
 , m_pWebViewDelegate(NULL)
 , m_pImageView(NULL)
+, m_obLastPoint(CCPointZero)
+, m_obLastContentSize(CCSizeZero)
 {
     
 }
@@ -158,10 +161,17 @@ void CAWebView::setVisible(bool visible)
 
 void CAWebView::update(float dt)
 {
-    if (m_bDirty)
+    do
     {
+        CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
+        CCPoint point = this->convertToWorldSpace(m_obPoint);
+        CCSize contentSize = CCSizeApplyAffineTransform(m_obContentSize, worldToNodeTransform());
+        CC_BREAK_IF(m_obLastPoint.equals(point) && m_obLastContentSize.equals(contentSize));
+        m_obLastPoint = point;
+        m_obLastContentSize = contentSize;
         _impl->update(dt);
     }
+    while (0);
 }
 
 NS_CC_END

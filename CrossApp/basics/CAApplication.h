@@ -257,6 +257,8 @@ public:
     
     float getContentScaleFactor(void);
 
+    bool isDrawing() {return (m_nDrawCount > 0);}
+    
 public:
 
     /** CCActionManager associated with this director
