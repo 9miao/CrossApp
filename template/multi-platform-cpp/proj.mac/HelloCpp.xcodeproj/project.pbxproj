@@ -47,7 +47,7 @@
 		B0621C311AC3DCB2005EBCA7 /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C2D1AC3DCB2005EBCA7 /* RootWindow.cpp */; };
 		B0621C351AC3DCCA005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621C321AC3DCCA005EBCA7 /* fonts */; };
 		B0621C371AC3DCCA005EBCA7 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B0621C341AC3DCCA005EBCA7 /* source_material */; };
-		B0621C391AC3DCD1005EBCA7 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = B0621C381AC3DCD1005EBCA7 /* HelloWorld.png */; };
+		B09FC0BC1AD3A25F0009C2D7 /* r in Resources */ = {isa = PBXBuildFile; fileRef = B09FC0BB1AD3A25F0009C2D7 /* r */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,7 +148,7 @@
 		B0621C2E1AC3DCB2005EBCA7 /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
 		B0621C321AC3DCCA005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B0621C341AC3DCCA005EBCA7 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
-		B0621C381AC3DCD1005EBCA7 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
+		B09FC0BB1AD3A25F0009C2D7 /* r */ = {isa = PBXFileReference; lastKnownFileType = folder; path = r; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -435,7 +435,7 @@
 		B04C0BBA19011F33009854FD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B0621C381AC3DCD1005EBCA7 /* HelloWorld.png */,
+				B09FC0BB1AD3A25F0009C2D7 /* r */,
 				B0621C321AC3DCCA005EBCA7 /* fonts */,
 				B0621C341AC3DCCA005EBCA7 /* source_material */,
 			);
@@ -518,8 +518,8 @@
 				41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */,
 				B0621C351AC3DCCA005EBCA7 /* fonts in Resources */,
 				41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */,
-				B0621C391AC3DCD1005EBCA7 /* HelloWorld.png in Resources */,
 				B0621C371AC3DCCA005EBCA7 /* source_material in Resources */,
+				B09FC0BC1AD3A25F0009C2D7 /* r in Resources */,
 				B04C0BB719011ED8009854FD /* json_valueiterator.inl in Resources */,
 				B04C0BB919011ED8009854FD /* sconscript in Resources */,
 			);

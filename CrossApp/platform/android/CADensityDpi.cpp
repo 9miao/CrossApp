@@ -12,7 +12,7 @@ float CADensityDpi::getDensityDpi()
     {
         dpi = getDPIJNI();
     }
-    return 320;
+    return dpi;
 }
 
 CADeviceIdiom CADensityDpi::getIdiom()

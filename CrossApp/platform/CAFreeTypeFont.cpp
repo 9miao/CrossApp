@@ -1032,11 +1032,6 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 		path = lowerCase;
 	}
 
-    if (std::string::npos == lowerCase.find(".ttf"))
-    {
-        path += ".ttf";
-    }
-
 	std::map<std::string, FontBufferInfo>::iterator ittFontNames = s_fontsNames.find(path.c_str());
 	if (ittFontNames != s_fontsNames.end())
 	{

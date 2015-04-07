@@ -103,7 +103,7 @@ namespace
         int offset;
     }tImageSource;
     
-    static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
+    void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
     {
         tImageSource* isource = (tImageSource*)png_get_io_ptr(png_ptr);
         
@@ -221,13 +221,565 @@ namespace
         return 0;
     }
     
-    static void tiffUnmapProc(thandle_t fd, void* base, toff_t size)
+    void tiffUnmapProc(thandle_t fd, void* base, toff_t size)
     {
         CC_UNUSED_PARAM(fd);
         CC_UNUSED_PARAM(base);
         CC_UNUSED_PARAM(size);
     }
 }
+
+// IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBB
+void convertI8ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i=0; i < dataLen; ++i)
+    {
+        *outData++ = data[i];     //R
+        *outData++ = data[i];     //G
+        *outData++ = data[i];     //B
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBB
+void convertAI88ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *outData++ = data[i];     //R
+        *outData++ = data[i];     //G
+        *outData++ = data[i];     //B
+    }
+}
+
+// IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBBAAAAAAAA
+void convertI8ToRGBA8888(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0; i < dataLen; ++i)
+    {
+        *outData++ = data[i];     //R
+        *outData++ = data[i];     //G
+        *outData++ = data[i];     //B
+        *outData++ = 0xFF;        //A
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
+void convertAI88ToRGBA8888(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *outData++ = data[i];     //R
+        *outData++ = data[i];     //G
+        *outData++ = data[i];     //B
+        *outData++ = data[i + 1]; //A
+    }
+}
+
+// IIIIIIII -> RRRRRGGGGGGBBBBB
+void convertI8ToRGB565(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0; i < dataLen; ++i)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+        | (data[i] & 0x00FC) << 3         //G
+        | (data[i] & 0x00F8) >> 3;        //B
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRGGGGGGBBBBB
+void convertAI88ToRGB565(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+        | (data[i] & 0x00FC) << 3         //G
+        | (data[i] & 0x00F8) >> 3;        //B
+    }
+}
+
+// IIIIIIII -> RRRRGGGGBBBBAAAA
+void convertI8ToRGBA4444(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0; i < dataLen; ++i)
+    {
+        *out16++ = (data[i] & 0x00F0) << 8    //R
+        | (data[i] & 0x00F0) << 4             //G
+        | (data[i] & 0x00F0)                  //B
+        | 0x000F;                             //A
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRGGGGBBBBAAAA
+void convertAI88ToRGBA4444(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *out16++ = (data[i] & 0x00F0) << 8    //R
+        | (data[i] & 0x00F0) << 4             //G
+        | (data[i] & 0x00F0)                  //B
+        | (data[i+1] & 0x00F0) >> 4;          //A
+    }
+}
+
+// IIIIIIII -> RRRRRGGGGGBBBBBA
+void convertI8ToRGB5A1(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (int i = 0; i < dataLen; ++i)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+        | (data[i] & 0x00F8) << 3         //G
+        | (data[i] & 0x00F8) >> 2         //B
+        | 0x0001;                         //A
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> RRRRRGGGGGBBBBBA
+void convertAI88ToRGB5A1(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+        | (data[i] & 0x00F8) << 3         //G
+        | (data[i] & 0x00F8) >> 2         //B
+        | (data[i + 1] & 0x0080) >> 7;    //A
+    }
+}
+
+// IIIIIIII -> IIIIIIIIAAAAAAAA
+void convertI8ToAI88(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0; i < dataLen; ++i)
+    {
+        *out16++ = 0xFF00     //A
+        | data[i];            //I
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> AAAAAAAA
+void convertAI88ToA8(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 1; i < dataLen; i += 2)
+    {
+        *outData++ = data[i]; //A
+    }
+}
+
+// IIIIIIIIAAAAAAAA -> IIIIIIII
+void convertAI88ToI8(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0, l = dataLen - 1; i < l; i += 2)
+    {
+        *outData++ = data[i]; //R
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
+void convertRGB888ToRGBA8888(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *outData++ = data[i];         //R
+        *outData++ = data[i + 1];     //G
+        *outData++ = data[i + 2];     //B
+        *outData++ = 0xFF;            //A
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBB
+void convertRGBA8888ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0, l = dataLen - 3; i < l; i += 4)
+    {
+        *outData++ = data[i];         //R
+        *outData++ = data[i + 1];     //G
+        *outData++ = data[i + 2];     //B
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGGBBBBB
+void convertRGB888ToRGB565(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+        | (data[i + 1] & 0x00FC) << 3     //G
+        | (data[i + 2] & 0x00F8) >> 3;    //B
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRGGGGGGBBBBB
+void convertRGBA8888ToRGB565(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0, l = dataLen - 3; i < l; i += 4)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+        | (data[i + 1] & 0x00FC) << 3     //G
+        | (data[i + 2] & 0x00F8) >> 3;    //B
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIII
+void convertRGB888ToI8(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *outData++ = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> IIIIIIII
+void convertRGBA8888ToI8(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0, l = dataLen - 3; i < l; i += 4)
+    {
+        *outData++ = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> AAAAAAAA
+void convertRGBA8888ToA8(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0, l = dataLen -3; i < l; i += 4)
+    {
+        *outData++ = data[i + 3]; //A
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIIIAAAAAAAA
+void convertRGB888ToAI88(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *outData++ = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+        *outData++ = 0xFF;
+    }
+}
+
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> IIIIIIIIAAAAAAAA
+void convertRGBA8888ToAI88(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    for (unsigned long i = 0, l = dataLen - 3; i < l; i += 4)
+    {
+        *outData++ = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114 + 500) / 1000;  //I =  (R*299 + G*587 + B*114 + 500) / 1000
+        *outData++ = data[i + 3];
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRGGGGBBBBAAAA
+void convertRGB888ToRGBA4444(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *out16++ = ((data[i] & 0x00F0) << 8           //R
+                    | (data[i + 1] & 0x00F0) << 4     //G
+                    | (data[i + 2] & 0xF0)            //B
+                    |  0x0F);                         //A
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRGGGGBBBBAAAA
+void convertRGBA8888ToRGBA4444(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0, l = dataLen - 3; i < l; i += 4)
+    {
+        *out16++ = (data[i] & 0x00F0) << 8    //R
+        | (data[i + 1] & 0x00F0) << 4         //G
+        | (data[i + 2] & 0xF0)                //B
+        |  (data[i + 3] & 0xF0) >> 4;         //A
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGBBBBBA
+void convertRGB888ToRGB5A1(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+        | (data[i + 1] & 0x00F8) << 3     //G
+        | (data[i + 2] & 0x00F8) >> 2     //B
+        |  0x01;                          //A
+    }
+}
+
+// RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGBBBBBA
+void convertRGBA8888ToRGB5A1(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
+{
+    unsigned short* out16 = (unsigned short*)outData;
+    for (unsigned long i = 0, l = dataLen - 2; i < l; i += 4)
+    {
+        *out16++ = (data[i] & 0x00F8) << 8    //R
+        | (data[i + 1] & 0x00F8) << 3     //G
+        | (data[i + 2] & 0x00F8) >> 2     //B
+        |  (data[i + 3] & 0x0080) >> 7;   //A
+    }
+}
+
+CAImage::PixelFormat convertI8ToFormat(const unsigned char* data, unsigned long dataLen,  CAImage::PixelFormat format, unsigned char** outData, unsigned long* outDataLen)
+{
+    switch (format)
+    {
+        case CAImage::PixelFormat_RGBA8888:
+            *outDataLen = dataLen*4;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertI8ToRGBA8888(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGB888:
+            *outDataLen = dataLen*3;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertI8ToRGB888(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGB565:
+            *outDataLen = dataLen*2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertI8ToRGB565(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_AI88:
+            *outDataLen = dataLen*2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertI8ToAI88(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGBA4444:
+            *outDataLen = dataLen*2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertI8ToRGBA4444(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGB5A1:
+            *outDataLen = dataLen*2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertI8ToRGB5A1(data, dataLen, *outData);
+            break;
+        default:
+            // unsupport convertion or don't need to convert
+            if (format != CAImage::PixelFormat_Default && format != CAImage::PixelFormat_I8)
+            {
+                CCLOG("Can not convert image format CAImage::PixelFormat_I8 to format ID:%d, we will use it's origin format CAImage::PixelFormat_I8", format);
+            }
+            
+            *outData = (unsigned char*)data;
+            *outDataLen = dataLen;
+            return CAImage::PixelFormat_I8;
+    }
+    
+    return format;
+}
+
+CAImage::PixelFormat convertAI88ToFormat(const unsigned char* data, unsigned long dataLen,  CAImage::PixelFormat format, unsigned char** outData, unsigned long* outDataLen)
+{
+    switch (format)
+    {
+        case CAImage::PixelFormat_RGBA8888:
+            *outDataLen = dataLen*2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertAI88ToRGBA8888(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGB888:
+            *outDataLen = dataLen/2*3;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertAI88ToRGB888(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGB565:
+            *outDataLen = dataLen;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertAI88ToRGB565(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_A8:
+            *outDataLen = dataLen/2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertAI88ToA8(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_I8:
+            *outDataLen = dataLen/2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertAI88ToI8(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGBA4444:
+            *outDataLen = dataLen;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertAI88ToRGBA4444(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGB5A1:
+            *outDataLen = dataLen;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertAI88ToRGB5A1(data, dataLen, *outData);
+            break;
+        default:
+            // unsupport convertion or don't need to convert
+            if (format != CAImage::PixelFormat_Default && format != CAImage::PixelFormat_AI88)
+            {
+                CCLOG("Can not convert image format CAImage::PixelFormat_AI88 to format ID:%d, we will use it's origin format CAImage::PixelFormat_AI88", format);
+            }
+            
+            *outData = (unsigned char*)data;
+            *outDataLen = dataLen;
+            return CAImage::PixelFormat_AI88;
+            break;
+    }
+    
+    return format;
+}
+
+CAImage::PixelFormat convertRGB888ToFormat(const unsigned char* data, unsigned long dataLen, CAImage::PixelFormat format, unsigned char** outData, unsigned long* outDataLen)
+{
+    switch (format)
+    {
+        case CAImage::PixelFormat_RGBA8888:
+            *outDataLen = dataLen/3*4;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGB888ToRGBA8888(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGB565:
+            *outDataLen = dataLen/3*2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGB888ToRGB565(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_I8:
+            *outDataLen = dataLen/3;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGB888ToI8(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_AI88:
+            *outDataLen = dataLen/3*2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGB888ToAI88(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGBA4444:
+            *outDataLen = dataLen/3*2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGB888ToRGBA4444(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGB5A1:
+            *outDataLen = dataLen;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGB888ToRGB5A1(data, dataLen, *outData);
+            break;
+        default:
+            // unsupport convertion or don't need to convert
+            if (format != CAImage::PixelFormat_Default && format != CAImage::PixelFormat_RGB888)
+            {
+                CCLOG("Can not convert image format CAImage::PixelFormat_RGB888 to format ID:%d, we will use it's origin format CAImage::PixelFormat_RGB888", format);
+            }
+            
+            *outData = (unsigned char*)data;
+            *outDataLen = dataLen;
+            return CAImage::PixelFormat_RGB888;
+    }
+    return format;
+}
+
+CAImage::PixelFormat convertRGBA8888ToFormat(const unsigned char* data, unsigned long dataLen, CAImage::PixelFormat format, unsigned char** outData, unsigned long* outDataLen)
+{
+    
+    switch (format)
+    {
+        case CAImage::PixelFormat_RGB888:
+            *outDataLen = dataLen/4*3;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGBA8888ToRGB888(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGB565:
+            *outDataLen = dataLen/2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGBA8888ToRGB565(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_A8:
+            *outDataLen = dataLen/4;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGBA8888ToA8(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_I8:
+            *outDataLen = dataLen/4;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGBA8888ToI8(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_AI88:
+            *outDataLen = dataLen/2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGBA8888ToAI88(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGBA4444:
+            *outDataLen = dataLen/2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGBA8888ToRGBA4444(data, dataLen, *outData);
+            break;
+        case CAImage::PixelFormat_RGB5A1:
+            *outDataLen = dataLen/2;
+            *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+            convertRGBA8888ToRGB5A1(data, dataLen, *outData);
+            break;
+        default:
+            // unsupport convertion or don't need to convert
+            if (format != CAImage::PixelFormat_Default && format != CAImage::PixelFormat_RGBA8888)
+            {
+                CCLOG("Can not convert image format CAImage::PixelFormat_RGBA8888 to format ID:%d, we will use it's origin format CAImage::PixelFormat_RGBA8888", format);
+            }
+            
+            *outData = (unsigned char*)data;
+            *outDataLen = dataLen;
+            return CAImage::PixelFormat_RGBA8888;
+    }
+    
+    return format;
+}
+
+/*
+ convert map:
+ 1.CAImage::PixelFormat_RGBA8888
+ 2.CAImage::PixelFormat_RGB888
+ 3.CAImage::PixelFormat_RGB565
+ 4.CAImage::PixelFormat_A8
+ 5.CAImage::PixelFormat_I8
+ 6.CAImage::PixelFormat_AI88
+ 7.CAImage::PixelFormat_RGBA4444
+ 8.CAImage::PixelFormat_RGB5A1
+ 
+ gray(5) -> 1235678
+ gray alpha(6) -> 12345678
+ rgb(2) -> 1235678
+ rgba(1) -> 12345678
+ 
+ */
+CAImage::PixelFormat convertDataToFormat(const unsigned char* data, unsigned long dataLen, CAImage::PixelFormat originFormat, CAImage::PixelFormat format, unsigned char** outData, unsigned long* outDataLen)
+{
+    // don't need to convert
+    if (format == originFormat || format == CAImage::PixelFormat_Default)
+    {
+        *outData = (unsigned char*)data;
+        *outDataLen = dataLen;
+        return originFormat;
+    }
+    
+    switch (originFormat)
+    {
+        case CAImage::PixelFormat_I8:
+            return convertI8ToFormat(data, dataLen, format, outData, outDataLen);
+        case CAImage::PixelFormat_AI88:
+            return convertAI88ToFormat(data, dataLen, format, outData, outDataLen);
+        case CAImage::PixelFormat_RGB888:
+            return convertRGB888ToFormat(data, dataLen, format, outData, outDataLen);
+        case CAImage::PixelFormat_RGBA8888:
+            return convertRGBA8888ToFormat(data, dataLen, format, outData, outDataLen);
+        default:
+            CCLOG("unsupport convert for format %d to format %d", originFormat, format);
+            *outData = (unsigned char*)data;
+            *outDataLen = dataLen;
+            return originFormat;
+    }
+}
+
+
 
 //CLASS IMPLEMENTATIONS:
 
@@ -353,10 +905,61 @@ CAImage* CAImage::createWithRawData(const unsigned char * data,
 
 bool CAImage::initWithImageFile(const std::string& file)
 {
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(file.c_str());
     unsigned long pSize = 0;
-    unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(file.c_str(), "rb", &pSize);
-    
+    unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &pSize);
     return initWithImageData(data, pSize);
+}
+
+bool CAImage::initWithImageFileThreadSafe(const std::string& fullPath)
+{
+    unsigned long pSize = 0;
+    unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &pSize);
+    bool ret = false;
+    
+    do
+    {
+        CC_BREAK_IF(! data || pSize <= 0);
+        
+        unsigned char* unpackedData = NULL;
+        unsigned long unpackedLen = 0;
+        
+        unpackedData = const_cast<unsigned char*>(data);
+        unpackedLen = pSize;
+        
+        Format type = this->detectFormat(unpackedData, unpackedLen);
+        
+        switch (type)
+        {
+            case JPG:
+                ret = this->initWithJpgData(unpackedData, unpackedLen);
+                break;
+            case PNG:
+                ret = this->initWithPngData(unpackedData, unpackedLen);
+                break;
+            case TIFF:
+                ret = this->initWithTiffData(unpackedData, unpackedLen);
+                break;
+            case WEBP:
+                ret = this->initWithWebpData(unpackedData, unpackedLen);
+                break;
+            case ETC:
+                ret = this->initWithETCData(unpackedData, unpackedLen);
+                break;
+            default:
+            {
+                ret = false;
+                break;
+            }
+        }
+        
+        if(unpackedData != data)
+        {
+            free(unpackedData);
+        }
+    } while (0);
+
+    return ret;
 }
 
 bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLen)
@@ -965,16 +1568,24 @@ const char* CAImage::description(void)
 
 bool CAImage::initPremultipliedATextureWithImage()
 {
-    unsigned char*            tempData = m_pData;
-    unsigned int*             inPixel32  = NULL;
-    unsigned char*            inPixel8 = NULL;
-    unsigned short*           outPixel16 = NULL;
-    bool                      hasAlpha = m_bHasAlpha;
-    PixelFormat               pixelFormat;
-    size_t                    bpp = m_nBitsPerComponent;
+    CAImage::PixelFormat      pixelFormat = m_ePixelFormat;
 
+    unsigned int bitsPerPixel;
+    if(pixelFormat == PixelFormat_RGB888)
+    {
+        bitsPerPixel = 24;
+    }
+    else
+    {
+        bitsPerPixel = bitsPerPixelForFormat(pixelFormat);
+    }
     
-    // compute pixel format
+    int bytesPerComponent = bitsPerPixel / 8;
+    unsigned int                length = (unsigned long)m_uPixelsWide * m_uPixelsHigh * bytesPerComponent;
+    unsigned char*            tempData = m_pData;
+    bool                      hasAlpha = m_bHasAlpha;
+    size_t                    bpp = m_nBitsPerComponent;
+    
     if (hasAlpha)
     {
     	pixelFormat = g_defaultAlphaPixelFormat;
@@ -992,116 +1603,7 @@ bool CAImage::initPremultipliedATextureWithImage()
         
     }
     
-    // Repack the pixel data into the right format
-    unsigned int length = m_uPixelsWide * m_uPixelsHigh;
-
-    if (pixelFormat == PixelFormat_RGB565)
-    {
-        if (hasAlpha)
-        {
-            // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-            
-            tempData = new unsigned char[m_uPixelsWide * m_uPixelsHigh * 2];
-            outPixel16 = (unsigned short*)tempData;
-            inPixel32 = (unsigned int*)m_pData;
-            
-            for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-            {
-                *outPixel16++ = 
-                ((((*inPixel32 >>  0) & 0xFF) >> 3) << 11) |  // R
-                ((((*inPixel32 >>  8) & 0xFF) >> 2) << 5)  |  // G
-                ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);    // B
-            }
-        }
-        else 
-        {
-            // Convert "RRRRRRRRRGGGGGGGGBBBBBBBB" to "RRRRRGGGGGGBBBBB"
-            
-            tempData = new unsigned char[m_uPixelsWide * m_uPixelsHigh * 2];
-            outPixel16 = (unsigned short*)tempData;
-            inPixel8 = (unsigned char*)m_pData;
-            
-            for(unsigned int i = 0; i < length; ++i)
-            {
-                *outPixel16++ = 
-                (((*inPixel8++ & 0xFF) >> 3) << 11) |  // R
-                (((*inPixel8++ & 0xFF) >> 2) << 5)  |  // G
-                (((*inPixel8++ & 0xFF) >> 3) << 0);    // B
-            }
-        }    
-    }
-    else if (pixelFormat == PixelFormat_RGBA4444)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-        
-        inPixel32 = (unsigned int*)m_pData;
-        tempData = new unsigned char[m_uPixelsWide * m_uPixelsHigh * 2];
-        outPixel16 = (unsigned short*)tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel16++ = 
-            ((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
-            ((((*inPixel32 >> 8) & 0xFF) >> 4) <<  8) | // G
-            ((((*inPixel32 >> 16) & 0xFF) >> 4) << 4) | // B
-            ((((*inPixel32 >> 24) & 0xFF) >> 4) << 0);  // A
-        }
-    }
-    else if (pixelFormat == PixelFormat_RGB5A1)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-        inPixel32 = (unsigned int*)m_pData;
-        tempData = new unsigned char[m_uPixelsWide * m_uPixelsHigh * 2];
-        outPixel16 = (unsigned short*)tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel16++ = 
-            ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
-            ((((*inPixel32 >> 8) & 0xFF) >> 3) <<  6) | // G
-            ((((*inPixel32 >> 16) & 0xFF) >> 3) << 1) | // B
-            ((((*inPixel32 >> 24) & 0xFF) >> 7) << 0);  // A
-        }
-    }
-    else if (pixelFormat == PixelFormat_A8)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "AAAAAAAA"
-        inPixel32 = (unsigned int*)m_pData;
-        tempData = new unsigned char[m_uPixelsWide * m_uPixelsHigh];
-        unsigned char *outPixel8 = tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel8++ = (*inPixel32 >> 24) & 0xFF;  // A
-        }
-    }
-    
-    if (hasAlpha && pixelFormat == PixelFormat_RGB888)
-    {
-        // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBBB"
-        inPixel32 = (unsigned int*)m_pData;
-        tempData = new unsigned char[m_uPixelsWide * m_uPixelsHigh * 3];
-        unsigned char *outPixel8 = tempData;
-        
-        for(unsigned int i = 0; i < length; ++i, ++inPixel32)
-        {
-            *outPixel8++ = (*inPixel32 >> 0) & 0xFF; // R
-            *outPixel8++ = (*inPixel32 >> 8) & 0xFF; // G
-            *outPixel8++ = (*inPixel32 >> 16) & 0xFF; // B
-        }
-    }
-    
-    
-    unsigned int bitsPerPixel;
-    //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
-    if(pixelFormat == PixelFormat_RGB888)
-    {
-        bitsPerPixel = 24;
-    }
-    else
-    {
-        bitsPerPixel = bitsPerPixelForFormat(pixelFormat);
-    }
+    convertDataToFormat(tempData, length, pixelFormat, m_ePixelFormat, &m_pData, &m_nDataLenght);
     
     unsigned int bytesPerRow = m_uPixelsWide * bitsPerPixel / 8;
     
@@ -1164,8 +1666,6 @@ bool CAImage::initPremultipliedATextureWithImage()
             
     }
 
-    int bytesPerComponent = bitsPerPixel / 8;
-    m_nDataLenght = (unsigned long)m_uPixelsWide * m_uPixelsHigh * bytesPerComponent;
     m_tContentSize = CCSize(m_uPixelsWide, m_uPixelsHigh);
     m_ePixelFormat = pixelFormat;
     m_fMaxS = 1;
@@ -1677,17 +2177,14 @@ CCLog(" 'CAImage::saveToFile', the method does not support the iOS simulator.");
             strLowerCasePath[i] = tolower(fullPath[i]);
         }
         
-        if (std::string::npos != strLowerCasePath.find(".png"))
-        {
-            CC_BREAK_IF(!saveImageToPNG(fullPath, bIsToRGB));
-        }
-        else if (std::string::npos != strLowerCasePath.find(".jpg"))
+        if (std::string::npos != strLowerCasePath.find(".jpg")
+                 || std::string::npos != strLowerCasePath.find(".jpeg"))
         {
             CC_BREAK_IF(!saveImageToJPG(fullPath));
         }
         else
         {
-            break;
+            CC_BREAK_IF(!saveImageToPNG(fullPath, bIsToRGB));
         }
         
         bRet = true;
@@ -1767,7 +2264,7 @@ CAImage* CAImage::CC_WHITE_IMAGE()
         }
         
         cc_white_image = new CAImage();
-        cc_white_image->initWithRawData((const unsigned char *)pixels, PixelFormat_A8, 2, 2);
+        cc_white_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_A8, 2, 2);
         cc_white_image->m_bMonochrome = true;
     }
     return cc_white_image;

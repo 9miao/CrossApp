@@ -182,6 +182,9 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned long, m_nDataLenght, DataLenght);
     
+    bool initWithImageFileThreadSafe(const std::string& fullPath);
+    bool initPremultipliedATextureWithImage();
+    
 protected:
     
     bool initWithJpgData(const unsigned char *  data, unsigned long dataLen);
@@ -190,10 +193,7 @@ protected:
     bool initWithWebpData(const unsigned char * data, unsigned long dataLen);
     bool initWithETCData(const unsigned char * data, unsigned long dataLen);
 
-    bool initPremultipliedATextureWithImage();
-
     bool saveImageToPNG(const std::string& filePath, bool isToRGB);
-    
     bool saveImageToJPG(const std::string& filePath);
 
 protected:
