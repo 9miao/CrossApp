@@ -165,17 +165,28 @@ public:
 
 	T at(size_t index) const
 	{
-		CCAssert(index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
+        if (index < 0 || index >= size())
+        {
+            return NULL;
+        }
 		return _data[index];
 	}
 
 	T front() const
 	{
+        if (_data.empty())
+        {
+            return NULL;
+        }
 		return _data.front();
 	}
 
 	T back() const
 	{
+        if (_data.empty())
+        {
+            return NULL;
+        }
 		return _data.back();
 	}
 
@@ -441,16 +452,24 @@ public:
 	{
 		return std::find(_data.begin(), _data.end(), object);
 	}
-
-	T front() const
-	{
-		return _data.front();
-	}
-
-	T back() const
-	{
-		return _data.back();
-	}
+    
+    T front() const
+    {
+        if (_data.empty())
+        {
+            return NULL;
+        }
+        return _data.front();
+    }
+    
+    T back() const
+    {
+        if (_data.empty())
+        {
+            return NULL;
+        }
+        return _data.back();
+    }
 
 	bool contains(T object) const
 	{
@@ -732,17 +751,28 @@ public:
     
     T at(size_t index) const
     {
-        CCAssert(index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
+        if (index < 0 || index >= size())
+        {
+            return NULL;
+        }
         return _data[index];
     }
     
     T front() const
     {
+        if (_data.empty())
+        {
+            return NULL;
+        }
         return _data.front();
     }
     
     T back() const
     {
+        if (_data.empty())
+        {
+            return NULL;
+        }
         return _data.back();
     }
     

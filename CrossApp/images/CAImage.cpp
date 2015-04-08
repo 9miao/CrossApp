@@ -7,6 +7,7 @@
 //
 
 #include "CAImage.h"
+#include "CAImageCache.h"
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "platform/platform.h"
@@ -17,8 +18,6 @@
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCFileUtils.h"
-#include "CAImage.h"
-#include "CAImageCache.h"
 #include "basics/CAApplication.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
@@ -1006,9 +1005,10 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
         {
             free(unpackedData);
         }
-    } while (0);
-    
-    this->initPremultipliedATextureWithImage();
+        
+        this->initPremultipliedATextureWithImage();
+    }
+    while (0);
     return ret;
 }
 
@@ -1581,7 +1581,7 @@ bool CAImage::initPremultipliedATextureWithImage()
     }
     
     int bytesPerComponent = bitsPerPixel / 8;
-    unsigned int                length = (unsigned long)m_uPixelsWide * m_uPixelsHigh * bytesPerComponent;
+    unsigned long                length = (unsigned long)m_uPixelsWide * m_uPixelsHigh * bytesPerComponent;
     unsigned char*            tempData = m_pData;
     bool                      hasAlpha = m_bHasAlpha;
     size_t                    bpp = m_nBitsPerComponent;
@@ -1868,7 +1868,7 @@ CAImage::PixelFormat CAImage::defaultAlphaPixelFormat()
 
 unsigned int CAImage::bitsPerPixelForFormat(CAImage::PixelFormat format)
 {
-	unsigned int ret=0;
+	unsigned int ret = 0;
 
 	switch (format) {
 		case PixelFormat_RGBA8888:
@@ -1910,13 +1910,12 @@ unsigned int CAImage::bitsPerPixelForFormat()
 	return this->bitsPerPixelForFormat(m_ePixelFormat);
 }
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+
 bool CAImage::saveImageToPNG(const std::string& filePath, bool isToRGB)
 {
     bool bRet = false;
-    
-#if TARGET_IPHONE_SIMULATOR
-    
-#else
+
     do
     {
         FILE *fp;
@@ -2057,20 +2056,13 @@ bool CAImage::saveImageToPNG(const std::string& filePath, bool isToRGB)
         bRet = true;
     } while (0);
     
-#endif
-    
     return bRet;
 }
 
 bool CAImage::saveImageToJPG(const std::string& filePath)
 {
     bool bRet = false;
-    
-#if TARGET_IPHONE_SIMULATOR
-    
-CCLog(" 'CAImage::saveToFile', the method does not support the iOS simulator.");
-    
-#else
+
     do
     {
         struct jpeg_compress_struct cinfo;
@@ -2145,13 +2137,11 @@ CCLog(" 'CAImage::saveToFile', the method does not support the iOS simulator.");
         
         bRet = true;
     } while (0);
-    
-#endif
-    
+
     return bRet;
 }
 
-
+#endif
 
 bool CAImage::saveToFile(const std::string& fullPath, bool bIsToRGB)
 {
@@ -2162,13 +2152,7 @@ bool CAImage::saveToFile(const std::string& fullPath, bool bIsToRGB)
     }
     
     bool bRet = false;
-    
-#if TARGET_IPHONE_SIMULATOR
-    
-CCLog(" 'CAImage::saveToFile', the method does not support the iOS simulator.");
-    
-#else
-    
+
     do
     {
         CC_BREAK_IF(fullPath.size() <= 4);
@@ -2192,10 +2176,10 @@ CCLog(" 'CAImage::saveToFile', the method does not support the iOS simulator.");
         bRet = true;
     } while (0);
     
-#endif
-    
     return bRet;
 }
+
+
 
 float CAImage::getAspectRatio()
 {

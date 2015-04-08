@@ -338,7 +338,7 @@ void CAImageCache::addImageAsyncCallBack(float dt)
     }
 }
 
-CAImage*  CAImageCache::addImage(const std::string& path)
+CAImage* CAImageCache::addImage(const std::string& path)
 {
     CAImage* image = NULL;
     
