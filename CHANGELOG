@@ -34,7 +34,8 @@
 #####8. Optimized touch distributed system bug
 
 Note:
-Due to the massive overhaul of this update, we advise you to create a new project and import project codes when updating your project engine, otherwise compiling errors will appear.
+Due to the massive overhaul of this update, we advise you to create a new project and import project codes[br/]
+when updating your project engine, otherwise compiling errors will appear.
 
 
 **********************************************************************************
