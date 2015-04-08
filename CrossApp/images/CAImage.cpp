@@ -2068,6 +2068,8 @@ bool CAImage::saveImageToJPG(const std::string& filePath)
     
 #if TARGET_IPHONE_SIMULATOR
     
+CCLog(" 'CAImage::saveToFile', the method does not support the iOS simulator.");
+    
 #else
     do
     {

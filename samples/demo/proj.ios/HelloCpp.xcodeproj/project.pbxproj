@@ -408,17 +408,20 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B0621B7A1AC3B851005EBCA7 /* Demo.h */,
+				B0621B8E1AC3B851005EBCA7 /* MainMenu.cpp */,
+				B0621B8F1AC3B851005EBCA7 /* MainMenu.h */,
+				B0AD93E519207CA300EA40BB /* AppMacros.h */,
+				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
+				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 				B0621B6E1AC3B851005EBCA7 /* ActivityIndicatorViewTest */,
 				B0621B711AC3B851005EBCA7 /* AlertViewTest */,
 				B0621B741AC3B851005EBCA7 /* ButtonTest */,
 				B0621B771AC3B851005EBCA7 /* CollectionViewTest */,
-				B0621B7A1AC3B851005EBCA7 /* Demo.h */,
 				B0621B7B1AC3B851005EBCA7 /* ExtensionsTest */,
 				B0621B831AC3B851005EBCA7 /* ImageViewTest */,
 				B0621B861AC3B851005EBCA7 /* LabelTest */,
 				B0621B891AC3B851005EBCA7 /* ListViewTest */,
-				B0621B8E1AC3B851005EBCA7 /* MainMenu.cpp */,
-				B0621B8F1AC3B851005EBCA7 /* MainMenu.h */,
 				B0621B901AC3B851005EBCA7 /* PageViewTest */,
 				B0621B931AC3B851005EBCA7 /* ProgressTest */,
 				B0621B961AC3B851005EBCA7 /* ScrollViewTest */,
@@ -430,9 +433,6 @@
 				B0621BAA1AC3B851005EBCA7 /* TextFieldTest */,
 				B0621BAD1AC3B851005EBCA7 /* TextViewTest */,
 				B0621BB01AC3B851005EBCA7 /* ViewController */,
-				B0AD93E519207CA300EA40BB /* AppMacros.h */,
-				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
-				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 			);
 			name = Classes;
 			path = ../classes;

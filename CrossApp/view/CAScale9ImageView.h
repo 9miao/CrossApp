@@ -99,6 +99,8 @@ protected:
     
     CCRect m_rFrame[9];
     
+    bool m_bUpdatePositions;
+    
 };
 
 // end of GUI group
