@@ -350,7 +350,7 @@ void CAAlertView::calcuAlerViewSize()
 	m_fAlertViewHeight += alertViewSpaceHeight;
 
 
-	int btnCount = m_vAllBtn.size();
+	size_t btnCount = m_vAllBtn.size();
 	CCAssert(btnCount,"");
 
 	if (btnCount == 1 || btnCount == 2)
