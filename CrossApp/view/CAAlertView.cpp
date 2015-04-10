@@ -162,7 +162,8 @@ void CAAlertView::addButton(CAButton* pBtn)
 {
 	CCAssert(pBtn , "");
 	m_vAllBtn.pushBack(pBtn);
-	pBtn->setTag(m_vAllBtn.size() - 1);
+    pBtn->setTextTag("btn");
+	pBtn->setTag((int)m_vAllBtn.size() - 1);
 	pBtn->addTarget(this, CAControl_selector(CAAlertView::onClickButton), CAControlEventTouchUpInSide);
 }
 
@@ -189,13 +190,18 @@ void CAAlertView::showAlertView() {
 
 	CCSize winSize = this->getBounds().size;
 
-	m_pBackView = CAView::createWithCenter(CADipRect(_dip(winSize.width)/2,_dip(winSize.height)/2,ALERT_VIEW_WIDTH,m_fAlertViewHeight));
-	m_pBackView->setColor(CAColor_clear);
-	addSubview(m_pBackView);
-
-	CAScale9ImageView *back = CAScale9ImageView::createWithFrame(CADipRect(0, 0, ALERT_VIEW_WIDTH, m_fAlertViewHeight));
-	back->setImage(CAImage::create("source_material/alert_back.png"));
-	m_pBackView->addSubview(back);
+    CADipRect rect = CADipRect(winSize.width/2, winSize.height/2, ALERT_VIEW_WIDTH, m_fAlertViewHeight);
+    
+    m_pBackView = CAClippingView::create();
+    m_pBackView->setCenter(rect);
+    this->addSubview(m_pBackView);
+    m_pBackView->setAlphaThreshold(0.0f);
+    
+    CAScale9ImageView *stencil = CAScale9ImageView::createWithFrame(m_pBackView->getBounds());
+    stencil->setImage(CAImage::create("source_material/alert_back.png"));
+    m_pBackView->setStencil(stencil);
+    
+	m_pBackView->addSubview(stencil->copy());
 
 	float alertViewSpaceHeight = 40;
 
@@ -411,16 +417,17 @@ CATableViewCell* CAAlertView::tableCellAtIndex(CATableView* table, const CCSize&
 	if (cell == NULL)
 	{
 		cell = CATableViewCell::create("cellID");
-
-		cell->addSubview(m_vAllBtn.at(row));
-		m_vAllBtn.at(row)->setFrame(CADipRect(0, 0, _dip(cellSize.width), _dip(cellSize.height)));
 	}
+    cell->removeSubviewByTextTag("btn");
+    m_vAllBtn.at(row)->removeFromSuperview();
+    m_vAllBtn.at(row)->setFrame(CCRect(0, 0, cellSize.width, cellSize.height));
+    cell->addSubview(m_vAllBtn.at(row));
 	return cell;
 }
 
 unsigned int CAAlertView::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-	return m_vAllBtn.size();
+	return (unsigned int)m_vAllBtn.size();
 }
 
 unsigned int CAAlertView::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
