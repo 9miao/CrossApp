@@ -183,7 +183,8 @@ public:
     CC_SYNTHESIZE_READONLY(unsigned long, m_nDataLenght, DataLenght);
     
     bool initWithImageFileThreadSafe(const std::string& fullPath);
-    bool initPremultipliedATextureWithImage();
+    void premultipliedAImageData();
+    void repremultipliedAImageData();
     
 protected:
     
@@ -196,7 +197,66 @@ protected:
     bool saveImageToPNG(const std::string& filePath, bool isToRGB);
     bool saveImageToJPG(const std::string& filePath);
 
+    void convertToRawData();
+    
+    CAImage::PixelFormat convertDataToFormat(const unsigned char* data,
+                                             unsigned long dataLen,
+                                             CAImage::PixelFormat originFormat,
+                                             CAImage::PixelFormat format,
+                                             unsigned char** outData,
+                                             unsigned long* outDataLen);
+    
+    CAImage::PixelFormat convertI8ToFormat(const unsigned char* data,
+                                           unsigned long dataLen,
+                                           CAImage::PixelFormat format,
+                                           unsigned char** outData,
+                                           unsigned long* outDataLen);
+    CAImage::PixelFormat convertAI88ToFormat(const unsigned char* data,
+                                             unsigned long dataLen,
+                                             CAImage::PixelFormat format,
+                                             unsigned char** outData,
+                                             unsigned long* outDataLen);
+    CAImage::PixelFormat convertRGB888ToFormat(const unsigned char* data,
+                                               unsigned long dataLen,
+                                               CAImage::PixelFormat format,
+                                               unsigned char** outData,
+                                               unsigned long* outDataLen);
+    CAImage::PixelFormat convertRGBA8888ToFormat(const unsigned char* data,
+                                                 unsigned long dataLen,
+                                                 CAImage::PixelFormat format,
+                                                 unsigned char** outData,
+                                                 unsigned long* outDataLen);
+    
+    void convertRGBA8888ToRGB5A1(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGB888ToRGB5A1(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGBA8888ToRGBA4444(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGB888ToRGBA4444(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGBA8888ToAI88(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGB888ToAI88(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGBA8888ToA8(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGBA8888ToI8(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGB888ToI8(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGBA8888ToRGB565(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGB888ToRGB565(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGBA8888ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertRGB888ToRGBA8888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertAI88ToI8(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertAI88ToA8(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertI8ToAI88(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertAI88ToRGB5A1(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertI8ToRGB5A1(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertAI88ToRGBA4444(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertI8ToRGBA4444(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertAI88ToRGB565(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertI8ToRGB565(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertAI88ToRGBA8888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertI8ToRGBA8888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertAI88ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    void convertI8ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    
 protected:
+    
+    bool m_bPremultiplied;
     
     bool m_bHasPremultipliedAlpha;
     

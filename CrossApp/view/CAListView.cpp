@@ -302,6 +302,14 @@ void CAListView::setUnSelectAtIndex(unsigned int index)
     m_pSelectedListCells.erase(index);
 }
 
+void CAListView::setShowsScrollIndicators(bool var)
+{
+    bool bVertScroll = m_pListViewOrientation == CAListViewOrientationVertical;
+    this->setShowsHorizontalScrollIndicator(var && !bVertScroll);
+    this->setShowsVerticalScrollIndicator(var && bVertScroll);
+    m_bShowsScrollIndicators = var;
+}
+
 void CAListView::setListViewOrientation(CAListViewOrientation var)
 {
 	m_pListViewOrientation = var;

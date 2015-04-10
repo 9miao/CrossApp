@@ -199,7 +199,7 @@ void CAPickerView::reloadAllComponents()
             tableView->setTableViewDataSource(this);
             tableView->setSeparatorViewHeight(0);
             tableView->setSeparatorColor(CAColor_clear);
-            tableView->setShowsVerticalScrollIndicator(false);
+            tableView->setShowsScrollIndicators(false);
 			m_tableViews.pushBack(tableView);
             
 			addSubview(tableView);

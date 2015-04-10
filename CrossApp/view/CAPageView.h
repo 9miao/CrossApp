@@ -65,6 +65,8 @@ public:
     
     CAView* getSubViewAtIndex(int index);
     
+    virtual void setShowsScrollIndicators(bool var);
+    
 protected:
 
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -100,6 +102,10 @@ private:
     using CAScrollView::setShowsHorizontalScrollIndicator;
     
     using CAScrollView::isShowsHorizontalScrollIndicator;
+    
+    using CAScrollView::setShowsVerticalScrollIndicator;
+    
+    using CAScrollView::isShowsVerticalScrollIndicator;
     
     using CAScrollView::setViewSize;
     

@@ -357,6 +357,11 @@ void CATableView::setUnSelectRowAtIndexPath(unsigned int section, unsigned int r
     m_pSelectedTableCells.erase(indexPath);
 }
 
+void CATableView::setShowsScrollIndicators(bool var)
+{
+    this->setShowsVerticalScrollIndicator(var);
+    m_bShowsScrollIndicators = var;
+}
 
 CATableViewCell* CATableView::cellForRowAtIndexPath(unsigned int section, unsigned int row)
 {

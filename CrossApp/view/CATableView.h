@@ -117,6 +117,8 @@ public:
     
     void setUnSelectRowAtIndexPath(unsigned int section, unsigned int row);
     
+    virtual void setShowsScrollIndicators(bool var);
+    
     CATableViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row);
     
     CC_SYNTHESIZE(CATableViewDataSource*, m_pTableViewDataSource, TableViewDataSource);
@@ -206,6 +208,10 @@ private:
     using CAScrollView::setShowsHorizontalScrollIndicator;
     
     using CAScrollView::isShowsHorizontalScrollIndicator;
+    
+    using CAScrollView::setShowsVerticalScrollIndicator;
+    
+    using CAScrollView::isShowsVerticalScrollIndicator;
     
     using CAScrollView::setViewSize;
     

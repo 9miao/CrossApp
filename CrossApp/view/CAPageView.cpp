@@ -55,8 +55,7 @@ bool CAPageView::init()
         return false;
     }
     
-    this->setShowsHorizontalScrollIndicator(false);
-    this->setShowsVerticalScrollIndicator(false);
+    this->setShowsScrollIndicators(false);
 
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
@@ -157,6 +156,14 @@ CAView* CAPageView::getSubViewAtIndex(int index)
     while (0);
     
     return view;
+}
+
+void CAPageView::setShowsScrollIndicators(bool var)
+{
+    bool bVertScroll = m_ePageViewDirection == CAPageViewDirectionVertical;
+    this->setShowsHorizontalScrollIndicator(var && !bVertScroll);
+    this->setShowsVerticalScrollIndicator(var && bVertScroll);
+    m_bShowsScrollIndicators = var;
 }
 
 int CAPageView::getPageCount()

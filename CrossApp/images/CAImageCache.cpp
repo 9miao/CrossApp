@@ -311,7 +311,6 @@ void CAImageCache::addImageAsyncCallBack(float dt)
 
         AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
         CAImage *image = pImageInfo->image;
-        image->initPremultipliedATextureWithImage();
         
         CAObject *target = pAsyncStruct->target;
         SEL_CallFuncO selector = pAsyncStruct->selector;
@@ -583,6 +582,10 @@ void CAImageAtlas::setImage(CAImage * var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pImage);
     m_pImage = var;
+    if (m_pImage)
+    {
+        m_pImage->premultipliedAImageData();
+    }
 }
 
 ccV3F_C4B_T2F_Quad* CAImageAtlas::getQuads()
