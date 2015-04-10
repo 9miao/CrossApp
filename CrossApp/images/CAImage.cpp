@@ -963,6 +963,7 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
             free(unpackedData);
         }
         this->convertToRawData();
+        
     }
     while (0);
     return ret;

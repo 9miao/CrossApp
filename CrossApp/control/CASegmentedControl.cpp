@@ -794,8 +794,8 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
         CCRect rect;
         rect.origin = CCPoint(x, 0);
         rect.size = segment->getBounds().size;
-        
-        imageView = CAImageView::createWithImage(render->getSprite()->getImage());
+
+        imageView = CAImageView::createWithImage(render->getImageView()->getImage());
         imageView->setRotationX(180.0f);
         imageView->setFrame(rect);
         imageView->setImageRect(rect, false, rect.size);

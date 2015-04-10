@@ -19,12 +19,12 @@ NS_CC_BEGIN
 
 // implementation CARenderImage
 CARenderImage::CARenderImage()
-: m_pSprite(NULL)
+: m_pImageView(NULL)
 , m_uFBO(0)
 , m_uDepthRenderBufffer(0)
 , m_nOldFBO(0)
-, m_pTexture(0)
-, m_pTextureCopy(0)
+, m_pImage(0)
+, m_pImageCopy(0)
 , m_ePixelFormat(CAImage::PixelFormat_RGBA8888)
 , m_uClearFlags(0)
 , m_sClearColor(ccc4f(0,0,0,0))
@@ -37,8 +37,8 @@ CARenderImage::CARenderImage()
 
 CARenderImage::~CARenderImage()
 {
-    CC_SAFE_RELEASE(m_pSprite);
-    CC_SAFE_RELEASE(m_pTextureCopy);
+    CC_SAFE_RELEASE(m_pImageView);
+    CC_SAFE_RELEASE(m_pImageCopy);
     
     glDeleteFramebuffers(1, &m_uFBO);
     if (m_uDepthRenderBufffer)
@@ -58,16 +58,16 @@ void CARenderImage::listenToForeground(CrossApp::CAObject *obj)
 
 }
 
-CAImageView * CARenderImage::getSprite()
+CAImageView * CARenderImage::getImageView()
 {
-    return m_pSprite;
+    return m_pImageView;
 }
 
-void CARenderImage::setSprite(CAImageView* var)
+void CARenderImage::setImageView(CAImageView* var)
 {
-    CC_SAFE_RELEASE(m_pSprite);
-    m_pSprite = var;
-    CC_SAFE_RETAIN(m_pSprite);
+    CC_SAFE_RELEASE(m_pImageView);
+    m_pImageView = var;
+    CC_SAFE_RETAIN(m_pImageView);
 }
 
 unsigned int CARenderImage::getClearFlags() const
@@ -193,10 +193,10 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         memset(data, 0, (int)(powW * powH * 4));
         m_ePixelFormat = eFormat;
 
-        m_pTexture = new CAImage();
-        if (m_pTexture)
+        m_pImage = new CAImage();
+        if (m_pImage)
         {
-            m_pTexture->initWithRawData(data, (CAImage::PixelFormat)m_ePixelFormat, powW, powH);
+            m_pImage->initWithRawData(data, (CAImage::PixelFormat)m_ePixelFormat, powW, powH);
         }
         else
         {
@@ -210,7 +210,7 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
 
         // associate Image with FBO
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
 
         if (uDepthStencilFormat != 0)
         {
@@ -230,16 +230,16 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         // check if it worked (probably worth doing :) )
         CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach Image to framebuffer");
 
-        m_pTexture->setAliasTexParameters();
+        m_pImage->setAliasTexParameters();
 
         // retained
-        setSprite(CAImageView::createWithImage(m_pTexture));
+        setImageView(CAImageView::createWithImage(m_pImage));
 
-        m_pTexture->release();
-        m_pSprite->setScaleY(-1);
+        m_pImage->release();
+        m_pImageView->setScaleY(-1);
 
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
-        m_pSprite->setBlendFunc(tBlendFunc);
+        m_pImageView->setBlendFunc(tBlendFunc);
 
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
@@ -248,7 +248,7 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         m_bAutoDraw = false;
         
         // add sprite for backward compatibility
-        addSubview(m_pSprite);
+        addSubview(m_pImageView);
         
         bRet = true;
     } while (0);
@@ -277,7 +277,7 @@ void CARenderImage::begin()
     kmGLMatrixMode(KM_GL_MODELVIEW);
 #endif
 
-    const CCSize& texSize = m_pTexture->getContentSizeInPixels();
+    const CCSize& texSize = m_pImage->getContentSizeInPixels();
 
     // Calculate the adjustment ratios based on the old and new projections
     CCSize size = director->getWinSizeInPixels();
@@ -418,7 +418,7 @@ void CARenderImage::visit()
 	kmGLPushMatrix();
 	
     transform();
-    m_pSprite->visit();
+    m_pImageView->visit();
     draw();
 	
 	kmGLPopMatrix();
@@ -492,7 +492,7 @@ bool CARenderImage::saveToFile(const char *szFilePath)
 {
     bool bRet = false;
 
-    CAImage *pImage = m_pSprite->getImage();
+    CAImage *pImage = m_pImageView->getImage();
     if (pImage)
     {
         bRet = pImage->saveToFile(szFilePath);

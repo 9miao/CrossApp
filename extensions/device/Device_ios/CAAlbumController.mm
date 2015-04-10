@@ -100,9 +100,10 @@
     [data getBytes:_data];
     
 
-    CAImage *__image = CAImage::createWithRawDataNoCache((const unsigned char*)_data, CAImage::PixelFormat_RGBA8888, fiximage.size.height, fiximage.size.width);
+    CAImage *__image = new CAImage();
+    __image->initWithImageData((unsigned char*)_data, data.length);
     cam->getSelectedImage(__image);
-    
+    __image->release();
     [picker dismissViewControllerAnimated:YES completion:^
         {
             [self.view removeFromSuperview];
