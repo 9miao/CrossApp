@@ -321,7 +321,7 @@ void CAViewAnimation::update(float dt)
     {
         CAViewAnimationModule* module = *itr_module;
         module->time += dt;
-        float time = module->time  - module->delay;
+        float time = module->time - module->delay;
 
         if (time > -FLT_MIN)
         {

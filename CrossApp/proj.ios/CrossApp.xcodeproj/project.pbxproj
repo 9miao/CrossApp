@@ -291,6 +291,9 @@
 		B0090D74198A444500BD8CDA /* CAPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0090D72198A444500BD8CDA /* CAPickerView.h */; };
 		B01D4BF819A5E8240071F6A3 /* CADrawerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */; };
 		B01D4BF919A5E8240071F6A3 /* CADrawerController.h in Headers */ = {isa = PBXBuildFile; fileRef = B01D4BF719A5E8240071F6A3 /* CADrawerController.h */; };
+		B01E807B1AD5113400301FC2 /* CAImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = B01E80781AD5113400301FC2 /* CAImage.mm */; };
+		B01E807C1AD5113400301FC2 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01E80791AD5113400301FC2 /* etc1.cpp */; };
+		B01E807D1AD5113400301FC2 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = B01E807A1AD5113400301FC2 /* etc1.h */; };
 		B01F650819658599005C14FC /* CADensityDpi.mm in Sources */ = {isa = PBXBuildFile; fileRef = B01F650719658599005C14FC /* CADensityDpi.mm */; };
 		B01F650A196585B2005C14FC /* CADensityDpi.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F6509196585B2005C14FC /* CADensityDpi.h */; };
 		B01F650D196585EA005C14FC /* CACollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01F650B196585EA005C14FC /* CACollectionView.cpp */; };
@@ -722,6 +725,9 @@
 		B01B29A819BADA1E00CBF581 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawerController.cpp; sourceTree = "<group>"; };
 		B01D4BF719A5E8240071F6A3 /* CADrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADrawerController.h; sourceTree = "<group>"; };
+		B01E80781AD5113400301FC2 /* CAImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAImage.mm; sourceTree = "<group>"; };
+		B01E80791AD5113400301FC2 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
+		B01E807A1AD5113400301FC2 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = etc1.h; sourceTree = "<group>"; };
 		B01F650719658599005C14FC /* CADensityDpi.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CADensityDpi.mm; sourceTree = "<group>"; };
 		B01F6509196585B2005C14FC /* CADensityDpi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADensityDpi.h; sourceTree = "<group>"; };
 		B01F650B196585EA005C14FC /* CACollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACollectionView.cpp; sourceTree = "<group>"; };
@@ -1016,8 +1022,8 @@
 				B076084B1ACCDFA70005F878 /* CADrawingPrimitives.h */,
 				B076084C1ACCDFA70005F878 /* CADrawView.cpp */,
 				B076084D1ACCDFA70005F878 /* CADrawView.h */,
-				3779E8E91A75EE950012E0B7 /* CAWebView.h */,
 				3779E8EA1A75EE950012E0B7 /* CAWebView.cpp */,
+				3779E8E91A75EE950012E0B7 /* CAWebView.h */,
 				3779E8EB1A75EE950012E0B7 /* CALabelStyle.cpp */,
 				3779E8EC1A75EE950012E0B7 /* CALabelStyle.h */,
 				B03919C119DD61D70026A9BE /* CATextView.cpp */,
@@ -1662,6 +1668,9 @@
 		B0B553CD193485BE0065053D /* images */ = {
 			isa = PBXGroup;
 			children = (
+				B01E80791AD5113400301FC2 /* etc1.cpp */,
+				B01E807A1AD5113400301FC2 /* etc1.h */,
+				B01E80781AD5113400301FC2 /* CAImage.mm */,
 				B0B553CE193485BE0065053D /* CAImage.cpp */,
 				B0B553CF193485BE0065053D /* CAImage.h */,
 				B0B553D0193485BE0065053D /* CAImageCache.cpp */,
@@ -1933,6 +1942,7 @@
 				04EA9FDC1956CE2500198A8E /* CAAutoreleasePool.h in Headers */,
 				04EA9FDE1956CE2500198A8E /* CACamera.h in Headers */,
 				B0596AF7197629BE00B1E8CB /* fttrigon.h in Headers */,
+				B01E807D1AD5113400301FC2 /* etc1.h in Headers */,
 				04EA9FE01956CE2500198A8E /* CAFPSImages.h in Headers */,
 				B0596B1C197629BE00B1E8CB /* svwinfnt.h in Headers */,
 				04EA9FE21956CE2500198A8E /* CAGeometry.h in Headers */,
@@ -2149,6 +2159,7 @@
 				04EA9FE71956CE2500198A8E /* CAScheduler.cpp in Sources */,
 				04EA9FE91956CE2500198A8E /* CABar.cpp in Sources */,
 				04EA9FEB1956CE2500198A8E /* CAButton.cpp in Sources */,
+				B01E807C1AD5113400301FC2 /* etc1.cpp in Sources */,
 				04EA9FED1956CE2500198A8E /* CAControl.cpp in Sources */,
 				04EA9FF11956CE2500198A8E /* CAProgress.cpp in Sources */,
 				04EA9FF31956CE2500198A8E /* CASegmentedControl.cpp in Sources */,
@@ -2165,6 +2176,7 @@
 				04EAA0091956CE2500198A8E /* CATouchDispatcher.cpp in Sources */,
 				04EAA00B1956CE2500198A8E /* CABatchView.cpp in Sources */,
 				04EAA00F1956CE2500198A8E /* CAImageView.cpp in Sources */,
+				B01E807B1AD5113400301FC2 /* CAImage.mm in Sources */,
 				04EAA0111956CE2500198A8E /* CALabel.cpp in Sources */,
 				04EAA0131956CE2500198A8E /* CARenderImage.cpp in Sources */,
 				B0C512EC19A341B700E6934B /* CACalendar.cpp in Sources */,

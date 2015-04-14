@@ -20,6 +20,7 @@ CAScale9ImageView::CAScale9ImageView()
 , m_obCapInsets(CCRectZero)
 , m_obOriginalSize(CCSizeZero)
 , m_pScale9ImageView(NULL)
+, m_bUpdatePositions(false)
 {
     m_obFrameRect = CCRectZero;
     memset(m_pImageView, 0, sizeof(m_pImageView));
@@ -165,7 +166,9 @@ void CAScale9ImageView::updateWithImage()
 void CAScale9ImageView::updatePositions()
 {
     CC_RETURN_IF(m_pobImage == NULL);
-
+    CC_RETURN_IF(m_bUpdatePositions);
+    m_bUpdatePositions = true;
+    
     CCSize size = this->m_obContentSize;
     
     CCRect newRect[9];
@@ -243,6 +246,8 @@ void CAScale9ImageView::updatePositions()
     {
         m_pImageView[i]->setFrame(newRect[i]);
     }
+    
+    m_bUpdatePositions = false;
 }
 
 void CAScale9ImageView::setContentSize(const CCSize &size)

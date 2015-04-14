@@ -1768,6 +1768,10 @@ void CAView::setImage(CAImage* image)
         CC_SAFE_RETAIN(image);
         CC_SAFE_RELEASE(m_pobImage);
         m_pobImage = image;
+        if (m_pobImage)
+        {
+            m_pobImage->premultipliedAImageData();
+        }
         updateBlendFunc();
         this->updateDraw();
     }

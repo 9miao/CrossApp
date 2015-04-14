@@ -20,8 +20,9 @@ void LabelTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
 
-	CAWebView* m_pWebView = CAWebView::createWithCenter(CADipRect(50, 50, size.width - 100, size.width - 100));
+	CAWebView* m_pWebView = CAWebView::createWithFrame(CADipRect(50, 50, size.width - 100, size.height - 100));
 	m_pWebView->loadURL("http://www.baidu.com");
+    m_pWebView->setColor(CAColor_green);
 	this->getView()->insertSubview(m_pWebView, 10);
 	return;
 

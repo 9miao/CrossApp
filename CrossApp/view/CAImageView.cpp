@@ -7,19 +7,12 @@
 //
 
 #include "CAImageView.h"
-#include "ccConfig.h"
-#include "images/CAImage.h"
 #include "images/CAImageCache.h"
-#include "view/CADrawingPrimitives.h"
 #include "shaders/CAShaderCache.h"
-#include "shaders/ccGLStateCache.h"
 #include "shaders/CAGLProgram.h"
-#include "basics/CAApplication.h"
-#include "support/CCPointExtension.h"
-#include "basics/CAGeometry.h"
 #include "shaders/CATransformation.h"
-#include "support/TransformUtils.h"
 #include "animation/CAViewAnimation.h"
+#include "basics/CAScheduler.h"
 
 NS_CC_BEGIN
 
@@ -96,13 +89,16 @@ bool CAImageView::initWithImage(CAImage* image)
 CAImageView::CAImageView(void)
 :m_eImageViewScaleType(CAImageViewScaleTypeFitImageXY)
 ,m_bUpdateByImageViewScaleType(false)
+,m_bAnimating(false)
+,m_iAnimationRepeatCount(0)
+,m_fAnimationDuration(1/30.0f)
 {
     
 }
 
 CAImageView::~CAImageView(void)
 {
-    
+    m_vAnimationImages.clear();
 }
 
 void CAImageView::updateByImageViewScaleType()
@@ -224,10 +220,61 @@ CAImage* CAImageView::getImage()
 void CAImageView::updateImageRect()
 {
     // Don't update Z.
-    m_sQuad.bl.vertices = vertex3(m_fLeft, m_fTop, m_fVertexZ);
-    m_sQuad.br.vertices = vertex3(m_fRight, m_fTop, m_fVertexZ);
-    m_sQuad.tl.vertices = vertex3(m_fLeft, m_fBottom, m_fVertexZ);
-    m_sQuad.tr.vertices = vertex3(m_fRight, m_fBottom, m_fVertexZ);
+    m_sQuad.bl.vertices = vertex3(  m_fLeft,    m_fTop, m_fVertexZ);
+    m_sQuad.br.vertices = vertex3( m_fRight,    m_fTop, m_fVertexZ);
+    m_sQuad.tl.vertices = vertex3(  m_fLeft, m_fBottom, m_fVertexZ);
+    m_sQuad.tr.vertices = vertex3( m_fRight, m_fBottom, m_fVertexZ);
+}
+
+void CAImageView::startAnimating()
+{
+    CC_RETURN_IF(m_vAnimationImages.empty());
+    CC_RETURN_IF(m_bAnimating);
+    m_bAnimating = true;
+    CAScheduler::schedule(schedule_selector(CAImageView::update), this, m_fAnimationDuration);
+}
+
+void CAImageView::stopAnimating()
+{
+    CC_RETURN_IF(!m_bAnimating);
+    m_bAnimating = false;
+    m_fAnimationRunTime = 0;
+    CAScheduler::unschedule(schedule_selector(CAImageView::update), this);
+}
+
+bool CAImageView::isAnimating()
+{
+    return m_bAnimating;
+}
+
+void CAImageView::update(float dt)
+{
+    do
+    {
+        CC_BREAK_IF(m_vAnimationImages.empty());
+        m_fAnimationRunTime += dt * 10000;
+        int count = (int)m_vAnimationImages.size();
+        int index = m_fAnimationRunTime / (m_fAnimationDuration * 10000);
+        bool isFinished = (m_iAnimationRepeatCount > 0 && index >= count * m_iAnimationRepeatCount);
+        if (isFinished)
+        {
+            index = count - 1;
+        }
+        else
+        {
+            index -= 1;
+        }
+        index = index % count;
+        index = MAX(index, 0);
+        this->setImage(m_vAnimationImages.at(index));
+        
+        if (isFinished)
+        {
+            this->stopAnimating();
+            break;
+        }
+    }
+    while (0);
 }
 
 CAView* CAImageView::copy()

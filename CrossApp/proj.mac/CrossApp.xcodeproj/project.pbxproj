@@ -617,11 +617,6 @@
 		B0A7150C1A43F56600A85FB9 /* CAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebView.h; sourceTree = "<group>"; };
 		B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebViewImpl.cpp; sourceTree = "<group>"; };
 		B0A7157D1A43F6DE00A85FB9 /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
-		B0B5AAE81AC16F2200D763D6 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../platform/third_party/png/prebuilt/mac/libpng.a; sourceTree = "<group>"; };
-		B0B5AAEA1AC16F3800D763D6 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../platform/third_party/jpeg/prebuilt/mac/libjpeg.a; sourceTree = "<group>"; };
-		B0B5AAEC1AC16F5A00D763D6 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../platform/third_party/tiff/prebuilt/mac/libtiff.a; sourceTree = "<group>"; };
-		B0B5AAEE1AC16F7200D763D6 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/webp/prebuilt/mac/libwebp.a; sourceTree = "<group>"; };
-		B0B5AAF01AC16F8700D763D6 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../platform/third_party/freetype/prebuilt/mac/libfreetype.a; sourceTree = "<group>"; };
 		B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAActivityIndicatorView.cpp; sourceTree = "<group>"; };
 		B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAActivityIndicatorView.h; sourceTree = "<group>"; };
 		B0C512E419A3127100E6934B /* CADatePickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADatePickerView.cpp; sourceTree = "<group>"; };
@@ -1172,11 +1167,6 @@
 				B0621A501AC3A23D005EBCA7 /* libtiff.a */,
 				B0621A4E1AC3A22D005EBCA7 /* libwebp.a */,
 				B0621A4C1AC3A208005EBCA7 /* libfreetype.a */,
-				B0B5AAF01AC16F8700D763D6 /* libfreetype.a */,
-				B0B5AAEE1AC16F7200D763D6 /* libwebp.a */,
-				B0B5AAEC1AC16F5A00D763D6 /* libtiff.a */,
-				B0B5AAEA1AC16F3800D763D6 /* libjpeg.a */,
-				B0B5AAE81AC16F2200D763D6 /* libpng.a */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
 			);
 			name = Frameworks;

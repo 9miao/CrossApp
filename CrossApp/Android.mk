@@ -133,7 +133,6 @@ platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxSDL.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \
 platform/android/jni/TouchesJni.cpp \
-platform/android/jni/DPIJni.cpp \
 script_support/JSViewController.cpp \
 script_support/CCScriptSupport.cpp \
 

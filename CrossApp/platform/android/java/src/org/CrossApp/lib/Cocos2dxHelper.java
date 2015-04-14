@@ -246,7 +246,7 @@ public class Cocos2dxHelper {
 				if (d != null)
 				{
 					d.getMetrics(metrics);
-					return (metrics.density*160.0f);
+					return (metrics.density * 160.0f);
 				}
 			}
 		}

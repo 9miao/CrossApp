@@ -16,25 +16,19 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CAApplication* pDirector = CAApplication::getApplication();
+    CAApplication* pApplication = CAApplication::getApplication();
 
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
     
-    pDirector->setOpenGLView(pEGLView);
+    pApplication->setOpenGLView(pEGLView);
 
-	pDirector->setDelegate(this);
-    
-    // turn on display FPS
-    pDirector->setDisplayStats(false);
-
-    // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60.0f);
+	pApplication->setDelegate(this);
 
     // create a scene. it's an autorelease object
 	m_pWindow = MainMenu::createWindow();
     
     // run
-    pDirector->runWindow(m_pWindow);
+    pApplication->runWindow(m_pWindow);
     
     return true;
 }

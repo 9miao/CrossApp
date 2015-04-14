@@ -11,7 +11,6 @@
 
 NS_CC_BEGIN
 
-class CCLock;
 
 class CC_DLL CAImageCache : public CAObject
 {

@@ -332,7 +332,6 @@ public:
     bool perform(int *responseCode)
     {
         int ss = curl_easy_perform(m_curl);
-        CCLog("---%d", ss);
         if (CURLE_OK != ss)
             return false;
         CURLcode code = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, responseCode);
@@ -349,25 +348,9 @@ public:
 static int processGetTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
-    bool ok = 0;
-    if (curl.init(request, callback, stream, headerCallback, headerStream))
-    {
-        ok = 1;
-        CCLog("----------------- 1");
-    }
-    if (curl.setOption(CURLOPT_FOLLOWLOCATION, true))
-    {
-        ok = 1;
-        CCLog("----------------- 2");
-    }
-    if (curl.perform(responseCode))
-    {
-        ok = 1;
-        CCLog("----------------- 3");
-    }
-//    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
-//            && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
-//            && curl.perform(responseCode);
+    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
+            && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
+            && curl.perform(responseCode);
     return ok ? 0 : 1;
 }
 

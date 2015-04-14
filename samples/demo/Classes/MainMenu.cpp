@@ -17,8 +17,6 @@ MainMenu::~MainMenu()
 
 CAWindow* MainMenu::createWindow()
 {
-	CAWindow* p_Window = CAWindow::create();
-
 	FirstViewController* viewController1 = new FirstViewController();
 	viewController1->init();
 
@@ -56,6 +54,7 @@ CAWindow* MainMenu::createWindow()
 	navigationController->initWithRootViewController(p_Funtion);
 	navigationController->getView()->setColor(CAColor_clear);
 
+    CAWindow* p_Window = CAWindow::create();
 	float winWidth = p_Window->getBounds().size.width;
 	CADrawerController* drawerController = new CADrawerController();
 	drawerController->initWithController(viewController1, navigationController, winWidth*0.7);

@@ -431,8 +431,8 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     CAView* container = new CAView();
     container->setFrame(this->getView()->getBounds());
     this->getView()->addSubview(container);
-    container->release();
     m_pContainers.pushBack(container);
+    container->release();
     
     CANavigationBar* navigationBar = CANavigationBar::create();
     if (m_pNavigationBarBackGroundImage)

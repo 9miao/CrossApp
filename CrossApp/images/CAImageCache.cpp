@@ -54,7 +54,6 @@ typedef struct _ImageInfo
 {
     AsyncStruct *asyncStruct;
     CAImage        *image;
-    CAImage::Format imageType;
 } ImageInfo;
 
 static pthread_t s_loadingThread;
@@ -116,13 +115,19 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
         //delete pAsyncStruct;
     }
     
-    CAImage* image = CAImageCache::sharedImageCache()->addImage(filename);
-
+    CAImage* image = new CAImage();
+    pthread_mutex_lock(&s_ImageInfoMutex);
+    if (image && !image->initWithImageFileThreadSafe(filename))
+    {
+        CC_SAFE_RELEASE(image);
+        return;
+    }
+    pthread_mutex_unlock(&s_ImageInfoMutex);
     // generate image info
     ImageInfo *pImageInfo = new ImageInfo();
     pImageInfo->asyncStruct = pAsyncStruct;
     pImageInfo->image = image;
-    pImageInfo->imageType = imageType;
+
     // put the image info into the queue
     pthread_mutex_lock(&s_ImageInfoMutex);
     s_pImageQueue->push(pImageInfo);
@@ -233,11 +238,6 @@ void CAImageCache::addImageAsync(const std::string& path, CAObject *target, SEL_
 
 void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector)
 {
-#ifdef EMSCRIPTEN
-    CCLOGWARN("Cannot load image %s asynchronously in Emscripten builds.", path);
-    return;
-#endif // EMSCRIPTEN
-    
     CAImage* image = NULL;
     
     // optimization
@@ -245,7 +245,6 @@ void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *targ
     image = (CAImage*)m_pImages->objectForKey(path);
     
     std::string fullpath = path;
-    
     
     if (image != NULL)
     {
@@ -257,7 +256,6 @@ void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *targ
         return;
     }
     
-    
     // lazy init
     if (s_pAsyncStructQueue == NULL)
     {
@@ -268,9 +266,7 @@ void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *targ
         pthread_mutex_init(&s_ImageInfoMutex, NULL);
         pthread_mutex_init(&s_SleepMutex, NULL);
         pthread_cond_init(&s_SleepCondition, NULL);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
         pthread_create(&s_loadingThread, NULL, loadImage, NULL);
-#endif
         need_quit = false;
     }
     
@@ -289,19 +285,11 @@ void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *targ
     data->target = target;
     data->selector = selector;
     
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // add async struct into queue
     pthread_mutex_lock(&s_asyncStructQueueMutex);
     s_pAsyncStructQueue->push(data);
     pthread_mutex_unlock(&s_asyncStructQueueMutex);
     pthread_cond_signal(&s_SleepCondition);
-#else
-    // WinRT uses an Async Task to load the image since the ThreadPool has a limited number of threads
-    //std::replace( data->filename.begin(), data->filename.end(), '/', '\\');
-    create_task([this, data] {
-        loadImageData(data);
-    });
-#endif
 }
 
 
@@ -323,16 +311,14 @@ void CAImageCache::addImageAsyncCallBack(float dt)
 
         AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
         CAImage *image = pImageInfo->image;
-
+        
         CAObject *target = pAsyncStruct->target;
         SEL_CallFuncO selector = pAsyncStruct->selector;
         const char* filename = pAsyncStruct->filename.c_str();
 
-
-
         // cache the image
         m_pImages->setObject(image, filename);
-        
+        image->release();
 
         if (target && selector)
         {
@@ -340,7 +326,6 @@ void CAImageCache::addImageAsyncCallBack(float dt)
             target->release();
         }
         
-        image->release();
         delete pAsyncStruct;
         delete pImageInfo;
 
@@ -352,7 +337,7 @@ void CAImageCache::addImageAsyncCallBack(float dt)
     }
 }
 
-CAImage*  CAImageCache::addImage(const std::string& path)
+CAImage* CAImageCache::addImage(const std::string& path)
 {
     CAImage* image = NULL;
     
@@ -597,6 +582,10 @@ void CAImageAtlas::setImage(CAImage * var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pImage);
     m_pImage = var;
+    if (m_pImage)
+    {
+        m_pImage->premultipliedAImageData();
+    }
 }
 
 ccV3F_C4B_T2F_Quad* CAImageAtlas::getQuads()
