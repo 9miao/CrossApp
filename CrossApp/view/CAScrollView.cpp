@@ -16,6 +16,7 @@
 #include "kazmath/GL/matrix.h"
 #include "CCEGLView.h"
 #include "animation/CAViewAnimation.h"
+#include "shaders/CAShaderCache.h"
 
 NS_CC_BEGIN
 
@@ -102,10 +103,8 @@ CAScrollView* CAScrollView::createWithCenter(const CCRect& rect)
 
 bool CAScrollView::init()
 {
-    if (!CAView::init())
-    {
-        return false;
-    }
+    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
+    CAView::setImage(CAImage::CC_WHITE_IMAGE());
     this->setDisplayRange(false);
     
     m_pContainer = new CAView();
@@ -345,13 +344,15 @@ CCPoint CAScrollView::getContentOffset()
 void CAScrollView::setBackGroundImage(CAImage* image)
 {
     CAView::setImage(image);
+    
     CCRect rect = CCRectZero;
     rect.size = image->getContentSize();
-    CAView::setImageRect(rect);
+    CAView::setVertexRect(rect);
 }
 
 void CAScrollView::setBackGroundColor(const CAColor4B &color)
 {
+    CAView::setImage(CAImage::CC_WHITE_IMAGE());
     CAView::setColor(color);
 }
 

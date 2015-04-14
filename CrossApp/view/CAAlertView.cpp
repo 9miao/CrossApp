@@ -5,7 +5,7 @@
 #include "control/CAButton.h"
 #include "dispatcher/CATouch.h"
 #include "view/CAWindow.h"
-
+#include "view/CARenderImage.h"
 
 NS_CC_BEGIN
 
@@ -195,14 +195,14 @@ void CAAlertView::showAlertView() {
     m_pBackView = CAClippingView::create();
     m_pBackView->setCenter(rect);
     this->addSubview(m_pBackView);
-    m_pBackView->setAlphaThreshold(0.0f);
+    m_pBackView->setAlphaThreshold(0.5f);
     
-    CAScale9ImageView *stencil = CAScale9ImageView::createWithFrame(m_pBackView->getBounds());
-    stencil->setImage(CAImage::create("source_material/alert_back.png"));
-    m_pBackView->setStencil(stencil);
+    CAScale9ImageView *backgroundImageView = CAScale9ImageView::createWithFrame(m_pBackView->getBounds());
+    backgroundImageView->setImage(CAImage::create("source_material/alert_back.png"));
+    m_pBackView->addSubview(backgroundImageView);
     
-	m_pBackView->addSubview(stencil->copy());
-
+    m_pBackView->setStencil(backgroundImageView->copy());
+	
 	float alertViewSpaceHeight = 40;
 
 	if (m_pTitleLabel && !m_pTitleLabel->getText().empty()) {
