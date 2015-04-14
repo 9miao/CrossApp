@@ -43,6 +43,7 @@ CAScrollView::CAScrollView()
 ,m_pIndicatorVertical(NULL)
 ,m_bShowsHorizontalScrollIndicator(true)
 ,m_bShowsVerticalScrollIndicator(true)
+,m_bShowsScrollIndicators(true)
 ,m_pHeaderRefreshView(NULL)
 ,m_pFooterRefreshView(NULL)
 {
@@ -261,6 +262,18 @@ void CAScrollView::setShowsVerticalScrollIndicator(bool var)
 bool CAScrollView::isShowsVerticalScrollIndicator()
 {
     return m_bShowsVerticalScrollIndicator;
+}
+
+void CAScrollView::setShowsScrollIndicators(bool var)
+{
+    this->setShowsHorizontalScrollIndicator(var);
+    this->setShowsVerticalScrollIndicator(var);
+    m_bShowsScrollIndicators = var;
+}
+
+bool CAScrollView::isShowsScrollIndicators()
+{
+    return m_bShowsScrollIndicators;
 }
 
 void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)

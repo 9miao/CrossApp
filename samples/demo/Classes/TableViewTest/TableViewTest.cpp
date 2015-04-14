@@ -23,7 +23,7 @@ void TableViewTest::viewDidLoad()
 	p_TableView->setTableViewDataSource(this);
 	p_TableView->setTableViewDelegate(this);
 	p_TableView->setAllowsSelection(true);
-	p_TableView->setAllowsMultipleSelection(true);
+	p_TableView->setAllowsMultipleSelection(false);
 	p_TableView->setSeparatorColor(CAColor_clear);
 	this->getView()->addSubview(p_TableView);
 }

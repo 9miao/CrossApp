@@ -101,6 +101,8 @@ public:
     
     CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);
     
+    CC_PROPERTY_IS(bool, m_bShowsScrollIndicators, ShowsScrollIndicators);
+    
     CC_SYNTHESIZE_IS_READONLY(bool, m_bZooming, Zooming);
     
     CC_SYNTHESIZE(float, m_fMinimumZoomScale, MinimumZoomScale);

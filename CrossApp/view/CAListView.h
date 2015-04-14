@@ -83,6 +83,8 @@ public:
 
     void setUnSelectAtIndex(unsigned int index);
     
+    virtual void setShowsScrollIndicators(bool var);
+    
 	CC_PROPERTY(CAListViewOrientation, m_pListViewOrientation, ListViewOrientation);
 
     CC_SYNTHESIZE(CAListViewDataSource*, m_pListViewDataSource, ListViewDataSource);
@@ -146,6 +148,10 @@ private:
     using CAScrollView::setShowsHorizontalScrollIndicator;
     
     using CAScrollView::isShowsHorizontalScrollIndicator;
+    
+    using CAScrollView::setShowsVerticalScrollIndicator;
+    
+    using CAScrollView::isShowsVerticalScrollIndicator;
     
     using CAScrollView::setViewSize;
     

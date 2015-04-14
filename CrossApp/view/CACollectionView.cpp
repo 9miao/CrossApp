@@ -173,6 +173,12 @@ void CACollectionView::setUnSelectRowAtIndexPath(unsigned int section, unsigned 
 	m_pSelectedCollectionCells.erase(indexPath);
 }
 
+void CACollectionView::setShowsScrollIndicators(bool var)
+{
+    this->setShowsVerticalScrollIndicator(var);
+    m_bShowsScrollIndicators = var;
+}
+
 bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
 	if (m_pTouches->count() > 0)
