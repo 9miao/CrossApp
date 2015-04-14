@@ -47,6 +47,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     private Cocos2dxWebViewHelper mWebViewHelper = null;
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
+	public static Cocos2dxRenderer mCocos2dxRenderer;
 	private static Context sContext = null;
 	AndroidNativeTool actAndroidNativeTool;
 	AndroidVolumeControl androidVolumeControl;
@@ -470,8 +471,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         // Switch to supported OpenGL (ARGB888) mode on emulator
         if (isAndroidEmulator())
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
-
-        this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
+        mCocos2dxRenderer = new Cocos2dxRenderer();
+        this.mGLSurfaceView.setCocos2dxRenderer(mCocos2dxRenderer);
         this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
         getKeyBoardHeight();
@@ -486,7 +487,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             public void onGlobalLayout() {
                 // TODO Auto-generated method stub
                 Rect r = new Rect();
-
                 rootview.getWindowVisibleDisplayFrame(r);
 
                 Rect frame = new Rect();
@@ -495,10 +495,16 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                 
                 int screenHeight = rootview.getRootView().getHeight();
                 keyboardheight =screenHeight- (r.bottom - (r.top-statusBarHeight));
+                System.out.println(keyboardheight);
                 if (keyboardheight!=0)
         		{
         			KeyBoardHeightReturn(keyboardheight);
+        			mCocos2dxRenderer.handleOpenKeyPad();
         		}
+                else 
+                {
+                	mCocos2dxRenderer.handleCloseKeyPad();
+				}
                 //boolean visible = heightDiff > screenHeight / 3;
             }
         });

@@ -98,6 +98,8 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	private static native void nativeInit(final int pWidth, final int pHeight);
 	private static native void nativeOnPause();
 	private static native void nativeOnResume();
+	private static native void nativeCloseKeyPad();
+	private static native void nativeOpenKeyPad();
 
 	public void handleActionDown(final int pID, final float pX, final float pY) {
 		Cocos2dxRenderer.nativeTouchesBegin(pID, pX, pY);
@@ -122,7 +124,17 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	public void handleOnPause() {
 		Cocos2dxRenderer.nativeOnPause();
 	}
+	
+	public void handleCloseKeyPad()
+	{
+		Cocos2dxRenderer.nativeCloseKeyPad();
+	}
 
+	public void handleOpenKeyPad()
+	{
+		Cocos2dxRenderer.nativeOpenKeyPad();
+	}
+	
 	public void handleOnResume() {
 		Cocos2dxRenderer.nativeOnResume();
 	}

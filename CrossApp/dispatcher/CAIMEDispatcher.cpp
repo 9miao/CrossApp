@@ -447,6 +447,7 @@ void CAIMEDispatcher::dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& inf
         DelegateIter last = m_pImpl->m_DelegateList.end();
         for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
         {
+            
             pDelegate = *(first);
             if (pDelegate)
             {

@@ -103,8 +103,10 @@ CAScrollView* CAScrollView::createWithCenter(const CCRect& rect)
 
 bool CAScrollView::init()
 {
-    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
-    CAView::setImage(CAImage::CC_WHITE_IMAGE());
+    if (!CAView::init())
+    {
+        return false;
+    }
     this->setDisplayRange(false);
     
     m_pContainer = new CAView();
@@ -343,6 +345,7 @@ CCPoint CAScrollView::getContentOffset()
 
 void CAScrollView::setBackGroundImage(CAImage* image)
 {
+    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
     CAView::setImage(image);
     
     CCRect rect = CCRectZero;
@@ -352,6 +355,7 @@ void CAScrollView::setBackGroundImage(CAImage* image)
 
 void CAScrollView::setBackGroundColor(const CAColor4B &color)
 {
+    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
     CAView::setImage(CAImage::CC_WHITE_IMAGE());
     CAView::setColor(color);
 }

@@ -20,7 +20,6 @@
 #include "platform/CAFTFontCache.h"
 #include "support/ConvertUTF.h"
 
-
 NS_CC_BEGIN
 
 enum eKeyBoardType
@@ -175,7 +174,10 @@ protected:
 
     void adjustCursorMoveBackward();
     void adjustCursorMoveForward();
-
+    
+    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
+    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
+    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     virtual void deleteForward();
     virtual void cursorMoveBackward(bool selected);
@@ -203,6 +205,7 @@ private:
 	int m_iString_r_length;
 	int m_iFontHeight;
 
+    bool m_isTouchInSide;
 	CAView* m_pCursorMark;
 	CCSize m_cImageSize;
 	eKeyBoardType m_keyboardType;
