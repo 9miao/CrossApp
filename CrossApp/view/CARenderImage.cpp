@@ -19,7 +19,7 @@ NS_CC_BEGIN
 
 // implementation CARenderImage
 CARenderImage::CARenderImage()
-: m_pSprite(NULL)
+: m_pImageView(NULL)
 , m_uFBO(0)
 , m_uDepthRenderBufffer(0)
 , m_nOldFBO(0)
@@ -37,7 +37,7 @@ CARenderImage::CARenderImage()
 
 CARenderImage::~CARenderImage()
 {
-    CC_SAFE_RELEASE(m_pSprite);
+    CC_SAFE_RELEASE(m_pImageView);
     CC_SAFE_RELEASE(m_pImageCopy);
     
     glDeleteFramebuffers(1, &m_uFBO);
@@ -58,16 +58,16 @@ void CARenderImage::listenToForeground(CrossApp::CAObject *obj)
 
 }
 
-CAImageView * CARenderImage::getSprite()
+CAImageView * CARenderImage::getImageView()
 {
-    return m_pSprite;
+    return m_pImageView;
 }
 
-void CARenderImage::setSprite(CAImageView* var)
+void CARenderImage::setImageView(CAImageView* var)
 {
-    CC_SAFE_RELEASE(m_pSprite);
-    m_pSprite = var;
-    CC_SAFE_RETAIN(m_pSprite);
+    CC_SAFE_RELEASE(m_pImageView);
+    m_pImageView = var;
+    CC_SAFE_RETAIN(m_pImageView);
 }
 
 unsigned int CARenderImage::getClearFlags() const
@@ -233,13 +233,13 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         m_pImage->setAliasTexParameters();
 
         // retained
-        setSprite(CAImageView::createWithImage(m_pImage));
+        setImageView(CAImageView::createWithImage(m_pImage));
 
         m_pImage->release();
-        m_pSprite->setScaleY(-1);
+        m_pImageView->setScaleY(-1);
 
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
-        m_pSprite->setBlendFunc(tBlendFunc);
+        m_pImageView->setBlendFunc(tBlendFunc);
 
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
@@ -248,7 +248,7 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         m_bAutoDraw = false;
         
         // add sprite for backward compatibility
-        addSubview(m_pSprite);
+        addSubview(m_pImageView);
         
         bRet = true;
     } while (0);
@@ -418,7 +418,7 @@ void CARenderImage::visit()
 	kmGLPushMatrix();
 	
     transform();
-    m_pSprite->visit();
+    m_pImageView->visit();
     draw();
 	
 	kmGLPopMatrix();
@@ -492,7 +492,7 @@ bool CARenderImage::saveToFile(const char *szFilePath)
 {
     bool bRet = false;
 
-    CAImage *pImage = m_pSprite->getImage();
+    CAImage *pImage = m_pImageView->getImage();
     if (pImage)
     {
         bRet = pImage->saveToFile(szFilePath);
