@@ -23,8 +23,8 @@ CARenderImage::CARenderImage()
 , m_uFBO(0)
 , m_uDepthRenderBufffer(0)
 , m_nOldFBO(0)
-, m_pTexture(0)
-, m_pTextureCopy(0)
+, m_pImage(0)
+, m_pImageCopy(0)
 , m_ePixelFormat(CAImage::PixelFormat_RGBA8888)
 , m_uClearFlags(0)
 , m_sClearColor(ccc4f(0,0,0,0))
@@ -38,7 +38,7 @@ CARenderImage::CARenderImage()
 CARenderImage::~CARenderImage()
 {
     CC_SAFE_RELEASE(m_pSprite);
-    CC_SAFE_RELEASE(m_pTextureCopy);
+    CC_SAFE_RELEASE(m_pImageCopy);
     
     glDeleteFramebuffers(1, &m_uFBO);
     if (m_uDepthRenderBufffer)
@@ -193,10 +193,10 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         memset(data, 0, (int)(powW * powH * 4));
         m_ePixelFormat = eFormat;
 
-        m_pTexture = new CAImage();
-        if (m_pTexture)
+        m_pImage = new CAImage();
+        if (m_pImage)
         {
-            m_pTexture->initWithRawData(data, (CAImage::PixelFormat)m_ePixelFormat, powW, powH);
+            m_pImage->initWithRawData(data, (CAImage::PixelFormat)m_ePixelFormat, powW, powH);
         }
         else
         {
@@ -210,7 +210,7 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
 
         // associate Image with FBO
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
 
         if (uDepthStencilFormat != 0)
         {
@@ -230,12 +230,12 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         // check if it worked (probably worth doing :) )
         CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach Image to framebuffer");
 
-        m_pTexture->setAliasTexParameters();
+        m_pImage->setAliasTexParameters();
 
         // retained
-        setSprite(CAImageView::createWithImage(m_pTexture));
+        setSprite(CAImageView::createWithImage(m_pImage));
 
-        m_pTexture->release();
+        m_pImage->release();
         m_pSprite->setScaleY(-1);
 
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
@@ -277,7 +277,7 @@ void CARenderImage::begin()
     kmGLMatrixMode(KM_GL_MODELVIEW);
 #endif
 
-    const CCSize& texSize = m_pTexture->getContentSizeInPixels();
+    const CCSize& texSize = m_pImage->getContentSizeInPixels();
 
     // Calculate the adjustment ratios based on the old and new projections
     CCSize size = director->getWinSizeInPixels();

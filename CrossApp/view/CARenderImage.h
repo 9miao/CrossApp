@@ -139,8 +139,8 @@ protected:
     GLuint       m_uFBO;
     GLuint       m_uDepthRenderBufffer;
     GLint        m_nOldFBO;
-    CAImage* m_pTexture;
-    CAImage* m_pTextureCopy;    // a copy of m_pTexture
+    CAImage* m_pImage;
+    CAImage* m_pImageCopy;    // a copy of m_pImage
 
     GLenum       m_ePixelFormat;
     
