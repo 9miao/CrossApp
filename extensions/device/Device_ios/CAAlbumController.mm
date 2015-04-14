@@ -99,11 +99,15 @@
     void* _data = malloc([data length]);
     [data getBytes:_data];
     
-
     CAImage *__image = new CAImage();
     __image->initWithImageData((unsigned char*)_data, data.length);
-    cam->getSelectedImage(__image);
+    if (cam)
+    {
+        cam->getSelectedImage(__image);
+    }
     __image->release();
+    free(_data);
+    
     [picker dismissViewControllerAnimated:YES completion:^
         {
             [self.view removeFromSuperview];

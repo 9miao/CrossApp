@@ -188,7 +188,7 @@ void CAAlertView::showAlertView() {
 
 	calcuAlerViewSize();
 
-	CCSize winSize = this->getBounds().size;
+	CADipSize winSize = this->getBounds().size;
 
     CADipRect rect = CADipRect(winSize.width/2, winSize.height/2, ALERT_VIEW_WIDTH, m_fAlertViewHeight);
     
@@ -331,7 +331,7 @@ void CAAlertView::calcuAlerViewSize()
 	if (m_pTitleLabel && !m_pTitleLabel->getText().empty())
     {
 
-		m_fAlertViewTitleHeight = CAImage::getFontHeight("", _px(ALERT_VIEW_TITLE_FONT));
+		m_fAlertViewTitleHeight = _dip(CAImage::getFontHeight("", _px(ALERT_VIEW_TITLE_FONT)));
 		
 		m_fAlertViewHeight += m_fAlertViewTitleHeight;
 	}
@@ -341,7 +341,7 @@ void CAAlertView::calcuAlerViewSize()
 	if (m_pContentLabel && !m_pContentLabel->getText().empty())
     {
 		
-		m_fAlertViewMessageHeight = CAImage::getStringHeight(m_sMsgFontName.c_str(), _px(ALERT_VIEW_MESG_FONT), m_pContentLabel->getText(), _px(ALERT_VIEW_MESG_WIDTH));
+		m_fAlertViewMessageHeight = _dip(CAImage::getStringHeight(m_sMsgFontName.c_str(), _px(ALERT_VIEW_MESG_FONT), m_pContentLabel->getText(), _px(ALERT_VIEW_MESG_WIDTH)));
 
 		if (m_fAlertViewMessageHeight > alertViewMessageHeight)
         {
