@@ -4,9 +4,41 @@
 #define __CANotificationCenter_H__
 
 #include "basics/CAObject.h"
-#include "cocoa/CCArray.h"
+#include "basics/CASTLContainer.h"
 
 NS_CC_BEGIN
+
+/**
+ * @js NA
+ * @lua NA
+ */
+class CC_DLL CANotificationObserver : public CAObject
+{
+public:
+    /** @brief CANotificationObserver constructor
+     *  @param target The target which wants to observer notification events.
+     *  @param selector The callback function which will be invoked when the specified notification event was posted.
+     *  @param name The name of this notification.
+     *  @param obj The extra parameter which will be passed to the callback function.
+     */
+    CANotificationObserver(CAObject *target,
+                           SEL_CallFuncO selector,
+                           const char *name,
+                           CAObject *obj);
+    
+    /** CANotificationObserver destructor function */
+    ~CANotificationObserver();
+    
+    /** Invokes the callback function of this observer */
+    void performSelector(CAObject *obj);
+private:
+    CC_PROPERTY_READONLY(CAObject *, m_target, Target);
+    CC_PROPERTY_READONLY(SEL_CallFuncO, m_selector, Selector);
+    CC_PROPERTY_READONLY(char *, m_name, Name);
+    CC_PROPERTY_READONLY(CAObject *, m_object, Object);
+    CC_PROPERTY(int, m_nHandler,Handler);
+};
+
 /**
  * @js NA
  */
@@ -87,40 +119,11 @@ private:
     
     // variables
     //
-    CCArray *m_observers;
+    CADeque<CANotificationObserver*> m_observers;
     int     m_scriptHandler;
 };
 
-/**
- * @js NA
- * @lua NA
- */
-class CC_DLL CCNotificationObserver : public CAObject
-{
-public:
-    /** @brief CCNotificationObserver constructor
-     *  @param target The target which wants to observer notification events.
-     *  @param selector The callback function which will be invoked when the specified notification event was posted.
-     *  @param name The name of this notification.
-     *  @param obj The extra parameter which will be passed to the callback function.
-     */
-    CCNotificationObserver(CAObject *target, 
-                           SEL_CallFuncO selector,
-                           const char *name,
-                           CAObject *obj);
 
-    /** CCNotificationObserver destructor function */
-    ~CCNotificationObserver();      
-    
-    /** Invokes the callback function of this observer */
-    void performSelector(CAObject *obj);
-private:
-    CC_PROPERTY_READONLY(CAObject *, m_target, Target);
-    CC_PROPERTY_READONLY(SEL_CallFuncO, m_selector, Selector);
-    CC_PROPERTY_READONLY(char *, m_name, Name);
-    CC_PROPERTY_READONLY(CAObject *, m_object, Object);
-    CC_PROPERTY(int, m_nHandler,Handler);
-};
 
 NS_CC_END
 
