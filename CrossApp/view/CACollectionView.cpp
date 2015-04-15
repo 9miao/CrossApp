@@ -181,11 +181,11 @@ void CACollectionView::setShowsScrollIndicators(bool var)
 
 bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	if (m_pTouches->count() > 0)
-	{
-		m_pTouches->replaceObjectAtIndex(0, pTouch);
-		return true;
-	}
+    if (!m_vTouches.empty())
+    {
+        m_vTouches.replace(0, pTouch);
+        return true;
+    }
 	bool isInertia = m_tInertia.getLength() < 1.0f;
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
 		return false;
@@ -227,7 +227,7 @@ bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
 	CC_RETURN_IF(m_bscrollEnabled == false);
-
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchMoved(pTouch, pEvent);
 
 	if (m_pHighlightedCollectionCells)
@@ -246,6 +246,7 @@ void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchEnded(pTouch, pEvent);
 
 	if (m_pHighlightedCollectionCells)
@@ -303,6 +304,7 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 void CACollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchCancelled(pTouch, pEvent);
 
 	if (m_pHighlightedCollectionCells)

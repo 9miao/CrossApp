@@ -7,7 +7,6 @@
 //
 
 #include "CATouchDispatcher.h"
-#include "cocoa/CCArray.h"
 #include "cocoa/CCSet.h"
 #include "CATouch.h"
 #include "images/CAImage.h"

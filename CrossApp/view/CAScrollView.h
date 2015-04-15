@@ -235,9 +235,9 @@ protected:
     
     CAIndicator* m_pIndicatorVertical;
     
-    CCArray* m_pChildInThis;
+    CAVector<CAView*> m_vChildInThis;
     
-    CCArray* m_pTouches;
+    CAVector<CATouch*> m_vTouches;
     
     float m_fTouchLength;
 

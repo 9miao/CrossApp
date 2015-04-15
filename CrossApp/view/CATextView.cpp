@@ -508,9 +508,9 @@ float CATextView::decelerationRatio(float dt)
 
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	if (m_pTouches->count() > 0)
+	if (!m_vTouches.empty())
 	{
-		m_pTouches->replaceObjectAtIndex(0, pTouch);
+		m_vTouches.replace(0, pTouch);
 	}
 
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))

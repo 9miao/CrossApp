@@ -7,7 +7,6 @@
 #include "CAObject.h"
 #include "ccTypes.h"
 #include "CAGeometry.h"
-#include "cocoa/CCArray.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
 #include "ccTypeInfo.h"
