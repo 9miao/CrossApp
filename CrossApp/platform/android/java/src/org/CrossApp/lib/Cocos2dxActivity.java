@@ -31,8 +31,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
 import org.CrossApp.lib.AndroidVolumeControl;
 import org.CrossApp.lib.AndroidNetWorkManager;
+
+import android.text.ClipboardManager;
 @SuppressLint("HandlerLeak")
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
 	// ===========================================================
@@ -69,7 +72,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     native static void returnDiscoveryDevice(AndroidBlueTooth sender);
     native static void returnStartedDiscoveryDevice();
     native static void returnFinfishedDiscoveryDevice();
-    
+    public static Handler msHandler;
 	public static Cocos2dxActivity getContext() {
 		return cocos2dxActivity;
 	}
@@ -181,6 +184,31 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		}
 	}
 	
+    public void setPasteBoardStr(String sender)
+    {
+        Message msg=new Message();
+        msg.obj = sender;
+        msg.what = 0;
+        msHandler.sendMessage(msg);
+    }
+    
+    public String getPasteBoardStr()
+    {
+		Callable<String> callable = new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+            	ClipboardManager clipboard =  (ClipboardManager)sContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.getText();
+                return clipboard.getText().toString();
+            }
+        };
+        try {
+            return Cocos2dxWebViewHelper.callInMainThread(callable);
+        } catch (Exception e) {
+        }
+		return "";
+    }
+
 	public BroadcastReceiver BluetoothReciever = new BroadcastReceiver()
     {
         @Override
@@ -390,6 +418,22 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 				}
 			 };
 		 }
+        if(msHandler ==null){
+            msHandler = new Handler(){
+
+                @Override
+                public void handleMessage(Message msg) {
+                    String value = (String)msg.obj;
+                    int what = msg.what;
+                    ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    if(what == 0)
+                    {
+
+                        cmb.setText(value);
+                    }
+                }
+            };
+        }
 	}
 	public static void startGps() {
 		AndroidGPS.Init(activity);

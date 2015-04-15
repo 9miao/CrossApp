@@ -85,7 +85,7 @@ _AgaginInitGlyphs:
 		{
 			int totalLines = m_inHeight / m_lineHeight;
 
-			for (int i = 0; i < m_lines.size(); i++)
+			for (int i = 0; i < m_lines.size(); i++, cszTemp+='\n')
 			{
 				if (i < totalLines)
 				{
@@ -534,6 +534,7 @@ void CAFreeTypeFont::newLine()
     m_currentLine->width = 0;
     m_currentLine->pen.x = 0;
     m_currentLine->pen.y = 0;
+	m_currentLine->includeRet = false;
 }
 
 
@@ -602,6 +603,9 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 
 		for (int i = 0; i < glyphs.size(); i++)
 		{
+			if (glyphs[i].index==0)
+				continue;
+			
 			glyphs[i].pos.x -= iLastWidth;
 		}
 		calcuMultiLines(glyphs);
@@ -680,6 +684,7 @@ FT_Error CAFreeTypeFont::initGlyphs(const char* text)
 		while (first != std::string::npos)
 		{
 			initGlyphsLine(line.substr(pos, first - pos));
+			m_currentLine->includeRet = true;
 
 			pos = first + 1;
 			first = line.find('\n', pos);
@@ -748,11 +753,9 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		/* convert character code to glyph index */
 		glyphs.resize(glyphs.size() + 1);
 		glyph = &glyphs[numGlyphs];
-		glyph_index = FT_Get_Char_Index(m_face, c);
-
-		glyph->index = glyph_index;
 		glyph->c = c;
-
+		glyph_index = FT_Get_Char_Index(m_face, c);
+		glyph->index = glyph_index;
 		glyph->isOpenType = (glyph_index == 0);
 		if (glyph_index == 0)
 		{
@@ -848,10 +851,6 @@ FT_Error CAFreeTypeFont::initTextView(const char* pText, std::vector<TextViewLin
 		{
 			TGlyph& g = m_lines[i]->glyphs[j];
 			
-			bIncludeReturn = (g.c == 10);
-			if (bIncludeReturn)
-				continue;
-
 			FT_BBox temp_bbox = bbox;
 			compute_bbox2(g, bbox);
 
@@ -878,6 +877,8 @@ FT_Error CAFreeTypeFont::initTextView(const char* pText, std::vector<TextViewLin
 		}
 		cTextViewLine.iEndCharPos = iCurCharPos;
 		linesText.push_back(cTextViewLine);
+
+		bIncludeReturn = m_lines[i]->includeRet;
 	}
 	return 0;
 }

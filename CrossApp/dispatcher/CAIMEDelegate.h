@@ -72,17 +72,16 @@ protected:
     */
     virtual void deleteBackward() {}
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    virtual void deleteForward() {}
-    virtual void cursorMoveBackward(bool selected) {CC_UNUSED_PARAM(selected);}
-    virtual void cursorMoveForward(bool selected) {CC_UNUSED_PARAM(selected);}
-#endif
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-    virtual void copyToClipboard(std::string *content) {CC_UNUSED_PARAM(content);}
-    virtual void cutToClipboard(std::string *content) {CC_UNUSED_PARAM(content);}
-    virtual void pasteFromClipboard(const char *content) {CC_UNUSED_PARAM(content);}
     virtual void selectAll() {}
-#endif
+	virtual void cursorMoveBackward() {}
+	virtual void cursorMoveForward() {}
+	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt) {}
+	virtual void moveSelectCharsCancel(const CCPoint& pt) {}
+	virtual void moveArrowBtn(const CCPoint& pt) {}
+
+	virtual void copyToClipboard() {}
+	virtual void cutToClipboard() {}
+	virtual void pasteFromClipboard() {}
 
     virtual void getKeyBoardHeight(int height) {}
     
@@ -91,9 +90,8 @@ protected:
     @brief    Called by CAIMEDispatcher for text stored in delegate.
     */
     virtual const char * getContentText() { return 0; }
-    virtual int getCursorPos() { return 0; }
-    virtual std::pair<int, int> getCharRange() { return std::pair<int, int>(0, 0); }
 
+    virtual int getCursorPos() { return 0; }
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////

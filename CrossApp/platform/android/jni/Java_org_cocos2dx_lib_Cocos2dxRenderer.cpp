@@ -69,10 +69,10 @@ extern "C" {
         if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
             return 0;
         }
-        std::pair<int, int> ret = CrossApp::CAIMEDispatcher::sharedDispatcher()->getCharRange();
+        //std::pair<int, int> ret = CrossApp::CAIMEDispatcher::sharedDispatcher()->getCharRange();
         jintArray iarr = env->NewIntArray(2);
-        int temp[2] = {ret.first, ret.second};
-        env->SetIntArrayRegion(iarr, 0, 2, temp);
+        //int temp[2] = {ret.first, ret.second};
+        //env->SetIntArrayRegion(iarr, 0, 2, temp);
         return iarr;
     }
 
