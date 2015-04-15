@@ -61,7 +61,7 @@ extern "C" {
         }
     }
     
-    void setCursorPos(int pos)
+    void setCursorPos(int pos,const char *text)
     {
         JniMethodInfo t;
         jobject jobj;
@@ -71,9 +71,9 @@ extern "C" {
             isHave = JniHelper::getMethodInfo(t,
                                               "org/CrossApp/lib/Cocos2dxGLSurfaceView",
                                               "setCursorPos",
-                                              "(I)V");
+                                              "(ILjava/lang/String;)V");
             if (isHave) {
-                t.env->CallVoidMethod(jobj, t.methodID,pos);
+                t.env->CallVoidMethod(jobj, t.methodID,pos,t.env->NewStringUTF(text));
             }
             t.env->DeleteLocalRef(t.classID);
         }

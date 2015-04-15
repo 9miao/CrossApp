@@ -43,7 +43,6 @@
 #include "control/CASwitch.h"
 #include "control/CASlider.h"
 #include "control/CASegmentedControl.h"
-#include "control/CATextField.h"
 #include "control/CAPageControl.h"
 #include "control/CAStepper.h"
 
@@ -88,6 +87,7 @@
 #include "view/CADatePickerView.h"
 #include "view/CAActivityIndicatorView.h"
 #include "view/CAPullToRefreshView.h"
+#include "view/CATextField.h"
 #include "view/CATextView.h"
 #include "view/CAWebView.h"
 #include "view/CADrawingPrimitives.h"

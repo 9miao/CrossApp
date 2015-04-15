@@ -248,6 +248,7 @@ void CAIMEDispatcher::dispatchGetKeyBoradReturnCallBack()
         m_pImpl->m_DelegateWithIme->getKeyBoradReturnCallBack();
     }while (0);
 }
+
 void CAIMEDispatcher::dispatchDeleteBackward()
 {
     do 
@@ -261,8 +262,7 @@ void CAIMEDispatcher::dispatchDeleteBackward()
     } while (0);
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-void CAIMEDispatcher::dispatchDeleteForward()
+void CAIMEDispatcher::dispatchCursorMoveBackward()
 {
     do
     {
@@ -271,11 +271,11 @@ void CAIMEDispatcher::dispatchDeleteForward()
         // there is no delegate attached to IME
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
-        m_pImpl->m_DelegateWithIme->deleteForward();
+		m_pImpl->m_DelegateWithIme->cursorMoveBackward();
     } while (0);
 }
 
-void CAIMEDispatcher::dispatchCursorMoveBackward(bool selected)
+void CAIMEDispatcher::dispatchCursorMoveForward()
 {
     do
     {
@@ -284,11 +284,11 @@ void CAIMEDispatcher::dispatchCursorMoveBackward(bool selected)
         // there is no delegate attached to IME
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
-        m_pImpl->m_DelegateWithIme->cursorMoveBackward(selected);
+		m_pImpl->m_DelegateWithIme->cursorMoveForward();
     } while (0);
 }
 
-void CAIMEDispatcher::dispatchCursorMoveForward(bool selected)
+void CAIMEDispatcher::dispatchMoveSelectChars(bool isLeftBtn, const CCPoint& pt)
 {
     do
     {
@@ -297,12 +297,11 @@ void CAIMEDispatcher::dispatchCursorMoveForward(bool selected)
         // there is no delegate attached to IME
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
-        m_pImpl->m_DelegateWithIme->cursorMoveForward(selected);
+		return m_pImpl->m_DelegateWithIme->moveSelectChars(isLeftBtn, pt);
     } while (0);
 }
-#endif
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-void CAIMEDispatcher::dispatchCopyToClipboard(std::string *content)
+
+void CAIMEDispatcher::dispatchMoveSelectCharsCancel(const CCPoint& pt)
 {
     do
     {
@@ -311,11 +310,11 @@ void CAIMEDispatcher::dispatchCopyToClipboard(std::string *content)
         // there is no delegate attached to IME
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
-        m_pImpl->m_DelegateWithIme->copyToClipboard(content);
+		return m_pImpl->m_DelegateWithIme->moveSelectCharsCancel(pt);
     } while (0);
 }
 
-void CAIMEDispatcher::dispatchCutToClipboard(std::string *content)
+void CAIMEDispatcher::dispatchMoveArrowBtn(const CCPoint& pt)
 {
     do
     {
@@ -324,11 +323,11 @@ void CAIMEDispatcher::dispatchCutToClipboard(std::string *content)
         // there is no delegate attached to IME
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
-        m_pImpl->m_DelegateWithIme->cutToClipboard(content);
+		return m_pImpl->m_DelegateWithIme->moveArrowBtn(pt);
     } while (0);
 }
 
-void CAIMEDispatcher::dispatchPasteFromClipboard(const char *content)
+void CAIMEDispatcher::dispatchCopyToClipboard()
 {
     do
     {
@@ -337,9 +336,35 @@ void CAIMEDispatcher::dispatchPasteFromClipboard(const char *content)
         // there is no delegate attached to IME
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
-        m_pImpl->m_DelegateWithIme->pasteFromClipboard(content);
+        m_pImpl->m_DelegateWithIme->copyToClipboard();
     } while (0);
 }
+
+void CAIMEDispatcher::dispatchCutToClipboard()
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+
+        m_pImpl->m_DelegateWithIme->cutToClipboard();
+    } while (0);
+}
+
+void CAIMEDispatcher::dispatchPasteFromClipboard()
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+
+        m_pImpl->m_DelegateWithIme->pasteFromClipboard();
+    } while (0);
+    }
 
 void CAIMEDispatcher::dispatchSelectAll()
 {
@@ -354,18 +379,6 @@ void CAIMEDispatcher::dispatchSelectAll()
     } while (0);
 }
 
-#endif
-
-const char * CAIMEDispatcher::getContentText()
-{
-    const char * pszContentText = 0;
-    if (m_pImpl && m_pImpl->m_DelegateWithIme)
-    {
-        pszContentText = m_pImpl->m_DelegateWithIme->getContentText();
-    }
-    return (pszContentText) ? pszContentText : "";
-}
-
 int CAIMEDispatcher::getCursorPos()
 {
     if (m_pImpl && m_pImpl->m_DelegateWithIme)
@@ -375,13 +388,14 @@ int CAIMEDispatcher::getCursorPos()
     return 0;
 }
 
-std::pair<int, int> CAIMEDispatcher::getCharRange()
+const char * CAIMEDispatcher::getContentText()
 {
+    const char * pszContentText = 0;
     if (m_pImpl && m_pImpl->m_DelegateWithIme)
     {
-        return m_pImpl->m_DelegateWithIme->getCharRange();
+        pszContentText = m_pImpl->m_DelegateWithIme->getContentText();
     }
-    return std::pair<int, int>(0, 0);
+    return (pszContentText) ? pszContentText : "";
 }
 
 //////////////////////////////////////////////////////////////////////////

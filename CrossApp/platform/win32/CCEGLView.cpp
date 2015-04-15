@@ -463,66 +463,30 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         case VK_ESCAPE:
 			CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
             break;
-        case VK_DELETE:
-            CAIMEDispatcher::sharedDispatcher()->dispatchDeleteForward();
-            break;
         case VK_LEFT:
-            CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveBackward(GetKeyState(VK_CONTROL) < 0 && GetKeyState(VK_SHIFT) < 0);
+            CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveBackward();
             break;
         case VK_RIGHT:
-            CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveForward(GetKeyState(VK_CONTROL) < 0 && GetKeyState(VK_SHIFT) < 0);
+            CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveForward();
             break;
         case 'C':
         case 'X':
-            if (GetKeyState(VK_CONTROL) < 0 && OpenClipboard(m_hWnd))
-            {
-                do
+            if (GetKeyState(VK_CONTROL) < 0)
                 {
-                    CC_BREAK_IF(!EmptyClipboard());
-                    std::string content;
                     if (wParam == 'C')
                     {
-                        CAIMEDispatcher::sharedDispatcher()->dispatchCopyToClipboard(&content);
+                    CAIMEDispatcher::sharedDispatcher()->dispatchCopyToClipboard();
                     }
                     else
                     {
-                        CAIMEDispatcher::sharedDispatcher()->dispatchCutToClipboard(&content);
+                    CAIMEDispatcher::sharedDispatcher()->dispatchCutToClipboard();
                     }
-                    CC_BREAK_IF(content.length() == 0);
-
-                    std::wstring str = utf8_to_unicode(content.c_str());
-                    HGLOBAL hGlobal = GlobalAlloc(GMEM_MOVEABLE, (str.length() + 1) * sizeof(wchar_t));
-                    CC_BREAK_IF(hGlobal == NULL);
-
-                    LPVOID lpVoid = GlobalLock(hGlobal);
-                    if (lpVoid != NULL)
-                    {
-                        wcscpy((wchar_t *)lpVoid, str.c_str());
-                        ((wchar_t *)lpVoid)[str.length()] = L'\0';
-                    }
-                    GlobalUnlock(hGlobal);
-
-                    SetClipboardData(CF_UNICODETEXT, hGlobal);
-                } while (0);
-                CloseClipboard();
             }
             break;
         case 'V':
-            if (GetKeyState(VK_CONTROL) < 0 && IsClipboardFormatAvailable(CF_UNICODETEXT) && OpenClipboard(m_hWnd))
-            {
-                do
-                {
-                    HANDLE hGlobal = GetClipboardData(CF_UNICODETEXT);
-                    CC_BREAK_IF(hGlobal == NULL);
-                    LPVOID lpVoid = GlobalLock(hGlobal);
-                    if (lpVoid != NULL)
-                    {
-                        std::string content = unicode_to_utf8((wchar_t *)lpVoid);
-                        CAIMEDispatcher::sharedDispatcher()->dispatchPasteFromClipboard(content.c_str());
-                    }
-                    GlobalUnlock(hGlobal);
-                } while (0);
-                CloseClipboard();
+            if (GetKeyState(VK_CONTROL) < 0)
+			{
+				CAIMEDispatcher::sharedDispatcher()->dispatchPasteFromClipboard();
             }
             break;
         case 'A':
@@ -531,6 +495,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 CAIMEDispatcher::sharedDispatcher()->dispatchSelectAll();
             }
             break;
+
         default:
             break;
         }

@@ -8,7 +8,7 @@ extern "C" {
     extern void closeKeyboardJNI();
     void setKeyboardType(int type);
     void setKeyboardReturnType(int type);
-    void setCursorPos(int pos);
+    void setCursorPos(int pos,const char* text);
 }
 
 #endif // __ANDROID_IME_JNI_H__

@@ -91,7 +91,7 @@ public:
 
 
 class CC_DLL CATextField
-: public CAControl
+: public CAView
 , public CAIMEDelegate
 {
 public:
@@ -163,7 +163,8 @@ protected:
     int getStringLength(const std::string &var);
     static int getStringCharCount(const std::string &var);
     virtual void setContentSize(const CCSize& var);
-    void         initMarkSprite();
+    void initMarkSprite();
+	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     virtual void insertText(const char * text, int len);
     virtual void willInsertText(const char* text,int len);
@@ -175,27 +176,27 @@ protected:
 
     void adjustCursorMoveBackward();
     void adjustCursorMoveForward();
+	CCRect getZZCRect(bool* l=NULL, bool* r=NULL);
+	bool execCurSelCharRange();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    virtual void deleteForward();
-    virtual void cursorMoveBackward(bool selected);
-    virtual void cursorMoveForward(bool selected);
-#endif
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-    virtual void copyToClipboard(std::string *content);
-    virtual void cutToClipboard(std::string *content);
-    virtual void pasteFromClipboard(const char *content);
     virtual void selectAll();
-#endif
+	virtual void cursorMoveBackward();
+	virtual void cursorMoveForward();
+	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt);
+	virtual void moveSelectCharsCancel(const CCPoint& pt);
+	virtual void moveArrowBtn(const CCPoint& pt);
+
+	virtual void copyToClipboard();
+	virtual void cutToClipboard();
+	virtual void pasteFromClipboard();
 
     virtual const char* getContentText();
     virtual int getCursorPos();
-    virtual std::pair<int, int> getCharRange();
 
 private:
 	std::vector<TextAttribute> m_vTextFiledChars;
+	std::pair<int, int> m_curSelCharRange;
 	int m_iCurPos;
-	std::pair<int, int> m_charRange;
 
 	int m_iLabelWidth;
 	int m_iString_left_offX;
@@ -204,6 +205,7 @@ private:
 	int m_iFontHeight;
 
 	CAView* m_pCursorMark;
+	CAImageView* m_pTextViewMark;
 	CCSize m_cImageSize;
 	eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;

@@ -111,7 +111,19 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					case SET_CURSOR_POS:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText) {
 							text = Cocos2dxGLSurfaceView.this.mCocos2dxEditText;
+							
+							
+							final String text = (String) msg.obj;
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.append(text);
+							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().length());
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(msg.arg1);
+							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0);
+							
 						}
 						break;
 					case HANDLER_CLOSE_IME_KEYBOARD:
@@ -174,7 +186,12 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 						if (Cocos2dxGLSurfaceView.this.mCocos2dxEditText !=null) 
 						{
 							int a= (int)msg.arg1;
+							final String text = (String) msg.obj;
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(a);
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.append(text);
+							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().length());
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 						}
 						break;
 				}
@@ -203,10 +220,12 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 	}
 
-	public void setCursorPos(int pos) {
+	public void setCursorPos(int pos,String str) {
+		System.out.println(str);
 		final Message msg = new Message();
 		msg.what = SET_CURSOR_POS;
 		msg.arg1 = pos;
+        msg.obj = str;
 		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 	}
 
@@ -223,12 +242,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		this.mCocos2dxRenderer = renderer;
 		this.setRenderer(this.mCocos2dxRenderer);
 	}
-	public void changeSelectionPosition(int pos)
+	public void changeSelectionPosition(int pos,String str)
 	{
 		
 		final Message msg = new Message();
 		msg.what = Cocos2dxGLSurfaceView.RESET_SELECTION_POSITION;
 		msg.arg1 =pos;
+		msg.obj = str;
 		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 
 
