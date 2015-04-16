@@ -992,12 +992,15 @@ void CATextField::getKeyBoradReturnCallBack()
         this->resignFirstResponder();
     }
 }
+
 void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
     //m_pCursorMark->setVisible(false);
-    
+	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
+	execCurSelCharRange();
     this->resignFirstResponder();
 }
+
 void CATextField::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
     if (m_isTouchInSide)
@@ -1006,6 +1009,7 @@ void CATextField::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
         
     }
 }
+
 void CATextField::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
     if(m_isTouchInSide)
@@ -1021,8 +1025,10 @@ void CATextField::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
         //CCLog("%d",resignFirstResponder());
     }
 }
+
 int CATextField::getStringLength(const std::string &var)
 {
     return g_AFTFontCache.getStringWidth("", m_iFontSize, var);
 }
+
 NS_CC_END
