@@ -22,6 +22,15 @@
 #include <list>
 #include <stdlib.h>
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#include <pthread.h>
+#else
+#include "CCPThreadWinRT.h"
+#include <ppl.h>
+#include <ppltasks.h>
+using namespace concurrency;
+#endif
+
 using namespace std;
 
 NS_CC_BEGIN
