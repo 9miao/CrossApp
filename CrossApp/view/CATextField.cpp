@@ -310,8 +310,6 @@ _CalcuAgain:
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	m_curSelCharRange.first = m_curSelCharRange.second = m_iCurPos;
-	execCurSelCharRange();
 	return true;
 }
 
@@ -336,10 +334,8 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                 }
                 return;
             }
-
 			calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
-			m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
-            
+           
 			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
         }
 
@@ -360,6 +356,9 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			this->updateImage();
         }
     }
+
+	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
+	execCurSelCharRange();
 }
 
 bool CATextField::canAttachWithIME()
