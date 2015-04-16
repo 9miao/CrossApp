@@ -9,13 +9,10 @@
 #include "CATouchDispatcher.h"
 #include "cocoa/CCSet.h"
 #include "CATouch.h"
-#include "images/CAImage.h"
-#include "support/data_support/ccCArray.h"
 #include "ccMacros.h"
 #include <algorithm>
 #include "basics/CAApplication.h"
 #include "view/CAWindow.h"
-#include "control/CAControl.h"
 #include "basics/CAScheduler.h"
 #include "support/CCPointExtension.h"
 
@@ -234,7 +231,6 @@ void CATouchController::touchMoved()
         {
             do
             {
-                CC_BREAK_IF(isScheduledPassing);
                 CC_BREAK_IF(m_vTouchesViews.empty());
                 CAResponder* responder = m_vTouchesViews.back();
                 if (responder->isTouchMovedStopSubviews())
@@ -269,11 +265,13 @@ void CATouchController::touchMoved()
                         CC_BREAK_IF(responder->isSlidingMaxY() && pointOffSet.y >= 0);
                     }
                 }
-                
-                CAVector<CAResponder*>::iterator itr;
-                for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
+                if (!isScheduledPassing)
                 {
-                    (*itr)->ccTouchCancelled(m_pTouch, m_pEvent);
+                    CAVector<CAResponder*>::iterator itr;
+                    for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
+                    {
+                        (*itr)->ccTouchCancelled(m_pTouch, m_pEvent);
+                    }
                 }
                 m_vTouchesViews.clear();
             }
@@ -316,7 +314,7 @@ void CATouchController::touchMoved()
                     
                     m_vTouchesViews.pushBack(responder);
                     responder->ccTouchBegan(m_pTouch, m_pEvent);
-                    
+
                     break;
                 }
                 
