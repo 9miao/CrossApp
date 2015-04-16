@@ -502,7 +502,7 @@ void CASegmentedControl::createSeparate()
 {
     CCRect frame = CCRect(0, 0, m_fSeparateWidth, this->getBounds().size.height);
     float length = 0;
-    int count = m_vSegments.size();
+    size_t count = m_vSegments.size();
 	CAVector<CAView *>::iterator itr = m_vSegments.begin();
     for(; itr != m_vSegments.end() && count != 1; ++ itr, --count)
     {
