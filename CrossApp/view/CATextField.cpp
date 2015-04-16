@@ -309,6 +309,13 @@ _CalcuAgain:
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
+	m_curSelCharRange.first = m_curSelCharRange.second = m_iCurPos;
+
+	return true;
+}
+
+void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
+{
     CCPoint point = this->convertTouchToNodeSpace(pTouch);
     
     if (this->getBounds().containsPoint(point))
@@ -324,7 +331,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 {
                     m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
                 }
-                return true;
+                return;
             }
 
 			calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
@@ -347,10 +354,7 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 			m_pCursorMark->setVisible(false);
 			this->updateImage();
         }
-        return false;
     }
-    
-    return true;
 }
 
 bool CATextField::canAttachWithIME()
@@ -409,6 +413,7 @@ void CATextField::insertText(const char * text, int len)
     CC_RETURN_IF(m_nInputType == KEY_BOARD_INPUT_PASSWORD && len >= 2);
 #endif
     
+	execCurSelCharRange();
     analyzeString(text, len);
     CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), m_sText.length()));
 
@@ -436,8 +441,11 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
 
 void CATextField::willInsertText(const char *text, int len)
 {
+	execCurSelCharRange();
+
+	int iOldCurPos = m_iCurPos;
 	insertText(text, len);
-	m_curSelCharRange.second = m_curSelCharRange.first + len;
+	m_curSelCharRange = std::make_pair(iOldCurPos, m_iCurPos);
 
 	m_pTextViewMark->setFrame(getZZCRect());
 	m_pTextViewMark->setVisible(true);
@@ -547,31 +555,34 @@ CCRect CATextField::getZZCRect(bool* l, bool* r)
 	int l1 = getStringLength(m_sText.substr(0, m_curSelCharRange.first));
 	int l2 = getStringLength(m_sText.substr(m_curSelCharRange.first, m_curSelCharRange.second-m_curSelCharRange.first));
 
-	if (l!=NULL)
-	{
-		*l = (l1 + m_iString_left_offX) >= 0;
-	}
-	if (r!=NULL)
-	{
-		*r = (l1 + m_iString_left_offX + l2) <= m_iLabelWidth;
-	}
+	bool ll = (l1 + m_iString_left_offX) >= 0;
+	bool rr = (l1 + m_iString_left_offX + l2) <= m_iLabelWidth;
 
 	int dd = 0;
-	if (l && r)
+	if (ll && rr)
 	{
 		dd = l2;
 	}
-	else if (l)
+	else if (ll)
 	{
 		dd = m_iLabelWidth - (l1 + m_iString_left_offX);
 	}
-	else if (r)
+	else if (rr)
 	{
 		dd = l1 + m_iString_left_offX + l2;
 	}
 	else dd = m_iLabelWidth;
 	
-	return CCRect((l ? (l1 + m_iString_left_offX) : 0) + m_iHoriMargins, m_iVertMargins, dd, m_iFontHeight);
+	if (l != NULL)
+	{
+		*l = ll;
+	}
+	if (r != NULL)
+	{
+		*r = rr;
+	}
+
+	return CCRect((ll ? (l1 + m_iString_left_offX) : 0) + m_iHoriMargins, m_iVertMargins, dd, m_iFontHeight);
 }
 
 
@@ -740,6 +751,7 @@ bool CATextField::execCurSelCharRange()
 
 //	CATextSelectView::hideTextSelectView();
 //	CATextToolBar::hideTextToolBar();
+	m_pTextViewMark->setVisible(false);
 
 	m_iCurPos = iOldCurPos;
 	m_pCursorMark->setVisible(true);

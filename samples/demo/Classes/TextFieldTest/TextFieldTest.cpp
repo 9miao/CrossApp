@@ -21,7 +21,6 @@ void TextFieldTest::viewDidLoad()
 	CATextField* textField = CATextField::createWithCenter(CADipRect(size.width*0.5, size.height*0.2, size.width*0.6, size.height*0.05));
 	textField->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded_highlighted.png")));
 	textField->setPlaceHolder("Input");
-	textField->setFontSize(78);
 	this->getView()->addSubview(textField);
 
 	CATextField* textField1 = CATextField::createWithCenter(CADipRect(size.width*0.5, size.height*0.4, size.width*0.6, size.height*0.05));
