@@ -165,6 +165,7 @@ protected:
     void initMarkSprite();
 	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     virtual void insertText(const char * text, int len);
     virtual void willInsertText(const char* text,int len);
     virtual void AndroidWillInsertText(int start,const char* str,int before,int count);

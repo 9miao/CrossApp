@@ -1,3 +1,4 @@
+
 #include "TextFieldTest.h"
 
 #define CAColor_blueStyle ccc4(51,204,255,255)
@@ -50,5 +51,4 @@ void TextFieldTest::viewDidLoad()
 
 void TextFieldTest::viewDidUnload() 
 {
-
 }
