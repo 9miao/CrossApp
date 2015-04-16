@@ -13,8 +13,6 @@
 #include "CAScrollView.h"
 #include <set>
 #include "basics/CASTLContainer.h"
-#include "cocoa/CCDictionary.h"
-#include "cocoa/CCArray.h"
 #include "control/CAControl.h"
 #include "basics/CAIndexPath.h"
 

@@ -6,7 +6,7 @@
 
 NS_CC_BEGIN
 
-std::string CAClipboard::GetText()
+std::string CAClipboard::getText()
 {
 	std::string str;
 	if (::OpenClipboard(NULL))
@@ -28,7 +28,7 @@ std::string CAClipboard::GetText()
 	return str;
 }
 
-void CAClipboard::SetText(const std::string& cszStrText)
+void CAClipboard::setText(const std::string& cszStrText)
 {
 	BOOL bSuccess = FALSE;
 

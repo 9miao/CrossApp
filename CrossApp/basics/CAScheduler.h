@@ -98,8 +98,6 @@ struct _listEntry;
 struct _hashSelectorEntry;
 struct _hashUpdateEntry;
 
-class CCArray;
-
 /** @brief Scheduler is responsible for triggering the scheduled callbacks.
 You should not use NSTimer. Instead use this class.
 

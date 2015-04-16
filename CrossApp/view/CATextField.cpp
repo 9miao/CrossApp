@@ -42,6 +42,7 @@ CATextField::CATextField()
 , m_iHoriMargins(0)
 , m_iVertMargins(0)
 , m_pBackgroundView(NULL)
+, m_isTouchInSide(false)
 {
 
 	m_iFontHeight = CAImage::getFontHeight("", m_iFontSize);
@@ -116,7 +117,7 @@ bool CATextField::init()
 	{
         return false;
     }
-
+    
     this->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png")));
 	
 	this->m_pTextViewMark = CAImageView::createWithImage(CAImage::create("source_material/zhezhao.png"));
@@ -310,7 +311,7 @@ _CalcuAgain:
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
 	m_curSelCharRange.first = m_curSelCharRange.second = m_iCurPos;
-
+	execCurSelCharRange();
 	return true;
 }
 
@@ -320,10 +321,12 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (this->getBounds().containsPoint(point))
     {
+        m_isTouchInSide = true;
 		becomeFirstResponder();
-		if (isFirstResponder())
+		if (!isFirstResponder())
         {
-			m_pCursorMark->setVisible(true);
+            becomeFirstResponder();
+			//m_pCursorMark->setVisible(true);
             //m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
             if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
             {
@@ -348,10 +351,12 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     }
     else
     {
+        m_isTouchInSide = false;
         if (resignFirstResponder())
         {
+            
             //m_pCursorMark->stopAllActions();
-			m_pCursorMark->setVisible(false);
+			//m_pCursorMark->setVisible(false);
 			this->updateImage();
         }
     }
@@ -718,7 +723,7 @@ void CATextField::cursorMoveForward()
 void CATextField::copyToClipboard()
 {
 	std::string cszText = m_sText.substr(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
-	CAClipboard::SetText(cszText);
+	CAClipboard::setText(cszText);
 }
 
 void CATextField::cutToClipboard()
@@ -731,7 +736,7 @@ void CATextField::cutToClipboard()
 
 void CATextField::pasteFromClipboard()
 {
-	std::string cszText = CAClipboard::GetText();
+	std::string cszText = CAClipboard::getText();
 	insertText(cszText.c_str(), cszText.size());
 
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
@@ -742,16 +747,16 @@ void CATextField::pasteFromClipboard()
 
 bool CATextField::execCurSelCharRange()
 {
+	//	CATextSelectView::hideTextSelectView();
+	//	CATextToolBar::hideTextToolBar();
+	m_pTextViewMark->setVisible(false);
+
 	if (m_curSelCharRange.first == m_curSelCharRange.second)
 		return false;
 
 	int iOldCurPos = m_curSelCharRange.first;
 	std::string cszText = m_sText.erase(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
 	setText(cszText);
-
-//	CATextSelectView::hideTextSelectView();
-//	CATextToolBar::hideTextToolBar();
-	m_pTextViewMark->setVisible(false);
 
 	m_iCurPos = iOldCurPos;
 	m_pCursorMark->setVisible(true);
@@ -839,7 +844,7 @@ void CATextField::updateImage()
 	CCSize size = CCSizeMake(0, m_iFontHeight);
     CAImage* image = CAImage::createWithString(text.c_str(),
                                                "",
-                                               m_iFontSize * CC_CONTENT_SCALE_FACTOR(),
+                                               m_iFontSize,
                                                size,
                                                CATextAlignmentLeft,
                                                CAVerticalTextAlignmentCenter,
@@ -990,9 +995,33 @@ void CATextField::getKeyBoradReturnCallBack()
 }
 void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
+    //m_pCursorMark->setVisible(false);
+    
     this->resignFirstResponder();
 }
-
+void CATextField::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
+{
+    if (m_isTouchInSide)
+    {
+        m_pCursorMark->setVisible(true);
+        
+    }
+}
+void CATextField::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
+{
+    if(m_isTouchInSide)
+    {
+//        m_pCursorMark->setVisible(false);
+        m_isTouchInSide = false;
+//        if (!isFirstResponder())
+        {
+            resignFirstResponder();
+            m_pCursorMark->setVisible(false);
+        }
+        
+        //CCLog("%d",resignFirstResponder());
+    }
+}
 int CATextField::getStringLength(const std::string &var)
 {
     return g_AFTFontCache.getStringWidth("", m_iFontSize, var);

@@ -66,12 +66,12 @@ extern "C"
 	}
 }
 
-std::string CAClipboard::GetText()
+std::string CAClipboard::getText()
 {
 	return JAVAgetPasteBoardString();
 }
 
-void CAClipboard::SetText(const std::string& cszStrText)
+void CAClipboard::setText(const std::string& cszStrText)
 {
 	JAVAsetPasteBoardString(cszStrText.c_str());
 }

@@ -191,7 +191,7 @@ void CANavigationBar::showLeftButton()
     }
     m_pLeftButtons.clear();
     
-    CCArray* buttonItems = m_pItem->getLeftButtonItems();
+    const CAVector<CAObject*>& buttonItems = m_pItem->getLeftButtonItems();
 
     CCRect rect;
     rect.size.width = this->getBounds().size.height * 0.9f;
@@ -199,13 +199,13 @@ void CANavigationBar::showLeftButton()
     rect.origin.x = rect.size.width * 0.7f;
     rect.origin.y = this->getBounds().size.height * 0.5f;
     
-    for (unsigned i=0; i<buttonItems->count(); i++)
+    for (size_t i=0; i<buttonItems.size(); i++)
     {
         rect.origin.x += i * rect.size.width;
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
         this->addSubview(button);
         
-        CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems->objectAtIndex(i));
+        CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
         if (item == NULL && m_pItem)
         {
             button->setImageForState(CAControlStateNormal, CAImage::create("source_material/btn_left_white.png"));
@@ -243,7 +243,7 @@ void CANavigationBar::showRightButton()
     }
     m_pRightButtons.clear();
     
-    CCArray* buttonItems = m_pItem->getRightButtonItems();
+    const CAVector<CAObject*>& buttonItems = m_pItem->getRightButtonItems();
     
     CCRect rect;
     rect.size.width = this->getBounds().size.height * 0.9f;
@@ -251,13 +251,13 @@ void CANavigationBar::showRightButton()
     rect.origin.x = this->getBounds().size.width - rect.size.width * 0.7f;
     rect.origin.y = this->getBounds().size.height * 0.5f;
 
-    for (unsigned i=0; i<buttonItems->count(); i++)
+    for (size_t i=0; i<buttonItems.size(); i++)
     {
         rect.origin.x -= i * rect.size.width * 1.1f;
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
         this->addSubview(button);
         
-        CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems->objectAtIndex(i));
+        CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
         if (item)
         {
             button->setTitleForState(CAControlStateNormal, item->getTitle());

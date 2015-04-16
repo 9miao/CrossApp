@@ -82,4 +82,23 @@ extern "C" {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxTextInputWraper_KeyBoardReturnCallBack(JNIEnv* env, jobject thiz) {
         CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchGetKeyBoradReturnCallBack();
     }
+    
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeCloseKeyPad(JNIEnv * env, jobject thiz)
+    {
+        CCIMEKeyboardNotificationInfo info;
+        info.begin = CCRectZero;
+        info.end = CCRectZero;
+        info.duration = 0;
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidHide(info);
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeOpenKeyPad(JNIEnv * env, jobject thiz)
+    {
+        CCIMEKeyboardNotificationInfo info;
+        info.begin = CCRectZero;
+        info.end = CCRectZero;
+        info.duration = 0;
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidShow(info);
+    }
 }

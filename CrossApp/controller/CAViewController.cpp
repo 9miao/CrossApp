@@ -788,7 +788,7 @@ void CANavigationController::popViewControllerFinish()
     CAView* backContainer = m_pContainers.back();
     backContainer->removeFromSuperview();
     m_pContainers.popBack();
-    
+    m_pSecondContainers.popBack();
     m_pNavigationBars.popBack();
     
     m_bSlidingMinX = m_pViewControllers.size() <= 1;

@@ -31,6 +31,7 @@ CATextView::CATextView()
 , m_bUpdateImage(false)
 , m_iLineSpacing(0)
 , m_bWordWrap(true)
+, m_isTouchInSide(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 }
@@ -184,7 +185,7 @@ void CATextView::updateImage()
 	{
 		m_vLinesTextView.clear();
 	}
-    m_pImageView->setColor(m_cFontColor);
+    m_pImageView->setColor(CAColor_black);
 	m_pImageView->setImage(image);
     CCRect rect = CCRectZero;
     rect.size = image->getContentSize();
@@ -507,9 +508,9 @@ float CATextView::decelerationRatio(float dt)
 
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	if (m_pTouches->count() > 0)
+	if (!m_vTouches.empty())
 	{
-		m_pTouches->replaceObjectAtIndex(0, pTouch);
+		m_vTouches.replace(0, pTouch);
 	}
 
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
@@ -519,6 +520,7 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 	if (this->getBounds().containsPoint(point))
 	{
+        m_isTouchInSide = true;
 		becomeFirstResponder();
 		if (isFirstResponder())
 		{
@@ -569,6 +571,7 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	{
 		if (resignFirstResponder())
 		{
+            m_isTouchInSide = true;
 			m_pCursorMark->setVisible(false);
 			m_pCursorMark->stopAllActions();
 			return false;
@@ -668,6 +671,24 @@ void CATextView::visit()
 		this->updateImage();
 	}
 	CAScrollView::visit();
+}
+
+void CATextView::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
+{
+    if (m_isTouchInSide)
+    {
+        m_pCursorMark->setVisible(true);
+        
+    }
+}
+void CATextView::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
+{
+    if(m_isTouchInSide)
+    {
+        m_isTouchInSide = false;
+        resignFirstResponder();
+        m_pCursorMark->setVisible(false);
+    }
 }
 
 NS_CC_END

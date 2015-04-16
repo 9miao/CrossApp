@@ -20,7 +20,6 @@
 #include "platform/CAFTFontCache.h"
 #include "support/ConvertUTF.h"
 
-
 NS_CC_BEGIN
 
 enum eKeyBoardType
@@ -177,6 +176,10 @@ protected:
 
     void adjustCursorMoveBackward();
     void adjustCursorMoveForward();
+
+    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
+    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
+    
 	CCRect getZZCRect(bool* l=NULL, bool* r=NULL);
 	bool execCurSelCharRange();
 
@@ -205,6 +208,7 @@ private:
 	int m_iString_r_length;
 	int m_iFontHeight;
 
+    bool m_isTouchInSide;
 	CAView* m_pCursorMark;
 	CAImageView* m_pTextViewMark;
 	CCSize m_cImageSize;

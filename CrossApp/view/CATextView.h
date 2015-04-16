@@ -146,6 +146,11 @@ public:
 	virtual bool attachWithIME();
 
 	virtual bool detachWithIME();
+    
+    
+    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
+    
+    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
 
 private:
 	CAView* m_pCursorMark;
@@ -157,7 +162,7 @@ private:
 	int m_iCurPos;
 	int m_iLineHeight;
 	std::vector<TextViewLineInfo> m_vLinesTextView;
-
+    bool m_isTouchInSide;
 	bool m_bUpdateImage;
     eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;

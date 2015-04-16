@@ -6,7 +6,7 @@
 NS_CC_BEGIN
 
 
-std::string CAClipboard::GetText()
+std::string CAClipboard::getText()
 {
     
     NSPasteboard *pastboard = [NSPasteboard generalPasteboard];
@@ -22,7 +22,7 @@ std::string CAClipboard::GetText()
     }
 }
 
-void CAClipboard::SetText(const std::string& cszStrText)
+void CAClipboard::setText(const std::string& cszStrText)
 {
     NSPasteboard *pastboard = [NSPasteboard generalPasteboard];
     [pastboard clearContents];

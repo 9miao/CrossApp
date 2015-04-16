@@ -52,7 +52,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	private static Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
 	private static Cocos2dxTextInputWraper sCocos2dxTextInputWraper;
 
-	private Cocos2dxRenderer mCocos2dxRenderer;
+	public Cocos2dxRenderer mCocos2dxRenderer;
 	private Cocos2dxEditText mCocos2dxEditText;
 	private static Cocos2dxEditText text;
 	// ===========================================================
@@ -62,7 +62,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	public Cocos2dxGLSurfaceView(final Context context) {
 		super(context);
 
-		this.initView();
+		this.initView();	
 	}
 
 	public Cocos2dxGLSurfaceView(final Context context, final AttributeSet attrs) {
@@ -92,6 +92,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(msg.arg1);
 							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
 						//	
+							Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleOpenKeyPad();
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().length());
 //							CharSequence text1 = Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText();
 //							
@@ -132,6 +133,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 							imm.hideSoftInputFromWindow(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getWindowToken(), 0);
 							Cocos2dxGLSurfaceView.this.requestFocus();
+							Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleCloseKeyPad();
 							Log.d("GLSurfaceView", "HideSoftInput");
 						}
 						break;
@@ -407,7 +409,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	 */
 	@Override
 	protected void onSizeChanged(final int pNewSurfaceWidth, final int pNewSurfaceHeight, final int pOldSurfaceWidth, final int pOldSurfaceHeight) {
-        if(!this.isInEditMode()) {
+        if(!this.isInEditMode()) 
+        {
             Log.e("SUN", "SurfaceView onSizeChanged ..."+pNewSurfaceWidth+"."+pNewSurfaceHeight+" old "+pOldSurfaceWidth+"."+pOldSurfaceHeight);
             
             ViewGroup.LayoutParams lp = getLayoutParams();
@@ -418,9 +421,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
             this.mCocos2dxRenderer.handleOnResume();
         }
 	}
-
+	
 	@Override
 	public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
+		
 		switch (pKeyCode) {
 			case KeyEvent.KEYCODE_BACK:
 			case KeyEvent.KEYCODE_MENU:
