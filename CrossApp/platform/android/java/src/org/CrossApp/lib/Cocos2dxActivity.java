@@ -97,7 +97,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
 		exeHandler();
-		//AndroidNetWorkManager.setContext(this);
+		AndroidNetWorkManager.setContext(this);
 		
 		 if(mWebViewHelper == null)
 		 {
