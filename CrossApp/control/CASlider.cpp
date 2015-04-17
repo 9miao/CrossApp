@@ -310,9 +310,9 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         }
     }
     
-    if (m_pTarget[CAControlEventTouchUpSide] && m_selTouch[CAControlEventTouchUpSide])
+    if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchUpSide]->*m_selTouch[CAControlEventTouchUpSide])(this, point);
+        ((CAObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this, point);
     }
 }
 
@@ -323,7 +323,7 @@ void CASlider::addTarget(CAObject* target, SEL_CAControl selector)
 
 void CASlider::addTargetForTouchUpSide(CAObject* target, SEL_CAControl selector)
 {
-    this->addTarget(target, selector, CAControlEventTouchUpSide);
+    this->addTarget(target, selector, CAControlEventTouchUpInSide);
 }
 
 void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)

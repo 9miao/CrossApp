@@ -321,9 +321,8 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         m_isTouchInSide = true;
 		becomeFirstResponder();
-		if (!isFirstResponder())
+		if (isFirstResponder())
         {
-            becomeFirstResponder();
 			//m_pCursorMark->setVisible(true);
             //m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
             if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)

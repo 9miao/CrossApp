@@ -269,7 +269,7 @@ void CATextView::setText(const std::string& var)
 	m_szText.clear();
 	m_iCurPos = 0;
 	m_vLinesTextView.clear();
-    m_curSelCharRange = std::make_pair(0, 0);
+	m_curSelCharRange = std::make_pair(0, 0);
 	insertText(var.c_str(), var.length());
 	m_pTextViewDelegate = pTemp;
 }
@@ -651,15 +651,13 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-	this->setTouchMovedListenVertical(true);
-	this->setBounceVertical(true);
-
 	CCPoint point = this->convertTouchToNodeSpace(pTouch);
 
 	if (!isScrollWindowNotOutSide())
 	{
 		if (this->getBounds().containsPoint(point))
 		{
+			m_isTouchInSide = true;
 			becomeFirstResponder();
 			if (isFirstResponder())
 			{
@@ -680,7 +678,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		//	CATextArrowView::hideTextArrowView();
 		//	CATextToolBar::hideTextToolBar();
 		//	CATextSelectView::hideTextSelectView();
-
+			m_isTouchInSide = false;
 			if (resignFirstResponder())
 			{
 				m_pCursorMark->setVisible(false);
