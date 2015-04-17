@@ -80,7 +80,7 @@ namespace CrossApp {
         
         unsigned char* out = (unsigned char*)strDupSize(in); // ensures we have enough space
         int k = 0;
-        int const jMax = strlen(in) - 3;
+        int const jMax = (int)strlen(in) - 3;
         // in case "in" is not a multiple of 4 bytes (although it should be)
         for (int j = 0; j < jMax; j += 4)
         {

@@ -57,7 +57,7 @@ public:
     
     void setCurrPage(int var, bool animated, bool listener = false);
     
-    int getPageCount();
+    unsigned int getPageCount();
     
     void setViews(const CADeque<CAView*>& vec);
     

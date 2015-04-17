@@ -99,7 +99,7 @@ unsigned int CollectionViewTest::numberOfSections(CACollectionView *collectionVi
 
 unsigned int CollectionViewTest::numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)
 {
-	return colorArr.size() % 3 == 0 ? colorArr.size() / 3 : colorArr.size() / 3 + 1;
+	return (unsigned int)(colorArr.size() % 3 == 0 ? colorArr.size() / 3 : colorArr.size() / 3 + 1);
 }
 
 unsigned int CollectionViewTest::numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)

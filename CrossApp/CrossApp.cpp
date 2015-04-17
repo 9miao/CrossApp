@@ -12,7 +12,7 @@ NS_CC_BEGIN
 
 const char* CrossAppVersion()
 {
-    return "CrossApp v1.1.0";
+    return "CrossApp v1.1.2";
 }
 
 NS_CC_END

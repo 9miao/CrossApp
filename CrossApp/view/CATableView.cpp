@@ -117,9 +117,9 @@ void CATableView::setContentSize(const CrossApp::CCSize &var)
 
 bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pTouches->count() > 0)
+    if (!m_vTouches.empty())
     {
-        m_pTouches->replaceObjectAtIndex(0, pTouch);
+        m_vTouches.replace(0, pTouch);
         return true;
     }
     bool isInertia = m_tInertia.getLength() < 1.0f;
@@ -162,7 +162,7 @@ bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 void CATableView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
     CC_RETURN_IF(m_bscrollEnabled == false);
-    CC_RETURN_IF(m_pTouches->containsObject(pTouch) == false);
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CAScrollView::ccTouchMoved(pTouch, pEvent);
     
     if (m_pHighlightedTableCells)
@@ -180,7 +180,7 @@ void CATableView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    CC_RETURN_IF(m_pTouches->containsObject(pTouch) == false);
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CAScrollView::ccTouchEnded(pTouch, pEvent);
     
     if (m_pHighlightedTableCells)
@@ -243,7 +243,7 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-    CC_RETURN_IF(m_pTouches->containsObject(pTouch) == false);
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CAScrollView::ccTouchCancelled(pTouch, pEvent);
     
     if (m_pHighlightedTableCells)
@@ -568,9 +568,9 @@ void CATableView::loadTableCell()
     rect.origin.y -= rect.size.height * 0.1f;
     rect.size.height *= 1.2f;
     
-    for (size_t i=0; i<m_rTableCellRectss.size(); i++)
+    for (unsigned int i=0; i<(unsigned int)m_rTableCellRectss.size(); i++)
     {
-        for (size_t j=0; j<m_rTableCellRectss.at(i).size(); j++)
+        for (unsigned int j=0; j<(unsigned int)m_rTableCellRectss.at(i).size(); j++)
         {
             CAIndexPath2E indexPath = CAIndexPath2E(i, j);
             CC_CONTINUE_IF(m_pUsedTableCells.count(indexPath) && m_pUsedTableCells[indexPath]);
@@ -653,7 +653,7 @@ void CATableView::updateSectionHeaderAndFooterRects()
     for (itr=m_rSectionRects.begin(); itr!=m_rSectionRects.end(); itr++)
     {
         CC_CONTINUE_IF(!rect.intersectsRect(*itr));
-        int i = itr - m_rSectionRects.begin();
+        int i = (int)(itr - m_rSectionRects.begin());
         CAView* header = NULL;
         CAView* footer = NULL;
         float headerHeight = m_nSectionHeaderHeights[i];

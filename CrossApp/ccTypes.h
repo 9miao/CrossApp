@@ -29,16 +29,16 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 }
 
 static inline CAColor4B
-ccc4Int(int rgba)
+ccc4Int(unsigned int rgba)
 {
     CAColor4B c;
-    c.r = rgba % 0xff;
-    rgba /= 0xff;
-    c.g = rgba % 0xff;
-    rgba /= 0xff;
-    c.b = rgba % 0xff;
-    rgba /= 0xff;
-    c.a = rgba % 0xff;
+    c.r = rgba % 0x100;
+    rgba /= 0x100;
+    c.g = rgba % 0x100;
+    rgba /= 0x100;
+    c.b = rgba % 0x100;
+    rgba /= 0x100;
+    c.a = rgba % 0x100;
     return c;
 }
 

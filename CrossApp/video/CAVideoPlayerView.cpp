@@ -116,15 +116,14 @@ void CAVideoPlayerView::setContentSize(const CCSize& size)
                                                    getFrame().size.width, getFrame().size.height);
     
     _pictRect = pictureRect;
-    setImageRect(_pictRect); 
+    setImageRect(_pictRect);
 }
 
 void CAVideoPlayerView::setImageCoords(CCRect rect)
 {
-    rect = CC_RECT_POINTS_TO_PIXELS(rect);
-    
-    float atlasWidth = _decoder->getFrameWidth();
-    float atlasHeight = _decoder->getFrameHeight();
+
+//    float atlasWidth = (float)_decoder->getFrameWidth();
+//    float atlasHeight = (float)_decoder->getFrameHeight();
     
     float left, right, top, bottom;
     
@@ -218,12 +217,6 @@ void CAVideoPlayerView::visit()
 #include "view/CADrawingPrimitives.h"
 void CAVideoPlayerView::draw()
 {
-//    CC_RETURN_IF(m_pobImage == NULL);
-//    
-//    CC_NODE_DRAW_SETUP();
-//    
-//    ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
-        
     long offset = (long)&m_sQuad;
     
     if (_currFrame && _renderer) {

@@ -3,8 +3,6 @@
 #include "ccMacros.h"
 #include "CAApplication.h"
 #include "support/data_support/utlist.h"
-#include "support/data_support/ccCArray.h"
-#include "cocoa/CCArray.h"
 #include "cocoa/CCSet.h"
 
 using namespace std;
@@ -59,6 +57,7 @@ CCTimer::CCTimer()
 , m_pfnSelector(NULL)
 , m_nScriptHandler(0)
 {
+
 }
 
 CCTimer* CCTimer::timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector)

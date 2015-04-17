@@ -77,25 +77,25 @@ void CAFTFontCache::setCurrentFontData(const char* pFontName, int nSize)
 
 int CAFTFontCache::getFontHeight(const char* pFontName, unsigned long nSize)
 {
-	setCurrentFontData(pFontName, nSize);
+	setCurrentFontData(pFontName, (int)nSize);
 	return m_pCurFontData->iFontHeight;
 }
 
 int CAFTFontCache::getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text, bool bBold, bool bItalics)
 {
-	setCurrentFontData(pFontName, nSize);
+	setCurrentFontData(pFontName, (int)nSize);
 	return m_pCurFontData->ftFont.getStringWidth(text, bBold, bItalics);
 }
 
 int CAFTFontCache::cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth, bool bBold, bool bItalics)
 {
-	setCurrentFontData(pFontName, nSize);
+	setCurrentFontData(pFontName, (int)nSize);
 	return m_pCurFontData->ftFont.cutStringByWidth(text, iLimitWidth, cutWidth);
 }
 
 int CAFTFontCache::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap)
 {
-	setCurrentFontData(pFontName, nSize);
+	setCurrentFontData(pFontName, (int)nSize);
 	return m_pCurFontData->ftFont.getStringHeight(text, iLimitWidth, iLineSpace, bWordWrap);
 }
 

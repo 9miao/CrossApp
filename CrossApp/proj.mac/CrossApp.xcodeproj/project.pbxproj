@@ -75,8 +75,6 @@
 		04EAB09C1956D75600198A8E /* CASlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0951956D74D00198A8E /* CASlider.h */; };
 		04EAB09D1956D75600198A8E /* CASwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0961956D74D00198A8E /* CASwitch.cpp */; };
 		04EAB09E1956D75600198A8E /* CASwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0971956D74D00198A8E /* CASwitch.h */; };
-		04EAB09F1956D75600198A8E /* CATextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0981956D74D00198A8E /* CATextField.cpp */; };
-		04EAB0A01956D75600198A8E /* CATextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0991956D74D00198A8E /* CATextField.h */; };
 		04EAB0A11956D75600198A8E /* CABarItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA09B1956D74D00198A8E /* CABarItem.cpp */; };
 		04EAB0A21956D75600198A8E /* CABarItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA09C1956D74D00198A8E /* CABarItem.h */; };
 		04EAB0A31956D75600198A8E /* CAViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA09D1956D74D00198A8E /* CAViewController.cpp */; };
@@ -305,6 +303,10 @@
 		B0A7150E1A43F56600A85FB9 /* CAWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A7150C1A43F56600A85FB9 /* CAWebView.h */; };
 		B0A7157E1A43F6DE00A85FB9 /* CAWebViewImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */; };
 		B0A7157F1A43F6DE00A85FB9 /* CAWebViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A7157D1A43F6DE00A85FB9 /* CAWebViewImpl.h */; };
+		B0C3BD3E1ADE6811009BE71A /* CATextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C3BD3C1ADE6811009BE71A /* CATextField.cpp */; };
+		B0C3BD3F1ADE6811009BE71A /* CATextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C3BD3D1ADE6811009BE71A /* CATextField.h */; };
+		B0C3BD411ADE70B3009BE71A /* CAClipboard.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C3BD401ADE70B3009BE71A /* CAClipboard.h */; };
+		B0C3BD431ADE70B8009BE71A /* CAClipboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0C3BD421ADE70B8009BE71A /* CAClipboard.mm */; };
 		B0C512E619A3127100E6934B /* CAActivityIndicatorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */; };
 		B0C512E719A3127100E6934B /* CAActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */; };
 		B0C512E819A3127100E6934B /* CADatePickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E419A3127100E6934B /* CADatePickerView.cpp */; };
@@ -384,8 +386,6 @@
 		04EAA0951956D74D00198A8E /* CASlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASlider.h; sourceTree = "<group>"; };
 		04EAA0961956D74D00198A8E /* CASwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CASwitch.cpp; sourceTree = "<group>"; };
 		04EAA0971956D74D00198A8E /* CASwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASwitch.h; sourceTree = "<group>"; };
-		04EAA0981956D74D00198A8E /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
-		04EAA0991956D74D00198A8E /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
 		04EAA09B1956D74D00198A8E /* CABarItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CABarItem.cpp; sourceTree = "<group>"; };
 		04EAA09C1956D74D00198A8E /* CABarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABarItem.h; sourceTree = "<group>"; };
 		04EAA09D1956D74D00198A8E /* CAViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewController.cpp; sourceTree = "<group>"; };
@@ -617,6 +617,10 @@
 		B0A7150C1A43F56600A85FB9 /* CAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebView.h; sourceTree = "<group>"; };
 		B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebViewImpl.cpp; sourceTree = "<group>"; };
 		B0A7157D1A43F6DE00A85FB9 /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
+		B0C3BD3C1ADE6811009BE71A /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
+		B0C3BD3D1ADE6811009BE71A /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
+		B0C3BD401ADE70B3009BE71A /* CAClipboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAClipboard.h; sourceTree = "<group>"; };
+		B0C3BD421ADE70B8009BE71A /* CAClipboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAClipboard.mm; sourceTree = "<group>"; };
 		B0C512E219A3127100E6934B /* CAActivityIndicatorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAActivityIndicatorView.cpp; sourceTree = "<group>"; };
 		B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAActivityIndicatorView.h; sourceTree = "<group>"; };
 		B0C512E419A3127100E6934B /* CADatePickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADatePickerView.cpp; sourceTree = "<group>"; };
@@ -762,8 +766,6 @@
 				04EAA0951956D74D00198A8E /* CASlider.h */,
 				04EAA0961956D74D00198A8E /* CASwitch.cpp */,
 				04EAA0971956D74D00198A8E /* CASwitch.h */,
-				04EAA0981956D74D00198A8E /* CATextField.cpp */,
-				04EAA0991956D74D00198A8E /* CATextField.h */,
 			);
 			path = control;
 			sourceTree = "<group>";
@@ -890,6 +892,7 @@
 		04EAA0E21956D74D00198A8E /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B0C3BD401ADE70B3009BE71A /* CAClipboard.h */,
 				B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */,
 				B0A02FEC1A8D8E960005CB8F /* CATempTypeFont.h */,
 				04EAA1771956D74D00198A8E /* platform.h */,
@@ -918,6 +921,7 @@
 		04EAA15F1956D74D00198A8E /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				B0C3BD421ADE70B8009BE71A /* CAClipboard.mm */,
 				B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */,
 				B0A7157D1A43F6DE00A85FB9 /* CAWebViewImpl.h */,
 				B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */,
@@ -1091,6 +1095,8 @@
 		04EAB03F1956D75500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B0C3BD3C1ADE6811009BE71A /* CATextField.cpp */,
+				B0C3BD3D1ADE6811009BE71A /* CATextField.h */,
 				B07608411ACCDE6C0005F878 /* CADrawingPrimitives.cpp */,
 				B07608421ACCDE6C0005F878 /* CADrawingPrimitives.h */,
 				B07608431ACCDE6C0005F878 /* CADrawView.cpp */,
@@ -1275,7 +1281,6 @@
 				04EAB09A1956D75600198A8E /* CASegmentedControl.h in Headers */,
 				04EAB09C1956D75600198A8E /* CASlider.h in Headers */,
 				04EAB09E1956D75600198A8E /* CASwitch.h in Headers */,
-				04EAB0A01956D75600198A8E /* CATextField.h in Headers */,
 				04EAB0A21956D75600198A8E /* CABarItem.h in Headers */,
 				04EAB0A41956D75600198A8E /* CAViewController.h in Headers */,
 				04EAB0A51956D75600198A8E /* CrossApp.h in Headers */,
@@ -1304,6 +1309,7 @@
 				B0A7150E1A43F56600A85FB9 /* CAWebView.h in Headers */,
 				04EAB0CB1956D75600198A8E /* ray2.h in Headers */,
 				04EAB0CC1956D75600198A8E /* utility.h in Headers */,
+				B0C3BD411ADE70B3009BE71A /* CAClipboard.h in Headers */,
 				B07608751ACD0CD40005F878 /* GIFMovie.h in Headers */,
 				04EAB0CD1956D75600198A8E /* vec2.h in Headers */,
 				B02CE47D19AD769700B905FB /* CAListView.h in Headers */,
@@ -1312,6 +1318,7 @@
 				04EAB10A1956D75600198A8E /* CCApplicationProtocol.h in Headers */,
 				04EAB10B1956D75600198A8E /* CCAccelerometerDelegate.h in Headers */,
 				04EAB10C1956D75600198A8E /* CCCommon.h in Headers */,
+				B0C3BD3F1ADE6811009BE71A /* CATextField.h in Headers */,
 				B0A7157F1A43F6DE00A85FB9 /* CAWebViewImpl.h in Headers */,
 				04EAB10F1956D75600198A8E /* CCFileUtils.h in Headers */,
 				04EAB1131956D75600198A8E /* CCPlatformConfig.h in Headers */,
@@ -1494,7 +1501,6 @@
 				04EAB0991956D75600198A8E /* CASegmentedControl.cpp in Sources */,
 				04EAB09B1956D75600198A8E /* CASlider.cpp in Sources */,
 				04EAB09D1956D75600198A8E /* CASwitch.cpp in Sources */,
-				04EAB09F1956D75600198A8E /* CATextField.cpp in Sources */,
 				B02CE47C19AD769700B905FB /* CAListView.cpp in Sources */,
 				04EAB0A11956D75600198A8E /* CABarItem.cpp in Sources */,
 				04EAB0A31956D75600198A8E /* CAViewController.cpp in Sources */,
@@ -1555,6 +1561,7 @@
 				04EABA7B1956D75A00198A8E /* CCProfiling.cpp in Sources */,
 				04EABA7D1956D75A00198A8E /* ccUTF8.cpp in Sources */,
 				04EABA7F1956D75A00198A8E /* ccUtils.cpp in Sources */,
+				B0C3BD3E1ADE6811009BE71A /* CATextField.cpp in Sources */,
 				B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */,
 				04EABA811956D75A00198A8E /* CCVertex.cpp in Sources */,
 				B07608681ACD0CD40005F878 /* Bitmap.cpp in Sources */,
@@ -1577,6 +1584,7 @@
 				04EABAAD1956D75B00198A8E /* CAView.cpp in Sources */,
 				04EABAAF1956D75B00198A8E /* CAWindow.cpp in Sources */,
 				04EABB441956DD8E00198A8E /* CrossApp.cpp in Sources */,
+				B0C3BD431ADE70B8009BE71A /* CAClipboard.mm in Sources */,
 				040665C21956F40E003E0D62 /* CAGLProgram.cpp in Sources */,
 				0460ECF51956F97A00D13001 /* CAApplicationCaller.mm in Sources */,
 				0460ECF71956F97A00D13001 /* CCEGLView.mm in Sources */,

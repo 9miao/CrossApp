@@ -35,7 +35,7 @@ class CC_DLL CARenderImage : public CAView
     The blending function can be changed in runtime by calling:
     - [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
     */
-    CC_PROPERTY(CAImageView*, m_pSprite, Sprite)
+    CC_PROPERTY(CAImageView*, m_pImageView, ImageView)
 public:
     /**
      * @js ctor
@@ -139,8 +139,8 @@ protected:
     GLuint       m_uFBO;
     GLuint       m_uDepthRenderBufffer;
     GLint        m_nOldFBO;
-    CAImage* m_pTexture;
-    CAImage* m_pTextureCopy;    // a copy of m_pTexture
+    CAImage* m_pImage;
+    CAImage* m_pImageCopy;    // a copy of m_pImage
 
     GLenum       m_ePixelFormat;
     

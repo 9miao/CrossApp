@@ -17,7 +17,7 @@ CCDictElement::CCDictElement(const char* pszKey, CAObject* pObject)
     m_iKey = 0;
     const char* pStart = pszKey;
     
-    int len = strlen(pszKey);
+    int len = (int)strlen(pszKey);
     if (len > MAX_KEY_LEN )
     {
         char* pEnd = (char*)&pszKey[len-1];

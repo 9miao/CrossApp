@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.CrossApp.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 import android.R.integer;
@@ -31,8 +32,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
 import org.CrossApp.lib.AndroidVolumeControl;
 import org.CrossApp.lib.AndroidNetWorkManager;
+
+import android.text.ClipboardManager;
 @SuppressLint("HandlerLeak")
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
 	// ===========================================================
@@ -47,6 +51,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     private Cocos2dxWebViewHelper mWebViewHelper = null;
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
+	public static Cocos2dxRenderer mCocos2dxRenderer;
 	private static Context sContext = null;
 	AndroidNativeTool actAndroidNativeTool;
 	AndroidVolumeControl androidVolumeControl;
@@ -68,7 +73,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     native static void returnDiscoveryDevice(AndroidBlueTooth sender);
     native static void returnStartedDiscoveryDevice();
     native static void returnFinfishedDiscoveryDevice();
-    
+    public static Handler msHandler;
 	public static Cocos2dxActivity getContext() {
 		return cocos2dxActivity;
 	}
@@ -93,7 +98,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
 		exeHandler();
-		//AndroidNetWorkManager.setContext(this);
+		AndroidNetWorkManager.setContext(this);
 		
 		 if(mWebViewHelper == null)
 		 {
@@ -111,14 +116,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		  
         @Override  
         public void onReceive(Context context, Intent intent) {  
-            // TODO Auto-generated method stub  
-            //�ж����Ƿ���Ϊ�����仯��Broadcast Action  
+
             if(Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())){  
-                //��ȡ��ǰ����  
+
                 int level = intent.getIntExtra("level", 0);  
-                //�������̶ܿ�  
+       
                 int scale = intent.getIntExtra("scale", 100);  
-                //����ת�ɰٷֱ�    
+
                 currentBattery =level*100/ scale;
             }  
         }  
@@ -180,6 +184,31 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		}
 	}
 	
+    public void setPasteBoardStr(String sender)
+    {
+        Message msg=new Message();
+        msg.obj = sender;
+        msg.what = 0;
+        msHandler.sendMessage(msg);
+    }
+    
+    public String getPasteBoardStr()
+    {
+		Callable<String> callable = new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+            	ClipboardManager clipboard =  (ClipboardManager)sContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.getText();
+                return clipboard.getText().toString();
+            }
+        };
+        try {
+            return Cocos2dxWebViewHelper.callInMainThread(callable);
+        } catch (Exception e) {
+        }
+		return "";
+    }
+
 	public BroadcastReceiver BluetoothReciever = new BroadcastReceiver()
     {
         @Override
@@ -389,6 +418,22 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 				}
 			 };
 		 }
+        if(msHandler ==null){
+            msHandler = new Handler(){
+
+                @Override
+                public void handleMessage(Message msg) {
+                    String value = (String)msg.obj;
+                    int what = msg.what;
+                    ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    if(what == 0)
+                    {
+
+                        cmb.setText(value);
+                    }
+                }
+            };
+        }
 	}
 	public static void startGps() {
 		AndroidGPS.Init(activity);
@@ -470,8 +515,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         // Switch to supported OpenGL (ARGB888) mode on emulator
         if (isAndroidEmulator())
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
-
-        this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
+        mCocos2dxRenderer = new Cocos2dxRenderer();
+        this.mGLSurfaceView.setCocos2dxRenderer(mCocos2dxRenderer);
         this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
         getKeyBoardHeight();
@@ -486,7 +531,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             public void onGlobalLayout() {
                 // TODO Auto-generated method stub
                 Rect r = new Rect();
-
                 rootview.getWindowVisibleDisplayFrame(r);
 
                 Rect frame = new Rect();
@@ -495,10 +539,16 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                 
                 int screenHeight = rootview.getRootView().getHeight();
                 keyboardheight =screenHeight- (r.bottom - (r.top-statusBarHeight));
+                System.out.println(keyboardheight);
                 if (keyboardheight!=0)
         		{
         			KeyBoardHeightReturn(keyboardheight);
+        			mCocos2dxRenderer.handleOpenKeyPad();
         		}
+                else 
+                {
+                	mCocos2dxRenderer.handleCloseKeyPad();
+				}
                 //boolean visible = heightDiff > screenHeight / 3;
             }
         });

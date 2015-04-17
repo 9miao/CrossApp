@@ -21,6 +21,7 @@
 #include <queue>
 #include <list>
 #include <stdlib.h>
+#include <pthread.h>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <pthread.h>
@@ -311,6 +312,7 @@ void CAImageCache::addImageAsyncCallBack(float dt)
 
         AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
         CAImage *image = pImageInfo->image;
+        image->premultipliedAImageData();
         
         CAObject *target = pAsyncStruct->target;
         SEL_CallFuncO selector = pAsyncStruct->selector;
@@ -582,10 +584,6 @@ void CAImageAtlas::setImage(CAImage * var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pImage);
     m_pImage = var;
-    if (m_pImage)
-    {
-        m_pImage->premultipliedAImageData();
-    }
 }
 
 ccV3F_C4B_T2F_Quad* CAImageAtlas::getQuads()

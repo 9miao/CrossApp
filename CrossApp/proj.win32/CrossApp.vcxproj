@@ -177,7 +177,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\control\CASlider.cpp" />
     <ClCompile Include="..\control\CAStepper.cpp" />
     <ClCompile Include="..\control\CASwitch.cpp" />
-    <ClCompile Include="..\control\CATextField.cpp" />
     <ClCompile Include="..\CrossApp.cpp" />
     <ClCompile Include="..\dispatcher\CAIMEDispatcher.cpp" />
     <ClCompile Include="..\dispatcher\CAKeypadDelegate.cpp" />
@@ -200,6 +199,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
+    <ClCompile Include="..\platform\win32\CAClipboard.cpp" />
     <ClCompile Include="..\platform\win32\CADensityDpi.cpp" />
     <ClCompile Include="..\platform\win32\CAWebViewImpl.cpp" />
     <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
@@ -265,6 +265,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CAScale9ImageView.cpp" />
     <ClCompile Include="..\view\CAScrollView.cpp" />
     <ClCompile Include="..\view\CATableView.cpp" />
+    <ClCompile Include="..\view\CATextField.cpp" />
     <ClCompile Include="..\view\CATextView.cpp" />
     <ClCompile Include="..\view\CAView.cpp" />
     <ClCompile Include="..\view\CAWebView.cpp" />
@@ -306,7 +307,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\control\CASlider.h" />
     <ClInclude Include="..\control\CAStepper.h" />
     <ClInclude Include="..\control\CASwitch.h" />
-    <ClInclude Include="..\control\CATextField.h" />
     <ClInclude Include="..\CrossApp.h" />
     <ClInclude Include="..\dispatcher\CAIMEDelegate.h" />
     <ClInclude Include="..\dispatcher\CAIMEDispatcher.h" />
@@ -324,6 +324,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\actions\CCActionTween.h" />
     <ClInclude Include="..\images\CAImage.h" />
     <ClInclude Include="..\images\CAImageCache.h" />
+    <ClInclude Include="..\platform\CAClipboard.h" />
     <ClInclude Include="..\platform\CADensityDpi.h" />
     <ClInclude Include="..\platform\CAFreeTypeFont.h" />
     <ClInclude Include="..\platform\CAFTFontCache.h" />
@@ -420,6 +421,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\view\CAScale9ImageView.h" />
     <ClInclude Include="..\view\CAScrollView.h" />
     <ClInclude Include="..\view\CATableView.h" />
+    <ClInclude Include="..\view\CATextField.h" />
     <ClInclude Include="..\view\CATextView.h" />
     <ClInclude Include="..\view\CAView.h" />
     <ClInclude Include="..\view\CAWebView.h" />

@@ -449,7 +449,7 @@ void CABatchView::removeViewFromAtlas(CAView *view)
     if (uIndex != UINT_MAX)
     {
         m_obDescendants.erase(uIndex);
-        unsigned int count = m_obDescendants.size();
+        unsigned int count = (unsigned int)m_obDescendants.size();
         
         for(; uIndex < count; ++uIndex)
         {

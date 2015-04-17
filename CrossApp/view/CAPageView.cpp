@@ -166,9 +166,9 @@ void CAPageView::setShowsScrollIndicators(bool var)
     m_bShowsScrollIndicators = var;
 }
 
-int CAPageView::getPageCount()
+unsigned int CAPageView::getPageCount()
 {
-    return m_pViews.size();
+    return (unsigned int)m_pViews.size();
 }
 
 void CAPageView::setCurrPage(int var, bool animated, bool listener)
@@ -213,9 +213,9 @@ void CAPageView::contentOffsetFinish(float dt)
 
 bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pTouches->count() > 0)
+    if (!m_vTouches.empty())
     {
-        m_pTouches->replaceObjectAtIndex(0, pTouch);
+        m_vTouches.replace(0, pTouch);
         return true;
     }
     
