@@ -397,12 +397,11 @@ void CATextView::insertText(const char * text, int len)
 
 void CATextView::willInsertText(const char* text, int len)
 {
-	execCurSelCharRange();
-	int iOldCurPos = m_iCurPos;
-	insertText(text, len);
-	m_curSelCharRange = std::make_pair(iOldCurPos, m_iCurPos);
-
-	showTextViewMark(getZZCRect());
+//	execCurSelCharRange();
+//	int iOldCurPos = m_iCurPos;
+//	insertText(text, len);
+//	m_curSelCharRange = std::make_pair(iOldCurPos, m_iCurPos);
+//	showTextViewMark(getZZCRect());
 }
 
 void CATextView::AndroidWillInsertText(int start, const char* str, int before, int count)
@@ -641,11 +640,6 @@ void CATextView::hideTextViewMark()
 
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	if (!m_vTouches.empty())
-	{
-		m_vTouches.replace(0, pTouch);
-	}
-
 	return CAScrollView::ccTouchBegan(pTouch, pEvent);
 }
 
