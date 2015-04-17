@@ -122,7 +122,7 @@ void CCEGLView::setIMEKeyboardReturnDone()
 void CCEGLView::setIMEKeyboardReturnEnter()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.returnKeyType =UIReturnKeyDone;
+    view.returnKeyType =UIReturnKeyDefault;
 }
 NS_CC_END
 

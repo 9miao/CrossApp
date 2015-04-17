@@ -103,13 +103,6 @@ public:
     
     CC_SYNTHESIZE(eKeyBoardInputType, m_nInputType, InputType);
     
-    inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
-    
-    inline int getKeyboardType () {return m_keyboardType; }
-    
-    inline void setKeyboardReturnType (eKeyBoardReturnType type) {m_keyBoardReturnType = type; }
-    
-    inline int getKeyboardReturnType () {return m_keyBoardReturnType; }
     
 protected:
 

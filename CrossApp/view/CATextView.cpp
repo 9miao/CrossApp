@@ -26,7 +26,6 @@ CATextView::CATextView()
 , m_cSpaceHolderColor(ccc4(193, 193, 193, 255))
 , m_nInputType(KEY_BOARD_INPUT_NORMAL)
 , m_keyboardType(KEY_BOARD_TYPE_NORMAL)
-, m_keyBoardReturnType(KEY_BOARD_RETURN_DONE)
 , m_szFontName("")
 , m_iFontSize(24)
 , m_iCurPos(0)
@@ -695,32 +694,10 @@ bool CATextView::attachWithIME()
 		CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
 		if (pGlView)
 		{
-#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID||CC_TARGET_PLATFORM==CC_PLATFORM_IOS)        
-			if (getKeyboardType() ==KEY_BOARD_TYPE_NORMAL)
-			{
-				pGlView->setIMEKeyboardDefault();
-			}
-			else if (getKeyboardType() ==KEY_BOARD_TYPE_NUMBER)
-			{
-				pGlView->setIMEKeyboardNumber();
-			}
-			else if(getKeyboardType() ==KEY_BOARD_TYPE_ALPHABET)
-			{
-				pGlView->setIMEKeyboardAlphabet();
-			}
-
-			if (getKeyboardReturnType() == KEY_BOARD_RETURN_SEND)
-			{
-				pGlView->setIMEKeyboardReturnSend();
-			}
-			else if (getKeyboardReturnType() == KEY_BOARD_RETURN_SEARCH)
-			{
-				pGlView->setIMEKeyboardReturnSearch();
-			}
-			else if (getKeyboardReturnType() == KEY_BOARD_RETURN_DONE)
-			{
-				pGlView->setIMEKeyboardReturnDone();
-			}
+#if( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
+            
+            pGlView->setIMEKeyboardReturnEnter();
+            
 #endif
 			m_pCursorMark->setVisible(true);
 			m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
