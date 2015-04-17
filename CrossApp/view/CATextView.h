@@ -75,18 +75,6 @@ public:
 	virtual void getKeyBoardHeight(int height);
 	virtual void getKeyBoradReturnCallBack();
 	virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-	virtual void deleteForward();
-	virtual void cursorMoveBackward(bool selected);
-	virtual void cursorMoveForward(bool selected);
-
-	virtual void copyToClipboard(std::string *content);
-	virtual void cutToClipboard(std::string *content);
-	virtual void pasteFromClipboard(const char *content);
-	virtual void selectAll();
-#endif
-
 	virtual const char* getContentText();
 	virtual void visit();
 
@@ -133,6 +121,19 @@ protected:
 
 	int getStringLength(const std::string &var);
 
+	int getCurrentByPointY(int y);
+
+	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
+
+	bool execCurSelCharRange();
+
+	std::pair<int, int> getLineAndPos(int iPos);
+
+	std::vector<CCRect> getZZCRect();
+
+	void showTextViewMark(const std::vector<CCRect>& vt);
+	void hideTextViewMark();
+
     inline virtual float maxSpeed(float dt);
     
     inline virtual float maxSpeedCache(float dt);
@@ -142,11 +143,22 @@ protected:
 public:
 
 	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 
 	virtual bool attachWithIME();
 
 	virtual bool detachWithIME();
     
+	virtual void selectAll();
+	virtual void cursorMoveBackward();
+	virtual void cursorMoveForward();
+	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt);
+	virtual void moveSelectCharsCancel(const CCPoint& pt);
+	virtual void moveArrowBtn(const CCPoint& pt);
+
+	virtual void copyToClipboard();
+	virtual void cutToClipboard();
+	virtual void pasteFromClipboard();
     
     virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
     
@@ -158,10 +170,12 @@ private:
 	CAScale9ImageView* m_pBackgroundView;
 
 	CAImageView* m_pImageView;
+	std::vector<CAImageView*> m_pTextViewMarkVect;
 
 	int m_iCurPos;
 	int m_iLineHeight;
 	std::vector<TextViewLineInfo> m_vLinesTextView;
+	std::pair<int, int> m_curSelCharRange;
     bool m_isTouchInSide;
 	bool m_bUpdateImage;
     eKeyBoardType m_keyboardType;
