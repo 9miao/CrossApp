@@ -349,9 +349,6 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         m_isTouchInSide = false;
         if (resignFirstResponder())
         {
-            
-            //m_pCursorMark->stopAllActions();
-			//m_pCursorMark->setVisible(false);
 			this->updateImage();
         }
     }
@@ -994,10 +991,10 @@ void CATextField::getKeyBoradReturnCallBack()
 
 void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
-    //m_pCursorMark->setVisible(false);
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 	execCurSelCharRange();
     this->resignFirstResponder();
+    m_pCursorMark->setVisible(false);
 }
 
 void CATextField::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
@@ -1013,15 +1010,7 @@ void CATextField::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
     if(m_isTouchInSide)
     {
-//        m_pCursorMark->setVisible(false);
         m_isTouchInSide = false;
-//        if (!isFirstResponder())
-        {
-            resignFirstResponder();
-            m_pCursorMark->setVisible(false);
-        }
-        
-        //CCLog("%d",resignFirstResponder());
     }
 }
 
