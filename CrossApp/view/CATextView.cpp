@@ -141,13 +141,22 @@ void CATextView::initMarkSprite()
 	{
 		m_pCursorMark = CAView::create();
 		m_pCursorMark->setColor(m_cCursorColor);
-		m_pCursorMark->setVisible(false);
-		m_pCursorMark->stopAllActions();
 		this->addSubview(m_pCursorMark);
-
-		m_pCursorMark->runAction(CCRepeatForever::create((CCActionInterval *)CCSequence::create(CCFadeOut::create(0.5f), CCFadeIn::create(0.5f), NULL)));
+        this->hideCursorMark();
 	}
 	m_pCursorMark->setFrame(CCRect(0, 0, 2, m_iLineHeight));
+}
+
+void CATextView::showCursorMark()
+{
+    m_pCursorMark->setVisible(true);
+    m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(0.8f, 1), 1048576));
+}
+
+void CATextView::hideCursorMark()
+{
+    m_pCursorMark->setVisible(false);
+    m_pCursorMark->stopAllActions();
 }
 
 void CATextView::updateImage()
@@ -269,7 +278,7 @@ void CATextView::setText(const std::string& var)
 	m_iCurPos = 0;
 	m_vLinesTextView.clear();
 	m_curSelCharRange = std::make_pair(0, 0);
-	insertText(var.c_str(), var.length());
+	insertText(var.c_str(), (int)var.length());
 	m_pTextViewDelegate = pTemp;
 }
 
@@ -405,13 +414,15 @@ void CATextView::willInsertText(const char* text, int len)
 
 void CATextView::AndroidWillInsertText(int start, const char* str, int before, int count)
 {
+    
 	CCAssert(str != NULL, "");
 	CCAssert(count > 0, "");
+    
 	std::string cszNewStr = str;
 	if (cszNewStr.size() >= m_szText.size())
 	{
 		cszNewStr = cszNewStr.substr(m_szText.size(), cszNewStr.size());
-		insertText(cszNewStr.c_str(), cszNewStr.size());
+		insertText(cszNewStr.c_str(), (int)cszNewStr.size());
 	}
 }
 
@@ -420,7 +431,7 @@ void CATextView::deleteBackward()
 	if (m_iCurPos == 0 || m_szText.empty())
 		return;
 
-	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, m_szText.c_str(), m_szText.length()));
+	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, m_szText.c_str(), (int)m_szText.length()));
 
 	int nDeleteLen = 1;
 	while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)))
@@ -453,15 +464,9 @@ void CATextView::getKeyBoradReturnCallBack()
 	}
 }
 
-void CATextView::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
-{
-	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
-	execCurSelCharRange();
-	this->resignFirstResponder();
-}
-
 const char* CATextView::getContentText()
 {
+    CCLog("-------%s",m_szText.c_str());
 	return m_szText.c_str();
 }
 
@@ -490,7 +495,7 @@ int CATextView::getCurrentByPointY(int y)
 	}
 	else if (iCurLine >= m_vLinesTextView.size())
 	{
-		iCurLine = m_vLinesTextView.size() - 1;
+		iCurLine = (int)m_vLinesTextView.size() - 1;
 	}
 	return iCurLine;
 }
@@ -541,7 +546,7 @@ bool CATextView::execCurSelCharRange()
 	setText(cszText);
 
 	m_iCurPos = iOldCurPos;
-	m_pCursorMark->setVisible(true);
+    this->showCursorMark();
 	calcCursorPosition();
 	return true;
 }
@@ -654,8 +659,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			becomeFirstResponder();
 			if (isFirstResponder())
 			{
-				m_pCursorMark->setVisible(true);
-				m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
+                this->showCursorMark();
 
 				int iCurLine = 0; int iCurPosX = 0;
 				calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
@@ -674,8 +678,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			m_isTouchInSide = false;
 			if (resignFirstResponder())
 			{
-				m_pCursorMark->setVisible(false);
-				m_pCursorMark->stopAllActions();
+                this->hideCursorMark();
 			}
 		}
 	}
@@ -699,8 +702,7 @@ bool CATextView::attachWithIME()
             pGlView->setIMEKeyboardReturnEnter();
             
 #endif
-			m_pCursorMark->setVisible(true);
-			m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
+            this->showCursorMark();
 			pGlView->setIMEKeyboardState(true);
 		}
 	}
@@ -717,8 +719,7 @@ bool CATextView::detachWithIME()
 		if (pGlView)
 		{
 			pGlView->setIMEKeyboardState(false);
-			m_pCursorMark->setVisible(false);
-			m_pCursorMark->stopAllActions();
+            this->hideCursorMark();
 		}
 	}
 	return bRet;
@@ -728,7 +729,7 @@ bool CATextView::detachWithIME()
 void CATextView::selectAll()
 {
 	m_curSelCharRange.first = 0;
-	m_curSelCharRange.second = m_iCurPos = m_szText.length();
+	m_curSelCharRange.second = m_iCurPos = (int)m_szText.length();
 }
 
 void CATextView::cursorMoveBackward()
@@ -736,7 +737,7 @@ void CATextView::cursorMoveBackward()
 	if (m_iCurPos == 0 || m_szText.empty())
 		return;
 
-	int iPrevPos = m_iCurPos, nMoveLen = 1;
+	int iPrevPos = (int)m_iCurPos, nMoveLen = 1;
 	while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nMoveLen)))
 	{
 		++nMoveLen;
@@ -752,7 +753,7 @@ void CATextView::cursorMoveForward()
 	if (m_iCurPos == m_szText.length() || m_szText.empty())
 		return;
 
-	int iPrevPos = m_iCurPos, nMoveLen = 1;
+	int iPrevPos = (int)m_iCurPos, nMoveLen = 1;
 	for (std::string::size_type n = m_iCurPos + nMoveLen; n < m_szText.length() && 0x80 == (0xC0 & m_szText.at(n));)
 	{
 		++nMoveLen;
@@ -783,7 +784,7 @@ void CATextView::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 	m_iCurPos = p;
 	calcCursorPosition();
 
-	m_pCursorMark->setVisible(false);
+    this->hideCursorMark();
 //	CATextArrowView::hideTextArrowView();
 //	hideSelectView();
 //	CATextSelViewEx* pSelCharsView = CATextSelViewEx::create();
@@ -830,7 +831,7 @@ void CATextView::cutToClipboard()
 void CATextView::pasteFromClipboard()
 {
 	std::string cszText = CAClipboard::getText();
-	insertText(cszText.c_str(), cszText.size());
+	insertText(cszText.c_str(), (int)cszText.size());
 }
 
 int CATextView::getStringLength(const std::string &var)
@@ -867,17 +868,24 @@ void CATextView::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
     if (m_isTouchInSide)
     {
-        m_pCursorMark->setVisible(true);
-        
+        this->showCursorMark();
     }
 }
+
+void CATextView::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
+{
+    m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
+    execCurSelCharRange();
+    
+}
+
 void CATextView::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
     if(m_isTouchInSide)
     {
         m_isTouchInSide = false;
-        resignFirstResponder();
-        m_pCursorMark->setVisible(false);
+        this->resignFirstResponder();
+        this->hideCursorMark();
     }
 }
 

@@ -108,6 +108,10 @@ protected:
 
 	void initMarkSprite();
 
+    void showCursorMark();
+    
+    void hideCursorMark();
+    
 	void updateImage();
 
 	void calcCursorPosition();

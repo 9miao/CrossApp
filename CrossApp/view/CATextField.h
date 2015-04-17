@@ -163,7 +163,11 @@ protected:
     int getStringLength(const std::string &var);
     static int getStringCharCount(const std::string &var);
     virtual void setContentSize(const CCSize& var);
+    
     void initMarkSprite();
+    void showCursorMark();
+    void hideCursorMark();
+    
 	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
@@ -211,7 +215,7 @@ private:
 
     bool m_isTouchInSide;
 	CAView* m_pCursorMark;
-	CAImageView* m_pTextViewMark;
+	CAView* m_pTextViewMark;
 	CCSize m_cImageSize;
 	eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;

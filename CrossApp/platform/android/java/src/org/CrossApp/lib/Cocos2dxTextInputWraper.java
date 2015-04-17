@@ -126,45 +126,33 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	
 	@Override
-	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
-		if ((this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit())||pActionID == EditorInfo.IME_ACTION_UNSPECIFIED) {
-			// user press the action button, delete all old text and insert new text
-			for (int i = this.mOriginText.length(); i > 0; i--) {
-				this.mCocos2dxGLSurfaceView.deleteBackward();
-				/*
-				if (BuildConfig.DEBUG) {
-					Log.d(TAG, "deleteBackward");
-				}
-				*/
-			}
-			String text = pTextView.getText().toString();
-
-			/* If user input nothing, translate "\n" to engine. */
-			if (text.compareTo("") == 0) {
-				text = "\n";
-			}
-			if ('\n' != text.charAt(text.length() - 1)) {
-				text += '\n';
-			}
-
-			final String insertText = text;
-			this.mCocos2dxGLSurfaceView.insertText(insertText);
-			/*
-			if (BuildConfig.DEBUG) {
-				Log.d(TAG, "insertText(" + insertText + ")");
-			}
-			*/
+	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) 
+	{
+		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() != pTextView)
+		{
+			return false;
 		}
-
-		  
 		
-		if (pActionID == EditorInfo.IME_ACTION_DONE) {
+		if(pKeyEvent.getAction() == KeyEvent.ACTION_DOWN)
+		{
+			return false;
+		}
+		
+		if (pActionID == EditorInfo.IME_ACTION_UNSPECIFIED) 
+		{
+			this.mCocos2dxGLSurfaceView.insertText("\n");
+		}
+		
+		if (pActionID == EditorInfo.IME_ACTION_DONE) 
+		{
 			KeyBoardReturnCallBack();	
 		}
-		if (pActionID == EditorInfo.IME_ACTION_SEARCH) {
+		if (pActionID == EditorInfo.IME_ACTION_SEARCH)
+{
 			KeyBoardReturnCallBack();
 		}
-		if (pActionID == EditorInfo.IME_ACTION_SEND) {
+		if (pActionID == EditorInfo.IME_ACTION_SEND)
+		{
 			KeyBoardReturnCallBack();		
 		}
 		return true;

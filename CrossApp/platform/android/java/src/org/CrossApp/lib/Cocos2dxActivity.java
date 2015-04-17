@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.CrossApp.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 import android.R.integer;
@@ -115,14 +116,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		  
         @Override  
         public void onReceive(Context context, Intent intent) {  
-            // TODO Auto-generated method stub  
-            //�ж����Ƿ���Ϊ�����仯��Broadcast Action  
+
             if(Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())){  
-                //��ȡ��ǰ����  
+
                 int level = intent.getIntExtra("level", 0);  
-                //�������̶ܿ�  
+       
                 int scale = intent.getIntExtra("scale", 100);  
-                //����ת�ɰٷֱ�    
+
                 currentBattery =level*100/ scale;
             }  
         }  
