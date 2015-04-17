@@ -155,6 +155,12 @@ _AgaginInitGlyphs:
 		return NULL;
 	}
 	delete[]pData;
+
+	if (std::string(pText).find("zhujian_g")!=-1)
+	{
+		pCAImage->saveToFile("c:\\xxx.png", true);
+	}
+	
     pCAImage->autorelease();
 	return pCAImage;
 }

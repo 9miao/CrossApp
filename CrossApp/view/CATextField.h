@@ -40,6 +40,7 @@ enum eKeyBoardReturnType
     KEY_BOARD_RETURN_DONE = 21,
     KEY_BOARD_RETURN_SEARCH,
     KEY_BOARD_RETURN_SEND,
+    KEY_BOARD_RETURN_ENTER,
 };
 
 class CATextField;
