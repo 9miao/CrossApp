@@ -172,8 +172,8 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
     unsigned char *data = NULL;
     do 
     {
-        w = (int)(w * CC_CONTENT_SCALE_FACTOR());
-        h = (int)(h * CC_CONTENT_SCALE_FACTOR());
+        w = (int)(w);
+        h = (int)(h);
 
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 
@@ -183,8 +183,8 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
 
         {
             //2014.7.21
-            powW = ccNextPOT(w);
-            powH = ccNextPOT(h);
+            powW = (unsigned int)ccNextPOT(w);
+            powH = (unsigned int)ccNextPOT(h);
         }
 
         data = (unsigned char *)malloc((int)(powW * powH * 4));

@@ -617,7 +617,7 @@
 		B0A7150C1A43F56600A85FB9 /* CAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebView.h; sourceTree = "<group>"; };
 		B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebViewImpl.cpp; sourceTree = "<group>"; };
 		B0A7157D1A43F6DE00A85FB9 /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
-		B0C3BD3C1ADE6811009BE71A /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
+		B0C3BD3C1ADE6811009BE71A /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
 		B0C3BD3D1ADE6811009BE71A /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
 		B0C3BD401ADE70B3009BE71A /* CAClipboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAClipboard.h; sourceTree = "<group>"; };
 		B0C3BD421ADE70B8009BE71A /* CAClipboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAClipboard.mm; sourceTree = "<group>"; };

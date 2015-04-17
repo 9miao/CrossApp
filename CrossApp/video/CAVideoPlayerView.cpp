@@ -116,13 +116,12 @@ void CAVideoPlayerView::setContentSize(const CCSize& size)
                                                    getFrame().size.width, getFrame().size.height);
     
     _pictRect = pictureRect;
-    setImageRect(_pictRect); 
+    setImageRect(_pictRect);
 }
 
 void CAVideoPlayerView::setImageCoords(CCRect rect)
 {
-    rect = CC_RECT_POINTS_TO_PIXELS(rect);
-    
+
 //    float atlasWidth = (float)_decoder->getFrameWidth();
 //    float atlasHeight = (float)_decoder->getFrameHeight();
     

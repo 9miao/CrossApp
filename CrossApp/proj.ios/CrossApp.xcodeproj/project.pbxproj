@@ -888,7 +888,7 @@
 		B0B553D1193485BE0065053D /* CAImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageCache.h; sourceTree = "<group>"; };
 		B0C3BD451ADE7264009BE71A /* CAClipboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAClipboard.h; sourceTree = "<group>"; };
 		B0C3BD471ADE726B009BE71A /* CAClipboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAClipboard.mm; sourceTree = "<group>"; };
-		B0C3BD491ADE7302009BE71A /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
+		B0C3BD491ADE7302009BE71A /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
 		B0C3BD4A1ADE7302009BE71A /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
 		B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTFontCache.cpp; sourceTree = "<group>"; };
 		B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTFontCache.h; sourceTree = "<group>"; };

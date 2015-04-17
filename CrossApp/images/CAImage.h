@@ -174,7 +174,7 @@ public:
     
     CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
     
-    CC_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSize)
+    CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
     
     CC_PROPERTY(CAGLProgram*, m_pShaderProgram, ShaderProgram);
     

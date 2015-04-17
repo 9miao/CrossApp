@@ -1852,8 +1852,6 @@ void CAView::setVertexRect(const CCRect& rect)
 
 void CAView::setImageCoords(CCRect rect)
 {
-    rect = CC_RECT_POINTS_TO_PIXELS(rect);
-    
     CAImage* tex = m_pobBatchView ? m_pobImageAtlas->getImage() : m_pobImage;
     if (! tex)
     {
