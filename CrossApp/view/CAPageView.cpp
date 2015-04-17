@@ -166,9 +166,9 @@ void CAPageView::setShowsScrollIndicators(bool var)
     m_bShowsScrollIndicators = var;
 }
 
-int CAPageView::getPageCount()
+unsigned int CAPageView::getPageCount()
 {
-    return m_pViews.size();
+    return (unsigned int)m_pViews.size();
 }
 
 void CAPageView::setCurrPage(int var, bool animated, bool listener)

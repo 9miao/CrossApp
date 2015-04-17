@@ -171,7 +171,7 @@ void CATextField::setText(const std::string &var)
 	m_vTextFiledChars.clear();
     CCPoint p = CCPoint(this->getCursorX() + m_iHoriMargins, m_obContentSize.height / 2);
     m_pCursorMark->setCenterOrigin(p);
-    insertText(var.c_str(), var.length());
+    insertText(var.c_str(), (int)var.length());
     m_pDelegate = pTemp;
     this->updateImage();
 }
@@ -419,7 +419,7 @@ void CATextField::insertText(const char * text, int len)
     
 	execCurSelCharRange();
     analyzeString(text, len);
-    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), m_sText.length()));
+    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), (int)m_sText.length()));
 
     adjustCursorMoveForward();
 }
@@ -439,7 +439,7 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
             }
         }
         std::string cszStrInsert = cszNewStr.substr(start, cszNewStr.size() - m_sText.size());
-        insertText(cszStrInsert.c_str(), cszStrInsert.size());
+        insertText(cszStrInsert.c_str(), (int)cszStrInsert.size());
     }
 }
 
@@ -484,7 +484,7 @@ void CATextField::deleteBackward()
     m_sText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
     m_iCurPos -= nDeleteLen;
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
-    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), m_sText.length()));
+    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), (int)m_sText.length()));
 	
 	m_vTextFiledChars.erase(m_vTextFiledChars.begin() + getStringCharCount(m_sText.substr(0, m_iCurPos)));
 	
@@ -596,7 +596,7 @@ void CATextField::selectAll()
 		return;
 
 	m_curSelCharRange.first = 0;
-	m_curSelCharRange.second = m_iCurPos = m_sText.length();
+	m_curSelCharRange.second = m_iCurPos = (int)m_sText.length();
 
 	/*CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool l, r;
@@ -736,7 +736,7 @@ void CATextField::cutToClipboard()
 void CATextField::pasteFromClipboard()
 {
 	std::string cszText = CAClipboard::getText();
-	insertText(cszText.c_str(), cszText.size());
+	insertText(cszText.c_str(), (int)cszText.size());
 
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
 	CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();

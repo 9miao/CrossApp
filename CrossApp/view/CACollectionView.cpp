@@ -431,7 +431,7 @@ void CACollectionView::reloadData()
 	}
     
 ;
-    int begin = m_rSectionRects.size();
+    int begin = (int)m_rSectionRects.size();
     m_rSectionRects.resize(m_rSectionRects.size() + m_nSections);
 	for (int i = 0; i < m_nSections; i++)
 	{
@@ -596,7 +596,7 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
 	for (itr = m_rSectionRects.begin(); itr != m_rSectionRects.end(); itr++)
 	{
 		CC_CONTINUE_IF(!rect.intersectsRect(*itr));
-		int i = itr - m_rSectionRects.begin();
+		int i = (int)(itr - m_rSectionRects.begin());
 		CAView* header = NULL;
 		CAView* footer = NULL;
 		float headerHeight = 0;

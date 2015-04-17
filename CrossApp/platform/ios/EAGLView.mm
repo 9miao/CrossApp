@@ -601,7 +601,7 @@ static EAGLView *view = 0;
         [markedText_ release];
     }
     const char * pszText = [markedText cStringUsingEncoding:NSUTF8StringEncoding];
-    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchWillInsertText(pszText, strlen(pszText));
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchWillInsertText(pszText, (int)strlen(pszText));
     markedText_ = markedText;
     [markedText_ retain];
 }
@@ -613,7 +613,7 @@ static EAGLView *view = 0;
         return;
     }
     const char * pszText = [markedText_ cStringUsingEncoding:NSUTF8StringEncoding];
-    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, (int)strlen(pszText));
     [markedText_ release];
     markedText_ = nil;
 }

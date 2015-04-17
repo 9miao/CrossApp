@@ -1241,7 +1241,7 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         
         png_read_end(png_ptr, NULL);
         
-        png_uint_32 channel = rowbytes/m_uPixelsWide;
+        png_uint_32 channel = (png_uint_32)rowbytes/m_uPixelsWide;
         
         // premultiplied alpha for RGBA8888
         if (channel == 4)
