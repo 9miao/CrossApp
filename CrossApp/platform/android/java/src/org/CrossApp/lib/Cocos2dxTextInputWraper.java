@@ -1,6 +1,7 @@
 
 package org.CrossApp.lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -126,7 +127,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 	
 	@Override
 	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
-		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit()) {
+		if ((this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit())||pActionID == EditorInfo.IME_ACTION_UNSPECIFIED) {
 			// user press the action button, delete all old text and insert new text
 			for (int i = this.mOriginText.length(); i > 0; i--) {
 				this.mCocos2dxGLSurfaceView.deleteBackward();
@@ -158,7 +159,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		  
 		
 		if (pActionID == EditorInfo.IME_ACTION_DONE) {
-				KeyBoardReturnCallBack();	
+			KeyBoardReturnCallBack();	
 		}
 		if (pActionID == EditorInfo.IME_ACTION_SEARCH) {
 			KeyBoardReturnCallBack();

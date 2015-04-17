@@ -72,7 +72,6 @@
 		B0621BD41AC3B851005EBCA7 /* FourthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621BB51AC3B851005EBCA7 /* FourthViewController.cpp */; };
 		B0621BD51AC3B851005EBCA7 /* SecondViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621BB71AC3B851005EBCA7 /* SecondViewController.cpp */; };
 		B0621BD61AC3B851005EBCA7 /* ThirdViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621BB91AC3B851005EBCA7 /* ThirdViewController.cpp */; };
-		B0621BE21AC3B871005EBCA7 /* animation in Resources */ = {isa = PBXBuildFile; fileRef = B0621BD81AC3B871005EBCA7 /* animation */; };
 		B0621BE31AC3B871005EBCA7 /* background in Resources */ = {isa = PBXBuildFile; fileRef = B0621BD91AC3B871005EBCA7 /* background */; };
 		B0621BE51AC3B871005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621BDB1AC3B871005EBCA7 /* fonts */; };
 		B0621BEA1AC3B871005EBCA7 /* tabbar_function in Resources */ = {isa = PBXBuildFile; fileRef = B0621BE01AC3B871005EBCA7 /* tabbar_function */; };
@@ -254,7 +253,6 @@
 		B0621BB81AC3B851005EBCA7 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		B0621BB91AC3B851005EBCA7 /* ThirdViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThirdViewController.cpp; sourceTree = "<group>"; };
 		B0621BBA1AC3B851005EBCA7 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
-		B0621BD81AC3B871005EBCA7 /* animation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animation; sourceTree = "<group>"; };
 		B0621BD91AC3B871005EBCA7 /* background */ = {isa = PBXFileReference; lastKnownFileType = folder; path = background; sourceTree = "<group>"; };
 		B0621BDB1AC3B871005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B0621BE01AC3B871005EBCA7 /* tabbar_function */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tabbar_function; sourceTree = "<group>"; };
@@ -497,7 +495,6 @@
 				B0621C101AC3C38B005EBCA7 /* information.json */,
 				B0621C111AC3C38B005EBCA7 /* loading.png */,
 				B0621C121AC3C38B005EBCA7 /* logo.png */,
-				B0621BD81AC3B871005EBCA7 /* animation */,
 				B0621BD91AC3B871005EBCA7 /* background */,
 				B0621BDB1AC3B871005EBCA7 /* fonts */,
 				B0621BE01AC3B871005EBCA7 /* tabbar_function */,
@@ -936,7 +933,6 @@
 				B04C0C091901207A009854FD /* json_valueiterator.inl in Resources */,
 				B01F71671951682600BA07A6 /* source_material in Resources */,
 				B0621BE51AC3B871005EBCA7 /* fonts in Resources */,
-				B0621BE21AC3B871005EBCA7 /* animation in Resources */,
 				B0621C171AC3C38B005EBCA7 /* logo.png in Resources */,
 				B0621BEA1AC3B871005EBCA7 /* tabbar_function in Resources */,
 				B01E807F1AD5219500301FC2 /* Images.xcassets in Resources */,
@@ -1036,8 +1032,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Danyi Feng (VE83T3M7CV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Danyi Feng (VE83T3M7CV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Li Ming (79VU7L3BQ3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Li Ming (79VU7L3BQ3)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1083,8 +1079,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Danyi Feng (VE83T3M7CV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Danyi Feng (VE83T3M7CV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Li Ming (79VU7L3BQ3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Li Ming (79VU7L3BQ3)";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;

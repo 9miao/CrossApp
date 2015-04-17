@@ -37,6 +37,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	private final static int KEY_BOARD_RETURNTYPE_DONE=21;
 	private final static int KEY_BOARD_RETURNTYPE_SEARCH=22;
 	private final static int KEY_BOARD_RETURNTYPE_SEND=23;
+	private final static int KEY_BOARD_RETURNTYPE_ENTER=25;
 	private final static int RESET_SELECTION_POSITION =24;
 	private final static int RESET_TEXT=13;
 
@@ -52,7 +53,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	private static Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
 	private static Cocos2dxTextInputWraper sCocos2dxTextInputWraper;
 
-	public Cocos2dxRenderer mCocos2dxRenderer;
+	private Cocos2dxRenderer mCocos2dxRenderer;
 	private Cocos2dxEditText mCocos2dxEditText;
 	private static Cocos2dxEditText text;
 	// ===========================================================
@@ -62,7 +63,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	public Cocos2dxGLSurfaceView(final Context context) {
 		super(context);
 
-		this.initView();	
+		this.initView();
 	}
 
 	public Cocos2dxGLSurfaceView(final Context context, final AttributeSet attrs) {
@@ -92,7 +93,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(msg.arg1);
 							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
 						//	
-							Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleOpenKeyPad();
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().length());
 //							CharSequence text1 = Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText();
 //							
@@ -133,7 +133,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 							imm.hideSoftInputFromWindow(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getWindowToken(), 0);
 							Cocos2dxGLSurfaceView.this.requestFocus();
-							Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleCloseKeyPad();
 							Log.d("GLSurfaceView", "HideSoftInput");
 						}
 						break;
@@ -169,7 +168,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					case KEY_BOARD_RETURNTYPE_DONE:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
 						{
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);//IME_FLAG_NO_ENTER_ACTION  IME_ACTION_DONE IME_ACTION_UNSPECIFIED
 						}
 						break;
 					case KEY_BOARD_RETURNTYPE_SEARCH:
@@ -182,6 +181,12 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
 						{
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
+						}
+						break;
+					case KEY_BOARD_RETURNTYPE_ENTER:
+						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
+						{
+							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
 						}
 						break;
 					case RESET_SELECTION_POSITION:
@@ -409,8 +414,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	 */
 	@Override
 	protected void onSizeChanged(final int pNewSurfaceWidth, final int pNewSurfaceHeight, final int pOldSurfaceWidth, final int pOldSurfaceHeight) {
-        if(!this.isInEditMode()) 
-        {
+        if(!this.isInEditMode()) {
             Log.e("SUN", "SurfaceView onSizeChanged ..."+pNewSurfaceWidth+"."+pNewSurfaceHeight+" old "+pOldSurfaceWidth+"."+pOldSurfaceHeight);
             
             ViewGroup.LayoutParams lp = getLayoutParams();
@@ -421,10 +425,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
             this.mCocos2dxRenderer.handleOnResume();
         }
 	}
-	
+
 	@Override
 	public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
-		
 		switch (pKeyCode) {
 			case KeyEvent.KEYCODE_BACK:
 			case KeyEvent.KEYCODE_MENU:
