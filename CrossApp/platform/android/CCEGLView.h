@@ -33,6 +33,8 @@ public:
     
     virtual void setIMEKeyboardReturnDone();
 
+    virtual void setIMEKeyboardReturnEnter();
+    
     void setIMECursorPos(int pos,const char* text);
     // static function
     /**

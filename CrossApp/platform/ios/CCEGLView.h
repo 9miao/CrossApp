@@ -37,6 +37,8 @@ public:
     
     virtual void setIMEKeyboardReturnDone();
     
+    virtual void setIMEKeyboardReturnEnter();
+    
     static CCEGLView* sharedOpenGLView();
 
 };

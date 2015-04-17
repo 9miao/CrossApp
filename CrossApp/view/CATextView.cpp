@@ -269,6 +269,7 @@ void CATextView::setText(const std::string& var)
 	m_szText.clear();
 	m_iCurPos = 0;
 	m_vLinesTextView.clear();
+    m_curSelCharRange = std::make_pair(0, 0);
 	insertText(var.c_str(), var.length());
 	m_pTextViewDelegate = pTemp;
 }
@@ -387,7 +388,7 @@ bool CATextView::canDetachWithIME()
 
 void CATextView::insertText(const char * text, int len)
 {
-    execCurSelCharRange();
+	execCurSelCharRange();
 	m_szText.insert(m_iCurPos, text, len);
  	m_iCurPos += len;
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
@@ -396,6 +397,7 @@ void CATextView::insertText(const char * text, int len)
 
 void CATextView::willInsertText(const char* text, int len)
 {
+	execCurSelCharRange();
 	int iOldCurPos = m_iCurPos;
 	insertText(text, len);
 	m_curSelCharRange = std::make_pair(iOldCurPos, m_iCurPos);
@@ -538,7 +540,6 @@ bool CATextView::execCurSelCharRange()
 
 	int iOldCurPos = m_curSelCharRange.first;
 	std::string cszText = m_szText.erase(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
-	m_curSelCharRange.first = m_curSelCharRange.second = 0;
 	setText(cszText);
 
 	m_iCurPos = iOldCurPos;
