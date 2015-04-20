@@ -686,6 +686,26 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     return backViewController;
 }
 
+void CANavigationController::popViewControllerFinish()
+{
+    CAViewController* backViewController = m_pViewControllers.back();
+    backViewController->viewDidDisappear();
+    backViewController->m_pNavigationController = NULL;
+    backViewController->removeViewFromSuperview();
+    backViewController->retain()->autorelease();
+    m_pViewControllers.popBack();
+    
+    m_pContainers.back()->removeFromSuperview();
+    m_pContainers.popBack();
+    
+    m_pSecondContainers.popBack();
+    
+    m_pNavigationBars.popBack();
+    
+    m_bSlidingMinX = m_pViewControllers.size() <= 1;
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+}
+
 // sprhawk@163.com: 2015-03-08
 void CANavigationController::popToRootViewControllerAnimated(bool animated)
 {
@@ -696,13 +716,10 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
     
     float x = this->getView()->getBounds().size.width;
     
-    size_t index = 0;
-    CAViewController* showViewController = m_pViewControllers.at(index);
+    CAViewController* showViewController = m_pViewControllers.front();
     showViewController->viewDidAppear();
-    
-    //    CAViewController* backViewController = m_pViewControllers.back();
-    
-    CAView* showContainer = m_pContainers.at(index);
+
+    CAView* showContainer = m_pContainers.front();
     showContainer->setVisible(true);
     showContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
     
@@ -737,61 +754,23 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
 // sprhawk@163.com: 2015-03-08
 void CANavigationController::popToRootViewControllerFinish()
 {
-    CAViewController* backViewController = m_pViewControllers.back();
-    backViewController->viewDidDisappear();
-    backViewController->m_pNavigationController = NULL;
-    backViewController->removeViewFromSuperview();
-    backViewController->retain()->autorelease();
-    m_pViewControllers.popBack();
-    if (m_pViewControllers.size() > 1) {
-        for (CAVector<CAViewController*>::iterator i = m_pViewControllers.begin() + 1; i != m_pViewControllers.end(); i ++) {
-            backViewController = *i;
-            backViewController->m_pNavigationController = NULL;
-            backViewController->removeViewFromSuperview();
-            backViewController->retain()->autorelease();
-            m_pViewControllers.erase(i);
-        }
-    }
-
-    CAView* backContainer = m_pContainers.back();
-    backContainer->removeFromSuperview();
-    m_pContainers.popBack();
-    
-    if (m_pContainers.size() > 1) {
-        for (CAVector<CAView *>::iterator i = m_pContainers.begin() + 1; i != m_pContainers.end(); i ++) {
-            CAView* backContainer = *i;
-            backContainer->removeFromSuperview();
-            m_pContainers.erase(i);
-        }
+    while (m_pViewControllers.size() > 1)
+    {
+        CAViewController* backViewController = m_pViewControllers.back();
+        backViewController->viewDidDisappear();
+        backViewController->m_pNavigationController = NULL;
+        backViewController->removeViewFromSuperview();
+        m_pViewControllers.popBack();
+        
+        m_pContainers.back()->removeFromSuperview();
+        m_pContainers.popBack();
+        
+        m_pSecondContainers.popBack();
+        
+        m_pNavigationBars.popBack();
     }
     
-    m_pNavigationBars.popBack();
-    if (m_pNavigationBars.size() > 1) {
-        for (CAVector<CANavigationBar *>::iterator i = m_pNavigationBars.begin() + 1; i != m_pNavigationBars.end(); i ++) {
-            m_pNavigationBars.erase(i);            
-        }
-    }
-    
-    m_bSlidingMinX = m_pViewControllers.size() <= 1;
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
-}
-
-void CANavigationController::popViewControllerFinish()
-{
-    CAViewController* backViewController = m_pViewControllers.back();
-    backViewController->viewDidDisappear();
-    backViewController->m_pNavigationController = NULL;
-    backViewController->removeViewFromSuperview();
-    backViewController->retain()->autorelease();
-    m_pViewControllers.popBack();
-    
-    CAView* backContainer = m_pContainers.back();
-    backContainer->removeFromSuperview();
-    m_pContainers.popBack();
-    
-    m_pNavigationBars.popBack();
-    
-    m_bSlidingMinX = m_pViewControllers.size() <= 1;
+    m_bSlidingMinX = true;
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 

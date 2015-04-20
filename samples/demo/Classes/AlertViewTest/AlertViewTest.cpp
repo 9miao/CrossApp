@@ -38,6 +38,14 @@ void AlertViewTest::respondTouch(CAControl* btn ,CCPoint point)
 	{
 		alertView->addButton("blue");
 	}
+    alertView->addButton("1");
+    alertView->addButton("2");
+    alertView->addButton("3");
+    alertView->addButton("4");
+    alertView->addButton("5");
+    alertView->addButton("6");
+    alertView->addButton("7");
+    
 	alertView->show();
 	alertView->setTarget(this, CAAlertView_selector(AlertViewTest::alertViewCallback));
 }

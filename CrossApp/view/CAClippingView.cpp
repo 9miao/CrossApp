@@ -24,7 +24,7 @@ static void setProgram(CAView *n, CAGLProgram *p)
 
 CAClippingView::CAClippingView()
 : m_pStencil(NULL)
-, m_fAlphaThreshold(0.0f)
+, m_fAlphaThreshold(1.0f)
 , m_bInverted(false)
 {}
 
@@ -72,7 +72,7 @@ bool CAClippingView::init(CAView *pStencil)
 {
     this->setStencil(pStencil);
     
-    m_fAlphaThreshold = 1;
+    m_fAlphaThreshold = 1.0f;
     m_bInverted = false;
 
     static bool once = true;
@@ -81,7 +81,7 @@ bool CAClippingView::init(CAView *pStencil)
         glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
         if (g_sStencilBits <= 0)
         {
-            CCLOG("Stencil buffer is not enabled.");
+            //"Stencil buffer is not enabled."
         }
         once = false;
     }

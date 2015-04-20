@@ -8,8 +8,7 @@ static CAPoolManager* s_pPoolManager = NULL;
 
 CAAutoreleasePool::CAAutoreleasePool(void)
 {
-    m_pManagedObjectArray = new CCArray();
-    m_pManagedObjectArray->init();
+    m_pManagedObjectArray = new std::vector<CAObject*>();
 }
 
 CAAutoreleasePool::~CAAutoreleasePool(void)
@@ -19,45 +18,45 @@ CAAutoreleasePool::~CAAutoreleasePool(void)
 
 void CAAutoreleasePool::addObject(CAObject* pObject)
 {
-    m_pManagedObjectArray->addObject(pObject);
+    m_pManagedObjectArray->push_back(pObject);
 
-    CCAssert(pObject->m_uReference > 1, "reference count should be greater than 1");
+    CCAssert(pObject->m_uReference > 0, "reference count should be greater than 0");
     ++(pObject->m_uAutoReleaseCount);
-    pObject->release(); // no ref count, in this case autorelease pool added.
 }
 
 void CAAutoreleasePool::removeObject(CAObject* pObject)
 {
     for (unsigned int i = 0; i < pObject->m_uAutoReleaseCount; ++i)
     {
-        m_pManagedObjectArray->removeObject(pObject, false);
+        std::vector<CAObject*>::iterator itr = std::find(m_pManagedObjectArray->begin(),
+                                                         m_pManagedObjectArray->end(),
+                                                         pObject);
+        if (itr != m_pManagedObjectArray->end())
+        {
+            m_pManagedObjectArray->erase(itr);
+        }
     }
 }
 
 void CAAutoreleasePool::clear()
 {
-    if(m_pManagedObjectArray->count() > 0)
+    if(!m_pManagedObjectArray->empty())
     {
-        //CAAutoreleasePool* pReleasePool;
 #ifdef _DEBUG
-        int nIndex = m_pManagedObjectArray->count() - 1;
+        size_t nIndex = m_pManagedObjectArray->size() - 1;
 #endif
 
-        CAObject* pObj = NULL;
-        CCARRAY_FOREACH_REVERSE(m_pManagedObjectArray, pObj)
+        for (std::vector<CAObject*>::reverse_iterator itr=m_pManagedObjectArray->rbegin();
+             itr!=m_pManagedObjectArray->rend();
+             itr++)
         {
-            if(!pObj)
-                break;
-
-            --(pObj->m_uAutoReleaseCount);
-            //(*it)->release();
-            //delete (*it);
+            --((*itr)->m_uAutoReleaseCount);
+            (*itr)->release();
 #ifdef _DEBUG
             nIndex--;
 #endif
         }
-
-        m_pManagedObjectArray->removeAllObjects();
+        m_pManagedObjectArray->clear();
     }
 }
 
@@ -84,8 +83,7 @@ void CAPoolManager::purgePoolManager()
 
 CAPoolManager::CAPoolManager()
 {
-    m_pReleasePoolStack = new CCArray();    
-    m_pReleasePoolStack->init();
+    m_pReleasePoolStack = new CADeque<CAAutoreleasePool*>();
     m_pCurReleasePool = 0;
 }
 
@@ -96,23 +94,20 @@ CAPoolManager::~CAPoolManager()
  
      // we only release the last autorelease pool here 
     m_pCurReleasePool = 0;
-     m_pReleasePoolStack->removeObjectAtIndex(0);
+    m_pReleasePoolStack->popFront();
  
-     CC_SAFE_DELETE(m_pReleasePoolStack);
+    CC_SAFE_DELETE(m_pReleasePoolStack);
 }
 
 void CAPoolManager::finalize()
 {
-    if(m_pReleasePoolStack->count() > 0)
+    if(!m_pReleasePoolStack->empty())
     {
-        //CAAutoreleasePool* pReleasePool;
-        CAObject* pObj = NULL;
-        CCARRAY_FOREACH(m_pReleasePoolStack, pObj)
+        for (CADeque<CAAutoreleasePool*>::iterator itr=m_pReleasePoolStack->begin();
+             itr!=m_pReleasePoolStack->end();
+             itr++)
         {
-            if(!pObj)
-                break;
-            CAAutoreleasePool* pPool = (CAAutoreleasePool*)pObj;
-            pPool->clear();
+            (*itr)->clear();
         }
     }
 }
@@ -122,7 +117,7 @@ void CAPoolManager::push()
     CAAutoreleasePool* pPool = new CAAutoreleasePool();       //ref = 1
     m_pCurReleasePool = pPool;
 
-    m_pReleasePoolStack->addObject(pPool);                   //ref = 2
+    m_pReleasePoolStack->pushBack(pPool);                   //ref = 2
 
     pPool->release();                                       //ref = 1
 }
@@ -130,16 +125,11 @@ void CAPoolManager::push()
 void CAPoolManager::pop()
 {
     CC_RETURN_IF(! m_pCurReleasePool);
-    
-    int nCount = m_pReleasePoolStack->count();
 
     m_pCurReleasePool->clear();
- 
-    if(nCount > 1)
-    {
-        m_pReleasePoolStack->removeObjectAtIndex(nCount-1);
-        m_pCurReleasePool = (CAAutoreleasePool*)m_pReleasePoolStack->objectAtIndex(nCount - 2);
-    }
+    m_pReleasePoolStack->popBack();
+
+    m_pCurReleasePool = m_pReleasePoolStack->back();
 
     /*m_pCurReleasePool = NULL;*/
 }

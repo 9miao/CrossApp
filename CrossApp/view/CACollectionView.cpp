@@ -181,11 +181,11 @@ void CACollectionView::setShowsScrollIndicators(bool var)
 
 bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	if (m_pTouches->count() > 0)
-	{
-		m_pTouches->replaceObjectAtIndex(0, pTouch);
-		return true;
-	}
+    if (!m_vTouches.empty())
+    {
+        m_vTouches.replace(0, pTouch);
+        return true;
+    }
 	bool isInertia = m_tInertia.getLength() < 1.0f;
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
 		return false;
@@ -227,7 +227,7 @@ bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
 	CC_RETURN_IF(m_bscrollEnabled == false);
-
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchMoved(pTouch, pEvent);
 
 	if (m_pHighlightedCollectionCells)
@@ -246,6 +246,7 @@ void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchEnded(pTouch, pEvent);
 
 	if (m_pHighlightedCollectionCells)
@@ -303,6 +304,7 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 void CACollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchCancelled(pTouch, pEvent);
 
 	if (m_pHighlightedCollectionCells)
@@ -429,7 +431,7 @@ void CACollectionView::reloadData()
 	}
     
 ;
-    int begin = m_rSectionRects.size();
+    int begin = (int)m_rSectionRects.size();
     m_rSectionRects.resize(m_rSectionRects.size() + m_nSections);
 	for (int i = 0; i < m_nSections; i++)
 	{
@@ -594,7 +596,7 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
 	for (itr = m_rSectionRects.begin(); itr != m_rSectionRects.end(); itr++)
 	{
 		CC_CONTINUE_IF(!rect.intersectsRect(*itr));
-		int i = itr - m_rSectionRects.begin();
+		int i = (int)(itr - m_rSectionRects.begin());
 		CAView* header = NULL;
 		CAView* footer = NULL;
 		float headerHeight = 0;

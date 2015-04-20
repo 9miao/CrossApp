@@ -24,9 +24,9 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_fSeparateWidth(1)
     , m_iSelectedIndex(-1)
     , m_iTouchIndex(0)
-    , m_cTextColor(ccc4(50, 190, 250, 255))
+    , m_cTextColor(ccc4(54, 195, 240, 255))
     , m_cTextSelectedColor(CAColor_white)
-    , m_cTintColor(ccc4(50, 190, 250, 255))
+    , m_cTintColor(ccc4(54, 195, 240, 255))
     , m_pTarget(NULL)
     , m_pCallFunc(NULL)
     , m_pSegmentItemBackgroundImage(NULL)
@@ -502,7 +502,7 @@ void CASegmentedControl::createSeparate()
 {
     CCRect frame = CCRect(0, 0, m_fSeparateWidth, this->getBounds().size.height);
     float length = 0;
-    int count = m_vSegments.size();
+    size_t count = m_vSegments.size();
 	CAVector<CAView *>::iterator itr = m_vSegments.begin();
     for(; itr != m_vSegments.end() && count != 1; ++ itr, --count)
     {
@@ -794,8 +794,8 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
         CCRect rect;
         rect.origin = CCPoint(x, 0);
         rect.size = segment->getBounds().size;
-        
-        imageView = CAImageView::createWithImage(render->getSprite()->getImage());
+
+        imageView = CAImageView::createWithImage(render->getImageView()->getImage());
         imageView->setRotationX(180.0f);
         imageView->setFrame(rect);
         imageView->setImageRect(rect, false, rect.size);

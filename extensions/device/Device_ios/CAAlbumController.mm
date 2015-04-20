@@ -99,9 +99,14 @@
     void* _data = malloc([data length]);
     [data getBytes:_data];
     
-
-    CAImage *__image = CAImage::createWithRawDataNoCache((const unsigned char*)_data, CAImage::PixelFormat_RGBA8888, fiximage.size.height, fiximage.size.width);
-    cam->getSelectedImage(__image);
+    CAImage *__image = new CAImage();
+    __image->initWithImageData((unsigned char*)_data, data.length);
+    if (cam)
+    {
+        cam->getSelectedImage(__image);
+    }
+    __image->release();
+    free(_data);
     
     [picker dismissViewControllerAnimated:YES completion:^
         {

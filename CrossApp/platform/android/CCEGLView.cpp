@@ -97,9 +97,14 @@ void CCEGLView::setIMEKeyboardReturnDone()
     setKeyboardReturnType(21);
 }
 
-void CCEGLView::setIMECursorPos(int pos)
+void CCEGLView::setIMEKeyboardReturnEnter()
 {
-    setCursorPos(pos);
+    setKeyboardReturnType(25);
+}
+
+void CCEGLView::setIMECursorPos(int pos,const char* text)
+{
+    setCursorPos(pos,text);
 }
 NS_CC_END
 

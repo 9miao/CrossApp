@@ -416,11 +416,14 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     if (!this->isTouchClick())
         return;
     
-    this->setTouchUpSide(point);
     
     if (getBounds().containsPoint(point))
     {
         this->setTouchUpInSide(point);
+    }
+    else
+    {
+        this->setTouchUpOutSide(point);
     }
 
     do
@@ -611,11 +614,11 @@ void CAButton::setTouchUpInSide(const CCPoint& point)
     }
 }
 
-void CAButton::setTouchUpSide(const CCPoint& point)
+void CAButton::setTouchUpOutSide(const CCPoint& point)
 {
-    if (m_pTarget[CAControlEventTouchUpSide] && m_selTouch[CAControlEventTouchUpSide])
+    if (m_pTarget[CAControlEventTouchUpOutSide] && m_selTouch[CAControlEventTouchUpOutSide])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchUpSide]->*m_selTouch[CAControlEventTouchUpSide])(this,point);
+        ((CAObject *)m_pTarget[CAControlEventTouchUpOutSide]->*m_selTouch[CAControlEventTouchUpOutSide])(this,point);
     }
 }
 

@@ -1768,10 +1768,6 @@ void CAView::setImage(CAImage* image)
         CC_SAFE_RETAIN(image);
         CC_SAFE_RELEASE(m_pobImage);
         m_pobImage = image;
-        if (m_pobImage)
-        {
-            m_pobImage->premultipliedAImageData();
-        }
         updateBlendFunc();
         this->updateDraw();
     }
@@ -1856,8 +1852,6 @@ void CAView::setVertexRect(const CCRect& rect)
 
 void CAView::setImageCoords(CCRect rect)
 {
-    rect = CC_RECT_POINTS_TO_PIXELS(rect);
-    
     CAImage* tex = m_pobBatchView ? m_pobImageAtlas->getImage() : m_pobImage;
     if (! tex)
     {

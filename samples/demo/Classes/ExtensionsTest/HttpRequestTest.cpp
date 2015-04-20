@@ -78,12 +78,12 @@ void HttpRequestTest::requestHttpInfo(CAControl* btn, CCPoint point)
 	{
 		url = inputWebsite->getText();
 	}
-	CCHttpRequest* request = new CCHttpRequest();
+	CAHttpRequest* request = new CAHttpRequest();
 	request->setTag("Getpage");
 	request->setRequestType(CCHttpRequest::kHttpGet);
 	request->setUrl(url.c_str());
 	request->setResponseCallback(this,httpresponse_selector(HttpRequestTest::requestResult));
-	CCHttpClient* httpClient = CCHttpClient::getInstance();
+	CAHttpClient* httpClient = CAHttpClient::getInstance();
 	httpClient->setTimeoutForConnect(30);
 	httpClient->send(request); 
 	request->release();
@@ -95,7 +95,7 @@ void HttpRequestTest::loadingAnim(float interval)
 	loadImage->setRotation(cout * 3);
 }
 
-void HttpRequestTest::requestResult(CCHttpClient* client, CCHttpResponse* response)
+void HttpRequestTest::requestResult(CAHttpClient* client, CAHttpResponse* response)
 { 
 	if (!response->isSucceed())
 	{

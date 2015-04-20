@@ -15,7 +15,7 @@ public:
 
 private:
 	void requestHttpInfo(CAControl* btn,CCPoint point);
-	void requestResult(CCHttpClient* client, CCHttpResponse* response);
+	void requestResult(CAHttpClient* client, CAHttpResponse* response);
 	void previousViewController(CAControl* btn, CCPoint point);
 	void nextViewController(CAControl* btn, CCPoint point);
 

@@ -29,7 +29,7 @@ void CATempTypeFont::initTempTypeFont(unsigned long nSize)
 	else
 	{
 		m_face = NULL;
-		initFreeTypeFont("arial", nSize);
+		initFreeTypeFont("arial.ttf", nSize);
 		m_CurFontFace = m_face;
 		m_mTempFontMap[nSize] = m_CurFontFace;
 	}

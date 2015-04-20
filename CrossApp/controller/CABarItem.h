@@ -89,9 +89,9 @@ public:
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pTitleViewImage, TitleViewImage);
     
-    CC_SYNTHESIZE_READONLY(CCArray*, m_pLeftButtonItems, LeftButtonItems);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CAObject*>, m_vLeftButtonItems, LeftButtonItems);
     
-    CC_SYNTHESIZE_READONLY(CCArray*, m_pRightButtonItems,RightButtonItems);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CAObject*>, m_vRightButtonItems,RightButtonItems);
     
     CC_PROPERTY_IS(bool, m_bShowGoBackButton, ShowGoBackButton);
 };

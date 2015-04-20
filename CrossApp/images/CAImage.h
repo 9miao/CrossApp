@@ -30,7 +30,7 @@ typedef struct _ccTexParams {
 class CC_DLL CAImage : public CAObject
 {
 public:
-
+    
     typedef enum
     {
         PixelFormat_RGBA8888 = 0,
@@ -64,24 +64,24 @@ public:
         //! Unknown format
         UNKOWN
     } Format;
-
-    CAImage();
-
-    virtual ~CAImage();
-
-	static CAImage* createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions,
-		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool isForTextField = false, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false);
     
-	static int getFontHeight(const char* pFontName, unsigned long nSize);
+    CAImage();
+    
+    virtual ~CAImage();
+    
+    static CAImage* createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions,
+                                     CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool isForTextField = false, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false);
+    
+    static int getFontHeight(const char* pFontName, unsigned long nSize);
     
     static int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& pText);
-
-	static int cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth);
     
-	static int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth, int iLineSpace = 0, bool bWordWrap = true);
+    static int cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth);
     
-	static CAImage* create(const std::string& file);
-
+    static int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth, int iLineSpace = 0, bool bWordWrap = true);
+    
+    static CAImage* create(const std::string& file);
+    
     static CAImage* createWithImageDataNoCache(const unsigned char * data, unsigned long lenght);
     
     static CAImage* createWithImageData(const unsigned char * data, unsigned long lenght, const std::string& key);
@@ -98,7 +98,9 @@ public:
                                       const std::string& key);
     
     bool initWithImageFile(const std::string& file);
-
+    
+    bool initWithImageFileThreadSafe(const std::string& fullPath);
+    
     bool initWithImageData(const unsigned char * data, unsigned long dataLen);
     
     bool initWithRawData(const unsigned char * data,
@@ -107,33 +109,33 @@ public:
                          unsigned int pixelsHigh);
     
     const char* description(void);
-
+    
     void releaseData(void *data);
-
+    
     void drawAtPoint(const CCPoint& point);
-
+    
     void drawInRect(const CCRect& rect);
     
     bool initWithETCFile(const char* file);
-
+    
     void setTexParameters(ccTexParams* texParams);
-
+    
     void setAntiAliasTexParameters();
-
+    
     void setAliasTexParameters();
-
+    
     void generateMipmap();
-
+    
     const char* stringForFormat();
-
-    unsigned int bitsPerPixelForFormat();  
-
+    
+    unsigned int bitsPerPixelForFormat();
+    
     unsigned int bitsPerPixelForFormat(CAImage::PixelFormat format);
-
+    
     static void setDefaultAlphaPixelFormat(CAImage::PixelFormat format);
-
+    
     static CAImage::PixelFormat defaultAlphaPixelFormat();
-
+    
     const CCSize& getContentSizeInPixels();
     
     bool hasPremultipliedAlpha();
@@ -159,7 +161,7 @@ public:
     bool isWebp(const unsigned char * data, unsigned long dataLen);
     bool isPvr(const unsigned char * data, unsigned long dataLen);
     bool isEtc(const unsigned char * data, unsigned long dataLen);
-
+    
     CC_PROPERTY_READONLY_PASS_BY_REF(CAImage::PixelFormat, m_ePixelFormat, PixelFormat)
     
     CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
@@ -172,7 +174,7 @@ public:
     
     CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
     
-    CC_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSize)
+    CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
     
     CC_PROPERTY(CAGLProgram*, m_pShaderProgram, ShaderProgram);
     
@@ -182,8 +184,8 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned long, m_nDataLenght, DataLenght);
     
-    bool initWithImageFileThreadSafe(const std::string& fullPath);
     void premultipliedAImageData();
+    
     void repremultipliedAImageData();
     
 protected:
@@ -193,10 +195,10 @@ protected:
     bool initWithTiffData(const unsigned char * data, unsigned long dataLen);
     bool initWithWebpData(const unsigned char * data, unsigned long dataLen);
     bool initWithETCData(const unsigned char * data, unsigned long dataLen);
-
+    
     bool saveImageToPNG(const std::string& filePath, bool isToRGB);
     bool saveImageToJPG(const std::string& filePath);
-
+    
     void convertToRawData();
     
     CAImage::PixelFormat convertDataToFormat(const unsigned char* data,
@@ -253,6 +255,7 @@ protected:
     void convertI8ToRGBA8888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
     void convertAI88ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
     void convertI8ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
+    
     
 protected:
     
