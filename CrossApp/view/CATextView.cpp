@@ -188,7 +188,7 @@ void CATextView::updateImage()
 	{
 		m_vLinesTextView.clear();
 	}
-    m_pImageView->setColor(CAColor_black);
+    m_pImageView->setColor(m_cFontColor);
 	m_pImageView->setImage(image);
     CCRect rect = CCRectZero;
     rect.size = image->getContentSize();
