@@ -43,6 +43,7 @@ CATextField::CATextField()
 , m_iVertMargins(0)
 , m_pBackgroundView(NULL)
 , m_isTouchInSide(false)
+, m_keyBoardReturnType(KEY_BOARD_RETURN_DONE)
 {
 
 	m_iFontHeight = CAImage::getFontHeight("", m_iFontSize);
@@ -119,8 +120,7 @@ bool CATextField::init()
     }
     
     this->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png")));
-	
-	this->m_pTextViewMark = CAImageView::createWithImage(CAImage::create("source_material/zhezhao.png"));
+    this->m_pTextViewMark = CAView::createWithColor(ccc4(60, 120, 240, 127));
 	this->addSubview(m_pTextViewMark);
 	m_pTextViewMark->setVisible(false);
 
@@ -133,11 +133,23 @@ void CATextField::initMarkSprite()
     {
         m_pCursorMark = CAView::create();
         m_pCursorMark->setColor(m_cCursorColor);
-        m_pCursorMark->setVisible(false);
         this->addSubview(m_pCursorMark);
+        this->hideCursorMark();
     }
 
     m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, _px(2), CAImage::getFontHeight("", m_iFontSize)));
+}
+
+void CATextField::showCursorMark()
+{
+    m_pCursorMark->setVisible(true);
+    m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(0.8f, 1), 1048576));
+}
+
+void CATextField::hideCursorMark()
+{
+    m_pCursorMark->setVisible(false);
+    m_pCursorMark->stopAllActions();
 }
 
 void CATextField::setFontSize(int var)
@@ -171,7 +183,7 @@ void CATextField::setText(const std::string &var)
 	m_vTextFiledChars.clear();
     CCPoint p = CCPoint(this->getCursorX() + m_iHoriMargins, m_obContentSize.height / 2);
     m_pCursorMark->setCenterOrigin(p);
-    insertText(var.c_str(), var.length());
+    insertText(var.c_str(), (int)var.length());
     m_pDelegate = pTemp;
     this->updateImage();
 }
@@ -250,8 +262,7 @@ bool CATextField::attachWithIME()
                 pGlView->setIMEKeyboardReturnDone();
             }
 #endif
-            m_pCursorMark->setVisible(true);
-            //m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
+            this->showCursorMark();
             m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
             pGlView->setIMEKeyboardState(true);
         }
@@ -270,8 +281,7 @@ bool CATextField::detachWithIME()
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(false);
-            //m_pCursorMark->stopAllActions();
-            m_pCursorMark->setVisible(false);
+            this->hideCursorMark();
         }
     }
     return bRet;
@@ -323,8 +333,7 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		becomeFirstResponder();
 		if (isFirstResponder())
         {
-			//m_pCursorMark->setVisible(true);
-            //m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
+            this->showCursorMark();
             if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
             {
                 if (m_sText.empty())
@@ -349,9 +358,6 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         m_isTouchInSide = false;
         if (resignFirstResponder())
         {
-            
-            //m_pCursorMark->stopAllActions();
-			//m_pCursorMark->setVisible(false);
 			this->updateImage();
         }
     }
@@ -418,7 +424,7 @@ void CATextField::insertText(const char * text, int len)
     
 	execCurSelCharRange();
     analyzeString(text, len);
-    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), m_sText.length()));
+    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), (int)m_sText.length()));
 
     adjustCursorMoveForward();
 }
@@ -438,7 +444,7 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
             }
         }
         std::string cszStrInsert = cszNewStr.substr(start, cszNewStr.size() - m_sText.size());
-        insertText(cszStrInsert.c_str(), cszStrInsert.size());
+        insertText(cszStrInsert.c_str(), (int)cszStrInsert.size());
     }
 }
 
@@ -483,7 +489,7 @@ void CATextField::deleteBackward()
     m_sText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
     m_iCurPos -= nDeleteLen;
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
-    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), m_sText.length()));
+    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), (int)m_sText.length()));
 	
 	m_vTextFiledChars.erase(m_vTextFiledChars.begin() + getStringCharCount(m_sText.substr(0, m_iCurPos)));
 	
@@ -595,13 +601,13 @@ void CATextField::selectAll()
 		return;
 
 	m_curSelCharRange.first = 0;
-	m_curSelCharRange.second = m_iCurPos = m_sText.length();
+	m_curSelCharRange.second = m_iCurPos = (int)m_sText.length();
 
 	/*CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool l, r;
 	CCRect cc = getZZCRect(l, r);
 	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), this, l, r);
-	m_pCursorMark->setVisible(false);
+	this->hideCursorMark();
 	CATextArrowView::hideTextArrowView();
 
 	CATextToolBar* pTextToolBar = CATextToolBar::createWithText(UTF8("¼ôÇÐ"), UTF8("¿½±´"), UTF8("Õ³Ìù"), NULL);
@@ -642,7 +648,7 @@ void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 	bool ll, rr;
 	CCRect cc = convertRectToWorldSpace(getZZCRect(ll, rr));
 	pSelCharsView->showTextSelView(cc, this, ll, rr);
-	m_pCursorMark->setVisible(false);
+	this->hideCursorMark();
 	CATextArrowView::hideTextArrowView();*/
 }
 
@@ -659,8 +665,7 @@ void CATextField::moveArrowBtn(const CCPoint& pt)
 		return;
 
 
-	m_pCursorMark->setVisible(true);
-	//m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(1.0f, 1), 1048576));
+    this->showCursorMark();
 	
 	int l, r, p;
 	calculateSelChars(convertToNodeSpace(pt), l, r, p);
@@ -735,7 +740,7 @@ void CATextField::cutToClipboard()
 void CATextField::pasteFromClipboard()
 {
 	std::string cszText = CAClipboard::getText();
-	insertText(cszText.c_str(), cszText.size());
+	insertText(cszText.c_str(), (int)cszText.size());
 
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
 	CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
@@ -757,7 +762,7 @@ bool CATextField::execCurSelCharRange()
 	setText(cszText);
 
 	m_iCurPos = iOldCurPos;
-	m_pCursorMark->setVisible(true);
+    this->showCursorMark();
 	adjustCursorMoveBackward();
 	return true;
 }
@@ -992,36 +997,27 @@ void CATextField::getKeyBoradReturnCallBack()
     }
 }
 
-void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
-{
-    //m_pCursorMark->setVisible(false);
-	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
-	execCurSelCharRange();
-    this->resignFirstResponder();
-}
-
 void CATextField::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
     if (m_isTouchInSide)
     {
-        m_pCursorMark->setVisible(true);
-        
+        this->showCursorMark();
     }
+}
+
+void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
+{
+    m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
+    execCurSelCharRange();
 }
 
 void CATextField::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
     if(m_isTouchInSide)
     {
-//        m_pCursorMark->setVisible(false);
         m_isTouchInSide = false;
-//        if (!isFirstResponder())
-        {
-            resignFirstResponder();
-            m_pCursorMark->setVisible(false);
-        }
-        
-        //CCLog("%d",resignFirstResponder());
+        this->resignFirstResponder();
+        this->hideCursorMark();
     }
 }
 

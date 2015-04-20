@@ -1241,7 +1241,7 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         
         png_read_end(png_ptr, NULL);
         
-        png_uint_32 channel = rowbytes/m_uPixelsWide;
+        png_uint_32 channel = (png_uint_32)rowbytes/m_uPixelsWide;
         
         // premultiplied alpha for RGBA8888
         if (channel == 4)
@@ -1621,14 +1621,9 @@ GLuint CAImage::getName()
     return m_uName;
 }
 
-CCSize CAImage::getContentSize()
+const CCSize& CAImage::getContentSize()
 {
-    
-    CCSize ret;
-    ret.width = m_tContentSize.width / CC_CONTENT_SCALE_FACTOR();
-    ret.height = m_tContentSize.height / CC_CONTENT_SCALE_FACTOR();
-    
-    return ret;
+    return m_tContentSize;
 }
 
 const CCSize& CAImage::getContentSizeInPixels()

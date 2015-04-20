@@ -226,7 +226,7 @@ bool CASwitch::initWithFrame(const CCRect& rect)
     }
     this->setColor(CAColor_clear);
     this->setFrame(rect);
-    this->setContentSize(CADipSize(100, 60));
+    this->setContentSize(CADipSize(102, 56));
     return true;
 }
 
@@ -238,7 +238,7 @@ bool CASwitch::initWithCenter(const CCRect& rect)
     }
     this->setColor(CAColor_clear);
     this->setCenter(rect);
-    this->setContentSize(CADipSize(100, 60));
+    this->setContentSize(CADipSize(102, 56));
     return true;
 }
 

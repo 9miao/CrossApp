@@ -123,7 +123,7 @@ protected:
     
     void setTouchMovedOutSide(const CCPoint& point);
     
-    void setTouchUpSide(const CCPoint& point);
+    void setTouchUpOutSide(const CCPoint& point);
     
     void setTouchUpInSide(const CCPoint& point);
     

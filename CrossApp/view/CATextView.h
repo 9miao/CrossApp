@@ -103,18 +103,15 @@ public:
     
     CC_SYNTHESIZE(eKeyBoardInputType, m_nInputType, InputType);
     
-    inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
-    
-    inline int getKeyboardType () {return m_keyboardType; }
-    
-    inline void setKeyboardReturnType (eKeyBoardReturnType type) {m_keyBoardReturnType = type; }
-    
-    inline int getKeyboardReturnType () {return m_keyBoardReturnType; }
     
 protected:
 
 	void initMarkSprite();
 
+    void showCursorMark();
+    
+    void hideCursorMark();
+    
 	void updateImage();
 
 	void calcCursorPosition();
@@ -170,7 +167,7 @@ private:
 	CAScale9ImageView* m_pBackgroundView;
 
 	CAImageView* m_pImageView;
-	std::vector<CAImageView*> m_pTextViewMarkVect;
+	std::vector<CAView*> m_pTextViewMarkVect;
 
 	int m_iCurPos;
 	int m_iLineHeight;

@@ -508,7 +508,7 @@ float VPDecoder::getSampleRate()
 
 unsigned int VPDecoder::getAudioStreamsCount()
 {
-    return _audioStreams.size();
+    return (unsigned int)_audioStreams.size();
 }
 
 int VPDecoder::getSelectedAudioStream()
