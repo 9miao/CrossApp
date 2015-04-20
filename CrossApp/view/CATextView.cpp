@@ -396,6 +396,8 @@ bool CATextView::canDetachWithIME()
 
 void CATextView::insertText(const char * text, int len)
 {
+    CCLog("insertText: %s, %d", text, len);
+    if (len<=0)return;
 	execCurSelCharRange();
 	m_szText.insert(m_iCurPos, text, len);
  	m_iCurPos += len;
@@ -405,11 +407,12 @@ void CATextView::insertText(const char * text, int len)
 
 void CATextView::willInsertText(const char* text, int len)
 {
-//	execCurSelCharRange();
-//	int iOldCurPos = m_iCurPos;
-//	insertText(text, len);
-//	m_curSelCharRange = std::make_pair(iOldCurPos, m_iCurPos);
-//	showTextViewMark(getZZCRect());
+    CCLog("willInsertText: %s, %d", text, len);
+	execCurSelCharRange();
+	int iOldCurPos = m_iCurPos;
+	insertText(text, len);
+	m_curSelCharRange = std::make_pair(iOldCurPos, m_iCurPos);
+	showTextViewMark(getZZCRect());
 }
 
 void CATextView::AndroidWillInsertText(int start, const char* str, int before, int count)
@@ -466,7 +469,6 @@ void CATextView::getKeyBoradReturnCallBack()
 
 const char* CATextView::getContentText()
 {
-    CCLog("-------%s",m_szText.c_str());
 	return m_szText.c_str();
 }
 
@@ -606,29 +608,12 @@ std::vector<CCRect> CATextView::getZZCRect()
 
 void CATextView::showTextViewMark(const std::vector<CCRect>& vt)
 {
-//	CCRect r = (vt.size() == 1) ? vt[0] : vt.back();
-
-//	CCPoint pt1 = vt[0].origin;
-//	CCPoint pt2 = CCPoint(r.origin.x + r.size.width, r.origin.y + r.size.height);
-
-//	m_pDotViewL->setFrame(CCRect(pt1.x - ZZSELECT_VIEW_SIZE / 2, pt1.y - ZZSELECT_VIEW_SIZE, ZZSELECT_VIEW_SIZE, ZZSELECT_VIEW_SIZE));
-//	m_pDotViewL->setVisible(true);
-
-//	m_pCursorMarkL->setFrame(CCRect(pt1.x, pt1.y, 2, iLineHeight));
-//	m_pCursorMarkL->setVisible(true);
-
-//	m_pDotViewR->setFrame(CCRect(pt2.x - ZZSELECT_VIEW_SIZE / 2, pt2.y, ZZSELECT_VIEW_SIZE, ZZSELECT_VIEW_SIZE));
-//	m_pDotViewR->setVisible(true);
-
-//	m_pCursorMarkR->setFrame(CCRect(pt2.x - 1, pt2.y - iLineHeight, 2, iLineHeight));
-//	m_pCursorMarkR->setVisible(true);
-
 	for (int i = 0; i < vt.size(); i++)
 	{
-		CAImageView* pImageView = CAImageView::createWithImage(CAImage::create("source_material/zhezhao.png"));
-		pImageView->setFrame(vt[i]);
-		addSubview(pImageView);
-		m_pTextViewMarkVect.push_back(pImageView);
+		CAView* pTextMaskView = CAView::createWithColor(ccc4(60, 120, 240, 127));
+		pTextMaskView->setFrame(vt[i]);
+		addSubview(pTextMaskView);
+		m_pTextViewMarkVect.push_back(pTextMaskView);
 	}
 }
 
