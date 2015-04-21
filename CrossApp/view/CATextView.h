@@ -167,7 +167,7 @@ private:
 	CAScale9ImageView* m_pBackgroundView;
 
 	CAImageView* m_pImageView;
-	std::vector<CAImageView*> m_pTextViewMarkVect;
+	std::vector<CAView*> m_pTextViewMarkVect;
 
 	int m_iCurPos;
 	int m_iLineHeight;
