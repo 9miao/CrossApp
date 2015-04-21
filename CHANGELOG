@@ -22,6 +22,21 @@
 
 #####10.其他一些细节的修改
 
+
+#### CrossApp 1. 1. 2 Update:
+
+#####1. Fixed bug that CAImage cannot appropriately display image in some circumstances
+#####2. Fixed bug that options are repeated when alterView number is above 5.
+#####3. Fixed bug that system cannot obtain CAImage in camera status.
+#####4. Optimized touch event distributed mechanism
+#####5. Fixed bug that CAScrollView background picture interface does not function
+#####6. Fixed bug that when users click Backspace in keyboard, callback event has no response in input status of textfield in Android platform.
+#####7. Fixed bug that when users click Backspace in keyboard, callback event has no response in input status of textView in Android platform.
+#####8. Added native-like preinput functionality in CATextField when users input Chinese in iOS platform.
+#####9. Fixed bug that clicking line wrap is invalid in input status in CATextView in Android platform.
+#####10. Other Details Tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 1.1.1 更新内容：  
