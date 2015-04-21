@@ -39,6 +39,20 @@
 #####6.其他一些细节的修改
 
 
+#### CrossApp 1. 1. 1 Update:
+
+#####1. Added CAImageView’s functionality that plays sequential frames
+
+#####2. Fixed bug that images fail to asynchoronously load
+
+#####3. Fixed webView's position refresh bug
+
+#####4. Fixed bug that Android test phone directly goes breakdown when debugging in some circumstances
+
+#####5. Fixed bug that CrossApp cannot run iOS emulator in previous version
+
+#####6. Other Details Tweaking
+
 **********************************************************************************
 
 #### CrossApp 1.1.0 更新内容：  
