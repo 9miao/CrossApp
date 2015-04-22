@@ -128,6 +128,8 @@ public:
     CC_SYNTHESIZE(CATextFieldDelegate*, m_pDelegate, Delegate);
     
     CC_PROPERTY(int, m_iFontSize, FontSize);
+
+	CC_PROPERTY_PASS_BY_REF(std::string, m_nfontName, FontName);
     
     CC_PROPERTY(eKeyBoardInputType, m_nInputType, InputType);
     
