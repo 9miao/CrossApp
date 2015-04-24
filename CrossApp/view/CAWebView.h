@@ -13,6 +13,7 @@
 #include "platform/CCFileUtils.h"
 #include "CAView.h"
 #include "CAImageView.h"
+#include "CAActivityIndicatorView.h"
 
 
 NS_CC_BEGIN
@@ -126,7 +127,8 @@ public:
 	virtual void setVisible(bool visible);
     
 	CC_SYNTHESIZE(CAWebViewDelegate*, m_pWebViewDelegate, WebViewDelegate);
-    
+
+    CC_SYNTHESIZE(bool, m_bShowLoadingImage, ShowLoadingImage);
 private:
     
     CAWebViewImpl *_impl;
@@ -134,6 +136,8 @@ private:
 	bool m_bHideNativeWeCmd;
     
     CAImageView* m_pImageView;
+    
+    CAActivityIndicatorView* m_pLoadingView;
     
     CCPoint m_obLastPoint;
     

@@ -156,11 +156,6 @@ _AgaginInitGlyphs:
 	}
 	delete[]pData;
 
-	if (std::string(pText).find("zhujian_g")!=-1)
-	{
-		pCAImage->saveToFile("c:\\xxx.png", true);
-	}
-	
     pCAImage->autorelease();
 	return pCAImage;
 }
@@ -1062,7 +1057,8 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
         char sTTFont[256];
         GetWindowsDirectoryA(sTTFont,255);
         strcat(sTTFont,"\\fonts\\simhei.ttf");
-        pFontName = sTTFont;
+		pFontName = sTTFont;
+
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
