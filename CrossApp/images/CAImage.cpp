@@ -31,6 +31,9 @@
 #include "tiffio.h"
 #include "decode.h"
 #include "etc1.h"
+#include "images/gif_lib/gif_lib.h"
+#include "images/gif_lib/gif_hash.h"
+#include "images/gif_lib/gif_lib_private.h"
 
 
 NS_CC_BEGIN
@@ -936,6 +939,9 @@ bool CAImage::initWithImageFileThreadSafe(const std::string& fullPath)
             case PNG:
                 ret = this->initWithPngData(unpackedData, unpackedLen);
                 break;
+            case GIF:
+                ret = this->initWithGifData(unpackedData, unpackedLen);
+                break;
             case TIFF:
                 ret = this->initWithTiffData(unpackedData, unpackedLen);
                 break;
@@ -951,8 +957,11 @@ bool CAImage::initWithImageFileThreadSafe(const std::string& fullPath)
                 break;
             }
         }
-        this->convertToRawData();
         
+        if (ret)
+        {
+            this->convertToRawData();
+        }
         
         if(unpackedData != data)
         {
@@ -988,6 +997,9 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
             case PNG:
                 ret = this->initWithPngData(unpackedData, unpackedLen);
                 break;
+            case GIF:
+                ret = this->initWithGifData(unpackedData, unpackedLen);
+                break;
             case TIFF:
                 ret = this->initWithTiffData(unpackedData, unpackedLen);
                 break;
@@ -1004,9 +1016,12 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
             }
         }
         
-        this->convertToRawData();
-        this->premultipliedAImageData();
-        
+        if (ret)
+        {
+            this->convertToRawData();
+            this->premultipliedImageData();
+        }
+
         if(unpackedData != data)
         {
             free(unpackedData);
@@ -1280,6 +1295,12 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
     return bRet;
 }
 
+bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
+{
+    CCLog("GIF --- ERROR");
+    return false;
+}
+
 bool CAImage::initWithTiffData(const unsigned char * data, unsigned long dataLen)
 {
     bool bRet = false;
@@ -1517,7 +1538,7 @@ void CAImage::convertToRawData()
     setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
 }
 
-void CAImage::premultipliedAImageData()
+void CAImage::premultipliedImageData()
 {
     CC_RETURN_IF(m_bPremultiplied);
     m_bPremultiplied = true;
@@ -1595,10 +1616,10 @@ void CAImage::premultipliedAImageData()
 
 }
 
-void CAImage::repremultipliedAImageData()
+void CAImage::repremultipliedImageData()
 {
     m_bPremultiplied = false;
-    this->premultipliedAImageData();
+    this->premultipliedImageData();
 }
 
 const CAImage::PixelFormat& CAImage::getPixelFormat()
@@ -2266,6 +2287,10 @@ CAImage::Format CAImage::detectFormat(const unsigned char * data, unsigned long 
     {
         return CAImage::JPG;
     }
+    else if (isGif(data, dataLen))
+    {
+        return CAImage::GIF;
+    }
     else if (isTiff(data, dataLen))
     {
         return CAImage::TIFF;
@@ -2297,13 +2322,6 @@ bool CAImage::isPng(const unsigned char * data, unsigned long dataLen)
     return memcmp(PNG_SIGNATURE, data, sizeof(PNG_SIGNATURE)) == 0;
 }
 
-
-bool CAImage::isEtc(const unsigned char * data, unsigned long dataLen)
-{
-    //    return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
-    return false;
-}
-
 bool CAImage::isJpg(const unsigned char * data, unsigned long dataLen)
 {
     if (dataLen <= 4)
@@ -2314,6 +2332,28 @@ bool CAImage::isJpg(const unsigned char * data, unsigned long dataLen)
     static const unsigned char JPG_SOI[] = {0xFF, 0xD8};
     
     return memcmp(data, JPG_SOI, 2) == 0;
+}
+
+bool CAImage::isGif(const unsigned char * data, unsigned long dataLen)
+{
+    if (dataLen <= 6)
+    {
+        return false;
+    }
+    
+    static const unsigned char JPG_SOI[] = GIF87_STAMP;
+    static const unsigned char JPG_SOI2[] = GIF89_STAMP;
+    static const unsigned char JPG_SOI3[] = GIF_STAMP;
+
+    return     (memcmp(data, JPG_SOI, 6) == 0)
+            || (memcmp(data, JPG_SOI2, 6) == 0)
+            || (memcmp(data, JPG_SOI3, 6) == 0);
+}
+
+bool CAImage::isEtc(const unsigned char * data, unsigned long dataLen)
+{
+    //    return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
+    return false;
 }
 
 bool CAImage::isTiff(const unsigned char * data, unsigned long dataLen)

@@ -292,9 +292,7 @@ void CAWebViewImpl::didFailLoading(void* pWebViewWrapper, const std::string &url
     WEB_MAP it=s_WebViewImpls.find((UIWebViewWrapper*)pWebViewWrapper);
     if (it != s_WebViewImpls.end())
     {
-        CAWebView* webView = it->second->m_pWebView;
-        if (webView && webView->m_pWebViewDelegate)
-        {
+        CAWebView* webView = it->second->m_pWebView;         {
             webView->m_pWebViewDelegate->onDidFailLoading(webView, url);
         }
     }

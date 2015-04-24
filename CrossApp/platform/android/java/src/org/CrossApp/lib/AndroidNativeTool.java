@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import org.CrossApp.lib.Cocos2dxGLSurfaceView;
 
+import android.R.integer;
 import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -58,7 +59,7 @@ public class AndroidNativeTool
 	
 	static String s;
 	public static Uri photoUri;
-	public static void CAImageCapture()
+	public static void CAImageCapture(int type)
 	{
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		SimpleDateFormat timeStampFormat = new SimpleDateFormat(
@@ -71,7 +72,16 @@ public class AndroidNativeTool
 				MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
 				intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-		s_pContext.startActivityForResult(intent,0);
+			
+				int selectedType = 0;
+		        if (type ==0) {
+					selectedType = 0;
+				}
+		        else {
+					selectedType = 3;
+				}
+			
+		s_pContext.startActivityForResult(intent,selectedType);
 	}
 	
 	public static void CAVideoCapture()
@@ -88,14 +98,21 @@ public class AndroidNativeTool
     	s_pContext.startActivityForResult(wrapperIntent, 2);
 	}
 	
-	public static void CAImageAlbum()
+	public static void CAImageAlbum(int type)
 	{
 		Intent getImage = new Intent(Intent.ACTION_GET_CONTENT);   
 		
         getImage.setType("image/*");  
         
         Intent wrapperIntent2 = Intent.createChooser(getImage, null);
-        s_pContext.startActivityForResult(wrapperIntent2, 3);
+        int selectedType = 0;
+        if (type ==0) {
+			selectedType = 0;
+		}
+        else {
+			selectedType = 3;
+		}
+        s_pContext.startActivityForResult(wrapperIntent2, selectedType);//3
 	}
 	
 	public static int getScreenBrightness() 

@@ -104,11 +104,6 @@ bool CAKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
             default:
                 break;
         }
-        if (pHandler && pHandler->getDelegate() == pDelegate)
-        {
-            m_vDelegates.erase(itr);
-            break;
-        }
     }
     
     m_bLocked = false;
