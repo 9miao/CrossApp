@@ -272,15 +272,6 @@
 		B07608481ACCDE6C0005F878 /* CADrawView.h in Headers */ = {isa = PBXBuildFile; fileRef = B07608441ACCDE6C0005F878 /* CADrawView.h */; };
 		B07608681ACD0CD40005F878 /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07608561ACD0CD40005F878 /* Bitmap.cpp */; };
 		B07608691ACD0CD40005F878 /* Bitmap.h in Headers */ = {isa = PBXBuildFile; fileRef = B07608571ACD0CD40005F878 /* Bitmap.h */; };
-		B076086A1ACD0CD40005F878 /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = B07608591ACD0CD40005F878 /* dgif_lib.c */; };
-		B076086B1ACD0CD40005F878 /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = B076085A1ACD0CD40005F878 /* gif_err.c */; };
-		B076086C1ACD0CD40005F878 /* gif_font.c in Sources */ = {isa = PBXBuildFile; fileRef = B076085B1ACD0CD40005F878 /* gif_font.c */; };
-		B076086D1ACD0CD40005F878 /* gif_hash.c in Sources */ = {isa = PBXBuildFile; fileRef = B076085C1ACD0CD40005F878 /* gif_hash.c */; };
-		B076086E1ACD0CD40005F878 /* gif_hash.h in Headers */ = {isa = PBXBuildFile; fileRef = B076085D1ACD0CD40005F878 /* gif_hash.h */; };
-		B076086F1ACD0CD40005F878 /* gif_lib.h in Headers */ = {isa = PBXBuildFile; fileRef = B076085E1ACD0CD40005F878 /* gif_lib.h */; };
-		B07608701ACD0CD40005F878 /* gif_lib_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B076085F1ACD0CD40005F878 /* gif_lib_private.h */; };
-		B07608711ACD0CD40005F878 /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = B07608601ACD0CD40005F878 /* gifalloc.c */; };
-		B07608721ACD0CD40005F878 /* quantize.c in Sources */ = {isa = PBXBuildFile; fileRef = B07608611ACD0CD40005F878 /* quantize.c */; };
 		B07608731ACD0CD40005F878 /* GifMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = B07608621ACD0CD40005F878 /* GifMacros.h */; };
 		B07608741ACD0CD40005F878 /* GifMovie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07608631ACD0CD40005F878 /* GifMovie.cpp */; };
 		B07608751ACD0CD40005F878 /* GIFMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = B07608641ACD0CD40005F878 /* GIFMovie.h */; };
@@ -299,6 +290,17 @@
 		B09205BD19D554A800CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B819D554A800CB99C1 /* CAThread.h */; };
 		B0A02FED1A8D8E960005CB8F /* CATempTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */; };
 		B0A02FEE1A8D8E960005CB8F /* CATempTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A02FEC1A8D8E960005CB8F /* CATempTypeFont.h */; };
+		B0A11D991AE8C47600933BF6 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A11D971AE8C47600933BF6 /* etc1.cpp */; };
+		B0A11D9A1AE8C47600933BF6 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A11D981AE8C47600933BF6 /* etc1.h */; };
+		B0A11DA51AE8C5C500933BF6 /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11D9C1AE8C5C500933BF6 /* dgif_lib.c */; };
+		B0A11DA61AE8C5C500933BF6 /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11D9D1AE8C5C500933BF6 /* gif_err.c */; };
+		B0A11DA71AE8C5C500933BF6 /* gif_font.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11D9E1AE8C5C500933BF6 /* gif_font.c */; };
+		B0A11DA81AE8C5C500933BF6 /* gif_hash.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11D9F1AE8C5C500933BF6 /* gif_hash.c */; };
+		B0A11DA91AE8C5C500933BF6 /* gif_hash.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A11DA01AE8C5C500933BF6 /* gif_hash.h */; };
+		B0A11DAA1AE8C5C500933BF6 /* gif_lib.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A11DA11AE8C5C500933BF6 /* gif_lib.h */; };
+		B0A11DAB1AE8C5C500933BF6 /* gif_lib_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A11DA21AE8C5C500933BF6 /* gif_lib_private.h */; };
+		B0A11DAC1AE8C5C500933BF6 /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DA31AE8C5C500933BF6 /* gifalloc.c */; };
+		B0A11DAD1AE8C5C500933BF6 /* quantize.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DA41AE8C5C500933BF6 /* quantize.c */; };
 		B0A7150D1A43F56600A85FB9 /* CAWebView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A7150B1A43F56600A85FB9 /* CAWebView.cpp */; };
 		B0A7150E1A43F56600A85FB9 /* CAWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A7150C1A43F56600A85FB9 /* CAWebView.h */; };
 		B0A7157E1A43F6DE00A85FB9 /* CAWebViewImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */; };
@@ -586,15 +588,6 @@
 		B07608441ACCDE6C0005F878 /* CADrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADrawView.h; sourceTree = "<group>"; };
 		B07608561ACD0CD40005F878 /* Bitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bitmap.cpp; sourceTree = "<group>"; };
 		B07608571ACD0CD40005F878 /* Bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bitmap.h; sourceTree = "<group>"; };
-		B07608591ACD0CD40005F878 /* dgif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dgif_lib.c; sourceTree = "<group>"; };
-		B076085A1ACD0CD40005F878 /* gif_err.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gif_err.c; sourceTree = "<group>"; };
-		B076085B1ACD0CD40005F878 /* gif_font.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gif_font.c; sourceTree = "<group>"; };
-		B076085C1ACD0CD40005F878 /* gif_hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gif_hash.c; sourceTree = "<group>"; };
-		B076085D1ACD0CD40005F878 /* gif_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_hash.h; sourceTree = "<group>"; };
-		B076085E1ACD0CD40005F878 /* gif_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_lib.h; sourceTree = "<group>"; };
-		B076085F1ACD0CD40005F878 /* gif_lib_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_lib_private.h; sourceTree = "<group>"; };
-		B07608601ACD0CD40005F878 /* gifalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gifalloc.c; sourceTree = "<group>"; };
-		B07608611ACD0CD40005F878 /* quantize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quantize.c; sourceTree = "<group>"; };
 		B07608621ACD0CD40005F878 /* GifMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifMacros.h; sourceTree = "<group>"; };
 		B07608631ACD0CD40005F878 /* GifMovie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GifMovie.cpp; sourceTree = "<group>"; };
 		B07608641ACD0CD40005F878 /* GIFMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GIFMovie.h; sourceTree = "<group>"; };
@@ -613,6 +606,17 @@
 		B09205B819D554A800CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
 		B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATempTypeFont.cpp; sourceTree = "<group>"; };
 		B0A02FEC1A8D8E960005CB8F /* CATempTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATempTypeFont.h; sourceTree = "<group>"; };
+		B0A11D971AE8C47600933BF6 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
+		B0A11D981AE8C47600933BF6 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = etc1.h; sourceTree = "<group>"; };
+		B0A11D9C1AE8C5C500933BF6 /* dgif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dgif_lib.c; sourceTree = "<group>"; };
+		B0A11D9D1AE8C5C500933BF6 /* gif_err.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gif_err.c; sourceTree = "<group>"; };
+		B0A11D9E1AE8C5C500933BF6 /* gif_font.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gif_font.c; sourceTree = "<group>"; };
+		B0A11D9F1AE8C5C500933BF6 /* gif_hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gif_hash.c; sourceTree = "<group>"; };
+		B0A11DA01AE8C5C500933BF6 /* gif_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_hash.h; sourceTree = "<group>"; };
+		B0A11DA11AE8C5C500933BF6 /* gif_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_lib.h; sourceTree = "<group>"; };
+		B0A11DA21AE8C5C500933BF6 /* gif_lib_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_lib_private.h; sourceTree = "<group>"; };
+		B0A11DA31AE8C5C500933BF6 /* gifalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gifalloc.c; sourceTree = "<group>"; };
+		B0A11DA41AE8C5C500933BF6 /* quantize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quantize.c; sourceTree = "<group>"; };
 		B0A7150B1A43F56600A85FB9 /* CAWebView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebView.cpp; sourceTree = "<group>"; };
 		B0A7150C1A43F56600A85FB9 /* CAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebView.h; sourceTree = "<group>"; };
 		B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebViewImpl.cpp; sourceTree = "<group>"; };
@@ -805,6 +809,9 @@
 		04EAA0B21956D74D00198A8E /* images */ = {
 			isa = PBXGroup;
 			children = (
+				B0A11D9B1AE8C5C500933BF6 /* gif_lib */,
+				B0A11D971AE8C47600933BF6 /* etc1.cpp */,
+				B0A11D981AE8C47600933BF6 /* etc1.h */,
 				04EAA0B31956D74D00198A8E /* CAImage.cpp */,
 				04EAA0B41956D74D00198A8E /* CAImage.h */,
 				04EAA0B51956D74D00198A8E /* CAImageCache.cpp */,
@@ -1201,7 +1208,6 @@
 		B07608551ACD0CD40005F878 /* gif */ = {
 			isa = PBXGroup;
 			children = (
-				B07608581ACD0CD40005F878 /* gif_lib */,
 				B07608561ACD0CD40005F878 /* Bitmap.cpp */,
 				B07608571ACD0CD40005F878 /* Bitmap.h */,
 				B07608621ACD0CD40005F878 /* GifMacros.h */,
@@ -1214,18 +1220,18 @@
 			path = gif;
 			sourceTree = "<group>";
 		};
-		B07608581ACD0CD40005F878 /* gif_lib */ = {
+		B0A11D9B1AE8C5C500933BF6 /* gif_lib */ = {
 			isa = PBXGroup;
 			children = (
-				B07608591ACD0CD40005F878 /* dgif_lib.c */,
-				B076085A1ACD0CD40005F878 /* gif_err.c */,
-				B076085B1ACD0CD40005F878 /* gif_font.c */,
-				B076085C1ACD0CD40005F878 /* gif_hash.c */,
-				B076085D1ACD0CD40005F878 /* gif_hash.h */,
-				B076085E1ACD0CD40005F878 /* gif_lib.h */,
-				B076085F1ACD0CD40005F878 /* gif_lib_private.h */,
-				B07608601ACD0CD40005F878 /* gifalloc.c */,
-				B07608611ACD0CD40005F878 /* quantize.c */,
+				B0A11D9C1AE8C5C500933BF6 /* dgif_lib.c */,
+				B0A11D9D1AE8C5C500933BF6 /* gif_err.c */,
+				B0A11D9E1AE8C5C500933BF6 /* gif_font.c */,
+				B0A11D9F1AE8C5C500933BF6 /* gif_hash.c */,
+				B0A11DA01AE8C5C500933BF6 /* gif_hash.h */,
+				B0A11DA11AE8C5C500933BF6 /* gif_lib.h */,
+				B0A11DA21AE8C5C500933BF6 /* gif_lib_private.h */,
+				B0A11DA31AE8C5C500933BF6 /* gifalloc.c */,
+				B0A11DA41AE8C5C500933BF6 /* quantize.c */,
 			);
 			path = gif_lib;
 			sourceTree = "<group>";
@@ -1256,6 +1262,8 @@
 				04EAB0721956D75600198A8E /* CAObject.h in Headers */,
 				04EAB0741956D75600198A8E /* CAResponder.h in Headers */,
 				B07608761ACD0CD40005F878 /* GifUtils.h in Headers */,
+				B0A11DA91AE8C5C500933BF6 /* gif_hash.h in Headers */,
+				B0A11DAB1AE8C5C500933BF6 /* gif_lib_private.h in Headers */,
 				04EAB0761956D75600198A8E /* CAScheduler.h in Headers */,
 				B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */,
 				04EAB0791956D75600198A8E /* ccConfig.h in Headers */,
@@ -1275,13 +1283,13 @@
 				B09205BB19D554A800CB99C1 /* CASyncQueue.h in Headers */,
 				04EAB0901956D75600198A8E /* CABar.h in Headers */,
 				04EAB0921956D75600198A8E /* CAButton.h in Headers */,
-				B076086E1ACD0CD40005F878 /* gif_hash.h in Headers */,
 				04EAB0941956D75600198A8E /* CAControl.h in Headers */,
 				04EAB0981956D75600198A8E /* CAProgress.h in Headers */,
 				04EAB09A1956D75600198A8E /* CASegmentedControl.h in Headers */,
 				04EAB09C1956D75600198A8E /* CASlider.h in Headers */,
 				04EAB09E1956D75600198A8E /* CASwitch.h in Headers */,
 				04EAB0A21956D75600198A8E /* CABarItem.h in Headers */,
+				B0A11D9A1AE8C47600933BF6 /* etc1.h in Headers */,
 				04EAB0A41956D75600198A8E /* CAViewController.h in Headers */,
 				04EAB0A51956D75600198A8E /* CrossApp.h in Headers */,
 				04EAB0A61956D75600198A8E /* CAIMEDelegate.h in Headers */,
@@ -1338,6 +1346,7 @@
 				04EAB1581956D75600198A8E /* EAGLView.h in Headers */,
 				04EAB15D1956D75600198A8E /* platform.h in Headers */,
 				04EABA5C1956D75A00198A8E /* CAGLProgram.h in Headers */,
+				B0A11DAA1AE8C5C500933BF6 /* gif_lib.h in Headers */,
 				04EABA5E1956D75A00198A8E /* ccGLStateCache.h in Headers */,
 				04EABA5F1956D75A00198A8E /* ccShader_Position_uColor_frag.h in Headers */,
 				04EABA601956D75A00198A8E /* ccShader_Position_uColor_vert.h in Headers */,
@@ -1349,7 +1358,6 @@
 				04EABA651956D75A00198A8E /* ccShader_PositionTexture_frag.h in Headers */,
 				04EABA661956D75A00198A8E /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				04EABA671956D75A00198A8E /* ccShader_PositionTexture_uColor_vert.h in Headers */,
-				B07608701ACD0CD40005F878 /* gif_lib_private.h in Headers */,
 				04EABA681956D75A00198A8E /* ccShader_PositionTexture_vert.h in Headers */,
 				04EABA691956D75A00198A8E /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				04EABA6A1956D75A00198A8E /* ccShader_PositionTextureA8Color_vert.h in Headers */,
@@ -1404,7 +1412,6 @@
 				0460ECF41956F97A00D13001 /* CAApplicationCaller.h in Headers */,
 				0460ECF61956F97A00D13001 /* CCEGLView.h in Headers */,
 				04DF7CB11984E6D9007352A8 /* CAIndexPath.h in Headers */,
-				B076086F1ACD0CD40005F878 /* gif_lib.h in Headers */,
 				0446097F19B8D73200E73CA6 /* CAPullToRefreshView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1460,6 +1467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0A11DAC1AE8C5C500933BF6 /* gifalloc.c in Sources */,
 				04EAB0571956D75600198A8E /* CCAction.cpp in Sources */,
 				04EAB0591956D75600198A8E /* CCActionCamera.cpp in Sources */,
 				04EAB05B1956D75600198A8E /* CCActionEase.cpp in Sources */,
@@ -1472,7 +1480,6 @@
 				04EAB0671956D75600198A8E /* CAApplication.cpp in Sources */,
 				04EAB0691956D75600198A8E /* CAAutoreleasePool.cpp in Sources */,
 				04EAB06B1956D75600198A8E /* CACamera.cpp in Sources */,
-				B07608711ACD0CD40005F878 /* gifalloc.c in Sources */,
 				B07608471ACCDE6C0005F878 /* CADrawView.cpp in Sources */,
 				B074A8B71A722B5200F34F79 /* CAViewAnimation.cpp in Sources */,
 				04EAB06D1956D75600198A8E /* CAFPSImages.c in Sources */,
@@ -1502,13 +1509,15 @@
 				04EAB09B1956D75600198A8E /* CASlider.cpp in Sources */,
 				04EAB09D1956D75600198A8E /* CASwitch.cpp in Sources */,
 				B02CE47C19AD769700B905FB /* CAListView.cpp in Sources */,
+				B0A11DA81AE8C5C500933BF6 /* gif_hash.c in Sources */,
+				B0A11D991AE8C47600933BF6 /* etc1.cpp in Sources */,
 				04EAB0A11956D75600198A8E /* CABarItem.cpp in Sources */,
 				04EAB0A31956D75600198A8E /* CAViewController.cpp in Sources */,
 				04EAB0A71956D75600198A8E /* CAIMEDispatcher.cpp in Sources */,
 				04EAB0AB1956D75600198A8E /* CAKeypadDispatcher.cpp in Sources */,
 				04EAB0AE1956D75600198A8E /* CATouch.cpp in Sources */,
+				B0A11DA61AE8C5C500933BF6 /* gif_err.c in Sources */,
 				B02A776E19B82F9100C4A5EF /* CAStepper.cpp in Sources */,
-				B07608721ACD0CD40005F878 /* quantize.c in Sources */,
 				04EAB0B01956D75600198A8E /* CATouchDispatcher.cpp in Sources */,
 				04EAB0B61956D75600198A8E /* CAImage.cpp in Sources */,
 				B0C512E619A3127100E6934B /* CAActivityIndicatorView.cpp in Sources */,
@@ -1519,6 +1528,7 @@
 				04EAB0D11956D75600198A8E /* mat4stack.c in Sources */,
 				04EAB0D21956D75600198A8E /* matrix.c in Sources */,
 				04EAB0D31956D75600198A8E /* mat3.c in Sources */,
+				B0A11DA51AE8C5C500933BF6 /* dgif_lib.c in Sources */,
 				B0C512E819A3127100E6934B /* CADatePickerView.cpp in Sources */,
 				04EAB0D41956D75600198A8E /* mat4.c in Sources */,
 				B0A7157E1A43F6DE00A85FB9 /* CAWebViewImpl.cpp in Sources */,
@@ -1526,7 +1536,6 @@
 				04EAB0D61956D75600198A8E /* plane.c in Sources */,
 				04EAB0D71956D75600198A8E /* quaternion.c in Sources */,
 				B08F4BCF19C7E66C008DE306 /* CAFTFontCache.cpp in Sources */,
-				B076086B1ACD0CD40005F878 /* gif_err.c in Sources */,
 				B0DA93F919D79B1A00E66E11 /* CATextView.cpp in Sources */,
 				04EAB0D81956D75600198A8E /* ray2.c in Sources */,
 				B0A7150D1A43F56600A85FB9 /* CAWebView.cpp in Sources */,
@@ -1535,10 +1544,10 @@
 				04EAB0DB1956D75600198A8E /* vec3.c in Sources */,
 				04EAB0DC1956D75600198A8E /* vec4.c in Sources */,
 				B01D4BF319A5947C0071F6A3 /* CADrawerController.cpp in Sources */,
+				B0A11DA71AE8C5C500933BF6 /* gif_font.c in Sources */,
 				04EAB10E1956D75600198A8E /* CCFileUtils.cpp in Sources */,
 				04EAB1151956D75600198A8E /* CCSAXParser.cpp in Sources */,
 				04EAB1191956D75600198A8E /* CCEGLViewProtocol.cpp in Sources */,
-				B076086A1ACD0CD40005F878 /* dgif_lib.c in Sources */,
 				04EAB1471956D75600198A8E /* CCApplication.mm in Sources */,
 				B07608741ACD0CD40005F878 /* GifMovie.cpp in Sources */,
 				04EAB14B1956D75600198A8E /* CCCommon.mm in Sources */,
@@ -1547,8 +1556,6 @@
 				04EAB1501956D75600198A8E /* CCFileUtilsMac.mm in Sources */,
 				04EAB1571956D75600198A8E /* CCWindow.m in Sources */,
 				B02A12CC197CE15D00F4F2C5 /* CATransformation.cpp in Sources */,
-				B076086D1ACD0CD40005F878 /* gif_hash.c in Sources */,
-				B076086C1ACD0CD40005F878 /* gif_font.c in Sources */,
 				04EAB1591956D75600198A8E /* EAGLView.mm in Sources */,
 				04EAB15C1956D75600198A8E /* platform.cpp in Sources */,
 				04EABA5D1956D75A00198A8E /* ccGLStateCache.cpp in Sources */,
@@ -1582,6 +1589,7 @@
 				04EABAA91956D75B00198A8E /* CAScrollView.cpp in Sources */,
 				04EABAAB1956D75B00198A8E /* CATableView.cpp in Sources */,
 				04EABAAD1956D75B00198A8E /* CAView.cpp in Sources */,
+				B0A11DAD1AE8C5C500933BF6 /* quantize.c in Sources */,
 				04EABAAF1956D75B00198A8E /* CAWindow.cpp in Sources */,
 				04EABB441956DD8E00198A8E /* CrossApp.cpp in Sources */,
 				B0C3BD431ADE70B8009BE71A /* CAClipboard.mm in Sources */,

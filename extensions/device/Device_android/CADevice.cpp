@@ -291,12 +291,12 @@ void updateVersion(const std::string &url
     
 }
     
-void OpenAlbum()
+void OpenAlbum(int type)
 {
 	JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "CAImageAlbum" , "()V"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "CAImageAlbum" , "(I)V"))
 	{
-		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID);
+		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
 	}
 }
     
@@ -314,12 +314,12 @@ void OpenURL(const std::string &url)
     }
 }
     
-void OpenCamera()
+void OpenCamera(int type)
 {
     JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "CAImageCapture" , "()V"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "CAImageCapture" , "(I)V"))
 	{
-		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID);
+		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
 	}
 }
     
@@ -348,10 +348,17 @@ static CALocationDelegate *locationDelegate = NULL;
 static CAWifiDelegate *wifidelegate = NULL;
 static std::vector<CAAddressBookRecord> _addressBookArr;
 
-void openCamera(CAMediaDelegate* target)
+void openCamera(CAMediaDelegate* target,bool allowEdit)
 {
     delegate = target;
-    OpenCamera();
+    if (allowEdit) {
+        OpenCamera(0);
+    }
+    else
+    {
+        OpenCamera(1);
+    }
+    
 }
     
 void getWifiList(CAWifiDelegate *target)
@@ -360,10 +367,17 @@ void getWifiList(CAWifiDelegate *target)
     JAVAgetWifiList();
 }
     
-void openAlbum(CAMediaDelegate* target)
+void openAlbum(CAMediaDelegate* target,bool allowEdit)
 {
     delegate = target;
-    OpenAlbum();
+    if (allowEdit) {
+        OpenAlbum(0);
+    }
+    else
+    {
+        OpenAlbum(1);
+    }
+
 }
     
 vector<CAAddressBookRecord> getAddressBook()

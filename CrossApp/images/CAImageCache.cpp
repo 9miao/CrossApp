@@ -312,7 +312,7 @@ void CAImageCache::addImageAsyncCallBack(float dt)
 
         AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
         CAImage *image = pImageInfo->image;
-        image->premultipliedAImageData();
+        image->premultipliedImageData();
         
         CAObject *target = pAsyncStruct->target;
         SEL_CallFuncO selector = pAsyncStruct->selector;
@@ -1053,24 +1053,18 @@ void CAImageAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     ccGLBindTexture2D(m_pImage->getName());
     
 #if CC_TEXTURE_ATLAS_USE_VAO
-    
-    //
-    // Using VBO and VAO
-    //
-    
-    // XXX: update is done in draw... perhaps it should be done in a timer
+
     if (m_bDirty)
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
-        // option 1: subdata
-        //glBufferSubData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*start, sizeof(m_pQuads[0]) * n , &m_pQuads[start] );
-		
-		// option 2: data
-        //		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
-		
-		// option 3: orphaning + glMapBuffer
+
 		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * (n-start), NULL, GL_DYNAMIC_DRAW);
 		void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+        if (buf == NULL)
+        {
+            listenBackToForeground(this);
+            return;
+        }
 		memcpy(buf, m_pQuads, sizeof(m_pQuads[0])* (n-start));
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		

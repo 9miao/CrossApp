@@ -46,7 +46,7 @@ void FourthViewController::viewDidLoad()
     
 
     animationView2 = CAScale9ImageView::createWithCenter(CADipRect(100, 100, 50, 50));
-    animationView2->setImage(CAImage::create("source_material/btn_rounded_normal.png"));
+    animationView2->setImage(CAImage::create("fonts/2.gif"));
     defaultView->insertSubview(animationView2, 1);
 
     defaultBtnL = CAButton::createWithCenter(CADipRect(60, 50, 100, 60), CAButtonTypeRoundedRect);
