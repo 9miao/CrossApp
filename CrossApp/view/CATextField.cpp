@@ -329,7 +329,6 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (this->getBounds().containsPoint(point))
     {
-        m_isTouchInSide = true;
 		becomeFirstResponder();
 		if (isFirstResponder())
         {
@@ -355,7 +354,6 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     }
     else
     {
-        m_isTouchInSide = false;
         if (resignFirstResponder())
         {
 			this->updateImage();
@@ -610,7 +608,7 @@ void CATextField::selectAll()
 	this->hideCursorMark();
 	CATextArrowView::hideTextArrowView();
 
-	CATextToolBar* pTextToolBar = CATextToolBar::createWithText(UTF8("¼ôÇÐ"), UTF8("¿½±´"), UTF8("Õ³Ìù"), NULL);
+	CATextToolBar* pTextToolBar = CATextToolBar::createWithText(UTF8("ÂºÃ™Â«â€“"), UTF8("Ã¸Î©Â±Â¥"), UTF8("â€™â‰¥ÃƒË˜"), NULL);
 	pTextToolBar->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
 	pTextToolBar->showTextEditView(cc.origin, this);*/
 }
@@ -654,7 +652,7 @@ void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 
 void CATextField::moveSelectCharsCancel(const CCPoint& pt)
 {
-	/*CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("¼ôÇÐ"), UTF8("¿½±´"), UTF8("Õ³Ìù"), NULL);
+	/*CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("ÂºÃ™Â«â€“"), UTF8("Ã¸Î©Â±Â¥"), UTF8("â€™â‰¥ÃƒË˜"), NULL);
 	pTextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
 	pTextEditView->showTextEditView(pt, this);*/
 }
@@ -999,9 +997,10 @@ void CATextField::getKeyBoradReturnCallBack()
 
 void CATextField::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
-    if (m_isTouchInSide)
+    if (!m_isTouchInSide)
     {
-        this->showCursorMark();
+        m_isTouchInSide = true;
+        //this->showCursorMark();
     }
 }
 
@@ -1009,6 +1008,7 @@ void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
     m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
     execCurSelCharRange();
+ 
 }
 
 void CATextField::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
