@@ -30,6 +30,15 @@ extern "C" {
 		CAWebViewImpl::didFinishLoading(index, url);
     }
 
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didLoadHtmlSource(JNIEnv *env, jclass, jint index, jstring jurl) {
+		const char* charHtml = env->GetStringUTFChars(jurl, NULL);
+		std::string html = charHtml;
+		env->ReleaseStringUTFChars(jurl, charHtml);
+		CAWebViewImpl::didLoadHtmlSource(index, html);
+	}
+
+	
+
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didFailLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
 		const char* charUrl = env->GetStringUTFChars(jurl, NULL);
         std::string url = charUrl;
@@ -337,6 +346,17 @@ void CAWebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
 		}
 		if (webView && webView->m_pWebViewDelegate) {
 			webView->m_pWebViewDelegate->onDidFinishLoading(webView, url);
+		}
+	}
+}
+
+void CAWebViewImpl::didLoadHtmlSource(const int viewTag, const std::string &html)
+{
+	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
+	if (it != s_WebViewImpls.end()) {
+		CAWebView* webView = it->second->_webView;
+		if (webView && webView->m_pWebViewDelegate) {
+			webView->m_pWebViewDelegate->onLoadHtmlSource(webView, html);
 		}
 	}
 }

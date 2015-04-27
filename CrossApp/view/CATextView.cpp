@@ -34,7 +34,6 @@ CATextView::CATextView()
 , m_bWordWrap(true)
 , m_isTouchInSide(false)
 , m_curSelCharRange(std::make_pair(0, 0))
-, m_bInputTag(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 }
@@ -781,7 +780,7 @@ void CATextView::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 
 void CATextView::moveSelectCharsCancel(const CCPoint& pt)
 {
-//	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("ºÙ«–"), UTF8("øΩ±¥"), UTF8("’≥Ã˘"), NULL);
+//	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("ºÙ«�?), UTF8("øΩ±¥"), UTF8("’≥Ã˘"), NULL);
 //	pTextEditView->setTarget(this, CATextToolBar_selector(CATextView::CATextEditBtnEvent2));
 //	pTextEditView->showTextEditView(pt, this);
 }
