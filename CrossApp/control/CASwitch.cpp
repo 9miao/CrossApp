@@ -175,7 +175,7 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.2f);
         CAViewAnimation::setAnimationDelay(1/60.0f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CASwitch::updateValueChanged));
         m_thumbTintImageView->setFrameOrigin(point);
         CAViewAnimation::commitAnimations();

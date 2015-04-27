@@ -51,6 +51,8 @@ public:
         JPG,
         //! PNG
         PNG,
+        //! GIF
+        GIF,
         //! TIFF
         TIFF,
         //! WebP
@@ -161,6 +163,7 @@ public:
     bool isWebp(const unsigned char * data, unsigned long dataLen);
     bool isPvr(const unsigned char * data, unsigned long dataLen);
     bool isEtc(const unsigned char * data, unsigned long dataLen);
+    bool isGif(const unsigned char * data, unsigned long dataLen);
     
     CC_PROPERTY_READONLY_PASS_BY_REF(CAImage::PixelFormat, m_ePixelFormat, PixelFormat)
     
@@ -184,14 +187,15 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned long, m_nDataLenght, DataLenght);
     
-    void premultipliedAImageData();
+    void premultipliedImageData();
     
-    void repremultipliedAImageData();
+    void repremultipliedImageData();
     
 protected:
     
     bool initWithJpgData(const unsigned char *  data, unsigned long dataLen);
     bool initWithPngData(const unsigned char * data, unsigned long dataLen);
+    bool initWithGifData(const unsigned char * data, unsigned long dataLen);
     bool initWithTiffData(const unsigned char * data, unsigned long dataLen);
     bool initWithWebpData(const unsigned char * data, unsigned long dataLen);
     bool initWithETCData(const unsigned char * data, unsigned long dataLen);

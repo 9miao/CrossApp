@@ -441,6 +441,15 @@
 		B094652F1969404400D96736 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B094652D1969404400D96736 /* CASTLContainer.h */; };
 		B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */; };
 		B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */; };
+		B0A11DB91AE8E0B300933BF6 /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DB01AE8E0B300933BF6 /* dgif_lib.c */; };
+		B0A11DBA1AE8E0B300933BF6 /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DB11AE8E0B300933BF6 /* gif_err.c */; };
+		B0A11DBB1AE8E0B300933BF6 /* gif_font.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DB21AE8E0B300933BF6 /* gif_font.c */; };
+		B0A11DBC1AE8E0B300933BF6 /* gif_hash.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DB31AE8E0B300933BF6 /* gif_hash.c */; };
+		B0A11DBD1AE8E0B300933BF6 /* gif_hash.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A11DB41AE8E0B300933BF6 /* gif_hash.h */; };
+		B0A11DBE1AE8E0B300933BF6 /* gif_lib.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A11DB51AE8E0B300933BF6 /* gif_lib.h */; };
+		B0A11DBF1AE8E0B300933BF6 /* gif_lib_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A11DB61AE8E0B300933BF6 /* gif_lib_private.h */; };
+		B0A11DC01AE8E0B300933BF6 /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DB71AE8E0B300933BF6 /* gifalloc.c */; };
+		B0A11DC11AE8E0B300933BF6 /* quantize.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DB81AE8E0B300933BF6 /* quantize.c */; };
 		B0B553D6193485BE0065053D /* CAImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553CE193485BE0065053D /* CAImage.cpp */; };
 		B0B553D7193485BE0065053D /* CAImage.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B553CF193485BE0065053D /* CAImage.h */; };
 		B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553D0193485BE0065053D /* CAImageCache.cpp */; };
@@ -882,6 +891,15 @@
 		B094652D1969404400D96736 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATempTypeFont.cpp; sourceTree = "<group>"; };
 		B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATempTypeFont.h; sourceTree = "<group>"; };
+		B0A11DB01AE8E0B300933BF6 /* dgif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dgif_lib.c; sourceTree = "<group>"; };
+		B0A11DB11AE8E0B300933BF6 /* gif_err.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gif_err.c; sourceTree = "<group>"; };
+		B0A11DB21AE8E0B300933BF6 /* gif_font.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gif_font.c; sourceTree = "<group>"; };
+		B0A11DB31AE8E0B300933BF6 /* gif_hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gif_hash.c; sourceTree = "<group>"; };
+		B0A11DB41AE8E0B300933BF6 /* gif_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_hash.h; sourceTree = "<group>"; };
+		B0A11DB51AE8E0B300933BF6 /* gif_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_lib.h; sourceTree = "<group>"; };
+		B0A11DB61AE8E0B300933BF6 /* gif_lib_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_lib_private.h; sourceTree = "<group>"; };
+		B0A11DB71AE8E0B300933BF6 /* gifalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gifalloc.c; sourceTree = "<group>"; };
+		B0A11DB81AE8E0B300933BF6 /* quantize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quantize.c; sourceTree = "<group>"; };
 		B0B553CE193485BE0065053D /* CAImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImage.cpp; sourceTree = "<group>"; };
 		B0B553CF193485BE0065053D /* CAImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImage.h; sourceTree = "<group>"; };
 		B0B553D0193485BE0065053D /* CAImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCache.cpp; sourceTree = "<group>"; };
@@ -1670,9 +1688,26 @@
 			path = animation;
 			sourceTree = "<group>";
 		};
+		B0A11DAF1AE8E0B300933BF6 /* gif_lib */ = {
+			isa = PBXGroup;
+			children = (
+				B0A11DB01AE8E0B300933BF6 /* dgif_lib.c */,
+				B0A11DB11AE8E0B300933BF6 /* gif_err.c */,
+				B0A11DB21AE8E0B300933BF6 /* gif_font.c */,
+				B0A11DB31AE8E0B300933BF6 /* gif_hash.c */,
+				B0A11DB41AE8E0B300933BF6 /* gif_hash.h */,
+				B0A11DB51AE8E0B300933BF6 /* gif_lib.h */,
+				B0A11DB61AE8E0B300933BF6 /* gif_lib_private.h */,
+				B0A11DB71AE8E0B300933BF6 /* gifalloc.c */,
+				B0A11DB81AE8E0B300933BF6 /* quantize.c */,
+			);
+			path = gif_lib;
+			sourceTree = "<group>";
+		};
 		B0B553CD193485BE0065053D /* images */ = {
 			isa = PBXGroup;
 			children = (
+				B0A11DAF1AE8E0B300933BF6 /* gif_lib */,
 				B01E80791AD5113400301FC2 /* etc1.cpp */,
 				B01E807A1AD5113400301FC2 /* etc1.h */,
 				B01E80781AD5113400301FC2 /* CAImage.mm */,
@@ -1769,6 +1804,7 @@
 				B0C512D619A30E5D00E6934B /* CAActivityIndicatorView.h in Headers */,
 				B0596AD6197629BE00B1E8CB /* ftautoh.h in Headers */,
 				B0596AD0197629BE00B1E8CB /* ftheader.h in Headers */,
+				B0A11DBE1AE8E0B300933BF6 /* gif_lib.h in Headers */,
 				B0596B1B197629BE00B1E8CB /* svttglyf.h in Headers */,
 				04EABB2F1956DAEA00198A8E /* CCActionManager.cpp in Headers */,
 				B0596B02197629BE00B1E8CB /* ftobjs.h in Headers */,
@@ -1796,6 +1832,7 @@
 				B0596B10197629BE00B1E8CB /* svkern.h in Headers */,
 				1551A639158F2ADE00E66CFE /* CCActionManager.h in Headers */,
 				B0596B09197629BE00B1E8CB /* internal.h in Headers */,
+				B0A11DBD1AE8E0B300933BF6 /* gif_hash.h in Headers */,
 				1551A641158F2ADE00E66CFE /* CCActionTween.h in Headers */,
 				1551A653158F2ADE00E66CFE /* CCArray.h in Headers */,
 				1551A657158F2ADE00E66CFE /* CCDictionary.h in Headers */,
@@ -1896,6 +1933,7 @@
 				B0596AD1197629BE00B1E8CB /* ftmodule.h in Headers */,
 				1551A83B158F2ADF00E66CFE /* base64.h in Headers */,
 				1551A83D158F2ADF00E66CFE /* CCPointExtension.h in Headers */,
+				B0A11DBF1AE8E0B300933BF6 /* gif_lib_private.h in Headers */,
 				1551A83F158F2ADF00E66CFE /* CCProfiling.h in Headers */,
 				B0596AF2197629BE00B1E8CB /* ftsizes.h in Headers */,
 				B0596AFE197629BE00B1E8CB /* ftdebug.h in Headers */,
@@ -2085,6 +2123,7 @@
 				B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */,
 				1551A656158F2ADE00E66CFE /* CCDictionary.cpp in Sources */,
 				1551A65B158F2ADE00E66CFE /* CCNS.cpp in Sources */,
+				B0A11DB91AE8E0B300933BF6 /* dgif_lib.c in Sources */,
 				1551A65F158F2ADE00E66CFE /* CCSet.cpp in Sources */,
 				1551A661158F2ADE00E66CFE /* CCString.cpp in Sources */,
 				EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */,
@@ -2112,6 +2151,7 @@
 				1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */,
 				EB9D562419E8DC2D0072BE8E /* JSViewController.cpp in Sources */,
 				1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */,
+				B0A11DBB1AE8E0B300933BF6 /* gif_font.c in Sources */,
 				1551A72E158F2ADE00E66CFE /* CCCommon.mm in Sources */,
 				1551A730158F2ADE00E66CFE /* CAApplicationCaller.mm in Sources */,
 				1551A734158F2ADE00E66CFE /* CCES2Renderer.m in Sources */,
@@ -2154,11 +2194,14 @@
 				04EA9FDD1956CE2500198A8E /* CACamera.cpp in Sources */,
 				04EA9FDF1956CE2500198A8E /* CAFPSImages.c in Sources */,
 				B09205DD19D5645300CB99C1 /* CAThread.cpp in Sources */,
+				B0A11DC01AE8E0B300933BF6 /* gifalloc.c in Sources */,
 				04EA9FE11956CE2500198A8E /* CAGeometry.cpp in Sources */,
 				04EA9FE31956CE2500198A8E /* CAObject.cpp in Sources */,
+				B0A11DBA1AE8E0B300933BF6 /* gif_err.c in Sources */,
 				04EA9FE51956CE2500198A8E /* CAResponder.cpp in Sources */,
 				B0C512D519A30E5D00E6934B /* CAActivityIndicatorView.cpp in Sources */,
 				B01F650D196585EA005C14FC /* CACollectionView.cpp in Sources */,
+				B0A11DBC1AE8E0B300933BF6 /* gif_hash.c in Sources */,
 				B03919C319DD61D70026A9BE /* CATextView.cpp in Sources */,
 				372C37EC1A03799E0010A376 /* CAVideoPlayerController.cpp in Sources */,
 				04EA9FE71956CE2500198A8E /* CAScheduler.cpp in Sources */,
@@ -2182,6 +2225,7 @@
 				04EAA00F1956CE2500198A8E /* CAImageView.cpp in Sources */,
 				B01E807B1AD5113400301FC2 /* CAImage.mm in Sources */,
 				04EAA0111956CE2500198A8E /* CALabel.cpp in Sources */,
+				B0A11DC11AE8E0B300933BF6 /* quantize.c in Sources */,
 				04EAA0131956CE2500198A8E /* CARenderImage.cpp in Sources */,
 				B0C512EC19A341B700E6934B /* CACalendar.cpp in Sources */,
 				04EAA0151956CE2500198A8E /* CAScale9ImageView.cpp in Sources */,

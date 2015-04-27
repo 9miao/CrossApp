@@ -34,6 +34,7 @@ CATextView::CATextView()
 , m_bWordWrap(true)
 , m_isTouchInSide(false)
 , m_curSelCharRange(std::make_pair(0, 0))
+, m_bInputTag(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 }
@@ -640,7 +641,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 	{
 		if (this->getBounds().containsPoint(point))
 		{
-			m_isTouchInSide = true;
+			//m_isTouchInSide = true;
 			becomeFirstResponder();
 			if (isFirstResponder())
 			{
@@ -660,7 +661,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		//	CATextArrowView::hideTextArrowView();
 		//	CATextToolBar::hideTextToolBar();
 		//	CATextSelectView::hideTextSelectView();
-			m_isTouchInSide = false;
+			//m_isTouchInSide = false;
 			if (resignFirstResponder())
 			{
                 this->hideCursorMark();
@@ -780,7 +781,7 @@ void CATextView::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 
 void CATextView::moveSelectCharsCancel(const CCPoint& pt)
 {
-//	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("¼ôÇÐ"), UTF8("¿½±´"), UTF8("Õ³Ìù"), NULL);
+//	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("ÂºÃ™Â«â€“"), UTF8("Ã¸Î©Â±Â¥"), UTF8("â€™â‰¥ÃƒË˜"), NULL);
 //	pTextEditView->setTarget(this, CATextToolBar_selector(CATextView::CATextEditBtnEvent2));
 //	pTextEditView->showTextEditView(pt, this);
 }
@@ -851,8 +852,9 @@ void CATextView::visit()
 
 void CATextView::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
-    if (m_isTouchInSide)
+    if (!m_isTouchInSide)
     {
+        m_isTouchInSide = true;
         this->showCursorMark();
     }
 }

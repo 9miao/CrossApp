@@ -1,7 +1,7 @@
 #ifndef Movie_DEFINED
 #define Movie_DEFINED
 #include <stdint.h>
-#include "gif_lib/gif_lib.h"
+#include "images/gif_lib/gif_lib.h"
 #include <stdio.h>
 #include <string.h>
 #include "Bitmap.h"

@@ -45,18 +45,16 @@ void CAAutoreleasePool::clear()
 #ifdef _DEBUG
         size_t nIndex = m_pManagedObjectArray->size() - 1;
 #endif
-
-        for (std::vector<CAObject*>::reverse_iterator itr=m_pManagedObjectArray->rbegin();
-             itr!=m_pManagedObjectArray->rend();
-             itr++)
+        while (m_pManagedObjectArray->size())
         {
-            --((*itr)->m_uAutoReleaseCount);
-            (*itr)->release();
+            CAObject* obj = m_pManagedObjectArray->back();
+            --obj->m_uAutoReleaseCount;
+            obj->release();
+            m_pManagedObjectArray->pop_back();
 #ifdef _DEBUG
             nIndex--;
 #endif
         }
-        m_pManagedObjectArray->clear();
     }
 }
 
@@ -94,7 +92,7 @@ CAPoolManager::~CAPoolManager()
  
      // we only release the last autorelease pool here 
     m_pCurReleasePool = 0;
-    m_pReleasePoolStack->popFront();
+    m_pReleasePoolStack->clear();
  
     CC_SAFE_DELETE(m_pReleasePoolStack);
 }
