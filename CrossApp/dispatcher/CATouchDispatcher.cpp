@@ -15,7 +15,7 @@
 #include "view/CAWindow.h"
 #include "basics/CAScheduler.h"
 #include "support/CCPointExtension.h"
-
+#include "CAIMEDelegate.h"
 
 NS_CC_BEGIN
 
@@ -113,12 +113,7 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
 void CATouchController::passingTouchesViews(float dt)
 {
     CAView* view = dynamic_cast<CAView*>(CAApplication::getApplication()->getTouchDispatcher()->getFirstResponder());
-    bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
-    if (!isContainsFirstPoint && view)
-    {
-        view->ccTouchBegan(m_pTouch, m_pEvent);
-    }
-    
+
     CC_RETURN_IF(m_vTouchesViews.empty());
 
     CAResponder* responder = m_vTouchesViews.front();
@@ -128,6 +123,7 @@ void CATouchController::passingTouchesViews(float dt)
         responder = responder->nextResponder();
     }
     
+    bool controlK = true;
     for (int i=0; i<m_vTouchesViews.size();)
     {
         if (!m_vTouchesViews.at(i)->ccTouchBegan(m_pTouch, m_pEvent))
@@ -136,6 +132,13 @@ void CATouchController::passingTouchesViews(float dt)
         }
         else
         {
+            if(controlK){
+                CAIMEDelegate* ime = dynamic_cast<CAIMEDelegate *>(m_vTouchesViews.at(i));
+                if(!ime && view){
+                    view->resignFirstResponder();
+                }
+                controlK = false;
+            }
             i++;
         }
     }
@@ -155,10 +158,6 @@ void CATouchController::touchBegan()
     }
     else
     {
-        if (view)
-        {
-            view->resignFirstResponder();
-        }
         vector = this->getEventListener(m_pTouch, CAApplication::getApplication()->getRootWindow());
     }
 
@@ -351,12 +350,14 @@ void CATouchController::touchEnded()
         this->passingTouchesViews();
     }
     
+#if(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
     CAView* view = dynamic_cast<CAView*>(CAApplication::getApplication()->getTouchDispatcher()->getFirstResponder());
     bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
     if (!isContainsFirstPoint && view)
     {
         view->ccTouchEnded(m_pTouch, m_pEvent);
     }
+#endif
     
     CAVector<CAResponder*>::iterator itr;
     for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)

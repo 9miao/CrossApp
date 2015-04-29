@@ -68,6 +68,9 @@ public:
 	virtual bool init();
 	virtual bool canAttachWithIME();
 	virtual bool canDetachWithIME();
+    virtual void didDetachWithIME();
+    virtual void didAttachWithIME();
+    
 	virtual void insertText(const char * text, int len);
 	virtual void willInsertText(const char* text, int len);
 	virtual void AndroidWillInsertText(int start, const char* str, int before, int count);

@@ -88,25 +88,19 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
 							text = Cocos2dxGLSurfaceView.this.mCocos2dxEditText;
-							final String text = (String) msg.obj;
+							String text = (String) msg.obj;
+							text = text.replace('\n', ' ');
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText(text);
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(msg.arg1);
 							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
 						//	
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().length());
-//							CharSequence text1 = Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText();
-//							
-//							if (text1 instanceof Spannable) {
-//							     Spannable spanText = (Spannable)text1;
-//							     Selection.setSelection(spanText, text1.length());
-//							 }
-							//
-							//InputType.TYPE_CLASS_NUMBER
+
 							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
 							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0);
-							Log.d("GLSurfaceView", "showSoftInput");
-							
+							Log.d("GLSurfaceView", "showSoftInput +"+Cocos2dxActivity.keyboardheight);
+							Cocos2dxActivity.setkeyboardHeight(0);
 						}
 						break;
 					case SET_CURSOR_POS:
@@ -186,7 +180,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					case KEY_BOARD_RETURNTYPE_ENTER:
 						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
 						{
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+	                        Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_WORDS|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
 						}
 						break;
 					case RESET_SELECTION_POSITION:

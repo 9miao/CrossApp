@@ -149,8 +149,10 @@ void CATextView::initMarkSprite()
 
 void CATextView::showCursorMark()
 {
-    m_pCursorMark->setVisible(true);
-    m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(0.8f, 1), 1048576));
+    if(!m_pCursorMark->isVisible()){
+        m_pCursorMark->setVisible(true);
+        m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(0.8f, 1), 1048576));
+    }
 }
 
 void CATextView::hideCursorMark()
@@ -196,7 +198,7 @@ void CATextView::updateImage()
 	{
 		m_vLinesTextView.clear();
 	}
-    m_pImageView->setColor(CAColor_black);
+    m_pImageView->setColor(m_cFontColor);
 	m_pImageView->setImage(image);
     CCRect rect = CCRectZero;
     rect.size = image->getContentSize();
@@ -394,6 +396,16 @@ bool CATextView::canDetachWithIME()
 	return (m_pTextViewDelegate) ? m_pTextViewDelegate->onTextViewDetachWithIME(this) : true;
 }
 
+void CATextView::didDetachWithIME()
+{
+    hideCursorMark();
+}
+
+void CATextView::didAttachWithIME()
+{
+    showCursorMark();
+}
+
 void CATextView::insertText(const char * text, int len)
 {
 	execCurSelCharRange();
@@ -418,12 +430,8 @@ void CATextView::AndroidWillInsertText(int start, const char* str, int before, i
 	CCAssert(str != NULL, "");
 	CCAssert(count > 0, "");
     
-	std::string cszNewStr = str;
-	if (cszNewStr.size() >= m_szText.size())
-	{
-		cszNewStr = cszNewStr.substr(m_szText.size(), cszNewStr.size());
-		insertText(cszNewStr.c_str(), (int)cszNewStr.size());
-	}
+    insertText(str, (int)strlen(str));
+
 }
 
 void CATextView::deleteBackward()
@@ -446,6 +454,8 @@ void CATextView::deleteBackward()
 
 void CATextView::getKeyBoardHeight(int height)
 {
+    CAView::becomeFirstResponder();
+
 	if (m_pTextViewDelegate && m_pTextViewDelegate->getKeyBoardHeight(height))
 	{
 		return;
@@ -653,9 +663,9 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 	if (!isScrollWindowNotOutSide())
 	{
+        showCursorMark();
 		if (this->getBounds().containsPoint(point))
 		{
-			m_isTouchInSide = true;
 			becomeFirstResponder();
 			if (isFirstResponder())
 			{
@@ -675,7 +685,6 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		//	CATextArrowView::hideTextArrowView();
 		//	CATextToolBar::hideTextToolBar();
 		//	CATextSelectView::hideTextSelectView();
-			m_isTouchInSide = false;
 			if (resignFirstResponder())
 			{
                 this->hideCursorMark();
@@ -702,7 +711,6 @@ bool CATextView::attachWithIME()
             pGlView->setIMEKeyboardReturnEnter();
             
 #endif
-            this->showCursorMark();
 			pGlView->setIMEKeyboardState(true);
 		}
 	}
@@ -719,7 +727,6 @@ bool CATextView::detachWithIME()
 		if (pGlView)
 		{
 			pGlView->setIMEKeyboardState(false);
-            this->hideCursorMark();
 		}
 	}
 	return bRet;
@@ -866,9 +873,9 @@ void CATextView::visit()
 
 void CATextView::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
-    if (m_isTouchInSide)
+    if (!m_isTouchInSide)
     {
-        this->showCursorMark();
+        m_isTouchInSide = true;
     }
 }
 
@@ -876,7 +883,6 @@ void CATextView::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
     m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
     execCurSelCharRange();
-    
 }
 
 void CATextView::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
@@ -884,8 +890,7 @@ void CATextView::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
     if(m_isTouchInSide)
     {
         m_isTouchInSide = false;
-        this->resignFirstResponder();
-        this->hideCursorMark();
+        CAView::resignFirstResponder();
     }
 }
 
