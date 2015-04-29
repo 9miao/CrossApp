@@ -335,6 +335,16 @@ static EAGLView *view = 0;
         glBindFramebuffer(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);    
 }
 
+- (void) checkContext
+{
+    EAGLContext* tontext = [EAGLContext currentContext];
+    if(!tontext)
+    {
+        [EAGLContext setCurrentContext:context_];
+        [self layoutSubviews];
+    }
+}
+
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat
 {
     // define the pixel format

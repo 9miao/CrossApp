@@ -22,6 +22,7 @@ public:
     // keep compatible
     virtual void    end();
     virtual void    swapBuffers();
+    virtual void    checkContext();
     
     virtual void setIMEKeyboardState(bool bOpen);
     

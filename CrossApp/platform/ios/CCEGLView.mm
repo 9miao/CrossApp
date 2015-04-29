@@ -48,6 +48,11 @@ void CCEGLView::swapBuffers()
     [[EAGLView sharedEGLView] swapBuffers];
 }
 
+void CCEGLView::checkContext()
+{
+    [[EAGLView sharedEGLView] checkContext];
+}
+
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
     if (bOpen)
