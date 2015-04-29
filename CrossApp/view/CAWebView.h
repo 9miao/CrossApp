@@ -29,6 +29,8 @@ public:
 	virtual bool onShouldStartLoading(CAWebView* pWebView, const std::string &url) { return true; }
 	
 	virtual void onDidFinishLoading(CAWebView* pWebView, const std::string &url) {}
+
+	virtual void onLoadHtmlSource(CAWebView* pWebView, const std::string &htmlSource) {}
 	
 	virtual void onDidFailLoading(CAWebView* pWebView, const std::string &url) {}
 	

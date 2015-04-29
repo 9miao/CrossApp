@@ -27,7 +27,7 @@ CAWebView::CAWebView()
 , m_pLoadingView(NULL)
 , m_obLastPoint(CCPointZero)
 , m_obLastContentSize(CCSizeZero)
-, m_bShowLoadingImage(false)
+, m_bShowLoadingImage(true)
 {
     
 }
@@ -35,6 +35,7 @@ CAWebView::CAWebView()
 CAWebView::~CAWebView()
 {
 	CC_SAFE_DELETE(_impl);
+	CC_SAFE_RELEASE(m_pLoadingView);
 }
 
 CAWebView *CAWebView::createWithFrame(const CCRect& rect)
@@ -67,11 +68,10 @@ bool CAWebView::init()
     
     CCSize size = this->getBounds().size;
     m_pLoadingView = CAActivityIndicatorView::create();
-    m_pLoadingView->setVisible(false);
     m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGray);
-    m_pLoadingView->startAnimating();
-
-    addSubview(m_pLoadingView);
+	m_pLoadingView->stopAnimating();
+	m_pLoadingView->retain();
+    
     return true;
 }
 
@@ -179,8 +179,8 @@ void CAWebView::update(float dt)
         m_obLastPoint = point;
         m_obLastContentSize = contentSize;
         
-        CCSize size = getBounds().size;
-        m_pLoadingView->setFrame(CCRect(size.width*0.5f, size.height*0.3f, size.width*0.2f, size.height*0.2f));
+		CCSize size = getBounds().size;
+		m_pLoadingView->setFrame(CCRect(size.width*0.5f, size.height*0.3f, size.width*0.2f, size.height*0.2f));
         _impl->update(dt);
     }
     while (0);

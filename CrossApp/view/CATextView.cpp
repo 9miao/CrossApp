@@ -780,7 +780,7 @@ void CATextView::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 
 void CATextView::moveSelectCharsCancel(const CCPoint& pt)
 {
-//	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("ºÙ«–"), UTF8("øΩ±¥"), UTF8("’≥Ã˘"), NULL);
+//	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("ºÙ«�?), UTF8("øΩ±¥"), UTF8("’≥Ã˘"), NULL);
 //	pTextEditView->setTarget(this, CATextToolBar_selector(CATextView::CATextEditBtnEvent2));
 //	pTextEditView->showTextEditView(pt, this);
 }

@@ -30,6 +30,15 @@ extern "C" {
 		CAWebViewImpl::didFinishLoading(index, url);
     }
 
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didLoadHtmlSource(JNIEnv *env, jclass, jint index, jstring jurl) {
+		const char* charHtml = env->GetStringUTFChars(jurl, NULL);
+		std::string html = charHtml;
+		env->ReleaseStringUTFChars(jurl, charHtml);
+		CAWebViewImpl::didLoadHtmlSource(index, html);
+	}
+
+	
+
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didFailLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
 		const char* charUrl = env->GetStringUTFChars(jurl, NULL);
         std::string url = charUrl;
@@ -307,11 +316,19 @@ void CAWebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
 }
 
 bool CAWebViewImpl::shouldStartLoading(const int viewTag, const std::string &url) {
+
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
 	if (it != s_WebViewImpls.end()) {
 		CAWebView* webView = it->second->_webView;
 		if (webView && webView->m_pWebViewDelegate) {
-			return webView->m_pWebViewDelegate->onShouldStartLoading(webView, url);
+			if (!webView->m_pWebViewDelegate->onShouldStartLoading(webView, url))
+				return false;
+		}
+		if (webView && webView->m_bShowLoadingImage)
+		{
+			it->second->setVisible(false);
+			webView->m_pLoadingView->startAnimating();
+			webView->addSubview(webView->m_pLoadingView);
 		}
 	}
 	return true;
@@ -321,8 +338,25 @@ void CAWebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
 	if (it != s_WebViewImpls.end()) {
 		CAWebView* webView = it->second->_webView;
+		if (webView && webView->m_bShowLoadingImage)
+		{
+			webView->m_pLoadingView->stopAnimating();
+			webView->m_pLoadingView->removeFromSuperview();
+			it->second->setVisible(true);
+		}
 		if (webView && webView->m_pWebViewDelegate) {
 			webView->m_pWebViewDelegate->onDidFinishLoading(webView, url);
+		}
+	}
+}
+
+void CAWebViewImpl::didLoadHtmlSource(const int viewTag, const std::string &html)
+{
+	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
+	if (it != s_WebViewImpls.end()) {
+		CAWebView* webView = it->second->_webView;
+		if (webView && webView->m_pWebViewDelegate) {
+			webView->m_pWebViewDelegate->onLoadHtmlSource(webView, html);
 		}
 	}
 }
@@ -331,6 +365,12 @@ void CAWebViewImpl::didFailLoading(const int viewTag, const std::string &url){
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
 	if (it != s_WebViewImpls.end()) {
 		CAWebView* webView = it->second->_webView;
+		if (webView && webView->m_bShowLoadingImage)
+		{
+			webView->m_pLoadingView->stopAnimating();
+			webView->m_pLoadingView->removeFromSuperview();
+			it->second->setVisible(true);
+		}
 		if (webView && webView->m_pWebViewDelegate) {
 			webView->m_pWebViewDelegate->onDidFailLoading(webView, url);
 		}
