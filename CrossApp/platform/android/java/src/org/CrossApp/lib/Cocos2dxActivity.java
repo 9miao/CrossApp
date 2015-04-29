@@ -57,7 +57,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	AndroidVolumeControl androidVolumeControl;
 	static FrameLayout frame;
 	static View rootview;
-	static int keyboardheight;
+	public static int keyboardheight;
 	public static int currentBattery=0;
 	private static Activity activity;
 	private static Cocos2dxActivity cocos2dxActivity;
@@ -244,7 +244,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		case 0:
 			boolean result = mAdapter.enable();
 			if(result)
-				returnBlueToothState(0);//�����򿪲����ɹ�
+				returnBlueToothState(0);//����������ɹ�
 			else if(wasBtOpened)
 				returnBlueToothState(1);//�����Ѿ�����
 			else 
@@ -579,6 +579,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
       return isEmulator;
    }
 
+   public static void setkeyboardHeight(int height){
+       if(height == 0){
+           if(keyboardheight > 0){
+               KeyBoardHeightReturn(keyboardheight);
+           }
+       } else {
+           KeyBoardHeightReturn(height);
+       }
+   }
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================

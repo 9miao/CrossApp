@@ -117,7 +117,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			}
 			else
 			{
-				this.mCocos2dxGLSurfaceView.willInsertText(calcStart,pCharSequence.toString(),before,count);
+                this.mCocos2dxGLSurfaceView.willInsertText(calcStart,pCharSequence.toString().substring(mText.length()),before,count);
 			}
 			
 		}
@@ -133,7 +133,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			return false;
 		}
 		
-		if(pKeyEvent.getAction() == KeyEvent.ACTION_DOWN)
+		if(pKeyEvent != null && pKeyEvent.getAction() == KeyEvent.ACTION_DOWN)
 		{
 			return false;
 		}
