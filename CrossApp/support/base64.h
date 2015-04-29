@@ -4,7 +4,7 @@
 #define __SUPPORT_BASE64_H__
 
 #include "platform/CCPlatformMacros.h"
-
+#include <string>
 #ifdef __cplusplus
 extern "C" {
 #endif    
@@ -13,11 +13,15 @@ extern "C" {
 namespace CrossApp
 {
 
-    CC_DLL unsigned char* base64Decode(char* in, unsigned int& resultSize, bool trimTrailingZeros = true);
+    CC_DLL static inline bool isBase64(unsigned char c) {
+        return (isalnum(c) || (c == '+') || (c == '/'));
+    }
+    
+    CC_DLL unsigned char* base64Decode(std::string const& encoded_string);
     // returns a newly allocated array - of size "resultSize" - that
     // the caller is responsible for delete[]ing.
     
-	CC_DLL char* base64Encode(char const* orig, unsigned origLength);
+	CC_DLL char* base64Encode(unsigned char const* bytes_to_encode, unsigned int in_len);
     // returns a 0-terminated string that
     // the caller is responsible for delete[]ing.
     
