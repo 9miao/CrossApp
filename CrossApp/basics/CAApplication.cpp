@@ -161,11 +161,11 @@ void CAApplication::setDefaultValues(void)
 
 	const char *projection = "3d";
 	if( strcmp(projection, "3d") == 0 )
-		m_eProjection = kCCDirectorProjection3D;
+        m_eProjection = CAApplication::P3D;
 	else if (strcmp(projection, "2d") == 0)
-		m_eProjection = kCCDirectorProjection2D;
+		m_eProjection = CAApplication::P2D;
 	else if (strcmp(projection, "custom") == 0)
-		m_eProjection = kCCDirectorProjectionCustom;
+		m_eProjection = CAApplication::PCustom;
 	else
 		CCAssert(false, "Invalid projection value");
 
@@ -364,7 +364,7 @@ void CAApplication::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
     m_bNextDeltaTimeZero = bNextDeltaTimeZero;
 }
 
-void CAApplication::setProjection(ccDirectorProjection kProjection)
+void CAApplication::setProjection(CAApplication::Projection kProjection)
 {
     CCSize size = m_obWinSizeInPoints;
 
@@ -372,7 +372,7 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
 
     switch (kProjection)
     {
-    case kCCDirectorProjection2D:
+    case CAApplication::P2D:
         {
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
@@ -384,7 +384,7 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
         }
         break;
 
-    case kCCDirectorProjection3D:
+    case CAApplication::P3D:
         {
             float zeye = this->getZEye();
 
@@ -410,7 +410,7 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
         }
         break;
             
-    case kCCDirectorProjectionCustom:
+    case CAApplication::PCustom:
         if (m_pProjectionDelegate)
         {
             m_pProjectionDelegate->updateProjection();
@@ -905,10 +905,8 @@ void CCDisplayLinkDirector::mainLoop(void)
          if (! m_bPaused)
          {
              CAScheduler::getScheduler()->update(m_fDeltaTime);
+             drawScene();
          }
-         
-         drawScene();
-         
          CAPoolManager::sharedPoolManager()->pop();        
      }
 }

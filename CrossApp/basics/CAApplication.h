@@ -21,23 +21,7 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @typedef ccDirectorProjection
- Possible OpenGL projections used by director
- */
-typedef enum
-{
-    /// sets a 2D projection (orthogonal projection)
-    kCCDirectorProjection2D,
-    
-    /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
-    kCCDirectorProjection3D,
-    
-    /// it calls "updateProjection" on the projection delegate.
-    kCCDirectorProjectionCustom,
-    
-    /// Default projection is 3D projection
-    kCCDirectorProjectionDefault = kCCDirectorProjection3D,
-} ccDirectorProjection;
+
 
 /* Forward declarations. */
 class CAWindow;
@@ -53,6 +37,25 @@ class CCAccelerometer;
 class CC_DLL CAApplication : public CAObject, public TypeInfo
 {
 public:
+    
+    /** @typedef Projection
+     Possible OpenGL projections used by director
+     */
+    typedef enum
+    {
+        /// sets a 2D projection (orthogonal projection)
+        P2D,
+        
+        /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
+        P3D,
+        
+        /// it calls "updateProjection" on the projection delegate.
+        PCustom,
+        
+        /// Default projection is 3D projection
+        Default = P3D,
+    } Projection;
+    
     /**
      *  @js ctor
      */
@@ -109,8 +112,8 @@ public:
      @since v0.8.2
      @js NA
      */
-    inline ccDirectorProjection getProjection(void) { return m_eProjection; }
-    void setProjection(ccDirectorProjection kProjection);
+    inline CAApplication::Projection getProjection(void) { return m_eProjection; }
+    void setProjection(CAApplication::Projection kProjection);
      /** reshape projection matrix when canvas has been change"*/
     void reshapeProjection(const CCSize& newWindowSize);
     
@@ -344,7 +347,7 @@ protected:
     bool m_bNextDeltaTimeZero;
     
     /* projection used */
-    ccDirectorProjection m_eProjection;
+    Projection m_eProjection;
 
     /* window size in points */
     CCSize    m_obWinSizeInPoints;

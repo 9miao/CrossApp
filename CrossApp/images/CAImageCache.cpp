@@ -1062,7 +1062,8 @@ void CAImageAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 		void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         if (buf == NULL)
         {
-            listenBackToForeground(this);
+            glUnmapBuffer(GL_ARRAY_BUFFER);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
             return;
         }
 		memcpy(buf, m_pQuads, sizeof(m_pQuads[0])* (n-start));

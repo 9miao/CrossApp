@@ -71,6 +71,11 @@ public:
 	}
 };
 
+class CC_DLL CAViewAnimationDelegate
+{
+    void animationSpeedOfProgress(const std::string& animationID, void* context, float accumulation);
+};
+
 class CC_DLL CAViewAnimation: public CAObject
 {
     CADeque<CAViewAnimationModule*> m_vWillModules;

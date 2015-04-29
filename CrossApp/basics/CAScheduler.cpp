@@ -35,7 +35,7 @@ typedef struct _hashSelectorEntry
     ccArray             *timers;
     CAObject            *target;    // hash key (retained)
     unsigned int        timerIndex;
-    CCTimer             *currentTimer;
+    CATimer             *currentTimer;
     bool                currentTimerSalvaged;
     bool                paused;
     UT_hash_handle      hh;
@@ -43,9 +43,9 @@ typedef struct _hashSelectorEntry
 
 static CAScheduler* _scheduler = NULL;
 
-// implementation CCTimer
+// implementation CATimer
 
-CCTimer::CCTimer()
+CATimer::CATimer()
 : m_pTarget(NULL)
 , m_fElapsed(-1)
 , m_bRunForever(false)
@@ -60,9 +60,9 @@ CCTimer::CCTimer()
 
 }
 
-CCTimer* CCTimer::timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector)
+CATimer* CATimer::timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector)
 {
-    CCTimer *pTimer = new CCTimer();
+    CATimer *pTimer = new CATimer();
 
     pTimer->initWithTarget(pTarget, pfnSelector, 0.0f, kCCRepeatForever, 0.0f);
     pTimer->autorelease();
@@ -70,9 +70,9 @@ CCTimer* CCTimer::timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector)
     return pTimer;
 }
 
-CCTimer* CCTimer::timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds)
+CATimer* CATimer::timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds)
 {
-    CCTimer *pTimer = new CCTimer();
+    CATimer *pTimer = new CATimer();
 
     pTimer->initWithTarget(pTarget, pfnSelector, fSeconds, kCCRepeatForever, 0.0f);
     pTimer->autorelease();
@@ -80,9 +80,9 @@ CCTimer* CCTimer::timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector, f
     return pTimer;
 }
 
-CCTimer* CCTimer::timerWithScriptHandler(int nHandler, float fSeconds)
+CATimer* CATimer::timerWithScriptHandler(int nHandler, float fSeconds)
 {
-    CCTimer *pTimer = new CCTimer();
+    CATimer *pTimer = new CATimer();
 
     pTimer->initWithScriptHandler(nHandler, fSeconds);
     pTimer->autorelease();
@@ -90,7 +90,7 @@ CCTimer* CCTimer::timerWithScriptHandler(int nHandler, float fSeconds)
     return pTimer;
 }
 
-bool CCTimer::initWithScriptHandler(int nHandler, float fSeconds)
+bool CATimer::initWithScriptHandler(int nHandler, float fSeconds)
 {
     m_nScriptHandler = nHandler;
     m_fElapsed = -1;
@@ -99,12 +99,12 @@ bool CCTimer::initWithScriptHandler(int nHandler, float fSeconds)
     return true;
 }
 
-bool CCTimer::initWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector)
+bool CATimer::initWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector)
 {
     return initWithTarget(pTarget, pfnSelector, 0, kCCRepeatForever, 0.0f);
 }
 
-bool CCTimer::initWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay)
+bool CATimer::initWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay)
 {
     m_pTarget = pTarget;
     m_pfnSelector = pfnSelector;
@@ -117,7 +117,7 @@ bool CCTimer::initWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector, float 
     return true;
 }
 
-void CCTimer::update(float dt)
+void CATimer::update(float dt)
 {
     if (m_fElapsed == -1)
     {
@@ -180,17 +180,17 @@ void CCTimer::update(float dt)
     }
 }
 
-float CCTimer::getInterval() const
+float CATimer::getInterval() const
 {
     return m_fInterval;
 }
 
-void CCTimer::setInterval(float fInterval)
+void CATimer::setInterval(float fInterval)
 {
     m_fInterval = fInterval;
 }
 
-SEL_SCHEDULE CCTimer::getSelector() const
+SEL_SCHEDULE CATimer::getSelector() const
 {
     return m_pfnSelector;
 }
@@ -304,7 +304,7 @@ void CAScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CAObject *pTarget, 
     {
         for (unsigned int i = 0; i < pElement->timers->num; ++i)
         {
-            CCTimer *timer = (CCTimer*)pElement->timers->arr[i];
+            CATimer *timer = (CATimer*)pElement->timers->arr[i];
 
             if (pfnSelector == timer->getSelector())
             {
@@ -316,7 +316,7 @@ void CAScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CAObject *pTarget, 
         ccArrayEnsureExtraCapacity(pElement->timers, 1);
     }
 
-    CCTimer *pTimer = new CCTimer();
+    CATimer *pTimer = new CATimer();
     pTimer->initWithTarget(pTarget, pfnSelector, fInterval, repeat, delay);
     ccArrayAppendObject(pElement->timers, pTimer);
     pTimer->release();    
@@ -340,7 +340,7 @@ void CAScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, CAObject *pTarget
     {
         for (unsigned int i = 0; i < pElement->timers->num; ++i)
         {
-            CCTimer *pTimer = (CCTimer*)(pElement->timers->arr[i]);
+            CATimer *pTimer = (CATimer*)(pElement->timers->arr[i]);
 
             if (pfnSelector == pTimer->getSelector())
             {
@@ -544,7 +544,7 @@ bool CAScheduler::isScheduledSelector(SEL_SCHEDULE pfnSelector, CAObject *pTarge
     {
         for (unsigned i = 0; i < pElement->timers->num; ++i)
         {
-            CCTimer *timer = static_cast<CCTimer*>(pElement->timers->arr[i]);
+            CATimer *timer = static_cast<CATimer*>(pElement->timers->arr[i]);
             
             if (pfnSelector == timer->getSelector())
             {
@@ -738,7 +738,7 @@ void CAScheduler::update(float dt)
             // The 'timers' array may change while inside this loop
             for (elt->timerIndex = 0; elt->timerIndex < elt->timers->num; ++(elt->timerIndex))
             {
-                elt->currentTimer = (CCTimer*)(elt->timers->arr[elt->timerIndex]);
+                elt->currentTimer = (CATimer*)(elt->timers->arr[elt->timerIndex]);
                 elt->currentTimerSalvaged = false;
 
                 elt->currentTimer->update(dt);

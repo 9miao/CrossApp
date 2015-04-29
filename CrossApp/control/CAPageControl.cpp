@@ -253,4 +253,13 @@ const CAPageControlStyle& CAPageControl::getStyle()
     return m_style;
 }
 
+void CAPageControl::addTarget(CAObject* target, SEL_CAControl selector)
+{
+    CAControl::addTarget(target, selector, CAControlEventTouchValueChanged);
+}
+
+void CAPageControl::removeTarget(CAObject* target, SEL_CAControl selector)
+{
+    CAControl::removeTarget(target, selector, CAControlEventTouchValueChanged);
+}
 NS_CC_END

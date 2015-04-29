@@ -71,12 +71,21 @@ void SecondViewController::viewDidUnload()
 
 void SecondViewController::reshapeViewRectDidFinish()
 {
-
+    p_TableView->setFrame(this->getView()->getBounds());
 }
 
 void SecondViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	
+    static bool s = true;
+    
+    CAWindow* window = CAApplication::getApplication()->getRootWindow();
+    CADrawerController* drawer = (CADrawerController*)window->getRootViewController();
+    CANavigationController* nav = (CANavigationController*)drawer->getRightViewController();
+    CATabBarController* tab = (CATabBarController*)nav->getViewControllerAtIndex(0);
+    nav->setNavigationBarHidden(!s, true);
+    tab->setTabBarHidden(!s, true);
+    s = !s;
+    return;
 }
 
 void SecondViewController::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)

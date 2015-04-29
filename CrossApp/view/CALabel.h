@@ -70,14 +70,18 @@ public:
 
 	void applyStyle(const CALabelStyle* pLabelStyle);
     
-    void updateImage();
+    
     
 protected:
     
     virtual void setContentSize(const CCSize& var);
     
     virtual void updateImageRect();
-        
+    
+    void updateImageDraw();
+    
+    void updateImage();
+    
     bool m_bUpdateImage;
     
     float pTextHeight;

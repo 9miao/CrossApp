@@ -15,6 +15,8 @@ actions/CCActionInstant.cpp \
 actions/CCActionInterval.cpp \
 actions/CCActionManager.cpp \
 actions/CCActionTween.cpp \
+animation/CAViewAnimation.cpp \
+animation/CAAnimation.cpp \
 basics/CAApplication.cpp \
 basics/CAAutoreleasePool.cpp \
 basics/CACamera.cpp \
@@ -98,7 +100,6 @@ view/CALabelStyle.cpp \
 view/CAWebView.cpp \
 view/CADrawView.cpp \
 view/CADrawingPrimitives.cpp \
-animation/CAViewAnimation.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

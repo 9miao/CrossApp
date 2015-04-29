@@ -14,7 +14,7 @@
 #include "view/CAScale9ImageView.h"
 #include "dispatcher/CATouchDispatcher.h"
 #include "animation/CAViewAnimation.h"
-
+#include "animation/CAAnimation.h"
 
 NS_CC_BEGIN
 
@@ -472,30 +472,22 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
 void CANavigationController::layoutNewContainer()
 {
     CCRect navigation_bar_rect = CCRectZero;
+    navigation_bar_rect.size = m_tNavigationBarSize;
     
     CCRect container_rect = this->getView()->getBounds();
     
     if (m_bNavigationBarHidden)
     {
-        if (m_eNavigationBarVerticalAlignment == CABarVerticalAlignmentTop)
-        {
-            navigation_bar_rect.origin.y = -m_tNavigationBarSize.height;
-        }
-        else
-        {
-            navigation_bar_rect.origin.y = container_rect.size.height;
-        }
+        navigation_bar_rect.origin = this->getNavigationBarTakeBackPoint();
     }
     else
     {
         container_rect.size.height -= m_tNavigationBarSize.height;
+        navigation_bar_rect.origin = this->getNavigationBarOpenPoint();
+        
         if (m_eNavigationBarVerticalAlignment == CABarVerticalAlignmentTop)
         {
             container_rect.origin.y = m_tNavigationBarSize.height;
-        }
-        else
-        {
-            navigation_bar_rect.origin.y = container_rect.size.height;
         }
     }
     
@@ -702,6 +694,8 @@ void CANavigationController::popViewControllerFinish()
     
     m_pNavigationBars.popBack();
     
+    m_pViewControllers.back()->getView()->setFrameOrigin(CCPointZero);
+    
     m_bSlidingMinX = m_pViewControllers.size() <= 1;
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
@@ -770,6 +764,8 @@ void CANavigationController::popToRootViewControllerFinish()
         m_pNavigationBars.popBack();
     }
     
+    m_pViewControllers.back()->getView()->setFrameOrigin(CCPointZero);
+    
     m_bSlidingMinX = true;
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
@@ -814,63 +810,20 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     m_bNavigationBarHidden = hidden;
     CC_RETURN_IF(this->getView()->getSuperview() == NULL);
     
-    CCPoint point = CCPointZero;
-    
-    if (m_bNavigationBarHidden)
-    {
-        switch (m_eNavigationBarVerticalAlignment)
-        {
-            case CABarVerticalAlignmentTop:
-            {
-                point.y = -m_tNavigationBarSize.height;
-            }
-                break;
-            case CABarVerticalAlignmentBottom:
-            {
-                point.y = this->getView()->getBounds().size.height;
-            }
-                break;
-            default:
-                break;
-        }
-    }
-    else
-    {
-        switch (m_eNavigationBarVerticalAlignment)
-        {
-            case CABarVerticalAlignmentTop:
-            {
-                point.y = 0;
-            }
-                break;
-            case CABarVerticalAlignmentBottom:
-            {
-                point.y = this->getView()->getBounds().size.height - m_tNavigationBarSize.height;
-            }
-                break;
-            default:
-                break;
-        }
-    }
-    
-    for (int i=0; i<m_pNavigationBars.size() - 1; i++)
-    {
-        m_pNavigationBars.at(i)->setFrameOrigin(point);
-        this->updateNavigationBarHidden(i);
-    }
-    
     if (animated)
     {
-        m_pNavigationBars.back()->setVisible(true);
-        this->scheduleUpdate();
+        CAAnimation::schedule(CAAnimation_selector(CANavigationController::navigationBarHiddenAnimation), this, 0.25f);
+        
         CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationDelay(0.1f);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::unScheduleUpdate));
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationWillStartSelector(CAApplication::getApplication()->getTouchDispatcher(), CAViewAnimation0_selector(CATouchDispatcher::setDispatchEventsFalse));
+        CAViewAnimation::setAnimationDidStopSelector(CAApplication::getApplication()->getTouchDispatcher(), CAViewAnimation0_selector(CATouchDispatcher::setDispatchEventsTrue));
         CAViewAnimation::commitAnimations();
     }
     else
     {
+        m_fProgress = 1.0f;
+        CCPoint point = this->getNavigationBarNowPoint();
         m_pNavigationBars.back()->setFrameOrigin(point);
         if (this->getView()->getSuperview())
         {
@@ -879,60 +832,92 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     }
 }
 
-void CANavigationController::updateNavigationBarHidden(int index)
+CCPoint CANavigationController::getNavigationBarOpenPoint()
 {
-    CCRect containerRect = this->getView()->getBounds();
-    containerRect.origin = m_pContainers.at(index)->getFrameOrigin();
-    m_pContainers.at(index)->setFrame(containerRect);
-    CCRect rect = m_pContainers.at(index)->getBounds();
-    CCRect navigationBarFrame = m_pNavigationBars.at(index)->getFrame();
+    CCPoint p = CCPointZero;
+    float height = this->getView()->getBounds().size.height;
     
+    if (m_eNavigationBarVerticalAlignment == CABarVerticalAlignmentTop)
+    {
+        p.y = 0;
+    }
+    else
+    {
+        p.y = height - m_tNavigationBarSize.height;
+    }
+    return p;
+}
+
+CCPoint CANavigationController::getNavigationBarTakeBackPoint()
+{
+    CCPoint p = CCPointZero;
+    float height = this->getView()->getBounds().size.height;
+    
+    if (m_eNavigationBarVerticalAlignment == CABarVerticalAlignmentTop)
+    {
+        p.y = -m_tNavigationBarSize.height;
+    }
+    else
+    {
+        p.y = height;
+    }
+    return p;
+}
+
+CCPoint CANavigationController::getNavigationBarNowPoint()
+{
+    float offsetY = this->getNavigationBarTakeBackPoint().y - this->getNavigationBarOpenPoint().y;
+    CCPoint p = CCPointZero;
+    
+    if (m_bNavigationBarHidden)
+    {
+        p.y = this->getNavigationBarOpenPoint().y + offsetY * m_fProgress;
+    }
+    else
+    {
+        p.y = this->getNavigationBarTakeBackPoint().y - offsetY * m_fProgress;
+    }
+    return p;
+}
+
+void CANavigationController::navigationBarHiddenAnimation(float delay, float now, float total)
+{
+    m_fProgress = now / total;
+
+    if (this->getView()->getSuperview())
+    {
+        this->update(0);
+    }
+}
+
+void CANavigationController::update(float dt)
+{
+    CCRect rect = this->getView()->getBounds();
+    
+    CCPoint point = this->getNavigationBarNowPoint();
+
     switch (m_eNavigationBarVerticalAlignment)
     {
         case CABarVerticalAlignmentTop:
         {
-            rect.origin.y = navigationBarFrame.origin.y + navigationBarFrame.size.height;
+            rect.origin.y = point.y + m_tNavigationBarSize.height;
             rect.size.height = rect.size.height - rect.origin.y;
         }
             break;
         case CABarVerticalAlignmentBottom:
         {
-            rect.size.height = navigationBarFrame.origin.y;
+            rect.size.height = point.y;
         }
             break;
         default:
             break;
     }
-    CAView* secondContainer = m_pSecondContainers.at(index);
-    CAViewController* viewController = m_pViewControllers.at(index);
+    m_pNavigationBars.back()->setFrameOrigin(point);
+    
+    CAView* secondContainer = m_pSecondContainers.back();
+    CAViewController* viewController = m_pViewControllers.back();
     secondContainer->setFrame(rect);
     viewController->getSuperViewRect(secondContainer->getBounds());
-}
-
-void CANavigationController::update(float dt)
-{
-    this->updateNavigationBarHidden((unsigned int)m_pNavigationBars.size() - 1);
-}
-
-void CANavigationController::scheduleUpdate()
-{
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
-    CAScheduler::unschedule(schedule_selector(CANavigationController::update), this);
-    CAScheduler::schedule(schedule_selector(CANavigationController::update), this, 1/60.0f);
-}
-
-void CANavigationController::unScheduleUpdate()
-{
-    CAScheduler::unschedule(schedule_selector(CANavigationController::update), this);
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
-    if (m_bNavigationBarHidden)
-    {
-        m_pNavigationBars.back()->setVisible(false);
-    }
-    else
-    {
-        m_pNavigationBars.back()->setVisible(true);
-    }
 }
 
 bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -1274,39 +1259,16 @@ void CATabBarController::viewDidLoad()
     
     if (m_bTabBarHidden)
     {
-        switch (m_eTabBarVerticalAlignment)
-        {
-            case CABarVerticalAlignmentBottom:
-            {
-                tab_bar_rectOrgin.y = container_rect.size.height;
-            }
-                break;
-            case CABarVerticalAlignmentTop:
-            {
-                tab_bar_rectOrgin.y = -m_pTabBar->getFrame().size.height;
-            }
-                break;
-            default:
-                break;
-        }
+        tab_bar_rectOrgin = this->getTabBarTakeBackPoint();
     }
     else
     {
+        tab_bar_rectOrgin = this->getTabBarOpenPoint();
+        
         container_rect.size.height -= m_pTabBar->getFrame().size.height;
-        switch (m_eTabBarVerticalAlignment)
+        if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
         {
-            case CABarVerticalAlignmentBottom:
-            {
-                tab_bar_rectOrgin.y = container_rect.size.height;
-            }
-                break;
-            case CABarVerticalAlignmentTop:
-            {
-                container_rect.origin.y = m_pTabBar->getFrame().size.height;
-            }
-                break;
-            default:
-                break;
+            container_rect.origin.y = m_pTabBar->getFrame().size.height;
         }
     }
     
@@ -1374,7 +1336,7 @@ void CATabBarController::viewDidLoad()
 
 void CATabBarController::viewDidUnload()
 {
-    m_pContainer = NULL;
+
 }
 
 void CATabBarController::viewDidAppear()
@@ -1527,63 +1489,74 @@ bool CATabBarController::isScrollEnabled()
     return m_bscrollEnabled;
 }
 
+CCPoint CATabBarController::getTabBarOpenPoint()
+{
+    CCPoint p = CCPointZero;
+    float height = this->getView()->getBounds().size.height;
+    
+    if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
+    {
+        p.y = 0;
+    }
+    else
+    {
+        p.y = height - m_pTabBar->getFrame().size.height;
+    }
+    return p;
+}
+
+CCPoint CATabBarController::getTabBarTakeBackPoint()
+{
+    CCPoint p = CCPointZero;
+    float height = this->getView()->getBounds().size.height;
+    
+    if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
+    {
+        p.y = -m_pTabBar->getFrame().size.height;
+    }
+    else
+    {
+        p.y = height;
+    }
+    return p;
+}
+
+CCPoint CATabBarController::getTabBarNowPoint()
+{
+    float offsetY = this->getTabBarTakeBackPoint().y - this->getTabBarOpenPoint().y;
+    CCPoint p = CCPointZero;
+    
+    if (m_bTabBarHidden)
+    {
+        p.y = this->getTabBarOpenPoint().y + offsetY * m_fProgress;
+    }
+    else
+    {
+        p.y = this->getTabBarTakeBackPoint().y - offsetY * m_fProgress;
+    }
+    return p;
+}
+
 void CATabBarController::setTabBarHidden(bool hidden, bool animated)
 {
     CC_RETURN_IF(m_bTabBarHidden == hidden);
     m_bTabBarHidden = hidden;
     CC_RETURN_IF(this->getView()->getSuperview() == NULL);
     
-    CCPoint point = CCPointZero;
-    
-    if (m_bTabBarHidden)
-    {
-        switch (m_eTabBarVerticalAlignment)
-        {
-            case CABarVerticalAlignmentTop:
-            {
-                point.y = -m_pTabBar->getFrame().size.height;
-            }
-                break;
-            case CABarVerticalAlignmentBottom:
-            {
-                point.y = this->getView()->getBounds().size.height;
-            }
-                break;
-            default:
-                break;
-        }
-    }
-    else
-    {
-        switch (m_eTabBarVerticalAlignment)
-        {
-            case CABarVerticalAlignmentTop:
-            {
-                point.y = 0;
-            }
-                break;
-            case CABarVerticalAlignmentBottom:
-            {
-                point.y = this->getView()->getBounds().size.height - m_pTabBar->getFrame().size.height;
-            }
-                break;
-            default:
-                break;
-        }
-    }
-    
     if (animated)
     {
-        m_pTabBar->setVisible(true);
-        this->scheduleUpdate();
+        CAAnimation::schedule(CAAnimation_selector(CATabBarController::tabBarHiddenAnimation), this, 0.25f);
+        
         CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationDelay(0.1f);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATabBarController::unScheduleUpdate));
+        CAViewAnimation::setAnimationDuration(0.3f);
+        CAViewAnimation::setAnimationWillStartSelector(CAApplication::getApplication()->getTouchDispatcher(), CAViewAnimation0_selector(CATouchDispatcher::setDispatchEventsFalse));
+        CAViewAnimation::setAnimationDidStopSelector(CAApplication::getApplication()->getTouchDispatcher(), CAViewAnimation0_selector(CATouchDispatcher::setDispatchEventsTrue));
         CAViewAnimation::commitAnimations();
     }
     else
     {
+        m_fProgress = 1.0f;
+        CCPoint point = this->getTabBarNowPoint();
         m_pTabBar->setFrameOrigin(point);
         if (this->getView()->getSuperview())
         {
@@ -1593,54 +1566,49 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
     
 }
 
+void CATabBarController::tabBarHiddenAnimation(float delay, float now, float total)
+{
+    m_fProgress = now / total;
+
+    if (this->getView()->getSuperview())
+    {
+        this->update(0);
+    }
+}
+
 void CATabBarController::update(float dt)
 {
-    CCRect rect = m_pContainer->getFrame();
+    CCRect rect = this->getView()->getFrame();
+    
+    CCPoint point = this->getTabBarNowPoint();
     
     switch (m_eTabBarVerticalAlignment)
     {
         case CABarVerticalAlignmentTop:
         {
-            rect.origin.y = m_pTabBar->getFrame().origin.y + m_pTabBar->getFrame().size.height;
-            rect.size.height = this->getView()->getBounds().size.height - rect.origin.y;
+            rect.origin.y = point.y + m_pTabBar->getFrame().size.height;
+            rect.size.height = rect.size.height - rect.origin.y;
         }
             break;
         case CABarVerticalAlignmentBottom:
         {
-            rect.size.height = m_pTabBar->getFrame().origin.y;
+            rect.size.height = point.y;
         }
             break;
         default:
             break;
     }
     
+    m_pTabBar->setFrameOrigin(point);
     m_pContainer->setFrame(rect);
     
-    for (unsigned int i=0; i<m_pViewControllers.size(); i++)
+    for (size_t i=0; i<m_pViewControllers.size(); i++)
     {
+        CCRect r = m_pContainer->getSubViewAtIndex(i)->getFrame();
+        r.size = rect.size;
+        m_pContainer->getSubViewAtIndex(i)->setFrame(r);
         CAViewController* viewController = m_pViewControllers.at(i);
         viewController->getSuperViewRect(m_pContainer->getBounds());
-    }
-}
-
-void CATabBarController::scheduleUpdate()
-{
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
-    CAScheduler::unschedule(schedule_selector(CATabBarController::update), this);
-    CAScheduler::schedule(schedule_selector(CATabBarController::update), this, 1/60.0f);
-}
-
-void CATabBarController::unScheduleUpdate()
-{
-    CAScheduler::unschedule(schedule_selector(CATabBarController::update), this);
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
-    if (m_bTabBarHidden)
-    {
-        m_pTabBar->setVisible(false);
-    }
-    else
-    {
-        m_pTabBar->setVisible(true);
     }
 }
 

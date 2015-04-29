@@ -15,7 +15,7 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
-class CCTimer;
+class CATimer;
 class CCLayer;
 class CCMenuItem;
 class CCNotificationCenter;
@@ -72,7 +72,7 @@ public:
     static CCSchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
     ~CCSchedulerScriptHandlerEntry(void);
     
-    CrossApp::CCTimer* getTimer(void) {
+    CrossApp::CATimer* getTimer(void) {
         return m_pTimer;
     }
     
@@ -98,7 +98,7 @@ private:
     }
     bool init(float fInterval, bool bPaused);
     
-    CrossApp::CCTimer*   m_pTimer;
+    CrossApp::CATimer*   m_pTimer;
     bool                m_bPaused;
     bool                m_bMarkedForDeletion;
 };

@@ -235,7 +235,6 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         setImageView(CAImageView::createWithImage(m_pImage));
 
         m_pImage->release();
-        m_pImageView->setScaleY(-1);
 
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
         m_pImageView->setBlendFunc(tBlendFunc);
