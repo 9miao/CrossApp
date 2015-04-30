@@ -13,7 +13,7 @@ extern "C" {
 namespace CrossApp
 {
 
-    CC_DLL static inline bool isBase64(unsigned char c) {
+    static inline bool isBase64(unsigned char c) {
         return (isalnum(c) || (c == '+') || (c == '/'));
     }
     
