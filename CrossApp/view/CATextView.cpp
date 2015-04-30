@@ -862,7 +862,10 @@ void CATextView::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
     m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
     execCurSelCharRange();
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    this->resignFirstResponder();
+    this->hideCursorMark();
+#endif
 }
 
 void CATextView::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
@@ -870,8 +873,10 @@ void CATextView::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
     if(m_isTouchInSide)
     {
         m_isTouchInSide = false;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         this->resignFirstResponder();
         this->hideCursorMark();
+#endif
     }
 }
 

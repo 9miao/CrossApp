@@ -1015,7 +1015,7 @@ void CATextField::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
     if (!m_isTouchInSide)
     {
         m_isTouchInSide = true;
-        //this->showCursorMark();
+
     }
 }
 
@@ -1023,6 +1023,10 @@ void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
     m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
     execCurSelCharRange();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    this->resignFirstResponder();
+    this->hideCursorMark();
+#endif
  
 }
 
@@ -1031,8 +1035,11 @@ void CATextField::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
     if(m_isTouchInSide)
     {
         m_isTouchInSide = false;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         this->resignFirstResponder();
         this->hideCursorMark();
+#endif
+        
     }
 }
 
