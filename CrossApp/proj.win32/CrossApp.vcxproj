@@ -148,6 +148,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\animation\CAAnimation.cpp" />
     <ClCompile Include="..\animation\CAViewAnimation.cpp" />
     <ClCompile Include="..\basics\CAApplication.cpp" />
     <ClCompile Include="..\basics\CAAutoreleasePool.cpp" />
@@ -272,6 +273,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CAWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\animation\CAAnimation.h" />
     <ClInclude Include="..\animation\CAViewAnimation.h" />
     <ClInclude Include="..\basics\CAApplication.h" />
     <ClInclude Include="..\basics\CAAutoreleasePool.h" />

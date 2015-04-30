@@ -440,6 +440,9 @@
     <ClCompile Include="..\platform\win32\CAClipboard.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\animation\CAAnimation.cpp">
+      <Filter>animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -889,6 +892,9 @@
     </ClInclude>
     <ClInclude Include="..\platform\CAClipboard.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\animation\CAAnimation.h">
+      <Filter>animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
