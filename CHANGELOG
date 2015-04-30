@@ -12,7 +12,7 @@
 
 #####5.修复CATabBarController 显示隐藏CATabBar时，播放动画不正确的bug
 
-#####6.修复CATextFiekd在安卓平台点回车崩溃的bug
+#####6.修复CATextField在安卓平台点回车崩溃的bug
 
 #####7.解决在iOS平台下与百度地图渲染冲突的bug
 
