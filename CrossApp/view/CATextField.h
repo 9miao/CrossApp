@@ -162,6 +162,9 @@ protected:
     virtual bool detachWithIME();
     virtual bool canAttachWithIME();
     virtual bool canDetachWithIME();
+    virtual void didDetachWithIME();
+    virtual void didAttachWithIME();
+    
     int getStringLength(const std::string &var);
     static int getStringCharCount(const std::string &var);
     virtual void setContentSize(const CCSize& var);
