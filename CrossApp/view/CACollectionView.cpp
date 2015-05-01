@@ -89,21 +89,6 @@ bool CACollectionView::init()
 	return true;
 }
 
-float CACollectionView::maxSpeed(float dt)
-{
-	return (CCPoint(m_obContentSize).getLength() * 8 * dt);
-}
-
-float CACollectionView::maxSpeedCache(float dt)
-{
-	return (maxSpeed(dt) * 3.0f);
-}
-
-float CACollectionView::decelerationRatio(float dt)
-{
-	return 2.0f * dt;
-}
-
 void CACollectionView::setAllowsSelection(bool var)
 {
 	m_bAllowsSelection = var;
@@ -246,7 +231,7 @@ void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
+    //CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchEnded(pTouch, pEvent);
 
 	if (m_pHighlightedCollectionCells)
@@ -317,20 +302,6 @@ void CACollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         }
 		m_pHighlightedCollectionCells = NULL;
 	}
-}
-
-CACollectionViewCell* CACollectionView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
-{
-	CACollectionViewCell* cell = NULL;
-    
-	if (reuseIdentifier && !m_pFreedCollectionCells[reuseIdentifier].empty())
-	{
-		cell = m_pFreedCollectionCells[reuseIdentifier].back();
-		cell->retain()->autorelease();
-		m_pFreedCollectionCells[reuseIdentifier].popBack();
-	}
-    
-	return cell;
 }
 
 void CACollectionView::reloadViewSizeData()
@@ -639,6 +610,35 @@ void CACollectionView::update(float dt)
 	loadCollectionCell();
     
 	updateSectionHeaderAndFooterRects();
+}
+
+float CACollectionView::maxSpeed(float dt)
+{
+    return (CCPoint(m_obContentSize).getLength() * 8 * dt);
+}
+
+float CACollectionView::maxSpeedCache(float dt)
+{
+    return (maxSpeed(dt) * 3.0f);
+}
+
+float CACollectionView::decelerationRatio(float dt)
+{
+    return 2.0f * dt;
+}
+
+CACollectionViewCell* CACollectionView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
+{
+    CACollectionViewCell* cell = NULL;
+    
+    if (reuseIdentifier && !m_pFreedCollectionCells[reuseIdentifier].empty())
+    {
+        cell = m_pFreedCollectionCells[reuseIdentifier].back();
+        cell->retain()->autorelease();
+        m_pFreedCollectionCells[reuseIdentifier].popBack();
+    }
+    
+    return cell;
 }
 
 CACollectionViewCell* CACollectionView::getHighlightCollectionCell()

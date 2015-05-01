@@ -125,6 +125,8 @@ protected:
     
     CAView* dequeueReusableLine();
     
+    void firstReloadData();
+    
 public:
 
 	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);

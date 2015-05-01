@@ -47,7 +47,7 @@ void CAListView::onEnterTransitionDidFinish()
 	{
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAListView::reloadData));
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAListView::firstReloadData));
         CAViewAnimation::commitAnimations();
 	}
 }
@@ -92,149 +92,6 @@ bool CAListView::init()
     this->setBounceHorizontal(false);
     this->setTouchMovedListenHorizontal(false);
 	return true;
-}
-
-float CAListView::maxSpeed(float dt)
-{
-    return (CCPoint(m_obContentSize).getLength() * 8 * dt);
-}
-
-float CAListView::maxSpeedCache(float dt)
-{
-    return (maxSpeed(dt) * 3.0f);
-}
-
-float CAListView::decelerationRatio(float dt)
-{
-    return 2.0f * dt;
-}
-
-void CAListView::reloadViewSizeData()
-{
-	CCRect winRect = this->getBounds();
-	winRect.origin = getContentOffset();
-	float width = winRect.size.width;
-	float height = winRect.size.height;
-
-    m_nIndexs = 0;
-	m_rIndexRects.clear();
-	m_rLineRects.clear();
-	m_rHeaderRect = m_rFooterRect = CCRectZero;
-
-	int iStartPosition = 0;
-	if (m_nListHeaderHeight > 0)
-	{
-		m_rHeaderRect = (m_pListViewOrientation == CAListViewOrientationVertical)
-                        ? CCRect(0, iStartPosition, width, m_nListHeaderHeight)
-                        : CCRect(iStartPosition, 0, m_nListHeaderHeight, height);
-		iStartPosition += m_nListHeaderHeight;
-	}
-
-	m_nIndexs = m_pListViewDataSource->numberOfIndex(this);
-    m_rIndexRects.resize(m_nIndexs);
-    m_rLineRects.resize(m_nIndexs);
-	for (unsigned i = 0; i < m_nIndexs; i++)
-	{
-		unsigned int cellHeight = m_pListViewDataSource->listViewHeightForIndex(this, i);
-		if (cellHeight > 0)
-		{
-			CCRect cellRect = (m_pListViewOrientation == CAListViewOrientationVertical)
-                            ? CCRect(0, iStartPosition, width, cellHeight)
-                            : CCRect(iStartPosition, 0, cellHeight, height);
-			m_rIndexRects[i] = cellRect;
-			iStartPosition += cellHeight;
-		}
-        if (m_nSeparatorViewHeight > 0)
-        {
-            m_rLineRects[i] = (m_pListViewOrientation == CAListViewOrientationVertical)
-            ? CCRect(0, iStartPosition, width, m_nSeparatorViewHeight)
-            : CCRect(iStartPosition, 0, m_nSeparatorViewHeight, height);
-            iStartPosition += m_nSeparatorViewHeight;
-        }
-	}
-
-	if (m_nListFooterHeight > 0)
-	{
-		m_rFooterRect = (m_pListViewOrientation == CAListViewOrientationVertical)
-                        ? CCRect(0, iStartPosition, width, m_nListFooterHeight)
-                        : CCRect(iStartPosition, 0, m_nListFooterHeight, height);
-		iStartPosition += m_nListFooterHeight;
-	}
-
-	if (m_pListViewOrientation == CAListViewOrientationVertical)
-	{
-		this->setViewSize(CCSize(width, iStartPosition));
-	}
-	else
-	{
-		this->setViewSize(CCSize(iStartPosition, height));
-	}
-}
-
-void CAListView::reloadData()
-{
-	if (m_pListViewDataSource == NULL)
-		return;
-    
-    this->reloadViewSizeData();
-    
-    this->removeAllSubviews();
-    
-    m_pUsedLines.clear();
-	m_pUsedListCells.clear();
-	m_pFreedListCells.clear();
-    m_pSelectedListCells.clear();
-	
-	CCRect winRect = this->getBounds();
-    winRect.origin = this->getContentOffset();
-    
-	if (m_nListHeaderHeight > 0)
-	{
-		if (m_pListHeaderView)
-		{
-			m_pListHeaderView->setFrame(m_rHeaderRect);
-			addSubview(m_pListHeaderView);
-		}
-	}
-
-	unsigned int cellCount = m_pListViewDataSource->numberOfIndex(this);
-	for (unsigned i = 0; i < cellCount; i++)
-	{
-		if (m_nIndexs > 0)
-		{
-			std::pair<std::map<unsigned int, CAListViewCell*>::iterator, bool> itrResult =
-				m_pUsedListCells.insert(std::make_pair(i, (CAListViewCell*)NULL));
-
-			CC_CONTINUE_IF(!winRect.intersectsRect(m_rIndexRects[i]));
-
-			CAListViewCell* pCellView = m_pListViewDataSource->listViewCellAtIndex(this, m_rIndexRects[i].size, i);
-			if (pCellView)
-			{
-				pCellView->m_nIndex = i;
-				pCellView->setFrame(m_rIndexRects[i]);
-				addSubview(pCellView);
-				itrResult.first->second = pCellView;
-			}
-		}
-        
-		if (m_nSeparatorViewHeight > 0)
-		{
-			CAView* view = CAView::createWithFrame(m_rLineRects[i], m_obSeparatorColor);
-			addSubview(view);
-            m_pUsedLines[i] = view;
-		}
-	}
-
-	if (m_nListFooterHeight > 0)
-	{
-		if (m_pListFooterView)
-		{
-			m_pListFooterView->setFrame(m_rFooterRect);
-			addSubview(m_pListFooterView);
-		}
-	}
-    this->layoutPullToRefreshView();
-    this->startDeaccelerateScroll();
 }
 
 void CAListView::setAllowsSelection(bool var)
@@ -464,15 +321,139 @@ void CAListView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 	}
 }
 
-void CAListView::update(float dt)
+void CAListView::reloadViewSizeData()
 {
-    CAScrollView::update(dt);
+    CCRect winRect = this->getBounds();
+    winRect.origin = getContentOffset();
+    float width = winRect.size.width;
+    float height = winRect.size.height;
     
-	recoveryCollectionCell();
-
-	loadCollectionCell();
+    m_nIndexs = 0;
+    m_rIndexRects.clear();
+    m_rLineRects.clear();
+    m_rHeaderRect = m_rFooterRect = CCRectZero;
+    
+    int iStartPosition = 0;
+    if (m_nListHeaderHeight > 0)
+    {
+        m_rHeaderRect = (m_pListViewOrientation == CAListViewOrientationVertical)
+        ? CCRect(0, iStartPosition, width, m_nListHeaderHeight)
+        : CCRect(iStartPosition, 0, m_nListHeaderHeight, height);
+        iStartPosition += m_nListHeaderHeight;
+    }
+    
+    m_nIndexs = m_pListViewDataSource->numberOfIndex(this);
+    m_rIndexRects.resize(m_nIndexs);
+    m_rLineRects.resize(m_nIndexs);
+    for (unsigned i = 0; i < m_nIndexs; i++)
+    {
+        unsigned int cellHeight = m_pListViewDataSource->listViewHeightForIndex(this, i);
+        if (cellHeight > 0)
+        {
+            CCRect cellRect = (m_pListViewOrientation == CAListViewOrientationVertical)
+            ? CCRect(0, iStartPosition, width, cellHeight)
+            : CCRect(iStartPosition, 0, cellHeight, height);
+            m_rIndexRects[i] = cellRect;
+            iStartPosition += cellHeight;
+        }
+        if (m_nSeparatorViewHeight > 0)
+        {
+            m_rLineRects[i] = (m_pListViewOrientation == CAListViewOrientationVertical)
+            ? CCRect(0, iStartPosition, width, m_nSeparatorViewHeight)
+            : CCRect(iStartPosition, 0, m_nSeparatorViewHeight, height);
+            iStartPosition += m_nSeparatorViewHeight;
+        }
+    }
+    
+    if (m_nListFooterHeight > 0)
+    {
+        m_rFooterRect = (m_pListViewOrientation == CAListViewOrientationVertical)
+        ? CCRect(0, iStartPosition, width, m_nListFooterHeight)
+        : CCRect(iStartPosition, 0, m_nListFooterHeight, height);
+        iStartPosition += m_nListFooterHeight;
+    }
+    
+    if (m_pListViewOrientation == CAListViewOrientationVertical)
+    {
+        this->setViewSize(CCSize(width, iStartPosition));
+    }
+    else
+    {
+        this->setViewSize(CCSize(iStartPosition, height));
+    }
 }
 
+void CAListView::reloadData()
+{
+    if (m_pListViewDataSource == NULL)
+        return;
+    
+    this->reloadViewSizeData();
+    
+    this->removeAllSubviews();
+    
+    m_pUsedLines.clear();
+    m_pUsedListCells.clear();
+    m_pFreedListCells.clear();
+    m_pSelectedListCells.clear();
+    
+    CCRect winRect = this->getBounds();
+    winRect.origin = this->getContentOffset();
+    
+    if (m_nListHeaderHeight > 0)
+    {
+        if (m_pListHeaderView)
+        {
+            m_pListHeaderView->setFrame(m_rHeaderRect);
+            addSubview(m_pListHeaderView);
+        }
+    }
+    
+    unsigned int cellCount = m_pListViewDataSource->numberOfIndex(this);
+    for (unsigned i = 0; i < cellCount; i++)
+    {
+        if (m_nIndexs > 0)
+        {
+            std::pair<std::map<unsigned int, CAListViewCell*>::iterator, bool> itrResult =
+            m_pUsedListCells.insert(std::make_pair(i, (CAListViewCell*)NULL));
+            
+            CC_CONTINUE_IF(!winRect.intersectsRect(m_rIndexRects[i]));
+            
+            CAListViewCell* pCellView = m_pListViewDataSource->listViewCellAtIndex(this, m_rIndexRects[i].size, i);
+            if (pCellView)
+            {
+                pCellView->m_nIndex = i;
+                pCellView->setFrame(m_rIndexRects[i]);
+                addSubview(pCellView);
+                itrResult.first->second = pCellView;
+            }
+        }
+        
+        if (m_nSeparatorViewHeight > 0)
+        {
+            CAView* view = CAView::createWithFrame(m_rLineRects[i], m_obSeparatorColor);
+            addSubview(view);
+            m_pUsedLines[i] = view;
+        }
+    }
+    
+    if (m_nListFooterHeight > 0)
+    {
+        if (m_pListFooterView)
+        {
+            m_pListFooterView->setFrame(m_rFooterRect);
+            addSubview(m_pListFooterView);
+        }
+    }
+    this->layoutPullToRefreshView();
+    this->startDeaccelerateScroll();
+}
+
+void CAListView::firstReloadData()
+{
+    CC_RETURN_IF(!m_pUsedListCells.empty());
+    this->reloadData();
+}
 
 void CAListView::recoveryCollectionCell()
 {
@@ -545,6 +526,30 @@ void CAListView::loadCollectionCell()
         this->insertSubview(view, 1);
         view->setFrame(lineRect);
 	}
+}
+
+void CAListView::update(float dt)
+{
+    CAScrollView::update(dt);
+    
+    recoveryCollectionCell();
+    
+    loadCollectionCell();
+}
+
+float CAListView::maxSpeed(float dt)
+{
+    return (CCPoint(m_obContentSize).getLength() * 8 * dt);
+}
+
+float CAListView::maxSpeedCache(float dt)
+{
+    return (maxSpeed(dt) * 3.0f);
+}
+
+float CAListView::decelerationRatio(float dt)
+{
+    return 2.0f * dt;
 }
 
 CAListViewCell* CAListView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)

@@ -466,13 +466,13 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     {
         CC_BREAK_IF(m_vTouches.size() > 2);
         
-        if (m_bscrollEnabled == false)
-            return true;
-
         if (!m_vTouches.contains(pTouch))
         {
             m_vTouches.pushBack(pTouch);
         }
+        
+        if (m_bscrollEnabled == false)
+            return true;
 
         if (m_vTouches.size() == 1)
         {
