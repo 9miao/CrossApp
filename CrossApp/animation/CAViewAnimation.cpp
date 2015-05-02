@@ -15,14 +15,10 @@ class CC_DLL CAViewModel : public CAObject
 {
 public:
     
-    CCPoint startFrameOrgin;
-    CCPoint endFrameOrgin;
-    CCPoint deltaFrameOrgin;
-    
-    CCPoint startCenterOrgin;
-    CCPoint endCenterOrgin;
-    CCPoint deltaCenterOrgin;
-    
+    CCPoint startPoint;
+    CCPoint endPoint;
+    CCPoint deltaPoint;
+
     CCSize startContentSize;
     CCSize endContentSize;
     CCSize deltaContentSize;
@@ -84,8 +80,7 @@ public:
 
     CAViewModel(CAView* v)
     :view(v)
-    ,deltaFrameOrgin(CCPointZero)
-    ,deltaCenterOrgin(CCPointZero)
+    ,deltaPoint(CCPointZero)
     ,deltaContentSize(CCSizeZero)
     ,deltaScaleX(0.0f)
     ,deltaScaleY(0.0f)
@@ -101,8 +96,7 @@ public:
     ,deltaColorA(0)
     ,deltaAlpha(0.0f)
     ,deltaImageRect(CCRectZero)
-    ,startFrameOrgin(v->getFrameOrigin())
-    ,startCenterOrgin(v->getCenterOrigin())
+    ,startPoint(v->m_obPoint)
     ,startContentSize(v->m_obContentSize)
     ,startScaleX(v->m_fScaleX)
     ,startScaleY(v->m_fScaleY)
@@ -406,17 +400,10 @@ void CAViewAnimation::update(float dt)
             {
                 CAView* view = itr_animation->first;
                 CAViewModel* model = (CAViewModel*)(itr_animation->second);
-                view->setContentSize(model->startContentSize + model->deltaContentSize * s);
-                if (view->m_bFrame)
-                {
-                    view->setFrameOrigin(model->startFrameOrgin + model->deltaFrameOrgin * s);
-                }
-                else
-                {
-                    view->setCenterOrigin(model->startCenterOrgin + model->deltaCenterOrgin * s);
-                }
                 view->setScaleX(model->startScaleX + model->deltaScaleX * s);
                 view->setScaleY(model->startScaleY + model->deltaScaleY * s);
+                view->setContentSize(model->startContentSize + model->deltaContentSize * s);
+                view->setPoint(model->startPoint + model->deltaPoint * s);
                 view->setZOrder(model->startZOrder + model->deltaZOrder * s);
                 view->setVertexZ(model->startVertexZ + model->deltaVertexZ * s);
                 view->setSkewX(model->startSkewX + model->deltaSkewX * s);
@@ -472,24 +459,12 @@ void CAViewAnimation::update(float dt)
     }
 }
 
-void CAViewAnimation::setFrameOrgin(const CCPoint& point, CAView* view)
+void CAViewAnimation::setPoint(const CCPoint& point, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
     CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
-    model->endFrameOrgin = point;
-    model->deltaFrameOrgin = point - model->startFrameOrgin;
-    model->endCenterOrgin = model->startCenterOrgin;
-    model->deltaCenterOrgin = CCPointZero;
-}
-
-void CAViewAnimation::setCenterOrgin(const CCPoint& point, CAView* view)
-{
-    CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
-    model->endCenterOrgin = point;
-    model->deltaCenterOrgin = point - model->startCenterOrgin;
-    model->endFrameOrgin = model->startFrameOrgin;
-    model->deltaFrameOrgin = CCPointZero;
+    model->endPoint = point;
+    model->deltaPoint = point - model->startPoint;
 }
 
 void CAViewAnimation::setContentSize(const CCSize& size, CAView* view)

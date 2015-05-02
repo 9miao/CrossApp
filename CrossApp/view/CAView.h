@@ -155,7 +155,7 @@ public:
     
     virtual CCRect getBounds() const;
     
-    virtual void setCenter(CCRect rect);
+    virtual void setCenter(const CCRect& rect);
     
     virtual CCRect getCenter();
     

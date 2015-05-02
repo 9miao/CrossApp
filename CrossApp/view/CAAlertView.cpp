@@ -39,7 +39,7 @@ bool CAAlertView::init()
 
 	this->setColor(ccc4(135,135,135,190));
     CCRect rect = CCRectZero;
-    rect.size = CAApplication::getApplication()->getWinSize();
+    rect.size = CAApplication::getApplication()->getRootWindow()->getBounds().size;
     this->setFrame(rect);
 
 	return true;

@@ -679,21 +679,21 @@ void CAView::setFrame(const CCRect &rect)
 
 void CAView::setFrameOrigin(const CCPoint& point)
 {
+    float x = m_obAnchorPointInPoints.x * m_fScaleX;
+    float y = m_obAnchorPointInPoints.y * m_fScaleY;
+    
+    CCPoint p = CCPoint(x, y);
+    p = ccpAdd(p, point);
+    
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
     {
-        CAViewAnimation::getInstance()->setFrameOrgin(point, this);
+        CAViewAnimation::getInstance()->setPoint(p, this);
         m_bFrame = true;
     }
     else
     {
-        float x = m_obAnchorPointInPoints.x * m_fScaleX;
-        float y = m_obAnchorPointInPoints.y * m_fScaleY;
-        
-        CCPoint p = CCPoint(x, y);
-        p = ccpAdd(p, point);
         this->setPoint(p);
-        
         m_bFrame = true;
     }
 }
@@ -726,7 +726,7 @@ CCRect CAView::getCenter()
     return rect;
 }
 
-void CAView::setCenter(CCRect rect)
+void CAView::setCenter(const CCRect& rect)
 {
     if ( ! rect.size.equals(CCSizeZero))
     {
@@ -745,20 +745,20 @@ CCPoint CAView::getCenterOrigin()
 
 void CAView::setCenterOrigin(const CCPoint& point)
 {
+    CCPoint p = ccpMult(m_obContentSize, 0.5f);
+    p = ccpSub(p, m_obAnchorPointInPoints);
+    p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
+    p = ccpSub(point, p);
+    
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
     {
-        CAViewAnimation::getInstance()->setCenterOrgin(point, this);
+        CAViewAnimation::getInstance()->setPoint(p, this);
         m_bFrame = false;
     }
     else
     {
-        CCPoint p = ccpMult(m_obContentSize, 0.5f);
-        p = ccpSub(p, m_obAnchorPointInPoints);
-        p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
-        p = ccpSub(point, p);
         this->setPoint(p);
-        
         m_bFrame = false;
     }
 }
@@ -1957,13 +1957,11 @@ void CAView::setAlpha(float alpha)
     }
     else if (_displayedAlpha != alpha)
     {
-        _displayedAlpha = _realAlpha = alpha;
+        _realAlpha = alpha;
         
         float superviewAlpha = m_pSuperview ? m_pSuperview->getDisplayedAlpha() : 1.0f;
         
         this->updateDisplayedAlpha(superviewAlpha);
-        
-        this->updateColor();
     }
 }
 
@@ -2017,11 +2015,34 @@ void CAView::updateDisplayedColor(const CAColor4B& parentColor)
 
 void CAView::updateColor(void)
 {
-    unsigned int r = _displayedColor.r * _displayedAlpha;
-    unsigned int g = _displayedColor.g * _displayedAlpha;
-    unsigned int b = _displayedColor.b * _displayedAlpha;
+    unsigned int r = _displayedColor.r;
+    unsigned int g = _displayedColor.g;
+    unsigned int b = _displayedColor.b;
     unsigned int a = _displayedColor.a * _displayedAlpha;
     
+    if (m_pobBatchView)
+    {
+        if (m_pobImage)
+        {
+            if (m_uAtlasIndex != 0xffffffff)
+            {
+                m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+            }
+            else
+            {
+                // no need to set it recursively
+                // update dirty_, don't update recursiveDirty_
+                setDirty(true);
+            }
+        }
+    }
+    else
+    {
+        r *= _displayedAlpha;
+        g *= _displayedAlpha;
+        b *= _displayedAlpha;
+    }
+
     CAColor4B color4 = ccc4(r, g, b, a);
     
     m_sQuad.bl.colors = color4;
@@ -2029,20 +2050,6 @@ void CAView::updateColor(void)
     m_sQuad.tl.colors = color4;
     m_sQuad.tr.colors = color4;
     
-    if (m_pobImage && m_pobBatchView)
-    {
-        if (m_uAtlasIndex != 0xffffffff)
-        {
-            m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
-        }
-        else
-        {
-            // no need to set it recursively
-            // update dirty_, don't update recursiveDirty_
-            setDirty(true);
-        }
-    }
-
     this->updateDraw();
 }
 

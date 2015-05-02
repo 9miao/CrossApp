@@ -1272,7 +1272,7 @@ void CATabBarController::viewDidLoad()
         }
     }
     
-    m_pContainer = CAPageView::createWithFrame(container_rect, CAPageView::CAPageViewDirectionHorizontal);
+    m_pContainer = CAPageView::createWithFrame(container_rect, CAPageViewDirectionHorizontal);
     m_pContainer->setBackGroundColor(CAColor_clear);
     m_pContainer->setPageViewDelegate(this);
     m_pContainer->setScrollViewDelegate(this);

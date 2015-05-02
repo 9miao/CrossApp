@@ -21,6 +21,10 @@
 #include "ccMacros.h"
 #include "ccTypes.h"
 
+// animation
+#include "animation/CAAnimation.h"
+#include "animation/CAViewAnimation.h"
+
 //basics
 #include "basics/CAApplication.h"
 #include "basics/CAAutoreleasePool.h"
@@ -65,8 +69,6 @@
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
 
-// animation
-#include "animation/CAViewAnimation.h"
 
 //view
 #include "view/CAView.h"

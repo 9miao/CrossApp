@@ -117,13 +117,11 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
     }
     
     CAImage* image = new CAImage();
-    pthread_mutex_lock(&s_ImageInfoMutex);
     if (image && !image->initWithImageFileThreadSafe(filename))
     {
         CC_SAFE_RELEASE(image);
         return;
     }
-    pthread_mutex_unlock(&s_ImageInfoMutex);
     // generate image info
     ImageInfo *pImageInfo = new ImageInfo();
     pImageInfo->asyncStruct = pAsyncStruct;

@@ -121,10 +121,8 @@ protected:
     CAViewAnimation();
     
     virtual ~CAViewAnimation();
-    
-    void setFrameOrgin(const CCPoint& point, CAView* view);
-    
-    void setCenterOrgin(const CCPoint& point, CAView* view);
+
+    void setPoint(const CCPoint& point, CAView* view);
     
     void setContentSize(const CCSize& size, CAView* view);
     
