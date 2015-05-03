@@ -258,6 +258,38 @@ void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAn
     animation->m_vWillModules.back()->didStopSel2 = selector;
 }
 
+void CAViewAnimation::removeAnimations(const std::string& animationID)
+{
+    CCAssert(animationID.length() > 0, "");
+    CAViewAnimation* animation = CAViewAnimation::getInstance();
+    
+    for (CADeque<CAViewAnimationModule*>::iterator itr=animation->m_vWillModules.begin();
+         itr!=animation->m_vWillModules.end();)
+    {
+        if ((*itr)->animationID.compare(animationID) == 0)
+        {
+            itr = animation->m_vWillModules.erase(itr);
+        }
+        else
+        {
+            itr++;
+        }
+    }
+    
+    for (CAVector<CAViewAnimationModule*>::iterator itr=animation->m_vModules.begin();
+         itr!=animation->m_vModules.end();)
+    {
+        if ((*itr)->animationID.compare(animationID) == 0)
+        {
+            itr = animation->m_vModules.erase(itr);
+        }
+        else
+        {
+            itr++;
+        }
+    }
+}
+
 void CAViewAnimation::setAnimationsEnabled(bool enabled)
 {
     CAViewAnimation::getInstance()->m_bAnimationsEnabled = enabled;
@@ -430,7 +462,7 @@ void CAViewAnimation::update(float dt)
                 ++itr_animation;
             }
             
-            if (times >= module->repeatCount)
+            if (times >= module->repeatCount && module->repeatCount < 1048576)
             {
                 if (module->didStopTarget)
                 {

@@ -6,6 +6,7 @@
 #include "dispatcher/CATouch.h"
 #include "view/CAWindow.h"
 #include "view/CARenderImage.h"
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
@@ -37,7 +38,7 @@ bool CAAlertView::init()
 		return false;
 	}
 
-	this->setColor(ccc4(135,135,135,190));
+	this->setColor(ccc4(127,127,127,127));
     CCRect rect = CCRectZero;
     rect.size = CAApplication::getApplication()->getRootWindow()->getBounds().size;
     this->setFrame(rect);
@@ -237,7 +238,9 @@ void CAAlertView::showAlertView() {
 		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
 		scrollView->addSubview(m_pContentLabel);
 	
-	} else {
+	}
+    else
+    {
 		
 		CCAssert(m_pContentLabel, "");
 		alertViewMessageHeight = m_fAlertViewMessageHeight;
@@ -248,6 +251,15 @@ void CAAlertView::showAlertView() {
 	addGrayLine(m_fAlertViewLineHeight);
 
 	adjustButtonView();
+    
+    this->setAlpha(0);
+    m_pBackView->setScale(0.5f);
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0.2f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    this->setAlpha(1.0f);
+    m_pBackView->setScale(1.0f);
+    CAViewAnimation::commitAnimations();
 }
  
 void CAAlertView::adjustButtonView() {

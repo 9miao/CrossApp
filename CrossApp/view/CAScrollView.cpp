@@ -347,7 +347,7 @@ void CAScrollView::setBackGroundImage(CAImage* image)
     
     CCRect rect = CCRectZero;
     rect.size = image->getContentSize();
-    CAView::setVertexRect(rect);
+    CAView::setImageRect(rect);
 }
 
 void CAScrollView::setBackGroundColor(const CAColor4B &color)
@@ -822,8 +822,15 @@ void CAScrollView::deaccelerateScrolling(float dt)
             }
         }
 
-        this->showIndicator();
-        this->setContainerFrame(point);
+        if (point.equals(m_pContainer->getFrameOrigin()))
+        {
+            m_tInertia = CCPointZero;
+        }
+        else
+        {
+            this->showIndicator();
+            this->setContainerFrame(point);
+        }
     }
     
     if (m_pScrollViewDelegate)

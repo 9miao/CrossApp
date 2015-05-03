@@ -415,17 +415,6 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     if (!this->isTouchClick())
         return;
-    
-    
-    if (getBounds().containsPoint(point))
-    {
-        this->setTouchUpInSide(point);
-    }
-    else
-    {
-        this->setTouchUpOutSide(point);
-    }
-
     do
     {
         CC_BREAK_IF(this->getControlState() != CAControlStateHighlighted);
@@ -449,6 +438,15 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         }
     }
     while (0);
+    
+    if (getBounds().containsPoint(point))
+    {
+        this->setTouchUpInSide(point);
+    }
+    else
+    {
+        this->setTouchUpOutSide(point);
+    }
 }
 
 void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)

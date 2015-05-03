@@ -126,15 +126,17 @@ void CATimer::update(float dt)
     }
     else
     {
+        m_fElapsed += dt;
+        
         if (m_bRunForever && !m_bUseDelay)
         {//standard timer usage
-            m_fElapsed += dt;
+            
             if (m_fElapsed >= m_fInterval || m_fInterval == 1/60.0f)
             {
                 
                 if (m_pTarget && m_pfnSelector)
                 {
-                    (m_pTarget->*m_pfnSelector)(m_fElapsed);
+                    (m_pTarget->*m_pfnSelector)(MIN(m_fElapsed, m_fInterval * 2));
                 }
             
                 m_fElapsed = 0;
@@ -142,17 +144,17 @@ void CATimer::update(float dt)
         }
         else
         {//advanced usage
-            m_fElapsed += dt;
             if (m_bUseDelay)
             {
                 if( m_fElapsed >= m_fDelay )
                 {
+                    m_fElapsed = m_fElapsed - m_fDelay;
+                    
                     if (m_pTarget && m_pfnSelector)
                     {
-                        (m_pTarget->*m_pfnSelector)(m_fElapsed);
+                        (m_pTarget->*m_pfnSelector)(MIN(m_fElapsed, m_fInterval * 2));
                     }
 
-                    m_fElapsed = m_fElapsed - m_fDelay;
                     m_uTimesExecuted += 1;
                     m_bUseDelay = false;
                 }
@@ -163,7 +165,7 @@ void CATimer::update(float dt)
                 {
                     if (m_pTarget && m_pfnSelector)
                     {
-                        (m_pTarget->*m_pfnSelector)(m_fElapsed);
+                        (m_pTarget->*m_pfnSelector)(MIN(m_fElapsed, m_fInterval * 2));
                     }
 
                     m_fElapsed = 0;
