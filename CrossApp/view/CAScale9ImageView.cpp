@@ -393,16 +393,6 @@ const CAColor4B& CAScale9ImageView::getColor()
 void CAScale9ImageView::setAlpha(float alpha)
 {
     CAView::setAlpha(alpha);
-    if (m_pScale9ImageView)
-    {
-        const CAVector<CAView*>& subview = m_pScale9ImageView->getSubviews();
-        
-        CAVector<CAView*>::const_iterator itr;
-        for (itr=subview.begin(); itr!=subview.end(); itr++)
-        {
-            (*itr)->setAlpha(alpha);
-        }
-    }
 }
 
 void CAScale9ImageView::setImage(CrossApp::CAImage *image)
@@ -412,14 +402,6 @@ void CAScale9ImageView::setImage(CrossApp::CAImage *image)
     {
         this->updateWithImage();
         this->updatePositions();
-    }
-}
-
-void CAScale9ImageView::updateDisplayedAlpha(float parentOpacity)
-{
-    if (m_pScale9ImageView)
-    {
-        m_pScale9ImageView->updateDisplayedAlpha(parentOpacity);
     }
 }
 

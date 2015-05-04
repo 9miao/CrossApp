@@ -1529,7 +1529,6 @@ void CAImage::convertToRawData()
     convertDataToFormat(tempData, length, pixelFormat, m_ePixelFormat, &m_pData, &m_nDataLenght);
 
     m_tContentSize = CCSize(m_uPixelsWide, m_uPixelsHigh);
-    m_ePixelFormat = pixelFormat;
     m_fMaxS = 1;
     m_fMaxT = 1;
     

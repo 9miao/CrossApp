@@ -459,7 +459,7 @@ protected:
     bool m_bReorderChildDirty;          ///< children order dirty flag
     
     float		_displayedAlpha;
-    float     _realAlpha;
+    float       _realAlpha;
 	CAColor4B	_displayedColor;
     CAColor4B   _realColor;
     

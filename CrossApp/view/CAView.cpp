@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-12.
-//  Copyright (c) 2014�?http://9miao.com All rights reserved.
+//  Copyright (c) 2014Âπ?http://9miao.com All rights reserved.
 //
 
 #include "CAView.h"
@@ -2020,41 +2020,40 @@ void CAView::updateDisplayedColor(const CAColor4B& parentColor)
 
 void CAView::updateColor(void)
 {
-    unsigned int r = _displayedColor.r;
-    unsigned int g = _displayedColor.g;
-    unsigned int b = _displayedColor.b;
-    unsigned int a = _displayedColor.a * _displayedAlpha;
+    CAColor4B color4 = _displayedColor;
+    color4.a = color4.a * _displayedAlpha;
     
-    if (m_pobBatchView)
+    if (m_pobImage)
     {
-        if (m_pobImage)
+        if (m_pobImage->getPixelFormat() == CAImage::PixelFormat_RGBA8888
+            ||
+            m_pobImage->getPixelFormat() == CAImage::PixelFormat_RGBA4444)
         {
-            if (m_uAtlasIndex != 0xffffffff)
-            {
-                m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
-            }
-            else
-            {
-                // no need to set it recursively
-                // update dirty_, don't update recursiveDirty_
-                setDirty(true);
-            }
+           color4.r = color4.r * _displayedAlpha;
+           color4.g = color4.g * _displayedAlpha;
+           color4.b = color4.b * _displayedAlpha;
         }
     }
-    else
-    {
-        r *= _displayedAlpha;
-        g *= _displayedAlpha;
-        b *= _displayedAlpha;
-    }
-
-    CAColor4B color4 = ccc4(r, g, b, a);
-    
+   
     m_sQuad.bl.colors = color4;
     m_sQuad.br.colors = color4;
     m_sQuad.tl.colors = color4;
     m_sQuad.tr.colors = color4;
     
+    if (m_pobBatchView && m_pobImage)
+    {
+        if (m_uAtlasIndex != 0xffffffff)
+        {
+            m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+        }
+        else
+        {
+            // no need to set it recursively
+            // update dirty_, don't update recursiveDirty_
+            setDirty(true);
+        }
+    }
+
     this->updateDraw();
 }
 

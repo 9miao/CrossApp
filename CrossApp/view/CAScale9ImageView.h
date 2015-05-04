@@ -54,8 +54,6 @@ public:
     virtual void setImage(CAImage* image);
 
     using CAView::getImage;
-    
-    virtual void updateDisplayedAlpha(float parentOpacity);
 
     virtual void draw(void);
     
