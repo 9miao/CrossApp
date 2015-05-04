@@ -222,6 +222,8 @@ USING_NS_CC;
 {
     NSString *url = [[webView.request URL] absoluteString];
     CAWebViewImpl::didFinishLoading(self, [url UTF8String]);
+	NSString* html = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.innerHTML"];
+    CAWebViewImpl::onLoadHtmlSource(self,[html UTF8String]);
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
