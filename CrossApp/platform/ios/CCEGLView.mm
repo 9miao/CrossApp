@@ -67,7 +67,7 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 void CCEGLView::setIMEKeyboardNumber()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.keyboardType =UIKeyboardTypeNumberPad;
+    view.keyboardType =UIKeyboardTypeDecimalPad;
 }
 void CCEGLView::setIMEKeyboardDefault()
 {
@@ -105,6 +105,7 @@ void CCEGLView::setIMEKeyboardReturnDone()
 void CCEGLView::setIMEKeyboardReturnEnter()
 {
     EAGLView * view = [EAGLView sharedEGLView];
+    view.keyboardType =UIKeyboardTypeDefault;
     view.returnKeyType =UIReturnKeyDefault;
 }
 NS_CC_END
