@@ -92,6 +92,7 @@ CAImageView::CAImageView(void)
 ,m_bAnimating(false)
 ,m_iAnimationRepeatCount(0)
 ,m_fAnimationDuration(1/30.0f)
+,m_fAnimationRunTime(0)
 {
     
 }

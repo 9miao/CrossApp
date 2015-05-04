@@ -366,7 +366,6 @@ public:
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
 protected:
-
     void detachSubview(CAView *subview);
 
     void updateDraw();

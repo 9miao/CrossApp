@@ -872,11 +872,9 @@ void CATextField::updateImage()
         this->setImage(image);
         this->setImageRect(rect);
     }
-	if (image == NULL )
-		return;
+    
+	if (image == NULL) return;
 
- 
-	
 	rect.size.height = image->getContentSize().height;
 	rect.size.width = MIN(m_iLabelWidth, image->getContentSize().width);
 

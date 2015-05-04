@@ -1083,7 +1083,7 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 			pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
 		}
 		ttfIndex = 1;
-        
+
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         
         pFontName = "/system/fonts/DroidSansFallback.ttf";

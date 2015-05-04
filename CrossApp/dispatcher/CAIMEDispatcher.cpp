@@ -316,15 +316,15 @@ void CAIMEDispatcher::dispatchMoveSelectCharsCancel(const CCPoint& pt)
 
 void CAIMEDispatcher::dispatchMoveArrowBtn(const CCPoint& pt)
 {
-    do
-    {
-        CC_BREAK_IF(!m_pImpl);
+	do
+	{
+		CC_BREAK_IF(!m_pImpl);
 
-        // there is no delegate attached to IME
-        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+		// there is no delegate attached to IME
+		CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
-		return m_pImpl->m_DelegateWithIme->moveArrowBtn(pt);
-    } while (0);
+		m_pImpl->m_DelegateWithIme->moveArrowBtn(pt);
+	} while (0);
 }
 
 void CAIMEDispatcher::dispatchCopyToClipboard()
@@ -337,7 +337,8 @@ void CAIMEDispatcher::dispatchCopyToClipboard()
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
         m_pImpl->m_DelegateWithIme->copyToClipboard();
-    } while (0);
+    }
+    while (0);
 }
 
 void CAIMEDispatcher::dispatchCutToClipboard()
@@ -350,7 +351,8 @@ void CAIMEDispatcher::dispatchCutToClipboard()
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
         m_pImpl->m_DelegateWithIme->cutToClipboard();
-    } while (0);
+    }
+    while (0);
 }
 
 void CAIMEDispatcher::dispatchPasteFromClipboard()
@@ -363,8 +365,9 @@ void CAIMEDispatcher::dispatchPasteFromClipboard()
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
         m_pImpl->m_DelegateWithIme->pasteFromClipboard();
-    } while (0);
     }
+    while (0);
+}
 
 void CAIMEDispatcher::dispatchSelectAll()
 {
@@ -376,7 +379,8 @@ void CAIMEDispatcher::dispatchSelectAll()
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
         m_pImpl->m_DelegateWithIme->selectAll();
-    } while (0);
+    }
+    while (0);
 }
 
 int CAIMEDispatcher::getCursorPos()

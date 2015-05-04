@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-12.
-//  Copyright (c) 2014å¹´ http://9miao.com All rights reserved.
+//  Copyright (c) 2014å¹?http://9miao.com All rights reserved.
 //
 
 #include "CAView.h"
@@ -2161,17 +2161,14 @@ bool CAView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CAView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-
 }
 
 void CAView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-
 }
 
 void CAView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-
 }
 
 void CAView::setBatch(CABatchView *batchView)
