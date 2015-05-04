@@ -222,6 +222,8 @@ USING_NS_CC;
 {
     NSString *url = [[webView.request URL] absoluteString];
     CAWebViewImpl::didFinishLoading(self, [url UTF8String]);
+	NSString* html = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.innerHTML"];
+    CAWebViewImpl::onLoadHtmlSource(self,[html UTF8String]);
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -296,6 +298,19 @@ void CAWebViewImpl::didFinishLoading(void* pWebViewWrapper, const std::string &u
         if (webView && webView->m_pWebViewDelegate)
         {
             webView->m_pWebViewDelegate->onDidFinishLoading(webView, url);
+        }
+    }
+}
+
+void CAWebViewImpl::onLoadHtmlSource(void* pWebViewWrapper, const std::string &htmlSource)
+{
+    WEB_MAP it=s_WebViewImpls.find((UIWebViewWrapper*)pWebViewWrapper);
+    if (it != s_WebViewImpls.end())
+    {
+        CAWebView* webView = it->second->m_pWebView;
+        if (webView && webView->m_pWebViewDelegate)
+        {
+            webView->m_pWebViewDelegate->onLoadHtmlSource(webView, htmlSource);
         }
     }
 }
