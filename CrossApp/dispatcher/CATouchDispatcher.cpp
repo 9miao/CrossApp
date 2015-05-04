@@ -1,4 +1,4 @@
-    //
+//
 //  CATouchDispatcher.h
 //  CrossApp
 //
@@ -15,7 +15,7 @@
 #include "view/CAWindow.h"
 #include "basics/CAScheduler.h"
 #include "support/CCPointExtension.h"
-#include "CAIMEDelegate.h"
+
 
 NS_CC_BEGIN
 
@@ -24,7 +24,7 @@ CATouchController::CATouchController()
 ,m_pEvent(NULL)
 ,m_tFirstPoint(CCPointZero)
 {
-
+    
 }
 
 CATouchController::~CATouchController()
@@ -106,16 +106,21 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
         responder = nextResponder;
     }
     while (responder);
-
+    
     return vector;
 }
 
 void CATouchController::passingTouchesViews(float dt)
 {
     CAView* view = dynamic_cast<CAView*>(CAApplication::getApplication()->getTouchDispatcher()->getFirstResponder());
-
+    bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
+    if (!isContainsFirstPoint && view)
+    {
+        view->ccTouchBegan(m_pTouch, m_pEvent);
+    }
+    
     CC_RETURN_IF(m_vTouchesViews.empty());
-
+    
     CAResponder* responder = m_vTouchesViews.front();
     while (responder->nextResponder())
     {
@@ -123,7 +128,6 @@ void CATouchController::passingTouchesViews(float dt)
         responder = responder->nextResponder();
     }
     
-    bool controlK = true;
     for (int i=0; i<m_vTouchesViews.size();)
     {
         if (!m_vTouchesViews.at(i)->ccTouchBegan(m_pTouch, m_pEvent))
@@ -132,13 +136,6 @@ void CATouchController::passingTouchesViews(float dt)
         }
         else
         {
-            if(controlK){
-                CAIMEDelegate* ime = dynamic_cast<CAIMEDelegate *>(m_vTouchesViews.at(i));
-                if(!ime && view){
-                    view->resignFirstResponder();
-                }
-                controlK = false;
-            }
             i++;
         }
     }
@@ -158,9 +155,13 @@ void CATouchController::touchBegan()
     }
     else
     {
+        if (view)
+        {
+            view->resignFirstResponder();
+        }
         vector = this->getEventListener(m_pTouch, CAApplication::getApplication()->getRootWindow());
     }
-
+    
     std::vector<CAResponder*>::iterator itr;
     for (itr=vector.begin(); itr!=vector.end(); itr++)
     {
@@ -228,10 +229,11 @@ void CATouchController::touchMoved()
         
         if (!m_vTouchMovedsView.empty())
         {
-            do
+            bool isTouchCancelled = true;
+            CAVector<CAResponder*>::iterator itr;
+            for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
             {
-                CC_BREAK_IF(m_vTouchesViews.empty());
-                CAResponder* responder = m_vTouchesViews.back();
+                CAResponder* responder = (*itr);
                 if (responder->isTouchMovedStopSubviews())
                 {
                     CCPoint pointOffSet = CCPointZero;
@@ -253,17 +255,37 @@ void CATouchController::touchMoved()
                     if (responder->isTouchMovedListenHorizontal()
                         && fabsf(pointOffSet.x) >= fabsf(pointOffSet.y))
                     {
-                        CC_BREAK_IF(responder->isSlidingMinX() && pointOffSet.x <= 0);
-                        CC_BREAK_IF(responder->isSlidingMaxX() && pointOffSet.x >= 0);
+                        if (responder->isSlidingMinX() && pointOffSet.x <= 0)
+                        {
+                            isTouchCancelled = false;
+                            break;
+                        }
+                        else if (responder->isSlidingMaxX() && pointOffSet.x >= 0)
+                        {
+                            isTouchCancelled = false;
+                            break;
+                        }
                     }
                     
                     if (responder->isTouchMovedListenVertical()
                         && fabsf(pointOffSet.x) < fabsf(pointOffSet.y))
                     {
-                        CC_BREAK_IF(responder->isSlidingMinY() && pointOffSet.y <= 0);
-                        CC_BREAK_IF(responder->isSlidingMaxY() && pointOffSet.y >= 0);
+                        if (responder->isSlidingMinY() && pointOffSet.y <= 0)
+                        {
+                            isTouchCancelled = false;
+                            break;
+                        }
+                        else if (responder->isSlidingMaxY() && pointOffSet.y >= 0)
+                        {
+                            isTouchCancelled = false;
+                            break;
+                        }
                     }
                 }
+            }
+            
+            if (isTouchCancelled)
+            {
                 if (!isScheduledPassing)
                 {
                     CAVector<CAResponder*>::iterator itr;
@@ -274,7 +296,6 @@ void CATouchController::touchMoved()
                 }
                 m_vTouchesViews.clear();
             }
-            while (0);
             
             if (isScheduledPassing || m_vTouchesViews.empty())
             {
@@ -311,8 +332,10 @@ void CATouchController::touchMoved()
                         CC_CONTINUE_IF(responder->isSlidingMaxY() && pointOffSet.y < 0);
                     }
                     
-                    m_vTouchesViews.pushBack(responder);
-                    responder->ccTouchBegan(m_pTouch, m_pEvent);
+                    if (responder->ccTouchBegan(m_pTouch, m_pEvent))
+                    {
+                        m_vTouchesViews.pushBack(responder);
+                    }
 
                     break;
                 }
@@ -320,7 +343,16 @@ void CATouchController::touchMoved()
                 if (m_vTouchesViews.empty())
                 {
                     m_vTouchesViews.pushBack(m_vTouchMovedsView.front());
-                    m_vTouchesViews.back()->ccTouchBegan(m_pTouch, m_pEvent);
+                    
+                    while (m_vTouchesViews.back())
+                    {
+                        if (m_vTouchesViews.back()->ccTouchBegan(m_pTouch, m_pEvent))
+                        {
+                            break;
+                        }
+                        m_vTouchesViews.popBack();
+                    }
+                    
                 }
             }
         }
@@ -350,14 +382,12 @@ void CATouchController::touchEnded()
         this->passingTouchesViews();
     }
     
-#if(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
     CAView* view = dynamic_cast<CAView*>(CAApplication::getApplication()->getTouchDispatcher()->getFirstResponder());
     bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
     if (!isContainsFirstPoint && view)
     {
         view->ccTouchEnded(m_pTouch, m_pEvent);
     }
-#endif
     
     CAVector<CAResponder*>::iterator itr;
     for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
@@ -392,7 +422,7 @@ CATouchDispatcher::CATouchDispatcher(void)
 ,m_bLocked(false)
 ,m_pFirstResponder(NULL)
 {
-
+    
 }
 
 CATouchDispatcher::~CATouchDispatcher(void)

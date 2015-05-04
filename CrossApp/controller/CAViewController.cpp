@@ -922,6 +922,11 @@ void CANavigationController::update(float dt)
 
 bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
+    if (pTouch->getLocation().x > _px(64))
+    {
+        return false;
+    }
+    
     m_bPopViewController = false;
     return true;
 }
