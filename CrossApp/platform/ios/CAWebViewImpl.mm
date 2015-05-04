@@ -302,6 +302,19 @@ void CAWebViewImpl::didFinishLoading(void* pWebViewWrapper, const std::string &u
     }
 }
 
+void CAWebViewImpl::onLoadHtmlSource(void* pWebViewWrapper, const std::string &htmlSource)
+{
+    WEB_MAP it=s_WebViewImpls.find((UIWebViewWrapper*)pWebViewWrapper);
+    if (it != s_WebViewImpls.end())
+    {
+        CAWebView* webView = it->second->m_pWebView;
+        if (webView && webView->m_pWebViewDelegate)
+        {
+            webView->m_pWebViewDelegate->onLoadHtmlSource(webView, htmlSource);
+        }
+    }
+}
+
 void CAWebViewImpl::didFailLoading(void* pWebViewWrapper, const std::string &url)
 {
     WEB_MAP it=s_WebViewImpls.find((UIWebViewWrapper*)pWebViewWrapper);
