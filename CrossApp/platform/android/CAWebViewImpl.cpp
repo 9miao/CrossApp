@@ -407,7 +407,7 @@ CAImageView* CAWebViewImpl::getWebViewImage()
 		CCSize size = _webView->getBounds().size;
 
 		CAImage* pImage = new CAImage();
-		if (!pImage->initWithImageData((const unsigned char*)&s_cszWebViewImageData[0], s_cszWebViewImageData.size()))
+		if (!pImage->initWithRawData((const unsigned char*)&s_cszWebViewImageData[0], CAImage::PixelFormat_RGBA8888, size.width, size.height))
 		{
 			delete pImage;
 			return NULL;
