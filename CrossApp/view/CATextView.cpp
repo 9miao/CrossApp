@@ -149,8 +149,10 @@ void CATextView::initMarkSprite()
 
 void CATextView::showCursorMark()
 {
-    m_pCursorMark->setVisible(true);
-    m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(0.8f, 1), 1048576));
+    if(!m_pCursorMark->isVisible()){
+        m_pCursorMark->setVisible(true);
+        m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(0.8f, 1), 1048576));
+    }
 }
 
 void CATextView::hideCursorMark()
@@ -394,6 +396,16 @@ bool CATextView::canDetachWithIME()
 	return (m_pTextViewDelegate) ? m_pTextViewDelegate->onTextViewDetachWithIME(this) : true;
 }
 
+void CATextView::didDetachWithIME()
+{
+    hideCursorMark();
+}
+
+void CATextView::didAttachWithIME()
+{
+    showCursorMark();
+}
+
 void CATextView::insertText(const char * text, int len)
 {
     CCLog("insertText: %s, %d", text, len);
@@ -417,16 +429,12 @@ void CATextView::willInsertText(const char* text, int len)
 
 void CATextView::AndroidWillInsertText(int start, const char* str, int before, int count)
 {
-    
+
 	CCAssert(str != NULL, "");
 	CCAssert(count > 0, "");
-    
-	std::string cszNewStr = str;
-	if (cszNewStr.size() >= m_szText.size())
-	{
-		cszNewStr = cszNewStr.substr(m_szText.size(), cszNewStr.size());
-		insertText(cszNewStr.c_str(), (int)cszNewStr.size());
-	}
+
+ 	insertText(str, (int)strlen(str));
+
 }
 
 void CATextView::deleteBackward()
@@ -449,6 +457,7 @@ void CATextView::deleteBackward()
 
 void CATextView::getKeyBoardHeight(int height)
 {
+	CAView::becomeFirstResponder();
 	if (m_pTextViewDelegate && m_pTextViewDelegate->getKeyBoardHeight(height))
 	{
 		return;
@@ -640,7 +649,6 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 	{
 		if (this->getBounds().containsPoint(point))
 		{
-			//m_isTouchInSide = true;
 			becomeFirstResponder();
 			if (isFirstResponder())
 			{
@@ -660,7 +668,6 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		//	CATextArrowView::hideTextArrowView();
 		//	CATextToolBar::hideTextToolBar();
 		//	CATextSelectView::hideTextSelectView();
-			//m_isTouchInSide = false;
 			if (resignFirstResponder())
 			{
                 this->hideCursorMark();
@@ -683,11 +690,10 @@ bool CATextView::attachWithIME()
 		if (pGlView)
 		{
 #if( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
-            
+
             pGlView->setIMEKeyboardReturnEnter();
-            
+
 #endif
-            this->showCursorMark();
 			pGlView->setIMEKeyboardState(true);
 		}
 	}
@@ -704,7 +710,6 @@ bool CATextView::detachWithIME()
 		if (pGlView)
 		{
 			pGlView->setIMEKeyboardState(false);
-            this->hideCursorMark();
 		}
 	}
 	return bRet;
@@ -780,7 +785,7 @@ void CATextView::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 
 void CATextView::moveSelectCharsCancel(const CCPoint& pt)
 {
-//	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("ºÙ«�?), UTF8("øΩ±¥"), UTF8("’≥Ã˘"), NULL);
+//	CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("ÂºÃÂ«â?), UTF8("Ã¸Î©Â±Â¥"), UTF8("ââ¥ÃË"), NULL);
 //	pTextEditView->setTarget(this, CATextToolBar_selector(CATextView::CATextEditBtnEvent2));
 //	pTextEditView->showTextEditView(pt, this);
 }
@@ -854,7 +859,6 @@ void CATextView::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
     if (!m_isTouchInSide)
     {
         m_isTouchInSide = true;
-        this->showCursorMark();
     }
 }
 
@@ -862,10 +866,6 @@ void CATextView::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
     m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
     execCurSelCharRange();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    this->resignFirstResponder();
-    this->hideCursorMark();
-#endif
 }
 
 void CATextView::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
@@ -873,10 +873,8 @@ void CATextView::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
     if(m_isTouchInSide)
     {
         m_isTouchInSide = false;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        this->resignFirstResponder();
-        this->hideCursorMark();
-#endif
+        CAView::resignFirstResponder();
+
     }
 }
 
