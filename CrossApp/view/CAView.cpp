@@ -848,12 +848,17 @@ void CAView::reViewlayout()
 
 void CAView::updateDraw()
 {
-    SET_DIRTY_RECURSIVELY();
-    if (this->getSuperview())
+    CAView* v = this->getSuperview();
+    CC_RETURN_IF(v == NULL);
+    while (v == v->getSuperview())
     {
-        this->reViewlayout();
-        CAApplication::getApplication()->updateDraw();
+        CC_BREAK_IF(v == NULL);
+        CC_RETURN_IF(v->isVisible());
     }
+    
+    SET_DIRTY_RECURSIVELY();
+    this->reViewlayout();
+    CAApplication::getApplication()->updateDraw();
 }
 
 CAView* CAView::getSubviewByTag(int aTag)

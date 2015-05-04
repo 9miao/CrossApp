@@ -86,7 +86,8 @@ public:
                                 int iLimitWidth,
                                 int& cutWidth);
     
-    static int getStringHeight(const char* pFontName, unsigned long nSize,
+    static int getStringHeight(const char* pFontName,
+                               unsigned long nSize,
                                const std::string& pText,
                                int iLimitWidth,
                                int iLineSpace = 0,
