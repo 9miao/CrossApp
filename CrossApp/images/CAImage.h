@@ -96,13 +96,7 @@ public:
                                bool bWordWrap = true);
     
     static CAImage* create(const std::string& file);
-    /******************************/
-    void setGifImageWithIndex(int index);
-    
-    int getGifImageIndex();
-    
-    int getGifImageCounts();
-    /******************************/
+
     static CAImage* createWithImageDataNoCache(const unsigned char * data, unsigned long lenght);
     
     static CAImage* createWithImageData(const unsigned char * data,
@@ -210,7 +204,16 @@ public:
     
     void repremultipliedImageData();
     
+    void updateGifImageWithIndex(unsigned int index);
     
+    void setGifImageWithIndex(unsigned int index);
+    
+    unsigned int getGifImageIndex();
+    
+    unsigned int getGifImageCounts();
+    
+    void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap,
+                  int transparent, int width);
     
 protected:
     
@@ -283,13 +286,8 @@ protected:
     
     /*GIF*/
     void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);
-    void disposeFrameIfNeeded(const SavedImage* cur, const SavedImage* next, const CAColor4B& color);
     bool checkIfCover(const SavedImage* target, const SavedImage* covered);
-    void drawFrame(const SavedImage* frame, const ColorMapObject* cmap);
-    void blitNormal(const SavedImage* frame, const ColorMapObject* cmap, int transparent);
     bool checkIfWillBeCleared(const SavedImage* frame);
-    void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width);
-    void fillRect(GifWord left, GifWord top, GifWord width, GifWord height, const CAColor4B& color);
 protected:
     
     bool m_bPremultiplied;
@@ -304,7 +302,7 @@ protected:
     
     GifFileType* m_pGIF;
     
-    int m_nGIFIndex;
+    int m_iGIFIndex;
 };
 
 NS_CC_END
