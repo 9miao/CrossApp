@@ -619,7 +619,7 @@ void CATextField::selectAll()
 	this->hideCursorMark();
 	CATextArrowView::hideTextArrowView();
 
-	CATextToolBar* pTextToolBar = CATextToolBar::createWithText(UTF8("ºÙ«–"), UTF8("øΩ±¥"), UTF8("’≥Ã˘"), NULL);
+	CATextToolBar* pTextToolBar = CATextToolBar::createWithText(UTF8("¬∫√ô¬´‚Äì"), UTF8("√∏Œ©¬±¬•"), UTF8("‚Äô‚â•√ÉÀò"), NULL);
 	pTextToolBar->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
 	pTextToolBar->showTextEditView(cc.origin, this);*/
 }
@@ -663,7 +663,7 @@ void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 
 void CATextField::moveSelectCharsCancel(const CCPoint& pt)
 {
-	/*CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("ºÙ«–"), UTF8("øΩ±¥"), UTF8("’≥Ã˘"), NULL);
+	/*CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("¬∫√ô¬´‚Äì"), UTF8("√∏Œ©¬±¬•"), UTF8("‚Äô‚â•√ÉÀò"), NULL);
 	pTextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
 	pTextEditView->showTextEditView(pt, this);*/
 }
@@ -856,7 +856,7 @@ void CATextField::updateImage()
 
 	float dt = 1.0f;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	dt = 1.2f;
+	dt = 1.1f;
 #endif
 	CCSize size = CCSizeMake(0, m_iFontHeight*dt);
     CAImage* image = CAImage::createWithString(text.c_str(),
