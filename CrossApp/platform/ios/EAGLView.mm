@@ -71,6 +71,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CAIMEDispatcher.h"
 #import "OpenGL_Internal.h"
 #import "CCEGLView.h"
+
 //CLASS IMPLEMENTATIONS:
 
 #define IOS_MAX_TOUCHES_COUNT     10
@@ -90,7 +91,8 @@ static EAGLView *view = 0;
 @synthesize multiSampling=multiSampling_;
 @synthesize isKeyboardShown=isKeyboardShown_;
 @synthesize keyboardShowNotification = keyboardShowNotification_;
-@synthesize returnKeyType;
+@synthesize textfield = _textfield;
+
 + (Class) layerClass
 {
     return [CAEAGLLayer class];
@@ -155,7 +157,11 @@ static EAGLView *view = 0;
         
         originalRect_ = self.frame;
         self.keyboardShowNotification = nil;
-		
+        _textfield = [[CAIOSTextField alloc] init];
+        [_textfield setCadelegate:self];
+        [_textfield setFrame:CGRectMake(-2000, -2000, 100, 50)];
+        _textfield.hidden = YES;
+        [self addSubview:_textfield];
 		if ([view respondsToSelector:@selector(setContentScaleFactor:)])
 		{
 			view.contentScaleFactor = [[UIScreen mainScreen] scale];
@@ -488,17 +494,18 @@ static EAGLView *view = 0;
 - (BOOL)becomeFirstResponder
 {
     isUseUITextField = NO;
+    return  [_textfield becomeFirstResponder];
+    
     return [super becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder
 {
     isUseUITextField = YES;
+    return  [_textfield resignFirstResponder];
+    
     return [super resignFirstResponder];
 }
-
-#pragma mark -
-#pragma mark UIKeyInput protocol
 
 
 - (BOOL)hasText
@@ -512,6 +519,7 @@ static EAGLView *view = 0;
         [markedText_ release];
         markedText_ = nil;
     }
+    NSLog(@"insertText: %@",text);
     const char * pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
     CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
 }
@@ -550,8 +558,10 @@ static EAGLView *view = 0;
  * always performed on the text from this selection.  nil corresponds to no selection. */
 - (void)setSelectedTextRange:(UITextRange *)aSelectedTextRange;
 {
+    NSLog(@"%@",aSelectedTextRange);
     //CCLOG("UITextRange:setSelectedTextRange");
 }
+
 - (UITextRange *)selectedTextRange;
 {
     return [[[UITextRange alloc] init] autorelease];
@@ -564,6 +574,7 @@ static EAGLView *view = 0;
     //CCLOG("textInRange");
     return @"";
 }
+
 - (void)replaceRange:(UITextRange *)range withText:(NSString *)theText;
 {
     //CCLOG("replaceRange");
@@ -581,9 +592,9 @@ static EAGLView *view = 0;
  * Setting marked text either replaces the existing marked text or, if none is present,
  * inserts it from the current selection. */ 
 
-- (void)setMarkedTextRange:(UITextRange *)markedTextRange;
+- (void)setMarkedTextRange:(UITextRange *)markedTextRange1;
 {
-
+    NSLog(@"setMarkedTextRange :%@",markedTextRange1);
 }
 
 - (UITextRange *)markedTextRange;
@@ -591,18 +602,23 @@ static EAGLView *view = 0;
     //CCLOG("markedTextRange");
     return nil; // Nil if no marked text.
 }
-- (void)setMarkedTextStyle:(NSDictionary *)markedTextStyle;
+
+- (void)setMarkedTextStyle:(NSDictionary *)markedTextStyle1;
 {
+    NSLog(@"setMarkedTextStyle :%@",markedTextStyle1);
     //CCLOG("setMarkedTextStyle");
     
 }
+
 - (NSDictionary *)markedTextStyle;
 {
     //CCLOG("markedTextStyle");
     return nil;
 }
+
 - (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
 {
+    
     //CCLOG("setMarkedText");
     if (markedText == markedText_) {
         return;
@@ -610,11 +626,26 @@ static EAGLView *view = 0;
     if (nil != markedText_) {
         [markedText_ release];
     }
+    
     const char * pszText = [markedText cStringUsingEncoding:NSUTF8StringEncoding];
+    NSRange range;
+    range.length = 0;
+    range.location = [markedText length];
+    
+//    UITextPosition *beginning = self.beginningOfDocument;
+//    UITextPosition *start = [self positionFromPosition:beginning offset:range.location];
+//    UITextPosition *end = [self positionFromPosition:start offset:range.length];
+//    UITextRange *textRange = [self textRangeFromPosition:start toPosition:end];
+//    
+//    [self textInRange:textRange];
+
+    NSLog(@"===== %@",markedText);
+//    NSLog(@"markedTextRange :  %@   length : %lu    location : %lu   StrLength  :%lu",markedText,(unsigned long)selectedRange.length,(unsigned long)selectedRange.location,(unsigned long)[markedText length]);
     CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchWillInsertText(pszText, (int)strlen(pszText));
     markedText_ = markedText;
     [markedText_ retain];
 }
+
 - (void)unmarkText;
 {
     //CCLOG("unmarkText");
@@ -630,62 +661,78 @@ static EAGLView *view = 0;
 
 #pragma mark Methods for creating ranges and positions.
 
-- (UITextRange *)textRangeFromPosition:(UITextPosition *)fromPosition toPosition:(UITextPosition *)toPosition;
-{
-    //CCLOG("textRangeFromPosition");
-    return nil;
-}
-- (UITextPosition *)positionFromPosition:(UITextPosition *)position offset:(NSInteger)offset;
-{
-    //CCLOG("positionFromPosition");
-    return nil;
-}
-- (UITextPosition *)positionFromPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction offset:(NSInteger)offset;
-{
-    //CCLOG("positionFromPosition");
-    return nil;
-}
-
+//- (UITextRange *)textRangeFromPosition:(UITextPosition *)fromPosition toPosition:(UITextPosition *)toPosition;
+//{
+//    NSLog(@"textRangeFromPosition");
+//    //CCLOG("textRangeFromPosition");
+//    
+//    return nil;
+//}
+//
+//- (UITextPosition *)positionFromPosition:(UITextPosition *)position offset:(NSInteger)offset;
+//{
+//    NSLog(@"positionFromPosition");
+//    //CCLOG("positionFromPosition");
+//    return nil;
+//}
+//
+//- (UITextPosition *)positionFromPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction offset:(NSInteger)offset;
+//{
+//    NSLog(@"positionFromPosition inDirection");
+//    //CCLOG("positionFromPosition");
+//    return nil;
+//}
+//
+//-(void) moveCursor:(id<UITextInput>)textInput inDirection:(UITextLayoutDirection)direction offset:(NSInteger)offset
+//{
+//    UITextRange *range = textInput.selectedTextRange;
+//    UITextPosition* start = [textInput positionFromPosition:range.start inDirection:direction offset:offset];
+//    if (start)
+//    {
+//        [textInput setSelectedTextRange:[textInput textRangeFromPosition:start toPosition:start]];
+//    }
+//}
 /* Simple evaluation of positions */
-- (NSComparisonResult)comparePosition:(UITextPosition *)position toPosition:(UITextPosition *)other;
-{
-    //CCLOG("comparePosition");
-    return (NSComparisonResult)0;
-}
-- (NSInteger)offsetFromPosition:(UITextPosition *)from toPosition:(UITextPosition *)toPosition;
-{
-    //CCLOG("offsetFromPosition");
-    return 0;
-}
-
-- (UITextPosition *)positionWithinRange:(UITextRange *)range farthestInDirection:(UITextLayoutDirection)direction;
-{
-    //CCLOG("positionWithinRange");
-    return nil;
-}
-- (UITextRange *)characterRangeByExtendingPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction;
-{
-    //CCLOG("characterRangeByExtendingPosition");
-    return nil;
-}
-
-#pragma mark Writing direction
-
-- (UITextWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction;
-{
-    //CCLOG("baseWritingDirectionForPosition");
-    return UITextWritingDirectionNatural;
-}
-- (void)setBaseWritingDirection:(UITextWritingDirection)writingDirection forRange:(UITextRange *)range;
-{
-    //CCLOG("setBaseWritingDirection");
-}
+//- (NSComparisonResult)comparePosition:(UITextPosition *)position toPosition:(UITextPosition *)other;
+//{
+//    //CCLOG("comparePosition");
+//    return (NSComparisonResult)0;
+//}
+//- (NSInteger)offsetFromPosition:(UITextPosition *)from toPosition:(UITextPosition *)toPosition;
+//{
+//    //CCLOG("offsetFromPosition");
+//    return 0;
+//}
+//
+//- (UITextPosition *)positionWithinRange:(UITextRange *)range farthestInDirection:(UITextLayoutDirection)direction;
+//{
+//    //CCLOG("positionWithinRange");
+//    return nil;
+//}
+//- (UITextRange *)characterRangeByExtendingPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction;
+//{
+//    //CCLOG("characterRangeByExtendingPosition");
+//    return nil;
+//}
+//
+//#pragma mark Writing direction
+//
+//- (UITextWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction;
+//{
+//    //CCLOG("baseWritingDirectionForPosition");
+//    return UITextWritingDirectionNatural;
+//}
+//- (void)setBaseWritingDirection:(UITextWritingDirection)writingDirection forRange:(UITextRange *)range;
+//{
+//    //CCLOG("setBaseWritingDirection");
+//}
 
 #pragma mark Geometry
 
 /* Geometry used to provide, for example, a correction rect. */
 - (CGRect)firstRectForRange:(UITextRange *)range;
 {
+    
     //CCLOG("firstRectForRange");
     return CGRectNull;
 }
