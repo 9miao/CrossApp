@@ -18,7 +18,7 @@ NS_CC_BEGIN
 
 typedef enum
 {
-    CAProgressStyleDefault=0,
+    CAProgressStyleDefault = 0,
     CAProgressStyleBar
 }CAProgressStyle;
 
