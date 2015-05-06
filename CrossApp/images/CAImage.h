@@ -205,15 +205,10 @@ public:
     void repremultipliedImageData();
     
     void updateGifImageWithIndex(unsigned int index);
-    
-    void setGifImageWithIndex(unsigned int index);
-    
+
     unsigned int getGifImageIndex();
     
     unsigned int getGifImageCounts();
-    
-    void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap,
-                  int transparent, int width);
     
 protected:
     
@@ -288,6 +283,9 @@ protected:
     void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);
     bool checkIfCover(const SavedImage* target, const SavedImage* covered);
     bool checkIfWillBeCleared(const SavedImage* frame);
+    void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width);
+    void setGifImageWithIndex(unsigned int index);
+    
 protected:
     
     bool m_bPremultiplied;

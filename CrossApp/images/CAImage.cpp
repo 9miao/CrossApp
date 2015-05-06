@@ -1525,6 +1525,9 @@ bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
         return false;
     }
     
+    m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
+    m_uPixelsWide = m_pGIF->SWidth;
+    m_uPixelsHigh = m_pGIF->SHeight;
     m_pData = (unsigned char*)malloc(sizeof(unsigned char) * m_uPixelsWide * m_uPixelsHigh * 4);
     for (unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
     {
@@ -1534,9 +1537,6 @@ bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
         *(m_pData + i * 4 + 3) = '\0';
     }
     
-    m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
-    m_uPixelsWide = m_pGIF->SWidth;
-    m_uPixelsHigh = m_pGIF->SHeight;
     m_bHasPremultipliedAlpha = false;
     
     this->setGifImageWithIndex(0);

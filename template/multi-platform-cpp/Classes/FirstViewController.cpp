@@ -16,7 +16,7 @@ void FirstViewController::viewDidLoad()
     // Do any additional setup after loading the view from its nib.
 	CCRect winRect = this->getView()->getBounds();
     CAImageView* imageView = CAImageView::createWithImage(CAImage::create("r/HelloWorld.png"));
-    imageView->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+    imageView->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     imageView->setFrame(winRect);
     this->getView()->addSubview(imageView);
 
