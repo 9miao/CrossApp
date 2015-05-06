@@ -15,6 +15,7 @@
 #include "platform/CCPlatformMacros.h"
 #include "CCGL.h"
 #include "CCStdC.h"
+#include "gif_lib/gif_lib.h"
 
 NS_CC_BEGIN
 
@@ -95,7 +96,13 @@ public:
                                bool bWordWrap = true);
     
     static CAImage* create(const std::string& file);
+    /******************************/
+    void setGifImageWithIndex(int index);
     
+    int getGifImageIndex();
+    
+    int getGifImageCounts();
+    /******************************/
     static CAImage* createWithImageDataNoCache(const unsigned char * data, unsigned long lenght);
     
     static CAImage* createWithImageData(const unsigned char * data,
@@ -203,6 +210,8 @@ public:
     
     void repremultipliedImageData();
     
+    
+    
 protected:
     
     bool initWithJpgData(const unsigned char *  data, unsigned long dataLen);
@@ -272,7 +281,15 @@ protected:
     void convertAI88ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
     void convertI8ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
     
-    
+    /*GIF*/
+    void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);
+    void disposeFrameIfNeeded(const SavedImage* cur, const SavedImage* next, const CAColor4B& color);
+    bool checkIfCover(const SavedImage* target, const SavedImage* covered);
+    void drawFrame(const SavedImage* frame, const ColorMapObject* cmap);
+    void blitNormal(const SavedImage* frame, const ColorMapObject* cmap, int transparent);
+    bool checkIfWillBeCleared(const SavedImage* frame);
+    void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width);
+    void fillRect(GifWord left, GifWord top, GifWord width, GifWord height, const CAColor4B& color);
 protected:
     
     bool m_bPremultiplied;
@@ -284,6 +301,10 @@ protected:
     bool m_bHasAlpha;
     
     int  m_nBitsPerComponent;
+    
+    GifFileType* m_pGIF;
+    
+    int m_nGIFIndex;
 };
 
 NS_CC_END
