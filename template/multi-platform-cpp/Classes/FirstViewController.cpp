@@ -27,6 +27,8 @@ void FirstViewController::viewDidLoad()
     label->setText("Hello World!");
     label->setColor(CAColor_white);
     this->getView()->insertSubview(label, 1);
+    
+    CCLog("%f", CAApplication::getApplication()->getWinSize().width);
 }
 
 void FirstViewController::viewDidUnload()
