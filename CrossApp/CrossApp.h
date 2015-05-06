@@ -92,6 +92,7 @@
 #include "view/CAWebView.h"
 #include "view/CADrawingPrimitives.h"
 #include "view/CADrawView.h"
+#include "view/CATextEditHelper.h"
 
 // cocoa
 #include "cocoa/CCDictionary.h"

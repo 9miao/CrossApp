@@ -16,8 +16,9 @@ CAAlertView::CAAlertView()
 , m_pCAlertTarget(NULL)
 , m_pBtnTableView(NULL)
 , m_sMsgFontName("")
-, m_fAlertViewHeight(0.0)
-, m_fAlertViewTitleHeight(0.0)
+, m_fAlertViewHeight(0.0f)
+, m_fAlertViewTitleHeight(0.0f)
+, m_fAlertViewMessageHeight(0.0f)
 {
 
 }
@@ -237,11 +238,11 @@ void CAAlertView::showAlertView() {
 		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
 		scrollView->addSubview(m_pContentLabel);
 	
-	} else {
-		
-		CCAssert(m_pContentLabel, "");
+	} 
+	else if (m_pContentLabel) {
+
 		alertViewMessageHeight = m_fAlertViewMessageHeight;
-		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight  + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
+		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
 		m_pBackView->addSubview(m_pContentLabel);
 	}
 

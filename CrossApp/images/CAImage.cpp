@@ -5,27 +5,26 @@
 //  Created by 栗元峰 on 15-3-23.
 //  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
-
+#include <ctype.h>
+#include <cctype>
 #include "CAImage.h"
 #include "CAImageCache.h"
 #include "ccConfig.h"
 #include "ccMacros.h"
-#include "platform/platform.h"
 #include "CCGL.h"
 #include "CCStdC.h"
 #include "support/ccUtils.h"
+#include "support/image_support/TGAlib.h"
 #include "support/zip_support/ZipUtils.h"
+#include "platform/platform.h"
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCFileUtils.h"
+#include "platform/CAFTFontCache.h"
 #include "basics/CAApplication.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAShaderCache.h"
-#include <ctype.h>
-#include <cctype>
-#include "platform/CAFTFontCache.h"
-#include "support/image_support/TGAlib.h"
 #include "png.h"
 #include "jpeglib.h"
 #include "tiffio.h"
@@ -824,9 +823,9 @@ CAImage::~CAImage()
 }
 
 CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment,
-                                    CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine)
+	CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine)
 {
-    return g_AFTFontCache.initWithString(text, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine);
+	return g_AFTFontCache.initWithString(text, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine);
 }
 
 int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)

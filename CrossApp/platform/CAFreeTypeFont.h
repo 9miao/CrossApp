@@ -88,10 +88,7 @@ public:
 	virtual ~CAFreeTypeFont();
 
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight,
-		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false);
-
-	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-		std::vector<TextViewLineInfo>& linesText, int iLineSpace = 0, bool bWordWrap = true);
+		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false, std::vector<TextViewLineInfo>* pLinesText = 0);
 
 	static void destroyAllFontBuff();
 protected:
@@ -108,7 +105,8 @@ protected:
 	FT_Error initGlyphs(const char* text);
 	FT_Error initGlyphsLine(const std::string& line);
 	FT_Error initWordGlyphs(std::vector<TGlyph>& glyphs, const std::string& text, FT_Vector& pen);
-	FT_Error initTextView(const char* pText, std::vector<TextViewLineInfo>& linesText);
+	
+	void initTextView(std::vector<TextViewLineInfo>& linesText);
 	
 	void compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox);
 	void compute_bbox2(TGlyph& glyph, FT_BBox& bbox);
