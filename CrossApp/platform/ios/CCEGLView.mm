@@ -23,16 +23,6 @@ bool CCEGLView::isOpenGLReady()
 {
     return [EAGLView sharedEGLView] != NULL;
 }
-    
-bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
-{
-    assert(m_eResolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
-	
-	m_fScaleX = m_fScaleY = contentScaleFactor;
-	[[EAGLView sharedEGLView] setNeedsLayout];
-        
-	return true;
-}
 
 void CCEGLView::end()
 {

@@ -1502,6 +1502,7 @@ bool CAImage::initWithRawData(const unsigned char * data,
     
     m_bHasPremultipliedAlpha = false;
     m_bHasMipmaps = false;
+    m_bHasAlpha = true;
     
     setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
     
@@ -1642,11 +1643,6 @@ GLuint CAImage::getName()
 }
 
 const CCSize& CAImage::getContentSize()
-{
-    return m_tContentSize;
-}
-
-const CCSize& CAImage::getContentSizeInPixels()
 {
     return m_tContentSize;
 }

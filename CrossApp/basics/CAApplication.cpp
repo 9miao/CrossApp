@@ -103,8 +103,6 @@ bool CAApplication::init(void)
 
     m_pobOpenGLView = NULL;
 
-    m_fContentScaleFactor = 1.0f;
-
     // action manager
     m_pActionManager = new CCActionManager();
     
@@ -467,8 +465,7 @@ void CAApplication::reshapeProjection(const CCSize& newWindowSize)
 	CC_UNUSED_PARAM(newWindowSize);
 	if (m_pobOpenGLView)
 	{
-		m_obWinSizeInPoints = CCSizeMake(newWindowSize.width * m_fContentScaleFactor,
-			newWindowSize.height * m_fContentScaleFactor);
+		m_obWinSizeInPoints = CCSize(newWindowSize.width, newWindowSize.height);
 		setProjection(m_eProjection);       
 	}
 
@@ -538,11 +535,6 @@ CCPoint CAApplication::convertToUI(const CCPoint& glPoint)
 CCSize CAApplication::getWinSize(void)
 {
     return m_obWinSizeInPoints;
-}
-
-CCSize CAApplication::getWinSizeInPixels()
-{
-    return CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
 }
 
 CCSize CAApplication::getVisibleSize()
@@ -774,20 +766,6 @@ void CAApplication::createStatsLabel()
     m_pFPSLabel->setFrameOrigin(CC_DIRECTOR_STATS_POSITION);
     
     CAImage::setDefaultAlphaPixelFormat(currentFormat);
-}
-
-float CAApplication::getContentScaleFactor(void)
-{
-    return m_fContentScaleFactor;
-}
-
-void CAApplication::setContentScaleFactor(float scaleFactor)
-{
-    if (scaleFactor != m_fContentScaleFactor)
-    {
-        m_fContentScaleFactor = scaleFactor;
-        createStatsLabel();
-    }
 }
 
 CAView* CAApplication::getNotificationView()

@@ -220,7 +220,8 @@ static void* networkThread(void *data)
     pthread_mutex_unlock(&s_requestQueueMutex[thread]);
     s_asyncRequestCount[thread] -= s_requestQueue[thread].size();
     
-    if (s_requestQueue != NULL) {
+    if (!s_requestQueue[thread].empty())
+    {
         
         pthread_mutex_destroy(&s_requestQueueMutex[thread]);
         pthread_mutex_destroy(&s_responseQueueMutex[thread]);

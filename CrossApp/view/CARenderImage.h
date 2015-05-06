@@ -139,10 +139,13 @@ protected:
     GLuint       m_uFBO;
     GLuint       m_uDepthRenderBufffer;
     GLint        m_nOldFBO;
+    
+    unsigned int m_uPixelsWide;
+    unsigned int m_uPixelsHigh;
+    GLuint m_uName;
     CAImage* m_pImage;
-    CAImage* m_pImageCopy;    // a copy of m_pImage
 
-    GLenum       m_ePixelFormat;
+    CAImage::PixelFormat m_ePixelFormat;
     
     // code for "auto" update
     GLbitfield   m_uClearFlags;

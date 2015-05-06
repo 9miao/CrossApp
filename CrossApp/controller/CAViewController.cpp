@@ -40,10 +40,9 @@ CAViewController::~CAViewController()
     CC_SAFE_RELEASE_NULL(m_pView);
     CC_SAFE_RELEASE_NULL(m_pTabBarItem);
     CC_SAFE_RELEASE_NULL(m_pNavigationBarItem);
-    CAApplication* pDirector = CAApplication::getApplication();
     if (m_bKeypadEnabled)
     {
-        pDirector->getKeypadDispatcher()->removeDelegate(this);
+        CAApplication::getApplication()->getKeypadDispatcher()->removeDelegate(this);
     }
 }
 

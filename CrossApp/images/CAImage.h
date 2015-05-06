@@ -20,7 +20,8 @@ NS_CC_BEGIN
 
 class CAGLProgram;
 
-typedef struct _ccTexParams {
+typedef struct _ccTexParams
+{
     GLuint    minFilter;
     GLuint    magFilter;
     GLuint    wrapS;
@@ -150,8 +151,6 @@ public:
     static void setDefaultAlphaPixelFormat(CAImage::PixelFormat format);
     
     static CAImage::PixelFormat defaultAlphaPixelFormat();
-    
-    const CCSize& getContentSizeInPixels();
     
     bool hasPremultipliedAlpha();
     
