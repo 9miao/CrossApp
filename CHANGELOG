@@ -23,7 +23,7 @@
 #####10.其他一些细节的修改
 
 
-#### CrossApp 1. 1. 3 Update:  
+#### CrossApp 1.1.3 Update:  
 #####1. Fixed bug that return button only execute one time in Android platform
 #####2. Added setting font interface for CAtextField
 #####3. Fixed bug that CALabel cannot refresh in timer
@@ -61,7 +61,7 @@
 #####10.其他一些细节的修改
 
 
-#### CrossApp 1. 1. 2 Update:
+#### CrossApp 1.1.2 Update:
 
 #####1. Fixed bug that CAImage cannot appropriately display image in some circumstances
 #####2. Fixed bug that options are repeated when alterView number is above 5.
@@ -92,7 +92,7 @@
 #####6.其他一些细节的修改
 
 
-#### CrossApp 1. 1. 1 Update:
+#### CrossApp 1.1.1 Update:
 
 #####1. Added CAImageView’s functionality that plays sequential frames
 
