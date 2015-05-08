@@ -151,14 +151,14 @@ public:
     
     virtual const CCPoint& getFrameOrigin();
     
-    virtual void setBounds(const CCRect& rect);
-    
-    virtual CCRect getBounds() const;
-    
     virtual void setCenter(const CCRect& rect);
     
     virtual CCRect getCenter();
     
+    virtual void setBounds(const CCRect& rect);
+    
+    virtual CCRect getBounds() const;
+
     virtual void setCenterOrigin(const CCPoint& point);
     
     virtual CCPoint getCenterOrigin();

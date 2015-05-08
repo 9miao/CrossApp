@@ -434,8 +434,8 @@ void CAViewAnimation::update(float dt)
                 CAViewModel* model = (CAViewModel*)(itr_animation->second);
                 view->setScaleX(model->startScaleX + model->deltaScaleX * s);
                 view->setScaleY(model->startScaleY + model->deltaScaleY * s);
-                view->setContentSize(model->startContentSize + model->deltaContentSize * s);
                 view->setPoint(model->startPoint + model->deltaPoint * s);
+                view->setContentSize(model->startContentSize + model->deltaContentSize * s);
                 view->setZOrder(model->startZOrder + model->deltaZOrder * s);
                 view->setVertexZ(model->startVertexZ + model->deltaVertexZ * s);
                 view->setSkewX(model->startSkewX + model->deltaSkewX * s);
@@ -504,8 +504,7 @@ void CAViewAnimation::setContentSize(const CCSize& size, CAView* view)
     CAViewAnimation::allocCAViewModel(view);
     CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->endContentSize = size;
-    model->deltaContentSize.width = size.width - model->startContentSize.width;
-    model->deltaContentSize.height = size.height - model->startContentSize.height;
+    model->deltaContentSize = size - model->startContentSize;
 }
 
 void CAViewAnimation::setScaleX(float scaleX, CAView* view)
