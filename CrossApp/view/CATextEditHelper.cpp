@@ -61,7 +61,7 @@ CATextToolBarView::~CATextToolBarView()
 {
 }
 
-void CATextToolBarView::addButton(const std::string& strBtnText, CAObject* target, SEL_CATextTooBarBtnEvent selector)
+void CATextToolBarView::addButton(const std::string& strBtnText, CAObject* target, SEL_CallFunc selector)
 {
 	m_CallbackTargets.push_back(CallbackTarget(target, selector, strBtnText));
 }
@@ -107,6 +107,7 @@ void CATextToolBarView::show()
 
 	if (CAWindow *rootWindow = CAApplication::getApplication()->getRootWindow())
 	{
+		setTextTag("CATextToolBarView");
 		rootWindow->insertSubview(this, CAWindowZoderTop);
 	}
 	becomeFirstResponder();
@@ -139,6 +140,15 @@ CATextToolBarView *CATextToolBarView::create()
 	return pAlert;
 }
 
+bool CATextToolBarView::IsTextToolBarShow()
+{
+	bool isShow = false;
+	if (CAWindow *rootWindow = CAApplication::getApplication()->getRootWindow())
+	{
+		isShow = rootWindow->getSubviewByTextTag("CATextToolBarView")!=NULL;
+	}
+	return isShow;
+}
 
 void CATextToolBarView::addGrayLine(int y) 
 {
@@ -159,7 +169,191 @@ bool CATextToolBarView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
 	resignFirstResponder();
 	removeFromSuperview();
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+CATextSelectView::CATextSelectView()
+: m_pCursorMarkL(NULL)
+, m_pCursorMarkR(NULL)
+, m_pTextViewMask(NULL)
+, m_pControlView(NULL)
+{
+
+}
+
+CATextSelectView::~CATextSelectView()
+{
+
+}
+
+bool CATextSelectView::init()
+{
+	if (!CAView::init())
+		return false;
+
+	m_pTextViewMask = CAView::createWithColor(ccc4(60, 120, 240, 127));
+	addSubview(m_pTextViewMask);
+
+	m_pCursorMarkL = CAImageView::createWithImage(CAImage::create("source_material/text_pos_l.png"));
+	addSubview(m_pCursorMarkL);
+	m_pCursorMarkL->setVisible(false);
+
+	m_pCursorMarkR = CAImageView::createWithImage(CAImage::create("source_material/text_pos_r.png"));
+	addSubview(m_pCursorMarkR);
+	m_pCursorMarkR->setVisible(false);
+
+	return true;
+}
+
+CATextSelectView *CATextSelectView::create()
+{
+	CATextSelectView *pTextSelView = new CATextSelectView();
+	if (pTextSelView && pTextSelView->init())
+	{
+		pTextSelView->autorelease();
+		return pTextSelView;
+	}
+	CC_SAFE_DELETE(pTextSelView);
+	return pTextSelView;
+}
+
+void CATextSelectView::hideTextSelectView()
+{
+	CATextSelectView* pSelTextView = NULL;
+	if (CAWindow *rootWindow = CAApplication::getApplication()->getRootWindow())
+	{
+		pSelTextView = (CATextSelectView*)rootWindow->getSubviewByTextTag("CATextSelectView");
+	}
+	if (pSelTextView)
+	{
+		pSelTextView->hideTextSelView();
+	}
+}
+
+void CATextSelectView::showTextSelView(const CCRect& rect, CAView* pControlView, bool showLeft, bool showRight)
+{
+	if (getSuperview() != NULL)
+		return;
+
+	CCSize winSize = CAApplication::getApplication()->getWinSize();
+	setFrame(CCRect(0, 0, winSize.width, winSize.height));
+	setColor(CAColor_clear);
+	setTextTag("CATextSelectView");
+
+	CCRect newRect = rect;
+	if (showLeft)
+	{
+		m_pCursorMarkL->setFrame(CCRect(newRect.origin.x - 20, newRect.origin.y + newRect.size.height, 20, 32));
+		m_pCursorMarkL->setVisible(true);
+	}
+
+	if (showRight)
+	{
+		m_pCursorMarkR->setFrame(CCRect(newRect.origin.x + newRect.size.width, newRect.origin.y + newRect.size.height, 20, 32));
+		m_pCursorMarkR->setVisible(true);
+	}
+
+	m_pTextViewMask->setFrame(newRect);
+	m_pTextViewMask->setVisible(true);
+
+
+	if (CAView *rootWindow = CAApplication::getApplication()->getRootWindow())
+	{
+		rootWindow->removeSubviewByTextTag("CATextSelectView");
+		rootWindow->addSubview(this);
+	}
+	becomeFirstResponder();
+	m_pControlView = pControlView;
+}
+
+
+void CATextSelectView::hideTextSelView()
+{
+	resignFirstResponder();
+
+	if (m_pControlView)
+	{
+		m_pControlView->becomeFirstResponder();
+		m_pControlView = NULL;
+	}
+
+	removeFromSuperview();
+
+	CAApplication::getApplication()->updateDraw();
+}
+
+bool CATextSelectView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
+{
+	CCPoint cTouchPoint = this->convertTouchToNodeSpace(pTouch);
+
+	CCRect newRectL = m_pCursorMarkL->getFrame();
+	newRectL.InflateRect(5);
+	CCRect newRectR = m_pCursorMarkR->getFrame();
+	newRectR.InflateRect(5);
+
+	m_iSelViewTouchPos = 0;
+	if (newRectL.containsPoint(cTouchPoint))
+	{
+		m_iSelViewTouchPos = 1;
+		return true;
+	}
+
+	if (newRectR.containsPoint(cTouchPoint))
+	{
+		m_iSelViewTouchPos = 2;
+		return true;
+	}
+
+	CCPoint point = this->convertTouchToNodeSpace(pTouch);
+
+	CCRect ccTextRect = m_pTextViewMask->getFrame();
+	if (ccTextRect.containsPoint(point))
+	{
+		CATextToolBarView *pToolBar = CATextToolBarView::create();
+		pToolBar->addButton(UTF8("\u526a\u5207"), this, callfunc_selector(CATextSelectView::ccCutToClipboard));
+		pToolBar->addButton(UTF8("\u590d\u5236"), this, callfunc_selector(CATextSelectView::ccCopyToClipboard));
+		pToolBar->addButton(UTF8("\u7c98\u8d34"), this, callfunc_selector(CATextSelectView::ccPasteFromClipboard));
+		pToolBar->show();
+	}
+	else
+	{
+		if (resignFirstResponder())
+		{
+			hideTextSelView();
+		}
+		else
+		{
+			becomeFirstResponder();
+		}
+	}
 	return false;
+}
+
+void CATextSelectView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+	if (m_iSelViewTouchPos != 1 && m_iSelViewTouchPos != 2)
+		return;
+
+	CAIMEDispatcher::sharedDispatcher()->dispatchMoveSelectChars(m_iSelViewTouchPos == 1, pTouch->getLocation());
+}
+
+void CATextSelectView::ccCopyToClipboard()
+{
+	hideTextSelView();
+	CAIMEDispatcher::sharedDispatcher()->dispatchCopyToClipboard();
+}
+
+void CATextSelectView::ccCutToClipboard()
+{
+	hideTextSelView();
+	CAIMEDispatcher::sharedDispatcher()->dispatchCutToClipboard();
+}
+
+void CATextSelectView::ccPasteFromClipboard()
+{
+	hideTextSelView();
+	CAIMEDispatcher::sharedDispatcher()->dispatchPasteFromClipboard();
 }
 
 NS_CC_END

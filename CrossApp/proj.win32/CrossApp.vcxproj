@@ -193,6 +193,12 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionTween.cpp" />
     <ClCompile Include="..\images\CAImage.cpp" />
     <ClCompile Include="..\images\CAImageCache.cpp" />
+    <ClCompile Include="..\images\gif_lib\dgif_lib.c" />
+    <ClCompile Include="..\images\gif_lib\gifalloc.c" />
+    <ClCompile Include="..\images\gif_lib\gif_err.c" />
+    <ClCompile Include="..\images\gif_lib\gif_font.c" />
+    <ClCompile Include="..\images\gif_lib\gif_hash.c" />
+    <ClCompile Include="..\images\gif_lib\quantize.c" />
     <ClCompile Include="..\platform\CAFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\CAFTFontCache.cpp" />
     <ClCompile Include="..\platform\CATempTypeFont.cpp" />

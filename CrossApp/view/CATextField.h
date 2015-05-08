@@ -15,7 +15,8 @@
 #include <utility>
 #include "dispatcher/CAIMEDispatcher.h"
 #include "control/CAControl.h"
-#include "view/CAScale9ImageView.h"
+#include "CAScale9ImageView.h"
+#include "CATextEditHelper.h"
 #include "support/ccUTF8.h"
 #include "platform/CAFTFontCache.h"
 #include "support/ConvertUTF.h"
@@ -91,8 +92,8 @@ public:
 
 
 class CC_DLL CATextField
-: public CAView
-, public CAIMEDelegate
+	: public CATouchView
+	, public CAIMEDelegate
 {
 public:
     CATextField();
@@ -176,6 +177,7 @@ protected:
 	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
     virtual void insertText(const char * text, int len);
     virtual void willInsertText(const char* text,int len);
     virtual void AndroidWillInsertText(int start,const char* str,int before,int count);
@@ -192,12 +194,14 @@ protected:
     
 	CCRect getZZCRect(bool* l=NULL, bool* r=NULL);
 	bool execCurSelCharRange();
+	void ccStartSelect();
+	void ccSelectAll() { selectAll(); }
+	void ccPasteFromClipboard() { pasteFromClipboard(); }
 
     virtual void selectAll();
 	virtual void cursorMoveBackward();
 	virtual void cursorMoveForward();
 	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt);
-	virtual void moveSelectCharsCancel(const CCPoint& pt);
 	virtual void moveArrowBtn(const CCPoint& pt);
 
 	virtual void copyToClipboard();
