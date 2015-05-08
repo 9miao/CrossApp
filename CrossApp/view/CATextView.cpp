@@ -181,18 +181,19 @@ void CATextView::updateImage()
 
 	float width = this->getBounds().size.width;
 
-	CAImage* image = NULL;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
-
-	image = g_AFTFontCache.initWithStringEx(text.c_str(),
+	CAImage* image = g_AFTFontCache.initWithString(text.c_str(),
 		m_szFontName.c_str(),
 		m_iFontSize,
 		width,
 		0,
-		m_vLinesTextView,
+		CATextAlignmentLeft,
+		CAVerticalTextAlignmentTop,
+		m_bWordWrap,
 		m_iLineSpacing,
-		m_bWordWrap);
-#endif
+		false,
+		false,
+		false,
+		&m_vLinesTextView);
 
 	if (image == NULL || m_szText.empty())
 	{

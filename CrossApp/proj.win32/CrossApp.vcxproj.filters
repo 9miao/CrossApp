@@ -443,6 +443,9 @@
     <ClCompile Include="..\animation\CAAnimation.cpp">
       <Filter>animation</Filter>
     </ClCompile>
+    <ClCompile Include="..\view\CATextEditHelper.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -895,6 +898,9 @@
     </ClInclude>
     <ClInclude Include="..\animation\CAAnimation.h">
       <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CATextEditHelper.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
