@@ -767,11 +767,7 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
 
     CAScale9ImageView* clipNode = CAScale9ImageView::createWithFrame(m_pBackgroundView->getBounds());
     clipNode->setImage(image);
-    CAClippingView* clip = CAClippingView::create(m_pBackgroundView);
-    clip->addSubview(clipNode);
-    clip->setInverted(false);
-    clip->setAlphaThreshold(0);
-    
+
     float x = 0;
     
     for(int i=0; i< index; ++i)
@@ -782,14 +778,13 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
     CAView* segment = m_vSegments.at(index);
     if(segment)
     {
-        clip->setFrame(this->getBounds());
-        this->addSubview(clip);
+        this->addSubview(clipNode);
         CCSize size = m_pBackgroundView->getBounds().size;
         CARenderImage* render = CARenderImage::create(size.width, size.height, CAImage::PixelFormat_RGBA8888);
-        render->beginWithClear(0, 0, 0, 0);
-        clip->visit();
+        render->beginWithClear(255, 255, 255, 0);
+        clipNode->visit();
         render->end();
-        clip->removeFromSuperview();
+        clipNode->removeFromSuperview();
         
         CCRect rect;
         rect.origin = CCPoint(x, 0);

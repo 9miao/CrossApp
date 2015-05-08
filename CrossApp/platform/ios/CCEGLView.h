@@ -17,11 +17,11 @@ public:
    ~CCEGLView();
 
     virtual bool    isOpenGLReady();
-    virtual bool    setContentScaleFactor(float contentScaleFactor);
-    
+
     // keep compatible
     virtual void    end();
     virtual void    swapBuffers();
+    virtual void    checkContext();
     
     virtual void setIMEKeyboardState(bool bOpen);
     

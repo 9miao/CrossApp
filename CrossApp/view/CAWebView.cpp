@@ -24,8 +24,10 @@ CAWebView::CAWebView()
 , m_bHideNativeWeCmd(false)
 , m_pWebViewDelegate(NULL)
 , m_pImageView(NULL)
+, m_pLoadingView(NULL)
 , m_obLastPoint(CCPointZero)
 , m_obLastContentSize(CCSizeZero)
+, m_bShowLoadingImage(true)
 {
     
 }
@@ -33,6 +35,7 @@ CAWebView::CAWebView()
 CAWebView::~CAWebView()
 {
 	CC_SAFE_DELETE(_impl);
+	CC_SAFE_RELEASE(m_pLoadingView);
 }
 
 CAWebView *CAWebView::createWithFrame(const CCRect& rect)
@@ -62,6 +65,12 @@ CAWebView *CAWebView::createWithCenter(const CCRect& rect)
 bool CAWebView::init()
 {
     CAScheduler::schedule(schedule_selector(CAWebView::update), this, 1/60.0f);
+    
+    CCSize size = this->getBounds().size;
+    m_pLoadingView = CAActivityIndicatorView::create();
+    m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGray);
+	m_pLoadingView->stopAnimating();
+	m_pLoadingView->retain();
     
     return true;
 }
@@ -169,6 +178,9 @@ void CAWebView::update(float dt)
         CC_BREAK_IF(m_obLastPoint.equals(point) && m_obLastContentSize.equals(contentSize));
         m_obLastPoint = point;
         m_obLastContentSize = contentSize;
+        
+		CCSize size = getBounds().size;
+		m_pLoadingView->setFrame(CCRect(size.width*0.5f, size.height*0.3f, size.width*0.2f, size.height*0.2f));
         _impl->update(dt);
     }
     while (0);

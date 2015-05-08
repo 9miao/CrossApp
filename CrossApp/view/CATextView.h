@@ -68,6 +68,9 @@ public:
 	virtual bool init();
 	virtual bool canAttachWithIME();
 	virtual bool canDetachWithIME();
+	virtual void didDetachWithIME();
+	virtual void didAttachWithIME();
+    
 	virtual void insertText(const char * text, int len);
 	virtual void willInsertText(const char* text, int len);
 	virtual void AndroidWillInsertText(int start, const char* str, int before, int count);
@@ -167,7 +170,7 @@ private:
 	CAScale9ImageView* m_pBackgroundView;
 
 	CAImageView* m_pImageView;
-	std::vector<CAImageView*> m_pTextViewMarkVect;
+	std::vector<CAView*> m_pTextViewMarkVect;
 
 	int m_iCurPos;
 	int m_iLineHeight;

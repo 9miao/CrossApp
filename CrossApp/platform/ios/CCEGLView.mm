@@ -23,16 +23,6 @@ bool CCEGLView::isOpenGLReady()
 {
     return [EAGLView sharedEGLView] != NULL;
 }
-    
-bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
-{
-    assert(m_eResolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
-	
-	m_fScaleX = m_fScaleY = contentScaleFactor;
-	[[EAGLView sharedEGLView] setNeedsLayout];
-        
-	return true;
-}
 
 void CCEGLView::end()
 {
@@ -46,6 +36,11 @@ void CCEGLView::end()
 void CCEGLView::swapBuffers()
 {
     [[EAGLView sharedEGLView] swapBuffers];
+}
+
+void CCEGLView::checkContext()
+{
+    [[EAGLView sharedEGLView] checkContext];
 }
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
@@ -62,17 +57,17 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 void CCEGLView::setIMEKeyboardNumber()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.keyboardType =UIKeyboardTypeNumberPad;
+    view.textfield.keyboardType = UIKeyboardTypeNumberPad;
 }
 void CCEGLView::setIMEKeyboardDefault()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.keyboardType =UIKeyboardTypeDefault;
+    view.textfield.keyboardType = UIKeyboardTypeDefault;
 }
 void CCEGLView::setIMEKeyboardAlphabet()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.keyboardType =UIKeyboardTypeASCIICapable;
+    view.textfield.keyboardType = UIKeyboardTypeASCIICapable;
 }
 CCEGLView* CCEGLView::sharedOpenGLView()
 {
@@ -82,25 +77,25 @@ CCEGLView* CCEGLView::sharedOpenGLView()
 void CCEGLView::setIMEKeyboardReturnSend()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.returnKeyType =UIReturnKeySend;
+    view.textfield.returnKeyType =UIReturnKeySend;
 }
 
 void CCEGLView::setIMEKeyboardReturnSearch()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.returnKeyType =UIReturnKeySearch;
+    view.textfield.returnKeyType =UIReturnKeySearch;
 }
 
 void CCEGLView::setIMEKeyboardReturnDone()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.returnKeyType =UIReturnKeyDone;
+    view.textfield.returnKeyType =UIReturnKeyDone;
 }
 
 void CCEGLView::setIMEKeyboardReturnEnter()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.returnKeyType =UIReturnKeyDefault;
+    view.textfield.returnKeyType =UIReturnKeyDefault;
 }
 NS_CC_END
 

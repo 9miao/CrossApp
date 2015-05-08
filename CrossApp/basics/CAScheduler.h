@@ -21,18 +21,18 @@ NS_CC_BEGIN
 
 class CCSet;
 //
-// CCTimer
+// CATimer
 //
 /** @brief Light-weight timer */
 //
-class CC_DLL CCTimer : public CAObject
+class CC_DLL CATimer : public CAObject
 {
 public:
     /**
      *  @js  ctor
      *  @lua NA
      */
-    CCTimer(void);
+    CATimer(void);
     
     /** get interval in seconds */
     float getInterval(void) const;
@@ -63,15 +63,15 @@ public:
     /** Allocates a timer with a target and a selector. 
      *  @lua NA
      */
-    static CCTimer* timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector);
+    static CATimer* timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector);
     
     /** Allocates a timer with a target, a selector and an interval in seconds. 
      *  @lua NA
      */
-    static CCTimer* timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds);
+    static CATimer* timerWithTarget(CAObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds);
     
     /** Allocates a timer with a script callback function and an interval in seconds. */
-    static CCTimer* timerWithScriptHandler(int nHandler, float fSeconds);
+    static CATimer* timerWithScriptHandler(int nHandler, float fSeconds);
     /**
      *  @lua NA
      */

@@ -34,7 +34,7 @@ class CAAlertView;
 #define ALERT_VIEW_WIDTH 540
 #define ALERT_VIEW_MESG_WIDTH 440
 
-typedef void (CAObject::*SEL_CAAlertBtnEvent)(int iButtonIndex);
+typedef void (CAObject::*SEL_CAAlertBtnEvent)(int index);
 #define CAAlertView_selector(_SELECTOR) (SEL_CAAlertBtnEvent)(&_SELECTOR)
 
 class CC_DLL CAAlertView 

@@ -1,3 +1,72 @@
+
+**********************************************************************************
+
+#### CrossApp 1.1.4 更新内容：  
+
+#####1.在动画系统中，增加删除某个动画模块功能
+
+#####2.优化scrollView指示器
+
+#####3.优化CAScheduler
+
+#####4.优化CASwitch默认效果
+
+#####5.增加CAImage对Gif的支持
+
+#####6.增加CALabel复制内容到系统粘贴板的功能
+
+#####7.增加CATextField节选并复制内容到系统粘贴板，粘贴系统粘贴板内容的功能
+
+#####8.修复CAWebView由于CAImage改动造成的bug
+
+#####9.完善CATextView/CATextField之间的输入法切换
+
+#####10.修复截屏并保存图片功能的bug
+
+#####11.新建工程支持iphone6 以上设备分辨率
+
+#####12.完善iOS平台icon
+
+#####13.其他一些细节的修改
+
+**********************************************************************************
+
+#### CrossApp 1.1.3 更新内容：  
+
+#####1.修复安卓平台返回键只执行一次的bug
+
+#####2.添加CAtextField设置字体接口
+
+#####3.修复CALabel在定时器中不能刷新的bug
+
+#####4.修复CANavigationController 显示隐藏CANavigationBar时，播放动画不正确的bug
+
+#####5.修复CATabBarController 显示隐藏CATabBar时，播放动画不正确的bug
+
+#####6.修复CATextField在安卓平台点回车崩溃的bug
+
+#####7.解决在iOS平台下与百度地图渲染冲突的bug
+
+#####8.重写base64
+
+#####9.CATextView增加在iOS平台输入中文时，仿原生预输入功能
+
+#####10.其他一些细节的修改
+
+
+#### CrossApp 1.1.3 Update:  
+#####1. Fixed bug that return button only execute one time in Android platform
+#####2. Added setting font interface for CAtextField
+#####3. Fixed bug that CALabel cannot refresh in timer
+#####4. Fixed bug that CANavigationController cannot correctly play animation when it displays hidden CANavigationBar
+#####5. Fixed bug that CATabBarController cannot correctly play animation when it displays hidden CATabBar
+#####6. Fixed bug that CATextField crashes when user clicks Enter button in Android platform
+#####7. Fixed bug that CrossApp has rendering conflict with Baidu Map in iOS platform
+#####8. Rewrote base64
+#####9. Added native-like preinput functionality in CATextView when users input Chinese in iOS platform.
+#####10. Other Details Tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 1.1.2 更新内容：  
@@ -22,6 +91,21 @@
 
 #####10.其他一些细节的修改
 
+
+#### CrossApp 1.1.2 Update:
+
+#####1. Fixed bug that CAImage cannot appropriately display image in some circumstances
+#####2. Fixed bug that options are repeated when alterView number is above 5.
+#####3. Fixed bug that system cannot obtain CAImage in camera status.
+#####4. Optimized touch event distributed mechanism
+#####5. Fixed bug that CAScrollView background picture interface does not function
+#####6. Fixed bug that when users click Backspace in keyboard, callback event has no response in input status of textfield in Android platform.
+#####7. Fixed bug that when users click Backspace in keyboard, callback event has no response in input status of textView in Android platform.
+#####8. Added native-like preinput functionality in CATextField when users input Chinese in iOS platform.
+#####9. Fixed bug that clicking line wrap is invalid in input status in CATextView in Android platform.
+#####10. Other Details Tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 1.1.1 更新内容：  
@@ -38,6 +122,20 @@
 
 #####6.其他一些细节的修改
 
+
+#### CrossApp 1.1.1 Update:
+
+#####1. Added CAImageView’s functionality that plays sequential frames
+
+#####2. Fixed bug that images fail to asynchoronously load
+
+#####3. Fixed webView's position refresh bug
+
+#####4. Fixed bug that Android test phone directly goes breakdown when debugging in some circumstances
+
+#####5. Fixed bug that CrossApp cannot run iOS emulator in previous version
+
+#####6. Other Details Tweaking
 
 **********************************************************************************
 

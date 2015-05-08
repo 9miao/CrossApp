@@ -24,9 +24,9 @@ void PageViewTest::viewDidLoad()
 	CAImageView* view3 = CAImageView::createWithImage(CAImage::create("background/7.jpg"));
 	_view.pushBack(view1);
 	_view.pushBack(view2);
-	_view.pushBack(view3);
+	_view.pushBack(view3); 
 	
-	pageViewTest = CAPageView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height), CAPageView::CAPageViewDirectionHorizontal);
+	pageViewTest = CAPageView::createWithCenter(CADipRect(size.width*0.5, size.height*0.5, size.width, size.height), CAPageViewDirectionHorizontal);
 	pageViewTest->setPageViewDelegate(this);
 	pageViewTest->setViews(_view);
 	this->getView()->addSubview(pageViewTest);

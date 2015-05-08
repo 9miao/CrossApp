@@ -92,15 +92,15 @@ public:
     
 protected:
     
-    virtual void viewDidLoad(){};
+    virtual void viewDidLoad() {};
     
-    virtual void viewDidUnload(){};
+    virtual void viewDidUnload() {};
     
-    virtual void viewDidAppear(){};
+    virtual void viewDidAppear() {};
     
-    virtual void viewDidDisappear(){};
+    virtual void viewDidDisappear() {};
     
-    virtual void reshapeViewRectDidFinish(){};
+    virtual void reshapeViewRectDidFinish() {};
     
     virtual void keyBackClicked() {}
     
@@ -212,24 +212,26 @@ protected:
     
     void popViewControllerFinish();
     
-    
     void popToRootViewControllerFinish();
     
     void homingViewControllerFinish();
     
     void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
     
-    
-    void updateNavigationBarHidden(int index);
-    
+    void navigationBarHiddenAnimation(float delay, float now, float total);
+
     void update(float dt);
     
-    void scheduleUpdate();
+    CCPoint getNavigationBarOpenPoint();
     
-    void unScheduleUpdate();
+    CCPoint getNavigationBarTakeBackPoint();
+    
+    CCPoint getNavigationBarNowPoint();
     
 protected:
 
+    float m_fProgress;
+    
     CAVector<CAViewController*> m_pViewControllers;
     
     CAVector<CANavigationBar*> m_pNavigationBars;
@@ -239,7 +241,7 @@ protected:
     CAVector<CAView*> m_pSecondContainers;
     
     bool m_bPopViewController;
-    
+
     CCSize m_tNavigationBarSize;
 };
 
@@ -321,11 +323,17 @@ protected:
     
     void update(float dt);
     
-    void scheduleUpdate();
+    void tabBarHiddenAnimation(float delay, float now, float total);
     
-    void unScheduleUpdate();
+    CCPoint getTabBarOpenPoint();
+    
+    CCPoint getTabBarTakeBackPoint();
+    
+    CCPoint getTabBarNowPoint();
     
 protected:
+    
+    float m_fProgress;
     
     bool m_bShowTabBarSelectedIndicator;
     

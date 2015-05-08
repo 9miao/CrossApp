@@ -222,6 +222,8 @@ USING_NS_CC;
 {
     NSString *url = [[webView.request URL] absoluteString];
     CAWebViewImpl::didFinishLoading(self, [url UTF8String]);
+	NSString* html = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.innerHTML"];
+    CAWebViewImpl::onLoadHtmlSource(self,[html UTF8String]);
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -267,8 +269,15 @@ bool CAWebViewImpl::shouldStartLoading(void* pWebViewWrapper, const std::string 
         CAWebView* webView = it->second->m_pWebView;
         if (webView && webView->m_pWebViewDelegate)
         {
-            return webView->m_pWebViewDelegate->onShouldStartLoading(webView, url);
+            if (!webView->m_pWebViewDelegate->onShouldStartLoading(webView, url))
+                return false;
         }
+        if (webView && webView->m_bShowLoadingImage)
+        {
+            it->second->setVisible(false);
+            webView->m_pLoadingView->setVisible(true);
+        }
+
     }
     return true;
 }
@@ -280,9 +289,28 @@ void CAWebViewImpl::didFinishLoading(void* pWebViewWrapper, const std::string &u
     if (it != s_WebViewImpls.end()) {
         
         CAWebView* webView = it->second->m_pWebView;
+        if (webView && webView->m_bShowLoadingImage)
+        {
+            webView->m_pLoadingView->setVisible(false);
+            it->second->setVisible(true);
+        }
+
         if (webView && webView->m_pWebViewDelegate)
         {
             webView->m_pWebViewDelegate->onDidFinishLoading(webView, url);
+        }
+    }
+}
+
+void CAWebViewImpl::onLoadHtmlSource(void* pWebViewWrapper, const std::string &htmlSource)
+{
+    WEB_MAP it=s_WebViewImpls.find((UIWebViewWrapper*)pWebViewWrapper);
+    if (it != s_WebViewImpls.end())
+    {
+        CAWebView* webView = it->second->m_pWebView;
+        if (webView && webView->m_pWebViewDelegate)
+        {
+            webView->m_pWebViewDelegate->onLoadHtmlSource(webView, htmlSource);
         }
     }
 }
@@ -293,6 +321,12 @@ void CAWebViewImpl::didFailLoading(void* pWebViewWrapper, const std::string &url
     if (it != s_WebViewImpls.end())
     {
         CAWebView* webView = it->second->m_pWebView;
+        if (webView && webView->m_bShowLoadingImage)
+        {
+            webView->m_pLoadingView->setVisible(false);
+            it->second->setVisible(true);
+        }
+
         if (webView && webView->m_pWebViewDelegate)
         {
             webView->m_pWebViewDelegate->onDidFailLoading(webView, url);
@@ -404,7 +438,7 @@ CAImageView* CAWebViewImpl::getWebViewImage()
             Byte* bytesData = (Byte*)[data bytes];
             if (bytesData != NULL)
             {
-                return CAImageView::createWithImage(CAImage::createWithImageData(bytesData, data.length, ""));
+                return CAImageView::createWithImage(CAImage::createWithImageDataNoCache(bytesData, data.length));
             }
         }
     }

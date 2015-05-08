@@ -21,18 +21,18 @@ namespace CADevice
 
 static std::vector<CAAddressBookRecord> _addressBookArr;
 
-void openCamera(CAMediaDelegate* target)
+void openCamera(CAMediaDelegate* target,bool allowEdit)
 {
     CACameraController *camera = [[CACameraController alloc] init];
     [camera setSender:target];
-    [camera openCameraView];
+    [camera openCameraView:allowEdit];
 }
 
-void openAlbum(CAMediaDelegate* target)
+void openAlbum(CAMediaDelegate* target,bool allowEdit)
 {
     CAAlbumController *album = [[CAAlbumController alloc] init];
     [album setSender:target];
-    [album openAlbumView];
+    [album openAlbumView:allowEdit];
 }
     
 void writeToSavedPhotosAlbum(const std::string &s)
@@ -223,7 +223,7 @@ CAWifiInfo getWifiConnectionInfo()
  
 void initBlueTooth(CABlueToothDelegate *target)
 {
-        
+    target->getBlueToothState((CABlueToothState)[[[CABlueTooth alloc] init] getBlueToothState]);
 }
 
 void setBlueToothType(CABlueToothType type)

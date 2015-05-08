@@ -69,7 +69,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <CoreFoundation/CoreFoundation.h>
 
 #import "CCESRenderer.h"
-
+#import "CAIOSTextField.h"
 //CLASS INTERFACE:
 
 /** EAGLView Class.
@@ -77,7 +77,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * The view content is basically an EAGL surface you render your OpenGL scene into.
  * Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
  */
-@interface EAGLView : UIView <UIKeyInput, UITextInput>
+@interface EAGLView : UIView <CAIOSTextFieldDelegate>
 {
     id                        <CCESRenderer> renderer_;    
     EAGLContext                *context_; // weak ref
@@ -93,14 +93,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     BOOL                    multisampling_;
     unsigned int               requestedSamples_;
     BOOL                    isUseUITextField;
+
 @private
+    
     NSString *              markedText_;
     CGRect                  caretRect_;
     CGRect                  originalRect_;
     NSNotification*         keyboardShowNotification_;
     BOOL                    isKeyboardShown_;
 }
-@property(nonatomic)UIKeyboardType keyboardType;
+@property(nonatomic,assign)CAIOSTextField *textfield;
 @property(nonatomic, readonly) UITextPosition *beginningOfDocument;
 @property(nonatomic, readonly) UITextPosition *endOfDocument;
 @property(nonatomic, assign) id<UITextInputDelegate> inputDelegate;
@@ -145,6 +147,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
+- (void) checkContext;
 
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect;
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point;

@@ -41,6 +41,13 @@ void TextViewTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
 
+	CATextField* textField = CATextField::createWithCenter(CADipRect(size.width*0.5, size.height*0.2, size.width*0.6, size.height*0.05));
+	textField->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded_highlighted.png")));
+	textField->setPlaceHolder("Input");
+	textField->setFontSize(_px(24));
+	textField->setKeyboardType(KEY_BOARD_TYPE_NUMBER);
+	this->getView()->addSubview(textField);
+    
 	CATextView* textView = CATextView::createWithCenter(CADipRect(size.width*0.5, size. height*0.5, 500, 300));
 	textView->setTextViewDelegate(this);
 	textView->setPlaceHolder("Multiline textfiled");

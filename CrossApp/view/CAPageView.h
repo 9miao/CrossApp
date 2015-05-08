@@ -14,6 +14,13 @@
 #include "basics/CASTLContainer.h"
 
 USING_NS_CC;
+
+typedef enum
+{
+    CAPageViewDirectionHorizontal,
+    CAPageViewDirectionVertical
+}CAPageViewDirection;
+
 class CC_DLL CAPageView;
 class CC_DLL CAPageViewDelegate
 {
@@ -33,11 +40,7 @@ class CC_DLL CAPageView: public CAScrollView
 {
 public:
     
-    typedef enum
-    {
-        CAPageViewDirectionHorizontal,
-        CAPageViewDirectionVertical
-    }CAPageViewDirection;
+    
     
     CAPageView(const CAPageViewDirection& type);
     

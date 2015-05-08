@@ -103,8 +103,6 @@ bool CAApplication::init(void)
 
     m_pobOpenGLView = NULL;
 
-    m_fContentScaleFactor = 1.0f;
-
     // action manager
     m_pActionManager = new CCActionManager();
     
@@ -161,11 +159,11 @@ void CAApplication::setDefaultValues(void)
 
 	const char *projection = "3d";
 	if( strcmp(projection, "3d") == 0 )
-		m_eProjection = kCCDirectorProjection3D;
+        m_eProjection = CAApplication::P3D;
 	else if (strcmp(projection, "2d") == 0)
-		m_eProjection = kCCDirectorProjection2D;
+		m_eProjection = CAApplication::P2D;
 	else if (strcmp(projection, "custom") == 0)
-		m_eProjection = kCCDirectorProjectionCustom;
+		m_eProjection = CAApplication::PCustom;
 	else
 		CCAssert(false, "Invalid projection value");
 
@@ -244,6 +242,14 @@ void CAApplication::drawScene(float dt)
     if (m_nDrawCount > 0)
     {
         --m_nDrawCount;
+        
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        
+        if (m_pobOpenGLView)
+        {
+            m_pobOpenGLView->checkContext();
+        }
+#endif
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
@@ -364,7 +370,7 @@ void CAApplication::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
     m_bNextDeltaTimeZero = bNextDeltaTimeZero;
 }
 
-void CAApplication::setProjection(ccDirectorProjection kProjection)
+void CAApplication::setProjection(CAApplication::Projection kProjection)
 {
     CCSize size = m_obWinSizeInPoints;
 
@@ -372,7 +378,7 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
 
     switch (kProjection)
     {
-    case kCCDirectorProjection2D:
+    case CAApplication::P2D:
         {
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
@@ -384,7 +390,7 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
         }
         break;
 
-    case kCCDirectorProjection3D:
+    case CAApplication::P3D:
         {
             float zeye = this->getZEye();
 
@@ -410,7 +416,7 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
         }
         break;
             
-    case kCCDirectorProjectionCustom:
+    case CAApplication::PCustom:
         if (m_pProjectionDelegate)
         {
             m_pProjectionDelegate->updateProjection();
@@ -459,8 +465,7 @@ void CAApplication::reshapeProjection(const CCSize& newWindowSize)
 	CC_UNUSED_PARAM(newWindowSize);
 	if (m_pobOpenGLView)
 	{
-		m_obWinSizeInPoints = CCSizeMake(newWindowSize.width * m_fContentScaleFactor,
-			newWindowSize.height * m_fContentScaleFactor);
+		m_obWinSizeInPoints = CCSize(newWindowSize.width, newWindowSize.height);
 		setProjection(m_eProjection);       
 	}
 
@@ -530,11 +535,6 @@ CCPoint CAApplication::convertToUI(const CCPoint& glPoint)
 CCSize CAApplication::getWinSize(void)
 {
     return m_obWinSizeInPoints;
-}
-
-CCSize CAApplication::getWinSizeInPixels()
-{
-    return CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
 }
 
 CCSize CAApplication::getVisibleSize()
@@ -768,20 +768,6 @@ void CAApplication::createStatsLabel()
     CAImage::setDefaultAlphaPixelFormat(currentFormat);
 }
 
-float CAApplication::getContentScaleFactor(void)
-{
-    return m_fContentScaleFactor;
-}
-
-void CAApplication::setContentScaleFactor(float scaleFactor)
-{
-    if (scaleFactor != m_fContentScaleFactor)
-    {
-        m_fContentScaleFactor = scaleFactor;
-        createStatsLabel();
-    }
-}
-
 CAView* CAApplication::getNotificationView()
 { 
     return m_pNotificationNode; 
@@ -905,10 +891,8 @@ void CCDisplayLinkDirector::mainLoop(void)
          if (! m_bPaused)
          {
              CAScheduler::getScheduler()->update(m_fDeltaTime);
+             drawScene();
          }
-         
-         drawScene();
-         
          CAPoolManager::sharedPoolManager()->pop();        
      }
 }

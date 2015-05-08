@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include "CALabelStyle.h"
 #include "shaders/CAShaderCache.h"
+#include "platform/CAClipboard.h"
 
 NS_CC_BEGIN
 
@@ -33,9 +34,9 @@ CALabel::CALabel()
 ,m_bBold(false)
 ,m_bItalics(false)
 ,m_bUnderLine(false)
+,m_bEnableCopy(false)
 {
     m_obContentSize = CCSizeZero;
-
 }
 
 CALabel::~CALabel()
@@ -96,6 +97,11 @@ bool CALabel::initWithCenter(const CCRect& rect)
     return true;
 }
 
+void CALabel::updateImageDraw()
+{
+    m_bUpdateImage = true;
+    this->updateDraw();
+}
 
 void CALabel::updateImage()
 {
@@ -220,6 +226,22 @@ void CALabel::updateImageRect()
     m_sQuad.tr.vertices = vertex3(x2, y2, 0);
 }
 
+void CALabel::copySelectText()
+{
+	CAClipboard::setText(m_nText);
+}
+
+void CALabel::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
+{
+	if (m_bEnableCopy)
+	{
+		CATextToolBarView *pToolBar = CATextToolBarView::create();
+		pToolBar->addButton(UTF8("\u590d\u5236"), this, callfunc_selector(CALabel::copySelectText));
+		pToolBar->show();
+	}
+}
+
+
 void CALabel::setDimensions(const CCSize& var)
 {
     m_nDimensions = var;
@@ -227,7 +249,7 @@ void CALabel::setDimensions(const CCSize& var)
     {
         return;
     }
-    m_bUpdateImage = true;
+    this->updateImageDraw();
 }
 
 const CCSize& CALabel::getDimensions()
@@ -242,7 +264,7 @@ void CALabel::sizeToFit()
     {
         return;
     }
-    m_bUpdateImage = true;
+    this->updateImageDraw();
 }
 
 void CALabel::unsizeToFit()
@@ -254,7 +276,7 @@ void CALabel::setText(const string& var)
 {
     CC_RETURN_IF(m_nText.compare(var) == 0);
     m_nText = var;
-    m_bUpdateImage = true;
+    this->updateImageDraw();
 }
 
 void CALabel::setTextAlignment(const CATextAlignment& var)
@@ -264,7 +286,7 @@ void CALabel::setTextAlignment(const CATextAlignment& var)
     {
         return;
     }
-    m_bUpdateImage = true;
+   this->updateImageDraw();
 }
 
 const CATextAlignment& CALabel::getTextAlignment()
@@ -289,7 +311,7 @@ void CALabel::setNumberOfLine(unsigned int var)
     {
         return;
     }
-    m_bUpdateImage = true;
+    this->updateImageDraw();
 }
 
 void CALabel::setFontSize(unsigned int var)
@@ -299,7 +321,7 @@ void CALabel::setFontSize(unsigned int var)
     {
         return;
     }
-    m_bUpdateImage = true;
+    this->updateImageDraw();
 }
 
 unsigned int CALabel::getFontSize()
@@ -311,7 +333,7 @@ void CALabel::setLineSpacing(int var)
 {
     CC_RETURN_IF(m_iLineSpacing == var);
 	m_iLineSpacing = var;
-	m_bUpdateImage = true;
+	this->updateImageDraw();
 }
 
 int CALabel::getLineSpacing()
@@ -322,7 +344,7 @@ int CALabel::getLineSpacing()
 void CALabel::setWordWrap(bool var)
 {
 	m_bWordWrap = var;
-	m_bUpdateImage = true;
+	this->updateImageDraw();
 }
 
 bool CALabel::getWordWrap()
@@ -333,7 +355,7 @@ bool CALabel::getWordWrap()
 void CALabel::setBold(bool var)
 {
 	m_bBold = var;
-	m_bUpdateImage = true;
+	this->updateImageDraw();
 }
 
 bool CALabel::getBold()
@@ -344,7 +366,7 @@ bool CALabel::getBold()
 void CALabel::setUnderLine(bool var)
 {
 	m_bUnderLine = var;
-	m_bUpdateImage = true;
+	this->updateImageDraw();
 }
 
 bool CALabel::getUnderLine()
@@ -355,7 +377,7 @@ bool CALabel::getUnderLine()
 void CALabel::setItalics(bool var)
 {
 	m_bItalics = var;
-	m_bUpdateImage = true;
+	this->updateImageDraw();
 }
 
 bool CALabel::getItalics()
@@ -370,7 +392,7 @@ void CALabel::setFontName(const string& var)
     {
         return;
     }
-    m_bUpdateImage = true;
+    this->updateImageDraw();
 }
 
 const std::string& CALabel::getFontName()
@@ -385,7 +407,7 @@ void CALabel::setVerticalTextAlignmet(const CAVerticalTextAlignment& var)
     {
         return;
     }
-    m_bUpdateImage = true;
+    this->updateImageDraw();
 }
 
 const CAVerticalTextAlignment& CALabel::getVerticalTextAlignmet()
@@ -397,8 +419,9 @@ void CALabel::setContentSize(const CrossApp::CCSize &var)
 {
     CCSize originSize = getFrame().size;
     CAView::setContentSize(var);
-    if (originSize.width != var.width || originSize.height != var.height) {
-        m_bUpdateImage = true;
+    if (originSize.width != var.width || originSize.height != var.height)
+    {
+        this->updateImageDraw();
     }
 }
 

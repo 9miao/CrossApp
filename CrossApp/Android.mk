@@ -15,6 +15,8 @@ actions/CCActionInstant.cpp \
 actions/CCActionInterval.cpp \
 actions/CCActionManager.cpp \
 actions/CCActionTween.cpp \
+animation/CAViewAnimation.cpp \
+animation/CAAnimation.cpp \
 basics/CAApplication.cpp \
 basics/CAAutoreleasePool.cpp \
 basics/CACamera.cpp \
@@ -50,6 +52,12 @@ dispatcher/CATouch.cpp \
 dispatcher/CATouchDispatcher.cpp \
 images/CAImage.cpp \
 images/CAImageCache.cpp \
+images/gif_lib/dgif_lib.c \
+images/gif_lib/gif_err.c \
+images/gif_lib/gif_font.c \
+images/gif_lib/gif_hash.c \
+images/gif_lib/gifalloc.c \
+images/gif_lib/quantize.c \
 shaders/CATransformation.cpp \
 shaders/CAGLProgram.cpp \
 shaders/CAShaderCache.cpp \
@@ -94,11 +102,11 @@ view/CAActivityIndicatorView.cpp \
 view/CAPullToRefreshView.cpp \
 view/CATextView.cpp \
 view/CATextField.cpp \
+view/CATextEditHelper.cpp \
 view/CALabelStyle.cpp \
 view/CAWebView.cpp \
 view/CADrawView.cpp \
 view/CADrawingPrimitives.cpp \
-animation/CAViewAnimation.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

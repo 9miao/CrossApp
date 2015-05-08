@@ -68,7 +68,8 @@
 
 -(int)getBlueToothState
 {
-    return [manager state];
+    
+    return (int)[manager state];
 }
 
 @end

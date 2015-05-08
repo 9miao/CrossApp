@@ -22,7 +22,7 @@ void FourthViewController::viewDidLoad()
     action_index = 0;
     isDoAction = false;
     flag = false;
-
+    
     playAnimationBtn = CAButton::createWithCenter(CADipRect(size.width*0.5, 100, 200, 60), CAButtonTypeRoundedRect);
     playAnimationBtn->setTitleForState(CAControlStateNormal, "点击播放动画");
     playAnimationBtn->addTarget(this, CAControl_selector(FourthViewController::playAnimation), CAControlEventTouchUpInSide);
@@ -38,6 +38,8 @@ void FourthViewController::viewDidLoad()
     defaultLable->setTextAlignment(CATextAlignmentCenter);
     defaultLable->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     defaultView->insertSubview(defaultLable, 10);
+    defaultLable->setFontSize(_px(24));
+
     defaultLable->setText("play animation 1");
     
     animationView1 = CAView::createWithFrame(defaultView->getBounds());
@@ -46,7 +48,7 @@ void FourthViewController::viewDidLoad()
     
 
     animationView2 = CAScale9ImageView::createWithCenter(CADipRect(100, 100, 50, 50));
-    animationView2->setImage(CAImage::create("source_material/btn_rounded_normal.png"));
+    animationView2->setImage(CAImage::create("source_material/alert_content.png"));
     defaultView->insertSubview(animationView2, 1);
 
     defaultBtnL = CAButton::createWithCenter(CADipRect(60, 50, 100, 60), CAButtonTypeRoundedRect);

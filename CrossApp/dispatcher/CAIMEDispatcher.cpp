@@ -231,7 +231,7 @@ void CAIMEDispatcher::dispatchGetKeyBoardHeight(int height)
         CC_BREAK_IF(! m_pImpl);
         
         CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
-        
+        m_pImpl->m_DelegateWithIme->didAttachWithIME();
         m_pImpl->m_DelegateWithIme->getKeyBoardHeight(height);
     }while (0);
         
@@ -301,30 +301,17 @@ void CAIMEDispatcher::dispatchMoveSelectChars(bool isLeftBtn, const CCPoint& pt)
     } while (0);
 }
 
-void CAIMEDispatcher::dispatchMoveSelectCharsCancel(const CCPoint& pt)
-{
-    do
-    {
-        CC_BREAK_IF(!m_pImpl);
-
-        // there is no delegate attached to IME
-        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
-
-		return m_pImpl->m_DelegateWithIme->moveSelectCharsCancel(pt);
-    } while (0);
-}
-
 void CAIMEDispatcher::dispatchMoveArrowBtn(const CCPoint& pt)
 {
-    do
-    {
-        CC_BREAK_IF(!m_pImpl);
+	do
+	{
+		CC_BREAK_IF(!m_pImpl);
 
-        // there is no delegate attached to IME
-        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+		// there is no delegate attached to IME
+		CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
-		return m_pImpl->m_DelegateWithIme->moveArrowBtn(pt);
-    } while (0);
+		m_pImpl->m_DelegateWithIme->moveArrowBtn(pt);
+	} while (0);
 }
 
 void CAIMEDispatcher::dispatchCopyToClipboard()
@@ -337,7 +324,8 @@ void CAIMEDispatcher::dispatchCopyToClipboard()
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
         m_pImpl->m_DelegateWithIme->copyToClipboard();
-    } while (0);
+    }
+    while (0);
 }
 
 void CAIMEDispatcher::dispatchCutToClipboard()
@@ -350,7 +338,8 @@ void CAIMEDispatcher::dispatchCutToClipboard()
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
         m_pImpl->m_DelegateWithIme->cutToClipboard();
-    } while (0);
+    }
+    while (0);
 }
 
 void CAIMEDispatcher::dispatchPasteFromClipboard()
@@ -363,8 +352,9 @@ void CAIMEDispatcher::dispatchPasteFromClipboard()
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
         m_pImpl->m_DelegateWithIme->pasteFromClipboard();
-    } while (0);
     }
+    while (0);
+}
 
 void CAIMEDispatcher::dispatchSelectAll()
 {
@@ -376,7 +366,8 @@ void CAIMEDispatcher::dispatchSelectAll()
         CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
 
         m_pImpl->m_DelegateWithIme->selectAll();
-    } while (0);
+    }
+    while (0);
 }
 
 int CAIMEDispatcher::getCursorPos()
@@ -406,6 +397,11 @@ void CAIMEDispatcher::dispatchKeyboardWillShow(CCIMEKeyboardNotificationInfo& in
 {
     if (m_pImpl)
     {
+        if(m_pImpl->m_DelegateWithIme){
+            m_pImpl->m_DelegateWithIme->keyboardWillShow(info);
+        }
+        
+        return;
         CAIMEDelegate * pDelegate = 0;
         DelegateIter last = m_pImpl->m_DelegateList.end();
         for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
@@ -423,6 +419,11 @@ void CAIMEDispatcher::dispatchKeyboardDidShow(CCIMEKeyboardNotificationInfo& inf
 {
     if (m_pImpl)
     {
+        if(m_pImpl->m_DelegateWithIme){
+            m_pImpl->m_DelegateWithIme->keyboardDidShow(info);
+        }
+        
+        return;
         CAIMEDelegate * pDelegate = 0;
         DelegateIter last = m_pImpl->m_DelegateList.end();
         for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
@@ -440,6 +441,16 @@ void CAIMEDispatcher::dispatchKeyboardWillHide(CCIMEKeyboardNotificationInfo& in
 {
     if (m_pImpl)
     {
+        if(m_pImpl->m_DelegateWithIme){
+            m_pImpl->m_DelegateWithIme->keyboardWillHide(info);
+#if CC_TARGET_PLATFORM==CC_PLATFORM_IOS
+            m_pImpl->m_DelegateWithIme->canDetachWithIME();
+            m_pImpl->m_DelegateWithIme->didDetachWithIME();
+#endif
+        }
+        
+        return;
+        
         CAIMEDelegate * pDelegate = 0;
         DelegateIter last = m_pImpl->m_DelegateList.end();
         for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
@@ -457,6 +468,15 @@ void CAIMEDispatcher::dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& inf
 {
     if (m_pImpl)
     {
+        if(m_pImpl->m_DelegateWithIme){
+            m_pImpl->m_DelegateWithIme->keyboardDidHide(info);
+#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
+            m_pImpl->m_DelegateWithIme->canDetachWithIME();
+            m_pImpl->m_DelegateWithIme->didDetachWithIME();
+#endif
+        }
+        
+        return;
         CAIMEDelegate * pDelegate = 0;
         DelegateIter last = m_pImpl->m_DelegateList.end();
         for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)

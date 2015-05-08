@@ -56,21 +56,21 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public void afterTextChanged(final Editable s) {
-	
-		if (this.isFullScreenEdit()) 
+
+		if (this.isFullScreenEdit())
 		{
 			return;
 		}
 //		int nModified = s.length() - this.mText.length();
 //		if (nModified > 0) {
 //			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-//		
+//
 //			//this.mCocos2dxGLSurfaceView.insertText(insertText);
 //			/*
 //			if (BuildConfig.DEBUG) {
 //				Log.d(TAG, "insertText(" + insertText + ")");
 //			}
-//			*/ 
+//			*/
 //		} else {
 //			for (; nModified < 0; ++nModified) {
 //				//Tthis.mCocos2dxGLSurfaceView.deleteBackward();
@@ -91,7 +91,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
 		}
 		*/
-		
+
 		//System.out.println(pCharSequence.toString());
 		this.mText = pCharSequence.toString();
 	}
@@ -117,44 +117,51 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			}
 			else
 			{
-				this.mCocos2dxGLSurfaceView.willInsertText(calcStart,pCharSequence.toString(),before,count);
+			    this.mCocos2dxGLSurfaceView.willInsertText(calcStart,pCharSequence.toString().substring(mText.length()),before,count);
 			}
-			
+
 		}
-		
+
 	}
 
-	
+
 	@Override
-	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) 
+	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent)
 	{
-		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() != pTextView)
+
+
+
+
+		if (pActionID == EditorInfo.IME_ACTION_DONE)
 		{
-			return false;
-		}
-		
-		if(pKeyEvent.getAction() == KeyEvent.ACTION_DOWN)
-		{
-			return false;
-		}
-		
-		if (pActionID == EditorInfo.IME_ACTION_UNSPECIFIED) 
-		{
-			this.mCocos2dxGLSurfaceView.insertText("\n");
-		}
-		
-		if (pActionID == EditorInfo.IME_ACTION_DONE) 
-		{
-			KeyBoardReturnCallBack();	
+			KeyBoardReturnCallBack();
+            return true;
 		}
 		if (pActionID == EditorInfo.IME_ACTION_SEARCH)
-{
+        {
 			KeyBoardReturnCallBack();
+            return true;
 		}
 		if (pActionID == EditorInfo.IME_ACTION_SEND)
 		{
-			KeyBoardReturnCallBack();		
+			KeyBoardReturnCallBack();
+            return true;
 		}
+
+        if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() != pTextView)
+        {
+            return false;
+        }
+
+        if(pKeyEvent.getAction() == KeyEvent.ACTION_DOWN)
+        {
+            return false;
+        }
+        if (pActionID == EditorInfo.IME_ACTION_UNSPECIFIED)
+        {
+            this.mCocos2dxGLSurfaceView.insertText("\n");
+            return true;
+        }
 		return true;
 	}
 	// ===========================================================

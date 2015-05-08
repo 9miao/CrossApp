@@ -101,6 +101,8 @@ public:
     
     static void setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation2 selector);
     
+    static void removeAnimations(const std::string& animationID);
+    
     static void setAnimationsEnabled(bool enabled);
     
     static bool areAnimationsEnabled();
@@ -116,10 +118,8 @@ protected:
     CAViewAnimation();
     
     virtual ~CAViewAnimation();
-    
-    void setFrameOrgin(const CCPoint& point, CAView* view);
-    
-    void setCenterOrgin(const CCPoint& point, CAView* view);
+
+    void setPoint(const CCPoint& point, CAView* view);
     
     void setContentSize(const CCSize& size, CAView* view);
     

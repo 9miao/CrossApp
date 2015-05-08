@@ -16,6 +16,6 @@ using namespace CrossApp;
 
 @interface CACameraController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (assign,nonatomic)void *sender;
--(void)openCameraView;
+-(void)openCameraView:(BOOL)allowEdit;
 -(void)writeImageToPhoto:(std::string)sender;
 @end

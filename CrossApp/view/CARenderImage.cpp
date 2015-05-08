@@ -24,13 +24,15 @@ CARenderImage::CARenderImage()
 , m_uDepthRenderBufffer(0)
 , m_nOldFBO(0)
 , m_pImage(0)
-, m_pImageCopy(0)
 , m_ePixelFormat(CAImage::PixelFormat_RGBA8888)
 , m_uClearFlags(0)
 , m_sClearColor(ccc4f(0,0,0,0))
 , m_fClearDepth(0.0f)
 , m_nClearStencil(0)
 , m_bAutoDraw(false)
+, m_uPixelsWide(0)
+, m_uPixelsHigh(0)
+, m_uName(0)
 {
     
 }
@@ -38,7 +40,7 @@ CARenderImage::CARenderImage()
 CARenderImage::~CARenderImage()
 {
     CC_SAFE_RELEASE(m_pImageView);
-    CC_SAFE_RELEASE(m_pImageCopy);
+    CC_SAFE_RELEASE(m_pImage);
     
     glDeleteFramebuffers(1, &m_uFBO);
     if (m_uDepthRenderBufffer)
@@ -172,9 +174,6 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
     unsigned char *data = NULL;
     do 
     {
-        w = (int)(w);
-        h = (int)(h);
-
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 
         // textures must be power of two squared
@@ -192,16 +191,19 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
 
         memset(data, 0, (int)(powW * powH * 4));
         m_ePixelFormat = eFormat;
-
-        m_pImage = new CAImage();
-        if (m_pImage)
-        {
-            m_pImage->initWithRawData(data, (CAImage::PixelFormat)m_ePixelFormat, powW, powH);
-        }
-        else
-        {
-            break;
-        }
+        m_uPixelsWide = powW;
+        m_uPixelsHigh = powH;
+        
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
+        glGenTextures(1, &m_uName);
+        ccGLBindTexture2D(m_uName);
+        
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_uPixelsWide, m_uPixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        
         GLint oldRBO;
         glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
         
@@ -210,7 +212,7 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
 
         // associate Image with FBO
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_uName, 0);
 
         if (uDepthStencilFormat != 0)
         {
@@ -226,30 +228,25 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
                 glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_uDepthRenderBufffer);
             }
         }
-
-        // check if it worked (probably worth doing :) )
+//        // check if it worked (probably worth doing :) )
         CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach Image to framebuffer");
 
-        m_pImage->setAliasTexParameters();
+        ccGLBindTexture2D( m_uName );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 
-        // retained
-        setImageView(CAImageView::createWithImage(m_pImage));
-
-        m_pImage->release();
-        m_pImageView->setScaleY(-1);
-
+        CAImageView* imageView = CAImageView::createWithFrame(CCRect(0, 0, m_uPixelsWide, m_uPixelsHigh));
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
-        m_pImageView->setBlendFunc(tBlendFunc);
-
+        imageView->setBlendFunc(tBlendFunc);
+        this->addSubview(imageView);
+        this->setImageView(imageView);
+        
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
         
         // Diabled by default.
         m_bAutoDraw = false;
-        
-        // add sprite for backward compatibility
-        addSubview(m_pImageView);
-        
+
         bRet = true;
     } while (0);
     
@@ -264,24 +261,24 @@ void CARenderImage::begin()
 	kmGLPushMatrix();
 	kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
-    
-    CAApplication *director = CAApplication::getApplication();
-    director->setProjection(director->getProjection());
-
-    const CCSize& texSize = m_pImage->getContentSizeInPixels();
 
     // Calculate the adjustment ratios based on the old and new projections
-    CCSize size = director->getWinSizeInPixels();
-    float widthRatio = size.width / texSize.width;
-    float heightRatio = size.height / texSize.height;
+    CCSize size = CAApplication::getApplication()->getWinSize();
+    float widthRatio = size.width / m_uPixelsWide;
+    float heightRatio = size.height / m_uPixelsHigh;
 
     // Adjust the orthographic projection and viewport
-    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
+    glViewport(0, 0, (GLsizei)m_uPixelsWide, (GLsizei)m_uPixelsHigh);
 
 
     kmMat4 orthoMatrix;
-    kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
-        (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+    kmMat4OrthographicProjection(&orthoMatrix,
+                                 (float)-1.0 / widthRatio,
+                                 (float)1.0 / widthRatio,
+                                 (float)-1.0 / heightRatio,
+                                 (float)1.0 / heightRatio,
+                                 -1,
+                                 1);
     kmGLMultMatrix(&orthoMatrix);
 
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
@@ -350,17 +347,26 @@ void CARenderImage::beginWithClear(float r, float g, float b, float a, float dep
 
 void CARenderImage::end()
 {
-    CAApplication *director = CAApplication::getApplication();
+    GLubyte *pBuffer = pBuffer = new GLubyte[m_uPixelsWide * m_uPixelsHigh * 4];
+    GLubyte *pTempData = new GLubyte[m_uPixelsWide * m_uPixelsHigh * 4];
     
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    glReadPixels(0, 0, m_uPixelsWide, m_uPixelsHigh, GL_RGBA, GL_UNSIGNED_BYTE, pTempData);
     glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
 
-    // restore viewport
-    director->setViewport();
+    CAApplication::getApplication()->setViewport();
 
     kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLPopMatrix();
 	kmGLMatrixMode(KM_GL_MODELVIEW);
 	kmGLPopMatrix();
+
+    m_pImage = new CAImage();
+    m_pImage->initWithRawData(pTempData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
+    m_pImageView->setImage(m_pImage);
+    
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+    CC_SAFE_DELETE_ARRAY(pTempData);
 }
 
 void CARenderImage::clear(float r, float g, float b, float a)
@@ -409,7 +415,10 @@ void CARenderImage::visit()
 	kmGLPushMatrix();
 	
     transform();
-    m_pImageView->visit();
+    if (m_pImageView)
+    {
+        m_pImageView->visit();
+    }
     draw();
 	
 	kmGLPopMatrix();
@@ -482,11 +491,9 @@ void CARenderImage::draw()
 bool CARenderImage::saveToFile(const char *szFilePath)
 {
     bool bRet = false;
-
-    CAImage *pImage = m_pImageView->getImage();
-    if (pImage)
+    if (m_pImage)
     {
-        bRet = pImage->saveToFile(szFilePath);
+        bRet = m_pImage->saveToFile(szFilePath);
     }
     return bRet;
 }

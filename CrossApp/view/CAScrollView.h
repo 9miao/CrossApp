@@ -143,12 +143,12 @@ protected:
  
     inline virtual float minSpeed(float dt)
     {
-        return (60 * dt);
+        return (_px(60) * dt);
     }
     
     inline virtual float maxSpeed(float dt)
     {
-        return (CCPoint(m_obContentSize).getLength() * 5 * dt);
+        return (_px(2500) * dt);
     }
     
     inline virtual float maxSpeedCache(float dt)
@@ -163,7 +163,7 @@ protected:
     
     inline virtual float maxBouncesSpeed(float dt)
     {
-        return (CCPoint(m_obContentSize).getLength() * 6 * dt);
+        return (_px(3000) * dt);
     }
     
     virtual float maxBouncesLenght()

@@ -148,6 +148,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\animation\CAAnimation.cpp" />
     <ClCompile Include="..\animation\CAViewAnimation.cpp" />
     <ClCompile Include="..\basics\CAApplication.cpp" />
     <ClCompile Include="..\basics\CAAutoreleasePool.cpp" />
@@ -192,6 +193,12 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionTween.cpp" />
     <ClCompile Include="..\images\CAImage.cpp" />
     <ClCompile Include="..\images\CAImageCache.cpp" />
+    <ClCompile Include="..\images\gif_lib\dgif_lib.c" />
+    <ClCompile Include="..\images\gif_lib\gifalloc.c" />
+    <ClCompile Include="..\images\gif_lib\gif_err.c" />
+    <ClCompile Include="..\images\gif_lib\gif_font.c" />
+    <ClCompile Include="..\images\gif_lib\gif_hash.c" />
+    <ClCompile Include="..\images\gif_lib\quantize.c" />
     <ClCompile Include="..\platform\CAFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\CAFTFontCache.cpp" />
     <ClCompile Include="..\platform\CATempTypeFont.cpp" />
@@ -265,6 +272,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CAScale9ImageView.cpp" />
     <ClCompile Include="..\view\CAScrollView.cpp" />
     <ClCompile Include="..\view\CATableView.cpp" />
+    <ClCompile Include="..\view\CATextEditHelper.cpp" />
     <ClCompile Include="..\view\CATextField.cpp" />
     <ClCompile Include="..\view\CATextView.cpp" />
     <ClCompile Include="..\view\CAView.cpp" />
@@ -272,6 +280,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CAWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\animation\CAAnimation.h" />
     <ClInclude Include="..\animation\CAViewAnimation.h" />
     <ClInclude Include="..\basics\CAApplication.h" />
     <ClInclude Include="..\basics\CAAutoreleasePool.h" />
@@ -421,6 +430,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\view\CAScale9ImageView.h" />
     <ClInclude Include="..\view\CAScrollView.h" />
     <ClInclude Include="..\view\CATableView.h" />
+    <ClInclude Include="..\view\CATextEditHelper.h" />
     <ClInclude Include="..\view\CATextField.h" />
     <ClInclude Include="..\view\CATextView.h" />
     <ClInclude Include="..\view\CAView.h" />

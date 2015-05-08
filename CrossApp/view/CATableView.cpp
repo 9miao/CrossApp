@@ -238,7 +238,6 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             }
         }
     }
-    
 }
 
 void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)

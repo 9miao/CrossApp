@@ -19,6 +19,7 @@ CACamera::CACamera(void)
 
 CACamera::~CACamera(void)
 {
+    
 }
 
 const char* CACamera::description(void)

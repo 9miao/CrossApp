@@ -7,7 +7,7 @@
 //
 
 #include "CADrawerController.h"
-#include "basics/CAScheduler.h"
+#include "animation/CAAnimation.h"
 #include "basics/CAApplication.h"
 #include "dispatcher/CATouchDispatcher.h"
 
@@ -291,7 +291,7 @@ void CADrawerController::scheduleHideAction(float dt)
 
 bool CADrawerController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    return this->isShowLeftViewController();
+    return true;
 }
 
 void CADrawerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)

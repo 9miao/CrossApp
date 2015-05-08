@@ -15,12 +15,14 @@
 #include "platform/CCPlatformMacros.h"
 #include "CCGL.h"
 #include "CCStdC.h"
+#include "gif_lib/gif_lib.h"
 
 NS_CC_BEGIN
 
 class CAGLProgram;
 
-typedef struct _ccTexParams {
+typedef struct _ccTexParams
+{
     GLuint    minFilter;
     GLuint    magFilter;
     GLuint    wrapS;
@@ -51,6 +53,8 @@ public:
         JPG,
         //! PNG
         PNG,
+        //! GIF
+        GIF,
         //! TIFF
         TIFF,
         //! WebP
@@ -74,17 +78,30 @@ public:
     
     static int getFontHeight(const char* pFontName, unsigned long nSize);
     
-    static int getStringWidth(const char* pFontName, unsigned long nSize, const std::string& pText);
+    static int getStringWidth(const char* pFontName,
+                              unsigned long nSize,
+                              const std::string& pText);
     
-    static int cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth);
+    static int cutStringByWidth(const char* pFontName,
+                                unsigned long nSize,
+                                const std::string& text,
+                                int iLimitWidth,
+                                int& cutWidth);
     
-    static int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth, int iLineSpace = 0, bool bWordWrap = true);
+    static int getStringHeight(const char* pFontName,
+                               unsigned long nSize,
+                               const std::string& pText,
+                               int iLimitWidth,
+                               int iLineSpace = 0,
+                               bool bWordWrap = true);
     
     static CAImage* create(const std::string& file);
-    
+
     static CAImage* createWithImageDataNoCache(const unsigned char * data, unsigned long lenght);
     
-    static CAImage* createWithImageData(const unsigned char * data, unsigned long lenght, const std::string& key);
+    static CAImage* createWithImageData(const unsigned char * data,
+                                        unsigned long lenght,
+                                        const std::string& key);
     
     static CAImage* createWithRawDataNoCache(const unsigned char * data,
                                              const CAImage::PixelFormat& pixelFormat,
@@ -136,8 +153,6 @@ public:
     
     static CAImage::PixelFormat defaultAlphaPixelFormat();
     
-    const CCSize& getContentSizeInPixels();
-    
     bool hasPremultipliedAlpha();
     
     bool hasMipmaps();
@@ -161,6 +176,7 @@ public:
     bool isWebp(const unsigned char * data, unsigned long dataLen);
     bool isPvr(const unsigned char * data, unsigned long dataLen);
     bool isEtc(const unsigned char * data, unsigned long dataLen);
+    bool isGif(const unsigned char * data, unsigned long dataLen);
     
     CC_PROPERTY_READONLY_PASS_BY_REF(CAImage::PixelFormat, m_ePixelFormat, PixelFormat)
     
@@ -184,14 +200,21 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned long, m_nDataLenght, DataLenght);
     
-    void premultipliedAImageData();
+    void premultipliedImageData();
     
-    void repremultipliedAImageData();
+    void repremultipliedImageData();
+    
+    void updateGifImageWithIndex(unsigned int index);
+
+    unsigned int getGifImageIndex();
+    
+    unsigned int getGifImageCounts();
     
 protected:
     
     bool initWithJpgData(const unsigned char *  data, unsigned long dataLen);
     bool initWithPngData(const unsigned char * data, unsigned long dataLen);
+    bool initWithGifData(const unsigned char * data, unsigned long dataLen);
     bool initWithTiffData(const unsigned char * data, unsigned long dataLen);
     bool initWithWebpData(const unsigned char * data, unsigned long dataLen);
     bool initWithETCData(const unsigned char * data, unsigned long dataLen);
@@ -256,6 +279,12 @@ protected:
     void convertAI88ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
     void convertI8ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
     
+    /*GIF*/
+    void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);
+    bool checkIfCover(const SavedImage* target, const SavedImage* covered);
+    bool checkIfWillBeCleared(const SavedImage* frame);
+    void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width);
+    void setGifImageWithIndex(unsigned int index);
     
 protected:
     
@@ -268,6 +297,10 @@ protected:
     bool m_bHasAlpha;
     
     int  m_nBitsPerComponent;
+    
+    GifFileType* m_pGIF;
+    
+    int m_iGIFIndex;
 };
 
 NS_CC_END

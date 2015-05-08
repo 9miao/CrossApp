@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-12.
-//  Copyright (c) 2014年 http://9miao.com All rights reserved.
+//  Copyright (c) 2014Âπ?http://9miao.com All rights reserved.
 //
 
 #include "CAView.h"
@@ -626,16 +626,16 @@ void CAView::setAnchorPoint(const CCPoint& point)
     }
 }
 
-void CAView::setContentSize(const CCSize & size)
+void CAView::setContentSize(const CCSize & contentSize)
 {
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
     {
-        CAViewAnimation::getInstance()->setContentSize(size, this);
+        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
     }
-    else if (!size.equals(m_obContentSize))
+    else if (!contentSize.equals(m_obContentSize))
     {
-        m_obContentSize = size;
+        m_obContentSize = contentSize;
         
         float anchorPointInPointsX = m_obContentSize.width * m_obAnchorPoint.x;
         float anchorPointInPointsY = m_obContentSize.height * m_obAnchorPoint.y;
@@ -667,33 +667,54 @@ const CCRect& CAView::getFrame() const
 
 void CAView::setFrame(const CCRect &rect)
 {
-    if (!rect.size.equals(CCSizeZero))
+    float width = rect.size.width / m_fScaleX;
+    float height = rect.size.height / m_fScaleY;
+    CCSize contentSize = CCSize(width, height);
+    CCSize originalSize = m_obContentSize;
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
     {
-        float width = rect.size.width / m_fScaleX;
-        float height = rect.size.height / m_fScaleY;
-        this->setContentSize(CCSize(width, height));
+        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
+        
+        m_obContentSize = contentSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
+    else
+    {
+        this->setContentSize(contentSize);
     }
     
     this->setFrameOrigin(rect.origin);
+    
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        m_obContentSize = originalSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
 }
 
 void CAView::setFrameOrigin(const CCPoint& point)
 {
+    float x = m_obAnchorPointInPoints.x * m_fScaleX;
+    float y = m_obAnchorPointInPoints.y * m_fScaleY;
+    
+    CCPoint p = CCPoint(x, y);
+    p = ccpAdd(p, point);
+    
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
     {
-        CAViewAnimation::getInstance()->setFrameOrgin(point, this);
+        CAViewAnimation::getInstance()->setPoint(p, this);
         m_bFrame = true;
     }
     else
     {
-        float x = m_obAnchorPointInPoints.x * m_fScaleX;
-        float y = m_obAnchorPointInPoints.y * m_fScaleY;
-        
-        CCPoint p = CCPoint(x, y);
-        p = ccpAdd(p, point);
         this->setPoint(p);
-        
         m_bFrame = true;
     }
 }
@@ -701,6 +722,72 @@ void CAView::setFrameOrigin(const CCPoint& point)
 const CCPoint& CAView::getFrameOrigin()
 {
     return m_obFrameRect.origin;
+}
+
+CCRect CAView::getCenter()
+{
+    CCRect rect = this->getFrame();
+    rect.origin = ccpAdd(rect.origin, ccpMult(rect.size, 0.5f));
+    rect.setCenter(true);
+    return rect;
+}
+
+void CAView::setCenter(const CCRect& rect)
+{
+    float width = rect.size.width / m_fScaleX;
+    float height = rect.size.height / m_fScaleY;
+    CCSize contentSize = CCSize(width, height);
+    CCSize originalSize = m_obContentSize;
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
+        
+        m_obContentSize = contentSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
+    else
+    {
+        this->setContentSize(contentSize);
+    }
+    
+    this->setCenterOrigin(rect.origin);
+    
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        m_obContentSize = originalSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
+}
+
+CCPoint CAView::getCenterOrigin()
+{
+    return this->getCenter().origin;
+}
+
+void CAView::setCenterOrigin(const CCPoint& point)
+{
+    CCPoint p = ccpMult(m_obContentSize, 0.5f);
+    p = ccpSub(p, m_obAnchorPointInPoints);
+    p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
+    p = ccpSub(point, p);
+    
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setPoint(p, this);
+        m_bFrame = false;
+    }
+    else
+    {
+        this->setPoint(p);
+        m_bFrame = false;
+    }
 }
 
 CCRect CAView::getBounds() const
@@ -712,54 +799,9 @@ CCRect CAView::getBounds() const
 
 void CAView::setBounds(const CCRect& rect)
 {
-    if ( ! rect.size.equals(CCSizeZero))
+    if (!rect.size.equals(CCSizeZero))
     {
         this->setContentSize(rect.size);
-    }
-}
-
-CCRect CAView::getCenter()
-{
-    CCRect rect = this->getFrame();
-    rect.origin = ccpAdd(rect.origin, ccpMult(rect.size, 0.5f));
-    rect.setCenter(true);
-    return rect;
-}
-
-void CAView::setCenter(CCRect rect)
-{
-    if ( ! rect.size.equals(CCSizeZero))
-    {
-        float width = rect.size.width / m_fScaleX;
-        float height = rect.size.height / m_fScaleY;
-        this->setContentSize(CCSize(width, height));
-    }
-    
-    this->setCenterOrigin(rect.origin);
-}
-
-CCPoint CAView::getCenterOrigin()
-{
-    return this->getCenter().origin;
-}
-
-void CAView::setCenterOrigin(const CCPoint& point)
-{
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
-    {
-        CAViewAnimation::getInstance()->setCenterOrgin(point, this);
-        m_bFrame = false;
-    }
-    else
-    {
-        CCPoint p = ccpMult(m_obContentSize, 0.5f);
-        p = ccpSub(p, m_obAnchorPointInPoints);
-        p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
-        p = ccpSub(point, p);
-        this->setPoint(p);
-        
-        m_bFrame = false;
     }
 }
 
@@ -848,12 +890,17 @@ void CAView::reViewlayout()
 
 void CAView::updateDraw()
 {
-    SET_DIRTY_RECURSIVELY();
-    if (this->getSuperview())
+    CAView* v = this->getSuperview();
+    CC_RETURN_IF(v == NULL);
+    while (v == v->getSuperview())
     {
-        this->reViewlayout();
-        CAApplication::getApplication()->updateDraw();
+        CC_BREAK_IF(v == NULL);
+        CC_RETURN_IF(v->isVisible());
     }
+    
+    SET_DIRTY_RECURSIVELY();
+    this->reViewlayout();
+    CAApplication::getApplication()->updateDraw();
 }
 
 CAView* CAView::getSubviewByTag(int aTag)
@@ -1957,13 +2004,11 @@ void CAView::setAlpha(float alpha)
     }
     else if (_displayedAlpha != alpha)
     {
-        _displayedAlpha = _realAlpha = alpha;
+        _realAlpha = alpha;
         
         float superviewAlpha = m_pSuperview ? m_pSuperview->getDisplayedAlpha() : 1.0f;
         
         this->updateDisplayedAlpha(superviewAlpha);
-        
-        this->updateColor();
     }
 }
 
@@ -2017,19 +2062,27 @@ void CAView::updateDisplayedColor(const CAColor4B& parentColor)
 
 void CAView::updateColor(void)
 {
-    unsigned int r = _displayedColor.r * _displayedAlpha;
-    unsigned int g = _displayedColor.g * _displayedAlpha;
-    unsigned int b = _displayedColor.b * _displayedAlpha;
-    unsigned int a = _displayedColor.a * _displayedAlpha;
+    CAColor4B color4 = _displayedColor;
+    color4.a = color4.a * _displayedAlpha;
     
-    CAColor4B color4 = ccc4(r, g, b, a);
-    
+    if (m_pobImage)
+    {
+        if (m_pobImage->getPixelFormat() == CAImage::PixelFormat_RGBA8888
+            ||
+            m_pobImage->getPixelFormat() == CAImage::PixelFormat_RGBA4444)
+        {
+           color4.r = color4.r * _displayedAlpha;
+           color4.g = color4.g * _displayedAlpha;
+           color4.b = color4.b * _displayedAlpha;
+        }
+    }
+   
     m_sQuad.bl.colors = color4;
     m_sQuad.br.colors = color4;
     m_sQuad.tl.colors = color4;
     m_sQuad.tr.colors = color4;
     
-    if (m_pobImage && m_pobBatchView)
+    if (m_pobBatchView && m_pobImage)
     {
         if (m_uAtlasIndex != 0xffffffff)
         {
@@ -2149,17 +2202,14 @@ bool CAView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CAView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-
 }
 
 void CAView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-
 }
 
 void CAView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-
 }
 
 void CAView::setBatch(CABatchView *batchView)

@@ -68,6 +68,8 @@ void SegmentedControlTest::viewDidLoad()
 	defaultPage->setColor(CAColor_white);
 	defaultPage->setTextAlignment(CATextAlignmentCenter);
 	defaultView->addSubview(defaultPage);
+    
+    this->getView()->setColor(CAColor_green);
 }
 
 void SegmentedControlTest::segmentCallback(CASegmentedControl* btn, int index)

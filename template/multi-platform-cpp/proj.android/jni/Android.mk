@@ -30,15 +30,17 @@ MY_ALL_DIRS := $(call uniq,$(MY_ALL_DIRS))
 LOCAL_SRC_FILES  := $(MY_SRC_LIST)
 LOCAL_C_INCLUDES := $(MY_ALL_DIRS)
 
-
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_extension_static
+#LOCAL_SHARED_LIBRARIES += cocos_ffmpeg_shared
 
 include $(BUILD_SHARED_LIBRARY)
 
-#$(call import-add-path, $(LOCAL_PATH)/../../../..)#$(call import-add-path, $(LOCAL_PATH)/../../../../CrossApp/the_third_party/)
-$(call import-module, CrossApp)
-$(call import-module, CocosDenshion/android)
-$(call import-module, extensions)
-$(call import-module, CrossApp/the_third_party/curl/prebuilt/android)
+#$(call import-add-path, $(LOCAL_PATH)/../../../..)
+#$(call import-add-path, $(LOCAL_PATH)/../../../../CrossApp/the_third_party/)
+
+$(call import-module,CrossApp)
+$(call import-module,CrossApp/the_third_party/curl/prebuilt/android)
+$(call import-module,CocosDenshion/android)
+$(call import-module,extensions)

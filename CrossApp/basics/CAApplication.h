@@ -21,23 +21,7 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @typedef ccDirectorProjection
- Possible OpenGL projections used by director
- */
-typedef enum
-{
-    /// sets a 2D projection (orthogonal projection)
-    kCCDirectorProjection2D,
-    
-    /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
-    kCCDirectorProjection3D,
-    
-    /// it calls "updateProjection" on the projection delegate.
-    kCCDirectorProjectionCustom,
-    
-    /// Default projection is 3D projection
-    kCCDirectorProjectionDefault = kCCDirectorProjection3D,
-} ccDirectorProjection;
+
 
 /* Forward declarations. */
 class CAWindow;
@@ -53,6 +37,25 @@ class CCAccelerometer;
 class CC_DLL CAApplication : public CAObject, public TypeInfo
 {
 public:
+    
+    /** @typedef Projection
+     Possible OpenGL projections used by director
+     */
+    typedef enum
+    {
+        /// sets a 2D projection (orthogonal projection)
+        P2D,
+        
+        /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
+        P3D,
+        
+        /// it calls "updateProjection" on the projection delegate.
+        PCustom,
+        
+        /// Default projection is 3D projection
+        Default = P3D,
+    } Projection;
+    
     /**
      *  @js ctor
      */
@@ -109,8 +112,8 @@ public:
      @since v0.8.2
      @js NA
      */
-    inline ccDirectorProjection getProjection(void) { return m_eProjection; }
-    void setProjection(ccDirectorProjection kProjection);
+    inline CAApplication::Projection getProjection(void) { return m_eProjection; }
+    void setProjection(CAApplication::Projection kProjection);
      /** reshape projection matrix when canvas has been change"*/
     void reshapeProjection(const CCSize& newWindowSize);
     
@@ -147,10 +150,6 @@ public:
     */
     CCSize getWinSize(void);
 
-    /** returns the size of the OpenGL view in pixels.
-    */
-    CCSize getWinSizeInPixels(void);
-    
     /** returns visible size of the OpenGL view in points.
      *  the value is equal to getWinSize if don't invoke
      *  CCEGLView::setDesignResolutionSize()
@@ -247,15 +246,6 @@ public:
 
     virtual void mainLoop(void) = 0;
 
-    /** The size in pixels of the surface. It could be different than the screen size.
-    High-res devices might have a higher surface size than the screen size.
-    Only available when compiled using SDK >= 4.0.
-    @since v0.99.4
-    */
-    void setContentScaleFactor(float scaleFactor);
-    
-    float getContentScaleFactor(void);
-
     bool isDrawing() {return (m_nDrawCount > 0);}
     
 public:
@@ -344,13 +334,10 @@ protected:
     bool m_bNextDeltaTimeZero;
     
     /* projection used */
-    ccDirectorProjection m_eProjection;
+    Projection m_eProjection;
 
     /* window size in points */
     CCSize    m_obWinSizeInPoints;
-    
-    /* content scale factor */
-    float    m_fContentScaleFactor;
 
     /* store the fps string */
     char *m_pszFPS;
