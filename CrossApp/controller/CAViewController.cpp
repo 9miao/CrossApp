@@ -211,6 +211,21 @@ void CAViewController::dismissModalViewController(bool animated)
     CAApplication::getApplication()->getRootWindow()->dismissModalViewController(animated);
 }
 
+
+void setDispatchEvents(CAViewController* controller, bool var)
+{
+    if (var == false)
+    {
+        CAView* view = CAView::createWithFrame(controller->getView()->getBounds(), CAColor_clear);
+        view->setTextTag("DispatchEvents");
+        controller->getView()->insertSubview(view, 0xffff);
+    }
+    else
+    {
+        controller->getView()->removeSubviewByTextTag("DispatchEvents");
+    }
+}
+
 #pragma CANavigationController
 
 CANavigationController::CANavigationController()
@@ -527,6 +542,8 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
     
     if (animated)
     {
+        setDispatchEvents(this, false);
+        
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(1/30.0f);
@@ -559,15 +576,14 @@ void CANavigationController::replaceViewControllerFinish()
     lastViewController->viewDidDisappear();
     lastViewController->m_pNavigationController = NULL;
     lastViewController->removeViewFromSuperview();
-    lastViewController->retain()->autorelease();
     m_pViewControllers.erase(index);
     
     CAView* backContainer = m_pContainers.at(index);
     backContainer->removeFromSuperview();
     m_pContainers.erase(index);
-    
+    m_pSecondContainers.erase(index);
     m_pNavigationBars.erase(index);
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    setDispatchEvents(this, true);
 }
 
 void CANavigationController::pushViewController(CAViewController* viewController, bool animated)
@@ -585,10 +601,10 @@ void CANavigationController::pushViewController(CAViewController* viewController
     CAView* newContainer = m_pContainers.back();
     newContainer->setFrameOrigin(CCPoint(x, 0));
     
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
-    
     if (animated)
     {
+        setDispatchEvents(this, false);
+        
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(1/30.0f);
@@ -626,7 +642,7 @@ void CANavigationController::pushViewControllerFinish()
     lastViewController->viewDidDisappear();
     
     m_bSlidingMinX = m_pViewControllers.size() <= 1;
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    setDispatchEvents(this, true);
 }
 
 CAViewController* CANavigationController::popViewControllerAnimated(bool animated)
@@ -651,10 +667,10 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     CAView* backContainer = m_pContainers.back();
     backContainer->setFrameOrigin(CCPointZero);
     
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
-    
     if (animated)
     {
+        setDispatchEvents(this, false);
+        
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(1/30.0f);
@@ -696,7 +712,7 @@ void CANavigationController::popViewControllerFinish()
     m_pViewControllers.back()->getView()->setFrameOrigin(CCPointZero);
     
     m_bSlidingMinX = m_pViewControllers.size() <= 1;
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    setDispatchEvents(this, true);
 }
 
 // sprhawk@163.com: 2015-03-08
@@ -719,10 +735,10 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
     CAView* backContainer = m_pContainers.back();
     backContainer->setFrameOrigin(CCPointZero);
     
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
-    
     if (animated)
     {
+        setDispatchEvents(this, false);
+        
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.02f);
@@ -766,7 +782,7 @@ void CANavigationController::popToRootViewControllerFinish()
     m_pViewControllers.back()->getView()->setFrameOrigin(CCPointZero);
     
     m_bSlidingMinX = true;
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    setDispatchEvents(this, true);
 }
 
 void CANavigationController::homingViewControllerFinish()
@@ -777,7 +793,8 @@ void CANavigationController::homingViewControllerFinish()
     
     CAView* lastContainer = m_pContainers.at(index);
     lastContainer->setVisible(false);
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    
+    setDispatchEvents(this, true);
 }
 
 void CANavigationController::navigationPopViewController(CANavigationBar* navigationBar, bool animated)
@@ -914,8 +931,8 @@ void CANavigationController::update(float dt)
     m_pNavigationBars.back()->setFrameOrigin(point);
     
     CAView* secondContainer = m_pSecondContainers.back();
-    CAViewController* viewController = m_pViewControllers.back();
     secondContainer->setFrame(rect);
+    CAViewController* viewController = m_pViewControllers.back();
     viewController->getSuperViewRect(secondContainer->getBounds());
 }
 
@@ -972,7 +989,7 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     CAView* backContainer = m_pContainers.back();
     
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+    setDispatchEvents(this, false);
     
     if (m_bPopViewController)
     {
@@ -1319,7 +1336,7 @@ void CATabBarController::viewDidLoad()
     }
     else
     {
-        m_pTabBar->setSelectedIndicatorColor(m_sTabBarSelectedBackGroundColor);
+        m_pTabBar->setSelectedIndicatorColor(m_sTabBarSelectedIndicatorColor);
     }
     
     
@@ -1430,7 +1447,7 @@ void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item
 
 void CATabBarController::pageViewDidEndTurning(CAPageView* pageView)
 {
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    setDispatchEvents(this, true);
     for (int i = MAX((int)m_nSelectedIndex - 1, 0);
          i < MIN((int)m_nSelectedIndex + 2, m_pViewControllers.size());
          i++)
@@ -1444,7 +1461,7 @@ void CATabBarController::pageViewDidEndTurning(CAPageView* pageView)
 
 void CATabBarController::scrollViewWillBeginDragging(CAScrollView* view)
 {
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+    setDispatchEvents(this, false);
     for (int i = MAX((int)m_nSelectedIndex - 1, 0);
          i < MIN((int)m_nSelectedIndex + 2, m_pViewControllers.size());
          i++)
@@ -1608,9 +1625,9 @@ void CATabBarController::update(float dt)
     
     for (size_t i=0; i<m_pViewControllers.size(); i++)
     {
-        CCRect r = m_pContainer->getSubViewAtIndex(i)->getFrame();
+        CCRect r = m_pContainer->getSubViewAtIndex((int)i)->getFrame();
         r.size = rect.size;
-        m_pContainer->getSubViewAtIndex(i)->setFrame(r);
+        m_pContainer->getSubViewAtIndex((int)i)->setFrame(r);
         CAViewController* viewController = m_pViewControllers.at(i);
         viewController->getSuperViewRect(m_pContainer->getBounds());
     }

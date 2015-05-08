@@ -639,8 +639,6 @@ static EAGLView *view = 0;
 //    
 //    [self textInRange:textRange];
 
-    NSLog(@"===== %@",markedText);
-//    NSLog(@"markedTextRange :  %@   length : %lu    location : %lu   StrLength  :%lu",markedText,(unsigned long)selectedRange.length,(unsigned long)selectedRange.location,(unsigned long)[markedText length]);
     CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchWillInsertText(pszText, (int)strlen(pszText));
     markedText_ = markedText;
     [markedText_ retain];

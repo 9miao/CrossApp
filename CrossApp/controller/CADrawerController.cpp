@@ -7,7 +7,7 @@
 //
 
 #include "CADrawerController.h"
-#include "basics/CAScheduler.h"
+#include "animation/CAAnimation.h"
 #include "basics/CAApplication.h"
 #include "dispatcher/CATouchDispatcher.h"
 

@@ -19,7 +19,7 @@ CATouchView::CATouchView()
 
 bool CATouchView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::schedule(schedule_selector(CATouchView::ccTouchTimer), this, 0, 0, 1.5f);
+	CAScheduler::schedule(schedule_selector(CATouchView::ccTouchTimer), this, 0, 0, 1.0f);
 
 	m_pCurTouch = pTouch;
 	m_pCurEvent = pEvent;
@@ -241,16 +241,16 @@ void CATextSelectView::showTextSelView(const CCRect& rect, CAView* pControlView,
 	setColor(CAColor_clear);
 	setTextTag("CATextSelectView");
 
-	CCRect newRect = rect;
+	CADipRect newRect = rect;
 	if (showLeft)
 	{
-		m_pCursorMarkL->setFrame(CCRect(newRect.origin.x - 20, newRect.origin.y + newRect.size.height, 20, 32));
+		m_pCursorMarkL->setFrame(CADipRect(newRect.origin.x - 40, newRect.origin.y + newRect.size.height, 40, 64));
 		m_pCursorMarkL->setVisible(true);
 	}
 
 	if (showRight)
 	{
-		m_pCursorMarkR->setFrame(CCRect(newRect.origin.x + newRect.size.width, newRect.origin.y + newRect.size.height, 20, 32));
+		m_pCursorMarkR->setFrame(CADipRect(newRect.origin.x + newRect.size.width, newRect.origin.y + newRect.size.height, 40, 64));
 		m_pCursorMarkR->setVisible(true);
 	}
 

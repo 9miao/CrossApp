@@ -858,8 +858,7 @@ void CATextField::setContentSize(const CCSize& var)
 	if (m_iHoriMargins==0)
 	{
 		m_iHoriMargins = BORDER_WIDTH(width);
-	}
-	if (m_iVertMargins==0)
+	} 	if (m_iVertMargins==0)
 	{
 		m_iVertMargins = (m_obContentSize.height - m_iFontHeight) / 2;
 	}
