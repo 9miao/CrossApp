@@ -28,12 +28,12 @@ void CAAutoreleasePool::removeObject(CAObject* pObject)
 {
     for (unsigned int i = 0; i < pObject->m_uAutoReleaseCount; ++i)
     {
-        std::vector<CAObject*>::reverse_iterator itr = std::find(m_pManagedObjectArray->rbegin(),
-                                                                  m_pManagedObjectArray->rend(),
-                                                                  pObject);
-        if (itr != m_pManagedObjectArray->rend())
+        std::vector<CAObject*>::iterator itr = std::find(m_pManagedObjectArray->begin(),
+                                                         m_pManagedObjectArray->end(),
+                                                         pObject);
+        if (itr != m_pManagedObjectArray->end())
         {
-            m_pManagedObjectArray->erase(itr.base());
+            m_pManagedObjectArray->erase(itr);
         }
     }
 }

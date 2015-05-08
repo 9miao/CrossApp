@@ -1353,7 +1353,7 @@ void CATabBarController::viewDidLoad()
     }
     else
     {
-        m_pTabBar->setSelectedIndicatorColor(m_sTabBarSelectedBackGroundColor);
+        m_pTabBar->setSelectedIndicatorColor(m_sTabBarSelectedIndicatorColor);
     }
     
     
