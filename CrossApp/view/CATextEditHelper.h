@@ -36,12 +36,10 @@ private:
 	CAEvent *m_pCurEvent;
 };
 
-typedef void (CAObject::*SEL_CATextTooBarBtnEvent)();
-#define CATextToolBarView_selector(_SELECTOR) (SEL_CATextTooBarBtnEvent)(&_SELECTOR)
 
 typedef struct CallbackTarget
 {
-	CallbackTarget(CAObject* t, SEL_CATextTooBarBtnEvent s, const std::string& szBtnText)
+	CallbackTarget(CAObject* t, SEL_CallFunc s, const std::string& szBtnText)
 	: target(t)
 	, selector(s)
 	, cszButtonText(szBtnText)
@@ -49,7 +47,7 @@ typedef struct CallbackTarget
 
 	}
 	CAObject* target;
-	SEL_CATextTooBarBtnEvent selector;
+	SEL_CallFunc selector;
 	std::string cszButtonText;
 
 } CallbackTarget;
@@ -66,8 +64,9 @@ public:
 	virtual ~CATextToolBarView();
 
 	static CATextToolBarView *create();
+	static bool IsTextToolBarShow();
 
-	void addButton(const std::string& strBtnText, CAObject* target, SEL_CATextTooBarBtnEvent selector);
+	void addButton(const std::string& strBtnText, CAObject* target, SEL_CallFunc selector);
 	void show();
 
 protected:
@@ -81,6 +80,40 @@ private:
 
 	CAClippingView *m_pBackView;
 };
+
+
+class CATextSelectView : public CAView
+{
+public:
+	CATextSelectView();
+	virtual ~CATextSelectView();
+
+	static CATextSelectView *create();
+	static void hideTextSelectView();
+
+	void showTextSelView(const CCRect& rect, CAView* pControlView, bool showLeft = true, bool showRight = true);
+	
+
+protected:
+	virtual bool init();
+	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+	
+	void hideTextSelView();
+	void ccCopyToClipboard();
+	void ccCutToClipboard();
+	void ccPasteFromClipboard();
+	
+private:
+
+	CAImageView* m_pCursorMarkL;
+	CAImageView* m_pCursorMarkR;
+	
+	CAView* m_pTextViewMask;
+	CAView* m_pControlView;
+	int m_iSelViewTouchPos;
+};
+
 
 
 NS_CC_END

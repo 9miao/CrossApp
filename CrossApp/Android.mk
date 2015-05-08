@@ -52,6 +52,12 @@ dispatcher/CATouch.cpp \
 dispatcher/CATouchDispatcher.cpp \
 images/CAImage.cpp \
 images/CAImageCache.cpp \
+images/gif_lib/dgif_lib.c \
+images/gif_lib/gif_err.c \
+images/gif_lib/gif_font.c \
+images/gif_lib/gif_hash.c \
+images/gif_lib/gifalloc.c \
+images/gif_lib/quantize.c \
 shaders/CATransformation.cpp \
 shaders/CAGLProgram.cpp \
 shaders/CAShaderCache.cpp \

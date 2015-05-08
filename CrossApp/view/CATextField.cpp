@@ -331,11 +331,16 @@ _CalcuAgain:
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	return true;
+	return CATouchView::ccTouchBegan(pTouch, pEvent);
 }
 
 void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
+	CATouchView::ccTouchEnded(pTouch, pEvent);
+
+	if (CATextToolBarView::IsTextToolBarShow())
+		return;
+
     CCPoint point = this->convertTouchToNodeSpace(pTouch);
     
     if (this->getBounds().containsPoint(point))
@@ -375,6 +380,25 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 	execCurSelCharRange();
+}
+
+void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
+{
+	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+		return;
+
+	CATextToolBarView *pToolBar = CATextToolBarView::create();
+	if (m_sText.empty())
+	{
+		pToolBar->addButton(UTF8("\u7c98\u8d34"), this, callfunc_selector(CATextField::ccPasteFromClipboard));
+	}
+	else
+	{
+		pToolBar->addButton(UTF8("\u7c98\u8d34"), this, callfunc_selector(CATextField::ccPasteFromClipboard));
+		pToolBar->addButton(UTF8("\u5168\u9009"), this, callfunc_selector(CATextField::ccSelectAll));
+		pToolBar->addButton(UTF8("\u9009\u62e9"), this, callfunc_selector(CATextField::ccStartSelect));
+	}
+	pToolBar->show();
 }
 
 bool CATextField::canAttachWithIME()
@@ -613,16 +637,12 @@ void CATextField::selectAll()
 	m_curSelCharRange.first = 0;
 	m_curSelCharRange.second = m_iCurPos = (int)m_sText.length();
 
-	/*CATextSelectView* pSelCharsView = CATextSelectView::create();
+	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool l, r;
-	CCRect cc = getZZCRect(l, r);
+	CCRect cc = getZZCRect(&l, &r);
 	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), this, l, r);
 	this->hideCursorMark();
-	CATextArrowView::hideTextArrowView();
-
-	CATextToolBar* pTextToolBar = CATextToolBar::createWithText(UTF8("¬∫√ô¬´‚Äì"), UTF8("√∏Œ©¬±¬•"), UTF8("‚Äô‚â•√ÉÀò"), NULL);
-	pTextToolBar->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
-	pTextToolBar->showTextEditView(cc.origin, this);*/
+//	CATextArrowView::hideTextArrowView();
 }
 
 void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
@@ -654,20 +674,14 @@ void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 		adjustCursorMoveForward();
 	}
 
-	/*CATextSelectView* pSelCharsView = CATextSelectView::create();
+	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool ll, rr;
-	CCRect cc = convertRectToWorldSpace(getZZCRect(ll, rr));
+	CCRect cc = convertRectToWorldSpace(getZZCRect(&ll, &rr));
 	pSelCharsView->showTextSelView(cc, this, ll, rr);
 	this->hideCursorMark();
-	CATextArrowView::hideTextArrowView();*/
+	//CATextArrowView::hideTextArrowView();
 }
 
-void CATextField::moveSelectCharsCancel(const CCPoint& pt)
-{
-	/*CATextToolBar* pTextEditView = CATextToolBar::createWithText(UTF8("¬∫√ô¬´‚Äì"), UTF8("√∏Œ©¬±¬•"), UTF8("‚Äô‚â•√ÉÀò"), NULL);
-	pTextEditView->setTarget(this, CATextToolBar_selector(CATextField::CATextEditBtnEvent2));
-	pTextEditView->showTextEditView(pt, this);*/
-}
 
 void CATextField::moveArrowBtn(const CCPoint& pt)
 {
@@ -760,7 +774,7 @@ void CATextField::pasteFromClipboard()
 
 bool CATextField::execCurSelCharRange()
 {
-	//	CATextSelectView::hideTextSelectView();
+	CATextSelectView::hideTextSelectView();
 	//	CATextToolBar::hideTextToolBar();
 	m_pTextViewMark->setVisible(false);
 
@@ -775,6 +789,35 @@ bool CATextField::execCurSelCharRange()
 //    this->showCursorMark();
 	adjustCursorMoveBackward();
 	return true;
+}
+
+void CATextField::ccStartSelect()
+{
+	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+		return;
+
+	if (m_sText.empty())
+		return;
+
+	int index = getStringCharCount(m_sText.substr(0, m_iCurPos));
+	if (index == 0)
+	{
+		m_curSelCharRange.first = m_iCurPos;
+		m_curSelCharRange.second = m_iCurPos + m_vTextFiledChars.front().charSize;
+	}
+	else
+	{
+		m_curSelCharRange.first = m_iCurPos - m_vTextFiledChars[index - 1].charSize;
+		m_curSelCharRange.second = m_iCurPos;
+	}
+
+	CATextSelectView* pSelCharsView = CATextSelectView::create();
+	bool l, r;
+	CCRect cc = getZZCRect(&l, &r);
+	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), this, l, r);
+	m_pCursorMark->setVisible(false);
+
+//	CATextArrowView::hideTextArrowView();
 }
 
 const char* CATextField::getContentText()
