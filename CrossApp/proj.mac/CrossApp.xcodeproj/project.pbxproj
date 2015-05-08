@@ -293,6 +293,8 @@
 		B0A11DAB1AE8C5C500933BF6 /* gif_lib_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A11DA21AE8C5C500933BF6 /* gif_lib_private.h */; };
 		B0A11DAC1AE8C5C500933BF6 /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DA31AE8C5C500933BF6 /* gifalloc.c */; };
 		B0A11DAD1AE8C5C500933BF6 /* quantize.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DA41AE8C5C500933BF6 /* quantize.c */; };
+		B0A370FD1AFC53C00034378F /* CATextEditHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A370FB1AFC53C00034378F /* CATextEditHelper.cpp */; };
+		B0A370FE1AFC53C00034378F /* CATextEditHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A370FC1AFC53C00034378F /* CATextEditHelper.h */; };
 		B0A7150D1A43F56600A85FB9 /* CAWebView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A7150B1A43F56600A85FB9 /* CAWebView.cpp */; };
 		B0A7150E1A43F56600A85FB9 /* CAWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A7150C1A43F56600A85FB9 /* CAWebView.h */; };
 		B0A7157E1A43F6DE00A85FB9 /* CAWebViewImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */; };
@@ -603,6 +605,8 @@
 		B0A11DA21AE8C5C500933BF6 /* gif_lib_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_lib_private.h; sourceTree = "<group>"; };
 		B0A11DA31AE8C5C500933BF6 /* gifalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gifalloc.c; sourceTree = "<group>"; };
 		B0A11DA41AE8C5C500933BF6 /* quantize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quantize.c; sourceTree = "<group>"; };
+		B0A370FB1AFC53C00034378F /* CATextEditHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextEditHelper.cpp; sourceTree = "<group>"; };
+		B0A370FC1AFC53C00034378F /* CATextEditHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextEditHelper.h; sourceTree = "<group>"; };
 		B0A7150B1A43F56600A85FB9 /* CAWebView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebView.cpp; sourceTree = "<group>"; };
 		B0A7150C1A43F56600A85FB9 /* CAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebView.h; sourceTree = "<group>"; };
 		B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebViewImpl.cpp; sourceTree = "<group>"; };
@@ -1089,6 +1093,8 @@
 		04EAB03F1956D75500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B0A370FB1AFC53C00034378F /* CATextEditHelper.cpp */,
+				B0A370FC1AFC53C00034378F /* CATextEditHelper.h */,
 				B0C3BD3C1ADE6811009BE71A /* CATextField.cpp */,
 				B0C3BD3D1ADE6811009BE71A /* CATextField.h */,
 				B07608411ACCDE6C0005F878 /* CADrawingPrimitives.cpp */,
@@ -1318,6 +1324,7 @@
 				04EAB1581956D75600198A8E /* EAGLView.h in Headers */,
 				04EAB15D1956D75600198A8E /* platform.h in Headers */,
 				04EABA5C1956D75A00198A8E /* CAGLProgram.h in Headers */,
+				B0A370FE1AFC53C00034378F /* CATextEditHelper.h in Headers */,
 				B0A11DAA1AE8C5C500933BF6 /* gif_lib.h in Headers */,
 				04EABA5E1956D75A00198A8E /* ccGLStateCache.h in Headers */,
 				04EABA5F1956D75A00198A8E /* ccShader_Position_uColor_frag.h in Headers */,
@@ -1533,6 +1540,7 @@
 				B02CE48319AD869600B905FB /* CAPageControl.cpp in Sources */,
 				04EABA751956D75A00198A8E /* base64.cpp in Sources */,
 				04EABA771956D75A00198A8E /* CANotificationCenter.cpp in Sources */,
+				B0A370FD1AFC53C00034378F /* CATextEditHelper.cpp in Sources */,
 				04EABA791956D75A00198A8E /* CCPointExtension.cpp in Sources */,
 				04EABA7B1956D75A00198A8E /* CCProfiling.cpp in Sources */,
 				04EABA7D1956D75A00198A8E /* ccUTF8.cpp in Sources */,

@@ -15,6 +15,7 @@
 #include "view/CAScale9ImageView.h"
 #include "shaders/CAShaderCache.h"
 #include "platform/CAClipboard.h"
+#include "CATextEditHelper.h"
 
 NS_CC_BEGIN
 

@@ -450,6 +450,8 @@
 		B0A11DBF1AE8E0B300933BF6 /* gif_lib_private.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A11DB61AE8E0B300933BF6 /* gif_lib_private.h */; };
 		B0A11DC01AE8E0B300933BF6 /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DB71AE8E0B300933BF6 /* gifalloc.c */; };
 		B0A11DC11AE8E0B300933BF6 /* quantize.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DB81AE8E0B300933BF6 /* quantize.c */; };
+		B0A371021AFC55370034378F /* CATextEditHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A371001AFC55370034378F /* CATextEditHelper.cpp */; };
+		B0A371031AFC55370034378F /* CATextEditHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A371011AFC55370034378F /* CATextEditHelper.h */; };
 		B0AF8DC01AFA257800A1A4E2 /* CAIOSTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B0AF8DBE1AFA257800A1A4E2 /* CAIOSTextField.h */; };
 		B0AF8DC11AFA257800A1A4E2 /* CAIOSTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AF8DBF1AFA257800A1A4E2 /* CAIOSTextField.m */; };
 		B0B0A2E51AF0DCA900BAC0B0 /* CAAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B0A2E31AF0DCA900BAC0B0 /* CAAnimation.cpp */; };
@@ -904,6 +906,8 @@
 		B0A11DB61AE8E0B300933BF6 /* gif_lib_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif_lib_private.h; sourceTree = "<group>"; };
 		B0A11DB71AE8E0B300933BF6 /* gifalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gifalloc.c; sourceTree = "<group>"; };
 		B0A11DB81AE8E0B300933BF6 /* quantize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quantize.c; sourceTree = "<group>"; };
+		B0A371001AFC55370034378F /* CATextEditHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextEditHelper.cpp; sourceTree = "<group>"; };
+		B0A371011AFC55370034378F /* CATextEditHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextEditHelper.h; sourceTree = "<group>"; };
 		B0AF8DBE1AFA257800A1A4E2 /* CAIOSTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIOSTextField.h; sourceTree = "<group>"; };
 		B0AF8DBF1AFA257800A1A4E2 /* CAIOSTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAIOSTextField.m; sourceTree = "<group>"; };
 		B0B0A2E31AF0DCA900BAC0B0 /* CAAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimation.cpp; sourceTree = "<group>"; };
@@ -1045,6 +1049,8 @@
 		04EA9FC41956CE2500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B0A371001AFC55370034378F /* CATextEditHelper.cpp */,
+				B0A371011AFC55370034378F /* CATextEditHelper.h */,
 				B076084A1ACCDFA70005F878 /* CADrawingPrimitives.cpp */,
 				B076084B1ACCDFA70005F878 /* CADrawingPrimitives.h */,
 				B076084C1ACCDFA70005F878 /* CADrawView.cpp */,
@@ -1824,6 +1830,7 @@
 				04EABB301956DAEA00198A8E /* CCActionTween.cpp in Headers */,
 				04EABB321956DAEA00198A8E /* CCArray.cpp in Headers */,
 				B0596B0B197629BE00B1E8CB /* pshints.h in Headers */,
+				B0A371031AFC55370034378F /* CATextEditHelper.h in Headers */,
 				04EABB341956DAEA00198A8E /* CCDictionary.cpp in Headers */,
 				04EABB351956DAEA00198A8E /* CCNS.cpp in Headers */,
 				04EABB361956DAEA00198A8E /* CCSet.cpp in Headers */,
@@ -2198,6 +2205,7 @@
 				1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */,
 				372E63F01A0B1E0E00582042 /* CAVideoPlayerRender.cpp in Sources */,
 				B02CE49119AD8D0D00B905FB /* CAListView.cpp in Sources */,
+				B0A371021AFC55370034378F /* CATextEditHelper.cpp in Sources */,
 				B076084E1ACCDFA70005F878 /* CADrawingPrimitives.cpp in Sources */,
 				B04BCA841985DE5500CE0BC1 /* CAIndexPath.cpp in Sources */,
 				469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */,

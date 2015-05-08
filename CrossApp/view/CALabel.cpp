@@ -37,7 +37,6 @@ CALabel::CALabel()
 ,m_bEnableCopy(false)
 {
     m_obContentSize = CCSizeZero;
-
 }
 
 CALabel::~CALabel()
@@ -237,7 +236,7 @@ void CALabel::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 	if (m_bEnableCopy)
 	{
 		CATextToolBarView *pToolBar = CATextToolBarView::create();
-		pToolBar->addButton(UTF8("¸´ÖÆ"), this, CATextToolBarView_selector(CALabel::copySelectText));
+		pToolBar->addButton("\u590d\u5236", this, CATextToolBarView_selector(CALabel::copySelectText));
 		pToolBar->show();
 	}
 }

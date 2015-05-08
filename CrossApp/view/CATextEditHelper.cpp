@@ -151,7 +151,6 @@ void CATextToolBarView::addGrayLine(int y)
 void CATextToolBarView::alertViewCallback(CAControl* btn, CCPoint point)
 {
 	int btnIndex = btn->getTag();
-	CCAssert(btnIndex >= 0 && btnIndex < m_CallbackTargets.size());
 	((CAObject*)m_CallbackTargets[btnIndex].target->*m_CallbackTargets[btnIndex].selector)();
 	removeFromSuperview();
 }
