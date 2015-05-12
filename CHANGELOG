@@ -29,6 +29,22 @@
 
 #####13.其他一些细节的修改
 
+
+#### CrossApp 1. 1. 4 Update:  
+#####1. Added 'deleted an animation module' functionality in animation system
+#####2. Optimized ScrollView indicator
+#####3. Optimized CAScheduler
+#####4. Optimized CASwitch default effects
+#####5. Added Gif support for CAImage
+#####6. Added CALabel functionality that user can copy contents into system clipboard
+#####7. Added CATextField functionality that user can select and copy contents into system clipboard, and paste clipboard contents
+#####8. Fixed bug that's caused by CAImage modifications in CAWebView
+#####9. Improved the UE of input method switch between CATextView and CATextField
+#####10. Fixed 'screenshot and save image' bug
+#####11. New project supports resolution of iPhone6 or higher version devices
+#####12. Improved the appearance of iOS platform icon
+#####13. Other details tweaking
+
 **********************************************************************************
 
 #### CrossApp 1.1.3 更新内容：  
