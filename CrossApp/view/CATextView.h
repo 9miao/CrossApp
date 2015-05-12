@@ -127,12 +127,13 @@ protected:
 
 	bool execCurSelCharRange();
 
+	void ccStartSelect();
+	void ccSelectAll() { selectAll(); }
+	void ccPasteFromClipboard() { pasteFromClipboard(); }
+
 	std::pair<int, int> getLineAndPos(int iPos);
 
 	std::vector<CCRect> getZZCRect();
-
-	void showTextViewMark(const std::vector<CCRect>& vt);
-	void hideTextViewMark();
 
     inline virtual float maxSpeed(float dt);
     
@@ -140,20 +141,22 @@ protected:
     
     inline virtual float decelerationRatio(float dt);
     
-public:
+protected:
 
 	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
+	void ccTouchTimer(float interval);
 
 	virtual bool attachWithIME();
-
 	virtual bool detachWithIME();
     
 	virtual void selectAll();
 	virtual void cursorMoveBackward();
 	virtual void cursorMoveForward();
 	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt);
-	virtual void moveSelectCharsCancel(const CCPoint& pt);
 	virtual void moveArrowBtn(const CCPoint& pt);
 
 	virtual void copyToClipboard();
@@ -161,7 +164,6 @@ public:
 	virtual void pasteFromClipboard();
     
     virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
-    
     virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
 
 private:
@@ -170,7 +172,6 @@ private:
 	CAScale9ImageView* m_pBackgroundView;
 
 	CAImageView* m_pImageView;
-	std::vector<CAView*> m_pTextViewMarkVect;
 
 	int m_iCurPos;
 	int m_iLineHeight;
@@ -180,6 +181,12 @@ private:
 	bool m_bUpdateImage;
     eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;
+
+	CATouch *m_pCurTouch;
+	CAEvent *m_pCurEvent;
+
+	CATextSelViewEx* m_pTextSelView;
+	CATextArrowView* m_pTextArrView;
 };
 
 
