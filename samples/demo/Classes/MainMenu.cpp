@@ -59,6 +59,7 @@ CAWindow* MainMenu::createWindow()
 	CADrawerController* drawerController = new CADrawerController();
 	drawerController->initWithController(viewController1, navigationController, winWidth*0.7);
 	drawerController->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("background/1.jpg")));
+    drawerController->setEffect3D(true);
 	drawerController->autorelease();
 
 	p_Window->setRootViewController(drawerController);

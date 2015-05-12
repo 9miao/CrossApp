@@ -155,10 +155,6 @@ void CATouchController::touchBegan()
     }
     else
     {
-        if (view)
-        {
-            view->resignFirstResponder();
-        }
         vector = this->getEventListener(m_pTouch, CAApplication::getApplication()->getRootWindow());
     }
     

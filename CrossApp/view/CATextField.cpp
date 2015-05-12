@@ -72,6 +72,8 @@ bool CATextField::resignFirstResponder()
     if (result)
     {
 		detachWithIME();
+        hideCursorMark();
+        this->updateImage();
     }
     return result;
 }
@@ -82,6 +84,22 @@ bool CATextField::becomeFirstResponder()
     if (result) 
 	{
 		attachWithIME();
+        this->showCursorMark();
+        if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+        {
+            if (m_sText.empty())
+            {
+                m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+            }
+        }
+        calculateSelChars(CCPoint(this->getCursorX() + m_iHoriMargins, m_obContentSize.height / 2), m_iString_l_length, m_iString_r_length, m_iCurPos);
+        
+        m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+
+#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
+        CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+        pGlView->setIMECursorPos(getCursorPos(), getContentText());
+#endif
     }
     return result;
 }
@@ -345,36 +363,20 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (this->getBounds().containsPoint(point))
     {
-		becomeFirstResponder();
-		if (isFirstResponder())
+        if (!isFirstResponder() && canAttachWithIME())
         {
-            this->showCursorMark();
-            if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
-            {
-                if (m_sText.empty())
-                {
-                    m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
-                }
-                return;
-            }
-			calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
-           
-			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+            becomeFirstResponder();
+            
+            calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
+            
+            m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
         }
-
-#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
-        CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
-		pGlView->setIMECursorPos(getCursorPos(), getContentText());
-#endif
-
     }
     else
     {
-        hideCursorMark();
-
-        if (resignFirstResponder())
+        if (canDetachWithIME())
         {
-			this->updateImage();
+            resignFirstResponder();
         }
     }
 
@@ -1036,15 +1038,15 @@ void CATextField::getKeyBoardHeight(int height)
 {
     CAView::becomeFirstResponder();
 	
-    if( m_pDelegate && m_pDelegate->getKeyBoardHeight(height) )
+    if( m_pDelegate)
     {
-        return;
+        m_pDelegate->getKeyBoardHeight(height);
     }
 }
 
 void CATextField::getKeyBoradReturnCallBack()
 {
-    if( m_pDelegate && m_pDelegate->keyBoardCallBack(this) )
+    if( m_pDelegate && !m_pDelegate->keyBoardCallBack(this) )
     {
         return;
     }

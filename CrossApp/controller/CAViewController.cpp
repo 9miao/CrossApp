@@ -217,6 +217,7 @@ void setDispatchEvents(CAViewController* controller, bool var)
     if (var == false)
     {
         CAView* view = CAView::createWithFrame(controller->getView()->getBounds(), CAColor_clear);
+        view->setHaveNextResponder(false);
         view->setTextTag("DispatchEvents");
         controller->getView()->insertSubview(view, 0xffff);
     }
@@ -268,7 +269,7 @@ void CANavigationController::setNavigationBarBackGroundImage(CrossApp::CAImage *
     
     if (!m_pNavigationBars.empty())
     {
-        CAVector<CANavigationBar*>::iterator itr;
+        CADeque<CANavigationBar*>::iterator itr;
         for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
         {
             if (m_pNavigationBarBackGroundImage)
@@ -296,7 +297,7 @@ void CANavigationController::setNavigationBarBackGroundColor(const CAColor4B &va
     
     if (!m_pNavigationBars.empty())
     {
-        CAVector<CANavigationBar*>::iterator itr;
+        CADeque<CANavigationBar*>::iterator itr;
         for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
         {
             if (m_pNavigationBarBackGroundImage)
@@ -323,7 +324,7 @@ void CANavigationController::setNavigationBarTitleColor(const CAColor4B &var)
     
     if (!m_pNavigationBars.empty())
     {
-        CAVector<CANavigationBar*>::iterator itr;
+        CADeque<CANavigationBar*>::iterator itr;
         for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
         {
             (*itr)->setTitleColor(m_sNavigationBarTitleColor);
@@ -342,7 +343,7 @@ void CANavigationController::setNavigationBarButtonColor(const CAColor4B &var)
     
     if (!m_pNavigationBars.empty())
     {
-        CAVector<CANavigationBar*>::iterator itr;
+        CADeque<CANavigationBar*>::iterator itr;
         for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
         {
             (*itr)->setButtonColor(m_sNavigationBarButtonColor);
@@ -407,14 +408,14 @@ void CANavigationController::viewDidLoad()
 
 void CANavigationController::viewDidUnload()
 {
-    for (std::vector<CAViewController*>::iterator itr=m_pViewControllers.begin();
+    for (CADeque<CAViewController*>::iterator itr=m_pViewControllers.begin();
          itr!=m_pViewControllers.end();
          itr++)
     {
         (*itr)->removeViewFromSuperview();
     }
     
-    for (std::vector<CAView*>::iterator itr=m_pContainers.begin();
+    for (CADeque<CAView*>::iterator itr=m_pContainers.begin();
          itr!=m_pContainers.end();
          itr++)
     {
@@ -571,7 +572,6 @@ void CANavigationController::replaceViewControllerFinish()
     newContainer->setFrameOrigin(CCPointZero);
     
     size_t index = m_pViewControllers.size() - 2;
-    
     CAViewController* lastViewController = m_pViewControllers.at(index);
     lastViewController->viewDidDisappear();
     lastViewController->m_pNavigationController = NULL;
@@ -797,6 +797,31 @@ void CANavigationController::homingViewControllerFinish()
     setDispatchEvents(this, true);
 }
 
+CAViewController* CANavigationController::popFirstViewController()
+{
+    if (m_pViewControllers.size() <= 1)
+    {
+        return NULL;
+    }
+    
+    CAViewController* backViewController = m_pViewControllers.front();
+    backViewController->viewDidDisappear();
+    backViewController->m_pNavigationController = NULL;
+    backViewController->removeViewFromSuperview();
+    backViewController->retain()->autorelease();
+    m_pViewControllers.popFront();
+    
+    m_pContainers.front()->removeFromSuperview();
+    m_pContainers.popFront();
+    
+    m_pSecondContainers.popFront();
+    
+    m_pNavigationBars.popFront();
+    
+    m_bSlidingMinX = m_pViewControllers.size() <= 1;
+    setDispatchEvents(this, true);
+}
+
 void CANavigationController::navigationPopViewController(CANavigationBar* navigationBar, bool animated)
 {
     this->popViewControllerAnimated(animated);
@@ -938,7 +963,7 @@ void CANavigationController::update(float dt)
 
 bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (pTouch->getLocation().x > _px(64))
+    if (pTouch->getLocation().x > _px(96))
     {
         return false;
     }
