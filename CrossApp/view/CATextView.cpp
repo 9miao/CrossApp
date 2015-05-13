@@ -461,6 +461,9 @@ void CATextView::deleteBackward()
 
 	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, m_szText.c_str(), (int)m_szText.length()));
 
+	if (execCurSelCharRange())
+		return;
+
 	int nDeleteLen = 1;
 	while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)))
 	{
@@ -565,6 +568,7 @@ void CATextView::calculateSelChars(const CCPoint& point, int& l, int& r, int& p)
 
 bool CATextView::execCurSelCharRange()
 {
+	CATextToolBarView::hideTextToolBar();
 	m_pTextSelView->hideTextSelView();
 
 	if (m_curSelCharRange.first == m_curSelCharRange.second)
@@ -704,7 +708,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
 	CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
 
-	if (CATextToolBarView::IsTextToolBarShow() || m_pTextSelView->isTextViewShow())
+	if (CATextToolBarView::isTextToolBarShow() || m_pTextSelView->isTextViewShow())
 		return;
 	
 	CCPoint point = this->convertTouchToNodeSpace(pTouch);

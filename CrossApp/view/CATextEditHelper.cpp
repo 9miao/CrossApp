@@ -146,7 +146,7 @@ CATextToolBarView *CATextToolBarView::create()
 	return pAlert;
 }
 
-bool CATextToolBarView::IsTextToolBarShow()
+bool CATextToolBarView::isTextToolBarShow()
 {
 	bool isShow = false;
 	if (CAWindow *rootWindow = CAApplication::getApplication()->getRootWindow())
@@ -155,6 +155,22 @@ bool CATextToolBarView::IsTextToolBarShow()
 	}
 	return isShow;
 }
+
+
+void CATextToolBarView::hideTextToolBar()
+{
+	CATextToolBarView* pToolBarView = NULL;
+	if (CAWindow *rootWindow = CAApplication::getApplication()->getRootWindow())
+	{
+		pToolBarView = (CATextToolBarView*)rootWindow->getSubviewByTextTag("CATextToolBarView");
+	}
+	if (pToolBarView)
+	{
+		pToolBarView->resignFirstResponder();
+		pToolBarView->removeFromSuperview();
+	}
+}
+
 
 void CATextToolBarView::addGrayLine(int y) 
 {
@@ -170,7 +186,9 @@ void CATextToolBarView::alertViewCallback(CAControl* btn, CCPoint point)
 	int btnIndex = btn->getTag();
 	if (btnIndex>=0 && btnIndex<m_CallbackTargets.size())
 	{
+		this->retain();
 		((CAObject*)m_CallbackTargets[btnIndex].target->*m_CallbackTargets[btnIndex].selector)();
+		this->autorelease();
 	}
 	m_CallbackTargets.clear();
 	removeFromSuperview();

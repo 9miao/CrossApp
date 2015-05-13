@@ -338,7 +338,7 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
 	CATouchView::ccTouchEnded(pTouch, pEvent);
 
-	if (CATextToolBarView::IsTextToolBarShow())
+	if (CATextToolBarView::isTextToolBarShow())
 		return;
 
     CCPoint point = this->convertTouchToNodeSpace(pTouch);
@@ -385,6 +385,10 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 {
 	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+		return;
+
+	std::string cszText = CAClipboard::getText();
+	if (cszText.empty() && m_sText.empty())
 		return;
 
 	CATextToolBarView *pToolBar = CATextToolBarView::create();
@@ -512,6 +516,9 @@ void CATextField::deleteBackward()
     }
 
 	if (m_iCurPos==0 || m_sText.empty())
+		return;
+
+	if (execCurSelCharRange())
 		return;
 
 	int nDeleteLen = 1;
@@ -775,7 +782,7 @@ void CATextField::pasteFromClipboard()
 bool CATextField::execCurSelCharRange()
 {
 	CATextSelectView::hideTextSelectView();
-	//	CATextToolBar::hideTextToolBar();
+	CATextToolBarView::hideTextToolBar();
 	m_pTextViewMark->setVisible(false);
 
 	if (m_curSelCharRange.first == m_curSelCharRange.second)
@@ -786,7 +793,7 @@ bool CATextField::execCurSelCharRange()
 	setText(cszText);
 
 	m_iCurPos = iOldCurPos;
-//    this->showCursorMark();
+	showCursorMark();
 	adjustCursorMoveBackward();
 	return true;
 }
