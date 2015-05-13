@@ -74,6 +74,7 @@ protected:
 	bool init();
 	void addGrayLine(int y);
 	void alertViewCallback(CAControl* btn, CCPoint point);
+	bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
 
 private:
 	std::vector<CallbackTarget> m_CallbackTargets;

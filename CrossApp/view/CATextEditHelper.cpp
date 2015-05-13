@@ -194,6 +194,12 @@ void CATextToolBarView::alertViewCallback(CAControl* btn, CCPoint point)
 	removeFromSuperview();
 }
 
+bool CATextToolBarView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
+{
+	resignFirstResponder();
+	removeFromSuperview();
+	return true;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 CATextSelectView::CATextSelectView()
