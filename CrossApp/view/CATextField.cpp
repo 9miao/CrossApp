@@ -461,7 +461,8 @@ void CATextField::insertText(const char * text, int len)
     CC_RETURN_IF(len <= 0);
     CC_RETURN_IF(text == 0);
     
-    if (!strcmp(text, "\n")) {
+    if (!strcmp(text, "\n"))
+    {
         getKeyBoradReturnCallBack();
         return;
     }
