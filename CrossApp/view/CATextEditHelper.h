@@ -64,7 +64,8 @@ public:
 	virtual ~CATextToolBarView();
 
 	static CATextToolBarView *create();
-	static bool IsTextToolBarShow();
+	static bool isTextToolBarShow();
+	static void hideTextToolBar();
 
 	void addButton(const std::string& strBtnText, CAObject* target, SEL_CallFunc selector);
 	void show();

@@ -9,7 +9,11 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static map<std::string, FontBufferInfo> s_fontsNames;
+struct StrICmpLess
+{
+	bool operator()(const std::string& _Left, const std::string& _Right) const { return _stricmp(_Left.c_str(), _Right.c_str()) < 0; }
+};
+static map<std::string, FontBufferInfo, StrICmpLess> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
 static CATempTypeFont s_TempFont;
 
@@ -955,22 +959,7 @@ void CAFreeTypeFont::finiFreeTypeFont()
 
 unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *size, int& ttfIndex)
 {
-	std::string path;
-	std::string lowerCase(pFontName);
-	for (unsigned int i = 0; i < lowerCase.length(); ++i)
-	{
-		lowerCase[i] = tolower(lowerCase[i]);
-	}
-	
-	if (std::string::npos == lowerCase.find("fonts/"))
-	{
-		path = "fonts/";
-		path += lowerCase;
-	}
-	else
-	{
-		path = lowerCase;
-	}
+	std::string path = std::string("fonts/") + pFontName;
 
 	std::map<std::string, FontBufferInfo>::iterator ittFontNames = s_fontsNames.find(path.c_str());
 	if (ittFontNames != s_fontsNames.end())
@@ -983,7 +972,19 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 
 	ttfIndex = 0;
 
+	for (unsigned int i = 6; i < path.length(); ++i)
+	{
+		path[i] = tolower(path[i]);
+	}
 	unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
+	if (pBuffer == NULL)
+	{
+		for (unsigned int i = 6; i < path.length(); ++i)
+		{
+			path[i] = toupper(path[i]);
+		}
+		pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
+	}
 	if (pBuffer == NULL)
 	{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
