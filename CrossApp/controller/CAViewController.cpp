@@ -486,12 +486,14 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
 
 void CANavigationController::layoutNewContainer()
 {
+    CAViewController* viewController = m_pViewControllers.back();
+    
     CCRect navigation_bar_rect = CCRectZero;
     navigation_bar_rect.size = m_tNavigationBarSize;
     
     CCRect container_rect = this->getView()->getBounds();
     
-    if (m_bNavigationBarHidden)
+    if (m_bNavigationBarHidden || viewController->getNavigationBarItem()->isNagigationBarHidden())
     {
         navigation_bar_rect.origin = this->getNavigationBarTakeBackPoint();
     }
@@ -515,7 +517,7 @@ void CANavigationController::layoutNewContainer()
     CAView* secondContainer = m_pSecondContainers.back();
     secondContainer->setFrame(container_rect);
     
-    CAViewController* viewController = m_pViewControllers.back();
+    
     viewController->addViewFromSuperview(secondContainer);
     viewController->viewDidAppear();
 }
@@ -654,18 +656,49 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
 
     float x = this->getView()->getBounds().size.width;
     
+    CAViewController* backViewController = m_pViewControllers.back();
+    CAView* backContainer = m_pContainers.back();
+    {
+        backContainer->setFrameOrigin(CCPointZero);
+    }
+    
     size_t index = m_pViewControllers.size() - 2;
     CAViewController* showViewController = m_pViewControllers.at(index);
     showViewController->viewDidAppear();
     
-    CAViewController* backViewController = m_pViewControllers.back();
-    
-    CAView* showContainer = m_pContainers.at(m_pContainers.size() - 2);
+    CAView* showContainer = m_pContainers.at(index);
     showContainer->setVisible(true);
     showContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
     
-    CAView* backContainer = m_pContainers.back();
-    backContainer->setFrameOrigin(CCPointZero);
+    {
+        CCRect rect = this->getView()->getBounds();
+        
+        m_fProgress = 1.0f;
+        CCPoint point = this->getNavigationBarNowPoint(showViewController);
+        
+        switch (m_eNavigationBarVerticalAlignment)
+        {
+            case CABarVerticalAlignmentTop:
+            {
+                rect.origin.y = point.y + m_tNavigationBarSize.height;
+                rect.size.height = rect.size.height - rect.origin.y;
+            }
+                break;
+            case CABarVerticalAlignmentBottom:
+            {
+                rect.size.height = point.y;
+            }
+                break;
+            default:
+                break;
+        }
+        m_pNavigationBars.at(index)->setFrameOrigin(point);
+        
+        CAView* secondContainer = m_pSecondContainers.at(index);
+        secondContainer->setFrame(rect);
+        
+        showViewController->getSuperViewRect(secondContainer->getBounds());
+    }
     
     if (animated)
     {
@@ -725,15 +758,46 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
     
     float x = this->getView()->getBounds().size.width;
     
-    CAViewController* showViewController = m_pViewControllers.front();
+    CAView* backContainer = m_pContainers.back();
+    backContainer->setFrameOrigin(CCPointZero);
+    
+    size_t index = 0;
+    CAViewController* showViewController = m_pViewControllers.at(index);
     showViewController->viewDidAppear();
-
-    CAView* showContainer = m_pContainers.front();
+    
+    CAView* showContainer = m_pContainers.at(index);
     showContainer->setVisible(true);
     showContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
     
-    CAView* backContainer = m_pContainers.back();
-    backContainer->setFrameOrigin(CCPointZero);
+    {
+        CCRect rect = this->getView()->getBounds();
+        
+        m_fProgress = 1.0f;
+        CCPoint point = this->getNavigationBarNowPoint(showViewController);
+        
+        switch (m_eNavigationBarVerticalAlignment)
+        {
+            case CABarVerticalAlignmentTop:
+            {
+                rect.origin.y = point.y + m_tNavigationBarSize.height;
+                rect.size.height = rect.size.height - rect.origin.y;
+            }
+                break;
+            case CABarVerticalAlignmentBottom:
+            {
+                rect.size.height = point.y;
+            }
+                break;
+            default:
+                break;
+        }
+        m_pNavigationBars.at(index)->setFrameOrigin(point);
+        
+        CAView* secondContainer = m_pSecondContainers.at(index);
+        secondContainer->setFrame(rect);
+        
+        showViewController->getSuperViewRect(secondContainer->getBounds());
+    }
     
     if (animated)
     {
@@ -804,11 +868,11 @@ CAViewController* CANavigationController::popFirstViewController()
         return NULL;
     }
     
-    CAViewController* backViewController = m_pViewControllers.front();
-    backViewController->viewDidDisappear();
-    backViewController->m_pNavigationController = NULL;
-    backViewController->removeViewFromSuperview();
-    backViewController->retain()->autorelease();
+    CAViewController* frontViewController = m_pViewControllers.front();
+    frontViewController->viewDidDisappear();
+    frontViewController->m_pNavigationController = NULL;
+    frontViewController->removeViewFromSuperview();
+    frontViewController->retain()->autorelease();
     m_pViewControllers.popFront();
     
     m_pContainers.front()->removeFromSuperview();
@@ -820,6 +884,8 @@ CAViewController* CANavigationController::popFirstViewController()
     
     m_bSlidingMinX = m_pViewControllers.size() <= 1;
     setDispatchEvents(this, true);
+    
+    return frontViewController;
 }
 
 void CANavigationController::navigationPopViewController(CANavigationBar* navigationBar, bool animated)
@@ -864,7 +930,7 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     else
     {
         m_fProgress = 1.0f;
-        CCPoint point = this->getNavigationBarNowPoint();
+        CCPoint point = this->getNavigationBarNowPoint(m_pViewControllers.back());
         m_pNavigationBars.back()->setFrameOrigin(point);
         if (this->getView()->getSuperview())
         {
@@ -905,18 +971,25 @@ CCPoint CANavigationController::getNavigationBarTakeBackPoint()
     return p;
 }
 
-CCPoint CANavigationController::getNavigationBarNowPoint()
+CCPoint CANavigationController::getNavigationBarNowPoint(CAViewController* viewController)
 {
     float offsetY = this->getNavigationBarTakeBackPoint().y - this->getNavigationBarOpenPoint().y;
     CCPoint p = CCPointZero;
     
-    if (m_bNavigationBarHidden)
+    if (viewController->getNavigationBarItem()->isNagigationBarHidden())
     {
-        p.y = this->getNavigationBarOpenPoint().y + offsetY * m_fProgress;
+        p.y = this->getNavigationBarOpenPoint().y + offsetY;
     }
     else
     {
-        p.y = this->getNavigationBarTakeBackPoint().y - offsetY * m_fProgress;
+        if (m_bNavigationBarHidden)
+        {
+            p.y = this->getNavigationBarOpenPoint().y + offsetY * m_fProgress;
+        }
+        else
+        {
+            p.y = this->getNavigationBarTakeBackPoint().y - offsetY * m_fProgress;
+        }
     }
     return p;
 }
@@ -933,9 +1006,11 @@ void CANavigationController::navigationBarHiddenAnimation(float delay, float now
 
 void CANavigationController::update(float dt)
 {
+    CAViewController* viewController = m_pViewControllers.back();
+    
     CCRect rect = this->getView()->getBounds();
     
-    CCPoint point = this->getNavigationBarNowPoint();
+    CCPoint point = this->getNavigationBarNowPoint(viewController);
 
     switch (m_eNavigationBarVerticalAlignment)
     {
@@ -957,7 +1032,7 @@ void CANavigationController::update(float dt)
     
     CAView* secondContainer = m_pSecondContainers.back();
     secondContainer->setFrame(rect);
-    CAViewController* viewController = m_pViewControllers.back();
+    
     viewController->getSuperViewRect(secondContainer->getBounds());
 }
 

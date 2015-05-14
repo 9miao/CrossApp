@@ -171,6 +171,16 @@ void CATextToolBarView::hideTextToolBar()
 	}
 }
 
+bool CATextToolBarView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
+{
+    return true;
+}
+
+void CATextToolBarView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
+{
+    resignFirstResponder();
+    this->removeFromSuperview();
+}
 
 void CATextToolBarView::addGrayLine(int y) 
 {

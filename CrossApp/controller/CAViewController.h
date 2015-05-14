@@ -227,7 +227,7 @@ protected:
     
     CCPoint getNavigationBarTakeBackPoint();
     
-    CCPoint getNavigationBarNowPoint();
+    CCPoint getNavigationBarNowPoint(CAViewController* viewController);
     
 protected:
 

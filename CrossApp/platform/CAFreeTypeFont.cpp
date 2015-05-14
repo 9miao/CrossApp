@@ -11,7 +11,7 @@ NS_CC_BEGIN
 
 struct StrICmpLess
 {
-	bool operator()(const std::string& _Left, const std::string& _Right) const { return _stricmp(_Left.c_str(), _Right.c_str()) < 0; }
+	bool operator()(const std::string& _Left, const std::string& _Right) const { return strcmp(_Left.c_str(), _Right.c_str()) < 0; }
 };
 static map<std::string, FontBufferInfo, StrICmpLess> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;

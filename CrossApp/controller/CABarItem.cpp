@@ -83,6 +83,7 @@ CANavigationBarItem::CANavigationBarItem()
 :m_pTitleViewImage(NULL)
 ,m_bShowGoBackButton(true)
 ,m_pTitleView(NULL)
+,m_bNagigationBarHidden(false)
 {
     m_vLeftButtonItems.pushBack(CAView::create());
 }

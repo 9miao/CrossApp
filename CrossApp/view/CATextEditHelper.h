@@ -66,7 +66,8 @@ public:
 	static CATextToolBarView *create();
 	static bool isTextToolBarShow();
 	static void hideTextToolBar();
-
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 	void addButton(const std::string& strBtnText, CAObject* target, SEL_CallFunc selector);
 	void show();
 
