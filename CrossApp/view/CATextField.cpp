@@ -486,7 +486,14 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
     CCAssert(str != NULL, "");
 	CCAssert(count > 0, "");
     
-    insertText(str, (int)strlen(str));
+    for (int i=0; i<before; i++)
+    {
+        deleteBackward();
+    }
+    CC_RETURN_IF(str == NULL || count <= 0);
+    
+    std::string s = str;
+    insertText(s.c_str(), s.length());
 }
 
 void CATextField::willInsertText(const char *text, int len)

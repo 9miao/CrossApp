@@ -236,6 +236,7 @@ CANavigationController::CANavigationController()
 ,m_sNavigationBarBackGroundColor(CAColor_white)
 ,m_sNavigationBarTitleColor(CAColor_white)
 ,m_sNavigationBarButtonColor(CAColor_white)
+,m_fProgress(1.0f)
 {
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
@@ -673,7 +674,6 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     {
         CCRect rect = this->getView()->getBounds();
         
-        m_fProgress = 1.0f;
         CCPoint point = this->getNavigationBarNowPoint(showViewController);
         
         switch (m_eNavigationBarVerticalAlignment)
@@ -772,7 +772,6 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
     {
         CCRect rect = this->getView()->getBounds();
         
-        m_fProgress = 1.0f;
         CCPoint point = this->getNavigationBarNowPoint(showViewController);
         
         switch (m_eNavigationBarVerticalAlignment)
@@ -1160,6 +1159,7 @@ CATabBarController::CATabBarController()
 ,m_sTabBarTitleColor(CAColor_white)
 ,m_sTabBarSelectedTitleColor(ccc4(50, 193, 255, 255))
 ,m_bShowTabBarSelectedIndicator(false)
+,m_fProgress(1.0f)
 {
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);

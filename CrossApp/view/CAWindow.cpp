@@ -106,7 +106,6 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
         
         CCRect endFrame = CCRectZero;
         endFrame.size = view->getFrame().size;
-        
         setDispatchEvents(this, false);
         
         CAViewAnimation::beginAnimations("", NULL);

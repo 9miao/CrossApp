@@ -592,7 +592,7 @@ void CATextView::ccStartSelect()
 	int iLastPos = m_iCurPos;
 	if (m_iCurPos == 0)
 	{
-		int iPrevPos = m_iCurPos, nMoveLen = 1;
+		int nMoveLen = 1;
 		for (std::string::size_type n = m_iCurPos + nMoveLen; n < m_szText.length() && 0x80 == (0xC0 & m_szText.at(n));)
 		{
 			++nMoveLen;
@@ -604,7 +604,7 @@ void CATextView::ccStartSelect()
 	}
 	else
 	{
-		int iPrevPos = m_iCurPos, nMoveLen = 1;
+		int nMoveLen = 1;
 		while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nMoveLen)))
 		{
 			++nMoveLen;
