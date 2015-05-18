@@ -6,28 +6,16 @@
 
 #####2.CATextView增加选择、复制、粘贴等功能。
 
-#####3.优化CAScheduler
+#####3.优化CANavigationController
+增加隐藏某个视图管理器所对应的CANavigationBar的功能
 
-#####4.优化CASwitch默认效果
+#####4.解决CATextField在索尼、华为等预输入的bug
 
-#####5.增加CAImage对Gif的支持
+#####5.修复文字在多行情况有偏差的bug
 
-#####6.增加CALabel复制内容到系统粘贴板的功能
+#####6.修复CAWebView在android平台会崩溃的bug
 
-#####7.增加CATextField节选并复制内容到系统粘贴板，粘贴系统粘贴板内容的功能
-
-#####8.修复CAWebView由于CAImage改动造成的bug
-
-#####9.完善CATextView/CATextField之间的输入法切换
-
-#####10.修复截屏并保存图片功能的bug
-
-#####11.新建工程支持iphone6 以上设备分辨率
-
-#####12.完善iOS平台icon
-
-#####13.其他一些细节的修改
-
+#####7.优化android物理返回键与屏幕触摸屏蔽的关联
 
 
 **********************************************************************************

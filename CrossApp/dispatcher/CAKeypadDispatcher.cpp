@@ -1,7 +1,8 @@
 
 
 #include "CAKeypadDispatcher.h"
-
+#include "basics/CAApplication.h"
+#include "CATouchDispatcher.h"
 NS_CC_BEGIN
 
 CAKeypadDispatcher::CAKeypadDispatcher()
@@ -82,6 +83,11 @@ void CAKeypadDispatcher::forceRemoveDelegate(CAKeypadDelegate* pDelegate)
 
 bool CAKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 {
+    if (!CAApplication::getApplication()->getTouchDispatcher()->isDispatchEvents())
+    {
+        return true;
+    }
+    
     CAKeypadHandler*  pHandler = NULL;
     CAKeypadDelegate* pDelegate = NULL;
 
