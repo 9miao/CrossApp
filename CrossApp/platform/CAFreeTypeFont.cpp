@@ -3,7 +3,7 @@
 #include "platform/CCFileUtils.h"
 #include "support/ccUTF8.h"
 #include "CATempTypeFont.h"
-
+#include <string.h>
 
 using namespace std;
 
@@ -11,7 +11,13 @@ NS_CC_BEGIN
 
 struct StrICmpLess
 {
-	bool operator()(const std::string& _Left, const std::string& _Right) const { return strcmp(_Left.c_str(), _Right.c_str()) < 0; }
+	bool operator()(const std::string& _Left, const std::string& _Right) const { 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+		return strcasecmp(_Left.c_str(), _Right.c_str()) < 0;
+#else
+		return stricmp(_Left.c_str(), _Right.c_str()) < 0;
+#endif
+	}
 };
 static map<std::string, FontBufferInfo, StrICmpLess> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
@@ -539,18 +545,18 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 	m_currentLine->width = (unsigned int)(m_currentLine->bbox.xMax - m_currentLine->bbox.xMin);
 	m_currentLine->pen.x = m_currentLine->bbox.xMax;
 
-	unsigned int iLastWidth = (unsigned int)m_currentLine->bbox.xMax;
 	if (!glyphs.empty())
 	{
 		endLine();
 		newLine();
 
+		unsigned int iTruncted = glyphs[0].pos.x;
 		for (int i = 0; i < glyphs.size(); i++)
 		{
 			if (glyphs[i].index==0)
 				continue;
 			
-			glyphs[i].pos.x -= iLastWidth;
+			glyphs[i].pos.x -= iTruncted;
 		}
 		calcuMultiLines(glyphs);
 	}
@@ -685,6 +691,8 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		return -1;
 
 	glyphs.clear();
+	glyphs.reserve(utf16String.size());
+
 	FT_Bool useKerning = FT_HAS_KERNING(m_face);
 
 	for (int n = 0; n < utf16String.size(); n++)

@@ -34,7 +34,7 @@ public:
 
 protected:
 
-    CAVector<CAObject*> m_vDelegates;
+    std::vector<CAObject*> m_vDelegates;
     bool m_bLocked;
     bool m_bToAdd;
     bool m_bToRemove;

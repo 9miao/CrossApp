@@ -5,6 +5,7 @@
 #include "view/CAWebView.h"
 #include "platform/CCFileUtils.h"
 #include "basics/CAApplication.h"
+#include "basics/CASyncQueue.h"
 
 #define CLASS_NAME "org/CrossApp/lib/Cocos2dxWebViewHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,"",__VA_ARGS__)
@@ -14,48 +15,65 @@ NS_CC_BEGIN
 
 static std::string s_cszWebViewImageData;
 
+enum callFuncParamType{ eType_shouldStartLoading, eType_didFinishLoading, eType_didLoadHtmlSource, eType_didFailLoading, eType_onJsCallback };
+struct callFuncParam { callFuncParamType e; int n; std::string s; };
+static CASyncQueue<callFuncParam> s_WebViewCallbackFunc;
+
+static void AddCallbackFunc(callFuncParamType e, int n, const std::string& s)
+{
+	callFuncParam v;
+	v.e = e;
+	v.n = n;
+	v.s = s;
+	s_WebViewCallbackFunc.AddElement(v);
+}
+
 extern "C" {
 
     JNIEXPORT jboolean JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_shouldStartLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
         const char* charUrl = env->GetStringUTFChars(jurl, NULL);
         std::string url = charUrl;
         env->ReleaseStringUTFChars(jurl, charUrl);
-        return CAWebViewImpl::shouldStartLoading(index, url);
+		bool result = CAWebViewImpl::shouldStartLoading(index, url);
+        if (result)
+        {
+			CrossApp::AddCallbackFunc(eType_shouldStartLoading, index, url);
+        }
+		return result;
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didFinishLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
 		const char* charUrl = env->GetStringUTFChars(jurl, NULL);
         std::string url = charUrl;
         env->ReleaseStringUTFChars(jurl, charUrl);
-		CAWebViewImpl::didFinishLoading(index, url);
+		CrossApp::AddCallbackFunc(eType_didFinishLoading, index, url);
     }
 
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didLoadHtmlSource(JNIEnv *env, jclass, jint index, jstring jurl) {
 		const char* charHtml = env->GetStringUTFChars(jurl, NULL);
 		std::string html = charHtml;
 		env->ReleaseStringUTFChars(jurl, charHtml);
-		CAWebViewImpl::didLoadHtmlSource(index, html);
+		CrossApp::AddCallbackFunc(eType_didLoadHtmlSource, index, html);
 	}
 
 	
-
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didFailLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
 		const char* charUrl = env->GetStringUTFChars(jurl, NULL);
         std::string url = charUrl;
         env->ReleaseStringUTFChars(jurl, charUrl);
-		CAWebViewImpl::didFailLoading(index, url);
+		CrossApp::AddCallbackFunc(eType_didFailLoading, index, url);
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_onJsCallback(JNIEnv *env, jclass, jint index, jstring jmessage) {
 		const char* charMessage = env->GetStringUTFChars(jmessage, NULL);
         std::string message = charMessage;
         env->ReleaseStringUTFChars(jmessage, charMessage);
-		CAWebViewImpl::onJsCallback(index, message);
+		CrossApp::AddCallbackFunc(eType_onJsCallback, index, message);
     }
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_onSetByteArrayBuffer(JNIEnv *env, jclass, jbyteArray buf, jint len) {
-			s_cszWebViewImageData.resize(len);
-			env->GetByteArrayRegion(buf, 0, len, (jbyte *)&s_cszWebViewImageData[0]);
+		s_cszWebViewImageData.resize(len);
+		env->GetByteArrayRegion(buf, 0, len, (jbyte *)&s_cszWebViewImageData[0]);
     }
 }
 
@@ -324,12 +342,6 @@ bool CAWebViewImpl::shouldStartLoading(const int viewTag, const std::string &url
 			if (!webView->m_pWebViewDelegate->onShouldStartLoading(webView, url))
 				return false;
 		}
-		if (webView && webView->m_bShowLoadingImage)
-		{
-			it->second->setVisible(false);
-			webView->m_pLoadingView->startAnimating();
-			webView->addSubview(webView->m_pLoadingView);
-		}
 	}
 	return true;
 }
@@ -341,8 +353,7 @@ void CAWebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
 		if (webView && webView->m_bShowLoadingImage)
 		{
 			webView->m_pLoadingView->stopAnimating();
-			webView->m_pLoadingView->removeFromSuperview();
-			it->second->setVisible(true);
+			webView->m_pLoadingView->setVisible(false);
 		}
 		if (webView && webView->m_pWebViewDelegate) {
 			webView->m_pWebViewDelegate->onDidFinishLoading(webView, url);
@@ -368,8 +379,7 @@ void CAWebViewImpl::didFailLoading(const int viewTag, const std::string &url){
 		if (webView && webView->m_bShowLoadingImage)
 		{
 			webView->m_pLoadingView->stopAnimating();
-			webView->m_pLoadingView->removeFromSuperview();
-			it->second->setVisible(true);
+			webView->m_pLoadingView->setVisible(false);
 		}
 		if (webView && webView->m_pWebViewDelegate) {
 			webView->m_pWebViewDelegate->onDidFailLoading(webView, url);
@@ -391,6 +401,51 @@ void CAWebViewImpl::update(float dt)
 {
 	CCRect cRect = _webView->convertRectToWorldSpace(_webView->getBounds());
 	setWebViewRectJNI(_viewTag, cRect.origin.x, cRect.origin.y, cRect.size.width, cRect.size.height);
+
+	callFuncParam callFunc;
+	if (s_WebViewCallbackFunc.PopElement(callFunc))
+	{
+		switch (callFunc.e)
+		{
+			case eType_shouldStartLoading:
+			{
+				std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(callFunc.n);
+				if (it != s_WebViewImpls.end()) {
+					 CAWebView* webView = it->second->_webView;
+					 if (webView && webView->m_bShowLoadingImage)
+					 {
+						 webView->m_pLoadingView->startAnimating();
+						 webView->m_pLoadingView->setVisible(true);
+					 }
+				 }
+			}
+			break;
+
+			case eType_didFinishLoading:
+			{
+				CAWebViewImpl::didFinishLoading(callFunc.n, callFunc.s);
+			}
+			break;
+
+			case eType_didLoadHtmlSource:
+			{
+				CAWebViewImpl::didLoadHtmlSource(callFunc.n, callFunc.s);
+			}
+			break;
+
+			case eType_didFailLoading:
+			{
+				CAWebViewImpl::didFailLoading(callFunc.n, callFunc.s);
+			}
+			break;
+
+			case eType_onJsCallback:
+			{
+				CAWebViewImpl::onJsCallback(callFunc.n, callFunc.s);
+			}
+			break;
+		}
+	}
 }
 
 void CAWebViewImpl::setVisible(bool visible) {

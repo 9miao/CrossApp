@@ -204,7 +204,6 @@ void CATextToolBarView::alertViewCallback(CAControl* btn, CCPoint point)
 	removeFromSuperview();
 }
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 CATextSelectView::CATextSelectView()
 : m_pCursorMarkL(NULL)
