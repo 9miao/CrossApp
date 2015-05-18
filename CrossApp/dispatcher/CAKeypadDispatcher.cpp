@@ -60,7 +60,7 @@ void CAKeypadDispatcher::forceAddDelegate(CAKeypadDelegate* pDelegate)
 
     if (pHandler)
     {
-        m_vDelegates.push_back(dynamic_cast<CAObject*>(pHandler));
+        m_vDelegates.pushBack(dynamic_cast<CAObject*>(pHandler));
     }
 }
 
