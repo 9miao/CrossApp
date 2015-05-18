@@ -126,7 +126,7 @@ bool CAViewController::isKeypadEnabled()
 /// isKeypadEnabled setter
 void CAViewController::setKeypadEnabled(bool enabled)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     if (enabled != m_bKeypadEnabled)
     {
         m_bKeypadEnabled = enabled;
