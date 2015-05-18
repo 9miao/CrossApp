@@ -102,7 +102,7 @@ protected:
     
     virtual void reshapeViewRectDidFinish() {};
     
-    virtual void keyBackClicked() {}
+    virtual void keyBackClicked() {};
     
     virtual void keyMenuClicked() {};
     
