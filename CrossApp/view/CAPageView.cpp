@@ -318,7 +318,7 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     }
     else
     {
-        page = MIN(page, this->getPageCount() - 1);
+        page = MIN(page, (int)this->getPageCount() - 1);
         page = MAX(page, 0);
         
         this->setCurrPage(page, true, true);

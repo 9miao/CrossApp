@@ -64,8 +64,10 @@ public:
 	virtual ~CATextToolBarView();
 
 	static CATextToolBarView *create();
-	static bool IsTextToolBarShow();
-
+	static bool isTextToolBarShow();
+	static void hideTextToolBar();
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 	void addButton(const std::string& strBtnText, CAObject* target, SEL_CallFunc selector);
 	void show();
 
@@ -73,7 +75,6 @@ protected:
 	bool init();
 	void addGrayLine(int y);
 	void alertViewCallback(CAControl* btn, CCPoint point);
-	bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
 
 private:
 	std::vector<CallbackTarget> m_CallbackTargets;
@@ -92,7 +93,6 @@ public:
 	static void hideTextSelectView();
 
 	void showTextSelView(const CCRect& rect, CAView* pControlView, bool showLeft = true, bool showRight = true);
-	
 
 protected:
 	virtual bool init();
@@ -113,6 +113,64 @@ private:
 	CAView* m_pControlView;
 	int m_iSelViewTouchPos;
 };
+
+
+class CATextSelViewEx : public CAView
+{
+public:
+	CATextSelViewEx();
+	virtual ~CATextSelViewEx();
+
+	static CATextSelViewEx *create();
+
+	void showTextSelView(const std::vector<CCRect>& vt, float iLineHeight);
+	void hideTextSelView();
+	void showTextViewMark(const std::vector<CCRect>& vt);
+	void hideTextViewMark();
+	bool isTextViewShow();
+
+protected:
+	virtual bool init();
+	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+
+	void ccCopyToClipboard();
+	void ccCutToClipboard();
+	void ccPasteFromClipboard();
+
+private:
+	CAImageView* m_pCursorMarkL;
+	CAImageView* m_pCursorMarkR;
+
+	int m_iSelViewTouchPos;
+	std::vector<CAView*> m_pTextViewMask;
+};
+
+
+class CATextArrowView : public CAView
+{
+public:
+	CATextArrowView();
+	virtual ~CATextArrowView();
+
+	static CATextArrowView *create();
+
+	void showTextArrView(const CCPoint& pt);
+	void hideTextArrView();
+
+
+protected:
+	virtual bool init();
+	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+	void ccTouchTimer(float interval);
+
+private:
+	bool m_isBtnPress;
+	CAImageView* m_pArrowView;
+};
+
 
 
 

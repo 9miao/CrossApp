@@ -1,3 +1,25 @@
+**********************************************************************************
+
+#### CrossApp 1.1.5 更新内容：  
+
+#####1.优化CATextField
+
+#####2.CATextView增加选择、复制、粘贴等功能。
+
+#####3.优化CANavigationController
+增加隐藏某个视图管理器所对应的CANavigationBar的功能
+
+#####4.解决CATextField在索尼、华为等预输入的bug
+
+#####5.修复文字在多行情况有偏差的bug
+
+#####6.修复CAWebView在android平台会崩溃的bug
+
+#####7.优化android物理返回键与屏幕触摸屏蔽的关联
+
+#####8.优化触摸事件屏幕功能
+
+#####9.其他一些细节的修改
 
 **********************************************************************************
 
@@ -28,6 +50,22 @@
 #####12.完善iOS平台icon
 
 #####13.其他一些细节的修改
+
+
+#### CrossApp 1. 1. 4 Update:  
+#####1. Added 'deleted an animation module' functionality in animation system
+#####2. Optimized ScrollView indicator
+#####3. Optimized CAScheduler
+#####4. Optimized CASwitch default effects
+#####5. Added Gif support for CAImage
+#####6. Added CALabel functionality that user can copy contents into system clipboard
+#####7. Added CATextField functionality that user can select and copy contents into system clipboard, and paste clipboard contents
+#####8. Fixed bug that's caused by CAImage modifications in CAWebView
+#####9. Improved the UE of input method switch between CATextView and CATextField
+#####10. Fixed 'screenshot and save image' bug
+#####11. New project supports resolution of iPhone6 or higher version devices
+#####12. Improved the appearance of iOS platform icon
+#####13. Other details tweaking
 
 **********************************************************************************
 

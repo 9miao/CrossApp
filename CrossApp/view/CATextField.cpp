@@ -72,6 +72,8 @@ bool CATextField::resignFirstResponder()
     if (result)
     {
 		detachWithIME();
+        hideCursorMark();
+        this->updateImage();
     }
     return result;
 }
@@ -82,6 +84,22 @@ bool CATextField::becomeFirstResponder()
     if (result) 
 	{
 		attachWithIME();
+        this->showCursorMark();
+        if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+        {
+            if (m_sText.empty())
+            {
+                m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+            }
+        }
+        calculateSelChars(CCPoint(this->getCursorX() + m_iHoriMargins, m_obContentSize.height / 2), m_iString_l_length, m_iString_r_length, m_iCurPos);
+        
+        m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+
+#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
+        CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+        pGlView->setIMECursorPos(getCursorPos(), getContentText());
+#endif
     }
     return result;
 }
@@ -338,43 +356,27 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
 	CATouchView::ccTouchEnded(pTouch, pEvent);
 
-	if (CATextToolBarView::IsTextToolBarShow())
+	if (CATextToolBarView::isTextToolBarShow())
 		return;
 
     CCPoint point = this->convertTouchToNodeSpace(pTouch);
     
     if (this->getBounds().containsPoint(point))
     {
-		becomeFirstResponder();
-		if (isFirstResponder())
+        if (!isFirstResponder() && canAttachWithIME())
         {
-            this->showCursorMark();
-            if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
-            {
-                if (m_sText.empty())
-                {
-                    m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
-                }
-                return;
-            }
-			calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
-           
-			m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+            becomeFirstResponder();
+            
+            calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
+            
+            m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
         }
-
-#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
-        CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
-		pGlView->setIMECursorPos(getCursorPos(), getContentText());
-#endif
-
     }
     else
     {
-        hideCursorMark();
-
-        if (resignFirstResponder())
+        if (canDetachWithIME())
         {
-			this->updateImage();
+            resignFirstResponder();
         }
     }
 
@@ -385,6 +387,10 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 {
 	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+		return;
+
+	std::string cszText = CAClipboard::getText();
+	if (cszText.empty() && m_sText.empty())
 		return;
 
 	CATextToolBarView *pToolBar = CATextToolBarView::create();
@@ -459,7 +465,8 @@ void CATextField::insertText(const char * text, int len)
     CC_RETURN_IF(len <= 0);
     CC_RETURN_IF(text == 0);
     
-    if (!strcmp(text, "\n")) {
+    if (!strcmp(text, "\n"))
+    {
         getKeyBoradReturnCallBack();
         return;
     }
@@ -479,7 +486,14 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
     CCAssert(str != NULL, "");
 	CCAssert(count > 0, "");
     
-    insertText(str, (int)strlen(str));
+    for (int i=0; i<before; i++)
+    {
+        deleteBackward();
+    }
+    CC_RETURN_IF(str == NULL || count <= 0);
+    
+    std::string s = str;
+    insertText(s.c_str(), s.length());
 }
 
 void CATextField::willInsertText(const char *text, int len)
@@ -512,6 +526,9 @@ void CATextField::deleteBackward()
     }
 
 	if (m_iCurPos==0 || m_sText.empty())
+		return;
+
+	if (execCurSelCharRange())
 		return;
 
 	int nDeleteLen = 1;
@@ -775,7 +792,7 @@ void CATextField::pasteFromClipboard()
 bool CATextField::execCurSelCharRange()
 {
 	CATextSelectView::hideTextSelectView();
-	//	CATextToolBar::hideTextToolBar();
+	CATextToolBarView::hideTextToolBar();
 	m_pTextViewMark->setVisible(false);
 
 	if (m_curSelCharRange.first == m_curSelCharRange.second)
@@ -786,7 +803,7 @@ bool CATextField::execCurSelCharRange()
 	setText(cszText);
 
 	m_iCurPos = iOldCurPos;
-//    this->showCursorMark();
+	showCursorMark();
 	adjustCursorMoveBackward();
 	return true;
 }
@@ -1036,15 +1053,15 @@ void CATextField::getKeyBoardHeight(int height)
 {
     CAView::becomeFirstResponder();
 	
-    if( m_pDelegate && m_pDelegate->getKeyBoardHeight(height) )
+    if( m_pDelegate)
     {
-        return;
+        m_pDelegate->getKeyBoardHeight(height);
     }
 }
 
 void CATextField::getKeyBoradReturnCallBack()
 {
-    if( m_pDelegate && m_pDelegate->keyBoardCallBack(this) )
+    if( m_pDelegate && !m_pDelegate->keyBoardCallBack(this) )
     {
         return;
     }

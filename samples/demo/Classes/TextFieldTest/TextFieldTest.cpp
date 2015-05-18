@@ -19,12 +19,17 @@ void TextFieldTest::viewDidLoad()
 {
 	size = this->getView()->getBounds().size;
 
+    CAScrollView* scrollView = CAScrollView::createWithFrame(this->getView()->getBounds());
+    this->getView()->addSubview(scrollView);
+    scrollView->setViewSize(size);
+    
 	CATextField* textField = CATextField::createWithCenter(CADipRect(size.width*0.5, size.height*0.2, size.width*0.6, size.height*0.05));
 	textField->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded_highlighted.png")));
 	textField->setPlaceHolder("Input");
 	textField->setFontSize(_px(24));
+    textField->setDelegate(this);
 	textField->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
-	this->getView()->addSubview(textField);
+	scrollView->addSubview(textField);
 
 	CATextField* textField1 = CATextField::createWithCenter(CADipRect(size.width*0.5, size.height*0.4, size.width*0.6, size.height*0.05));
 	textField1->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/ex1.png")));
@@ -32,7 +37,7 @@ void TextFieldTest::viewDidLoad()
 	textField1->setFontSize(_px(24));
 	textField1->setKeyboardType(KEY_BOARD_TYPE_NUMBER);
 	textField1->setSpaceHolderColor(CAColor_yellow);
-	this->getView()->addSubview(textField1);
+	scrollView->addSubview(textField1);
 
 	CATextField* textField2 = CATextField::createWithCenter(CADipRect(size.width*0.5, size.height*0.6, size.width*0.6, size.height*0.05));
 	textField2->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_selected.png")));
@@ -41,7 +46,7 @@ void TextFieldTest::viewDidLoad()
 	textField2->setTextColor(CAColor_red);
 	textField2->setSpaceHolderColor(CAColor_blue);
 	textField2->setDelegate(this);
-	this->getView()->addSubview(textField2);
+	scrollView->addSubview(textField2);
 
 	CATextField* textField3 = CATextField::createWithCenter(CADipRect(size.width*0.5, size.height*0.8, size.width*0.6, size.height*0.05));
 	textField3->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/ex3.png")));
@@ -50,17 +55,20 @@ void TextFieldTest::viewDidLoad()
 	textField3->setSpaceHolderColor(CAColor_green);
 	textField3->setInputType(KEY_BOARD_INPUT_PASSWORD);
 	textField3->setDelegate(this);
-	this->getView()->addSubview(textField3);
+	scrollView->addSubview(textField3);
 }
 
 void TextFieldTest::viewDidUnload() 
 {
 }
 
-bool TextFieldTest::getKeyBoardHeight(int height)
+void TextFieldTest::getKeyBoardHeight(int height)
 {
-    int fixHeight = height + 2 * m_pTextField->getFrame().size.height + m_pTextField->getFrameOrigin().y - getView()->getFrame().size.height;
-    if(fixHeight > 0){
+    int fixHeight = height + 2 * m_pTextField->getFrame().size.height
+                            + m_pTextField->getFrameOrigin().y
+                            - getView()->getFrame().size.height;
+    if(fixHeight > 0)
+    {
         //开始执行动画
         CAViewAnimation::beginAnimations("", NULL);
         //动画时长
@@ -81,9 +89,7 @@ bool TextFieldTest::getKeyBoardHeight(int height)
         
         //执行动画
         CAViewAnimation::commitAnimations();
-
     }
-    return true;
 }
 
 bool TextFieldTest::onTextFieldAttachWithIME(CATextField * sender)

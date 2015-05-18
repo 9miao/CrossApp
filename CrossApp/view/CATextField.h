@@ -51,14 +51,14 @@ public:
     virtual bool onTextFieldAttachWithIME(CATextField * sender)
     {
         CC_UNUSED_PARAM(sender);
-        return false;
+        return true;
     }
     
 	//If the sender doesn't want to detach from the IME, return true;
     virtual bool onTextFieldDetachWithIME(CATextField * sender)
     {
         CC_UNUSED_PARAM(sender);
-        return false;
+        return true;
     }
     
 	//If the sender doesn't want to insert the text, return true;
@@ -79,15 +79,10 @@ public:
         return false;
     }
     
-    virtual bool getKeyBoardHeight(int height)
-    {
-        return false;
-    }
+    virtual void getKeyBoardHeight(int height){}
     
-    virtual bool keyBoardCallBack(CATextField *sender)
-    {
-        return false;
-    }
+    
+    virtual bool keyBoardCallBack(CATextField *sender) {return true;}
 };
 
 

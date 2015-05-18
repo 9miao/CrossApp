@@ -139,7 +139,7 @@ CAView::~CAView(void)
         CAVector<CAView*>::iterator itr;
         for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
         {
-            (*itr)->m_pSuperview = NULL;
+            (*itr)->setSuperview(NULL);
         }
     }
     m_obSubviews.clear();
@@ -1052,7 +1052,7 @@ void CAView::removeAllSubviews()
                 (*itr)->onExit();
             }
             
-            (*itr)->m_pSuperview = NULL;
+            (*itr)->setSuperview(NULL);
         }
         
         m_obSubviews.clear();
