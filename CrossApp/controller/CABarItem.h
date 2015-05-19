@@ -85,6 +85,8 @@ public:
     
     void addRightButtonItem(CABarButtonItem* item);
     
+    CC_SYNTHESIZE_IS(bool, m_bNagigationBarHidden, NagigationBarHidden);
+    
     CC_SYNTHESIZE_RETAIN(CAView*, m_pTitleView, TitleView);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pTitleViewImage, TitleViewImage);
@@ -94,6 +96,7 @@ public:
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CAObject*>, m_vRightButtonItems,RightButtonItems);
     
     CC_PROPERTY_IS(bool, m_bShowGoBackButton, ShowGoBackButton);
+
 };
 
 class CC_DLL CATabBarItem

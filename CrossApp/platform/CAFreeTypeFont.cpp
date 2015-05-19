@@ -3,13 +3,23 @@
 #include "platform/CCFileUtils.h"
 #include "support/ccUTF8.h"
 #include "CATempTypeFont.h"
-
+#include <string.h>
 
 using namespace std;
 
 NS_CC_BEGIN
 
-static map<std::string, FontBufferInfo> s_fontsNames;
+struct StrICmpLess
+{
+	bool operator()(const std::string& _Left, const std::string& _Right) const { 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+		return strcasecmp(_Left.c_str(), _Right.c_str()) < 0;
+#else
+		return stricmp(_Left.c_str(), _Right.c_str()) < 0;
+#endif
+	}
+};
+static map<std::string, FontBufferInfo, StrICmpLess> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
 static CATempTypeFont s_TempFont;
 
@@ -535,18 +545,18 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 	m_currentLine->width = (unsigned int)(m_currentLine->bbox.xMax - m_currentLine->bbox.xMin);
 	m_currentLine->pen.x = m_currentLine->bbox.xMax;
 
-	unsigned int iLastWidth = (unsigned int)m_currentLine->bbox.xMax;
 	if (!glyphs.empty())
 	{
 		endLine();
 		newLine();
 
+		unsigned int iTruncted = glyphs[0].pos.x;
 		for (int i = 0; i < glyphs.size(); i++)
 		{
 			if (glyphs[i].index==0)
 				continue;
 			
-			glyphs[i].pos.x -= iLastWidth;
+			glyphs[i].pos.x -= iTruncted;
 		}
 		calcuMultiLines(glyphs);
 	}
@@ -681,6 +691,8 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		return -1;
 
 	glyphs.clear();
+	glyphs.reserve(utf16String.size());
+
 	FT_Bool useKerning = FT_HAS_KERNING(m_face);
 
 	for (int n = 0; n < utf16String.size(); n++)
@@ -955,22 +967,7 @@ void CAFreeTypeFont::finiFreeTypeFont()
 
 unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *size, int& ttfIndex)
 {
-	std::string path;
-	std::string lowerCase(pFontName);
-	for (unsigned int i = 0; i < lowerCase.length(); ++i)
-	{
-		lowerCase[i] = tolower(lowerCase[i]);
-	}
-	
-	if (std::string::npos == lowerCase.find("fonts/"))
-	{
-		path = "fonts/";
-		path += lowerCase;
-	}
-	else
-	{
-		path = lowerCase;
-	}
+	std::string path = std::string("fonts/") + pFontName;
 
 	std::map<std::string, FontBufferInfo>::iterator ittFontNames = s_fontsNames.find(path.c_str());
 	if (ittFontNames != s_fontsNames.end())
@@ -983,7 +980,19 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 
 	ttfIndex = 0;
 
+	for (unsigned int i = 6; i < path.length(); ++i)
+	{
+		path[i] = tolower(path[i]);
+	}
 	unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
+	if (pBuffer == NULL)
+	{
+		for (unsigned int i = 6; i < path.length(); ++i)
+		{
+			path[i] = toupper(path[i]);
+		}
+		pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
+	}
 	if (pBuffer == NULL)
 	{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

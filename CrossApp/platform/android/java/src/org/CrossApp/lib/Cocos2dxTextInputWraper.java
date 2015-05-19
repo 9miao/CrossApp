@@ -56,21 +56,23 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public void afterTextChanged(final Editable s) {
-
-		if (this.isFullScreenEdit())
+	
+		Log.d(TAG, "afterTextChanged: " + s.toString());
+		
+		if (this.isFullScreenEdit()) 
 		{
 			return;
 		}
 //		int nModified = s.length() - this.mText.length();
 //		if (nModified > 0) {
 //			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-//
+//		
 //			//this.mCocos2dxGLSurfaceView.insertText(insertText);
 //			/*
 //			if (BuildConfig.DEBUG) {
 //				Log.d(TAG, "insertText(" + insertText + ")");
 //			}
-//			*/
+//			*/ 
 //		} else {
 //			for (; nModified < 0; ++nModified) {
 //				//Tthis.mCocos2dxGLSurfaceView.deleteBackward();
@@ -91,48 +93,43 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
 		}
 		*/
-
+		Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
 		//System.out.println(pCharSequence.toString());
 		this.mText = pCharSequence.toString();
 	}
 
 	@Override
 	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
-	    int calcStart = 0;
-	    for (int i = 0; i < pCharSequence.length(); i++) {
-	        if (mText.length() <= 0 || i >= mText.length()) {
-	            calcStart = i;
-                break;
-            }
-            if (pCharSequence.charAt(i) != mText.charAt(i)) {
-                calcStart = i;
-                break;
-            }
-        }
-		int nModified = pCharSequence.length() - this.mText.length();
-		{
-			if(nModified<0)
-			{
-				this.mCocos2dxGLSurfaceView.deleteBackward();
-			}
-			else
-			{
-			    this.mCocos2dxGLSurfaceView.willInsertText(calcStart,pCharSequence.toString().substring(mText.length()),before,count);
-			}
+		
+		Log.d(TAG, "onTextChanged(" + pCharSequence + ")start: " + start + ",before: " + before + ",count: " + count);
 
+		String subReplace = null;
+		
+		try {
+			CharSequence subSeq = pCharSequence.subSequence(start, start+count);
+			if (subSeq != null) {
+				subReplace = subSeq.toString();
+			} else {
+				subReplace = "";
+			}
+		} catch (IndexOutOfBoundsException e) {
+			Log.d(TAG, e.toString());
+			
+			return;
 		}
-
+		
+		this.mCocos2dxGLSurfaceView.willInsertText(start, subReplace, before, count);
 	}
 
-
+	
 	@Override
-	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent)
+	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) 
 	{
-
-
-
-
-		if (pActionID == EditorInfo.IME_ACTION_DONE)
+		
+		
+		
+		
+		if (pActionID == EditorInfo.IME_ACTION_DONE) 
 		{
 			KeyBoardReturnCallBack();
             return true;
@@ -147,12 +144,12 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			KeyBoardReturnCallBack();
             return true;
 		}
-
+        
         if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() != pTextView)
         {
             return false;
         }
-
+        
         if(pKeyEvent.getAction() == KeyEvent.ACTION_DOWN)
         {
             return false;

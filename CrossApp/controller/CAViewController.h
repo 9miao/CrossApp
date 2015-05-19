@@ -102,7 +102,7 @@ protected:
     
     virtual void reshapeViewRectDidFinish() {};
     
-    virtual void keyBackClicked() {}
+    virtual void keyBackClicked() {};
     
     virtual void keyMenuClicked() {};
     
@@ -151,9 +151,10 @@ public:
     
     CAViewController* popViewControllerAnimated(bool animated);
     
-    // sprhawk@163.com: 2015-03-08
     void popToRootViewControllerAnimated(bool animated);
     
+    CAViewController* popFirstViewController();
+ 
     CAViewController* getViewControllerAtIndex(int index);
     
     CAViewController* getBackViewController();
@@ -226,19 +227,19 @@ protected:
     
     CCPoint getNavigationBarTakeBackPoint();
     
-    CCPoint getNavigationBarNowPoint();
+    CCPoint getNavigationBarNowPoint(CAViewController* viewController);
     
 protected:
 
     float m_fProgress;
     
-    CAVector<CAViewController*> m_pViewControllers;
+    CADeque<CAViewController*> m_pViewControllers;
     
-    CAVector<CANavigationBar*> m_pNavigationBars;
+    CADeque<CANavigationBar*> m_pNavigationBars;
     
-    CAVector<CAView*> m_pContainers;
+    CADeque<CAView*> m_pContainers;
 
-    CAVector<CAView*> m_pSecondContainers;
+    CADeque<CAView*> m_pSecondContainers;
     
     bool m_bPopViewController;
 

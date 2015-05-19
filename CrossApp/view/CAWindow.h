@@ -33,6 +33,8 @@ public:
     
 protected:
 
+    void presentEnd();
+    
     void dismissEnd();
     
 protected:

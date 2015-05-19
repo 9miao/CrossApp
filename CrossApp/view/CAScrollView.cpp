@@ -1064,7 +1064,7 @@ void CAScrollView::changedFromPullToRefreshView()
         {
             m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStatePulling);
         }
-    }
+    } 
 }
 
 void CAScrollView::detectionFromPullToRefreshView()

@@ -35,7 +35,6 @@ CAWebView::CAWebView()
 CAWebView::~CAWebView()
 {
 	CC_SAFE_DELETE(_impl);
-	CC_SAFE_RELEASE(m_pLoadingView);
 }
 
 CAWebView *CAWebView::createWithFrame(const CCRect& rect)
@@ -69,8 +68,8 @@ bool CAWebView::init()
     CCSize size = this->getBounds().size;
     m_pLoadingView = CAActivityIndicatorView::create();
     m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGray);
-	m_pLoadingView->stopAnimating();
-	m_pLoadingView->retain();
+	m_pLoadingView->setVisible(false);
+	this->addSubview(m_pLoadingView);
     
     return true;
 }

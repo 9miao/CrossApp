@@ -68,7 +68,9 @@ extern "C"
 
 std::string CAClipboard::getText()
 {
-	return JAVAgetPasteBoardString();
+    const char *str = JAVAgetPasteBoardString();
+    
+    return str ? str : "";
 }
 
 void CAClipboard::setText(const std::string& cszStrText)

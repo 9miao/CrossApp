@@ -1,3 +1,40 @@
+**********************************************************************************
+
+#### CrossApp 1.1.5 更新内容：  
+
+#####1.优化CATextField
+
+#####2.CATextView增加选择、复制、粘贴等功能。
+
+#####3.优化CANavigationController
+增加隐藏某个视图管理器所对应的CANavigationBar的功能
+
+#####4.解决CATextField在索尼、华为等预输入的bug
+
+#####5.修复文字在多行情况有偏差的bug
+
+#####6.修复CAWebView在android平台会崩溃的bug
+
+#####7.优化android物理返回键与屏幕触摸屏蔽的关联
+
+#####8.优化触摸事件屏幕功能
+
+#####9.其他一些细节的修改
+
+
+#### CrossApp 1.1.5 Update:  
+
+#####1. Optimized CATextField
+#####2. Added select, copy, paste and other functionalities in CATextView
+#####3. Optimized CANavigationController
+Added functionality that user can hide the corresponding CANavigationBar of a view controller
+#####4. Fixed CATextField's preinput bug existed in Sony, Huawei and other mobile types
+#####5. Fixed bug that characters have deviation in multi-line conditions
+#####6. Fixed CAWebView's breakdown bug in Android platform
+#####7. Optimized the connection between Android physical back button and screen touch shielding
+#####8. Optimized touch event screen functionality
+#####9. Other details tweaking
+
 
 **********************************************************************************
 

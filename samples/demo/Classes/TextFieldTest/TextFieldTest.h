@@ -16,7 +16,7 @@ protected:
 	void viewDidLoad();
 	void viewDidUnload();
 
-    virtual bool getKeyBoardHeight(int height);
+    virtual void getKeyBoardHeight(int height);
     virtual bool onTextFieldAttachWithIME(CATextField * sender);
     virtual bool onTextFieldDetachWithIME(CATextField * sender);
 
