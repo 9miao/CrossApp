@@ -43,7 +43,7 @@ void SecondViewController::viewDidAppear()
 
 void SecondViewController::loadJsonData()
 {
-	Reader reader;
+	CSJson::Reader reader;
 	Value value;
 	string jsonFile = CCFileUtils::sharedFileUtils()->fullPathForFilename("information.json");
 	CCString *jsonData = CCString::createWithContentsOfFile(jsonFile.c_str());

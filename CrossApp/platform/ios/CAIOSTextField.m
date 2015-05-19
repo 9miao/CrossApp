@@ -16,7 +16,6 @@
     if (![super init]) {
         return nil;
     }
-    [self setDelegate:self];
     [self setAutocorrectionType:UITextAutocorrectionTypeNo];
     return self;
 }
