@@ -66,20 +66,23 @@ public:
 	static CATextToolBarView *create();
 	static bool isTextToolBarShow();
 	static void hideTextToolBar();
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    
 	void addButton(const std::string& strBtnText, CAObject* target, SEL_CallFunc selector);
-	void show();
+	void show(CAView* pView=NULL);
 
 protected:
 	bool init();
-	void addGrayLine(int y);
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    
+	void addGrayLine(int x);
 	void alertViewCallback(CAControl* btn, CCPoint point);
 
 private:
 	std::vector<CallbackTarget> m_CallbackTargets;
 
 	CAClippingView *m_pBackView;
+    CAView* m_pControlView;
 };
 
 
@@ -127,16 +130,14 @@ public:
 	void hideTextSelView();
 	void showTextViewMark(const std::vector<CCRect>& vt);
 	void hideTextViewMark();
-	bool isTextViewShow();
-
+    bool isTextViewShow();
+    bool touchSelectText(CATouch *pTouch);
+    
 protected:
 	virtual bool init();
-	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-
-	void ccCopyToClipboard();
-	void ccCutToClipboard();
-	void ccPasteFromClipboard();
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 
 private:
 	CAImageView* m_pCursorMarkL;
