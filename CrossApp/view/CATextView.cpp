@@ -123,7 +123,7 @@ bool CATextView::init()
 	this->addSubview(m_pTextSelView);
 
 	m_pTextArrView = CATextArrowView::create();
-	m_pTextSelView->setFrame(getFrame());
+	m_pTextArrView->setFrame(getFrame());
 	this->addSubview(m_pTextArrView);
 
 	return true;
@@ -479,10 +479,11 @@ void CATextView::deleteBackward()
 void CATextView::getKeyBoardHeight(int height)
 {
 	CAView::becomeFirstResponder();
-	if (m_pTextViewDelegate && m_pTextViewDelegate->getKeyBoardHeight(height))
-	{
-		return;
-	}
+    
+    if( m_pTextViewDelegate)
+    {
+        m_pTextViewDelegate->getKeyBoardHeight(height);
+    }
 }
 
 void CATextView::getKeyBoradReturnCallBack()
@@ -569,7 +570,6 @@ void CATextView::calculateSelChars(const CCPoint& point, int& l, int& r, int& p)
 bool CATextView::execCurSelCharRange()
 {
 	CATextToolBarView::hideTextToolBar();
-	m_pTextSelView->hideTextSelView();
 
 	if (m_curSelCharRange.first == m_curSelCharRange.second)
 		return false;
@@ -581,6 +581,7 @@ bool CATextView::execCurSelCharRange()
 	m_iCurPos = iOldCurPos;
     this->showCursorMark();
 	calcCursorPosition();
+    m_pTextSelView->hideTextSelView();
 	return true;
 }
 
@@ -623,6 +624,7 @@ void CATextView::ccTouchTimer(float interval)
 {
 	CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
 	ccTouchPress(m_pCurTouch, m_pCurEvent);
+    CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
 }
 
 std::pair<int, int> CATextView::getLineAndPos(int iPos)
@@ -680,35 +682,40 @@ std::vector<CCRect> CATextView::getZZCRect()
 
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	if (m_pTextSelView->isTextViewShow())
-	{
-		m_pTextSelView->becomeFirstResponder();
-	}
-	else
-	{
-		this->setTouchMovedListenVertical(false);
-		this->setBounceVertical(false);
+    this->setTouchMovedListenVertical(false);
+    this->setBounceVertical(false);
 
-		CAScheduler::schedule(schedule_selector(CATextView::ccTouchTimer), this, 0, 0, 1.5f);
-		m_pCurTouch = pTouch;
-		m_pCurEvent = pEvent;
-	}
+    CAScheduler::schedule(schedule_selector(CATextView::ccTouchTimer), this, 0, 0, 1.5f);
+    m_pCurTouch = pTouch;
+    m_pCurEvent = pEvent;
 
-	return CAScrollView::ccTouchBegan(pTouch, pEvent);
+    if (m_pTextSelView->touchSelectText(pTouch))
+    {
+        CATextToolBarView *pToolBar = CATextToolBarView::create();
+        pToolBar->addButton(UTF8("\u526a\u5207"), this, callfunc_selector(CATextView::ccCutToClipboard));
+        pToolBar->addButton(UTF8("\u590d\u5236"), this, callfunc_selector(CATextView::ccCopyToClipboard));
+        pToolBar->addButton(UTF8("\u7c98\u8d34"), this, callfunc_selector(CATextView::ccPasteFromClipboard));
+        pToolBar->show(this);
+    }
+    else if (m_pTextSelView->isTextViewShow())
+    {
+        return true;
+    }
+    return CAScrollView::ccTouchBegan(pTouch, pEvent);
 }
 
 
 void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
 	CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
-	CAScrollView::ccTouchMoved(pTouch, pEvent);
+    CAScrollView::ccTouchMoved(pTouch, pEvent);
 }
 
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
 	CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
 
-	if (CATextToolBarView::isTextToolBarShow() || m_pTextSelView->isTextViewShow())
+    if (CATextToolBarView::isTextToolBarShow())
 		return;
 	
 	CCPoint point = this->convertTouchToNodeSpace(pTouch);
@@ -718,7 +725,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		if (this->getBounds().containsPoint(point))
 		{
 			becomeFirstResponder();
-			if (isFirstResponder())
+			if (isFirstResponder() && !m_pTextSelView->isTextViewShow())
 			{
                 this->showCursorMark();
 
@@ -726,8 +733,9 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 				calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
 				m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
 
-				CCPoint pt = m_pCursorMark->getCenterOrigin();
-				m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + getContentOffset().y));
+                CCPoint pt = m_pCursorMark->getCenterOrigin();
+                m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + getContentOffset().y));
+                m_curSelCharRange = std::pair<int,int>(m_iCurPos, m_iCurPos);
 			}
 		}
 		else
@@ -740,10 +748,9 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                 this->hideCursorMark();
 			}
 		}
+        
 	}
 
-	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
-	execCurSelCharRange();
 	CAScrollView::ccTouchEnded(pTouch, pEvent);
 }
 
@@ -758,6 +765,7 @@ void CATextView::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 	if (m_pTextSelView->isTextViewShow())
 		return;
 
+    becomeFirstResponder();
 	CATextToolBarView *pToolBar = CATextToolBarView::create();
 	if (m_szText.empty())
 	{
@@ -769,7 +777,7 @@ void CATextView::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 		pToolBar->addButton(UTF8("\u5168\u9009"), this, callfunc_selector(CATextView::ccSelectAll));
 		pToolBar->addButton(UTF8("\u9009\u62e9"), this, callfunc_selector(CATextView::ccStartSelect));
 	}
-	pToolBar->show();
+	pToolBar->show(this);
 }
 
 bool CATextView::attachWithIME()
@@ -784,6 +792,32 @@ bool CATextView::attachWithIME()
 #if( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
 
             pGlView->setIMEKeyboardReturnEnter();
+
+            if (getKeyboardType() ==KEY_BOARD_TYPE_NORMAL)
+            {
+                pGlView->setIMEKeyboardDefault();
+            }
+            else if (getKeyboardType() ==KEY_BOARD_TYPE_NUMBER)
+            {
+                pGlView->setIMEKeyboardNumber();
+            }
+            else if(getKeyboardType() ==KEY_BOARD_TYPE_ALPHABET)
+            {
+                pGlView->setIMEKeyboardAlphabet();
+            }
+            
+            if (getKeyboardReturnType() ==KEY_BOARD_RETURN_SEND)
+            {
+                pGlView->setIMEKeyboardReturnSend();
+            }
+            else if (getKeyboardReturnType() ==KEY_BOARD_RETURN_SEARCH)
+            {
+                pGlView->setIMEKeyboardReturnSearch();
+            }
+            else if(getKeyboardReturnType() ==KEY_BOARD_RETURN_DONE)
+            {
+                pGlView->setIMEKeyboardReturnDone();
+            }
 
 #endif
 			pGlView->setIMEKeyboardState(true);
