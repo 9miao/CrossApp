@@ -413,7 +413,7 @@ CAUserDefault* CAUserDefault::sharedUserDefault()
 
 bool CAUserDefault::isXMLFileExist()
 {
-    FILE *fp = fopen(m_sFilePath.c_str(), "r");
+    FILE *fp = fopen(m_sFilePath.c_str(), "rb");
 	bool bRet = false;
     
 	if (fp)

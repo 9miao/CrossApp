@@ -33,7 +33,7 @@ public:
      */
     virtual long getClassTypeInfo()
     {
-		static const long id = CrossApp::getHashCodeByString(typeid(CrossApp::CCFileUtils).name());
+		static const long id = getHashCodeByString(typeid(CrossApp::CCFileUtils).name());
 		return id;
     }
     

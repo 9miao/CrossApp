@@ -146,12 +146,12 @@ void CAViewController::setKeypadEnabled(bool enabled)
 
 void CAViewController::setNavigationBarItem(CANavigationBarItem* item)
 {
+    CC_SAFE_RETAIN(item);
+    CC_SAFE_RELEASE(m_pNavigationBarItem);
+    m_pNavigationBarItem = item;
+    
     if (item)
     {
-        CC_SAFE_RETAIN(item);
-        CC_SAFE_RELEASE(m_pNavigationBarItem);
-        m_pNavigationBarItem = item;
-        
         if (m_pNavigationController)
         {
             m_pNavigationController->updateItem(this);
@@ -161,12 +161,12 @@ void CAViewController::setNavigationBarItem(CANavigationBarItem* item)
 
 void CAViewController::setTabBarItem(CATabBarItem* item)
 {
+    CC_SAFE_RETAIN(item);
+    CC_SAFE_RELEASE(m_pTabBarItem);
+    m_pTabBarItem = item;
+    
     if (item)
     {
-        CC_SAFE_RETAIN(item);
-        CC_SAFE_RELEASE(m_pTabBarItem);
-        m_pTabBarItem = item;
-        
         if (m_pTabBarController)
         {
             m_pTabBarController->updateItem(this);
@@ -959,7 +959,7 @@ CCPoint CANavigationController::getNavigationBarNowPoint(CAViewController* viewC
     float offsetY = this->getNavigationBarTakeBackPoint().y - this->getNavigationBarOpenPoint().y;
     CCPoint p = CCPointZero;
     
-    if (viewController->getNavigationBarItem()->isNagigationBarHidden())
+    if (viewController->getNavigationBarItem() && viewController->getNavigationBarItem()->isNagigationBarHidden())
     {
         p.y = this->getNavigationBarOpenPoint().y + offsetY;
     }

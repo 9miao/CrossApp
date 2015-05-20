@@ -329,6 +329,7 @@ eKeyBoardInputType CATextField::getInputType()
 void CATextField::calculateSelChars(const CCPoint& point, int& l, int& r, int& p)
 {
 _CalcuAgain:
+
 	int dtValue = point.x - m_iString_left_offX - m_iHoriMargins;
 	l = r = p = 0;
 	for (std::vector<TextAttribute>::iterator it = m_vTextFiledChars.begin(); it != m_vTextFiledChars.end(); ++it)

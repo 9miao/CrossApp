@@ -61,7 +61,7 @@ public:
     
     virtual bool init();
 
-    void addSubview(CAView* subview);
+    virtual void addSubview(CAView* subview);
     
     virtual void insertSubview(CAView* subview, int z);
     

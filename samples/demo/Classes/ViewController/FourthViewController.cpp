@@ -63,7 +63,6 @@ void FourthViewController::viewDidLoad()
     defaultBtnR->addTarget(this, CAControl_selector(FourthViewController::buttonCallback), CAControlEventTouchUpInSide);
     defaultBtnR->setTag(2);
     defaultView->insertSubview(defaultBtnR, 11);
-    
 }
 
 void FourthViewController::viewDidAppear()

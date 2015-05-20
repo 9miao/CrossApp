@@ -108,8 +108,8 @@ const CAColor4B& CAProgress::getProgressTintColor()
 
 void CAProgress::setProgressTintImage(CrossApp::CAImage *var)
 {
-    CC_SAFE_RELEASE_NULL(m_pProgressTintImage);
     CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE_NULL(m_pProgressTintImage);
     m_pProgressTintImage = var;
     m_pProgressImageView->setImage(m_pProgressTintImage);
 }
@@ -132,8 +132,8 @@ const CAColor4B& CAProgress::getProgressTrackColor()
 
 void CAProgress::setProgressTrackImage(CrossApp::CAImage *var)
 {
-    CC_SAFE_RELEASE_NULL(m_pProgressTrackImage);
     CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE_NULL(m_pProgressTrackImage);
     m_pProgressTrackImage = var;
     m_pTarckImageView->setImage(m_pProgressTrackImage);
 }
