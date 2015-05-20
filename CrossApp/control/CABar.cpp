@@ -246,14 +246,14 @@ void CANavigationBar::showRightButton()
     const CAVector<CAObject*>& buttonItems = m_pItem->getRightButtonItems();
     
     CCRect rect;
-    rect.size.width = this->getBounds().size.height * 0.9f;
+    rect.size.width = this->getBounds().size.height * 1.05f;
     rect.size.height = this->getBounds().size.height * 0.8f;
-    rect.origin.x = this->getBounds().size.width - rect.size.width * 0.7f;
+    rect.origin.x = this->getBounds().size.width - rect.size.width * 0.65f;
     rect.origin.y = this->getBounds().size.height * 0.5f;
 
     for (size_t i=0; i<buttonItems.size(); i++)
     {
-        rect.origin.x -= i * rect.size.width * 1.1f;
+        rect.origin.x -= i * rect.size.width * 0.98f;
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
         this->addSubview(button);
         
