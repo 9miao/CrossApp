@@ -515,15 +515,13 @@ bool CATextSelViewEx::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	if (newRectL.containsPoint(cTouchPoint))
 	{
 		m_iSelViewTouchPos = 1;
-		return true;
 	}
 
 	if (newRectR.containsPoint(cTouchPoint))
 	{
 		m_iSelViewTouchPos = 2;
-		return true;
 	}
-    return false;
+    return true;
 }
 
 void CATextSelViewEx::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)

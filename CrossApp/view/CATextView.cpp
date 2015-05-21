@@ -624,7 +624,6 @@ void CATextView::ccTouchTimer(float interval)
 {
 	CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
 	ccTouchPress(m_pCurTouch, m_pCurEvent);
-    CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
 }
 
 std::pair<int, int> CATextView::getLineAndPos(int iPos)
@@ -696,6 +695,7 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         pToolBar->addButton(UTF8("\u590d\u5236"), this, callfunc_selector(CATextView::ccCopyToClipboard));
         pToolBar->addButton(UTF8("\u7c98\u8d34"), this, callfunc_selector(CATextView::ccPasteFromClipboard));
         pToolBar->show(this);
+		return false;
     }
     else if (m_pTextSelView->isTextViewShow())
     {
