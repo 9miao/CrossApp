@@ -364,7 +364,7 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (this->getBounds().containsPoint(point))
     {
-        if (!isFirstResponder() && canAttachWithIME())
+        if (canAttachWithIME())
         {
             becomeFirstResponder();
             
@@ -394,6 +394,7 @@ void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 	if (cszText.empty() && m_sText.empty())
 		return;
 
+	becomeFirstResponder();
 	CATextToolBarView *pToolBar = CATextToolBarView::create();
 	if (m_sText.empty())
 	{
