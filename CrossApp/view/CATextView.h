@@ -65,7 +65,7 @@ public:
 };
 
 
-class CC_DLL CATextView : public CAScrollView, public CAIMEDelegate
+class CC_DLL CATextView : public CATouchView, public CAIMEDelegate
 {
 public:
 	CATextView();
@@ -80,10 +80,6 @@ public:
 	static CATextView* createWithFrame(const CCRect& rect);
 
 	static CATextView* createWithCenter(const CCRect& rect);
-
-	bool initWithFrame(const CCRect& frame);
-
-	bool initWithCenter(const CCRect& rect);
 
 protected:
 	virtual bool init();
@@ -172,14 +168,12 @@ protected:
     
     inline virtual float decelerationRatio(float dt);
     
-public:
-
+protected:
+	virtual void setContentSize(const CCSize& var);
 	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
-	void ccTouchTimer(float interval);
 
 	virtual bool attachWithIME();
 	virtual bool detachWithIME();
@@ -198,6 +192,8 @@ public:
     virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
 
 private:
+	CAScrollView* m_pContainerView;
+
 	CAView* m_pCursorMark;
 
 	CAScale9ImageView* m_pBackgroundView;
@@ -212,9 +208,6 @@ private:
 	bool m_bUpdateImage;
     eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;
-
-	CATouch *m_pCurTouch;
-	CAEvent *m_pCurEvent;
 
 	CATextSelViewEx* m_pTextSelView;
 	CATextArrowView* m_pTextArrView;
