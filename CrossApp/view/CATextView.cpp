@@ -85,25 +85,28 @@ bool CATextView::init()
 	{
 		return false;
 	}
-
+    this->setColor(CAColor_gray);
+    
 	m_pContainerView = CAScrollView::createWithFrame(CCRectZero);
 	m_pContainerView->setShowsHorizontalScrollIndicator(false);
-	m_pContainerView->setBounceHorizontal(false);
 	m_pContainerView->setTouchMovedListenHorizontal(false);
 	m_pContainerView->setBounceHorizontal(false);
+    m_pContainerView->setHaveNextResponder(true);
 	this->addSubview(m_pContainerView);
-
+    m_pContainerView->setBackGroundColor(CAColor_clear);
+    
 	m_pImageView = new CAImageView();
     m_pImageView->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
-
+    m_pContainerView->addSubview(m_pImageView);
+    
 	m_pTextSelView = CATextSelViewEx::create();
 	m_pTextSelView->setFrame(getFrame());
 	this->addSubview(m_pTextSelView);
-
+    
 	m_pTextArrView = CATextArrowView::create();
 	m_pTextArrView->setFrame(getFrame());
 	this->addSubview(m_pTextArrView);
-
+    
 	return true;
 }
 
@@ -197,9 +200,8 @@ void CATextView::updateImage()
     rect.size = image->getContentSize();
     m_pImageView->setImageRect(rect);
     m_pImageView->setFrame(rect);
-
-	m_pContainerView->addSubview(m_pImageView);
-	
+    m_pContainerView->setViewSize(rect.size);
+    
 	calcCursorPosition();
 }
 
@@ -655,18 +657,12 @@ void CATextView::setContentSize(const CCSize& var)
 	if (m_pContainerView)
 	{
 		m_pContainerView->setFrame(this->getBounds());
-		m_pContainerView->setBackGroundColor(CAColor_gray);
-		m_pContainerView->setHaveNextResponder(true);
-
 	}
 	this->initMarkSprite();
 }
 
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	m_pContainerView->setTouchMovedListenVertical(false);
-	m_pContainerView->setBounceVertical(false);
-
     if (m_pTextSelView->touchSelectText(pTouch))
     {
         CATextToolBarView *pToolBar = CATextToolBarView::create();
@@ -685,7 +681,6 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-	m_pContainerView->ccTouchMoved(pTouch, pEvent);
 	CATouchView::ccTouchMoved(pTouch, pEvent);
 }
 
