@@ -101,11 +101,11 @@ bool CATextView::init()
     
 	m_pTextSelView = CATextSelViewEx::create();
 	m_pTextSelView->setFrame(getFrame());
-	this->addSubview(m_pTextSelView);
+	m_pContainerView->addSubview(m_pTextSelView);
     
 	m_pTextArrView = CATextArrowView::create();
 	m_pTextArrView->setFrame(getFrame());
-	this->addSubview(m_pTextArrView);
+	m_pContainerView->addSubview(m_pTextArrView);
     
 	return true;
 }
@@ -141,8 +141,8 @@ void CATextView::initMarkSprite()
 	{
 		m_pCursorMark = CAView::create();
 		m_pCursorMark->setColor(m_cCursorColor);
-		this->addSubview(m_pCursorMark);
-        this->hideCursorMark();
+		m_pContainerView->addSubview(m_pCursorMark);
+        hideCursorMark();
 	}
 	m_pCursorMark->setFrame(CCRect(0, 0, 2, m_iLineHeight));
 }
@@ -279,6 +279,7 @@ void CATextView::setText(const std::string& var)
 	m_curSelCharRange = std::make_pair(0, 0);
 	insertText(var.c_str(), (int)var.length());
 	m_pTextViewDelegate = pTemp;
+	m_bUpdateImage = true;
 }
 
 const std::string& CATextView::getText()
@@ -677,11 +678,6 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         return true;
     }
 	return CATouchView::ccTouchBegan(pTouch, pEvent);
-}
-
-void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
-{
-	CATouchView::ccTouchMoved(pTouch, pEvent);
 }
 
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
