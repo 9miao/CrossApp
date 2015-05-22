@@ -1009,7 +1009,7 @@ void CDUIShowView::showTextView()
     //textView->setLineSpacing(50);
     //textView->setFontColor(CAColor_gray);
     //textView->setBackGroundColor(CAColor_blueStyle);
-    textView->setBackGroundImage(CAImage::create("source_material/btn_square_selected.png"));
+    //textView->setBackGroundImage(CAImage::create("source_material/btn_square_selected.png"));
     //textView->setColor(CAColor_blue);
     this->getView()->addSubview(textView);
 }
