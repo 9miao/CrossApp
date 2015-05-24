@@ -448,11 +448,14 @@ void CAViewAnimation::update(float dt)
                 short colorA = model->startColor.a + model->deltaColorA * s;
                 view->setColor(ccc4(colorR, colorG, colorB, colorA));
                 view->setAlpha(model->startAlpha + model->deltaAlpha * s);
-                CADipRect rect;
-                rect.origin = model->startImageRect.origin + model->deltaImageRect.origin * s;
-                rect.size = model->startImageRect.size + model->deltaImageRect.size * s;
-                view->setImageRect(rect);
-
+				if (!model->deltaImageRect.equals(CCRectZero))
+				{
+					CADipRect rect;
+					rect.origin = model->startImageRect.origin + model->deltaImageRect.origin * s;
+					rect.size = model->startImageRect.size + model->deltaImageRect.size * s;
+					view->setImageRect(rect);
+				}
+               
                 if (time >= module->duration)
                 {
                     view->setFlipX(model->endFlipX);
