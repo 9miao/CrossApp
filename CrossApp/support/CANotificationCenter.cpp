@@ -79,17 +79,16 @@ void CANotificationCenter::removeObserver(CAObject *target, const char *name)
         if (!strcmp(observer->getName(),name) && observer->getTarget() == target)
         {
             m_observers.erase(itr);
-            return;
+			break;
         }
     }
 }
 
 int CANotificationCenter::removeAllObservers(CAObject *target)
 {
-    CADeque<CANotificationObserver*> toRemove;
-
+	int size = 0;
     CADeque<CANotificationObserver*>::iterator itr;
-    for (itr=m_observers.begin(); itr!=m_observers.end(); ++itr)
+    for (itr=m_observers.begin(); itr!=m_observers.end();)
     {
         CANotificationObserver* observer = *itr;
         if (!observer)
@@ -97,12 +96,16 @@ int CANotificationCenter::removeAllObservers(CAObject *target)
 
         if (observer->getTarget() == target)
         {
-            toRemove.pushBack(observer);
+			itr = m_observers.erase(itr);
+			++size;
         }
+		else
+		{
+			++itr;
+		}
     }
 
-    m_observers.erase(toRemove.begin(), toRemove.end());
-    return (int)toRemove.size();
+	return size;
 }
 
 void CANotificationCenter::registerScriptObserver( CAObject *target, int handler,const char* name)
