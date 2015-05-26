@@ -7,7 +7,7 @@
 //
 
 #include "CADrawerController.h"
-#include "basics/CAScheduler.h"
+#include "animation/CAAnimation.h"
 #include "basics/CAApplication.h"
 #include "dispatcher/CATouchDispatcher.h"
 
@@ -248,6 +248,7 @@ void CADrawerController::updateViewFrame()
         float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
         float scale1 = 1.0f - powf(m_fCurrDivision / m_fDivision, 2) * 0.2f;
         
+        m_pContainer[0]->setAlpha(m_fCurrDivision / m_fDivision);
         m_pContainer[0]->setScale(scale0);
         m_pContainer[1]->setScale(scale1);
         point[0].x = (point[1].x - m_pContainer[0]->getFrame().size.width) / 3;
@@ -321,7 +322,7 @@ void CADrawerController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         this->hideLeftViewController(true);
     }
-    else if (fabsf(m_fOffX) > FLT_EPSILON)
+    else if (std::abs(m_fOffX) > FLT_EPSILON)
     {
         if (m_fOffX > 0)
         {

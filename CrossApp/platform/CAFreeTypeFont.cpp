@@ -3,13 +3,23 @@
 #include "platform/CCFileUtils.h"
 #include "support/ccUTF8.h"
 #include "CATempTypeFont.h"
-
+#include <string.h>
 
 using namespace std;
 
 NS_CC_BEGIN
 
-static map<std::string, FontBufferInfo> s_fontsNames;
+struct StrICmpLess
+{
+	bool operator()(const std::string& _Left, const std::string& _Right) const { 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+		return strcasecmp(_Left.c_str(), _Right.c_str()) < 0;
+#else
+		return stricmp(_Left.c_str(), _Right.c_str()) < 0;
+#endif
+	}
+};
+static map<std::string, FontBufferInfo, StrICmpLess> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
 static CATempTypeFont s_TempFont;
 
@@ -56,11 +66,11 @@ void CAFreeTypeFont::destroyAllFontBuff()
 
 
 CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine)
+	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, std::vector<TextViewLineInfo>* pLinesText)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
-
+	
 	std::u16string cszTemp;
 	std::string cszNewText = pText;
 
@@ -77,9 +87,15 @@ _AgaginInitGlyphs:
 	m_bItalics = bItalics;
 	m_bUnderLine = bUnderLine;
 	
-	initGlyphs(cszNewText.c_str());
+	FT_Error error = initGlyphs(cszNewText.c_str());
+	if (error)
+		return NULL;
 
-	if (m_inHeight < m_textHeight)
+	if (pLinesText != NULL)
+	{
+		initTextView(*pLinesText);
+	}
+	else if (m_inHeight < m_textHeight)
 	{
 		if (cszTemp.empty())
 		{
@@ -157,75 +173,6 @@ _AgaginInitGlyphs:
 	delete[]pData;
 
     pCAImage->autorelease();
-	return pCAImage;
-}
-
-CAImage* CAFreeTypeFont::initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-	std::vector<TextViewLineInfo>& linesText, int iLineSpace, bool bWordWrap)
-{
-	if (pText == NULL || pFontName == NULL)
-		return NULL;
-
-	m_inWidth = inWidth;
-	m_inHeight = inHeight;
-	m_lineSpacing = iLineSpace;
-	m_bWordWrap = bWordWrap;
-	m_bBold = false;
-	m_bItalics = false;
-	m_bUnderLine = false;
-
-	linesText.clear();
-	initTextView(pText, linesText);
-
-
-	ETextAlign eAlign;
-
-	CATextAlignment hAlignment = CATextAlignmentLeft;
-	CAVerticalTextAlignment vAlignment = CAVerticalTextAlignmentTop;
-
-	if (m_inHeight < m_textHeight)
-	{
-		vAlignment = CAVerticalTextAlignmentTop;
-	}
-
-	if (CAVerticalTextAlignmentTop == vAlignment)
-	{
-		eAlign = (CATextAlignmentCenter == hAlignment) ? kAlignTop
-			: (CATextAlignmentLeft == hAlignment) ? kAlignTopLeft : kAlignTopRight;
-	}
-	else if (CAVerticalTextAlignmentCenter == vAlignment)
-	{
-		eAlign = (CATextAlignmentCenter == hAlignment) ? kAlignCenter
-			: (CATextAlignmentLeft == hAlignment) ? kAlignLeft : kAlignRight;
-	}
-	else if (CAVerticalTextAlignmentBottom == vAlignment)
-	{
-		eAlign = (CATextAlignmentCenter == hAlignment) ? kAlignBottom
-			: (CATextAlignmentLeft == hAlignment) ? kAlignBottomLeft : kAlignBottomRight;
-	}
-	else
-	{
-		CCAssert(false, "Not supported alignment format!");
-		return NULL;
-	}
-
-	int width = 0, height = 0;
-	unsigned char* pData = getBitmap(eAlign, &width, &height);
-	if (pData == NULL)
-	{
-		return NULL;
-	}
-
-	CAImage* pCAImage = new CAImage();
-	if (!pCAImage->initWithRawData(pData, CAImage::PixelFormat_A8, width, height))
-	{
-		delete[]pData;
-		delete pCAImage;
-		return NULL;
-	}
-	delete[]pData;
-	pCAImage->autorelease();
-
 	return pCAImage;
 }
 
@@ -598,18 +545,18 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 	m_currentLine->width = (unsigned int)(m_currentLine->bbox.xMax - m_currentLine->bbox.xMin);
 	m_currentLine->pen.x = m_currentLine->bbox.xMax;
 
-	unsigned int iLastWidth = (unsigned int)m_currentLine->bbox.xMax;
 	if (!glyphs.empty())
 	{
 		endLine();
 		newLine();
 
+		unsigned int iTruncted = glyphs[0].pos.x;
 		for (int i = 0; i < glyphs.size(); i++)
 		{
 			if (glyphs[i].index==0)
 				continue;
 			
-			glyphs[i].pos.x -= iLastWidth;
+			glyphs[i].pos.x -= iTruncted;
 		}
 		calcuMultiLines(glyphs);
 	}
@@ -744,6 +691,8 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		return -1;
 
 	glyphs.clear();
+	glyphs.reserve(utf16String.size());
+
 	FT_Bool useKerning = FT_HAS_KERNING(m_face);
 
 	for (int n = 0; n < utf16String.size(); n++)
@@ -825,12 +774,9 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 }
 
 
-FT_Error CAFreeTypeFont::initTextView(const char* pText, std::vector<TextViewLineInfo>& linesText)
+void CAFreeTypeFont::initTextView(std::vector<TextViewLineInfo>& linesText)
 {
-	FT_Error error = initGlyphs(pText);
-	if (error)
-		return error;
-
+	linesText.clear();
 	bool bIncludeReturn = false;
 
 	int iCurCharPos = 0;
@@ -886,7 +832,6 @@ FT_Error CAFreeTypeFont::initTextView(const char* pText, std::vector<TextViewLin
 
 		bIncludeReturn = m_lines[i]->includeRet;
 	}
-	return 0;
 }
 
 void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
@@ -1022,22 +967,7 @@ void CAFreeTypeFont::finiFreeTypeFont()
 
 unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *size, int& ttfIndex)
 {
-	std::string path;
-	std::string lowerCase(pFontName);
-	for (unsigned int i = 0; i < lowerCase.length(); ++i)
-	{
-		lowerCase[i] = tolower(lowerCase[i]);
-	}
-	
-	if (std::string::npos == lowerCase.find("fonts/"))
-	{
-		path = "fonts/";
-		path += lowerCase;
-	}
-	else
-	{
-		path = lowerCase;
-	}
+	std::string path = std::string("fonts/") + pFontName;
 
 	std::map<std::string, FontBufferInfo>::iterator ittFontNames = s_fontsNames.find(path.c_str());
 	if (ittFontNames != s_fontsNames.end())
@@ -1050,7 +980,19 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 
 	ttfIndex = 0;
 
+	for (unsigned int i = 6; i < path.length(); ++i)
+	{
+		path[i] = tolower(path[i]);
+	}
 	unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
+	if (pBuffer == NULL)
+	{
+		for (unsigned int i = 6; i < path.length(); ++i)
+		{
+			path[i] = toupper(path[i]);
+		}
+		pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
+	}
 	if (pBuffer == NULL)
 	{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

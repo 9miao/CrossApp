@@ -155,10 +155,6 @@ void CATouchController::touchBegan()
     }
     else
     {
-        if (view)
-        {
-            view->resignFirstResponder();
-        }
         vector = this->getEventListener(m_pTouch, CAApplication::getApplication()->getRootWindow());
     }
     
@@ -418,7 +414,7 @@ void CATouchController::touchCancelled()
 
 
 CATouchDispatcher::CATouchDispatcher(void)
-:m_bDispatchEvents(true)
+:m_iDispatchEvents(0)
 ,m_bLocked(false)
 ,m_pFirstResponder(NULL)
 {
@@ -437,7 +433,14 @@ bool CATouchDispatcher::init(void)
 
 void CATouchDispatcher::setDispatchEvents(bool dispatchEvents)
 {
-    m_bDispatchEvents = dispatchEvents;
+    if (dispatchEvents)
+    {
+        ++m_iDispatchEvents;
+    }
+    else
+    {
+        --m_iDispatchEvents;
+    }
 }
 
 void CATouchDispatcher::setDispatchEventsTrue()
@@ -452,7 +455,7 @@ void CATouchDispatcher::setDispatchEventsFalse()
 
 void CATouchDispatcher::touchesBegan(CCSet *touches, CAEvent *pEvent)
 {
-    CC_RETURN_IF(!m_bDispatchEvents);
+    CC_RETURN_IF(!isDispatchEvents());
     m_bLocked = true;
     
     CATouch *pTouch;

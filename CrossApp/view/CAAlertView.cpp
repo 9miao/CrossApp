@@ -17,8 +17,9 @@ CAAlertView::CAAlertView()
 , m_pCAlertTarget(NULL)
 , m_pBtnTableView(NULL)
 , m_sMsgFontName("")
-, m_fAlertViewHeight(0.0)
-, m_fAlertViewTitleHeight(0.0)
+, m_fAlertViewHeight(0.0f)
+, m_fAlertViewTitleHeight(0.0f)
+, m_fAlertViewMessageHeight(0.0f)
 {
 
 }
@@ -215,7 +216,8 @@ void CAAlertView::showAlertView() {
 
 	float alertViewMessageHeight = 150;
 
-	if (m_fAlertViewMessageHeight > alertViewMessageHeight) {
+	if (m_fAlertViewMessageHeight > alertViewMessageHeight)
+    {
 	
 		CAScrollView *scrollView = CAScrollView::createWithFrame(CADipRect(
 			0 , 0, ALERT_VIEW_WIDTH, m_fAlertViewLineHeight - alertViewSpaceHeight ));
@@ -239,12 +241,10 @@ void CAAlertView::showAlertView() {
 		scrollView->addSubview(m_pContentLabel);
 	
 	}
-    else
+	else if (m_pContentLabel)
     {
-		
-		CCAssert(m_pContentLabel, "");
 		alertViewMessageHeight = m_fAlertViewMessageHeight;
-		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight  + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
+		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
 		m_pBackView->addSubview(m_pContentLabel);
 	}
 
@@ -255,7 +255,7 @@ void CAAlertView::showAlertView() {
     this->setAlpha(0);
     m_pBackView->setScale(0.5f);
     CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDuration(0.2f);
+    CAViewAnimation::setAnimationDuration(0.15f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
     this->setAlpha(1.0f);
     m_pBackView->setScale(1.0f);
@@ -406,7 +406,14 @@ void CAAlertView::onClickButton(CAControl* btn, CCPoint point)
 	{
 		((CAObject*)m_pCAlertTarget->*m_pCAlertBtnEvent)(btn->getTag());
 	}
-	removeFromSuperview();
+    
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0.15f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAAlertView::removeFromSuperview));
+    this->setAlpha(0.0f);
+    m_pBackView->setScale(0.5f);
+    CAViewAnimation::commitAnimations();
 }
 
 void CAAlertView::show()

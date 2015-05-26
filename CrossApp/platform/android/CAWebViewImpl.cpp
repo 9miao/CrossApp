@@ -328,7 +328,7 @@ bool CAWebViewImpl::shouldStartLoading(const int viewTag, const std::string &url
 		{
 			it->second->setVisible(false);
 			webView->m_pLoadingView->startAnimating();
-			webView->addSubview(webView->m_pLoadingView);
+			webView->m_pLoadingView->setVisible(true);
 		}
 	}
 	return true;
@@ -341,7 +341,7 @@ void CAWebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
 		if (webView && webView->m_bShowLoadingImage)
 		{
 			webView->m_pLoadingView->stopAnimating();
-			webView->m_pLoadingView->removeFromSuperview();
+			webView->m_pLoadingView->setVisible(false);
 			it->second->setVisible(true);
 		}
 		if (webView && webView->m_pWebViewDelegate) {
@@ -368,7 +368,7 @@ void CAWebViewImpl::didFailLoading(const int viewTag, const std::string &url){
 		if (webView && webView->m_bShowLoadingImage)
 		{
 			webView->m_pLoadingView->stopAnimating();
-			webView->m_pLoadingView->removeFromSuperview();
+			webView->m_pLoadingView->setVisible(false);
 			it->second->setVisible(true);
 		}
 		if (webView && webView->m_pWebViewDelegate) {

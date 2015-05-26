@@ -15,7 +15,8 @@
 #include <utility>
 #include "dispatcher/CAIMEDispatcher.h"
 #include "control/CAControl.h"
-#include "view/CAScale9ImageView.h"
+#include "CAScale9ImageView.h"
+#include "CATextEditHelper.h"
 #include "support/ccUTF8.h"
 #include "platform/CAFTFontCache.h"
 #include "support/ConvertUTF.h"
@@ -50,14 +51,14 @@ public:
     virtual bool onTextFieldAttachWithIME(CATextField * sender)
     {
         CC_UNUSED_PARAM(sender);
-        return false;
+        return true;
     }
     
 	//If the sender doesn't want to detach from the IME, return true;
     virtual bool onTextFieldDetachWithIME(CATextField * sender)
     {
         CC_UNUSED_PARAM(sender);
-        return false;
+        return true;
     }
     
 	//If the sender doesn't want to insert the text, return true;
@@ -78,21 +79,16 @@ public:
         return false;
     }
     
-    virtual bool getKeyBoardHeight(int height)
-    {
-        return false;
-    }
+    virtual void getKeyBoardHeight(int height){}
     
-    virtual bool keyBoardCallBack(CATextField *sender)
-    {
-        return false;
-    }
+    
+    virtual bool keyBoardCallBack(CATextField *sender) {return true;}
 };
 
 
 class CC_DLL CATextField
-: public CAView
-, public CAIMEDelegate
+	: public CATouchView
+	, public CAIMEDelegate
 {
 public:
     CATextField();
@@ -176,6 +172,7 @@ protected:
 	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
     virtual void insertText(const char * text, int len);
     virtual void willInsertText(const char* text,int len);
     virtual void AndroidWillInsertText(int start,const char* str,int before,int count);
@@ -192,12 +189,14 @@ protected:
     
 	CCRect getZZCRect(bool* l=NULL, bool* r=NULL);
 	bool execCurSelCharRange();
+	void ccStartSelect();
+	void ccSelectAll() { selectAll(); }
+	void ccPasteFromClipboard() { pasteFromClipboard(); }
 
     virtual void selectAll();
 	virtual void cursorMoveBackward();
 	virtual void cursorMoveForward();
 	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt);
-	virtual void moveSelectCharsCancel(const CCPoint& pt);
 	virtual void moveArrowBtn(const CCPoint& pt);
 
 	virtual void copyToClipboard();

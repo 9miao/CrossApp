@@ -185,14 +185,14 @@ static unsigned long _getLocalFileSize(const std::string& fileName)
 {
     unsigned long lCurFileSize = 0;
     
-    FILE* fp = fopen(fileName.c_str(), "r");
+    FILE* fp = fopen(fileName.c_str(), "rb");
     if (fp != NULL)
     {
         fseek(fp, 0L, SEEK_END);
         lCurFileSize = ftell(fp);
         fclose(fp);
     }
-    fp = fopen(std::string(fileName + ".tmp").c_str(), "r");
+    fp = fopen(std::string(fileName + ".tmp").c_str(), "rb");
     if (fp != NULL)
     {
         fseek(fp, 0L, SEEK_END);

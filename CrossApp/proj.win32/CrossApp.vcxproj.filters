@@ -76,6 +76,9 @@
     <Filter Include="animation">
       <UniqueIdentifier>{9a11cabc-ff1b-4ddb-8450-fcc2fed59407}</UniqueIdentifier>
     </Filter>
+    <Filter Include="images\gif_lib">
+      <UniqueIdentifier>{80ac80b5-ea8e-41ed-a8ad-cc62a8cf14b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\cocoa\CCArray.cpp">
@@ -442,6 +445,27 @@
     </ClCompile>
     <ClCompile Include="..\animation\CAAnimation.cpp">
       <Filter>animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CATextEditHelper.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\dgif_lib.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\gif_err.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\gif_font.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\gif_hash.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\gifalloc.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\quantize.c">
+      <Filter>images\gif_lib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -895,6 +919,9 @@
     </ClInclude>
     <ClInclude Include="..\animation\CAAnimation.h">
       <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CATextEditHelper.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

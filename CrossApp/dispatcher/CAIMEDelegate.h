@@ -76,7 +76,6 @@ protected:
 	virtual void cursorMoveBackward() {}
 	virtual void cursorMoveForward() {}
 	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt) {}
-	virtual void moveSelectCharsCancel(const CCPoint& pt) {}
 	virtual void moveArrowBtn(const CCPoint& pt) {}
 
 	virtual void copyToClipboard() {}

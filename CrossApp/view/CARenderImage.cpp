@@ -181,9 +181,8 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         unsigned int powH = 0;
 
         {
-            //2014.7.21
-            powW = (unsigned int)ccNextPOT(w);
-            powH = (unsigned int)ccNextPOT(h);
+            powW = (unsigned int)w;
+            powH = (unsigned int)h;
         }
 
         data = (unsigned char *)malloc((int)(powW * powH * 4));

@@ -1,7 +1,8 @@
 
 
 #include "CAKeypadDispatcher.h"
-
+#include "basics/CAApplication.h"
+#include "CATouchDispatcher.h"
 NS_CC_BEGIN
 
 CAKeypadDispatcher::CAKeypadDispatcher()
@@ -67,7 +68,7 @@ void CAKeypadDispatcher::forceAddDelegate(CAKeypadDelegate* pDelegate)
 void CAKeypadDispatcher::forceRemoveDelegate(CAKeypadDelegate* pDelegate)
 {
     CAKeypadHandler* pHandler = NULL;
-    CAVector<CAObject*>::iterator itr;
+    std::vector<CAObject*>::iterator itr;
     for (itr=m_vDelegates.begin(); itr!=m_vDelegates.end(); itr++)
     {
         pHandler = dynamic_cast<CAKeypadHandler*>(*itr);
@@ -82,12 +83,17 @@ void CAKeypadDispatcher::forceRemoveDelegate(CAKeypadDelegate* pDelegate)
 
 bool CAKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 {
+    if (!CAApplication::getApplication()->getTouchDispatcher()->isDispatchEvents())
+    {
+        return true;
+    }
+    
     CAKeypadHandler*  pHandler = NULL;
     CAKeypadDelegate* pDelegate = NULL;
 
     m_bLocked = true;
 
-    CAVector<CAObject*>::iterator itr;
+    std::vector<CAObject*>::iterator itr;
     for (itr=m_vDelegates.begin(); itr!=m_vDelegates.end(); itr++)
     {
         pHandler = dynamic_cast<CAKeypadHandler*>(*itr);

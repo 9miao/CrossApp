@@ -8,7 +8,8 @@ NS_CC_BEGIN
 
 std::string CAClipboard::getText()
 {
-	return [[UIPasteboard generalPasteboard].string cStringUsingEncoding:NSUTF8StringEncoding];
+    NSString* str = [UIPasteboard generalPasteboard].string;
+    return str ? [str cStringUsingEncoding:NSUTF8StringEncoding] : "";
 }
 
 void CAClipboard::setText(const std::string& cszStrText)

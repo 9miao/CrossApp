@@ -113,6 +113,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
 	}
 
+	@Override
+	protected void onDestroy() 
+	{
+		super.onDestroy();
+		unregisterReceiver(BluetoothReciever) ; 
+		unregisterReceiver(BTDiscoveryReceiver) ; 
+	}
+
+	
 	class BatteryReceiver extends BroadcastReceiver{
 
         @Override
@@ -195,9 +204,11 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
     public String getPasteBoardStr()
     {
-		Callable<String> callable = new Callable<String>() {
+		Callable<String> callable = new Callable<String>() 
+		{
             @Override
-            public String call() throws Exception {
+            public String call() throws Exception 
+            {
             	ClipboardManager clipboard =  (ClipboardManager)sContext.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.getText();
                 return clipboard.getText().toString();

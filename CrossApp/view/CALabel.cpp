@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include "CALabelStyle.h"
 #include "shaders/CAShaderCache.h"
+#include "platform/CAClipboard.h"
 
 NS_CC_BEGIN
 
@@ -33,9 +34,9 @@ CALabel::CALabel()
 ,m_bBold(false)
 ,m_bItalics(false)
 ,m_bUnderLine(false)
+,m_bEnableCopy(false)
 {
     m_obContentSize = CCSizeZero;
-
 }
 
 CALabel::~CALabel()
@@ -224,6 +225,22 @@ void CALabel::updateImageRect()
     m_sQuad.tl.vertices = vertex3(x1, y2, 0);
     m_sQuad.tr.vertices = vertex3(x2, y2, 0);
 }
+
+void CALabel::copySelectText()
+{
+	CAClipboard::setText(m_nText);
+}
+
+void CALabel::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
+{
+	if (m_bEnableCopy)
+	{
+		CATextToolBarView *pToolBar = CATextToolBarView::create();
+		pToolBar->addButton(UTF8("\u590d\u5236"), this, callfunc_selector(CALabel::copySelectText));
+		pToolBar->show();
+	}
+}
+
 
 void CALabel::setDimensions(const CCSize& var)
 {

@@ -139,7 +139,7 @@ CAView::~CAView(void)
         CAVector<CAView*>::iterator itr;
         for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
         {
-            (*itr)->m_pSuperview = NULL;
+            (*itr)->setSuperview(NULL);
         }
     }
     m_obSubviews.clear();
@@ -626,16 +626,16 @@ void CAView::setAnchorPoint(const CCPoint& point)
     }
 }
 
-void CAView::setContentSize(const CCSize & size)
+void CAView::setContentSize(const CCSize & contentSize)
 {
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
     {
-        CAViewAnimation::getInstance()->setContentSize(size, this);
+        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
     }
-    else if (!size.equals(m_obContentSize))
+    else if (!contentSize.equals(m_obContentSize))
     {
-        m_obContentSize = size;
+        m_obContentSize = contentSize;
         
         float anchorPointInPointsX = m_obContentSize.width * m_obAnchorPoint.x;
         float anchorPointInPointsY = m_obContentSize.height * m_obAnchorPoint.y;
@@ -667,14 +667,35 @@ const CCRect& CAView::getFrame() const
 
 void CAView::setFrame(const CCRect &rect)
 {
-    if (!rect.size.equals(CCSizeZero))
+    float width = rect.size.width / m_fScaleX;
+    float height = rect.size.height / m_fScaleY;
+    CCSize contentSize = CCSize(width, height);
+    CCSize originalSize = m_obContentSize;
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
     {
-        float width = rect.size.width / m_fScaleX;
-        float height = rect.size.height / m_fScaleY;
-        this->setContentSize(CCSize(width, height));
+        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
+        
+        m_obContentSize = contentSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
+    else
+    {
+        this->setContentSize(contentSize);
     }
     
     this->setFrameOrigin(rect.origin);
+    
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        m_obContentSize = originalSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
 }
 
 void CAView::setFrameOrigin(const CCPoint& point)
@@ -703,21 +724,6 @@ const CCPoint& CAView::getFrameOrigin()
     return m_obFrameRect.origin;
 }
 
-CCRect CAView::getBounds() const
-{
-    CCRect rect = CCRectZero;
-    rect.size = m_obContentSize;
-    return rect;
-}
-
-void CAView::setBounds(const CCRect& rect)
-{
-    if ( ! rect.size.equals(CCSizeZero))
-    {
-        this->setContentSize(rect.size);
-    }
-}
-
 CCRect CAView::getCenter()
 {
     CCRect rect = this->getFrame();
@@ -728,14 +734,35 @@ CCRect CAView::getCenter()
 
 void CAView::setCenter(const CCRect& rect)
 {
-    if ( ! rect.size.equals(CCSizeZero))
+    float width = rect.size.width / m_fScaleX;
+    float height = rect.size.height / m_fScaleY;
+    CCSize contentSize = CCSize(width, height);
+    CCSize originalSize = m_obContentSize;
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
     {
-        float width = rect.size.width / m_fScaleX;
-        float height = rect.size.height / m_fScaleY;
-        this->setContentSize(CCSize(width, height));
+        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
+        
+        m_obContentSize = contentSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
+    else
+    {
+        this->setContentSize(contentSize);
     }
     
     this->setCenterOrigin(rect.origin);
+    
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        m_obContentSize = originalSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
 }
 
 CCPoint CAView::getCenterOrigin()
@@ -760,6 +787,21 @@ void CAView::setCenterOrigin(const CCPoint& point)
     {
         this->setPoint(p);
         m_bFrame = false;
+    }
+}
+
+CCRect CAView::getBounds() const
+{
+    CCRect rect = CCRectZero;
+    rect.size = m_obContentSize;
+    return rect;
+}
+
+void CAView::setBounds(const CCRect& rect)
+{
+    if (!rect.size.equals(CCSizeZero))
+    {
+        this->setContentSize(rect.size);
     }
 }
 
@@ -1010,7 +1052,7 @@ void CAView::removeAllSubviews()
                 (*itr)->onExit();
             }
             
-            (*itr)->m_pSuperview = NULL;
+            (*itr)->setSuperview(NULL);
         }
         
         m_obSubviews.clear();
