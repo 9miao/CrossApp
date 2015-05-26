@@ -99,7 +99,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\extensions\libwebsockets\win32\lib\*.*" "$(Ou
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..\Classes\win;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -130,13 +130,31 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\extensions\libwebsockets\win32\lib\*.*" "$(Ou
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\FirstViewController.cpp" />
+    <ClCompile Include="..\Classes\CDNewsAboutController.cpp" />
+    <ClCompile Include="..\Classes\CDNewsImageController.cpp" />
+    <ClCompile Include="..\Classes\CDNewsViewController.cpp" />
+    <ClCompile Include="..\Classes\CDShowNewsImage.cpp" />
+    <ClCompile Include="..\Classes\CDUIShowCollectionView.cpp" />
+    <ClCompile Include="..\Classes\CDUIShowView.cpp" />
+    <ClCompile Include="..\Classes\CDWebViewController.cpp" />
+    <ClCompile Include="..\Classes\CommonHttpManager.cpp" />
+    <ClCompile Include="..\Classes\MenuViewController.cpp" />
     <ClCompile Include="..\Classes\RootWindow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\FirstViewController.h" />
+    <ClInclude Include="..\Classes\AppMacros.h" />
+    <ClInclude Include="..\Classes\CDData.h" />
+    <ClInclude Include="..\Classes\CDNewsAboutController.h" />
+    <ClInclude Include="..\Classes\CDNewsImageController.h" />
+    <ClInclude Include="..\Classes\CDNewsViewController.h" />
+    <ClInclude Include="..\Classes\CDShowNewsImage.h" />
+    <ClInclude Include="..\Classes\CDUIShowCollectionView.h" />
+    <ClInclude Include="..\Classes\CDUIShowView.h" />
+    <ClInclude Include="..\Classes\CDWebViewController.h" />
+    <ClInclude Include="..\Classes\CommonHttpManager.h" />
+    <ClInclude Include="..\Classes\MenuViewController.h" />
     <ClInclude Include="..\Classes\RootWindow.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

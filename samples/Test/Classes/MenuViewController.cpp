@@ -7,9 +7,7 @@
 //
 
 #include "MenuViewController.h"
-#include "RootWindow.h"
 #include "CDWebViewController.h"
-#include "CDData.h"
 
 MenuViewController::MenuViewController()
 {
@@ -96,8 +94,8 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         arrow->setTag(101);
         cell->addSubview(arrow);
     }
-    CALabel* test = (CALabel*)cell->getSubviewByTag(100);
-    test->setText(menuList[row]);
+	CALabel* test = (CALabel*)cell->getSubviewByTag(100);
+	test->setText(UTF8EX(menuList[row]));// menuList[row]);
     CAImageView* arrow = (CAImageView*)cell->getSubviewByTag(101);
     arrow->setImage(CAImage::create("source_material/cell_btn_right.png"));
     return cell;

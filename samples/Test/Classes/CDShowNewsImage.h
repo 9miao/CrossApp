@@ -9,14 +9,11 @@
 #ifndef __Test__CDShowNewsImage__
 #define __Test__CDShowNewsImage__
 
-#include "CrossApp.h"
-#include "CDData.h"
+#include "RootWindow.h"
 
-class CDShowNewsImage : public CAViewController,
-public CAPageViewDelegate
+class CDShowNewsImage : public CAViewController,CAPageViewDelegate
 {
 public:
-    
     CDShowNewsImage();
     
     virtual ~CDShowNewsImage();
@@ -26,14 +23,10 @@ public:
     void viewDidUnload();
     
     void initNewsImageView(newsImage _image);
-    
 public:
-    
     virtual void pageViewDidEndTurning(CAPageView* pageView);
-    
     virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point);
 public:
-    
     CADipSize winSize;
     newsImage m_image;
     CAPageView* p_PageView;

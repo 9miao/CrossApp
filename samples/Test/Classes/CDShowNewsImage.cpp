@@ -7,7 +7,6 @@
 //
 
 #include "CDShowNewsImage.h"
-#include "CommonHttpManager.h"
 
 CDShowNewsImage::CDShowNewsImage()
 :m_isShow(true)
@@ -73,7 +72,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     p_bg->addSubview(p_title);
     
     char temp[10];
-    sprintf(temp, "1/%d",m_image.m_imageUrl.size());
+    sprintf(temp, "1/%lu",m_image.m_imageUrl.size());
     p_index = CALabel::createWithFrame(CADipRect(winSize.width-60,10,80,30));
     p_index->setText(temp);
     p_index->setColor(CAColor_white);
@@ -102,7 +101,7 @@ void CDShowNewsImage::pageViewDidEndTurning(CAPageView* pageView)
     CCLog("----%d----%s",pageView->getCurrPage(),m_image.m_imageDesc[pageView->getCurrPage()].c_str());
     p_des->setText(m_image.m_imageDesc[pageView->getCurrPage()]);
     char temp[10];
-    sprintf(temp, "%d/%d",pageView->getCurrPage()+1,m_image.m_imageUrl.size());
+    sprintf(temp, "%d/%lu",pageView->getCurrPage()+1,m_image.m_imageUrl.size());
     p_index->setText(temp);
     CAVector<CAView* > tem_view = p_PageView->getSubviews();
     for (int i=0; i<tem_view.size(); i++) {
@@ -115,7 +114,8 @@ void CDShowNewsImage::pageViewDidEndTurning(CAPageView* pageView)
 
 void CDShowNewsImage::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point)
 {
-    if (m_isShow) {
+    if (m_isShow)
+    {
         m_isShow=false;
         //开始执行动画
         CAViewAnimation::beginAnimations("", NULL);
@@ -126,7 +126,9 @@ void CDShowNewsImage::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigne
         
         //执行动画
         CAViewAnimation::commitAnimations();
-    }else{
+    }
+    else
+    {
         m_isShow=true;
         //开始执行动画
         CAViewAnimation::beginAnimations("", NULL);

@@ -412,11 +412,12 @@ bool CATextSelViewEx::init()
 	m_pCursorMarkL = CAImageView::createWithImage(CAImage::create("source_material/text_pos_l.png"));
 	insertSubview(m_pCursorMarkL, CAWindowZoderTop);
 	m_pCursorMarkL->setVisible(false);
-
+    
 	m_pCursorMarkR = CAImageView::createWithImage(CAImage::create("source_material/text_pos_r.png"));
 	insertSubview(m_pCursorMarkR, CAWindowZoderTop);
 	m_pCursorMarkR->setVisible(false);
-
+    
+    this->setHaveNextResponder(false);
 	return true;
 }
 
@@ -469,6 +470,7 @@ void CATextSelViewEx::showTextSelView(const std::vector<CCRect>& vt, float iLine
 
 	m_pCursorMarkR->setFrame(CCRect(pt2.x, pt2.y, CATextSelectArrWidth, CATextSelectArrHeight));
 	m_pCursorMarkR->setVisible(true);
+    this->setVisible(true);
 }
 
 void CATextSelViewEx::hideTextSelView()
@@ -477,6 +479,7 @@ void CATextSelViewEx::hideTextSelView()
 
 	m_pCursorMarkL->setVisible(false);
 	m_pCursorMarkR->setVisible(false);
+    this->setVisible(false);
 }
 
 bool CATextSelViewEx::isTextViewShow()

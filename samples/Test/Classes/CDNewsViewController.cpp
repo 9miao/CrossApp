@@ -8,7 +8,6 @@
 
 #include "CDNewsViewController.h"
 #include "CDWebViewController.h"
-#include "RootWindow.h"
 
 extern int page_index;
 
@@ -108,12 +107,62 @@ void CDNewsViewController::viewDidLoad()
         {
             p_pLoading = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,50,50));
             this->getView()->insertSubview(p_pLoading, CAWindowZoderTop);
+            p_pLoading->setLoadingMinTime(0.5f);
             p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
         }
     }
     else
     {
         this->initNewsTableView();
+    }
+}
+
+void CDNewsViewController::showAlert()
+{
+    p_alertView = CAView::createWithFrame(this->getView()->getBounds());
+    this->getView()->addSubview(p_alertView);
+    
+    CAImageView* bg = CAImageView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
+    bg->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    bg->setImage(CAImage::create("HelloWorld.png"));
+    
+    CAButton* btn5 = CAButton::create(CAButtonTypeSquareRect);
+    btn5->setTag(100);
+    btn5->setCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width, winSize.height));
+    btn5->setTitleColorForState(CAControlStateNormal,CAColor_white);
+    btn5->setBackGroundViewForState(CAControlStateNormal, bg);
+    btn5->setBackGroundViewForState(CAControlStateHighlighted, bg);
+    btn5->addTarget(this, CAControl_selector(CDNewsViewController::buttonCallBack), CAControlEventTouchUpInSide);
+    p_alertView->addSubview(btn5);
+    
+    CALabel* test = CALabel::createWithCenter(CADipRect(winSize.width/2,
+                                                        winSize.height-100,
+                                                        winSize.width,
+                                                        40));
+    test->setColor(CAColor_gray);
+    test->setTextAlignment(CATextAlignmentCenter);
+    test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+    test->setFontSize(_px(24));
+    test->setText("网络不给力，请点击屏幕重新加载～");
+    p_alertView->addSubview(test);
+    
+}
+
+void CDNewsViewController::buttonCallBack(CAControl* btn,CCPoint point)
+{
+    this->getView()->removeSubview(p_alertView);
+    p_alertView = NULL;
+    std::map<std::string,
+    std::string> key_value;
+    char temurl[200];
+    sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=1&tag=%s",menuTag[urlID]);
+    CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
+                                               CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
+    {
+        p_pLoading = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,50,50));
+        this->getView()->insertSubview(p_pLoading, CAWindowZoderTop);
+        p_pLoading->setLoadingMinTime(0.5f);
+        p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
     }
 }
 
@@ -206,6 +255,10 @@ void CDNewsViewController::onRefreshRequestFinished(const HttpResponseStatus& st
 
 void CDNewsViewController::initNewsTableView()
 {
+    if (m_page.empty()) {
+        showAlert();
+        return;
+    }
     if (p_TableView!=NULL) {
         this->getView()->removeSubview(p_TableView);
     }
@@ -240,6 +293,7 @@ void CDNewsViewController::initNewsPageView()
     temImage0->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     temImage0->setImage(CAImage::create("HelloWorld.png"));
     temImage0->setUrl(m_page[m_page.size()-1].m_pic);
+    
     viewList.pushBack(temImage0);
     for (int i=0; i<m_page.size(); i++) {
         //初始化viewList
@@ -259,7 +313,7 @@ void CDNewsViewController::initNewsPageView()
     tempview->addSubview(p_PageView);
     p_PageView->setCurrPage(1, false);
     pageControl = CAPageControl::createWithCenter(CADipRect(winSize.width-80, winSize.width/2-25, 100, 50));
-    pageControl->setNumberOfPages(m_page.size());
+    pageControl->setNumberOfPages((int)m_page.size());
     pageControl->setPageIndicatorImage(CAImage::create("image/pagecontrol_selected.png"));
     pageControl->setCurrIndicatorImage(CAImage::create("image/pagecontrol_bg.png"));
     pageControl->setPageIndicatorTintColor(CAColor_gray);

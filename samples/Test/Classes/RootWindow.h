@@ -4,9 +4,7 @@
 #define __HelloCpp__RootWindow__
 
 #include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "CDData.h"
 
 class RootWindow: public CAWindow
 {
@@ -21,16 +19,10 @@ public:
     
     virtual bool init();
     
-    CC_SYNTHESIZE_READONLY(CANavigationController*,
-                           m_pRootNavigationController,
-                           RootNavigationController);
-    
-    CC_SYNTHESIZE_READONLY(CADrawerController*,
-                           m_pRootDrawerController,
-                           DrawerController);
+    CC_SYNTHESIZE_READONLY(CANavigationController*, m_pRootNavigationController, RootNavigationController);
+    CC_SYNTHESIZE_READONLY(CADrawerController*, m_pRootDrawerController, DrawerController);
 
     void initUIView();
-    
     void intNewsView();
     
 };

@@ -8,8 +8,6 @@
 
 #include "CDNewsImageController.h"
 #include "CDShowNewsImage.h"
-#include "RootWindow.h"
-#include "CDData.h"
 
 CDNewsImageTableCell::CDNewsImageTableCell()
 {
@@ -124,6 +122,7 @@ void CDNewsImageController::viewDidLoad()
         {
             p_pLoading = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,50,50));
             this->getView()->insertSubview(p_pLoading, CAWindowZoderTop);
+            p_pLoading->setLoadingMinTime(0.5f);
             p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsImageController::initImageTableView));
         }
     }else{
@@ -134,6 +133,10 @@ void CDNewsImageController::viewDidLoad()
 
 void CDNewsImageController::initImageTableView()
 {
+    if (m_ImageMsg.empty()) {
+        showAlert();
+        return;
+    }
     p_TableView= CATableView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
@@ -150,6 +153,55 @@ void CDNewsImageController::initImageTableView()
     refreshDiscount1->setLabelColor(CAColor_black);
     p_TableView->setFooterRefreshView(refreshDiscount);
     p_TableView->setHeaderRefreshView(refreshDiscount1);
+}
+
+void CDNewsImageController::showAlert()
+{
+    p_alertView = CAView::createWithFrame(this->getView()->getBounds());
+    this->getView()->addSubview(p_alertView);
+    
+    CAImageView* bg = CAImageView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
+    bg->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    bg->setImage(CAImage::create("HelloWorld.png"));
+    
+    CAButton* btn5 = CAButton::create(CAButtonTypeSquareRect);
+    btn5->setTag(100);
+    btn5->setCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width, winSize.height));
+    btn5->setTitleColorForState(CAControlStateNormal,CAColor_white);
+    btn5->setBackGroundViewForState(CAControlStateNormal, bg);
+    btn5->setBackGroundViewForState(CAControlStateHighlighted, bg);
+    btn5->addTarget(this, CAControl_selector(CDNewsImageController::buttonCallBack), CAControlEventTouchUpInSide);
+    p_alertView->addSubview(btn5);
+    
+    CALabel* test = CALabel::createWithCenter(CADipRect(winSize.width/2,
+                                                        winSize.height-100,
+                                                        winSize.width,
+                                                        40));
+    test->setColor(CAColor_gray);
+    test->setTextAlignment(CATextAlignmentCenter);
+    test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+    test->setFontSize(_px(24));
+    test->setText("网络不给力，请点击屏幕重新加载～");
+    p_alertView->addSubview(test);
+    
+}
+
+void CDNewsImageController::buttonCallBack(CAControl* btn,CCPoint point)
+{
+    this->getView()->removeSubview(p_alertView);
+    p_alertView = NULL;
+    std::map<std::string,
+    std::string> key_value;
+    char temurl[200];
+    sprintf(temurl, "http://123.183.220.246:8090/pic?num=1&tag=%s",imageTag[urlID]);
+    CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
+                                               CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
+    {
+        p_pLoading = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,50,50));
+        this->getView()->insertSubview(p_pLoading, CAWindowZoderTop);
+        p_pLoading->setLoadingMinTime(0.5f);
+        p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsImageController::initImageTableView));
+    }
 }
 
 void CDNewsImageController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollView *view)

@@ -221,7 +221,7 @@ void CommonHttpManager::send_post(const std::string& url,
         }
         while (1);
     }
-    CCLog("---%s %s",url.c_str(), postData.c_str());
+    //CCLog("---%s %s",url.c_str(), postData.c_str());
 
     CAHttpRequest* httpRequest = new CAHttpRequest();
     httpRequest->setUrl(url.c_str());
@@ -581,7 +581,7 @@ void CommonHttpResponseCallBack::onResponseJson(CAHttpClient* client, CAHttpResp
                 CC_RETURN_IF(viewController->isViewRunning() == false);
             }
             
-            CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n",data.c_str());
+            //CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n",data.c_str());
             
             CSJson::Reader read;
             CSJson::Value root;

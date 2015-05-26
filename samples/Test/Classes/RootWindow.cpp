@@ -1,4 +1,4 @@
-
+﻿
 
 #include "RootWindow.h"
 #include "MenuViewController.h"
@@ -40,8 +40,7 @@ bool RootWindow::init()
     }
     CCSize winSize = this->getBounds().size;
     initUIView();
-    //intNewsView();
-    
+
     return true;
 }
 
@@ -49,7 +48,7 @@ void RootWindow::initUIView()
 {
     CDUIShowCollectionView* tabBarController = new CDUIShowCollectionView();
     tabBarController->init();
-    tabBarController->setTitle("控件展示");
+	tabBarController->setTitle(UTF8("控件展示"));
     CANavigationController *nav = new CANavigationController();
     nav->initWithRootViewController(tabBarController);
     nav->setNavigationBarBackGroundImage(CAImage::create("image/navbg.jpg"));
@@ -83,28 +82,28 @@ void RootWindow::intNewsView()
     std::vector<CAViewController*> vec_news;
     
     CDNewsViewController* news_controller1 = new CDNewsViewController(0);
-    news_controller1->autorelease();
-    news_controller1->setTabBarItem(CATabBarItem::create(newsTitle[0], CAImage::create(""),CAImage::create("")));
+    news_controller1->autorelease(); 
+	news_controller1->setTabBarItem(CATabBarItem::create(UTF8EX(newsTitle[0]), CAImage::create(""), CAImage::create("")));
     vec_news.push_back(news_controller1);
     
     CDNewsViewController* news_controller2 = new CDNewsViewController(1);
     news_controller2->autorelease();
-    news_controller2->setTabBarItem(CATabBarItem::create(newsTitle[1], CAImage::create(""),CAImage::create("")));
+	news_controller2->setTabBarItem(CATabBarItem::create(UTF8EX(newsTitle[1]), CAImage::create(""), CAImage::create("")));
     vec_news.push_back(news_controller2);
     
     CDNewsViewController* news_controller3 = new CDNewsViewController(2);
     news_controller3->autorelease();
-    news_controller3->setTabBarItem(CATabBarItem::create(newsTitle[2], CAImage::create(""),CAImage::create("")));
+	news_controller3->setTabBarItem(CATabBarItem::create(UTF8EX(newsTitle[2]), CAImage::create(""), CAImage::create("")));
     vec_news.push_back(news_controller3);
     
     CDNewsViewController* news_controller4 = new CDNewsViewController(3);
     news_controller4->autorelease();
-    news_controller4->setTabBarItem(CATabBarItem::create(newsTitle[3], CAImage::create(""),CAImage::create("")));
+	news_controller4->setTabBarItem(CATabBarItem::create(UTF8EX(newsTitle[3]), CAImage::create(""), CAImage::create("")));
     vec_news.push_back(news_controller4);
     
     CDNewsViewController* news_controller5 = new CDNewsViewController(4);
     news_controller5->autorelease();
-    news_controller5->setTabBarItem(CATabBarItem::create(newsTitle[4], CAImage::create(""),CAImage::create("")));
+	news_controller5->setTabBarItem(CATabBarItem::create(UTF8EX(newsTitle[4]), CAImage::create(""), CAImage::create("")));
     vec_news.push_back(news_controller5);
     
     CATabBarController * newsTabBarController = new CATabBarController();
@@ -127,21 +126,21 @@ void RootWindow::intNewsView()
     
     CDNewsImageController* controller1 = new CDNewsImageController(0);
     controller1->autorelease();
-    controller1->setTabBarItem(CATabBarItem::create(imageTitle[0], CAImage::create(""),CAImage::create("")));
+	controller1->setTabBarItem(CATabBarItem::create(UTF8EX(imageTitle[0]), CAImage::create(""), CAImage::create("")));
     vec_image.push_back(controller1);
     
     CDNewsImageController* controller2 = new CDNewsImageController(1);
-    controller2->setTabBarItem(CATabBarItem::create(imageTitle[1], CAImage::create(""),CAImage::create("")));
+	controller2->setTabBarItem(CATabBarItem::create(UTF8EX(imageTitle[1]), CAImage::create(""), CAImage::create("")));
     controller2->autorelease();
     vec_image.push_back(controller2);
     
     CDNewsImageController* controller3 = new CDNewsImageController(2);
-    controller3->setTabBarItem(CATabBarItem::create(imageTitle[2], CAImage::create(""),CAImage::create("")));
+	controller3->setTabBarItem(CATabBarItem::create(UTF8EX(imageTitle[2]), CAImage::create(""), CAImage::create("")));
     controller3->autorelease();
     vec_image.push_back(controller3);
     
     CDNewsImageController* controller4 = new CDNewsImageController(3);
-    controller4->setTabBarItem(CATabBarItem::create(imageTitle[3], CAImage::create(""),CAImage::create("")));
+	controller4->setTabBarItem(CATabBarItem::create(UTF8EX(imageTitle[3]), CAImage::create(""), CAImage::create("")));
     controller4->autorelease();
     vec_image.push_back(controller4);
     

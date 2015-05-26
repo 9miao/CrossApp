@@ -14,7 +14,6 @@
 class CDWebViewController : public CAViewController
 {
 public:
-    
     CDWebViewController();
     
     virtual ~CDWebViewController();
@@ -24,9 +23,8 @@ public:
     void viewDidUnload();
     
     void initWebView(string url);
-
+    //CREATE_FUNC(CDWebViewController);
 public:
-    
     CADipSize winSize;
     CAWebView* p_webView;
     std::string m_url;

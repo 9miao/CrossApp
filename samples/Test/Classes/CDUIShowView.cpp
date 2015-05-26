@@ -163,12 +163,12 @@ unsigned int ETableView::tableViewHeightForFooterInSection(CATableView* table, u
 CDListView::CDListView()
 {
     tempList.clear();
-    tempList.push_back("最新上线");
-    tempList.push_back("亲子特卖");
-    tempList.push_back("昨日上新");
-    tempList.push_back("最后疯抢");
-    tempList.push_back("美妆精选");
-    tempList.push_back("即将上线");
+    tempList.push_back("1");
+    tempList.push_back("2");
+    tempList.push_back("3");
+    tempList.push_back("4");
+    tempList.push_back("5");
+    tempList.push_back("6");
 }
 
 CDListView::~CDListView()
@@ -974,6 +974,7 @@ void CDUIShowView::showTextField()
     CATextField* textField = CATextField::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width/2, 50));
     textField->setTag(100);
     textField->setPlaceHolder("Input");
+    textField->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
     this->getView()->addSubview(textField);
     showNum = 2;
 }
@@ -1009,8 +1010,7 @@ void CDUIShowView::showTextView()
     //textView->setLineSpacing(50);
     //textView->setFontColor(CAColor_gray);
     //textView->setBackGroundColor(CAColor_blueStyle);
-    //textView->setBackGroundImage(CAImage::create("source_material/btn_square_selected.png"));
-    //textView->setColor(CAColor_blue);
+    textView->setBackGroundImage(CAImage::create("source_material/btn_square_selected.png"));
     this->getView()->addSubview(textView);
 }
 
@@ -1250,7 +1250,7 @@ void CDUIShowView::showTableView()
 void CDUIShowView::etableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
     //CCLog("ssss====%d",row);
-    p_TableView->setContentOffset(CCPoint(0,313*row), false);
+    p_TableView->setContentOffset(CADipPoint(0,313*row), false);
 }
 
 void CDUIShowView::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
@@ -1309,8 +1309,6 @@ CAView* CDUIShowView::tableViewSectionViewForHeaderInSection(CATableView* table,
 CAView* CDUIShowView::tableViewSectionViewForFooterInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
 {
     CAView* view = CAView::createWithColor(CAColor_gray);
-    
-    
     return view;
 }
 
@@ -1575,18 +1573,18 @@ void CDUIShowView::jsonTest()
 void CDUIShowView::httpTest()
 {
     string url = "http://test.yuhaisong.com/test/index.php";
-    CAHttpRequest* request = new CAHttpRequest();
+    CCHttpRequest* request = new CCHttpRequest();
     request->setTag("Getpage");
     request->setRequestType(CCHttpRequest::kHttpPost);
     request->setUrl(url.c_str());
     request->setResponseCallback(this,httpresponse_selector(CDUIShowView::requestResult));
-    CAHttpClient* httpClient = CAHttpClient::getInstance();
+    CCHttpClient* httpClient = CCHttpClient::getInstance();
     httpClient->setTimeoutForConnect(30);
     httpClient->send(request);
     request->release();
 }
 
-void CDUIShowView::requestResult(CAHttpClient *client, CAHttpResponse *response)
+void CDUIShowView::requestResult(CCHttpClient *client, CCHttpResponse *response)
 {
     if (!response->isSucceed())
     {

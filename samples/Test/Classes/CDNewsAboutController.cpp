@@ -7,7 +7,6 @@
 //
 
 #include "CDNewsAboutController.h"
-#include "CDData.h"
 
 CDNewsAboutTableCell::CDNewsAboutTableCell()
 {
@@ -86,11 +85,11 @@ void CDNewsAboutController::viewDidLoad()
     p_TableView->setAlwaysTopSectionHeader(false);
     p_TableView->setBackGroundColor(CAColor_white);
     this->getView()->addSubview(p_TableView);
-    p_TableView->setTableHeaderHeight(_px(600));
+    p_TableView->setTableHeaderHeight(_px(602));
     CAView* view = CAView::createWithColor(CAColor_clear);
-    view->setFrame(CADipRect(0,0,winSize.width,600));
+    view->setFrame(CADipRect(0,0,winSize.width,602));
     
-    CAImageView* head_bg = CAImageView::createWithFrame(CADipRect(0,0,winSize.width,600));
+    CAImageView* head_bg = CAImageView::createWithFrame(CADipRect(0,0,winSize.width,602));
     head_bg->setImage(CAImage::create("image/about_head_bg.png"));
     view->addSubview(head_bg);
     
@@ -164,16 +163,16 @@ CATableViewCell* CDNewsAboutController::tableCellAtIndex(CATableView* table, con
     cellBtn->setVisible(false);
     switch (section) {
         case 0:
-            cellText->setText(aboutMenuTag[row]);
+			cellText->setText(UTF8EX(aboutMenuTag[row]));
             break;
         case 1:
-            cellText->setText(aboutMenuTag[row+2]);
+			cellText->setText(UTF8EX(aboutMenuTag[row + 2]));
             if (row==2||row==3||row==4) {
                 cellBtn->setVisible(true);
             };
             break;
         case 2:
-            cellText->setText(aboutMenuTag[row+8]);
+			cellText->setText(UTF8EX(aboutMenuTag[row + 8]));
             break;
     }
     return cell;

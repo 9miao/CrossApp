@@ -81,6 +81,10 @@ public:
 
 	static CATextView* createWithCenter(const CCRect& rect);
 
+    void setBackGroundImage(CAImage* image);
+    
+    void setBackGroundColor(const CAColor4B &color);
+    
 protected:
 	virtual bool init();
 	virtual bool canAttachWithIME();
@@ -191,6 +195,7 @@ protected:
     virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
 
 private:
+    
 	CAScrollView* m_pContainerView;
 
 	CAView* m_pCursorMark;

@@ -85,7 +85,7 @@ bool CATextView::init()
 	{
 		return false;
 	}
-    this->setColor(CAColor_gray);
+    this->setColor(CAColor_clear);
     
 	m_pContainerView = CAScrollView::createWithFrame(CCRectZero);
 	m_pContainerView->setShowsHorizontalScrollIndicator(false);
@@ -93,7 +93,6 @@ bool CATextView::init()
 	m_pContainerView->setBounceHorizontal(false);
     m_pContainerView->setHaveNextResponder(true);
 	this->addSubview(m_pContainerView);
-    m_pContainerView->setBackGroundColor(CAColor_clear);
     
 	m_pImageView = new CAImageView();
     m_pImageView->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
@@ -133,6 +132,16 @@ CATextView* CATextView::createWithCenter(const CCRect& rect)
 	}
 	CC_SAFE_DELETE(text);
 	return NULL;
+}
+
+void CATextView::setBackGroundImage(CAImage* image)
+{
+    m_pContainerView->setBackGroundImage(image);
+}
+
+void CATextView::setBackGroundColor(const CAColor4B &color)
+{
+    m_pContainerView->setBackGroundColor(color);
 }
 
 void CATextView::initMarkSprite()

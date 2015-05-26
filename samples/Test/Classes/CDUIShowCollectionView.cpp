@@ -1,4 +1,4 @@
-//
+﻿//
 //  CDUIShowCollectionView.cpp
 //  Test
 //
@@ -9,8 +9,7 @@
 #include "CDUIShowCollectionView.h"
 #include "CDUIShowView.h"
 #include "CDWebViewController.h"
-#include "RootWindow.h"
-#include "CDData.h"
+
 
 #define VIEWCONTROLLER_SWITCH(p_Contrller,index)											\
 p_Contrller* p_ViewContrller = new p_Contrller();										\
@@ -23,7 +22,7 @@ p_ViewContrller->initUIWithIndex(index);
 
 CDUIShowCollectionView::CDUIShowCollectionView()
 {
-    UINAME.push_back("AlertView");
+	UINAME.push_back("AlertView");
     UINAME.push_back("Button");
     UINAME.push_back("ImageView");
     UINAME.push_back("Scale9ImageView");
