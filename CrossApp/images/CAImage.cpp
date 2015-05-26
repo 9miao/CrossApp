@@ -1280,9 +1280,9 @@ bool CAImage::initWithJpgData(const unsigned char *  data, unsigned long dataLen
         /* setup decompression process and source, then read JPEG header */
         jpeg_create_decompress( &cinfo );
         
-#ifndef CC_TARGET_QT5
-        jpeg_mem_src( &cinfo, const_cast<unsigned char*>(data), dataLen );
-#endif /* CC_TARGET_QT5 */
+//#ifndef CC_TARGET_QT5
+//        jpeg_mem_src( &cinfo, const_cast<unsigned char*>(data), dataLen );
+//#endif /* CC_TARGET_QT5 */
         
         /* reading the image header which contains image information */
 #if (JPEG_LIB_VERSION >= 90)
@@ -1525,6 +1525,9 @@ bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
         return false;
     }
     
+    m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
+    m_uPixelsWide = m_pGIF->SWidth;
+    m_uPixelsHigh = m_pGIF->SHeight;
     m_pData = (unsigned char*)malloc(sizeof(unsigned char) * m_uPixelsWide * m_uPixelsHigh * 4);
     for (unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
     {
@@ -1534,9 +1537,6 @@ bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
         *(m_pData + i * 4 + 3) = '\0';
     }
     
-    m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
-    m_uPixelsWide = m_pGIF->SWidth;
-    m_uPixelsHigh = m_pGIF->SHeight;
     m_bHasPremultipliedAlpha = false;
     
     this->setGifImageWithIndex(0);
