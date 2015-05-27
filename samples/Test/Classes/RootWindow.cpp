@@ -52,21 +52,17 @@ void RootWindow::initUIView()
     CANavigationController *nav = new CANavigationController();
     nav->initWithRootViewController(tabBarController);
     nav->setNavigationBarBackGroundImage(CAImage::create("image/navbg.jpg"));
-
+    tabBarController->release();
+    
     
     MenuViewController* _menuview = MenuViewController::create();
     
     CADrawerController* drawer = new CADrawerController();
     drawer->initWithController(_menuview, nav, this->getBounds().size.width/6*5);
     drawer->setBackgroundView(CAImageView::createWithImage(CAImage::create("image/bg.jpg")));
-    tabBarController->release();
+    drawer->setEffect3D(true);
     nav->release();
     
-    CCRect rect = this->getBounds();
-    rect.size.height /= 2;
-    rect.origin.y = rect.size.height;
-    //drawer->getBackgroundView()->addSubview(CAView::createWithFrame(rect));
-    drawer->setEffect3D(true);
     this->setRootViewController(drawer);
     drawer->release();
     

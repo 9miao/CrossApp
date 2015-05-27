@@ -318,7 +318,7 @@ void CDUIShowView::viewDidUnload()
     
 }
 
-void CDUIShowView::initUIWithIndex(int _index)
+void CDUIShowView::showUiWithIndex(int _index)
 {
     UIINDEX = _index;
     switch (_index) {
@@ -371,7 +371,6 @@ void CDUIShowView::initUIWithIndex(int _index)
             showListView();
             break;
         case 16:
-            //httpTest();
             showWebView();
             break;
         case 17:
@@ -379,6 +378,9 @@ void CDUIShowView::initUIWithIndex(int _index)
             break;
         case 18:
             showScrollView();
+            break;
+        case 19:
+            showFlashView();
             break;
         default:
             break;
@@ -748,7 +750,8 @@ void CDUIShowView::showLabel()
 void CDUIShowView::showLabelByIndex()
 {
     this->getView()->removeSubviewByTag(100);
-    if (showIndex==0) {
+    if (showIndex==0)
+    {
         CALabel* label = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 200, 50));
         label->setText("Hello World");
         label->setColor(CAColor_black);
@@ -758,7 +761,9 @@ void CDUIShowView::showLabelByIndex()
         label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         label->setTag(100);
         this->getView()->addSubview(label);
-    }else if(showIndex==1){
+    }
+    else if(showIndex==1)
+    {
         CALabel* label = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 200, 50));
         label->setText("Hello World");
         label->setColor(CAColor_black);
@@ -769,7 +774,8 @@ void CDUIShowView::showLabelByIndex()
         label->setTag(100);
         this->getView()->addSubview(label);
     }
-    else if(showIndex==2){
+    else if(showIndex==2)
+    {
         CALabel* label = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 200, 50));
         label->setText("Hello World");
         label->setColor(CAColor_black);
@@ -780,7 +786,8 @@ void CDUIShowView::showLabelByIndex()
         label->setTag(100);
         this->getView()->addSubview(label);
     }
-    else if(showIndex==3){
+    else if(showIndex==3)
+    {
         CALabel* label = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 300, 50));
         label->setText("Hello World");
         label->setColor(CAColor_black);
@@ -791,7 +798,8 @@ void CDUIShowView::showLabelByIndex()
         label->setTag(100);
         this->getView()->addSubview(label);
     }
-    else if(showIndex==4){
+    else if(showIndex==4)
+    {
         CALabel* label = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 400, 50));
         label->setText("Hello World Can Copy");
         label->setColor(CAColor_black);
@@ -802,7 +810,8 @@ void CDUIShowView::showLabelByIndex()
         label->setTag(100);
         this->getView()->addSubview(label);
     }
-    else if(showIndex==5){
+    else if(showIndex==5)
+    {
         CALabel* label = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width, 200));
         label->setText("Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World");
         label->setColor(CAColor_black);
@@ -889,13 +898,16 @@ void CDUIShowView::showSlider()
 void CDUIShowView::showSliderByindex()
 {
     this->getView()->removeSubview(slider);
-    if (showIndex==0) {
+    if (showIndex==0)
+    {
         this->setNavigationBarItem(CANavigationBarItem::create("Slider"));
         slider = CASlider::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,20));
         slider->addTarget(this, CAControl_selector(CDUIShowView::sliderValueChange));
         this->getView()->addSubview(slider);
         sliderValue->setText("");
-    }else if(showIndex==1){
+    }
+    else if(showIndex==1)
+    {
         this->setNavigationBarItem(CANavigationBarItem::create("Slider Custem"));
         slider = CASlider::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,20));
         slider->setTrackHeight(20);
@@ -937,20 +949,21 @@ void CDUIShowView::showSwitch()
 void CDUIShowView::showSwitchByIndex()
 {
     this->getView()->removeSubviewByTag(100);
-    if (showIndex==0) {
+    if (showIndex==0)
+    {
         this->setNavigationBarItem(CANavigationBarItem::create("Switch"));
         CASwitch* customSwitch = CASwitch::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 100, 20));
         customSwitch->setTag(100);
         customSwitch->addTarget(this, CAControl_selector(CDUIShowView::switchStateChange));
         this->getView()->addSubview(customSwitch);
-    }else if(showIndex==1){
+    }
+    else if(showIndex==1)
+    {
         this->setNavigationBarItem(CANavigationBarItem::create("Switch Custem"));
         CASwitch* customSwitch = CASwitch::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 100, 20));
         customSwitch->setTag(100);
         customSwitch->setOnImage(CAImage::create("image/Switch_on.png"));
         customSwitch->setOffImage(CAImage::create("image/switch_off.png"));
-        //customSwitch->setThumbTintImage(CAImage::create("image/switch_p.png"));
-        
         customSwitch->addTarget(this, CAControl_selector(CDUIShowView::switchStateChange));
         this->getView()->addSubview(customSwitch);
     }
@@ -982,13 +995,16 @@ void CDUIShowView::showTextField()
 void CDUIShowView::showTextFieldByIndex()
 {
     this->getView()->removeSubviewByTag(100);
-    if (showIndex==0) {
+    if (showIndex==0)
+    {
         this->setNavigationBarItem(CANavigationBarItem::create("TextField"));
         CATextField* textField = CATextField::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width/2, 50));
         textField->setTag(100);
         textField->setPlaceHolder("Input");
         this->getView()->addSubview(textField);
-    }else if(showIndex==1){
+    }
+    else if(showIndex==1)
+    {
         this->setNavigationBarItem(CANavigationBarItem::create("TextField Custem"));
         CATextField* textField = CATextField::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width/2, 50));
         textField->setTag(100);
@@ -1026,12 +1042,10 @@ void CDUIShowView::showSegmentedControl()
         sprintf(temstr, "Page%d", i + 1);
         segment->setTitleForSegmentAtIndex(temstr, i);
     }
+    
     segment->setTitleColor(CAColor_black);
     segment->setTitleSelectedColor(CAColor_white);
-    
     segment->addTarget(this, CASegmentedControl_selector(CDUIShowView::segmentCallback));
-//    segment->setBackgroundImage(CAImage::create("image/seg1.png"));
-//    segment->setSegmentItemBackgroundImage(CAImage::create("image/seg2.png"));
     segment->setSelectedAtIndex(0);
     this->getView()->addSubview(segment);
     segment->setTag(100);
@@ -1047,7 +1061,8 @@ void CDUIShowView::showSegmentedControl()
 void CDUIShowView::showSegmentedControlByIndex()
 {
     this->getView()->removeSubviewByTag(100);
-    if (showIndex==0) {
+    if (showIndex==0)
+    {
         this->setNavigationBarItem(CANavigationBarItem::create("Segment"));
         CASegmentedControl* segment = CASegmentedControl::createWithCenter(CADipRect(winSize.width/2,
                                                                                      winSize.height/4,
@@ -1067,7 +1082,9 @@ void CDUIShowView::showSegmentedControlByIndex()
         this->getView()->addSubview(segment);
         segment->setTag(100);
         segmentPage->setText("page1");
-    }else if(showIndex==1){
+    }
+    else if(showIndex==1)
+    {
         this->setNavigationBarItem(CANavigationBarItem::create("Segment Custem"));
         CASegmentedControl* segment = CASegmentedControl::createWithCenter(CADipRect(winSize.width/2,
                                                                                      winSize.height/4,
@@ -1543,10 +1560,18 @@ void CDUIShowView::showScrollView()
     p_ScrollView->addSubview(p_imageView);
 }
 
+void CDUIShowView::showFlashView()
+{
+    CAFlashView* swfBg = CAFlashView::create("image/swfWK.swf");
+    swfBg->setFrame(CCRect(200,200,200,200));
+    swfBg->runAction();
+    swfBg->setRepeat(true);
+    this->getView()->addSubview(swfBg);
+}
+
 void CDUIShowView::zoomViewBySliderValue(CrossApp::CAControl *btn, CrossApp::CCPoint point)
 {
-//    float multiple = zoomView->getValue()+1.0;
-//    p_imageView->setScale(multiple);
+
 }
 
 void CDUIShowView::jsonTest()
@@ -1573,25 +1598,25 @@ void CDUIShowView::jsonTest()
 void CDUIShowView::httpTest()
 {
     string url = "http://test.yuhaisong.com/test/index.php";
-    CCHttpRequest* request = new CCHttpRequest();
+    CAHttpRequest* request = new CAHttpRequest();
     request->setTag("Getpage");
     request->setRequestType(CCHttpRequest::kHttpPost);
     request->setUrl(url.c_str());
     request->setResponseCallback(this,httpresponse_selector(CDUIShowView::requestResult));
-    CCHttpClient* httpClient = CCHttpClient::getInstance();
+    CAHttpClient* httpClient = CAHttpClient::getInstance();
     httpClient->setTimeoutForConnect(30);
     httpClient->send(request);
     request->release();
 }
 
-void CDUIShowView::requestResult(CCHttpClient *client, CCHttpResponse *response)
+void CDUIShowView::requestResult(CAHttpClient *client, CAHttpResponse *response)
 {
     if (!response->isSucceed())
     {
         CCLog("Error reason: %s", response->getErrorBuffer());
         return;
     }
-    //if (!strcmp("Getpage", response->getHttpRequest()->getTag()) && (response->getResponseCode() == 200))
+
     if (response->getResponseCode() == 200)
     {
         std::string responseRes = "";
