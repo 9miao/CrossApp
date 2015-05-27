@@ -687,16 +687,6 @@ bool CACollectionViewCell::initWithReuseIdentifier(const std::string& reuseIdent
 	return true;
 }
 
-bool CACollectionViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
-{
-	this->setBackgroundView(CAView::create());
-	this->setColor(CAColor_clear);
-	this->setReuseIdentifier(reuseIdentifier);
-	this->normalCollectionViewCell();
-
-	return true;
-}
-
 void CACollectionViewCell::setBackgroundView(CrossApp::CAView *var)
 {
 	CC_SAFE_RETAIN(var);
