@@ -1,9 +1,0 @@
-eclipse.preferences.version=1
-environment/project/0.756827735/NDK_MODULE_PATH/delimiter=;
-environment/project/0.756827735/NDK_MODULE_PATH/operation=append
-environment/project/0.756827735/NDK_MODULE_PATH/value=C\:\\Users\\renhongguang\\Documents\\CA\\CrossApp;C\:\\Users\\renhongguang\\Documents\\CA\\CrossApp\\CrossApp\\the_third_party
-environment/project/0.756827735/NDK_ROOT/delimiter=\:
-environment/project/0.756827735/NDK_ROOT/operation=replace
-environment/project/0.756827735/NDK_ROOT/value=D\:\\Android\\android-ndk-r9c
-environment/project/0.756827735/append=true
-environment/project/0.756827735/appendContributed=true

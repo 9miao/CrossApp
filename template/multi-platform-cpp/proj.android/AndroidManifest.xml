@@ -10,7 +10,7 @@
     <application android:label="@string/app_name"
         android:icon="@drawable/icon">
 
-        <activity android:name=".Demo"
+        <activity android:name=".HelloCpp"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar"
@@ -19,7 +19,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>   
+        </activity>
     </application>
     <supports-screens android:largeScreens="true"
                       android:smallScreens="true"
@@ -27,9 +27,9 @@
                       android:normalScreens="true"/>
                          
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"></uses-permission>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
                          
@@ -37,15 +37,19 @@
     If you do not locate required permissions  please ignore
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     -->
-    
+                         
+                         
     <!--
     If you don't need permission to contact please ignore
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     -->
-    
+                                       
     <!--
     If you don't need permission to BLUETOOTH please ignore
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     -->
+   
+   
+   
 </manifest>

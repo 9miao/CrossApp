@@ -45,6 +45,7 @@ CATextField::CATextField()
 , m_pBackgroundView(NULL)
 , m_isTouchInSide(false)
 , m_keyBoardReturnType(KEY_BOARD_RETURN_DONE)
+, m_bMoved(false)
 {
 	m_iFontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize);
 }
@@ -353,6 +354,11 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	return CATouchView::ccTouchBegan(pTouch, pEvent);
 }
 
+void CATextField::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+    m_bMoved = true;
+}
+
 void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
 	CATouchView::ccTouchEnded(pTouch, pEvent);
@@ -360,6 +366,12 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 	if (CATextToolBarView::isTextToolBarShow())
 		return;
 
+    if (m_bMoved)
+    {
+        m_bMoved = false;
+        return;
+    }
+    
     CCPoint point = this->convertTouchToNodeSpace(pTouch);
     
     if (this->getBounds().containsPoint(point))

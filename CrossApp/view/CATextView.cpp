@@ -38,6 +38,7 @@ CATextView::CATextView()
 , m_pContainerView(NULL)
 , m_pTextSelView(NULL)
 , m_pTextArrView(NULL)
+, m_bMoved(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 }
@@ -415,13 +416,14 @@ void CATextView::didAttachWithIME()
 
 void CATextView::insertText(const char * text, int len)
 {
-    if (len<=0)return;
+    CC_RETURN_IF(len <= 0);
+    CC_RETURN_IF(text == 0);
+    
 	execCurSelCharRange();
 	m_szText.insert(m_iCurPos, text, len);
  	m_iCurPos += len;
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 	updateImage();
-	m_pTextArrView->hideTextArrView();
 }
 
 void CATextView::willInsertText(const char* text, int len)
@@ -435,22 +437,26 @@ void CATextView::willInsertText(const char* text, int len)
 
 void CATextView::AndroidWillInsertText(int start, const char* str, int before, int count)
 {
-	CCAssert(str != NULL, "");
-	CCAssert(count > 0, "");
-
- 	insertText(str, (int)strlen(str));
+    CCAssert(str != NULL, "");
+    CCAssert(count > 0, "");
+    
+    for (int i=0; i<before; i++)
+    {
+        deleteBackward();
+    }
+    CC_RETURN_IF(str == NULL || count <= 0);
+    
+    std::string s = str;
+    insertText(s.c_str(), s.length());
 }
 
 void CATextView::deleteBackward()
 {
 	if (m_iCurPos == 0 || m_szText.empty())
 		return;
-
 	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, m_szText.c_str(), (int)m_szText.length()));
-
 	if (execCurSelCharRange())
 		return;
-
 	int nDeleteLen = 1;
 	while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)))
 	{
@@ -671,11 +677,22 @@ void CATextView::setContentSize(const CCSize& var)
 	this->initMarkSprite();
 }
 
+void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+    m_bMoved = true;
+}
+
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     if (CATextToolBarView::isTextToolBarShow())
 		return;
 	
+    if (m_bMoved)
+    {
+        m_bMoved = false;
+        return;
+    }
+    
 	CCPoint point = this->convertTouchToNodeSpace(pTouch);
 
 	if (this->getBounds().containsPoint(point))
