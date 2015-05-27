@@ -268,7 +268,6 @@ void CDNewsViewController::initNewsTableView()
     p_TableView->setAllowsSelection(true);
     p_TableView->setScrollViewDelegate(this);
     p_TableView->setAllowsMultipleSelection(false);
-    p_TableView->setShowsScrollIndicators(false);
     this->getView()->addSubview(p_TableView);
     CAPullToRefreshView *refreshDiscount = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     refreshDiscount->setLabelColor(CAColor_black);

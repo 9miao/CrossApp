@@ -81,9 +81,7 @@ void CDNewsAboutController::viewDidLoad()
     p_TableView->setTableViewDelegate(this);
     p_TableView->setAllowsSelection(true);
     p_TableView->setAllowsMultipleSelection(false);
-    p_TableView->setShowsScrollIndicators(false);
     p_TableView->setAlwaysTopSectionHeader(false);
-    p_TableView->setBackGroundColor(CAColor_white);
     this->getView()->addSubview(p_TableView);
     p_TableView->setTableHeaderHeight(_px(602));
     CAView* view = CAView::createWithColor(CAColor_clear);
@@ -163,16 +161,16 @@ CATableViewCell* CDNewsAboutController::tableCellAtIndex(CATableView* table, con
     cellBtn->setVisible(false);
     switch (section) {
         case 0:
-			cellText->setText(UTF8EX(aboutMenuTag[row]));
+			cellText->setText(unicode_to_utf8(aboutMenuTag[row]));
             break;
         case 1:
-			cellText->setText(UTF8EX(aboutMenuTag[row + 2]));
+			cellText->setText(unicode_to_utf8(aboutMenuTag[row + 2]));
             if (row==2||row==3||row==4) {
                 cellBtn->setVisible(true);
             };
             break;
         case 2:
-			cellText->setText(UTF8EX(aboutMenuTag[row + 8]));
+			cellText->setText(unicode_to_utf8(aboutMenuTag[row + 8]));
             break;
     }
     return cell;

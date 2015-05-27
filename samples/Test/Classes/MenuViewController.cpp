@@ -95,7 +95,7 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         cell->addSubview(arrow);
     }
 	CALabel* test = (CALabel*)cell->getSubviewByTag(100);
-	test->setText(UTF8EX(menuList[row]));// menuList[row]);
+	test->setText(unicode_to_utf8(menuList[row]));// menuList[row]);
     CAImageView* arrow = (CAImageView*)cell->getSubviewByTag(101);
     arrow->setImage(CAImage::create("source_material/cell_btn_right.png"));
     return cell;

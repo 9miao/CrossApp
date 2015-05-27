@@ -143,7 +143,6 @@ void CDNewsImageController::initImageTableView()
     p_TableView->setAllowsSelection(true);
     p_TableView->setScrollViewDelegate(this);
     p_TableView->setAllowsMultipleSelection(false);
-    p_TableView->setShowsScrollIndicators(false);
     p_TableView->setSeparatorViewHeight(20);
     p_TableView->setSeparatorColor(ccc4(240,240,240,255));
     this->getView()->addSubview(p_TableView);

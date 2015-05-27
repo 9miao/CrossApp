@@ -2,7 +2,6 @@
 
 #define _T(x) L##x
 #define CHAR    wchar_t
-#define UTF8EX(x) unicode_to_utf8( x ).c_str()
 
 struct newsPage
 {
