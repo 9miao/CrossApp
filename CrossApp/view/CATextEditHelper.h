@@ -117,7 +117,6 @@ private:
 	int m_iSelViewTouchPos;
 };
 
-
 class CATextSelViewEx : public CAView
 {
 public:
@@ -126,22 +125,23 @@ public:
 
 	static CATextSelViewEx *create();
 
-	void showTextSelView(const std::vector<CCRect>& vt, float iLineHeight);
+	void showTextSelView(CAView* pControlView, const std::vector<CCRect>& vt, float iLineHeight);
 	void hideTextSelView();
 	void showTextViewMark(const std::vector<CCRect>& vt);
 	void hideTextViewMark();
     bool isTextViewShow();
-    bool touchSelectText(CATouch *pTouch);
     
 protected:
 	virtual bool init();
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+	bool touchSelectText(CATouch *pTouch);
 
 private:
 	CAImageView* m_pCursorMarkL;
 	CAImageView* m_pCursorMarkR;
+	CAView* m_pControlView;
 
 	int m_iSelViewTouchPos;
 	std::vector<CAView*> m_pTextViewMask;
