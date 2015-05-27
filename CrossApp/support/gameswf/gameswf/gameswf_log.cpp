@@ -20,12 +20,12 @@ namespace gameswf
 	{
 		if (error)
 		{
-			fprintf(stderr, message);
+			fprintf(stderr, "%s", message);
 		}
 		else
 		{
 			// NORMAL or VERBOSE
-			printf(message);
+			printf("%s", message);
 		}
 	}
 

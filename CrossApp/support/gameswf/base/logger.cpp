@@ -17,7 +17,7 @@ namespace logger
 	// Function pointer to log callback.
 	static void (*s_log_callback)(log_type e, const char* message) = NULL;
 
-	void	register_log_callback(void (*callback)(log_type e, const char* message))
+	void register_log_callback(void (*callback)(log_type e, const char* message))
 	// The host app can use this to install a function to receive log
 	// & error messages from gameswf.
 	//
@@ -27,16 +27,19 @@ namespace logger
 	}
 
 
-	void	register_log_callback(void (*callback)(log_type e, const char* message));
+	void register_log_callback(void (*callback)(log_type e, const char* message));
 
 
 	void standard_logger(log_type e, const char* message)
 	{
-		if (e == ERROR) {
-			fprintf(stderr, message);
-		} else {
+		if (e == ERROR)
+        {
+			fprintf(stderr, "%s", message);
+		}
+        else
+        {
 			// NORMAL or VERBOSE
-			printf(message);
+			printf("%s",message);
 		}
 	}
 
