@@ -6,6 +6,8 @@
 #include "support/ccUTF8.h"
 #include "platform/CCPlatformMacros.h"
 #include "CAWindow.h"
+#include "CATextView.h"
+
 
 #define CATextArrowViewWidth 30
 #define CATextArrowViewHeight 62
@@ -395,6 +397,7 @@ void CATextSelectView::ccPasteFromClipboard()
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 CATextSelViewEx::CATextSelViewEx()
+: m_pControlView(NULL)
 {
 
 }
@@ -416,8 +419,7 @@ bool CATextSelViewEx::init()
 	m_pCursorMarkR = CAImageView::createWithImage(CAImage::create("source_material/text_pos_r.png"));
 	insertSubview(m_pCursorMarkR, CAWindowZoderTop);
 	m_pCursorMarkR->setVisible(false);
-    
-    this->setHaveNextResponder(false);
+	this->setHaveNextResponder(false);
 	return true;
 }
 
@@ -454,7 +456,7 @@ void CATextSelViewEx::hideTextViewMark()
 	m_pTextViewMask.clear();
 }
 
-void CATextSelViewEx::showTextSelView(const std::vector<CCRect>& vt, float iLineHeight)
+void CATextSelViewEx::showTextSelView(CAView* pControlView, const std::vector<CCRect>& vt, float iLineHeight)
 {
     setFrame(this->getSuperview()->getFrame());
 	setColor(CAColor_clear);
@@ -471,6 +473,7 @@ void CATextSelViewEx::showTextSelView(const std::vector<CCRect>& vt, float iLine
 	m_pCursorMarkR->setFrame(CCRect(pt2.x, pt2.y, CATextSelectArrWidth, CATextSelectArrHeight));
 	m_pCursorMarkR->setVisible(true);
     this->setVisible(true);
+	m_pControlView = pControlView;
 }
 
 void CATextSelViewEx::hideTextSelView()
@@ -519,12 +522,23 @@ bool CATextSelViewEx::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	{
 		m_iSelViewTouchPos = 1;
 	}
-
-	if (newRectR.containsPoint(cTouchPoint))
+	else if (newRectR.containsPoint(cTouchPoint))
 	{
 		m_iSelViewTouchPos = 2;
 	}
-    return true;
+	else if (m_pControlView)
+	{
+		if (touchSelectText(pTouch))
+		{
+			CATextToolBarView *pToolBar = CATextToolBarView::create();
+			pToolBar->addButton(UTF8("\u526a\u5207"), m_pControlView, callfunc_selector(CATextView::ccCutToClipboard));
+			pToolBar->addButton(UTF8("\u590d\u5236"), m_pControlView, callfunc_selector(CATextView::ccCopyToClipboard));
+			pToolBar->addButton(UTF8("\u7c98\u8d34"), m_pControlView, callfunc_selector(CATextView::ccPasteFromClipboard));
+			pToolBar->show(m_pControlView);
+			return false;
+		}
+	}
+	return true;
 }
 
 void CATextSelViewEx::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)

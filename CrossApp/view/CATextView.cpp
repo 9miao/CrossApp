@@ -603,7 +603,7 @@ void CATextView::ccStartSelect()
 	}
 
 	m_pTextArrView->hideTextArrView();
-	m_pTextSelView->showTextSelView(getZZCRect(), m_iLineHeight);
+	m_pTextSelView->showTextSelView(this, getZZCRect(), m_iLineHeight);
 	hideCursorMark();
 }
 
@@ -669,24 +669,6 @@ void CATextView::setContentSize(const CCSize& var)
 		m_pContainerView->setFrame(this->getBounds());
 	}
 	this->initMarkSprite();
-}
-
-bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
-{
-    if (m_pTextSelView->touchSelectText(pTouch))
-    {
-        CATextToolBarView *pToolBar = CATextToolBarView::create();
-        pToolBar->addButton(UTF8("\u526a\u5207"), this, callfunc_selector(CATextView::ccCutToClipboard));
-        pToolBar->addButton(UTF8("\u590d\u5236"), this, callfunc_selector(CATextView::ccCopyToClipboard));
-        pToolBar->addButton(UTF8("\u7c98\u8d34"), this, callfunc_selector(CATextView::ccPasteFromClipboard));
-        pToolBar->show(this);
-		return false;
-    }
-    else if (m_pTextSelView->isTextViewShow())
-    {
-        return true;
-    }
-	return CATouchView::ccTouchBegan(pTouch, pEvent);
 }
 
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
@@ -817,7 +799,7 @@ void CATextView::selectAll()
 	m_curSelCharRange.second = m_iCurPos = (int)m_szText.length();
 
 	m_pTextArrView->hideTextArrView();
-	m_pTextSelView->showTextSelView(getZZCRect(), m_iLineHeight);
+	m_pTextSelView->showTextSelView(this, getZZCRect(), m_iLineHeight);
 	this->hideCursorMark();
 }
 
@@ -874,7 +856,7 @@ void CATextView::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 	calcCursorPosition();
 
 	m_pTextArrView->hideTextArrView();
-	m_pTextSelView->showTextSelView(getZZCRect(), m_iLineHeight);
+	m_pTextSelView->showTextSelView(this, getZZCRect(), m_iLineHeight);
 	hideCursorMark();
 }
 
