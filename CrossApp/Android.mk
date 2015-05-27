@@ -107,6 +107,7 @@ view/CALabelStyle.cpp \
 view/CAWebView.cpp \
 view/CADrawView.cpp \
 view/CADrawingPrimitives.cpp \
+view/CAFlashView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -146,6 +147,7 @@ script_support/JSViewController.cpp \
 script_support/CCScriptSupport.cpp \
 
 
+
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
@@ -167,6 +169,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_tiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_webp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype_static
+LOCAL_WHOLE_STATIC_LIBRARIES += SWF_static
 
 
 ifeq ($(VIDEO_ENABLE),1)
@@ -194,6 +197,7 @@ LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
 
 include $(BUILD_STATIC_LIBRARY)
 
+
 $(call import-module,jpeg/prebuilt/android)
 $(call import-module,png/prebuilt/android)
 $(call import-module,tiff/prebuilt/android)
@@ -201,3 +205,4 @@ $(call import-module,webp/prebuilt/android)
 $(call import-module,freetype/prebuilt/android)
 $(call import-module,SDL/prebuilt/android)
 $(call import-module,FFmpeg/prebuilt/android)
+$(call import-module,../support/gameswf)
