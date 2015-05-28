@@ -440,7 +440,7 @@ void CATextView::AndroidWillInsertText(int start, const char* str, int before, i
     
     for (int i=0; i<before; i++)
     {
-        deleteBackward();
+    //    deleteBackward();
     }
     CC_RETURN_IF(str == NULL || count <= 0);
     
@@ -678,6 +678,7 @@ void CATextView::setContentSize(const CCSize& var)
 void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
     m_bMoved = true;
+	CATouchView::ccTouchMoved(pTouch, pEvent);
 }
 
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
@@ -685,11 +686,11 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     if (CATextToolBarView::isTextToolBarShow())
 		return;
 	
-    if (m_bMoved)
-    {
-        m_bMoved = false;
-        return;
-    }
+	if (m_bMoved)
+	{
+		m_bMoved = false;
+		return;
+	}
     
 	CCPoint point = this->convertTouchToNodeSpace(pTouch);
 
@@ -729,6 +730,10 @@ void CATextView::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 {
 	if (m_pTextSelView->isTextViewShow())
 		return;
+
+	if (CATextToolBarView::isTextToolBarShow())
+		return;
+
 
     becomeFirstResponder();
 	CATextToolBarView *pToolBar = CATextToolBarView::create();

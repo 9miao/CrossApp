@@ -83,12 +83,12 @@ void CATextToolBarView::addButton(const std::string& strBtnText, CAObject* targe
 
 void CATextToolBarView::show(CAView* pView)
 {
-	CADipSize winSize = this->getBounds().size;
+	CCSize winSize = CAApplication::getApplication()->getWinSize();
 
 	float alertViewButtonHeight = 88;
 	float alertViewWidth = winSize.width * 2 / 3;
 
-	CADipRect rect = CADipRect(winSize.width / 2, winSize.height / 2, alertViewWidth, alertViewButtonHeight);
+	CCRect rect = CCRect(winSize.width / 2, winSize.height / 2 - alertViewButtonHeight, alertViewWidth, alertViewButtonHeight);
 
 	m_pBackView = CAClippingView::create();
 	m_pBackView->setCenter(rect);
@@ -112,7 +112,7 @@ void CATextToolBarView::show(CAView* pView)
 		btn->setBackGroundViewForState(CAControlStateHighlighted, CAView::createWithColor(ccc4(226, 226, 226, 225)));
 		btn->setTag(i);
 		btn->addTarget(this, CAControl_selector(CATextToolBarView::alertViewCallback), CAControlEventTouchUpInSide);
-		btn->setFrame(CADipRect(i*alertViewWidth/btnCount, 0, alertViewWidth/btnCount, alertViewButtonHeight));
+		btn->setFrame(CCRect(i*alertViewWidth / btnCount, 0, alertViewWidth / btnCount, alertViewButtonHeight));
 		m_pBackView->addSubview(btn);
 
 		if (i>0)
@@ -195,7 +195,7 @@ void CATextToolBarView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 void CATextToolBarView::addGrayLine(int x)
 {
 	CCSize size = CAApplication::getApplication()->getWinSize();
-	CAView *line = createWithFrame(CADipRect(x, 0, 1, size.height));
+	CAView *line = createWithFrame(CCRect(x, 0, 1, size.height));
 	line->setColor(ccc4(206, 206, 211, 255));
 	m_pBackView->addSubview(line);
 }
@@ -280,16 +280,16 @@ void CATextSelectView::showTextSelView(const CCRect& rect, CAView* pControlView,
 	setColor(CAColor_clear);
 	setTextTag("CATextSelectView");
 
-	CADipRect newRect = rect;
+	CCRect newRect = rect;
 	if (showLeft)
 	{
-		m_pCursorMarkL->setFrame(CADipRect(newRect.origin.x - CATextSelectArrWidth, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
+		m_pCursorMarkL->setFrame(CCRect(newRect.origin.x - CATextSelectArrWidth, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
 		m_pCursorMarkL->setVisible(true);
 	}
 
 	if (showRight)
 	{
-		m_pCursorMarkR->setFrame(CADipRect(newRect.origin.x + newRect.size.width, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
+		m_pCursorMarkR->setFrame(CCRect(newRect.origin.x + newRect.size.width, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
 		m_pCursorMarkR->setVisible(true);
 	}
 
@@ -326,9 +326,9 @@ bool CATextSelectView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	CCPoint cTouchPoint = this->convertTouchToNodeSpace(pTouch);
 
 	CCRect newRectL = m_pCursorMarkL->getFrame();
-	newRectL.InflateRect(5);
+	newRectL.InflateRect(8);
 	CCRect newRectR = m_pCursorMarkR->getFrame();
-	newRectR.InflateRect(5);
+	newRectR.InflateRect(8);
 
 	m_iSelViewTouchPos = 0;
 	if (newRectL.containsPoint(cTouchPoint))
@@ -643,7 +643,7 @@ void CATextArrowView::showTextArrView(const CCPoint& pt)
 void CATextArrowView::hideTextArrView()
 {
 	m_pArrowView->setVisible(false);
-    setVisible(false);
+	setVisible(false);
 }
 
 void CATextArrowView::ccTouchTimer(float interval)
