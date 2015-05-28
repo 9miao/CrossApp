@@ -418,13 +418,7 @@ void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 		pToolBar->addButton(UTF8("\u5168\u9009"), this, callfunc_selector(CATextField::ccSelectAll));
 		pToolBar->addButton(UTF8("\u9009\u62e9"), this, callfunc_selector(CATextField::ccStartSelect));
 	}
-    
-    if (canDetachWithIME())
-    {
-        resignFirstResponder();
-    }
-    
-    pToolBar->show();
+     pToolBar->show();
 }
 
 bool CATextField::canAttachWithIME()

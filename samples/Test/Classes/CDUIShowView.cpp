@@ -984,7 +984,7 @@ void CDUIShowView::switchStateChange(CAControl* btn, CCPoint point)
 
 void CDUIShowView::showTextField()
 {
-    CATextField* textField = CATextField::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width/2, 50));
+    CATextField* textField = CATextField::createWithCenter(CADipRect(winSize.width/2, winSize.height/2-200, winSize.width/2, 50));
     textField->setTag(100);
     textField->setPlaceHolder("Input");
     textField->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
