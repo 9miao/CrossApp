@@ -5,9 +5,9 @@ Thumbs.db
 *.obj
 *.pdb
 *.aps
-#*.vcproj.*.user
-#*.vcxproj.user
-#*.vspscc
+*.vcproj.*.user
+*.vcxproj.user
+*.vspscc
 *_i.c
 *.i
 *.icf
@@ -39,7 +39,7 @@ SubmissionInfo
 projects/
 
 # Ignore files build by ndk and eclipse
-#libs/
+libs/
 bin/
 obj/
 gen/
@@ -55,13 +55,13 @@ build_*_xcode/
 build_*_vc10/
 
 # Ignore files build by xcode
-#*.mode*v*
-#*.pbxuser
-#*.xcbkptlist
-#.xcscheme
-#*.xcworkspacedata
-#*.xcuserstate
-#xcschememanagement.plist
+*.mode*v*
+*.pbxuser
+*.xcbkptlist
+.xcscheme
+*.xcworkspacedata
+*.xcuserstate
+xcschememanagement.plist
 build/
 .DS_Store
 ._.*
