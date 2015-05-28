@@ -83,7 +83,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 //				*/
 //			}
 //		}
-//		this.mText = s.toString();
+		this.mText = s.toString();
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		*/
 		Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
 		//System.out.println(pCharSequence.toString());
-		this.mText = pCharSequence.toString();
+		//this.mText = pCharSequence.toString();
 	}
 
 	@Override

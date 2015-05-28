@@ -261,6 +261,7 @@ void CDNewsViewController::initNewsTableView()
     if (p_TableView!=NULL)
     {
         this->getView()->removeSubview(p_TableView);
+        p_TableView = NULL;
     }
     
     p_TableView= CATableView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));

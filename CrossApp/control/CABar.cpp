@@ -347,6 +347,7 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size)
     m_pContentView = new CAView();
     m_pContentView->setCenter(rect);
     this->addSubview(m_pContentView);
+    m_pContentView->release();
     
     unsigned int count = (unsigned int)m_pItems.size();
     m_cItemSize = m_pContentView->getBounds().size;

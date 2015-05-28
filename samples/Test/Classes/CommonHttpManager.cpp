@@ -668,7 +668,7 @@ void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpRes
         {
             image = CAImage::createWithImageDataNoCache(pData, pSize);
         }
-        
+
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         if (m_eGetImageType != HttpGetImageNoAllCache)
         {

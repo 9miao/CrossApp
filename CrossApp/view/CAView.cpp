@@ -120,8 +120,7 @@ CAView::CAView(void)
     this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     this->setHaveNextResponder(true);
     
-    ++viewCount;
-    CCLog("CAView = %d\n",viewCount);
+    CCLog("CAView = %d\n", ++viewCount);
 }
 
 CAView::~CAView(void)
@@ -145,8 +144,7 @@ CAView::~CAView(void)
     m_obSubviews.clear();
     CC_SAFE_RELEASE(m_pobImage);
     
-    --viewCount;
-    CCLog("~CAView = %d\n",viewCount);
+    CCLog("~CAView = %d\n", --viewCount);
 }
 
 CAView * CAView::create(void)

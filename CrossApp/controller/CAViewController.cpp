@@ -1157,6 +1157,9 @@ CATabBarController::~CATabBarController()
 {
     m_pViewControllers.clear();
     CC_SAFE_RELEASE_NULL(m_pTabBar);
+    CC_SAFE_RELEASE_NULL(m_pTabBarBackGroundImage);
+    CC_SAFE_RELEASE_NULL(m_pTabBarSelectedBackGroundImage);
+    CC_SAFE_RELEASE_NULL(m_pTabBarSelectedIndicatorImage);
 }
 
 void CATabBarController::setTabBarBackGroundImage(CrossApp::CAImage *var)
@@ -1441,7 +1444,7 @@ void CATabBarController::viewDidLoad()
 
 void CATabBarController::viewDidUnload()
 {
-
+    this->getView()->removeAllSubviews();
 }
 
 void CATabBarController::viewDidAppear()

@@ -76,6 +76,11 @@ void CDNewsAboutController::viewDidLoad()
 {
     winSize = this->getView()->getBounds().size;
     
+    if (p_TableView!=NULL)
+    {
+        this->getView()->removeSubview(p_TableView);
+        p_TableView = NULL;
+    }
     p_TableView= CATableView::createWithFrame(CADipRect(0, -150, winSize.width, winSize.height+150));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);

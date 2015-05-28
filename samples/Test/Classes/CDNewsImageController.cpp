@@ -137,6 +137,11 @@ void CDNewsImageController::initImageTableView()
         showAlert();
         return;
     }
+    if (p_TableView!=NULL)
+    {
+        this->getView()->removeSubview(p_TableView);
+        p_TableView = NULL;
+    }
     p_TableView= CATableView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);

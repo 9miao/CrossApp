@@ -383,6 +383,11 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
             
             m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
+            
+#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
+            CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+            pGlView->setIMECursorPos(getCursorPos(), getContentText());
+#endif
         }
     }
     else

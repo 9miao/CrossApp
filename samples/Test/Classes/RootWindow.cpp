@@ -180,6 +180,7 @@ void RootWindow::intNewsView()
         _aboutController->setTabBarItem(CATabBarItem::create("", CAImage::create("image/tab_mine_btn_up.png"),CAImage::create("image/tab_mine_btn_down.png")));
         vec.pushBack(_aboutController);
         
+
         CATabBarController* tabBarController = new CATabBarController();
         tabBarController->initWithViewControllers(vec);
         tabBarController->setTitle(" ");
