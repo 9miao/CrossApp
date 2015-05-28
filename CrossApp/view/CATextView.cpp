@@ -100,11 +100,9 @@ bool CATextView::init()
     m_pContainerView->addSubview(m_pImageView);
     
 	m_pTextSelView = CATextSelViewEx::create();
-	m_pTextSelView->setFrame(getFrame());
 	m_pContainerView->addSubview(m_pTextSelView);
     
 	m_pTextArrView = CATextArrowView::create();
-	m_pTextArrView->setFrame(getFrame());
 	m_pContainerView->addSubview(m_pTextArrView);
     
 	return true;

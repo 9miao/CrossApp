@@ -467,7 +467,7 @@ void CATextSelViewEx::showTextSelView(CAView* pControlView, const std::vector<CC
 	CCPoint pt1 = vt[0].origin;
 	CCPoint pt2 = CCPoint(r.origin.x + r.size.width, r.origin.y + r.size.height);
 
-	m_pCursorMarkL->setFrame(CADipRect(pt1.x - CATextSelectArrWidth, pt1.y + iLineHeight, CATextSelectArrWidth, CATextSelectArrHeight));
+	m_pCursorMarkL->setFrame(CCRect(pt1.x - CATextSelectArrWidth, pt1.y + iLineHeight, CATextSelectArrWidth, CATextSelectArrHeight));
 	m_pCursorMarkL->setVisible(true);
 
 	m_pCursorMarkR->setFrame(CCRect(pt2.x, pt2.y, CATextSelectArrWidth, CATextSelectArrHeight));
@@ -513,9 +513,9 @@ bool CATextSelViewEx::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	CCPoint cTouchPoint = this->convertTouchToNodeSpace(pTouch);
     
 	CCRect newRectL = m_pCursorMarkL->getFrame();
-	newRectL.InflateRect(5);
+	newRectL.InflateRect(8);
 	CCRect newRectR = m_pCursorMarkR->getFrame();
-	newRectR.InflateRect(5);
+	newRectR.InflateRect(8);
 
 	m_iSelViewTouchPos = 0;
 	if (newRectL.containsPoint(cTouchPoint))
@@ -636,7 +636,7 @@ void CATextArrowView::showTextArrView(const CCPoint& pt)
 	setColor(CAColor_clear);
     setVisible(true);
 	m_pArrowView->setVisible(true);
-	m_pArrowView->setCenterOrigin(CADipPoint(pt.x, pt.y));
+	m_pArrowView->setCenterOrigin(pt);
 	CAScheduler::schedule(schedule_selector(CATextArrowView::ccTouchTimer), this, 0, 0, 3);
 }
 
