@@ -121,7 +121,7 @@ CAView::CAView(void)
     this->setHaveNextResponder(true);
     
     ++viewCount;
-    //CCLog("CAView = %d\n",viewCount);
+    CCLog("CAView = %d\n",viewCount);
 }
 
 CAView::~CAView(void)
@@ -146,7 +146,7 @@ CAView::~CAView(void)
     CC_SAFE_RELEASE(m_pobImage);
     
     --viewCount;
-    //CCLog("~CAView = %d\n",viewCount);
+    CCLog("~CAView = %d\n",viewCount);
 }
 
 CAView * CAView::create(void)

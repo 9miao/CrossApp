@@ -655,7 +655,7 @@ void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpRes
     {
         std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
         unsigned char* pData = ((unsigned char*)(const_cast<char*>(data.c_str())));
-        unsigned long pSize = data.length();
+        size_t pSize = data.length();
 
         CAImage* image = NULL;
         std::string key = MD5(m_sUrl).md5();
@@ -669,6 +669,7 @@ void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpRes
             image = CAImage::createWithImageDataNoCache(pData, pSize);
         }
         
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         if (m_eGetImageType != HttpGetImageNoAllCache)
         {
             std::string imagePath = CCFileUtils::sharedFileUtils()->getWritablePath() + "image/";
@@ -676,11 +677,11 @@ void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpRes
             FILE *fp = fopen(string(imagePath + key).c_str(), "wb+");
             if (fp)
             {
-                fwrite(pData, sizeof(char), pSize, fp);
+                fwrite(pData, sizeof(unsigned char), pSize, fp);
                 fclose(fp);
             }
         }
-        
+#endif
         if (m_pTarget && m_pSelectorImage && image)
         {
             (m_pTarget->*m_pSelectorImage)(image, m_sUrl.c_str());
@@ -702,7 +703,7 @@ CommonUrlImageViewDelegate::~CommonUrlImageViewDelegate()
 
 CommonUrlImageView::CommonUrlImageView()
 :m_pDelegate(NULL)
-,m_eType(HttpGetImageDefault)
+,m_eType(HttpGetImageNoMemoryCache)
 {
     
 }

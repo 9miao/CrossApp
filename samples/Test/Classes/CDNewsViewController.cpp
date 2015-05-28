@@ -104,12 +104,12 @@ void CDNewsViewController::viewDidLoad()
         sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=1&tag=%s",menuTag[urlID]);
         CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                    CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
-        {
-            p_pLoading = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,50,50));
-            this->getView()->insertSubview(p_pLoading, CAWindowZoderTop);
-            p_pLoading->setLoadingMinTime(0.5f);
-            p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
-        }
+        
+        
+        p_pLoading = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,50,50));
+        this->getView()->insertSubview(p_pLoading, CAWindowZoderTop);
+        p_pLoading->setLoadingMinTime(0.5f);
+        p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
     }
     else
     {
@@ -234,8 +234,6 @@ void CDNewsViewController::onRefreshRequestFinished(const HttpResponseStatus& st
             m_msg.push_back(temp_msg);
             CCLog("title==%s",value[index]["title"].asString().c_str());
         }
-        
-        //p_TableView->reloadData();
     }
     
     do
@@ -255,19 +253,21 @@ void CDNewsViewController::onRefreshRequestFinished(const HttpResponseStatus& st
 
 void CDNewsViewController::initNewsTableView()
 {
-    if (m_page.empty()) {
+    if (m_page.empty())
+    {
         showAlert();
         return;
     }
-    if (p_TableView!=NULL) {
+    if (p_TableView!=NULL)
+    {
         this->getView()->removeSubview(p_TableView);
     }
+    
     p_TableView= CATableView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
-    p_TableView->setAllowsSelection(true);
     p_TableView->setScrollViewDelegate(this);
-    p_TableView->setAllowsMultipleSelection(false);
+    p_TableView->setAllowsSelection(true);
     this->getView()->addSubview(p_TableView);
     CAPullToRefreshView *refreshDiscount = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     refreshDiscount->setLabelColor(CAColor_black);

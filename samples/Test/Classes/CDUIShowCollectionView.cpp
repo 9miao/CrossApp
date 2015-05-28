@@ -32,7 +32,7 @@ CDUIShowCollectionView::CDUIShowCollectionView()
     m_vTitle.push_back("WebView");
     m_vTitle.push_back("CollectionView");
     m_vTitle.push_back("ScrollView");
-    m_vTitle.push_back("FLashView");
+    m_vTitle.push_back("FlashView");
 }
 
 CDUIShowCollectionView::~CDUIShowCollectionView()
@@ -46,7 +46,6 @@ void CDUIShowCollectionView::viewDidLoad()
 
     p_Conllection = CACollectionView::createWithFrame(this->getView()->getBounds());
     p_Conllection->setAllowsSelection(true);
-    p_Conllection->setAllowsMultipleSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
     p_Conllection->setCollectionViewDataSource(this);
     p_Conllection->setScrollViewDelegate(this);

@@ -30,7 +30,8 @@ CADrawerController::CADrawerController()
 
 CADrawerController::~CADrawerController()
 {
-
+    CC_SAFE_RELEASE(m_pLeftViewController);
+    CC_SAFE_RELEASE(m_pRightViewController);
 }
 
 bool CADrawerController::initWithController(CAViewController* leftViewController, CAViewController* rightViewController, float division)
