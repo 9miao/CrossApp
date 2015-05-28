@@ -28,25 +28,46 @@ class CATextViewDelegate
 public:
 	virtual ~CATextViewDelegate(){};
 
-	virtual bool onTextViewAttachWithIME(CATextView* sender) { return false; }
+	virtual bool onTextViewAttachWithIME(CATextView* sender)
+    {
+        CC_UNUSED_PARAM(sender);
+        return true;
+    }
 
 	//If the sender doesn't want to detach from the IME, return true;
-	virtual bool onTextViewDetachWithIME(CATextView* sender) { return false; }
+	virtual bool onTextViewDetachWithIME(CATextView* sender)
+    {
+        CC_UNUSED_PARAM(sender);
+        return true;
+    }
 
 	//If the sender doesn't want to insert the text, return true;
-	virtual bool onTextViewInsertText(CATextView* sender, const char * text, int nLen) { return false; }
+	virtual bool onTextViewInsertText(CATextView* sender, const char * text, int nLen)
+    {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(text);
+        CC_UNUSED_PARAM(nLen);
+        return false;
+    }
 
 	//If the sender doesn't want to delete the delText, return true;
-	virtual bool onTextViewDeleteBackward(CATextView* sender, const char * delText, int nLen) { return false; }
+	virtual bool onTextViewDeleteBackward(CATextView* sender, const char * delText, int nLen)
+    {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(delText);
+        CC_UNUSED_PARAM(nLen);
+        return false;
+    }
 
-	virtual bool getKeyBoardHeight(int height) { return false; }
+	virtual void getKeyBoardHeight(int height) {}
 
-	virtual bool keyBoardCallBack(CATextView *sender) { return false; }
+	virtual bool keyBoardCallBack(CATextView *sender) { return true; }
 };
 
 
-class CC_DLL CATextView : public CAScrollView, public CAIMEDelegate
+class CC_DLL CATextView : public CATouchView, public CAIMEDelegate
 {
+	friend class CATextSelViewEx;
 public:
 	CATextView();
 	virtual ~CATextView();
@@ -61,10 +82,11 @@ public:
 
 	static CATextView* createWithCenter(const CCRect& rect);
 
-	bool initWithFrame(const CCRect& frame);
-
-	bool initWithCenter(const CCRect& rect);
-
+    void setBackGroundImage(CAImage* image);
+    
+    void setBackGroundColor(const CAColor4B &color);
+    
+protected:
 	virtual bool init();
 	virtual bool canAttachWithIME();
 	virtual bool canDetachWithIME();
@@ -106,6 +128,13 @@ public:
     
     CC_SYNTHESIZE(eKeyBoardInputType, m_nInputType, InputType);
     
+    inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
+    
+    inline int getKeyboardType () {return m_keyboardType; }
+    
+    inline void setKeyboardReturnType (eKeyBoardReturnType type) {m_keyBoardReturnType = type; }
+    
+    inline int getKeyboardReturnType () {return m_keyBoardReturnType; }
     
 protected:
 
@@ -130,6 +159,9 @@ protected:
 	void ccStartSelect();
 	void ccSelectAll() { selectAll(); }
 	void ccPasteFromClipboard() { pasteFromClipboard(); }
+    void ccCopyToClipboard() { copyToClipboard(); }
+    void ccCutToClipboard() { cutToClipboard(); }
+
 
 	std::pair<int, int> getLineAndPos(int iPos);
 
@@ -142,13 +174,10 @@ protected:
     inline virtual float decelerationRatio(float dt);
     
 protected:
-
-	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+	virtual void setContentSize(const CCSize& var);
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
-	void ccTouchTimer(float interval);
 
 	virtual bool attachWithIME();
 	virtual bool detachWithIME();
@@ -167,12 +196,16 @@ protected:
     virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
 
 private:
+    
+	CAScrollView* m_pContainerView;
+
 	CAView* m_pCursorMark;
 
 	CAScale9ImageView* m_pBackgroundView;
 
 	CAImageView* m_pImageView;
 
+    bool m_bMoved;
 	int m_iCurPos;
 	int m_iLineHeight;
 	std::vector<TextViewLineInfo> m_vLinesTextView;
@@ -181,9 +214,6 @@ private:
 	bool m_bUpdateImage;
     eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;
-
-	CATouch *m_pCurTouch;
-	CAEvent *m_pCurEvent;
 
 	CATextSelViewEx* m_pTextSelView;
 	CATextArrowView* m_pTextArrView;

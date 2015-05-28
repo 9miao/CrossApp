@@ -543,7 +543,7 @@ std::string CCFileUtils::getFileString(const char* pszFilePath)
     std::string data;
     
     unsigned long pSize = 0;
-    unsigned char* pData = this->getFileData(pszFilePath, "r", &pSize);
+    unsigned char* pData = this->getFileData(pszFilePath, "rb", &pSize);
     
     data.resize(pSize, sizeof(char));
     for (int i=0; i<data.size(); i++)

@@ -35,10 +35,10 @@ CATextView::CATextView()
 , m_bWordWrap(true)
 , m_isTouchInSide(false)
 , m_curSelCharRange(std::make_pair(0, 0))
-, m_pCurTouch(NULL)
-, m_pCurEvent(NULL)
+, m_pContainerView(NULL)
 , m_pTextSelView(NULL)
 , m_pTextArrView(NULL)
+, m_bMoved(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 }
@@ -46,12 +46,13 @@ CATextView::CATextView()
 
 CATextView::~CATextView()
 {
+	CC_SAFE_RELEASE_NULL(m_pImageView);
 	m_pTextViewDelegate = NULL;
 }
 
 void CATextView::onEnterTransitionDidFinish()
 {
-	CAScrollView::onEnterTransitionDidFinish();
+	CAView::onEnterTransitionDidFinish();
 	CC_RETURN_IF(m_sPlaceHolder.empty());
 	this->updateImage();
 
@@ -63,6 +64,7 @@ bool CATextView::resignFirstResponder()
 	if (result)
 	{
 		detachWithIME();
+		hideCursorMark();
 	}
 	return result;
 }
@@ -73,81 +75,74 @@ bool CATextView::becomeFirstResponder()
 	if (result)
 	{
 		attachWithIME();
+		showCursorMark();
 	}
 	return result;
 }
 
-CATextView* CATextView::createWithFrame(const CCRect& rect)
+bool CATextView::init()
 {
-	CATextView* pTextView = new CATextView();
-	if (pTextView && pTextView->initWithFrame(rect))
+	if (!CAView::init())
 	{
-		pTextView->autorelease();
-		return pTextView;
+		return false;
 	}
-	CC_SAFE_DELETE(pTextView);
+    this->setColor(CAColor_clear);
+    
+	m_pContainerView = CAScrollView::createWithFrame(CCRectZero);
+	m_pContainerView->setShowsHorizontalScrollIndicator(false);
+	m_pContainerView->setTouchMovedListenHorizontal(false);
+	m_pContainerView->setBounceHorizontal(false);
+    m_pContainerView->setHaveNextResponder(true);
+	this->addSubview(m_pContainerView);
+    
+	m_pImageView = new CAImageView();
+    m_pImageView->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
+    m_pContainerView->addSubview(m_pImageView);
+    
+	m_pTextSelView = CATextSelViewEx::create();
+	m_pTextSelView->setFrame(getFrame());
+	m_pContainerView->addSubview(m_pTextSelView);
+    
+	m_pTextArrView = CATextArrowView::create();
+	m_pTextArrView->setFrame(getFrame());
+	m_pContainerView->addSubview(m_pTextArrView);
+    
+	return true;
+}
+
+
+CATextView* CATextView::createWithFrame(const CCRect& frame)
+{
+	CATextView *text = new CATextView();
+	if (text && text->initWithFrame(frame))
+	{
+		text->autorelease();
+		return text;
+	}
+	CC_SAFE_DELETE(text);
 	return NULL;
 }
 
 CATextView* CATextView::createWithCenter(const CCRect& rect)
 {
-	CATextView* pTextView = new CATextView();
-	if (pTextView && pTextView->initWithCenter(rect))
+	CATextView *text = new CATextView();
+	if (text && text->initWithCenter(rect))
 	{
-		pTextView->autorelease();
-		return pTextView;
+		text->autorelease();
+		return text;
 	}
-	CC_SAFE_DELETE(pTextView);
+	CC_SAFE_DELETE(text);
 	return NULL;
 }
 
-bool CATextView::init()
+void CATextView::setBackGroundImage(CAImage* image)
 {
-	if (!CAScrollView::init())
-	{
-		return false;
-	}
-
-	this->setShowsHorizontalScrollIndicator(false);
-	this->setBounceHorizontal(false);
-	this->setTouchMovedListenHorizontal(false);
-	this->setBounceHorizontal(false);
-
-    m_pImageView = new CAImageView();
-    m_pImageView->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
-    m_pImageView->autorelease();
-	this->addSubview(m_pImageView);
-
-	m_pTextSelView = CATextSelViewEx::create();
-	m_pTextSelView->setFrame(getFrame());
-	this->addSubview(m_pTextSelView);
-
-	m_pTextArrView = CATextArrowView::create();
-	m_pTextSelView->setFrame(getFrame());
-	this->addSubview(m_pTextArrView);
-
-	return true;
+    m_pContainerView->setBackGroundImage(image);
 }
 
-
-bool CATextView::initWithFrame(const CCRect& frame)
+void CATextView::setBackGroundColor(const CAColor4B &color)
 {
-	if (!CAScrollView::initWithFrame(frame))
-	{
-		return false;
-	}
-	initMarkSprite();
-	return true;
-}
-
-bool CATextView::initWithCenter(const CCRect& rect)
-{
-	if (!CAScrollView::initWithCenter(rect))
-	{
-		return false;
-	}
-	initMarkSprite();
-	return true;
+    m_pContainerView->setBackGroundColor(color);
 }
 
 void CATextView::initMarkSprite()
@@ -156,8 +151,8 @@ void CATextView::initMarkSprite()
 	{
 		m_pCursorMark = CAView::create();
 		m_pCursorMark->setColor(m_cCursorColor);
-		this->addSubview(m_pCursorMark);
-        this->hideCursorMark();
+		m_pContainerView->addSubview(m_pCursorMark);
+        hideCursorMark();
 	}
 	m_pCursorMark->setFrame(CCRect(0, 0, 2, m_iLineHeight));
 }
@@ -187,12 +182,7 @@ void CATextView::updateImage()
 	{
 		text = m_szText;
 	}
-
 	m_cFontColor = m_szText.empty() ? m_cSpaceHolderColor : m_cTextColor;
-	if (m_pImageView)
-	{
-		m_pImageView->setColor(m_cFontColor);
-	}
 
 	float width = this->getBounds().size.width;
 
@@ -220,7 +210,8 @@ void CATextView::updateImage()
     rect.size = image->getContentSize();
     m_pImageView->setImageRect(rect);
     m_pImageView->setFrame(rect);
-	setViewSize(rect.size);
+    m_pContainerView->setViewSize(rect.size);
+    
 	calcCursorPosition();
 }
 
@@ -266,11 +257,11 @@ void CATextView::calcCursorPosition()
 	}
 
 	float w = getBounds().size.height;
-	float y = cCurPosition.y - getContentOffset().y;
+	float y = cCurPosition.y - m_pContainerView->getContentOffset().y;
 	if (y < 0 || y > w)
 	{
 		y = y < 0 ? fHalfLineHeight : w - fHalfLineHeight;
-		setContentOffset(CCPointMake(0, cCurPosition.y-y), true);
+		m_pContainerView->setContentOffset(CCPointMake(0, cCurPosition.y-y), true);
 	}
 }
 
@@ -298,6 +289,7 @@ void CATextView::setText(const std::string& var)
 	m_curSelCharRange = std::make_pair(0, 0);
 	insertText(var.c_str(), (int)var.length());
 	m_pTextViewDelegate = pTemp;
+	m_bUpdateImage = true;
 }
 
 const std::string& CATextView::getText()
@@ -424,19 +416,18 @@ void CATextView::didAttachWithIME()
 
 void CATextView::insertText(const char * text, int len)
 {
-    CCLog("insertText: %s, %d", text, len);
-    if (len<=0)return;
+    CC_RETURN_IF(len <= 0);
+    CC_RETURN_IF(text == 0);
+    
 	execCurSelCharRange();
 	m_szText.insert(m_iCurPos, text, len);
  	m_iCurPos += len;
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 	updateImage();
-	m_pTextArrView->hideTextArrView();
 }
 
 void CATextView::willInsertText(const char* text, int len)
 {
-    CCLog("willInsertText: %s, %d", text, len);
 	execCurSelCharRange();
 	int iOldCurPos = m_iCurPos;
 	insertText(text, len);
@@ -446,24 +437,26 @@ void CATextView::willInsertText(const char* text, int len)
 
 void CATextView::AndroidWillInsertText(int start, const char* str, int before, int count)
 {
-
-	CCAssert(str != NULL, "");
-	CCAssert(count > 0, "");
-
- 	insertText(str, (int)strlen(str));
-
+    CCAssert(str != NULL, "");
+    CCAssert(count > 0, "");
+    
+    for (int i=0; i<before; i++)
+    {
+        deleteBackward();
+    }
+    CC_RETURN_IF(str == NULL || count <= 0);
+    
+    std::string s = str;
+    insertText(s.c_str(), s.length());
 }
 
 void CATextView::deleteBackward()
 {
 	if (m_iCurPos == 0 || m_szText.empty())
 		return;
-
 	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, m_szText.c_str(), (int)m_szText.length()));
-
 	if (execCurSelCharRange())
 		return;
-
 	int nDeleteLen = 1;
 	while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)))
 	{
@@ -479,10 +472,11 @@ void CATextView::deleteBackward()
 void CATextView::getKeyBoardHeight(int height)
 {
 	CAView::becomeFirstResponder();
-	if (m_pTextViewDelegate && m_pTextViewDelegate->getKeyBoardHeight(height))
-	{
-		return;
-	}
+    
+    if( m_pTextViewDelegate)
+    {
+        m_pTextViewDelegate->getKeyBoardHeight(height);
+    }
 }
 
 void CATextView::getKeyBoradReturnCallBack()
@@ -534,7 +528,7 @@ int CATextView::getCurrentByPointY(int y)
 
 void CATextView::calculateSelChars(const CCPoint& point, int& l, int& r, int& p)
 {
-	float y = point.y + getContentOffset().y;
+	float y = point.y + m_pContainerView->getContentOffset().y;
 	int iCurLine = getCurrentByPointY(y);
 	int iHalfCharSize = 0;
 	int iStartPos = 0;
@@ -569,7 +563,6 @@ void CATextView::calculateSelChars(const CCPoint& point, int& l, int& r, int& p)
 bool CATextView::execCurSelCharRange()
 {
 	CATextToolBarView::hideTextToolBar();
-	m_pTextSelView->hideTextSelView();
 
 	if (m_curSelCharRange.first == m_curSelCharRange.second)
 		return false;
@@ -581,6 +574,7 @@ bool CATextView::execCurSelCharRange()
 	m_iCurPos = iOldCurPos;
     this->showCursorMark();
 	calcCursorPosition();
+    m_pTextSelView->hideTextSelView();
 	return true;
 }
 
@@ -615,15 +609,10 @@ void CATextView::ccStartSelect()
 	}
 
 	m_pTextArrView->hideTextArrView();
-	m_pTextSelView->showTextSelView(getZZCRect(), m_iLineHeight);
+	m_pTextSelView->showTextSelView(this, getZZCRect(), m_iLineHeight);
 	hideCursorMark();
 }
 
-void CATextView::ccTouchTimer(float interval)
-{
-	CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
-	ccTouchPress(m_pCurTouch, m_pCurEvent);
-}
 
 std::pair<int, int> CATextView::getLineAndPos(int iPos)
 {
@@ -673,91 +662,77 @@ std::vector<CCRect> CATextView::getZZCRect()
 	}
 	for (int i = 0; i < vr.size(); i++)
 	{
-		vr[i].origin.y += getContentOffset().y;
+		vr[i].origin.y += m_pContainerView->getContentOffset().y;
 	}
 	return vr;
 }
 
-bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
+void CATextView::setContentSize(const CCSize& var)
 {
-	if (m_pTextSelView->isTextViewShow())
+	CAView::setContentSize(var);
+	if (m_pContainerView)
 	{
-		m_pTextSelView->becomeFirstResponder();
+		m_pContainerView->setFrame(this->getBounds());
 	}
-	else
-	{
-		this->setTouchMovedListenVertical(false);
-		this->setBounceVertical(false);
-
-		CAScheduler::schedule(schedule_selector(CATextView::ccTouchTimer), this, 0, 0, 1.5f);
-		m_pCurTouch = pTouch;
-		m_pCurEvent = pEvent;
-	}
-
-	return CAScrollView::ccTouchBegan(pTouch, pEvent);
+	this->initMarkSprite();
 }
-
 
 void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
-	CAScrollView::ccTouchMoved(pTouch, pEvent);
+    m_bMoved = true;
 }
 
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
-
-	if (CATextToolBarView::isTextToolBarShow() || m_pTextSelView->isTextViewShow())
+    if (CATextToolBarView::isTextToolBarShow())
 		return;
 	
+    if (m_bMoved)
+    {
+        m_bMoved = false;
+        return;
+    }
+    
 	CCPoint point = this->convertTouchToNodeSpace(pTouch);
 
-	if (!isScrollWindowNotOutSide())
+	if (this->getBounds().containsPoint(point))
 	{
-		if (this->getBounds().containsPoint(point))
+		becomeFirstResponder();
+		if (isFirstResponder() && !m_pTextSelView->isTextViewShow())
 		{
-			becomeFirstResponder();
-			if (isFirstResponder())
-			{
-                this->showCursorMark();
+            this->showCursorMark();
 
-				int iCurLine = 0; int iCurPosX = 0;
-				calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
-				m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+			int iCurLine = 0; int iCurPosX = 0;
+			calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
+			m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
 
-				CCPoint pt = m_pCursorMark->getCenterOrigin();
-				m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + getContentOffset().y));
-			}
+            CCPoint pt = m_pCursorMark->getCenterOrigin();
+            m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
+            m_curSelCharRange = std::pair<int,int>(m_iCurPos, m_iCurPos);
 		}
-		else
-		{
-			m_pTextArrView->hideTextArrView();
-			m_pTextSelView->hideTextSelView();
+	}
+	else
+	{
+		m_pTextArrView->hideTextArrView();
+		m_pTextSelView->hideTextSelView();
 
-			if (resignFirstResponder())
-			{
-                this->hideCursorMark();
-			}
+		if (resignFirstResponder())
+		{
+            this->hideCursorMark();
 		}
 	}
 
-	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
-	execCurSelCharRange();
-	CAScrollView::ccTouchEnded(pTouch, pEvent);
+	CATouchView::ccTouchEnded(pTouch, pEvent);
 }
 
-void CATextView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
-{
-	CAScheduler::unschedule(schedule_selector(CATextView::ccTouchTimer), this);
-	CAScrollView::ccTouchCancelled(pTouch, pEvent);
-}
+
 
 void CATextView::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 {
 	if (m_pTextSelView->isTextViewShow())
 		return;
 
+    becomeFirstResponder();
 	CATextToolBarView *pToolBar = CATextToolBarView::create();
 	if (m_szText.empty())
 	{
@@ -769,7 +744,7 @@ void CATextView::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 		pToolBar->addButton(UTF8("\u5168\u9009"), this, callfunc_selector(CATextView::ccSelectAll));
 		pToolBar->addButton(UTF8("\u9009\u62e9"), this, callfunc_selector(CATextView::ccStartSelect));
 	}
-	pToolBar->show();
+	pToolBar->show(this);
 }
 
 bool CATextView::attachWithIME()
@@ -784,6 +759,32 @@ bool CATextView::attachWithIME()
 #if( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
 
             pGlView->setIMEKeyboardReturnEnter();
+
+            if (getKeyboardType() ==KEY_BOARD_TYPE_NORMAL)
+            {
+                pGlView->setIMEKeyboardDefault();
+            }
+            else if (getKeyboardType() ==KEY_BOARD_TYPE_NUMBER)
+            {
+                pGlView->setIMEKeyboardNumber();
+            }
+            else if(getKeyboardType() ==KEY_BOARD_TYPE_ALPHABET)
+            {
+                pGlView->setIMEKeyboardAlphabet();
+            }
+            
+            if (getKeyboardReturnType() ==KEY_BOARD_RETURN_SEND)
+            {
+                pGlView->setIMEKeyboardReturnSend();
+            }
+            else if (getKeyboardReturnType() ==KEY_BOARD_RETURN_SEARCH)
+            {
+                pGlView->setIMEKeyboardReturnSearch();
+            }
+            else if(getKeyboardReturnType() ==KEY_BOARD_RETURN_DONE)
+            {
+                pGlView->setIMEKeyboardReturnDone();
+            }
 
 #endif
 			pGlView->setIMEKeyboardState(true);
@@ -815,7 +816,7 @@ void CATextView::selectAll()
 	m_curSelCharRange.second = m_iCurPos = (int)m_szText.length();
 
 	m_pTextArrView->hideTextArrView();
-	m_pTextSelView->showTextSelView(getZZCRect(), m_iLineHeight);
+	m_pTextSelView->showTextSelView(this, getZZCRect(), m_iLineHeight);
 	this->hideCursorMark();
 }
 
@@ -872,7 +873,7 @@ void CATextView::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 	calcCursorPosition();
 
 	m_pTextArrView->hideTextArrView();
-	m_pTextSelView->showTextSelView(getZZCRect(), m_iLineHeight);
+	m_pTextSelView->showTextSelView(this, getZZCRect(), m_iLineHeight);
 	hideCursorMark();
 }
 
@@ -888,7 +889,7 @@ void CATextView::moveArrowBtn(const CCPoint& pt)
 	m_pCursorMark->setVisible(true);
 
 	CCPoint ptArr = m_pCursorMark->getCenterOrigin();
-	m_pTextArrView->showTextArrView(CCPoint(ptArr.x, ptArr.y + m_iLineHeight*1.2f + getContentOffset().y));
+	m_pTextArrView->showTextArrView(CCPoint(ptArr.x, ptArr.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
 }
 
 void CATextView::copyToClipboard()
@@ -937,7 +938,7 @@ void CATextView::visit()
 		m_bUpdateImage = false;
 		this->updateImage();
 	}
-	CAScrollView::visit();
+	CAView::visit();
 }
 
 void CATextView::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
@@ -960,7 +961,6 @@ void CATextView::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
     {
         m_isTouchInSide = false;
         CAView::resignFirstResponder();
-
     }
 }
 

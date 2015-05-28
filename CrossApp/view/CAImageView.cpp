@@ -204,9 +204,9 @@ void CAImageView::setContentSize(const CCSize & size)
 void CAImageView::setImage(CAImage* image)
 {
     CAView::setImage(image);
-    CCRect rect = CCRectZero;
     if (image)
     {
+        CCRect rect = CCRectZero;
         rect.size = image->getContentSize();
         this->setVertexRect(rect);
         this->updateByImageViewScaleType();

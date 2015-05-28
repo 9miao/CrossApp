@@ -45,6 +45,7 @@ CATextField::CATextField()
 , m_pBackgroundView(NULL)
 , m_isTouchInSide(false)
 , m_keyBoardReturnType(KEY_BOARD_RETURN_DONE)
+, m_bMoved(false)
 {
 	m_iFontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize);
 }
@@ -329,6 +330,7 @@ eKeyBoardInputType CATextField::getInputType()
 void CATextField::calculateSelChars(const CCPoint& point, int& l, int& r, int& p)
 {
 _CalcuAgain:
+
 	int dtValue = point.x - m_iString_left_offX - m_iHoriMargins;
 	l = r = p = 0;
 	for (std::vector<TextAttribute>::iterator it = m_vTextFiledChars.begin(); it != m_vTextFiledChars.end(); ++it)
@@ -352,6 +354,11 @@ bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	return CATouchView::ccTouchBegan(pTouch, pEvent);
 }
 
+void CATextField::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+    m_bMoved = true;
+}
+
 void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
 	CATouchView::ccTouchEnded(pTouch, pEvent);
@@ -359,11 +366,17 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 	if (CATextToolBarView::isTextToolBarShow())
 		return;
 
+    if (m_bMoved)
+    {
+        m_bMoved = false;
+        return;
+    }
+    
     CCPoint point = this->convertTouchToNodeSpace(pTouch);
     
     if (this->getBounds().containsPoint(point))
     {
-        if (!isFirstResponder() && canAttachWithIME())
+        if (canAttachWithIME())
         {
             becomeFirstResponder();
             
@@ -393,6 +406,7 @@ void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 	if (cszText.empty() && m_sText.empty())
 		return;
 
+	becomeFirstResponder();
 	CATextToolBarView *pToolBar = CATextToolBarView::create();
 	if (m_sText.empty())
 	{
@@ -404,7 +418,13 @@ void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 		pToolBar->addButton(UTF8("\u5168\u9009"), this, callfunc_selector(CATextField::ccSelectAll));
 		pToolBar->addButton(UTF8("\u9009\u62e9"), this, callfunc_selector(CATextField::ccStartSelect));
 	}
-	pToolBar->show();
+    
+    if (canDetachWithIME())
+    {
+        resignFirstResponder();
+    }
+    
+    pToolBar->show();
 }
 
 bool CATextField::canAttachWithIME()

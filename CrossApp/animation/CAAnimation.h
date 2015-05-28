@@ -19,7 +19,7 @@ typedef void (CAObject::*SEL_CAAnimation)(float delay, float now, float total);
 namespace CAAnimation
 {
 
-    void schedule(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval = 1/60.0f, float delay = 0.0f);
+    CC_DLL void schedule(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval = 1/60.0f, float delay = 0.0f);
 
 };
 

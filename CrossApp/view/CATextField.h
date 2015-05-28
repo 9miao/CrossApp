@@ -142,8 +142,6 @@ public:
     
     inline int getKeyboardReturnType () {return m_keyBoardReturnType; }
     
-	void analyzeString(const char * text, int len);
-    
     virtual void setImageRect(const CCRect& rect);
     
     virtual void updateImageRect();
@@ -169,8 +167,10 @@ protected:
     void showCursorMark();
     void hideCursorMark();
     
+    void analyzeString(const char * text, int len);
 	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
     virtual void insertText(const char * text, int len);
@@ -211,6 +211,7 @@ private:
 	std::pair<int, int> m_curSelCharRange;
 	int m_iCurPos;
 
+    bool m_bMoved;
 	int m_iLabelWidth;
 	int m_iString_left_offX;
 	int m_iString_l_length;

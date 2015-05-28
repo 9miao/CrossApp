@@ -211,16 +211,13 @@ bool CASwitch::initWithFrame(const CCRect& rect)
     
     CCRect bounds = this->getBounds();
     
-    m_pOnImageView = CAImageView::createWithImage(m_onImage);
-    m_pOnImageView->setFrame(bounds);
+    m_pOnImageView = CAImageView::createWithFrame(bounds);
     this->addSubview(m_pOnImageView);
     
-    m_pOffImageView = CAImageView::createWithImage(m_offImage);
-    m_pOffImageView->setFrame(bounds);
+    m_pOffImageView = CAImageView::createWithFrame(bounds);
     this->addSubview(m_pOffImageView);
     
-    m_pThumbTintImageView = CAImageView::createWithImage(m_thumbTintImage);
-    m_pThumbTintImageView->setFrame(CCRect(0, 0, bounds.size.height, bounds.size.height));
+    m_pThumbTintImageView = CAImageView::createWithFrame(CCRect(0, 0, bounds.size.height, bounds.size.height));
     this->addSubview(m_pThumbTintImageView);
     return true;
 }
