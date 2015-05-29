@@ -19,7 +19,7 @@ public:
     
     virtual ~MenuViewController();
     
-    CREATE_FUNC(MenuViewController);
+    //CREATE_FUNC(MenuViewController);
     
 protected:
     

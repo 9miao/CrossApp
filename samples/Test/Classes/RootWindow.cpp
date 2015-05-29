@@ -6,6 +6,7 @@
 #include "CDNewsViewController.h"
 #include "CDNewsImageController.h"
 #include "CDNewsAboutController.h"
+#include "CDWebViewController.h"
 
 static RootWindow* _window = NULL;
 
@@ -29,7 +30,6 @@ RootWindow::RootWindow()
 
 RootWindow::~RootWindow()
 {
-
 }
 
 bool RootWindow::init()
@@ -39,7 +39,7 @@ bool RootWindow::init()
         return false;
     }
     CCSize winSize = this->getBounds().size;
-    initUIView();
+    intNewsView();
 
     return true;
 }
@@ -49,22 +49,23 @@ void RootWindow::initUIView()
     CDUIShowCollectionView* tabBarController = new CDUIShowCollectionView();
     tabBarController->init();
 	tabBarController->setTitle(UTF8("控件展示"));
+    tabBarController->autorelease();
+    
     CANavigationController *nav = new CANavigationController();
     nav->initWithRootViewController(tabBarController);
     nav->setNavigationBarBackGroundImage(CAImage::create("image/navbg.jpg"));
-    tabBarController->release();
+    nav->autorelease();
     
-    
-    MenuViewController* _menuview = MenuViewController::create();
+    MenuViewController* _menuview = new MenuViewController;
+    _menuview->autorelease();
     
     CADrawerController* drawer = new CADrawerController();
     drawer->initWithController(_menuview, nav, this->getBounds().size.width/6*5);
     drawer->setBackgroundView(CAImageView::createWithImage(CAImage::create("image/bg.jpg")));
     drawer->setEffect3D(true);
-    nav->release();
     
     this->setRootViewController(drawer);
-    drawer->release();
+    drawer->autorelease();
     
     m_pRootNavigationController = nav;
     m_pRootDrawerController = drawer;
@@ -109,11 +110,11 @@ void RootWindow::intNewsView()
     newsTabBarController->setTabBarBackGroundImage(CAImage::create("source_material/tabbar_background.png"));
     newsTabBarController->setTabBarSelectedBackGroundColor(CAColor_clear);
     newsTabBarController->setTabBarTitleColorForNormal(CAColor_black);
-    newsTabBarController->setTabBarTitleColorForSelected(CAColor_gray);
+    newsTabBarController->setTabBarTitleColorForSelected(ccc4(42,117,201,255));
     newsTabBarController->setTitle(" ");
     newsTabBarController->showTabBarSelectedIndicator();
-    newsTabBarController->setTabBarSelectedIndicatorColor(CAColor_gray);
-    
+    newsTabBarController->setTabBarSelectedIndicatorColor(ccc4(42,117,201,255));
+    newsTabBarController->autorelease();
     vec.push_back(newsTabBarController);
     /////////////////NewsTabBar///////////////////////
 
@@ -147,10 +148,11 @@ void RootWindow::intNewsView()
     imageTabBarController->setTabBarBackGroundImage(CAImage::create("source_material/tabbar_background.png"));
     imageTabBarController->setTabBarSelectedBackGroundColor(CAColor_clear);
     imageTabBarController->setTabBarTitleColorForNormal(CAColor_black);
-    imageTabBarController->setTabBarTitleColorForSelected(CAColor_gray);
+    imageTabBarController->setTabBarTitleColorForSelected(ccc4(42,117,201,255));
     imageTabBarController->setTitle(" ");
     imageTabBarController->showTabBarSelectedIndicator();
-    imageTabBarController->setTabBarSelectedIndicatorColor(CAColor_gray);
+    imageTabBarController->setTabBarSelectedIndicatorColor(ccc4(42,117,201,255));
+    imageTabBarController->autorelease();
     
     vec.push_back(imageTabBarController);
     
@@ -168,22 +170,24 @@ void RootWindow::intNewsView()
     CANavigationBarItem* temp_nav = CANavigationBarItem::create(" ");
     temp_nav->setNagigationBarHidden(true);
     tabBarController->setNavigationBarItem(temp_nav);
+    tabBarController->autorelease();
     
     CANavigationController* nav = new CANavigationController();
     nav->initWithRootViewController(tabBarController);
     nav->setNavigationBarBackGroundImage(CAImage::create("image/navbg.jpg"));
+    nav->autorelease();
     
-    MenuViewController* _menuview = MenuViewController::create();
+    MenuViewController* _menuview =new MenuViewController();
+    _menuview->autorelease();
     
     CADrawerController* drawer = new CADrawerController();
     drawer->initWithController(_menuview, nav, this->getBounds().size.width/6*5);
     drawer->setBackgroundView(CAImageView::createWithImage(CAImage::create("image/bg.jpg")));
     drawer->setEffect3D(true);
-    tabBarController->release();
-    nav->release();
+    drawer->autorelease();
     
     this->setRootViewController(drawer);
-    drawer->release();
+    
     
     m_pRootNavigationController = nav;
     m_pRootDrawerController = drawer;

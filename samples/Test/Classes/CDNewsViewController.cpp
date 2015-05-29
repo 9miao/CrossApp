@@ -119,6 +119,11 @@ void CDNewsViewController::viewDidLoad()
 
 void CDNewsViewController::showAlert()
 {
+    if (p_alertView) {
+        this->getView()->removeSubview(p_alertView);
+        p_alertView= NULL;
+    }
+
     p_alertView = CAView::createWithFrame(this->getView()->getBounds());
     this->getView()->addSubview(p_alertView);
     
@@ -186,7 +191,6 @@ void CDNewsViewController::onRequestFinished(const HttpResponseStatus& status, c
                 temp_msg.m_imageUrl.push_back(value[index]["pic"][i].asString());
             }
             m_msg.push_back(temp_msg);
-            CCLog("title==%s",value[index]["title"].asString().c_str());
         }
         
         for (int i=0; i<length1; i++) {
@@ -232,7 +236,6 @@ void CDNewsViewController::onRefreshRequestFinished(const HttpResponseStatus& st
                 temp_msg.m_imageUrl.push_back(value[index]["pic"][i].asString());
             }
             m_msg.push_back(temp_msg);
-            CCLog("title==%s",value[index]["title"].asString().c_str());
         }
         
         //p_TableView->reloadData();
@@ -261,6 +264,7 @@ void CDNewsViewController::initNewsTableView()
     }
     if (p_TableView!=NULL) {
         this->getView()->removeSubview(p_TableView);
+        p_TableView = NULL;
     }
     p_TableView= CATableView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
     p_TableView->setTableViewDataSource(this);
@@ -367,7 +371,6 @@ CATableViewCell* CDNewsViewController::tableCellAtIndex(CATableView* table, cons
         cell = CDNewsTableCell::create("CrossApp", CADipRect(0, 0, _size.width, _size.height));
         cell->initWithCell();
     }
-    CCLog("section==%d,row===%d",section,row);
     CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);
     cellText->setText(m_msg[row].m_title);
     
@@ -422,7 +425,6 @@ void CDNewsViewController::scrollViewFooterBeginRefreshing(CAScrollView* view)
 
 void CDNewsViewController::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point)
 {
-    CCLog("adadf==%d",index);
     CDWebViewController* _webController = new CDWebViewController();
     _webController->init();
     _webController->setTitle(" ");
@@ -431,7 +433,6 @@ void CDNewsViewController::pageViewDidSelectPageAtIndex(CAPageView* pageView, un
     RootWindow::getInstance()->getDrawerController()->hideLeftViewController(true);
     RootWindow::getInstance()->getRootNavigationController()->pushViewController(_webController, true);
     _webController->initWebView(m_page[index-1].m_url);
-    CCLog("adadf==%s",m_page[index-1].m_url.c_str());
 }
 
 void CDNewsViewController::pageViewDidBeginTurning(CAPageView* pageView)
@@ -455,7 +456,6 @@ void CDNewsViewController::pageViewDidEndTurning(CAPageView* pageView)
 
 void CDNewsViewController::pageControlCallBack(CrossApp::CAControl *btn, CrossApp::CCPoint point){
     CAPageControl* button = (CAPageControl*)btn;
-    CCLog("btn_tag===%d",button->getCurrentPage());
     p_PageView->setCurrPage(button->getCurrentPage()+1, true);
     if (m_page.size()>0) {
         pageViewTitle->setText(m_page[button->getCurrentPage()].m_title);

@@ -324,42 +324,53 @@ void CDUIShowView::showUiWithIndex(int _index)
     switch (_index) {
         case 0:
             showAlertView();
+            initButtonControl();
             break;
         case 1:
             showButton();
+            initButtonControl();
             break;
         case 2:
             showImage();
+            initButtonControl();
             break;
         case 3:
             showScale9Image();
             break;
         case 4:
             showIndicator();
+            initButtonControl();
             break;
         case 5:
             showLabel();
+            initButtonControl();
             break;
         case 6:
             showProgress();
+            initButtonControl();
             break;
         case 7:
             showSlider();
+            initButtonControl();
             break;
         case 8:
             showSwitch();
+            initButtonControl();
             break;
         case 9:
             showTextField();
+            initButtonControl();
             break;
         case 10:
             showTextView();
             break;
         case 11:
             showSegmentedControl();
+            initButtonControl();
             break;
         case 12:
             showTabBar();
+            initButtonControl();
             break;
         case 13:
             showPageView();
@@ -385,7 +396,6 @@ void CDUIShowView::showUiWithIndex(int _index)
         default:
             break;
     }
-    initButtonControl();
 }
 
 void CDUIShowView::initButtonControl()
@@ -1249,7 +1259,7 @@ void CDUIShowView::reshapeViewRectDidFinish()
 //TableView
 void CDUIShowView::showTableView()
 {
-    p_TableView = CATableView::createWithFrame(CADipRect(0, 0, winSize.width-50, winSize.height-100));
+    p_TableView = CATableView::createWithFrame(CADipRect(0, 0, winSize.width-50, winSize.height));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
     p_TableView->setAllowsSelection(true);
@@ -1259,7 +1269,7 @@ void CDUIShowView::showTableView()
     this->getView()->addSubview(p_TableView);
     
     
-    ETableView* p_TableView1 = ETableView::createWithFrame(CADipRect(winSize.width-50, 0, 50, winSize.height-100));
+    ETableView* p_TableView1 = ETableView::createWithFrame(CADipRect(winSize.width-50, 0, 50, winSize.height));
     p_TableView1->setETableViewDelegate(this);
     this->getView()->addSubview(p_TableView1);
 }
@@ -1359,7 +1369,7 @@ void CDUIShowView::showListView()
     CDListView* listview1 = CDListView::createWithFrame(CADipRect(0,0,winSize.width,50));
     this->getView()->addSubview(listview1);
     
-    p_ListView = CAListView::createWithFrame(CADipRect(0,50,winSize.width,winSize.height-150));
+    p_ListView = CAListView::createWithFrame(CADipRect(0,50,winSize.width,winSize.height));
     p_ListView->setListViewDelegate(this);
     p_ListView->setListViewDataSource(this);
     p_ListView->setAllowsSelection(true);
@@ -1444,7 +1454,7 @@ void CDUIShowView::showCollectionView()
     headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
     footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     
-    p_Conllection = CACollectionView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height-100));
+    p_Conllection = CACollectionView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
     p_Conllection->setAllowsSelection(true);
     //p_Conllection->setAllowsMultipleSelection(true);
     p_Conllection->setCollectionViewDelegate(this);

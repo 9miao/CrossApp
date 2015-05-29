@@ -44,7 +44,7 @@ void CDUIShowCollectionView::viewDidLoad()
 {
     size = this->getView()->getBounds().size;
 
-    p_Conllection = CACollectionView::createWithFrame(this->getView()->getBounds());
+    CACollectionView* p_Conllection = CACollectionView::createWithFrame(this->getView()->getBounds());
     p_Conllection->setAllowsSelection(true);
     p_Conllection->setAllowsMultipleSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
@@ -58,7 +58,7 @@ void CDUIShowCollectionView::viewDidLoad()
 
 void CDUIShowCollectionView::viewDidUnload()
 {
-    
+
 }
 
 void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
@@ -143,9 +143,4 @@ unsigned int CDUIShowCollectionView::numberOfItemsInRowsInSection(CACollectionVi
 unsigned int CDUIShowCollectionView::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
 {
     return (this->getView()->getBounds().size.width - _px(10) * 4) / 3;
-}
-
-void CDUIShowCollectionView::refreshData(float interval)
-{
-    p_Conllection->reloadData();
 }

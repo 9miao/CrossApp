@@ -676,7 +676,7 @@ void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpRes
             FILE *fp = fopen(string(imagePath + key).c_str(), "wb+");
             if (fp)
             {
-                fwrite(pData, sizeof(char), pSize, fp);
+                //fwrite(pData, sizeof(char), pSize, fp);
                 fclose(fp);
             }
         }

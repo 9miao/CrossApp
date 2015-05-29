@@ -19,7 +19,7 @@ public:
     CDUIShowCollectionView();
     
     virtual ~CDUIShowCollectionView();
-    
+    //CREATE_FUNC(CDUIShowCollectionView);
 protected:
     
     void viewDidLoad();
@@ -50,7 +50,7 @@ private:
     
     CADipSize size;
     
-    CACollectionView* p_Conllection;
+    //CACollectionView* p_Conllection;
     
     std::vector<CAColor4B> colorArr;
     

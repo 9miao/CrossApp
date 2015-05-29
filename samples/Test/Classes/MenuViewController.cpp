@@ -8,6 +8,7 @@
 
 #include "MenuViewController.h"
 #include "CDWebViewController.h"
+#include "CDUIShowCollectionView.h"
 
 MenuViewController::MenuViewController()
 {
@@ -21,6 +22,7 @@ MenuViewController::~MenuViewController()
 
 void MenuViewController::viewDidLoad()
 {
+    this->getView()->removeAllSubviews();
     this->getView()->setColor(CAColor_clear);
     size = this->getView()->getBounds().size;
     
@@ -37,16 +39,24 @@ void MenuViewController::viewDidLoad()
 
 void MenuViewController::viewDidUnload()
 {
-    
+
 }
 
 void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    CCLog("index==%d",row);
     RootWindow::getInstance()->dismissModalViewController(true);
     if (row==0) {
+//        RootWindow::getInstance()->removeSubviewByTag(100);
         RootWindow::getInstance()->initUIView();
+//        CDUIShowCollectionView* tabBarController = new CDUIShowCollectionView();
+//        tabBarController->init();
+//        tabBarController->setTitle(UTF8("控件展示"));
+//        tabBarController->autorelease();
+//        RootWindow::getInstance()->getDrawerController()->hideLeftViewController(true);
+//        RootWindow::getInstance()->getRootNavigationController()->pushViewController(tabBarController, true);
     }else if(row==1){
+        this->getView()->removeSubview(tableView);
+        tableView = NULL;
         RootWindow::getInstance()->intNewsView();
     }else if(row==2){
         CDWebViewController* _webController = new CDWebViewController();
