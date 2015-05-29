@@ -137,7 +137,9 @@ void CDNewsImageController::initImageTableView()
         showAlert();
         return;
     }
-    if (p_TableView) {
+
+    if (p_TableView!=NULL)
+    {
         this->getView()->removeSubview(p_TableView);
         p_TableView = NULL;
     }
@@ -147,7 +149,7 @@ void CDNewsImageController::initImageTableView()
     p_TableView->setAllowsSelection(true);
     p_TableView->setScrollViewDelegate(this);
     p_TableView->setAllowsMultipleSelection(false);
-    p_TableView->setSeparatorViewHeight(30);
+    p_TableView->setSeparatorViewHeight(40);
     p_TableView->setSeparatorColor(ccc4(240,240,240,255));
     this->getView()->addSubview(p_TableView);
     CAPullToRefreshView *refreshDiscount = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);

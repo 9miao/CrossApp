@@ -45,20 +45,16 @@ void MenuViewController::viewDidUnload()
 void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
     RootWindow::getInstance()->dismissModalViewController(true);
-    if (row==0) {
-//        RootWindow::getInstance()->removeSubviewByTag(100);
+    if (row==0)
+    {
         RootWindow::getInstance()->initUIView();
-//        CDUIShowCollectionView* tabBarController = new CDUIShowCollectionView();
-//        tabBarController->init();
-//        tabBarController->setTitle(UTF8("控件展示"));
-//        tabBarController->autorelease();
-//        RootWindow::getInstance()->getDrawerController()->hideLeftViewController(true);
-//        RootWindow::getInstance()->getRootNavigationController()->pushViewController(tabBarController, true);
-    }else if(row==1){
-        this->getView()->removeSubview(tableView);
-        tableView = NULL;
+    }
+    else if(row==1)
+    {
         RootWindow::getInstance()->intNewsView();
-    }else if(row==2){
+    }
+    else if(row==2)
+    {
         CDWebViewController* _webController = new CDWebViewController();
         _webController->init();
         _webController->setTitle(" ");
@@ -67,7 +63,9 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
         RootWindow::getInstance()->getDrawerController()->hideLeftViewController(true);
         RootWindow::getInstance()->getRootNavigationController()->pushViewController(_webController, true);
         _webController->initWebView("http://www.crossapp.com.cn");
-    }else if(row==3){
+    }
+    else if(row==3)
+    {
         CDWebViewController* _webController = new CDWebViewController();
         _webController->init();
         _webController->setTitle(" ");

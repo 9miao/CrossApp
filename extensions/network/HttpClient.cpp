@@ -466,7 +466,8 @@ CAHttpClient::~CAHttpClient()
 {
     need_quit[_threadID] = true;
     
-    if (!s_requestQueue[_threadID].empty()) {
+    if (!s_requestQueue[_threadID].empty())
+    {
     	pthread_cond_signal(&s_SleepCondition[_threadID]);
     }
     

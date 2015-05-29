@@ -803,6 +803,8 @@ static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int size)
     return size;
 }
 
+static int imageCount = 0;
+
 CAImage::CAImage()
 : m_uPixelsWide(0)
 , m_uPixelsHigh(0)
@@ -820,7 +822,7 @@ CAImage::CAImage()
 , m_pGIF(NULL)
 , m_iGIFIndex(0)
 {
-    
+    //CCLog("CAImage = %d\n", ++imageCount);
 }
 
 CAImage::~CAImage()
@@ -836,6 +838,7 @@ CAImage::~CAImage()
     {
         free(m_pData);
     }
+    //CCLog("~CAImage = %d\n", --imageCount);
 }
 
 CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment,

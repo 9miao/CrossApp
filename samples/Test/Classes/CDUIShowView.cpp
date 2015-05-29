@@ -994,7 +994,8 @@ void CDUIShowView::switchStateChange(CAControl* btn, CCPoint point)
 
 void CDUIShowView::showTextField()
 {
-    CATextField* textField = CATextField::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width/2, 50));
+    CATextField* textField = CATextField::createWithFrame(CADipRect(100, 150, winSize.width-200, 80));
+    textField->setFontSize(_px(40));
     textField->setTag(100);
     textField->setPlaceHolder("Input");
     textField->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
@@ -1008,7 +1009,8 @@ void CDUIShowView::showTextFieldByIndex()
     if (showIndex==0)
     {
         this->setNavigationBarItem(CANavigationBarItem::create("TextField"));
-        CATextField* textField = CATextField::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width/2, 50));
+        CATextField* textField = CATextField::createWithFrame(CADipRect(100, 150, winSize.width-200, 80));
+        textField->setFontSize(_px(40));
         textField->setTag(100);
         textField->setPlaceHolder("Input");
         this->getView()->addSubview(textField);
@@ -1016,17 +1018,18 @@ void CDUIShowView::showTextFieldByIndex()
     else if(showIndex==1)
     {
         this->setNavigationBarItem(CANavigationBarItem::create("TextField Custem"));
-        CATextField* textField = CATextField::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width/2, 50));
+        CATextField* textField = CATextField::createWithFrame(CADipRect(100, 150, winSize.width-200, 80));
+        textField->setFontSize(_px(40));
         textField->setTag(100);
-        textField->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded_highlighted.png")));
         textField->setPlaceHolder("Input");
+        textField->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded_highlighted.png")));
         this->getView()->addSubview(textField);
     }
 }
 
 void CDUIShowView::showTextView()
 {
-    CATextView* textView = CATextView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 500, 300));
+    CATextView* textView = CATextView::createWithFrame(CADipRect(100, 150, winSize.width-200, 300));
     textView->setPlaceHolder("TextView");
     //textView->setSpaceHolderColor(CAColor_blueStyle);
     //textView->setTextColor(CAColor_green);
