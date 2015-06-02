@@ -24,13 +24,14 @@ static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int size)
 
 CAGif::CAGif()
 :m_fDurTime(0.0f)
+,m_pImage(NULL)
 {
-    
+    m_pImage = new CAImage();
 }
 
 CAGif::~CAGif()
 {
-    
+    CC_SAFE_DELETE(m_pImage);
 }
 
 CAGif* CAGif::createWithFilePath(std::string filePath)
@@ -110,11 +111,6 @@ unsigned int CAGif::getGifImageIndex()
 unsigned int CAGif::getGifImageCounts()
 {
     return m_pGIF ? m_pGIF->ImageCount : 0;
-}
-
-void CAGif::updateGifImageWithIndex(unsigned int index)
-{
-    this->setGifImageWithIndex(index);
 }
 
 float CAGif::getImageDuration()
@@ -257,16 +253,14 @@ void CAGif::setGifImageWithIndex(unsigned int index)
             }
         }
     }
+    
+    m_pImage->initWithRawData(m_pImageData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
 }
 
-int CAGif::getGifImageNextIndex()
+void CAGif::nextGifImageIndex()
 {
-    int index = this->getGifImageIndex() + 1;
-    if( index == this->getGifImageCounts())
-    {
-        index = 0;
-    }
-    return index;
+    int index = (m_iGIFIndex + 1) % this->getGifImageCounts();
+    this->setGifImageWithIndex(index);
 }
 
 void CAGif::getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal)
@@ -335,12 +329,6 @@ float CAGif::getImageDuration(const SavedImage* image)
     duration = duration <= 50 ? 50 : duration;
     return duration;
 }
-
-unsigned char* CAGif::getImageData()
-{
-    return m_pImageData;
-}
-
 
 
 NS_CC_END

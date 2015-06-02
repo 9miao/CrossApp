@@ -15,7 +15,6 @@
 NS_CC_BEGIN
 
 class CAGif;
-class CAImage;
 
 class CC_DLL CAGifView : public CAView
 {
@@ -26,34 +25,28 @@ public:
     static CAGifView* createWithFrame(const CCRect& rect);
     static CAGifView* createWithCenter(const CCRect& rect);
     static CAGifView* createWithGif(CAGif* gif);
+    
     virtual bool init();
     virtual bool initWithGif(CAGif* gif);
+    
     void setGif(CAGif* gif);
     void setTimes(float times);
-    void setRepeat(bool repeat);
-    virtual void updateByImageViewScaleType();
-
+    void setRepeatForever(bool repeatForever);
+    bool isRepeatForever() {return m_bIsRepeatForever; }
 protected:
-    virtual CAImage* createImage(int index);
     virtual void updateGif(float delta);
+    
 private:
-    CAGif*      m_pGif;
-    CAImage*    m_pImage;
-    int         m_nGifcount;
-    bool        m_bIsRepeat;
-    float       m_fDurTime;
-    float       m_fTimes;
     
-    bool        m_bUpdateByImageViewScaleType;
+    CAGif* m_pGif;
+
+    int m_nGifcount;
     
-    CC_SYNTHESIZE_PASS_BY_REF(CAImageViewScaleType, m_eImageViewScaleType, ImageViewScaleType);
-    float m_fLeft;
+    bool m_bIsRepeatForever;
     
-    float m_fRight;
+    float m_fDurTime;
     
-    float m_fTop;
-    
-    float m_fBottom;
+    float m_fTimes;
 
 };
 

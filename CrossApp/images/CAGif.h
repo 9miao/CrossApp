@@ -15,7 +15,6 @@
 NS_CC_BEGIN
 class CAImage;
 
-
 class CC_DLL CAGif : public CAObject
 {
 public:
@@ -27,16 +26,17 @@ public:
 
     bool initWithFilePath(std::string filePath);
     bool initWithData(unsigned char* data);
+    
     void setGifImageWithIndex(unsigned int index);
-    int getGifImageNextIndex();
-    unsigned int getWidth() { return m_uPixelsWide;}
-    unsigned int getHeith() { return m_uPixelsHigh;}
-    void updateGifImageWithIndex(unsigned int index);
     unsigned int getGifImageIndex();
+    
     unsigned int getGifImageCounts();
-    CAImage* createTexture(int index);
-    unsigned char* getImageData();
+
+    void nextGifImageIndex();
+    
     float getImageDuration();
+    
+    CAImage* getImage() { return m_pImage; }
     
 protected:
     void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);
@@ -46,19 +46,22 @@ protected:
     float getImageDuration(const SavedImage* image);
 
 protected:
-    unsigned char* m_pImageData;
     
-    unsigned long m_pSize;
+    CAImage*        m_pImage;
     
-    GifFileType* m_pGIF;
+    unsigned char*  m_pImageData;
     
-    int m_iGIFIndex;
+    unsigned long   m_pSize;
     
-    unsigned int m_uPixelsWide;
+    GifFileType*    m_pGIF;
     
-    unsigned int m_uPixelsHigh;
+    int             m_iGIFIndex;
     
-    float       m_fDurTime;
+    unsigned int    m_uPixelsWide;
+    
+    unsigned int    m_uPixelsHigh;
+    
+    float           m_fDurTime;
 };
 
 NS_CC_END
