@@ -51,6 +51,7 @@ public:
 
     static bool shouldStartLoading(void* pWebViewWrapper, const std::string &url);
     static void didFinishLoading(void* pWebViewWrapper, const std::string &url);
+	static void onLoadHtmlSource(void* pWebViewWrapper, const std::string &htmlSource);
     static void didFailLoading(void* pWebViewWrapper, const std::string &url);
     static void onJsCallback(void* pWebViewWrapper, const std::string &message);
 

@@ -7,10 +7,7 @@
 //
 
 #include "CADrawerController.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionEase.h"
-#include "basics/CAScheduler.h"
+#include "animation/CAAnimation.h"
 #include "basics/CAApplication.h"
 #include "dispatcher/CATouchDispatcher.h"
 
@@ -22,6 +19,7 @@ CADrawerController::CADrawerController()
 ,m_fDivision(0)
 ,m_fCurrDivision(0)
 ,m_bShow(false)
+,m_bEffect3D(false)
 ,m_fOffX(0)
 ,m_pBackgroundView(NULL)
 {
@@ -32,7 +30,8 @@ CADrawerController::CADrawerController()
 
 CADrawerController::~CADrawerController()
 {
-
+    CC_SAFE_RELEASE(m_pLeftViewController);
+    CC_SAFE_RELEASE(m_pRightViewController);
 }
 
 bool CADrawerController::initWithController(CAViewController* leftViewController, CAViewController* rightViewController, float division)
@@ -245,19 +244,19 @@ void CADrawerController::updateViewFrame()
         CCPoint(m_fCurrDivision, 0)
     };
     
-    if (1)
+    if (m_bEffect3D)
     {
         float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
         float scale1 = 1.0f - powf(m_fCurrDivision / m_fDivision, 2) * 0.2f;
         
+        m_pContainer[0]->setAlpha(m_fCurrDivision / m_fDivision);
         m_pContainer[0]->setScale(scale0);
         m_pContainer[1]->setScale(scale1);
-        
         point[0].x = (point[1].x - m_pContainer[0]->getFrame().size.width) / 3;
         point[0].y = this->getView()->getBounds().size.height * (1.0f - scale0) / 2;
         point[1].y = this->getView()->getBounds().size.height * (1.0f - scale1) / 2;
     }
-
+    
     m_pContainer[0]->setFrameOrigin(point[0]);
     m_pContainer[1]->setFrameOrigin(point[1]);
 
@@ -294,7 +293,7 @@ void CADrawerController::scheduleHideAction(float dt)
 
 bool CADrawerController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    return this->isShowLeftViewController();
+    return true;
 }
 
 void CADrawerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
@@ -324,7 +323,7 @@ void CADrawerController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         this->hideLeftViewController(true);
     }
-    else if (fabsf(m_fOffX) > FLT_EPSILON)
+    else if (std::abs(m_fOffX) > FLT_EPSILON)
     {
         if (m_fOffX > 0)
         {

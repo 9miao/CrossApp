@@ -14,7 +14,7 @@ CAKeypadHandler::~CAKeypadHandler()
 {
     if (m_pDelegate)
     {
-        dynamic_cast<CAObject*>(m_pDelegate)->release();
+        //dynamic_cast<CAObject*>(m_pDelegate)->release();
     }  
 }
 
@@ -37,7 +37,7 @@ bool CAKeypadHandler::initWithDelegate(CAKeypadDelegate *pDelegate)
     CCAssert(pDelegate != NULL, "It's a wrong delegate!");
 
     m_pDelegate = pDelegate;
-    dynamic_cast<CAObject*>(pDelegate)->retain();
+    //dynamic_cast<CAObject*>(pDelegate)->retain();
 
     return true;
 }

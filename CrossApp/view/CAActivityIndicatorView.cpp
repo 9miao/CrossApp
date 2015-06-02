@@ -7,7 +7,7 @@
 //
 
 #include "CAActivityIndicatorView.h"
-#include "draw_nodes/CCDrawingPrimitives.h"
+#include "view/CADrawingPrimitives.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "CAScale9ImageView.h"
@@ -154,8 +154,8 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
         m_vertex[index][0] = center.origin;
         m_vertex[index][1] = center.origin;
         m_vertex[index][0].x += radius_inside * cos(radian);
-        m_vertex[index][0].y += radius_inside * sin(radian);
         m_vertex[index][1].x += radius_outside * cos(radian);
+        m_vertex[index][0].y += radius_inside * sin(radian);
         m_vertex[index][1].y += radius_outside * sin(radian);
         
 //        printf("%f, %f, %f, %f \n", 
@@ -221,13 +221,13 @@ void CAActivityIndicatorView::draw()
             break;
     }
     
-    float step = (start_alpha - end_alpha)/5;
+    float step = (start_alpha - end_alpha)/4;
     float alpha = start_alpha;
     int index = m_animationIndex;
     int count = 12;
     while (count--)
     {
-        glLineWidth( 5.0f * CAApplication::getApplication()->getAdaptationRatio() );
+        glLineWidth( _px(5.0f) );
         ccDrawColor4B(m_color.r, m_color.g, m_color.b, alpha);
         ccDrawLine(m_vertex[index][0], m_vertex[index][1]);
         

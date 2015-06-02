@@ -4,7 +4,7 @@
 #include "cocoa/CCString.h"
 #include "CCGL.h"
 
-#include "draw_nodes/CCDrawingPrimitives.h"
+#include "view/CADrawingPrimitives.h"
 #include "CAApplication.h"
 #include "kazmath/GL/matrix.h"
 
@@ -19,6 +19,7 @@ CACamera::CACamera(void)
 
 CACamera::~CACamera(void)
 {
+    
 }
 
 const char* CACamera::description(void)

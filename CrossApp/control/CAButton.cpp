@@ -9,20 +9,18 @@
 #include "CAButton.h"
 #include "view/CAScale9ImageView.h"
 #include "view/CAView.h"
+#include "view/CAScrollView.h"
 #include "dispatcher/CATouch.h"
 #include "support/CCPointExtension.h"
 #include "cocoa/CCSet.h"
 #include "view/CALabel.h"
 #include "basics/CAApplication.h"
 
-#define PLAYSOUND 
-
 NS_CC_BEGIN
 
 CAButton::CAButton(const CAButtonType& buttonType)
 :m_bAllowsSelected(false)
 ,m_bSelected(false)
-,m_closeTapSound(false)
 ,m_bTouchClick(false)
 ,m_color(CAColor_white)
 ,m_eButtonType(buttonType)
@@ -204,6 +202,9 @@ void CAButton::setBackGroundViewRoundedRect()
 
 void CAButton::setBackGroundViewForState(const CAControlState& controlState, CAView *var)
 {
+    CCAssert(dynamic_cast<CAControl*>(var) == NULL, "Not allowed to inherit from the CAControl");
+    CCAssert(dynamic_cast<CAScrollView*>(var) == NULL, "Not allowed to inherit from the CAScrollView");
+    
     if (controlState == CAControlStateAll)
     {
         for (int i=0; i<CAControlStateAll; i++)
@@ -414,14 +415,6 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     if (!this->isTouchClick())
         return;
-    
-    this->setTouchUpSide(point);
-    
-    if (getBounds().containsPoint(point))
-    {
-        this->setTouchUpInSide(point);
-    }
-
     do
     {
         CC_BREAK_IF(this->getControlState() != CAControlStateHighlighted);
@@ -445,6 +438,15 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         }
     }
     while (0);
+    
+    if (getBounds().containsPoint(point))
+    {
+        this->setTouchUpInSide(point);
+    }
+    else
+    {
+        this->setTouchUpOutSide(point);
+    }
 }
 
 void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
@@ -610,11 +612,11 @@ void CAButton::setTouchUpInSide(const CCPoint& point)
     }
 }
 
-void CAButton::setTouchUpSide(const CCPoint& point)
+void CAButton::setTouchUpOutSide(const CCPoint& point)
 {
-    if (m_pTarget[CAControlEventTouchUpSide] && m_selTouch[CAControlEventTouchUpSide])
+    if (m_pTarget[CAControlEventTouchUpOutSide] && m_selTouch[CAControlEventTouchUpOutSide])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchUpSide]->*m_selTouch[CAControlEventTouchUpSide])(this,point);
+        ((CAObject *)m_pTarget[CAControlEventTouchUpOutSide]->*m_selTouch[CAControlEventTouchUpOutSide])(this,point);
     }
 }
 

@@ -31,7 +31,7 @@ public class AndroidPersonList
 	}
 	public static String CAGetPersonList()
 	{
-		// »ñµÃËùÓÐµÄÁªÏµÈË  
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ïµï¿½ï¿½  
         Cursor cur = s_pContext.getContentResolver().query(  
                 ContactsContract.Contacts.CONTENT_URI,  
                 null,  
@@ -40,7 +40,7 @@ public class AndroidPersonList
                 ContactsContract.Contacts.DISPLAY_NAME  
                         + " COLLATE LOCALIZED ASC");  
         ArrayList<FriendData> vecFriend = new ArrayList<FriendData>();
-        // Ñ­»·±éÀú  
+        // Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
         if (cur.moveToFirst())
         {
             int idColumn = cur.getColumnIndex(ContactsContract.Contacts._ID);  
@@ -48,46 +48,53 @@ public class AndroidPersonList
             int displayNameColumn = cur  
                     .getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);  
   
-       	    do {
-				try
+       	    do 
+       	    {
+       	    	try
 				{
 	            	FriendData data = new FriendData();
-	                // »ñµÃÁªÏµÈËµÄIDºÅ  
+	                // ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½Ëµï¿½IDï¿½ï¿½  
 	                String contactId = cur.getString(idColumn);  
-	                // »ñµÃÁªÏµÈËÐÕÃû  
+	                // ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
 	                String disPlayName = cur.getString(displayNameColumn);  
 	                data.name = disPlayName;
 	                int phoneCount = cur  
 	                        .getInt(cur  
 	                                .getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));  
-	                if (phoneCount > 0) {  
+	                if (phoneCount > 0)
+	                {  
 	                    Cursor phones = s_pContext.getContentResolver().query(  
 	                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,  
 	                            null,  
 	                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
 	                                    + " = " + contactId, null, null);  
-	                    if (phones.moveToFirst()) {  
-	                        do {   
+	                    if (phones.moveToFirst())
+	                    {  
+	                        do
+	                        {   
 	                            String phoneNumber = phones  
 	                                    .getString(phones  
 	                                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));   
 	                            //Log.i("phoneNumber", phoneNumber);  
 	                            //Log.i("phoneType", phoneType);  
 	                            data.phoneNumber.add( phoneNumber );
-	                        } while (phones.moveToNext());  
+	                        }
+	                        while (phones.moveToNext());  
 	                    }
 	                    phones.close();
 	                }  
 	  
-	                // »ñÈ¡¸ÃÁªÏµÈËÓÊÏä  
+	                // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
 	                Cursor emails = s_pContext.getContentResolver().query(  
 	                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,  
 	                        null,  
 	                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
 	                                + " = " + contactId, null, null);  
-	                if (emails.moveToFirst()) {  
-	                    do {  
-	                        // ±éÀúËùÓÐµÄµç»°ºÅÂë    
+	                if (emails.moveToFirst())
+	                {  
+	                    do
+	                    {  
+	                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄµç»°ï¿½ï¿½ï¿½ï¿½    
 	                        String emailValue = emails  
 	                                .getString(emails  
 	                                        .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));  
@@ -95,19 +102,21 @@ public class AndroidPersonList
 	                        //Log.i("emailType", emailType);  
 	                        //Log.i("emailValue", emailValue);  
 	                        data.emailValue = emailValue;
-	                    } while (emails.moveToNext());  
+	                    }
+	                    while (emails.moveToNext());  
 	                }  
 	                emails.close();
-	                 //»ñÈ¡¸ÃÁªÏµÈËµØÖ·  
+	                 //ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ïµï¿½Ëµï¿½Ö·  
 	                Cursor address = s_pContext.getContentResolver()  
 	                        .query(  
 	                                ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,  
 	                                null,  
 	                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
 	                                        + " = " + contactId, null, null);  
-	                if (address.moveToFirst()) {  
+	                if (address.moveToFirst()) 
+	                {  
 	                    do {  
-	                        // ±éÀúËùÓÐµÄµØÖ·  
+	                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄµï¿½Ö·  
 	                        String street = address  
 	                                .getString(address  
 	                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET));  
@@ -128,23 +137,27 @@ public class AndroidPersonList
 	                        data.address_region = region;  
 	                        data.address_postCode = postCode;  
 	                        data.address_formatAddress = formatAddress;
-	                    } while (address.moveToNext());  
+	                    } 
+	                    while (address.moveToNext());  
 	                }  
 	                address.close();
-	                 //»ñÈ¡nicknameÐÅÏ¢  
+	                 //ï¿½ï¿½È¡nicknameï¿½ï¿½Ï¢  
 	                Cursor nicknames = s_pContext.getContentResolver().query(  
 	                        Data.CONTENT_URI,  
 	                        new String[] { Data._ID, Nickname.NAME },  
 	                        Data.CONTACT_ID + "=?" + " AND " + Data.MIMETYPE + "='"  
 	                                + Nickname.CONTENT_ITEM_TYPE + "'",  
 	                        new String[] { contactId }, null);  
-	                if (nicknames.moveToFirst()) {  
-	                    do {  
+	                if (nicknames.moveToFirst()) 
+	                {  
+	                    do 
+	                    {  
 	                        String nickname_ = nicknames.getString(nicknames  
 	                                .getColumnIndex(Nickname.NAME));  
 	                        //Log.i("nickname_", nickname_);  
 	                        data.nickname = nickname_;
-	                    } while (nicknames.moveToNext());  
+	                    } 
+	                    while (nicknames.moveToNext());  
 	                } 
 	                nicknames.close();
 	                if ( data.name != null )
@@ -157,8 +170,10 @@ public class AndroidPersonList
             }
         	while (cur.moveToNext());  
         }
-        try {  
-            // Ê×ÏÈ×îÍâ²ãÊÇ{}£¬ÊÇ´´½¨Ò»¸ö¶ÔÏó  
+        
+        try
+        {  
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½{}ï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
             JSONObject personList = new JSONObject();
             JSONArray personArray = new JSONArray();
             for ( int i = 0 ; i < vecFriend.size(); i ++ )
@@ -172,7 +187,7 @@ public class AndroidPersonList
 	            person.put("address_postCode" , data.address_postCode != null ? data.address_postCode : "null" );  
 	            person.put("address_formatAddress" , data.address_formatAddress != null ? data.address_formatAddress : "null" );
 	    		person.put("nickname" , data.nickname != null ? data.nickname : "null" );
-	            // µÚÒ»¸ö¼üphoneµÄÖµÊÇÊý×é£¬ËùÒÔÐèÒª´´½¨Êý×é¶ÔÏó  
+	            // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½phoneï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
 	            JSONArray phone = new JSONArray();
 	            for ( int j = 0 ; j < data.phoneNumber.size(); j ++ )
 	            {
@@ -186,8 +201,10 @@ public class AndroidPersonList
             personList.put("person", personArray);
             String ret = personList.toString();
             return ret;
-        } catch (JSONException ex) {  
-            // ¼üÎªnull»òÊ¹ÓÃjson²»Ö§³ÖµÄÊý×Ö¸ñÊ½(NaN, infinities)  
+        } 
+        catch (JSONException ex) 
+        {  
+            // ï¿½ï¿½Îªnullï¿½ï¿½Ê¹ï¿½ï¿½jsonï¿½ï¿½Ö§ï¿½Öµï¿½ï¿½ï¿½ï¿½Ö¸ï¿½Ê½(NaN, infinities)  
             throw new RuntimeException(ex);  
         }
 	}

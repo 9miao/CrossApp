@@ -30,6 +30,15 @@ extern "C" {
 		CAWebViewImpl::didFinishLoading(index, url);
     }
 
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didLoadHtmlSource(JNIEnv *env, jclass, jint index, jstring jurl) {
+		const char* charHtml = env->GetStringUTFChars(jurl, NULL);
+		std::string html = charHtml;
+		env->ReleaseStringUTFChars(jurl, charHtml);
+		CAWebViewImpl::didLoadHtmlSource(index, html);
+	}
+
+	
+
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didFailLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
 		const char* charUrl = env->GetStringUTFChars(jurl, NULL);
         std::string url = charUrl;
@@ -120,7 +129,7 @@ void loadHTMLStringJNI(const int index, const std::string &string, const std::st
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadHTMLString", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V")) {
         jstring jString = t.env->NewStringUTF(string.c_str());
         jstring jBaseURL = t.env->NewStringUTF(baseURL.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL,NULL);
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL);
 
         t.env->DeleteLocalRef(jString);
         t.env->DeleteLocalRef(jBaseURL);
@@ -307,11 +316,19 @@ void CAWebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
 }
 
 bool CAWebViewImpl::shouldStartLoading(const int viewTag, const std::string &url) {
+
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
 	if (it != s_WebViewImpls.end()) {
 		CAWebView* webView = it->second->_webView;
 		if (webView && webView->m_pWebViewDelegate) {
-			return webView->m_pWebViewDelegate->onShouldStartLoading(webView, url);
+			if (!webView->m_pWebViewDelegate->onShouldStartLoading(webView, url))
+				return false;
+		}
+		if (webView && webView->m_bShowLoadingImage)
+		{
+			it->second->setVisible(false);
+			webView->m_pLoadingView->startAnimating();
+			webView->m_pLoadingView->setVisible(true);
 		}
 	}
 	return true;
@@ -321,8 +338,25 @@ void CAWebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
 	if (it != s_WebViewImpls.end()) {
 		CAWebView* webView = it->second->_webView;
+		if (webView && webView->m_bShowLoadingImage)
+		{
+			webView->m_pLoadingView->stopAnimating();
+			webView->m_pLoadingView->setVisible(false);
+			it->second->setVisible(true);
+		}
 		if (webView && webView->m_pWebViewDelegate) {
 			webView->m_pWebViewDelegate->onDidFinishLoading(webView, url);
+		}
+	}
+}
+
+void CAWebViewImpl::didLoadHtmlSource(const int viewTag, const std::string &html)
+{
+	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
+	if (it != s_WebViewImpls.end()) {
+		CAWebView* webView = it->second->_webView;
+		if (webView && webView->m_pWebViewDelegate) {
+			webView->m_pWebViewDelegate->onLoadHtmlSource(webView, html);
 		}
 	}
 }
@@ -331,6 +365,12 @@ void CAWebViewImpl::didFailLoading(const int viewTag, const std::string &url){
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
 	if (it != s_WebViewImpls.end()) {
 		CAWebView* webView = it->second->_webView;
+		if (webView && webView->m_bShowLoadingImage)
+		{
+			webView->m_pLoadingView->stopAnimating();
+			webView->m_pLoadingView->setVisible(false);
+			it->second->setVisible(true);
+		}
 		if (webView && webView->m_pWebViewDelegate) {
 			webView->m_pWebViewDelegate->onDidFailLoading(webView, url);
 		}
@@ -366,23 +406,14 @@ CAImageView* CAWebViewImpl::getWebViewImage()
 	{
 		CCSize size = _webView->getBounds().size;
 
-		CCImage* pImage = new CCImage();
-		if (!pImage->initWithImageData(&s_cszWebViewImageData[0], s_cszWebViewImageData.size(), CCImage::kFmtRawData, size.width, size.height))
+		CAImage* pImage = new CAImage();
+		if (!pImage->initWithRawData((const unsigned char*)&s_cszWebViewImageData[0], CAImage::PixelFormat_RGBA8888, size.width, size.height))
 		{
 			delete pImage;
 			return NULL;
 		}
-
-		CAImage* pCAImage = new CAImage();
-		if (!pCAImage->initWithImage(pImage))
-		{
-			delete pImage;
-			delete pCAImage;
-			return NULL;
-		}
-		pImage->release();
-		pCAImage->autorelease();
-		return CAImageView::createWithImage(pCAImage);
+		pImage->autorelease();
+		return CAImageView::createWithImage(pImage);
 	}
   	return NULL;
 }

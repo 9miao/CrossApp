@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by Li Yuanfeng on 14-5-12.
-//  Copyright (c) 2014年 http://9miao.com All rights reserved.
+//  Copyright (c) 2014Âπ?http://9miao.com All rights reserved.
 //
 
 #include "CAView.h"
@@ -29,6 +29,7 @@
 #include "cocoa/CCSet.h"
 #include "CAImageView.h"
 #include "actions/CCActionInterval.h"
+#include "animation/CAViewAnimation.h"
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -68,10 +69,10 @@ CAView::CAView(void)
 , m_obContentSize(kCAViewSizeInvalid)
 , m_obFrameRect(kCAViewRectInvalid)
 , m_obPoint(kCAViewPointInvalid)
+, m_obRect(CCRectZero)
 , m_sAdditionalTransform(CATransformationMakeIdentity())
 , m_pCamera(NULL)
 , m_nZOrder(0)
-, m_pSubviews(NULL)
 , m_pSuperview(NULL)
 , m_pUserData(NULL)
 , m_pUserObject(NULL)
@@ -119,8 +120,7 @@ CAView::CAView(void)
     this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     this->setHaveNextResponder(true);
     
-    ++viewCount;
-    //CCLog("CAView = %d\n",viewCount);
+    CCLog("CAView = %d\n", ++viewCount);
 }
 
 CAView::~CAView(void)
@@ -133,23 +133,18 @@ CAView::~CAView(void)
     CC_SAFE_RELEASE(m_pShaderProgram);
     CC_SAFE_RELEASE(m_pUserObject);
     
-    if(m_pSubviews && m_pSubviews->count() > 0)
+    if(!m_obSubviews.empty())
     {
-        CAObject* subview;
-        CCARRAY_FOREACH(m_pSubviews, subview)
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
         {
-            CAView* pChild = (CAView*) subview;
-            if (pChild)
-            {
-                pChild->m_pSuperview = NULL;
-            }
+            (*itr)->setSuperview(NULL);
         }
     }
-    CC_SAFE_RELEASE_NULL(m_pSubviews);
+    m_obSubviews.clear();
     CC_SAFE_RELEASE(m_pobImage);
     
-    --viewCount;
-    //CCLog("~CAView = %d\n",viewCount);
+    CCLog("~CAView = %d\n", --viewCount);
 }
 
 CAView * CAView::create(void)
@@ -306,7 +301,12 @@ float CAView::getSkewX()
 
 void CAView::setSkewX(float newSkewX)
 {
-    if (m_fSkewX != newSkewX)
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setSkewX(newSkewX, this);
+    }
+    else if (m_fSkewX != newSkewX)
     {
         m_fSkewX = newSkewX;
         this->updateDraw();
@@ -320,7 +320,12 @@ float CAView::getSkewY()
 
 void CAView::setSkewY(float newSkewY)
 {
-    if (m_fSkewY != newSkewY)
+    if (CAViewAnimation::areAnimationsEnabled()
+         && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setSkewY(newSkewY, this);
+    }
+    else if (m_fSkewY != newSkewY)
     {
         m_fSkewY = newSkewY;
         this->updateDraw();
@@ -342,10 +347,18 @@ void CAView::_setZOrder(int z)
 
 void CAView::setZOrder(int z)
 {
-    _setZOrder(z);
-    if (m_pSuperview)
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
     {
-        m_pSuperview->reorderSubview(this, z);
+        CAViewAnimation::getInstance()->setZOrder(z, this);
+    }
+    else
+    {
+        _setZOrder(z);
+        if (m_pSuperview)
+        {
+            m_pSuperview->reorderSubview(this, z);
+        }
     }
 }
 
@@ -359,7 +372,16 @@ float CAView::getVertexZ()
 /// vertexZ setter
 void CAView::setVertexZ(float var)
 {
-    m_fVertexZ = var;
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setVertexZ(var, this);
+    }
+    else if(m_fVertexZ != var)
+    {
+        m_fVertexZ = var;
+        this->updateDraw();
+    }
 }
 
 
@@ -373,11 +395,8 @@ float CAView::getRotation()
 /// rotation setter
 void CAView::setRotation(float newRotation)
 {
-    if (m_fRotationX != newRotation || m_fRotationY != newRotation)
-    {
-        m_fRotationX = m_fRotationY = newRotation;
-        this->updateDraw();
-    }
+    this->setRotationX(newRotation);
+    this->setRotationY(newRotation);
 }
 
 float CAView::getRotationX()
@@ -387,7 +406,12 @@ float CAView::getRotationX()
 
 void CAView::setRotationX(float fRotationX)
 {
-    if (m_fRotationX != fRotationX)
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setRotationX(fRotationX, this);
+    }
+    else if (m_fRotationX != fRotationX)
     {
         m_fRotationX = fRotationX;
         this->updateDraw();
@@ -401,7 +425,12 @@ float CAView::getRotationY()
 
 void CAView::setRotationY(float fRotationY)
 {
-    if (m_fRotationY != fRotationY)
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setRotationY(fRotationY, this);
+    }
+    else if (m_fRotationY != fRotationY)
     {
         m_fRotationY = fRotationY;
         this->updateDraw();
@@ -424,16 +453,8 @@ void CAView::setScale(float scale)
 /// scale setter
 void CAView::setScale(float fScaleX,float fScaleY)
 {
-    if (m_fScaleX != fScaleX || m_fScaleY != fScaleY)
-    {
-        m_fScaleX = fScaleX;
-        m_fScaleY = fScaleY;
-        m_obFrameRect.size.width = m_fScaleX * m_obContentSize.width;
-        m_obFrameRect.size.height = m_fScaleY * m_obContentSize.height;
-        CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX, m_obAnchorPointInPoints.y * m_fScaleY);
-        m_obFrameRect.origin = ccpSub(m_obPoint, point);
-        this->updateDraw();
-    }
+    this->setScaleX(fScaleX);
+    this->setScaleY(fScaleY);
 }
 
 /// scaleX getter
@@ -445,12 +466,17 @@ float CAView::getScaleX()
 /// scaleX setter
 void CAView::setScaleX(float newScaleX)
 {
-    if (m_fScaleX != newScaleX)
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setScaleX(newScaleX, this);
+    }
+    else if (m_fScaleX != newScaleX)
     {
         m_fScaleX = newScaleX;
         m_obFrameRect.size.width = m_fScaleX * m_obContentSize.width;
         float x = m_obAnchorPointInPoints.x * m_fScaleX;
-        m_obFrameRect.origin.x = m_obPoint.y - x;
+        m_obFrameRect.origin.x = m_obPoint.x - x;
         this->updateDraw();
     }
 }
@@ -464,7 +490,12 @@ float CAView::getScaleY()
 /// scaleY setter
 void CAView::setScaleY(float newScaleY)
 {
-    if (m_fScaleY != newScaleY)
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setScaleY(newScaleY, this);
+    }
+    else if (m_fScaleY != newScaleY)
     {
         m_fScaleY = newScaleY;
         m_obFrameRect.size.height = m_fScaleY * m_obContentSize.height;
@@ -485,14 +516,14 @@ void CAView::setPoint(const CCPoint& newPoint)
 }
 
 /// children getter
-CCArray* CAView::getSubviews()
+const CAVector<CAView*>& CAView::getSubviews()
 {
-    return m_pSubviews;
+    return m_obSubviews;
 }
 
 unsigned int CAView::getSubviewsCount(void) const
 {
-    return m_pSubviews ? m_pSubviews->count() : 0;
+    return (unsigned int)m_obSubviews.size();
 }
 
 /// camera getter: lazy alloc
@@ -579,8 +610,7 @@ void CAView::setAnchorPoint(const CCPoint& point)
         m_obAnchorPoint = point;
         m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x,
                                       m_obContentSize.height * m_obAnchorPoint.y );
-        //m_obFrameRect.origin = ccpSub(m_obPoint, m_obAnchorPointInPoints);
-        
+      
         if (m_bFrame)
         {
             this->setFrameOrigin(p);
@@ -594,18 +624,35 @@ void CAView::setAnchorPoint(const CCPoint& point)
     }
 }
 
-void CAView::setContentSize(const CCSize & size)
+void CAView::setContentSize(const CCSize & contentSize)
 {
-    if ( ! size.equals(m_obContentSize))
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
     {
-        m_obContentSize = size;
+        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
+    }
+    else if (!contentSize.equals(m_obContentSize))
+    {
+        m_obContentSize = contentSize;
         
-        m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x, m_obContentSize.height * m_obAnchorPoint.y );
-        m_obFrameRect.size = CCSize(m_obContentSize.width * m_fScaleX, m_obContentSize.height * m_fScaleY);
-
+        float anchorPointInPointsX = m_obContentSize.width * m_obAnchorPoint.x;
+        float anchorPointInPointsY = m_obContentSize.height * m_obAnchorPoint.y;
+        m_obAnchorPointInPoints = CCPoint(anchorPointInPointsX, anchorPointInPointsY);
+        
+        float frameRectWidth = m_obContentSize.width * m_fScaleX;
+        float frameRectHeight = m_obContentSize.height * m_fScaleY;
+        m_obFrameRect.size = CCSize(frameRectWidth, frameRectHeight);
+        
         this->updateImageRect();
         
-        arrayMakeObjectsPerformSelector(m_pSubviews, reViewlayout, CAView*);
+        if(!m_obSubviews.empty())
+        {
+            CAVector<CAView*>::iterator itr;
+            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            {
+                (*itr)->reViewlayout();
+            }
+        }
         
         this->updateDraw();
     }
@@ -618,27 +665,127 @@ const CCRect& CAView::getFrame() const
 
 void CAView::setFrame(const CCRect &rect)
 {
-    if ( ! rect.size.equals(CCSizeZero))
+    float width = rect.size.width / m_fScaleX;
+    float height = rect.size.height / m_fScaleY;
+    CCSize contentSize = CCSize(width, height);
+    CCSize originalSize = m_obContentSize;
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
     {
-        this->setContentSize(CCSize(rect.size.width / m_fScaleX, rect.size.height / m_fScaleY));
+        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
+        
+        m_obContentSize = contentSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
+    else
+    {
+        this->setContentSize(contentSize);
     }
     
     this->setFrameOrigin(rect.origin);
+    
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        m_obContentSize = originalSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
 }
 
 void CAView::setFrameOrigin(const CCPoint& point)
 {
-    CCPoint p = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX,
-                        m_obAnchorPointInPoints.y * m_fScaleY);
-    p = ccpAdd(p, point);
-    this->setPoint(p);
+    float x = m_obAnchorPointInPoints.x * m_fScaleX;
+    float y = m_obAnchorPointInPoints.y * m_fScaleY;
     
-    m_bFrame = true;
+    CCPoint p = CCPoint(x, y);
+    p = ccpAdd(p, point);
+    
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setPoint(p, this);
+        m_bFrame = true;
+    }
+    else
+    {
+        this->setPoint(p);
+        m_bFrame = true;
+    }
 }
 
 const CCPoint& CAView::getFrameOrigin()
 {
     return m_obFrameRect.origin;
+}
+
+CCRect CAView::getCenter()
+{
+    CCRect rect = this->getFrame();
+    rect.origin = ccpAdd(rect.origin, ccpMult(rect.size, 0.5f));
+    rect.setCenter(true);
+    return rect;
+}
+
+void CAView::setCenter(const CCRect& rect)
+{
+    float width = rect.size.width / m_fScaleX;
+    float height = rect.size.height / m_fScaleY;
+    CCSize contentSize = CCSize(width, height);
+    CCSize originalSize = m_obContentSize;
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
+        
+        m_obContentSize = contentSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
+    else
+    {
+        this->setContentSize(contentSize);
+    }
+    
+    this->setCenterOrigin(rect.origin);
+    
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        m_obContentSize = originalSize;
+        m_obAnchorPointInPoints = m_obContentSize;
+        m_obAnchorPointInPoints.x *= m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y *= m_obAnchorPoint.y;
+    }
+}
+
+CCPoint CAView::getCenterOrigin()
+{
+    return this->getCenter().origin;
+}
+
+void CAView::setCenterOrigin(const CCPoint& point)
+{
+    CCPoint p = ccpMult(m_obContentSize, 0.5f);
+    p = ccpSub(p, m_obAnchorPointInPoints);
+    p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
+    p = ccpSub(point, p);
+    
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setPoint(p, this);
+        m_bFrame = false;
+    }
+    else
+    {
+        this->setPoint(p);
+        m_bFrame = false;
+    }
 }
 
 CCRect CAView::getBounds() const
@@ -650,43 +797,10 @@ CCRect CAView::getBounds() const
 
 void CAView::setBounds(const CCRect& rect)
 {
-    if ( ! rect.size.equals(CCSizeZero))
+    if (!rect.size.equals(CCSizeZero))
     {
-        this->setContentSize(CCSize(rect.size.width, rect.size.height));
+        this->setContentSize(rect.size);
     }
-}
-
-CCRect CAView::getCenter()
-{
-    CCRect rect = this->getFrame();
-    rect.origin = ccpAdd(rect.origin, ccpMult(rect.size, 0.5f));
-    rect.setCenter(true);
-    return rect;
-}
-
-void CAView::setCenter(CCRect rect)
-{
-    if ( ! rect.size.equals(CCSizeZero))
-    {
-        this->setContentSize(CCSize(rect.size.width / m_fScaleX, rect.size.height / m_fScaleY));
-    }
-    
-    this->setCenterOrigin(rect.origin);
-}
-
-CCPoint CAView::getCenterOrigin()
-{
-    return this->getCenter().origin;
-}
-
-void CAView::setCenterOrigin(const CCPoint& point)
-{
-    CCPoint p = ccpSub(ccpMult(m_obContentSize, 0.5f), m_obAnchorPointInPoints);
-    p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
-    p = ccpSub(point, p);
-    this->setPoint(p);
-    
-    m_bFrame = false;
 }
 
 // isRunning getter
@@ -774,37 +888,54 @@ void CAView::reViewlayout()
 
 void CAView::updateDraw()
 {
-    SET_DIRTY_RECURSIVELY();
-    if (this->getSuperview())
+    CAView* v = this->getSuperview();
+    CC_RETURN_IF(v == NULL);
+    while (v == v->getSuperview())
     {
-        this->reViewlayout();
-        CAApplication::getApplication()->updateDraw();
+        CC_BREAK_IF(v == NULL);
+        CC_RETURN_IF(v->isVisible());
     }
-}
-
-// lazy allocs
-void CAView::childrenAlloc(void)
-{
-    m_pSubviews = new CCArray(4);
+    
+    SET_DIRTY_RECURSIVELY();
+    this->reViewlayout();
+    CAApplication::getApplication()->updateDraw();
 }
 
 CAView* CAView::getSubviewByTag(int aTag)
 {
     CCAssert( aTag != kCAObjectTagInvalid, "Invalid tag");
     
-    if(m_pSubviews && m_pSubviews->count() > 0)
+    if(!m_obSubviews.empty())
     {
-        CAObject* subview;
-        CCARRAY_FOREACH(m_pSubviews, subview)
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
         {
-            CAView* pNode = (CAView*) subview;
-            if(pNode && pNode->m_nTag == aTag)
-                return pNode;
+            if ((*itr)->m_nTag == aTag)
+            {
+                return *itr;
+            }
         }
     }
     return NULL;
 }
 
+CAView* CAView::getSubviewByTextTag(const std::string& textTag)
+{
+    CCAssert( !textTag.empty(), "Invalid tag");
+    
+    if(!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+        {
+            if ((*itr)->m_sTextTag.compare(textTag) == 0)
+            {
+                return *itr;
+            }
+        }
+    }
+    return NULL;
+}
 
 void CAView::addSubview(CAView *subview)
 {
@@ -819,7 +950,7 @@ void CAView::insertSubview(CAView* subview, int z)
     
     if (m_pobBatchView)
     {
-        m_pobBatchView->appendChild(subview);
+        m_pobBatchView->appendSubview(subview);
         
         if (!m_bReorderChildDirty)
         {
@@ -827,13 +958,8 @@ void CAView::insertSubview(CAView* subview, int z)
         }
     }
     
-    if(m_pSubviews == NULL)
-    {
-        this->childrenAlloc();
-    }
-    
     m_bReorderChildDirty = true;
-    ccArrayAppendObjectWithResize(m_pSubviews->data, subview);
+    m_obSubviews.pushBack(subview);
     subview->_setZOrder(z);
     
     subview->setSuperview(this);
@@ -858,23 +984,16 @@ void CAView::removeFromSuperview()
 
 void CAView::removeSubview(CAView* subview)
 {
-    // explicit nil handling
-    if (m_pSubviews == NULL)
-    {
-        return;
-    }
-    
     if (m_pobBatchView)
     {
-        m_pobBatchView->removeSpriteFromAtlas(subview);
+        m_pobBatchView->removeViewFromAtlas(subview);
     }
     
-    if ( m_pSubviews->containsObject(subview) )
+    if ( m_obSubviews.contains(subview))
     {
         this->detachSubview(subview);
     }
 }
-
 
 void CAView::removeSubviewByTag(int tag)
 {
@@ -884,7 +1003,23 @@ void CAView::removeSubviewByTag(int tag)
     
     if (subview == NULL)
     {
-        CCLOG("CrossApp: removeChildByTag(tag = %d): child not found!", tag);
+        CCLOG("CrossApp: removeSubviewByTag(tag = %d): child not found!", tag);
+    }
+    else
+    {
+        this->removeSubview(subview);
+    }
+}
+
+void CAView::removeSubviewByTextTag(const std::string& textTag)
+{
+    CCAssert( !textTag.empty(), "Invalid tag");
+    
+    CAView *subview = this->getSubviewByTextTag(textTag);
+    
+    if (subview == NULL)
+    {
+        CCLOG("CrossApp: removeSubviewByTextTag(textTag = %s): child not found!", textTag.c_str());
     }
     else
     {
@@ -894,45 +1029,33 @@ void CAView::removeSubviewByTag(int tag)
 
 void CAView::removeAllSubviews()
 {
-    // not using detachChild improves speed here
-    if ( m_pSubviews && m_pSubviews->count() > 0 )
+    // not using detachSubview improves speed here
+    if (!m_obSubviews.empty())
     {
         if (m_pobBatchView)
         {
-            CAObject* obj = NULL;
-            CCARRAY_FOREACH(m_pSubviews, obj)
+            CAVector<CAView*>::iterator itr;
+            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
             {
-                CAView* subview = dynamic_cast<CAView*>(obj);
-                if (subview)
-                {
-                    m_pobBatchView->removeSpriteFromAtlas(subview);
-                }
+                m_pobBatchView->removeViewFromAtlas(*itr);
             }
         }
-        
-        CAObject* obj;
-        CCARRAY_FOREACH(m_pSubviews, obj)
-        {
-            CAView* subview = dynamic_cast<CAView*>(obj);
-            if (subview)
-            {
-                // IMPORTANT:
-                //  -1st do onExit
-                //  -2nd cleanup
-                if(m_bRunning)
-                {
-                    subview->onExitTransitionDidStart();
-                    subview->onExit();
-                }
 
-                // set parent nil at the end
-                subview->setSuperview(NULL);
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+        {
+            if(m_bRunning)
+            {
+                (*itr)->onExitTransitionDidStart();
+                (*itr)->onExit();
             }
+            
+            (*itr)->setSuperview(NULL);
         }
         
-        m_pSubviews->removeAllObjects();
+        m_obSubviews.clear();
     }
-    
+
     m_bHasChildren = false;
 }
 
@@ -951,7 +1074,7 @@ void CAView::detachSubview(CAView *subview)
     // set parent nil at the end
     subview->setSuperview(NULL);
     
-    m_pSubviews->removeObject(subview);
+    m_obSubviews.eraseObject(subview);
     
     this->updateDraw();
 }
@@ -969,7 +1092,7 @@ void CAView::reorderSubview(CAView *subview, int zOrder)
         m_pobBatchView->reorderBatch(true);
     }
     
-    CCAssert( subview != NULL, "Child must be non-nil");
+    CCAssert( subview != NULL, "Subview must be non-nil");
     m_bReorderChildDirty = true;
     subview->setOrderOfArrival(s_globalOrderOfArrival++);
     subview->_setZOrder(zOrder);
@@ -977,40 +1100,23 @@ void CAView::reorderSubview(CAView *subview, int zOrder)
 
 void CAView::sortAllSubviews()
 {
-    if (m_bReorderChildDirty)
+    if (m_bReorderChildDirty && !m_obSubviews.empty())
     {
-        int i,j,length = m_pSubviews->data->num;
-        CAView ** x = (CAView**)m_pSubviews->data->arr;
-        CAView *tempItem;
-        
-        for(i=1; i<length; i++)
+        std::sort(m_obSubviews.begin(), m_obSubviews.end(), compareSubviewZOrder);
+    
+        if (m_pobBatchView)
         {
-            tempItem = x[i];
-            j = i-1;
-            CC_CONTINUE_IF(tempItem == NULL);
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempItem->m_nZOrder < x[j]->m_nZOrder || ( tempItem->m_nZOrder== x[j]->m_nZOrder && tempItem->m_uOrderOfArrival < x[j]->m_uOrderOfArrival ) ) )
-            {
-                x[j+1] = x[j];
-                j = j-1;
-            }
-            x[j+1] = tempItem;
-        }
-        
-        if ( m_pobBatchView)
-        {
-            arrayMakeObjectsPerformSelector(m_pSubviews, sortAllSubviews, CAView*);
+            CAVector<CAView*>::iterator itr;
+            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+                if(m_bRunning) (*itr)->sortAllSubviews();
         }
         
         m_bReorderChildDirty = false;
     }
 }
 
-#include "CAImageView.h"
-
 void CAView::draw()
 {
-
     CC_RETURN_IF(m_pobImage == NULL);
     CC_RETURN_IF(m_pShaderProgram == NULL);
     
@@ -1022,11 +1128,15 @@ void CAView::draw()
     
 #define kQuadSize sizeof(m_sQuad.bl)
 #ifdef EMSCRIPTEN
+    
     long offset = 0;
     setGLBufferData(&m_sQuad, 4 * kQuadSize, 0);
+    
 #else
+    
     long offset = (long)&m_sQuad;
-#endif // EMSCRIPTEN
+    
+#endif
     
     // vertex
     int diff = offsetof( ccV3F_C4B_T2F, vertices);
@@ -1086,12 +1196,11 @@ void CAView::draw()
     
     CC_INCREMENT_GL_DRAWS(1);
     
-    CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAImageView - draw");
+    CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAView - draw");
 }
 
 void CAView::visit()
 {
-    // quick return if not visible. children won't be drawn.
     CC_RETURN_IF(!m_bVisible);
     
     kmGLPushMatrix();
@@ -1100,7 +1209,6 @@ void CAView::visit()
     
     if (!m_bDisplayRange)
     {
-        // check parent scissor
         if (glIsEnabled(GL_SCISSOR_TEST))
         {
             GLfloat params[4];
@@ -1123,18 +1231,18 @@ void CAView::visit()
                 parent = parent->getSuperview();
             }
             
-            if (fabsf(rotation % 360 - 90) < FLT_EPSILON)
+            if (std::abs(rotation % 360 - 90) < FLT_EPSILON)
             {
                 point = this->getBounds().size;
                 size.width = size.width + size.height;
                 size.height = size.width - size.height;
                 size.width = size.width - size.height;
             }
-            else if (fabsf(rotation % 360 - 180) < FLT_EPSILON)
+            else if (std::abs(rotation % 360 - 180) < FLT_EPSILON)
             {
                 point = CCPoint(this->getBounds().size.width, 0);
             }
-            else if (fabsf(rotation % 360 - 270) < FLT_EPSILON)
+            else if (std::abs(rotation % 360 - 270) < FLT_EPSILON)
             {
                 point = CCPointZero;
                 size.width = size.width + size.height;
@@ -1189,55 +1297,38 @@ void CAView::visit()
             glScissor(frame.origin.x - 0.5f, frame.origin.y + 0.5f, frame.size.width + 1.0f, frame.size.height);
         }
     }
+
+    this->sortAllSubviews();
     
-    CAView* pNode = NULL;
-    unsigned int i = 0;
-    if(m_pSubviews && m_pSubviews->count() > 0)
+    CAVector<CAView*>::iterator itr=m_obSubviews.begin();
+    while (itr!=m_obSubviews.end())
     {
-        this->sortAllSubviews();
-        // draw children zOrder < 0
-        ccArray *arrayData = m_pSubviews->data;
-
-        for( ; i < arrayData->num; i++ )
-        {
-            pNode = (CAView*) arrayData->arr[i];
-
-            if ( pNode && pNode->m_nZOrder < 0 )
-            {
-                pNode->visit();
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        this->draw();
-
-        for( ; i < arrayData->num; i++ )
-        {
-            pNode = (CAView*) arrayData->arr[i];
-            if (pNode && pNode->m_nZOrder >= 0)
-            {
-                pNode->visit();
-            }
-        }
-    }
-    else
-    {
-        this->draw();
+        CC_BREAK_IF((*itr)->m_nZOrder >= 0);
+        (*itr)->visit();
+        itr++;
     }
     
-    m_uOrderOfArrival = 0;
+    this->draw();
+    
+    while (itr!=m_obSubviews.end())
+    {
+        (*itr)->visit();
+        itr++;
+    }
+    
+    //m_uOrderOfArrival = 0;
     
     if (!m_bDisplayRange)
     {
-        if (m_bRestoreScissor) {
-            glScissor(m_obRestoreScissorRect.origin.x, 
-                      m_obRestoreScissorRect.origin.y, 
+        if (m_bRestoreScissor)
+        {
+            glScissor(m_obRestoreScissorRect.origin.x,
+                      m_obRestoreScissorRect.origin.y,
                       m_obRestoreScissorRect.size.width, 
                       m_obRestoreScissorRect.size.height);
-        } else {
+        }
+        else
+        {
             glDisable(GL_SCISSOR_TEST);
         }
     }
@@ -1277,12 +1368,16 @@ void CAView::transform()
         bool translate = (anchorPointInPoints.x != 0.0f || anchorPointInPoints.y != 0.0f);
 
         if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(anchorPointInPoints.x), RENDER_IN_SUBPIXEL(anchorPointInPoints.y), 0 );
+            kmGLTranslatef(RENDER_IN_SUBPIXEL(anchorPointInPoints.x),
+                           RENDER_IN_SUBPIXEL(anchorPointInPoints.y),
+                           0 );
         
         m_pCamera->locate();
         
         if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-anchorPointInPoints.y), 0 );
+            kmGLTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPoints.x),
+                           RENDER_IN_SUBPIXEL(-anchorPointInPoints.y),
+                           0 );
     }
     
 }
@@ -1320,14 +1415,24 @@ CAResponder* CAView::nextResponder()
 
 void CAView::onEnter()
 {
-    arrayMakeObjectsPerformSelector(m_pSubviews, onEnter, CAView*);
-
+    if (!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->onEnter();
+    }
+    
     m_bRunning = true;
 }
 
 void CAView::onEnterTransitionDidFinish()
 {
-    arrayMakeObjectsPerformSelector(m_pSubviews, onEnterTransitionDidFinish, CAView*);
+    if (!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->onEnterTransitionDidFinish();
+    }
     
     if (m_pViewDelegate)
     {
@@ -1338,7 +1443,12 @@ void CAView::onEnterTransitionDidFinish()
 
 void CAView::onExitTransitionDidStart()
 {
-    arrayMakeObjectsPerformSelector(m_pSubviews, onExitTransitionDidStart, CAView*);
+    if (!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->onExitTransitionDidStart();
+    }
     
     if (m_pViewDelegate)
     {
@@ -1350,7 +1460,12 @@ void CAView::onExit()
 {
     m_bRunning = false;
     
-    arrayMakeObjectsPerformSelector(m_pSubviews, onExit, CAView*);
+    if (!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->onExit();
+    }
 }
 
 void CAView::setActionManager(CCActionManager* actionManager)
@@ -1463,17 +1578,24 @@ CATransformation CAView::nodeToParentTransform(void)
         
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        m_sTransform = CATransformationMake( cy * m_fScaleX,  sy * m_fScaleX,
-                                             -sx * m_fScaleY, cx * m_fScaleY,
-                                             x, y );
+        m_sTransform = CATransformationMake(cy * m_fScaleX,
+                                            sy * m_fScaleX,
+                                            -sx * m_fScaleY,
+                                            cx * m_fScaleY,
+                                            x,
+                                            y );
         
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            CATransformation skewMatrix = CATransformationMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
-                                                                 tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1.0f,
-                                                                 0.0f, 0.0f );
+            CATransformation skewMatrix = CATransformationMake(1.0f,
+                                                               tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
+                                                               tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)),
+                                                               1.0f,
+                                                               0.0f,
+                                                               0.0f );
+            
             m_sTransform = CATransformationConcat(skewMatrix, m_sTransform);
             
             // adjust anchor point
@@ -1482,7 +1604,9 @@ CATransformation CAView::nodeToParentTransform(void)
             
             if (!anchorPointInPoints.equals(CCPointZero))
             {
-                m_sTransform = CATransformationTranslate(m_sTransform, -anchorPointInPoints.x, -anchorPointInPoints.y);
+                m_sTransform = CATransformationTranslate(m_sTransform,
+                                                         -anchorPointInPoints.x,
+                                                         -anchorPointInPoints.y);
             }
         }
         
@@ -1506,7 +1630,8 @@ void CAView::setAdditionalTransform(const CATransformation& additionalTransform)
 
 CATransformation CAView::parentToNodeTransform(void)
 {
-    if ( m_bInverseDirty ) {
+    if ( m_bInverseDirty )
+    {
         m_sInverse = CATransformationInvert(this->nodeToParentTransform());
         m_bInverseDirty = false;
     }
@@ -1603,27 +1728,20 @@ void CAView::updateTransform()
         {
             m_bShouldBeHidden = false;
             
-            if( ! m_pSuperview || m_pSuperview == m_pobBatchView)
+            if( !m_pSuperview || m_pSuperview == m_pobBatchView)
             {
                 m_transformToBatch = nodeToParentTransform();
             }
             else
             {
-                CCAssert( dynamic_cast<CAImageView*>(m_pSuperview), "Logic error in CAImageView. Parent must be a CAImageView");
                 m_transformToBatch = CATransformationConcat( nodeToParentTransform() , m_pSuperview->m_transformToBatch );
             }
-            
-            //
-            // calculate the Quad based on the Affine Matrix
-            //
-            
-            CCSize size = m_obRect.size;
+
+            CCSize size = m_obContentSize;
             
             float x1 = 0;
             float y1 = 0;
             
-            float x2 = x1 + size.width;
-            float y2 = y1 + size.height;
             float x = m_transformToBatch.tx;
             float y = m_transformToBatch.ty;
             
@@ -1632,25 +1750,21 @@ void CAView::updateTransform()
             float cr2 = m_transformToBatch.d;
             float sr2 = -m_transformToBatch.c;
             
-            float ax = x1 * cr - y1 * sr2 + x;
-            float ay = x1 * sr + y1 * cr2 + y;
+            x1 = x1 * cr - y1 * sr2 + x;
+            y1 = x1 * sr + y1 * cr2 + y;
             
-            float bx = x2 * cr - y1 * sr2 + x;
-            float by = x2 * sr + y1 * cr2 + y;
+            x1 = RENDER_IN_SUBPIXEL(x1);
+            y1 = RENDER_IN_SUBPIXEL(y1);
             
-            float cx = x2 * cr - y2 * sr2 + x;
-            float cy = x2 * sr + y2 * cr2 + y;
+            float x2 = x1 + size.width;
+            float y2 = y1 + size.height;
             
-            float dx = x1 * cr - y2 * sr2 + x;
-            float dy = x1 * sr + y2 * cr2 + y;
-            
-            m_sQuad.bl.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ );
-            m_sQuad.br.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
-            m_sQuad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
-            m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
+            m_sQuad.bl.vertices = vertex3( x1, y1, m_fVertexZ );
+            m_sQuad.br.vertices = vertex3( x2, y1, m_fVertexZ );
+            m_sQuad.tl.vertices = vertex3( x1, y2, m_fVertexZ );
+            m_sQuad.tr.vertices = vertex3( x2, y2, m_fVertexZ );
         }
         
-        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / Image ATLAS
         if (m_pobImageAtlas)
 		{
             m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
@@ -1660,15 +1774,12 @@ void CAView::updateTransform()
         setDirty(false);
     }
     
-    // MARMALADE CHANGED
-    // recursively iterate over children
-    /*    if( m_bHasChildren )
-     {
-     // MARMALADE: CHANGED TO USE CCNode*
-     // NOTE THAT WE HAVE ALSO DEFINED virtual CAView::updateTransform()
-     arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAImageView*);
-     }*/
-    arrayMakeObjectsPerformSelector(m_pSubviews, updateTransform, CAView*);
+    if (!m_obSubviews.empty())
+    {
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->updateTransform();
+    }
     
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
@@ -1680,7 +1791,7 @@ void CAView::updateTransform()
         ccp( m_sQuad.tl.vertices.x, m_sQuad.tl.vertices.y ),
     };
     ccDrawPoly(vertices, 4, true);
-#endif // CC_SPRITE_DEBUG_DRAW
+#endif
 
 }
 
@@ -1721,8 +1832,8 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
 {
     m_bRectRotated = rotated;
     
-    setVertexRect(rect);
-    setImageCoords(rect);
+    this->setVertexRect(rect);
+    this->setImageCoords(rect);
     
     if (!m_obContentSize.equals(untrimmedSize))
     {
@@ -1736,7 +1847,6 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
             rect = this->getCenter();
         }
         rect.size = untrimmedSize;
-        
         if (m_bFrame)
         {
             this->setFrame(rect);
@@ -1745,8 +1855,6 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
         {
             this->setCenter(rect);
         }
-        
-        
     }
     
     CCPoint relativeOffset = m_obUnflippedOffsetPositionFromCenter;
@@ -1775,10 +1883,10 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
 void CAView::updateImageRect()
 {
     // Don't update Z.
-    m_sQuad.bl.vertices = vertex3(0, 0, 0);
-    m_sQuad.br.vertices = vertex3(m_obContentSize.width, 0, 0);
-    m_sQuad.tl.vertices = vertex3(0, m_obContentSize.height, 0);
-    m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, 0);
+    m_sQuad.bl.vertices = vertex3(0, 0, m_fVertexZ);
+    m_sQuad.br.vertices = vertex3(m_obContentSize.width, 0, m_fVertexZ);
+    m_sQuad.tl.vertices = vertex3(0, m_obContentSize.height, m_fVertexZ);
+    m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, m_fVertexZ);
 }
 
 // override this method to generate "double scale" sprites
@@ -1789,8 +1897,6 @@ void CAView::setVertexRect(const CCRect& rect)
 
 void CAView::setImageCoords(CCRect rect)
 {
-    rect = CC_RECT_POINTS_TO_PIXELS(rect);
-    
     CAImage* tex = m_pobBatchView ? m_pobImageAtlas->getImage() : m_pobImage;
     if (! tex)
     {
@@ -1805,15 +1911,19 @@ void CAView::setImageCoords(CCRect rect)
     if (m_bRectRotated)
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left+(rect.size.height*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top+(rect.size.width*2-2)/(2*atlasHeight);
+        
+        left   = (2 * rect.origin.x + 1) / (2 * atlasWidth);
+        right  = left + (rect.size.height * 2 - 2) / (2 * atlasWidth);
+        top    = (2 * rect.origin.y + 1) / (2 * atlasHeight);
+        bottom = top + (rect.size.width * 2 - 2) / (2 * atlasHeight);
+        
 #else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x+rect.size.height) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y+rect.size.width) / atlasHeight;
+        
+        left   = rect.origin.x / atlasWidth;
+        right  = (rect.origin.x + rect.size.height) / atlasWidth;
+        top    = rect.origin.y / atlasHeight;
+        bottom = (rect.origin.y + rect.size.width) / atlasHeight;
+        
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
         
         if (m_bFlipX)
@@ -1838,25 +1948,25 @@ void CAView::setImageCoords(CCRect rect)
     else
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left + (rect.size.width*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top + (rect.size.height*2-2)/(2*atlasHeight);
+        left   = (2 * rect.origin.x + 1) / (2 * atlasWidth);
+        right  = left + (rect.size.width * 2 - 2) / (2 * atlasWidth);
+        top    = (2 * rect.origin.y + 1) / (2 * atlasHeight);
+        bottom = top + (rect.size.height * 2 - 2) / (2 * atlasHeight);
 #else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x + rect.size.width) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
+        left   = rect.origin.x / atlasWidth;
+        right  = (rect.origin.x + rect.size.width) / atlasWidth;
+        top    = rect.origin.y / atlasHeight;
+        bottom = (rect.origin.y + rect.size.height) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
         
         if(m_bFlipX)
         {
-            CC_SWAP(left,right,float);
+            CC_SWAP(left, right, float);
         }
         
         if(m_bFlipY)
         {
-            CC_SWAP(top,bottom,float);
+            CC_SWAP(top, bottom, float);
         }
         
         m_sQuad.bl.texCoords.u = left;
@@ -1885,29 +1995,32 @@ void CAView::setAlpha(float alpha)
     alpha = MIN(alpha, 1.0f);
     alpha = MAX(alpha, 0.0f);
     
-    _displayedAlpha = _realAlpha = alpha;
-    
-    float superviewAlpha = m_pSuperview ? m_pSuperview->getDisplayedAlpha() : 1.0f;
-    
-    this->updateDisplayedAlpha(superviewAlpha);
-    
-    this->updateColor();
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setAlpha(alpha, this);
+    }
+    else if (_displayedAlpha != alpha)
+    {
+        _realAlpha = alpha;
+        
+        float superviewAlpha = m_pSuperview ? m_pSuperview->getDisplayedAlpha() : 1.0f;
+        
+        this->updateDisplayedAlpha(superviewAlpha);
+    }
 }
 
 void CAView::updateDisplayedAlpha(float parentAlpha)
 {
 	_displayedAlpha = _realAlpha * parentAlpha;
 	
-    CAObject* pObj;
-    CCARRAY_FOREACH(m_pSubviews, pObj)
+    if (!m_obSubviews.empty())
     {
-        CAView* item = (CAView*)pObj;
-        if (item)
-        {
-            item->updateDisplayedAlpha(_displayedAlpha);
-        }
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            (*itr)->updateDisplayedAlpha(_displayedAlpha);
     }
-    
+
     this->updateColor();
 }
 
@@ -1923,9 +2036,16 @@ const CAColor4B& CAView::getDisplayedColor()
 
 void CAView::setColor(const CAColor4B& color)
 {
-	_displayedColor = _realColor = color;
-	
-	this->updateColor();
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
+    {
+        CAViewAnimation::getInstance()->setColor(color, this);
+    }
+    else
+    {
+        _displayedColor = _realColor = color;
+        this->updateColor();
+    }
 }
 
 void CAView::updateDisplayedColor(const CAColor4B& parentColor)
@@ -1941,19 +2061,27 @@ void CAView::updateDisplayedColor(const CAColor4B& parentColor)
 void CAView::updateColor(void)
 {
     CAColor4B color4 = _displayedColor;
+    color4.a = color4.a * _displayedAlpha;
     
-    if (m_pobImage && m_pobBatchView)
+    if (m_pobImage)
     {
-        color4.r *= _displayedAlpha;
-        color4.g *= _displayedAlpha;
-        color4.b *= _displayedAlpha;
-        color4.a *= _displayedAlpha;
-        
-        m_sQuad.bl.colors = color4;
-        m_sQuad.br.colors = color4;
-        m_sQuad.tl.colors = color4;
-        m_sQuad.tr.colors = color4;
-        
+        if (m_pobImage->getPixelFormat() == CAImage::PixelFormat_RGBA8888
+            ||
+            m_pobImage->getPixelFormat() == CAImage::PixelFormat_RGBA4444)
+        {
+           color4.r = color4.r * _displayedAlpha;
+           color4.g = color4.g * _displayedAlpha;
+           color4.b = color4.b * _displayedAlpha;
+        }
+    }
+   
+    m_sQuad.bl.colors = color4;
+    m_sQuad.br.colors = color4;
+    m_sQuad.tl.colors = color4;
+    m_sQuad.tr.colors = color4;
+    
+    if (m_pobBatchView && m_pobImage)
+    {
         if (m_uAtlasIndex != 0xffffffff)
         {
             m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
@@ -1965,16 +2093,7 @@ void CAView::updateColor(void)
             setDirty(true);
         }
     }
-    else
-    {
-        color4.a *= _displayedAlpha;
-        
-        m_sQuad.bl.colors = color4;
-        m_sQuad.br.colors = color4;
-        m_sQuad.tl.colors = color4;
-        m_sQuad.tr.colors = color4;
-    }
-    
+
     this->updateDraw();
 }
 
@@ -2015,14 +2134,11 @@ void CAView::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (m_bHasChildren)
     {
-        CAObject* pObject = NULL;
-        CCARRAY_FOREACH(m_pSubviews, pObject)
+        if (!m_obSubviews.empty())
         {
-            CAImageView* pChild = dynamic_cast<CAImageView*>(pObject);
-            if (pChild)
-            {
-                pChild->setDirtyRecursively(true);
-            }
+            CAVector<CAView*>::iterator itr;
+            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+                (*itr)->setDirtyRecursively(bValue);
         }
     }
 }
@@ -2031,10 +2147,18 @@ void CAView::setFlipX(bool bFlipX)
 {
     if (m_bFlipX != bFlipX)
     {
-        m_bFlipX = bFlipX;
-        if (m_pobImage)
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
         {
-            setImageRect(m_obRect, m_bRectRotated, m_obContentSize);
+            CAViewAnimation::getInstance()->setFlipX(bFlipX, this);
+        }
+        else
+        {
+            m_bFlipX = bFlipX;
+            if (m_pobImage)
+            {
+                setImageRect(m_obRect, m_bRectRotated, m_obContentSize);
+            }
         }
     }
 }
@@ -2048,10 +2172,18 @@ void CAView::setFlipY(bool bFlipY)
 {
     if (m_bFlipY != bFlipY)
     {
-        m_bFlipY = bFlipY;
-        if (m_pobImage)
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
         {
-            setImageRect(m_obRect, m_bRectRotated, m_obContentSize);
+            CAViewAnimation::getInstance()->setFlipY(bFlipY, this);
+        }
+        else
+        {
+            m_bFlipY = bFlipY;
+            if (m_pobImage)
+            {
+                setImageRect(m_obRect, m_bRectRotated, m_obContentSize);
+            }
         }
     }
 }
@@ -2068,17 +2200,14 @@ bool CAView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CAView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-
 }
 
 void CAView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-
 }
 
 void CAView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-
 }
 
 void CAView::setBatch(CABatchView *batchView)
@@ -2101,11 +2230,9 @@ void CAView::setBatch(CABatchView *batchView)
         m_sQuad.br.vertices = vertex3( x2, y1, 0 );
         m_sQuad.tl.vertices = vertex3( x1, y2, 0 );
         m_sQuad.tr.vertices = vertex3( x2, y2, 0 );
-        
     }
     else
     {
-        
         // using batch
         m_transformToBatch = CATransformationIdentity;
         setImageAtlas(m_pobBatchView->getImageAtlas()); // weak ref

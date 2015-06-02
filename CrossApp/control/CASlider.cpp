@@ -241,7 +241,7 @@ void CASlider::setMaxTrackTintImage(CAImage* image)
         m_pMaxTrackTintImage = image;
         if (m_pMaxTrackTintImageView)
         {
-            ((CAScale9ImageView*)m_pMinTrackTintImageView)->setImage(m_pMaxTrackTintImage);
+            ((CAScale9ImageView*)m_pMaxTrackTintImageView)->setImage(m_pMaxTrackTintImage);
         }
         this->layoutSubViews();
     }
@@ -256,7 +256,7 @@ void CASlider::setThumbTintImage(CAImage* image)
         m_pThumbTintImage = image;
         if (m_pThumbTintImageView)
         {
-            ((CAScale9ImageView*)m_pMinTrackTintImageView)->setImage(m_pThumbTintImage);
+            ((CAScale9ImageView*)m_pThumbTintImageView)->setImage(m_pThumbTintImage);
             const CCSize size = this->getBounds().size;
             m_pThumbTintImageView->setFrame(CCRect(0, 0, size.height, size.height));
         }
@@ -310,9 +310,9 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         }
     }
     
-    if (m_pTarget[CAControlEventTouchUpSide] && m_selTouch[CAControlEventTouchUpSide])
+    if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchUpSide]->*m_selTouch[CAControlEventTouchUpSide])(this, point);
+        ((CAObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this, point);
     }
 }
 
@@ -323,7 +323,7 @@ void CASlider::addTarget(CAObject* target, SEL_CAControl selector)
 
 void CASlider::addTargetForTouchUpSide(CAObject* target, SEL_CAControl selector)
 {
-    this->addTarget(target, selector, CAControlEventTouchUpSide);
+    this->addTarget(target, selector, CAControlEventTouchUpInSide);
 }
 
 void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
@@ -333,7 +333,7 @@ void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
 
 void CASlider::setContentSize(const CCSize & var)
 {
-    CAControl::setContentSize(CCSize(var.width, _px(56)));
+    CAControl::setContentSize(CCSize(var.width, MAX(var.height, _px(56))));
 }
 
 NS_CC_END

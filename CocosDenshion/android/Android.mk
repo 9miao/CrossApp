@@ -16,8 +16,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../../CrossApp \
                     $(LOCAL_PATH)/../../CrossApp/kazmath/include \
                     $(LOCAL_PATH)/../../CrossApp/platform/android \
-                    $(LOCAL_PATH)/../../CrossApp/platform/third_party/android/prebuilt/libfreetype2/include \
-		    $(LOCAL_PATH)/../../CrossApp/platform/third_party/android/prebuilt/libfreetype2/include/freetype \
+                    $(LOCAL_PATH)/../../CrossApp/the_third_party/freetype/include/android\
+		    $(LOCAL_PATH)/../../CrossApp/the_third_party/freetype/include/android/freetype \
 
 LOCAL_CFLAGS += -Wno-psabi
 LOCAL_EXPORT_CFLAGS += -Wno-psabi

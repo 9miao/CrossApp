@@ -10,7 +10,6 @@
 #define __CC_PLATFORM_CAFREETYPEFONT_H
 
 #include "platform/CCCommon.h"
-#include "platform/CCImage.h"
 #include "images/CAImage.h"
 #include <map>
 #include <string>
@@ -47,6 +46,7 @@ typedef struct TGlyph_
     FT_Vector  pos;    // glyph origin on the baseline
 	FT_Glyph   image;  // glyph image
 	FT_ULong   c;
+	FT_Bool	   isOpenType;
 } TGlyph, *PGlyph;
 
 typedef struct FontBufferInfo
@@ -54,6 +54,7 @@ typedef struct FontBufferInfo
 	unsigned char*  pBuffer;  
 	unsigned long  size;
 	int face_index;
+	bool isOpenTypeFont;
 } FontBufferInfo;
 
 typedef struct FTLineInfo
@@ -62,8 +63,21 @@ typedef struct FTLineInfo
 	FT_BBox             bbox;       // bounding box containing all of the glyphs in the line
     unsigned int        width;      // width of the line     
     FT_Vector           pen;        // current pen position
+	bool				includeRet;
 } FTLineInfo;
 
+typedef enum
+{
+    kAlignCenter        = 0x33, ///< Horizontal center and vertical center.
+    kAlignTop           = 0x13, ///< Horizontal center and vertical top.
+    kAlignTopRight      = 0x12, ///< Horizontal right and vertical top.
+    kAlignRight         = 0x32, ///< Horizontal right and vertical center.
+    kAlignBottomRight   = 0x22, ///< Horizontal right and vertical bottom.
+    kAlignBottom        = 0x23, ///< Horizontal center and vertical bottom.
+    kAlignBottomLeft    = 0x21, ///< Horizontal left and vertical bottom.
+    kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
+    kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
+}ETextAlign;
 
 class CC_DLL CAFreeTypeFont
 {
@@ -74,17 +88,14 @@ public:
 	virtual ~CAFreeTypeFont();
 
 	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight,
-		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false);
-
-	CAImage* initWithStringEx(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
-		std::vector<TextViewLineInfo>& linesText, int iLineSpace = 0, bool bWordWrap = true);
+		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false, std::vector<TextViewLineInfo>* pLinesText = 0);
 
 	static void destroyAllFontBuff();
 protected:
 	bool initFreeTypeFont(const char* pFontName, unsigned long nSize);
 	void finiFreeTypeFont();
 	unsigned char* loadFont(const char *pFontName, unsigned long *size, int& ttfIndex);
-	unsigned char* getBitmap(CCImage::ETextAlign eAlignMask, int* outWidth, int* outHeight);
+	unsigned char* getBitmap(ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);
     int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth);
@@ -94,7 +105,8 @@ protected:
 	FT_Error initGlyphs(const char* text);
 	FT_Error initGlyphsLine(const std::string& line);
 	FT_Error initWordGlyphs(std::vector<TGlyph>& glyphs, const std::string& text, FT_Vector& pen);
-	FT_Error initTextView(const char* pText, std::vector<TextViewLineInfo>& linesText);
+	
+	void initTextView(std::vector<TextViewLineInfo>& linesText);
 	
 	void compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox);
 	void compute_bbox2(TGlyph& glyph, FT_BBox& bbox);
@@ -104,7 +116,7 @@ protected:
     void draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap,FT_Int x,FT_Int y);
 	void draw_line(unsigned char* pBuffer, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
 
-    FT_Vector getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAlign eAlignMask, int lineNumber, int totalLines);
+    FT_Vector getPenForAlignment(FTLineInfo* pInfo, ETextAlign eAlignMask, int lineNumber, int totalLines);
 
     void calcuMultiLines(std::vector<TGlyph>& glyphs);
     
@@ -132,6 +144,7 @@ protected:
 	bool m_bBold;
 	bool m_bItalics;
 	bool m_bUnderLine;
+	bool m_bOpenTypeFont;
 };
 
 NS_CC_END

@@ -13,8 +13,6 @@
 #include "CAScrollView.h"
 #include <set>
 #include "basics/CASTLContainer.h"
-#include "cocoa/CCDictionary.h"
-#include "cocoa/CCArray.h"
 #include "control/CAControl.h"
 #include "basics/CAIndexPath.h"
 
@@ -83,16 +81,6 @@ public:
     {
         return 0;
     }
-    
-    CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, unsigned int section)
-    {
-        return NULL;
-    }
-    
-    CC_DEPRECATED_ATTRIBUTE virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, unsigned int section)
-    {
-        return NULL;
-    }
 };
 
 
@@ -126,6 +114,8 @@ public:
     void setSelectRowAtIndexPath(unsigned int section, unsigned int row);
     
     void setUnSelectRowAtIndexPath(unsigned int section, unsigned int row);
+    
+    virtual void setShowsScrollIndicators(bool var);
     
     CATableViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row);
     
@@ -217,6 +207,10 @@ private:
     
     using CAScrollView::isShowsHorizontalScrollIndicator;
     
+    using CAScrollView::setShowsVerticalScrollIndicator;
+    
+    using CAScrollView::isShowsVerticalScrollIndicator;
+    
     using CAScrollView::setViewSize;
     
     using CAScrollView::setMinimumZoomScale;
@@ -306,10 +300,6 @@ public:
     CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
-    
-protected:
-    
-    CC_DEPRECATED_ATTRIBUTE virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
     
 protected:
 

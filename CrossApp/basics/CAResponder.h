@@ -42,6 +42,8 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);
     
+    CC_SYNTHESIZE_IS(bool, m_bAllowIntercepted, AllowIntercepted);
+    
     CC_SYNTHESIZE_IS(bool, m_bHaveNextResponder, HaveNextResponder);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bSlidingMinX, SlidingMinX);

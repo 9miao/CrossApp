@@ -14,6 +14,13 @@
 #include "basics/CASTLContainer.h"
 
 USING_NS_CC;
+
+typedef enum
+{
+    CAPageViewDirectionHorizontal,
+    CAPageViewDirectionVertical
+}CAPageViewDirection;
+
 class CC_DLL CAPageView;
 class CC_DLL CAPageViewDelegate
 {
@@ -33,11 +40,7 @@ class CC_DLL CAPageView: public CAScrollView
 {
 public:
     
-    typedef enum
-    {
-        CAPageViewDirectionHorizontal,
-        CAPageViewDirectionVertical
-    }CAPageViewDirection;
+    
     
     CAPageView(const CAPageViewDirection& type);
     
@@ -57,13 +60,15 @@ public:
     
     void setCurrPage(int var, bool animated, bool listener = false);
     
-    int getPageCount();
+    unsigned int getPageCount();
     
     void setViews(const CADeque<CAView*>& vec);
     
     void setViews(const CAVector<CAView*>& vec);
     
     CAView* getSubViewAtIndex(int index);
+    
+    virtual void setShowsScrollIndicators(bool var);
     
 protected:
 
@@ -100,6 +105,10 @@ private:
     using CAScrollView::setShowsHorizontalScrollIndicator;
     
     using CAScrollView::isShowsHorizontalScrollIndicator;
+    
+    using CAScrollView::setShowsVerticalScrollIndicator;
+    
+    using CAScrollView::isShowsVerticalScrollIndicator;
     
     using CAScrollView::setViewSize;
     

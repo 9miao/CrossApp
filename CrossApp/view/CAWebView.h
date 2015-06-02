@@ -13,6 +13,7 @@
 #include "platform/CCFileUtils.h"
 #include "CAView.h"
 #include "CAImageView.h"
+#include "CAActivityIndicatorView.h"
 
 
 NS_CC_BEGIN
@@ -28,6 +29,8 @@ public:
 	virtual bool onShouldStartLoading(CAWebView* pWebView, const std::string &url) { return true; }
 	
 	virtual void onDidFinishLoading(CAWebView* pWebView, const std::string &url) {}
+
+	virtual void onLoadHtmlSource(CAWebView* pWebView, const std::string &htmlSource) {}
 	
 	virtual void onDidFailLoading(CAWebView* pWebView, const std::string &url) {}
 	
@@ -119,12 +122,15 @@ public:
 
 	void showNativeWeb();
     
+    virtual void update(float dt);
+    
 	virtual void draw();
 
 	virtual void setVisible(bool visible);
     
 	CC_SYNTHESIZE(CAWebViewDelegate*, m_pWebViewDelegate, WebViewDelegate);
 
+    CC_SYNTHESIZE(bool, m_bShowLoadingImage, ShowLoadingImage);
 private:
     
     CAWebViewImpl *_impl;
@@ -132,6 +138,12 @@ private:
 	bool m_bHideNativeWeCmd;
     
     CAImageView* m_pImageView;
+    
+    CAActivityIndicatorView* m_pLoadingView;
+    
+    CCPoint m_obLastPoint;
+    
+    CCSize m_obLastContentSize;
     
 	friend class CAWebViewImpl;
     

@@ -53,10 +53,22 @@ public:
     
     CC_SYNTHESIZE_PASS_BY_REF(CAImageViewScaleType, m_eImageViewScaleType, ImageViewScaleType);
     
+    CC_SYNTHESIZE(CAVector<CAImage*>, m_vAnimationImages, AnimationImages);
+    
+    CC_SYNTHESIZE(float, m_fAnimationDuration, AnimationDuration);//default is number of images * 1/30th
+    
+    CC_SYNTHESIZE(unsigned int, m_iAnimationRepeatCount, AnimationRepeatCount);//(default is 0)
+    
+    void startAnimating();
+    void stopAnimating();
+    bool isAnimating();
+    
     virtual CAView* copy();
     
 protected:
 
+    void update(float dt);
+    
     virtual void asyncFinish(CAObject* var);
     
     virtual void setContentSize(const CCSize& size);
@@ -71,6 +83,8 @@ protected:
     
     using CAView::initWithColor;
     
+    bool m_bUpdateByImageViewScaleType;
+    
     float m_fLeft;
     
     float m_fRight;
@@ -78,6 +92,10 @@ protected:
     float m_fTop;
     
     float m_fBottom;
+    
+    int m_fAnimationRunTime;
+    
+    bool m_bAnimating;
 };
 
 NS_CC_END

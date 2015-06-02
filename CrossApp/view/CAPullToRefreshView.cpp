@@ -45,7 +45,7 @@ CAPullToRefreshView* CAPullToRefreshView::create(const CAPullToRefreshType& type
     CAPullToRefreshView* view = new CAPullToRefreshView(type);
     if (view && view->init())
     {
-        //view->autorelease();
+        view->autorelease();
         return view;
     }
     CC_SAFE_DELETE(view);

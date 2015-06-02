@@ -2,12 +2,10 @@
 #include "basics/CAApplication.h"
 #include "control/CAButton.h"
 #include "support/CCPointExtension.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionEase.h"
 #include "dispatcher/CATouch.h"
-#include "view/CAWindow.h"
-#include <utility>
+#include "animation/CAViewAnimation.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
 
 NS_CC_BEGIN
 
@@ -43,8 +41,10 @@ void CACollectionView::onEnterTransitionDidFinish()
 {
 	CAScrollView::onEnterTransitionDidFinish();
 
-	this->runAction(CCSequence::create(CCDelayTime::create(1 / 60.0f),
-		CCCallFunc::create(this, callfunc_selector(CACollectionView::firstReloadData)), NULL));
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CACollectionView::firstReloadData));
+    CAViewAnimation::commitAnimations();
 }
 
 void CACollectionView::onExitTransitionDidStart()
@@ -87,21 +87,6 @@ bool CACollectionView::init()
 	this->setBounceHorizontal(false);
 	this->setTouchMovedListenHorizontal(false);
 	return true;
-}
-
-float CACollectionView::maxSpeed(float dt)
-{
-	return (CCPoint(m_obContentSize).getLength() * 8 * dt);
-}
-
-float CACollectionView::maxSpeedCache(float dt)
-{
-	return (maxSpeed(dt) * 3.0f);
-}
-
-float CACollectionView::decelerationRatio(float dt)
-{
-	return 2.0f * dt;
 }
 
 void CACollectionView::setAllowsSelection(bool var)
@@ -173,13 +158,19 @@ void CACollectionView::setUnSelectRowAtIndexPath(unsigned int section, unsigned 
 	m_pSelectedCollectionCells.erase(indexPath);
 }
 
+void CACollectionView::setShowsScrollIndicators(bool var)
+{
+    this->setShowsVerticalScrollIndicator(var);
+    m_bShowsScrollIndicators = var;
+}
+
 bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	if (m_pTouches->count() > 0)
-	{
-		m_pTouches->replaceObjectAtIndex(0, pTouch);
-		return true;
-	}
+    if (!m_vTouches.empty())
+    {
+        m_vTouches.replace(0, pTouch);
+        return true;
+    }
 	bool isInertia = m_tInertia.getLength() < 1.0f;
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
 		return false;
@@ -221,7 +212,7 @@ bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
 	CC_RETURN_IF(m_bscrollEnabled == false);
-
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchMoved(pTouch, pEvent);
 
 	if (m_pHighlightedCollectionCells)
@@ -240,6 +231,7 @@ void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
+    //CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchEnded(pTouch, pEvent);
 
 	if (m_pHighlightedCollectionCells)
@@ -248,7 +240,6 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 		CAIndexPath3E deselectedIndexPath = CAIndexPath3EZero;
 		CAIndexPath3E selectedIndexPath = CAIndexPath3E(m_pHighlightedCollectionCells->getSection(), m_pHighlightedCollectionCells->getRow(), m_pHighlightedCollectionCells->getItem());
-		m_pHighlightedCollectionCells = NULL;
 
 		if (m_pSelectedCollectionCells.count(selectedIndexPath) > 0 && m_bAllowsMultipleSelection)
 		{
@@ -291,11 +282,14 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 					selectedIndexPath.section, selectedIndexPath.row, selectedIndexPath.item);
 			}
 		}
+        
+        m_pHighlightedCollectionCells = NULL;
 	}
 }
 
 void CACollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchCancelled(pTouch, pEvent);
 
 	if (m_pHighlightedCollectionCells)
@@ -308,20 +302,6 @@ void CACollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         }
 		m_pHighlightedCollectionCells = NULL;
 	}
-}
-
-CACollectionViewCell* CACollectionView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
-{
-	CACollectionViewCell* cell = NULL;
-    
-	if (reuseIdentifier && !m_pFreedCollectionCells[reuseIdentifier].empty())
-	{
-		cell = m_pFreedCollectionCells[reuseIdentifier].back();
-		cell->retain()->autorelease();
-		m_pFreedCollectionCells[reuseIdentifier].popBack();
-	}
-    
-	return cell;
 }
 
 void CACollectionView::reloadViewSizeData()
@@ -421,7 +401,10 @@ void CACollectionView::reloadData()
 		y += m_nCollectionHeaderHeight;
 	}
     
-	for (unsigned i = 0; i < m_nSections; i++)
+;
+    int begin = (int)m_rSectionRects.size();
+    m_rSectionRects.resize(m_rSectionRects.size() + m_nSections);
+	for (int i = 0; i < m_nSections; i++)
 	{
 		unsigned int iSectionHeaderHeight = m_nSectionHeaderHeights.at(i);
 		CCRect sectionHeaderRect = CCRect(0, y, width, iSectionHeaderHeight);
@@ -440,7 +423,7 @@ void CACollectionView::reloadData()
         
 		y += m_nVertInterval;
 		unsigned int rowCount = m_nRowsInSections.at(i);
-		for (unsigned j = 0; j < rowCount; j++)
+		for (int j = 0; j < rowCount; j++)
 		{
 			int iHeight = m_nRowHeightss.at(i).at(j);
             
@@ -451,7 +434,7 @@ void CACollectionView::reloadData()
 			{
 				cellWidth = (width - m_nHoriInterval) / itemCount - m_nHoriInterval;
 			}
-			for (unsigned k = 0; k < itemCount; k++)
+			for (int k = 0; k < itemCount; k++)
 			{
 				CAIndexPath3E indexPath = CAIndexPath3E(i, j, k);
 				CCRect cellRect = CCRect(m_nHoriInterval + (cellWidth + m_nHoriInterval)*k, y, cellWidth, iHeight);
@@ -495,7 +478,8 @@ void CACollectionView::reloadData()
 		sectionRect.size.height = sectionFooterRect.origin.y
         + sectionFooterRect.size.height
         - sectionHeaderRect.origin.y;
-		m_rSectionRects.push_back(sectionRect);
+//		m_rSectionRects.push_back(sectionRect);
+        m_rSectionRects[begin + i] = sectionRect;
 	}
     
 	if (m_nCollectionFooterHeight > 0 && m_pCollectionHeaderView)
@@ -583,7 +567,7 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
 	for (itr = m_rSectionRects.begin(); itr != m_rSectionRects.end(); itr++)
 	{
 		CC_CONTINUE_IF(!rect.intersectsRect(*itr));
-		int i = itr - m_rSectionRects.begin();
+		int i = (int)(itr - m_rSectionRects.begin());
 		CAView* header = NULL;
 		CAView* footer = NULL;
 		float headerHeight = 0;
@@ -628,6 +612,40 @@ void CACollectionView::update(float dt)
 	updateSectionHeaderAndFooterRects();
 }
 
+float CACollectionView::maxSpeed(float dt)
+{
+    return (CCPoint(m_obContentSize).getLength() * 8 * dt);
+}
+
+float CACollectionView::maxSpeedCache(float dt)
+{
+    return (maxSpeed(dt) * 3.0f);
+}
+
+float CACollectionView::decelerationRatio(float dt)
+{
+    return 2.0f * dt;
+}
+
+CACollectionViewCell* CACollectionView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
+{
+    CACollectionViewCell* cell = NULL;
+    
+    if (reuseIdentifier && !m_pFreedCollectionCells[reuseIdentifier].empty())
+    {
+        cell = m_pFreedCollectionCells[reuseIdentifier].back();
+        cell->retain()->autorelease();
+        m_pFreedCollectionCells[reuseIdentifier].popBack();
+    }
+    
+    return cell;
+}
+
+CACollectionViewCell* CACollectionView::getHighlightCollectionCell()
+{
+    return m_pHighlightedCollectionCells;
+}
+
 #pragma CACollectionViewCell
 
 CACollectionViewCell::CACollectionViewCell()
@@ -639,13 +657,12 @@ CACollectionViewCell::CACollectionViewCell()
 , m_bAllowsSelected(true)
 {
 	this->setHaveNextResponder(true);
-
 }
 
 
 CACollectionViewCell::~CACollectionViewCell()
 {
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
+    CC_SAFE_RELEASE(m_pBackgroundView);
 }
 
 CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdentifier)
@@ -661,16 +678,6 @@ CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdent
 }
 
 bool CACollectionViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
-{
-	this->setBackgroundView(CAView::create());
-	this->setColor(CAColor_clear);
-	this->setReuseIdentifier(reuseIdentifier);
-	this->normalCollectionViewCell();
-
-	return true;
-}
-
-bool CACollectionViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
 {
 	this->setBackgroundView(CAView::create());
 	this->setColor(CAColor_clear);

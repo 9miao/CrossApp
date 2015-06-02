@@ -115,6 +115,8 @@ public:
 
     void setUnSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
     
+    virtual void setShowsScrollIndicators(bool var);
+    
     CC_SYNTHESIZE(CACollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
     
 	CC_SYNTHESIZE(CACollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
@@ -138,6 +140,8 @@ public:
     CC_SYNTHESIZE_IS(bool, m_bAlwaysTopSectionHeader, AlwaysTopSectionHeader);
     
     CC_SYNTHESIZE_IS(bool, m_bAlwaysBottomSectionFooter, AlwaysBottomSectionFooter);
+    
+    CACollectionViewCell* getHighlightCollectionCell();
     
 protected:
     
@@ -168,7 +172,53 @@ public:
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 
 	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-
+    
+private:
+    
+    using CAScrollView::setBounceHorizontal;
+    
+    using CAScrollView::isBounceHorizontal;
+    
+    using CAScrollView::setBounceVertical;
+    
+    using CAScrollView::isBounceVertical;
+    
+    using CAScrollView::setShowsHorizontalScrollIndicator;
+    
+    using CAScrollView::isShowsHorizontalScrollIndicator;
+    
+    using CAScrollView::setShowsVerticalScrollIndicator;
+    
+    using CAScrollView::isShowsVerticalScrollIndicator;
+    
+    using CAScrollView::setViewSize;
+    
+    using CAScrollView::setMinimumZoomScale;
+    
+    using CAScrollView::getMinimumZoomScale;
+    
+    using CAScrollView::setMaximumZoomScale;
+    
+    using CAScrollView::getMaximumZoomScale;
+    
+    using CAScrollView::getZoomScale;
+    
+    using CAScrollView::isZooming;
+    
+    using CAScrollView::addSubview;
+    
+    using CAScrollView::insertSubview;
+    
+    using CAScrollView::removeAllSubviews;
+    
+    using CAScrollView::removeSubview;
+    
+    using CAScrollView::removeSubviewByTag;
+    
+    using CAScrollView::getSubviewByTag;
+    
+    using CAResponder::setTouchMovedListenHorizontal;
+    
 private:
     
     unsigned int m_nSections;
@@ -225,11 +275,7 @@ public:
     CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
-    
-protected:
-    
-    CC_DEPRECATED_ATTRIBUTE virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
-    
+
 protected:
     
 	virtual void normalCollectionViewCell();

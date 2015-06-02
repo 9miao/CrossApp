@@ -61,7 +61,7 @@ public:
     
     virtual bool init();
 
-    void addSubview(CAView* subview);
+    virtual void addSubview(CAView* subview);
     
     virtual void insertSubview(CAView* subview, int z);
     
@@ -73,7 +73,7 @@ public:
     
     CAView* getSubviewByTag(int aTag);
     
-    CCArray* getSubviews();
+    const CAVector<CAView*>& getSubviews();
     
     void setContentOffset(const CCPoint& offset, bool animated);
     
@@ -100,6 +100,8 @@ public:
     CC_PROPERTY_IS(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);
     
     CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);
+    
+    CC_PROPERTY_IS(bool, m_bShowsScrollIndicators, ShowsScrollIndicators);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bZooming, Zooming);
     
@@ -233,9 +235,9 @@ protected:
     
     CAIndicator* m_pIndicatorVertical;
     
-    CCArray* m_pChildInThis;
+    CAVector<CAView*> m_vChildInThis;
     
-    CCArray* m_pTouches;
+    CAVector<CATouch*> m_vTouches;
     
     float m_fTouchLength;
 

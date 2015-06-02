@@ -21,14 +21,9 @@
 #include "ccMacros.h"
 #include "ccTypes.h"
 
-// actions
-#include "actions/CCAction.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionCamera.h"
-#include "actions/CCActionManager.h"
-#include "actions/CCActionEase.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionTween.h"
+// animation
+#include "animation/CAAnimation.h"
+#include "animation/CAViewAnimation.h"
 
 //basics
 #include "basics/CAApplication.h"
@@ -52,7 +47,6 @@
 #include "control/CASwitch.h"
 #include "control/CASlider.h"
 #include "control/CASegmentedControl.h"
-#include "control/CATextField.h"
 #include "control/CAPageControl.h"
 #include "control/CAStepper.h"
 
@@ -95,8 +89,13 @@
 #include "view/CADatePickerView.h"
 #include "view/CAActivityIndicatorView.h"
 #include "view/CAPullToRefreshView.h"
+#include "view/CATextField.h"
 #include "view/CATextView.h"
 #include "view/CAWebView.h"
+#include "view/CADrawingPrimitives.h"
+#include "view/CADrawView.h"
+#include "view/CAFlashView.h"
+#include "view/CATextEditHelper.h"
 
 // cocoa
 #include "cocoa/CCDictionary.h"
@@ -105,10 +104,6 @@
 #include "cocoa/CCString.h"
 #include "cocoa/CCNS.h"
 #include "cocoa/CACalendar.h"
-
-// draw nodes
-#include "draw_nodes/CCDrawingPrimitives.h"
-#include "draw_nodes/CCDrawNode.h"
 
 
 // kazmath
@@ -123,10 +118,9 @@
 #include "shaders/CAShaderCache.h"
 #include "shaders/ccShaders.h"
 
-
 // support
-#include "support/ccUTF8.h"
 #include "support/ccUtils.h"
+#include "support/ccUTF8.h"
 #include "support/CANotificationCenter.h"
 #include "support/CCPointExtension.h"
 #include "support/CCProfiling.h"
@@ -135,20 +129,20 @@
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/md5.h"
 #include "support/base64.h"
-#include "support/ccUtils.h"
-
 
 // platform
-#include "platform/CCDevice.h"
 #include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"
-#include "platform/CCImage.h"
 #include "platform/CCSAXParser.h"
 #include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformMacros.h"
 #include "platform/CAFreeTypeFont.h"
 #include "platform/CAFTFontCache.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+// video
+#include "video/CAVideoPlayerController.h"
+#endif //(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 //script_support
 #include "script_support/CCScriptSupport.h"
@@ -188,15 +182,6 @@
 	#include "platform/winrt/CCAccelerometer.h"
 	#include "platform/winrt/CCPrecompiledShaders.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	#include "platform/winrt/CCApplication.h"
-	#include "platform/wp8/CCEGLView.h"
-	#include "platform/winrt/CCGL.h"
-	#include "platform/winrt/CCStdC.h"
-	#include "platform/winrt/CCAccelerometer.h"
-	#include "platform/winrt/CCPrecompiledShaders.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 	#include "platform/mac/CCAccelerometer.h"

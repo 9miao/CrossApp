@@ -1,0 +1,74 @@
+
+Free Fonts
+==========
+
+Type Oasis has some good free fonts; would need to investigate
+legalities before putting them in a game:
+
+http://moorstation.org/typoasis/typoasis1.htm
+
+I've been working on and off on Tuffy, a Public Domain font family,
+http://tulrich.com/fonts
+
+
+ActionScript Notes
+==================
+
+* As far as I can determine, "goto N" means the play/move/remove tags
+  have been executed as if we played them from frame 1 through frame
+  N.  No actions or other things get executed.  So it's just a way of
+  updating the display list according to the standard timeline.  But
+  there is persistent state for objects currently on the display list
+  -- if a object has been modified via ActionScript (edit_text
+  contents, or the matrix of a movie clip), and that object is not
+  removed in any frame between the current frame and the target frame,
+  then that object's state is unchanged when we goto N.
+
+  Also, once an object's matrix is touched by ActionScript, it ignores
+  subsequent move_object tags from the timeline.
+
+
+* ActionScript identifiers are NOT CASE SENSITIVE???
+
+* null and undefined are distinct???  Flash help says null is for
+  missing parameters or return values, while undefined is for things
+  that haven't been assigned yet.
+
+
+
+Movie clip button events
+========================
+
+See test_cascaded_clipbuttons.swf/fla
+
+Apparently, the behavior on mouse press is:
+
+1. detect topmost character containing the event
+
+2. proceed down from root (not including root) towards the topmost
+   character under mouse: the first entity that has a clip handler or
+   an onXXX function becomes the active entity, and receives the
+   event.  (TODO determine what exactly is required to qualify for
+   this -- is an onEnterFrame enough?)
+
+   on (keyPress "...") {} qualifies (!)
+   onDragOver
+   onDragOut
+   onPress
+   onRelease
+   onReleaseOutside
+   onRollOut
+   onRollOver
+   
+   onClipEvent (load) {} does NOT qualify
+   onClipEvent (keyDown) {} does NOT qualify
+   function onKeyDown() {} does NOT qualify
+   function onEnterFrame() {} does NOT qualify
+   function onKillFocus() {} does NOT qualify
+   function onLoad() {} does NOT qualify
+   function onMouseDown does NOT qualify (though it is triggered as well on any mouse down event; it's like a listener)
+
+
+3. if the entity has *both* an instance clip handler and a onXXX
+   function, the instance clip handler is invoked, followed by the
+   onXXX function.

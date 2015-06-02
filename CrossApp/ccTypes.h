@@ -28,6 +28,26 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
     return c;
 }
 
+static inline CAColor4B
+ccc4Int(unsigned int rgba)
+{
+    CAColor4B c;
+    c.r = rgba % 0x100;
+    rgba /= 0x100;
+    c.g = rgba % 0x100;
+    rgba /= 0x100;
+    c.b = rgba % 0x100;
+    rgba /= 0x100;
+    c.a = rgba % 0x100;
+    return c;
+}
+
+static inline int
+getIntFormColor4B(const CAColor4B& color)
+{
+    return (color.r + color.g * 0xff + color.b * 0xffff + color.a * 0xffffff);
+}
+
 //CAColor4B predefined colors
 //! White color (255,255,255,255)
 static const CAColor4B CAColor_white   = {255, 255, 255, 255};
@@ -85,10 +105,18 @@ static inline CAColor4B ccc4BFromccc4F(CAColor4F c)
 }
 
 
+/** returns YES if both CAColor4B are equal. Otherwise it returns NO.
+ @since v0.99.1
+ */
+static inline bool CAColor4BEqual(CAColor4B a, CAColor4B b)
+{
+    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+}
+
 /** returns YES if both CAColor4F are equal. Otherwise it returns NO.
  @since v0.99.1
  */
-static inline bool ccc4FEqual(CAColor4F a, CAColor4F b)
+static inline bool CAColor4FEqual(CAColor4F a, CAColor4F b)
 {
     return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }

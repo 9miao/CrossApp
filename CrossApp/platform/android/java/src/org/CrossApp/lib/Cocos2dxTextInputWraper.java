@@ -1,6 +1,7 @@
 
 package org.CrossApp.lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -56,6 +57,8 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 	@Override
 	public void afterTextChanged(final Editable s) {
 	
+		Log.d(TAG, "afterTextChanged: " + s.toString());
+		
 		if (this.isFullScreenEdit()) 
 		{
 			return;
@@ -80,7 +83,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 //				*/
 //			}
 //		}
-//		this.mText = s.toString();
+		this.mText = s.toString();
 	}
 
 	@Override
@@ -90,71 +93,72 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
 		}
 		*/
-		
+		Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
 		//System.out.println(pCharSequence.toString());
-		this.mText = pCharSequence.toString();
+		//this.mText = pCharSequence.toString();
 	}
 
 	@Override
 	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
-		int nModified = pCharSequence.length() - this.mText.length();
-		{
-			if(nModified<0)
-			{
-				this.mCocos2dxGLSurfaceView.deleteBackward();
+		
+		Log.d(TAG, "onTextChanged(" + pCharSequence + ")start: " + start + ",before: " + before + ",count: " + count);
+
+		String subReplace = null;
+		
+		try {
+			CharSequence subSeq = pCharSequence.subSequence(start, start+count);
+			if (subSeq != null) {
+				subReplace = subSeq.toString();
+			} else {
+				subReplace = "";
 			}
-			else
-			{
-				this.mCocos2dxGLSurfaceView.willInsertText(start,pCharSequence.toString(),before,count);
-			}
+		} catch (IndexOutOfBoundsException e) {
+			Log.d(TAG, e.toString());
 			
+			return;
 		}
 		
+		this.mCocos2dxGLSurfaceView.willInsertText(start, subReplace, before, count);
 	}
 
 	
 	@Override
-	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
-		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit()) {
-			// user press the action button, delete all old text and insert new text
-			for (int i = this.mOriginText.length(); i > 0; i--) {
-				this.mCocos2dxGLSurfaceView.deleteBackward();
-				/*
-				if (BuildConfig.DEBUG) {
-					Log.d(TAG, "deleteBackward");
-				}
-				*/
-			}
-			String text = pTextView.getText().toString();
-
-			/* If user input nothing, translate "\n" to engine. */
-			if (text.compareTo("") == 0) {
-				text = "\n";
-			}
-			if ('\n' != text.charAt(text.length() - 1)) {
-				text += '\n';
-			}
-
-			final String insertText = text;
-			this.mCocos2dxGLSurfaceView.insertText(insertText);
-			/*
-			if (BuildConfig.DEBUG) {
-				Log.d(TAG, "insertText(" + insertText + ")");
-			}
-			*/
-		}
-
-		  
+	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) 
+	{
 		
-		if (pActionID == EditorInfo.IME_ACTION_DONE) {
-				KeyBoardReturnCallBack();	
-		}
-		if (pActionID == EditorInfo.IME_ACTION_SEARCH) {
+		
+		
+		
+		if (pActionID == EditorInfo.IME_ACTION_DONE) 
+		{
 			KeyBoardReturnCallBack();
+            return true;
 		}
-		if (pActionID == EditorInfo.IME_ACTION_SEND) {
-			KeyBoardReturnCallBack();		
+		if (pActionID == EditorInfo.IME_ACTION_SEARCH)
+        {
+			KeyBoardReturnCallBack();
+            return true;
 		}
+		if (pActionID == EditorInfo.IME_ACTION_SEND)
+		{
+			KeyBoardReturnCallBack();
+            return true;
+		}
+        
+        if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() != pTextView)
+        {
+            return false;
+        }
+        
+        if(pKeyEvent.getAction() == KeyEvent.ACTION_DOWN)
+        {
+            return false;
+        }
+        if (pActionID == EditorInfo.IME_ACTION_UNSPECIFIED)
+        {
+            this.mCocos2dxGLSurfaceView.insertText("\n");
+            return true;
+        }
 		return true;
 	}
 	// ===========================================================

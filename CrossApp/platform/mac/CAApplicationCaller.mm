@@ -37,7 +37,7 @@ static id s_sharedDirectorCaller;
 -(void) dealloc
 {
     s_sharedDirectorCaller = nil;
-    CCLOG("cocos2d: deallocing CAApplicationCaller %p", self);
+    CCLOG("CrossApp: deallocing CAApplicationCaller %p", self);
 	if (displayLink) {
 		CVDisplayLinkRelease(displayLink);
 	}

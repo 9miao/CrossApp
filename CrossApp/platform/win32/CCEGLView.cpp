@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "dispatcher/CAIMEDispatcher.h"
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "support/CCPointExtension.h"
+#include "support/ccUTF8.h"
 #include "CCApplication.h"
 
 NS_CC_BEGIN
@@ -449,15 +450,54 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_KEYDOWN:
-        if (wParam == VK_F1 || wParam == VK_F2)
+        switch (wParam)
         {
-			CAApplication* pDirector = CAApplication::getApplication();
+        case VK_F1:
+            if (GetKeyState(VK_LSHIFT) < 0 || GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
+                CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+            break;
+        case VK_F2:
             if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
-                pDirector->getKeypadDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
-        }
-        else if (wParam == VK_ESCAPE)
-        {
+                CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+            break;
+        case VK_ESCAPE:
 			CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+            break;
+        case VK_LEFT:
+            CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveBackward();
+            break;
+        case VK_RIGHT:
+            CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveForward();
+            break;
+        case 'C':
+        case 'X':
+            if (GetKeyState(VK_CONTROL) < 0)
+                {
+                    if (wParam == 'C')
+                    {
+                    CAIMEDispatcher::sharedDispatcher()->dispatchCopyToClipboard();
+                    }
+                    else
+                    {
+                    CAIMEDispatcher::sharedDispatcher()->dispatchCutToClipboard();
+                    }
+            }
+            break;
+        case 'V':
+            if (GetKeyState(VK_CONTROL) < 0)
+			{
+				CAIMEDispatcher::sharedDispatcher()->dispatchPasteFromClipboard();
+            }
+            break;
+        case 'A':
+            if (GetKeyState(VK_CONTROL) < 0)
+            {
+                CAIMEDispatcher::sharedDispatcher()->dispatchSelectAll();
+            }
+            break;
+
+        default:
+            break;
         }
 
         if ( m_lpfnAccelerometerKeyHook!=NULL )

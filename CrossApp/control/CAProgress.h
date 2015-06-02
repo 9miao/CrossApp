@@ -18,7 +18,7 @@ NS_CC_BEGIN
 
 typedef enum
 {
-    CAProgressStyleDefault=0,
+    CAProgressStyleDefault = 0,
     CAProgressStyleBar
 }CAProgressStyle;
 
@@ -44,15 +44,13 @@ public:
 
 public:
     
-    CC_SYNTHESIZE_PASS_BY_REF(CAProgressStyle, m_pProgressStyle, ProgressStyle);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cProgressTintColor, ProgressTintColor);
     
-    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_progressTintColor, ProgressTintColor);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cProgressTrackColor, ProgressTrackColor);
     
-    CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_progresstrackColor, ProgresstrackColor);
+	CC_PROPERTY(CAImage*, m_pProgressTintImage, ProgressTintImage);
     
-	CC_SYNTHESIZE_RETAIN(CAImage*, m_pProgressTintImage, ProgressTintImage);
-    
-	CC_SYNTHESIZE_RETAIN(CAImage*, m_pProgressTrackImage, ProgressTrackImage);
+	CC_PROPERTY(CAImage*, m_pProgressTrackImage, ProgressTrackImage);
     
 protected:
 

@@ -3,7 +3,7 @@
 #include "DownloadManager.h"
 #include "CrossApp.h"
 #include "../sqlite3/include/sqlite3.h"
-
+#include "support/zip_support/unzip.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <curl/curl.h>
@@ -14,13 +14,12 @@
 #include <list>
 #include <vector>
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM != CC_PLATORM_WIN32)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 #endif
 
-#include "support/zip_support/unzip.h"
 
 using namespace CrossApp;
 using namespace std;
@@ -87,9 +86,9 @@ public:
     
     unsigned long getDownloadID() const;
     
-    const char* getDownloadUrl() const;
+    const string& getDownloadUrl() const;
     
-    const char* getFileName() const;
+    const string& getFileName() const;
     
     unsigned int getConnectionTimeout();
     
@@ -186,14 +185,14 @@ static unsigned long _getLocalFileSize(const std::string& fileName)
 {
     unsigned long lCurFileSize = 0;
     
-    FILE* fp = fopen(fileName.c_str(), "r");
+    FILE* fp = fopen(fileName.c_str(), "rb");
     if (fp != NULL)
     {
         fseek(fp, 0L, SEEK_END);
         lCurFileSize = ftell(fp);
         fclose(fp);
     }
-    fp = fopen(std::string(fileName + ".tmp").c_str(), "r");
+    fp = fopen(std::string(fileName + ".tmp").c_str(), "rb");
     if (fp != NULL)
     {
         fseek(fp, 0L, SEEK_END);
@@ -1112,6 +1111,10 @@ bool CADownloadResponse::downLoad()
         return false;
     }
     
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    chmod(outFileName.c_str(), 0x666);
+#endif
+    
 	_curl = curl_easy_init();
 	if (_curl == NULL)
 	{
@@ -1133,7 +1136,7 @@ bool CADownloadResponse::downLoad()
 	char cRange[32] = { 0 };
 	sprintf(cRange, "%.0f-", _initialFileSize);
 	curl_easy_setopt(_curl, CURLOPT_RANGE, cRange);
-	curl_easy_setopt(_curl, CURLOPT_RESUME_FROM, _initialFileSize);
+	curl_easy_setopt(_curl, CURLOPT_RESUME_FROM, (long)_initialFileSize);
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, downLoadPackage);
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
     curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
@@ -1149,7 +1152,10 @@ bool CADownloadResponse::downLoad()
     }
 
 	if (isDownloadAbort())
-		return false;
+    {
+        fclose(fp);
+        return false;
+    }
     
     if (res != 0)
     {
@@ -1169,14 +1175,14 @@ unsigned long CADownloadResponse::getDownloadID() const
     return _download_id;
 }
 
-const char* CADownloadResponse::getDownloadUrl() const
+const string& CADownloadResponse::getDownloadUrl() const
 {
-    return _downloadUrl.c_str();
+    return _downloadUrl;
 }
 
-const char* CADownloadResponse::getFileName() const
+const string& CADownloadResponse::getFileName() const
 {
-    return _fileName.c_str();
+    return _fileName;
 }
 
 unsigned int CADownloadResponse::getConnectionTimeout()

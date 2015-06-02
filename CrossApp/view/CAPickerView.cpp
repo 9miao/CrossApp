@@ -1,4 +1,4 @@
-//
+﻿//
 //  CAPickerView.cpp
 //  CrossApp
 //
@@ -8,12 +8,12 @@
 
 #include "CAPickerView.h"
 #include "CALabel.h"
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
 CAPickerView::CAPickerView()
-: m_tableViews(NULL)
-, m_delegate(NULL)
+: m_delegate(NULL)
 , m_dataSource(NULL)
 , m_fontSizeNormal(20)
 , m_fontSizeSelected(22)
@@ -27,7 +27,7 @@ CAPickerView::CAPickerView()
 
 CAPickerView::~CAPickerView()
 {
-    CC_SAFE_RELEASE(m_tableViews);
+
 }
 
 CAPickerView* CAPickerView::create()
@@ -100,6 +100,20 @@ void CAPickerView::onExit()
     CAView::onExit();
 }
 
+void CAPickerView::onEnterTransitionDidFinish()
+{
+	CAView::onEnterTransitionDidFinish();
+    
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAPickerView::reloadAllComponents));
+    CAViewAnimation::commitAnimations();
+}
+
+void CAPickerView::onExitTransitionDidStart() {
+	CAView::onExitTransitionDidStart();
+}
+
 int CAPickerView::numberOfComponents()
 {
     if (m_dataSource) {
@@ -138,7 +152,7 @@ CAView* CAPickerView::viewForRow(unsigned int row, unsigned int component)
 float CAPickerView::calcTotalWidth(unsigned int component)
 {
     float total = 0;
-    for (unsigned i=0; i<component; i++) {
+    for (int i=0; i<component; i++) {
         total += m_dataSource->widthForComponent(this, i);
     }
     return total;
@@ -149,11 +163,9 @@ void CAPickerView::reloadAllComponents()
     if (m_delegate && m_dataSource)
     {
         
-        // clear old data        
-        CC_SAFE_RELEASE_NULL(m_tableViews);
-        m_tableViews = CCArray::create();
-        m_tableViews->retain();
+        // clear old data       
         
+		m_tableViews.clear();
         m_selected.clear();
         m_componentsIndex.clear();
         m_displayRow.clear();
@@ -187,9 +199,10 @@ void CAPickerView::reloadAllComponents()
             tableView->setTableViewDataSource(this);
             tableView->setSeparatorViewHeight(0);
             tableView->setSeparatorColor(CAColor_clear);
-            tableView->setShowsVerticalScrollIndicator(false);
-            m_tableViews->addObject(tableView);
-            addSubview(tableView);
+            tableView->setShowsScrollIndicators(false);
+			m_tableViews.pushBack(tableView);
+            
+			addSubview(tableView);
             
             // create highlight
             CCSize selectSize = CCSizeMake(tableWidth, m_dataSource->rowHeightForComponent(this, i));
@@ -248,7 +261,8 @@ void CAPickerView::reloadComponent(unsigned int component, bool bReloadData)
     
     if (bReloadData) {
         // reload table view
-        CATableView* view = (CATableView*)m_tableViews->objectAtIndex(component);
+		CATableView* view = m_tableViews.at(component);
+
         view->reloadData();   
         view->stopDeaccelerateScroll();
     }
@@ -281,7 +295,7 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, CCSize size)
 
 CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
-    if (m_dataSource && m_tableViews) {
+    if (m_dataSource && !m_tableViews.empty()) {
         
         CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
         if (cell == NULL) {
@@ -291,7 +305,7 @@ CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const CCSize
             cell->removeSubviewByTag(100);            
         }
         
-        int component = m_tableViews->indexOfObject(table);
+		int component = m_tableViews.getIndex(table);
         
         CAView* view = viewForRowInComponent(component, row, cellSize);
         if (view) {
@@ -307,8 +321,8 @@ CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const CCSize
 
 unsigned int CAPickerView::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    if (m_dataSource && m_tableViews) {
-        int component = m_tableViews->indexOfObject(table);
+    if (m_dataSource && !m_tableViews.empty()) {
+		int component = m_tableViews.getIndex(table);
 
         return m_componentsIndex[component].size();
     }
@@ -317,8 +331,8 @@ unsigned int CAPickerView::numberOfRowsInSection(CATableView *table, unsigned in
 
 unsigned int CAPickerView::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    if (m_dataSource && m_tableViews) {
-        int component = m_tableViews->indexOfObject(table);
+    if (m_dataSource && !m_tableViews.empty()) {
+        int component = m_tableViews.getIndex(table);
         return m_dataSource->rowHeightForComponent(this, component);
     }
     return 0;
@@ -326,13 +340,13 @@ unsigned int CAPickerView::tableViewHeightForRowAtIndexPath(CATableView* table, 
 
 void CAPickerView::selectRow(unsigned int row, unsigned int component, bool animated)
 {
-    if (!m_tableViews || !m_dataSource) {
+    if ( m_tableViews.empty() || !m_dataSource) {
         return;
     }
     
-    CATableView* tableView = (CATableView*)m_tableViews->objectAtIndex(component);
+    CATableView* tableView = m_tableViews.at(component);
     if (tableView) {
-        unsigned maxRow = m_dataSource->numberOfRowsInComponent(this, component);
+        int maxRow = m_dataSource->numberOfRowsInComponent(this, component);
         float height = m_dataSource->rowHeightForComponent(this, component);
         if (row < maxRow) {
             CCPoint offset = CCPointZero;
@@ -354,20 +368,25 @@ int CAPickerView::selectedRowInComponent(unsigned int component)
     return m_selected[component];
 }
 
+void CAPickerView::setBackgroundColor(const CAColor4B& color) {
+	this->setColor(color);
+}
+
 void CAPickerView::visit()
 {
+	CAView::visit();
+
     if (m_dataSource)
     {
-        CAObject* obj = NULL;
-        CCARRAY_FOREACH(m_tableViews, obj)
+		for (int i = 0; i < m_tableViews.size(); i++)
         {
-            
             // cycle data
-            CATableView* tableView = (CATableView*)obj;
+			CATableView* tableView = (CATableView*)m_tableViews.at(i);
             CCPoint offset = tableView->getContentOffset();
-            int component = m_tableViews->indexOfObject(obj);
+			int component = m_tableViews.getIndex(tableView);
             int row = m_dataSource->numberOfRowsInComponent(this, component);
             int row_height = m_dataSource->rowHeightForComponent(this, component);
+
             if (row > m_displayRow[component])
             {
                 if (offset.y < 0)
@@ -381,11 +400,17 @@ void CAPickerView::visit()
                     tableView->setContentOffset(offset, false);
                 }
             }
-            
+ 
+
             // set opacity
             int offset_y = abs((int)offset.y);
             int remainder = offset_y % row_height;
             int index = offset_y / row_height;
+
+			if (remainder >= row_height * 0.95) {
+				index++;
+			}
+
             for (int i=index-1; i<index + m_displayRow[component] + 2; i++)
             {
                 CATableViewCell* cell = tableView->cellForRowAtIndexPath(0, i);
@@ -398,10 +423,7 @@ void CAPickerView::visit()
                     op = powf(op, 2);
                     op = MAX(op, 0.1f);
                     cell->setAlpha(op);
-                    
-//                    float scale = length/mid * 0.1;
-//                    cell->setScale(1.0 - scale);
-                }
+				}
             }
             
             // fixed position in the middle 
@@ -420,7 +442,7 @@ void CAPickerView::visit()
                 }
                 else
                 {
-                    // set selected when stop scrolling.
+					// set selected when stop scrolling.
                     
                     int selected = index + m_displayRow[component]/2;
                     
@@ -437,7 +459,7 @@ void CAPickerView::visit()
         }
     }
     
-    CAView::visit();
+    
 }
 
 NS_CC_END

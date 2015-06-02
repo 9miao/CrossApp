@@ -140,8 +140,8 @@ bool CAGLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteA
 
 bool CAGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
-    const GLchar * vertexSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(vShaderFilename).c_str())->getCString();
-    const GLchar * fragmentSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(fShaderFilename).c_str())->getCString();
+    const GLchar * vertexSource = (GLchar*) CCString::createWithContentsOfFile(vShaderFilename)->getCString();
+    const GLchar * fragmentSource = (GLchar*) CCString::createWithContentsOfFile(fShaderFilename)->getCString();
 
     return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }

@@ -3,6 +3,8 @@
 #ifndef __CC_IME_DELEGATE_H__
 #define __CC_IME_DELEGATE_H__
 
+#include <string>
+#include <utility>
 #include "basics/CAGeometry.h"
 
 NS_CC_BEGIN
@@ -70,6 +72,16 @@ protected:
     */
     virtual void deleteBackward() {}
 
+    virtual void selectAll() {}
+	virtual void cursorMoveBackward() {}
+	virtual void cursorMoveForward() {}
+	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt) {}
+	virtual void moveArrowBtn(const CCPoint& pt) {}
+
+	virtual void copyToClipboard() {}
+	virtual void cutToClipboard() {}
+	virtual void pasteFromClipboard() {}
+
     virtual void getKeyBoardHeight(int height) {}
     
     virtual void getKeyBoradReturnCallBack() {}
@@ -78,6 +90,7 @@ protected:
     */
     virtual const char * getContentText() { return 0; }
 
+    virtual int getCursorPos() { return 0; }
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////
@@ -85,7 +98,6 @@ protected:
     virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info)    {CC_UNUSED_PARAM(info);}
     virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info)   {CC_UNUSED_PARAM(info);}
     virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info)    {CC_UNUSED_PARAM(info);}
-
 protected:
     CAIMEDelegate();
 };

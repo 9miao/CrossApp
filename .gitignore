@@ -44,19 +44,7 @@ bin/
 obj/
 gen/
 assets/
-local.properties
-
-# Ignore specific winrt files 
-CrossApp/platform/third_party/winrt/freetype/src
-CrossApp/platform/third_party/winrt/libpng/lpng142
-CrossApp/platform/third_party/winrt/libjpeg/jpeg-8b
-CrossApp/platform/third_party/winrt/libtiff/tiff-4.0.1
-CrossApp/platform/third_party/winrt/zlib/zlib-1.2.5
-CrossApp/platform/third_party/wp8/freetype/src
-CrossApp/platform/third_party/wp8/libpng/lpng142
-CrossApp/platform/third_party/wp8/libjpeg/jpeg-8b
-CrossApp/platform/third_party/wp8/libtiff/tiff-4.0.1
-CrossApp/platform/third_party/wp8/zlib/zlib-1.2.5
+#local.properties
 
 
 # Ignore python compiled files
@@ -70,7 +58,7 @@ build_*_vc10/
 *.mode*v*
 *.pbxuser
 *.xcbkptlist
-*.xcscheme
+.xcscheme
 *.xcworkspacedata
 *.xcuserstate
 xcschememanagement.plist

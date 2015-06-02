@@ -55,8 +55,7 @@ bool CAPageView::init()
         return false;
     }
     
-    this->setShowsHorizontalScrollIndicator(false);
-    this->setShowsVerticalScrollIndicator(false);
+    this->setShowsScrollIndicators(false);
 
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
@@ -159,9 +158,17 @@ CAView* CAPageView::getSubViewAtIndex(int index)
     return view;
 }
 
-int CAPageView::getPageCount()
+void CAPageView::setShowsScrollIndicators(bool var)
 {
-    return m_pViews.size();
+    bool bVertScroll = m_ePageViewDirection == CAPageViewDirectionVertical;
+    this->setShowsHorizontalScrollIndicator(var && !bVertScroll);
+    this->setShowsVerticalScrollIndicator(var && bVertScroll);
+    m_bShowsScrollIndicators = var;
+}
+
+unsigned int CAPageView::getPageCount()
+{
+    return (unsigned int)m_pViews.size();
 }
 
 void CAPageView::setCurrPage(int var, bool animated, bool listener)
@@ -206,9 +213,9 @@ void CAPageView::contentOffsetFinish(float dt)
 
 bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pTouches->count() > 0)
+    if (!m_vTouches.empty())
     {
-        m_pTouches->replaceObjectAtIndex(0, pTouch);
+        m_vTouches.replace(0, pTouch);
         return true;
     }
     
@@ -311,7 +318,7 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     }
     else
     {
-        page = MIN(page, this->getPageCount() - 1);
+        page = MIN(page, (int)this->getPageCount() - 1);
         page = MAX(page, 0);
         
         this->setCurrPage(page, true, true);

@@ -19,6 +19,7 @@ public class Cocos2dxWebViewHelper {
 
     private static SparseArray<Cocos2dxWebView> webViews;
     private static int viewTag = 0;
+    private static int indexView = 0;
 
     public Cocos2dxWebViewHelper(FrameLayout layout) {
         Cocos2dxWebViewHelper.layout = layout;
@@ -53,6 +54,14 @@ public class Cocos2dxWebViewHelper {
     }
     
     private static native void onSetByteArrayBuffer(byte[] buf, int len);
+    private static native void didLoadHtmlSource(int index, String htmlSrc);
+    
+    public static void _onLoadHtmlSource1(int index) {
+    	indexView = index;
+    }
+    public static void _onLoadHtmlSource2(String html) {
+    	didLoadHtmlSource(indexView, html);
+    }
 
     @SuppressWarnings("unused")
     public static int createWebView() {
@@ -82,6 +91,7 @@ public class Cocos2dxWebViewHelper {
                 if (webView != null) {
                     webViews.remove(index);
                     layout.removeView(webView);
+                    webView.destroy();
                 }
             }
         });
@@ -133,13 +143,13 @@ public class Cocos2dxWebViewHelper {
 
 
     @SuppressWarnings("unused")
-    public static void loadHTMLString(final int index, final String htmlString, final String mimeType, final String encoding) {
+    public static void loadHTMLString(final int index, final String htmlString, final String data, final String baseUrl) {
         cocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
-                    webView.loadData(htmlString, mimeType, encoding);
+                    webView.loadDataWithBaseURL(baseUrl, data, null,null,null);
                 }
             }
         });

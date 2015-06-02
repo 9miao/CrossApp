@@ -538,6 +538,23 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
     return pBuffer;
 }
 
+std::string CCFileUtils::getFileString(const char* pszFilePath)
+{
+    std::string data;
+    
+    unsigned long pSize = 0;
+    unsigned char* pData = this->getFileData(pszFilePath, "rb", &pSize);
+    
+    data.resize(pSize, sizeof(char));
+    for (int i=0; i<data.size(); i++)
+    {
+        data[i] = pData[i];
+    }
+    data += '\0';
+    
+    return data;
+}
+
 std::string CCFileUtils::getNewFilename(const std::string& pszFileName)
 {
     std::string pszNewFileName = "";
@@ -585,7 +602,6 @@ std::string CCFileUtils::fullPathForFilename(const std::string& pszFileName)
         //CCLOG("Return absolute path( %s ) directly.", pszFileName);
         return pszFileName;
     }
-    
     // Already Cached ?
     std::map<std::string, std::string>::iterator cacheIter = m_fullPathCache.find(pszFileName);
     if (cacheIter != m_fullPathCache.end())
@@ -593,7 +609,6 @@ std::string CCFileUtils::fullPathForFilename(const std::string& pszFileName)
         //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
         return cacheIter->second;
     }
-    
     // Get the new file name.
     std::string newFilename = getNewFilename(pszFileName);
     
@@ -609,22 +624,17 @@ std::string CCFileUtils::fullPathForFilename(const std::string& pszFileName)
              resOrderIter != m_searchResolutionsOrderArray.end();
              ++resOrderIter)
         {
-            
-            //CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
-            
             fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
             
             if (fullpath.length() > 0)
             {
                 // Using the filename passed in as key.
                 m_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
-                //CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
     }
     
-    //CCLOG("CrossApp: fullPathForFilename: No file found at %s. Possible missing file.", pszFileName);
     return pszFileName;
 }
 
@@ -778,7 +788,13 @@ void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
 
 std::string CCFileUtils::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
 {
-    std::string ret = strDirectory+strFilename;
+    std::string ret = strDirectory;
+    if (strDirectory.size() && strDirectory[strDirectory.size()-1] != '/')
+    {
+        ret += '/';
+    }
+    ret += strFilename;
+    
     if (!isFileExist(ret)) {
         ret = "";
     }

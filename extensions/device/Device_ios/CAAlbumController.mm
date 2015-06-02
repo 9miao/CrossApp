@@ -57,14 +57,14 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)openAlbumView
+-(void)openAlbumView:(BOOL)allowEdit
 {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     
     
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
-    
+    imagePicker.editing = allowEdit;
     imagePicker.delegate = self;
     
     [self presentViewController:imagePicker animated:YES completion:^
@@ -76,7 +76,16 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSString *imageType;
+    if (picker.allowsEditing)
+    {
+        imageType = [NSString stringWithFormat:@"UIImagePickerControllerEditedImage"];
+    }
+    else
+    {
+        imageType = [NSString stringWithFormat:@"UIImagePickerControllerOriginalImage"];
+    }
+    UIImage *image = [info objectForKey:imageType];
     UIImage *newfixImage = [self fixOrientation:image];
     CGSize size ;
     if ([newfixImage size].width>[newfixImage size].height)
@@ -96,17 +105,17 @@
     }
     
     NSData *data = UIImageJPEGRepresentation(fiximage,0.5);
-    void* _data =malloc([data length]);
+    void* _data = malloc([data length]);
     [data getBytes:_data];
     
-    CCImage *caimage = new CCImage();
-   
-    caimage->initWithImageData(_data, [data length], CCImage::kFmtPng, fiximage.size.height, fiximage.size.width);
-    
     CAImage *__image = new CAImage();
-    __image->initWithImage(caimage);
-    
-    cam->getSelectedImage(__image);
+    __image->initWithImageData((unsigned char*)_data, data.length);
+    if (cam)
+    {
+        cam->getSelectedImage(__image);
+    }
+    __image->release();
+    free(_data);
     
     [picker dismissViewControllerAnimated:YES completion:^
         {

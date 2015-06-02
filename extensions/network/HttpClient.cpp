@@ -47,12 +47,12 @@ typedef int int32_t;
 
 static bool need_quit[MAX_Thread] = {0};
 
-static CCArray* s_requestQueue[MAX_Thread] = {0};
+static CADeque<CAHttpRequest*> s_requestQueue[MAX_Thread];
 
-static CCArray* s_responseQueue[MAX_Thread] = {0};
+static CADeque<CAHttpResponse*> s_responseQueue[MAX_Thread];
 
 
-static CCHttpClient *s_pHttpClient[MAX_Thread] = {0};
+static CAHttpClient *s_pHttpClient[MAX_Thread] = {0};
  // pointer to singleton
 
 static char s_errorBuffer[MAX_Thread][CURL_ERROR_SIZE];
@@ -86,11 +86,11 @@ static size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream
 }
 
 
-static int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processPostFileTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processGetTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processPostTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processPutTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processDeleteTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processPostFileTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
@@ -99,7 +99,7 @@ static void* networkThread(void *data)
 {
     int thread = *(int*)data;
 
-    CCHttpRequest *request = NULL;
+    CAHttpRequest *request = NULL;
     
     while (true) 
     {
@@ -112,10 +112,10 @@ static void* networkThread(void *data)
         request = NULL;
         
         pthread_mutex_lock(&s_requestQueueMutex[thread]); //Get request task from queue
-        if (0 != s_requestQueue[thread]->count())
+        if (!s_requestQueue[thread].empty())
         {
-            request = dynamic_cast<CCHttpRequest*>(s_requestQueue[thread]->objectAtIndex(0));
-            s_requestQueue[thread]->removeObjectAtIndex(0);
+            request = s_requestQueue[thread].front();
+            s_requestQueue[thread].popFront();
             // request's refcount = 1 here
         }
         pthread_mutex_unlock(&s_requestQueueMutex[thread]);
@@ -130,7 +130,7 @@ static void* networkThread(void *data)
         // step 2: libcurl sync access
         
         // Create a HttpResponse object, the default setting is http access failed
-        CCHttpResponse *response = new CCHttpResponse(request);
+        CAHttpResponse *response = new CAHttpResponse(request);
         
         // request's refcount = 2 here, it's retained by HttpRespose constructor
         request->release();
@@ -142,7 +142,7 @@ static void* networkThread(void *data)
         // Process the request -> get response packet
         switch (request->getRequestType())
         {
-            case CCHttpRequest::kHttpGet: // HTTP GET
+            case CAHttpRequest::kHttpGet: // HTTP GET
                 retValue = processGetTask(request,
                                           writeData, 
                                           response->getResponseData(), 
@@ -151,7 +151,7 @@ static void* networkThread(void *data)
                                           response->getResponseHeader());
                 break;
             
-            case CCHttpRequest::kHttpPost: // HTTP POST
+            case CAHttpRequest::kHttpPost: // HTTP POST
                 retValue = processPostTask(request,
                                            writeData, 
                                            response->getResponseData(), 
@@ -160,7 +160,7 @@ static void* networkThread(void *data)
                                            response->getResponseHeader());
                 break;
 
-            case CCHttpRequest::kHttpPut:
+            case CAHttpRequest::kHttpPut:
                 retValue = processPutTask(request,
                                           writeData,
                                           response->getResponseData(),
@@ -169,7 +169,7 @@ static void* networkThread(void *data)
                                           response->getResponseHeader());
                 break;
 
-            case CCHttpRequest::kHttpDelete:
+            case CAHttpRequest::kHttpDelete:
                 retValue = processDeleteTask(request,
                                              writeData,
                                              response->getResponseData(),
@@ -178,7 +178,7 @@ static void* networkThread(void *data)
                                              response->getResponseHeader());
                 break;
 
-			case CCHttpRequest::kHttpPostFile:
+			case CAHttpRequest::kHttpPostFile:
 				retValue = processPostFileTask(request,
 											writeData,
 											response->getResponseData(),
@@ -188,7 +188,7 @@ static void* networkThread(void *data)
 				break;
 
             default:
-                CCAssert(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
+                CCAssert(true, "CAHttpClient: unkown request type, only GET and POSt are supported");
                 break;
         }
 
@@ -207,20 +207,21 @@ static void* networkThread(void *data)
         
         // add response packet into queue
         pthread_mutex_lock(&s_responseQueueMutex[thread]);
-        s_responseQueue[thread]->addObject(response);
+        s_responseQueue[thread].pushBack(response);
         pthread_mutex_unlock(&s_responseQueueMutex[thread]);
         
         // resume dispatcher selector
-        CAScheduler::getScheduler()->resumeTarget(CCHttpClient::getInstance(thread));
+        CAScheduler::getScheduler()->resumeTarget(CAHttpClient::getInstance(thread));
     }
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
     pthread_mutex_lock(&s_requestQueueMutex[thread]);
-    s_requestQueue[thread]->removeAllObjects();
+    s_requestQueue[thread].clear();
     pthread_mutex_unlock(&s_requestQueueMutex[thread]);
-    s_asyncRequestCount[thread] -= s_requestQueue[thread]->count();
+    s_asyncRequestCount[thread] -= s_requestQueue[thread].size();
     
-    if (s_requestQueue != NULL) {
+    if (!s_requestQueue[thread].empty())
+    {
         
         pthread_mutex_destroy(&s_requestQueueMutex[thread]);
         pthread_mutex_destroy(&s_responseQueueMutex[thread]);
@@ -228,10 +229,8 @@ static void* networkThread(void *data)
         pthread_mutex_destroy(&s_SleepMutex[thread]);
         pthread_cond_destroy(&s_SleepCondition[thread]);
 
-        s_requestQueue[thread]->release();
-        s_requestQueue[thread] = NULL;
-        s_responseQueue[thread]->release();
-        s_responseQueue[thread] = NULL;
+        s_requestQueue[thread].clear();
+        s_responseQueue[thread].clear();
     }
 
     pthread_exit(NULL);
@@ -251,18 +250,18 @@ static bool configureCURL(CURL *handle)
     if (code != CURLE_OK) {
         return false;
     }
-    code = curl_easy_setopt(handle, CURLOPT_TIMEOUT, CCHttpClient::getInstance()->getTimeoutForRead());
+    code = curl_easy_setopt(handle, CURLOPT_TIMEOUT, CAHttpClient::getInstance()->getTimeoutForRead());
     if (code != CURLE_OK) {
         return false;
     }
-    code = curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT, CCHttpClient::getInstance()->getTimeoutForConnect());
+    code = curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT, CAHttpClient::getInstance()->getTimeoutForConnect());
     if (code != CURLE_OK) {
         return false;
     }
     curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
 
-    // FIXED #3224: The subthread of CCHttpClient interrupts main thread if timeout comes.
+    // FIXED #3224: The subthread of CAHttpClient interrupts main thread if timeout comes.
     // Document is here: http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL 
     curl_easy_setopt(handle, CURLOPT_NOSIGNAL, 1L);
 
@@ -303,7 +302,7 @@ public:
      * @param callback Response write callback
      * @param stream Response write stream
      */
-    bool init(CCHttpRequest *request, write_callback callback, void *stream, write_callback headerCallback, void *headerStream)
+    bool init(CAHttpRequest *request, write_callback callback, void *stream, write_callback headerCallback, void *headerStream)
     {
         if (!m_curl)
             return false;
@@ -333,9 +332,7 @@ public:
     /// @param responseCode Null not allowed
     bool perform(int *responseCode)
     {
-        int ss = curl_easy_perform(m_curl);
-        CCLog("---%d", ss);
-        if (CURLE_OK != ss)
+        if (CURLE_OK != curl_easy_perform(m_curl))
             return false;
         CURLcode code = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, responseCode);
         if (code != CURLE_OK || *responseCode != 200)
@@ -348,33 +345,17 @@ public:
 };
 
 //Process Get Request
-static int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processGetTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
-    bool ok = 0;
-    if (curl.init(request, callback, stream, headerCallback, headerStream))
-    {
-        ok = 1;
-        CCLog("----------------- 1");
-    }
-    if (curl.setOption(CURLOPT_FOLLOWLOCATION, true))
-    {
-        ok = 1;
-        CCLog("----------------- 2");
-    }
-    if (curl.perform(responseCode))
-    {
-        ok = 1;
-        CCLog("----------------- 3");
-    }
-//    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
-//            && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
-//            && curl.perform(responseCode);
+    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
+            && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
+            && curl.perform(responseCode);
     return ok ? 0 : 1;
 }
 
 //Process POST Request
-static int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processPostTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
@@ -386,7 +367,7 @@ static int processPostTask(CCHttpRequest *request, write_callback callback, void
 }
 
 //Process PUT Request
-static int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processPutTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
@@ -398,7 +379,7 @@ static int processPutTask(CCHttpRequest *request, write_callback callback, void 
 }
 
 //Process DELETE Request
-static int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processDeleteTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
@@ -409,7 +390,7 @@ static int processDeleteTask(CCHttpRequest *request, write_callback callback, vo
 }
 
 //Process POST FILE Request
-static int processPostFileTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processPostFileTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
 	CURLRaii curl;
 	bool ok = curl.init(request, callback, stream, headerCallback, headerStream);
@@ -422,17 +403,21 @@ static int processPostFileTask(CCHttpRequest *request, write_callback callback, 
 	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "filepath", CURLFORM_FILE, 
 		request->getFileNameToPost(), CURLFORM_CONTENTTYPE, "application/octet-stream", CURLFORM_END);
 
-	std::string strReq = request->getRequestData();
-	std::vector<std::string> vv = Parse2StrVector(strReq, "&");
-	for (int i = 0; i < vv.size(); i++)
+	int requestDataSize = request->getRequestDataSize();
+	if (requestDataSize>0)
 	{
-		std::vector<std::string> v = Parse2StrVector(vv[i], "=");
-		if (v.size() == 2)
+		std::string strReq = request->getRequestData();
+		std::vector<std::string> vv = CrossApp::Parse2StrVector(strReq, "&");
+		for (int i = 0; i < vv.size(); i++)
 		{
-			curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, v[0].c_str(), CURLFORM_COPYCONTENTS, v[1].c_str(), CURLFORM_END);
+			std::vector<std::string> v = CrossApp::Parse2StrVector(vv[i], "=");
+			if (v.size() == 2)
+			{
+				curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, v[0].c_str(), CURLFORM_COPYCONTENTS, v[1].c_str(), CURLFORM_END);
+			}
 		}
+		curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "act", CURLFORM_COPYCONTENTS, "end", CURLFORM_END);
 	}
-	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "act", CURLFORM_COPYCONTENTS, "end", CURLFORM_END);
 	
 	ok = curl.setOption(CURLOPT_HTTPPOST, pFormPost)
 		&& curl.perform(responseCode);
@@ -447,7 +432,7 @@ static int processPostFileTask(CCHttpRequest *request, write_callback callback, 
 
 
 // HttpClient implementation
-CCHttpClient* CCHttpClient::getInstance(int thread)
+CAHttpClient* CAHttpClient::getInstance(int thread)
 {
     if (thread >= MAX_Thread)
     {
@@ -455,33 +440,34 @@ CCHttpClient* CCHttpClient::getInstance(int thread)
     }
     if (s_pHttpClient[thread] == NULL)
     {
-        s_pHttpClient[thread] = new CCHttpClient(thread);
+        s_pHttpClient[thread] = new CAHttpClient(thread);
     }
     
     return s_pHttpClient[thread];
 }
 
-void CCHttpClient::destroyInstance(int thread)
+void CAHttpClient::destroyInstance(int thread)
 {
     CCAssert(s_pHttpClient[thread], "");
-    CAScheduler::unschedule(schedule_selector(CCHttpClient::dispatchResponseCallbacks), s_pHttpClient[thread]);
+    CAScheduler::unschedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), s_pHttpClient[thread]);
     s_pHttpClient[thread]->release();
 }
 
-CCHttpClient::CCHttpClient(int thread)
+CAHttpClient::CAHttpClient(int thread)
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
 , _threadID(thread)
 {
-    CAScheduler::schedule(schedule_selector(CCHttpClient::dispatchResponseCallbacks), this, 0);
+    CAScheduler::schedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), this, 0);
     CAScheduler::getScheduler()->pauseTarget(this);
 }
 
-CCHttpClient::~CCHttpClient()
+CAHttpClient::~CAHttpClient()
 {
     need_quit[_threadID] = true;
     
-    if (s_requestQueue != NULL) {
+    if (!s_requestQueue[_threadID].empty())
+    {
     	pthread_cond_signal(&s_SleepCondition[_threadID]);
     }
     
@@ -489,18 +475,13 @@ CCHttpClient::~CCHttpClient()
 }
 
 //Lazy create semaphore & mutex & thread
-bool CCHttpClient::lazyInitThreadSemphore()
+bool CAHttpClient::lazyInitThreadSemphore()
 {
-    if (s_requestQueue[_threadID] != NULL) {
+    if (!s_requestQueue[_threadID].empty()) {
         return true;
-    } else {
-        
-        s_requestQueue[_threadID] = new CCArray();
-        s_requestQueue[_threadID]->init();
-        
-        s_responseQueue[_threadID] = new CCArray();
-        s_responseQueue[_threadID]->init();
-        
+    }
+    else
+    {
         pthread_mutex_init(&s_requestQueueMutex[_threadID], NULL);
         pthread_mutex_init(&s_responseQueueMutex[_threadID], NULL);
         
@@ -517,7 +498,7 @@ bool CCHttpClient::lazyInitThreadSemphore()
 }
 
 //Add a get task to queue
-void CCHttpClient::send(CCHttpRequest* request)
+void CAHttpClient::send(CAHttpRequest* request)
 {    
     lazyInitThreadSemphore();
     
@@ -528,7 +509,7 @@ void CCHttpClient::send(CCHttpRequest* request)
     request->retain();
         
     pthread_mutex_lock(&s_requestQueueMutex[_threadID]);
-    s_requestQueue[_threadID]->addObject(request);
+    s_requestQueue[_threadID].pushBack(request);
     pthread_mutex_unlock(&s_requestQueueMutex[_threadID]);
     
     // Notify thread start to work
@@ -536,17 +517,17 @@ void CCHttpClient::send(CCHttpRequest* request)
 }
 
 // Poll and notify main thread if responses exists in queue
-void CCHttpClient::dispatchResponseCallbacks(float delta)
+void CAHttpClient::dispatchResponseCallbacks(float delta)
 {
-    // CCLog("CCHttpClient::dispatchResponseCallbacks is running");
+    // CCLog("CAHttpClient::dispatchResponseCallbacks is running");
     
-    CCHttpResponse* response = NULL;
+    CAHttpResponse* response = NULL;
     
     pthread_mutex_lock(&s_responseQueueMutex[_threadID]);
-    if (s_responseQueue[_threadID]->count())
+    if (!s_responseQueue[_threadID].empty())
     {
-        response = dynamic_cast<CCHttpResponse*>(s_responseQueue[_threadID]->objectAtIndex(0));
-        s_responseQueue[_threadID]->removeObjectAtIndex(0);
+        response = s_responseQueue[_threadID].front();
+        s_responseQueue[_threadID].popFront();
     }
     pthread_mutex_unlock(&s_responseQueueMutex[_threadID]);
     
@@ -554,7 +535,7 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
     {
         --s_asyncRequestCount[_threadID];
         
-        CCHttpRequest *request = response->getHttpRequest();
+        CAHttpRequest *request = response->getHttpRequest();
         CC_RETURN_IF(request == NULL);
         CAObject *pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
@@ -567,16 +548,16 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
         response->release();
     }
     
-    if (0 == s_asyncRequestCount) 
+    if (0 == s_asyncRequestCount[_threadID])
     {
         CAScheduler::getScheduler()->pauseTarget(this);
     }
     
 }
 
-int CCHttpClient::getRequestCount()
+unsigned int CAHttpClient::getRequestCount()
 {
-    return s_requestQueue[_threadID] ? s_requestQueue[_threadID]->count() : 0;
+    return (unsigned int)s_requestQueue[_threadID].size();
 }
 
 NS_CC_EXT_END

@@ -1,8 +1,6 @@
 
 
 #include "CANotificationCenter.h"
-#include "cocoa/CCArray.h"
-#include <string>
 
 using namespace std;
 
@@ -13,13 +11,12 @@ static CANotificationCenter *s_sharedNotifCenter = NULL;
 CANotificationCenter::CANotificationCenter()
 : m_scriptHandler(0)
 {
-    m_observers = CCArray::createWithCapacity(3);
-    m_observers->retain();
+
 }
 
 CANotificationCenter::~CANotificationCenter()
 {
-    m_observers->release();
+    m_observers.clear();
 }
 
 CANotificationCenter *CANotificationCenter::sharedNotificationCenter(void)
@@ -41,10 +38,10 @@ void CANotificationCenter::purgeNotificationCenter(void)
 //
 bool CANotificationCenter::observerExisted(CAObject *target,const char *name)
 {
-    CAObject* obj = NULL;
-    CCARRAY_FOREACH(m_observers, obj)
+    CADeque<CANotificationObserver*>::iterator itr;
+    for (itr=m_observers.begin(); itr!=m_observers.end(); ++itr)
     {
-        CCNotificationObserver* observer = (CCNotificationObserver*) obj;
+        CANotificationObserver* observer = *itr;
         if (!observer)
             continue;
         
@@ -62,50 +59,53 @@ void CANotificationCenter::addObserver(CAObject *target, SEL_CallFuncO selector,
     if (this->observerExisted(target, name))
         return;
     
-    CCNotificationObserver *observer = new CCNotificationObserver(target, selector, name, obj);
+    CANotificationObserver *observer = new CANotificationObserver(target, selector, name, obj);
     if (!observer)
         return;
     
     observer->autorelease();
-    m_observers->addObject(observer);
+    m_observers.pushBack(observer);
 }
 
 void CANotificationCenter::removeObserver(CAObject *target, const char *name)
 {
-    CAObject* obj = NULL;
-    CCARRAY_FOREACH(m_observers, obj)
+    CADeque<CANotificationObserver*>::iterator itr;
+    for (itr=m_observers.begin(); itr!=m_observers.end(); ++itr)
     {
-        CCNotificationObserver* observer = (CCNotificationObserver*) obj;
+        CANotificationObserver* observer = *itr;
         if (!observer)
             continue;
         
         if (!strcmp(observer->getName(),name) && observer->getTarget() == target)
         {
-            m_observers->removeObject(observer);
-            return;
+            m_observers.erase(itr);
+			break;
         }
     }
 }
 
 int CANotificationCenter::removeAllObservers(CAObject *target)
 {
-    CAObject *obj = NULL;
-    CCArray *toRemove = CCArray::create();
-
-    CCARRAY_FOREACH(m_observers, obj)
+	int size = 0;
+    CADeque<CANotificationObserver*>::iterator itr;
+    for (itr=m_observers.begin(); itr!=m_observers.end();)
     {
-        CCNotificationObserver *observer = (CCNotificationObserver *)obj;
+        CANotificationObserver* observer = *itr;
         if (!observer)
             continue;
 
         if (observer->getTarget() == target)
         {
-            toRemove->addObject(observer);
+			itr = m_observers.erase(itr);
+			++size;
         }
+		else
+		{
+			++itr;
+		}
     }
 
-    m_observers->removeObjectsInArray(toRemove);
-    return toRemove->count();
+	return size;
 }
 
 void CANotificationCenter::registerScriptObserver( CAObject *target, int handler,const char* name)
@@ -114,39 +114,39 @@ void CANotificationCenter::registerScriptObserver( CAObject *target, int handler
     if (this->observerExisted(target, name))
         return;
     
-    CCNotificationObserver *observer = new CCNotificationObserver(target, NULL, name, NULL);
+    CANotificationObserver *observer = new CANotificationObserver(target, NULL, name, NULL);
     if (!observer)
         return;
     
     observer->setHandler(handler);
     observer->autorelease();
-    m_observers->addObject(observer);
+    m_observers.pushBack(observer);
 }
 
 void CANotificationCenter::unregisterScriptObserver(CAObject *target,const char* name)
 {        
-    CAObject* obj = NULL;
-    CCARRAY_FOREACH(m_observers, obj)
+    CADeque<CANotificationObserver*>::iterator itr;
+    for (itr=m_observers.begin(); itr!=m_observers.end(); ++itr)
     {
-        CCNotificationObserver* observer = (CCNotificationObserver*) obj;
+        CANotificationObserver* observer = *itr;
         if (!observer)
             continue;
             
         if ( !strcmp(observer->getName(),name) && observer->getTarget() == target)
         {
-            m_observers->removeObject(observer);
+            m_observers.erase(itr);
         }
     }
 }
 
 void CANotificationCenter::postNotification(const char *name, CAObject *object)
 {
-    CCArray* ObserversCopy = CCArray::createWithCapacity(m_observers->count());
-    ObserversCopy->addObjectsFromArray(m_observers);
-    CAObject* obj = NULL;
-    CCARRAY_FOREACH(ObserversCopy, obj)
+    CADeque<CANotificationObserver*> ObserversCopy = m_observers;
+    
+    CADeque<CANotificationObserver*>::iterator itr;
+    for (itr=ObserversCopy.begin(); itr!=ObserversCopy.end(); ++itr)
     {
-        CCNotificationObserver* observer = (CCNotificationObserver*) obj;
+        CANotificationObserver* observer = *itr;
         if (!observer)
             continue;
         
@@ -172,10 +172,10 @@ int CANotificationCenter::getObserverHandlerByName(const char* name)
         return -1;
     }
     
-    CAObject* obj = NULL;
-    CCARRAY_FOREACH(m_observers, obj)
+    CADeque<CANotificationObserver*>::iterator itr;
+    for (itr=m_observers.begin(); itr!=m_observers.end(); ++itr)
     {
-        CCNotificationObserver* observer = (CCNotificationObserver*) obj;
+        CANotificationObserver* observer = *itr;
         if (NULL == observer)
             continue;
         
@@ -191,10 +191,10 @@ int CANotificationCenter::getObserverHandlerByName(const char* name)
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
-/// CCNotificationObserver
+/// CANotificationObserver
 ///
 ////////////////////////////////////////////////////////////////////////////////
-CCNotificationObserver::CCNotificationObserver(CAObject *target, SEL_CallFuncO selector, const char *name, CAObject *obj)
+CANotificationObserver::CANotificationObserver(CAObject *target, SEL_CallFuncO selector, const char *name, CAObject *obj)
 {
     m_target = target;
     m_selector = selector;
@@ -208,12 +208,12 @@ CCNotificationObserver::CCNotificationObserver(CAObject *target, SEL_CallFuncO s
     m_nHandler = 0;
 }
 
-CCNotificationObserver::~CCNotificationObserver()
+CANotificationObserver::~CANotificationObserver()
 {
     CC_SAFE_DELETE_ARRAY(m_name);
 }
 
-void CCNotificationObserver::performSelector(CAObject *obj)
+void CANotificationObserver::performSelector(CAObject *obj)
 {
     if (m_target)
     {
@@ -228,32 +228,32 @@ void CCNotificationObserver::performSelector(CAObject *obj)
     }
 }
 
-CAObject *CCNotificationObserver::getTarget()
+CAObject *CANotificationObserver::getTarget()
 {
     return m_target;
 }
 
-SEL_CallFuncO CCNotificationObserver::getSelector()
+SEL_CallFuncO CANotificationObserver::getSelector()
 {
     return m_selector;
 }
 
-char *CCNotificationObserver::getName()
+char *CANotificationObserver::getName()
 {
     return m_name;
 }
 
-CAObject *CCNotificationObserver::getObject()
+CAObject *CANotificationObserver::getObject()
 {
     return m_object;
 }
 
-int CCNotificationObserver::getHandler()
+int CANotificationObserver::getHandler()
 {
     return m_nHandler;
 }
 
-void CCNotificationObserver::setHandler(int var)
+void CANotificationObserver::setHandler(int var)
 {
     m_nHandler = var;
 }
