@@ -332,8 +332,7 @@ public:
     /// @param responseCode Null not allowed
     bool perform(int *responseCode)
     {
-        int ss = curl_easy_perform(m_curl);
-        if (CURLE_OK != ss)
+        if (CURLE_OK != curl_easy_perform(m_curl))
             return false;
         CURLcode code = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, responseCode);
         if (code != CURLE_OK || *responseCode != 200)
@@ -467,7 +466,8 @@ CAHttpClient::~CAHttpClient()
 {
     need_quit[_threadID] = true;
     
-    if (s_requestQueue != NULL) {
+    if (!s_requestQueue[_threadID].empty())
+    {
     	pthread_cond_signal(&s_SleepCondition[_threadID]);
     }
     
@@ -548,7 +548,7 @@ void CAHttpClient::dispatchResponseCallbacks(float delta)
         response->release();
     }
     
-    if (0 == s_asyncRequestCount) 
+    if (0 == s_asyncRequestCount[_threadID])
     {
         CAScheduler::getScheduler()->pauseTarget(this);
     }

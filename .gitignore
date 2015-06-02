@@ -44,7 +44,7 @@ bin/
 obj/
 gen/
 assets/
-local.properties
+#local.properties
 
 
 # Ignore python compiled files
@@ -58,7 +58,7 @@ build_*_vc10/
 *.mode*v*
 *.pbxuser
 *.xcbkptlist
-*.xcscheme
+.xcscheme
 *.xcworkspacedata
 *.xcuserstate
 xcschememanagement.plist

@@ -79,6 +79,18 @@
     <Filter Include="images\gif_lib">
       <UniqueIdentifier>{80ac80b5-ea8e-41ed-a8ad-cc62a8cf14b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="support\gameswf">
+      <UniqueIdentifier>{de9c5911-5377-4777-a0cb-046714ca47de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\gameswf\gameswf">
+      <UniqueIdentifier>{bdccf33d-26bc-4f84-a5da-9033b8c4913d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\gameswf\base">
+      <UniqueIdentifier>{eed4d444-fc86-4fbd-81ae-82afb2e83f9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\gameswf\gameswf\gameswf_as_classes">
+      <UniqueIdentifier>{a9ecc98b-0ca7-423c-b369-289c3af0c17c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\cocoa\CCArray.cpp">
@@ -466,6 +478,288 @@
     </ClCompile>
     <ClCompile Include="..\images\gif_lib\quantize.c">
       <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAFlashView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\component_hackery.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\configvars.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\container.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\ear_clip_triangulate_float.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\ear_clip_triangulate_sint16.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\file_util.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\image.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\image_filters.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\jpeg.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\logger.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\membuf.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\triangulate_float.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\triangulate_sint32.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\tu_file.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\tu_file_SDL.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\tu_gc_singlethreaded_marksweep.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\tu_gc_test.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\tu_loadlib.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\tu_random.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\tu_timer.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\tu_types.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\utf8.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\utility.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\base\zlib_adapter.cpp">
+      <Filter>support\gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_abc.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_action.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_sprite.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_avm2.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_avm2_jit.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_button.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_canvas.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_character.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_disasm.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_dlist.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_environment.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_filters.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_font.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_fontlib.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_freetype.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_function.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_impl.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_jit.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_jit_opcode.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_listener.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_log.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_morph2.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_movie_def.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_mutex.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_object.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_player.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_render.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_render_handler_ogles.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_root.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_shape.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_sound.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_sprite.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_sprite_def.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_stream.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_styles.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_tesselate.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_text.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_types.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_value.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_video_impl.cpp">
+      <Filter>support\gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_array.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_boolean.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_broadcaster.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_class.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_color.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_color_transform.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_date.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_event.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_flash.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_geom.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_global.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_key.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_loadvars.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_math.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_matrix.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_mcloader.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_mouse.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_mouse_event.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_netconnection.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_netstream.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_number.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_point.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_selection.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_sharedobject.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_sound.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_string.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_textformat.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_transform.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_xmlsocket.cpp">
+      <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -921,6 +1215,9 @@
       <Filter>animation</Filter>
     </ClInclude>
     <ClInclude Include="..\view\CATextEditHelper.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAFlashView.h">
       <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>

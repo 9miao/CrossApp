@@ -67,6 +67,7 @@ public:
 
 class CC_DLL CATextView : public CATouchView, public CAIMEDelegate
 {
+	friend class CATextSelViewEx;
 public:
 	CATextView();
 	virtual ~CATextView();
@@ -174,7 +175,7 @@ protected:
     
 protected:
 	virtual void setContentSize(const CCSize& var);
-	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
 
@@ -204,6 +205,7 @@ private:
 
 	CAImageView* m_pImageView;
 
+    bool m_bMoved;
 	int m_iCurPos;
 	int m_iLineHeight;
 	std::vector<TextViewLineInfo> m_vLinesTextView;

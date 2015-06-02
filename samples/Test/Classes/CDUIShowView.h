@@ -92,7 +92,17 @@ public:
     std::vector<std::string> tempList;
 };
 
-class CDUIShowView : public CAViewController ,CATableViewDelegate, CATableViewDataSource,CAListViewDelegate,CAListViewDataSource,CAPageViewDelegate,CDETableViewDelegate,CACollectionViewDelegate,CACollectionViewDataSource,CAScrollViewDelegate
+class CDUIShowView :
+public CAViewController,
+public CATableViewDelegate,
+public CATableViewDataSource,
+public CAListViewDelegate,
+public CAListViewDataSource,
+public CAPageViewDelegate,
+public CDETableViewDelegate,
+public CACollectionViewDelegate,
+public CACollectionViewDataSource,
+public CAScrollViewDelegate
 {
 public:
     
@@ -108,7 +118,7 @@ protected:
     
 public:
     
-    void initUIWithIndex(int _index);
+    void showUiWithIndex(int _index);
     
     void initButtonControl();
     void buttonControlCallBack(CAControl* btn,CCPoint point);
@@ -169,10 +179,14 @@ public:
     
     void showScrollView();
     
+    void showFlashView();
+    
     void jsonTest();
     
     void httpTest();
-    void requestResult(CCHttpClient* client, CCHttpResponse* response);
+    
+    void requestResult(CAHttpClient* client, CAHttpResponse* response);
+    
 public:
     //TableView
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);

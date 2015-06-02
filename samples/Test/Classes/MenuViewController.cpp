@@ -44,11 +44,16 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
 {
     CCLog("index==%d",row);
     RootWindow::getInstance()->dismissModalViewController(true);
-    if (row==0) {
+    if (row==0)
+    {
         RootWindow::getInstance()->initUIView();
-    }else if(row==1){
+    }
+    else if(row==1)
+    {
         RootWindow::getInstance()->intNewsView();
-    }else if(row==2){
+    }
+    else if(row==2)
+    {
         CDWebViewController* _webController = new CDWebViewController();
         _webController->init();
         _webController->setTitle(" ");
@@ -57,7 +62,9 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
         RootWindow::getInstance()->getDrawerController()->hideLeftViewController(true);
         RootWindow::getInstance()->getRootNavigationController()->pushViewController(_webController, true);
         _webController->initWebView("http://www.crossapp.com.cn");
-    }else if(row==3){
+    }
+    else if(row==3)
+    {
         CDWebViewController* _webController = new CDWebViewController();
         _webController->init();
         _webController->setTitle(" ");
@@ -95,7 +102,7 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         cell->addSubview(arrow);
     }
 	CALabel* test = (CALabel*)cell->getSubviewByTag(100);
-	test->setText(UTF8EX(menuList[row]));// menuList[row]);
+	test->setText(unicode_to_utf8(menuList[row]));// menuList[row]);
     CAImageView* arrow = (CAImageView*)cell->getSubviewByTag(101);
     arrow->setImage(CAImage::create("source_material/cell_btn_right.png"));
     return cell;

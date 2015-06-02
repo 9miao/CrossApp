@@ -1,8 +1,7 @@
-#include "CommonHttpManager.h"
+﻿#include "CommonHttpManager.h"
 
 #define _T(x) L##x
 #define CHAR    wchar_t
-#define UTF8EX(x) unicode_to_utf8( x ).c_str()
 
 struct newsPage
 {
@@ -72,45 +71,26 @@ static const CHAR* aboutMenuTag[12] =
     _T("关于")
 };
 
-static const char* ui_icon_01 = "image/AlertView.png";
-static const char* ui_icon_02 = "image/button.png";
-static const char* ui_icon_03 = "image/ImageView.png";
-static const char* ui_icon_04 = "image/Scale9ImageView.png";
-static const char* ui_icon_05 = "image/indicatorView.png";
-static const char* ui_icon_06 = "image/Label.png";
-static const char* ui_icon_07 = "image/Progress.png";
-static const char* ui_icon_08 = "image/slider.png";
-static const char* ui_icon_09 = "image/Switch.png";
-static const char* ui_icon_10 = "image/TextField.png";
-static const char* ui_icon_11 = "image/TextView.png";
-static const char* ui_icon_12 = "image/SegmentedControl.png";
-static const char* ui_icon_13 = "image/TabBar.png";
-static const char* ui_icon_14 = "image/PageView.png";
-static const char* ui_icon_15 = "image/TableView.png";
-static const char* ui_icon_16 = "image/ListView.png";
-static const char* ui_icon_17 = "image/WebView.png";
-static const char* ui_icon_18 = "image/CollectionView.png";
-static const char* ui_icon_19 = "image/ScrollView.png";
-
-static const char* iconTag[19] = 
+static const char* iconTag[20] =
 {
-	ui_icon_01,
-    ui_icon_02,
-    ui_icon_03,
-    ui_icon_04,
-    ui_icon_05,
-    ui_icon_06,
-    ui_icon_07,
-    ui_icon_08,
-    ui_icon_09,
-    ui_icon_10,
-    ui_icon_11,
-    ui_icon_12,
-    ui_icon_13,
-    ui_icon_14,
-    ui_icon_15,
-    ui_icon_16,
-    ui_icon_17,
-    ui_icon_18,
-    ui_icon_19
+	"image/AlertView.png",
+    "image/button.png",
+    "image/ImageView.png",
+    "image/Scale9ImageView.png",
+    "image/indicatorView.png",
+    "image/Label.png",
+    "image/Progress.png",
+    "image/slider.png",
+    "image/Switch.png",
+    "image/TextField.png",
+    "image/TextView.png",
+    "image/SegmentedControl.png",
+    "image/TabBar.png",
+    "image/PageView.png",
+    "image/TableView.png",
+    "image/ListView.png",
+    "image/WebView.png",
+    "image/CollectionView.png",
+    "image/ScrollView.png",
+    "image/FlashView.png"
 };

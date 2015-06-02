@@ -120,8 +120,7 @@ CAView::CAView(void)
     this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     this->setHaveNextResponder(true);
     
-    ++viewCount;
-    //CCLog("CAView = %d\n",viewCount);
+    CCLog("CAView = %d\n", ++viewCount);
 }
 
 CAView::~CAView(void)
@@ -145,8 +144,7 @@ CAView::~CAView(void)
     m_obSubviews.clear();
     CC_SAFE_RELEASE(m_pobImage);
     
-    --viewCount;
-    //CCLog("~CAView = %d\n",viewCount);
+    CCLog("~CAView = %d\n", --viewCount);
 }
 
 CAView * CAView::create(void)
@@ -1233,18 +1231,18 @@ void CAView::visit()
                 parent = parent->getSuperview();
             }
             
-            if (fabsf(rotation % 360 - 90) < FLT_EPSILON)
+            if (std::abs(rotation % 360 - 90) < FLT_EPSILON)
             {
                 point = this->getBounds().size;
                 size.width = size.width + size.height;
                 size.height = size.width - size.height;
                 size.width = size.width - size.height;
             }
-            else if (fabsf(rotation % 360 - 180) < FLT_EPSILON)
+            else if (std::abs(rotation % 360 - 180) < FLT_EPSILON)
             {
                 point = CCPoint(this->getBounds().size.width, 0);
             }
-            else if (fabsf(rotation % 360 - 270) < FLT_EPSILON)
+            else if (std::abs(rotation % 360 - 270) < FLT_EPSILON)
             {
                 point = CCPointZero;
                 size.width = size.width + size.height;
