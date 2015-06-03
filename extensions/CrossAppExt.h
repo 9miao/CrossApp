@@ -14,7 +14,7 @@
 #include "sqlite3/include/sqlite3.h"
 #include "LocalStorage/LocalStorage.h"
 
-
+#include "crypto/CACrypto.h"
 //other
 #include "device/CADevice.h"
 #endif /* __CrossApp_EXT_H__ */
