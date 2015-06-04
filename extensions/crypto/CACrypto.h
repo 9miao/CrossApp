@@ -60,13 +60,13 @@ public:
     
     static const string MD5String(void* input, int inputLength);
     
+    static char *bin2hex(unsigned char* bin, int binLength);
+    static char *hex2bin(char* hex, int hexLength);
 #pragma mark -
 #pragma mark private methods
     
 private:
     CACrypto(void) {}
-    
-    static char* bin2hex(unsigned char* bin, int binLength);
 };
 
 NS_CC_EXT_END

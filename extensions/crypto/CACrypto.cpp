@@ -106,7 +106,7 @@ const string CACrypto::MD5String(void* input, int inputLength)
     return ret;
 }
 
-char* CACrypto::bin2hex(unsigned char* bin, int binLength)
+char *CACrypto::bin2hex(unsigned char* bin, int binLength)
 {
     static const char* hextable = "0123456789abcdef";
     
@@ -115,7 +115,7 @@ char* CACrypto::bin2hex(unsigned char* bin, int binLength)
     memset(hex, 0, sizeof(char) * hexLength);
     
     int ci = 0;
-    for (int i = 0; i < 16; ++i)
+    for (int i = 0; i < binLength; ++i)
     {
         unsigned char c = bin[i];
         hex[ci++] = hextable[(c >> 4) & 0x0f];
@@ -123,6 +123,50 @@ char* CACrypto::bin2hex(unsigned char* bin, int binLength)
     }
     
     return hex;
+}
+
+char *CACrypto::hex2bin(char* hex, int hexLength)
+{
+    if (hexLength % 2) {
+        CCLog("hexLength should be even number.");
+        return NULL;
+    }
+    
+    int binLength = hexLength / 2 + 1;
+    char *bin = new char[binLength];
+    memset(bin, 0, sizeof(char) * binLength);
+    
+    int ci = 0;
+    for (int i = 0; i < hexLength; i += 2) {
+        char high = hex[i];
+        char low = hex[i+1];
+        
+        if (high >= '0' && high <= '9') {
+            high = high - '0';
+        } else if (high >= 'A' && high <= 'F') {
+            high = high - 'A' + 10;
+        } else if (high >= 'a' && high <= 'f') {
+            high = high - 'a' + 10;
+        } else {
+            assert(0);
+            high = 0;
+        }
+        
+        if (low >= '0' && low <= '9') {
+            low = low - '0';
+        } else if (low >= 'A' && low <= 'F') {
+            low = low - 'A' + 10;
+        } else if (low >= 'a' && low <= 'f') {
+            low = low - 'a' + 10;
+        } else {
+            assert(0);
+            low = 0;
+        }
+        
+        bin[ci++] = (high << 4) | (low);
+    }
+    
+    return bin;
 }
 
 
