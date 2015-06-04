@@ -26,6 +26,24 @@
 
 #####11.其他一些细节的修改
 
+
+#### CrossApp 1. 1. 6 Update:  
+
+#####1. Added CAFlashView that supports play .swf flash file.
+Currently it does not support audio play and is only available for 32-bit system
+#####2. Added new version demo
+New version demo contains two major modules: basic control display module and simple version Sina News-like client module
+#####3. Fixed bug that keyword gets stuck in CATextField in iOS7
+#####4. Optimized CAProgress interface
+#####5. Optimized screenshot function
+#####6. Modified WebView’s loading
+#####7. Optimized CATextField’s UE
+#####8. Optimized CATextView’s UE
+#####9. Fixed bug that chinese characters input error in CATextView in some Android systems
+#####10. Fixed bug that system reports error if user conducts long press operation in CATextField and CATextView when clipboard has no content.
+#####11. Other details tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 1.1.5 更新内容：  
