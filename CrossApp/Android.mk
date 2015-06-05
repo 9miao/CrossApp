@@ -52,6 +52,8 @@ dispatcher/CATouch.cpp \
 dispatcher/CATouchDispatcher.cpp \
 images/CAImage.cpp \
 images/CAImageCache.cpp \
+images/CAFlash.cpp \
+images/CAGif.cpp \
 images/gif_lib/dgif_lib.c \
 images/gif_lib/gif_err.c \
 images/gif_lib/gif_font.c \
@@ -108,6 +110,7 @@ view/CAWebView.cpp \
 view/CADrawView.cpp \
 view/CADrawingPrimitives.cpp \
 view/CAFlashView.cpp \
+view/CAGifView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
