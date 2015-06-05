@@ -20,24 +20,20 @@ class CC_DLL CAGif : public CAObject
 public:
     CAGif();
     ~CAGif();
-
     static CAGif* createWithFilePath(std::string filePath);
     static CAGif* createWithData(unsigned char* data);
-
+    
     bool initWithFilePath(std::string filePath);
     bool initWithData(unsigned char* data);
     
     void setGifImageWithIndex(unsigned int index);
     unsigned int getGifImageIndex();
-    
     unsigned int getGifImageCounts();
-
     void nextGifImageIndex();
-    
     float getImageDuration();
-    
     CAImage* getImage() { return m_pImage; }
-    
+    int getWidth();
+    int getHeight();
 protected:
     void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);
     bool checkIfCover(const SavedImage* target, const SavedImage* covered);
@@ -46,21 +42,14 @@ protected:
     float getImageDuration(const SavedImage* image);
 
 protected:
-    
     CAImage*        m_pImage;
-    
     unsigned char*  m_pImageData;
-    
-    unsigned long   m_pSize;
-    
+    unsigned long   m_pDataSize;
     GifFileType*    m_pGIF;
-    
     int             m_iGIFIndex;
-    
+   // CCSize          m_pSize;
     unsigned int    m_uPixelsWide;
-    
     unsigned int    m_uPixelsHigh;
-    
     float           m_fDurTime;
 };
 

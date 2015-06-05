@@ -69,6 +69,7 @@
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
 #include "images/CAGif.h"
+#include "images/CAFlash.h"
 
 
 //view

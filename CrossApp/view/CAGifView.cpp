@@ -17,6 +17,10 @@ CAGifView::CAGifView()
 ,m_fTimes(1.0f)
 ,m_pGif(NULL)
 ,m_bIsRepeatForever(true)
+,m_fLeft(0.0f)
+,m_fRight(0.0f)
+,m_fTop(0.0f)
+,m_fBottom(0.0f)
 {
 
 }
@@ -80,6 +84,26 @@ bool CAGifView::initWithGif(CAGif* gif)
     return false;
 }
 
+void CAGifView::setFrame(CCRect rect)
+{
+    CAView::setFrame(rect);
+    this->setGifBounds(rect.size);
+}
+
+void CAGifView::setCenter(CCRect rect)
+{
+    CAView::setCenter(rect);
+    this->setGifBounds(rect.size);
+}
+
+void CAGifView::updateImageRect()
+{
+    m_sQuad.bl.vertices = vertex3(  m_fLeft, m_fBottom, m_fVertexZ);
+    m_sQuad.br.vertices = vertex3( m_fRight, m_fBottom, m_fVertexZ);
+    m_sQuad.tl.vertices = vertex3(  m_fLeft, m_fTop,    m_fVertexZ);
+    m_sQuad.tr.vertices = vertex3( m_fRight, m_fTop,    m_fVertexZ);
+}
+
 void CAGifView::setGif(CAGif* gif)
 {
     CC_SAFE_RETAIN(gif);
@@ -88,7 +112,6 @@ void CAGifView::setGif(CAGif* gif)
     if (m_pGif)
     {
         CAImage* image = m_pGif->getImage();
-        
         this->setImage(image);
         CCRect rect = CCRectZero;
         rect.size = image->getContentSize();
@@ -98,7 +121,41 @@ void CAGifView::setGif(CAGif* gif)
             m_nGifcount = m_pGif->getGifImageCounts();
             CAScheduler::schedule(schedule_selector(CAGifView::updateGif), this, 0);
         }
+        this->setGifBounds(this->getBounds().size);
     }
+}
+
+void CAGifView::setGifBounds(CCSize size)
+{
+    CCSize newSize;
+    CCSize contentSize = size;
+    if(m_pGif)
+    {
+        CCSize gifSize = CCSize(m_pGif->getWidth(),m_pGif->getHeight());
+        newSize = compareSize(contentSize,gifSize);
+        m_fLeft = (contentSize.width - newSize.width)*0.5;
+        m_fRight = m_fLeft + newSize.width;
+        m_fBottom = (contentSize.height - newSize.height)*0.5;
+        m_fTop = m_fBottom + newSize.height;
+    }
+}
+
+CCSize CAGifView::compareSize(CCSize setSize, CCSize gifSize)
+{
+    CCSize size = CCSizeZero;
+    float rate = setSize.width/setSize.height;
+    float rateGif = gifSize.width/gifSize.height;
+    if(rate>rateGif)
+    {
+        size.height = setSize.height<gifSize.height ? setSize.height : gifSize.height;
+        size.width = size.height*rateGif;
+    }
+    else
+    {
+        size.width = setSize.width<gifSize.width ? setSize.width : gifSize.width;
+        size.height = size.width/rateGif;
+    }
+    return size;
 }
 
 void CAGifView::setTimes(float times)

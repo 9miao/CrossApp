@@ -1687,7 +1687,10 @@ bool CAImage::initWithRawData(const unsigned char * data,
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
-    
+    if(m_uName)
+    {
+        ccGLDeleteTexture(m_uName);
+    }
     
     glGenTextures(1, &m_uName);
     ccGLBindTexture2D(m_uName);
@@ -1818,6 +1821,10 @@ void CAImage::premultipliedImageData()
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
     
+    if(m_uName)
+    {
+        ccGLDeleteTexture(m_uName);
+    }
     
     glGenTextures(1, &m_uName);
     ccGLBindTexture2D(m_uName);

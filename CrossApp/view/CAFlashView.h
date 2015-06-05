@@ -11,11 +11,6 @@
 
 #include <iostream>
 #include "CrossApp.h"
-#include "support/gameswf/gameswf/gameswf.h"
-#include "support/gameswf/gameswf/gameswf_player.h"
-#include "support/gameswf/gameswf/gameswf_root.h"
-#include "support/gameswf/gameswf/gameswf_types.h"
-#include "support/gameswf/gameswf/gameswf_impl.h"
 
 NS_CC_BEGIN
 
@@ -26,35 +21,20 @@ class CC_DLL CAFlashView : public CAView
 public:
     CAFlashView();
     virtual ~CAFlashView();
-    static CAFlashView* create(const std::string& file);
-    bool initWithSWFFile(const std::string& file);
-    virtual void onEnter();
-    virtual void onExit();
-    std::string movieName();
-    void setMovieName(char *movieName);
+    static CAFlashView* createWithFlash(CAFlash* flash);
+    bool initWithFlash(CAFlash* flash);
+    void setFlash(CAFlash* flash);
     void stopAction();
     void runAction();
-    bool Runing(){return m_bIsRuning;};
-    void setRepeat(bool flag);
-    bool getRepeat();
-    void setScale(float scale);
+    void setRepeatForever(bool flag);
+    bool getRepeatForever();
 protected:
+    virtual void onEnter();
+    virtual void onExit();
     virtual void update(float dt);
     virtual void draw();
-    void setScaleX(float scaleX);
-    void setScaleY(float scaleY);
 protected:
-    gameswf::gc_ptr<gameswf::player>    m_pPlayer;
-    gameswf::gc_ptr<gameswf::root>      m_pMovie;
-    bool    m_bIsRuning;
-    bool    m_bIsRepeat;
-    GLfloat m_movieWidth;
-    GLfloat m_movieHeight;
-    GLfloat m_localScaleX;
-    GLfloat m_localScaleY;
-    GLfloat m_fScaleX;
-    GLfloat m_fScaleY;
-    int     m_nFrameCount;
+    CAFlash*    m_pFlash;
 };
 
 NS_CC_END

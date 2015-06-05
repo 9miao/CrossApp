@@ -25,13 +25,15 @@ static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int size)
 CAGif::CAGif()
 :m_fDurTime(0.0f)
 ,m_pImage(NULL)
+,m_pDataSize(0)
 {
     m_pImage = new CAImage();
 }
 
 CAGif::~CAGif()
 {
-    CC_SAFE_DELETE(m_pImage);
+    CC_SAFE_RELEASE(m_pImage);
+    free(m_pImageData);
 }
 
 CAGif* CAGif::createWithFilePath(std::string filePath)
@@ -63,8 +65,8 @@ bool CAGif::initWithFilePath(std::string filePath)
     if(CAGif::init())
     {
         std::string fileFullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath.c_str());
-        s_pData = CCFileUtils::sharedFileUtils()->getFileData(fileFullPath.c_str(), "rb", &m_pSize);
-        if(!s_pData || 0 == m_pSize)
+        s_pData = CCFileUtils::sharedFileUtils()->getFileData(fileFullPath.c_str(), "rb", &m_pDataSize);
+        if(!s_pData || 0 == m_pDataSize)
         {
             return false;
         }
@@ -117,6 +119,22 @@ float CAGif::getImageDuration()
 {
     return m_fDurTime;
 }
+
+int CAGif::getWidth()
+{
+   // CCLog("%d", m_uPixelsWide);
+    return m_uPixelsWide;
+}
+
+int CAGif::getHeight()
+{
+    return m_uPixelsHigh;
+}
+
+//const CCSize& CAGif::getGifSize()
+//{
+//    return CCSize(m_uPixelsWide, m_uPixelsHigh);
+//}
 
 void CAGif::copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width)
 {
@@ -253,7 +271,6 @@ void CAGif::setGifImageWithIndex(unsigned int index)
             }
         }
     }
-    
     m_pImage->initWithRawData(m_pImageData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
 }
 

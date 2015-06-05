@@ -28,14 +28,18 @@ public:
     
     virtual bool init();
     virtual bool initWithGif(CAGif* gif);
-    
+    virtual void setFrame(CCRect rect);
+    virtual void setCenter(CCRect rect);
+
     void setGif(CAGif* gif);
     void setTimes(float times);
     void setRepeatForever(bool repeatForever);
     bool isRepeatForever() {return m_bIsRepeatForever; }
 protected:
+    virtual void updateImageRect();
     virtual void updateGif(float delta);
-    
+    void setGifBounds(CCSize size);
+    CCSize compareSize(CCSize setSize, CCSize gifSize);
 private:
     
     CAGif* m_pGif;
@@ -47,6 +51,14 @@ private:
     float m_fDurTime;
     
     float m_fTimes;
+    
+    float m_fLeft;
+    
+    float m_fRight;
+    
+    float m_fTop;
+    
+    float m_fBottom;
 
 };
 
