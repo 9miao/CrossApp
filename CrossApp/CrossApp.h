@@ -68,12 +68,15 @@
 // images
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
+#include "images/CAGif.h"
+#include "images/CAFlash.h"
 
 
 //view
 #include "view/CAView.h"
 #include "view/CAWindow.h"
 #include "view/CAImageView.h"
+#include "view/CAGifView.h"
 #include "view/CAScale9ImageView.h"
 #include "view/CALabel.h"
 #include "view/CABatchView.h"
