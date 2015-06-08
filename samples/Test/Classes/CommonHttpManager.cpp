@@ -144,17 +144,11 @@ CommonHttpManager::CommonHttpManager()
 
 CommonHttpManager::~CommonHttpManager()
 {
-    std::vector<CAHttpClient*>::iterator itr1;
-    for (itr1 = m_pHttpJsonClients.begin(); itr1!=m_pHttpJsonClients.end(); itr1++)
+    for (int i=0; i<REQUEST_JSON_COUNT + REQUEST_IMAGE_COUNT; i++)
     {
-        (*itr1)->destroyInstance();
+        CAHttpClient::destroyInstance(15 - i);
     }
     m_pHttpJsonClients.clear();
-    
-    for (itr1 = m_pHttpImageClients.begin(); itr1!=m_pHttpImageClients.end(); itr1++)
-    {
-        (*itr1)->destroyInstance();
-    }
     m_pHttpImageClients.clear();
 }
 
@@ -636,7 +630,7 @@ void CommonHttpResponseCallBack::onResponseJson(CAHttpClient* client, CAHttpResp
             {
                 (m_pTarget->*m_pSelectorJson)(HttpResponseSucceed, root);
             }
-            
+            return;
         }
         while (0);
         
@@ -657,16 +651,12 @@ void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpRes
         unsigned char* pData = ((unsigned char*)(const_cast<char*>(data.c_str())));
         size_t pSize = data.length();
 
-        CAImage* image = NULL;
         std::string key = MD5(m_sUrl).md5();
+        CAImage* image = CAImage::createWithImageData(pData, pSize, key);;
 
-        if (m_eGetImageType == HttpGetImageDefault)
+        if (m_eGetImageType != HttpGetImageDefault)
         {
-            image = CAImage::createWithImageData(pData, pSize, key);
-        }
-        else
-        {
-            image = CAImage::createWithImageDataNoCache(pData, pSize);
+            CommonImageCacheManager::getInstance()->pushImage(image);
         }
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)

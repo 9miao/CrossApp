@@ -43,13 +43,13 @@ public:
 public:
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
     
-    CC_SYNTHESIZE_READONLY(float, m_value, Value);       // default 0.0.
+    CC_SYNTHESIZE_READONLY(float, m_fValue, Value);       // default 0.0.
     
-    CC_SYNTHESIZE_READONLY(float, m_minValue, MinValue); // default 0.0.
+    CC_SYNTHESIZE_READONLY(float, m_fMinValue, MinValue); // default 0.0.
     
-    CC_SYNTHESIZE_READONLY(float, m_maxValue, MaxValue); // default 1.0.
+    CC_SYNTHESIZE_READONLY(float, m_fMaxValue, MaxValue); // default 1.0.
     
-    CC_SYNTHESIZE_READONLY(float, m_trackHeight, TrackHeight); // default 4.0;
+    CC_SYNTHESIZE_READONLY(float, m_fTrackHeight, TrackHeight); // default 4.0;
     
 	CC_SYNTHESIZE_READONLY(CAImage*, m_pMinTrackTintImage, MinTrackTintImage);
     

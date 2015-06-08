@@ -21,14 +21,14 @@ namespace CADevice
 
 static std::vector<CAAddressBookRecord> _addressBookArr;
 
-void openCamera(CAMediaDelegate* target,bool allowEdit)
+void openCamera(CAMediaDelegate* target, bool allowEdit)
 {
     CACameraController *camera = [[CACameraController alloc] init];
     [camera setSender:target];
     [camera openCameraView:allowEdit];
 }
 
-void openAlbum(CAMediaDelegate* target,bool allowEdit)
+void openAlbum(CAMediaDelegate* target, bool allowEdit)
 {
     CAAlbumController *album = [[CAAlbumController alloc] init];
     [album setSender:target];

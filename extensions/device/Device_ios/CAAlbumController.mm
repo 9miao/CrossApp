@@ -64,7 +64,7 @@
     
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
-    imagePicker.editing = allowEdit;
+    imagePicker.allowsEditing = allowEdit;
     imagePicker.delegate = self;
     
     [self presentViewController:imagePicker animated:YES completion:^

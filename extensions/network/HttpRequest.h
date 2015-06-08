@@ -41,7 +41,6 @@ public:
         _tag.clear();
         _pTarget = NULL;
         _pSelector = NULL;
-        _pUserData = NULL;
     };
     
     /** Destructor */
@@ -88,9 +87,9 @@ public:
         _url = url;
     };
     /** Get back the setted url */
-    inline const char* getUrl()
+    inline const std::string& getUrl()
     {
-        return _url.c_str();
+        return _url;
     };
     
     /** Option field. You can set your post data here
@@ -107,37 +106,8 @@ public:
     /** Get the size of request data back */
     inline int getRequestDataSize()
     {
-        return _requestData.size();
+        return (int)_requestData.size();
     }
-    
-    /** Option field. You can set a string tag to identify your request, this tag can be found in HttpResponse->getHttpRequest->getTag()
-     */
-    inline void setTag(const char* tag)
-    {
-        _tag = tag;
-    };
-    /** Get the string tag back to identify the request. 
-        The best practice is to use it in your MyClass::onMyHttpRequestCompleted(sender, HttpResponse*) callback
-     */
-    inline const char* getTag()
-    {
-        return _tag.c_str();
-    };
-    
-    /** Option field. You can attach a customed data in each request, and get it back in response callback.
-        But you need to new/delete the data pointer manully
-     */
-    inline void setUserData(void* pUserData)
-    {
-        _pUserData = pUserData;
-    };
-    /** Get the pre-setted custom data pointer back.
-        Don't forget to delete it. HttpClient/HttpResponse/HttpRequest will do nothing with this pointer
-     */
-    inline void* getUserData()
-    {
-        return _pUserData;
-    };
     
     /** Required field. You should set the callback selector function at ack the http request completed
      */
@@ -195,7 +165,7 @@ public:
             return false;
         }
         
-        if (strcmp(this->getUrl(), request->getUrl()) != 0)
+        if (this->getUrl().compare(request->getUrl()) != 0)
         {
             return false;
         }
@@ -208,6 +178,16 @@ public:
         return true;
     }
     
+    inline void setThreadID(int threadID)
+    {
+        _threadID = threadID;
+    };
+
+    inline int getThreadID()
+    {
+        return _threadID;
+    };
+    
 protected:
     // properties
     HttpRequestType             _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums
@@ -216,9 +196,9 @@ protected:
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback
     CAObject*          _pTarget;        /// callback target of pSelector function
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCHttpClient *sender, CCHttpResponse * response)
-    void*                       _pUserData;      /// You can add your customed data here 
     std::vector<std::string>    _headers;		      /// custom http headers
 	std::string					_fileNameToPost;
+    int                         _threadID;
 };
 
 NS_CC_EXT_END

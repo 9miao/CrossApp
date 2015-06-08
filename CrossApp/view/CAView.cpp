@@ -74,8 +74,6 @@ CAView::CAView(void)
 , m_pCamera(NULL)
 , m_nZOrder(0)
 , m_pSuperview(NULL)
-, m_pUserData(NULL)
-, m_pUserObject(NULL)
 , m_pShaderProgram(NULL)
 , m_eGLServerState(ccGLServerState(0))
 , m_uOrderOfArrival(0)
@@ -105,7 +103,7 @@ CAView::CAView(void)
 , m_pobImageAtlas(NULL)
 {
     m_pActionManager = CAApplication::getApplication()->getActionManager();
-    m_pActionManager->retain();
+    CC_SAFE_RETAIN(m_pActionManager);
     
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
@@ -120,7 +118,7 @@ CAView::CAView(void)
     this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     this->setHaveNextResponder(true);
     
-    CCLog("CAView = %d\n", ++viewCount);
+    //CCLog("CAView = %d\n", ++viewCount);
 }
 
 CAView::~CAView(void)
@@ -131,7 +129,6 @@ CAView::~CAView(void)
     CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pCamera);
     CC_SAFE_RELEASE(m_pShaderProgram);
-    CC_SAFE_RELEASE(m_pUserObject);
     
     if(!m_obSubviews.empty())
     {
@@ -144,7 +141,7 @@ CAView::~CAView(void)
     m_obSubviews.clear();
     CC_SAFE_RELEASE(m_pobImage);
     
-    CCLog("~CAView = %d\n", --viewCount);
+    //CCLog("~CAView = %d\n", --viewCount);
 }
 
 CAView * CAView::create(void)
@@ -820,18 +817,6 @@ void CAView::setSuperview(CrossApp::CAView * superview)
     m_pSuperview = superview;
 }
 
-/// userData getter
-void * CAView::getUserData()
-{
-    return m_pUserData;
-}
-
-/// userData setter
-void CAView::setUserData(void *var)
-{
-    m_pUserData = var;
-}
-
 unsigned int CAView::getOrderOfArrival()
 {
     return m_uOrderOfArrival;
@@ -847,11 +832,6 @@ CAGLProgram* CAView::getShaderProgram()
     return m_pShaderProgram;
 }
 
-CAObject* CAView::getUserObject()
-{
-    return m_pUserObject;
-}
-
 ccGLServerState CAView::getGLServerState()
 {
     return m_eGLServerState;
@@ -860,13 +840,6 @@ ccGLServerState CAView::getGLServerState()
 void CAView::setGLServerState(ccGLServerState glServerState)
 {
     m_eGLServerState = glServerState;
-}
-
-void CAView::setUserObject(CAObject *pUserObject)
-{
-    CC_SAFE_RETAIN(pUserObject);
-    CC_SAFE_RELEASE(m_pUserObject);
-    m_pUserObject = pUserObject;
 }
 
 void CAView::setShaderProgram(CAGLProgram *pShaderProgram)

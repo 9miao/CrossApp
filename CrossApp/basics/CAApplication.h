@@ -310,9 +310,7 @@ protected:
     float m_fFrameRate;
     
     CALabel *m_pFPSLabel;
-    CALabel *m_pSPFLabel;
-    CALabel *m_pDrawsLabel;
-    
+
     /** Whether or not the Director is paused */
     bool m_bPaused;
 

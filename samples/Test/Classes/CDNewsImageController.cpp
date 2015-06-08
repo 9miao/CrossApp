@@ -352,8 +352,8 @@ CATableViewCell* CDNewsImageController::tableCellAtIndex(CATableView* table, con
     cellTextdsc->setText(m_ImageMsg[row].m_imageDesc[1]);
     
     int img_num = m_ImageNum[row];
-    CCLog("titledfvdfgdfg==%d===%d===%d====%d",section,row,m_ImageNum[row],img_num);
-    if (img_num==1) {
+    if (img_num==1)
+    {
         CommonUrlImageView* temImage = dynamic_cast<CommonUrlImageView*>(cell->getSubviewByTag(200));
         if (temImage)
         {
@@ -368,7 +368,9 @@ CATableViewCell* CDNewsImageController::tableCellAtIndex(CATableView* table, con
         temImage1->setVisible(false);
         temImage2->setVisible(false);
         temImage3->setVisible(false);
-    }else if(img_num==2){
+    }
+    else if(img_num==2)
+    {
         CommonUrlImageView* temImage = dynamic_cast<CommonUrlImageView*>(cell->getSubviewByTag(200));
         if (temImage)
         {
@@ -390,7 +392,9 @@ CATableViewCell* CDNewsImageController::tableCellAtIndex(CATableView* table, con
         CommonUrlImageView* temImage3 = dynamic_cast<CommonUrlImageView*>(cell->getSubviewByTag(203));;
         temImage2->setVisible(false);
         temImage3->setVisible(false);
-    }else if(img_num==3){
+    }
+    else if(img_num==3)
+    {
         CommonUrlImageView* temImage = dynamic_cast<CommonUrlImageView*>(cell->getSubviewByTag(200));
         if (temImage)
         {
@@ -419,7 +423,9 @@ CATableViewCell* CDNewsImageController::tableCellAtIndex(CATableView* table, con
         CommonUrlImageView* temImage3 = dynamic_cast<CommonUrlImageView*>(cell->getSubviewByTag(203));;
         temImage3->setVisible(false);
 
-    }else if(img_num==4){
+    }
+    else if(img_num==4)
+    {
         CommonUrlImageView* temImage = dynamic_cast<CommonUrlImageView*>(cell->getSubviewByTag(200));
         if (temImage)
         {

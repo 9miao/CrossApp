@@ -949,7 +949,9 @@ bool CAFreeTypeFont::initFreeTypeFont(const char* pFontName, unsigned long nSize
 	}
 
 	if (!error)
+    {
 		error = FT_Set_Char_Size(m_face, nSize << 6, nSize << 6, 72, 72);
+    }
 
 	return (error==0);
 }

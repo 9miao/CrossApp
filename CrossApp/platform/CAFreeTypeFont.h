@@ -79,7 +79,7 @@ typedef enum
     kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
 }ETextAlign;
 
-class CC_DLL CAFreeTypeFont
+class CC_DLL CAFreeTypeFont: public CAObject
 {
 	friend class CAFTFontCache;
 public:

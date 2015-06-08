@@ -219,14 +219,6 @@ public:
 
     virtual void onExitTransitionDidStart();
 
-    virtual void* getUserData();
-
-    virtual void setUserData(void *pUserData);
-
-    virtual CAObject* getUserObject();
-
-    virtual void setUserObject(CAObject *pUserObject);
-
     virtual CACamera* getCamera();
 
     virtual void draw(void);
@@ -436,10 +428,6 @@ protected:
     
     CAVector<CAView*> m_obSubviews;               ///< array of children nodes              ///< weak reference to parent node
     CAView* m_pSuperview;
-    
-    
-    void *m_pUserData;                  ///< A user assingned void pointer, Can be point to any cpp object
-    CAObject *m_pUserObject;            ///< A user assigned CAObject
     
     CAGLProgram *m_pShaderProgram;      ///< OpenGL shader
     

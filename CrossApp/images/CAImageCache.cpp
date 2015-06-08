@@ -115,7 +115,6 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
         //CCLOG("unsupported format %s",filename);
         //delete pAsyncStruct;
     }
-    
     CAImage* image = new CAImage();
     if (image && !image->initWithImageFileThreadSafe(filename))
     {
@@ -297,13 +296,13 @@ void CAImageCache::addImageAsyncCallBack(float dt)
     // the image is generated in loading thread
     std::queue<ImageInfo*> *imagesQueue = s_pImageQueue;
 
-    pthread_mutex_lock(&s_ImageInfoMutex);
     if (imagesQueue->empty())
     {
-        pthread_mutex_unlock(&s_ImageInfoMutex);
+        
     }
     else
     {
+        pthread_mutex_lock(&s_ImageInfoMutex);
         ImageInfo *pImageInfo = imagesQueue->front();
         imagesQueue->pop();
         pthread_mutex_unlock(&s_ImageInfoMutex);

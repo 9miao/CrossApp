@@ -42,23 +42,21 @@ using namespace std;
 unsigned int g_uNumberOfDraws = 0;
 
 NS_CC_BEGIN
-// XXX it should be a Director ivar. Move it there once support for multiple directors is added
 
-// singleton stuff
-static CCDisplayLinkDirector *s_SharedDirector = NULL;
+static CCDisplayLinkDirector *s_SharedApplication = NULL;
 
 #define kDefaultFPS        60  // 60 frames per second
 extern const char* CrossAppVersion(void);
 
 CAApplication* CAApplication::getApplication()
 {
-    if (!s_SharedDirector)
+    if (!s_SharedApplication)
     {
-        s_SharedDirector = new CCDisplayLinkDirector();
-        s_SharedDirector->init();
+        s_SharedApplication = new CCDisplayLinkDirector();
+        s_SharedApplication->init();
     }
 
-    return s_SharedDirector;
+    return s_SharedApplication;
 }
 
 CAApplication::CAApplication(void)
@@ -82,8 +80,6 @@ bool CAApplication::init(void)
     m_fAccumDt = 0.0f;
     m_fFrameRate = 0.0f;
     m_pFPSLabel = NULL;
-    m_pSPFLabel = NULL;
-    m_pDrawsLabel = NULL;
     m_uTotalFrames = m_uFrames = 0;
     m_pszFPS = new char[10];
     m_pLastUpdate = new struct cc_timeval();
@@ -129,8 +125,6 @@ bool CAApplication::init(void)
 CAApplication::~CAApplication(void)
 {
     CC_SAFE_RELEASE(m_pFPSLabel);
-    CC_SAFE_RELEASE(m_pSPFLabel);
-    CC_SAFE_RELEASE(m_pDrawsLabel);
     
     CC_SAFE_RELEASE(m_pRootWindow);
     CC_SAFE_RELEASE(m_pNotificationNode);
@@ -148,7 +142,7 @@ CAApplication::~CAApplication(void)
     // delete fps string
     delete []m_pszFPS;
 
-    s_SharedDirector = NULL;
+    s_SharedApplication = NULL;
 }
 
 void CAApplication::setDefaultValues(void)
@@ -434,7 +428,7 @@ void CAApplication::setProjection(CAApplication::Projection kProjection)
 
 void CAApplication::purgeCachedData(void)
 {
-    if (s_SharedDirector->getOpenGLView())
+    if (s_SharedApplication->getOpenGLView())
     {
         CAImageCache::sharedImageCache()->removeUnusedImages();
     }
@@ -613,8 +607,6 @@ void CAApplication::purgeDirector()
     stopAnimation();
 
     CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-    CC_SAFE_RELEASE_NULL(m_pSPFLabel);
-    CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
 
     // purge all managed caches
     ccDrawFree();
@@ -678,30 +670,19 @@ void CAApplication::showStats(void)
     m_uFrames++;
     m_fAccumDt += m_fDeltaTime;
     
-    if (m_bDisplayStats)
+    if (m_bDisplayStats && m_pFPSLabel)
     {
-        if (m_pFPSLabel && m_pSPFLabel && m_pDrawsLabel)
+        if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL)
         {
-            if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL)
-            {
-                sprintf(m_pszFPS, "%.3f", m_fSecondsPerFrame);
-                m_pSPFLabel->setText(m_pszFPS);
-                
-                m_fFrameRate = m_uFrames / m_fAccumDt;
-                m_uFrames = 0;
-                m_fAccumDt = 0;
-                
-                sprintf(m_pszFPS, "%.1f", m_fFrameRate);
-                m_pFPSLabel->setText(m_pszFPS);
-                
-                sprintf(m_pszFPS, "%4lu", (unsigned long)g_uNumberOfDraws);
-                m_pDrawsLabel->setText(m_pszFPS);
-            }
-            m_pSPFLabel->visit();
-            m_pFPSLabel->visit();
-            m_pDrawsLabel->visit();
+            m_fFrameRate = m_uFrames / m_fAccumDt;
+            m_uFrames = 0;
+            m_fAccumDt = 0;
+            
+            sprintf(m_pszFPS, "%.1f", m_fFrameRate);
+            m_pFPSLabel->setText(m_pszFPS);
         }
-    }    
+        m_pFPSLabel->visit();
+    }
     
     g_uNumberOfDraws = 0;
 }
@@ -727,11 +708,9 @@ void CAApplication::createStatsLabel()
     CAImage* image = NULL;
     CAImageCache *ImageCache = CAImageCache::sharedImageCache();
 
-    if( m_pFPSLabel && m_pSPFLabel )
+    if( m_pFPSLabel)
     {
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-        CC_SAFE_RELEASE_NULL(m_pSPFLabel);
-        CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
         ImageCache->removeImageForKey("cc_fps_images");
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
@@ -750,19 +729,6 @@ void CAApplication::createStatsLabel()
     m_pFPSLabel->retain();
     m_pFPSLabel->setScale(factor);
     m_pFPSLabel->setColor(CAColor_blue);
-    
-    m_pSPFLabel = CALabel::createWithFrame(CCRect(0, 0, 100, 32));
-    m_pSPFLabel->retain();
-    m_pSPFLabel->setScale(factor);
-    m_pSPFLabel->setColor(CAColor_yellow);
-    
-    m_pDrawsLabel = CALabel::createWithFrame(CCRect(0, 0, 100, 32));
-    m_pDrawsLabel->retain();
-    m_pDrawsLabel->setScale(factor);
-    m_pDrawsLabel->setColor(CAColor_green);
-    
-    m_pDrawsLabel->setFrameOrigin(ccpAdd(ccp(0, 64*factor), CC_DIRECTOR_STATS_POSITION));
-    m_pSPFLabel->setFrameOrigin(ccpAdd(ccp(0, 32*factor), CC_DIRECTOR_STATS_POSITION));
     m_pFPSLabel->setFrameOrigin(CC_DIRECTOR_STATS_POSITION);
     
     CAImage::setDefaultAlphaPixelFormat(currentFormat);

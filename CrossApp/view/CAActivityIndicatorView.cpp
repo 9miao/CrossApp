@@ -102,68 +102,67 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
 {
     m_style = style;
     
-    CCRect center = getBounds();
-    if (center.size.width > center.size.height)
+    if (m_style != CAActivityIndicatorViewStyleImage)
     {
-        center.size.width = center.size.height;
-    }
-    else
-    {
-        center.size.height = center.size.width;
-    }
-    center.origin.x = center.size.width/2;
-    center.origin.y = center.size.height/2;
-    
-    float radius_inside, radius_outside;
-    
-    switch (m_style)
-    {
-        case CAActivityIndicatorViewStyleGray:
-            radius_outside = _px(34);
-            radius_inside = _px(15);
-            m_color = ccc4(127, 127, 127, 60);
-            break;
-        case CAActivityIndicatorViewStyleWhite:
-            radius_outside = _px(20);
-            radius_inside = _px(8.5);
-            m_color = ccc4(255, 255, 255, 127);
-            break;
-        case CAActivityIndicatorViewStyleWhiteLarge:
-            radius_outside = _px(34);
-            radius_inside = _px(12);
-            m_color = ccc4(255, 255, 255, 127);
-            break;
+        CCRect center = getBounds();
+        if (center.size.width > center.size.height)
+        {
+            center.size.width = center.size.height;
+        }
+        else
+        {
+            center.size.height = center.size.width;
+        }
+        center.origin.x = center.size.width/2;
+        center.origin.y = center.size.height/2;
+        
+        float radius_inside, radius_outside;
+        
+        switch (m_style)
+        {
+            case CAActivityIndicatorViewStyleGray:
+                radius_outside = _px(34);
+                radius_inside = _px(15);
+                m_color = ccc4(127, 127, 127, 60);
+                break;
+            case CAActivityIndicatorViewStyleWhite:
+                radius_outside = _px(20);
+                radius_inside = _px(8.5);
+                m_color = ccc4(255, 255, 255, 127);
+                break;
+            case CAActivityIndicatorViewStyleWhiteLarge:
+                radius_outside = _px(34);
+                radius_inside = _px(12);
+                m_color = ccc4(255, 255, 255, 127);
+                break;
+                
+            default:
+                break;
+        }
+        
+        //
+        //       90
+        //    120   60
+        //  150       30
+        // 180           0(begin, anti-clock-wise)
+        //  210       330
+        //    240   300
+        //       270
+        for (int angle=0, index=0; angle<360; angle+=30, index++)
+        {
             
-        default:
-            break;
+            float radian = 2 * M_PI / 360 * angle;
+            
+            m_vertex[index][0] = center.origin;
+            m_vertex[index][1] = center.origin;
+            m_vertex[index][0].x += radius_inside * cos(radian);
+            m_vertex[index][1].x += radius_outside * cos(radian);
+            m_vertex[index][0].y += radius_inside * sin(radian);
+            m_vertex[index][1].y += radius_outside * sin(radian);
+        }
     }
     
-    //
-    //       90
-    //    120   60
-    //  150       30
-    // 180           0(begin, anti-clock-wise)
-    //  210       330
-    //    240   300
-    //       270
-    for (int angle=0, index=0; angle<360; angle+=30, index++)
-    {
-        
-        float radian = 2 * M_PI / 360 * angle;
-        
-        m_vertex[index][0] = center.origin;
-        m_vertex[index][1] = center.origin;
-        m_vertex[index][0].x += radius_inside * cos(radian);
-        m_vertex[index][1].x += radius_outside * cos(radian);
-        m_vertex[index][0].y += radius_inside * sin(radian);
-        m_vertex[index][1].y += radius_outside * sin(radian);
-        
-//        printf("%f, %f, %f, %f \n", 
-//               m_vertex[index][0].x,
-//               m_vertex[index][0].y,
-//               m_vertex[index][1].x,
-//               m_vertex[index][1].y);
-    }
+    
     
 }
 
