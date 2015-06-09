@@ -32,9 +32,9 @@ public:
 
     inline int getTimeoutForRead() {return _timeoutForRead;};
     
-    void setSSLVerification(const std::string& str) {_sslCaFilename = str;}
+    inline void setSSLVerification(const std::string& str) {_sslCaFilename = str;}
     
-    unsigned long getRequestCount() {return _asyncRequestCount;}
+    inline unsigned long getRequestCount() {return _asyncRequestCount;}
     
 private:
     

@@ -23,11 +23,15 @@ public:
     virtual ~CAFlashView();
     static CAFlashView* createWithFlash(CAFlash* flash);
     bool initWithFlash(CAFlash* flash);
+    bool init();
     void setFlash(CAFlash* flash);
-    void stopAction();
-    void runAction();
+    void stopAnimation();
+    void runAnimation();
     void setRepeatForever(bool flag);
-    bool getRepeatForever();
+    bool isRepeatForever();
+    void setRunning(bool running);
+    bool isRunning();
+    
 protected:
     virtual void onEnter();
     virtual void onExit();
@@ -35,6 +39,8 @@ protected:
     virtual void draw();
 protected:
     CAFlash*    m_pFlash;
+    bool        m_bIsRepeatForever;
+    bool        m_bIsRunning;
 };
 
 NS_CC_END

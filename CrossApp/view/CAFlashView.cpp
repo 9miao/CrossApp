@@ -13,13 +13,15 @@ NS_CC_BEGIN
 
 CAFlashView::CAFlashView()
 :m_pFlash(NULL)
+,m_bIsRepeatForever(false)
+,m_bIsRunning(false)
 {
 
 }
 
 CAFlashView::~CAFlashView()
 {
-    this->stopAction();
+    this->stopAnimation();
     CC_SAFE_DELETE(m_pFlash);
 }
 
@@ -35,12 +37,19 @@ CAFlashView* CAFlashView::createWithFlash(CAFlash* flash)
 
 bool CAFlashView::initWithFlash(CAFlash* flash)
 {
-    if(CAView::init())
+    if (!this->init())
     {
-        this->setFlash(flash);
-        return true;
+        return false;
     }
-    return false;
+    
+    this->setFlash(flash);
+    return true;
+}
+
+bool CAFlashView::init()
+{
+    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
+    return true;
 }
 
 void CAFlashView::setFlash(CAFlash* flash)
@@ -58,38 +67,28 @@ void CAFlashView::onEnter()
 void CAFlashView::onExit()
 {
     CAView::onExit();
-    if(! m_pFlash->isRunning())
+    if(!this->isRunning())
         return;
     CAScheduler::unschedule(schedule_selector(CAFlashView::update), this);
-    m_pFlash->setRunning(false);
+    this->setRunning(false);
 }
 
-void CAFlashView::runAction()
+void CAFlashView::runAnimation()
 {
-    if(m_pFlash->isRunning())
+    if(this->isRunning())
         return;
-    m_pFlash->setRunning(true);
+    this->setRunning(true);
     m_pFlash->setIndex(0);
     m_pFlash->playRun();
     CAScheduler::schedule(schedule_selector(CAFlashView::update), this, 0.01f);
 }
 
-void CAFlashView::stopAction()
+void CAFlashView::stopAnimation()
 {
-    if(! m_pFlash->isRunning())
+    if(! this->isRunning())
         return;
     CAScheduler::unschedule(schedule_selector(CAFlashView::update), this);
-    m_pFlash->setRunning(false);
-}
-
-void CAFlashView::setRepeatForever(bool repeatForever)
-{
-    m_pFlash->setRepeatForever(repeatForever);
-}
-
-bool CAFlashView::getRepeatForever()
-{
-    return m_pFlash->isRepeatForever();
+    this->setRunning(false);
 }
 
 void CAFlashView::update(float dt)
@@ -99,7 +98,7 @@ void CAFlashView::update(float dt)
     int counts = m_pFlash->getCounts();
 
     bool tobestop = false;
-    if(! m_pFlash->isRepeatForever())
+    if(! m_bIsRepeatForever)
     {
         if (index == counts - 1)
         {
@@ -109,7 +108,7 @@ void CAFlashView::update(float dt)
     m_pFlash->advance(dt);
     if(tobestop)
     {
-        this->stopAction();
+        this->stopAnimation();
     }
     this->updateDraw();
 }
@@ -139,4 +138,25 @@ void CAFlashView::draw()
     m_pFlash->display(&matrixMVP);
     CHECK_GL_ERROR_DEBUG();
 }
+
+void CAFlashView::setRepeatForever(bool repeatForever)
+{
+    m_bIsRepeatForever = repeatForever;
+}
+
+bool CAFlashView::isRepeatForever()
+{
+    return m_bIsRepeatForever;
+}
+
+void CAFlashView::setRunning(bool running)
+{
+    m_bIsRunning = running;
+}
+
+bool CAFlashView::isRunning()
+{
+    return m_bIsRunning;
+}
+
 NS_CC_END

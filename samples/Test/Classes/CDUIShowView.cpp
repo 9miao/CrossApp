@@ -1565,10 +1565,10 @@ void CDUIShowView::showScrollView()
 
 void CDUIShowView::showFlashView()
 {
-    CAFlashView* swfBg = CAFlashView::create("image/swfWK.swf");
+    CAFlashView* swfBg = CAFlashView::createWithFlash(CAFlash::createWithFilePath("image/swfWK.swf"));
     swfBg->setFrame(CCRect(200,200,200,200));
-    swfBg->runAction();
-    swfBg->setRepeat(true);
+    swfBg->runAnimation();
+    swfBg->setRepeatForever(true);
     this->getView()->addSubview(swfBg);
 }
 

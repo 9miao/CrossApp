@@ -45,8 +45,6 @@ static void CCGameSWF_log_handler (bool error, const char* message)
 CAFlash::CAFlash()
 :m_fScaleX(1)
 ,m_fScaleY(1)
-,m_bIsRunning(false)
-,m_bIsRepeatForever(false)
 ,m_nFrameCount(0)
 ,m_pMovie(NULL)
 ,m_pPlayer(NULL)
@@ -72,15 +70,12 @@ CAFlash* CAFlash::createWithFilePath(const std::string& filePath)
 
 bool CAFlash::initWithFilePath(const std::string& filePath)
 {
-    if(!CAObject::init())
+    if (filePath.empty())
     {
         return false;
     }
+    
     std::string pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath.c_str());
-    if (pathKey.size() == 0)
-    {
-        return false;
-    }
     gameswf::register_file_opener_callback(&CCGameSWF_file_opener);
     gameswf::register_fscommand_callback(&CCGameSWF_fscommand_handler);
     gameswf::register_log_callback(&CCGameSWF_log_handler);
@@ -90,10 +85,12 @@ bool CAFlash::initWithFilePath(const std::string& filePath)
     gameswf::set_glyph_provider(gameswf::create_glyph_provider_tu());
     m_pPlayer = new gameswf::player();
     m_pMovie = m_pPlayer->load_file(pathKey.c_str());
+    
     if (!m_pPlayer || !m_pMovie)
     {
         return false;
     }
+    
     m_movieWidth = m_pMovie->m_def->m_frame_size.m_x_max - m_pMovie->m_def->m_frame_size.m_x_min;
     m_movieHeight = m_pMovie->m_def->m_frame_size.m_y_max - m_pMovie->m_def->m_frame_size.m_y_min;
     m_localScaleX = (m_pMovie->get_movie_width() / m_movieWidth);
@@ -167,24 +164,6 @@ float CAFlash::getFrameCount()
     return m_nFrameCount;
 }
 
-void CAFlash::setRunning(bool running)
-{
-    m_bIsRunning = running;
-}
 
-bool CAFlash::isRunning()
-{
-    return m_bIsRunning;
-}
-
-void CAFlash::setRepeatForever(bool repeatForever)
-{
-    m_bIsRepeatForever = repeatForever;
-}
-
-bool CAFlash::isRepeatForever()
-{
-    return m_bIsRepeatForever;
-}
 
 NS_CC_END

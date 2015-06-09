@@ -40,10 +40,8 @@ public:
     float getScaleX();
     float getScaleY();
     float getFrameCount();
-    void  setRunning(bool running);
-    bool  isRunning();
-    void  setRepeatForever(bool repeatForever);
-    bool  isRepeatForever();
+    
+    
 protected:
     GLfloat m_movieWidth;
     GLfloat m_movieHeight;
@@ -52,8 +50,7 @@ protected:
     GLfloat m_fScaleX;
     GLfloat m_fScaleY;
     int     m_nFrameCount;
-    bool    m_bIsRunning;
-    bool    m_bIsRepeatForever;
+    
     gameswf::gc_ptr<gameswf::player>    m_pPlayer;
     gameswf::gc_ptr<gameswf::root>      m_pMovie;
 };

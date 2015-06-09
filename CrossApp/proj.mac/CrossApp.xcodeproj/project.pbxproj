@@ -511,6 +511,10 @@
 		B0C512E919A3127100E6934B /* CADatePickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512E519A3127100E6934B /* CADatePickerView.h */; };
 		B0DA93F919D79B1A00E66E11 /* CATextView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DA93F719D79B1A00E66E11 /* CATextView.cpp */; };
 		B0DA93FA19D79B1A00E66E11 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0DA93F819D79B1A00E66E11 /* CATextView.h */; };
+		B0DAEED01B256B6D0011E87D /* CAFlash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DAEECC1B256B6D0011E87D /* CAFlash.cpp */; };
+		B0DAEED11B256B6D0011E87D /* CAFlash.h in Headers */ = {isa = PBXBuildFile; fileRef = B0DAEECD1B256B6D0011E87D /* CAFlash.h */; };
+		B0DAEED21B256B6D0011E87D /* CAGif.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DAEECE1B256B6D0011E87D /* CAGif.cpp */; };
+		B0DAEED31B256B6D0011E87D /* CAGif.h in Headers */ = {isa = PBXBuildFile; fileRef = B0DAEECF1B256B6D0011E87D /* CAGif.h */; };
 		B0F7E4FE198788010048F46B /* CAPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F7E4FC198788010048F46B /* CAPageView.cpp */; };
 		B0F7E4FF198788010048F46B /* CAPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F7E4FD198788010048F46B /* CAPageView.h */; };
 /* End PBXBuildFile section */
@@ -1016,7 +1020,7 @@
 		B0A7157D1A43F6DE00A85FB9 /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
 		B0B0A2DF1AF06E0B00BAC0B0 /* CAAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimation.cpp; sourceTree = "<group>"; };
 		B0B0A2E01AF06E0B00BAC0B0 /* CAAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimation.h; sourceTree = "<group>"; };
-		B0C3BD3C1ADE6811009BE71A /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
+		B0C3BD3C1ADE6811009BE71A /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
 		B0C3BD3D1ADE6811009BE71A /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
 		B0C3BD401ADE70B3009BE71A /* CAClipboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAClipboard.h; sourceTree = "<group>"; };
 		B0C3BD421ADE70B8009BE71A /* CAClipboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAClipboard.mm; sourceTree = "<group>"; };
@@ -1026,6 +1030,10 @@
 		B0C512E519A3127100E6934B /* CADatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADatePickerView.h; sourceTree = "<group>"; };
 		B0DA93F719D79B1A00E66E11 /* CATextView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextView.cpp; sourceTree = "<group>"; };
 		B0DA93F819D79B1A00E66E11 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
+		B0DAEECC1B256B6D0011E87D /* CAFlash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFlash.cpp; sourceTree = "<group>"; };
+		B0DAEECD1B256B6D0011E87D /* CAFlash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFlash.h; sourceTree = "<group>"; };
+		B0DAEECE1B256B6D0011E87D /* CAGif.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGif.cpp; sourceTree = "<group>"; };
+		B0DAEECF1B256B6D0011E87D /* CAGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGif.h; sourceTree = "<group>"; };
 		B0F7E4FC198788010048F46B /* CAPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageView.cpp; sourceTree = "<group>"; };
 		B0F7E4FD198788010048F46B /* CAPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPageView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1205,6 +1213,10 @@
 			isa = PBXGroup;
 			children = (
 				B0A11D9B1AE8C5C500933BF6 /* gif_lib */,
+				B0DAEECC1B256B6D0011E87D /* CAFlash.cpp */,
+				B0DAEECD1B256B6D0011E87D /* CAFlash.h */,
+				B0DAEECE1B256B6D0011E87D /* CAGif.cpp */,
+				B0DAEECF1B256B6D0011E87D /* CAGif.h */,
 				B0A11D971AE8C47600933BF6 /* etc1.cpp */,
 				B0A11D981AE8C47600933BF6 /* etc1.h */,
 				04EAA0B31956D74D00198A8E /* CAImage.cpp */,
@@ -1914,6 +1926,7 @@
 				04EAB08E1956D75600198A8E /* CCString.h in Headers */,
 				3EA063091B147DB800183C30 /* tu_queue.h in Headers */,
 				B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */,
+				B0DAEED31B256B6D0011E87D /* CAGif.h in Headers */,
 				3EA063A01B147DB800183C30 /* gameswf_value.h in Headers */,
 				B09205BB19D554A800CB99C1 /* CASyncQueue.h in Headers */,
 				04EAB0901956D75600198A8E /* CABar.h in Headers */,
@@ -2074,6 +2087,7 @@
 				04EABA801956D75A00198A8E /* ccUtils.h in Headers */,
 				3EA063401B147DB800183C30 /* as_mouse.h in Headers */,
 				04EABA821956D75A00198A8E /* CCVertex.h in Headers */,
+				B0DAEED11B256B6D0011E87D /* CAFlash.h in Headers */,
 				3EA063711B147DB800183C30 /* gameswf_freetype.h in Headers */,
 				04EABA881956D75A00198A8E /* ccCArray.h in Headers */,
 				04EABA891956D75A00198A8E /* uthash.h in Headers */,
@@ -2205,6 +2219,7 @@
 				B047B91819E9181800F24BE6 /* JSViewController.cpp in Sources */,
 				04EAB0631956D75600198A8E /* CCActionTween.cpp in Sources */,
 				04EAB0671956D75600198A8E /* CAApplication.cpp in Sources */,
+				B0DAEED21B256B6D0011E87D /* CAGif.cpp in Sources */,
 				3EA0635B1B147DB800183C30 /* gameswf_avm2.cpp in Sources */,
 				3EA062DD1B147DB800183C30 /* component_hackery.cpp in Sources */,
 				04EAB0691956D75600198A8E /* CAAutoreleasePool.cpp in Sources */,
@@ -2298,6 +2313,7 @@
 				3EA062F11B147DB800183C30 /* logger.cpp in Sources */,
 				3EA063761B147DB800183C30 /* gameswf_jit.cpp in Sources */,
 				3EA063111B147DB800183C30 /* utf8.cpp in Sources */,
+				B0DAEED01B256B6D0011E87D /* CAFlash.cpp in Sources */,
 				B0DA93F919D79B1A00E66E11 /* CATextView.cpp in Sources */,
 				04EAB0D81956D75600198A8E /* ray2.c in Sources */,
 				B0A7150D1A43F56600A85FB9 /* CAWebView.cpp in Sources */,

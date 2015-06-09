@@ -74,7 +74,7 @@ bool CATextField::resignFirstResponder()
     {
 		detachWithIME();
         hideCursorMark();
-        this->updateImage();
+        //this->updateImage();
     }
     return result;
 }
