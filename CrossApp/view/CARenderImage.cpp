@@ -34,7 +34,20 @@ CARenderImage::CARenderImage()
 , m_uPixelsHigh(0)
 , m_uName(0)
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    // Listen this event to save render Image before come to background.
+    // Then it can be restored after coming to foreground on Android.
+    CANotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                  callfuncO_selector(CARenderImage::listenToBackground),
+                                                                  EVENT_COME_TO_BACKGROUND,
+                                                                  NULL);
     
+    CANotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                  callfuncO_selector(CARenderImage::listenToForeground),
+                                                                  EVENT_COME_TO_FOREGROUND, // this is misspelt
+                                                                  NULL);
+#endif
+
 }
 
 CARenderImage::~CARenderImage()
@@ -47,6 +60,11 @@ CARenderImage::~CARenderImage()
     {
         glDeleteRenderbuffers(1, &m_uDepthRenderBufffer);
     }
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    CANotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
+    CANotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
+#endif
 
 }
 
@@ -57,6 +75,16 @@ void CARenderImage::listenToBackground(CrossApp::CAObject *obj)
 
 void CARenderImage::listenToForeground(CrossApp::CAObject *obj)
 {
+// -- regenerate frame buffer object and attach the texture
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
+    
+    glGenFramebuffers(1, &m_uFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
+    
+    m_pImage->setAliasTexParameters();
+    
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
 
 }
 

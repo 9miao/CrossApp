@@ -727,7 +727,7 @@ void CANavigationController::popViewControllerFinish()
     
     m_pNavigationBars.popBack();
     
-    m_pViewControllers.back()->getView()->setFrameOrigin(CCPointZero);
+    m_pContainers.back()->setFrameOrigin(CCPointZero);
     
     m_bSlidingMinX = m_pViewControllers.size() <= 1;
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();

@@ -42,6 +42,8 @@ typedef struct _TextViewLineInfo
 
 typedef struct TGlyph_
 {
+	TGlyph_() : index(0), image(0) {}
+	
 	FT_UInt    index;  // glyph index
     FT_Vector  pos;    // glyph origin on the baseline
 	FT_Glyph   image;  // glyph image
@@ -79,7 +81,7 @@ typedef enum
     kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
 }ETextAlign;
 
-class CC_DLL CAFreeTypeFont: public CAObject
+class CC_DLL CAFreeTypeFont
 {
 	friend class CAFTFontCache;
 public:
@@ -101,6 +103,8 @@ protected:
     int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth);
 	int getStringHeight(const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 	void destroyAllLines();
+	void destroyFontGlyph(std::vector<TGlyph>& v);
+	void destroyAllLineFontGlyph();
 
 	FT_Error initGlyphs(const char* text);
 	FT_Error initGlyphsLine(const std::string& line);

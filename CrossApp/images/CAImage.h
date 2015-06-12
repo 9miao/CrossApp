@@ -16,9 +16,11 @@
 #include "CCGL.h"
 #include "CCStdC.h"
 #include "gif_lib/gif_lib.h"
+#include <list>
 
 NS_CC_BEGIN
 
+class CAFreeTypeFont;
 class CAGLProgram;
 
 typedef struct _ccTexParams
@@ -148,11 +150,7 @@ public:
     unsigned int bitsPerPixelForFormat();
     
     unsigned int bitsPerPixelForFormat(CAImage::PixelFormat format);
-    
-    static void setDefaultAlphaPixelFormat(CAImage::PixelFormat format);
-    
-    static CAImage::PixelFormat defaultAlphaPixelFormat();
-    
+
     bool hasPremultipliedAlpha();
     
     bool hasMipmaps();
@@ -209,6 +207,8 @@ public:
     unsigned int getGifImageIndex();
     
     unsigned int getGifImageCounts();
+    
+    static void reloadAllImages();
     
 protected:
     
@@ -296,11 +296,15 @@ protected:
     
     bool m_bHasAlpha;
     
+    bool m_bTextImage;
+    
     int  m_nBitsPerComponent;
     
     GifFileType* m_pGIF;
     
     int m_iGIFIndex;
+    
+    friend class CAFreeTypeFont;
 };
 
 NS_CC_END

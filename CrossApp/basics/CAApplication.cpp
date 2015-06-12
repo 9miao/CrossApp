@@ -161,14 +161,6 @@ void CAApplication::setDefaultValues(void)
 	else
 		CCAssert(false, "Invalid projection value");
 
-	const char *pixel_format = "rgba8888";
-	if( strcmp(pixel_format, "rgba8888") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(CAImage::PixelFormat_RGBA8888);
-	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(CAImage::PixelFormat_RGBA4444);
-	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(CAImage::PixelFormat_RGB5A1);
-
 }
 
 void CAApplication::setGLDefaultValues(void)
@@ -177,52 +169,12 @@ void CAApplication::setGLDefaultValues(void)
     CCAssert(m_pobOpenGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    // XXX: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
-    // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(m_eProjection);
 
     // set other opengl default values
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
-
-// Draw the Scene
-//void CAApplication::drawView(CAView* var)
-//{
-//    //tick before glClear: issue #533
-//
-//    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//    CCPoint point = var->convertToWorldSpace(CCPoint(0, var->getBounds().size.height));
-//    point = CAApplication::sharedDirector()->convertToGL(point);
-//    
-//    glScissor(point.x, point.y, var->getFrame().size.width, var->getFrame().size.height);
-//    
-//    kmGLPushMatrix();
-//
-//    // draw the scene
-//    if (var)
-//    {
-//        var->visit();
-//    }
-//
-//    CCLog(" <<<<<<< %s\n",typeid(*var).name());
-//    
-//    kmGLPopMatrix();
-//
-//    m_uTotalFrames++;
-//
-//    // swap buffers
-//    if (m_pobOpenGLView)
-//    {
-//        m_pobOpenGLView->swapBuffers();
-//    }
-//    
-//    if (m_bDisplayStats)
-//    {
-//        calculateMPF();
-//    }
-//}
 
 void CAApplication::updateDraw()
 {
@@ -715,8 +667,6 @@ void CAApplication::createStatsLabel()
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
-    CAImage::PixelFormat currentFormat = CAImage::defaultAlphaPixelFormat();
-    CAImage::setDefaultAlphaPixelFormat(CAImage::PixelFormat_RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);
@@ -730,8 +680,6 @@ void CAApplication::createStatsLabel()
     m_pFPSLabel->setScale(factor);
     m_pFPSLabel->setColor(CAColor_blue);
     m_pFPSLabel->setFrameOrigin(CC_DIRECTOR_STATS_POSITION);
-    
-    CAImage::setDefaultAlphaPixelFormat(currentFormat);
 }
 
 CAView* CAApplication::getNotificationView()

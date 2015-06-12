@@ -125,6 +125,7 @@ _AgaginInitGlyphs:
 			cszNewText.clear();
 			StringUtils::UTF16ToUTF8(cszTemp, cszNewText);
 			cszNewText += "...";
+			destroyAllLineFontGlyph();
 			goto _AgaginInitGlyphs;
 		}
 	}
@@ -147,8 +148,7 @@ _AgaginInitGlyphs:
 	}
 	else
 	{
-		CCAssert(false, "Not supported alignment format!");
-		return NULL;
+		eAlign = kAlignTopLeft;
 	}
 
 	int width = 0, height = 0;
@@ -163,17 +163,17 @@ _AgaginInitGlyphs:
 	m_bItalics = false;
 	m_bUnderLine = false;
 
-	CAImage* pCAImage = new CAImage();
-	if (!pCAImage->initWithRawData(pData, CAImage::PixelFormat_A8, width, height))
+	CAImage* image = new CAImage();
+	if (!image->initWithRawData(pData, CAImage::PixelFormat_A8, width, height))
 	{
 		delete[]pData;
-		delete pCAImage;
+		delete image;
 		return NULL;
 	}
 	delete[]pData;
 
-    pCAImage->autorelease();
-	return pCAImage;
+    image->autorelease();
+	return image;
 }
 
 unsigned char* CAFreeTypeFont::getBitmap(ETextAlign eAlignMask, int* outWidth, int* outHeight)
@@ -236,6 +236,8 @@ int CAFreeTypeFont::getStringWidth(const std::string& text, bool bBold, bool bIt
 	m_bBold = false;
 	m_bItalics = false;
 	m_bUnderLine = false;
+
+	destroyFontGlyph(glyphs);
 	return iStrWidth;
 }
 
@@ -315,6 +317,7 @@ int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, i
             nCharPos += 4;
     }
     
+	destroyFontGlyph(glyphs);
     return nCharPos;
 }
 
@@ -328,6 +331,12 @@ int CAFreeTypeFont::getStringHeight(const std::string& text, int iLimitWidth, in
 	m_bWordWrap = bWordWrap;
 
 	initGlyphs(text.c_str());
+
+	for (int i = 0; i < m_lines.size(); i++)
+	{
+		destroyFontGlyph(m_lines[i]->glyphs);
+	}
+	destroyAllLines();
 	return m_textHeight;
 }
 
@@ -339,6 +348,26 @@ void CAFreeTypeFont::destroyAllLines()
 	}
 	m_lines.clear();
 	m_currentLine = NULL;
+}
+
+void CAFreeTypeFont::destroyFontGlyph(std::vector<TGlyph>& v)
+{
+	for (size_t i = 0; i < v.size(); i++)
+	{
+		if (v[i].image)
+		{
+			FT_Done_Glyph(v[i].image);
+		}
+		v[i].image = 0;
+	}
+}
+
+void CAFreeTypeFont::destroyAllLineFontGlyph()
+{
+	for (int i = 0; i < m_lines.size(); i++)
+	{
+		destroyFontGlyph(m_lines[i]->glyphs);
+	}
 }
 
 FT_Vector CAFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, ETextAlign eAlignMask,int lineNumber, int totalLines)
@@ -949,9 +978,7 @@ bool CAFreeTypeFont::initFreeTypeFont(const char* pFontName, unsigned long nSize
 	}
 
 	if (!error)
-    {
 		error = FT_Set_Char_Size(m_face, nSize << 6, nSize << 6, 72, 72);
-    }
 
 	return (error==0);
 }
@@ -1001,6 +1028,8 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
         char sTTFont[256];
         GetWindowsDirectoryA(sTTFont,255);
         strcat(sTTFont,"\\fonts\\simhei.ttf");
+
+		//strcpy(sTTFont, "c:\\xxx.ttf");
 		pFontName = sTTFont;
 
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);

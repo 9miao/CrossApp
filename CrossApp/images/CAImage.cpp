@@ -10,21 +10,20 @@
 #include "CAImageCache.h"
 #include "ccConfig.h"
 #include "ccMacros.h"
-#include "platform/platform.h"
 #include "CCGL.h"
 #include "CCStdC.h"
 #include "support/ccUtils.h"
 #include "support/zip_support/ZipUtils.h"
-#include "platform/CCPlatformMacros.h"
+#include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCFileUtils.h"
+#include "platform/CAFTFontCache.h"
 #include "basics/CAApplication.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAShaderCache.h"
 #include <ctype.h>
 #include <cctype>
-#include "platform/CAFTFontCache.h"
 #include "support/image_support/TGAlib.h"
 #include "png.h"
 #include "jpeglib.h"
@@ -781,13 +780,9 @@ CAImage::PixelFormat CAImage::convertDataToFormat(const unsigned char* data, uns
     }
 }
 
+#include "cocoa/CCArray.h"
 
-
-//CLASS IMPLEMENTATIONS:
-
-// If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
-// Default is: RGBA8888 (32-bit textures)
-static CAImage::PixelFormat g_defaultAlphaPixelFormat = CAImage::PixelFormat_Default;
+static CCArray* s_pImages = new CCArray();
 
 static CAImage* cc_white_image = NULL;
 
@@ -802,8 +797,6 @@ static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int size)
     }
     return size;
 }
-
-static int imageCount = 0;
 
 CAImage::CAImage()
 : m_uPixelsWide(0)
@@ -821,12 +814,16 @@ CAImage::CAImage()
 , m_bPremultiplied(false)
 , m_pGIF(NULL)
 , m_iGIFIndex(0)
+, m_bTextImage(false)
 {
-    //CCLog("CAImage = %d\n", ++imageCount);
+    s_pImages->addObject(this);
+    //CCLog("CAImage = %d\n", s_pImages->count());
 }
 
 CAImage::~CAImage()
 {
+    s_pImages->removeObject(this);
+
     CCLOGINFO("CrossApp: deallocing CAImage %u.", m_uName);
     CC_SAFE_RELEASE(m_pShaderProgram);
     if(m_uName)
@@ -838,7 +835,7 @@ CAImage::~CAImage()
     {
         free(m_pData);
     }
-    //CCLog("~CAImage = %d\n", --imageCount);
+    //CCLog("~CAImage = %d\n", s_pImages->count());
 }
 
 CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment,
@@ -891,8 +888,10 @@ void CAImage::updateGifImageWithIndex(unsigned int index)
 
 void CAImage::copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width)
 {
-    for (; width > 0; width--, src++, dst+=4) {
-        if (*src != transparent) {
+    for (; width > 0; width--, src++, dst+=4)
+    {
+        if (*src != transparent)
+        {
             const GifColorType& col = cmap->Colors[*src];
             *dst     = col.Red;
             *(dst+1) = col.Green;
@@ -1531,7 +1530,8 @@ bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
     m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
     m_uPixelsWide = m_pGIF->SWidth;
     m_uPixelsHigh = m_pGIF->SHeight;
-    m_pData = (unsigned char*)malloc(sizeof(unsigned char) * m_uPixelsWide * m_uPixelsHigh * 4);
+    m_nDataLenght = m_uPixelsWide * m_uPixelsHigh * 4;
+    m_pData = (unsigned char*)malloc(sizeof(unsigned char) * m_nDataLenght);
     for (unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
     {
         *(m_pData + i * 4)     = '\0';
@@ -1669,69 +1669,6 @@ bool CAImage::initWithRawData(const unsigned char * data,
         bitsPerPixel = bitsPerPixelForFormat(pixelFormat);
     }
     
-    unsigned int bytesPerRow = pixelsWide * bitsPerPixel / 8;
-    
-    if(bytesPerRow % 8 == 0)
-    {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
-    }
-    else if(bytesPerRow % 4 == 0)
-    {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-    }
-    else if(bytesPerRow % 2 == 0)
-    {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
-    }
-    else
-    {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    }
-    if(m_uName)
-    {
-        ccGLDeleteTexture(m_uName);
-    }
-    
-    glGenTextures(1, &m_uName);
-    ccGLBindTexture2D(m_uName);
-    
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-    
-    // Specify OpenGL texture image
-    
-    switch(pixelFormat)
-    {
-        case PixelFormat_RGBA8888:
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-            break;
-        case PixelFormat_RGB888:
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            break;
-        case PixelFormat_RGBA4444:
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
-            break;
-        case CAImage::PixelFormat_RGB5A1:
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
-            break;
-        case PixelFormat_RGB565:
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
-            break;
-        case PixelFormat_AI88:
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
-            break;
-        case PixelFormat_A8:
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
-            break;
-        case PixelFormat_I8:
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
-            break;
-        default:
-            CCAssert(0, "NSInternalInconsistencyException");
-            
-    }
     if (m_pData)
     {
         free(m_pData);
@@ -1755,28 +1692,14 @@ bool CAImage::initWithRawData(const unsigned char * data,
     
     setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
     
+    this->repremultipliedImageData();
+    
     return true;
 }
 
 void CAImage::convertToRawData()
 {
-    CAImage::PixelFormat      pixelFormat = m_ePixelFormat;
-    
-    unsigned int bitsPerPixel;
-    if(pixelFormat == PixelFormat_RGB888)
-    {
-        bitsPerPixel = 24;
-    }
-    else
-    {
-        bitsPerPixel = bitsPerPixelForFormat(pixelFormat);
-    }
-    
-    int bytesPerComponent = bitsPerPixel / 8;
-    unsigned long length = (unsigned long)m_uPixelsWide * m_uPixelsHigh * bytesPerComponent;
-    unsigned char* tempData = m_pData;
-
-    convertDataToFormat(tempData, length, pixelFormat, m_ePixelFormat, &m_pData, &m_nDataLenght);
+    convertDataToFormat(m_pData, m_nDataLenght, m_ePixelFormat, m_ePixelFormat, &m_pData, &m_nDataLenght);
 
     m_tContentSize = CCSize(m_uPixelsWide, m_uPixelsHigh);
     m_fMaxS = 1;
@@ -2118,21 +2041,6 @@ const char* CAImage::stringForFormat()
     }
     
     return  NULL;
-}
-
-//
-// Texture options for images that contains alpha
-//
-// implementation CAImage (PixelFormat)
-
-void CAImage::setDefaultAlphaPixelFormat(CAImage::PixelFormat format)
-{
-    g_defaultAlphaPixelFormat = format;
-}
-
-CAImage::PixelFormat CAImage::defaultAlphaPixelFormat()
-{
-    return g_defaultAlphaPixelFormat;
 }
 
 unsigned int CAImage::bitsPerPixelForFormat(CAImage::PixelFormat format)
@@ -2632,4 +2540,17 @@ bool CAImage::isWebp(const unsigned char * data, unsigned long dataLen)
     && memcmp(static_cast<const unsigned char*>(data) + 8, WEBP_WEBP, 4) == 0;
 }
 
+
+
+void CAImage::reloadAllImages()
+{
+    static bool isReload = false;
+    
+    CC_RETURN_IF(isReload);
+    isReload = true;
+
+    arrayMakeObjectsPerformSelector(s_pImages, repremultipliedImageData, CAImage*);
+    
+    isReload = false;
+}
 NS_CC_END

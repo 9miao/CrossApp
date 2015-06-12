@@ -737,7 +737,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
             m_curSelCharRange = std::pair<int,int>(m_iCurPos, m_iCurPos);
             
-#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
             CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
             pGlView->setIMECursorPos(getStringCharCount(m_szText), getContentText());
 #endif
