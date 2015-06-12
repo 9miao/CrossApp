@@ -1,5 +1,34 @@
 **********************************************************************************
 
+#### CrossApp 1.1.7 更新内容：  
+
+#####1.新增CAGif、CAGifView，支持播放.gif
+
+#####2.新增CAFlash、优化CAFlashView，完美支持x64
+
+#####3.修复安卓平台某些情况从后台返回花屏的bug
+
+#####4.优化CAPickerView
+修复不同分辨率下显示bug
+
+#####5.优化CADatePickerView
+修复不能正常获取并显示当前时间的bug,以及日期与周错乱的bug
+
+#####6.优化CAStepper
+修复setWraps、 setMinValue、 setAutoRepeat无效的bug,以及设置自定义图片不能正常显示的bug
+
+#####7.优化CAActivityIndicatorView
+
+#####8.优化文字系统
+修复文字缓存管理内存泄露的bug
+
+#####9.修复CANavigationController
+修复popViewController方法不执行动画时，viewController位置不正确的问题
+
+#####10.其他一些细节的修改
+
+**********************************************************************************
+
 #### CrossApp 1.1.6 更新内容：  
 
 #####1.新增CAFlashView，支持播放.swf后缀的flash文件

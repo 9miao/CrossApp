@@ -113,8 +113,7 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
         {
             center.size.height = center.size.width;
         }
-        center.origin.x = center.size.width/2;
-        center.origin.y = center.size.height/2;
+        center.origin = center.size/2;
         
         float radius_inside, radius_outside;
         
@@ -324,6 +323,12 @@ void CAActivityIndicatorView::setActivityBackView(CrossApp::CAView *var)
 CAView* CAActivityIndicatorView::getActivityBackView()
 {
     return m_pBackView;
+}
+
+void CAActivityIndicatorView::setContentSize(const CCSize & var)
+{
+    CAView::setContentSize(var);
+    this->setStyle(m_style);
 }
 
 NS_CC_END

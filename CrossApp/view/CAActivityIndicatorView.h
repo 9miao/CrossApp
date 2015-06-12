@@ -61,6 +61,9 @@ public:
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_color, Color);
     
+protected:
+    void setContentSize(const CCSize & var);
+
 private:
     float m_fLoadingTime;
     float m_duration;

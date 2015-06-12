@@ -34,7 +34,7 @@ public:
     void setGif(CAGif* gif);
     void setTimes(float times);
     void setRepeatForever(bool repeatForever);
-    bool isRepeatForever() {return m_bIsRepeatForever; }
+    bool isRepeatForever() { return m_bIsRepeatForever; }
 protected:
     virtual void updateImageRect();
     virtual void updateGif(float delta);

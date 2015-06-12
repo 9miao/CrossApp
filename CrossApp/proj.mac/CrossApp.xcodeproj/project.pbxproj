@@ -509,6 +509,8 @@
 		B0C512E719A3127100E6934B /* CAActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */; };
 		B0C512E819A3127100E6934B /* CADatePickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512E419A3127100E6934B /* CADatePickerView.cpp */; };
 		B0C512E919A3127100E6934B /* CADatePickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512E519A3127100E6934B /* CADatePickerView.h */; };
+		B0C94CEE1B2A7BB60007FAEB /* CAGifView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C94CEC1B2A7BB60007FAEB /* CAGifView.cpp */; };
+		B0C94CEF1B2A7BB60007FAEB /* CAGifView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C94CED1B2A7BB60007FAEB /* CAGifView.h */; };
 		B0DA93F919D79B1A00E66E11 /* CATextView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DA93F719D79B1A00E66E11 /* CATextView.cpp */; };
 		B0DA93FA19D79B1A00E66E11 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0DA93F819D79B1A00E66E11 /* CATextView.h */; };
 		B0DAEED01B256B6D0011E87D /* CAFlash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DAEECC1B256B6D0011E87D /* CAFlash.cpp */; };
@@ -1028,6 +1030,8 @@
 		B0C512E319A3127100E6934B /* CAActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAActivityIndicatorView.h; sourceTree = "<group>"; };
 		B0C512E419A3127100E6934B /* CADatePickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADatePickerView.cpp; sourceTree = "<group>"; };
 		B0C512E519A3127100E6934B /* CADatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADatePickerView.h; sourceTree = "<group>"; };
+		B0C94CEC1B2A7BB60007FAEB /* CAGifView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGifView.cpp; sourceTree = "<group>"; };
+		B0C94CED1B2A7BB60007FAEB /* CAGifView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGifView.h; sourceTree = "<group>"; };
 		B0DA93F719D79B1A00E66E11 /* CATextView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextView.cpp; sourceTree = "<group>"; };
 		B0DA93F819D79B1A00E66E11 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
 		B0DAEECC1B256B6D0011E87D /* CAFlash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFlash.cpp; sourceTree = "<group>"; };
@@ -1509,6 +1513,8 @@
 		04EAB03F1956D75500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B0C94CEC1B2A7BB60007FAEB /* CAGifView.cpp */,
+				B0C94CED1B2A7BB60007FAEB /* CAGifView.h */,
 				B0A370FB1AFC53C00034378F /* CATextEditHelper.cpp */,
 				B0A370FC1AFC53C00034378F /* CATextEditHelper.h */,
 				B0C3BD3C1ADE6811009BE71A /* CATextField.cpp */,
@@ -1914,6 +1920,7 @@
 				3EA063831B147DB800183C30 /* gameswf_mutex.h in Headers */,
 				3EA0637F1B147DB800183C30 /* gameswf_morph2.h in Headers */,
 				04EAB07C1956D75600198A8E /* ccTypes.h in Headers */,
+				B0C94CEF1B2A7BB60007FAEB /* CAGifView.h in Headers */,
 				B01F650519657084005C14FC /* CACollectionView.h in Headers */,
 				04EAB0801956D75600198A8E /* CCArray.h in Headers */,
 				B01A29421994C95F00D42BA0 /* CACalendar.h in Headers */,
@@ -2296,6 +2303,7 @@
 				3EA063991B147DB800183C30 /* gameswf_tesselate.cpp in Sources */,
 				3EA063271B147DB800183C30 /* as_color.cpp in Sources */,
 				04EAB0D31956D75600198A8E /* mat3.c in Sources */,
+				B0C94CEE1B2A7BB60007FAEB /* CAGifView.cpp in Sources */,
 				3EA062DE1B147DB800183C30 /* configvars.cpp in Sources */,
 				B0A11DA51AE8C5C500933BF6 /* dgif_lib.c in Sources */,
 				3EA062F91B147DB800183C30 /* triangulate_sint32.cpp in Sources */,
@@ -2490,7 +2498,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				DSTROOT = /tmp/CrossApp.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2529,7 +2537,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/CrossApp.dst;
