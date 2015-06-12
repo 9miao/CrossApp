@@ -11,14 +11,14 @@
 CDWebViewController::CDWebViewController()
 :m_url("")
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
+//    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+//    drawer->setTouchMoved(false);
 }
 
 CDWebViewController::~CDWebViewController()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
+//    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+//    drawer->setTouchMoved(true);
     this->getView()->removeSubview(p_webView);
     p_webView = NULL;
 }

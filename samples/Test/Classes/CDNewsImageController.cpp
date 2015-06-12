@@ -137,6 +137,7 @@ void CDNewsImageController::initImageTableView()
         showAlert();
         return;
     }
+
     if (p_TableView!=NULL)
     {
         this->getView()->removeSubview(p_TableView);

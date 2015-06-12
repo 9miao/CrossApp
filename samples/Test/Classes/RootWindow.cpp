@@ -6,6 +6,7 @@
 #include "CDNewsViewController.h"
 #include "CDNewsImageController.h"
 #include "CDNewsAboutController.h"
+#include "CDWebViewController.h"
 
 static RootWindow* _window = NULL;
 
@@ -25,11 +26,12 @@ RootWindow::RootWindow()
 :m_pRootNavigationController(NULL)
 ,m_pRootDrawerController(NULL)
 {
+    CAApplication::getApplication()->getKeypadDispatcher()->addDelegate(this);
 }
 
 RootWindow::~RootWindow()
 {
-
+    CAApplication::getApplication()->getKeypadDispatcher()->removeDelegate(this);
 }
 
 bool RootWindow::init()
@@ -54,10 +56,9 @@ bool RootWindow::init()
     drawer->initWithController(_menuview, nav, this->getBounds().size.width/6*5);
     drawer->setBackgroundView(CAImageView::createWithImage(CAImage::create("image/bg.jpg")));
     drawer->setEffect3D(true);
-    nav->release();
     
     this->setRootViewController(drawer);
-    drawer->release();
+    drawer->autorelease();
     
     m_pRootNavigationController = nav;
     m_pRootDrawerController = drawer;
@@ -197,4 +198,22 @@ void RootWindow::intNewsView()
     while (0);
     
     m_pRootDrawerController->hideLeftViewController(true);
+}
+
+void RootWindow::keyBackClicked()
+{
+    if (this->getModalViewController())
+    {
+        this->dismissModalViewController(true);
+    }
+    else if (this->getDrawerController()->isShowLeftViewController())
+    {
+        this->getDrawerController()->hideLeftViewController(true);
+    }
+    else if (this->getRootNavigationController()->getViewControllerCount() > 1)
+    {
+        this->getRootNavigationController()->popViewControllerAnimated(true);
+    }else{
+        CAApplication::getApplication()->end();
+    }
 }
