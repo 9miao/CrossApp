@@ -105,14 +105,15 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
     if (m_style != CAActivityIndicatorViewStyleImage)
     {
         CCRect center = getBounds();
-        if (center.size.width > center.size.height)
-        {
-            center.size.width = center.size.height;
-        }
-        else
-        {
-            center.size.height = center.size.width;
-        }
+        //tanjie0037: fix转轴中心错误
+//        if (center.size.width > center.size.height)
+//        {
+//            center.size.width = center.size.height;
+//        }
+//        else
+//        {
+//            center.size.height = center.size.width;
+//        }
         center.origin = center.size/2;
         
         float radius_inside, radius_outside;

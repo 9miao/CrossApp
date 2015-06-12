@@ -136,7 +136,6 @@
 		04EABB4A1956DE7100198A8E /* CrossApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EABB491956DE7100198A8E /* CrossApp.cpp */; };
 		154269DC15B5653000712A7F /* CANotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154269DA15B5653000712A7F /* CANotificationCenter.cpp */; };
 		154269DD15B5653000712A7F /* CANotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 154269DB15B5653000712A7F /* CANotificationCenter.h */; };
-		1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		1551A628158F2ADE00E66CFE /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A355158F2ADE00E66CFE /* CCAction.cpp */; };
 		1551A629158F2ADE00E66CFE /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A356158F2ADE00E66CFE /* CCAction.h */; };
 		1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A357158F2ADE00E66CFE /* CCActionCamera.cpp */; };
@@ -268,6 +267,7 @@
 		1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */; };
 		1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */; };
 		1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8716B910CD00330EFD /* CCFileUtils.h */; };
+		2B09F8931B2AC7920098D4EE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B09F8921B2AC7920098D4EE /* CoreFoundation.framework */; };
 		372C37EC1A03799E0010A376 /* CAVideoPlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 372C37E41A03799E0010A376 /* CAVideoPlayerController.cpp */; };
 		372C37ED1A03799E0010A376 /* CAVideoPlayerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 372C37E51A03799E0010A376 /* CAVideoPlayerController.h */; };
 		372C37EE1A03799E0010A376 /* CAVideoPlayerDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 372C37E61A03799E0010A376 /* CAVideoPlayerDecoder.cpp */; };
@@ -769,7 +769,6 @@
 		154269DA15B5653000712A7F /* CANotificationCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CANotificationCenter.cpp; sourceTree = "<group>"; };
 		154269DB15B5653000712A7F /* CANotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CANotificationCenter.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libCrossApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCrossApp.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1551A355158F2ADE00E66CFE /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		1551A356158F2ADE00E66CFE /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		1551A357158F2ADE00E66CFE /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -900,15 +899,12 @@
 		1A3191B616C0DDE700207637 /* decode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decode.h; sourceTree = "<group>"; };
 		1A3191B716C0DDE700207637 /* encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encode.h; sourceTree = "<group>"; };
 		1A3191B816C0DDE700207637 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
-		1A3199AD16C0E3A200207637 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/ios/libraries/libwebp.a; sourceTree = "<group>"; };
 		1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsIOS.h; sourceTree = "<group>"; };
 		1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		1AC6CE8716B910CD00330EFD /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
+		2B09F8921B2AC7920098D4EE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		37147ECF1A14881300EBE03E /* SDL */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SDL; sourceTree = "<group>"; };
 		37147ED61A15F68C00EBE03E /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSDL2.a; sourceTree = "<group>"; };
-		3727122B1A1C785D00FB827E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		3727122D1A1C78AD00FB827E /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		3727122F1A1C78D400FB827E /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		372C37E41A03799E0010A376 /* CAVideoPlayerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerController.cpp; sourceTree = "<group>"; };
 		372C37E51A03799E0010A376 /* CAVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerController.h; sourceTree = "<group>"; };
 		372C37E61A03799E0010A376 /* CAVideoPlayerDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerDecoder.cpp; sourceTree = "<group>"; };
@@ -1138,8 +1134,6 @@
 		46A393F416E5D01B00210B16 /* CAUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAUserDefault.mm; sourceTree = "<group>"; };
 		B0090D71198A444500BD8CDA /* CAPickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPickerView.cpp; sourceTree = "<group>"; };
 		B0090D72198A444500BD8CDA /* CAPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPickerView.h; sourceTree = "<group>"; };
-		B01B29A519BADA1E00CBF581 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		B01B29A819BADA1E00CBF581 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawerController.cpp; sourceTree = "<group>"; };
 		B01D4BF719A5E8240071F6A3 /* CADrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADrawerController.h; sourceTree = "<group>"; };
 		B01E80781AD5113400301FC2 /* CAImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAImage.mm; sourceTree = "<group>"; };
@@ -1275,7 +1269,6 @@
 		B0621BF71AC3C1E5005EBCA7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../the_third_party/freetype/prebuilt/ios/libfreetype.a; sourceTree = "<group>"; };
 		B0621BF91AC3C1F0005EBCA7 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../the_third_party/jpeg/prebuilt/ios/libjpeg.a; sourceTree = "<group>"; };
 		B0621BFB1AC3C1FA005EBCA7 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../the_third_party/png/prebuilt/ios/libpng.a; sourceTree = "<group>"; };
-		B0621BFD1AC3C210005EBCA7 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../the_third_party/sdl/prebuilt/ios/libSDL2.a; sourceTree = "<group>"; };
 		B0621BFF1AC3C21E005EBCA7 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../the_third_party/tiff/prebuilt/ios/libtiff.a; sourceTree = "<group>"; };
 		B0621C011AC3C229005EBCA7 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../the_third_party/webp/prebuilt/ios/libwebp.a; sourceTree = "<group>"; };
 		B06805211A833DF700F6BE00 /* CAViewAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewAnimation.cpp; sourceTree = "<group>"; };
@@ -1341,6 +1334,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B09F8931B2AC7920098D4EE /* CoreFoundation.framework in Frameworks */,
 				B0D7FA7E1B21506B004B2B86 /* libcrypto.a in Frameworks */,
 				B0D7FA7F1B21506B004B2B86 /* libssl.a in Frameworks */,
 				B0621BEC1AC3C1C9005EBCA7 /* libcurl.a in Frameworks */,
@@ -1355,7 +1349,6 @@
 				B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */,
 				B0621BFA1AC3C1F0005EBCA7 /* libjpeg.a in Frameworks */,
 				B0621BF81AC3C1E5005EBCA7 /* libfreetype.a in Frameworks */,
-				1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1528,6 +1521,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B09F8921B2AC7920098D4EE /* CoreFoundation.framework */,
 				B0D7FA7C1B21506B004B2B86 /* libcrypto.a */,
 				B0621BEB1AC3C1C9005EBCA7 /* libcurl.a */,
 				B0D7FA7D1B21506B004B2B86 /* libssl.a */,
@@ -1538,17 +1532,9 @@
 				B06E0C961AC8F7BF004F12F2 /* libswscale.a */,
 				B0621C011AC3C229005EBCA7 /* libwebp.a */,
 				B0621BFF1AC3C21E005EBCA7 /* libtiff.a */,
-				B0621BFD1AC3C210005EBCA7 /* libSDL2.a */,
 				B0621BFB1AC3C1FA005EBCA7 /* libpng.a */,
 				B0621BF91AC3C1F0005EBCA7 /* libjpeg.a */,
 				B0621BF71AC3C1E5005EBCA7 /* libfreetype.a */,
-				3727122F1A1C78D400FB827E /* CoreAudio.framework */,
-				3727122D1A1C78AD00FB827E /* ExternalAccessory.framework */,
-				3727122B1A1C785D00FB827E /* Accelerate.framework */,
-				1A3199AD16C0E3A200207637 /* libwebp.a */,
-				1551A342158F2AB200E66CFE /* Foundation.framework */,
-				B01B29A519BADA1E00CBF581 /* XCTest.framework */,
-				B01B29A819BADA1E00CBF581 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3193,6 +3179,7 @@
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
+					/Users/tanjie/Desktop/work/ZPT/CrossApp/CrossApp/the_third_party/sdl/prebuilt/ios,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -3234,6 +3221,7 @@
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
+					/Users/tanjie/Desktop/work/ZPT/CrossApp/CrossApp/the_third_party/sdl/prebuilt/ios,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

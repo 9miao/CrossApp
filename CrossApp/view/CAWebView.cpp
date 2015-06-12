@@ -179,7 +179,9 @@ void CAWebView::update(float dt)
         m_obLastContentSize = contentSize;
         
 		CCSize size = getBounds().size;
-		m_pLoadingView->setFrame(CCRect(size.width*0.5f, size.height*0.3f, size.width*0.2f, size.height*0.2f));
+        //tanjie0037: fix转轴中心错误
+		m_pLoadingView->setCenter(CCRect(size.width*0.5f, size.height*0.5f, size.width*0.2f, size.height*0.2f));
+        
         _impl->update(dt);
     }
     while (0);
