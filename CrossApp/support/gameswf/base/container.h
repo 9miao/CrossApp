@@ -31,11 +31,11 @@ class fixed_size_hash
 // Computes a hash of an object's representation.
 {
 public:
-	size_t	operator()(const T& data) const
+	long unsigned int	operator()(const T& data) const
 	{
 		unsigned char*	p = (unsigned char*) &data;
 		int	size = sizeof(T);
-
+        
 		return sdbm_hash(p, size);
 	}
 };
@@ -46,9 +46,9 @@ class identity_hash
 // Hash is just the input value; can use this for integer-indexed hash tables.
 {
 public:
-	size_t	operator()(const T& data) const
+	long unsigned int	operator()(const T& data) const
 	{
-		return (size_t) data;
+		return (long unsigned int) data;
 	}
 };
 
@@ -805,7 +805,7 @@ namespace gameswf
 			assert(m_table);
 			m_table->m_entry_count++;
 
-			unsigned int	hash_value = (unsigned int)compute_hash(key);
+			long unsigned int	hash_value = (long unsigned int)compute_hash(key);
 			int	index = hash_value & m_table->m_size_mask;
 
 			entry*	natural_entry = &(E(index));
@@ -913,7 +913,7 @@ namespace gameswf
 			// If value == NULL, return true or false according to the
 			// presence of the key, but don't touch *value.
 		{
-			int	index = find_index(key);
+            int	index = find_index(key);
 			if (index >= 0)
 			{
 				if (value) {
@@ -937,7 +937,7 @@ namespace gameswf
 		{
 			if (m_table == NULL) {
 				// Initial creation of table.  Make a minimum-sized table.
-				set_raw_capacity(16);
+				set_raw_capacity(32);
 			}
 			else if (m_table->m_entry_count * 3 > (m_table->m_size_mask + 1) * 2) {
 				// Table is more than 2/3rds full.  Expand.
@@ -956,7 +956,7 @@ namespace gameswf
 			}
 		}
 
-		void	resize(size_t n)
+		void	resize(long unsigned int n)
 			// Hint the bucket count to >= n.
 		{
 			// Not really sure what this means in relation to
@@ -986,7 +986,7 @@ namespace gameswf
 		struct entry
 		{
 			int	m_next_in_chain;	// internal chaining for collisions
-			size_t	m_hash_value;		// avoids recomputing.  Worthwhile?
+			long unsigned int	m_hash_value;		// avoids recomputing.  Worthwhile?
 			T	first;
 			U	second;
 
@@ -995,7 +995,7 @@ namespace gameswf
 				: m_next_in_chain(e.m_next_in_chain), m_hash_value(e.m_hash_value), first(e.first), second(e.second)
 			{
 			}
-			entry(const T& key, const U& value, int next_in_chain, int hash_value)
+			entry(const T& key, const U& value, int next_in_chain, long unsigned int hash_value)
 				: m_next_in_chain(next_in_chain), m_hash_value(hash_value), first(key), second(value)
 			{
 			}
@@ -1205,14 +1205,14 @@ namespace gameswf
 	private:
 		// A value of m_hash_value that marks an entry as a
 		// "tombstone" -- i.e. a placeholder entry.
-		static const size_t TOMBSTONE_HASH = (size_t)-1;
+		static const long unsigned int TOMBSTONE_HASH = (long unsigned int)-1;
 
 		int	find_index(const T& key) const
 			// Find the index of the matching entry.  If no match, then return -1.
 		{
 			if (m_table == NULL) return -1;
 
-			size_t	hash_value = compute_hash(key);
+			long unsigned int	hash_value = compute_hash(key);
 			int	index = (int)(hash_value & m_table->m_size_mask);
 
 			const entry*	e = &E(index);
@@ -1235,6 +1235,7 @@ namespace gameswf
 				}
 				assert(e->is_tombstone() || !(e->first == key));	// keys are equal, but hash differs!
 
+
 				// Keep looking through the chain.
 				index = e->m_next_in_chain;
 				if (index == -1) break;	// end of chain
@@ -1247,8 +1248,8 @@ namespace gameswf
 			return -1;
 		}
 
-		size_t compute_hash(const T& key) const {
-			size_t hash_value = hash_functor()(key);
+		long unsigned int compute_hash(const T& key) const {
+			long unsigned int hash_value = hash_functor()(key);
 			if (hash_value == TOMBSTONE_HASH) {
 				hash_value ^= 0x8000;
 			}
@@ -1809,7 +1810,7 @@ class string_hash_functor
 // ::length() and ::[int]).
 {
 public:
-	size_t	operator()(const T& data) const
+	long unsigned int	operator()(const T& data) const
 	{
 		int	size = data.length();
 
@@ -1830,7 +1831,7 @@ class stringi_hash_functor
 // ::length() and ::[int] and tolower(::[])).
 {
 public:
-	size_t	operator()(const T& data) const
+	long unsigned int	operator()(const T& data) const
 	{
 		int	size = data.length();
 
