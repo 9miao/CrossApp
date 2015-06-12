@@ -48,7 +48,6 @@ public:
     // will set CAActivityIndicatorViewStyleImage when call this func
     CC_PROPERTY(CAView*, m_pImageView, ActivityIndicatorView);
     
-    // 
     CC_PROPERTY(CAView*, m_pBackView, ActivityBackView);
     
     void startAnimating();

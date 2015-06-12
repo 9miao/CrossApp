@@ -264,7 +264,7 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         }
 
         if (m_bAutoRepeat) {
-            CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 0.5f);
+            CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 0.1f, kCCRepeatForever, 0.5f);
         }
         
         return true;
@@ -453,9 +453,6 @@ void CAStepper::action()
 
 void CAStepper::repeat(float dt)
 {
-    CAScheduler::unschedule(schedule_selector(CAStepper::repeat), this);
-    CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 0.2f);
-
     action();
 }
 

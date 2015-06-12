@@ -1541,7 +1541,7 @@ void CDUIShowView::showScrollView()
 void CDUIShowView::showFlashView()
 {
     CAFlashView* swfBg = CAFlashView::createWithFlash(CAFlash::createWithFilePath("image/swfWK.swf"));
-    swfBg->setFrame(CCRect(200,200,200,200));
+    swfBg->setFrame(CADipRect(100, 100, winSize.width/2, winSize.height/2));
     swfBg->runAnimation();
     swfBg->setRepeatForever(true);
     this->getView()->addSubview(swfBg);
@@ -1692,7 +1692,7 @@ void CDUIShowView::showStepper()
     step->setMinValue(0);
     step->setMaxValue(50);
     step->setStepValue(1);
-    step->setAutoRepeat(false);
+    //step->setAutoRepeat(false);
     this->getView()->addSubview(step);
 //    step->setDividerImage(CAImage::create("image/stepper_divider1.png"), CAControlStateNormal);
 //    step->setDecrementImage(CAImage::create("image/stepper_dec_n1.png"), CAControlStateNormal);
@@ -1713,7 +1713,10 @@ void CDUIShowView::stepperCallBack(CAControl *btn, CCPoint point)
 
 void CDUIShowView::showGifView()
 {
-    
+    CAGifView* swfBg = CAGifView::createWithGif(CAGif::createWithFilePath("image/gifview1.gif"));
+    swfBg->setFrame(CADipRect(100, 100, winSize.width/2, winSize.height/2));
+    swfBg->setRepeatForever(true);
+    this->getView()->addSubview(swfBg);
 }
 
 void CDUIShowView::jsonTest()

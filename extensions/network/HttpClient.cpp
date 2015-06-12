@@ -366,10 +366,11 @@ static int processPostFileTask(CAHttpRequest *request, write_callback callback, 
 	if (requestDataSize>0)
 	{
 		std::string strReq = request->getRequestData();
+        strReq.resize(request->getRequestDataSize());
 		std::vector<std::string> vv = CrossApp::Parse2StrVector(strReq, "&");
 		for (int i = 0; i < vv.size(); i++)
 		{
-			std::vector<std::string> v = CrossApp::Parse2StrVector(vv[i], "=");
+			std::vector<std::string> v = CrossApp::Parse2StrVector(vv[i], "=", true);
 			if (v.size() == 2)
 			{
 				curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, v[0].c_str(), CURLFORM_COPYCONTENTS, v[1].c_str(), CURLFORM_END);

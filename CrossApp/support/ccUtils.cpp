@@ -14,7 +14,7 @@ CC_DLL unsigned long ccNextPOT(unsigned long x)
     return x + 1;
 }
 
-CC_DLL std::vector<std::string> Parse2StrVector(const std::string& str, const std::string& strDelimiter)
+CC_DLL std::vector<std::string> Parse2StrVector(const std::string& str, const std::string& strDelimiter, bool bIncludeEmptyStr)
 {
 	std::vector<std::string> strVector;
 
@@ -25,14 +25,14 @@ CC_DLL std::vector<std::string> Parse2StrVector(const std::string& str, const st
 		while (first != std::string::npos)
 		{
 			std::string cszStrTemp = str.substr(pos, first - pos);
-			if (!cszStrTemp.empty())
+			if (!cszStrTemp.empty() || bIncludeEmptyStr)
 				strVector.push_back(cszStrTemp);
 
 			pos = first + strDelimiter.size();
 			first = str.find(strDelimiter, pos);
 		}
 		std::string cszStrTemp = str.substr(pos, str.size() - pos);
-		if (!cszStrTemp.empty())
+		if (!cszStrTemp.empty() || bIncludeEmptyStr)
 			strVector.push_back(cszStrTemp);
 	}
 	return strVector;
