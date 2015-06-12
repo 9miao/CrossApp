@@ -195,6 +195,8 @@ public:
     void showStepper();
     void stepperCallBack(CAControl* btn,CCPoint point);
     
+    void showGifView();
+    
     void jsonTest();//json数据读写
     
     void httpTest();

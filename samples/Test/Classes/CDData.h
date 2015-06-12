@@ -127,10 +127,11 @@ static const char* iconTag[23] =
     "image/PageView.png",
     "image/TableView.png",
     "image/ListView.png",
-    "image/WebView.png",
     "image/CollectionView.png",
     "image/ScrollView.png",
+    "image/WebView.png",
     "image/FlashView.png",
+    "image/Stepper.png",
     "image/PickerView.png",
-    "image/Animation.png"
+    "image/Stepper.png"
 };

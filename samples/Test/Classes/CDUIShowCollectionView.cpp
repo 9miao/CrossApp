@@ -29,10 +29,11 @@ CDUIShowCollectionView::CDUIShowCollectionView()
     m_vTitle.push_back("PageView");
     m_vTitle.push_back("TableView");
     m_vTitle.push_back("ListView");
-    m_vTitle.push_back("WebView");
     m_vTitle.push_back("CollectionView");
     m_vTitle.push_back("ScrollView");
+    m_vTitle.push_back("WebView");
     m_vTitle.push_back("FlashView");
+    m_vTitle.push_back("GifView");
     m_vTitle.push_back("PickerView");
     m_vTitle.push_back("Stepper");
 }

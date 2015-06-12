@@ -382,22 +382,25 @@ void CDUIShowView::showUiWithIndex(int _index)
             showListView();
             break;
         case 16:
-            showWebView();
-            break;
-        case 17:
             showCollectionView();
             break;
-        case 18:
+        case 17:
             showScrollView();
+            break;
+        case 18:
+            showWebView();
             break;
         case 19:
             showFlashView();
             break;
         case 20:
+            showGifView();
+            break;
+        case 21:
             initButtonControl();
             showDatePickerView();
             break;
-        case 21:
+        case 22:
             showStepper();
             break;
         default:
@@ -1706,6 +1709,11 @@ void CDUIShowView::stepperCallBack(CAControl *btn, CCPoint point)
     sprintf(tem, "step_value:%.0f",step->getValue());
     step_value->setText(tem);
     CCLog("step-tag === %f",step->getValue());
+}
+
+void CDUIShowView::showGifView()
+{
+    
 }
 
 void CDUIShowView::jsonTest()
