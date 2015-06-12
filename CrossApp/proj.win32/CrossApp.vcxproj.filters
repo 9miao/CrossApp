@@ -761,6 +761,15 @@
     <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_xmlsocket.cpp">
       <Filter>support\gameswf\gameswf\gameswf_as_classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\view\CAGifView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAFlash.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAGif.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -1219,6 +1228,15 @@
     </ClInclude>
     <ClInclude Include="..\view\CAFlashView.h">
       <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAGifView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAFlash.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAGif.h">
+      <Filter>images</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -191,6 +191,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionInterval.cpp" />
     <ClCompile Include="..\actions\CCActionManager.cpp" />
     <ClCompile Include="..\actions\CCActionTween.cpp" />
+    <ClCompile Include="..\images\CAFlash.cpp" />
+    <ClCompile Include="..\images\CAGif.cpp" />
     <ClCompile Include="..\images\CAImage.cpp" />
     <ClCompile Include="..\images\CAImageCache.cpp" />
     <ClCompile Include="..\images\gif_lib\dgif_lib.c" />
@@ -355,6 +357,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\view\CADrawingPrimitives.cpp" />
     <ClCompile Include="..\view\CADrawView.cpp" />
     <ClCompile Include="..\view\CAFlashView.cpp" />
+    <ClCompile Include="..\view\CAGifView.cpp" />
     <ClCompile Include="..\view\CAImageView.cpp" />
     <ClCompile Include="..\view\CALabel.cpp" />
     <ClCompile Include="..\view\CALabelStyle.cpp" />
@@ -425,6 +428,8 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\actions\CCActionInterval.h" />
     <ClInclude Include="..\actions\CCActionManager.h" />
     <ClInclude Include="..\actions\CCActionTween.h" />
+    <ClInclude Include="..\images\CAFlash.h" />
+    <ClInclude Include="..\images\CAGif.h" />
     <ClInclude Include="..\images\CAImage.h" />
     <ClInclude Include="..\images\CAImageCache.h" />
     <ClInclude Include="..\platform\CAClipboard.h" />
@@ -514,6 +519,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\view\CADrawingPrimitives.h" />
     <ClInclude Include="..\view\CADrawView.h" />
     <ClInclude Include="..\view\CAFlashView.h" />
+    <ClInclude Include="..\view\CAGifView.h" />
     <ClInclude Include="..\view\CAImageView.h" />
     <ClInclude Include="..\view\CALabel.h" />
     <ClInclude Include="..\view\CALabelStyle.h" />
