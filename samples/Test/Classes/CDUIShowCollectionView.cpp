@@ -33,11 +33,13 @@ CDUIShowCollectionView::CDUIShowCollectionView()
     m_vTitle.push_back("CollectionView");
     m_vTitle.push_back("ScrollView");
     m_vTitle.push_back("FlashView");
+    m_vTitle.push_back("PickerView");
+    m_vTitle.push_back("Stepper");
 }
 
 CDUIShowCollectionView::~CDUIShowCollectionView()
 {
-
+    
 }
 
 void CDUIShowCollectionView::viewDidLoad()

@@ -106,7 +106,6 @@ void CAPickerView::onEnterTransitionDidFinish()
     
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAPickerView::reloadAllComponents));
     CAViewAnimation::commitAnimations();
 }
 
@@ -195,7 +194,7 @@ void CAPickerView::reloadAllComponents()
             float tableWidth = m_dataSource->widthForComponent(this, i);
             float tableHeight = m_dataSource->rowHeightForComponent(this, i) * m_displayRow[i];
             float start_y = getFrame().size.height/2 - tableHeight/2;
-            CATableView* tableView = CATableView::createWithFrame(CCRectMake(start_x, start_y, tableWidth, tableHeight));
+            CATableView* tableView = CATableView::createWithFrame(CCRect(start_x, start_y, tableWidth, tableHeight));
             tableView->setTableViewDataSource(this);
             tableView->setSeparatorViewHeight(0);
             tableView->setSeparatorColor(CAColor_clear);
@@ -210,7 +209,7 @@ void CAPickerView::reloadAllComponents()
             if (!select)
             {
                 CCRect sepRect = CCRectMake(start_x, getFrame().size.height/2 - m_dataSource->rowHeightForComponent(this, i)/2, tableWidth, 1);
-                addSubview(CAView::createWithFrame(sepRect, m_separateColor));               
+                addSubview(CAView::createWithFrame(sepRect, m_separateColor));
                 sepRect.origin.y += m_dataSource->rowHeightForComponent(this, i);
                 addSubview(CAView::createWithFrame(sepRect, m_separateColor));
             }
@@ -220,7 +219,7 @@ void CAPickerView::reloadAllComponents()
                 addSubview(select);
             }
 
-            reloadComponent(i, true);
+            reloadComponent(1,i, true);
             
             start_x += m_dataSource->widthForComponent(this, i);
         }
@@ -228,7 +227,7 @@ void CAPickerView::reloadAllComponents()
 }
 
 
-void CAPickerView::reloadComponent(unsigned int component, bool bReloadData)
+void CAPickerView::reloadComponent(unsigned int _row,unsigned int component, bool bReloadData)
 {
     // reload component
     int row = m_dataSource->numberOfRowsInComponent(this, component);
@@ -257,7 +256,7 @@ void CAPickerView::reloadComponent(unsigned int component, bool bReloadData)
     }
         
     // reset selected index
-    selectRow(0, component, false);
+    selectRow(_row, component, false);
     
     if (bReloadData) {
         // reload table view
@@ -343,21 +342,21 @@ void CAPickerView::selectRow(unsigned int row, unsigned int component, bool anim
     if ( m_tableViews.empty() || !m_dataSource) {
         return;
     }
-    
     CATableView* tableView = m_tableViews.at(component);
     if (tableView) {
         int maxRow = m_dataSource->numberOfRowsInComponent(this, component);
         float height = m_dataSource->rowHeightForComponent(this, component);
         if (row < maxRow) {
-            CCPoint offset = CCPointZero;
+            //CCPoint offset = CCPointZero;
+            CCPoint offset;
             if (maxRow <= m_displayRow[component]) {
                 m_selected[component] = row + m_displayRow[component]/2;
                 offset.y = row * height;
-                tableView->setContentOffset(offset, animated);
+                tableView->setContentOffset(offset, false);
             } else {
                 m_selected[component] = maxRow + row;
                 offset.y = m_selected[component] * height + height/2 - tableView->getFrame().size.height/2;
-                tableView->setContentOffset(offset, animated);
+                tableView->setContentOffset(offset, false);
             }
         }
     }
@@ -455,6 +454,7 @@ void CAPickerView::visit()
                         }                    
                     }                    
                 }
+
             }
         }
     }

@@ -27,7 +27,8 @@ class CADatePickerViewDelegate {
 public:
     virtual ~CADatePickerViewDelegate() {};
     
-    virtual void didSelectRow(const struct tm& tm) {CC_UNUSED_PARAM(tm);}
+    //virtual void didSelectRow(const struct tm& tm) {CC_UNUSED_PARAM(tm);}
+    virtual void didSelectRow(const struct tm& tm) {}
 };
 
 class CC_DLL CADatePickerView : public CAControl, public CAPickerViewDataSource, public CAPickerViewDelegate {

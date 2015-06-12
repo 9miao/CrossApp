@@ -22,6 +22,11 @@ public:
     std::string occupation;
 };
 
+class jsonWriter : Writer
+{
+    
+};
+
 class CDETableViewDelegate
 {
 public:
@@ -102,7 +107,10 @@ public CAPageViewDelegate,
 public CDETableViewDelegate,
 public CACollectionViewDelegate,
 public CACollectionViewDataSource,
-public CAScrollViewDelegate
+public CAScrollViewDelegate,
+public CAPickerViewDelegate,
+public CAPickerViewDataSource,
+public CADatePickerViewDelegate
 {
 public:
     
@@ -144,7 +152,6 @@ public:
     void showLabelByIndex();
     
     void showProgress();
-    void showProgressByIndex();
     void progressValueChange(float _t);
     
     void showSlider();
@@ -163,7 +170,6 @@ public:
     void segmentCallback(CASegmentedControl* btn, int index);
     
     void showTabBar();
-    void showTabBarByIndex();
     
     void showPageView();
     
@@ -181,9 +187,21 @@ public:
     
     void showFlashView();
     
-    void jsonTest();
+    void showAnimation();
+    void doAction(CAControl* btn,CCPoint point);
+    
+    void showDatePickerView();
+    
+    void showStepper();
+    void stepperCallBack(CAControl* btn,CCPoint point);
+    
+    void jsonTest();//json数据读写
     
     void httpTest();
+    
+    void DownLoadManageTest();
+    
+    void DeviceTest();
     
     void requestResult(CAHttpClient* client, CAHttpResponse* response);
     
@@ -234,18 +252,30 @@ public:
 public:
     void zoomViewBySliderValue(CAControl* btn,CCPoint point);
 public:
+    //CAPickerView
+    virtual unsigned int numberOfComponentsInPickerView(CAPickerView* pickerView);
+    virtual unsigned int numberOfRowsInComponent(CAPickerView* pickerView, unsigned int component);
+    virtual float widthForComponent(CAPickerView* pickerView, unsigned int component);
+    virtual float rowHeightForComponent(CAPickerView* pickerView, unsigned int component);
+    virtual CCString* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
+    
+    virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
+    virtual void didSelectRow(const struct tm& tm);
+public:
     
     std::vector<std::string> testList;
     CADipSize winSize;
     CALabel* progress_value;
     CAProgress* progress;
-    CALabel* sliderValue;
+    CALabel* sliderValue1;
+    CALabel* sliderValue2;
     CASlider* slider;
     CALabel* switchState;
     CALabel* segmentPage;
     CATableView* p_TableView;
     CAListView* p_ListView;
     CAPageView* p_pageView;
+    CAPageView* p_PageViewVec;
     CAPageControl* pageControl;
     CAScrollView* p_ScrollView;
     CACollectionView* p_Conllection;
@@ -253,10 +283,18 @@ public:
     CAPullToRefreshView* footerRefreshView;
     std::vector<CAColor4B> colorArr;
     CAImageView* p_imageView;
+    CAPickerView* p_pickerView;
+    CALabel* city_value;
+    CAImageView* animationView;
+    CAStepper* step;
+    CALabel* step_value;
     
     int UIINDEX;
     int showIndex;
     int showNum;
+    int pageViewIndex;
+    int heart_index;
+    CAVector<CAView* > VIEWLIST;
 };
 
 #endif /* defined(__Test__CDUIShowView__) */

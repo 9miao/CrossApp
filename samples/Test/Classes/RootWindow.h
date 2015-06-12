@@ -6,7 +6,7 @@
 #include <iostream>
 #include "CDData.h"
 
-class RootWindow: public CAWindow
+class RootWindow: public CAWindow, public CAKeypadDelegate
 {
     
 public:
@@ -24,6 +24,8 @@ public:
 
     void initUIView();
     void intNewsView();
+    
+    virtual void keyBackClicked();
     
 };
 

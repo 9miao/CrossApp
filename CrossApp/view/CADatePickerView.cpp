@@ -127,7 +127,7 @@ bool CADatePickerView::initWithCenter(const CCRect& rect)
 void CADatePickerView::setDate(int year, int month, int day, bool animated)
 {
     m_tTM.tm_year = year;
-    m_tTM.tm_mon = month - 1;
+    m_tTM.tm_mon = month;
     m_tTM.tm_mday = day;
     
     // fault tolerance
@@ -197,17 +197,17 @@ unsigned int CADatePickerView::numberOfRowsInComponent(CAPickerView* pickerView,
             
         case CADatePickerModeDate:
             if (component == 0) { // year
-                row = 2030 - 1900 + 1; // 1900~2030
+                row = 2030 - 1900+1; // 1900~2030
             } else if (component == 1) { // month
                 row = 12;
             } else { // day
-                row = CACalendar::create(mktime(&m_tTM))->dayCountOfMonth();
+                row = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year,m_tTM.tm_mon);
             }
             break;
             
         case CADatePickerModeDateAndTime:
             if (component == 0) { // date
-                row = CACalendar::create(mktime(&m_tTM))->isLeapYear() ? 366 : 365;
+                row = CACalendar::create()->_isLeapYear(m_tTM.tm_year) ? 366 : 365;
             } else if (component == 1) { // hour
                 row = 24;
             } else { // minutes
@@ -302,7 +302,7 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
         case CADatePickerModeDateAndTime:
             if (component == 0)
             { // date
-                CACalendar* cal = CACalendar::create(mktime(&m_tTM));
+                CACalendar* cal = CACalendar::create(m_tTM.tm_year,m_tTM.tm_mon,m_tTM.tm_mday);
                 int day = row + 1;
                 int dayOfYear = cal->dayOfYear();
                 cal->addDay(day - dayOfYear);
@@ -361,37 +361,38 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
             if (component == 0)
             { // years
                 m_tTM.tm_year = row;
-                m_tTM.tm_mon = 0;
-                m_tTM.tm_mday = 1;
-                m_pPickerView->reloadComponent(1);
-                m_pPickerView->reloadComponent(2);
+                int tem_day = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year,m_tTM.tm_mon);
+                if (m_tTM.tm_mday>tem_day) {
+                    m_tTM.tm_mday = 1;
+                    m_pPickerView->reloadComponent(0,2);
+                }
             }
             else if (component == 1)
-            { // month
-                m_tTM.tm_mon = row;
-                m_tTM.tm_mday = 1;
-                m_pPickerView->reloadComponent(2);
+            {
+                m_tTM.tm_mon = row+1;
+                int tem_day = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year,m_tTM.tm_mon);
+                if (m_tTM.tm_mday>tem_day) {
+                    m_tTM.tm_mday = 1;
+                    m_pPickerView->reloadComponent(0,2);
+                }else{
+                    m_pPickerView->reloadComponent(m_tTM.tm_mday-1,2);
+                    
+                }
             }
             else
-            { // day
+            {
                 m_tTM.tm_mday = row + 1;
             }
-            // fault tolerant
-            time_t t = mktime(&m_tTM);
-            m_tTM = *localtime(&t);
             break;
         }
-            
         case CADatePickerModeDateAndTime:
             if (component == 0)
             { // date
                 CACalendar* cal = CACalendar::create();
                 int month, date;
-                cal->dateByDayOfYear(m_tTM.tm_year, row + 1, month, date);
+                cal->dateByDayOfYear(m_tTM.tm_year, row+1, month, date);
                 m_tTM.tm_mon = month;
                 m_tTM.tm_mday = date;
-                time_t t = mktime(&m_tTM);
-                m_tTM = *localtime(&t);
             }
             else if (component == 1)
             { // hour

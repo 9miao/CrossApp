@@ -46,7 +46,7 @@ public:
     
     void dateByDayOfYear(int year, int day, int& month, int& date);
     
-private:
+public:
     bool _isLeapYear(int year);
     int _dayCountOfMonth(int year, int month);
     int _calcDayCount(tm target);

@@ -1,4 +1,4 @@
-﻿#include "CommonHttpManager.h"
+#include "CommonHttpManager.h"
 
 #define _T(x) L##x
 #define CHAR    wchar_t
@@ -71,7 +71,45 @@ static const CHAR* aboutMenuTag[12] =
     _T("关于")
 };
 
-static const char* iconTag[20] =
+static const CHAR* adressTag[34] =
+{
+    _T("北京市"),
+    _T("天津市"),
+    _T("上海市"),
+    _T("重庆市"),
+    _T("河北省"),
+    _T("山西省"),
+    _T("辽宁省"),
+    _T("吉林省"),
+    _T("黑龙江省"),
+    _T("江苏省"),
+    _T("浙江省"),
+    _T("安徽省"),
+    _T("福建省"),
+    _T("江西省"),
+    _T("山东省"),
+    _T("河南省"),
+    _T("湖北省"),
+    _T("湖南省"),
+    _T("广东省"),
+    _T("海南省"),
+    _T("四川省"),
+    _T("贵州省"),
+    _T("云南省"),
+    _T("陕西省"),
+    _T("甘肃省"),
+    _T("青海省"),
+    _T("台湾省"),
+    _T("广西壮族自治区"),
+    _T("内蒙古自治区"),
+    _T("西藏自治区"),
+    _T("宁夏回族自治区"),
+    _T("新疆维吾尔自治区"),
+    _T("香港特别行政区"),
+    _T("澳门特别行政区"),
+};
+
+static const char* iconTag[23] =
 {
 	"image/AlertView.png",
     "image/button.png",
@@ -92,5 +130,7 @@ static const char* iconTag[20] =
     "image/WebView.png",
     "image/CollectionView.png",
     "image/ScrollView.png",
-    "image/FlashView.png"
+    "image/FlashView.png",
+    "image/PickerView.png",
+    "image/Animation.png"
 };

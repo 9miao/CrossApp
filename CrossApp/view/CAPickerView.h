@@ -79,7 +79,7 @@ public:
     
     // Reloading whole view or single component
     virtual void reloadAllComponents();
-    virtual void reloadComponent(unsigned int component, bool bReload = true);
+    virtual void reloadComponent(unsigned int row,unsigned int component, bool bReload = true);
     
     // selection. in this case, it means showing the appropriate row in the middle
     // animated: scrolls the specified row to center. default is false

@@ -26,10 +26,12 @@ RootWindow::RootWindow()
 :m_pRootNavigationController(NULL)
 ,m_pRootDrawerController(NULL)
 {
+    CAApplication::getApplication()->getKeypadDispatcher()->addDelegate(this);
 }
 
 RootWindow::~RootWindow()
 {
+    CAApplication::getApplication()->getKeypadDispatcher()->removeDelegate(this);
 }
 
 bool RootWindow::init()
@@ -196,4 +198,22 @@ void RootWindow::intNewsView()
     while (0);
     
     m_pRootDrawerController->hideLeftViewController(true);
+}
+
+void RootWindow::keyBackClicked()
+{
+    if (this->getModalViewController())
+    {
+        this->dismissModalViewController(true);
+    }
+    else if (this->getDrawerController()->isShowLeftViewController())
+    {
+        this->getDrawerController()->hideLeftViewController(true);
+    }
+    else if (this->getRootNavigationController()->getViewControllerCount() > 1)
+    {
+        this->getRootNavigationController()->popViewControllerAnimated(true);
+    }else{
+        CAApplication::getApplication()->end();
+    }
 }
