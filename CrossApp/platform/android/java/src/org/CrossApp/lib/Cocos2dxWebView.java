@@ -96,6 +96,11 @@ public class Cocos2dxWebView extends WebView {
             super.onReceivedError(view, errorCode, description, failingUrl);
             Cocos2dxWebViewHelper._didFailLoading(viewTag, failingUrl);
         }
+
+	@Override
+	public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+		handler.proceed();
+	}
     }
     
     final class InJavaScriptLocalObj {

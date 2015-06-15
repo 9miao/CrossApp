@@ -1,4 +1,4 @@
-//
+﻿//
 //  CDUIShowView.cpp
 //  Test
 //
@@ -1527,6 +1527,9 @@ void CDUIShowView::refreshData(float interval)
 
 void CDUIShowView::showScrollView()
 {
+	CAView* pView = CAStudioViewParser::getInstance()->initWithFile("c:\\page1.json");
+	this->getView()->addSubview(pView);
+	/*
     p_ScrollView = CAScrollView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
     p_ScrollView->setMinimumZoomScale(0.2f);
     p_ScrollView->setMaximumZoomScale(5.0f);
@@ -1536,6 +1539,7 @@ void CDUIShowView::showScrollView()
     p_imageView = CAImageView::createWithImage(CAImage::create("image/h1.png"));
     p_imageView->setCenter(CADipRect(_size.width/2, _size.height/2,800,1200));
     p_ScrollView->addSubview(p_imageView);
+	*/
 }
 
 void CDUIShowView::showFlashView()
