@@ -623,7 +623,7 @@
 		B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BFB1AC3C1FA005EBCA7 /* libpng.a */; };
 		B0621C001AC3C21E005EBCA7 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BFF1AC3C21E005EBCA7 /* libtiff.a */; };
 		B0621C021AC3C229005EBCA7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621C011AC3C229005EBCA7 /* libwebp.a */; };
-		B0621E271AC3EF5E005EBCA7 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BFD1AC3C210005EBCA7 /* libSDL2.a */; };
+		B0621E271AC3EF5E005EBCA7 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		B06805231A833DF700F6BE00 /* CAViewAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06805211A833DF700F6BE00 /* CAViewAnimation.cpp */; };
 		B06805241A833DF700F6BE00 /* CAViewAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B06805221A833DF700F6BE00 /* CAViewAnimation.h */; };
 		B06E0C971AC8F7BF004F12F2 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B06E0C921AC8F7BF004F12F2 /* libavcodec.a */; };
@@ -1343,7 +1343,7 @@
 				B06E0C991AC8F7BF004F12F2 /* libavutil.a in Frameworks */,
 				B06E0C9A1AC8F7BF004F12F2 /* libswresample.a in Frameworks */,
 				B06E0C9B1AC8F7BF004F12F2 /* libswscale.a in Frameworks */,
-				B0621E271AC3EF5E005EBCA7 /* libSDL2.a in Frameworks */,
+				B0621E271AC3EF5E005EBCA7 /* (null) in Frameworks */,
 				B0621C021AC3C229005EBCA7 /* libwebp.a in Frameworks */,
 				B0621C001AC3C21E005EBCA7 /* libtiff.a in Frameworks */,
 				B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */,
@@ -3179,7 +3179,7 @@
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
-					/Users/tanjie/Desktop/work/ZPT/CrossApp/CrossApp/the_third_party/sdl/prebuilt/ios,
+					"\"$(SRCROOT)/../the_third_party/sdl/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -3221,7 +3221,7 @@
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
-					/Users/tanjie/Desktop/work/ZPT/CrossApp/CrossApp/the_third_party/sdl/prebuilt/ios,
+					"\"$(SRCROOT)/../the_third_party/sdl/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
