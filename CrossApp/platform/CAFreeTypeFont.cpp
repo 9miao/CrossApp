@@ -443,10 +443,6 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
 	std::vector<TGlyph>& glyphs = pInfo->glyphs;
 	for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
     {
-		if (glyph->index == 0)
-		{
-		//	continue;
-		}
         FT_Glyph image = glyph->image;
         FT_Error error = FT_Glyph_To_Bitmap(&image, FT_RENDER_MODE_NORMAL, 0, 1);
         if (!error)
@@ -738,9 +734,14 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		glyph_index = FT_Get_Char_Index(m_face, c);
 		glyph->index = glyph_index;
 		glyph->isOpenType = (glyph_index == 0);
-		if (glyph_index == 0)
+		if (glyph_index == 0 && m_bOpenTypeFont)
 		{
 			glyph_index = FT_Get_Char_Index(s_TempFont.m_CurFontFace, c);
+		}
+		if (glyph_index == 0)
+		{
+            glyphs.resize(glyphs.size() - 1);
+            continue;
 		}
 
 		FT_Face curFace = glyph->isOpenType ? s_TempFont.m_CurFontFace : m_face;
@@ -996,7 +997,22 @@ void CAFreeTypeFont::finiFreeTypeFont()
 
 unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *size, int& ttfIndex)
 {
-	std::string path = std::string("fonts/") + pFontName;
+	std::string path;
+	std::string lowerCase(pFontName);
+	for (unsigned int i = 0; i < lowerCase.length(); ++i)
+	{
+		lowerCase[i] = tolower(lowerCase[i]);
+	}
+
+	if (std::string::npos == lowerCase.find("fonts/"))
+	{
+		path = "fonts/";
+		path += lowerCase;
+	}
+	else
+	{
+		path = lowerCase;
+	}
 
 	std::map<std::string, FontBufferInfo>::iterator ittFontNames = s_fontsNames.find(path.c_str());
 	if (ittFontNames != s_fontsNames.end())
@@ -1028,8 +1044,6 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
         char sTTFont[256];
         GetWindowsDirectoryA(sTTFont,255);
         strcat(sTTFont,"\\fonts\\simhei.ttf");
-
-		//strcpy(sTTFont, "c:\\xxx.ttf");
 		pFontName = sTTFont;
 
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
