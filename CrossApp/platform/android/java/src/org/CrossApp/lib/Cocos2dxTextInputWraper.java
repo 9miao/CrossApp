@@ -63,39 +63,15 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		{
 			return;
 		}
-//		int nModified = s.length() - this.mText.length();
-//		if (nModified > 0) {
-//			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-//		
-//			//this.mCocos2dxGLSurfaceView.insertText(insertText);
-//			/*
-//			if (BuildConfig.DEBUG) {
-//				Log.d(TAG, "insertText(" + insertText + ")");
-//			}
-//			*/ 
-//		} else {
-//			for (; nModified < 0; ++nModified) {
-//				//Tthis.mCocos2dxGLSurfaceView.deleteBackward();
-//				/*
-//				if (BuildConfig.DEBUG) {
-//					Log.d(TAG, "deleteBackward");
-//				}
-//				*/
-//			}
-//		}
+
 		this.mText = s.toString();
 	}
 
 	@Override
 	public void beforeTextChanged(final CharSequence pCharSequence, final int start, final int count, final int after) {
-		/*
-		if (BuildConfig.DEBUG) {
-			Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
-		}
-		*/
+
 		Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
-		//System.out.println(pCharSequence.toString());
-		//this.mText = pCharSequence.toString();
+
 	}
 
 	@Override
@@ -131,17 +107,32 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		
 		if (pActionID == EditorInfo.IME_ACTION_DONE) 
 		{
-			KeyBoardReturnCallBack();
+			this.mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
+				@Override
+				public void run() {
+					KeyBoardReturnCallBack();
+				}
+			});
             return true;
 		}
 		if (pActionID == EditorInfo.IME_ACTION_SEARCH)
         {
-			KeyBoardReturnCallBack();
+			this.mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
+				@Override
+				public void run() {
+					KeyBoardReturnCallBack();
+				}
+			});
             return true;
 		}
 		if (pActionID == EditorInfo.IME_ACTION_SEND)
 		{
-			KeyBoardReturnCallBack();
+			this.mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
+				@Override
+				public void run() {
+					KeyBoardReturnCallBack();
+				}
+			});
             return true;
 		}
         
@@ -156,7 +147,12 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
         }
         if (pActionID == EditorInfo.IME_ACTION_UNSPECIFIED)
         {
-            this.mCocos2dxGLSurfaceView.insertText("\n");
+        	this.mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
+				@Override
+				public void run() {
+					mCocos2dxGLSurfaceView.insertText("\n");
+				}
+			});
             return true;
         }
 		return true;

@@ -177,12 +177,16 @@ void CAWebView::update(float dt)
         CC_BREAK_IF(m_obLastPoint.equals(point) && m_obLastContentSize.equals(contentSize));
         m_obLastPoint = point;
         m_obLastContentSize = contentSize;
-        
-		CCSize size = getBounds().size;
-		m_pLoadingView->setFrame(CCRect(size.width*0.5f, size.height*0.3f, size.width*0.2f, size.height*0.2f));
+
         _impl->update(dt);
     }
     while (0);
+}
+
+void CAWebView::setContentSize(const CCSize &contentSize)
+{
+    CAView::setContentSize(contentSize);
+    m_pLoadingView->setFrame(this->getBounds());
 }
 
 NS_CC_END

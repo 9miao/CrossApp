@@ -99,6 +99,28 @@ public:
     
 };
 
+class CC_DLL CABadgeView: public CAView
+{
+public:
+    
+    CABadgeView();
+    
+    virtual ~CABadgeView();
+    
+    bool init();
+    
+    void setBadgeText(const std::string& text);
+    
+    virtual void setContentSize(const CCSize& contentSize);
+    
+protected:
+    
+    CAScale9ImageView* m_pBackground;
+    
+    CALabel* m_pTextView;
+    
+};
+
 class CC_DLL CATabBar
 :public CAView
 {
@@ -176,6 +198,8 @@ protected:
     CAView* m_pSelectedIndicatorView;
     
     CAVector<CAButton*> m_pButtons;
+    
+    CAVector<CABadgeView*> m_pBadgeViews;
 };
 
 
