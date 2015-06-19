@@ -55,8 +55,7 @@ bool CAProgress::init()
     {
         return false;
     }
-    this->setColor(CAColor_clear);
-    
+    CAView::setColor(CAColor_clear);
     
     m_pTarckImageView = CAScale9ImageView::createWithImage(NULL);
     m_pTarckImageView->setFrame(this->getBounds());
@@ -143,6 +142,11 @@ CAImage* CAProgress::getProgressTrackImage()
     return m_pProgressTrackImage;
 }
 
+void CAProgress::setColor(const CAColor4B& color)
+{
+	setProgressTintColor(color);
+	setProgressTrackColor(color);
+}
 
 void CAProgress::setProgress(float progress, bool animated)
 {

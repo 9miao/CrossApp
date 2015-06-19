@@ -193,7 +193,7 @@ CCEGLView::CCEGLView()
 
 CCEGLView::~CCEGLView()
 {
-
+	s_pEglView = NULL;
 }
 
 bool CCEGLView::initGL()

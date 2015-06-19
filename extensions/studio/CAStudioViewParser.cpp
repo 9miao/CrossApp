@@ -251,17 +251,13 @@ CAView* CAStudioViewParser::ParseJsonForImageView(CSJsonDictionary& csJson, CAIm
 
 CAView* CAStudioViewParser::ParseJsonForLabel(CSJsonDictionary& csJson, CALabel* pView)
 {
+	ParseJsonForView(csJson, pView);
+
 	pView->setText(csJson.getItemStringValue("Text"));
 	pView->setWordWrap(csJson.getItemBoolvalue("WordWrap", false));
 	pView->setLineSpacing(csJson.getItemIntValue("LineSpacing", 0));
 	pView->setNumberOfLine(csJson.getItemIntValue("NumberOfLine", 0));
 
-	CSJsonDictionary* pSubJson = csJson.getSubDictionary("FontColor");
-	pView->setColor(ccc4(
-		pSubJson->getItemIntValue("R", 0),
-		pSubJson->getItemIntValue("G", 0),
-		pSubJson->getItemIntValue("B", 0),
-		pSubJson->getItemIntValue("A", 0)));
 	pView->setFontName(csJson.getItemStringValue("FontName"));
 	pView->setFontSize(csJson.getItemIntValue("FontSize", 20));
 	pView->setBold(csJson.getItemBoolvalue("Bold", false));
@@ -270,11 +266,19 @@ CAView* CAStudioViewParser::ParseJsonForLabel(CSJsonDictionary& csJson, CALabel*
 	pView->setVerticalTextAlignmet((CAVerticalTextAlignment)csJson.getItemIntValue("VerticalTextAlignment", 1));
 	pView->setTextAlignment((CATextAlignment)csJson.getItemIntValue("TextAlignment", 0));
 
-	return ParseJsonForView(csJson, pView);
+	CSJsonDictionary* pSubJson = csJson.getSubDictionary("FontColor");
+	pView->setColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+	return pView;
 }
 
 CAView* CAStudioViewParser::ParseJsonForProgress(CSJsonDictionary& csJson, CAProgress* pView)
 {
+	ParseJsonForView(csJson, pView);
+	
 	pView->setProgressTintImage(CAImage::create(csJson.getItemStringValue("ProgressTintImage")));
 	CSJsonDictionary* pSubJson = csJson.getSubDictionary("ProgressTintColor");
 	pView->setProgressTintColor(ccc4(
@@ -291,7 +295,10 @@ CAView* CAStudioViewParser::ParseJsonForProgress(CSJsonDictionary& csJson, CAPro
 		pSubJson->getItemIntValue("B", 0),
 		pSubJson->getItemIntValue("A", 0)));
 
-	return ParseJsonForView(csJson, pView);
+	pView->setProgress(0.5f);
+
+	return pView;
+	
 }
 
 CAView* CAStudioViewParser::ParseJsonForButton(CSJsonDictionary& csJson, CAButton* pView)
@@ -417,7 +424,7 @@ CAView* CAStudioViewParser::ParseJsonForTextField(CSJsonDictionary& csJson, CATe
 {
 	pView->initWithFrame(CCRect(0, 0, 1, 1));
 	pView->setPlaceHolder(csJson.getItemStringValue("PromptInfo"));
-	/*
+
 	CSJsonDictionary* pSubJson = csJson.getSubDictionary("PrompInfoColor");
 	pView->setSpaceHolderColor(ccc4(
 		pSubJson->getItemIntValue("R", 0),
@@ -441,11 +448,11 @@ CAView* CAStudioViewParser::ParseJsonForTextField(CSJsonDictionary& csJson, CATe
 		pSubJson->getItemIntValue("G", 0),
 		pSubJson->getItemIntValue("B", 0),
 		pSubJson->getItemIntValue("A", 0)));
-	*/
-//	pView->setInputType((eKeyBoardInputType)csJson.getItemIntValue("KeyBoardInputType", 0));
-	pView->setKeyboardType((eKeyBoardType)csJson.getItemIntValue("KeyBoardType", 0));
-//	pView->setKeyboardReturnType((eKeyBoardReturnType)csJson.getItemIntValue("KeyBoardReturnType", 0));
 
+	pView->setInputType((eKeyBoardInputType)csJson.getItemIntValue("KeyBoardInputType", 0));
+	pView->setKeyboardType((eKeyBoardType)csJson.getItemIntValue("KeyBoardType", 0));
+	pView->setKeyboardReturnType((eKeyBoardReturnType)csJson.getItemIntValue("KeyBoardReturnType", 0));
+	pView->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create(csJson.getItemStringValue("BackgroundView"))));
 	return ParseJsonForView(csJson, pView);
 }
 
