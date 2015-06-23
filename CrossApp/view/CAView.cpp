@@ -30,6 +30,7 @@
 #include "CAImageView.h"
 #include "actions/CCActionInterval.h"
 #include "animation/CAViewAnimation.h"
+#include "CADrawingPrimitives.h"
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -938,13 +939,13 @@ void CAView::insertSubview(CAView* subview, int z)
     subview->setSuperview(this);
     subview->setOrderOfArrival(s_globalOrderOfArrival++);
     
-    this->updateDraw();
-    
     if( m_bRunning )
     {
         subview->onEnter();
         subview->onEnterTransitionDidFinish();
     }
+    
+    this->updateDraw();
 }
 
 void CAView::removeFromSuperview()
@@ -1141,7 +1142,6 @@ void CAView::draw()
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     CHECK_GL_ERROR_DEBUG();
-    
     
 #if CC_SPRITE_DEBUG_DRAW == 1
     // draw bounding box

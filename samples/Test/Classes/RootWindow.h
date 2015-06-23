@@ -26,7 +26,6 @@ public:
     void intNewsView();
     
     virtual void keyBackClicked();
-    
 };
 
 

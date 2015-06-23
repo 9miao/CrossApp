@@ -63,8 +63,10 @@ bool RootWindow::init()
     m_pRootNavigationController = nav;
     m_pRootDrawerController = drawer;
 
+    
     return true;
 }
+
 
 void RootWindow::initUIView()
 {

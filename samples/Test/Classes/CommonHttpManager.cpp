@@ -351,7 +351,7 @@ void CommonHttpManager::starActivityIndicatorView()
         bg->addSubview(bg2);
         m_pActivityIndicatorView->setActivityBackView(bg);
         m_pActivityIndicatorView->setLoadingMinTime(0.3f);
-        window->insertSubview(m_pActivityIndicatorView, CAWindowZoderTop);
+        window->insertSubview(m_pActivityIndicatorView, CAWindowZOderTop);
     }
     else
     {
