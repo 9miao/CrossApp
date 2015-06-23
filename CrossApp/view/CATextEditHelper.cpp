@@ -445,6 +445,7 @@ void CATextSelViewEx::showTextViewMark(const std::vector<CCRect>& vt)
 		addSubview(pTextMaskView);
 		m_pTextViewMask.push_back(pTextMaskView);
 	}
+	this->setVisible(true);
 }
 
 void CATextSelViewEx::hideTextViewMark()
