@@ -39,7 +39,6 @@ CATextView::CATextView()
 , m_pTextSelView(NULL)
 , m_pTextArrView(NULL)
 , m_bMoved(false)
-, m_bKeyboardOpen(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 }
@@ -76,7 +75,7 @@ bool CATextView::becomeFirstResponder()
 	bool result = CAView::becomeFirstResponder();
 	if (result)
 	{
-		attachWithIME();
+		result = attachWithIME();
 		showCursorMark();
 	}
 	return result;
@@ -395,28 +394,22 @@ const CAColor4B &CATextView::getFontColor()
 
 bool CATextView::canAttachWithIME()
 {
-	if (m_bKeyboardOpen)
-		return false;
 	return (m_pTextViewDelegate) ? m_pTextViewDelegate->onTextViewAttachWithIME(this) : true;
 }
 
 bool CATextView::canDetachWithIME()
 {
-	if (!m_bKeyboardOpen)
-		return false;
 	return (m_pTextViewDelegate) ? m_pTextViewDelegate->onTextViewDetachWithIME(this) : true;
 }
 
 void CATextView::didDetachWithIME()
 {
     hideCursorMark();
-	m_bKeyboardOpen = false;
 }
 
 void CATextView::didAttachWithIME()
 {
     showCursorMark();
-	m_bKeyboardOpen = true;
 }
 
 void CATextView::insertText(const char * text, int len)
@@ -748,10 +741,8 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
     if (this->getBounds().containsPoint(point))
     {
-        if (canAttachWithIME() && !m_pTextSelView->isTextViewShow())
+		if (becomeFirstResponder() && !m_pTextSelView->isTextViewShow())
         {
-            becomeFirstResponder();
-            
             int iCurLine = 0; int iCurPosX = 0;
             calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
             m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
@@ -768,10 +759,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     }
     else
     {
-        if (canDetachWithIME())
-        {
-            resignFirstResponder();
-        }
+		resignFirstResponder();
     }
 
 	CATouchView::ccTouchEnded(pTouch, pEvent);
