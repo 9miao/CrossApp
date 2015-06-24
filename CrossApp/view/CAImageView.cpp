@@ -73,8 +73,6 @@ bool CAImageView::init(void)
 
 bool CAImageView::initWithImage(CAImage* image)
 {
-	this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-
 	CCRect rect = CCRectZero;
 	if (image)
 	{

@@ -161,8 +161,6 @@ CAView * CAView::create(void)
 
 bool CAView::init()
 {
-    // shader program
-    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
     this->setImage(CAImage::CC_WHITE_IMAGE());
     return true;
 }
@@ -1786,6 +1784,18 @@ void CAView::setImage(CAImage* image)
         CC_SAFE_RETAIN(image);
         CC_SAFE_RELEASE(m_pobImage);
         m_pobImage = image;
+        if (image)
+        {
+            if (image->getPixelFormat() == CAImage::PixelFormat_A8)
+            {
+                this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
+            }
+            else
+            {
+                this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+            }
+        }
+        
         updateBlendFunc();
         this->updateDraw();
     }

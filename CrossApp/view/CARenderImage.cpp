@@ -26,7 +26,7 @@ CARenderImage::CARenderImage()
 , m_pImage(0)
 , m_ePixelFormat(CAImage::PixelFormat_RGBA8888)
 , m_uClearFlags(0)
-, m_sClearColor(ccc4f(0,0,0,0))
+, m_sClearColor(ccc4f(0,0,0,1))
 , m_fClearDepth(0.0f)
 , m_nClearStencil(0)
 , m_bAutoDraw(false)
@@ -282,6 +282,40 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
     return bRet;
 }
 
+void CARenderImage::printscreenWithView(CAView* view)
+{
+    this->printscreenWithView(view, CCPointZero);
+}
+
+void CARenderImage::printscreenWithView(CAView* view, CCPoint offset)
+{
+    this->printscreenWithView(view, offset, CAColor_clear);
+}
+
+void CARenderImage::printscreenWithView(CAView* view, const CAColor4B& backgroundColor)
+{
+    this->printscreenWithView(view, CCPointZero, backgroundColor);
+}
+
+void CARenderImage::printscreenWithView(CAView* view, CCPoint offset, const CAColor4B& backgroundColor)
+{
+    CC_RETURN_IF(view == NULL);
+    
+    float scaleY =view->getScaleY();
+    CCPoint original = view->getFrameOrigin();
+    CCPoint p = original;
+    p.y += CAApplication::getApplication()->getWinSize().height - view->getFrame().size.height;
+    p.y += offset.y;
+    p.x -= offset.x;
+    view->setFrameOrigin(p);
+    this->beginWithClear(backgroundColor);
+    view->setScaleY(-1 * scaleY);
+    view->visit();
+    this->end();
+    view->setFrameOrigin(original);
+    view->setScaleY(scaleY);
+}
+
 void CARenderImage::begin()
 {
     kmGLMatrixMode(KM_GL_PROJECTION);
@@ -313,22 +347,22 @@ void CARenderImage::begin()
     
 }
 
-void CARenderImage::beginWithClear(float r, float g, float b, float a)
+void CARenderImage::beginWithClear(const CAColor4B& backgroundColor)
 {
-    beginWithClear(r, g, b, a, 0, 0, GL_COLOR_BUFFER_BIT);
+    beginWithClear(backgroundColor, 0, 0, GL_COLOR_BUFFER_BIT);
 }
 
-void CARenderImage::beginWithClear(float r, float g, float b, float a, float depthValue)
+void CARenderImage::beginWithClear(const CAColor4B& backgroundColor, float depthValue)
 {
-    beginWithClear(r, g, b, a, depthValue, 0, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    beginWithClear(backgroundColor, depthValue, 0, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
 
-void CARenderImage::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue)
+void CARenderImage::beginWithClear(const CAColor4B& backgroundColor, float depthValue, int stencilValue)
 {
-    beginWithClear(r, g, b, a, depthValue, stencilValue, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
+    beginWithClear(backgroundColor, depthValue, stencilValue, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 }
 
-void CARenderImage::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags)
+void CARenderImage::beginWithClear(const CAColor4B& backgroundColor, float depthValue, int stencilValue, GLbitfield flags)
 {
     this->begin();
 
@@ -340,7 +374,7 @@ void CARenderImage::beginWithClear(float r, float g, float b, float a, float dep
     if (flags & GL_COLOR_BUFFER_BIT)
     {
         glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
-        glClearColor(r, g, b, a);
+        glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
     }
     
     if (flags & GL_DEPTH_BUFFER_BIT)
@@ -396,9 +430,9 @@ void CARenderImage::end()
     CC_SAFE_DELETE_ARRAY(pTempData);
 }
 
-void CARenderImage::clear(float r, float g, float b, float a)
+void CARenderImage::clear(const CAColor4B& backgroundColor)
 {
-    this->beginWithClear(r, g, b, a);
+    this->beginWithClear(backgroundColor);
     this->end();
 }
 
@@ -525,4 +559,9 @@ bool CARenderImage::saveToFile(const char *szFilePath)
     return bRet;
 }
 
+
+void CARenderImage::setContentSize(const CCSize& contentSize)
+{
+    CAView::setContentSize(CCSize(m_uPixelsWide, m_uPixelsHigh));
+}
 NS_CC_END

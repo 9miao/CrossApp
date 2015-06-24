@@ -48,7 +48,6 @@ bool CAFlashView::initWithFlash(CAFlash* flash)
 
 bool CAFlashView::init()
 {
-    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
     return true;
 }
 
