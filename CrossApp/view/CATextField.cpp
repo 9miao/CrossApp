@@ -893,8 +893,8 @@ void CATextField::setContentSize(const CCSize& var)
     }
     
     float width = CAApplication::getApplication()->getWinSize().width;
-		m_iHoriMargins = BORDER_WIDTH(width);
-		m_iVertMargins = (m_obContentSize.height - m_iFontHeight) / 2;
+	m_iHoriMargins = BORDER_WIDTH(width);
+	m_iVertMargins = (m_obContentSize.height - m_iFontHeight) / 2;
 	m_iLabelWidth = m_obContentSize.width - 2 * m_iHoriMargins;
     this->initMarkSprite();
 }
