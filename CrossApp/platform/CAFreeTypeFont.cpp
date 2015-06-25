@@ -124,7 +124,10 @@ _AgaginInitGlyphs:
 
 			cszNewText.clear();
 			StringUtils::UTF16ToUTF8(cszTemp, cszNewText);
-			cszNewText += "...";
+			if (!cszNewText.empty())
+			{
+				cszNewText += "...";
+			}
 			destroyAllLineFontGlyph();
 			goto _AgaginInitGlyphs;
 		}
