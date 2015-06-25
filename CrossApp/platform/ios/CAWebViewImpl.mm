@@ -218,7 +218,6 @@ USING_NS_CC;
     {
         return CAWebViewImpl::shouldStartLoading(self, [url UTF8String]);
     }
-	[url release];
     return YES;
 }
 
@@ -226,10 +225,8 @@ USING_NS_CC;
 {
     NSString *url = [[webView.request URL] absoluteString];
     CAWebViewImpl::didFinishLoading(self, [url UTF8String]);
-	[url release];
 	NSString* html = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.innerHTML"];
     CAWebViewImpl::onLoadHtmlSource(self,[html UTF8String]);
-	[html release];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -237,7 +234,6 @@ USING_NS_CC;
     NSString *url = error.userInfo[NSURLErrorFailingURLStringErrorKey];
     if (url) {
         CAWebViewImpl::didFailLoading(self, [url UTF8String]);
-		[url release];
     }
 }
 
