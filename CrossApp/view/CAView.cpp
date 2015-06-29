@@ -57,8 +57,6 @@ static int viewCount = 0;
 
 static int s_globalOrderOfArrival = 1;
 
-static CCRect s_restoreScissorRect = CCRectZero;
-
 CAView::CAView(void)
 : m_fRotationX(0.0f)
 , m_fRotationY(0.0f)
@@ -1166,7 +1164,16 @@ void CAView::visit()
 
     this->transform();
     
-    bool restoreScissor = (bool)glIsEnabled(GL_SCISSOR_TEST);
+    bool isDraw = true;
+    bool isScissor = (bool)glIsEnabled(GL_SCISSOR_TEST);
+    CCRect restoreScissorRect = CCRectZero;
+    if (isScissor)
+    {
+        GLfloat params[4];
+        glGetFloatv(GL_SCISSOR_BOX, params);
+        restoreScissorRect = CCRect(params[0], params[1], params[2], params[3]);
+    }
+
     
     if (!m_bDisplayRange)
     {
@@ -1230,24 +1237,18 @@ void CAView::visit()
         }
 
         CCRect frame = CCRect((point.x) * glScaleX + off_X - 0.5f,
-                              (point.y) * glScaleY + off_Y - 0.5f,
+                              (point.y) * glScaleY + off_Y,
                               (size.width) * scaleX * glScaleX + 1.0f,
                               (size.height) * scaleY * glScaleY + 1.0f);
         
-        if (restoreScissor)
+        if (isScissor)
         {
-            /*
-            GLfloat params[4];
-            glGetFloatv(GL_SCISSOR_BOX, params);
-            CCRect restoreScissorRect = CCRect(params[0], params[1], params[2], params[3]);
-            */
+            float x = MAX(frame.origin.x, restoreScissorRect.origin.x);
+            float y = MAX(frame.origin.y, restoreScissorRect.origin.y);
+            float xx = MIN(frame.origin.x + frame.size.width, restoreScissorRect.origin.x + restoreScissorRect.size.width);
+            float yy = MIN(frame.origin.y + frame.size.height, restoreScissorRect.origin.y + restoreScissorRect.size.height);
             
-            float x = MAX(frame.origin.x, s_restoreScissorRect.origin.x);
-            float y = MAX(frame.origin.y, s_restoreScissorRect.origin.y);
-            float xx = MIN(frame.origin.x + frame.size.width, s_restoreScissorRect.origin.x + s_restoreScissorRect.size.width);
-            float yy = MIN(frame.origin.y + frame.size.height, s_restoreScissorRect.origin.y + s_restoreScissorRect.size.height);
-            
-            if (frame.intersectsRect(s_restoreScissorRect))
+            if (frame.intersectsRect(restoreScissorRect))
             {
                 glScissor(x,
                           y,
@@ -1256,10 +1257,7 @@ void CAView::visit()
             }
             else
             {
-                glScissor(s_restoreScissorRect.origin.x,
-                          s_restoreScissorRect.origin.y,
-                          s_restoreScissorRect.size.width,
-                          s_restoreScissorRect.size.height);
+                isDraw = false;
             }
         }
         else
@@ -1269,7 +1267,6 @@ void CAView::visit()
                       frame.origin.y,
                       frame.size.width,
                       frame.size.height);
-            s_restoreScissorRect = frame;
         }
     }
 
@@ -1283,7 +1280,10 @@ void CAView::visit()
         itr++;
     }
     
-    this->draw();
+    if (isDraw)
+    {
+        this->draw();
+    }
     
     while (itr!=m_obSubviews.end())
     {
@@ -1295,8 +1295,17 @@ void CAView::visit()
     
     if (!m_bDisplayRange)
     {
-        glDisable(GL_SCISSOR_TEST);
-        s_restoreScissorRect = CCRectZero;
+        if (isScissor)
+        {
+            glScissor(restoreScissorRect.origin.x,
+                      restoreScissorRect.origin.y,
+                      restoreScissorRect.size.width,
+                      restoreScissorRect.size.height);
+        }
+        else
+        {
+            glDisable(GL_SCISSOR_TEST);
+        }
     }
 
     kmGLPopMatrix();
@@ -1847,10 +1856,10 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
 void CAView::updateImageRect()
 {
     // Don't update Z.
-    m_sQuad.bl.vertices = vertex3(0, 0, m_fVertexZ);
-    m_sQuad.br.vertices = vertex3(m_obContentSize.width, 0, m_fVertexZ);
-    m_sQuad.tl.vertices = vertex3(0, m_obContentSize.height, m_fVertexZ);
-    m_sQuad.tr.vertices = vertex3(m_obContentSize.width, m_obContentSize.height, m_fVertexZ);
+    m_sQuad.bl.vertices = vertex3(1, 0, m_fVertexZ);
+    m_sQuad.br.vertices = vertex3(m_obContentSize.width - 1.0f, 0, m_fVertexZ);
+    m_sQuad.tl.vertices = vertex3(1, m_obContentSize.height - 1.0f, m_fVertexZ);
+    m_sQuad.tr.vertices = vertex3(m_obContentSize.width - 1.0f, m_obContentSize.height - 1.0f, m_fVertexZ);
 }
 
 // override this method to generate "double scale" sprites
