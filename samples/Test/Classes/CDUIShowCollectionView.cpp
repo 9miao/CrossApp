@@ -36,6 +36,7 @@ CDUIShowCollectionView::CDUIShowCollectionView()
     m_vTitle.push_back("GifView");
     m_vTitle.push_back("PickerView");
     m_vTitle.push_back("Stepper");
+    m_vTitle.push_back("Video");
 }
 
 CDUIShowCollectionView::~CDUIShowCollectionView()

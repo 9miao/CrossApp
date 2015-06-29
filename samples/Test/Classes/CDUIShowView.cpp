@@ -403,6 +403,9 @@ void CDUIShowView::showUiWithIndex(int _index)
         case 22:
             showStepper();
             break;
+        case 23:
+            showVideo();
+            break;
         default:
             break;
     }
@@ -739,8 +742,8 @@ void CDUIShowView::showIndicator()
     pageViewIndex = 1;
     VIEWLIST.clear();
     
-    CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                     100, 100));
+    CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithFrame(CADipRect(0, 0,
+                                                                     winSize.width, winSize.height));
     idc1->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
     idc1->startAnimating();
     CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
@@ -749,7 +752,7 @@ void CDUIShowView::showIndicator()
     VIEWLIST.pushBack(view1);
     
     CAActivityIndicatorView* idc2 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                                        100, 100));
+                                                                                        winSize.width, winSize.height));
     idc2->setStyle(CAActivityIndicatorViewStyleWhite);
     idc2->startAnimating();
     CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
@@ -758,7 +761,7 @@ void CDUIShowView::showIndicator()
     VIEWLIST.pushBack(view2);
     
     CAActivityIndicatorView* idc3 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                                        100, 100));
+                                                                                        winSize.width, winSize.height));
     idc3->setStyle(CAActivityIndicatorViewStyleGray);
     idc3->startAnimating();
     CAView* view3 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
@@ -767,7 +770,7 @@ void CDUIShowView::showIndicator()
     VIEWLIST.pushBack(view3);
     
     CAActivityIndicatorView* idc4 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                                       100, 100));
+                                                                                       winSize.width, winSize.height));
     idc4->setStyle(CAActivityIndicatorViewStyleImage);
     idc4->setActivityIndicatorView(CAImageView::createWithImage(CAImage::create("image/indicator2.png")));
     idc4->startAnimating();
@@ -1549,7 +1552,7 @@ void CDUIShowView::showFlashView()
 
 void CDUIShowView::showDatePickerView()
 {
-    showNum = 2;
+    showNum = 5;
     pageViewIndex = 1;
     VIEWLIST.clear();
     
@@ -1573,14 +1576,38 @@ void CDUIShowView::showDatePickerView()
     view1->setColor(CAColor_white);
     VIEWLIST.pushBack(view1);
     
-    CADatePickerView* dpv = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280));
-    dpv->setMode(CADatePickerModeDateAndTime);
+    CADatePickerView* dpv = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDate);
+    dpv->setDate(2004, 2, 30, false);
     dpv->setDelegate(this);
 
     CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(dpv);
     view2->setColor(CAColor_white);
     VIEWLIST.pushBack(view2);
+    
+    CADatePickerView* dpv3 = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDateAndTime);
+    dpv3->setDelegate(this);
+    
+    CAView* view3 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    view3->addSubview(dpv3);
+    view3->setColor(CAColor_white);
+    VIEWLIST.pushBack(view3);
+    
+    CADatePickerView* dpv4 = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeTime);
+    dpv4->setDelegate(this);
+    
+    CAView* view4 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    view4->addSubview(dpv4);
+    view4->setColor(CAColor_white);
+    VIEWLIST.pushBack(view4);
+    
+    CADatePickerView* dpv5 = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeCountDownTimer);
+    dpv5->setDelegate(this);
+    
+    CAView* view5 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    view5->addSubview(dpv5);
+    view5->setColor(CAColor_white);
+    VIEWLIST.pushBack(view5);
 
     p_PageViewVec->setViews(VIEWLIST);
 }
@@ -1717,6 +1744,24 @@ void CDUIShowView::showGifView()
     swfBg->setFrame(CADipRect(100, 100, winSize.width/2, winSize.height/2));
     swfBg->setRepeatForever(true);
     this->getView()->addSubview(swfBg);
+}
+
+void CDUIShowView::showVideo()
+{
+    //http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4
+    //mnt/sdcard/video.mp4
+    
+    string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");
+    CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl(path.c_str(), "asdas");
+    this->getView()->addSubview(pv->getView());
+    pv->retain();
+    pv->play();
+    pv->setDelegate(this);
+}
+
+void CDUIShowView::onVideoPlayerButtonBack()
+{
+    
 }
 
 void CDUIShowView::jsonTest()

@@ -731,11 +731,11 @@ float VPDecoder::getFPS()
     return _fps;
 }
 
-VPDecoder* VPDecoder::createWithContentPath(const std::string& path, std::string& error)
+VPDecoder* VPDecoder::createWithContentPath(const std::string& path, std::string& error,bool isNetPath)
 {
     VPDecoder* vpdec = new VPDecoder();
     if (vpdec) {
-        if (!vpdec->openFile(path, error)) {
+        if (!vpdec->openFile(path, error,isNetPath)) {
             delete vpdec;
             return NULL;
         };
@@ -743,9 +743,9 @@ VPDecoder* VPDecoder::createWithContentPath(const std::string& path, std::string
     return vpdec;
 }
 
-bool VPDecoder::openFile(const std::string& path, std::string& perror)
+bool VPDecoder::openFile(const std::string& path, std::string& perror,bool isNetPath)
 {
-    _isNetwork = isNetworkPath(path);
+    _isNetwork = isNetPath;
     
     static bool needNetworkInit = true;
     if (needNetworkInit && _isNetwork) {
@@ -1245,13 +1245,13 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
             return NULL;
         }
         
-        sws_scale(_swsContext,
-                  (const uint8_t **)_videoFrame->data,
-                  _videoFrame->linesize,
-                  0,
-                  _videoCodecCtx->height,
-                  _picture->data,
-                  _picture->linesize);
+//        sws_scale(_swsContext,
+//                  (const uint8_t **)_videoFrame->data,
+//                  _videoFrame->linesize,
+//                  0,
+//                  _videoCodecCtx->height,
+//                  _picture->data,
+//                  _picture->linesize);
         
         VPVideoFrameRGB *rgbFrame = new VPVideoFrameRGB();
         rgbFrame->setLineSize(_picture->linesize[0]);

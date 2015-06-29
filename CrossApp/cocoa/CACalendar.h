@@ -51,7 +51,7 @@ public:
     int _dayCountOfMonth(int year, int month);
     int _calcDayCount(tm target);
     int _compareDate(tm date1, tm date2);
-    
+    int _dayCountOfYear(int year);
 private:
     tm m_tDateTime;
 };

@@ -110,7 +110,8 @@ public CACollectionViewDataSource,
 public CAScrollViewDelegate,
 public CAPickerViewDelegate,
 public CAPickerViewDataSource,
-public CADatePickerViewDelegate
+public CADatePickerViewDelegate,
+public CAVideoPlayerControllerDelegate
 {
 public:
     
@@ -197,6 +198,8 @@ public:
     
     void showGifView();
     
+    void showVideo();
+    
     void jsonTest();//json数据读写
     
     void httpTest();
@@ -263,6 +266,8 @@ public:
     
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
     virtual void didSelectRow(const struct tm& tm);
+public:
+    virtual void onVideoPlayerButtonBack();
 public:
     
     std::vector<std::string> testList;
