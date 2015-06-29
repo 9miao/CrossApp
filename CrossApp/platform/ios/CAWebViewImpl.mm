@@ -92,6 +92,9 @@ USING_NS_CC;
         [eaglview addSubview:self.uiWebView];
         [eaglview bringSubviewToFront: self.uiWebView];
     }
+
+	NSURLCache *sharedCache = [[[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil] autorelease];
+    [NSURLCache setSharedURLCache:sharedCache];
 }
 
 - (void)setVisible:(bool)visible
