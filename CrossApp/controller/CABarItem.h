@@ -117,6 +117,8 @@ public:
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pSelectedImage, SelectedImage);
     
+    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_pBadgeValue, BadgeValue);
+    
 };
 
 

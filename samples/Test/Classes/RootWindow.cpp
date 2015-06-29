@@ -63,8 +63,10 @@ bool RootWindow::init()
     m_pRootNavigationController = nav;
     m_pRootDrawerController = drawer;
 
+    
     return true;
 }
+
 
 void RootWindow::initUIView()
 {
@@ -94,9 +96,11 @@ void RootWindow::intNewsView()
         
         CAVector<CAViewController*> vec_news;
         
+        CATabBarItem* item = CATabBarItem::create(unicode_to_utf8(newsTitle[0]), CAImage::create(""), CAImage::create(""));
+        item->setBadgeValue("new");
         CDNewsViewController* news_controller1 = new CDNewsViewController(0);
         news_controller1->autorelease();
-        news_controller1->setTabBarItem(CATabBarItem::create(unicode_to_utf8(newsTitle[0]), CAImage::create(""), CAImage::create("")));
+        news_controller1->setTabBarItem(item);
         vec_news.pushBack(news_controller1);
         
         CDNewsViewController* news_controller2 = new CDNewsViewController(1);

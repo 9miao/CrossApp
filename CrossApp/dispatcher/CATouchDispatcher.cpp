@@ -63,8 +63,6 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
             }
             else
             {
-                view->sortAllSubviews();
-                
                 CAVector<CAView*>::const_reverse_iterator itr;
                 for (itr=view->getSubviews().rbegin(); itr!=view->getSubviews().rend(); itr++)
                 {

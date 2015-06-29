@@ -23,7 +23,8 @@ typedef enum
     CAControlEventTouchUpInSide,
     CAControlEventTouchUpOutSide,
     CAControlEventTouchValueChanged,
-    
+    CAControlEventTouchLongPress,
+    CAControlEventTouchCancelled,
     CAControlEventMax
 }CAControlEvents;
 

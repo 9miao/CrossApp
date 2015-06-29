@@ -72,9 +72,8 @@ bool CATextField::resignFirstResponder()
 	bool result = CAView::resignFirstResponder();
     if (result)
     {
-		detachWithIME();
+		result = detachWithIME();
         hideCursorMark();
-        //this->updateImage();
     }
     return result;
 }
@@ -84,7 +83,7 @@ bool CATextField::becomeFirstResponder()
 	bool result = CAView::becomeFirstResponder();
     if (result) 
 	{
-		attachWithIME();
+		result = attachWithIME();
         this->showCursorMark();
         if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
         {
@@ -376,10 +375,8 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (this->getBounds().containsPoint(point))
     {
-        if (canAttachWithIME())
+        if (becomeFirstResponder())
         {
-            becomeFirstResponder();
-            
             calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
             
             m_pCursorMark->setCenterOrigin(CCPoint(getCursorX() + m_iHoriMargins, m_obContentSize.height / 2));
@@ -392,11 +389,8 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     }
     else
     {
-        if (canDetachWithIME())
-        {
-            resignFirstResponder();
-        }
-    }
+		resignFirstResponder();
+	}
 
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 	execCurSelCharRange();
@@ -483,6 +477,7 @@ void CATextField::insertText(const char * text, int len)
 {
     CC_RETURN_IF(len <= 0);
     CC_RETURN_IF(text == 0);
+	CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), (int)m_sText.length()));
     
     if (!strcmp(text, "\n"))
     {
@@ -492,11 +487,9 @@ void CATextField::insertText(const char * text, int len)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     CC_RETURN_IF(m_nInputType == KEY_BOARD_INPUT_PASSWORD && len >= 2);
 #endif
-    
+
 	execCurSelCharRange();
     analyzeString(text, len);
-    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), (int)m_sText.length()));
-
     adjustCursorMoveForward();
 }
 
@@ -529,8 +522,11 @@ void CATextField::willInsertText(const char *text, int len)
 
 void CATextField::deleteBackward()
 {
+	CC_RETURN_IF(m_iCurPos == 0 || m_sText.empty());
     if (m_nInputType==KEY_BOARD_INPUT_PASSWORD)
     {
+		CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), (int)m_sText.length()));
+
         m_sText.clear();
 		m_vTextFiledChars.clear();
 		this->updateImage();
@@ -544,23 +540,29 @@ void CATextField::deleteBackward()
         return;
     }
 
-	if (m_iCurPos==0 || m_sText.empty())
-		return;
-
+	std::string cszDelStr;
+	if (m_curSelCharRange.first != m_curSelCharRange.second)
+	{
+		cszDelStr = m_sText.substr(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
+	}
+	else
+	{
+		int nDeleteLen = 1;
+		while (0x80 == (0xC0 & m_sText.at(m_iCurPos - nDeleteLen)))
+		{
+			++nDeleteLen;
+		}
+		cszDelStr = m_sText.substr(m_iCurPos - nDeleteLen, nDeleteLen);
+	}
+	CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length()));
+	
 	if (execCurSelCharRange())
 		return;
 
-	int nDeleteLen = 1;
-	while (0x80 == (0xC0 & m_sText.at(m_iCurPos - nDeleteLen)))
-	{
-		++nDeleteLen;
-	}
-	
+	int nDeleteLen = cszDelStr.size();
     m_sText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
     m_iCurPos -= nDeleteLen;
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
-    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), (int)m_sText.length()));
-	
 	m_vTextFiledChars.erase(m_vTextFiledChars.begin() + getStringCharCount(m_sText.substr(0, m_iCurPos)));
 	
     adjustCursorMoveBackward();
@@ -891,13 +893,8 @@ void CATextField::setContentSize(const CCSize& var)
     }
     
     float width = CAApplication::getApplication()->getWinSize().width;
-	if (m_iHoriMargins==0)
-	{
-		m_iHoriMargins = BORDER_WIDTH(width);
-	} 	if (m_iVertMargins==0)
-	{
-		m_iVertMargins = (m_obContentSize.height - m_iFontHeight) / 2;
-	}
+	m_iHoriMargins = BORDER_WIDTH(width);
+	m_iVertMargins = (m_obContentSize.height - m_iFontHeight) / 2;
 	m_iLabelWidth = m_obContentSize.width - 2 * m_iHoriMargins;
     this->initMarkSprite();
 }
@@ -995,8 +992,8 @@ void CATextField::updateImageRect()
 
 	x1 = m_iHoriMargins;
 	y1 = m_iVertMargins;
-    x2=x1+m_obRect.size.width;
-    y2=y1+m_obRect.size.height;
+    x2 = x1 + m_obRect.size.width;
+    y2 = y1 + m_obRect.size.height;
     m_sQuad.bl.vertices = vertex3(x1, y1, m_fVertexZ);
     m_sQuad.br.vertices = vertex3(x2, y1, m_fVertexZ);
     m_sQuad.tl.vertices = vertex3(x1, y2, m_fVertexZ);

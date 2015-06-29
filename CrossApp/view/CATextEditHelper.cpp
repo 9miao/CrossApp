@@ -123,7 +123,7 @@ void CATextToolBarView::show(CAView* pView)
 
 	if (CAWindow *rootWindow = CAApplication::getApplication()->getRootWindow())
 	{
-		rootWindow->insertSubview(this, CAWindowZoderTop);
+		rootWindow->insertSubview(this, CAWindowZOderTop);
 	}
 	becomeFirstResponder();
     m_pControlView = pView;
@@ -413,11 +413,11 @@ bool CATextSelViewEx::init()
 		return false;
 
 	m_pCursorMarkL = CAImageView::createWithImage(CAImage::create("source_material/text_pos_l.png"));
-	insertSubview(m_pCursorMarkL, CAWindowZoderTop);
+	insertSubview(m_pCursorMarkL, CAWindowZOderTop);
 	m_pCursorMarkL->setVisible(false);
     
 	m_pCursorMarkR = CAImageView::createWithImage(CAImage::create("source_material/text_pos_r.png"));
-	insertSubview(m_pCursorMarkR, CAWindowZoderTop);
+	insertSubview(m_pCursorMarkR, CAWindowZOderTop);
 	m_pCursorMarkR->setVisible(false);
 	this->setHaveNextResponder(false);
 	return true;
@@ -445,6 +445,7 @@ void CATextSelViewEx::showTextViewMark(const std::vector<CCRect>& vt)
 		addSubview(pTextMaskView);
 		m_pTextViewMask.push_back(pTextMaskView);
 	}
+	this->setVisible(true);
 }
 
 void CATextSelViewEx::hideTextViewMark()

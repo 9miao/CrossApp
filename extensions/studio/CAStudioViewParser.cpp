@@ -8,6 +8,7 @@ static CAStudioViewParser* s_pCAStudioParser = NULL;
 
 CAStudioViewParser::CAStudioViewParser()
 {
+	registAllParseFunc();
 }
 
 CAStudioViewParser::~CAStudioViewParser()
@@ -62,382 +63,405 @@ CAView* CAStudioViewParser::initWithJson(CSJson::Value& var)
 	CSJsonDictionary csJson;
 	csJson.initWithValue(var);
 
-	eItemsType eType = (eItemsType)csJson.getItemIntValue("type", -1);
-    if (eType == CAType_View)
-    {
-        return ParseJsonForView(csJson);
-    }
+	eItemsType e = (eItemsType)csJson.getItemIntValue("CaType", -1);
+	CAView* pView = createViewFactory(e);
+	if (pView != NULL)
+	{
+		return (this->*m_RegParseFunMap[e])(csJson, pView);
+	}
 	return NULL;
 }
 
-CAView* CAStudioViewParser::ParseJsonForView(const CSJsonDictionary& csJson)
+void CAStudioViewParser::registAllParseFunc()
 {
-	return NULL;
+	m_RegParseFunMap[CAType_View] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForView;
+	m_RegParseFunMap[CAType_ActivityIndicatorView] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForActivityIndicatorView;
+	m_RegParseFunMap[CAType_AlertView] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForAlertView;
+	m_RegParseFunMap[CAType_ImageView] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForImageView;
+	m_RegParseFunMap[CAType_Label] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForLabel;
+	m_RegParseFunMap[CAType_Progress] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForProgress;
+	m_RegParseFunMap[CAType_Button] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForButton;
+	m_RegParseFunMap[CAType_SegmentedControl] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForSegmentedControl;
+	m_RegParseFunMap[CAType_Slider] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForSlider;
+	m_RegParseFunMap[CAType_Stepper] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForStepper;
+	m_RegParseFunMap[CAType_Switch] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForSwitch;
+	m_RegParseFunMap[CAType_TextField] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForTextField;
+	m_RegParseFunMap[CAType_WindowView] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForView;
+	m_RegParseFunMap[CAType_Control] = (ParseJsonForViewFunc)&CAStudioViewParser::ParseJsonForControl;
+}
+
+CAView* CAStudioViewParser::createViewFactory(eItemsType eType)
+{
+	CAView* pView = NULL;
+	switch (eType)
+	{
+	case CrossApp::extension::CAType_View:
+		pView = new CAView;
+		break;
+	case CrossApp::extension::CAType_ActivityIndicatorView:
+		pView = new CAActivityIndicatorView;
+		break;
+	case CrossApp::extension::CAType_AlertView:
+		pView = new CAAlertView;
+		break;
+	case CrossApp::extension::CAType_ImageView:
+		pView = new CAImageView;
+		break;
+	case CrossApp::extension::CAType_Label:
+		pView = new CALabel;
+		break;
+	case CrossApp::extension::CAType_Progress:
+		pView = new CAProgress;
+		break;
+	case CrossApp::extension::CAType_Button:
+		pView = new CAButton(CAButtonTypeCustom);
+		break;
+	case CrossApp::extension::CAType_SegmentedControl:
+		pView = new CASegmentedControl(1);
+		break;
+	case CrossApp::extension::CAType_Slider:
+		pView = new CASlider;
+		break;
+	case CrossApp::extension::CAType_Stepper:
+		pView = new CAStepper;
+		break;
+	case CrossApp::extension::CAType_Switch:
+		pView = new CASwitch;
+		break;
+	case CrossApp::extension::CAType_TextField:
+		pView = new CATextField;
+		break;
+	case CrossApp::extension::CAType_WindowView:
+		pView = new CAView;
+		break;
+	case CrossApp::extension::CAType_Control:
+		pView = new CAControl;
+		break;
+	default:
+		break;
+	}
+	if (pView)
+	{
+		pView->init();
+		pView->autorelease();
+	}
+	return pView;
+}
+
+
+CAView* CAStudioViewParser::ParseJsonForView(CSJsonDictionary& csJson, CAView* pView)
+{
+	pView->setTag(csJson.getItemIntValue("Tag", -1));
+	pView->setTextTag(csJson.getItemStringValue("TextTag"));
+
+	CSJsonDictionary* pSubJson = csJson.getSubDictionary("BackColor");
+	pView->setColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	int PointLR = csJson.getItemIntValue("PointLR", 0);
+	int PointTB = csJson.getItemIntValue("PointTB", 0);
+	int X = csJson.getItemIntValue("X", 0);
+	int Y = csJson.getItemIntValue("Y", 0);
+	int W = csJson.getItemIntValue("Width", 0);
+	int H = csJson.getItemIntValue("Height", 0);
+
+	CAView* pParentView = pView->getSuperview();
+	if (PointLR && pParentView)
+	{
+		CCSize size = pParentView->getBounds().size;
+		X = size.width - W - X;
+	}
+	if (PointTB && pParentView)
+	{
+		CCSize size = pParentView->getBounds().size;
+		Y = size.height - H - Y;
+	}
+	pView->setFrame(CCRectMake(X, Y, W, H));
+
+	pView->setAlpha(csJson.getItemFloatValue("Alpha", 1));
+	pView->setZOrder(csJson.getItemIntValue("ZOrder", 0));
+	pView->setScaleX(csJson.getItemFloatValue("ScaleX", 1));
+	pView->setScaleY(csJson.getItemFloatValue("ScaleY", 1));
+	pView->setVisible(csJson.getItemBoolvalue("Visible", true));
+	pView->setRotation(csJson.getItemFloatValue("Rotaion", 0));
+	pView->setSkewX(csJson.getItemFloatValue("SkewX", 0));
+	pView->setSkewY(csJson.getItemFloatValue("SkewY", 0));
+	pView->setAnchorPoint(CCPointMake(csJson.getItemFloatValue("CenterX", 0.5f), csJson.getItemFloatValue("CenterY", 0.5f)));
+
+	int childViewSize = csJson.getArrayItemCount("childViews");
+	for (size_t i = 0; i < childViewSize; i++)
+	{
+		CSJsonDictionary* pSubJson = csJson.getSubItemFromArray("childViews", i);
+		eItemsType e = (eItemsType)pSubJson->getItemIntValue("CaType", -1);
+		CAView* pSubView = createViewFactory(e);
+		if (pSubView)
+		{
+			pView->addSubview(pSubView);
+			((this->*m_RegParseFunMap[e])(*pSubJson, pSubView));
+		}
+	}
+
+	return pView;
+}
+
+CAView* CAStudioViewParser::ParseJsonForActivityIndicatorView(CSJsonDictionary& csJson, CAActivityIndicatorView* pView)
+{
+	pView->setStyle((CAActivityIndicatorViewStyle)csJson.getItemIntValue("ActivityIndicatorStyle", 0));
+	pView->setLoadingMinTime(csJson.getItemFloatValue("LoadingMinTime", 0));
+
+	CAImageView* pBack = NULL;
+	CAImageView* pIndicator = NULL;
+	std::string cszBack = csJson.getItemStringValue("ActivityBack");
+	if (!cszBack.empty())
+	{
+		pView->setActivityBackView(pBack = CAImageView::createWithImage(CAImage::create(cszBack)));
+	}
+	std::string cszActivityIndicator = csJson.getItemStringValue("ActivityIndicator");
+	if (!cszActivityIndicator.empty())
+	{
+		pView->setStyle(CAActivityIndicatorViewStyleImage);
+		pView->setActivityIndicatorView(pIndicator = CAImageView::createWithImage(CAImage::create(cszActivityIndicator)));
+	}
+	ParseJsonForView(csJson, pView);
+	if (pBack)
+	{
+		pBack->setFrame(pView->getBounds());
+	}
+	if (pIndicator)
+	{
+		pIndicator->setFrame(pView->getBounds());
+	}
+	return pView;
+}
+
+CAView* CAStudioViewParser::ParseJsonForAlertView(CSJsonDictionary& csJson, CAAlertView* pView)
+{
+	return pView;
+}
+
+CAView* CAStudioViewParser::ParseJsonForImageView(CSJsonDictionary& csJson, CAImageView* pView)
+{
+	pView->setImage(CAImage::create(csJson.getItemStringValue("ImagePath")));
+	pView->setImageViewScaleType((CAImageViewScaleType)csJson.getItemIntValue("CAImageViewScaleType", 1));
+	return ParseJsonForView(csJson, pView);
+}
+
+CAView* CAStudioViewParser::ParseJsonForLabel(CSJsonDictionary& csJson, CALabel* pView)
+{
+	ParseJsonForView(csJson, pView);
+
+	pView->setText(csJson.getItemStringValue("Text"));
+	pView->setWordWrap(csJson.getItemBoolvalue("WordWrap", false));
+	pView->setLineSpacing(csJson.getItemIntValue("LineSpacing", 0));
+	pView->setNumberOfLine(csJson.getItemIntValue("NumberOfLine", 0));
+
+	pView->setFontName(csJson.getItemStringValue("FontName"));
+	pView->setFontSize(csJson.getItemIntValue("FontSize", 20));
+	pView->setBold(csJson.getItemBoolvalue("Bold", false));
+	pView->setUnderLine(csJson.getItemBoolvalue("UnderLine", false));
+	pView->setItalics(csJson.getItemBoolvalue("Italics", false));
+	pView->setVerticalTextAlignmet((CAVerticalTextAlignment)csJson.getItemIntValue("VerticalTextAlignment", 1));
+	pView->setTextAlignment((CATextAlignment)csJson.getItemIntValue("TextAlignment", 0));
+
+	CSJsonDictionary* pSubJson = csJson.getSubDictionary("FontColor");
+	pView->setColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+	return pView;
+}
+
+CAView* CAStudioViewParser::ParseJsonForProgress(CSJsonDictionary& csJson, CAProgress* pView)
+{
+	ParseJsonForView(csJson, pView);
+	
+	pView->setProgressTintImage(CAImage::create(csJson.getItemStringValue("ProgressTintImage")));
+	CSJsonDictionary* pSubJson = csJson.getSubDictionary("ProgressTintColor");
+	pView->setProgressTintColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pView->setProgressTrackImage(CAImage::create(csJson.getItemStringValue("ProgressTrackImage")));
+	pSubJson = csJson.getSubDictionary("ProgressTrackColor");
+	pView->setProgressTrackColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pView->setProgress(0.5f);
+
+	return pView;
+	
+}
+
+CAView* CAStudioViewParser::ParseJsonForButton(CSJsonDictionary& csJson, CAButton* pView)
+{
+	pView->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create(csJson.getItemStringValue("BackImage_normal"))));
+	pView->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create(csJson.getItemStringValue("BackImage_highlighted"))));
+	pView->setBackGroundViewForState(CAControlStateDisabled, CAScale9ImageView::createWithImage(CAImage::create(csJson.getItemStringValue("BackImage_disabled"))));
+	pView->setBackGroundViewForState(CAControlStateSelected, CAScale9ImageView::createWithImage(CAImage::create(csJson.getItemStringValue("BackImage_selected"))));
+
+	pView->setTitleForState(CAControlStateNormal, csJson.getItemStringValue("Text_normal"));
+	pView->setTitleForState(CAControlStateHighlighted, csJson.getItemStringValue("Text_highlighted"));
+	pView->setTitleForState(CAControlStateDisabled, csJson.getItemStringValue("Text_disabled"));
+	pView->setTitleForState(CAControlStateSelected, csJson.getItemStringValue("Text_selected"));
+	
+	CSJsonDictionary* pSubJson = csJson.getSubDictionary("Color_normal");
+	pView->getBackGroundViewForState(CAControlStateNormal)->setColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pSubJson = csJson.getSubDictionary("Color_highlighted");
+	pView->getBackGroundViewForState(CAControlStateHighlighted)->setColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pSubJson = csJson.getSubDictionary("Color_disabled");
+	pView->getBackGroundViewForState(CAControlStateDisabled)->setColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pSubJson = csJson.getSubDictionary("Color_selected");
+	pView->getBackGroundViewForState(CAControlStateSelected)->setColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pSubJson = csJson.getSubDictionary("Text_color_normal");
+	pView->setTitleColorForState(CAControlStateNormal, ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pSubJson = csJson.getSubDictionary("Text_color_highlighted");
+	pView->setTitleColorForState(CAControlStateHighlighted, ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+
+	pSubJson = csJson.getSubDictionary("Text_color_disabled");
+	pView->setTitleColorForState(CAControlStateDisabled, ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pSubJson = csJson.getSubDictionary("Text_color_selected");
+	pView->setTitleColorForState(CAControlStateSelected, ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pView->setTitleFontName(csJson.getItemStringValue("Fontname"));
+	return ParseJsonForControl(csJson, pView);
+}
+
+CAView* CAStudioViewParser::ParseJsonForSegmentedControl(CSJsonDictionary& csJson, CASegmentedControl* pView)
+{
+	return pView;
+}
+
+CAView* CAStudioViewParser::ParseJsonForSlider(CSJsonDictionary& csJson, CASlider* pView)
+{
+	pView->setValue(csJson.getItemFloatValue("Value", 0));
+	pView->setMinValue(csJson.getItemFloatValue("MinValue", 0));
+	pView->setMaxValue(csJson.getItemFloatValue("MaxValue", 100.0f));
+	pView->setTrackHeight(csJson.getItemFloatValue("TrackHeigth", 3.0f));
+	pView->setMinTrackTintImage(CAImage::create(csJson.getItemStringValue("MinTrackTintImage")));
+	pView->setMaxTrackTintImage(CAImage::create(csJson.getItemStringValue("MaxTrackTintImage")));
+	pView->setThumbTintImage(CAImage::create(csJson.getItemStringValue("ThumbTintImage")));
+	return ParseJsonForControl(csJson, pView);
+}
+
+CAView* CAStudioViewParser::ParseJsonForStepper(CSJsonDictionary& csJson, CAStepper* pView)
+{
+	pView->setContinuous(csJson.getItemBoolvalue("Continuous", true));
+	pView->setAutoRepeat(csJson.getItemBoolvalue("AutoRepeat", true));
+	pView->setTouchEffect(csJson.getItemBoolvalue("TouchEffect", false));
+	pView->setWraps(csJson.getItemBoolvalue("Wraps", false));
+	pView->setValue(csJson.getItemFloatValue("Value", 0));
+	pView->setMinValue(csJson.getItemFloatValue("MinValue", 0));
+	pView->setMaxValue(csJson.getItemFloatValue("MaxValue", 100.0f));
+	pView->setStepValue(csJson.getItemFloatValue("StepValue", 1.0f));
+	
+	pView->setBackgroundImage(CAImage::create(csJson.getItemStringValue("BackgroundImage")), CAControlStateAll);
+	pView->setIncrementImage(CAImage::create(csJson.getItemStringValue("IncrementImage")), CAControlStateAll);
+	pView->setDecrementImage(CAImage::create(csJson.getItemStringValue("DecrementImage")), CAControlStateAll);
+	pView->setDividerImage(CAImage::create(csJson.getItemStringValue("DividerImage")), CAControlStateAll);
+	return ParseJsonForControl(csJson, pView);
+}
+
+CAView* CAStudioViewParser::ParseJsonForSwitch(CSJsonDictionary& csJson, CASwitch* pView)
+{
+	pView->initWithFrame(CCRect(0, 0, 1, 1));
+	pView->setIsOn(csJson.getItemBoolvalue("IsOpen", false), false);
+	pView->setOnImage(CAImage::create(csJson.getItemStringValue("OnImage")));
+	pView->setOffImage(CAImage::create(csJson.getItemStringValue("OffImage")));
+	pView->setThumbTintImage(CAImage::create(csJson.getItemStringValue("ThumbTintImage")));
+
+	return ParseJsonForControl(csJson, pView);
+}
+
+CAView* CAStudioViewParser::ParseJsonForTextField(CSJsonDictionary& csJson, CATextField* pView)
+{
+	pView->initWithFrame(CCRect(0, 0, 1, 1));
+	pView->setPlaceHolder(csJson.getItemStringValue("PromptInfo"));
+
+	CSJsonDictionary* pSubJson = csJson.getSubDictionary("PrompInfoColor");
+	pView->setSpaceHolderColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pView->setText(csJson.getItemStringValue("TextInfo"));
+
+	pSubJson = csJson.getSubDictionary("TextColor");
+	pView->setTextColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+	pView->setFontSize(pSubJson->getItemIntValue("FontSize", 18));
+
+	pSubJson = csJson.getSubDictionary("CursorColor");
+	pView->setCursorColor(ccc4(
+		pSubJson->getItemIntValue("R", 0),
+		pSubJson->getItemIntValue("G", 0),
+		pSubJson->getItemIntValue("B", 0),
+		pSubJson->getItemIntValue("A", 0)));
+
+	pView->setInputType((eKeyBoardInputType)csJson.getItemIntValue("KeyBoardInputType", 0));
+	pView->setKeyboardType((eKeyBoardType)csJson.getItemIntValue("KeyBoardType", 0));
+	pView->setKeyboardReturnType((eKeyBoardReturnType)csJson.getItemIntValue("KeyBoardReturnType", 0));
+	pView->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create(csJson.getItemStringValue("BackgroundView"))));
+	return ParseJsonForView(csJson, pView);
+}
+
+CAView* CAStudioViewParser::ParseJsonForControl(CSJsonDictionary& csJson, CAControl* pView)
+{
+	pView->setControlState((CAControlState)csJson.getItemIntValue("ControlStart", 0));
+	pView->setControlStateLocked(csJson.getItemBoolvalue("ControlStateLocked", true));
+	return ParseJsonForView(csJson, pView);
 }
 
 
 NS_CC_EXT_END
-
-
-/*
-void CAStudioViewParser::sendStudioJson(CSJson::Value var)
-{
-
-	BaseAnalyze *analyze = new BaseAnalyze();
-	analyze->name = var["name"].asString();
-	analyze->width = var["width"].asFloat();
-	analyze->height = var["height"].asFloat();
-
-	controls = var["controls"];
-	names = controls.getMemberNames();
-	for (std::vector<std::string>::iterator i = names.begin(); i != names.end(); i++)
-	{
-		CSJson::Value value = controls[(*i).c_str()];
-		getItemType(value, (*i));
-	}
-}
-
-void CAStudioViewController::getItemType(CSJson::Value sender, std::string itemName)
-{
-    ITEMSTYPE typeId =(ITEMSTYPE)sender["TypeMode"].asInt();
-    
-    CSJson::Value location = sender["Location"];
-    CSJson::Value size = sender["Size"];
-    CCRect rect = CCRectMake(location["X"].asFloat(), location["Y"].asFloat(), size["Width"].asFloat(), size["Height"].asFloat());
-    
-    if (typeId == CA_TYPE_VIEW)
-    {
-        CAView *view = CAView::createWithFrame(rect);
-		setPropertiesForView(view, sender);
-		m_pViewDicByName->setObject(view,itemName);
-    }
-    else if (typeId == CA_TYPE_TEXTFIELD)
-    {
-        CATextField *textfiled = CATextField::createWithFrame(rect);
-		setPropertiesForTextField(textfiled, sender);
-		m_pViewDicByName->setObject(textfiled,itemName);
-    }
-    else if(typeId == CA_TYPE_TABLEVIEW)
-    {
-        CATableView *tableview = CATableView::createWithFrame(rect);
-		setPropertiesForTableView(tableview, sender);
-		m_pViewDicByName->setObject(tableview,itemName);
-    }
-    else if (typeId == CA_TYPE_SWITCH)
-    {
-        CASwitch *switchs = CASwitch::createWithFrame(rect);
-		setPropertiesForSwitch(switchs, sender);
-		m_pViewDicByName->setObject(switchs, itemName);
-
-    }
-    else if (typeId == CA_TYPE_SCROLLVIEW)
-    {
-        CAScrollView *scrollview = CAScrollView::createWithFrame(rect);
-		setPropertiesForScrollView(scrollview, sender);
-		m_pViewDicByName->setObject(scrollview,itemName);
-    }
-    else if(typeId == CA_TYPE_PROGRESS)
-    {
-        CAProgress *progress = CAProgress::create();
-        progress->setFrame(rect);
-		setPropertiesForProgress(progress, sender);
-		m_pViewDicByName->setObject(progress,itemName);
-    }
-    else if(typeId == CA_TYPE_LABEL)
-    {
-        CALabel *label = CALabel::createWithFrame(rect);
-		setPropertiesForLabel(label, sender);
-		m_pViewDicByName->setObject(label, itemName);
-    }
-    else if(typeId == CA_TYPE_IMAGE)
-    {
-        CAView *imageview = CAView::createWithFrame(rect);
-		setPropertiesForImageView(imageview, sender);
-		m_pViewDicByName->setObject(imageview,itemName);
-    }
-    else if(typeId == CA_TYPE_BUTTON)
-    {
-        CAButton *button = CAButton::createWithFrame(rect,(CAButtonType)(sender["BtnType"].asInt()-1));
-		setPropertiesForButton(button, sender);
-		m_pViewDicByName->setObject(button,itemName);
-    }
-
-}
-CAView* CAStudioViewController::getViewByName(std::string viewName)
-{
-	return (CAView*)m_pViewDicByName->objectForKey(viewName.c_str());
-}
-CAView* CAStudioViewController::getViewByTag(int tag)
-{
-	return (CAView*)m_pViewDicByName->objectForKey(tag);
-}
-void CAStudioViewController::setPropertiesForBaseObject(CAObject *sender, CSJson::Value dic)
-{
- 
-}
-void CAStudioViewController::setPropertiesForButton(CAObject *sender, CSJson::Value dic)
-{
-    CAButton *btn = (CAButton *)sender;
-    CSJson::Value touchsize = dic["TouchSize"];
-    CSJson::Value backGround = dic["BackGroundcolor"];
-    CSJson::Value foreText = dic["ForeText"];
-    CSJson::Value textColorStruct = foreText["Color"];
-    std::string backGroundImage = dic["BackgroundImage"].asString();
-    std::string bgHighLighted = dic["BgHighLighted"].asString();
-    std::string bgDisabled = dic["BgDisabled"].asString();
-    std::string bgSelected = dic["BgSelected"].asString();
-    std::string foreHighLighted = dic["ForeHighLighted"].asString();
-    std::string foreDisabled = dic["ForeDisabled"].asString();
-    std::string foreSelected = dic["ForeSelected"].asString();
-    std::string btnText = foreText["Text"].asString();
-    bool tc_isEmpty = textColorStruct["IsEmpty"].asBool();
-    bool bgc_isEmpty = backGround["IsEmpty"].asBool();
-    bool tcs_isEmpty = touchsize["IsEmpty"].asBool();
-    bool isEffect = dic["IsEffect"].asBool();
-    bool isClick = dic["IsClick"].asBool();
-    bool isTouchSuspend = dic["IsTouchSuspend"].asBool();
-    int alpha = dic["Alpha"].asInt();
-    int tag = dic["Tag"].asInt();
-    CAColor4B backgroundcolor = ccc4(backGround["R"].asInt(), backGround["G"].asInt(), backGround["B"].asInt(), backGround["A"].asInt());
-    
-    CAColor4B textColor = ccc4(textColorStruct["R"].asInt(), textColorStruct["G"].asInt(), textColorStruct["B"].asInt(), textColorStruct["A"].asInt());
-    btn->setAlpha(alpha);
-    btn->setTag(tag);
-    
-    if (!bgc_isEmpty)
-    {
-        btn->setBackGroundViewForState(CAControlStateNormal, CAView::createWithColor(backgroundcolor));
-    }
-    
-    std::string s = backGroundImage.substr(0,backGroundImage.length()-1);
-
-    if (strcmp(s.c_str(), ""))
-    {
-        btn->setBackGroundViewForState(CAControlStateNormal,CAScale9ImageView::createWithImage(CAImage::create(s.c_str())));
-    }
-    if (strcmp(bgHighLighted.c_str(), ""))
-    {
-        btn->setBackGroundViewForState(CAControlStateHighlighted, CAImageView::createWithImage(CAImage::create(bgHighLighted.c_str())));
-    }
-    if (strcmp(bgDisabled.c_str(), ""))
-    {
-        btn->setBackGroundViewForState(CAControlStateDisabled, CAImageView::createWithImage(CAImage::create(bgDisabled.c_str())));
-    } 
-    if (strcmp(bgSelected.c_str(), ""))
-    {       
-		btn->setBackGroundViewForState(CAControlStateSelected, CAImageView::createWithImage(CAImage::create(bgSelected.c_str())));
-    }
-    if (strcmp(foreHighLighted.c_str(), ""))
-    {
-        btn->setBackGroundViewForState(CAControlStateSelected, CAImageView::createWithImage(CAImage::create(bgSelected.c_str())));
-    }
-    if (strcmp(foreDisabled.c_str(), ""))
-    {
-        
-    }
-    if (strcmp(foreSelected.c_str(), ""))
-    {
-        
-    }
-    if (strcmp(btnText.c_str(), ""))
-    {
-        btn->setTitleForState(CAControlStateNormal, btnText);
-        btn->setTitleFontName("Arial");
-        if (!tc_isEmpty)
-        {
-            btn->setTitleColorForState(CAControlStateNormal, textColor);
-        }
-        
-        
-    }
-    if (!tcs_isEmpty)
-    {
-        
-    }
-    if (isEffect)
-    {
-        
-    }
-    if (isClick)
-    {
-        
-    }
-    if (isTouchSuspend)
-    {
-        
-    }
-    this->getView()->addSubview(btn);
-    
-}
-void CAStudioViewController::setPropertiesForLabel(CAObject *sender, CSJson::Value dic)
-{
-    CALabel *label = (CALabel *)sender;
-    std::string text = dic["Text"].asString();
-    std::string fontName = dic["Font"].asString();
-    CSJson::Value FontColorStruct = dic["FontColor"];
-    CAColor4B fontColor = ccc4(FontColorStruct["R"].asInt(), FontColorStruct["G"].asInt(), FontColorStruct["B"].asInt(), FontColorStruct["A"].asInt());
-    float fontSie = dic["FontSize"].asFloat();
-    CATextAlignment textAlignment = (CATextAlignment)dic["Alignment"].asInt();
-    CAVerticalTextAlignment verticalTextAlignment = (CAVerticalTextAlignment)dic["LineAlignment"].asInt();
-    CSJson::Value backColorStruct = dic["BackColor"];
-    label->setColor(fontColor);
-    label->setText(text);
-    label->setFontName(fontName);
-    label->setFontSize(fontSie);
-    label->setTextAlignment(textAlignment);
-    label->setVerticalTextAlignmet(verticalTextAlignment);
-    this->getView()->addSubview(label);
-    
-}
-void CAStudioViewController::setPropertiesForView(CAObject *sender, CSJson::Value dic)
-{
-    CAView *view = (CAView *)sender;
-    CSJson::Value BackColorStruct = dic["BackColor"];
-    bool bc_isEmpty = BackColorStruct["IsEmpty"].asBool();
-    CAColor4B backColor = ccc4(BackColorStruct["R"].asInt(), BackColorStruct["G"].asInt(), BackColorStruct["B"].asInt(), BackColorStruct["A"].asInt());
-    if (!bc_isEmpty)
-    {
-        view->setColor(backColor);
-    }
-    this->getView()->addSubview(view);
-}
-void CAStudioViewController::setPropertiesForScrollView(CAObject *sender, CSJson::Value dic)
-{
-    CAScrollView *scrollview = (CAScrollView *)sender;
-    std::string backGroundImage = dic["BackgroundImage"].asString();
-    CSJson::Value viewSizeStruct = dic["ViewSize"];
-    bool vs_isEmpty = viewSizeStruct["IsEmpty"].asBool();
-    CCSize viewsize = CCSizeMake(viewSizeStruct["Width"].asFloat(), viewSizeStruct["Height"].asFloat());
-    if (!vs_isEmpty)
-    {
-        scrollview->setViewSize(viewsize);
-    }
-    
-    bool bounces = dic["Bounces"].asBool();
-    bool bouncesHorizontal = dic["BouncesHorizontal"].asBool();
-    bool bouncesVertical = dic["BouncesVertical"].asBool();
-    float minimumZoomScale = dic["MinimumZoomScale"].asFloat();
-    float maximumZoomScale = dic["MaximumZoomScale"].asFloat();
-//    float zoomScale = dic["ZoomScale"].asFloat();
-    CSJson::Value backColorStruct = dic["BackColor"];
-    CAColor4B backColor = ccc4(backColorStruct["R"].asInt(), backColorStruct["G"].asInt(), backColorStruct["B"].asInt(), backColorStruct["A"].asInt());
-    bool bc_isEmpty = backColorStruct["IsEmpty"].asBool();
-    if (!bc_isEmpty)
-    {
-        scrollview->setBackGroundColor(backColor);
-    }
-    if (strcmp(backGroundImage.c_str(), ""))
-    {
-        scrollview->setBackGroundImage(CAImage::create(backGroundImage.c_str()));
-    }
-    scrollview->setBounces(bounces);
-    scrollview->setBounceHorizontal(bouncesHorizontal);
-    scrollview->setBounceVertical(bouncesVertical);
-    scrollview->setMinimumZoomScale(minimumZoomScale);
-    scrollview->setMaximumZoomScale(maximumZoomScale);
-    this->getView()->addSubview(scrollview);
-
-}
-void CAStudioViewController::setPropertiesForTableView(CAObject *sender, CSJson::Value dic)
-{
-
-    CATableView *tableview = (CATableView *)sender;
-    std::string backGoundImage = dic["BackgroundImage"].asString();
-    bool Bounces = dic["Bounces"].asBool();
-    bool ScrollEnabled = dic["ScrollEnabled"].asBool();
-    CSJson::Value backColorStruct = dic["BackColor"];
-    bool bc_isEmpty = backColorStruct["IsEmpty"].asBool();
-    CAColor4B backColor = ccc4(backColorStruct["R"].asInt(), backColorStruct["G"].asInt(), backColorStruct["B"].asInt(), backColorStruct["A"].asInt());
-    tableview->setBounces(Bounces);
-    tableview->setScrollEnabled(true);
-    if (m_pDataSourceTarget)
-    {
-        tableview->setTableViewDataSource(m_pDataSourceTarget);
-    }
-    if (m_pDelegateTarget)
-    {
-        tableview->setTableViewDelegate(m_pDelegateTarget);
-    }
-    if (!bc_isEmpty)
-    {
-        tableview->setBackGroundColor(backColor);
-    }
-    this->getView()->addSubview(tableview);
-    
-}
-
-void CAStudioViewController::setPropertiesForSwitch(CAObject *sender, CSJson::Value dic)
-{
-    
-}
-
-void CAStudioViewController::setPropertiesForProgress(CAObject *sender, CSJson::Value dic)
-{
-    CAProgress *progress =(CAProgress*)sender;
-    float progressPer = dic["Progress"].asFloat();
-    std::string backGroundImage = dic["BackgroundImage"].asString();
-    std::string foreImage = dic["ForeImage"].asString();
-    CSJson::Value BackColorStruct = dic["BackColor"];
-    bool bc_isEmpty = BackColorStruct["IsEmpty"].asBool();
-    CAColor4B backColor = ccc4(BackColorStruct["R"].asInt(), BackColorStruct["G"].asInt(), BackColorStruct["B"].asInt(), BackColorStruct["A"].asInt());
-    if (!bc_isEmpty) {
-        progress->setColor(backColor);
-    }
-    progress->setProgressTintImage(CAImage::create(backGroundImage.substr(0,backGroundImage.length()-1).c_str()));
-    progress->setProgressTrackImage(CAImage::create(foreImage.substr(0,foreImage.length()-1).c_str()));
-    progress->setTag(100);
-    this->getView()->addSubview(progress);
-
-   
-    
-}
-
-void CAStudioViewController::setPropertiesForTextField(CAObject *sender, CSJson::Value dic)
-{
-    CATextField *textfield = (CATextField *)sender;
-    std::string placeHolder = dic["TextCue"].asString();
-    std::string fontName = dic["Font"].asString();
-    CSJson::Value FontColorStruct = dic["FontColor"];
-    CAColor4B fontColor = ccc4(FontColorStruct["R"].asInt(), FontColorStruct["G"].asInt(), FontColorStruct["B"].asInt(), FontColorStruct["A"].asInt());
-    bool fc_isEmpty = FontColorStruct["IsEmpty"].asBool();
-    int fontSize = dic["FontSize"].asInt();
-    eKeyBoardInputType inputMode = (eKeyBoardInputType)dic["InputMode"].asInt();
-    CSJson::Value BackColorStruct = dic["BackColor"];
-    bool bc_isEmpty = BackColorStruct["IsEmpty"].asBool();
-    CAColor4B backColor = ccc4(BackColorStruct["R"].asInt(), BackColorStruct["G"].asInt(), BackColorStruct["B"].asInt(), BackColorStruct["A"].asInt());
-    CSJson::Value textCueColorStruct = dic["ColorCue"];
-    bool tcc_isEmpty = textCueColorStruct["IsEmpty"].asBool();
-    CAColor4B textCueColor = ccc4(textCueColorStruct["R"].asInt(), textCueColorStruct["G"].asInt(), textCueColorStruct["B"].asInt(), textCueColorStruct["A"].asInt());
-	textfield->setPlaceHolder(placeHolder);
-    if (!tcc_isEmpty)
-    {
-        textfield->setSpaceHolderColor(textCueColor);
-    }
-    if (!fc_isEmpty)
-    {
-        textfield->setTextColor(fontColor);
-    }
-    if (!bc_isEmpty)
-    {
-        textfield->setColor(backColor);
-    }
-    textfield->setFontSize(fontSize);
-    textfield->setInputType(inputMode);
-    this->getView()->addSubview(textfield);
-    
-}
-void CAStudioViewController::setPropertiesForImageView(CAObject *sender, CSJson::Value dic)
-{
-    CAView *imageview = (CAView *)sender;
-    std::string backGroundImage = dic["BackgroundImage"].asString();
-    CSJson::Value backGroundStruct = dic["BackColor"];
-    bool bc_isEmpty = backGroundStruct["IsEmpty"].asBool();
-    CAColor4B backGroundColor = ccc4(backGroundStruct["R"].asInt(), backGroundStruct["G"].asInt(), backGroundStruct["B"].asInt(), backGroundStruct["A"].asInt());
-    if (!bc_isEmpty)
-    {
-        imageview->setColor(backGroundColor);
-    }
-    this->getView()->addSubview(imageview);
-    
-}
-*/

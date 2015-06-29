@@ -1,5 +1,7 @@
  
 #include "CommonHttpManager.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
 
 static const char* common_loadingBackground = "dm_resource/loading_background.png";
 static const char* common_loadingIcon = "dm_resource/loading_icon.png";
@@ -295,6 +297,9 @@ void CommonHttpManager::get_image(const std::string& url,
     }
     else
     {
+        
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+        
         std::string imagePath = CCFileUtils::sharedFileUtils()->getWritablePath() + "image/" + key;
         
         unsigned long pSize = 0;
@@ -313,6 +318,7 @@ void CommonHttpManager::get_image(const std::string& url,
             callBack = CommonHttpResponseCallBack::imagePathAsync(pTarget, pSelector, imagePath, url, type);
         }
         else
+#endif
         {
             CAHttpRequest* httpRequest = new CAHttpRequest();
             httpRequest->setUrl(url.c_str());
@@ -347,7 +353,7 @@ void CommonHttpManager::starActivityIndicatorView()
         bg->addSubview(bg2);
         m_pActivityIndicatorView->setActivityBackView(bg);
         m_pActivityIndicatorView->setLoadingMinTime(0.3f);
-        window->insertSubview(m_pActivityIndicatorView, CAWindowZoderTop);
+        window->insertSubview(m_pActivityIndicatorView, CAWindowZOderTop);
     }
     else
     {
@@ -659,7 +665,7 @@ void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpRes
             CommonImageCacheManager::getInstance()->pushImage(image);
         }
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
         if (m_eGetImageType != HttpGetImageNoAllCache)
         {
             std::string imagePath = CCFileUtils::sharedFileUtils()->getWritablePath() + "image/";

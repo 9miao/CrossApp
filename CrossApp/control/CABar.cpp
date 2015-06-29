@@ -287,6 +287,64 @@ void CANavigationBar::goBack(CAControl* btn, CCPoint point)
     }
 }
 
+#pragma CABadgeView
+
+CABadgeView::CABadgeView()
+:m_pBackground(NULL)
+,m_pTextView(NULL)
+{
+
+}
+
+CABadgeView::~CABadgeView()
+{
+    
+}
+
+bool CABadgeView::init()
+{
+    m_pBackground = CAScale9ImageView::createWithCenter(CCRect(0, 0, 46, 46));
+    m_pBackground->setCapInsets(CCRect(22.5, 22.5, 1, 1));
+    m_pBackground->setImage(CAImage::create("source_material/bg_badge.png"));
+    this->addSubview(m_pBackground);
+    
+    m_pTextView = CALabel::createWithCenter(CCRect(0, 0, 180, 46));
+    m_pTextView->setTextAlignment(CATextAlignmentCenter);
+    m_pTextView->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    m_pTextView->setFontSize(30);
+    m_pTextView->setColor(CAColor_white);
+    m_pTextView->setBold(true);
+    this->addSubview(m_pTextView);
+    
+    this->setScale(_px(1) /1.23f);
+    
+    return true;
+}
+
+void CABadgeView::setBadgeText(const std::string& text)
+{
+    this->setVisible(!text.empty());
+    
+    m_pTextView->setCenter(CCRect(0, 0, 180, 46));
+    m_pTextView->setText(text);
+    
+    CCRect rect = m_pBackground->getCenter();
+    rect.size.width = CAImage::getStringWidth("", 30, text);
+    if (rect.size.width > 30)
+    {
+        rect.size.width += 16;
+    }
+    rect.size.width = MIN(rect.size.width, 196);
+    rect.size.width = MAX(rect.size.width, 46);
+
+    m_pBackground->setCenter(rect);
+}
+
+void CABadgeView::setContentSize(const CCSize& contentSize)
+{
+
+}
+
 #pragma CATabBar
 
 CATabBar::CATabBar()
@@ -367,6 +425,12 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size)
             btn->addTarget(this, CAControl_selector(CATabBar::setTouchSelected), CAControlEventTouchUpInSide);
             m_pButtons.pushBack(btn);
             
+            CABadgeView* badgeView = new CABadgeView();
+            badgeView->init();
+            badgeView->setCenter(CADipRect(rect.size.width, 25, 0, 0));
+            btn->insertSubview(badgeView, 10);
+            m_pBadgeViews.pushBack(badgeView);
+            
         }
     }
     if (m_pBackGroundImage == NULL)
@@ -399,11 +463,8 @@ CATabBar* CATabBar::create(const CAVector<CATabBarItem*>& items, const CCSize& s
 
 void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
 {
-	do
-	{
-		CC_BREAK_IF(items.empty());
-		m_pItems = items;
-	} while (0);
+    CC_RETURN_IF(items.empty());
+	m_pItems = items;
 }
 
 void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)
@@ -422,6 +483,8 @@ void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)
             btn->setImageForState(CAControlStateHighlighted, selectedImage);
             btn->setImageForState(CAControlStateSelected, selectedImage);
 
+            CABadgeView* badgeView = m_pBadgeViews.at(index);
+            badgeView->setBadgeText(item->getBadgeValue());
         }
     }
 }
@@ -598,6 +661,9 @@ void CATabBar::showSelectedBackGround()
                                            CAView::createWithColor(m_sSelectedBackGroundColor));
         }
         btn->setAllowsSelected(true);
+        
+        CABadgeView* badgeView = m_pBadgeViews.at(i);
+        badgeView->setBadgeText(m_pItems.at(i)->getBadgeValue());
     }
 }
 

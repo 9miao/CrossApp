@@ -263,7 +263,8 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 break;
         }
 
-        if (m_bAutoRepeat) {
+        if (m_bAutoRepeat)
+        {
             CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 0.1f, kCCRepeatForever, 0.5f);
         }
         
@@ -335,6 +336,12 @@ void CAStepper::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 void CAStepper::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
+    m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
+    m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
+    if (m_bTouchEffect) {
+        m_pDecrementImageView->setAlpha(1.0);
+        m_pIncrementImageView->setAlpha(1.0);
+    }
     CAScheduler::unschedule(schedule_selector(CAStepper::repeat), this);
 }
 

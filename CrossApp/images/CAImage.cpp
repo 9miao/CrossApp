@@ -1893,7 +1893,6 @@ void CAImage::drawAtPoint(const CCPoint& point)
     
     ccGLBindTexture2D( m_uName );
     
-    
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
@@ -1904,7 +1903,6 @@ void CAImage::drawAtPoint(const CCPoint& point)
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 #endif // EMSCRIPTEN
-    
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 

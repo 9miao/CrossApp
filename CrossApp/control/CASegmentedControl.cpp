@@ -778,13 +778,9 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
     CAView* segment = m_vSegments.at(index);
     if(segment)
     {
-        this->addSubview(clipNode);
-        CCSize size = m_pBackgroundView->getBounds().size;
+        CCSize size = clipNode->getFrame().size;
         CARenderImage* render = CARenderImage::create(size.width, size.height, CAImage::PixelFormat_RGBA8888);
-        render->beginWithClear(255, 255, 255, 0);
-        clipNode->visit();
-        render->end();
-        clipNode->removeFromSuperview();
+        render->printscreenWithView(clipNode);
         
         CCRect rect;
         rect.origin = CCPoint(x, 0);

@@ -1,4 +1,4 @@
-//
+﻿//
 //  CDUIShowView.cpp
 //  Test
 //
@@ -999,7 +999,7 @@ void CDUIShowView::switchStateChange(CAControl* btn, CCPoint point)
 
 void CDUIShowView::showTextField()
 {
-    CATextField* textField = CATextField::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width-200, 80));
+    CATextField* textField = CATextField::createWithFrame(CADipRect(100, 300, winSize.width-200, 80));
     textField->setFontSize(_px(40));
     textField->setTag(100);
     textField->setPlaceHolder("Input");
@@ -1011,7 +1011,7 @@ void CDUIShowView::showTextField()
 void CDUIShowView::showTextFieldByIndex()
 {
     this->getView()->removeSubviewByTag(100);
-    if (showIndex==0)
+    if (showIndex == 0)
     {
         this->setNavigationBarItem(CANavigationBarItem::create("TextField"));
         CATextField* textField = CATextField::createWithFrame(CADipRect(100, 150, winSize.width-200, 80));
@@ -1020,7 +1020,7 @@ void CDUIShowView::showTextFieldByIndex()
         textField->setPlaceHolder("Input");
         this->getView()->addSubview(textField);
     }
-    else if(showIndex==1)
+    else if(showIndex == 1)
     {
         this->setNavigationBarItem(CANavigationBarItem::create("TextField Custem"));
         CATextField* textField = CATextField::createWithFrame(CADipRect(100, 150, winSize.width-200, 80));
@@ -1539,6 +1539,7 @@ void CDUIShowView::showScrollView()
     p_imageView = CAImageView::createWithImage(CAImage::create("image/h1.png"));
     p_imageView->setCenter(CADipRect(_size.width/2, _size.height/2,800,1200));
     p_ScrollView->addSubview(p_imageView);
+
 }
 
 void CDUIShowView::showFlashView()

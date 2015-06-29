@@ -452,8 +452,6 @@ protected:
     CAColor4B   _realColor;
     
     bool m_bDisplayRange;
-    bool m_bRestoreScissor;
-    CCRect m_obRestoreScissorRect;
 
     unsigned int        m_uAtlasIndex;          /// Absolute (real) Index on the SpriteSheet
     

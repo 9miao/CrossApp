@@ -76,7 +76,7 @@ bool CAActivityIndicatorView::init()
         return false;
     }
     this->CAView::setColor(CAColor_clear);
-    setStyle(CAActivityIndicatorViewStyleGray);
+    m_style = CAActivityIndicatorViewStyleGray;
     
     return true;
 }
@@ -105,15 +105,11 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
     if (m_style != CAActivityIndicatorViewStyleImage)
     {
         CCRect center = getBounds();
-        if (center.size.width > center.size.height)
-        {
-            center.size.width = center.size.height;
-        }
-        else
-        {
-            center.size.height = center.size.width;
-        }
+        
         center.origin = center.size/2;
+//        center.size.width = MIN(center.size.width, center.size.height);
+//        center.size.height = center.size.width;
+        
         
         float radius_inside, radius_outside;
         
@@ -160,9 +156,6 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
             m_vertex[index][1].y += radius_outside * sin(radian);
         }
     }
-    
-    
-    
 }
 
 void CAActivityIndicatorView::startAnimating()
@@ -329,6 +322,14 @@ void CAActivityIndicatorView::setContentSize(const CCSize & var)
 {
     CAView::setContentSize(var);
     this->setStyle(m_style);
+    if (m_pBackView)
+    {
+        m_pBackView->setCenterOrigin(getBounds().size/2);
+    }
+    if (m_pImageView)
+    {
+        m_pImageView->setCenterOrigin(getBounds().size/2);
+    }
 }
 
 NS_CC_END

@@ -746,7 +746,6 @@
 		1551A33F158F2AB200E66CFE /* libCrossApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCrossApp.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1551A873158F2B4700E66CFE /* CrossApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.pch"; sourceTree = "<group>"; };
-		3EA062111B147DB700183C30 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		3EA062131B147DB700183C30 /* component_hackery.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = component_hackery.cpp; sourceTree = "<group>"; };
 		3EA062141B147DB700183C30 /* configvars.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = configvars.cpp; sourceTree = "<group>"; };
 		3EA062151B147DB700183C30 /* configvars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = configvars.h; sourceTree = "<group>"; };
@@ -1605,9 +1604,8 @@
 		3EA062101B147DB700183C30 /* gameswf */ = {
 			isa = PBXGroup;
 			children = (
-				3EA062111B147DB700183C30 /* Android.mk */,
-				3EA062121B147DB700183C30 /* base */,
 				3EA0624F1B147DB700183C30 /* compatibility_include.h */,
+				3EA062121B147DB700183C30 /* base */,
 				3EA062501B147DB700183C30 /* gameswf */,
 			);
 			path = gameswf;

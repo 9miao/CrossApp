@@ -30,6 +30,28 @@
 
 #####11.其他一些细节的修改
 
+
+#### CrossApp 1.1.7 Update:  
+
+#####1. Added CAGif, CAGifView, .gif play support
+#####2. Added CAFlash and optimized CAFlashView, perfectly support x64
+#####3. Fixed bug that phone gets screen blurred after backing from background at some certain circumstances in Android platform
+#####4. Optimized CAPickerView
+Fixed display bug in different resolutions
+#####5. Optimized CADatePickerView
+Fixed bug that system cannot normally obtain and display current time, and date as well as week number are in disorder
+#####6. Optimized CAStepper
+Fixed setWraps, setMinValue, setAutoRepeat invalid bug, and system cannot normally display the set custom images
+#####7. Optimized CAActivityIndicatorView
+#####8. Optimized character system
+Fixed memory leak bug in characters cache management
+#####9. Optimized CATextField
+The characters in input box changes into black block after users click Enter button
+#####10. Optimized CANavigationController
+Fixed bug that viewController is in the wrong place when popViewController method does not perform animation
+#####11. Other details tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 1.1.6 更新内容：  

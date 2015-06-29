@@ -39,6 +39,7 @@ CATextView::CATextView()
 , m_pTextSelView(NULL)
 , m_pTextArrView(NULL)
 , m_bMoved(false)
+, m_bKeyboardOpen(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 }
@@ -75,7 +76,7 @@ bool CATextView::becomeFirstResponder()
 	bool result = CAView::becomeFirstResponder();
 	if (result)
 	{
-		attachWithIME();
+		result = attachWithIME();
 		showCursorMark();
 	}
 	return result;
@@ -394,29 +395,36 @@ const CAColor4B &CATextView::getFontColor()
 
 bool CATextView::canAttachWithIME()
 {
+	if (m_bKeyboardOpen)
+		return false;
 	return (m_pTextViewDelegate) ? m_pTextViewDelegate->onTextViewAttachWithIME(this) : true;
 }
 
 bool CATextView::canDetachWithIME()
 {
+	if (!m_bKeyboardOpen)
+		return false;
 	return (m_pTextViewDelegate) ? m_pTextViewDelegate->onTextViewDetachWithIME(this) : true;
 }
 
 void CATextView::didDetachWithIME()
 {
     hideCursorMark();
+	m_bKeyboardOpen = false;
 }
 
 void CATextView::didAttachWithIME()
 {
     showCursorMark();
+	m_bKeyboardOpen = true;
 }
 
 void CATextView::insertText(const char * text, int len)
 {
     CC_RETURN_IF(len <= 0);
     CC_RETURN_IF(text == 0);
-    
+	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewInsertText(this, text, len));
+
 	execCurSelCharRange();
 	m_szText.insert(m_iCurPos, text, len);
  	m_iCurPos += len;
@@ -435,45 +443,55 @@ void CATextView::willInsertText(const char* text, int len)
 
 void CATextView::AndroidWillInsertText(int start, const char* str, int before, int count)
 {
-    CCAssert(str != NULL, "");
-    CCAssert(count > 0, "");
-    
-    
-    for (int i=0; i<before; i++)
-    {
-        if (m_iCurPos == 0 || m_szText.empty())
-            break;
-        
-        int nDeleteLen = 1;
-        while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)))
-        {
-            ++nDeleteLen;
-        }
-        m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
-        m_iCurPos -= nDeleteLen;
-    }
-    updateImage();
-    CC_RETURN_IF(str == NULL || count <= 0);
-    
-    std::string s = str;
-    m_szText.insert(m_iCurPos, s.c_str(), s.length());
-    m_iCurPos += s.length();
-    updateImage();
+	CCAssert(str != NULL, "");
+	CCAssert(count > 0, "");
+
+	for (int i = 0; i < before; i++)
+	{
+		if (m_iCurPos == 0 || m_szText.empty())
+			break;
+
+		int nDeleteLen = 1;
+		while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)))
+		{
+			++nDeleteLen;
+		}
+		m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
+		m_iCurPos -= nDeleteLen;
+	}
+	updateImage();
+	CC_RETURN_IF(str == NULL || count <= 0);
+
+	std::string s = str;
+	m_szText.insert(m_iCurPos, s.c_str(), s.length());
+	m_iCurPos += s.length();
+	updateImage();
 }
 
 void CATextView::deleteBackward()
 {
     CC_RETURN_IF(m_iCurPos == 0 || m_szText.empty());
-	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, m_szText.c_str(), (int)m_szText.length()));
-    CC_RETURN_IF(execCurSelCharRange());
 
-	int nDeleteLen = 1;
-    while (1)
-    {
-        CC_BREAK_IF(m_iCurPos - nDeleteLen < 0);
-        CC_BREAK_IF(0x80 != (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)));
-        ++nDeleteLen;
-    }
+	std::string cszDelStr;
+	if (m_curSelCharRange.first != m_curSelCharRange.second)
+	{
+		cszDelStr = m_szText.substr(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
+	}
+	else
+	{
+		int nDeleteLen = 1;
+		while (1)
+		{
+			CC_BREAK_IF(m_iCurPos - nDeleteLen < 0);
+			CC_BREAK_IF(0x80 != (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)));
+			++nDeleteLen;
+		}
+		cszDelStr = m_szText.substr(m_iCurPos - nDeleteLen, nDeleteLen);
+	}
+	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length()));
+    CC_RETURN_IF(execCurSelCharRange());
+	
+	int nDeleteLen = cszDelStr.size();
     m_iCurPos = MAX(m_iCurPos, nDeleteLen);
 	m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
 	m_iCurPos -= nDeleteLen;
@@ -507,6 +525,11 @@ void CATextView::getKeyBoradReturnCallBack()
 const char* CATextView::getContentText()
 {
 	return m_szText.c_str();
+}
+
+int CATextView::getCursorPos()
+{
+	return getStringCharCount(m_szText.substr(0, m_iCurPos));
 }
 
 float CATextView::maxSpeed(float dt)
@@ -696,18 +719,18 @@ void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 	CATouchView::ccTouchMoved(pTouch, pEvent);
 }
 
-int getStringCharCount(const std::string &var)
+int CATextView::getStringCharCount(const std::string &var)
 {
-    int count = 0;
-    for (std::string::size_type i = 0; i < var.size(); i++)
-    {
-        if (var[i] < 0 || var[i]>127)
-        {
-            i += 2;
-        }
-        count++;
-    }
-    return count;
+	int count = 0;
+	for (std::string::size_type i = 0; i < var.size(); i++)
+	{
+		if (var[i] < 0 || var[i]>127)
+		{
+			i += 2;
+		}
+		count++;
+	}
+	return count;
 }
 
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
@@ -725,10 +748,9 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
     if (this->getBounds().containsPoint(point))
     {
-        if (canAttachWithIME() && !m_pTextSelView->isTextViewShow())
+		if (!m_pTextSelView->isTextViewShow())
         {
-            becomeFirstResponder();
-            
+			becomeFirstResponder();
             int iCurLine = 0; int iCurPosX = 0;
             calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
             m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
@@ -739,16 +761,13 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
             CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
-            pGlView->setIMECursorPos(getStringCharCount(m_szText), getContentText());
+			pGlView->setIMECursorPos(getCursorPos(), getContentText());
 #endif
         }
     }
     else
     {
-        if (canDetachWithIME())
-        {
-            resignFirstResponder();
-        }
+		resignFirstResponder();
     }
 
 	CATouchView::ccTouchEnded(pTouch, pEvent);
@@ -764,8 +783,6 @@ void CATextView::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 	if (CATextToolBarView::isTextToolBarShow())
 		return;
 
-
-    becomeFirstResponder();
 	CATextToolBarView *pToolBar = CATextToolBarView::create();
 	if (m_szText.empty())
 	{
@@ -942,6 +959,11 @@ void CATextView::pasteFromClipboard()
 {
 	std::string cszText = CAClipboard::getText();
 	insertText(cszText.c_str(), (int)cszText.size());
+
+#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
+	CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+	pGlView->setIMECursorPos(getCursorPos(), getContentText());
+#endif
 }
 
 int CATextView::getStringLength(const std::string &var)

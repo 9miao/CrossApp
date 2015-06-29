@@ -65,10 +65,10 @@ void CAFreeTypeFont::destroyAllFontBuff()
 }
 
 
-CAImage* CAFreeTypeFont::initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight, 
+CAImage* CAFreeTypeFont::initWithString(const std::string& pText, const std::string& pFontName, int nSize, int inWidth, int inHeight,
 	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, std::vector<TextViewLineInfo>* pLinesText)
 {
-	if (pText == NULL || pFontName == NULL)
+	if (pText.empty())
 		return NULL;
 	
 	std::u16string cszTemp;
@@ -88,8 +88,7 @@ _AgaginInitGlyphs:
 	m_bUnderLine = bUnderLine;
 	
 	FT_Error error = initGlyphs(cszNewText.c_str());
-	if (error)
-		return NULL;
+	if (error) return NULL;
 
 	if (pLinesText != NULL)
 	{
@@ -443,10 +442,6 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
 	std::vector<TGlyph>& glyphs = pInfo->glyphs;
 	for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
     {
-		if (glyph->index == 0)
-		{
-		//	continue;
-		}
         FT_Glyph image = glyph->image;
         FT_Error error = FT_Glyph_To_Bitmap(&image, FT_RENDER_MODE_NORMAL, 0, 1);
         if (!error)
@@ -579,7 +574,7 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 		endLine();
 		newLine();
 
-		unsigned int iTruncted = glyphs[0].pos.x;
+		FT_Pos iTruncted = glyphs[0].pos.x;
 		for (int i = 0; i < glyphs.size(); i++)
 		{
 			if (glyphs[i].index==0)
@@ -641,7 +636,7 @@ FT_Error CAFreeTypeFont::addWord(const std::string& word)
     return error;
 }
 
-FT_Error CAFreeTypeFont::initGlyphs(const char* text) 
+FT_Error CAFreeTypeFont::initGlyphs(const std::string& text)
 {
     std::string line(text);
     vector<std::string> lines;
@@ -738,9 +733,14 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		glyph_index = FT_Get_Char_Index(m_face, c);
 		glyph->index = glyph_index;
 		glyph->isOpenType = (glyph_index == 0);
-		if (glyph_index == 0)
+		if (glyph_index == 0 && m_bOpenTypeFont)
 		{
 			glyph_index = FT_Get_Char_Index(s_TempFont.m_CurFontFace, c);
+		}
+		if (glyph_index == 0)
+		{
+            glyphs.resize(glyphs.size() - 1);
+            continue;
 		}
 
 		FT_Face curFace = glyph->isOpenType ? s_TempFont.m_CurFontFace : m_face;
@@ -954,7 +954,7 @@ void CAFreeTypeFont::compute_bbox2(TGlyph& glyph, FT_BBox& bbox)
 	}
 }
 
-bool CAFreeTypeFont::initFreeTypeFont(const char* pFontName, unsigned long nSize)
+bool CAFreeTypeFont::initFreeTypeFont(const std::string& pFontName, unsigned long nSize)
 {
 	unsigned long size = 0; int face_index = 0;
 	unsigned char* pBuffer = loadFont(pFontName, &size, face_index);
@@ -994,9 +994,24 @@ void CAFreeTypeFont::finiFreeTypeFont()
 	destroyAllLines();
 }
 
-unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *size, int& ttfIndex)
+unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned long *size, int& ttfIndex)
 {
-	std::string path = std::string("fonts/") + pFontName;
+	std::string path;
+	std::string lowerCase(pFontName);
+	for (unsigned int i = 0; i < lowerCase.length(); ++i)
+	{
+		lowerCase[i] = tolower(lowerCase[i]);
+	}
+
+	if (std::string::npos == lowerCase.find("fonts/"))
+	{
+		path = "fonts/";
+		path += lowerCase;
+	}
+	else
+	{
+		path = lowerCase;
+	}
 
 	std::map<std::string, FontBufferInfo>::iterator ittFontNames = s_fontsNames.find(path.c_str());
 	if (ittFontNames != s_fontsNames.end())
@@ -1013,61 +1028,65 @@ unsigned char* CAFreeTypeFont::loadFont(const char *pFontName, unsigned long *si
 	{
 		path[i] = tolower(path[i]);
 	}
-	unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
-	if (pBuffer == NULL)
-	{
-		for (unsigned int i = 6; i < path.length(); ++i)
-		{
-			path[i] = toupper(path[i]);
-		}
-		pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
-	}
+    unsigned char* pBuffer = NULL;
+    
+    if (path.compare("fonts/") != 0)
+    {
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
+        if (pBuffer == NULL)
+        {
+            for (unsigned int i = 6; i < path.length(); ++i)
+            {
+                path[i] = toupper(path[i]);
+            }
+            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
+        }
+    }
+    
 	if (pBuffer == NULL)
 	{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         char sTTFont[256];
         GetWindowsDirectoryA(sTTFont,255);
         strcat(sTTFont,"\\fonts\\simhei.ttf");
-
-		//strcpy(sTTFont, "c:\\xxx.ttf");
 		pFontName = sTTFont;
 
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         
-        pFontName = "/System/Library/Fonts/STHeiti Light.ttc";
-        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        const char* fontName = "/System/Library/Fonts/STHeiti Light.ttc";
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
 		ttfIndex = 1;
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         
-        pFontName = "/System/Library/Fonts/Cache/STHeiti-Light.ttc";
-        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        const char* fontName = "/System/Library/Fonts/Cache/STHeiti-Light.ttc";
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
         
         if (pBuffer == NULL)
         {
-            pFontName = "/System/Library/Fonts/Core/STHeiti-Light.ttc";
-            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+            fontName = "/System/Library/Fonts/Core/STHeiti-Light.ttc";
+            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
         }
         
         if (pBuffer == NULL)
         {
-            pFontName = "/System/Library/Fonts/STHeiti Light.ttc";
-            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+            fontName = "/System/Library/Fonts/STHeiti Light.ttc";
+            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
         }
 		
 		ttfIndex = 1;
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         
-        pFontName = "/system/fonts/DroidSansFallback.ttf";
-        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        const char* fontName = "/system/fonts/DroidSansFallback.ttf";
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
         
         if (pBuffer == NULL)
         {
-            pFontName = "/system/fonts/NotoSansHans-Regular.otf";
-            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+            fontName = "/system/fonts/NotoSansHans-Regular.otf";
+            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
 			m_bOpenTypeFont = true;
         }
 #endif

@@ -131,6 +131,12 @@ public:
 	CC_SYNTHESIZE(CAWebViewDelegate*, m_pWebViewDelegate, WebViewDelegate);
 
     CC_SYNTHESIZE(bool, m_bShowLoadingImage, ShowLoadingImage);
+    
+    
+protected:
+    
+    virtual void setContentSize(const CCSize &contentSize);
+    
 private:
     
     CAWebViewImpl *_impl;

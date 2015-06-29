@@ -68,7 +68,7 @@ static const CAColor4B CAColor_orange  = {255, 127,   0, 255};
 //! Gray Color (166,166,166,255)
 static const CAColor4B CAColor_gray    = {166, 166, 166, 255};
 //! Gray Color (0,0,0,0)
-static const CAColor4B CAColor_clear   = {  0,   0,   0,   0};
+static const CAColor4B CAColor_clear   = {255, 255, 255,   0};
 
 /** RGBA color composed of 4 floats
 @since v0.8
