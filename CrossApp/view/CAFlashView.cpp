@@ -115,7 +115,6 @@ void CAFlashView::update(float dt)
 void CAFlashView::draw()
 {
     CAView::draw();
-    CC_NODE_DRAW_SETUP();
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
     kmMat4 matrixP;
     kmMat4 matrixMV;

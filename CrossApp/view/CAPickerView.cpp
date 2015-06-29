@@ -9,6 +9,7 @@
 #include "CAPickerView.h"
 #include "CALabel.h"
 #include "animation/CAViewAnimation.h"
+#include "actions/CCActionCamera.h"
 
 NS_CC_BEGIN
 

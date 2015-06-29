@@ -263,7 +263,8 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 break;
         }
 
-        if (m_bAutoRepeat) {
+        if (m_bAutoRepeat)
+        {
             CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 0.1f, kCCRepeatForever, 0.5f);
         }
         

@@ -10,9 +10,6 @@
 #define __CrossApp__CAPickerView__
 
 #include "CATableView.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionCamera.h"
 
 NS_CC_BEGIN
 

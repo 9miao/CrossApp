@@ -9,11 +9,11 @@
 NS_CC_BEGIN
 
 struct CATransformation {
-  float a, b, c, d;
-  float tx, ty;
+  double a, b, c, d;
+  double tx, ty;
 };
 
-CC_DLL CATransformation __CATransformationMake(float a, float b, float c, float d, float tx, float ty);
+CC_DLL CATransformation __CATransformationMake(double a, double b, double c, double d, double tx, double ty);
 #define CATransformationMake __CATransformationMake
 
 CC_DLL CCPoint __CCPointApplyAffineTransform(const CCPoint& point, const CATransformation& t);

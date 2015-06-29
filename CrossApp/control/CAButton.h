@@ -129,6 +129,8 @@ protected:
     
     bool setTouchBegin(const CCPoint& point);
 
+    void setTouchLongPress(float dt);
+    
     void setContentSize(const CCSize & var);
 
     void setBackGroundViewSquareRect();

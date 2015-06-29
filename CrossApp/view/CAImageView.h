@@ -51,7 +51,7 @@ public:
     
     using CAView::setImageRect;
     
-    CC_SYNTHESIZE_PASS_BY_REF(CAImageViewScaleType, m_eImageViewScaleType, ImageViewScaleType);
+    CC_PROPERTY_PASS_BY_REF(CAImageViewScaleType, m_eImageViewScaleType, ImageViewScaleType);
     
     CC_SYNTHESIZE(CAVector<CAImage*>, m_vAnimationImages, AnimationImages);
     

@@ -1,5 +1,7 @@
  
 #include "CommonHttpManager.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
 
 static const char* common_loadingBackground = "dm_resource/loading_background.png";
 static const char* common_loadingIcon = "dm_resource/loading_icon.png";
