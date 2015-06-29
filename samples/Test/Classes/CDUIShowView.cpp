@@ -740,7 +740,7 @@ void CDUIShowView::showIndicator()
     VIEWLIST.clear();
     
     CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                     100, 100));
+                                                                     200, 200));
     idc1->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
     idc1->startAnimating();
     CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
@@ -760,6 +760,8 @@ void CDUIShowView::showIndicator()
     CAActivityIndicatorView* idc3 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
                                                                                         100, 100));
     idc3->setStyle(CAActivityIndicatorViewStyleGray);
+    idc2->setCycleTime(1.0f);
+    idc2->setTimesOneCycle(12);
     idc3->startAnimating();
     CAView* view3 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
     view3->addSubview(idc3);
@@ -1527,6 +1529,9 @@ void CDUIShowView::refreshData(float interval)
 
 void CDUIShowView::showScrollView()
 {
+	CAView* pView = CAStudioViewParser::getInstance()->initWithFile("c:\\page1.json");
+	this->getView()->addSubview(pView);
+	/*
     p_ScrollView = CAScrollView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
     p_ScrollView->setMinimumZoomScale(0.2f);
     p_ScrollView->setMaximumZoomScale(5.0f);
@@ -1536,7 +1541,7 @@ void CDUIShowView::showScrollView()
     p_imageView = CAImageView::createWithImage(CAImage::create("image/h1.png"));
     p_imageView->setCenter(CADipRect(_size.width/2, _size.height/2,800,1200));
     p_ScrollView->addSubview(p_imageView);
-
+	*/
 }
 
 void CDUIShowView::showFlashView()
