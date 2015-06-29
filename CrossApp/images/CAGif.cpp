@@ -224,7 +224,6 @@ void CAGif::setGifImageWithIndex(unsigned int index)
         }
     }
     
-    if (index == m_pGIF->ImageCount-1 || !this->checkIfWillBeCleared(cur))
     {
         int transparent = -1;
         for (int i = 0; i < cur->ExtensionBlockCount; ++i)

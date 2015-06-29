@@ -17,6 +17,7 @@ NS_CC_BEGIN
 typedef enum
 {
     CAActivityIndicatorViewStyleWhiteLarge,
+    CAActivityIndicatorViewStyleWGrayLarge,
     CAActivityIndicatorViewStyleWhite,
     CAActivityIndicatorViewStyleGray,
     CAActivityIndicatorViewStyleImage,
@@ -24,6 +25,7 @@ typedef enum
 CAActivityIndicatorViewStyle;
 
 class CAScale9ImageView;
+class CAImageView;
 class CC_DLL CAActivityIndicatorView : public CAView
 {
     
@@ -42,6 +44,8 @@ public:
     virtual void visit();
     virtual void draw();
     
+    void setTimesOneCycle(float times);
+    void setCycleTime(float time);
     // sizes the view according to the style
     virtual void setStyle(CAActivityIndicatorViewStyle style);
     
@@ -72,13 +76,16 @@ private:
     
     CAObject* m_pTarget;
     SEL_CallFunc m_pCallFunc;
+    CAImageView* m_pImageBG;
     
 private:
-    CCPoint m_vertex[12][2];
+    std::vector<float> m_vRotate;
     
 private:
     void animation(float dt);
     int m_animationIndex;
+    int m_nTimesOneCycle;
+    float m_fCycleTime;
 };
 
 NS_CC_END
