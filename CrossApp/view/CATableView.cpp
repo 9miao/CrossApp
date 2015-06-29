@@ -484,7 +484,7 @@ void CATableView::reloadData()
     this->removeAllSubviews();
     
     float width = this->getBounds().size.width;
-    int y = 0;
+    unsigned int y = 0;
     
     if (m_pTableHeaderView)
     {

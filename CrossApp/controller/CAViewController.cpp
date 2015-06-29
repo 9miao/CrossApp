@@ -837,8 +837,7 @@ void CANavigationController::homingViewControllerFinish()
 {
     size_t index = m_pViewControllers.size() - 2;
     CAViewController* lastViewController = m_pViewControllers.at(index);
-    lastViewController->viewDidDisappear();
-    
+
     CAView* lastContainer = m_pContainers.at(index);
     lastContainer->setVisible(false);
     
@@ -1065,8 +1064,7 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     float x = this->getView()->getBounds().size.width;
     size_t index = m_pViewControllers.size() - 2;
     CAViewController* lastViewController = m_pViewControllers.at(index);
-    lastViewController->viewDidAppear();
-
+    
     CAView* lastContainer = m_pContainers.at(index);
     lastContainer->setVisible(true);
     
@@ -1076,6 +1074,8 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_bPopViewController)
     {
+        lastViewController->viewDidAppear();
+        
         CAViewAnimation::beginAnimations("navigation_animation", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.02f);

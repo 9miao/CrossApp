@@ -11,7 +11,7 @@ CAWindow::CAWindow()
 :m_pRootViewController(NULL)
 ,m_pModalViewController(NULL)
 {
-
+    this->setDisplayRange(false);
 }
 
 CAWindow::~CAWindow()

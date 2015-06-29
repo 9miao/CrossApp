@@ -15,7 +15,7 @@ CAControl::CAControl()
 ,m_bControlStateLocked(false)
 {
     this->setHaveNextResponder(false);
-    for (int i=0; i<7; i++)
+    for (int i=0; i<CAControlEventMax; i++)
     {
         m_selTouch[i] = NULL;
         m_pTarget[i] = NULL;

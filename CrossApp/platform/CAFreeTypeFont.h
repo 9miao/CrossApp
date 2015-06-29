@@ -89,14 +89,14 @@ public:
 	CAFreeTypeFont();
 	virtual ~CAFreeTypeFont();
 
-	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int inWidth, int inHeight,
+	CAImage* initWithString(const std::string& pText, const std::string& pFontName, int nSize, int inWidth, int inHeight,
 		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false, std::vector<TextViewLineInfo>* pLinesText = 0);
 
 	static void destroyAllFontBuff();
 protected:
-	bool initFreeTypeFont(const char* pFontName, unsigned long nSize);
+	bool initFreeTypeFont(const std::string& pFontName, unsigned long nSize);
 	void finiFreeTypeFont();
-	unsigned char* loadFont(const char *pFontName, unsigned long *size, int& ttfIndex);
+	unsigned char* loadFont(const std::string& pFontName, unsigned long *size, int& ttfIndex);
 	unsigned char* getBitmap(ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);
@@ -106,7 +106,7 @@ protected:
 	void destroyFontGlyph(std::vector<TGlyph>& v);
 	void destroyAllLineFontGlyph();
 
-	FT_Error initGlyphs(const char* text);
+	FT_Error initGlyphs(const std::string& text);
 	FT_Error initGlyphsLine(const std::string& line);
 	FT_Error initWordGlyphs(std::vector<TGlyph>& glyphs, const std::string& text, FT_Vector& pen);
 	

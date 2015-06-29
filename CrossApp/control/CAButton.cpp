@@ -15,6 +15,7 @@
 #include "cocoa/CCSet.h"
 #include "view/CALabel.h"
 #include "basics/CAApplication.h"
+#include "basics/CAScheduler.h"
 
 NS_CC_BEGIN
 
@@ -353,14 +354,7 @@ void CAButton::updateWithPreferredSize()
         CC_CONTINUE_IF(m_pBackGroundView[i] == NULL);
         CC_CONTINUE_IF(this->getBounds().equals(m_pBackGroundView[i]->getBounds()));
         
-        if (CAScale9ImageView* _var = dynamic_cast<CAScale9ImageView*>(m_pBackGroundView[i]))
-        {
-            _var->setFrame(this->getBounds());
-        }
-        else
-        {
-            m_pBackGroundView[i]->setFrame(this->getBounds());
-        }
+        m_pBackGroundView[i]->setFrame(this->getBounds());
     }
     
     m_pLabel->setFontSize(this->getBounds().size.height * 0.667f);
@@ -375,6 +369,8 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     {
         CC_BREAK_IF(m_eControlState != CAControlStateNormal && m_eControlState != CAControlStateSelected);
 
+        CAScheduler::schedule(schedule_selector(CAButton::setTouchLongPress), this, 0, 0, 0.5f);
+        
         return this->setTouchBegin(point);
     }
     while (0);
@@ -384,10 +380,12 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
+    CC_RETURN_IF(!this->isTouchClick());
+    
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
 
-    if (!this->isTouchClick()) return;
+    CAScheduler::unschedule(schedule_selector(CAButton::setTouchLongPress), this);
     
     if (getBounds().containsPoint(point))
     {
@@ -410,11 +408,13 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
+    CC_RETURN_IF(!this->isTouchClick());
+    
     CCPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    if (!this->isTouchClick())
-        return;
+    CAScheduler::unschedule(schedule_selector(CAButton::setTouchLongPress), this);
+    
     do
     {
         CC_BREAK_IF(this->getControlState() != CAControlStateHighlighted);
@@ -451,6 +451,11 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
+    CCPoint point = pTouch->getLocation();
+    point = this->convertToNodeSpace(point);
+    
+    CAScheduler::unschedule(schedule_selector(CAButton::setTouchLongPress), this);
+    
     if (m_bAllowsSelected && m_bSelected)
     {
         this->setControlState(CAControlStateSelected);
@@ -458,6 +463,11 @@ void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pE
     else
     {
         this->setControlState(CAControlStateNormal);
+    }
+    
+    if (m_pTarget[CAControlEventTouchCancelled] && m_selTouch[CAControlEventTouchCancelled])
+    {
+        ((CAObject *)m_pTarget[CAControlEventTouchCancelled]->*m_selTouch[CAControlEventTouchCancelled])(this, point);
     }
 }
 
@@ -577,14 +587,8 @@ void CAButton::interruptTouchState()
     CC_RETURN_IF(m_bTouchClick == false);
     m_bTouchClick = false;
     CC_RETURN_IF(m_eControlState != CAControlStateHighlighted);
-    if (m_bAllowsSelected && m_bSelected)
-    {
-        this->setControlState(CAControlStateSelected);
-    }
-    else
-    {
-        this->setControlState(CAControlStateNormal);
-    }
+
+    this->ccTouchCancelled(NULL, NULL);
 }
 
 bool CAButton::setTouchBegin(const CCPoint& point)
@@ -608,7 +612,7 @@ void CAButton::setTouchUpInSide(const CCPoint& point)
 {
     if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this,point);
+        ((CAObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this, point);
     }
 }
 
@@ -616,7 +620,7 @@ void CAButton::setTouchUpOutSide(const CCPoint& point)
 {
     if (m_pTarget[CAControlEventTouchUpOutSide] && m_selTouch[CAControlEventTouchUpOutSide])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchUpOutSide]->*m_selTouch[CAControlEventTouchUpOutSide])(this,point);
+        ((CAObject *)m_pTarget[CAControlEventTouchUpOutSide]->*m_selTouch[CAControlEventTouchUpOutSide])(this, point);
     }
 }
 
@@ -624,7 +628,7 @@ void CAButton::setTouchMoved(const CCPoint& point)
 {
     if (m_pTarget[CAControlEventTouchMoved] && m_selTouch[CAControlEventTouchMoved])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchMoved]->*m_selTouch[CAControlEventTouchMoved])(this,point);
+        ((CAObject *)m_pTarget[CAControlEventTouchMoved]->*m_selTouch[CAControlEventTouchMoved])(this, point);
     }
 }
 
@@ -632,7 +636,15 @@ void CAButton::setTouchMovedOutSide(const CCPoint& point)
 {
     if (m_pTarget[CAControlEventTouchMovedOutSide] && m_selTouch[CAControlEventTouchMovedOutSide])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchMovedOutSide]->*m_selTouch[CAControlEventTouchMovedOutSide])(this,point);
+        ((CAObject *)m_pTarget[CAControlEventTouchMovedOutSide]->*m_selTouch[CAControlEventTouchMovedOutSide])(this, point);
+    }
+}
+
+void CAButton::setTouchLongPress(float dt)
+{
+    if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
+    {
+        ((CAObject *)m_pTarget[CAControlEventTouchLongPress]->*m_selTouch[CAControlEventTouchLongPress])(this, CCPointZero);
     }
 }
 

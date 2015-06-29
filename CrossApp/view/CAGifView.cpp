@@ -77,7 +77,6 @@ bool CAGifView::initWithGif(CAGif* gif)
 {
     if(CAView::init())
     {
-        this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
         this->setGif(gif);
         return true;
     }
