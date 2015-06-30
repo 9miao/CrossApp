@@ -9,28 +9,6 @@ NS_CC_BEGIN
 
 extern "C"
 {
-
-	char* jstringTostring(JNIEnv* env, jstring jstr)
-	{
-		char* rtn = NULL;
-		jclass clsstring = env->FindClass("java/lang/String");
-		jstring strencode = env->NewStringUTF("utf-8");
-		jmethodID mid = env->GetMethodID(clsstring, "getBytes", "(Ljava/lang/String;)[B");
-		jbyteArray barr = (jbyteArray)env->CallObjectMethod(jstr, mid, strencode);
-		jsize alen = env->GetArrayLength(barr);
-		jbyte* ba = env->GetByteArrayElements(barr, JNI_FALSE);
-		if (alen > 0)
-		{
-			rtn = (char*)malloc(alen + 1);
-			memcpy(rtn, ba, alen);
-			rtn[alen] = 0;
-		}
-		env->ReleaseByteArrayElements(barr, ba, 0);
-		return rtn;
-	}
-
-
-
 	void JAVAsetPasteBoardString(const char* str)
 	{
 
@@ -43,14 +21,12 @@ extern "C"
 			{
 				jmi.env->CallVoidMethod(obj, jmi.methodID, jmi.env->NewStringUTF(str));
 			}
-
-
 		}
 	}
 
-	const char* JAVAgetPasteBoardString()
+	std::string JAVAgetPasteBoardString()
 	{
-		JniMethodInfo jmi;
+		JniMethodInfo jmi; std::string cszResult;
 		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/Cocos2dxActivity", "getContext", "()Lorg/CrossApp/lib/Cocos2dxActivity;"))
 		{
 			jobject obj = jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
@@ -58,19 +34,16 @@ extern "C"
 			if (isHave)
 			{
 				jstring a = (jstring)jmi.env->CallObjectMethod(obj, jmi.methodID);
-				const char *str = jstringTostring(jmi.env, a);
-				return str;
+				cszResult = JniHelper::jstring2string(a);
 			}
 		}
-		return "";
+		return cszResult;
 	}
 }
 
 std::string CAClipboard::getText()
 {
-    const char *str = JAVAgetPasteBoardString();
-    
-    return str ? str : "";
+	return JAVAgetPasteBoardString();
 }
 
 void CAClipboard::setText(const std::string& cszStrText)

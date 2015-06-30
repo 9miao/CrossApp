@@ -124,9 +124,22 @@ void CAWebView::goForward()
 	_impl->goForward();
 }
 
-void CAWebView::evaluateJS(const std::string &js)
+std::string CAWebView::evaluateJS(const std::string &js)
 {
-	_impl->evaluateJS(js);
+	return _impl->evaluateJS(js);
+}
+
+std::string CAWebView::getHTMLSource()
+{
+#if( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
+	return evaluateJS(std::string("window.local_obj.showSource('<head>'+") + "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+#endif
+
+#if( CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
+	return evaluateJS("document.documentElement.innerHTML");
+#endif
+
+	return "";
 }
 
 void CAWebView::setScalesPageToFit(bool const scalesPageToFit)
