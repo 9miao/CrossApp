@@ -106,6 +106,7 @@ public class Cocos2dxWebView extends WebView {
     final class InJavaScriptLocalObj {
         public void showSource(String html) {
         	Cocos2dxWebViewHelper.didLoadHtmlSource(html);
+        	Cocos2dxWebViewHelper.s_bWaitGetHemlSource = false;
         }
     }
 

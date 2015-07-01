@@ -54,6 +54,7 @@ public class Cocos2dxWebViewHelper {
     
     private static native void onSetByteArrayBuffer(byte[] buf, int len);
     public static native void didLoadHtmlSource(String htmlSrc);
+    public static Boolean s_bWaitGetHemlSource = false;
 
     @SuppressWarnings("unused")
     public static int createWebView() {
@@ -288,18 +289,22 @@ public class Cocos2dxWebViewHelper {
 
     @SuppressWarnings("unused")
     public static void evaluateJS(final int index, final String js) {
-    	Callable<Boolean> callable = new Callable<Boolean>() {
+    	s_bWaitGetHemlSource = false;
+    	cocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
-            public Boolean call() throws Exception {
+            public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
-                    webView.loadUrl("javascript:"+js);
+                	s_bWaitGetHemlSource = true;
+                	webView.loadUrl("javascript:"+js);
                 }
-                return true;
             }
-        };
+        });
+    	
         try {
-        	callInMainThread(callable);
+        	while (s_bWaitGetHemlSource) {
+            	Thread.sleep(100);
+            }
         } catch (Exception e) {
         }
 	}

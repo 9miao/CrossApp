@@ -309,7 +309,7 @@ void CAWebViewImpl::setJavascriptInterfaceScheme(const std::string &scheme) {
 }
 
 std::string CAWebViewImpl::evaluateJS(const std::string &js) {
-	evaluateJSJNI(_viewTag, js);
+	return evaluateJSJNI(_viewTag, js);
 }
 
 void CAWebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
