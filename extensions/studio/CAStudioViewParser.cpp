@@ -246,13 +246,15 @@ CAView* CAStudioViewParser::ParseJsonForImageView(CSJsonDictionary& csJson, CAIm
 {
 	pView->setImage(CAImage::create(csJson.getItemStringValue("ImagePath")));
 	pView->setImageViewScaleType((CAImageViewScaleType)csJson.getItemIntValue("CAImageViewScaleType", 1));
+	
+	ParseJsonForView(csJson, pView);
 	CSJsonDictionary* pSubJson = csJson.getSubDictionary("ImageColor");
 	pView->setColor(ccc4(
 		pSubJson->getItemIntValue("R", 0),
 		pSubJson->getItemIntValue("G", 0),
 		pSubJson->getItemIntValue("B", 0),
 		pSubJson->getItemIntValue("A", 0)));
-	return ParseJsonForView(csJson, pView);
+	return pView;
 }
 
 CAView* CAStudioViewParser::ParseJsonForLabel(CSJsonDictionary& csJson, CALabel* pView)
