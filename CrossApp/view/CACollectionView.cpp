@@ -26,6 +26,7 @@ CACollectionView::CACollectionView()
 , m_bAlwaysTopSectionHeader(true)
 , m_bAlwaysBottomSectionFooter(true)
 {
+    
 }
 
 
@@ -85,7 +86,7 @@ bool CACollectionView::init()
 
 	this->setShowsHorizontalScrollIndicator(false);
 	this->setBounceHorizontal(false);
-	this->setTouchMovedListenHorizontal(false);
+    this->setHorizontalScrollEnabled(false);
 	return true;
 }
 
@@ -211,7 +212,6 @@ bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-	CC_RETURN_IF(m_bscrollEnabled == false);
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchMoved(pTouch, pEvent);
 
@@ -656,7 +656,7 @@ CACollectionViewCell::CACollectionViewCell()
 , m_bControlStateEffect(true)
 , m_bAllowsSelected(true)
 {
-	this->setHaveNextResponder(true);
+
 }
 
 

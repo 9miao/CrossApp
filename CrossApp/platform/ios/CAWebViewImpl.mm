@@ -10,7 +10,9 @@ USING_NS_CC;
 
 #define WebViewWrapper ((UIWebViewWrapper*)m_pWebViewWrapper)
 
-@interface UIWebViewWrapper : NSObject
+@interface UIWebViewWrapper : NSObject<UIWebViewDelegate>
+@property(nonatomic, retain) UIWebView *uiWebView;
+@property(nonatomic, copy) NSString *jsScheme;
 
 @property(nonatomic, readonly, getter=canGoBack) BOOL canGoBack;
 @property(nonatomic, readonly, getter=canGoForward) BOOL canGoForward;
@@ -42,12 +44,6 @@ USING_NS_CC;
 - (void)goForward;
 
 - (void)setScalesPageToFit:(const bool)scalesPageToFit;
-@end
-
-
-@interface UIWebViewWrapper () <UIWebViewDelegate>
-@property(nonatomic, retain) UIWebView *uiWebView;
-@property(nonatomic, copy) NSString *jsScheme;
 @end
 
 @implementation UIWebViewWrapper

@@ -735,7 +735,7 @@ void CDUIShowView::showScale9Image()
 
 void CDUIShowView::showIndicator()
 {
-    showNum = 4;
+    showNum = 5;
     pageViewIndex = 1;
     VIEWLIST.clear();
     
@@ -750,7 +750,7 @@ void CDUIShowView::showIndicator()
     
     CAActivityIndicatorView* idc2 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
                                                                                         100, 100));
-    idc2->setStyle(CAActivityIndicatorViewStyleWhite);
+    idc2->setStyle(CAActivityIndicatorViewStyleGrayLarge);
     idc2->startAnimating();
     CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(idc2);
@@ -759,24 +759,35 @@ void CDUIShowView::showIndicator()
     
     CAActivityIndicatorView* idc3 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
                                                                                         100, 100));
-    idc3->setStyle(CAActivityIndicatorViewStyleGray);
+    idc3->setStyle(CAActivityIndicatorViewStyleWhite);
     idc2->setCycleTime(1.0f);
     idc2->setTimesOneCycle(12);
-    idc3->startAnimating();
+    idc2->startAnimating();
     CAView* view3 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
     view3->addSubview(idc3);
     view3->setColor(CAColor_gray);
     VIEWLIST.pushBack(view3);
     
     CAActivityIndicatorView* idc4 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                                       100, 100));
-    idc4->setStyle(CAActivityIndicatorViewStyleImage);
-    idc4->setActivityIndicatorView(CAImageView::createWithImage(CAImage::create("image/indicator2.png")));
+                                                                                        100, 100));
+    idc4->setStyle(CAActivityIndicatorViewStyleGray);
+    idc4->setCycleTime(1.0f);
+    idc4->setTimesOneCycle(12);
     idc4->startAnimating();
     CAView* view4 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
     view4->addSubview(idc4);
     view4->setColor(CAColor_gray);
     VIEWLIST.pushBack(view4);
+    
+    CAActivityIndicatorView* idc5 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
+                                                                                       100, 100));
+    idc5->setStyle(CAActivityIndicatorViewStyleImage);
+    idc5->setActivityIndicatorView(CAImageView::createWithImage(CAImage::create("image/indicator2.png")));
+    idc5->startAnimating();
+    CAView* view5 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    view5->addSubview(idc5);
+    view5->setColor(CAColor_gray);
+    VIEWLIST.pushBack(view5);
     
     p_PageViewVec->setViews(VIEWLIST);
     
@@ -1363,7 +1374,7 @@ void CDUIShowView::listViewDidDeselectCellAtIndex(CAListView *listView, unsigned
 
 unsigned int CDUIShowView::numberOfIndex(CAListView *listView)
 {
-    return 8;
+    return 80;
 }
 
 unsigned int CDUIShowView::listViewHeightForIndex(CAListView *listView, unsigned int index)
@@ -1394,6 +1405,7 @@ CAListViewCell* CDUIShowView::listViewCellAtIndex(CAListView *listView, const CC
         btn->setTitleForState(CAControlStateNormal, "btn");
         btn->setTag(200);
         cell->addSubview(btn);
+        btn->setTouchEventScrollHandOverToSuperview(false);
     }
     char temptext[10];
     sprintf(temptext, "cell-%d",index);

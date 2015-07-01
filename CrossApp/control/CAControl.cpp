@@ -14,7 +14,6 @@ CAControl::CAControl()
 :m_eControlState(CAControlStateNormal)
 ,m_bControlStateLocked(false)
 {
-    this->setHaveNextResponder(false);
     for (int i=0; i<CAControlEventMax; i++)
     {
         m_selTouch[i] = NULL;

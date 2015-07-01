@@ -28,7 +28,6 @@ CAViewController::CAViewController()
 ,m_bLifeLock(false)
 ,m_bKeypadEnabled(false)
 {
-    this->setHaveNextResponder(true);
     m_pView = CAView::createWithColor(CAColor_white);
     m_pView->retain();
     m_pView->setViewDelegate(this);
@@ -226,11 +225,8 @@ CANavigationController::CANavigationController()
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
     
-    this->setTouchMovedListenVertical(false);
     this->setTouchMoved(true);
-    m_bSlidingMaxX = true;
-    m_bSlidingMinX = true;
-    
+
     CCSize winSize = CAApplication::getApplication()->getWinSize();
     m_tNavigationBarSize = CCSize(winSize.width, _px(88));
     
@@ -629,7 +625,6 @@ void CANavigationController::pushViewControllerFinish()
     CAViewController* lastViewController = m_pViewControllers.at(m_pViewControllers.size() - 2);
     lastViewController->viewDidDisappear();
     
-    m_bSlidingMinX = m_pViewControllers.size() <= 1;
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
@@ -729,7 +724,6 @@ void CANavigationController::popViewControllerFinish()
     
     m_pContainers.back()->setFrameOrigin(CCPointZero);
     
-    m_bSlidingMinX = m_pViewControllers.size() <= 1;
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
@@ -829,7 +823,6 @@ void CANavigationController::popToRootViewControllerFinish()
     
     m_pViewControllers.back()->getView()->setFrameOrigin(CCPointZero);
     
-    m_bSlidingMinX = true;
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
@@ -864,8 +857,6 @@ CAViewController* CANavigationController::popFirstViewController()
     m_pSecondContainers.popFront();
     
     m_pNavigationBars.popFront();
-    
-    m_bSlidingMinX = m_pViewControllers.size() <= 1;
     
     return frontViewController;
 }
@@ -1117,12 +1108,18 @@ void CANavigationController::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CANavigationController::setTouchMoved(bool var)
 {
-    m_bTouchMovedStopSubviews = m_bTouchMoved = var;
+    m_bTouchMoved = var;
+    this->setPriorityScroll(var);
 }
 
 bool CANavigationController::isTouchMoved()
 {
     return m_bTouchMoved;
+}
+
+bool CANavigationController::isReachBoundaryLeft()
+{
+    return m_pViewControllers.size() == 1;
 }
 
 #pragma CATabBarController

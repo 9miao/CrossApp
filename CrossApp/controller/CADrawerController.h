@@ -52,6 +52,10 @@ public:
     
     bool isShowLeftViewController();
     
+    virtual bool isReachBoundaryLeft();
+    
+    virtual bool isReachBoundaryRight();
+    
 protected:
     
     void showBegin();

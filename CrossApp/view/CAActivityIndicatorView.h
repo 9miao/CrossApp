@@ -17,7 +17,7 @@ NS_CC_BEGIN
 typedef enum
 {
     CAActivityIndicatorViewStyleWhiteLarge,
-    CAActivityIndicatorViewStyleWGrayLarge,
+    CAActivityIndicatorViewStyleGrayLarge,
     CAActivityIndicatorViewStyleWhite,
     CAActivityIndicatorViewStyleGray,
     CAActivityIndicatorViewStyleImage,

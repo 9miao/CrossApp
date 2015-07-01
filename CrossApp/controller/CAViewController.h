@@ -70,6 +70,8 @@ public:
     
     virtual CAView* getView();
     
+    virtual CAResponder* nextResponder();
+
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -79,8 +81,6 @@ public:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-    
-    virtual CAResponder* nextResponder();
     
     friend class CATabBarController;
     
@@ -179,6 +179,14 @@ public:
 
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarButtonColor, NavigationBarButtonColor);
     
+    virtual bool isReachBoundaryLeft();
+    
+    virtual bool isReachBoundaryRight() {return true;}
+    
+    virtual bool isReachBoundaryUp() {return true;}
+    
+    virtual bool isReachBoundaryDown() {return true;}
+    
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
@@ -186,6 +194,8 @@ public:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual CAResponder* nextResponder() {return NULL;}
     
 protected:
     
@@ -299,7 +309,7 @@ public:
     void updateItem(CAViewController* viewController);
     
     void showTabBarSelectedIndicator();
-    
+ 
 protected:
     
     virtual void viewDidLoad();

@@ -46,10 +46,9 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         p_ScrollView->setMinimumZoomScale(1.0f);
         p_ScrollView->setMaximumZoomScale(2.5f);
         p_ScrollView->setBackGroundColor(CAColor_clear);
-        p_ScrollView->setShowsVerticalScrollIndicator(false);
-        p_ScrollView->setShowsHorizontalScrollIndicator(false);
+        p_ScrollView->setShowsScrollIndicators(false);
         p_ScrollView->setBounceVertical(false);
-        p_ScrollView->setHaveNextResponder(true);
+        p_ScrollView->setScrollViewDelegate(this);
         p_ScrollView->addSubview(temImage);
         viewList.pushBack(p_ScrollView);
     }
@@ -90,7 +89,6 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     ps->setShowsVerticalScrollIndicator(false);
     ps->setShowsHorizontalScrollIndicator(false);
     ps->setBounceHorizontal(false);
-    ps->setHaveNextResponder(true);
     ps->addSubview(p_des);
     p_bg->addSubview(ps);
 
@@ -112,7 +110,7 @@ void CDShowNewsImage::pageViewDidEndTurning(CAPageView* pageView)
     
 }
 
-void CDShowNewsImage::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point)
+void CDShowNewsImage::scrollViewTouchUpWithoutMoved(CAScrollView* view, const CCPoint& point)
 {
     if (m_isShow)
     {

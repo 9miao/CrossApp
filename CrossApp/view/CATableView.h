@@ -237,8 +237,6 @@ private:
     
     using CAScrollView::getSubviewByTag;
     
-    using CAResponder::setTouchMovedListenHorizontal;
-    
 protected:
     
     unsigned int m_nSections;
@@ -300,6 +298,8 @@ public:
     CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
+    
+    virtual CAResponder* nextResponder() {return this->getSuperview();}
     
 protected:
 

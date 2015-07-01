@@ -25,11 +25,11 @@ NS_CC_BEGIN
 CAScrollView::CAScrollView()
 :m_pContainer(NULL)
 ,m_obViewSize(CCSizeZero)
+,m_bTouchEnabledAtSubviews(true)
 ,m_pScrollViewDelegate(NULL)
 ,m_bBounces(true)
 ,m_bBounceHorizontal(true)
 ,m_bBounceVertical(true)
-,m_bscrollEnabled(true)
 ,m_bTracking(false)
 ,m_bDecelerating(false)
 ,m_bZooming(false)
@@ -44,12 +44,11 @@ CAScrollView::CAScrollView()
 ,m_pIndicatorVertical(NULL)
 ,m_bShowsHorizontalScrollIndicator(true)
 ,m_bShowsVerticalScrollIndicator(true)
-,m_bShowsScrollIndicators(true)
 ,m_pHeaderRefreshView(NULL)
 ,m_pFooterRefreshView(NULL)
 {
-    m_bTouchMovedStopSubviews = true;
-    this->setHaveNextResponder(false);
+    this->setPriorityScroll(true);
+    this->setReachBoundaryHandOverToSuperview(true);
 }
 
 CAScrollView::~CAScrollView()
@@ -191,24 +190,67 @@ const CCSize& CAScrollView::getViewSize()
     return m_obViewSize;
 }
 
-void CAScrollView::setScrollEnabled(bool var)
+bool CAScrollView::isReachBoundaryLeft()
 {
-    m_bTouchMovedStopSubviews = m_bscrollEnabled = var;
+    do
+    {
+        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
+        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
+        return false;
+    }
+    while (0);
+
+    return m_pContainer->getFrame().getMinX() >= 0.0f;
 }
 
-bool CAScrollView::isScrollEnabled()
+bool CAScrollView::isReachBoundaryRight()
 {
-    return m_bscrollEnabled;
+    do
+    {
+        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
+        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
+        return false;
+    }
+    while (0);
+
+    return m_pContainer->getFrame().getMaxX() <= m_obContentSize.width;
+}
+
+bool CAScrollView::isReachBoundaryUp()
+{
+    do
+    {
+        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
+        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
+        return false;
+    }
+    while (0);
+
+    return m_pContainer->getFrame().getMinY() >= 0.0f;
+}
+
+bool CAScrollView::isReachBoundaryDown()
+{
+    do
+    {
+        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
+        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
+        return false;
+    }
+    while (0);
+
+    return m_pContainer->getFrame().getMaxX() <= m_obContentSize.height;
 }
 
 void CAScrollView::setTouchEnabledAtSubviews(bool var)
 {
+    m_bTouchEnabledAtSubviews = var;
     m_pContainer->setTouchEnabled(var);
 }
 
 bool CAScrollView::isTouchEnabledAtSubviews()
 {
-    return m_pContainer->isTouchEnabled();
+    return m_bTouchEnabledAtSubviews;
 }
 
 void CAScrollView::setBounces(bool var)
@@ -226,17 +268,30 @@ bool CAScrollView::isBounces()
     return m_bBounces;
 }
 
-void CAScrollView::setShowsHorizontalScrollIndicator(bool var)
+void CAScrollView::setShowsScrollIndicators(bool var)
 {
-    m_bShowsHorizontalScrollIndicator = var;
-    if (m_bShowsHorizontalScrollIndicator)
+    m_bShowsScrollIndicators = var;
+    if (!var)
     {
-        m_pIndicatorHorizontal->setVisible(true);
+        m_pIndicatorHorizontal->setVisible(var);
+        m_pIndicatorVertical->setVisible(var);
     }
     else
     {
-        m_pIndicatorHorizontal->setVisible(false);
+        m_pIndicatorHorizontal->setVisible(var && m_bShowsHorizontalScrollIndicator);
+        m_pIndicatorVertical->setVisible(var && m_bShowsVerticalScrollIndicator);
     }
+}
+
+bool CAScrollView::isShowsScrollIndicators()
+{
+    return m_bShowsScrollIndicators;
+}
+
+void CAScrollView::setShowsHorizontalScrollIndicator(bool var)
+{
+    m_bShowsHorizontalScrollIndicator = var;
+    m_pIndicatorHorizontal->setVisible(var);
 }
 
 bool CAScrollView::isShowsHorizontalScrollIndicator()
@@ -247,31 +302,12 @@ bool CAScrollView::isShowsHorizontalScrollIndicator()
 void CAScrollView::setShowsVerticalScrollIndicator(bool var)
 {
     m_bShowsVerticalScrollIndicator = var;
-    if (m_bShowsVerticalScrollIndicator)
-    {
-        m_pIndicatorVertical->setVisible(true);
-    }
-    else
-    {
-        m_pIndicatorVertical->setVisible(false);
-    }
+    m_pIndicatorVertical->setVisible(var);
 }
 
 bool CAScrollView::isShowsVerticalScrollIndicator()
 {
     return m_bShowsVerticalScrollIndicator;
-}
-
-void CAScrollView::setShowsScrollIndicators(bool var)
-{
-    this->setShowsHorizontalScrollIndicator(var);
-    this->setShowsVerticalScrollIndicator(var);
-    m_bShowsScrollIndicators = var;
-}
-
-bool CAScrollView::isShowsScrollIndicators()
-{
-    return m_bShowsScrollIndicators;
 }
 
 void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
@@ -398,64 +434,6 @@ void CAScrollView::setContainerFrame(const CCPoint& point, const CCSize& size)
     
     CCRect rect = m_pContainer->getFrame();
     
-    m_bSlidingMinX = rect.getMinX() >= 0.0f;
-    m_bSlidingMaxX = rect.getMaxX() - this->getBounds().size.width < FLT_EPSILON;
-    m_bSlidingMinY = rect.getMinY() >= 0.0f;
-    m_bSlidingMaxY = rect.getMaxY() - this->getBounds().size.height < FLT_EPSILON;
-    
-    
-}
-
-bool CAScrollView::isSlidingMinX(void) const
-{
-    do
-    {
-        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
-        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
-        return false;
-    }
-    while (0);
-    
-    return m_bSlidingMinX;
-}
-
-bool CAScrollView::isSlidingMaxX(void) const
-{
-    do
-    {
-        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
-        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
-        return false;
-    }
-    while (0);
-    
-    return m_bSlidingMaxX;
-}
-
-bool CAScrollView::isSlidingMinY(void) const
-{
-    do
-    {
-        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
-        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
-        return false;
-    }
-    while (0);
-    
-    return m_bSlidingMinY;
-}
-
-bool CAScrollView::isSlidingMaxY(void) const
-{
-    do
-    {
-        CC_BREAK_IF(m_fMaximumZoomScale - m_fMinimumZoomScale < FLT_EPSILON);
-        CC_BREAK_IF(CAApplication::getApplication()->getTouchDispatcher()->getTouchCount() < 2);
-        return false;
-    }
-    while (0);
-    
-    return m_bSlidingMaxY;
 }
 
 bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -469,9 +447,6 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             m_vTouches.pushBack(pTouch);
         }
         
-        if (m_bscrollEnabled == false)
-            return true;
-
         if (m_vTouches.size() == 1)
         {
             CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
@@ -511,7 +486,6 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-    CC_RETURN_IF(m_bscrollEnabled == false);
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CCPoint p_container = m_pContainer->getFrameOrigin();
     CCPoint p_off = CCPointZero;
@@ -651,6 +625,11 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         
         this->startDeaccelerateScroll();
         
+        if (m_pScrollViewDelegate && m_bTracking == false)
+        {
+            m_pScrollViewDelegate->scrollViewTouchUpWithoutMoved(this, this->convertToNodeSpace(pTouch->getLocation()));
+        }
+        
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewDidEndDragging(this);
@@ -713,7 +692,11 @@ void CAScrollView::stopDeaccelerateScroll()
     CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     m_tInertia = CCPointZero;
     m_bDecelerating = false;
-    this->setAllowIntercepted(true);
+    
+    if (m_bTouchEnabledAtSubviews)
+    {
+        m_pContainer->setTouchEnabled(true);
+    }
 }
 
 void CAScrollView::startDeaccelerateScroll()
@@ -723,7 +706,11 @@ void CAScrollView::startDeaccelerateScroll()
     CAScheduler::unschedule(schedule_selector(CAScrollView::update), this);
     CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
     CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f);
-    this->setAllowIntercepted(false);
+    
+    if (m_bTouchEnabledAtSubviews)
+    {
+        m_pContainer->setTouchEnabled(false);
+    }
 }
 
 void CAScrollView::deaccelerateScrolling(float dt)

@@ -115,7 +115,6 @@ CAView::CAView(void)
     m_sQuad.tr.colors = tmpColor;
     
     this->setAnchorPoint(CCPoint(0.5f, 0.5f));
-    this->setHaveNextResponder(true);
     
     //CCLog("CAView = %d\n", ++viewCount);
 }
@@ -1177,83 +1176,34 @@ void CAView::visit()
     
     if (!m_bDisplayRange)
     {
-        CCPoint point = CCPointZero;
-        
-        CCSize size = this->getBounds().size;
-        
-        {
-            int rotation = this->getRotation();
-            
-            CAView* parent = this->getSuperview();
-            while (parent)
-            {
-                rotation += parent->getRotation();
-                parent = parent->getSuperview();
-            }
-            
-            if (std::abs(rotation % 360 - 90) < FLT_EPSILON)
-            {
-                point = this->getBounds().size;
-                size.width = size.width + size.height;
-                size.height = size.width - size.height;
-                size.width = size.width - size.height;
-            }
-            else if (std::abs(rotation % 360 - 180) < FLT_EPSILON)
-            {
-                point = CCPoint(this->getBounds().size.width, 0);
-            }
-            else if (std::abs(rotation % 360 - 270) < FLT_EPSILON)
-            {
-                point = CCPointZero;
-                size.width = size.width + size.height;
-                size.height = size.width - size.height;
-                size.width = size.width - size.height;
-            }
-            else
-            {
-                point = CCPoint(0, this->getBounds().size.height);
-            }
-        }
-        
-        point = this->convertToWorldSpace(point);
-        point = CAApplication::getApplication()->convertToGL(point);
-        
-        CCEGLView* pGLView = CCEGLView::sharedOpenGLView();
-        float glScaleX = pGLView->getScaleX();
-        float glScaleY = pGLView->getScaleY();
-        
-        float off_X = pGLView->getViewPortRect().origin.x;
-        float off_Y = pGLView->getViewPortRect().origin.y;
-        
-        float scaleX = this->getScaleX();
-        float scaleY = this->getScaleY();
-        
-        CAView* parent = this->getSuperview();
-        while (parent)
-        {
-            scaleX *= parent->getScaleX();
-            scaleY *= parent->getScaleY();
-            parent = parent->getSuperview();
-        }
+        kmMat4 modelview;
+        kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
+        kmMat4 tm;
+        kmMat4Identity(&tm);
+        tm.mat[12] = m_obContentSize.width;
+        tm.mat[13] = m_obContentSize.height;
+        kmMat4 tm2;
+        kmMat4Multiply(&tm2, &modelview, &tm);
 
-        CCRect frame = CCRect((point.x) * glScaleX + off_X - 0.5f,
-                              (point.y) * glScaleY + off_Y,
-                              (size.width) * scaleX * glScaleX + 1.0f,
-                              (size.height) * scaleY * glScaleY + 1.0f);
+        CCSize winSize = CAApplication::getApplication()->getWinSize();
+        CCPoint point = CCPoint(modelview.mat[12], modelview.mat[13]) + winSize/2;
+        CCSize size = CCSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
+
+        CCRect frame = CCRect(point.x,
+                              point.y,
+                              size.width,
+                              size.height);
         
         if (isScissor)
         {
-            float x = MAX(frame.origin.x, restoreScissorRect.origin.x);
-            float y = MAX(frame.origin.y, restoreScissorRect.origin.y);
-            float xx = MIN(frame.origin.x + frame.size.width, restoreScissorRect.origin.x + restoreScissorRect.size.width);
-            float yy = MIN(frame.origin.y + frame.size.height, restoreScissorRect.origin.y + restoreScissorRect.size.height);
+            float x1 = MAX(frame.getMinX(), restoreScissorRect.getMinX());
+            float y1 = MAX(frame.getMinY(), restoreScissorRect.getMinY());
+            float x2 = MIN(frame.getMaxX(), restoreScissorRect.getMaxX());
+            float y2 = MIN(frame.getMaxY(), restoreScissorRect.getMaxY());
             
             if (frame.intersectsRect(restoreScissorRect))
             {
-                glScissor(x,
-                          y,
-                          xx-x,
-                          yy-y);
+                glScissor(x1, y1, x2-x1, y2-y1);
             }
             else
             {
@@ -1376,11 +1326,6 @@ CAView* CAView::copy()
 
 CAResponder* CAView::nextResponder()
 {
-    if (m_bHaveNextResponder == false)
-    {
-        return NULL;
-    }
-    
     if (m_pViewDelegate)
     {
         return dynamic_cast<CAResponder*>(m_pViewDelegate);
@@ -1856,10 +1801,17 @@ void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrim
 void CAView::updateImageRect()
 {
     // Don't update Z.
-    m_sQuad.bl.vertices = vertex3(1, 0, m_fVertexZ);
-    m_sQuad.br.vertices = vertex3(m_obContentSize.width - 1.0f, 0, m_fVertexZ);
-    m_sQuad.tl.vertices = vertex3(1, m_obContentSize.height - 1.0f, m_fVertexZ);
-    m_sQuad.tr.vertices = vertex3(m_obContentSize.width - 1.0f, m_obContentSize.height - 1.0f, m_fVertexZ);
+    
+    GLfloat x1,x2,y1,y2;
+    x1 = 0;
+    y1 = 0;
+    x2 = m_obContentSize.width;
+    y2 = m_obContentSize.height;
+    
+    m_sQuad.bl.vertices = vertex3(x1, y1, m_fVertexZ);
+    m_sQuad.br.vertices = vertex3(x2, y1, m_fVertexZ);
+    m_sQuad.tl.vertices = vertex3(x1, y2, m_fVertexZ);
+    m_sQuad.tr.vertices = vertex3(x2, y2, m_fVertexZ);
 }
 
 // override this method to generate "double scale" sprites

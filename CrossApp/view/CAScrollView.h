@@ -39,6 +39,8 @@ public:
     virtual void scrollViewHeaderBeginRefreshing(CAScrollView* view){};
     
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view){};
+    
+    virtual void scrollViewTouchUpWithoutMoved(CAScrollView* view, const CCPoint& point){};
 };
 
 class CAIndicator;
@@ -84,6 +86,22 @@ public:
     void setBackGroundColor(const CAColor4B &color);
     
     void setZoomScale(float zoom);
+
+    virtual bool isReachBoundaryLeft();
+    
+    virtual bool isReachBoundaryRight();
+    
+    virtual bool isReachBoundaryUp();
+    
+    virtual bool isReachBoundaryDown();
+    
+    CC_PROPERTY_IS(bool, m_bTouchEnabledAtSubviews, TouchEnabledAtSubviews);
+    
+    CC_PROPERTY_IS(bool, m_bShowsScrollIndicators, ShowsScrollIndicators);// default is true
+    
+    CC_PROPERTY_IS(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);// default is true
+    
+    CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);// default is true
     
     CC_SYNTHESIZE(CAScrollViewDelegate*, m_pScrollViewDelegate, ScrollViewDelegate);
     
@@ -93,25 +111,17 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bBounceVertical, BounceVertical);
     
-	CC_SYNTHESIZE_IS_READONLY(bool, m_bTracking, Tracking);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bTracking, Tracking);
     
-	CC_SYNTHESIZE_IS_READONLY(bool, m_bDecelerating, Decelerating);
-    
-    CC_PROPERTY_IS(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);
-    
-    CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);
-    
-    CC_PROPERTY_IS(bool, m_bShowsScrollIndicators, ShowsScrollIndicators);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bDecelerating, Decelerating);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bZooming, Zooming);
     
-    CC_SYNTHESIZE(float, m_fMinimumZoomScale, MinimumZoomScale);
+    CC_SYNTHESIZE(float, m_fMinimumZoomScale, MinimumZoomScale);// default is 1.0
     
-    CC_SYNTHESIZE(float, m_fMaximumZoomScale, MaximumZoomScale);
+    CC_SYNTHESIZE(float, m_fMaximumZoomScale, MaximumZoomScale);// default is 1.0
     
     CC_SYNTHESIZE_READONLY(float, m_fZoomScale, ZoomScale);
-    
-    CC_PROPERTY_IS(bool, m_bscrollEnabled, ScrollEnabled);
     
     CC_PROPERTY_PASS_BY_REF(CCSize, m_obViewSize, ViewSize);
     
@@ -126,18 +136,8 @@ public:
     void stopDeaccelerateScroll();
     
     void startDeaccelerateScroll();
-    
-    virtual bool isSlidingMinX(void) const;
-    
-    virtual bool isSlidingMaxX(void) const;
-    
-    virtual bool isSlidingMinY(void) const;
-    
-    virtual bool isSlidingMaxY(void) const;
-    
-    void setTouchEnabledAtSubviews(bool var);
-    
-    bool isTouchEnabledAtSubviews();
+
+    virtual CAResponder* nextResponder() {return NULL;}
     
 protected:
  

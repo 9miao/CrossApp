@@ -419,7 +419,6 @@ bool CATextSelViewEx::init()
 	m_pCursorMarkR = CAImageView::createWithImage(CAImage::create("source_material/text_pos_r.png"));
 	insertSubview(m_pCursorMarkR, CAWindowZOderTop);
 	m_pCursorMarkR->setVisible(false);
-	this->setHaveNextResponder(false);
 	return true;
 }
 

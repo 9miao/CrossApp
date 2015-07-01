@@ -13,16 +13,13 @@
 NS_CC_BEGIN;
 
 CAResponder::CAResponder()
-:m_bTouchMovedStopSubviews(false)
-,m_bTouchMovedListenHorizontal(true)
-,m_bTouchMovedListenVertical(true)
-,m_bTouchEnabled(true)
-,m_bAllowIntercepted(true)
-,m_bHaveNextResponder(false)
-,m_bSlidingMinX(false)
-,m_bSlidingMaxX(false)
-,m_bSlidingMinY(false)
-,m_bSlidingMaxY(false)
+:m_bTouchEnabled(true)
+,m_bScrollEnabled(true)
+,m_bHorizontalScrollEnabled(true)
+,m_bVerticalScrollEnabled(true)
+,m_bPriorityScroll(false)
+,m_bReachBoundaryHandOverToSuperview(true)
+,m_bTouchEventScrollHandOverToSuperview(true)
 {
 
 }

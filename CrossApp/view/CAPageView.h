@@ -33,7 +33,9 @@ public:
     
     virtual void pageViewDidEndTurning(CAPageView* pageView){};
     
-    virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point){};
+    virtual void pageViewDidSelectedPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point){};
+    
+    CC_DEPRECATED_ATTRIBUTE virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point){};
 };
 
 class CC_DLL CAPageView: public CAScrollView
@@ -136,20 +138,16 @@ private:
     
     using CAScrollView::getSubviewByTag;
     
-    using CAResponder::setTouchMovedListenHorizontal;
-    
-    using CAResponder::setTouchMovedListenVertical;
-    
 private:
     
     typedef enum
     {
-        CAPageViewLast,
-        CAPageViewNext,
-        CAPageViewNone
-    }CAPageViewState;
+        Last,
+        Next,
+        None
+    }State;
     
-    CAPageViewState m_ePageViewState;
+    State m_ePageViewState;
     
     CADeque<CAView*> m_pViews;
     

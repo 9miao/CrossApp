@@ -24,8 +24,8 @@ CADrawerController::CADrawerController()
 ,m_pBackgroundView(NULL)
 {
     this->getView()->setColor(CAColor_clear);
-    this->setTouchMovedListenVertical(false);
     this->setTouchMoved(true);
+    this->setVerticalScrollEnabled(false);
 }
 
 CADrawerController::~CADrawerController()
@@ -190,8 +190,6 @@ void CADrawerController::showLeftViewController(bool animated)
         this->updateViewFrame();
         this->hideEnded();
     }
-    m_bSlidingMaxX = false;
-    m_bSlidingMinX = true;
 }
 
 void CADrawerController::hideLeftViewController(bool animated)
@@ -211,8 +209,6 @@ void CADrawerController::hideLeftViewController(bool animated)
         this->updateViewFrame();
         this->hideEnded();
     }
-    m_bSlidingMaxX = true;
-    m_bSlidingMinX = false;
 }
 
 bool CADrawerController::isShowLeftViewController()
@@ -289,6 +285,16 @@ void CADrawerController::scheduleHideAction(float dt)
         m_fCurrDivision = MAX(m_fCurrDivision - m_fDivision/12.0f * 60 * dt, 0);
         this->updateViewFrame();
     }
+}
+
+bool CADrawerController::isReachBoundaryLeft()
+{
+    return this->isShowLeftViewController();
+}
+
+bool CADrawerController::isReachBoundaryRight()
+{
+    return !this->isShowLeftViewController();
 }
 
 bool CADrawerController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -372,7 +378,8 @@ CAView* CADrawerController::getBackgroundView()
 
 void CADrawerController::setTouchMoved(bool var)
 {
-    m_bTouchMovedStopSubviews = m_bTouchMoved = var;
+    m_bTouchMoved = var;
+    this->setPriorityScroll(var);
 }
 
 bool CADrawerController::isTouchMoved()

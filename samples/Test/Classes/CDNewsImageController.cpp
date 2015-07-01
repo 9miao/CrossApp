@@ -103,7 +103,7 @@ CDNewsImageController::CDNewsImageController(int index)
 
 CDNewsImageController::~CDNewsImageController()
 {
-    
+
 }
 
 void CDNewsImageController::viewDidLoad()

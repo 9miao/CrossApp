@@ -11,7 +11,7 @@
 
 #include "RootWindow.h"
 
-class CDShowNewsImage : public CAViewController,CAPageViewDelegate
+class CDShowNewsImage : public CAViewController, CAPageViewDelegate, CAScrollViewDelegate
 {
 public:
     CDShowNewsImage();
@@ -25,7 +25,7 @@ public:
     void initNewsImageView(newsImage _image);
 public:
     virtual void pageViewDidEndTurning(CAPageView* pageView);
-    virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point);
+    virtual void scrollViewTouchUpWithoutMoved(CAScrollView* view, const CCPoint& point);
 public:
     CADipSize winSize;
     newsImage m_image;

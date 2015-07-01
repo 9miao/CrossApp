@@ -74,6 +74,8 @@ public:
 
 	virtual void onEnterTransitionDidFinish();
 
+    virtual void onExitTransitionDidStart();
+    
 	virtual bool resignFirstResponder();
 
 	virtual bool becomeFirstResponder();

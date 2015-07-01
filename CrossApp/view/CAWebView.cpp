@@ -67,7 +67,7 @@ bool CAWebView::init()
     
     CCSize size = this->getBounds().size;
     m_pLoadingView = CAActivityIndicatorView::create();
-    m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGray);
+    m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGrayLarge);
 	m_pLoadingView->setVisible(false);
 	this->addSubview(m_pLoadingView);
     

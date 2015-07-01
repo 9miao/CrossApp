@@ -123,7 +123,7 @@ CACollectionViewCell* CDUIShowCollectionView::collectionCellAtIndex(CACollection
     
     CAImageView* icon = (CAImageView*)p_Cell->getSubviewByTag(101);
     icon->setImage(CAImage::create(iconTag[index]));
-    
+
     return p_Cell;
 }
 

@@ -90,7 +90,6 @@ bool CAListView::init()
 
 	this->setShowsHorizontalScrollIndicator(false);
     this->setBounceHorizontal(false);
-    this->setTouchMovedListenHorizontal(false);
 	return true;
 }
 
@@ -176,8 +175,8 @@ void CAListView::setListViewOrientation(CAListViewOrientation var)
 	setBounceVertical(bVertScroll);
 	setShowsHorizontalScrollIndicator(!bVertScroll);
 	setBounceHorizontal(!bVertScroll);
-	setTouchMovedListenHorizontal(!bVertScroll);
-	setTouchMovedListenVertical(bVertScroll);
+	setHorizontalScrollEnabled(!bVertScroll);
+	setVerticalScrollEnabled(bVertScroll);
 }
 
 CAListViewOrientation CAListView::getListViewOrientation()
@@ -231,7 +230,6 @@ bool CAListView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CAListView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-	CC_RETURN_IF(m_bscrollEnabled == false);
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchMoved(pTouch, pEvent);
 
@@ -587,7 +585,7 @@ CAListViewCell::CAListViewCell()
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
 {
-    this->setHaveNextResponder(true);
+
 }
 
 

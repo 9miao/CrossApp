@@ -9,7 +9,7 @@
 #ifndef __CrossApp_CATextEditHelper__
 #define __CrossApp_CATextEditHelper__
 
-#include "CAView.h"
+#include "control/CAControl.h"
 #include "CAImageView.h"
 
 
@@ -117,7 +117,7 @@ private:
 	int m_iSelViewTouchPos;
 };
 
-class CATextSelViewEx : public CAView
+class CATextSelViewEx : public CAControl
 {
 public:
 	CATextSelViewEx();

@@ -51,25 +51,17 @@ public:
     /** Supported formats for Image */
     typedef enum
     {
-        //! JPEG
-        JPG,
-        //! PNG
-        PNG,
-        //! GIF
-        GIF,
-        //! TIFF
-        TIFF,
-        //! WebP
-        WEBP,
-        //! ETC
-        ETC,
-        //! TGA
-        TGA,
-        //! Raw Data
-        RAW_DATA,
-        //! Unknown format
-        UNKOWN
-    } Format;
+        JPG,//! JPEG
+        PNG,//! PNG
+        GIF,//! GIF
+        TIFF,//! TIFF
+        WEBP,//! WebP
+        ETC,//! ETC
+        TGA,//! TGA
+        RAW_DATA,//! Raw Data
+        UNKOWN//! Unknown format
+    }
+    Format;
     
     CAImage();
     

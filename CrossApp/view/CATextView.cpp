@@ -59,6 +59,12 @@ void CATextView::onEnterTransitionDidFinish()
 
 }
 
+void CATextView::onExitTransitionDidStart()
+{
+    CAView::onExitTransitionDidStart();
+    resignFirstResponder();
+}
+
 bool CATextView::resignFirstResponder()
 {
 	bool result = CAView::resignFirstResponder();
@@ -91,9 +97,8 @@ bool CATextView::init()
     this->setColor(CAColor_clear);
 	m_pContainerView = CAScrollView::createWithFrame(CCRectZero);
 	m_pContainerView->setShowsHorizontalScrollIndicator(false);
-	m_pContainerView->setTouchMovedListenHorizontal(false);
+    m_pContainerView->setHorizontalScrollEnabled(false);
 	m_pContainerView->setBounceHorizontal(false);
-    m_pContainerView->setHaveNextResponder(true);
 	this->addSubview(m_pContainerView);
     
 	m_pImageView = new CAImageView();

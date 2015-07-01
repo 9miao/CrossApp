@@ -65,6 +65,7 @@ void CATextField::onEnterTransitionDidFinish()
 void CATextField::onExitTransitionDidStart()
 {
 	CAView::onExitTransitionDidStart();
+    resignFirstResponder();
 }
 
 bool CATextField::resignFirstResponder()

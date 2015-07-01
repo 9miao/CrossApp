@@ -17,7 +17,7 @@ NS_CC_BEGIN
 CAActivityIndicatorView::CAActivityIndicatorView()
 : m_bStopAnimation(false)
 , m_hidesWhenStopped(true)
-, m_style(CAActivityIndicatorViewStyleWhite)
+, m_style(CAActivityIndicatorViewStyleGrayLarge)
 , m_color(ccc4(255, 255, 255, 255))
 , m_duration(0.1f)
 , m_pImageView(NULL)
@@ -34,6 +34,8 @@ CAActivityIndicatorView::CAActivityIndicatorView()
 
 CAActivityIndicatorView::~CAActivityIndicatorView()
 {
+    CC_SAFE_RELEASE(m_pImageView);
+    CC_SAFE_RELEASE(m_pBackView);
 }
 
 CAActivityIndicatorView* CAActivityIndicatorView::create()
@@ -76,7 +78,7 @@ bool CAActivityIndicatorView::init()
         return false;
     }
     this->CAView::setColor(CAColor_clear);
-    m_style = CAActivityIndicatorViewStyleGray;
+    m_style = CAActivityIndicatorViewStyleGrayLarge;
     
     return true;
 }
@@ -104,41 +106,53 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
     
     if (m_style != CAActivityIndicatorViewStyleImage)
     {
+        this->removeSubview(m_pImageView);
+        CC_SAFE_RELEASE(m_pImageView);
+        
+        this->removeSubview(m_pBackView);
+        CC_SAFE_RELEASE(m_pBackView);
+        
         CCRect center = getBounds();
         center.origin = center.size/2;
+        CAImage* image = NULL;
         
-        CC_SAFE_RELEASE(m_pImageView);
-        this->removeSubview(m_pImageView);
-        CC_SAFE_RELEASE(m_pBackView);
-        this->removeSubview(m_pBackView);
         switch (m_style)
         {
             case CAActivityIndicatorViewStyleGray:
-                m_pImageView = CAImageView::createWithImage(CAImage::create("source_material/loading_black.png"));
+            {
+                image = CAImage::create("source_material/loading_black.png");
+                center.size = CADipSize(40, 40);
+            }
                 break;
             case CAActivityIndicatorViewStyleWhite:
-                m_pImageView = CAImageView::createWithImage(CAImage::create("source_material/loading_write.png"));
+            {
+                image = CAImage::create("source_material/loading_write.png");
+                center.size = CADipSize(40, 40);
+            }                break;
+            case CAActivityIndicatorViewStyleGrayLarge:
+            {
+                image = CAImage::create("source_material/loading_black.png");
+                center.size = CADipSize(68, 68);
+            }
                 break;
             case CAActivityIndicatorViewStyleWhiteLarge:
             {
-                m_pImageView = CAImageView::createWithImage(CAImage::create("source_material/loading_write_big.png"));
-                break;
+                image = CAImage::create("source_material/loading_write.png");
+                center.size = CADipSize(68, 68);
             }
-            case CAActivityIndicatorViewStyleWGrayLarge:
-            {
-                m_pImageView = CAImageView::createWithImage(CAImage::create("source_material/loading_black_big.png"));
                 break;
-            }
+            
             default:
                 break;
         }
         setTimesOneCycle(m_nTimesOneCycle);
         
-        if (m_pImageView)
-        {
-            m_pImageView->setCenterOrigin(getBounds().size/2);
-            this->insertSubview(m_pImageView, 1);
-        }
+        
+        CAImageView* imageView = CAImageView::createWithCenter(center);
+        imageView->retain();
+        imageView->setImage(image);
+        this->insertSubview(imageView, 1);
+        m_pImageView = imageView;
     }
 }
 
@@ -217,14 +231,17 @@ void CAActivityIndicatorView::setActivityIndicatorView(CrossApp::CAView *var)
 {
     m_style = CAActivityIndicatorViewStyleImage;
     
-    CC_SAFE_RELEASE(m_pImageView);
     this->removeSubview(m_pImageView);
+    CC_SAFE_RELEASE_NULL(m_pImageView);
+    CC_SAFE_RETAIN(var);
     m_pImageView = var;
     if (m_pImageView)
     {
         m_pImageView->setCenterOrigin(getBounds().size/2);
         this->insertSubview(m_pImageView, 1);
     }
+    
+    this->setTimesOneCycle(60);
 }
 
 CAView* CAActivityIndicatorView::getActivityIndicatorView()
@@ -234,13 +251,13 @@ CAView* CAActivityIndicatorView::getActivityIndicatorView()
 
 void CAActivityIndicatorView::setActivityBackView(CrossApp::CAView *var)
 {
-    if (m_pBackView) {
-        removeSubview(m_pBackView);
-    }
-    CC_SAFE_RELEASE(m_pBackView);
+    this->removeSubview(m_pBackView);
+    CC_SAFE_RELEASE_NULL(m_pBackView);
+    CC_SAFE_RETAIN(var);
     m_pBackView = var;
     
-    if (m_pBackView) {
+    if (m_pBackView)
+    {
         m_pBackView->setCenterOrigin(getBounds().size/2);
         this->insertSubview(m_pBackView, 0);
     }

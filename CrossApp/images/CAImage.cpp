@@ -816,13 +816,14 @@ CAImage::CAImage()
 , m_iGIFIndex(0)
 , m_bTextImage(false)
 {
-    s_pImages->addObject(this);
+    ccArrayAppendObjectWithResize(s_pImages->data, this);
+    CC_SAFE_RELEASE(this);
     //CCLog("CAImage = %d\n", s_pImages->count());
 }
 
 CAImage::~CAImage()
 {
-    s_pImages->removeObject(this);
+    ccArrayRemoveObject(s_pImages->data, this, false);
 
     CCLOGINFO("CrossApp: deallocing CAImage %u.", m_uName);
     CC_SAFE_RELEASE(m_pShaderProgram);
@@ -1688,8 +1689,24 @@ bool CAImage::initWithRawData(const unsigned char * data,
     
     m_bHasPremultipliedAlpha = false;
     m_bHasMipmaps = false;
-    m_bHasAlpha = true;
     
+    switch (pixelFormat)
+    {
+        case PixelFormat_RGBA8888:
+        case PixelFormat_RGBA4444:
+        case PixelFormat_RGB5A1:
+        case PixelFormat_AI88:
+        case PixelFormat_A8:
+            m_bHasAlpha = true;
+            break;
+        case PixelFormat_RGB888:
+        case PixelFormat_RGB565:
+        case PixelFormat_I8:
+        default:
+            m_bHasAlpha = false;
+            break;
+    }
+
     setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
     
     this->repremultipliedImageData();
@@ -2059,7 +2076,7 @@ unsigned int CAImage::bitsPerPixelForFormat(CAImage::PixelFormat format)
         case PixelFormat_RGBA4444:
             ret = 16;
             break;
-        case CAImage::PixelFormat_RGB5A1:
+        case PixelFormat_RGB5A1:
             ret = 16;
             break;
         case PixelFormat_AI88:
@@ -2364,7 +2381,7 @@ float CAImage::getAspectRatio()
 CAImage* CAImage::copy()
 {
     CAImage *newImage = new CAImage();
-    
+    newImage->autorelease();
     newImage->m_ePixelFormat = this->m_ePixelFormat;
     newImage->m_uPixelsWide = this->m_uPixelsWide;
     newImage->m_uPixelsHigh = this->m_uPixelsHigh;
