@@ -40,7 +40,7 @@ public:
 
     void goForward();
 
-    void evaluateJS(const std::string &js);
+    std::string evaluateJS(const std::string &js);
 
     void setScalesPageToFit(const bool scalesPageToFit);
 
@@ -52,7 +52,6 @@ public:
 
     static bool shouldStartLoading(const int viewTag, const std::string &url);
     static void didFinishLoading(const int viewTag, const std::string &url);
-	static void didLoadHtmlSource(const int viewTag, const std::string &html);
     static void didFailLoading(const int viewTag, const std::string &url);
     static void onJsCallback(const int viewTag, const std::string &message);
 

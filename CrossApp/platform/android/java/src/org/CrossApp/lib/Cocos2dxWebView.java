@@ -39,7 +39,7 @@ public class Cocos2dxWebView extends WebView {
         this.getSettings().setSupportZoom(false);
         this.getSettings().setBuiltInZoomControls(true);
         this.getSettings().setJavaScriptEnabled(true);
-        this.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");        
+        this.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
      
         
         // `searchBoxJavaBridge_` has big security risk. http://jvn.jp/en/jp/JVN53768697
@@ -87,8 +87,6 @@ public class Cocos2dxWebView extends WebView {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-        	Cocos2dxWebViewHelper._onLoadHtmlSource1(viewTag);
-        	view.loadUrl("javascript:window.local_obj.showSource('<head>'+" + "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
             super.onPageFinished(view, url);
             Cocos2dxWebViewHelper._didFinishLoading(viewTag, url);
         }
@@ -107,7 +105,8 @@ public class Cocos2dxWebView extends WebView {
     
     final class InJavaScriptLocalObj {
         public void showSource(String html) {
-        	Cocos2dxWebViewHelper._onLoadHtmlSource2(html);
+        	Cocos2dxWebViewHelper.didLoadHtmlSource(html);
+        	Cocos2dxWebViewHelper.s_bWaitGetHemlSource = false;
         }
     }
 

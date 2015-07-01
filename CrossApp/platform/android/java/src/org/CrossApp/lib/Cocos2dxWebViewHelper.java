@@ -19,7 +19,6 @@ public class Cocos2dxWebViewHelper {
 
     private static SparseArray<Cocos2dxWebView> webViews;
     private static int viewTag = 0;
-    private static int indexView = 0;
 
     public Cocos2dxWebViewHelper(FrameLayout layout) {
         Cocos2dxWebViewHelper.layout = layout;
@@ -54,14 +53,8 @@ public class Cocos2dxWebViewHelper {
     }
     
     private static native void onSetByteArrayBuffer(byte[] buf, int len);
-    private static native void didLoadHtmlSource(int index, String htmlSrc);
-    
-    public static void _onLoadHtmlSource1(int index) {
-    	indexView = index;
-    }
-    public static void _onLoadHtmlSource2(String html) {
-    	didLoadHtmlSource(indexView, html);
-    }
+    public static native void didLoadHtmlSource(String htmlSrc);
+    public static Boolean s_bWaitGetHemlSource = false;
 
     @SuppressWarnings("unused")
     public static int createWebView() {
@@ -296,16 +289,25 @@ public class Cocos2dxWebViewHelper {
 
     @SuppressWarnings("unused")
     public static void evaluateJS(final int index, final String js) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+    	s_bWaitGetHemlSource = false;
+    	cocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
-                    webView.loadUrl("javascript:" + js);
+                	s_bWaitGetHemlSource = true;
+                	webView.loadUrl("javascript:"+js);
                 }
             }
         });
-    }
+    	
+        try {
+        	while (s_bWaitGetHemlSource) {
+            	Thread.sleep(100);
+            }
+        } catch (Exception e) {
+        }
+	}
 
     @SuppressWarnings("unused")
     public static void setScalesPageToFit(final int index, final boolean scalesPageToFit) {

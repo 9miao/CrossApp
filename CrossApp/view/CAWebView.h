@@ -29,8 +29,6 @@ public:
 	virtual bool onShouldStartLoading(CAWebView* pWebView, const std::string &url) { return true; }
 	
 	virtual void onDidFinishLoading(CAWebView* pWebView, const std::string &url) {}
-
-	virtual void onLoadHtmlSource(CAWebView* pWebView, const std::string &htmlSource) {}
 	
 	virtual void onDidFailLoading(CAWebView* pWebView, const std::string &url) {}
 	
@@ -111,7 +109,9 @@ public:
     /**
     * evaluates JavaScript in the context of the currently displayed page
     */
-    void evaluateJS(const std::string &js);
+    std::string evaluateJS(const std::string &js);
+
+	std::string getHTMLSource();
 
     /**
     * Set WebView should support zooming. The default value is false.

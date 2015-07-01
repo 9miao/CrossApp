@@ -37,7 +37,7 @@ USING_NS_CC;
 
 - (void)reload;
 
-- (void)evaluateJS:(const std::string &)js;
+- (std::string)evaluateJS:(const std::string &)js;
 
 - (void)goBack;
 
@@ -190,10 +190,11 @@ USING_NS_CC;
     [self.uiWebView goForward];
 }
 
-- (void)evaluateJS:(const std::string &)js
+- (std::string)evaluateJS:(const std::string &)js
 {
     if (!self.uiWebView) {[self setupWebView];}
-    [self.uiWebView stringByEvaluatingJavaScriptFromString:@(js.c_str())];
+    NSString* s = [self.uiWebView stringByEvaluatingJavaScriptFromString:@(js.c_str())];
+    return [s UTF8String];
 }
 
 - (void)setScalesPageToFit:(const bool)scalesPageToFit
@@ -221,8 +222,6 @@ USING_NS_CC;
 {
     NSString *url = [[webView.request URL] absoluteString];
     CAWebViewImpl::didFinishLoading(self, [url UTF8String]);
-	NSString* html = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.innerHTML"];
-    CAWebViewImpl::onLoadHtmlSource(self,[html UTF8String]);
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -297,19 +296,6 @@ void CAWebViewImpl::didFinishLoading(void* pWebViewWrapper, const std::string &u
         if (webView && webView->m_pWebViewDelegate)
         {
             webView->m_pWebViewDelegate->onDidFinishLoading(webView, url);
-        }
-    }
-}
-
-void CAWebViewImpl::onLoadHtmlSource(void* pWebViewWrapper, const std::string &htmlSource)
-{
-    WEB_MAP it=s_WebViewImpls.find((UIWebViewWrapper*)pWebViewWrapper);
-    if (it != s_WebViewImpls.end())
-    {
-        CAWebView* webView = it->second->m_pWebView;
-        if (webView && webView->m_pWebViewDelegate)
-        {
-            webView->m_pWebViewDelegate->onLoadHtmlSource(webView, htmlSource);
         }
     }
 }
@@ -399,9 +385,9 @@ void CAWebViewImpl::goForward()
     [WebViewWrapper goForward];
 }
 
-void CAWebViewImpl::evaluateJS(const std::string &js)
+std::string CAWebViewImpl::evaluateJS(const std::string &js)
 {
-    [WebViewWrapper evaluateJS:js];
+    return [WebViewWrapper evaluateJS:js];
 }
 
 void CAWebViewImpl::setScalesPageToFit(const bool scalesPageToFit)
