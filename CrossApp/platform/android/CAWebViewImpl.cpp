@@ -211,7 +211,7 @@ void goForwardJNI(const int index) {
 
 std::string evaluateJSJNI(const int index, const std::string &js) {
 	JniMethodInfo t;
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "evaluateJS", "(ILjava/lang/String;)Ljava/lang/String;")) {
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "evaluateJS", "(ILjava/lang/String;)V")) {
 
 		s_cszWebViewHtmSource.clear();
         jstring jjs = t.env->NewStringUTF(js.c_str());
