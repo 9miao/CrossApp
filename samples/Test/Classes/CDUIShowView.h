@@ -200,8 +200,8 @@ public:
     void showVideo();
     
     void showRenderImage();
-    void renderCallBack();
-    void scheduleFuck();
+	void renderCallBack(CAControl* control, CCPoint point);
+	void scheduleFuck(float dt);
     
     void jsonTest();//json数据读写
     

@@ -1560,9 +1560,6 @@ void CDUIShowView::refreshData(float interval)
 
 void CDUIShowView::showScrollView()
 {
-	CAView* pView = CAStudioViewParser::getInstance()->initWithFile("c:\\page1.json");
-	this->getView()->addSubview(pView);
-	/*
     p_ScrollView = CAScrollView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
     p_ScrollView->setMinimumZoomScale(0.2f);
     p_ScrollView->setMaximumZoomScale(5.0f);
@@ -1572,7 +1569,7 @@ void CDUIShowView::showScrollView()
     p_imageView = CAImageView::createWithImage(CAImage::create("image/h1.png"));
     p_imageView->setCenter(CADipRect(_size.width/2, _size.height/2,800,1200));
     p_ScrollView->addSubview(p_imageView);
-	*/
+
 }
 
 void CDUIShowView::showFlashView()
@@ -1586,7 +1583,7 @@ void CDUIShowView::showFlashView()
 
 void CDUIShowView::showDatePickerView()
 {
-    showNum = 5;
+    
     pageViewIndex = 1;
     VIEWLIST.clear();
     
@@ -1598,10 +1595,10 @@ void CDUIShowView::showDatePickerView()
     p_pickerView->reloadAllComponents();
     
     city_value = CALabel::createWithFrame(CADipRect(0, 100, winSize.width, 40));
-    city_value->setText(UTF8("请选择你所在的城市：北京"));
+    city_value->setText(UTF8("天津市"));
     city_value->setColor(CAColor_black);
     city_value->setFontSize((_px(28)));
-    city_value->setTextAlignment(CATextAlignmentLeft);
+    city_value->setTextAlignment(CATextAlignmentCenter);
     city_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
     CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
@@ -1609,6 +1606,7 @@ void CDUIShowView::showDatePickerView()
     view1->addSubview(city_value);
     view1->setColor(CAColor_white);
     VIEWLIST.pushBack(view1);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     
     CADatePickerView* dpv = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDate);
     dpv->setDate(2004, 2, 30, false);
@@ -1642,14 +1640,16 @@ void CDUIShowView::showDatePickerView()
     view5->addSubview(dpv5);
     view5->setColor(CAColor_white);
     VIEWLIST.pushBack(view5);
-
-    p_PageViewVec->setViews(VIEWLIST);
+#endif
+	p_PageViewVec->setViews(VIEWLIST);
+	showNum = VIEWLIST.size();
 }
 
 void CDUIShowView::didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
     char tem[100];
-    sprintf(tem, "请选择你所在的城市：%s",unicode_to_utf8(adressTag[row]).c_str());
+    //sprintf(tem, "请选择你所在的城市：%s",unicode_to_utf8(adressTag[row]).c_str());
+	sprintf(tem, "%s", unicode_to_utf8(adressTag[row]).c_str());
     city_value->setText(tem);
 }
 
@@ -1813,7 +1813,7 @@ void CDUIShowView::showRenderImage()
     this->getView()->addSubview(btn1);
 }
 
-void CDUIShowView::renderCallBack()
+void CDUIShowView::renderCallBack(CAControl* control, CCPoint point)
 {
     if (dle_ren_index==0)
     {
@@ -1827,7 +1827,7 @@ void CDUIShowView::renderCallBack()
     }
 }
 
-void CDUIShowView::scheduleFuck()
+void CDUIShowView::scheduleFuck(float dt)
 {
     if (dle_ren_index>=1) {
         CAScheduler::unschedule(schedule_selector(CDUIShowView::scheduleFuck), this);

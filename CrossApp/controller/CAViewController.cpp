@@ -583,12 +583,14 @@ void CANavigationController::pushViewController(CAViewController* viewController
     this->createWithContainer(viewController);
     this->layoutNewContainer();
     CAView* newContainer = m_pContainers.back();
-    newContainer->setFrameOrigin(CCPoint(x, 0));
+    
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     
     if (animated)
     {
+        newContainer->setFrameOrigin(CCPoint(x, 0));
+        
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(1/30.0f);
@@ -613,11 +615,8 @@ void CANavigationController::pushViewController(CAViewController* viewController
 
 void CANavigationController::pushViewControllerFinish()
 {
-    float x = this->getView()->getBounds().size.width;
-    
     CAView* lastContainer = m_pContainers.at(m_pContainers.size() - 2);
     lastContainer->setVisible(false);
-    lastContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
     
     CAView* newContainer = m_pContainers.back();
     newContainer->setFrameOrigin(CCPointZero);
@@ -649,7 +648,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     
     CAView* showContainer = m_pContainers.at(index);
     showContainer->setVisible(true);
-    showContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
+    
     
     {
         CCRect rect = this->getView()->getBounds();
@@ -684,6 +683,8 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     
     if (animated)
     {
+        showContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
+        
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(1/30.0f);
