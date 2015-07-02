@@ -37,6 +37,7 @@ SubmissionInfo
 
 # Ignore files build
 projects/
+project/
 
 # Ignore files build by ndk and eclipse
 libs/
