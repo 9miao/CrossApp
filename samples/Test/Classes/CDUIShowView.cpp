@@ -1121,6 +1121,7 @@ void CDUIShowView::showSegmentedControl()
     segment2->addTarget(this, CASegmentedControl_selector(CDUIShowView::segmentCallback));
     segment2->setBackgroundImage(CAImage::create("image/seg1.png"));
     segment2->setSegmentItemBackgroundImage(CAImage::create("image/seg2.png"));
+    segment2->setTintColor(ccc4(44, 178, 93, 255));
     segment2->setSelectedAtIndex(0);
     
     CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
@@ -1820,9 +1821,13 @@ void CDUIShowView::renderCallBack(CAControl* control, CCPoint point)
         CARenderImage* rm = CARenderImage::create(_px(winSize.width), _px(winSize.height));
         rm->printscreenWithView(this->getView());
         
-        renderImage = CAImageView::createWithFrame(CADipRect(winSize.width/4,winSize.height/4,winSize.width/2,winSize.height/2));
-        renderImage->setImage(rm->getImageView()->getImage());
+        renderImage = CAView::createWithFrame(this->getView()->getBounds());
         this->getView()->addSubview(renderImage);
+        
+        CAImageView* imageView = CAImageView::createWithFrame(CADipRect(winSize.width/4,winSize.height/4,winSize.width/2,winSize.height/2));
+        imageView->setImage(rm->getImageView()->getImage());
+        renderImage->addSubview(imageView);
+        
         CAScheduler::schedule(schedule_selector(CDUIShowView::scheduleFuck), this, 3);
     }
 }

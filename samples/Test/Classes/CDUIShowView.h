@@ -298,7 +298,7 @@ public:
     CAImageView* animationView;
     CAStepper* step;
     CALabel* step_value;
-    CAImageView* renderImage;
+    CAView* renderImage;
     
     int UIINDEX;
     int showIndex;

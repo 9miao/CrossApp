@@ -1188,7 +1188,7 @@ void CAView::visit()
         CCPoint point = CCPoint(modelview.mat[12], modelview.mat[13]) + winSize/2;
         CCSize size = CCSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
 
-        CCRect frame = CCRect(point.x, point.y, size.width, size.height);
+        CCRect frame = CCRect(point.x + 0.5f, point.y, size.width + 1.0f, size.height + 1.0f);
         
         if (isScissor)
         {

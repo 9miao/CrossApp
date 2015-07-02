@@ -301,25 +301,26 @@ void CARenderImage::printscreenWithView(CAView* view, CCPoint offset, const CACo
 {
     CC_RETURN_IF(view == NULL);
     
-    float originalRotationX = view->getRotationX();
-    view->setRotationX(originalRotationX + 180);
+    CCPoint point = CCPointZero;
+    point.y += CAApplication::getApplication()->getWinSize().height;
+    point.y -= view->getFrame().size.height;
+    point.y += offset.y;
+    point.x -= offset.x;
     
     CCPoint originalFrameOrigin = view->getFrameOrigin();
-    CCPoint p = originalFrameOrigin;
-    if (!view->isRunning())
-    {
-        p.y += CAApplication::getApplication()->getWinSize().height - view->getFrame().size.height;
-    }
+    CCPoint originalAnchorPoint = view->getAnchorPoint();
+    float originalRotationX = view->getRotationX();
     
-    p.y += offset.y;
-    p.x -= offset.x;
-    view->setFrameOrigin(p);
+    view->setAnchorPoint(CCPoint(0.5f, 0.5f));
+    view->setRotationX(originalRotationX + 180);
+    view->setFrameOrigin(point);
     
     this->beginWithClear(backgroundColor);
     view->visit();
     this->end();
     
     view->setRotationX(originalRotationX);
+    view->setAnchorPoint(originalAnchorPoint);
     view->setFrameOrigin(originalFrameOrigin);
 }
 
