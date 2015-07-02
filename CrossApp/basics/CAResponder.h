@@ -34,6 +34,8 @@ public:
     
     virtual CAResponder* nextResponder();
 
+    CC_SYNTHESIZE_IS(bool, m_bHaveNextResponder, HaveNextResponder);// default is true
+    
     CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);// default is true
 
     CC_SYNTHESIZE_IS(bool, m_bScrollEnabled, ScrollEnabled);// default is true

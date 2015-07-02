@@ -19,6 +19,7 @@ CAControl::CAControl()
         m_selTouch[i] = NULL;
         m_pTarget[i] = NULL;
     }
+    this->setHaveNextResponder(false);
 }
 
 CAControl::~CAControl()

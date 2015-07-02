@@ -656,7 +656,7 @@ CACollectionViewCell::CACollectionViewCell()
 , m_bControlStateEffect(true)
 , m_bAllowsSelected(true)
 {
-
+    this->setHaveNextResponder(true);
 }
 
 

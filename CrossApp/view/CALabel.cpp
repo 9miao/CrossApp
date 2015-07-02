@@ -218,8 +218,8 @@ void CALabel::updateImageRect()
     y1 = 0;
     y1 = m_obContentSize.height - m_obRect.size.height - y1;
     y1 = y1 - pTextHeight;
-    x2 = x1 + m_obRect.size.width;
-    y2 = y1 + m_obRect.size.height;
+    x2 = x1 + m_obRect.size.width - 1;
+    y2 = y1 + m_obRect.size.height - 1;
     m_sQuad.bl.vertices = vertex3(x1, y1, 0);
     m_sQuad.br.vertices = vertex3(x2, y1, 0);
     m_sQuad.tl.vertices = vertex3(x1, y2, 0);

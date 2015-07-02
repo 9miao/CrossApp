@@ -136,8 +136,6 @@ public:
     void stopDeaccelerateScroll();
     
     void startDeaccelerateScroll();
-
-    virtual CAResponder* nextResponder() {return NULL;}
     
 protected:
  

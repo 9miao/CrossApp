@@ -1314,6 +1314,11 @@ CAView* CAView::copy()
 
 CAResponder* CAView::nextResponder()
 {
+    if (!m_bHaveNextResponder)
+    {
+        return NULL;
+    }
+    
     if (m_pViewDelegate)
     {
         return dynamic_cast<CAResponder*>(m_pViewDelegate);

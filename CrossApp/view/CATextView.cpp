@@ -99,6 +99,7 @@ bool CATextView::init()
 	m_pContainerView->setShowsHorizontalScrollIndicator(false);
     m_pContainerView->setHorizontalScrollEnabled(false);
 	m_pContainerView->setBounceHorizontal(false);
+    m_pContainerView->setHaveNextResponder(true);
 	this->addSubview(m_pContainerView);
     
 	m_pImageView = new CAImageView();

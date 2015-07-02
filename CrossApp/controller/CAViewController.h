@@ -194,9 +194,7 @@ public:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-    
-    virtual CAResponder* nextResponder() {return NULL;}
-    
+
 protected:
     
     virtual void viewDidLoad();

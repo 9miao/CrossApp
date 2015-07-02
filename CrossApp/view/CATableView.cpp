@@ -755,7 +755,7 @@ CATableViewCell::CATableViewCell()
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
 {
-
+    this->setHaveNextResponder(true);
 }
 
 CATableViewCell::~CATableViewCell()

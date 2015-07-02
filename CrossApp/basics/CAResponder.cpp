@@ -15,6 +15,7 @@ NS_CC_BEGIN;
 CAResponder::CAResponder()
 :m_bTouchEnabled(true)
 ,m_bScrollEnabled(true)
+,m_bHaveNextResponder(true)
 ,m_bHorizontalScrollEnabled(true)
 ,m_bVerticalScrollEnabled(true)
 ,m_bPriorityScroll(false)

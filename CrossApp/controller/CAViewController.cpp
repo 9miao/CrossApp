@@ -224,7 +224,7 @@ CANavigationController::CANavigationController()
 {
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
-    
+    this->setHaveNextResponder(false);
     this->setTouchMoved(true);
 
     CCSize winSize = CAApplication::getApplication()->getWinSize();

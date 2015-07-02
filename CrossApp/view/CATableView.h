@@ -298,9 +298,7 @@ public:
     CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
-    
-    virtual CAResponder* nextResponder() {return this->getSuperview();}
-    
+
 protected:
 
     virtual void normalTableViewCell();

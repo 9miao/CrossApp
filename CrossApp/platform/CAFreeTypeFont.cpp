@@ -1052,7 +1052,7 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         char sTTFont[256];
         GetWindowsDirectoryA(sTTFont,255);
         strcat(sTTFont,"\\fonts\\simhei.ttf");
-		pFontName = sTTFont;
+		const char* pFontName = sTTFont;
 
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
         
