@@ -779,7 +779,7 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
     if(segment)
     {
         CCSize size = clipNode->getFrame().size;
-        CARenderImage* render = CARenderImage::create(size.width, size.height, CAImage::PixelFormat_RGBA8888);
+        CARenderImage* render = CARenderImage::create(size.width, size.height);
         render->printscreenWithView(clipNode);
         
         CCRect rect;

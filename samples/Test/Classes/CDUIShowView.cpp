@@ -7,6 +7,7 @@
 //
 
 #include "CDUIShowView.h"
+
 std::vector<std::string> sectionTitle;
 
 ETableViewCell::ETableViewCell()
@@ -169,6 +170,20 @@ CDListView::CDListView()
     tempList.push_back("4");
     tempList.push_back("5");
     tempList.push_back("6");
+    tempList.push_back("7");
+    tempList.push_back("8");
+    tempList.push_back("9");
+    tempList.push_back("10");
+    tempList.push_back("11");
+    tempList.push_back("12");
+    tempList.push_back("13");
+    tempList.push_back("14");
+    tempList.push_back("15");
+    tempList.push_back("16");
+    tempList.push_back("17");
+    tempList.push_back("18");
+    tempList.push_back("19");
+    tempList.push_back("20");
 }
 
 CDListView::~CDListView()
@@ -311,6 +326,7 @@ void CDUIShowView::viewDidLoad()
     sectionTitle.push_back("Z");
     
     showIndex = 0;
+    dle_ren_index = 0;
     this->getView()->setColor(CAColor_gray);
     jsonTest();
 }
@@ -404,6 +420,9 @@ void CDUIShowView::showUiWithIndex(int _index)
             showStepper();
             break;
         case 23:
+            showRenderImage();
+            break;
+        case 24:
             showVideo();
             break;
         default:
@@ -1364,7 +1383,7 @@ void CDUIShowView::listViewDidDeselectCellAtIndex(CAListView *listView, unsigned
 
 unsigned int CDUIShowView::numberOfIndex(CAListView *listView)
 {
-    return 8;
+    return 30;
 }
 
 unsigned int CDUIShowView::listViewHeightForIndex(CAListView *listView, unsigned int index)
@@ -1762,6 +1781,50 @@ void CDUIShowView::showVideo()
 
 void CDUIShowView::onVideoPlayerButtonBack()
 {
+    
+}
+
+void CDUIShowView::showRenderImage()
+{
+    CAImageView* im = CAImageView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,winSize.height/2));
+    im->setImage(CAImage::create("image/HelloWorld.png"));
+    im->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+    this->getView()->addSubview(im);
+    
+    CAButton* btn1 = CAButton::create(CAButtonTypeSquareRect);
+    btn1->setCenter(CADipRect(winSize.width/2, winSize.height-100, 100, 50));
+    btn1->setTitleForState(CAControlStateNormal, "Click");
+    btn1->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
+    btn1->addTarget(this, CAControl_selector(CDUIShowView::renderCallBack), CAControlEventTouchUpInSide);
+    this->getView()->addSubview(btn1);
+}
+
+void CDUIShowView::renderCallBack()
+{
+    if (dle_ren_index==0) {
+        CARenderImage* rm = CARenderImage::create(winSize.width, winSize.height);
+        rm->printscreenWithView(this->getView());
+        
+        renderImage = CAImageView::createWithFrame(CADipRect(winSize.width/4,winSize.height/4,winSize.width/2,winSize.height/2));
+        renderImage->setImage(rm->getImageView()->getImage());
+        this->getView()->addSubview(renderImage);
+        CAScheduler::schedule(schedule_selector(CDUIShowView::scheduleFuck), this, 3);
+    }
+}
+
+void CDUIShowView::scheduleFuck()
+{
+    if (dle_ren_index>=1) {
+        CAScheduler::unschedule(schedule_selector(CDUIShowView::scheduleFuck), this);
+        if (renderImage!=NULL) {
+            this->getView()->removeSubview(renderImage);
+            renderImage = NULL;
+        }
+        dle_ren_index = 0;
+    }else{
+        dle_ren_index++;
+    }
+
     
 }
 

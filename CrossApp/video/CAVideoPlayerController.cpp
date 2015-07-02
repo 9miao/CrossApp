@@ -410,7 +410,7 @@ void CAVideoPlayerController::play()
     if (_interrupted)
         return;
     
-    CCLog("_wantMoviePosition===%f",_decoder->getPosition());
+    //CCLog("_wantMoviePosition===%f",_decoder->getPosition());
     _playing = true;
     _interrupted = false;
     _disableUpdateHUD = false;
@@ -423,13 +423,13 @@ void CAVideoPlayerController::play()
     updatePlayButton();
     
     tick(0);
-    
+    CAScheduler::schedule(schedule_selector(CAVideoPlayerController::updateHUD), this, 0);
     if (_decoder->isValidAudio()) {
         enableAudio(true);
         //freeBufferedFrames();
     }
         
-    CCLog("play movie");
+    //CCLog("play movie");
 }
 
 void CAVideoPlayerController::pause()
@@ -615,7 +615,7 @@ void CAVideoPlayerController::tick(float dt)
     }
     
     if ((_tickCounter++ % 3) == 0) {
-        updateHUD();
+        //updateHUD();
     }
 }
 
@@ -734,7 +734,7 @@ void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int 
                 pthread_mutex_unlock(&m_vp_data_mutex);
 
                 
-                CCLog("Audio frame position: %f, %f", _moviePosition, frame->getPosition());
+                //CCLog("Audio frame position: %f, %f", _moviePosition, frame->getPosition());
                 
                 if (_decoder->isValidVideo()) {
                     const float delta = _moviePosition - frame->getPosition();
@@ -879,7 +879,6 @@ void CAVideoPlayerController::buildHUD()
         _slider->setTrackHeight(_px(backImage->getContentSize().height));
         _slider->addTargetForTouchUpSide(this, CAControl_selector(CAVideoPlayerController::onSlideChanged));
         _slider->addTarget(this, CAControl_selector(CAVideoPlayerController::onSlideTouched));
-
         _playSlider = _slider; _playSlider->retain();
         bottomPanel->addSubview(_slider);
     } while (0);
@@ -984,17 +983,34 @@ void CAVideoPlayerController::displayHUD(bool bDisp)
 void CAVideoPlayerController::onSlideTouched(CAControl* control, CCPoint point)
 {
     _disableUpdateHUD = true;
+    if (isPlaying()) {
+        pause();
+    }
 }
 
 void CAVideoPlayerController::onSlideChanged(CAControl *control, CCPoint point)
 {
     CASlider* slider = dynamic_cast<CASlider*>(control);
+    
     if (!_decoder) {
         slider->setValue(0);
         return;
     }
+//    char value[20] = "";
+//    CASlider* p_Slider = (CASlider*)control;
+//    sprintf(value, "%.02f%%", slider->getValue() * 100);
+//    CCLog("onSlideChanged == %s",value);
+//    _moviePosition = slider->getValue() * _decoder->getDuration();
+//    _decoder->setPosition(_moviePosition);
+    
     if (slider) {
-        setMoviePosition(slider->getValue() * _decoder->getDuration());
+        CCLog("onSlideChanged == %f",slider->getValue() * _decoder->getDuration());
+        if (isPlaying()) {
+            setMoviePosition(slider->getValue() * _decoder->getDuration());
+        }else{
+            play();
+            setMoviePosition(slider->getValue() * _decoder->getDuration());
+        }
     }
 }
 
@@ -1019,13 +1035,13 @@ void CAVideoPlayerController::gotoWantedMoviePosition()
 
 void CAVideoPlayerController::setMoviePosition(float position)
 {
-    if (!_decoder || _decoding) {
-        _wantMoviePosition = position;
-        CAScheduler::unschedule(schedule_selector(CAVideoPlayerController::gotoWantedMoviePosition), this);
-        CAScheduler::schedule(schedule_selector(CAVideoPlayerController::gotoWantedMoviePosition), this, 0.1f);
-        _activityView->startAnimating();
-        return;
-    }
+//    if (!_decoder || _decoding) {
+//        _wantMoviePosition = position;
+//        CAScheduler::unschedule(schedule_selector(CAVideoPlayerController::gotoWantedMoviePosition), this);
+//        CAScheduler::schedule(schedule_selector(CAVideoPlayerController::gotoWantedMoviePosition), this, 0.1f);
+//        _activityView->startAnimating();
+//        return;
+//    }
     
     bool playing = _playing;
     
@@ -1037,15 +1053,17 @@ void CAVideoPlayerController::setMoviePosition(float position)
 void CAVideoPlayerController::updatePosition(float position, bool playing)
 {
     freeBufferedFrames();
-    position = MIN(_decoder->getDuration() - 1, MAX(0, position));
+    //position = MIN(_decoder->getDuration() - 1, MAX(0, position));
 
     pthread_mutex_lock(&m_vp_data_mutex);
 
     if (playing) {
+        CCLog("position====%f",position);
         setDecoderPosition(position);
         setMoviePositionFromDecoder();
         play();
     } else {
+        CCLog("position11111====%f",position);
         setDecoderPosition(position);
         vector<VPFrame*> frames;
         if (_decoder->isValidAudio() || _decoder->isValidVideo()) {

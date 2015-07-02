@@ -118,7 +118,6 @@ public:
     CDUIShowView();
     
     virtual ~CDUIShowView();
-    
 protected:
     
     void viewDidLoad();
@@ -199,6 +198,10 @@ public:
     void showGifView();
     
     void showVideo();
+    
+    void showRenderImage();
+    void renderCallBack();
+    void scheduleFuck();
     
     void jsonTest();//json数据读写
     
@@ -295,12 +298,14 @@ public:
     CAImageView* animationView;
     CAStepper* step;
     CALabel* step_value;
+    CAImageView* renderImage;
     
     int UIINDEX;
     int showIndex;
     int showNum;
     int pageViewIndex;
     int heart_index;
+    int dle_ren_index;
     CAVector<CAView* > VIEWLIST;
 };
 
