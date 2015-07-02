@@ -1163,7 +1163,6 @@ void CAView::visit()
 
     this->transform();
     
-    bool isDraw = true;
     bool isScissor = (bool)glIsEnabled(GL_SCISSOR_TEST);
     CCRect restoreScissorRect = CCRectZero;
     if (isScissor)
@@ -1207,7 +1206,10 @@ void CAView::visit()
             }
             else
             {
-                isDraw = false;
+                glScissor(frame.origin.x,
+                          frame.origin.y,
+                          frame.size.width,
+                          frame.size.height);
             }
         }
         else
@@ -1230,10 +1232,7 @@ void CAView::visit()
         itr++;
     }
     
-    if (isDraw)
-    {
-        this->draw();
-    }
+    this->draw();
     
     while (itr!=m_obSubviews.end())
     {
