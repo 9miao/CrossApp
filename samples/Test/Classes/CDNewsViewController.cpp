@@ -237,6 +237,7 @@ void CDNewsViewController::onRefreshRequestFinished(const HttpResponseStatus& st
             }
             m_msg.push_back(temp_msg);
         }
+
     }
     
     do
@@ -410,6 +411,12 @@ void CDNewsViewController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollVie
     sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=1&tag=%s",menuTag[urlID]);
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
+    CATabBarItem* item = this->getTabBarItem();
+    CCLog("BadgeValue====%s",item->getBadgeValue().c_str());
+    if (!item->getBadgeValue().empty()) {
+        item->setBadgeValue("");
+        this->setTabBarItem(item);
+    }
 }
 
 void CDNewsViewController::scrollViewFooterBeginRefreshing(CAScrollView* view)

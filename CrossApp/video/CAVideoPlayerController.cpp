@@ -134,13 +134,13 @@ CAVideoPlayerController::CAVideoPlayerController()
 , _playButton(NULL)
 , _playSlider(NULL)
 , _playTime(NULL)
+, _isPathByUrl(false)
 {
+    SDL_Quit();
 }
 
 CAVideoPlayerController::~CAVideoPlayerController()
 {
-//    pause();
-
     if (_decoder) {
         delete _decoder;
     }
@@ -162,10 +162,10 @@ CAVideoPlayerController::~CAVideoPlayerController()
     CC_SAFE_RELEASE_NULL(_playSlider);
 }
 
-CAVideoPlayerController* CAVideoPlayerController::create(const string &path, const string& title)
+CAVideoPlayerController* CAVideoPlayerController::createWithPath(const string &path, const string& title)
 {
     CAVideoPlayerController* p = new CAVideoPlayerController();
-    if (p && p->init(path, title)) {
+    if (p && p->init(path, title,false)) {
         p->autorelease();
         return p;
     }
@@ -173,7 +173,18 @@ CAVideoPlayerController* CAVideoPlayerController::create(const string &path, con
     return p;
 }
 
-bool CAVideoPlayerController::init(const string& path, const string& title)
+CAVideoPlayerController* CAVideoPlayerController::createWithUrl(const string &path, const string& title)
+{
+    CAVideoPlayerController* p = new CAVideoPlayerController();
+    if (p && p->init(path, title,true)) {
+        p->autorelease();
+        return p;
+    }
+    CC_SAFE_DELETE(p);
+    return p;
+}
+
+bool CAVideoPlayerController::init(const string& path, const string& title,bool _pathType)
 {
     CCAssert(path.size() > 0, "empty path");
     
@@ -184,7 +195,7 @@ bool CAVideoPlayerController::init(const string& path, const string& title)
     getView()->setColor(ccc4(0, 0, 0, 255));
 
     _moviePosition = 0;
-    
+    _isPathByUrl = _pathType;
     _path = path;
     _title = title;
 
@@ -236,7 +247,7 @@ bool CAVideoPlayerController::setMovieDecoder()
     decoder->setInterruputCallback(this, decoder_selector(CAVideoPlayerController::interruptDecoder));
     decoder->setAudioCallback(this, decoder_audio_selector(CAVideoPlayerController::audioCallback));
     
-    if (decoder && decoder->openFile(path, error)) {
+    if (decoder && decoder->openFile(path, error,_isPathByUrl)) {
         
         _videoFrames    = CCArray::create(); _videoFrames->retain();
         _audioFrames    = CCArray::create(); _audioFrames->retain();
@@ -246,7 +257,7 @@ bool CAVideoPlayerController::setMovieDecoder()
             _subtitles = CCArray::create(); _subtitles->retain();
         }
         
-        if (decoder->getIsNetwork()) {
+        if (_isPathByUrl) {
             
             _minBufferedDuration = NETWORK_MIN_BUFFERED_DURATION;
             _maxBufferedDuration = NETWORK_MAX_BUFFERED_DURATION;
@@ -335,9 +346,10 @@ void CAVideoPlayerController::freeBufferedFrames()
 
 bool CAVideoPlayerController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (_HUDView->getSuperview()) {
+    if (_HUDView->isVisible()) {
         dispearHUDView();
-    } else {
+    }
+    else {
         showHUDView();
     }
     return false;
@@ -372,16 +384,12 @@ void CAVideoPlayerController::prepare()
             getView()->addSubview(_glView);
         }
     }
-
-    
-//    if (_HUDView->getSuperview()) {
-//        getView()->removeSubview(_HUDView);
-//        getView()->addSubview(_HUDView);        
-//    }
     
     play();
     
     CAScheduler::unschedule(schedule_selector(CAVideoPlayerController::prepare), this);
+    
+    pause();
 }
 
 void CAVideoPlayerController::play()
@@ -398,10 +406,11 @@ void CAVideoPlayerController::play()
     if (!_decoder->isValidAudio() && !_decoder->isValidVideo()) {
         return;
     }
-    
+
     if (_interrupted)
         return;
-
+    
+    //CCLog("_wantMoviePosition===%f",_decoder->getPosition());
     _playing = true;
     _interrupted = false;
     _disableUpdateHUD = false;
@@ -414,12 +423,13 @@ void CAVideoPlayerController::play()
     updatePlayButton();
     
     tick(0);
-    
+    CAScheduler::schedule(schedule_selector(CAVideoPlayerController::updateHUD), this, 0);
     if (_decoder->isValidAudio()) {
         enableAudio(true);
+        //freeBufferedFrames();
     }
         
-    CCLog("play movie");
+    //CCLog("play movie");
 }
 
 void CAVideoPlayerController::pause()
@@ -427,8 +437,6 @@ void CAVideoPlayerController::pause()
     if (!this->isPlaying()) {
         return;
     }
-
-
     _playing = false;
     this->enableAudio(false);
     updatePlayButton();
@@ -607,7 +615,7 @@ void CAVideoPlayerController::tick(float dt)
     }
     
     if ((_tickCounter++ % 3) == 0) {
-        updateHUD();
+        //updateHUD();
     }
 }
 
@@ -630,11 +638,6 @@ float CAVideoPlayerController::tickCorrection()
     float dPosition = _moviePosition - _tickCorrectionPosition;
     float dTime = (now.tv_sec - _tickCorrectionTime.tv_sec) + (now.tv_usec - _tickCorrectionTime.tv_usec)/1000000.0f;
     float correction = dPosition - dTime;
-    
-//    CCLog("%s, %f", __FUNCTION__, correction);
-    
-    //if ((_tickCounter % 200) == 0)
-    //    LoggerStream(1, @"tick correction %.4f", correction);
     
     if (correction > 1.f || correction < -1.f) {
         
@@ -691,61 +694,25 @@ float CAVideoPlayerController::presentVideoFrame(VPVideoFrame *frame)
     if (_glView) {
         
         _glView->setCurrentFrame(frame);
-        
-    } else {
-//        TODO: _imageView
-//        KxVideoFrameRGB *rgbFrame = (KxVideoFrameRGB *)frame;
-//        _imageView.image = [rgbFrame asImage];
     }
-    
     _moviePosition = frame->getPosition();
     _movieDuration = frame->getDuration();
-    
+    if (_decoder->getDuration()-_moviePosition<1) {
+        pause();
+        _moviePosition = 0;
+        _currentAudioFramePos = 0;
+        _decoder->setPosition(0);
+        setDecoderPosition(0);
+        presentFrame();
+        freeBufferedFrames();
+    }
     return frame->getDuration();
 }
 
 
 void CAVideoPlayerController::presentSubtitles()
 {
-    // TODO: presendSubtitles
-//    NSArray *actual, *outdated;
-//    
-//    if ([self subtitleForPosition:_moviePosition
-//                           actual:&actual
-//                         outdated:&outdated]){
-//        
-//        if (outdated.count) {
-//            @synchronized(_subtitles) {
-//                [_subtitles removeObjectsInArray:outdated];
-//            }
-//        }
-//        
-//        if (actual.count) {
-//            
-//            NSMutableString *ms = [NSMutableString string];
-//            for (KxSubtitleFrame *subtitle in actual.reverseObjectEnumerator) {
-//                if (ms.length) [ms appendString:@"\n"];
-//                [ms appendString:subtitle.text];
-//            }
-//            
-//            if (![_subtitlesLabel.text isEqualToString:ms]) {
-//                
-//                CGSize viewSize = self.view.bounds.size;
-//                CGSize size = [ms sizeWithFont:_subtitlesLabel.font
-//                             constrainedToSize:CGSizeMake(viewSize.width, viewSize.height * 0.5)
-//                                 lineBreakMode:NSLineBreakByTruncatingTail];
-//                _subtitlesLabel.text = ms;
-//                _subtitlesLabel.frame = CGRectMake(0, viewSize.height - size.height - 10,
-//                                                   viewSize.width, size.height);
-//                _subtitlesLabel.hidden = NO;
-//            }
-//            
-//        } else {
-//            
-//            _subtitlesLabel.text = nil;
-//            _subtitlesLabel.hidden = YES;
-//        }
-//    }
+
 }
 
 void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int channels)
@@ -767,7 +734,7 @@ void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int 
                 pthread_mutex_unlock(&m_vp_data_mutex);
 
                 
-//                CCLog("Audio frame position: %f, %f", _moviePosition, frame->getPosition());
+                //CCLog("Audio frame position: %f, %f", _moviePosition, frame->getPosition());
                 
                 if (_decoder->isValidVideo()) {
                     const float delta = _moviePosition - frame->getPosition();
@@ -864,12 +831,12 @@ void CAVideoPlayerController::updateHUD()
 {
     if (_disableUpdateHUD)
         return;
-    
+    //float ttt = _decoder->getStartTime();
     const float duration = _decoder->getDuration();
     const float position = _moviePosition - _decoder->getStartTime();
-    
+
     _playSlider->setValue(position / duration);
-    _playTime->setText(formatTimeInterval(position, false).append(" / ").append(formatTimeInterval(duration, false)));
+    _playTime->setText(formatTimeInterval(position, false).append(" / ").append(formatTimeInterval(duration-1, false)));
 }
 
 void CAVideoPlayerController::buildHUD()
@@ -912,7 +879,6 @@ void CAVideoPlayerController::buildHUD()
         _slider->setTrackHeight(_px(backImage->getContentSize().height));
         _slider->addTargetForTouchUpSide(this, CAControl_selector(CAVideoPlayerController::onSlideChanged));
         _slider->addTarget(this, CAControl_selector(CAVideoPlayerController::onSlideTouched));
-
         _playSlider = _slider; _playSlider->retain();
         bottomPanel->addSubview(_slider);
     } while (0);
@@ -967,8 +933,10 @@ void CAVideoPlayerController::buildHUD()
     CAButton* buttonBack = NULL;
     do {
         CCRect frame = topPanel->getFrame();
-        CAImage* backImage = CAImage::create("source_material/vdo_btn_back.png");
-        CAImage* backImage_h = CAImage::create("source_material/vdo_btn_back_h.png");
+//        CAImage* backImage = CAImage::create("source_material/vdo_btn_back.png");
+//        CAImage* backImage_h = CAImage::create("source_material/vdo_btn_back_h.png");
+        CAImage* backImage = CAImage::create("source_material/btn_left_blue.png");
+        CAImage* backImage_h = CAImage::create("source_material/btn_left_white.png");
         frame.origin.y = frame.size.height/3;
         frame.origin.x = frame.origin.y;
         frame.size.height = _px(backImage->getContentSize().height);
@@ -1015,17 +983,34 @@ void CAVideoPlayerController::displayHUD(bool bDisp)
 void CAVideoPlayerController::onSlideTouched(CAControl* control, CCPoint point)
 {
     _disableUpdateHUD = true;
+    if (isPlaying()) {
+        pause();
+    }
 }
 
 void CAVideoPlayerController::onSlideChanged(CAControl *control, CCPoint point)
 {
     CASlider* slider = dynamic_cast<CASlider*>(control);
+    
     if (!_decoder) {
         slider->setValue(0);
         return;
     }
+//    char value[20] = "";
+//    CASlider* p_Slider = (CASlider*)control;
+//    sprintf(value, "%.02f%%", slider->getValue() * 100);
+//    CCLog("onSlideChanged == %s",value);
+//    _moviePosition = slider->getValue() * _decoder->getDuration();
+//    _decoder->setPosition(_moviePosition);
+    
     if (slider) {
-        setMoviePosition(slider->getValue() * _decoder->getDuration());
+        CCLog("onSlideChanged == %f",slider->getValue() * _decoder->getDuration());
+        if (isPlaying()) {
+            setMoviePosition(slider->getValue() * _decoder->getDuration());
+        }else{
+            play();
+            setMoviePosition(slider->getValue() * _decoder->getDuration());
+        }
     }
 }
 
@@ -1050,13 +1035,13 @@ void CAVideoPlayerController::gotoWantedMoviePosition()
 
 void CAVideoPlayerController::setMoviePosition(float position)
 {
-    if (!_decoder || _decoding) {
-        _wantMoviePosition = position;
-        CAScheduler::unschedule(schedule_selector(CAVideoPlayerController::gotoWantedMoviePosition), this);
-        CAScheduler::schedule(schedule_selector(CAVideoPlayerController::gotoWantedMoviePosition), this, 0.1f);
-        _activityView->startAnimating();
-        return;
-    }
+//    if (!_decoder || _decoding) {
+//        _wantMoviePosition = position;
+//        CAScheduler::unschedule(schedule_selector(CAVideoPlayerController::gotoWantedMoviePosition), this);
+//        CAScheduler::schedule(schedule_selector(CAVideoPlayerController::gotoWantedMoviePosition), this, 0.1f);
+//        _activityView->startAnimating();
+//        return;
+//    }
     
     bool playing = _playing;
     
@@ -1068,15 +1053,17 @@ void CAVideoPlayerController::setMoviePosition(float position)
 void CAVideoPlayerController::updatePosition(float position, bool playing)
 {
     freeBufferedFrames();
-    position = MIN(_decoder->getDuration() - 1, MAX(0, position));
+    //position = MIN(_decoder->getDuration() - 1, MAX(0, position));
 
     pthread_mutex_lock(&m_vp_data_mutex);
 
     if (playing) {
+        CCLog("position====%f",position);
         setDecoderPosition(position);
         setMoviePositionFromDecoder();
         play();
     } else {
+        CCLog("position11111====%f",position);
         setDecoderPosition(position);
         vector<VPFrame*> frames;
         if (_decoder->isValidAudio() || _decoder->isValidVideo()) {
@@ -1095,19 +1082,20 @@ void CAVideoPlayerController::updatePosition(float position, bool playing)
 
 void CAVideoPlayerController::dispearHUDView()
 {
-    _HUDView->stopAllActions();
-    _HUDView->runAction(CCSequence::create(CCFadeOut::create(0.3f),
-                                           CCCallFunc::create(_HUDView, callfunc_selector(CAView::removeFromSuperview)),
-                                           NULL));
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0.3f);
+    CAViewAnimation::setAnimationRepeatAutoreverses(true);
+    _HUDView->setVisible(false);
+    CAViewAnimation::commitAnimations();
 }
 
 void CAVideoPlayerController::showHUDView()
 {
-    if (!_HUDView->getSuperview()) {
-        getView()->insertSubview(_HUDView, 1);
-    }
-    _HUDView->stopAllActions();
-    _HUDView->runAction(CCFadeIn::create(0.3f));
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0.3f);
+    CAViewAnimation::setAnimationRepeatAutoreverses(true);
+    _HUDView->setVisible(true);
+    CAViewAnimation::commitAnimations();
 }
 
 float CAVideoPlayerController::getDuration()
@@ -1124,6 +1112,4 @@ void CAVideoPlayerController::setPosition(float pos)
 {
     setMoviePosition(pos);
 }
-
-
 NS_CC_END

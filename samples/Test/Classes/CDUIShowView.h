@@ -110,14 +110,14 @@ public CACollectionViewDataSource,
 public CAScrollViewDelegate,
 public CAPickerViewDelegate,
 public CAPickerViewDataSource,
-public CADatePickerViewDelegate
+public CADatePickerViewDelegate//,
+//public CAVideoPlayerControllerDelegate
 {
 public:
     
     CDUIShowView();
     
     virtual ~CDUIShowView();
-    
 protected:
     
     void viewDidLoad();
@@ -197,6 +197,12 @@ public:
     
     void showGifView();
     
+    void showVideo();
+    
+    void showRenderImage();
+    void renderCallBack();
+    void scheduleFuck();
+    
     void jsonTest();//json数据读写
     
     void httpTest();
@@ -264,6 +270,8 @@ public:
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
     virtual void didSelectRow(const struct tm& tm);
 public:
+    virtual void onVideoPlayerButtonBack();
+public:
     
     std::vector<std::string> testList;
     CADipSize winSize;
@@ -290,12 +298,14 @@ public:
     CAImageView* animationView;
     CAStepper* step;
     CALabel* step_value;
+    CAImageView* renderImage;
     
     int UIINDEX;
     int showIndex;
     int showNum;
     int pageViewIndex;
     int heart_index;
+    int dle_ren_index;
     CAVector<CAView* > VIEWLIST;
 };
 

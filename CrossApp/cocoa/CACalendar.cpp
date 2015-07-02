@@ -56,7 +56,7 @@ void CACalendar::setCalendar(int year, int month, int day)
 {
     struct tm tm = {0};
     tm.tm_year = year - 1900;
-    tm.tm_mon = month - 1;
+    tm.tm_mon = month-1;
     tm.tm_mday = day;
     
     time_t time = mktime(&tm);
@@ -167,9 +167,14 @@ int CACalendar::_dayCountOfMonth(int year, int month)
     }
 }
 
+int CACalendar::_dayCountOfYear(int year)
+{
+    return _isLeapYear(year) ? 366 : 365;
+}
+
 int CACalendar::dayCountOfMonth()
 {
-    return _dayCountOfMonth(m_tDateTime.tm_year + 1900, m_tDateTime.tm_mon + 1);
+    return _dayCountOfMonth(m_tDateTime.tm_year + 1900, m_tDateTime.tm_mon);
 }
 
 int CACalendar::dayCountOfYear()
@@ -194,7 +199,7 @@ int CACalendar::dayOfWeek()
 
 int CACalendar::monthOfYear()
 {
-    return m_tDateTime.tm_mon + 1;
+    return m_tDateTime.tm_mon+1;
 }
 
 void CACalendar::dateByDayOfYear(int year, int day, int& month, int& date)

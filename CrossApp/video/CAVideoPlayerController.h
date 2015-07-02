@@ -17,6 +17,7 @@
 #include "control/CASlider.h"
 #include "control/CAButton.h"
 #include "view/CALabel.h"
+#include "CrossApp.h"
 
 NS_CC_BEGIN
 
@@ -31,10 +32,11 @@ class CAVideoPlayerController : public CAViewController {
 public:
     CAVideoPlayerController();
     virtual ~CAVideoPlayerController();
+
+    static CAVideoPlayerController* createWithPath(const string& path, const string& title);
+    static CAVideoPlayerController* createWithUrl(const string& path, const string& title);
     
-    static CAVideoPlayerController* create(const string& path, const string& title);
-    
-    virtual bool init(const string& path, const string& title);
+    virtual bool init(const string& path, const string& title,bool pathType);
     
     virtual void play();
     virtual void pause();
@@ -44,7 +46,6 @@ public:
     virtual float getDuration();
     virtual float getPosition();
     virtual void setPosition(float pos);
-    
     CC_SYNTHESIZE(CAVideoPlayerControllerDelegate*, _delegate, Delegate);
             
 protected:
@@ -94,6 +95,7 @@ protected:
     CAButton            *_playButton;
     CASlider            *_playSlider;
     CALabel             *_playTime;
+    bool                _isPathByUrl;
     
 protected:
     virtual void viewDidLoad();

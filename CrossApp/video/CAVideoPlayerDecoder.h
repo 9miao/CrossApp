@@ -160,9 +160,9 @@ public:
     
 public:
     
-    static VPDecoder* createWithContentPath(const std::string& path, std::string& error);
+    static VPDecoder* createWithContentPath(const std::string& path, std::string& error,bool isNetworkPath);
     
-    bool openFile(const std::string& path, std::string& error);
+    bool openFile(const std::string& path, std::string& error,bool isNetworkPath);
     
     void closeFile();
     

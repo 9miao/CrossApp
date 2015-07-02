@@ -1188,10 +1188,7 @@ void CAView::visit()
         CCPoint point = CCPoint(modelview.mat[12], modelview.mat[13]) + winSize/2;
         CCSize size = CCSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
 
-        CCRect frame = CCRect(point.x,
-                              point.y,
-                              size.width,
-                              size.height);
+        CCRect frame = CCRect(point.x, point.y, size.width, size.height);
         
         if (isScissor)
         {
@@ -1199,18 +1196,10 @@ void CAView::visit()
             float y1 = MAX(frame.getMinY(), restoreScissorRect.getMinY());
             float x2 = MIN(frame.getMaxX(), restoreScissorRect.getMaxX());
             float y2 = MIN(frame.getMaxY(), restoreScissorRect.getMaxY());
+            float width = MAX(x2-x1, 0);
+            float height = MAX(y2-y1, 0);
             
-            if (frame.intersectsRect(restoreScissorRect))
-            {
-                glScissor(x1, y1, x2-x1, y2-y1);
-            }
-            else
-            {
-                glScissor(frame.origin.x,
-                          frame.origin.y,
-                          frame.size.width,
-                          frame.size.height);
-            }
+            glScissor(x1, y1, width, height);
         }
         else
         {

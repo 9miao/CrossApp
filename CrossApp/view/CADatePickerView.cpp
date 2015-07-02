@@ -17,12 +17,13 @@ NS_CC_BEGIN
 
 #pragma execution_character_set("utf-8")
 
-CADatePickerView::CADatePickerView()
+CADatePickerView::CADatePickerView(const CADatePickerMode& m_mode)
 : m_pPickerView(NULL)
-, m_eMode(CADatePickerModeTime)
+, m_eMode(m_mode)
 , m_pDelegate(NULL)
+,isSetDate(false)
 {
-    
+
 }
 
 CADatePickerView::~CADatePickerView()
@@ -30,9 +31,9 @@ CADatePickerView::~CADatePickerView()
     CC_SAFE_RELEASE(m_pPickerView);
 }
 
-CADatePickerView* CADatePickerView::create()
+CADatePickerView* CADatePickerView::create(const CADatePickerMode& m_mode)
 {
-    CADatePickerView* view = new CADatePickerView();
+    CADatePickerView* view = new CADatePickerView(m_mode);
     if (view && view->init()) {
         view->autorelease();
     } else {
@@ -41,9 +42,9 @@ CADatePickerView* CADatePickerView::create()
     return view;
 }
 
-CADatePickerView* CADatePickerView::createWithFrame(const CCRect& rect)
+CADatePickerView* CADatePickerView::createWithFrame(const CCRect& rect,const CADatePickerMode& m_mode)
 {
-    CADatePickerView* view = new CADatePickerView();
+    CADatePickerView* view = new CADatePickerView(m_mode);
     if (view && view->initWithFrame(rect)) {
         view->autorelease();
     } else {
@@ -52,9 +53,9 @@ CADatePickerView* CADatePickerView::createWithFrame(const CCRect& rect)
     return view;
 }
 
-CADatePickerView* CADatePickerView::createWithCenter(const CCRect& rect)
+CADatePickerView* CADatePickerView::createWithCenter(const CCRect& rect,const CADatePickerMode& m_mode)
 {
-    CADatePickerView* view = new CADatePickerView();
+    CADatePickerView* view = new CADatePickerView(m_mode);
     if (view && view->initWithCenter(rect)) {
         view->autorelease();
     } else {
@@ -69,7 +70,6 @@ bool CADatePickerView::init()
     if (!CAControl::init()) {
         return false;
     }
-    
     m_pPickerView = new CAPickerView();
     m_pPickerView->initWithFrame(this->getBounds());
     m_pPickerView->setPickerViewDelegate(this);
@@ -82,13 +82,16 @@ bool CADatePickerView::init()
     gettimeofday(&tp,  NULL);
     time_t time = tp.tv_sec;
     m_tTM = *localtime(&time);
-    
     return true;
 }
 
 void CADatePickerView::onEnter()
 {
     CAControl::onEnter();
+    if (!isSetDate) {
+        setMode(m_eMode);
+    }
+    
 }
 
 void CADatePickerView::onExit()
@@ -126,27 +129,48 @@ bool CADatePickerView::initWithCenter(const CCRect& rect)
 
 void CADatePickerView::setDate(int year, int month, int day, bool animated)
 {
-    m_tTM.tm_year = year;
-    m_tTM.tm_mon = month;
-    m_tTM.tm_mday = day;
+    isSetDate = true;
+    if (year>=1900 && year<=2030) {
+        m_tTM.tm_year = year-1900;
+    }else{
+        isSetDate = false;
+        return;
+    }
+    if (month>=1 && month<=12) {
+        m_tTM.tm_mon = month;
+    }else{
+        isSetDate = false;
+        return;
+    }
+    if (day>=1 && day<=31) {
+        m_tTM.tm_mday = day;
+    }else{
+        isSetDate = false;
+        return;
+    }
     
-    // fault tolerance
-    time_t t = mktime(&m_tTM);
-    m_tTM = *localtime(&t);
-    
+    int tem_day = CACalendar::create()->_dayCountOfMonth(year,month);
+    while (m_tTM.tm_mday>tem_day) {
+        m_tTM.tm_mday--;
+    }
+
     if (m_pPickerView)
     {
+        m_pPickerView->reloadAllComponents();
         switch (m_eMode)
         {
             case CADatePickerModeDate:
             {
                 m_pPickerView->selectRow(m_tTM.tm_year, 0, animated);
-                m_pPickerView->selectRow(m_tTM.tm_mon, 1, animated);
-                m_pPickerView->selectRow(m_tTM.tm_mday - 1, 2, animated);
+                m_pPickerView->selectRow(m_tTM.tm_mon-1, 1, animated);
+                m_pPickerView->selectRow(m_tTM.tm_mday-1, 2, animated);
                 break;
             }
             case CADatePickerModeDateAndTime:
-                m_pPickerView->selectRow(CACalendar::create(mktime(&m_tTM))->dayOfYear() - 1, 0, animated);
+                m_tTM.tm_mon--;
+                m_pPickerView->selectRow(CACalendar::create(mktime(&m_tTM))->dayOfYear(), 0, animated);
+                m_pPickerView->selectRow(m_tTM.tm_hour, 1);
+                m_pPickerView->selectRow(m_tTM.tm_min, 2);
                 break;
             default:
                 break;
@@ -201,13 +225,13 @@ unsigned int CADatePickerView::numberOfRowsInComponent(CAPickerView* pickerView,
             } else if (component == 1) { // month
                 row = 12;
             } else { // day
-                row = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year,m_tTM.tm_mon);
+                row = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year+1900,m_tTM.tm_mon);
             }
             break;
             
         case CADatePickerModeDateAndTime:
             if (component == 0) { // date
-                row = CACalendar::create()->_isLeapYear(m_tTM.tm_year) ? 366 : 365;
+                row = CACalendar::create()->_isLeapYear(m_tTM.tm_year+1900) ? 366 : 365;
             } else if (component == 1) { // hour
                 row = 24;
             } else { // minutes
@@ -302,8 +326,8 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
         case CADatePickerModeDateAndTime:
             if (component == 0)
             { // date
-                CACalendar* cal = CACalendar::create(m_tTM.tm_year,m_tTM.tm_mon,m_tTM.tm_mday);
-                int day = row + 1;
+                CACalendar* cal = CACalendar::create(m_tTM.tm_year+1900,m_tTM.tm_mon,m_tTM.tm_mday);
+                int day = row;
                 int dayOfYear = cal->dayOfYear();
                 cal->addDay(day - dayOfYear);
                 int week = cal->dayOfWeek();
@@ -311,7 +335,6 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
                 int date = cal->dayOfMonth();
                 // const char* week_s[] = {"日","一","二","三","四","五","六"};
 				const char* week_s[] = {"\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"};
-                
                 sprintf(buff, "%d\u6708%d\u65e5  \u5468%s", month, date, week_s[week]);
             }
             else if (component == 1)
@@ -361,16 +384,18 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
             if (component == 0)
             { // years
                 m_tTM.tm_year = row;
-                int tem_day = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year,m_tTM.tm_mon);
+                int tem_day = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year+1900,m_tTM.tm_mon);
                 if (m_tTM.tm_mday>tem_day) {
                     m_tTM.tm_mday = 1;
                     m_pPickerView->reloadComponent(0,2);
+                }else{
+                    m_pPickerView->reloadComponent(m_tTM.tm_mday-1,2);
                 }
             }
             else if (component == 1)
             {
                 m_tTM.tm_mon = row+1;
-                int tem_day = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year,m_tTM.tm_mon);
+                int tem_day = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year+1900,m_tTM.tm_mon);
                 if (m_tTM.tm_mday>tem_day) {
                     m_tTM.tm_mday = 1;
                     m_pPickerView->reloadComponent(0,2);
@@ -381,7 +406,7 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
             }
             else
             {
-                m_tTM.tm_mday = row + 1;
+                m_tTM.tm_mday = row+1;
             }
             break;
         }
@@ -390,7 +415,7 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
             { // date
                 CACalendar* cal = CACalendar::create();
                 int month, date;
-                cal->dateByDayOfYear(m_tTM.tm_year, row+1, month, date);
+                cal->dateByDayOfYear(m_tTM.tm_year, row, month, date);
                 m_tTM.tm_mon = month;
                 m_tTM.tm_mday = date;
             }
@@ -428,6 +453,7 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
 void CADatePickerView::setMode(CADatePickerMode mode)
 {
     m_eMode = mode;
+    CCLog("setMode m_tTM.tm_mon==%d",m_tTM.tm_mon);
     if (m_pPickerView) {
         m_pPickerView->reloadAllComponents();
         switch (m_eMode)
@@ -435,10 +461,10 @@ void CADatePickerView::setMode(CADatePickerMode mode)
             case CADatePickerModeDate:
                 m_pPickerView->selectRow(m_tTM.tm_year, 0);
                 m_pPickerView->selectRow(m_tTM.tm_mon, 1);
-                m_pPickerView->selectRow(m_tTM.tm_mday - 1, 2);
+                m_pPickerView->selectRow(m_tTM.tm_mday-1, 2);
                 break;
             case CADatePickerModeDateAndTime:
-                m_pPickerView->selectRow(CACalendar::create(mktime(&m_tTM))->dayOfYear() - 1, 0);
+                m_pPickerView->selectRow(CACalendar::create(mktime(&m_tTM))->dayOfYear(), 0);
                 m_pPickerView->selectRow(m_tTM.tm_hour, 1);
                 m_pPickerView->selectRow(m_tTM.tm_min, 2);
                 break;
@@ -446,7 +472,6 @@ void CADatePickerView::setMode(CADatePickerMode mode)
                 m_pPickerView->selectRow(m_tTM.tm_hour, 0);
                 m_pPickerView->selectRow(m_tTM.tm_min, 1);
                 break;
-                
             default:
                 break;
         }

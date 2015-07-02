@@ -7,6 +7,7 @@
 //
 
 #include "CDUIShowView.h"
+
 std::vector<std::string> sectionTitle;
 
 ETableViewCell::ETableViewCell()
@@ -169,6 +170,20 @@ CDListView::CDListView()
     tempList.push_back("4");
     tempList.push_back("5");
     tempList.push_back("6");
+    tempList.push_back("7");
+    tempList.push_back("8");
+    tempList.push_back("9");
+    tempList.push_back("10");
+    tempList.push_back("11");
+    tempList.push_back("12");
+    tempList.push_back("13");
+    tempList.push_back("14");
+    tempList.push_back("15");
+    tempList.push_back("16");
+    tempList.push_back("17");
+    tempList.push_back("18");
+    tempList.push_back("19");
+    tempList.push_back("20");
 }
 
 CDListView::~CDListView()
@@ -311,6 +326,7 @@ void CDUIShowView::viewDidLoad()
     sectionTitle.push_back("Z");
     
     showIndex = 0;
+    dle_ren_index = 0;
     this->getView()->setColor(CAColor_gray);
     jsonTest();
 }
@@ -402,6 +418,12 @@ void CDUIShowView::showUiWithIndex(int _index)
             break;
         case 22:
             showStepper();
+            break;
+        case 23:
+            showRenderImage();
+            break;
+        case 24:
+            showVideo();
             break;
         default:
             break;
@@ -739,8 +761,7 @@ void CDUIShowView::showIndicator()
     pageViewIndex = 1;
     VIEWLIST.clear();
     
-    CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                     200, 200));
+    CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
     idc1->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
     idc1->startAnimating();
     CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
@@ -748,8 +769,7 @@ void CDUIShowView::showIndicator()
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
     
-    CAActivityIndicatorView* idc2 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                                        100, 100));
+    CAActivityIndicatorView* idc2 = CAActivityIndicatorView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
     idc2->setStyle(CAActivityIndicatorViewStyleGrayLarge);
     idc2->startAnimating();
     CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
@@ -757,8 +777,7 @@ void CDUIShowView::showIndicator()
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);
     
-    CAActivityIndicatorView* idc3 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                                        100, 100));
+    CAActivityIndicatorView* idc3 = CAActivityIndicatorView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
     idc3->setStyle(CAActivityIndicatorViewStyleWhite);
     idc2->setCycleTime(1.0f);
     idc2->setTimesOneCycle(12);
@@ -768,8 +787,8 @@ void CDUIShowView::showIndicator()
     view3->setColor(CAColor_gray);
     VIEWLIST.pushBack(view3);
     
-    CAActivityIndicatorView* idc4 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                                        100, 100));
+    CAActivityIndicatorView* idc4 = CAActivityIndicatorView::createWithFrame(CADipRect(0, 0,
+                                                                                       winSize.width, winSize.height));
     idc4->setStyle(CAActivityIndicatorViewStyleGray);
     idc4->setCycleTime(1.0f);
     idc4->setTimesOneCycle(12);
@@ -1374,7 +1393,7 @@ void CDUIShowView::listViewDidDeselectCellAtIndex(CAListView *listView, unsigned
 
 unsigned int CDUIShowView::numberOfIndex(CAListView *listView)
 {
-    return 80;
+    return 30;
 }
 
 unsigned int CDUIShowView::listViewHeightForIndex(CAListView *listView, unsigned int index)
@@ -1567,7 +1586,7 @@ void CDUIShowView::showFlashView()
 
 void CDUIShowView::showDatePickerView()
 {
-    showNum = 2;
+    showNum = 5;
     pageViewIndex = 1;
     VIEWLIST.clear();
     
@@ -1591,14 +1610,38 @@ void CDUIShowView::showDatePickerView()
     view1->setColor(CAColor_white);
     VIEWLIST.pushBack(view1);
     
-    CADatePickerView* dpv = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280));
-    dpv->setMode(CADatePickerModeDateAndTime);
+    CADatePickerView* dpv = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDate);
+    dpv->setDate(2004, 2, 30, false);
     dpv->setDelegate(this);
 
     CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(dpv);
     view2->setColor(CAColor_white);
     VIEWLIST.pushBack(view2);
+    
+    CADatePickerView* dpv3 = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDateAndTime);
+    dpv3->setDelegate(this);
+    
+    CAView* view3 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    view3->addSubview(dpv3);
+    view3->setColor(CAColor_white);
+    VIEWLIST.pushBack(view3);
+    
+    CADatePickerView* dpv4 = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeTime);
+    dpv4->setDelegate(this);
+    
+    CAView* view4 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    view4->addSubview(dpv4);
+    view4->setColor(CAColor_white);
+    VIEWLIST.pushBack(view4);
+    
+    CADatePickerView* dpv5 = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeCountDownTimer);
+    dpv5->setDelegate(this);
+    
+    CAView* view5 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    view5->addSubview(dpv5);
+    view5->setColor(CAColor_white);
+    VIEWLIST.pushBack(view5);
 
     p_PageViewVec->setViews(VIEWLIST);
 }
@@ -1735,6 +1778,70 @@ void CDUIShowView::showGifView()
     swfBg->setFrame(CADipRect(100, 100, winSize.width/2, winSize.height/2));
     swfBg->setRepeatForever(true);
     this->getView()->addSubview(swfBg);
+}
+
+void CDUIShowView::showVideo()
+{
+    //http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4
+    //mnt/sdcard/video.mp4
+    
+//    string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");
+//    CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl(path.c_str(), "asdas");
+//    this->getView()->addSubview(pv->getView());
+//    pv->retain();
+//    pv->play();
+//    pv->setDelegate(this);
+}
+
+void CDUIShowView::onVideoPlayerButtonBack()
+{
+    
+}
+
+void CDUIShowView::showRenderImage()
+{
+    CAImageView* im = CAImageView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,winSize.height/2));
+    im->setImage(CAImage::create("image/HelloWorld.png"));
+    im->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+    this->getView()->addSubview(im);
+    
+    CAButton* btn1 = CAButton::create(CAButtonTypeSquareRect);
+    btn1->setCenter(CADipRect(winSize.width/2, winSize.height-100, 100, 50));
+    btn1->setTitleForState(CAControlStateNormal, "Click");
+    btn1->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
+    btn1->addTarget(this, CAControl_selector(CDUIShowView::renderCallBack), CAControlEventTouchUpInSide);
+    this->getView()->addSubview(btn1);
+}
+
+void CDUIShowView::renderCallBack()
+{
+    if (dle_ren_index==0)
+    {
+        CARenderImage* rm = CARenderImage::create(_px(winSize.width), _px(winSize.height));
+        rm->printscreenWithView(this->getView());
+        
+        renderImage = CAImageView::createWithFrame(CADipRect(winSize.width/4,winSize.height/4,winSize.width/2,winSize.height/2));
+        renderImage->setImage(rm->getImageView()->getImage());
+        this->getView()->addSubview(renderImage);
+        CAScheduler::schedule(schedule_selector(CDUIShowView::scheduleFuck), this, 3);
+    }
+}
+
+void CDUIShowView::scheduleFuck()
+{
+    if (dle_ren_index>=1) {
+        CAScheduler::unschedule(schedule_selector(CDUIShowView::scheduleFuck), this);
+        if (renderImage!=NULL)
+        {
+            this->getView()->removeSubview(renderImage);
+            renderImage = NULL;
+        }
+        dle_ren_index = 0;
+    }else{
+        dle_ren_index++;
+    }
+
+    
 }
 
 void CDUIShowView::jsonTest()
