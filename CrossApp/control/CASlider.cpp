@@ -30,7 +30,8 @@ CASlider::CASlider()
     , m_pMaxTrackTintImageView(NULL)
     , m_pThumbTintImageView(NULL)
 {
-    
+    this->setPriorityScroll(true);
+    this->setVerticalScrollEnabled(false);
 }
 
 CASlider::~CASlider()

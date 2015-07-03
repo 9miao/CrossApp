@@ -219,11 +219,13 @@ void CALabel::updateImageRect()
     y1 = m_obContentSize.height - m_obRect.size.height - y1;
     y1 = y1 - pTextHeight;
     x2 = x1 + m_obRect.size.width - 1;
+    x2 = MAX(x1, x2);
     y2 = y1 + m_obRect.size.height - 1;
-    m_sQuad.bl.vertices = vertex3(x1, y1, 0);
-    m_sQuad.br.vertices = vertex3(x2, y1, 0);
-    m_sQuad.tl.vertices = vertex3(x1, y2, 0);
-    m_sQuad.tr.vertices = vertex3(x2, y2, 0);
+    y2 = MAX(y1, y2);
+    m_sQuad.bl.vertices = vertex3(x1, y1, m_fVertexZ);
+    m_sQuad.br.vertices = vertex3(x2, y1, m_fVertexZ);
+    m_sQuad.tl.vertices = vertex3(x1, y2, m_fVertexZ);
+    m_sQuad.tr.vertices = vertex3(x2, y2, m_fVertexZ);
 }
 
 void CALabel::copySelectText()
