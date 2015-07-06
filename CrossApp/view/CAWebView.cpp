@@ -197,7 +197,7 @@ void CAWebView::showLoadingActivity(bool show)
 {
 	if (show)
 	{
-		setVisible(false);
+		_impl->setVisible(false);
 		m_pLoadingView->startAnimating();
 		m_pLoadingView->setVisible(true);
 	}
@@ -205,7 +205,7 @@ void CAWebView::showLoadingActivity(bool show)
 	{
 		m_pLoadingView->stopAnimating();
 		m_pLoadingView->setVisible(false);
-		setVisible(true);
+		_impl->setVisible(true);
 	}
 }
 
