@@ -1889,20 +1889,21 @@ const char* CAImage::description(void)
 
 void CAImage::drawAtPoint(const CCPoint& point)
 {
-    GLfloat    coordinates[] = {
-        0.0f,    m_fMaxT,
-        m_fMaxS,m_fMaxT,
-        0.0f,    0.0f,
-        m_fMaxS,0.0f };
+    GLfloat    coordinates[] =
+    {
+        0.0f,       m_fMaxT,
+        m_fMaxS,    m_fMaxT,
+        0.0f,       0.0f,
+        m_fMaxS,    0.0f
+    };
     
-    GLfloat    width = (GLfloat)m_uPixelsWide * m_fMaxS,
-    height = (GLfloat)m_uPixelsHigh * m_fMaxT;
-    
-    GLfloat        vertices[] = {
-        point.x,            point.y,
-        width + point.x,    point.y,
-        point.x,            height  + point.y,
-        width + point.x,    height  + point.y };
+    GLfloat    vertices[] =
+    {
+        point.x,                          point.y,                           /*0.0f,*/
+        point.x + m_tContentSize.width,   point.y,                           /*0.0f,*/
+        point.x,                          point.y + m_tContentSize.height,   /*0.0f,*/
+        point.x + m_tContentSize.width,   point.y + m_tContentSize.height,   /*0.0f*/
+    };
     
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
     m_pShaderProgram->use();
@@ -1925,16 +1926,21 @@ void CAImage::drawAtPoint(const CCPoint& point)
 
 void CAImage::drawInRect(const CCRect& rect)
 {
-    GLfloat    coordinates[] = {
-        0.0f,    m_fMaxT,
-        m_fMaxS,m_fMaxT,
-        0.0f,    0.0f,
-        m_fMaxS,0.0f };
+    GLfloat    coordinates[] =
+    {
+        0.0f,       m_fMaxT,
+        m_fMaxS,    m_fMaxT,
+        0.0f,       0.0f,
+        m_fMaxS,    0.0f
+    };
     
-    GLfloat    vertices[] = {    rect.origin.x,        rect.origin.y,                            /*0.0f,*/
-        rect.origin.x + rect.size.width,        rect.origin.y,                            /*0.0f,*/
-        rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
-        rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
+    GLfloat    vertices[] =
+    {
+        rect.origin.x,                     rect.origin.y,                      /*0.0f,*/
+        rect.origin.x + rect.size.width,   rect.origin.y,                      /*0.0f,*/
+        rect.origin.x,                     rect.origin.y + rect.size.height,   /*0.0f,*/
+        rect.origin.x + rect.size.width,   rect.origin.y + rect.size.height,   /*0.0f*/
+    };
     
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
     m_pShaderProgram->use();
@@ -2402,6 +2408,61 @@ CAImage* CAImage::copy()
     
     return newImage;
 }
+
+CAImage* CAImage::scaleToNewImageWithSize(const CCSize& size)
+{
+    CCRect rect;
+    rect.size = size;
+    CARenderImage* renderImage = CARenderImage::create(size.width, size.height);
+    renderImage->begin();
+    
+    GLfloat    coordinates[] =
+    {
+        0.0f,       0.0f,
+        m_fMaxS,    0.0f,
+        0.0f,       m_fMaxT,
+        m_fMaxS,    m_fMaxT
+    };
+    
+    GLfloat    vertices[] =
+    {
+        rect.origin.x,                     rect.origin.y,                      /*0.0f,*/
+        rect.origin.x + rect.size.width,   rect.origin.y,                      /*0.0f,*/
+        rect.origin.x,                     rect.origin.y + rect.size.height,   /*0.0f,*/
+        rect.origin.x + rect.size.width,   rect.origin.y + rect.size.height,   /*0.0f*/
+    };
+    
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+    m_pShaderProgram->use();
+    m_pShaderProgram->setUniformsForBuiltins();
+    
+    ccGLBindTexture2D( m_uName );
+    
+#ifdef EMSCRIPTEN
+    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+#else
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+#endif // EMSCRIPTEN
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    renderImage->end();
+    return renderImage->getImageView()->getImage();
+}
+
+CAImage* CAImage::scaleToNewImage(float scaleX, float scaleY)
+{
+    CCSize size;
+    size.width = m_tContentSize.width * scaleX;
+    size.height = m_tContentSize.height * scaleY;
+    return scaleToNewImageWithSize(size);
+}
+
+
 const char* CAImage::getImageFileType()
 {
     const char* text = NULL;

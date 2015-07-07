@@ -124,6 +124,8 @@ protected:
     GLclampf     m_fClearDepth;
     GLint        m_nClearStencil;
     bool         m_bAutoDraw;
+    
+    friend class CAImage;
 };
 
 // end of textures group

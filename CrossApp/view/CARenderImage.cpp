@@ -302,7 +302,14 @@ void CARenderImage::printscreenWithView(CAView* view, CCPoint offset, const CACo
     CC_RETURN_IF(view == NULL);
     
     CCPoint point = CCPointZero;
-    point.y += CAApplication::getApplication()->getWinSize().height;
+    if (view->getSuperview())
+    {
+        point.y += view->getSuperview()->getFrame().size.height;
+    }
+    else
+    {
+        point.y += CAApplication::getApplication()->getWinSize().height;
+    }
     point.y -= view->getFrame().size.height;
     point.y += offset.y;
     point.x -= offset.x;
