@@ -1889,20 +1889,21 @@ const char* CAImage::description(void)
 
 void CAImage::drawAtPoint(const CCPoint& point)
 {
-    GLfloat    coordinates[] = {
-        0.0f,    m_fMaxT,
-        m_fMaxS,m_fMaxT,
-        0.0f,    0.0f,
-        m_fMaxS,0.0f };
+    GLfloat    coordinates[] =
+    {
+        0.0f,       m_fMaxT,
+        m_fMaxS,    m_fMaxT,
+        0.0f,       0.0f,
+        m_fMaxS,    0.0f
+    };
     
-    GLfloat    width = (GLfloat)m_uPixelsWide * m_fMaxS,
-    height = (GLfloat)m_uPixelsHigh * m_fMaxT;
-    
-    GLfloat        vertices[] = {
-        point.x,            point.y,
-        width + point.x,    point.y,
-        point.x,            height  + point.y,
-        width + point.x,    height  + point.y };
+    GLfloat    vertices[] =
+    {
+        point.x,                          point.y,                           /*0.0f,*/
+        point.x + m_tContentSize.width,   point.y,                           /*0.0f,*/
+        point.x,                          point.y + m_tContentSize.height,   /*0.0f,*/
+        point.x + m_tContentSize.width,   point.y + m_tContentSize.height,   /*0.0f*/
+    };
     
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
     m_pShaderProgram->use();
@@ -1925,16 +1926,21 @@ void CAImage::drawAtPoint(const CCPoint& point)
 
 void CAImage::drawInRect(const CCRect& rect)
 {
-    GLfloat    coordinates[] = {
-        0.0f,    m_fMaxT,
-        m_fMaxS,m_fMaxT,
-        0.0f,    0.0f,
-        m_fMaxS,0.0f };
+    GLfloat    coordinates[] =
+    {
+        0.0f,       m_fMaxT,
+        m_fMaxS,    m_fMaxT,
+        0.0f,       0.0f,
+        m_fMaxS,    0.0f
+    };
     
-    GLfloat    vertices[] = {    rect.origin.x,        rect.origin.y,                            /*0.0f,*/
-        rect.origin.x + rect.size.width,        rect.origin.y,                            /*0.0f,*/
-        rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
-        rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
+    GLfloat    vertices[] =
+    {
+        rect.origin.x,                     rect.origin.y,                      /*0.0f,*/
+        rect.origin.x + rect.size.width,   rect.origin.y,                      /*0.0f,*/
+        rect.origin.x,                     rect.origin.y + rect.size.height,   /*0.0f,*/
+        rect.origin.x + rect.size.width,   rect.origin.y + rect.size.height,   /*0.0f*/
+    };
     
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
     m_pShaderProgram->use();
@@ -2402,6 +2408,201 @@ CAImage* CAImage::copy()
     
     return newImage;
 }
+
+CAImage* CAImage::scaleToNewImageWithSize(const CCSize& size)
+{
+    CCRect rect;
+    rect.size = size;
+    CARenderImage* renderImage = CARenderImage::create(size.width, size.height);
+    renderImage->begin();
+    
+    GLfloat    coordinates[] =
+    {
+        0.0f,       0.0f,
+        m_fMaxS,    0.0f,
+        0.0f,       m_fMaxT,
+        m_fMaxS,    m_fMaxT
+    };
+    
+    GLfloat    vertices[] =
+    {
+        rect.origin.x,                     rect.origin.y,                      /*0.0f,*/
+        rect.origin.x + rect.size.width,   rect.origin.y,                      /*0.0f,*/
+        rect.origin.x,                     rect.origin.y + rect.size.height,   /*0.0f,*/
+        rect.origin.x + rect.size.width,   rect.origin.y + rect.size.height,   /*0.0f*/
+    };
+    
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+    m_pShaderProgram->use();
+    m_pShaderProgram->setUniformsForBuiltins();
+    
+    ccGLBindTexture2D( m_uName );
+    
+#ifdef EMSCRIPTEN
+    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+#else
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+#endif // EMSCRIPTEN
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    renderImage->end();
+    return renderImage->getImageView()->getImage();
+}
+
+CAImage* CAImage::scaleToNewImage(float scaleX, float scaleY)
+{
+    CCSize size;
+    size.width = m_tContentSize.width * scaleX;
+    size.height = m_tContentSize.height * scaleY;
+    return scaleToNewImageWithSize(size);
+}
+
+CAImage* CAImage::make_next_miplevel_rgb()
+// Fast, in-place resample.  For making mip-maps.  Munges the
+// input image to produce the output image.
+{
+    CCAssert(m_pData, "m_pData == null");
+    
+    int	new_w = m_uPixelsWide >> 1;
+    int	new_h = m_uPixelsHigh >> 1;
+    if (new_w < 1) new_w = 1;
+    if (new_h < 1) new_h = 1;
+    
+    int	new_pitch = new_w * 3;
+    
+    // Round pitch up to the nearest 4-byte boundary.
+    new_pitch = (new_pitch + 3) & ~3;
+    
+//    if (new_w * 2 != m_uPixelsWide || new_h * 2 != m_uPixelsHigh)
+//    {
+//        // Image can't be shrunk along (at least) one
+//        // of its dimensions, so don't bother
+//        // resampling.  Technically we should, but
+//        // it's pretty useless at this point.  Just
+//        // change the image dimensions and leave the
+//        // existing pixels.
+//    }
+//    else
+    {
+        CAImage* newImage = new CAImage();
+        unsigned char* data = new unsigned char[new_pitch * new_h];
+        // Resample.  Simple average 2x2 --> 1, in-place.
+        int	pitch = m_uPixelsWide * 3;
+        
+        for (int j = 0; j < new_h; j++) {
+            unsigned char*	out = ((unsigned char*)data) + j * new_pitch;
+            unsigned char*	in = ((unsigned char*)m_pData) + (j << 1) * pitch;
+            for (int i = 0; i < new_w; i++) {
+                int	r, g, b;
+                r = (*(in + 0) + *(in + 3) + *(in + 0 + pitch) + *(in + 3 + pitch));
+                g = (*(in + 1) + *(in + 4) + *(in + 1 + pitch) + *(in + 4 + pitch));
+                b = (*(in + 2) + *(in + 5) + *(in + 2 + pitch) + *(in + 5 + pitch));
+                *(out + 0) = r >> 2;
+                *(out + 1) = g >> 2;
+                *(out + 2) = b >> 2;
+                out += 3;
+                in += 6;
+            }
+        }
+        
+        newImage->initWithRawData(data, CAImage::PixelFormat_RGB888, new_w, new_h);
+        newImage->autorelease();
+        delete[] data;
+        
+        return newImage;
+    }
+    
+    // Munge image's members to reflect the shrunken image.
+    //m_uPixelsWide = new_w;
+    //m_uPixelsHigh = new_h;
+    
+    return 0;
+}
+
+CAImage* CAImage::make_next_miplevel_rgba()
+// Fast, in-place resample.  For making mip-maps.  Munges the
+// input image to produce the output image.
+{
+    CCAssert(m_pData, "m_pData == null");
+    
+    int	new_w = m_uPixelsWide >> 1;
+    int	new_h = m_uPixelsHigh >> 1;
+    if (new_w < 1) new_w = 1;
+    if (new_h < 1) new_h = 1;
+    
+    int	new_pitch = new_w * 4;
+    
+//    if (new_w * 2 != m_uPixelsWide || new_h * 2 != m_uPixelsHigh)
+//    {
+//        // Image can't be shrunk along (at least) one
+//        // of its dimensions, so don't bother
+//        // resampling.  Technically we should, but
+//        // it's pretty useless at this point.  Just
+//        // change the image dimensions and leave the
+//        // existing pixels.
+//    }
+//    else
+    {
+        CAImage* newImage = new CAImage();
+        unsigned char* data = new unsigned char[new_pitch * new_h];
+        
+        // Resample.  Simple average 2x2 --> 1, in-place.
+        int	pitch = m_uPixelsWide * 4;
+        for (int j = 0; j < new_h; j++) {
+            unsigned char*	out = ((unsigned char*)data) + j * new_pitch;
+            unsigned char*	in = ((unsigned char*)m_pData) + (j << 1) * pitch;
+            for (int i = 0; i < new_w; i++) {
+                int	r, g, b, a;
+                r = (*(in + 0) + *(in + 4) + *(in + 0 + pitch) + *(in + 4 + pitch));
+                g = (*(in + 1) + *(in + 5) + *(in + 1 + pitch) + *(in + 5 + pitch));
+                b = (*(in + 2) + *(in + 6) + *(in + 2 + pitch) + *(in + 6 + pitch));
+                a = (*(in + 3) + *(in + 7) + *(in + 3 + pitch) + *(in + 7 + pitch));
+                *(out + 0) = r >> 2;
+                *(out + 1) = g >> 2;
+                *(out + 2) = b >> 2;
+                *(out + 3) = a >> 2;
+                out += 4;
+                in += 8;
+            }
+        }
+        newImage->initWithRawData(data, CAImage::PixelFormat_RGBA8888, new_w, new_h);
+        newImage->autorelease();
+        delete[] data;
+        
+        return newImage;
+    }
+    
+    // Munge image's members to reflect the shrunken image.
+    //m_uPixelsWide = new_w;
+    //m_uPixelsHigh = new_h;
+    
+    return 0;
+}
+
+
+CAImage* CAImage::generate_mipmaps()
+// DESTRUCTIVELY generate mipmaps of the given image.  The image data
+// and width/height of im are munged in this process.
+{
+    while (m_uPixelsWide > 1 || m_uPixelsHigh > 1)
+    {
+        if (m_ePixelFormat == CAImage::PixelFormat_RGB888)
+        {
+            return make_next_miplevel_rgb();
+        }
+        else if (m_ePixelFormat == CAImage::PixelFormat_RGBA8888)
+        {
+            return make_next_miplevel_rgba();
+        }
+    }
+    return 0;
+}
+
 const char* CAImage::getImageFileType()
 {
     const char* text = NULL;

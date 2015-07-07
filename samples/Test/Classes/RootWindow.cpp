@@ -42,6 +42,8 @@ bool RootWindow::init()
     }
     CCSize winSize = this->getBounds().size;
     
+    CAApplication::getApplication()->setNotificationView(CAView::createWithFrame(this->getBounds(), CAColor_green));
+    
     CDUIShowCollectionView* tabBarController = new CDUIShowCollectionView();
     tabBarController->init();
     tabBarController->setTitle(UTF8("控件展示"));
@@ -62,11 +64,14 @@ bool RootWindow::init()
     
     m_pRootNavigationController = nav;
     m_pRootDrawerController = drawer;
-
-    
+    CAApplication::getApplication()->setNotificationView(NULL);
     return true;
 }
 
+void RootWindow::draw()
+{
+
+}
 
 void RootWindow::initUIView()
 {
@@ -206,6 +211,8 @@ void RootWindow::intNewsView()
 
 void RootWindow::keyBackClicked()
 {
+    CC_RETURN_IF(CAAlertView::hideWithDisplayed());
+    
     if (this->getModalViewController())
     {
         this->dismissModalViewController(true);

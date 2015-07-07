@@ -124,7 +124,7 @@ CACollectionViewCell* CDUIShowCollectionView::collectionCellAtIndex(CACollection
     itemText->setColor(ccc4(34,151,254,255));
     
     CAImageView* icon = (CAImageView*)p_Cell->getSubviewByTag(101);
-    icon->setImage(CAImage::create(iconTag[index]));
+    icon->setImage(CAImage::create(iconTag[index])->generate_mipmaps());
 
     return p_Cell;
 }

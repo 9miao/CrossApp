@@ -45,8 +45,11 @@ class CC_DLL CAAlertView
 public:
 
 	CAAlertView();
+    
 	virtual ~CAAlertView();
 
+    static bool hideWithDisplayed();
+    
 	static CAAlertView *create();
 
 	static CAAlertView *createWithText(const char* pszTitle, const char* pszAlertMsg, const char* pszBtnText, ...);
@@ -61,6 +64,8 @@ public:
 	
 	void show();
 
+    void hide();
+    
 	//optional
 	void setMessageFontName(std::string &var);
 

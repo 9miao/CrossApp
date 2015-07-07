@@ -151,11 +151,21 @@ public:
     
     const char* getImageFileType();
     
-    static CAImage* CC_WHITE_IMAGE();
-    
     float getAspectRatio();
     
+    static CAImage* CC_WHITE_IMAGE();
+
     virtual CAImage* copy();
+    
+    CAImage* scaleToNewImageWithSize(const CCSize& size);
+    
+    CAImage* scaleToNewImage(float scaleX, float scaleY);
+    
+    CAImage* make_next_miplevel_rgb();
+    
+    CAImage* make_next_miplevel_rgba();
+    
+    CAImage* generate_mipmaps();
     
     bool hasAlpha() { return m_bHasAlpha; }
     

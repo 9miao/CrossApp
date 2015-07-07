@@ -48,9 +48,20 @@ public:
     
     virtual ~CABarButtonItem();
     
-    bool init(const std::string& title, CAImage* image, CAImage* highlightedImage);
+    bool init(const std::string& title, CAImage* image = NULL, CAImage* highlightedImage = NULL)
+    {
+        return initWithTitle(title, image, highlightedImage);
+    }
+    
+    bool initWithTitle(const std::string& title, CAImage* image = NULL, CAImage* highlightedImage = NULL);
+    
+    bool initWithImage(CAImage* image, CAImage* highlightedImage = NULL);
+    
+    bool initWithCustomView(CAView* customView);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pHighlightedImage, HighlightedImage);
+    
+    CC_SYNTHESIZE_READONLY(CAView*, m_pCustomView, CustomView);
     
     void setTarget(CAObject* target, SEL_CAControl callfunc);
     
@@ -63,6 +74,7 @@ protected:
     CAObject* m_pTarget;
     
     SEL_CAControl m_selCallFunc;
+    
 };
 
 class CC_DLL CANavigationBarItem
