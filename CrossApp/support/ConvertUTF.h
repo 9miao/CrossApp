@@ -109,8 +109,8 @@ typedef unsigned short char16_t;
 
 namespace std
 {
-	typedef basic_string < char16_t, char_traits<char16_t>, allocator<char16_t> >
-		u16string;
+	typedef basic_string < char16_t, char_traits<char16_t>, allocator<char16_t> > u16string;
+	typedef basic_string < char32_t, char_traits<char32_t>, allocator<char32_t> > u32string;
 }
 
 
