@@ -166,6 +166,7 @@ protected:
     void initMarkSprite();
     void showCursorMark();
     void hideCursorMark();
+    void setCursorPosition();
     
     void analyzeString(const char * text, int len);
 	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
