@@ -105,10 +105,13 @@ typedef unsigned short  UTF16;  /* at least 16 bits */
 typedef unsigned char   UTF8;   /* typically 8 bits */
 typedef unsigned char   Boolean; /* 0 or 1 */
 
+typedef UTF16 char16_t;
+typedef UTF32 char32_t;
+
 namespace std
 {
-	typedef basic_string < UTF16, char_traits<UTF16>, allocator<UTF16> > u16string;
-	typedef basic_string < UTF32, char_traits<UTF32>, allocator<UTF32> > u32string;
+	typedef basic_string < char16_t, char_traits<char16_t>, allocator<char16_t> > u16string;
+	typedef basic_string < char32_t, char_traits<char32_t>, allocator<char32_t> > u32string;
 }
 
 
