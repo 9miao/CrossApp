@@ -1801,35 +1801,143 @@ void CDUIShowView::onVideoPlayerButtonBack()
 
 void CDUIShowView::showRenderImage()
 {
-    CAImageView* im = CAImageView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,winSize.height/2));
-    im->setImage(CAImage::create("image/HelloWorld.png"));
-    im->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
-    this->getView()->addSubview(im);
+    CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
+    btn->setCenter(CADipRect(winSize.width/2, winSize.height/2, 100, 50));
+    btn->setTitleForState(CAControlStateNormal, "Click");
+    btn->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
+    btn->setTag(1);
+    btn->addTarget(this, CAControl_selector(CDUIShowView::renderCallBack), CAControlEventTouchUpInSide);
+    this->getView()->addSubview(btn);
     
-    CAButton* btn1 = CAButton::create(CAButtonTypeSquareRect);
-    btn1->setCenter(CADipRect(winSize.width/2, winSize.height-100, 100, 50));
-    btn1->setTitleForState(CAControlStateNormal, "Click");
-    btn1->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
-    btn1->addTarget(this, CAControl_selector(CDUIShowView::renderCallBack), CAControlEventTouchUpInSide);
-    this->getView()->addSubview(btn1);
 }
 
 void CDUIShowView::renderCallBack(CAControl* control, CCPoint point)
 {
-    if (dle_ren_index==0)
-    {
-        CARenderImage* rm = CARenderImage::create(_px(winSize.width), _px(winSize.height));
-        rm->printscreenWithView(this->getView());
+    CAButton* button = (CAButton*)control;
+    if (button->getTag()==1) {
+        CADevice::openAlbum(this,false);
+    }else if(button->getTag()==2) {
+
+        m_clvImage->setClippingEnabled(true);
+        CARenderImage* rm = CARenderImage::create(_px(winSize.width-100), _px(winSize.width-100));
+        rm->printscreenWithView(m_clvImage);
         
-        renderImage = CAView::createWithFrame(this->getView()->getBounds());
+        renderImage = CAView::createWithFrame(CADipRect(50,winSize.height/4,winSize.width-100,winSize.width-100));
         this->getView()->addSubview(renderImage);
         
-        CAImageView* imageView = CAImageView::createWithFrame(CADipRect(winSize.width/4,winSize.height/4,winSize.width/2,winSize.height/2));
+        m_clvImage->setClippingEnabled(false);
+        
+        if (m_clv!=NULL)
+        {
+            this->getView()->removeSubview(m_clv);
+            m_clv = NULL;
+            this->getView()->removeSubview(m_clvImage);
+            m_clvImage = NULL;
+            this->getView()->removeSubview(render_btn);
+            render_btn = NULL;
+        }
+        
+        CAImageView* imageView = CAImageView::createWithFrame(CADipRect(0,0,winSize.width-100,winSize.width-100));
         imageView->setImage(rm->getImageView()->getImage());
         renderImage->addSubview(imageView);
         
         CAScheduler::schedule(schedule_selector(CDUIShowView::scheduleFuck), this, 3);
     }
+
+    
+}
+
+CADrawView* getStencil(const CCSize& size, int index)
+{
+    if (index == 0)
+    {
+        CCPoint ver[4];
+        ver[0] = CCPoint(0, 0);
+        ver[1] = CCPoint(0, size.height);
+        ver[2] = CCPoint(size.width, size.height);
+        ver[3] = CCPoint(size.width, 0);
+        CADrawView* stencil = CADrawView::create();
+        stencil->drawPolygon(ver, 4, ccc4f(255, 0, 0, 0), 2, ccc4f(255, 0, 0, 0));
+        stencil->setFrameOrigin(CCPoint(0, size.height));
+        return stencil;
+    }
+    else if (index == 1)
+    {
+        CCPoint cir[720];
+        for (int i=0; i<720; i++)
+        {
+            float x = cosf(i * M_PI/180.f) * size.width/2;
+            float y = sinf(i * M_PI/180.f) * size.width/2;
+            cir[i] = CCPoint(x, y);
+        }
+        CADrawView* stencil = CADrawView::create();
+        stencil->drawPolygon(cir, 720, ccc4f(1, 1, 1, 0.5), 0, ccc4f(1, 1, 1, 0));
+        stencil->setCenterOrigin(CCPoint(size.width/2, size.height/2));
+        return stencil;
+    }
+    return NULL;
+}
+
+void CDUIShowView::getSelectedImage(CAImage *image)
+{
+    int index = 0;
+    
+    CADipRect scrollRect;
+    scrollRect.origin.x = 50;
+    scrollRect.origin.y = winSize.height/4;
+    scrollRect.size.width = winSize.width-100;
+    scrollRect.size.height = scrollRect.size.width;
+    
+    m_clvImage = CAClippingView::create();
+    m_clvImage->setStencil(getStencil(scrollRect.size, index));
+    m_clvImage->setFrame(scrollRect);
+    m_clvImage->setInverted(false);
+    m_clvImage->setClippingEnabled(false);
+    this->getView()->addSubview(m_clvImage);
+    
+    CAScrollView* scrollView = CAScrollView::createWithFrame(m_clvImage->getBounds());
+    scrollView->setViewSize(CADipSize(image->getContentSize()));
+    //scrollView->setContentOffset(CADipPoint(0,winSize.height/4), false);
+    scrollView->setMinimumZoomScale(1.0f);
+    scrollView->setMaximumZoomScale(2.5f);
+    scrollView->setBackGroundColor(CAColor_clear);
+    scrollView->setShowsScrollIndicators(false);
+    scrollView->setBounces(false);
+    scrollView->setScrollViewDelegate(this);
+    scrollView->setDisplayRange(true);
+    m_clvImage->addSubview(scrollView);
+    
+    CADipRect rect;
+    rect.origin = CADipPointZero;
+    rect.size = scrollView->getViewSize();
+    CAImageView* imv = CAImageView::createWithFrame(rect);
+    imv->setImage(image);
+    //imv->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+    scrollView->addSubview(imv);
+    
+    
+    
+    m_clv = CAClippingView::create();
+    m_clv->setStencil(getStencil(scrollRect.size, index));
+    m_clv->setFrame(scrollRect);
+    m_clv->setInverted(true);
+    m_clv->setTouchEnabled(false);
+    this->getView()->addSubview(m_clv);
+
+    CADipRect ivRect;
+    ivRect.size = winSize;
+    ivRect.origin = ccpMult(scrollRect.origin, -1);
+    CAView* iv = CAView::createWithColor(ccc4(0,0,0,128));
+    iv->setFrame(ivRect);
+    m_clv->addSubview(iv);
+    
+    render_btn = CAButton::create(CAButtonTypeSquareRect);
+    render_btn->setCenter(CADipRect(winSize.width/2, winSize.height-100, 100, 50));
+    render_btn->setTitleForState(CAControlStateNormal, "Click");
+    render_btn->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
+    render_btn->addTarget(this, CAControl_selector(CDUIShowView::renderCallBack), CAControlEventTouchUpInSide);
+    render_btn->setTag(2);
+    this->getView()->addSubview(render_btn);
 }
 
 void CDUIShowView::scheduleFuck(float dt)
