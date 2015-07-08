@@ -224,6 +224,8 @@ std::string inline utf8_to_url_string( const char *in )
 
 namespace StringUtils {
 
+
+CC_DLL bool UTF8ToUTF32(const std::string& utf8, std::u32string& outUtf32);
 /**
  *  @brief Converts utf8 string to utf16 string
  *  @param utf8 The utf8 string to be converted

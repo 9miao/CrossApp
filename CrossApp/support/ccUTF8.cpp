@@ -92,6 +92,35 @@ void trimUTF16Vector(std::vector<char16_t>& str)
     }
 }
 
+
+bool UTF8ToUTF32(const std::string& utf8, std::u32string& outUtf32)
+{
+	if (utf8.empty())
+	{
+		outUtf32.clear();
+		return true;
+	}
+
+	bool ret = false;
+
+	const size_t utf32Bytes = (utf8.length() + 1) * sizeof(char32_t);
+	char32_t* utf32 = (char32_t*)malloc(utf32Bytes);
+	memset(utf32, 0, utf32Bytes);
+
+	char* utf32ptr = reinterpret_cast<char*>(utf32);
+	const UTF8* error = NULL;
+
+	if (llvm::ConvertUTF8toWide(4, utf8, utf32ptr, error))
+	{
+		outUtf32 = utf32;
+		ret = true;
+	}
+
+	free(utf32);
+
+	return ret;
+}
+
 bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16)
 {
     if (utf8.empty())
