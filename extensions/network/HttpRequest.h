@@ -157,27 +157,6 @@ public:
    		return _headers;
    	}
 
-    virtual bool isEqual(const CAObject* pObject)
-    {
-        CAHttpRequest* request = NULL;
-        if ((request = dynamic_cast<CAHttpRequest*>((CAObject*)pObject)))
-        {
-            return false;
-        }
-        
-        if (this->getUrl().compare(request->getUrl()) != 0)
-        {
-            return false;
-        }
-        
-//        if (this->getTarget() != request->getTarget())
-//        {
-//            return false;
-//        }
-//        
-        return true;
-    }
-    
     inline void setThreadID(int threadID)
     {
         _threadID = threadID;

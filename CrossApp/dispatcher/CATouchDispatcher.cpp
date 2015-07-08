@@ -68,8 +68,6 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
                     CAView* subview = *itr;
                     if (subview->isVisible() && subview->isTouchEnabled())
                     {
-                        //CC_BREAK_IF(!subview->isTouchEnabled());
-                        
                         CCPoint point = subview->convertTouchToNodeSpace(touch);
                         
                         if (subview->getBounds().containsPoint(point))

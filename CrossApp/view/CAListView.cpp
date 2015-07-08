@@ -33,6 +33,7 @@ CAListView::CAListView()
 
 CAListView::~CAListView()
 {
+    m_vpUsedListCells.clear();
 	CC_SAFE_RELEASE_NULL(m_pListHeaderView);
 	CC_SAFE_RELEASE_NULL(m_pListFooterView);
     m_pListViewDataSource = NULL;
@@ -43,7 +44,7 @@ void CAListView::onEnterTransitionDidFinish()
 {
 	CAScrollView::onEnterTransitionDidFinish();
 
-	if (m_pUsedListCells.empty())
+	if (m_mpUsedListCells.empty())
 	{
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0);
@@ -101,7 +102,7 @@ void CAListView::setAllowsSelection(bool var)
 	std::set<unsigned int>::iterator itr;
 	for (itr = m_pSelectedListCells.begin(); itr != m_pSelectedListCells.end(); itr++)
     {
-		if (CAListViewCell* cell = m_pUsedListCells[(*itr)])
+		if (CAListViewCell* cell = m_mpUsedListCells[(*itr)])
 		{
 			cell->setControlState(CAControlStateNormal);
 		}
@@ -116,7 +117,7 @@ void CAListView::setAllowsMultipleSelection(bool var)
 	std::set<unsigned int>::iterator itr;
 	for (itr = m_pSelectedListCells.begin(); itr != m_pSelectedListCells.end(); itr++)
     {
-		if (CAListViewCell* cell = m_pUsedListCells[(*itr)])
+		if (CAListViewCell* cell = m_mpUsedListCells[(*itr)])
 		{
 			cell->setControlState(CAControlStateNormal);
 		}
@@ -131,7 +132,7 @@ void CAListView::setSelectAtIndex(unsigned int index)
 		std::set<unsigned int>::iterator itr;
 		for (itr = m_pSelectedListCells.begin(); itr != m_pSelectedListCells.end(); itr++)
 		{
-			if (CAListViewCell* cell = m_pUsedListCells[(*itr)])
+			if (CAListViewCell* cell = m_mpUsedListCells[(*itr)])
 			{
 				cell->setControlState(CAControlStateNormal);
 			}
@@ -139,7 +140,7 @@ void CAListView::setSelectAtIndex(unsigned int index)
 		m_pSelectedListCells.clear();
 	}
 
-	if (CAListViewCell* cell = m_pUsedListCells[index])
+	if (CAListViewCell* cell = m_mpUsedListCells[index])
 	{
 		cell->setControlStateSelected();
 	}
@@ -151,7 +152,7 @@ void CAListView::setUnSelectAtIndex(unsigned int index)
     CC_RETURN_IF(index >= m_rIndexRects.size());
     
     CC_RETURN_IF(m_pSelectedListCells.find(index) == m_pSelectedListCells.end());
-    if (CAListViewCell* cell = m_pUsedListCells.at(index))
+    if (CAListViewCell* cell = m_mpUsedListCells.at(index))
     {
         cell->setControlStateNormal();
     }
@@ -164,6 +165,16 @@ void CAListView::setShowsScrollIndicators(bool var)
     this->setShowsHorizontalScrollIndicator(var && !bVertScroll);
     this->setShowsVerticalScrollIndicator(var && bVertScroll);
     m_bShowsScrollIndicators = var;
+}
+
+CAListViewCell* CAListView::cellForRowAtIndex(unsigned int index)
+{
+    return m_mpUsedListCells[index];
+}
+
+const CAVector<CAListViewCell*>& CAListView::displayingIndexWithListCell()
+{
+    return m_vpUsedListCells;
 }
 
 void CAListView::setListViewOrientation(CAListViewOrientation var)
@@ -200,7 +211,7 @@ bool CAListView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 		CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
 
 		std::map<unsigned int, CAListViewCell*>::iterator itr;
-		for (itr = m_pUsedListCells.begin(); itr != m_pUsedListCells.end(); ++itr)
+		for (itr = m_mpUsedListCells.begin(); itr != m_mpUsedListCells.end(); ++itr)
 		{
 			CAListViewCell* pCell = itr->second;
 			CC_CONTINUE_IF(pCell == NULL);
@@ -278,7 +289,7 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 		if (iDeSelectIndex != -1)
 		{
-			if (CAListViewCell* cell = m_pUsedListCells[iDeSelectIndex])
+			if (CAListViewCell* cell = m_mpUsedListCells[iDeSelectIndex])
 			{
 				cell->setControlStateNormal();
 			}
@@ -290,7 +301,7 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 		if (iSelectIndex != -1)
 		{
-			if (CAListViewCell* cell = m_pUsedListCells[iSelectIndex])
+			if (CAListViewCell* cell = m_mpUsedListCells[iSelectIndex])
 			{
 				cell->setControlStateSelected();
 			}
@@ -391,8 +402,9 @@ void CAListView::reloadData()
     this->removeAllSubviews();
     
     m_pUsedLines.clear();
-    m_pUsedListCells.clear();
-    m_pFreedListCells.clear();
+    m_vpUsedListCells.clear();
+    m_mpUsedListCells.clear();
+    m_mpFreedListCells.clear();
     m_pSelectedListCells.clear();
     
     CCRect winRect = this->getBounds();
@@ -413,7 +425,7 @@ void CAListView::reloadData()
         if (m_nIndexs > 0)
         {
             std::pair<std::map<unsigned int, CAListViewCell*>::iterator, bool> itrResult =
-            m_pUsedListCells.insert(std::make_pair(i, (CAListViewCell*)NULL));
+            m_mpUsedListCells.insert(std::make_pair(i, (CAListViewCell*)NULL));
             
             CC_CONTINUE_IF(!winRect.intersectsRect(m_rIndexRects[i]));
             
@@ -424,6 +436,7 @@ void CAListView::reloadData()
                 pCellView->setFrame(m_rIndexRects[i]);
                 addSubview(pCellView);
                 itrResult.first->second = pCellView;
+                m_vpUsedListCells.pushBack(pCellView);
             }
         }
         
@@ -449,7 +462,7 @@ void CAListView::reloadData()
 
 void CAListView::firstReloadData()
 {
-    CC_RETURN_IF(!m_pUsedListCells.empty());
+    CC_RETURN_IF(!m_mpUsedListCells.empty());
     this->reloadData();
 }
 
@@ -461,7 +474,7 @@ void CAListView::recoveryCollectionCell()
     rect.size.height *= 1.2f;
     
 	std::map<unsigned int, CAListViewCell*>::iterator itr;
-	for (itr = m_pUsedListCells.begin(); itr != m_pUsedListCells.end(); itr++)
+	for (itr = m_mpUsedListCells.begin(); itr != m_mpUsedListCells.end(); itr++)
 	{
 		CAListViewCell* cell = itr->second;
 		CC_CONTINUE_IF(cell == NULL);
@@ -469,17 +482,18 @@ void CAListView::recoveryCollectionCell()
 		CCRect cellRect = cell->getFrame();
 		CC_CONTINUE_IF(rect.intersectsRect(cellRect));
 
-		m_pFreedListCells[cell->getReuseIdentifier()].pushBack(cell);
+		m_mpFreedListCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
 		cell->resetListViewCell();
 		itr->second = NULL;
-        
+        m_vpUsedListCells.eraseObject(cell);
         
         CAView* line = m_pUsedLines[itr->first];
         CC_CONTINUE_IF(line == NULL);
         m_pFreedLines.pushBack(line);
         line->removeFromSuperview();
         m_pUsedLines[itr->first] = NULL;
+        
 	}
 }
 
@@ -491,7 +505,7 @@ void CAListView::loadCollectionCell()
     rect.size.height *= 1.2f;
     
 	std::map<unsigned int, CAListViewCell*>::iterator itr;
-	for (itr = m_pUsedListCells.begin(); itr != m_pUsedListCells.end(); itr++)
+	for (itr = m_mpUsedListCells.begin(); itr != m_mpUsedListCells.end(); itr++)
 	{
 		CC_CONTINUE_IF(itr->second != NULL);
 
@@ -506,7 +520,8 @@ void CAListView::loadCollectionCell()
             cell->updateDisplayedAlpha(this->getAlpha());
 			addSubview(cell);
 			cell->setFrame(cellRect);
-            m_pUsedListCells[index] = cell;
+            m_mpUsedListCells[index] = cell;
+            m_vpUsedListCells.pushBack(cell);
 		}
 
 		if (m_pSelectedListCells.count(index))
@@ -537,12 +552,12 @@ void CAListView::update(float dt)
 
 float CAListView::maxSpeed(float dt)
 {
-    return (CCPoint(m_obContentSize).getLength() * 8 * dt);
+    return (_px(128) * 60 * dt);
 }
 
 float CAListView::maxSpeedCache(float dt)
 {
-    return (maxSpeed(dt) * 3.0f);
+    return (maxSpeed(dt) * 2.0f);
 }
 
 float CAListView::decelerationRatio(float dt)
@@ -554,11 +569,11 @@ CAListViewCell* CAListView::dequeueReusableCellWithIdentifier(const char* reuseI
 {
 	CAListViewCell* cell = NULL;
 
-	if (reuseIdentifier && !m_pFreedListCells[reuseIdentifier].empty())
+	if (reuseIdentifier && !m_mpFreedListCells[reuseIdentifier].empty())
 	{
-		cell = m_pFreedListCells[reuseIdentifier].back();
+		cell = m_mpFreedListCells[reuseIdentifier].back();
 		cell->retain()->autorelease();
-		m_pFreedListCells[reuseIdentifier].popBack();
+		m_mpFreedListCells[reuseIdentifier].popBack();
 	}
     
 	return cell;

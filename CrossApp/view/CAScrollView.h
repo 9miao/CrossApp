@@ -27,10 +27,10 @@ public:
     virtual void scrollViewDidMoved(CAScrollView* view){};
     
     virtual void scrollViewStopMoved(CAScrollView* view){};
-    
-    virtual void scrollViewDidScroll(CAScrollView* view){};
-    
+
     virtual void scrollViewWillBeginDragging(CAScrollView* view){};
+    
+    virtual void scrollViewDragging(CAScrollView* view){};
     
     virtual void scrollViewDidEndDragging(CAScrollView* view){};
     
@@ -41,6 +41,10 @@ public:
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view){};
     
     virtual void scrollViewTouchUpWithoutMoved(CAScrollView* view, const CCPoint& point){};
+    
+public:
+    
+    virtual void scrollViewDidScroll(CAScrollView* view){};
 };
 
 class CAIndicator;
@@ -159,15 +163,12 @@ protected:
         return 6 * dt;
     }
     
-    inline virtual float maxBouncesSpeed(float dt)
-    {
-        return (CCPoint(m_obContentSize).getLength() * 6 * dt);
-    }
-    
     virtual float maxBouncesLenght()
     {
         return _px(120.0f);
     }
+    
+    virtual void contentOffsetFinish(float dt) {};
     
     void getScrollWindowNotOutPoint(CCPoint& point);
     
@@ -183,9 +184,7 @@ protected:
     
     void deaccelerateScrolling(float dt);
     
-    virtual void contentOffsetFinish(float dt);
-    
-    void closeToPoint(float dt);
+    void closeToPoint(float dt, float now, float total);
     
     void updateIndicator();
     
@@ -245,7 +244,7 @@ protected:
     
     CCPoint m_tCloseToPoint;
     
-    CCPoint m_tCloseToSpeed;
+    CCPoint m_tInitialPoint;
 };
 
 

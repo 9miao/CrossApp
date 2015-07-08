@@ -166,17 +166,10 @@ protected:
     void ccCutToClipboard() { cutToClipboard(); }
 	int getStringCharCount(const std::string &var);
 
-
 	std::pair<int, int> getLineAndPos(int iPos);
 
 	std::vector<CCRect> getZZCRect();
 
-    inline virtual float maxSpeed(float dt);
-    
-    inline virtual float maxSpeedCache(float dt);
-    
-    inline virtual float decelerationRatio(float dt);
-    
 protected:
 	virtual void setContentSize(const CCSize& var);
 	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);

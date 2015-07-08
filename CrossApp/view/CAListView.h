@@ -85,6 +85,10 @@ public:
     
     virtual void setShowsScrollIndicators(bool var);
     
+    CAListViewCell* cellForRowAtIndex(unsigned int index);
+    
+    const CAVector<CAListViewCell*>& displayingIndexWithListCell();
+    
 	CC_PROPERTY(CAListViewOrientation, m_pListViewOrientation, ListViewOrientation);
 
     CC_SYNTHESIZE(CAListViewDataSource*, m_pListViewDataSource, ListViewDataSource);
@@ -193,9 +197,11 @@ private:
 
     std::vector<CCRect> m_rLineRects;
     
-	std::map<unsigned int, CAListViewCell*> m_pUsedListCells;
+	std::map<unsigned int, CAListViewCell*> m_mpUsedListCells;
 
-	std::map<std::string, CAVector<CAListViewCell*> > m_pFreedListCells;
+    CAVector<CAListViewCell*> m_vpUsedListCells;
+    
+	std::map<std::string, CAVector<CAListViewCell*> > m_mpFreedListCells;
     
     std::map<unsigned int, CAView*> m_pUsedLines;
     

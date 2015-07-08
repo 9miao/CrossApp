@@ -86,31 +86,30 @@
         imageType = [NSString stringWithFormat:@"UIImagePickerControllerOriginalImage"];
     }
     UIImage *image = [info objectForKey:imageType];
-    UIImage *newfixImage = [self fixOrientation:image];
-    CGSize size ;
-    if ([newfixImage size].width>[newfixImage size].height)
-    {
-        size = CGSizeMake([newfixImage size].width/([newfixImage size].height/640), 640);
-    }
-    else
-    {
-        size = CGSizeMake(640, [newfixImage size].height/([newfixImage size].width/640));
-    }
-    UIImage *fiximage = [self scaleFromImage:newfixImage toSize:size];
-    CAMediaDelegate *cam = (CAMediaDelegate *)self.sender;
     
-    if(cam == NULL)
-    {
-        return ;
-    }
+//    UIImage *newfixImage = [self fixOrientation:image];
+//    CGSize size ;
+//    if ([newfixImage size].width>[newfixImage size].height)
+//    {
+//        size = CGSizeMake([newfixImage size].width/([newfixImage size].height/640), 640);
+//    }
+//    else
+//    {
+//        size = CGSizeMake(640, [newfixImage size].height/([newfixImage size].width/640));
+//    }
+//    UIImage *fiximage = [self scaleFromImage:newfixImage toSize:size];
+//    
+//    ;
+    CC_RETURN_IF(self.sender == NULL);
     
-    NSData *data = UIImageJPEGRepresentation(fiximage,0.5);
+    NSData *data = UIImageJPEGRepresentation([self fixOrientation:image], 1.0f);
     void* _data = malloc([data length]);
     [data getBytes:_data];
     
     CAImage *__image = new CAImage();
     __image->initWithImageData((unsigned char*)_data, data.length);
-    if (cam)
+    
+    if (CAMediaDelegate *cam = (CAMediaDelegate *)self.sender)
     {
         cam->getSelectedImage(__image);
     }
@@ -124,6 +123,7 @@
         }
     ];
 }
+
 - (UIImage *) scaleFromImage: (UIImage *) image toSize: (CGSize) size
 {
     UIGraphicsBeginImageContext(size);
@@ -132,6 +132,7 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:^

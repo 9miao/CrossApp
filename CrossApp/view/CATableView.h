@@ -40,28 +40,19 @@ public:
     virtual ~CATableViewDataSource(){};
     
     //Necessary
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
-    {
-        return NULL;
-    }
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row) = 0;
     
     //Necessary
-    virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
-    {
-        return 0;
-    }
+    virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row) = 0;
     
     //Necessary
-    virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section)
-    {
-        return 0;
-    }
+    virtual unsigned int numberOfRowsInSection(CATableView* table, unsigned int section) = 0;
     
-    virtual unsigned int numberOfSections(CATableView *table)
+    virtual unsigned int numberOfSections(CATableView* table)
     {
         return 1;
     }
-    
+
     virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
     {
         return NULL;
@@ -118,6 +109,8 @@ public:
     virtual void setShowsScrollIndicators(bool var);
     
     CATableViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row);
+    
+    const CAVector<CATableViewCell*>& displayingIndexPathWithTableCell();
     
     CC_SYNTHESIZE(CATableViewDataSource*, m_pTableViewDataSource, TableViewDataSource);
     
@@ -259,9 +252,11 @@ protected:
     
     std::vector<std::vector<CCRect> > m_rTableCellRectss;
 
-    std::map<CAIndexPath2E, CATableViewCell*> m_pUsedTableCells;
+    std::map<CAIndexPath2E, CATableViewCell*> m_mpUsedTableCells;
     
-    std::map<std::string, CAVector<CATableViewCell*> > m_pFreedTableCells;
+    CAVector<CATableViewCell*> m_vpUsedTableCells;
+    
+    std::map<std::string, CAVector<CATableViewCell*> > m_mpFreedTableCells;
     
     std::set<CAIndexPath2E> m_pSelectedTableCells;
     
@@ -272,6 +267,8 @@ protected:
     std::map<CAIndexPath2E, CAView*> m_pUsedLines;
     
     CAList<CAView*> m_pFreedLines;
+    
+    
 };
 
 class CC_DLL CATableViewCell: public CAControl

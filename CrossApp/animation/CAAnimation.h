@@ -13,7 +13,7 @@
 
 NS_CC_BEGIN
 
-typedef void (CAObject::*SEL_CAAnimation)(float delay, float now, float total);
+typedef void (CAObject::*SEL_CAAnimation)(float dt, float now, float total);
 #define CAAnimation_selector(_SELECTOR) (SEL_CAAnimation)(&_SELECTOR)
 
 namespace CAAnimation
@@ -21,6 +21,8 @@ namespace CAAnimation
 
     CC_DLL void schedule(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval = 1/60.0f, float delay = 0.0f);
 
+    CC_DLL void unschedule(SEL_CAAnimation selector, CAObject* target);
+    
 };
 
 

@@ -26,6 +26,7 @@ CAClippingView::CAClippingView()
 : m_pStencil(NULL)
 , m_fAlphaThreshold(1.0f)
 , m_bInverted(false)
+, m_bClippingEnabled(true)
 {}
 
 CAClippingView::~CAClippingView()
@@ -116,7 +117,7 @@ void CAClippingView::onExit()
 void CAClippingView::visit()
 {
     // if stencil buffer disabled
-    if (g_sStencilBits < 1)
+    if (!m_bClippingEnabled || g_sStencilBits < 1)
     {
         // draw everything, as if there where no stencil
         CAView::visit();
@@ -366,6 +367,15 @@ bool CAClippingView::isInverted() const
 void CAClippingView::setInverted(bool bInverted)
 {
     m_bInverted = bInverted;
+}
+
+bool CAClippingView::isClippingEnabled() const
+{
+    return m_bClippingEnabled;
+}
+void CAClippingView::setClippingEnabled(bool bClippingEnabled)
+{
+    m_bClippingEnabled = bClippingEnabled;
 }
 
 NS_CC_END

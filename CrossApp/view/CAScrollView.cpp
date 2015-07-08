@@ -16,6 +16,7 @@
 #include "kazmath/GL/matrix.h"
 #include "CCEGLView.h"
 #include "animation/CAViewAnimation.h"
+#include "animation/CAAnimation.h"
 #include "shaders/CAShaderCache.h"
 
 NS_CC_BEGIN
@@ -39,7 +40,7 @@ CAScrollView::CAScrollView()
 ,m_fTouchLength(0.0f)
 ,m_tInertia(CCPointZero)
 ,m_tCloseToPoint(CCPointZero)
-,m_tCloseToSpeed(CCPointZero)
+,m_tInitialPoint(CCPointZero)
 ,m_pIndicatorHorizontal(NULL)
 ,m_pIndicatorVertical(NULL)
 ,m_bShowsHorizontalScrollIndicator(true)
@@ -315,10 +316,12 @@ void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
 {
     if (animated)
     {
+        m_tInitialPoint = offset;
+        
         m_tInertia = CCPointZero;
         m_tCloseToPoint = ccpMult(offset, -1);
-        m_tCloseToSpeed = ccpMult(ccpSub(m_tCloseToPoint, m_pContainer->getFrameOrigin()), 1/12.0f);
-        CAScheduler::schedule(schedule_selector(CAScrollView::closeToPoint), this, 1/60.0f);
+        m_tInitialPoint = m_pContainer->getFrameOrigin();
+        CAAnimation::schedule(CAAnimation_selector(CAScrollView::closeToPoint), this, 0.25f);
     }
     else
     {
@@ -332,44 +335,33 @@ void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
     }
 }
 
-void CAScrollView::closeToPoint(float dt)
+void CAScrollView::closeToPoint(float dt, float now, float total)
 {
-    CCPoint point = m_pContainer->getFrameOrigin();
-
-    if (fabsf(m_tCloseToPoint.x - point.x) <= fabsf(m_tCloseToSpeed.x * 60 * dt)
-        &&
-        fabsf(m_tCloseToPoint.y - point.y) <= fabsf(m_tCloseToSpeed.y * 60 * dt))
+    if (now < total)
     {
-        this->setContainerFrame(m_tCloseToPoint);
-        CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
-        m_tCloseToPoint = this->getViewSize();
-        m_tCloseToSpeed = CCPointZero;
-        this->update(1/60.0f);
-        this->hideIndicator();
-        CAScheduler::schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
-        
-        if (m_pScrollViewDelegate)
-        {
-            m_pScrollViewDelegate->scrollViewStopMoved(this);
-        }
-    }
-    else
-    {
-        point = ccpAdd(point, m_tCloseToSpeed * 60 * dt);
-        this->setContainerFrame(point);
+        CCPoint offSet = ccpSub(m_tCloseToPoint, m_tInitialPoint);
+        offSet = ccpMult(offSet, now / total);
+        this->setContainerFrame(ccpAdd(m_tInitialPoint, offSet));
         
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
     }
-    
-    
-}
-
-void CAScrollView::contentOffsetFinish(float dt)
-{
-    
+    else
+    {
+        this->setContainerFrame(m_tCloseToPoint);
+        this->update(1/60.0f);
+        if (m_pScrollViewDelegate)
+        {
+            m_pScrollViewDelegate->scrollViewStopMoved(this);
+        }
+        CAScheduler::schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
+        
+        this->hideIndicator();
+        m_tCloseToPoint = this->getViewSize();
+        m_tInitialPoint = m_tCloseToPoint;
+    }
 }
 
 CCPoint CAScrollView::getContentOffset()
@@ -450,9 +442,10 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         
         if (m_vTouches.size() == 1)
         {
-            CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
+            CAAnimation::unschedule(CAAnimation_selector(CAScrollView::closeToPoint), this);
             this->stopDeaccelerateScroll();
             m_tCloseToPoint = this->getViewSize();
+            m_tInitialPoint = m_tCloseToPoint;
             m_pContainer->setAnchorPoint(CCPoint(0.5f, 0.5f));
             CAScheduler::schedule(schedule_selector(CAScrollView::updatePointOffset), this, 0);
         }
@@ -590,6 +583,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewDidScroll(this);
+            m_pScrollViewDelegate->scrollViewDragging(this);
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
     }
@@ -702,7 +696,7 @@ void CAScrollView::stopDeaccelerateScroll()
 
 void CAScrollView::startDeaccelerateScroll()
 {
-    CAScheduler::unschedule(schedule_selector(CAScrollView::closeToPoint), this);
+    CAAnimation::unschedule(CAAnimation_selector(CAScrollView::closeToPoint), this);
     CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     CAScheduler::unschedule(schedule_selector(CAScrollView::update), this);
     CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
@@ -734,11 +728,6 @@ void CAScrollView::deaccelerateScrolling(float dt)
         speed = m_tInertia;
     }
     
-    if (!m_tInertia.equals(CCPointZero))
-    {
-        m_tInertia = ccpMult(m_tInertia, 1 - decelerationRatio(dt));
-    }
-
     CCPoint point = m_pContainer->getFrameOrigin();
 
     if (m_bBounces)
@@ -748,35 +737,37 @@ void CAScrollView::deaccelerateScrolling(float dt)
         CCPoint curr_point = m_pContainer->getFrameOrigin();
         CCPoint relust_point = curr_point;
         this->getScrollWindowNotOutPoint(relust_point);
-        float off_x = curr_point.x - relust_point.x;
-        float off_y = curr_point.y - relust_point.y;
+        float off_x = relust_point.x - curr_point.x;
+        float off_y = relust_point.y - curr_point.y;
         
-        if (!(fabsf(off_x) < FLT_EPSILON))
+        if (fabsf(off_x) > FLT_EPSILON)
         {
             resilience.x = off_x / size.width;
         }
         
-        if (!(fabsf(off_y) < FLT_EPSILON))
+        if (fabsf(off_y) > FLT_EPSILON)
         {
             resilience.y = off_y / size.height;
         }
         
-        resilience = ccpMult(resilience, maxBouncesSpeed(dt));
+        resilience = ccpMult(resilience, maxSpeed(dt));
         
         if (speed.getLength() < resilience.getLength())
         {
-            speed = ccpMult(resilience, -1.0f);
+            speed = resilience;
             m_tInertia = CCPointZero;
         }
     }
 
-    if (speed.getLength() <= minSpeed(dt) / 2)
+    if (speed.getLength() < 0.25f)
     {
+        m_tInertia = CCPointZero;
         this->getScrollWindowNotOutPoint(point);
         this->setContainerFrame(point);
         this->update(0);
         this->hideIndicator();
         this->stopDeaccelerateScroll();
+        
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewStopMoved(this);
@@ -785,8 +776,8 @@ void CAScrollView::deaccelerateScrolling(float dt)
     else
     {
         point = ccpAdd(point, speed);
-        
-        if (this->isScrollWindowNotMaxOutSide(m_pContainer->getFrameOrigin()))
+
+        if (this->isScrollWindowNotMaxOutSide(point))
         {
             m_tInertia = CCPointZero;
         }
@@ -817,11 +808,29 @@ void CAScrollView::deaccelerateScrolling(float dt)
             this->showIndicator();
             this->setContainerFrame(point);
         }
+        
+        if (m_pScrollViewDelegate)
+        {
+            m_pScrollViewDelegate->scrollViewDidMoved(this);
+        }
+    }
+
+    if (fabsf(m_tInertia.x) > _px(32))
+    {
+        m_tInertia.x = m_tInertia.x * (1 - decelerationRatio(dt));
+    }
+    else if (fabsf(m_tInertia.x) > FLT_EPSILON)
+    {
+        m_tInertia.x = MAX((fabsf(m_tInertia.x) - _px(1)), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
     }
     
-    if (m_pScrollViewDelegate)
+    if (fabsf(m_tInertia.y) > _px(32))
     {
-        m_pScrollViewDelegate->scrollViewDidMoved(this);
+        m_tInertia.y = m_tInertia.y * (1 - decelerationRatio(dt));
+    }
+    else if (fabsf(m_tInertia.y) > FLT_EPSILON)
+    {
+        m_tInertia.y = MAX((fabsf(m_tInertia.y) - _px(1)), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
     }
 }
 
