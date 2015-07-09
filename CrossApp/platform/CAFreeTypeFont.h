@@ -17,10 +17,10 @@
 #include <vector>
 #include <memory>
 #include <ft2build.h>
-#include <freetype/freetype.h>
-#include <freetype/ftglyph.h>
-#include <freetype/ftoutln.h>
-#include <freetype/fttrigon.h>
+#include <freetype.h>
+#include <ftglyph.h>
+#include <ftoutln.h>
+#include <fttrigon.h>
 
 NS_CC_BEGIN
 
@@ -42,13 +42,14 @@ typedef struct _TextViewLineInfo
 
 typedef struct TGlyph_
 {
-	TGlyph_() : index(0), image(0) {}
+	TGlyph_() : index(0), image(0), isEmoji(false){}
 	
 	FT_UInt    index;  // glyph index
     FT_Vector  pos;    // glyph origin on the baseline
 	FT_Glyph   image;  // glyph image
 	FT_ULong   c;
 	FT_Bool	   isOpenType;
+	FT_Bool	   isEmoji;
 } TGlyph, *PGlyph;
 
 typedef struct FontBufferInfo
@@ -97,7 +98,7 @@ protected:
 	bool initFreeTypeFont(const std::string& pFontName, unsigned long nSize);
 	void finiFreeTypeFont();
 	unsigned char* loadFont(const std::string& pFontName, unsigned long *size, int& ttfIndex);
-	unsigned char* getBitmap(ETextAlign eAlignMask, int* outWidth, int* outHeight);
+	unsigned char* getBitmap(ETextAlign eAlignMask, bool emoji, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);
     int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth);
@@ -115,10 +116,10 @@ protected:
 	void compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox);
 	void compute_bbox2(TGlyph& glyph, FT_BBox& bbox);
 
-    void drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vector *pen);
-
-    void draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap,FT_Int x,FT_Int y);
-	void draw_line(unsigned char* pBuffer, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
+	void drawText(FTLineInfo* pInfo, bool emoji, unsigned char* pBuffer, FT_Vector *pen);
+	void draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y);
+    void draw_bitmap(unsigned char* pBuffer, bool emoji, FT_Bitmap*  bitmap,FT_Int x,FT_Int y);
+	void draw_line(unsigned char* pBuffer, bool emoji, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
 
     FT_Vector getPenForAlignment(FTLineInfo* pInfo, ETextAlign eAlignMask, int lineNumber, int totalLines);
 
@@ -127,12 +128,14 @@ protected:
     FT_Error addWord(const std::string& word);
     void newLine();
     void endLine();
+	bool hasEmoji();
 
     const std::string m_space;
 	FT_Face			m_face;
 	std::vector<FTLineInfo*> m_lines;
 	FT_Matrix		m_ItalicMatrix;
 
+	int				m_inFontSize;
     int             m_inWidth;      // requested width of text box
     int             m_inHeight;     // requested height of text box
     int             m_width;        // final bitMap width

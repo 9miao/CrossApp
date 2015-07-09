@@ -39,6 +39,178 @@
 NS_CC_BEGIN
 
 
+CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const CCSize& size)
+{
+    CCRect rect;
+    rect.size = size;
+    CARenderImage* renderImage = CARenderImage::create(size.width, size.height);
+    renderImage->begin();
+    
+    GLfloat    coordinates[] =
+    {
+        0.0f,                   0.0f,
+        image->getMaxS(),       0.0f,
+        0.0f,                   image->getMaxT(),
+        image->getMaxS(),       image->getMaxT()
+    };
+    
+    GLfloat    vertices[] =
+    {
+        rect.origin.x,                     rect.origin.y,                      /*0.0f,*/
+        rect.origin.x + rect.size.width,   rect.origin.y,                      /*0.0f,*/
+        rect.origin.x,                     rect.origin.y + rect.size.height,   /*0.0f,*/
+        rect.origin.x + rect.size.width,   rect.origin.y + rect.size.height,   /*0.0f*/
+    };
+    
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+    
+    image->getShaderProgram()->use();
+    image->getShaderProgram()->setUniformsForBuiltins();
+    
+    ccGLBindTexture2D( image->getName() );
+    
+#ifdef EMSCRIPTEN
+    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+#else
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+#endif // EMSCRIPTEN
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    renderImage->end();
+    return renderImage->getImageView()->getImage();
+}
+
+CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, float scaleX, float scaleY)
+{
+    CCSize size;
+    size.width = image->getContentSize().width * scaleX;
+    size.height = image->getContentSize().height * scaleY;
+    return scaleToNewImageWithImage(image, size);
+}
+
+CAImage* generateMipmapsWithImageRGB(CAImage* image)
+
+{
+
+    int	new_w = image->getPixelsWide() >> 1;
+    int	new_h = image->getPixelsHigh() >> 1;
+    if (new_w < 1) new_w = 1;
+    if (new_h < 1) new_h = 1;
+    
+    int	new_pitch = new_w * 3;
+    
+    new_pitch = (new_pitch + 3) & ~3;
+    
+    //    if (new_w * 2 != m_uPixelsWide || new_h * 2 != m_uPixelsHigh)
+    //    {
+    //    }
+    //    else
+    {
+        CAImage* newImage = new CAImage();
+        unsigned char* data = new unsigned char[new_pitch * new_h];
+        // Resample.  Simple average 2x2 --> 1, in-place.
+        int	pitch = image->getPixelsWide() * 3;
+        
+        for (int j = 0; j < new_h; j++) {
+            unsigned char*	out = ((unsigned char*)data) + j * new_pitch;
+            unsigned char*	in = ((unsigned char*)image->getData()) + (j << 1) * pitch;
+            for (int i = 0; i < new_w; i++) {
+                int	r, g, b;
+                r = (*(in + 0) + *(in + 3) + *(in + 0 + pitch) + *(in + 3 + pitch));
+                g = (*(in + 1) + *(in + 4) + *(in + 1 + pitch) + *(in + 4 + pitch));
+                b = (*(in + 2) + *(in + 5) + *(in + 2 + pitch) + *(in + 5 + pitch));
+                *(out + 0) = r >> 2;
+                *(out + 1) = g >> 2;
+                *(out + 2) = b >> 2;
+                out += 3;
+                in += 6;
+            }
+        }
+        
+        newImage->initWithRawData(data, CAImage::PixelFormat_RGB888, new_w, new_h);
+        newImage->autorelease();
+        delete[] data;
+        
+        return newImage;
+    }
+    return 0;
+}
+
+CAImage* generateMipmapsWithImageRGBA(CAImage* image)
+{
+    int	new_w = image->getPixelsWide() >> 1;
+    int	new_h = image->getPixelsHigh() >> 1;
+    if (new_w < 1) new_w = 1;
+    if (new_h < 1) new_h = 1;
+    
+    int	new_pitch = new_w * 4;
+    
+    //    if (new_w * 2 != m_uPixelsWide || new_h * 2 != m_uPixelsHigh)
+    //    {
+    //    }
+    //    else
+    {
+        CAImage* newImage = new CAImage();
+        unsigned char* data = new unsigned char[new_pitch * new_h];
+        
+        // Resample.  Simple average 2x2 --> 1, in-place.
+        int	pitch = image->getPixelsWide() * 4;
+        for (int j = 0; j < new_h; j++) {
+            unsigned char*	out = ((unsigned char*)data) + j * new_pitch;
+            unsigned char*	in = ((unsigned char*)image->getData()) + (j << 1) * pitch;
+            for (int i = 0; i < new_w; i++) {
+                int	r, g, b, a;
+                r = (*(in + 0) + *(in + 4) + *(in + 0 + pitch) + *(in + 4 + pitch));
+                g = (*(in + 1) + *(in + 5) + *(in + 1 + pitch) + *(in + 5 + pitch));
+                b = (*(in + 2) + *(in + 6) + *(in + 2 + pitch) + *(in + 6 + pitch));
+                a = (*(in + 3) + *(in + 7) + *(in + 3 + pitch) + *(in + 7 + pitch));
+                *(out + 0) = r >> 2;
+                *(out + 1) = g >> 2;
+                *(out + 2) = b >> 2;
+                *(out + 3) = a >> 2;
+                out += 4;
+                in += 8;
+            }
+        }
+        newImage->initWithRawData(data, CAImage::PixelFormat_RGBA8888, new_w, new_h);
+        newImage->autorelease();
+        delete[] data;
+        
+        return newImage;
+    }
+
+    return 0;
+}
+
+
+CAImage* CAImage::generateMipmapsWithImage(CAImage* image)
+{
+    if (CCPoint(image->getContentSize()).getLength() < 2895)
+    {
+        CAImage* newImage = new CAImage();
+        newImage->initWithRawData(image->getData(), image->getPixelFormat(), image->getPixelsWide(), image->getPixelsHigh());
+        newImage->autorelease();
+        return newImage;
+    }
+    
+    if (image->getPixelFormat() == CAImage::PixelFormat_RGB888)
+    {
+        return generateMipmapsWithImageRGB(image);
+    }
+    else if (image->getPixelFormat() == CAImage::PixelFormat_RGBA8888)
+    {
+        return generateMipmapsWithImageRGBA(image);
+    }
+    
+    return NULL;
+}
+
+
 namespace
 {
     /*
@@ -2408,60 +2580,6 @@ CAImage* CAImage::copy()
     
     return newImage;
 }
-
-CAImage* CAImage::scaleToNewImageWithSize(const CCSize& size)
-{
-    CCRect rect;
-    rect.size = size;
-    CARenderImage* renderImage = CARenderImage::create(size.width, size.height);
-    renderImage->begin();
-    
-    GLfloat    coordinates[] =
-    {
-        0.0f,       0.0f,
-        m_fMaxS,    0.0f,
-        0.0f,       m_fMaxT,
-        m_fMaxS,    m_fMaxT
-    };
-    
-    GLfloat    vertices[] =
-    {
-        rect.origin.x,                     rect.origin.y,                      /*0.0f,*/
-        rect.origin.x + rect.size.width,   rect.origin.y,                      /*0.0f,*/
-        rect.origin.x,                     rect.origin.y + rect.size.height,   /*0.0f,*/
-        rect.origin.x + rect.size.width,   rect.origin.y + rect.size.height,   /*0.0f*/
-    };
-    
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-    m_pShaderProgram->use();
-    m_pShaderProgram->setUniformsForBuiltins();
-    
-    ccGLBindTexture2D( m_uName );
-    
-#ifdef EMSCRIPTEN
-    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
-#else
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-#endif // EMSCRIPTEN
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    
-    renderImage->end();
-    return renderImage->getImageView()->getImage();
-}
-
-CAImage* CAImage::scaleToNewImage(float scaleX, float scaleY)
-{
-    CCSize size;
-    size.width = m_tContentSize.width * scaleX;
-    size.height = m_tContentSize.height * scaleY;
-    return scaleToNewImageWithSize(size);
-}
-
 
 const char* CAImage::getImageFileType()
 {
