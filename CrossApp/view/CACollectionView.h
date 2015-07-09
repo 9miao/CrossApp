@@ -117,6 +117,10 @@ public:
     
     virtual void setShowsScrollIndicators(bool var);
     
+    CACollectionViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
+    
+    const CAVector<CACollectionViewCell*>& displayingIndexPathWithCollectionCell();
+    
     CC_SYNTHESIZE(CACollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
     
 	CC_SYNTHESIZE(CACollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
@@ -243,9 +247,11 @@ private:
 
 	CACollectionViewCell* m_pHighlightedCollectionCells;
 
-	std::map<CAIndexPath3E, CACollectionViewCell*> m_pUsedCollectionCells;
+	std::map<CAIndexPath3E, CACollectionViewCell*> m_mpUsedCollectionCells;
 
-	std::map<std::string, CAVector<CACollectionViewCell*> > m_pFreedCollectionCells;
+    CAVector<CACollectionViewCell*> m_vpUsedCollectionCells;
+    
+	std::map<std::string, CAVector<CACollectionViewCell*> > m_mpFreedCollectionCells;
 };
 
 class CC_DLL CACollectionViewCell : public CAControl

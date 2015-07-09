@@ -82,16 +82,6 @@ protected:
     
     virtual void contentOffsetFinish(float dt);
     
-    inline virtual float minSpeed(float dt)
-    {
-        return (3000 * dt);
-    }
-    
-    inline virtual float maxSpeed(float dt)
-    {
-        return (CCPoint(m_obContentSize).getLength() * 3000 * dt);
-    }
-    
 private:
     
     using CAScrollView::setBounces;

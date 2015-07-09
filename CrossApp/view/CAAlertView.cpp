@@ -2,13 +2,15 @@
 #include "CAAlertView.h"
 #include "view/CAScale9ImageView.h"
 #include "basics/CAApplication.h"
+#include "basics/CASTLContainer.h"
 #include "control/CAButton.h"
 #include "dispatcher/CATouch.h"
 #include "view/CAWindow.h"
 #include "view/CARenderImage.h"
 #include "animation/CAViewAnimation.h"
-
 NS_CC_BEGIN
+
+static CAVector<CAAlertView*> s_vAlertViewCaches;
 
 CAAlertView::CAAlertView()
 : m_pContentLabel(NULL)
@@ -109,6 +111,16 @@ CAAlertView *CAAlertView::createWithText(const char* pszTitle, const char* pszAl
 	}
 	CC_SAFE_DELETE(pAlert);
 	return NULL;
+}
+
+bool CAAlertView::hideWithDisplayed()
+{
+    if (!s_vAlertViewCaches.empty())
+    {
+        s_vAlertViewCaches.back()->hide();
+        return true;
+    }
+    return false;
 }
 
 void CAAlertView::setMessageFontName(std::string &var)
@@ -251,15 +263,6 @@ void CAAlertView::showAlertView() {
 	addGrayLine(m_fAlertViewLineHeight);
 
 	adjustButtonView();
-    
-    this->setAlpha(0);
-    m_pBackView->setScale(0.7f);
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDuration(0.1f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-    this->setAlpha(1.0f);
-    m_pBackView->setScale(1.0f);
-    CAViewAnimation::commitAnimations();
 }
  
 void CAAlertView::adjustButtonView() {
@@ -407,13 +410,7 @@ void CAAlertView::onClickButton(CAControl* btn, CCPoint point)
 		((CAObject*)m_pCAlertTarget->*m_pCAlertBtnEvent)(btn->getTag());
 	}
     
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDuration(0.1f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAAlertView::removeFromSuperview));
-    this->setAlpha(0.0f);
-    m_pBackView->setScale(0.7f);
-    CAViewAnimation::commitAnimations();
+    this->hide();
 }
 
 void CAAlertView::show()
@@ -426,9 +423,31 @@ void CAAlertView::show()
 	if (CAWindow *rootWindow = CAApplication::getApplication()->getRootWindow())
     {
 		rootWindow->insertSubview(this, CAWindowZOderTop);
+        s_vAlertViewCaches.pushBack(this);
 	}
+    
+    this->setAlpha(0);
+    m_pBackView->setScale(0.7f);
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0.1f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    this->setAlpha(1.0f);
+    m_pBackView->setScale(1.0f);
+    CAViewAnimation::commitAnimations();
 }
 
+void CAAlertView::hide()
+{
+    s_vAlertViewCaches.eraseObject(this);
+
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0.1f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAAlertView::removeFromSuperview));
+    this->setAlpha(0.0f);
+    m_pBackView->setScale(0.7f);
+    CAViewAnimation::commitAnimations();
+}
 
 CATableViewCell* CAAlertView::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {

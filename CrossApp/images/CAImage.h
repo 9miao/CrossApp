@@ -67,8 +67,17 @@ public:
     
     virtual ~CAImage();
     
-    static CAImage* createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions,
-                                     CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool isForTextField = false, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false);
+    static CAImage* createWithString(const char *text,
+                                     const char *fontName,
+                                     float fontSize,
+                                     const CCSize& dimensions,
+                                     CATextAlignment hAlignment,
+                                     CAVerticalTextAlignment vAlignment,
+                                     bool isForTextField = false,
+                                     int iLineSpacing = 0,
+                                     bool bBold = false,
+                                     bool bItalics = false,
+                                     bool bUnderLine = false);
     
     static int getFontHeight(const char* pFontName, unsigned long nSize);
     
@@ -88,6 +97,12 @@ public:
                                int iLimitWidth,
                                int iLineSpace = 0,
                                bool bWordWrap = true);
+    
+    static CAImage* scaleToNewImageWithImage(CAImage* image, const CCSize& size);
+    
+    static CAImage* scaleToNewImageWithImage(CAImage* image, float scaleX, float scaleY);
+    
+    static CAImage* generateMipmapsWithImage(CAImage* image);
     
     static CAImage* create(const std::string& file);
 
@@ -151,10 +166,10 @@ public:
     
     const char* getImageFileType();
     
-    static CAImage* CC_WHITE_IMAGE();
-    
     float getAspectRatio();
     
+    static CAImage* CC_WHITE_IMAGE();
+
     virtual CAImage* copy();
     
     bool hasAlpha() { return m_bHasAlpha; }

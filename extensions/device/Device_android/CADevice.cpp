@@ -493,7 +493,7 @@ void ToMainThread::runDelegate()
         if (image->initWithImageFile(_path))
         {
             CAScheduler::unschedule(schedule_selector(ToMainThread::runDelegate), this);
-            delegate->getSelectedImage(image);
+            delegate->getSelectedImage(CAImage::generateMipmapsWithImage(image));
             image->release();
         }
     }

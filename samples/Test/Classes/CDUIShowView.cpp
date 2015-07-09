@@ -1897,7 +1897,7 @@ void CDUIShowView::getSelectedImage(CAImage *image)
     
     CAScrollView* scrollView = CAScrollView::createWithFrame(m_clvImage->getBounds());
     scrollView->setViewSize(CADipSize(image->getContentSize()));
-    //scrollView->setContentOffset(CADipPoint(0,winSize.height/4), false);
+    scrollView->setContentOffset(CADipPoint(0,winSize.height/4), false);
     scrollView->setMinimumZoomScale(1.0f);
     scrollView->setMaximumZoomScale(2.5f);
     scrollView->setBackGroundColor(CAColor_clear);
@@ -1912,7 +1912,7 @@ void CDUIShowView::getSelectedImage(CAImage *image)
     rect.size = scrollView->getViewSize();
     CAImageView* imv = CAImageView::createWithFrame(rect);
     imv->setImage(image);
-    //imv->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+    imv->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
     scrollView->addSubview(imv);
     
     

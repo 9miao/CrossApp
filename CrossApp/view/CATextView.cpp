@@ -538,22 +538,6 @@ int CATextView::getCursorPos()
 	return getStringCharCount(m_szText.substr(0, m_iCurPos));
 }
 
-float CATextView::maxSpeed(float dt)
-{
-    return (CCPoint(m_obContentSize).getLength() * 8 * dt);
-}
-
-float CATextView::maxSpeedCache(float dt)
-{
-    return (maxSpeed(dt) * 3.0f);
-}
-
-float CATextView::decelerationRatio(float dt)
-{
-    return 2.0f * dt;
-}
-
-
 int CATextView::getCurrentByPointY(int y)
 {
 	int iCurLine = y / (m_iLineHeight*1.25f);

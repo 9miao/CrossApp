@@ -270,12 +270,6 @@ bool CAWebViewImpl::shouldStartLoading(void* pWebViewWrapper, const std::string 
             if (!webView->m_pWebViewDelegate->onShouldStartLoading(webView, url))
                 return false;
         }
-        if (webView && webView->m_bShowLoadingImage)
-        {
-            it->second->setVisible(false);
-            webView->m_pLoadingView->setVisible(true);
-        }
-
     }
     return true;
 }
@@ -287,12 +281,6 @@ void CAWebViewImpl::didFinishLoading(void* pWebViewWrapper, const std::string &u
     if (it != s_WebViewImpls.end()) {
         
         CAWebView* webView = it->second->m_pWebView;
-        if (webView && webView->m_bShowLoadingImage)
-        {
-            webView->m_pLoadingView->setVisible(false);
-            it->second->setVisible(true);
-        }
-
         if (webView && webView->m_pWebViewDelegate)
         {
             webView->m_pWebViewDelegate->onDidFinishLoading(webView, url);
@@ -306,12 +294,6 @@ void CAWebViewImpl::didFailLoading(void* pWebViewWrapper, const std::string &url
     if (it != s_WebViewImpls.end())
     {
         CAWebView* webView = it->second->m_pWebView;
-        if (webView && webView->m_bShowLoadingImage)
-        {
-            webView->m_pLoadingView->setVisible(false);
-            it->second->setVisible(true);
-        }
-
         if (webView && webView->m_pWebViewDelegate)
         {
             webView->m_pWebViewDelegate->onDidFailLoading(webView, url);

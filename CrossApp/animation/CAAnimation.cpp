@@ -28,6 +28,8 @@ namespace CAAnimation
         
         Animation();
         
+        virtual ~Animation();
+        
         void startAnimation(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay);
         
         void update(float dt);
@@ -44,6 +46,11 @@ namespace CAAnimation
         m_obInfo.interval = 0;
         m_obInfo.selector = NULL;
         m_obInfo.target = NULL;
+    }
+    
+    Animation::~Animation()
+    {
+        CAScheduler::unschedule(schedule_selector(Animation::update), this);
     }
     
     void Animation::startAnimation(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay)
@@ -88,14 +95,26 @@ namespace CAAnimation
     
     static CADeque<Animation*> _deque;
     
-void schedule(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay)
-{
-    Animation* obj = new Animation();
-    obj->startAnimation(selector, target, totalTime, interval, delay);
-    _deque.pushBack(obj);
-    obj->release();
-}
+    void schedule(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay)
+    {
+        Animation* obj = new Animation();
+        obj->startAnimation(selector, target, totalTime, interval, delay);
+        _deque.pushBack(obj);
+        obj->release();
+    }
 
+    void unschedule(SEL_CAAnimation selector, CAObject* target)
+    {
+        for (CADeque<Animation*>::iterator itr=_deque.begin(); itr!=_deque.end(); itr++)
+        {
+            Animation* obj = *itr;
+            if (obj->m_obInfo.selector == selector && obj->m_obInfo.target == target)
+            {
+                _deque.erase(itr);
+                break;
+            }
+        }
+    }
     
     
 }
