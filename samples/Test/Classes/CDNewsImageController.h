@@ -45,6 +45,7 @@ public:
     
     virtual void scrollViewHeaderBeginRefreshing(CAScrollView* view);
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view);
+    virtual void scrollViewStopMoved(CAScrollView* view);
 public:
     void initImageTableView();
     void onRequestFinished(const HttpResponseStatus& status, const CSJson::Value& json);
