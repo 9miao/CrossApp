@@ -317,10 +317,10 @@ void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
     if (animated)
     {
         m_tInitialPoint = offset;
-        
         m_tInertia = CCPointZero;
         m_tCloseToPoint = ccpMult(offset, -1);
         m_tInitialPoint = m_pContainer->getFrameOrigin();
+        CCLog("--- sss");
         CAAnimation::schedule(CAAnimation_selector(CAScrollView::closeToPoint), this, 0.25f);
     }
     else

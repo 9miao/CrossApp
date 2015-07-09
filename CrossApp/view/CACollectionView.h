@@ -119,7 +119,7 @@ public:
     
     CACollectionViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
     
-    const CAVector<CACollectionViewCell*>& displayingIndexPathWithCollectionCell();
+    const CAVector<CACollectionViewCell*>& displayingCollectionCell();
     
     CC_SYNTHESIZE(CACollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
     

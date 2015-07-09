@@ -66,7 +66,8 @@ CAPickerView* CAPickerView::createWithCenter(const CCRect& rect)
 
 bool CAPickerView::init()
 {
-    if (!CAView::init()) {
+    if (!CAView::init())
+    {
         return false;
     }
     
@@ -75,7 +76,8 @@ bool CAPickerView::init()
 
 bool CAPickerView::initWithCenter(const CrossApp::CCRect &rect)
 {
-    if (!CAView::initWithCenter(rect)) {
+    if (!CAView::initWithCenter(rect))
+    {
         return false;
     }
     
@@ -84,7 +86,8 @@ bool CAPickerView::initWithCenter(const CrossApp::CCRect &rect)
 
 bool CAPickerView::initWithFrame(const CrossApp::CCRect &rect)
 {
-    if (!CAView::initWithFrame(rect)) {
+    if (!CAView::initWithFrame(rect))
+    {
         return false;
     }
     
@@ -104,19 +107,17 @@ void CAPickerView::onExit()
 void CAPickerView::onEnterTransitionDidFinish()
 {
 	CAView::onEnterTransitionDidFinish();
-    
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::commitAnimations();
 }
 
-void CAPickerView::onExitTransitionDidStart() {
+void CAPickerView::onExitTransitionDidStart()
+{
 	CAView::onExitTransitionDidStart();
 }
 
 int CAPickerView::numberOfComponents()
 {
-    if (m_dataSource) {
+    if (m_dataSource)
+    {
         m_dataSource->numberOfComponentsInPickerView(this);
     }
     return -1;
@@ -124,7 +125,8 @@ int CAPickerView::numberOfComponents()
 
 int CAPickerView::numberOfRowsInComponent(unsigned int component)
 {
-    if (m_dataSource) {
+    if (m_dataSource)
+    {
         return m_dataSource->numberOfRowsInComponent(this, component);
     }
     return -1;
@@ -132,17 +134,19 @@ int CAPickerView::numberOfRowsInComponent(unsigned int component)
 
 CCSize CAPickerView::rowSizeForComponent(unsigned int component)
 {
-    if (m_dataSource) {
+    if (m_dataSource)
+    {
         float width = m_dataSource->widthForComponent(this, component);
         float height = m_dataSource->rowHeightForComponent(this, component);
-        return CCSizeMake(width, height);
+        return CCSize(width, height);
     }
-    return CCSizeMake(0, 0);
+    return CCSize(0, 0);
 }
 
 CAView* CAPickerView::viewForRow(unsigned int row, unsigned int component)
 {
-    if (m_dataSource) {
+    if (m_dataSource)
+    {
         return m_dataSource->viewForRow(this, row, component);
     }
     
@@ -152,7 +156,8 @@ CAView* CAPickerView::viewForRow(unsigned int row, unsigned int component)
 float CAPickerView::calcTotalWidth(unsigned int component)
 {
     float total = 0;
-    for (int i=0; i<component; i++) {
+    for (int i=0; i<component; i++)
+    {
         total += m_dataSource->widthForComponent(this, i);
     }
     return total;
@@ -234,23 +239,34 @@ void CAPickerView::reloadComponent(unsigned int _row,unsigned int component, boo
     int row = m_dataSource->numberOfRowsInComponent(this, component);
     int head = m_displayRow[component]/2;
     int foot = m_displayRow[component]/2;
-    if (row <= m_displayRow[component]) {
+    if (row <= m_displayRow[component])
+    {
         row += (head + foot);
         m_componentsIndex[component].resize(row);
-        for (int i=0; i<row; i++) {
-            if (i < head) {
+        for (int i=0; i<row; i++)
+        {
+            if (i < head)
+            {
                 m_componentsIndex[component][i] = -1;
-            } else if (i >= row - foot) {
+            }
+            else if (i >= row - foot)
+            {
                 m_componentsIndex[component][i] = -1;
-            } else {
+            }
+            else
+            {
                 m_componentsIndex[component][i] = i - head;
             }
         }
-    } else {
+    }
+    else
+    {
         int cycle = 3;
         m_componentsIndex[component].resize(row*3);
-        while (cycle--) {
-            for (int i=0; i<row; i++) {
+        while (cycle--)
+        {
+            for (int i=0; i<row; i++)
+            {
                 m_componentsIndex[component][i + cycle*row] = i;
             }
         }
@@ -259,7 +275,8 @@ void CAPickerView::reloadComponent(unsigned int _row,unsigned int component, boo
     // reset selected index
     selectRow(_row, component, false);
     
-    if (bReloadData) {
+    if (bReloadData)
+    {
         // reload table view
 		CATableView* view = m_tableViews.at(component);
 
@@ -271,13 +288,17 @@ void CAPickerView::reloadComponent(unsigned int _row,unsigned int component, boo
 CAView* CAPickerView::viewForRowInComponent(int component, int row, CCSize size)
 {
     int index = m_componentsIndex[component][row];
-    if (index == -1) {
+    if (index == -1)
+    {
         return NULL;
     }
+    
     CAView* view = m_dataSource->viewForRow(this, index, component);
-    if (!view) { // create view
+    if (!view)
+    { // create view
         CCString* title = m_dataSource->titleForRow(this, index, component);
-        if (title && title->length() > 0) {
+        if (title && title->length() > 0)
+        {
             CCRect rect = CCRectMake(0, 0, size.width, size.height);
             CALabel* label = CALabel::createWithFrame(rect);
             label->setText(title->getCString());
@@ -295,20 +316,25 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, CCSize size)
 
 CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
-    if (m_dataSource && !m_tableViews.empty()) {
+    if (m_dataSource && !m_tableViews.empty())
+    {
         
         CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
-        if (cell == NULL) {
+        if (cell == NULL)
+        {
             cell = CATableViewCell::create("CrossApp");
             cell->setBackgroundView(NULL);
-        } else {
+        }
+        else
+        {
             cell->removeSubviewByTag(100);            
         }
         
 		int component = m_tableViews.getIndex(table);
         
         CAView* view = viewForRowInComponent(component, row, cellSize);
-        if (view) {
+        if (view)
+        {
             view->setTag(100);
             cell->addSubview(view);
         }
@@ -321,9 +347,9 @@ CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const CCSize
 
 unsigned int CAPickerView::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    if (m_dataSource && !m_tableViews.empty()) {
+    if (m_dataSource && !m_tableViews.empty())
+    {
 		int component = m_tableViews.getIndex(table);
-
         return m_componentsIndex[component].size();
     }
     return 0;
@@ -331,7 +357,8 @@ unsigned int CAPickerView::numberOfRowsInSection(CATableView *table, unsigned in
 
 unsigned int CAPickerView::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    if (m_dataSource && !m_tableViews.empty()) {
+    if (m_dataSource && !m_tableViews.empty())
+    {
         int component = m_tableViews.getIndex(table);
         return m_dataSource->rowHeightForComponent(this, component);
     }
@@ -340,21 +367,28 @@ unsigned int CAPickerView::tableViewHeightForRowAtIndexPath(CATableView* table, 
 
 void CAPickerView::selectRow(unsigned int row, unsigned int component, bool animated)
 {
-    if ( m_tableViews.empty() || !m_dataSource) {
+    if ( m_tableViews.empty() || !m_dataSource)
+    {
         return;
     }
+    
     CATableView* tableView = m_tableViews.at(component);
-    if (tableView) {
+    if (tableView)
+    {
         int maxRow = m_dataSource->numberOfRowsInComponent(this, component);
         float height = m_dataSource->rowHeightForComponent(this, component);
-        if (row < maxRow) {
+        if (row < maxRow)
+        {
             //CCPoint offset = CCPointZero;
             CCPoint offset;
-            if (maxRow <= m_displayRow[component]) {
+            if (maxRow <= m_displayRow[component])
+            {
                 m_selected[component] = row + m_displayRow[component]/2;
                 offset.y = row * height;
                 tableView->setContentOffset(offset, false);
-            } else {
+            }
+            else
+            {
                 m_selected[component] = maxRow + row;
                 offset.y = m_selected[component] * height + height/2 - tableView->getFrame().size.height/2;
                 tableView->setContentOffset(offset, false);
@@ -407,7 +441,8 @@ void CAPickerView::visit()
             int remainder = offset_y % row_height;
             int index = offset_y / row_height;
 
-			if (remainder >= row_height * 0.95) {
+			if (remainder >= row_height * 0.95)
+            {
 				index++;
 			}
 

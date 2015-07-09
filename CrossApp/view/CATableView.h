@@ -110,7 +110,7 @@ public:
     
     CATableViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row);
     
-    const CAVector<CATableViewCell*>& displayingIndexPathWithTableCell();
+    const CAVector<CATableViewCell*>& displayingTableCell();
     
     CC_SYNTHESIZE(CATableViewDataSource*, m_pTableViewDataSource, TableViewDataSource);
     

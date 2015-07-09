@@ -172,7 +172,7 @@ CAListViewCell* CAListView::cellForRowAtIndex(unsigned int index)
     return m_mpUsedListCells[index];
 }
 
-const CAVector<CAListViewCell*>& CAListView::displayingIndexWithListCell()
+const CAVector<CAListViewCell*>& CAListView::displayingListCell()
 {
     return m_vpUsedListCells;
 }
