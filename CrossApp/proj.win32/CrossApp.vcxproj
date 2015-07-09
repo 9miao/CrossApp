@@ -95,7 +95,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\freetype\prebuilt\win32\*.*" "$(Out
 xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype250.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -206,6 +206,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClCompile Include="..\images\gif_lib\gif_font.c" />
     <ClCompile Include="..\images\gif_lib\gif_hash.c" />
     <ClCompile Include="..\images\gif_lib\quantize.c" />
+    <ClCompile Include="..\platform\CAEmojiFont.cpp" />
     <ClCompile Include="..\platform\CAFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\CAFTFontCache.cpp" />
     <ClCompile Include="..\platform\CATempTypeFont.cpp" />
@@ -439,6 +440,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClInclude Include="..\images\CAImageCache.h" />
     <ClInclude Include="..\platform\CAClipboard.h" />
     <ClInclude Include="..\platform\CADensityDpi.h" />
+    <ClInclude Include="..\platform\CAEmojiFont.h" />
     <ClInclude Include="..\platform\CAFreeTypeFont.h" />
     <ClInclude Include="..\platform\CAFTFontCache.h" />
     <ClInclude Include="..\platform\CATempTypeFont.h" />

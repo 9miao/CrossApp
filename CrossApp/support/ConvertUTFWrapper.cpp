@@ -155,5 +155,27 @@ bool convertUTF16ToUTF8String(const std::u16string& utf16, std::string &Out)
   return true;
 }
 
+
+bool convertUTF32ToUTF8String(const std::u32string& utf32, std::string &Out)
+{
+	assert(Out.empty());
+
+	// Avoid OOB by returning early on empty input.
+	if (utf32.empty())
+		return true;
+
+	Out.clear();
+	for (int i = 0; i < utf32.size(); i++)
+	{
+		char c[32] = { 0 }; char* p = c;
+		if (!ConvertCodePointToUTF8(utf32[i], p))
+			return false;
+
+		Out += c;
+	}
+	return true;
+}
+
+
 } // end namespace llvm
 

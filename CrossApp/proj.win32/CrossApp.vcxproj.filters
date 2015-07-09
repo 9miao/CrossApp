@@ -770,6 +770,9 @@
     <ClCompile Include="..\images\CAGif.cpp">
       <Filter>images</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\CAEmojiFont.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -1237,6 +1240,9 @@
     </ClInclude>
     <ClInclude Include="..\images\CAGif.h">
       <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAEmojiFont.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

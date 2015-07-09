@@ -255,6 +255,7 @@ bool hasUTF16ByteOrderMark(const char* SrcBytes, size_t len);
  * \returns true on success
  */
 bool convertUTF16ToUTF8String(const std::u16string& utf16, std::string &Out);
+bool convertUTF32ToUTF8String(const std::u32string& utf32, std::string &Out);
 
 } /* end namespace llvm */
 

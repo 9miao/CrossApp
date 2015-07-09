@@ -182,6 +182,7 @@ void CALabel::updateImage()
     rect.size.width = width;
     
     this->setImage(image);
+	image->saveToFile("c:\\xxx.png", true);
 
     switch (m_nVerticalTextAlignmet)
     {
