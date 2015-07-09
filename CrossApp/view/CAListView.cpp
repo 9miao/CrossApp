@@ -429,14 +429,19 @@ void CAListView::reloadData()
             
             CC_CONTINUE_IF(!winRect.intersectsRect(m_rIndexRects[i]));
             
-            CAListViewCell* pCellView = m_pListViewDataSource->listViewCellAtIndex(this, m_rIndexRects[i].size, i);
-            if (pCellView)
+            CAListViewCell* cell = m_pListViewDataSource->listViewCellAtIndex(this, m_rIndexRects[i].size, i);
+            if (cell)
             {
-                pCellView->m_nIndex = i;
-                pCellView->setFrame(m_rIndexRects[i]);
-                addSubview(pCellView);
-                itrResult.first->second = pCellView;
-                m_vpUsedListCells.pushBack(pCellView);
+                cell->m_nIndex = i;
+                cell->setFrame(m_rIndexRects[i]);
+                addSubview(cell);
+                itrResult.first->second = cell;
+                m_vpUsedListCells.pushBack(cell);
+                
+                if (m_pListViewDataSource)
+                {
+                    m_pListViewDataSource->listViewWillDisplayCellAtIndex(this, cell, i);
+                }
             }
         }
         
@@ -529,6 +534,11 @@ void CAListView::loadCollectionCell()
 			cell->setControlStateSelected();
 		}
         
+        if (m_pListViewDataSource)
+        {
+            m_pListViewDataSource->listViewWillDisplayCellAtIndex(this, cell, index);
+        }
+        
         CAView* view = this->dequeueReusableLine();
         CCRect lineRect = m_rLineRects[index];
         if (view == NULL)
@@ -596,16 +606,20 @@ CAView* CAListView::dequeueReusableLine()
 
 CAListViewCell::CAListViewCell()
 :m_pBackgroundView(NULL)
+,m_pContentView(NULL)
 ,m_nIndex(0xffffffff)
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
 {
     this->setHaveNextResponder(true);
+    this->setDisplayRange(false);
+    this->setColor(CAColor_clear);
 }
 
 
 CAListViewCell::~CAListViewCell()
 {
+    CC_SAFE_RELEASE_NULL(m_pContentView);
     CC_SAFE_RELEASE_NULL(m_pBackgroundView);
 }
 
@@ -623,9 +637,10 @@ CAListViewCell* CAListViewCell::create(const std::string& reuseIdentifier)
 
 bool CAListViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
-    this->setDisplayRange(false);
+    m_pContentView = new CAView();
+    this->addSubview(m_pContentView);
+    
     this->setBackgroundView(CAView::create());
-    this->setColor(CAColor_clear);
     this->setReuseIdentifier(reuseIdentifier);
     this->normalListViewCell();
     
@@ -640,7 +655,7 @@ void CAListViewCell::setBackgroundView(CrossApp::CAView *var)
     m_pBackgroundView = var;
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setFrame(this->getBounds());
-    this->insertSubview(m_pBackgroundView, -1);
+    m_pContentView->insertSubview(m_pBackgroundView, -1);
 }
 
 CAView* CAListViewCell::getBackgroundView()
@@ -651,9 +666,11 @@ CAView* CAListViewCell::getBackgroundView()
 void CAListViewCell::setContentSize(const CrossApp::CCSize &var)
 {
     CAView::setContentSize(var);
+    
+    m_pContentView->setFrame(this->getBounds());
     if (m_pBackgroundView)
     {
-        m_pBackgroundView->setFrame(this->getBounds());
+        m_pBackgroundView->setFrame(m_pContentView->getBounds());
     }
 }
 

@@ -84,6 +84,8 @@ public:
     {
         return 0;
     }
+    
+    virtual void collectionViewWillDisplayCellAtIndex(CACollectionView* table, CACollectionViewCell* cell, unsigned int section, unsigned int row, unsigned int item) {};
 };
 
 
@@ -266,6 +268,8 @@ public:
 
 	virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
 
+    CC_SYNTHESIZE_READONLY(CAView*, m_pContentView, ContentView);
+    
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);

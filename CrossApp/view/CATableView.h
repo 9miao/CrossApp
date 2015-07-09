@@ -72,6 +72,8 @@ public:
     {
         return 0;
     }
+    
+    virtual void tableViewWillDisplayCellAtIndex(CATableView* table, CATableViewCell* cell, unsigned int section, unsigned int row) {};
 };
 
 
@@ -284,8 +286,10 @@ public:
     
     virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
     
-    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
+    CC_SYNTHESIZE_READONLY(CAView*, m_pContentView, ContentView);
     
+    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
+
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);

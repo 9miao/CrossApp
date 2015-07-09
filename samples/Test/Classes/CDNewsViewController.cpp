@@ -12,6 +12,9 @@
 extern int page_index;
 
 CDNewsTableCell::CDNewsTableCell()
+:theTitle(NULL),
+theDesc(NULL),
+theImage(NULL)
 {
     this->setAllowsSelected(false);
 }
@@ -47,36 +50,44 @@ void CDNewsTableCell::selectedTableViewCell()
 void CDNewsTableCell::initWithCell()
 {
     CADipSize _size = this->getFrame().size;
-    CALabel* test = CALabel::createWithFrame(CADipRect(240,
+    theTitle = CALabel::createWithFrame(CADipRect(240,
                                                        20,
                                                        _size.width/2+50,
                                                        40));
-    test->setColor(CAColor_black);
-    test->setTextAlignment(CATextAlignmentLeft);
-    test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
-    test->setFontSize(_px(32));
-    test->setBold(true);
-    test->setTag(100);
-    this->addSubview(test);
+    theTitle->setColor(CAColor_black);
+    theTitle->setTextAlignment(CATextAlignmentLeft);
+    theTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+    theTitle->setFontSize(_px(32));
+    theTitle->setBold(true);
+    theTitle->setTag(100);
+    this->getContentView()->addSubview(theTitle);
     
-    CALabel* dsc = CALabel::createWithFrame(CADipRect(240,
+    theDesc = CALabel::createWithFrame(CADipRect(240,
                                                       80,
                                                       _size.width/2,
                                                       40));
-    dsc->setColor(CAColor_black);
-    dsc->setTextAlignment(CATextAlignmentLeft);
-    dsc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
-    dsc->setFontSize(_px(24));
-    dsc->setTag(102);
-    dsc->setColor(ccc4(180,180,180,255));
-    dsc->setLineSpacing(10);
-    this->addSubview(dsc);
+    theDesc->setColor(CAColor_black);
+    theDesc->setTextAlignment(CATextAlignmentLeft);
+    theDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+    theDesc->setFontSize(_px(24));
+    theDesc->setTag(102);
+    theDesc->setColor(ccc4(180,180,180,255));
+    theDesc->setLineSpacing(10);
+    this->getContentView()->addSubview(theDesc);
     
-    CommonUrlImageView* temImage = CommonUrlImageView::createWithCenter(CADipRect(120,_size.height/2,200,_size.height-40));
-    temImage->setTag(101);
-    temImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
-    temImage->setImage(CAImage::create("image/HelloWorld.png"));
-    this->addSubview(temImage);
+    theImage = CommonUrlImageView::createWithCenter(CADipRect(120,_size.height/2,200,_size.height-40));
+    theImage->setTag(101);
+    theImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    theImage->setImage(CAImage::create("image/HelloWorld.png"));
+    this->getContentView()->addSubview(theImage);
+}
+
+void CDNewsTableCell::setModel(const newsMsg &cellmodel)
+{
+    theTitle->setText(cellmodel.m_title);
+    theDesc->setText(cellmodel.m_desc);
+    theImage->setImage(CAImage::create("image/HelloWorld.png"));
+    theImage->setUrl(cellmodel.m_imageUrl[0]);
 }
 
 CDNewsViewController::CDNewsViewController(int index)
@@ -372,20 +383,25 @@ CATableViewCell* CDNewsViewController::tableCellAtIndex(CATableView* table, cons
         cell = CDNewsTableCell::create("CrossApp", CADipRect(0, 0, _size.width, _size.height));
         cell->initWithCell();
     }
-    CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);
-    cellText->setText(m_msg[row].m_title);
-    
-    CALabel* cellTextdsc = (CALabel*)cell->getSubviewByTag(102);
-    cellTextdsc->setText(m_msg[row].m_desc);
-    
-    CommonUrlImageView* temImage = (CommonUrlImageView*)cell->getSubviewByTag(101);
-    temImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
-    temImage->setImage(CAImage::create("image/HelloWorld.png"));
-    if (m_msg[row].m_imageUrl.size()>0) {
-        temImage->setUrl(m_msg[row].m_imageUrl[0]);
-    }
+    cell->setModel(m_msg[row]);
+
     return cell;
     
+}
+
+void CDNewsViewController::tableViewWillDisplayCellAtIndex(CATableView* table, CATableViewCell* cell, unsigned int section, unsigned int row)
+{
+    if (cell != NULL){
+        cell->getContentView()->setScale(0.5f);
+        cell->getContentView()->setRotation(180);
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.1f);
+        cell->getContentView()->setScale(1.0f);
+        cell->getContentView()->setRotation(0);
+        //执行动画
+        CAViewAnimation::commitAnimations();
+    }
 }
 
 unsigned int CDNewsViewController::numberOfSections(CATableView *table)

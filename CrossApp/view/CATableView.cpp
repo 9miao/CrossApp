@@ -594,6 +594,10 @@ void CATableView::loadTableCell()
             {
                 cell->setControlStateSelected();
             }
+            if (m_pTableViewDataSource)
+            {
+                m_pTableViewDataSource->tableViewWillDisplayCellAtIndex(this, cell, i, j);
+            }
             
             CAView* view = this->dequeueReusableLine();
             CCRect lineRect = m_rLineRectss[i][j];
@@ -759,16 +763,20 @@ float CATableView::getRowHeightInSectionInRow(unsigned int section, unsigned int
 
 CATableViewCell::CATableViewCell()
 :m_pBackgroundView(NULL)
+,m_pContentView(NULL)
 ,m_nSection(0xffffffff)
 ,m_nRow(0xffffffff)
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
 {
     this->setHaveNextResponder(true);
+    this->setDisplayRange(false);
+    this->setColor(CAColor_clear);
 }
 
 CATableViewCell::~CATableViewCell()
 {
+    CC_SAFE_RELEASE_NULL(m_pContentView);
     CC_SAFE_RELEASE_NULL(m_pBackgroundView);
 }
 
@@ -786,12 +794,13 @@ CATableViewCell* CATableViewCell::create(const std::string& reuseIdentifier)
 
 bool CATableViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
-    this->setDisplayRange(false);
+    m_pContentView = new CAView();
+    this->addSubview(m_pContentView);
+    
     this->setBackgroundView(CAView::create());
-    this->setColor(CAColor_clear);
     this->setReuseIdentifier(reuseIdentifier);
     this->normalTableViewCell();
-
+    
     return true;
 }
 
@@ -803,7 +812,7 @@ void CATableViewCell::setBackgroundView(CrossApp::CAView *var)
     m_pBackgroundView = var;
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setFrame(this->getBounds());
-    this->insertSubview(m_pBackgroundView, -1);
+    m_pContentView->insertSubview(m_pBackgroundView, -1);
 }
 
 CAView* CATableViewCell::getBackgroundView()
@@ -814,9 +823,11 @@ CAView* CATableViewCell::getBackgroundView()
 void CATableViewCell::setContentSize(const CrossApp::CCSize &var)
 {
     CAView::setContentSize(var);
+    
+    m_pContentView->setFrame(this->getBounds());
     if (m_pBackgroundView)
     {
-        m_pBackgroundView->setFrame(this->getBounds());
+        m_pBackgroundView->setFrame(m_pContentView->getBounds());
     }
 }
 

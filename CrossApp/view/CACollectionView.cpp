@@ -456,16 +456,21 @@ void CACollectionView::reloadData()
                 
 				CC_CONTINUE_IF(!winRect.intersectsRect(cellRect));
                 
-				CACollectionViewCell* pCellView = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, i, j, k);
-				if (pCellView)
+				CACollectionViewCell* cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, i, j, k);
+				if (cell)
 				{
-					addSubview(pCellView);
-					pCellView->setFrame(cellRect);
-					pCellView->m_nSection = i;
-					pCellView->m_nRow = j;
-					pCellView->m_nItem = k;
-					itrResult.first->second = pCellView;
-                    m_vpUsedCollectionCells.pushBack(pCellView);
+					addSubview(cell);
+					cell->setFrame(cellRect);
+					cell->m_nSection = i;
+					cell->m_nRow = j;
+					cell->m_nItem = k;
+					itrResult.first->second = cell;
+                    m_vpUsedCollectionCells.pushBack(cell);
+                    
+                    if (m_pCollectionViewDataSource)
+                    {
+                        m_pCollectionViewDataSource->collectionViewWillDisplayCellAtIndex(this, cell, i, j, k);
+                    }
 				}
 			}
 			y += (iHeight + m_nVertInterval);
@@ -568,6 +573,11 @@ void CACollectionView::loadCollectionCell()
 			{
 				cell->setControlStateSelected();
 			}
+            
+            if (m_pCollectionViewDataSource)
+            {
+                m_pCollectionViewDataSource->collectionViewWillDisplayCellAtIndex(this, cell, r.section, r.row, r.item);
+            }
 		}
 	}
 }
@@ -671,12 +681,15 @@ CACollectionViewCell::CACollectionViewCell()
 , m_bAllowsSelected(true)
 {
     this->setHaveNextResponder(true);
+    this->setDisplayRange(false);
+    this->setColor(CAColor_clear);
 }
 
 
 CACollectionViewCell::~CACollectionViewCell()
 {
-    CC_SAFE_RELEASE(m_pBackgroundView);
+    CC_SAFE_RELEASE_NULL(m_pContentView);
+    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
 }
 
 CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdentifier)
@@ -693,8 +706,10 @@ CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdent
 
 bool CACollectionViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
+    m_pContentView = new CAView();
+    this->addSubview(m_pContentView);
+    
 	this->setBackgroundView(CAView::create());
-	this->setColor(CAColor_clear);
 	this->setReuseIdentifier(reuseIdentifier);
 	this->normalCollectionViewCell();
 
@@ -720,10 +735,12 @@ CAView* CACollectionViewCell::getBackgroundView()
 void CACollectionViewCell::setContentSize(const CrossApp::CCSize &var)
 {
 	CAView::setContentSize(var);
-	if (m_pBackgroundView)
-	{
-		m_pBackgroundView->setFrame(this->getBounds());
-	}
+    
+    m_pContentView->setFrame(this->getBounds());
+    if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setFrame(m_pContentView->getBounds());
+    }
 }
 
 void CACollectionViewCell::setControlState(const CAControlState& var)

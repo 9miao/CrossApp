@@ -233,7 +233,7 @@ void CDNewsImageController::scrollViewFooterBeginRefreshing(CAScrollView* view)
 
 void CDNewsImageController::scrollViewStopMoved(CrossApp::CAScrollView *view)
 {
-    CAVector<CATableViewCell*> temVec =  p_TableView->displayingIndexPathWithTableCell();
+    CAVector<CATableViewCell*> temVec =  p_TableView->displayingTableCell();
     for(int i=0;i<temVec.size();i++){
         CDNewsImageTableCell* cell = (CDNewsImageTableCell*)temVec.at(i);
         CCLog("cell-index===%d",cell->getRow());

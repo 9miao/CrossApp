@@ -50,6 +50,8 @@ public:
 	virtual unsigned int listViewHeightForIndex(CAListView *listView, unsigned int index) = 0;
 
 	virtual CAListViewCell* listViewCellAtIndex(CAListView *listView, const CCSize& cellSize, unsigned int index) = 0;
+    
+    virtual void listViewWillDisplayCellAtIndex(CAListView* table, CAListViewCell* cell, unsigned int index) {};
 };
 
 
@@ -224,6 +226,8 @@ public:
 
 	virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
 
+    CC_SYNTHESIZE_READONLY(CAView*, m_pContentView, ContentView);
+    
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
