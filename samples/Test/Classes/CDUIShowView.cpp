@@ -194,7 +194,7 @@ CDListView::~CDListView()
 bool CDListView::init(const CrossApp::CCRect &rect)
 {
     CADipSize size = rect.size;
-    CAListView *listView = CAListView::createWithCenter(CADipRect(size.width/2,size.height/2,size.width,50));
+    CAListView *listView = CAListView::createWithCenter(CADipRect(size.width/2,size.height/2,size.width,100));
     listView->setListViewDelegate(this);
     listView->setListViewDataSource(this);
     listView->setAllowsSelection(true);
@@ -1367,10 +1367,10 @@ unsigned int CDUIShowView::tableViewHeightForFooterInSection(CATableView* table,
 
 void CDUIShowView::showListView()
 {
-    CDListView* listview1 = CDListView::createWithFrame(CADipRect(0,0,winSize.width,50));
+    CDListView* listview1 = CDListView::createWithFrame(CADipRect(0,0,winSize.width,100));
     this->getView()->addSubview(listview1);
     
-    p_ListView = CAListView::createWithFrame(CADipRect(0,50,winSize.width,winSize.height));
+    p_ListView = CAListView::createWithFrame(CADipRect(0,100,winSize.width,winSize.height-100));
     p_ListView->setListViewDelegate(this);
     p_ListView->setListViewDataSource(this);
     p_ListView->setAllowsSelection(true);
@@ -1785,13 +1785,13 @@ void CDUIShowView::showVideo()
 {
     //http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4
     //mnt/sdcard/video.mp4
-    
-//    string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");
-//    CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl(path.c_str(), "asdas");
-//    this->getView()->addSubview(pv->getView());
-//    pv->retain();
-//    pv->play();
-//    pv->setDelegate(this);
+    string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("mnt/sdcard/video.mp4");
+    CAVideoPlayerController* pv = CAVideoPlayerController::createWithPath(path.c_str(), "asdas");
+    //CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "asdas");
+    this->getView()->addSubview(pv->getView());
+    pv->retain();
+    pv->play();
+    pv->setDelegate(this);
 }
 
 void CDUIShowView::onVideoPlayerButtonBack()

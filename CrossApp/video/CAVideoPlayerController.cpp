@@ -490,7 +490,7 @@ void CAVideoPlayerController::_decodeProcess()
     
     while (good) {
         good = false;
-        if (_decoder && (_decoder->isValidVideo() || _decoder->isValidAudio())) {
+        if (_decoder && (_decoder->isValidVideo() && _decoder->isValidAudio())) {
             vector<VPFrame*> frames = _decoder->decodeFrames(duration);
             if (frames.size()) {
                 good = addFrames(frames);

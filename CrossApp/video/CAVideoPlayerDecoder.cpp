@@ -335,8 +335,9 @@ VPVideoFrameRGB::VPVideoFrameRGB()
 
 VPVideoFrameRGB::~VPVideoFrameRGB()
 {
-    if (m_data) {
-        delete [] m_data;
+    if (m_data!=NULL) {
+        //delete [] m_data;
+        CC_SAFE_DELETE_ARRAY(m_data);
     }
 }
 
@@ -1259,6 +1260,7 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
         rgbFrame->setDataLength(rgbFrame->getLineSize() * _videoCodecCtx->height);
         
         frame = rgbFrame;
+        rgbFrame->retain();
     }    
     
     frame->setWidth(_videoCodecCtx->width);
