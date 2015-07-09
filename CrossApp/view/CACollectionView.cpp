@@ -170,7 +170,7 @@ CACollectionViewCell* CACollectionView::cellForRowAtIndexPath(unsigned int secti
     return m_mpUsedCollectionCells[CAIndexPath3E(section, row, item)];
 }
 
-const CAVector<CACollectionViewCell*>& CACollectionView::displayingIndexPathWithCollectionCell()
+const CAVector<CACollectionViewCell*>& CACollectionView::displayingCollectionCell()
 {
     return m_vpUsedCollectionCells;
 }

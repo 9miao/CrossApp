@@ -367,7 +367,7 @@ CATableViewCell* CATableView::cellForRowAtIndexPath(unsigned int section, unsign
     return m_mpUsedTableCells[CAIndexPath2E(section, row)];
 }
 
-const CAVector<CATableViewCell*>& CATableView::displayingIndexPathWithTableCell()
+const CAVector<CATableViewCell*>& CATableView::displayingTableCell()
 {
     return m_vpUsedTableCells;
 }

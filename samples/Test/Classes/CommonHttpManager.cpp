@@ -7,7 +7,7 @@ static const char* common_loadingBackground = "dm_resource/loading_background.pn
 static const char* common_loadingIcon = "dm_resource/loading_icon.png";
 
 #define REQUEST_JSON_COUNT 2
-#define REQUEST_IMAGE_COUNT 2
+#define REQUEST_IMAGE_COUNT 4
 
 static std::map<std::string, CAObject*> _httpResponses;
 

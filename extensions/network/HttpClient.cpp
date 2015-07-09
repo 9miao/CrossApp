@@ -456,7 +456,7 @@ void CAHttpClient::send(CAHttpRequest* request)
 
 // Poll and notify main thread if responses exists in queue
 void CAHttpClient::dispatchResponseCallbacks(float delta)
-{    
+{
     CAHttpResponse* response = NULL;
     
     pthread_mutex_lock(&s_responseQueueMutex);

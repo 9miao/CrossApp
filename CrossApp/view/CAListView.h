@@ -87,7 +87,7 @@ public:
     
     CAListViewCell* cellForRowAtIndex(unsigned int index);
     
-    const CAVector<CAListViewCell*>& displayingIndexWithListCell();
+    const CAVector<CAListViewCell*>& displayingListCell();
     
 	CC_PROPERTY(CAListViewOrientation, m_pListViewOrientation, ListViewOrientation);
 
