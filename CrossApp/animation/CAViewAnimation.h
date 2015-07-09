@@ -103,6 +103,8 @@ public:
     
     static void removeAnimations(const std::string& animationID);
     
+    static void removeAnimationsWithView(CAView* view);
+    
     static void setAnimationsEnabled(bool enabled);
     
     static bool areAnimationsEnabled();

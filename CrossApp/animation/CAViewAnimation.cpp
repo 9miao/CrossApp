@@ -290,6 +290,26 @@ void CAViewAnimation::removeAnimations(const std::string& animationID)
     }
 }
 
+void CAViewAnimation::removeAnimationsWithView(CAView* view)
+{
+    CC_RETURN_IF(view == NULL);
+    CAViewAnimation* animation = CAViewAnimation::getInstance();
+    
+    for (CADeque<CAViewAnimationModule*>::iterator itr=animation->m_vWillModules.begin();
+         itr!=animation->m_vWillModules.end(); itr++)
+    {
+        CAViewAnimationModule* module = *itr;
+        module->animations.erase(view);
+    }
+    
+    for (CAVector<CAViewAnimationModule*>::iterator itr=animation->m_vModules.begin();
+         itr!=animation->m_vModules.end(); itr++)
+    {
+        CAViewAnimationModule* module = *itr;
+        module->animations.erase(view);
+    }
+}
+
 void CAViewAnimation::setAnimationsEnabled(bool enabled)
 {
     CAViewAnimation::getInstance()->m_bAnimationsEnabled = enabled;

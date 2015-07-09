@@ -1783,15 +1783,15 @@ void CDUIShowView::showGifView()
 
 void CDUIShowView::showVideo()
 {
-    //http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4
-    //mnt/sdcard/video.mp4
-    string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("mnt/sdcard/video.mp4");
-    CAVideoPlayerController* pv = CAVideoPlayerController::createWithPath(path.c_str(), "asdas");
-    //CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "asdas");
-    this->getView()->addSubview(pv->getView());
-    pv->retain();
-    pv->play();
-    pv->setDelegate(this);
+//    //http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4
+//    //mnt/sdcard/video.mp4
+//    string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("mnt/sdcard/video.mp4");
+//    CAVideoPlayerController* pv = CAVideoPlayerController::createWithPath(path.c_str(), "asdas");
+//    //CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "asdas");
+//    this->getView()->addSubview(pv->getView());
+//    pv->retain();
+//    pv->play();
+//    pv->setDelegate(this);
 }
 
 void CDUIShowView::onVideoPlayerButtonBack()

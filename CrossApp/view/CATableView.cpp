@@ -893,6 +893,9 @@ void CATableViewCell::resetTableViewCell()
     this->setVisible(true);
     this->normalTableViewCell();
     this->recoveryTableViewCell();
+    m_pContentView->setScale(1.0f);
+    m_pContentView->setFrame(this->getBounds());
+    m_pContentView->setRotation(0);
 }
 
 NS_CC_END

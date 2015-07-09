@@ -1356,6 +1356,7 @@ void CAView::onEnterTransitionDidFinish()
 
 void CAView::onExitTransitionDidStart()
 {
+    CAViewAnimation::removeAnimationsWithView(this);
     if (!m_obSubviews.empty())
     {
         CAVector<CAView*>::iterator itr;
