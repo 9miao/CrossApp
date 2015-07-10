@@ -104,7 +104,7 @@ protected:
     virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
-    virtual void scrollViewStopMoved(CAScrollView* view);
+    virtual void scrollViewDidEndDragging(CAScrollView* view);
 private:
 
 	CAVector<CATableView*> m_tableViews;

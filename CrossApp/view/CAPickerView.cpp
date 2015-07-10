@@ -366,9 +366,9 @@ unsigned int CAPickerView::tableViewHeightForRowAtIndexPath(CATableView* table, 
     return 0;
 }
 
-void CAPickerView::scrollViewStopMoved(CAScrollView* view)
+void CAPickerView::scrollViewDidEndDragging(CAScrollView* view)
 {
-
+    
 }
 
 void CAPickerView::selectRow(unsigned int row, unsigned int component, bool animated)
@@ -414,8 +414,6 @@ void CAPickerView::setBackgroundColor(const CAColor4B& color) {
 
 void CAPickerView::visit()
 {
-	CAView::visit();
-    
     if (m_dataSource)
     {
         for (int i = 0; i < m_tableViews.size(); i++)
@@ -447,7 +445,7 @@ void CAPickerView::visit()
             int remainder = offset_y % row_height;
             int index = offset_y / row_height;
             
-            if (remainder >= row_height * 0.95)
+            if (remainder >= row_height * 0.5)
             {
                 index++;
             }
@@ -500,6 +498,8 @@ void CAPickerView::visit()
             }
         }
     }
+    
+    CAView::visit();
 }
 
 NS_CC_END
