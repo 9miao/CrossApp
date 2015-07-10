@@ -392,13 +392,13 @@ CATableViewCell* CDNewsViewController::tableCellAtIndex(CATableView* table, cons
 void CDNewsViewController::tableViewWillDisplayCellAtIndex(CATableView* table, CATableViewCell* cell, unsigned int section, unsigned int row)
 {
     if (cell != NULL){
-        cell->getContentView()->setScale(0.5f);
-        cell->getContentView()->setRotation(180);
+        cell->getContentView()->setScale(1.5f);
+        cell->getContentView()->setAlpha(0.5f);
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
-        CAViewAnimation::setAnimationDelay(0.1f);
+        CAViewAnimation::setAnimationDelay(1/60.0f);
         cell->getContentView()->setScale(1.0f);
-        cell->getContentView()->setRotation(0);
+        cell->getContentView()->setAlpha(1.0f);
         //执行动画
         CAViewAnimation::commitAnimations();
     }

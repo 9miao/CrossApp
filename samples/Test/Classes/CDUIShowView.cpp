@@ -1682,7 +1682,7 @@ float CDUIShowView::rowHeightForComponent(CAPickerView* pickerView, unsigned int
 
 CCString* CDUIShowView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
-    CCLog("ppppp===%s",unicode_to_utf8(adressTag[row]).c_str());
+    //CCLog("ppppp===%s",unicode_to_utf8(adressTag[row]).c_str());
     return CCString::create(unicode_to_utf8(adressTag[row]).c_str());
 }
 

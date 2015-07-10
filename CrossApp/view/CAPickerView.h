@@ -41,7 +41,7 @@ public:
     virtual CAView* viewForSelect(CAPickerView* pickerView, unsigned int component, const CCSize& size) {return NULL;}
 };
 
-class CC_DLL CAPickerView : public CAView, public CATableViewDataSource , public CATableViewDelegate
+class CC_DLL CAPickerView : public CAView, public CATableViewDataSource , public CATableViewDelegate, public CAScrollViewDelegate
 {
 public:
     static CAPickerView* create();
@@ -104,7 +104,7 @@ protected:
     virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
-    
+    virtual void scrollViewStopMoved(CAScrollView* view);
 private:
 
 	CAVector<CATableView*> m_tableViews;

@@ -316,11 +316,9 @@ void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
 {
     if (animated)
     {
-        m_tInitialPoint = offset;
         m_tInertia = CCPointZero;
         m_tCloseToPoint = ccpMult(offset, -1);
         m_tInitialPoint = m_pContainer->getFrameOrigin();
-        CCLog("--- sss");
         CAAnimation::schedule(CAAnimation_selector(CAScrollView::closeToPoint), this, 0.25f);
     }
     else
@@ -758,7 +756,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
             m_tInertia = CCPointZero;
         }
     }
-
+    
     if (speed.getLength() < 0.25f)
     {
         m_tInertia = CCPointZero;
@@ -772,6 +770,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
         {
             m_pScrollViewDelegate->scrollViewStopMoved(this);
         }
+        
     }
     else
     {
@@ -809,28 +808,28 @@ void CAScrollView::deaccelerateScrolling(float dt)
             this->setContainerFrame(point);
         }
         
+        if (fabsf(m_tInertia.x) > _px(32))
+        {
+            m_tInertia.x = m_tInertia.x * (1 - decelerationRatio(dt));
+        }
+        else if (fabsf(m_tInertia.x) > FLT_EPSILON)
+        {
+            m_tInertia.x = MAX((fabsf(m_tInertia.x) - _px(1)), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
+        }
+        
+        if (fabsf(m_tInertia.y) > _px(32))
+        {
+            m_tInertia.y = m_tInertia.y * (1 - decelerationRatio(dt));
+        }
+        else if (fabsf(m_tInertia.y) > FLT_EPSILON)
+        {
+            m_tInertia.y = MAX((fabsf(m_tInertia.y) - _px(1)), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
+        }
+        
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
-    }
-
-    if (fabsf(m_tInertia.x) > _px(32))
-    {
-        m_tInertia.x = m_tInertia.x * (1 - decelerationRatio(dt));
-    }
-    else if (fabsf(m_tInertia.x) > FLT_EPSILON)
-    {
-        m_tInertia.x = MAX((fabsf(m_tInertia.x) - _px(1)), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
-    }
-    
-    if (fabsf(m_tInertia.y) > _px(32))
-    {
-        m_tInertia.y = m_tInertia.y * (1 - decelerationRatio(dt));
-    }
-    else if (fabsf(m_tInertia.y) > FLT_EPSILON)
-    {
-        m_tInertia.y = MAX((fabsf(m_tInertia.y) - _px(1)), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
     }
 }
 

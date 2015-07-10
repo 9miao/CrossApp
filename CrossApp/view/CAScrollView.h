@@ -150,7 +150,7 @@ protected:
     
     inline virtual float maxSpeed(float dt)
     {
-        return (_px(90) * 5 * dt);
+        return (_px(90) * 60 * dt);
     }
     
     inline virtual float maxSpeedCache(float dt)
