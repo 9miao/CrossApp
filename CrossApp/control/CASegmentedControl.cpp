@@ -647,7 +647,6 @@ int CASegmentedControl::getSegmentItemIndexByPoint(CCPoint point)
         index++;
     }
     
-    CCAssert(index < m_vSegments.size(), "index is overStep");
     return index;
 }
 
@@ -788,7 +787,7 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
 
         imageView = CAImageView::createWithImage(render->getImageView()->getImage());
         imageView->setFrame(rect);
-        imageView->setImageRect(rect, false, rect.size);
+        imageView->setImageRect(rect, rect.size);
     }
     return imageView;
 }
@@ -861,9 +860,10 @@ void CASegmentedControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     if(index>-1 && index<m_vSegments.size())
     {
         if( -1 != m_iSelectedIndex )
+        {
             refreshSegmentItemByIndex(m_iSelectedIndex, CAControlStateNormal);
-        
-        setSegmentItemBackgroundVisibleWithIndex(false, m_iSelectedIndex);
+            setSegmentItemBackgroundVisibleWithIndex(false, m_iSelectedIndex);
+        }
         refreshSegmentItemByIndex(index, CAControlStateSelected);
         setSegmentItemBackgroundVisibleWithIndex(true, index);
         m_iSelectedIndex = index;

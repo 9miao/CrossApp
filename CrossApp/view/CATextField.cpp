@@ -925,6 +925,7 @@ void CATextField::updateImage()
                                                CATextAlignmentLeft,
                                                CAVerticalTextAlignmentCenter,
                                                true);
+    CC_RETURN_IF(!image);
     
     CCRect rect = CCRectZero;
     if (m_sPlaceHolder.length() == 0)

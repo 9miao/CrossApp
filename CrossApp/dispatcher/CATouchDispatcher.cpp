@@ -63,7 +63,8 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
             {
                 
                 CAVector<CAView*>::const_reverse_iterator itr;
-                for (itr=view->CAView::getSubviews().rbegin(); itr!=view->CAView::getSubviews().rend(); itr++)
+                for (itr=view->CAView::getSubviews().rbegin();
+                     itr!=view->CAView::getSubviews().rend(); itr++)
                 {
                     CAView* subview = *itr;
                     if (subview->isVisible() && subview->isTouchEnabled())
@@ -370,7 +371,7 @@ void CATouchController::touchMoved()
 
     CAView* view = dynamic_cast<CAView*>(CAApplication::getApplication()->getTouchDispatcher()->getFirstResponder());
     bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
-    if (!isContainsFirstPoint && view)
+    if (!isContainsFirstPoint && view && view->isScrollEnabled())
     {
         view->ccTouchMoved(m_pTouch, m_pEvent);
     }
@@ -378,6 +379,7 @@ void CATouchController::touchMoved()
     CAVector<CAResponder*>::iterator itr;
     for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
     {
+        CC_CONTINUE_IF(!(*itr)->isScrollEnabled());
         (*itr)->ccTouchMoved(m_pTouch, m_pEvent);
     }
     

@@ -662,6 +662,7 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 void CAScrollView::updatePointOffset(float dt)
 {
     CC_RETURN_IF(m_vTouches.size() == 0);
+    CC_RETURN_IF(m_bScrollEnabled == false);
     CATouch* pTouch = dynamic_cast<CATouch*>(m_vTouches.at(0));
     CCPoint p_off = ccpSub(this->convertToNodeSpace(pTouch->getLocation()),
                    this->convertToNodeSpace(pTouch->getPreviousLocation()));

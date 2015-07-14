@@ -329,7 +329,7 @@ void CDNewsImageController::onRequestFinished(const HttpResponseStatus& status, 
 
             m_ImageMsg.push_back(temp_msg);
             m_ImageNum.push_back((int)getRandNum());
-            CCLog("title==%s===%d",value[index]["title"].asString().c_str(),value[index]["piccon"].size());
+            //CCLog("title==%s===%d",value[index]["title"].asString().c_str(),value[index]["piccon"].size());
         }
         
     }
@@ -368,7 +368,7 @@ void CDNewsImageController::onRefreshRequestFinished(const HttpResponseStatus& s
             
             m_ImageMsg.push_back(temp_msg);
             m_ImageNum.push_back((int)getRandNum());
-            CCLog("title==%s===%d",value[index]["title"].asString().c_str(),value[index]["piccon"].size());
+            //CCLog("title==%s===%d",value[index]["title"].asString().c_str(),value[index]["piccon"].size());
         }
         
     }else{
@@ -397,7 +397,7 @@ void CDNewsImageController::viewDidUnload()
 
 void CDNewsImageController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    CCLog("title====%d",(int)getRandNum());
+    //CCLog("title====%d",(int)getRandNum());
     CDShowNewsImage* _controller = new CDShowNewsImage();
     _controller->init();
     _controller->setTitle(" ");

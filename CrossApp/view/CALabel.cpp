@@ -203,7 +203,7 @@ void CALabel::updateImage()
 
     if (m_bFitFlag)
     {
-        this->setImageRect(rect, false, size);
+        this->setImageRect(rect, size);
     }
     else
     {

@@ -168,9 +168,7 @@ _AgaginInitGlyphs:
 	CAImage* image = new CAImage();
 	if (!image->initWithRawData(pData, CAImage::PixelFormat_A8, width, height))
 	{
-		delete[]pData;
-		delete image;
-		return NULL;
+        CC_SAFE_RELEASE_NULL(image);
 	}
 	delete[]pData;
 

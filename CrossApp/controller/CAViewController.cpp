@@ -501,7 +501,10 @@ void CANavigationController::layoutNewContainer()
     
     
     viewController->addViewFromSuperview(secondContainer);
-    viewController->viewDidAppear();
+    if (m_pViewControllers.size() > 1)
+    {
+        viewController->viewDidAppear();
+    }
 }
 
 void CANavigationController::replaceViewController(CrossApp::CAViewController *viewController, bool animated)

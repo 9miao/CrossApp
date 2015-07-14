@@ -421,15 +421,18 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         
         if (m_bAllowsSelected)
         {
+            if (getBounds().containsPoint(point))
+            {
+                m_bSelected = !m_bSelected;
+            }
+            
             if (m_bSelected)
             {
-                m_bSelected = false;
-                this->setControlState(CAControlStateNormal);
+                this->setControlState(CAControlStateSelected);
             }
             else
             {
-                m_bSelected = true;
-                this->setControlState(CAControlStateSelected);
+                this->setControlState(CAControlStateNormal);
             }
         }
         else
