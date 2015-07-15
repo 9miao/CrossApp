@@ -111,8 +111,8 @@ public CAScrollViewDelegate,
 public CAPickerViewDelegate,
 public CAPickerViewDataSource,
 public CADatePickerViewDelegate,
-public CAMediaDelegate
-//,public CAVideoPlayerControllerDelegate
+public CAMediaDelegate,
+public CAVideoPlayerControllerDelegate
 {
 public:
     
@@ -190,6 +190,7 @@ public:
     
     void showAnimation();
     void doAction(CAControl* btn,CCPoint point);
+    void endAction();
     
     void showDatePickerView();
     
@@ -297,7 +298,6 @@ public:
     CAImageView* p_imageView;
     CAPickerView* p_pickerView;
     CALabel* city_value;
-    CAImageView* animationView;
     CAStepper* step;
     CALabel* step_value;
     CAView* renderImage;
@@ -305,6 +305,13 @@ public:
     CAClippingView* m_clvImage;
     CAClippingView* m_clv;
     CAButton* render_btn;
+    //Animation
+    CAImageView* animation_1_view;
+    CATextField* animation_2_textfield;
+    CAButton* animation_2_btn_search;
+    CAButton* animation_2_btn_cancel;
+    CAImageView* animation_3_imageview;
+    
     
     int UIINDEX;
     int showIndex;

@@ -63,6 +63,7 @@ public:
     void pageControlCallBack(CrossApp::CAControl *btn, CrossApp::CCPoint point);
     void showAlert();
     void buttonCallBack(CAControl* btn,CCPoint point);
+    void tempCallBack();
 public:
     CADipSize winSize;
     std::vector<std::string> tempList;

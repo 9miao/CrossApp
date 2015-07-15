@@ -7,6 +7,10 @@
 #include "CDNewsImageController.h"
 #include "CDNewsAboutController.h"
 #include "CDWebViewController.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include <jni.h>
+#include "platform/android/jni/JniHelper.h"
+#endif
 
 static RootWindow* _window = NULL;
 
@@ -44,25 +48,19 @@ bool RootWindow::init()
     
     CAApplication::getApplication()->setNotificationView(CAView::createWithFrame(this->getBounds(), CAColor_green));
     
-    CDUIShowCollectionView* tabBarController = new CDUIShowCollectionView();
-    tabBarController->init();
-    tabBarController->setTitle(UTF8("控件展示"));
-    CANavigationController *nav = new CANavigationController();
-    nav->initWithRootViewController(tabBarController);
-    nav->setNavigationBarBackGroundImage(CAImage::create("image/navbg.jpg"));
-    tabBarController->release();
+    this->initUIView();
+    
     
     MenuViewController* _menuview = MenuViewController::create();
     
     CADrawerController* drawer = new CADrawerController();
-    drawer->initWithController(_menuview, nav, this->getBounds().size.width/6*5);
+    drawer->initWithController(_menuview, m_pRootNavigationController, this->getBounds().size.width/6*5);
     drawer->setBackgroundView(CAImageView::createWithImage(CAImage::create("image/bg.jpg")));
     drawer->setEffect3D(true);
     
     this->setRootViewController(drawer);
     drawer->autorelease();
     
-    m_pRootNavigationController = nav;
     m_pRootDrawerController = drawer;
     CAApplication::getApplication()->setNotificationView(NULL);
     return true;
@@ -77,20 +75,45 @@ void RootWindow::initUIView()
 {
     do
     {
-        CAViewController* viewController = m_pRootNavigationController->getViewControllerAtIndex(0);
+        CAViewController* viewController =
+        m_pRootNavigationController
+        ? m_pRootNavigationController->getViewControllerAtIndex(0) : NULL;
+        
         CC_BREAK_IF(dynamic_cast<CDUIShowCollectionView*>(viewController));
 
         CDUIShowCollectionView* tabBarController = new CDUIShowCollectionView();
         tabBarController->init();
-        tabBarController->setTitle(UTF8("控件展示"));
         tabBarController->autorelease();
-        m_pRootNavigationController->replaceViewController(tabBarController, false);
+        
+        CANavigationBarItem* temp_nav = CANavigationBarItem::create(UTF8("控件展示"));
+        CABarButtonItem* item = CABarButtonItem::create("", CAImage::create("image/ic_category_list.png"), NULL);
+        item->setTarget(this, CAControl_selector(RootWindow::buttonCallBack));
+        temp_nav->addLeftButtonItem(item);
+        tabBarController->setNavigationBarItem(temp_nav);
+        
+        if (m_pRootNavigationController)
+        {
+            m_pRootNavigationController->replaceViewController(tabBarController, false);
+        }
+        else
+        {
+            m_pRootNavigationController = new CANavigationController();
+            m_pRootNavigationController->initWithRootViewController(tabBarController);
+            m_pRootNavigationController->setNavigationBarBackGroundImage(CAImage::create("image/navbg.jpg"));
+        }
+        
     }
     while (0);
 
-    m_pRootDrawerController->hideLeftViewController(true);
+    if (m_pRootDrawerController)
+    {
+        m_pRootDrawerController->hideLeftViewController(true);
+    }
 }
-
+void RootWindow::buttonCallBack(CAControl* btn,CCPoint point)
+{
+    this->getDrawerController()->showLeftViewController(true);
+}
 void RootWindow::intNewsView()
 {
     do
