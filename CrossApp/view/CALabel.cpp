@@ -203,12 +203,23 @@ void CALabel::updateImage()
 
     if (m_bFitFlag)
     {
-        this->setImageRect(rect, size);
+        if (!size.equals(m_obContentSize))
+        {
+            if (m_bFrame)
+            {
+                CCRect rect = this->getFrame();
+                rect.size = size;
+                this->setFrame(rect);
+            }
+            else
+            {
+                CCRect rect = this->getCenter();
+                rect.size = size;
+                this->setCenter(rect);
+            }
+        }
     }
-    else
-    {
-        this->setImageRect(rect);
-    }
+    this->setImageRect(rect);
 }
 
 void CALabel::updateImageRect()

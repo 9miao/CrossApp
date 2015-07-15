@@ -374,8 +374,6 @@ protected:
     
     virtual void setImageRect(const CCRect& rect);
     
-    virtual void setImageRect(const CCRect& rect, const CCSize& untrimmedSize);
-    
     virtual void setImageCoords(CCRect rect);
     
     virtual void setVertexRect(const CCRect& rect);

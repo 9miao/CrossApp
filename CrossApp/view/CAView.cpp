@@ -1774,32 +1774,6 @@ void CAView::setImageRect(const CCRect& rect)
     }
 }
 
-void CAView::setImageRect(const CCRect& rect, const CCSize& untrimmedSize)
-{
-    if (!m_bIsAnimation)
-    {
-        CCRect r;
-        if (m_bFrame)
-        {
-            r = this->getFrame();
-        }
-        else
-        {
-            r = this->getCenter();
-        }
-        r.size = untrimmedSize;
-        if (m_bFrame)
-        {
-            this->setFrame(r);
-        }
-        else
-        {
-            this->setCenter(r);
-        }
-    }
-    this->setImageRect(rect);
-}
-
 void CAView::updateImageRect()
 {
     // Don't update Z.
@@ -2084,7 +2058,7 @@ void CAView::setFlipX(bool bFlipX)
             m_bFlipX = bFlipX;
             if (m_pobImage)
             {
-                setImageRect(m_obRect, m_obContentSize);
+                setImageRect(m_obRect);
             }
         }
     }
@@ -2109,7 +2083,7 @@ void CAView::setFlipY(bool bFlipY)
             m_bFlipY = bFlipY;
             if (m_pobImage)
             {
-                setImageRect(m_obRect, m_obContentSize);
+                setImageRect(m_obRect);
             }
         }
     }

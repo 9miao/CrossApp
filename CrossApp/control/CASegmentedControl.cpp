@@ -787,7 +787,7 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
 
         imageView = CAImageView::createWithImage(render->getImageView()->getImage());
         imageView->setFrame(rect);
-        imageView->setImageRect(rect, rect.size);
+        imageView->setImageRect(rect);
     }
     return imageView;
 }
