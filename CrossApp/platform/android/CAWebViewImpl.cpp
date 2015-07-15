@@ -55,6 +55,14 @@ extern "C" {
 			s_cszWebViewImageData.resize(len);
 			env->GetByteArrayRegion(buf, 0, len, (jbyte *)&s_cszWebViewImageData[0]);
     }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_pause() {
+        CrossApp::CAApplication::getApplication()->pause();
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_resume() {
+        CrossApp::CAApplication::getApplication()->resume();
+    }
 }
 
 

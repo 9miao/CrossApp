@@ -10,7 +10,7 @@
 #include "CDWebViewController.h"
 
 extern int page_index;
-
+float temp_time = 0;
 CDNewsTableCell::CDNewsTableCell()
 :theTitle(NULL),
 theDesc(NULL),
@@ -392,16 +392,30 @@ CATableViewCell* CDNewsViewController::tableCellAtIndex(CATableView* table, cons
 void CDNewsViewController::tableViewWillDisplayCellAtIndex(CATableView* table, CATableViewCell* cell, unsigned int section, unsigned int row)
 {
     if (cell != NULL){
-        cell->getContentView()->setScale(1.5f);
-        cell->getContentView()->setAlpha(0.5f);
+        temp_time+=0.02f;
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(temp_time);
+        CAViewAnimation::setAnimationDidStopSelector(this,CAViewAnimation0_selector(CDNewsViewController::tempCallBack));
+        CAViewAnimation::commitAnimations();
+        
+//        cell->getContentView()->setScale(1.5f);
+//        cell->getContentView()->setAlpha(0.5f);
+        cell->getContentView()->setFrameOrigin(CADipPoint(winSize.width/2,0));
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
-        CAViewAnimation::setAnimationDelay(1/60.0f);
-        cell->getContentView()->setScale(1.0f);
-        cell->getContentView()->setAlpha(1.0f);
+        CAViewAnimation::setAnimationDelay(temp_time);
+//        cell->getContentView()->setScale(1.0f);
+//        cell->getContentView()->setAlpha(1.0f);
+        cell->getContentView()->setFrameOrigin(CADipPoint(0,0));
         //执行动画
         CAViewAnimation::commitAnimations();
+        
     }
+}
+
+void CDNewsViewController::tempCallBack()
+{
+    temp_time-=0.02f;
 }
 
 unsigned int CDNewsViewController::numberOfSections(CATableView *table)

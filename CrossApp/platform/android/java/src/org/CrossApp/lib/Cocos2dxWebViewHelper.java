@@ -55,10 +55,13 @@ public class Cocos2dxWebViewHelper {
     private static native void onSetByteArrayBuffer(byte[] buf, int len);
     public static native void didLoadHtmlSource(String htmlSrc);
     public static Boolean s_bWaitGetHemlSource = false;
+    public static native void pause();
+    public static native void resume();
 
     @SuppressWarnings("unused")
     public static int createWebView() {
         final int index = viewTag;
+        pause();
         cocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -72,6 +75,7 @@ public class Cocos2dxWebViewHelper {
                 webViews.put(index, webView);
             }
         });
+        resume();
         return viewTag++;
     }
 
