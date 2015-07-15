@@ -79,7 +79,7 @@ bool CAImageView::initWithImage(CAImage* image)
 		rect.size = image->getContentSize();
 	}
 	this->setImage(image);
-	this->setImageRect(rect, false, rect.size);
+	this->setImageRect(rect, rect.size);
 
     return true;
 }
@@ -166,7 +166,7 @@ void CAImageView::updateByImageViewScaleType()
         default:
             break;
     }
-    this->setImageRect(rect, false, viewSize);
+    this->setImageRect(rect, viewSize);
     m_bUpdateByImageViewScaleType = false;
 }
 

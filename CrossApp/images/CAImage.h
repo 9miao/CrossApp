@@ -229,6 +229,8 @@ protected:
     bool saveImageToPNG(const std::string& filePath, bool isToRGB);
     bool saveImageToJPG(const std::string& filePath);
     
+    void setData(const unsigned char* data, unsigned long dataLenght);
+    
     void convertToRawData();
     
     CAImage::PixelFormat convertDataToFormat(const unsigned char* data,
@@ -310,6 +312,10 @@ protected:
     GifFileType* m_pGIF;
     
     int m_iGIFIndex;
+    
+    unsigned char* m_pImageData;
+    
+    unsigned long m_uImageDataLenght;
     
     friend class CAFreeTypeFont;
 };

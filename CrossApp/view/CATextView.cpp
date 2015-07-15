@@ -205,7 +205,9 @@ void CATextView::updateImage()
 		false,
 		&m_vLinesTextView);
 
-	if (image == NULL || m_szText.empty())
+    CC_RETURN_IF(!image);
+    
+	if (m_szText.empty())
 	{
 		m_vLinesTextView.clear();
 	}

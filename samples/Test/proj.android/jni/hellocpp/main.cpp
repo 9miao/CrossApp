@@ -32,10 +32,11 @@ void Java_org_CrossApp_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
     }
     else
     {
+
         ccGLInvalidateStateCache();
+        CAImageCache::reloadAllImages();
         CAShaderCache::sharedShaderCache()->reloadDefaultShaders();
         ccDrawInit();
-        CAImageCache::reloadAllImages();
         CANotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_FOREGROUND, NULL);
         CAApplication::getApplication()->setGLDefaultValues();
     }

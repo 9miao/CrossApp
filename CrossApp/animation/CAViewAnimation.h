@@ -104,7 +104,7 @@ public:
     static void removeAnimations(const std::string& animationID);
     
     static void removeAnimationsWithView(CAView* view);
-    
+
     static void setAnimationsEnabled(bool enabled);
     
     static bool areAnimationsEnabled();
@@ -146,6 +146,8 @@ protected:
     void setAlpha(float alpha, CAView* view);
     
     void setImageRect(const CCRect& imageRect, CAView* view);
+    
+    void setImageRect(const CCRect& imageRect, const CCSize& untrimmedSize, CAView* view);
     
     void setFlipX(bool flipX, CAView* view);
     

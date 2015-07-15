@@ -381,43 +381,46 @@ void CARenderImage::beginWithClear(const CAColor4B& backgroundColor, float depth
 {
     this->begin();
 
-    // save clear color
-    GLfloat	clearColor[4] = {0.0f};
-    GLfloat depthClearValue = 0.0f;
-    int stencilClearValue = 0;
-    
-    if (flags & GL_COLOR_BUFFER_BIT)
+    if (backgroundColor.a > 0)
     {
-        glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
-        glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
-    }
-    
-    if (flags & GL_DEPTH_BUFFER_BIT)
-    {
-        glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
-        glClearDepth(depthValue);
-    }
-
-    if (flags & GL_STENCIL_BUFFER_BIT)
-    {
-        glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
-        glClearStencil(stencilValue);
-    }
-    
-    glClear(flags);
-
-    // restore
-    if (flags & GL_COLOR_BUFFER_BIT)
-    {
-        glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-    }
-    if (flags & GL_DEPTH_BUFFER_BIT)
-    {
-        glClearDepth(depthClearValue);
-    }
-    if (flags & GL_STENCIL_BUFFER_BIT)
-    {
-        glClearStencil(stencilClearValue);
+        // save clear color
+        GLfloat	clearColor[4] = {0.0f};
+        GLfloat depthClearValue = 0.0f;
+        int stencilClearValue = 0;
+        
+        if (flags & GL_COLOR_BUFFER_BIT)
+        {
+            glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
+            glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+        }
+        
+        if (flags & GL_DEPTH_BUFFER_BIT)
+        {
+            glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+            glClearDepth(depthValue);
+        }
+        
+        if (flags & GL_STENCIL_BUFFER_BIT)
+        {
+            glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
+            glClearStencil(stencilValue);
+        }
+        
+        glClear(flags);
+        
+        // restore
+        if (flags & GL_COLOR_BUFFER_BIT)
+        {
+            glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+        }
+        if (flags & GL_DEPTH_BUFFER_BIT)
+        {
+            glClearDepth(depthClearValue);
+        }
+        if (flags & GL_STENCIL_BUFFER_BIT)
+        {
+            glClearStencil(stencilClearValue);
+        }
     }
 }
 

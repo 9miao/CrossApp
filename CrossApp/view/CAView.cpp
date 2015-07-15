@@ -98,6 +98,7 @@ CAView::CAView(void)
 , m_bHasChildren(false)
 , m_pViewDelegate(NULL)
 , m_bFrame(true)
+, m_bIsAnimation(false)
 , m_pobBatchView(NULL)
 , m_pobImageAtlas(NULL)
 {
@@ -1750,46 +1751,53 @@ CAImage* CAView::getImage(void)
 
 void CAView::setImageRect(const CCRect& rect)
 {
-    setImageRect(rect, false, m_obContentSize);
-}
-
-void CAView::setImageRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize)
-{
-    m_bRectRotated = rotated;
-    
-    this->setVertexRect(rect);
-    this->setImageCoords(rect);
-    
-    if (!m_obContentSize.equals(untrimmedSize))
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations())
     {
-        CCRect rect;
-        if (m_bFrame)
-        {
-            rect = this->getFrame();
-        }
-        else
-        {
-            rect = this->getCenter();
-        }
-        rect.size = untrimmedSize;
-        if (m_bFrame)
-        {
-            this->setFrame(rect);
-        }
-        else
-        {
-            this->setCenter(rect);
-        }
-    }
-
-    if (m_pobBatchView)
-    {
-        setDirty(true);
+        CAViewAnimation::getInstance()->setImageRect(rect, this);
     }
     else
     {
-        this->updateImageRect();
+        m_bRectRotated = false;
+        
+        this->setVertexRect(rect);
+        this->setImageCoords(rect);
+
+        if (m_pobBatchView)
+        {
+            setDirty(true);
+        }
+        else
+        {
+            this->updateImageRect();
+        }
     }
+}
+
+void CAView::setImageRect(const CCRect& rect, const CCSize& untrimmedSize)
+{
+    if (!m_bIsAnimation)
+    {
+        CCRect r;
+        if (m_bFrame)
+        {
+            r = this->getFrame();
+        }
+        else
+        {
+            r = this->getCenter();
+        }
+        r.size = untrimmedSize;
+        if (m_bFrame)
+        {
+            this->setFrame(r);
+        }
+        else
+        {
+            this->setCenter(r);
+        }
+    }
+    this->setImageRect(rect);
 }
 
 void CAView::updateImageRect()
@@ -2076,7 +2084,7 @@ void CAView::setFlipX(bool bFlipX)
             m_bFlipX = bFlipX;
             if (m_pobImage)
             {
-                setImageRect(m_obRect, m_bRectRotated, m_obContentSize);
+                setImageRect(m_obRect, m_obContentSize);
             }
         }
     }
@@ -2101,7 +2109,7 @@ void CAView::setFlipY(bool bFlipY)
             m_bFlipY = bFlipY;
             if (m_pobImage)
             {
-                setImageRect(m_obRect, m_bRectRotated, m_obContentSize);
+                setImageRect(m_obRect, m_obContentSize);
             }
         }
     }
