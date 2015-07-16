@@ -102,9 +102,9 @@ protected:
     
     virtual void reshapeViewRectDidFinish() {};
     
-    virtual void keyBackClicked() {};
+    virtual bool keyBackClicked() {return false;};
     
-    virtual void keyMenuClicked() {};
+    virtual bool keyMenuClicked() {return false;};
     
 protected:
     
