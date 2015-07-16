@@ -9,20 +9,13 @@
 
 NS_CC_EXT_BEGIN
 
-/** 
- @brief defines the object which users will receive at onHttpCompleted(sender, HttpResponse) callback
- Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
- @since v2.0.2
- @js NA
- @lua NA
- */
-class CCHttpResponse : public CAObject
+class CAHttpResponse : public CAObject
 {
 public:
     /** Constructor, it's used by CCHttpClient internal, users don't need to create HttpResponse manually
      @param request the corresponding HttpRequest which leads to this response 
      */
-    CCHttpResponse(CCHttpRequest* request)
+    CAHttpResponse(CAHttpRequest* request)
     {
         _pHttpRequest = request;
         if (_pHttpRequest)
@@ -38,7 +31,7 @@ public:
     /** Destructor, it will be called in CCHttpClient internal,
      users don't need to desturct HttpResponse object manully 
      */
-    virtual ~CCHttpResponse()
+    virtual ~CAHttpResponse()
     {
         if (_pHttpRequest)
         {
@@ -59,7 +52,7 @@ public:
     /** Get the corresponding HttpRequest object which leads to this response 
         There's no paired setter for it, coz it's already setted in class constructor
      */
-    inline CCHttpRequest* getHttpRequest()
+    inline CAHttpRequest* getHttpRequest()
     {
         return _pHttpRequest;
     }
@@ -90,7 +83,7 @@ public:
      */
     inline int getResponseCode()
     {
-        return _responseCode;
+        return (int)_responseCode;
     }
 
     /** Get the rror buffer which will tell you more about the reason why http request failed
@@ -131,7 +124,7 @@ public:
     
     /** Set the http response errorCode
      */
-    inline void setResponseCode(int value)
+    inline void setResponseCode(long value)
     {
         _responseCode = value;
     }
@@ -145,15 +138,20 @@ public:
         _errorBuffer.assign(value);
     };
     
+    inline CAHttpRequest* getRequest()
+    {
+        return _pHttpRequest;
+    }
+    
 protected:
-    bool initWithRequest(CCHttpRequest* request);
+    bool initWithRequest(CAHttpRequest* request);
     
     // properties
-    CCHttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response 
+    CAHttpRequest*      _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response
     bool                _succeed;       /// to indecate if the http reqeust is successful simply
     std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
     std::vector<char>   _responseHeader;  /// the returned raw header data. You can also dump it as a string
-    int                 _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
+    long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
     std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason 
     
 };

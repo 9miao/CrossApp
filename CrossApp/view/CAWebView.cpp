@@ -1,6 +1,7 @@
 
 #include "CAWebView.h"
 #include "basics/CAScheduler.h"
+#include "basics/CAApplication.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "platform/ios/CAWebViewImpl.h"
@@ -23,6 +24,9 @@ CAWebView::CAWebView()
 , m_bHideNativeWeCmd(false)
 , m_pWebViewDelegate(NULL)
 , m_pImageView(NULL)
+, m_pLoadingView(NULL)
+, m_obLastPoint(CCPointZero)
+, m_obLastContentSize(CCSizeZero)
 {
     
 }
@@ -31,7 +35,6 @@ CAWebView::~CAWebView()
 {
 	CC_SAFE_DELETE(_impl);
 }
-
 
 CAWebView *CAWebView::createWithFrame(const CCRect& rect)
 {
@@ -59,7 +62,13 @@ CAWebView *CAWebView::createWithCenter(const CCRect& rect)
 
 bool CAWebView::init()
 {
-    CAScheduler::schedule(schedule_selector(CAWebViewImpl::update), _impl, 1/60.0f);
+    CAScheduler::schedule(schedule_selector(CAWebView::update), this, 1/60.0f);
+    
+    CCSize size = this->getBounds().size;
+    m_pLoadingView = CAActivityIndicatorView::create();
+    m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGrayLarge);
+	m_pLoadingView->setVisible(false);
+	this->addSubview(m_pLoadingView);
     
     return true;
 }
@@ -114,9 +123,22 @@ void CAWebView::goForward()
 	_impl->goForward();
 }
 
-void CAWebView::evaluateJS(const std::string &js)
+std::string CAWebView::evaluateJS(const std::string &js)
 {
-	_impl->evaluateJS(js);
+	return _impl->evaluateJS(js);
+}
+
+std::string CAWebView::getHTMLSource()
+{
+#if( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
+	return evaluateJS(std::string("window.local_obj.showSource('<head>'+") + "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+#endif
+
+#if( CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
+	return evaluateJS("document.documentElement.innerHTML");
+#endif
+
+	return "";
 }
 
 void CAWebView::setScalesPageToFit(bool const scalesPageToFit)
@@ -151,11 +173,62 @@ void CAWebView::draw()
 	}
 }
 
-
 void CAWebView::setVisible(bool visible)
 {
 	CAView::setVisible(visible);
 	_impl->setVisible(visible);
+}
+
+void CAWebView::setActivityView(CAActivityIndicatorView* loadingView)
+{
+	if (m_pLoadingView)
+	{
+		m_pLoadingView->removeFromSuperview();
+	}
+	m_pLoadingView = loadingView;
+
+	if (m_pLoadingView)
+	{
+		this->addSubview(m_pLoadingView);
+	}
+}
+
+void CAWebView::showLoadingActivity(bool show)
+{
+	if (show)
+	{
+		_impl->setVisible(false);
+		m_pLoadingView->startAnimating();
+		m_pLoadingView->setVisible(true);
+	}
+	else
+	{
+		m_pLoadingView->stopAnimating();
+		m_pLoadingView->setVisible(false);
+		_impl->setVisible(true);
+	}
+}
+
+void CAWebView::update(float dt)
+{
+    do
+    {
+        CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
+        CCPoint point = this->convertToWorldSpace(m_obPoint);
+        CCSize contentSize = CCSizeApplyAffineTransform(m_obContentSize, worldToNodeTransform());
+        CC_BREAK_IF(m_obLastPoint.equals(point) && m_obLastContentSize.equals(contentSize));
+        m_obLastPoint = point;
+        m_obLastContentSize = contentSize;
+
+        _impl->update(dt);
+    }
+    while (0);
+}
+
+void CAWebView::setContentSize(const CCSize &contentSize)
+{
+    CAView::setContentSize(contentSize);
+    m_pLoadingView->setFrame(this->getBounds());
 }
 
 NS_CC_END

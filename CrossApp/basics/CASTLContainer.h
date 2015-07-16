@@ -118,6 +118,11 @@ public:
 	{
 		_data.reserve(n);
 	}
+    
+    void resize(size_t n)
+    {
+        _data.resize(n);
+    }
 
 	size_t capacity() const
 	{
@@ -160,17 +165,28 @@ public:
 
 	T at(size_t index) const
 	{
-		CCAssert(index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
+        if (index < 0 || index >= size())
+        {
+            return NULL;
+        }
 		return _data[index];
 	}
 
 	T front() const
 	{
+        if (_data.empty())
+        {
+            return NULL;
+        }
 		return _data.front();
 	}
 
 	T back() const
 	{
+        if (_data.empty())
+        {
+            return NULL;
+        }
 		return _data.back();
 	}
 
@@ -219,7 +235,7 @@ public:
     
 	void pushBack(const CAVector<T>& other)
 	{
-		for (int i = 0; i < other.size(); i++)
+		for (size_t i = 0; i < other.size(); i++)
 		{
 			pushBack(other.at(i));
 		}
@@ -237,7 +253,6 @@ public:
 	{
 		if (removeAll)
 		{
-
 			for (iterator iter = _data.begin(); iter != _data.end();)
 			{
 				if ((*iter) == object)
@@ -286,7 +301,7 @@ public:
 
 	void clear()
 	{
-		for (int i = 0; i < _data.size(); i++)
+		for (size_t i = 0; i < _data.size(); i++)
 		{
             CC_SAFE_RELEASE(_data[i]);
 		}
@@ -326,7 +341,7 @@ public:
 protected:
 	void addRefForAllObjects()
 	{
-		for (int i = 0; i < _data.size(); i++)
+		for (size_t i = 0; i < _data.size(); i++)
 		{
             CC_SAFE_RETAIN(_data[i]);
 		}
@@ -437,16 +452,24 @@ public:
 	{
 		return std::find(_data.begin(), _data.end(), object);
 	}
-
-	T front() const
-	{
-		return _data.front();
-	}
-
-	T back() const
-	{
-		return _data.back();
-	}
+    
+    T front() const
+    {
+        if (_data.empty())
+        {
+            return NULL;
+        }
+        return _data.front();
+    }
+    
+    T back() const
+    {
+        if (_data.empty())
+        {
+            return NULL;
+        }
+        return _data.back();
+    }
 
 	bool contains(T object) const
 	{
@@ -460,7 +483,7 @@ public:
 
 		const_iterator it1 = this->begin();
 		const_iterator it2 = other.begin();
-		for (int i = 0; i < s; i++, ++it1, ++it2)
+		for (size_t i = 0; i < s; i++, ++it1, ++it2)
 		{
 			if (*it1 != *it2)
 				return false;
@@ -682,6 +705,11 @@ public:
         _data.reserve(n);
     }
     
+    void resize(size_t n)
+    {
+        _data.resize(n);
+    }
+    
     size_t capacity() const
     {
         return _data.capacity();
@@ -723,17 +751,28 @@ public:
     
     T at(size_t index) const
     {
-        CCAssert(index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
+        if (index < 0 || index >= size())
+        {
+            return NULL;
+        }
         return _data[index];
     }
     
     T front() const
     {
+        if (_data.empty())
+        {
+            return NULL;
+        }
         return _data.front();
     }
     
     T back() const
     {
+        if (_data.empty())
+        {
+            return NULL;
+        }
         return _data.back();
     }
     
@@ -788,7 +827,7 @@ public:
     
     void pushBack(const CADeque<T>& other)
     {
-        for (int i = 0; i < other.size(); i++)
+        for (size_t i = 0; i < other.size(); i++)
         {
             pushBack(other.at(i));
         }
@@ -865,7 +904,7 @@ public:
     
     void clear()
     {
-        for (int i = 0; i < _data.size(); i++)
+        for (size_t i = 0; i < _data.size(); i++)
         {
             CC_SAFE_RELEASE(_data[i]);
         }

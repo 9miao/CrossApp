@@ -77,46 +77,36 @@ void CAFTFontCache::setCurrentFontData(const char* pFontName, int nSize)
 
 int CAFTFontCache::getFontHeight(const char* pFontName, unsigned long nSize)
 {
-	setCurrentFontData(pFontName, nSize);
+	setCurrentFontData(pFontName, (int)nSize);
 	return m_pCurFontData->iFontHeight;
 }
 
 int CAFTFontCache::getStringWidth(const char* pFontName, unsigned long nSize, const std::string& text, bool bBold, bool bItalics)
 {
-	setCurrentFontData(pFontName, nSize);
+	setCurrentFontData(pFontName, (int)nSize);
 	return m_pCurFontData->ftFont.getStringWidth(text, bBold, bItalics);
 }
 
 int CAFTFontCache::cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth, bool bBold, bool bItalics)
 {
-	setCurrentFontData(pFontName, nSize);
+	setCurrentFontData(pFontName, (int)nSize);
 	return m_pCurFontData->ftFont.cutStringByWidth(text, iLimitWidth, cutWidth);
 }
 
 int CAFTFontCache::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap)
 {
-	setCurrentFontData(pFontName, nSize);
+	setCurrentFontData(pFontName, (int)nSize);
 	return m_pCurFontData->ftFont.getStringHeight(text, iLimitWidth, iLineSpace, bWordWrap);
 }
 
 CAImage* CAFTFontCache::initWithString(const char* pText, const char* pFontName, int nSize, int width, int height, 
-	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine)
+	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, std::vector<TextViewLineInfo>* pLinesText)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
 
 	setCurrentFontData(pFontName, nSize);
-	CAImage* pImage = m_pCurFontData->ftFont.initWithString(pText, pFontName, nSize, width, height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine);
-	return pImage;
-}
-
-CAImage* CAFTFontCache::initWithStringEx(const char* pText, const char* pFontName, int nSize, int width, int height, std::vector<TextViewLineInfo>& linesText, int iLineSpace, bool bWordWrap)
-{
-	if (pText == NULL || pFontName == NULL)
-		return NULL;
-
-	setCurrentFontData(pFontName, nSize);
-	CAImage* pImage = m_pCurFontData->ftFont.initWithStringEx(pText, pFontName, nSize, width, height, linesText, iLineSpace, bWordWrap);
+	CAImage* pImage = m_pCurFontData->ftFont.initWithString(pText, pFontName, nSize, width, height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine, pLinesText);
 	return pImage;
 }
 

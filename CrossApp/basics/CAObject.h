@@ -62,6 +62,10 @@ public:
 
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     
+    CC_SYNTHESIZE(void*, m_pUserData, UserData);
+    
+    CC_SYNTHESIZE_RETAIN(CAObject*, m_pUserObject, UserObject);
+    
     CC_SYNTHESIZE(int, m_nTag, Tag);
     
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sTextTag, TextTag);

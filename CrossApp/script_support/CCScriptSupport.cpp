@@ -50,7 +50,7 @@ CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::create(int nHandle
 
 bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
 {
-//    m_pTimer = new CrossApp::CCTimer();
+//    m_pTimer = new CrossApp::CATimer();
 //    m_pTimer->initWithScriptHandler(m_nHandler, fInterval);
 //    m_pTimer->autorelease();
 //    m_pTimer->retain();

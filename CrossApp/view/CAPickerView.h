@@ -1,4 +1,4 @@
-//
+﻿//
 //  CAPickerView.h
 //  CrossApp
 //
@@ -15,35 +15,33 @@ NS_CC_BEGIN
 
 class CAPickerView;
 
-class CAPickerViewDelegate {
-    
+class CC_DLL CAPickerViewDelegate {
+
 public:
-    virtual ~CAPickerViewDelegate() {};
-    
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {}
 };
 
-class CAPickerViewDataSource {
+class CC_DLL CAPickerViewDataSource {
     
 public:
     virtual ~CAPickerViewDataSource() {};
     
     virtual unsigned int numberOfComponentsInPickerView(CAPickerView* pickerView) = 0; 
-    
+
     virtual unsigned int numberOfRowsInComponent(CAPickerView* pickerView, unsigned int component) = 0;
 
     virtual float widthForComponent(CAPickerView* pickerView, unsigned int component) {return 0;}
     
     virtual float rowHeightForComponent(CAPickerView* pickerView, unsigned int component) {return 0;}
-    
+
     virtual CCString* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
-    
+
     virtual CAView* viewForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
     
     virtual CAView* viewForSelect(CAPickerView* pickerView, unsigned int component, const CCSize& size) {return NULL;}
 };
 
-class CC_DLL CAPickerView : public CAView, public CATableViewDataSource
+class CC_DLL CAPickerView : public CAView, public CATableViewDataSource , public CATableViewDelegate, public CAScrollViewDelegate
 {
 public:
     static CAPickerView* create();
@@ -56,6 +54,11 @@ public:
     virtual bool init();
     virtual void onEnter();
     virtual void onExit();
+	
+	virtual void onEnterTransitionDidFinish();
+
+	virtual void onExitTransitionDidStart();
+
     virtual void visit();
     
     virtual bool initWithFrame(const CCRect& rect);
@@ -73,7 +76,7 @@ public:
     
     // Reloading whole view or single component
     virtual void reloadAllComponents();
-    virtual void reloadComponent(unsigned int component, bool bReload = true);
+    virtual void reloadComponent(unsigned int row,unsigned int component, bool bReload = true);
     
     // selection. in this case, it means showing the appropriate row in the middle
     // animated: scrolls the specified row to center. default is false
@@ -82,9 +85,10 @@ public:
     // returns selected row. -1 if nothing selected
     virtual int selectedRowInComponent(unsigned int component);
 
-    
-    CC_SYNTHESIZE(CAPickerViewDelegate*, m_delegate, Delegate);
-    CC_SYNTHESIZE(CAPickerViewDataSource*, m_dataSource, DataSource);
+	virtual void setBackgroundColor(const CAColor4B& color);
+
+	CC_SYNTHESIZE(CAPickerViewDelegate*, m_delegate, PickerViewDelegate);
+	CC_SYNTHESIZE(CAPickerViewDataSource*, m_dataSource, PickerViewDataSource);
     
     CC_SYNTHESIZE(float, m_fontSizeNormal, FontSizeNormal);
     CC_SYNTHESIZE(float, m_fontSizeSelected, FontSizeSelected);
@@ -100,10 +104,10 @@ protected:
     virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
-    
+    virtual void scrollViewDidEndDragging(CAScrollView* view);
 private:
-    CCArray* m_componentArrays;
-    CCArray* m_tableViews;
+
+	CAVector<CATableView*> m_tableViews;
     std::vector<int> m_selected;
     std::vector< std::vector<int> > m_componentsIndex;
     std::vector<float> m_componentOffsetX;

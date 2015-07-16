@@ -57,14 +57,14 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)openAlbumView
+-(void)openAlbumView:(BOOL)allowEdit
 {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     
     
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
-    
+    imagePicker.allowsEditing = allowEdit;
     imagePicker.delegate = self;
     
     [self presentViewController:imagePicker animated:YES completion:^
@@ -76,37 +76,45 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    UIImage *newfixImage = [self fixOrientation:image];
-    CGSize size ;
-    if ([newfixImage size].width>[newfixImage size].height)
+    NSString *imageType;
+    if (picker.allowsEditing)
     {
-        size = CGSizeMake([newfixImage size].width/([newfixImage size].height/640), 640);
+        imageType = [NSString stringWithFormat:@"UIImagePickerControllerEditedImage"];
     }
     else
     {
-        size = CGSizeMake(640, [newfixImage size].height/([newfixImage size].width/640));
+        imageType = [NSString stringWithFormat:@"UIImagePickerControllerOriginalImage"];
     }
-    UIImage *fiximage = [self scaleFromImage:newfixImage toSize:size];
-    CAMediaDelegate *cam = (CAMediaDelegate *)self.sender;
+    UIImage *image = [info objectForKey:imageType];
     
-    if(cam == NULL)
-    {
-        return ;
-    }
+//    UIImage *newfixImage = [self fixOrientation:image];
+//    CGSize size ;
+//    if ([newfixImage size].width>[newfixImage size].height)
+//    {
+//        size = CGSizeMake([newfixImage size].width/([newfixImage size].height/640), 640);
+//    }
+//    else
+//    {
+//        size = CGSizeMake(640, [newfixImage size].height/([newfixImage size].width/640));
+//    }
+//    UIImage *fiximage = [self scaleFromImage:newfixImage toSize:size];
+//    
+//    ;
+    CC_RETURN_IF(self.sender == NULL);
     
-    NSData *data = UIImageJPEGRepresentation(fiximage,0.5);
-    void* _data =malloc([data length]);
+    NSData *data = UIImageJPEGRepresentation([self fixOrientation:image], 1.0f);
+    void* _data = malloc([data length]);
     [data getBytes:_data];
     
-    CCImage *caimage = new CCImage();
-   
-    caimage->initWithImageData(_data, [data length], CCImage::kFmtPng, fiximage.size.height, fiximage.size.width);
-    
     CAImage *__image = new CAImage();
-    __image->initWithImage(caimage);
+    __image->initWithImageData((unsigned char*)_data, data.length);
     
-    cam->getSelectedImage(__image);
+    if (CAMediaDelegate *cam = (CAMediaDelegate *)self.sender)
+    {
+        cam->getSelectedImage(__image);
+    }
+    __image->release();
+    free(_data);
     
     [picker dismissViewControllerAnimated:YES completion:^
         {
@@ -115,6 +123,7 @@
         }
     ];
 }
+
 - (UIImage *) scaleFromImage: (UIImage *) image toSize: (CGSize) size
 {
     UIGraphicsBeginImageContext(size);
@@ -123,6 +132,7 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:^

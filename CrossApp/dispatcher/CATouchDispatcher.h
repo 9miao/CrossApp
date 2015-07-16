@@ -78,7 +78,7 @@ protected:
     std::vector<CAResponder*> getEventListener(CATouch* touch, CAView* view);
 
 protected:
-    
+
     CAVector<CAResponder*> m_vTouchMovedsView;
     
     CAVector<CAResponder*> m_vTouchMovedsViewCache;
@@ -105,6 +105,8 @@ public:
     bool init(void);
 
     virtual void setDispatchEvents(bool dispatchEvents);
+    
+    virtual bool isDispatchEvents() { return m_iDispatchEvents > 0; }
     
     void setDispatchEventsTrue();
     
@@ -134,8 +136,8 @@ public:
 protected:
 
     CC_SYNTHESIZE_RETAIN(CAResponder*, m_pFirstResponder, FirstResponder);
-    
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bDispatchEvents, DispatchEvents);
+
+    int m_iDispatchEvents;
     
     bool m_bLocked;
     

@@ -15,12 +15,15 @@ public class Cocos2dxETCLoader {
 	private static final String ASSETS_PATH = "assets/";
 	private static Context context;
 	
-	public static boolean loadTexture(String filePath) {
-		if (! ETC1Util.isETC1Supported()) {
+	public static boolean loadTexture(String filePath)
+	{
+		if (! ETC1Util.isETC1Supported()) 
+		{
 			return false;
 		}
 		
-		if (filePath.length() == 0) {
+		if (filePath.length() == 0)
+		{
 			return false;
 		}
 		
@@ -28,13 +31,18 @@ public class Cocos2dxETCLoader {
 		InputStream inputStream = null;
 		ETC1Util.ETC1Texture texture = null;
 		AssetManager assetManager = null;
-		try {
-			if (filePath.charAt(0) == '/') {
+		try 
+		{
+			if (filePath.charAt(0) == '/') 
+			{
 				// absolute path
 				inputStream = new FileInputStream(filePath);
-			} else {
+			} 
+			else
+			{
 				// remove prefix: "assets/"
-				if (filePath.startsWith(ASSETS_PATH)) {
+				if (filePath.startsWith(ASSETS_PATH)) 
+				{
 					filePath = filePath.substring(ASSETS_PATH.length());
 				}
 				assetManager = context.getAssets();
@@ -43,16 +51,20 @@ public class Cocos2dxETCLoader {
 			
 			texture = ETC1Util.createTexture(inputStream);
 			inputStream.close();
-		} catch (Exception e) {
+		} 
+		catch (Exception e)
+		{
 			Log.d("Cocos2dx", "Unable to create texture for " + filePath);
 			
 			texture = null;
 		}
 		
-		if (texture != null) {
+		if (texture != null)
+		{
 			boolean ret = true;
 			
-			try {
+			try 
+			{
 				final int width = texture.getWidth();
 				final int height = texture.getHeight();
 				final int length = texture.getData().remaining();
@@ -66,7 +78,8 @@ public class Cocos2dxETCLoader {
 			             height,
 			             data,
 			             length);
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				Log.d("invoke native function error", e.toString());
 				ret = false;
@@ -78,7 +91,8 @@ public class Cocos2dxETCLoader {
 		}
 	}
 	
-	public static void setContext(Context context) {
+	public static void setContext(Context context)
+	{
 		Cocos2dxETCLoader.context = context;
 	}
 	

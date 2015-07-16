@@ -8,8 +8,10 @@ import java.nio.ByteBuffer;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.util.Log;
 import android.view.Gravity;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -37,8 +39,7 @@ public class Cocos2dxWebView extends WebView {
         this.getSettings().setSupportZoom(false);
         this.getSettings().setBuiltInZoomControls(true);
         this.getSettings().setJavaScriptEnabled(true);
-
-        
+        this.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
      
         
         // `searchBoxJavaBridge_` has big security risk. http://jvn.jp/en/jp/JVN53768697
@@ -94,6 +95,18 @@ public class Cocos2dxWebView extends WebView {
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
             Cocos2dxWebViewHelper._didFailLoading(viewTag, failingUrl);
+        }
+
+	@Override
+	public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+		handler.proceed();
+	}
+    }
+    
+    final class InJavaScriptLocalObj {
+        public void showSource(String html) {
+        	Cocos2dxWebViewHelper.didLoadHtmlSource(html);
+        	Cocos2dxWebViewHelper.s_bWaitGetHemlSource = false;
         }
     }
 

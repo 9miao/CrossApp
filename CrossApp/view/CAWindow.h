@@ -9,9 +9,9 @@ NS_CC_BEGIN
 
 enum
 {
-    CAWindowZoderBottom = 0,
-    CAWindowZoderCenter = 1,
-    CAWindowZoderTop = 0xffff
+    CAWindowZOderBottom = 0,
+    CAWindowZOderCenter = 1,
+    CAWindowZOderTop = 0xffff
 };
 
 class CC_DLL CAWindow : public CAView
@@ -33,6 +33,8 @@ public:
     
 protected:
 
+    void presentEnd();
+    
     void dismissEnd();
     
 protected:

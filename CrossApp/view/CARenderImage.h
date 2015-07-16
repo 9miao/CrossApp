@@ -35,123 +35,88 @@ class CC_DLL CARenderImage : public CAView
     The blending function can be changed in runtime by calling:
     - [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
     */
-    CC_PROPERTY(CAImageView*, m_pSprite, Sprite)
+    CC_PROPERTY(CAImageView*, m_pImageView, ImageView)
 public:
-    /**
-     * @js ctor
-     */
+
     CARenderImage();
-    /**
-     * @js NA
-     * @lua NA
-     */
+
     virtual ~CARenderImage();
     
     virtual void visit();
     virtual void draw();
 
-    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    static CARenderImage * create(int w ,int h, CAImagePixelFormat eFormat, GLuint uDepthStencilFormat);
+    static CARenderImage * create(int w ,int h, CAImage::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
-    /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    static CARenderImage * create(int w, int h, CAImagePixelFormat eFormat);
+    static CARenderImage * create(int w, int h, CAImage::PixelFormat eFormat);
 
-    /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static CARenderImage * create(int w, int h);
 
-    /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    bool initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFormat);
+    bool initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eFormat);
 
-    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    bool initWithWidthAndHeight(int w, int h, CAImagePixelFormat eFormat, GLuint uDepthStencilFormat);
+    bool initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
-    /** starts grabbing */
-    void begin();
+    void printscreenWithView(CAView* view);
+    
+    void printscreenWithView(CAView* view, CCPoint offset);
+    
+    void printscreenWithView(CAView* view, const CAColor4B& backgroundColor);
+    
+    void printscreenWithView(CAView* view, CCPoint offset, const CAColor4B& backgroundColor);
+    
+    void clear(const CAColor4B& backgroundColor);
 
-    /** starts rendering to the Image while clearing the Image first.
-    This is more efficient then calling -clear first and then -begin */
-    void beginWithClear(float r, float g, float b, float a);
-
-    /** starts rendering to the Image while clearing the Image first.
-     This is more efficient then calling -clear first and then -begin */
-    void beginWithClear(float r, float g, float b, float a, float depthValue);
-
-    /** starts rendering to the Image while clearing the Image first.
-     This is more efficient then calling -clear first and then -begin */
-    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
-
-    /** end is key word of lua, use other name to export to lua. */
-    inline void endToLua(){ end();};
-
-    /** ends grabbing*/
-    void end();
-
-    /** clears the Image with a color */
-    void clear(float r, float g, float b, float a);
-
-    /** clears the Image with a specified depth value */
     void clearDepth(float depthValue);
 
-    /** clears the Image with a specified stencil value */
     void clearStencil(int stencilValue);
-    /* creates a new CCImage from with the texture's data.
-       Caller is responsible for releasing it by calling delete.
-     */
-    CCImage* newCCImage(bool flipImage = true);
 
-    /** saves the Image into a file using JPEG format. The file will be saved in the Documents folder.
-        Returns YES if the operation is successful.
-     */
     bool saveToFile(const char *szFilePath);
 
-    /** saves the Image into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
-        Returns YES if the operation is successful.
-     */
-    bool saveToFile(const char *name, tCCImageFormat format);
-    
-    /** Listen "come to background" message, and save render texture.
-     It only has effect on Android.
-     */
     void listenToBackground(CAObject *obj);
-    
-    /** Listen "come to foreground" message and restore the frame buffer object
-     It only has effect on Android.
-     */
+
     void listenToForeground(CAObject *obj);
-    
-    /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw is YES. */
+
     unsigned int getClearFlags() const;
     void setClearFlags(unsigned int uClearFlags);
-    
-    /** Clear color value. Valid only when "autoDraw" is true. */
+
     const CAColor4F& getClearColor() const;
     void setClearColor(const CAColor4F &clearColor);
-    
-    /** Value for clearDepth. Valid only when autoDraw is true. */
+
     float getClearDepth() const;
     void setClearDepth(float fClearDepth);
-    
-    /** Value for clear Stencil. Valid only when autoDraw is true */
+
     int getClearStencil() const;
     void setClearStencil(float fClearStencil);
-    
-    /** When enabled, it will render its children into the Image automatically. Disabled by default for compatiblity reasons.
-     Will be enabled in the future.
-     */
+
     bool isAutoDraw() const;
     void setAutoDraw(bool bAutoDraw);
 
-private:
-    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
+protected:
+    
+    void begin();
+    
+    void beginWithClear(const CAColor4B& backgroundColor);
+    
+    void beginWithClear(const CAColor4B& backgroundColor, float depthValue);
 
+    void beginWithClear(const CAColor4B& backgroundColor, float depthValue, int stencilValue);
+    
+    void beginWithClear(const CAColor4B& backgroundColor, float depthValue, int stencilValue, GLbitfield flags);
+    
+    void end();
+    
+    virtual void setContentSize(const CCSize& contentSize);
+    
 protected:
     GLuint       m_uFBO;
     GLuint       m_uDepthRenderBufffer;
     GLint        m_nOldFBO;
-    CAImage* m_pTexture;
-    CAImage* m_pTextureCopy;    // a copy of m_pTexture
-    CCImage*     m_pUITextureImage;
-    GLenum       m_ePixelFormat;
+    
+    unsigned int m_uPixelsWide;
+    unsigned int m_uPixelsHigh;
+    GLuint m_uName;
+    CAImage* m_pImage;
+
+    CAImage::PixelFormat m_ePixelFormat;
     
     // code for "auto" update
     GLbitfield   m_uClearFlags;
@@ -159,6 +124,8 @@ protected:
     GLclampf     m_fClearDepth;
     GLint        m_nClearStencil;
     bool         m_bAutoDraw;
+    
+    friend class CAImage;
 };
 
 // end of textures group

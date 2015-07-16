@@ -56,6 +56,7 @@ public:
     virtual void setOnImage(CAImage* onImage);
     virtual void setOffImage(CAImage* offImage);
     void setThumbTintImage(CAImage* thumbTintImage);
+    
 protected:
     void updateSwitchState(bool animated, bool callfunced);
     void updateValueChanged();
@@ -64,9 +65,10 @@ protected:
     using CAControl::removeTarget;
     
 protected:
-    CAScale9ImageView *m_onImageView;
-    CAScale9ImageView *m_offImageView;
-    CAScale9ImageView *m_thumbTintImageView;
+    
+    CAImageView *m_pOnImageView;
+    CAImageView *m_pOffImageView;
+    CAImageView *m_pThumbTintImageView;
 };
 
 NS_CC_END

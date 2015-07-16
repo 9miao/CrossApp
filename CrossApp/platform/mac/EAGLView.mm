@@ -300,7 +300,7 @@ static EAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 	
-    int ids[1] = {0};
+    intptr_t ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -324,7 +324,7 @@ static EAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 
-    int ids[1] = {0};
+    intptr_t ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -343,7 +343,7 @@ static EAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 
-    int ids[1] = {0};
+    intptr_t ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     

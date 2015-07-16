@@ -48,7 +48,7 @@
     UIImageWriteToSavedPhotosAlbum(newImage, self, nil, nil);
     [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%s",sender.c_str()] error:nil];
 }
--(void)openCameraView
+-(void)openCameraView:(BOOL)allowEdit
 {
 
     BOOL isCamera = [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear];
@@ -58,7 +58,7 @@
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.delegate= self;
-    imagePicker.allowsEditing = YES;
+    imagePicker.allowsEditing = allowEdit;
    // imagePicker.allowsEditing=NO;
    // imagePicker.cameraOverlayView = NO;
     [self presentViewController:imagePicker animated:YES completion:^{ CAApplication::getApplication()->getTouchDispatcher()->setDispatchEvents(false);
@@ -67,27 +67,36 @@
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    
+    NSString *imageType;
+    if (picker.allowsEditing)
+    {
+        imageType = [NSString stringWithFormat:@"UIImagePickerControllerEditedImage"];
+    }
+    else
+    {
+        imageType = [NSString stringWithFormat:@"UIImagePickerControllerOriginalImage"];
+    }
+    
+    UIImage *image = [info objectForKey:imageType];
     UIImage *newfixImage = [self fixOrientation:image];
     UIImage *fiximage = [self scaleFromImage:newfixImage toSize:CGSizeMake(640, [newfixImage size].height/([newfixImage size].width/640))];
     CAMediaDelegate *cam = (CAMediaDelegate *)self.sender;
     CC_RETURN_IF(!cam);
 
-    NSData *data = UIImageJPEGRepresentation(fiximage,0.3);
-    void* _data =malloc([data length]);
+    NSData *data = UIImageJPEGRepresentation(fiximage,0.5);
+    void* _data = malloc([data length]);
     [data getBytes:_data];
-    CCImage *caimage = new CCImage();
-    caimage->initWithImageData(_data, [data length], CCImage::kFmtJpg, 640, 640);
-    CC_RETURN_IF(!caimage);
     
     CAImage *__image = new CAImage();
-    __image->initWithImage(caimage);
-    
+    __image->initWithImageData((unsigned char*)_data, data.length);
     if (cam)
     {
         cam->getSelectedImage(__image);
     }
-    
+    __image->release();
+    free(_data);
+
     [picker dismissViewControllerAnimated:YES completion:^
         {
             [self.view removeFromSuperview];

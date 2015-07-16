@@ -11,12 +11,15 @@
 
 #include <iostream>
 #include "CAView.h"
+#include "view/CATextEditHelper.h"
+#include "view/CATextField.h"
+
 
 NS_CC_BEGIN
 using namespace std;
 class CALabelStyle;
 
-class CC_DLL CALabel: public CAView
+class CC_DLL CALabel : public CATouchView
 {
 public:
     
@@ -57,6 +60,8 @@ public:
     CC_PROPERTY_PASS_BY_REF(CCSize, m_nDimensions, Dimensions);
     
     CC_PROPERTY(unsigned int, m_nNumberOfLine, NumberOfLine);
+
+	CC_SYNTHESIZE(bool, m_bEnableCopy, EnableCopy);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_cLabelSize, LabelSize);
     
@@ -70,13 +75,21 @@ public:
 
 	void applyStyle(const CALabelStyle* pLabelStyle);
     
+    
+    
 protected:
     
     virtual void setContentSize(const CCSize& var);
+
+	virtual void updateImageRect();
+
+	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
     
-    virtual void updateImageRect();
+    void updateImageDraw();
     
     void updateImage();
+
+	void copySelectText();
     
     bool m_bUpdateImage;
     

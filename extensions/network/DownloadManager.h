@@ -46,9 +46,15 @@ public:
     
     static void destroyInstance();
 
-    unsigned long enqueueDownload(const std::string& downloadUrl, const std::string& fileName, const std::string& headers = "", const std::string& textTag = "");
+    unsigned long enqueueDownload(const std::string& downloadUrl,
+                                  const std::string& fileName,
+                                  const std::string& headers = "",
+                                  const std::string& textTag = "");
 
-	unsigned long enqueueDownloadEx(const std::string& downloadUrl, const std::string& fileName, const std::string& headers = "", const std::string& textTag = "");
+	unsigned long enqueueDownloadEx(const std::string& downloadUrl,
+                                    const std::string& fileName,
+                                    const std::string& headers = "",
+                                    const std::string& textTag = "");
 
     void resumeDownload(unsigned long download_id);
     

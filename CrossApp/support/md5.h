@@ -33,10 +33,12 @@ documentation and/or software.
 #ifndef BZF_MD5_H
 #define BZF_MD5_H
 
+#include "platform/CCPlatformMacros.h"
 #include <string>
 #include <iostream>
 
 
+NS_CC_BEGIN
 // a small class for calculating MD5 hashes of strings or byte arrays
 // it is not meant to be fast or secure
 //
@@ -47,7 +49,7 @@ documentation and/or software.
 //      MD5(std::string).hexdigest()
 //
 // assumes that char is 8 bit and int is 32 bit
-class MD5
+class CC_DLL MD5
 {
 public:
   typedef unsigned int size_type; // must be 32bit
@@ -89,4 +91,7 @@ private:
   static inline void II(uint4 &a, uint4 b, uint4 c, uint4 d, uint4 x, uint4 s, uint4 ac);
 };
 
+NS_CC_END
+
 #endif
+

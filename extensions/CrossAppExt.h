@@ -12,11 +12,9 @@
 #include "Json/DictionaryHelper.h"
 
 #include "sqlite3/include/sqlite3.h"
-
 #include "LocalStorage/LocalStorage.h"
+#include "studio/CAStudioViewParser.h"
 
+//other
 #include "device/CADevice.h"
-
-#include "studio/CAStudioViewController.h"
-
 #endif /* __CrossApp_EXT_H__ */

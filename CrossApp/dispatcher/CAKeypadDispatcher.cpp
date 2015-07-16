@@ -1,8 +1,8 @@
 
 
 #include "CAKeypadDispatcher.h"
-#include "support/data_support/ccCArray.h"
-
+#include "basics/CAApplication.h"
+#include "CATouchDispatcher.h"
 NS_CC_BEGIN
 
 CAKeypadDispatcher::CAKeypadDispatcher()
@@ -10,25 +10,14 @@ CAKeypadDispatcher::CAKeypadDispatcher()
 , m_bToAdd(false)
 , m_bToRemove(false)
 {
-    m_pDelegates = CCArray::create();
-    m_pDelegates->retain();
 
-    m_pHandlersToAdd    = ccCArrayNew(8);
-    m_pHandlersToRemove = ccCArrayNew(8);
 }
 
 CAKeypadDispatcher::~CAKeypadDispatcher()
 {
-    CC_SAFE_RELEASE(m_pDelegates);
-    if (m_pHandlersToAdd)
-    {
-        ccCArrayFree(m_pHandlersToAdd);
-    }
-    
-    if (m_pHandlersToRemove)
-    {
-        ccCArrayFree(m_pHandlersToRemove);
-    }    
+    m_vDelegates.clear();
+    m_vHandlersToAdd.clear();
+    m_vHandlersToRemove.clear();
 }
 
 void CAKeypadDispatcher::removeDelegate(CAKeypadDelegate* pDelegate)
@@ -43,7 +32,7 @@ void CAKeypadDispatcher::removeDelegate(CAKeypadDelegate* pDelegate)
     }
     else
     {
-        ccCArrayAppendValue(m_pHandlersToRemove, pDelegate);
+        m_vHandlersToRemove.push_back(pDelegate);
         m_bToRemove = true;
     }
 }
@@ -61,7 +50,7 @@ void CAKeypadDispatcher::addDelegate(CAKeypadDelegate* pDelegate)
     }
     else
     {
-        ccCArrayAppendValue(m_pHandlersToAdd, pDelegate);
+        m_vHandlersToAdd.push_back(pDelegate);
         m_bToAdd = true;
     }
 }
@@ -72,44 +61,46 @@ void CAKeypadDispatcher::forceAddDelegate(CAKeypadDelegate* pDelegate)
 
     if (pHandler)
     {
-        m_pDelegates->addObject(pHandler);
+        m_vDelegates.pushBack(dynamic_cast<CAObject*>(pHandler));
     }
 }
 
 void CAKeypadDispatcher::forceRemoveDelegate(CAKeypadDelegate* pDelegate)
 {
     CAKeypadHandler* pHandler = NULL;
-    CAObject* pObj = NULL;
-    CCARRAY_FOREACH(m_pDelegates, pObj)
+    std::vector<CAObject*>::iterator itr;
+    for (itr=m_vDelegates.begin(); itr!=m_vDelegates.end(); itr++)
     {
-        pHandler = (CAKeypadHandler*)pObj;
+        pHandler = dynamic_cast<CAKeypadHandler*>(*itr);
         if (pHandler && pHandler->getDelegate() == pDelegate)
         {
-            m_pDelegates->removeObject(pHandler);
+            m_vDelegates.erase(itr);
             break;
         }
     }
+    
 }
 
 bool CAKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 {
+    if (!CAApplication::getApplication()->getTouchDispatcher()->isDispatchEvents())
+    {
+        return true;
+    }
+    
     CAKeypadHandler*  pHandler = NULL;
     CAKeypadDelegate* pDelegate = NULL;
 
     m_bLocked = true;
 
-    if (m_pDelegates->count() > 0)
+    std::vector<CAObject*>::iterator itr;
+    for (itr=m_vDelegates.begin(); itr!=m_vDelegates.end(); itr++)
     {
-        CAObject* pObj = NULL;
-        CCARRAY_FOREACH(m_pDelegates, pObj)
+        pHandler = dynamic_cast<CAKeypadHandler*>(*itr);
+        pDelegate = pHandler->getDelegate();
+        CC_BREAK_IF(!pHandler);
+        switch (nMsgType)
         {
-            CC_BREAK_IF(!pObj);
-
-            pHandler = (CAKeypadHandler*)pObj;
-            pDelegate = pHandler->getDelegate();
-
-            switch (nMsgType)
-            {
             case kTypeBackClicked:
                 pDelegate->keyBackClicked();
                 break;
@@ -118,29 +109,29 @@ bool CAKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
                 break;
             default:
                 break;
-            }
         }
     }
-
+    
     m_bLocked = false;
     if (m_bToRemove)
     {
         m_bToRemove = false;
-        for (unsigned int i = 0; i < m_pHandlersToRemove->num; ++i)
+        
+        for (unsigned int i = 0; i < m_vHandlersToRemove.size(); ++i)
         {
-            forceRemoveDelegate((CAKeypadDelegate*)m_pHandlersToRemove->arr[i]);
+            forceRemoveDelegate(m_vHandlersToRemove.at(i));
         }
-        ccCArrayRemoveAllValues(m_pHandlersToRemove);
+        m_vHandlersToRemove.clear();
     }
 
     if (m_bToAdd)
     {
         m_bToAdd = false;
-        for (unsigned int i = 0; i < m_pHandlersToAdd->num; ++i)
+        for (unsigned int i = 0; i < m_vHandlersToAdd.size(); ++i)
         {
-            forceAddDelegate((CAKeypadDelegate*)m_pHandlersToAdd->arr[i]);
+            forceAddDelegate((CAKeypadDelegate*)m_vHandlersToAdd.at(i));
         }
-        ccCArrayRemoveAllValues(m_pHandlersToAdd);
+        m_vHandlersToAdd.clear();
     }
 
     return true;

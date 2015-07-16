@@ -53,7 +53,11 @@ public:
     
     void setImageForState(const CAControlState& controlState, CAImage* var);
     
+    CAImage* getImageForState(const CAControlState& controlState);
+    
     void setTitleForState(const CAControlState& controlState, const std::string& var);
+    
+    const std::string& getTitleForState(const CAControlState& controlState);
     
     void setImageColorForState(const CAControlState& controlState, const CAColor4B& var);
     
@@ -71,8 +75,6 @@ public:
     
 public:
     
-    CC_SYNTHESIZE_IS(bool, m_closeTapSound, CloseTapSound);
-
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
 
     CC_SYNTHESIZE_IS_READONLY(bool, m_bSelected, Selected);
@@ -121,12 +123,14 @@ protected:
     
     void setTouchMovedOutSide(const CCPoint& point);
     
-    void setTouchUpSide(const CCPoint& point);
+    void setTouchUpOutSide(const CCPoint& point);
     
     void setTouchUpInSide(const CCPoint& point);
     
     bool setTouchBegin(const CCPoint& point);
 
+    void setTouchLongPress(float dt);
+    
     void setContentSize(const CCSize & var);
 
     void setBackGroundViewSquareRect();

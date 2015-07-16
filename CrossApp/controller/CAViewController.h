@@ -70,6 +70,8 @@ public:
     
     virtual CAView* getView();
     
+    virtual CAResponder* nextResponder();
+
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -79,8 +81,6 @@ public:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-    
-    virtual CAResponder* nextResponder();
     
     friend class CATabBarController;
     
@@ -92,17 +92,17 @@ public:
     
 protected:
     
-    virtual void viewDidLoad(){};
+    virtual void viewDidLoad() {};
     
-    virtual void viewDidUnload(){};
+    virtual void viewDidUnload() {};
     
-    virtual void viewDidAppear(){};
+    virtual void viewDidAppear() {};
     
-    virtual void viewDidDisappear(){};
+    virtual void viewDidDisappear() {};
     
-    virtual void reshapeViewRectDidFinish(){};
+    virtual void reshapeViewRectDidFinish() {};
     
-    virtual void keyBackClicked() {}
+    virtual void keyBackClicked() {};
     
     virtual void keyMenuClicked() {};
     
@@ -151,6 +151,10 @@ public:
     
     CAViewController* popViewControllerAnimated(bool animated);
     
+    void popToRootViewControllerAnimated(bool animated);
+    
+    CAViewController* popFirstViewController();
+ 
     CAViewController* getViewControllerAtIndex(int index);
     
     CAViewController* getBackViewController();
@@ -161,13 +165,27 @@ public:
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bNavigationBarHidden, NavigationBarHidden);
     
-    CC_SYNTHESIZE_READONLY(CANavigationBar*, m_pNavigationBar, NavigationBar);
-    
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eNavigationBarVerticalAlignment, NavigationBarVerticalAlignment);
     
     void updateItem(CAViewController* viewController);
     
     CC_PROPERTY_IS(bool, m_bTouchMoved, TouchMoved);
+
+    CC_PROPERTY(CAImage*, m_pNavigationBarBackGroundImage, NavigationBarBackGroundImage);
+
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarBackGroundColor, NavigationBarBackGroundColor);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarTitleColor, NavigationBarTitleColor);
+
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarButtonColor, NavigationBarButtonColor);
+    
+    virtual bool isReachBoundaryLeft();
+    
+    virtual bool isReachBoundaryRight() {return true;}
+    
+    virtual bool isReachBoundaryUp() {return true;}
+    
+    virtual bool isReachBoundaryDown() {return true;}
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     
@@ -176,7 +194,7 @@ public:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-    
+
 protected:
     
     virtual void viewDidLoad();
@@ -191,29 +209,49 @@ protected:
     
 protected:
     
+    void createWithContainer(CAViewController* viewController);
+    
+    void layoutNewContainer();
+    
+    void popBack();
+    
     void replaceViewControllerFinish();
     
     void pushViewControllerFinish();
     
     void popViewControllerFinish();
     
+    void popToRootViewControllerFinish();
+    
     void homingViewControllerFinish();
     
     void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
     
+    void navigationBarHiddenAnimation(float delay, float now, float total);
+
     void update(float dt);
     
-    void scheduleUpdate();
+    CCPoint getNavigationBarOpenPoint();
     
-    void unScheduleUpdate();
+    CCPoint getNavigationBarTakeBackPoint();
+    
+    CCPoint getNavigationBarNowPoint(CAViewController* viewController);
     
 protected:
-    
-    CAVector<CAViewController*> m_pViewControllers;
-    
-    CAView* m_pContainer;
 
+    float m_fProgress;
+    
+    CADeque<CAViewController*> m_pViewControllers;
+    
+    CADeque<CANavigationBar*> m_pNavigationBars;
+    
+    CADeque<CAView*> m_pContainers;
+
+    CADeque<CAView*> m_pSecondContainers;
+    
     bool m_bPopViewController;
+
+    CCSize m_tNavigationBarSize;
 };
 
 class CC_DLL CATabBarController
@@ -248,12 +286,28 @@ public:
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bTabBarHidden, TabBarHidden);
     
-    CC_SYNTHESIZE_READONLY(CATabBar*, m_pTabBar, TabBar);
-    
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eTabBarVerticalAlignment, TabBarVerticalAlignment);
+    
+    CC_PROPERTY(CAImage*, m_pTabBarBackGroundImage, TabBarBackGroundImage);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarBackGroundColor, TabBarBackGroundColor);
+    
+    CC_PROPERTY(CAImage*, m_pTabBarSelectedBackGroundImage, TabBarSelectedBackGroundImage);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedBackGroundColor, TabBarSelectedBackGroundColor);
+    
+    CC_PROPERTY(CAImage*, m_pTabBarSelectedIndicatorImage, TabBarSelectedIndicatorImage);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedIndicatorColor, TabBarSelectedIndicatorColor);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarTitleColor, TabBarTitleColorForNormal);
+    
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedTitleColor, TabBarTitleColorForSelected);
     
     void updateItem(CAViewController* viewController);
     
+    void showTabBarSelectedIndicator();
+ 
 protected:
     
     virtual void viewDidLoad();
@@ -274,15 +328,23 @@ protected:
     
     virtual void scrollViewWillBeginDragging(CAScrollView* view);
     
-    void renderingSelectedViewController();
+    virtual void renderingSelectedViewController();
     
     void update(float dt);
     
-    void scheduleUpdate();
+    void tabBarHiddenAnimation(float delay, float now, float total);
     
-    void unScheduleUpdate();
+    CCPoint getTabBarOpenPoint();
+    
+    CCPoint getTabBarTakeBackPoint();
+    
+    CCPoint getTabBarNowPoint();
     
 protected:
+    
+    float m_fProgress;
+    
+    bool m_bShowTabBarSelectedIndicator;
     
     CAVector<CAViewController*> m_pViewControllers;
     
@@ -291,6 +353,8 @@ protected:
     unsigned int m_nLastSelectedIndex;
     
     CAPageView* m_pContainer;
+    
+    CATabBar* m_pTabBar;
 };
 
 

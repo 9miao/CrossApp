@@ -1,100 +1,77 @@
 
 
-#ifndef __CCHTTPREQUEST_H__
-#define __CCHTTPREQUEST_H__
+#ifndef __CAHttpRequest_H__
+#define __CAHttpRequest_H__
 
 #include "CrossApp.h"
 #include "ExtensionMacros.h"
-
 #include "HttpRequest.h"
 #include "HttpResponse.h"
+#include <queue>
+#include <pthread.h>
+#include <errno.h>
+
 
 NS_CC_EXT_BEGIN
 
-/**
- * @addtogroup Network
- * @{
- */
-
-
-/** @brief Singleton that handles asynchrounous http requests
- * Once the request completed, a callback will issued in main thread when it provided during make request
- * @js NA
- * @lua NA
- */
-class CCHttpClient : public CAObject
+class CAHttpClient : public CAObject
 {
 public:
-    /** Return the shared instance **/
-    static CCHttpClient *getInstance(int thread = 0);
-    
-    /** Relase the shared instance **/
-    static void destroyInstance(int thread = 0);
-        
-    /**
-     * Add a get request to task queue
-     * @param request a CCHttpRequest object, which includes url, response callback etc.
-                      please make sure request->_requestData is clear before calling "send" here.
-     * @return NULL
-     */
-    void send(CCHttpRequest* request);
-  
-    
-    /**
-     * Change the connect timeout
-     * @param timeout 
-     * @return NULL
-     */
-    inline void setTimeoutForConnect(int value) {_timeoutForConnect = value;};
-    
-    /**
-     * Get connect timeout
-     * @return int
-     *
-     */
-    inline int getTimeoutForConnect() {return _timeoutForConnect;}
-    
-    
-    /**
-     * Change the download timeout
-     * @param value
-     * @return NULL
-     */
-    inline void setTimeoutForRead(int value) {_timeoutForRead = value;};
-    
 
-    /**
-     * Get download timeout
-     * @return int
-     */
+    static CAHttpClient *getInstance(int thread = 0);
+    
+    static void destroyInstance(int thread = 0);
+
+    void send(CAHttpRequest* request);
+
+    inline void setTimeoutForConnect(int value) {_timeoutForConnect = value;};
+
+    inline int getTimeoutForConnect() {return _timeoutForConnect;}
+
+    inline void setTimeoutForRead(int value) {_timeoutForRead = value;};
+
     inline int getTimeoutForRead() {return _timeoutForRead;};
     
+    inline void setSSLVerification(const std::string& str) {_sslCaFilename = str;}
     
-    int getRequestCount();
+    inline unsigned long getRequestCount() {return _asyncRequestCount;}
     
 private:
-    CCHttpClient(int thread);
-    virtual ~CCHttpClient();
+    
+    CAHttpClient(int thread);
+    
+    virtual ~CAHttpClient();
+    
     bool init(void);
     
-    /**
-     * Init pthread mutex, semaphore, and create new thread for http requests
-     * @return bool
-     */
     bool lazyInitThreadSemphore();
-    /** Poll function called from main thread to dispatch callbacks when http requests finished **/
+    
     void dispatchResponseCallbacks(float delta);
     
 private:
     int _timeoutForConnect;
     int _timeoutForRead;
     int _threadID;
-    // std::string reqId;
+
+public:
+    unsigned long               _asyncRequestCount;
+    std::string                 _sslCaFilename;
+    pthread_t                   s_networkThread;
+    pthread_mutex_t             s_requestQueueMutex;
+    pthread_mutex_t             s_responseQueueMutex;
+    pthread_mutex_t             s_SleepMutex;
+    pthread_cond_t              s_SleepCondition;
+    bool                        need_quit;
+    char                        s_errorBuffer[256];
+    CADeque<CAHttpRequest*>     s_requestQueue;
+    CADeque<CAHttpResponse*>    s_responseQueue;
+
 };
 
-// end of Network group
-/// @}
 
+CC_DEPRECATED_ATTRIBUTE typedef CAHttpClient CCHttpClient;
+CC_DEPRECATED_ATTRIBUTE typedef CAHttpResponse CCHttpResponse;
+CC_DEPRECATED_ATTRIBUTE typedef CAHttpRequest CCHttpRequest;
 NS_CC_EXT_END
 
-#endif //__CCHTTPREQUEST_H__
+#endif //__CAHttpRequest_H__

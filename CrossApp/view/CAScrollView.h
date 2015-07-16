@@ -18,7 +18,7 @@
 NS_CC_BEGIN
 
 class CAScrollView;
-class CAScrollViewDelegate
+class CC_DLL CAScrollViewDelegate
 {
 public:
 
@@ -27,10 +27,10 @@ public:
     virtual void scrollViewDidMoved(CAScrollView* view){};
     
     virtual void scrollViewStopMoved(CAScrollView* view){};
-    
-    virtual void scrollViewDidScroll(CAScrollView* view){};
-    
+
     virtual void scrollViewWillBeginDragging(CAScrollView* view){};
+    
+    virtual void scrollViewDragging(CAScrollView* view){};
     
     virtual void scrollViewDidEndDragging(CAScrollView* view){};
     
@@ -39,6 +39,12 @@ public:
     virtual void scrollViewHeaderBeginRefreshing(CAScrollView* view){};
     
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view){};
+    
+    virtual void scrollViewTouchUpWithoutMoved(CAScrollView* view, const CCPoint& point){};
+    
+public:
+    
+    virtual void scrollViewDidScroll(CAScrollView* view){};
 };
 
 class CAIndicator;
@@ -61,7 +67,7 @@ public:
     
     virtual bool init();
 
-    void addSubview(CAView* subview);
+    virtual void addSubview(CAView* subview);
     
     virtual void insertSubview(CAView* subview, int z);
     
@@ -73,7 +79,7 @@ public:
     
     CAView* getSubviewByTag(int aTag);
     
-    CCArray* getSubviews();
+    const CAVector<CAView*>& getSubviews();
     
     void setContentOffset(const CCPoint& offset, bool animated);
     
@@ -84,6 +90,22 @@ public:
     void setBackGroundColor(const CAColor4B &color);
     
     void setZoomScale(float zoom);
+
+    virtual bool isReachBoundaryLeft();
+    
+    virtual bool isReachBoundaryRight();
+    
+    virtual bool isReachBoundaryUp();
+    
+    virtual bool isReachBoundaryDown();
+    
+    CC_PROPERTY_IS(bool, m_bTouchEnabledAtSubviews, TouchEnabledAtSubviews);
+    
+    CC_PROPERTY_IS(bool, m_bShowsScrollIndicators, ShowsScrollIndicators);// default is true
+    
+    CC_PROPERTY_IS(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);// default is true
+    
+    CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);// default is true
     
     CC_SYNTHESIZE(CAScrollViewDelegate*, m_pScrollViewDelegate, ScrollViewDelegate);
     
@@ -93,23 +115,17 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bBounceVertical, BounceVertical);
     
-	CC_SYNTHESIZE_IS_READONLY(bool, m_bTracking, Tracking);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bTracking, Tracking);
     
-	CC_SYNTHESIZE_IS_READONLY(bool, m_bDecelerating, Decelerating);
-    
-    CC_PROPERTY_IS(bool, m_bShowsHorizontalScrollIndicator, ShowsHorizontalScrollIndicator);
-    
-    CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bDecelerating, Decelerating);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bZooming, Zooming);
     
-    CC_SYNTHESIZE(float, m_fMinimumZoomScale, MinimumZoomScale);
+    CC_SYNTHESIZE(float, m_fMinimumZoomScale, MinimumZoomScale);// default is 1.0
     
-    CC_SYNTHESIZE(float, m_fMaximumZoomScale, MaximumZoomScale);
+    CC_SYNTHESIZE(float, m_fMaximumZoomScale, MaximumZoomScale);// default is 1.0
     
     CC_SYNTHESIZE_READONLY(float, m_fZoomScale, ZoomScale);
-    
-    CC_PROPERTY_IS(bool, m_bscrollEnabled, ScrollEnabled);
     
     CC_PROPERTY_PASS_BY_REF(CCSize, m_obViewSize, ViewSize);
     
@@ -125,18 +141,6 @@ public:
     
     void startDeaccelerateScroll();
     
-    virtual bool isSlidingMinX(void) const;
-    
-    virtual bool isSlidingMaxX(void) const;
-    
-    virtual bool isSlidingMinY(void) const;
-    
-    virtual bool isSlidingMaxY(void) const;
-    
-    void setTouchEnabledAtSubviews(bool var);
-    
-    bool isTouchEnabledAtSubviews();
-    
 protected:
  
     inline virtual float minSpeed(float dt)
@@ -146,7 +150,7 @@ protected:
     
     inline virtual float maxSpeed(float dt)
     {
-        return (CCPoint(m_obContentSize).getLength() * 5 * dt);
+        return (_px(90) * 60 * dt);
     }
     
     inline virtual float maxSpeedCache(float dt)
@@ -159,15 +163,12 @@ protected:
         return 6 * dt;
     }
     
-    inline virtual float maxBouncesSpeed(float dt)
-    {
-        return (CCPoint(m_obContentSize).getLength() * 6 * dt);
-    }
-    
     virtual float maxBouncesLenght()
     {
         return _px(120.0f);
     }
+    
+    virtual void contentOffsetFinish(float dt) {};
     
     void getScrollWindowNotOutPoint(CCPoint& point);
     
@@ -183,9 +184,7 @@ protected:
     
     void deaccelerateScrolling(float dt);
     
-    virtual void contentOffsetFinish(float dt);
-    
-    void closeToPoint(float dt);
+    void closeToPoint(float dt, float now, float total);
     
     void updateIndicator();
     
@@ -233,9 +232,9 @@ protected:
     
     CAIndicator* m_pIndicatorVertical;
     
-    CCArray* m_pChildInThis;
+    CAVector<CAView*> m_vChildInThis;
     
-    CCArray* m_pTouches;
+    CAVector<CATouch*> m_vTouches;
     
     float m_fTouchLength;
 
@@ -245,7 +244,7 @@ protected:
     
     CCPoint m_tCloseToPoint;
     
-    CCPoint m_tCloseToSpeed;
+    CCPoint m_tInitialPoint;
 };
 
 

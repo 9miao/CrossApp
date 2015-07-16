@@ -9,15 +9,8 @@
 #include <string>
 
 
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "platform/CCImage.h"
-    #include <list>
-#endif
-
 NS_CC_BEGIN
 
-class CCLock;
-class CCImage;
 
 class CC_DLL CAImageCache : public CAObject
 {
@@ -37,14 +30,10 @@ public:
     static void purgeSharedImageCache();
 
     CAImage* addImage(const std::string& fileimage);
-    
-    CAImage* addImageFullPath(const std::string& fileimage);
-    
+
     void addImageAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector);
 
     void addImageFullPathAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector);
-    
-    CAImage* addUIImage(CCImage *image, const std::string& key);
 
     CAImage* addETCImage(const std::string& filename);
 
@@ -159,86 +148,6 @@ protected:
     GLuint              m_pBuffersVBO[2];
     bool                m_bDirty;
 };
-
-
-
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-
-class VolatileTexture
-{
-    typedef enum
-    {
-        kInvalid = 0,
-        kImageFile,
-        kImageData,
-        kString,
-        kImage,
-    }ccCachedImageType;
-    
-public:
-    
-    VolatileTexture(CAImage* t);
-    
-    ~VolatileTexture();
-    
-    static void addImageTexture(CAImage* tt, const char* imageFileName, CCImage::EImageFormat format);
-
-    static void addDataTexture(CAImage* tt, void* data, CAImagePixelFormat pixelFormat, const CCSize& contentSize);
-    
-    static void addCCImage(CAImage* tt, CCImage *image);
-    
-    static void setTexParameters(CAImage* t, ccTexParams *texParams);
-    
-    static void removeImage(CAImage* t);
-    
-    static void reloadAllImages();
-    
-public:
-    
-    static std::list<VolatileTexture*> textures;
-    
-    static bool isReloading;
-    
-private:
-
-    static VolatileTexture* findVolotileTexture(CAImage* tt);
-    
-protected:
-    
-    CAImage* texture;
-    
-    CCImage *uiImage;
-    
-    ccCachedImageType m_eCashedImageType;
-    
-    void *m_pTextureData;
-    
-    CCSize m_TextureSize;
-    
-    CAImagePixelFormat m_PixelFormat;
-    
-    std::string m_strFileName;
-    
-    CCImage::EImageFormat m_FmtImage;
-    
-    ccTexParams     m_texParams;
-    
-    CCSize          m_size;
-    
-    CATextAlignment m_alignment;
-    
-    CAVerticalTextAlignment m_vAlignment;
-    
-    std::string     m_strFontName;
-    
-    std::string     m_strText;
-    
-    float           m_fFontSize;
-};
-
-#endif
-
 
 
 NS_CC_END

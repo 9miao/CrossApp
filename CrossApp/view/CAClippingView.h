@@ -14,7 +14,7 @@ protected:
     CAView* m_pStencil;
     GLfloat m_fAlphaThreshold;
     bool    m_bInverted;
-    
+    bool    m_bClippingEnabled;
 public:
     /** Creates and initializes a clipping node without a stencil.
      */
@@ -81,6 +81,10 @@ public:
      */
     bool isInverted() const;
     void setInverted(bool bInverted);
+    
+    bool isClippingEnabled() const;
+    void setClippingEnabled(bool bClippingEnabled);
+    
     
 protected:
     CAClippingView();

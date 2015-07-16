@@ -3,31 +3,25 @@
 #ifndef __SUPPORT_BASE64_H__
 #define __SUPPORT_BASE64_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif    
-    
+#include "platform/CCPlatformMacros.h"
+#include <string>
+
 namespace CrossApp
 {
 
-/** @file
- base64 helper functions
- */
-
-/** 
- * Decodes a 64base encoded memory. The decoded memory is
- * expected to be freed by the caller.
- *
- * @returns the length of the out buffer
- *
- @since v0.8.1
- */
-int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out);
-
+    static inline bool isBase64(unsigned char c) {
+        return (isalnum(c) || (c == '+') || (c == '/'));
+    }
+    
+    CC_DLL std::string base64Decode(std::string const& encoded_string);
+    // returns a newly allocated array - of size "resultSize" - that
+    // the caller is responsible for delete[]ing.
+    
+	CC_DLL std::string base64Encode(unsigned char const* bytes_to_encode, unsigned int in_len);
+    // returns a 0-terminated string that
+    // the caller is responsible for delete[]ing.
+    
 }//namespace   CrossApp 
 
-#ifdef __cplusplus
-}
-#endif    
 
 #endif // __SUPPORT_BASE64_H__

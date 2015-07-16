@@ -12,5 +12,9 @@ float CADensityDpi::getDensityDpi()
     return relust;
 }
 
+CADeviceIdiom CADensityDpi::getIdiom()
+{
+    return CADeviceIdiomPhone;
+}
 
 NS_CC_END

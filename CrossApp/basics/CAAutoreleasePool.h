@@ -3,13 +3,13 @@
 #define __AUTORELEASEPOOL_H__
 
 #include "CAObject.h"
-#include "cocoa/CCArray.h"
+#include "basics/CASTLContainer.h"
 
 NS_CC_BEGIN
 
 class CC_DLL CAAutoreleasePool : public CAObject
 {
-    CCArray*    m_pManagedObjectArray;    
+    std::vector<CAObject*>*    m_pManagedObjectArray;
 public:
     CAAutoreleasePool(void);
     ~CAAutoreleasePool(void);
@@ -23,8 +23,8 @@ public:
 
 class CC_DLL CAPoolManager
 {
-    CCArray*    m_pReleasePoolStack;    
-    CAAutoreleasePool*                    m_pCurReleasePool;
+    CADeque<CAAutoreleasePool*>*     m_pReleasePoolStack;
+    CAAutoreleasePool*                m_pCurReleasePool;
 
     CAAutoreleasePool* getCurReleasePool();
 public:

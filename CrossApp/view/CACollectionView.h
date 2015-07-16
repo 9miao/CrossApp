@@ -84,6 +84,8 @@ public:
     {
         return 0;
     }
+    
+    virtual void collectionViewWillDisplayCellAtIndex(CACollectionView* table, CACollectionViewCell* cell, unsigned int section, unsigned int row, unsigned int item) {};
 };
 
 
@@ -115,6 +117,12 @@ public:
 
     void setUnSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
     
+    virtual void setShowsScrollIndicators(bool var);
+    
+    CACollectionViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
+    
+    const CAVector<CACollectionViewCell*>& displayingCollectionCell();
+    
     CC_SYNTHESIZE(CACollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
     
 	CC_SYNTHESIZE(CACollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
@@ -138,6 +146,8 @@ public:
     CC_SYNTHESIZE_IS(bool, m_bAlwaysTopSectionHeader, AlwaysTopSectionHeader);
     
     CC_SYNTHESIZE_IS(bool, m_bAlwaysBottomSectionFooter, AlwaysBottomSectionFooter);
+    
+    CACollectionViewCell* getHighlightCollectionCell();
     
 protected:
     
@@ -168,6 +178,50 @@ public:
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 
 	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
+private:
+    
+    using CAScrollView::setBounceHorizontal;
+    
+    using CAScrollView::isBounceHorizontal;
+    
+    using CAScrollView::setBounceVertical;
+    
+    using CAScrollView::isBounceVertical;
+    
+    using CAScrollView::setShowsHorizontalScrollIndicator;
+    
+    using CAScrollView::isShowsHorizontalScrollIndicator;
+    
+    using CAScrollView::setShowsVerticalScrollIndicator;
+    
+    using CAScrollView::isShowsVerticalScrollIndicator;
+    
+    using CAScrollView::setViewSize;
+    
+    using CAScrollView::setMinimumZoomScale;
+    
+    using CAScrollView::getMinimumZoomScale;
+    
+    using CAScrollView::setMaximumZoomScale;
+    
+    using CAScrollView::getMaximumZoomScale;
+    
+    using CAScrollView::getZoomScale;
+    
+    using CAScrollView::isZooming;
+    
+    using CAScrollView::addSubview;
+    
+    using CAScrollView::insertSubview;
+    
+    using CAScrollView::removeAllSubviews;
+    
+    using CAScrollView::removeSubview;
+    
+    using CAScrollView::removeSubviewByTag;
+    
+    using CAScrollView::getSubviewByTag;
 
 private:
     
@@ -195,9 +249,11 @@ private:
 
 	CACollectionViewCell* m_pHighlightedCollectionCells;
 
-	std::map<CAIndexPath3E, CACollectionViewCell*> m_pUsedCollectionCells;
+	std::map<CAIndexPath3E, CACollectionViewCell*> m_mpUsedCollectionCells;
 
-	std::map<std::string, CAVector<CACollectionViewCell*> > m_pFreedCollectionCells;
+    CAVector<CACollectionViewCell*> m_vpUsedCollectionCells;
+    
+	std::map<std::string, CAVector<CACollectionViewCell*> > m_mpFreedCollectionCells;
 };
 
 class CC_DLL CACollectionViewCell : public CAControl
@@ -212,6 +268,8 @@ public:
 
 	virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
 
+    CC_SYNTHESIZE_READONLY(CAView*, m_pContentView, ContentView);
+    
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
     
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
@@ -225,10 +283,6 @@ public:
     CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
-    
-protected:
-    
-    CC_DEPRECATED_ATTRIBUTE virtual bool initWithReuseIdentifier(const char* reuseIdentifier);
     
 protected:
     

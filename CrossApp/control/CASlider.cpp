@@ -19,10 +19,10 @@ NS_CC_BEGIN
 CASlider::CASlider()
     : CAControl()
     , m_bTouchClick(false)
-    , m_value(0.0f)
-    , m_minValue(0.0f)
-    , m_maxValue(1.0f)
-    , m_trackHeight(3.0f)
+    , m_fValue(0.0f)
+    , m_fMinValue(0.0f)
+    , m_fMaxValue(1.0f)
+    , m_fTrackHeight(3.0f)
     , m_pMinTrackTintImage(NULL)
     , m_pMaxTrackTintImage(NULL)
     , m_pThumbTintImage(NULL)
@@ -30,7 +30,8 @@ CASlider::CASlider()
     , m_pMaxTrackTintImageView(NULL)
     , m_pThumbTintImageView(NULL)
 {
-    
+    this->setPriorityScroll(true);
+    this->setVerticalScrollEnabled(false);
 }
 
 CASlider::~CASlider()
@@ -66,15 +67,16 @@ void CASlider::onEnterTransitionDidFinish()
     
     const CCSize size = this->getBounds().size;
     
-    if (m_trackHeight > size.height)
+    if (m_fTrackHeight > size.height)
     {
-        m_trackHeight = size.height;
+        m_fTrackHeight = size.height;
     }
     
     if (NULL == m_pMinTrackTintImageView)
     {
         m_pMinTrackTintImageView = CAScale9ImageView::createWithImage(m_pMinTrackTintImage);
     }
+    
     if (m_pMinTrackTintImageView)
     {
         this->addSubview(m_pMinTrackTintImageView);
@@ -137,9 +139,7 @@ bool CASlider::initWithFrame(const CCRect& rect)
     {
         return false;
     }
-    this->setTouchMovedListenHorizontal(true);
-    this->setTouchMovedListenVertical(false);
-    m_bTouchMovedStopSubviews = true;
+
     this->setFrame(rect);
     return true;
 }
@@ -150,17 +150,15 @@ bool CASlider::initWithCenter(const CCRect& rect)
     {
         return false;
     }
-    this->setTouchMovedListenHorizontal(true);
-    this->setTouchMovedListenVertical(false);
-    m_bTouchMovedStopSubviews = true;
+
     this->setCenter(rect);
     return true;
 }
 
 void CASlider::layoutSubViews()
 {
-    if (m_value >= m_minValue
-        && m_value <= m_maxValue
+    if (m_fValue >= m_fMinValue
+        && m_fValue <= m_fMaxValue
         && m_pThumbTintImageView
         && m_pMinTrackTintImageView
         && m_pMaxTrackTintImageView)
@@ -169,50 +167,50 @@ void CASlider::layoutSubViews()
         const CCSize thumbSize = m_pThumbTintImageView->getBounds().size;
         const float halfThumbWidth = thumbSize.width / 2;
         const float totalWidth = size.width;
-        const float percent = m_value / (m_maxValue - m_minValue);
+        const float percent = m_fValue / (m_fMaxValue - m_fMinValue);
         const float centerX = ((totalWidth - thumbSize.width) * percent) + halfThumbWidth;
-        const float trackOriginY = (size.height - m_trackHeight) / 2;
+        const float trackOriginY = (size.height - m_fTrackHeight) / 2;
         const float minRight = centerX - halfThumbWidth;
         const float maxLeft = centerX + halfThumbWidth;
         
         m_pThumbTintImageView->setCenterOrigin(CCPoint(centerX, size.height / 2));
-        m_pMinTrackTintImageView->setFrame(CCRect(0, trackOriginY, minRight, m_trackHeight));
-        m_pMaxTrackTintImageView->setFrame(CCRect(maxLeft, trackOriginY, size.width - maxLeft, m_trackHeight));
+        m_pMinTrackTintImageView->setFrame(CCRect(0, trackOriginY, minRight, m_fTrackHeight));
+        m_pMaxTrackTintImageView->setFrame(CCRect(maxLeft, trackOriginY, size.width - maxLeft, m_fTrackHeight));
     }
 }
 
 void CASlider::setValue(float value)
 {
-    if (m_value != value)
+    if (m_fValue != value)
     {
-        m_value = value;
+        m_fValue = value;
         this->layoutSubViews();
     }
 }
 
 void CASlider::setMinValue(float minValue)
 {
-    if (m_minValue != minValue)
+    if (m_fMinValue != minValue)
     {
-        m_minValue = minValue;
+        m_fMinValue = minValue;
         this->layoutSubViews();
     }
 }
 
 void CASlider::setMaxValue(float maxValue)
 {
-    if (m_maxValue != maxValue)
+    if (m_fMaxValue != maxValue)
     {
-        m_maxValue = maxValue;
+        m_fMaxValue = maxValue;
         this->layoutSubViews();
     }
 }
 
 void CASlider::setTrackHeight(float trackHeight)
 {
-    if (m_trackHeight != trackHeight)
+    if (m_fTrackHeight != trackHeight)
     {
-        m_trackHeight = trackHeight;
+        m_fTrackHeight = trackHeight;
         this->layoutSubViews();
     }
 }
@@ -241,7 +239,7 @@ void CASlider::setMaxTrackTintImage(CAImage* image)
         m_pMaxTrackTintImage = image;
         if (m_pMaxTrackTintImageView)
         {
-            ((CAScale9ImageView*)m_pMinTrackTintImageView)->setImage(m_pMaxTrackTintImage);
+            ((CAScale9ImageView*)m_pMaxTrackTintImageView)->setImage(m_pMaxTrackTintImage);
         }
         this->layoutSubViews();
     }
@@ -256,7 +254,7 @@ void CASlider::setThumbTintImage(CAImage* image)
         m_pThumbTintImage = image;
         if (m_pThumbTintImageView)
         {
-            ((CAScale9ImageView*)m_pMinTrackTintImageView)->setImage(m_pThumbTintImage);
+            ((CAScale9ImageView*)m_pThumbTintImageView)->setImage(m_pThumbTintImage);
             const CCSize size = this->getBounds().size;
             m_pThumbTintImageView->setFrame(CCRect(0, 0, size.height, size.height));
         }
@@ -282,8 +280,8 @@ void CASlider::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         return;
     
     CCRect bounds = getBounds();
-    float value = (m_maxValue - m_minValue) * (point.x / bounds.size.width);
-    value = (point.x <= 0) ? m_minValue : ((point.x >= bounds.size.width) ? m_maxValue : value);
+    float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width);
+    value = (point.x <= 0) ? m_fMinValue : ((point.x >= bounds.size.width) ? m_fMaxValue : value);
     this->setValue(value);
     
     if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
@@ -302,7 +300,7 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     CCRect bounds = getBounds();
     if (bounds.containsPoint(point))
     {
-        float value = (m_maxValue - m_minValue) * (point.x / bounds.size.width);
+        float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width);
         this->setValue(value);
         if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
         {
@@ -310,9 +308,9 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         }
     }
     
-    if (m_pTarget[CAControlEventTouchUpSide] && m_selTouch[CAControlEventTouchUpSide])
+    if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchUpSide]->*m_selTouch[CAControlEventTouchUpSide])(this, point);
+        ((CAObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this, point);
     }
 }
 
@@ -323,7 +321,7 @@ void CASlider::addTarget(CAObject* target, SEL_CAControl selector)
 
 void CASlider::addTargetForTouchUpSide(CAObject* target, SEL_CAControl selector)
 {
-    this->addTarget(target, selector, CAControlEventTouchUpSide);
+    this->addTarget(target, selector, CAControlEventTouchUpInSide);
 }
 
 void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
@@ -333,7 +331,7 @@ void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
 
 void CASlider::setContentSize(const CCSize & var)
 {
-    CAControl::setContentSize(var);
+    CAControl::setContentSize(CCSize(var.width, MAX(var.height, _px(56))));
 }
 
 NS_CC_END

@@ -15,7 +15,7 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
-class CCTimer;
+class CATimer;
 class CCLayer;
 class CCMenuItem;
 class CCNotificationCenter;
@@ -72,7 +72,7 @@ public:
     static CCSchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
     ~CCSchedulerScriptHandlerEntry(void);
     
-    CrossApp::CCTimer* getTimer(void) {
+    CrossApp::CATimer* getTimer(void) {
         return m_pTimer;
     }
     
@@ -98,7 +98,7 @@ private:
     }
     bool init(float fInterval, bool bPaused);
     
-    CrossApp::CCTimer*   m_pTimer;
+    CrossApp::CATimer*   m_pTimer;
     bool                m_bPaused;
     bool                m_bMarkedForDeletion;
 };
@@ -196,29 +196,6 @@ public:
      */
     virtual int executeNodeEvent(CrossApp::CAViewController* pNode, int nAction) = 0;
     
-  //  virtual int executeMenuItemEvent(CCMenuItem* pMenuItem) = 0;
-    /** Execute a notification event function */
-//    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName) = 0;
-    
-    /** execute a callfun event */
-//    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CAObject* pTarget = NULL) = 0;
-    /** execute a schedule function */
- //   virtual int executeSchedule(int nHandler, float dt, CrossApp::CAView* pNode = NULL) = 0;
-    
-    /** functions for executing touch event */
-
-    /** functions for keypad event */
-//    virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType) = 0;
-
-    /** execute a accelerometer event */
-//    virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue) = 0;
-
-    /** function for common event */
-//    virtual int executeEvent(int nHandler, const char* pEventName, CAObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) = 0;
-    
-    /** function for c++ call back lua funtion */
-   // virtual int executeEventWithArgs(int nHandler, CCArray* pArgs) { return 0; }
-
     /** called by CCAssert to allow scripting engine to handle failed assertions
      * @return true if the assert was handled by the script engine, false otherwise.
      */

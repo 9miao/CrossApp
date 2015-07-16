@@ -1,26 +1,4 @@
-/****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
 
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
 #include "EAGLView.h"
 #include "CAApplicationCaller.h"
 #include "CCEGLView.h"
@@ -45,16 +23,6 @@ bool CCEGLView::isOpenGLReady()
 {
     return [EAGLView sharedEGLView] != NULL;
 }
-    
-bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
-{
-    assert(m_eResolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
-	
-	m_fScaleX = m_fScaleY = contentScaleFactor;
-	[[EAGLView sharedEGLView] setNeedsLayout];
-        
-	return true;
-}
 
 void CCEGLView::end()
 {
@@ -68,6 +36,11 @@ void CCEGLView::end()
 void CCEGLView::swapBuffers()
 {
     [[EAGLView sharedEGLView] swapBuffers];
+}
+
+void CCEGLView::checkContext()
+{
+    [[EAGLView sharedEGLView] checkContext];
 }
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
@@ -84,17 +57,17 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 void CCEGLView::setIMEKeyboardNumber()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.keyboardType =UIKeyboardTypeNumberPad;
+    view.textfield.keyboardType = UIKeyboardTypeNumberPad;
 }
 void CCEGLView::setIMEKeyboardDefault()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.keyboardType =UIKeyboardTypeDefault;
+    view.textfield.keyboardType = UIKeyboardTypeDefault;
 }
 void CCEGLView::setIMEKeyboardAlphabet()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.keyboardType =UIKeyboardTypeASCIICapable;
+    view.textfield.keyboardType = UIKeyboardTypeASCIICapable;
 }
 CCEGLView* CCEGLView::sharedOpenGLView()
 {
@@ -104,19 +77,25 @@ CCEGLView* CCEGLView::sharedOpenGLView()
 void CCEGLView::setIMEKeyboardReturnSend()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.returnKeyType =UIReturnKeySend;
+    view.textfield.returnKeyType =UIReturnKeySend;
 }
 
 void CCEGLView::setIMEKeyboardReturnSearch()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.returnKeyType =UIReturnKeySearch;
+    view.textfield.returnKeyType =UIReturnKeySearch;
 }
 
 void CCEGLView::setIMEKeyboardReturnDone()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.returnKeyType =UIReturnKeyDone;
+    view.textfield.returnKeyType =UIReturnKeyDone;
+}
+
+void CCEGLView::setIMEKeyboardReturnEnter()
+{
+    EAGLView * view = [EAGLView sharedEGLView];
+    view.textfield.returnKeyType =UIReturnKeyDefault;
 }
 NS_CC_END
 

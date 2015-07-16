@@ -33,24 +33,30 @@ public:
     virtual bool becomeFirstResponder();
     
     virtual CAResponder* nextResponder();
-    
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchMovedStopSubviews, TouchMovedStopSubviews);
 
-    CC_SYNTHESIZE_IS(bool, m_bTouchMovedListenHorizontal, TouchMovedListenHorizontal);
+    CC_SYNTHESIZE_IS(bool, m_bHaveNextResponder, HaveNextResponder);// default is true
     
-    CC_SYNTHESIZE_IS(bool, m_bTouchMovedListenVertical, TouchMovedListenVertical);
+    CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);// default is true
+
+    CC_SYNTHESIZE_IS(bool, m_bScrollEnabled, ScrollEnabled);// default is true
     
-    CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);
+    CC_SYNTHESIZE_IS(bool, m_bHorizontalScrollEnabled, HorizontalScrollEnabled);// default is true
     
-    CC_SYNTHESIZE_IS(bool, m_bHaveNextResponder, HaveNextResponder);
+    CC_SYNTHESIZE_IS(bool, m_bVerticalScrollEnabled, VerticalScrollEnabled);// default is true
     
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bSlidingMinX, SlidingMinX);
+    CC_SYNTHESIZE_IS(bool, m_bPriorityScroll, PriorityScroll);// default is false, CAScrollView as well as his derived type defaults to true
     
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bSlidingMaxX, SlidingMaxX);
+    CC_SYNTHESIZE_IS(bool, m_bReachBoundaryHandOverToSuperview, ReachBoundaryHandOverToSuperview);// default is true
     
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bSlidingMinY, SlidingMinY);
+    CC_SYNTHESIZE_IS(bool, m_bTouchEventScrollHandOverToSuperview, TouchEventScrollHandOverToSuperview);// default is true
     
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bSlidingMaxY, SlidingMaxY);
+    virtual bool isReachBoundaryLeft() {return false;}
+    
+    virtual bool isReachBoundaryRight() {return false;}
+    
+    virtual bool isReachBoundaryUp() {return false;}
+    
+    virtual bool isReachBoundaryDown() {return false;}
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     

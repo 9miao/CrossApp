@@ -11,11 +11,13 @@
 #include "CAScale9ImageView.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
-#include "actions/CCActionInstant.h"
-#include "actions/CCActionInterval.h"
 #include "dispatcher/CATouch.h"
 #include "support/CCPointExtension.h"
 #include "CCEGLView.h"
+#include "animation/CAViewAnimation.h"
+#include "actions/CCActionInterval.h"
+#include "actions/CCActionInstant.h"
+
 NS_CC_BEGIN
 
 #pragma CATableView
@@ -42,11 +44,12 @@ CATableView::CATableView()
 CATableView::~CATableView()
 {
     std::map<std::string, CAVector<CATableViewCell*> >::iterator itr;
-    for (itr=m_pFreedTableCells.begin(); itr!=m_pFreedTableCells.end(); itr++)
+    for (itr=m_mpFreedTableCells.begin(); itr!=m_mpFreedTableCells.end(); itr++)
     {
         itr->second.clear();
     }
-    m_pFreedTableCells.clear();
+    m_vpUsedTableCells.clear();
+    m_mpFreedTableCells.clear();
     m_pFreedLines.clear();
     this->clearData();
     
@@ -60,8 +63,10 @@ void CATableView::onEnterTransitionDidFinish()
 {
     CAScrollView::onEnterTransitionDidFinish();
     
-    this->runAction(CCSequence::create(CCDelayTime::create(1/60.0f),
-                                       CCCallFunc::create(this, callfunc_selector(CATableView::firstReloadData)), NULL));
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATableView::firstReloadData));
+    CAViewAnimation::commitAnimations();
 }
 
 void CATableView::onExitTransitionDidStart()
@@ -102,7 +107,7 @@ bool CATableView::init()
     
     this->setShowsHorizontalScrollIndicator(false);
     this->setBounceHorizontal(false);
-    this->setTouchMovedListenHorizontal(false);
+    this->setHorizontalScrollEnabled(false);
     return true;
 }
 
@@ -113,9 +118,9 @@ void CATableView::setContentSize(const CrossApp::CCSize &var)
 
 bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pTouches->count() > 0)
+    if (!m_vTouches.empty())
     {
-        m_pTouches->replaceObjectAtIndex(0, pTouch);
+        m_vTouches.replace(0, pTouch);
         return true;
     }
     bool isInertia = m_tInertia.getLength() < 1.0f;
@@ -127,7 +132,7 @@ bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
         
         std::map<CAIndexPath2E, CATableViewCell*>::iterator itr;
-        for (itr=m_pUsedTableCells.begin(); itr!=m_pUsedTableCells.end(); itr++)
+        for (itr=m_mpUsedTableCells.begin(); itr!=m_mpUsedTableCells.end(); itr++)
         {
             CATableViewCell* cell = itr->second;
             CC_CONTINUE_IF(cell == NULL);
@@ -157,8 +162,7 @@ bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CATableView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-    CC_RETURN_IF(m_bscrollEnabled == false);
-    CC_RETURN_IF(m_pTouches->containsObject(pTouch) == false);
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CAScrollView::ccTouchMoved(pTouch, pEvent);
     
     if (m_pHighlightedTableCells)
@@ -176,7 +180,7 @@ void CATableView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    CC_RETURN_IF(m_pTouches->containsObject(pTouch) == false);
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CAScrollView::ccTouchEnded(pTouch, pEvent);
     
     if (m_pHighlightedTableCells)
@@ -207,7 +211,7 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
         if (deselectedIndexPath != CAIndexPath2EZero)
         {
-            if (CATableViewCell* cell = m_pUsedTableCells[deselectedIndexPath])
+            if (CATableViewCell* cell = m_mpUsedTableCells[deselectedIndexPath])
             {
                 cell->setControlStateNormal();
             }
@@ -221,7 +225,7 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         
         if (selectedIndexPath != CAIndexPath2EZero)
         {
-            if (CATableViewCell* cell = m_pUsedTableCells[selectedIndexPath])
+            if (CATableViewCell* cell = m_mpUsedTableCells[selectedIndexPath])
             {
                 cell->setControlStateSelected();
             }
@@ -234,12 +238,11 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             }
         }
     }
-    
 }
 
 void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-    CC_RETURN_IF(m_pTouches->containsObject(pTouch) == false);
+    CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CAScrollView::ccTouchCancelled(pTouch, pEvent);
     
     if (m_pHighlightedTableCells)
@@ -256,12 +259,12 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 float CATableView::maxSpeed(float dt)
 {
-    return (CCPoint(m_obContentSize).getLength() * 8 * dt);
+    return (_px(128) * 60 * dt);
 }
 
 float CATableView::maxSpeedCache(float dt)
 {
-    return (maxSpeed(dt) * 3.0f);
+    return (maxSpeed(dt) * 2.0f);
 }
 
 float CATableView::decelerationRatio(float dt)
@@ -273,11 +276,11 @@ CATableViewCell* CATableView::dequeueReusableCellWithIdentifier(const char* reus
 {
     CATableViewCell* cell = NULL;
     
-    if (!m_pFreedTableCells[reuseIdentifier].empty())
+    if (!m_mpFreedTableCells[reuseIdentifier].empty())
     {
-        cell = m_pFreedTableCells[reuseIdentifier].back();
+        cell = m_mpFreedTableCells[reuseIdentifier].back();
         cell->retain()->autorelease();
-        m_pFreedTableCells[reuseIdentifier].eraseObject(cell);
+        m_mpFreedTableCells[reuseIdentifier].eraseObject(cell);
     }
     return cell;
 }
@@ -290,7 +293,7 @@ void CATableView::setAllowsSelection(bool var)
     std::set<CAIndexPath2E>::iterator itr;
     for (itr=m_pSelectedTableCells.begin(); itr!=m_pSelectedTableCells.end(); itr++)
     {
-        if (CATableViewCell* cell = m_pUsedTableCells[(*itr)])
+        if (CATableViewCell* cell = m_mpUsedTableCells[(*itr)])
         {
             cell->setControlState(CAControlStateNormal);
         }
@@ -305,7 +308,7 @@ void CATableView::setAllowsMultipleSelection(bool var)
     std::set<CAIndexPath2E>::iterator itr;
     for (itr=m_pSelectedTableCells.begin(); itr!=m_pSelectedTableCells.end(); itr++)
     {
-        if (CATableViewCell* cell = m_pUsedTableCells[(*itr)])
+        if (CATableViewCell* cell = m_mpUsedTableCells[(*itr)])
         {
             cell->setControlState(CAControlStateNormal);
         }
@@ -323,7 +326,7 @@ void CATableView::setSelectRowAtIndexPath(unsigned int section, unsigned int row
         std::set<CAIndexPath2E>::iterator itr;
         for (itr=m_pSelectedTableCells.begin(); itr!=m_pSelectedTableCells.end(); itr++)
         {
-            if (CATableViewCell* cell = m_pUsedTableCells[(*itr)])
+            if (CATableViewCell* cell = m_mpUsedTableCells[(*itr)])
             {
                 cell->setControlState(CAControlStateNormal);
             }
@@ -332,7 +335,7 @@ void CATableView::setSelectRowAtIndexPath(unsigned int section, unsigned int row
     }
     
     CAIndexPath2E indexPath = CAIndexPath2E(section, row);
-    if (CATableViewCell* cell = m_pUsedTableCells[indexPath])
+    if (CATableViewCell* cell = m_mpUsedTableCells[indexPath])
     {
         cell->setControlStateSelected();
     }
@@ -346,17 +349,27 @@ void CATableView::setUnSelectRowAtIndexPath(unsigned int section, unsigned int r
     
     CAIndexPath2E indexPath = CAIndexPath2E(section, row);
     CC_RETURN_IF(m_pSelectedTableCells.find(indexPath) == m_pSelectedTableCells.end());
-    if (CATableViewCell* cell = m_pUsedTableCells.at(indexPath))
+    if (CATableViewCell* cell = m_mpUsedTableCells.at(indexPath))
     {
         cell->setControlStateNormal();
     }
     m_pSelectedTableCells.erase(indexPath);
 }
 
+void CATableView::setShowsScrollIndicators(bool var)
+{
+    this->setShowsVerticalScrollIndicator(var);
+    m_bShowsScrollIndicators = var;
+}
 
 CATableViewCell* CATableView::cellForRowAtIndexPath(unsigned int section, unsigned int row)
 {
-    return m_pUsedTableCells[CAIndexPath2E(section, row)];
+    return m_mpUsedTableCells[CAIndexPath2E(section, row)];
+}
+
+const CAVector<CATableViewCell*>& CATableView::displayingTableCell()
+{
+    return m_vpUsedTableCells;
 }
 
 void CATableView::clearData()
@@ -392,16 +405,17 @@ void CATableView::clearData()
     m_pUsedLines.clear();
     
     std::map<CAIndexPath2E, CATableViewCell*>::iterator itr4;
-    for (itr4=m_pUsedTableCells.begin(); itr4!=m_pUsedTableCells.end(); itr4++)
+    for (itr4=m_mpUsedTableCells.begin(); itr4!=m_mpUsedTableCells.end(); itr4++)
     {
         CATableViewCell* cell = itr4->second;
         CC_CONTINUE_IF(cell == NULL);
-        m_pFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
+        m_mpFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
         itr4->second = NULL;
         cell->removeFromSuperview();
         cell->resetTableViewCell();
     }
-    m_pUsedTableCells.clear();
+    m_mpUsedTableCells.clear();
+    m_vpUsedTableCells.clear();
     m_pSectionHeaderViews.clear();
     m_pSectionHeaderViews.clear();
 }
@@ -476,7 +490,7 @@ void CATableView::reloadData()
     this->removeAllSubviews();
     
     float width = this->getBounds().size.width;
-    int y = 0;
+    unsigned int y = 0;
     
     if (m_pTableHeaderView)
     {
@@ -493,12 +507,6 @@ void CATableView::reloadData()
     {
         CCRect sectionHeaderRect = CCRect(0, y, width, m_nSectionHeaderHeights.at(i));
         CAView* sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
-        
-        //CC_DEPRECATED_ATTRIBUTE
-        if (sectionHeaderView == NULL)
-        {
-            sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, i);
-        }
         
         if (sectionHeaderView)
         {
@@ -522,12 +530,6 @@ void CATableView::reloadData()
         CCRect sectionFooterRect = CCRect(0, y, width, m_nSectionFooterHeights.at(i));
         
         CAView* sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
-        
-        //CC_DEPRECATED_ATTRIBUTE
-        if (sectionFooterView == NULL)
-        {
-            sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, i);
-        }
         
         if (sectionFooterView)
         {
@@ -560,7 +562,7 @@ void CATableView::reloadData()
 
 void CATableView::firstReloadData()
 {
-    CC_RETURN_IF(!m_pUsedTableCells.empty());
+    CC_RETURN_IF(!m_mpUsedTableCells.empty());
     this->reloadData();
 }
 
@@ -571,12 +573,12 @@ void CATableView::loadTableCell()
     rect.origin.y -= rect.size.height * 0.1f;
     rect.size.height *= 1.2f;
     
-    for (int i=0; i<m_rTableCellRectss.size(); i++)
+    for (unsigned int i=0; i<(unsigned int)m_rTableCellRectss.size(); i++)
     {
-        for (int j=0; j<m_rTableCellRectss.at(i).size(); j++)
+        for (unsigned int j=0; j<(unsigned int)m_rTableCellRectss.at(i).size(); j++)
         {
             CAIndexPath2E indexPath = CAIndexPath2E(i, j);
-            CC_CONTINUE_IF(m_pUsedTableCells.count(indexPath) && m_pUsedTableCells[indexPath]);
+            CC_CONTINUE_IF(m_mpUsedTableCells.count(indexPath) && m_mpUsedTableCells[indexPath]);
             CCRect cellRect = m_rTableCellRectss[i][j];
             CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
             CATableViewCell* cell = m_pTableViewDataSource->tableCellAtIndex(this, m_rTableCellRectss[i][j].size, i, j);
@@ -586,10 +588,15 @@ void CATableView::loadTableCell()
             cell->updateDisplayedAlpha(this->getAlpha());
             m_pContainer->addSubview(cell);
             cell->setFrame(m_rTableCellRectss[i][j]);
-            m_pUsedTableCells[indexPath] = cell;
+            m_mpUsedTableCells[indexPath] = cell;
+            m_vpUsedTableCells.pushBack(cell);
             if (m_pSelectedTableCells.count(indexPath))
             {
                 cell->setControlStateSelected();
+            }
+            if (m_pTableViewDataSource)
+            {
+                m_pTableViewDataSource->tableViewWillDisplayCellAtIndex(this, cell, i, j);
             }
             
             CAView* view = this->dequeueReusableLine();
@@ -613,8 +620,8 @@ void CATableView::recoveryTableCell()
     rect.size.height *= 1.2f;
     
     std::map<CAIndexPath2E, CATableViewCell*>::iterator itr;
-    for (itr=m_pUsedTableCells.begin();
-         itr!=m_pUsedTableCells.end();
+    for (itr=m_mpUsedTableCells.begin();
+         itr!=m_mpUsedTableCells.end();
          itr++)
     {
         CATableViewCell* cell = itr->second;
@@ -622,10 +629,11 @@ void CATableView::recoveryTableCell()
         CCRect cellRect = cell->getFrame();
 
         CC_CONTINUE_IF(rect.intersectsRect(cellRect));
-        m_pFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
+        m_mpFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
         cell->removeFromSuperview();
         cell->resetTableViewCell();
         itr->second = NULL;
+        m_vpUsedTableCells.eraseObject(cell);
         
         CAView* line = m_pUsedLines[itr->first];
         CC_CONTINUE_IF(line == NULL);
@@ -656,7 +664,7 @@ void CATableView::updateSectionHeaderAndFooterRects()
     for (itr=m_rSectionRects.begin(); itr!=m_rSectionRects.end(); itr++)
     {
         CC_CONTINUE_IF(!rect.intersectsRect(*itr));
-        int i = itr - m_rSectionRects.begin();
+        int i = (int)(itr - m_rSectionRects.begin());
         CAView* header = NULL;
         CAView* footer = NULL;
         float headerHeight = m_nSectionHeaderHeights[i];
@@ -755,16 +763,20 @@ float CATableView::getRowHeightInSectionInRow(unsigned int section, unsigned int
 
 CATableViewCell::CATableViewCell()
 :m_pBackgroundView(NULL)
+,m_pContentView(NULL)
 ,m_nSection(0xffffffff)
 ,m_nRow(0xffffffff)
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
 {
     this->setHaveNextResponder(true);
+    this->setDisplayRange(false);
+    this->setColor(CAColor_clear);
 }
 
 CATableViewCell::~CATableViewCell()
 {
+    CC_SAFE_RELEASE_NULL(m_pContentView);
     CC_SAFE_RELEASE_NULL(m_pBackgroundView);
 }
 
@@ -782,20 +794,10 @@ CATableViewCell* CATableViewCell::create(const std::string& reuseIdentifier)
 
 bool CATableViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
-    this->setDisplayRange(false);
+    m_pContentView = new CAView();
+    this->addSubview(m_pContentView);
+    
     this->setBackgroundView(CAView::create());
-    this->setColor(CAColor_clear);
-    this->setReuseIdentifier(reuseIdentifier);
-    this->normalTableViewCell();
-
-    return true;
-}
-
-bool CATableViewCell::initWithReuseIdentifier(const char* reuseIdentifier)
-{
-    this->setDisplayRange(false);
-    this->setBackgroundView(CAView::create());
-    this->setColor(CAColor_clear);
     this->setReuseIdentifier(reuseIdentifier);
     this->normalTableViewCell();
     
@@ -810,7 +812,7 @@ void CATableViewCell::setBackgroundView(CrossApp::CAView *var)
     m_pBackgroundView = var;
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setFrame(this->getBounds());
-    this->insertSubview(m_pBackgroundView, -1);
+    m_pContentView->insertSubview(m_pBackgroundView, -1);
 }
 
 CAView* CATableViewCell::getBackgroundView()
@@ -821,9 +823,11 @@ CAView* CATableViewCell::getBackgroundView()
 void CATableViewCell::setContentSize(const CrossApp::CCSize &var)
 {
     CAView::setContentSize(var);
+    
+    m_pContentView->setFrame(this->getBounds());
     if (m_pBackgroundView)
     {
-        m_pBackgroundView->setFrame(this->getBounds());
+        m_pBackgroundView->setFrame(m_pContentView->getBounds());
     }
 }
 
@@ -889,6 +893,9 @@ void CATableViewCell::resetTableViewCell()
     this->setVisible(true);
     this->normalTableViewCell();
     this->recoveryTableViewCell();
+    m_pContentView->setScale(1.0f);
+    m_pContentView->setFrame(this->getBounds());
+    m_pContentView->setRotation(0);
 }
 
 NS_CC_END

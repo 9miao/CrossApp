@@ -14,11 +14,22 @@
 
 NS_CC_BEGIN
 
+typedef enum
+{
+    CADeviceIdiomUnknown = -1,
+    CADeviceIdiomPad = 0,
+    CADeviceIdiomPhone = 1
+}
+CADeviceIdiom;
+
+
 class CADensityDpi
 {
 public:
     
     static float getDensityDpi();
+    
+    static CADeviceIdiom getIdiom();
 };
 
 NS_CC_END

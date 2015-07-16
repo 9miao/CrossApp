@@ -12,7 +12,6 @@
 #include <iostream>
 #include "ccMacros.h"
 #include "shaders/CATransformation.h"
-#include "cocoa/CCArray.h"
 #include "CCGL.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAGLProgram.h"
@@ -20,6 +19,7 @@
 #include "dispatcher/CAProtocols.h"
 #include "platform/CCAccelerometerDelegate.h"
 #include "basics/CAResponder.h"
+#include "basics/CASTLContainer.h"
 #include "images/CAImageCache.h"
 
 #ifdef EMSCRIPTEN
@@ -39,6 +39,7 @@ class CCDictionary;
 class CAImage;
 class CAViewDelegate;
 class CABatchView;
+class CAViewAnimation;
 struct transformValues_;
 
 
@@ -57,7 +58,7 @@ typedef enum
 }
 CALayoutLinearType;
 
-#define kCAViewPointInvalid CCPoint(-0xffffffff, -0xffffffff)
+#define kCAViewPointInvalid CCPoint(FLT_MIN, FLT_MIN)
 #define kCAViewSizeInvalid CCPoint(0, 0)
 #define kCAViewRectInvalid CCRect(0, 0, 0, 0)
 
@@ -150,14 +151,14 @@ public:
     
     virtual const CCPoint& getFrameOrigin();
     
-    virtual void setBounds(const CCRect& rect);
-    
-    virtual CCRect getBounds() const;
-    
-    virtual void setCenter(CCRect rect);
+    virtual void setCenter(const CCRect& rect);
     
     virtual CCRect getCenter();
     
+    virtual void setBounds(const CCRect& rect);
+    
+    virtual CCRect getBounds() const;
+
     virtual void setCenterOrigin(const CCPoint& point);
     
     virtual CCPoint getCenterOrigin();
@@ -184,7 +185,9 @@ public:
 
     virtual CAView * getSubviewByTag(int tag);
 
-    virtual CCArray* getSubviews();
+    virtual CAView * getSubviewByTextTag(const std::string& textTag);
+    
+    virtual const CAVector<CAView*>& getSubviews();
 
     virtual unsigned int getSubviewsCount(void) const;
 
@@ -198,6 +201,8 @@ public:
 
     virtual void removeSubviewByTag(int tag);
 
+    virtual void removeSubviewByTextTag(const std::string& textTag);
+    
     virtual void removeAllSubviews();
 
     virtual void reorderSubview(CAView * child, int zOrder);
@@ -213,14 +218,6 @@ public:
     virtual void onExit();
 
     virtual void onExitTransitionDidStart();
-
-    virtual void* getUserData();
-
-    virtual void setUserData(void *pUserData);
-
-    virtual CAObject* getUserObject();
-
-    virtual void setUserObject(CAObject *pUserObject);
 
     virtual CACamera* getCamera();
 
@@ -361,9 +358,6 @@ public:
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
 protected:
-
-    void childrenAlloc(void);
-
     void detachSubview(CAView *subview);
 
     void updateDraw();
@@ -379,8 +373,6 @@ protected:
     virtual CAImage* getImage(void);
     
     virtual void setImageRect(const CCRect& rect);
-    
-    virtual void setImageRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
     
     virtual void setImageCoords(CCRect rect);
     
@@ -432,12 +424,8 @@ protected:
 
     int m_nZOrder;                      ///< z-order value that affects the draw order
     
-    CCArray *m_pSubviews;               ///< array of children nodes              ///< weak reference to parent node
+    CAVector<CAView*> m_obSubviews;               ///< array of children nodes              ///< weak reference to parent node
     CAView* m_pSuperview;
-    
-    
-    void *m_pUserData;                  ///< A user assingned void pointer, Can be point to any cpp object
-    CAObject *m_pUserObject;            ///< A user assigned CAObject
     
     CAGLProgram *m_pShaderProgram;      ///< OpenGL shader
     
@@ -457,13 +445,11 @@ protected:
     bool m_bReorderChildDirty;          ///< children order dirty flag
     
     float		_displayedAlpha;
-    float     _realAlpha;
+    float       _realAlpha;
 	CAColor4B	_displayedColor;
     CAColor4B   _realColor;
     
     bool m_bDisplayRange;
-    bool m_bRestoreScissor;
-    CCRect m_obRestoreScissorRect;
 
     unsigned int        m_uAtlasIndex;          /// Absolute (real) Index on the SpriteSheet
     
@@ -479,7 +465,7 @@ protected:
     bool   m_bRectRotated;                      /// Whether the Image is rotated
     
 
-    CCPoint m_obUnflippedOffsetPositionFromCenter;
+    bool m_bIsAnimation;
     
     // vertex coords, Image coords and color info
     ccV3F_C4B_T2F_Quad m_sQuad;
@@ -491,9 +477,11 @@ protected:
     ccBlendFunc        m_sBlendFunc;            /// It's required for CAImageProtocol inheritance
     
     CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
+    
+    friend class CAViewAnimation;
 };
 
-class CAViewDelegate
+class CC_DLL CAViewDelegate
 {
 public:
     
@@ -505,6 +493,19 @@ public:
     
     virtual void viewOnExitTransitionDidStart() = 0;
 };
+
+static bool compareSubviewZOrder(CAView* one, CAView* two)
+{
+    if (one->getZOrder() < two->getZOrder())
+    {
+        return true;
+    }
+    else if (one->getZOrder() == two->getZOrder())
+    {
+        return (bool)(one->getOrderOfArrival() < two->getOrderOfArrival());
+    }
+    return false;
+}
 
 NS_CC_END
 

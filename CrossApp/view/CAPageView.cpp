@@ -11,7 +11,7 @@
 
 CAPageView::CAPageView(const CAPageViewDirection& type)
 :m_ePageViewDirection(type)
-,m_ePageViewState(CAPageViewNone)
+,m_ePageViewState(None)
 ,m_nCurrPage(0)
 ,m_pPageViewDelegate(NULL)
 ,m_bListener(false)
@@ -55,18 +55,15 @@ bool CAPageView::init()
         return false;
     }
     
-    this->setShowsHorizontalScrollIndicator(false);
-    this->setShowsVerticalScrollIndicator(false);
+    this->setShowsScrollIndicators(false);
 
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
-        this->setTouchMovedListenVertical(false);
-        this->setBounceVertical(false);
+        this->setVerticalScrollEnabled(false);
     }
     else
     {
-        this->setTouchMovedListenHorizontal(false);
-        this->setBounceHorizontal(false);
+        this->setHorizontalScrollEnabled(false);
     }
     
     this->setBounces(false);
@@ -93,7 +90,7 @@ void CAPageView::setViews(const CAVector<CAView*>& vec)
         this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size()));
     }
     
-    for (int i=0; i<m_pViews.size(); i++)
+    for (size_t i=0; i<m_pViews.size(); i++)
     {
         CCRect rect = this->getBounds();
         if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
@@ -128,7 +125,7 @@ void CAPageView::setViews(const CADeque<CAView*>& vec)
         this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size()));
     }
     
-    for (int i=0; i<m_pViews.size(); i++)
+    for (size_t i=0; i<m_pViews.size(); i++)
     {
         CCRect rect = this->getBounds();
         if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
@@ -151,7 +148,7 @@ CAView* CAPageView::getSubViewAtIndex(int index)
     do
     {
         CC_BREAK_IF(index < 0);
-        CC_BREAK_IF(index >= m_pViews.size());
+        CC_BREAK_IF((size_t)index >= m_pViews.size());
         view = m_pViews.at(index);
     }
     while (0);
@@ -159,9 +156,17 @@ CAView* CAPageView::getSubViewAtIndex(int index)
     return view;
 }
 
-int CAPageView::getPageCount()
+void CAPageView::setShowsScrollIndicators(bool var)
 {
-    return m_pViews.size();
+    bool bVertScroll = m_ePageViewDirection == CAPageViewDirectionVertical;
+    this->setShowsHorizontalScrollIndicator(var && !bVertScroll);
+    this->setShowsVerticalScrollIndicator(var && bVertScroll);
+    m_bShowsScrollIndicators = var;
+}
+
+unsigned int CAPageView::getPageCount()
+{
+    return (unsigned int)m_pViews.size();
 }
 
 void CAPageView::setCurrPage(int var, bool animated, bool listener)
@@ -206,12 +211,11 @@ void CAPageView::contentOffsetFinish(float dt)
 
 bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pTouches->count() > 0)
+    if (!m_vTouches.empty())
     {
-        m_pTouches->replaceObjectAtIndex(0, pTouch);
+        m_vTouches.replace(0, pTouch);
         return true;
     }
-    
     return CAScrollView::ccTouchBegan(pTouch, pEvent);
 }
 
@@ -224,22 +228,21 @@ void CAPageView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     CAScrollView::ccTouchEnded(pTouch, pEvent);
-
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
         float off_x = -m_tInertia.x;
         
         if (off_x > 0)
         {
-            m_ePageViewState = CAPageViewNext;
+            m_ePageViewState = Next;
         }
         else if (off_x < 0)
         {
-            m_ePageViewState = CAPageViewLast;
+            m_ePageViewState = Last;
         }
         else
         {
-            m_ePageViewState = CAPageViewNone;
+            m_ePageViewState = None;
         }
     }
     else
@@ -248,24 +251,24 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         
         if (off_y > 0)
         {
-            m_ePageViewState = CAPageViewNext;
+            m_ePageViewState = Next;
         }
         else if (off_y < 0)
         {
-            m_ePageViewState = CAPageViewLast;
+            m_ePageViewState = Last;
         }
         else
         {
-            m_ePageViewState = CAPageViewNone;
+            m_ePageViewState = None;
         }
     }
     
     int page = this->getCurrPage();
-    if (m_ePageViewState == CAPageViewNext)
+    if (m_ePageViewState == Next)
     {
         page++;
     }
-    else if (m_ePageViewState == CAPageViewLast)
+    else if (m_ePageViewState == Last)
     {
         page--;
     }
@@ -311,7 +314,7 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     }
     else
     {
-        page = MIN(page, this->getPageCount() - 1);
+        page = MIN(page, (int)this->getPageCount() - 1);
         page = MAX(page, 0);
         
         this->setCurrPage(page, true, true);

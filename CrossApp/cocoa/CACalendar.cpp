@@ -56,7 +56,7 @@ void CACalendar::setCalendar(int year, int month, int day)
 {
     struct tm tm = {0};
     tm.tm_year = year - 1900;
-    tm.tm_mon = month - 1;
+    tm.tm_mon = month-1;
     tm.tm_mday = day;
     
     time_t time = mktime(&tm);
@@ -114,23 +114,6 @@ int CACalendar::_calcDayCount(tm target)
 
 void CACalendar::addYear(int count)
 {
-//    struct tm tm = m_tDateTime;
-//    tm.tm_year += count;
-//    if (tm.tm_year < 1) {
-//        tm.tm_year = 1;
-//    } else if (tm.tm_year > 10000) {
-//        tm.tm_year = 10000;
-//    }
-//    
-//    if (tm.tm_mon == 1 && tm.tm_mday == 29) { // 2.29
-//        if (!_isLeapYear(tm.tm_year)) {
-//            tm.tm_mday = 28;
-//        }
-//    }
-//    
-//    int day = _calcDayCount(tm);
-//    time_t time = mktime(&m_tDateTime) + day * 24 * 60 * 60;
-//    m_tDateTime = *localtime(&time);
     m_tDateTime.tm_year += count;
     time_t time = mktime(&m_tDateTime);
     m_tDateTime = *localtime(&time);
@@ -138,37 +121,6 @@ void CACalendar::addYear(int count)
 
 void CACalendar::addMonth(int count)
 {
-//    int year = (m_tDateTime.tm_mon + count)/12;
-//    int month = (m_tDateTime.tm_mon + count)%12;
-//    if (month < 0) {
-//        year--;
-//        month += 12;
-//    }
-//    struct tm tm = m_tDateTime;
-//    tm.tm_year += year;
-//    tm.tm_mom = month;
-//    
-//    if (tm.tm_mon == 1 && tm.tm_mday > 28) { // 2.29
-//        if (!_isLeapYear(tm.tm_year)) {
-//            tm.tm_mday = 28;
-//        } else {
-//            tm.tm_mday = 29;
-//        }
-//    } else if (tm.tm_mday == 31) {
-//        switch (tm.tm_mon) {
-//            case 4:
-//            case 6:
-//            case 9:
-//            case 11:
-//                tm.tm_mday = 30;
-//                break;
-//            default:
-//                break;
-//        }
-//    }
-//    
-//    int day = _calcDayCount(tm);
-
     m_tDateTime.tm_mon += count;
     time_t time = mktime(&m_tDateTime);
     m_tDateTime = *localtime(&time);
@@ -215,9 +167,14 @@ int CACalendar::_dayCountOfMonth(int year, int month)
     }
 }
 
+int CACalendar::_dayCountOfYear(int year)
+{
+    return _isLeapYear(year) ? 366 : 365;
+}
+
 int CACalendar::dayCountOfMonth()
 {
-    return _dayCountOfMonth(m_tDateTime.tm_year + 1900, m_tDateTime.tm_mon + 1);
+    return _dayCountOfMonth(m_tDateTime.tm_year + 1900, m_tDateTime.tm_mon);
 }
 
 int CACalendar::dayCountOfYear()
@@ -242,21 +199,27 @@ int CACalendar::dayOfWeek()
 
 int CACalendar::monthOfYear()
 {
-    return m_tDateTime.tm_mon + 1;
+    return m_tDateTime.tm_mon+1;
 }
 
 void CACalendar::dateByDayOfYear(int year, int day, int& month, int& date)
 {
-    month = 1;
-    
-    while (day > 0) {
-        day -= _dayCountOfMonth(year, month++);
-    }
-    if (day == 0) {
-        month--;
-        date = _dayCountOfMonth(year, month);
-    } else {
-        date = _dayCountOfMonth(year, month) + day;
+    int num = _isLeapYear(year+1900)? 366 : 365;
+    if (day<num) {
+        month = 1;
+        while (day > 0) {
+            day -= _dayCountOfMonth(year, month++);
+        }
+        
+        if (day == 0) {
+            date = 1;
+        } else if(day < 0){
+            month--;
+            date = _dayCountOfMonth(year, month) + day + 1;
+        }
+    }else{
+        month = 1;
+        date = 1;
     }
 }
 

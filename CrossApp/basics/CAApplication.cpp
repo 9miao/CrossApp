@@ -1,10 +1,9 @@
 #include <string>
 #include "CAApplication.h"
 #include "CAFPSImages.h"
-#include "draw_nodes/CCDrawingPrimitives.h"
+#include "view/CADrawingPrimitives.h"
 #include "cocoa/CCNS.h"
 #include "view/CAWindow.h"
-#include "cocoa/CCArray.h"
 #include "CAScheduler.h"
 #include "ccMacros.h"
 #include "dispatcher/CATouchDispatcher.h"
@@ -25,7 +24,6 @@
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
 #include "support/CCProfiling.h"
-#include "platform/CCImage.h"
 #include "CCEGLView.h"
 #include "platform/CADensityDpi.h"
 #include "view/CALabelStyle.h"
@@ -44,23 +42,21 @@ using namespace std;
 unsigned int g_uNumberOfDraws = 0;
 
 NS_CC_BEGIN
-// XXX it should be a Director ivar. Move it there once support for multiple directors is added
 
-// singleton stuff
-static CCDisplayLinkDirector *s_SharedDirector = NULL;
+static CCDisplayLinkDirector *s_SharedApplication = NULL;
 
 #define kDefaultFPS        60  // 60 frames per second
 extern const char* CrossAppVersion(void);
 
 CAApplication* CAApplication::getApplication()
 {
-    if (!s_SharedDirector)
+    if (!s_SharedApplication)
     {
-        s_SharedDirector = new CCDisplayLinkDirector();
-        s_SharedDirector->init();
+        s_SharedApplication = new CCDisplayLinkDirector();
+        s_SharedApplication->init();
     }
 
-    return s_SharedDirector;
+    return s_SharedApplication;
 }
 
 CAApplication::CAApplication(void)
@@ -84,8 +80,6 @@ bool CAApplication::init(void)
     m_fAccumDt = 0.0f;
     m_fFrameRate = 0.0f;
     m_pFPSLabel = NULL;
-    m_pSPFLabel = NULL;
-    m_pDrawsLabel = NULL;
     m_uTotalFrames = m_uFrames = 0;
     m_pszFPS = new char[10];
     m_pLastUpdate = new struct cc_timeval();
@@ -104,8 +98,6 @@ bool CAApplication::init(void)
     m_obWinSizeInPoints = CCSizeZero;    
 
     m_pobOpenGLView = NULL;
-
-    m_fContentScaleFactor = 1.0f;
 
     // action manager
     m_pActionManager = new CCActionManager();
@@ -133,8 +125,6 @@ bool CAApplication::init(void)
 CAApplication::~CAApplication(void)
 {
     CC_SAFE_RELEASE(m_pFPSLabel);
-    CC_SAFE_RELEASE(m_pSPFLabel);
-    CC_SAFE_RELEASE(m_pDrawsLabel);
     
     CC_SAFE_RELEASE(m_pRootWindow);
     CC_SAFE_RELEASE(m_pNotificationNode);
@@ -152,7 +142,7 @@ CAApplication::~CAApplication(void)
     // delete fps string
     delete []m_pszFPS;
 
-    s_SharedDirector = NULL;
+    s_SharedApplication = NULL;
 }
 
 void CAApplication::setDefaultValues(void)
@@ -163,21 +153,13 @@ void CAApplication::setDefaultValues(void)
 
 	const char *projection = "3d";
 	if( strcmp(projection, "3d") == 0 )
-		m_eProjection = kCCDirectorProjection3D;
+        m_eProjection = CAApplication::P3D;
 	else if (strcmp(projection, "2d") == 0)
-		m_eProjection = kCCDirectorProjection2D;
+		m_eProjection = CAApplication::P2D;
 	else if (strcmp(projection, "custom") == 0)
-		m_eProjection = kCCDirectorProjectionCustom;
+		m_eProjection = CAApplication::PCustom;
 	else
 		CCAssert(false, "Invalid projection value");
-
-	const char *pixel_format = "rgba8888";
-	if( strcmp(pixel_format, "rgba8888") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGBA8888);
-	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGBA4444);
-	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGB5A1);
 
 }
 
@@ -187,52 +169,12 @@ void CAApplication::setGLDefaultValues(void)
     CCAssert(m_pobOpenGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    // XXX: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
-    // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(m_eProjection);
 
     // set other opengl default values
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
-
-// Draw the Scene
-//void CAApplication::drawView(CAView* var)
-//{
-//    //tick before glClear: issue #533
-//
-//    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//    CCPoint point = var->convertToWorldSpace(CCPoint(0, var->getBounds().size.height));
-//    point = CAApplication::sharedDirector()->convertToGL(point);
-//    
-//    glScissor(point.x, point.y, var->getFrame().size.width, var->getFrame().size.height);
-//    
-//    kmGLPushMatrix();
-//
-//    // draw the scene
-//    if (var)
-//    {
-//        var->visit();
-//    }
-//
-//    CCLog(" <<<<<<< %s\n",typeid(*var).name());
-//    
-//    kmGLPopMatrix();
-//
-//    m_uTotalFrames++;
-//
-//    // swap buffers
-//    if (m_pobOpenGLView)
-//    {
-//        m_pobOpenGLView->swapBuffers();
-//    }
-//    
-//    if (m_bDisplayStats)
-//    {
-//        calculateMPF();
-//    }
-//}
 
 void CAApplication::updateDraw()
 {
@@ -247,12 +189,20 @@ void CAApplication::drawScene(float dt)
     {
         --m_nDrawCount;
         
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        
+        if (m_pobOpenGLView)
+        {
+            m_pobOpenGLView->checkContext();
+        }
+#endif
+        
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         kmGLPushMatrix();
         
-        kmGLTranslatef(0.5, -0.5, 0);
-        
+        kmGLTranslatef(-0.5f, 0, 0);
+
         // draw the scene
         if (m_pRootWindow)
         {
@@ -366,7 +316,7 @@ void CAApplication::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
     m_bNextDeltaTimeZero = bNextDeltaTimeZero;
 }
 
-void CAApplication::setProjection(ccDirectorProjection kProjection)
+void CAApplication::setProjection(CAApplication::Projection kProjection)
 {
     CCSize size = m_obWinSizeInPoints;
 
@@ -374,13 +324,10 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
 
     switch (kProjection)
     {
-    case kCCDirectorProjection2D:
+    case CAApplication::P2D:
         {
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-            kmGLMultMatrix(CCEGLView::sharedOpenGLView()->getOrientationMatrix());
-#endif
             kmMat4 orthoMatrix;
             kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
             kmGLMultMatrix(&orthoMatrix);
@@ -389,7 +336,7 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
         }
         break;
 
-    case kCCDirectorProjection3D:
+    case CAApplication::P3D:
         {
             float zeye = this->getZEye();
 
@@ -398,10 +345,6 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
             
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-            //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-            kmGLMultMatrix(CCEGLView::sharedOpenGLView()->getOrientationMatrix());
-#endif
             // issue #1334
             kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
             // kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
@@ -419,7 +362,7 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
         }
         break;
             
-    case kCCDirectorProjectionCustom:
+    case CAApplication::PCustom:
         if (m_pProjectionDelegate)
         {
             m_pProjectionDelegate->updateProjection();
@@ -437,7 +380,7 @@ void CAApplication::setProjection(ccDirectorProjection kProjection)
 
 void CAApplication::purgeCachedData(void)
 {
-    if (s_SharedDirector->getOpenGLView())
+    if (s_SharedApplication->getOpenGLView())
     {
         CAImageCache::sharedImageCache()->removeUnusedImages();
     }
@@ -468,8 +411,7 @@ void CAApplication::reshapeProjection(const CCSize& newWindowSize)
 	CC_UNUSED_PARAM(newWindowSize);
 	if (m_pobOpenGLView)
 	{
-		m_obWinSizeInPoints = CCSizeMake(newWindowSize.width * m_fContentScaleFactor,
-			newWindowSize.height * m_fContentScaleFactor);
+		m_obWinSizeInPoints = CCSize(newWindowSize.width, newWindowSize.height);
 		setProjection(m_eProjection);       
 	}
 
@@ -481,7 +423,7 @@ void CAApplication::setDepthTest(bool bOn)
         glClearDepth(1.0f);
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
-//        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
     else
     {
@@ -495,11 +437,6 @@ GLToClipTransform(kmMat4 *transformOut)
 {
 	kmMat4 projection;
 	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
-	kmMat4Multiply(&projection, CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix(), &projection);
-#endif
 
 	kmMat4 modelview;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
@@ -544,11 +481,6 @@ CCPoint CAApplication::convertToUI(const CCPoint& glPoint)
 CCSize CAApplication::getWinSize(void)
 {
     return m_obWinSizeInPoints;
-}
-
-CCSize CAApplication::getWinSizeInPixels()
-{
-    return CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
 }
 
 CCSize CAApplication::getVisibleSize()
@@ -627,8 +559,6 @@ void CAApplication::purgeDirector()
     stopAnimation();
 
     CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-    CC_SAFE_RELEASE_NULL(m_pSPFLabel);
-    CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
 
     // purge all managed caches
     ccDrawFree();
@@ -692,30 +622,19 @@ void CAApplication::showStats(void)
     m_uFrames++;
     m_fAccumDt += m_fDeltaTime;
     
-    if (m_bDisplayStats)
+    if (m_bDisplayStats && m_pFPSLabel)
     {
-        if (m_pFPSLabel && m_pSPFLabel && m_pDrawsLabel)
+        if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL)
         {
-            if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL)
-            {
-                sprintf(m_pszFPS, "%.3f", m_fSecondsPerFrame);
-                m_pSPFLabel->setText(m_pszFPS);
-                
-                m_fFrameRate = m_uFrames / m_fAccumDt;
-                m_uFrames = 0;
-                m_fAccumDt = 0;
-                
-                sprintf(m_pszFPS, "%.1f", m_fFrameRate);
-                m_pFPSLabel->setText(m_pszFPS);
-                
-                sprintf(m_pszFPS, "%4lu", (unsigned long)g_uNumberOfDraws);
-                m_pDrawsLabel->setText(m_pszFPS);
-            }
-            m_pSPFLabel->visit();
-            m_pFPSLabel->visit();
-            m_pDrawsLabel->visit();
+            m_fFrameRate = m_uFrames / m_fAccumDt;
+            m_uFrames = 0;
+            m_fAccumDt = 0;
+            
+            sprintf(m_pszFPS, "%.1f", m_fFrameRate);
+            m_pFPSLabel->setText(m_pszFPS);
         }
-    }    
+        m_pFPSLabel->visit();
+    }
     
     g_uNumberOfDraws = 0;
 }
@@ -738,88 +657,47 @@ void CAApplication::getFPSImageData(unsigned char** datapointer, unsigned int* l
 
 void CAApplication::createStatsLabel()
 {
-    CAImage* texture = NULL;
+    CAImage* image = NULL;
     CAImageCache *ImageCache = CAImageCache::sharedImageCache();
 
-    if( m_pFPSLabel && m_pSPFLabel )
+    if( m_pFPSLabel)
     {
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-        CC_SAFE_RELEASE_NULL(m_pSPFLabel);
-        CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
         ImageCache->removeImageForKey("cc_fps_images");
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
-    CAImagePixelFormat currentFormat = CAImage::defaultAlphaPixelFormat();
-    CAImage::setDefaultAlphaPixelFormat(kCAImagePixelFormat_RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);
 
-    CCImage* image = new CCImage();
-    bool isOK = image->initWithImageData(data, data_len);
-    if (!isOK) {
-        CCLOGERROR("%s", "Fails: init fps_images");
-        return;
-    }
-
-    texture = ImageCache->addUIImage(image, "cc_fps_images");
-    CC_SAFE_RELEASE(image);
-
+    image = CAImage::createWithImageData(data, data_len, "cc_fps_images");
+    
     float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 640.0f;
 
     m_pFPSLabel = CALabel::createWithFrame(CCRect(0, 0, 100, 32));
     m_pFPSLabel->retain();
     m_pFPSLabel->setScale(factor);
     m_pFPSLabel->setColor(CAColor_blue);
-    
-    m_pSPFLabel = CALabel::createWithFrame(CCRect(0, 0, 100, 32));
-    m_pSPFLabel->retain();
-    m_pSPFLabel->setScale(factor);
-    m_pSPFLabel->setColor(CAColor_yellow);
-    
-    m_pDrawsLabel = CALabel::createWithFrame(CCRect(0, 0, 100, 32));
-    m_pDrawsLabel->retain();
-    m_pDrawsLabel->setScale(factor);
-    m_pDrawsLabel->setColor(CAColor_green);
-    
-    m_pDrawsLabel->setFrameOrigin(ccpAdd(ccp(0, 64*factor), CC_DIRECTOR_STATS_POSITION));
-    m_pSPFLabel->setFrameOrigin(ccpAdd(ccp(0, 32*factor), CC_DIRECTOR_STATS_POSITION));
     m_pFPSLabel->setFrameOrigin(CC_DIRECTOR_STATS_POSITION);
-    
-    CAImage::setDefaultAlphaPixelFormat(currentFormat);
 }
 
-float CAApplication::getContentScaleFactor(void)
-{
-    return m_fContentScaleFactor;
-}
-
-void CAApplication::setContentScaleFactor(float scaleFactor)
-{
-    if (scaleFactor != m_fContentScaleFactor)
-    {
-        m_fContentScaleFactor = scaleFactor;
-        createStatsLabel();
-    }
-}
-
-CAView* CAApplication::getNotificationNode()
+CAView* CAApplication::getNotificationView()
 { 
     return m_pNotificationNode; 
 }
 
-void CAApplication::setNotificationNode(CAView *node)
+void CAApplication::setNotificationView(CAView *view)
 {
     if (m_pNotificationNode)
     {
-        m_pNotificationNode->becomeFirstResponder();
+        m_pNotificationNode->resignFirstResponder();
     }
     CC_SAFE_RELEASE(m_pNotificationNode);
-    m_pNotificationNode = node;
+    m_pNotificationNode = view;
     if (m_pNotificationNode)
     {
-        m_pNotificationNode->resignFirstResponder();
+        m_pNotificationNode->becomeFirstResponder();
     }
     CC_SAFE_RETAIN(m_pNotificationNode);
     this->updateDraw();
@@ -927,10 +805,8 @@ void CCDisplayLinkDirector::mainLoop(void)
          if (! m_bPaused)
          {
              CAScheduler::getScheduler()->update(m_fDeltaTime);
+             drawScene();
          }
-         
-         drawScene();
-         
          CAPoolManager::sharedPoolManager()->pop();        
      }
 }

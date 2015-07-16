@@ -105,7 +105,6 @@ bool CAStepper::init()
     {
         return false;
     }
-    
     setIncrementImage(CAImage::create("source_material/stepper_inc_h.png"), CAControlStateAll);
     setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
     setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);
@@ -168,6 +167,9 @@ void CAStepper::setIncrementImage(CrossApp::CAImage *image, CAControlState state
         m_pIncrementImage[state] = image;
         CC_SAFE_RETAIN(m_pIncrementImage[state]);
     }
+    if (m_pIncrementImageView!=NULL&& m_pIncrementImage[CAControlStateNormal]) {
+        m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
+    }
 }
 
 CAImage* CAStepper::getIncrementImageForState(CAControlState state)
@@ -188,6 +190,9 @@ void CAStepper::setDecrementImage(CrossApp::CAImage *image, CAControlState state
         m_pDecrementImage[state] = image;
         CC_SAFE_RETAIN(m_pDecrementImage[state]);
     }
+    if (m_pDecrementImageView!=NULL&& m_pDecrementImage[CAControlStateNormal]) {
+        m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
+    }
 }
 
 CAImage* CAStepper::getDecrementImageForState(CAControlState state)
@@ -207,7 +212,10 @@ void CAStepper::setDividerImage(CrossApp::CAImage *image, CAControlState state)
         CC_SAFE_RELEASE_NULL(m_pDividerImage[state]);
         m_pDividerImage[state] = image;
         CC_SAFE_RETAIN(m_pDividerImage[state]);
-    }    
+    }
+    if (m_pDividerImageView!=NULL&& m_pDividerImage[CAControlStateNormal]) {
+        m_pDividerImageView->setImage(m_pDividerImage[CAControlStateNormal]);
+    }
 }
 
 CAImage* CAStepper::getDividerImageForState(CAControlState state)
@@ -218,7 +226,7 @@ CAImage* CAStepper::getDividerImageForState(CAControlState state)
 bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     m_actionType = ActionNone; // lazy init;
-    
+    m_pIncrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
     if (getBounds().containsPoint(convertToNodeSpace(pTouch->getLocation()))) {
         
         click(pTouch);
@@ -255,7 +263,11 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 break;
         }
 
-        CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 0.5f);
+        if (m_bAutoRepeat)
+        {
+            CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 0.1f, kCCRepeatForever, 0.5f);
+        }
+        
         return true;
     }
     
@@ -324,13 +336,21 @@ void CAStepper::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 void CAStepper::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
+    m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
+    m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
+    if (m_bTouchEffect) {
+        m_pDecrementImageView->setAlpha(1.0);
+        m_pIncrementImageView->setAlpha(1.0);
+    }
     CAScheduler::unschedule(schedule_selector(CAStepper::repeat), this);
 }
 
 void CAStepper::onEnter()
 {
     CAControl::onEnter();
-    
+    if (m_value<m_minimumValue) {
+        m_value = m_minimumValue;
+    }
     // init background
     if (!m_pBackgroundImageView && m_pBackgroundImage[CAControlStateNormal]) {
         m_pBackgroundImageView = CAImageView::createWithImage(m_pBackgroundImage[CAControlStateNormal]);
@@ -357,6 +377,7 @@ void CAStepper::onEnter()
     // init increment
     if (!m_pIncrementImageView && m_pIncrementImage[CAControlStateNormal]) {
         m_pIncrementImageView = CAImageView::createWithImage(m_pIncrementImage[CAControlStateNormal]);
+        m_pIncrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
         m_pIncrementImageView->retain();
         m_pIncrementImageView->setFrame(CCRect(getBounds().size.width/2 + div, 0, 
                                                getBounds().size.width/2 - div, 
@@ -367,6 +388,7 @@ void CAStepper::onEnter()
     // init decrement
     if (!m_pDecrementImageView && m_pDecrementImage[CAControlStateNormal]) {
         m_pDecrementImageView = CAImageView::createWithImage(m_pDecrementImage[CAControlStateNormal]);
+        m_pDecrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
         m_pDecrementImageView->retain();
         m_pDecrementImageView->setFrame(CCRect(0, 0,
                                                getBounds().size.width/2 - div, 
@@ -438,9 +460,6 @@ void CAStepper::action()
 
 void CAStepper::repeat(float dt)
 {
-    CAScheduler::unschedule(schedule_selector(CAStepper::repeat), this);
-    CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 0.2f);
-
     action();
 }
 
@@ -476,6 +495,12 @@ void CAStepper::removeAllTargets()
 {
 	CAControl::removeAllTargets();
 }
+
+void CAStepper::setContentSize(const CCSize & var)
+{
+    CAControl::setContentSize(CADipSize(188, 58));
+}
+
 
 
 NS_CC_END

@@ -13,6 +13,7 @@
 NS_CC_BEGIN
 
 static std::string s_cszWebViewImageData;
+static std::string s_cszWebViewHtmSource;
 
 extern "C" {
 
@@ -29,6 +30,12 @@ extern "C" {
         env->ReleaseStringUTFChars(jurl, charUrl);
 		CAWebViewImpl::didFinishLoading(index, url);
     }
+
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didLoadHtmlSource(JNIEnv *env, jclass, jstring jurl) {
+		const char* charHtml = env->GetStringUTFChars(jurl, NULL);
+		s_cszWebViewHtmSource = charHtml;
+		env->ReleaseStringUTFChars(jurl, charHtml);
+	}
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didFailLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
 		const char* charUrl = env->GetStringUTFChars(jurl, NULL);
@@ -47,6 +54,14 @@ extern "C" {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_onSetByteArrayBuffer(JNIEnv *env, jclass, jbyteArray buf, jint len) {
 			s_cszWebViewImageData.resize(len);
 			env->GetByteArrayRegion(buf, 0, len, (jbyte *)&s_cszWebViewImageData[0]);
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_pause() {
+        CrossApp::CAApplication::getApplication()->pause();
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_resume() {
+        CrossApp::CAApplication::getApplication()->resume();
     }
 }
 
@@ -120,7 +135,7 @@ void loadHTMLStringJNI(const int index, const std::string &string, const std::st
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadHTMLString", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V")) {
         jstring jString = t.env->NewStringUTF(string.c_str());
         jstring jBaseURL = t.env->NewStringUTF(baseURL.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL,NULL);
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL);
 
         t.env->DeleteLocalRef(jString);
         t.env->DeleteLocalRef(jBaseURL);
@@ -202,15 +217,18 @@ void goForwardJNI(const int index) {
     }
 }
 
-void evaluateJSJNI(const int index, const std::string &js) {
-    JniMethodInfo t;
+std::string evaluateJSJNI(const int index, const std::string &js) {
+	JniMethodInfo t;
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "evaluateJS", "(ILjava/lang/String;)V")) {
+
+		s_cszWebViewHtmSource.clear();
         jstring jjs = t.env->NewStringUTF(js.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jjs);
+		t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jjs);
 
         t.env->DeleteLocalRef(jjs);
         t.env->DeleteLocalRef(t.classID);
     }
+	return s_cszWebViewHtmSource;
 }
 
 void setScalesPageToFitJNI(const int index, const bool scalesPageToFit) {
@@ -298,8 +316,8 @@ void CAWebViewImpl::setJavascriptInterfaceScheme(const std::string &scheme) {
 	setJavascriptInterfaceSchemeJNI(_viewTag, scheme);
 }
 
-void CAWebViewImpl::evaluateJS(const std::string &js) {
-	evaluateJSJNI(_viewTag, js);
+std::string CAWebViewImpl::evaluateJS(const std::string &js) {
+	return evaluateJSJNI(_viewTag, js);
 }
 
 void CAWebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
@@ -307,11 +325,13 @@ void CAWebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
 }
 
 bool CAWebViewImpl::shouldStartLoading(const int viewTag, const std::string &url) {
+
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
 	if (it != s_WebViewImpls.end()) {
 		CAWebView* webView = it->second->_webView;
 		if (webView && webView->m_pWebViewDelegate) {
-			return webView->m_pWebViewDelegate->onShouldStartLoading(webView, url);
+			if (!webView->m_pWebViewDelegate->onShouldStartLoading(webView, url))
+				return false;
 		}
 	}
 	return true;
@@ -326,6 +346,7 @@ void CAWebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
 		}
 	}
 }
+
 
 void CAWebViewImpl::didFailLoading(const int viewTag, const std::string &url){
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
@@ -366,23 +387,14 @@ CAImageView* CAWebViewImpl::getWebViewImage()
 	{
 		CCSize size = _webView->getBounds().size;
 
-		CCImage* pImage = new CCImage();
-		if (!pImage->initWithImageData(&s_cszWebViewImageData[0], s_cszWebViewImageData.size(), CCImage::kFmtRawData, size.width, size.height))
+		CAImage* pImage = new CAImage();
+		if (!pImage->initWithRawData((const unsigned char*)&s_cszWebViewImageData[0], CAImage::PixelFormat_RGBA8888, size.width, size.height))
 		{
 			delete pImage;
 			return NULL;
 		}
-
-		CAImage* pCAImage = new CAImage();
-		if (!pCAImage->initWithImage(pImage))
-		{
-			delete pImage;
-			delete pCAImage;
-			return NULL;
-		}
-		pImage->release();
-		pCAImage->autorelease();
-		return CAImageView::createWithImage(pCAImage);
+		pImage->autorelease();
+		return CAImageView::createWithImage(pImage);
 	}
   	return NULL;
 }
