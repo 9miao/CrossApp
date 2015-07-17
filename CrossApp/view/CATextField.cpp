@@ -225,6 +225,10 @@ void CATextField::setText(const std::string &var)
     insertText(var.c_str(), (int)var.length());
     m_pDelegate = pTemp;
     this->updateImage();
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+	pGlView->setIMECursorPos(getCursorPos(), getContentText());
+#endif
 }
 
 const std::string &CATextField::getText()
