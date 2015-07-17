@@ -212,7 +212,10 @@ void CATextView::updateImage()
     m_pImageView->setColor(m_cFontColor);
 	m_pImageView->setImage(image);
     CCRect rect = CCRectZero;
-    rect.size = image->getContentSize();
+	if (image)
+	{
+		rect.size = image->getContentSize();
+	}
     m_pImageView->setImageRect(rect);
     m_pImageView->setFrame(rect);
     m_pContainerView->setViewSize(rect.size);
@@ -462,6 +465,8 @@ void CATextView::AndroidWillInsertText(int start, const char* str, int before, i
 		{
 			++nDeleteLen;
 		}
+		std::string cszDelStr = m_szText.substr(m_iCurPos - nDeleteLen, nDeleteLen);
+		CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length()));
 		m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
 		m_iCurPos -= nDeleteLen;
 	}
@@ -469,6 +474,7 @@ void CATextView::AndroidWillInsertText(int start, const char* str, int before, i
 	CC_RETURN_IF(str == NULL || count <= 0);
 
 	std::string s = str;
+	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewInsertText(this, s.c_str(), s.size()));
 	m_szText.insert(m_iCurPos, s.c_str(), s.length());
 	m_iCurPos += s.length();
 	updateImage();
@@ -494,6 +500,7 @@ void CATextView::deleteBackward()
 		}
 		cszDelStr = m_szText.substr(m_iCurPos - nDeleteLen, nDeleteLen);
 	}
+
 	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length()));
     CC_RETURN_IF(execCurSelCharRange());
 	
@@ -514,18 +521,6 @@ void CATextView::getKeyBoardHeight(int height)
     {
         m_pTextViewDelegate->getKeyBoardHeight(height);
     }
-}
-
-void CATextView::getKeyBoradReturnCallBack()
-{
-	if (m_pTextViewDelegate && m_pTextViewDelegate->keyBoardCallBack(this))
-	{
-		return;
-	}
-	else
-	{
-		this->resignFirstResponder();
-	}
 }
 
 const char* CATextView::getContentText()

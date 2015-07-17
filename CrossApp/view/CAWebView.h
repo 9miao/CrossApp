@@ -130,8 +130,8 @@ public:
     
 	CC_SYNTHESIZE(CAWebViewDelegate*, m_pWebViewDelegate, WebViewDelegate);
 
-    CC_SYNTHESIZE(bool, m_bShowLoadingImage, ShowLoadingImage);
-    
+	void setActivityView(CAActivityIndicatorView* loadingView);
+	void showLoadingActivity(bool show);
     
 protected:
     

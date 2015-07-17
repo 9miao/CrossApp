@@ -27,7 +27,6 @@ CAWebView::CAWebView()
 , m_pLoadingView(NULL)
 , m_obLastPoint(CCPointZero)
 , m_obLastContentSize(CCSizeZero)
-, m_bShowLoadingImage(true)
 {
     
 }
@@ -178,6 +177,36 @@ void CAWebView::setVisible(bool visible)
 {
 	CAView::setVisible(visible);
 	_impl->setVisible(visible);
+}
+
+void CAWebView::setActivityView(CAActivityIndicatorView* loadingView)
+{
+	if (m_pLoadingView)
+	{
+		m_pLoadingView->removeFromSuperview();
+	}
+	m_pLoadingView = loadingView;
+
+	if (m_pLoadingView)
+	{
+		this->addSubview(m_pLoadingView);
+	}
+}
+
+void CAWebView::showLoadingActivity(bool show)
+{
+	if (show)
+	{
+		_impl->setVisible(false);
+		m_pLoadingView->startAnimating();
+		m_pLoadingView->setVisible(true);
+	}
+	else
+	{
+		m_pLoadingView->stopAnimating();
+		m_pLoadingView->setVisible(false);
+		_impl->setVisible(true);
+	}
 }
 
 void CAWebView::update(float dt)
