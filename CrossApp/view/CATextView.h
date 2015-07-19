@@ -60,8 +60,6 @@ public:
     }
 
 	virtual void getKeyBoardHeight(int height) {}
-
-	virtual bool keyBoardCallBack(CATextView *sender) { return true; }
 };
 
 
@@ -100,7 +98,6 @@ protected:
 	virtual void AndroidWillInsertText(int start, const char* str, int before, int count);
 	virtual void deleteBackward();
 	virtual void getKeyBoardHeight(int height);
-	virtual void getKeyBoradReturnCallBack();
 	virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
 	virtual const char* getContentText();
 	virtual int getCursorPos();

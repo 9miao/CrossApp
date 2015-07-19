@@ -90,7 +90,7 @@ bool CATextField::becomeFirstResponder()
 
         calculateSelChars(CCPoint(this->getCursorX() + m_iHoriMargins, m_obContentSize.height / 2), m_iString_l_length, m_iString_r_length, m_iCurPos);
         setCursorPosition();
-        
+
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
         CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
         pGlView->setIMECursorPos(getCursorPos(), getContentText());
@@ -226,6 +226,10 @@ void CATextField::setText(const std::string &var)
     insertText(var.c_str(), (int)var.length());
     m_pDelegate = pTemp;
     this->updateImage();
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+	pGlView->setIMECursorPos(getCursorPos(), getContentText());
+#endif
 }
 
 const std::string &CATextField::getText()
@@ -1030,6 +1034,7 @@ int CATextField::getCursorX()
     return m_iString_l_length + m_iString_left_offX;
 }
     
+
 
 int CATextField::getStringViewLength()
 {
