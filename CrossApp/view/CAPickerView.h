@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 www.9miao.com. All rights reserved.
 //
 
-#ifndef __CrossApp__CAPickerView__
-#define __CrossApp__CAPickerView__
+#ifndef __CrossApp_CAPickerView__
+#define __CrossApp_CAPickerView__
 
 #include "CATableView.h"
 

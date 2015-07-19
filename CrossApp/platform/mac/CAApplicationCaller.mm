@@ -95,7 +95,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	EAGLView *openGLView = [EAGLView sharedEGLView];
 	[openGLView lockOpenGLContext];
     
-	// run the main cocos2d loop
+	// run the main CrossApp loop
 	CrossApp::CAApplication::getApplication()->mainLoop();
     
 	// flush buffer (this line is very important!)
@@ -136,26 +136,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
                                  forMode:NSDefaultRunLoopMode];
     [[NSRunLoop currentRunLoop] addTimer:renderTimer
                                  forMode:NSEventTrackingRunLoopMode]; //Ensure timer fires during resize
-    
-    /*
-     // CVDisplayLink
-     //cocos2d::CAApplication::sharedDirector()->gettimeofday();
-     
-     // Create a display link capable of being used with all active displays
-     CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
-     
-     // Set the renderer output callback function
-     CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, self);
-     
-     // Set the display link for the current renderer
-     EAGLView *openGLView_ = (EAGLView*)[EAGLView sharedEGLView];
-     CGLContextObj cglContext = (CGLContextObj)[[openGLView_ openGLContext] CGLContextObj];
-     CGLPixelFormatObj cglPixelFormat = (CGLPixelFormatObj)[[openGLView_ pixelFormat] CGLPixelFormatObj];
-     CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
-     
-     // Activate the display link
-     CVDisplayLinkStart(displayLink);
-     */
+
 }
 
 -(void) end

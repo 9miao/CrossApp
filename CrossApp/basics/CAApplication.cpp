@@ -567,7 +567,7 @@ void CAApplication::purgeDirector()
     CCFileUtils::purgeFileUtils();
 	CALabelStyleCache::purgeSharedStyleCache();
 
-    // cocos2d-x specific data structures
+    // CrossApp specific data structures
     CAUserDefault::purgeSharedUserDefault();
     CANotificationCenter::purgeNotificationCenter();
 

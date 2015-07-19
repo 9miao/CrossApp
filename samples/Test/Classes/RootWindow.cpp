@@ -50,7 +50,6 @@ bool RootWindow::init()
     
     this->initUIView();
     
-    
     MenuViewController* _menuview = MenuViewController::create();
     
     CADrawerController* drawer = new CADrawerController();

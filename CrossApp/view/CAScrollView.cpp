@@ -808,22 +808,22 @@ void CAScrollView::deaccelerateScrolling(float dt)
             this->setContainerFrame(point);
         }
         
-        if (fabsf(m_tInertia.x) > _px(32))
+        if (fabsf(m_tInertia.x) > _px(16))
         {
             m_tInertia.x = m_tInertia.x * (1 - decelerationRatio(dt));
         }
         else if (fabsf(m_tInertia.x) > FLT_EPSILON)
         {
-            m_tInertia.x = MAX((fabsf(m_tInertia.x) - _px(1)), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
+            m_tInertia.x = MAX((fabsf(m_tInertia.x) - _px(0.5f)), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
         }
         
-        if (fabsf(m_tInertia.y) > _px(32))
+        if (fabsf(m_tInertia.y) > _px(16))
         {
             m_tInertia.y = m_tInertia.y * (1 - decelerationRatio(dt));
         }
         else if (fabsf(m_tInertia.y) > FLT_EPSILON)
         {
-            m_tInertia.y = MAX((fabsf(m_tInertia.y) - _px(1)), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
+            m_tInertia.y = MAX((fabsf(m_tInertia.y) - _px(0.5f)), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
         }
         
         if (m_pScrollViewDelegate)

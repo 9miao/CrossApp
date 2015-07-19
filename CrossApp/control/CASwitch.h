@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
-#ifndef CrossAppx_CASwitch_h
-#define CrossAppx_CASwitch_h
+#ifndef CrossApp_CASwitch_h
+#define CrossApp_CASwitch_h
 
 #include "CAControl.h"
 #include "view/CAScale9ImageView.h"
@@ -73,4 +73,4 @@ protected:
 
 NS_CC_END
 
-#endif /*defined(CrossAppx_CASwitch_h)*/
+#endif /*defined(CrossApp_CASwitch_h)*/

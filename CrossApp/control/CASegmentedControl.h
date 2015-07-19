@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 CrossApp. All rights reserved.
 //
 
-#ifndef CrossAppx_CASegmentedControl_h
-#define CrossAppx_CASegmentedControl_h
+#ifndef CrossApp_CASegmentedControl_h
+#define CrossApp_CASegmentedControl_h
 
 #include "CAControl.h"
 #include "basics/CASTLContainer.h"

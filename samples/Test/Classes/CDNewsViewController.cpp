@@ -50,32 +50,25 @@ void CDNewsTableCell::selectedTableViewCell()
 void CDNewsTableCell::initWithCell()
 {
     CADipSize _size = this->getFrame().size;
-    theTitle = CALabel::createWithFrame(CADipRect(240,
-                                                       20,
-                                                       _size.width/2+50,
-                                                       40));
+    theTitle = CALabel::createWithFrame(CADipRect(240, 20, _size.width/2+50, 40));
     theTitle->setColor(CAColor_black);
     theTitle->setTextAlignment(CATextAlignmentLeft);
     theTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
     theTitle->setFontSize(_px(32));
-    theTitle->setBold(true);
     theTitle->setTag(100);
     this->getContentView()->addSubview(theTitle);
     
-    theDesc = CALabel::createWithFrame(CADipRect(240,
-                                                      80,
-                                                      _size.width/2,
-                                                      40));
+    theDesc = CALabel::createWithFrame(CADipRect(240, 65, _size.width/2, 40));
     theDesc->setColor(CAColor_black);
     theDesc->setTextAlignment(CATextAlignmentLeft);
     theDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
     theDesc->setFontSize(_px(24));
     theDesc->setTag(102);
-    theDesc->setColor(ccc4(180,180,180,255));
+    theDesc->setColor(CAColor_gray);
     theDesc->setLineSpacing(10);
     this->getContentView()->addSubview(theDesc);
     
-    theImage = CommonUrlImageView::createWithCenter(CADipRect(120,_size.height/2,200,_size.height-40));
+    theImage = CommonUrlImageView::createWithCenter(CADipRect(120, _size.height/2, 200, _size.height-40));
     theImage->setTag(101);
     theImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     theImage->setImage(CAImage::create("image/HelloWorld.png"));

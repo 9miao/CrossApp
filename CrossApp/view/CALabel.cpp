@@ -169,6 +169,7 @@ void CALabel::updateImage()
 											   m_bItalics,
 											   m_bUnderLine);
 
+    this->setImage(image);
 	CC_RETURN_IF(image == NULL);
 
     m_cLabelSize = size;
@@ -180,8 +181,6 @@ void CALabel::updateImage()
     float width = m_bFitFlag ? image->getContentSize().width : MIN(this->getBounds().size.width, image->getContentSize().width);
     
     rect.size.width = width;
-    
-    this->setImage(image);
 
     switch (m_nVerticalTextAlignmet)
     {

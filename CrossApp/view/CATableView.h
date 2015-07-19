@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
-#ifndef __CrossAppx__CATableView__
-#define __CrossAppx__CATableView__
+#ifndef __CrossApp_CATableView__
+#define __CrossApp_CATableView__
 
 #include <iostream>
 #include "CAScrollView.h"
@@ -334,4 +334,4 @@ private:
 
 NS_CC_END;
 
-#endif /* defined(__CrossAppx__CATableView__) */
+#endif /* defined(__CrossApp_CATableView__) */

@@ -62,10 +62,10 @@ public:
     }
     
 	//If the sender doesn't want to insert the text, return true;
-    virtual bool onTextFieldInsertText(CATextField * sender, const char * text, int nLen)
+    virtual bool onTextFieldInsertText(CATextField * sender, const char * insText, int nLen)
     {
         CC_UNUSED_PARAM(sender);
-        CC_UNUSED_PARAM(text);
+        CC_UNUSED_PARAM(insText);
         CC_UNUSED_PARAM(nLen);
         return false;
     }

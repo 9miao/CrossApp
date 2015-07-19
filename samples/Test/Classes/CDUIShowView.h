@@ -111,8 +111,8 @@ public CAScrollViewDelegate,
 public CAPickerViewDelegate,
 public CAPickerViewDataSource,
 public CADatePickerViewDelegate,
-public CAMediaDelegate,
-public CAVideoPlayerControllerDelegate
+public CAMediaDelegate//,
+//public CAVideoPlayerControllerDelegate
 {
 public:
     

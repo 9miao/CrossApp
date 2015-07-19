@@ -42,6 +42,7 @@ CATextView::CATextView()
 , m_bKeyboardOpen(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
+    this->setHaveNextResponder(false);
 }
 
 
@@ -205,7 +206,6 @@ void CATextView::updateImage()
 		false,
 		&m_vLinesTextView);
 
-    CC_RETURN_IF(!image);
     
 	if (m_szText.empty())
 	{
@@ -214,7 +214,10 @@ void CATextView::updateImage()
     m_pImageView->setColor(m_cFontColor);
 	m_pImageView->setImage(image);
     CCRect rect = CCRectZero;
-    rect.size = image->getContentSize();
+    if (image)
+    {
+        rect.size = image->getContentSize();
+    }
     m_pImageView->setImageRect(rect);
     m_pImageView->setFrame(rect);
     m_pContainerView->setViewSize(rect.size);
@@ -499,7 +502,7 @@ void CATextView::deleteBackward()
 	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length()));
     CC_RETURN_IF(execCurSelCharRange());
 	
-	int nDeleteLen = cszDelStr.size();
+	int nDeleteLen = (int)cszDelStr.size();
     m_iCurPos = MAX(m_iCurPos, nDeleteLen);
 	m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
 	m_iCurPos -= nDeleteLen;

@@ -1409,10 +1409,10 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
             }
         }
         
-        //this->initWithRawData(m_pImageData, m_ePixelFormat, m_uPixelsWide, m_uPixelsHigh);
+        this->initWithRawData(m_pImageData, m_ePixelFormat, m_uPixelsWide, m_uPixelsHigh);
 
-        this->convertToRawData();
-        this->premultipliedImageData();
+//        this->convertToRawData();
+//        this->premultipliedImageData();
         
         if(unpackedData != data)
         {
@@ -1881,8 +1881,6 @@ bool CAImage::initWithRawData(const unsigned char * data,
             break;
     }
 
-    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
-    
     this->repremultipliedImageData();
     
     return true;
@@ -2061,10 +2059,14 @@ void CAImage::premultipliedImageData()
             CCAssert(0, "NSInternalInconsistencyException");
             
     }
+    
+    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
+    
+    //CCLog("&&&&& IMAGE &&&& m_FileName/m_txt: %s/%ls, m_uName: %d, glGetError: %d", m_FileName.c_str(), m_txt.c_str(), m_uName, glGetError());
 }
 
 void CAImage::repremultipliedImageData()
-{
+{//CCLog("&&&&& IMAGE &&&& repremultipliedImageData ...");
     m_bPremultiplied = false;
     this->premultipliedImageData();
 }
@@ -2798,8 +2800,16 @@ bool CAImage::isTiff(const unsigned char * data, unsigned long dataLen)
     static const char* TIFF_II = "II";
     static const char* TIFF_MM = "MM";
     
-    return (memcmp(data, TIFF_II, 2) == 0 && *(static_cast<const unsigned char*>(data) + 2) == 42 && *(static_cast<const unsigned char*>(data) + 3) == 0) ||
-    (memcmp(data, TIFF_MM, 2) == 0 && *(static_cast<const unsigned char*>(data) + 2) == 0 && *(static_cast<const unsigned char*>(data) + 3) == 42);
+    return (    memcmp(data, TIFF_II, 2) == 0
+                &&
+                *(static_cast<const unsigned char*>(data) + 2) == 42
+                &&
+                *(static_cast<const unsigned char*>(data) + 3) == 0)
+            || (memcmp(data, TIFF_MM, 2) == 0
+                &&
+                *(static_cast<const unsigned char*>(data) + 2) == 0
+                &&
+                *(static_cast<const unsigned char*>(data) + 3) == 42);
 }
 
 bool CAImage::isWebp(const unsigned char * data, unsigned long dataLen)
@@ -2812,14 +2822,16 @@ bool CAImage::isWebp(const unsigned char * data, unsigned long dataLen)
     static const char* WEBP_RIFF = "RIFF";
     static const char* WEBP_WEBP = "WEBP";
     
-    return memcmp(data, WEBP_RIFF, 4) == 0
-    && memcmp(static_cast<const unsigned char*>(data) + 8, WEBP_WEBP, 4) == 0;
+    return  memcmp(data, WEBP_RIFF, 4) == 0
+            &&
+            memcmp(static_cast<const unsigned char*>(data) + 8, WEBP_WEBP, 4) == 0;
 }
 
 
 
 void CAImage::reloadAllImages()
 {
+    //CCLog("&&&&& IMAGE &&&& reloadAllImages ...");
     static bool isReload = false;
     if (isReload == false)
     {
@@ -2831,7 +2843,6 @@ void CAImage::reloadAllImages()
             usleep(10000);
         }
         
-
         isReload = false;
     }
 }

@@ -129,6 +129,7 @@ bool CAIMEDispatcher::attachDelegateWithIME(CAIMEDelegate * pDelegate)
 
             // detach first
             CAIMEDelegate * pOldDelegate = m_pImpl->m_DelegateWithIme;
+            m_pImpl->m_DelegateWithIme->getKeyBoardHeight(0);
             m_pImpl->m_DelegateWithIme = 0;
             pOldDelegate->didDetachWithIME();
 
@@ -160,6 +161,7 @@ bool CAIMEDispatcher::detachDelegateWithIME(CAIMEDelegate * pDelegate)
 
         CC_BREAK_IF(! pDelegate->canDetachWithIME());
 
+        m_pImpl->m_DelegateWithIme->getKeyBoardHeight(0);
         m_pImpl->m_DelegateWithIme = 0;
         pDelegate->didDetachWithIME();
         bRet = true;
@@ -441,10 +443,12 @@ void CAIMEDispatcher::dispatchKeyboardWillHide(CCIMEKeyboardNotificationInfo& in
 {
     if (m_pImpl)
     {
-        if(m_pImpl->m_DelegateWithIme){
+        if(m_pImpl->m_DelegateWithIme)
+        {
             m_pImpl->m_DelegateWithIme->keyboardWillHide(info);
 #if CC_TARGET_PLATFORM==CC_PLATFORM_IOS
             m_pImpl->m_DelegateWithIme->canDetachWithIME();
+            m_pImpl->m_DelegateWithIme->getKeyBoardHeight(0);
             m_pImpl->m_DelegateWithIme->didDetachWithIME();
 #endif
         }
@@ -472,6 +476,7 @@ void CAIMEDispatcher::dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& inf
             m_pImpl->m_DelegateWithIme->keyboardDidHide(info);
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
             m_pImpl->m_DelegateWithIme->canDetachWithIME();
+            m_pImpl->m_DelegateWithIme->getKeyBoardHeight(0);
             m_pImpl->m_DelegateWithIme->didDetachWithIME();
 #endif
         }

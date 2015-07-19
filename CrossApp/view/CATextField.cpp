@@ -48,6 +48,7 @@ CATextField::CATextField()
 , m_bMoved(false)
 {
 	m_iFontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize);
+    this->setHaveNextResponder(false);
 }
 
 CATextField::~CATextField()
@@ -487,7 +488,7 @@ void CATextField::insertText(const char * text, int len)
 {
     CC_RETURN_IF(len <= 0);
     CC_RETURN_IF(text == 0);
-	CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, m_sText.c_str(), (int)m_sText.length()));
+	CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, text, len));
     
     if (!strcmp(text, "\n"))
     {
@@ -515,7 +516,7 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
     CC_RETURN_IF(str == NULL || count <= 0);
     
     std::string s = str;
-    insertText(s.c_str(), s.length());
+    insertText(s.c_str(), (int)s.length());
 }
 
 void CATextField::willInsertText(const char *text, int len)
@@ -568,7 +569,7 @@ void CATextField::deleteBackward()
 	if (execCurSelCharRange())
 		return;
 
-	int nDeleteLen = cszDelStr.size();
+	int nDeleteLen = (int)cszDelStr.size();
     m_sText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
     m_iCurPos -= nDeleteLen;
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
@@ -925,7 +926,6 @@ void CATextField::updateImage()
                                                CATextAlignmentLeft,
                                                CAVerticalTextAlignmentCenter,
                                                true);
-    CC_RETURN_IF(!image);
     
     CCRect rect = CCRectZero;
     if (m_sPlaceHolder.length() == 0)
@@ -934,7 +934,7 @@ void CATextField::updateImage()
         this->setImageRect(rect);
     }
     
-	if (image == NULL) return;
+	CC_RETURN_IF(image == NULL);
 
 	rect.size.height = image->getContentSize().height;
 	rect.size.width = MIN(m_iLabelWidth, image->getContentSize().width);
@@ -1052,8 +1052,6 @@ int CATextField::getStringCharCount(const std::string &var)
 
 void CATextField::getKeyBoardHeight(int height)
 {
-    CAView::becomeFirstResponder();
-	
     if( m_pDelegate)
     {
         m_pDelegate->getKeyBoardHeight(height);

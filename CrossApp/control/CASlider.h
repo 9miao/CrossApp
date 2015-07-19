@@ -7,8 +7,8 @@
 //
 
 
-#ifndef CrossAppx_CASlider_h
-#define CrossAppx_CASlider_h
+#ifndef CrossApp_CASlider_h
+#define CrossApp_CASlider_h
 
 #include "CAControl.h"
 #include "view/CAScale9ImageView.h"
@@ -86,5 +86,5 @@ protected:
 
 NS_CC_END
 
-#endif //defined(CrossAppx_CASlider_h)
+#endif //defined(CrossApp_CASlider_h)
 

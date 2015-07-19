@@ -7,8 +7,8 @@
 //
 
 
-#ifndef __CrossAppx__CAClipboard__
-#define __CrossAppx__CAClipboard__
+#ifndef __CrossApp_CAClipboard__
+#define __CrossApp_CAClipboard__
 
 #include <string>
 #include "ccMacros.h"
@@ -25,4 +25,4 @@ public:
 
 NS_CC_END
 
-#endif /* defined(__cocos2dx__CAAlertView__) */
+#endif /* defined(__CrossApp__CAAlertView__) */

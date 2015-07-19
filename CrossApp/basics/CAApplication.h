@@ -224,7 +224,7 @@ public:
     
     // Memory Helper
 
-    /** Removes cached all cocos2d cached data.
+    /** Removes cached all CrossApp cached data.
      It will purge the CAImageCache, CCSpriteFrameCache, CCLabelBMFont cache
      @since v0.99.3
      */
