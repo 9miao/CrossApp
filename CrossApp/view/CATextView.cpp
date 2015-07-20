@@ -244,9 +244,9 @@ void CATextView::updateImage()
 	}
 
     m_pImageView->setImageRect(rect);
-	m_pContainerView->setViewSize(rect.size);
+	m_pContainerView->setViewSize(CCSizeMake(rect.size.width, rect.size.height));
 
-	rect.origin = CCPointMake(m_iHoriMargins, m_iVertMargins);
+	rect.origin = CCPointMake(m_iHoriMargins, 0);
     m_pImageView->setFrame(rect);
     
 	calcCursorPosition();
@@ -275,7 +275,7 @@ void CATextView::calcCursorPosition()
 	if (iCurLine == -1)
 	{
 		cCurPosition.x = m_iHoriMargins;
-		cCurPosition.y = m_iVertMargins + fHalfLineHeight;
+		cCurPosition.y = fHalfLineHeight;
 	}
 	else
 	{
@@ -285,7 +285,7 @@ void CATextView::calcCursorPosition()
 			s.erase(0, 1);
 		}
 		cCurPosition.x = m_iHoriMargins + getStringLength(s);
-		cCurPosition.y = m_iVertMargins + (m_iLineHeight + fLineSpaceValue)*iCurLine + fHalfLineHeight;
+		cCurPosition.y = (m_iLineHeight + fLineSpaceValue)*iCurLine + fHalfLineHeight;
 	}
 
 	if (m_pCursorMark)
@@ -704,18 +704,18 @@ std::vector<CCRect> CATextView::getZZCRect()
 	std::vector<CCRect> vr;
 	if (t1.first == t2.first)
 	{
-		vr.push_back(CCRect(l1, m_iVertMargins + m_iLineHeight*1.25f*t1.first, l2 - l1, m_iLineHeight));
+		vr.push_back(CCRect(l1, m_iLineHeight*1.25f*t1.first, l2 - l1, m_iLineHeight));
 	}
 	else
 	{
-		vr.push_back(CCRect(l1, m_iVertMargins + m_iLineHeight*1.25f*t1.first, size.width - l1 - m_iHoriMargins, m_iLineHeight*1.25f));
+		vr.push_back(CCRect(l1, m_iLineHeight*1.25f*t1.first, size.width - l1 - m_iHoriMargins, m_iLineHeight*1.25f));
 
 		int i = t1.first + 1;
 		for (; i < t2.first; i++)
 		{
-			vr.push_back(CCRect(m_iHoriMargins, m_iVertMargins + m_iLineHeight*1.25f*i, size.width - 2 * m_iHoriMargins, m_iLineHeight*1.25f));
+			vr.push_back(CCRect(m_iHoriMargins, m_iLineHeight*1.25f*i, size.width - 2 * m_iHoriMargins, m_iLineHeight*1.25f));
 		}
-		vr.push_back(CCRect(m_iHoriMargins, m_iVertMargins + m_iLineHeight*1.25f*i, l2 - m_iHoriMargins, m_iLineHeight));
+		vr.push_back(CCRect(m_iHoriMargins, m_iLineHeight*1.25f*i, l2 - m_iHoriMargins, m_iLineHeight));
 	}
 	for (int i = 0; i < vr.size(); i++)
 	{
@@ -733,7 +733,10 @@ void CATextView::setContentSize(const CCSize& var)
 	}
 	if (m_pContainerView)
 	{
-		m_pContainerView->setFrame(this->getBounds());
+		CCRect r = this->getBounds();
+		r.origin.y += m_iVertMargins;
+		r.size.height -= m_iVertMargins * 2;
+		m_pContainerView->setFrame(r);
 	}
 	this->initMarkSprite();
 }
@@ -778,7 +781,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			becomeFirstResponder();
             int iCurLine = 0; int iCurPosX = 0;
             calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
-			m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iVertMargins + m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+			m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
 			showCursorMark();
             
             CCPoint pt = m_pCursorMark->getCenterOrigin();
@@ -961,7 +964,7 @@ void CATextView::moveArrowBtn(const CCPoint& pt)
 	calcCursorPosition();
 
 	m_pCursorMark->stopAllActions();
-	m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iVertMargins + m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+	m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
 	m_pCursorMark->setVisible(true);
 
 	CCPoint ptArr = m_pCursorMark->getCenterOrigin();
