@@ -121,7 +121,8 @@ protected:
 	virtual int getCursorPos();
 	virtual void visit();
 
-    
+	CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
+
 	CC_SYNTHESIZE(CATextViewDelegate*, m_pTextViewDelegate, TextViewDelegate);
 
 	CC_PROPERTY_PASS_BY_REF(std::string, m_sPlaceHolder, PlaceHolder);
@@ -215,8 +216,6 @@ private:
 	CAScrollView* m_pContainerView;
 
 	CAView* m_pCursorMark;
-
-	CAScale9ImageView* m_pBackgroundView;
 
 	CAImageView* m_pImageView;
 
