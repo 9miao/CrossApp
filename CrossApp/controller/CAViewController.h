@@ -155,6 +155,8 @@ public:
     
     CAViewController* popFirstViewController();
  
+    CAViewController* popViewControllerAtIndex(int index);
+    
     CAViewController* getViewControllerAtIndex(int index);
     
     CAViewController* getBackViewController();

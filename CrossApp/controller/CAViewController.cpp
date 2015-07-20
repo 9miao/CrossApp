@@ -833,7 +833,6 @@ void CANavigationController::popToRootViewControllerFinish()
 void CANavigationController::homingViewControllerFinish()
 {
     size_t index = m_pViewControllers.size() - 2;
-    CAViewController* lastViewController = m_pViewControllers.at(index);
 
     CAView* lastContainer = m_pContainers.at(index);
     lastContainer->setVisible(false);
@@ -863,6 +862,35 @@ CAViewController* CANavigationController::popFirstViewController()
     m_pNavigationBars.popFront();
     
     return frontViewController;
+}
+
+CAViewController* CANavigationController::popViewControllerAtIndex(int index)
+{
+    if (index >= m_pViewControllers.size() || index < 0)
+    {
+        return NULL;
+    }
+    
+    if (index == m_pViewControllers.size() - 1)
+    {
+        return this->popViewControllerAnimated(false);
+    }
+    
+    CAViewController* viewController = m_pViewControllers.at(index);
+    viewController->viewDidDisappear();
+    viewController->m_pNavigationController = NULL;
+    viewController->removeViewFromSuperview();
+    viewController->retain()->autorelease();
+    m_pViewControllers.erase(index);
+    
+    m_pContainers.at(index)->removeFromSuperview();
+    m_pContainers.erase(index);
+    
+    m_pSecondContainers.erase(index);
+    
+    m_pNavigationBars.erase(index);
+    
+    return viewController;
 }
 
 void CANavigationController::navigationPopViewController(CANavigationBar* navigationBar, bool animated)
