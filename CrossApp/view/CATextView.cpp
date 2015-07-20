@@ -15,6 +15,7 @@
 
 NS_CC_BEGIN
 
+
 #pragma CATextView
 
 CATextView::CATextView()
@@ -113,6 +114,8 @@ bool CATextView::init()
 	m_pTextArrView = CATextArrowView::create();
 	m_pContainerView->addSubview(m_pTextArrView);
     
+	m_iHoriMargins = 10;
+	m_iVertMargins = 10;
 	return true;
 }
 
@@ -191,6 +194,7 @@ void CATextView::updateImage()
 	m_cFontColor = m_szText.empty() ? m_cSpaceHolderColor : m_cTextColor;
 
 	float width = this->getBounds().size.width;
+	width -= m_iHoriMargins * 2;
 
 	CAImage* image = g_AFTFontCache.initWithString(text.c_str(),
 		m_szFontName.c_str(),
@@ -221,8 +225,10 @@ void CATextView::updateImage()
 	}
 
     m_pImageView->setImageRect(rect);
+	m_pContainerView->setViewSize(rect.size);
+
+	rect.origin = CCPointMake(m_iHoriMargins, m_iVertMargins);
     m_pImageView->setFrame(rect);
-    m_pContainerView->setViewSize(rect.size);
     
 	calcCursorPosition();
 }
@@ -249,8 +255,8 @@ void CATextView::calcCursorPosition()
 	CCPoint cCurPosition;
 	if (iCurLine == -1)
 	{
-		cCurPosition.x = 0;
-		cCurPosition.y = fHalfLineHeight;
+		cCurPosition.x = m_iHoriMargins;
+		cCurPosition.y = m_iVertMargins + fHalfLineHeight;
 	}
 	else
 	{
@@ -259,8 +265,8 @@ void CATextView::calcCursorPosition()
 		{
 			s.erase(0, 1);
 		}
-		cCurPosition.x = getStringLength(s);
-		cCurPosition.y = (m_iLineHeight + fLineSpaceValue)*iCurLine + fHalfLineHeight;
+		cCurPosition.x = m_iHoriMargins + getStringLength(s);
+		cCurPosition.y = m_iVertMargins + (m_iLineHeight + fLineSpaceValue)*iCurLine + fHalfLineHeight;
 	}
 
 	if (m_pCursorMark)
@@ -588,7 +594,7 @@ void CATextView::calculateSelChars(const CCPoint& point, int& l, int& r, int& p)
 		s.erase(0, 1);
 	}
 	l = iCurLine;
-	r = getStringLength(s);
+	r = m_iHoriMargins + getStringLength(s);
 }
 
 
@@ -670,27 +676,27 @@ std::vector<CCRect> CATextView::getZZCRect()
 
 	std::string s1 = m_szText.substr(t1.second, m_curSelCharRange.first - t1.second);
 	if (!s1.empty() && s1[0] == '\n') s1.erase(0, 1);
-	int l1 = getStringLength(s1);
+	int l1 = m_iHoriMargins + getStringLength(s1);
 
 	std::string s2 = m_szText.substr(t2.second, m_curSelCharRange.second - t2.second);
 	if (!s2.empty() && s2[0] == '\n') s2.erase(0, 1);
-	int l2 = getStringLength(s2);
+	int l2 = m_iHoriMargins + getStringLength(s2);
 
 	std::vector<CCRect> vr;
 	if (t1.first == t2.first)
 	{
-		vr.push_back(CCRect(l1, m_iLineHeight*1.25f*t1.first, l2 - l1, m_iLineHeight));
+		vr.push_back(CCRect(l1, m_iVertMargins + m_iLineHeight*1.25f*t1.first, l2 - l1, m_iLineHeight));
 	}
 	else
 	{
-		vr.push_back(CCRect(l1, m_iLineHeight*1.25f*t1.first, size.width - l1, m_iLineHeight*1.25f));
+		vr.push_back(CCRect(l1, m_iVertMargins + m_iLineHeight*1.25f*t1.first, size.width - l1 - m_iHoriMargins, m_iLineHeight*1.25f));
 
 		int i = t1.first + 1;
 		for (; i < t2.first; i++)
 		{
-			vr.push_back(CCRect(0, m_iLineHeight*1.25f*i, size.width, m_iLineHeight*1.25f));
+			vr.push_back(CCRect(m_iHoriMargins, m_iVertMargins + m_iLineHeight*1.25f*i, size.width - 2 * m_iHoriMargins, m_iLineHeight*1.25f));
 		}
-		vr.push_back(CCRect(0, m_iLineHeight*1.25f*i, l2, m_iLineHeight));
+		vr.push_back(CCRect(m_iHoriMargins, m_iVertMargins + m_iLineHeight*1.25f*i, l2 - m_iHoriMargins, m_iLineHeight));
 	}
 	for (int i = 0; i < vr.size(); i++)
 	{
@@ -749,7 +755,8 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			becomeFirstResponder();
             int iCurLine = 0; int iCurPosX = 0;
             calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
-            m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+			m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iVertMargins + m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+			showCursorMark();
             
             CCPoint pt = m_pCursorMark->getCenterOrigin();
             m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
@@ -931,7 +938,7 @@ void CATextView::moveArrowBtn(const CCPoint& pt)
 	calcCursorPosition();
 
 	m_pCursorMark->stopAllActions();
-	m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+	m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iVertMargins + m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
 	m_pCursorMark->setVisible(true);
 
 	CCPoint ptArr = m_pCursorMark->getCenterOrigin();

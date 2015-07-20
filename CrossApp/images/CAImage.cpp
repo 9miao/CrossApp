@@ -991,7 +991,6 @@ CAImage::CAImage()
 , m_bTextImage(false)
 {
     s_pImages.insert(this);
-    //CCLog("CAImage = %d\n", s_pImages->count());
 }
 
 CAImage::~CAImage()
@@ -1009,7 +1008,6 @@ CAImage::~CAImage()
         free(m_pData);
     }
     s_pImages.erase(this);
-    //CCLog("~CAImage = %d\n", s_pImages->count());
 }
 
 CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment,
@@ -2840,7 +2838,11 @@ void CAImage::reloadAllImages()
         for (std::set<CAImage*>::iterator itr=s_pImages.begin(); itr!=s_pImages.end(); itr++)
         {
             (*itr)->repremultipliedImageData();
-            usleep(10000);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+			Sleep(10);
+#else
+			usleep(10000);
+#endif
         }
         
         isReload = false;
