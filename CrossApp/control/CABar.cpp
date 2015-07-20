@@ -194,18 +194,21 @@ void CANavigationBar::showLeftButton()
     const CAVector<CAObject*>& buttonItems = m_pItem->getLeftButtonItems();
 
     CCRect rect;
-    rect.size.width = this->getBounds().size.height * 0.9f;
+    rect.size.width = _px(80);
     rect.size.height = this->getBounds().size.height * 0.8f;
     rect.origin.x = rect.size.width * 0.7f;
     rect.origin.y = this->getBounds().size.height * 0.5f;
-    
+
     for (size_t i=0; i<buttonItems.size(); i++)
     {
+        CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
+        
+        rect.size.width = item ? item->getItemWidth() : _px(80);
         rect.origin.x += i * rect.size.width;
+        
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
         this->addSubview(button);
         
-        CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
         if (item == NULL && m_pItem)
         {
             button->setImageForState(CAControlStateNormal, CAImage::create("source_material/btn_left_white.png"));
@@ -214,20 +217,26 @@ void CANavigationBar::showLeftButton()
         }
         else if (item)
         {
-            button->setTitleForState(CAControlStateNormal, item->getTitle());
-            button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
-            button->setTitleForState(CAControlStateHighlighted, item->getTitle());
-            button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
-            button->setImageForState(CAControlStateNormal, item->getImage());
-            if (item->getHighlightedImage())
+            if (item->getImage())
             {
-                button->setImageForState(CAControlStateHighlighted, item->getHighlightedImage());
+                button->setImageForState(CAControlStateNormal, item->getImage());
+                if (item->getHighlightedImage())
+                {
+                    button->setImageForState(CAControlStateHighlighted, item->getHighlightedImage());
+                }
+                else
+                {
+                    button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
+                }
             }
             else
             {
-                //button->setImageForState(CAControlStateHighlighted, item->getImage());
-                button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
+                button->setTitleForState(CAControlStateNormal, item->getTitle());
+                button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
+                button->setTitleForState(CAControlStateHighlighted, item->getTitle());
+                button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
+            
             button->addTarget(item->getTarget(), item->getSel(), CAControlEventTouchUpInSide);
         }
         m_pLeftButtons.push_back(button);
@@ -253,26 +262,36 @@ void CANavigationBar::showRightButton()
 
     for (size_t i=0; i<buttonItems.size(); i++)
     {
-        rect.origin.x -= i * rect.size.width * 1.1f;
+        CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
+        
+        rect.size.width = item ? item->getItemWidth() : _px(80);
+        rect.origin.x -= i * rect.size.width;
+        
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
         this->addSubview(button);
-        
-        CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
+
         if (item)
         {
-            button->setTitleForState(CAControlStateNormal, item->getTitle());
-            button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
-            button->setTitleForState(CAControlStateHighlighted, item->getTitle());
-            button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
-            button->setImageForState(CAControlStateNormal, item->getImage());
-            if (item->getHighlightedImage())
+            if (item->getImage())
             {
-                button->setImageForState(CAControlStateHighlighted, item->getHighlightedImage());
+                button->setImageForState(CAControlStateNormal, item->getImage());
+                if (item->getHighlightedImage())
+                {
+                    button->setImageForState(CAControlStateHighlighted, item->getHighlightedImage());
+                }
+                else
+                {
+                    button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
+                }
             }
             else
             {
-                button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
+                button->setTitleForState(CAControlStateNormal, item->getTitle());
+                button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
+                button->setTitleForState(CAControlStateHighlighted, item->getTitle());
+                button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
+            
             button->addTarget(item->getTarget(), item->getSel(), CAControlEventTouchUpInSide);
         }
         m_pRightButtons.push_back(button);

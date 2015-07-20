@@ -204,13 +204,13 @@ void CAIMEDispatcher::dispatchWillInsertText(const char * pText, int nLen)
         m_pImpl->m_DelegateWithIme->willInsertText(pText, nLen);
     } while (0);
 }
-void CAIMEDispatcher::dispatchAndroidWillInsertText(int start,const std::string &str,int before,int count)
+void CAIMEDispatcher::dispatchAndroidWillInsertText(int start, const std::string &str, int before, int count)
 {
     do
     {
         CC_BREAK_IF(! m_pImpl);
         CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
-        m_pImpl->m_DelegateWithIme->AndroidWillInsertText(start,str.c_str(),before,count);
+        m_pImpl->m_DelegateWithIme->AndroidWillInsertText(start, str.c_str(), before, count);
     } while (0);
 }
 void CAIMEDispatcher::dispatchInsertText(const char * pText, int nLen)

@@ -492,6 +492,7 @@ void CATextField::insertText(const char * text, int len)
 {
     CC_RETURN_IF(len <= 0);
     CC_RETURN_IF(text == 0);
+    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, text, len, m_iCurPos));
 	CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, text, len));
     
     if (!strcmp(text, "\n"))
@@ -540,8 +541,8 @@ void CATextField::deleteBackward()
 	CC_RETURN_IF(m_iCurPos == 0 || m_sText.empty());
     if (m_nInputType==KEY_BOARD_INPUT_PASSWORD)
     {
-		CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), (int)m_sText.length()));
-
+		CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), (int)m_sText.length(), m_iCurPos - (int)m_sText.length()));
+        CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_sText.c_str(), (int)m_sText.length()));
         m_sText.clear();
 		m_vTextFiledChars.clear();
 		this->updateImage();
@@ -568,10 +569,9 @@ void CATextField::deleteBackward()
 		}
 		cszDelStr = m_sText.substr(m_iCurPos - nDeleteLen, nDeleteLen);
 	}
+	CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length(), m_iCurPos - (int)cszDelStr.length()));
 	CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length()));
-	
-	if (execCurSelCharRange())
-		return;
+	CC_RETURN_IF(execCurSelCharRange());
 
 	int nDeleteLen = (int)cszDelStr.size();
     m_sText.erase(m_iCurPos - nDeleteLen, nDeleteLen);

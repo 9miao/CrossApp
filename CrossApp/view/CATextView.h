@@ -41,6 +41,24 @@ public:
         return true;
     }
 
+    //If the sender doesn't want to insert the text, return true;
+    virtual bool onTextViewInsertText(CATextView* sender, const char * text, int nLen, int nPosition)
+    {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(text);
+        CC_UNUSED_PARAM(nLen);
+        return false;
+    }
+    
+    //If the sender doesn't want to delete the delText, return true;
+    virtual bool onTextViewDeleteBackward(CATextView* sender, const char * delText, int nLen, int nPosition)
+    {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(delText);
+        CC_UNUSED_PARAM(nLen);
+        return false;
+    }
+    
 	//If the sender doesn't want to insert the text, return true;
 	virtual bool onTextViewInsertText(CATextView* sender, const char * text, int nLen)
     {

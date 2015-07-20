@@ -440,6 +440,7 @@ void CATextView::insertText(const char * text, int len)
 {
     CC_RETURN_IF(len <= 0);
     CC_RETURN_IF(text == 0);
+    CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewInsertText(this, text, len, m_iCurPos));
 	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewInsertText(this, text, len));
 
 	execCurSelCharRange();
@@ -474,6 +475,7 @@ void CATextView::AndroidWillInsertText(int start, const char* str, int before, i
 			++nDeleteLen;
 		}
 		std::string cszDelStr = m_szText.substr(m_iCurPos - nDeleteLen, nDeleteLen);
+        CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length(), m_iCurPos - (int)cszDelStr.length()));
 		CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length()));
 		m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
 		m_iCurPos -= nDeleteLen;
@@ -482,7 +484,8 @@ void CATextView::AndroidWillInsertText(int start, const char* str, int before, i
 	CC_RETURN_IF(str == NULL || count <= 0);
 
 	std::string s = str;
-	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewInsertText(this, s.c_str(), s.size()));
+    CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, s.c_str(), (int)s.size(), m_iCurPos - (int)s.size()));
+	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewInsertText(this, s.c_str(), (int)s.size()));
 	m_szText.insert(m_iCurPos, s.c_str(), s.length());
 	m_iCurPos += s.length();
 	updateImage();

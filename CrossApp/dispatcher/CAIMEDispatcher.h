@@ -40,7 +40,7 @@ public:
 
     void dispatchWillInsertText(const char * pText, int nLen);
     
-    void dispatchAndroidWillInsertText(int start,const std::string &str,int before,int count);
+    void dispatchAndroidWillInsertText(int start, const std::string &str, int before, int count);
     /**
     @brief Dispatches the delete-backward operation.
     */

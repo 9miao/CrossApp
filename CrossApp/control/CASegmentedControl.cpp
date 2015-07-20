@@ -26,6 +26,8 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_iTouchIndex(0)
     , m_cTextColor(ccc4(54, 195, 240, 255))
     , m_cTextSelectedColor(CAColor_white)
+    , m_cImageColor(CAColor_white)
+    , m_cImageSelectedColor(CAColor_white)
     , m_cTintColor(ccc4(54, 195, 240, 255))
     , m_pTarget(NULL)
     , m_pCallFunc(NULL)
@@ -149,6 +151,7 @@ void CASegmentedControl::setTitleColor(const CAColor4B& color)
     m_cTextColor = color;
     for(int index=0; index<m_vSegments.size(); ++index)
     {
+        CC_CONTINUE_IF(m_iSelectedIndex == index);
         CALabel* label = m_vTitles.at(index);
         if(label != NULL)
             label->setColor(m_cTextColor);
@@ -163,6 +166,44 @@ const CAColor4B& CASegmentedControl::getTitleColor()
 void CASegmentedControl::setTitleSelectedColor(const CAColor4B& color)
 {
     m_cTextSelectedColor = color;
+    CC_RETURN_IF(m_iSelectedIndex == -1);
+    CALabel* label = m_vTitles.at(m_iSelectedIndex);
+    if(label != NULL)
+        label->setColor(m_cTextSelectedColor);
+}
+
+const CAColor4B& CASegmentedControl::getTitleSelectedColor()
+{
+    return m_cTextSelectedColor;
+}
+
+void CASegmentedControl::setImageColor(const CAColor4B& color)
+{
+    m_cImageColor = color;
+    for(int index=0; index<m_vSegments.size(); ++index)
+    {
+        CC_CONTINUE_IF(m_iSelectedIndex == index);
+        CAImageView* imageView = dynamic_cast<CAImageView*>(m_vSegments.at(index)->getSubviewByTextTag("image"));
+        if(imageView != NULL)
+            imageView->setColor(m_cImageColor);
+    }
+}
+const CAColor4B& CASegmentedControl::getImageColor()
+{
+    return m_cImageColor;
+}
+
+void CASegmentedControl::setImageSelectedColor(const CAColor4B& color)
+{
+    m_cImageSelectedColor = color;
+    CC_RETURN_IF(m_iSelectedIndex == -1);
+    CAImageView* imageView = dynamic_cast<CAImageView*>(m_vSegments.at(m_iSelectedIndex)->getSubviewByTextTag("image"));
+    if(imageView != NULL)
+        imageView->setColor(m_cImageSelectedColor);
+}
+const CAColor4B& CASegmentedControl::getImageSelectedColor()
+{
+    return m_cImageSelectedColor;
 }
 
 void CASegmentedControl::setTintColor(const CAColor4B& color)
@@ -475,14 +516,6 @@ void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
     createSeparate();
 }
 
-void CASegmentedControl::setBackgroundView(CrossApp::CAView *view)
-{
-    this->removeSubview(m_pBackgroundView);
-    m_pBackgroundView = view;
-    m_pBackgroundView->setFrame(this->getBounds());
-    this->insertSubview(m_pBackgroundView, -2);
-}
-
 CAView* CASegmentedControl::getBackgroundView()
 {
     return m_pBackgroundView;
@@ -621,7 +654,18 @@ void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState con
                                         segmentSize.height*0.5f + contentOffset.height,
                                         width,
                                         height));
+        imageView->setTextTag("image");
         m_vSegments.at(index)->addSubview(imageView);
+        
+        if (controlState == CAControlStateSelected || controlState ==  CAControlStateHighlighted)
+        {
+            imageView->setColor(m_cImageSelectedColor);
+        }
+        else
+        {
+            imageView->setColor(m_cImageColor);
+        }
+        
     }
     else
     {

@@ -604,7 +604,7 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             }
             p = p/m_tPointOffset.size();
         }
-        m_tInertia = p * 1.5f;
+        m_tInertia = p;
         m_tPointOffset.clear();
         
         if (!m_tInertia.equals(CCPointZero))

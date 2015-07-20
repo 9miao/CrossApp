@@ -61,7 +61,31 @@ public:
         return true;
     }
     
-	//If the sender doesn't want to insert the text, return true;
+    //If the sender doesn't want to insert the text, return true;
+    virtual bool onTextFieldInsertText(CATextField * sender, const char * insText, int nLen, int nPosition)
+    {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(insText);
+        CC_UNUSED_PARAM(nLen);
+        return false;
+    }
+    
+    //If the sender doesn't want to delete the delText, return true;
+    virtual bool onTextFieldDeleteBackward(CATextField * sender, const char * delText, int nLen, int nPosition)
+    {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(delText);
+        CC_UNUSED_PARAM(nLen);
+        return false;
+    }
+    
+    virtual void getKeyBoardHeight(int height){}
+    
+    
+    virtual bool keyBoardCallBack(CATextField *sender) {return true;}
+    
+    
+    //If the sender doesn't want to insert the text, return true;
     virtual bool onTextFieldInsertText(CATextField * sender, const char * insText, int nLen)
     {
         CC_UNUSED_PARAM(sender);
@@ -78,11 +102,6 @@ public:
         CC_UNUSED_PARAM(nLen);
         return false;
     }
-    
-    virtual void getKeyBoardHeight(int height){}
-    
-    
-    virtual bool keyBoardCallBack(CATextField *sender) {return true;}
 };
 
 

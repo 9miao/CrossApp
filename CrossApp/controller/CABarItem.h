@@ -61,6 +61,8 @@ public:
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pHighlightedImage, HighlightedImage);
     
+    CC_SYNTHESIZE(unsigned int, m_uItemWidth, ItemWidth);
+    
     CC_SYNTHESIZE_READONLY(CAView*, m_pCustomView, CustomView);
     
     void setTarget(CAObject* target, SEL_CAControl callfunc);

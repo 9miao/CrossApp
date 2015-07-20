@@ -9,6 +9,8 @@
 #include "CAPageView.h"
 #include "basics/CAScheduler.h"
 
+static float s_fSpacing = _px(40);
+
 CAPageView::CAPageView(const CAPageViewDirection& type)
 :m_ePageViewDirection(type)
 ,m_ePageViewState(None)
@@ -79,31 +81,7 @@ void CAPageView::setViews(const CAVector<CAView*>& vec)
         m_pViews.clear();
     }
     
-    m_pViews = CADeque<CAView*>(vec);
-    
-    if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
-    {
-        this->setViewSize(CCSize(this->getBounds().size.width * m_pViews.size(), m_obViewSize.height));
-    }
-    else
-    {
-        this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size()));
-    }
-    
-    for (size_t i=0; i<m_pViews.size(); i++)
-    {
-        CCRect rect = this->getBounds();
-        if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
-        {
-            rect.origin.x = rect.size.width * i;
-        }
-        else
-        {
-            rect.origin.y = rect.size.height * i;
-        }
-        m_pContainer->addSubview(m_pViews.at(i));
-        m_pViews.at(i)->setFrame(rect);
-    }
+    this->setViews(CADeque<CAView*>(vec));
 }
 
 void CAPageView::setViews(const CADeque<CAView*>& vec)
@@ -118,11 +96,11 @@ void CAPageView::setViews(const CADeque<CAView*>& vec)
     
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
-        this->setViewSize(CCSize(this->getBounds().size.width * m_pViews.size(), m_obViewSize.height));
+        this->setViewSize(CCSize(this->getBounds().size.width * m_pViews.size() + s_fSpacing * (m_pViews.size() - 1), m_obViewSize.height));
     }
     else
     {
-        this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size()));
+        this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size() + s_fSpacing * (m_pViews.size() - 1)));
     }
     
     for (size_t i=0; i<m_pViews.size(); i++)
@@ -130,11 +108,11 @@ void CAPageView::setViews(const CADeque<CAView*>& vec)
         CCRect rect = this->getBounds();
         if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
         {
-            rect.origin.x = rect.size.width * i;
+            rect.origin.x = (rect.size.width + s_fSpacing) * i;
         }
         else
         {
-            rect.origin.y = rect.size.height * i;
+            rect.origin.y = (rect.size.height + s_fSpacing) * i;
         }
         m_pContainer->addSubview(m_pViews.at(i));
         m_pViews.at(i)->setFrame(rect);
@@ -185,11 +163,11 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
     
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
-        this->setContentOffset(CCPoint(m_nCurrPage * this->getBounds().size.width, 0), animated);
+        this->setContentOffset(CCPoint(m_nCurrPage * (this->getBounds().size.width + s_fSpacing), 0), animated);
     }
     else
     {
-        this->setContentOffset(CCPoint(0, m_nCurrPage * this->getBounds().size.height), animated);
+        this->setContentOffset(CCPoint(0, m_nCurrPage * (this->getBounds().size.height + s_fSpacing)), animated);
     }
     
 }
