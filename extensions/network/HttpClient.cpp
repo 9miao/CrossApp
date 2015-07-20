@@ -70,7 +70,11 @@ static void* networkThread(void *data)
         if (NULL == request)
         {
         	pthread_cond_wait(&httpClient->s_SleepCondition, &httpClient->s_SleepMutex);
-            usleep(100000);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+			Sleep(100);
+#else
+			usleep(100000);
+#endif
             continue;
         }
         

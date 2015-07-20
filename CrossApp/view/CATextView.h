@@ -142,6 +142,9 @@ protected:
 
 	CC_PROPERTY(unsigned int, m_iLineSpacing, LineSpacing);
 
+	CC_SYNTHESIZE(int, m_iHoriMargins, HoriMargins);
+	CC_SYNTHESIZE(int, m_iVertMargins, VertMargins);
+
 	CC_PROPERTY_PASS_BY_REF(std::string, m_szFontName, FontName);
     
     CC_SYNTHESIZE(eKeyBoardInputType, m_nInputType, InputType);

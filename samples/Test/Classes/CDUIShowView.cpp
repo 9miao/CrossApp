@@ -1789,14 +1789,14 @@ void CDUIShowView::doAction(CAControl* btn,CCPoint point)
         CAViewAnimation::setAnimationDuration(0.3f);
         animation_2_textfield->setFrame(CADipRect(90,winSize.height/2-25,winSize.width-200,50));
         animation_2_textfield->setAlpha(1);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation2_selector(CDUIShowView::endAction));
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CDUIShowView::endAction));
         CAViewAnimation::commitAnimations();
     }else if(tag==202){
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
         animation_2_textfield->setFrame(CADipRect(90,winSize.height/2-25,0,50));
         animation_2_textfield->setAlpha(0);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation2_selector(CDUIShowView::endAction));
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CDUIShowView::endAction));
         CAViewAnimation::commitAnimations();
     }
 }
