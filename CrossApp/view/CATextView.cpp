@@ -102,6 +102,7 @@ bool CATextView::init()
     m_pContainerView->setHorizontalScrollEnabled(false);
 	m_pContainerView->setBounceHorizontal(false);
     m_pContainerView->setHaveNextResponder(true);
+	setBackGroundColor(CAColor_clear);
 	this->addSubview(m_pContainerView);
     
 	m_pImageView = new CAImageView();
@@ -116,9 +117,27 @@ bool CATextView::init()
     
 	m_iHoriMargins = 10;
 	m_iVertMargins = 10;
+
+	m_pBackgroundView = CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png"));
+	setBackgroundView(m_pBackgroundView);
 	return true;
 }
 
+void CATextView::setBackgroundView(CrossApp::CAView *var)
+{
+	this->removeSubview(m_pBackgroundView);
+	m_pBackgroundView = var;
+	if (m_pBackgroundView)
+	{
+		m_pBackgroundView->setFrame(this->getBounds());
+		this->insertSubview(m_pBackgroundView, -1);
+	}
+}
+
+CAView* CATextView::getBackgroundView()
+{
+	return m_pBackgroundView;
+}
 
 CATextView* CATextView::createWithFrame(const CCRect& frame)
 {
@@ -708,6 +727,10 @@ std::vector<CCRect> CATextView::getZZCRect()
 void CATextView::setContentSize(const CCSize& var)
 {
 	CAView::setContentSize(var);
+	if (m_pBackgroundView)
+	{
+		m_pBackgroundView->setFrame(this->getBounds());
+	}
 	if (m_pContainerView)
 	{
 		m_pContainerView->setFrame(this->getBounds());
