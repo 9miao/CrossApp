@@ -718,7 +718,7 @@ static bool check_debug_dump(tristate* ts)
 }
 
 
-#define DEBUG_MARKUP
+//#define DEBUG_MARKUP
 #ifdef DEBUG_MARKUP
 
 static vec2_t debug_centroid(const tristate* ts, int vi0, int vi1, int vi2)
