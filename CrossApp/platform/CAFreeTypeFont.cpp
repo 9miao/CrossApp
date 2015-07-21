@@ -41,7 +41,6 @@ CAFreeTypeFont::CAFreeTypeFont()
 , m_bBold(false)
 , m_bItalics(false)
 , m_bUnderLine(false)
-, m_bOpenTypeFont(false)
 {
 	m_ItalicMatrix.xx = 0x10000L;
 	m_ItalicMatrix.xy = ITALIC_LEAN_VALUE * 0x10000L;
@@ -74,10 +73,8 @@ CAImage* CAFreeTypeFont::initWithString(const std::string& pText, const std::str
 	std::u16string cszTemp;
 	std::string cszNewText = pText;
 
-	if (m_bOpenTypeFont)
-	{
-		s_TempFont.initTempTypeFont(nSize);
-	}
+	s_TempFont.initTempTypeFont(nSize);
+
 _AgaginInitGlyphs:
 	m_inWidth = inWidth;
 	m_inHeight = inHeight;
@@ -719,6 +716,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	glyphs.reserve(utf16String.size());
 
 	FT_Bool useKerning = FT_HAS_KERNING(m_face);
+	FT_Bool useOpenTypeFont = FT_Get_Char_Index(m_face, 97) == 0;
 
 	for (int n = 0; n < utf16String.size(); n++)
 	{
@@ -734,7 +732,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		glyph_index = FT_Get_Char_Index(m_face, c);
 		glyph->index = glyph_index;
 		glyph->isOpenType = (glyph_index == 0);
-		if (glyph_index == 0 && m_bOpenTypeFont)
+		if (glyph_index == 0 && useOpenTypeFont)
 		{
 			glyph_index = FT_Get_Char_Index(s_TempFont.m_CurFontFace, c);
 		}
@@ -1019,7 +1017,6 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
 	{
 		ttfIndex = ittFontNames->second.face_index;
 		*size = ittFontNames->second.size;
-		m_bOpenTypeFont = ittFontNames->second.isOpenTypeFont;
 		return ittFontNames->second.pBuffer;
 	}
 
@@ -1088,7 +1085,6 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         {
             fontName = "/system/fonts/NotoSansHans-Regular.otf";
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
-			m_bOpenTypeFont = true;
         }
 #endif
 	}
@@ -1097,7 +1093,6 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
 	info.pBuffer = pBuffer;
 	info.size = *size;
 	info.face_index = ttfIndex;
-	info.isOpenTypeFont = m_bOpenTypeFont;
 	s_fontsNames[path] = info;
 	return pBuffer;
 }
