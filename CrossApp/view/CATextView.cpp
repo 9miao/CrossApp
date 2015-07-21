@@ -115,8 +115,8 @@ bool CATextView::init()
 	m_pTextArrView = CATextArrowView::create();
 	m_pContainerView->addSubview(m_pTextArrView);
     
-	m_iHoriMargins = 10;
-	m_iVertMargins = 10;
+	m_iHoriMargins = _px(16);
+	m_iVertMargins = _px(16);
 
 	m_pBackgroundView = CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png"));
 	setBackgroundView(m_pBackgroundView);
