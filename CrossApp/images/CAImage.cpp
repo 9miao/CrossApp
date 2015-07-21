@@ -2830,22 +2830,22 @@ bool CAImage::isWebp(const unsigned char * data, unsigned long dataLen)
 void CAImage::reloadAllImages()
 {
     //CCLog("&&&&& IMAGE &&&& reloadAllImages ...");
-    static bool isReload = false;
-    if (isReload == false)
-    {
-        isReload = true;
-        
-        for (std::set<CAImage*>::iterator itr=s_pImages.begin(); itr!=s_pImages.end(); itr++)
-        {
-            (*itr)->repremultipliedImageData();
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-			Sleep(10);
-#else
-			usleep(10000);
-#endif
-        }
-        
-        isReload = false;
-    }
+//    static bool isReload = false;
+//    if (isReload == false)
+//    {
+//        isReload = true;
+//        
+//        for (std::set<CAImage*>::iterator itr=s_pImages.begin(); itr!=s_pImages.end(); itr++)
+//        {
+//            (*itr)->repremultipliedImageData();
+//#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+//			Sleep(10);
+//#else
+//			usleep(10000);
+//#endif
+//        }
+//        
+//        isReload = false;
+//    }
 }
 NS_CC_END

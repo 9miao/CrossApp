@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 http://9miao.com All rights reserved.
 //
 
-#ifndef __CrossApp_CAViewController__
-#define __CrossApp_CAViewController__
+#ifndef __CrossApp__CAViewController__
+#define __CrossApp__CAViewController__
 
 #include <iostream>
 #include "control/CABar.h"
@@ -363,4 +363,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__CrossApp_CAViewController__) */
+#endif /* defined(__CrossApp__CAViewController__) */

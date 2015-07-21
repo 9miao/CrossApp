@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
-#ifndef __CrossApp_CABarItem__
-#define __CrossApp_CABarItem__
+#ifndef __CrossApp__CABarItem__
+#define __CrossApp__CABarItem__
 
 #include <iostream>
 
@@ -139,4 +139,4 @@ public:
 NS_CC_END
 
 
-#endif /* defined(__CrossApp_CABarItem__) */
+#endif /* defined(__CrossApp__CABarItem__) */

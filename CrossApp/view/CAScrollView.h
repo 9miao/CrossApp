@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
-#ifndef __CrossApp_CAScrollView__
-#define __CrossApp_CAScrollView__
+#ifndef __CrossApp__CAScrollView__
+#define __CrossApp__CAScrollView__
 
 #include <iostream>
 #include "CAView.h"
@@ -287,4 +287,4 @@ private:
 
 
 NS_CC_END
-#endif /* defined(__CrossApp_CAScrollView__) */
+#endif /* defined(__CrossApp__CAScrollView__) */
