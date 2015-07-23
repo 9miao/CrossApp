@@ -39,7 +39,7 @@ public:
         kCreateFile,
         kNetwork,
         kNoNewVersion,
-        kUncompress,
+        //kUncompress
     };
     
     static CADownloadManager* getInstance();

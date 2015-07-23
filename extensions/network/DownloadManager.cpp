@@ -837,10 +837,10 @@ void* CADownloadResponseDownloadAndUncompress(void *data)
 		bool bDSucc = self->downLoad();
 		bool bAbort = self->isDownloadAbort();
 
-		if (!bAbort && !self->uncompress())
-        {
-            self->sendErrorMessage(CADownloadManager::kUncompress);
-        }
+//		if (!bAbort && !self->uncompress())
+//        {
+//            self->sendErrorMessage(CADownloadManager::kUncompress);
+//        }
 
 		if (bDSucc || bAbort)
 		{

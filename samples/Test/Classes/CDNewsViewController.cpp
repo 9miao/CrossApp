@@ -384,24 +384,22 @@ CATableViewCell* CDNewsViewController::tableCellAtIndex(CATableView* table, cons
 
 void CDNewsViewController::tableViewWillDisplayCellAtIndex(CATableView* table, CATableViewCell* cell, unsigned int section, unsigned int row)
 {
-    if (cell != NULL){
+    if (cell != NULL)
+    {
         temp_time+=0.02f;
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(temp_time);
         CAViewAnimation::setAnimationDidStopSelector(this,CAViewAnimation0_selector(CDNewsViewController::tempCallBack));
         CAViewAnimation::commitAnimations();
         
-//        cell->getContentView()->setScale(1.5f);
-//        cell->getContentView()->setAlpha(0.5f);
-        
-        cell->getContentView()->setFrameOrigin(CADipPoint(winSize.width/2,0));
+        cell->getContentView()->setScale(0.8f);
+        cell->getContentView()->setRotationY(-180);
         
         CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDuration(0.3f);
         CAViewAnimation::setAnimationDelay(temp_time);
-//        cell->getContentView()->setScale(1.0f);
-//        cell->getContentView()->setAlpha(1.0f);
-        cell->getContentView()->setFrameOrigin(CADipPoint(0,0));
+        cell->getContentView()->setScale(1.0f);
+        cell->getContentView()->setRotationY(0);
         //执行动画
         CAViewAnimation::commitAnimations();
         
