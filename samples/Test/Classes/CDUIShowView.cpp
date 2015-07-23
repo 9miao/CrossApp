@@ -1612,7 +1612,7 @@ void CDUIShowView::showDatePickerView()
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     
     CADatePickerView* dpv = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDate);
-    dpv->setDate(2004, 2, 30, false);
+    dpv->setDate(2004, 2, 16, false);
     dpv->setDelegate(this);
 
     CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));

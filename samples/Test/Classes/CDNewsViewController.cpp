@@ -402,7 +402,6 @@ void CDNewsViewController::tableViewWillDisplayCellAtIndex(CATableView* table, C
         cell->getContentView()->setRotationY(0);
         //执行动画
         CAViewAnimation::commitAnimations();
-        
     }
 }
 

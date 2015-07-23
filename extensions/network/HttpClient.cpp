@@ -4,6 +4,10 @@
 #include "curl/curl.h"
 #define MAX_Thread 16
 
+#ifndef usleep
+#include "libwebsockets.h"
+#endif
+
 NS_CC_EXT_BEGIN
 
 static int s_httpClientCount = 0;

@@ -209,6 +209,8 @@ public:
     
     void repremultipliedImageData();
     
+    void freeName();
+    
     void updateGifImageWithIndex(unsigned int index);
 
     unsigned int getGifImageIndex();

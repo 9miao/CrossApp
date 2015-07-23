@@ -1950,10 +1950,7 @@ void CAImage::premultipliedImageData()
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
     
-    if(m_uName)
-    {
-        ccGLDeleteTexture(m_uName);
-    }
+    this->freeName();
     
     glGenTextures(1, &m_uName);
     ccGLBindTexture2D(m_uName);
@@ -2059,12 +2056,19 @@ void CAImage::premultipliedImageData()
     }
     
     setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
-    
-    //CCLog("&&&&& IMAGE &&&& m_FileName/m_txt: %s/%ls, m_uName: %d, glGetError: %d", m_FileName.c_str(), m_txt.c_str(), m_uName, glGetError());
+}
+
+void CAImage::freeName()
+{
+    if(m_uName)
+    {
+        ccGLDeleteTexture(m_uName);
+        m_uName = 0;
+    }
 }
 
 void CAImage::repremultipliedImageData()
-{//CCLog("&&&&& IMAGE &&&& repremultipliedImageData ...");
+{
     m_bPremultiplied = false;
     this->premultipliedImageData();
 }
@@ -2829,23 +2833,14 @@ bool CAImage::isWebp(const unsigned char * data, unsigned long dataLen)
 
 void CAImage::reloadAllImages()
 {
-    //CCLog("&&&&& IMAGE &&&& reloadAllImages ...");
-//    static bool isReload = false;
-//    if (isReload == false)
-//    {
-//        isReload = true;
-//        
-//        for (std::set<CAImage*>::iterator itr=s_pImages.begin(); itr!=s_pImages.end(); itr++)
-//        {
-//            (*itr)->repremultipliedImageData();
-//#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-//			Sleep(10);
-//#else
-//			usleep(10000);
-//#endif
-//        }
-//        
-//        isReload = false;
-//    }
+    for (std::set<CAImage*>::iterator itr=s_pImages.begin(); itr!=s_pImages.end(); itr++)
+    {
+        (*itr)->freeName();
+    }
+    
+    for (std::set<CAImage*>::iterator itr=s_pImages.begin(); itr!=s_pImages.end(); itr++)
+    {
+        (*itr)->repremultipliedImageData();
+    }
 }
 NS_CC_END
