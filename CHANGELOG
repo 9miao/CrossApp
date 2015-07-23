@@ -83,6 +83,25 @@
 #####13.其他一些细节的修改
 
 
+#### CrossApp 1.1.8 Update:  
+
+#####1. Optimized CATextField and CATextView
+1. Fixed bug that text becomes black block in some circumstances
+2. Changed onTextViewAttachWithIME, onTextViewDetachWithIME and other delegate function callback as main thread
+#####2. Added item alert badge in CATabBar
+#####3. Readjusted and optimized touch event distribution mechanism
+#####4. Fixed bug that CADatePickerView displays wrong time in some certain circumstances
+#####5. Optimized CAActivityIndicatorView default style
+#####6. Added long press event to trigger monitor function
+#####7. Fixed bug that system crashed in iOS 6.x
+#####8. Optimized OpenGL clipping deviation
+#####9. Fixed the memory leak bug of last version
+#####10. Readjusted and optimized the screenshot class interface of CARenderImage
+#####11. Fixed the compiling error bug that caused by not adding CAGif, CAFlash in iOS
+#####12. Fixed the incorrect Chinese compiling of date control of last version
+#####13. Other details tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 1.1.7 更新内容：  
