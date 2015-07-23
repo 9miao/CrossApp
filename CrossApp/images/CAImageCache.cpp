@@ -336,6 +336,11 @@ CAImage* CAImageCache::addImage(const std::string& path)
     
     //pthread_mutex_lock(m_pDictLock);
     
+    if (path.empty())
+    {
+        return NULL;
+    }
+    
     image = (CAImage*)m_pImages->objectForKey(path);
 
     if (!image)

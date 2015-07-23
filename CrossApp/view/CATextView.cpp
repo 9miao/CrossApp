@@ -25,7 +25,7 @@ CATextView::CATextView()
 , m_pImageView(NULL)
 , m_cCursorColor(CAColor_black)
 , m_cTextColor(ccc4(0, 0, 0, 255))
-, m_cSpaceHolderColor(ccc4(193, 193, 193, 255))
+, m_cPlaceHolderColor(ccc4(193, 193, 193, 255))
 , m_nInputType(KEY_BOARD_INPUT_NORMAL)
 , m_keyboardType(KEY_BOARD_TYPE_NORMAL)
 , m_szFontName("")
@@ -210,7 +210,7 @@ void CATextView::updateImage()
 	{
 		text = m_szText;
 	}
-	m_cFontColor = m_szText.empty() ? m_cSpaceHolderColor : m_cTextColor;
+	m_cFontColor = m_szText.empty() ? m_cPlaceHolderColor : m_cTextColor;
 
 	float width = this->getBounds().size.width;
 	width -= m_iHoriMargins * 2;
@@ -349,15 +349,15 @@ const std::string& CATextView::getPlaceHolder()
 	return m_sPlaceHolder;
 }
 
-void CATextView::setSpaceHolderColor(const CAColor4B &var)
+void CATextView::setPlaceHolderColor(const CAColor4B &var)
 {
-	m_cSpaceHolderColor = var;
+	m_cPlaceHolderColor = var;
 	this->updateImage();
 }
 
-const CAColor4B &CATextView::getSpaceHolderColor()
+const CAColor4B &CATextView::getPlaceHolderColor()
 {
-	return m_cSpaceHolderColor;
+	return m_cPlaceHolderColor;
 }
 
 void CATextView::setLineSpacing(unsigned int var)

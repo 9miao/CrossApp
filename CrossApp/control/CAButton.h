@@ -73,6 +73,16 @@ public:
     
     using CAControl::removeAllTargets;
     
+    void setImageOffset(CCSize offset);
+    
+    void setImageSize(CCSize size);
+    
+    void setTitleOffset(CCSize offset);
+    
+    void setTitleLabelSize(CCSize size);
+    
+    void setTitleFontSize(float fontSize);
+    
 public:
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
@@ -115,6 +125,15 @@ protected:
     
     CAView* m_pBackGroundView[CAControlStateAll];
     
+    float m_fTitleFontSize;
+    
+    CCSize m_pTitleLabelSize;
+    
+    CCSize m_pImageSize;
+    
+    CCSize m_pTitleOffset;
+    
+    CCSize m_pImageOffset;
 protected:
     
     void updateWithPreferredSize();

@@ -28,6 +28,11 @@ CAButton::CAButton(const CAButtonType& buttonType)
 ,m_sTitleFontName("")
 ,m_pImageView(NULL)
 ,m_pLabel(NULL)
+,m_fTitleFontSize(0)
+,m_pTitleLabelSize(CCSizeZero)
+,m_pImageSize(CCSizeZero)
+,m_pTitleOffset(CCSizeZero)
+,m_pImageOffset(CCSizeZero)
 {
     for (int i=0; i<CAControlStateAll; i++)
     {
@@ -564,19 +569,42 @@ void CAButton::setControlState(const CAControlState& var)
     }
 
     m_pImageView->setColor(m_sImageColor[m_eControlState]);
+
+    if (!m_pImageSize.equals(CCSizeZero))
+    {
+        imageViewCenter.size = m_pImageSize;
+    }
+    if (!m_pImageOffset.equals(CCSizeZero))
+    {
+        imageViewCenter.origin = ccpMult(this->getBounds().size, 0.5f);
+        imageViewCenter.origin = ccpAdd(imageViewCenter.origin, m_pImageOffset);
+    }
     m_pImageView->setCenter(imageViewCenter);
+    
     
     if (image != m_pImageView->getImage())
     {
         m_pImageView->setImage(image);
     }
-    
     m_pLabel->setColor(m_sTitleColor[m_eControlState]);
+
+    
+    if (!m_pTitleLabelSize.equals(CCSizeZero))
+    {
+        labelCenter.size = m_pTitleLabelSize;
+    }
+    if(!m_pTitleOffset.equals(CCSizeZero))
+    {
+        labelCenter.origin = ccpMult(this->getBounds().size, 0.5f);
+        labelCenter.origin = ccpAdd(labelCenter.origin, m_pTitleOffset);
+    }
     m_pLabel->setCenter(labelCenter);
     
     if (!title.empty())
     {
-        m_pLabel->setFontSize(labelSize);
+        if(m_fTitleFontSize==0)
+            m_fTitleFontSize = labelSize;
+        m_pLabel->setFontSize(m_fTitleFontSize);
     }
     
     if (strcmp(title.c_str(), m_pLabel->getText().c_str()))
@@ -668,6 +696,46 @@ void CAButton::setContentSize(const CCSize & var)
     
     this->updateWithPreferredSize();
     this->setControlState(m_eControlState);
+}
+
+void CAButton::setImageOffset(CCSize offset)
+{
+    m_pImageOffset = offset;
+    CCRect rect = m_pImageView->getCenter();
+    rect.origin.x += offset.width;
+    rect.origin.y += offset.height;
+    m_pImageView->setCenter(rect);
+}
+
+void CAButton::setImageSize(CCSize size)
+{
+    m_pImageSize = size;
+    CCRect rect = m_pImageView->getCenter();
+    rect.size = m_pImageSize;
+    m_pImageView->setCenter(rect);
+}
+
+void CAButton::setTitleOffset(CCSize offset)
+{
+    m_pTitleOffset = offset;
+    CCRect rect = m_pLabel->getCenter();
+    rect.origin.x += offset.width;
+    rect.origin.y += offset.height;
+    m_pLabel->setCenter(rect);
+}
+
+void CAButton::setTitleLabelSize(CCSize size)
+{
+    m_pTitleLabelSize = size;
+    CCRect rect = m_pLabel->getCenter();
+    rect.size = m_pTitleLabelSize;
+    m_pLabel->setCenter(rect);
+}
+
+void CAButton::setTitleFontSize(float fontSize)
+{
+    m_fTitleFontSize = fontSize;
+    m_pLabel->setFontSize(m_fTitleFontSize);
 }
 
 NS_CC_END

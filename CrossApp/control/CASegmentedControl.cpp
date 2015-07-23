@@ -46,6 +46,7 @@ CASegmentedControl::~CASegmentedControl()
     m_vSegments.clear();
     m_vSeparateView.clear();
     m_vSegmentWidth.clear();
+    m_vImageSize.clear();
 	m_vSegmentItemBackground.clear();
  	m_pCallFunc = NULL;
 }
@@ -473,6 +474,11 @@ void CASegmentedControl::removeSegmentAtIndex(int index)
     }
     
     {
+        std::vector<CCSize>::iterator itr = m_vImageSize.begin() + index;
+        m_vImageSize.erase(itr);
+    }
+    
+    {
         std::vector<float>::iterator itr = m_vSegmentWidth.begin() + index;
         m_vSegmentWidth.erase(itr);
     }
@@ -626,6 +632,7 @@ void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState con
     CAObject* object = getObjectByIndex(index, controlState);
     CCSize segmentSize = m_vSegments.at(index)->getBounds().size;
     CCSize contentOffset = m_vContentOffset.at(index);
+    CCSize imageSize = m_vImageSize.at(index);
     
     if(CALabel* label = dynamic_cast<CALabel*>(object))
     {
@@ -636,20 +643,26 @@ void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState con
     }
     else if(CAImage* image = dynamic_cast<CAImage*>(object))
     {
-        CCSize imageSize = image->getContentSize();
+        CADipSize imageSelfSize =  CADipSize(image->getContentSize().width, image->getContentSize().height);
+    
         CADipSize segmentSizeDip = CADipSize( segmentSize );
-        float width = imageSize.width;
-        float height = imageSize.height;
-        if(imageSize.width > segmentSizeDip.width)
+        float width = imageSelfSize.width;
+        float height = imageSelfSize.height;
+        if(imageSelfSize.width > segmentSizeDip.width)
         {
             width = segmentSizeDip.width;
         }
-        if(imageSize.height > segmentSizeDip.height)
+        if(imageSelfSize.height > segmentSizeDip.height)
         {
             height = segmentSizeDip.height;
         }
         m_vSegments.at(index)->removeAllSubviews();
         CAImageView* imageView = CAImageView::createWithImage(image);
+        if( imageSize.width || imageSize.height)
+        {
+            width = imageSize.width;
+            height = imageSize.height;
+        }
         imageView->setCenter(CCRectMake(segmentSize.width*0.5f + contentOffset.width,
                                         segmentSize.height*0.5f + contentOffset.height,
                                         width,
@@ -770,6 +783,9 @@ CAView* CASegmentedControl::createDefaultSegment(int index)
         std::vector<CCSize>::iterator itr_offset = m_vContentOffset.begin()+index;
         m_vContentOffset.insert(itr_offset, CCSizeMake(0, 0));
         
+        std::vector<CCSize>::iterator itr_imageSize = m_vImageSize.begin()+index;
+        m_vImageSize.insert(itr_imageSize, CCSizeMake(0, 0));
+        
         std::vector<float>::iterator itr_width = m_vSegmentWidth.begin()+index;
         m_vSegmentWidth.insert(itr_width, -1);
         
@@ -842,6 +858,17 @@ void CASegmentedControl::setSegmentItemBackgroundVisibleWithIndex(bool isVisible
     if(*itr!=NULL && index>-1 && index< m_vSegments.size())
         (*itr)->setVisible(isVisible);
 }
+
+void CASegmentedControl::setImageSizeAtIndex(CCSize size, int index)
+{
+    if(index >= 0 && index < m_vSegments.size())
+    {
+        m_vImageSize.at(index) = size;
+        refreshSegmentItemByIndex(index, CAControlStateNormal);
+        refreshSegmentItemByIndex(index, CAControlStateSelected);
+    }
+}
+
 
 #pragma mark --
 

@@ -1,5 +1,57 @@
 **********************************************************************************
 
+#### CrossApp 1.1.9 更新内容：  
+
+#####1.优化引擎性能
+1.CPU高峰占有率，性能提升
+2.耗电优化
+
+#####2.优化iOS端Http网络请求稳定性
+
+#####3.优化CAScrollView
+1.优化滑动容易惯性算法
+
+#####4.优化CAViewAnimation动画系统
+1.增加对ImageRect的支持
+
+#####5.优化CAImage
+1.增加纹理拉伸缩放接口
+
+#####6.优化Android端从相册、摄像头获取照片
+1.修复之前部分手机不能争取显示照片的问题
+
+#####7.优化CATextView
+1.增加默认背景
+2.增加输入区域与边框距离的接口
+2.优化CATextViewDelegate中getKeyBoardHeight 回调，增加键盘收回的回调
+3.优化CATextViewDelegate中onTextViewInsertText、onTextViewDeleteBackward插入删除监听回调，整理回调参数
+
+#####8.优化CATextField
+1.优化CATextField Delegate中getKeyBoardHeight 回调，增加键盘收回的回调
+2.优化CATextField Delegate中onTextFieldInsertText、onTextFieldDeleteBackward插入删除监听回调，整理回调参数
+
+#####9.优化CAButton
+1.增加Image位置、大小更改接口
+2.增加Title位置、字体大小以及Label大小更改接口
+
+#####10.优化CANavigationBar
+1.增加item单项宽度接口
+
+#####11.优化CAListView、CATableView、CACollectionView
+1.增加displayingXXXCell函数，可以获取当前所有被显示的CAXXXViewCell对象
+2.CAXXXViewDelegate增加 XXXViewWillDisplayCellAtIndex 回调，可以监听已经被加载完成并即将被显示的listViewCell
+3.CAXXXViewCell增加ContentView层
+
+#####12.优化CAWebView接口
+1.修改了webView加载菊花的接口，由用户自己调用，还有添加设置菊花view的接口，用户可以拥有自己的加载动画
+
+#####13.添加UTF8转UTF32接口
+
+#####14.其他一些细节的修改
+
+
+**********************************************************************************
+
 #### CrossApp 1.1.8 更新内容：  
 
 #####1.优化CATextField、CATextView

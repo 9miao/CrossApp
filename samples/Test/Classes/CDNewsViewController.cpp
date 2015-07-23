@@ -393,7 +393,9 @@ void CDNewsViewController::tableViewWillDisplayCellAtIndex(CATableView* table, C
         
 //        cell->getContentView()->setScale(1.5f);
 //        cell->getContentView()->setAlpha(0.5f);
+        
         cell->getContentView()->setFrameOrigin(CADipPoint(winSize.width/2,0));
+        
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(temp_time);

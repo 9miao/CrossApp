@@ -39,6 +39,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.Toast;
 
+
 @SuppressLint("SdCardPath")
 public class AndroidNativeTool
 {
@@ -201,21 +202,26 @@ public class AndroidNativeTool
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {  
     	Log.i("qiaoxin", "onActivityResult:requestCode:"+requestCode+ " resultCode: " + resultCode + " Intent:  "+ intent);
-        if (resultCode == -1)
+        if (true)
         {  
             switch (requestCode) 
             {  
             case 4:  // Photo
             	Log.i("qiaoxin","requestCode:"+ requestCode);
 
-            	String uriStr = getPath(s_pContext, intent.getData());
+            	final String uriStr = getPath(s_pContext, intent.getData());
             	Log.i("qiaoxin", "String uriStr:"+uriStr);
             	
             	String fileStr = getRealFilePath(s_pContext, intent.getData());
             	
             	Log.i("qiaoxin", "String fileStr:"+fileStr);
             	
-                NativeReturn( uriStr , null );
+                Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+					@Override
+					public void run() {
+		                NativeReturn( uriStr , null );
+					}
+				});
                 break;  
             case 1:
             	Log.i("qiaoxin","requestCode:"+ requestCode);
@@ -239,10 +245,15 @@ public class AndroidNativeTool
 
                 cursor1.moveToFirst();
 
-                String path1 = cursor1.getString(column_index1);
+                final String path1 = cursor1.getString(column_index1);
                 Log.i("qiaoxin","qiaoxin2"+ path1);
 
-                NativeReturn( path1 , null );
+                Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+					@Override
+					public void run() {
+		                NativeReturn( path1 , null );
+					}
+				});
 
             	break;
             case 2:
@@ -268,10 +279,16 @@ public class AndroidNativeTool
 
                 cursor.moveToFirst();
 
-                String path = cursor.getString(column_index);
+                final String path = cursor.getString(column_index);
                 Log.i("qiaoxin","qiaoxin--path:"+ path);
 
-                NativeReturn( path , null );
+                Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+					@Override
+					public void run() {
+						NativeReturn( path , null );
+					}
+				});
+                
                 break;
             case 0: 
             	 Uri takePhoto;
@@ -364,7 +381,13 @@ public class AndroidNativeTool
         // File  
         else if ("file".equalsIgnoreCase(uri.getScheme())) {  
             return uri.getPath();  
-        }  
+        }else{
+            String[] projection = { MediaStore.Images.Media.DATA };
+            Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
       
         return null;  
     }  

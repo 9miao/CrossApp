@@ -88,6 +88,8 @@ public:
     bool isEnabledForSegmentAtIndex(int index);
     
     CC_PROPERTY_READONLY(CAView*, m_pBackgroundView, BackgroundView);
+    
+    void setImageSizeAtIndex(CCSize size, int index);
 
 protected:
     virtual bool initWithFrame(const CCRect& rect);
@@ -143,6 +145,8 @@ protected:
     std::vector<bool>                m_vIsEnabled;
     
     std::vector<CCSize>              m_vContentOffset;
+    
+    std::vector<CCSize>              m_vImageSize;
     
     std::vector<float>               m_vSegmentWidth;
     

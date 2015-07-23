@@ -1407,10 +1407,10 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
             }
         }
         
-        this->initWithRawData(m_pImageData, m_ePixelFormat, m_uPixelsWide, m_uPixelsHigh);
+        //this->initWithRawData(m_pImageData, m_ePixelFormat, m_uPixelsWide, m_uPixelsHigh);
 
-//        this->convertToRawData();
-//        this->premultipliedImageData();
+        this->convertToRawData();
+        this->premultipliedImageData();
         
         if(unpackedData != data)
         {

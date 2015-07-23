@@ -125,9 +125,9 @@ typedef enum
 namespace CADevice
 {
    
-    void openCamera(CAMediaDelegate* target, bool allowEdit = true);
+    void openCamera(CAMediaDelegate* target, bool allowEdit = false);
     
-    void openAlbum(CAMediaDelegate* target, bool allowEdit = true);
+    void openAlbum(CAMediaDelegate* target, bool allowEdit = false);
     
     void startLocation(CALocationDelegate* target);
     
