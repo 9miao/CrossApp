@@ -390,7 +390,8 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (this->getBounds().containsPoint(point))
     {
-        if (becomeFirstResponder())
+		becomeFirstResponder();
+        if (isFirstResponder())
         {
             calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
             

@@ -24,8 +24,17 @@ std::string CAClipboard::getText()
 		}
 		::CloseClipboard();
 	}
+	setlocale(LC_ALL, "");
 
-	return str;
+	size_t nDsize = str.size() + 8;
+	wchar_t *pDest = new wchar_t[nDsize];
+	wmemset(pDest, 0, nDsize);
+
+	mbstowcs(pDest, str.c_str(), nDsize);
+
+	std::wstring result = pDest;
+	delete[]pDest;
+	return unicode_to_utf8(result.c_str());
 }
 
 void CAClipboard::setText(const std::string& cszStrText)
