@@ -1,8 +1,18 @@
 package org.CrossApp.lib;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
+import org.CrossApp.lib.Cocos2dxGLSurfaceView;
+
+import android.R.integer;
+import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,11 +20,14 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -22,7 +35,10 @@ import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.text.format.DateFormat;
 import android.util.Log;
+import android.widget.Toast;
+
 
 @SuppressLint("SdCardPath")
 public class AndroidNativeTool
@@ -30,7 +46,6 @@ public class AndroidNativeTool
 	private static AlertDialog mDialog = null;
 	private static Activity s_pContext;
 	native static void NativeReturn( String arg1 , Object arg2 );
-
 
 	public AndroidNativeTool( final Activity context )
 	{
@@ -91,14 +106,7 @@ public class AndroidNativeTool
 	
 	public static void CAImageAlbum(int type)
 	{
-		Intent getImage = new Intent(); 
-		
-		if (Build.VERSION.SDK_INT >= 19){
-			getImage.setAction(Intent.ACTION_OPEN_DOCUMENT);  
-		}else{
-			getImage.setAction(Intent.ACTION_GET_CONTENT);  
-		}
-		
+		Intent getImage = new Intent(Intent.ACTION_OPEN_DOCUMENT); 
 		getImage.addCategory(Intent.CATEGORY_OPENABLE);
         getImage.setType("image/*");  
         
@@ -163,7 +171,7 @@ public class AndroidNativeTool
 	private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode)
 	{
 		 Intent intent = new Intent("com.android.camera.action.CROP");
-		 //Log.i("qiaoxin", "cropImageUri: !!!");
+		 Log.i("qiaoxin", "cropImageUri: !!!");
 		 intent.setDataAndType(uri, "image/*");
 		 intent.putExtra("crop", "true");
 		 intent.putExtra("aspectX", 1);
@@ -180,38 +188,43 @@ public class AndroidNativeTool
 		String filename = timeStampFormat.format(new Date(0));
 		ContentValues values = new ContentValues();
 		values.put(Media.TITLE, filename);
-		//Log.i("qiaoxin","filename:" + filename);
+		Log.i("qiaoxin","filename:" + filename);
 		photoUri = s_pContext.getContentResolver().insert(
 		MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-		//Log.i("qiaoxin","photoUri:" + photoUri);
+		Log.i("qiaoxin","photoUri:" + photoUri);
 
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-		//Log.i("qiaoxin","intent:" + intent);
+		Log.i("qiaoxin","intent:" + intent);
 
 		 s_pContext.startActivityForResult(intent, 1);
 	}
 	
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {  
-    	//Log.i("qiaoxin", "onActivityResult:requestCode:"+requestCode+ " resultCode: " + resultCode + " Intent:  "+ intent);
-        if (resultCode == -1)
+    	Log.i("qiaoxin", "onActivityResult:requestCode:"+requestCode+ " resultCode: " + resultCode + " Intent:  "+ intent);
+        if (true)
         {  
             switch (requestCode) 
             {  
             case 4:  // Photo
-            	//Log.i("qiaoxin","requestCode:"+ requestCode);
+            	Log.i("qiaoxin","requestCode:"+ requestCode);
 
-            	String uriStr = getPath(s_pContext, intent.getData());
-            	//Log.i("qiaoxin", "String uriStr:"+uriStr);
+            	final String uriStr = getPath(s_pContext, intent.getData());
+            	Log.i("qiaoxin", "String uriStr:"+uriStr);
             	
             	String fileStr = getRealFilePath(s_pContext, intent.getData());
             	
-            	//Log.i("qiaoxin", "String fileStr:"+fileStr);
+            	Log.i("qiaoxin", "String fileStr:"+fileStr);
             	
-                NativeReturn( uriStr , null );
+                Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+					@Override
+					public void run() {
+		                NativeReturn( uriStr , null );
+					}
+				});
                 break;  
             case 1:
-            	//Log.i("qiaoxin","requestCode:"+ requestCode);
+            	Log.i("qiaoxin","requestCode:"+ requestCode);
 
             	Uri originalUri1;
             	if (intent != null && intent.getData() != null) 
@@ -232,16 +245,19 @@ public class AndroidNativeTool
 
                 cursor1.moveToFirst();
 
-                String path1 = cursor1.getString(column_index1);
-                //Log.i("qiaoxin","qiaoxin2"+ path1);
+                final String path1 = cursor1.getString(column_index1);
+                Log.i("qiaoxin","qiaoxin2"+ path1);
 
-                NativeReturn( path1 , null );
+                Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+					@Override
+					public void run() {
+		                NativeReturn( path1 , null );
+					}
+				});
 
             	break;
             case 2:
             case 3:
-            	//Log.i("qiaoxin","requestCode3:"+ requestCode);
-
             	Uri originalUri2;
             	if (intent != null && intent.getData() != null) 
             	{
@@ -251,7 +267,6 @@ public class AndroidNativeTool
             	{
             		originalUri2= photoUri;
             	}
-                //Log.i("qiaoxin","photoUri::"+ originalUri2);
 
                 String[] proj = {MediaStore.Images.Media.DATA};
                 
@@ -261,10 +276,17 @@ public class AndroidNativeTool
 
                 cursor.moveToFirst();
 
-                String path = cursor.getString(column_index);
-                //Log.i("qiaoxin","qiaoxin--path:"+ path);
+                final String path = cursor.getString(column_index);
 
-                NativeReturn( path , null );
+                Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable()
+                {
+					@Override
+					public void run() 
+					{
+						NativeReturn( path , null );
+					}
+				});
+                
                 break;
             case 0: 
             	 Uri takePhoto;
@@ -277,10 +299,10 @@ public class AndroidNativeTool
             	{
             		takePhoto= intent.getData();  
             		cropImageUri(takePhoto, 640, 640, 1);   
-            		//Log.i("qiaoxin","qiaoxin3");
+            		Log.i("qiaoxin","qiaoxin3");
             	}else {
             		cropImageUri(photoUri, 640, 640, 1);   
-            		//Log.i("qiaoxin","qiaoxin4");
+            		Log.i("qiaoxin","qiaoxin4");
 				}
 
             	 
@@ -296,7 +318,7 @@ public class AndroidNativeTool
     }
     
     public static String getPath(final Context context, final Uri uri) {  
-        //Log.i("qiaoxin", "uri---:" + uri);
+        Log.i("qiaoxin", "uri---:" + uri);
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;  
       
         // DocumentProvider  
@@ -357,8 +379,14 @@ public class AndroidNativeTool
         // File  
         else if ("file".equalsIgnoreCase(uri.getScheme())) {  
             return uri.getPath();  
-        }  
-        
+        }else{
+            String[] projection = { MediaStore.Images.Media.DATA };
+            Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+      
         return null;  
     }  
       
