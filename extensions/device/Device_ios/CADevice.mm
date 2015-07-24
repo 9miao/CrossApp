@@ -20,6 +20,13 @@ namespace CADevice
 {
 
 static std::vector<CAAddressBookRecord> _addressBookArr;
+    
+const char* getAppVersion()
+{
+    NSDictionary *infoDictionary = [[[NSBundle mainBundle] infoDictionary] autorelease];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    return [app_Version UTF8String];
+}
 
 void openCamera(CAMediaDelegate* target, bool allowEdit)
 {

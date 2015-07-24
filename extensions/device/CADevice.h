@@ -124,10 +124,11 @@ typedef enum
 
 namespace CADevice
 {
-   
-    void openCamera(CAMediaDelegate* target, bool allowEdit = false);
+    const char* getAppVersion();
     
-    void openAlbum(CAMediaDelegate* target, bool allowEdit = false);
+    void openCamera(CAMediaDelegate* target, bool allowEdit = true);
+    
+    void openAlbum(CAMediaDelegate* target, bool allowEdit = true);
     
     void startLocation(CALocationDelegate* target);
     

@@ -208,6 +208,17 @@ extern "C"
     }
 }
     
+const char* getAppVersion()
+{
+    JniMethodInfo jmi;
+    if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "getAppVersion" , "()Ljava/lang/String;"))
+    {
+        jstring a = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
+        const char* b = jmi.env->GetStringUTFChars( a , 0 );
+        return b;
+    }
+}
+    
 double* getGPSLocation()
 {
 	JniMethodInfo jmi;
