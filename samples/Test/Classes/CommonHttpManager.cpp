@@ -654,12 +654,9 @@ void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpRes
         size_t pSize = data.length();
 
         std::string key = MD5(m_sUrl).md5();
-        CAImage* image = CAImage::createWithImageData(pData, pSize, key);;
+        CAImage* image = NULL;
 
-        if (m_eGetImageType != HttpGetImageDefault)
-        {
-            CommonImageCacheManager::getInstance()->pushImage(image);
-        }
+        
 
         if (m_eGetImageType != HttpGetImageNoAllCache)
         {
@@ -671,11 +668,22 @@ void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpRes
                 fwrite(pData, sizeof(unsigned char), pSize, fp);
                 fclose(fp);
             }
+            
+            CommonHttpResponseCallBack::imagePathAsync(m_pTarget, m_pSelectorImage, string(imagePath + key).c_str(), m_sUrl, m_eGetImageType);
+        }
+        else
+        {
+            image = CAImage::createWithImageData(pData, pSize, key);
+            
+            if (m_pTarget && m_pSelectorImage && image)
+            {
+                (m_pTarget->*m_pSelectorImage)(image, m_sUrl.c_str());
+            }
         }
 
-        if (m_pTarget && m_pSelectorImage && image)
+        if (m_eGetImageType != HttpGetImageDefault)
         {
-            (m_pTarget->*m_pSelectorImage)(image, m_sUrl.c_str());
+            CommonImageCacheManager::getInstance()->pushImage(image);
         }
     }
 }

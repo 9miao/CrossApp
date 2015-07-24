@@ -90,8 +90,6 @@ public:
     
     friend class CAWindow;
     
-protected:
-    
     virtual void viewDidLoad() {};
     
     virtual void viewDidUnload() {};
@@ -105,8 +103,6 @@ protected:
     virtual void keyBackClicked() {};
     
     virtual void keyMenuClicked() {};
-    
-protected:
     
     virtual void addViewFromSuperview(CAView* node);
     

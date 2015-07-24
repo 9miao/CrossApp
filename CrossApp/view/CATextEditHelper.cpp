@@ -283,13 +283,13 @@ void CATextSelectView::showTextSelView(const CCRect& rect, CAView* pControlView,
 	CCRect newRect = rect;
 	if (showLeft)
 	{
-		m_pCursorMarkL->setFrame(CCRect(newRect.origin.x - CATextSelectArrWidth, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
+		m_pCursorMarkL->setFrame(CADipRect(newRect.origin.x - CATextSelectArrWidth, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
 		m_pCursorMarkL->setVisible(true);
 	}
 
 	if (showRight)
 	{
-		m_pCursorMarkR->setFrame(CCRect(newRect.origin.x + newRect.size.width, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
+		m_pCursorMarkR->setFrame(CADipRect(newRect.origin.x + newRect.size.width, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
 		m_pCursorMarkR->setVisible(true);
 	}
 
@@ -467,10 +467,10 @@ void CATextSelViewEx::showTextSelView(CAView* pControlView, const std::vector<CC
 	CCPoint pt1 = vt[0].origin;
 	CCPoint pt2 = CCPoint(r.origin.x + r.size.width, r.origin.y + r.size.height);
 
-	m_pCursorMarkL->setFrame(CCRect(pt1.x - CATextSelectArrWidth, pt1.y + iLineHeight, CATextSelectArrWidth, CATextSelectArrHeight));
+	m_pCursorMarkL->setFrame(CADipRect(pt1.x - CATextSelectArrWidth, pt1.y + iLineHeight, CATextSelectArrWidth, CATextSelectArrHeight));
 	m_pCursorMarkL->setVisible(true);
 
-	m_pCursorMarkR->setFrame(CCRect(pt2.x, pt2.y, CATextSelectArrWidth, CATextSelectArrHeight));
+	m_pCursorMarkR->setFrame(CADipRect(pt2.x, pt2.y, CATextSelectArrWidth, CATextSelectArrHeight));
 	m_pCursorMarkR->setVisible(true);
     this->setVisible(true);
 	m_pControlView = pControlView;
@@ -581,7 +581,7 @@ bool CATextArrowView::init()
 	m_pArrowView = CAImageView::createWithImage(CAImage::create("source_material/arrow.png"));
 	addSubview(m_pArrowView);
 	m_pArrowView->setVisible(false);
-	m_pArrowView->setFrame(CCRectMake(0, 0, CATextArrowViewWidth, CATextArrowViewHeight));
+	m_pArrowView->setFrame(CADipRect(0, 0, CATextArrowViewWidth, CATextArrowViewHeight));
 	m_pArrowView->setAlpha(0.5f);
 
 	return true;
