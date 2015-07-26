@@ -12,9 +12,9 @@ class CC_DLL CAKeypadDelegate
 {
 public:
 
-    virtual void keyBackClicked() {}
+    virtual bool keyBackClicked() {return false;}
 
-    virtual void keyMenuClicked() {};
+    virtual bool keyMenuClicked() {return false;};
 };
 
 class CC_DLL CAKeypadHandler : public CAObject
