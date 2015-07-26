@@ -1193,6 +1193,12 @@ void CAView::visit()
         
         if (isScissor)
         {
+            //bug fix by alexviolent ,support designresolutionsize.
+            CCEGLView* eglView = CAApplication::getApplication()->getOpenGLView();
+            frame.origin.x*=eglView->getScaleX();
+            frame.origin.y*=eglView->getScaleY();
+            frame.size.width*=eglView->getScaleX();
+            frame.size.height*=eglView->getScaleY();
             float x1 = MAX(frame.getMinX(), restoreScissorRect.getMinX());
             float y1 = MAX(frame.getMinY(), restoreScissorRect.getMinY());
             float x2 = MIN(frame.getMaxX(), restoreScissorRect.getMaxX());
