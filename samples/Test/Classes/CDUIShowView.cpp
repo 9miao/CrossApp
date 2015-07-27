@@ -1888,7 +1888,7 @@ void CDUIShowView::renderCallBack(CAControl* control, CCPoint point)
 {
     CAButton* button = (CAButton*)control;
     if (button->getTag()==1) {
-        CADevice::openAlbum(this,false);
+        CADevice::openAlbum(this);
     }else if(button->getTag()==2) {
 
         m_clvImage->setClippingEnabled(true);
