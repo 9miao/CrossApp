@@ -14,8 +14,8 @@ static int s_httpClientCount = 0;
 static CAHttpClient *s_pHttpClient[MAX_Thread] = {0};
 
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
-
 static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
+
 {
     std::vector<char> *recvBuffer = (std::vector<char>*)stream;
     size_t sizes = size * nmemb;

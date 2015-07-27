@@ -55,14 +55,12 @@ bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
 //    m_pTimer->autorelease();
 //    m_pTimer->retain();
 //    m_bPaused = bPaused;
-//    LUALOG("[LUA] ADD script schedule: %d, entryID: %d", m_nHandler, m_nEntryId);
     return true;
 }
 
 CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
 {
 //    m_pTimer->release();
-//    LUALOG("[LUA] DEL script schedule %d, entryID: %d", m_nHandler, m_nEntryId);
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -86,7 +84,6 @@ CCTouchScriptHandlerEntry::~CCTouchScriptHandlerEntry(void)
     if (m_nHandler != 0)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
-        LUALOG("[LUA] Remove touch event handler: %d", m_nHandler);
         m_nHandler = 0;
     }
 }

@@ -13,9 +13,9 @@ CrossApp
 
 支持的平台：
 
-iOS：5.X ~ 8.X SDK
+iOS：6.0 ~ 9.X SDK
 
-android：2.3.4 ~ 5.X SDK
+android：4.0 ~ 5.X SDK
 
 windows：windows XP、windows Vista、windows 7、windows 8.0、 windows 8.1
 

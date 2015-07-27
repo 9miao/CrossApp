@@ -36,18 +36,29 @@ CANavigationBar::~CANavigationBar()
     CC_SAFE_RELEASE(m_pBackGroundView);
 }
 
-bool CANavigationBar::init()
+bool CANavigationBar::init(const CCSize& size)
 {
-    if (!CAView::init())
-    {
-        return false;
-    }
     this->setColor(CAColor_clear);
+    
     CCSize winSize = CAApplication::getApplication()->getWinSize();
-    CCSize size = CCSize(winSize.width, _px(88));
-    this->setContentSize(size);
+    CCSize contentSize;
+    contentSize.width = size.width == 0 ? winSize.width : MIN(winSize.width, size.width);
+    contentSize.height = size.height == 0 ? _px(88) : size.height;
+    this->setContentSize(contentSize);
     
     return true;
+}
+
+CANavigationBar* CANavigationBar::create(const CCSize& size)
+{
+    CANavigationBar* nav = new CANavigationBar();
+    if (nav && nav->init(size))
+    {
+        nav->autorelease();
+        return nav;
+    }
+    CC_SAFE_DELETE(nav);
+    return NULL;
 }
 
 void CANavigationBar::onEnterTransitionDidFinish()
@@ -414,7 +425,9 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size)
     this->setItems(items);
 
     CCSize winSize = CAApplication::getApplication()->getWinSize();
-    CCSize contentSize = size.equals(CCSizeZero) ? CCSize(winSize.width, _px(98)) : size;
+    CCSize contentSize;
+    contentSize.width = MIN(winSize.width, size.width);
+    contentSize.height = size.height == 0 ? _px(98) : size.height;
     this->setContentSize(contentSize);
 
     CADipRect rect = this->getBounds();

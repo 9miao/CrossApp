@@ -33,7 +33,7 @@ class CC_DLL CANavigationBar
     
 public:
     
-    CREATE_FUNC(CANavigationBar);
+    static CANavigationBar* create(const CCSize& size = CCSizeZero);
 
 public:
     
@@ -41,7 +41,7 @@ public:
     
     virtual ~CANavigationBar();
     
-    virtual bool init();
+    virtual bool init(const CCSize& size = CCSizeZero);
     
     virtual void onEnterTransitionDidFinish();
     
