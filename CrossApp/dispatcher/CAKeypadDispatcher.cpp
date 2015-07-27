@@ -102,21 +102,15 @@ bool CAKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
         switch (nMsgType)
         {
             case kTypeBackClicked:
-                if(pDelegate->keyBackClicked()){
-                    goto end;
-                }
+                pDelegate->keyBackClicked();
                 break;
             case kTypeMenuClicked:
-                if(pDelegate->keyMenuClicked()){
-                    goto end;
-                }
+                pDelegate->keyMenuClicked();
                 break;
             default:
                 break;
         }
     }
-    
-end:
     
     m_bLocked = false;
     if (m_bToRemove)

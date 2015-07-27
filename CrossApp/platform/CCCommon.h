@@ -21,11 +21,6 @@ static const int kMaxLogLen = 16*1024;
 void CC_DLL CCLog(const char * pszFormat, ...) CC_FORMAT_PRINTF(1, 2);
 
 /**
- * lua can not deal with ...
- */
-void CC_DLL CCLuaLog(const char * pszFormat);
-
-/**
 @brief Pop out a message box
 */
 void CC_DLL CCMessageBox(const char * pszMsg, const char * pszTitle);

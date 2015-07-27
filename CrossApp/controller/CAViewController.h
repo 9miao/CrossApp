@@ -100,9 +100,9 @@ public:
     
     virtual void reshapeViewRectDidFinish() {};
     
-    virtual bool keyBackClicked() {return false;};
+    virtual void keyBackClicked() {};
     
-    virtual bool keyMenuClicked() {return false;};
+    virtual void keyMenuClicked() {};
     
     virtual void addViewFromSuperview(CAView* node);
     
