@@ -1657,7 +1657,10 @@ void CDUIShowView::didSelectRow(CAPickerView* pickerView, unsigned int row, unsi
 
 void CDUIShowView::didSelectRow(const struct tm& tm)
 {
-    CCLog("didSelectRow----tm======%d-%d-%d",tm.tm_year+1900,tm.tm_mon,tm.tm_mday);
+    char temp_time[20];
+    strftime(temp_time, 100, "%F", &tm);
+    CCLog("didSelectRow----tm======%d-%d-%d",tm.tm_year+1900,tm.tm_mon+1,tm.tm_mday);
+    CCLog("didSelectRow----tm======%s",temp_time);
 }
 
 unsigned int CDUIShowView::numberOfComponentsInPickerView(CAPickerView* pickerView)
