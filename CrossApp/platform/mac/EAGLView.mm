@@ -20,6 +20,7 @@ static EAGLView *view;
 @implementation EAGLView
 
 @synthesize eventDelegate = eventDelegate_, isFullScreen = isFullScreen_, frameZoomFactor=frameZoomFactor_;
+@synthesize textfield = _textfield;
 
 +(id) sharedEGLView
 {
@@ -69,6 +70,12 @@ static EAGLView *view;
 - (id) initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format{
     // event delegate
     eventDelegate_ = [CCEventDispatcher sharedDispatcher];
+    
+    _textfield = [[CAMACTextField alloc] init];
+    [_textfield setCadelegate:self];
+    [_textfield setFrame:CGRectMake(-2000, -2000, 100, 50)];
+    _textfield.hidden = YES;
+    [self addSubview:_textfield];
     
     CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
     
@@ -405,6 +412,8 @@ static EAGLView *view;
 
 -(BOOL) becomeFirstResponder
 {
+    return  [_textfield becomeFirstResponder];
+
 	return YES;
 }
 
@@ -415,13 +424,39 @@ static EAGLView *view;
 
 -(BOOL) resignFirstResponder
 {
+    return  [_textfield resignFirstResponder];
+
 	return YES;
+}
+
+
+- (BOOL)hasText
+{
+    return NO;
+}
+
+- (void)insertText:(NSString *)text
+{
+    if (nil != markedText_) {
+        [markedText_ release];
+        markedText_ = nil;
+    }
+    const char * pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+}
+
+- (void)deleteBackward
+{
+    if (nil != markedText_) {
+        [markedText_ release];
+        markedText_ = nil;
+    }
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 }
 
 - (void)keyDown:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
-	
 	// pass the event along to the next responder (like your NSWindow subclass)
 	[super keyDown:theEvent];
 }
@@ -429,7 +464,7 @@ static EAGLView *view;
 - (void)keyUp:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
-
+    [_textfield insertText:[theEvent characters]];
 	// pass the event along to the next responder (like your NSWindow subclass)
 	[super keyUp:theEvent];
 }
@@ -458,5 +493,46 @@ static EAGLView *view;
 - (void)touchesCancelledWithEvent:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
+{
+    
+    //CCLOG("setMarkedText");
+    if (markedText == markedText_) {
+        return;
+    }
+    if (nil != markedText_) {
+        [markedText_ release];
+    }
+    
+    const char * pszText = [markedText cStringUsingEncoding:NSUTF8StringEncoding];
+    NSRange range;
+    range.length = 0;
+    range.location = [markedText length];
+    
+    //    UITextPosition *beginning = self.beginningOfDocument;
+    //    UITextPosition *start = [self positionFromPosition:beginning offset:range.location];
+    //    UITextPosition *end = [self positionFromPosition:start offset:range.length];
+    //    UITextRange *textRange = [self textRangeFromPosition:start toPosition:end];
+    //
+    //    [self textInRange:textRange];
+    
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchWillInsertText(pszText, (int)strlen(pszText));
+    markedText_ = markedText;
+    [markedText_ retain];
+}
+
+- (void)unmarkText;
+{
+    //CCLOG("unmarkText");
+    if (nil == markedText_)
+    {
+        return;
+    }
+    const char * pszText = [markedText_ cStringUsingEncoding:NSUTF8StringEncoding];
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, (int)strlen(pszText));
+    [markedText_ release];
+    markedText_ = nil;
 }
 @end
