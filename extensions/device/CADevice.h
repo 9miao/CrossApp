@@ -126,9 +126,9 @@ namespace CADevice
 {
     const char* getAppVersion();
     
-    void openCamera(CAMediaDelegate* target, bool allowEdit = true);
+    void openCamera(CAMediaDelegate* target);
     
-    void openAlbum(CAMediaDelegate* target, bool allowEdit = true);
+    void openAlbum(CAMediaDelegate* target);
     
     void startLocation(CALocationDelegate* target);
     

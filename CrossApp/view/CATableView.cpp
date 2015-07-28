@@ -269,7 +269,7 @@ float CATableView::maxSpeedCache(float dt)
 
 float CATableView::decelerationRatio(float dt)
 {
-    return 2.0f * dt;
+    return 1.8f * dt;
 }
 
 CATableViewCell* CATableView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
