@@ -44,6 +44,14 @@ enum eKeyBoardReturnType
     KEY_BOARD_RETURN_ENTER,
 };
 
+enum eTextEditAlign
+{
+	eTextEditAlignLeft,
+	eTextEditAlignCenter,
+	eTextEditAlignRight,
+};
+
+
 class CATextField;
 class CC_DLL CATextFieldDelegate
 {
@@ -152,6 +160,7 @@ public:
     
 	CC_PROPERTY(int, m_iHoriMargins, HoriMargins);
 	CC_PROPERTY(int, m_iVertMargins, VertMargins);
+	CC_PROPERTY(eTextEditAlign, m_eTextEditAlign, TextEditAlign);
     
     inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
     
@@ -164,11 +173,10 @@ public:
     virtual void setImageRect(const CCRect& rect);
     
     virtual void updateImageRect();
-    
-
 
 protected:
     void updateImage();
+	int getDtStrLength();
     int getCursorX();
     int getStringViewLength();
     virtual bool attachWithIME();
@@ -186,6 +194,7 @@ protected:
     void showCursorMark();
     void hideCursorMark();
     void setCursorPosition();
+	void adjustCursorMove(bool forward = true);
     
     void analyzeString(const char * text, int len);
 	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
@@ -200,10 +209,6 @@ protected:
     virtual void getKeyBoardHeight(int height);
     virtual void getKeyBoradReturnCallBack();
     virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-
-    void adjustCursorMoveBackward();
-    void adjustCursorMoveForward();
-
     virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
     virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
     
@@ -233,9 +238,9 @@ private:
 
     bool m_bMoved;
 	int m_iLabelWidth;
-	int m_iString_left_offX;
 	int m_iString_l_length;
 	int m_iString_r_length;
+	int m_iString_o_length;
 	int m_iFontHeight;
 
     bool m_isTouchInSide;
