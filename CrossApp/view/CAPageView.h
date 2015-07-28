@@ -60,6 +60,8 @@ public:
     
     CC_PROPERTY_READONLY(int, m_nCurrPage, CurrPage);
     
+    CC_PROPERTY(int, m_fSpacing, Spacing);
+    
     void setCurrPage(int var, bool animated, bool listener = false);
     
     unsigned int getPageCount();

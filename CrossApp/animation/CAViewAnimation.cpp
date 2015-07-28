@@ -55,12 +55,9 @@ public:
     float endRotationY;
     float deltaRotationY;
     
-    CAColor4B startColor;
-    CAColor4B endColor;
-    short deltaColorR;
-    short deltaColorG;
-    short deltaColorB;
-    short deltaColorA;
+    long startColor;
+    long endColor;
+    long deltaColor;
     
     float startAlpha;
     float endAlpha;
@@ -90,10 +87,7 @@ public:
     ,deltaSkewY(0.0f)
     ,deltaRotationX(0.0f)
     ,deltaRotationY(0.0f)
-    ,deltaColorR(0)
-    ,deltaColorG(0)
-    ,deltaColorB(0)
-    ,deltaColorA(0)
+    ,deltaColor(0)
     ,deltaAlpha(0.0f)
     ,deltaImageRect(CCRectZero)
     ,startPoint(v->m_obPoint)
@@ -106,7 +100,7 @@ public:
     ,startSkewY(v->m_fSkewY)
     ,startRotationX(v->m_fRotationX)
     ,startRotationY(v->m_fRotationY)
-    ,startColor(v->_realColor)
+    ,startColor(getUIntFormColor4B(v->_realColor))
     ,startAlpha(v->_realAlpha)
     ,startImageRect(v->m_obRect)
     ,startFlipX(v->m_bFlipX)
@@ -358,6 +352,8 @@ bool CAViewAnimation::areBeginAnimationsWithID(const std::string& animationID)
     return bRet;
 }
 
+#define VALID_FLOAT(_DELTA_) (!(fabsf(_DELTA_) < FLT_EPSILON))
+#define VALID_INT(_DELTA_) (_DELTA_ != 0)
 void CAViewAnimation::update(float dt)
 {
     CAVector<CAViewAnimationModule*> modules = CAVector<CAViewAnimationModule*>(m_vModules);
@@ -433,23 +429,55 @@ void CAViewAnimation::update(float dt)
                 CAView* view = itr_animation->first;
                 view->m_bIsAnimation = true;
                 CAViewModel* model = (CAViewModel*)(itr_animation->second);
-
-                view->setScaleX(model->startScaleX + model->deltaScaleX * s);
-                view->setScaleY(model->startScaleY + model->deltaScaleY * s);
-                view->setPoint(model->startPoint + model->deltaPoint * s);
-                view->setContentSize(model->startContentSize + model->deltaContentSize * s);
-                view->setZOrder(model->startZOrder + model->deltaZOrder * s);
-                view->setVertexZ(model->startVertexZ + model->deltaVertexZ * s);
-                view->setSkewX(model->startSkewX + model->deltaSkewX * s);
-                view->setSkewY(model->startSkewY + model->deltaSkewY * s);
-                view->setRotationX(model->startRotationX + model->deltaRotationX * s);
-                view->setRotationY(model->startRotationY + model->deltaRotationY * s);
-                short colorR = model->startColor.r + model->deltaColorR * s;
-                short colorG = model->startColor.g + model->deltaColorG * s;
-                short colorB = model->startColor.b + model->deltaColorB * s;
-                short colorA = model->startColor.a + model->deltaColorA * s;
-                view->setColor(ccc4(colorR, colorG, colorB, colorA));
-                view->setAlpha(model->startAlpha + model->deltaAlpha * s);
+                
+                if (VALID_FLOAT(model->deltaScaleX))
+                {
+                    view->setScaleX(model->startScaleX + model->deltaScaleX * s);
+                }
+                if (VALID_FLOAT(model->deltaScaleY))
+                {
+                    view->setScaleY(model->startScaleY + model->deltaScaleY * s);
+                }
+                if (VALID_FLOAT(model->deltaPoint.x) || VALID_FLOAT(model->deltaPoint.y))
+                {
+                    view->setPoint(model->startPoint + model->deltaPoint * s);
+                }
+                if (VALID_FLOAT(model->deltaContentSize.width) || VALID_FLOAT(model->deltaContentSize.height))
+                {
+                    view->setContentSize(model->startContentSize + model->deltaContentSize * s);
+                }
+                if (VALID_INT(model->deltaZOrder))
+                {
+                    view->setZOrder(model->startZOrder + model->deltaZOrder * s);
+                }
+                if (VALID_FLOAT(model->deltaVertexZ))
+                {
+                    view->setVertexZ(model->startVertexZ + model->deltaVertexZ * s);
+                }
+                if (VALID_FLOAT(model->deltaSkewX))
+                {
+                    view->setSkewX(model->startSkewX + model->deltaSkewX * s);
+                }
+                if (VALID_FLOAT(model->deltaSkewY))
+                {
+                    view->setSkewY(model->startSkewY + model->deltaSkewY * s);
+                }
+                if (VALID_FLOAT(model->deltaRotationX))
+                {
+                    view->setRotationX(model->startRotationX + model->deltaRotationX * s);
+                }
+                if (VALID_FLOAT(model->deltaRotationY))
+                {
+                    view->setRotationY(model->startRotationY + model->deltaRotationY * s);
+                }
+                if (VALID_INT(model->deltaColor))
+                {
+                    view->setColor(ccc4Int(model->startColor + model->deltaColor * s));
+                }
+                if (VALID_FLOAT(model->deltaAlpha))
+                {
+                    view->setAlpha(model->startAlpha + model->deltaAlpha * s);
+                }
                 if (!model->deltaImageRect.equals(CCRectZero))
                 {
                     CADipRect rect;
@@ -579,11 +607,8 @@ void CAViewAnimation::setColor(const CAColor4B& color, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
     CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
-    model->endColor = color;
-    model->deltaColorR = (short)color.r - (short)view->_realColor.r;
-    model->deltaColorG = (short)color.g - (short)view->_realColor.g;
-    model->deltaColorB = (short)color.b - (short)view->_realColor.b;
-    model->deltaColorA = (short)color.a - (short)view->_realColor.a;
+    model->endColor = getUIntFormColor4B(color);
+    model->deltaColor = model->endColor - model->startColor;
 }
 
 void CAViewAnimation::setAlpha(float alpha, CAView* view)

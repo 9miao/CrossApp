@@ -22,6 +22,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -106,18 +108,25 @@ public class AndroidNativeTool
 	
 	public static void CAImageAlbum(int type)
 	{
-		Intent getImage = new Intent(Intent.ACTION_OPEN_DOCUMENT); 
-		getImage.addCategory(Intent.CATEGORY_OPENABLE);
-        getImage.setType("image/*");  
+        Intent getImage = new Intent();
+        
+        if (Build.VERSION.SDK_INT >= 19){
+            getImage.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        }else{
+            getImage.setAction(Intent.ACTION_GET_CONTENT);
+        }
+        
+        getImage.addCategory(Intent.CATEGORY_OPENABLE);
+        getImage.setType("image/*");
         
         Intent wrapperIntent2 = Intent.createChooser(getImage, null);
         int selectedType = 0;
         if (type ==0) {
-			selectedType = 0;
-		}
+            selectedType = 0;
+        }
         else {
-			selectedType = 4;
-		}
+            selectedType = 4;
+        }
         s_pContext.startActivityForResult(getImage, selectedType);//3
 	}
 	
@@ -202,7 +211,7 @@ public class AndroidNativeTool
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {  
     	Log.i("qiaoxin", "onActivityResult:requestCode:"+requestCode+ " resultCode: " + resultCode + " Intent:  "+ intent);
-        if (true)
+        if (resultCode == -1)
         {  
             switch (requestCode) 
             {  
@@ -477,5 +486,17 @@ public class AndroidNativeTool
      */  
     public static boolean isGooglePhotosUri(Uri uri) {  
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());  
-    }  
+    }
+    
+    public static String getAppVersion(){
+        String versionName = "";
+        try {
+            PackageInfo info = s_pContext.getPackageManager().getPackageInfo(s_pContext.getPackageName(), 0);
+            versionName =info.versionName;
+        } catch (NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return versionName;
+    }
 }

@@ -208,6 +208,17 @@ extern "C"
     }
 }
     
+const char* getAppVersion()
+{
+    JniMethodInfo jmi;
+    if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "getAppVersion" , "()Ljava/lang/String;"))
+    {
+        jstring a = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
+        const char* b = jmi.env->GetStringUTFChars( a , 0 );
+        return b;
+    }
+}
+    
 double* getGPSLocation()
 {
 	JniMethodInfo jmi;
@@ -348,13 +359,13 @@ static CALocationDelegate *locationDelegate = NULL;
 static CAWifiDelegate *wifidelegate = NULL;
 static std::vector<CAAddressBookRecord> _addressBookArr;
 
-void openCamera(CAMediaDelegate* target,bool allowEdit)
+void openCamera(CAMediaDelegate* target)
 {
     delegate = target;
-    if (allowEdit) {
-        OpenCamera(0);
-    }
-    else
+//    if (allowEdit) {
+//        OpenCamera(0);
+//    }
+//    else
     {
         OpenCamera(1);
     }
@@ -367,13 +378,13 @@ void getWifiList(CAWifiDelegate *target)
     JAVAgetWifiList();
 }
     
-void openAlbum(CAMediaDelegate* target,bool allowEdit)
+void openAlbum(CAMediaDelegate* target)
 {
     delegate = target;
-    if (allowEdit) {
-        OpenAlbum(0);
-    }
-    else
+//    if (allowEdit) {
+//        OpenAlbum(0);
+//    }
+//    else
     {
         OpenAlbum(1);
     }

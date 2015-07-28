@@ -354,7 +354,7 @@ bool CANavigationController::initWithRootViewController(CAViewController* viewCo
     
     m_eNavigationBarVerticalAlignment = var;
     
-    this->createWithContainer(viewController);
+    m_pViewControllers.pushBack(viewController);
     
     return true;
 }
@@ -385,6 +385,10 @@ void CANavigationController::updateItem(CAViewController* viewController)
 
 void CANavigationController::viewDidLoad()
 {
+    CAViewController* viewController = m_pViewControllers.front();
+    viewController->retain()->autorelease();
+    m_pViewControllers.popFront();
+    this->createWithContainer(viewController);
     this->layoutNewContainer();
 }
 
@@ -431,7 +435,7 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     m_pContainers.pushBack(container);
     container->release();
     
-    CANavigationBar* navigationBar = CANavigationBar::create();
+    CANavigationBar* navigationBar = CANavigationBar::create(CCSize(this->getView()->getBounds().size.width, 0));
     if (m_pNavigationBarBackGroundImage)
     {
         navigationBar->setBackGroundView(CAScale9ImageView::createWithImage(m_pNavigationBarBackGroundImage));
@@ -1341,28 +1345,6 @@ bool CATabBarController::initWithViewControllers(const CAVector<CAViewController
     {
         CC_BREAK_IF(viewControllers.size() == 0);
         m_pViewControllers = viewControllers;
-        
-        std::vector<CATabBarItem*> items;
-        
-        for (unsigned int i=0; i<m_pViewControllers.size(); i++)
-        {
-            CAViewController* view = m_pViewControllers.at(i);
-            if (view->getTabBarItem() == NULL)
-            {
-                char title[8];
-                sprintf(title, "item%d", i);
-                CATabBarItem* item = CATabBarItem::create(title, NULL);
-                item->setTag(i);
-                view->setTabBarItem(item);
-            }
-            items.push_back(view->getTabBarItem());
-            view->m_pTabBarController = this;
-        }
-        
-        m_pTabBar = CATabBar::create(items);
-        m_pTabBar->retain();
-        m_pTabBar->setDelegate(this);
-        
     }
     while (0);
     
@@ -1387,13 +1369,30 @@ void CATabBarController::updateItem(CAViewController* viewController)
 
 void CATabBarController::viewDidLoad()
 {
-    CCPoint tab_bar_rectOrgin = CCPointZero;
+    std::vector<CATabBarItem*> items;
+    
+    for (unsigned int i=0; i<m_pViewControllers.size(); i++)
+    {
+        CAViewController* view = m_pViewControllers.at(i);
+        if (view->getTabBarItem() == NULL)
+        {
+            char title[8];
+            sprintf(title, "item%d", i);
+            CATabBarItem* item = CATabBarItem::create(title, NULL);
+            item->setTag(i);
+            view->setTabBarItem(item);
+        }
+        items.push_back(view->getTabBarItem());
+        view->m_pTabBarController = this;
+    }
+    
+    m_pTabBar = CATabBar::create(items, CCSize(this->getView()->getBounds().size.width, 0));
+    m_pTabBar->retain();
+    m_pTabBar->setDelegate(this);
     
     CCRect container_rect = this->getView()->getBounds();
     
-    CCSize container_view_size = container_rect.size;
-    container_view_size.width *= m_pViewControllers.size();
-    
+    CCPoint tab_bar_rectOrgin = CCPointZero;
     if (m_bTabBarHidden)
     {
         tab_bar_rectOrgin = this->getTabBarTakeBackPoint();
@@ -1408,6 +1407,9 @@ void CATabBarController::viewDidLoad()
             container_rect.origin.y = m_pTabBar->getFrame().size.height;
         }
     }
+    
+    CCSize container_view_size = container_rect.size;
+    container_view_size.width *= m_pViewControllers.size();
     
     m_pContainer = CAPageView::createWithFrame(container_rect, CAPageViewDirectionHorizontal);
     m_pContainer->setBackGroundColor(CAColor_clear);
