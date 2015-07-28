@@ -995,18 +995,16 @@ CAImage::CAImage()
 
 CAImage::~CAImage()
 {
-    
     CCLOGINFO("CrossApp: deallocing CAImage %u.", m_uName);
     CC_SAFE_RELEASE(m_pShaderProgram);
+    
     if(m_uName)
     {
         ccGLDeleteTexture(m_uName);
     }
-    
-    if (m_pData)
-    {
-        free(m_pData);
-    }
+
+    releaseData(&m_pData);
+
     s_pImages.erase(this);
 }
 
@@ -1808,8 +1806,7 @@ bool CAImage::initWithWebpData(const unsigned char * data, unsigned long dataLen
         
         if (WebPDecode(static_cast<const uint8_t*>(data), dataLen, &config) != VP8_STATUS_OK)
         {
-            free(m_pImageData);
-            m_pImageData = NULL;
+            releaseData(&m_pImageData);
             break;
         }
         
@@ -1890,11 +1887,7 @@ void CAImage::setData(const unsigned char* data, unsigned long dataLenght)
     unsigned char * tmpData = static_cast<unsigned char*>(malloc(m_nDataLenght * sizeof(unsigned char)));
     memcpy(tmpData, data, m_nDataLenght);
     
-    if (m_pData)
-    {
-        free(m_pData);
-    }
-    
+    releaseData(&m_pData);
     m_pData = tmpData;
 }
 
@@ -1904,7 +1897,7 @@ void CAImage::convertToRawData()
     unsigned long lenght = 0;
     convertDataToFormat(m_pImageData, m_uImageDataLenght, m_ePixelFormat, m_ePixelFormat, &data, &lenght);
     this->setData(data, lenght);
-    free(m_pImageData);
+    releaseData(&m_pImageData);
     m_uImageDataLenght = 0;
 
     m_tContentSize = CCSize(m_uPixelsWide, m_uPixelsHigh);
@@ -2130,9 +2123,15 @@ void CAImage::setShaderProgram(CAGLProgram* pShaderProgram)
     m_pShaderProgram = pShaderProgram;
 }
 
-void CAImage::releaseData(void *data)
+void CAImage::releaseData()
 {
-    free(data);
+    releaseData(&m_pData);
+}
+
+void CAImage::releaseData(unsigned char ** data)
+{
+    free(*data);
+    *data = NULL;
 }
 
 bool CAImage::hasPremultipliedAlpha()
