@@ -572,7 +572,7 @@ float CAListView::maxSpeedCache(float dt)
 
 float CAListView::decelerationRatio(float dt)
 {
-    return 2.0f * dt;
+    return 1.8f * dt;
 }
 
 CAListViewCell* CAListView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
