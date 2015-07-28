@@ -39,7 +39,6 @@ CANavigationBar::~CANavigationBar()
 bool CANavigationBar::init(const CCSize& size)
 {
     this->setColor(CAColor_clear);
-    
     CCSize winSize = CAApplication::getApplication()->getWinSize();
     CCSize contentSize;
     contentSize.width = size.width == 0 ? winSize.width : MIN(winSize.width, size.width);
@@ -91,10 +90,7 @@ void CANavigationBar::setItem(CANavigationBarItem* item)
 
 void CANavigationBar::setBackGroundView(CAView* var)
 {
-    CCAssert(dynamic_cast<CAControl*>(var) == NULL, "Not allowed to inherit from the CAControl");
-    CCAssert(dynamic_cast<CAScrollView*>(var) == NULL, "Not allowed to inherit from the CAScrollView");
-    CCAssert(dynamic_cast<CALabel*>(var) == NULL, "Not allowed to inherit from the CALabel");
-    
+    var->setTouchEnabled(false);
     this->removeSubview(m_pBackGroundView);
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pBackGroundView);
@@ -140,10 +136,10 @@ void CANavigationBar::showBackGround()
 void CANavigationBar::showTitle()
 {
     CCRect rect;
-    rect.origin = this->getBounds().size/2;
-    rect.size.height = this->getBounds().size.height;
-    rect.size.width = this->getBounds().size.width - rect.size.height * 4;
-    
+    rect.size = this->getBounds().size;
+    rect.origin = rect.size/2;
+    rect.size.width = rect.size.width - rect.size.height * 4;
+
     if (m_pTitle)
     {
         this->removeSubview(m_pTitle);
@@ -407,7 +403,7 @@ CATabBar::~CATabBar()
     }
     m_pItems.clear();
     m_pButtons.clear();
-    
+    m_pBadgeViews.clear();
     CC_SAFE_RELEASE_NULL(m_pBackGroundImage);
     CC_SAFE_RELEASE_NULL(m_pSelectedBackGroundImage);
     CC_SAFE_RELEASE_NULL(m_pSelectedIndicatorImage);
@@ -462,7 +458,7 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size)
             badgeView->setCenter(CADipRect(rect.size.width, 25, 0, 0));
             btn->insertSubview(badgeView, 10);
             m_pBadgeViews.pushBack(badgeView);
-            
+            badgeView->release();
         }
     }
     if (m_pBackGroundImage == NULL)
