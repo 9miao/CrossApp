@@ -429,7 +429,6 @@ static EAGLView *view;
 	return YES;
 }
 
-
 - (BOOL)hasText
 {
     return NO;
@@ -442,7 +441,13 @@ static EAGLView *view;
         markedText_ = nil;
     }
     const char * pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"insertext:%@； length:%lu", text, strlen(pszText));
+
     CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    [_textfield setStringValue:@""];
+
+#endif
 }
 
 - (void)deleteBackward
@@ -464,7 +469,15 @@ static EAGLView *view;
 - (void)keyUp:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
-    [_textfield insertText:[theEvent characters]];
+    //[_textfield insertText:[theEvent characters]];
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    if(51 ==[theEvent keyCode])
+    {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+    }
+#endif
+
+
 	// pass the event along to the next responder (like your NSWindow subclass)
 	[super keyUp:theEvent];
 }
@@ -495,6 +508,72 @@ static EAGLView *view;
 	DISPATCH_EVENT(theEvent, _cmd);
 }
 
+@synthesize inputDelegate;
+
+
+- (BOOL)textShouldBeginEditing:(NSText *)textObject
+{
+    [_textfield textShouldBeginEditing:textObject];
+    NSLog(@"textShouldBeginEditing:%@",textObject.string);
+    return true;
+}
+
+- (BOOL)textShouldEndEditing:(NSText *)textObject
+{
+    [_textfield textShouldBeginEditing:textObject];
+    
+    NSLog(@"textShouldEndEditing:%@",textObject.string);
+    return true;
+}
+
+
+- (void)textDidBeginEditing:(NSNotification *)notification
+{
+    [_textfield textDidBeginEditing:notification];
+    NSLog(@"textDidBeginEditing:");
+    
+}
+
+- (void)textDidEndEditing:(NSNotification *)notification
+{
+    NSLog(@"textDidEndEditing:");
+    [_textfield textDidEndEditing:notification];
+
+}
+
+- (void)textDidChange:(NSNotification *)notification
+{
+    NSLog(@"textDidChange:%@",notification);
+    [_textfield textDidChange:notification];
+
+}
+
+- (void)setMarkedText:(id)aString selectedRange:(NSRange)selectedRange replacementRange:(NSRange)replacementRange
+{
+    if (aString == markedText_) {
+        return;
+    }
+    if (nil != markedText_) {
+        [markedText_ release];
+    }
+    
+    const char * pszText = [aString cStringUsingEncoding:NSUTF8StringEncoding];
+    NSRange range;
+    range.length = 0;
+    range.location = [aString length];
+    
+    //    UITextPosition *beginning = self.beginningOfDocument;
+    //    UITextPosition *start = [self positionFromPosition:beginning offset:range.location];
+    //    UITextPosition *end = [self positionFromPosition:start offset:range.length];
+    //    UITextRange *textRange = [self textRangeFromPosition:start toPosition:end];
+    //
+    //    [self textInRange:textRange];
+    
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchWillInsertText(pszText, (int)strlen(pszText));
+    markedText_ = aString;
+    [markedText_ retain];
+
+}
 - (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
 {
     
