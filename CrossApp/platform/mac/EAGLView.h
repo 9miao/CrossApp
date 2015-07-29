@@ -62,6 +62,7 @@
     NSString *              markedText_;
 }
 @property(nonatomic,assign)CAMACTextField *textfield;
+@property(nonatomic, assign) id<NSTextFieldDelegate> inputDelegate;
 
 @property (nonatomic, readwrite, assign) id<MacEventDelegate> eventDelegate;
 

@@ -20,6 +20,37 @@
     return self;
 }
 
+- (BOOL)textShouldBeginEditing:(NSText *)textObject
+{
+    NSLog(@"textShouldBeginEditing:%@",textObject.string);
+    return true;
+}
+
+- (BOOL)textShouldEndEditing:(NSText *)textObject
+{
+    NSLog(@"textShouldEndEditing:%@",textObject.string);
+    return true;
+}
+
+- (void)textDidBeginEditing:(NSNotification *)notification
+{
+    NSLog(@"textDidBeginEditing:");
+
+}
+
+- (void)textDidEndEditing:(NSNotification *)notification
+{
+    NSLog(@"textDidEndEditing:");
+}
+
+- (void)textDidChange:(NSNotification *)notification
+{
+    NSLog(@"selectable:::a%hhd", self.selectable);
+    
+    NSLog(@"did change:%@",self.stringValue);
+    [_cadelegate insertText:self.stringValue];
+}
+
 - (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange
 {
     //[super setMarkedText:markedText selectedRange:selectedRange];

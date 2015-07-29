@@ -428,6 +428,8 @@
 		3EA063A21B147DB800183C30 /* gameswf_video_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA062DA1B147DB800183C30 /* gameswf_video_impl.h */; };
 		3EA063A51B147DC900183C30 /* CAFlashView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA063A31B147DC900183C30 /* CAFlashView.cpp */; };
 		3EA063A61B147DC900183C30 /* CAFlashView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA063A41B147DC900183C30 /* CAFlashView.h */; };
+		3EF6A3A81B6781EB00A645EC /* CAMACTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EF6A3A61B6781EB00A645EC /* CAMACTextField.h */; };
+		3EF6A3A91B6781EB00A645EC /* CAMACTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF6A3A71B6781EB00A645EC /* CAMACTextField.m */; };
 		B0090D6E198A441800BD8CDA /* CAPickerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0090D6C198A441800BD8CDA /* CAPickerView.cpp */; };
 		B0090D6F198A441800BD8CDA /* CAPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0090D6D198A441800BD8CDA /* CAPickerView.h */; };
 		B01A29411994C95F00D42BA0 /* CACalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01A293F1994C95F00D42BA0 /* CACalendar.cpp */; };
@@ -948,6 +950,8 @@
 		3EA062DC1B147DB800183C30 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		3EA063A31B147DC900183C30 /* CAFlashView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFlashView.cpp; sourceTree = "<group>"; };
 		3EA063A41B147DC900183C30 /* CAFlashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFlashView.h; sourceTree = "<group>"; };
+		3EF6A3A61B6781EB00A645EC /* CAMACTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMACTextField.h; sourceTree = "<group>"; };
+		3EF6A3A71B6781EB00A645EC /* CAMACTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAMACTextField.m; sourceTree = "<group>"; };
 		B0090D6C198A441800BD8CDA /* CAPickerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPickerView.cpp; sourceTree = "<group>"; };
 		B0090D6D198A441800BD8CDA /* CAPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPickerView.h; sourceTree = "<group>"; };
 		B01A293F1994C95F00D42BA0 /* CACalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACalendar.cpp; sourceTree = "<group>"; };
@@ -1341,6 +1345,8 @@
 				B0C3BD421ADE70B8009BE71A /* CAClipboard.mm */,
 				B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */,
 				B0A7157D1A43F6DE00A85FB9 /* CAWebViewImpl.h */,
+				3EF6A3A61B6781EB00A645EC /* CAMACTextField.h */,
+				3EF6A3A71B6781EB00A645EC /* CAMACTextField.m */,
 				B01F64FA1964FF0D005C14FC /* CADensityDpi.cpp */,
 				0460ECF01956F97A00D13001 /* CAApplicationCaller.h */,
 				0460ECF11956F97A00D13001 /* CAApplicationCaller.mm */,
@@ -1877,6 +1883,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EF6A3A81B6781EB00A645EC /* CAMACTextField.h in Headers */,
 				3EA062EB1B147DB800183C30 /* grid_index.h in Headers */,
 				1551A874158F2B4700E66CFE /* CrossApp-Prefix.pch in Headers */,
 				04EAB0581956D75600198A8E /* CCAction.h in Headers */,
@@ -2311,6 +2318,7 @@
 				3EA062E81B147DB800183C30 /* ear_clip_triangulate_sint16.cpp in Sources */,
 				04EAB0D41956D75600198A8E /* mat4.c in Sources */,
 				B0A7157E1A43F6DE00A85FB9 /* CAWebViewImpl.cpp in Sources */,
+				3EF6A3A91B6781EB00A645EC /* CAMACTextField.m in Sources */,
 				04EAB0D51956D75600198A8E /* neon_matrix_impl.c in Sources */,
 				3EA0632F1B147DB800183C30 /* as_flash.cpp in Sources */,
 				04EAB0D61956D75600198A8E /* plane.c in Sources */,

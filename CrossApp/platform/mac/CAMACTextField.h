@@ -15,6 +15,13 @@
 - (BOOL)hasText;
 - (void)insertText:(NSString *)text;
 - (void)deleteBackward;
+//NSTEXTFIELD
+- (BOOL)textShouldBeginEditing:(NSText *)textObject;
+- (BOOL)textShouldEndEditing:(NSText *)textObject;
+- (void)textDidBeginEditing:(NSNotification *)notification;
+- (void)textDidEndEditing:(NSNotification *)notification;
+- (void)textDidChange:(NSNotification *)notification;
+
 
 @end
 @interface CAMACTextField : NSTextField<NSTextFieldDelegate>
