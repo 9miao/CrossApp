@@ -54,6 +54,8 @@ public:
 
 	void dispatchCursorMoveBackward();
 	void dispatchCursorMoveForward();
+    void dispatchCursorMoveUp();
+    void dispatchCursorMoveDown();
 	void dispatchMoveSelectChars(bool isLeftBtn, const CCPoint& pt);
 	void dispatchMoveSelectCharsCancel(const CCPoint& pt);
 	void dispatchMoveArrowBtn(const CCPoint& pt);

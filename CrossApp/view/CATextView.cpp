@@ -932,6 +932,60 @@ void CATextView::cursorMoveForward()
 	calcCursorPosition();
 }
 
+void CATextView::cursorMoveUp()
+{
+    if (m_iCurPos == 0 || m_szText.empty())
+    return;
+    
+    CCPoint cursorRect = m_pCursorMark->getCenterOrigin();//  ->setFrame(CCRect(0, 0, 2, m_iLineHeight));
+    
+    CCPoint point = CCPoint(cursorRect.x-20,cursorRect.y-m_iLineHeight);
+    
+    if (this->getBounds().containsPoint(point))
+    {
+        if (!m_pTextSelView->isTextViewShow())
+        {
+            becomeFirstResponder();
+            int iCurLine = 0; int iCurPosX = 0;
+            calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
+            m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+            showCursorMark();
+            
+            CCPoint pt = m_pCursorMark->getCenterOrigin();
+            m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
+            m_curSelCharRange = std::pair<int,int>(m_iCurPos, m_iCurPos);
+            calcCursorPosition();
+        }
+    }
+}
+
+void CATextView::cursorMoveDown()
+{
+    if (m_iCurPos == 0 || m_szText.empty())
+    return;
+    
+    CCPoint cursorRect = m_pCursorMark->getCenterOrigin();//  ->setFrame(CCRect(0, 0, 2, m_iLineHeight));
+    
+    CCPoint point = CCPoint(cursorRect.x-20,cursorRect.y+m_iLineHeight);
+    
+    if (this->getBounds().containsPoint(point))
+    {
+        if (!m_pTextSelView->isTextViewShow())
+        {
+            becomeFirstResponder();
+            int iCurLine = 0; int iCurPosX = 0;
+            calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
+            m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+            showCursorMark();
+            
+            CCPoint pt = m_pCursorMark->getCenterOrigin();
+            m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
+            m_curSelCharRange = std::pair<int,int>(m_iCurPos, m_iCurPos);
+            calcCursorPosition();
+        }
+    }
+}
+
 void CATextView::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 {
 	int l, r, p;

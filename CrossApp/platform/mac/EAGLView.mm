@@ -471,9 +471,23 @@ static EAGLView *view;
 	DISPATCH_EVENT(theEvent, _cmd);
     //[_textfield insertText:[theEvent characters]];
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    if(51 ==[theEvent keyCode])
+    //NSLog(@"%hu", [theEvent keyCode]);
+    if(51 == [theEvent keyCode])//delete
     {
         CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+    }else if(123 == [theEvent keyCode])//leftsaf
+    {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveBackward();
+    }else if(124 == [theEvent keyCode])//right
+    {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveForward();
+    }else if(125 == [theEvent keyCode])//down
+    {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveDown();
+
+    }else if(126 == [theEvent keyCode])//up
+    {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveUp();
     }
 #endif
 
