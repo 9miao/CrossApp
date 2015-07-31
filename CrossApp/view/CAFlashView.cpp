@@ -16,7 +16,7 @@ CAFlashView::CAFlashView()
 ,m_bIsRepeatForever(false)
 ,m_bIsRunning(false)
 {
-
+    this->setDisplayRange(false);
 }
 
 CAFlashView::~CAFlashView()
