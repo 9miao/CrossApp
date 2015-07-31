@@ -403,6 +403,7 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
                     m_pPickerView->reloadComponent(m_tTM.tm_mday-1,2);
                     
                 }
+                m_tTM.tm_mon--;
             }
             else
             {
@@ -418,6 +419,7 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
                 cal->dateByDayOfYear(m_tTM.tm_year, row, month, date);
                 m_tTM.tm_mon = month;
                 m_tTM.tm_mday = date;
+                m_tTM.tm_mon--;
             }
             else if (component == 1)
             { // hour

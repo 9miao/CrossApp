@@ -134,9 +134,11 @@ void CAPageControl::onEnter()
             {
                 view = CAImageView::createWithImage(m_pSelectPageImage);
                 view->setColor(m_currentPageIndicatorTintColor);
+                view->setFrame(CADipRect(0,0,14,14));
             } else {
                 view = CAImageView::createWithImage(m_pPageImage);        
                 view->setColor(m_pageIndicatorTintColor);
+                view->setFrame(CADipRect(0,0,14,14));
             }
             
             CCRect rect;
