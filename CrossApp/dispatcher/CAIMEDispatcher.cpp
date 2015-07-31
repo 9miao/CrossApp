@@ -303,6 +303,32 @@ void CAIMEDispatcher::dispatchCursorMoveForward()
     } while (0);
 }
 
+void CAIMEDispatcher::dispatchCursorMoveUp()
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+        
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+        
+        m_pImpl->m_DelegateWithIme->cursorMoveUp();
+    } while (0);
+}
+
+void CAIMEDispatcher::dispatchCursorMoveDown()
+{
+    do
+    {
+        CC_BREAK_IF(!m_pImpl);
+        
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!m_pImpl->m_DelegateWithIme);
+        
+        m_pImpl->m_DelegateWithIme->cursorMoveDown();
+    } while (0);
+}
+
 void CAIMEDispatcher::dispatchMoveSelectChars(bool isLeftBtn, const CCPoint& pt)
 {
     do

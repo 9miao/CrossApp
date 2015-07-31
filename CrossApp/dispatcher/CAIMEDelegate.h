@@ -77,7 +77,9 @@ protected:
 
     virtual void selectAll() {}
 	virtual void cursorMoveBackward() {}
-	virtual void cursorMoveForward() {}
+    virtual void cursorMoveForward() {}
+    virtual void cursorMoveUp() {}
+    virtual void cursorMoveDown() {}
 	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt) {}
 	virtual void moveArrowBtn(const CCPoint& pt) {}
 
