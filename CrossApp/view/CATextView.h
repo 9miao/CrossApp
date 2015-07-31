@@ -81,7 +81,10 @@ public:
 };
 
 
-class CC_DLL CATextView : public CATouchView, public CAIMEDelegate
+class CC_DLL CATextView 
+	: public CATouchView
+	, public CAIMEDelegate
+	, public CATextResponder
 {
 	friend class CATextSelViewEx;
 public:
@@ -96,6 +99,8 @@ public:
 
 	virtual bool becomeFirstResponder();
 
+	virtual void resignResponder();
+
 	static CATextView* createWithFrame(const CCRect& rect);
 
 	static CATextView* createWithCenter(const CCRect& rect);
@@ -103,24 +108,9 @@ public:
     void setBackGroundImage(CAImage* image);
     
     void setBackGroundColor(const CAColor4B &color);
-    
-protected:
-	virtual bool init();
-	virtual bool canAttachWithIME();
-	virtual bool canDetachWithIME();
-	virtual void didDetachWithIME();
-	virtual void didAttachWithIME();
-    
-	virtual void insertText(const char * text, int len);
-	virtual void willInsertText(const char* text, int len);
-	virtual void AndroidWillInsertText(int start, const char* str, int before, int count);
-	virtual void deleteBackward();
-	virtual void getKeyBoardHeight(int height);
-	virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-	virtual const char* getContentText();
-	virtual int getCursorPos();
-	virtual void visit();
 
+	int getLineCount();
+    
 	CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
 
 	CC_SYNTHESIZE(CATextViewDelegate*, m_pTextViewDelegate, TextViewDelegate);
@@ -169,37 +159,22 @@ protected:
     }
     
 protected:
+	virtual bool init();
+	virtual bool canAttachWithIME();
+	virtual bool canDetachWithIME();
+	virtual void didDetachWithIME();
+	virtual void didAttachWithIME();
 
-	void initMarkSprite();
+	virtual void insertText(const char * text, int len);
+	virtual void willInsertText(const char* text, int len);
+	virtual void AndroidWillInsertText(int start, const char* str, int before, int count);
+	virtual void deleteBackward();
+	virtual void getKeyBoardHeight(int height);
+	virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
+	virtual const char* getContentText();
+	virtual int getCursorPos();
+	virtual void visit();
 
-    void showCursorMark();
-    
-    void hideCursorMark();
-    
-	void updateImage();
-
-	void calcCursorPosition();
-
-	int getStringLength(const std::string &var);
-
-	int getCurrentByPointY(int y);
-
-	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
-
-	bool execCurSelCharRange();
-
-	void ccStartSelect();
-	void ccSelectAll() { selectAll(); }
-	void ccPasteFromClipboard() { pasteFromClipboard(); }
-    void ccCopyToClipboard() { copyToClipboard(); }
-    void ccCutToClipboard() { cutToClipboard(); }
-	int getStringCharCount(const std::string &var);
-
-	std::pair<int, int> getLineAndPos(int iPos);
-
-	std::vector<CCRect> getZZCRect();
-
-protected:
 	virtual void setContentSize(const CCSize& var);
 	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
@@ -217,9 +192,26 @@ protected:
 	virtual void copyToClipboard();
 	virtual void cutToClipboard();
 	virtual void pasteFromClipboard();
-    
-    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
-    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
+
+	void initMarkSprite();
+	void showCursorMark();
+	void hideCursorMark();
+	void updateImage();
+	void calcCursorPosition();
+	int getStringLength(const std::string &var);
+	int getCurrentByPointY(int y);
+	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
+	bool execCurSelCharRange();
+
+	void ccStartSelect();
+	void ccSelectAll() { selectAll(); }
+	void ccPasteFromClipboard() { pasteFromClipboard(); }
+	void ccCopyToClipboard() { copyToClipboard(); }
+	void ccCutToClipboard() { cutToClipboard(); }
+	int getStringCharCount(const std::string &var);
+
+	std::pair<int, int> getLineAndPos(int iPos);
+	std::vector<CCRect> getZZCRect();
 
 private:
     
@@ -235,7 +227,6 @@ private:
 	int m_iLineHeight;
 	std::vector<TextViewLineInfo> m_vLinesTextView;
 	std::pair<int, int> m_curSelCharRange;
-    bool m_isTouchInSide;
 	bool m_bUpdateImage;
     eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;
