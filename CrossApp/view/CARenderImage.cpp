@@ -205,13 +205,8 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 
         // textures must be power of two squared
-        unsigned int powW = 0;
-        unsigned int powH = 0;
-
-        {
-            powW = (unsigned int)w;
-            powH = (unsigned int)h;
-        }
+        unsigned int powW = (unsigned int)w;
+        unsigned int powH = (unsigned int)h;
 
         data = (unsigned char *)malloc((int)(powW * powH * 4));
         CC_BREAK_IF(! data);

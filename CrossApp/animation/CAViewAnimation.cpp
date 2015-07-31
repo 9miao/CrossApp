@@ -55,9 +55,9 @@ public:
     float endRotationY;
     float deltaRotationY;
     
-    long startColor;
-    long endColor;
-    long deltaColor;
+    CAColor4B startColor;
+    CAColor4B endColor;
+    short deltaColor[4];
     
     float startAlpha;
     float endAlpha;
@@ -87,7 +87,6 @@ public:
     ,deltaSkewY(0.0f)
     ,deltaRotationX(0.0f)
     ,deltaRotationY(0.0f)
-    ,deltaColor(0)
     ,deltaAlpha(0.0f)
     ,deltaImageRect(CCRectZero)
     ,startPoint(v->m_obPoint)
@@ -100,7 +99,7 @@ public:
     ,startSkewY(v->m_fSkewY)
     ,startRotationX(v->m_fRotationX)
     ,startRotationY(v->m_fRotationY)
-    ,startColor(getUIntFormColor4B(v->_realColor))
+    ,startColor(v->_realColor)
     ,startAlpha(v->_realAlpha)
     ,startImageRect(v->m_obRect)
     ,startFlipX(v->m_bFlipX)
@@ -109,6 +108,10 @@ public:
     ,endFlipY(v->m_bFlipY)
     {
         CC_SAFE_RETAIN(view);
+        deltaColor[0] = 0;
+        deltaColor[1] = 0;
+        deltaColor[2] = 0;
+        deltaColor[3] = 0;
     }
     
     virtual ~CAViewModel()
@@ -177,7 +180,6 @@ void CAViewAnimation::commitAnimations()
         CAScheduler::schedule(schedule_selector(CAViewAnimation::update), manager, 1/60.0f);
     }
     while (0);
-    
 }
 
 void CAViewAnimation::setAnimationDuration(float duration)
@@ -224,7 +226,6 @@ void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAView
     CC_RETURN_IF(animation->m_vWillModules.empty());
     animation->m_vWillModules.back()->willStartTarget = target;
     animation->m_vWillModules.back()->willStartSel0 = selector;
-
 }
 
 void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation2 selector)
@@ -233,7 +234,6 @@ void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAView
     CC_RETURN_IF(animation->m_vWillModules.empty());
     animation->m_vWillModules.back()->willStartTarget = target;
     animation->m_vWillModules.back()->willStartSel2 = selector;
-    
 }
 
 void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation0 selector)
@@ -470,9 +470,16 @@ void CAViewAnimation::update(float dt)
                 {
                     view->setRotationY(model->startRotationY + model->deltaRotationY * s);
                 }
-                if (VALID_INT(model->deltaColor))
+                if (VALID_INT(model->deltaColor[0]) ||
+                    VALID_INT(model->deltaColor[1]) ||
+                    VALID_INT(model->deltaColor[2]) ||
+                    VALID_INT(model->deltaColor[3]))
                 {
-                    view->setColor(ccc4Int(model->startColor + model->deltaColor * s));
+                    short r = model->startColor.r + model->deltaColor[0] * s;
+                    short g = model->startColor.g + model->deltaColor[1] * s;
+                    short b = model->startColor.b + model->deltaColor[2] * s;
+                    short a = model->startColor.a + model->deltaColor[3] * s;
+                    view->setColor(ccc4(r, g, b, a));
                 }
                 if (VALID_FLOAT(model->deltaAlpha))
                 {
@@ -607,8 +614,11 @@ void CAViewAnimation::setColor(const CAColor4B& color, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
     CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
-    model->endColor = getUIntFormColor4B(color);
-    model->deltaColor = model->endColor - model->startColor;
+    model->endColor = color;
+    model->deltaColor[0] = (short)model->endColor.r - (short)model->startColor.r;
+    model->deltaColor[1] = (short)model->endColor.g - (short)model->startColor.g;
+    model->deltaColor[2] = (short)model->endColor.b - (short)model->startColor.b;
+    model->deltaColor[3] = (short)model->endColor.a - (short)model->startColor.a;
 }
 
 void CAViewAnimation::setAlpha(float alpha, CAView* view)

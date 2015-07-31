@@ -227,9 +227,6 @@ CANavigationController::CANavigationController()
     this->setHaveNextResponder(false);
     this->setTouchMoved(true);
 
-    CCSize winSize = CAApplication::getApplication()->getWinSize();
-    m_tNavigationBarSize = CCSize(winSize.width, _px(88));
-    
     this->setNavigationBarBackGroundImage(CAImage::create("source_material/navigation_bg.png"));
 }
 
@@ -385,6 +382,8 @@ void CANavigationController::updateItem(CAViewController* viewController)
 
 void CANavigationController::viewDidLoad()
 {
+    m_tNavigationBarSize = CCSize(this->getView()->getBounds().size.width, _px(88));
+    
     CAViewController* viewController = m_pViewControllers.front();
     viewController->retain()->autorelease();
     m_pViewControllers.popFront();

@@ -41,9 +41,9 @@ bool CANavigationBar::init(const CCSize& size)
     this->setColor(CAColor_clear);
     CCSize winSize = CAApplication::getApplication()->getWinSize();
     CCSize contentSize;
-    contentSize.width = size.width == 0 ? winSize.width : MIN(winSize.width, size.width);
-    contentSize.height = size.height == 0 ? _px(88) : size.height;
-    this->setContentSize(contentSize);
+    contentSize.width = size.width > FLT_EPSILON ? MIN(winSize.width, size.width) : winSize.width;
+    contentSize.height = size.height > FLT_EPSILON ? size.height : _px(88);
+    this->setFrame(CCRect(0, 0, contentSize.width, contentSize.height));
     
     return true;
 }
@@ -422,9 +422,9 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size)
 
     CCSize winSize = CAApplication::getApplication()->getWinSize();
     CCSize contentSize;
-    contentSize.width = MIN(winSize.width, size.width);
-    contentSize.height = size.height == 0 ? _px(98) : size.height;
-    this->setContentSize(contentSize);
+    contentSize.width = size.width > FLT_EPSILON ? MIN(winSize.width, size.width) : winSize.width;
+    contentSize.height = size.height > FLT_EPSILON ? size.height : _px(98);
+    this->setFrame(CCRect(0, 0, contentSize.width, contentSize.height));
 
     CADipRect rect = this->getBounds();
     rect.origin = rect.size / 2;
