@@ -116,6 +116,7 @@ public:
 class CC_DLL CATextField
 	: public CATouchView
 	, public CAIMEDelegate
+	, public CATextResponder
 {
 public:
     CATextField();
@@ -129,11 +130,13 @@ public:
     virtual bool resignFirstResponder();
     
     virtual bool becomeFirstResponder();
+
+	virtual void resignResponder();
     
     static CATextField* createWithFrame(const CCRect& frame);
     
     static CATextField* createWithCenter(const CCRect& rect);
-    
+
     bool init();
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
@@ -209,8 +212,6 @@ protected:
     virtual void getKeyBoardHeight(int height);
     virtual void getKeyBoradReturnCallBack();
     virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
-    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
     
 	CCRect getZZCRect(bool* l=NULL, bool* r=NULL);
 	bool execCurSelCharRange();
@@ -243,7 +244,6 @@ private:
 	int m_iString_o_length;
 	int m_iFontHeight;
 
-    bool m_isTouchInSide;
 	CAView* m_pCursorMark;
 	CAView* m_pTextViewMark;
 	CCSize m_cImageSize;

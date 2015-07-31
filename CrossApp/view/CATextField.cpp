@@ -19,6 +19,7 @@
 
 NS_CC_BEGIN
 
+
 #define BORDER_WIDTH(w) (0.01125*w)
 
 CATextField::CATextField()
@@ -43,7 +44,6 @@ CATextField::CATextField()
 , m_iHoriMargins(0)
 , m_iVertMargins(0)
 , m_pBackgroundView(NULL)
-, m_isTouchInSide(false)
 , m_keyBoardReturnType(KEY_BOARD_RETURN_DONE)
 , m_bMoved(false)
 , m_eTextEditAlign(eTextEditAlignLeft)
@@ -83,6 +83,8 @@ bool CATextField::resignFirstResponder()
 
 bool CATextField::becomeFirstResponder()
 {
+	resignAllResponder();
+    
 	bool result = CAView::becomeFirstResponder();
     if (result) 
 	{
@@ -98,6 +100,12 @@ bool CATextField::becomeFirstResponder()
 #endif
     }
     return result;
+}
+
+void CATextField::resignResponder()
+{
+	detachWithIME();
+	hideCursorMark();
 }
 
 CATextField* CATextField::createWithFrame(const CCRect& frame)
@@ -177,7 +185,7 @@ void CATextField::setCursorPosition()
     }
     else
     {
-		float mPmarkWidth = MIN(m_obContentSize.width, getCursorX());
+		float mPmarkWidth = MIN(m_iLabelWidth, getCursorX());
         m_pCursorMark->setCenterOrigin(CCPoint(mPmarkWidth + m_iHoriMargins, m_obContentSize.height / 2));
     }
 }
@@ -306,6 +314,10 @@ bool CATextField::attachWithIME()
             {
                 pGlView->setIMEKeyboardReturnDone();
             }
+			else if(getKeyboardReturnType() ==KEY_BOARD_RETURN_ENTER)
+			{
+				pGlView->setIMEKeyboardReturnEnter();
+			}
 
 #endif
 
@@ -502,10 +514,7 @@ void CATextField::insertText(const char * text, int len)
         getKeyBoradReturnCallBack();
         return;
     }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    CC_RETURN_IF(m_nInputType == KEY_BOARD_INPUT_PASSWORD && len >= 2);
-#endif
-
+	
 	execCurSelCharRange();
     analyzeString(text, len);
 	adjustCursorMove(true);
@@ -528,6 +537,9 @@ void CATextField::AndroidWillInsertText(int start,const char* str,int before,int
 
 void CATextField::willInsertText(const char *text, int len)
 {
+	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
+		return;
+
 	execCurSelCharRange();
 
 	int iOldCurPos = m_iCurPos;
@@ -594,8 +606,8 @@ void CATextField::adjustCursorMove(bool forward)
 	}
 	else
 	{
-		m_iString_r_length = getStringLength(m_sText.substr(m_iCurPos, m_sText.size()));
-		m_iString_l_length = m_cImageSize.width - m_iString_r_length;
+		m_iString_l_length = getStringLength(m_sText.substr(0, m_iCurPos));
+		m_iString_r_length = m_cImageSize.width - m_iString_l_length;
 	}
 
 	if (forward)
@@ -636,11 +648,11 @@ void CATextField::adjustCursorMove(bool forward)
 CCRect CATextField::getZZCRect(bool* l, bool* r)
 {
 	int l1 = getStringLength(m_sText.substr(0, m_curSelCharRange.first));
-	int l2 = getStringLength(m_sText.substr(m_curSelCharRange.first, m_curSelCharRange.second-m_curSelCharRange.first));
+	int l2 = getStringLength(m_sText.substr(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first));
 	int ld = getDtStrLength();
 
 	bool ll = (l1 + m_iString_o_length) >= 0;
-	bool rr = (l1 + m_iString_o_length + l2) <= m_iLabelWidth;
+	bool rr = (l1 + m_iString_o_length + l2 + ld) <= m_iLabelWidth;
 
 	int dd = 0;
 	if (ll && rr)
@@ -649,7 +661,7 @@ CCRect CATextField::getZZCRect(bool* l, bool* r)
 	}
 	else if (ll)
 	{
-		dd = m_iLabelWidth - (l1 + m_iString_o_length);
+		dd = m_iLabelWidth - (l1 + m_iString_o_length + ld);
 	}
 	else if (rr)
 	{
@@ -705,14 +717,7 @@ void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 	m_iString_r_length = r;
 	bool isBackward = p < m_iCurPos;
 	m_iCurPos = p;
-	if (isBackward)
-	{
-		adjustCursorMove(false);
-	}
-	else
-	{
-		adjustCursorMove(true);
-	}
+	adjustCursorMove(!isBackward);
 
 	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool ll, rr;
@@ -884,8 +889,6 @@ void CATextField::setContentSize(const CCSize& var)
 	m_iVertMargins = (m_obContentSize.height - m_iFontHeight) / 2;
 	m_iLabelWidth = m_obContentSize.width - 2 * m_iHoriMargins;
     this->initMarkSprite();
-
-	setTextEditAlign(eTextEditAlignRight);
 }
 
 void CATextField::updateImage()
@@ -1121,28 +1124,10 @@ void CATextField::getKeyBoradReturnCallBack()
     }
 }
 
-void CATextField::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
-{
-    if (!m_isTouchInSide)
-    {
-        m_isTouchInSide = true;
-
-    }
-}
-
 void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
     m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
     execCurSelCharRange();
-}
-
-void CATextField::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
-{
-    if(m_isTouchInSide)
-    {
-        m_isTouchInSide = false;
-        CAView::resignFirstResponder();
-    }
 }
 
 int CATextField::getStringLength(const std::string &var)
