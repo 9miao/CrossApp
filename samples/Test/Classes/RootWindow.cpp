@@ -104,7 +104,7 @@ void RootWindow::initUIView()
         
     }
     while (0);
-
+    
     if (m_pRootDrawerController)
     {
         m_pRootDrawerController->hideLeftViewController(true);
