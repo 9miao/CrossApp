@@ -1033,7 +1033,9 @@ void CDUIShowView::showTextField()
     textField->setFontSize(_px(40));
     textField->setTag(100);
     textField->setPlaceHolder("Input");
-    textField->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
+    textField->setKeyboardType(KEY_BOARD_TYPE_ALPHABET);
+    textField->setTextEditAlign(eTextEditAlignLeft);
+    textField->setInputType(KEY_BOARD_INPUT_PASSWORD);
     this->getView()->addSubview(textField);
     showNum = 1;
 }
@@ -1725,6 +1727,7 @@ void CDUIShowView::showAnimation()
     animation_2_textfield->setFontSize(_px(40));
     animation_2_textfield->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
     animation_2_textfield->setVisible(false);
+    
     
     animation_2_btn_search = CAButton::createWithCenter(CADipRect(70,winSize.height/2,56,48), CAButtonTypeCustom);
     animation_2_btn_search->setImageForState(CAControlStateNormal, CAImage::create("image/search_btn.png"));

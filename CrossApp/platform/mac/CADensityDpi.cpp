@@ -7,7 +7,7 @@ NS_CC_BEGIN
 
 float CADensityDpi::getDensityDpi()
 {
-    return 160.0f;
+    return 320.0f;
 }
 
 CADeviceIdiom CADensityDpi::getIdiom()

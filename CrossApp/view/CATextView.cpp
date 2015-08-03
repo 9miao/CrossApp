@@ -954,7 +954,7 @@ void CATextView::cursorMoveUp()
     
     CCPoint cursorRect = m_pCursorMark->getCenterOrigin();//  ->setFrame(CCRect(0, 0, 2, m_iLineHeight));
     
-    CCPoint point = CCPoint(cursorRect.x-20,cursorRect.y-m_iLineHeight);
+    CCPoint point = CCPoint(cursorRect.x-10,cursorRect.y-m_iLineHeight);
     
     if (this->getBounds().containsPoint(point))
     {
@@ -981,7 +981,7 @@ void CATextView::cursorMoveDown()
     
     CCPoint cursorRect = m_pCursorMark->getCenterOrigin();//  ->setFrame(CCRect(0, 0, 2, m_iLineHeight));
     
-    CCPoint point = CCPoint(cursorRect.x-20,cursorRect.y+m_iLineHeight);
+    CCPoint point = CCPoint(cursorRect.x-10,cursorRect.y+m_iLineHeight);
     
     if (this->getBounds().containsPoint(point))
     {

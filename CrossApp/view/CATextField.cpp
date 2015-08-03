@@ -502,62 +502,6 @@ void CATextField::analyzeString(const char * text, int len)
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 }
 
-void CATextField::MacAnalyzeString(const char * text, int len)
-{
-    std::string strLeft = "";
-    std::string strRight = "";
-    m_sText = "";
-    m_iCurPos = 0;
-    for (int i = 0; i < len; i++)
-    {
-        TextAttribute t;
-        
-        int iStrLen1 = getStringLength(strLeft);
-        if (text[i] >= 0 && text[i] <= 127)
-        {
-            t.charSize = 1;
-            strLeft += text[i];
-        }
-        else
-        {
-            t.charSize = 3;
-            strLeft += text[i++];
-            strLeft += text[i++];
-            strLeft += text[i];
-        }
-        int iStrLen2 = getStringLength(strLeft);
-        
-        t.charlength = iStrLen2 - iStrLen1;
-        
-        m_vTextFiledChars.insert(m_vTextFiledChars.begin() + (getStringCharCount(strLeft)-1), t);
-        m_iCurPos += t.charSize;
-    }
-    m_sText = strLeft + strRight;
-    m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
-}
-
-void CATextField::MacInsertText(const char * text, int len)
-{
-   // CC_RETURN_IF(len <= 0);
-   // CC_RETURN_IF(text == 0);
-    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, text, len, m_iCurPos));
-    CC_RETURN_IF(m_pDelegate && m_pDelegate->onTextFieldInsertText(this, text, len));
-    
-    if (!strcmp(text, "\n"))
-    {
-        getKeyBoradReturnCallBack();
-        return;
-    }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    CC_RETURN_IF(m_nInputType == KEY_BOARD_INPUT_PASSWORD && len >= 2);
-#endif
-    
-    execCurSelCharRange();
-    MacAnalyzeString(text, len);
-    adjustCursorMoveForward();
-
-}
-
 void CATextField::insertText(const char * text, int len)
 {
     CC_RETURN_IF(len <= 0);
@@ -687,25 +631,6 @@ void CATextField::adjustCursorMove(bool forward)
 			}
 		}
 	}
-
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC )
-    if (m_iString_l_length < m_iLabelWidth)
-    {
-        m_iString_left_offX = 0;
-    }
-    else
-    {
-        m_iString_left_offX = m_iLabelWidth - m_iString_l_length;
-    }
-
-#else
-    if (m_iString_l_length + m_iString_left_offX > m_iLabelWidth)
-    {
-        m_iString_left_offX = m_iLabelWidth - m_iString_l_length;
-    }
-#endif
-
 
 	CCRect r = CCRectMake(0, 0, MIN(m_iLabelWidth, m_cImageSize.width), m_cImageSize.height);
 	r.origin.x = -m_iString_o_length;
@@ -999,7 +924,7 @@ void CATextField::updateImage()
 	}
 
 	float dt = 1.0f;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 	dt = 1.1f;
 #endif
 	CCSize size = CCSizeMake(0, m_iFontHeight*dt);

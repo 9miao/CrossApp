@@ -225,7 +225,7 @@ unsigned int CADatePickerView::numberOfRowsInComponent(CAPickerView* pickerView,
             } else if (component == 1) { // month
                 row = 12;
             } else { // day
-                row = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year+1900,m_tTM.tm_mon);
+                row = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year+1900,m_tTM.tm_mon+1);
             }
             break;
             

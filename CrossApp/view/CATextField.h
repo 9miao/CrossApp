@@ -208,8 +208,6 @@ protected:
     virtual void insertText(const char * text, int len);
     virtual void willInsertText(const char* text,int len);
     virtual void AndroidWillInsertText(int start,const char* str,int before,int count);
-    virtual void MacInsertText(const char * text, int len);
-    virtual void MacAnalyzeString(const char * text, int len);
     virtual void deleteBackward();
     virtual void getKeyBoardHeight(int height);
     virtual void getKeyBoradReturnCallBack();
