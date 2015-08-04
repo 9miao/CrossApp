@@ -2,6 +2,7 @@
 #include "CrossApp.h"
 #include "ccTypes.h"
 #include "platform/android/jni/JniHelper.h"
+#include "platform/android/CAWebViewImpl.h"
 #include <jni.h>
 #include <android/log.h>
 
@@ -39,6 +40,7 @@ void Java_org_CrossApp_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         CANotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_FOREGROUND, NULL);
         CAApplication::getApplication()->setGLDefaultValues();
         CAImageCache::reloadAllImages();
+		CAWebViewImpl::reloadAll();
     }
 }
 
