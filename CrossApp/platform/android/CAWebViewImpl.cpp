@@ -368,6 +368,15 @@ void CAWebViewImpl::onJsCallback(const int viewTag, const std::string &message){
 	}
 }
 
+void CAWebViewImpl::reloadAll()
+{
+	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.begin();
+	for (; it != s_WebViewImpls.end(); ++it)
+	{
+		it->second->reload();
+	}
+}
+
 void CAWebViewImpl::update(float dt)
 {
 	CCRect cRect = _webView->convertRectToWorldSpace(_webView->getBounds());
