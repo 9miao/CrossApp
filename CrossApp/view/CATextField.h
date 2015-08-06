@@ -44,6 +44,14 @@ enum eKeyBoardReturnType
     KEY_BOARD_RETURN_ENTER,
 };
 
+enum eTextEditAlign
+{
+	eTextEditAlignLeft,
+	eTextEditAlignCenter,
+	eTextEditAlignRight,
+};
+
+
 class CATextField;
 class CC_DLL CATextFieldDelegate
 {
@@ -108,6 +116,7 @@ public:
 class CC_DLL CATextField
 	: public CATouchView
 	, public CAIMEDelegate
+	, public CATextResponder
 {
 public:
     CATextField();
@@ -121,11 +130,13 @@ public:
     virtual bool resignFirstResponder();
     
     virtual bool becomeFirstResponder();
+
+	virtual void resignResponder();
     
     static CATextField* createWithFrame(const CCRect& frame);
     
     static CATextField* createWithCenter(const CCRect& rect);
-    
+
     bool init();
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
@@ -152,6 +163,7 @@ public:
     
 	CC_PROPERTY(int, m_iHoriMargins, HoriMargins);
 	CC_PROPERTY(int, m_iVertMargins, VertMargins);
+	CC_PROPERTY(eTextEditAlign, m_eTextEditAlign, TextEditAlign);
     
     inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
     
@@ -164,11 +176,10 @@ public:
     virtual void setImageRect(const CCRect& rect);
     
     virtual void updateImageRect();
-    
-
 
 protected:
     void updateImage();
+	int getDtStrLength();
     int getCursorX();
     int getStringViewLength();
     virtual bool attachWithIME();
@@ -186,6 +197,7 @@ protected:
     void showCursorMark();
     void hideCursorMark();
     void setCursorPosition();
+	void adjustCursorMove(bool forward = true);
     
     void analyzeString(const char * text, int len);
 	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
@@ -196,18 +208,10 @@ protected:
     virtual void insertText(const char * text, int len);
     virtual void willInsertText(const char* text,int len);
     virtual void AndroidWillInsertText(int start,const char* str,int before,int count);
-    virtual void MacInsertText(const char * text, int len);
-    virtual void MacAnalyzeString(const char * text, int len);
     virtual void deleteBackward();
     virtual void getKeyBoardHeight(int height);
     virtual void getKeyBoradReturnCallBack();
     virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-
-    void adjustCursorMoveBackward();
-    void adjustCursorMoveForward();
-
-    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
-    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
     
 	CCRect getZZCRect(bool* l=NULL, bool* r=NULL);
 	bool execCurSelCharRange();
@@ -235,12 +239,11 @@ private:
 
     bool m_bMoved;
 	int m_iLabelWidth;
-	int m_iString_left_offX;
 	int m_iString_l_length;
 	int m_iString_r_length;
+	int m_iString_o_length;
 	int m_iFontHeight;
 
-    bool m_isTouchInSide;
 	CAView* m_pCursorMark;
 	CAView* m_pTextViewMark;
 	CCSize m_cImageSize;

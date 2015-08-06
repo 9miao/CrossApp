@@ -68,8 +68,6 @@ protected:
     
     virtual void AndroidWillInsertText(int start, const char* str, int before, int count){CC_UNUSED_PARAM(before);};
     
-    virtual void MacInsertText(const char * text, int len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
-
     /**
     @brief    Called by CAIMEDispatcher after the user clicks the backward key.
     */

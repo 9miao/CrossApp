@@ -123,17 +123,22 @@ void CAPageControl::onEnter()
 {
     CAControl::onEnter();
     
-    if (m_pIndicators.size() != m_numberOfPages) {
+    if (m_pIndicators.size() != m_numberOfPages)
+    {
         m_pIndicators.clear();
         
-        for (int i=0; i<m_numberOfPages; i++) {
+        for (int i=0; i<m_numberOfPages; i++)
+        {
             CAImageView* view;
-            if (i == m_currentPage) {
+            if (i == m_currentPage)
+            {
                 view = CAImageView::createWithImage(m_pSelectPageImage);
                 view->setColor(m_currentPageIndicatorTintColor);
+                view->setFrame(CADipRect(0,0,14,14));
             } else {
                 view = CAImageView::createWithImage(m_pPageImage);        
                 view->setColor(m_pageIndicatorTintColor);
+                view->setFrame(CADipRect(0,0,14,14));
             }
             
             CCRect rect;

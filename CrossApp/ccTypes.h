@@ -48,6 +48,12 @@ getIntFormColor4B(const CAColor4B& color)
     return (color.r + color.g * 0x100 + color.b * 0x10000 + color.a * 0x1000000);
 }
 
+static inline unsigned int
+getUIntFormColor4B(const CAColor4B& color)
+{
+    return (color.r + color.g * 0x100 + color.b * 0x10000 + color.a * 0x1000000);
+}
+
 //CAColor4B predefined colors
 //! White color (255,255,255,255)
 static const CAColor4B CAColor_white   = {255, 255, 255, 255};

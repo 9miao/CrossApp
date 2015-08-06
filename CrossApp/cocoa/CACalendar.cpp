@@ -206,7 +206,7 @@ void CACalendar::dateByDayOfYear(int year, int day, int& month, int& date)
 {
     int num = _isLeapYear(year+1900)? 366 : 365;
     if (day<num) {
-        month = 1;
+        month = 0;
         while (day > 0) {
             day -= _dayCountOfMonth(year, month++);
         }
@@ -218,7 +218,7 @@ void CACalendar::dateByDayOfYear(int year, int day, int& month, int& date)
             date = _dayCountOfMonth(year, month) + day + 1;
         }
     }else{
-        month = 1;
+        month = 0;
         date = 1;
     }
 }

@@ -65,6 +65,16 @@ public:
     
     void setTitleFontName(const std::string& var);
     
+    void setImageOffset(const CCSize& offset);
+    
+    void setImageSize(const CCSize& size);
+    
+    void setTitleOffset(const CCSize& offset);
+    
+    void setTitleLabelSize(const CCSize& size);
+    
+    void setTitleFontSize(float fontSize);
+    
     virtual void setControlState(const CAControlState& var);
     
     using CAControl::addTarget;
@@ -72,16 +82,6 @@ public:
     using CAControl::removeTarget;
     
     using CAControl::removeAllTargets;
-    
-    void setImageOffset(CCSize offset);
-    
-    void setImageSize(CCSize size);
-    
-    void setTitleOffset(CCSize offset);
-    
-    void setTitleLabelSize(CCSize size);
-    
-    void setTitleFontSize(float fontSize);
     
 public:
     

@@ -226,19 +226,6 @@ void CAIMEDispatcher::dispatchInsertText(const char * pText, int nLen)
     } while (0);
 }
 
-void CAIMEDispatcher::dispatchMacInsertText(const char * pText, int nLen)
-{
-    do
-    {
-        CC_BREAK_IF(! m_pImpl);
-        
-        // there is no delegate attached to IME
-        CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
-        
-        m_pImpl->m_DelegateWithIme->MacInsertText(pText, nLen);
-    } while (0);
-}
-
 void CAIMEDispatcher::dispatchGetKeyBoardHeight(int height)
 {
     do

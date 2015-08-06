@@ -695,7 +695,7 @@ void CAButton::setContentSize(const CCSize & var)
     this->setControlState(m_eControlState);
 }
 
-void CAButton::setImageOffset(CCSize offset)
+void CAButton::setImageOffset(const CCSize& offset)
 {
     m_pImageOffset = offset;
     CCRect rect = m_pImageView->getCenter();
@@ -704,7 +704,7 @@ void CAButton::setImageOffset(CCSize offset)
     m_pImageView->setCenter(rect);
 }
 
-void CAButton::setImageSize(CCSize size)
+void CAButton::setImageSize(const CCSize& size)
 {
     m_pImageSize = size;
     CCRect rect = m_pImageView->getCenter();
@@ -712,7 +712,7 @@ void CAButton::setImageSize(CCSize size)
     m_pImageView->setCenter(rect);
 }
 
-void CAButton::setTitleOffset(CCSize offset)
+void CAButton::setTitleOffset(const CCSize& offset)
 {
     m_pTitleOffset = offset;
     CCRect rect = m_pLabel->getCenter();
@@ -721,7 +721,7 @@ void CAButton::setTitleOffset(CCSize offset)
     m_pLabel->setCenter(rect);
 }
 
-void CAButton::setTitleLabelSize(CCSize size)
+void CAButton::setTitleLabelSize(const CCSize& size)
 {
     m_pTitleLabelSize = size;
     CCRect rect = m_pLabel->getCenter();

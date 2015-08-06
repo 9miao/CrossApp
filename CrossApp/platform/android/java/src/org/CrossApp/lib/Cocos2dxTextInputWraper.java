@@ -101,9 +101,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 	@Override
 	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) 
 	{
-		
-		
-		
+		Log.d(TAG, "onEditorAction: "+pActionID+", "+pKeyEvent.getAction());
 		
 		if (pActionID == EditorInfo.IME_ACTION_DONE) 
 		{
@@ -115,6 +113,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			});
             return true;
 		}
+
 		if (pActionID == EditorInfo.IME_ACTION_SEARCH)
         {
 			this.mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
@@ -125,6 +124,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			});
             return true;
 		}
+
 		if (pActionID == EditorInfo.IME_ACTION_SEND)
 		{
 			this.mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
@@ -143,8 +143,9 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
         
         if(pKeyEvent.getAction() == KeyEvent.ACTION_DOWN)
         {
-            return false;
+            return true;
         }
+        
         if (pActionID == EditorInfo.IME_ACTION_UNSPECIFIED)
         {
         	this.mCocos2dxGLSurfaceView.queueEvent(new Runnable() {

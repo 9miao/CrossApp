@@ -136,7 +136,9 @@ public:
     
     const char* description(void);
     
-    void releaseData(void *data);
+    void releaseData();
+    
+    void releaseData(unsigned char ** data);
     
     void drawAtPoint(const CCPoint& point);
     

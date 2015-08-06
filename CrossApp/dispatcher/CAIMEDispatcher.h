@@ -41,8 +41,6 @@ public:
     void dispatchWillInsertText(const char * pText, int nLen);
     
     void dispatchAndroidWillInsertText(int start, const std::string &str, int before, int count);
-    
-    void dispatchMacInsertText(const char * pText, int nLen);
     /**
     @brief Dispatches the delete-backward operation.
     */

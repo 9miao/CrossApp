@@ -17,6 +17,7 @@ CAPageView::CAPageView(const CAPageViewDirection& type)
 ,m_nCurrPage(0)
 ,m_pPageViewDelegate(NULL)
 ,m_bListener(false)
+,m_fSpacing(_px(40))
 {
 
 }
@@ -96,11 +97,11 @@ void CAPageView::setViews(const CADeque<CAView*>& vec)
     
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
-        this->setViewSize(CCSize(this->getBounds().size.width * m_pViews.size() + s_fSpacing * (m_pViews.size() - 1), m_obViewSize.height));
+        this->setViewSize(CCSize(this->getBounds().size.width * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1), m_obViewSize.height));
     }
     else
     {
-        this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size() + s_fSpacing * (m_pViews.size() - 1)));
+        this->setViewSize(CCSize(m_obViewSize.width, this->getBounds().size.height * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1)));
     }
     
     for (size_t i=0; i<m_pViews.size(); i++)
@@ -108,11 +109,11 @@ void CAPageView::setViews(const CADeque<CAView*>& vec)
         CCRect rect = this->getBounds();
         if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
         {
-            rect.origin.x = (rect.size.width + s_fSpacing) * i;
+            rect.origin.x = (rect.size.width + m_fSpacing) * i;
         }
         else
         {
-            rect.origin.y = (rect.size.height + s_fSpacing) * i;
+            rect.origin.y = (rect.size.height + m_fSpacing) * i;
         }
         m_pContainer->addSubview(m_pViews.at(i));
         m_pViews.at(i)->setFrame(rect);
@@ -163,11 +164,11 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
     
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
-        this->setContentOffset(CCPoint(m_nCurrPage * (this->getBounds().size.width + s_fSpacing), 0), animated);
+        this->setContentOffset(CCPoint(m_nCurrPage * (this->getBounds().size.width + m_fSpacing), 0), animated);
     }
     else
     {
-        this->setContentOffset(CCPoint(0, m_nCurrPage * (this->getBounds().size.height + s_fSpacing)), animated);
+        this->setContentOffset(CCPoint(0, m_nCurrPage * (this->getBounds().size.height + m_fSpacing)), animated);
     }
     
 }
@@ -175,6 +176,24 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
 int CAPageView::getCurrPage()
 {
     return m_nCurrPage;
+}
+
+void CAPageView::setSpacing(int var)
+{
+    m_fSpacing = var;
+    
+    if (!m_pViews.empty())
+    {
+        CAVector<CAView*> vec = m_pViews;
+        int currPath = m_nCurrPage;
+        this->setViews(vec);
+        this->setCurrPage(currPath, false, false);
+    }
+}
+
+int CAPageView::getSpacing()
+{
+    return m_fSpacing;
 }
 
 void CAPageView::contentOffsetFinish(float dt)

@@ -227,9 +227,6 @@ CANavigationController::CANavigationController()
     this->setHaveNextResponder(false);
     this->setTouchMoved(true);
 
-    CCSize winSize = CAApplication::getApplication()->getWinSize();
-    m_tNavigationBarSize = CCSize(winSize.width, _px(88));
-    
     this->setNavigationBarBackGroundImage(CAImage::create("source_material/navigation_bg.png"));
 }
 
@@ -385,6 +382,8 @@ void CANavigationController::updateItem(CAViewController* viewController)
 
 void CANavigationController::viewDidLoad()
 {
+    m_tNavigationBarSize = CCSize(this->getView()->getBounds().size.width, _px(88));
+    
     CAViewController* viewController = m_pViewControllers.front();
     viewController->retain()->autorelease();
     m_pViewControllers.popFront();
@@ -436,6 +435,16 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     container->release();
     
     CANavigationBar* navigationBar = CANavigationBar::create(CCSize(this->getView()->getBounds().size.width, 0));
+    if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
+    {
+        viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
+    }
+    if (m_pViewControllers.empty())
+    {
+        viewController->getNavigationBarItem()->setShowGoBackButton(false);
+    }
+    navigationBar->setItem(viewController->getNavigationBarItem());
+    
     if (m_pNavigationBarBackGroundImage)
     {
         navigationBar->setBackGroundView(CAScale9ImageView::createWithImage(m_pNavigationBarBackGroundImage));
@@ -450,16 +459,6 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     container->insertSubview(navigationBar, 1);
     navigationBar->setDelegate(this);
     m_pNavigationBars.pushBack(navigationBar);
-    
-    if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
-    {
-        viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
-    }
-    if (m_pViewControllers.empty())
-    {
-        viewController->getNavigationBarItem()->setShowGoBackButton(false);
-    }
-    navigationBar->setItem(viewController->getNavigationBarItem());
     
     CAView* secondContainer = new CAView();
     container->addSubview(secondContainer);
@@ -518,28 +517,34 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
         return;
     }
     
-    float x = this->getView()->getBounds().size.width;
-    
-    CAView* lastContainer = m_pContainers.back();
-    this->createWithContainer(viewController);
-    this->layoutNewContainer();
-    if (m_pNavigationBars.size() == 2)
+    if (m_pNavigationBars.size() == 1)
     {
         CANavigationBarItem* item = viewController->getNavigationBarItem();
+        if (item == NULL)
+        {
+            item = CANavigationBarItem::create("");
+        }
         item->setShowGoBackButton(false);
         viewController->setNavigationBarItem(item);
     }
+    
+    float x = this->getView()->getBounds().size.width;
+
+    CAView* lastContainer = m_pContainers.back();
+    this->createWithContainer(viewController);
+    this->layoutNewContainer();
     CAView* newContainer = m_pContainers.back();
-    newContainer->setFrameOrigin(CCPoint(x, 0));
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     
     if (animated)
     {
+        newContainer->setFrameOrigin(CCPoint(x, 0));
+        
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(1/30.0f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
+        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
         lastContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
         CAViewAnimation::commitAnimations();
         
@@ -590,7 +595,6 @@ void CANavigationController::pushViewController(CAViewController* viewController
     this->createWithContainer(viewController);
     this->layoutNewContainer();
     CAView* newContainer = m_pContainers.back();
-    
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     
@@ -1166,7 +1170,6 @@ CATabBarController::CATabBarController()
 ,m_pTabBar(NULL)
 ,m_pContainer(NULL)
 ,m_bTabBarHidden(false)
-,m_bscrollEnabled(false)
 ,m_pTabBarBackGroundImage(NULL)
 ,m_pTabBarSelectedBackGroundImage(NULL)
 ,m_pTabBarSelectedIndicatorImage(NULL)
@@ -1182,14 +1185,15 @@ CATabBarController::CATabBarController()
     m_pView->setDisplayRange(false);
     
     this->setTabBarBackGroundImage(CAImage::create("source_material/tabBar_bg.png"));
+    
     this->setTabBarSelectedBackGroundImage(CAImage::create("source_material/tabBar_selected_bg.png"));
+    
     this->setTabBarSelectedIndicatorImage(CAImage::create("source_material/tabBar_selected_indicator.png"));
 }
 
 CATabBarController::~CATabBarController()
 {
     m_pViewControllers.clear();
-    CC_SAFE_RELEASE_NULL(m_pTabBar);
     CC_SAFE_RELEASE_NULL(m_pTabBarBackGroundImage);
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedBackGroundImage);
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedIndicatorImage);
@@ -1341,13 +1345,7 @@ bool CATabBarController::initWithViewControllers(const CAVector<CAViewController
 {
     CAViewController::init();
     
-    do
-    {
-        CC_BREAK_IF(viewControllers.size() == 0);
-        m_pViewControllers = viewControllers;
-    }
-    while (0);
-    
+    m_pViewControllers = viewControllers;
     m_eTabBarVerticalAlignment = var;
     
     return true;
@@ -1369,29 +1367,6 @@ void CATabBarController::updateItem(CAViewController* viewController)
 
 void CATabBarController::viewDidLoad()
 {
-    CCRect container_rect = this->getView()->getBounds();
-    
-    CCSize container_view_size = container_rect.size;
-    container_view_size.width *= m_pViewControllers.size();
-    
-    
-    m_pContainer = CAPageView::createWithFrame(container_rect, CAPageViewDirectionHorizontal);
-    m_pContainer->setBackGroundColor(CAColor_clear);
-    m_pContainer->setPageViewDelegate(this);
-    m_pContainer->setScrollViewDelegate(this);
-    m_pContainer->setScrollEnabled(m_bscrollEnabled);
-    m_pContainer->setDisplayRange(true);
-    this->getView()->addSubview(m_pContainer);
-    
-    CAVector<CAView*> views;
-    for (int i=0; i<m_pViewControllers.size(); i++)
-    {
-        CAView* view = new CAView();
-        views.pushBack(view);
-        view->release();
-    }
-    m_pContainer->setViews(views);
-    
     std::vector<CATabBarItem*> items;
     
     for (unsigned int i=0; i<m_pViewControllers.size(); i++)
@@ -1409,9 +1384,48 @@ void CATabBarController::viewDidLoad()
         view->m_pTabBarController = this;
     }
     
-    m_pTabBar = CATabBar::create(items, CCSize(container_rect.size.width, 0));
-    m_pTabBar->retain();
+    m_pTabBar = CATabBar::create(items, CCSize(this->getView()->getBounds().size.width, 0));
+    this->getView()->addSubview(m_pTabBar);
     m_pTabBar->setDelegate(this);
+    
+    CCRect container_rect = this->getView()->getBounds();
+    
+    CCPoint tab_bar_rectOrgin = CCPointZero;
+    if (m_bTabBarHidden)
+    {
+        tab_bar_rectOrgin = this->getTabBarTakeBackPoint();
+    }
+    else
+    {
+        tab_bar_rectOrgin = this->getTabBarOpenPoint();
+        
+        container_rect.size.height -= m_pTabBar->getFrame().size.height;
+        if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
+        {
+            container_rect.origin.y = m_pTabBar->getFrame().size.height;
+        }
+    }
+    
+    CCSize container_view_size = container_rect.size;
+    container_view_size.width *= m_pViewControllers.size();
+    
+    m_pContainer = CAPageView::createWithFrame(container_rect, CAPageViewDirectionHorizontal);
+    m_pContainer->setBackGroundColor(CAColor_clear);
+    m_pContainer->setPageViewDelegate(this);
+    m_pContainer->setScrollViewDelegate(this);
+    m_pContainer->setScrollEnabled(m_bScrollEnabled);
+    m_pContainer->setDisplayRange(true);
+    this->getView()->addSubview(m_pContainer);
+    
+    CAVector<CAView*> views;
+    for (int i=0; i<m_pViewControllers.size(); i++)
+    {
+        CAView* view = new CAView();
+        views.pushBack(view);
+        view->release();
+    }
+    m_pContainer->setViews(views);
+    
     if (m_pTabBarBackGroundImage)
     {
         m_pTabBar->setBackGroundImage(m_pTabBarBackGroundImage);
@@ -1450,24 +1464,8 @@ void CATabBarController::viewDidLoad()
         m_pTabBar->showSelectedIndicator();
     }
     
-    CCPoint tab_bar_rectOrgin = CCPointZero;
-    if (m_bTabBarHidden)
-    {
-        tab_bar_rectOrgin = this->getTabBarTakeBackPoint();
-    }
-    else
-    {
-        tab_bar_rectOrgin = this->getTabBarOpenPoint();
-        
-        container_rect.size.height -= m_pTabBar->getFrame().size.height;
-        if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
-        {
-            container_rect.origin.y = m_pTabBar->getFrame().size.height;
-        }
-    }
-    
     m_pTabBar->setFrameOrigin(tab_bar_rectOrgin);
-    this->getView()->addSubview(m_pTabBar);
+    
     
     m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
     this->renderingSelectedViewController();
@@ -1587,7 +1585,6 @@ void CATabBarController::scrollViewWillBeginDragging(CAScrollView* view)
         if (!m_pViewControllers.at(i)->getView()->getSuperview())
         {
             CAView* view = m_pContainer->getSubViewAtIndex(i);
-            m_pViewControllers.at(i)->getView()->setFrame(view->getBounds());
             m_pViewControllers.at(i)->addViewFromSuperview(view);
         }
         
@@ -1606,7 +1603,6 @@ void CATabBarController::renderingSelectedViewController()
     if (!m_pViewControllers.at(m_nSelectedIndex)->getView()->getSuperview())
     {
         CAView* view = m_pContainer->getSubViewAtIndex(m_nSelectedIndex);
-        m_pViewControllers.at(m_nSelectedIndex)->getView()->setFrame(view->getBounds());
         m_pViewControllers.at(m_nSelectedIndex)->addViewFromSuperview(view);
     }
     
@@ -1616,16 +1612,16 @@ void CATabBarController::renderingSelectedViewController()
 
 void CATabBarController::setScrollEnabled(bool var)
 {
-    m_bscrollEnabled = var;
+    m_bScrollEnabled = var;
     if (m_pContainer)
     {
-        m_pContainer->setScrollEnabled(m_bscrollEnabled);
+        m_pContainer->setScrollEnabled(m_bScrollEnabled);
     }
 }
 
 bool CATabBarController::isScrollEnabled()
 {
-    return m_bscrollEnabled;
+    return m_bScrollEnabled;
 }
 
 CCPoint CATabBarController::getTabBarOpenPoint()

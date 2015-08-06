@@ -2,6 +2,7 @@
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "control/CAButton.h"
+#include "dispatcher/CATouchDispatcher.h"
 #include "CAAlertView.h"
 #include "support/ccUTF8.h"
 #include "platform/CCPlatformMacros.h"
@@ -652,5 +653,31 @@ void CATextArrowView::ccTouchTimer(float interval)
 	hideTextArrView();
 }
 
+///////////////////////////////////////////////////////////////////////////////////////
+//
+std::vector<CATextResponder*> CATextResponder::s_AllTextResponder;
+
+CATextResponder::CATextResponder()
+{
+	s_AllTextResponder.push_back(this);
+}
+
+CATextResponder::~CATextResponder()
+{
+	std::vector<CATextResponder*>::iterator it = std::find(s_AllTextResponder.begin(), s_AllTextResponder.end(), this);
+	if (it != s_AllTextResponder.end())
+	{
+		s_AllTextResponder.erase(it);
+	}
+}
+
+void CATextResponder::resignAllResponder()
+{
+	for (int i = 0; i < s_AllTextResponder.size(); i++)
+	{
+		s_AllTextResponder[i]->resignResponder();
+	}
+	CAApplication::getApplication()->getTouchDispatcher()->setFirstResponder(NULL);
+}
 
 NS_CC_END

@@ -648,7 +648,7 @@ float CACollectionView::maxSpeedCache(float dt)
 
 float CACollectionView::decelerationRatio(float dt)
 {
-    return 2.0f * dt;
+    return 1.8f * dt;
 }
 
 CACollectionViewCell* CACollectionView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
