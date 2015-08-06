@@ -10,6 +10,12 @@
 
 namespace CADevice
 {
+    
+    const char* getAppVersion()
+    {
+        return "";
+    }
+    
     void openCamera(CAMediaDelegate* target)
     {
         
