@@ -113,6 +113,10 @@ public class Cocos2dxWebView extends WebView {
     public void setWebViewRect(int left, int top, int maxWidth, int maxHeight) {
         fixSize(left, top, maxWidth, maxHeight);
     }
+    public int getViewTag() {
+    	return viewTag;
+    }
+    
 
     private void fixSize(int left, int top, int width, int height) {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,

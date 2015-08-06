@@ -59,8 +59,7 @@ public class Cocos2dxWebViewHelper {
     public static native void resume();
 
     @SuppressWarnings("unused")
-    public static int createWebView() {
-        final int index = viewTag;
+    public static void createWebView(final int index) {
         pause();
         cocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
@@ -76,6 +75,12 @@ public class Cocos2dxWebViewHelper {
             }
         });
         resume();
+    }
+    
+    @SuppressWarnings("unused")
+    public static int createWebView() {
+        final int index = viewTag;
+        createWebView(index);
         return viewTag++;
     }
 
@@ -324,5 +329,34 @@ public class Cocos2dxWebViewHelper {
                 }
             }
         });
+    }
+    
+    public static String[] getAllWebviews() {
+
+    	String [] strs = new String[1 + webViews.size() * 2];
+    	
+    	int index = 0;
+    	strs[index++] = String.valueOf(viewTag);
+    	
+    	for (int i=0; i<webViews.size(); i++) {
+    		Cocos2dxWebView webView = webViews.get(webViews.keyAt(i));
+            if (webView != null) {
+            	strs[index++] = String.valueOf(webView.getViewTag());
+            	strs[index++] = webView.getUrl();
+            }
+    	}
+    	return strs;
+    }
+    
+    public static void setAllWebviews(String[] strs) {
+    	int cnt = (strs.length-1) / 2;
+    	
+    	viewTag = Integer.parseInt(strs[0]);
+    	
+    	for (int i=0; i<cnt; i++) {
+    		int index = Integer.parseInt(strs[2*i+1]);
+    		createWebView(index);
+    		loadUrl(index, strs[2*i+2]);
+    	}
     }
 }
