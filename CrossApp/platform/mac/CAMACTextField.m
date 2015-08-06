@@ -81,6 +81,11 @@
 {
     [_cadelegate deleteBackward];
 }
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+
+}
 //
 //- (BOOL)keyboardInputShouldDelete:(UITextField *)textField {
 //    BOOL shouldDelete = YES;

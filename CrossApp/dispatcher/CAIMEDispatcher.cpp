@@ -514,9 +514,9 @@ void CAIMEDispatcher::dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& inf
         if(m_pImpl->m_DelegateWithIme){
             m_pImpl->m_DelegateWithIme->keyboardDidHide(info);
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
-            m_pImpl->m_DelegateWithIme->canDetachWithIME();
-            m_pImpl->m_DelegateWithIme->getKeyBoardHeight(0);
-            m_pImpl->m_DelegateWithIme->didDetachWithIME();
+//            m_pImpl->m_DelegateWithIme->canDetachWithIME();
+//            m_pImpl->m_DelegateWithIme->getKeyBoardHeight(0);
+//            m_pImpl->m_DelegateWithIme->didDetachWithIME();
 #endif
         }
         

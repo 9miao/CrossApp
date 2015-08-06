@@ -23,7 +23,7 @@ static std::vector<CAAddressBookRecord> _addressBookArr;
     
 const char* getAppVersion()
 {
-    NSDictionary *infoDictionary = [[[NSBundle mainBundle] infoDictionary] autorelease];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     return [app_Version UTF8String];
 }
@@ -32,14 +32,14 @@ void openCamera(CAMediaDelegate* target)
 {
     CACameraController *camera = [[CACameraController alloc] init];
     [camera setSender:target];
-    //[camera openCameraView:true];
+    [camera openCameraView:false];
 }
 
 void openAlbum(CAMediaDelegate* target)
 {
     CAAlbumController *album = [[CAAlbumController alloc] init];
     [album setSender:target];
-    //[album openAlbumView:allowEdit];
+    [album openAlbumView:false];
 }
     
 void writeToSavedPhotosAlbum(const std::string &s)

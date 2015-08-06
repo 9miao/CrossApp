@@ -9,7 +9,7 @@
 #include "CAPageView.h"
 #include "basics/CAScheduler.h"
 
-#define s_fSpacing _px(40)
+#define s_fSpacing _px(0)
 
 CAPageView::CAPageView(const CAPageViewDirection& type)
 :m_ePageViewDirection(type)

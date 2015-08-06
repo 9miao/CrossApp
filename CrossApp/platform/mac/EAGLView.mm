@@ -419,6 +419,8 @@ static EAGLView *view;
 
 -(BOOL) acceptsFirstResponder
 {
+    return  [_textfield acceptsFirstResponder];
+
 	return YES;
 }
 
