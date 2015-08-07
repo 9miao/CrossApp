@@ -923,7 +923,7 @@ void CATextView::cursorMoveBackward()
 		return;
 
 	int nMoveLen = 1;
-	while (m_iCurPos - nMoveLen < m_szText.size() && 0x80 == (0xC0 & m_szText.at(m_iCurPos - nMoveLen)))
+	while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nMoveLen)))
 	{
         ++nMoveLen;
 		
