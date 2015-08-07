@@ -552,7 +552,7 @@ static EAGLView *view;
 
 - (void)textDidEndEditing:(NSNotification *)notification
 {
-    NSLog(@"textDidEndEditing:");
+  //  NSLog(@"textDidEndEditing:");
     [_textfield textDidEndEditing:notification];
 
 }

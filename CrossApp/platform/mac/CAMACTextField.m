@@ -40,7 +40,7 @@
 
 - (void)textDidEndEditing:(NSNotification *)notification
 {
-    NSLog(@"textDidEndEditing:");
+   // NSLog(@"textDidEndEditing:");
 }
 
 - (void)textDidChange:(NSNotification *)notification
