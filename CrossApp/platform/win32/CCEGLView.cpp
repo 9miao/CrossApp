@@ -469,6 +469,13 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         case VK_RIGHT:
             CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveForward();
             break;
+		case VK_UP:
+			CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveUp();
+			break;
+		case VK_DOWN:
+			CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveDown();
+			break;
+
         case 'C':
         case 'X':
             if (GetKeyState(VK_CONTROL) < 0)
