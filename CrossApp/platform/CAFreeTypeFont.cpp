@@ -687,7 +687,7 @@ FT_Error CAFreeTypeFont::initGlyphsLine(const std::string& line)
 				}
 				prev = pos > prev ? pos : pos + 1;
 			}
-			if (prev <= line.length())
+			if (prev < line.length())
 			{
 				addWord(line.substr(prev, std::string::npos));
 			}
