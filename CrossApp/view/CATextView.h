@@ -235,6 +235,8 @@ private:
 
 	CATextSelViewEx* m_pTextSelView;
 	CATextArrowView* m_pTextArrView;
+    
+    CCPoint m_pCurPosition;
 };
 
 
