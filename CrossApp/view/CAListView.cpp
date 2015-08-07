@@ -31,7 +31,7 @@ CAListView::CAListView()
 
 CAListView::~CAListView()
 {
-    m_vpUsedListCells.clear();
+	m_mpFreedListCells.clear();
 	CC_SAFE_RELEASE_NULL(m_pListHeaderView);
 	CC_SAFE_RELEASE_NULL(m_pListFooterView);
     m_pListViewDataSource = NULL;
@@ -336,10 +336,7 @@ void CAListView::reloadViewSizeData()
     float width = winRect.size.width;
     float height = winRect.size.height;
     
-    m_nIndexs = 0;
-    m_rIndexRects.clear();
-    m_rLineRects.clear();
-    m_rHeaderRect = m_rFooterRect = CCRectZero;
+	clearData();
     
     int iStartPosition = 0;
     if (m_nListHeaderHeight > 0)
@@ -391,6 +388,39 @@ void CAListView::reloadViewSizeData()
     }
 }
 
+void CAListView::clearData()
+{
+	std::map<unsigned int, CAView*>::iterator it = m_pUsedLines.begin();
+	for (; it != m_pUsedLines.end(); ++it)
+	{
+		CAView* view = it->second;
+		CC_CONTINUE_IF(view == NULL);
+		m_pFreedLines.pushBack(view);
+		view->removeFromSuperview();
+	}
+	m_pUsedLines.clear();
+
+	m_mpUsedListCells.clear();
+
+	for (int i = 0; i < m_vpUsedListCells.size(); i++)
+	{
+		CAListViewCell* cell = m_vpUsedListCells.at(i);
+		CC_CONTINUE_IF(cell == NULL);
+		m_mpFreedListCells[cell->getReuseIdentifier()].pushBack(cell);
+		cell->removeFromSuperview();
+		cell->resetListViewCell();
+	}
+	m_vpUsedListCells.clear();
+
+	m_pSelectedListCells.clear();
+	
+	m_nIndexs = 0;
+	m_rIndexRects.clear();
+	m_rLineRects.clear();
+	m_rHeaderRect = m_rFooterRect = CCRectZero;
+	m_pHighlightedListCells = NULL;
+}
+
 void CAListView::reloadData()
 {
     if (m_pListViewDataSource == NULL)
@@ -398,13 +428,7 @@ void CAListView::reloadData()
     
     this->reloadViewSizeData();
     
-    this->removeAllSubviews();
-    
-    m_pUsedLines.clear();
-    m_vpUsedListCells.clear();
-    m_mpUsedListCells.clear();
-    m_mpFreedListCells.clear();
-    m_pSelectedListCells.clear();
+	this->removeAllSubviews();
     
     CCRect winRect = this->getBounds();
     winRect.origin = this->getContentOffset();
@@ -446,8 +470,12 @@ void CAListView::reloadData()
         
         if (m_nSeparatorViewHeight > 0)
         {
-            CAView* view = CAView::createWithFrame(m_rLineRects[i], m_obSeparatorColor);
-            addSubview(view);
+			CAView* view = this->dequeueReusableLine();
+			if (view == NULL)
+			{
+				view = CAView::createWithFrame(m_rLineRects[i], m_obSeparatorColor);
+			}
+			addSubview(view);
             m_pUsedLines[i] = view;
         }
     }
