@@ -4,6 +4,7 @@
 #include "CAApplication.h"
 #include "support/data_support/utlist.h"
 #include "cocoa/CCSet.h"
+#include "cocoa/CCArray.h"
 
 using namespace std;
 

@@ -250,11 +250,6 @@ public:
     
 public:
 
-    /** CCActionManager associated with this director
-     @since v2.0
-     */
-    CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
-
     /** CATouchDispatcher associated with this director
      @since v2.0
      */

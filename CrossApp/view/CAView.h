@@ -230,24 +230,6 @@ public:
     virtual CAView* copy();
     
 public:
-
-    virtual void setActionManager(CCActionManager* actionManager);
- 
-    virtual CCActionManager* getActionManager();
-    
-    CCAction* runAction(CCAction* action);
-    
-    void stopAllActions(void);
-    
-    void stopAction(CCAction* action);
-    
-    void stopActionByTag(int tag);
-    
-    CCAction* getActionByTag(int tag);
-    
-    unsigned int numberOfRunningActions(void);
-    
-public:
     
     void transform(void);
     

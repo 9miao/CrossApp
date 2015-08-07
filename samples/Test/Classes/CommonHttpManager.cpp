@@ -1,7 +1,5 @@
  
 #include "CommonHttpManager.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
 
 static const char* common_loadingBackground = "dm_resource/loading_background.png";
 static const char* common_loadingIcon = "dm_resource/loading_icon.png";
@@ -84,10 +82,11 @@ void CommonImageCacheManager::pushImage(CAImage* image)
 {
     CC_RETURN_IF(m_dImageQueue.contains(image));
     m_dImageQueue.pushBack(image);
-    CCArray* array = CCArray::create();
-    array->addObject(CCDelayTime::create(10));
-    array->addObject(CCCallFunc::create(this, callfunc_selector(CommonImageCacheManager::update)));
-    this->runAction(CCSequence::create(array));
+    
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(10);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CommonImageCacheManager::update));
+    CAViewAnimation::commitAnimations();
 }
 
 void CommonImageCacheManager::removeImage(CAImage* image)

@@ -14,7 +14,6 @@
 #include "platform/platform.h"
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
-#include "actions/CCActionManager.h"
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "CCAccelerometer.h"
 #include "dispatcher/CATouch.h"
@@ -99,11 +98,6 @@ bool CAApplication::init(void)
 
     m_pobOpenGLView = NULL;
 
-    // action manager
-    m_pActionManager = new CCActionManager();
-    
-    CAScheduler::schedule(schedule_selector(CAApplication::update), m_pActionManager, kCCPrioritySystem);
-    
     // touchDispatcher
     m_pTouchDispatcher = new CATouchDispatcher();
     m_pTouchDispatcher->init();
@@ -128,7 +122,6 @@ CAApplication::~CAApplication(void)
     
     CC_SAFE_RELEASE(m_pRootWindow);
     CC_SAFE_RELEASE(m_pNotificationNode);
-    CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pTouchDispatcher);
     CC_SAFE_RELEASE(m_pKeypadDispatcher);
     CC_SAFE_DELETE(m_pAccelerometer);
@@ -711,21 +704,6 @@ CAApplicationDelegate* CAApplication::getDelegate() const
 void CAApplication::setDelegate(CAApplicationDelegate* pDelegate)
 {
     m_pProjectionDelegate = pDelegate;
-}
-
-void CAApplication::setActionManager(CCActionManager* pActionManager)
-{
-    if (m_pActionManager != pActionManager)
-    {
-        CC_SAFE_RETAIN(pActionManager);
-        CC_SAFE_RELEASE(m_pActionManager);
-        m_pActionManager = pActionManager;
-    }    
-}
-
-CCActionManager* CAApplication::getActionManager()
-{
-    return m_pActionManager;
 }
 
 void CAApplication::setTouchDispatcher(CATouchDispatcher* pTouchDispatcher)

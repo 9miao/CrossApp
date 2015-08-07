@@ -5,8 +5,6 @@
 #include "basics/CAScheduler.h"
 #include "dispatcher/CATouch.h"
 #include "animation/CAViewAnimation.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
 
 NS_CC_BEGIN
 
@@ -228,10 +226,11 @@ bool CAListView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
 
-				CCDelayTime* delayTime = CCDelayTime::create(0.05f);
-				CCCallFunc* func = CCCallFunc::create(pCell, callfunc_selector(CAListViewCell::setControlStateHighlighted));
-				CCSequence* actions = CCSequence::create(delayTime, func, NULL);
-				m_pContainer->runAction(actions);
+                CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+                CAViewAnimation::setAnimationDuration(0.05f);
+                CAViewAnimation::setAnimationDidStopSelector(pCell, CAViewAnimation0_selector(CAListViewCell::setControlStateHighlighted));
+                CAViewAnimation::commitAnimations();
+                
 				break;
 			}
 		}
@@ -246,7 +245,7 @@ void CAListView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 	if (m_pHighlightedListCells)
 	{
-		m_pContainer->stopAllActions();
+        CAViewAnimation::removeAnimations(m_s__StrID);
 
 		if (m_pHighlightedListCells->getControlState() == CAControlStateHighlighted)
 		{
@@ -265,7 +264,7 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 	if (m_pHighlightedListCells)
 	{
-		m_pContainer->stopAllActions();
+        CAViewAnimation::removeAnimations(m_s__StrID);
 
 		unsigned int iDeSelectIndex = -1;
 		unsigned int iSelectIndex = m_pHighlightedListCells->getIndex();
@@ -320,7 +319,7 @@ void CAListView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 	if (m_pHighlightedListCells)
 	{
-        m_pContainer->stopAllActions();
+        CAViewAnimation::removeAnimations(m_s__StrID);
         
         if (m_pHighlightedListCells->getControlState() == CAControlStateHighlighted)
         {

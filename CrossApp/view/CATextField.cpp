@@ -8,7 +8,6 @@
 
 #include "CATextField.h"
 #include "basics/CAApplication.h"
-#include "actions/CCActionInterval.h"
 #include "CCEGLView.h"
 #include <locale>
 #include <algorithm>
@@ -16,6 +15,7 @@
 #include "shaders/CAShaderCache.h"
 #include "platform/CAClipboard.h"
 #include "CATextEditHelper.h"
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
@@ -166,14 +166,21 @@ void CATextField::showCursorMark()
 {
     if(!m_pCursorMark->isVisible()){
         m_pCursorMark->setVisible(true);
-        m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(0.8f, 1), 1048576));
+        
+        m_pCursorMark->setAlpha(0);
+        CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+        CAViewAnimation::setAnimationDuration(0.5f);
+        CAViewAnimation::setAnimationRepeatAutoreverses(true);
+        CAViewAnimation::setAnimationRepeatCount(1048576);
+        m_pCursorMark->setAlpha(1.0f);
+        CAViewAnimation::commitAnimations();
     }
 }
 
 void CATextField::hideCursorMark()
 {
     m_pCursorMark->setVisible(false);
-    m_pCursorMark->stopAllActions();
+    CAViewAnimation::removeAnimations(m_s__StrID);
 }
 
 void CATextField::setCursorPosition()

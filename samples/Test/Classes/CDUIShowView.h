@@ -267,7 +267,7 @@ public:
     virtual unsigned int numberOfRowsInComponent(CAPickerView* pickerView, unsigned int component);
     virtual float widthForComponent(CAPickerView* pickerView, unsigned int component);
     virtual float rowHeightForComponent(CAPickerView* pickerView, unsigned int component);
-    virtual CCString* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
+    virtual const char* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
     
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
     virtual void didSelectRow(const struct tm& tm);

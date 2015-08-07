@@ -289,7 +289,7 @@ CCDictionary* CCFileUtilsMac::createCCDictionaryWithContentsOfFile(const std::st
 
 bool CCFileUtilsMac::writeToFile(CCDictionary *dict, const std::string &fullPath)
 {
-    CCLOG("iOS||Mac CCDictionary %d write to file %s", dict->m_uID, fullPath.c_str());
+    CCLOG("iOS||Mac CCDictionary %d write to file %s", dict->m_u__ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
     
     CCDictElement *element = NULL;

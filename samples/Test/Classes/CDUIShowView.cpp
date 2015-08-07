@@ -1686,10 +1686,9 @@ float CDUIShowView::rowHeightForComponent(CAPickerView* pickerView, unsigned int
     return rowHeight;
 }
 
-CCString* CDUIShowView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
+const char* CDUIShowView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
-    //CCLog("ppppp===%s",unicode_to_utf8(adressTag[row]).c_str());
-    return CCString::create(unicode_to_utf8(adressTag[row]).c_str());
+    return unicode_to_utf8(adressTag[row]).c_str();
 }
 
 void CDUIShowView::zoomViewBySliderValue(CrossApp::CAControl *btn, CrossApp::CCPoint point)

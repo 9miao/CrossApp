@@ -17,20 +17,6 @@
 		0460ECF71956F97A00D13001 /* CCEGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0460ECF31956F97A00D13001 /* CCEGLView.mm */; };
 		04DF7CB01984E6D9007352A8 /* CAIndexPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DF7CAE1984E6D9007352A8 /* CAIndexPath.cpp */; };
 		04DF7CB11984E6D9007352A8 /* CAIndexPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 04DF7CAF1984E6D9007352A8 /* CAIndexPath.h */; };
-		04EAB0571956D75600198A8E /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA04B1956D74D00198A8E /* CCAction.cpp */; };
-		04EAB0581956D75600198A8E /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA04C1956D74D00198A8E /* CCAction.h */; };
-		04EAB0591956D75600198A8E /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA04D1956D74D00198A8E /* CCActionCamera.cpp */; };
-		04EAB05A1956D75600198A8E /* CCActionCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA04E1956D74D00198A8E /* CCActionCamera.h */; };
-		04EAB05B1956D75600198A8E /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA04F1956D74D00198A8E /* CCActionEase.cpp */; };
-		04EAB05C1956D75600198A8E /* CCActionEase.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0501956D74D00198A8E /* CCActionEase.h */; };
-		04EAB05D1956D75600198A8E /* CCActionInstant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0511956D74D00198A8E /* CCActionInstant.cpp */; };
-		04EAB05E1956D75600198A8E /* CCActionInstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0521956D74D00198A8E /* CCActionInstant.h */; };
-		04EAB05F1956D75600198A8E /* CCActionInterval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0531956D74D00198A8E /* CCActionInterval.cpp */; };
-		04EAB0601956D75600198A8E /* CCActionInterval.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0541956D74D00198A8E /* CCActionInterval.h */; };
-		04EAB0611956D75600198A8E /* CCActionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0551956D74D00198A8E /* CCActionManager.cpp */; };
-		04EAB0621956D75600198A8E /* CCActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0561956D74D00198A8E /* CCActionManager.h */; };
-		04EAB0631956D75600198A8E /* CCActionTween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0571956D74D00198A8E /* CCActionTween.cpp */; };
-		04EAB0641956D75600198A8E /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0581956D74D00198A8E /* CCActionTween.h */; };
 		04EAB0671956D75600198A8E /* CAApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA05E1956D74D00198A8E /* CAApplication.cpp */; };
 		04EAB0681956D75600198A8E /* CAApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA05F1956D74D00198A8E /* CAApplication.h */; };
 		04EAB0691956D75600198A8E /* CAAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0601956D74D00198A8E /* CAAutoreleasePool.cpp */; };
@@ -534,20 +520,6 @@
 		0460ECF31956F97A00D13001 /* CCEGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEGLView.mm; sourceTree = "<group>"; };
 		04DF7CAE1984E6D9007352A8 /* CAIndexPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAIndexPath.cpp; sourceTree = "<group>"; };
 		04DF7CAF1984E6D9007352A8 /* CAIndexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIndexPath.h; sourceTree = "<group>"; };
-		04EAA04B1956D74D00198A8E /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
-		04EAA04C1956D74D00198A8E /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
-		04EAA04D1956D74D00198A8E /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
-		04EAA04E1956D74D00198A8E /* CCActionCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCamera.h; sourceTree = "<group>"; };
-		04EAA04F1956D74D00198A8E /* CCActionEase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEase.cpp; sourceTree = "<group>"; };
-		04EAA0501956D74D00198A8E /* CCActionEase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEase.h; sourceTree = "<group>"; };
-		04EAA0511956D74D00198A8E /* CCActionInstant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionInstant.cpp; sourceTree = "<group>"; };
-		04EAA0521956D74D00198A8E /* CCActionInstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionInstant.h; sourceTree = "<group>"; };
-		04EAA0531956D74D00198A8E /* CCActionInterval.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionInterval.cpp; sourceTree = "<group>"; };
-		04EAA0541956D74D00198A8E /* CCActionInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionInterval.h; sourceTree = "<group>"; };
-		04EAA0551956D74D00198A8E /* CCActionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionManager.cpp; sourceTree = "<group>"; };
-		04EAA0561956D74D00198A8E /* CCActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionManager.h; sourceTree = "<group>"; };
-		04EAA0571956D74D00198A8E /* CCActionTween.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTween.cpp; sourceTree = "<group>"; };
-		04EAA0581956D74D00198A8E /* CCActionTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTween.h; sourceTree = "<group>"; };
 		04EAA05E1956D74D00198A8E /* CAApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAApplication.cpp; sourceTree = "<group>"; };
 		04EAA05F1956D74D00198A8E /* CAApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAApplication.h; sourceTree = "<group>"; };
 		04EAA0601956D74D00198A8E /* CAAutoreleasePool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAutoreleasePool.cpp; sourceTree = "<group>"; };
@@ -1073,7 +1045,6 @@
 				04EAA0731956D74D00198A8E /* ccTypes.h */,
 				B074A8B41A722B1600F34F79 /* animation */,
 				B047B91119E9181800F24BE6 /* script_support */,
-				04EAA04A1956D74D00198A8E /* actions */,
 				04EAA05D1956D74D00198A8E /* basics */,
 				04EAA0741956D74D00198A8E /* cocoa */,
 				04EAA0871956D74D00198A8E /* control */,
@@ -1088,27 +1059,6 @@
 			);
 			name = CrossApp;
 			path = ..;
-			sourceTree = "<group>";
-		};
-		04EAA04A1956D74D00198A8E /* actions */ = {
-			isa = PBXGroup;
-			children = (
-				04EAA04B1956D74D00198A8E /* CCAction.cpp */,
-				04EAA04C1956D74D00198A8E /* CCAction.h */,
-				04EAA04D1956D74D00198A8E /* CCActionCamera.cpp */,
-				04EAA04E1956D74D00198A8E /* CCActionCamera.h */,
-				04EAA04F1956D74D00198A8E /* CCActionEase.cpp */,
-				04EAA0501956D74D00198A8E /* CCActionEase.h */,
-				04EAA0511956D74D00198A8E /* CCActionInstant.cpp */,
-				04EAA0521956D74D00198A8E /* CCActionInstant.h */,
-				04EAA0531956D74D00198A8E /* CCActionInterval.cpp */,
-				04EAA0541956D74D00198A8E /* CCActionInterval.h */,
-				04EAA0551956D74D00198A8E /* CCActionManager.cpp */,
-				04EAA0561956D74D00198A8E /* CCActionManager.h */,
-				04EAA0571956D74D00198A8E /* CCActionTween.cpp */,
-				04EAA0581956D74D00198A8E /* CCActionTween.h */,
-			);
-			path = actions;
 			sourceTree = "<group>";
 		};
 		04EAA05D1956D74D00198A8E /* basics */ = {
@@ -1886,20 +1836,13 @@
 				3EF6A3A81B6781EB00A645EC /* CAMACTextField.h in Headers */,
 				3EA062EB1B147DB800183C30 /* grid_index.h in Headers */,
 				1551A874158F2B4700E66CFE /* CrossApp-Prefix.pch in Headers */,
-				04EAB0581956D75600198A8E /* CCAction.h in Headers */,
 				3EA063421B147DB800183C30 /* as_mouse_event.h in Headers */,
 				3EA063871B147DB800183C30 /* gameswf_player.h in Headers */,
-				04EAB05A1956D75600198A8E /* CCActionCamera.h in Headers */,
-				04EAB05C1956D75600198A8E /* CCActionEase.h in Headers */,
 				3EA062DF1B147DB800183C30 /* configvars.h in Headers */,
 				3EA062FE1B147DB800183C30 /* tu_gc.h in Headers */,
-				04EAB05E1956D75600198A8E /* CCActionInstant.h in Headers */,
 				B0A02FEE1A8D8E960005CB8F /* CATempTypeFont.h in Headers */,
 				3EA063791B147DB800183C30 /* gameswf_jit_opcode.h in Headers */,
-				04EAB0601956D75600198A8E /* CCActionInterval.h in Headers */,
 				3EA063521B147DB800183C30 /* as_string.h in Headers */,
-				04EAB0621956D75600198A8E /* CCActionManager.h in Headers */,
-				04EAB0641956D75600198A8E /* CCActionTween.h in Headers */,
 				B08F4BD019C7E66C008DE306 /* CAFTFontCache.h in Headers */,
 				04EAB0681956D75600198A8E /* CAApplication.h in Headers */,
 				B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */,
@@ -2217,19 +2160,12 @@
 				B0A11DAC1AE8C5C500933BF6 /* gifalloc.c in Sources */,
 				3EA062E01B147DB800183C30 /* container.cpp in Sources */,
 				3EA0636E1B147DB800183C30 /* gameswf_fontlib.cpp in Sources */,
-				04EAB0571956D75600198A8E /* CCAction.cpp in Sources */,
-				04EAB0591956D75600198A8E /* CCActionCamera.cpp in Sources */,
-				04EAB05B1956D75600198A8E /* CCActionEase.cpp in Sources */,
-				04EAB05D1956D75600198A8E /* CCActionInstant.cpp in Sources */,
-				04EAB05F1956D75600198A8E /* CCActionInterval.cpp in Sources */,
-				04EAB0611956D75600198A8E /* CCActionManager.cpp in Sources */,
 				3EA062FB1B147DB800183C30 /* tu_file.cpp in Sources */,
 				3EA0633D1B147DB800183C30 /* as_mcloader.cpp in Sources */,
 				B0090D6E198A441800BD8CDA /* CAPickerView.cpp in Sources */,
 				3EA0633F1B147DB800183C30 /* as_mouse.cpp in Sources */,
 				3EA063971B147DB800183C30 /* gameswf_styles.cpp in Sources */,
 				B047B91819E9181800F24BE6 /* JSViewController.cpp in Sources */,
-				04EAB0631956D75600198A8E /* CCActionTween.cpp in Sources */,
 				04EAB0671956D75600198A8E /* CAApplication.cpp in Sources */,
 				B0DAEED21B256B6D0011E87D /* CAGif.cpp in Sources */,
 				3EA0635B1B147DB800183C30 /* gameswf_avm2.cpp in Sources */,

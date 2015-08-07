@@ -953,8 +953,6 @@ CAImage::PixelFormat CAImage::convertDataToFormat(const unsigned char* data, uns
     }
 }
 
-#include "cocoa/CCArray.h"
-
 static std::set<CAImage*> s_pImages;
 
 static CAImage* cc_white_image = NULL;
