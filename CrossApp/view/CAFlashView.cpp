@@ -127,8 +127,8 @@ void CAFlashView::draw()
     ccGLUseProgram(0);//valid program is NON_ZERO unsigned int
 #endif
     CCSize size = this->getFrame().size;
-    float localScaleX = size.width/ m_pFlash->getWidth()/this->getScaleX();
-    float localScaleY = -(size.height / m_pFlash->getHeight()/this->getScaleY());
+    float localScaleX = size.width/ m_pFlash->getWidth();
+    float localScaleY = -(size.height / m_pFlash->getHeight());
     float localScale = localScaleX > -localScaleY ? -localScaleY : localScaleX;
     kmMat4 matrixs;
     kmMat4Scaling(&matrixs, localScale, -localScale, getZOrder());

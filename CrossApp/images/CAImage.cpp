@@ -403,6 +403,7 @@ namespace
     }
 }
 
+
 // IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBB
 void CAImage::convertI8ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData)
 {
@@ -981,7 +982,7 @@ CAImage::CAImage()
 , m_pShaderProgram(NULL)
 , m_bMonochrome(false)
 , m_pData(NULL)
-, m_nDataLenght(0)
+, m_uDataLenght(0)
 , m_pImageData(NULL)
 , m_uImageDataLenght(0)
 , m_nBitsPerComponent(0)
@@ -1716,6 +1717,9 @@ bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
     return true;
 }
 
+
+
+
 bool CAImage::initWithTiffData(const unsigned char * data, unsigned long dataLen)
 {
     bool bRet = false;
@@ -1726,55 +1730,54 @@ bool CAImage::initWithTiffData(const unsigned char * data, unsigned long dataLen
         imageSource.data    = data;
         imageSource.size    = dataLen;
         imageSource.offset  = 0;
+
+        tiff* tif = TIFFClientOpen("file.tif", "rb", (thandle_t)&imageSource, tiffReadProc,
+                                   tiffWriteProc, tiffSeekProc,
+                                   tiffCloseProc, tiffSizeProc,
+                                   tiffMapProc, tiffUnmapProc);
         
-        //        TIFF* tif = TIFFClientOpen("file.tif", "r", (thandle_t)&imageSource,
-        //                                   tiffReadProc, tiffWriteProc,
-        //                                   tiffSeekProc, tiffCloseProc, tiffSizeProc,
-        //                                   tiffMapProc,
-        //                                   tiffUnmapProc);
+        CC_BREAK_IF(NULL == tif);
         
-        //        CC_BREAK_IF(NULL == tif);
-        //
-        //        uint32 w = 0, h = 0;
-        //        uint16 bitsPerSample = 0, samplePerPixel = 0, planarConfig = 0;
-        //        size_t npixels = 0;
-        //
-        //        TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &w);
-        //        TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &h);
-        //        TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bitsPerSample);
-        //        TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samplePerPixel);
-        //        TIFFGetField(tif, TIFFTAG_PLANARCONFIG, &planarConfig);
-        //
-        //        npixels = w * h;
-        //
-        //        m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
-        //        m_uPixelsWide = w;
-        //        m_uPixelsHigh = h;
-        //        m_bHasAlpha = true;
-        //        m_nBitsPerComponent = 8;
-        //
-        //        m_nDataLenght = npixels * sizeof (uint32);
-        //        m_pData = static_cast<unsigned char*>(malloc(m_nDataLenght * sizeof(unsigned char)));
-        //
-        //        uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
-        //        if (raster != NULL)
-        //        {
-        //            if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
-        //            {
-        //                /* the raster data is pre-multiplied by the alpha component
-        //                 after invoking TIFFReadRGBAImageOriented*/
-        //                m_bHasPremultipliedAlpha = true;
-        //
-        //                memcpy(m_pData, raster, npixels*sizeof (uint32));
-        //            }
-        //
-        //            _TIFFfree(raster);
-        //        }
-        //
-        //
-        //        TIFFClose(tif);
-        //
-        //        bRet = true;
+        uint32 w = 0, h = 0;
+        uint16 bitsPerSample = 0, samplePerPixel = 0, planarConfig = 0;
+        size_t npixels = 0;
+        
+        TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &w);
+        TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &h);
+        TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bitsPerSample);
+        TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samplePerPixel);
+        TIFFGetField(tif, TIFFTAG_PLANARCONFIG, &planarConfig);
+        
+        npixels = w * h;
+        
+        m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
+        m_uPixelsWide = w;
+        m_uPixelsHigh = h;
+        m_bHasAlpha = true;
+        m_nBitsPerComponent = 8;
+        
+        m_uImageDataLenght = npixels * sizeof (uint32);
+        m_pImageData = static_cast<unsigned char*>(malloc(m_uImageDataLenght * sizeof(unsigned char)));
+        
+        uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
+        if (raster != NULL)
+        {
+            if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
+            {
+                /* the raster data is pre-multiplied by the alpha component
+                 after invoking TIFFReadRGBAImageOriented*/
+                m_bHasPremultipliedAlpha = true;
+                
+                memcpy(m_pData, raster, npixels*sizeof (uint32));
+            }
+            
+            _TIFFfree(raster);
+        }
+        
+        
+        TIFFClose(tif);
+        
+        bRet = true;
     } while (0);
     return bRet;
 }
@@ -1801,7 +1804,7 @@ bool CAImage::initWithWebpData(const unsigned char * data, unsigned long dataLen
         
         config.output.u.RGBA.rgba = static_cast<uint8_t*>(m_pImageData);
         config.output.u.RGBA.stride = m_uPixelsWide * 4;
-        config.output.u.RGBA.size = m_nDataLenght;
+        config.output.u.RGBA.size = m_uImageDataLenght;
         config.output.is_external_memory = 1;
         
         if (WebPDecode(static_cast<const uint8_t*>(data), dataLen, &config) != VP8_STATUS_OK)
@@ -1817,6 +1820,7 @@ bool CAImage::initWithWebpData(const unsigned char * data, unsigned long dataLen
 
 bool CAImage::initWithETCData(const unsigned char * data, unsigned long dataLen)
 {
+
     return false;
 }
 
@@ -1883,9 +1887,9 @@ bool CAImage::initWithRawData(const unsigned char * data,
 
 void CAImage::setData(const unsigned char* data, unsigned long dataLenght)
 {
-    m_nDataLenght = dataLenght;
-    unsigned char * tmpData = static_cast<unsigned char*>(malloc(m_nDataLenght * sizeof(unsigned char)));
-    memcpy(tmpData, data, m_nDataLenght);
+    m_uDataLenght = dataLenght;
+    unsigned char * tmpData = static_cast<unsigned char*>(malloc(m_uDataLenght * sizeof(unsigned char)));
+    memcpy(tmpData, data, m_uDataLenght);
     
     releaseData(&m_pData);
     m_pData = tmpData;
@@ -2658,10 +2662,10 @@ CAImage* CAImage::copy()
     newImage->m_bHasPremultipliedAlpha = this->m_bHasPremultipliedAlpha;
     newImage->m_bHasAlpha = this->m_bHasAlpha;
     newImage->m_nBitsPerComponent = this->m_nBitsPerComponent;
-    newImage->m_nDataLenght = this->m_nDataLenght;
+    newImage->m_uDataLenght = this->m_uDataLenght;
     
-    newImage->m_pData = static_cast<unsigned char*>(malloc(m_nDataLenght * sizeof(unsigned char)));
-    memcpy(newImage->m_pData, this->m_pData, m_nDataLenght);
+    newImage->m_pData = static_cast<unsigned char*>(malloc(m_uDataLenght * sizeof(unsigned char)));
+    memcpy(newImage->m_pData, this->m_pData, m_uDataLenght);
     
     return newImage;
 }

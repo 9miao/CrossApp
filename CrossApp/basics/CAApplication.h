@@ -352,17 +352,7 @@ protected:
     friend class CCEGLViewProtocol;
 };
 
-/** 
- @brief DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
- 
- Features and Limitations:
-  - Scheduled timers & drawing are synchronizes with the refresh rate of the display
-  - Only supports animation intervals of 1/60 1/30 & 1/15
- 
- @since v0.8.2
- @js NA
- @lua NA
- */
+
 class CCDisplayLinkDirector : public CAApplication
 {
 public:
