@@ -105,6 +105,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		 {
 			 mWebViewHelper = new Cocos2dxWebViewHelper(frame);
 		 }
+		 if (savedInstanceState != null && savedInstanceState.containsKey("WEBVIEW"))
+		 {
+			 mWebViewHelper = new Cocos2dxWebViewHelper(frame);
+			 String[] strs = savedInstanceState.getStringArray("WEBVIEW");
+			 mWebViewHelper.setAllWebviews(strs);
+			 savedInstanceState.clear();
+		 }
 		 IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 
 	     BatteryReceiver batteryReceiver = new BatteryReceiver();
@@ -120,6 +127,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 //		unregisterReceiver(BluetoothReciever) ; 
 //		unregisterReceiver(BTDiscoveryReceiver) ; 
 //	}
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		
+		outState.putStringArray("WEBVIEW", mWebViewHelper.getAllWebviews());
+		super.onSaveInstanceState(outState);
+	}
+
 
 	
 	class BatteryReceiver extends BroadcastReceiver{

@@ -711,6 +711,12 @@ CommonUrlImageView::~CommonUrlImageView()
 {
     CC_SAFE_RELEASE(dynamic_cast<CAObject*>(m_pDelegate));
     m_pDelegate = NULL;
+    
+    CC_SAFE_RETAIN(m_pobImage);
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(1.0f);
+    CAViewAnimation::setAnimationDidStopSelector(m_pobImage, CAViewAnimation0_selector(CAImage::release));
+    CAViewAnimation::commitAnimations();
 }
 
 CommonUrlImageView* CommonUrlImageView::createWithImage(CAImage* image)
