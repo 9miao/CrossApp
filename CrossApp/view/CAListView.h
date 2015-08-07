@@ -73,6 +73,7 @@ public:
 
 	void reloadViewSizeData();
 
+	void clearData();
 	void reloadData();
 
 	CAListViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
