@@ -210,6 +210,19 @@ CAImage* CAImage::generateMipmapsWithImage(CAImage* image)
     return NULL;
 }
 
+extern "C"
+{
+    
+    size_t fwrite$UNIX2003( const void *a, size_t b, size_t c, FILE *d )
+    {
+        return fwrite(a, b, c, d);
+    }
+    
+    char* strerror$UNIX2003( int errnum )
+    {
+        return strerror(errnum);
+    }
+}
 
 namespace
 {
@@ -2359,7 +2372,6 @@ unsigned int CAImage::bitsPerPixelForFormat()
     return this->bitsPerPixelForFormat(m_ePixelFormat);
 }
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 
 bool CAImage::saveImageToPNG(const std::string& filePath, bool isToRGB)
 {
@@ -2589,8 +2601,6 @@ bool CAImage::saveImageToJPG(const std::string& filePath)
     
     return bRet;
 }
-
-#endif
 
 bool CAImage::saveToFile(const std::string& fullPath, bool bIsToRGB)
 {
