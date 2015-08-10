@@ -450,7 +450,6 @@
 		46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F416E5D01B00210B16 /* CAUserDefault.mm */; };
 		B01D4BF819A5E8240071F6A3 /* CADrawerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */; };
 		B01D4BF919A5E8240071F6A3 /* CADrawerController.h in Headers */ = {isa = PBXBuildFile; fileRef = B01D4BF719A5E8240071F6A3 /* CADrawerController.h */; };
-		B01E807B1AD5113400301FC2 /* CAImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = B01E80781AD5113400301FC2 /* CAImage.mm */; };
 		B01E807C1AD5113400301FC2 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01E80791AD5113400301FC2 /* etc1.cpp */; };
 		B01E807D1AD5113400301FC2 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = B01E807A1AD5113400301FC2 /* etc1.h */; };
 		B01F650819658599005C14FC /* CADensityDpi.mm in Sources */ = {isa = PBXBuildFile; fileRef = B01F650719658599005C14FC /* CADensityDpi.mm */; };
@@ -1110,7 +1109,6 @@
 		B01B29A819BADA1E00CBF581 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawerController.cpp; sourceTree = "<group>"; };
 		B01D4BF719A5E8240071F6A3 /* CADrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADrawerController.h; sourceTree = "<group>"; };
-		B01E80781AD5113400301FC2 /* CAImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAImage.mm; sourceTree = "<group>"; };
 		B01E80791AD5113400301FC2 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
 		B01E807A1AD5113400301FC2 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = etc1.h; sourceTree = "<group>"; };
 		B01F650719658599005C14FC /* CADensityDpi.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CADensityDpi.mm; sourceTree = "<group>"; };
@@ -2368,7 +2366,6 @@
 				B0ADAE281B2E7EFB00BE8FA3 /* CAGif.h */,
 				B01E80791AD5113400301FC2 /* etc1.cpp */,
 				B01E807A1AD5113400301FC2 /* etc1.h */,
-				B01E80781AD5113400301FC2 /* CAImage.mm */,
 				B0B553CE193485BE0065053D /* CAImage.cpp */,
 				B0B553CF193485BE0065053D /* CAImage.h */,
 				B0B553D0193485BE0065053D /* CAImageCache.cpp */,
@@ -3069,7 +3066,6 @@
 				3EA061B31B147D1C00183C30 /* as_number.cpp in Sources */,
 				3EA0615F1B147D1C00183C30 /* membuf.cpp in Sources */,
 				B0ADAE2B1B2E7EFB00BE8FA3 /* CAGif.cpp in Sources */,
-				B01E807B1AD5113400301FC2 /* CAImage.mm in Sources */,
 				B0ADAE7B1B2E7F1B00BE8FA3 /* CAImageView.cpp in Sources */,
 				3EA061D01B147D1C00183C30 /* gameswf_disasm.cpp in Sources */,
 				B0A11DC11AE8E0B300933BF6 /* quantize.c in Sources */,
