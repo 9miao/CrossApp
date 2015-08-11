@@ -16,7 +16,8 @@
 
 using namespace std;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+#if  1
+//(CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
 NS_CC_BEGIN
 
@@ -42,41 +43,42 @@ class CCDictMaker : public CCSAXDelegator
 {
 public:
     CCSAXResult m_eResultType;
-    CCArray* m_pRootArray;
-    CCDictionary *m_pRootDict;
-    CCDictionary *m_pCurDict;
-    std::stack<CCDictionary*> m_tDictStack;
+    CAVector<CAObject*> m_pRootArray;
+    CAMap<CAObject*, CAObject*> m_pRootDict;
+    CAMap<CAObject*, CAObject*> m_pCurDict;
+    std::stack<CAMap<CAObject*, CAObject*>*> m_tDictStack;
     std::string m_sCurKey;   ///< parsed key
     std::string m_sCurValue; // parsed value
     CCSAXState m_tState;
-    CCArray* m_pArray;
+    CAVector<CAObject*> m_pArray;
 
-    std::stack<CCArray*> m_tArrayStack;
+    std::stack<CAVector<CAObject*>*> m_tArrayStack;
     std::stack<CCSAXState>  m_tStateStack;
 
 public:
     CCDictMaker()        
         : m_eResultType(SAX_RESULT_NONE),
-          m_pRootArray(NULL), 
-          m_pRootDict(NULL),
-          m_pCurDict(NULL),
-          m_tState(SAX_NONE),
-          m_pArray(NULL)
+          m_tState(SAX_NONE)
     {
+        m_pRootArray.clear();
+        m_pRootDict.clear();
+        m_pCurDict.clear();
+        m_pArray.clear();
     }
 
     ~CCDictMaker()
     {
     }
 
-    CCDictionary* dictionaryWithContentsOfFile(const char *pFileName)
+    CAMap<CAObject*, CAObject*> dictionaryWithContentsOfFile(const char *pFileName)
     {
         m_eResultType = SAX_RESULT_DICT;
         CCSAXParser parser;
 
         if (false == parser.init("UTF-8"))
         {
-            return NULL;
+            CAMap<CAObject*, CAObject*> emptyMap;
+            return emptyMap;
         }
         parser.setDelegator(this);
 
@@ -84,14 +86,15 @@ public:
         return m_pRootDict;
     }
 
-    CCArray* arrayWithContentsOfFile(const char* pFileName)
+    CAVector<CAObject*> arrayWithContentsOfFile(const char* pFileName)
     {
         m_eResultType = SAX_RESULT_ARRAY;
         CCSAXParser parser;
 
         if (false == parser.init("UTF-8"))
         {
-            return NULL;
+            CAVector<CAObject*> emptyVec;
+            return emptyVec;
         }
         parser.setDelegator(this);
 
@@ -106,12 +109,11 @@ public:
         std::string sName((char*)name);
         if( sName == "dict" )
         {
-            m_pCurDict = new CCDictionary();
-            if(m_eResultType == SAX_RESULT_DICT && m_pRootDict == NULL)
+            if(m_eResultType == SAX_RESULT_DICT && m_pRootDict.size() == 0)
             {
                 // Because it will call m_pCurDict->release() later, so retain here.
                 m_pRootDict = m_pCurDict;
-                m_pRootDict->retain();
+                m_pRootDict.retain();
             }
             m_tState = SAX_DICT;
 
@@ -124,21 +126,31 @@ public:
             if (SAX_ARRAY == preState)
             {
                 // add the dictionary into the array
-                m_pArray->addObject(m_pCurDict);
+                m_pArray.pushBack(&m_pCurDict);
             }
             else if (SAX_DICT == preState)
             {
                 // add the dictionary into the pre dictionary
                 CCAssert(! m_tDictStack.empty(), "The state is wrong!");
-                CCDictionary* pPreDict = m_tDictStack.top();
-                pPreDict->setObject(m_pCurDict, m_sCurKey.c_str());
+                CAMap<CAObject*, CAObject*>* pPreDict = m_tDictStack.top();
+                if(!(*pPreDict).insert(&m_pCurDict, CCString::create(m_sCurKey)))
+                {
+                    CAMap<CAObject*, CAObject*>::iterator it = (*pPreDict).getValue((CAObject*)m_pCurDict);
+                    CAMap<CAObject*, CAObject*>::iterator it = (*pPreDict).find((CAObject*)m_pCurDict);
+                    if (it != _data.end())
+                    {
+                        return false;
+                    }
+                    CC_SAFE_RETAIN(object);
+                    _data[key] = object;
+                }
             }
 
-            m_pCurDict->release();
+            //m_pCurDict.clear();
 
             // record the dict state
             m_tStateStack.push(m_tState);
-            m_tDictStack.push(m_pCurDict);
+            m_tDictStack.push(&m_pCurDict);
         }
         else if(sName == "key")
         {
@@ -159,32 +171,32 @@ public:
         else if (sName == "array")
         {
             m_tState = SAX_ARRAY;
-            m_pArray = new CCArray();
-            if (m_eResultType == SAX_RESULT_ARRAY && m_pRootArray == NULL)
+            if (m_eResultType == SAX_RESULT_ARRAY && m_pRootArray.size() == 0)
             {
                 m_pRootArray = m_pArray;
-                m_pRootArray->retain();
+                m_pRootArray.retain();
             }
             CCSAXState preState = SAX_NONE;
             if (! m_tStateStack.empty())
             {
                 preState = m_tStateStack.top();
             }
-
+            map<string, string> hhh;
+            hhh.insert(<#const value_type &__x#>)
             if (preState == SAX_DICT)
             {
-                m_pCurDict->setObject(m_pArray, m_sCurKey.c_str());
+                m_pCurDict.insert(&m_pArray, CCString::create(m_sCurKey));
             }
             else if (preState == SAX_ARRAY)
             {
                 CCAssert(! m_tArrayStack.empty(), "The state is wrong!");
-                CCArray* pPreArray = m_tArrayStack.top();
-                pPreArray->addObject(m_pArray);
+                CAVector<CAObject*>* pPreArray = m_tArrayStack.top();
+                (*pPreArray).pushBack(m_pArray);
             }
-            m_pArray->release();
+            //m_pArray.clear();
             // record the array state
             m_tStateStack.push(m_tState);
-            m_tArrayStack.push(m_pArray);
+            m_tArrayStack.push(&m_pArray);
         }
         else
         {
@@ -203,7 +215,7 @@ public:
             m_tDictStack.pop();
             if ( !m_tDictStack.empty())
             {
-                m_pCurDict = m_tDictStack.top();
+                m_pCurDict = *m_tDictStack.top();
             }
         }
         else if (sName == "array")
@@ -212,7 +224,7 @@ public:
             m_tArrayStack.pop();
             if (! m_tArrayStack.empty())
             {
-                m_pArray = m_tArrayStack.top();
+                m_pArray = *m_tArrayStack.top();
             }
         }
         else if (sName == "true")
@@ -220,7 +232,7 @@ public:
             CCString *str = new CCString("1");
             if (SAX_ARRAY == curState)
             {
-                m_pArray->addObject(str);
+                m_pArray.pushBack(str);
             }
             else if (SAX_DICT == curState)
             {
