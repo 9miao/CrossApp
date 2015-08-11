@@ -16,7 +16,7 @@ NS_CC_BEGIN
 static void addValueToCCDict(id key, id value, CAMap<CAObject*, CAObject*>& pDict);
 static void addCAObjectToNSDict(const char*key, CAObject* object, NSMutableDictionary *dict);
 
-static void addItemToCCArray(id item, CAVector<CAObject*>& pArray)
+static void addItemToCCVector(id item, CAVector<CAObject*>& pArray)
 {
     // add string value into array
     if ([item isKindOfClass:[NSString class]]) {
@@ -53,7 +53,7 @@ static void addItemToCCArray(id item, CAVector<CAObject*>& pArray)
     if ([item isKindOfClass:[NSArray class]]) {
         CAVector<CAObject*> pArrayItem;
         for (id subItem in item) {
-            addItemToCCArray(subItem, pArrayItem);
+            addItemToCCVector(subItem, pArrayItem);
         }
         pArray.pushBack(pArrayItem);
         pArrayItem.clear();
@@ -136,7 +136,7 @@ static void addValueToCCDict(id key, id value, CAMap<CAObject*, CAObject*>& pDic
     if ([value isKindOfClass:[NSArray class]]) {
         CAVector<CAObject*> pArray;
         for (id item in value) {
-            addItemToCCArray(item, pArray);
+            addItemToCCVector(item, pArray);
         }
         pDict.assign(&pArray, tmpKey);
         pArray.clear();
@@ -301,7 +301,7 @@ bool CCFileUtilsMac::writeToFile(CCDictionary *dict, const std::string &fullPath
     return [nsDict writeToFile:file atomically:YES];
 }
 
-CAVector<CAObject*> CCFileUtilsMac::createCCArrayWithContentsOfFile(const std::string& filename)
+CAVector<CAObject*> CCFileUtilsMac::createCCVectorWithContentsOfFile(const std::string& filename)
 {
     //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
     //    NSString* pathExtension= [pPath pathExtension];
@@ -314,7 +314,7 @@ CAVector<CAObject*> CCFileUtilsMac::createCCArrayWithContentsOfFile(const std::s
     
     CAVector<CAObject*> pRet;
     for (id value in pArray) {
-        addItemToCCArray(value, pRet);
+        addItemToCCVector(value, pRet);
     }
     
     return pRet;

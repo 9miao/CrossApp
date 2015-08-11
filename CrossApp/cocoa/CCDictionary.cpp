@@ -380,7 +380,7 @@ CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
 
 CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return NULL;//CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(pFileName);
+    return NULL;//CCFileUtils::sharedFileUtils()->createCAMapWithContentsOfFile(pFileName);
 }
 
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
@@ -392,7 +392,7 @@ CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
 
 bool CCDictionary::writeToFile(const char *fullPath)
 {
-    return CCFileUtils::sharedFileUtils()->writeToFile(this, fullPath);
+    return false ;//CCFileUtils::sharedFileUtils()->writeToFile(this, fullPath);
 }
 
 

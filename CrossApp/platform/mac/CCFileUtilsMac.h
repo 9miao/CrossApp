@@ -28,7 +28,7 @@ public:
     virtual CAMap<CrossApp::CAObject*, CrossApp::CAObject*> createCCDictionaryWithContentsOfFile(const std::string& filename);
     virtual bool writeToFile(CCDictionary *dict, const std::string& fullPath);
     
-    virtual CAVector<CAObject*> createCCArrayWithContentsOfFile(const std::string& filename);
+    virtual CAVector<CAObject*> createCCVectorWithContentsOfFile(const std::string& filename);
 
 };
 

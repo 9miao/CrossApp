@@ -12,8 +12,6 @@
 
 NS_CC_BEGIN
 
-class CCDictionary;
-class CCArray;
 /**
  * @addtogroup platform
  * @{
@@ -22,8 +20,6 @@ class CCArray;
 //! @brief  Helper class to handle file operations
 class CC_DLL CCFileUtils : public TypeInfo
 {
-    friend class CCArray;
-    friend class CCDictionary;
 public:
     /**
      *  Returns an unique ID for this class.
@@ -340,19 +336,19 @@ protected:
      *  Creates a dictionary by the contents of a file.
      *  @note This method is used internally.
      */
-    virtual CAMap<CAObject*, CAObject*> createCCDictionaryWithContentsOfFile(const std::string& filename);
+    virtual CAMap<CAObject*, CAObject*> createCAMapWithContentsOfFile(const std::string& filename);
     
     /**
      *  Write a dictionary to a plist file.
      *  @note This method is used internally.
      */
-    virtual bool writeToFile(CCDictionary *dict, const std::string& fullPath);
+    virtual bool writeToFile(CAMap<CAObject*, CAObject*> *dict, const std::string& fullPath);
     
     /**
      *  Creates an array by the contents of a file.
      *  @note This method is used internally.
      */
-    virtual CAVector<CAObject*> createCCArrayWithContentsOfFile(const std::string& filename);
+    virtual CAVector<CAObject*> createCCVectorWithContentsOfFile(const std::string& filename);
     
     /** Dictionary used to lookup filenames based on a key.
      *  It is used internally by the following methods:
@@ -361,7 +357,6 @@ protected:
      *
      *  @since v2.1
      */
-    //CCDictionary* m_pFilenameLookupDict;
     CAMap<CAObject*, CAObject*> m_pFilenameLookupDict;
 
     /**

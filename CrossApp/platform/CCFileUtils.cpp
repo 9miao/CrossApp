@@ -2,7 +2,6 @@
 
 #include "CCFileUtils.h"
 #include "basics/CAApplication.h"
-#include "cocoa/CCDictionary.h"
 #include "cocoa/CCString.h"
 #include "CCSAXParser.h"
 #include "support/tinyxml2/tinyxml2.h"
@@ -296,14 +295,14 @@ public:
     }
 };
 
-CAMap<CAObject*, CAObject*> CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename)
+CAMap<CAObject*, CAObject*> CCFileUtils::createCAMapWithContentsOfFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     CCDictMaker tMaker;
     return tMaker.dictionaryWithContentsOfFile(fullPath.c_str());
 }
 
-CAVector<CAObject*> CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename)
+CAVector<CAObject*> CCFileUtils::createCCVectorWithContentsOfFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     CCDictMaker tMaker;
@@ -313,15 +312,15 @@ CAVector<CAObject*> CCFileUtils::createCCArrayWithContentsOfFile(const std::stri
 /*
  * forward statement
  */
-static tinyxml2::XMLElement* generateElementForArray(CrossApp::CCArray *array, tinyxml2::XMLDocument *pDoc);
-static tinyxml2::XMLElement* generateElementForDict(CrossApp::CCDictionary *dict, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForArray(CAVector<CAObject*> *array, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForDict(CAMap<CAObject*, CAObject*> *dict, tinyxml2::XMLDocument *pDoc);
 
 /*
  * Use tinyxml2 to write plist files
  */
-bool CCFileUtils::writeToFile(CrossApp::CCDictionary *dict, const std::string &fullPath)
+bool CCFileUtils::writeToFile(CAMap<CAObject*, CAObject*> *dict, const std::string &fullPath)
 {
-    //CCLOG("tinyxml2 CCDictionary %d writeToFile %s", dict->m_uID, fullPath.c_str());
+    //CCLOG("tinyxml2 CAMap %d writeToFile %s", dict->m_uID, fullPath.c_str());
     tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
     if (NULL == pDoc)
         return false;
@@ -374,12 +373,12 @@ static tinyxml2::XMLElement* generateElementForObject(CrossApp::CAObject *object
         return node;
     }
     
-    // object is CCArray
-    if (CCArray *array = dynamic_cast<CCArray *>(object))
+    // object is CAVector
+    if (CAVector<CAObject*> *array = dynamic_cast<CAVector<CAObject*> *>(object))
         return generateElementForArray(array, pDoc);
     
-    // object is CCDictionary
-    if (CCDictionary *innerDict = dynamic_cast<CCDictionary *>(object))
+    // object is CAMap
+    if (CAMap<CAObject*, CAObject*> *innerDict = dynamic_cast<CAMap<CAObject*, CAObject*> *>(object))
         return generateElementForDict(innerDict, pDoc);
     
     CCLOG("This type cannot appear in property list");
@@ -387,14 +386,16 @@ static tinyxml2::XMLElement* generateElementForObject(CrossApp::CAObject *object
 }
 
 /*
- * Generate tinyxml2::XMLElement for CCDictionary through a tinyxml2::XMLDocument
+ * Generate tinyxml2::XMLElement for CAMap through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForDict(CrossApp::CCDictionary *dict, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForDict(CAMap<CAObject*, CAObject*> *dict, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
     
     CCDictElement *dictElement = NULL;
-    CCDICT_FOREACH(dict, dictElement)
+    
+    CAMap<CAObject* , CAObject*>::iterator itr = dict->begin();
+    for(; itr != dict->end(); itr++)
     {
         tinyxml2::XMLElement* tmpNode = pDoc->NewElement("key");
         rootNode->LinkEndChild(tmpNode);
@@ -410,15 +411,16 @@ static tinyxml2::XMLElement* generateElementForDict(CrossApp::CCDictionary *dict
 }
 
 /*
- * Generate tinyxml2::XMLElement for CCArray through a tinyxml2::XMLDocument
+ * Generate tinyxml2::XMLElement for CAVector through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForArray(CrossApp::CCArray *array, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForArray(CAVector<CAObject*> *array, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
     
     CAObject *object = NULL;
-    CCARRAY_FOREACH(array, object)
+    for(int i=0; i < array->size(); i++)
     {
+        object = array->at(i);
         tinyxml2::XMLElement *element = generateElementForObject(object, pDoc);
         if (element)
             rootNode->LinkEndChild(element);
@@ -431,12 +433,12 @@ static tinyxml2::XMLElement* generateElementForArray(CrossApp::CCArray *array, t
 NS_CC_BEGIN
 
 /* The subclass CCFileUtilsIOS and CCFileUtilsMac should override these two method. */
-CAMap<CAObject*, CAObject*> CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename) {
+CAMap<CAObject*, CAObject*> CCFileUtils::createCAMapWithContentsOfFile(const std::string& filename) {
     CAMap<CAObject*, CAObject*> FileMap;
     return FileMap;
 }
-bool CCFileUtils::writeToFile(CrossApp::CCDictionary *dict, const std::string &fullPath) {return NULL;}
-CAVector<CAObject*> CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename) {
+bool CCFileUtils::writeToFile(CAMap<CAObject*, CAObject*> *dict, const std::string &fullPath) {return NULL;}
+CAVector<CAObject*> CCFileUtils::createCCVectorWithContentsOfFile(const std::string& filename) {
     CAVector<CAObject*> fileVec;
     return fileVec;
 }
@@ -769,7 +771,7 @@ void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
     std::string fullPath = this->fullPathForFilename(filename);
     if (fullPath.length() > 0)
     {
-        CAMap<CAObject*, CAObject*> pDict = CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(fullPath.c_str());
+        CAMap<CAObject*, CAObject*> pDict = CCFileUtils::sharedFileUtils()->createCAMapWithContentsOfFile(fullPath.c_str());
         if (!pDict.empty())
         {
             CAObject* mapObj = pDict.getValue(CCString::create("metadata"));
