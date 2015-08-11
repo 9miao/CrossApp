@@ -1024,7 +1024,7 @@ public:
 		else
 		{
 			CC_SAFE_RELEASE_NULL(it->second);
-			*it = object;
+			it->second = object;
 		}
 	}
 
