@@ -110,7 +110,7 @@ static void addValueToCCDict(id key, id value, CAMap<CAObject*, CAObject*>& pDic
             id subValue = [value objectForKey:subKey];
             addValueToCCDict(subKey, subValue, pSubDict);
         }
-        pDict.insert(&pSubDict, tmpKey);
+        pDict.assign(&pSubDict, tmpKey);
         pSubDict.clear();
         return;
     }
@@ -119,7 +119,7 @@ static void addValueToCCDict(id key, id value, CAMap<CAObject*, CAObject*>& pDic
     if ([value isKindOfClass:[NSString class]]) {
         CCString* pValue = new CCString([value UTF8String]);
         
-        pDict.insert(pValue, tmpKey);
+        pDict.assign(pValue, tmpKey);
         pValue->release();
         return;
     }
@@ -129,7 +129,7 @@ static void addValueToCCDict(id key, id value, CAMap<CAObject*, CAObject*>& pDic
         NSString* pStr = [value stringValue];
         CCString* pValue = new CCString([pStr UTF8String]);
         
-        pDict.insert(pValue, tmpKey);
+        pDict.assign(pValue, tmpKey);
         pValue->release();
         return;
     }
@@ -140,7 +140,7 @@ static void addValueToCCDict(id key, id value, CAMap<CAObject*, CAObject*>& pDic
         for (id item in value) {
             addItemToCCArray(item, pArray);
         }
-        pDict.insert(&pArray, tmpKey);
+        pDict.assign(&pArray, tmpKey);
         pArray.clear();
         return;
     }

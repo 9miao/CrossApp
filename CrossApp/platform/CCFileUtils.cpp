@@ -16,8 +16,7 @@
 
 using namespace std;
 
-#if  1
-//(CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
 NS_CC_BEGIN
 
@@ -133,17 +132,7 @@ public:
                 // add the dictionary into the pre dictionary
                 CCAssert(! m_tDictStack.empty(), "The state is wrong!");
                 CAMap<CAObject*, CAObject*>* pPreDict = m_tDictStack.top();
-                if(!(*pPreDict).insert(&m_pCurDict, CCString::create(m_sCurKey)))
-                {
-                    CAMap<CAObject*, CAObject*>::iterator it = (*pPreDict).getValue((CAObject*)m_pCurDict);
-                    CAMap<CAObject*, CAObject*>::iterator it = (*pPreDict).find((CAObject*)m_pCurDict);
-                    if (it != _data.end())
-                    {
-                        return false;
-                    }
-                    CC_SAFE_RETAIN(object);
-                    _data[key] = object;
-                }
+                (*pPreDict).assign(&m_pCurDict, CCString::create(m_sCurKey));
             }
 
             //m_pCurDict.clear();
@@ -181,11 +170,10 @@ public:
             {
                 preState = m_tStateStack.top();
             }
-            map<string, string> hhh;
-            hhh.insert(<#const value_type &__x#>)
+
             if (preState == SAX_DICT)
             {
-                m_pCurDict.insert(&m_pArray, CCString::create(m_sCurKey));
+                m_pCurDict.assign(&m_pArray, CCString::create(m_sCurKey));
             }
             else if (preState == SAX_ARRAY)
             {
@@ -236,7 +224,7 @@ public:
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(str, m_sCurKey.c_str());
+                m_pCurDict.assign(str, CCString::create(m_sCurKey));
             }
             str->release();
         }
@@ -245,11 +233,11 @@ public:
             CCString *str = new CCString("0");
             if (SAX_ARRAY == curState)
             {
-                m_pArray->addObject(str);
+                m_pArray.pushBack(str);
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(str, m_sCurKey.c_str());
+                m_pCurDict.assign(str, CCString::create(m_sCurKey));
             }
             str->release();
         }
@@ -259,11 +247,11 @@ public:
 
             if (SAX_ARRAY == curState)
             {
-                m_pArray->addObject(pStrValue);
+                m_pArray.pushBack(pStrValue);
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(pStrValue, m_sCurKey.c_str());
+                m_pCurDict.assign(pStrValue, CCString::create(m_sCurKey));
             }
 
             pStrValue->release();
