@@ -15,16 +15,16 @@
 
 NS_CC_BEGIN
 
-static void addValueToCCDict(id key, id value, CCDictionary* pDict);
+static void addValueToCCDict(id key, id value,CAMap<CAObject*, CAObject*>& pDict);
 static void addCCObjectToNSDict(const char*key, CAObject* object, NSMutableDictionary *dict);
 
-static void addItemToCCArray(id item, CCArray *pArray)
+static void addItemToCCArray(id item, CAVector<CAObject*>& pArray)
 {
     // add string value into array
     if ([item isKindOfClass:[NSString class]]) {
         CCString* pValue = new CCString([item UTF8String]);
         
-        pArray->addObject(pValue);
+        pArray.pushBack(pValue);
         pValue->release();
         return;
     }
@@ -34,32 +34,31 @@ static void addItemToCCArray(id item, CCArray *pArray)
         NSString* pStr = [item stringValue];
         CCString* pValue = new CCString([pStr UTF8String]);
         
-        pArray->addObject(pValue);
+        pArray.pushBack(pValue);
         pValue->release();
         return;
     }
     
     // add dictionary value into array
     if ([item isKindOfClass:[NSDictionary class]]) {
-        CCDictionary* pDictItem = new CCDictionary();
+        CAMap<CAObject*, CAObject*> pDictItem;;
         for (id subKey in [item allKeys]) {
             id subValue = [item objectForKey:subKey];
             addValueToCCDict(subKey, subValue, pDictItem);
         }
-        pArray->addObject(pDictItem);
-        pDictItem->release();
+        pArray.pushBack(&pDictItem);
+        pDictItem.clear();
         return;
     }
     
     // add array value into array
     if ([item isKindOfClass:[NSArray class]]) {
-        CCArray *pArrayItem = new CCArray();
-        pArrayItem->init();
+        CAVector<CAObject*> pArrayItem;
         for (id subItem in item) {
             addItemToCCArray(subItem, pArrayItem);
         }
-        pArray->addObject(pArrayItem);
-        pArrayItem->release();
+        pArray.pushBack(pArrayItem);
+        pArrayItem.clear();
         return;
     }
 }
@@ -98,29 +97,29 @@ static void addCCObjectToNSArray(CAObject *object, NSMutableArray *array)
 
 }
 
-static void addValueToCCDict(id key, id value, CCDictionary* pDict)
+static void addValueToCCDict(id key, id value, CAMap<CAObject*, CAObject*>& pDict)
 {
     // the key must be a string
     CCAssert([key isKindOfClass:[NSString class]], "The key should be a string!");
     std::string pKey = [key UTF8String];
-    
+    CCString * tmpKey = CCString::create(pKey);
     // the value is a new dictionary
     if ([value isKindOfClass:[NSDictionary class]]) {
-        CCDictionary* pSubDict = new CCDictionary();
+        CAMap<CAObject*, CAObject*> pSubDict;
         for (id subKey in [value allKeys]) {
             id subValue = [value objectForKey:subKey];
             addValueToCCDict(subKey, subValue, pSubDict);
         }
-        pDict->setObject(pSubDict, pKey.c_str());
-        pSubDict->release();
+        pDict.insert(&pSubDict, tmpKey);
+        pSubDict.clear();
         return;
     }
-    
+
     // the value is a string
     if ([value isKindOfClass:[NSString class]]) {
         CCString* pValue = new CCString([value UTF8String]);
         
-        pDict->setObject(pValue, pKey.c_str());
+        pDict.insert(pValue, tmpKey);
         pValue->release();
         return;
     }
@@ -130,20 +129,19 @@ static void addValueToCCDict(id key, id value, CCDictionary* pDict)
         NSString* pStr = [value stringValue];
         CCString* pValue = new CCString([pStr UTF8String]);
         
-        pDict->setObject(pValue, pKey.c_str());
+        pDict.insert(pValue, tmpKey);
         pValue->release();
         return;
     }
     
     // the value is a array
     if ([value isKindOfClass:[NSArray class]]) {
-        CCArray *pArray = new CCArray();
-        pArray->init();
+        CAVector<CAObject*> pArray;
         for (id item in value) {
             addItemToCCArray(item, pArray);
         }
-        pDict->setObject(pArray, pKey.c_str());
-        pArray->release();
+        pDict.insert(&pArray, tmpKey);
+        pArray.clear();
         return;
     }
 }
@@ -279,26 +277,20 @@ bool CCFileUtilsIOS::isAbsolutePath(const std::string& strPath)
     return [path isAbsolutePath] ? true : false;
 }
 
-CCDictionary* CCFileUtilsIOS::createCCDictionaryWithContentsOfFile(const std::string& filename)
+CAMap<CAObject*, CAObject*> CCFileUtilsIOS::createCCDictionaryWithContentsOfFile(const std::string& filename)
 {
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
     NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
-    
+    CAMap<CAObject*, CAObject*> pRet;
     if (pDict != nil)
     {
-        CCDictionary* pRet = new CCDictionary();
         for (id key in [pDict allKeys]) {
             id value = [pDict objectForKey:key];
             addValueToCCDict(key, value, pRet);
         }
-        
-        return pRet;
     }
-    else
-    {
-        return NULL;
-    }
+    return pRet;
 }
 
 bool CCFileUtilsIOS::writeToFile(CCDictionary *dict, const std::string &fullPath)
@@ -319,7 +311,7 @@ bool CCFileUtilsIOS::writeToFile(CCDictionary *dict, const std::string &fullPath
     return true;
 }
 
-CCArray* CCFileUtilsIOS::createCCArrayWithContentsOfFile(const std::string& filename)
+CAVector<CAObject*> CCFileUtilsIOS::createCCArrayWithContentsOfFile(const std::string& filename)
 {
     //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
     //    NSString* pathExtension= [pPath pathExtension];
@@ -330,7 +322,7 @@ CCArray* CCFileUtilsIOS::createCCArrayWithContentsOfFile(const std::string& file
     NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
     
-    CCArray* pRet = new CCArray();
+    CAVector<CAObject*> pRet;
     for (id value in pArray) {
         addItemToCCArray(value, pRet);
     }

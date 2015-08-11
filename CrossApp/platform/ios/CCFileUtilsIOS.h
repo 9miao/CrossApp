@@ -26,10 +26,10 @@ public:
     virtual bool isAbsolutePath(const std::string& strPath);
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
     
-    virtual CCDictionary* createCCDictionaryWithContentsOfFile(const std::string& filename);
+    virtual CAMap<CrossApp::CAObject*, CrossApp::CAObject*> createCCDictionaryWithContentsOfFile(const std::string& filename);
     virtual bool writeToFile(CCDictionary *dict, const std::string& fullPath);
     
-    virtual CCArray* createCCArrayWithContentsOfFile(const std::string& filename);
+    virtual CAVector<CAObject*> createCCArrayWithContentsOfFile(const std::string& filename);
 };
 
 // end of platform group

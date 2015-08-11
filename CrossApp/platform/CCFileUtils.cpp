@@ -296,14 +296,14 @@ public:
     }
 };
 
-CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename)
+CAMap<CAObject*, CAObject*> CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     CCDictMaker tMaker;
     return tMaker.dictionaryWithContentsOfFile(fullPath.c_str());
 }
 
-CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename)
+CAVector<CAObject*> CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     CCDictMaker tMaker;
@@ -431,9 +431,15 @@ static tinyxml2::XMLElement* generateElementForArray(CrossApp::CCArray *array, t
 NS_CC_BEGIN
 
 /* The subclass CCFileUtilsIOS and CCFileUtilsMac should override these two method. */
-CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
+CAMap<CAObject*, CAObject*> CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename) {
+    CAMap<CAObject*, CAObject*> FileMap;
+    return FileMap;
+}
 bool CCFileUtils::writeToFile(CrossApp::CCDictionary *dict, const std::string &fullPath) {return NULL;}
-CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename) {return NULL;}
+CAVector<CAObject*> CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename) {
+    CAVector<CAObject*> fileVec;
+    return fileVec;
+}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
@@ -446,13 +452,12 @@ void CCFileUtils::purgeFileUtils()
 }
 
 CCFileUtils::CCFileUtils()
-: m_pFilenameLookupDict(NULL)
 {
 }
 
 CCFileUtils::~CCFileUtils()
 {
-    CC_SAFE_RELEASE(m_pFilenameLookupDict);
+    m_pFilenameLookupDict.clear();
 }
 
 bool CCFileUtils::init()
@@ -557,19 +562,13 @@ std::string CCFileUtils::getFileString(const char* pszFilePath)
 
 std::string CCFileUtils::getNewFilename(const std::string& pszFileName)
 {
-    std::string pszNewFileName = "";
-    // in Lookup Filename dictionary ?
-    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
-    if( NULL == fileNameFound || fileNameFound->length() == 0)
+    CCString* pszNewFileName = (CCString*)m_pFilenameLookupDict.getValue(CCString::create(pszFileName));
+    m_pFilenameLookupDict.getValue(CCString::create(pszFileName));
+    if(NULL == pszNewFileName || pszNewFileName->length() == 0)
     {
-        pszNewFileName = pszFileName;
+        return pszFileName;
     }
-    else
-    {
-        pszNewFileName = fileNameFound->m_sString;
-        //CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
-    }
-    return pszNewFileName;
+    return pszNewFileName->getCString();
 }
 
 std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
@@ -758,12 +757,11 @@ void CCFileUtils::removeAllPaths()
 {
 	m_searchPathArray.clear();
 }
-void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
+void CCFileUtils::setFilenameLookupDictionary(CAMap<CAObject*, CAObject*> &pFilenameLookupDict)
 {
     m_fullPathCache.clear();
-    CC_SAFE_RELEASE(m_pFilenameLookupDict);
+    m_pFilenameLookupDict.clear();
     m_pFilenameLookupDict = pFilenameLookupDict;
-    CC_SAFE_RETAIN(m_pFilenameLookupDict);
 }
 
 void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
@@ -771,17 +769,19 @@ void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
     std::string fullPath = this->fullPathForFilename(filename);
     if (fullPath.length() > 0)
     {
-        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(fullPath.c_str());
-        if (pDict)
+        CAMap<CAObject*, CAObject*> pDict = CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(fullPath.c_str());
+        if (!pDict.empty())
         {
-            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
-            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            CAObject* mapObj = pDict.getValue(CCString::create("metadata"));
+            CAMap<CAObject*, CAObject*>* pMetadata = (CAMap<CAObject*, CAObject*>*) (mapObj);
+            int version = ((CCString*)pMetadata->getValue(CCString::create("version")))->intValue();
             if (version != 1)
             {
                 CCLOG("CrossApp: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
                 return;
             }
-            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("filenames"));
+            CAMap<CAObject*, CAObject*>* mapTmp = (CAMap<CAObject*, CAObject*>*) (pDict.getValue(CCString::create("filenames")));
+            setFilenameLookupDictionary(*mapTmp);
         }
     }
 }

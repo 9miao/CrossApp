@@ -380,7 +380,7 @@ CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
 
 CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(pFileName);
+    return NULL;//CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(pFileName);
 }
 
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)

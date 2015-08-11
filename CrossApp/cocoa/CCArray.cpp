@@ -111,7 +111,7 @@ CCArray* CCArray::createWithContentsOfFile(const char* pFileName)
 
 CCArray* CCArray::createWithContentsOfFileThreadSafe(const char* pFileName)
 {
-    return CCFileUtils::sharedFileUtils()->createCCArrayWithContentsOfFile(pFileName);
+    return NULL;//CCFileUtils::sharedFileUtils()->createCCArrayWithContentsOfFile(pFileName);
 }
 
 bool CCArray::init()
