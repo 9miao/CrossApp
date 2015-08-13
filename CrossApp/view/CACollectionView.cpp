@@ -315,20 +315,9 @@ void CACollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 }
 
 void CACollectionView::reloadViewSizeData()
-{
-    m_rUsedCollectionCellRects.clear();
-    
-    m_vpUsedCollectionCells.clear();
-	m_mpUsedCollectionCells.clear();
-	m_rUsedCollectionCellRects.clear();
-    
-	m_pSelectedCollectionCells.clear();
-    
-	m_pSectionFooterViews.clear();
-	m_pSectionFooterViews.clear();
-	m_rSectionRects.clear();
-    
-    
+{    
+	clearData();
+
     m_nSections = m_pCollectionViewDataSource->numberOfSections(this);
     m_nRowsInSections.resize(m_nSections);
     for (unsigned int i=0; i<m_nSections; i++)
@@ -388,6 +377,32 @@ void CACollectionView::reloadViewSizeData()
     size.height = viewHeight;
     this->setViewSize(size);
 
+}
+
+void CACollectionView::clearData()
+{
+	m_rUsedCollectionCellRects.clear();
+
+	m_mpUsedCollectionCells.clear();
+	m_rUsedCollectionCellRects.clear();
+
+	m_pSelectedCollectionCells.clear();
+
+	m_pSectionHeaderViews.clear();
+	m_pSectionFooterViews.clear();
+	m_rSectionRects.clear();
+
+	for (int i = 0; i < m_vpUsedCollectionCells.size(); i++)
+	{
+		CACollectionViewCell* cell = m_vpUsedCollectionCells.at(i);
+		CC_CONTINUE_IF(cell == NULL);
+		m_mpFreedCollectionCells[cell->getReuseIdentifier()].pushBack(cell);
+		cell->removeFromSuperview();
+		cell->resetCollectionViewCell();
+	}
+	m_vpUsedCollectionCells.clear();
+
+	m_pHighlightedCollectionCells = NULL;
 }
 
 void CACollectionView::reloadData()
@@ -495,7 +510,6 @@ void CACollectionView::reloadData()
 		sectionRect.size.height = sectionFooterRect.origin.y
         + sectionFooterRect.size.height
         - sectionHeaderRect.origin.y;
-//		m_rSectionRects.push_back(sectionRect);
         m_rSectionRects[begin + i] = sectionRect;
 	}
     

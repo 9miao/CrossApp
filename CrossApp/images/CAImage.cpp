@@ -1313,7 +1313,9 @@ bool CAImage::initWithImageFile(const std::string& file)
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(file.c_str());
     unsigned long pSize = 0;
     unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &pSize);
-    return initWithImageData(data, pSize);
+    bool bRet = initWithImageData(data, pSize);
+	delete[]data;
+	return bRet;
 }
 
 bool CAImage::initWithImageFileThreadSafe(const std::string& fullPath)
@@ -1384,11 +1386,8 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
     {
         CC_BREAK_IF(! data || dataLen <= 0);
         
-        unsigned char* unpackedData = NULL;
-        unsigned long unpackedLen = 0;
-        
-        unpackedData = const_cast<unsigned char*>(data);
-        unpackedLen = dataLen;
+		unsigned char* unpackedData = const_cast<unsigned char*>(data);
+		unsigned long unpackedLen = dataLen;
         
         Format type = this->detectFormat(unpackedData, unpackedLen);
         
@@ -1419,15 +1418,8 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
             }
         }
         
-        //this->initWithRawData(m_pImageData, m_ePixelFormat, m_uPixelsWide, m_uPixelsHigh);
-
         this->convertToRawData();
         this->premultipliedImageData();
-        
-        if(unpackedData != data)
-        {
-            free(unpackedData);
-        }
     }
     while (0);
     return ret;

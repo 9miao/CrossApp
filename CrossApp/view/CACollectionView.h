@@ -105,6 +105,7 @@ public:
 
 	virtual bool init();
 
+	void clearData();
 	void reloadData();
 
 	CACollectionViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);

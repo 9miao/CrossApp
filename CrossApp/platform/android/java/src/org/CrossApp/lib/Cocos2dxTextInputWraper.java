@@ -43,7 +43,6 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		final TextView textField = this.mCocos2dxGLSurfaceView.getCocos2dxEditText();
 		final InputMethodManager imm = (InputMethodManager) textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 		return imm.isFullscreenMode();
-				//isFullscreenMode();
 	}
 
 	public void setOriginText(final String pOriginText) {
@@ -101,7 +100,8 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 	@Override
 	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) 
 	{
-		Log.d(TAG, "onEditorAction: "+pActionID+", "+pKeyEvent.getAction());
+		if (pKeyEvent == null)
+			return true;
 		
 		if (pActionID == EditorInfo.IME_ACTION_DONE) 
 		{
@@ -158,11 +158,5 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
         }
 		return true;
 	}
-	// ===========================================================
-	// Methods
-	// ===========================================================
 
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
 }
