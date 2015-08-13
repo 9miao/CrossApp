@@ -150,7 +150,7 @@ namespace gameswf
 		bool is_function() const;
 		inline bool is_bool() const { return m_type == BOOLEAN; }
 		inline bool is_string() const { return m_type == STRING; }
-		inline bool is_number() const { return m_type == NUMBER && isnan(m_number) == false; }
+		inline bool is_number() const { return m_type == NUMBER; }
 		inline bool is_object() const { return m_type == OBJECT; }
 		inline bool is_property() const { return m_type == PROPERTY; }
 		inline bool is_null() const { return m_type == OBJECT && m_object == NULL; }
