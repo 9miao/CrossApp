@@ -348,10 +348,13 @@ void CAView::setZOrder(int z)
     }
     else
     {
-        _setZOrder(z);
         if (m_pSuperview)
         {
             m_pSuperview->reorderSubview(this, z);
+        }
+        else
+        {
+            this->_setZOrder(z);
         }
     }
 }
