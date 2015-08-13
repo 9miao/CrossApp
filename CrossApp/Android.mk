@@ -8,13 +8,6 @@ LOCAL_MODULE_FILENAME := libCrossApp
 
 LOCAL_SRC_FILES := \
 CrossApp.cpp \
-actions/CCAction.cpp \
-actions/CCActionCamera.cpp \
-actions/CCActionEase.cpp \
-actions/CCActionInstant.cpp \
-actions/CCActionInterval.cpp \
-actions/CCActionManager.cpp \
-actions/CCActionTween.cpp \
 animation/CAViewAnimation.cpp \
 animation/CAAnimation.cpp \
 basics/CAApplication.cpp \

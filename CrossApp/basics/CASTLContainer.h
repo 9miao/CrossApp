@@ -15,6 +15,7 @@
 #include <map>
 #include <list>
 #include <algorithm>
+#include "CAObject.h"
 
 NS_CC_BEGIN
 
@@ -25,7 +26,7 @@ template<class T>
 class CAList;
 
 template<class T>
-class CAVector
+class CAVector:public CAObject
 {
 public:
 	typedef typename std::vector<T>::iterator iterator;
@@ -350,7 +351,7 @@ protected:
 };
 
 template <class T>
-class CAList
+class CAList:public CAObject
 {
 public:
 public:
@@ -621,7 +622,7 @@ protected:
 
 
 template <class T>
-class CADeque
+class CADeque:public CAObject
 {
 public:
 	typedef typename std::deque<T>::iterator iterator;
@@ -954,7 +955,7 @@ private:
 
 
 template <class K, class T>
-class CAMap
+class CAMap:public CAObject
 {
 public:
 	typedef typename std::map<K, T>::iterator iterator;
@@ -1010,6 +1011,22 @@ public:
         CC_SAFE_RETAIN(object);
 		_data[key] = object;
         return true;
+	}
+
+	void assign(K key, T object)
+	{
+		CC_SAFE_RETAIN(object);
+
+		iterator it = _data.find(key);
+		if (it == _data.end())
+		{
+			_data[key] = object;
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(it->second);
+			it->second = object;
+		}
 	}
 
 	size_t size() const

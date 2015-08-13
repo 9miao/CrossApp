@@ -2,7 +2,6 @@
 
 #include "CCFileUtils.h"
 #include "basics/CAApplication.h"
-#include "cocoa/CCDictionary.h"
 #include "cocoa/CCString.h"
 #include "CCSAXParser.h"
 #include "support/tinyxml2/tinyxml2.h"
@@ -42,41 +41,42 @@ class CCDictMaker : public CCSAXDelegator
 {
 public:
     CCSAXResult m_eResultType;
-    CCArray* m_pRootArray;
-    CCDictionary *m_pRootDict;
-    CCDictionary *m_pCurDict;
-    std::stack<CCDictionary*> m_tDictStack;
+    CAVector<CAObject*> m_pRootArray;
+    CAMap<CAObject*, CAObject*> m_pRootDict;
+    CAMap<CAObject*, CAObject*> m_pCurDict;
+    std::stack<CAMap<CAObject*, CAObject*>*> m_tDictStack;
     std::string m_sCurKey;   ///< parsed key
     std::string m_sCurValue; // parsed value
     CCSAXState m_tState;
-    CCArray* m_pArray;
+    CAVector<CAObject*> m_pArray;
 
-    std::stack<CCArray*> m_tArrayStack;
+    std::stack<CAVector<CAObject*>*> m_tArrayStack;
     std::stack<CCSAXState>  m_tStateStack;
 
 public:
     CCDictMaker()        
         : m_eResultType(SAX_RESULT_NONE),
-          m_pRootArray(NULL), 
-          m_pRootDict(NULL),
-          m_pCurDict(NULL),
-          m_tState(SAX_NONE),
-          m_pArray(NULL)
+          m_tState(SAX_NONE)
     {
+        m_pRootArray.clear();
+        m_pRootDict.clear();
+        m_pCurDict.clear();
+        m_pArray.clear();
     }
 
     ~CCDictMaker()
     {
     }
 
-    CCDictionary* dictionaryWithContentsOfFile(const char *pFileName)
+    CAMap<CAObject*, CAObject*> dictionaryWithContentsOfFile(const char *pFileName)
     {
         m_eResultType = SAX_RESULT_DICT;
         CCSAXParser parser;
 
         if (false == parser.init("UTF-8"))
         {
-            return NULL;
+            CAMap<CAObject*, CAObject*> emptyMap;
+            return emptyMap;
         }
         parser.setDelegator(this);
 
@@ -84,14 +84,15 @@ public:
         return m_pRootDict;
     }
 
-    CCArray* arrayWithContentsOfFile(const char* pFileName)
+    CAVector<CAObject*> arrayWithContentsOfFile(const char* pFileName)
     {
         m_eResultType = SAX_RESULT_ARRAY;
         CCSAXParser parser;
 
         if (false == parser.init("UTF-8"))
         {
-            return NULL;
+            CAVector<CAObject*> emptyVec;
+            return emptyVec;
         }
         parser.setDelegator(this);
 
@@ -106,12 +107,11 @@ public:
         std::string sName((char*)name);
         if( sName == "dict" )
         {
-            m_pCurDict = new CCDictionary();
-            if(m_eResultType == SAX_RESULT_DICT && m_pRootDict == NULL)
+            if(m_eResultType == SAX_RESULT_DICT && m_pRootDict.size() == 0)
             {
                 // Because it will call m_pCurDict->release() later, so retain here.
                 m_pRootDict = m_pCurDict;
-                m_pRootDict->retain();
+                m_pRootDict.retain();
             }
             m_tState = SAX_DICT;
 
@@ -124,21 +124,21 @@ public:
             if (SAX_ARRAY == preState)
             {
                 // add the dictionary into the array
-                m_pArray->addObject(m_pCurDict);
+                m_pArray.pushBack(&m_pCurDict);
             }
             else if (SAX_DICT == preState)
             {
                 // add the dictionary into the pre dictionary
                 CCAssert(! m_tDictStack.empty(), "The state is wrong!");
-                CCDictionary* pPreDict = m_tDictStack.top();
-                pPreDict->setObject(m_pCurDict, m_sCurKey.c_str());
+                CAMap<CAObject*, CAObject*>* pPreDict = m_tDictStack.top();
+                (*pPreDict).assign(&m_pCurDict, CCString::create(m_sCurKey));
             }
 
-            m_pCurDict->release();
+            //m_pCurDict.clear();
 
             // record the dict state
             m_tStateStack.push(m_tState);
-            m_tDictStack.push(m_pCurDict);
+            m_tDictStack.push(&m_pCurDict);
         }
         else if(sName == "key")
         {
@@ -159,11 +159,10 @@ public:
         else if (sName == "array")
         {
             m_tState = SAX_ARRAY;
-            m_pArray = new CCArray();
-            if (m_eResultType == SAX_RESULT_ARRAY && m_pRootArray == NULL)
+            if (m_eResultType == SAX_RESULT_ARRAY && m_pRootArray.size() == 0)
             {
                 m_pRootArray = m_pArray;
-                m_pRootArray->retain();
+                m_pRootArray.retain();
             }
             CCSAXState preState = SAX_NONE;
             if (! m_tStateStack.empty())
@@ -173,18 +172,18 @@ public:
 
             if (preState == SAX_DICT)
             {
-                m_pCurDict->setObject(m_pArray, m_sCurKey.c_str());
+                m_pCurDict.assign(&m_pArray, CCString::create(m_sCurKey));
             }
             else if (preState == SAX_ARRAY)
             {
                 CCAssert(! m_tArrayStack.empty(), "The state is wrong!");
-                CCArray* pPreArray = m_tArrayStack.top();
-                pPreArray->addObject(m_pArray);
+                CAVector<CAObject*>* pPreArray = m_tArrayStack.top();
+                (*pPreArray).pushBack(m_pArray);
             }
-            m_pArray->release();
+            //m_pArray.clear();
             // record the array state
             m_tStateStack.push(m_tState);
-            m_tArrayStack.push(m_pArray);
+            m_tArrayStack.push(&m_pArray);
         }
         else
         {
@@ -203,7 +202,7 @@ public:
             m_tDictStack.pop();
             if ( !m_tDictStack.empty())
             {
-                m_pCurDict = m_tDictStack.top();
+                m_pCurDict = *m_tDictStack.top();
             }
         }
         else if (sName == "array")
@@ -212,7 +211,7 @@ public:
             m_tArrayStack.pop();
             if (! m_tArrayStack.empty())
             {
-                m_pArray = m_tArrayStack.top();
+                m_pArray = *m_tArrayStack.top();
             }
         }
         else if (sName == "true")
@@ -220,11 +219,11 @@ public:
             CCString *str = new CCString("1");
             if (SAX_ARRAY == curState)
             {
-                m_pArray->addObject(str);
+                m_pArray.pushBack(str);
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(str, m_sCurKey.c_str());
+                m_pCurDict.assign(str, CCString::create(m_sCurKey));
             }
             str->release();
         }
@@ -233,11 +232,11 @@ public:
             CCString *str = new CCString("0");
             if (SAX_ARRAY == curState)
             {
-                m_pArray->addObject(str);
+                m_pArray.pushBack(str);
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(str, m_sCurKey.c_str());
+                m_pCurDict.assign(str, CCString::create(m_sCurKey));
             }
             str->release();
         }
@@ -247,11 +246,11 @@ public:
 
             if (SAX_ARRAY == curState)
             {
-                m_pArray->addObject(pStrValue);
+                m_pArray.pushBack(pStrValue);
             }
             else if (SAX_DICT == curState)
             {
-                m_pCurDict->setObject(pStrValue, m_sCurKey.c_str());
+                m_pCurDict.assign(pStrValue, CCString::create(m_sCurKey));
             }
 
             pStrValue->release();
@@ -296,14 +295,14 @@ public:
     }
 };
 
-CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename)
+CAMap<CAObject*, CAObject*> CCFileUtils::createCAMapWithContentsOfFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     CCDictMaker tMaker;
     return tMaker.dictionaryWithContentsOfFile(fullPath.c_str());
 }
 
-CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename)
+CAVector<CAObject*> CCFileUtils::createCCVectorWithContentsOfFile(const std::string& filename)
 {
     std::string fullPath = fullPathForFilename(filename.c_str());
     CCDictMaker tMaker;
@@ -313,15 +312,15 @@ CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filenam
 /*
  * forward statement
  */
-static tinyxml2::XMLElement* generateElementForArray(CrossApp::CCArray *array, tinyxml2::XMLDocument *pDoc);
-static tinyxml2::XMLElement* generateElementForDict(CrossApp::CCDictionary *dict, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForArray(CAVector<CAObject*> *array, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForDict(CAMap<CAObject*, CAObject*> *dict, tinyxml2::XMLDocument *pDoc);
 
 /*
  * Use tinyxml2 to write plist files
  */
-bool CCFileUtils::writeToFile(CrossApp::CCDictionary *dict, const std::string &fullPath)
+bool CCFileUtils::writeToFile(CAMap<CAObject*, CAObject*> *dict, const std::string &fullPath)
 {
-    //CCLOG("tinyxml2 CCDictionary %d writeToFile %s", dict->m_uID, fullPath.c_str());
+    //CCLOG("tinyxml2 CAMap %d writeToFile %s", dict->m_uID, fullPath.c_str());
     tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
     if (NULL == pDoc)
         return false;
@@ -374,12 +373,12 @@ static tinyxml2::XMLElement* generateElementForObject(CrossApp::CAObject *object
         return node;
     }
     
-    // object is CCArray
-    if (CCArray *array = dynamic_cast<CCArray *>(object))
+    // object is CAVector
+    if (CAVector<CAObject*> *array = dynamic_cast<CAVector<CAObject*> *>(object))
         return generateElementForArray(array, pDoc);
     
-    // object is CCDictionary
-    if (CCDictionary *innerDict = dynamic_cast<CCDictionary *>(object))
+    // object is CAMap
+    if (CAMap<CAObject*, CAObject*> *innerDict = dynamic_cast<CAMap<CAObject*, CAObject*> *>(object))
         return generateElementForDict(innerDict, pDoc);
     
     CCLOG("This type cannot appear in property list");
@@ -387,14 +386,16 @@ static tinyxml2::XMLElement* generateElementForObject(CrossApp::CAObject *object
 }
 
 /*
- * Generate tinyxml2::XMLElement for CCDictionary through a tinyxml2::XMLDocument
+ * Generate tinyxml2::XMLElement for CAMap through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForDict(CrossApp::CCDictionary *dict, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForDict(CAMap<CAObject*, CAObject*> *dict, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
     
     CCDictElement *dictElement = NULL;
-    CCDICT_FOREACH(dict, dictElement)
+    
+    CAMap<CAObject* , CAObject*>::iterator itr = dict->begin();
+    for(; itr != dict->end(); itr++)
     {
         tinyxml2::XMLElement* tmpNode = pDoc->NewElement("key");
         rootNode->LinkEndChild(tmpNode);
@@ -410,15 +411,16 @@ static tinyxml2::XMLElement* generateElementForDict(CrossApp::CCDictionary *dict
 }
 
 /*
- * Generate tinyxml2::XMLElement for CCArray through a tinyxml2::XMLDocument
+ * Generate tinyxml2::XMLElement for CAVector through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForArray(CrossApp::CCArray *array, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForArray(CAVector<CAObject*> *array, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
     
     CAObject *object = NULL;
-    CCARRAY_FOREACH(array, object)
+    for(int i=0; i < array->size(); i++)
     {
+        object = array->at(i);
         tinyxml2::XMLElement *element = generateElementForObject(object, pDoc);
         if (element)
             rootNode->LinkEndChild(element);
@@ -431,9 +433,15 @@ static tinyxml2::XMLElement* generateElementForArray(CrossApp::CCArray *array, t
 NS_CC_BEGIN
 
 /* The subclass CCFileUtilsIOS and CCFileUtilsMac should override these two method. */
-CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
-bool CCFileUtils::writeToFile(CrossApp::CCDictionary *dict, const std::string &fullPath) {return NULL;}
-CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename) {return NULL;}
+CAMap<CAObject*, CAObject*> CCFileUtils::createCAMapWithContentsOfFile(const std::string& filename) {
+    CAMap<CAObject*, CAObject*> FileMap;
+    return FileMap;
+}
+bool CCFileUtils::writeToFile(CAMap<CAObject*, CAObject*> *dict, const std::string &fullPath) {return NULL;}
+CAVector<CAObject*> CCFileUtils::createCCVectorWithContentsOfFile(const std::string& filename) {
+    CAVector<CAObject*> fileVec;
+    return fileVec;
+}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
@@ -446,13 +454,12 @@ void CCFileUtils::purgeFileUtils()
 }
 
 CCFileUtils::CCFileUtils()
-: m_pFilenameLookupDict(NULL)
 {
 }
 
 CCFileUtils::~CCFileUtils()
 {
-    CC_SAFE_RELEASE(m_pFilenameLookupDict);
+    m_pFilenameLookupDict.clear();
 }
 
 bool CCFileUtils::init()
@@ -557,19 +564,13 @@ std::string CCFileUtils::getFileString(const char* pszFilePath)
 
 std::string CCFileUtils::getNewFilename(const std::string& pszFileName)
 {
-    std::string pszNewFileName = "";
-    // in Lookup Filename dictionary ?
-    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
-    if( NULL == fileNameFound || fileNameFound->length() == 0)
+    CCString* pszNewFileName = (CCString*)m_pFilenameLookupDict.getValue(CCString::create(pszFileName));
+    m_pFilenameLookupDict.getValue(CCString::create(pszFileName));
+    if(NULL == pszNewFileName || pszNewFileName->length() == 0)
     {
-        pszNewFileName = pszFileName;
+        return pszFileName;
     }
-    else
-    {
-        pszNewFileName = fileNameFound->m_sString;
-        //CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
-    }
-    return pszNewFileName;
+    return pszNewFileName->getCString();
 }
 
 std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
@@ -758,12 +759,11 @@ void CCFileUtils::removeAllPaths()
 {
 	m_searchPathArray.clear();
 }
-void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
+void CCFileUtils::setFilenameLookupDictionary(CAMap<CAObject*, CAObject*> &pFilenameLookupDict)
 {
     m_fullPathCache.clear();
-    CC_SAFE_RELEASE(m_pFilenameLookupDict);
+    m_pFilenameLookupDict.clear();
     m_pFilenameLookupDict = pFilenameLookupDict;
-    CC_SAFE_RETAIN(m_pFilenameLookupDict);
 }
 
 void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
@@ -771,17 +771,19 @@ void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
     std::string fullPath = this->fullPathForFilename(filename);
     if (fullPath.length() > 0)
     {
-        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(fullPath.c_str());
-        if (pDict)
+        CAMap<CAObject*, CAObject*> pDict = CCFileUtils::sharedFileUtils()->createCAMapWithContentsOfFile(fullPath.c_str());
+        if (!pDict.empty())
         {
-            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
-            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            CAObject* mapObj = pDict.getValue(CCString::create("metadata"));
+            CAMap<CAObject*, CAObject*>* pMetadata = (CAMap<CAObject*, CAObject*>*) (mapObj);
+            int version = ((CCString*)pMetadata->getValue(CCString::create("version")))->intValue();
             if (version != 1)
             {
                 CCLOG("CrossApp: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
                 return;
             }
-            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("filenames"));
+            CAMap<CAObject*, CAObject*>* mapTmp = (CAMap<CAObject*, CAObject*>*) (pDict.getValue(CCString::create("filenames")));
+            setFilenameLookupDictionary(*mapTmp);
         }
     }
 }

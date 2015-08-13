@@ -8,11 +8,10 @@
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "ccTypeInfo.h"
+#include "CrossApp.h"
 
 NS_CC_BEGIN
 
-class CCDictionary;
-class CCArray;
 /**
  * @addtogroup platform
  * @{
@@ -21,8 +20,6 @@ class CCArray;
 //! @brief  Helper class to handle file operations
 class CC_DLL CCFileUtils : public TypeInfo
 {
-    friend class CCArray;
-    friend class CCDictionary;
 public:
     /**
      *  Returns an unique ID for this class.
@@ -155,7 +152,7 @@ public:
      *  @since v2.1
      *  @lua NA
      */
-    virtual void setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict);
+    virtual void setFilenameLookupDictionary(CAMap<CAObject*, CAObject*> &pFilenameLookupDict);
     
     /**
      *  Gets full path from a file name and the path of the reletive file.
@@ -339,19 +336,19 @@ protected:
      *  Creates a dictionary by the contents of a file.
      *  @note This method is used internally.
      */
-    virtual CCDictionary* createCCDictionaryWithContentsOfFile(const std::string& filename);
+    virtual CAMap<CAObject*, CAObject*> createCAMapWithContentsOfFile(const std::string& filename);
     
     /**
      *  Write a dictionary to a plist file.
      *  @note This method is used internally.
      */
-    virtual bool writeToFile(CCDictionary *dict, const std::string& fullPath);
+    virtual bool writeToFile(CAMap<CAObject*, CAObject*> *dict, const std::string& fullPath);
     
     /**
      *  Creates an array by the contents of a file.
      *  @note This method is used internally.
      */
-    virtual CCArray* createCCArrayWithContentsOfFile(const std::string& filename);
+    virtual CAVector<CAObject*> createCCVectorWithContentsOfFile(const std::string& filename);
     
     /** Dictionary used to lookup filenames based on a key.
      *  It is used internally by the following methods:
@@ -360,9 +357,9 @@ protected:
      *
      *  @since v2.1
      */
-    CCDictionary* m_pFilenameLookupDict;
-    
-    /** 
+    CAMap<CAObject*, CAObject*> m_pFilenameLookupDict;
+
+    /**
      *  The vector contains resolution folders.
      *  The lower index of the element in this vector, the higher priority for this resolution directory.
      */
