@@ -125,7 +125,7 @@ void sendLocalNotification(const char* title,const char* content,unsigned long t
         //显示在icon上的红色圈中的数子
         notification.applicationIconBadgeNumber = 1;
         //设置userinfo 方便在之后需要撤销的时候使用
-        NSDictionary *info = [NSDictionary dictionaryWithObject:@"name"forKey:@"key"];
+        NSDictionary *info = [NSDictionary dictionaryWithObject:@"name" forKey:@"key"];
         notification.userInfo = info;
         //添加推送到UIApplication
         UIApplication *app = [UIApplication sharedApplication];

@@ -91,13 +91,6 @@
 		04EABB1D1956DAEA00198A8E /* CAKeypadDispatcher.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FBD1956CE2500198A8E /* CAKeypadDispatcher.cpp */; };
 		04EABB1E1956DAEA00198A8E /* CATouch.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FC01956CE2500198A8E /* CATouch.cpp */; };
 		04EABB1F1956DAEA00198A8E /* CATouchDispatcher.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FC21956CE2500198A8E /* CATouchDispatcher.cpp */; };
-		04EABB2A1956DAEA00198A8E /* CCAction.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A355158F2ADE00E66CFE /* CCAction.cpp */; };
-		04EABB2B1956DAEA00198A8E /* CCActionCamera.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A357158F2ADE00E66CFE /* CCActionCamera.cpp */; };
-		04EABB2C1956DAEA00198A8E /* CCActionEase.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A35B158F2ADE00E66CFE /* CCActionEase.cpp */; };
-		04EABB2D1956DAEA00198A8E /* CCActionInstant.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A361158F2ADE00E66CFE /* CCActionInstant.cpp */; };
-		04EABB2E1956DAEA00198A8E /* CCActionInterval.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A363158F2ADE00E66CFE /* CCActionInterval.cpp */; };
-		04EABB2F1956DAEA00198A8E /* CCActionManager.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A365158F2ADE00E66CFE /* CCActionManager.cpp */; };
-		04EABB301956DAEA00198A8E /* CCActionTween.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A36D158F2ADE00E66CFE /* CCActionTween.cpp */; };
 		04EABB321956DAEA00198A8E /* CCArray.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A382158F2ADE00E66CFE /* CCArray.cpp */; };
 		04EABB341956DAEA00198A8E /* CCDictionary.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A386158F2ADE00E66CFE /* CCDictionary.cpp */; };
 		04EABB351956DAEA00198A8E /* CCNS.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A38B158F2ADE00E66CFE /* CCNS.cpp */; };
@@ -107,20 +100,6 @@
 		154269DC15B5653000712A7F /* CANotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154269DA15B5653000712A7F /* CANotificationCenter.cpp */; };
 		154269DD15B5653000712A7F /* CANotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 154269DB15B5653000712A7F /* CANotificationCenter.h */; };
 		1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
-		1551A628158F2ADE00E66CFE /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A355158F2ADE00E66CFE /* CCAction.cpp */; };
-		1551A629158F2ADE00E66CFE /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A356158F2ADE00E66CFE /* CCAction.h */; };
-		1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A357158F2ADE00E66CFE /* CCActionCamera.cpp */; };
-		1551A62B158F2ADE00E66CFE /* CCActionCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A358158F2ADE00E66CFE /* CCActionCamera.h */; };
-		1551A62E158F2ADE00E66CFE /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A35B158F2ADE00E66CFE /* CCActionEase.cpp */; };
-		1551A62F158F2ADE00E66CFE /* CCActionEase.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A35C158F2ADE00E66CFE /* CCActionEase.h */; };
-		1551A634158F2ADE00E66CFE /* CCActionInstant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A361158F2ADE00E66CFE /* CCActionInstant.cpp */; };
-		1551A635158F2ADE00E66CFE /* CCActionInstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A362158F2ADE00E66CFE /* CCActionInstant.h */; };
-		1551A636158F2ADE00E66CFE /* CCActionInterval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A363158F2ADE00E66CFE /* CCActionInterval.cpp */; };
-		1551A637158F2ADE00E66CFE /* CCActionInterval.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A364158F2ADE00E66CFE /* CCActionInterval.h */; };
-		1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A365158F2ADE00E66CFE /* CCActionManager.cpp */; };
-		1551A639158F2ADE00E66CFE /* CCActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A366158F2ADE00E66CFE /* CCActionManager.h */; };
-		1551A640158F2ADE00E66CFE /* CCActionTween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A36D158F2ADE00E66CFE /* CCActionTween.cpp */; };
-		1551A641158F2ADE00E66CFE /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A36E158F2ADE00E66CFE /* CCActionTween.h */; };
 		1551A652158F2ADE00E66CFE /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A382158F2ADE00E66CFE /* CCArray.cpp */; };
 		1551A653158F2ADE00E66CFE /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A383158F2ADE00E66CFE /* CCArray.h */; };
 		1551A656158F2ADE00E66CFE /* CCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A386158F2ADE00E66CFE /* CCDictionary.cpp */; };
@@ -745,20 +724,6 @@
 		154269DB15B5653000712A7F /* CANotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CANotificationCenter.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libCrossApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCrossApp.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1551A355158F2ADE00E66CFE /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
-		1551A356158F2ADE00E66CFE /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
-		1551A357158F2ADE00E66CFE /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
-		1551A358158F2ADE00E66CFE /* CCActionCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCamera.h; sourceTree = "<group>"; };
-		1551A35B158F2ADE00E66CFE /* CCActionEase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEase.cpp; sourceTree = "<group>"; };
-		1551A35C158F2ADE00E66CFE /* CCActionEase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEase.h; sourceTree = "<group>"; };
-		1551A361158F2ADE00E66CFE /* CCActionInstant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionInstant.cpp; sourceTree = "<group>"; };
-		1551A362158F2ADE00E66CFE /* CCActionInstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionInstant.h; sourceTree = "<group>"; };
-		1551A363158F2ADE00E66CFE /* CCActionInterval.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionInterval.cpp; sourceTree = "<group>"; };
-		1551A364158F2ADE00E66CFE /* CCActionInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionInterval.h; sourceTree = "<group>"; };
-		1551A365158F2ADE00E66CFE /* CCActionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionManager.cpp; sourceTree = "<group>"; };
-		1551A366158F2ADE00E66CFE /* CCActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionManager.h; sourceTree = "<group>"; };
-		1551A36D158F2ADE00E66CFE /* CCActionTween.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTween.cpp; sourceTree = "<group>"; };
-		1551A36E158F2ADE00E66CFE /* CCActionTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTween.h; sourceTree = "<group>"; };
 		1551A382158F2ADE00E66CFE /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		1551A383158F2ADE00E66CFE /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		1551A386158F2ADE00E66CFE /* CCDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDictionary.cpp; sourceTree = "<group>"; };
@@ -1571,7 +1536,6 @@
 				04EA9F9F1956CE2500198A8E /* control */,
 				04EA9FB21956CE2500198A8E /* controller */,
 				04EA9FB71956CE2500198A8E /* dispatcher */,
-				1551A354158F2ADE00E66CFE /* actions */,
 				1551A37F158F2ADE00E66CFE /* cocoa */,
 				1551A3F0158F2ADE00E66CFE /* kazmath */,
 				B0B553CD193485BE0065053D /* images */,
@@ -1582,27 +1546,6 @@
 			);
 			name = CrossApp;
 			path = ..;
-			sourceTree = "<group>";
-		};
-		1551A354158F2ADE00E66CFE /* actions */ = {
-			isa = PBXGroup;
-			children = (
-				1551A355158F2ADE00E66CFE /* CCAction.cpp */,
-				1551A356158F2ADE00E66CFE /* CCAction.h */,
-				1551A357158F2ADE00E66CFE /* CCActionCamera.cpp */,
-				1551A358158F2ADE00E66CFE /* CCActionCamera.h */,
-				1551A35B158F2ADE00E66CFE /* CCActionEase.cpp */,
-				1551A35C158F2ADE00E66CFE /* CCActionEase.h */,
-				1551A361158F2ADE00E66CFE /* CCActionInstant.cpp */,
-				1551A362158F2ADE00E66CFE /* CCActionInstant.h */,
-				1551A363158F2ADE00E66CFE /* CCActionInterval.cpp */,
-				1551A364158F2ADE00E66CFE /* CCActionInterval.h */,
-				1551A365158F2ADE00E66CFE /* CCActionManager.cpp */,
-				1551A366158F2ADE00E66CFE /* CCActionManager.h */,
-				1551A36D158F2ADE00E66CFE /* CCActionTween.cpp */,
-				1551A36E158F2ADE00E66CFE /* CCActionTween.h */,
-			);
-			path = actions;
 			sourceTree = "<group>";
 		};
 		1551A37F158F2ADE00E66CFE /* cocoa */ = {
@@ -2456,19 +2399,14 @@
 				B0596B391976343300B1E8CB /* easy.h in Headers */,
 				B0596AE4197629BE00B1E8CB /* ftgzip.h in Headers */,
 				3EA061661B147D1C00183C30 /* tu_config.h in Headers */,
-				04EABB2A1956DAEA00198A8E /* CCAction.cpp in Headers */,
-				04EABB2B1956DAEA00198A8E /* CCActionCamera.cpp in Headers */,
-				04EABB2C1956DAEA00198A8E /* CCActionEase.cpp in Headers */,
 				3EA061C61B147D1C00183C30 /* gameswf_as_sprite.h in Headers */,
 				B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */,
 				B0ADAE9A1B2E7F1B00BE8FA3 /* CAWebView.h in Headers */,
 				B0596AE9197629BE00B1E8CB /* ftlzw.h in Headers */,
 				B0ADAE2A1B2E7EFB00BE8FA3 /* CAFlash.h in Headers */,
 				B0ADAE8A1B2E7F1B00BE8FA3 /* CARenderImage.h in Headers */,
-				04EABB2D1956DAEA00198A8E /* CCActionInstant.cpp in Headers */,
 				B0596B3A1976343300B1E8CB /* mprintf.h in Headers */,
 				B0C512C819A2DF9F00E6934B /* CAFTFontCache.h in Headers */,
-				04EABB2E1956DAEA00198A8E /* CCActionInterval.cpp in Headers */,
 				3EA061861B147D1C00183C30 /* gameswf.h in Headers */,
 				B0ADAE6C1B2E7F1B00BE8FA3 /* CABatchView.h in Headers */,
 				3EA0620C1B147D1C00183C30 /* gameswf_value.h in Headers */,
@@ -2479,9 +2417,7 @@
 				B0A11DBE1AE8E0B300933BF6 /* gif_lib.h in Headers */,
 				3EA061F81B147D1C00183C30 /* gameswf_root.h in Headers */,
 				B0596B1B197629BE00B1E8CB /* svttglyf.h in Headers */,
-				04EABB2F1956DAEA00198A8E /* CCActionManager.cpp in Headers */,
 				B0596B02197629BE00B1E8CB /* ftobjs.h in Headers */,
-				04EABB301956DAEA00198A8E /* CCActionTween.cpp in Headers */,
 				04EABB321956DAEA00198A8E /* CCArray.cpp in Headers */,
 				B0596B0B197629BE00B1E8CB /* pshints.h in Headers */,
 				3EA061501B147D1C00183C30 /* dlmalloc.h in Headers */,
@@ -2496,24 +2432,17 @@
 				3EA061B21B147D1C00183C30 /* as_netstream.h in Headers */,
 				3EA061961B147D1C00183C30 /* as_color_transform.h in Headers */,
 				B0596B25197629BE00B1E8CB /* ttunpat.h in Headers */,
-				1551A629158F2ADE00E66CFE /* CCAction.h in Headers */,
 				B0B553D9193485BE0065053D /* CAImageCache.h in Headers */,
 				B0596AE2197629BE00B1E8CB /* ftglyph.h in Headers */,
-				1551A62B158F2ADE00E66CFE /* CCActionCamera.h in Headers */,
 				3EA061591B147D1C00183C30 /* image.h in Headers */,
 				B0596B0F197629BE00B1E8CB /* svgxval.h in Headers */,
 				B0596B01197629BE00B1E8CB /* ftmemory.h in Headers */,
-				1551A62F158F2ADE00E66CFE /* CCActionEase.h in Headers */,
 				3EA061881B147D1C00183C30 /* gameswf_abc.h in Headers */,
 				B0596AD8197629BE00B1E8CB /* ftbdf.h in Headers */,
-				1551A635158F2ADE00E66CFE /* CCActionInstant.h in Headers */,
-				1551A637158F2ADE00E66CFE /* CCActionInterval.h in Headers */,
 				B0596B12197629BE00B1E8CB /* svotval.h in Headers */,
 				B0596B10197629BE00B1E8CB /* svkern.h in Headers */,
-				1551A639158F2ADE00E66CFE /* CCActionManager.h in Headers */,
 				B0596B09197629BE00B1E8CB /* internal.h in Headers */,
 				B0A11DBD1AE8E0B300933BF6 /* gif_hash.h in Headers */,
-				1551A641158F2ADE00E66CFE /* CCActionTween.h in Headers */,
 				3EA061AA1B147D1C00183C30 /* as_mcloader.h in Headers */,
 				3EA061DB1B147D1C00183C30 /* gameswf_fontlib.h in Headers */,
 				1551A653158F2ADE00E66CFE /* CCArray.h in Headers */,
@@ -2865,26 +2794,19 @@
 				3EA0616E1B147D1C00183C30 /* tu_gc_test.cpp in Sources */,
 				3EA061521B147D1C00183C30 /* ear_clip_triangulate_float.cpp in Sources */,
 				B0596A581976287B00B1E8CB /* CAFreeTypeFont.cpp in Sources */,
-				1551A628158F2ADE00E66CFE /* CCAction.cpp in Sources */,
 				B0ADAE951B2E7F1B00BE8FA3 /* CATextView.cpp in Sources */,
 				3EA0619B1B147D1C00183C30 /* as_flash.cpp in Sources */,
 				B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */,
-				1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */,
 				3EA061B91B147D1C00183C30 /* as_sharedobject.cpp in Sources */,
 				B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */,
-				1551A62E158F2ADE00E66CFE /* CCActionEase.cpp in Sources */,
-				1551A634158F2ADE00E66CFE /* CCActionInstant.cpp in Sources */,
 				372C37F21A03799E0010A376 /* CAVideoPlayerView.cpp in Sources */,
-				1551A636158F2ADE00E66CFE /* CCActionInterval.cpp in Sources */,
 				3EA061C51B147D1C00183C30 /* gameswf_as_sprite.cpp in Sources */,
 				3EA0618F1B147D1C00183C30 /* as_broadcaster.cpp in Sources */,
-				1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */,
 				B0ADAE991B2E7F1B00BE8FA3 /* CAWebView.cpp in Sources */,
 				3EA061EA1B147D1C00183C30 /* gameswf_morph2.cpp in Sources */,
 				3EA0614F1B147D1C00183C30 /* dlmalloc.c in Sources */,
 				3EA061651B147D1C00183C30 /* triangulate_sint32.cpp in Sources */,
 				3EA061951B147D1C00183C30 /* as_color_transform.cpp in Sources */,
-				1551A640158F2ADE00E66CFE /* CCActionTween.cpp in Sources */,
 				3EA061C31B147D1C00183C30 /* as_xmlsocket.cpp in Sources */,
 				B0ADAE7F1B2E7F1B00BE8FA3 /* CALabelStyle.cpp in Sources */,
 				3EA061C91B147D1C00183C30 /* gameswf_avm2_jit.cpp in Sources */,
@@ -3110,6 +3032,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -3127,7 +3051,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
 			};
@@ -3138,6 +3062,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -3152,7 +3078,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
@@ -3162,7 +3088,7 @@
 		1551A34D158F2AB200E66CFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/cocos2dx.dst;
+				DSTROOT = "/tmp/$(PROJECT_NAME).dst";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3204,7 +3130,7 @@
 		1551A34E158F2AB200E66CFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/cocos2dx.dst;
+				DSTROOT = "/tmp/$(PROJECT_NAME).dst";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (

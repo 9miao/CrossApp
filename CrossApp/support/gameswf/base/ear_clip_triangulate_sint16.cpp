@@ -11,11 +11,11 @@
 
 namespace ear_clip_triangulate {
 	void compute(
-		array<sint16>* results,
+		swf_array<sint16>* results,
 		int path_count,
-		const array<sint16> paths[],
+		const swf_array<sint16> paths[],
 		int debug_halt_step,
-		array<sint16>* debug_edges)
+		swf_array<sint16>* debug_edges)
 	{
 		ear_clip_triangulate::compute_triangulation<sint16>(results, path_count, paths, debug_halt_step, debug_edges);
 	}

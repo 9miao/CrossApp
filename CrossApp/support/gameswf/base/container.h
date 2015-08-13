@@ -18,7 +18,7 @@
 #include <string.h>	// for strcmp and friends
 #include <new>	// for placement new
 
-// If you prefer STL implementations of array<> (i.e. std::vector) and
+// If you prefer STL implementations of swf_array<> (i.e. std::vector) and
 // hash<> (i.e. std::hash_map) instead of home cooking, then put
 // -D_TU_USE_STL=1 in your compiler flags, or do it in tu_config.h, or do
 // it right here:
@@ -71,7 +71,7 @@ public:
 #include <string>
 
 
-// array<> is much like std::vector<>
+// swf_array<> is much like std::vector<>
 //
 // @@ move this towards a strict subset of std::vector ?  Compatibility is good.
 template<class T> class array : public std::vector<T>
@@ -79,7 +79,7 @@ template<class T> class array : public std::vector<T>
 public:
 	int	size() const { return (int) std::vector<T>::size(); }
 
-	void	append(const array<T>& other)
+	void	append(const swf_array<T>& other)
 	// Append the given data to our array.
 	{
 		std::vector<T>::insert(end(), other.begin(), other.end());
@@ -192,19 +192,19 @@ public:
 
 
 template<class T>
-class array {
-// Resizable array.  Don't put anything in here that can't be moved
+class swf_array {
+// Resizable swf_array.  Don't put anything in here that can't be moved
 // around by bitwise copy.  Don't keep the address of an element; the
-// array contents will move around as it gets resized.
+// swf_array contents will move around as it gets resized.
 //
 // Default constructor and destructor get called on the elements as
-// they are added or removed from the active part of the array.
+// they are added or removed from the active part of the swf_array.
 public:
 	typedef T value_type;
 
-	array() : m_buffer(0), m_size(0), m_buffer_size(0) {}
-	array(int size_hint) : m_buffer(0), m_size(0), m_buffer_size(0) { resize(size_hint); }
-	array(const array<T>& a)
+	swf_array() : m_buffer(0), m_size(0), m_buffer_size(0) {}
+	swf_array(int size_hint) : m_buffer(0), m_size(0), m_buffer_size(0) { resize(size_hint); }
+	swf_array(const swf_array<T>& a)
 		:
 		m_buffer(0),
 		m_size(0),
@@ -212,17 +212,17 @@ public:
 	{
 		operator=(a);
 	}
-	~array() {
+	~swf_array() {
 		clear();
 	}
 
-	// Basic array access.
+	// Basic swf_array access.
 	T&	operator[](int index) { assert(index >= 0 && index < m_size); return m_buffer[index]; }
 	const T&	operator[](int index) const { assert(index >= 0 && index < m_size); return m_buffer[index]; }
 	int	size() const { return m_size; }
 
 	void	push_back(const T& val)
-	// Insert the given element at the end of the array.
+	// Insert the given element at the end of the swf_array.
 	{
 		// DO NOT pass elements of your own vector into
 		// push_back()!  Since we're using references,
@@ -256,8 +256,8 @@ public:
 		resize(0);
 	}
 
-	void	operator=(const array<T>& a)
-	// Array copy.  Copies the contents of a into this array.
+	void	operator=(const swf_array<T>& a)
+	// swf_array copy.  Copies the contents of a into this swf_array.
 	{
 		resize(a.size());
 		for (int i = 0; i < m_size; i++) {
@@ -267,7 +267,7 @@ public:
 
 
 	void	remove(int index)
-	// Removing an element from the array is an expensive operation!
+	// Removing an element from the swf_array is an expensive operation!
 	// It compacts only after removing the last element.
 	{
 		assert(index >= 0 && index < m_size);
@@ -304,15 +304,15 @@ public:
 	}
 
 
-	void	append(const array<T>& other)
-	// Append the given data to our array.
+	void	append(const swf_array<T>& other)
+	// Append the given data to our swf_array.
 	{
 		append(other.m_buffer, other.size());
 	}
 
 
 	void	append(const T other[], int count)
-	// Append the given data to our array.
+	// Append the given data to our swf_array.
 	{
 		if (count > 0)
 		{
@@ -389,8 +389,8 @@ public:
 		}			
 	}
 
-	void	transfer_members(array<T>* a)
-	// UNSAFE!  Low-level utility function: replace this array's
+	void	transfer_members(swf_array<T>* a)
+	// UNSAFE!  Low-level utility function: replace this swf_array's
 	// members with a's members.
 	{
 		m_buffer = a->m_buffer;
@@ -438,7 +438,7 @@ class shared_array {
 public:
 	shared_array() : m_buffer(0), m_size(0), m_buffer_size(0) {}
 	shared_array(int size_hint) : m_buffer(0), m_size(0), m_buffer_size(0) { resize(size_hint); }
-	shared_array(const shared_array<T>& a)
+	shared_array(const shared_swf_array<T>& a)
 		:
 		m_buffer(0),
 		m_buffer(0),
@@ -490,7 +490,7 @@ public:
 		resize( 0 );
 	}
 
-	void	operator=(const shared_array<T>& a)
+	void	operator=(const shared_swf_array<T>& a)
 	// Array copy.  Copies the contents of a into this array.
 	{
 
@@ -545,7 +545,7 @@ public:
 	}
 
 
-	void	append(const shared_array<T>& other)
+	void	append(const shared_swf_array<T>& other)
 	// Append the given data to our array.
 	{
 		append(other.m_buffer, other.size());

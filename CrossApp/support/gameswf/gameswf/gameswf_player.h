@@ -17,7 +17,7 @@
 
 namespace gameswf
 {
-	typedef exported_module as_object* (*gameswf_module_init)(player* player, const array<as_value>& params);
+	typedef exported_module as_object* (*gameswf_module_init)(player* player, const swf_array<as_value>& params);
 
 	as_value	get_property(as_object* obj, int prop_number);
 	void	set_property(as_object* obj, int prop_number, const as_value& val);

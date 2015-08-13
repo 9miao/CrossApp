@@ -508,7 +508,7 @@ struct grid_index_box
 		assert(bound.min.y <= bound.max.y);
 
 		// Allocate the grid.
-		m_grid = new array<grid_entry_t*>[x_cells * y_cells];
+		m_grid = new swf_array<grid_entry_t*>[x_cells * y_cells];
 	}
 
 	// Constructor that picks good values for x_cells and y_cells,
@@ -527,7 +527,7 @@ struct grid_index_box
 		assert(m_x_cells > 0 && m_y_cells > 0);
 		assert(bound.min.x <= bound.max.x);
 		assert(bound.min.y <= bound.max.y);
-		m_grid = new array<grid_entry_t*>[m_x_cells * m_y_cells];
+		m_grid = new swf_array<grid_entry_t*>[m_x_cells * m_y_cells];
 	}
 
 	~grid_index_box()
@@ -535,7 +535,7 @@ struct grid_index_box
 		// Need to delete all entries (be careful to only
 		// delete each entry once, even though entries may be
 		// repeated many times).
-		array<grid_entry_t*>&	cell_array = m_grid[0];
+		swf_array<grid_entry_t*>&	cell_array = m_grid[0];
 		for (int i = 0, n = cell_array.size(); i < n; i++)
 		{
 			grid_entry_t*	e = cell_array[i];
@@ -627,7 +627,7 @@ struct grid_index_box
 		// element, and return true.
 		{
 			int	query_id = m_index->get_query_id();
-			array<grid_entry_t*>*	cell_array = m_index->get_cell(m_current_cell_x, m_current_cell_y);
+			swf_array<grid_entry_t*>*	cell_array = m_index->get_cell(m_current_cell_x, m_current_cell_y);
 
 			while (++m_current_cell_array_index < cell_array->size())
 			{
@@ -691,7 +691,7 @@ struct grid_index_box
 			int	cell_count = m_x_cells * m_y_cells;
 			for (int i = 0; i < cell_count; i++)
 			{
-				array<grid_entry_t*>*	cell_array = &m_grid[i];
+				swf_array<grid_entry_t*>*	cell_array = &m_grid[i];
 				for (int j = 0, n = cell_array->size(); j < n; j++)
 				{
 					(*cell_array)[j]->m_last_query_id = 0;
@@ -744,7 +744,7 @@ struct grid_index_box
 		// Add it to all cells it overlaps with.
 		for (int i = 0, n = m_x_cells * m_y_cells; i < n; i++)
 		{
-			array<grid_entry_t*>&	cell_array = m_grid[i];
+			swf_array<grid_entry_t*>&	cell_array = m_grid[i];
 			cell_array.push_back(new_entry);
 		}
 	}
@@ -762,7 +762,7 @@ struct grid_index_box
 		{
 			for (int ix = ib.min.x; ix <= ib.max.x; ix++)
 			{
-				array<grid_entry_t*>*	cell_array = get_cell(ix, iy);
+				swf_array<grid_entry_t*>*	cell_array = get_cell(ix, iy);
 
 				int	i, n;
 				for (i = 0, n = cell_array->size(); i < n; i++)
@@ -806,7 +806,7 @@ struct grid_index_box
 	// Should be relatively quick, assuming payload is unique.
 	{
 		index_point<int>	ip = get_containing_cell_clamped(loc);
-		array<grid_entry_t*>*	cell_array = get_cell(ip.x, ip.y);
+		swf_array<grid_entry_t*>*	cell_array = get_cell(ip.x, ip.y);
 		
 		for (int i = 0, n = cell_array->size(); i < n; i++)
 		{
@@ -824,7 +824,7 @@ struct grid_index_box
 
 private:
 	
-	array<grid_entry_t*>*	get_cell(int x, int y)
+	swf_array<grid_entry_t*>*	get_cell(int x, int y)
 	{
 		assert(x >= 0 && x < m_x_cells);
 		assert(y >= 0 && y < m_y_cells);
@@ -860,7 +860,7 @@ private:
 	int	m_x_cells;
 	int	m_y_cells;
 	int	m_query_id;
-	array<grid_entry_t*>*	m_grid;
+	swf_array<grid_entry_t*>*	m_grid;
 };
 
 

@@ -151,8 +151,8 @@ namespace gameswf
 
 		// as_number builtins
 		map = new_standard_method_map(BUILTIN_NUMBER_METHOD);
-		map->add("toString", as_number_to_string);
 		map->add("valueOf", as_number_valueof);
+		map->add("toString", as_number_to_string);
 
 		// as_boolean builtins
 		map = new_standard_method_map(BUILTIN_BOOLEAN_METHOD);
@@ -238,9 +238,9 @@ namespace gameswf
 	const char* get_gameswf_version()
 	{
 #ifdef WIN32
-	static tu_string s_gameswf_version("WIN "__DATE__" "__TIME__);
+	static tu_string s_gameswf_version("WIN ");
 #else
-	static tu_string s_gameswf_version("LINUX "__DATE__" "__TIME__);
+	static tu_string s_gameswf_version("LINUX ");
 #endif
 		
 		return s_gameswf_version.c_str();

@@ -183,8 +183,8 @@ namespace tesselate
 
 
 	// More Renderer state.
-	static array<fill_segment>	s_current_segments;	// @@ should not dynamically resize this thing!
-	static array<point>	s_current_path;			// @@ should not dynamically resize this thing!
+	static swf_array<fill_segment>	s_current_segments;	// @@ should not dynamically resize this thing!
+	static swf_array<point>	s_current_path;			// @@ should not dynamically resize this thing!
 	static point	s_last_point;
 	static int	s_current_left_style;
 	static int	s_current_right_style;
@@ -387,7 +387,7 @@ namespace tesselate
 		}
 
 		// Peel off first.
-		array<fill_segment>	slab;	// @@ make this use static storage
+		swf_array<fill_segment>	slab;	// @@ make this use static storage
 		for (int i = i0; i < i1; i++)
 		{
 			fill_segment*	f = &s_current_segments[i];
@@ -618,11 +618,11 @@ namespace tesselate_new
 		bool m_closed;
 		bool m_processed;
 
-		array<point> m_verts;
+		swf_array<point> m_verts;
 	};
 
 
-	static array<path_part>	s_path_parts;
+	static swf_array<path_part>	s_path_parts;
 	static point	s_last_point;
 
 
@@ -693,7 +693,7 @@ namespace tesselate_new
 		return false;
 	}
 	
-	void copy_points_into_array(array<float>* out, const array<point>& in)
+	void copy_points_into_array(swf_array<float>* out, const swf_array<point>& in)
 	{
 		if (in.size() > 0) {
 			// Don't copy the end point, which should be a
@@ -769,7 +769,7 @@ namespace tesselate_new
 			if (!pp->m_processed && pp->m_right_style != -1 && pp->m_closed && pp->m_verts.size() > 0) {
 				pp->m_processed = true;
 				int style = pp->m_right_style;
-				array<array<float> > paths;
+				swf_array<swf_array<float> > paths;
 				paths.resize(paths.size() + 1);
 				// TODO fix gratuitous array copying
 				copy_points_into_array(&paths.back(), pp->m_verts);
@@ -785,7 +785,7 @@ namespace tesselate_new
 						pj->m_processed = true;
 					}
 				}
-				array<float> trilist;
+				swf_array<float> trilist;
 				ear_clip_triangulate::compute(&trilist, paths.size(), &paths[0]);
 				// TODO: get the results from the
 				// triangulator in a more incremental

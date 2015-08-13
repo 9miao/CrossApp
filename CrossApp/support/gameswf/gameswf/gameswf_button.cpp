@@ -147,7 +147,7 @@ namespace gameswf
 	struct button_character_instance : public character
 	{
 		gc_ptr<button_character_definition>	m_def;
-		array<gc_ptr<character> >	m_record_character;
+		swf_array<gc_ptr<character> >	m_record_character;
 
 		enum mouse_flags
 		{

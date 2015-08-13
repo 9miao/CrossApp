@@ -11,8 +11,6 @@
 #include "basics/CAApplication.h"
 #include "view/CAWindow.h"
 #include <pthread.h>
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
 
 #include "SDL.h"
 

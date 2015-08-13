@@ -42,7 +42,7 @@ namespace gameswf
 	}
 
 	as_s_function::as_s_function(player* player,
-		const action_buffer* ab, int start, const array<with_stack_entry>& with_stack) :
+		const action_buffer* ab, int start, const swf_array<with_stack_entry>& with_stack) :
 		as_function(player),
 		m_with_stack(with_stack),
 		m_start_pc(start),
@@ -248,7 +248,7 @@ namespace gameswf
 			if (m_function2_flags & 0x80)
 			{
 				// Put '_parent' in a register.
-				array<with_stack_entry>	dummy;
+				swf_array<with_stack_entry>	dummy;
 				as_value	parent = env->get_variable("_parent", dummy);
 				IF_VERBOSE_ACTION(log_msg("-------------- preload _parent=%p to register %d\n", parent.to_object(), current_reg));
 				env->set_register(current_reg, parent);

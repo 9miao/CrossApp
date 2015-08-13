@@ -68,7 +68,7 @@
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationPortrait;
 }
 
 - (BOOL) shouldAutorotate

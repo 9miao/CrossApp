@@ -407,9 +407,9 @@ namespace gameswf
 	}
 
 
-	const array<execute_tag*>&	movie_def_impl::get_playlist(int frame_number) { return m_playlist[frame_number]; }
+	const swf_array<execute_tag*>&	movie_def_impl::get_playlist(int frame_number) { return m_playlist[frame_number]; }
 
-	const array<execute_tag*>*	movie_def_impl::get_init_actions(int frame_number)
+	const swf_array<execute_tag*>*	movie_def_impl::get_init_actions(int frame_number)
 	{
 		return &m_init_action_list[frame_number];
 	}
@@ -544,13 +544,13 @@ namespace gameswf
 	}
 
 
-	void	movie_def_impl::get_owned_fonts(array<font*>* fonts)
+	void	movie_def_impl::get_owned_fonts(swf_array<font*>* fonts)
 	// Fill up *fonts with fonts that we own.
 	{
 		assert(fonts);
 		fonts->resize(0);
 
-		array<int>	font_ids;
+		swf_array<int>	font_ids;
 
 		for (gameswf::hash<int, gc_ptr<font> >::iterator it = m_fonts.begin();
 			it != m_fonts.end();
@@ -594,7 +594,7 @@ namespace gameswf
 		out->write_bytes(header, 4);
 
 		// Write font data.
-//		array<font*>	fonts;
+//		swf_array<font*>	fonts;
 //		get_owned_fonts(&fonts);
 //		fontlib::output_cached_data(out, fonts, this, options);
 
@@ -630,7 +630,7 @@ namespace gameswf
 		}
 
 		// Read the cached font data.
-//		array<font*>	fonts;
+//		swf_array<font*>	fonts;
 //		get_owned_fonts(&fonts);
 //		fontlib::input_cached_data(in, fonts, this);
 

@@ -46,7 +46,7 @@ namespace gameswf
 		}
 
 		movie_definition_sub*	     m_movie_def;		// parent movie.
-		array<array<execute_tag*> >  m_playlist;	// movie control events for each frame.
+		swf_array<swf_array<execute_tag*> >  m_playlist;	// movie control events for each frame.
 		stringi_hash<int>	     m_named_frames;	// stores 0-based frame #'s
 
 		sprite_definition(player* player, movie_definition_sub* m);
@@ -160,13 +160,13 @@ namespace gameswf
 			return m_named_frames.get(label, frame_number);
 		}
 
-		const array<execute_tag*>&	get_playlist(int frame_number)
+		const swf_array<execute_tag*>&	get_playlist(int frame_number)
 		// frame_number is 0-based
 		{
 			return m_playlist[frame_number];
 		}
 
-		virtual const array<execute_tag*>*	get_init_actions(int frame_number)
+		virtual const swf_array<execute_tag*>*	get_init_actions(int frame_number)
 		{
 			// Sprites do not have init actions in their
 			// playlists!  Only the root movie

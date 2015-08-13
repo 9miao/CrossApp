@@ -124,7 +124,7 @@ Renderer
 * optimize tesselator (not super-high priority, caching works pretty
   well)
 
-  * improve naive (mis)use of array<>; use a more statically-allocated
+  * improve naive (mis)use of swf_array<>; use a more statically-allocated
     array to hold intermediate results.
 
   * examine use of qsort; should probably use pointers to stuff in

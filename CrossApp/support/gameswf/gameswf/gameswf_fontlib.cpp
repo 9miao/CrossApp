@@ -103,7 +103,7 @@ namespace gameswf
 	};
 
 	// Rects already on the texture.
-	static array<recti>	s_covered_rects;
+	static swf_array<recti>	s_covered_rects;
 
 	// 2d integer point.
 	struct pointi
@@ -126,7 +126,7 @@ namespace gameswf
 
 	// Candidates for upper-left corner of a new rectangle.  Use
 	// lower-left and upper-right of previously placed rects.
-	static array<pointi>	s_anchor_points;
+	static swf_array<pointi>	s_anchor_points;
 
 	bool	is_rect_available(const recti& r)
 	// Return true if the given rect can be packed into the

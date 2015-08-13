@@ -78,7 +78,7 @@ namespace gameswf
 	struct text_glyph_record
 	{
 		text_style	m_style;
-		array<glyph>	m_glyphs;
+		swf_array<glyph>	m_glyphs;
 
 		void	read(stream* in, int glyph_count, int glyph_bits, int advance_bits)
 		{
@@ -100,7 +100,7 @@ namespace gameswf
 		movie_definition_sub*	m_root_def;
 		rect	m_rect;
 		matrix	m_matrix;
-		array<text_glyph_record>	m_text_glyph_records;
+		swf_array<text_glyph_record>	m_text_glyph_records;
 
 		// Flash 8
 		bool m_use_flashtype;
@@ -193,9 +193,9 @@ namespace gameswf
 		}
 
 		gc_ptr<edit_text_character_def>	m_def;
-		array<text_glyph_record>	m_text_glyph_records;
-		array<fill_style>	m_dummy_style;	// used to pass a color on to shape_character::display()
-		array<line_style>	m_dummy_line_style;
+		swf_array<text_glyph_record>	m_text_glyph_records;
+		swf_array<fill_style>	m_dummy_style;	// used to pass a color on to shape_character::display()
+		swf_array<line_style>	m_dummy_line_style;
 		rect	m_text_bounding_box;	// bounds of dynamic text, as laid out
 		tu_string	m_text;
 		bool m_has_focus;

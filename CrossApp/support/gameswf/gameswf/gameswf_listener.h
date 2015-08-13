@@ -20,9 +20,9 @@ namespace gameswf
 	{
 
 		// misc
-		struct clone_listener : public array<gc_ptr<as_object> >
+		struct clone_listener : public swf_array<gc_ptr<as_object> >
 		{
-			clone_listener(const array< gameswf::weak_ptr<as_object> >& listeners)
+			clone_listener(const swf_array< gameswf::weak_ptr<as_object> >& listeners)
 			{
 				for (int i = 0, n = listeners.size(); i < n; i++)
 				{
@@ -49,7 +49,7 @@ namespace gameswf
 
 	private:
 
-		array< gameswf::weak_ptr<as_object> > m_listeners;
+		swf_array< gameswf::weak_ptr<as_object> > m_listeners;
 
 	};
 

@@ -51,7 +51,7 @@ namespace gameswf
 	void canvas::close_path()
 	{
 		path& p = m_paths[m_current_path];
-		array<edge>& edges = m_paths[m_current_path].m_edges;
+		swf_array<edge>& edges = m_paths[m_current_path].m_edges;
 		if (edges.size() > 0)
 		{
 			// Close it with a straight edge if needed

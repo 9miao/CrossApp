@@ -163,14 +163,14 @@ void test_multiple_inheritance() {
 
 // test gc_container
 SPECIALIZE_GC_CONTAINER(gc_vector, std::vector);
-SPECIALIZE_GC_CONTAINER(gc_array, array);
+SPECIALIZE_GC_CONTAINER(swf_array, array);
 
 struct bag : public gc_object {
 	gc_vector<gc_ptr<bag> > m_ptrs;
 };
 
 struct bag2 : public gc_object {
-	gc_array<gc_ptr<bag2> > m_ptrs;
+	swf_array<<gc_ptr<bag2> > m_ptrs;
 };
 
 template<class bag_type>

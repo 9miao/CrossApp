@@ -48,7 +48,7 @@ namespace gameswf
 
 	// stack access/manipulation
 	// @@ TODO do more checking on these
-	struct vm_stack : private array<as_value>
+	struct vm_stack : private swf_array<as_value>
 	{
 		vm_stack() :
 			m_stack_size(0)
@@ -58,13 +58,13 @@ namespace gameswf
 		inline as_value&	operator[](int index) 
 		{
 //			assert(index >= 0 && index < m_stack_size);
-			return array<as_value>::operator[](index);
+			return swf_array<as_value>::operator[](index);
 		}
 
 		inline const as_value&	operator[](int index) const 
 		{
 //			assert(index >= 0 && index < m_stack_size);
-			return array<as_value>::operator[](index);
+			return swf_array<as_value>::operator[](index);
 		}
 
 		void reset(const as_value& val)
@@ -110,7 +110,7 @@ namespace gameswf
 		template<class T>
 		void	push(T val) 
 		{
-			if (m_stack_size < array<as_value>::size())
+			if (m_stack_size < swf_array<as_value>::size())
 			{
 				// this reduces NEW operators
 //				(*this)[m_stack_size] = as_value(val);
@@ -147,7 +147,7 @@ namespace gameswf
 	{
 		vm_stack m_scope;	// scope stack for AVM2
 		as_value	m_global_register[GLOBAL_REGISTER_COUNT];
-		array<as_value>	m_local_register;	// function2 uses this
+		swf_array<as_value>	m_local_register;	// function2 uses this
 		gc_ptr<as_object>	m_target;
 
 		// For local vars.  Use empty names to separate frames.
@@ -159,7 +159,7 @@ namespace gameswf
 			frame_slot() {}
 			frame_slot(const tu_string& name, const as_value& val) : m_name(name), m_value(val) {}
 		};
-		array<frame_slot>	m_local_frames;
+		swf_array<frame_slot>	m_local_frames;
 
 		gameswf::weak_ptr<player> m_player;
 
@@ -176,13 +176,13 @@ namespace gameswf
 		void set_target(character* target);
 		void set_target(as_value& target, character* original_target);
 
-		as_value	get_variable(const tu_string& varname, const array<with_stack_entry>& with_stack) const;
+		as_value	get_variable(const tu_string& varname, const swf_array<with_stack_entry>& with_stack) const;
 		// no path stuff:
-		as_value	get_variable_raw(const tu_string& varname, const array<with_stack_entry>& with_stack) const;
+		as_value	get_variable_raw(const tu_string& varname, const swf_array<with_stack_entry>& with_stack) const;
 
-		void	set_variable(const tu_string& path, const as_value& val, const array<with_stack_entry>& with_stack);
+		void	set_variable(const tu_string& path, const as_value& val, const swf_array<with_stack_entry>& with_stack);
 		// no path stuff:
-		void	set_variable_raw(const tu_string& path, const as_value& val, const array<with_stack_entry>& with_stack);
+		void	set_variable_raw(const tu_string& path, const as_value& val, const swf_array<with_stack_entry>& with_stack);
 
 		void	set_local(const tu_string& varname, const as_value& val);
 		void	add_local(const tu_string& varname, const as_value& val);	// when you know it doesn't exist.

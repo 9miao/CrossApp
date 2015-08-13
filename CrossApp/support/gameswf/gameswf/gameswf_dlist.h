@@ -107,7 +107,7 @@ namespace gameswf
 			return m_display_object_array[idx];
 		}
 
-		void clear_unaffected(array<int>& affected_depths);
+		void clear_unaffected(swf_array<int>& affected_depths);
 		void swap_characters(character* ch, character* ch2);
 		void change_character_depth(character* ch, int depth);
 		int get_highest_depth();
@@ -118,7 +118,7 @@ namespace gameswf
 	private:
 
 		void remove(int index);
-		array<display_object_info> m_display_object_array;
+		swf_array<display_object_info> m_display_object_array;
 	};
 
 
