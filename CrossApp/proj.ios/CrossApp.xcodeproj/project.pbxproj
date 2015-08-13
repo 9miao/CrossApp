@@ -533,15 +533,6 @@
 		B0596B24197629BE00B1E8CB /* tttags.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596ABE197629BE00B1E8CB /* tttags.h */; };
 		B0596B25197629BE00B1E8CB /* ttunpat.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596ABF197629BE00B1E8CB /* ttunpat.h */; };
 		B0596B26197629BE00B1E8CB /* ft2build.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596AC0197629BE00B1E8CB /* ft2build.h */; };
-		B0596B351976343300B1E8CB /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B2C1976343300B1E8CB /* curl.h */; };
-		B0596B361976343300B1E8CB /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B2D1976343300B1E8CB /* curlbuild.h */; };
-		B0596B371976343300B1E8CB /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B2E1976343300B1E8CB /* curlrules.h */; };
-		B0596B381976343300B1E8CB /* curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B2F1976343300B1E8CB /* curlver.h */; };
-		B0596B391976343300B1E8CB /* easy.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B301976343300B1E8CB /* easy.h */; };
-		B0596B3A1976343300B1E8CB /* mprintf.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B311976343300B1E8CB /* mprintf.h */; };
-		B0596B3B1976343300B1E8CB /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B321976343300B1E8CB /* multi.h */; };
-		B0596B3C1976343300B1E8CB /* stdcheaders.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B331976343300B1E8CB /* stdcheaders.h */; };
-		B0596B3D1976343300B1E8CB /* typecheck-gcc.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B341976343300B1E8CB /* typecheck-gcc.h */; };
 		B0596B411976356C00B1E8CB /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596B3E1976356C00B1E8CB /* ConvertUTF.cpp */; };
 		B0596B421976356C00B1E8CB /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B3F1976356C00B1E8CB /* ConvertUTF.h */; };
 		B0596B431976356C00B1E8CB /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */; };
@@ -840,7 +831,6 @@
 		1A3191B616C0DDE700207637 /* decode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decode.h; sourceTree = "<group>"; };
 		1A3191B716C0DDE700207637 /* encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encode.h; sourceTree = "<group>"; };
 		1A3191B816C0DDE700207637 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
-		1A3199AD16C0E3A200207637 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/ios/libraries/libwebp.a; sourceTree = "<group>"; };
 		1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsIOS.h; sourceTree = "<group>"; };
 		1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		1AC6CE8716B910CD00330EFD /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
@@ -1178,15 +1168,6 @@
 		B0596ABE197629BE00B1E8CB /* tttags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tttags.h; sourceTree = "<group>"; };
 		B0596ABF197629BE00B1E8CB /* ttunpat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttunpat.h; sourceTree = "<group>"; };
 		B0596AC0197629BE00B1E8CB /* ft2build.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ft2build.h; sourceTree = "<group>"; };
-		B0596B2C1976343300B1E8CB /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
-		B0596B2D1976343300B1E8CB /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlbuild.h; sourceTree = "<group>"; };
-		B0596B2E1976343300B1E8CB /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlrules.h; sourceTree = "<group>"; };
-		B0596B2F1976343300B1E8CB /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
-		B0596B301976343300B1E8CB /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
-		B0596B311976343300B1E8CB /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
-		B0596B321976343300B1E8CB /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
-		B0596B331976343300B1E8CB /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
-		B0596B341976343300B1E8CB /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
 		B0596B3E1976356C00B1E8CB /* ConvertUTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTF.cpp; sourceTree = "<group>"; };
 		B0596B3F1976356C00B1E8CB /* ConvertUTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertUTF.h; sourceTree = "<group>"; };
 		B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
@@ -1512,7 +1493,6 @@
 				3727122F1A1C78D400FB827E /* CoreAudio.framework */,
 				3727122D1A1C78AD00FB827E /* ExternalAccessory.framework */,
 				3727122B1A1C785D00FB827E /* Accelerate.framework */,
-				1A3199AD16C0E3A200207637 /* libwebp.a */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
 				B01B29A519BADA1E00CBF581 /* XCTest.framework */,
 				B01B29A819BADA1E00CBF581 /* UIKit.framework */,
@@ -1831,7 +1811,6 @@
 			children = (
 				37147ECF1A14881300EBE03E /* SDL */,
 				372E63DF1A07572C00582042 /* FFmpeg */,
-				B0596B2B1976343300B1E8CB /* curl */,
 				B0596A64197629BE00B1E8CB /* freetype */,
 				B0596AC1197629BE00B1E8CB /* libraries */,
 				1A3191B516C0DDE700207637 /* webp */,
@@ -2256,22 +2235,6 @@
 			path = libraries;
 			sourceTree = "<group>";
 		};
-		B0596B2B1976343300B1E8CB /* curl */ = {
-			isa = PBXGroup;
-			children = (
-				B0596B2C1976343300B1E8CB /* curl.h */,
-				B0596B2D1976343300B1E8CB /* curlbuild.h */,
-				B0596B2E1976343300B1E8CB /* curlrules.h */,
-				B0596B2F1976343300B1E8CB /* curlver.h */,
-				B0596B301976343300B1E8CB /* easy.h */,
-				B0596B311976343300B1E8CB /* mprintf.h */,
-				B0596B321976343300B1E8CB /* multi.h */,
-				B0596B331976343300B1E8CB /* stdcheaders.h */,
-				B0596B341976343300B1E8CB /* typecheck-gcc.h */,
-			);
-			path = curl;
-			sourceTree = "<group>";
-		};
 		B06805201A833DF700F6BE00 /* animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -2340,7 +2303,6 @@
 				B0ADAE6E1B2E7F1B00BE8FA3 /* CAClippingView.h in Headers */,
 				3EA061771B147D1C00183C30 /* tu_random.h in Headers */,
 				04EABB091956DAEA00198A8E /* CAAutoreleasePool.cpp in Headers */,
-				B0596B361976343300B1E8CB /* curlbuild.h in Headers */,
 				3EA061811B147D1C00183C30 /* vert_types.h in Headers */,
 				B094652F1969404400D96736 /* CASTLContainer.h in Headers */,
 				04EABB0A1956DAEA00198A8E /* CACamera.cpp in Headers */,
@@ -2349,7 +2311,6 @@
 				04EABB0C1956DAEA00198A8E /* CAGeometry.cpp in Headers */,
 				04EABB0D1956DAEA00198A8E /* CAObject.cpp in Headers */,
 				04EABB0E1956DAEA00198A8E /* CAResponder.cpp in Headers */,
-				B0596B3B1976343300B1E8CB /* multi.h in Headers */,
 				04EABB0F1956DAEA00198A8E /* CAScheduler.cpp in Headers */,
 				B0596B1A197629BE00B1E8CB /* svtteng.h in Headers */,
 				B0596B17197629BE00B1E8CB /* svpsinfo.h in Headers */,
@@ -2366,7 +2327,6 @@
 				04EABB171956DAEA00198A8E /* CASwitch.cpp in Headers */,
 				3EA061981B147D1C00183C30 /* as_date.h in Headers */,
 				3EA061571B147D1C00183C30 /* grid_index.h in Headers */,
-				B0596B351976343300B1E8CB /* curl.h in Headers */,
 				B09205DE19D5645300CB99C1 /* CAThread.h in Headers */,
 				B0596B1E197629BE00B1E8CB /* sfnt.h in Headers */,
 				3EA061611B147D1C00183C30 /* smart_ptr.h in Headers */,
@@ -2396,7 +2356,6 @@
 				3EA061A81B147D1C00183C30 /* as_matrix.h in Headers */,
 				B0596B13197629BE00B1E8CB /* svpfr.h in Headers */,
 				3EA061E71B147D1C00183C30 /* gameswf_listener.h in Headers */,
-				B0596B391976343300B1E8CB /* easy.h in Headers */,
 				B0596AE4197629BE00B1E8CB /* ftgzip.h in Headers */,
 				3EA061661B147D1C00183C30 /* tu_config.h in Headers */,
 				3EA061C61B147D1C00183C30 /* gameswf_as_sprite.h in Headers */,
@@ -2405,7 +2364,6 @@
 				B0596AE9197629BE00B1E8CB /* ftlzw.h in Headers */,
 				B0ADAE2A1B2E7EFB00BE8FA3 /* CAFlash.h in Headers */,
 				B0ADAE8A1B2E7F1B00BE8FA3 /* CARenderImage.h in Headers */,
-				B0596B3A1976343300B1E8CB /* mprintf.h in Headers */,
 				B0C512C819A2DF9F00E6934B /* CAFTFontCache.h in Headers */,
 				3EA061861B147D1C00183C30 /* gameswf.h in Headers */,
 				B0ADAE6C1B2E7F1B00BE8FA3 /* CABatchView.h in Headers */,
@@ -2456,7 +2414,6 @@
 				B0596B26197629BE00B1E8CB /* ft2build.h in Headers */,
 				B0596AE7197629BE00B1E8CB /* ftlcdfil.h in Headers */,
 				1551A660158F2ADE00E66CFE /* CCSet.h in Headers */,
-				B0596B381976343300B1E8CB /* curlver.h in Headers */,
 				B0596AE5197629BE00B1E8CB /* ftimage.h in Headers */,
 				1551A662158F2ADE00E66CFE /* CCString.h in Headers */,
 				1551A6B8158F2ADE00E66CFE /* aabb.h in Headers */,
@@ -2526,7 +2483,6 @@
 				3EA061C81B147D1C00183C30 /* gameswf_avm2.h in Headers */,
 				B0596AD7197629BE00B1E8CB /* ftbbox.h in Headers */,
 				1551A735158F2ADE00E66CFE /* CCESRenderer.h in Headers */,
-				B0596B3D1976343300B1E8CB /* typecheck-gcc.h in Headers */,
 				1551A737158F2ADE00E66CFE /* CCGL.h in Headers */,
 				1551A73A158F2ADE00E66CFE /* CCLock.h in Headers */,
 				1551A73B158F2ADE00E66CFE /* CCPlatformDefine.h in Headers */,
@@ -2605,13 +2561,11 @@
 				B0ADAE721B2E7F1B00BE8FA3 /* CADatePickerView.h in Headers */,
 				1551A847158F2ADF00E66CFE /* ccCArray.h in Headers */,
 				1551A848158F2ADF00E66CFE /* uthash.h in Headers */,
-				B0596B3C1976343300B1E8CB /* stdcheaders.h in Headers */,
 				3EA062061B147D1C00183C30 /* gameswf_tesselate.h in Headers */,
 				1551A849158F2ADF00E66CFE /* utlist.h in Headers */,
 				B0596AF4197629BE00B1E8CB /* ftstroke.h in Headers */,
 				B0ADAE961B2E7F1B00BE8FA3 /* CATextView.h in Headers */,
 				3EA061741B147D1C00183C30 /* tu_opengl_includes.h in Headers */,
-				B0596B371976343300B1E8CB /* curlrules.h in Headers */,
 				B0340827199211B3005DB179 /* md5.h in Headers */,
 				B0596AF6197629BE00B1E8CB /* ftsystem.h in Headers */,
 				B0596AFC197629BE00B1E8CB /* autohint.h in Headers */,
