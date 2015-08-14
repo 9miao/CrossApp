@@ -1466,8 +1466,8 @@ void CDUIShowView::showCollectionView()
     p_Conllection->setCollectionViewDelegate(this);
     p_Conllection->setCollectionViewDataSource(this);
     p_Conllection->setScrollViewDelegate(this);
-    p_Conllection->setHeaderRefreshView(headerRefreshView);
-    p_Conllection->setFooterRefreshView(footerRefreshView);
+//    p_Conllection->setHeaderRefreshView(headerRefreshView);
+//    p_Conllection->setFooterRefreshView(footerRefreshView);
     p_Conllection->setHoriInterval(_px(40));
     p_Conllection->setVertInterval(_px(40));
     this->getView()->addSubview(p_Conllection);
@@ -1512,9 +1512,16 @@ CAAutoCollectionViewCell* CDUIShowView::collectionCellAtIndex(CAAutoCollectionVi
 	itemImageView->setColor(colorArr.at(item));
 	CCLog("%d", item);
 
+	CAView* itemImage = p_Cell->getSubviewByTag(99);
+	CALabel* itemText = (CALabel*)itemImage->getSubviewByTag(100);
+
+	itemImage->setFrame(CADipRect(0, 0, _size.width, _size.height));
+
 	char pos[20] = "";
 	sprintf(pos, "(%d,%d)", section, item);
-	CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
+
+	CADipSize itemSize = itemImage->getBounds().size;
+	itemText->setCenter(CADipRect(itemSize.width / 2, itemSize.height / 2, 150, 40));
 	itemText->setText(pos);
 
 	return p_Cell;

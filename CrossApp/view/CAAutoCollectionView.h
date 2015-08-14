@@ -291,8 +291,6 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
     
-    CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
-    
     CC_SYNTHESIZE_READONLY(unsigned int, m_nItem, Item);
     
     CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
