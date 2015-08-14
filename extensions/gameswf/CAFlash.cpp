@@ -9,15 +9,8 @@
 
 #include "CrossApp.h"
 #include "CAFlash.h"
-#include "../support/gameswf/gameswf/gameswf.h"
-#include "../support/gameswf/gameswf/gameswf_player.h"
-#include "../support/gameswf/gameswf/gameswf_root.h"
-#include "../support/gameswf/gameswf/gameswf_types.h"
-#include "../support/gameswf/gameswf/gameswf_impl.h"
-#include "../support/gameswf/base/tu_file.h"
 
-
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 
 void CCGameSWF_fscommand_handler (gameswf::character* movie, const char* command, const char* arg)
@@ -165,5 +158,4 @@ float CAFlash::getFrameCount()
 }
 
 
-
-NS_CC_END
+NS_CC_EXT_END

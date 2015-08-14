@@ -803,7 +803,7 @@ namespace gameswf
 					int	buffer_bytes = color_table_size * 3 + pitch * height;
 					Uint8*	buffer = new Uint8[buffer_bytes];
 
-					inflate_wrapper(in->get_underlying_stream(), buffer, buffer_bytes);
+					gameswf::inflate_wrapper(in->get_underlying_stream(), buffer, buffer_bytes);
 					assert(in->get_position() <= in->get_tag_end_position());
 
 					Uint8*	color_table = buffer;
@@ -832,7 +832,7 @@ namespace gameswf
 					int	buffer_bytes = pitch * height;
 					Uint8*	buffer = new Uint8[buffer_bytes];
 
-					inflate_wrapper(in->get_underlying_stream(), buffer, buffer_bytes);
+					gameswf::inflate_wrapper(in->get_underlying_stream(), buffer, buffer_bytes);
 					assert(in->get_position() <= in->get_tag_end_position());
 
 					for (int j = 0; j < height; j++)
@@ -861,7 +861,7 @@ namespace gameswf
 					int	buffer_bytes = pitch * height;
 					Uint8*	buffer = new Uint8[buffer_bytes];
 
-					inflate_wrapper(in->get_underlying_stream(), buffer, buffer_bytes);
+					gameswf::inflate_wrapper(in->get_underlying_stream(), buffer, buffer_bytes);
 					assert(in->get_position() <= in->get_tag_end_position());
 
 					// Need to re-arrange ARGB into RGB.
@@ -912,7 +912,7 @@ namespace gameswf
 					int	buffer_bytes = color_table_size * 4 + pitch * height;
 					Uint8*	buffer = new Uint8[buffer_bytes];
 
-					inflate_wrapper(in->get_underlying_stream(), buffer, buffer_bytes);
+					gameswf::inflate_wrapper(in->get_underlying_stream(), buffer, buffer_bytes);
 					assert(in->get_position() <= in->get_tag_end_position());
 
 					Uint8*	color_table = buffer;
@@ -942,7 +942,7 @@ namespace gameswf
 					int	buffer_bytes = pitch * height;
 					Uint8*	buffer = new Uint8[buffer_bytes];
 
-					inflate_wrapper(in->get_underlying_stream(), buffer, buffer_bytes);
+					gameswf::inflate_wrapper(in->get_underlying_stream(), buffer, buffer_bytes);
 					assert(in->get_position() <= in->get_tag_end_position());
 
 					for (int j = 0; j < height; j++)
@@ -967,7 +967,7 @@ namespace gameswf
 				{
 					// 32 bits / pixel, input is ARGB format
 
-					inflate_wrapper(in->get_underlying_stream(), image->m_data, width * height * 4);
+					gameswf::inflate_wrapper(in->get_underlying_stream(), image->m_data, width * height * 4);
 					assert(in->get_position() <= in->get_tag_end_position());
 
 					// Need to re-arrange ARGB into RGBA.

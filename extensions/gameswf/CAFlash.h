@@ -11,19 +11,21 @@
 
 #include <iostream>
 #include "CrossApp.h"
-#include "support/gameswf/gameswf/gameswf.h"
-#include "support/gameswf/gameswf/gameswf_player.h"
-#include "support/gameswf/gameswf/gameswf_root.h"
-#include "support/gameswf/gameswf/gameswf_types.h"
-#include "support/gameswf/gameswf/gameswf_impl.h"
+#include "ExtensionMacros.h"
+#include "gameswf/gameswf/gameswf.h"
+#include "gameswf/gameswf/gameswf_player.h"
+#include "gameswf/gameswf/gameswf_root.h"
+#include "gameswf/gameswf/gameswf_types.h"
+#include "gameswf/gameswf/gameswf_impl.h"
+#include "base/tu_file.h"
 
-NS_CC_BEGIN
-class CAImage;
 
-class CC_DLL CAFlash : public CAObject
+NS_CC_EXT_BEGIN
+
+class CAFlash : public CAObject
 {
 public:
-    CAFlash();
+	CAFlash();
     virtual ~CAFlash();
     static CAFlash* createWithFilePath(const std::string& filePath);
     bool initWithFilePath(const std::string& filePath);
@@ -55,7 +57,7 @@ protected:
     gameswf::gc_ptr<gameswf::root>      m_pMovie;
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif //__CAFlash_H__
 

@@ -11,7 +11,6 @@
 #include "tu_file.h"
 #include "utility.h"
 
-
 #if !TU_CONFIG_LINK_TO_ZLIB
 
 

@@ -10,21 +10,20 @@
 #define __CrossApp__CAFlashView__
 
 #include <iostream>
-#include "CrossApp.h"
+#include "CAFlash.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
-class CAView;
-
-class CC_DLL CAFlashView : public CAView
+class  CAFlashView : public CAView
 {
+    
 public:
     CAFlashView();
     virtual ~CAFlashView();
-    static CAFlashView* createWithFlash(CAFlash* flash);
+	static CAFlashView* createWithFlash(extension::CAFlash* flash);
     bool initWithFlash(CAFlash* flash);
     bool init();
-    void setFlash(CAFlash* flash);
+	void setFlash(extension::CAFlash* flash);
     void stopAnimation();
     void runAnimation();
     void setRepeatForever(bool flag);
@@ -43,6 +42,6 @@ protected:
     bool        m_bIsRunning;
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif /* defined(__CrossApp__CAFlashView__) */

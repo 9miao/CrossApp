@@ -40,7 +40,7 @@
 // your build.  Be aware of what you're doing -- it may break
 // features!
 #ifndef TU_CONFIG_LINK_TO_JPEGLIB
-#   define TU_CONFIG_LINK_TO_JPEGLIB 1
+#   define TU_CONFIG_LINK_TO_JPEGLIB 0
 #endif
 
 // define TU_CONFIG_LINK_TO_ZLIB to 0 to exclude zlib code from your

@@ -15,6 +15,9 @@
 #include "LocalStorage/LocalStorage.h"
 #include "studio/CAStudioViewParser.h"
 
+#include "gameswf/CAFlash.h"
+#include "gameswf/CAFlashView.h"
+
 //other
 #include "device/CADevice.h"
 #endif /* __CrossApp_EXT_H__ */

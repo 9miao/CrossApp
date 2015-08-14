@@ -69,7 +69,6 @@
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
 #include "images/CAGif.h"
-#include "images/CAFlash.h"
 
 
 //view
@@ -97,7 +96,6 @@
 #include "view/CAWebView.h"
 #include "view/CADrawingPrimitives.h"
 #include "view/CADrawView.h"
-#include "view/CAFlashView.h"
 #include "view/CATextEditHelper.h"
 
 // cocoa

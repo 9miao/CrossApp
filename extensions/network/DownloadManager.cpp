@@ -6,7 +6,7 @@
 #include "support/zip_support/unzip.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-#include <curl/curl.h>
+#include "curl/curl.h"
 #include <curl/easy.h>
 #include <pthread.h>
 #include <stdio.h>

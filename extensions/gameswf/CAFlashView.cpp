@@ -1,15 +1,14 @@
 //
-//  CAFlashView.cpp
+//  extension::CAFlashView.cpp
 //  CrossApp
 //
 //  Created by qiaoxin on 15-05-12.
 //
 
-#include "CrossApp.h"
 #include "CAFlashView.h"
 
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 CAFlashView::CAFlashView()
 :m_pFlash(NULL)
@@ -25,7 +24,7 @@ CAFlashView::~CAFlashView()
     CC_SAFE_DELETE(m_pFlash);
 }
 
-CAFlashView* CAFlashView::createWithFlash(CAFlash* flash)
+CAFlashView* CAFlashView::createWithFlash(extension::CAFlash* flash)
 {
     CAFlashView* view = new CAFlashView();
     if ( view && view->initWithFlash(flash)) {
@@ -35,7 +34,7 @@ CAFlashView* CAFlashView::createWithFlash(CAFlash* flash)
     return NULL;
 }
 
-bool CAFlashView::initWithFlash(CAFlash* flash)
+bool CAFlashView::initWithFlash(extension::CAFlash* flash)
 {
     if (!this->init())
     {
@@ -51,7 +50,7 @@ bool CAFlashView::init()
     return true;
 }
 
-void CAFlashView::setFlash(CAFlash* flash)
+void CAFlashView::setFlash(extension::CAFlash* flash)
 {
     CC_SAFE_RETAIN(flash);
     CC_SAFE_DELETE(m_pFlash);
@@ -157,4 +156,4 @@ bool CAFlashView::isRunning()
     return m_bIsRunning;
 }
 
-NS_CC_END
+NS_CC_EXT_END
