@@ -29,27 +29,27 @@ namespace triangulate
 
 	// Version using float coords
 	void	compute(
-		array<float>* results,
+		swf_array<float>* results,
 		int path_count,
-		const array<float> paths[],
+		const swf_array<float> paths[],
 		int debug_halt_step = -1,
-		array<float>* debug_remaining_loop = NULL);
+		swf_array<float>* debug_remaining_loop = NULL);
 
 	// Version using short coords
 	void	compute(
-		array<sint16>* results,	// indexed trilist
+		swf_array<sint16>* results,	// indexed trilist
 		int path_count,
-		const array<sint16> paths[],
+		const swf_array<sint16> paths[],
 		int debug_halt_step = -1,
-		array<sint16>* debug_remaining_loop = NULL);
+		swf_array<sint16>* debug_remaining_loop = NULL);
 
 	// Version using int coords
 	void	compute(
-		array<sint32>* results,	// indexed trilist
+		swf_array<sint32>* results,	// indexed trilist
 		int path_count,
-		const array<sint32> paths[],
+		const swf_array<sint32> paths[],
 		int debug_halt_step = -1,
-		array<sint32>* debug_remaining_loop = NULL);
+		swf_array<sint32>* debug_remaining_loop = NULL);
 }
 
 

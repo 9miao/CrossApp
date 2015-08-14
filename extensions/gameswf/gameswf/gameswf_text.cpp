@@ -16,8 +16,8 @@
 namespace gameswf
 {
 	// use safe container
-	static array<char> s_gameswf_key_to_ascii;
-	static array<char> s_gameswf_key_to_ascii_shifted;
+	static swf_array<char> s_gameswf_key_to_ascii;
+	static swf_array<char> s_gameswf_key_to_ascii_shifted;
 
 	static void initialize_key_to_ascii()
 	{
@@ -91,11 +91,11 @@ namespace gameswf
 	static void	display_glyph_records(
 		const matrix& this_mat,
 		character* inst,
-		const array<text_glyph_record>& records,
+		const swf_array<text_glyph_record>& records,
 		movie_definition_sub* root_def)
 	{
-		array<fill_style>	dummy_style;	// used to pass a color on to shape_character::display()
-		array<line_style>	dummy_line_style;
+		swf_array<fill_style>	dummy_style;	// used to pass a color on to shape_character::display()
+		swf_array<line_style>	dummy_line_style;
 		dummy_style.resize(1);
 
 		matrix	mat = inst->get_world_matrix();

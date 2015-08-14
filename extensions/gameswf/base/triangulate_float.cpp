@@ -14,11 +14,11 @@ namespace triangulate
 {
 	// Version using float coords
 	void	compute(
-		array<float>* result,	// trilist
+		swf_array<float>* result,	// trilist
 		int path_count,
-		const array<float> paths[],
+		const swf_array<float> paths[],
 		int debug_halt_step /* = -1 */,
-		array<float>* debug_remaining_loop /* = NULL */)
+		swf_array<float>* debug_remaining_loop /* = NULL */)
 	{
 		compute_triangulation<float>(result, path_count, paths, debug_halt_step, debug_remaining_loop);
 	}
@@ -40,8 +40,8 @@ namespace triangulate
 void	test_square()
 // A very minimal, easy test.
 {
-	array<float>	result;
-	array<array<float> >	paths;
+	swf_array<float>	result;
+	swf_array<swf_array<float> >	paths;
 
 	// Make a square.
 	paths.resize(1);

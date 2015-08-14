@@ -68,7 +68,7 @@ namespace gameswf
 		}
 
 		// Create local registers.
-		array<as_value>	local_register;
+		swf_array<as_value>	local_register;
 		local_register.resize(m_local_count + 1);
 
 		// Register 0 holds the ?this? object. This value is never null.
@@ -100,7 +100,7 @@ namespace gameswf
 		{
 			//try
 			{
-				m_compiled_code.call< array<as_value>&, vm_stack&, vm_stack&, as_value* >
+				m_compiled_code.call< swf_array<as_value>&, vm_stack&, vm_stack&, as_value* >
 					(local_register, *env, env->m_scope, fn.result );
 			}
 		//	catch( ... )
@@ -133,7 +133,7 @@ namespace gameswf
 	}
 
 	// interperate action script bytecode
-	void	as_3_function::execute(array<as_value>& lregister, as_environment* env, as_value* result)
+	void	as_3_function::execute(swf_array<as_value>& lregister, as_environment* env, as_value* result)
 	{
 		// m_abc may be destroyed
 		assert(m_abc != NULL);

@@ -451,7 +451,7 @@ namespace gameswf
 
 		// That there was no crash because of actions script
 		// we iterate through the copy
-		array<display_object_info> tmp_list = m_display_object_array;
+		swf_array<display_object_info> tmp_list = m_display_object_array;
 		int n = tmp_list.size();
 		for (int i = 0; i < n; i++)
 		{
@@ -551,7 +551,7 @@ namespace gameswf
 		}
 	}
 
-	void display_list::clear_unaffected(array<int>& affected_depths) 
+	void display_list::clear_unaffected(swf_array<int>& affected_depths) 
 	{ 
 		for (int i = 0; i < m_display_object_array.size(); )
 		{

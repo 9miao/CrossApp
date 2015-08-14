@@ -105,7 +105,7 @@ namespace gameswf
 		int m_super_name;
 		Uint8 m_flags;
 		int m_protectedNs;
-		array<int> m_interface;
+		swf_array<int> m_interface;
 		int m_iinit;
 		gc_array<gc_ptr<traits_info> > m_trait;
 		gameswf::weak_ptr<abc_def> m_abc;
@@ -142,13 +142,13 @@ namespace gameswf
 	struct abc_def : public ref_counted
 	{
 		// constant pool
-		array<int> m_integer;
-		array<Uint32> m_uinteger;
-		array<double> m_double;
-		array<tu_string> m_string;
-		array<namespac> m_namespace;
-		array< array<int> > m_ns_set;
-		array<multiname> m_multiname;
+		swf_array<int> m_integer;
+		swf_array<Uint32> m_uinteger;
+		swf_array<double> m_double;
+		swf_array<tu_string> m_string;
+		swf_array<namespac> m_namespace;
+		swf_array< swf_array<int> > m_ns_set;
+		swf_array<multiname> m_multiname;
 
 //		array<gc_ptr<method_info> > m_method;
 		gc_array<gc_ptr<as_3_function> > m_method;

@@ -41,7 +41,7 @@ namespace gameswf
 
 		listener m_listeners;
 		bool m_reentrance;
-		tu_queue< array<as_value> > m_suspended_event;
+		tu_queue< swf_array<as_value> > m_suspended_event;
 	};
 
 }	// end namespace gameswf

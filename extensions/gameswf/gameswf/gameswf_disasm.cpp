@@ -85,7 +85,7 @@ namespace gameswf
 	struct inst_info_avm2
 	{
 		const char*	m_instruction;
-		array<arg_format_avm2> m_arg_formats;
+		swf_array<arg_format_avm2> m_arg_formats;
 
 		inst_info_avm2(const char* opname) :
 			m_instruction(opname)

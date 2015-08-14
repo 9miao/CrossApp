@@ -389,7 +389,7 @@ namespace gameswf
 	{
 		// receive indexes
 		// array may contain not numerical indexes
-		array<tu_stringi> idx;
+		swf_array<tu_stringi> idx;
 		for (stringi_hash<as_value>::iterator it = m_members.begin(); it != m_members.end(); ++it)
 		{
 			if (it->second.is_enum())
@@ -459,7 +459,7 @@ namespace gameswf
 		assert(val);
 
 		// receive numerical indexes
-		array<int> idx;
+		swf_array<int> idx;
 		for (stringi_hash<as_value>::iterator it = m_members.begin(); it != m_members.end(); ++it)
 		{
 			int index;
@@ -508,7 +508,7 @@ namespace gameswf
 	// Inserts the element after 'index'
 	{
 		// receive numerical indexes
-		array<int> idx;
+		swf_array<int> idx;
 		for (stringi_hash<as_value>::iterator it = m_members.begin(); it != m_members.end(); ++it)
 		{
 			int index;

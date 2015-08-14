@@ -111,7 +111,7 @@ namespace gameswf
 		unsigned char	m_id;
 		unsigned char	m_key_code;
 		Uint16	m_unused;
-		array<as_value>* m_args;
+		swf_array<as_value>* m_args;
 
 		event_id() :
 			m_id(INVALID),
@@ -121,7 +121,7 @@ namespace gameswf
 		{
 		}
 
-		event_id(id_code id, array<as_value>* args) :
+		event_id(id_code id, swf_array<as_value>* args) :
 			m_id((unsigned char) id),
 			m_key_code(key::INVALID),
 			m_unused(0),
@@ -169,11 +169,11 @@ namespace gameswf
 			int start_pc,
 			int exec_bytes,
 			as_value* retval,
-			const array<with_stack_entry>& initial_with_stack,
+			const swf_array<with_stack_entry>& initial_with_stack,
 			bool is_function2) const;
 
 		static as_object* load_as_plugin(player* player,
-			const tu_string& classname, const array<as_value>& params);
+			const tu_string& classname, const swf_array<as_value>& params);
 		int	get_length() const { return m_buffer->size(); }
 		void operator=(const action_buffer& ab);
 		
@@ -182,7 +182,7 @@ namespace gameswf
 #endif
 
 	private:
-		// Don't put these as values in array<>!  They contain
+		// Don't put these as values in swf_array<>!  They contain
 		// internal pointers and cannot be moved or copied.
 		// If you need to keep an array of them, keep pointers
 		// to new'd instances.
@@ -193,7 +193,7 @@ namespace gameswf
 
 		// data:
 		gc_ptr<counted_buffer>	m_buffer;
-		array<tu_string>	m_dictionary;
+		swf_array<tu_string>	m_dictionary;
 		int	m_decl_dict_processed_at;
 #if ACTION_BUFFER_PROFILLING		
 		static gameswf::hash<int, Uint64> profiling_table;

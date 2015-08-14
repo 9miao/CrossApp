@@ -22,8 +22,8 @@ class jit_function
 	};
 
 	int m_current_stack_offset;
-	array<uint8> m_work_byte_code;
-	array<patch_entry> m_address_patches;
+	swf_array<uint8> m_work_byte_code;
+	swf_array<patch_entry> m_address_patches;
 	void * m_executable_byte_code; // must allocate with execute rights
 
 public:

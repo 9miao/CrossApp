@@ -146,7 +146,7 @@ namespace gameswf
 		{
 			// keep call args
 			// we must process one event completely then another
-			array<as_value> arg;
+			swf_array<as_value> arg;
 			for (int i = 0; i < fn.nargs; i++)
 			{
 				arg.push_back(fn.arg(i));
@@ -174,7 +174,7 @@ namespace gameswf
 		{
 			// event handler may affects m_suspended_event using broadcastMessage
 			// so we iterate through the copy of args
-			array<as_value>& arg = m_suspended_event.front();
+			swf_array<as_value>& arg = m_suspended_event.front();
 			tu_string event_name = arg[0].to_tu_string();
 			for (int j = arg.size() - 1; j > 0; j--)
 			{

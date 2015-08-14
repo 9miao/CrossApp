@@ -393,7 +393,7 @@ void	resample(image::rgb* out, int out_x0, int out_y0, int out_x1, int out_y1,
 	float width, fscale, weight;	/* filter calculation variables */
 	Uint8*	raster;			/* a row or column of pixels */
 
-	array< array<CONTRIB> >	contrib;
+	swf_array< swf_array<CONTRIB> >	contrib;
 
 	int	out_width = out_x1 - out_x0 + 1;
 	int	out_height = out_y1 - out_y0 + 1;
@@ -558,7 +558,7 @@ void	resample(image::rgba* out, int out_x0, int out_y0, int out_x1, int out_y1,
 	float width, fscale, weight;	/* filter calculation variables */
 	Uint8*	raster;			/* a row or column of pixels */
 
-	array< array<CONTRIB> >	contrib;
+	swf_array< swf_array<CONTRIB> >	contrib;
 
 	int	out_width = out_x1 - out_x0 + 1;
 	int	out_height = out_y1 - out_y0 + 1;

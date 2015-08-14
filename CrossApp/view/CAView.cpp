@@ -341,10 +341,13 @@ void CAView::setZOrder(int z)
     }
     else
     {
-        _setZOrder(z);
         if (m_pSuperview)
         {
             m_pSuperview->reorderSubview(this, z);
+        }
+        else
+        {
+            this->_setZOrder(z);
         }
     }
 }
@@ -1059,6 +1062,7 @@ void CAView::reorderSubview(CAView *subview, int zOrder)
     m_bReorderChildDirty = true;
     subview->setOrderOfArrival(s_globalOrderOfArrival++);
     subview->_setZOrder(zOrder);
+    this->updateDraw();
 }
 
 void CAView::sortAllSubviews()

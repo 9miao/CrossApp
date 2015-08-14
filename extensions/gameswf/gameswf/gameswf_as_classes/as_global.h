@@ -27,7 +27,7 @@ namespace gameswf
 		gameswf::weak_ptr<as_function> m_func;
 		float m_interval;	// sec
 		float m_time_remainder;
-		array<as_value> m_arg;
+		swf_array<as_value> m_arg;
 		bool m_do_once;
 
 		// Unique id of a gameswf resource

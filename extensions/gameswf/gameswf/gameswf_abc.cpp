@@ -453,7 +453,7 @@ namespace gameswf
 		if (n > 0)
 		{
 			m_ns_set.resize(n);
-			array<int> ns;
+			swf_array<int> ns;
 			m_ns_set[0] = ns;	// default value
 			for (int i = 1; i < n; i++)
 			{

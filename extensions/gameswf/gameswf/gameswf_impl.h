@@ -45,7 +45,7 @@ namespace gameswf
 	struct swf_event
 	{
 		// NOTE: DO NOT USE THESE AS VALUE TYPES IN AN
-		// array<>!  They cannot be moved!  The private
+		// swf_array<>!  They cannot be moved!  The private
 		// operator=(const swf_event&) should help guard
 		// against that.
 

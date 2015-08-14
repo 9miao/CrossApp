@@ -69,7 +69,7 @@ namespace gameswf
 	//private:
 		int	m_fill0, m_fill1, m_line;
 		float	m_ax, m_ay;	// starting point
-		array<edge>	m_edges;
+		swf_array<edge>	m_edges;
 		bool	m_new_shape;
 	};
 
@@ -87,8 +87,8 @@ namespace gameswf
 		void	output_cached_data(tu_file* out);
 		void	input_cached_data(tu_file* in);
 	private:
-		array<coord_component>	m_triangle_strip;// TODO remove
-		array<coord_component> m_triangle_list;
+		swf_array<coord_component>	m_triangle_strip;// TODO remove
+		swf_array<coord_component> m_triangle_list;
 	};
 
 
@@ -105,7 +105,7 @@ namespace gameswf
 		void	input_cached_data(tu_file* in);
 	private:
 		int	m_style;
-		array<coord_component>	m_coords;
+		swf_array<coord_component>	m_coords;
 	};
 
 
@@ -120,8 +120,8 @@ namespace gameswf
 
 		float	get_error_tolerance() const { return m_error_tolerance; }
 
-		void display( const matrix& m, const cxform& cx, const array<fill_style>& fills,
-			const array<line_style>& line_styles, render_handler::bitmap_blend_mode bm) const;
+		void display( const matrix& m, const cxform& cx, const swf_array<fill_style>& fills,
+			const swf_array<line_style>& line_styles, render_handler::bitmap_blend_mode bm) const;
 
 		void new_layer();
 		void	set_tri_strip(int style, const point pts[], int count);
@@ -137,12 +137,12 @@ namespace gameswf
 		
 		float	m_error_tolerance;
 		struct layer {
-			array<mesh*> m_meshes;  // one mesh per style.
-			array<line_strip*> m_line_strips;
+			swf_array<mesh*> m_meshes;  // one mesh per style.
+			swf_array<line_strip*> m_line_strips;
 
 			~layer();  // delete m_meshes & m_line_strips
 		};
-		array<layer> m_layers;
+		swf_array<layer> m_layers;
 	};
 
 
@@ -162,8 +162,8 @@ namespace gameswf
 		const rect&	get_bound_local() const { return m_bound; }
 
 		void	read(stream* in, int tag_type, bool with_style, movie_definition_sub* m);
-		void	display( const matrix& mat, const cxform& cx, float pixel_scale, const array<fill_style>& fill_styles,
-				const array<line_style>& line_styles, render_handler::bitmap_blend_mode bm) const;
+		void	display( const matrix& mat, const cxform& cx, float pixel_scale, const swf_array<fill_style>& fill_styles,
+				const swf_array<line_style>& line_styles, render_handler::bitmap_blend_mode bm) const;
 
 		virtual void	tesselate(float error_tolerance, tesselate::trapezoid_accepter* accepter) const;
 		virtual void	tesselate_new(float error_tolerance, tesselate_new::mesh_accepter* accepter) const;
@@ -173,9 +173,9 @@ namespace gameswf
 		void	output_cached_data(tu_file* out, const cache_options& options);
 		void	input_cached_data(tu_file* in);
 
-		const array<fill_style>&	get_fill_styles() const { return m_fill_styles; }
-		const array<line_style>&	get_line_styles() const { return m_line_styles; }
-		const array<path>&	get_paths() const { return m_paths; }
+		const swf_array<fill_style>&	get_fill_styles() const { return m_fill_styles; }
+		const swf_array<line_style>&	get_line_styles() const { return m_line_styles; }
+		const swf_array<path>&	get_paths() const { return m_paths; }
 
 		// morph uses this
 		void	set_bound(const rect& r) { m_bound = r; /* should do some verifying */ }
@@ -187,9 +187,9 @@ namespace gameswf
 		friend struct canvas;
 
 		// derived morph classes changes these
-		array<fill_style>	m_fill_styles;
-		array<line_style>	m_line_styles;
-		array<path>	m_paths;
+		swf_array<fill_style>	m_fill_styles;
+		swf_array<line_style>	m_line_styles;
+		swf_array<path>	m_paths;
 
 	private:
 		void	sort_and_clean_meshes() const;
@@ -202,7 +202,7 @@ namespace gameswf
 		bool	m_uses_scaling_strokes;
 
 		// Cached pre-tesselated meshes.
-		mutable array<mesh_set*>	m_cached_meshes;
+		mutable swf_array<mesh_set*>	m_cached_meshes;
 	};
 
 }	// end namespace gameswf

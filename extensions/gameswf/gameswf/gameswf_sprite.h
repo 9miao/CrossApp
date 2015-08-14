@@ -37,13 +37,13 @@ namespace gameswf
 		root*	m_root;
 
 		display_list	m_display_list;
-		array<action_buffer*>	m_action_list;
-		array<action_buffer*>	m_goto_frame_action_list;
+		swf_array<action_buffer*>	m_action_list;
+		swf_array<action_buffer*>	m_goto_frame_action_list;
 
 		play_state	m_play_state;
 		int		m_current_frame;
 		bool		m_update_frame;
-		array<bool>	m_init_actions_executed;	// a bit-array class would be ideal for this
+		swf_array<bool>	m_init_actions_executed;	// a bit-array class would be ideal for this
 
 		as_environment	m_as_environment;
 
@@ -140,7 +140,7 @@ namespace gameswf
 		void	execute_remove_tags(int frame);
 		void	set_frame_script(int frame);	// flash9
 		void	do_actions();
-		virtual void do_actions(const array<action_buffer*>& action_list);
+		virtual void do_actions(const swf_array<action_buffer*>& action_list);
 		exported_module void	goto_frame(const tu_string& target_frame);
 		exported_module void	goto_frame(int target_frame_number);
 		exported_module bool	goto_labeled_frame(const char* label);
@@ -148,7 +148,7 @@ namespace gameswf
 		void	display();
 
 		character*	add_display_object( Uint16 character_id, const tu_string& name,
-			const array<swf_event*>& event_handlers, int depth, bool replace_if_depth_is_occupied,
+			const swf_array<swf_event*>& event_handlers, int depth, bool replace_if_depth_is_occupied,
 			const cxform& color_transform, const matrix& matrix, float ratio, Uint16 clip_depth, Uint8 blend_mode);
 		void	move_display_object( int depth, bool use_cxform, const cxform& color_xform, bool use_matrix,
 			const matrix& mat, float ratio, Uint16 clip_depth, Uint8 blend_mode);

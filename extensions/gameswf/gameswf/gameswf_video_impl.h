@@ -47,7 +47,7 @@ namespace gameswf
 		// 3: screen video (Flash 7+ only)
 		// 4: VP6
 		Uint8 m_codec_id;
-		array<void*>	m_frames;
+		swf_array<void*>	m_frames;
 	};
 
 	struct video_stream_instance : public character

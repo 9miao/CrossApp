@@ -79,7 +79,7 @@ namespace gameswf
 		};
 
 
-		array<int> m_metadata;
+		swf_array<int> m_metadata;
 
 		void	read(stream* in, abc_def* abc);
 	};
@@ -121,10 +121,10 @@ namespace gameswf
 
 		// method_info
 		int m_return_type;
-		array<int> m_param_type;
+		swf_array<int> m_param_type;
 		int m_name;
 		Uint8 m_flags;
-		array<option_detail> m_options;
+		swf_array<option_detail> m_options;
 		int m_method;	// index in method_info
 
 		// body_info
@@ -136,8 +136,8 @@ namespace gameswf
 		int m_init_scope_depth;
 		int m_max_scope_depth;
 		membuf m_code;
-		array<gc_ptr<except_info> > m_exception;
-		array<gc_ptr<traits_info> > m_trait;
+		swf_array<gc_ptr<except_info> > m_exception;
+		swf_array<gc_ptr<traits_info> > m_trait;
 		jit_function m_compiled_code;
 
 		as_3_function(abc_def* abc, int method, player* player);
@@ -146,7 +146,7 @@ namespace gameswf
 		// Dispatch.
 		virtual void	operator()(const fn_call& fn);
 
-		void	execute(array<as_value>& lregister, as_environment* env, as_value* result);
+		void	execute(swf_array<as_value>& lregister, as_environment* env, as_value* result);
 		void	compile();
 
 		void	compile_stack_resize(int count);

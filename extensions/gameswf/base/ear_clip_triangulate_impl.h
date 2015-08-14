@@ -156,10 +156,10 @@ struct tristate {
 		delete m_reflex_point_index;
 	}
 	
-//	array<coord_t>* m_results;
+//	swf_array<coord_t>* m_results;
 	trilist_accepter* m_output;
-	array<poly_vert> m_verts;
-	array<path_info> m_input_paths;
+	swf_array<poly_vert> m_verts;
+	swf_array<path_info> m_input_paths;
 
 	int m_estimated_vert_count;
 	index_box_t m_bbox;
@@ -179,7 +179,7 @@ struct tristate {
 
 	// For debugging.
 	int m_debug_halt_step;
-	array<coord_t>* m_debug_edges;
+	swf_array<coord_t>* m_debug_edges;
 };
 
 
@@ -203,7 +203,7 @@ static int	compare_vertices(const poly_vert& a, const poly_vert& b)
 
 // Helper for sorting verts.
 struct vert_index_sorter {
-	vert_index_sorter(const array<poly_vert>& verts)
+	vert_index_sorter(const swf_array<poly_vert>& verts)
 		: m_verts(verts) {
 	}
 
@@ -212,7 +212,7 @@ struct vert_index_sorter {
 		return compare_vertices(m_verts[a], m_verts[b]) == -1;
 	}
 
-	const array<poly_vert>& m_verts;
+	const swf_array<poly_vert>& m_verts;
 };
 
 
@@ -387,8 +387,8 @@ static void sort_and_remap(tristate* ts)
 // verts.
 {
 	// Sort.
-	array<poly_vert> verts = ts->m_verts;
-	array<int> vert_indices(verts.size());   // verts[vert_indices[0]] --> leftmost vert
+	swf_array<poly_vert> verts = ts->m_verts;
+	swf_array<int> vert_indices(verts.size());   // verts[vert_indices[0]] --> leftmost vert
 	for (int i = 0; i < verts.size(); i++) {
 		vert_indices[i] = i;
 	}
@@ -398,7 +398,7 @@ static void sort_and_remap(tristate* ts)
 	}
 
 	// Make the old-to-new mapping.
-	array<int> old_to_new;
+	swf_array<int> old_to_new;
 	old_to_new.resize(verts.size());
 
 // 	// Remove dupes.
@@ -444,8 +444,8 @@ static void sort_and_remap(tristate* ts)
 
 
 static void init(tristate* ts, trilist_accepter* output, path_supplier* input,
-		 /*array<coord_t>* results, int path_count, const array<coord_t> paths[], */
-		 int debug_halt_step, array<coord_t>* debug_edges)
+		 /*swf_array<coord_t>* results, int path_count, const swf_array<coord_t> paths[], */
+		 int debug_halt_step, swf_array<coord_t>* debug_edges)
 // Pull the paths into *tristate.
 {
 	assert(output);
@@ -730,7 +730,7 @@ static vec2_t debug_centroid(const tristate* ts, int vi0, int vi1, int vi2)
 }
 
 
-static void debug_make_x(array<coord_t>* out, const vec2_t& v)
+static void debug_make_x(swf_array<coord_t>* out, const vec2_t& v)
 {
 	if (!out) return;
 	out->push_back(v.x - 200);
@@ -744,7 +744,7 @@ static void debug_make_x(array<coord_t>* out, const vec2_t& v)
 }
 
 
-static void debug_make_plus(array<coord_t>* out, const vec2_t& v)
+static void debug_make_plus(swf_array<coord_t>* out, const vec2_t& v)
 {
 	if (!out) return;
 	out->push_back(v.x);
@@ -758,7 +758,7 @@ static void debug_make_plus(array<coord_t>* out, const vec2_t& v)
 }
 
 
-static void debug_make_square(array<coord_t>* out, const vec2_t& v)
+static void debug_make_square(swf_array<coord_t>* out, const vec2_t& v)
 {
 	if (!out) return;
 	out->push_back(v.x - 200);
@@ -1113,7 +1113,7 @@ static void compute_triangulation_impl(
 	trilist_accepter* output,
 	path_supplier* input,
 	int debug_halt_step,
-	array<coord_t>* debug_edges)
+	swf_array<coord_t>* debug_edges)
 {
 #ifdef PROFILE_TRIANGULATE
 	uint64	start_ticks = tu_timer::get_profile_ticks();
@@ -1154,7 +1154,7 @@ namespace ear_clip_triangulate
 template<class coord_t>
 struct ear_clip_array_io
 {
-	ear_clip_array_io(array<coord_t>* results, int path_count, const array<coord_t> paths[])
+	ear_clip_array_io(swf_array<coord_t>* results, int path_count, const swf_array<coord_t> paths[])
 		:
 		m_results(results),
 		m_path_count(path_count),
@@ -1221,20 +1221,20 @@ struct ear_clip_array_io
 	}
 
 // data:
-	array<coord_t>* m_results;
+	swf_array<coord_t>* m_results;
 	int m_path_count;
-	const array<coord_t>* m_paths;
+	const swf_array<coord_t>* m_paths;
 	int m_next_path;
 };
 
 
 template<class coord_t>
 static void compute_triangulation(
-	array<coord_t>* results,
+	swf_array<coord_t>* results,
 	int path_count,
-	const array<coord_t> paths[],
+	const swf_array<coord_t> paths[],
 	int debug_halt_step,
-	array<coord_t>* debug_edges)
+	swf_array<coord_t>* debug_edges)
 {
 	ear_clip_array_io<coord_t> io(results, path_count, paths);
 	ear_clip_wrapper<coord_t, ear_clip_array_io<coord_t>, ear_clip_array_io<coord_t> >::

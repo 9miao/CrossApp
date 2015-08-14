@@ -356,7 +356,7 @@ tu_string string_printf(const char* fmt, ...)
 void	test_hash()
 {
 	// Collect a bunch of random key/value pairs.
-	array<Uint32>	data;
+	swf_array<Uint32>	data;
 	for (int i = 0; i < 1000; i++)
 	{
 		data.push_back(tu_random::next_random());
@@ -487,7 +487,7 @@ void	test_hash_speed()
 	const int	SIZE = 1000000;
 
 	// Make an array of random numbers.
-	array<uint32>	numbers;
+	swf_array<uint32>	numbers;
 	numbers.resize(SIZE);
 
 	for (int i = 0, n = numbers.size(); i < n; i++)
@@ -634,7 +634,7 @@ int	main()
 #if 1
 	printf("sizeof(tu_string) == %d\n", sizeof(tu_string));
 
-	array<tu_string>	storage;
+	swf_array<tu_string>	storage;
 	storage.resize(2);
 
 	tu_string&	a = storage[0];
@@ -826,7 +826,7 @@ int	main()
 
 	test_unicode();
 
-	// TODO: unit tests for array<>, string_hash<>
+	// TODO: unit tests for swf_array<>, string_hash<>
 #endif
 
 	test_hash_speed();

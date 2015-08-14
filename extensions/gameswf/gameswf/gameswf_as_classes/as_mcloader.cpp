@@ -53,7 +53,7 @@ namespace gameswf
 		fn.result->set_bool(false);	// on default
 		if (fn.nargs == 2)
 		{
-			array<as_value> event_args;	// for event handler args
+			swf_array<as_value> event_args;	// for event handler args
 			event_args.push_back(as_value());	// undefined
 
 			tu_string infile = get_full_url(fn.get_player()->get_workdir(), fn.arg(0).to_string());
@@ -134,7 +134,7 @@ namespace gameswf
 
 		for (int i = 0; i < m_lm.size();)
 		{
-			array<as_value> event_args;		// for event handler args
+			swf_array<as_value> event_args;		// for event handler args
 			event_args.push_back(m_lm[i].m_ch);
 
 			int nframe = m_lm[i].m_def->get_loading_frame();

@@ -61,7 +61,7 @@ namespace gameswf
 		Uint8 m_blend_mode;
 		rgba	m_color;
 		matrix	m_gradient_matrix;
-		array<gradient_record>	m_gradients;
+		swf_array<gradient_record>	m_gradients;
 		gc_ptr<gameswf::bitmap_info>	m_gradient_bitmap_info;
 		gc_ptr<bitmap_character_def>	m_bitmap_character;
 		matrix	m_bitmap_matrix;
@@ -84,7 +84,7 @@ namespace gameswf
 		int m_type;
 		rgba m_color[2];
 		matrix m_gradient_matrix[2];
-		array<gradient_record> m_gradients[2];
+		swf_array<gradient_record> m_gradients[2];
 		gc_ptr<bitmap_info> m_gradient_bitmap_info[2];
 		gc_ptr<bitmap_character_def> m_bitmap_character;
 		matrix m_bitmap_matrix[2];

@@ -40,7 +40,7 @@ namespace gameswf
 		};
 
 		listener m_listeners;
-		array<loadable_movie> m_lm;
+		swf_array<loadable_movie> m_lm;
 
 		as_mcloader(player* player);
 		~as_mcloader();

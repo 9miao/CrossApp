@@ -58,7 +58,7 @@ namespace gameswf
 		string_hash<tu_string> m_headers;
 		string_hash<tu_string> m_values;
 		string_hash<tu_string> m_received_values;
-		array<request_data> m_requests;
+		swf_array<request_data> m_requests;
 
 		as_loadvars(player* player);
 

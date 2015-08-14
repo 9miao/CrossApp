@@ -80,7 +80,7 @@ namespace gameswf
 
 		action_buffer	m_action_buffer;
 
-		array<with_stack_entry>	m_with_stack;	// initial with-stack on function entry.
+		swf_array<with_stack_entry>	m_with_stack;	// initial with-stack on function entry.
 		int	m_start_pc;
 		int	m_length;
 		struct arg_spec
@@ -88,7 +88,7 @@ namespace gameswf
 			int	m_register;
 			tu_string	m_name;
 		};
-		array<arg_spec>	m_args;
+		swf_array<arg_spec>	m_args;
 		bool	m_is_function2;
 		uint8	m_local_register_count;
 		uint16	m_function2_flags;	// used by function2 to control implicit arg register assignments
@@ -101,7 +101,7 @@ namespace gameswf
 		gameswf::weak_ptr<as_object>	m_target;
 
 		as_s_function(player* player,
-			const action_buffer* ab, int start, const array<with_stack_entry>& with_stack);
+			const action_buffer* ab, int start, const swf_array<with_stack_entry>& with_stack);
 		~as_s_function();
 
 		void	set_is_function2() { m_is_function2 = true; }

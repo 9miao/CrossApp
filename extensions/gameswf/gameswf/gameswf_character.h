@@ -353,7 +353,7 @@ namespace gameswf
 		virtual character* replace_me(character_def*	def) { assert(0); return NULL; }
 		virtual character* replace_me(movie_definition*	md) { assert(0); return NULL; }
 
-		virtual character*	add_display_object( Uint16 character_id, const tu_string& name, const array<swf_event*>& event_handlers, int depth, bool replace_if_depth_is_occupied, const cxform& color_transform, const matrix& mat, float ratio, Uint16 clip_depth, Uint8 blend_mode)
+		virtual character*	add_display_object( Uint16 character_id, const tu_string& name, const swf_array<swf_event*>& event_handlers, int depth, bool replace_if_depth_is_occupied, const cxform& color_transform, const matrix& mat, float ratio, Uint16 clip_depth, Uint8 blend_mode)
 		{
 			return NULL;
 		}
@@ -374,7 +374,7 @@ namespace gameswf
 
 		virtual void	execute_frame_tags(int frame, bool state_only = false) {}
 		virtual void	add_action_buffer(action_buffer* a) { assert(0); }
-		virtual void	do_actions(const array<action_buffer*>& action_list) { assert(0); }
+		virtual void	do_actions(const swf_array<action_buffer*>& action_list) { assert(0); }
 
 		virtual character*	clone_display_object(const tu_string& newname, int depth)
 		{

@@ -99,7 +99,7 @@ namespace gameswf
 	private:
 		void	read_code_table(stream* in);
 
-		array<gc_ptr<shape_character_def> >	m_glyphs;
+		swf_array<gc_ptr<shape_character_def> >	m_glyphs;
 		tu_string	m_fontname;
 		movie_definition_sub*	m_owning_movie;
 		bool	m_has_layout;
@@ -126,9 +126,9 @@ namespace gameswf
 		float	m_ascent;
 		float	m_descent;
 		float	m_leading;
-		array<float>	m_advance_table;
+		swf_array<float>	m_advance_table;
 		// @@ we don't seem to use this thing at all, so don't bother keeping it.
-		// array<rect>	m_bounds_table;	// @@ this thing should be optional.
+		// swf_array<rect>	m_bounds_table;	// @@ this thing should be optional.
 
 		// @@ replace this with a flat hash, or else a sorted array (binary search)
 		struct kerning_pair
@@ -154,13 +154,13 @@ namespace gameswf
 				float m_alignment_coord;
 				float m_range;
 			};
-			array<zone_data> m_zone_data;
+			swf_array<zone_data> m_zone_data;
 
 			bool m_has_maskx;
 			bool m_has_masky;
 		};
 
-		array<zone_record> m_zone_table;
+		swf_array<zone_record> m_zone_table;
 	};
 
 }	// end namespace gameswf

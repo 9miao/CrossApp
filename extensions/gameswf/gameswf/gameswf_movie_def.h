@@ -194,8 +194,8 @@ namespace gameswf
 			}
 		}
 
-		virtual const array<execute_tag*>&	get_playlist(int frame_number) = 0;
-		virtual const array<execute_tag*>*	get_init_actions(int frame_number) = 0;
+		virtual const swf_array<execute_tag*>&	get_playlist(int frame_number) = 0;
+		virtual const swf_array<execute_tag*>*	get_init_actions(int frame_number) = 0;
 		virtual character_def*	get_exported_resource(const tu_string& symbol) = 0;
 		virtual character_def*	get_character_def(int id) = 0;
 
@@ -300,20 +300,20 @@ namespace gameswf
 		gameswf::hash<int, gc_ptr<font> >	 m_fonts;
 		gameswf::hash<int, gc_ptr<bitmap_character_def> >	m_bitmap_characters;
 		gameswf::hash<int, gc_ptr<sound_sample> >	m_sound_samples;
-		array<array<execute_tag*> >	   m_playlist;	// A list of movie control events for each frame.
-		array<array<execute_tag*> >	   m_init_action_list;	// Init actions for each frame.
+		swf_array<swf_array<execute_tag*> >	   m_playlist;	// A list of movie control events for each frame.
+		swf_array<swf_array<execute_tag*> >	   m_init_action_list;	// Init actions for each frame.
 		stringi_hash<int>		   m_named_frames;	// 0-based frame #'s
 		stringi_hash<gc_ptr<character_def> > m_exports;
 
 		// Items we import.
-		array<import_info>	m_imports;
+		swf_array<import_info>	m_imports;
 
 		// Movies we import from; hold a ref on these, to keep them alive
-		array<gc_ptr<movie_definition> >	m_import_source_movies;
+		swf_array<gc_ptr<movie_definition> >	m_import_source_movies;
 
 		// Bitmaps used in this movie; collected in one place to make
 		// it possible for the host to manage them as textures.
-		array<gc_ptr<bitmap_info> >	m_bitmap_list;
+		swf_array<gc_ptr<bitmap_info> >	m_bitmap_list;
 
 		create_bitmaps_flag	m_create_bitmaps;
 		create_font_shapes_flag	m_create_font_shapes;
@@ -385,12 +385,12 @@ namespace gameswf
 		void	set_jpeg_loader(jpeg::input* j_in);
 		jpeg::input*	get_jpeg_loader();
 
-		virtual const array<execute_tag*>&	get_playlist(int frame_number);
+		virtual const swf_array<execute_tag*>&	get_playlist(int frame_number);
 
-		virtual const array<execute_tag*>*	get_init_actions(int frame_number);
+		virtual const swf_array<execute_tag*>*	get_init_actions(int frame_number);
 		void	read(tu_file* in);
 		void	read_tags();
-		void	get_owned_fonts(array<font*>* fonts);
+		void	get_owned_fonts(swf_array<font*>* fonts);
 
 		void	output_cached_data(tu_file* out, const cache_options& options);
 		void	input_cached_data(tu_file* in);

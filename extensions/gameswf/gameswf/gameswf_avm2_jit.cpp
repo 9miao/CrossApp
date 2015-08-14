@@ -17,21 +17,21 @@ namespace gameswf
 {
 
 	template< typename T >
-	void stack_push_back_value( array<as_value> & stack, T value )
+	void stack_push_back_value( swf_array<as_value> & stack, T value )
 	{
 		stack.push_back( value );
 	}
 
 	template< typename T >
-	void stack_push_back_ref( array<as_value> & stack, T & value )
+	void stack_push_back_ref( swf_array<as_value> & stack, T & value )
 	{
 		stack.push_back( value );
 	}
 
-	typedef void ( *stack_int_function )( array<as_value> & stack, int value );
-	typedef void ( *stack_charp_function )( array<as_value> & stack, char * value );
-	typedef void (array<as_value>::*push_value_function )( as_value & );
-	typedef as_value & (array<as_value>::*index_function)(int);
+	typedef void ( *stack_int_function )( swf_array<as_value> & stack, int value );
+	typedef void ( *stack_charp_function )( swf_array<as_value> & stack, char * value );
+	typedef void (swf_array<as_value>::*push_value_function )( as_value & );
+	typedef as_value & (swf_array<as_value>::*index_function)(int);
 
 	template<typename T> struct constructor_helper
 	{
@@ -49,7 +49,7 @@ namespace gameswf
 
 	struct callpropvoid
 	{
-		static void call( const as_object *_this, const char* name, int arg_count, array<as_value> & stack )
+		static void call( const as_object *_this, const char* name, int arg_count, swf_array<as_value> & stack )
 		{
 			as_environment env(_this->get_player());
 			for (int i = 0; i < arg_count; i++)
@@ -162,13 +162,13 @@ namespace gameswf
 				case 0x30:	// pushscope
 				{
 					//as_value& val = stack.back();
-					typedef as_value& ( array<as_value>::*back_function )();
+					typedef as_value& ( swf_array<as_value>::*back_function )();
 					jit_load( m_compiled_code, jit_this_pointer, jit_getarg( 1 ) );
-					jit_this_call( m_compiled_code, (back_function)&array<as_value>::back );
+					jit_this_call( m_compiled_code, (back_function)&swf_array<as_value>::back );
 
 					jit_load( m_compiled_code, jit_this_pointer, var_scope );
 					jit_push( m_compiled_code, jit_result );
-					jit_call( m_compiled_code, (push_value_function)&array<as_value>::push_back );
+					jit_call( m_compiled_code, (push_value_function)&swf_array<as_value>::push_back );
 					jit_popargs( m_compiled_code, 1 );
 
 
@@ -200,7 +200,7 @@ namespace gameswf
 					struct constructsuper
 					{
 					
-						static void call( array<as_value> & stack, int arg_count )
+						static void call( swf_array<as_value> & stack, int arg_count )
 						{
 							as_object* obj = stack.back().to_object();
 							stack.resize(stack.size() - 1);
@@ -268,8 +268,8 @@ namespace gameswf
 
 					//as_value* val = stack.back();
 					jit_load( m_compiled_code, jit_this_pointer, jit_getarg( 1 ) );
-					typedef as_value& ( array<as_value>::*back_function )();
-					jit_this_call( m_compiled_code, (back_function)&array<as_value>::back );
+					typedef as_value& ( swf_array<as_value>::*back_function )();
+					jit_this_call( m_compiled_code, (back_function)&swf_array<as_value>::back );
 					jit_mov( m_compiled_code, jit_esi, jit_result );
 
 					for (int i = 0; i < arg_count; i++)
@@ -288,8 +288,8 @@ namespace gameswf
 
 					//as_object* obj = stack.back().to_object();
 					jit_load( m_compiled_code, jit_this_pointer, jit_getarg( 1 ) );
-					typedef as_value& ( array<as_value>::*back_function )();
-					jit_this_call( m_compiled_code, (back_function)&array<as_value>::back );
+					typedef as_value& ( swf_array<as_value>::*back_function )();
+					jit_this_call( m_compiled_code, (back_function)&swf_array<as_value>::back );
 					jit_mov( m_compiled_code, jit_this_pointer, jit_result );
 					jit_this_call( m_compiled_code, &as_value::to_object );
 					jit_mov( m_compiled_code, jit_esi, jit_result );
@@ -327,7 +327,7 @@ namespace gameswf
 					// TODO: inline
 					struct findpropstrict
 					{
-						static as_object * call( char* name, array<as_value> & scope )
+						static as_object * call( char* name, swf_array<as_value> & scope )
 						{
 							for (int i = scope.size() - 1; i >= 0; i--)
 							{
@@ -368,7 +368,7 @@ namespace gameswf
 
 					struct findproperty
 					{
-						static void call( const char* name, array<as_value> & scope, array<as_value> & stack )
+						static void call( const char* name, swf_array<as_value> & scope, swf_array<as_value> & stack )
 						{
 							as_object* obj = NULL;
 							for (int i = scope.size() - 1; i >= 0; i--)
@@ -407,7 +407,7 @@ namespace gameswf
 
 					struct getlex
 					{
-						static void call( const char* name, array<as_value> & scope, array<as_value> &stack )
+						static void call( const char* name, swf_array<as_value> & scope, swf_array<as_value> &stack )
 						{
 							// search property in scope
 							as_value val;
@@ -464,7 +464,7 @@ namespace gameswf
 
 					struct initproperty
 					{
-						static void call( const char * name, array<as_value> & stack )
+						static void call( const char * name, swf_array<as_value> & stack )
 						{
 							as_value& val = stack[stack.size() - 1];
 							as_object* obj = stack[stack.size() - 2].to_object();
@@ -495,13 +495,13 @@ namespace gameswf
 					//as_value& val = lregister[opcode & 0x03];
 					jit_load( m_compiled_code, jit_this_pointer, jit_getarg( 0 ) );
 					jit_pushi( m_compiled_code, opcode & 0x03 );
-					jit_this_call( m_compiled_code, (index_function)&array<as_value>::operator[] );
+					jit_this_call( m_compiled_code, (index_function)&swf_array<as_value>::operator[] );
 					jit_popargs( m_compiled_code, 1 );
 
 					//stack.push_back(val);
 					jit_push( m_compiled_code, jit_result );
 					jit_load( m_compiled_code, jit_this_pointer, jit_getarg( 1 ) );
-					jit_this_call( m_compiled_code, (push_value_function) &array<as_value>::push_back );
+					jit_this_call( m_compiled_code, (push_value_function) &swf_array<as_value>::push_back );
 					jit_popargs( m_compiled_code, 1 );
 
 					//IF_VERBOSE_ACTION(log_msg("EX: getlocal_%d\t %s\n", opcode & 0x03, val.to_xstring()));
@@ -527,11 +527,11 @@ namespace gameswf
 	{
 #ifdef __GAMESWF_ENABLE_JIT__
 		jit_load( m_compiled_code, jit_this_pointer, jit_getarg( 1 ) );
-		jit_this_call( m_compiled_code, &array<as_value>::size );
+		jit_this_call( m_compiled_code, &swf_array<as_value>::size );
 		jit_subi( m_compiled_code, jit_eax, count );
 		jit_pusharg( m_compiled_code, jit_eax );
 		jit_load( m_compiled_code, jit_this_pointer, jit_getarg( 1 ) );
-		jit_this_call( m_compiled_code,  &array<as_value>::resize );
+		jit_this_call( m_compiled_code,  &swf_array<as_value>::resize );
 		jit_popargs( m_compiled_code, 1 );
 #endif
 	}
