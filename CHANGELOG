@@ -19,6 +19,22 @@
 
 #####6.其他一些细节的优化
 
+
+#### CrossApp 1.1.10 Update:  
+
+#####1. Optimized CATextField
+1. Added content alignment setting interface
+2. Fixed bug that multi CATextField caused messy code in Android
+3. Added input functionality that supports .mac platform
+#####2. Optimizations in CADevice
+1. Call album and camera, and cancel tailorable functionablity interface
+2. Added version number obtaining
+#####3. Fixed bug that webView cannot reload after being released in webView
+#####4. Optimized animation system of CAViewAnimation
+#####5. Optimized CAImage, adding support for tiff format
+#####6. Other Details Tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 1.1.9 更新内容：  
