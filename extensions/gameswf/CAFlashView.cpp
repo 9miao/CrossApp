@@ -5,13 +5,12 @@
 //  Created by qiaoxin on 15-05-12.
 //
 
-#include "CrossApp.h"
 #include "CAFlashView.h"
 
 
 NS_CC_EXT_BEGIN
 
-extension::CAFlashView::CAFlashView()
+CAFlashView::CAFlashView()
 :m_pFlash(NULL)
 ,m_bIsRepeatForever(false)
 ,m_bIsRunning(false)
@@ -19,15 +18,15 @@ extension::CAFlashView::CAFlashView()
     this->setDisplayRange(false);
 }
 
-extension::CAFlashView::~CAFlashView()
+CAFlashView::~CAFlashView()
 {
     this->stopAnimation();
     CC_SAFE_DELETE(m_pFlash);
 }
 
-extension::CAFlashView* extension::CAFlashView::createWithFlash(CAFlash* flash)
+CAFlashView* CAFlashView::createWithFlash(extension::CAFlash* flash)
 {
-    extension::CAFlashView* view = new extension::CAFlashView();
+    CAFlashView* view = new CAFlashView();
     if ( view && view->initWithFlash(flash)) {
         view->autorelease();
         return view;
@@ -35,7 +34,7 @@ extension::CAFlashView* extension::CAFlashView::createWithFlash(CAFlash* flash)
     return NULL;
 }
 
-bool extension::CAFlashView::initWithFlash(CAFlash* flash)
+bool CAFlashView::initWithFlash(extension::CAFlash* flash)
 {
     if (!this->init())
     {
@@ -46,51 +45,51 @@ bool extension::CAFlashView::initWithFlash(CAFlash* flash)
     return true;
 }
 
-bool extension::CAFlashView::init()
+bool CAFlashView::init()
 {
     return true;
 }
 
-void extension::CAFlashView::setFlash(CAFlash* flash)
+void CAFlashView::setFlash(extension::CAFlash* flash)
 {
     CC_SAFE_RETAIN(flash);
     CC_SAFE_DELETE(m_pFlash);
     m_pFlash = flash;
 }
 
-void extension::CAFlashView::onEnter()
+void CAFlashView::onEnter()
 {
     CAView::onEnter();
 }
 
-void extension::CAFlashView::onExit()
+void CAFlashView::onExit()
 {
     CAView::onExit();
     if(!this->isRunning())
         return;
-    CAScheduler::unschedule(schedule_selector(extension::CAFlashView::update), this);
+    CAScheduler::unschedule(schedule_selector(CAFlashView::update), this);
     this->setRunning(false);
 }
 
-void extension::CAFlashView::runAnimation()
+void CAFlashView::runAnimation()
 {
     if(this->isRunning())
         return;
     this->setRunning(true);
     m_pFlash->setIndex(0);
     m_pFlash->playRun();
-    CAScheduler::schedule(schedule_selector(extension::CAFlashView::update), this, 0.01f);
+    CAScheduler::schedule(schedule_selector(CAFlashView::update), this, 0.01f);
 }
 
-void extension::CAFlashView::stopAnimation()
+void CAFlashView::stopAnimation()
 {
     if(! this->isRunning())
         return;
-    CAScheduler::unschedule(schedule_selector(extension::CAFlashView::update), this);
+    CAScheduler::unschedule(schedule_selector(CAFlashView::update), this);
     this->setRunning(false);
 }
 
-void extension::CAFlashView::update(float dt)
+void CAFlashView::update(float dt)
 {
     CAView::update(dt);
     int index = m_pFlash->getIndex();
@@ -112,7 +111,7 @@ void extension::CAFlashView::update(float dt)
     this->updateDraw();
 }
 
-void extension::CAFlashView::draw()
+void CAFlashView::draw()
 {
     CAView::draw();
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
@@ -137,22 +136,22 @@ void extension::CAFlashView::draw()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void extension::CAFlashView::setRepeatForever(bool repeatForever)
+void CAFlashView::setRepeatForever(bool repeatForever)
 {
     m_bIsRepeatForever = repeatForever;
 }
 
-bool extension::CAFlashView::isRepeatForever()
+bool CAFlashView::isRepeatForever()
 {
     return m_bIsRepeatForever;
 }
 
-void extension::CAFlashView::setRunning(bool running)
+void CAFlashView::setRunning(bool running)
 {
     m_bIsRunning = running;
 }
 
-bool extension::CAFlashView::isRunning()
+bool CAFlashView::isRunning()
 {
     return m_bIsRunning;
 }

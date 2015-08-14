@@ -11,19 +11,21 @@
 
 #include <iostream>
 #include "CrossApp.h"
-#include "gameswf/gameswf.h"
-#include "gameswf/gameswf_player.h"
-#include "gameswf/gameswf_root.h"
-#include "gameswf/gameswf_types.h"
-#include "gameswf/gameswf_impl.h"
 #include "ExtensionMacros.h"
+#include "gameswf/gameswf/gameswf.h"
+#include "gameswf/gameswf/gameswf_player.h"
+#include "gameswf/gameswf/gameswf_root.h"
+#include "gameswf/gameswf/gameswf_types.h"
+#include "gameswf/gameswf/gameswf_impl.h"
+#include "base/tu_file.h"
+
 
 NS_CC_EXT_BEGIN
 
-class CC_DLL CAFlash : public CAObject
+class CAFlash : public CAObject
 {
 public:
-    CAFlash();
+	CAFlash();
     virtual ~CAFlash();
     static CAFlash* createWithFilePath(const std::string& filePath);
     bool initWithFilePath(const std::string& filePath);

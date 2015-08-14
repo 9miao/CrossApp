@@ -10,10 +10,7 @@
 #define __CrossApp__CAFlashView__
 
 #include <iostream>
-#include "CrossApp.h"
-#include "ExtensionMacros.h"
 #include "CAFlash.h"
-#include "platform/CCPlatformMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -23,10 +20,10 @@ class  CAFlashView : public CAView
 public:
     CAFlashView();
     virtual ~CAFlashView();
-    static CAFlashView* createWithFlash(CAFlash* flash);
+	static CAFlashView* createWithFlash(extension::CAFlash* flash);
     bool initWithFlash(CAFlash* flash);
     bool init();
-    void setFlash(CAFlash* flash);
+	void setFlash(extension::CAFlash* flash);
     void stopAnimation();
     void runAnimation();
     void setRepeatForever(bool flag);

@@ -9,13 +9,6 @@
 
 #include "CrossApp.h"
 #include "CAFlash.h"
-#include "gameswf/gameswf.h"
-#include "gameswf/gameswf_player.h"
-#include "gameswf/gameswf_root.h"
-#include "gameswf/gameswf_types.h"
-#include "gameswf/gameswf_impl.h"
-#include "base/tu_file.h"
-
 
 NS_CC_EXT_BEGIN
 
@@ -163,7 +156,6 @@ float CAFlash::getFrameCount()
 {
     return m_nFrameCount;
 }
-
 
 
 NS_CC_EXT_END
