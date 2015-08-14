@@ -254,6 +254,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClCompile Include="..\kazmath\src\GL\matrix.c" />
     <ClCompile Include="..\view\CAActivityIndicatorView.cpp" />
     <ClCompile Include="..\view\CAAlertView.cpp" />
+    <ClCompile Include="..\view\CAAutoCollectionView.cpp" />
     <ClCompile Include="..\view\CABatchView.cpp" />
     <ClCompile Include="..\view\CAClippingView.cpp" />
     <ClCompile Include="..\view\CACollectionView.cpp" />
@@ -407,6 +408,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClInclude Include="..\kazmath\include\kazmath\GL\matrix.h" />
     <ClInclude Include="..\view\CAActivityIndicatorView.h" />
     <ClInclude Include="..\view\CAAlertView.h" />
+    <ClInclude Include="..\view\CAAutoCollectionView.h" />
     <ClInclude Include="..\view\CABatchView.h" />
     <ClInclude Include="..\view\CAClippingView.h" />
     <ClInclude Include="..\view\CACollectionView.h" />

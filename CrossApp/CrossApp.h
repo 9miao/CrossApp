@@ -86,6 +86,7 @@
 #include "view/CATableView.h"
 #include "view/CAPageView.h"
 #include "view/CACollectionView.h"
+#include "view/CAAutoCollectionView.h"
 #include "view/CAAlertView.h"
 #include "view/CAPickerView.h"
 #include "view/CADatePickerView.h"

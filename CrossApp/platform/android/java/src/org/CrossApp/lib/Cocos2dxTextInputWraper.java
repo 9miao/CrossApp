@@ -100,9 +100,6 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 	@Override
 	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) 
 	{
-		if (pKeyEvent == null)
-			return true;
-		
 		if (pActionID == EditorInfo.IME_ACTION_DONE) 
 		{
 			this.mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
@@ -141,7 +138,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
             return false;
         }
         
-        if(pKeyEvent.getAction() == KeyEvent.ACTION_DOWN)
+        if(pKeyEvent != null && pKeyEvent.getAction() == KeyEvent.ACTION_DOWN)
         {
             return true;
         }

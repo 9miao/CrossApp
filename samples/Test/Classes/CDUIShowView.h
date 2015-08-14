@@ -105,8 +105,8 @@ public CAListViewDelegate,
 public CAListViewDataSource,
 public CAPageViewDelegate,
 public CDETableViewDelegate,
-public CACollectionViewDelegate,
-public CACollectionViewDataSource,
+public CAAutoCollectionViewDelegate,
+public CAAutoCollectionViewDataSource,
 public CAScrollViewDelegate,
 public CAPickerViewDelegate,
 public CAPickerViewDataSource,
@@ -247,14 +247,13 @@ public:
     virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point);
 public:
     //CollectionView
-    virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item);
-    virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item);
+    virtual void collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item);
+	virtual void collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item);
     
-    virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item);
-    virtual unsigned int numberOfSections(CACollectionView *collectionView);
-    virtual unsigned int numberOfRowsInSection(CACollectionView *collectionView, unsigned int section);
-    virtual unsigned int numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row);
-    virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row);
+	virtual CAAutoCollectionViewCell* collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item);
+	virtual CCSize collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item);
+	virtual unsigned int numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section);
+	virtual unsigned int numberOfSections(CAAutoCollectionView *collectionView);
     
     virtual void scrollViewHeaderBeginRefreshing(CAScrollView* view);
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view);
@@ -291,7 +290,7 @@ public:
     CAPageView* p_PageViewVec;
     CAPageControl* pageControl;
     CAScrollView* p_ScrollView;
-    CACollectionView* p_Conllection;
+    CAAutoCollectionView* p_Conllection;
     CAPullToRefreshView* headerRefreshView;
     CAPullToRefreshView* footerRefreshView;
     std::vector<CAColor4B> colorArr;

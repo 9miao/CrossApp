@@ -585,6 +585,12 @@ void CATextView::getKeyBoardHeight(int height)
     }
 }
 
+void CATextView::getKeyBoradReturnCallBack()
+{
+	std::string cszText = "\n";
+	insertText(cszText.c_str(), cszText.size());
+}
+
 const char* CATextView::getContentText()
 {
 	return m_szText.c_str();

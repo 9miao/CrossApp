@@ -449,6 +449,9 @@
     <ClCompile Include="..\images\CAGif.cpp">
       <Filter>images</Filter>
     </ClCompile>
+    <ClCompile Include="..\view\CAAutoCollectionView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCArray.h">
@@ -889,6 +892,9 @@
     </ClInclude>
     <ClInclude Include="..\images\CAGif.h">
       <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAAutoCollectionView.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
