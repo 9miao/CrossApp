@@ -15,7 +15,6 @@
 #include <map>
 #include <list>
 #include <algorithm>
-#include "CAObject.h"
 
 NS_CC_BEGIN
 
@@ -304,7 +303,7 @@ public:
 	{
 		for (size_t i = 0; i < _data.size(); i++)
 		{
-            CC_SAFE_RELEASE(_data[i]);
+			CC_SAFE_RELEASE((CAObject*)_data[i]);
 		}
 		_data.clear();
 	}
@@ -596,7 +595,7 @@ public:
 	{
 		for (iterator iter = _data.begin(); iter != _data.end(); ++iter)
 		{
-			CC_SAFE_RELEASE((*iter));
+			CC_SAFE_RELEASE((CAObject*)(*iter));
 		}
 		_data.clear();
 	}
@@ -907,7 +906,7 @@ public:
     {
         for (size_t i = 0; i < _data.size(); i++)
         {
-            CC_SAFE_RELEASE(_data[i]);
+			CC_SAFE_RELEASE((CAObject*)_data[i]);
         }
         _data.clear();
     }
@@ -1024,7 +1023,8 @@ public:
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(it->second);
+			CAObject* o = (CAObject*)it->second;
+			CC_SAFE_RELEASE_NULL(o);
 			it->second = object;
 		}
 	}
@@ -1049,7 +1049,8 @@ public:
 		iterator it = _data.find(key);
 		if (it != _data.end())
 		{
-            CC_SAFE_RELEASE_NULL(it->second);
+			CAObject* o = (CAObject*)it->second;
+			CC_SAFE_RELEASE_NULL(o);
 			_data.erase(it);
 			return true;
 		}
@@ -1080,7 +1081,8 @@ public:
 	{
 		for (iterator it = _data.begin(); it != _data.end(); it++)
 		{
-            CC_SAFE_RELEASE_NULL(it->second);
+			CAObject* o = (CAObject*)it->second;
+			CC_SAFE_RELEASE_NULL(o);
 		}
 		_data.clear();
 	}
