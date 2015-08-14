@@ -109,6 +109,8 @@ void RootWindow::initUIView()
     {
         m_pRootDrawerController->hideLeftViewController(true);
     }
+    
+    CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyleLightContent);
 }
 void RootWindow::buttonCallBack(CAControl* btn,CCPoint point)
 {
@@ -230,6 +232,7 @@ void RootWindow::intNewsView()
     while (0);
     
     m_pRootDrawerController->hideLeftViewController(true);
+    CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyleDefault);
 }
 
 void RootWindow::keyBackClicked()

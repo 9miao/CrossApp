@@ -31,11 +31,9 @@ NS_CC_BEGIN
 class CACamera;
 class CCPoint;
 class CATouch;
-class CCAction;
 class CARGBAProtocol;
 class CCActionManager;
 class CCComponent;
-class CCDictionary;
 class CAImage;
 class CAViewDelegate;
 class CABatchView;

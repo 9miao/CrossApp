@@ -81,6 +81,8 @@ protected:
     
 protected:
     
+    CAView* m_pContentView;
+    
     CAView* m_pTitle;
     
     std::vector<CAButton*> m_pLeftButtons;
@@ -121,13 +123,19 @@ protected:
     
 };
 
+typedef enum
+{
+    CABarVerticalAlignmentTop = 0,
+    CABarVerticalAlignmentBottom
+}CABarVerticalAlignment;
+
 class CC_DLL CATabBar
 :public CAView
 {
     
 public:
     
-    static CATabBar* create(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
+    static CATabBar* create(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
     
 	void setItems(const CAVector<CATabBarItem*>& items);
     
@@ -137,7 +145,7 @@ public:
     
     virtual ~CATabBar();
 
-    virtual bool init(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
+    virtual bool init(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
     
     CC_PROPERTY(CAImage*, m_pBackGroundImage, BackGroundImage);
     
@@ -159,7 +167,7 @@ public:
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CATabBarItem*>, m_pItems, Items);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CADipSize, m_cItemSize, ItemSize);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_cItemSize, ItemSize);
     
     CC_SYNTHESIZE_READONLY(int, m_nSelectedIndex, SelectedIndex);
     
@@ -188,6 +196,8 @@ protected:
 protected:
     
     bool m_bShowIndicator;
+    
+    CABarVerticalAlignment m_eVerticalAlignment;
     
     CATabBarItem* m_pSelectedItem;
 

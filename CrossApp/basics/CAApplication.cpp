@@ -409,6 +409,16 @@ void CAApplication::reshapeProjection(const CCSize& newWindowSize)
 	}
 
 }
+
+void CAApplication::setStatusBarStyle(const CAStatusBarStyle &var)
+{
+    m_eStatusBarStyle = var;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    CCApplication::sharedApplication()->setStatusBarStyle(var);
+#endif
+    
+}
+
 void CAApplication::setDepthTest(bool bOn)
 {
     if (bOn)

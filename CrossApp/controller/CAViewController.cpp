@@ -335,7 +335,7 @@ const CAColor4B& CANavigationController::getNavigationBarButtonColor()
     return m_sNavigationBarButtonColor;
 }
 
-bool CANavigationController::initWithRootViewController(CAViewController* viewController, CABarVerticalAlignment var)
+bool CANavigationController::initWithRootViewController(CAViewController* viewController)
 {
     CAViewController::init();
     
@@ -348,9 +348,7 @@ bool CANavigationController::initWithRootViewController(CAViewController* viewCo
     {
         return false;
     }
-    
-    m_eNavigationBarVerticalAlignment = var;
-    
+
     m_pViewControllers.pushBack(viewController);
     
     return true;
@@ -382,12 +380,13 @@ void CANavigationController::updateItem(CAViewController* viewController)
 
 void CANavigationController::viewDidLoad()
 {
-    m_tNavigationBarSize = CCSize(this->getView()->getBounds().size.width, _px(88));
-    
     CAViewController* viewController = m_pViewControllers.front();
     viewController->retain()->autorelease();
     m_pViewControllers.popFront();
     this->createWithContainer(viewController);
+    
+    m_tNavigationBarSize = m_pNavigationBars.front()->getFrame().size;
+    
     this->layoutNewContainer();
 }
 
@@ -487,10 +486,7 @@ void CANavigationController::layoutNewContainer()
         container_rect.size.height -= m_tNavigationBarSize.height;
         navigation_bar_rect.origin = this->getNavigationBarOpenPoint();
         
-        if (m_eNavigationBarVerticalAlignment == CABarVerticalAlignmentTop)
-        {
-            container_rect.origin.y = m_tNavigationBarSize.height;
-        }
+        container_rect.origin.y = m_tNavigationBarSize.height;
     }
     
     CAView* container = m_pContainers.back();
@@ -662,26 +658,12 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     
     
     {
-        CCRect rect = this->getView()->getBounds();
-        
         CCPoint point = this->getNavigationBarNowPoint(showViewController);
         
-        switch (m_eNavigationBarVerticalAlignment)
-        {
-            case CABarVerticalAlignmentTop:
-            {
-                rect.origin.y = point.y + m_tNavigationBarSize.height;
-                rect.size.height = rect.size.height - rect.origin.y;
-            }
-                break;
-            case CABarVerticalAlignmentBottom:
-            {
-                rect.size.height = point.y;
-            }
-                break;
-            default:
-                break;
-        }
+        CCRect rect = this->getView()->getBounds();
+        rect.origin.y = point.y + m_tNavigationBarSize.height;
+        rect.size.height = rect.size.height - rect.origin.y;
+        
         m_pNavigationBars.at(index)->setFrameOrigin(point);
         
         CAView* secondContainer = m_pSecondContainers.at(index);
@@ -761,26 +743,11 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
     showContainer->setFrameOrigin(CCPoint(-x/2.0f, 0));
     
     {
-        CCRect rect = this->getView()->getBounds();
-        
         CCPoint point = this->getNavigationBarNowPoint(showViewController);
         
-        switch (m_eNavigationBarVerticalAlignment)
-        {
-            case CABarVerticalAlignmentTop:
-            {
-                rect.origin.y = point.y + m_tNavigationBarSize.height;
-                rect.size.height = rect.size.height - rect.origin.y;
-            }
-                break;
-            case CABarVerticalAlignmentBottom:
-            {
-                rect.size.height = point.y;
-            }
-                break;
-            default:
-                break;
-        }
+        CCRect rect = this->getView()->getBounds();
+        rect.origin.y = point.y + m_tNavigationBarSize.height;
+        rect.size.height = rect.size.height - rect.origin.y;
         m_pNavigationBars.at(index)->setFrameOrigin(point);
         
         CAView* secondContainer = m_pSecondContainers.at(index);
@@ -955,32 +922,14 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
 CCPoint CANavigationController::getNavigationBarOpenPoint()
 {
     CCPoint p = CCPointZero;
-    float height = this->getView()->getBounds().size.height;
-    
-    if (m_eNavigationBarVerticalAlignment == CABarVerticalAlignmentTop)
-    {
-        p.y = 0;
-    }
-    else
-    {
-        p.y = height - m_tNavigationBarSize.height;
-    }
+    p.y = 0;
     return p;
 }
 
 CCPoint CANavigationController::getNavigationBarTakeBackPoint()
 {
     CCPoint p = CCPointZero;
-    float height = this->getView()->getBounds().size.height;
-    
-    if (m_eNavigationBarVerticalAlignment == CABarVerticalAlignmentTop)
-    {
-        p.y = -m_tNavigationBarSize.height;
-    }
-    else
-    {
-        p.y = height;
-    }
+    p.y = -m_tNavigationBarSize.height;
     return p;
 }
 
@@ -1021,26 +970,11 @@ void CANavigationController::update(float dt)
 {
     CAViewController* viewController = m_pViewControllers.back();
     
-    CCRect rect = this->getView()->getBounds();
-    
     CCPoint point = this->getNavigationBarNowPoint(viewController);
 
-    switch (m_eNavigationBarVerticalAlignment)
-    {
-        case CABarVerticalAlignmentTop:
-        {
-            rect.origin.y = point.y + m_tNavigationBarSize.height;
-            rect.size.height = rect.size.height - rect.origin.y;
-        }
-            break;
-        case CABarVerticalAlignmentBottom:
-        {
-            rect.size.height = point.y;
-        }
-            break;
-        default:
-            break;
-    }
+    CCRect rect = this->getView()->getBounds();
+    rect.origin.y = point.y + m_tNavigationBarSize.height;
+    rect.size.height = rect.size.height - rect.origin.y;
     m_pNavigationBars.back()->setFrameOrigin(point);
     
     CAView* secondContainer = m_pSecondContainers.back();
@@ -1384,7 +1318,7 @@ void CATabBarController::viewDidLoad()
         view->m_pTabBarController = this;
     }
     
-    m_pTabBar = CATabBar::create(items, CCSize(this->getView()->getBounds().size.width, 0));
+    m_pTabBar = CATabBar::create(items, CCSize(this->getView()->getBounds().size.width, 0), m_eTabBarVerticalAlignment);
     this->getView()->addSubview(m_pTabBar);
     m_pTabBar->setDelegate(this);
     

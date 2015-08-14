@@ -37,8 +37,6 @@
 		04EAB07A1956D75600198A8E /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0711956D74D00198A8E /* ccMacros.h */; };
 		04EAB07B1956D75600198A8E /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0721956D74D00198A8E /* ccTypeInfo.h */; };
 		04EAB07C1956D75600198A8E /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0731956D74D00198A8E /* ccTypes.h */; };
-		04EAB07F1956D75600198A8E /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0771956D74D00198A8E /* CCArray.cpp */; };
-		04EAB0801956D75600198A8E /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0781956D74D00198A8E /* CCArray.h */; };
 		04EAB0841956D75600198A8E /* CCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA07C1956D74D00198A8E /* CCDictionary.cpp */; };
 		04EAB0851956D75600198A8E /* CCDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA07D1956D74D00198A8E /* CCDictionary.h */; };
 		04EAB0891956D75600198A8E /* CCNS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0811956D74D00198A8E /* CCNS.cpp */; };
@@ -540,8 +538,6 @@
 		04EAA0711956D74D00198A8E /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
 		04EAA0721956D74D00198A8E /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
 		04EAA0731956D74D00198A8E /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
-		04EAA0771956D74D00198A8E /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
-		04EAA0781956D74D00198A8E /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		04EAA07C1956D74D00198A8E /* CCDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDictionary.cpp; sourceTree = "<group>"; };
 		04EAA07D1956D74D00198A8E /* CCDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDictionary.h; sourceTree = "<group>"; };
 		04EAA0811956D74D00198A8E /* CCNS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNS.cpp; sourceTree = "<group>"; };
@@ -1095,8 +1091,6 @@
 			children = (
 				B01A293F1994C95F00D42BA0 /* CACalendar.cpp */,
 				B01A29401994C95F00D42BA0 /* CACalendar.h */,
-				04EAA0771956D74D00198A8E /* CCArray.cpp */,
-				04EAA0781956D74D00198A8E /* CCArray.h */,
 				04EAA07C1956D74D00198A8E /* CCDictionary.cpp */,
 				04EAA07D1956D74D00198A8E /* CCDictionary.h */,
 				04EAA0811956D74D00198A8E /* CCNS.cpp */,
@@ -1870,7 +1864,6 @@
 				04EAB07C1956D75600198A8E /* ccTypes.h in Headers */,
 				B0C94CEF1B2A7BB60007FAEB /* CAGifView.h in Headers */,
 				B01F650519657084005C14FC /* CACollectionView.h in Headers */,
-				04EAB0801956D75600198A8E /* CCArray.h in Headers */,
 				B01A29421994C95F00D42BA0 /* CACalendar.h in Headers */,
 				B0DA93FA19D79B1A00E66E11 /* CATextView.h in Headers */,
 				04EAB0851956D75600198A8E /* CCDictionary.h in Headers */,
@@ -2186,7 +2179,6 @@
 				B0A02FED1A8D8E960005CB8F /* CATempTypeFont.cpp in Sources */,
 				04EAB0731956D75600198A8E /* CAResponder.cpp in Sources */,
 				04EAB0751956D75600198A8E /* CAScheduler.cpp in Sources */,
-				04EAB07F1956D75600198A8E /* CCArray.cpp in Sources */,
 				B07608451ACCDE6C0005F878 /* CADrawingPrimitives.cpp in Sources */,
 				04EAB0841956D75600198A8E /* CCDictionary.cpp in Sources */,
 				04EAB0891956D75600198A8E /* CCNS.cpp in Sources */,

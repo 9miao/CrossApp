@@ -42,7 +42,6 @@ void CAShaderCache::purgeSharedShaderCache()
 }
 
 CAShaderCache::CAShaderCache()
-: m_pPrograms(0)
 {
 
 }
@@ -50,14 +49,12 @@ CAShaderCache::CAShaderCache()
 CAShaderCache::~CAShaderCache()
 {
     CCLOGINFO("CrossApp deallocing 0x%X", this);
-    m_pPrograms->release();
 }
 
 
 
 bool CAShaderCache::init()
 {
-    m_pPrograms = new CCDictionary();
     loadDefaultShaders();
     return true;
 }
@@ -68,14 +65,13 @@ void CAShaderCache::loadDefaultShaders()
     CAGLProgram *p = new CAGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureColor);
 
-    m_pPrograms->setObject(p, kCCShader_PositionTextureColor);
+    m_mPrograms.insert(kCCShader_PositionTextureColor, p);
     p->release();
 
     // Position Image Color alpha test
     p = new CAGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureColorAlphaTest);
-
-    m_pPrograms->setObject(p, kCCShader_PositionTextureColorAlphaTest);
+    m_mPrograms.insert(kCCShader_PositionTextureColorAlphaTest, p);
     p->release();
 
     //
@@ -83,8 +79,7 @@ void CAShaderCache::loadDefaultShaders()
     //
     p = new CAGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionColor);
-
-    m_pPrograms->setObject(p, kCCShader_PositionColor);
+    m_mPrograms.insert(kCCShader_PositionColor, p);
     p->release();
 
     //
@@ -92,8 +87,7 @@ void CAShaderCache::loadDefaultShaders()
     //
     p = new CAGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTexture);
-
-    m_pPrograms->setObject(p, kCCShader_PositionTexture);
+    m_mPrograms.insert(kCCShader_PositionTexture, p);
     p->release();
 
     //
@@ -101,8 +95,7 @@ void CAShaderCache::loadDefaultShaders()
     //
     p = new CAGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTexture_uColor);
-
-    m_pPrograms->setObject(p ,kCCShader_PositionTexture_uColor);
+    m_mPrograms.insert(kCCShader_PositionTexture_uColor, p);
     p->release();
 
     //
@@ -110,8 +103,7 @@ void CAShaderCache::loadDefaultShaders()
     //
     p = new CAGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureA8Color);
-    
-    m_pPrograms->setObject(p, kCCShader_PositionTextureA8Color);
+    m_mPrograms.insert(kCCShader_PositionTextureA8Color, p);
     p->release();
 
     //
@@ -119,8 +111,7 @@ void CAShaderCache::loadDefaultShaders()
     //
     p = new CAGLProgram();
     loadDefaultShader(p, kCCShaderType_Position_uColor);
-    
-    m_pPrograms->setObject(p, kCCShader_Position_uColor);
+    m_mPrograms.insert(kCCShader_Position_uColor, p);
     p->release();
     
     //
@@ -128,8 +119,7 @@ void CAShaderCache::loadDefaultShaders()
 	//
     p = new CAGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionLengthTexureColor);
-    
-    m_pPrograms->setObject(p, kCCShader_PositionLengthTexureColor);
+    m_mPrograms.insert(kCCShader_PositionLengthTexureColor, p);
     p->release();
 
     //
@@ -137,8 +127,7 @@ void CAShaderCache::loadDefaultShaders()
 	//
     p = new CAGLProgram();
     loadDefaultShader(p, kCCShaderType_ControlSwitch);
-    
-    m_pPrograms->setObject(p, kCCShader_ControlSwitch);
+    m_mPrograms.insert(kCCShader_ControlSwitch, p);
     p->release();
 }
 
@@ -289,12 +278,12 @@ void CAShaderCache::loadDefaultShader(CAGLProgram *p, int type)
 
 CAGLProgram* CAShaderCache::programForKey(const char* key)
 {
-    return (CAGLProgram*)m_pPrograms->objectForKey(key);
+    return m_mPrograms.getValue(key);
 }
 
 void CAShaderCache::addProgram(CAGLProgram* program, const char* key)
 {
-    m_pPrograms->setObject(program, key);
+    m_mPrograms.insert(key, program);
 }
 
 NS_CC_END

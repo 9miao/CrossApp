@@ -1,11 +1,10 @@
 
 
 #import "CCApplication.h"
-
 #import <UIKit/UIKit.h>
-
 #import "basics/CAGeometry.h"
 #import "CAApplicationCaller.h"
+
 
 NS_CC_BEGIN
 
@@ -113,6 +112,21 @@ TargetPlatform CCApplication::getTargetPlatform()
     else 
     {
         return kTargetIphone;
+    }
+}
+
+void CCApplication::setStatusBarStyle(const CAStatusBarStyle& var)
+{
+    switch (var)
+    {
+        case CAStatusBarStyleDefault:
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+            break;
+        case CAStatusBarStyleLightContent:
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+            break;
+        default:
+            break;
     }
 }
 

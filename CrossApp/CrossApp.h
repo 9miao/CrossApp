@@ -101,10 +101,7 @@
 #include "view/CATextEditHelper.h"
 
 // cocoa
-#include "cocoa/CCDictionary.h"
-#include "cocoa/CCArray.h"
 #include "cocoa/CCSet.h"
-#include "cocoa/CCString.h"
 #include "cocoa/CCNS.h"
 #include "cocoa/CACalendar.h"
 

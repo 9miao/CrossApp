@@ -5,7 +5,6 @@
 
 #include "support/data_support/uthash.h"
 #include "basics/CAObject.h"
-#include "CCArray.h"
 #include "CCString.h"
 
 NS_CC_BEGIN
