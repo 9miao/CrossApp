@@ -1,13 +1,13 @@
 //
-//  CACollectionView.h
+//  CAAutoCollectionView.h
 //  CrossApp
 //
-//  Created by Zhujian on 14-6-27.
+//  Created by Zhujian on 15-8-10.
 //  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
-#ifndef __CrossApp__CACollectionView__
-#define __CrossApp__CACollectionView__
+#ifndef __CrossApp__CAAutoCollectionView__
+#define __CrossApp__CAAutoCollectionView__
 
 #include "view/CAView.h"
 #include "view/CAScale9ImageView.h"
@@ -17,116 +17,147 @@
 
 NS_CC_BEGIN
 
-class CACollectionViewCell;
-class CACollectionView;
+typedef enum
+{
+	CACollectionViewOrientationHorizontal,
+	CACollectionViewOrientationVertical
+}
+CACollectionViewOrientation;
 
-class CACollectionViewDelegate
+class CAAutoCollectionViewCell;
+class CAAutoCollectionView;
+
+class CAAutoCollectionViewDelegate
 {
 public:
-	virtual ~CACollectionViewDelegate(){};
+	virtual ~CAAutoCollectionViewDelegate(){};
 
-	virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item){};
+	virtual void collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item){};
 
-	virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item){};
+	virtual void collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item){};
 };
 
 
-class CACollectionViewDataSource
+class CAAutoCollectionViewDataSource
 {
 public:
-	virtual ~CACollectionViewDataSource(){};
+	virtual ~CAAutoCollectionViewDataSource(){};
 
     //Necessary
-	virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
+	virtual CAAutoCollectionViewCell* collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item)
     {
         return NULL;
     }
 
     //Necessary
-    virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
+	virtual CCSize collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
     {
-        return 0;
-    }
-    
-	//Necessary
-    virtual unsigned int numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)
-    {
-        return 0;
+        return CCSizeZero;
     }
     
     //Necessary
-	virtual unsigned int numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)
+	virtual unsigned int numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
     {
         return 0;
     }
     
-    virtual unsigned int numberOfSections(CACollectionView *collectionView)
+    virtual unsigned int numberOfSections(CAAutoCollectionView *collectionView)
     {
         return 1;
     }
     
-	virtual CAView* collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section)
+	virtual CAView* collectionViewSectionViewForHeaderInSection(CAAutoCollectionView *collectionView, const CCSize& viewSize, unsigned int section)
     {
         return NULL;
     }
 
-    virtual unsigned int collectionViewHeightForHeaderInSection(CACollectionView *collectionView, unsigned int section)
+	virtual unsigned int collectionViewHeightForHeaderInSection(CAAutoCollectionView *collectionView, unsigned int section)
     {
         return 0;
     }
     
-	virtual CAView* collectionViewSectionViewForFooterInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section)
+	virtual CAView* collectionViewSectionViewForFooterInSection(CAAutoCollectionView *collectionView, const CCSize& viewSize, unsigned int section)
     {
         return NULL;
     }
     
-	virtual unsigned int collectionViewHeightForFooterInSection(CACollectionView *collectionView, unsigned int section)
+	virtual unsigned int collectionViewHeightForFooterInSection(CAAutoCollectionView *collectionView, unsigned int section)
     {
         return 0;
     }
     
-    virtual void collectionViewWillDisplayCellAtIndex(CACollectionView* table, CACollectionViewCell* cell, unsigned int section, unsigned int row, unsigned int item) {};
+	virtual void collectionViewWillDisplayCellAtIndex(CAAutoCollectionView* table, CAAutoCollectionViewCell* cell, unsigned int section, unsigned int item) {};
 };
 
 
-class CC_DLL CACollectionView : public CAScrollView
+struct CollectionViewRow
+{
+	CollectionViewRow() : iHeight(0) {}
+	unsigned int iHeight;
+	std::vector<CCSize> rItemSizes;
+};
+
+struct CollectionViewSection
+{
+	CollectionViewSection()
+	: pSectionHeaderView(NULL)
+	, pSectionFooterView(NULL)
+	{
+
+	}
+	CAView* pSectionHeaderView;
+	CAView* pSectionFooterView;
+
+	unsigned int nSectionHeaderHeight;
+	unsigned int nSectionFooterHeight;
+
+	std::vector<CollectionViewRow> CollectionViewRows;
+
+	CCRect rSectionRect;
+};
+
+
+
+class CC_DLL CAAutoCollectionView : public CAScrollView
 {
 public:
-	CACollectionView();
-	virtual ~CACollectionView();
+	CAAutoCollectionView();
+	virtual ~CAAutoCollectionView();
 
 	virtual void onEnterTransitionDidFinish();
 
 	virtual void onExitTransitionDidStart();
 
-	static CACollectionView* createWithFrame(const CCRect& rect);
+	static CAAutoCollectionView* createWithFrame(const CCRect& rect);
 
-	static CACollectionView* createWithCenter(const CCRect& rect);
+	static CAAutoCollectionView* createWithCenter(const CCRect& rect);
 
 	virtual bool init();
 
 	void clearData();
 	void reloadData();
 
-	CACollectionViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
+	CAAutoCollectionViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
     
     virtual void setAllowsSelection(bool var);
     
     virtual void setAllowsMultipleSelection(bool var);
     
-	void setSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
+	void setSelectRowAtIndexPath(unsigned int section, unsigned int item);
 
-    void setUnSelectRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
+    void setUnSelectRowAtIndexPath(unsigned int section, unsigned int item);
     
     virtual void setShowsScrollIndicators(bool var);
     
-    CACollectionViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
+    CAAutoCollectionViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
     
-    const CAVector<CACollectionViewCell*>& displayingCollectionCell();
+	const CAVector<CAAutoCollectionViewCell*>& displayingCollectionCell();
     
-    CC_SYNTHESIZE(CACollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
+	CC_PROPERTY(CACollectionViewOrientation, m_pCollectionViewOrientation, CollectionViewOrientation);
+
+    CC_SYNTHESIZE(CAAutoCollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
     
-	CC_SYNTHESIZE(CACollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
+	CC_SYNTHESIZE(CAAutoCollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
     
 	CC_SYNTHESIZE_RETAIN(CAView*, m_pCollectionHeaderView, CollectionHeaderView);
     
@@ -148,7 +179,7 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bAlwaysBottomSectionFooter, AlwaysBottomSectionFooter);
     
-    CACollectionViewCell* getHighlightCollectionCell();
+	CAAutoCollectionViewCell* getHighlightCollectionCell();
     
 protected:
     
@@ -225,47 +256,30 @@ private:
     using CAScrollView::getSubviewByTag;
 
 private:
-    
-    unsigned int m_nSections;
-    
-    std::vector<unsigned int> m_nRowsInSections;
-    
-    std::vector<unsigned int> m_nSectionHeights;
-    
-    std::vector<unsigned int> m_nSectionHeaderHeights;
-    
-    std::vector<unsigned int> m_nSectionFooterHeights;
-    
-    std::vector<std::vector<unsigned int> > m_nRowHeightss;
-    
-    std::vector<CCRect> m_rSectionRects;
+	std::vector<CollectionViewSection> m_rCollectionViewSection;
     
     std::map<CAIndexPath3E, CCRect> m_rUsedCollectionCellRects;
     
-    std::map<int, CAView*> m_pSectionHeaderViews;
-    
-    std::map<int, CAView*> m_pSectionFooterViews;
-    
 	std::set<CAIndexPath3E> m_pSelectedCollectionCells;
 
-	CACollectionViewCell* m_pHighlightedCollectionCells;
+	CAAutoCollectionViewCell* m_pHighlightedCollectionCells;
 
-	std::map<CAIndexPath3E, CACollectionViewCell*> m_mpUsedCollectionCells;
+	std::map<CAIndexPath3E, CAAutoCollectionViewCell*> m_mpUsedCollectionCells;
 
-    CAVector<CACollectionViewCell*> m_vpUsedCollectionCells;
+	CAVector<CAAutoCollectionViewCell*> m_vpUsedCollectionCells;
     
-	std::map<std::string, CAVector<CACollectionViewCell*> > m_mpFreedCollectionCells;
+	std::map<std::string, CAVector<CAAutoCollectionViewCell*> > m_mpFreedCollectionCells;
 };
 
-class CC_DLL CACollectionViewCell : public CAControl
+class CC_DLL CAAutoCollectionViewCell : public CAControl
 {
 public:
     
-	CACollectionViewCell();
+	CAAutoCollectionViewCell();
     
-	virtual ~CACollectionViewCell();
+	virtual ~CAAutoCollectionViewCell();
 
-	static CACollectionViewCell* create(const std::string& reuseIdentifier);
+	static CAAutoCollectionViewCell* create(const std::string& reuseIdentifier);
 
 	virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
 
@@ -276,8 +290,6 @@ public:
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
-    
-    CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nItem, Item);
     
@@ -313,7 +325,7 @@ private:
     
     using CAView::initWithColor;
     
-    friend class CACollectionView;
+    friend class CAAutoCollectionView;
 };
 
 NS_CC_END

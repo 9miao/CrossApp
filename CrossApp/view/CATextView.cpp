@@ -341,6 +341,11 @@ void CATextView::setText(const std::string& var)
 	insertText(var.c_str(), (int)var.length());
 	m_pTextViewDelegate = pTemp;
 	m_bUpdateImage = true;
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+	pGlView->setIMECursorPos(getCursorPos(), getContentText());
+#endif
 }
 
 const std::string& CATextView::getText()
@@ -572,6 +577,12 @@ void CATextView::getKeyBoardHeight(int height)
     {
         m_pTextViewDelegate->getKeyBoardHeight(height);
     }
+}
+
+void CATextView::getKeyBoradReturnCallBack()
+{
+	std::string cszText = "\n";
+	insertText(cszText.c_str(), cszText.size());
 }
 
 const char* CATextView::getContentText()

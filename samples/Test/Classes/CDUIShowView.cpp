@@ -1460,85 +1460,131 @@ void CDUIShowView::showCollectionView()
     headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
     footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     
-    p_Conllection = CACollectionView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
+    p_Conllection = CAAutoCollectionView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
     p_Conllection->setAllowsSelection(true);
     //p_Conllection->setAllowsMultipleSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
     p_Conllection->setCollectionViewDataSource(this);
     p_Conllection->setScrollViewDelegate(this);
-    p_Conllection->setHeaderRefreshView(headerRefreshView);
-    p_Conllection->setFooterRefreshView(footerRefreshView);
+//    p_Conllection->setHeaderRefreshView(headerRefreshView);
+//    p_Conllection->setFooterRefreshView(footerRefreshView);
     p_Conllection->setHoriInterval(_px(40));
     p_Conllection->setVertInterval(_px(40));
     this->getView()->addSubview(p_Conllection);
 }
 
-void CDUIShowView::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
+void CDUIShowView::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     
 }
 
-void CDUIShowView::collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
+void CDUIShowView::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     
 }
 
-CACollectionViewCell* CDUIShowView::collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
+CAAutoCollectionViewCell* CDUIShowView::collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item)
 {
-    if (row * 3 + item >= colorArr.size())
-    {
-        return NULL;
-    }
-    
-    CADipSize _size = cellSize;
-    CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
-    if (p_Cell == NULL)
-    {
-        p_Cell = CACollectionViewCell::create("CrossApp");
-        
-        CAView* itemImage = CAView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
-        itemImage->setTag(99);
-        p_Cell->addSubview(itemImage);
-        
-        CADipSize itemSize = itemImage->getBounds().size;
-        CALabel* itemText = CALabel::createWithCenter(CADipRect(itemSize.width/2, itemSize.height/2, 150, 40));
-        itemText->setTag(100);
-        itemText->setFontSize(_px(29));
-        itemText->setTextAlignment(CATextAlignmentCenter);
-        itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        itemImage->addSubview(itemText);
-    }
-    CAView* itemImageView = p_Cell->getSubviewByTag(99);
-    itemImageView->setColor(colorArr.at(row * 3 + item));
-    CCLog("%d", row * 3 + item);
-    
-    char pos[20] = "";
-    sprintf(pos, "(%d,%d,%d)", section, row, item);
-    CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
-    itemText->setText(pos);
-    
-    return p_Cell;
+	if (item >= colorArr.size())
+	{
+		return NULL;
+	}
+
+	CADipSize _size = cellSize;
+	CAAutoCollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
+	if (p_Cell == NULL)
+	{
+		p_Cell = CAAutoCollectionViewCell::create("CrossApp");
+
+		CAView* itemImage = CAView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
+		itemImage->setTag(99);
+		p_Cell->addSubview(itemImage);
+
+		CADipSize itemSize = itemImage->getBounds().size;
+		CALabel* itemText = CALabel::createWithCenter(CADipRect(itemSize.width / 2, itemSize.height / 2, 150, 40));
+		itemText->setTag(100);
+		itemText->setFontSize(_px(29));
+		itemText->setTextAlignment(CATextAlignmentCenter);
+		itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		itemImage->addSubview(itemText);
+	}
+	CAView* itemImageView = p_Cell->getSubviewByTag(99);
+	itemImageView->setColor(colorArr.at(item));
+	CCLog("%d", item);
+
+	CAView* itemImage = p_Cell->getSubviewByTag(99);
+	CALabel* itemText = (CALabel*)itemImage->getSubviewByTag(100);
+
+	itemImage->setFrame(CADipRect(0, 0, _size.width, _size.height));
+
+	char pos[20] = "";
+	sprintf(pos, "(%d,%d)", section, item);
+
+	CADipSize itemSize = itemImage->getBounds().size;
+	itemText->setCenter(CADipRect(itemSize.width / 2, itemSize.height / 2, 150, 40));
+	itemText->setText(pos);
+
+	return p_Cell;
 }
 
-unsigned int CDUIShowView::numberOfSections(CACollectionView *collectionView)
+CCSize CDUIShowView::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+{
+	switch (item)
+	{
+	case 0:
+		return CCSizeMake(50, 50);
+
+	case 1:
+		return CCSizeMake(150, 150);
+
+	case 2:
+		return CCSizeMake(250, 50);
+
+	case 3:
+		return CCSizeMake(50, 150);
+
+	default:
+		break;
+	}
+	return CCSizeMake(50, 50);
+}
+
+unsigned int CDUIShowView::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
+{
+	return 10;
+}
+
+unsigned int CDUIShowView::numberOfSections(CAAutoCollectionView *collectionView)
+{
+	return 1;
+}
+
+/*
+CAAutoCollectionViewCell* CDUIShowView::collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item)
+{
+    
+}
+
+unsigned int CDUIShowView::numberOfSections(CAAutoCollectionView *collectionView)
 {
     return 1;
 }
 
-unsigned int CDUIShowView::numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)
+unsigned int CDUIShowView::numberOfRowsInSection(CAAutoCollectionView *collectionView, unsigned int section)
 {
     return colorArr.size() % 3 == 0 ? colorArr.size() / 3 : colorArr.size() / 3 + 1;
 }
 
-unsigned int CDUIShowView::numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)
+unsigned int CDUIShowView::numberOfItemsInRowsInSection(CAAutoCollectionView *collectionView, unsigned int section)
 {
     return 3;
 }
 
-unsigned int CDUIShowView::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
+unsigned int CDUIShowView::collectionViewHeightForRowAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section)
 {
     return (this->getView()->getBounds().size.width - _px(40) * 4) / 3;
 }
+*/
 
 void CDUIShowView::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
