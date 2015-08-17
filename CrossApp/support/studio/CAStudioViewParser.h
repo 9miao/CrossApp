@@ -11,9 +11,9 @@
 
 #include <iostream>
 #include "CrossApp.h"
-#include "Json/CSContentJsonDictionary.h"
 
-NS_CC_EXT_BEGIN;
+
+NS_CC_BEGIN;
 
 enum eItemsType
 {
@@ -33,6 +33,7 @@ enum eItemsType
 	CAType_Control,
 };
 
+class CSJsonDictionary;
 
 class CAStudioViewParser
 {
@@ -69,6 +70,6 @@ private:
 	std::map<eItemsType, ParseJsonForViewFunc> m_RegParseFunMap;
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif /* defined(__Extensions__CAStudioManager__) */

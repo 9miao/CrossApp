@@ -40,6 +40,8 @@
 #include "jni/JniHelper.h"
 
 USING_NS_CC;
+NS_CC_BEGIN
+
 static int _initialized = 0;
 
 static void splitFilename (std::string& str)
@@ -114,16 +116,16 @@ const char* localStorageGetItem( const char *key )
 {
 	assert( _initialized );
     JniMethodInfo t;
-    CCString* pStr = NULL;
     if (JniHelper::getStaticMethodInfo(t, "org/CrossApp/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;")) {
         jstring jkey = t.env->NewStringUTF(key);
         jstring ret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, jkey);
-        pStr = CCString::create(JniHelper::jstring2string(ret));
+        const char* b = t.env->GetStringUTFChars( ret , 0 );
         t.env->DeleteLocalRef(ret);
         t.env->DeleteLocalRef(jkey);
         t.env->DeleteLocalRef(t.classID);
+        return b ? b : NULL;
     }
-    return pStr ? pStr->getCString() : NULL;
+    return NULL;
 }
 
 /** removes an item from the LS */
@@ -142,3 +144,4 @@ void localStorageRemoveItem( const char *key )
 }
 
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+NS_CC_END

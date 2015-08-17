@@ -287,14 +287,14 @@ CAMap<CAObject*, CAObject*> CCFileUtilsMac::createCCDictionaryWithContentsOfFile
     return pRet;
 }
 
-bool CCFileUtilsMac::writeToFile(CAMap<CAObject*, CAObject*> *dict, const std::string &fullPath)
+bool CCFileUtilsMac::writeToFile(CAMap<std::string, CAObject*> *dict, const std::string &fullPath)
 {
     CCLOG("iOS||Mac CCDictionary %d write to file %s", dict->m_u__ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
-    CAMap<CAObject* , CAObject*>::iterator itr = dict->begin();
+    CAMap<std::string, CAObject*>::iterator itr = dict->begin();
     for(; itr != dict->end(); itr++)
     {
-        addCAObjectToNSDict( ((CCString*)(itr->first))->getCString(), (CAObject*)((itr)->second), nsDict);
+        addCAObjectToNSDict( (itr->first).c_str(), (CAObject*)((itr)->second), nsDict);
     }
     
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];

@@ -8,7 +8,6 @@
 
 #include "../CADevice.h"
 #include "../../Json/CSContentJsonDictionary.h"
-#include "../../Json/DictionaryHelper.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
 
@@ -355,7 +354,7 @@ public:
 static CAMediaDelegate *delegate = NULL;
 static ToMainThread *main = NULL;
 static const char *_path = NULL;
-static CALocationDelegate *locationDelegate = NULL;
+//static CALocationDelegate *locationDelegate = NULL;
 static CAWifiDelegate *wifidelegate = NULL;
 static std::vector<CAAddressBookRecord> _addressBookArr;
 

@@ -20,8 +20,6 @@ basics/CAScheduler.cpp \
 basics/CAFPSImages.c \
 basics/CAIndexPath.cpp \
 basics/CAThread.cpp \
-cocoa/CCArray.cpp \
-cocoa/CCDictionary.cpp \
 cocoa/CCNS.cpp \
 cocoa/CCSet.cpp \
 cocoa/CCString.cpp \
@@ -113,6 +111,7 @@ view/CAWebView.cpp \
 view/CADrawView.cpp \
 view/CADrawingPrimitives.cpp \
 view/CAGifView.cpp \
+view/CAAutoCollectionView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -206,8 +205,9 @@ endif
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libsdl_static
 
 # define the macro to compile through support/zip_support/ioapi.c
-LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
+LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS -fexceptions
 LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
+
 
 include $(BUILD_STATIC_LIBRARY)
 

@@ -16,7 +16,7 @@
 #include "CAVideoPlayerDecoder.h"
 
 NS_CC_BEGIN
-
+class VPDecoder;
 class CAVideoPlayerView : public CAView {
         
 public:

@@ -1642,12 +1642,12 @@ VPSubtitleASSParser::~VPSubtitleASSParser()
     
 }
 
-CCArray* VPSubtitleASSParser::parseEvents(std::string events)
+CAVector<CAObject*>* VPSubtitleASSParser::parseEvents(std::string events)
 {
     return NULL;
 }
 
-CCArray* VPSubtitleASSParser::parseDialogue(std::string dialogue, unsigned int numFields)
+CAVector<CAObject*>* VPSubtitleASSParser::parseDialogue(std::string dialogue, unsigned int numFields)
 {
     return NULL;
 }
