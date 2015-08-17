@@ -76,14 +76,35 @@
     <Filter Include="images\gif_lib">
       <UniqueIdentifier>{80ac80b5-ea8e-41ed-a8ad-cc62a8cf14b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="support\device">
+      <UniqueIdentifier>{8da1252a-fe0c-45b0-977a-50c730c95504}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\json">
+      <UniqueIdentifier>{22e56ebe-f31d-4db2-ad05-ea45289e5c68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\json\lib_json">
+      <UniqueIdentifier>{e982ce20-2e84-40cd-90c1-38111ece0e7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\libwebsockets">
+      <UniqueIdentifier>{a6e1376f-3820-4c38-b693-06550f16182b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\libwebsockets\win32helpers">
+      <UniqueIdentifier>{2d5b3499-5ac1-4ac3-a52c-3492e2524fae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\LocalStorage">
+      <UniqueIdentifier>{7e40d8df-8c3d-4324-b3b9-42ec36b8d151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\network">
+      <UniqueIdentifier>{87131849-f0b4-4a97-959f-c7f10ce2338f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\sqlite3">
+      <UniqueIdentifier>{3b623472-1e34-43bf-a172-60319e7c75ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\studio">
+      <UniqueIdentifier>{ba400e57-10db-45bd-9b76-bcec7392d0a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\cocoa\CCArray.cpp">
-      <Filter>cocoa</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cocoa\CCDictionary.cpp">
-      <Filter>cocoa</Filter>
-    </ClCompile>
     <ClCompile Include="..\cocoa\CCNS.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
@@ -452,14 +473,41 @@
     <ClCompile Include="..\view\CAAutoCollectionView.cpp">
       <Filter>view</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\device\CADevice.cpp">
+      <Filter>support\device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\Json\CSContentJsonDictionary.cpp">
+      <Filter>support\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\Json\lib_json\json_reader.cpp">
+      <Filter>support\json\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\Json\lib_json\json_value.cpp">
+      <Filter>support\json\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\Json\lib_json\json_writer.cpp">
+      <Filter>support\json\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\LocalStorage\LocalStorage.cpp">
+      <Filter>support\LocalStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\network\DownloadManager.cpp">
+      <Filter>support\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\network\HttpClient.cpp">
+      <Filter>support\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\network\WebSocket.cpp">
+      <Filter>support\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\sqlite3\include\sqlite3.c">
+      <Filter>support\sqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\studio\CAStudioViewParser.cpp">
+      <Filter>support\studio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\cocoa\CCArray.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCDictionary.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
     <ClInclude Include="..\cocoa\CCNS.h">
       <Filter>cocoa</Filter>
     </ClInclude>
@@ -896,5 +944,92 @@
     <ClInclude Include="..\view\CAAutoCollectionView.h">
       <Filter>view</Filter>
     </ClInclude>
+    <ClInclude Include="..\support\device\CADevice.h">
+      <Filter>support\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\CSContentJsonDictionary.h">
+      <Filter>support\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\config.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\features.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\forwards.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\json_batchallocator.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\json_lib.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\json_tool.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\reader.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\value.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\writer.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\autolink.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\libwebsockets\win32\include\win32helpers\gettimeofday.h">
+      <Filter>support\libwebsockets\win32helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\libwebsockets\win32\include\win32helpers\websock-w32.h">
+      <Filter>support\libwebsockets\win32helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\libwebsockets\win32\include\libwebsockets.h">
+      <Filter>support\libwebsockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\LocalStorage\LocalStorage.h">
+      <Filter>support\LocalStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\network\DownloadManager.h">
+      <Filter>support\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\network\HttpClient.h">
+      <Filter>support\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\network\HttpRequest.h">
+      <Filter>support\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\network\HttpResponse.h">
+      <Filter>support\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\network\WebSocket.h">
+      <Filter>support\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\sqlite3\include\sqlite3.h">
+      <Filter>support\sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\sqlite3\include\sqlite3ext.h">
+      <Filter>support\sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\studio\CAStudioViewParser.h">
+      <Filter>support\studio</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\support\Json\lib_json\json_internalarray.inl">
+      <Filter>support\json\lib_json</Filter>
+    </None>
+    <None Include="..\support\Json\lib_json\json_internalmap.inl">
+      <Filter>support\json\lib_json</Filter>
+    </None>
+    <None Include="..\support\Json\lib_json\json_valueiterator.inl">
+      <Filter>support\json\lib_json</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="libCrossApp.rc" />
   </ItemGroup>
 </Project>

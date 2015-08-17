@@ -65,7 +65,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\extensions\sqlite3\include;$(ProjectDir)..\..\extensions\libwebsockets\win32\include;$(ProjectDir)..\..\CrossApp;$(ProjectDir)..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\CrossApp\platform\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\CrossApp\the_third_party\win32\zlib;$(ProjectDir)..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\CrossApp\the_third_party\freetype\include\win32\;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\CrossApp;$(ProjectDir)..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\CrossApp\platform\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\CrossApp\the_third_party\win32\zlib;$(ProjectDir)..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\CrossApp\the_third_party\freetype\include\win32\;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -104,7 +104,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\device\CADevice.cpp" />
     <ClCompile Include="..\gameswf\base\component_hackery.cpp" />
     <ClCompile Include="..\gameswf\base\configvars.cpp" />
     <ClCompile Include="..\gameswf\base\container.cpp" />
@@ -201,21 +200,9 @@
     <ClCompile Include="..\gameswf\gameswf\gameswf_types.cpp" />
     <ClCompile Include="..\gameswf\gameswf\gameswf_value.cpp" />
     <ClCompile Include="..\gameswf\gameswf\gameswf_video_impl.cpp" />
-    <ClCompile Include="..\Json\CSContentJsonDictionary.cpp" />
-    <ClCompile Include="..\Json\DictionaryHelper.cpp" />
-    <ClCompile Include="..\Json\lib_json\json_reader.cpp" />
-    <ClCompile Include="..\Json\lib_json\json_value.cpp" />
-    <ClCompile Include="..\Json\lib_json\json_writer.cpp" />
-    <ClCompile Include="..\LocalStorage\LocalStorage.cpp" />
-    <ClCompile Include="..\network\DownloadManager.cpp" />
-    <ClCompile Include="..\network\HttpClient.cpp" />
-    <ClCompile Include="..\network\Websocket.cpp" />
-    <ClCompile Include="..\sqlite3\include\sqlite3.c" />
-    <ClCompile Include="..\studio\CAStudioViewParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CrossAppExt.h" />
-    <ClInclude Include="..\device\CADevice.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\gameswf\base\configvars.h" />
     <ClInclude Include="..\gameswf\base\container.h" />
@@ -323,35 +310,6 @@
     <ClInclude Include="..\gameswf\gameswf\gameswf_types.h" />
     <ClInclude Include="..\gameswf\gameswf\gameswf_value.h" />
     <ClInclude Include="..\gameswf\gameswf\gameswf_video_impl.h" />
-    <ClInclude Include="..\Json\CSContentJsonDictionary.h" />
-    <ClInclude Include="..\Json\DictionaryHelper.h" />
-    <ClInclude Include="..\Json\lib_json\autolink.h" />
-    <ClInclude Include="..\Json\lib_json\config.h" />
-    <ClInclude Include="..\Json\lib_json\features.h" />
-    <ClInclude Include="..\Json\lib_json\forwards.h" />
-    <ClInclude Include="..\Json\lib_json\json_batchallocator.h" />
-    <ClInclude Include="..\Json\lib_json\json_lib.h" />
-    <ClInclude Include="..\Json\lib_json\json_tool.h" />
-    <ClInclude Include="..\Json\lib_json\reader.h" />
-    <ClInclude Include="..\Json\lib_json\value.h" />
-    <ClInclude Include="..\Json\lib_json\writer.h" />
-    <ClInclude Include="..\libwebsockets\win32\include\libwebsockets.h" />
-    <ClInclude Include="..\libwebsockets\win32\include\win32helpers\gettimeofday.h" />
-    <ClInclude Include="..\libwebsockets\win32\include\win32helpers\websock-w32.h" />
-    <ClInclude Include="..\LocalStorage\LocalStorage.h" />
-    <ClInclude Include="..\network\DownloadManager.h" />
-    <ClInclude Include="..\network\HttpClient.h" />
-    <ClInclude Include="..\network\HttpRequest.h" />
-    <ClInclude Include="..\network\HttpResponse.h" />
-    <ClInclude Include="..\network\Websocket.h" />
-    <ClInclude Include="..\sqlite3\include\sqlite3.h" />
-    <ClInclude Include="..\sqlite3\include\sqlite3ext.h" />
-    <ClInclude Include="..\studio\CAStudioViewParser.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Json\lib_json\json_internalarray.inl" />
-    <None Include="..\Json\lib_json\json_internalmap.inl" />
-    <None Include="..\Json\lib_json\json_valueiterator.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

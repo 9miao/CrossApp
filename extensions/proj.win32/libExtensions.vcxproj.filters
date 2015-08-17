@@ -1,36 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="LocalStorage">
-      <UniqueIdentifier>{4da8061d-80f3-45fd-aa7e-2c0a96701b79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="network">
-      <UniqueIdentifier>{2a7741ff-87a5-41c8-8e51-d7a1cf0c8e4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="json">
-      <UniqueIdentifier>{231d1242-516f-4183-86f7-020feb7befd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="json\lib_json">
-      <UniqueIdentifier>{3bdcfa22-2dcc-4a54-878c-1fe9a1076b88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="studio">
-      <UniqueIdentifier>{9d686e1b-4252-47d1-b28a-5715f049857e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="libwebsockets">
-      <UniqueIdentifier>{2fa447a3-897b-4803-ac40-15708e965f2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="libwebsockets\win32helpers">
-      <UniqueIdentifier>{7eef16a7-8faa-4e42-a72e-fa025c03b26b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sqlite3">
-      <UniqueIdentifier>{9581e20d-7c68-4b81-8dd6-608eb3840f3c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="device">
-      <UniqueIdentifier>{e5072c29-86ef-45ca-95e0-fa5f5d83e37c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="gui">
-      <UniqueIdentifier>{1c306010-7e4a-4ba8-954e-dececa33f147}</UniqueIdentifier>
-    </Filter>
     <Filter Include="gameswf">
       <UniqueIdentifier>{fb1efcbe-02bc-4173-b950-e42872d48ffe}</UniqueIdentifier>
     </Filter>
@@ -45,42 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\network\HttpClient.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\LocalStorage\LocalStorage.cpp">
-      <Filter>LocalStorage</Filter>
-    </ClCompile>
-    <ClCompile Include="..\network\Websocket.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Json\lib_json\json_reader.cpp">
-      <Filter>json\lib_json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Json\lib_json\json_value.cpp">
-      <Filter>json\lib_json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Json\lib_json\json_writer.cpp">
-      <Filter>json\lib_json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sqlite3\include\sqlite3.c">
-      <Filter>sqlite3</Filter>
-    </ClCompile>
-    <ClCompile Include="..\network\DownloadManager.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\device\CADevice.cpp">
-      <Filter>device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Json\CSContentJsonDictionary.cpp">
-      <Filter>json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Json\DictionaryHelper.cpp">
-      <Filter>json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\studio\CAStudioViewParser.cpp">
-      <Filter>studio</Filter>
-    </ClCompile>
     <ClCompile Include="..\gameswf\CAFlash.cpp">
       <Filter>gameswf</Filter>
     </ClCompile>
@@ -371,78 +305,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\network\HttpClient.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\HttpRequest.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\HttpResponse.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\LocalStorage\LocalStorage.h">
-      <Filter>LocalStorage</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\lib_json\autolink.h">
-      <Filter>json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\lib_json\config.h">
-      <Filter>json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\lib_json\features.h">
-      <Filter>json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\lib_json\forwards.h">
-      <Filter>json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\lib_json\json_batchallocator.h">
-      <Filter>json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\lib_json\json_lib.h">
-      <Filter>json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\lib_json\json_tool.h">
-      <Filter>json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\lib_json\reader.h">
-      <Filter>json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\lib_json\value.h">
-      <Filter>json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\lib_json\writer.h">
-      <Filter>json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libwebsockets\win32\include\libwebsockets.h">
-      <Filter>libwebsockets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libwebsockets\win32\include\win32helpers\gettimeofday.h">
-      <Filter>libwebsockets\win32helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libwebsockets\win32\include\win32helpers\websock-w32.h">
-      <Filter>libwebsockets\win32helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sqlite3\include\sqlite3.h">
-      <Filter>sqlite3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sqlite3\include\sqlite3ext.h">
-      <Filter>sqlite3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\DownloadManager.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\device\CADevice.h">
-      <Filter>device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\CSContentJsonDictionary.h">
-      <Filter>json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\DictionaryHelper.h">
-      <Filter>json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\studio\CAStudioViewParser.h">
-      <Filter>studio</Filter>
-    </ClInclude>
     <ClInclude Include="..\gameswf\CAFlash.h">
       <Filter>gameswf</Filter>
     </ClInclude>
@@ -763,21 +625,5 @@
     </ClInclude>
     <ClInclude Include="..\CrossAppExt.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\network\Websocket.h">
-      <Filter>network</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Json\lib_json\json_internalarray.inl">
-      <Filter>json\lib_json</Filter>
-    </None>
-    <None Include="..\Json\lib_json\json_internalmap.inl">
-      <Filter>json\lib_json</Filter>
-    </None>
-    <None Include="..\Json\lib_json\json_valueiterator.inl">
-      <Filter>json\lib_json</Filter>
-    </None>
   </ItemGroup>
 </Project>
