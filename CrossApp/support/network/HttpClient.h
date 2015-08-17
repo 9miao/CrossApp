@@ -4,7 +4,6 @@
 #define __CAHttpRequest_H__
 
 #include "CrossApp.h"
-#include "ExtensionMacros.h"
 #include "HttpRequest.h"
 #include "HttpResponse.h"
 #include <queue>
@@ -12,7 +11,7 @@
 #include <errno.h>
 
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 class CAHttpClient : public CAObject
 {
@@ -72,6 +71,6 @@ public:
 CC_DEPRECATED_ATTRIBUTE typedef CAHttpClient CCHttpClient;
 CC_DEPRECATED_ATTRIBUTE typedef CAHttpResponse CCHttpResponse;
 CC_DEPRECATED_ATTRIBUTE typedef CAHttpRequest CCHttpRequest;
-NS_CC_EXT_END
+NS_CC_END
 
 #endif //__CAHttpRequest_H__

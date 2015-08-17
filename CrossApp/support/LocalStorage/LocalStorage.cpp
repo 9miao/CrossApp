@@ -6,6 +6,7 @@
 
 #include <assert.h>
 #include <sqlite3.h>
+NS_CC_BEGIN
 
 static int _initialized = 0;
 static sqlite3 *_db;
@@ -126,3 +127,6 @@ void localStorageRemoveItem( const char *key )
 }
 
 #endif // #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+
+NS_CC_END
+

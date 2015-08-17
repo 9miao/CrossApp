@@ -4,10 +4,9 @@
 #define __HTTP_RESPONSE__
 
 #include "CrossApp.h"
-#include "ExtensionMacros.h"
 #include "HttpRequest.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 class CAHttpResponse : public CAObject
 {
@@ -156,6 +155,6 @@ protected:
     
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif //__HTTP_RESPONSE_H__

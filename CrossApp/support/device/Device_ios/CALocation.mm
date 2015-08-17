@@ -35,10 +35,10 @@
 {
     [_locationManager stopUpdatingLocation];
 }
--(CGPoint)getLocation
+-(CCPoint)getLocation
 {
     
-    return CGPointZero;
+    return CCPointZero;
 }
 
 #pragma mark Core Location

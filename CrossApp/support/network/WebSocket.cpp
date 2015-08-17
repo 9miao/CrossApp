@@ -6,7 +6,7 @@
 #include <signal.h>
 #include <errno.h>
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 class WsMessage
 {
@@ -635,4 +635,4 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
     }
 }
 
-NS_CC_EXT_END
+NS_CC_END

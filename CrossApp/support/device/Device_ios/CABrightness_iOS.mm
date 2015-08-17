@@ -7,6 +7,7 @@
 //
 
 #import "CABrightness_iOS.h"
+#import <UIKit/UIKit.h>
 
 @implementation CABrightness_iOS
 -(float)getBrightnessPercent

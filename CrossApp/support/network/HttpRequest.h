@@ -4,14 +4,13 @@
 #define __HTTP_REQUEST_H__
 
 #include "CrossApp.h"
-#include "ExtensionMacros.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 class CAHttpClient;
 class CAHttpResponse;
 typedef void (CAObject::*SEL_HttpResponse)(CAHttpClient* client, CAHttpResponse* response);
-#define httpresponse_selector(_SELECTOR) (CrossApp::extension::SEL_HttpResponse)(&_SELECTOR)
+#define httpresponse_selector(_SELECTOR) (CrossApp::SEL_HttpResponse)(&_SELECTOR)
 
 class CAHttpRequest : public CAObject
 {
@@ -180,6 +179,6 @@ protected:
     int                         _threadID;
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif //__HTTP_REQUEST_H__

@@ -7,11 +7,10 @@
 #include "lib_json/json_lib.h"
 #include <vector>
 #include <string>
-#include "ExtensionMacros.h"
 #include "CrossApp.h"
 
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 typedef enum _DicItemType
 {
@@ -79,6 +78,6 @@ private:
     inline CSJson::Value * validateArrayItem(const char *pszArrayKey, int nIndex);
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif

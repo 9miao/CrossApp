@@ -22,6 +22,8 @@
 #ifndef LIBWEBSOCKET_H_3060898B846849FF9F88F5DB59B5950C
 #define LIBWEBSOCKET_H_3060898B846849FF9F88F5DB59B5950C
 
+NS_CC_BEGIN
+
 #ifdef __cplusplus
 extern "C" {
 #include <cstddef>
@@ -1023,3 +1025,5 @@ LWS_VISIBLE LWS_EXTERN struct libwebsocket_extension *libwebsocket_get_internal_
 #endif
 
 #endif
+
+NS_CC_END

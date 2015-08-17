@@ -10,9 +10,8 @@
 #define __CADownloadManager__
 
 #include "CrossApp.h"
-#include "ExtensionMacros.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 class CADownloadManagerDelegate;
 class CADownloadResponse;
@@ -154,6 +153,6 @@ public:
 };
 
 
-NS_CC_EXT_END;
+NS_CC_END;
 
 #endif /* defined(__CADownloadManager__) */

@@ -11,9 +11,8 @@
 
 #include <iostream>
 #include "CrossApp.h"
-#include "CrossAppExt.h"
 USING_NS_CC;
-USING_NS_CC_EXT;
+
 struct CAWifiInfo
 {
     std::string ssid;

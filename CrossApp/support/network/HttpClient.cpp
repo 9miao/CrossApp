@@ -8,7 +8,7 @@
 #include "libwebsockets.h"
 #endif
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 static int s_httpClientCount = 0;
 static CAHttpClient *s_pHttpClient[MAX_Thread] = {0};
@@ -500,6 +500,6 @@ void CAHttpClient::dispatchResponseCallbacks(float delta)
 }
 
 
-NS_CC_EXT_END
+NS_CC_END
 
 

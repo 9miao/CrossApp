@@ -76,6 +76,17 @@ support/user_default/CAUserDefaultAndroid.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
 support/zip_support/unzip.cpp \
+support/network/HttpClient.cpp \
+support/network/DownloadManager.cpp \
+support/network/WebSocket.cpp \
+support/LocalStorage/LocalStorageAndroid.cpp \
+support/Json/CSContentJsonDictionary.cpp \
+support/Json/lib_json/json_value.cpp \
+support/Json/lib_json/json_reader.cpp \
+support/Json/lib_json/json_writer.cpp \
+support/sqlite3/include/sqlite3.c \
+support/device/Device_android/CADevice.cpp \
+support/studio/CAStudioViewParser.cpp \
 view/CABatchView.cpp \
 view/CAClippingView.cpp \
 view/CAImageView.cpp \
@@ -145,10 +156,18 @@ script_support/CCScriptSupport.cpp \
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
+                    $(LOCAL_PATH)/support/network \
+                    $(LOCAL_PATH)/support/LocalStorage \
+                    $(LOCAL_PATH)/support/Json \
+                    $(LOCAL_PATH)/support/Json/lib_json \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
+                    $(LOCAL_PATH)/support/network \
+                    $(LOCAL_PATH)/support/LocalStorage \
+                    $(LOCAL_PATH)/support/Json \
+                    $(LOCAL_PATH)/support/Json/lib_json \
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -llog \
@@ -163,6 +182,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_tiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_webp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype_static
+LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 
 
 ifeq ($(VIDEO_ENABLE),1)
@@ -198,3 +219,6 @@ $(call import-module,webp/prebuilt/android)
 $(call import-module,freetype/prebuilt/android)
 $(call import-module,SDL/prebuilt/android)
 $(call import-module,FFmpeg/prebuilt/android)
+$(call import-module,CrossApp/the_third_party/curl/prebuilt/android)
+$(call import-module,CrossApp/support/libwebsockets/android)
+

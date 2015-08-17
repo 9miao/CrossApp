@@ -1,7 +1,7 @@
 #include "CAStudioViewParser.h"
-#include "Json/CSContentJsonDictionary.h"
+#include "CSContentJsonDictionary.h"
 
-NS_CC_EXT_BEGIN;
+NS_CC_BEGIN;
 
 static CAStudioViewParser* s_pCAStudioParser = NULL;
 
@@ -95,46 +95,46 @@ CAView* CAStudioViewParser::createViewFactory(eItemsType eType)
 	CAView* pView = NULL;
 	switch (eType)
 	{
-	case CrossApp::extension::CAType_View:
+	case CrossApp::CAType_View:
 		pView = new CAView;
 		break;
-	case CrossApp::extension::CAType_ActivityIndicatorView:
+	case CrossApp::CAType_ActivityIndicatorView:
 		pView = new CAActivityIndicatorView;
 		break;
-	case CrossApp::extension::CAType_AlertView:
+	case CrossApp::CAType_AlertView:
 		pView = new CAAlertView;
 		break;
-	case CrossApp::extension::CAType_ImageView:
+	case CrossApp::CAType_ImageView:
 		pView = new CAImageView;
 		break;
-	case CrossApp::extension::CAType_Label:
+	case CrossApp::CAType_Label:
 		pView = new CALabel;
 		break;
-	case CrossApp::extension::CAType_Progress:
+	case CrossApp::CAType_Progress:
 		pView = new CAProgress;
 		break;
-	case CrossApp::extension::CAType_Button:
+	case CrossApp::CAType_Button:
 		pView = new CAButton(CAButtonTypeCustom);
 		break;
-	case CrossApp::extension::CAType_SegmentedControl:
+	case CrossApp::CAType_SegmentedControl:
 		pView = new CASegmentedControl(1);
 		break;
-	case CrossApp::extension::CAType_Slider:
+	case CrossApp::CAType_Slider:
 		pView = new CASlider;
 		break;
-	case CrossApp::extension::CAType_Stepper:
+	case CrossApp::CAType_Stepper:
 		pView = new CAStepper;
 		break;
-	case CrossApp::extension::CAType_Switch:
+	case CrossApp::CAType_Switch:
 		pView = new CASwitch;
 		break;
-	case CrossApp::extension::CAType_TextField:
+	case CrossApp::CAType_TextField:
 		pView = new CATextField;
 		break;
-	case CrossApp::extension::CAType_WindowView:
+	case CrossApp::CAType_WindowView:
 		pView = new CAView;
 		break;
-	case CrossApp::extension::CAType_Control:
+	case CrossApp::CAType_Control:
 		pView = new CAControl;
 		break;
 	default:
@@ -472,4 +472,4 @@ CAView* CAStudioViewParser::ParseJsonForControl(CSJsonDictionary& csJson, CACont
 }
 
 
-NS_CC_EXT_END
+NS_CC_END

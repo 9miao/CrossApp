@@ -129,6 +129,21 @@
 #include "support/md5.h"
 #include "support/base64.h"
 
+#include "support/network/HttpRequest.h"
+#include "support/network/HttpResponse.h"
+#include "support/network/HttpClient.h"
+#include "support/network/DownloadManager.h"
+
+#include "support/Json/CSContentJsonDictionary.h"
+#include "support/Json/DictionaryHelper.h"
+
+#include "support/sqlite3/include/sqlite3.h"
+#include "support/LocalStorage/LocalStorage.h"
+#include "support/studio/CAStudioViewParser.h"
+
+#include "support/device/CADevice.h"
+
+
 // platform
 #include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"

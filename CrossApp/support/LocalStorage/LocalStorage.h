@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+NS_CC_BEGIN
 
 /** Initializes the database. If path is null, it will create an in-memory DB */
 void localStorageInit( const char *fullpath);
@@ -22,3 +23,4 @@ const char* localStorageGetItem( const char *key );
 void localStorageRemoveItem( const char *key );
 
 #endif // __JSB_LOCALSTORAGE_H
+NS_CC_END

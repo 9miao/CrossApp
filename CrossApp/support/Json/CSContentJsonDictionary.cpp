@@ -27,7 +27,7 @@
 #include <iostream>
 #include "CSContentJsonDictionary.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
     
 CSJsonDictionary::CSJsonDictionary()
 {
@@ -386,4 +386,4 @@ inline CSJson::Value * CSJsonDictionary::validateArrayItem(const char *pszArrayK
 	return &m_cValue[pszArrayKey];
 }
 
-NS_CC_EXT_END
+NS_CC_END

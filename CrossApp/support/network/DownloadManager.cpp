@@ -24,7 +24,7 @@
 using namespace CrossApp;
 using namespace std;
 
-NS_CC_EXT_BEGIN;
+NS_CC_BEGIN;
 
 #define BUFFER_SIZE    8192
 #define MAX_FILENAME   512
@@ -1288,5 +1288,5 @@ void CADownloadResponse::Helper::handleUpdateSucceed(Message *msg)
 //    }
 }
 
-NS_CC_EXT_END;
+NS_CC_END;
 #endif // CC_PLATFORM_WINRT

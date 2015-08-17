@@ -3,13 +3,12 @@
 #ifndef __CC_WEBSOCKET_H__
 #define __CC_WEBSOCKET_H__
 
-#include "ExtensionMacros.h"
 
 #include "CrossApp.h"
-#include "libwebsockets/ios/include/libwebsockets.h"
+#include "../libwebsockets/ios/include/libwebsockets.h"
 #include <list>
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 class WsThreadHelper;
 class WsMessage;
@@ -135,6 +134,6 @@ private:
     struct libwebsocket_protocols* _wsProtocols;
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif /* defined(__CC_JSB_WEBSOCKET_H__) */
