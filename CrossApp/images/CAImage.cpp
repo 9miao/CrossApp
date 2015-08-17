@@ -2148,7 +2148,11 @@ bool CAImage::hasPremultipliedAlpha()
 
 const char* CAImage::description(void)
 {
-    return CCString::createWithFormat("<CAImage | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT)->getCString();
+    const char* description;
+    char tmp[128];
+    sprintf(tmp, "<CAImage | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT);
+    description = tmp;
+    return description;
 }
 
 void CAImage::drawAtPoint(const CCPoint& point)

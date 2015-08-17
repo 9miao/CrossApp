@@ -266,7 +266,6 @@ void CABatchView::increaseAtlasCapacity(void)
 
     if (! m_pobImageAtlas->resizeCapacity(quantity))
     {
-        CCLOGWARN("CrossApp: WARNING: Not enough memory to resize the atlas");
         CCAssert(false, "Not enough memory to resize the atlas");
     }
 }

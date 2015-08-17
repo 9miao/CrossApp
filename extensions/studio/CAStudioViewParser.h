@@ -12,8 +12,6 @@
 #include <iostream>
 #include "CrossApp.h"
 #include "Json/CSContentJsonDictionary.h"
-#include "Json/DictionaryHelper.h"
-
 
 NS_CC_EXT_BEGIN;
 

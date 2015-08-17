@@ -1,7 +1,6 @@
 
 
 #include "CCSAXParser.h"
-#include "cocoa/CCDictionary.h"
 #include "CCFileUtils.h"
 #include "support/tinyxml2/tinyxml2.h"
 

@@ -3,7 +3,6 @@
 #include "dispatcher/CATouch.h"
 #include "basics/CAApplication.h"
 #include "cocoa/CCSet.h"
-#include "cocoa/CCDictionary.h"
 
 NS_CC_BEGIN
 

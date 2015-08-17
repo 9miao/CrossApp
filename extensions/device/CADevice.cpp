@@ -31,11 +31,7 @@ namespace CADevice
         std::vector<CAAddressBookRecord> _addressBookArr;
         return _addressBookArr;
     }
-    void startLocation(CALocationDelegate* target)
-    {
-        
-    }
-    
+
     float getScreenBrightness()
     {
         return 1.0f;

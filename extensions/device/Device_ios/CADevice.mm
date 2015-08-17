@@ -71,7 +71,9 @@ void OpenURL(const std::string &url)
     
 #endif
 }
-    
+  
+/* //EX
+ 
 void startLocation(CALocationDelegate* target)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -80,7 +82,9 @@ void startLocation(CALocationDelegate* target)
     [location startUpdatingLocation];
 #endif
 }
-   
+ 
+*/
+    
 void sendLocalNotification(const char* title,const char* content,unsigned long time)
 {
 //    let _app = UIApplication.sharedApplication()

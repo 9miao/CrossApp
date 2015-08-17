@@ -5,7 +5,7 @@
 #include "ccConfig.h"
 #include "basics/CAObject.h"
 #include "platform/platform.h"
-#include "cocoa/CCDictionary.h"
+#include "basics/CASTLContainer.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -42,7 +42,7 @@ public:
     /** releases all timers */
     void releaseAllTimers();
 
-    CCDictionary* m_pActiveTimers;
+    CAMap<std::string, CCProfilingTimer*> m_mActiveTimers;
 };
 /**
  *@js NA

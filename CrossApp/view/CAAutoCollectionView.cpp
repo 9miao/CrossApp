@@ -4,8 +4,6 @@
 #include "support/CCPointExtension.h"
 #include "dispatcher/CATouch.h"
 #include "animation/CAViewAnimation.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
 
 NS_CC_BEGIN
 
@@ -25,7 +23,7 @@ CAAutoCollectionView::CAAutoCollectionView()
 , m_nVertInterval(0)
 , m_bAlwaysTopSectionHeader(true)
 , m_bAlwaysBottomSectionFooter(true)
-, m_pCollectionViewOrientation(CACollectionViewOrientationHorizontal)
+, m_pCollectionViewOrientation(CACollectionViewOrientationVertical)
 {
     
 }
@@ -220,10 +218,10 @@ bool CAAutoCollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
 
-				CCDelayTime* delayTime = CCDelayTime::create(0.05f);
-				CCCallFunc* func = CCCallFunc::create(pCell, callfunc_selector(CAAutoCollectionViewCell::setControlStateHighlighted));
-				CCSequence* actions = CCSequence::create(delayTime, func, NULL);
-				m_pContainer->runAction(actions);
+                CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+                CAViewAnimation::setAnimationDuration(0.05f);
+                CAViewAnimation::setAnimationDidStopSelector(pCell, CAViewAnimation0_selector(CAAutoCollectionViewCell::setControlStateHighlighted));
+                CAViewAnimation::commitAnimations();
 				break;
 			}
 		}
@@ -238,7 +236,7 @@ void CAAutoCollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 	if (m_pHighlightedCollectionCells)
 	{
-		m_pContainer->stopAllActions();
+		CAViewAnimation::removeAnimations(m_s__StrID);
 
 		if (m_pHighlightedCollectionCells->getControlState() == CAControlStateHighlighted)
 		{
@@ -257,7 +255,7 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 	if (m_pHighlightedCollectionCells)
 	{
-		m_pContainer->stopAllActions();
+		CAViewAnimation::removeAnimations(m_s__StrID);
 
 		CAIndexPath3E deselectedIndexPath = CAIndexPath3EZero;
 		CAIndexPath3E selectedIndexPath = CAIndexPath3E(m_pHighlightedCollectionCells->getSection(), 0, m_pHighlightedCollectionCells->getItem());
@@ -313,7 +311,7 @@ void CAAutoCollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 	if (m_pHighlightedCollectionCells)
 	{
-		m_pContainer->stopAllActions();
+		CAViewAnimation::removeAnimations(m_s__StrID);
 
         if (m_pHighlightedCollectionCells->getControlState() == CAControlStateHighlighted)
         {

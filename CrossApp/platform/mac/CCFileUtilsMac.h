@@ -26,7 +26,7 @@ public:
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
     
     virtual CAMap<CrossApp::CAObject*, CrossApp::CAObject*> createCCDictionaryWithContentsOfFile(const std::string& filename);
-    virtual bool writeToFile(CCDictionary *dict, const std::string& fullPath);
+    virtual bool writeToFile(CAMap<CAObject*, CAObject*> *dict, const std::string& fullPath);
     
     virtual CAVector<CAObject*> createCCVectorWithContentsOfFile(const std::string& filename);
 

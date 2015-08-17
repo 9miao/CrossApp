@@ -76,15 +76,6 @@ public:
     virtual void getWifiListFunc(std::vector<CAWifiInfo> _wifiInfoList) = 0;
 };
 
-class CALocationDelegate
-{
-public:
-    virtual ~CALocationDelegate(){};
-    
-    virtual void getLocations(CCDictionary *locations) = 0;
-};
-
-
 
 struct CAAddressBookRecord
 {
@@ -129,9 +120,7 @@ namespace CADevice
     void openCamera(CAMediaDelegate* target);
     
     void openAlbum(CAMediaDelegate* target);
-    
-    void startLocation(CALocationDelegate* target);
-    
+
     float getScreenBrightness();
     
     void setScreenBrightness(float brightness);

@@ -2119,10 +2119,9 @@ void CDUIShowView::jsonTest()
     
     Reader reader;
     Value value;
-//    string jsonFile = CCFileUtils::sharedFileUtils()->fullPathForFilename("information.json");
-//    CCString *jsonData = CCString::createWithContentsOfFile(jsonFile.c_str());
-    CCString *jsonData = CCString::create(tempjson);
-    if (reader.parse(jsonData->getCString(),value))
+    string jsonData = CCFileUtils::sharedFileUtils()->getFileString(tempjson.c_str());
+
+    if (reader.parse(jsonData.c_str(),value))
     {
         int length = value.size();
         CCLog("length==%d",length);

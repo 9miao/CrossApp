@@ -234,7 +234,7 @@ double* getGPSLocation()
 	}
 }
 
-void start()
+void start()//ex
 {
     JniMethodInfo jmi;
 	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "startGps" , "()V"))
@@ -441,21 +441,6 @@ vector<CAAddressBookRecord> getAddressBook()
     return _addressBookArr;
 }
     
-void startLocation(CALocationDelegate* target)
-{
-    start();
-    
-    double *b = getGPSLocation();
-    
-    CCString *lt= CCString::createWithFormat("%f",b[0]);
-    CCString *lata= CCString::createWithFormat("%f",b[1]);
-    CCDictionary *dic = CCDictionary::create();
-    dic->retain();
-    dic->setObject(lata, "longitude");
-    dic->setObject(lt, "latitude");
-    target->getLocations(dic);
-}
-
 float getScreenBrightness()
 {
     float percent = JAVAgetBrightness();
