@@ -210,6 +210,19 @@ CAImage* CAImage::generateMipmapsWithImage(CAImage* image)
     return NULL;
 }
 
+extern "C"
+{
+    
+    size_t fwrite$UNIX2003( const void *a, size_t b, size_t c, FILE *d )
+    {
+        return fwrite(a, b, c, d);
+    }
+    
+    char* strerror$UNIX2003( int errnum )
+    {
+        return strerror(errnum);
+    }
+}
 
 namespace
 {
@@ -952,8 +965,6 @@ CAImage::PixelFormat CAImage::convertDataToFormat(const unsigned char* data, uns
             return originFormat;
     }
 }
-
-#include "cocoa/CCArray.h"
 
 static std::set<CAImage*> s_pImages;
 
@@ -2137,7 +2148,11 @@ bool CAImage::hasPremultipliedAlpha()
 
 const char* CAImage::description(void)
 {
-    return CCString::createWithFormat("<CAImage | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT)->getCString();
+    const char* description;
+    char tmp[128];
+    sprintf(tmp, "<CAImage | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT);
+    description = tmp;
+    return description;
 }
 
 void CAImage::drawAtPoint(const CCPoint& point)
@@ -2361,7 +2376,6 @@ unsigned int CAImage::bitsPerPixelForFormat()
     return this->bitsPerPixelForFormat(m_ePixelFormat);
 }
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 
 bool CAImage::saveImageToPNG(const std::string& filePath, bool isToRGB)
 {
@@ -2591,8 +2605,6 @@ bool CAImage::saveImageToJPG(const std::string& filePath)
     
     return bRet;
 }
-
-#endif
 
 bool CAImage::saveToFile(const std::string& fullPath, bool bIsToRGB)
 {

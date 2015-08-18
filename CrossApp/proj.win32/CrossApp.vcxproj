@@ -73,7 +73,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include\win32;..\include;$(ProjectDir)..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\curl\include\win32;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include\win32;$(ProjectDir)..\the_third_party\websockets\win32\include;$(ProjectDir)..\kazmath\include;$(ProjectDir)..\support\Json;$(ProjectDir)..\support\sqlite3\include;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -92,10 +92,11 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\jpeg\prebuilt\win32\*.*" "$(OutDir)
 xcopy /Y /Q "$(ProjectDir)..\the_third_party\tiff\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\the_third_party\webp\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\the_third_party\freetype\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\win32\lib\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype250.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype250.lib;libcurl_imp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -104,6 +105,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalManifestDependencies>$(ProjectDir)..\..\CrossApp\the_third_party\win32\libraries;$(ProjectDir)..\..\CrossApp\the_third_party\websockets\win32\lib;$(ProjectDir)..\..\CrossApp\the_third_party\curl\prebuilt\win32;$(ProjectDir)..\..\CrossApp\the_third_party\freetype\prebuilt\win32;$(ProjectDir)..\..\CrossApp\the_third_party\jpegl\prebuilt\win32;$(ProjectDir)..\..\CrossApp\the_third_party\png\prebuilt\win32;$(ProjectDir)..\..\CrossApp\the_third_party\tiff\prebuilt\win32;$(ProjectDir)..\..\CrossApp\the_third_party\webp\prebuilt\win32;%(AdditionalManifestDependencies)</AdditionalManifestDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -166,8 +168,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClCompile Include="..\basics\CAScheduler.cpp" />
     <ClCompile Include="..\basics\CAThread.cpp" />
     <ClCompile Include="..\cocoa\CACalendar.cpp" />
-    <ClCompile Include="..\cocoa\CCArray.cpp" />
-    <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
     <ClCompile Include="..\cocoa\CCSet.cpp" />
     <ClCompile Include="..\cocoa\CCString.cpp" />
@@ -189,14 +189,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClCompile Include="..\dispatcher\CAKeypadDispatcher.cpp" />
     <ClCompile Include="..\dispatcher\CATouch.cpp" />
     <ClCompile Include="..\dispatcher\CATouchDispatcher.cpp" />
-    <ClCompile Include="..\actions\CCAction.cpp" />
-    <ClCompile Include="..\actions\CCActionCamera.cpp" />
-    <ClCompile Include="..\actions\CCActionEase.cpp" />
-    <ClCompile Include="..\actions\CCActionInstant.cpp" />
-    <ClCompile Include="..\actions\CCActionInterval.cpp" />
-    <ClCompile Include="..\actions\CCActionManager.cpp" />
-    <ClCompile Include="..\actions\CCActionTween.cpp" />
-    <ClCompile Include="..\images\CAFlash.cpp" />
     <ClCompile Include="..\images\CAGif.cpp" />
     <ClCompile Include="..\images\CAImage.cpp" />
     <ClCompile Include="..\images\CAImageCache.cpp" />
@@ -238,100 +230,17 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClCompile Include="..\support\CCVertex.cpp" />
     <ClCompile Include="..\support\ConvertUTF.cpp" />
     <ClCompile Include="..\support\ConvertUTFWrapper.cpp" />
-    <ClCompile Include="..\support\gameswf\base\component_hackery.cpp" />
-    <ClCompile Include="..\support\gameswf\base\configvars.cpp" />
-    <ClCompile Include="..\support\gameswf\base\container.cpp" />
-    <ClCompile Include="..\support\gameswf\base\ear_clip_triangulate_float.cpp" />
-    <ClCompile Include="..\support\gameswf\base\ear_clip_triangulate_sint16.cpp" />
-    <ClCompile Include="..\support\gameswf\base\file_util.cpp" />
-    <ClCompile Include="..\support\gameswf\base\image.cpp" />
-    <ClCompile Include="..\support\gameswf\base\image_filters.cpp" />
-    <ClCompile Include="..\support\gameswf\base\jpeg.cpp" />
-    <ClCompile Include="..\support\gameswf\base\logger.cpp" />
-    <ClCompile Include="..\support\gameswf\base\membuf.cpp" />
-    <ClCompile Include="..\support\gameswf\base\triangulate_float.cpp" />
-    <ClCompile Include="..\support\gameswf\base\triangulate_sint32.cpp" />
-    <ClCompile Include="..\support\gameswf\base\tu_file.cpp" />
-    <ClCompile Include="..\support\gameswf\base\tu_file_SDL.cpp" />
-    <ClCompile Include="..\support\gameswf\base\tu_gc_singlethreaded_marksweep.cpp" />
-    <ClCompile Include="..\support\gameswf\base\tu_gc_test.cpp" />
-    <ClCompile Include="..\support\gameswf\base\tu_loadlib.cpp" />
-    <ClCompile Include="..\support\gameswf\base\tu_random.cpp" />
-    <ClCompile Include="..\support\gameswf\base\tu_timer.cpp" />
-    <ClCompile Include="..\support\gameswf\base\tu_types.cpp" />
-    <ClCompile Include="..\support\gameswf\base\utf8.cpp" />
-    <ClCompile Include="..\support\gameswf\base\utility.cpp" />
-    <ClCompile Include="..\support\gameswf\base\zlib_adapter.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_abc.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_action.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_array.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_boolean.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_broadcaster.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_class.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_color.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_color_transform.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_date.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_event.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_flash.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_geom.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_global.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_key.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_loadvars.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_math.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_matrix.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_mcloader.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_mouse.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_mouse_event.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_netconnection.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_netstream.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_number.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_point.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_selection.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_sharedobject.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_sound.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_string.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_textformat.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_transform.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_classes\as_xmlsocket.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_as_sprite.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_avm2.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_avm2_jit.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_button.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_canvas.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_character.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_disasm.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_dlist.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_environment.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_filters.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_font.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_fontlib.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_freetype.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_function.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_impl.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_jit.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_jit_opcode.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_listener.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_log.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_morph2.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_movie_def.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_mutex.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_object.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_player.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_render.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_render_handler_ogles.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_root.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_shape.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_sound.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_sprite.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_sprite_def.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_stream.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_styles.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_tesselate.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_text.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_types.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_value.cpp" />
-    <ClCompile Include="..\support\gameswf\gameswf\gameswf_video_impl.cpp" />
+    <ClCompile Include="..\support\device\CADevice.cpp" />
+    <ClCompile Include="..\support\Json\CSContentJsonDictionary.cpp" />
+    <ClCompile Include="..\support\Json\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\support\Json\lib_json\json_value.cpp" />
+    <ClCompile Include="..\support\Json\lib_json\json_writer.cpp" />
+    <ClCompile Include="..\support\LocalStorage\LocalStorage.cpp" />
     <ClCompile Include="..\support\md5.cpp" />
+    <ClCompile Include="..\support\network\DownloadManager.cpp" />
+    <ClCompile Include="..\support\network\HttpClient.cpp" />
+    <ClCompile Include="..\support\network\WebSocket.cpp" />
+    <ClCompile Include="..\support\sqlite3\include\sqlite3.c" />
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\data_support\ccCArray.cpp" />
@@ -362,7 +271,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClCompile Include="..\view\CADatePickerView.cpp" />
     <ClCompile Include="..\view\CADrawingPrimitives.cpp" />
     <ClCompile Include="..\view\CADrawView.cpp" />
-    <ClCompile Include="..\view\CAFlashView.cpp" />
     <ClCompile Include="..\view\CAGifView.cpp" />
     <ClCompile Include="..\view\CAImageView.cpp" />
     <ClCompile Include="..\view\CALabel.cpp" />
@@ -402,8 +310,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClInclude Include="..\ccTypeInfo.h" />
     <ClInclude Include="..\ccTypes.h" />
     <ClInclude Include="..\cocoa\CACalendar.h" />
-    <ClInclude Include="..\cocoa\CCArray.h" />
-    <ClInclude Include="..\cocoa\CCDictionary.h" />
     <ClInclude Include="..\cocoa\CCNS.h" />
     <ClInclude Include="..\cocoa\CCSet.h" />
     <ClInclude Include="..\cocoa\CCString.h" />
@@ -427,14 +333,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClInclude Include="..\dispatcher\CAProtocols.h" />
     <ClInclude Include="..\dispatcher\CATouch.h" />
     <ClInclude Include="..\dispatcher\CATouchDispatcher.h" />
-    <ClInclude Include="..\actions\CCAction.h" />
-    <ClInclude Include="..\actions\CCActionCamera.h" />
-    <ClInclude Include="..\actions\CCActionEase.h" />
-    <ClInclude Include="..\actions\CCActionInstant.h" />
-    <ClInclude Include="..\actions\CCActionInterval.h" />
-    <ClInclude Include="..\actions\CCActionManager.h" />
-    <ClInclude Include="..\actions\CCActionTween.h" />
-    <ClInclude Include="..\images\CAFlash.h" />
     <ClInclude Include="..\images\CAGif.h" />
     <ClInclude Include="..\images\CAImage.h" />
     <ClInclude Include="..\images\CAImageCache.h" />
@@ -491,7 +389,27 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
     <ClInclude Include="..\support\ConvertUTF.h" />
+    <ClInclude Include="..\support\device\CADevice.h" />
+    <ClInclude Include="..\support\Json\CSContentJsonDictionary.h" />
+    <ClInclude Include="..\support\Json\lib_json\autolink.h" />
+    <ClInclude Include="..\support\Json\lib_json\config.h" />
+    <ClInclude Include="..\support\Json\lib_json\features.h" />
+    <ClInclude Include="..\support\Json\lib_json\forwards.h" />
+    <ClInclude Include="..\support\Json\lib_json\json_batchallocator.h" />
+    <ClInclude Include="..\support\Json\lib_json\json_lib.h" />
+    <ClInclude Include="..\support\Json\lib_json\json_tool.h" />
+    <ClInclude Include="..\support\Json\lib_json\reader.h" />
+    <ClInclude Include="..\support\Json\lib_json\value.h" />
+    <ClInclude Include="..\support\Json\lib_json\writer.h" />
+    <ClInclude Include="..\support\LocalStorage\LocalStorage.h" />
     <ClInclude Include="..\support\md5.h" />
+    <ClInclude Include="..\support\network\DownloadManager.h" />
+    <ClInclude Include="..\support\network\HttpClient.h" />
+    <ClInclude Include="..\support\network\HttpRequest.h" />
+    <ClInclude Include="..\support\network\HttpResponse.h" />
+    <ClInclude Include="..\support\network\WebSocket.h" />
+    <ClInclude Include="..\support\sqlite3\include\sqlite3.h" />
+    <ClInclude Include="..\support\sqlite3\include\sqlite3ext.h" />
     <ClInclude Include="..\support\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\support\TransformUtils.h" />
     <ClInclude Include="..\support\data_support\ccCArray.h" />
@@ -525,7 +443,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClInclude Include="..\view\CADatePickerView.h" />
     <ClInclude Include="..\view\CADrawingPrimitives.h" />
     <ClInclude Include="..\view\CADrawView.h" />
-    <ClInclude Include="..\view\CAFlashView.h" />
     <ClInclude Include="..\view\CAGifView.h" />
     <ClInclude Include="..\view\CAImageView.h" />
     <ClInclude Include="..\view\CALabel.h" />
@@ -544,6 +461,15 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClInclude Include="..\view\CAView.h" />
     <ClInclude Include="..\view\CAWebView.h" />
     <ClInclude Include="..\view\CAWindow.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\support\Json\lib_json\json_internalarray.inl" />
+    <None Include="..\support\Json\lib_json\json_internalmap.inl" />
+    <None Include="..\support\Json\lib_json\json_valueiterator.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="libCrossApp.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

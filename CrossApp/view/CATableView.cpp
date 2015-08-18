@@ -15,8 +15,6 @@
 #include "support/CCPointExtension.h"
 #include "CCEGLView.h"
 #include "animation/CAViewAnimation.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionInstant.h"
 
 NS_CC_BEGIN
 
@@ -149,10 +147,10 @@ bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
                 CC_BREAK_IF(cell->getControlState() == CAControlStateSelected);
                 
-                CCDelayTime* delayTime = CCDelayTime::create(0.05f);
-                CCCallFunc* func = CCCallFunc::create(cell, callfunc_selector(CATableViewCell::setControlStateHighlighted));
-                CCSequence* actions = CCSequence::create(delayTime, func, NULL);
-                m_pContainer->runAction(actions);
+                CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+                CAViewAnimation::setAnimationDuration(0.05f);
+                CAViewAnimation::setAnimationDidStopSelector(cell, CAViewAnimation0_selector(CATableViewCell::setControlStateHighlighted));
+                CAViewAnimation::commitAnimations();
                 break;
             }
         }
@@ -167,7 +165,7 @@ void CATableView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_pHighlightedTableCells)
     {
-        m_pContainer->stopAllActions();
+        CAViewAnimation::removeAnimations(m_s__StrID);
         
         if (m_pHighlightedTableCells->getControlState() == CAControlStateHighlighted)
         {
@@ -185,7 +183,7 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_pHighlightedTableCells)
     {
-        m_pContainer->stopAllActions();
+        CAViewAnimation::removeAnimations(m_s__StrID);
         
         CAIndexPath2E deselectedIndexPath = CAIndexPath2EZero;
         CAIndexPath2E selectedIndexPath = CAIndexPath2E(m_pHighlightedTableCells->getSection(), m_pHighlightedTableCells->getRow());
@@ -247,7 +245,7 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_pHighlightedTableCells)
     {
-        m_pContainer->stopAllActions();
+        CAViewAnimation::removeAnimations(m_s__StrID);
         
         if (m_pHighlightedTableCells->getControlState() == CAControlStateHighlighted)
         {

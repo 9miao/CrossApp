@@ -338,6 +338,12 @@ typedef struct
     CCSize size; 
 } CAAnimationFrameData;
 
+typedef enum
+{
+    CAStatusBarStyleDefault          = 0, // Dark content, for use on light backgrounds
+    CAStatusBarStyleLightContent     = 1, // Light content, for use on dark backgrounds
+}CAStatusBarStyle;
+
 /**
  * This header is used for defining event types using in CANotificationCenter
  */

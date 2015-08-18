@@ -34,7 +34,7 @@ public:
     
     virtual float rowHeightForComponent(CAPickerView* pickerView, unsigned int component) {return 0;}
 
-    virtual CCString* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
+    virtual const char* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
 
     virtual CAView* viewForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
     

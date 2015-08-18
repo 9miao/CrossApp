@@ -7,17 +7,10 @@ NS_CC_BEGIN
 enum TargetPlatform
 {
     kTargetWindows,
-    kTargetLinux,
     kTargetMacOS,
     kTargetAndroid,
     kTargetIphone,
-    kTargetIpad,
-    kTargetBlackBerry,
-    kTargetNaCl,
-    kTargetEmscripten,
-    kTargetTizen,
-    kTargetWinRT,
-    kTargetWP8
+    kTargetIpad
 };
 
 /**

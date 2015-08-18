@@ -7,6 +7,7 @@
 //
 
 #include "CDUIShowView.h"
+#include "CAFlashView.h"
 
 std::vector<std::string> sectionTitle;
 
@@ -799,10 +800,14 @@ void CDUIShowView::showIndicator()
     view4->setColor(CAColor_gray);
     VIEWLIST.pushBack(view4);
     
+    
+    CAImage* image = CAImage::create("image/indicator2.png");
+    CAImageView* imageView = CAImageView::createWithCenter(CCRect(0, 0, 100, 100));
+    imageView->setImage(image);
     CAActivityIndicatorView* idc5 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
-                                                                                       100, 100));
+                                                                                       winSize.width, winSize.height));
     idc5->setStyle(CAActivityIndicatorViewStyleImage);
-    idc5->setActivityIndicatorView(CAImageView::createWithImage(CAImage::create("image/indicator2.png")));
+    idc5->setActivityIndicatorView(imageView);
     idc5->startAnimating();
     CAView* view5 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
     view5->addSubview(idc5);
@@ -1625,7 +1630,7 @@ void CDUIShowView::showScrollView()
 
 void CDUIShowView::showFlashView()
 {
-    CAFlashView* swfBg = CAFlashView::createWithFlash(CAFlash::createWithFilePath("image/swfWK.swf"));
+    CrossApp::extension::CAFlashView* swfBg = CrossApp::extension::CAFlashView::createWithFlash(CrossApp::extension::CAFlash::createWithFilePath("image/swfWK.swf"));
     swfBg->setFrame(CADipRect(100, 100, winSize.width/2, winSize.height/2));
     swfBg->runAnimation();
     swfBg->setRepeatForever(true);
@@ -1732,10 +1737,9 @@ float CDUIShowView::rowHeightForComponent(CAPickerView* pickerView, unsigned int
     return rowHeight;
 }
 
-CCString* CDUIShowView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
+const char* CDUIShowView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
-    //CCLog("ppppp===%s",unicode_to_utf8(adressTag[row]).c_str());
-    return CCString::create(unicode_to_utf8(adressTag[row]).c_str());
+    return unicode_to_utf8(adressTag[row]).c_str();
 }
 
 void CDUIShowView::zoomViewBySliderValue(CrossApp::CAControl *btn, CrossApp::CCPoint point)
@@ -2116,10 +2120,9 @@ void CDUIShowView::jsonTest()
     
     Reader reader;
     Value value;
-//    string jsonFile = CCFileUtils::sharedFileUtils()->fullPathForFilename("information.json");
-//    CCString *jsonData = CCString::createWithContentsOfFile(jsonFile.c_str());
-    CCString *jsonData = CCString::create(tempjson);
-    if (reader.parse(jsonData->getCString(),value))
+    string jsonData = CCFileUtils::sharedFileUtils()->getFileString(tempjson.c_str());
+
+    if (reader.parse(jsonData.c_str(),value))
     {
         int length = value.size();
         CCLog("length==%d",length);

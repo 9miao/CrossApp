@@ -3,7 +3,7 @@
 #ifndef __CAShaderCache_H__
 #define __CAShaderCache_H__
 
-#include "cocoa/CCDictionary.h"
+#include "basics/CASTLContainer.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +58,7 @@ private:
     bool init();
     void loadDefaultShader(CAGLProgram *program, int type);
 
-    CCDictionary* m_pPrograms;
+    CAMap<std::string, CAGLProgram*> m_mPrograms;
 
 };
 

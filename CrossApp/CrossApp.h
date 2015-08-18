@@ -69,7 +69,6 @@
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
 #include "images/CAGif.h"
-#include "images/CAFlash.h"
 
 
 //view
@@ -98,14 +97,10 @@
 #include "view/CAWebView.h"
 #include "view/CADrawingPrimitives.h"
 #include "view/CADrawView.h"
-#include "view/CAFlashView.h"
 #include "view/CATextEditHelper.h"
 
 // cocoa
-#include "cocoa/CCDictionary.h"
-#include "cocoa/CCArray.h"
 #include "cocoa/CCSet.h"
-#include "cocoa/CCString.h"
 #include "cocoa/CCNS.h"
 #include "cocoa/CACalendar.h"
 
@@ -133,6 +128,15 @@
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/md5.h"
 #include "support/base64.h"
+#include "support/network/HttpRequest.h"
+#include "support/network/HttpResponse.h"
+#include "support/network/HttpClient.h"
+#include "support/network/DownloadManager.h"
+#include "support/Json/CSContentJsonDictionary.h"
+#include "support/sqlite3/include/sqlite3.h"
+#include "support/LocalStorage/LocalStorage.h"
+#include "support/device/CADevice.h"
+
 
 // platform
 #include "platform/CCCommon.h"

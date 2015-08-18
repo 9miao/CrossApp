@@ -702,7 +702,7 @@
 					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
@@ -751,7 +751,7 @@
 					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",

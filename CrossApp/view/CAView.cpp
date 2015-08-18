@@ -14,7 +14,6 @@
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "dispatcher/CATouch.h"
-#include "actions/CCActionManager.h"
 #include "shaders/CAGLProgram.h"
 #include "CABatchView.h"
 #include "kazmath/GL/matrix.h"
@@ -28,7 +27,6 @@
 #include "CCEGLView.h"
 #include "cocoa/CCSet.h"
 #include "CAImageView.h"
-#include "actions/CCActionInterval.h"
 #include "animation/CAViewAnimation.h"
 #include "CADrawingPrimitives.h"
 
@@ -102,9 +100,6 @@ CAView::CAView(void)
 , m_pobBatchView(NULL)
 , m_pobImageAtlas(NULL)
 {
-    m_pActionManager = CAApplication::getApplication()->getActionManager();
-    CC_SAFE_RETAIN(m_pActionManager);
-    
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
     memset(&m_sQuad, 0, sizeof(m_sQuad));
@@ -123,9 +118,7 @@ CAView::CAView(void)
 CAView::~CAView(void)
 {
     CAScheduler::getScheduler()->pauseTarget(this);
-    m_pActionManager->pauseTarget(this);
     
-    CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pCamera);
     CC_SAFE_RELEASE(m_pShaderProgram);
     
@@ -348,10 +341,13 @@ void CAView::setZOrder(int z)
     }
     else
     {
-        _setZOrder(z);
         if (m_pSuperview)
         {
             m_pSuperview->reorderSubview(this, z);
+        }
+        else
+        {
+            this->_setZOrder(z);
         }
     }
 }
@@ -1066,6 +1062,7 @@ void CAView::reorderSubview(CAView *subview, int zOrder)
     m_bReorderChildDirty = true;
     subview->setOrderOfArrival(s_globalOrderOfArrival++);
     subview->_setZOrder(zOrder);
+    this->updateDraw();
 }
 
 void CAView::sortAllSubviews()
@@ -1382,58 +1379,6 @@ void CAView::onExit()
             (*itr)->onExit();
     }
 }
-
-void CAView::setActionManager(CCActionManager* actionManager)
-{
-    if( actionManager != m_pActionManager ) {
-        this->stopAllActions();
-        CC_SAFE_RETAIN(actionManager);
-        CC_SAFE_RELEASE(m_pActionManager);
-        m_pActionManager = actionManager;
-    }
-}
-
-CCActionManager* CAView::getActionManager()
-{
-    return m_pActionManager;
-}
-
-CCAction * CAView::runAction(CCAction* action)
-{
-    CCAssert( action != NULL, "Argument must be non-nil");
-    action = CCSequence::createWithTwoActions(CCDelayTime::create(1/60.0f), (CCFiniteTimeAction*)action);
-    m_pActionManager->addAction(action, this, false);
-    return action;
-}
-
-void CAView::stopAllActions()
-{
-    m_pActionManager->removeAllActionsFromTarget(this);
-}
-
-void CAView::stopAction(CCAction* action)
-{
-    m_pActionManager->removeAction(action);
-}
-
-void CAView::stopActionByTag(int tag)
-{
-    CCAssert( tag != kCCActionTagInvalid, "Invalid tag");
-    m_pActionManager->removeActionByTag(tag, this);
-}
-
-CCAction * CAView::getActionByTag(int tag)
-{
-    CCAssert( tag != kCCActionTagInvalid, "Invalid tag");
-    return m_pActionManager->getActionByTag(tag, this);
-}
-
-unsigned int CAView::numberOfRunningActions()
-{
-    return m_pActionManager->numberOfRunningActionsInTarget(this);
-}
-
-
 
 // override me
 void CAView::update(float fDelta)

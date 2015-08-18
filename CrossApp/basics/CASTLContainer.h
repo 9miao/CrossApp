@@ -25,7 +25,7 @@ template<class T>
 class CAList;
 
 template<class T>
-class CAVector
+class CAVector:public CAObject
 {
 public:
 	typedef typename std::vector<T>::iterator iterator;
@@ -303,7 +303,7 @@ public:
 	{
 		for (size_t i = 0; i < _data.size(); i++)
 		{
-            CC_SAFE_RELEASE(_data[i]);
+			CC_SAFE_RELEASE((CAObject*)_data[i]);
 		}
 		_data.clear();
 	}
@@ -350,7 +350,7 @@ protected:
 };
 
 template <class T>
-class CAList
+class CAList:public CAObject
 {
 public:
 public:
@@ -595,7 +595,7 @@ public:
 	{
 		for (iterator iter = _data.begin(); iter != _data.end(); ++iter)
 		{
-			CC_SAFE_RELEASE((*iter));
+			CC_SAFE_RELEASE((CAObject*)(*iter));
 		}
 		_data.clear();
 	}
@@ -621,7 +621,7 @@ protected:
 
 
 template <class T>
-class CADeque
+class CADeque:public CAObject
 {
 public:
 	typedef typename std::deque<T>::iterator iterator;
@@ -906,7 +906,7 @@ public:
     {
         for (size_t i = 0; i < _data.size(); i++)
         {
-            CC_SAFE_RELEASE(_data[i]);
+			CC_SAFE_RELEASE((CAObject*)_data[i]);
         }
         _data.clear();
     }
@@ -954,7 +954,7 @@ private:
 
 
 template <class K, class T>
-class CAMap
+class CAMap:public CAObject
 {
 public:
 	typedef typename std::map<K, T>::iterator iterator;
@@ -1023,7 +1023,8 @@ public:
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(it->second);
+			CAObject* o = (CAObject*)it->second;
+			CC_SAFE_RELEASE_NULL(o);
 			it->second = object;
 		}
 	}
@@ -1048,7 +1049,8 @@ public:
 		iterator it = _data.find(key);
 		if (it != _data.end())
 		{
-            CC_SAFE_RELEASE_NULL(it->second);
+			CAObject* o = (CAObject*)it->second;
+			CC_SAFE_RELEASE_NULL(o);
 			_data.erase(it);
 			return true;
 		}
@@ -1079,7 +1081,8 @@ public:
 	{
 		for (iterator it = _data.begin(); it != _data.end(); it++)
 		{
-            CC_SAFE_RELEASE_NULL(it->second);
+			CAObject* o = (CAObject*)it->second;
+			CC_SAFE_RELEASE_NULL(o);
 		}
 		_data.clear();
 	}

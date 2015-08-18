@@ -117,6 +117,8 @@ public:
      /** reshape projection matrix when canvas has been change"*/
     void reshapeProjection(const CCSize& newWindowSize);
     
+    inline const CAStatusBarStyle& getStatusBarStyle() { return m_eStatusBarStyle; }
+    void setStatusBarStyle(const CAStatusBarStyle& var);
     /** Sets the glViewport*/
     void setViewport();
 
@@ -250,11 +252,6 @@ public:
     
 public:
 
-    /** CCActionManager associated with this director
-     @since v2.0
-     */
-    CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
-
     /** CATouchDispatcher associated with this director
      @since v2.0
      */
@@ -345,6 +342,8 @@ protected:
 
     /* Projection protocol delegate */
     CAApplicationDelegate *m_pProjectionDelegate;
+    
+    CAStatusBarStyle m_eStatusBarStyle;
     
     int m_nDrawCount;
     

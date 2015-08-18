@@ -31,11 +31,9 @@ NS_CC_BEGIN
 class CACamera;
 class CCPoint;
 class CATouch;
-class CCAction;
 class CARGBAProtocol;
 class CCActionManager;
 class CCComponent;
-class CCDictionary;
 class CAImage;
 class CAViewDelegate;
 class CABatchView;
@@ -228,24 +226,6 @@ public:
     virtual CAResponder* nextResponder();
     
     virtual CAView* copy();
-    
-public:
-
-    virtual void setActionManager(CCActionManager* actionManager);
- 
-    virtual CCActionManager* getActionManager();
-    
-    CCAction* runAction(CCAction* action);
-    
-    void stopAllActions(void);
-    
-    void stopAction(CCAction* action);
-    
-    void stopActionByTag(int tag);
-    
-    CCAction* getActionByTag(int tag);
-    
-    unsigned int numberOfRunningActions(void);
     
 public:
     

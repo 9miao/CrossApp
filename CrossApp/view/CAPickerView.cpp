@@ -8,8 +8,6 @@
 
 #include "CAPickerView.h"
 #include "CALabel.h"
-#include "animation/CAViewAnimation.h"
-#include "actions/CCActionCamera.h"
 
 NS_CC_BEGIN
 
@@ -297,12 +295,12 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, CCSize size)
     CAView* view = m_dataSource->viewForRow(this, index, component);
     if (!view)
     { // create view
-        CCString* title = m_dataSource->titleForRow(this, index, component);
-        if (title && title->length() > 0)
+        const char* title = m_dataSource->titleForRow(this, index, component);
+        if (title && strlen(title) > 0)
         {
             CCRect rect = CCRectMake(0, 0, size.width, size.height);
             CALabel* label = CALabel::createWithFrame(rect);
-            label->setText(title->getCString());
+            label->setText(title);
             label->setColor(m_fontColorNormal);
             label->setFontSize(m_fontSizeNormal);
             label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
@@ -310,8 +308,8 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, CCSize size)
             
             return label;
         }
-    }
     
+    }
     return view;
 }
 

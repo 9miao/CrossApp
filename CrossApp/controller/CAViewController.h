@@ -17,12 +17,6 @@
 
 NS_CC_BEGIN
 
-typedef enum
-{
-    CABarVerticalAlignmentTop = 0,
-    CABarVerticalAlignmentBottom
-}CABarVerticalAlignment;
-
 class CAWindow;
 class CATabBarController;
 class CANavigationController;
@@ -136,8 +130,7 @@ public:
     
     virtual ~CANavigationController();
     
-    virtual bool initWithRootViewController(CAViewController* viewController,
-                                            CABarVerticalAlignment var = CABarVerticalAlignmentTop);
+    virtual bool initWithRootViewController(CAViewController* viewController);
     
 public:
     
@@ -162,9 +155,7 @@ public:
     virtual void setNavigationBarHidden(bool hidden, bool animated);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bNavigationBarHidden, NavigationBarHidden);
-    
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eNavigationBarVerticalAlignment, NavigationBarVerticalAlignment);
-    
+  
     void updateItem(CAViewController* viewController);
     
     CC_PROPERTY_IS(bool, m_bTouchMoved, TouchMoved);

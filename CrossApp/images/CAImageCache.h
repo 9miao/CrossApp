@@ -4,13 +4,12 @@
 #define __CCTEXTURE_CACHE_H__
 
 #include "basics/CAObject.h"
-#include "cocoa/CCDictionary.h"
+#include "basics/CASTLContainer.h"
 #include "CAImage.h"
 #include <string>
 
 
 NS_CC_BEGIN
-
 
 class CC_DLL CAImageCache : public CAObject
 {
@@ -23,8 +22,6 @@ public:
 
     const char* description(void);
 
-    CCDictionary* snapshotTextures();
-
     static CAImageCache * sharedImageCache();
 
     static void purgeSharedImageCache();
@@ -34,8 +31,6 @@ public:
     void addImageAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector);
 
     void addImageFullPathAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector);
-
-    CAImage* addETCImage(const std::string& filename);
 
     CAImage* imageForKey(const std::string& key);
     
@@ -61,7 +56,7 @@ private:
     
 protected:
     
-    CCDictionary* m_pImages;
+    CAMap<std::string, CAImage*> m_mImages;
     //pthread_mutex_t                *m_pDictLock;
 };
 

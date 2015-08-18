@@ -13,9 +13,8 @@
 #include <vector>
 
 #include "basics/CAObject.h"
-#include "cocoa/CCArray.h"
-#include "cocoa/CCDictionary.h"
 #include "images/CAImage.h"
+#include "CrossApp.h"
 
 NS_CC_BEGIN
 
@@ -277,8 +276,8 @@ public:
     VPSubtitleASSParser();
     ~VPSubtitleASSParser();
     
-    static CCArray* parseEvents(std::string events);
-    static CCArray* parseDialogue(std::string dialogue, unsigned int numFields);
+    static CAVector<CAObject*>* parseEvents(std::string events);
+    static CAVector<CAObject*>* parseDialogue(std::string dialogue, unsigned int numFields);
     static std::string removeCommandsFromEventText(std::string text);
 };
 

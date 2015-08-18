@@ -1,13 +1,13 @@
 #include "CATextView.h"
+#include "CCEGLView.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "view/CAWindow.h"
-#include "actions/CCActionInterval.h"
-#include "CCEGLView.h"
-#include <utility>
 #include "shaders/CAShaderCache.h"
 #include "platform/CAClipboard.h"
+#include "animation/CAViewAnimation.h"
 
+#include <utility>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "platform/CAFTFontCache.h"
@@ -201,14 +201,20 @@ void CATextView::showCursorMark()
 {
     if(!m_pCursorMark->isVisible()){
         m_pCursorMark->setVisible(true);
-        m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(0.8f, 1), 1048576));
+        m_pCursorMark->setAlpha(0);
+        CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+        CAViewAnimation::setAnimationDuration(0.5f);
+        CAViewAnimation::setAnimationRepeatAutoreverses(true);
+        CAViewAnimation::setAnimationRepeatCount(1048576);
+        m_pCursorMark->setAlpha(1.0f);
+        CAViewAnimation::commitAnimations();
     }
 }
 
 void CATextView::hideCursorMark()
 {
     m_pCursorMark->setVisible(false);
-    m_pCursorMark->stopAllActions();
+    CAViewAnimation::removeAnimations(m_s__StrID);
 }
 
 void CATextView::updateImage()
@@ -1049,9 +1055,7 @@ void CATextView::moveArrowBtn(const CCPoint& pt)
 	m_curSelCharRange = std::make_pair(0, 0);
 	calcCursorPosition();
 
-	m_pCursorMark->stopAllActions();
 	m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
-	m_pCursorMark->setVisible(true);
 
 	CCPoint ptArr = m_pCursorMark->getCenterOrigin();
 	m_pTextArrView->showTextArrView(CCPoint(ptArr.x, ptArr.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
