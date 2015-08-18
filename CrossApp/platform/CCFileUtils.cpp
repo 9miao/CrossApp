@@ -15,7 +15,8 @@
 
 using namespace std;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+#if 1
+//(CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
 NS_CC_BEGIN
 
@@ -313,12 +314,12 @@ CAVector<CAObject*> CCFileUtils::createCCVectorWithContentsOfFile(const std::str
  * forward statement
  */
 static tinyxml2::XMLElement* generateElementForArray(CAVector<CAObject*> *array, tinyxml2::XMLDocument *pDoc);
-static tinyxml2::XMLElement* generateElementForDict(CAMap<CAObject*, CAObject*> *dict, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForDict(CAMap<std::string, CAObject*> *dict, tinyxml2::XMLDocument *pDoc);
 
 /*
  * Use tinyxml2 to write plist files
  */
-bool CCFileUtils::writeToFile(CAMap<CAObject*, CAObject*> *dict, const std::string &fullPath)
+bool CCFileUtils::writeToFile(CAMap<std::string, CAObject*> *dict, const std::string &fullPath)
 {
     //CCLOG("tinyxml2 CAMap %d writeToFile %s", dict->m_uID, fullPath.c_str());
     tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
@@ -378,7 +379,7 @@ static tinyxml2::XMLElement* generateElementForObject(CrossApp::CAObject *object
         return generateElementForArray(array, pDoc);
     
     // object is CAMap
-    if (CAMap<CAObject*, CAObject*> *innerDict = dynamic_cast<CAMap<CAObject*, CAObject*> *>(object))
+    if (CAMap<std::string, CAObject*> *innerDict = dynamic_cast<CAMap<std::string, CAObject*> *>(object))
         return generateElementForDict(innerDict, pDoc);
     
     CCLOG("This type cannot appear in property list");
@@ -388,21 +389,19 @@ static tinyxml2::XMLElement* generateElementForObject(CrossApp::CAObject *object
 /*
  * Generate tinyxml2::XMLElement for CAMap through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForDict(CAMap<CAObject*, CAObject*> *dict, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForDict(CAMap<std::string, CAObject*> *dict, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
     
-    CCDictElement *dictElement = NULL;
-    
-    CAMap<CAObject* , CAObject*>::iterator itr = dict->begin();
+    CAMap<std::string , CAObject*>::iterator itr = dict->begin();
     for(; itr != dict->end(); itr++)
     {
         tinyxml2::XMLElement* tmpNode = pDoc->NewElement("key");
         rootNode->LinkEndChild(tmpNode);
-        tinyxml2::XMLText* content = pDoc->NewText(dictElement->getStrKey());
+        tinyxml2::XMLText* content = pDoc->NewText((itr->first).c_str());
         tmpNode->LinkEndChild(content);
         
-        CAObject *object = dictElement->getObject();
+        CAObject *object = itr->second;
         tinyxml2::XMLElement *element = generateElementForObject(object, pDoc);
         if (element)
             rootNode->LinkEndChild(element);

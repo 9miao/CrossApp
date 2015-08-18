@@ -9,23 +9,27 @@
 #ifndef __CrossApp__CAVideoPlayerController__
 #define __CrossApp__CAVideoPlayerController__
 
-#include "CAVideoPlayerView.h"
-
 #include "controller/CAViewController.h"
 #include "basics/CAThread.h"
-
 #include "control/CASlider.h"
 #include "control/CAButton.h"
 #include "view/CALabel.h"
-#include "CrossApp.h"
+#include "basics/CASTLContainer.h"
+#include "CAVideoPlayerView.h"
 
 NS_CC_BEGIN
 
+class CAVideoPlayerView;
+class VPAudioFrame;
+class VPFrame;
+class VPArtworkFrame;
+class VPDecoder;
 class CAVideoPlayerControllerDelegate
 {
 public:
     virtual void onVideoPlayerButtonBack() = 0;
 };
+
 
 class CAVideoPlayerController : public CAViewController {
     
@@ -49,8 +53,8 @@ public:
     CC_SYNTHESIZE(CAVideoPlayerControllerDelegate*, _delegate, Delegate);
             
 protected:
+    
     enum {
-        
         kMovieInfoSectionGeneral,
         kMovieInfoSectionVideo,
         kMovieInfoSectionAudio,
@@ -65,13 +69,12 @@ protected:
         kMovieInfoGeneralBitrate,
         kMovieInfoGeneralCount,
     };
-    
-protected:
-    CAVideoPlayerView   *_glView;
-    VPDecoder           *_decoder;
-    CCArray             *_videoFrames;
-    CCArray             *_audioFrames;
-    CCArray             *_subtitles;
+
+    CAVideoPlayerView*_glView;
+    VPDecoder*_decoder;
+    CAVector<CAObject*>  _videoFrames;
+    CAVector<CAObject*>  _audioFrames;
+    CAVector<CAObject*>  _subtitles;
     VPAudioFrame        *_currentAudioFrame;
     unsigned int        _currentAudioFramePos;
     float               _moviePosition;

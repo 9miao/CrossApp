@@ -7,6 +7,7 @@
 //
 
 #include "CDUIShowView.h"
+#include "CAFlashView.h"
 
 std::vector<std::string> sectionTitle;
 
@@ -1629,7 +1630,7 @@ void CDUIShowView::showScrollView()
 
 void CDUIShowView::showFlashView()
 {
-    CAFlashView* swfBg = CAFlashView::createWithFlash(CAFlash::createWithFilePath("image/swfWK.swf"));
+    CrossApp::extension::CAFlashView* swfBg = CrossApp::extension::CAFlashView::createWithFlash(CrossApp::extension::CAFlash::createWithFilePath("image/swfWK.swf"));
     swfBg->setFrame(CADipRect(100, 100, winSize.width/2, winSize.height/2));
     swfBg->runAnimation();
     swfBg->setRepeatForever(true);

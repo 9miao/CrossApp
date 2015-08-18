@@ -3,6 +3,7 @@
 
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
+#include "ccTypes.h"
 
 NS_CC_BEGIN
 
@@ -41,9 +42,14 @@ public:
      @brief Get target platform
      */
     virtual TargetPlatform getTargetPlatform();
+    
+    void setStatusBarStyle(const CAStatusBarStyle& var);
 
 protected:
     static CCApplication * sm_pSharedApplication;
+    
+    CAStatusBarStyle m_eStatusBarStyle;
+
 };
 
 NS_CC_END

@@ -342,7 +342,7 @@ protected:
      *  Write a dictionary to a plist file.
      *  @note This method is used internally.
      */
-    virtual bool writeToFile(CAMap<CAObject*, CAObject*> *dict, const std::string& fullPath);
+    virtual bool writeToFile(CAMap<std::string, CAObject*> *dict, const std::string& fullPath);
     
     /**
      *  Creates an array by the contents of a file.

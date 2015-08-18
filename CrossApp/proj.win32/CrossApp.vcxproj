@@ -73,7 +73,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include\win32;..\include;$(ProjectDir)..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\curl\include\win32;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include\win32;$(ProjectDir)..\the_third_party\websockets\win32\include;$(ProjectDir)..\kazmath\include;$(ProjectDir)..\support\Json;$(ProjectDir)..\support\sqlite3\include;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -92,10 +92,11 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\jpeg\prebuilt\win32\*.*" "$(OutDir)
 xcopy /Y /Q "$(ProjectDir)..\the_third_party\tiff\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\the_third_party\webp\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\the_third_party\freetype\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\win32\lib\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype250.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype250.lib;libcurl_imp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -104,6 +105,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalManifestDependencies>$(ProjectDir)..\..\CrossApp\the_third_party\win32\libraries;$(ProjectDir)..\..\CrossApp\the_third_party\websockets\win32\lib;$(ProjectDir)..\..\CrossApp\the_third_party\curl\prebuilt\win32;$(ProjectDir)..\..\CrossApp\the_third_party\freetype\prebuilt\win32;$(ProjectDir)..\..\CrossApp\the_third_party\jpegl\prebuilt\win32;$(ProjectDir)..\..\CrossApp\the_third_party\png\prebuilt\win32;$(ProjectDir)..\..\CrossApp\the_third_party\tiff\prebuilt\win32;$(ProjectDir)..\..\CrossApp\the_third_party\webp\prebuilt\win32;%(AdditionalManifestDependencies)</AdditionalManifestDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -166,8 +168,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClCompile Include="..\basics\CAScheduler.cpp" />
     <ClCompile Include="..\basics\CAThread.cpp" />
     <ClCompile Include="..\cocoa\CACalendar.cpp" />
-    <ClCompile Include="..\cocoa\CCArray.cpp" />
-    <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
     <ClCompile Include="..\cocoa\CCSet.cpp" />
     <ClCompile Include="..\cocoa\CCString.cpp" />
@@ -230,7 +230,17 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClCompile Include="..\support\CCVertex.cpp" />
     <ClCompile Include="..\support\ConvertUTF.cpp" />
     <ClCompile Include="..\support\ConvertUTFWrapper.cpp" />
+    <ClCompile Include="..\support\device\CADevice.cpp" />
+    <ClCompile Include="..\support\Json\CSContentJsonDictionary.cpp" />
+    <ClCompile Include="..\support\Json\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\support\Json\lib_json\json_value.cpp" />
+    <ClCompile Include="..\support\Json\lib_json\json_writer.cpp" />
+    <ClCompile Include="..\support\LocalStorage\LocalStorage.cpp" />
     <ClCompile Include="..\support\md5.cpp" />
+    <ClCompile Include="..\support\network\DownloadManager.cpp" />
+    <ClCompile Include="..\support\network\HttpClient.cpp" />
+    <ClCompile Include="..\support\network\WebSocket.cpp" />
+    <ClCompile Include="..\support\sqlite3\include\sqlite3.c" />
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\data_support\ccCArray.cpp" />
@@ -300,8 +310,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClInclude Include="..\ccTypeInfo.h" />
     <ClInclude Include="..\ccTypes.h" />
     <ClInclude Include="..\cocoa\CACalendar.h" />
-    <ClInclude Include="..\cocoa\CCArray.h" />
-    <ClInclude Include="..\cocoa\CCDictionary.h" />
     <ClInclude Include="..\cocoa\CCNS.h" />
     <ClInclude Include="..\cocoa\CCSet.h" />
     <ClInclude Include="..\cocoa\CCString.h" />
@@ -381,7 +389,27 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
     <ClInclude Include="..\support\ConvertUTF.h" />
+    <ClInclude Include="..\support\device\CADevice.h" />
+    <ClInclude Include="..\support\Json\CSContentJsonDictionary.h" />
+    <ClInclude Include="..\support\Json\lib_json\autolink.h" />
+    <ClInclude Include="..\support\Json\lib_json\config.h" />
+    <ClInclude Include="..\support\Json\lib_json\features.h" />
+    <ClInclude Include="..\support\Json\lib_json\forwards.h" />
+    <ClInclude Include="..\support\Json\lib_json\json_batchallocator.h" />
+    <ClInclude Include="..\support\Json\lib_json\json_lib.h" />
+    <ClInclude Include="..\support\Json\lib_json\json_tool.h" />
+    <ClInclude Include="..\support\Json\lib_json\reader.h" />
+    <ClInclude Include="..\support\Json\lib_json\value.h" />
+    <ClInclude Include="..\support\Json\lib_json\writer.h" />
+    <ClInclude Include="..\support\LocalStorage\LocalStorage.h" />
     <ClInclude Include="..\support\md5.h" />
+    <ClInclude Include="..\support\network\DownloadManager.h" />
+    <ClInclude Include="..\support\network\HttpClient.h" />
+    <ClInclude Include="..\support\network\HttpRequest.h" />
+    <ClInclude Include="..\support\network\HttpResponse.h" />
+    <ClInclude Include="..\support\network\WebSocket.h" />
+    <ClInclude Include="..\support\sqlite3\include\sqlite3.h" />
+    <ClInclude Include="..\support\sqlite3\include\sqlite3ext.h" />
     <ClInclude Include="..\support\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\support\TransformUtils.h" />
     <ClInclude Include="..\support\data_support\ccCArray.h" />
@@ -433,6 +461,15 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)
     <ClInclude Include="..\view\CAView.h" />
     <ClInclude Include="..\view\CAWebView.h" />
     <ClInclude Include="..\view\CAWindow.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\support\Json\lib_json\json_internalarray.inl" />
+    <None Include="..\support\Json\lib_json\json_internalmap.inl" />
+    <None Include="..\support\Json\lib_json\json_valueiterator.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="libCrossApp.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -145,9 +145,6 @@ CAVideoPlayerController::~CAVideoPlayerController()
     
     CC_SAFE_RELEASE_NULL(_glView);
 
-    CC_SAFE_RELEASE_NULL(_subtitles);
-    CC_SAFE_RELEASE_NULL(_videoFrames);
-    CC_SAFE_RELEASE_NULL(_audioFrames);
     CC_SAFE_RELEASE_NULL(_currentAudioFrame);
     CC_SAFE_RELEASE_NULL(_artworkFrame);
     
@@ -246,13 +243,8 @@ bool CAVideoPlayerController::setMovieDecoder()
     decoder->setAudioCallback(this, decoder_audio_selector(CAVideoPlayerController::audioCallback));
     
     if (decoder && decoder->openFile(path, error,_isPathByUrl)) {
-        
-        _videoFrames    = CCArray::create(); _videoFrames->retain();
-        _audioFrames    = CCArray::create(); _audioFrames->retain();
-        
-        
+    
         if (decoder->getSubtitleStreamsCount()) {
-            _subtitles = CCArray::create(); _subtitles->retain();
         }
         
         if (_isPathByUrl) {
@@ -313,28 +305,10 @@ void CAVideoPlayerController::freeBufferedFrames()
     
     CAObject* object = NULL;
         
-    if (_videoFrames) {
-        CCARRAY_FOREACH(_videoFrames, object) {
-            object->release();    
-        }
-        _videoFrames->removeAllObjects();
-    }
+    _videoFrames.clear();
+    _audioFrames.clear();
+    _subtitles.clear();
 
-    if (_audioFrames) {
-        CCARRAY_FOREACH(_audioFrames, object) {
-            object->release();
-        }
-        _audioFrames->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(_currentAudioFrame);
-    }
-    
-    if (_subtitles) {
-        CCARRAY_FOREACH(_subtitles, object) {
-            object->release();
-        }
-        _subtitles->removeAllObjects();
-    }
-    
     _buffered = true;
     _bufferedDuration = 0;
     
@@ -524,7 +498,7 @@ bool CAVideoPlayerController::addFrames(const vector<VPFrame*>& frames)
         for (int i=0; i<frames.size(); i++) {
             VPFrame* frame = frames.at(i);
             if (frame && frame->getType() == kFrameTypeVideo) {
-                _videoFrames->addObject(frame);
+                _videoFrames.pushBack(frame);
                 _bufferedDuration += frame->getDuration();
             }
         }
@@ -535,7 +509,7 @@ bool CAVideoPlayerController::addFrames(const vector<VPFrame*>& frames)
         for (int i=0; i<frames.size(); i++) {
             VPFrame* frame = frames.at(i);
             if (frame && frame->getType() == kFrameTypeAudio) {
-                _audioFrames->addObject(frame);
+                _audioFrames.pushBack(frame);
                 if (!_decoder->isValidVideo()) {
                     _bufferedDuration += frame->getDuration();
                 }
@@ -551,7 +525,7 @@ bool CAVideoPlayerController::addFrames(const vector<VPFrame*>& frames)
         for (int i=0; i<frames.size(); i++) {
             VPFrame* frame = frames.at(i);
             if (frame && frame->getType() == kFrameTypeSubtitle) {
-                _subtitles->addObject(frame);
+                _subtitles.pushBack(frame);
             }
         }
     }
@@ -580,8 +554,8 @@ void CAVideoPlayerController::tick(float dt)
     if (_playing) {
         
         const unsigned int leftFrames =
-        (_decoder->isValidVideo() ? _videoFrames->count() : 0) +
-        (_decoder->isValidAudio() ? _audioFrames->count() : 0);
+        (_decoder->isValidVideo() ? _videoFrames.size() : 0) +
+        (_decoder->isValidAudio() ? _audioFrames.size() : 0);
         
         if (0 == leftFrames) {
             
@@ -658,10 +632,10 @@ float CAVideoPlayerController::presentFrame()
         
         pthread_mutex_lock(&m_vp_data_mutex);
                     
-        if (_videoFrames->count() > 0) {
+        if (_videoFrames.size() > 0) {
             
-            frame = (VPVideoFrame*)_videoFrames->objectAtIndex(0);
-            _videoFrames->removeObject(frame);
+            frame = (VPVideoFrame*)_videoFrames.at(0);
+            _videoFrames.eraseObject(frame);
             _bufferedDuration -= frame->getDuration();
         }
         
@@ -722,13 +696,13 @@ void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int 
     
     while (len > 0) {
         
-        unsigned int count = _audioFrames->count();
+        unsigned int count = _audioFrames.size();
 
         if (!_currentAudioFrame) {
             
             if (count > 0) {
                 pthread_mutex_lock(&m_vp_data_mutex);
-                VPAudioFrame* frame = (VPAudioFrame*)_audioFrames->objectAtIndex(0);
+                VPAudioFrame* frame = (VPAudioFrame*)_audioFrames.at(0);
                 pthread_mutex_unlock(&m_vp_data_mutex);
 
                 
@@ -743,7 +717,7 @@ void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int 
                     }
                     
                     pthread_mutex_lock(&m_vp_data_mutex);
-                    _audioFrames->removeObjectAtIndex(0);
+                    _audioFrames.erase(0);
                     pthread_mutex_unlock(&m_vp_data_mutex);
                     
                     if (delta > 0.1 && count > 1)
@@ -752,7 +726,7 @@ void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int 
                     }
                     
                 } else {
-                    _audioFrames->removeObjectAtIndex(0);
+                    _audioFrames.erase(0);
                     _moviePosition = frame->getPosition();
                     _bufferedDuration -= frame->getDuration();
                 }
