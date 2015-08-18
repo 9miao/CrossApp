@@ -1,27 +1,10 @@
 
 
 #include "DownloadManager.h"
-#include "CrossApp.h"
-#include "../sqlite3/include/sqlite3.h"
+#include <sqlite3.h>
 #include "support/zip_support/unzip.h"
+#include "platform/CCFileUtils.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-#include "curl/curl.h"
-#include <curl/easy.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <string>
-#include <list>
-#include <vector>
-
-#if (CC_TARGET_PLATFORM != CC_PLATORM_WIN32)
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <errno.h>
-#endif
-
-
-using namespace CrossApp;
 using namespace std;
 
 NS_CC_BEGIN;
@@ -61,124 +44,6 @@ enum
 	DownloadCmd_Pause,
 	DownloadCmd_resume,
 	DownloadCmd_Delete,
-};
-
-class CADownloadResponse : public CAObject
-{
-public:
-
-	friend class CADownloadManager;
-    
-    static CADownloadResponse* create(const std::string& downloadUrl,
-                                   const std::string& fileName,
-                                   unsigned long downloadId,
-								   const std::string& headers="");
-
-    CADownloadResponse(const std::string& downloadUrl, const std::string& fileName, unsigned long downloadId, const std::string& downHeaders="");
-    
-    virtual ~CADownloadResponse();
-    
-    bool startDownload();
-    
-    bool isDownloaded();
-
-	void setDownloadCmd(int cmd);
-    
-    unsigned long getDownloadID() const;
-    
-    const string& getDownloadUrl() const;
-    
-    const string& getFileName() const;
-    
-    unsigned int getConnectionTimeout();
-    
-    friend void* CADownloadResponseDownloadAndUncompress(void*);
-    
-    friend int CADownloadResponseProgressFunc(void *, double, double, double, double);
-
-	bool isDownloadAbort();
-    
-	bool checkDownloadStatus();
-    
-    CC_SYNTHESIZE_READONLY(double, _initialFileSize, InitialFileSize);
-    
-    CC_SYNTHESIZE(double, _localFileSize, LocalFileSize);
-    
-    CC_SYNTHESIZE(double, _totalFileSize, TotalFileSize);
-    
-protected:
-    
-    bool downLoad();
-    
-    void checkStoragePath();
-    
-    bool uncompress();
-    
-    bool createDirectory(const char *path);
-    
-    void setSearchPath();
-    
-    void sendErrorMessage(CADownloadManager::ErrorCode code);
-    
-private:
-    
-    typedef struct _Message
-    {
-        _Message() : what(0), obj(NULL){}
-        
-        unsigned int what;
-        
-        void* obj;
-        
-    }Message;
-    
-    class Helper : public CrossApp::CAObject
-    {
-    public:
-        
-        Helper();
-        
-        ~Helper();
-        
-        virtual void update(float dt);
-        
-        void sendMessage(Message *msg);
-        
-    private:
-        
-        void handleUpdateSucceed(Message *msg);
-        
-        std::list<Message*> *_messageQueue;
-        
-        pthread_mutex_t _messageQueueMutex;
-    };
-    
-private:
-    
-    std::string _fileName;
-    
-    std::string _downloadUrl;
-	std::string _downHeaders;
-    
-    CURL *_curl;
-    
-    curl_slist *m_headers;
-    
-    Helper *_schedule;
-    
-    pthread_t *_tid;
-
-	int _downloadCmd;
-    
-	int _downloadStatus;
-
-    unsigned int _connectionTimeout;
-    
-    unsigned long _download_id;
-    
-    float m_fDelay;
-    
-    struct cc_timeval m_pLastUpdate;
 };
 
 static unsigned long _getLocalFileSize(const std::string& fileName)
@@ -1289,4 +1154,4 @@ void CADownloadResponse::Helper::handleUpdateSucceed(Message *msg)
 }
 
 NS_CC_END;
-#endif // CC_PLATFORM_WINRT
+

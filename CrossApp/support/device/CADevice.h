@@ -10,8 +10,10 @@
 #define __PublishPhoto__CADevice__
 
 #include <iostream>
-#include "CrossApp.h"
-USING_NS_CC;
+#include "basics/CAObject.h"
+#include "images/CAImage.h"
+
+NS_CC_BEGIN
 
 struct CAWifiInfo
 {
@@ -41,11 +43,11 @@ typedef enum
 
 struct CABlueToothUnit
 {
-    string address;
-    string name;
+    std::string address;
+	std::string name;
 };
 
-class CAMediaDelegate
+class CC_DLL CAMediaDelegate
 {
 public:
     virtual ~CAMediaDelegate(){};
@@ -53,7 +55,7 @@ public:
     virtual void getSelectedImage(CAImage *image) = 0;
 };
 
-class CABlueToothDelegate
+class CC_DLL CABlueToothDelegate
 {
 public:
     virtual ~CABlueToothDelegate(){};
@@ -67,7 +69,7 @@ public:
     virtual void finishedDiscoveryBlueToothDevice(){};
 };
 
-class CAWifiDelegate
+class CC_DLL CAWifiDelegate
 {
 public:
     virtual ~CAWifiDelegate(){};
@@ -76,32 +78,32 @@ public:
 };
 
 
-struct CAAddressBookRecord
+struct CC_DLL CAAddressBookRecord
 {
-    string firstName;
-    string lastName;
-    string middleName;
-    string prefix;
-    string suffix;
-    string nickname;
-    string firstNamePhonetic;
-    string lastNamePhonetic;
-    string middleNamePhonetic;
-    string organization;
-    string jobtitle;
-    string department;
-    string birthday;
-    string note;
-    string lastEdit;
-    string email;
-    string country;
-    string city;
-    string province;
-    string street;
-    string zip;
-    string countrycode;
-    string phoneNumber;
-    string fullname;
+	std::string firstName;
+	std::string lastName;
+	std::string middleName;
+	std::string prefix;
+	std::string suffix;
+	std::string nickname;
+	std::string firstNamePhonetic;
+	std::string lastNamePhonetic;
+	std::string middleNamePhonetic;
+	std::string organization;
+	std::string jobtitle;
+	std::string department;
+	std::string birthday;
+	std::string note;
+	std::string lastEdit;
+	std::string email;
+	std::string country;
+	std::string city;
+	std::string province;
+	std::string street;
+	std::string zip;
+	std::string countrycode;
+	std::string phoneNumber;
+	std::string fullname;
 };
 
 typedef enum
@@ -114,44 +116,48 @@ typedef enum
 
 namespace CADevice
 {
-    const char* getAppVersion();
+	CC_DLL const char* getAppVersion();
     
-    void openCamera(CAMediaDelegate* target);
+	CC_DLL void openCamera(CAMediaDelegate* target);
     
-    void openAlbum(CAMediaDelegate* target);
+	CC_DLL void openAlbum(CAMediaDelegate* target);
 
-    float getScreenBrightness();
+	CC_DLL float getScreenBrightness();
     
-    void setScreenBrightness(float brightness);
+	CC_DLL void setScreenBrightness(float brightness);
     
-    void writeToSavedPhotosAlbum(const std::string &s);
+	CC_DLL void writeToSavedPhotosAlbum(const std::string &s);
     
-    std::vector<CAAddressBookRecord> getAddressBook();
+	CC_DLL std::vector<CAAddressBookRecord> getAddressBook();
     
-    void updateVersion(const std::string &url
+	CC_DLL void updateVersion(const std::string &url
                       ,unsigned int versionNumber
                       ,const std::string &appId);
     
-    CANetWorkType getNetWorkType();
+	CC_DLL CANetWorkType getNetWorkType();
     
-    void getWifiList(CAWifiDelegate *target);
+	CC_DLL void getWifiList(CAWifiDelegate *target);
     
-    void setVolume(float sender,int type);
+	CC_DLL void setVolume(float sender, int type);
     
-    float getVolume(int type);
+	CC_DLL float getVolume(int type);
     
-    void OpenURL(const std::string &url);
+	CC_DLL void OpenURL(const std::string &url);
     
-    float getBatteryLevel();
+	CC_DLL float getBatteryLevel();
     
-    bool isNetWorkAvailble();
+	CC_DLL bool isNetWorkAvailble();
     
-    void sendLocalNotification(const char* title,const char* content,unsigned long time);
+	CC_DLL void sendLocalNotification(const char* title, const char* content, unsigned long time);
     
-    CAWifiInfo getWifiConnectionInfo();
+	CC_DLL CAWifiInfo getWifiConnectionInfo();
 
-    void initBlueTooth(CABlueToothDelegate *target);
+	CC_DLL void initBlueTooth(CABlueToothDelegate *target);
     
-    void setBlueToothType(CABlueToothType type);
+	CC_DLL void setBlueToothType(CABlueToothType type);
 };
+
+NS_CC_END
+
 #endif /* defined(__PublishPhoto__CADevice__) */
+

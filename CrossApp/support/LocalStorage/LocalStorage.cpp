@@ -1,6 +1,6 @@
 
 
-#include "CrossApp.h"
+
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
@@ -125,8 +125,8 @@ void localStorageRemoveItem( const char *key )
 	if( ok != SQLITE_OK && ok != SQLITE_DONE)
 		printf("Error in localStorage.removeItem()\n");
 }
-
+NS_CC_END
 #endif // #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
-NS_CC_END
+
 

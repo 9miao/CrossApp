@@ -3,7 +3,8 @@
 #ifndef __CAHttpRequest_H__
 #define __CAHttpRequest_H__
 
-#include "CrossApp.h"
+#include "basics/CAObject.h"
+#include "basics/CASTLContainer.h"
 #include "HttpRequest.h"
 #include "HttpResponse.h"
 #include <queue>
@@ -13,7 +14,7 @@
 
 NS_CC_BEGIN
 
-class CAHttpClient : public CAObject
+class CC_DLL CAHttpClient : public CAObject
 {
 public:
 

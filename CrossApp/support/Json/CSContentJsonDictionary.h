@@ -7,10 +7,6 @@
 #include "lib_json/json_lib.h"
 #include <vector>
 #include <string>
-#include "CrossApp.h"
-
-
-NS_CC_BEGIN
 
 typedef enum _DicItemType
 {
@@ -77,7 +73,5 @@ private:
     inline bool isKeyValidate(const char *pszKey, CSJson::Value& root);
     inline CSJson::Value * validateArrayItem(const char *pszArrayKey, int nIndex);
 };
-
-NS_CC_END
 
 #endif

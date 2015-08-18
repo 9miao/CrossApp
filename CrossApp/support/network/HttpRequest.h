@@ -3,7 +3,7 @@
 #ifndef __HTTP_REQUEST_H__
 #define __HTTP_REQUEST_H__
 
-#include "CrossApp.h"
+#include "basics/CAObject.h"
 
 NS_CC_BEGIN
 
@@ -12,7 +12,7 @@ class CAHttpResponse;
 typedef void (CAObject::*SEL_HttpResponse)(CAHttpClient* client, CAHttpResponse* response);
 #define httpresponse_selector(_SELECTOR) (CrossApp::SEL_HttpResponse)(&_SELECTOR)
 
-class CAHttpRequest : public CAObject
+class CC_DLL CAHttpRequest : public CAObject
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */

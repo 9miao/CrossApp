@@ -5,7 +5,7 @@
 
 
 #include "CrossApp.h"
-#include "../libwebsockets/ios/include/libwebsockets.h"
+#include "libwebsockets.h"
 #include <list>
 
 NS_CC_BEGIN
@@ -13,7 +13,7 @@ NS_CC_BEGIN
 class WsThreadHelper;
 class WsMessage;
 
-class WebSocket
+class CC_DLL WebSocket
 {
 public:
     /**

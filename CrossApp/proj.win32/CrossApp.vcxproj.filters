@@ -85,12 +85,6 @@
     <Filter Include="support\json\lib_json">
       <UniqueIdentifier>{e982ce20-2e84-40cd-90c1-38111ece0e7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="support\libwebsockets">
-      <UniqueIdentifier>{a6e1376f-3820-4c38-b693-06550f16182b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="support\libwebsockets\win32helpers">
-      <UniqueIdentifier>{2d5b3499-5ac1-4ac3-a52c-3492e2524fae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="support\LocalStorage">
       <UniqueIdentifier>{7e40d8df-8c3d-4324-b3b9-42ec36b8d151}</UniqueIdentifier>
     </Filter>
@@ -99,9 +93,6 @@
     </Filter>
     <Filter Include="support\sqlite3">
       <UniqueIdentifier>{3b623472-1e34-43bf-a172-60319e7c75ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="support\studio">
-      <UniqueIdentifier>{ba400e57-10db-45bd-9b76-bcec7392d0a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -502,9 +493,6 @@
     </ClCompile>
     <ClCompile Include="..\support\sqlite3\include\sqlite3.c">
       <Filter>support\sqlite3</Filter>
-    </ClCompile>
-    <ClCompile Include="..\support\studio\CAStudioViewParser.cpp">
-      <Filter>support\studio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -980,15 +968,6 @@
     <ClInclude Include="..\support\Json\lib_json\autolink.h">
       <Filter>support\json\lib_json</Filter>
     </ClInclude>
-    <ClInclude Include="..\support\libwebsockets\win32\include\win32helpers\gettimeofday.h">
-      <Filter>support\libwebsockets\win32helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\libwebsockets\win32\include\win32helpers\websock-w32.h">
-      <Filter>support\libwebsockets\win32helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\libwebsockets\win32\include\libwebsockets.h">
-      <Filter>support\libwebsockets</Filter>
-    </ClInclude>
     <ClInclude Include="..\support\LocalStorage\LocalStorage.h">
       <Filter>support\LocalStorage</Filter>
     </ClInclude>
@@ -1012,9 +991,6 @@
     </ClInclude>
     <ClInclude Include="..\support\sqlite3\include\sqlite3ext.h">
       <Filter>support\sqlite3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\studio\CAStudioViewParser.h">
-      <Filter>support\studio</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
   </ItemGroup>

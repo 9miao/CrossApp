@@ -8,6 +8,8 @@
 
 #include "CADevice.h"
 
+NS_CC_BEGIN
+
 namespace CADevice
 {
     
@@ -26,7 +28,7 @@ namespace CADevice
         
     }
     
-    vector<CAAddressBookRecord> getAddressBook()
+    std::vector<CAAddressBookRecord> getAddressBook()
     {
         std::vector<CAAddressBookRecord> _addressBookArr;
         return _addressBookArr;
@@ -98,3 +100,5 @@ namespace CADevice
         
     }
 }
+
+NS_CC_END

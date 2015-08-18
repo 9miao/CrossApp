@@ -1,7 +1,7 @@
 
 
 #include "HttpClient.h"
-#include "curl/curl.h"
+#include <curl/curl.h>
 #define MAX_Thread 16
 
 #ifndef usleep
