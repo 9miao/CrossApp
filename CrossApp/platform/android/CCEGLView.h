@@ -20,7 +20,6 @@ public:
     void    end();
     void    swapBuffers();
     void    setIMEKeyboardState(bool bOpen);
-	bool	getIMEKeyboardState();
     
     virtual void setIMEKeyboardNumber();
     
@@ -42,9 +41,6 @@ public:
     @brief    get the shared main open gl window
     */
     static CCEGLView* sharedOpenGLView();
-
-private:
-	bool m_bKeyboardOpen;
 };
 
 NS_CC_END

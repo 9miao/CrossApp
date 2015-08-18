@@ -44,7 +44,6 @@ public:
 	virtual void end();
 	virtual void swapBuffers();
 	virtual void setIMEKeyboardState(bool bOpen);
-	virtual bool getIMEKeyboardState();
 
 	/**
 	 @brief	get the shared main open gl window

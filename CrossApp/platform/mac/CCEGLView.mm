@@ -20,7 +20,6 @@ CCEGLView* CCEGLView::sharedOpenGLView(void)
 }
 
 CCEGLView::CCEGLView(void)
-: m_bKeyboardOpen(false)
 {
 }
 
@@ -64,12 +63,6 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
     {
         [[EAGLView sharedEGLView] resignFirstResponder];
     }
-	m_bKeyboardOpen = bOpen;
-}
-
-bool CCEGLView::getIMEKeyboardState()
-{
-	return m_bKeyboardOpen;
 }
 
 void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)

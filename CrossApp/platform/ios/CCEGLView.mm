@@ -9,7 +9,6 @@
 NS_CC_BEGIN
 
 CCEGLView::CCEGLView()
-: m_bKeyboardOpen(false)
 {
     m_obScreenSize.width = m_obDesignResolutionSize.width = [[EAGLView sharedEGLView] getWidth];
     m_obScreenSize.height = m_obDesignResolutionSize.height = [[EAGLView sharedEGLView] getHeight];
@@ -54,14 +53,7 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
     {
         [[EAGLView sharedEGLView] resignFirstResponder];
     }
-	m_bKeyboardOpen = bOpen;
 }
-
-bool CCEGLView::getIMEKeyboardState()
-{
-	return m_bKeyboardOpen;
-}
-
 void CCEGLView::setIMEKeyboardNumber()
 {
     EAGLView * view = [EAGLView sharedEGLView];

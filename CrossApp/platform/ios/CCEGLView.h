@@ -24,7 +24,6 @@ public:
     virtual void    checkContext();
     
     virtual void setIMEKeyboardState(bool bOpen);
-	virtual bool getIMEKeyboardState();
     
     virtual void setIMEKeyboardNumber();
     
@@ -42,8 +41,6 @@ public:
     
     static CCEGLView* sharedOpenGLView();
 
-private:
-	bool m_bKeyboardOpen;
 };
 
 NS_CC_END

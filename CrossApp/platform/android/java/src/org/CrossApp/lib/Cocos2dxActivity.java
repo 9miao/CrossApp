@@ -565,6 +565,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                 keyboardheight =screenHeight- r.bottom;
                 System.out.println(keyboardheight);
                 
+                frame.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
                 cocos2dxActivity.mGLSurfaceView.queueEvent(new Runnable()
                 {
 					@Override

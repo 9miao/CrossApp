@@ -102,7 +102,6 @@ public:
     virtual void swapBuffers();
     virtual void setFrameSize(float width, float height);
     virtual void setIMEKeyboardState(bool bOpen);
-	virtual bool getIMEKeyboardState();
 	void ShowKeyboard(Windows::Foundation::Rect r);
 	void HideKeyboard(Windows::Foundation::Rect r);
     virtual bool Create(Windows::UI::Core::CoreWindow^ window, Windows::UI::Xaml::Controls::SwapChainBackgroundPanel^ panel);

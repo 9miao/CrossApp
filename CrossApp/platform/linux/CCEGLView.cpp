@@ -294,11 +294,6 @@ void CCEGLView::setIMEKeyboardState(bool bOpen) {
 
 }
 
-bool CCEGLView::getIMEKeyboardState()
-{
-	return false;
-}
-
 bool CCEGLView::initGL()
 {
     GLenum GlewInitResult = glewInit();

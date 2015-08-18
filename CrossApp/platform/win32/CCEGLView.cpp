@@ -632,11 +632,6 @@ void CCEGLView::setIMEKeyboardState(bool /*bOpen*/)
 
 }
 
-bool CCEGLView::getIMEKeyboardState()
-{
-	return false;
-}
-
 void CCEGLView::setMenuResource(LPCWSTR menu)
 {
     m_menu = menu;
