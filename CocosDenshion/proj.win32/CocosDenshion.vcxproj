@@ -92,7 +92,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;..\Include;$(ProjectDir)..\..\CrossApp;$(ProjectDir)..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\CrossApp\platform\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\CrossApp\the_third_party\freetype\include\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;..\Include;$(ProjectDir)..\..\CrossApp;$(ProjectDir)..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\CrossApp\platform\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\CrossApp\the_third_party\freetype\include\win32;$(ProjectDir)..\..\CrossApp\the_third_party\curl\include\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOSDENSHIONWIN32_EXPORTS;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
