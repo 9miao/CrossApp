@@ -30,6 +30,7 @@ public:
     virtual void setScissorInPoints(float x , float y , float w , float h);
     
     virtual void setIMEKeyboardState(bool bOpen);
+	virtual bool getIMEKeyboardState();
 	virtual void setMultiTouchMask(bool mask);
     
 private:

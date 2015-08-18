@@ -49,6 +49,7 @@ public:
     virtual void setFrameSize(float width, float height);
 	virtual void setEditorFrameSize(float width, float height,HWND hWnd); 
     virtual void setIMEKeyboardState(bool bOpen);
+	virtual bool getIMEKeyboardState();
 
     void setMenuResource(LPCWSTR menu);
     void setWndProc(CUSTOM_WND_PROC proc);

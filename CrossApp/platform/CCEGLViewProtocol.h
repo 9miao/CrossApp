@@ -73,6 +73,8 @@ public:
      */
     virtual void    setIMEKeyboardState(bool bOpen) = 0;
 
+	virtual bool	getIMEKeyboardState() = 0;
+
     /**
      * Get the frame size of EGL view.
      * In general, it returns the screen size since the EGL view is a fullscreen view.

@@ -224,7 +224,6 @@ private:
 
 	CAImageView* m_pImageView;
 
-	bool m_bKeyboardOpen;
     bool m_bMoved;
 	int m_iCurPos;
 	int m_iLineHeight;

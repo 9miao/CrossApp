@@ -39,7 +39,6 @@ CATextView::CATextView()
 , m_pTextSelView(NULL)
 , m_pTextArrView(NULL)
 , m_bMoved(false)
-, m_bKeyboardOpen(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
     this->setHaveNextResponder(false);
@@ -452,28 +451,34 @@ const CAColor4B &CATextView::getFontColor()
 
 bool CATextView::canAttachWithIME()
 {
-	if (m_bKeyboardOpen)
-		return false;
+	CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+	if (pGlView)
+	{
+		if (pGlView->getIMEKeyboardState())
+			return false;
+	}
 	return (m_pTextViewDelegate) ? m_pTextViewDelegate->onTextViewAttachWithIME(this) : true;
 }
 
 bool CATextView::canDetachWithIME()
 {
-	if (!m_bKeyboardOpen)
-		return false;
+	CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+	if (pGlView)
+	{
+		if (!pGlView->getIMEKeyboardState())
+			return false;
+	}
 	return (m_pTextViewDelegate) ? m_pTextViewDelegate->onTextViewDetachWithIME(this) : true;
 }
 
 void CATextView::didDetachWithIME()
 {
     hideCursorMark();
-	m_bKeyboardOpen = false;
 }
 
 void CATextView::didAttachWithIME()
 {
     showCursorMark();
-	m_bKeyboardOpen = true;
 }
 
 void CATextView::insertText(const char * text, int len)

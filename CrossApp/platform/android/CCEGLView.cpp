@@ -34,6 +34,7 @@ void initExtensions() {
 NS_CC_BEGIN
 
 CCEGLView::CCEGLView()
+: m_bKeyboardOpen(false)
 {
     initExtensions();
 }
@@ -67,7 +68,14 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
     CCLog("setIMEKeyboardState %d",bOpen);
     setKeyboardStateJNI((int)bOpen);
+	m_bKeyboardOpen = bOpen;
 }
+
+bool CCEGLView::getIMEKeyboardState()
+{
+	return m_bKeyboardOpen;
+}
+
 void CCEGLView::setIMEKeyboardNumber()
 {
     setKeyboardType(11);
