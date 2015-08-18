@@ -250,7 +250,7 @@ public:
     virtual void collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item);
 	virtual void collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item);
     
-	virtual CAAutoCollectionViewCell* collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item);
+	virtual CACollectionViewCell* collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item);
 	virtual CCSize collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item);
 	virtual unsigned int numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section);
 	virtual unsigned int numberOfSections(CAAutoCollectionView *collectionView);

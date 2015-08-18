@@ -1483,7 +1483,7 @@ void CDUIShowView::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView
     
 }
 
-CAAutoCollectionViewCell* CDUIShowView::collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item)
+CACollectionViewCell* CDUIShowView::collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item)
 {
 	if (item >= colorArr.size())
 	{
@@ -1491,10 +1491,10 @@ CAAutoCollectionViewCell* CDUIShowView::collectionCellAtIndex(CAAutoCollectionVi
 	}
 
 	CADipSize _size = cellSize;
-	CAAutoCollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
+	CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
 	if (p_Cell == NULL)
 	{
-		p_Cell = CAAutoCollectionViewCell::create("CrossApp");
+		p_Cell = CACollectionViewCell::create("CrossApp");
 
 		CAView* itemImage = CAView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
 		itemImage->setTag(99);

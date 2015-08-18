@@ -1,4 +1,5 @@
 #include "CAAutoCollectionView.h"
+#include "CACollectionView.h"
 #include "basics/CAApplication.h"
 #include "control/CAButton.h"
 #include "support/CCPointExtension.h"
@@ -25,7 +26,7 @@ CAAutoCollectionView::CAAutoCollectionView()
 , m_nVertInterval(0)
 , m_bAlwaysTopSectionHeader(true)
 , m_bAlwaysBottomSectionFooter(true)
-, m_pCollectionViewOrientation(CACollectionViewOrientationHorizontal)
+, m_pCollectionViewOrientation(CACollectionViewOrientationVertical)
 {
     
 }
@@ -99,7 +100,7 @@ void CAAutoCollectionView::setAllowsSelection(bool var)
 	std::set<CAIndexPath3E>::iterator itr;
 	for (itr = m_pSelectedCollectionCells.begin(); itr != m_pSelectedCollectionCells.end(); itr++)
 	{
-		if (CAAutoCollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
+		if (CACollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
 		{
 			cell->setControlState(CAControlStateNormal);
 		}
@@ -114,7 +115,7 @@ void CAAutoCollectionView::setAllowsMultipleSelection(bool var)
 	std::set<CAIndexPath3E>::iterator itr;
 	for (itr = m_pSelectedCollectionCells.begin(); itr != m_pSelectedCollectionCells.end(); itr++)
 	{
-		if (CAAutoCollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
+		if (CACollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
 		{
 			cell->setControlState(CAControlStateNormal);
 		}
@@ -131,7 +132,7 @@ void CAAutoCollectionView::setSelectRowAtIndexPath(unsigned int section, unsigne
 		std::set<CAIndexPath3E>::iterator itr;
 		for (itr = m_pSelectedCollectionCells.begin(); itr != m_pSelectedCollectionCells.end(); itr++)
 		{
-			if (CAAutoCollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
+			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
 			{
 				cell->setControlState(CAControlStateNormal);
 			}
@@ -140,7 +141,7 @@ void CAAutoCollectionView::setSelectRowAtIndexPath(unsigned int section, unsigne
 	}
 
 	CAIndexPath3E indexPath = CAIndexPath3E(section, 0, item);
-	if (CAAutoCollectionViewCell* cell = m_mpUsedCollectionCells.at(indexPath))
+	if (CACollectionViewCell* cell = m_mpUsedCollectionCells.at(indexPath))
 	{
 		cell->setControlStateSelected();
 	}
@@ -153,7 +154,7 @@ void CAAutoCollectionView::setUnSelectRowAtIndexPath(unsigned int section, unsig
 
 	CAIndexPath3E indexPath = CAIndexPath3E(section, 0, item);
 	CC_RETURN_IF(m_pSelectedCollectionCells.find(indexPath) == m_pSelectedCollectionCells.end());
-	if (CAAutoCollectionViewCell* cell = m_mpUsedCollectionCells.at(indexPath))
+	if (CACollectionViewCell* cell = m_mpUsedCollectionCells.at(indexPath))
 	{
 		cell->setControlStateNormal();
 	}
@@ -166,12 +167,12 @@ void CAAutoCollectionView::setShowsScrollIndicators(bool var)
     m_bShowsScrollIndicators = var;
 }
 
-CAAutoCollectionViewCell* CAAutoCollectionView::cellForRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item)
+CACollectionViewCell* CAAutoCollectionView::cellForRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item)
 {
     return m_mpUsedCollectionCells[CAIndexPath3E(section, row, item)];
 }
 
-const CAVector<CAAutoCollectionViewCell*>& CAAutoCollectionView::displayingCollectionCell()
+const CAVector<CACollectionViewCell*>& CAAutoCollectionView::displayingCollectionCell()
 {
     return m_vpUsedCollectionCells;
 }
@@ -201,10 +202,10 @@ bool CAAutoCollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	{
 		CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
 
-		std::map<CAIndexPath3E, CAAutoCollectionViewCell*>::iterator itr;
+		std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
 		for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); ++itr)
 		{
-			CAAutoCollectionViewCell* pCell = itr->second;
+			CACollectionViewCell* pCell = itr->second;
 			CC_CONTINUE_IF(pCell == NULL);
 
 			if (pCell->getFrame().containsPoint(point) && pCell->isVisible())
@@ -221,7 +222,7 @@ bool CAAutoCollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
 
 				CCDelayTime* delayTime = CCDelayTime::create(0.05f);
-				CCCallFunc* func = CCCallFunc::create(pCell, callfunc_selector(CAAutoCollectionViewCell::setControlStateHighlighted));
+				CCCallFunc* func = CCCallFunc::create(pCell, callfunc_selector(CACollectionViewCell::setControlStateHighlighted));
 				CCSequence* actions = CCSequence::create(delayTime, func, NULL);
 				m_pContainer->runAction(actions);
 				break;
@@ -280,7 +281,7 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 		if (deselectedIndexPath != CAIndexPath3EZero)
 		{
-			if (CAAutoCollectionViewCell* cell = m_mpUsedCollectionCells[deselectedIndexPath])
+			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[deselectedIndexPath])
 			{
 				cell->setControlStateNormal();
 			}
@@ -292,7 +293,7 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 		if (selectedIndexPath != CAIndexPath3EZero)
 		{
-			if (CAAutoCollectionViewCell* cell = m_mpUsedCollectionCells[selectedIndexPath])
+			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[selectedIndexPath])
 			{
 				cell->setControlStateSelected();
 			}
@@ -432,7 +433,7 @@ void CAAutoCollectionView::clearData()
 
 	for (int i = 0; i < m_vpUsedCollectionCells.size(); i++)
 	{
-		CAAutoCollectionViewCell* cell = m_vpUsedCollectionCells.at(i);
+		CACollectionViewCell* cell = m_vpUsedCollectionCells.at(i);
 		CC_CONTINUE_IF(cell == NULL);
 		m_mpFreedCollectionCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
@@ -549,12 +550,12 @@ void CAAutoCollectionView::reloadData()
 				}
 				m_rUsedCollectionCellRects[indexPath] = cellRect;
 
-				std::pair<std::map<CAIndexPath3E, CAAutoCollectionViewCell*>::iterator, bool> itrResult =
-					m_mpUsedCollectionCells.insert(std::make_pair(indexPath, (CAAutoCollectionViewCell*)NULL));
+				std::pair<std::map<CAIndexPath3E, CACollectionViewCell*>::iterator, bool> itrResult =
+					m_mpUsedCollectionCells.insert(std::make_pair(indexPath, (CACollectionViewCell*)NULL));
 
 				CC_CONTINUE_IF(!winRect.intersectsRect(cellRect));
 
-				CAAutoCollectionViewCell* cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, i, l);
+				CACollectionViewCell* cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, i, l);
 				if (cell)
 				{
 					addSubview(cell);
@@ -634,10 +635,10 @@ void CAAutoCollectionView::recoveryCollectionCell()
 	rect.origin.y -= rect.size.height * 0.1f;
 	rect.size.height *= 1.2f;
 
-	std::map<CAIndexPath3E, CAAutoCollectionViewCell*>::iterator itr;
+	std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
 	for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); itr++)
 	{
-		CAAutoCollectionViewCell* cell = itr->second;
+		CACollectionViewCell* cell = itr->second;
 		CC_CONTINUE_IF(cell == NULL);
 
 		CCRect cellRect = cell->getFrame();
@@ -658,7 +659,7 @@ void CAAutoCollectionView::loadCollectionCell()
 	rect.origin.y -= rect.size.height * 0.1f;
 	rect.size.height *= 1.2f;
 
-	std::map<CAIndexPath3E, CAAutoCollectionViewCell*>::iterator itr;
+	std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
 	for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); itr++)
 	{
 		CC_CONTINUE_IF(itr->second != NULL);
@@ -667,7 +668,7 @@ void CAAutoCollectionView::loadCollectionCell()
 		CCRect cellRect = m_rUsedCollectionCellRects[r];
 		CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
 
-		CAAutoCollectionViewCell* cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, r.section, r.item);
+		CACollectionViewCell* cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, r.section, r.item);
 		if (cell)
 		{
 			cell->m_nSection = r.section;
@@ -753,9 +754,9 @@ float CAAutoCollectionView::decelerationRatio(float dt)
     return 1.8f * dt;
 }
 
-CAAutoCollectionViewCell* CAAutoCollectionView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
+CACollectionViewCell* CAAutoCollectionView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
 {
-    CAAutoCollectionViewCell* cell = NULL;
+	CACollectionViewCell* cell = NULL;
     
     if (reuseIdentifier && !m_mpFreedCollectionCells[reuseIdentifier].empty())
     {
@@ -767,148 +768,9 @@ CAAutoCollectionViewCell* CAAutoCollectionView::dequeueReusableCellWithIdentifie
     return cell;
 }
 
-CAAutoCollectionViewCell* CAAutoCollectionView::getHighlightCollectionCell()
+CACollectionViewCell* CAAutoCollectionView::getHighlightCollectionCell()
 {
     return m_pHighlightedCollectionCells;
-}
-
-#pragma CACollectionViewCell
-
-CAAutoCollectionViewCell::CAAutoCollectionViewCell()
-:m_pBackgroundView(NULL)
-, m_nSection(0xffffffff)
-, m_nItem(0xffffffff)
-, m_bControlStateEffect(true)
-, m_bAllowsSelected(true)
-{
-    this->setHaveNextResponder(true);
-    this->setDisplayRange(false);
-    this->setColor(CAColor_clear);
-}
-
-
-CAAutoCollectionViewCell::~CAAutoCollectionViewCell()
-{
-    CC_SAFE_RELEASE_NULL(m_pContentView);
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
-}
-
-CAAutoCollectionViewCell* CAAutoCollectionViewCell::create(const std::string& reuseIdentifier)
-{
-	CAAutoCollectionViewCell* cell = new CAAutoCollectionViewCell();
-	if (cell && cell->initWithReuseIdentifier(reuseIdentifier))
-	{
-		cell->autorelease();
-		return cell;
-	}
-	CC_SAFE_DELETE(cell);
-	return NULL;
-}
-
-bool CAAutoCollectionViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
-{
-    m_pContentView = new CAView();
-    this->addSubview(m_pContentView);
-    
-	this->setBackgroundView(CAView::create());
-	this->setReuseIdentifier(reuseIdentifier);
-	this->normalCollectionViewCell();
-
-	return true;
-}
-
-void CAAutoCollectionViewCell::setBackgroundView(CrossApp::CAView *var)
-{
-	CC_SAFE_RETAIN(var);
-	this->removeSubview(m_pBackgroundView);
-	CC_SAFE_RELEASE(m_pBackgroundView);
-	m_pBackgroundView = var;
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setFrame(this->getBounds());
-	this->insertSubview(m_pBackgroundView, -1);
-}
-
-CAView* CAAutoCollectionViewCell::getBackgroundView()
-{
-	return m_pBackgroundView;
-}
-
-void CAAutoCollectionViewCell::setContentSize(const CrossApp::CCSize &var)
-{
-	CAView::setContentSize(var);
-    
-    m_pContentView->setFrame(this->getBounds());
-    if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setFrame(m_pContentView->getBounds());
-    }
-}
-
-void CAAutoCollectionViewCell::setControlState(const CAControlState& var)
-{
-	if (m_bAllowsSelected == false && var == CAControlStateSelected)
-	{
-		CAControl::setControlState(CAControlStateNormal);
-	}
-	else
-	{
-		CAControl::setControlState(var);
-	}
-
-	CC_RETURN_IF(m_bControlStateEffect == false);
-	switch (m_eControlState)
-	{
-	case CAControlStateNormal:
-		this->normalCollectionViewCell();
-		break;
-	case CAControlStateHighlighted:
-		this->highlightedCollectionViewCell();
-		break;
-	case CAControlStateSelected:
-		this->selectedCollectionViewCell();
-		break;
-	case CAControlStateDisabled:
-		this->disabledCollectionViewCell();
-		break;
-	default:
-		break;
-	}
-}
-
-void CAAutoCollectionViewCell::normalCollectionViewCell()
-{
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(255, 255, 255, 255));
-}
-
-void CAAutoCollectionViewCell::highlightedCollectionViewCell()
-{
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
-}
-
-
-void CAAutoCollectionViewCell::selectedCollectionViewCell()
-{
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
-}
-
-
-void CAAutoCollectionViewCell::disabledCollectionViewCell()
-{
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
-}
-
-void CAAutoCollectionViewCell::resetCollectionViewCell()
-{
-	this->setVisible(true);
-	this->normalCollectionViewCell();
-	this->recoveryCollectionViewCell();
-    m_pContentView->setScale(1.0f);
-    m_pContentView->setFrame(this->getBounds());
-    m_pContentView->setRotation(0);
 }
 
 NS_CC_END
