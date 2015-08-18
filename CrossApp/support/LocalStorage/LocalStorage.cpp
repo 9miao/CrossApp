@@ -1,5 +1,6 @@
 
 
+#include "CrossApp.h"
 
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)

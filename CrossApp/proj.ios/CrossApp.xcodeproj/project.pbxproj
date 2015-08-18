@@ -235,8 +235,6 @@
 		3E0F756E1B7DD0C4004CFD41 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0F75321B7DD0C4004CFD41 /* sqlite3ext.h */; };
 		3E0F75771B7DD0F4004CFD41 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0F75711B7DD0F4004CFD41 /* LocalStorage.cpp */; };
 		3E0F75781B7DD0F4004CFD41 /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0F75721B7DD0F4004CFD41 /* LocalStorage.h */; };
-		3E0F757A1B7DD0F4004CFD41 /* CAStudioViewParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0F75751B7DD0F4004CFD41 /* CAStudioViewParser.cpp */; };
-		3E0F757B1B7DD0F4004CFD41 /* CAStudioViewParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0F75761B7DD0F4004CFD41 /* CAStudioViewParser.h */; };
 		3E0F75851B7DEA35004CFD41 /* CADevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0F75841B7DEA35004CFD41 /* CADevice.cpp */; };
 		3E0F75891B7DFAB3004CFD41 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 3E0F75881B7DFAB3004CFD41 /* sqlite3.c */; };
 		3E2154701B819CA60075448E /* CAVideoPlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2154681B819CA60075448E /* CAVideoPlayerController.cpp */; };
@@ -594,8 +592,6 @@
 		3E0F75321B7DD0C4004CFD41 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		3E0F75711B7DD0F4004CFD41 /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		3E0F75721B7DD0F4004CFD41 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
-		3E0F75751B7DD0F4004CFD41 /* CAStudioViewParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStudioViewParser.cpp; sourceTree = "<group>"; };
-		3E0F75761B7DD0F4004CFD41 /* CAStudioViewParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStudioViewParser.h; sourceTree = "<group>"; };
 		3E0F75841B7DEA35004CFD41 /* CADevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADevice.cpp; sourceTree = "<group>"; };
 		3E0F75861B7DF8FB004CFD41 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3E0F75881B7DFAB3004CFD41 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
@@ -1214,7 +1210,6 @@
 				3E0F75241B7DD0C4004CFD41 /* network */,
 				3E0F752D1B7DD0C4004CFD41 /* sqlite3 */,
 				3E0F75701B7DD0F4004CFD41 /* LocalStorage */,
-				3E0F75741B7DD0F4004CFD41 /* studio */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
 				469A7DF016C24787006FFCB2 /* tinyxml2 */,
@@ -1378,15 +1373,6 @@
 			path = LocalStorage;
 			sourceTree = "<group>";
 		};
-		3E0F75741B7DD0F4004CFD41 /* studio */ = {
-			isa = PBXGroup;
-			children = (
-				3E0F75751B7DD0F4004CFD41 /* CAStudioViewParser.cpp */,
-				3E0F75761B7DD0F4004CFD41 /* CAStudioViewParser.h */,
-			);
-			path = studio;
-			sourceTree = "<group>";
-		};
 		469A7DF016C24787006FFCB2 /* tinyxml2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1506,7 +1492,6 @@
 				B0C512C819A2DF9F00E6934B /* CAFTFontCache.h in Headers */,
 				B0ADAE6C1B2E7F1B00BE8FA3 /* CABatchView.h in Headers */,
 				B0A11DBE1AE8E0B300933BF6 /* gif_lib.h in Headers */,
-				3E0F757B1B7DD0F4004CFD41 /* CAStudioViewParser.h in Headers */,
 				B0ADAE921B2E7F1B00BE8FA3 /* CATextEditHelper.h in Headers */,
 				04EABB351956DAEA00198A8E /* CCNS.cpp in Headers */,
 				04EABB361956DAEA00198A8E /* CCSet.cpp in Headers */,
@@ -1748,7 +1733,6 @@
 				1551A65F158F2ADE00E66CFE /* CCSet.cpp in Sources */,
 				1551A661158F2ADE00E66CFE /* CCString.cpp in Sources */,
 				EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */,
-				3E0F757A1B7DD0F4004CFD41 /* CAStudioViewParser.cpp in Sources */,
 				B0ADAE831B2E7F1B00BE8FA3 /* CAPageView.cpp in Sources */,
 				1551A6C6158F2ADE00E66CFE /* aabb.c in Sources */,
 				3E0F75771B7DD0F4004CFD41 /* LocalStorage.cpp in Sources */,

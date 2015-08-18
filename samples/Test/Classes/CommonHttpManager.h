@@ -6,10 +6,8 @@
 #include <CrossApp.h>
 #include <CrossAppExt.h>
 #include <map>
-#include "json_lib.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
+
 
 static char Dec2HexChar(short int n)
 {
