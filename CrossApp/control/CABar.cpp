@@ -166,7 +166,7 @@ void CANavigationBar::showTitle()
 
     if (m_pTitle)
     {
-        this->removeSubview(m_pTitle);
+        m_pContentView->removeSubview(m_pTitle);
         m_pTitle = NULL;
     }
     
