@@ -3,7 +3,7 @@
 #ifndef COCOSTUDIO_CSCONTENTJSONDICTIONARY_H
 #define COCOSTUDIO_CSCONTENTJSONDICTIONARY_H
 
-
+#include "CrossApp.h"
 #include "lib_json/json_lib.h"
 #include <vector>
 #include <string>
@@ -21,7 +21,7 @@ typedef enum _DicItemType
 }DicItemType;
 
 
-class CSJsonDictionary
+class CC_DLL CSJsonDictionary
 {
 public:
     CSJsonDictionary();
