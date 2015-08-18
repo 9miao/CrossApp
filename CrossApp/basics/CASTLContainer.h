@@ -1012,6 +1012,22 @@ public:
         return true;
 	}
 
+	void assign(K key, T object)
+	{
+		CC_SAFE_RETAIN(object);
+
+		iterator it = _data.find(key);
+		if (it == _data.end())
+		{
+			_data[key] = object;
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(it->second);
+			it->second = object;
+		}
+	}
+
 	size_t size() const
 	{
 		return _data.size();

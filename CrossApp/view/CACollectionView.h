@@ -259,6 +259,7 @@ private:
 
 class CC_DLL CACollectionViewCell : public CAControl
 {
+	friend class CAAutoCollectionView;
 public:
     
 	CACollectionViewCell();
