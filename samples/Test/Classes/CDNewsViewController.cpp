@@ -384,6 +384,7 @@ CATableViewCell* CDNewsViewController::tableCellAtIndex(CATableView* table, cons
 
 void CDNewsViewController::tableViewWillDisplayCellAtIndex(CATableView* table, CATableViewCell* cell, unsigned int section, unsigned int row)
 {
+    /*
     if (cell != NULL)
     {
         temp_time+=0.02f;
@@ -403,6 +404,7 @@ void CDNewsViewController::tableViewWillDisplayCellAtIndex(CATableView* table, C
         //执行动画
         CAViewAnimation::commitAnimations();
     }
+  */
 }
 
 void CDNewsViewController::tempCallBack()

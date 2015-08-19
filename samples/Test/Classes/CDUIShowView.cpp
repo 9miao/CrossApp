@@ -1,4 +1,4 @@
-﻿//
+//
 //  CDUIShowView.cpp
 //  Test
 //
@@ -1033,9 +1033,7 @@ void CDUIShowView::showTextField()
     textField->setFontSize(_px(40));
     textField->setTag(100);
     textField->setPlaceHolder("Input");
-    textField->setKeyboardType(KEY_BOARD_TYPE_ALPHABET);
-    textField->setTextEditAlign(eTextEditAlignLeft);
-    textField->setInputType(KEY_BOARD_INPUT_PASSWORD);
+    textField->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
     this->getView()->addSubview(textField);
     showNum = 1;
 }
@@ -1169,8 +1167,8 @@ void CDUIShowView::showTabBar()
     item.push_back(item2);
     item.push_back(item3);
     
-    CATabBar* tabBar = CATabBar::create(item);
-    tabBar->setFrame(CADipRect(0, winSize.height-200, winSize.width, 100));
+    CATabBar* tabBar = CATabBar::create(item,CADipSize(winSize.width, 100));
+    tabBar->setFrameOrigin(CADipPoint(0, winSize.height-200));
     tabBar->showSelectedIndicator();
     tabBar->setTitleColorForNormal(CAColor_yellow);
     tabBar->setTitleColorForSelected(CAColor_orange);
@@ -1191,8 +1189,8 @@ void CDUIShowView::showTabBar()
     it1.push_back(item5);
     it1.push_back(item6);
     
-    CATabBar* tabBar1 = CATabBar::create(it1);
-    tabBar1->setFrame(CADipRect(0, winSize.height-200, winSize.width, 100));
+    CATabBar* tabBar1 = CATabBar::create(it1,CADipSize(winSize.width, 100));
+    tabBar1->setFrameOrigin(CADipPoint(0, winSize.height-200));
     tabBar1->setTitleColorForNormal(CAColor_yellow);
     tabBar1->setTitleColorForSelected(CAColor_orange);
     tabBar1->setBackGroundImage(CAImage::create("image/tab_news_bg.png"));
@@ -1460,131 +1458,85 @@ void CDUIShowView::showCollectionView()
     headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
     footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     
-    p_Conllection = CAAutoCollectionView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
+    p_Conllection = CACollectionView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
     p_Conllection->setAllowsSelection(true);
     //p_Conllection->setAllowsMultipleSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
     p_Conllection->setCollectionViewDataSource(this);
     p_Conllection->setScrollViewDelegate(this);
-//    p_Conllection->setHeaderRefreshView(headerRefreshView);
-//    p_Conllection->setFooterRefreshView(footerRefreshView);
+    p_Conllection->setHeaderRefreshView(headerRefreshView);
+    p_Conllection->setFooterRefreshView(footerRefreshView);
     p_Conllection->setHoriInterval(_px(40));
     p_Conllection->setVertInterval(_px(40));
     this->getView()->addSubview(p_Conllection);
 }
 
-void CDUIShowView::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
+void CDUIShowView::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
 {
     
 }
 
-void CDUIShowView::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
+void CDUIShowView::collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
 {
     
 }
 
-CACollectionViewCell* CDUIShowView::collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item)
+CACollectionViewCell* CDUIShowView::collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
 {
-	if (item >= colorArr.size())
-	{
-		return NULL;
-	}
-
-	CADipSize _size = cellSize;
-	CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
-	if (p_Cell == NULL)
-	{
-		p_Cell = CACollectionViewCell::create("CrossApp");
-
-		CAView* itemImage = CAView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
-		itemImage->setTag(99);
-		p_Cell->addSubview(itemImage);
-
-		CADipSize itemSize = itemImage->getBounds().size;
-		CALabel* itemText = CALabel::createWithCenter(CADipRect(itemSize.width / 2, itemSize.height / 2, 150, 40));
-		itemText->setTag(100);
-		itemText->setFontSize(_px(29));
-		itemText->setTextAlignment(CATextAlignmentCenter);
-		itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-		itemImage->addSubview(itemText);
-	}
-	CAView* itemImageView = p_Cell->getSubviewByTag(99);
-	itemImageView->setColor(colorArr.at(item));
-	CCLog("%d", item);
-
-	CAView* itemImage = p_Cell->getSubviewByTag(99);
-	CALabel* itemText = (CALabel*)itemImage->getSubviewByTag(100);
-
-	itemImage->setFrame(CADipRect(0, 0, _size.width, _size.height));
-
-	char pos[20] = "";
-	sprintf(pos, "(%d,%d)", section, item);
-
-	CADipSize itemSize = itemImage->getBounds().size;
-	itemText->setCenter(CADipRect(itemSize.width / 2, itemSize.height / 2, 150, 40));
-	itemText->setText(pos);
-
-	return p_Cell;
-}
-
-CCSize CDUIShowView::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
-{
-	switch (item)
-	{
-	case 0:
-		return CCSizeMake(50, 50);
-
-	case 1:
-		return CCSizeMake(150, 150);
-
-	case 2:
-		return CCSizeMake(250, 50);
-
-	case 3:
-		return CCSizeMake(50, 150);
-
-	default:
-		break;
-	}
-	return CCSizeMake(50, 50);
-}
-
-unsigned int CDUIShowView::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
-{
-	return 10;
-}
-
-unsigned int CDUIShowView::numberOfSections(CAAutoCollectionView *collectionView)
-{
-	return 1;
-}
-
-/*
-CAAutoCollectionViewCell* CDUIShowView::collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item)
-{
+    if (row * 3 + item >= colorArr.size())
+    {
+        return NULL;
+    }
     
+    CADipSize _size = cellSize;
+    CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
+    if (p_Cell == NULL)
+    {
+        p_Cell = CACollectionViewCell::create("CrossApp");
+        
+        CAView* itemImage = CAView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
+        itemImage->setTag(99);
+        p_Cell->addSubview(itemImage);
+        
+        CADipSize itemSize = itemImage->getBounds().size;
+        CALabel* itemText = CALabel::createWithCenter(CADipRect(itemSize.width/2, itemSize.height/2, 150, 40));
+        itemText->setTag(100);
+        itemText->setFontSize(_px(29));
+        itemText->setTextAlignment(CATextAlignmentCenter);
+        itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        itemImage->addSubview(itemText);
+    }
+    CAView* itemImageView = p_Cell->getSubviewByTag(99);
+    itemImageView->setColor(colorArr.at(row * 3 + item));
+    CCLog("%d", row * 3 + item);
+    
+    char pos[20] = "";
+    sprintf(pos, "(%d,%d,%d)", section, row, item);
+    CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
+    itemText->setText(pos);
+    
+    return p_Cell;
 }
 
-unsigned int CDUIShowView::numberOfSections(CAAutoCollectionView *collectionView)
+unsigned int CDUIShowView::numberOfSections(CACollectionView *collectionView)
 {
     return 1;
 }
 
-unsigned int CDUIShowView::numberOfRowsInSection(CAAutoCollectionView *collectionView, unsigned int section)
+unsigned int CDUIShowView::numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)
 {
     return colorArr.size() % 3 == 0 ? colorArr.size() / 3 : colorArr.size() / 3 + 1;
 }
 
-unsigned int CDUIShowView::numberOfItemsInRowsInSection(CAAutoCollectionView *collectionView, unsigned int section)
+unsigned int CDUIShowView::numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)
 {
     return 3;
 }
 
-unsigned int CDUIShowView::collectionViewHeightForRowAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section)
+unsigned int CDUIShowView::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
 {
     return (this->getView()->getBounds().size.width - _px(40) * 4) / 3;
 }
-*/
 
 void CDUIShowView::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
@@ -1773,7 +1725,6 @@ void CDUIShowView::showAnimation()
     animation_2_textfield->setFontSize(_px(40));
     animation_2_textfield->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
     animation_2_textfield->setVisible(false);
-    
     
     animation_2_btn_search = CAButton::createWithCenter(CADipRect(70,winSize.height/2,56,48), CAButtonTypeCustom);
     animation_2_btn_search->setImageForState(CAControlStateNormal, CAImage::create("image/search_btn.png"));
