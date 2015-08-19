@@ -13,12 +13,12 @@ using namespace CrossApp;
 extern "C" {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y)
     {
-        CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, &id, &x, &y);
+        CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, &id, &x, &y, NULL);
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y)
     {
-        CAApplication::getApplication()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
+        CAApplication::getApplication()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y, NULL);
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
@@ -31,7 +31,7 @@ extern "C" {
         env->GetFloatArrayRegion(xs, 0, size, x);
         env->GetFloatArrayRegion(ys, 0, size, y);
 
-        CAApplication::getApplication()->getOpenGLView()->handleTouchesMove(size, id, x, y);
+        CAApplication::getApplication()->getOpenGLView()->handleTouchesMove(size, id, x, y, NULL);
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
@@ -44,7 +44,7 @@ extern "C" {
         env->GetFloatArrayRegion(xs, 0, size, x);
         env->GetFloatArrayRegion(ys, 0, size, y);
 
-        CAApplication::getApplication()->getOpenGLView()->handleTouchesCancel(size, id, x, y);
+        CAApplication::getApplication()->getOpenGLView()->handleTouchesCancel(size, id, x, y, NULL);
     }
 
     #define KEYCODE_BACK 0x04

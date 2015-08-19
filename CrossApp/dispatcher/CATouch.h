@@ -51,8 +51,28 @@ private:
     CCPoint m_prevPoint;
 };
 
+enum EventType
+{
+    keyboardEvent = 0,
+    leftMouseEvent,
+    rightMouseEvent,
+};
+
 class CC_DLL CAEvent : public CAObject
 {
+
+
+public:
+    CAEvent()
+    : m_eType(keyboardEvent)
+    {}
+    
+    EventType getEventType() { return m_eType;}
+    
+    void setEventType(EventType type) { m_eType = type;}
+protected:
+    EventType m_eType;
+
 };
 
 // end of input group
