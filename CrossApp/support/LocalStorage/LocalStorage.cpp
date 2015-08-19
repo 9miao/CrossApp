@@ -31,7 +31,7 @@ static void localStorageCreateTable()
 		printf("Error in CREATE TABLE\n");
 }
 
-void localStorageInit( const char *fullpath)
+CC_DLL void localStorageInit(const char *fullpath)
 {
 	if( ! _initialized )
     {
@@ -65,7 +65,7 @@ void localStorageInit( const char *fullpath)
 	}
 }
 
-void localStorageFree()
+CC_DLL void localStorageFree()
 {
 	if( _initialized ) {
 		sqlite3_finalize(_stmt_select);
@@ -79,7 +79,7 @@ void localStorageFree()
 }
 
 /** sets an item in the LS */
-void localStorageSetItem( const char *key, const char *value)
+CC_DLL void localStorageSetItem(const char *key, const char *value)
 {
 	assert( _initialized );
 	
@@ -95,7 +95,7 @@ void localStorageSetItem( const char *key, const char *value)
 }
 
 /** gets an item from the LS */
-const char* localStorageGetItem( const char *key )
+CC_DLL const char* localStorageGetItem(const char *key)
 {
 	assert( _initialized );
 
@@ -113,7 +113,7 @@ const char* localStorageGetItem( const char *key )
 }
 
 /** removes an item from the LS */
-void localStorageRemoveItem( const char *key )
+CC_DLL void localStorageRemoveItem(const char *key)
 {
 	assert( _initialized );
 

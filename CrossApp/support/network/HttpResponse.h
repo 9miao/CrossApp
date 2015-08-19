@@ -8,7 +8,7 @@
 
 NS_CC_BEGIN
 
-class CAHttpResponse : public CAObject
+class CC_DLL CAHttpResponse : public CAObject
 {
 public:
     /** Constructor, it's used by CCHttpClient internal, users don't need to create HttpResponse manually

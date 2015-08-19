@@ -7,7 +7,7 @@
 //
 
 #include "CDUIShowView.h"
-#include "CAFlashView.h"
+
 
 std::vector<std::string> sectionTitle;
 
