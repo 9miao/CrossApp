@@ -11,6 +11,8 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
 
+NS_CC_BEGIN
+
 namespace CADevice
 {
 
@@ -587,3 +589,5 @@ extern "C"
 }
 
 }
+
+NS_CC_END

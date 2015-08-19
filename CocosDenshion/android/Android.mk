@@ -10,6 +10,8 @@ LOCAL_SRC_FILES := SimpleAudioEngine.cpp \
                    opensl/OpenSLEngine.cpp \
                    opensl/SimpleAudioEngineOpenSL.cpp
 
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
+
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
