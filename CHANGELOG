@@ -33,6 +33,22 @@ cell重用机制优化，刷新时不清空缓存列表
 
 #####6.其他一些细节的优化
 
+
+#### CrossApp 1.1.10 Update:  
+
+#####1. Optimized CATextField
+1. Added content alignment setting interface
+2. Fixed bug that multi CATextField caused messy code in Android
+3. Added input functionality that supports .mac platform
+#####2. Optimizations in CADevice
+1. Call album and camera, and cancel tailorable functionablity interface
+2. Added version number obtaining
+#####3. Fixed bug that webView cannot reload after being released in webView
+#####4. Optimized animation system of CAViewAnimation
+#####5. Optimized CAImage, adding support for tiff format
+#####6. Other Details Tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 1.1.9 更新内容：  
@@ -83,6 +99,57 @@ cell重用机制优化，刷新时不清空缓存列表
 #####13.添加UTF8转UTF32接口
 
 #####14.其他一些细节的修改
+
+
+CrossApp 1.1.9 Update:  
+
+#####1. Optimized engine performance
+1. Improved the performance of CPU peak occupany
+2. Optimized power consumption
+
+#####2. Optimized the stability of Http network request in iOS
+
+#####3. Optimized CAScrollView
+1. Optimized sliding inertial algorithm
+
+#####4. Optimized animation system of CAViewAnimation
+1. Added support for ImageRect
+
+#####5. Optimized CAImage
+1. Added texture stretch and scale interface
+
+#####6. Optimized obtaining photos from album and camera in Android
+1. Fixed bug that some kinds of mobile phone model cannot accurately display photo
+
+#####7. Optimized CATextView
+1. Added default background
+2. Added input area and border distance interface
+3. Optimized getKeyBoardHeight callback of CATextViewDelegate and added keyborad withdraw callback
+4. Optimized onTextViewInsertText, onTextViewDeleteBackward in CATextViewDelegate, insert deleting monitor callback and sorting callback parameters
+
+#####8. Optimized CATextField
+1. Optimized getKeyBoardHeight callback in CATextField Delegate, and added keyboard withdraw callback
+2. Optimized onTextViewInsertText、onTextViewDeleteBackward in CATextField Delegate, insert deleting monitor callback and sorting callback parameters
+
+#####9. optimized CAButton
+1. Added Image location and size change interface
+2. Added Title location, font size and Label size change interface
+
+#####10. Optimized CANavigationBar
+1. Added single item width interface
+
+#####11. optimized CAListView, CATableView, CACollectionView
+1. Added displayingXXXCell function, it's able to obtain all current displayed CAXXXViewCell objects
+2. Added XXXViewWillDisplayCellAtIndex callback in CAXXXViewDelegate, it's able to monitor loaded and soon to be displayed listViewCell
+3. Added ContentView layer in CAXXXViewCell
+
+#####12. Optimized CAWebView interface
+1. Modified webView's chrysanthemum loading interface, now it can be called by users; Added setting chrysanthemum view interface, users are able to have their own loading animation
+
+#####13. Added UTF8 to UTF32 interface
+
+#####14. Other details tweaking
+
 
 
 **********************************************************************************
