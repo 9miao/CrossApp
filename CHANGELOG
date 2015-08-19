@@ -12,6 +12,15 @@ cell重用机制优化，刷新时不清空缓存列表
 #####4.其他一些细节的优化
 
 
+####CrossApp 1.1.11 Update: 
+
+#####1. Optimized CAListView and CACollectionView
+Optimized cell's reuse mechanism, system will not wipe cache list when refreshing
+#####2. Fixed bug that system reports error when iOS simulator compiling
+#####3. Optimized many details of input box
+#####4. Other Details Tweaking
+
+
 **********************************************************************************
 
 #### CrossApp 1.1.10 更新内容：  
