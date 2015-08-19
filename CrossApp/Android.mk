@@ -95,6 +95,7 @@ view/CAScrollView.cpp \
 view/CAListView.cpp \
 view/CATableView.cpp \
 view/CACollectionView.cpp \
+view/CAAutoCollectionView.cpp \
 view/CAView.cpp \
 view/CAWindow.cpp \
 view/CAAlertView.cpp \
