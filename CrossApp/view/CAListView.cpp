@@ -442,43 +442,14 @@ void CAListView::reloadData()
             addSubview(m_pListHeaderView);
         }
     }
-    
+	
     unsigned int cellCount = m_pListViewDataSource->numberOfIndex(this);
     for (unsigned i = 0; i < cellCount; i++)
     {
-        if (m_nIndexs > 0)
-        {
-            std::pair<std::map<unsigned int, CAListViewCell*>::iterator, bool> itrResult =
-            m_mpUsedListCells.insert(std::make_pair(i, (CAListViewCell*)NULL));
-            
-            CC_CONTINUE_IF(!winRect.intersectsRect(m_rIndexRects[i]));
-            
-            CAListViewCell* cell = m_pListViewDataSource->listViewCellAtIndex(this, m_rIndexRects[i].size, i);
-            if (cell)
-            {
-                cell->m_nIndex = i;
-                cell->setFrame(m_rIndexRects[i]);
-                addSubview(cell);
-                itrResult.first->second = cell;
-                m_vpUsedListCells.pushBack(cell);
-                
-                if (m_pListViewDataSource)
-                {
-                    m_pListViewDataSource->listViewWillDisplayCellAtIndex(this, cell, i);
-                }
-            }
-        }
-        
-        if (m_nSeparatorViewHeight > 0)
-        {
-			CAView* view = this->dequeueReusableLine();
-			if (view == NULL)
-			{
-				view = CAView::createWithFrame(m_rLineRects[i], m_obSeparatorColor);
-			}
-			addSubview(view);
-            m_pUsedLines[i] = view;
-        }
+		if (m_nIndexs > 0)
+		{
+			m_mpUsedListCells.insert(std::make_pair(i, (CAListViewCell*)NULL));
+		}
     }
     
     if (m_nListFooterHeight > 0)
@@ -489,6 +460,7 @@ void CAListView::reloadData()
             addSubview(m_pListFooterView);
         }
     }
+	loadCollectionCell();
     this->layoutPullToRefreshView();
     this->startDeaccelerateScroll();
 }
@@ -514,19 +486,18 @@ void CAListView::recoveryCollectionCell()
 
 		CCRect cellRect = cell->getFrame();
 		CC_CONTINUE_IF(rect.intersectsRect(cellRect));
-
+		
 		m_mpFreedListCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
 		cell->resetListViewCell();
 		itr->second = NULL;
         m_vpUsedListCells.eraseObject(cell);
-        
+		
         CAView* line = m_pUsedLines[itr->first];
         CC_CONTINUE_IF(line == NULL);
         m_pFreedLines.pushBack(line);
         line->removeFromSuperview();
         m_pUsedLines[itr->first] = NULL;
-        
 	}
 }
 
@@ -575,7 +546,7 @@ void CAListView::loadCollectionCell()
         }
         m_pUsedLines[index] = view;
         this->insertSubview(view, 1);
-        view->setFrame(lineRect);
+		view->setFrame(lineRect);
 	}
 }
 
