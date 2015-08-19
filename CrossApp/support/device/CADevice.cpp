@@ -61,10 +61,10 @@ namespace CADevice
     }
     
     float getVolume(int type)
+
     {
         return 1.0f;
     }
-    
     void OpenURL(const std::string &url)
     {
         

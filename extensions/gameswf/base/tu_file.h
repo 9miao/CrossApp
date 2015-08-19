@@ -188,25 +188,25 @@ private:
 	inline Uint64	tu_file::read_le64() { return read64(); }
 	inline Uint32	tu_file::read_le32() { return read32(); }
 	inline Uint16	tu_file::read_le16() { return read16(); }
-	inline Uint64	tu_file::read_be64() { return swap64(read64()); }
-	inline Uint32	tu_file::read_be32() { return swap32(read32()); }
-	inline Uint16	tu_file::read_be16() { return swap16(read16()); }
+	inline Uint64	tu_file::read_be64() { return gameswf_swap64(read64()); }
+	inline Uint32	tu_file::read_be32() { return gameswf_swap32(read32()); }
+	inline Uint16	tu_file::read_be16() { return gameswf_swap16(read16()); }
 	inline void	tu_file::write_le64(Uint64 u) { write64(u); }
 	inline void	tu_file::write_le32(Uint32 u) { write32(u); }
 	inline void	tu_file::write_le16(Uint16 u) { write16(u); }
-	inline void	tu_file::write_be64(Uint64 u) { write64(swap64(u)); }
-	inline void	tu_file::write_be32(Uint32 u) { write32(swap32(u)); }
-	inline void	tu_file::write_be16(Uint16 u) { write16(swap16(u)); }
+	inline void	tu_file::write_be64(Uint64 u) { write64(gameswf_swap64(u)); }
+	inline void	tu_file::write_be32(Uint32 u) { write32(gameswf_swap32(u)); }
+	inline void	tu_file::write_be16(Uint16 u) { write16(gameswf_swap16(u)); }
 #else // not _TU_LITTLE_ENDIAN_
-	inline Uint64	tu_file::read_le64() { return swap64(read64()); }
-	inline Uint32	tu_file::read_le32() { return swap32(read32()); }
-	inline Uint16	tu_file::read_le16() { return swap16(read16()); }
+	inline Uint64	tu_file::read_le64() { return gameswf_swap64(read64()); }
+	inline Uint32	tu_file::read_le32() { return gameswf_swap32(read32()); }
+	inline Uint16	tu_file::read_le16() { return gameswf_swap16(read16()); }
 	inline Uint64	tu_file::read_be64() { return read64(); }
 	inline Uint32	tu_file::read_be32() { return read32(); }
 	inline Uint16	tu_file::read_be16() { return read16(); }
-	inline void	tu_file::write_le64(Uint64 u) { write64(swap64(u)); }
-	inline void	tu_file::write_le32(Uint32 u) { write32(swap32(u)); }
-	inline void	tu_file::write_le16(Uint16 u) { write16(swap16(u)); }
+	inline void	tu_file::write_le64(Uint64 u) { write64(gameswf_swap64(u)); }
+	inline void	tu_file::write_le32(Uint32 u) { write32(gameswf_swap32(u)); }
+	inline void	tu_file::write_le16(Uint16 u) { write16(gameswf_swap16(u)); }
 	inline void	tu_file::write_be64(Uint64 u) { write64(u); }
 	inline void	tu_file::write_be32(Uint32 u) { write32(u); }
 	inline void	tu_file::write_be16(Uint16 u) { write16(u); }

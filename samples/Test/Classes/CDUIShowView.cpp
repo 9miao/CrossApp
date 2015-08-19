@@ -7,7 +7,10 @@
 //
 
 #include "CDUIShowView.h"
+#include "support/device/CADevice.h"
+#include "CrossAppExt.h"
 
+USING_NS_CC;
 
 std::vector<std::string> sectionTitle;
 
