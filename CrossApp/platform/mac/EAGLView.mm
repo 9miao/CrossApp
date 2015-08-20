@@ -468,7 +468,7 @@ static EAGLView *view;
 -(void) scrollWheel:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
 	[super scrollWheel:theEvent];
-    
+
     NSPoint event_location = [theEvent locationInWindow];
     NSPoint local_point = [self convertPoint:event_location fromView:nil];
     
@@ -479,15 +479,14 @@ static EAGLView *view;
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
-    ids[0] = [theEvent eventNumber];
+    ids[0] = 0;
     xs[0] = x / frameZoomFactor_;
     ys[0] = y / frameZoomFactor_;
-
+    
     CrossApp::CAEvent* event = new CrossApp::CAEvent();
     event->setEventType(CrossApp::EventType::middleMouseEvent);
-    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, ids, xs, ys, event);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleMiddleMouseButtonScroll(1, ids, xs, ys, theEvent.scrollingDeltaX, theEvent.scrollingDeltaY, event);
     event->release();
-    
 }
 
 #pragma mark EAGLView - Key events

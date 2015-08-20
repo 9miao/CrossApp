@@ -333,6 +333,12 @@ void CCEGLViewProtocol::handleTouchesCancel(int num, intptr_t ids[], float xs[],
     m_pDelegate->touchesCancelled(&set, event);
 }
 
+void CCEGLViewProtocol::handleMiddleMouseButtonScroll(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event)
+{
+    CCLog("%f", offx);
+    CCLog("%f", offy);
+}
+
 const CCRect& CCEGLViewProtocol::getViewPortRect() const
 {
     return m_obViewPortRect;
