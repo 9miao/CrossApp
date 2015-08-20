@@ -56,6 +56,9 @@ enum EventType
     keyboardEvent = 0,
     leftMouseEvent,
     rightMouseEvent,
+    middleMouseEvent,
+    iosEvent,
+    androidEvent,
 };
 
 class CC_DLL CAEvent : public CAObject
