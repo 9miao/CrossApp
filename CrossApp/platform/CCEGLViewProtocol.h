@@ -159,10 +159,13 @@ public:
      * @lua NA
      */
     virtual void handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event);
-    /**
-     * @lua NA
-     */
-    virtual void handleMiddleMouseButtonScroll(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event);
+    
+    virtual void handleScrollWheel(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event);
+    virtual void handleOtherMouseDown(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event);
+    virtual void handleOtherMouseDragged(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event);
+    virtual void handleOtherMouseUp(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event);
+    virtual void handleMouseEntered(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event);
+    
     /**
      * Get the opengl view port rectangle.
      */
