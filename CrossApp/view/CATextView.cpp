@@ -80,7 +80,7 @@ bool CATextView::resignFirstResponder()
 
 bool CATextView::becomeFirstResponder()
 {
-	resignAllResponder();
+	resignAllResponder(this);
 	bool result = CAView::becomeFirstResponder();
 	if (result)
 	{
