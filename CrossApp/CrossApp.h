@@ -97,6 +97,7 @@
 #include "view/CADrawingPrimitives.h"
 #include "view/CADrawView.h"
 #include "view/CATextEditHelper.h"
+#include "view/CAAutoCollectionView.h"
 
 // cocoa
 #include "cocoa/CCSet.h"

@@ -1,13 +1,12 @@
 #include "CAAutoCollectionView.h"
 #include "basics/CAApplication.h"
-#include "control/CAButton.h"
 #include "support/CCPointExtension.h"
 #include "dispatcher/CATouch.h"
 #include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
-#pragma CACollectionView
+#pragma CAAutoCollectionView
 
 CAAutoCollectionView::CAAutoCollectionView()
 : m_pCollectionViewDataSource(NULL)
@@ -386,9 +385,7 @@ void CAAutoCollectionView::reloadViewSizeData()
 			cvs.CollectionViewRows.push_back(r);
 		}
     }
-
-	CCRect winRect = this->getBounds();
-
+    
 	unsigned int viewHeight = 0;
 	for (int i = 0; i < nSections; i++)
 	{
@@ -768,145 +765,6 @@ CACollectionViewCell* CAAutoCollectionView::dequeueReusableCellWithIdentifier(co
 CACollectionViewCell* CAAutoCollectionView::getHighlightCollectionCell()
 {
     return m_pHighlightedCollectionCells;
-}
-
-#pragma CACollectionViewCell
-
-CACollectionViewCell::CACollectionViewCell()
-:m_pBackgroundView(NULL)
-, m_nSection(0xffffffff)
-, m_nItem(0xffffffff)
-, m_bControlStateEffect(true)
-, m_bAllowsSelected(true)
-{
-    this->setHaveNextResponder(true);
-    this->setDisplayRange(false);
-    this->setColor(CAColor_clear);
-}
-
-
-CACollectionViewCell::~CACollectionViewCell()
-{
-    CC_SAFE_RELEASE_NULL(m_pContentView);
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
-}
-
-CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdentifier)
-{
-	CACollectionViewCell* cell = new CACollectionViewCell();
-	if (cell && cell->initWithReuseIdentifier(reuseIdentifier))
-	{
-		cell->autorelease();
-		return cell;
-	}
-	CC_SAFE_DELETE(cell);
-	return NULL;
-}
-
-bool CACollectionViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
-{
-    m_pContentView = new CAView();
-    this->addSubview(m_pContentView);
-    
-	this->setBackgroundView(CAView::create());
-	this->setReuseIdentifier(reuseIdentifier);
-	this->normalCollectionViewCell();
-
-	return true;
-}
-
-void CACollectionViewCell::setBackgroundView(CrossApp::CAView *var)
-{
-	CC_SAFE_RETAIN(var);
-	this->removeSubview(m_pBackgroundView);
-	CC_SAFE_RELEASE(m_pBackgroundView);
-	m_pBackgroundView = var;
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setFrame(this->getBounds());
-	this->insertSubview(m_pBackgroundView, -1);
-}
-
-CAView* CACollectionViewCell::getBackgroundView()
-{
-	return m_pBackgroundView;
-}
-
-void CACollectionViewCell::setContentSize(const CrossApp::CCSize &var)
-{
-	CAView::setContentSize(var);
-    
-    m_pContentView->setFrame(this->getBounds());
-    if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setFrame(m_pContentView->getBounds());
-    }
-}
-
-void CACollectionViewCell::setControlState(const CAControlState& var)
-{
-	if (m_bAllowsSelected == false && var == CAControlStateSelected)
-	{
-		CAControl::setControlState(CAControlStateNormal);
-	}
-	else
-	{
-		CAControl::setControlState(var);
-	}
-
-	CC_RETURN_IF(m_bControlStateEffect == false);
-	switch (m_eControlState)
-	{
-	case CAControlStateNormal:
-		this->normalCollectionViewCell();
-		break;
-	case CAControlStateHighlighted:
-		this->highlightedCollectionViewCell();
-		break;
-	case CAControlStateSelected:
-		this->selectedCollectionViewCell();
-		break;
-	case CAControlStateDisabled:
-		this->disabledCollectionViewCell();
-		break;
-	default:
-		break;
-	}
-}
-
-void CACollectionViewCell::normalCollectionViewCell()
-{
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(255, 255, 255, 255));
-}
-
-void CACollectionViewCell::highlightedCollectionViewCell()
-{
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
-}
-
-
-void CACollectionViewCell::selectedCollectionViewCell()
-{
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
-}
-
-
-void CACollectionViewCell::disabledCollectionViewCell()
-{
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
-}
-
-void CACollectionViewCell::resetCollectionViewCell()
-{
-	this->setVisible(true);
-	this->normalCollectionViewCell();
-	this->recoveryCollectionViewCell();
-    m_pContentView->setScale(1.0f);
-    m_pContentView->setFrame(this->getBounds());
-    m_pContentView->setRotation(0);
 }
 
 NS_CC_END

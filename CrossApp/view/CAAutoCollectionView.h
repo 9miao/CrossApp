@@ -9,7 +9,7 @@
 #ifndef __CrossApp__CAAutoCollectionView__
 #define __CrossApp__CAAutoCollectionView__
 
-#include "CACollectionView.h"
+#include "view/CACollectionView.h"
 
 NS_CC_BEGIN
 
@@ -20,7 +20,6 @@ typedef enum
 }
 CACollectionViewOrientation;
 
-class CACollectionViewCell;
 class CAAutoCollectionView;
 
 class CAAutoCollectionViewDelegate

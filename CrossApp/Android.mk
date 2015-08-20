@@ -111,7 +111,6 @@ view/CAWebView.cpp \
 view/CADrawView.cpp \
 view/CADrawingPrimitives.cpp \
 view/CAGifView.cpp \
-view/CAAutoCollectionView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
