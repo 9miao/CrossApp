@@ -424,7 +424,11 @@ static EAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    CrossApp::CCEGLView::sharedOpenGLView()->handleTouchesBegin(i, (intptr_t*)ids, xs, ys);
+    
+    CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
+    theEvent->setEventType(CrossApp::EventType::iosEvent);
+    CrossApp::CCEGLView::sharedOpenGLView()->handleTouchesBegin(i, (intptr_t*)ids, xs, ys, theEvent);
+    theEvent->release();
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -440,7 +444,10 @@ static EAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    CrossApp::CCEGLView::sharedOpenGLView()->handleTouchesMove(i, (intptr_t*)ids, xs, ys);
+    CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
+    theEvent->setEventType(CrossApp::EventType::iosEvent);
+    CrossApp::CCEGLView::sharedOpenGLView()->handleTouchesMove(i, (intptr_t*)ids, xs, ys, theEvent);
+    theEvent->release();
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -456,7 +463,10 @@ static EAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    CrossApp::CCEGLView::sharedOpenGLView()->handleTouchesEnd(i, (intptr_t*)ids, xs, ys);
+    CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
+    theEvent->setEventType(CrossApp::EventType::iosEvent);
+    CrossApp::CCEGLView::sharedOpenGLView()->handleTouchesEnd(i, (intptr_t*)ids, xs, ys, theEvent);
+    theEvent->release();
 }
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -472,7 +482,10 @@ static EAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    CrossApp::CCEGLView::sharedOpenGLView()->handleTouchesCancel(i, (intptr_t*)ids, xs, ys);
+    CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
+    theEvent->setEventType(CrossApp::EventType::iosEvent);
+    CrossApp::CCEGLView::sharedOpenGLView()->handleTouchesCancel(i, (intptr_t*)ids, xs, ys, theEvent);
+    theEvent->release();
 }
 
 #pragma mark -

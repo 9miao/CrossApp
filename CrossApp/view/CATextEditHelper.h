@@ -180,7 +180,7 @@ public:
 
 	virtual void resignResponder() = 0;
 
-	void resignAllResponder();
+	void resignAllResponder(CATextResponder* pCurExcept);
 private:
 	static std::vector<CATextResponder*> s_AllTextResponder;
 };

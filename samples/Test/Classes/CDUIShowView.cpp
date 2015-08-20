@@ -1086,6 +1086,13 @@ void CDUIShowView::showTextView()
 	//textView->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png")));
     //textView->setBackGroundImage(CAImage::create("source_material/btn_square_selected.png"));
     this->getView()->addSubview(textView);
+    
+    CATextField* textField = CATextField::createWithFrame(CADipRect(100, 450, winSize.width-200, 80));
+    textField->setFontSize(_px(40));
+    textField->setTag(100);
+    textField->setPlaceHolder("Input");
+    textField->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded_highlighted.png")));
+    this->getView()->addSubview(textField);
 }
 
 void CDUIShowView::showSegmentedControl()

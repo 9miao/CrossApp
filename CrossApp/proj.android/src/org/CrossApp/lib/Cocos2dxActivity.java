@@ -545,10 +545,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         this.mGLSurfaceView.setCocos2dxRenderer(mCocos2dxRenderer);
         this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
-        getKeyBoardHeight();
         // Set framelayout as the content view
 		setContentView(framelayout);
+		
+		getKeyBoardHeight();
 	}
+	
 	public static int getKeyBoardHeight()
 	{
 		frame.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -565,15 +567,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                 keyboardheight =screenHeight- r.bottom;
                 System.out.println(keyboardheight);
                 
-                frame.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
                 cocos2dxActivity.mGLSurfaceView.queueEvent(new Runnable()
                 {
 					@Override
 					public void run() {
 						if (keyboardheight!=0)
 		        		{
-		        			KeyBoardHeightReturn(keyboardheight);
 		        			mCocos2dxRenderer.handleOpenKeyPad();
 		        			System.out.println("handleOpenKeyPad");
 		        		}
@@ -582,6 +581,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		                	mCocos2dxRenderer.handleCloseKeyPad();
 		                	System.out.println("handleCloseKeyPad");
 						}
+						KeyBoardHeightReturn(keyboardheight);
 					}
 				});
             }
