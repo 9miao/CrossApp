@@ -124,8 +124,7 @@ bool CAIMEDispatcher::attachDelegateWithIME(CAIMEDelegate * pDelegate)
             // if old delegate canDetachWithIME return false 
             // or pDelegate canAttachWithIME return false,
             // do nothing.
-            CC_BREAK_IF(! m_pImpl->m_DelegateWithIme->canDetachWithIME()
-                || ! pDelegate->canAttachWithIME());
+            CC_BREAK_IF(! pDelegate->canAttachWithIME());
 
             // detach first
             CAIMEDelegate * pOldDelegate = m_pImpl->m_DelegateWithIme;
@@ -473,23 +472,10 @@ void CAIMEDispatcher::dispatchKeyboardWillHide(CCIMEKeyboardNotificationInfo& in
         {
             m_pImpl->m_DelegateWithIme->keyboardWillHide(info);
 #if CC_TARGET_PLATFORM==CC_PLATFORM_IOS
-            m_pImpl->m_DelegateWithIme->canDetachWithIME();
+			CC_RETURN_IF(! m_pImpl->m_DelegateWithIme->canDetachWithIME());
             m_pImpl->m_DelegateWithIme->getKeyBoardHeight(0);
             m_pImpl->m_DelegateWithIme->didDetachWithIME();
 #endif
-        }
-        
-        return;
-        
-        CAIMEDelegate * pDelegate = 0;
-        DelegateIter last = m_pImpl->m_DelegateList.end();
-        for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
-        {
-            pDelegate = *(first);
-            if (pDelegate)
-            {
-                pDelegate->keyboardWillHide(info);
-            }
         }
     }
 }
@@ -501,23 +487,10 @@ void CAIMEDispatcher::dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& inf
         if(m_pImpl->m_DelegateWithIme){
             m_pImpl->m_DelegateWithIme->keyboardDidHide(info);
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
-            m_pImpl->m_DelegateWithIme->canDetachWithIME();
-//            m_pImpl->m_DelegateWithIme->getKeyBoardHeight(0);
-//            m_pImpl->m_DelegateWithIme->didDetachWithIME();
+			CC_RETURN_IF(!m_pImpl->m_DelegateWithIme->canDetachWithIME());
+			m_pImpl->m_DelegateWithIme->getKeyBoardHeight(0);
+			m_pImpl->m_DelegateWithIme->didDetachWithIME();
 #endif
-        }
-        
-        return;
-        CAIMEDelegate * pDelegate = 0;
-        DelegateIter last = m_pImpl->m_DelegateList.end();
-        for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
-        {
-            
-            pDelegate = *(first);
-            if (pDelegate)
-            {
-                pDelegate->keyboardDidHide(info);
-            }
         }
     }
 }
