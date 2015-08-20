@@ -83,7 +83,7 @@ bool CATextField::resignFirstResponder()
 
 bool CATextField::becomeFirstResponder()
 {
-	resignAllResponder();
+	resignAllResponder(this);
     
 	bool result = CAView::becomeFirstResponder();
     if (result) 

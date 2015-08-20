@@ -468,10 +468,10 @@ void CATextSelViewEx::showTextSelView(CAView* pControlView, const std::vector<CC
 	CCPoint pt1 = vt[0].origin;
 	CCPoint pt2 = CCPoint(r.origin.x + r.size.width, r.origin.y + r.size.height);
 
-	m_pCursorMarkL->setFrame(CADipRect(pt1.x - CATextSelectArrWidth, pt1.y + iLineHeight, CATextSelectArrWidth, CATextSelectArrHeight));
+	m_pCursorMarkL->setFrame(CCRect(pt1.x - _px(CATextSelectArrWidth), pt1.y + iLineHeight, _px(CATextSelectArrWidth), _px(CATextSelectArrHeight)));
 	m_pCursorMarkL->setVisible(true);
 
-	m_pCursorMarkR->setFrame(CADipRect(pt2.x, pt2.y, CATextSelectArrWidth, CATextSelectArrHeight));
+	m_pCursorMarkR->setFrame(CCRect(pt2.x, pt2.y, _px(CATextSelectArrWidth), _px(CATextSelectArrHeight)));
 	m_pCursorMarkR->setVisible(true);
     this->setVisible(true);
 	m_pControlView = pControlView;
@@ -671,10 +671,13 @@ CATextResponder::~CATextResponder()
 	}
 }
 
-void CATextResponder::resignAllResponder()
+void CATextResponder::resignAllResponder(CATextResponder* pCurExcept)
 {
 	for (int i = 0; i < s_AllTextResponder.size(); i++)
 	{
+		if (s_AllTextResponder[i] == pCurExcept)
+			continue;
+		
 		s_AllTextResponder[i]->resignResponder();
 	}
 	CAApplication::getApplication()->getTouchDispatcher()->setFirstResponder(NULL);
