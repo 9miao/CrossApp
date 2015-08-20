@@ -12,8 +12,8 @@
 
 #define CATextArrowViewWidth 30
 #define CATextArrowViewHeight 62
-#define CATextSelectArrWidth 40
-#define CATextSelectArrHeight 64
+#define CATextSelectArrWidth _px(40)
+#define CATextSelectArrHeight _px(64)
 
 
 NS_CC_BEGIN
@@ -284,13 +284,13 @@ void CATextSelectView::showTextSelView(const CCRect& rect, CAView* pControlView,
 	CCRect newRect = rect;
 	if (showLeft)
 	{
-		m_pCursorMarkL->setFrame(CADipRect(newRect.origin.x - CATextSelectArrWidth, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
+		m_pCursorMarkL->setFrame(CCRect(newRect.origin.x - CATextSelectArrWidth, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
 		m_pCursorMarkL->setVisible(true);
 	}
 
 	if (showRight)
 	{
-		m_pCursorMarkR->setFrame(CADipRect(newRect.origin.x + newRect.size.width, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
+		m_pCursorMarkR->setFrame(CCRect(newRect.origin.x + newRect.size.width, newRect.origin.y + newRect.size.height, CATextSelectArrWidth, CATextSelectArrHeight));
 		m_pCursorMarkR->setVisible(true);
 	}
 
@@ -468,10 +468,10 @@ void CATextSelViewEx::showTextSelView(CAView* pControlView, const std::vector<CC
 	CCPoint pt1 = vt[0].origin;
 	CCPoint pt2 = CCPoint(r.origin.x + r.size.width, r.origin.y + r.size.height);
 
-	m_pCursorMarkL->setFrame(CCRect(pt1.x - _px(CATextSelectArrWidth), pt1.y + iLineHeight, _px(CATextSelectArrWidth), _px(CATextSelectArrHeight)));
+	m_pCursorMarkL->setFrame(CCRect(pt1.x - CATextSelectArrWidth, pt1.y + iLineHeight, CATextSelectArrWidth, CATextSelectArrHeight));
 	m_pCursorMarkL->setVisible(true);
 
-	m_pCursorMarkR->setFrame(CCRect(pt2.x, pt2.y, _px(CATextSelectArrWidth), _px(CATextSelectArrHeight)));
+	m_pCursorMarkR->setFrame(CCRect(pt2.x, pt2.y, CATextSelectArrWidth, CATextSelectArrHeight));
 	m_pCursorMarkR->setVisible(true);
     this->setVisible(true);
 	m_pControlView = pControlView;
