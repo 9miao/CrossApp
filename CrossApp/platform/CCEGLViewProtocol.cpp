@@ -340,22 +340,22 @@ void CCEGLViewProtocol::handleScrollWheel(int num, intptr_t ids[], float xs[], f
 }
 
 
-void CCEGLViewProtocol::handleOtherMouseDown(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event)
+void CCEGLViewProtocol::handleOtherMouseDown(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     
 }
 
-void CCEGLViewProtocol::handleOtherMouseDragged(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event)
+void CCEGLViewProtocol::handleOtherMouseDragged(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     
 }
 
-void CCEGLViewProtocol::handleOtherMouseUp(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event)
+void CCEGLViewProtocol::handleOtherMouseUp(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     
 }
 
-void CCEGLViewProtocol::handleMouseEntered(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event)
+void CCEGLViewProtocol::handleMouseEntered(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     
 }
