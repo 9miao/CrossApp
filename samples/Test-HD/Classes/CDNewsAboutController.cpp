@@ -115,6 +115,11 @@ void CDNewsAboutTableCell::selectedTableViewCell()
     this->setBackgroundView(CAView::createWithColor(ccc4(0, 0, 0, 64)));
 }
 
+void CDNewsAboutTableCell::normalTableViewCell()
+{
+    this->setBackgroundView(CAView::createWithColor(CAColor_white));
+}
+
 void CDNewsAboutTableCell::initWithCell()
 {
     CADipSize m_size = this->getFrame().size;
@@ -151,51 +156,40 @@ CDNewsAboutController::~CDNewsAboutController()
 void CDNewsAboutController::viewDidLoad()
 {
     winSize = this->getView()->getBounds().size;
-    
+    this->getView()->setColor(ccc4(0,0,0,150));
     if (p_TableView!=NULL)
     {
         this->getView()->removeSubview(p_TableView);
         p_TableView = NULL;
     }
-    p_TableView= CATableView::createWithFrame(CADipRect(0, -150, winSize.width, winSize.height+150));
+    
+//    CAView* bg = CAView::createWithColor(ccc4(255,255,255,0));
+//    bg->setFrame(this->getView()->getBounds());
+//    this->getView()->addSubview(bg);
+    
+    CAView* bg1 = CAView::createWithColor(CAColor_white);
+    bg1->setFrame(CADipRect(0,0,500,winSize.height));
+    this->getView()->addSubview(bg1);
+    
+    p_TableView= CATableView::createWithFrame(CADipRect(50, winSize.height/4, 400, winSize.height));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
     p_TableView->setAllowsSelection(true);
     p_TableView->setAllowsMultipleSelection(false);
+    p_TableView->setBackGroundColor(CAColor_white);
     p_TableView->setAlwaysTopSectionHeader(false);
+    p_TableView->setSeparatorColor(CAColor_gray);
+    p_TableView->setScrollEnabled(false);
+    p_TableView->setShowsScrollIndicators(false);
     this->getView()->addSubview(p_TableView);
-    p_TableView->setTableHeaderHeight(_px(1000));
-    CAView* view = CAView::createWithColor(CAColor_clear);
-    view->setFrame(CADipRect(0,0,winSize.width,1000));
     
-    CAImageView* head_bg = CAImageView::createWithFrame(CADipRect(0,0,winSize.width,1000));
-    head_bg->setImage(CAImage::create("image/about_head_bg.png"));
-    view->addSubview(head_bg);
-    
-    CAImageView* head = CAImageView::createWithCenter(CADipRect(winSize.width/2,320,96,96));
-    head->setImage(CAImage::create("image/avatar_bg_70.png"));
-    view->addSubview(head);
-    
-    CAButton* btn1 = CAButton::create(CAButtonTypeSquareRect);
-    btn1->setCenter(CADipRect(winSize.width/6, 1000-(winSize.width/3)/9*5/2, winSize.width/3-1, (winSize.width/3)/9*5));
-    btn1->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn1_up.png")));
-    btn1->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn1_down.png")));
-    view->addSubview(btn1);
-    
-    CAButton* btn2 = CAButton::create(CAButtonTypeSquareRect);
-    btn2->setCenter(CADipRect(winSize.width/2, 1000-(winSize.width/3)/9*5/2, winSize.width/3-1, (winSize.width/3)/9*5));
-    btn2->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn2_up.png")));
-    btn2->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn2_down.png")));
-    view->addSubview(btn2);
-    
-    CAButton* btn3 = CAButton::create(CAButtonTypeSquareRect);
-    btn3->setTag(100);
-    btn3->setCenter(CADipRect(winSize.width/6*5, 1000-(winSize.width/3)/9*5/2, winSize.width/3-1, (winSize.width/3)/9*5));
-    btn3->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn3_up.png")));
-    btn3->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn3_down.png")));
-    view->addSubview(btn3);
-    
-    p_TableView->setTableHeaderView(view);
+    CAButton* btn_back = CAButton::create(CAButtonTypeSquareRect);
+    btn_back->setCenter(CADipRect(250, winSize.height-200, 40, 40));
+    btn_back->setTitleColorForState(CAControlStateNormal,CAColor_white);
+    btn_back->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/news_close.png")));
+    btn_back->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/news_close.png")));
+    btn_back->addTarget(this, CAControl_selector(CDNewsAboutController::btn_callback), CAControlEventTouchDown);
+    this->getView()->addSubview(btn_back);
 }
 
 void CDNewsAboutController::viewDidUnload()
@@ -233,7 +227,7 @@ void CDNewsAboutController::deleteCallBack(float dt)
 
 CAView* CDNewsAboutController::tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
 {
-    CAView* view = CAView::createWithColor(ccc4(240,240,240,255));
+    CAView* view = CAView::createWithColor(CAColor_clear);
     
     return view;
 }
@@ -248,7 +242,7 @@ CAView* CDNewsAboutController::tableViewSectionViewForFooterInSection(CATableVie
 void CDNewsAboutController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
     CCLog("section==%d,row==%d",section,row);
-    if (section==1 && row == 5) {
+    if (section==0 && row == 0) {
         _waitview = CAView::createWithColor(ccc4(0,0,0,128));
         _waitview->setFrame(CADipRect(0,0,winSize.width,winSize.height));
         CAActivityIndicatorView* p_pLoading = CAActivityIndicatorView::createWithCenter(CADipRect( winSize.width/2, winSize.height/2,50,50));
@@ -285,41 +279,19 @@ CATableViewCell* CDNewsAboutController::tableCellAtIndex(CATableView* table, con
     CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);
     CASwitch* cellBtn = (CASwitch*)cell->getSubviewByTag(103);
     cellBtn->setVisible(false);
-    switch (section) {
-        case 0:
-			cellText->setText(unicode_to_utf8(aboutMenuTag[row]));
-            break;
-        case 1:
-			cellText->setText(unicode_to_utf8(aboutMenuTag[row + 2]));
-            if (row==2||row==3||row==4) {
-                cellBtn->setVisible(true);
-            };
-            break;
-        case 2:
-			cellText->setText(unicode_to_utf8(aboutMenuTag[row + 8]));
-            break;
-    }
+    cellText->setText(unicode_to_utf8(aboutMenuTag[row]));
     return cell;
     
 }
 
 unsigned int CDNewsAboutController::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    int cellnum = 0;
-    if (section==0) {
-        cellnum = 2;
-    }else if (section==1){
-        cellnum = 6;
-    }
-    else if (section==2){
-        cellnum = 4;
-    }
-    return cellnum;
+    return 5;
 }
 
 unsigned int CDNewsAboutController::numberOfSections(CATableView *table)
 {
-    return 3;
+    return 1;
 }
 unsigned int CDNewsAboutController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
@@ -338,4 +310,9 @@ unsigned int CDNewsAboutController::tableViewHeightForHeaderInSection(CATableVie
 unsigned int CDNewsAboutController::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
 {
     return 1;
+}
+
+void CDNewsAboutController::btn_callback(CrossApp::CAControl *btn, CrossApp::CCPoint point)
+{
+    RootWindow::getInstance()->getSplitNavigationController()->dismissModalViewController(true);
 }

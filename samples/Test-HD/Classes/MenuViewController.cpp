@@ -17,7 +17,6 @@
 MenuViewController::MenuViewController()
 :isinitComplete(false)
 {
-
 }
 
 MenuViewController::~MenuViewController()
@@ -81,6 +80,8 @@ void MenuViewController::buttonCallBack(CAControl* btn,CCPoint point)
             break;
         case 1:
         {
+            CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyleDefault);
+            //RootWindow::getInstance()->getSplitNavigationController()->setNavigationBarHidden(true, false);
             CDNewsMenuView* _menuview = new CDNewsMenuView();
             _menuview->init();
             _menuview->autorelease();
@@ -89,7 +90,7 @@ void MenuViewController::buttonCallBack(CAControl* btn,CCPoint point)
             temp_nav0->setNagigationBarHidden(true);
             _menuview->setNavigationBarItem(temp_nav0);
             
-            CDNewsViewController* news_controller1 = new CDNewsViewController(0);
+            CDNewsViewController* news_controller1 = new CDNewsViewController(0,"getdemocon");
             news_controller1->autorelease();
             CANavigationBarItem* temp_nav = CANavigationBarItem::create(" ");
             temp_nav->setNagigationBarHidden(true);
@@ -100,17 +101,22 @@ void MenuViewController::buttonCallBack(CAControl* btn,CCPoint point)
             _vec.pushBack(_menuview);
             _vec.pushBack(news_controller1);
             vector<unsigned int> widths;
-            widths.push_back(200);
-            widths.push_back(winSize.width-200);
+            widths.push_back(_px(400));
+            widths.push_back(winSize.width-_px(400));
             
             CASplitViewController* _splitViewController = new CASplitViewController();
             _splitViewController->initWithController(_vec, widths);
             _splitViewController->setBackgroundView(CAImageView::createWithImage(CAImage::create("image/bg1.jpg")));
+            
+            CANavigationBarItem* temp_nav1 = CANavigationBarItem::create(" ");
+            temp_nav1->setNagigationBarHidden(true);
+            _splitViewController->setNavigationBarItem(temp_nav1);
             RootWindow::getInstance()->getSplitNavigationController()->pushViewController(_splitViewController, true);
         }
             break;
         case 2:
         {
+            RootWindow::getInstance()->getSplitNavigationController()->setNavigationBarHidden(false, false);
             CDWebViewController* _webController = new CDWebViewController();
             _webController->init();
             _webController->setTitle(" ");
@@ -122,6 +128,7 @@ void MenuViewController::buttonCallBack(CAControl* btn,CCPoint point)
             break;
         case 3:
         {
+            RootWindow::getInstance()->getSplitNavigationController()->setNavigationBarHidden(false, false);
             CDWebViewController* _webController = new CDWebViewController();
             _webController->init();
             _webController->setTitle(" ");

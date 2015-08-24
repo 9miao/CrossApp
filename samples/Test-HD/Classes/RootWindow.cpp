@@ -10,6 +10,7 @@
 #include "CDTempViewController.h"
 #include "CDUIShowView.h"
 #include "CDNewsMenuView.h"
+#include "CDNewsAboutController.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <jni.h>

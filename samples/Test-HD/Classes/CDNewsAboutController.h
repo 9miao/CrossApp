@@ -19,6 +19,7 @@ public:
     static CDNewsAboutTableCell* create(const std::string& identifier, const CADipRect& _rect = CADipRectZero);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
+    virtual void normalTableViewCell();
 public:
     void initWithCell();
 };
@@ -48,6 +49,8 @@ public:
     virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
     
     void deleteCallBack(float dt);
+    void btn_callback(CAControl* btn,CCPoint point);
+    void doAnimation();
 public:
     CADipSize winSize;
     CATableView* p_TableView;

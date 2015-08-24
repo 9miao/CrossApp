@@ -46,9 +46,9 @@ static const CHAR* imageTitle[4] =
 };
 
 
-static const char* menuTag[5] =
+static const char* menuTag[9] =
 {
-	"weixin", "news_entertainment", "news_sports", "news_car", "news_society"
+	"weixin", "news_entertainment", "news_sports", "news_car", "news_society","gossip", "style", "body", "beauty"
 };
 
 static const char* imageTag[4] =
@@ -56,15 +56,8 @@ static const char* imageTag[4] =
 	"gossip", "style", "body", "beauty"
 };
 
-static const CHAR* aboutMenuTag[12] =
+static const CHAR* aboutMenuTag[5] =
 {
-	_T("新用户做任务，赢大奖"),
-    _T("礼品中心"),
-    _T("离线下载"),
-    _T("夜间模式"),
-    _T("头条推送"),
-    _T("仅wifi下载图片"),
-    _T("正文字号"),
     _T("清除缓存"),
     _T("检查更新"),
     _T("评分"),

@@ -312,7 +312,6 @@ void CDNewsImageController::onRefreshRequestFinished(const HttpResponseStatus& s
             
             m_ImageMsg.push_back(temp_msg);
             m_ImageNum.push_back((int)getRandNum());
-            //CCLog("title==%s===%d",value[index]["title"].asString().c_str(),value[index]["piccon"].size());
         }
         
     }else{

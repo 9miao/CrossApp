@@ -1187,7 +1187,6 @@ void CAView::visit()
         CCSize size = CCSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
 
         CCRect frame = CCRect(point.x + 0.5f, point.y, size.width + 1.0f, size.height + 1.0f);
-        CCLog("--------   %f", frame.origin.x);
         if (isScissor)
         {
             float x1 = MAX(frame.getMinX(), restoreScissorRect.getMinX());

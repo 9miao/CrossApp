@@ -15,12 +15,15 @@
 class CDNewsMenuTableCell : public CATableViewCell
 {
 public:
-    CDNewsMenuTableCell();
+    CDNewsMenuTableCell(int row);
     virtual ~CDNewsMenuTableCell();
-    static CDNewsMenuTableCell* create(const std::string& identifier, const CADipRect& _rect = CADipRectZero);
+    static CDNewsMenuTableCell* create(const std::string& identifier, const CADipRect& _rect = CADipRectZero,const int row = 1);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
     virtual void normalTableViewCell();
+    void setImageID(int _id);
+public:
+    int imageid;
 };
 
 class CDNewsMenuView : public CAViewController, CATableViewDelegate,CATableViewDataSource
@@ -38,6 +41,8 @@ protected:
     void viewDidLoad();
     
     void viewDidUnload();
+    
+    void btn_callBack(CAControl* btn,CCPoint point);
     
 public:
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
