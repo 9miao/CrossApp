@@ -9,8 +9,10 @@
 #ifndef __LocationTest__CAAlbumController__
 #define __LocationTest__CAAlbumController__
 
+#import <UIKit/UIKit.h>
+#include <iostream>
 #include "CrossApp.h"
-using namespace CrossApp;
+
 @protocol CAAlbumDelegate<NSObject>
 @optional
 -(void)setSeletedImage:(UIImage*)_image;

@@ -16,6 +16,9 @@
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "CABlueTooth.h"
 #import "Reachability.h"
+
+NS_CC_BEGIN
+
 namespace CADevice
 {
 
@@ -244,3 +247,4 @@ void setBlueToothType(CABlueToothType type)
     
 }
 
+NS_CC_END
