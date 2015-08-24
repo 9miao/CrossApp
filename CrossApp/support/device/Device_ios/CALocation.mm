@@ -43,7 +43,6 @@
 
 #pragma mark Core Location
 
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 
 {
