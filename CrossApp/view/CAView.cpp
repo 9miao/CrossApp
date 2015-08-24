@@ -7,7 +7,6 @@
 //
 
 #include "CAView.h"
-#include "cocoa/CCString.h"
 #include "support/CCPointExtension.h"
 #include "support/TransformUtils.h"
 #include "basics/CACamera.h"
@@ -844,7 +843,7 @@ void CAView::setShaderProgram(CAGLProgram *pShaderProgram)
 
 const char* CAView::description()
 {
-    return CCString::createWithFormat("<CAView | Tag = %d>", m_nTag)->getCString();
+    return crossapp_format_string("<CAView | TextTag = %s | Tag = %d >", m_sTextTag.c_str(), m_nTag).c_str();
 }
 
 void CAView::reViewlayout()
@@ -1187,7 +1186,6 @@ void CAView::visit()
         CCSize size = CCSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
 
         CCRect frame = CCRect(point.x + 0.5f, point.y, size.width + 1.0f, size.height + 1.0f);
-        CCLog("--------   %f", frame.origin.x);
         if (isScissor)
         {
             float x1 = MAX(frame.getMinX(), restoreScissorRect.getMinX());

@@ -25,7 +25,7 @@ template<class T>
 class CAList;
 
 template<class T>
-class CAVector:public CAObject
+class CAVector: public CAObject
 {
 public:
 	typedef typename std::vector<T>::iterator iterator;
@@ -350,7 +350,7 @@ protected:
 };
 
 template <class T>
-class CAList:public CAObject
+class CAList: public CAObject
 {
 public:
 public:
@@ -621,7 +621,7 @@ protected:
 
 
 template <class T>
-class CADeque:public CAObject
+class CADeque: public CAObject
 {
 public:
 	typedef typename std::deque<T>::iterator iterator;
@@ -954,7 +954,7 @@ private:
 
 
 template <class K, class T>
-class CAMap:public CAObject
+class CAMap: public CAObject
 {
 public:
 	typedef typename std::map<K, T>::iterator iterator;

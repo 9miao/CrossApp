@@ -41,8 +41,6 @@
 		04EAB08A1956D75600198A8E /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0821956D74D00198A8E /* CCNS.h */; };
 		04EAB08B1956D75600198A8E /* CCSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0831956D74D00198A8E /* CCSet.cpp */; };
 		04EAB08C1956D75600198A8E /* CCSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0841956D74D00198A8E /* CCSet.h */; };
-		04EAB08D1956D75600198A8E /* CCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0851956D74D00198A8E /* CCString.cpp */; };
-		04EAB08E1956D75600198A8E /* CCString.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0861956D74D00198A8E /* CCString.h */; };
 		04EAB08F1956D75600198A8E /* CABar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0881956D74D00198A8E /* CABar.cpp */; };
 		04EAB0901956D75600198A8E /* CABar.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0891956D74D00198A8E /* CABar.h */; };
 		04EAB0911956D75600198A8E /* CAButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA08A1956D74D00198A8E /* CAButton.cpp */; };
@@ -369,8 +367,6 @@
 		04EAA0821956D74D00198A8E /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
 		04EAA0831956D74D00198A8E /* CCSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSet.cpp; sourceTree = "<group>"; };
 		04EAA0841956D74D00198A8E /* CCSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSet.h; sourceTree = "<group>"; };
-		04EAA0851956D74D00198A8E /* CCString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCString.cpp; sourceTree = "<group>"; };
-		04EAA0861956D74D00198A8E /* CCString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCString.h; sourceTree = "<group>"; };
 		04EAA0881956D74D00198A8E /* CABar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CABar.cpp; sourceTree = "<group>"; };
 		04EAA0891956D74D00198A8E /* CABar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABar.h; sourceTree = "<group>"; };
 		04EAA08A1956D74D00198A8E /* CAButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAButton.cpp; sourceTree = "<group>"; };
@@ -750,8 +746,6 @@
 				04EAA0821956D74D00198A8E /* CCNS.h */,
 				04EAA0831956D74D00198A8E /* CCSet.cpp */,
 				04EAA0841956D74D00198A8E /* CCSet.h */,
-				04EAA0851956D74D00198A8E /* CCString.cpp */,
-				04EAA0861956D74D00198A8E /* CCString.h */,
 			);
 			path = cocoa;
 			sourceTree = "<group>";
@@ -1387,7 +1381,6 @@
 				B0F7E4FF198788010048F46B /* CAPageView.h in Headers */,
 				04EAB08A1956D75600198A8E /* CCNS.h in Headers */,
 				04EAB08C1956D75600198A8E /* CCSet.h in Headers */,
-				04EAB08E1956D75600198A8E /* CCString.h in Headers */,
 				B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */,
 				B0DAEED31B256B6D0011E87D /* CAGif.h in Headers */,
 				B09205BB19D554A800CB99C1 /* CASyncQueue.h in Headers */,
@@ -1612,7 +1605,6 @@
 				B07608451ACCDE6C0005F878 /* CADrawingPrimitives.cpp in Sources */,
 				04EAB0891956D75600198A8E /* CCNS.cpp in Sources */,
 				04EAB08B1956D75600198A8E /* CCSet.cpp in Sources */,
-				04EAB08D1956D75600198A8E /* CCString.cpp in Sources */,
 				B047B91619E9181800F24BE6 /* CCScriptSupport.cpp in Sources */,
 				B01F64FB1964FF0D005C14FC /* CADensityDpi.cpp in Sources */,
 				B0B0A2E11AF06E0B00BAC0B0 /* CAAnimation.cpp in Sources */,
