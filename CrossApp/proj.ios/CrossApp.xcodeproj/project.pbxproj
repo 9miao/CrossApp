@@ -236,6 +236,21 @@
 		3E0F75771B7DD0F4004CFD41 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0F75711B7DD0F4004CFD41 /* LocalStorage.cpp */; };
 		3E0F75781B7DD0F4004CFD41 /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0F75721B7DD0F4004CFD41 /* LocalStorage.h */; };
 		3E0F75891B7DFAB3004CFD41 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 3E0F75881B7DFAB3004CFD41 /* sqlite3.c */; };
+		3E19F2A41B8B0ED100720027 /* CAAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19F2951B8B0ED100720027 /* CAAddress.h */; };
+		3E19F2A51B8B0ED100720027 /* CAAddress.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F2961B8B0ED100720027 /* CAAddress.mm */; };
+		3E19F2A61B8B0ED100720027 /* CAAlbumController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19F2971B8B0ED100720027 /* CAAlbumController.h */; };
+		3E19F2A71B8B0ED100720027 /* CAAlbumController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F2981B8B0ED100720027 /* CAAlbumController.mm */; };
+		3E19F2A81B8B0ED100720027 /* CABlueTooth.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19F2991B8B0ED100720027 /* CABlueTooth.h */; };
+		3E19F2A91B8B0ED100720027 /* CABlueTooth.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F29A1B8B0ED100720027 /* CABlueTooth.mm */; };
+		3E19F2AA1B8B0ED100720027 /* CABrightness_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19F29B1B8B0ED100720027 /* CABrightness_iOS.h */; };
+		3E19F2AB1B8B0ED100720027 /* CABrightness_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F29C1B8B0ED100720027 /* CABrightness_iOS.mm */; };
+		3E19F2AC1B8B0ED100720027 /* CACameraController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19F29D1B8B0ED100720027 /* CACameraController.h */; };
+		3E19F2AD1B8B0ED100720027 /* CACameraController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F29E1B8B0ED100720027 /* CACameraController.mm */; };
+		3E19F2AE1B8B0ED100720027 /* CADevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F29F1B8B0ED100720027 /* CADevice.mm */; };
+		3E19F2AF1B8B0ED100720027 /* CALocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19F2A01B8B0ED100720027 /* CALocation.h */; };
+		3E19F2B01B8B0ED100720027 /* CALocation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F2A11B8B0ED100720027 /* CALocation.mm */; };
+		3E19F2B11B8B0ED100720027 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19F2A21B8B0ED100720027 /* Reachability.h */; };
+		3E19F2B21B8B0ED100720027 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F2A31B8B0ED100720027 /* Reachability.m */; };
 		3E2154701B819CA60075448E /* CAVideoPlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2154681B819CA60075448E /* CAVideoPlayerController.cpp */; };
 		3E2154711B819CA60075448E /* CAVideoPlayerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E2154691B819CA60075448E /* CAVideoPlayerController.h */; };
 		3E2154721B819CA60075448E /* CAVideoPlayerDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E21546A1B819CA60075448E /* CAVideoPlayerDecoder.cpp */; };
@@ -252,7 +267,6 @@
 		469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DF216C24787006FFCB2 /* tinyxml2.h */; };
 		46A393F716E5D01B00210B16 /* CAUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A393F316E5D01B00210B16 /* CAUserDefault.h */; };
 		46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F416E5D01B00210B16 /* CAUserDefault.mm */; };
-		4E20D6C81B8AFAD40071A8F6 /* CADevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E20D6C71B8AFAD40071A8F6 /* CADevice.cpp */; };
 		B01D4BF819A5E8240071F6A3 /* CADrawerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */; };
 		B01D4BF919A5E8240071F6A3 /* CADrawerController.h in Headers */ = {isa = PBXBuildFile; fileRef = B01D4BF719A5E8240071F6A3 /* CADrawerController.h */; };
 		B01E807C1AD5113400301FC2 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01E80791AD5113400301FC2 /* etc1.cpp */; };
@@ -594,6 +608,21 @@
 		3E0F75721B7DD0F4004CFD41 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		3E0F75861B7DF8FB004CFD41 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3E0F75881B7DFAB3004CFD41 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
+		3E19F2951B8B0ED100720027 /* CAAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddress.h; sourceTree = "<group>"; };
+		3E19F2961B8B0ED100720027 /* CAAddress.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddress.mm; sourceTree = "<group>"; };
+		3E19F2971B8B0ED100720027 /* CAAlbumController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlbumController.h; sourceTree = "<group>"; };
+		3E19F2981B8B0ED100720027 /* CAAlbumController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAlbumController.mm; sourceTree = "<group>"; };
+		3E19F2991B8B0ED100720027 /* CABlueTooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABlueTooth.h; sourceTree = "<group>"; };
+		3E19F29A1B8B0ED100720027 /* CABlueTooth.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CABlueTooth.mm; sourceTree = "<group>"; };
+		3E19F29B1B8B0ED100720027 /* CABrightness_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABrightness_iOS.h; sourceTree = "<group>"; };
+		3E19F29C1B8B0ED100720027 /* CABrightness_iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CABrightness_iOS.mm; sourceTree = "<group>"; };
+		3E19F29D1B8B0ED100720027 /* CACameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACameraController.h; sourceTree = "<group>"; };
+		3E19F29E1B8B0ED100720027 /* CACameraController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CACameraController.mm; sourceTree = "<group>"; };
+		3E19F29F1B8B0ED100720027 /* CADevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CADevice.mm; sourceTree = "<group>"; };
+		3E19F2A01B8B0ED100720027 /* CALocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocation.h; sourceTree = "<group>"; };
+		3E19F2A11B8B0ED100720027 /* CALocation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocation.mm; sourceTree = "<group>"; };
+		3E19F2A21B8B0ED100720027 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		3E19F2A31B8B0ED100720027 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		3E2154681B819CA60075448E /* CAVideoPlayerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerController.cpp; sourceTree = "<group>"; };
 		3E2154691B819CA60075448E /* CAVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerController.h; sourceTree = "<group>"; };
 		3E21546A1B819CA60075448E /* CAVideoPlayerDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerDecoder.cpp; sourceTree = "<group>"; };
@@ -610,7 +639,6 @@
 		469A7DF216C24787006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		46A393F316E5D01B00210B16 /* CAUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUserDefault.h; sourceTree = "<group>"; };
 		46A393F416E5D01B00210B16 /* CAUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAUserDefault.mm; sourceTree = "<group>"; };
-		4E20D6C71B8AFAD40071A8F6 /* CADevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADevice.cpp; sourceTree = "<group>"; };
 		B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawerController.cpp; sourceTree = "<group>"; };
 		B01D4BF719A5E8240071F6A3 /* CADrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADrawerController.h; sourceTree = "<group>"; };
 		B01E80791AD5113400301FC2 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
@@ -1270,8 +1298,8 @@
 		3E0F74DE1B7DD0C3004CFD41 /* device */ = {
 			isa = PBXGroup;
 			children = (
+				3E19F2941B8B0ED100720027 /* Device_ios */,
 				3E0F74E01B7DD0C3004CFD41 /* CADevice.h */,
-				4E20D6C71B8AFAD40071A8F6 /* CADevice.cpp */,
 			);
 			path = device;
 			sourceTree = "<group>";
@@ -1279,9 +1307,9 @@
 		3E0F74F31B7DD0C3004CFD41 /* Json */ = {
 			isa = PBXGroup;
 			children = (
-				3E0F74F81B7DD0C3004CFD41 /* lib_json */,
 				3E0F74F41B7DD0C3004CFD41 /* CSContentJsonDictionary.cpp */,
 				3E0F74F51B7DD0C3004CFD41 /* CSContentJsonDictionary.h */,
+				3E0F74F81B7DD0C3004CFD41 /* lib_json */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -1373,6 +1401,28 @@
 			path = LocalStorage;
 			sourceTree = "<group>";
 		};
+		3E19F2941B8B0ED100720027 /* Device_ios */ = {
+			isa = PBXGroup;
+			children = (
+				3E19F2951B8B0ED100720027 /* CAAddress.h */,
+				3E19F2961B8B0ED100720027 /* CAAddress.mm */,
+				3E19F2971B8B0ED100720027 /* CAAlbumController.h */,
+				3E19F2981B8B0ED100720027 /* CAAlbumController.mm */,
+				3E19F2991B8B0ED100720027 /* CABlueTooth.h */,
+				3E19F29A1B8B0ED100720027 /* CABlueTooth.mm */,
+				3E19F29B1B8B0ED100720027 /* CABrightness_iOS.h */,
+				3E19F29C1B8B0ED100720027 /* CABrightness_iOS.mm */,
+				3E19F29D1B8B0ED100720027 /* CACameraController.h */,
+				3E19F29E1B8B0ED100720027 /* CACameraController.mm */,
+				3E19F29F1B8B0ED100720027 /* CADevice.mm */,
+				3E19F2A01B8B0ED100720027 /* CALocation.h */,
+				3E19F2A11B8B0ED100720027 /* CALocation.mm */,
+				3E19F2A21B8B0ED100720027 /* Reachability.h */,
+				3E19F2A31B8B0ED100720027 /* Reachability.m */,
+			);
+			path = Device_ios;
+			sourceTree = "<group>";
+		};
 		469A7DF016C24787006FFCB2 /* tinyxml2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1461,6 +1511,7 @@
 				3E0F756E1B7DD0C4004CFD41 /* sqlite3ext.h in Headers */,
 				3E2154751B819CA60075448E /* CAVideoPlayerRender.h in Headers */,
 				04EABB0B1956DAEA00198A8E /* CAFPSImages.c in Headers */,
+				3E19F2B11B8B0ED100720027 /* Reachability.h in Headers */,
 				04EABB0C1956DAEA00198A8E /* CAGeometry.cpp in Headers */,
 				04EABB0D1956DAEA00198A8E /* CAObject.cpp in Headers */,
 				04EABB0E1956DAEA00198A8E /* CAResponder.cpp in Headers */,
@@ -1479,6 +1530,7 @@
 				04EABB1A1956DAEA00198A8E /* CAViewController.cpp in Headers */,
 				04EABB1B1956DAEA00198A8E /* CAIMEDispatcher.cpp in Headers */,
 				04EABB1C1956DAEA00198A8E /* CAKeypadDelegate.cpp in Headers */,
+				3E19F2A41B8B0ED100720027 /* CAAddress.h in Headers */,
 				3E0F755E1B7DD0C4004CFD41 /* libwebsockets.h in Headers */,
 				B0ADAE801B2E7F1B00BE8FA3 /* CALabelStyle.h in Headers */,
 				04EABB1D1956DAEA00198A8E /* CAKeypadDispatcher.cpp in Headers */,
@@ -1537,6 +1589,7 @@
 				B0C512ED19A341B700E6934B /* CACalendar.h in Headers */,
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
 				1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */,
+				3E19F2AF1B8B0ED100720027 /* CALocation.h in Headers */,
 				1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */,
 				1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */,
 				B06805241A833DF700F6BE00 /* CAViewAnimation.h in Headers */,
@@ -1572,6 +1625,7 @@
 				1551A823158F2ADF00E66CFE /* ccShader_PositionTexture_vert.h in Headers */,
 				1551A824158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				B0ADAE901B2E7F1B00BE8FA3 /* CATableView.h in Headers */,
+				3E19F2AA1B8B0ED100720027 /* CABrightness_iOS.h in Headers */,
 				1551A825158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_vert.h in Headers */,
 				3E0F754E1B7DD0C4004CFD41 /* config.h in Headers */,
 				1551A826158F2ADF00E66CFE /* ccShader_PositionTextureColor_frag.h in Headers */,
@@ -1600,6 +1654,7 @@
 				B0ADAE961B2E7F1B00BE8FA3 /* CATextView.h in Headers */,
 				B0340827199211B3005DB179 /* md5.h in Headers */,
 				1551A84B158F2ADF00E66CFE /* TGAlib.h in Headers */,
+				3E19F2A61B8B0ED100720027 /* CAAlbumController.h in Headers */,
 				1551A84D158F2ADF00E66CFE /* TransformUtils.h in Headers */,
 				1551A84F158F2ADF00E66CFE /* ioapi.h in Headers */,
 				1551A851158F2ADF00E66CFE /* unzip.h in Headers */,
@@ -1643,6 +1698,7 @@
 				04EAA0031956CE2500198A8E /* CAKeypadDelegate.h in Headers */,
 				EB9D562519E8DC2D0072BE8E /* JSViewController.h in Headers */,
 				B0ADAE881B2E7F1B00BE8FA3 /* CAPullToRefreshView.h in Headers */,
+				3E19F2A81B8B0ED100720027 /* CABlueTooth.h in Headers */,
 				B04BCA851985DE5500CE0BC1 /* CAIndexPath.h in Headers */,
 				04EAA0051956CE2500198A8E /* CAKeypadDispatcher.h in Headers */,
 				04EAA0061956CE2500198A8E /* CAProtocols.h in Headers */,
@@ -1651,6 +1707,7 @@
 				B0CA5A3B1A77A8B400BECD89 /* CAWebViewImpl.h in Headers */,
 				B0ADAE701B2E7F1B00BE8FA3 /* CACollectionView.h in Headers */,
 				04EAA0241956CE3B00198A8E /* ccConfig.h in Headers */,
+				3E19F2AC1B8B0ED100720027 /* CACameraController.h in Headers */,
 				04EAA0251956CE3B00198A8E /* ccMacros.h in Headers */,
 				04EAA0261956CE3B00198A8E /* ccTypeInfo.h in Headers */,
 				04EAA0271956CE3B00198A8E /* ccTypes.h in Headers */,
@@ -1727,6 +1784,7 @@
 				B0ADAE7F1B2E7F1B00BE8FA3 /* CALabelStyle.cpp in Sources */,
 				B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */,
 				3E2154761B819CA60075448E /* CAVideoPlayerView.cpp in Sources */,
+				3E19F2B21B8B0ED100720027 /* Reachability.m in Sources */,
 				1551A65B158F2ADE00E66CFE /* CCNS.cpp in Sources */,
 				B0A11DB91AE8E0B300933BF6 /* dgif_lib.c in Sources */,
 				3E2154721B819CA60075448E /* CAVideoPlayerDecoder.cpp in Sources */,
@@ -1743,6 +1801,7 @@
 				1551A6C8158F2ADE00E66CFE /* matrix.c in Sources */,
 				B0340826199211B3005DB179 /* md5.cpp in Sources */,
 				1551A6C9158F2ADE00E66CFE /* mat3.c in Sources */,
+				3E19F2AB1B8B0ED100720027 /* CABrightness_iOS.mm in Sources */,
 				1551A6CA158F2ADE00E66CFE /* mat4.c in Sources */,
 				B06805231A833DF700F6BE00 /* CAViewAnimation.cpp in Sources */,
 				B0ADAE9B1B2E7F1B00BE8FA3 /* CAWindow.cpp in Sources */,
@@ -1798,7 +1857,6 @@
 				B0ADAE891B2E7F1B00BE8FA3 /* CARenderImage.cpp in Sources */,
 				B0ADAE6D1B2E7F1B00BE8FA3 /* CAClippingView.cpp in Sources */,
 				B04BCA841985DE5500CE0BC1 /* CAIndexPath.cpp in Sources */,
-				4E20D6C81B8AFAD40071A8F6 /* CADevice.cpp in Sources */,
 				469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */,
 				1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */,
 				B0596B411976356C00B1E8CB /* ConvertUTF.cpp in Sources */,
@@ -1812,19 +1870,23 @@
 				3E0F75551B7DD0C4004CFD41 /* json_value.cpp in Sources */,
 				04EA9FDF1956CE2500198A8E /* CAFPSImages.c in Sources */,
 				B09205DD19D5645300CB99C1 /* CAThread.cpp in Sources */,
+				3E19F2A51B8B0ED100720027 /* CAAddress.mm in Sources */,
 				B0A11DC01AE8E0B300933BF6 /* gifalloc.c in Sources */,
 				04EA9FE11956CE2500198A8E /* CAGeometry.cpp in Sources */,
 				04EA9FE31956CE2500198A8E /* CAObject.cpp in Sources */,
+				3E19F2A91B8B0ED100720027 /* CABlueTooth.mm in Sources */,
 				B0A11DBA1AE8E0B300933BF6 /* gif_err.c in Sources */,
 				04EA9FE51956CE2500198A8E /* CAResponder.cpp in Sources */,
 				B0A11DBC1AE8E0B300933BF6 /* gif_hash.c in Sources */,
 				04EA9FE71956CE2500198A8E /* CAScheduler.cpp in Sources */,
 				04EA9FE91956CE2500198A8E /* CABar.cpp in Sources */,
+				3E19F2A71B8B0ED100720027 /* CAAlbumController.mm in Sources */,
 				3E0F75561B7DD0C4004CFD41 /* json_writer.cpp in Sources */,
 				04EA9FEB1956CE2500198A8E /* CAButton.cpp in Sources */,
 				B01E807C1AD5113400301FC2 /* etc1.cpp in Sources */,
 				04EA9FED1956CE2500198A8E /* CAControl.cpp in Sources */,
 				04EA9FF11956CE2500198A8E /* CAProgress.cpp in Sources */,
+				3E19F2B01B8B0ED100720027 /* CALocation.mm in Sources */,
 				04EA9FF31956CE2500198A8E /* CASegmentedControl.cpp in Sources */,
 				04EA9FF51956CE2500198A8E /* CASlider.cpp in Sources */,
 				04EA9FF71956CE2500198A8E /* CASwitch.cpp in Sources */,
@@ -1839,9 +1901,11 @@
 				B0ADAE751B2E7F1B00BE8FA3 /* CADrawView.cpp in Sources */,
 				04EAA0071956CE2500198A8E /* CATouch.cpp in Sources */,
 				3E0F75491B7DD0C4004CFD41 /* CSContentJsonDictionary.cpp in Sources */,
+				3E19F2AD1B8B0ED100720027 /* CACameraController.mm in Sources */,
 				B0C512C719A2DF9F00E6934B /* CAFTFontCache.cpp in Sources */,
 				04EAA0091956CE2500198A8E /* CATouchDispatcher.cpp in Sources */,
 				B0ADAE2B1B2E7EFB00BE8FA3 /* CAGif.cpp in Sources */,
+				3E19F2AE1B8B0ED100720027 /* CADevice.mm in Sources */,
 				B0ADAE7B1B2E7F1B00BE8FA3 /* CAImageView.cpp in Sources */,
 				B0A11DC11AE8E0B300933BF6 /* quantize.c in Sources */,
 				B0ADAE911B2E7F1B00BE8FA3 /* CATextEditHelper.cpp in Sources */,
@@ -1949,7 +2013,6 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/ios/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -1960,7 +2023,6 @@
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/ios/lib\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -1992,7 +2054,6 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/ios/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2003,7 +2064,6 @@
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/ios/lib\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

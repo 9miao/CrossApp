@@ -15,5 +15,5 @@
 {
     
 }
--(std::vector<CAAddressBookRecord>)getAddressBook;
+-(std::vector<CrossApp::CAAddressBookRecord>)getAddressBook;
 @end
