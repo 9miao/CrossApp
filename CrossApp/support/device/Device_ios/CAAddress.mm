@@ -20,7 +20,7 @@
     return self;
 }
 
--(vector<CAAddressBookRecord>)getAddressBook
+-(std::vector<CrossApp::CAAddressBookRecord>)getAddressBook
 {
     
     CFErrorRef *error = nil;
@@ -49,7 +49,7 @@
         accessGranted = YES;
     }
     
-    std::vector<CAAddressBookRecord> arr;
+    std::vector<CrossApp::CAAddressBookRecord> arr;
     
     if (accessGranted)
     {
@@ -60,7 +60,7 @@
         {
             
             ABRecordRef person = CFArrayGetValueAtIndex(results, i);
-            CAAddressBookRecord address;
+            CrossApp::CAAddressBookRecord address;
             
             NSString *_firstName = (NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
             
