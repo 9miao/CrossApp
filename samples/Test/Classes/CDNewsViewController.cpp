@@ -105,7 +105,7 @@ void CDNewsViewController::viewDidLoad()
         std::map<std::string,
         std::string> key_value;
         char temurl[200];
-        sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=1&tag=%s",menuTag[urlID]);
+        sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=1&tag=%s",menuTag[urlID]);
         CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                    CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
         
@@ -164,7 +164,7 @@ void CDNewsViewController::buttonCallBack(CAControl* btn,CCPoint point)
     std::map<std::string,
     std::string> key_value;
     char temurl[200];
-    sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=1&tag=%s",menuTag[urlID]);
+    sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=1&tag=%s",menuTag[urlID]);
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     {
@@ -432,7 +432,7 @@ void CDNewsViewController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollVie
     std::map<std::string,
     std::string> key_value;
     char temurl[200];
-    sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=1&tag=%s",menuTag[urlID]);
+    sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=1&tag=%s",menuTag[urlID]);
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     CATabBarItem* item = this->getTabBarItem();
@@ -449,7 +449,7 @@ void CDNewsViewController::scrollViewFooterBeginRefreshing(CAScrollView* view)
     std::string> key_value;
     char temurl[200];
     p_section++;
-    sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=%d&tag=%s",p_section,menuTag[urlID]);
+    sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=%d&tag=%s",p_section,menuTag[urlID]);
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRefreshRequestFinished));
 }

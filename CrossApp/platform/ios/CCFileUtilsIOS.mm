@@ -62,14 +62,16 @@ bool CCFileUtilsIOS::isFileExist(const std::string& strFilePath)
         NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:path.c_str()]];
-        if (fullpath != nil) {
+        if (fullpath != nil)
+        {
             bRet = true;
         }
     }
     else
     {
         // Search path is an absolute path.
-        if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:strFilePath.c_str()]]) {
+        if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:strFilePath.c_str()]])
+        {
             bRet = true;
         }
     }
