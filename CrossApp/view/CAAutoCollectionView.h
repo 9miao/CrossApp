@@ -24,6 +24,13 @@ typedef enum
 }
 CACollectionViewOrientation;
 
+typedef enum
+{
+	eCollectionViewCellAlignLeftOrTop,
+	eCollectionViewCellAlignRightOrBottom,
+}
+CACollectionViewCellAlign;
+
 class CACollectionViewCell;
 class CAAutoCollectionView;
 
@@ -94,9 +101,10 @@ class CC_DLL CAAutoCollectionView : public CAScrollView
 {
 	struct CollectionViewRow
 	{
-		CollectionViewRow() : iHeight(0) {}
-		unsigned int iHeight;
-		std::vector<CCSize> rItemSizes;
+		CollectionViewRow() : iIniValue(0), iMaxValue(0) {}
+		unsigned int iIniValue;
+		unsigned int iMaxValue;
+		std::vector<CCRect> rItemRects;
 	};
 
 	struct CollectionViewSection
@@ -132,7 +140,6 @@ public:
 
 	virtual bool init();
 
-	void clearData();
 	void reloadData();
 
 	CACollectionViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
@@ -151,8 +158,6 @@ public:
     
 	const CAVector<CACollectionViewCell*>& displayingCollectionCell();
     
-	CC_PROPERTY(CACollectionViewOrientation, m_pCollectionViewOrientation, CollectionViewOrientation);
-
     CC_SYNTHESIZE(CAAutoCollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
     
 	CC_SYNTHESIZE(CAAutoCollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
@@ -165,9 +170,14 @@ public:
     
     CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
 
-	CC_SYNTHESIZE(unsigned int, m_nHoriInterval, HoriInterval);
+	CC_PROPERTY(CACollectionViewOrientation, m_pCollectionViewOrientation, CollectionViewOrientation);
+	CC_PROPERTY(CACollectionViewCellAlign, m_pCollectionViewCellAlign, CollectionViewCellAlign);
 
-	CC_SYNTHESIZE(unsigned int, m_nVertInterval, VertInterval);
+	CC_PROPERTY(unsigned int, m_nHoriCellInterval, HoriCellInterval);
+	CC_PROPERTY(unsigned int, m_nVertCellInterval, VertCellInterval);
+
+	CC_PROPERTY(unsigned int, m_iHoriMargins, HoriMargins);
+	CC_PROPERTY(unsigned int, m_iVertMargins, VertMargins);
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsSelection, AllowsSelection);
     
@@ -187,6 +197,9 @@ protected:
     
     inline virtual float decelerationRatio(float dt);
     
+	void clearData();
+	int calculateAllRects();
+	bool fillSectionRowData(CollectionViewRow& r, CCSize rSize);
     void reloadViewSizeData();
     
     virtual void update(float dt);
