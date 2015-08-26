@@ -154,9 +154,6 @@ public: virtual void set##funName(varType var)   \
 #define CC_BREAK_IF(cond)           if(cond) break
 #define CC_CONTINUE_IF(cond)        if(cond) continue
 
-#define __CCLOGWITHFUNCTION(s, ...) \
-    CCLog("%s : %s",__FUNCTION__, CCString::createWithFormat(s, ##__VA_ARGS__)->getCString())
-
 // CrossApp debug
 #if !defined(CROSSAPP_DEBUG) || CROSSAPP_DEBUG == 0
 #define CCLOG(...)       do {} while (0)

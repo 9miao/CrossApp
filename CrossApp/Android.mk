@@ -22,7 +22,6 @@ basics/CAIndexPath.cpp \
 basics/CAThread.cpp \
 cocoa/CCNS.cpp \
 cocoa/CCSet.cpp \
-cocoa/CCString.cpp \
 cocoa/CACalendar.cpp \
 control/CABar.cpp \
 control/CAButton.cpp \

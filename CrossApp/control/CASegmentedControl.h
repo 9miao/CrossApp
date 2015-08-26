@@ -19,8 +19,6 @@ class CAImage;
 class CAImageView;
 class CAScale9ImageView;
 class CALabel;
-
-
 class CASegmentedControl;
 
 typedef void (CAObject::*SEL_CASegmentedControl)(CASegmentedControl*, int index);

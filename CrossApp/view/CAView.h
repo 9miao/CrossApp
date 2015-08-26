@@ -32,7 +32,6 @@ class CACamera;
 class CCPoint;
 class CATouch;
 class CARGBAProtocol;
-class CCActionManager;
 class CCComponent;
 class CAImage;
 class CAViewDelegate;
@@ -412,8 +411,6 @@ protected:
     ccGLServerState m_eGLServerState;   ///< OpenGL servier side state
     
     unsigned int m_uOrderOfArrival;     ///< used to preserve sequence while sorting children with the same zOrder
-    
-    CCActionManager *m_pActionManager;  ///< a pointer to ActionManager singleton, which is used to handle all the actions
     
     bool m_bRunning;                    ///< is running
     

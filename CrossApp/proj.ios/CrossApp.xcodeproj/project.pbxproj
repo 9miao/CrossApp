@@ -93,7 +93,6 @@
 		04EABB1F1956DAEA00198A8E /* CATouchDispatcher.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FC21956CE2500198A8E /* CATouchDispatcher.cpp */; };
 		04EABB351956DAEA00198A8E /* CCNS.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A38B158F2ADE00E66CFE /* CCNS.cpp */; };
 		04EABB361956DAEA00198A8E /* CCSet.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A38F158F2ADE00E66CFE /* CCSet.cpp */; };
-		04EABB371956DAEA00198A8E /* CCString.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 1551A391158F2ADE00E66CFE /* CCString.cpp */; };
 		04EABB4A1956DE7100198A8E /* CrossApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EABB491956DE7100198A8E /* CrossApp.cpp */; };
 		154269DC15B5653000712A7F /* CANotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154269DA15B5653000712A7F /* CANotificationCenter.cpp */; };
 		154269DD15B5653000712A7F /* CANotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 154269DB15B5653000712A7F /* CANotificationCenter.h */; };
@@ -102,8 +101,6 @@
 		1551A65C158F2ADE00E66CFE /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A38C158F2ADE00E66CFE /* CCNS.h */; };
 		1551A65F158F2ADE00E66CFE /* CCSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A38F158F2ADE00E66CFE /* CCSet.cpp */; };
 		1551A660158F2ADE00E66CFE /* CCSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A390158F2ADE00E66CFE /* CCSet.h */; };
-		1551A661158F2ADE00E66CFE /* CCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A391158F2ADE00E66CFE /* CCString.cpp */; };
-		1551A662158F2ADE00E66CFE /* CCString.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A392158F2ADE00E66CFE /* CCString.h */; };
 		1551A6B8158F2ADE00E66CFE /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A3F3158F2ADE00E66CFE /* aabb.h */; };
 		1551A6B9158F2ADE00E66CFE /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A3F5158F2ADE00E66CFE /* mat4stack.h */; };
 		1551A6BA158F2ADE00E66CFE /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A3F6158F2ADE00E66CFE /* matrix.h */; };
@@ -465,8 +462,6 @@
 		1551A38C158F2ADE00E66CFE /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
 		1551A38F158F2ADE00E66CFE /* CCSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSet.cpp; sourceTree = "<group>"; };
 		1551A390158F2ADE00E66CFE /* CCSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSet.h; sourceTree = "<group>"; };
-		1551A391158F2ADE00E66CFE /* CCString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCString.cpp; sourceTree = "<group>"; };
-		1551A392158F2ADE00E66CFE /* CCString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCString.h; sourceTree = "<group>"; };
 		1551A3F3158F2ADE00E66CFE /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
 		1551A3F5158F2ADE00E66CFE /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
 		1551A3F6158F2ADE00E66CFE /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
@@ -1019,8 +1014,6 @@
 				1551A38C158F2ADE00E66CFE /* CCNS.h */,
 				1551A38F158F2ADE00E66CFE /* CCSet.cpp */,
 				1551A390158F2ADE00E66CFE /* CCSet.h */,
-				1551A391158F2ADE00E66CFE /* CCString.cpp */,
-				1551A392158F2ADE00E66CFE /* CCString.h */,
 			);
 			path = cocoa;
 			sourceTree = "<group>";
@@ -1547,7 +1540,6 @@
 				B0ADAE921B2E7F1B00BE8FA3 /* CATextEditHelper.h in Headers */,
 				04EABB351956DAEA00198A8E /* CCNS.cpp in Headers */,
 				04EABB361956DAEA00198A8E /* CCSet.cpp in Headers */,
-				04EABB371956DAEA00198A8E /* CCString.cpp in Headers */,
 				B01D4BF919A5E8240071F6A3 /* CADrawerController.h in Headers */,
 				B0B553D9193485BE0065053D /* CAImageCache.h in Headers */,
 				B0A11DBD1AE8E0B300933BF6 /* gif_hash.h in Headers */,
@@ -1556,7 +1548,6 @@
 				1551A65C158F2ADE00E66CFE /* CCNS.h in Headers */,
 				3E0F754D1B7DD0C4004CFD41 /* autolink.h in Headers */,
 				1551A660158F2ADE00E66CFE /* CCSet.h in Headers */,
-				1551A662158F2ADE00E66CFE /* CCString.h in Headers */,
 				1551A6B8158F2ADE00E66CFE /* aabb.h in Headers */,
 				1551A6B9158F2ADE00E66CFE /* mat4stack.h in Headers */,
 				1551A6BA158F2ADE00E66CFE /* matrix.h in Headers */,
@@ -1789,7 +1780,6 @@
 				B0A11DB91AE8E0B300933BF6 /* dgif_lib.c in Sources */,
 				3E2154721B819CA60075448E /* CAVideoPlayerDecoder.cpp in Sources */,
 				1551A65F158F2ADE00E66CFE /* CCSet.cpp in Sources */,
-				1551A661158F2ADE00E66CFE /* CCString.cpp in Sources */,
 				EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */,
 				B0ADAE831B2E7F1B00BE8FA3 /* CAPageView.cpp in Sources */,
 				1551A6C6158F2ADE00E66CFE /* aabb.c in Sources */,

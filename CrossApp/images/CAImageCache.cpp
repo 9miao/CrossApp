@@ -207,11 +207,7 @@ void CAImageCache::purgeSharedImageCache()
 
 const char* CAImageCache::description()
 {
-    const char* description;
-    char tmp[128];
-    sprintf(tmp, "<CAImageCache | Number of textures = %lu>", m_mImages.size());
-    description = tmp;
-    return description;
+    return crossapp_format_string("<CAImageCache | Number of textures = %lu>", m_mImages.size()).c_str();
 }
 
 void CAImageCache::addImageAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector)

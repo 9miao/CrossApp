@@ -6,7 +6,6 @@
 #include "ccMacros.h"
 #include "platform/CCFileUtils.h"
 #include "support/data_support/uthash.h"
-#include "cocoa/CCString.h"
 // extern
 #include "kazmath/GL/matrix.h"
 #include "kazmath/kazmath.h"
@@ -140,18 +139,18 @@ bool CAGLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteA
 
 bool CAGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
-    const GLchar * vertexSource = (GLchar*) CCString::createWithContentsOfFile(vShaderFilename)->getCString();
-    const GLchar * fragmentSource = (GLchar*) CCString::createWithContentsOfFile(fShaderFilename)->getCString();
+    const GLchar * vertexSource = (GLchar*) CCFileUtils::sharedFileUtils()->getFileString(vShaderFilename).c_str();
+    const GLchar * fragmentSource = (GLchar*) CCFileUtils::sharedFileUtils()->getFileString(fShaderFilename).c_str();
 
     return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }
 
 const char* CAGLProgram::description()
 {
-    return CCString::createWithFormat("<CAGLProgram = "
-                                      CC_FORMAT_PRINTF_SIZE_T
-                                      " | Program = %i, VertexShader = %i, FragmentShader = %i>",
-                                      (size_t)this, m_uProgram, m_uVertShader, m_uFragShader)->getCString();
+    return crossapp_format_string("<CAGLProgram = "
+                                  CC_FORMAT_PRINTF_SIZE_T
+                                  " | Program = %i, VertexShader = %i, FragmentShader = %i>",
+                                  (size_t)this, m_uProgram, m_uVertShader, m_uFragShader).c_str();
 }
 
 bool CAGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)
@@ -309,10 +308,9 @@ const char* CAGLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFu
     char *logBytes = (char*)malloc(logLength);
     logFunc(object, logLength, &charsWritten, logBytes);
 
-    CCString* log = CCString::create(logBytes);
-
+    std::string log = logBytes;
     free(logBytes);
-    return log->getCString();
+    return log.c_str();
 }
 
 const char* CAGLProgram::vertexShaderLog()

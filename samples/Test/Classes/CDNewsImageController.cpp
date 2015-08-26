@@ -116,7 +116,7 @@ void CDNewsImageController::viewDidLoad()
         std::map<std::string,
         std::string> key_value;
         char temurl[200];
-        sprintf(temurl, "http://123.183.220.246:8090/pic?num=1&tag=%s",imageTag[urlID]);
+        sprintf(temurl, "http://h5.9miao.com/pic?num=1&tag=%s",imageTag[urlID]);
         CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                    CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
         {
@@ -198,7 +198,7 @@ void CDNewsImageController::buttonCallBack(CAControl* btn,CCPoint point)
     std::map<std::string,
     std::string> key_value;
     char temurl[200];
-    sprintf(temurl, "http://123.183.220.246:8090/pic?num=1&tag=%s",imageTag[urlID]);
+    sprintf(temurl, "http://h5.9miao.com/pic?num=1&tag=%s",imageTag[urlID]);
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
     {
@@ -214,7 +214,7 @@ void CDNewsImageController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollVi
     std::map<std::string,
     std::string> key_value;
     char temurl[200];
-    sprintf(temurl,  "http://123.183.220.246:8090/pic?num=1&tag=%s",imageTag[urlID]);
+    sprintf(temurl,  "http://h5.9miao.com/pic?num=1&tag=%s",imageTag[urlID]);
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
 }
@@ -225,7 +225,7 @@ void CDNewsImageController::scrollViewFooterBeginRefreshing(CAScrollView* view)
     std::string> key_value;
     char temurl[200];
     p_section++;
-    sprintf(temurl,  "http://123.183.220.246:8090/pic?num=%d&tag=%s",p_section,imageTag[urlID]);
+    sprintf(temurl,  "http://h5.9miao.com/pic?num=%d&tag=%s",p_section,imageTag[urlID]);
 
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsImageController::onRefreshRequestFinished));

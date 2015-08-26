@@ -31,6 +31,23 @@ static inline unsigned int getHashCodeByString(const char *key)
 	return (hash);
 }
 
+static std::string crossapp_format_string(const char* format, ...)
+{
+    std::string str;
+    va_list ap;
+    va_start(ap, format);
+    size_t lenght = 102400;
+    char* pBuf = (char*)malloc(lenght);
+    if (pBuf != NULL)
+    {
+        vsnprintf(pBuf, lenght, format, ap);
+        str = pBuf;
+        free(pBuf);
+    }
+    va_end(ap);
+    return str;
+}
+
 NS_CC_END
 
 #endif

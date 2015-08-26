@@ -7,7 +7,6 @@
 //
 
 #include "CAView.h"
-#include "cocoa/CCString.h"
 #include "support/CCPointExtension.h"
 #include "support/TransformUtils.h"
 #include "basics/CACamera.h"
@@ -844,7 +843,7 @@ void CAView::setShaderProgram(CAGLProgram *pShaderProgram)
 
 const char* CAView::description()
 {
-    return CCString::createWithFormat("<CAView | Tag = %d>", m_nTag)->getCString();
+    return crossapp_format_string("<CAView | TextTag = %s | Tag = %d >", m_sTextTag.c_str(), m_nTag).c_str();
 }
 
 void CAView::reViewlayout()
