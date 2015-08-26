@@ -102,6 +102,10 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
         view->setFrame(endFrame);
         CAViewAnimation::commitAnimations();
     }
+    else
+    {
+        this->presentEnd();
+    }
 }
 
 void CAWindow::presentEnd()
