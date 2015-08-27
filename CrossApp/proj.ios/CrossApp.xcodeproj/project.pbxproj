@@ -1300,9 +1300,9 @@
 		3E0F74F31B7DD0C3004CFD41 /* Json */ = {
 			isa = PBXGroup;
 			children = (
-				3E0F74F81B7DD0C3004CFD41 /* lib_json */,
 				3E0F74F41B7DD0C3004CFD41 /* CSContentJsonDictionary.cpp */,
 				3E0F74F51B7DD0C3004CFD41 /* CSContentJsonDictionary.h */,
+				3E0F74F81B7DD0C3004CFD41 /* lib_json */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -2003,7 +2003,6 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/ios/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2014,7 +2013,6 @@
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/ios/lib\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2046,7 +2044,6 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/ios/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2057,7 +2054,6 @@
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/ios/lib\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
