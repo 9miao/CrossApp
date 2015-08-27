@@ -88,6 +88,10 @@ public:
     CC_PROPERTY_READONLY(CAView*, m_pBackgroundView, BackgroundView);
     
     void setImageSizeAtIndex(CCSize size, int index);
+    
+    void setTitleFontName(std::string titleName);
+    
+    void setTitleFontSize(float titleSize);
 
 protected:
     virtual bool initWithFrame(const CCRect& rect);
@@ -175,6 +179,10 @@ protected:
     CAVector<CAView*>                m_vSegmentItemBackground;
     
     CAImage*                         m_pSegmentItemBackgroundImage;
+    
+    float                            m_fTitleFontSize;
+    
+    std::string                      m_sTitleFontName;
 };
 
 NS_CC_END

@@ -504,15 +504,15 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size, co
     }
     if (m_pBackGroundImage == NULL)
     {
-        this->setBackGroundImage(CAImage::create("source_material/tabNAVBAR_bg.png"));
+        this->setBackGroundImage(CAImage::create("source_material/tabBar_bg.png"));
     }
     if (m_pSelectedBackGroundImage == NULL)
     {
-        this->setSelectedBackGroundImage(CAImage::create("source_material/tabNAVBAR_selected_bg.png"));
+        this->setSelectedBackGroundImage(CAImage::create("source_material/tabBar_selected_bg.png"));
     }
     if (m_pSelectedIndicatorImage == NULL)
     {
-        this->setSelectedIndicatorImage(CAImage::create("source_material/tabNAVBAR_selected_indicator.png"));
+        this->setSelectedIndicatorImage(CAImage::create("source_material/tabBar_selected_indicator.png"));
     }
 
     return true;

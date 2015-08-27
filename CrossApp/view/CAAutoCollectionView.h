@@ -27,6 +27,7 @@ CACollectionViewOrientation;
 typedef enum
 {
 	eCollectionViewCellAlignLeftOrTop,
+    eCollectionViewCellAlignCenter,
 	eCollectionViewCellAlignRightOrBottom,
 }
 CACollectionViewCellAlign;
