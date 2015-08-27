@@ -26,10 +26,19 @@ CACollectionViewOrientation;
 
 typedef enum
 {
-	eCollectionViewCellAlignLeftOrTop,
-	eCollectionViewCellAlignRightOrBottom,
+	eCollectionViewCellHoriAlignLeft,
+	eCollectionViewCellHoriAlignCenter,
+	eCollectionViewCellHoriAlignRight,
 }
-CACollectionViewCellAlign;
+CACollectionViewCellHoriAlign;
+
+typedef enum
+{
+	eCollectionViewCellVertAlignTop,
+	eCollectionViewCellVertAlignCenter,
+	eCollectionViewCellVertAlignBottom,
+}
+CACollectionViewCellVertAlign;
 
 class CACollectionViewCell;
 class CAAutoCollectionView;
@@ -170,14 +179,15 @@ public:
     
     CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
 
-	CC_PROPERTY(CACollectionViewOrientation, m_pCollectionViewOrientation, CollectionViewOrientation);
-	CC_PROPERTY(CACollectionViewCellAlign, m_pCollectionViewCellAlign, CollectionViewCellAlign);
+	CC_SYNTHESIZE(CACollectionViewOrientation, m_pCollectionViewOrientation, CollectionViewOrientation);
+	CC_SYNTHESIZE(CACollectionViewCellHoriAlign, m_pCollectionViewCellHoriAlign, CollectionViewCellHoriAlign);
+	CC_SYNTHESIZE(CACollectionViewCellVertAlign, m_pCollectionViewCellVertAlign, CollectionViewCellVertAlign);
 
-	CC_PROPERTY(unsigned int, m_nHoriCellInterval, HoriCellInterval);
-	CC_PROPERTY(unsigned int, m_nVertCellInterval, VertCellInterval);
+	CC_SYNTHESIZE(unsigned int, m_nHoriCellInterval, HoriCellInterval);
+	CC_SYNTHESIZE(unsigned int, m_nVertCellInterval, VertCellInterval);
 
-	CC_PROPERTY(unsigned int, m_iHoriMargins, HoriMargins);
-	CC_PROPERTY(unsigned int, m_iVertMargins, VertMargins);
+	CC_SYNTHESIZE(unsigned int, m_iHoriMargins, HoriMargins);
+	CC_SYNTHESIZE(unsigned int, m_iVertMargins, VertMargins);
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsSelection, AllowsSelection);
     
@@ -198,6 +208,8 @@ protected:
     inline virtual float decelerationRatio(float dt);
     
 	void clearData();
+	int calculateAllCellsLength(CollectionViewSection& cvs);
+	int calculateAllCells(CollectionViewSection& cvs, int index, int dd, int dv, int dw);
 	int calculateAllRects();
 	bool fillSectionRowData(CollectionViewRow& r, CCSize rSize);
     void reloadViewSizeData();
