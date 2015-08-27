@@ -111,7 +111,7 @@ void MenuViewController::buttonCallBack(CAControl* btn,CCPoint point)
             CANavigationBarItem* temp_nav1 = CANavigationBarItem::create(" ");
             temp_nav1->setNagigationBarHidden(true);
             _splitViewController->setNavigationBarItem(temp_nav1);
-            RootWindow::getInstance()->getSplitNavigationController()->pushViewController(_splitViewController, true);
+            RootWindow::getInstance()->getSplitNavigationController()->pushViewController(_splitViewController, false);
         }
             break;
         case 2:
@@ -122,7 +122,7 @@ void MenuViewController::buttonCallBack(CAControl* btn,CCPoint point)
             _webController->setTitle(" ");
             
             _webController->autorelease();
-            RootWindow::getInstance()->getSplitNavigationController()->pushViewController(_webController, true);
+            RootWindow::getInstance()->getSplitNavigationController()->pushViewController(_webController, false);
             _webController->initWebView("http://www.crossapp.com.cn");
         }
             break;
@@ -134,7 +134,7 @@ void MenuViewController::buttonCallBack(CAControl* btn,CCPoint point)
             _webController->setTitle(" ");
             
             _webController->autorelease();
-            RootWindow::getInstance()->getSplitNavigationController()->pushViewController(_webController, true);
+            RootWindow::getInstance()->getSplitNavigationController()->pushViewController(_webController, false);
             _webController->initWebView("http://www.9miao.com/");
         }
             break;

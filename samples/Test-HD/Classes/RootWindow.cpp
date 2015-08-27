@@ -4,7 +4,6 @@
 #include "MenuViewController.h"
 #include "CDUIShowCollectionView.h"
 #include "CDNewsViewController.h"
-#include "CDNewsImageController.h"
 #include "CDNewsAboutController.h"
 #include "CDWebViewController.h"
 #include "CDTempViewController.h"

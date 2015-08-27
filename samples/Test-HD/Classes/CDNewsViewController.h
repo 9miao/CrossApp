@@ -35,12 +35,6 @@ public:
     virtual CCSize collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item);
     virtual unsigned int numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section);
     virtual unsigned int numberOfSections(CAAutoCollectionView *collectionView);
-    
-//    virtual CAView* collectionViewSectionViewForHeaderInSection(CAAutoCollectionView *collectionView, const CCSize& viewSize, unsigned int section);
-//    virtual unsigned int collectionViewHeightForHeaderInSection(CAAutoCollectionView *collectionView, unsigned int section);
-//    virtual CAView* collectionViewSectionViewForFooterInSection(CAAutoCollectionView *collectionView, const CCSize& viewSize, unsigned int section);
-//    virtual unsigned int collectionViewHeightForFooterInSection(CAAutoCollectionView *collectionView, unsigned int section);
-//    virtual void collectionViewWillDisplayCellAtIndex(CAAutoCollectionView* table, CACollectionViewCell* cell, unsigned int section, unsigned int item);
 public:
     
     void onRequestFinished(const HttpResponseStatus& status, const CSJson::Value& json);

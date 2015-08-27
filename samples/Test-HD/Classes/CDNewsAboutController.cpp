@@ -156,7 +156,7 @@ CDNewsAboutController::~CDNewsAboutController()
 void CDNewsAboutController::viewDidLoad()
 {
     winSize = this->getView()->getBounds().size;
-    this->getView()->setColor(ccc4(0,0,0,150));
+    this->getView()->setColor(ccc4(0,0,0,0));
     if (p_TableView!=NULL)
     {
         this->getView()->removeSubview(p_TableView);
@@ -167,9 +167,9 @@ void CDNewsAboutController::viewDidLoad()
 //    bg->setFrame(this->getView()->getBounds());
 //    this->getView()->addSubview(bg);
     
-    CAView* bg1 = CAView::createWithColor(CAColor_white);
-    bg1->setFrame(CADipRect(0,0,500,winSize.height));
-    this->getView()->addSubview(bg1);
+    bg = CAView::createWithColor(CAColor_white);
+    bg->setFrame(CADipRect(-500,0,500,winSize.height));
+    this->getView()->addSubview(bg);
     
     p_TableView= CATableView::createWithFrame(CADipRect(50, winSize.height/4, 400, winSize.height));
     p_TableView->setTableViewDataSource(this);
@@ -181,20 +181,34 @@ void CDNewsAboutController::viewDidLoad()
     p_TableView->setSeparatorColor(CAColor_gray);
     p_TableView->setScrollEnabled(false);
     p_TableView->setShowsScrollIndicators(false);
-    this->getView()->addSubview(p_TableView);
+    bg->addSubview(p_TableView);
     
     CAButton* btn_back = CAButton::create(CAButtonTypeSquareRect);
     btn_back->setCenter(CADipRect(250, winSize.height-200, 40, 40));
     btn_back->setTitleColorForState(CAControlStateNormal,CAColor_white);
-    btn_back->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/news_close.png")));
-    btn_back->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/news_close.png")));
+    btn_back->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("image/news_close.png")));
+    btn_back->setBackGroundViewForState(CAControlStateHighlighted, CAImageView::createWithImage(CAImage::create("image/news_close.png")));
     btn_back->addTarget(this, CAControl_selector(CDNewsAboutController::btn_callback), CAControlEventTouchDown);
-    this->getView()->addSubview(btn_back);
+    bg->addSubview(btn_back);
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0.3f);
+    //CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CDNewsAboutController::endAction));
+    this->getView()->setColor(ccc4(0,0,0,200));
+    bg->setFrameOrigin(CCPointMake(0, 0));
+    CAViewAnimation::commitAnimations();
 }
 
 void CDNewsAboutController::viewDidUnload()
 {
-    
+
+}
+
+void CDNewsAboutController::endAction()
+{
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0.3f);
+    bg->setFrameOrigin(CCPointMake(0, 0));
+    CAViewAnimation::commitAnimations();
 }
 
 void CDNewsAboutController::worker()
@@ -314,5 +328,16 @@ unsigned int CDNewsAboutController::tableViewHeightForFooterInSection(CATableVie
 
 void CDNewsAboutController::btn_callback(CrossApp::CAControl *btn, CrossApp::CCPoint point)
 {
-    RootWindow::getInstance()->getSplitNavigationController()->dismissModalViewController(true);
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDuration(0.3f);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CDNewsAboutController::dissModel));
+    bg->setFrameOrigin(CCPointMake(-500, 0));
+    this->getView()->setColor(ccc4(0,0,0,0));
+    CAViewAnimation::commitAnimations();
+    
+}
+
+void CDNewsAboutController::dissModel()
+{
+    RootWindow::getInstance()->getSplitNavigationController()->dismissModalViewController(false);
 }

@@ -50,7 +50,8 @@ public:
     
     void deleteCallBack(float dt);
     void btn_callback(CAControl* btn,CCPoint point);
-    void doAnimation();
+    void endAction();
+    void dissModel();
 public:
     CADipSize winSize;
     CATableView* p_TableView;
@@ -58,8 +59,8 @@ public:
     float _tempfilesize;
     CAView* _waitview;
     CAActivityIndicatorView* p_pLoading;
+    CAView* bg;
     pthread_t start()
-    
     {
         pthread_t tid;
         pthread_create(&tid, NULL, hook, this);

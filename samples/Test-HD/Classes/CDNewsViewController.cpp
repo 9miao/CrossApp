@@ -226,14 +226,16 @@ void CDNewsViewController::initNewsView()
         showAlert();
         return;
     }
-    
     p_Conllection = CAAutoCollectionView::createWithFrame(CCRect(0,20,this->getView()->getBounds().size.width,this->getView()->getBounds().size.height-20));
     p_Conllection->setAllowsSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
     p_Conllection->setCollectionViewDataSource(this);
     p_Conllection->setScrollViewDelegate(this);
-    p_Conllection->setHoriInterval(_px(3));
-    p_Conllection->setVertInterval(_px(3));
+    p_Conllection->setHoriCellInterval(_px(2));
+    p_Conllection->setVertCellInterval(_px(2));
+    
+    p_Conllection->setHoriMargins((winSize.width-1506)/4);
+    p_Conllection->setBackGroundColor(ccc4(234,234,234,255));
     
     CAPullToRefreshView *refreshDiscount = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     refreshDiscount->setLabelColor(CAColor_black);
@@ -315,27 +317,31 @@ CACollectionViewCell* CDNewsViewController::collectionCellAtIndex(CAAutoCollecti
         itemImage->setTag(99);
         p_Cell->addSubview(itemImage);
         
-        CommonUrlImageView* theImage = CommonUrlImageView::createWithFrame(CADipRect(30, 30, _size.width-60, _size.height/3*2));
+        CommonUrlImageView* theImage = CommonUrlImageView::createWithFrame(CADipRect(30, 30, 440, 300));
         theImage->setTag(101);
         theImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
         theImage->setImage(CAImage::create("image/HelloWorld.png"));
         p_Cell->addSubview(theImage);
         
         CADipSize itemSize = itemImage->getBounds().size;
-        CALabel* itemText = CALabel::createWithFrame(CADipRect(30, _size.height/3*2+60, itemSize.width-60,80));
+        CALabel* itemText = CALabel::createWithFrame(CADipRect(30, 360, itemSize.width-60,80));
         itemText->setTag(100);
         itemText->setFontSize(_px(34));
         itemText->setTextAlignment(CATextAlignmentLeft);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
         p_Cell->addSubview(itemText);
+        
+        CAImageView* commentImage = CAImageView::createWithFrame(CADipRect(itemSize.width-100, itemSize.height-60, 48, 48));
+        commentImage->setTag(200);
+        commentImage->setImage(CAImage::create("image/comment.png"));
+        p_Cell->addSubview(commentImage);
     }
     
     CAImageView* itemImageView = (CAImageView*)p_Cell->getSubviewByTag(99);
     itemImageView->setImage(CAImage::create("image/collection_bg.png"));
-    //itemImageView->setColor(ccc4(240, 250, 250, 255));
     
     CommonUrlImageView* theImage = (CommonUrlImageView*)p_Cell->getSubviewByTag(101);
-    
+    theImage->setImage(CAImage::create("image/HelloWorld.png"));
     CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(100);
     
     

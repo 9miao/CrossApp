@@ -92,8 +92,8 @@ void CDNewsMenuView::viewDidLoad()
     btn_back->setCenter(CADipRect(150, size.height-200, 40, 40));
     btn_back->setTag(0);
     btn_back->setTitleColorForState(CAControlStateNormal,CAColor_white);
-    btn_back->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/news_close.png")));
-    btn_back->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/news_close.png")));
+    btn_back->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("image/news_close.png")));
+    btn_back->setBackGroundViewForState(CAControlStateHighlighted, CAImageView::createWithImage(CAImage::create("image/news_close.png")));
     btn_back->addTarget(this, CAControl_selector(CDNewsMenuView::btn_callBack), CAControlEventTouchDown);
     this->getView()->addSubview(btn_back);
     
@@ -101,8 +101,8 @@ void CDNewsMenuView::viewDidLoad()
     btn_set->setCenter(CADipRect(300, size.height-200, 40, 40));
     btn_set->setTag(1);
     btn_set->setTitleColorForState(CAControlStateNormal,CAColor_white);
-    btn_set->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/news_set.png")));
-    btn_set->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/news_set.png")));
+    btn_set->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("image/news_set.png")));
+    btn_set->setBackGroundViewForState(CAControlStateHighlighted, CAImageView::createWithImage(CAImage::create("image/news_set.png")));
     btn_set->addTarget(this, CAControl_selector(CDNewsMenuView::btn_callBack), CAControlEventTouchDown);
     this->getView()->addSubview(btn_set);
     

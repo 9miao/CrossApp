@@ -121,7 +121,6 @@
 		4E000F421B85706100EBC223 /* CASplitViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E000F3C1B85706100EBC223 /* CASplitViewController.cpp */; };
 		4E000F431B85706100EBC223 /* CDNewsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E000F3E1B85706100EBC223 /* CDNewsMenuView.cpp */; };
 		4E000F441B85706100EBC223 /* CDTempViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E000F401B85706100EBC223 /* CDTempViewController.cpp */; };
-		4E20D6CB1B8B103D0071A8F6 /* CDSetView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E20D6C91B8B103D0071A8F6 /* CDSetView.cpp */; };
 		4E6489181B412CF600643640 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E6489171B412CF600643640 /* libiconv.dylib */; };
 		B01F71671951682600BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71661951682600BA07A6 /* source_material */; };
 		B0621BE51AC3B871005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621BDB1AC3B871005EBCA7 /* fonts */; };
@@ -131,7 +130,6 @@
 		B0CA5A2B1A77A79900BECD89 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */; };
 		B0CA5A2D1A77A7A000BECD89 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2C1A77A7A000BECD89 /* MediaPlayer.framework */; };
 		B0DB98891B1452EC00710982 /* CDNewsAboutController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB98771B1452EC00710982 /* CDNewsAboutController.cpp */; };
-		B0DB988A1B1452EC00710982 /* CDNewsImageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB98791B1452EC00710982 /* CDNewsImageController.cpp */; };
 		B0DB988B1B1452EC00710982 /* CDNewsViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB987B1B1452EC00710982 /* CDNewsViewController.cpp */; };
 		B0DB988C1B1452EC00710982 /* CDShowNewsImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB987D1B1452EC00710982 /* CDShowNewsImage.cpp */; };
 		B0DB988D1B1452EC00710982 /* CDUIShowCollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB987F1B1452EC00710982 /* CDUIShowCollectionView.cpp */; };
@@ -408,8 +406,6 @@
 		4E000F3F1B85706100EBC223 /* CDNewsMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsMenuView.h; path = ../Classes/CDNewsMenuView.h; sourceTree = "<group>"; };
 		4E000F401B85706100EBC223 /* CDTempViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDTempViewController.cpp; path = ../Classes/CDTempViewController.cpp; sourceTree = "<group>"; };
 		4E000F411B85706100EBC223 /* CDTempViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDTempViewController.h; path = ../Classes/CDTempViewController.h; sourceTree = "<group>"; };
-		4E20D6C91B8B103D0071A8F6 /* CDSetView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDSetView.cpp; path = ../Classes/CDSetView.cpp; sourceTree = "<group>"; };
-		4E20D6CA1B8B103D0071A8F6 /* CDSetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDSetView.h; path = ../Classes/CDSetView.h; sourceTree = "<group>"; };
 		4E6489171B412CF600643640 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		B00CC60D19792FF800A62E4C /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
@@ -426,8 +422,6 @@
 		B0DB98761B1452EC00710982 /* CDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDData.h; path = ../Classes/CDData.h; sourceTree = "<group>"; };
 		B0DB98771B1452EC00710982 /* CDNewsAboutController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsAboutController.cpp; path = ../Classes/CDNewsAboutController.cpp; sourceTree = "<group>"; };
 		B0DB98781B1452EC00710982 /* CDNewsAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsAboutController.h; path = ../Classes/CDNewsAboutController.h; sourceTree = "<group>"; };
-		B0DB98791B1452EC00710982 /* CDNewsImageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsImageController.cpp; path = ../Classes/CDNewsImageController.cpp; sourceTree = "<group>"; };
-		B0DB987A1B1452EC00710982 /* CDNewsImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsImageController.h; path = ../Classes/CDNewsImageController.h; sourceTree = "<group>"; };
 		B0DB987B1B1452EC00710982 /* CDNewsViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsViewController.cpp; path = ../Classes/CDNewsViewController.cpp; sourceTree = "<group>"; };
 		B0DB987C1B1452EC00710982 /* CDNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsViewController.h; path = ../Classes/CDNewsViewController.h; sourceTree = "<group>"; };
 		B0DB987D1B1452EC00710982 /* CDShowNewsImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDShowNewsImage.cpp; path = ../Classes/CDShowNewsImage.cpp; sourceTree = "<group>"; };
@@ -562,8 +556,6 @@
 				B0DB98761B1452EC00710982 /* CDData.h */,
 				B0DB98771B1452EC00710982 /* CDNewsAboutController.cpp */,
 				B0DB98781B1452EC00710982 /* CDNewsAboutController.h */,
-				B0DB98791B1452EC00710982 /* CDNewsImageController.cpp */,
-				B0DB987A1B1452EC00710982 /* CDNewsImageController.h */,
 				B0DB987B1B1452EC00710982 /* CDNewsViewController.cpp */,
 				B0DB987C1B1452EC00710982 /* CDNewsViewController.h */,
 				B0DB987D1B1452EC00710982 /* CDShowNewsImage.cpp */,
@@ -583,8 +575,6 @@
 				B0AD93E519207CA300EA40BB /* AppMacros.h */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
-				4E20D6C91B8B103D0071A8F6 /* CDSetView.cpp */,
-				4E20D6CA1B8B103D0071A8F6 /* CDSetView.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -1027,7 +1017,6 @@
 				3EF48A511B7C7E0B00179E69 /* gameswf_font.cpp in Sources */,
 				3EF48A3B1B7C7E0B00179E69 /* as_mouse_event.cpp in Sources */,
 				3EF48A101B7C7E0B00179E69 /* dlmalloc.c in Sources */,
-				4E20D6CB1B8B103D0071A8F6 /* CDSetView.cpp in Sources */,
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
 				3EF48A261B7C7E0B00179E69 /* CAFlash.cpp in Sources */,
 				3EF48A4B1B7C7E0B00179E69 /* gameswf_canvas.cpp in Sources */,
@@ -1071,7 +1060,6 @@
 				3EF48A241B7C7E0B00179E69 /* utility.cpp in Sources */,
 				3EF48A401B7C7E0B00179E69 /* as_selection.cpp in Sources */,
 				3EF48A2E1B7C7E0B00179E69 /* as_color.cpp in Sources */,
-				B0DB988A1B1452EC00710982 /* CDNewsImageController.cpp in Sources */,
 				3EF48A3A1B7C7E0B00179E69 /* as_mouse.cpp in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
 				3EF48A161B7C7E0B00179E69 /* jpeg.cpp in Sources */,
