@@ -9,7 +9,11 @@
 #ifndef __CrossApp__CAAutoCollectionView__
 #define __CrossApp__CAAutoCollectionView__
 
-#include "view/CACollectionView.h"
+#include "view/CAView.h"
+#include "view/CAScale9ImageView.h"
+#include "controller/CABarItem.h"
+#include "view/CATableView.h"
+#include "view/CALabel.h"
 
 NS_CC_BEGIN
 
@@ -20,6 +24,23 @@ typedef enum
 }
 CACollectionViewOrientation;
 
+typedef enum
+{
+	eCollectionViewCellHoriAlignLeft,
+	eCollectionViewCellHoriAlignCenter,
+	eCollectionViewCellHoriAlignRight,
+}
+CACollectionViewCellHoriAlign;
+
+typedef enum
+{
+	eCollectionViewCellVertAlignTop,
+	eCollectionViewCellVertAlignCenter,
+	eCollectionViewCellVertAlignBottom,
+}
+CACollectionViewCellVertAlign;
+
+class CACollectionViewCell;
 class CAAutoCollectionView;
 
 class CAAutoCollectionViewDelegate
@@ -89,9 +110,10 @@ class CC_DLL CAAutoCollectionView : public CAScrollView
 {
 	struct CollectionViewRow
 	{
-		CollectionViewRow() : iHeight(0) {}
-		unsigned int iHeight;
-		std::vector<CCSize> rItemSizes;
+		CollectionViewRow() : iIniValue(0), iMaxValue(0) {}
+		unsigned int iIniValue;
+		unsigned int iMaxValue;
+		std::vector<CCRect> rItemRects;
 	};
 
 	struct CollectionViewSection
@@ -127,7 +149,6 @@ public:
 
 	virtual bool init();
 
-	void clearData();
 	void reloadData();
 
 	CACollectionViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
@@ -146,8 +167,6 @@ public:
     
 	const CAVector<CACollectionViewCell*>& displayingCollectionCell();
     
-	CC_PROPERTY(CACollectionViewOrientation, m_pCollectionViewOrientation, CollectionViewOrientation);
-
     CC_SYNTHESIZE(CAAutoCollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
     
 	CC_SYNTHESIZE(CAAutoCollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
@@ -160,9 +179,15 @@ public:
     
     CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
 
-	CC_SYNTHESIZE(unsigned int, m_nHoriInterval, HoriInterval);
+	CC_SYNTHESIZE(CACollectionViewOrientation, m_pCollectionViewOrientation, CollectionViewOrientation);
+	CC_SYNTHESIZE(CACollectionViewCellHoriAlign, m_pCollectionViewCellHoriAlign, CollectionViewCellHoriAlign);
+	CC_SYNTHESIZE(CACollectionViewCellVertAlign, m_pCollectionViewCellVertAlign, CollectionViewCellVertAlign);
 
-	CC_SYNTHESIZE(unsigned int, m_nVertInterval, VertInterval);
+	CC_SYNTHESIZE(unsigned int, m_nHoriCellInterval, HoriCellInterval);
+	CC_SYNTHESIZE(unsigned int, m_nVertCellInterval, VertCellInterval);
+
+	CC_SYNTHESIZE(unsigned int, m_iHoriMargins, HoriMargins);
+	CC_SYNTHESIZE(unsigned int, m_iVertMargins, VertMargins);
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsSelection, AllowsSelection);
     
@@ -182,6 +207,11 @@ protected:
     
     inline virtual float decelerationRatio(float dt);
     
+	void clearData();
+	int calculateAllCellsLength(CollectionViewSection& cvs);
+	int calculateAllCells(CollectionViewSection& cvs, int index, int dd, int dv, int dw);
+	int calculateAllRects();
+	bool fillSectionRowData(CollectionViewRow& r, CCSize rSize);
     void reloadViewSizeData();
     
     virtual void update(float dt);

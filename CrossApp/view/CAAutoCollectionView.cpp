@@ -1,12 +1,14 @@
 #include "CAAutoCollectionView.h"
+#include "CACollectionView.h"
 #include "basics/CAApplication.h"
+#include "control/CAButton.h"
 #include "support/CCPointExtension.h"
 #include "dispatcher/CATouch.h"
 #include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
-#pragma CAAutoCollectionView
+#pragma CACollectionView
 
 CAAutoCollectionView::CAAutoCollectionView()
 : m_pCollectionViewDataSource(NULL)
@@ -18,11 +20,15 @@ CAAutoCollectionView::CAAutoCollectionView()
 , m_pHighlightedCollectionCells(NULL)
 , m_nCollectionHeaderHeight(0)
 , m_nCollectionFooterHeight(0)
-, m_nHoriInterval(0)
-, m_nVertInterval(0)
+, m_nHoriCellInterval(5)
+, m_nVertCellInterval(5)
+, m_iHoriMargins(0)
+, m_iVertMargins(0)
 , m_bAlwaysTopSectionHeader(true)
 , m_bAlwaysBottomSectionFooter(true)
-, m_pCollectionViewOrientation(CACollectionViewOrientationVertical)
+, m_pCollectionViewOrientation(CACollectionViewOrientationHorizontal)
+, m_pCollectionViewCellHoriAlign(eCollectionViewCellHoriAlignRight)
+, m_pCollectionViewCellVertAlign(eCollectionViewCellVertAlignBottom)
 {
     
 }
@@ -173,15 +179,6 @@ const CAVector<CACollectionViewCell*>& CAAutoCollectionView::displayingCollectio
     return m_vpUsedCollectionCells;
 }
 
-void CAAutoCollectionView::setCollectionViewOrientation(CACollectionViewOrientation var)
-{
-	m_pCollectionViewOrientation = var;
-}
-
-CACollectionViewOrientation CAAutoCollectionView::getCollectionViewOrientation()
-{
-	return m_pCollectionViewOrientation;
-}
 
 bool CAAutoCollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
@@ -320,6 +317,48 @@ void CAAutoCollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 	}
 }
 
+bool CAAutoCollectionView::fillSectionRowData(CollectionViewRow& r, CCSize rSize)
+{
+	if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
+	{
+		int dw = this->getBounds().size.width - 2 * m_iHoriMargins;
+
+		if (r.iIniValue + rSize.width > dw && r.iMaxValue > 0)
+			return false;
+
+		if (r.iMaxValue < rSize.height)
+			r.iMaxValue = rSize.height;
+		
+		if (r.iIniValue > 0)
+		{
+			r.iIniValue += m_nHoriCellInterval;
+		}
+		r.rItemRects.push_back(CCRectMake(m_iHoriMargins + r.iIniValue, 0, rSize.width, rSize.height));
+
+		r.iIniValue += rSize.width;
+	}
+	else
+	{
+		int dw = this->getBounds().size.height - 2 * m_iVertMargins;
+
+		if (r.iIniValue + rSize.height > dw && r.iMaxValue > 0)
+			return false;
+
+		if (r.iMaxValue < rSize.width)
+			r.iMaxValue = rSize.width;
+
+		if (r.iIniValue > 0)
+		{
+			r.iIniValue += m_nVertCellInterval;
+		}
+		r.rItemRects.push_back(CCRectMake(0, m_iVertMargins + r.iIniValue, rSize.width, rSize.height));
+
+		r.iIniValue += rSize.height;
+	}
+	
+	return true;
+}
+
 void CAAutoCollectionView::reloadViewSizeData()
 {    
 	clearData();
@@ -327,17 +366,6 @@ void CAAutoCollectionView::reloadViewSizeData()
     int nSections = m_pCollectionViewDataSource->numberOfSections(this);
 	m_rCollectionViewSection.resize(nSections);
     
-	int dw = 0;
-	if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
-	{
-		dw = this->getBounds().size.width - 2 * m_nHoriInterval;
-	}
-	else
-	{
-		dw = this->getBounds().size.height - 2 * m_nVertInterval;
-	}
-	
-
 	CollectionViewRow r;
 	for (unsigned int i = 0; i<nSections; i++)
     {
@@ -345,60 +373,47 @@ void CAAutoCollectionView::reloadViewSizeData()
 		cvs.nSectionHeaderHeight = m_pCollectionViewDataSource->collectionViewHeightForHeaderInSection(this, i);
 		cvs.nSectionFooterHeight = m_pCollectionViewDataSource->collectionViewHeightForFooterInSection(this, i);
 
-		int iCurW = 0;
-
 		unsigned int itemCount = m_pCollectionViewDataSource->numberOfItemsInSection(this, i);
 		for (int j = 0; j < itemCount; j++)
 		{
 			CCSize rSize = m_pCollectionViewDataSource->collectionViewSizeForItemAtIndexPath(this, i, j);
 
-			int d1 = 0, d2 = 0, d3 = 0;
-			if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
+			if (!fillSectionRowData(r, rSize))
 			{
-				d1 = rSize.width;
-				d2 = rSize.height;
-				d3 = m_nHoriInterval;
-			}
-			else
-			{
-				d1 = rSize.height;
-				d2 = rSize.width;
-				d3 = m_nVertInterval;
-			}
-
-			if (iCurW + d1 > dw && r.iHeight > 0)
-			{
-				iCurW = 0;
 				cvs.CollectionViewRows.push_back(r);
 				r = CollectionViewRow();
+				j--;
 			}
-
-			iCurW += (d1 + d3);
-			if (r.iHeight < d2)
-			{
-				r.iHeight = d2;
-			}
-			r.rItemSizes.push_back(rSize);
 		}
-		if (r.iHeight > 0)
+		if (r.iMaxValue > 0)
 		{
 			cvs.CollectionViewRows.push_back(r);
 		}
     }
     
-	unsigned int viewHeight = 0;
+	unsigned int cellXValue = (m_pCollectionViewOrientation == CACollectionViewOrientationVertical) ? m_nVertCellInterval : m_nHoriCellInterval;
+	unsigned int viewHeight = (m_pCollectionViewOrientation == CACollectionViewOrientationVertical) ? (2 * m_iVertMargins) : (2 * m_iHoriMargins);
+
 	for (int i = 0; i < nSections; i++)
 	{
 		CollectionViewSection& cvs = m_rCollectionViewSection[i];
 
 		unsigned int sectionHeight = 0;
-		sectionHeight += cvs.nSectionHeaderHeight;
-		sectionHeight += cvs.nSectionFooterHeight;
-		sectionHeight += (m_pCollectionViewOrientation == CACollectionViewOrientationVertical) ? m_nVertInterval : m_nHoriInterval;
+		if (cvs.nSectionHeaderHeight>0)
+		{
+			sectionHeight += cvs.nSectionHeaderHeight;
+			sectionHeight += cellXValue;
+		}
+		if (cvs.nSectionFooterHeight>0)
+		{
+			sectionHeight += cvs.nSectionFooterHeight;
+			sectionHeight += cellXValue;
+		}
+		
 		for (unsigned int j = 0; j < cvs.CollectionViewRows.size(); j++)
 		{
-			sectionHeight += cvs.CollectionViewRows[j].iHeight;
-			sectionHeight += (m_pCollectionViewOrientation == CACollectionViewOrientationVertical) ? m_nVertInterval : m_nHoriInterval;
+			sectionHeight += cvs.CollectionViewRows[j].iMaxValue;
+			sectionHeight += cellXValue;
 		}
 		viewHeight += sectionHeight;
 	}
@@ -438,6 +453,186 @@ void CAAutoCollectionView::clearData()
 	m_pHighlightedCollectionCells = NULL;
 }
 
+
+int CAAutoCollectionView::calculateAllCellsLength(CollectionViewSection& cvs)
+{
+	int iMaxLengthValue = 0;
+	for (int i = 0; i < cvs.CollectionViewRows.size(); i++)
+	{
+		CollectionViewRow& r = cvs.CollectionViewRows[i];
+
+		if (r.iIniValue > iMaxLengthValue)
+		{
+			iMaxLengthValue = r.iIniValue;
+		}
+	}
+	return iMaxLengthValue;
+}
+
+int CAAutoCollectionView::calculateAllCells(CollectionViewSection& cvs, int index, int dd, int dv, int dw)
+{
+	int iMaxLengthValue = calculateAllCellsLength(cvs);
+
+	for (int j = 0, l = 0; j < cvs.CollectionViewRows.size(); j++)
+	{
+		CollectionViewRow& r = cvs.CollectionViewRows[j];
+
+		if (j>0)
+		{
+			dd += dv;
+		}
+		for (int k = 0; k < r.rItemRects.size(); k++, l++)
+		{
+			CAIndexPath3E indexPath = CAIndexPath3E(index, j, l);
+
+			CCRect& cellRect = r.rItemRects[k];
+
+			if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
+			{
+				cellRect.origin.y = dd;
+				if (m_pCollectionViewCellVertAlign == eCollectionViewCellVertAlignCenter)
+				{
+					int d = (r.iMaxValue - r.rItemRects[k].size.height) / 2;
+					cellRect.origin.y += d;
+				}
+				if (m_pCollectionViewCellVertAlign == eCollectionViewCellVertAlignBottom)
+				{
+					int d = r.iMaxValue - r.rItemRects[k].size.height;
+					cellRect.origin.y += d;
+				}
+				if (m_pCollectionViewCellHoriAlign == eCollectionViewCellHoriAlignCenter)
+				{
+					int d = (dw - iMaxLengthValue) / 2;
+					cellRect.origin.x += d;
+				}
+				if (m_pCollectionViewCellHoriAlign == eCollectionViewCellHoriAlignRight)
+				{
+					int d = dw - iMaxLengthValue;
+					cellRect.origin.x += d;
+				}
+			}
+			else
+			{
+				if (m_pCollectionViewCellVertAlign == eCollectionViewCellVertAlignCenter)
+				{
+					int d = (dw - iMaxLengthValue) / 2;
+					cellRect.origin.y += d;
+				}
+				if (m_pCollectionViewCellVertAlign == eCollectionViewCellVertAlignBottom)
+				{
+					int d = dw - iMaxLengthValue;
+					cellRect.origin.y += d;
+				}
+
+				cellRect.origin.x = dd;
+				if (m_pCollectionViewCellHoriAlign == eCollectionViewCellHoriAlignCenter)
+				{
+					int d = (r.iMaxValue - r.rItemRects[k].size.width) / 2;
+					cellRect.origin.x += d;
+				}
+				if (m_pCollectionViewCellHoriAlign == eCollectionViewCellHoriAlignRight)
+				{
+					int d = r.iMaxValue - r.rItemRects[k].size.width;
+					cellRect.origin.x += d;
+				}
+			}
+			m_rUsedCollectionCellRects[indexPath] = cellRect;
+
+			m_mpUsedCollectionCells.insert(std::make_pair(indexPath, (CACollectionViewCell*)NULL));
+		}
+		
+		dd += r.iMaxValue;
+	}
+	return dd;
+}
+
+int CAAutoCollectionView::calculateAllRects()
+{
+	int dw = 0, dd = 0, dv = 0;
+	if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
+	{
+		dw = this->getBounds().size.width - 2 * m_iHoriMargins;
+		dd = m_iVertMargins + m_nCollectionHeaderHeight;
+		dv = m_nVertCellInterval;
+	}
+	else
+	{
+		dw = this->getBounds().size.height - 2 * m_iVertMargins;
+		dd = m_iHoriMargins + m_nCollectionHeaderHeight;
+		dv = m_nHoriCellInterval;
+	}
+
+	for (int i = 0; i < m_rCollectionViewSection.size(); i++)
+	{
+		CollectionViewSection& cvs = m_rCollectionViewSection[i];
+
+		unsigned int iSectionHeaderHeight = cvs.nSectionHeaderHeight;
+
+		CCRect sectionHeaderRect;
+		if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
+		{
+			sectionHeaderRect = CCRect(m_iHoriMargins, dd, dw, iSectionHeaderHeight);
+		}
+		else
+		{
+			sectionHeaderRect = CCRect(dd, m_iVertMargins, iSectionHeaderHeight, dw);
+		}
+
+		if (iSectionHeaderHeight > 0)
+		{
+			CAView* pSectionHeaderView = m_pCollectionViewDataSource->collectionViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
+			if (pSectionHeaderView != NULL)
+			{
+				pSectionHeaderView->setDisplayRange(true);
+				pSectionHeaderView->setFrame(sectionHeaderRect);
+				insertSubview(pSectionHeaderView, 1);
+			}
+			dd += (iSectionHeaderHeight + dv);
+			cvs.pSectionHeaderView = pSectionHeaderView;
+		}
+
+		dd = calculateAllCells(cvs, i, dd, dv, dw);
+
+		unsigned int iSectionFooterHeight = cvs.nSectionFooterHeight;
+
+		CCRect sectionFooterRect;
+		if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
+		{
+			sectionFooterRect = CCRect(m_iHoriMargins, dd, dw, iSectionFooterHeight);
+		}
+		else
+		{
+			sectionFooterRect = CCRect(dd, m_iVertMargins, iSectionFooterHeight, dw);
+		}
+
+		if (iSectionFooterHeight > 0)
+		{
+			CAView* pSectionFooterView = m_pCollectionViewDataSource->collectionViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
+			if (pSectionFooterView != NULL)
+			{
+				pSectionFooterView->setDisplayRange(true);
+				pSectionFooterView->setFrame(sectionFooterRect);
+				insertSubview(pSectionFooterView, 1);
+			}
+			dd += (iSectionFooterHeight + dv);
+			cvs.pSectionFooterView = pSectionFooterView;
+		}
+
+		CCRect sectionRect = sectionHeaderRect;
+		if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
+		{
+			sectionRect.size.height = sectionFooterRect.origin.y + sectionFooterRect.size.height - sectionHeaderRect.origin.y;
+		}
+		else
+		{
+			sectionRect.size.width = sectionFooterRect.origin.x + sectionFooterRect.size.width - sectionHeaderRect.origin.x;
+		}
+		cvs.rSectionRect = sectionRect;
+	}
+	
+	return dd;
+}
+
 void CAAutoCollectionView::reloadData()
 {
 	if (m_pCollectionViewDataSource == NULL)
@@ -450,163 +645,33 @@ void CAAutoCollectionView::reloadData()
 	CCRect winRect = this->getBounds();
 	winRect.origin = getContentOffset();
 	
-	int x = 0, y = 0, z = 0;
-    
+	int dw = winRect.size.width - 2 * ((m_pCollectionViewOrientation == CACollectionViewOrientationVertical) ? m_iHoriMargins : m_iVertMargins);
+
 	if (m_nCollectionHeaderHeight > 0 && m_pCollectionHeaderView)
 	{
 		m_pCollectionHeaderView->setDisplayRange(true);
 		if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
 		{
-			m_pCollectionHeaderView->setFrame(CCRect(0, y, winRect.size.width, m_nCollectionHeaderHeight));
-			y += m_nCollectionHeaderHeight;
+			m_pCollectionHeaderView->setFrame(CCRect(m_iHoriMargins, m_iVertMargins, dw, m_nCollectionHeaderHeight));
 		}
 		else
 		{
-			m_pCollectionHeaderView->setFrame(CCRect(x, 0, m_nCollectionHeaderHeight, winRect.size.height));
-			x += m_nCollectionHeaderHeight;
+			m_pCollectionHeaderView->setFrame(CCRect(m_iHoriMargins, m_iVertMargins, m_nCollectionHeaderHeight, dw));
 		}
 		addSubview(m_pCollectionHeaderView);
 	}
-    
-	for (int i = 0; i < m_rCollectionViewSection.size(); i++)
-	{
-		CollectionViewSection& cvs = m_rCollectionViewSection[i];
 
-		unsigned int iSectionHeaderHeight = cvs.nSectionHeaderHeight;
-		CCRect sectionHeaderRect;
-		if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
-		{
-			sectionHeaderRect = CCRect(0, y, winRect.size.width, iSectionHeaderHeight);
-		}
-		else
-		{
-			sectionHeaderRect = CCRect(x, 0, iSectionHeaderHeight, winRect.size.height);
-		}
-		
-		if (iSectionHeaderHeight>0)
-		{
-			CAView* pSectionHeaderView = m_pCollectionViewDataSource->collectionViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
-			if (pSectionHeaderView != NULL)
-			{
-				pSectionHeaderView->setDisplayRange(true);
-				pSectionHeaderView->setFrame(sectionHeaderRect);
-				insertSubview(pSectionHeaderView, 1);
-				if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
-				{
-					y += iSectionHeaderHeight;
-				}
-				else
-				{
-					x += iSectionHeaderHeight;
-				}
-			}
-			cvs.pSectionHeaderView = pSectionHeaderView;
-		}
+	int dwValue = calculateAllRects();
 
-		if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
-		{
-			y += m_nVertInterval;
-		}
-		else
-		{
-			x += m_nHoriInterval;
-		}
-
-		for (int j = 0, l=0; j < cvs.CollectionViewRows.size(); j++)
-		{
-			CollectionViewRow& r = cvs.CollectionViewRows[j];
-			int iHeight = r.iHeight;
-
-			if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
-			{
-				z = m_nHoriInterval;
-			}
-			else
-			{
-				z = m_nVertInterval;
-			}
-			for (int k = 0; k < r.rItemSizes.size(); k++, l++)
-			{
-				CAIndexPath3E indexPath = CAIndexPath3E(i, 0, l);
-
-				CCRect cellRect;
-				if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
-				{
-					int d = (iHeight - r.rItemSizes[k].height) / 2;
-					cellRect = CCRect(z, y + d, r.rItemSizes[k].width, r.rItemSizes[k].height);
-					z += (r.rItemSizes[k].width + m_nHoriInterval);
-				}
-				else
-				{
-					int d = (iHeight - r.rItemSizes[k].width) / 2;
-					cellRect = CCRect(x + d, z, r.rItemSizes[k].width, r.rItemSizes[k].height);
-					z += (r.rItemSizes[k].height + m_nVertInterval);
-				}
-				m_rUsedCollectionCellRects[indexPath] = cellRect;
-
-				std::pair<std::map<CAIndexPath3E, CACollectionViewCell*>::iterator, bool> itrResult =
-					m_mpUsedCollectionCells.insert(std::make_pair(indexPath, (CACollectionViewCell*)NULL));
-
-				CC_CONTINUE_IF(!winRect.intersectsRect(cellRect));
-
-				CACollectionViewCell* cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, i, l);
-				if (cell)
-				{
-					addSubview(cell);
-					cell->setFrame(cellRect);
-					cell->m_nSection = i;
-					cell->m_nItem = l;
-					itrResult.first->second = cell;
-					m_vpUsedCollectionCells.pushBack(cell);
-
-					if (m_pCollectionViewDataSource)
-					{
-						m_pCollectionViewDataSource->collectionViewWillDisplayCellAtIndex(this, cell, i, l);
-					}
-				}
-			}
-			if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
-			{
-				y += (iHeight + m_nVertInterval);
-			}
-			else
-			{
-				x += (iHeight + m_nHoriInterval);
-			}
-		}
-
-
-		unsigned int iSectionFooterHeight = cvs.nSectionFooterHeight;
-		CCRect sectionFooterRect = CCRectMake(0, y, winRect.size.width, iSectionFooterHeight);
-		if (iSectionFooterHeight > 0)
-		{
-			CAView* pSectionFooterView = m_pCollectionViewDataSource->collectionViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
-			if (pSectionFooterView != NULL)
-			{
-				pSectionFooterView->setDisplayRange(true);
-				pSectionFooterView->setFrame(sectionFooterRect);
-				insertSubview(pSectionFooterView, 1);
-				y += iSectionFooterHeight;
-			}
-			cvs.pSectionHeaderView = pSectionFooterView;
-		}
-        
-		CCRect sectionRect = sectionHeaderRect;
-		sectionRect.size.height = sectionFooterRect.origin.y + sectionFooterRect.size.height  - sectionHeaderRect.origin.y;
-		cvs.rSectionRect = sectionRect;
-	}
-    
-	if (m_nCollectionFooterHeight > 0 && m_pCollectionHeaderView)
+	if (m_nCollectionFooterHeight > 0 && m_pCollectionFooterView)
 	{
 		if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
 		{
-			m_pCollectionFooterView->setFrame(CCRect(0, y, winRect.size.width, m_nCollectionFooterHeight));
-			y += m_nCollectionFooterHeight;
+			m_pCollectionFooterView->setFrame(CCRect(m_iHoriMargins, dwValue, dw, m_nCollectionFooterHeight));
 		}
 		else
 		{
-			m_pCollectionFooterView->setFrame(CCRect(x, 0, m_nCollectionFooterHeight, winRect.size.height));
-			x += m_nCollectionFooterHeight;
+			m_pCollectionFooterView->setFrame(CCRect(dwValue, m_iVertMargins, m_nCollectionFooterHeight, dw));
 		}
 		addSubview(m_pCollectionFooterView);
 	}
@@ -614,6 +679,7 @@ void CAAutoCollectionView::reloadData()
 	this->updateSectionHeaderAndFooterRects();
 	this->layoutPullToRefreshView();
 	this->startDeaccelerateScroll();
+	this->loadCollectionCell();
 }
 
 void CAAutoCollectionView::firstReloadData()
@@ -666,6 +732,7 @@ void CAAutoCollectionView::loadCollectionCell()
 		if (cell)
 		{
 			cell->m_nSection = r.section;
+			cell->m_nRow = r.row;
 			cell->m_nItem = r.item;
 			cell->updateDisplayedAlpha(this->getAlpha());
 			this->addSubview(cell);
@@ -750,7 +817,7 @@ float CAAutoCollectionView::decelerationRatio(float dt)
 
 CACollectionViewCell* CAAutoCollectionView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
 {
-    CACollectionViewCell* cell = NULL;
+	CACollectionViewCell* cell = NULL;
     
     if (reuseIdentifier && !m_mpFreedCollectionCells[reuseIdentifier].empty())
     {

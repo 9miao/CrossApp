@@ -13,6 +13,7 @@
 #include "CALabelStyle.h"
 #include "shaders/CAShaderCache.h"
 #include "platform/CAClipboard.h"
+#include "CAApplication.h"
 
 NS_CC_BEGIN
 
@@ -24,7 +25,7 @@ CALabel::CALabel()
 ,m_nfontName("")
 ,m_nVerticalTextAlignmet(CAVerticalTextAlignmentTop)
 ,m_nDimensions(CCSizeZero)
-,m_nfontSize(24)
+,m_nfontSize(_px(24))
 ,m_cLabelSize(CCSizeZero)
 ,m_bUpdateImage(false)
 ,pTextHeight(0)

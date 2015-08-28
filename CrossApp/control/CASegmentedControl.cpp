@@ -32,6 +32,8 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_pTarget(NULL)
     , m_pCallFunc(NULL)
     , m_pSegmentItemBackgroundImage(NULL)
+    , m_sTitleFontName("")
+    , m_fTitleFontSize(_px(24))
 {
 
 }
@@ -299,6 +301,8 @@ void CASegmentedControl::setTitleForSegmentAtIndex(const std::string& title, int
         label->setTextAlignment(CATextAlignmentCenter);
         label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         label->setText(title);
+        label->setFontSize(m_fTitleFontSize);
+        label->setFontName(m_sTitleFontName);
         label->setColor(m_cTextColor);
         label->retain();
         CAVector<CALabel*>::iterator itr = m_vTitles.begin()+index;
@@ -869,6 +873,26 @@ void CASegmentedControl::setImageSizeAtIndex(CCSize size, int index)
     }
 }
 
+void CASegmentedControl::setTitleFontName(std::string titleName)
+{
+    m_sTitleFontName = titleName;
+    CAVector<CALabel*>::iterator itr = m_vTitles.begin();
+    for(; itr != m_vTitles.end(); itr++)
+    {
+        (*itr)->setFontName(titleName);
+    }
+}
+
+void CASegmentedControl::setTitleFontSize(float titleSize)
+{
+    m_fTitleFontSize = titleSize;
+    CAVector<CALabel*>::iterator itr = m_vTitles.begin();
+    for(; itr != m_vTitles.end(); itr++)
+    {
+        if(*itr!=NULL)
+            (*itr)->setFontSize(titleSize);
+    }
+}
 
 #pragma mark --
 

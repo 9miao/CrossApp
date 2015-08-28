@@ -359,7 +359,10 @@ void CAButton::updateWithPreferredSize()
         m_pBackGroundView[i]->setFrame(this->getBounds());
     }
     
-    m_pLabel->setFontSize(this->getBounds().size.height * 0.667f);
+    if (m_fTitleFontSize < FLT_EPSILON)
+    {
+        m_pLabel->setFontSize(this->getBounds().size.height * 0.667f);
+    }
 }
 
 bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)

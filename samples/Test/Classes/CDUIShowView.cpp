@@ -1105,13 +1105,13 @@ void CDUIShowView::showSegmentedControl()
                                                              winSize.height/2,
                                                              winSize.width/2,
                                                              50), 3);
+
     char temstr[20];
     for (int i = 0; i < 3; i++)
     {
         sprintf(temstr, "Page%d", i + 1);
         segment1->setTitleForSegmentAtIndex(temstr, i);
     }
-    
     segment1->setTitleColor(CAColor_black);
     segment1->setTitleSelectedColor(CAColor_white);
     segment1->addTarget(this, CASegmentedControl_selector(CDUIShowView::segmentCallback));
@@ -1185,8 +1185,8 @@ void CDUIShowView::showTabBar()
     CATabBar* tabBar = CATabBar::create(item,CADipSize(winSize.width, 100));
     tabBar->setFrameOrigin(CADipPoint(0, winSize.height-200));
     tabBar->showSelectedIndicator();
-    tabBar->setTitleColorForNormal(CAColor_yellow);
-    tabBar->setTitleColorForSelected(CAColor_orange);
+//    tabBar->setTitleColorForNormal(CAColor_yellow);
+//    tabBar->setTitleColorForSelected(CAColor_orange);
     tabBar->setTag(100);
     tabBar->setSelectedAtIndex(0);
     

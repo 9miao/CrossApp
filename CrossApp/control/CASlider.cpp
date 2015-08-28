@@ -44,6 +44,15 @@ CASlider::~CASlider()
 void CASlider::onExitTransitionDidStart()
 {
     CAControl::onExitTransitionDidStart();
+    
+    m_pMinTrackTintImageView->removeFromSuperview();
+    m_pMinTrackTintImageView = NULL;
+    
+    m_pMaxTrackTintImageView->removeFromSuperview();
+    m_pMaxTrackTintImageView = NULL;
+    
+    m_pThumbTintImageView->removeFromSuperview();
+    m_pThumbTintImageView = NULL;
 }
 
 void CASlider::onEnterTransitionDidFinish()
