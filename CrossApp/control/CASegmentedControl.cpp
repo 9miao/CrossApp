@@ -522,6 +522,9 @@ void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
     {
         m_pBackgroundView->setFrame(this->getBounds());
     }
+    
+    refreshAllSegmentItemBounds();
+    refreshAllSegmentItemPosition();
     cleanAllSeparate();
     createSeparate();
 }
@@ -970,7 +973,6 @@ void CASegmentedControl::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
     refreshSegmentItemByIndex(m_iTouchIndex, CAControlStateNormal);
     setSegmentItemBackgroundVisibleWithIndex(false, m_iTouchIndex);
-
 }
 
 NS_CC_END
