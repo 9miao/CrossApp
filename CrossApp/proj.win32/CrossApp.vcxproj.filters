@@ -102,9 +102,6 @@
     <ClCompile Include="..\cocoa\CCSet.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocoa\CCString.cpp">
-      <Filter>cocoa</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -500,9 +497,6 @@
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\cocoa\CCSet.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCString.h">
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCAccelerometerDelegate.h">

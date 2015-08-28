@@ -4,7 +4,8 @@
 #define CrossApp_ccTypeInfo_h
 
 #include "platform/CCPlatformMacros.h"
-
+#include <stdarg.h>
+#include <stdio.h>
 #include <typeinfo>
 #include <ctype.h>
 #include <string.h>

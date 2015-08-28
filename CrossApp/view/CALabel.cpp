@@ -13,7 +13,7 @@
 #include "CALabelStyle.h"
 #include "shaders/CAShaderCache.h"
 #include "platform/CAClipboard.h"
-#include "CAApplication.h"
+#include "basics/CAApplication.h"
 
 NS_CC_BEGIN
 

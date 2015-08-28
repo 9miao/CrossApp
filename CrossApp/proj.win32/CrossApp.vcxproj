@@ -172,7 +172,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\win32\lib\*.*" "$(OutDir
     <ClCompile Include="..\cocoa\CACalendar.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
     <ClCompile Include="..\cocoa\CCSet.cpp" />
-    <ClCompile Include="..\cocoa\CCString.cpp" />
     <ClCompile Include="..\controller\CABarItem.cpp" />
     <ClCompile Include="..\controller\CADrawerController.cpp" />
     <ClCompile Include="..\controller\CAViewController.cpp" />
@@ -314,7 +313,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\win32\lib\*.*" "$(OutDir
     <ClInclude Include="..\cocoa\CACalendar.h" />
     <ClInclude Include="..\cocoa\CCNS.h" />
     <ClInclude Include="..\cocoa\CCSet.h" />
-    <ClInclude Include="..\cocoa\CCString.h" />
     <ClInclude Include="..\controller\CABarItem.h" />
     <ClInclude Include="..\controller\CADrawerController.h" />
     <ClInclude Include="..\controller\CAViewController.h" />
