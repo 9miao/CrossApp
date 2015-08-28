@@ -232,7 +232,7 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], 
         return;
     }
 
-    m_pDelegate->touchesBegan(&set, NULL);
+    m_pDelegate->touchesBegan(&set, event);
 }
 
 void CCEGLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
@@ -271,7 +271,7 @@ void CCEGLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], f
         return;
     }
 
-    m_pDelegate->touchesMoved(&set, NULL);
+    m_pDelegate->touchesMoved(&set, event);
 }
 
 void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
