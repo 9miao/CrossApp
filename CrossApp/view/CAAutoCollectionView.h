@@ -179,7 +179,7 @@ public:
     
     CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
 
-	CC_SYNTHESIZE(CACollectionViewOrientation, m_pCollectionViewOrientation, CollectionViewOrientation);
+	CC_PROPERTY(CACollectionViewOrientation, m_pCollectionViewOrientation, CollectionViewOrientation);
 	CC_SYNTHESIZE(CACollectionViewCellHoriAlign, m_pCollectionViewCellHoriAlign, CollectionViewCellHoriAlign);
 	CC_SYNTHESIZE(CACollectionViewCellVertAlign, m_pCollectionViewCellVertAlign, CollectionViewCellVertAlign);
 

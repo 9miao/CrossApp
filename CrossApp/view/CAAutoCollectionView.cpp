@@ -28,7 +28,7 @@ CAAutoCollectionView::CAAutoCollectionView()
 , m_iVertMargins(0)
 , m_bAlwaysTopSectionHeader(true)
 , m_bAlwaysBottomSectionFooter(true)
-, m_pCollectionViewOrientation(CACollectionViewOrientationHorizontal)
+, m_pCollectionViewOrientation(CACollectionViewOrientationVertical)
 , m_pCollectionViewCellHoriAlign(eCollectionViewCellHoriAlignRight)
 , m_pCollectionViewCellVertAlign(eCollectionViewCellVertAlignBottom)
 {
@@ -181,6 +181,24 @@ const CAVector<CACollectionViewCell*>& CAAutoCollectionView::displayingCollectio
     return m_vpUsedCollectionCells;
 }
 
+
+void CAAutoCollectionView::setCollectionViewOrientation(CACollectionViewOrientation var)
+{
+	m_pCollectionViewOrientation = var;
+	bool bVertScroll = m_pCollectionViewOrientation == CACollectionViewOrientationVertical;
+
+	setShowsVerticalScrollIndicator(bVertScroll);
+	setBounceVertical(bVertScroll);
+	setShowsHorizontalScrollIndicator(!bVertScroll);
+	setBounceHorizontal(!bVertScroll);
+	setHorizontalScrollEnabled(!bVertScroll);
+	setVerticalScrollEnabled(bVertScroll);
+}
+
+CACollectionViewOrientation CAAutoCollectionView::getCollectionViewOrientation()
+{
+	return m_pCollectionViewOrientation;
+}
 
 bool CAAutoCollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
