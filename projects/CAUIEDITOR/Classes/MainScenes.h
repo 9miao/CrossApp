@@ -13,8 +13,40 @@
 #include "AutoView.h"
 #include "CanvasView.h"
 #include "CanvasScenes.h"
+#include "CAMenuView.h"
+#include "CAListMenuView.h"
+#include "PropertyView.h"
 
-class MainScenes: public CAViewController, CACollectionViewDelegate, CACollectionViewDataSource,AutoViewDelegate
+static const char* iconTag[25] =
+{
+    "image/button.png",
+    "image/ImageView.png",
+    "image/Scale9ImageView.png",
+    "image/indicatorView.png",
+    "image/Label.png",
+    "image/Progress.png",
+    "image/slider.png",
+    "image/Switch.png",
+    "image/TextField.png",
+    "image/TextView.png",
+    "image/SegmentedControl.png",
+    "image/TabBar.png",
+    "image/PageView.png",
+    "image/TableView.png",
+    "image/ListView.png",
+    "image/CollectionView.png",
+    "image/ScrollView.png",
+    "image/WebView.png",
+    "image/FlashView.png",
+    "image/GifView.png",
+    "image/PickerView.png",
+    "image/Stepper.png",
+    "image/RenderImage.png",
+    "image/Video.png",
+    "image/Video.png"
+};
+
+class MainScenes: public CAViewController, CAAutoCollectionViewDelegate, CAAutoCollectionViewDataSource,AutoViewDelegate,CAMenuViewDelegate
 {
     
 public:
@@ -28,13 +60,16 @@ protected:
     void viewDidLoad();
     void viewDidUnload();
     
-    virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item);
-    virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item);
-    virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item);
-    virtual unsigned int numberOfSections(CACollectionView *collectionView);
-    virtual unsigned int numberOfRowsInSection(CACollectionView *collectionView, unsigned int section);
-    virtual unsigned int numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row);
-    virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row);
+    void initMenuBar();
+    virtual void collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item);
+    
+    virtual void collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item);
+    
+    virtual CACollectionViewCell* collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item);
+    
+    virtual CCSize collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item);
+    virtual unsigned int numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section);
+    virtual unsigned int numberOfSections(CAAutoCollectionView *collectionView);
 
     void addControl(CAControl* control, CCPoint point);
     void movedControl(CAControl* control, CCPoint point);
@@ -50,14 +85,20 @@ protected:
     virtual void AutoViewChangeFrameStart();
     virtual void AutoViewChangeFrameEnd();
     virtual void AutoViewMoveToPosition(CCPoint& p);
+    
+    virtual void selectedMenuViewItem(CAMenuView* menuView, int tag, std::string titleName);
 public:
-    CADipSize winsize;
-    std::vector<std::string> m_vTitle;
-    CAScrollView* p_ScrollView;
-    CanvasScenes* scence_view;
-    CanvasView* p_view;
-    CAView* p_canvas;
-    AutoView* p_tempView;
-    CACollectionView* p_Conllection;
+    CADipSize                   winsize;
+    std::vector<std::string>    m_vTitle;
+    CAScrollView*               p_ScrollView;
+    CanvasScenes*               scence_view;
+    CanvasView*                 p_view;
+    CAView*                     p_canvas;
+    CAView*                     p_control;
+    PropertyView*               p_property;
+    AutoView*                   p_tempView;
+    CAAutoCollectionView*       p_Conllection;
+    CAMenuView*                 p_MenuView;
+    CAListMenuView*             p_listMenuView;
 };
 #endif /* MainScenes_cpp */

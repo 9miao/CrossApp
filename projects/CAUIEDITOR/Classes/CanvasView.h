@@ -25,14 +25,14 @@ public:
 protected:
     void draw2();
     void visit();
-    CCPoint m_pointBegin;
-    CCPoint m_pointEnd;
-    bool isdraw;
-    AutoView*  m_TempAutoView;
-    int m_TempAutoPoint;
-    CCRect m_TempRect;
-    bool selectMoreView;
-    bool isCanMove;
-    bool hadMove;
+    CCPoint         m_pointBegin;
+    CCPoint         m_pointEnd;
+    bool            isdraw;
+    AutoView*       m_TempAutoView;
+    int             m_TempAutoPoint;
+    CCRect          m_TempRect;
+    bool            selectMoreView;
+    bool            isCanMove;
+    bool            hadMove;
 };
 #endif /* CanvasView_cpp */

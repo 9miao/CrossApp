@@ -291,6 +291,24 @@ void CASegmentedControl::insertSegmentWithImageAtIndex(CAImage* image, int index
     refreshSegmentItemByIndex(m_iSelectedIndex, CAControlStateSelected);
 }
 
+void CASegmentedControl::refreshAllLable()
+{
+    for(int i=0; i<m_vTitles.size(); i++)
+    {
+        CCPoint point = m_vSegments.at(i)->getBounds().origin;
+        CCSize size = m_vSegments.at(i)->getBounds().size;
+        CCSize contentOffset = m_vContentOffset.at(i);
+        CALabel* label = m_vTitles.at(i);
+        if(label != NULL)
+        {
+            label->setCenter(CCRect(size.width*0.5f + contentOffset.width,
+                                    size.height*0.5f + contentOffset.height,
+                                    size.width,
+                                    size.height));
+        }
+    }
+}
+
 void CASegmentedControl::setTitleForSegmentAtIndex(const std::string& title, int index)
 {
     if(index < m_vSegments.size())
@@ -524,7 +542,16 @@ void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
     }
     
     refreshAllSegmentItemBounds();
-    refreshAllSegmentItemPosition();
+    refreshAllLable();
+    float length = 0;
+    CAVector<CAView*>::iterator itr = m_vSegments.begin();
+    for(; itr != m_vSegments.end(); ++itr)
+    {
+        CCRect rect = CCRect(length, 0, (*itr)->getBounds().size.width, (*itr)->getBounds().size.height);
+        length += (*itr)->getBounds().size.width;
+        (*itr)->setFrame(rect);
+    }
+    refreshAllSegmentItemBackgroundPosition();
     cleanAllSeparate();
     createSeparate();
 }

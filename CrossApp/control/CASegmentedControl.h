@@ -110,6 +110,8 @@ protected:
     void createSeparate();
     
     void cleanAllSeparate();
+    
+    void refreshAllLable();
 
     void removeAllSeparateImage();
     
@@ -122,9 +124,7 @@ protected:
     void refreshSegmentItemByPoint(CCPoint point, CAControlState controlState);
     
     void refreshSegmentItemByIndex(int index, CAControlState controlState);
-    
-    void refreshAllSegmentItemByState(CAControlState controlState);
-    
+        
     int  getSegmentItemIndexByPoint(CCPoint point);
     
     CAObject* getObjectByIndex(int index, CAControlState controlState);

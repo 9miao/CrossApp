@@ -7,7 +7,9 @@
 //
 
 #include "MainScenes.h"
-#include "CDData.h"
+#include "SqlManage.h"
+#include "RootWindow.h"
+#include "PropertyView.h"
 
 MainScenes::MainScenes()
 {
@@ -43,21 +45,39 @@ MainScenes::~MainScenes()
 void MainScenes::viewDidLoad()
 {
     winsize = this->getView()->getBounds().size;
+    //菜单栏
+    CAImageView* title_bg = CAImageView::createWithFrame(CADipRect(0,0,winsize.width,50));
+    title_bg->setImage(CAImage::create("image/navbg.jpg"));
+    this->getView()->addSubview(title_bg);
+    initMenuBar();
+    
     //控件栏
-    p_Conllection = CACollectionView::createWithFrame(CADipRect(0,0,300,winsize.height));
+    p_control = CAView::createWithFrame(CADipRect(winsize.width-300,winsize.height/2,300,winsize.height/2));
+    p_Conllection = CAAutoCollectionView::createWithFrame(CADipRect(0,0,300,winsize.height/2));
     p_Conllection->setAllowsSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
     p_Conllection->setCollectionViewDataSource(this);
-    p_Conllection->setHoriInterval(_px(3));
-    p_Conllection->setVertInterval(_px(3));
     p_Conllection->setCollectionViewDelegate(this);
-    this->getView()->addSubview(p_Conllection);
+    p_Conllection->setCollectionViewOrientation(CACollectionViewOrientationVertical);
+    p_control->addSubview(p_Conllection);
+    this->getView()->addSubview(p_control);
+    //属性栏
+    p_property = new PropertyView(ViewType::ViewTypeCAButton);
+    p_property->initWithFrame(CADipRect(winsize.width-300,50,300,winsize.height/2-50));
+    this->getView()->addSubview(p_property);
     //场景
     scence_view = new CanvasScenes();
-    scence_view->initWithFrame(CADipRect(300,0,winsize.width-300,winsize.height));
+    scence_view->initWithFrame(CADipRect(300,50,winsize.width-600,winsize.height));
     scence_view->setColor(CAColor_gray);
+//    p_ScrollView = CAScrollView::createWithFrame(CADipRect(0,0,winsize.width-300,winsize.height));
+//    p_ScrollView->setMinimumZoomScale(1.0f);
+//    p_ScrollView->setMaximumZoomScale(2.5f);
+//    p_ScrollView->setBackGroundColor(CAColor_clear);
+//    p_ScrollView->setShowsScrollIndicators(false);
+//    scence_view->addSubview(p_ScrollView);
+    
     p_view = new CanvasView();
-    p_view->initWithCenter(CCRect(scence_view->getBounds().size.width/2,scence_view->getBounds().size.height/2,320,480));
+    p_view->initWithCenter(CCRect(scence_view->getBounds().size.width/2,scence_view->getBounds().size.height/2,640,960));
     scence_view->addSubview(p_view);
     this->getView()->addSubview(scence_view);
     scence_view->release();
@@ -66,25 +86,33 @@ void MainScenes::viewDidLoad()
 
 void MainScenes::viewDidUnload()
 {
-    
-}
-void MainScenes::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
-{
-    int index = row * 3 + item;
+
 }
 
-void MainScenes::collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
+void MainScenes::initMenuBar()
+{
+    p_MenuView = CAMenuView::create(CCRect(0,0,winsize.width,50),5);
+    p_MenuView->setDelegate(this);
+    this->getView()->addSubview(p_MenuView);
+    
+    p_MenuView->setMenuWithIndex("File", CCRect(0,0,100,50), 1);
+    p_MenuView->setMenuWithIndex("Edit", CCRect(100,0,100,50), 2);
+    p_MenuView->setMenuWithIndex("Product", CCRect(200,0,100,50), 3);
+    p_MenuView->setMenuWithIndex("Help", CCRect(300,0,100,50), 4);
+}
+
+void MainScenes::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     
 }
 
-CACollectionViewCell* MainScenes::collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
+void MainScenes::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
-    if (row * 3 + item >= m_vTitle.size())
-    {
-        return NULL;
-    }
     
+}
+
+CACollectionViewCell* MainScenes::collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item)
+{
     CADipSize _size = cellSize;
     CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
     if (p_Cell == NULL)
@@ -93,23 +121,23 @@ CACollectionViewCell* MainScenes::collectionCellAtIndex(CACollectionView *collec
         p_Cell->setAllowsSelected(false);
     }
     p_Cell->removeAllSubviews();
-    int index = row * 3 + item;
+
     CAView* itemImage = CAView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
     p_Cell->addSubview(itemImage);
     
     CADipSize itemSize = itemImage->getBounds().size;
-    CALabel* itemText = CALabel::createWithCenter(CADipRect(itemSize.width/2, itemSize.height-40, itemSize.width,40));
+    CALabel* itemText = CALabel::createWithCenter(CADipRect(itemSize.width/2, itemSize.height-20, itemSize.width,40));
     itemText->setTag(100);
-    itemText->setFontSize(_px(18));
+    itemText->setFontSize(_px(14));
     itemText->setTextAlignment(CATextAlignmentCenter);
     itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    itemText->setText(m_vTitle.at(index));
+    itemText->setText(m_vTitle.at(item));
     itemText->setColor(ccc4(34,151,254,255));
     p_Cell->addSubview(itemText);
     
-    CAButton* btn = CAButton::createWithCenter(CADipRect(itemSize.width/2,itemSize.height/3,189,123),CAButtonTypeCustom);
-    btn->setImageForState(CAControlStateAll, CAImage::create(iconTag[index]));
-    btn->setTag(index);
+    CAButton* btn = CAButton::createWithCenter(CADipRect(itemSize.width/2,itemSize.height/3,189/2,123/2),CAButtonTypeCustom);
+    btn->setImageForState(CAControlStateAll, CAImage::create(iconTag[item]));
+    btn->setTag(item);
     btn->addTarget(this, CAControl_selector(MainScenes::addControl), CAControlEventTouchDown);
     btn->addTarget(this, CAControl_selector(MainScenes::movedControl), CAControlEventTouchMoved);
     btn->addTarget(this, CAControl_selector(MainScenes::movedControl), CAControlEventTouchMovedOutSide);
@@ -126,41 +154,108 @@ void MainScenes::addControl(CrossApp::CAControl *control, CrossApp::CCPoint poin
     p_Conllection->setVerticalScrollEnabled(false);
     CAButton* btn = (CAButton*)control;
     int tag = btn->getTag();
+    CCSize temp_size;
     point = btn->convertToWorldSpace(point);
     
     ViewType viewtype;
     switch (tag) {
         case 0:
             viewtype = ViewTypeCAButton;
+            temp_size = CCSize(200,50);
             break;
         case 1:
             viewtype = ViewTypeCAImageView;
+            temp_size = CCSize(200,200);
+            break;
+        case 2:
+            viewtype = ViewTypeCAScale9ImageView;
+            temp_size = CCSize(200,200);
             break;
         case 3:
-            viewtype = ViewTypeCAScale9ImageView;
+            viewtype = viewTypeCAIndicator;
+            temp_size = CCSize(50,50);
             break;
         case 4:
             viewtype = ViewTypeCALabel;
+            temp_size = CCSize(100,50);
             break;
         case 5:
-            viewtype = ViewTypeCAButton;
+            viewtype = viewTypeCAProgress;
+            temp_size = CCSize(400,0);
+            break;
+        case 6:
+            viewtype = viewTypeCASlider;
+            temp_size = CCSize(400,10);
+            break;
+        case 7:
+            viewtype = viewTypeCASwitch;
+            temp_size = CCSize(20,10);
+            break;
+        case 8:
+            viewtype = viewTypeCATextField;
+            temp_size = CCSize(200,50);
+            break;
+        case 9:
+            viewtype = viewTypeCATextView;
+            temp_size = CCSize(200,100);
+            break;
+        case 10:
+            viewtype = ViewTypeCASegmentControl;
+            temp_size = CCSize(300,30);
+            break;
+        case 11:
+            viewtype = ViewTypeCATabBar;
+            temp_size = CCSize(p_view->getFrame().size.width,80);
+            break;
+        case 12:
+            viewtype = viewTypeCAPageView;
+            break;
+        case 13:
+            viewtype = viewTypeCATableView;
+            break;
+        case 14:
+            viewtype = viewTypeCAListView;
+            break;
+        case 15:
+            viewtype = viewTypeCAColectionView;
+            break;
+        case 16:
+            viewtype = viewTypeCAScrollView;
+            break;
+        case 17:
+            viewtype = viewTypeCAWebView;
+            temp_size = CCSize(300,300);
+            break;
+        case 18:
+            viewtype = viewTypeCAFlashView;
+            temp_size = CCSize(200,200);
+            break;
+        case 19:
+            viewtype = viewTypeCAGifView;
+            temp_size = CCSize(200,200);
+            break;
+        case 20:
+            viewtype = viewTypeCAPickerView;
+            temp_size = CCSize(p_view->getFrame().size.width,280);
+            break;
+        case 21:
+            viewtype = viewTypeCAStepper;
+            temp_size = CCSize(200,50);
             break;
     }
 
     p_tempView = new AutoView(viewtype,false);
-    p_tempView->initWithFrame(CCRect(point.x,point.y,100,100));
+    p_tempView->initWithFrame(CCRect(point.x,point.y,temp_size.width,temp_size.height));
+    p_tempView->setTitleFontSize(18);
     this->getView()->addSubview(p_tempView);
     p_tempView->release();
-    //m_autoViews.push_back(p_tempView);
 }
 
 void MainScenes::movedControl(CrossApp::CAControl *control, CrossApp::CCPoint point)
 {
-    CCLog("movedControl");
     CAButton* btn = (CAButton*)control;
     int tag = btn->getTag();
     point = btn->convertToWorldSpace(point);
-    
     if (p_tempView) {
         p_tempView->setCenterOrigin(point);
     }
@@ -169,17 +264,14 @@ void MainScenes::movedControl(CrossApp::CAControl *control, CrossApp::CCPoint po
 
 void MainScenes::selectedControl(CrossApp::CAControl *control, CrossApp::CCPoint point)
 {
-    CCLog("selectedControl");
     CAButton* btn = (CAButton*)control;
     int tag = btn->getTag();
-    
     this->getView()->removeSubview(p_tempView);
     p_tempView = NULL;
 }
 
 void MainScenes::putDownControl(CrossApp::CAControl *control, CrossApp::CCPoint point)
 {
-    CCLog("putDownControl");
     CAButton* btn = (CAButton*)control;
     int tag = btn->getTag();
     
@@ -189,9 +281,12 @@ void MainScenes::putDownControl(CrossApp::CAControl *control, CrossApp::CCPoint 
             AutoView* av = new AutoView(p_tempView->getViewType(),false);
             av->initWithFrame(p_view->convertRectToNodeSpace(p_tempView->getFrame()));
             av->setAutoViewDelegate(this);
-            av->setTag(100);
-            //av->setFrameOrigin(scence_view->convertToNodeSpace(p_tempView->getFrameOrigin()));
+            av->setTitleFontSize(18);
             p_view->addSubview(av);
+            av->setTag(100);
+            
+            //SqlManage::insertCAViewsLayout(crossapp_format_string("%.f",av->m_DM.ix), crossapp_format_string("%.f",av->m_DM.iy), crossapp_format_string("%.f",av->m_DM.iw), crossapp_format_string("%.f",av->m_DM.ih));
+            av->release();
         }
     }
     this->getView()->removeSubview(p_tempView);
@@ -201,32 +296,25 @@ void MainScenes::putDownControl(CrossApp::CAControl *control, CrossApp::CCPoint 
 void MainScenes::cancelControl(CrossApp::CAControl *control, CrossApp::CCPoint point)
 {
     p_Conllection->setVerticalScrollEnabled(false);
-    CCLog("cancelControl");
     CAButton* btn = (CAButton*)control;
     int tag = btn->getTag();
-    
     this->getView()->removeSubview(p_tempView);
     p_tempView = NULL;
 }
 
-unsigned int MainScenes::numberOfSections(CACollectionView *collectionView)
+unsigned int MainScenes::numberOfSections(CAAutoCollectionView *collectionView)
 {
     return 1;
 }
 
-unsigned int MainScenes::numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)
+unsigned int MainScenes::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
 {
-    return m_vTitle.size() % 3 == 0 ? m_vTitle.size() / 3 : m_vTitle.size() / 3 + 1;
+    return m_vTitle.size();
 }
 
-unsigned int MainScenes::numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)
+CCSize MainScenes::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
-    return 2;
-}
-
-unsigned int MainScenes::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
-{
-    return _px(250);
+    return CCSize(95,100);
 }
 
 bool MainScenes::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -251,14 +339,19 @@ void MainScenes::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void MainScenes::AutoViewChangeFrameStart()
 {
-   // scence_view->setDrawRect(false);
+   
 }
 
 void MainScenes::AutoViewChangeFrameEnd()
 {
-    //scence_view->setDrawRect(true);
+    
 }
 
 void MainScenes::AutoViewMoveToPosition(CCPoint& p)
 {
+}
+
+void MainScenes::selectedMenuViewItem(CrossApp::CAMenuView *menuView, int tag, std::string titleName)
+{
+    
 }
