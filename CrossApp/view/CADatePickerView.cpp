@@ -137,7 +137,7 @@ void CADatePickerView::setDate(int year, int month, int day, bool animated)
         return;
     }
     if (month>=1 && month<=12) {
-        m_tTM.tm_mon = month;
+        m_tTM.tm_mon = month-1;
     }else{
         isSetDate = false;
         return;
@@ -162,7 +162,7 @@ void CADatePickerView::setDate(int year, int month, int day, bool animated)
             case CADatePickerModeDate:
             {
                 m_pPickerView->selectRow(m_tTM.tm_year, 0, animated);
-                m_pPickerView->selectRow(m_tTM.tm_mon-1, 1, animated);
+                m_pPickerView->selectRow(m_tTM.tm_mon, 1, animated);
                 m_pPickerView->selectRow(m_tTM.tm_mday-1, 2, animated);
                 break;
             }
@@ -298,7 +298,7 @@ float CADatePickerView::rowHeightForComponent(CAPickerView* pickerView, unsigned
     return rowHeight;
 }
 
-const char* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
+CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
     char buff[256] = {0};
     switch (m_eMode)
@@ -361,7 +361,7 @@ const char* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int
         default:
             break;
     }
-    return std::string(buff).c_str();
+    return CCString::create(std::string(buff));
 }
 
 void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
@@ -394,7 +394,7 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
             }
             else if (component == 1)
             {
-                m_tTM.tm_mon = row+1;
+                m_tTM.tm_mon = row;
                 int tem_day = CACalendar::create()->_dayCountOfMonth(m_tTM.tm_year+1900,m_tTM.tm_mon);
                 if (m_tTM.tm_mday>tem_day) {
                     m_tTM.tm_mday = 1;
@@ -403,7 +403,6 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
                     m_pPickerView->reloadComponent(m_tTM.tm_mday-1,2);
                     
                 }
-                m_tTM.tm_mon--;
             }
             else
             {
