@@ -96,11 +96,14 @@ private:
     CAImageView* m_pDividerImageView;
     
 private:
-    enum ActionType{
+    
+    enum ActionType
+    {
         ActionNone,
         ActionIncrease,
         ActionDecrease
     };
+    
     int m_actionType;
 };
 

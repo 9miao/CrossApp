@@ -18,14 +18,16 @@ NS_CC_BEGIN
 class CAImage;
 class CAImageView;
 
-typedef enum {
+typedef enum
+{
     CAPageControlStyleDot,
     CAPageControlStyleRound,
     CAPageControlStyleRectangle
     
 }CAPageControlStyle;
 
-class CC_DLL CAPageControl : public CAControl {
+class CC_DLL CAPageControl : public CAControl
+{
     
 public:
     CAPageControl();
