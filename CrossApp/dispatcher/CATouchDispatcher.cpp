@@ -63,7 +63,8 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
             {
                 
                 CAVector<CAView*>::const_reverse_iterator itr;
-                for (itr=view->CAView::getSubviews().rbegin(); itr!=view->CAView::getSubviews().rend(); itr++)
+                for (itr=view->CAView::getSubviews().rbegin();
+                     itr!=view->CAView::getSubviews().rend(); itr++)
                 {
                     CAView* subview = *itr;
                     if (subview->isVisible() && subview->isTouchEnabled())
@@ -123,8 +124,8 @@ void CATouchController::passingTouchesViews(float dt)
     CAResponder* responder = m_vTouchesViews.front();
     while (responder->nextResponder())
     {
-        m_vTouchesViews.pushBack(responder->nextResponder());
         responder = responder->nextResponder();
+        m_vTouchesViews.pushBack(responder);
     }
     
     for (int i=0; i<m_vTouchesViews.size();)
@@ -179,7 +180,7 @@ void CATouchController::touchBegan()
 
 void CATouchController::touchMoved()
 {
-    CC_RETURN_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < _px(32));
+    CC_RETURN_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < _px(16));
     
     m_tFirstPoint = CCPointZero;
 
@@ -260,6 +261,12 @@ void CATouchController::touchMoved()
                             pointOffSet = ccpSub(m_pTouch->getLocation(), m_pTouch->getPreviousLocation());
                         }
                         
+                        if (!responder->isReachBoundaryHandOverToSuperview())
+                        {
+                            isTouchCancelled = false;
+                            break;
+                        }
+                        
                         if (responder->isHorizontalScrollEnabled()
                             && fabsf(pointOffSet.x) >= fabsf(pointOffSet.y))
                         {
@@ -327,19 +334,22 @@ void CATouchController::touchMoved()
                             pointOffSet = ccpSub(m_pTouch->getLocation(), m_pTouch->getPreviousLocation());
                         }
                         
-                        if (responder->isHorizontalScrollEnabled()
-                            && fabsf(pointOffSet.x) >= fabsf(pointOffSet.y))
+                        if (responder->isReachBoundaryHandOverToSuperview())
                         {
-                            CC_CONTINUE_IF(responder->isReachBoundaryLeft() && pointOffSet.x > 0);
-                            CC_CONTINUE_IF(responder->isReachBoundaryRight() && pointOffSet.x < 0);
+                            if (responder->isHorizontalScrollEnabled()
+                                && fabsf(pointOffSet.x) >= fabsf(pointOffSet.y))
+                            {
+                                CC_CONTINUE_IF(responder->isReachBoundaryLeft() && pointOffSet.x > 0);
+                                CC_CONTINUE_IF(responder->isReachBoundaryRight() && pointOffSet.x < 0);
+                            }
+                            else if (responder->isVerticalScrollEnabled()
+                                     && fabsf(pointOffSet.x) < fabsf(pointOffSet.y))
+                            {
+                                CC_CONTINUE_IF(responder->isReachBoundaryUp() && pointOffSet.y > 0);
+                                CC_CONTINUE_IF(responder->isReachBoundaryDown() && pointOffSet.y < 0);
+                            }
                         }
-                        else if (responder->isVerticalScrollEnabled()
-                                 && fabsf(pointOffSet.x) < fabsf(pointOffSet.y))
-                        {
-                            CC_CONTINUE_IF(responder->isReachBoundaryUp() && pointOffSet.y > 0);
-                            CC_CONTINUE_IF(responder->isReachBoundaryDown() && pointOffSet.y < 0);
-                        }
-                        
+
                         if (responder->ccTouchBegan(m_pTouch, m_pEvent))
                         {
                             m_vTouchesViews.pushBack(responder);
@@ -370,7 +380,7 @@ void CATouchController::touchMoved()
 
     CAView* view = dynamic_cast<CAView*>(CAApplication::getApplication()->getTouchDispatcher()->getFirstResponder());
     bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
-    if (!isContainsFirstPoint && view)
+    if (!isContainsFirstPoint && view && view->isScrollEnabled())
     {
         view->ccTouchMoved(m_pTouch, m_pEvent);
     }
@@ -378,6 +388,7 @@ void CATouchController::touchMoved()
     CAVector<CAResponder*>::iterator itr;
     for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
     {
+        CC_CONTINUE_IF(!(*itr)->isScrollEnabled());
         (*itr)->ccTouchMoved(m_pTouch, m_pEvent);
     }
     

@@ -7,8 +7,8 @@
 //
 
 
-#ifndef __CrossAppx__CAAlertView__
-#define __CrossAppx__CAAlertView__
+#ifndef __CrossApp__CAAlertView__
+#define __CrossApp__CAAlertView__
 
 #include <iostream>
 #include "view/CAView.h"
@@ -126,4 +126,4 @@ private:
 
 NS_CC_END
 
-#endif /* defined(__cocos2dx__CAAlertView__) */
+#endif /* defined(__CrossApp__CAAlertView__) */

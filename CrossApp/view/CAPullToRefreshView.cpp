@@ -7,10 +7,10 @@
 //
 
 #include "CAPullToRefreshView.h"
-#include "actions/CCActionInterval.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "support/CCPointExtension.h"
+#include "animation/CAViewAnimation.h"
 
 #pragma CAPullToRefreshView
 
@@ -181,8 +181,12 @@ void CAPullToRefreshView::setPullToRefreshStateType(const CAPullToRefreshStateTy
             m_pReleaseToRefreshLabel->setVisible(false);
             m_pRefreshingLabel->setVisible(false);
             
-            m_pPullToImageView->stopAllActions();
-            m_pPullToImageView->runAction(CCRotateTo::create(0.2f * m_pPullToImageView->getRotation() / 180.f, 0));
+            CAViewAnimation::removeAnimations(m_s__StrID);
+            
+            CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+            CAViewAnimation::setAnimationDuration(0.2f * m_pPullToImageView->getRotation() / 180.f);
+            m_pPullToImageView->setRotation(0);
+            CAViewAnimation::commitAnimations();
         }
             break;
         case CAPullToRefreshStatePulling:
@@ -196,8 +200,12 @@ void CAPullToRefreshView::setPullToRefreshStateType(const CAPullToRefreshStateTy
             m_pReleaseToRefreshLabel->setVisible(true);
             m_pRefreshingLabel->setVisible(false);
             
-            m_pPullToImageView->stopAllActions();
-            m_pPullToImageView->runAction(CCRotateTo::create(0.2f * (1 - m_pPullToImageView->getRotation() / 180.f), 180));
+            CAViewAnimation::removeAnimations(m_s__StrID);
+            
+            CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+            CAViewAnimation::setAnimationDuration(0.2f * (1 - m_pPullToImageView->getRotation() / 180.f));
+            m_pPullToImageView->setRotation(180);
+            CAViewAnimation::commitAnimations();
         }
             break;
         case CAPullToRefreshStateRefreshing:

@@ -61,6 +61,11 @@ CCApplication* CCApplication::sharedApplication()
     return sm_pSharedApplication;
 }
 
+void CCApplication::setStatusBarStyle(const CAStatusBarStyle &var)
+{
+    m_eStatusBarStyle = var;
+}
+
 ccLanguageType CCApplication::getCurrentLanguage()
 {
     std::string languageName = getCurrentLanguageJNI();

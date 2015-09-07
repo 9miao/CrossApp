@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
-#ifndef __CrossAppx__CAScrollView__
-#define __CrossAppx__CAScrollView__
+#ifndef __CrossApp__CAScrollView__
+#define __CrossApp__CAScrollView__
 
 #include <iostream>
 #include "CAView.h"
@@ -150,7 +150,7 @@ protected:
     
     inline virtual float maxSpeed(float dt)
     {
-        return (_px(90) * 5 * dt);
+        return (_px(90) * 60 * dt);
     }
     
     inline virtual float maxSpeedCache(float dt)
@@ -287,4 +287,4 @@ private:
 
 
 NS_CC_END
-#endif /* defined(__CrossAppx__CAScrollView__) */
+#endif /* defined(__CrossApp__CAScrollView__) */

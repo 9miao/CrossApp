@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by dai xinping on 14-8-7.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
+//  Copyright (c) 2014年 CrossApp All rights reserved.
 //
 
 #ifndef __CrossApp__CAPageControl__
@@ -18,14 +18,16 @@ NS_CC_BEGIN
 class CAImage;
 class CAImageView;
 
-typedef enum {
+typedef enum
+{
     CAPageControlStyleDot,
     CAPageControlStyleRound,
     CAPageControlStyleRectangle
     
 }CAPageControlStyle;
 
-class CC_DLL CAPageControl : public CAControl {
+class CC_DLL CAPageControl : public CAControl
+{
     
 public:
     CAPageControl();

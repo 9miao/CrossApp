@@ -89,4 +89,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__CrossAppx__CAControl__) */
+#endif /* defined(__CrossApp__CAControl__) */

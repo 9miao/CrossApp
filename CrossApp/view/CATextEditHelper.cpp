@@ -2,6 +2,7 @@
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "control/CAButton.h"
+#include "dispatcher/CATouchDispatcher.h"
 #include "CAAlertView.h"
 #include "support/ccUTF8.h"
 #include "platform/CCPlatformMacros.h"
@@ -11,8 +12,8 @@
 
 #define CATextArrowViewWidth 30
 #define CATextArrowViewHeight 62
-#define CATextSelectArrWidth 40
-#define CATextSelectArrHeight 64
+#define CATextSelectArrWidth _px(40)
+#define CATextSelectArrHeight _px(64)
 
 
 NS_CC_BEGIN
@@ -581,7 +582,7 @@ bool CATextArrowView::init()
 	m_pArrowView = CAImageView::createWithImage(CAImage::create("source_material/arrow.png"));
 	addSubview(m_pArrowView);
 	m_pArrowView->setVisible(false);
-	m_pArrowView->setFrame(CCRectMake(0, 0, CATextArrowViewWidth, CATextArrowViewHeight));
+	m_pArrowView->setFrame(CADipRect(0, 0, CATextArrowViewWidth, CATextArrowViewHeight));
 	m_pArrowView->setAlpha(0.5f);
 
 	return true;
@@ -652,5 +653,34 @@ void CATextArrowView::ccTouchTimer(float interval)
 	hideTextArrView();
 }
 
+///////////////////////////////////////////////////////////////////////////////////////
+//
+std::vector<CATextResponder*> CATextResponder::s_AllTextResponder;
+
+CATextResponder::CATextResponder()
+{
+	s_AllTextResponder.push_back(this);
+}
+
+CATextResponder::~CATextResponder()
+{
+	std::vector<CATextResponder*>::iterator it = std::find(s_AllTextResponder.begin(), s_AllTextResponder.end(), this);
+	if (it != s_AllTextResponder.end())
+	{
+		s_AllTextResponder.erase(it);
+	}
+}
+
+void CATextResponder::resignAllResponder(CATextResponder* pCurExcept)
+{
+	for (int i = 0; i < s_AllTextResponder.size(); i++)
+	{
+		if (s_AllTextResponder[i] == pCurExcept)
+			continue;
+		
+		s_AllTextResponder[i]->resignResponder();
+	}
+	CAApplication::getApplication()->getTouchDispatcher()->setFirstResponder(NULL);
+}
 
 NS_CC_END

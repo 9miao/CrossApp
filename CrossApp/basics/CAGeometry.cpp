@@ -7,32 +7,40 @@
 // implementation of CCPoint
 NS_CC_BEGIN
 
+float fround(float x)//double round
+{
+    float y = 10000;
+    int xx = x > FLT_EPSILON ? (x * y + 0.5) : (x * y - 0.5);
+    return xx/y;
+}
+
 CCPoint::CCPoint(void) : x(0), y(0)
 {
 }
 
-CCPoint::CCPoint(float x, float y) : x(x), y(y)
+CCPoint::CCPoint(float x, float y)
 {
+    setPoint(x, y);
 }
 
-CCPoint::CCPoint(const CCPoint& other) : x(other.x), y(other.y)
+CCPoint::CCPoint(const CCPoint& other)
 {
+    setPoint(other.x, other.y);
 }
 
-CCPoint::CCPoint(const CCSize& size) : x(size.width), y(size.height)
+CCPoint::CCPoint(const CCSize& size)
 {
+    setPoint(size.width, size.height);
 }
 
 CCPoint::CCPoint(const CADipPoint& other)
-: x(_px(other.x))
-, y(_px(other.y))
 {
+    setPoint(_px(other.x), _px(other.y));
 }
 
 CCPoint::CCPoint(const CADipSize& size)
-: x(_px(size.width))
-, y(_px(size.height))
 {
+    setPoint(_px(size.width), _px(size.height));
 }
 
 CCPoint& CCPoint::operator= (const CADipPoint& other)
@@ -87,8 +95,8 @@ CCPoint CCPoint::operator/(float a) const
 
 void CCPoint::setPoint(float x, float y)
 {
-    this->x = x;
-    this->y = y;
+    this->x = fround(x);
+    this->y = fround(y);
 }
 
 bool CCPoint::equals(const CCPoint& target) const
@@ -125,28 +133,29 @@ CCSize::CCSize(void) : width(0), height(0)
 {
 }
 
-CCSize::CCSize(float width, float height) : width(width), height(height)
+CCSize::CCSize(float width, float height)
 {
+    setSize(width, height);
 }
 
-CCSize::CCSize(const CCSize& other) : width(other.width), height(other.height)
+CCSize::CCSize(const CCSize& other)
 {
+    setSize(other.width, other.height);
 }
 
-CCSize::CCSize(const CCPoint& point) : width(point.x), height(point.y)
+CCSize::CCSize(const CCPoint& point)
 {
+    setSize(point.x, point.y);
 }
 
 CCSize::CCSize(const CADipPoint& other)
-: width(_px(other.x))
-, height(_px(other.y))
 {
+    setSize(other.x, other.y);
 }
 
 CCSize::CCSize(const CADipSize& size)
-: width(_px(size.width))
-, height(_px(size.height))
 {
+    setSize(_px(size.width), _px(size.height));
 }
 
 CCSize& CCSize::operator= (const CADipPoint& other)
@@ -197,8 +206,8 @@ CCSize CCSize::operator/(float a) const
 
 void CCSize::setSize(float width, float height)
 {
-    this->width = width;
-    this->height = height;
+    this->width = fround(width);
+    this->height = fround(height);
 }
 
 bool CCSize::equals(const CCSize& target) const
@@ -236,11 +245,8 @@ CCRect::CCRect(const CADipRect& other)
 
 void CCRect::setRect(float x, float y, float width, float height)
 {
-    origin.x = x;
-    origin.y = y;
-
-    size.width = width;
-    size.height = height;
+    origin.setPoint(x, y);
+    size.setSize(width, height);
 }
 
 CCRect& CCRect::operator= (const CCRect& other)
@@ -333,7 +339,7 @@ bool CCRect::containsPoint(const CCPoint& point) const
 {
     bool bRet = false;
 
-    if (point.x >= getMinX()
+    if (   point.x >= getMinX()
         && point.x <= getMaxX()
         && point.y >= getMinY()
         && point.y <= getMaxY())

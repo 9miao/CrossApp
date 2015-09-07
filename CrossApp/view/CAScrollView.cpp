@@ -316,11 +316,9 @@ void CAScrollView::setContentOffset(const CCPoint& offset, bool animated)
 {
     if (animated)
     {
-        m_tInitialPoint = offset;
         m_tInertia = CCPointZero;
         m_tCloseToPoint = ccpMult(offset, -1);
         m_tInitialPoint = m_pContainer->getFrameOrigin();
-        CCLog("--- sss");
         CAAnimation::schedule(CAAnimation_selector(CAScrollView::closeToPoint), this, 0.25f);
     }
     else
@@ -606,12 +604,11 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             }
             p = p/m_tPointOffset.size();
         }
-        m_tInertia = p * 1.5f;
+        m_tInertia = p;
         m_tPointOffset.clear();
         
         if (!m_tInertia.equals(CCPointZero))
         {
-            m_bDecelerating = true;
             if (m_pScrollViewDelegate)
             {
                 m_pScrollViewDelegate->scrollViewDidScroll(this);
@@ -665,6 +662,7 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 void CAScrollView::updatePointOffset(float dt)
 {
     CC_RETURN_IF(m_vTouches.size() == 0);
+    CC_RETURN_IF(m_bScrollEnabled == false);
     CATouch* pTouch = dynamic_cast<CATouch*>(m_vTouches.at(0));
     CCPoint p_off = ccpSub(this->convertToNodeSpace(pTouch->getLocation()),
                    this->convertToNodeSpace(pTouch->getPreviousLocation()));
@@ -701,7 +699,7 @@ void CAScrollView::startDeaccelerateScroll()
     CAScheduler::unschedule(schedule_selector(CAScrollView::update), this);
     CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
     CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f);
-    
+    m_bDecelerating = true;
     if (m_bTouchEnabledAtSubviews)
     {
         m_pContainer->setTouchEnabled(false);
@@ -758,7 +756,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
             m_tInertia = CCPointZero;
         }
     }
-
+    
     if (speed.getLength() < 0.25f)
     {
         m_tInertia = CCPointZero;
@@ -772,6 +770,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
         {
             m_pScrollViewDelegate->scrollViewStopMoved(this);
         }
+        
     }
     else
     {
@@ -809,28 +808,28 @@ void CAScrollView::deaccelerateScrolling(float dt)
             this->setContainerFrame(point);
         }
         
+        if (fabsf(m_tInertia.x) > _px(16))
+        {
+            m_tInertia.x = m_tInertia.x * (1 - decelerationRatio(dt));
+        }
+        else if (fabsf(m_tInertia.x) > FLT_EPSILON)
+        {
+            m_tInertia.x = MAX((fabsf(m_tInertia.x) - _px(0.5f)), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
+        }
+        
+        if (fabsf(m_tInertia.y) > _px(16))
+        {
+            m_tInertia.y = m_tInertia.y * (1 - decelerationRatio(dt));
+        }
+        else if (fabsf(m_tInertia.y) > FLT_EPSILON)
+        {
+            m_tInertia.y = MAX((fabsf(m_tInertia.y) - _px(0.5f)), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
+        }
+        
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
-    }
-
-    if (fabsf(m_tInertia.x) > _px(32))
-    {
-        m_tInertia.x = m_tInertia.x * (1 - decelerationRatio(dt));
-    }
-    else if (fabsf(m_tInertia.x) > FLT_EPSILON)
-    {
-        m_tInertia.x = MAX((fabsf(m_tInertia.x) - _px(1)), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
-    }
-    
-    if (fabsf(m_tInertia.y) > _px(32))
-    {
-        m_tInertia.y = m_tInertia.y * (1 - decelerationRatio(dt));
-    }
-    else if (fabsf(m_tInertia.y) > FLT_EPSILON)
-    {
-        m_tInertia.y = MAX((fabsf(m_tInertia.y) - _px(1)), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
     }
 }
 
@@ -1222,8 +1221,6 @@ void CAIndicator::setIndicator(const CCSize& parentSize, const CCRect& childrenF
 
 void CAIndicator::setHide(bool var)
 {
-    CAScale9ImageView* indicator = dynamic_cast<CAScale9ImageView*>(m_pIndicator);
-    
     if (var == false)
     {
         CC_RETURN_IF(fabs(1.0f-this->getAlpha()) < FLT_EPSILON);
@@ -1232,10 +1229,10 @@ void CAIndicator::setHide(bool var)
     }
     else
     {
-        CC_RETURN_IF(indicator->getActionByTag(0xfff));
+        CAViewAnimation::areBeginAnimationsWithID(m_s__StrID);
         
         CC_RETURN_IF(1.0f-this->getAlpha() > FLT_EPSILON);
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations(m_s__StrID, NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
         CAViewAnimation::setAnimationDelay(0.2f);
         this->setAlpha(0.0f);

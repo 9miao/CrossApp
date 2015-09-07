@@ -38,6 +38,8 @@ namespace CAAnimation
         
     };
     
+    static CADeque<Animation*> _deque;
+    
     Animation::Animation()
     {
         
@@ -50,7 +52,7 @@ namespace CAAnimation
     
     Animation::~Animation()
     {
-        CAScheduler::unschedule(schedule_selector(Animation::update), this);
+
     }
     
     void Animation::startAnimation(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay)
@@ -65,6 +67,12 @@ namespace CAAnimation
     
     void Animation::update(float dt)
     {
+        if (m_obInfo.now >= m_obInfo.total)
+        {
+            _deque.eraseObject(this);
+            return;
+        }
+        
         if (m_obInfo.delay > 0)
         {
             m_obInfo.delay -= dt;
@@ -85,21 +93,31 @@ namespace CAAnimation
         {
             ((CAObject *)m_obInfo.target->*m_obInfo.selector)(m_obInfo.interval, m_obInfo.now, m_obInfo.total);
         }
-        
-        if (m_obInfo.now >= m_obInfo.total)
-        {
-            CAScheduler::unschedule(schedule_selector(Animation::update), this);
-        }
     }
     
     
-    static CADeque<Animation*> _deque;
+    bool isSchedule(SEL_CAAnimation selector, CAObject* target)
+    {
+        bool ret = false;
+        
+        for (CADeque<Animation*>::iterator itr=_deque.begin(); itr!=_deque.end(); itr++)
+        {
+            Animation* obj = *itr;
+            if (obj->m_obInfo.selector == selector && obj->m_obInfo.target == target)
+            {
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
     
     void schedule(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay)
     {
+        CC_RETURN_IF(isSchedule(selector, target));
         Animation* obj = new Animation();
-        obj->startAnimation(selector, target, totalTime, interval, delay);
         _deque.pushBack(obj);
+        obj->startAnimation(selector, target, totalTime, interval, delay);
         obj->release();
     }
 
@@ -110,6 +128,8 @@ namespace CAAnimation
             Animation* obj = *itr;
             if (obj->m_obInfo.selector == selector && obj->m_obInfo.target == target)
             {
+                
+                CAScheduler::unscheduleAllForTarget(obj);
                 _deque.erase(itr);
                 break;
             }

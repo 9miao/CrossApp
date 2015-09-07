@@ -1,165 +1,629 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="LocalStorage">
-      <UniqueIdentifier>{4da8061d-80f3-45fd-aa7e-2c0a96701b79}</UniqueIdentifier>
+    <Filter Include="gameswf">
+      <UniqueIdentifier>{fb1efcbe-02bc-4173-b950-e42872d48ffe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="network">
-      <UniqueIdentifier>{2a7741ff-87a5-41c8-8e51-d7a1cf0c8e4d}</UniqueIdentifier>
+    <Filter Include="gameswf\base">
+      <UniqueIdentifier>{85d54de3-2036-4d0c-83be-77ac1a3d6972}</UniqueIdentifier>
     </Filter>
-    <Filter Include="json">
-      <UniqueIdentifier>{231d1242-516f-4183-86f7-020feb7befd1}</UniqueIdentifier>
+    <Filter Include="gameswf\gameswf">
+      <UniqueIdentifier>{162a79b6-8abf-4433-aec7-41684f96ad62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="json\lib_json">
-      <UniqueIdentifier>{3bdcfa22-2dcc-4a54-878c-1fe9a1076b88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="studio">
-      <UniqueIdentifier>{9d686e1b-4252-47d1-b28a-5715f049857e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="libwebsockets">
-      <UniqueIdentifier>{2fa447a3-897b-4803-ac40-15708e965f2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="libwebsockets\win32helpers">
-      <UniqueIdentifier>{7eef16a7-8faa-4e42-a72e-fa025c03b26b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sqlite3">
-      <UniqueIdentifier>{9581e20d-7c68-4b81-8dd6-608eb3840f3c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="device">
-      <UniqueIdentifier>{e5072c29-86ef-45ca-95e0-fa5f5d83e37c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="gui">
-      <UniqueIdentifier>{1c306010-7e4a-4ba8-954e-dececa33f147}</UniqueIdentifier>
+    <Filter Include="gameswf\gameswf\gameswf_as_classes">
+      <UniqueIdentifier>{1f10acc9-2c7b-4b21-b023-fa90b63ff40b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\network\HttpClient.cpp">
-      <Filter>network</Filter>
+    <ClCompile Include="..\gameswf\CAFlash.cpp">
+      <Filter>gameswf</Filter>
     </ClCompile>
-    <ClCompile Include="..\LocalStorage\LocalStorage.cpp">
-      <Filter>LocalStorage</Filter>
+    <ClCompile Include="..\gameswf\CAFlashView.cpp">
+      <Filter>gameswf</Filter>
     </ClCompile>
-    <ClCompile Include="..\network\Websocket.cpp">
-      <Filter>network</Filter>
+    <ClCompile Include="..\gameswf\base\tu_file_SDL.cpp">
+      <Filter>gameswf\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\Json\lib_json\json_reader.cpp">
-      <Filter>json\lib_json</Filter>
+    <ClCompile Include="..\gameswf\base\tu_gc_singlethreaded_marksweep.cpp">
+      <Filter>gameswf\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\Json\lib_json\json_value.cpp">
-      <Filter>json\lib_json</Filter>
+    <ClCompile Include="..\gameswf\base\tu_gc_test.cpp">
+      <Filter>gameswf\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\Json\lib_json\json_writer.cpp">
-      <Filter>json\lib_json</Filter>
+    <ClCompile Include="..\gameswf\base\tu_loadlib.cpp">
+      <Filter>gameswf\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\sqlite3\include\sqlite3.c">
-      <Filter>sqlite3</Filter>
+    <ClCompile Include="..\gameswf\base\tu_random.cpp">
+      <Filter>gameswf\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\network\DownloadManager.cpp">
-      <Filter>network</Filter>
+    <ClCompile Include="..\gameswf\base\tu_timer.cpp">
+      <Filter>gameswf\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\device\CADevice.cpp">
-      <Filter>device</Filter>
+    <ClCompile Include="..\gameswf\base\tu_types.cpp">
+      <Filter>gameswf\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\Json\CSContentJsonDictionary.cpp">
-      <Filter>json</Filter>
+    <ClCompile Include="..\gameswf\base\utf8.cpp">
+      <Filter>gameswf\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\Json\DictionaryHelper.cpp">
-      <Filter>json</Filter>
+    <ClCompile Include="..\gameswf\base\utility.cpp">
+      <Filter>gameswf\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\studio\CAStudioViewParser.cpp">
-      <Filter>studio</Filter>
+    <ClCompile Include="..\gameswf\base\zlib_adapter.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\component_hackery.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\configvars.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\container.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\dlmalloc.c">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\ear_clip_triangulate_float.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\ear_clip_triangulate_sint16.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\file_util.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\image.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\image_filters.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\jpeg.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\logger.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\membuf.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\triangulate_float.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\triangulate_sint32.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\base\tu_file.cpp">
+      <Filter>gameswf\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_matrix.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_mcloader.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_mouse.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_mouse_event.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_netconnection.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_netstream.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_number.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_point.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_selection.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_sharedobject.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_sound.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_string.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_textformat.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_transform.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_xmlsocket.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_array.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_boolean.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_broadcaster.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_class.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_color.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_color_transform.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_date.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_event.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_flash.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_geom.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_global.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_key.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_loadvars.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_math.cpp">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_render_handler_ogles.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_root.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_shape.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_sound.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_sprite.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_sprite_def.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_stream.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_styles.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_tesselate.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_text.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_types.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_value.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_video_impl.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_abc.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_action.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_sprite.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_avm2.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_avm2_jit.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_button.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_canvas.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_character.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_disasm.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_dlist.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_environment.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_filters.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_font.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_fontlib.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_freetype.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_function.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_impl.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_jit.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_jit_opcode.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_listener.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_log.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_morph2.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_movie_def.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_mutex.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_object.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_player.cpp">
+      <Filter>gameswf\gameswf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gameswf\gameswf\gameswf_render.cpp">
+      <Filter>gameswf\gameswf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\ExtensionMacros.h" />
-    <ClInclude Include="..\network\HttpClient.h">
-      <Filter>network</Filter>
+    <ClInclude Include="..\gameswf\CAFlash.h">
+      <Filter>gameswf</Filter>
     </ClInclude>
-    <ClInclude Include="..\network\HttpRequest.h">
-      <Filter>network</Filter>
+    <ClInclude Include="..\gameswf\CAFlashView.h">
+      <Filter>gameswf</Filter>
     </ClInclude>
-    <ClInclude Include="..\network\HttpResponse.h">
-      <Filter>network</Filter>
+    <ClInclude Include="..\gameswf\compatibility_include.h">
+      <Filter>gameswf</Filter>
     </ClInclude>
-    <ClInclude Include="..\LocalStorage\LocalStorage.h">
-      <Filter>LocalStorage</Filter>
+    <ClInclude Include="..\gameswf\base\tu_file.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Json\lib_json\autolink.h">
-      <Filter>json\lib_json</Filter>
+    <ClInclude Include="..\gameswf\base\tu_gc.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Json\lib_json\config.h">
-      <Filter>json\lib_json</Filter>
+    <ClInclude Include="..\gameswf\base\tu_gc_singlethreaded_marksweep.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Json\lib_json\features.h">
-      <Filter>json\lib_json</Filter>
+    <ClInclude Include="..\gameswf\base\tu_gc_singlethreaded_refcount.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Json\lib_json\forwards.h">
-      <Filter>json\lib_json</Filter>
+    <ClInclude Include="..\gameswf\base\tu_gc_test_impl.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Json\lib_json\json_batchallocator.h">
-      <Filter>json\lib_json</Filter>
+    <ClInclude Include="..\gameswf\base\tu_loadlib.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Json\lib_json\json_lib.h">
-      <Filter>json\lib_json</Filter>
+    <ClInclude Include="..\gameswf\base\tu_math.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Json\lib_json\json_tool.h">
-      <Filter>json\lib_json</Filter>
+    <ClInclude Include="..\gameswf\base\tu_memdebug.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Json\lib_json\reader.h">
-      <Filter>json\lib_json</Filter>
+    <ClInclude Include="..\gameswf\base\tu_opengl_includes.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Json\lib_json\value.h">
-      <Filter>json\lib_json</Filter>
+    <ClInclude Include="..\gameswf\base\tu_queue.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Json\lib_json\writer.h">
-      <Filter>json\lib_json</Filter>
+    <ClInclude Include="..\gameswf\base\tu_random.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\libwebsockets\win32\include\libwebsockets.h">
-      <Filter>libwebsockets</Filter>
+    <ClInclude Include="..\gameswf\base\tu_swap.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\libwebsockets\win32\include\win32helpers\gettimeofday.h">
-      <Filter>libwebsockets\win32helpers</Filter>
+    <ClInclude Include="..\gameswf\base\tu_timer.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\libwebsockets\win32\include\win32helpers\websock-w32.h">
-      <Filter>libwebsockets\win32helpers</Filter>
+    <ClInclude Include="..\gameswf\base\tu_types.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\sqlite3\include\sqlite3.h">
-      <Filter>sqlite3</Filter>
+    <ClInclude Include="..\gameswf\base\utf8.h">
+      <Filter>gameswf\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\sqlite3\include\sqlite3ext.h">
-      <Filter>sqlite3</Filter>
+    <ClInclude Include="..\gameswf\base\utility.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\vert_types.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\weak_ptr.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\zlib_adapter.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\configvars.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\container.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\cschema.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\dlmalloc.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\ear_clip_triangulate.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\ear_clip_triangulate_impl.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\file_util.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\grid_index.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\image.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\jpeg.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\logger.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\membuf.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\smart_ptr.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\triangulate.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\triangulate_impl.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\base\tu_config.h">
+      <Filter>gameswf\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_matrix.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_mcloader.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_mouse.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_mouse_event.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_netconnection.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_netstream.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_number.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_point.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_selection.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_sharedobject.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_sound.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_string.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_textformat.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_transform.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_xmlsocket.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_array.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_boolean.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_broadcaster.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_class.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_color.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_color_transform.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_date.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_event.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_flash.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_geom.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_global.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_key.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_loadvars.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_math.h">
+      <Filter>gameswf\gameswf\gameswf_as_classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_root.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_shape.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_sound.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_sprite.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_sprite_def.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_stream.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_styles.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_tesselate.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_text.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_types.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_value.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_video_impl.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_abc.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_action.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_sprite.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_avm2.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_button.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_canvas.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_character.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_disasm.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_dlist.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_environment.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_filters.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_font.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_fontlib.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_freetype.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_function.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_impl.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_jit.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_jit_opcode.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_listener.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_log.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_morph2.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_movie_def.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_mutex.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_object.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_player.h">
+      <Filter>gameswf\gameswf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameswf\gameswf\gameswf_render.h">
+      <Filter>gameswf\gameswf</Filter>
     </ClInclude>
     <ClInclude Include="..\CrossAppExt.h" />
-    <ClInclude Include="..\network\DownloadManager.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\device\CADevice.h">
-      <Filter>device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\CSContentJsonDictionary.h">
-      <Filter>json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Json\DictionaryHelper.h">
-      <Filter>json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\studio\CAStudioViewParser.h">
-      <Filter>studio</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\network\Websocket.h">
-      <Filter>network</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Json\lib_json\json_internalarray.inl">
-      <Filter>json\lib_json</Filter>
-    </None>
-    <None Include="..\Json\lib_json\json_internalmap.inl">
-      <Filter>json\lib_json</Filter>
-    </None>
-    <None Include="..\Json\lib_json\json_valueiterator.inl">
-      <Filter>json\lib_json</Filter>
-    </None>
+    <ClInclude Include="..\ExtensionMacros.h" />
   </ItemGroup>
 </Project>

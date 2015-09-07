@@ -560,25 +560,25 @@ void VPFrameRender::draw(VPVideoFrame *frame, long offset)
         return;
     }
     
-    if (prepareRender()) {
-        
+    if (prepareRender())
+    {
+
     #define kQuadSize sizeof(ccV3F_C4B_T2F)
-        
+
         ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
-        
+
         // vertex
         int diff = offsetof( ccV3F_C4B_T2F, vertices);
         glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-        
+
         // texCoods
         diff = offsetof( ccV3F_C4B_T2F, texCoords);
         glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-        
+
         // color
         diff = offsetof( ccV3F_C4B_T2F, colors);
         glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
-        
 //        GLfloat modelviewProj[16];
 //        mat4f_LoadOrtho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, modelviewProj);
 //        glUniformMatrix4fv(_uniformMatrix, 1, GL_FALSE, modelviewProj);
@@ -587,7 +587,7 @@ void VPFrameRender::draw(VPVideoFrame *frame, long offset)
 //        glEnableVertexAttribArray(ATTRIBUTE_VERTEX);
 //        glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, 0, 0, texCoords);
 //        glEnableVertexAttribArray(ATTRIBUTE_TEXCOORD);
-               
+
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
 }

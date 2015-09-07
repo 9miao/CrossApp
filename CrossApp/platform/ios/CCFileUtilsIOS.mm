@@ -1,189 +1,15 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIDevice.h>
-
 #include <string>
 #include <stack>
-#include "cocoa/CCString.h"
 #include "CCFileUtils.h"
 #include "CAApplication.h"
 #include "CCSAXParser.h"
-#include "CCDictionary.h"
 #include "support/zip_support/unzip.h"
-
 #include "CCFileUtilsIOS.h"
 
 NS_CC_BEGIN
-
-static void addValueToCCDict(id key, id value, CCDictionary* pDict);
-static void addCCObjectToNSDict(const char*key, CAObject* object, NSMutableDictionary *dict);
-
-static void addItemToCCArray(id item, CCArray *pArray)
-{
-    // add string value into array
-    if ([item isKindOfClass:[NSString class]]) {
-        CCString* pValue = new CCString([item UTF8String]);
-        
-        pArray->addObject(pValue);
-        pValue->release();
-        return;
-    }
-    
-    // add number value into array(such as int, float, bool and so on)
-    if ([item isKindOfClass:[NSNumber class]]) {
-        NSString* pStr = [item stringValue];
-        CCString* pValue = new CCString([pStr UTF8String]);
-        
-        pArray->addObject(pValue);
-        pValue->release();
-        return;
-    }
-    
-    // add dictionary value into array
-    if ([item isKindOfClass:[NSDictionary class]]) {
-        CCDictionary* pDictItem = new CCDictionary();
-        for (id subKey in [item allKeys]) {
-            id subValue = [item objectForKey:subKey];
-            addValueToCCDict(subKey, subValue, pDictItem);
-        }
-        pArray->addObject(pDictItem);
-        pDictItem->release();
-        return;
-    }
-    
-    // add array value into array
-    if ([item isKindOfClass:[NSArray class]]) {
-        CCArray *pArrayItem = new CCArray();
-        pArrayItem->init();
-        for (id subItem in item) {
-            addItemToCCArray(subItem, pArrayItem);
-        }
-        pArray->addObject(pArrayItem);
-        pArrayItem->release();
-        return;
-    }
-}
-
-static void addCCObjectToNSArray(CAObject *object, NSMutableArray *array)
-{
-    // add string into array
-    if (CCString *ccString = dynamic_cast<CCString *>(object)) {
-        NSString *strElement = [NSString stringWithCString:ccString->getCString() encoding:NSUTF8StringEncoding];
-        [array addObject:strElement];
-        return;
-    }
-    
-    // add array into array
-    if (CCArray *ccArray = dynamic_cast<CCArray *>(object)) {
-        NSMutableArray *arrElement = [NSMutableArray array];
-        CAObject *element = NULL;
-        CCARRAY_FOREACH(ccArray, element)
-        {
-            addCCObjectToNSArray(element, arrElement);
-        }
-        [array addObject:arrElement];
-        return;
-    }
-    
-    // add dictionary value into array
-    if (CCDictionary *ccDict = dynamic_cast<CCDictionary *>(object)) {
-        NSMutableDictionary *dictElement = [NSMutableDictionary dictionary];
-        CCDictElement *element = NULL;
-        CCDICT_FOREACH(ccDict, element)
-        {
-            addCCObjectToNSDict(element->getStrKey(), element->getObject(), dictElement);
-        }
-        [array addObject:dictElement];
-    }
-
-}
-
-static void addValueToCCDict(id key, id value, CCDictionary* pDict)
-{
-    // the key must be a string
-    CCAssert([key isKindOfClass:[NSString class]], "The key should be a string!");
-    std::string pKey = [key UTF8String];
-    
-    // the value is a new dictionary
-    if ([value isKindOfClass:[NSDictionary class]]) {
-        CCDictionary* pSubDict = new CCDictionary();
-        for (id subKey in [value allKeys]) {
-            id subValue = [value objectForKey:subKey];
-            addValueToCCDict(subKey, subValue, pSubDict);
-        }
-        pDict->setObject(pSubDict, pKey.c_str());
-        pSubDict->release();
-        return;
-    }
-    
-    // the value is a string
-    if ([value isKindOfClass:[NSString class]]) {
-        CCString* pValue = new CCString([value UTF8String]);
-        
-        pDict->setObject(pValue, pKey.c_str());
-        pValue->release();
-        return;
-    }
-    
-    // the value is a number
-    if ([value isKindOfClass:[NSNumber class]]) {
-        NSString* pStr = [value stringValue];
-        CCString* pValue = new CCString([pStr UTF8String]);
-        
-        pDict->setObject(pValue, pKey.c_str());
-        pValue->release();
-        return;
-    }
-    
-    // the value is a array
-    if ([value isKindOfClass:[NSArray class]]) {
-        CCArray *pArray = new CCArray();
-        pArray->init();
-        for (id item in value) {
-            addItemToCCArray(item, pArray);
-        }
-        pDict->setObject(pArray, pKey.c_str());
-        pArray->release();
-        return;
-    }
-}
-
-static void addCCObjectToNSDict(const char * key, CAObject* object, NSMutableDictionary *dict)
-{
-    NSString *NSkey = [NSString stringWithCString:key encoding:NSUTF8StringEncoding];
-    
-    // the object is a CCDictionary
-    if (CCDictionary *ccDict = dynamic_cast<CCDictionary *>(object)) {
-        NSMutableDictionary *dictElement = [NSMutableDictionary dictionary];
-        CCDictElement *element = NULL;
-        CCDICT_FOREACH(ccDict, element)
-        {
-            addCCObjectToNSDict(element->getStrKey(), element->getObject(), dictElement);
-        }
-        
-        [dict setObject:dictElement forKey:NSkey];
-        return;
-    }
-    
-    // the object is a CCString
-    if (CCString *element = dynamic_cast<CCString *>(object)) {
-        NSString *strElement = [NSString stringWithCString:element->getCString() encoding:NSUTF8StringEncoding];
-        [dict setObject:strElement forKey:NSkey];
-        return;
-    }
-    
-    // the object is a CCArray
-    if (CCArray *ccArray = dynamic_cast<CCArray *>(object)) {
-        NSMutableArray *arrElement = [NSMutableArray array];
-        CAObject *element = NULL;
-        CCARRAY_FOREACH(ccArray, element)
-        {
-            addCCObjectToNSArray(element, arrElement);
-        }
-        [dict setObject:arrElement forKey:NSkey];
-        return;
-    }
-}
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
@@ -236,14 +62,16 @@ bool CCFileUtilsIOS::isFileExist(const std::string& strFilePath)
         NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:path.c_str()]];
-        if (fullpath != nil) {
+        if (fullpath != nil)
+        {
             bRet = true;
         }
     }
     else
     {
         // Search path is an absolute path.
-        if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:strFilePath.c_str()]]) {
+        if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:strFilePath.c_str()]])
+        {
             bRet = true;
         }
     }
@@ -277,65 +105,6 @@ bool CCFileUtilsIOS::isAbsolutePath(const std::string& strPath)
 {
     NSString* path = [NSString stringWithUTF8String:strPath.c_str()];
     return [path isAbsolutePath] ? true : false;
-}
-
-CCDictionary* CCFileUtilsIOS::createCCDictionaryWithContentsOfFile(const std::string& filename)
-{
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
-    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
-    NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
-    
-    if (pDict != nil)
-    {
-        CCDictionary* pRet = new CCDictionary();
-        for (id key in [pDict allKeys]) {
-            id value = [pDict objectForKey:key];
-            addValueToCCDict(key, value, pRet);
-        }
-        
-        return pRet;
-    }
-    else
-    {
-        return NULL;
-    }
-}
-
-bool CCFileUtilsIOS::writeToFile(CCDictionary *dict, const std::string &fullPath)
-{
-    //CCLOG("iOS||Mac CCDictionary %d write to file %s", dict->m_uID, fullPath.c_str());
-    NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
-    
-    CCDictElement *element = NULL;
-    CCDICT_FOREACH(dict, element)
-    {
-        addCCObjectToNSDict(element->getStrKey(), element->getObject(), nsDict);
-    }
-    
-    NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
-    // do it atomically
-    [nsDict writeToFile:file atomically:YES];
-    
-    return true;
-}
-
-CCArray* CCFileUtilsIOS::createCCArrayWithContentsOfFile(const std::string& filename)
-{
-    //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
-    //    NSString* pathExtension= [pPath pathExtension];
-    //    pPath = [pPath stringByDeletingPathExtension];
-    //    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
-    //    fixing cannot read data using CCArray::createWithContentsOfFile
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
-    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
-    NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
-    
-    CCArray* pRet = new CCArray();
-    for (id value in pArray) {
-        addItemToCCArray(value, pRet);
-    }
-    
-    return pRet;
 }
 
 NS_CC_END

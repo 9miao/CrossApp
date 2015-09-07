@@ -8,11 +8,10 @@
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "ccTypeInfo.h"
+#include "CrossApp.h"
 
 NS_CC_BEGIN
 
-class CCDictionary;
-class CCArray;
 /**
  * @addtogroup platform
  * @{
@@ -21,8 +20,6 @@ class CCArray;
 //! @brief  Helper class to handle file operations
 class CC_DLL CCFileUtils : public TypeInfo
 {
-    friend class CCArray;
-    friend class CCDictionary;
 public:
     /**
      *  Returns an unique ID for this class.
@@ -113,49 +110,6 @@ public:
     virtual std::string getFileString(const char* pszFilePath);
     
     virtual std::string fullPathForFilename(const std::string& pszFileName);
-    
-    /**
-     * Loads the filenameLookup dictionary from the contents of a filename.
-     * 
-     * @note The plist file name should follow the format below:
-     * 
-     * @code
-     * <?xml version="1.0" encoding="UTF-8"?>
-     * <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-     * <plist version="1.0">
-     * <dict>
-     *     <key>filenames</key>
-     *     <dict>
-     *         <key>sounds/click.wav</key>
-     *         <string>sounds/click.caf</string>
-     *         <key>sounds/endgame.wav</key>
-     *         <string>sounds/endgame.caf</string>
-     *         <key>sounds/gem-0.wav</key>
-     *         <string>sounds/gem-0.caf</string>
-     *     </dict>
-     *     <key>metadata</key>
-     *     <dict>
-     *         <key>version</key>
-     *         <integer>1</integer>
-     *     </dict>
-     * </dict>
-     * </plist>
-     * @endcode
-     * @param filename The plist file name.
-     *
-     * @since v2.1
-     * @loadFilenameLookup
-     */
-    virtual void loadFilenameLookupDictionaryFromFile(const char* filename);
-    
-    /** 
-     *  Sets the filenameLookup dictionary.
-     *
-     *  @param pFilenameLookupDict The dictionary for replacing filename.
-     *  @since v2.1
-     *  @lua NA
-     */
-    virtual void setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict);
     
     /**
      *  Gets full path from a file name and the path of the reletive file.
@@ -324,6 +278,15 @@ protected:
     virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath);
     
     /**
+     *  Sets the filenameLookup dictionary.
+     *
+     *  @param pFilenameLookupDict The dictionary for replacing filename.
+     *  @since v2.1
+     *  @lua NA
+     */
+    virtual void setFilenameLookupDictionary(const std::map<std::string, std::string> &pFilenameLookupDict);
+
+    /**
      *  Gets full path for the directory and the filename.
      *
      *  @note Only iOS and Mac need to override this method since they are using
@@ -334,35 +297,9 @@ protected:
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
+
     
     /**
-     *  Creates a dictionary by the contents of a file.
-     *  @note This method is used internally.
-     */
-    virtual CCDictionary* createCCDictionaryWithContentsOfFile(const std::string& filename);
-    
-    /**
-     *  Write a dictionary to a plist file.
-     *  @note This method is used internally.
-     */
-    virtual bool writeToFile(CCDictionary *dict, const std::string& fullPath);
-    
-    /**
-     *  Creates an array by the contents of a file.
-     *  @note This method is used internally.
-     */
-    virtual CCArray* createCCArrayWithContentsOfFile(const std::string& filename);
-    
-    /** Dictionary used to lookup filenames based on a key.
-     *  It is used internally by the following methods:
-     *
-     *  std::string fullPathForFilename(const char*);
-     *
-     *  @since v2.1
-     */
-    CCDictionary* m_pFilenameLookupDict;
-    
-    /** 
      *  The vector contains resolution folders.
      *  The lower index of the element in this vector, the higher priority for this resolution directory.
      */
@@ -393,6 +330,8 @@ protected:
      *  The singleton pointer of CCFileUtils.
      */
     static CCFileUtils* s_sharedFileUtils;
+    
+    std::map<std::string, std::string> m_mFilenameLookupDict;
     
 };
 

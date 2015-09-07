@@ -13,6 +13,7 @@
 #include "CALabelStyle.h"
 #include "shaders/CAShaderCache.h"
 #include "platform/CAClipboard.h"
+#include "basics/CAApplication.h"
 
 NS_CC_BEGIN
 
@@ -24,7 +25,7 @@ CALabel::CALabel()
 ,m_nfontName("")
 ,m_nVerticalTextAlignmet(CAVerticalTextAlignmentTop)
 ,m_nDimensions(CCSizeZero)
-,m_nfontSize(24)
+,m_nfontSize(_px(24))
 ,m_cLabelSize(CCSizeZero)
 ,m_bUpdateImage(false)
 ,pTextHeight(0)
@@ -169,6 +170,7 @@ void CALabel::updateImage()
 											   m_bItalics,
 											   m_bUnderLine);
 
+    this->setImage(image);
 	CC_RETURN_IF(image == NULL);
 
     m_cLabelSize = size;
@@ -180,9 +182,6 @@ void CALabel::updateImage()
     float width = m_bFitFlag ? image->getContentSize().width : MIN(this->getBounds().size.width, image->getContentSize().width);
     
     rect.size.width = width;
-    
-    this->setImage(image);
-	image->saveToFile("c:\\xxx.png", true);
 
     switch (m_nVerticalTextAlignmet)
     {
@@ -204,12 +203,23 @@ void CALabel::updateImage()
 
     if (m_bFitFlag)
     {
-        this->setImageRect(rect, false, size);
+        if (!size.equals(m_obContentSize))
+        {
+            if (m_bFrame)
+            {
+                CCRect rect = this->getFrame();
+                rect.size = size;
+                this->setFrame(rect);
+            }
+            else
+            {
+                CCRect rect = this->getCenter();
+                rect.size = size;
+                this->setCenter(rect);
+            }
+        }
     }
-    else
-    {
-        this->setImageRect(rect);
-    }
+    this->setImageRect(rect);
 }
 
 void CALabel::updateImageRect()

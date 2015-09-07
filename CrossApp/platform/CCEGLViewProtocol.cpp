@@ -3,7 +3,6 @@
 #include "dispatcher/CATouch.h"
 #include "basics/CAApplication.h"
 #include "cocoa/CCSet.h"
-#include "cocoa/CCDictionary.h"
 
 NS_CC_BEGIN
 
@@ -193,7 +192,7 @@ const char* CCEGLViewProtocol::getViewName()
     return m_szViewName;
 }
 
-void CCEGLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
+void CCEGLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     CCSet set;
     for (int i = 0; i < num; ++i)
@@ -233,10 +232,10 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], 
         return;
     }
 
-    m_pDelegate->touchesBegan(&set, NULL);
+    m_pDelegate->touchesBegan(&set, event);
 }
 
-void CCEGLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
+void CCEGLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     CCSet set;
     for (int i = 0; i < num; ++i)
@@ -272,10 +271,10 @@ void CCEGLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], f
         return;
     }
 
-    m_pDelegate->touchesMoved(&set, NULL);
+    m_pDelegate->touchesMoved(&set, event);
 }
 
-void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, intptr_t ids[], float xs[], float ys[])
+void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     for (int i = 0; i < num; ++i)
     {
@@ -320,18 +319,45 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, intptr_t
     }
 }
 
-void CCEGLViewProtocol::handleTouchesEnd(int num, intptr_t ids[], float xs[], float ys[])
+void CCEGLViewProtocol::handleTouchesEnd(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     CCSet set;
-    getSetOfTouchesEndOrCancel(set, num, ids, xs, ys);
-    m_pDelegate->touchesEnded(&set, NULL);
+    getSetOfTouchesEndOrCancel(set, num, ids, xs, ys, event);
+    m_pDelegate->touchesEnded(&set, event);
 }
 
-void CCEGLViewProtocol::handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[])
+void CCEGLViewProtocol::handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     CCSet set;
-    getSetOfTouchesEndOrCancel(set, num, ids, xs, ys);
-    m_pDelegate->touchesCancelled(&set, NULL);
+    getSetOfTouchesEndOrCancel(set, num, ids, xs, ys, event);
+    m_pDelegate->touchesCancelled(&set, event);
+}
+
+void CCEGLViewProtocol::handleScrollWheel(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event)
+{
+    CCLog("%f", offx);
+    CCLog("%f", offy);
+}
+
+
+void CCEGLViewProtocol::handleOtherMouseDown(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
+{
+    
+}
+
+void CCEGLViewProtocol::handleOtherMouseDragged(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
+{
+    
+}
+
+void CCEGLViewProtocol::handleOtherMouseUp(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
+{
+    
+}
+
+void CCEGLViewProtocol::handleMouseEntered(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
+{
+    
 }
 
 const CCRect& CCEGLViewProtocol::getViewPortRect() const

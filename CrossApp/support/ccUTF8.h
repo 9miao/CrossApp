@@ -1,7 +1,7 @@
 
 
-#ifndef __cocos2dx__ccUTF8__
-#define __cocos2dx__ccUTF8__
+#ifndef __CrossApp__ccUTF8__
+#define __CrossApp__ccUTF8__
 
 #include "platform/CCPlatformMacros.h"
 #include <vector>
@@ -408,4 +408,4 @@ CC_DEPRECATED_ATTRIBUTE CC_DLL char * cc_utf16_to_utf8 (const unsigned short  *s
 
 NS_CC_END
 
-#endif /* defined(__cocos2dx__ccUTF8__) */
+#endif /* defined(__CrossApp__ccUTF8__) */

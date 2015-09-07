@@ -65,7 +65,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\extensions\sqlite3\include;$(ProjectDir)..\..\extensions\libwebsockets\win32\include;$(ProjectDir)..\..\CrossApp;$(ProjectDir)..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\CrossApp\platform\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\CrossApp\the_third_party\win32\zlib;$(ProjectDir)..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\CrossApp\the_third_party\freetype\include\win32\;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\CrossApp;$(ProjectDir)..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\CrossApp\platform\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\CrossApp\the_third_party\win32\zlib;$(ProjectDir)..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\CrossApp\the_third_party\freetype\include\win32;$(ProjectDir)..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -79,12 +79,16 @@
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
+    <Lib>
+      <AdditionalDependencies>libzlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\CrossApp\the_third_party\win32\libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\extensions\sqlite3\include;$(ProjectDir)..\..\extensions\libwebsockets\win32\include;$(ProjectDir)..\..\CrossApp;$(ProjectDir)..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\CrossApp\platform\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\CrossApp\the_third_party\win32\zlib;$(ProjectDir)..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\CrossApp\the_third_party\freetype\include\win32\;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\CrossApp;$(ProjectDir)..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\CrossApp\platform\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\CrossApp\the_third_party\win32\zlib;$(ProjectDir)..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\CrossApp\the_third_party\freetype\include\win32;$(ProjectDir)..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -94,54 +98,218 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
+    <Lib>
+      <AdditionalDependencies>libzlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\CrossApp\the_third_party\win32\libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\device\CADevice.cpp" />
-    <ClCompile Include="..\Json\CSContentJsonDictionary.cpp" />
-    <ClCompile Include="..\Json\DictionaryHelper.cpp" />
-    <ClCompile Include="..\Json\lib_json\json_reader.cpp" />
-    <ClCompile Include="..\Json\lib_json\json_value.cpp" />
-    <ClCompile Include="..\Json\lib_json\json_writer.cpp" />
-    <ClCompile Include="..\LocalStorage\LocalStorage.cpp" />
-    <ClCompile Include="..\network\DownloadManager.cpp" />
-    <ClCompile Include="..\network\HttpClient.cpp" />
-    <ClCompile Include="..\network\Websocket.cpp" />
-    <ClCompile Include="..\sqlite3\include\sqlite3.c" />
-    <ClCompile Include="..\studio\CAStudioViewParser.cpp" />
+    <ClCompile Include="..\gameswf\base\component_hackery.cpp" />
+    <ClCompile Include="..\gameswf\base\configvars.cpp" />
+    <ClCompile Include="..\gameswf\base\container.cpp" />
+    <ClCompile Include="..\gameswf\base\dlmalloc.c" />
+    <ClCompile Include="..\gameswf\base\ear_clip_triangulate_float.cpp" />
+    <ClCompile Include="..\gameswf\base\ear_clip_triangulate_sint16.cpp" />
+    <ClCompile Include="..\gameswf\base\file_util.cpp" />
+    <ClCompile Include="..\gameswf\base\image.cpp" />
+    <ClCompile Include="..\gameswf\base\image_filters.cpp" />
+    <ClCompile Include="..\gameswf\base\jpeg.cpp" />
+    <ClCompile Include="..\gameswf\base\logger.cpp" />
+    <ClCompile Include="..\gameswf\base\membuf.cpp" />
+    <ClCompile Include="..\gameswf\base\triangulate_float.cpp" />
+    <ClCompile Include="..\gameswf\base\triangulate_sint32.cpp" />
+    <ClCompile Include="..\gameswf\base\tu_file.cpp" />
+    <ClCompile Include="..\gameswf\base\tu_file_SDL.cpp" />
+    <ClCompile Include="..\gameswf\base\tu_gc_singlethreaded_marksweep.cpp" />
+    <ClCompile Include="..\gameswf\base\tu_gc_test.cpp" />
+    <ClCompile Include="..\gameswf\base\tu_loadlib.cpp" />
+    <ClCompile Include="..\gameswf\base\tu_random.cpp" />
+    <ClCompile Include="..\gameswf\base\tu_timer.cpp" />
+    <ClCompile Include="..\gameswf\base\tu_types.cpp" />
+    <ClCompile Include="..\gameswf\base\utf8.cpp" />
+    <ClCompile Include="..\gameswf\base\utility.cpp" />
+    <ClCompile Include="..\gameswf\base\zlib_adapter.cpp" />
+    <ClCompile Include="..\gameswf\CAFlash.cpp" />
+    <ClCompile Include="..\gameswf\CAFlashView.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_abc.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_action.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_array.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_boolean.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_broadcaster.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_class.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_color.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_color_transform.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_date.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_event.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_flash.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_geom.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_global.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_key.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_loadvars.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_math.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_matrix.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_mcloader.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_mouse.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_mouse_event.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_netconnection.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_netstream.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_number.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_point.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_selection.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_sharedobject.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_sound.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_string.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_textformat.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_transform.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_classes\as_xmlsocket.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_as_sprite.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_avm2.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_avm2_jit.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_button.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_canvas.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_character.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_disasm.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_dlist.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_environment.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_filters.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_font.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_fontlib.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_freetype.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_function.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_impl.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_jit.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_jit_opcode.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_listener.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_log.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_morph2.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_movie_def.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_mutex.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_object.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_player.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_render.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_render_handler_ogles.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_root.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_shape.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_sound.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_sprite.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_sprite_def.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_stream.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_styles.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_tesselate.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_text.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_types.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_value.cpp" />
+    <ClCompile Include="..\gameswf\gameswf\gameswf_video_impl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CrossAppExt.h" />
-    <ClInclude Include="..\device\CADevice.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
-    <ClInclude Include="..\Json\CSContentJsonDictionary.h" />
-    <ClInclude Include="..\Json\DictionaryHelper.h" />
-    <ClInclude Include="..\Json\lib_json\autolink.h" />
-    <ClInclude Include="..\Json\lib_json\config.h" />
-    <ClInclude Include="..\Json\lib_json\features.h" />
-    <ClInclude Include="..\Json\lib_json\forwards.h" />
-    <ClInclude Include="..\Json\lib_json\json_batchallocator.h" />
-    <ClInclude Include="..\Json\lib_json\json_lib.h" />
-    <ClInclude Include="..\Json\lib_json\json_tool.h" />
-    <ClInclude Include="..\Json\lib_json\reader.h" />
-    <ClInclude Include="..\Json\lib_json\value.h" />
-    <ClInclude Include="..\Json\lib_json\writer.h" />
-    <ClInclude Include="..\libwebsockets\win32\include\libwebsockets.h" />
-    <ClInclude Include="..\libwebsockets\win32\include\win32helpers\gettimeofday.h" />
-    <ClInclude Include="..\libwebsockets\win32\include\win32helpers\websock-w32.h" />
-    <ClInclude Include="..\LocalStorage\LocalStorage.h" />
-    <ClInclude Include="..\network\DownloadManager.h" />
-    <ClInclude Include="..\network\HttpClient.h" />
-    <ClInclude Include="..\network\HttpRequest.h" />
-    <ClInclude Include="..\network\HttpResponse.h" />
-    <ClInclude Include="..\network\Websocket.h" />
-    <ClInclude Include="..\sqlite3\include\sqlite3.h" />
-    <ClInclude Include="..\sqlite3\include\sqlite3ext.h" />
-    <ClInclude Include="..\studio\CAStudioViewParser.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Json\lib_json\json_internalarray.inl" />
-    <None Include="..\Json\lib_json\json_internalmap.inl" />
-    <None Include="..\Json\lib_json\json_valueiterator.inl" />
+    <ClInclude Include="..\gameswf\base\configvars.h" />
+    <ClInclude Include="..\gameswf\base\container.h" />
+    <ClInclude Include="..\gameswf\base\cschema.h" />
+    <ClInclude Include="..\gameswf\base\dlmalloc.h" />
+    <ClInclude Include="..\gameswf\base\ear_clip_triangulate.h" />
+    <ClInclude Include="..\gameswf\base\ear_clip_triangulate_impl.h" />
+    <ClInclude Include="..\gameswf\base\file_util.h" />
+    <ClInclude Include="..\gameswf\base\grid_index.h" />
+    <ClInclude Include="..\gameswf\base\image.h" />
+    <ClInclude Include="..\gameswf\base\jpeg.h" />
+    <ClInclude Include="..\gameswf\base\logger.h" />
+    <ClInclude Include="..\gameswf\base\membuf.h" />
+    <ClInclude Include="..\gameswf\base\smart_ptr.h" />
+    <ClInclude Include="..\gameswf\base\triangulate.h" />
+    <ClInclude Include="..\gameswf\base\triangulate_impl.h" />
+    <ClInclude Include="..\gameswf\base\tu_config.h" />
+    <ClInclude Include="..\gameswf\base\tu_file.h" />
+    <ClInclude Include="..\gameswf\base\tu_gc.h" />
+    <ClInclude Include="..\gameswf\base\tu_gc_singlethreaded_marksweep.h" />
+    <ClInclude Include="..\gameswf\base\tu_gc_singlethreaded_refcount.h" />
+    <ClInclude Include="..\gameswf\base\tu_gc_test_impl.h" />
+    <ClInclude Include="..\gameswf\base\tu_loadlib.h" />
+    <ClInclude Include="..\gameswf\base\tu_math.h" />
+    <ClInclude Include="..\gameswf\base\tu_memdebug.h" />
+    <ClInclude Include="..\gameswf\base\tu_opengl_includes.h" />
+    <ClInclude Include="..\gameswf\base\tu_queue.h" />
+    <ClInclude Include="..\gameswf\base\tu_random.h" />
+    <ClInclude Include="..\gameswf\base\tu_swap.h" />
+    <ClInclude Include="..\gameswf\base\tu_timer.h" />
+    <ClInclude Include="..\gameswf\base\tu_types.h" />
+    <ClInclude Include="..\gameswf\base\utf8.h" />
+    <ClInclude Include="..\gameswf\base\utility.h" />
+    <ClInclude Include="..\gameswf\base\vert_types.h" />
+    <ClInclude Include="..\gameswf\base\weak_ptr.h" />
+    <ClInclude Include="..\gameswf\base\zlib_adapter.h" />
+    <ClInclude Include="..\gameswf\CAFlash.h" />
+    <ClInclude Include="..\gameswf\CAFlashView.h" />
+    <ClInclude Include="..\gameswf\compatibility_include.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_abc.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_action.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_array.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_boolean.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_broadcaster.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_class.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_color.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_color_transform.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_date.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_event.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_flash.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_geom.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_global.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_key.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_loadvars.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_math.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_matrix.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_mcloader.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_mouse.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_mouse_event.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_netconnection.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_netstream.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_number.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_point.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_selection.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_sharedobject.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_sound.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_string.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_textformat.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_transform.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_classes\as_xmlsocket.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_as_sprite.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_avm2.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_button.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_canvas.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_character.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_disasm.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_dlist.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_environment.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_filters.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_font.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_fontlib.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_freetype.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_function.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_impl.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_jit.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_jit_opcode.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_listener.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_log.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_morph2.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_movie_def.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_mutex.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_object.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_player.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_render.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_root.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_shape.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_sound.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_sprite.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_sprite_def.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_stream.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_styles.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_tesselate.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_text.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_types.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_value.h" />
+    <ClInclude Include="..\gameswf\gameswf\gameswf_video_impl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

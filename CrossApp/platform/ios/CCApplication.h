@@ -5,7 +5,7 @@
 
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
-
+#include "ccTypes.h"
 NS_CC_BEGIN
 
 class CCRect;
@@ -52,6 +52,8 @@ public:
      */
     virtual TargetPlatform getTargetPlatform();
 
+    void setStatusBarStyle(const CAStatusBarStyle& var);
+    
 protected:
     static CCApplication * sm_pSharedApplication;
 };

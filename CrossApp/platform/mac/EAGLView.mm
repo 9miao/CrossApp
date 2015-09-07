@@ -20,6 +20,7 @@ static EAGLView *view;
 @implementation EAGLView
 
 @synthesize eventDelegate = eventDelegate_, isFullScreen = isFullScreen_, frameZoomFactor=frameZoomFactor_;
+@synthesize textfield = _textfield;
 
 +(id) sharedEGLView
 {
@@ -69,6 +70,12 @@ static EAGLView *view;
 - (id) initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format{
     // event delegate
     eventDelegate_ = [CCEventDispatcher sharedDispatcher];
+    
+    _textfield = [[CAMACTextField alloc] init];
+    [_textfield setCadelegate:self];
+    [_textfield setFrame:CGRectMake(-2000, -2000, 100, 50)];
+    _textfield.hidden = YES;
+    [self addSubview:_textfield];
     
     CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
     
@@ -307,8 +314,11 @@ static EAGLView *view;
 	ids[0] = [theEvent eventNumber];
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::leftMouseEvent);
 
-	CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, ids, xs, ys);
+	CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, ids, xs, ys, event);
+    event->release();
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
@@ -331,8 +341,11 @@ static EAGLView *view;
 	ids[0] = [theEvent eventNumber];
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::leftMouseEvent);
 
-	CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesMove(1, ids, xs, ys);
+	CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesMove(1, ids, xs, ys, event);
+    event->release();
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
@@ -351,7 +364,10 @@ static EAGLView *view;
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
 
-	CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesEnd(1, ids, xs, ys);
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::leftMouseEvent);
+	CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesEnd(1, ids, xs, ys, event);
+    event->release();
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent {
@@ -359,69 +375,266 @@ static EAGLView *view;
 
 	// pass the event along to the next responder (like your NSWindow subclass)
 	[super rightMouseDown:theEvent];
+    
+    
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+    
+    float x = local_point.x;
+    float y = [self getHeight] - local_point.y;
+    
+    intptr_t ids[1] = {0};
+    float xs[1] = {0.0f};
+    float ys[1] = {0.0f};
+    
+    ids[0] = [theEvent eventNumber];
+    xs[0] = x / frameZoomFactor_;
+    ys[0] = y / frameZoomFactor_;
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::rightMouseEvent);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, ids, xs, ys, event);
+    event->release();
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
 	[super rightMouseDragged:theEvent];
+    
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+    
+    float x = local_point.x;
+    float y = [self getHeight] - local_point.y;
+    
+    intptr_t ids[1] = {0};
+    float xs[1] = {0.0f};
+    float ys[1] = {0.0f};
+    
+    ids[0] = [theEvent eventNumber];
+    xs[0] = x / frameZoomFactor_;
+    ys[0] = y / frameZoomFactor_;
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::rightMouseEvent);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesMove(1, ids, xs, ys, event);
+    event->release();
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
 	[super rightMouseUp:theEvent];
+    
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+    
+    float x = local_point.x;
+    float y = [self getHeight] - local_point.y;
+    
+    intptr_t ids[1] = {0};
+    float xs[1] = {0.0f};
+    float ys[1] = {0.0f};
+    
+    ids[0] = [theEvent eventNumber];
+    xs[0] = x / frameZoomFactor_;
+    ys[0] = y / frameZoomFactor_;
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::rightMouseEvent);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesEnd(1, ids, xs, ys, event);
+    event->release();
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
-	[super otherMouseDown:theEvent];
+    [super otherMouseDown:theEvent];
+    
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+    
+    float x = local_point.x;
+    float y = [self getHeight] - local_point.y;
+    
+    intptr_t ids[1] = {0};
+    float xs[1] = {0.0f};
+    float ys[1] = {0.0f};
+    
+    ids[0] = [theEvent eventNumber];
+    xs[0] = x / frameZoomFactor_;
+    ys[0] = y / frameZoomFactor_;
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::middleMouseEvent);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleOtherMouseDown(1, ids, xs, ys, event);
+    event->release();
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
-	[super otherMouseDragged:theEvent];
+    [super otherMouseDragged:theEvent];
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+    
+    float x = local_point.x;
+    float y = [self getHeight] - local_point.y;
+    
+    intptr_t ids[1] = {0};
+    float xs[1] = {0.0f};
+    float ys[1] = {0.0f};
+    
+    ids[0] = [theEvent eventNumber];
+    xs[0] = x / frameZoomFactor_;
+    ys[0] = y / frameZoomFactor_;
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::middleMouseEvent);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleOtherMouseDragged(1, ids, xs, ys, event);
+    event->release();
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
-	[super otherMouseUp:theEvent];
+    [super otherMouseUp:theEvent];
+    
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+    
+    float x = local_point.x;
+    float y = [self getHeight] - local_point.y;
+    
+    intptr_t ids[1] = {0};
+    float xs[1] = {0.0f};
+    float ys[1] = {0.0f};
+    
+    ids[0] = [theEvent eventNumber];
+    xs[0] = x / frameZoomFactor_;
+    ys[0] = y / frameZoomFactor_;
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::middleMouseEvent);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleOtherMouseUp(1, ids, xs, ys, event);
+    event->release();
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
 	[super mouseEntered:theEvent];
+    
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+    
+    float x = local_point.x;
+    float y = [self getHeight] - local_point.y;
+    
+    intptr_t ids[1] = {0};
+    float xs[1] = {0.0f};
+    float ys[1] = {0.0f};
+    
+    ids[0] = [theEvent eventNumber];
+    xs[0] = x / frameZoomFactor_;
+    ys[0] = y / frameZoomFactor_;
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::rightMouseEvent);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleMouseEntered(1, ids, xs, ys, event);
+    event->release();
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
 	[super mouseExited:theEvent];
+    
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+    
+    float x = local_point.x;
+    float y = [self getHeight] - local_point.y;
+    
+    intptr_t ids[1] = {0};
+    float xs[1] = {0.0f};
+    float ys[1] = {0.0f};
+    
+    ids[0] = [theEvent eventNumber];
+    xs[0] = x / frameZoomFactor_;
+    ys[0] = y / frameZoomFactor_;
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::rightMouseEvent);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleScrollWheel(1, ids, xs, ys, theEvent.scrollingDeltaX, theEvent.scrollingDeltaY, event);
 }
 
 -(void) scrollWheel:(NSEvent *)theEvent {
 	DISPATCH_EVENT(theEvent, _cmd);
 	[super scrollWheel:theEvent];
+
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+    
+    float x = local_point.x;
+    float y = [self getHeight] - local_point.y;
+    
+    intptr_t ids[1] = {0};
+    float xs[1] = {0.0f};
+    float ys[1] = {0.0f};
+    
+    ids[0] = 0;
+    xs[0] = x / frameZoomFactor_;
+    ys[0] = y / frameZoomFactor_;
+    
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::middleMouseEvent);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleScrollWheel(1, ids, xs, ys, theEvent.scrollingDeltaX, theEvent.scrollingDeltaY, event);
+    event->release();
 }
 
 #pragma mark EAGLView - Key events
 
 -(BOOL) becomeFirstResponder
 {
+    return  [_textfield becomeFirstResponder];
+
 	return YES;
 }
 
 -(BOOL) acceptsFirstResponder
 {
+    return  [_textfield acceptsFirstResponder];
+
 	return YES;
 }
 
 -(BOOL) resignFirstResponder
 {
+    return  [_textfield resignFirstResponder];
+
 	return YES;
+}
+
+- (BOOL)hasText
+{
+    return NO;
+}
+
+- (void)insertText:(NSString *)text
+{
+    if (nil != markedText_) {
+        [markedText_ release];
+        markedText_ = nil;
+    }
+    const char * pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"insertext:%@； length:%lu", text, strlen(pszText));
+
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    [_textfield setStringValue:@""];
+
+#endif
+}
+
+- (void)deleteBackward
+{
+    if (nil != markedText_) {
+        [markedText_ release];
+        markedText_ = nil;
+    }
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 }
 
 - (void)keyDown:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
-	
 	// pass the event along to the next responder (like your NSWindow subclass)
 	[super keyDown:theEvent];
 }
@@ -429,6 +642,28 @@ static EAGLView *view;
 - (void)keyUp:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
+    //[_textfield insertText:[theEvent characters]];
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    //NSLog(@"%hu", [theEvent keyCode]);
+    if(51 == [theEvent keyCode])//delete
+    {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+    }else if(123 == [theEvent keyCode])//leftsaf
+    {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveBackward();
+    }else if(124 == [theEvent keyCode])//right
+    {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveForward();
+    }else if(125 == [theEvent keyCode])//down
+    {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveDown();
+
+    }else if(126 == [theEvent keyCode])//up
+    {
+        CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveUp();
+    }
+#endif
+
 
 	// pass the event along to the next responder (like your NSWindow subclass)
 	[super keyUp:theEvent];
@@ -458,5 +693,112 @@ static EAGLView *view;
 - (void)touchesCancelledWithEvent:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+@synthesize inputDelegate;
+
+
+- (BOOL)textShouldBeginEditing:(NSText *)textObject
+{
+    [_textfield textShouldBeginEditing:textObject];
+    NSLog(@"textShouldBeginEditing:%@",textObject.string);
+    return true;
+}
+
+- (BOOL)textShouldEndEditing:(NSText *)textObject
+{
+    [_textfield textShouldBeginEditing:textObject];
+    
+    NSLog(@"textShouldEndEditing:%@",textObject.string);
+    return true;
+}
+
+
+- (void)textDidBeginEditing:(NSNotification *)notification
+{
+    [_textfield textDidBeginEditing:notification];
+    NSLog(@"textDidBeginEditing:");
+    
+}
+
+- (void)textDidEndEditing:(NSNotification *)notification
+{
+  //  NSLog(@"textDidEndEditing:");
+    [_textfield textDidEndEditing:notification];
+
+}
+
+- (void)textDidChange:(NSNotification *)notification
+{
+    NSLog(@"textDidChange:%@",notification);
+    [_textfield textDidChange:notification];
+
+}
+
+- (void)setMarkedText:(id)aString selectedRange:(NSRange)selectedRange replacementRange:(NSRange)replacementRange
+{
+    if (aString == markedText_) {
+        return;
+    }
+    if (nil != markedText_) {
+        [markedText_ release];
+    }
+    
+    const char * pszText = [aString cStringUsingEncoding:NSUTF8StringEncoding];
+    NSRange range;
+    range.length = 0;
+    range.location = [aString length];
+    
+    //    UITextPosition *beginning = self.beginningOfDocument;
+    //    UITextPosition *start = [self positionFromPosition:beginning offset:range.location];
+    //    UITextPosition *end = [self positionFromPosition:start offset:range.length];
+    //    UITextRange *textRange = [self textRangeFromPosition:start toPosition:end];
+    //
+    //    [self textInRange:textRange];
+    
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchWillInsertText(pszText, (int)strlen(pszText));
+    markedText_ = aString;
+    [markedText_ retain];
+
+}
+- (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
+{
+    
+    //CCLOG("setMarkedText");
+    if (markedText == markedText_) {
+        return;
+    }
+    if (nil != markedText_) {
+        [markedText_ release];
+    }
+    
+    const char * pszText = [markedText cStringUsingEncoding:NSUTF8StringEncoding];
+    NSRange range;
+    range.length = 0;
+    range.location = [markedText length];
+    
+    //    UITextPosition *beginning = self.beginningOfDocument;
+    //    UITextPosition *start = [self positionFromPosition:beginning offset:range.location];
+    //    UITextPosition *end = [self positionFromPosition:start offset:range.length];
+    //    UITextRange *textRange = [self textRangeFromPosition:start toPosition:end];
+    //
+    //    [self textInRange:textRange];
+    
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchWillInsertText(pszText, (int)strlen(pszText));
+    markedText_ = markedText;
+    [markedText_ retain];
+}
+
+- (void)unmarkText;
+{
+    //CCLOG("unmarkText");
+    if (nil == markedText_)
+    {
+        return;
+    }
+    const char * pszText = [markedText_ cStringUsingEncoding:NSUTF8StringEncoding];
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, (int)strlen(pszText));
+    [markedText_ release];
+    markedText_ = nil;
 }
 @end

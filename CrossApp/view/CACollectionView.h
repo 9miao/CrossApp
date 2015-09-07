@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://www.9miao.com All rights reserved.
 //
 
-#ifndef __cocos2dx__CACollectionView__
-#define __cocos2dx__CACollectionView__
+#ifndef __CrossApp__CACollectionView__
+#define __CrossApp__CACollectionView__
 
 #include "view/CAView.h"
 #include "view/CAScale9ImageView.h"
@@ -105,6 +105,7 @@ public:
 
 	virtual bool init();
 
+	void clearData();
 	void reloadData();
 
 	CACollectionViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
@@ -258,6 +259,7 @@ private:
 
 class CC_DLL CACollectionViewCell : public CAControl
 {
+	friend class CAAutoCollectionView;
 public:
     
 	CACollectionViewCell();

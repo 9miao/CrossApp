@@ -66,7 +66,8 @@ protected:
     
     virtual void willInsertText(const char * text, int len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
     
-    virtual void AndroidWillInsertText(int start,const char* str,int before,int count){CC_UNUSED_PARAM(before);};
+    virtual void AndroidWillInsertText(int start, const char* str, int before, int count){CC_UNUSED_PARAM(before);};
+    
     /**
     @brief    Called by CAIMEDispatcher after the user clicks the backward key.
     */
@@ -74,7 +75,9 @@ protected:
 
     virtual void selectAll() {}
 	virtual void cursorMoveBackward() {}
-	virtual void cursorMoveForward() {}
+    virtual void cursorMoveForward() {}
+    virtual void cursorMoveUp() {}
+    virtual void cursorMoveDown() {}
 	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt) {}
 	virtual void moveArrowBtn(const CCPoint& pt) {}
 

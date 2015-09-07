@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 http://9miao.com All rights reserved.
 //
 
-#ifndef __CrossAppx__CAViewController__
-#define __CrossAppx__CAViewController__
+#ifndef __CrossApp__CAViewController__
+#define __CrossApp__CAViewController__
 
 #include <iostream>
 #include "control/CABar.h"
@@ -16,12 +16,6 @@
 #include "dispatcher/CAKeypadDispatcher.h"
 
 NS_CC_BEGIN
-
-typedef enum
-{
-    CABarVerticalAlignmentTop = 0,
-    CABarVerticalAlignmentBottom
-}CABarVerticalAlignment;
 
 class CAWindow;
 class CATabBarController;
@@ -90,8 +84,6 @@ public:
     
     friend class CAWindow;
     
-protected:
-    
     virtual void viewDidLoad() {};
     
     virtual void viewDidUnload() {};
@@ -105,8 +97,6 @@ protected:
     virtual void keyBackClicked() {};
     
     virtual void keyMenuClicked() {};
-    
-protected:
     
     virtual void addViewFromSuperview(CAView* node);
     
@@ -140,8 +130,7 @@ public:
     
     virtual ~CANavigationController();
     
-    virtual bool initWithRootViewController(CAViewController* viewController,
-                                            CABarVerticalAlignment var = CABarVerticalAlignmentTop);
+    virtual bool initWithRootViewController(CAViewController* viewController);
     
 public:
     
@@ -155,6 +144,8 @@ public:
     
     CAViewController* popFirstViewController();
  
+    CAViewController* popViewControllerAtIndex(int index);
+    
     CAViewController* getViewControllerAtIndex(int index);
     
     CAViewController* getBackViewController();
@@ -164,9 +155,7 @@ public:
     virtual void setNavigationBarHidden(bool hidden, bool animated);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bNavigationBarHidden, NavigationBarHidden);
-    
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eNavigationBarVerticalAlignment, NavigationBarVerticalAlignment);
-    
+  
     void updateItem(CAViewController* viewController);
     
     CC_PROPERTY_IS(bool, m_bTouchMoved, TouchMoved);
@@ -282,7 +271,7 @@ public:
     
     virtual void setTabBarHidden(bool hidden, bool animated);
     
-    CC_PROPERTY_IS(bool, m_bscrollEnabled, ScrollEnabled);
+    CC_PROPERTY_IS(bool, m_bScrollEnabled, ScrollEnabled);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bTabBarHidden, TabBarHidden);
     
@@ -361,4 +350,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__CrossAppx__CAViewController__) */
+#endif /* defined(__CrossApp__CAViewController__) */

@@ -41,8 +41,26 @@ public:
         return true;
     }
 
+    //If the sender doesn't want to insert the text, return true;
+    virtual bool onTextViewInsertText(CATextView* sender, const char * text, int nLen, int nPosition)
+    {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(text);
+        CC_UNUSED_PARAM(nLen);
+        return false;
+    }
+    
+    //If the sender doesn't want to delete the delText, return true;
+    virtual bool onTextViewDeleteBackward(CATextView* sender, const char * delText, int nLen, int nPosition)
+    {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(delText);
+        CC_UNUSED_PARAM(nLen);
+        return false;
+    }
+    
 	//If the sender doesn't want to insert the text, return true;
-	virtual bool onTextViewInsertText(CATextView* sender, const char * text, int nLen)
+	CC_DEPRECATED_ATTRIBUTE virtual bool onTextViewInsertText(CATextView* sender, const char * text, int nLen)
     {
         CC_UNUSED_PARAM(sender);
         CC_UNUSED_PARAM(text);
@@ -51,7 +69,7 @@ public:
     }
 
 	//If the sender doesn't want to delete the delText, return true;
-	virtual bool onTextViewDeleteBackward(CATextView* sender, const char * delText, int nLen)
+	CC_DEPRECATED_ATTRIBUTE virtual bool onTextViewDeleteBackward(CATextView* sender, const char * delText, int nLen)
     {
         CC_UNUSED_PARAM(sender);
         CC_UNUSED_PARAM(delText);
@@ -60,12 +78,13 @@ public:
     }
 
 	virtual void getKeyBoardHeight(int height) {}
-
-	virtual bool keyBoardCallBack(CATextView *sender) { return true; }
 };
 
 
-class CC_DLL CATextView : public CATouchView, public CAIMEDelegate
+class CC_DLL CATextView 
+	: public CATouchView
+	, public CAIMEDelegate
+	, public CATextResponder
 {
 	friend class CATextSelViewEx;
 public:
@@ -80,6 +99,8 @@ public:
 
 	virtual bool becomeFirstResponder();
 
+	virtual void resignResponder();
+
 	static CATextView* createWithFrame(const CCRect& rect);
 
 	static CATextView* createWithCenter(const CCRect& rect);
@@ -87,31 +108,16 @@ public:
     void setBackGroundImage(CAImage* image);
     
     void setBackGroundColor(const CAColor4B &color);
-    
-protected:
-	virtual bool init();
-	virtual bool canAttachWithIME();
-	virtual bool canDetachWithIME();
-	virtual void didDetachWithIME();
-	virtual void didAttachWithIME();
-    
-	virtual void insertText(const char * text, int len);
-	virtual void willInsertText(const char* text, int len);
-	virtual void AndroidWillInsertText(int start, const char* str, int before, int count);
-	virtual void deleteBackward();
-	virtual void getKeyBoardHeight(int height);
-	virtual void getKeyBoradReturnCallBack();
-	virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-	virtual const char* getContentText();
-	virtual int getCursorPos();
-	virtual void visit();
 
+	int getLineCount();
     
+	CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
+
 	CC_SYNTHESIZE(CATextViewDelegate*, m_pTextViewDelegate, TextViewDelegate);
 
 	CC_PROPERTY_PASS_BY_REF(std::string, m_sPlaceHolder, PlaceHolder);
-
-	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cSpaceHolderColor, SpaceHolderColor);
+    
+	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cPlaceHolderColor, PlaceHolderColor);
 
 	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cTextColor, TextColor);
 
@@ -127,6 +133,9 @@ protected:
 
 	CC_PROPERTY(unsigned int, m_iLineSpacing, LineSpacing);
 
+	CC_SYNTHESIZE(int, m_iHoriMargins, HoriMargins);
+	CC_SYNTHESIZE(int, m_iVertMargins, VertMargins);
+
 	CC_PROPERTY_PASS_BY_REF(std::string, m_szFontName, FontName);
     
     CC_SYNTHESIZE(eKeyBoardInputType, m_nInputType, InputType);
@@ -139,38 +148,34 @@ protected:
     
     inline int getKeyboardReturnType () {return m_keyBoardReturnType; }
     
-protected:
-
-	void initMarkSprite();
-
-    void showCursorMark();
+    CC_DEPRECATED_ATTRIBUTE void setSpaceHolderColor(const CAColor4B& color)
+    {
+        return setPlaceHolderColor(color);
+    }
     
-    void hideCursorMark();
+    CC_DEPRECATED_ATTRIBUTE const CAColor4B& getSpaceHolderColor()
+    {
+        return getPlaceHolderColor();
+    }
     
-	void updateImage();
-
-	void calcCursorPosition();
-
-	int getStringLength(const std::string &var);
-
-	int getCurrentByPointY(int y);
-
-	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
-
-	bool execCurSelCharRange();
-
-	void ccStartSelect();
-	void ccSelectAll() { selectAll(); }
-	void ccPasteFromClipboard() { pasteFromClipboard(); }
-    void ccCopyToClipboard() { copyToClipboard(); }
-    void ccCutToClipboard() { cutToClipboard(); }
-	int getStringCharCount(const std::string &var);
-
-	std::pair<int, int> getLineAndPos(int iPos);
-
-	std::vector<CCRect> getZZCRect();
-
 protected:
+	virtual bool init();
+	virtual bool canAttachWithIME();
+	virtual bool canDetachWithIME();
+	virtual void didDetachWithIME();
+	virtual void didAttachWithIME();
+
+	virtual void insertText(const char * text, int len);
+	virtual void willInsertText(const char* text, int len);
+	virtual void AndroidWillInsertText(int start, const char* str, int before, int count);
+	virtual void deleteBackward();
+	virtual void getKeyBoardHeight(int height);
+	virtual void getKeyBoradReturnCallBack();
+	virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
+	virtual const char* getContentText();
+	virtual int getCursorPos();
+	virtual void visit();
+
 	virtual void setContentSize(const CCSize& var);
 	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
@@ -182,23 +187,40 @@ protected:
 	virtual void selectAll();
 	virtual void cursorMoveBackward();
 	virtual void cursorMoveForward();
+    virtual void cursorMoveUp();
+    virtual void cursorMoveDown();
 	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt);
 	virtual void moveArrowBtn(const CCPoint& pt);
 
 	virtual void copyToClipboard();
 	virtual void cutToClipboard();
 	virtual void pasteFromClipboard();
-    
-    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
-    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
+
+	void initMarkSprite();
+	void showCursorMark();
+	void hideCursorMark();
+	void updateImage();
+	void calcCursorPosition();
+	int getStringLength(const std::string &var);
+	int getCurrentByPointY(int y);
+	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
+	bool execCurSelCharRange();
+
+	void ccStartSelect();
+	void ccSelectAll() { selectAll(); }
+	void ccPasteFromClipboard() { pasteFromClipboard(); }
+	void ccCopyToClipboard() { copyToClipboard(); }
+	void ccCutToClipboard() { cutToClipboard(); }
+	int getStringCharCount(const std::string &var);
+
+	std::pair<int, int> getLineAndPos(int iPos);
+	std::vector<CCRect> getZZCRect();
 
 private:
     
 	CAScrollView* m_pContainerView;
 
 	CAView* m_pCursorMark;
-
-	CAScale9ImageView* m_pBackgroundView;
 
 	CAImageView* m_pImageView;
 
@@ -208,13 +230,14 @@ private:
 	int m_iLineHeight;
 	std::vector<TextViewLineInfo> m_vLinesTextView;
 	std::pair<int, int> m_curSelCharRange;
-    bool m_isTouchInSide;
 	bool m_bUpdateImage;
     eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;
 
 	CATextSelViewEx* m_pTextSelView;
 	CATextArrowView* m_pTextArrView;
+    
+    CCPoint m_pCurPosition;
 };
 
 

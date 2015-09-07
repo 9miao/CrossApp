@@ -3,7 +3,9 @@
 #include "ccMacros.h"
 #include "CAApplication.h"
 #include "support/data_support/utlist.h"
+#include "support/data_support/ccCArray.h"
 #include "cocoa/CCSet.h"
+
 
 using namespace std;
 

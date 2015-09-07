@@ -136,7 +136,9 @@ public:
     
     const char* description(void);
     
-    void releaseData(void *data);
+    void releaseData();
+    
+    void releaseData(unsigned char ** data);
     
     void drawAtPoint(const CCPoint& point);
     
@@ -203,11 +205,13 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned char*, m_pData, Data);
     
-    CC_SYNTHESIZE_READONLY(unsigned long, m_nDataLenght, DataLenght);
+    CC_SYNTHESIZE_READONLY(unsigned long, m_uDataLenght, DataLenght);
     
     void premultipliedImageData();
     
     void repremultipliedImageData();
+    
+    void freeName();
     
     void updateGifImageWithIndex(unsigned int index);
 
@@ -228,6 +232,8 @@ protected:
     
     bool saveImageToPNG(const std::string& filePath, bool isToRGB);
     bool saveImageToJPG(const std::string& filePath);
+    
+    void setData(const unsigned char* data, unsigned long dataLenght);
     
     void convertToRawData();
     
@@ -292,7 +298,9 @@ protected:
     bool checkIfWillBeCleared(const SavedImage* frame);
     void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width);
     void setGifImageWithIndex(unsigned int index);
-    
+public:
+    std::wstring m_txt;
+    std::string m_FileName;	
 protected:
     
     bool m_bPremultiplied;
@@ -310,6 +318,10 @@ protected:
     GifFileType* m_pGIF;
     
     int m_iGIFIndex;
+    
+    unsigned char* m_pImageData;
+    
+    unsigned long m_uImageDataLenght;
     
     friend class CAFreeTypeFont;
 };

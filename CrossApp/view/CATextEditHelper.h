@@ -172,7 +172,18 @@ private:
 	CAImageView* m_pArrowView;
 };
 
+class CC_DLL CATextResponder
+{
+public:
+	CATextResponder();
+	virtual ~CATextResponder();
 
+	virtual void resignResponder() = 0;
+
+	void resignAllResponder(CATextResponder* pCurExcept);
+private:
+	static std::vector<CATextResponder*> s_AllTextResponder;
+};
 
 
 NS_CC_END

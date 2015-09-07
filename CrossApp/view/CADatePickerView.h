@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by dai xinping on 14-8-4.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
+//  Copyright (c) 2014年 CrossApp. All rights reserved.
 //
 
 #ifndef __CrossApp__CADatePickerView__
@@ -59,7 +59,7 @@ protected:
     virtual unsigned int numberOfRowsInComponent(CAPickerView* pickerView, unsigned int component);
     virtual float widthForComponent(CAPickerView* pickerView, unsigned int component);
     virtual float rowHeightForComponent(CAPickerView* pickerView, unsigned int component);
-    virtual CCString* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
+    virtual const char* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
     
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
     void setMode(CADatePickerMode mode);

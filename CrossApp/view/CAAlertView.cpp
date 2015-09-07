@@ -237,7 +237,7 @@ void CAAlertView::showAlertView() {
 		scrollView->setShowsHorizontalScrollIndicator(false);
 		scrollView->setShowsVerticalScrollIndicator(true);
 		scrollView->setBounceHorizontal(false);
-		scrollView->setViewSize(CCSizeMake(ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight * 1.1 + m_fAlertViewTitleHeight + alertViewSpaceHeight* 1.5));
+		scrollView->setViewSize(CADipSize(ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight * 1.1 + m_fAlertViewTitleHeight + alertViewSpaceHeight* 1.5));
 		m_pBackView->addSubview(scrollView);
 
 		CCAssert(m_pTitleLabel, "");
@@ -427,9 +427,9 @@ void CAAlertView::show()
 	}
     
     this->setAlpha(0);
-    m_pBackView->setScale(0.7f);
+    m_pBackView->setScale(0.5f);
     CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDuration(0.1f);
+    CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
     this->setAlpha(1.0f);
     m_pBackView->setScale(1.0f);
@@ -441,11 +441,11 @@ void CAAlertView::hide()
     s_vAlertViewCaches.eraseObject(this);
 
     CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDuration(0.1f);
+    CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
     CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAAlertView::removeFromSuperview));
     this->setAlpha(0.0f);
-    m_pBackView->setScale(0.7f);
+    m_pBackView->setScale(0.5f);
     CAViewAnimation::commitAnimations();
 }
 

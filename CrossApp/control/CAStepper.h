@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by dai xinping on 14-8-15.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
+//  Copyright (c) 2014年 CrossApp. All rights reserved.
 //
 
 #ifndef __CrossApp__CAStepper__
@@ -96,11 +96,14 @@ private:
     CAImageView* m_pDividerImageView;
     
 private:
-    enum ActionType{
+    
+    enum ActionType
+    {
         ActionNone,
         ActionIncrease,
         ActionDecrease
     };
+    
     int m_actionType;
 };
 

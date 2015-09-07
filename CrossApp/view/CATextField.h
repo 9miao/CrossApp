@@ -44,6 +44,14 @@ enum eKeyBoardReturnType
     KEY_BOARD_RETURN_ENTER,
 };
 
+enum eTextEditAlign
+{
+	eTextEditAlignLeft,
+	eTextEditAlignCenter,
+	eTextEditAlignRight,
+};
+
+
 class CATextField;
 class CC_DLL CATextFieldDelegate
 {
@@ -61,17 +69,17 @@ public:
         return true;
     }
     
-	//If the sender doesn't want to insert the text, return true;
-    virtual bool onTextFieldInsertText(CATextField * sender, const char * text, int nLen)
+    //If the sender doesn't want to insert the text, return true;
+    virtual bool onTextFieldInsertText(CATextField * sender, const char * insText, int nLen, int nPosition)
     {
         CC_UNUSED_PARAM(sender);
-        CC_UNUSED_PARAM(text);
+        CC_UNUSED_PARAM(insText);
         CC_UNUSED_PARAM(nLen);
         return false;
     }
     
     //If the sender doesn't want to delete the delText, return true;
-    virtual bool onTextFieldDeleteBackward(CATextField * sender, const char * delText, int nLen)
+    virtual bool onTextFieldDeleteBackward(CATextField * sender, const char * delText, int nLen, int nPosition)
     {
         CC_UNUSED_PARAM(sender);
         CC_UNUSED_PARAM(delText);
@@ -83,12 +91,32 @@ public:
     
     
     virtual bool keyBoardCallBack(CATextField *sender) {return true;}
+    
+    
+    //If the sender doesn't want to insert the text, return true;
+    CC_DEPRECATED_ATTRIBUTE virtual bool onTextFieldInsertText(CATextField * sender, const char * insText, int nLen)
+    {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(insText);
+        CC_UNUSED_PARAM(nLen);
+        return false;
+    }
+    
+    //If the sender doesn't want to delete the delText, return true;
+    CC_DEPRECATED_ATTRIBUTE virtual bool onTextFieldDeleteBackward(CATextField * sender, const char * delText, int nLen)
+    {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(delText);
+        CC_UNUSED_PARAM(nLen);
+        return false;
+    }
 };
 
 
 class CC_DLL CATextField
 	: public CATouchView
 	, public CAIMEDelegate
+	, public CATextResponder
 {
 public:
     CATextField();
@@ -102,11 +130,13 @@ public:
     virtual bool resignFirstResponder();
     
     virtual bool becomeFirstResponder();
+
+	virtual void resignResponder();
     
     static CATextField* createWithFrame(const CCRect& frame);
     
     static CATextField* createWithCenter(const CCRect& rect);
-    
+
     bool init();
     
     CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
@@ -133,6 +163,7 @@ public:
     
 	CC_PROPERTY(int, m_iHoriMargins, HoriMargins);
 	CC_PROPERTY(int, m_iVertMargins, VertMargins);
+	CC_PROPERTY(eTextEditAlign, m_eTextEditAlign, TextEditAlign);
     
     inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
     
@@ -145,11 +176,10 @@ public:
     virtual void setImageRect(const CCRect& rect);
     
     virtual void updateImageRect();
-    
-
 
 protected:
     void updateImage();
+	int getDtStrLength();
     int getCursorX();
     int getStringViewLength();
     virtual bool attachWithIME();
@@ -167,6 +197,7 @@ protected:
     void showCursorMark();
     void hideCursorMark();
     void setCursorPosition();
+	void adjustCursorMove(bool forward = true);
     
     void analyzeString(const char * text, int len);
 	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
@@ -181,12 +212,6 @@ protected:
     virtual void getKeyBoardHeight(int height);
     virtual void getKeyBoradReturnCallBack();
     virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-
-    void adjustCursorMoveBackward();
-    void adjustCursorMoveForward();
-
-    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
-    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
     
 	CCRect getZZCRect(bool* l=NULL, bool* r=NULL);
 	bool execCurSelCharRange();
@@ -214,12 +239,11 @@ private:
 
     bool m_bMoved;
 	int m_iLabelWidth;
-	int m_iString_left_offX;
 	int m_iString_l_length;
 	int m_iString_r_length;
+	int m_iString_o_length;
 	int m_iFontHeight;
 
-    bool m_isTouchInSide;
 	CAView* m_pCursorMark;
 	CAView* m_pTextViewMark;
 	CCSize m_cImageSize;

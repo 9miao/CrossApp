@@ -31,11 +31,8 @@ NS_CC_BEGIN
 class CACamera;
 class CCPoint;
 class CATouch;
-class CCAction;
 class CARGBAProtocol;
-class CCActionManager;
 class CCComponent;
-class CCDictionary;
 class CAImage;
 class CAViewDelegate;
 class CABatchView;
@@ -230,24 +227,6 @@ public:
     virtual CAView* copy();
     
 public:
-
-    virtual void setActionManager(CCActionManager* actionManager);
- 
-    virtual CCActionManager* getActionManager();
-    
-    CCAction* runAction(CCAction* action);
-    
-    void stopAllActions(void);
-    
-    void stopAction(CCAction* action);
-    
-    void stopActionByTag(int tag);
-    
-    CCAction* getActionByTag(int tag);
-    
-    unsigned int numberOfRunningActions(void);
-    
-public:
     
     void transform(void);
     
@@ -374,8 +353,6 @@ protected:
     
     virtual void setImageRect(const CCRect& rect);
     
-    virtual void setImageRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
-    
     virtual void setImageCoords(CCRect rect);
     
     virtual void setVertexRect(const CCRect& rect);
@@ -435,8 +412,6 @@ protected:
     
     unsigned int m_uOrderOfArrival;     ///< used to preserve sequence while sorting children with the same zOrder
     
-    CCActionManager *m_pActionManager;  ///< a pointer to ActionManager singleton, which is used to handle all the actions
-    
     bool m_bRunning;                    ///< is running
     
     bool m_bTransformDirty;             ///< transform dirty flag
@@ -467,7 +442,7 @@ protected:
     bool   m_bRectRotated;                      /// Whether the Image is rotated
     
 
-    CCPoint m_obUnflippedOffsetPositionFromCenter;
+    bool m_bIsAnimation;
     
     // vertex coords, Image coords and color info
     ccV3F_C4B_T2F_Quad m_sQuad;

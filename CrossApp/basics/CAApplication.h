@@ -117,6 +117,8 @@ public:
      /** reshape projection matrix when canvas has been change"*/
     void reshapeProjection(const CCSize& newWindowSize);
     
+    inline const CAStatusBarStyle& getStatusBarStyle() { return m_eStatusBarStyle; }
+    void setStatusBarStyle(const CAStatusBarStyle& var);
     /** Sets the glViewport*/
     void setViewport();
 
@@ -224,7 +226,7 @@ public:
     
     // Memory Helper
 
-    /** Removes cached all cocos2d cached data.
+    /** Removes cached all CrossApp cached data.
      It will purge the CAImageCache, CCSpriteFrameCache, CCLabelBMFont cache
      @since v0.99.3
      */
@@ -249,11 +251,6 @@ public:
     bool isDrawing() {return (m_nDrawCount > 0);}
     
 public:
-
-    /** CCActionManager associated with this director
-     @since v2.0
-     */
-    CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
 
     /** CATouchDispatcher associated with this director
      @since v2.0
@@ -346,23 +343,15 @@ protected:
     /* Projection protocol delegate */
     CAApplicationDelegate *m_pProjectionDelegate;
     
+    CAStatusBarStyle m_eStatusBarStyle;
+    
     int m_nDrawCount;
     
     // CCEGLViewProtocol will recreate stats labels to fit visible rect
     friend class CCEGLViewProtocol;
 };
 
-/** 
- @brief DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
- 
- Features and Limitations:
-  - Scheduled timers & drawing are synchronizes with the refresh rate of the display
-  - Only supports animation intervals of 1/60 1/30 & 1/15
- 
- @since v0.8.2
- @js NA
- @lua NA
- */
+
 class CCDisplayLinkDirector : public CAApplication
 {
 public:
@@ -382,8 +371,8 @@ protected:
 // end of base_node group
 /// @}
 
-static inline float _px(float dip) { return dip * CAApplication::getApplication()->getAdaptationRatio(); }
-static inline float _dip(float px) { return px / CAApplication::getApplication()->getAdaptationRatio(); }
+static inline long _px(float dip) { return (long)dip * CAApplication::getApplication()->getAdaptationRatio(); }
+static inline long _dip(float px) { return (long)px / CAApplication::getApplication()->getAdaptationRatio(); }
 
 NS_CC_END
 

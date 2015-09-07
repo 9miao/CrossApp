@@ -45,7 +45,13 @@ ccc4Int(unsigned int rgba)
 static inline int
 getIntFormColor4B(const CAColor4B& color)
 {
-    return (color.r + color.g * 0xff + color.b * 0xffff + color.a * 0xffffff);
+    return (color.r + color.g * 0x100 + color.b * 0x10000 + color.a * 0x1000000);
+}
+
+static inline unsigned int
+getUIntFormColor4B(const CAColor4B& color)
+{
+    return (color.r + color.g * 0x100 + color.b * 0x10000 + color.a * 0x1000000);
 }
 
 //CAColor4B predefined colors
@@ -331,6 +337,12 @@ typedef struct
     float delay;
     CCSize size; 
 } CAAnimationFrameData;
+
+typedef enum
+{
+    CAStatusBarStyleDefault          = 0, // Dark content, for use on light backgrounds
+    CAStatusBarStyleLightContent     = 1, // Light content, for use on dark backgrounds
+}CAStatusBarStyle;
 
 /**
  * This header is used for defining event types using in CANotificationCenter

@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
-#ifndef __CrossAppx__CABar__
-#define __CrossAppx__CABar__
+#ifndef __CrossApp__CABar__
+#define __CrossApp__CABar__
 
 #include <iostream>
 #include "view/CAView.h"
@@ -33,7 +33,7 @@ class CC_DLL CANavigationBar
     
 public:
     
-    CREATE_FUNC(CANavigationBar);
+    static CANavigationBar* create(const CCSize& size = CCSizeZero);
 
 public:
     
@@ -41,7 +41,7 @@ public:
     
     virtual ~CANavigationBar();
     
-    virtual bool init();
+    virtual bool init(const CCSize& size = CCSizeZero);
     
     virtual void onEnterTransitionDidFinish();
     
@@ -80,6 +80,8 @@ protected:
     void updateNavigationBar();
     
 protected:
+    
+    CAView* m_pContentView;
     
     CAView* m_pTitle;
     
@@ -121,13 +123,19 @@ protected:
     
 };
 
+typedef enum
+{
+    CABarVerticalAlignmentTop = 0,
+    CABarVerticalAlignmentBottom
+}CABarVerticalAlignment;
+
 class CC_DLL CATabBar
 :public CAView
 {
     
 public:
     
-    static CATabBar* create(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
+    static CATabBar* create(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
     
 	void setItems(const CAVector<CATabBarItem*>& items);
     
@@ -137,7 +145,7 @@ public:
     
     virtual ~CATabBar();
 
-    virtual bool init(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero);
+    virtual bool init(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
     
     CC_PROPERTY(CAImage*, m_pBackGroundImage, BackGroundImage);
     
@@ -159,7 +167,7 @@ public:
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CATabBarItem*>, m_pItems, Items);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CADipSize, m_cItemSize, ItemSize);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_cItemSize, ItemSize);
     
     CC_SYNTHESIZE_READONLY(int, m_nSelectedIndex, SelectedIndex);
     
@@ -189,6 +197,8 @@ protected:
     
     bool m_bShowIndicator;
     
+    CABarVerticalAlignment m_eVerticalAlignment;
+    
     CATabBarItem* m_pSelectedItem;
 
     CAView* m_pBackGroundView;
@@ -205,4 +215,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__CrossAppx__CABar__) */
+#endif /* defined(__CrossApp__CABar__) */

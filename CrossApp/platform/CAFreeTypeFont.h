@@ -57,7 +57,7 @@ typedef struct FontBufferInfo
 	unsigned char*  pBuffer;  
 	unsigned long  size;
 	int face_index;
-	bool isOpenTypeFont;
+
 } FontBufferInfo;
 
 typedef struct FTLineInfo
@@ -151,7 +151,6 @@ protected:
 	bool m_bBold;
 	bool m_bItalics;
 	bool m_bUnderLine;
-	bool m_bOpenTypeFont;
 };
 
 NS_CC_END

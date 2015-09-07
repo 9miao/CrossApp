@@ -63,8 +63,9 @@ void CDNewsAboutTableCell::initWithCell()
     this->addSubview(sw);
 }
 
-CDNewsAboutController::CDNewsAboutController(){
-    
+CDNewsAboutController::CDNewsAboutController()
+{
+
 }
 
 CDNewsAboutController::~CDNewsAboutController()

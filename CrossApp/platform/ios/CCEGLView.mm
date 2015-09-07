@@ -67,7 +67,7 @@ void CCEGLView::setIMEKeyboardDefault()
 void CCEGLView::setIMEKeyboardAlphabet()
 {
     EAGLView * view = [EAGLView sharedEGLView];
-    view.textfield.keyboardType = UIKeyboardTypeASCIICapable;
+    view.textfield.keyboardType = UIKeyboardTypeEmailAddress;
 }
 CCEGLView* CCEGLView::sharedOpenGLView()
 {

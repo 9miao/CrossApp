@@ -205,6 +205,7 @@ void CAProgress::setContentSize(const CCSize & var)
     m_pTarckImageView->setFrame(this->getBounds());
     CCRect rect = CCRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
     m_pProgressImageView->setFrame(rect);
+    this->setProgress(m_fProgress);
 }
 
 NS_CC_END

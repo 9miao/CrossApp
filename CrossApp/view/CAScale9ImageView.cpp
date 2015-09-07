@@ -302,7 +302,7 @@ void CAScale9ImageView::updateCapInset()
     {
         for (int i=0; i<9; i++)
         {
-            m_pImageView[i]->setImageRect(m_rFrame[i], false, m_rFrame[i].size);
+            m_pImageView[i]->setImageRect(m_rFrame[i]);
         }
         this->updatePositions();
     }

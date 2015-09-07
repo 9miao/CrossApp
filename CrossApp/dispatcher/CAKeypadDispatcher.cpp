@@ -93,8 +93,8 @@ bool CAKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 
     m_bLocked = true;
 
-    std::vector<CAObject*>::iterator itr;
-    for (itr=m_vDelegates.begin(); itr!=m_vDelegates.end(); itr++)
+    std::vector<CAObject*>::reverse_iterator itr;
+    for (itr=m_vDelegates.rbegin(); itr!=m_vDelegates.rend(); itr++)
     {
         pHandler = dynamic_cast<CAKeypadHandler*>(*itr);
         pDelegate = pHandler->getDelegate();

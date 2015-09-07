@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 http://9miao.com All rights reserved.
 //
 
-#ifndef __CrossAppx__CABarItem__
-#define __CrossAppx__CABarItem__
+#ifndef __CrossApp__CABarItem__
+#define __CrossApp__CABarItem__
 
 #include <iostream>
 
@@ -60,6 +60,8 @@ public:
     bool initWithCustomView(CAView* customView);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pHighlightedImage, HighlightedImage);
+    
+    CC_SYNTHESIZE(unsigned int, m_uItemWidth, ItemWidth);
     
     CC_SYNTHESIZE_READONLY(CAView*, m_pCustomView, CustomView);
     
@@ -137,4 +139,4 @@ public:
 NS_CC_END
 
 
-#endif /* defined(__CrossAppx__CABarItem__) */
+#endif /* defined(__CrossApp__CABarItem__) */

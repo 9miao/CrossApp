@@ -10,7 +10,7 @@
 #include "CDWebViewController.h"
 
 extern int page_index;
-
+float temp_time = 0;
 CDNewsTableCell::CDNewsTableCell()
 :theTitle(NULL),
 theDesc(NULL),
@@ -50,32 +50,25 @@ void CDNewsTableCell::selectedTableViewCell()
 void CDNewsTableCell::initWithCell()
 {
     CADipSize _size = this->getFrame().size;
-    theTitle = CALabel::createWithFrame(CADipRect(240,
-                                                       20,
-                                                       _size.width/2+50,
-                                                       40));
+    theTitle = CALabel::createWithFrame(CADipRect(240, 20, _size.width/2+50, 40));
     theTitle->setColor(CAColor_black);
     theTitle->setTextAlignment(CATextAlignmentLeft);
     theTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
     theTitle->setFontSize(_px(32));
-    theTitle->setBold(true);
     theTitle->setTag(100);
     this->getContentView()->addSubview(theTitle);
     
-    theDesc = CALabel::createWithFrame(CADipRect(240,
-                                                      80,
-                                                      _size.width/2,
-                                                      40));
+    theDesc = CALabel::createWithFrame(CADipRect(240, 65, _size.width/2, 40));
     theDesc->setColor(CAColor_black);
     theDesc->setTextAlignment(CATextAlignmentLeft);
     theDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
     theDesc->setFontSize(_px(24));
     theDesc->setTag(102);
-    theDesc->setColor(ccc4(180,180,180,255));
+    theDesc->setColor(CAColor_gray);
     theDesc->setLineSpacing(10);
     this->getContentView()->addSubview(theDesc);
     
-    theImage = CommonUrlImageView::createWithCenter(CADipRect(120,_size.height/2,200,_size.height-40));
+    theImage = CommonUrlImageView::createWithCenter(CADipRect(120, _size.height/2, 200, _size.height-40));
     theImage->setTag(101);
     theImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     theImage->setImage(CAImage::create("image/HelloWorld.png"));
@@ -112,7 +105,7 @@ void CDNewsViewController::viewDidLoad()
         std::map<std::string,
         std::string> key_value;
         char temurl[200];
-        sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=1&tag=%s",menuTag[urlID]);
+        sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=1&tag=%s",menuTag[urlID]);
         CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                    CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
         
@@ -171,7 +164,7 @@ void CDNewsViewController::buttonCallBack(CAControl* btn,CCPoint point)
     std::map<std::string,
     std::string> key_value;
     char temurl[200];
-    sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=1&tag=%s",menuTag[urlID]);
+    sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=1&tag=%s",menuTag[urlID]);
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     {
@@ -391,17 +384,32 @@ CATableViewCell* CDNewsViewController::tableCellAtIndex(CATableView* table, cons
 
 void CDNewsViewController::tableViewWillDisplayCellAtIndex(CATableView* table, CATableViewCell* cell, unsigned int section, unsigned int row)
 {
-    if (cell != NULL){
-        cell->getContentView()->setScale(0.5f);
-        cell->getContentView()->setRotation(180);
+    /*
+    if (cell != NULL)
+    {
+        temp_time+=0.02f;
         CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.25f);
-        CAViewAnimation::setAnimationDelay(0.1f);
+        CAViewAnimation::setAnimationDuration(temp_time);
+        CAViewAnimation::setAnimationDidStopSelector(this,CAViewAnimation0_selector(CDNewsViewController::tempCallBack));
+        CAViewAnimation::commitAnimations();
+        
+        cell->getContentView()->setScale(0.8f);
+        cell->getContentView()->setRotationY(-180);
+        
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.3f);
+        CAViewAnimation::setAnimationDelay(temp_time);
         cell->getContentView()->setScale(1.0f);
-        cell->getContentView()->setRotation(0);
+        cell->getContentView()->setRotationY(0);
         //执行动画
         CAViewAnimation::commitAnimations();
     }
+  */
+}
+
+void CDNewsViewController::tempCallBack()
+{
+    temp_time-=0.02f;
 }
 
 unsigned int CDNewsViewController::numberOfSections(CATableView *table)
@@ -424,7 +432,7 @@ void CDNewsViewController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollVie
     std::map<std::string,
     std::string> key_value;
     char temurl[200];
-    sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=1&tag=%s",menuTag[urlID]);
+    sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=1&tag=%s",menuTag[urlID]);
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     CATabBarItem* item = this->getTabBarItem();
@@ -441,7 +449,7 @@ void CDNewsViewController::scrollViewFooterBeginRefreshing(CAScrollView* view)
     std::string> key_value;
     char temurl[200];
     p_section++;
-    sprintf(temurl, "http://123.183.220.246:8090/getdemocon/?num=%d&tag=%s",p_section,menuTag[urlID]);
+    sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=%d&tag=%s",p_section,menuTag[urlID]);
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRefreshRequestFinished));
 }

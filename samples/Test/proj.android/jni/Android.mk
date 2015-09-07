@@ -37,8 +37,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_extension_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-#$(call import-add-path, $(LOCAL_PATH)/../../../..)
-#$(call import-add-path, $(LOCAL_PATH)/../../../../CrossApp/the_third_party/)
+$(call import-add-path, $(LOCAL_PATH)/../../../..)
+$(call import-add-path, $(LOCAL_PATH)/../../../../CrossApp/the_third_party/)
 
 $(call import-module,CrossApp)
 $(call import-module,CrossApp/the_third_party/curl/prebuilt/android)

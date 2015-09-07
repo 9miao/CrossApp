@@ -1,6 +1,6 @@
 //
 //  CASlider.m
-//  CrossAppx
+//  CrossApp 
 //
 //  Created by juguanhui on 14-5-30.
 //  Copyright (c) 2014年 CrossApp-x. All rights reserved.
@@ -44,6 +44,15 @@ CASlider::~CASlider()
 void CASlider::onExitTransitionDidStart()
 {
     CAControl::onExitTransitionDidStart();
+    
+    m_pMinTrackTintImageView->removeFromSuperview();
+    m_pMinTrackTintImageView = NULL;
+    
+    m_pMaxTrackTintImageView->removeFromSuperview();
+    m_pMaxTrackTintImageView = NULL;
+    
+    m_pThumbTintImageView->removeFromSuperview();
+    m_pThumbTintImageView = NULL;
 }
 
 void CASlider::onEnterTransitionDidFinish()

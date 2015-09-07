@@ -68,7 +68,7 @@ protected:
 class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
-    // nHandler return by tolua_ref_function(), called from LuaCocos2d.cpp
+
     static CCSchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
     ~CCSchedulerScriptHandlerEntry(void);
     
@@ -214,7 +214,7 @@ public:
 
 /**
  CCScriptEngineManager is a singleton which holds an object instance of CCScriptEngineProtocl
- It helps cocos2d-x and the user code to find back LuaEngine object
+ It helps CrossApp and the user code to find back LuaEngine object
  @since v0.99.5-x-0.8.5
  @js NA
  @lua NA

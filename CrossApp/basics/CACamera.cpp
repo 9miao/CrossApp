@@ -1,14 +1,10 @@
 
 
 #include "CACamera.h"
-#include "cocoa/CCString.h"
 #include "CCGL.h"
-
 #include "view/CADrawingPrimitives.h"
 #include "CAApplication.h"
 #include "kazmath/GL/matrix.h"
-
-using namespace std;
 
 NS_CC_BEGIN
 
@@ -19,12 +15,12 @@ CACamera::CACamera(void)
 
 CACamera::~CACamera(void)
 {
-    
+
 }
 
 const char* CACamera::description(void)
 {
-    return CCString::createWithFormat("<CACamera | center = (%.2f,%.2f,%.2f)>", m_fCenterX, m_fCenterY, m_fCenterZ)->getCString();
+    return crossapp_format_string("<CACamera | center = (%s, %s, %s)>", m_fCenterX, m_fCenterY, m_fCenterZ).c_str();
 }
 
 void CACamera::init(void)

@@ -1,4 +1,4 @@
-﻿//
+//
 //  CAPickerView.h
 //  CrossApp
 //
@@ -34,14 +34,14 @@ public:
     
     virtual float rowHeightForComponent(CAPickerView* pickerView, unsigned int component) {return 0;}
 
-    virtual CCString* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
+    virtual const char* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
 
     virtual CAView* viewForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
     
     virtual CAView* viewForSelect(CAPickerView* pickerView, unsigned int component, const CCSize& size) {return NULL;}
 };
 
-class CC_DLL CAPickerView : public CAView, public CATableViewDataSource , public CATableViewDelegate
+class CC_DLL CAPickerView : public CAView, public CATableViewDataSource , public CATableViewDelegate, public CAScrollViewDelegate
 {
 public:
     static CAPickerView* create();
@@ -104,7 +104,7 @@ protected:
     virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
-    
+    virtual void scrollViewDidEndDragging(CAScrollView* view);
 private:
 
 	CAVector<CATableView*> m_tableViews;
