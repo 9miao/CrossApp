@@ -1,24 +1,15 @@
-//
-//  CAVideoPlayerDecoder.cpp
-//  CrossApp
-//
-//  Created by dai xinping on 14-10-30.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
-//
-
 #include <vector>
 #include <map>
 #include <sstream>
 #include <stdarg.h>
 #include <stdio.h>
-
 #include "CAVideoPlayerDecoder.h"
-
 #include "SDL.h"
 
 NS_CC_BEGIN
 
-extern "C" {
+extern "C" 
+{
 #include "libavformat/avformat.h"
 #include "libavcodec/avcodec.h"
 #include "libswscale/swscale.h"
@@ -26,9 +17,12 @@ extern "C" {
 #include "libavutil/pixdesc.h"
 }
 
+
+
 #pragma mark - static
 
-static void FFLog(void* context, int level, const char* pszFormat, va_list args) {
+static void FFLog(void* context, int level, const char* pszFormat, va_list args) 
+{
     printf("CrossApp: ");
     char szBuf[16*1024+1] = {0};
     vsnprintf(szBuf, kMaxLogLen, pszFormat, args);
@@ -62,6 +56,7 @@ static const char* errorMessage(VPError errorCode)
         case kErrorUnknown:
             return "Unknown";
     }
+	return NULL;
 }
 
 #ifdef DEBUG
@@ -117,7 +112,7 @@ static void testConvertYUV420pToRGB(AVFrame * frame, unsigned char *outbuf, int 
     
     for (int y = 0; y < height; y += 2) {
         
-        unsigned char char *dst1 = outbuf + y       * linesize;
+        unsigned char *dst1 = outbuf + y       * linesize;
         unsigned char *dst2 = outbuf + (y + 1) * linesize;
         
         unsigned char *py1  = pY  +  y       * linesizeY;
@@ -464,7 +459,11 @@ float VPDecoder::getDuration()
         return 0;
     }
     if (_formatCtx->duration == AV_NOPTS_VALUE) {
-        return MAXFLOAT;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+		return FLT_MAX;
+#else
+		return MAXFLOAT;
+#endif
     }
     return (float)_formatCtx->duration / AV_TIME_BASE;
 }
@@ -937,9 +936,6 @@ VPError VPDecoder::openAudioStream(int audioStream)
     SDL_AudioSpec wanted_spec, spec;
     long long wanted_channel_layout = 0;
     int wanted_nb_channels = codecCtx->channels;
-    /*  SDL支持的声道数为 1, 2, 4, 6 */
-    /*  后面我们会使用这个数组来纠正不支持的声道数目 */
-    const int next_nb_channels[] = { 0, 0, 1, 6, 2, 6, 4, 6 };
         
     if (!wanted_channel_layout || wanted_nb_channels != av_get_channel_layout_nb_channels(wanted_channel_layout)) {
         wanted_channel_layout = av_get_default_channel_layout(wanted_nb_channels);
@@ -959,9 +955,13 @@ VPError VPDecoder::openAudioStream(int audioStream)
     wanted_spec.userdata = this;                    // 传给上面回调函数的外带数据
     
     /*  打开音频设备，这里使用一个while来循环尝试打开不同的声道数(由上面 */
-    /*  next_nb_channels数组指定）直到成功打开，或者全部失败 */
     while (SDL_OpenAudio(&wanted_spec, &spec) < 0) {
         CCLog("SDL_OpenAudio (%d channels): %s\n", wanted_spec.channels, SDL_GetError());
+		/*  SDL支持的声道数为 1, 2, 4, 6 */
+		/*  后面我们会使用这个数组来纠正不支持的声道数目 */
+		/*  next_nb_channels数组指定）直到成功打开，或者全部失败 */
+		const int next_nb_channels[] = { 0, 0, 1, 6, 2, 6, 4, 6 };
+
         wanted_spec.channels = next_nb_channels[MIN(7, wanted_spec.channels)];
         if (!wanted_spec.channels) {
             CCLog("No more channel combinations to tyu, audio open failed\n");
@@ -1630,31 +1630,5 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
     return result;
 }
 
-#pragma mark - VPSubtitleASSParser
-
-VPSubtitleASSParser::VPSubtitleASSParser()
-{
-    
-}
-
-VPSubtitleASSParser::~VPSubtitleASSParser()
-{
-    
-}
-
-CAVector<CAObject*>* VPSubtitleASSParser::parseEvents(std::string events)
-{
-    return NULL;
-}
-
-CAVector<CAObject*>* VPSubtitleASSParser::parseDialogue(std::string dialogue, unsigned int numFields)
-{
-    return NULL;
-}
-
-std::string VPSubtitleASSParser::removeCommandsFromEventText(std::string text)
-{
-    return "";
-}
 
 NS_CC_END

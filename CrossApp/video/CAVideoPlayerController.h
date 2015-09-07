@@ -2,8 +2,10 @@
 //  CAVideoPlayerController.h
 //  CrossApp
 //
-//  Created by dai xinping on 14-10-30.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
+//  Created by dai xinping on 14-11-6.
+//  Modified by zhujian on 15-9-6
+//
+//  Copyright (c) 2015年 http://www.9miao.com. All rights reserved.
 //
 
 #ifndef __CrossApp__CAVideoPlayerController__
@@ -31,8 +33,8 @@ public:
 };
 
 
-class CAVideoPlayerController : public CAViewController {
-    
+class CC_DLL CAVideoPlayerController : public CAViewController
+{
 public:
     CAVideoPlayerController();
     virtual ~CAVideoPlayerController();
@@ -103,12 +105,9 @@ protected:
 protected:
     virtual void viewDidLoad();
     virtual void viewDidUnload();
-    virtual void prepare();
+    virtual void prepare(float);
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
     bool interruptDecoder();
     bool setMovieDecoder();
@@ -129,7 +128,7 @@ protected:
     void setDecoderPosition(float position);
     void setMoviePosition(float position);
     void updatePosition(float position, bool playing);
-    void gotoWantedMoviePosition();
+    void gotoWantedMoviePosition(float);
     
     void dispearHUDView();
     void showHUDView();
@@ -146,7 +145,7 @@ protected:
     void onButtonPause(CAControl* control, CCPoint point);
     void onCheckExit(float dt);
     void buildHUD();
-    void updateHUD();
+    void updateHUD(float);
     void onSlideTouched(CAControl* control, CCPoint point);
     void onSlideChanged(CAControl* control, CCPoint point);
     

@@ -2,8 +2,10 @@
 //  CAVideoPlayerDecoder.h
 //  CrossApp
 //
-//  Created by dai xinping on 14-10-30.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
+//  Created by dai xinping on 14-11-6.
+//  Modified by zhujian on 15-9-6
+//
+//  Copyright (c) 2015年 http://www.9miao.com. All rights reserved.
 //
 
 #ifndef __CrossApp__CAVideoPlayerDecoder__
@@ -18,7 +20,8 @@
 
 NS_CC_BEGIN
 
-extern "C" {
+extern "C" 
+{
     struct AVFormatContext;
     struct AVCodecContext;
     struct AVFrame;
@@ -40,13 +43,12 @@ typedef enum {
     kErrorSetupScaler,
     kErrorReSampler,
     kErrorUnsupported,
-    
     kErrorUnknown
     
 } VPError;
 
-typedef enum {
-    
+typedef enum 
+{
     kFrameTypeAudio,
     kFrameTypeVideo,
     kFrameTypeArtwork,
@@ -54,15 +56,15 @@ typedef enum {
     
 } VPFrameType;
 
-typedef enum {
-    
+typedef enum 
+{
     kVideoFrameFormatRGB,
     kVideoFrameFormatYUV,
     
 } VPVideoFrameFormat;
 
-class VPFrame : public CAObject {
-    
+class VPFrame : public CAObject 
+{
 public:
     VPFrame();
     ~VPFrame();
@@ -94,8 +96,8 @@ public:
 
 };
 
-class VPVideoFrameRGB : public VPVideoFrame {
-    
+class VPVideoFrameRGB : public VPVideoFrame 
+{
 public:
     VPVideoFrameRGB();
     ~VPVideoFrameRGB();
@@ -107,8 +109,8 @@ public:
     CAImage* asImage();
 };
 
-class VPVideoFrameYUV : public VPVideoFrame {
-    
+class VPVideoFrameYUV : public VPVideoFrame
+{
 public:
     VPVideoFrameYUV();
     ~VPVideoFrameYUV();
@@ -122,8 +124,8 @@ public:
     
 };
 
-class VPArtworkFrame : public VPFrame {
-    
+class VPArtworkFrame : public VPFrame 
+{
 public:
     VPArtworkFrame();
     ~VPArtworkFrame();
@@ -134,8 +136,8 @@ public:
     CAImage* asImage();
 };
 
-class VPSubtitleFrame : public VPFrame {
-
+class VPSubtitleFrame : public VPFrame 
+{
 public:
     VPSubtitleFrame();
     ~VPSubtitleFrame();
@@ -150,12 +152,11 @@ typedef void (CAObject::*SEL_DecoderAudioCallback)(unsigned char *stream, int le
 #define decoder_audio_selector(_SELECTOR) (SEL_DecoderAudioCallback)(&_SELECTOR)
 
 
-class VPDecoder {
-
+class VPDecoder 
+{
 public:
     VPDecoder();
     ~VPDecoder();
-    
     
 public:
     
@@ -267,18 +268,6 @@ private:
     VPVideoFrame* handleVideoFrame();
     VPAudioFrame* handleAudioFrame();
     VPSubtitleFrame* handleSubtitle(AVSubtitle *pSubtitle);
-};
-
-
-class VPSubtitleASSParser : public CAObject {
-
-public:
-    VPSubtitleASSParser();
-    ~VPSubtitleASSParser();
-    
-    static CAVector<CAObject*>* parseEvents(std::string events);
-    static CAVector<CAObject*>* parseDialogue(std::string dialogue, unsigned int numFields);
-    static std::string removeCommandsFromEventText(std::string text);
 };
 
 NS_CC_END

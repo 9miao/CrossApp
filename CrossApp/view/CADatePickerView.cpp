@@ -298,6 +298,12 @@ float CADatePickerView::rowHeightForComponent(CAPickerView* pickerView, unsigned
     return rowHeight;
 }
 
+
+const char* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
+{
+	return 0;
+}
+/*
 CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
     char buff[256] = {0};
@@ -363,7 +369,7 @@ CCString* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int r
     }
     return CCString::create(std::string(buff));
 }
-
+*/
 void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
     switch (m_eMode)

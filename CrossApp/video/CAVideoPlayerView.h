@@ -2,8 +2,10 @@
 //  CAVideoPlayerView.h
 //  CrossApp
 //
-//  Created by dai xinping on 14-10-27.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
+//  Created by dai xinping on 14-11-6.
+//  Modified by zhujian on 15-9-6
+//
+//  Copyright (c) 2015年 http://www.9miao.com. All rights reserved.
 //
 
 #ifndef __CrossApp__CAVideoPlayerView__
@@ -16,9 +18,10 @@
 #include "CAVideoPlayerDecoder.h"
 
 NS_CC_BEGIN
+
 class VPDecoder;
-class CAVideoPlayerView : public CAView {
-        
+class CC_DLL CAVideoPlayerView : public CAView 
+{
 public:
     CAVideoPlayerView(VPDecoder* decoder);
     ~CAVideoPlayerView();
@@ -30,29 +33,14 @@ public:
     virtual bool init();
     virtual void visit();
     virtual void draw();
-    virtual bool initWithFrame(const CCRect& rect);
-    virtual bool initWithCenter(const CCRect& rect);
     virtual void setContentSize(const CCSize& size);
     virtual void setImageCoords(CCRect rect);
     virtual void updateImageRect();
     
     virtual void setCurrentFrame(VPVideoFrame* frame);
     
-    virtual void setDecoder(VPDecoder* decoder);
         
-protected:
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);    
-    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-
-    
-private:
-    enum {
-        ATTRIBUTE_VERTEX,
-        ATTRIBUTE_TEXCOORD,
-    };
-    
+   
 private:
     GLuint          _program;
     GLint           _uniformMatrix;
@@ -62,16 +50,10 @@ private:
     VPFrameRender   *_renderer;
     VPVideoFrame    *_currFrame;
     
-    CAImageView     *_image;
-    
     CCRect          _pictRect;
     
 private:
     bool loadShaders();
-    
-private:
-    double m_elapsed;               // 用于帧率控制
-
 };
 
 NS_CC_END
