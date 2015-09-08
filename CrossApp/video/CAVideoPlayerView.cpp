@@ -1,38 +1,28 @@
-//
-//  CAVideoPlayerView.cpp
-//  CrossApp
-//
-//  Created by dai xinping on 14-10-27.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
-//
-
 #include "CAVideoPlayerView.h"
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
+#include "view/CADrawingPrimitives.h"
 
 NS_CC_BEGIN
 
 CAVideoPlayerView::CAVideoPlayerView(VPDecoder* decoder)
 : _renderer(NULL)
 , _currFrame(NULL)
-, _image(NULL)
 {
-    m_elapsed = 0;
     _decoder = decoder;
 }
 
 CAVideoPlayerView::~CAVideoPlayerView()
 {
-    if (_renderer) {
-        delete _renderer;
-    }
+	CC_SAFE_DELETE(_renderer);
     CC_SAFE_RELEASE(_currFrame);
 }
 
 CAVideoPlayerView* CAVideoPlayerView::create(VPDecoder* decoder)
 {
     CAVideoPlayerView* view = new CAVideoPlayerView(decoder);
-    if (view && view->init()) {
+    if (view && view->init()) 
+	{
         view->autorelease();
         return view;
     }
@@ -43,7 +33,8 @@ CAVideoPlayerView* CAVideoPlayerView::create(VPDecoder* decoder)
 CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const CCRect &rect, VPDecoder* decoder)
 {
     CAVideoPlayerView* view = new CAVideoPlayerView(decoder);
-    if (view && view->initWithCenter(rect)) {
+    if (view && view->initWithCenter(rect))
+	{
         view->autorelease();
         return view;
     }
@@ -55,7 +46,8 @@ CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const CCRect &rect, VPDec
 CAVideoPlayerView* CAVideoPlayerView::createWithFrame(const CCRect &rect, VPDecoder* decoder)
 {
     CAVideoPlayerView* view = new CAVideoPlayerView(decoder);
-    if (view && view->initWithFrame(rect)) {
+    if (view && view->initWithFrame(rect)) 
+	{
         view->autorelease();
         return view;
     }
@@ -72,39 +64,20 @@ bool CAVideoPlayerView::init()
     
     setColor(ccc4(0, 0, 0, 255));
     
-//    _decoder->setupVideoFrameFormat(kVideoFrameFormatYUV);
-    
-    if (_decoder->setupVideoFrameFormat(kVideoFrameFormatYUV)) {
+    if (_decoder->setupVideoFrameFormat(kVideoFrameFormatYUV)) 
+	{
         _renderer = new VPFrameRenderYUV();
-    } else {
+    }
+	else 
+	{
         _renderer = new VPFrameRenderRGB();
     }
-            
-    if (!_renderer->loadShaders()) {
+
+    if (!_renderer->loadShaders()) 
+	{
         delete _renderer;
         return false;
     }
-    
-    CCLog("OK setup GL");
-    
-    return true;
-}
-
-bool CAVideoPlayerView::initWithFrame(const CCRect &rect)
-{
-    if (!CAView::initWithFrame(rect)) {
-        return false;
-    }
-        
-    return true;
-}
-
-bool CAVideoPlayerView::initWithCenter(const CCRect &rect)
-{
-    if (!CAView::initWithFrame(rect)) {
-        return false;
-    }
-        
     return true;
 }
 
@@ -112,8 +85,8 @@ void CAVideoPlayerView::setContentSize(const CCSize& size)
 {
     CAView::setContentSize(size);
     
-    CCRect pictureRect = _renderer->updateVertices(_decoder->getFrameWidth(), _decoder->getFrameHeight(),
-                                                   getFrame().size.width, getFrame().size.height);
+    CCRect pictureRect = _renderer->updateVertices(
+		_decoder->getFrameWidth(), _decoder->getFrameHeight(), getFrame().size.width, getFrame().size.height);
     
     _pictRect = pictureRect;
     setImageRect(_pictRect);
@@ -121,24 +94,10 @@ void CAVideoPlayerView::setContentSize(const CCSize& size)
 
 void CAVideoPlayerView::setImageCoords(CCRect rect)
 {
-
-//    float atlasWidth = (float)_decoder->getFrameWidth();
-//    float atlasHeight = (float)_decoder->getFrameHeight();
-    
-    float left, right, top, bottom;
+    float left = 0, right = 1, top = 0, bottom = 1;
     
     if (m_bRectRotated)
     {
-//        left    = rect.origin.x/atlasWidth;
-//        right    = (rect.origin.x+rect.size.height) / atlasWidth;
-//        top        = rect.origin.y/atlasHeight;
-//        bottom    = (rect.origin.y+rect.size.width) / atlasHeight;
-
-        left    = 0;
-        right   = 1;
-        top     = 0;
-        bottom  = 1;
-
         if (m_bFlipX)
         {
             CC_SWAP(top, bottom, float);
@@ -160,16 +119,6 @@ void CAVideoPlayerView::setImageCoords(CCRect rect)
     }
     else
     {
-//        left    = rect.origin.x/atlasWidth;
-//        right    = (rect.origin.x + rect.size.width) / atlasWidth;
-//        top        = rect.origin.y/atlasHeight;
-//        bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
-
-        left    = 0;
-        right   = 1;
-        top     = 0;
-        bottom  = 1;        
-        
         if(m_bFlipX)
         {
             CC_SWAP(left,right,float);
@@ -214,7 +163,7 @@ void CAVideoPlayerView::visit()
     updateDraw();
 }
 
-#include "view/CADrawingPrimitives.h"
+
 void CAVideoPlayerView::draw()
 {
     long offset = (long)&m_sQuad;
@@ -229,31 +178,6 @@ void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
     CC_SAFE_RELEASE_NULL(_currFrame);
     _currFrame = frame;
     CC_SAFE_RETAIN(_currFrame);
-}
-
-void CAVideoPlayerView::setDecoder(VPDecoder *decoder)
-{
-    _decoder = decoder;
-}
-
-bool CAVideoPlayerView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
-{
-    return false;
-}
-
-void CAVideoPlayerView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
-{
-    
-}
-
-void CAVideoPlayerView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
-{
-    
-}
-
-void CAVideoPlayerView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
-{
-    
 }
 
 
