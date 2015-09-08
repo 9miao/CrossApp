@@ -44,6 +44,10 @@ public:
     /**
      * @lua NA
      */
+    virtual void touchesScrollWheel(CCSet* touches, CAEvent* pEvent) = 0;
+    /**
+     * @lua NA
+     */
     virtual ~CCEGLTouchDelegate() {}
 };
 
@@ -132,6 +136,10 @@ public:
      * @lua NA
      */
     virtual void touchesCancelled(CCSet* touches, CAEvent* pEvent);
+    /**
+     * @lua NA
+     */
+    virtual void touchesScrollWheel(CCSet* touches, CAEvent* pEvent);
     
 protected:
 
