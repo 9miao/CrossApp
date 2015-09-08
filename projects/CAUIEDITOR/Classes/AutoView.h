@@ -18,7 +18,24 @@ typedef enum
     ViewTypeCAScale9ImageView,
     ViewTypeCALabel,
     ViewTypeCAButton,
-    ViewTypeCASegmentControl
+    ViewTypeCASegmentControl,
+    ViewTypeCATabBar,
+    viewTypeCAIndicator,
+    viewTypeCAProgress,
+    viewTypeCASlider,
+    viewTypeCASwitch,
+    viewTypeCAStepper,
+    viewTypeCAWebView,
+    viewTypeCAFlashView,
+    viewTypeCAGifView,
+    viewTypeCAPickerView,
+    viewTypeCATextField,
+    viewTypeCATextView,
+    viewTypeCAPageView,
+    viewTypeCAColectionView,
+    viewTypeCATableView,
+    viewTypeCAListView,
+    viewTypeCAScrollView
 }ViewType;
 
 enum AutoPoint
@@ -32,6 +49,41 @@ enum AutoPoint
     Right_Up,
     Center_Up,
     None
+};
+
+enum ShowType{
+    show_normal = 0,
+    show_LR2
+};
+
+struct dataModel
+{
+    int tag;
+    int parentid;
+    int controlType;
+    int fontsize;
+    int type;
+    
+    float ix;
+    float iy;
+    float iw;
+    float ih;
+    float iz;
+    
+    string name;
+    string imageNormal;
+    string imageHighted;
+    string imageDisabled;
+    string imageSelected;
+    string titleNormal;
+    string titleHighted;
+    string titleDisabled;
+    string titleSelected;
+    
+    CAColor4B titleColorNormal;
+    CAColor4B titleColorHighted;
+    CAColor4B titleColorDisabled;
+    CAColor4B titleColorSelected;
 };
 
 class AutoViewDelegate
@@ -73,13 +125,14 @@ public:
 protected:
     
     void draw();
-    
+public:
+    dataModel m_DM;
 protected:
-    
     CAView* m_pView;
     AutoPoint m_eAutoPoint;
     CCPoint touchBegin_point;
     ViewType m_viewtype;
+    ShowType m_showType;
 };
 
 #endif /* AutoView_cpp */

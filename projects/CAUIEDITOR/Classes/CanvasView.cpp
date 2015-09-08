@@ -131,7 +131,6 @@ void CanvasView::visit()
     kmGLPopMatrix();
 }
 
-
 bool CanvasView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     CAView::ccTouchBegan(pTouch, pEvent);
@@ -249,30 +248,39 @@ void CanvasView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     
     if (this->getSubviews().size()>0) {
         if (m_TempAutoView && m_TempAutoView->getEditing()) {
+            CAView* tempview = m_TempAutoView->getBackGroundViewForState(CAControlStateNormal);
             switch (m_TempAutoPoint) {
                 case AutoPoint::Left_Up:
-                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x+temp_x,m_TempRect.origin.y+temp_y,m_TempRect.size.width-temp_x,m_TempRect.size.height-temp_y));
+                    tempview->setFrame(CCRect(m_TempRect.origin.x+temp_x,m_TempRect.origin.y+temp_y,m_TempRect.size.width-temp_x,m_TempRect.size.height-temp_y));
+                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x+temp_x,m_TempRect.origin.y+temp_y,tempview->getFrame().size.width,tempview->getFrame().size.height));
                     break;
                 case AutoPoint::Left_Center:
-                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x+temp_x,m_TempRect.origin.y,m_TempRect.size.width-temp_x,m_TempRect.size.height));
+                    tempview->setFrame(CCRect(m_TempRect.origin.x+temp_x,m_TempRect.origin.y,m_TempRect.size.width-temp_x,m_TempRect.size.height));
+                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x+temp_x,m_TempRect.origin.y,tempview->getFrame().size.width,tempview->getFrame().size.height));
                     break;
                 case AutoPoint::Left_Down:
-                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x+temp_x,m_TempRect.origin.y,m_TempRect.size.width-temp_x,m_TempRect.size.height+temp_y));
+                    tempview->setFrame(CCRect(m_TempRect.origin.x+temp_x,m_TempRect.origin.y,m_TempRect.size.width-temp_x,m_TempRect.size.height+temp_y));
+                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x+temp_x,m_TempRect.origin.y,tempview->getFrame().size.width,tempview->getFrame().size.height));
                     break;
                 case AutoPoint::Center_Down:
-                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y,m_TempRect.size.width,m_TempRect.size.height+temp_y));
+                    tempview->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y,m_TempRect.size.width,m_TempRect.size.height+temp_y));
+                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y,tempview->getFrame().size.width,tempview->getFrame().size.height));
                     break;
                 case AutoPoint::Right_Down:
-                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y,m_TempRect.size.width+temp_x,m_TempRect.size.height+temp_y));
+                    tempview->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y,m_TempRect.size.width+temp_x,m_TempRect.size.height+temp_y));
+                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y,tempview->getFrame().size.width,tempview->getFrame().size.height));
                     break;
                 case AutoPoint::Right_Center:
-                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y,m_TempRect.size.width+temp_x,m_TempRect.size.height));
+                    tempview->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y,m_TempRect.size.width+temp_x,m_TempRect.size.height));
+                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y,tempview->getFrame().size.width,tempview->getFrame().size.height));
                     break;
                 case AutoPoint::Right_Up:
-                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y+temp_y,m_TempRect.size.width+temp_x,m_TempRect.size.height-temp_y));
+                    tempview->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y+temp_y,m_TempRect.size.width+temp_x,m_TempRect.size.height-temp_y));
+                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y+temp_y,tempview->getFrame().size.width,tempview->getFrame().size.height));
                     break;
                 case AutoPoint::Center_Up:
-                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y+temp_y,m_TempRect.size.width,m_TempRect.size.height-temp_y));
+                    tempview->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y+temp_y,m_TempRect.size.width,m_TempRect.size.height-temp_y));
+                    m_TempAutoView->setFrame(CCRect(m_TempRect.origin.x,m_TempRect.origin.y+temp_y,tempview->getFrame().size.width,tempview->getFrame().size.height));
                     break;
                 case AutoPoint::None:
                     m_TempAutoView->setFrameOrigin(CCPoint(m_TempRect.origin.x+temp_x,m_TempRect.origin.y+temp_y));

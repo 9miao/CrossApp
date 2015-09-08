@@ -551,6 +551,11 @@ void CATouchDispatcher::touchesCancelled(CCSet *touches, CAEvent *pEvent)
     m_bLocked = false;
 }
 
+void CATouchDispatcher::touchesScrollWheel(CCSet* touches, CAEvent* pEvent)
+{
+
+}
+
 int CATouchDispatcher::getTouchCount()
 {
     return (int)m_vTouchControllers.size();
