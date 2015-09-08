@@ -24,6 +24,8 @@
 
 NS_CC_BEGIN
 
+class CATempTypeFont;
+class CAEmojiFont;
 
 typedef struct _TextAttribute
 {

@@ -23,7 +23,7 @@ struct StrICmpLess
 static map<std::string, FontBufferInfo, StrICmpLess> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
 static CATempTypeFont s_TempFont;
-static CAEmojiFont s_EmojiFont;
+static CAEmojiFont* s_EmojiFont = NULL;
 
 #define ITALIC_LEAN_VALUE (0.3f)
 
@@ -44,12 +44,12 @@ CAFreeTypeFont::CAFreeTypeFont()
 , m_bBold(false)
 , m_bItalics(false)
 , m_bUnderLine(false)
-, m_bOpenTypeFont(false)
 {
 	m_ItalicMatrix.xx = 0x10000L;
 	m_ItalicMatrix.xy = ITALIC_LEAN_VALUE * 0x10000L;
 	m_ItalicMatrix.yx = 0;
 	m_ItalicMatrix.yy = 0x10000L;
+
 }
 
 CAFreeTypeFont::~CAFreeTypeFont() 
@@ -77,10 +77,7 @@ CAImage* CAFreeTypeFont::initWithString(const std::string& pText, const std::str
 	std::u16string cszTemp;
 	std::string cszNewText = pText;
 
-	if (m_bOpenTypeFont)
-	{
-		s_TempFont.initTempTypeFont(nSize);
-	}
+	s_TempFont.initTempTypeFont(nSize);
 _AgaginInitGlyphs:
 	m_inWidth = inWidth;
 	m_inHeight = inHeight;
@@ -173,9 +170,7 @@ _AgaginInitGlyphs:
 	CAImage* image = new CAImage();
 	if (!image->initWithRawData(pData, emoji ? CAImage::PixelFormat_RGBA8888 : CAImage::PixelFormat_A8, width, height))
 	{
-		delete[]pData;
-		delete image;
-		return NULL;
+        CC_SAFE_RELEASE_NULL(image);
 	}
 	delete[]pData;
 
@@ -457,7 +452,12 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, bool emoji, unsigned char* pBu
         FT_Glyph image = glyph->image;
 		if (image == NULL)
 		{
-			CAImage* pEmoji = CAImage::scaleToNewImageWithImage(s_EmojiFont.getEmojiImage(glyph->c, m_inFontSize), CCSizeMake(m_inFontSize,m_inFontSize));
+            if (s_EmojiFont == NULL)
+            {
+                s_EmojiFont = new CAEmojiFont();
+            }
+            
+			CAImage* pEmoji = CAImage::scaleToNewImageWithImage(s_EmojiFont->getEmojiImage(glyph->c, m_inFontSize), CCSizeMake(m_inFontSize,m_inFontSize));
 
 			FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
 			FT_Int y = (FT_Int)(pen->y - m_inFontSize);
@@ -767,7 +767,7 @@ FT_Error CAFreeTypeFont::initGlyphsLine(const std::string& line)
 				}
 				prev = pos > prev ? pos : pos + 1;
 			}
-			if (prev <= line.length())
+			if (prev < line.length())
 			{
 				addWord(line.substr(prev, std::string::npos));
 			}
@@ -796,7 +796,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	glyphs.reserve(utf32String.size());
 
 	FT_Bool useKerning = FT_HAS_KERNING(m_face);
-
+    FT_Bool useOpenTypeFont = FT_Get_Char_Index(m_face, 97) == 0;
 	for (int n = 0; n < utf32String.size(); n++)
 	{
 		FT_ULong c = utf32String[n];
@@ -811,13 +811,17 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		glyph_index = FT_Get_Char_Index(m_face, c);
 		glyph->index = glyph_index;
 		glyph->isOpenType = (glyph_index == 0);
-		if (glyph_index == 0 && m_bOpenTypeFont)
+		if (glyph_index == 0 && useOpenTypeFont)
 		{
 			glyph_index = FT_Get_Char_Index(s_TempFont.m_CurFontFace, c);
 		}
 		if (glyph_index == 0)
 		{
-			if (s_EmojiFont.isEmojiCodePoint(c))
+            if (s_EmojiFont == NULL)
+            {
+                s_EmojiFont = new CAEmojiFont();
+            }
+			if (s_EmojiFont->isEmojiCodePoint(c))
 			{
 				glyph->isOpenType = false;
 				glyph->isEmoji = true;
@@ -1108,7 +1112,6 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
 	{
 		ttfIndex = ittFontNames->second.face_index;
 		*size = ittFontNames->second.size;
-		m_bOpenTypeFont = ittFontNames->second.isOpenTypeFont;
 		return ittFontNames->second.pBuffer;
 	}
 
@@ -1177,7 +1180,6 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         {
             fontName = "/system/fonts/NotoSansHans-Regular.otf";
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
-			m_bOpenTypeFont = true;
         }
 #endif
 	}
@@ -1186,7 +1188,6 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
 	info.pBuffer = pBuffer;
 	info.size = *size;
 	info.face_index = ttfIndex;
-	info.isOpenTypeFont = m_bOpenTypeFont;
 	s_fontsNames[path] = info;
 	return pBuffer;
 }
