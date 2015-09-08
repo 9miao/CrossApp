@@ -299,12 +299,13 @@ void CASegmentedControl::refreshAllLable()
         CCSize size = m_vSegments.at(i)->getBounds().size;
         CCSize contentOffset = m_vContentOffset.at(i);
         CALabel* label = m_vTitles.at(i);
-		if(label!=NULL){
-			label->setCenter(CCRect(size.width*0.5f + contentOffset.width,
+        if(label != NULL)
+        {
+            label->setCenter(CCRect(size.width*0.5f + contentOffset.width,
                                     size.height*0.5f + contentOffset.height,
                                     size.width,
                                     size.height));
-		}
+        }
     }
 }
 
