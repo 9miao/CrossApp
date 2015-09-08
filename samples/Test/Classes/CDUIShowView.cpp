@@ -11,6 +11,7 @@
 #include "CrossAppExt.h"
 
 USING_NS_CC;
+USING_NS_CC_EXT;
 
 std::vector<std::string> sectionTitle;
 
@@ -1592,7 +1593,7 @@ void CDUIShowView::showScrollView()
 
 void CDUIShowView::showFlashView()
 {
-    CrossApp::extension::CAFlashView* swfBg = CrossApp::extension::CAFlashView::createWithFlash(CrossApp::extension::CAFlash::createWithFilePath("image/swfWK.swf"));
+    CAFlashView* swfBg = CAFlashView::createWithFlash(CAFlash::createWithFilePath("image/swfWK.swf"));
     swfBg->setFrame(CADipRect(100, 100, winSize.width/2, winSize.height/2));
     swfBg->runAnimation();
     swfBg->setRepeatForever(true);
