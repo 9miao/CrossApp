@@ -226,6 +226,7 @@ namespace StringUtils {
 
 
 CC_DLL bool UTF8ToUTF32(const std::string& utf8, std::u32string& outUtf32);
+CC_DLL bool UTF32ToUTF8(const std::u32string& utf32, std::string& outUtf8);
 /**
  *  @brief Converts utf8 string to utf16 string
  *  @param utf8 The utf8 string to be converted

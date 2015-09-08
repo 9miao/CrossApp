@@ -3,7 +3,9 @@
 //  CrossApp
 //
 //  Created by dai xinping on 14-11-6.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
+//  Modified by zhujian on 15-9-6
+//
+//  Copyright (c) 2015年 http://www.9miao.com. All rights reserved.
 //
 
 #ifndef __CrossApp__CAVideoPlayerRender__
@@ -18,7 +20,8 @@
 NS_CC_BEGIN
 
 class VPVideoFrame;
-class VPFrameRender {    
+class VPFrameRender 
+{    
 public:
     VPFrameRender();
     virtual ~VPFrameRender();
@@ -36,11 +39,6 @@ public:
     
 protected:
     
-    enum {
-        ATTRIBUTE_VERTEX,
-        ATTRIBUTE_TEXCOORD,
-    };
-
     GLuint _program;
     GLint  _uniformMatrix;
     GLfloat _vertices[8];
@@ -50,8 +48,8 @@ protected:
     std::string _key;
 };
 
-class VPFrameRenderRGB : public VPFrameRender {
-    
+class VPFrameRenderRGB : public VPFrameRender 
+{
     GLint _uniformSampler;
     GLuint _texture;
 
@@ -67,8 +65,8 @@ public:
     virtual const char* key();
 };
 
-class VPFrameRenderYUV : public VPFrameRender {
-    
+class VPFrameRenderYUV : public VPFrameRender 
+{
     GLint _uniformSamplers[3];
     GLuint _textures[3];
     

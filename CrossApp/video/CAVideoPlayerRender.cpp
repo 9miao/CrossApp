@@ -1,11 +1,3 @@
-//
-//  CAVideoPlayerRender.cpp
-//  CrossApp
-//
-//  Created by dai xinping on 14-11-6.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
-//
-
 #include "CAVideoPlayerRender.h"
 
 #include "CAVideoPlayerDecoder.h"
@@ -17,127 +9,69 @@ NS_CC_BEGIN
 
 #pragma mark - shaders
 
-//const char* vertexShaderString = 
-//#include "CAVideoPlayerShaderVert.h"
-//
-//const char* rgbFragmentShaderString = 
-//#include "CAVideoPlayerShaderFragRGB.h"
-//
-//const char* yuvFragmentShaderString = 
-//#include "CAVideoPlayerShaderFragYUV.h"
 
-#define STRINGIZE(x) #x
-#define STRINGIZE2(x) STRINGIZE(x)
-#define SHADER_STRING(text) STRINGIZE2(text)
+const char* vertexShaderString = 
+"													\n\
+attribute vec4 a_position;							\n\
+attribute vec2 a_texCoord;							\n\
+attribute vec4 a_color;								\n\
+													\n\
+#ifdef GL_ES										\n\
+varying lowp vec4 v_fragmentColor;					\n\
+varying mediump vec2 v_texCoord;					\n\
+#else												\n\
+varying vec4 v_fragmentColor;						\n\
+varying vec2 v_texCoord;							\n\
+#endif												\n\
+void main()											\n\
+{													\n\
+	gl_Position = CC_MVPMatrix * a_position;		\n\
+	v_fragmentColor = a_color;						\n\
+	v_texCoord = a_texCoord;						\n\
+}													\n\
+";
 
-//const char* vertexShaderString = SHADER_STRING
-//(
-// attribute vec4 position;
-// attribute vec2 texcoord;
-// uniform mat4 modelViewProjectionMatrix;
-// varying vec2 v_texcoord;
-// 
-// void main()
-// {
-//     gl_Position = modelViewProjectionMatrix * position;
-//     v_texcoord = texcoord.xy;
-// }
-//);
 
-const char* vertexShaderString = SHADER_STRING
-(
- attribute vec4 a_position;
- attribute vec2 a_texCoord;
- attribute vec4 a_color;
+const char* rgbFragmentShaderString =
+"													\n\
+#ifdef GL_ES										\n\
+precision lowp float;								\n\
+#endif												\n\
+varying vec4 v_fragmentColor;						\n\
+varying vec2 v_texCoord;							\n\
+uniform sampler2D CC_Texture0;						\n\
+void main()											\n\
+{													\n\
+	gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);	\n\
+}													\n\
+";
 
-#ifdef GL_ES
- varying lowp vec4 v_fragmentColor;
- varying mediump vec2 v_texCoord;
-#else
- varying vec4 v_fragmentColor;
- varying vec2 v_texCoord;
-#endif
- void main() 
- {
-    gl_Position = CC_MVPMatrix * a_position;
-    v_fragmentColor = a_color;
-    v_texCoord = a_texCoord;
- }
-);
 
-//const char* rgbFragmentShaderString = SHADER_STRING
-//(
-// varying highp vec2 v_texcoord;
-// uniform sampler2D s_texture;
-// 
-// void main()
-// {
-//     gl_FragColor = texture2D(s_texture, v_texcoord);
-// }
-//);
-
-const char* rgbFragmentShaderString = SHADER_STRING
-(
-#ifdef GL_ES
- precision lowp float;
-#endif
- varying vec4 v_fragmentColor;
- varying vec2 v_texCoord;
- uniform sampler2D CC_Texture0;
- void main()
- {
-    gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
- }
-);
-
-//const char* yuvFragmentShaderString = SHADER_STRING
-//(
-// varying highp vec2 v_texcoord;
-// uniform sampler2D s_texture_y;
-// uniform sampler2D s_texture_u;
-// uniform sampler2D s_texture_v;
-// 
-// void main()
-// {
-//     highp float y = texture2D(s_texture_y, v_texcoord).r;
-//     highp float u = texture2D(s_texture_u, v_texcoord).r - 0.5;
-//     highp float v = texture2D(s_texture_v, v_texcoord).r - 0.5;
-//     
-//     highp float r = y +             1.402 * v;
-//     highp float g = y - 0.344 * u - 0.714 * v;
-//     highp float b = y + 1.772 * u;
-//     
-//     gl_FragColor = vec4(r,g,b,1.0); 
-// }
-//);
-
-const char* yuvFragmentShaderString = SHADER_STRING
-(
-#ifdef GL_ES
- precision lowp float;
-#endif
- varying vec4 v_fragmentColor;
- varying highp vec2 v_texCoord;
-
- uniform sampler2D s_texture_y;
- uniform sampler2D s_texture_u;
- uniform sampler2D s_texture_v;
-
- void main()
- {
-     highp float y = texture2D(s_texture_y, v_texCoord).r;
-     highp float u = texture2D(s_texture_u, v_texCoord).r - 0.5;
-     highp float v = texture2D(s_texture_v, v_texCoord).r - 0.5;
-     
-     highp float r = y +             1.402 * v;
-     highp float g = y - 0.344 * u - 0.714 * v;
-     highp float b = y + 1.772 * u;
-     
-     gl_FragColor = vec4(r,g,b,1.0); 
- }
-
-);
-
+const char* yuvFragmentShaderString =
+"													\n\
+#ifdef GL_ES										\n\
+precision lowp float;								\n\
+#endif												\n\
+varying vec4 v_fragmentColor;						\n\
+varying highp vec2 v_texCoord;						\n\
+													\n\
+uniform sampler2D s_texture_y;						\n\
+uniform sampler2D s_texture_u;						\n\
+uniform sampler2D s_texture_v;						\n\
+													\n\
+void main()											\n\
+{													\n\
+	highp float y = texture2D(s_texture_y, v_texCoord).r;			\n\
+	highp float u = texture2D(s_texture_u, v_texCoord).r - 0.5;		\n\
+	highp float v = texture2D(s_texture_v, v_texCoord).r - 0.5;		\n\
+													\n\
+	highp float r = y +             1.402 * v;		\n\
+	highp float g = y - 0.344 * u - 0.714 * v;		\n\
+	highp float b = y + 1.772 * u;					\n\
+													\n\
+	gl_FragColor = vec4(r,g,b,1.0);					\n\
+}													\n\
+";
 
 
 static bool validateProgram(GLuint prog)
@@ -203,14 +137,14 @@ static GLuint compileShader(GLenum type, const char* sources)
     return shader;
 }
 
-static void mat4f_LoadOrtho(float left, float right, float bottom, float top, float near, float far, float* mout)
+static void mat4f_LoadOrtho(float left, float right, float bottom, float top, float fnear, float far, float* mout)
 {
     float r_l = right - left;
     float t_b = top - bottom;
-    float f_n = far - near;
+    float f_n = far - fnear;
     float tx = - (right + left) / (right - left);
     float ty = - (top + bottom) / (top - bottom);
-    float tz = - (far + near) / (far - near);
+    float tz = - (far + fnear) / (far - fnear);
     
     mout[0] = 2.0f / r_l;
     mout[1] = 0.0f;
@@ -437,7 +371,7 @@ VPFrameRender::~VPFrameRender()
 
 bool VPFrameRender::loadShaders()
 {
-    CAGLProgram* pProgram = CAShaderCache::sharedShaderCache()->programForKey("CAVideoPlayerRenderYUV");
+	CAGLProgram* pProgram = CAShaderCache::sharedShaderCache()->programForKey("CAVideoPlayerRenderYUV");
     if (!pProgram) {
         pProgram = new CAGLProgram();
         pProgram->initWithVertexShaderByteArray(vertexShaderString, yuvFragmentShaderString);
@@ -453,7 +387,7 @@ bool VPFrameRender::loadShaders()
         pProgram->release();
     }
     
-    pProgram = CAShaderCache::sharedShaderCache()->programForKey("CAVideoPlayerRenderRGB");
+	pProgram = CAShaderCache::sharedShaderCache()->programForKey("CAVideoPlayerRenderRGB");
     if (!pProgram) {
         pProgram = new CAGLProgram();
         pProgram->initWithVertexShaderByteArray(vertexShaderString, rgbFragmentShaderString);
@@ -469,65 +403,12 @@ bool VPFrameRender::loadShaders()
         pProgram->release();
     }
     
-    pProgram = CAShaderCache::sharedShaderCache()->programForKey(key());
+	pProgram = CAShaderCache::sharedShaderCache()->programForKey(key());
     if (pProgram) {
         resolveUniforms(pProgram->getProgram());
     }
-    
     return true;
 }
-//{
-//    bool result = true;
-//    GLuint vertShader = 0, fragShader = 0;
-//    
-//    _program = glCreateProgram();
-//    
-//    vertShader = compileShader(GL_VERTEX_SHADER, vertexShaderString);
-//    if (!vertShader)
-//        goto exit;
-//    
-//    fragShader = compileShader(GL_FRAGMENT_SHADER, fragmentShader());
-//    if (!fragShader)
-//        goto exit;
-//    
-//    glAttachShader(_program, vertShader);
-//    glAttachShader(_program, fragShader);
-//    glBindAttribLocation(_program, ATTRIBUTE_VERTEX, "position");
-//    glBindAttribLocation(_program, ATTRIBUTE_TEXCOORD, "texcoord");
-//    
-//    glLinkProgram(_program);
-//    
-//    GLint status;
-//    glGetProgramiv(_program, GL_LINK_STATUS, &status);
-//    if (status == GL_FALSE) {
-//        CCLog("Failed to link program %d", _program);
-//        goto exit;
-//    }
-//    
-////    result = validateProgram(_program);
-//    
-//    _uniformMatrix = glGetUniformLocation(_program, "modelViewProjectionMatrix");
-//    resolveUniforms(_program);
-//    
-//exit:
-//    
-//    if (vertShader)
-//        glDeleteShader(vertShader);
-//    if (fragShader)
-//        glDeleteShader(fragShader);
-//    
-//    if (result) {
-//        
-//        CCLog("OK setup GL programm");
-//        
-//    } else {
-//        
-//        glDeleteProgram(_program);
-//        _program = 0;
-//    }
-//    
-//    return result;
-//}
 
 #include "kazmath/GL/matrix.h"
 
@@ -560,25 +441,25 @@ void VPFrameRender::draw(VPVideoFrame *frame, long offset)
         return;
     }
     
-    if (prepareRender()) {
-        
+    if (prepareRender())
+    {
+
     #define kQuadSize sizeof(ccV3F_C4B_T2F)
-        
+
         ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
-        
+
         // vertex
         int diff = offsetof( ccV3F_C4B_T2F, vertices);
         glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-        
+
         // texCoods
         diff = offsetof( ccV3F_C4B_T2F, texCoords);
         glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-        
+
         // color
         diff = offsetof( ccV3F_C4B_T2F, colors);
         glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
-        
 //        GLfloat modelviewProj[16];
 //        mat4f_LoadOrtho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, modelviewProj);
 //        glUniformMatrix4fv(_uniformMatrix, 1, GL_FALSE, modelviewProj);
@@ -587,7 +468,7 @@ void VPFrameRender::draw(VPVideoFrame *frame, long offset)
 //        glEnableVertexAttribArray(ATTRIBUTE_VERTEX);
 //        glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, 0, 0, texCoords);
 //        glEnableVertexAttribArray(ATTRIBUTE_TEXCOORD);
-               
+
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
 }

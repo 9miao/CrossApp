@@ -1,11 +1,3 @@
-//
-//  CAVideoPlayerController.cpp
-//  CrossApp
-//
-//  Created by dai xinping on 14-10-30.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
-//
-
 #include "CAVideoPlayerController.h"
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
@@ -15,13 +7,6 @@
 #include "SDL.h"
 
 NS_CC_BEGIN
-
-//static bool            m_inited = false;
-//static bool            m_bNeedExit = false;
-//static pthread_t       m_thread;
-//static pthread_mutex_t m_vp_data_mutex;
-//static pthread_mutex_t m_vp_cond_mutex;
-//static pthread_cond_t  m_vp_cond;
 
 static string formatTimeInterval(float seconds, bool isLeft)
 {
@@ -61,26 +46,26 @@ static void* decodeProcess(void* param)
 
 void CAVideoPlayerController::lazyProcess()
 {
-    while (true) {
-        if (m_bNeedExit) {
-            break;
-        }
-        _decodeProcess();
-        if (m_bNeedExit) {
-            break;
-        }
-        pthread_mutex_lock(&m_vp_cond_mutex);
-        pthread_cond_wait(&m_vp_cond, &m_vp_cond_mutex);
-        pthread_mutex_unlock(&m_vp_cond_mutex);
-    }
-    
-    if (m_inited) {
-        pthread_mutex_destroy(&m_vp_data_mutex);
-        pthread_mutex_destroy(&m_vp_cond_mutex);
-        pthread_cond_destroy(&m_vp_cond);
-        m_inited = false;
-        m_bNeedExit = false;
-    }
+	while (true) {
+		if (m_bNeedExit) {
+			break;
+		}
+		_decodeProcess();
+		if (m_bNeedExit) {
+			break;
+		}
+		pthread_mutex_lock(&m_vp_cond_mutex);
+		pthread_cond_wait(&m_vp_cond, &m_vp_cond_mutex);
+		pthread_mutex_unlock(&m_vp_cond_mutex);
+	}
+
+	if (m_inited) {
+		pthread_mutex_destroy(&m_vp_data_mutex);
+		pthread_mutex_destroy(&m_vp_cond_mutex);
+		pthread_cond_destroy(&m_vp_cond);
+		m_inited = false;
+		m_bNeedExit = false;
+	}
 }
 
 void CAVideoPlayerController::lazyInit()
@@ -89,9 +74,7 @@ void CAVideoPlayerController::lazyInit()
         pthread_mutex_init(&m_vp_data_mutex, NULL);
         pthread_mutex_init(&m_vp_cond_mutex, NULL);
         pthread_cond_init(&m_vp_cond, NULL);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
         pthread_create(&m_thread, NULL, decodeProcess, (void*)this);
-#endif
         m_inited = true;
     }
 }
@@ -327,22 +310,8 @@ bool CAVideoPlayerController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     return false;
 }
 
-void CAVideoPlayerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
-{
-    
-}
 
-void CAVideoPlayerController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
-{
-    
-}
-
-void CAVideoPlayerController::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
-{
-    
-}
-
-void CAVideoPlayerController::prepare()
+void CAVideoPlayerController::prepare(float)
 {
     if (!_decoder) {
         return;
@@ -562,7 +531,7 @@ void CAVideoPlayerController::tick(float dt)
             if (_decoder->isEOF()) {
                 
                 pause();
-                updateHUD();
+                updateHUD(0);
                 return;
             }
             
@@ -799,7 +768,7 @@ void CAVideoPlayerController::onButtonPause(CrossApp::CAControl *control, CrossA
     }
 }
 
-void CAVideoPlayerController::updateHUD()
+void CAVideoPlayerController::updateHUD(float)
 {
     if (_disableUpdateHUD)
         return;
@@ -996,7 +965,7 @@ void CAVideoPlayerController::setDecoderPosition(float position)
     _decoder->setPosition(position);
 }
 
-void CAVideoPlayerController::gotoWantedMoviePosition()
+void CAVideoPlayerController::gotoWantedMoviePosition(float)
 {
     if (_decoder && !_decoding) {
         CAScheduler::unschedule(schedule_selector(CAVideoPlayerController::gotoWantedMoviePosition), this);
@@ -1047,7 +1016,7 @@ void CAVideoPlayerController::updatePosition(float position, bool playing)
         _disableUpdateHUD = false;
         setMoviePositionFromDecoder();
         presentFrame();
-        updateHUD();
+        updateHUD(0);
     }
     pthread_mutex_unlock(&m_vp_data_mutex);
 }

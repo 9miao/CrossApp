@@ -384,6 +384,8 @@
 		B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */; };
 		B0D7FA7E1B21506B004B2B86 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D7FA7C1B21506B004B2B86 /* libcrypto.a */; };
 		B0D7FA7F1B21506B004B2B86 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D7FA7D1B21506B004B2B86 /* libssl.a */; };
+		B0F61E211B9C402800BDCBAB /* CAEmojiFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */; };
+		B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */; };
 		EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */; };
 		EB9D562319E8DC2D0072BE8E /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */; };
 		EB9D562419E8DC2D0072BE8E /* JSViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */; };
@@ -754,6 +756,8 @@
 		B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAWebViewImpl.mm; sourceTree = "<group>"; };
 		B0D7FA7C1B21506B004B2B86 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../the_third_party/curl/prebuilt/ios/libcrypto.a; sourceTree = "<group>"; };
 		B0D7FA7D1B21506B004B2B86 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../the_third_party/curl/prebuilt/ios/libssl.a; sourceTree = "<group>"; };
+		B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAEmojiFont.cpp; sourceTree = "<group>"; };
+		B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
 		EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSViewController.cpp; sourceTree = "<group>"; };
@@ -1097,6 +1101,8 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */,
+				B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */,
 				B0C3BD451ADE7264009BE71A /* CAClipboard.h */,
 				B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */,
 				B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */,
@@ -1575,6 +1581,7 @@
 				3E0F75581B7DD0C4004CFD41 /* value.h in Headers */,
 				1551A71B158F2ADE00E66CFE /* CCCommon.h in Headers */,
 				B0ADAE821B2E7F1B00BE8FA3 /* CAListView.h in Headers */,
+				B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */,
 				1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */,
 				B0B553D7193485BE0065053D /* CAImage.h in Headers */,
 				B0C512ED19A341B700E6934B /* CACalendar.h in Headers */,
@@ -1822,6 +1829,7 @@
 				1551A74E158F2ADE00E66CFE /* platform.cpp in Sources */,
 				B0ADAE8F1B2E7F1B00BE8FA3 /* CATableView.cpp in Sources */,
 				1551A81A158F2ADF00E66CFE /* ccGLStateCache.cpp in Sources */,
+				B0F61E211B9C402800BDCBAB /* CAEmojiFont.cpp in Sources */,
 				1551A82C158F2ADF00E66CFE /* ccShaders.cpp in Sources */,
 				B0AF8DC11AFA257800A1A4E2 /* CAIOSTextField.m in Sources */,
 				B0B553D6193485BE0065053D /* CAImage.cpp in Sources */,
@@ -2001,7 +2009,7 @@
 					"\"$(SRCROOT)/../the_third_party/png/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
-					"\"$(SRCROOT)/../the_third_party/freetype/include/ios\"",
+					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -2042,7 +2050,7 @@
 					"\"$(SRCROOT)/../the_third_party/png/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
-					"\"$(SRCROOT)/../the_third_party/freetype/include/ios\"",
+					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 				);
 				LIBRARY_SEARCH_PATHS = (

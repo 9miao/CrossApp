@@ -324,6 +324,8 @@
 		B0C512E919A3127100E6934B /* CADatePickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512E519A3127100E6934B /* CADatePickerView.h */; };
 		B0C94CEE1B2A7BB60007FAEB /* CAGifView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C94CEC1B2A7BB60007FAEB /* CAGifView.cpp */; };
 		B0C94CEF1B2A7BB60007FAEB /* CAGifView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C94CED1B2A7BB60007FAEB /* CAGifView.h */; };
+		B0D890451B9D3A59004A0830 /* CAEmojiFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D890431B9D3A59004A0830 /* CAEmojiFont.cpp */; };
+		B0D890461B9D3A59004A0830 /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D890441B9D3A59004A0830 /* CAEmojiFont.h */; };
 		B0DA93F919D79B1A00E66E11 /* CATextView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DA93F719D79B1A00E66E11 /* CATextView.cpp */; };
 		B0DA93FA19D79B1A00E66E11 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0DA93F819D79B1A00E66E11 /* CATextView.h */; };
 		B0DAEED21B256B6D0011E87D /* CAGif.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DAEECE1B256B6D0011E87D /* CAGif.cpp */; };
@@ -656,6 +658,8 @@
 		B0C512E519A3127100E6934B /* CADatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADatePickerView.h; sourceTree = "<group>"; };
 		B0C94CEC1B2A7BB60007FAEB /* CAGifView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGifView.cpp; sourceTree = "<group>"; };
 		B0C94CED1B2A7BB60007FAEB /* CAGifView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGifView.h; sourceTree = "<group>"; };
+		B0D890431B9D3A59004A0830 /* CAEmojiFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAEmojiFont.cpp; sourceTree = "<group>"; };
+		B0D890441B9D3A59004A0830 /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
 		B0DA93F719D79B1A00E66E11 /* CATextView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextView.cpp; sourceTree = "<group>"; };
 		B0DA93F819D79B1A00E66E11 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
 		B0DAEECE1B256B6D0011E87D /* CAGif.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGif.cpp; sourceTree = "<group>"; };
@@ -902,6 +906,8 @@
 		04EAA0E21956D74D00198A8E /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B0D890431B9D3A59004A0830 /* CAEmojiFont.cpp */,
+				B0D890441B9D3A59004A0830 /* CAEmojiFont.h */,
 				B0C3BD401ADE70B3009BE71A /* CAClipboard.h */,
 				B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */,
 				B0A02FEC1A8D8E960005CB8F /* CATempTypeFont.h */,
@@ -1488,6 +1494,7 @@
 				04EABA741956D75A00198A8E /* precompiledshaders.h in Headers */,
 				3E2154591B8180340075448E /* writer.h in Headers */,
 				3E2154581B8180340075448E /* value.h in Headers */,
+				B0D890461B9D3A59004A0830 /* CAEmojiFont.h in Headers */,
 				B047B91919E9181800F24BE6 /* JSViewController.h in Headers */,
 				04EABA761956D75A00198A8E /* base64.h in Headers */,
 				B074A8B81A722B5200F34F79 /* CAViewAnimation.h in Headers */,
@@ -1701,6 +1708,7 @@
 				04EABA991956D75B00198A8E /* ZipUtils.cpp in Sources */,
 				04EABA9D1956D75B00198A8E /* CABatchView.cpp in Sources */,
 				04EABA9F1956D75B00198A8E /* CAClippingView.cpp in Sources */,
+				B0D890451B9D3A59004A0830 /* CAEmojiFont.cpp in Sources */,
 				04EABAA11956D75B00198A8E /* CAImageView.cpp in Sources */,
 				3E2154531B8180340075448E /* json_reader.cpp in Sources */,
 				04EABAA31956D75B00198A8E /* CALabel.cpp in Sources */,
@@ -1802,7 +1810,7 @@
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
-					"\"$(SRCROOT)/../the_third_party/freetype/include/mac\"",
+					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -1842,7 +1850,7 @@
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
-					"\"$(SRCROOT)/../the_third_party/freetype/include/mac\"",
+					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",

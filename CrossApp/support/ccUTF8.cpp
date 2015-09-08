@@ -121,6 +121,17 @@ bool UTF8ToUTF32(const std::string& utf8, std::u32string& outUtf32)
 	return ret;
 }
 
+bool UTF32ToUTF8(const std::u32string& utf32, std::string& outUtf8)
+{
+	if (utf32.empty())
+	{
+		outUtf8.clear();
+		return true;
+	}
+
+	return llvm::convertUTF32ToUTF8String(utf32, outUtf8);
+}
+
 bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16)
 {
     if (utf8.empty())
