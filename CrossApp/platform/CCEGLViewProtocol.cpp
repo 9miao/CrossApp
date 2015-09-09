@@ -335,7 +335,9 @@ void CCEGLViewProtocol::handleTouchesCancel(int num, intptr_t ids[], float xs[],
 
 void CCEGLViewProtocol::handleScrollWheel(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event)
 {
-    CCLog("%f", offx);
+    CCSet set;
+    getSetOfTouchesEndOrCancel(set, num, ids, xs, ys, event);
+    m_pDelegate->touchesScrollWheel(&set, event);
     CCLog("%f", offy);
 }
 
