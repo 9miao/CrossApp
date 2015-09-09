@@ -27,7 +27,6 @@ extern "C"
     struct AVFrame;
     struct AVPicture;
     struct SwrContext;
-    struct AVSubtitle;
     struct SwsContext;
 }
 
@@ -51,8 +50,6 @@ typedef enum
 {
     kFrameTypeAudio,
     kFrameTypeVideo,
-    kFrameTypeArtwork,
-    kFrameTypeSubtitle,
     
 } VPFrameType;
 
@@ -105,8 +102,6 @@ public:
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_lineSize, LineSize);
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_dataLength, DataLength);
     CC_SYNTHESIZE(char*, m_data, Data); // rgb data
-    
-    CAImage* asImage();
 };
 
 class VPVideoFrameYUV : public VPVideoFrame
@@ -124,29 +119,6 @@ public:
     
 };
 
-class VPArtworkFrame : public VPFrame 
-{
-public:
-    VPArtworkFrame();
-    ~VPArtworkFrame();
-    
-    CC_SYNTHESIZE(char*, m_data, Data); // picture
-    CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_dataLength, DataLength);
-    
-    CAImage* asImage();
-};
-
-class VPSubtitleFrame : public VPFrame 
-{
-public:
-    VPSubtitleFrame();
-    ~VPSubtitleFrame();
-    
-    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_text, Text);
-};
-
-typedef bool (CAObject::*SEL_DecoderInterruptCallback)();
-#define decoder_selector(_SELECTOR) (SEL_DecoderInterruptCallback)(&_SELECTOR)
 
 typedef void (CAObject::*SEL_DecoderAudioCallback)(unsigned char *stream, int len, int channels);
 #define decoder_audio_selector(_SELECTOR) (SEL_DecoderAudioCallback)(&_SELECTOR)
@@ -160,9 +132,9 @@ public:
     
 public:
     
-    static VPDecoder* createWithContentPath(const std::string& path, std::string& error,bool isNetworkPath);
+    static VPDecoder* createWithContentPath(const std::string& path, bool isNetworkPath);
     
-    bool openFile(const std::string& path, std::string& error,bool isNetworkPath);
+    bool openFile(const std::string& path, bool isNetworkPath);
     
     void closeFile();
     
@@ -170,24 +142,14 @@ public:
     
     std::vector<VPFrame*> decodeFrames(float minDuration); // VPFrame
     
-    bool interruputDecoder();
-    
     void onAudioCallback(unsigned char *stream, int len);
     
 private:
-    CAObject* m_pInterruptTarget;
-    SEL_DecoderInterruptCallback m_interruptCallback;
-    
     CAObject* m_pAudioCallbackTarget;
     SEL_DecoderAudioCallback m_audioCallback;
     
     
 public:
-    void setInterruputCallback(CAObject* target, SEL_DecoderInterruptCallback callBack)
-    {
-        m_pInterruptTarget = target;
-        m_interruptCallback = callBack;
-    }
     
     void setAudioCallback(CAObject* target, SEL_DecoderAudioCallback callBack)
     {
@@ -205,48 +167,44 @@ public:
     unsigned int getAudioStreamsCount();
     int getSelectedAudioStream();
     void setSelectedAudioStream(int selected);
-    unsigned int getSubtitleStreamsCount();
-    int getSelectedSubtitleStream();
-    void setSelectedSubtitleStream(int selected);
+
     bool isValidAudio();
     bool isValidVideo();
-    bool isValidSubtitles();
-    const std::map<std::string, std::string>& getInfo();
-    std::string getVideoStreamFormatName();
+
     float getStartTime();
     bool getIsNetwork();
-    bool isDisableDeinterlacing();
-    void setDisableDeinterlacing(bool disable);
+
     bool isEOF();
     std::string getPath();
     float getFPS();
     
 private:
     AVFormatContext     *_formatCtx;
+
     AVCodecContext      *_videoCodecCtx;
     AVCodecContext      *_audioCodecCtx;
-    AVCodecContext      *_subtitleCodecCtx;
+
     AVFrame             *_videoFrame;
     AVFrame             *_audioFrame;
     int                 _videoStream;
     int                 _audioStream;
-    int                 _subtitleStream;
+
     AVPicture           *_picture;
     bool                _pictureValid;
     SwsContext          *_swsContext;
+
     float               _videoTimeBase;
     float               _audioTimeBase;
     float               _position;
     std::vector<int>         _videoStreams;
     std::vector<int>         _audioStreams;
-    std::vector<int>         _subtitleStreams;
+
     SwrContext          *_swrContext;
     void                *_swrBuffer;
     unsigned int        _swrBufferSize;
-    std::map<std::string, std::string> _info;
+
     VPVideoFrameFormat  _videoFrameFormat;
-    unsigned int        _artworkStream;
-    int                 _subtitleASSEvents;
+
     bool                _isNetwork;
     bool                _disableDeinterlacing;
     bool                _isEOF;
@@ -259,15 +217,15 @@ private:
     VPError openVideoStream(int videoStream);
     VPError openAudioStream();
     VPError openAudioStream(int audioStream);
-    VPError openSubtitleStream(int subTitleStream);
+
     void closeVideoStream();
     void closeAudioStream();
-    void closeSubtitleStream();
+
     void closeScaler();
     bool setupScaler();
+
     VPVideoFrame* handleVideoFrame();
     VPAudioFrame* handleAudioFrame();
-    VPSubtitleFrame* handleSubtitle(AVSubtitle *pSubtitle);
 };
 
 NS_CC_END

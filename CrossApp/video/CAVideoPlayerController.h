@@ -26,11 +26,7 @@ class VPAudioFrame;
 class VPFrame;
 class VPArtworkFrame;
 class VPDecoder;
-class CAVideoPlayerControllerDelegate
-{
-public:
-    virtual void onVideoPlayerButtonBack() = 0;
-};
+
 
 
 class CC_DLL CAVideoPlayerController : public CAViewController
@@ -52,7 +48,7 @@ public:
     virtual float getDuration();
     virtual float getPosition();
     virtual void setPosition(float pos);
-    CC_SYNTHESIZE(CAVideoPlayerControllerDelegate*, _delegate, Delegate);
+
             
 protected:
     
@@ -73,16 +69,17 @@ protected:
     };
 
     CAVideoPlayerView*_glView;
+
     VPDecoder*_decoder;
     CAVector<CAObject*>  _videoFrames;
     CAVector<CAObject*>  _audioFrames;
-    CAVector<CAObject*>  _subtitles;
+
     VPAudioFrame        *_currentAudioFrame;
     unsigned int        _currentAudioFramePos;
     float               _moviePosition;
     float               _wantMoviePosition;
     float               _movieDuration;
-    bool                _interrupted;    
+ 
     float               _bufferedDuration;
     float               _minBufferedDuration;
     float               _maxBufferedDuration;
@@ -92,7 +89,7 @@ protected:
     float               _tickCorrectionPosition;
     unsigned int        _tickCounter;
     bool                _decoding;
-    VPArtworkFrame      *_artworkFrame;
+
     bool                _buffered;
     string              _path;
     string              _title;
@@ -109,7 +106,7 @@ protected:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     
-    bool interruptDecoder();
+
     bool setMovieDecoder();
     void freeBufferedFrames();
     void enableAudio(bool on);
@@ -120,7 +117,7 @@ protected:
     bool addFrames(const vector<VPFrame*>& frames);
     float presentFrame();
     float presentVideoFrame(VPVideoFrame* frame);
-    void presentSubtitles();
+
     void audioCallback(unsigned char *stream, int len, int channels);
     void _decodeProcess();
     
@@ -133,8 +130,6 @@ protected:
     void dispearHUDView();
     void showHUDView();
     
-    virtual void didReceiveMemoryWarning();
-
     //    HUD
 protected:
     CASlider            *_slider;
@@ -143,7 +138,6 @@ protected:
 protected:
     void onButtonBack(CAControl* control, CCPoint point);
     void onButtonPause(CAControl* control, CCPoint point);
-    void onCheckExit(float dt);
     void buildHUD();
     void updateHUD(float);
     void onSlideTouched(CAControl* control, CCPoint point);

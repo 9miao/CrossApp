@@ -74,34 +74,6 @@ void main()											\n\
 ";
 
 
-static bool validateProgram(GLuint prog)
-{
-    GLint status;
-    
-    glValidateProgram(prog);
-    
-#ifdef DEBUG
-    GLint logLength;
-    glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength > 0)
-    {
-        GLchar *log = (GLchar *)malloc(logLength);
-        glGetProgramInfoLog(prog, logLength, &logLength, log);
-        CCLog("Program validate log:\n%s", log);
-        free(log);
-    }
-#endif
-    
-    glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
-    if (status == GL_FALSE) {
-        CCLog("Failed to validate program %d", prog);
-        return false;
-    }
-
-    
-    return true;
-}
-
 static GLuint compileShader(GLenum type, const char* sources)
 {
     GLint status;
@@ -135,36 +107,6 @@ static GLuint compileShader(GLenum type, const char* sources)
     }
     
     return shader;
-}
-
-static void mat4f_LoadOrtho(float left, float right, float bottom, float top, float fnear, float far, float* mout)
-{
-    float r_l = right - left;
-    float t_b = top - bottom;
-    float f_n = far - fnear;
-    float tx = - (right + left) / (right - left);
-    float ty = - (top + bottom) / (top - bottom);
-    float tz = - (far + fnear) / (far - fnear);
-    
-    mout[0] = 2.0f / r_l;
-    mout[1] = 0.0f;
-    mout[2] = 0.0f;
-    mout[3] = 0.0f;
-    
-    mout[4] = 0.0f;
-    mout[5] = 2.0f / t_b;
-    mout[6] = 0.0f;
-    mout[7] = 0.0f;
-    
-    mout[8] = 0.0f;
-    mout[9] = 0.0f;
-    mout[10] = -2.0f / f_n;
-    mout[11] = 0.0f;
-    
-    mout[12] = tx;
-    mout[13] = ty;
-    mout[14] = tz;
-    mout[15] = 1.0f;
 }
 
 #pragma mark - Frame Render
@@ -206,6 +148,13 @@ void VPFrameRenderRGB::setFrame(VPVideoFrame* frame)
     
     CCAssert((rgbFrame->getDataLength() == rgbFrame->getWidth() * rgbFrame->getHeight() * 3), "");
     
+
+	CAImage* p = CAImage::createWithRawDataNoCache((unsigned char*)rgbFrame->getData(), CAImage::PixelFormat_RGB888, rgbFrame->getWidth(), rgbFrame->getHeight());
+	p->saveToFile("c:\\xxx.bmp", true);
+	//static CAImage* createWithImageDataNoCache(const unsigned char * data, unsigned long lenght);
+
+
+
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
     if (0 == _texture)
@@ -414,26 +363,9 @@ bool VPFrameRender::loadShaders()
 
 void VPFrameRender::draw(VPVideoFrame *frame, long offset)
 {
-//    static const GLfloat texCoords[] = {
-//        0.0f, 1.0f,
-//        1.0f, 1.0f,
-//        0.0f, 0.0f,
-//        1.0f, 0.0f,
-//    };
-
-//    static const GLfloat texCoords[] = {
-//        1.0f, 1.0f,
-//        1.0f, 0.0f,
-//        0.0f, 1.0f,
-//        0.0f, 0.0f,
-//    };
-
-    CAGLProgram *pProgram = CAShaderCache::sharedShaderCache()->programForKey(key());
+	CAGLProgram *pProgram = CAShaderCache::sharedShaderCache()->programForKey(key());
     pProgram->use();
     pProgram->setUniformsForBuiltins();
-    
-//    ccGLUseProgram(_program);
-//    glUseProgram(_program);
     
     if (frame) {
         setFrame(frame);
@@ -459,16 +391,6 @@ void VPFrameRender::draw(VPVideoFrame *frame, long offset)
         diff = offsetof( ccV3F_C4B_T2F, colors);
         glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
-        
-//        GLfloat modelviewProj[16];
-//        mat4f_LoadOrtho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, modelviewProj);
-//        glUniformMatrix4fv(_uniformMatrix, 1, GL_FALSE, modelviewProj);
-//        
-//        glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, 0, 0, _vertices);
-//        glEnableVertexAttribArray(ATTRIBUTE_VERTEX);
-//        glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, 0, 0, texCoords);
-//        glEnableVertexAttribArray(ATTRIBUTE_TEXCOORD);
-               
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
 }

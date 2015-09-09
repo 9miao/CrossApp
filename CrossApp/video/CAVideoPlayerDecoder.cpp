@@ -23,170 +23,11 @@ extern "C"
 
 static void FFLog(void* context, int level, const char* pszFormat, va_list args) 
 {
-    printf("CrossApp: ");
-    char szBuf[16*1024+1] = {0};
+	char szBuf[kMaxLogLen+1] = { 0 };
     vsnprintf(szBuf, kMaxLogLen, pszFormat, args);
-    printf("%s", szBuf);
-    printf("\n");
+	CCLog(szBuf);
 }
     
-static const char* errorMessage(VPError errorCode)
-{
-    switch (errorCode) {
-        case kErrorNone:
-            return "";
-        case kErrorOpenFile:
-            return "Unable to open file";
-        case kErrorStreamInfoNotFound:
-            return "Unable to find stream information";
-        case kErrorStreamNotFound:
-            return "Unable to find stream";
-        case kErrorCodecNotFound:
-            return "Unable to find codec";
-        case kErrorOpenCodec:
-            return "Unable to open codec";
-        case kErrorAllocateFrame:
-            return "Unable to allocate frame";
-        case kErrorSetupScaler:
-            return "Unable to setup scaler";
-        case kErrorReSampler:
-            return "Unable to setup resampler";
-        case kErrorUnsupported:
-            return "The ability is not supported";
-        case kErrorUnknown:
-            return "Unknown";
-    }
-	return NULL;
-}
-
-#ifdef DEBUG
-
-static void fillSignal(signed short *outData,  unsigned int numFrames, unsigned int numChannels)
-{
-    static float phase = 0.0;
-    
-    for (int i=0; i < numFrames; ++i)
-    {
-        for (int iChannel = 0; iChannel < numChannels; ++iChannel)
-        {
-            float theta = phase * M_PI * 2;
-            outData[i*numChannels + iChannel] = sin(theta) * (float)INT16_MAX;
-        }
-        phase += 1.0 / (44100 / 440.0);
-        if (phase > 1.0) phase = -1;
-    }
-}
-
-static void fillSignalF(float *outData,  unsigned int numFrames, unsigned int numChannels)
-{
-    static float phase = 0.0;
-    
-    for (int i=0; i < numFrames; ++i)
-    {
-        for (int iChannel = 0; iChannel < numChannels; ++iChannel)
-        {
-            float theta = phase * M_PI * 2;
-            outData[i*numChannels + iChannel] = sin(theta);
-        }
-        phase += 1.0 / (44100 / 440.0);
-        if (phase > 1.0) phase = -1;
-    }
-}
-
-static void testConvertYUV420pToRGB(AVFrame * frame, unsigned char *outbuf, int linesize, int height)
-{
-    const int linesizeY = frame->linesize[0];
-    const int linesizeU = frame->linesize[1];
-    const int linesizeV = frame->linesize[2];
-    
-    assert(height == frame->height);
-    assert(linesize  <= linesizeY * 3);
-    assert(linesizeY == linesizeU * 2);
-    assert(linesizeY == linesizeV * 2);
-    
-    unsigned char *pY = frame->data[0];
-    unsigned char *pU = frame->data[1];
-    unsigned char *pV = frame->data[2];
-    
-    const int width = linesize / 3;
-    
-    for (int y = 0; y < height; y += 2) {
-        
-        unsigned char *dst1 = outbuf + y       * linesize;
-        unsigned char *dst2 = outbuf + (y + 1) * linesize;
-        
-        unsigned char *py1  = pY  +  y       * linesizeY;
-        unsigned char *py2  = py1 +            linesizeY;
-        unsigned char *pu   = pU  + (y >> 1) * linesizeU;
-        unsigned char *pv   = pV  + (y >> 1) * linesizeV;
-        
-        for (int i = 0; i < width; i += 2) {
-            
-            int Y1 = py1[i];
-            int Y2 = py2[i];
-            int Y3 = py1[i+1];
-            int Y4 = py2[i+1];
-            
-            int U = pu[(i >> 1)] - 128;
-            int V = pv[(i >> 1)] - 128;
-            
-            int dr = (int)(             1.402f * V);
-            int dg = (int)(0.344f * U + 0.714f * V);
-            int db = (int)(1.772f * U);
-            
-            int r1 = Y1 + dr;
-            int g1 = Y1 - dg;
-            int b1 = Y1 + db;
-            
-            int r2 = Y2 + dr;
-            int g2 = Y2 - dg;
-            int b2 = Y2 + db;
-            
-            int r3 = Y3 + dr;
-            int g3 = Y3 - dg;
-            int b3 = Y3 + db;
-            
-            int r4 = Y4 + dr;
-            int g4 = Y4 - dg;
-            int b4 = Y4 + db;
-            
-            r1 = r1 > 255 ? 255 : r1 < 0 ? 0 : r1;
-            g1 = g1 > 255 ? 255 : g1 < 0 ? 0 : g1;
-            b1 = b1 > 255 ? 255 : b1 < 0 ? 0 : b1;
-            
-            r2 = r2 > 255 ? 255 : r2 < 0 ? 0 : r2;
-            g2 = g2 > 255 ? 255 : g2 < 0 ? 0 : g2;
-            b2 = b2 > 255 ? 255 : b2 < 0 ? 0 : b2;
-            
-            r3 = r3 > 255 ? 255 : r3 < 0 ? 0 : r3;
-            g3 = g3 > 255 ? 255 : g3 < 0 ? 0 : g3;
-            b3 = b3 > 255 ? 255 : b3 < 0 ? 0 : b3;
-            
-            r4 = r4 > 255 ? 255 : r4 < 0 ? 0 : r4;
-            g4 = g4 > 255 ? 255 : g4 < 0 ? 0 : g4;
-            b4 = b4 > 255 ? 255 : b4 < 0 ? 0 : b4;
-            
-            dst1[3*i + 0] = r1;
-            dst1[3*i + 1] = g1;
-            dst1[3*i + 2] = b1;
-            
-            dst2[3*i + 0] = r2;
-            dst2[3*i + 1] = g2;
-            dst2[3*i + 2] = b2;
-            
-            dst1[3*i + 3] = r3;
-            dst1[3*i + 4] = g3;
-            dst1[3*i + 5] = b3;
-            
-            dst2[3*i + 3] = r4;
-            dst2[3*i + 4] = g4;
-            dst2[3*i + 5] = b4;            
-        }
-    }
-}
-
-#endif
-
 static void avStreamFPSTimeBase(AVStream *st, float defaultTimeBase, float *pFPS, float *pTimeBase)
 {
     float fps, timebase;
@@ -257,19 +98,6 @@ static bool isNetworkPath (std::string path)
     return true;
 }
 
-static int interrupt_callback(void *ctx)
-{
-    if (!ctx)
-        return 0;
-    
-    VPDecoder *p = (VPDecoder*)ctx;
-    if (p) {
-        return p->interruputDecoder();
-    } else {
-        return -1;
-    }
-}
-
 #pragma mark - VPFrame
 
 static SDL_AudioSpec s_audioSpec;
@@ -330,15 +158,7 @@ VPVideoFrameRGB::VPVideoFrameRGB()
 
 VPVideoFrameRGB::~VPVideoFrameRGB()
 {
-    if (m_data!=NULL) {
-        //delete [] m_data;
-        CC_SAFE_DELETE_ARRAY(m_data);
-    }
-}
-
-CAImage* VPVideoFrameRGB::asImage()
-{
-    return NULL;
+	CC_SAFE_DELETE_ARRAY(m_data);
 }
 
 #pragma mark - VPVideoFrameYUV
@@ -369,40 +189,6 @@ VPVideoFrameYUV::~VPVideoFrameYUV()
     }
 }
 
-#pragma mark - VPArtworkFrame
-
-VPArtworkFrame::VPArtworkFrame()
-: m_data(NULL)
-, m_dataLength(0)
-{
-    m_type = kFrameTypeArtwork;
-}
-
-VPArtworkFrame::~VPArtworkFrame()
-{
-    if (m_data) {
-        delete [] m_data;
-    }
-}
-
-CAImage* VPArtworkFrame::asImage()
-{
-    return NULL;
-}
-
-#pragma mark - VPSubtitleFrame
-
-VPSubtitleFrame::VPSubtitleFrame()
-: m_text(std::string(""))
-{
-    m_type = kFrameTypeSubtitle;
-}
-
-VPSubtitleFrame::~VPSubtitleFrame()
-{
-    
-}
-
 
 #pragma mark - VPDecoder
 
@@ -410,12 +196,10 @@ VPDecoder::VPDecoder()
 : _formatCtx(NULL)
 , _videoCodecCtx(NULL)
 , _audioCodecCtx(NULL)
-, _subtitleCodecCtx(NULL)
 , _videoFrame(NULL)
 , _audioFrame(NULL)
 , _videoStream(0)
 , _audioStream(0)
-, _subtitleStream(0)
 , _pictureValid(false)
 , _swsContext(NULL)
 , _videoTimeBase(0)
@@ -425,15 +209,11 @@ VPDecoder::VPDecoder()
 , _swrBuffer(NULL)
 , _swrBufferSize(0)
 , _videoFrameFormat(kVideoFrameFormatRGB)
-, _artworkStream(0)
-, _subtitleASSEvents(0)
 , _isNetwork(false)
 , _disableDeinterlacing(false)
 , _isEOF(false)
 , _path(std::string(""))
 , _fps(0)
-, m_pInterruptTarget(NULL)
-, m_interruptCallback(NULL)
 , m_audioCallback(NULL)
 , m_pAudioCallbackTarget(NULL)
 , _picture(NULL)
@@ -537,44 +317,7 @@ void VPDecoder::setSelectedAudioStream(int selected)
         int audioStream = _audioStreams[selected];
         VPError errCode = this->openAudioStream(audioStream);
         if (kErrorNone != errCode) {
-            CCLog("%s, %s", __FUNCTION__, errorMessage(errCode));
-        }
-    }
-}
-
-unsigned int VPDecoder::getSubtitleStreamsCount()
-{
-    return (unsigned int)_subtitleStreams.size();
-}
-
-int VPDecoder::getSelectedSubtitleStream()
-{
-    if (_subtitleStream == -1) {
-        return -1;
-    }
-    std::vector<int>::iterator iter = _subtitleStreams.begin();
-    int index = 0;
-    while (iter != _subtitleStreams.end()) {
-        if (*iter == _subtitleStream) {
-            return index;
-        }
-        iter++;
-        index++;
-    }
-    return -1;
-}
-
-void VPDecoder::setSelectedSubtitleStream(int selected)
-{
-    this->closeSubtitleStream();
-    
-    if (selected == -1) {
-        _subtitleStream = -1;
-    } else {
-        int subtitleStream = _subtitleStreams[selected];
-        VPError errCode = this->openSubtitleStream(subtitleStream);
-        if (kErrorNone != errCode) {
-            CCLog("%s, %s", __FUNCTION__, errorMessage(errCode));
+			CCLog("%s, %d", __FUNCTION__, errCode);
         }
     }
 }
@@ -587,112 +330,6 @@ bool VPDecoder::isValidAudio()
 bool VPDecoder::isValidVideo()
 {
     return _videoStream != -1;
-}
-
-bool VPDecoder::isValidSubtitles()
-{
-    return _subtitleStream != -1;
-}
-
-const std::map<std::string, std::string>& VPDecoder::getInfo()
-{
-    if (_info.empty()) {
-        if (_formatCtx) {
-            _info.insert(std::make_pair("format", _formatCtx->iformat->name));
-            
-            if (_formatCtx->bit_rate) {
-                std::stringstream ss;
-                ss << _formatCtx->bit_rate;
-                _info.insert(make_pair("bitrate", ss.str()));
-            }
-            
-            if (_formatCtx->metadata) {
-                AVDictionaryEntry *tag = NULL;
-                
-                while ((tag = av_dict_get(_formatCtx->metadata, "", tag, AV_DICT_IGNORE_SUFFIX))) {
-                    std::string key = "meta_";
-                    key.append(tag->key);
-                    _info.insert(make_pair(key, tag->value));
-                }
-            }
-            
-            char buf[256];
-            
-            if (_videoStreams.size()) {
-                std::vector<int>::iterator iter = _videoStreams.begin();
-                int index = 0;
-                while (iter != _videoStreams.end()) {
-                    AVStream *st = _formatCtx->streams[*iter];
-                    avcodec_string(buf, sizeof(buf), st->codec, 1);
-                    std::stringstream ss;
-                    ss << "video_" << index;
-                    _info.insert(make_pair(ss.str(), buf));
-                    index++;
-                }
-            }
-            
-            if (_audioStreams.size()) {
-                std::vector<int>::iterator iter = _audioStreams.begin();
-                int index = 0;
-                while (iter != _audioStreams.end()) {
-                    AVStream *st = _formatCtx->streams[*iter];
-                    std::stringstream ss;
-                    
-                    AVDictionaryEntry *lang = av_dict_get(st->metadata, "language", NULL, 0);
-                    if (lang && lang->value) {
-                        ss << "audiolang_" << index;
-                        _info.insert(make_pair(ss.str(), lang->value));
-                    }
-                    
-                    avcodec_string(buf, sizeof(buf), st->codec, 1);
-                    ss.clear();
-                    ss << "audio_" << index;
-                    _info.insert(make_pair(ss.str(), buf));
-                    index++;
-                }
-            }
-            
-            if (_subtitleStreams.size()) {
-                std::vector<int>::iterator iter = _subtitleStreams.begin();
-                int index = 0;
-                while (iter != _subtitleStreams.end()) {
-                    AVStream *st = _formatCtx->streams[*iter];
-                    std::stringstream ss;
-                    
-                    AVDictionaryEntry *lang = av_dict_get(st->metadata, "language", NULL, 0);
-                    if (lang && lang->value) {
-                        ss << "subtitlelang_" << index;
-                        _info.insert(make_pair(ss.str(), lang->value));
-                    }
-                    
-                    avcodec_string(buf, sizeof(buf), st->codec, 1);
-                    ss.clear();
-                    ss << "subtitle_" << index;
-                    _info.insert(make_pair(ss.str(), buf));
-                    index++;
-                }
-            }
-        }
-    }
-    return _info;
-}
-
-std::string VPDecoder::getVideoStreamFormatName()
-{
-    if (!_videoCodecCtx) {
-        return "NULL";
-    }
-    
-    if (_videoCodecCtx->pix_fmt == AV_PIX_FMT_NONE) {
-        return "NONE";
-    }
-    
-    const char *name = av_get_pix_fmt_name(_videoCodecCtx->pix_fmt);
-    if (name) {
-        return name;
-    } else {
-        return "?";
-    }
 }
 
 float VPDecoder::getStartTime()
@@ -731,11 +368,11 @@ float VPDecoder::getFPS()
     return _fps;
 }
 
-VPDecoder* VPDecoder::createWithContentPath(const std::string& path, std::string& error,bool isNetPath)
+VPDecoder* VPDecoder::createWithContentPath(const std::string& path, bool isNetPath)
 {
     VPDecoder* vpdec = new VPDecoder();
     if (vpdec) {
-        if (!vpdec->openFile(path, error,isNetPath)) {
+        if (!vpdec->openFile(path, isNetPath)) {
             delete vpdec;
             return NULL;
         };
@@ -743,7 +380,7 @@ VPDecoder* VPDecoder::createWithContentPath(const std::string& path, std::string
     return vpdec;
 }
 
-bool VPDecoder::openFile(const std::string& path, std::string& perror,bool isNetPath)
+bool VPDecoder::openFile(const std::string& path, bool isNetPath)
 {
     _isNetwork = isNetPath;
     
@@ -755,25 +392,28 @@ bool VPDecoder::openFile(const std::string& path, std::string& perror,bool isNet
     
     _path = path;
     
-    VPError errCode = openInput(path);
-    
+	VPError errCode = kErrorNone;
+	
+	try
+	{
+		errCode = openInput(path);
+	}
+	catch (...)
+	{
+	}
+
     if (errCode == kErrorNone) {
         VPError videoErr = openVideoStream();
         VPError audioErr = openAudioStream();
         
-        _subtitleStream = -1;
-        
         if (videoErr != kErrorNone && audioErr != kErrorNone) {
             errCode = videoErr;
-        } else {
-            _subtitleStreams = collectStreams(_formatCtx, AVMEDIA_TYPE_SUBTITLE);
         }
     }
     
     if (errCode != kErrorNone) {
         closeFile();
-        perror = errorMessage(errCode);
-        CCLog("%s, %s", __FUNCTION__, perror.c_str());
+		CCLog("%s, %d", __FUNCTION__, errCode);
         return false;
     }
     
@@ -784,17 +424,12 @@ bool VPDecoder::openFile(const std::string& path, std::string& perror,bool isNet
 
 VPError VPDecoder::openInput(std::string path)
 {
-    AVFormatContext *formatCtx = NULL;
+	AVFormatContext *formatCtx = avformat_alloc_context();
     
-    if (m_interruptCallback) {
-        formatCtx = avformat_alloc_context();
-        if (!formatCtx) {
-            return kErrorOpenFile;
-        }
-        AVIOInterruptCB cb = {interrupt_callback, (void*)this};
-        formatCtx->interrupt_callback = cb;
-    }
-    
+	if (!formatCtx) {
+		return kErrorOpenFile;
+	}
+
     CCLog("avformat_open_input");
     int ret = avformat_open_input(&formatCtx, path.c_str(), NULL, NULL);
     CCLog("avformat_open_input, %d", ret);
@@ -804,7 +439,7 @@ VPError VPDecoder::openInput(std::string path)
         }
         return kErrorOpenFile;
     }
-    
+
     CCLog("avformat_find_stream_info");
     ret = avformat_find_stream_info(formatCtx, NULL);
     CCLog("avformat_find_stream_info, %d", ret);
@@ -820,6 +455,7 @@ VPError VPDecoder::openInput(std::string path)
     _formatCtx = formatCtx;
 
     CCLog("openInput return");
+
     
     return kErrorNone;
 }
@@ -827,9 +463,9 @@ VPError VPDecoder::openInput(std::string path)
 VPError VPDecoder::openVideoStream()
 {
     VPError errCode = kErrorStreamNotFound;
-    _videoStream = -1;
-    _artworkStream = -1;
-    _videoStreams = collectStreams(_formatCtx, AVMEDIA_TYPE_VIDEO);
+
+	_videoStream = -1;
+	_videoStreams = collectStreams(_formatCtx, AVMEDIA_TYPE_VIDEO);
     std::vector<int>::iterator iter = _videoStreams.begin();
     while (iter != _videoStreams.end()) {
         if (0 == (_formatCtx->streams[*iter]->disposition & AV_DISPOSITION_ATTACHED_PIC)) {
@@ -837,9 +473,7 @@ VPError VPDecoder::openVideoStream()
             if (errCode == kErrorNone) {
                 break;
             }
-        } else {
-            _artworkStream = *iter;
-        }
+        } 
     }
     
     return errCode;
@@ -1035,61 +669,16 @@ VPError VPDecoder::openAudioStream(int audioStream)
     return kErrorNone;
 }
 
-VPError VPDecoder::openSubtitleStream(int subtitleStream)
-{
-    AVCodecContext *codecCtx = _formatCtx->streams[subtitleStream]->codec;
-    
-    AVCodec *codec = avcodec_find_decoder(codecCtx->codec_id);
-    if(!codec)
-        return kErrorCodecNotFound;
-    
-    const AVCodecDescriptor *codecDesc = avcodec_descriptor_get(codecCtx->codec_id);
-    if (codecDesc && (codecDesc->props & AV_CODEC_PROP_BITMAP_SUB)) {
-        // Only text based subtitles supported
-        return kErrorUnsupported;
-    }
-    
-    if (avcodec_open2(codecCtx, codec, NULL) < 0)
-        return kErrorOpenCodec;
-    
-    _subtitleStream = subtitleStream;
-    _subtitleCodecCtx = codecCtx;
-    
-    CCLog("subtitle codec: '%s' mode: %d enc: %s",
-          codecDesc->name, 
-          codecCtx->sub_charenc_mode,
-          codecCtx->sub_charenc);
-    
-    _subtitleASSEvents = -1;
-    
-    if (codecCtx->subtitle_header_size) {
-        
-        std::string s = "";
-        s.append((char*)codecCtx->subtitle_header, codecCtx->subtitle_header_size);   
-//        TODO: parse subtitle
-//        if (s.length) {
-//            
-//            NSArray *fields = [KxMovieSubtitleASSParser parseEvents:s];
-//            if (fields.count && [fields.lastObject isEqualToString:@"Text"]) {
-//                _subtitleASSEvents = fields.count;
-//                LoggerStream(2, @"subtitle ass events: %@", [fields componentsJoinedByString:@","]);
-//            }
-//        }
-    }
-    
-    return kErrorNone;
-}
 
 void VPDecoder::closeFile()
 {
     this->closeAudioStream();
     this->closeVideoStream();
-    this->closeSubtitleStream();
+
     
     std::vector<int>().swap(_videoStreams);
     std::vector<int>().swap(_audioStreams);
-    std::vector<int>().swap(_subtitleStreams);
-    
+
     if (_formatCtx) {
         
         _formatCtx->interrupt_callback.opaque = NULL;
@@ -1146,17 +735,6 @@ void VPDecoder::closeAudioStream()
         
         avcodec_close(_audioCodecCtx);
         _audioCodecCtx = NULL;
-    }
-}
-
-void VPDecoder::closeSubtitleStream()
-{
-    _subtitleStream = -1;
-    
-    if (_subtitleCodecCtx) {
-        
-        avcodec_close(_subtitleCodecCtx);
-        _subtitleCodecCtx = NULL;
     }
 }
 
@@ -1238,7 +816,9 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
 
         frame = yuvFrame;
         
-    } else {
+    }
+	else 
+	{
         
         if (!_swsContext && !setupScaler()) {
             
@@ -1246,13 +826,13 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
             return NULL;
         }
         
-//        sws_scale(_swsContext,
-//                  (const uint8_t **)_videoFrame->data,
-//                  _videoFrame->linesize,
-//                  0,
-//                  _videoCodecCtx->height,
-//                  _picture->data,
-//                  _picture->linesize);
+		sws_scale(_swsContext,
+			(const uint8_t **)_videoFrame->data,
+			_videoFrame->linesize,
+			0,
+			_videoCodecCtx->height,
+			_picture->data,
+			_picture->linesize);
         
         VPVideoFrameRGB *rgbFrame = new VPVideoFrameRGB();
         rgbFrame->setLineSize(_picture->linesize[0]);
@@ -1273,12 +853,10 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
         frame->setDuration(frameDuration * _videoTimeBase);
         frame->setDuration(frame->getDuration() + _videoFrame->repeat_pict * _videoTimeBase * 0.5);
         
-        //if (_videoFrame->repeat_pict > 0) {
-        //    CCLog("_videoFrame.repeat_pict %d", _videoFrame->repeat_pict);
-        //}
         
-    } else {
-        
+    } 
+	else 
+	{
         // sometimes, ffmpeg unable to determine a frame duration
         // as example yuvj420p stream from web camera
         frame->setDuration( 1.0 / _fps );
@@ -1294,7 +872,6 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
     return frame;
 }
 
-//#include <Accelerate/Accelerate.h>
 
 VPAudioFrame* VPDecoder::handleAudioFrame()
 {
@@ -1394,53 +971,6 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
 #endif
     
     return frame;
-}
-
-VPSubtitleFrame* VPDecoder::handleSubtitle(AVSubtitle *pSubtitle)
-{
-    std::string ms = "";
-    
-    for (int i = 0; i < pSubtitle->num_rects; ++i) {
-        
-        AVSubtitleRect *rect = pSubtitle->rects[i];
-        if (rect) {
-            
-            if (rect->text) { // rect->type == SUBTITLE_TEXT
-                
-                ms.append(rect->text);
-                
-            } else if (rect->ass && _subtitleASSEvents != -1) {
-                
-//                NSArray *fields = [KxMovieSubtitleASSParser parseDialogue:s numFields:_subtitleASSEvents];
-//                if (fields.count && [fields.lastObject length]) {
-//                    
-//                    s = [KxMovieSubtitleASSParser removeCommandsFromEventText: fields.lastObject];
-//                    if (s.length) [ms appendString:s];
-//                }                    
-            }
-        }
-    }
-    
-    if (ms.size() == 0)
-        return NULL;
-    
-    VPSubtitleFrame *frame = new VPSubtitleFrame();
-    frame->setText(ms);
-    frame->setPosition(pSubtitle->pts / AV_TIME_BASE + pSubtitle->start_display_time);
-    frame->setDuration((float)(pSubtitle->end_display_time - pSubtitle->start_display_time) / 1000.f);
-    
-#if 0
-    CCLog("SUB: %.4f %.4f | %s", frame->getPosition(), frame->getDuration(), frame->getText().c_str())
-#endif
-    
-    return frame;    
-}
-
-bool VPDecoder::interruputDecoder()
-{
-    if (m_pInterruptTarget && m_interruptCallback)
-        return ((CAObject*)m_pInterruptTarget->*m_interruptCallback)();
-    return false;
 }
 
 void VPDecoder::onAudioCallback(unsigned char *stream, int len)
@@ -1578,51 +1108,7 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
                 pktSize -= len;
             }
             
-        } else if (packet.stream_index == _artworkStream) {
-            
-            if (packet.size) {
-                
-                VPArtworkFrame *frame = new VPArtworkFrame();
-                char* data = (char*)malloc(packet.size);
-                memcpy(data, packet.data, packet.size);
-                frame->setData(data);
-                frame->setDataLength(packet.size);
-                result.push_back((VPFrame*)frame);
-            }
-            
-        } else if (packet.stream_index == _subtitleStream) {
-            
-            int pktSize = packet.size;
-            
-            while (pktSize > 0) {
-                
-                AVSubtitle subtitle;
-                int gotsubtitle = 0;
-                int len = avcodec_decode_subtitle2(_subtitleCodecCtx,
-                                                   &subtitle,
-                                                   &gotsubtitle,
-                                                   &packet);
-                
-                if (len < 0) {
-                    CCLog("decode subtitle error, skip packet");
-                    break;
-                }
-                
-                if (gotsubtitle) {
-                    
-                    VPSubtitleFrame *frame = this->handleSubtitle(&subtitle);
-                    if (frame) {
-                        result.push_back((VPFrame*)frame);
-                    }
-                    avsubtitle_free(&subtitle);
-                }
-                
-                if (0 == len)
-                    break;
-                
-                pktSize -= len;
-            }
-        }
+        } 
         
         av_free_packet(&packet);
     }

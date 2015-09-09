@@ -88,10 +88,8 @@ void CAVideoPlayerController::lazyInit()
 CAVideoPlayerController::CAVideoPlayerController()
 : _decoder(NULL)
 , _audioFrames(NULL)
-, _subtitles(NULL)
 , _videoFrames(NULL)
 , _moviePosition(0)
-, _interrupted(false)
 , _bufferedDuration(0)
 , _minBufferedDuration(0)
 , _maxBufferedDuration(0)
@@ -101,13 +99,11 @@ CAVideoPlayerController::CAVideoPlayerController()
 , _tickCorrectionPosition(0)
 , _tickCounter(0)
 , _decoding(false)
-, _artworkFrame(NULL)
 , _buffered(false)
 , _glView(NULL)
 , _movieDuration(0)
 , _currentAudioFramePos(0)
 , _slider(NULL)
-, _delegate(NULL)
 , _HUDView(NULL)
 , m_bNeedExit(false)
 , m_inited(false)
@@ -127,10 +123,8 @@ CAVideoPlayerController::~CAVideoPlayerController()
     }
     
     CC_SAFE_RELEASE_NULL(_glView);
-
-    CC_SAFE_RELEASE_NULL(_currentAudioFrame);
-    CC_SAFE_RELEASE_NULL(_artworkFrame);
-    
+	CC_SAFE_RELEASE_NULL(_currentAudioFrame);
+     
     CC_SAFE_RELEASE_NULL(_slider);
     CC_SAFE_RELEASE_NULL(_HUDView);
     
@@ -204,11 +198,6 @@ void CAVideoPlayerController::viewDidUnload()
     
 }
 
-bool CAVideoPlayerController::interruptDecoder()
-{
-    return _interrupted;
-}
-
 bool CAVideoPlayerController::setMovieDecoder()
 {
     CCLog("setMovieDecoder");    
@@ -220,16 +209,11 @@ bool CAVideoPlayerController::setMovieDecoder()
     
     string path = _path;
     
-    string error;
     VPDecoder* decoder = new VPDecoder();
-    decoder->setInterruputCallback(this, decoder_selector(CAVideoPlayerController::interruptDecoder));
     decoder->setAudioCallback(this, decoder_audio_selector(CAVideoPlayerController::audioCallback));
     
-    if (decoder && decoder->openFile(path, error,_isPathByUrl)) {
+    if (decoder && decoder->openFile(path, _isPathByUrl)) {
     
-        if (decoder->getSubtitleStreamsCount()) {
-        }
-        
         if (_isPathByUrl) {
             
             _minBufferedDuration = NETWORK_MIN_BUFFERED_DURATION;
@@ -254,34 +238,6 @@ bool CAVideoPlayerController::setMovieDecoder()
     return false;
 }
 
-void CAVideoPlayerController::didReceiveMemoryWarning()
-{    
-    if (this->isPlaying()) {
-        
-        this->pause();
-        this->freeBufferedFrames();
-        
-        if (_maxBufferedDuration > 0) {
-            
-            _minBufferedDuration = _maxBufferedDuration = 0;
-            this->play();
-            
-            CCLog("didReceiveMemoryWarning, disable buffering and continue playing");
-            
-        } else {
-            
-            delete _decoder;
-            _decoder = NULL;
-        }
-        
-    } else {
-        
-        this->freeBufferedFrames();
-        delete _decoder;
-        _decoder = NULL;
-    }
-}
-
 void CAVideoPlayerController::freeBufferedFrames()
 {
     pthread_mutex_lock(&m_vp_data_mutex);
@@ -290,7 +246,6 @@ void CAVideoPlayerController::freeBufferedFrames()
         
     _videoFrames.clear();
     _audioFrames.clear();
-    _subtitles.clear();
 
     _buffered = true;
     _bufferedDuration = 0;
@@ -348,12 +303,9 @@ void CAVideoPlayerController::play()
         return;
     }
 
-    if (_interrupted)
-        return;
     
     //CCLog("_wantMoviePosition===%f",_decoder->getPosition());
     _playing = true;
-    _interrupted = false;
     _disableUpdateHUD = false;
     _tickCorrectionTime.tv_sec = 0;
     _tickCorrectionTime.tv_usec = 0;
@@ -431,7 +383,7 @@ void CAVideoPlayerController::_decodeProcess()
     
     while (good) {
         good = false;
-        if (_decoder && (_decoder->isValidVideo() && _decoder->isValidAudio())) {
+        if (_decoder && (_decoder->isValidVideo() || _decoder->isValidAudio())) {
             vector<VPFrame*> frames = _decoder->decodeFrames(duration);
             if (frames.size()) {
                 good = addFrames(frames);
@@ -483,22 +435,10 @@ bool CAVideoPlayerController::addFrames(const vector<VPFrame*>& frames)
                     _bufferedDuration += frame->getDuration();
                 }
             }
-            if (frame && _decoder->isValidVideo() && frame->getType() == kFrameTypeArtwork) {
-                _artworkFrame = (VPArtworkFrame*)frame;
-            }
         }
     }
     
-    if (_decoder->isValidSubtitles()) {
         
-        for (int i=0; i<frames.size(); i++) {
-            VPFrame* frame = frames.at(i);
-            if (frame && frame->getType() == kFrameTypeSubtitle) {
-                _subtitles.pushBack(frame);
-            }
-        }
-    }
-    
     pthread_mutex_unlock(&m_vp_data_mutex);
     
     return _playing && _bufferedDuration < _maxBufferedDuration;
@@ -554,10 +494,7 @@ void CAVideoPlayerController::tick(float dt)
         
         CAScheduler::schedule(schedule_selector(CAVideoPlayerController::tick), this, time);
     }
-    
-    if ((_tickCounter++ % 3) == 0) {
-        //updateHUD();
-    }
+
 }
 
 
@@ -615,18 +552,7 @@ float CAVideoPlayerController::presentFrame()
             frame->release();
         }
         
-    } else if (_decoder->isValidAudio()) {
-        //interval = _bufferedDuration * 0.5;
-        if (_artworkFrame) {
-//                TODO: _imageView
-//                _imageView.image = [self.artworkFrame asImage];
-//                self.artworkFrame = nil;
-        }
     }
-    
-    if (_decoder->isValidSubtitles())
-        presentSubtitles();
-            
     return interval;
 }
 
@@ -638,6 +564,9 @@ float CAVideoPlayerController::presentVideoFrame(VPVideoFrame *frame)
     }
     _moviePosition = frame->getPosition();
     _movieDuration = frame->getDuration();
+
+	float aaaaa = _decoder->getDuration();
+	aaaaa -= _moviePosition;
     if (_decoder->getDuration()-_moviePosition<1) {
         pause();
         _moviePosition = 0;
@@ -650,11 +579,6 @@ float CAVideoPlayerController::presentVideoFrame(VPVideoFrame *frame)
     return frame->getDuration();
 }
 
-
-void CAVideoPlayerController::presentSubtitles()
-{
-
-}
 
 void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int channels)
 {
@@ -728,14 +652,6 @@ void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int 
     } 
 }
 
-void CAVideoPlayerController::onCheckExit(float dt)
-{
-    pthread_mutex_lock(&m_vp_cond_mutex);
-    pthread_cond_signal(&m_vp_cond);
-    pthread_mutex_unlock(&m_vp_cond_mutex);
-
-}
-
 void CAVideoPlayerController::onButtonBack(CrossApp::CAControl *control, CrossApp::CCPoint point)
 {
     pause();
@@ -750,13 +666,6 @@ void CAVideoPlayerController::onButtonBack(CrossApp::CAControl *control, CrossAp
     pthread_mutex_lock(&m_vp_cond_mutex);
     pthread_cond_signal(&m_vp_cond);
     pthread_mutex_unlock(&m_vp_cond_mutex);
-
-
-//    CAScheduler::schedule(schedule_selector(CAVideoPlayerController::onCheckExit), this, 0);
-
-    if (_delegate) {
-        _delegate->onVideoPlayerButtonBack();
-    }
 }
 
 void CAVideoPlayerController::onButtonPause(CrossApp::CAControl *control, CrossApp::CCPoint point)
