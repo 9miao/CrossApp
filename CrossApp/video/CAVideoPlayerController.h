@@ -51,23 +51,6 @@ public:
 
             
 protected:
-    
-    enum {
-        kMovieInfoSectionGeneral,
-        kMovieInfoSectionVideo,
-        kMovieInfoSectionAudio,
-        kMovieInfoSectionSubtitles,
-        kMovieInfoSectionMetadata,    
-        kMovieInfoSectionCount,
-    };
-    
-    enum {
-        
-        kMovieInfoGeneralFormat,
-        kMovieInfoGeneralBitrate,
-        kMovieInfoGeneralCount,
-    };
-
     CAVideoPlayerView*_glView;
 
     VPDecoder*_decoder;
@@ -78,16 +61,13 @@ protected:
     unsigned int        _currentAudioFramePos;
     float               _moviePosition;
     float               _wantMoviePosition;
-    float               _movieDuration;
  
     float               _bufferedDuration;
     float               _minBufferedDuration;
     float               _maxBufferedDuration;
     bool                _playing;
     bool                _disableUpdateHUD;
-    struct timeval      _tickCorrectionTime;
-    float               _tickCorrectionPosition;
-    unsigned int        _tickCounter;
+
     bool                _decoding;
 
     bool                _buffered;
@@ -113,7 +93,7 @@ protected:
     void updatePlayButton();
     void asyncDecodeFrames();
     void tick(float dt);
-    float tickCorrection();
+
     bool addFrames(const vector<VPFrame*>& frames);
     float presentFrame();
     float presentVideoFrame(VPVideoFrame* frame);

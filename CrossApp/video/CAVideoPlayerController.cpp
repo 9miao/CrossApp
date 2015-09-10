@@ -96,12 +96,9 @@ CAVideoPlayerController::CAVideoPlayerController()
 , _currentAudioFrame(NULL)
 , _playing(false)
 , _disableUpdateHUD(false)
-, _tickCorrectionPosition(0)
-, _tickCounter(0)
 , _decoding(false)
 , _buffered(false)
 , _glView(NULL)
-, _movieDuration(0)
 , _currentAudioFramePos(0)
 , _slider(NULL)
 , _HUDView(NULL)
@@ -307,11 +304,8 @@ void CAVideoPlayerController::play()
     //CCLog("_wantMoviePosition===%f",_decoder->getPosition());
     _playing = true;
     _disableUpdateHUD = false;
-    _tickCorrectionTime.tv_sec = 0;
-    _tickCorrectionTime.tv_usec = 0;
-    _tickCounter = 0;
         
-    asyncDecodeFrames();
+	asyncDecodeFrames();
     
     updatePlayButton();
     
@@ -448,8 +442,6 @@ void CAVideoPlayerController::tick(float dt)
 {
     if (_buffered && ((_bufferedDuration > _minBufferedDuration) || _decoder->isEOF())) {
         
-        _tickCorrectionTime.tv_sec = 0;
-        _tickCorrectionTime.tv_usec = 0;
         _buffered = false;
         
         _activityView->stopAnimating();
@@ -482,13 +474,14 @@ void CAVideoPlayerController::tick(float dt)
                 _activityView->startAnimating();
             }
         }
-        
+
 //        if (!leftFrames || !(_bufferedDuration > _minBufferedDuration)) {
-        if (_bufferedDuration < _maxBufferedDuration) {
-            asyncDecodeFrames();
-        }
+		if (_bufferedDuration < _maxBufferedDuration) 
+		{
+			asyncDecodeFrames();
+		}
         
-        float correction = tickCorrection();
+		float correction = 0;// tickCorrection();
         float time = MAX(interval + correction, 0.01);
 //        CCLog("%s, %f, %f, %f", __FUNCTION__, time, dt, correction);
         
@@ -497,7 +490,7 @@ void CAVideoPlayerController::tick(float dt)
 
 }
 
-
+/*
 float CAVideoPlayerController::tickCorrection()
 {
     if (_buffered)
@@ -527,6 +520,8 @@ float CAVideoPlayerController::tickCorrection()
     
     return correction;
 }
+*/
+
 
 float CAVideoPlayerController::presentFrame()
 {
@@ -563,10 +558,9 @@ float CAVideoPlayerController::presentVideoFrame(VPVideoFrame *frame)
         _glView->setCurrentFrame(frame);
     }
     _moviePosition = frame->getPosition();
-    _movieDuration = frame->getDuration();
 
-	float aaaaa = _decoder->getDuration();
-	aaaaa -= _moviePosition;
+	//float aaaaa = _decoder->getDuration();
+	//aaaaa -= _moviePosition;
     if (_decoder->getDuration()-_moviePosition<1) {
         pause();
         _moviePosition = 0;
@@ -583,7 +577,7 @@ float CAVideoPlayerController::presentVideoFrame(VPVideoFrame *frame)
 void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int channels)
 {
     if (_buffered) {
-        memset(stream, 0, len);
+		memset(stream, 0, len * channels);
         return;
     }
     
@@ -647,7 +641,8 @@ void CAVideoPlayerController::audioCallback(unsigned char *stream, int len, int 
                 CC_SAFE_RELEASE_NULL(_currentAudioFrame);
             }
         } else {
-            memset(stream, 0, len);
+			memset(stream, 0, len * channels);
+			return;
         }
     } 
 }
