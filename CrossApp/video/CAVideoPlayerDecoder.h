@@ -132,8 +132,6 @@ public:
     
 public:
     
-    static VPDecoder* createWithContentPath(const std::string& path, bool isNetworkPath);
-    
     bool openFile(const std::string& path, bool isNetworkPath);
     
     void closeFile();
@@ -165,8 +163,6 @@ public:
     unsigned int getFrameWidth();
     unsigned int getFrameHeight();
     unsigned int getAudioStreamsCount();
-    int getSelectedAudioStream();
-    void setSelectedAudioStream(int selected);
 
     bool isValidAudio();
     bool isValidVideo();
@@ -175,7 +171,6 @@ public:
     bool getIsNetwork();
 
     bool isEOF();
-    std::string getPath();
     float getFPS();
     
 private:

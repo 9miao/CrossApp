@@ -30,30 +30,28 @@ public:
     static CAVideoPlayerView* createWithFrame(const CCRect& rect, VPDecoder* decoder);
     static CAVideoPlayerView* createWithCenter(const CCRect& rect, VPDecoder* decoder);
 
-    virtual bool init();
-    virtual void visit();
-    virtual void draw();
-    virtual void setContentSize(const CCSize& size);
-    virtual void setImageCoords(CCRect rect);
-    virtual void updateImageRect();
-    
-    virtual void setCurrentFrame(VPVideoFrame* frame);
-    
-        
-   
+	virtual void setCurrentFrame(VPVideoFrame* frame);
+
 private:
-    GLuint          _program;
-    GLint           _uniformMatrix;
-    GLfloat         _vertices[8];
-    
-    VPDecoder       *_decoder;
-    VPFrameRender   *_renderer;
-    VPVideoFrame    *_currFrame;
-    
-    CCRect          _pictRect;
-    
+	virtual bool init();
+	virtual void visit();
+	virtual void draw();
+	virtual void setContentSize(const CCSize& size);
+	virtual void setImageCoords(CCRect rect);
+	virtual void updateImageRect();
+	
+	bool loadShaders();
+
 private:
-    bool loadShaders();
+    VPDecoder *m_pDecoder;
+    VPFrameRender *m_pRenderer;
+
+    VPVideoFrame *m_pCurFrame;
+
+	CAVector<CAObject*> m_vVideoFrames;
+	CAVector<CAObject*> m_vAudioFrames;
+
+	CCRect m_viewRect;
 };
 
 NS_CC_END

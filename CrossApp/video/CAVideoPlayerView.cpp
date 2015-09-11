@@ -6,16 +6,16 @@
 NS_CC_BEGIN
 
 CAVideoPlayerView::CAVideoPlayerView(VPDecoder* decoder)
-: _renderer(NULL)
-, _currFrame(NULL)
+: m_pRenderer(NULL)
+, m_pCurFrame(NULL)
 {
-    _decoder = decoder;
+	m_pDecoder = decoder;
 }
 
 CAVideoPlayerView::~CAVideoPlayerView()
 {
-	CC_SAFE_DELETE(_renderer);
-    CC_SAFE_RELEASE(_currFrame);
+	CC_SAFE_DELETE(m_pRenderer);
+	CC_SAFE_RELEASE(m_pCurFrame);
 }
 
 CAVideoPlayerView* CAVideoPlayerView::create(VPDecoder* decoder)
@@ -64,18 +64,18 @@ bool CAVideoPlayerView::init()
     
     setColor(ccc4(0, 0, 0, 255));
     
-    if (_decoder->setupVideoFrameFormat(kVideoFrameFormatYUV)) 
+	if (m_pDecoder->setupVideoFrameFormat(kVideoFrameFormatYUV))
 	{
-        _renderer = new VPFrameRenderYUV();
+		m_pRenderer = new VPFrameRenderYUV();
     }
 	else 
 	{
-        _renderer = new VPFrameRenderRGB();
+		m_pRenderer = new VPFrameRenderRGB();
     }
 
-    if (!_renderer->loadShaders()) 
+	if (!m_pRenderer->loadShaders())
 	{
-        delete _renderer;
+		delete m_pRenderer;
         return false;
     }
     return true;
@@ -85,11 +85,11 @@ void CAVideoPlayerView::setContentSize(const CCSize& size)
 {
     CAView::setContentSize(size);
     
-    CCRect pictureRect = _renderer->updateVertices(
-		_decoder->getFrameWidth(), _decoder->getFrameHeight(), getFrame().size.width, getFrame().size.height);
+	CCRect pictureRect = m_pRenderer->updateVertices(
+		m_pDecoder->getFrameWidth(), m_pDecoder->getFrameHeight(), getFrame().size.width, getFrame().size.height);
     
-    _pictRect = pictureRect;
-    setImageRect(_pictRect);
+	m_viewRect = pictureRect;
+	setImageRect(pictureRect);
 }
 
 void CAVideoPlayerView::setImageCoords(CCRect rect)
@@ -145,10 +145,10 @@ void CAVideoPlayerView::updateImageRect()
     // Don't update Z.
     float m_fLeft, m_fTop, m_fRight, m_fBottom;
     
-    m_fLeft = _pictRect.origin.x;
-    m_fRight = _pictRect.origin.x + _pictRect.size.width;
-    m_fTop = _pictRect.origin.y;
-    m_fBottom = _pictRect.origin.y + _pictRect.size.height;
+	m_fLeft = m_viewRect.origin.x;
+	m_fRight = m_viewRect.origin.x + m_viewRect.size.width;
+	m_fTop = m_viewRect.origin.y;
+	m_fBottom = m_viewRect.origin.y + m_viewRect.size.height;
     
     m_sQuad.bl.vertices = vertex3(m_fLeft, m_fTop, 0);
     m_sQuad.br.vertices = vertex3(m_fRight, m_fTop, 0);
@@ -168,16 +168,16 @@ void CAVideoPlayerView::draw()
 {
     long offset = (long)&m_sQuad;
     
-    if (_currFrame && _renderer) {
-        _renderer->draw(_currFrame, offset);
+	if (m_pCurFrame && m_pRenderer) {
+		m_pRenderer->draw(m_pCurFrame, offset);
     }
 }
 
 void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
 {
-    CC_SAFE_RELEASE_NULL(_currFrame);
-    _currFrame = frame;
-    CC_SAFE_RETAIN(_currFrame);
+	CC_SAFE_RELEASE_NULL(m_pCurFrame);
+	m_pCurFrame = frame;
+	CC_SAFE_RETAIN(m_pCurFrame);
 }
 
 

@@ -4,6 +4,8 @@
 #include "shaders/CAShaderCache.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
+#include "kazmath/GL/matrix.h"
+
 
 NS_CC_BEGIN
 
@@ -191,10 +193,7 @@ bool VPFrameRenderRGB::prepareRender()
     return true;
 }
 
-const char* VPFrameRenderRGB::key()
-{
-    return _key.c_str();
-}
+
 
 VPFrameRenderYUV::VPFrameRenderYUV()
 {
@@ -284,17 +283,8 @@ bool VPFrameRenderYUV::prepareRender()
     return true;
 }
 
-const char* VPFrameRenderYUV::key()
-{
-    return _key.c_str();
-}
-
 VPFrameRender::VPFrameRender()
 {
-    _program = 0;
-    _renderBufer = 0;
-    _uniformMatrix = 0;
-    
     _vertices[0] = -1.0f;  // x0
     _vertices[1] = -1.0f;  // y0
     _vertices[2] =  1.0f;  // ..
@@ -307,15 +297,6 @@ VPFrameRender::VPFrameRender()
 
 VPFrameRender::~VPFrameRender()
 {
-    if (_program) {
-        glDeleteProgram(_program);
-        _program = 0;
-    }
-    
-    if (_renderBufer) {
-        glDeleteRenderbuffers(1, &_renderBufer);
-        _renderBufer = 0;
-    }
 }
 
 bool VPFrameRender::loadShaders()
@@ -359,7 +340,10 @@ bool VPFrameRender::loadShaders()
     return true;
 }
 
-#include "kazmath/GL/matrix.h"
+const char* VPFrameRender::key()
+{
+	return _key.c_str();
+}
 
 void VPFrameRender::draw(VPVideoFrame *frame, long offset)
 {

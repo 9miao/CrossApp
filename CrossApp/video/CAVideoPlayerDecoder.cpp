@@ -291,37 +291,6 @@ unsigned int VPDecoder::getAudioStreamsCount()
     return (unsigned int)_audioStreams.size();
 }
 
-int VPDecoder::getSelectedAudioStream()
-{
-    if (_audioStream == -1) {
-        return -1;
-    }
-    std::vector<int>::iterator iter = _audioStreams.begin();
-    int index = 0;
-    while (iter != _audioStreams.end()) {
-        if (*iter == _audioStream) {
-            return index;
-        }
-        iter++;
-        index++;
-    }
-    return -1;
-}
-
-void VPDecoder::setSelectedAudioStream(int selected)
-{
-    this->closeAudioStream();
-    if (selected == -1) {
-        _audioStream = -1;
-    } else {
-        int audioStream = _audioStreams[selected];
-        VPError errCode = this->openAudioStream(audioStream);
-        if (kErrorNone != errCode) {
-			CCLog("%s, %d", __FUNCTION__, errCode);
-        }
-    }
-}
-
 bool VPDecoder::isValidAudio()
 {
     return _audioStream != -1;
@@ -366,18 +335,6 @@ bool VPDecoder::getIsNetwork()
 float VPDecoder::getFPS()
 {
     return _fps;
-}
-
-VPDecoder* VPDecoder::createWithContentPath(const std::string& path, bool isNetPath)
-{
-    VPDecoder* vpdec = new VPDecoder();
-    if (vpdec) {
-        if (!vpdec->openFile(path, isNetPath)) {
-            delete vpdec;
-            return NULL;
-        };
-    }
-    return vpdec;
 }
 
 bool VPDecoder::openFile(const std::string& path, bool isNetPath)
@@ -901,17 +858,14 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
         
         unsigned char *outbuf[2] = { (unsigned char*)_swrBuffer, 0};
         
-//        if (s_audioSpec.samples != _audioFrame->nb_samples) {
-//            if (swr_set_compensation(_swrContext,
-//                                     (s_audioSpec.samples - _audioFrame->nb_samples)
-//                                     * s_audioSpec.freq
-//                                     / _audioFrame->sample_rate,
-//                                     s_audioSpec.samples * s_audioSpec.freq
-//                                     / _audioFrame->sample_rate) < 0) {
-//                CCLog("swr_set_compensation() failed\n");
-//                return NULL;
-//            }
-//        }
+		if (s_audioSpec.samples != _audioFrame->nb_samples) {
+			if (swr_set_compensation(_swrContext,
+				(s_audioSpec.samples - _audioFrame->nb_samples) * s_audioSpec.freq / _audioFrame->sample_rate,
+				s_audioSpec.samples * s_audioSpec.freq / _audioFrame->sample_rate) < 0) {
+				CCLog("swr_set_compensation() failed\n");
+				return NULL;
+			}
+		}
         
         numFrames = swr_convert(_swrContext,
                                 outbuf,
