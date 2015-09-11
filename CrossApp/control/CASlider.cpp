@@ -44,15 +44,6 @@ CASlider::~CASlider()
 void CASlider::onExitTransitionDidStart()
 {
     CAControl::onExitTransitionDidStart();
-    
-    m_pMinTrackTintImageView->removeFromSuperview();
-    m_pMinTrackTintImageView = NULL;
-    
-    m_pMaxTrackTintImageView->removeFromSuperview();
-    m_pMaxTrackTintImageView = NULL;
-    
-    m_pThumbTintImageView->removeFromSuperview();
-    m_pThumbTintImageView = NULL;
 }
 
 void CASlider::onEnterTransitionDidFinish()
@@ -86,7 +77,7 @@ void CASlider::onEnterTransitionDidFinish()
         m_pMinTrackTintImageView = CAScale9ImageView::createWithImage(m_pMinTrackTintImage);
     }
     
-    if (m_pMinTrackTintImageView)
+    if (m_pMinTrackTintImageView && m_pMinTrackTintImageView->getSuperview() == NULL)
     {
         this->addSubview(m_pMinTrackTintImageView);
     }
@@ -97,7 +88,7 @@ void CASlider::onEnterTransitionDidFinish()
         const CCSize size = this->getBounds().size;
         m_pThumbTintImageView->setFrame(CCRect(0, 0, size.height, size.height));
     }
-    if (m_pThumbTintImageView)
+    if (m_pThumbTintImageView && m_pThumbTintImageView->getSuperview() == NULL)
     {
         this->addSubview(m_pThumbTintImageView);
     }
@@ -106,7 +97,7 @@ void CASlider::onEnterTransitionDidFinish()
     {
         m_pMaxTrackTintImageView = CAScale9ImageView::createWithImage(m_pMaxTrackTintImage);
     }
-    if (m_pMaxTrackTintImageView)
+    if (m_pMaxTrackTintImageView && m_pMaxTrackTintImageView->getSuperview() == NULL)
     {
         this->addSubview(m_pMaxTrackTintImageView);
     }

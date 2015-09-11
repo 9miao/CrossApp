@@ -60,7 +60,7 @@ static EAGLView *view;
 	}
     
     CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
-    
+
     frameZoomFactor_ = 1.0f;
 	
 	view = self;
@@ -76,6 +76,7 @@ static EAGLView *view;
     [_textfield setFrame:CGRectMake(-2000, -2000, 100, 50)];
     _textfield.hidden = YES;
     [self addSubview:_textfield];
+    [_textfield release];
     
     CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
     
@@ -85,6 +86,14 @@ static EAGLView *view;
     
     [super initWithFrame:frameRect pixelFormat:format];
 
+    NSRect bounds = frameRect;
+    bounds.origin = CGPointZero;
+    NSTrackingArea* trackingArea = [[NSTrackingArea alloc]
+                                    initWithRect:bounds
+                                    options: NSTrackingMouseMoved | NSTrackingActiveAlways
+                                    owner:self userInfo:nil];
+    [self addTrackingArea:trackingArea];
+    
     return self;
 }
 
@@ -323,7 +332,8 @@ static EAGLView *view;
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	NSPoint event_location = [theEvent locationInWindow];
+    NSLog(@"mouseMoved: x=%f, y=%f", event_location.x, [self getHeight] - event_location.y);
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
