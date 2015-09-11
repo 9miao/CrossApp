@@ -107,6 +107,12 @@ bool CAStepper::init()
     {
         return false;
     }
+    setBackgroundImage(CAImage::create("source_material/btn_rounded_normal.png"), CAControlStateNormal);
+    setBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"), CAControlStateHighlighted);
+    setIncrementImage(CAImage::create("source_material/stepper_inc_h.png"), CAControlStateAll);
+    setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
+    setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);
+    setDecrementImage(CAImage::create("source_material/stepper_dec_n.png"), CAControlStateNormal);
     return true;
 }
 
@@ -126,7 +132,6 @@ bool CAStepper::initWithCenter(const CCRect& rect)
     {
         return false;
     }
-    
     return true;
 }
 
@@ -212,12 +217,14 @@ CAColor4B CAStepper::getDividerColor()
 
 void CAStepper::setTailorImageAtIndex(int index)
 {
-    if (m_pBackgroundSelectedImageView) {
-        this->removeSubview(m_pBackgroundSelectedImageView);
-        m_pBackgroundSelectedImageView = NULL;
+    if (m_pBackgroundImageView && m_pBackgroundImage[CAControlStateHighlighted]) {
+        if (m_pBackgroundSelectedImageView) {
+            this->removeSubview(m_pBackgroundSelectedImageView);
+            m_pBackgroundSelectedImageView = NULL;
+        }
+        m_pBackgroundSelectedImageView = (CAImageView*)getTailorImageAtIndex(index);
+        this->insertSubview(m_pBackgroundSelectedImageView,1);
     }
-    m_pBackgroundSelectedImageView = (CAImageView*)getTailorImageAtIndex(index);
-    this->insertSubview(m_pBackgroundSelectedImageView,1);
 }
 
 CAView* CAStepper::getTailorImageAtIndex(int i)
@@ -264,7 +271,6 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 }else{
                     setTailorImageAtIndex(1);
                 }
-                m_pBackgroundSelectedImageView->setVisible(true);
                 if (m_bTouchEffect) {
                     m_pDecrementImageView->setAlpha(0.7);
                     m_pIncrementImageView->setAlpha(1.0);
@@ -385,12 +391,7 @@ void CAStepper::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 void CAStepper::onEnter()
 {
     CAControl::onEnter();
-    setBackgroundImage(CAImage::create("source_material/btn_rounded_normal.png"), CAControlStateNormal);
-    setBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"), CAControlStateHighlighted);
-    setIncrementImage(CAImage::create("source_material/stepper_inc_h.png"), CAControlStateAll);
-    setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
-    setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);
-    setDecrementImage(CAImage::create("source_material/stepper_dec_n.png"), CAControlStateNormal);
+
     if (m_value<m_minimumValue) {
         m_value = m_minimumValue;
     }
