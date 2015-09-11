@@ -10,6 +10,9 @@
 #include "basics/CAScheduler.h"
 #include "view/CAImageView.h"
 #include "view/CAScale9ImageView.h"
+#include "view/CAClippingView.h"
+#include "view/CADrawView.h"
+#include "view/CARenderImage.h"
 #include "basics/CAApplication.h"
 
 NS_CC_BEGIN
@@ -22,18 +25,19 @@ CAStepper::CAStepper()
 , m_minimumValue(0)
 , m_maximumValue(100)
 , m_stepValue(0)
-//, m_tintColor(ccc4(0, 0, 255, 255))
 , m_pDecrementImageView(NULL)
 , m_pIncrementImageView(NULL)
 , m_pBackgroundImageView(NULL)
+, m_pBackgroundSelectedImageView(NULL)
 , m_actionType(ActionNone)
 , m_bTouchEffect(false)
 , m_pDividerImageView(NULL)
+, m_pCAStepperOrientation(CAStepperOrientationHorizontal)
+,m_cTintColor(ccc4(54, 195, 240, 255))
 {
     memset(m_pBackgroundImage, 0x00, sizeof(m_pBackgroundImage));
     memset(m_pIncrementImage, 0x00, sizeof(m_pIncrementImage));
     memset(m_pDecrementImage, 0x00, sizeof(m_pDecrementImage));
-    memset(m_pDividerImage, 0x00, sizeof(m_pDividerImage));
 }
 
 CAStepper::~CAStepper()
@@ -47,11 +51,9 @@ CAStepper::~CAStepper()
     for (int i=0; i<CAControlStateAll; i++) {
         CC_SAFE_RELEASE(m_pDecrementImage[i]);
     }
-    for (int i=0; i<CAControlStateAll; i++) {
-        CC_SAFE_RELEASE(m_pDividerImage[i]);
-    }
     
     CC_SAFE_RELEASE(m_pBackgroundImageView);
+    CC_SAFE_RELEASE(m_pBackgroundSelectedImageView);
     CC_SAFE_RELEASE(m_pIncrementImageView);
     CC_SAFE_RELEASE(m_pDecrementImageView);
     CC_SAFE_RELEASE(m_pDividerImageView);
@@ -105,12 +107,6 @@ bool CAStepper::init()
     {
         return false;
     }
-    setIncrementImage(CAImage::create("source_material/stepper_inc_h.png"), CAControlStateAll);
-    setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
-    setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);
-    setDecrementImage(CAImage::create("source_material/stepper_dec_n.png"), CAControlStateNormal);
-    setDividerImage(CAImage::create("source_material/stepper_divider.png"), CAControlStateAll);
-    
     return true;
 }
 
@@ -200,27 +196,54 @@ CAImage* CAStepper::getDecrementImageForState(CAControlState state)
     return m_pDecrementImage[state];
 }
 
-void CAStepper::setDividerImage(CrossApp::CAImage *image, CAControlState state)
+void CAStepper::setDividerColor(CAColor4B color)
 {
-    if (state == CAControlStateAll) {
-        for (int i=0; i<CAControlStateAll; i++) {
-            CC_SAFE_RELEASE_NULL(m_pDividerImage[i]);
-            m_pDividerImage[i] = image;
-            CC_SAFE_RETAIN(m_pDividerImage[i]);
-        }
-    } else {
-        CC_SAFE_RELEASE_NULL(m_pDividerImage[state]);
-        m_pDividerImage[state] = image;
-        CC_SAFE_RETAIN(m_pDividerImage[state]);
-    }
-    if (m_pDividerImageView!=NULL&& m_pDividerImage[CAControlStateNormal]) {
-        m_pDividerImageView->setImage(m_pDividerImage[CAControlStateNormal]);
+
+    m_cTintColor = color;
+    if (m_pDividerImageView!=NULL) {
+        m_pDividerImageView->setColor(m_cTintColor);
     }
 }
 
-CAImage* CAStepper::getDividerImageForState(CAControlState state)
+CAColor4B CAStepper::getDividerColor()
 {
-    return m_pDividerImage[state];
+    return m_cTintColor;
+}
+
+void CAStepper::setTailorImageAtIndex(int index)
+{
+    if (m_pBackgroundSelectedImageView) {
+        this->removeSubview(m_pBackgroundSelectedImageView);
+        m_pBackgroundSelectedImageView = NULL;
+    }
+    m_pBackgroundSelectedImageView = (CAImageView*)getTailorImageAtIndex(index);
+    this->insertSubview(m_pBackgroundSelectedImageView,1);
+}
+
+CAView* CAStepper::getTailorImageAtIndex(int i)
+{
+    CAImageView* imageView = NULL;
+    
+    CAScale9ImageView* clipNode = CAScale9ImageView::createWithFrame(m_pBackgroundImageView->getBounds());
+    clipNode->setImage(m_pBackgroundImage[CAControlStateHighlighted]);
+    
+    CCSize size = clipNode->getFrame().size;
+    CARenderImage* render = CARenderImage::create(size.width, size.height);
+    render->printscreenWithView(clipNode);
+    
+    CCRect rect;
+    if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+        rect.origin = CCPoint(i*m_pBackgroundImageView->getBounds().size.width/2,0);
+        rect.size   = CCSize(m_pBackgroundImageView->getBounds().size.width/2,m_pBackgroundImageView->getBounds().size.height);
+    }else{
+        rect.origin = CCPoint(0,i*m_pBackgroundImageView->getBounds().size.height/2);
+        rect.size   = CCSize(m_pBackgroundImageView->getBounds().size.width,m_pBackgroundImageView->getBounds().size.height/2);
+    }
+    
+    imageView = CAImageView::createWithImage(render->getImageView()->getImage());
+    imageView->setFrame(rect);
+    imageView->setImageRect(rect);
+    return imageView;
 }
 
 bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -236,6 +259,12 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             case ActionDecrease:
                 m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateHighlighted]);
                 m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
+                if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+                    setTailorImageAtIndex(0);
+                }else{
+                    setTailorImageAtIndex(1);
+                }
+                m_pBackgroundSelectedImageView->setVisible(true);
                 if (m_bTouchEffect) {
                     m_pDecrementImageView->setAlpha(0.7);
                     m_pIncrementImageView->setAlpha(1.0);
@@ -245,6 +274,11 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             case ActionIncrease:
                 m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
                 m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateHighlighted]);
+                if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+                    setTailorImageAtIndex(1);
+                }else{
+                    setTailorImageAtIndex(0);
+                }
                 if (m_bTouchEffect) {
                     m_pDecrementImageView->setAlpha(1.0);
                     m_pIncrementImageView->setAlpha(0.7);
@@ -287,7 +321,7 @@ void CAStepper::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
                 case ActionDecrease:
                     m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateHighlighted]);
                     m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
-                    m_pDividerImageView->setImage(m_pDividerImage[CAControlStateHighlighted]);
+                    m_pDividerImageView->setColor(m_cTintColor);
                     if (m_bTouchEffect) {
                         m_pDecrementImageView->setAlpha(0.7);
                         m_pIncrementImageView->setAlpha(1.0);
@@ -297,7 +331,7 @@ void CAStepper::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
                 case ActionIncrease:
                     m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
                     m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateHighlighted]);
-                    m_pDividerImageView->setImage(m_pDividerImage[CAControlStateHighlighted]);
+                    m_pDividerImageView->setColor(m_cTintColor);
                     if (m_bTouchEffect) {
                         m_pDecrementImageView->setAlpha(1.0);
                         m_pIncrementImageView->setAlpha(0.7);
@@ -307,7 +341,7 @@ void CAStepper::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
                 case ActionNone:
                     m_pDecrementImageView->setImage(m_pDecrementImage[CAControlStateNormal]);
                     m_pIncrementImageView->setImage(m_pIncrementImage[CAControlStateNormal]);
-                    m_pDividerImageView->setImage(m_pDividerImage[CAControlStateNormal]);
+                    m_pDividerImageView->setColor(m_cTintColor);
                     if (m_bTouchEffect) {
                         m_pDecrementImageView->setAlpha(1.0);
                         m_pIncrementImageView->setAlpha(1.0);
@@ -330,7 +364,10 @@ void CAStepper::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         m_pDecrementImageView->setAlpha(1.0);
         m_pIncrementImageView->setAlpha(1.0);
     }
-
+    if (m_pBackgroundSelectedImageView) {
+        this->removeSubview(m_pBackgroundSelectedImageView);
+        m_pBackgroundSelectedImageView = NULL;
+    }
     CAScheduler::unschedule(schedule_selector(CAStepper::repeat), this);
 }
 
@@ -348,27 +385,42 @@ void CAStepper::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 void CAStepper::onEnter()
 {
     CAControl::onEnter();
+    setBackgroundImage(CAImage::create("source_material/btn_rounded_normal.png"), CAControlStateNormal);
+    setBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"), CAControlStateHighlighted);
+    setIncrementImage(CAImage::create("source_material/stepper_inc_h.png"), CAControlStateAll);
+    setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
+    setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);
+    setDecrementImage(CAImage::create("source_material/stepper_dec_n.png"), CAControlStateNormal);
     if (m_value<m_minimumValue) {
         m_value = m_minimumValue;
     }
     // init background
     if (!m_pBackgroundImageView && m_pBackgroundImage[CAControlStateNormal]) {
-        m_pBackgroundImageView = CAImageView::createWithImage(m_pBackgroundImage[CAControlStateNormal]);
+        m_pBackgroundImageView = CAScale9ImageView::createWithImage(m_pBackgroundImage[CAControlStateNormal]);
         m_pBackgroundImageView->retain();
-        m_pBackgroundImageView->setCenterOrigin(CCPoint(getFrame().size.width/2, getFrame().size.height/2));
+        m_pBackgroundImageView->setCenter(CCRect(getFrame().size.width/2, getFrame().size.height/2,getFrame().size.width,getFrame().size.height));
         addSubview(m_pBackgroundImageView);
     }
-    
     // init divider
-    if (!m_pDividerImageView && m_pDividerImage[CAControlStateNormal]) {
-        m_pDividerImageView = CAImageView::createWithImage(m_pDividerImage[CAControlStateNormal]);
+    if (!m_pDividerImageView ) {
+        m_pDividerImageView = CAImageView::createWithColor(m_cTintColor);
         m_pDividerImageView->retain();
-        float scale = getBounds().size.height / m_pDividerImage[CAControlStateNormal]->getContentSize().height;
-        m_pDividerImageView->setCenter(CCRect(getBounds().size.width/2, 
-                                              getBounds().size.height/2,
-//                                              getBounds().size.width,
-                                              m_pDividerImage[CAControlStateNormal]->getContentSize().width * scale, 
-                                              getBounds().size.height));
+        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal)
+        {
+            m_pDividerImageView->setCenter(CCRect(getBounds().size.width/2,
+                                                  getBounds().size.height/2,
+                                                  1,
+                                                  getBounds().size.height));
+        }else{
+            m_pDividerImageView->setCenter(CCRect(getBounds().size.width/2,
+                                                  getBounds().size.height/2,
+                                                  1,
+                                                  getBounds().size.width));
+            m_pDividerImageView->setRotation(90);
+        }
+        
+        
+        
         addSubview(m_pDividerImageView);
     }
     
@@ -377,23 +429,39 @@ void CAStepper::onEnter()
     // init increment
     if (!m_pIncrementImageView && m_pIncrementImage[CAControlStateNormal]) {
         m_pIncrementImageView = CAImageView::createWithImage(m_pIncrementImage[CAControlStateNormal]);
-        m_pIncrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
         m_pIncrementImageView->retain();
-        m_pIncrementImageView->setFrame(CCRect(getBounds().size.width/2 + div, 0, 
-                                               getBounds().size.width/2 - div, 
-                                               getBounds().size.height));
-        addSubview(m_pIncrementImageView);
+        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+            m_pIncrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
+            m_pIncrementImageView->setCenter(CCRect(getBounds().size.width/4*3 + div, getBounds().size.height/2,
+                                                   getBounds().size.width/2 - div,
+                                                   getBounds().size.height));
+        }else{
+            m_pIncrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByVertical);
+            m_pIncrementImageView->setCenter(CCRect(getBounds().size.width/2, getBounds().size.height/4,
+                                                   getBounds().size.width,
+                                                   getBounds().size.height/2 - div));
+        }
+        
+        insertSubview(m_pIncrementImageView,10);
     }
     
     // init decrement
     if (!m_pDecrementImageView && m_pDecrementImage[CAControlStateNormal]) {
         m_pDecrementImageView = CAImageView::createWithImage(m_pDecrementImage[CAControlStateNormal]);
-        m_pDecrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
         m_pDecrementImageView->retain();
-        m_pDecrementImageView->setFrame(CCRect(0, 0,
-                                               getBounds().size.width/2 - div, 
-                                               getBounds().size.height));
-        addSubview(m_pDecrementImageView);
+        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+            m_pDecrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
+            m_pDecrementImageView->setCenter(CCRect(getBounds().size.width/4, getBounds().size.height/2,
+                                                   getBounds().size.width/2 - div,
+                                                   getBounds().size.height));
+        }else{
+            m_pDecrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByVertical);
+            m_pDecrementImageView->setCenter(CCRect(getBounds().size.width/2, getBounds().size.height/4*3 + div,
+                                                   getBounds().size.width,
+                                                   getBounds().size.height/2 - div));
+        }
+        
+        insertSubview(m_pDecrementImageView,10);
     }
 }
 
@@ -466,11 +534,20 @@ void CAStepper::repeat(float dt)
 void CAStepper::click(CATouch* pTouch)
 {
     CCRect increseRect, decreaseRect;
-    increseRect = getBounds();
-    increseRect.origin.x = getBounds().size.width/2;
-    increseRect.size.width = getBounds().size.width/2;
-    decreaseRect = increseRect;
-    decreaseRect.origin.x = 0;
+    if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+        increseRect = getBounds();
+        increseRect.origin.x = getBounds().size.width/2;
+        increseRect.size.width = getBounds().size.width/2;
+        decreaseRect = increseRect;
+        decreaseRect.origin.x = 0;
+    }else{
+        decreaseRect = getBounds();
+        decreaseRect.origin.y = getBounds().size.height/2;
+        decreaseRect.size.height = getBounds().size.height/2;
+        increseRect = decreaseRect;
+        increseRect.origin.y = 0;
+    }
+
     
     if (increseRect.containsPoint(convertToNodeSpace(pTouch->getLocation()))) {
         m_actionType = ActionIncrease;
@@ -498,7 +575,54 @@ void CAStepper::removeAllTargets()
 
 void CAStepper::setContentSize(const CCSize & var)
 {
-    CAControl::setContentSize(CADipSize(188, 58));
+    CAControl::setContentSize(var);
+    if (m_pBackgroundImageView) {
+        m_pBackgroundImageView->setFrame(this->getBounds());
+    }
+    
+    if (m_pDividerImageView) {
+
+        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal)
+        {
+            m_pDividerImageView->setCenter(CCRect(getBounds().size.width/2,
+                                                  getBounds().size.height/2,
+                                                  1,
+                                                  getBounds().size.height));
+        }else{
+            m_pDividerImageView->setCenter(CCRect(getBounds().size.width/2,
+                                                  getBounds().size.height/2,
+                                                  1,
+                                                  getBounds().size.width));
+        }
+    }
+    
+    float div = (m_pDividerImageView) ? m_pDividerImageView->getBounds().size.width/2 : 0;
+    
+    // init increment
+    if (m_pIncrementImageView) {
+        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+            m_pIncrementImageView->setCenter(CCRect(getBounds().size.width/4*3 + div, getBounds().size.height/2,
+                                                    getBounds().size.width/2 - div,
+                                                    getBounds().size.height));
+        }else{
+            m_pIncrementImageView->setCenter(CCRect(getBounds().size.width/2, getBounds().size.height/4,
+                                                    getBounds().size.width,
+                                                    getBounds().size.height/2 - div));
+        }
+    }
+    
+    // init decrement
+    if (m_pDecrementImageView) {
+        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+            m_pDecrementImageView->setCenter(CCRect(getBounds().size.width/4, getBounds().size.height/2,
+                                                    getBounds().size.width/2 - div,
+                                                    getBounds().size.height));
+        }else{
+            m_pDecrementImageView->setCenter(CCRect(getBounds().size.width/2, getBounds().size.height/4*3 + div,
+                                                    getBounds().size.width,
+                                                    getBounds().size.height/2 - div));
+        }
+    }
 }
 
 
