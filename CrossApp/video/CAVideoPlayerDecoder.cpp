@@ -21,9 +21,9 @@ extern "C"
 
 static void FFLog(void* context, int level, const char* pszFormat, va_list args) 
 {
-	//char szBuf[kMaxLogLen+1] = { 0 };
-    //vsnprintf(szBuf, kMaxLogLen, pszFormat, args);
-	//CCLog(szBuf);
+	char szBuf[kMaxLogLen+1] = { 0 };
+    vsnprintf(szBuf, kMaxLogLen, pszFormat, args);
+	CCLog(szBuf);
 }
     
 static void avStreamFPSTimeBase(AVStream *st, float defaultTimeBase, float *pFPS, float *pTimeBase)
@@ -772,7 +772,7 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
         }
         
 		int64_t delay = swr_get_delay(m_pSwrContext, s_audioSpec.freq);
-        if (delay > 0)
+        //if (delay > 0)
 			//CCLog("resample delay %lld", delay);
         
 		audioData = m_pswrBuffer;

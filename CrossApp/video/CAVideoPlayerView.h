@@ -14,13 +14,16 @@
 #include "view/CAView.h"
 #include "view/CAImageView.h"
 #include "view/CARenderImage.h"
+#include "basics/CAThread.h"
+#include "basics/CASyncQueue.h"
 #include "CAVideoPlayerRender.h"
 #include "CAVideoPlayerDecoder.h"
 
 NS_CC_BEGIN
 
 class VPDecoder;
-class CC_DLL CAVideoPlayerView : public CAView
+class VPFrame;
+class CC_DLL CAVideoPlayerView : public CAView, public CAThread
 {
 public:
     CAVideoPlayerView();
@@ -30,11 +33,17 @@ public:
 	static CAVideoPlayerView* createWithFrame(const CCRect& rect);
 	static CAVideoPlayerView* createWithCenter(const CCRect& rect);
 
-	bool initWithPath(const std::string& szPath);
-
-	virtual void setCurrentFrame(VPVideoFrame* frame);
+	bool initWithPath(const std::string& szPath, bool isPathByUrl);
 
 	CC_SYNTHESIZE(std::string, m_cszTitle, Title);
+
+	void play();
+	void pause();
+	bool isPlaying();
+
+	float getDuration();
+	//float getPosition();
+	//void setPosition(float pos);
 
 private:
 	virtual bool init();
@@ -43,20 +52,38 @@ private:
 	virtual void setContentSize(const CCSize& size);
 	virtual void setImageCoords(CCRect rect);
 	virtual void updateImageRect();
-	
-	bool loadShaders();
+
+	static bool decodeProcessThread(void* param);
+	void decodeProcess();
+	bool addFrames(const std::vector<VPFrame*>& frames);
+	float presentFrame();
+	void asyncDecodeFrames();
+	void setCurrentFrame(VPVideoFrame* frame);
+	void tick(float dt);
 	void audioCallback(unsigned char *stream, int len, int channels) {}
 
 private:
 	VPDecoder *m_pDecoder;
 	VPFrameRender *m_pRenderer;
 
-	CAVector<CAObject*> m_vVideoFrames;
-	CAVector<CAObject*> m_vAudioFrames;
+	CASyncQueue<VPFrame*> m_vVideoFrames;
+	CASyncQueue<VPFrame*> m_vAudioFrames;
 
 	CCRect m_viewRect;
 
 	std::string m_cszPath;
+
+	bool m_isPlaying;
+
+	float m_fMinBufferedDuration;
+	float m_fMaxBufferedDuration;
+
+	float m_fBufferedDuration;
+	float m_fMoviePosition;
+
+	VPVideoFrame *m_pCurVideoFrame;
+	VPAudioFrame *m_pCurAudioFrame;
+	unsigned int m_uCurAudioFramePos;
 };
 
 NS_CC_END

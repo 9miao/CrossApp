@@ -33,6 +33,7 @@ CAThread::CAThread()
 {
 	pthread_mutex_init(&m_SleepMutex, NULL);
 	pthread_cond_init(&m_SleepCondition, NULL);
+	pthread_cond_init(&m_ExitCondition, NULL);
 }
 
 CAThread::~CAThread()
@@ -40,6 +41,7 @@ CAThread::~CAThread()
 	close();
 	pthread_mutex_destroy(&m_SleepMutex);
 	pthread_cond_destroy(&m_SleepCondition);
+	pthread_cond_destroy(&m_ExitCondition);
 }
 
 void CAThread::start()
@@ -68,7 +70,8 @@ void CAThread::notifyRun(void* param)
 void CAThread::close()
 {
 	m_bIsRunning = false;
-	pthread_cond_wait(&m_SleepCondition, &m_SleepMutex);
+	pthread_cond_signal(&m_SleepCondition);
+	pthread_cond_wait(&m_ExitCondition, &m_SleepMutex);
 	pthread_detach(m_hThread);
 }
 
@@ -116,7 +119,7 @@ void* CAThread::_ThreadProc(void* lpParameter)
 	}
 	pAThread->OnExitInstance();
 	pAThread->m_bIsRunning = false;
-	pthread_cond_signal(&pAThread->m_SleepCondition);
+	pthread_cond_signal(&pAThread->m_ExitCondition);
 	return 0;
 }
 

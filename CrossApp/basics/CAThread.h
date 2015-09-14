@@ -54,6 +54,7 @@ private:
 
 	pthread_mutex_t m_SleepMutex;
 	pthread_cond_t m_SleepCondition;
+	pthread_cond_t m_ExitCondition;
 
 	CASyncQueue<void*> m_ThreadDataQueue;
 

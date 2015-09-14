@@ -5,14 +5,29 @@
 
 NS_CC_BEGIN
 
+#define LOCAL_MIN_BUFFERED_DURATION   0.2
+#define LOCAL_MAX_BUFFERED_DURATION   0.4
+#define NETWORK_MIN_BUFFERED_DURATION 2.0
+#define NETWORK_MAX_BUFFERED_DURATION 20.0
+
+
 CAVideoPlayerView::CAVideoPlayerView()
 : m_pRenderer(NULL)
 , m_pDecoder(NULL)
+, m_isPlaying(false)
+, m_fMinBufferedDuration(0)
+, m_fMaxBufferedDuration(0)
+, m_fBufferedDuration(0)
+, m_fMoviePosition(0)
+, m_pCurVideoFrame(NULL)
+, m_pCurAudioFrame(NULL)
+, m_uCurAudioFramePos(0)
 {
 }
 
 CAVideoPlayerView::~CAVideoPlayerView()
 {
+	CAThread::close();
 	CC_SAFE_DELETE(m_pRenderer);
 	CC_SAFE_DELETE(m_pDecoder);
 }
@@ -65,7 +80,18 @@ bool CAVideoPlayerView::init()
     return true;
 }
 
-bool CAVideoPlayerView::initWithPath(const std::string& szPath)
+bool CAVideoPlayerView::decodeProcessThread(void* param)
+{
+	CAVideoPlayerView* pVideoView = (CAVideoPlayerView*)param;
+
+	pVideoView->retain();
+	pVideoView->decodeProcess();
+	pVideoView->release();
+
+	return true;
+}
+
+bool CAVideoPlayerView::initWithPath(const std::string& szPath, bool isPathByUrl)
 {
 	m_pDecoder = new VPDecoder();
 	if (m_pDecoder == NULL)
@@ -78,6 +104,19 @@ bool CAVideoPlayerView::initWithPath(const std::string& szPath)
 		CC_SAFE_DELETE(m_pDecoder);
 		return false;
 	}
+
+	if (isPathByUrl)
+	{
+		m_fMinBufferedDuration = NETWORK_MIN_BUFFERED_DURATION;
+		m_fMaxBufferedDuration = NETWORK_MAX_BUFFERED_DURATION;
+	}
+	else 
+	{
+		m_fMinBufferedDuration = LOCAL_MIN_BUFFERED_DURATION;
+		m_fMaxBufferedDuration = LOCAL_MAX_BUFFERED_DURATION;
+	}
+	if (!m_pDecoder->isValidVideo())
+		m_fMinBufferedDuration *= 10.0; // increase for audio
 	
 	m_pDecoder->setAudioCallback(this, decoder_audio_selector(CAVideoPlayerView::audioCallback));
 
@@ -96,7 +135,9 @@ bool CAVideoPlayerView::initWithPath(const std::string& szPath)
 		CC_SAFE_DELETE(m_pDecoder);
 		return false;
 	}
+	setFrame(getFrame());
 
+	CAThread::startAndWait(decodeProcessThread);
 	return true;
 }
 
@@ -188,18 +229,160 @@ void CAVideoPlayerView::draw()
 {
     long offset = (long)&m_sQuad;
     
-//	if (m_pCurFrame && m_pRenderer) {
-//		m_pRenderer->draw(m_pCurFrame, offset);
-//    }
+	if (m_pCurVideoFrame && m_pRenderer) {
+		m_pRenderer->draw(m_pCurVideoFrame, offset);
+	}
 }
 
 void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
 {
-//	CC_SAFE_RELEASE_NULL(m_pCurFrame);
-//	m_pCurFrame = frame;
-//	CC_SAFE_RETAIN(m_pCurFrame);
+	CC_SAFE_DELETE(m_pCurVideoFrame);
+	m_pCurVideoFrame = frame;
 }
 
+void CAVideoPlayerView::play()
+{
+	if (isPlaying())
+		return;
+
+	m_isPlaying = true;
+	asyncDecodeFrames();
+	tick(0);
+}
+
+void CAVideoPlayerView::pause()
+{
+
+}
+
+bool CAVideoPlayerView::isPlaying()
+{
+	return m_isPlaying;
+}
+
+float CAVideoPlayerView::getDuration()
+{
+	if (m_pDecoder)
+	{
+		return m_pDecoder->getDuration();
+	}
+	return 0;
+}
+
+void CAVideoPlayerView::decodeProcess()
+{
+	if (!m_isPlaying)
+		return;
+	
+	bool good = true;
+
+	while (good) {
+		good = false;
+		if (m_pDecoder && (m_pDecoder->isValidVideo() || m_pDecoder->isValidAudio())) {
+			std::vector<VPFrame*> frames = m_pDecoder->decodeFrames(0.1f);
+			if (!frames.empty()) 
+			{
+				good = addFrames(frames);
+			}
+		}
+	}
+}
+
+
+bool CAVideoPlayerView::addFrames(const std::vector<VPFrame*>& frames)
+{
+	std::vector<VPFrame*>::iterator obj;
+
+	if (m_pDecoder->isValidVideo()) {
+		for (int i = 0; i < frames.size(); i++) {
+			VPFrame* frame = frames.at(i);
+			if (frame && frame->getType() == kFrameTypeVideo) {
+				m_vVideoFrames.AddElement(frame);
+				m_fBufferedDuration += frame->getDuration();
+			}
+		}
+	}
+
+	if (m_pDecoder->isValidAudio()) {
+		for (int i = 0; i < frames.size(); i++) {
+			VPFrame* frame = frames.at(i);
+			if (frame && frame->getType() == kFrameTypeAudio) {
+				m_vAudioFrames.AddElement(frame);
+				if (!m_pDecoder->isValidVideo()) {
+					m_fBufferedDuration += frame->getDuration();
+				}
+			}
+		}
+	}
+
+	return m_isPlaying && m_fBufferedDuration < m_fMaxBufferedDuration;
+}
+
+void CAVideoPlayerView::asyncDecodeFrames()
+{
+	CAThread::notifyRun(this);
+}
+
+float CAVideoPlayerView::presentFrame()
+{
+	float interval = 0;
+
+	if (m_pDecoder->isValidVideo()) {
+
+		VPFrame *frame = NULL;
+		if (m_vVideoFrames.PopElement(frame))
+		{
+			m_fBufferedDuration -= frame->getDuration();
+			m_fMoviePosition = frame->getPosition();
+			interval = frame->getDuration();
+		}
+
+		if (m_pDecoder->getDuration() - m_fMoviePosition < 1) {
+
+			pause();
+			//_moviePosition = 0;
+			//_currentAudioFramePos = 0;
+			m_pDecoder->setPosition(0);
+			//setDecoderPosition(0);
+			//presentFrame();
+			//freeBufferedFrames();
+		}
+
+		setCurrentFrame((VPVideoFrame*)frame);
+	}
+	return interval;
+}
+
+void CAVideoPlayerView::tick(float dt)
+{
+	if (m_pDecoder == NULL)
+		return;
+	
+	if (!m_isPlaying)
+		return;
+
+	float interval = presentFrame();
+
+	const unsigned int leftFrames =
+		(m_pDecoder->isValidVideo() ? m_vVideoFrames.GetCount() : 0) +
+		(m_pDecoder->isValidAudio() ? m_vAudioFrames.GetCount() : 0);
+
+	if (0 == leftFrames)
+	{
+		if (m_pDecoder->isEOF()) {
+			pause();
+			return;
+		}
+	}
+
+	if (m_fBufferedDuration < m_fMaxBufferedDuration)
+	{
+		asyncDecodeFrames();
+	}
+
+	float time = MAX(interval, 0.01);
+	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, time);
+}
 /*
 void CAVideoPlayerView::audioCallback(unsigned char *stream, int len, int channels)
 {

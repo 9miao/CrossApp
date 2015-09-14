@@ -555,12 +555,10 @@ float CAVideoPlayerController::presentVideoFrame(VPVideoFrame *frame)
 {
     if (_glView) {
         
-        _glView->setCurrentFrame(frame);
+        //_glView->setCurrentFrame(frame);
     }
     _moviePosition = frame->getPosition();
 
-	//float aaaaa = _decoder->getDuration();
-	//aaaaa -= _moviePosition;
     if (_decoder->getDuration()-_moviePosition<1) {
         pause();
         _moviePosition = 0;
