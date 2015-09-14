@@ -110,7 +110,7 @@ CAVideoPlayerController::CAVideoPlayerController()
 , _playTime(NULL)
 , _isPathByUrl(false)
 {
-    SDL_Quit();
+    
 }
 
 CAVideoPlayerController::~CAVideoPlayerController()
@@ -209,7 +209,7 @@ bool CAVideoPlayerController::setMovieDecoder()
     VPDecoder* decoder = new VPDecoder();
     decoder->setAudioCallback(this, decoder_audio_selector(CAVideoPlayerController::audioCallback));
     
-    if (decoder && decoder->openFile(path, _isPathByUrl)) {
+    if (decoder && decoder->openFile(path)) {
     
         if (_isPathByUrl) {
             
@@ -272,7 +272,7 @@ void CAVideoPlayerController::prepare(float)
     if (_decoder && !_glView) {
         if (_decoder->isValidVideo()) {
             CCRect frame = getView()->getBounds();
-            _glView = CAVideoPlayerView::createWithFrame(frame, _decoder);
+            _glView = CAVideoPlayerView::createWithFrame(frame);
             CC_SAFE_RETAIN(_glView);
             getView()->addSubview(_glView);
         }
@@ -369,7 +369,7 @@ void CAVideoPlayerController::_decodeProcess()
         return;
     }
     
-    float duration = _decoder->getIsNetwork() ? .0f : 0.1f;
+	float duration = 0.1f;// _decoder->getIsNetwork() ? .0f : 0.1f;
     
     _decoding = true;
     
@@ -927,20 +927,20 @@ void CAVideoPlayerController::updatePosition(float position, bool playing)
 
 void CAVideoPlayerController::dispearHUDView()
 {
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDuration(0.3f);
-    CAViewAnimation::setAnimationRepeatAutoreverses(true);
-    _HUDView->setVisible(false);
-    CAViewAnimation::commitAnimations();
+	//CAViewAnimation::beginAnimations("", NULL);
+	//CAViewAnimation::setAnimationDuration(0.3f);
+	//CAViewAnimation::setAnimationRepeatAutoreverses(true);
+	//_HUDView->setVisible(false);
+	//CAViewAnimation::commitAnimations();
 }
 
 void CAVideoPlayerController::showHUDView()
 {
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDuration(0.3f);
-    CAViewAnimation::setAnimationRepeatAutoreverses(true);
-    _HUDView->setVisible(true);
-    CAViewAnimation::commitAnimations();
+	//CAViewAnimation::beginAnimations("", NULL);
+	//CAViewAnimation::setAnimationDuration(0.3f);
+	//CAViewAnimation::setAnimationRepeatAutoreverses(true);
+	//_HUDView->setVisible(true);
+	//CAViewAnimation::commitAnimations();
 }
 
 float CAVideoPlayerController::getDuration()

@@ -13,10 +13,10 @@
 
 #include <map>
 #include <vector>
-
 #include "basics/CAObject.h"
 #include "images/CAImage.h"
-#include "CrossApp.h"
+#include "platform/CCCommon.h"
+
 
 NS_CC_BEGIN
 
@@ -64,11 +64,10 @@ class VPFrame : public CAObject
 {
 public:
     VPFrame();
-    ~VPFrame();
     
-    CC_SYNTHESIZE_PASS_BY_REF(VPFrameType, m_type, Type)
-    CC_SYNTHESIZE_PASS_BY_REF(float, m_position, Position)
-    CC_SYNTHESIZE_PASS_BY_REF(float, m_duration, Duration)
+	CC_SYNTHESIZE_PASS_BY_REF(VPFrameType, m_type, Type);
+	CC_SYNTHESIZE_PASS_BY_REF(float, m_position, Position);
+	CC_SYNTHESIZE_PASS_BY_REF(float, m_duration, Duration);
 };
 
 class VPAudioFrame : public VPFrame
@@ -85,8 +84,7 @@ class VPVideoFrame : public VPFrame
 {
 public:
     VPVideoFrame();
-    ~VPVideoFrame();
-    
+
     CC_SYNTHESIZE_PASS_BY_REF(VPVideoFrameFormat, m_format, Format)
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_width, Width);
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_height, Height);
@@ -116,7 +114,6 @@ public:
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_chromaBLength, ChromaBLength)
     CC_SYNTHESIZE(char*, m_chromaR, ChromaR)
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_chromaRLength, ChromaRLength)
-    
 };
 
 
@@ -128,99 +125,87 @@ class VPDecoder
 {
 public:
     VPDecoder();
-    ~VPDecoder();
+	virtual ~VPDecoder();
     
 public:
     
-    bool openFile(const std::string& path, bool isNetworkPath);
+    bool openFile(const std::string& path);
     
     void closeFile();
-    
+
     bool setupVideoFrameFormat(VPVideoFrameFormat format);
     
-    std::vector<VPFrame*> decodeFrames(float minDuration); // VPFrame
+    std::vector<VPFrame*> decodeFrames(float minDuration);
     
     void onAudioCallback(unsigned char *stream, int len);
-    
-private:
-    CAObject* m_pAudioCallbackTarget;
-    SEL_DecoderAudioCallback m_audioCallback;
-    
-    
-public:
-    
+
     void setAudioCallback(CAObject* target, SEL_DecoderAudioCallback callBack)
     {
         m_pAudioCallbackTarget = target;
         m_audioCallback = callBack;
     }
     
-public:
     float getDuration();
     float getPosition();
     void setPosition(float seconds);
     float getSampleRate();
     unsigned int getFrameWidth();
     unsigned int getFrameHeight();
-    unsigned int getAudioStreamsCount();
 
     bool isValidAudio();
     bool isValidVideo();
 
     float getStartTime();
-    bool getIsNetwork();
-
     bool isEOF();
-    float getFPS();
+
+protected:
+	std::vector<int> collectStreams(enum AVMediaType codecType);
+	VPError openInput(std::string path);
+	VPError openVideoStream();
+	VPError openVideoStream(int videoStream);
+	VPError openAudioStream();
+	VPError openAudioStream(int audioStream);
+
+	void closeVideoStream();
+	void closeAudioStream();
+
+	void closeScaler();
+	bool setupScaler();
+
+	VPVideoFrame* handleVideoFrame();
+	VPAudioFrame* handleAudioFrame();
     
 private:
-    AVFormatContext     *_formatCtx;
+	CAObject* m_pAudioCallbackTarget;
+	SEL_DecoderAudioCallback m_audioCallback;
 
-    AVCodecContext      *_videoCodecCtx;
-    AVCodecContext      *_audioCodecCtx;
+    AVFormatContext *m_pFormatCtx;
 
-    AVFrame             *_videoFrame;
-    AVFrame             *_audioFrame;
-    int                 _videoStream;
-    int                 _audioStream;
+    AVCodecContext *m_pVideoCodecCtx;
+    AVCodecContext *m_pAudioCodecCtx;
 
-    AVPicture           *_picture;
-    bool                _pictureValid;
-    SwsContext          *_swsContext;
+    AVFrame *m_pVideoFrame;
+    AVFrame *m_pAudioFrame;
 
-    float               _videoTimeBase;
-    float               _audioTimeBase;
-    float               _position;
-    std::vector<int>         _videoStreams;
-    std::vector<int>         _audioStreams;
+    int m_iVideoStream;
+    int m_iAudioStream;
 
-    SwrContext          *_swrContext;
-    void                *_swrBuffer;
-    unsigned int        _swrBufferSize;
+    AVPicture *m_pAVPicture;
 
-    VPVideoFrameFormat  _videoFrameFormat;
+	SwsContext *m_pSwsContext;
+	SwrContext *m_pSwrContext;
 
-    bool                _isNetwork;
-    bool                _disableDeinterlacing;
-    bool                _isEOF;
-    std::string         _path;
-    float               _fps;
-    
-private:
-    VPError openInput(std::string path);
-    VPError openVideoStream();
-    VPError openVideoStream(int videoStream);
-    VPError openAudioStream();
-    VPError openAudioStream(int audioStream);
+    float m_fVideoTimeBase;
+    float m_fAudioTimeBase;
+    float m_fPosition;
+ 
+    void *m_pswrBuffer;
+    unsigned int m_uswrBufferSize;
 
-    void closeVideoStream();
-    void closeAudioStream();
+    VPVideoFrameFormat m_videoFrameFormat;
 
-    void closeScaler();
-    bool setupScaler();
-
-    VPVideoFrame* handleVideoFrame();
-    VPAudioFrame* handleAudioFrame();
+    bool _isEOF;
+    float _fps;
 };
 
 NS_CC_END

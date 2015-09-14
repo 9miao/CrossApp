@@ -19,13 +19,11 @@ extern "C"
 
 
 
-#pragma mark - static
-
 static void FFLog(void* context, int level, const char* pszFormat, va_list args) 
 {
-	char szBuf[kMaxLogLen+1] = { 0 };
-    vsnprintf(szBuf, kMaxLogLen, pszFormat, args);
-	CCLog(szBuf);
+	//char szBuf[kMaxLogLen+1] = { 0 };
+    //vsnprintf(szBuf, kMaxLogLen, pszFormat, args);
+	//CCLog(szBuf);
 }
     
 static void avStreamFPSTimeBase(AVStream *st, float defaultTimeBase, float *pFPS, float *pTimeBase)
@@ -57,20 +55,10 @@ static void avStreamFPSTimeBase(AVStream *st, float defaultTimeBase, float *pFPS
         *pTimeBase = timebase;
 }
 
-static std::vector<int> collectStreams(AVFormatContext *formatCtx, enum AVMediaType codecType)
+void copyFrameData(unsigned char *src, unsigned char **dst, int linesize, int width, int height, int *dstLength)
 {
-    std::vector<int> ret;
-    for (int i=0; i<formatCtx->nb_streams; ++i) {
-        if (codecType == formatCtx->streams[i]->codec->codec_type) {
-            ret.push_back(i);
-        }
-    }
-    return ret;
-}
-
-static void copyFrameData(unsigned char *src, unsigned char **dst, int linesize, int width, int height, int *dstLength)
-{
-    if (dst) {
+	if (dst) 
+	{
         width = MIN(linesize, width);
         *dst = (unsigned char*)malloc(width * height);
         if (dstLength) {
@@ -85,21 +73,6 @@ static void copyFrameData(unsigned char *src, unsigned char **dst, int linesize,
     }
 }
 
-static bool isNetworkPath (std::string path)
-{
-    std::size_t found = path.find(":");
-    if (found == std::string::npos) {
-        return false;
-    }
-    std::string scheme = path.substr(0, found);
-    if (path == "file") {
-        return false;
-    }
-    return true;
-}
-
-#pragma mark - VPFrame
-
 static SDL_AudioSpec s_audioSpec;
 
 VPFrame::VPFrame()
@@ -107,16 +80,9 @@ VPFrame::VPFrame()
 , m_position(0)
 , m_type(kFrameTypeVideo)
 {
-
-}
-
-VPFrame::~VPFrame()
-{
-    
 }
 
 
-#pragma mark - VPAudioFrame
 
 VPAudioFrame::VPAudioFrame()
 : m_data(NULL)
@@ -127,12 +93,9 @@ VPAudioFrame::VPAudioFrame()
 
 VPAudioFrame::~VPAudioFrame()
 {
-    if (m_data) {
-        delete [] m_data;
-    }
+	CC_SAFE_DELETE_ARRAY(m_data);
 }
 
-#pragma mark - VPVideoFrame
 
 VPVideoFrame::VPVideoFrame()
 : m_height(0)
@@ -141,12 +104,6 @@ VPVideoFrame::VPVideoFrame()
     m_type = kFrameTypeVideo;
 }
 
-VPVideoFrame::~VPVideoFrame()
-{
-    
-}
-
-#pragma mark - VPVideoFrameRGB
 
 VPVideoFrameRGB::VPVideoFrameRGB()
 : m_data(NULL)
@@ -161,8 +118,6 @@ VPVideoFrameRGB::~VPVideoFrameRGB()
 	CC_SAFE_DELETE_ARRAY(m_data);
 }
 
-#pragma mark - VPVideoFrameYUV
-
 VPVideoFrameYUV::VPVideoFrameYUV()
 : m_chromaB(NULL)
 , m_chromaBLength(0)
@@ -176,145 +131,141 @@ VPVideoFrameYUV::VPVideoFrameYUV()
 
 VPVideoFrameYUV::~VPVideoFrameYUV()
 {
-    if (m_luma) {
-        delete [] m_luma;
-    }
-    
-    if (m_chromaB) {
-        delete [] m_chromaB;
-    }
-    
-    if (m_chromaR) {
-        delete [] m_chromaR;
-    }
+	CC_SAFE_DELETE_ARRAY(m_luma);
+	CC_SAFE_DELETE_ARRAY(m_chromaB);
+	CC_SAFE_DELETE_ARRAY(m_chromaR);
 }
 
 
-#pragma mark - VPDecoder
-
 VPDecoder::VPDecoder()
-: _formatCtx(NULL)
-, _videoCodecCtx(NULL)
-, _audioCodecCtx(NULL)
-, _videoFrame(NULL)
-, _audioFrame(NULL)
-, _videoStream(0)
-, _audioStream(0)
-, _pictureValid(false)
-, _swsContext(NULL)
-, _videoTimeBase(0)
-, _audioTimeBase(0)
-, _position(0)
-, _swrContext(NULL)
-, _swrBuffer(NULL)
-, _swrBufferSize(0)
-, _videoFrameFormat(kVideoFrameFormatRGB)
-, _isNetwork(false)
-, _disableDeinterlacing(false)
+: m_pFormatCtx(NULL)
+, m_pVideoCodecCtx(NULL)
+, m_pAudioCodecCtx(NULL)
+, m_pVideoFrame(NULL)
+, m_pAudioFrame(NULL)
+, m_iVideoStream(-1)
+, m_iAudioStream(-1)
+, m_pSwsContext(NULL)
+, m_fVideoTimeBase(0)
+, m_fAudioTimeBase(0)
+, m_fPosition(0)
+, m_pSwrContext(NULL)
+, m_pswrBuffer(NULL)
+, m_uswrBufferSize(0)
+, m_videoFrameFormat(kVideoFrameFormatRGB)
 , _isEOF(false)
-, _path(std::string(""))
 , _fps(0)
 , m_audioCallback(NULL)
 , m_pAudioCallbackTarget(NULL)
-, _picture(NULL)
+, m_pAVPicture(NULL)
 {
     av_log_set_callback(FFLog);
     av_register_all();
     avformat_network_init();
-    
-    _picture = (AVPicture*)malloc(sizeof(AVPicture));
 }
 
 VPDecoder::~VPDecoder()
 {
     closeFile();
     SDL_CloseAudio();
-    
-    free(_picture);
 }
+
+
+std::vector<int> VPDecoder::collectStreams(enum AVMediaType codecType)
+{
+	std::vector<int> ret;
+
+	if (m_pFormatCtx)
+	{
+		for (int i = 0; i < m_pFormatCtx->nb_streams; ++i) {
+			if (codecType == m_pFormatCtx->streams[i]->codec->codec_type)
+			{
+				ret.push_back(i);
+			}
+		}
+	}
+	return ret;
+}
+
 
 float VPDecoder::getDuration()
 {
-    if (!_formatCtx) {
+	if (!m_pFormatCtx) {
         return 0;
     }
-    if (_formatCtx->duration == AV_NOPTS_VALUE) {
+	if (m_pFormatCtx->duration == AV_NOPTS_VALUE) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 		return FLT_MAX;
 #else
 		return MAXFLOAT;
 #endif
     }
-    return (float)_formatCtx->duration / AV_TIME_BASE;
+	return (float)m_pFormatCtx->duration / AV_TIME_BASE;
 }
 
 float VPDecoder::getPosition()
 {
-    return _position;
+    return m_fPosition;
 }
 
 void VPDecoder::setPosition(float seconds)
 {
-    _position = seconds;
+	m_fPosition = seconds;
     _isEOF = false;
     
-    if (_videoStream != -1) {
-        long long ts = (long long)(seconds / _videoTimeBase);
-        avformat_seek_file(_formatCtx, _videoStream, ts, ts, ts, AVSEEK_FLAG_FRAME);
-        avcodec_flush_buffers(_videoCodecCtx);
+	if (m_iVideoStream != -1) {
+		long long ts = (long long)(seconds / m_fVideoTimeBase);
+		avformat_seek_file(m_pFormatCtx, m_iVideoStream, ts, ts, ts, AVSEEK_FLAG_FRAME);
+		avcodec_flush_buffers(m_pVideoCodecCtx);
     }
     
-    if (_audioStream != -1) {
-        long long ts = (long long)(seconds / _audioTimeBase);
-        avformat_seek_file(_formatCtx, _audioStream, ts, ts, ts, AVSEEK_FLAG_FRAME);
-        avcodec_flush_buffers(_audioCodecCtx);
+	if (m_iAudioStream != -1) {
+		long long ts = (long long)(seconds / m_fAudioTimeBase);
+		avformat_seek_file(m_pFormatCtx, m_fAudioTimeBase, ts, ts, ts, AVSEEK_FLAG_FRAME);
+		avcodec_flush_buffers(m_pAudioCodecCtx);
     }
 }
 
 unsigned int VPDecoder::getFrameWidth()
 {
-    return _videoCodecCtx ? _videoCodecCtx->width : 0;
+	return m_pVideoCodecCtx ? m_pVideoCodecCtx->width : 0;
 }
 
 unsigned int VPDecoder::getFrameHeight()
 {
-    return _videoCodecCtx ? _videoCodecCtx->height : 0;
+	return m_pVideoCodecCtx ? m_pVideoCodecCtx->height : 0;
 }
 
 float VPDecoder::getSampleRate()
 {
-    return _audioCodecCtx ? _audioCodecCtx->sample_rate : 0;
+	return m_pAudioCodecCtx ? m_pAudioCodecCtx->sample_rate : 0;
 }
 
-unsigned int VPDecoder::getAudioStreamsCount()
-{
-    return (unsigned int)_audioStreams.size();
-}
 
 bool VPDecoder::isValidAudio()
 {
-    return _audioStream != -1;
+	return m_iAudioStream != -1;
 }
 
 bool VPDecoder::isValidVideo()
 {
-    return _videoStream != -1;
+	return m_iVideoStream != -1;
 }
 
 float VPDecoder::getStartTime()
 {
-    if (_videoStream != -1) {
-        AVStream *st = _formatCtx->streams[_videoStream];
+	if (m_iVideoStream != -1) {
+		AVStream *st = m_pFormatCtx->streams[m_iVideoStream];
         if (AV_NOPTS_VALUE != st->start_time) {
-            return st->start_time * _videoTimeBase;
+			return st->start_time * m_fVideoTimeBase;
         }
         return 0;
     }
     
-    if (_audioStream != -1) {
-        AVStream *st = _formatCtx->streams[_audioStream];
+	if (m_iAudioStream != -1) {
+		AVStream *st = m_pFormatCtx->streams[m_iAudioStream];
         if (AV_NOPTS_VALUE != st->start_time) {
-            return st->start_time * _audioTimeBase;
+			return st->start_time * m_fAudioTimeBase;
         }
         return 0;
     }
@@ -327,43 +278,16 @@ bool VPDecoder::isEOF()
     return _isEOF;
 }
 
-bool VPDecoder::getIsNetwork()
+bool VPDecoder::openFile(const std::string& path)
 {
-    return _isNetwork;
-}
-
-float VPDecoder::getFPS()
-{
-    return _fps;
-}
-
-bool VPDecoder::openFile(const std::string& path, bool isNetPath)
-{
-    _isNetwork = isNetPath;
-    
-    static bool needNetworkInit = true;
-    if (needNetworkInit && _isNetwork) {
-        needNetworkInit = false;
-        avformat_network_init();
-    }
-    
-    _path = path;
-    
-	VPError errCode = kErrorNone;
+	VPError errCode = openInput(path);
 	
-	try
+    if (errCode == kErrorNone) 
 	{
-		errCode = openInput(path);
-	}
-	catch (...)
-	{
-	}
-
-    if (errCode == kErrorNone) {
         VPError videoErr = openVideoStream();
         VPError audioErr = openAudioStream();
         
-        if (videoErr != kErrorNone && audioErr != kErrorNone) {
+		if (videoErr != kErrorNone && audioErr != kErrorNone) {
             errCode = videoErr;
         }
     }
@@ -377,8 +301,6 @@ bool VPDecoder::openFile(const std::string& path, bool isNetPath)
     return true;
 }
 
-#pragma mark - VPDecoder - Private
-
 VPError VPDecoder::openInput(std::string path)
 {
 	AVFormatContext *formatCtx = avformat_alloc_context();
@@ -387,7 +309,6 @@ VPError VPDecoder::openInput(std::string path)
 		return kErrorOpenFile;
 	}
 
-    CCLog("avformat_open_input");
     int ret = avformat_open_input(&formatCtx, path.c_str(), NULL, NULL);
     CCLog("avformat_open_input, %d", ret);
     if (ret < 0) {
@@ -397,23 +318,16 @@ VPError VPDecoder::openInput(std::string path)
         return kErrorOpenFile;
     }
 
-    CCLog("avformat_find_stream_info");
-    ret = avformat_find_stream_info(formatCtx, NULL);
+	ret = avformat_find_stream_info(formatCtx, NULL);
     CCLog("avformat_find_stream_info, %d", ret);
     if (ret < 0) {
         avformat_close_input(&formatCtx);
         return kErrorStreamInfoNotFound;
     }
     
-    CCLog("av_dump_format");
-    
     av_dump_format(formatCtx, 0, path.c_str(), false);
     
-    _formatCtx = formatCtx;
-
-    CCLog("openInput return");
-
-    
+    m_pFormatCtx = formatCtx;
     return kErrorNone;
 }
 
@@ -421,25 +335,25 @@ VPError VPDecoder::openVideoStream()
 {
     VPError errCode = kErrorStreamNotFound;
 
-	_videoStream = -1;
-	_videoStreams = collectStreams(_formatCtx, AVMEDIA_TYPE_VIDEO);
-    std::vector<int>::iterator iter = _videoStreams.begin();
-    while (iter != _videoStreams.end()) {
-        if (0 == (_formatCtx->streams[*iter]->disposition & AV_DISPOSITION_ATTACHED_PIC)) {
+	m_iVideoStream = -1;
+	std::vector<int> videoStreams = collectStreams(AVMEDIA_TYPE_VIDEO);
+	std::vector<int>::iterator iter = videoStreams.begin();
+	while (iter != videoStreams.end()) {
+		if (0 == (m_pFormatCtx->streams[*iter]->disposition & AV_DISPOSITION_ATTACHED_PIC)) {
             errCode = openVideoStream(*iter);
             if (errCode == kErrorNone) {
                 break;
             }
         } 
     }
-    
+
     return errCode;
 }
 
 VPError VPDecoder::openVideoStream(int videoStream)
 {    
     // get a pointer to the codec context for the video stream
-    AVCodecContext *codecCtx = _formatCtx->streams[videoStream]->codec;
+    AVCodecContext *codecCtx = m_pFormatCtx->streams[videoStream]->codec;
     
     // find the decoder for the video stream
     AVCodec *codec = avcodec_find_decoder(codecCtx->codec_id);
@@ -455,25 +369,20 @@ VPError VPDecoder::openVideoStream(int videoStream)
     if (avcodec_open2(codecCtx, codec, NULL) < 0)
         return kErrorOpenCodec;
     
-    _videoFrame = av_frame_alloc();
+    m_pVideoFrame = av_frame_alloc();
     
-    if (!_videoFrame) {
+    if (!m_pVideoFrame) {
         avcodec_close(codecCtx);
         return kErrorAllocateFrame;
     }
     
-    _videoStream = videoStream;
-    _videoCodecCtx = codecCtx;
+    m_iVideoStream = videoStream;
+    m_pVideoCodecCtx = codecCtx;
     
     // determine fps
-    
-    AVStream *st = _formatCtx->streams[_videoStream];
-    avStreamFPSTimeBase(st, 0.04, &_fps, &_videoTimeBase);
-    
-    CCLog("video codec size: %d:%d fps: %.3f tb: %f", getFrameWidth(), getFrameHeight(), _fps, _videoTimeBase);
-    CCLog("video start time %f", st->start_time * _videoTimeBase);
-    CCLog("video disposition %d", st->disposition);
-    
+    AVStream *st = m_pFormatCtx->streams[m_iVideoStream];
+    avStreamFPSTimeBase(st, 0.04, &_fps, &m_fVideoTimeBase);
+  
     return kErrorNone;
 }
 
@@ -489,10 +398,10 @@ static void audio_callback(void *userdata, Uint8 *stream, int len)
 VPError VPDecoder::openAudioStream()
 {
     VPError errCode = kErrorStreamNotFound;
-    _audioStream = -1;
-    _audioStreams = collectStreams(_formatCtx, AVMEDIA_TYPE_AUDIO);
-    std::vector<int>::iterator iter = _audioStreams.begin();
-    while (iter != _audioStreams.end()) {
+    m_iAudioStream = -1;
+	std::vector<int> audioStreams = collectStreams(AVMEDIA_TYPE_AUDIO);
+	std::vector<int>::iterator iter = audioStreams.begin();
+	while (iter != audioStreams.end()) {
         errCode = openAudioStream(*iter);
         if (errCode == kErrorNone) {
             break;
@@ -504,11 +413,11 @@ VPError VPDecoder::openAudioStream()
 
 VPError VPDecoder::openAudioStream(int audioStream)
 {
-    if (audioStream < 0 || audioStream >= _formatCtx->nb_streams) {
+    if (audioStream < 0 || audioStream >= m_pFormatCtx->nb_streams) {
         return kErrorStreamNotFound;
     }
     
-    AVCodecContext *codecCtx = _formatCtx->streams[audioStream]->codec;    
+    AVCodecContext *codecCtx = m_pFormatCtx->streams[audioStream]->codec;    
     AVCodec *codec = avcodec_find_decoder(codecCtx->codec_id);
     SwrContext* swrContext;
     if(!codec)
@@ -539,18 +448,15 @@ VPError VPDecoder::openAudioStream(int audioStream)
         CCLog("Invalid sample rate or channel count!\n");
         return kErrorUnknown;
     }
-    wanted_spec.format = AUDIO_S16SYS; // 具体含义请查看“SDL宏定义”部分
-    wanted_spec.silence = 0;            // 0指示静音
-    wanted_spec.samples = 1024;  // 自定义SDL缓冲区大小
-    wanted_spec.callback = audio_callback;        // 音频解码的关键回调函数
-    wanted_spec.userdata = this;                    // 传给上面回调函数的外带数据
-    
-    /*  打开音频设备，这里使用一个while来循环尝试打开不同的声道数(由上面 */
+    wanted_spec.format = AUDIO_S16SYS;
+    wanted_spec.silence = 0;
+    wanted_spec.samples = 1024;
+    wanted_spec.callback = audio_callback;
+    wanted_spec.userdata = this;
+
     while (SDL_OpenAudio(&wanted_spec, &spec) < 0) {
         CCLog("SDL_OpenAudio (%d channels): %s\n", wanted_spec.channels, SDL_GetError());
-		/*  SDL支持的声道数为 1, 2, 4, 6 */
-		/*  后面我们会使用这个数组来纠正不支持的声道数目 */
-		/*  next_nb_channels数组指定）直到成功打开，或者全部失败 */
+
 		const int next_nb_channels[] = { 0, 0, 1, 6, 2, 6, 4, 6 };
 
         wanted_spec.channels = next_nb_channels[MIN(7, wanted_spec.channels)];
@@ -561,7 +467,6 @@ VPError VPDecoder::openAudioStream(int audioStream)
         wanted_channel_layout = av_get_default_channel_layout(wanted_spec.channels);
     }
     
-    /* 检查实际使用的配置（保存在spec,由SDL_OpenAudio()填充） */
     if (spec.format != AUDIO_S16SYS) {
         CCLog("SDL advised audio format %d is not supported!\n", spec.format);
         return kErrorUnknown;
@@ -596,32 +501,32 @@ VPError VPDecoder::openAudioStream(int audioStream)
         }
     }
         
-    _audioFrame = av_frame_alloc();
+    m_pAudioFrame = av_frame_alloc();
     
-    if (!_audioFrame) {
+    if (!m_pAudioFrame) {
         if (swrContext)
             swr_free(&swrContext);
         avcodec_close(codecCtx);
         return kErrorAllocateFrame;
     }
     
-    _audioStream = audioStream;
-    _audioCodecCtx = codecCtx;
-    _swrContext = swrContext;
+    m_iAudioStream = audioStream;
+    m_pAudioCodecCtx = codecCtx;
+    m_pSwrContext = swrContext;
     
-    AVStream *st = _formatCtx->streams[_audioStream];
-    avStreamFPSTimeBase(st, 0.025, 0, &_audioTimeBase);
+    AVStream *st = m_pFormatCtx->streams[m_iAudioStream];
+	avStreamFPSTimeBase(st, 0.025, 0, &m_fAudioTimeBase);
     
     CCLog("audio codec smr: %.d fmt: %d chn: %d tb: %f %s",
-          _audioCodecCtx->sample_rate,
-          _audioCodecCtx->sample_fmt,
-          _audioCodecCtx->channels,
-          _audioTimeBase,
-          _swrContext ? "resample" : "");
+          m_pAudioCodecCtx->sample_rate,
+          m_pAudioCodecCtx->sample_fmt,
+          m_pAudioCodecCtx->channels,
+		  m_fAudioTimeBase,
+          m_pSwrContext ? "resample" : "");
     
     SDL_PauseAudio(0);
     
-    _formatCtx->streams[audioStream]->discard = AVDISCARD_DEFAULT;
+    m_pFormatCtx->streams[audioStream]->discard = AVDISCARD_DEFAULT;
     
     return kErrorNone;
 }
@@ -632,79 +537,77 @@ void VPDecoder::closeFile()
     this->closeAudioStream();
     this->closeVideoStream();
 
-    
-    std::vector<int>().swap(_videoStreams);
-    std::vector<int>().swap(_audioStreams);
-
-    if (_formatCtx) {
+    if (m_pFormatCtx) {
         
-        _formatCtx->interrupt_callback.opaque = NULL;
-        _formatCtx->interrupt_callback.callback = NULL;
+        m_pFormatCtx->interrupt_callback.opaque = NULL;
+        m_pFormatCtx->interrupt_callback.callback = NULL;
         
-        avformat_close_input(&_formatCtx);
-        _formatCtx = NULL;
+        avformat_close_input(&m_pFormatCtx);
+        m_pFormatCtx = NULL;
     }
 }
 
 void VPDecoder::closeVideoStream()
 {
-    _videoStream = -1;
+    m_iVideoStream = -1;
     
     this->closeScaler();
     
-    if (_videoFrame) {
+    if (m_pVideoFrame) {
         
-        av_free(_videoFrame);
-        _videoFrame = NULL;
+        av_free(m_pVideoFrame);
+        m_pVideoFrame = NULL;
     }
     
-    if (_videoCodecCtx) {
+    if (m_pVideoCodecCtx) {
         
-        avcodec_close(_videoCodecCtx);
-        _videoCodecCtx = NULL;
+        avcodec_close(m_pVideoCodecCtx);
+        m_pVideoCodecCtx = NULL;
     }
 }
 
 void VPDecoder::closeAudioStream()
 {
-    _audioStream = -1;
+    m_iAudioStream = -1;
     
-    if (_swrBuffer) {
+	if (m_pswrBuffer) {
         
-        free(_swrBuffer);
-        _swrBuffer = NULL;
-        _swrBufferSize = 0;
+		free(m_pswrBuffer);
+		m_pswrBuffer = NULL;
+		m_uswrBufferSize = 0;
     }
     
-    if (_swrContext) {
+    if (m_pSwrContext) {
         
-        swr_free(&_swrContext);
-        _swrContext = NULL;
+        swr_free(&m_pSwrContext);
+        m_pSwrContext = NULL;
     }
     
-    if (_audioFrame) {
+    if (m_pAudioFrame) {
         
-        av_free(_audioFrame);
-        _audioFrame = NULL;
+        av_free(m_pAudioFrame);
+        m_pAudioFrame = NULL;
     }
     
-    if (_audioCodecCtx) {
+    if (m_pAudioCodecCtx) {
         
-        avcodec_close(_audioCodecCtx);
-        _audioCodecCtx = NULL;
+        avcodec_close(m_pAudioCodecCtx);
+        m_pAudioCodecCtx = NULL;
     }
+
+	SDL_Quit();
 }
 
 void VPDecoder::closeScaler()
 {
-    if (_swsContext) {
-        sws_freeContext(_swsContext);
-        _swsContext = NULL;
+    if (m_pSwsContext) {
+        sws_freeContext(m_pSwsContext);
+        m_pSwsContext = NULL;
     }
     
-    if (_pictureValid) {
-        avpicture_free(_picture);
-        _pictureValid = false;
+	if (m_pAVPicture) {
+		avpicture_free(m_pAVPicture);
+		m_pAVPicture = NULL;
     }
 }
 
@@ -712,61 +615,59 @@ bool VPDecoder::setupScaler()
 {
     this->closeScaler();
     
-    _pictureValid = avpicture_alloc(_picture,
-                                    PIX_FMT_RGB24,
-                                    _videoCodecCtx->width,
-                                    _videoCodecCtx->height) == 0;
-    
-    if (!_pictureValid)
-        return false;
-    
-    _swsContext = sws_getCachedContext(_swsContext,
-                                       _videoCodecCtx->width,
-                                       _videoCodecCtx->height,
-                                       _videoCodecCtx->pix_fmt,
-                                       _videoCodecCtx->width,
-                                       _videoCodecCtx->height,
+	if (avpicture_alloc(m_pAVPicture,
+		PIX_FMT_RGB24,
+		m_pVideoCodecCtx->width,
+		m_pVideoCodecCtx->height))
+		return false;
+
+    m_pSwsContext = sws_getCachedContext(m_pSwsContext,
+                                       m_pVideoCodecCtx->width,
+                                       m_pVideoCodecCtx->height,
+                                       m_pVideoCodecCtx->pix_fmt,
+                                       m_pVideoCodecCtx->width,
+                                       m_pVideoCodecCtx->height,
                                        PIX_FMT_RGB24,
                                        SWS_FAST_BILINEAR,
                                        NULL, NULL, NULL);
     
-    return _swsContext != NULL;
+    return m_pSwsContext != NULL;
 }
 
 VPVideoFrame* VPDecoder::handleVideoFrame()
 {
-    if (!_videoFrame->data[0])
+	if (!m_pVideoFrame->data[0])
         return NULL;
     
-    VPVideoFrame *frame;
+    VPVideoFrame *frame = NULL;
     
-    if (_videoFrameFormat == kVideoFrameFormatYUV) {
+	if (m_videoFrameFormat == kVideoFrameFormatYUV) {
         
         VPVideoFrameYUV * yuvFrame = new VPVideoFrameYUV();
         
         unsigned char* data = NULL;
         int dataLength = 0;
         
-        copyFrameData(_videoFrame->data[0], &data,
-                      _videoFrame->linesize[0],
-                      _videoCodecCtx->width,
-                      _videoCodecCtx->height,
+		copyFrameData(m_pVideoFrame->data[0], &data,
+						m_pVideoFrame->linesize[0],
+						m_pVideoCodecCtx->width,
+						m_pVideoCodecCtx->height,
                       &dataLength);
         yuvFrame->setLuma((char*)data);
         yuvFrame->setLumaLength(dataLength);
 
-        copyFrameData(_videoFrame->data[1], &data,
-                      _videoFrame->linesize[1],
-                      _videoCodecCtx->width / 2,
-                      _videoCodecCtx->height / 2,
+		copyFrameData(m_pVideoFrame->data[1], &data,
+						m_pVideoFrame->linesize[1],
+						m_pVideoCodecCtx->width / 2,
+						m_pVideoCodecCtx->height / 2,
                       &dataLength);
         yuvFrame->setChromaB((char*)data);
         yuvFrame->setChromaBLength(dataLength);
 
-        copyFrameData(_videoFrame->data[2], &data,
-                      _videoFrame->linesize[2],
-                      _videoCodecCtx->width / 2,
-                      _videoCodecCtx->height / 2,
+		copyFrameData(m_pVideoFrame->data[2], &data,
+						m_pVideoFrame->linesize[2],
+						m_pVideoCodecCtx->width / 2,
+						m_pVideoCodecCtx->height / 2,
                       &dataLength);
         yuvFrame->setChromaR((char*)data);
         yuvFrame->setChromaRLength(dataLength);
@@ -777,38 +678,38 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
 	else 
 	{
         
-        if (!_swsContext && !setupScaler()) {
+		if (!m_pSwsContext && !setupScaler()) {
             
             CCLog("fail setup video scaler");
             return NULL;
         }
         
-		sws_scale(_swsContext,
-			(const uint8_t **)_videoFrame->data,
-			_videoFrame->linesize,
+		sws_scale(m_pSwsContext,
+			(const uint8_t **)m_pVideoFrame->data,
+			m_pVideoFrame->linesize,
 			0,
-			_videoCodecCtx->height,
-			_picture->data,
-			_picture->linesize);
+			m_pVideoCodecCtx->height,
+			m_pAVPicture->data,
+			m_pAVPicture->linesize);
         
         VPVideoFrameRGB *rgbFrame = new VPVideoFrameRGB();
-        rgbFrame->setLineSize(_picture->linesize[0]);
-        rgbFrame->setData((char*)_picture->data[0]);
-        rgbFrame->setDataLength(rgbFrame->getLineSize() * _videoCodecCtx->height);
+		rgbFrame->setLineSize(m_pAVPicture->linesize[0]);
+		rgbFrame->setData((char*)m_pAVPicture->data[0]);
+        rgbFrame->setDataLength(rgbFrame->getLineSize() * m_pVideoCodecCtx->height);
         
         frame = rgbFrame;
         rgbFrame->retain();
     }    
     
-    frame->setWidth(_videoCodecCtx->width);
-    frame->setHeight(_videoCodecCtx->height);
-    frame->setPosition(av_frame_get_best_effort_timestamp(_videoFrame) * _videoTimeBase);
+	frame->setWidth(m_pVideoCodecCtx->width);
+	frame->setHeight(m_pVideoCodecCtx->height);
+	frame->setPosition(av_frame_get_best_effort_timestamp(m_pVideoFrame) * m_fVideoTimeBase);
     
-    const long long frameDuration = av_frame_get_pkt_duration(_videoFrame);
+	const long long frameDuration = av_frame_get_pkt_duration(m_pVideoFrame);
     if (frameDuration) {
         
-        frame->setDuration(frameDuration * _videoTimeBase);
-        frame->setDuration(frame->getDuration() + _videoFrame->repeat_pict * _videoTimeBase * 0.5);
+        frame->setDuration(frameDuration * m_fVideoTimeBase);
+		frame->setDuration(frame->getDuration() + m_pVideoFrame->repeat_pict * m_fVideoTimeBase * 0.5);
         
         
     } 
@@ -818,95 +719,83 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
         // as example yuvj420p stream from web camera
         frame->setDuration( 1.0 / _fps );
     }    
-    
-#if 0
-    CCLog("VFD: %.4f %.4f | %lld ", 
-          frame->getPosition(), 
-          frame->getDuration(), 
-          av_frame_get_pkt_pos(_videoFrame));
-#endif
-    
+
     return frame;
 }
 
 
 VPAudioFrame* VPDecoder::handleAudioFrame()
 {
-    if (!_audioFrame->data[0])
+	if (!m_pAudioFrame->data[0])
         return NULL;
     
     const unsigned int numChannels = s_audioSpec.channels;
     int numFrames;
     
-    void * audioData;
+    void * audioData = NULL;
     
-    if (_swrContext) {
-        
-        const unsigned int ratio = MAX(1, s_audioSpec.freq / _audioCodecCtx->sample_rate) * 
-        MAX(1, s_audioSpec.channels / _audioCodecCtx->channels) * 2;
+	if (m_pSwrContext) 
+	{
+        const unsigned int ratio = MAX(1, s_audioSpec.freq / m_pAudioCodecCtx->sample_rate) * MAX(1, s_audioSpec.channels / m_pAudioCodecCtx->channels) * 2;
         
         const int bufSize = av_samples_get_buffer_size(NULL,
                                                        s_audioSpec.channels,
-                                                       _audioFrame->nb_samples * ratio,
+													   m_pAudioFrame->nb_samples * ratio,
                                                        AV_SAMPLE_FMT_S16,
                                                        1);
         
-        if (!_swrBuffer || _swrBufferSize < bufSize) {
-            _swrBufferSize = bufSize;
-            _swrBuffer = realloc(_swrBuffer, _swrBufferSize);
+		if (m_pswrBuffer==NULL || m_uswrBufferSize < bufSize) {
+			m_uswrBufferSize = bufSize;
+			m_pswrBuffer = realloc(m_pswrBuffer, m_uswrBufferSize);
         }
         
-        unsigned char *outbuf[2] = { (unsigned char*)_swrBuffer, 0};
+		unsigned char *outbuf[2] = { (unsigned char*)m_pswrBuffer, 0 };
         
-		if (s_audioSpec.samples != _audioFrame->nb_samples) {
-			if (swr_set_compensation(_swrContext,
-				(s_audioSpec.samples - _audioFrame->nb_samples) * s_audioSpec.freq / _audioFrame->sample_rate,
-				s_audioSpec.samples * s_audioSpec.freq / _audioFrame->sample_rate) < 0) {
-				CCLog("swr_set_compensation() failed\n");
+		if (s_audioSpec.samples != m_pAudioFrame->nb_samples) 
+		{
+			if (swr_set_compensation(m_pSwrContext,
+				(s_audioSpec.samples - m_pAudioFrame->nb_samples) * s_audioSpec.freq / m_pAudioFrame->sample_rate,
+				s_audioSpec.samples * s_audioSpec.freq / m_pAudioFrame->sample_rate) < 0) {
 				return NULL;
 			}
 		}
         
-        numFrames = swr_convert(_swrContext,
+		numFrames = swr_convert(m_pSwrContext,
                                 outbuf,
-//                                _swrBufferSize,
-                                _audioFrame->nb_samples * ratio,
-                                (const uint8_t **)_audioFrame->data,
-                                _audioFrame->nb_samples);
+								m_pAudioFrame->nb_samples * ratio,
+								(const uint8_t **)m_pAudioFrame->data,
+								m_pAudioFrame->nb_samples);
         
         if (numFrames < 0) {
-            CCLog("fail resample audio");
+            //CCLog("fail resample audio");
             return NULL;
         }
         
-        int64_t delay = swr_get_delay(_swrContext, s_audioSpec.freq);
+		int64_t delay = swr_get_delay(m_pSwrContext, s_audioSpec.freq);
         if (delay > 0)
-            CCLog("resample delay %lld", delay);
+			//CCLog("resample delay %lld", delay);
         
-        audioData = _swrBuffer;
+		audioData = m_pswrBuffer;
         
     } else {
         
-        if (_audioCodecCtx->sample_fmt != AV_SAMPLE_FMT_S16) {
-            CCAssert(false, "bucheck, audio format is invalid");
+		if (m_pAudioCodecCtx->sample_fmt != AV_SAMPLE_FMT_S16) {
+           //CCAssert(false, "bucheck, audio format is invalid");
             return NULL;
         }
         
-        audioData = _audioFrame->data[0];
-        numFrames = _audioFrame->nb_samples;
+		audioData = m_pAudioFrame->data[0];
+		numFrames = m_pAudioFrame->nb_samples;
     }
     
     const unsigned int numElements = numFrames * numChannels;
     int dataLength = numElements * av_get_bytes_per_sample(AV_SAMPLE_FMT_S16);
-    char* data = (char*)malloc(dataLength);
-//    float scale = 1.0 / (float)INT16_MAX ;
-//    vDSP_vflt16((short *)audioData, 1, (float*)data, 1, numElements);
-//    vDSP_vsmul((float*)data, 1, &scale, (float*)data, 1, numElements);
+	char* data = new char[dataLength];
     memcpy(data, audioData, dataLength);
     
     VPAudioFrame *frame = new VPAudioFrame();
-    frame->setPosition( av_frame_get_best_effort_timestamp(_audioFrame) * _audioTimeBase );
-    frame->setDuration( av_frame_get_pkt_duration(_audioFrame) * _audioTimeBase );
+	frame->setPosition(av_frame_get_best_effort_timestamp(m_pAudioFrame) * m_fAudioTimeBase);
+	frame->setDuration(av_frame_get_pkt_duration(m_pAudioFrame) * m_fAudioTimeBase);
     frame->setData(data);
     frame->setDataLength(dataLength);
     
@@ -916,14 +805,6 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
         // so in this case must compute duration
         frame->setDuration( dataLength / (sizeof(float) * numChannels * s_audioSpec.freq) );
     }
-    
-#if 0
-    CCLog("AFD: %.4f %.4f | %.4f ",
-          frame->getPosition(), 
-          frame->getDuration(),
-          frame->getDataLength() / (8.0 * 44100.0));
-#endif
-    
     return frame;
 }
 
@@ -934,19 +815,15 @@ void VPDecoder::onAudioCallback(unsigned char *stream, int len)
     }
 }
 
-#pragma mark - VPDecoder Public
-
 bool VPDecoder::setupVideoFrameFormat(VPVideoFrameFormat format)
 {
-    if (format == kVideoFrameFormatYUV &&
-        _videoCodecCtx &&
-        (_videoCodecCtx->pix_fmt == AV_PIX_FMT_YUV420P || _videoCodecCtx->pix_fmt == AV_PIX_FMT_YUVJ420P)) {
-        
-        _videoFrameFormat = kVideoFrameFormatYUV;
+    if (format == kVideoFrameFormatYUV && m_pVideoCodecCtx && (m_pVideoCodecCtx->pix_fmt == AV_PIX_FMT_YUV420P || m_pVideoCodecCtx->pix_fmt == AV_PIX_FMT_YUVJ420P)) 
+	{
+		m_videoFrameFormat = kVideoFrameFormatYUV;
         return true;
     }
     
-    _videoFrameFormat = kVideoFrameFormatRGB;
+	m_videoFrameFormat = kVideoFrameFormatRGB;
     return false;
 }
 
@@ -954,11 +831,10 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
 {
     std::vector<VPFrame*> result;
 
-    if (_videoStream == -1 &&
-        _audioStream == -1)
+    if (m_iVideoStream == -1 && m_iAudioStream == -1)
         return result;
     
-    if (!_formatCtx) {
+	if (!m_pFormatCtx) {
         return result;
     }
     
@@ -970,46 +846,38 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
     
     while (!finished) {
         
-        if (av_read_frame(_formatCtx, &packet) < 0) {
+		if (av_read_frame(m_pFormatCtx, &packet) < 0) {
             _isEOF = true;
             break;
         }
         
-        if (packet.stream_index == _videoStream) {
-            
+		if (packet.stream_index == m_iVideoStream) {
             int pktSize = packet.size;
             
-            while (pktSize > 0) {
+				while (pktSize > 0) {
                 
                 int gotframe = 0;
-                int len = avcodec_decode_video2(_videoCodecCtx,
-                                                _videoFrame,
-                                                &gotframe,
-                                                &packet);
+				int len = avcodec_decode_video2(m_pVideoCodecCtx, m_pVideoFrame, &gotframe, &packet);
                 
                 if (len < 0) {
                     CCLog("decode video error, skip packet");
                     break;
                 }
                 
-                if (gotframe) {
+                if (gotframe) 
+				{
                     
-                    if (!_disableDeinterlacing &&
-                        _videoFrame->interlaced_frame) {
-                        
-                        avpicture_deinterlace((AVPicture*)_videoFrame,
-                                              (AVPicture*)_videoFrame,
-                                              _videoCodecCtx->pix_fmt,
-                                              _videoCodecCtx->width,
-                                              _videoCodecCtx->height);
+					if (m_pVideoFrame->interlaced_frame) 
+					{
+						avpicture_deinterlace((AVPicture*)m_pVideoFrame, (AVPicture*)m_pVideoFrame, m_pVideoCodecCtx->pix_fmt, m_pVideoCodecCtx->width, m_pVideoCodecCtx->height);
                     }
                     
                     VPVideoFrame *frame = this->handleVideoFrame();
-                    if (frame) {
-                        
+                    if (frame) 
+					{
                         result.push_back((VPFrame*)frame);
                         
-                        _position = frame->getPosition();
+						m_fPosition = frame->getPosition();
                         decodedDuration += frame->getDuration();
                         if (decodedDuration > minDuration)
                             finished = true;
@@ -1022,17 +890,15 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
                 pktSize -= len;
             }
             
-        } else if (packet.stream_index == _audioStream) {
+		}
+		else if (packet.stream_index == m_iAudioStream) {
             
             int pktSize = packet.size;
             
             while (pktSize > 0) {
                 
                 int gotframe = 0;
-                int len = avcodec_decode_audio4(_audioCodecCtx,
-                                                _audioFrame,                                                
-                                                &gotframe,
-                                                &packet);
+				int len = avcodec_decode_audio4(m_pAudioCodecCtx, m_pAudioFrame, &gotframe, &packet);
                 
                 if (len < 0) {
                     CCLog("decode audio error, skip packet");
@@ -1046,9 +912,9 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
                         
                         result.push_back((VPFrame*)frame);
                         
-                        if (_videoStream == -1) {
+						if (m_iAudioStream == -1) {
                             
-                            _position = frame->getPosition();
+                            m_fPosition = frame->getPosition();
                             decodedDuration += frame->getDuration();
                             if (decodedDuration > minDuration)
                                 finished = true;

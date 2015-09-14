@@ -150,13 +150,6 @@ void VPFrameRenderRGB::setFrame(VPVideoFrame* frame)
     
     CCAssert((rgbFrame->getDataLength() == rgbFrame->getWidth() * rgbFrame->getHeight() * 3), "");
     
-
-	CAImage* p = CAImage::createWithRawDataNoCache((unsigned char*)rgbFrame->getData(), CAImage::PixelFormat_RGB888, rgbFrame->getWidth(), rgbFrame->getHeight());
-	p->saveToFile("c:\\xxx.bmp", true);
-	//static CAImage* createWithImageDataNoCache(const unsigned char * data, unsigned long lenght);
-
-
-
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
     if (0 == _texture)

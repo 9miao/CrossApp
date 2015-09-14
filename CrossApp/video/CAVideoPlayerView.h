@@ -20,17 +20,21 @@
 NS_CC_BEGIN
 
 class VPDecoder;
-class CC_DLL CAVideoPlayerView : public CAView 
+class CC_DLL CAVideoPlayerView : public CAView
 {
 public:
-    CAVideoPlayerView(VPDecoder* decoder);
-    ~CAVideoPlayerView();
+    CAVideoPlayerView();
+	virtual ~CAVideoPlayerView();
     
-    static CAVideoPlayerView* create(VPDecoder* decoder);
-    static CAVideoPlayerView* createWithFrame(const CCRect& rect, VPDecoder* decoder);
-    static CAVideoPlayerView* createWithCenter(const CCRect& rect, VPDecoder* decoder);
+	static CAVideoPlayerView* create();
+	static CAVideoPlayerView* createWithFrame(const CCRect& rect);
+	static CAVideoPlayerView* createWithCenter(const CCRect& rect);
+
+	bool initWithPath(const std::string& szPath);
 
 	virtual void setCurrentFrame(VPVideoFrame* frame);
+
+	CC_SYNTHESIZE(std::string, m_cszTitle, Title);
 
 private:
 	virtual bool init();
@@ -41,17 +45,18 @@ private:
 	virtual void updateImageRect();
 	
 	bool loadShaders();
+	void audioCallback(unsigned char *stream, int len, int channels) {}
 
 private:
-    VPDecoder *m_pDecoder;
-    VPFrameRender *m_pRenderer;
-
-    VPVideoFrame *m_pCurFrame;
+	VPDecoder *m_pDecoder;
+	VPFrameRender *m_pRenderer;
 
 	CAVector<CAObject*> m_vVideoFrames;
 	CAVector<CAObject*> m_vAudioFrames;
 
 	CCRect m_viewRect;
+
+	std::string m_cszPath;
 };
 
 NS_CC_END
