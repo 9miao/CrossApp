@@ -33,7 +33,6 @@ CAThread::CAThread()
 {
 	pthread_mutex_init(&m_SleepMutex, NULL);
 	pthread_cond_init(&m_SleepCondition, NULL);
-	pthread_cond_init(&m_ExitCondition, NULL);
 }
 
 CAThread::~CAThread()
@@ -41,7 +40,6 @@ CAThread::~CAThread()
 	close();
 	pthread_mutex_destroy(&m_SleepMutex);
 	pthread_cond_destroy(&m_SleepCondition);
-	pthread_cond_destroy(&m_ExitCondition);
 }
 
 void CAThread::start()
@@ -64,15 +62,16 @@ void CAThread::startAndWait(ThreadProcFunc func)
 void CAThread::notifyRun(void* param)
 {
 	m_ThreadDataQueue.AddElement(param);
-	pthread_cond_signal(&m_SleepCondition);
 }
 
 void CAThread::close()
 {
-	m_bIsRunning = false;
-	pthread_cond_signal(&m_SleepCondition);
-	pthread_cond_wait(&m_ExitCondition, &m_SleepMutex);
-	pthread_detach(m_hThread);
+	if (m_bIsRunning)
+	{
+		m_bIsRunning = false;
+		pthread_cond_wait(&m_SleepCondition, &m_SleepMutex);
+		pthread_detach(m_hThread);
+	}
 }
 
 void CAThread::closeAtOnce()
@@ -93,6 +92,8 @@ void* CAThread::_ThreadProc(void* lpParameter)
 	
 	pAThread->m_bIsRunning = true;
 	pAThread->OnInitInstance();
+
+	pthread_mutex_lock(&pAThread->m_SleepMutex);
 	while (pAThread->m_bIsRunning)
 	{
 		if (pAThread->m_ThreadRunType == ThreadRunDirectly)
@@ -112,14 +113,19 @@ void* CAThread::_ThreadProc(void* lpParameter)
 			}
 			else
 			{
-				pthread_cond_wait(&pAThread->m_SleepCondition, &pAThread->m_SleepMutex);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+				Sleep(5);
+#else
+				usleep(5000);
+#endif
 			}
 		}
 		else break;
 	}
+	pthread_mutex_unlock(&pAThread->m_SleepMutex);
 	pAThread->OnExitInstance();
 	pAThread->m_bIsRunning = false;
-	pthread_cond_signal(&pAThread->m_ExitCondition);
+	pthread_cond_signal(&pAThread->m_SleepCondition);
 	return 0;
 }
 

@@ -40,7 +40,7 @@ public:
 	void play();
 	void pause();
 	bool isPlaying();
-
+	void enableAudio(bool on);
 	float getDuration();
 	//float getPosition();
 	//void setPosition(float pos);
@@ -58,9 +58,10 @@ private:
 	bool addFrames(const std::vector<VPFrame*>& frames);
 	float presentFrame();
 	void asyncDecodeFrames();
+	void freeBufferedFrames();
 	void setCurrentFrame(VPVideoFrame* frame);
 	void tick(float dt);
-	void audioCallback(unsigned char *stream, int len, int channels) {}
+	void audioCallback(unsigned char *stream, int len, int channels);
 
 private:
 	VPDecoder *m_pDecoder;

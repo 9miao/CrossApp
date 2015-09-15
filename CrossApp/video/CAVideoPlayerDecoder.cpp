@@ -37,11 +37,6 @@ static void avStreamFPSTimeBase(AVStream *st, float defaultTimeBase, float *pFPS
     else
         timebase = defaultTimeBase;
     
-    if (st->codec->ticks_per_frame != 1) {
-        printf("WARNING: st.codec.ticks_per_frame=%d", st->codec->ticks_per_frame);
-        //timebase *= st->codec->ticks_per_frame;
-    }
-    
     if (st->avg_frame_rate.den && st->avg_frame_rate.num)
         fps = av_q2d(st->avg_frame_rate);
     else if (st->r_frame_rate.den && st->r_frame_rate.num)
@@ -55,7 +50,7 @@ static void avStreamFPSTimeBase(AVStream *st, float defaultTimeBase, float *pFPS
         *pTimeBase = timebase;
 }
 
-void copyFrameData(unsigned char *src, unsigned char **dst, int linesize, int width, int height, int *dstLength)
+static void copyFrameData(unsigned char *src, unsigned char **dst, int linesize, int width, int height, int *dstLength)
 {
 	if (dst) 
 	{

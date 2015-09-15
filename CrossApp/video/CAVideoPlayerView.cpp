@@ -2,6 +2,7 @@
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
 #include "view/CADrawingPrimitives.h"
+#include "SDL.h"
 
 NS_CC_BEGIN
 
@@ -252,12 +253,21 @@ void CAVideoPlayerView::play()
 
 void CAVideoPlayerView::pause()
 {
-
+	if (!this->isPlaying())
+		return;
+	
+	m_isPlaying = false;
+	this->enableAudio(false);
 }
 
 bool CAVideoPlayerView::isPlaying()
 {
 	return m_isPlaying;
+}
+
+void CAVideoPlayerView::enableAudio(bool on)
+{
+	SDL_PauseAudio(!on);
 }
 
 float CAVideoPlayerView::getDuration()
@@ -323,6 +333,20 @@ void CAVideoPlayerView::asyncDecodeFrames()
 	CAThread::notifyRun(this);
 }
 
+void CAVideoPlayerView::freeBufferedFrames()
+{
+	m_vVideoFrames.Clear();
+	m_vAudioFrames.Clear();
+
+	m_fBufferedDuration = 0;
+	m_fMoviePosition = 0;
+
+	CC_SAFE_DELETE(m_pCurVideoFrame);
+	CC_SAFE_DELETE(m_pCurAudioFrame);
+
+	m_uCurAudioFramePos = 0;
+}
+
 float CAVideoPlayerView::presentFrame()
 {
 	float interval = 0;
@@ -340,12 +364,8 @@ float CAVideoPlayerView::presentFrame()
 		if (m_pDecoder->getDuration() - m_fMoviePosition < 1) {
 
 			pause();
-			//_moviePosition = 0;
-			//_currentAudioFramePos = 0;
 			m_pDecoder->setPosition(0);
-			//setDecoderPosition(0);
-			//presentFrame();
-			//freeBufferedFrames();
+			freeBufferedFrames();
 		}
 
 		setCurrentFrame((VPVideoFrame*)frame);
@@ -383,82 +403,59 @@ void CAVideoPlayerView::tick(float dt)
 	float time = MAX(interval, 0.01);
 	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, time);
 }
-/*
+
 void CAVideoPlayerView::audioCallback(unsigned char *stream, int len, int channels)
 {
-	if (_buffered) {
-		memset(stream, 0, len * channels);
-		return;
-	}
-
-	while (len > 0) {
-
-		unsigned int count = _audioFrames.size();
-
-		if (!_currentAudioFrame) {
-
-			if (count > 0) {
-				pthread_mutex_lock(&m_vp_data_mutex);
-				VPAudioFrame* frame = (VPAudioFrame*)_audioFrames.at(0);
-				pthread_mutex_unlock(&m_vp_data_mutex);
-
-
-				//CCLog("Audio frame position: %f, %f", _moviePosition, frame->getPosition());
-
-				if (_decoder->isValidVideo()) {
-					const float delta = _moviePosition - frame->getPosition();
-
-					if (delta < -0.1) {
-						memset(stream, 0, len * channels);
-						break;
-					}
-
-					pthread_mutex_lock(&m_vp_data_mutex);
-					_audioFrames.erase(0);
-					pthread_mutex_unlock(&m_vp_data_mutex);
-
-					if (delta > 0.1 && count > 1)
-					{
-						continue;
-					}
-
-				}
-				else {
-					_audioFrames.erase(0);
-					_moviePosition = frame->getPosition();
-					_bufferedDuration -= frame->getDuration();
-				}
-
-				_currentAudioFramePos = 0;
-				CC_SAFE_RELEASE_NULL(_currentAudioFrame);
-				_currentAudioFrame = frame;
-				//                CC_SAFE_RETAIN(_currentAudioFrame);
+	while (len > 0) 
+	{
+		if (m_pCurAudioFrame == NULL)
+		{
+			VPFrame* frame = NULL;
+			if (m_vAudioFrames.PopElement(frame))
+			{
+				m_pCurAudioFrame = (VPAudioFrame*)frame;
 			}
+			m_uCurAudioFramePos = 0;
 		}
 
-		if (_currentAudioFrame) {
-			unsigned char* bytes = (unsigned char*)(_currentAudioFrame->getData() + _currentAudioFramePos);
-			const unsigned int bytesLeft = _currentAudioFrame->getDataLength() - _currentAudioFramePos;
+		if (m_pCurAudioFrame)
+		{
+			if (m_pDecoder->isValidAudio())
+			{
+				const float delta = m_fMoviePosition - m_pCurAudioFrame->getPosition();
+				if (delta < -0.1) 
+				{
+					continue;
+				}
+			}
+
+			m_fMoviePosition = m_pCurAudioFrame->getPosition();
+			m_fBufferedDuration -= m_pCurAudioFrame->getDuration();
+
+			unsigned char* bytes = (unsigned char*)(m_pCurAudioFrame->getData() + m_uCurAudioFramePos);
+			const unsigned int bytesLeft = m_pCurAudioFrame->getDataLength() - m_uCurAudioFramePos;
 			const unsigned int bytesToCopy = MIN(len, bytesLeft);
 
-			//            CCLog("%s, copyLen = %d, leftLen = %d, count = %d", __FUNCTION__, bytesToCopy, len - bytesToCopy, count);
 			memcpy(stream, bytes, bytesToCopy);
 			stream += bytesToCopy;
 			len -= bytesToCopy;
 
-			if (bytesToCopy < bytesLeft) {
-				_currentAudioFramePos += bytesToCopy;
+			if (bytesToCopy < bytesLeft) 
+			{
+				m_uCurAudioFramePos += bytesToCopy;
 			}
-			else {
-				CC_SAFE_RELEASE_NULL(_currentAudioFrame);
+			else 
+			{
+				CC_SAFE_DELETE(m_pCurAudioFrame);
 			}
 		}
-		else {
-			memset(stream, 0, len * channels);
-			return;
+		else
+		{
+			memset(stream, 0, channels * len);
+			break;
 		}
 	}
 }
-*/
+
 
 NS_CC_END
