@@ -428,9 +428,11 @@ void CAVideoPlayerView::audioCallback(unsigned char *stream, int len, int channe
 					continue;
 				}
 			}
-
-			m_fMoviePosition = m_pCurAudioFrame->getPosition();
-			m_fBufferedDuration -= m_pCurAudioFrame->getDuration();
+			else
+			{
+				m_fMoviePosition = m_pCurAudioFrame->getPosition();
+				m_fBufferedDuration -= m_pCurAudioFrame->getDuration();
+			}
 
 			unsigned char* bytes = (unsigned char*)(m_pCurAudioFrame->getData() + m_uCurAudioFramePos);
 			const unsigned int bytesLeft = m_pCurAudioFrame->getDataLength() - m_uCurAudioFramePos;
@@ -451,7 +453,7 @@ void CAVideoPlayerView::audioCallback(unsigned char *stream, int len, int channe
 		}
 		else
 		{
-			memset(stream, 0, channels * len);
+			memset(stream, 0, len);
 			break;
 		}
 	}

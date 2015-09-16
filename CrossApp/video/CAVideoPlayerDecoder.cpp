@@ -766,9 +766,7 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
             return NULL;
         }
         
-		int64_t delay = swr_get_delay(m_pSwrContext, s_audioSpec.freq);
-        //if (delay > 0)
-			//CCLog("resample delay %lld", delay);
+		swr_get_delay(m_pSwrContext, s_audioSpec.freq);
         
 		audioData = m_pswrBuffer;
         
