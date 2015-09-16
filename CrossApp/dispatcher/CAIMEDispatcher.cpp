@@ -1,7 +1,7 @@
 
 
 #include "CAIMEDispatcher.h"
-
+#include "platform/CCCommon.h"
 #include <list>
 
 NS_CC_BEGIN
@@ -252,7 +252,7 @@ void CAIMEDispatcher::dispatchGetKeyBoradReturnCallBack()
 
 void CAIMEDispatcher::dispatchDeleteBackward()
 {
-    do 
+    do
     {
         CC_BREAK_IF(! m_pImpl);
 

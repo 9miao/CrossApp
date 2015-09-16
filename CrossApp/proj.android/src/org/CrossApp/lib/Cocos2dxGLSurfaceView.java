@@ -470,32 +470,36 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	public static void openIMEKeyboard() {
 		final Message msg = new Message();
 		msg.what = Cocos2dxGLSurfaceView.HANDLER_OPEN_IME_KEYBOARD;
-		msg.obj = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentText();
 		msg.arg1 = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.mCocos2dxRenderer.getCursorPos();
+		msg.obj = Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContentText();
 		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 	}
 
 	public static void closeIMEKeyboard() {
 		final Message msg = new Message();
 		msg.what = Cocos2dxGLSurfaceView.HANDLER_CLOSE_IME_KEYBOARD;
+		msg.arg1 = 0;
+		msg.obj = "";
 		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 	}
 
 	public void insertText(final String pText) {
+		Log.e("11111 1", pText);
 		this.queueEvent(new Runnable() {
 			@Override
-			public void run() {
+			public void run() 
+			{
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleInsertText(pText);
 			}
 		});
 	}
 	public void willInsertText(final int start,final String pString,final int before,final int count) {
+		Log.e("11111 2", pString);
 		this.queueEvent(new Runnable() {
 			@Override
-			public void run() {
+			public void run()
+			{
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleWillInsertText(start,pString,before,count);
-
-
 			}
 		});
 	}
