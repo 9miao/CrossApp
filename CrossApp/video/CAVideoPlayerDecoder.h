@@ -60,7 +60,7 @@ typedef enum
     
 } VPVideoFrameFormat;
 
-class VPFrame : public CAObject 
+class VPFrame
 {
 public:
     VPFrame();
@@ -159,7 +159,7 @@ public:
     bool isEOF();
 
 protected:
-	std::vector<int> collectStreams(enum AVMediaType codecType);
+	std::vector<int> collectStreams(int codecType);
 	VPError openInput(std::string path);
 	VPError openVideoStream();
 	VPError openVideoStream(int videoStream);

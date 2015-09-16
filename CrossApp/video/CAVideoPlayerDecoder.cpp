@@ -15,6 +15,7 @@ extern "C"
 #include "libswscale/swscale.h"
 #include "libswresample/swresample.h"
 #include "libavutil/pixdesc.h"
+#include "libavutil/avutil.h"
 }
 
 
@@ -166,14 +167,15 @@ VPDecoder::~VPDecoder()
 }
 
 
-std::vector<int> VPDecoder::collectStreams(enum AVMediaType codecType)
+std::vector<int> VPDecoder::collectStreams(int codecType)
 {
 	std::vector<int> ret;
 
+	AVMediaType atype = (AVMediaType)codecType;
 	if (m_pFormatCtx)
 	{
 		for (int i = 0; i < m_pFormatCtx->nb_streams; ++i) {
-			if (codecType == m_pFormatCtx->streams[i]->codec->codec_type)
+			if (atype == m_pFormatCtx->streams[i]->codec->codec_type)
 			{
 				ret.push_back(i);
 			}
@@ -668,7 +670,6 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
         yuvFrame->setChromaRLength(dataLength);
 
         frame = yuvFrame;
-        
     }
 	else 
 	{
@@ -693,7 +694,6 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
         rgbFrame->setDataLength(rgbFrame->getLineSize() * m_pVideoCodecCtx->height);
         
         frame = rgbFrame;
-        rgbFrame->retain();
     }    
     
 	frame->setWidth(m_pVideoCodecCtx->width);

@@ -1,10 +1,7 @@
-#include "CAVideoPlayerController.h"
+#include "CAVideoPlayerControlView.h"
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
 #include "view/CAWindow.h"
-#include <pthread.h>
-
-#include "SDL.h"
 
 NS_CC_BEGIN
 

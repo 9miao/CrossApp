@@ -31,6 +31,7 @@ CAVideoPlayerView::~CAVideoPlayerView()
 	CAThread::close();
 	CC_SAFE_DELETE(m_pRenderer);
 	CC_SAFE_DELETE(m_pDecoder);
+	freeBufferedFrames();
 }
 
 CAVideoPlayerView* CAVideoPlayerView::create()
@@ -277,6 +278,25 @@ float CAVideoPlayerView::getDuration()
 		return m_pDecoder->getDuration();
 	}
 	return 0;
+}
+
+float CAVideoPlayerView::getPosition()
+{
+	if (m_pDecoder)
+	{
+		return m_fMoviePosition - m_pDecoder->getStartTime();
+	}
+	return 0;
+}
+
+void CAVideoPlayerView::setPosition(float position)
+{
+	if (m_pDecoder == NULL)
+		return;
+	
+	freeBufferedFrames();
+	position = MIN(m_pDecoder->getDuration() - 1, MAX(0, position));
+	m_pDecoder->setPosition(position);
 }
 
 void CAVideoPlayerView::decodeProcess()

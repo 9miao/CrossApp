@@ -34,16 +34,13 @@ public:
 	static CAVideoPlayerView* createWithCenter(const CCRect& rect);
 
 	bool initWithPath(const std::string& szPath, bool isPathByUrl);
-
-	CC_SYNTHESIZE(std::string, m_cszTitle, Title);
-
 	void play();
 	void pause();
 	bool isPlaying();
 	void enableAudio(bool on);
 	float getDuration();
-	//float getPosition();
-	//void setPosition(float pos);
+	float getPosition();
+	void setPosition(float position);
 
 private:
 	virtual bool init();

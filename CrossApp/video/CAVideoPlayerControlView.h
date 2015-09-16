@@ -1,22 +1,18 @@
 //
-//  CAVideoPlayerController.h
+//  CAVideoPlayerControlView.h
 //  CrossApp
 //
-//  Created by dai xinping on 14-11-6.
-//  Modified by zhujian on 15-9-6
+//  Created by zhujian on 15-9-16.
 //
 //  Copyright (c) 2015年 http://www.9miao.com. All rights reserved.
 //
 
-#ifndef __CrossApp__CAVideoPlayerController__
-#define __CrossApp__CAVideoPlayerController__
+#ifndef __CrossApp__CAVideoPlayerControlView__
+#define __CrossApp__CAVideoPlayerControlView__
 
 #include "controller/CAViewController.h"
-#include "basics/CAThread.h"
 #include "control/CASlider.h"
 #include "control/CAButton.h"
-#include "view/CALabel.h"
-#include "basics/CASTLContainer.h"
 #include "CAVideoPlayerView.h"
 
 NS_CC_BEGIN
@@ -29,36 +25,16 @@ class VPDecoder;
 
 
 
-class CC_DLL CAVideoPlayerController : public CAViewController
+class CC_DLL CAVideoPlayerControlView : public CAView
 {
 public:
-    CAVideoPlayerController();
-    virtual ~CAVideoPlayerController();
+	CAVideoPlayerControlView();
+	virtual ~CAVideoPlayerControlView();
 
-    static CAVideoPlayerController* createWithPath(const string& path, const string& title);
-    static CAVideoPlayerController* createWithUrl(const string& path, const string& title);
-    
-    virtual bool init(const string& path, const string& title,bool pathType);
-    
-    virtual void play();
-    virtual void pause();
-    virtual void displayHUD(bool bDisp);
 
-//	CC_SYNTHESIZE(std::string, m_cszTitle, Title);
-    
-//    virtual float getDuration();
-//    virtual float getPosition();
-//    virtual void setPosition(float pos);
-
-            
 protected:
-    CAVideoPlayerView*_glView;
+	CAVideoPlayerView *m_glView;
 
-
-    float               _wantMoviePosition;
- 
-
-    bool                _disableUpdateHUD;
 
 
 //    bool                _buffered;
@@ -102,13 +78,9 @@ protected:
     void updateHUD(float);
     void onSlideTouched(CAControl* control, CCPoint point);
     void onSlideChanged(CAControl* control, CCPoint point);
-    
-private: // THREAD
-    bool            m_inited;
-    bool            m_bNeedExit;
 
 };
 
 NS_CC_END
 
-#endif /* defined(__CrossApp__CAVideoPlayerController__) */
+#endif /* defined(__CrossApp__CAVideoPlayerControlView__) */
