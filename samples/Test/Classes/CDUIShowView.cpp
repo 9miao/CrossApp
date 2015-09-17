@@ -1605,11 +1605,13 @@ void CDUIShowView::showFlashView()
 
 //	CAView* pView = CAView::createWithFrame(frame);
 //	pView->setColor(ccc4(255, 0, 255, 255));
-	CAVideoPlayerView* pView = CAVideoPlayerView::createWithFrame(frame);
-	pView->setColor(ccc4(255, 0, 255, 255));
-	pView->initWithPath("D:\\XiGua Yingshi\\x.rmvb", false);
+	CAVideoPlayerControlView* pView = CAVideoPlayerControlView::createWithFrame(frame);
+//	pView->setColor(ccc4(255, 0, 255, 255));
+
+	pView->getVideoPlayerView()->initWithPath("image/video.mp4", false);
+//	pView->initWithPath("D:\\XiGua Yingshi\\x.rmvb", false);
 	this->getView()->addSubview(pView);
-	pView->play();
+//	pView->play();
 
 	return;
 

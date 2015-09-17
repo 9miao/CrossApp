@@ -32,6 +32,7 @@ CAVideoPlayerView::~CAVideoPlayerView()
 	CC_SAFE_DELETE(m_pRenderer);
 	CC_SAFE_DELETE(m_pDecoder);
 	freeBufferedFrames();
+	CC_SAFE_DELETE(m_pCurAudioFrame);
 }
 
 CAVideoPlayerView* CAVideoPlayerView::create()
@@ -248,6 +249,7 @@ void CAVideoPlayerView::play()
 		return;
 
 	m_isPlaying = true;
+	this->enableAudio(true);
 	asyncDecodeFrames();
 	tick(0);
 }
@@ -362,7 +364,6 @@ void CAVideoPlayerView::freeBufferedFrames()
 	m_fMoviePosition = 0;
 
 	CC_SAFE_DELETE(m_pCurVideoFrame);
-	CC_SAFE_DELETE(m_pCurAudioFrame);
 
 	m_uCurAudioFramePos = 0;
 }
@@ -428,6 +429,9 @@ void CAVideoPlayerView::audioCallback(unsigned char *stream, int len, int channe
 {
 	while (len > 0) 
 	{
+		if (!isPlaying())
+			return;
+
 		if (m_pCurAudioFrame == NULL)
 		{
 			VPFrame* frame = NULL;
@@ -470,11 +474,6 @@ void CAVideoPlayerView::audioCallback(unsigned char *stream, int len, int channe
 			{
 				CC_SAFE_DELETE(m_pCurAudioFrame);
 			}
-		}
-		else
-		{
-			memset(stream, 0, len);
-			break;
 		}
 	}
 }

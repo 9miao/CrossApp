@@ -13,16 +13,9 @@
 #include "controller/CAViewController.h"
 #include "control/CASlider.h"
 #include "control/CAButton.h"
-#include "CAVideoPlayerView.h"
+#include "video/CAVideoPlayerView.h"
 
 NS_CC_BEGIN
-
-class CAVideoPlayerView;
-class VPAudioFrame;
-class VPFrame;
-class VPArtworkFrame;
-class VPDecoder;
-
 
 
 class CC_DLL CAVideoPlayerControlView : public CAView
@@ -31,53 +24,43 @@ public:
 	CAVideoPlayerControlView();
 	virtual ~CAVideoPlayerControlView();
 
+	static CAVideoPlayerControlView* createWithFrame(const CCRect& rect);
+	static CAVideoPlayerControlView* createWithCenter(const CCRect& rect);
+
+	CC_SYNTHESIZE(std::string, m_szTitle, Title);
+	
+	CAVideoPlayerView *getVideoPlayerView() { return m_glView; }
 
 protected:
+	virtual bool init();
+//	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	void onSlideTouched(CAControl* control, CCPoint point);
+	void onSlideChanged(CAControl* control, CCPoint point);
+	void onButtonPause(CAControl* control, CCPoint point);
+	void onButtonBack(CAControl* control, CCPoint point);
+	void updatePlayUI(float t);
+	void buildCtrlViews();
+	void updatePlayButton();
+	std::string formatTimeInterval(float seconds, bool isLeft);
+
+private:
 	CAVideoPlayerView *m_glView;
-
-
-
-//    bool                _buffered;
-    string              _path;
-    string              _title;
-    CAActivityIndicatorView *_activityView;
-    CAButton            *_playButton;
-    CASlider            *_playSlider;
-    CALabel             *_playTime;
-
+	CAActivityIndicatorView *m_actView;
+	CAButton *m_playButton;
+	CASlider *m_playSlider;
+	CALabel *m_playTimeLabel;
     
-protected:
-    virtual void viewDidLoad();
-    virtual void viewDidUnload();
-//    virtual void prepare(float);
-    
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    
-
-    void updatePlayButton();
- //   void tick(float dt);
-  
- //   void setMoviePositionFromDecoder();
- //   void setDecoderPosition(float position);
- //   void setMoviePosition(float position);
- //   void updatePosition(float position, bool playing);
- //   void gotoWantedMoviePosition(float);
-    
+ 
     void dispearHUDView();
     void showHUDView();
     
-    //    HUD
-protected:
-    CASlider            *_slider;
-    CAView              *_HUDView;
         
 protected:
-    void onButtonBack(CAControl* control, CCPoint point);
-    void onButtonPause(CAControl* control, CCPoint point);
+    
+    
     void buildHUD();
     void updateHUD(float);
-    void onSlideTouched(CAControl* control, CCPoint point);
-    void onSlideChanged(CAControl* control, CCPoint point);
+    
 
 };
 

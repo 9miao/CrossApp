@@ -21,8 +21,7 @@
 
 NS_CC_BEGIN
 
-class VPDecoder;
-class VPFrame;
+
 class CC_DLL CAVideoPlayerView : public CAView, public CAThread
 {
 public:

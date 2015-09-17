@@ -506,6 +506,9 @@
     <ClCompile Include="..\video\CAVideoPlayerView.cpp">
       <Filter>video</Filter>
     </ClCompile>
+    <ClCompile Include="..\video\CAVideoPlayerControlView.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1012,6 +1015,9 @@
       <Filter>video</Filter>
     </ClInclude>
     <ClInclude Include="..\video\CAVideoPlayerView.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\video\CAVideoPlayerControlView.h">
       <Filter>video</Filter>
     </ClInclude>
   </ItemGroup>
