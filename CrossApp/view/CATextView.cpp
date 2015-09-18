@@ -40,6 +40,7 @@ CATextView::CATextView()
 , m_pTextArrView(NULL)
 , m_bMoved(false)
 , m_bKeyboardOpen(false)
+, m_bFirstInput(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
     this->setHaveNextResponder(false);
@@ -512,40 +513,27 @@ void CATextView::willInsertText(const char* text, int len)
 
 void CATextView::AndroidWillInsertText(int start, const char* str, int before, int count)
 {
-	CCAssert(str != NULL, "");
-	CCAssert(count > 0, "");
-
-	for (int i = 0; i < before; i++)
-	{
-		if (m_iCurPos == 0 || m_szText.empty())
-			break;
-
-		int nDeleteLen = 1;
-		while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)))
-		{
-			++nDeleteLen;
-		}
-		std::string cszDelStr = m_szText.substr(m_iCurPos - nDeleteLen, nDeleteLen);
-        CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length(), m_iCurPos - (int)cszDelStr.length()));
-		CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length()));
-		m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
-		m_iCurPos -= nDeleteLen;
-	}
-	updateImage();
-	CC_RETURN_IF(str == NULL || count <= 0);
-
-	std::string s = str;
-    CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, s.c_str(), (int)s.size(), m_iCurPos - (int)s.size()));
-	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewInsertText(this, s.c_str(), (int)s.size()));
-	m_szText.insert(m_iCurPos, s.c_str(), s.length());
-	m_iCurPos += s.length();
-	updateImage();
+    if(m_bFirstInput == false)
+    {
+        m_bFirstInput = true;
+        return;
+    }
+    
+    for (int i=0; i<before; i++)
+    {
+        deleteBackward();
+    }
+    
+    if (count >0)
+    {
+        std::string s = str;
+        insertText(s.c_str(), (int)s.length());
+    }
 }
 
 void CATextView::deleteBackward()
 {
     CC_RETURN_IF(m_iCurPos == 0 || m_szText.empty());
-
 	std::string cszDelStr;
 	if (m_curSelCharRange.first != m_curSelCharRange.second)
 	{
@@ -553,17 +541,16 @@ void CATextView::deleteBackward()
 	}
 	else
 	{
-		int nDeleteLen = 1;
-		while (1)
-		{
-			CC_BREAK_IF(m_iCurPos - nDeleteLen < 0);
-			CC_BREAK_IF(0x80 != (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)));
-			++nDeleteLen;
-		}
+        int nDeleteLen = 1;
+        while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nDeleteLen)))
+        {
+            ++nDeleteLen;
+        }
 		cszDelStr = m_szText.substr(m_iCurPos - nDeleteLen, nDeleteLen);
 	}
 
-	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, cszDelStr.c_str(), (int)cszDelStr.length()));
+	CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, m_szText.c_str(), (int)m_szText.length(), m_iCurPos - (int)m_szText.length()));
+    CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, m_szText.c_str(), (int)m_szText.length()));
     CC_RETURN_IF(execCurSelCharRange());
 	
 	int nDeleteLen = (int)cszDelStr.size();
@@ -588,7 +575,7 @@ void CATextView::getKeyBoardHeight(int height)
 void CATextView::getKeyBoradReturnCallBack()
 {
 	std::string cszText = "\n";
-	insertText(cszText.c_str(), cszText.size());
+	insertText(cszText.c_str(), (int)cszText.size());
 }
 
 const char* CATextView::getContentText()
@@ -916,6 +903,10 @@ bool CATextView::detachWithIME()
 		CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
 		if (pGlView)
 		{
+#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+            pGlView->setIMEKeyboardDefault();
+            pGlView->setIMEKeyboardReturnEnter();
+#endif
 			pGlView->setIMEKeyboardState(false);
 		}
 		m_pTextArrView->hideTextArrView();

@@ -1,7 +1,7 @@
 
 
 #include "CAIMEDispatcher.h"
-
+#include "platform/CCCommon.h"
 #include <list>
 
 NS_CC_BEGIN
@@ -220,7 +220,6 @@ void CAIMEDispatcher::dispatchInsertText(const char * pText, int nLen)
 
         // there is no delegate attached to IME
         CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
-
         m_pImpl->m_DelegateWithIme->insertText(pText, nLen);
     } while (0);
 }
@@ -252,7 +251,7 @@ void CAIMEDispatcher::dispatchGetKeyBoradReturnCallBack()
 
 void CAIMEDispatcher::dispatchDeleteBackward()
 {
-    do 
+    do
     {
         CC_BREAK_IF(! m_pImpl);
 
