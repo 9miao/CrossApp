@@ -23,7 +23,11 @@ CAObject::CAObject(void)
 {
     static unsigned int uObjectCount = 0;
 
-    m_uID = ++uObjectCount;
+    m_u__ID = ++uObjectCount;
+    
+    char str[32];
+    sprintf(str, "%u", m_u__ID);
+    m_s__StrID = str;
 }
 
 CAObject::~CAObject(void)
