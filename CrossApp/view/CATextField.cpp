@@ -8,7 +8,6 @@
 
 #include "CATextField.h"
 #include "basics/CAApplication.h"
-#include "actions/CCActionInterval.h"
 #include "CCEGLView.h"
 #include <locale>
 #include <algorithm>
@@ -16,6 +15,7 @@
 #include "shaders/CAShaderCache.h"
 #include "platform/CAClipboard.h"
 #include "CATextEditHelper.h"
+#include "animation/CAViewAnimation.h"
 
 NS_CC_BEGIN
 
@@ -47,6 +47,7 @@ CATextField::CATextField()
 , m_keyBoardReturnType(KEY_BOARD_RETURN_DONE)
 , m_bMoved(false)
 , m_eTextEditAlign(eTextEditAlignLeft)
+, m_bFirstInput(false)
 {
 	m_iFontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize);
     this->setHaveNextResponder(false);
@@ -166,21 +167,27 @@ void CATextField::showCursorMark()
 {
     if(!m_pCursorMark->isVisible()){
         m_pCursorMark->setVisible(true);
-        m_pCursorMark->runAction(CCRepeat::create(CCBlink::create(0.8f, 1), 1048576));
+        
+        m_pCursorMark->setAlpha(0);
+        CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+        CAViewAnimation::setAnimationDuration(0.5f);
+        CAViewAnimation::setAnimationRepeatAutoreverses(true);
+        CAViewAnimation::setAnimationRepeatCount(1048576);
+        m_pCursorMark->setAlpha(1.0f);
+        CAViewAnimation::commitAnimations();
     }
 }
 
 void CATextField::hideCursorMark()
 {
     m_pCursorMark->setVisible(false);
-    m_pCursorMark->stopAllActions();
+    CAViewAnimation::removeAnimations(m_s__StrID);
 }
 
 void CATextField::setCursorPosition()
 {
     if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
     {
-        //float mPmarkWidth = MIN(m_obContentSize.width, getCursorX());
 		m_pCursorMark->setCenterOrigin(CCPoint((m_sText.empty() ? 0 : this->getImageRect().size.width) + m_iHoriMargins, m_obContentSize.height / 2));
     }
     else
@@ -234,7 +241,6 @@ void CATextField::setText(const std::string &var)
     m_pCursorMark->setCenterOrigin(p);
     insertText(var.c_str(), (int)var.length());
     m_pDelegate = pTemp;
-    this->updateImage();
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 	CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
 	pGlView->setIMECursorPos(getCursorPos(), getContentText());
@@ -289,38 +295,37 @@ bool CATextField::attachWithIME()
         if (pGlView)
         {
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
-            if (getKeyboardType() ==KEY_BOARD_TYPE_NORMAL)
+            if (getKeyboardType() == KEY_BOARD_TYPE_NORMAL)
             {
                 pGlView->setIMEKeyboardDefault();
             }
-            else if (getKeyboardType() ==KEY_BOARD_TYPE_NUMBER)
+            else if (getKeyboardType() == KEY_BOARD_TYPE_NUMBER)
             {
                 pGlView->setIMEKeyboardNumber();
             }
-            else if(getKeyboardType() ==KEY_BOARD_TYPE_ALPHABET)
+            else if(getKeyboardType() == KEY_BOARD_TYPE_ALPHABET)
             {
                 pGlView->setIMEKeyboardAlphabet();
             }
             
-            if (getKeyboardReturnType() ==KEY_BOARD_RETURN_SEND)
+            if (getKeyboardReturnType() == KEY_BOARD_RETURN_SEND)
             {
                 pGlView->setIMEKeyboardReturnSend();
             }
-            else if (getKeyboardReturnType() ==KEY_BOARD_RETURN_SEARCH)
+            else if (getKeyboardReturnType() == KEY_BOARD_RETURN_SEARCH)
             {
                 pGlView->setIMEKeyboardReturnSearch();
             }
-            else if(getKeyboardReturnType() ==KEY_BOARD_RETURN_DONE)
+            else if(getKeyboardReturnType() == KEY_BOARD_RETURN_DONE)
             {
                 pGlView->setIMEKeyboardReturnDone();
             }
-			else if(getKeyboardReturnType() ==KEY_BOARD_RETURN_ENTER)
+			else if(getKeyboardReturnType() == KEY_BOARD_RETURN_ENTER)
 			{
 				pGlView->setIMEKeyboardReturnEnter();
 			}
 
 #endif
-
             pGlView->setIMEKeyboardState(true);
             setCursorPosition();
         }
@@ -338,6 +343,11 @@ bool CATextField::detachWithIME()
         
         if (pGlView)
         {
+            
+#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+            pGlView->setIMEKeyboardDefault();
+            pGlView->setIMEKeyboardReturnEnter();
+#endif
             pGlView->setIMEKeyboardState(false);
         }
     }
@@ -346,7 +356,7 @@ bool CATextField::detachWithIME()
 
 void CATextField::setInputType(eKeyBoardInputType type)
 {
-    m_nInputType=type;
+    m_nInputType = type;
 }
 
 eKeyBoardInputType CATextField::getInputType()
@@ -403,18 +413,17 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (this->getBounds().containsPoint(point))
     {
-		becomeFirstResponder();
-        if (isFirstResponder())
+        if (!isFirstResponder())
         {
-            calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
-			
-			adjustCursorMove();
-            
-#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
-            CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
-            pGlView->setIMECursorPos(getCursorPos(), getContentText());
-#endif
+            becomeFirstResponder();
         }
+        calculateSelChars(point, m_iString_l_length, m_iString_r_length, m_iCurPos);
+        adjustCursorMove();
+        
+#if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
+        CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
+        pGlView->setIMECursorPos(getCursorPos(), getContentText());
+#endif
     }
     else
     {
@@ -423,6 +432,7 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 	execCurSelCharRange();
+
 }
 
 void CATextField::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
@@ -520,19 +530,25 @@ void CATextField::insertText(const char * text, int len)
 	adjustCursorMove(true);
 }
 
-void CATextField::AndroidWillInsertText(int start,const char* str,int before,int count)
+void CATextField::AndroidWillInsertText(int start, const char* str, int before, int count)
 {
-    CCAssert(str != NULL, "");
-	CCAssert(count > 0, "");
+    if(m_bFirstInput == false)
+    {
+        m_bFirstInput = true;
+        return;
+    }
     
     for (int i=0; i<before; i++)
     {
         deleteBackward();
     }
-    CC_RETURN_IF(str == NULL || count <= 0);
-    
-    std::string s = str;
-    insertText(s.c_str(), (int)s.length());
+
+    if (count >0)
+    {
+        std::string s = str;
+        insertText(s.c_str(), (int)s.length());
+    }
+
 }
 
 void CATextField::willInsertText(const char *text, int len)
@@ -594,6 +610,7 @@ void CATextField::deleteBackward()
 	m_vTextFiledChars.erase(m_vTextFiledChars.begin() + getStringCharCount(m_sText.substr(0, m_iCurPos)));
 	
 	adjustCursorMove(false);
+    CCLog("··· deleteBackward text:%s", m_sText.c_str());
 }
 
 void CATextField::adjustCursorMove(bool forward)
@@ -632,7 +649,7 @@ void CATextField::adjustCursorMove(bool forward)
 		}
 	}
 
-	CCRect r = CCRectMake(0, 0, MIN(m_iLabelWidth, m_cImageSize.width), m_cImageSize.height);
+	CCRect r = CCRect(0, 0, MIN(m_iLabelWidth, m_cImageSize.width), m_cImageSize.height);
 	r.origin.x = -m_iString_o_length;
 	r.size.width = getStringViewLength();
 	if (r.size.width == 0)
@@ -719,7 +736,6 @@ void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 	bool isBackward = p < m_iCurPos;
 	m_iCurPos = p;
 	adjustCursorMove(!isBackward);
-
 	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool ll, rr;
 	CCRect cc = convertRectToWorldSpace(getZZCRect(&ll, &rr));
@@ -924,9 +940,9 @@ void CATextField::updateImage()
 	}
 
 	float dt = 1.0f;
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//	dt = 1.1f;
-//#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+	dt = 1.1f;
+#endif
 	CCSize size = CCSizeMake(0, m_iFontHeight*dt);
     CAImage* image = CAImage::createWithString(text.c_str(),
 											   m_nfontName.c_str(),

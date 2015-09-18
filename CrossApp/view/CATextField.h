@@ -243,7 +243,8 @@ private:
 	int m_iString_r_length;
 	int m_iString_o_length;
 	int m_iFontHeight;
-
+    bool m_bFirstInput;
+    
 	CAView* m_pCursorMark;
 	CAView* m_pTextViewMark;
 	CCSize m_cImageSize;
