@@ -447,9 +447,9 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
             FT_BitmapGlyph  bit = (FT_BitmapGlyph)image;
 
 			int dtValue = 0;
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
-			dtValue = (glyph->c > 0x80) ? 0 : (m_lineHeight / 12);
-#endif
+//#if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+//			dtValue = (glyph->c > 0x80) ? 0 : (m_lineHeight / 12);
+//#endif
             FT_Int x = (FT_Int)(pen->x + glyph->pos.x + bit->left);
             FT_Int y = (FT_Int)(pen->y - bit->top + dtValue);
 			draw_bitmap(pBuffer, &bit->bitmap, x, y);
@@ -1043,6 +1043,11 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
     
 	if (pBuffer == NULL)
 	{
+        const char* fontName = "fonts/Regular.ttf";
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+        ttfIndex = 0;
+        
+        /*
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         char sTTFont[256];
         GetWindowsDirectoryA(sTTFont,255);
@@ -1073,8 +1078,8 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
             fontName = "/System/Library/Fonts/STHeiti Light.ttc";
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
         }
-		
-		ttfIndex = 1;
+        
+        ttfIndex = 1;
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         
@@ -1087,6 +1092,7 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
         }
 #endif
+         */
 	}
 
 	FontBufferInfo info;

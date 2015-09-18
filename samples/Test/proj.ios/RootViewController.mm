@@ -1,7 +1,7 @@
 #import "RootViewController.h"
 #import "EAGLView.h"
 #import "CrossApp.h"
-
+#import <UIKit/UIKit.h>
 @implementation RootViewController
 
 /*
@@ -50,6 +50,29 @@
                                  numberOfSamples: 0];
     [__glView setMultipleTouchEnabled:YES];
     [self.view addSubview:__glView];
+    
+    NSFileManager* fm=[NSFileManager defaultManager];
+    NSString* path = [NSString stringWithUTF8String:"/System/Library/Fonts"];
+    NSArray *files = [fm subpathsAtPath: path];
+    
+    for (int i = 0; i < files.count; i++)
+    {
+        NSLog(@"font : %@", files[i]);
+        NSString* s = files[i];
+        std::string ss = std::string("/System/Library/Fonts/") + [s UTF8String];
+        unsigned long pSize = 0;
+        
+        FILE* fp = fopen(ss.c_str(), "rb");
+        if (fp)
+        {
+            fseek(fp, 0L, SEEK_END);
+            pSize = ftell(fp);
+            fseek(fp,0,SEEK_SET);
+            fclose(fp);
+        }
+        
+        NSLog(@"fontSize : %lu", pSize / 1048576);
+    }
 }
 
 

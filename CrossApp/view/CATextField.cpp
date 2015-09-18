@@ -924,9 +924,9 @@ void CATextField::updateImage()
 	}
 
 	float dt = 1.0f;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-	dt = 1.1f;
-#endif
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+//	dt = 1.1f;
+//#endif
 	CCSize size = CCSizeMake(0, m_iFontHeight*dt);
     CAImage* image = CAImage::createWithString(text.c_str(),
 											   m_nfontName.c_str(),
