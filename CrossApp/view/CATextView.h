@@ -228,6 +228,8 @@ private:
     bool m_bMoved;
 	int m_iCurPos;
 	int m_iLineHeight;
+    bool m_bFirstInput;
+    
 	std::vector<TextViewLineInfo> m_vLinesTextView;
 	std::pair<int, int> m_curSelCharRange;
 	bool m_bUpdateImage;

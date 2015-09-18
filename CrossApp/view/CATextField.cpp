@@ -47,6 +47,7 @@ CATextField::CATextField()
 , m_keyBoardReturnType(KEY_BOARD_RETURN_DONE)
 , m_bMoved(false)
 , m_eTextEditAlign(eTextEditAlignLeft)
+, m_bFirstInput(false)
 {
 	m_iFontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize);
     this->setHaveNextResponder(false);
@@ -531,16 +532,23 @@ void CATextField::insertText(const char * text, int len)
 
 void CATextField::AndroidWillInsertText(int start, const char* str, int before, int count)
 {
-    if (count >0)
+    if(m_bFirstInput == false)
     {
-        std::string s = str;
-        insertText(s.c_str(), (int)s.length());
+        m_bFirstInput = true;
+        return;
     }
     
     for (int i=0; i<before; i++)
     {
         deleteBackward();
     }
+
+    if (count >0)
+    {
+        std::string s = str;
+        insertText(s.c_str(), (int)s.length());
+    }
+
 }
 
 void CATextField::willInsertText(const char *text, int len)
@@ -602,6 +610,7 @@ void CATextField::deleteBackward()
 	m_vTextFiledChars.erase(m_vTextFiledChars.begin() + getStringCharCount(m_sText.substr(0, m_iCurPos)));
 	
 	adjustCursorMove(false);
+    CCLog("··· deleteBackward text:%s", m_sText.c_str());
 }
 
 void CATextField::adjustCursorMove(bool forward)
@@ -640,7 +649,7 @@ void CATextField::adjustCursorMove(bool forward)
 		}
 	}
 
-	CCRect r = CCRectMake(0, 0, MIN(m_iLabelWidth, m_cImageSize.width), m_cImageSize.height);
+	CCRect r = CCRect(0, 0, MIN(m_iLabelWidth, m_cImageSize.width), m_cImageSize.height);
 	r.origin.x = -m_iString_o_length;
 	r.size.width = getStringViewLength();
 	if (r.size.width == 0)

@@ -40,6 +40,7 @@ CATextView::CATextView()
 , m_pTextArrView(NULL)
 , m_bMoved(false)
 , m_bKeyboardOpen(false)
+, m_bFirstInput(false)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
     this->setHaveNextResponder(false);
@@ -512,15 +513,21 @@ void CATextView::willInsertText(const char* text, int len)
 
 void CATextView::AndroidWillInsertText(int start, const char* str, int before, int count)
 {
-    if (count >0)
+    if(m_bFirstInput == false)
     {
-        std::string s = str;
-        insertText(s.c_str(), (int)s.length());
+        m_bFirstInput = true;
+        return;
     }
     
     for (int i=0; i<before; i++)
     {
         deleteBackward();
+    }
+    
+    if (count >0)
+    {
+        std::string s = str;
+        insertText(s.c_str(), (int)s.length());
     }
 }
 

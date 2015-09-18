@@ -220,7 +220,6 @@ void CAIMEDispatcher::dispatchInsertText(const char * pText, int nLen)
 
         // there is no delegate attached to IME
         CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
-
         m_pImpl->m_DelegateWithIme->insertText(pText, nLen);
     } while (0);
 }
