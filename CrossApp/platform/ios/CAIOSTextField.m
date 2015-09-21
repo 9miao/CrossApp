@@ -17,20 +17,24 @@
         return nil;
     }
     [self setAutocorrectionType:UITextAutocorrectionTypeNo];
-#if __IPHONE_OS_VERSION_MIN_REQUIRED == __IPHONE_9_0
-    [self setDelegate:self];
-#endif
+   
+    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
+    {
+        [self setDelegate:self];
+    }
     return self;
 }
 
 - (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED == __IPHONE_9_0
-    if (self.markedTextRange == nil)
+    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
     {
-        [self deleteBackward];
+        if (self.markedTextRange == nil)
+        {
+            [self deleteBackward];
+        }
     }
-#endif
+
     [super setMarkedText:markedText selectedRange:selectedRange];
     [_cadelegate setMarkedText:markedText selectedRange:selectedRange];
 }
@@ -49,19 +53,18 @@
     return ht;
 }
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED == __IPHONE_9_0
-
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (string.length > 0 && self.markedTextRange == nil)
+    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
     {
-        [_cadelegate insertText:string];
+        if (string.length > 0 && self.markedTextRange == nil)
+        {
+            [_cadelegate insertText:string];
+        }
     }
-    
     return YES;
 }
 
-#endif
 
 - (void)insertText:(NSString *)text
 {
