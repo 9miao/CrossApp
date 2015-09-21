@@ -7,6 +7,7 @@
 NS_CC_BEGIN
 
 static CATouch* s_pTouches[CC_MAX_TOUCHES] = { NULL };
+static CATouch* s_pMouseMoved = NULL;
 static unsigned int s_indexBitsUsed = 0;
 static std::map<intptr_t, int> s_TouchesIntergerDict;
 
@@ -333,12 +334,30 @@ void CCEGLViewProtocol::handleTouchesCancel(int num, intptr_t ids[], float xs[],
     m_pDelegate->touchesCancelled(&set, event);
 }
 
-void CCEGLViewProtocol::handleScrollWheel(int num, intptr_t ids[], float xs[], float ys[], float offx, float offy, CAEvent* event)
+void CCEGLViewProtocol::handleMouseMoved(float x, float y, CAEvent* event)
 {
-    CCSet set;
-    getSetOfTouchesEndOrCancel(set, num, ids, xs, ys, event);
-    m_pDelegate->touchesScrollWheel(&set, event);
-    CCLog("%f", offy);
+    if (s_pMouseMoved == NULL)
+    {
+        s_pMouseMoved = new CATouch();
+    }
+    s_pMouseMoved->setTouchInfo(-1,
+                         (x - m_obViewPortRect.origin.x) / m_fScaleX,
+                         (y - m_obViewPortRect.origin.y) / m_fScaleY);
+    
+    m_pDelegate->mouseMoved(s_pMouseMoved, event);
+}
+
+void CCEGLViewProtocol::handleScrollWheel(float x, float y, float offx, float offy, CAEvent* event)
+{
+    if (s_pMouseMoved == NULL)
+    {
+        s_pMouseMoved = new CATouch();
+    }
+    s_pMouseMoved->setTouchInfo(-1,
+                                (x - m_obViewPortRect.origin.x) / m_fScaleX,
+                                (y - m_obViewPortRect.origin.y) / m_fScaleY);
+    
+    m_pDelegate->touchesScrollWheel(s_pMouseMoved, offx, offy, event);
 }
 
 
@@ -358,6 +377,11 @@ void CCEGLViewProtocol::handleOtherMouseUp(int num, intptr_t ids[], float xs[], 
 }
 
 void CCEGLViewProtocol::handleMouseEntered(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
+{
+    
+}
+
+void CCEGLViewProtocol::handleMouseExited(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     
 }

@@ -551,7 +551,12 @@ void CATouchDispatcher::touchesCancelled(CCSet *touches, CAEvent *pEvent)
     m_bLocked = false;
 }
 
-void CATouchDispatcher::touchesScrollWheel(CCSet* touches, CAEvent* pEvent)
+void CATouchDispatcher::mouseMoved(CATouch* touch, CAEvent* pEvent)
+{
+
+}
+
+void CATouchDispatcher::touchesScrollWheel(CATouch* touch, float off_x, float off_y, CAEvent* pEvent)
 {
 
 }

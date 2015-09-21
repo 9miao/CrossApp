@@ -44,7 +44,11 @@ public:
     /**
      * @lua NA
      */
-    virtual void touchesScrollWheel(CCSet* touches, CAEvent* pEvent) = 0;
+    virtual void mouseMoved(CATouch* touch, CAEvent* pEvent) = 0;
+    /**
+     * @lua NA
+     */
+    virtual void touchesScrollWheel(CATouch* touch, float off_x, float off_y, CAEvent* pEvent) = 0;
     /**
      * @lua NA
      */
@@ -139,7 +143,11 @@ public:
     /**
      * @lua NA
      */
-    virtual void touchesScrollWheel(CCSet* touches, CAEvent* pEvent);
+    virtual void mouseMoved(CATouch* touch, CAEvent* pEvent);
+    /**
+     * @lua NA
+     */
+    virtual void touchesScrollWheel(CATouch* touch, float off_x, float off_y, CAEvent* pEvent);
     
 protected:
 
