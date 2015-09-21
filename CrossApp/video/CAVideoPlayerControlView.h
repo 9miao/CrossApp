@@ -29,7 +29,8 @@ public:
 
 	CC_SYNTHESIZE(std::string, m_szTitle, Title);
 	
-	CAVideoPlayerView *getVideoPlayerView() { return m_glView; }
+	bool initWithPath(const std::string& szPath);
+	bool initWithUrl(const std::string& szUrl);
 
 protected:
 	virtual bool init();
@@ -49,19 +50,6 @@ private:
 	CAButton *m_playButton;
 	CASlider *m_playSlider;
 	CALabel *m_playTimeLabel;
-    
- 
-    void dispearHUDView();
-    void showHUDView();
-    
-        
-protected:
-    
-    
-    void buildHUD();
-    void updateHUD(float);
-    
-
 };
 
 NS_CC_END

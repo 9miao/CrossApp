@@ -104,7 +104,6 @@
 #include "video/CAVideoPlayerRender.h"
 #include "video/CAVideoPlayerView.h"
 #include "video/CAVideoPlayerControlView.h"
-#include "video/CAVideoPlayerController.h"
 
 // cocoa
 #include "cocoa/CCSet.h"

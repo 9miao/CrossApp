@@ -64,6 +64,11 @@ void CAThread::notifyRun(void* param)
 	m_ThreadDataQueue.AddElement(param);
 }
 
+void CAThread::clear()
+{
+	m_ThreadDataQueue.Clear();
+}
+
 void CAThread::close()
 {
 	if (m_bIsRunning)

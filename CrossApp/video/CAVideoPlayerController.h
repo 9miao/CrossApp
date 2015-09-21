@@ -17,7 +17,7 @@
 #include "control/CAButton.h"
 #include "view/CALabel.h"
 #include "basics/CASTLContainer.h"
-#include "CAVideoPlayerView.h"
+#include "CAVideoPlayerControlView.h"
 
 NS_CC_BEGIN
 
@@ -35,78 +35,11 @@ public:
     CAVideoPlayerController();
     virtual ~CAVideoPlayerController();
 
-    static CAVideoPlayerController* createWithPath(const string& path, const string& title);
-    static CAVideoPlayerController* createWithUrl(const string& path, const string& title);
-    
-    virtual bool init(const string& path, const string& title,bool pathType);
-    
-    virtual void play();
-    virtual void pause();
-    virtual void displayHUD(bool bDisp);
-
-//	CC_SYNTHESIZE(std::string, m_cszTitle, Title);
-    
-//    virtual float getDuration();
-//    virtual float getPosition();
-//    virtual void setPosition(float pos);
-
-            
-protected:
-    CAVideoPlayerView*_glView;
-
-
-    float               _wantMoviePosition;
  
-
-    bool                _disableUpdateHUD;
-
-
-//    bool                _buffered;
-    string              _path;
-    string              _title;
-    CAActivityIndicatorView *_activityView;
-    CAButton            *_playButton;
-    CASlider            *_playSlider;
-    CALabel             *_playTime;
-
-    
 protected:
     virtual void viewDidLoad();
     virtual void viewDidUnload();
-//    virtual void prepare(float);
-    
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    
-
-    void updatePlayButton();
- //   void tick(float dt);
-  
- //   void setMoviePositionFromDecoder();
- //   void setDecoderPosition(float position);
- //   void setMoviePosition(float position);
- //   void updatePosition(float position, bool playing);
- //   void gotoWantedMoviePosition(float);
-    
-    void dispearHUDView();
-    void showHUDView();
-    
-    //    HUD
-protected:
-    CASlider            *_slider;
-    CAView              *_HUDView;
-        
-protected:
-    void onButtonBack(CAControl* control, CCPoint point);
-    void onButtonPause(CAControl* control, CCPoint point);
-    void buildHUD();
-    void updateHUD(float);
-    void onSlideTouched(CAControl* control, CCPoint point);
-    void onSlideChanged(CAControl* control, CCPoint point);
-    
-private: // THREAD
-    bool            m_inited;
-    bool            m_bNeedExit;
-
 };
 
 NS_CC_END

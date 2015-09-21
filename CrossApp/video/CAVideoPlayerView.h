@@ -32,7 +32,8 @@ public:
 	static CAVideoPlayerView* createWithFrame(const CCRect& rect);
 	static CAVideoPlayerView* createWithCenter(const CCRect& rect);
 
-	bool initWithPath(const std::string& szPath, bool isPathByUrl);
+	bool initWithPath(const std::string& szPath);
+	bool initWithUrl(const std::string& szUrl);
 	void play();
 	void pause();
 	bool isPlaying();
@@ -49,6 +50,7 @@ private:
 	virtual void setImageCoords(CCRect rect);
 	virtual void updateImageRect();
 
+	bool createDecoder(const std::string& cszPath);
 	static bool decodeProcessThread(void* param);
 	void decodeProcess();
 	bool addFrames(const std::vector<VPFrame*>& frames);

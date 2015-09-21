@@ -12,13 +12,16 @@ CAVideoPlayerControlView::CAVideoPlayerControlView()
 , m_playButton(NULL)
 , m_playSlider(NULL)
 , m_playTimeLabel(NULL)
+, m_szTitle(UTF8("\u672a\u547d\u540d"))
 {
+	CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this, 0);
 }
 
 CAVideoPlayerControlView::~CAVideoPlayerControlView()
 {
 	CC_SAFE_RELEASE_NULL(m_glView);
 	CC_SAFE_RELEASE_NULL(m_actView);
+	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this);
 }
 
 CAVideoPlayerControlView* CAVideoPlayerControlView::createWithFrame(const CCRect& rect)
@@ -57,6 +60,24 @@ bool CAVideoPlayerControlView::init()
 
 	this->setColor(ccc4(0, 0, 0, 255));
 	return true;
+}
+
+bool CAVideoPlayerControlView::initWithPath(const std::string& szPath)
+{
+	if (m_glView == NULL)
+	{
+		return false;
+	}
+	return m_glView->initWithPath(szPath);
+}
+
+bool CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
+{
+	if (m_glView == NULL)
+	{
+		return false;
+	}
+	return m_glView->initWithUrl(szUrl);
 }
 
 
@@ -227,8 +248,6 @@ void CAVideoPlayerControlView::onSlideChanged(CAControl* control, CCPoint point)
 	if (m_glView == NULL || m_playSlider == NULL)
 		return;
 
-	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this);
-
 	float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
 	m_glView->setPosition(moviePosition);
 	m_glView->play();
@@ -242,12 +261,10 @@ void CAVideoPlayerControlView::onButtonPause(CAControl* control, CCPoint point)
 	if (m_glView->isPlaying())
 	{
 		m_glView->pause();
-		CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this);
 	}
 	else
 	{
 		m_glView->play();
-		CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this, 0);
 	}
 	updatePlayButton();
 }
@@ -262,19 +279,13 @@ void CAVideoPlayerControlView::updatePlayUI(float t)
 	if (m_glView == NULL || m_playSlider == NULL || m_playTimeLabel == NULL)
 		return;
 
-	if (m_glView->isPlaying())
-	{
-		const float duration = m_glView->getDuration();
-		const float position = m_glView->getPosition();
+	const float duration = m_glView->getDuration();
+	const float position = m_glView->getPosition();
 
-		m_playSlider->setValue(position / duration);
-		m_playTimeLabel->setText(formatTimeInterval(position, false).append(" / ").append(formatTimeInterval(duration - 1, false)));
-	}
-	else
-	{
-		CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this);
-		updatePlayButton();
-	}
+	m_playSlider->setValue(position / duration);
+	m_playTimeLabel->setText(formatTimeInterval(position, false).append(" / ").append(formatTimeInterval(duration - 1, false)));
+
+	updatePlayButton();
 }
 
 NS_CC_END

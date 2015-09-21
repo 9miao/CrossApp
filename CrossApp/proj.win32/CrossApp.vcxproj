@@ -266,7 +266,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\win32\lib\*.*" "$(OutDir
     <ClCompile Include="..\kazmath\src\vec4.c" />
     <ClCompile Include="..\kazmath\src\GL\mat4stack.c" />
     <ClCompile Include="..\kazmath\src\GL\matrix.c" />
-    <ClCompile Include="..\video\CAVideoPlayerController.cpp" />
     <ClCompile Include="..\video\CAVideoPlayerControlView.cpp" />
     <ClCompile Include="..\video\CAVideoPlayerDecoder.cpp" />
     <ClCompile Include="..\video\CAVideoPlayerRender.cpp" />
@@ -442,7 +441,6 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\win32\lib\*.*" "$(OutDir
     <ClInclude Include="..\kazmath\include\kazmath\vec4.h" />
     <ClInclude Include="..\kazmath\include\kazmath\GL\mat4stack.h" />
     <ClInclude Include="..\kazmath\include\kazmath\GL\matrix.h" />
-    <ClInclude Include="..\video\CAVideoPlayerController.h" />
     <ClInclude Include="..\video\CAVideoPlayerControlView.h" />
     <ClInclude Include="..\video\CAVideoPlayerDecoder.h" />
     <ClInclude Include="..\video\CAVideoPlayerRender.h" />

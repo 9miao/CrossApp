@@ -24,10 +24,13 @@ CAVideoPlayerView::CAVideoPlayerView()
 , m_pCurAudioFrame(NULL)
 , m_uCurAudioFramePos(0)
 {
+	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
 }
 
 CAVideoPlayerView::~CAVideoPlayerView()
 {
+	CAScheduler::unschedule(schedule_selector(CAVideoPlayerView::tick), this);
+
 	CAThread::close();
 	CC_SAFE_DELETE(m_pRenderer);
 	CC_SAFE_DELETE(m_pDecoder);
@@ -94,54 +97,20 @@ bool CAVideoPlayerView::decodeProcessThread(void* param)
 	return true;
 }
 
-bool CAVideoPlayerView::initWithPath(const std::string& szPath, bool isPathByUrl)
+bool CAVideoPlayerView::initWithPath(const std::string& szPath)
 {
-	m_pDecoder = new VPDecoder();
-	if (m_pDecoder == NULL)
-	{
-		return false;
-	}
+	m_fMinBufferedDuration = LOCAL_MIN_BUFFERED_DURATION;
+	m_fMaxBufferedDuration = LOCAL_MAX_BUFFERED_DURATION;
 
-	if (!m_pDecoder->openFile(szPath))
-	{
-		CC_SAFE_DELETE(m_pDecoder);
-		return false;
-	}
+	return createDecoder(szPath);
+}
 
-	if (isPathByUrl)
-	{
-		m_fMinBufferedDuration = NETWORK_MIN_BUFFERED_DURATION;
-		m_fMaxBufferedDuration = NETWORK_MAX_BUFFERED_DURATION;
-	}
-	else 
-	{
-		m_fMinBufferedDuration = LOCAL_MIN_BUFFERED_DURATION;
-		m_fMaxBufferedDuration = LOCAL_MAX_BUFFERED_DURATION;
-	}
-	if (!m_pDecoder->isValidVideo())
-		m_fMinBufferedDuration *= 10.0; // increase for audio
-	
-	m_pDecoder->setAudioCallback(this, decoder_audio_selector(CAVideoPlayerView::audioCallback));
+bool CAVideoPlayerView::initWithUrl(const std::string& szUrl)
+{
+	m_fMinBufferedDuration = NETWORK_MIN_BUFFERED_DURATION;
+	m_fMaxBufferedDuration = NETWORK_MAX_BUFFERED_DURATION;
 
-	if (m_pDecoder->setupVideoFrameFormat(kVideoFrameFormatYUV))
-	{
-		m_pRenderer = new VPFrameRenderYUV();
-	}
-	else
-	{
-		m_pRenderer = new VPFrameRenderRGB();
-	}
-
-	if (!m_pRenderer->loadShaders())
-	{
-		CC_SAFE_DELETE(m_pRenderer);
-		CC_SAFE_DELETE(m_pDecoder);
-		return false;
-	}
-	setFrame(getFrame());
-
-	CAThread::startAndWait(decodeProcessThread);
-	return true;
+	return createDecoder(szUrl);
 }
 
 void CAVideoPlayerView::setContentSize(const CCSize& size)
@@ -251,7 +220,6 @@ void CAVideoPlayerView::play()
 	m_isPlaying = true;
 	this->enableAudio(true);
 	asyncDecodeFrames();
-	tick(0);
 }
 
 void CAVideoPlayerView::pause()
@@ -297,8 +265,49 @@ void CAVideoPlayerView::setPosition(float position)
 		return;
 	
 	freeBufferedFrames();
-	position = MIN(m_pDecoder->getDuration() - 1, MAX(0, position));
+	position = MIN(m_pDecoder->getDuration(), MAX(0, position));
 	m_pDecoder->setPosition(position);
+	m_fMoviePosition = position + m_pDecoder->getStartTime();
+}
+
+bool CAVideoPlayerView::createDecoder(const std::string& cszPath)
+{
+	m_pDecoder = new VPDecoder();
+	if (m_pDecoder == NULL)
+	{
+		return false;
+	}
+
+	if (!m_pDecoder->openFile(cszPath))
+	{
+		CC_SAFE_DELETE(m_pDecoder);
+		return false;
+	}
+
+	if (!m_pDecoder->isValidVideo())
+		m_fMinBufferedDuration *= 10.0; // increase for audio
+
+	m_pDecoder->setAudioCallback(this, decoder_audio_selector(CAVideoPlayerView::audioCallback));
+
+	if (m_pDecoder->setupVideoFrameFormat(kVideoFrameFormatYUV))
+	{
+		m_pRenderer = new VPFrameRenderYUV();
+	}
+	else
+	{
+		m_pRenderer = new VPFrameRenderRGB();
+	}
+
+	if (!m_pRenderer->loadShaders())
+	{
+		CC_SAFE_DELETE(m_pRenderer);
+		CC_SAFE_DELETE(m_pDecoder);
+		return false;
+	}
+	setFrame(getFrame());
+
+	CAThread::startAndWait(decodeProcessThread);
+	return true;
 }
 
 void CAVideoPlayerView::decodeProcess()
@@ -357,6 +366,8 @@ void CAVideoPlayerView::asyncDecodeFrames()
 
 void CAVideoPlayerView::freeBufferedFrames()
 {
+	CAThread::clear();
+
 	m_vVideoFrames.Clear();
 	m_vAudioFrames.Clear();
 
@@ -377,18 +388,27 @@ float CAVideoPlayerView::presentFrame()
 		VPFrame *frame = NULL;
 		if (m_vVideoFrames.PopElement(frame))
 		{
-			m_fBufferedDuration -= frame->getDuration();
-			m_fMoviePosition = frame->getPosition();
 			interval = frame->getDuration();
+
+			float fCurPos = frame->getPosition();
+
+			if (fCurPos >= m_fMoviePosition)
+			{
+				m_fBufferedDuration -= frame->getDuration();
+				m_fMoviePosition = frame->getPosition();
+			}
+			else
+			{
+				CC_SAFE_DELETE(frame);
+			}
 		}
 
-		if (m_pDecoder->getDuration() - m_fMoviePosition < 1) {
+		if (m_pDecoder->getDuration() - m_fMoviePosition < 0.1f) {
 
 			pause();
 			m_pDecoder->setPosition(0);
 			freeBufferedFrames();
 		}
-
 		setCurrentFrame((VPVideoFrame*)frame);
 	}
 	return interval;

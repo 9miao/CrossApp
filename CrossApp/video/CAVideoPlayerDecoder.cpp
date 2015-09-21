@@ -357,11 +357,6 @@ VPError VPDecoder::openVideoStream(int videoStream)
     if (!codec)
         return kErrorCodecNotFound;
     
-    // inform the codec that we can handle truncated bitstreams -- i.e.,
-    // bitstreams where frame boundaries can fall in the middle of packets
-    //if(codec->capabilities & CODEC_CAP_TRUNCATED)
-    //    _codecCtx->flags |= CODEC_FLAG_TRUNCATED;
-    
     // open codec
     if (avcodec_open2(codecCtx, codec, NULL) < 0)
         return kErrorOpenCodec;
