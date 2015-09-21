@@ -19,5 +19,4 @@
 @end
 @interface CAIOSTextField : UITextField<UITextFieldDelegate>
 @property(nonatomic,assign)id<CAIOSTextFieldDelegate> cadelegate;
-
 @end
