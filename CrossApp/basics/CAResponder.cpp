@@ -21,13 +21,16 @@ CAResponder::CAResponder()
 ,m_bPriorityScroll(false)
 ,m_bReachBoundaryHandOverToSuperview(true)
 ,m_bTouchEventScrollHandOverToSuperview(true)
+,m_bMouseMovedEnabled(false)
+,m_bMouseScrollWheelEnabled(false)
 {
 
 }
 
 CAResponder::~CAResponder()
 {
-
+    this->setMouseMovedEnabled(false);
+    this->setMouseScrollWheelEnabled(false);
 }
 
 bool CAResponder::isFirstResponder()
@@ -88,5 +91,54 @@ void CAResponder::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 }
+
+void CAResponder::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pEvent);
+}
+
+void CAResponder::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pEvent);
+}
+
+void CAResponder::setMouseMovedEnabled(bool var)
+{
+    m_bMouseMovedEnabled = var;
+    if (m_bMouseMovedEnabled)
+    {
+        CAApplication::getApplication()->getTouchDispatcher()->addMouseMovedResponder(this);
+    }
+    else
+    {
+        CAApplication::getApplication()->getTouchDispatcher()->removeMouseMovedResponder(this);
+    }
+}
+
+bool CAResponder::isMouseMovedEnabled()
+{
+    return m_bMouseMovedEnabled;
+}
+
+void CAResponder::setMouseScrollWheelEnabled(bool var)
+{
+    m_bMouseScrollWheelEnabled = var;
+    if (m_bMouseMovedEnabled)
+    {
+        CAApplication::getApplication()->getTouchDispatcher()->addMouseScrollWheel(this);
+    }
+    else
+    {
+        CAApplication::getApplication()->getTouchDispatcher()->removeMouseScrollWheel(this);
+    }
+}
+
+bool CAResponder::isMouseScrollWheelEnabled()
+{
+    return m_bMouseScrollWheelEnabled;
+}
+
 
 NS_CC_END;

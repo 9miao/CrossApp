@@ -50,6 +50,10 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bTouchEventScrollHandOverToSuperview, TouchEventScrollHandOverToSuperview);// default is true
     
+    CC_PROPERTY_IS(bool, m_bMouseMovedEnabled, MouseMovedEnabled);// default is false
+    
+    CC_PROPERTY_IS(bool, m_bMouseScrollWheelEnabled, MouseScrollWheelEnabled);// default is false
+    
     virtual bool isReachBoundaryLeft() {return false;}
     
     virtual bool isReachBoundaryRight() {return false;}
@@ -58,14 +62,30 @@ public:
     
     virtual bool isReachBoundaryDown() {return false;}
     
+    /**
+     * @lua NA
+     */
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    
+    /**
+     * @lua NA
+     */
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-    
+    /**
+     * @lua NA
+     */
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-    
+    /**
+     * @lua NA
+     */
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-    
+    /**
+     * @lua NA
+     */
+    virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
+    /**
+     * @lua NA
+     */
+    virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent);
 };
 
 NS_CC_END;

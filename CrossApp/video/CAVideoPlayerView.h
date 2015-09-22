@@ -14,46 +14,75 @@
 #include "view/CAView.h"
 #include "view/CAImageView.h"
 #include "view/CARenderImage.h"
+#include "basics/CAThread.h"
+#include "basics/CASyncQueue.h"
 #include "CAVideoPlayerRender.h"
 #include "CAVideoPlayerDecoder.h"
 
 NS_CC_BEGIN
 
-class VPDecoder;
-class CC_DLL CAVideoPlayerView : public CAView 
+
+class CC_DLL CAVideoPlayerView : public CAView, public CAThread
 {
 public:
-    CAVideoPlayerView(VPDecoder* decoder);
-    ~CAVideoPlayerView();
+    CAVideoPlayerView();
+	virtual ~CAVideoPlayerView();
     
-    static CAVideoPlayerView* create(VPDecoder* decoder);
-    static CAVideoPlayerView* createWithFrame(const CCRect& rect, VPDecoder* decoder);
-    static CAVideoPlayerView* createWithCenter(const CCRect& rect, VPDecoder* decoder);
+	static CAVideoPlayerView* create();
+	static CAVideoPlayerView* createWithFrame(const CCRect& rect);
+	static CAVideoPlayerView* createWithCenter(const CCRect& rect);
 
-    virtual bool init();
-    virtual void visit();
-    virtual void draw();
-    virtual void setContentSize(const CCSize& size);
-    virtual void setImageCoords(CCRect rect);
-    virtual void updateImageRect();
-    
-    virtual void setCurrentFrame(VPVideoFrame* frame);
-    
-        
-   
+	bool initWithPath(const std::string& szPath);
+	bool initWithUrl(const std::string& szUrl);
+	void play();
+	void pause();
+	bool isPlaying();
+	void enableAudio(bool on);
+	float getDuration();
+	float getPosition();
+	void setPosition(float position);
+
 private:
-    GLuint          _program;
-    GLint           _uniformMatrix;
-    GLfloat         _vertices[8];
-    
-    VPDecoder       *_decoder;
-    VPFrameRender   *_renderer;
-    VPVideoFrame    *_currFrame;
-    
-    CCRect          _pictRect;
-    
+	virtual bool init();
+	virtual void visit();
+	virtual void draw();
+	virtual void setContentSize(const CCSize& size);
+	virtual void setImageCoords(CCRect rect);
+	virtual void updateImageRect();
+
+	bool createDecoder(const std::string& cszPath);
+	static bool decodeProcessThread(void* param);
+	void decodeProcess();
+	bool addFrames(const std::vector<VPFrame*>& frames);
+	float presentFrame();
+	void asyncDecodeFrames();
+	void freeBufferedFrames();
+	void setCurrentFrame(VPVideoFrame* frame);
+	void tick(float dt);
+	void audioCallback(unsigned char *stream, int len, int channels);
+
 private:
-    bool loadShaders();
+	VPDecoder *m_pDecoder;
+	VPFrameRender *m_pRenderer;
+
+	CASyncQueue<VPFrame*> m_vVideoFrames;
+	CASyncQueue<VPFrame*> m_vAudioFrames;
+
+	CCRect m_viewRect;
+
+	std::string m_cszPath;
+
+	bool m_isPlaying;
+
+	float m_fMinBufferedDuration;
+	float m_fMaxBufferedDuration;
+
+	float m_fBufferedDuration;
+	float m_fMoviePosition;
+
+	VPVideoFrame *m_pCurVideoFrame;
+	VPAudioFrame *m_pCurAudioFrame;
+	unsigned int m_uCurAudioFramePos;
 };
 
 NS_CC_END

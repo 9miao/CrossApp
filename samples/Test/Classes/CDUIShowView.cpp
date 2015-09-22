@@ -1593,7 +1593,30 @@ void CDUIShowView::showScrollView()
 
 void CDUIShowView::showFlashView()
 {
-    CAFlashView* swfBg = CAFlashView::createWithFlash(CAFlash::createWithFilePath("image/swfWK.swf"));
+//	//http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 
+//	//mnt/sdcard/video.mp4
+//	std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");// image / 11.avi");// video.mp4");
+//	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithPath(path.c_str(), "asdas");
+//	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "asdas");
+//
+//	CCRect frame = getView()->getFrame();
+//
+//	//frame.origin.x = frame.size.width / 2;
+//	//frame.origin.y = frame.size.height / 2;
+//
+////	CAView* pView = CAView::createWithFrame(frame);
+////	pView->setColor(ccc4(255, 0, 255, 255));
+//	CAVideoPlayerControlView* pView = CAVideoPlayerControlView::createWithFrame(frame);
+////	pView->setColor(ccc4(255, 0, 255, 255));
+//
+//	pView->initWithPath("image/video.mp4");
+////	pView->initWithPath("D:\\XiGua Yingshi\\x.rmvb", false);
+//	this->getView()->addSubview(pView);
+////	pView->play();
+//
+//	return;
+
+    CAFlashView* swfBg = CAFlashView::createWithFlash(CrossApp::extension::CAFlash::createWithFilePath("image/swfWK.swf"));
     swfBg->setFrame(CADipRect(100, 100, winSize.width/2, winSize.height/2));
     swfBg->runAnimation();
     swfBg->setRepeatForever(true);
@@ -1892,11 +1915,6 @@ void CDUIShowView::showVideo()
 //    pv->retain();
 //    pv->play();
 //    pv->setDelegate(this);
-}
-
-void CDUIShowView::onVideoPlayerButtonBack()
-{
-    
 }
 
 void CDUIShowView::showRenderImage()

@@ -494,9 +494,6 @@
     <ClCompile Include="..\support\sqlite3\include\sqlite3.c">
       <Filter>support\sqlite3</Filter>
     </ClCompile>
-    <ClCompile Include="..\video\CAVideoPlayerController.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
     <ClCompile Include="..\video\CAVideoPlayerDecoder.cpp">
       <Filter>video</Filter>
     </ClCompile>
@@ -505,6 +502,12 @@
     </ClCompile>
     <ClCompile Include="..\video\CAVideoPlayerView.cpp">
       <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\video\CAVideoPlayerControlView.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CAEmojiFont.cpp">
+      <Filter>platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1002,9 +1005,6 @@
       <Filter>support\sqlite3</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="..\video\CAVideoPlayerController.h">
-      <Filter>video</Filter>
-    </ClInclude>
     <ClInclude Include="..\video\CAVideoPlayerDecoder.h">
       <Filter>video</Filter>
     </ClInclude>
@@ -1013,6 +1013,12 @@
     </ClInclude>
     <ClInclude Include="..\video\CAVideoPlayerView.h">
       <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\video\CAVideoPlayerControlView.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAEmojiFont.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

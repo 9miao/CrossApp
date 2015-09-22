@@ -141,7 +141,7 @@ bool CATextField::init()
 	{
         return false;
     }
-    
+    setKeyboardReturnType(KEY_BOARD_RETURN_SEND);
     this->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png")));
     this->m_pTextViewMark = CAView::createWithColor(ccc4(60, 120, 240, 127));
 	this->addSubview(m_pTextViewMark);

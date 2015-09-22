@@ -111,8 +111,7 @@ public CAScrollViewDelegate,
 public CAPickerViewDelegate,
 public CAPickerViewDataSource,
 public CADatePickerViewDelegate,
-public CAMediaDelegate,
-public CAVideoPlayerControllerDelegate
+public CAMediaDelegate
 {
 public:
     
@@ -271,8 +270,7 @@ public:
     
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
     virtual void didSelectRow(const struct tm& tm);
-public:
-    virtual void onVideoPlayerButtonBack();
+
     virtual void getSelectedImage(CAImage *image);
 public:
     

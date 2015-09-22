@@ -57,6 +57,7 @@ enum EventType
     leftMouseEvent,
     rightMouseEvent,
     middleMouseEvent,
+    movedMouseEvent,
     iosEvent,
     androidEvent,
 };

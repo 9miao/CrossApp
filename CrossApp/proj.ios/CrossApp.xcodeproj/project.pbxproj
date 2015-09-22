@@ -285,13 +285,15 @@
 		B0596B411976356C00B1E8CB /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596B3E1976356C00B1E8CB /* ConvertUTF.cpp */; };
 		B0596B421976356C00B1E8CB /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596B3F1976356C00B1E8CB /* ConvertUTF.h */; };
 		B0596B431976356C00B1E8CB /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */; };
+		B0602A3D1BB0006B00E64AF8 /* CAVideoPlayerControlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0602A3B1BB0006B00E64AF8 /* CAVideoPlayerControlView.cpp */; };
+		B0602A3E1BB0006B00E64AF8 /* CAVideoPlayerControlView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0602A3C1BB0006B00E64AF8 /* CAVideoPlayerControlView.h */; };
+		B0602A401BB00ADD00E64AF8 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0602A3F1BB00ADD00E64AF8 /* SDL2.framework */; };
 		B0621BEC1AC3C1C9005EBCA7 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BEB1AC3C1C9005EBCA7 /* libcurl.a */; };
 		B0621BF81AC3C1E5005EBCA7 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BF71AC3C1E5005EBCA7 /* libfreetype.a */; };
 		B0621BFA1AC3C1F0005EBCA7 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BF91AC3C1F0005EBCA7 /* libjpeg.a */; };
 		B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BFB1AC3C1FA005EBCA7 /* libpng.a */; };
 		B0621C001AC3C21E005EBCA7 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BFF1AC3C21E005EBCA7 /* libtiff.a */; };
 		B0621C021AC3C229005EBCA7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621C011AC3C229005EBCA7 /* libwebp.a */; };
-		B0621E271AC3EF5E005EBCA7 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BFD1AC3C210005EBCA7 /* libSDL2.a */; };
 		B06805231A833DF700F6BE00 /* CAViewAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06805211A833DF700F6BE00 /* CAViewAnimation.cpp */; };
 		B06805241A833DF700F6BE00 /* CAViewAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B06805221A833DF700F6BE00 /* CAViewAnimation.h */; };
 		B06E0C971AC8F7BF004F12F2 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B06E0C921AC8F7BF004F12F2 /* libavcodec.a */; };
@@ -657,6 +659,9 @@
 		B0596B3E1976356C00B1E8CB /* ConvertUTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTF.cpp; sourceTree = "<group>"; };
 		B0596B3F1976356C00B1E8CB /* ConvertUTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertUTF.h; sourceTree = "<group>"; };
 		B0596B401976356C00B1E8CB /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
+		B0602A3B1BB0006B00E64AF8 /* CAVideoPlayerControlView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerControlView.cpp; sourceTree = "<group>"; };
+		B0602A3C1BB0006B00E64AF8 /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerControlView.h; sourceTree = "<group>"; };
+		B0602A3F1BB00ADD00E64AF8 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../the_third_party/SDL/prebuilt/ios/SDL2.framework; sourceTree = "<group>"; };
 		B0621BEB1AC3C1C9005EBCA7 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../the_third_party/curl/prebuilt/ios/libcurl.a; sourceTree = "<group>"; };
 		B0621BF71AC3C1E5005EBCA7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../the_third_party/freetype/prebuilt/ios/libfreetype.a; sourceTree = "<group>"; };
 		B0621BF91AC3C1F0005EBCA7 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../the_third_party/jpeg/prebuilt/ios/libjpeg.a; sourceTree = "<group>"; };
@@ -769,6 +774,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0602A401BB00ADD00E64AF8 /* SDL2.framework in Frameworks */,
 				B0D7FA7E1B21506B004B2B86 /* libcrypto.a in Frameworks */,
 				B0D7FA7F1B21506B004B2B86 /* libssl.a in Frameworks */,
 				B0621BEC1AC3C1C9005EBCA7 /* libcurl.a in Frameworks */,
@@ -777,7 +783,6 @@
 				B06E0C991AC8F7BF004F12F2 /* libavutil.a in Frameworks */,
 				B06E0C9A1AC8F7BF004F12F2 /* libswresample.a in Frameworks */,
 				B06E0C9B1AC8F7BF004F12F2 /* libswscale.a in Frameworks */,
-				B0621E271AC3EF5E005EBCA7 /* libSDL2.a in Frameworks */,
 				B0621C021AC3C229005EBCA7 /* libwebp.a in Frameworks */,
 				B0621C001AC3C21E005EBCA7 /* libtiff.a in Frameworks */,
 				B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */,
@@ -958,6 +963,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0602A3F1BB00ADD00E64AF8 /* SDL2.framework */,
 				3E0F75861B7DF8FB004CFD41 /* libsqlite3.dylib */,
 				B0D7FA7C1B21506B004B2B86 /* libcrypto.a */,
 				B0621BEB1AC3C1C9005EBCA7 /* libcurl.a */,
@@ -1282,6 +1288,8 @@
 		3724C63C19FDF88000300E42 /* video */ = {
 			isa = PBXGroup;
 			children = (
+				B0602A3B1BB0006B00E64AF8 /* CAVideoPlayerControlView.cpp */,
+				B0602A3C1BB0006B00E64AF8 /* CAVideoPlayerControlView.h */,
 				3E2154681B819CA60075448E /* CAVideoPlayerController.cpp */,
 				3E2154691B819CA60075448E /* CAVideoPlayerController.h */,
 				3E21546A1B819CA60075448E /* CAVideoPlayerDecoder.cpp */,
@@ -1629,6 +1637,7 @@
 				1551A826158F2ADF00E66CFE /* ccShader_PositionTextureColor_frag.h in Headers */,
 				3E21547B1B81AAAE0075448E /* CAAutoCollectionView.h in Headers */,
 				1551A827158F2ADF00E66CFE /* ccShader_PositionTextureColor_vert.h in Headers */,
+				B0602A3E1BB0006B00E64AF8 /* CAVideoPlayerControlView.h in Headers */,
 				1551A828158F2ADF00E66CFE /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				1551A82B158F2ADF00E66CFE /* ccShaderEx_SwitchMask_frag.h in Headers */,
 				1551A82D158F2ADF00E66CFE /* ccShaders.h in Headers */,
@@ -1893,6 +1902,7 @@
 				04EA9FFD1956CE2500198A8E /* CAViewController.cpp in Sources */,
 				B0ADAE851B2E7F1B00BE8FA3 /* CAPickerView.cpp in Sources */,
 				3E0F75661B7DD0C4004CFD41 /* HttpClient.cpp in Sources */,
+				B0602A3D1BB0006B00E64AF8 /* CAVideoPlayerControlView.cpp in Sources */,
 				04EAA0001956CE2500198A8E /* CAIMEDispatcher.cpp in Sources */,
 				04EAA0021956CE2500198A8E /* CAKeypadDelegate.cpp in Sources */,
 				04EAA0041956CE2500198A8E /* CAKeypadDispatcher.cpp in Sources */,
@@ -2004,7 +2014,6 @@
 					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SRCROOT)/../../CocosDenshion/include\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/include/ios\"",
-					"\"$(SRCROOT)/../the_third_party/SDL/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/png/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/ios\"",
@@ -2019,7 +2028,6 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
-					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
@@ -2045,7 +2053,6 @@
 					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SRCROOT)/../../CocosDenshion/include\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/include/ios\"",
-					"\"$(SRCROOT)/../the_third_party/SDL/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/png/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/ios\"",
@@ -2060,7 +2067,6 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
-					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";

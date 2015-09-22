@@ -406,6 +406,7 @@ void CAAutoCollectionView::reloadViewSizeData()
 		if (r.iMaxValue > 0)
 		{
 			cvs.CollectionViewRows.push_back(r);
+			r = CollectionViewRow();
 		}
     }
     

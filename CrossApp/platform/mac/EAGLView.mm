@@ -330,12 +330,6 @@ static EAGLView *view;
     event->release();
 }
 
-- (void)mouseMoved:(NSEvent *)theEvent
-{
-	NSPoint event_location = [theEvent locationInWindow];
-    //NSLog(@"mouseMoved: x=%f, y=%f", event_location.x, [self getHeight] - event_location.y);
-}
-
 - (void)mouseDragged:(NSEvent *)theEvent
 {
 	NSPoint event_location = [theEvent locationInWindow];
@@ -562,7 +556,25 @@ static EAGLView *view;
     ys[0] = y / frameZoomFactor_;
     CrossApp::CAEvent* event = new CrossApp::CAEvent();
     event->setEventType(CrossApp::EventType::rightMouseEvent);
-    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleScrollWheel(1, ids, xs, ys, theEvent.scrollingDeltaX, theEvent.scrollingDeltaY, event);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleMouseExited(1, ids, xs, ys, event);
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+    DISPATCH_EVENT(theEvent, _cmd);
+    [super mouseMoved:theEvent];
+
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+    
+    float x = local_point.x / frameZoomFactor_;
+    float y = ([self getHeight] - local_point.y) / frameZoomFactor_;
+    
+    CrossApp::CAEvent* event = new CrossApp::CAEvent();
+    event->setEventType(CrossApp::EventType::movedMouseEvent);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleMouseMoved(x, y, event);
+    event->release();
+    
 }
 
 -(void) scrollWheel:(NSEvent *)theEvent {
@@ -572,20 +584,12 @@ static EAGLView *view;
     NSPoint event_location = [theEvent locationInWindow];
     NSPoint local_point = [self convertPoint:event_location fromView:nil];
     
-    float x = local_point.x;
-    float y = [self getHeight] - local_point.y;
-    
-    intptr_t ids[1] = {0};
-    float xs[1] = {0.0f};
-    float ys[1] = {0.0f};
-    
-    ids[0] = 0;
-    xs[0] = x / frameZoomFactor_;
-    ys[0] = y / frameZoomFactor_;
-    
+    float x = local_point.x / frameZoomFactor_;
+    float y = ([self getHeight] - local_point.y) / frameZoomFactor_;
+
     CrossApp::CAEvent* event = new CrossApp::CAEvent();
     event->setEventType(CrossApp::EventType::middleMouseEvent);
-    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleScrollWheel(1, ids, xs, ys, theEvent.scrollingDeltaX, theEvent.scrollingDeltaY, event);
+    CrossApp::CAApplication::getApplication()->getOpenGLView()->handleScrollWheel(x, y, theEvent.scrollingDeltaX, theEvent.scrollingDeltaY, event);
     event->release();
 }
 

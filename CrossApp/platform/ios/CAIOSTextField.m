@@ -17,13 +17,24 @@
         return nil;
     }
     [self setAutocorrectionType:UITextAutocorrectionTypeNo];
+   
+    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
+    {
+        [self setDelegate:self];
+    }
     return self;
 }
 
 - (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange
 {
-    
-    
+    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
+    {
+        if (self.markedTextRange == nil)
+        {
+            [self deleteBackward];
+        }
+    }
+
     [super setMarkedText:markedText selectedRange:selectedRange];
     [_cadelegate setMarkedText:markedText selectedRange:selectedRange];
 }
@@ -41,6 +52,19 @@
     [_cadelegate hasText];
     return ht;
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
+    {
+        if (string.length > 0 && self.markedTextRange == nil)
+        {
+            [_cadelegate insertText:string];
+        }
+    }
+    return YES;
+}
+
 
 - (void)insertText:(NSString *)text
 {

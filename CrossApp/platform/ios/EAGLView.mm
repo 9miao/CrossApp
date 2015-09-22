@@ -533,8 +533,8 @@ static EAGLView *view = 0;
         markedText_ = nil;
     }
     NSLog(@"insertText: %@",text);
-    const char * pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
-    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+    std::string pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
+    CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText.c_str(), (int)pszText.length());
 }
 
 - (void)deleteBackward

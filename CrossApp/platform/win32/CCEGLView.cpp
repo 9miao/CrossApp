@@ -356,11 +356,10 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				m_bCaptured = true;
 				SetCapture(m_hWnd);
-				int id = 0;
 
 				CrossApp::CAEvent* event = new CrossApp::CAEvent();
 				event->setEventType(CrossApp::EventType::middleMouseEvent);
-				handleScrollWheel(1, &id, &pt.x, &pt.y, 0, zDelta, event);
+				handleScrollWheel(pt.x, pt.y, 0, zDelta, event);
 				event->release();
 			}
 		}
@@ -462,6 +461,11 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			CrossApp::CAEvent* event = new CrossApp::CAEvent();
 			event->setEventType(CrossApp::EventType::leftMouseEvent);
 			handleTouchesMove(1, &id, &pt.x, &pt.y, event);
+			event->release();
+
+			event = new CrossApp::CAEvent();
+			event->setEventType(CrossApp::EventType::movedMouseEvent);
+			handleMouseMoved(pt.x, pt.y, event);
 			event->release();
         }
         break;
