@@ -28,23 +28,18 @@ public:
     
     virtual bool isValid() = 0;
     virtual const char* fragmentShader() = 0;
-    virtual const char* key() = 0;
+    
     virtual void resolveUniforms(GLuint program) = 0;
     virtual void setFrame(VPVideoFrame* frame) = 0;
     virtual bool prepareRender() = 0;
     virtual CCRect updateVertices(float width, float height, float screen_w, float screen_h);
     virtual bool loadShaders();
-    
+	virtual const char* key();
     virtual void draw(VPVideoFrame* frame, long offset);
     
 protected:
-    
-    GLuint _program;
-    GLint  _uniformMatrix;
+
     GLfloat _vertices[8];
-    
-    GLuint _renderBufer;
-    
     std::string _key;
 };
 
@@ -62,7 +57,6 @@ public:
     virtual void resolveUniforms(GLuint program);
     virtual void setFrame(VPVideoFrame* frame);
     virtual bool prepareRender();
-    virtual const char* key();
 };
 
 class VPFrameRenderYUV : public VPFrameRender 
@@ -79,7 +73,6 @@ public:
     virtual void resolveUniforms(GLuint program);
     virtual void setFrame(VPVideoFrame* frame);
     virtual bool prepareRender();
-    virtual const char* key();
 };
 
 NS_CC_END

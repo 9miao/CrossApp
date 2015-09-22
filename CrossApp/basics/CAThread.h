@@ -33,6 +33,7 @@ public:
 	void start();
 	void startAndWait(ThreadProcFunc func);
 	void notifyRun(void* param);
+	void clear();
 	void close();
 	void closeAtOnce();
 

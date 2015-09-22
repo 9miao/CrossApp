@@ -270,6 +270,15 @@
 		B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */; };
 		B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D3697195AB93900DD4814 /* CAAlertView.cpp */; };
 		B05D369A195AB93900DD4814 /* CAAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D3698195AB93900DD4814 /* CAAlertView.h */; };
+		B0602A451BB00C4000E64AF8 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0602A441BB00C4000E64AF8 /* SDL2.framework */; };
+		B0602AC91BB00C9500E64AF8 /* CAVideoPlayerControlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0602ABF1BB00C9500E64AF8 /* CAVideoPlayerControlView.cpp */; };
+		B0602ACA1BB00C9500E64AF8 /* CAVideoPlayerControlView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0602AC01BB00C9500E64AF8 /* CAVideoPlayerControlView.h */; };
+		B0602ACB1BB00C9500E64AF8 /* CAVideoPlayerDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0602AC11BB00C9500E64AF8 /* CAVideoPlayerDecoder.cpp */; };
+		B0602ACC1BB00C9500E64AF8 /* CAVideoPlayerDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = B0602AC21BB00C9500E64AF8 /* CAVideoPlayerDecoder.h */; };
+		B0602ACD1BB00C9500E64AF8 /* CAVideoPlayerRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0602AC31BB00C9500E64AF8 /* CAVideoPlayerRender.cpp */; };
+		B0602ACE1BB00C9500E64AF8 /* CAVideoPlayerRender.h in Headers */ = {isa = PBXBuildFile; fileRef = B0602AC41BB00C9500E64AF8 /* CAVideoPlayerRender.h */; };
+		B0602ACF1BB00C9500E64AF8 /* CAVideoPlayerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0602AC51BB00C9500E64AF8 /* CAVideoPlayerView.cpp */; };
+		B0602AD01BB00C9500E64AF8 /* CAVideoPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0602AC61BB00C9500E64AF8 /* CAVideoPlayerView.h */; };
 		B0621A4D1AC3A208005EBCA7 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A4C1AC3A208005EBCA7 /* libfreetype.a */; };
 		B0621A4F1AC3A22D005EBCA7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A4E1AC3A22D005EBCA7 /* libwebp.a */; };
 		B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A501AC3A23D005EBCA7 /* libtiff.a */; };
@@ -604,6 +613,18 @@
 		B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDelegate.h; sourceTree = "<group>"; };
 		B05D3697195AB93900DD4814 /* CAAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertView.cpp; sourceTree = "<group>"; };
 		B05D3698195AB93900DD4814 /* CAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertView.h; sourceTree = "<group>"; };
+		B0602A441BB00C4000E64AF8 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../the_third_party/SDL/prebuilt/mac/SDL2.framework; sourceTree = "<group>"; };
+		B0602ABF1BB00C9500E64AF8 /* CAVideoPlayerControlView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerControlView.cpp; sourceTree = "<group>"; };
+		B0602AC01BB00C9500E64AF8 /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerControlView.h; sourceTree = "<group>"; };
+		B0602AC11BB00C9500E64AF8 /* CAVideoPlayerDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerDecoder.cpp; sourceTree = "<group>"; };
+		B0602AC21BB00C9500E64AF8 /* CAVideoPlayerDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerDecoder.h; sourceTree = "<group>"; };
+		B0602AC31BB00C9500E64AF8 /* CAVideoPlayerRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerRender.cpp; sourceTree = "<group>"; };
+		B0602AC41BB00C9500E64AF8 /* CAVideoPlayerRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerRender.h; sourceTree = "<group>"; };
+		B0602AC51BB00C9500E64AF8 /* CAVideoPlayerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerView.cpp; sourceTree = "<group>"; };
+		B0602AC61BB00C9500E64AF8 /* CAVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerView.h; sourceTree = "<group>"; };
+		B0602AD11BB00F9200E64AF8 /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = ffmpeg; path = ../the_third_party/FFmpeg/prebuilt/mac/ffmpeg; sourceTree = "<group>"; };
+		B0602AD21BB00F9200E64AF8 /* ffprobe */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = ffprobe; path = ../the_third_party/FFmpeg/prebuilt/mac/ffprobe; sourceTree = "<group>"; };
+		B0602AD31BB00F9200E64AF8 /* ffserver */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = ffserver; path = ../the_third_party/FFmpeg/prebuilt/mac/ffserver; sourceTree = "<group>"; };
 		B0621A4C1AC3A208005EBCA7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../the_third_party/freetype/prebuilt/mac/libfreetype.a; sourceTree = "<group>"; };
 		B0621A4E1AC3A22D005EBCA7 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../the_third_party/webp/prebuilt/mac/libwebp.a; sourceTree = "<group>"; };
 		B0621A501AC3A23D005EBCA7 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../the_third_party/tiff/prebuilt/mac/libtiff.a; sourceTree = "<group>"; };
@@ -673,6 +694,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0602A451BB00C4000E64AF8 /* SDL2.framework in Frameworks */,
 				B0621A551AC3A28D005EBCA7 /* libjpeg.a in Frameworks */,
 				B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */,
 				B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */,
@@ -706,6 +728,7 @@
 				04EAA0E21956D74D00198A8E /* platform */,
 				04EAAFF11956D75500198A8E /* shaders */,
 				04EAB00F1956D75500198A8E /* support */,
+				B0602ABC1BB00C9500E64AF8 /* video */,
 				04EAB03F1956D75500198A8E /* view */,
 			);
 			name = CrossApp;
@@ -1197,6 +1220,10 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0602AD11BB00F9200E64AF8 /* ffmpeg */,
+				B0602AD21BB00F9200E64AF8 /* ffprobe */,
+				B0602AD31BB00F9200E64AF8 /* ffserver */,
+				B0602A441BB00C4000E64AF8 /* SDL2.framework */,
 				B0621A541AC3A28D005EBCA7 /* libjpeg.a */,
 				B0621A521AC3A24D005EBCA7 /* libpng.a */,
 				B0621A501AC3A23D005EBCA7 /* libtiff.a */,
@@ -1324,6 +1351,21 @@
 			path = script_support;
 			sourceTree = "<group>";
 		};
+		B0602ABC1BB00C9500E64AF8 /* video */ = {
+			isa = PBXGroup;
+			children = (
+				B0602ABF1BB00C9500E64AF8 /* CAVideoPlayerControlView.cpp */,
+				B0602AC01BB00C9500E64AF8 /* CAVideoPlayerControlView.h */,
+				B0602AC11BB00C9500E64AF8 /* CAVideoPlayerDecoder.cpp */,
+				B0602AC21BB00C9500E64AF8 /* CAVideoPlayerDecoder.h */,
+				B0602AC31BB00C9500E64AF8 /* CAVideoPlayerRender.cpp */,
+				B0602AC41BB00C9500E64AF8 /* CAVideoPlayerRender.h */,
+				B0602AC51BB00C9500E64AF8 /* CAVideoPlayerView.cpp */,
+				B0602AC61BB00C9500E64AF8 /* CAVideoPlayerView.h */,
+			);
+			path = video;
+			sourceTree = "<group>";
+		};
 		B074A8B41A722B1600F34F79 /* animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1378,6 +1420,7 @@
 				04EAB0791956D75600198A8E /* ccConfig.h in Headers */,
 				04EAB07A1956D75600198A8E /* ccMacros.h in Headers */,
 				04EAB07B1956D75600198A8E /* ccTypeInfo.h in Headers */,
+				B0602ACA1BB00C9500E64AF8 /* CAVideoPlayerControlView.h in Headers */,
 				04EAB07C1956D75600198A8E /* ccTypes.h in Headers */,
 				B0C94CEF1B2A7BB60007FAEB /* CAGifView.h in Headers */,
 				B01F650519657084005C14FC /* CACollectionView.h in Headers */,
@@ -1388,12 +1431,14 @@
 				04EAB08A1956D75600198A8E /* CCNS.h in Headers */,
 				04EAB08C1956D75600198A8E /* CCSet.h in Headers */,
 				B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */,
+				B0602AD01BB00C9500E64AF8 /* CAVideoPlayerView.h in Headers */,
 				B0DAEED31B256B6D0011E87D /* CAGif.h in Headers */,
 				B09205BB19D554A800CB99C1 /* CASyncQueue.h in Headers */,
 				04EAB0901956D75600198A8E /* CABar.h in Headers */,
 				04EAB0921956D75600198A8E /* CAButton.h in Headers */,
 				04EAB0941956D75600198A8E /* CAControl.h in Headers */,
 				04EAB0981956D75600198A8E /* CAProgress.h in Headers */,
+				B0602ACE1BB00C9500E64AF8 /* CAVideoPlayerRender.h in Headers */,
 				3E2154101B817AB80075448E /* sqlite3.h in Headers */,
 				B0B0A2E21AF06E0B00BAC0B0 /* CAAnimation.h in Headers */,
 				04EAB09A1956D75600198A8E /* CASegmentedControl.h in Headers */,
@@ -1518,6 +1563,7 @@
 				04EABA961956D75B00198A8E /* ioapi.h in Headers */,
 				3E2154511B8180340075448E /* json_batchallocator.h in Headers */,
 				04EABA981956D75B00198A8E /* unzip.h in Headers */,
+				B0602ACC1BB00C9500E64AF8 /* CAVideoPlayerDecoder.h in Headers */,
 				B01D4BF419A5947C0071F6A3 /* CADrawerController.h in Headers */,
 				04EABA9A1956D75B00198A8E /* ZipUtils.h in Headers */,
 				04EABA9E1956D75B00198A8E /* CABatchView.h in Headers */,
@@ -1663,6 +1709,7 @@
 				B08F4BCF19C7E66C008DE306 /* CAFTFontCache.cpp in Sources */,
 				B0DA93F919D79B1A00E66E11 /* CATextView.cpp in Sources */,
 				04EAB0D81956D75600198A8E /* ray2.c in Sources */,
+				B0602ACD1BB00C9500E64AF8 /* CAVideoPlayerRender.cpp in Sources */,
 				B0A7150D1A43F56600A85FB9 /* CAWebView.cpp in Sources */,
 				04EAB0D91956D75600198A8E /* utility.c in Sources */,
 				04EAB0DA1956D75600198A8E /* vec2.c in Sources */,
@@ -1689,12 +1736,15 @@
 				04EABA751956D75A00198A8E /* base64.cpp in Sources */,
 				04EABA771956D75A00198A8E /* CANotificationCenter.cpp in Sources */,
 				B0A370FD1AFC53C00034378F /* CATextEditHelper.cpp in Sources */,
+				B0602ACF1BB00C9500E64AF8 /* CAVideoPlayerView.cpp in Sources */,
+				B0602AC91BB00C9500E64AF8 /* CAVideoPlayerControlView.cpp in Sources */,
 				04EABA791956D75A00198A8E /* CCPointExtension.cpp in Sources */,
 				04EABA7B1956D75A00198A8E /* CCProfiling.cpp in Sources */,
 				3E2154091B817AB80075448E /* HttpClient.cpp in Sources */,
 				04EABA7D1956D75A00198A8E /* ccUTF8.cpp in Sources */,
 				3E21540F1B817AB80075448E /* sqlite3.c in Sources */,
 				04EABA7F1956D75A00198A8E /* ccUtils.cpp in Sources */,
+				B0602ACB1BB00C9500E64AF8 /* CAVideoPlayerDecoder.cpp in Sources */,
 				B0C3BD3E1ADE6811009BE71A /* CATextField.cpp in Sources */,
 				B05D3699195AB93900DD4814 /* CAAlertView.cpp in Sources */,
 				04EABA811956D75A00198A8E /* CCVertex.cpp in Sources */,
@@ -1811,6 +1861,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/include/win32\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -1818,6 +1869,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -1851,6 +1903,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/include/win32\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -1858,6 +1911,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

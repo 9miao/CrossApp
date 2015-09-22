@@ -4,6 +4,8 @@
 #include "shaders/CAShaderCache.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
+#include "kazmath/GL/matrix.h"
+
 
 NS_CC_BEGIN
 
@@ -74,34 +76,6 @@ void main()											\n\
 ";
 
 
-static bool validateProgram(GLuint prog)
-{
-    GLint status;
-    
-    glValidateProgram(prog);
-    
-#ifdef DEBUG
-    GLint logLength;
-    glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength > 0)
-    {
-        GLchar *log = (GLchar *)malloc(logLength);
-        glGetProgramInfoLog(prog, logLength, &logLength, log);
-        CCLog("Program validate log:\n%s", log);
-        free(log);
-    }
-#endif
-    
-    glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
-    if (status == GL_FALSE) {
-        CCLog("Failed to validate program %d", prog);
-        return false;
-    }
-
-    
-    return true;
-}
-
 static GLuint compileShader(GLenum type, const char* sources)
 {
     GLint status;
@@ -135,36 +109,6 @@ static GLuint compileShader(GLenum type, const char* sources)
     }
     
     return shader;
-}
-
-static void mat4f_LoadOrtho(float left, float right, float bottom, float top, float fnear, float far, float* mout)
-{
-    float r_l = right - left;
-    float t_b = top - bottom;
-    float f_n = far - fnear;
-    float tx = - (right + left) / (right - left);
-    float ty = - (top + bottom) / (top - bottom);
-    float tz = - (far + fnear) / (far - fnear);
-    
-    mout[0] = 2.0f / r_l;
-    mout[1] = 0.0f;
-    mout[2] = 0.0f;
-    mout[3] = 0.0f;
-    
-    mout[4] = 0.0f;
-    mout[5] = 2.0f / t_b;
-    mout[6] = 0.0f;
-    mout[7] = 0.0f;
-    
-    mout[8] = 0.0f;
-    mout[9] = 0.0f;
-    mout[10] = -2.0f / f_n;
-    mout[11] = 0.0f;
-    
-    mout[12] = tx;
-    mout[13] = ty;
-    mout[14] = tz;
-    mout[15] = 1.0f;
 }
 
 #pragma mark - Frame Render
@@ -242,10 +186,7 @@ bool VPFrameRenderRGB::prepareRender()
     return true;
 }
 
-const char* VPFrameRenderRGB::key()
-{
-    return _key.c_str();
-}
+
 
 VPFrameRenderYUV::VPFrameRenderYUV()
 {
@@ -335,17 +276,8 @@ bool VPFrameRenderYUV::prepareRender()
     return true;
 }
 
-const char* VPFrameRenderYUV::key()
-{
-    return _key.c_str();
-}
-
 VPFrameRender::VPFrameRender()
 {
-    _program = 0;
-    _renderBufer = 0;
-    _uniformMatrix = 0;
-    
     _vertices[0] = -1.0f;  // x0
     _vertices[1] = -1.0f;  // y0
     _vertices[2] =  1.0f;  // ..
@@ -358,15 +290,6 @@ VPFrameRender::VPFrameRender()
 
 VPFrameRender::~VPFrameRender()
 {
-    if (_program) {
-        glDeleteProgram(_program);
-        _program = 0;
-    }
-    
-    if (_renderBufer) {
-        glDeleteRenderbuffers(1, &_renderBufer);
-        _renderBufer = 0;
-    }
 }
 
 bool VPFrameRender::loadShaders()
@@ -410,30 +333,16 @@ bool VPFrameRender::loadShaders()
     return true;
 }
 
-#include "kazmath/GL/matrix.h"
+const char* VPFrameRender::key()
+{
+	return _key.c_str();
+}
 
 void VPFrameRender::draw(VPVideoFrame *frame, long offset)
 {
-//    static const GLfloat texCoords[] = {
-//        0.0f, 1.0f,
-//        1.0f, 1.0f,
-//        0.0f, 0.0f,
-//        1.0f, 0.0f,
-//    };
-
-//    static const GLfloat texCoords[] = {
-//        1.0f, 1.0f,
-//        1.0f, 0.0f,
-//        0.0f, 1.0f,
-//        0.0f, 0.0f,
-//    };
-
-    CAGLProgram *pProgram = CAShaderCache::sharedShaderCache()->programForKey(key());
+	CAGLProgram *pProgram = CAShaderCache::sharedShaderCache()->programForKey(key());
     pProgram->use();
     pProgram->setUniformsForBuiltins();
-    
-//    ccGLUseProgram(_program);
-//    glUseProgram(_program);
     
     if (frame) {
         setFrame(frame);
@@ -441,33 +350,23 @@ void VPFrameRender::draw(VPVideoFrame *frame, long offset)
         return;
     }
     
-    if (prepareRender())
-    {
-
+    if (prepareRender()) {
+        
     #define kQuadSize sizeof(ccV3F_C4B_T2F)
-
+        
         ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
-
+        
         // vertex
         int diff = offsetof( ccV3F_C4B_T2F, vertices);
         glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-
+        
         // texCoods
         diff = offsetof( ccV3F_C4B_T2F, texCoords);
         glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-
+        
         // color
         diff = offsetof( ccV3F_C4B_T2F, colors);
         glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-
-//        GLfloat modelviewProj[16];
-//        mat4f_LoadOrtho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, modelviewProj);
-//        glUniformMatrix4fv(_uniformMatrix, 1, GL_FALSE, modelviewProj);
-//        
-//        glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, 0, 0, _vertices);
-//        glEnableVertexAttribArray(ATTRIBUTE_VERTEX);
-//        glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, 0, 0, texCoords);
-//        glEnableVertexAttribArray(ATTRIBUTE_TEXCOORD);
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
