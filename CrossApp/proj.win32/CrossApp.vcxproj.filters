@@ -506,6 +506,9 @@
     <ClCompile Include="..\video\CAVideoPlayerControlView.cpp">
       <Filter>video</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\CAEmojiFont.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1013,6 +1016,9 @@
     </ClInclude>
     <ClInclude Include="..\video\CAVideoPlayerControlView.h">
       <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAEmojiFont.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

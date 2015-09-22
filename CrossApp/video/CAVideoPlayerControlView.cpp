@@ -19,8 +19,6 @@ CAVideoPlayerControlView::CAVideoPlayerControlView()
 
 CAVideoPlayerControlView::~CAVideoPlayerControlView()
 {
-	CC_SAFE_RELEASE_NULL(m_glView);
-	CC_SAFE_RELEASE_NULL(m_actView);
 	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this);
 }
 
