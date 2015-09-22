@@ -333,7 +333,7 @@ static EAGLView *view;
 - (void)mouseMoved:(NSEvent *)theEvent
 {
 	NSPoint event_location = [theEvent locationInWindow];
-    NSLog(@"mouseMoved: x=%f, y=%f", event_location.x, [self getHeight] - event_location.y);
+    //NSLog(@"mouseMoved: x=%f, y=%f", event_location.x, [self getHeight] - event_location.y);
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent

@@ -267,6 +267,7 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 		unsigned int iDeSelectIndex = -1;
 		unsigned int iSelectIndex = m_pHighlightedListCells->getIndex();
+        
 		m_pHighlightedListCells = NULL;
 
 		if (m_pSelectedListCells.count(iSelectIndex) > 0 && m_bAllowsMultipleSelection)
