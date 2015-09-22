@@ -357,7 +357,7 @@ void CCEGLViewProtocol::handleScrollWheel(float x, float y, float offx, float of
                                 (x - m_obViewPortRect.origin.x) / m_fScaleX,
                                 (y - m_obViewPortRect.origin.y) / m_fScaleY);
     
-    m_pDelegate->touchesScrollWheel(s_pMouseMoved, offx, offy, event);
+    m_pDelegate->mouseScrollWheel(s_pMouseMoved, offx, offy, event);
 }
 
 

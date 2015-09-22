@@ -44,11 +44,11 @@ public:
     /**
      * @lua NA
      */
-    virtual void mouseMoved(CATouch* touch, CAEvent* pEvent) = 0;
+    virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent) = 0;
     /**
      * @lua NA
      */
-    virtual void touchesScrollWheel(CATouch* touch, float off_x, float off_y, CAEvent* pEvent) = 0;
+    virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent) = 0;
     /**
      * @lua NA
      */
@@ -122,6 +122,14 @@ public:
     
     int getTouchCount();
     
+    void addMouseMovedResponder(CAResponder* responder);
+    
+    void removeMouseMovedResponder(CAResponder* responder);
+    
+    void addMouseScrollWheel(CAResponder* responder);
+    
+    void removeMouseScrollWheel(CAResponder* responder);
+    
 public:
 
     /**
@@ -143,11 +151,11 @@ public:
     /**
      * @lua NA
      */
-    virtual void mouseMoved(CATouch* touch, CAEvent* pEvent);
+    virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
     /**
      * @lua NA
      */
-    virtual void touchesScrollWheel(CATouch* touch, float off_x, float off_y, CAEvent* pEvent);
+    virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent);
     
 protected:
 
@@ -158,6 +166,10 @@ protected:
     bool m_bLocked;
     
     std::map<int, CATouchController*> m_vTouchControllers;
+    
+    std::set<CAResponder*> m_pMouseMoveds;
+    
+    std::set<CAResponder*> m_pMouseScrollWheels;
 };
 
 // end of input group

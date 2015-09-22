@@ -551,19 +551,47 @@ void CATouchDispatcher::touchesCancelled(CCSet *touches, CAEvent *pEvent)
     m_bLocked = false;
 }
 
-void CATouchDispatcher::mouseMoved(CATouch* touch, CAEvent* pEvent)
+void CATouchDispatcher::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 {
-
+    std::set<CAResponder*>::iterator itr;
+    for (itr=m_pMouseMoveds.begin() ; itr!=m_pMouseMoveds.end(); itr++)
+    {
+        (*itr)->mouseMoved(pTouch, pEvent);
+    }
 }
 
-void CATouchDispatcher::touchesScrollWheel(CATouch* touch, float off_x, float off_y, CAEvent* pEvent)
+void CATouchDispatcher::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent)
 {
-
+    std::set<CAResponder*>::iterator itr;
+    for (itr=m_pMouseMoveds.begin() ; itr!=m_pMouseMoveds.end(); itr++)
+    {
+        (*itr)->mouseScrollWheel(pTouch, off_x, off_y, pEvent);
+    }
 }
 
 int CATouchDispatcher::getTouchCount()
 {
     return (int)m_vTouchControllers.size();
+}
+
+void CATouchDispatcher::addMouseMovedResponder(CAResponder* responder)
+{
+    m_pMouseMoveds.insert(responder);
+}
+
+void CATouchDispatcher::removeMouseMovedResponder(CAResponder* responder)
+{
+    m_pMouseMoveds.erase(responder);
+}
+
+void CATouchDispatcher::addMouseScrollWheel(CAResponder* responder)
+{
+    m_pMouseScrollWheels.insert(responder);
+}
+
+void CATouchDispatcher::removeMouseScrollWheel(CAResponder* responder)
+{
+    m_pMouseScrollWheels.erase(responder);
 }
 
 NS_CC_END
