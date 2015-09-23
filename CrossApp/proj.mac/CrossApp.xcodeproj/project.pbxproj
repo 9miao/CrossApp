@@ -694,7 +694,6 @@
 		04EAA0491956D74D00198A8E /* CrossApp */ = {
 			isa = PBXGroup;
 			children = (
-				B0B05F641BB1483200B891CE /* view */,
 				04EABB431956DD8E00198A8E /* CrossApp.cpp */,
 				04EAA09F1956D74D00198A8E /* CrossApp.h */,
 				04EAA0701956D74D00198A8E /* ccConfig.h */,
@@ -712,6 +711,7 @@
 				04EAA0BF1956D74D00198A8E /* kazmath */,
 				04EAA0E21956D74D00198A8E /* platform */,
 				04EAAFF11956D75500198A8E /* shaders */,
+				B0B05F641BB1483200B891CE /* view */,
 				04EAB00F1956D75500198A8E /* support */,
 			);
 			name = CrossApp;

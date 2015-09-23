@@ -923,7 +923,7 @@ void CDUIShowView::showSlider()
     sliderValue1->setTextAlignment(CATextAlignmentCenter);
     sliderValue1->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
-    CASlider* slider1 = CASlider::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,20));
+    CASlider* slider1 = CASlider::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,56));
     slider1->addTarget(this, CAControl_selector(CDUIShowView::sliderValueChange));
     slider1->setTag(100);
     CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
@@ -939,15 +939,14 @@ void CDUIShowView::showSlider()
     sliderValue2->setTextAlignment(CATextAlignmentCenter);
     sliderValue2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
-    CASlider* slider2 = CASlider::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,20));
-    slider2->setTrackHeight(20);
+    CASlider* slider2 = CASlider::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,56));
     slider2->setTag(101);
     slider2->setMaxTrackTintImage(CAImage::create("source_material/ex1.png"));
     slider2->setMinTrackTintImage(CAImage::create("source_material/ex3.png"));
     slider2->setThumbTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
     slider2->addTarget(this, CAControl_selector(CDUIShowView::sliderValueChange));
     CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
-    view2->addSubview(slider2);
+    //view2->addSubview(slider2);
     view2->addSubview(sliderValue2);
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);

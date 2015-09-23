@@ -563,7 +563,7 @@ void CATouchDispatcher::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 void CATouchDispatcher::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent)
 {
     std::set<CAResponder*>::iterator itr;
-    for (itr=m_pMouseMoveds.begin() ; itr!=m_pMouseMoveds.end(); itr++)
+    for (itr=m_pMouseScrollWheels.begin() ; itr!=m_pMouseScrollWheels.end(); itr++)
     {
         (*itr)->mouseScrollWheel(pTouch, off_x, off_y, pEvent);
     }
