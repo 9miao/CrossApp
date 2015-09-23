@@ -125,7 +125,7 @@ bool CAResponder::isMouseMovedEnabled()
 void CAResponder::setMouseScrollWheelEnabled(bool var)
 {
     m_bMouseScrollWheelEnabled = var;
-    if (m_bMouseMovedEnabled)
+    if (m_bMouseScrollWheelEnabled)
     {
         CAApplication::getApplication()->getTouchDispatcher()->addMouseScrollWheel(this);
     }
