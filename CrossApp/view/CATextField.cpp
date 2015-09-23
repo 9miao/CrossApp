@@ -204,10 +204,8 @@ void CATextField::setFontSize(int var)
 	m_iFontSize = var;
 	m_iFontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize);
     m_iVertMargins = (m_obContentSize.height - m_iFontHeight) / 2;
-    
-	m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, _px(2), var));
-    setText(m_sText);
-    this->updateImage();
+    std::string text = m_sText;
+    setText(text);
 }
 
 int CATextField::getFontSize()
