@@ -143,6 +143,7 @@ void CAAlertView::setAlertMessage(std::string var, CAColor4B col)
 {
 	CC_RETURN_IF(var.compare("") == 0);
 	setLabel(m_pContentLabel, var.c_str(), m_sMsgFontName.c_str(), col);
+    m_pContentLabel->setTextAlignment(CATextAlignmentLeft);
 }
 
 void CAAlertView::addButton(const std::string& btnText, CAColor4B col, CAImage* pNormalImage, CAImage* pHighlightedImage)
@@ -219,7 +220,8 @@ void CAAlertView::showAlertView() {
 	
 	float alertViewSpaceHeight = 40;
 
-	if (m_pTitleLabel && !m_pTitleLabel->getText().empty()) {
+	if (m_pTitleLabel && !m_pTitleLabel->getText().empty())
+    {
 
 		m_pTitleLabel->setFrame(CADipRect(0, alertViewSpaceHeight , ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
 		m_pTitleLabel->setFontSize(_px(ALERT_VIEW_TITLE_FONT));
@@ -237,11 +239,12 @@ void CAAlertView::showAlertView() {
 		scrollView->setShowsHorizontalScrollIndicator(false);
 		scrollView->setShowsVerticalScrollIndicator(true);
 		scrollView->setBounceHorizontal(false);
-		scrollView->setViewSize(CADipSize(ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight * 1.1 + m_fAlertViewTitleHeight + alertViewSpaceHeight* 1.5));
+		scrollView->setViewSize(CADipSize(ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight + m_fAlertViewTitleHeight));
 		m_pBackView->addSubview(scrollView);
 
 		CCAssert(m_pTitleLabel, "");
-		if (m_pTitleLabel && !m_pTitleLabel->getText().empty()) {
+		if (m_pTitleLabel && !m_pTitleLabel->getText().empty())
+        {
 			m_pTitleLabel->removeFromSuperview();
 			m_pTitleLabel->setFontSize(_px(ALERT_VIEW_TITLE_FONT));
 			m_pTitleLabel->setFrame(CADipRect(0, alertViewSpaceHeight, ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
@@ -358,14 +361,7 @@ void CAAlertView::calcuAlerViewSize()
 		
 		m_fAlertViewMessageHeight = _dip(CAImage::getStringHeight(m_sMsgFontName.c_str(), _px(ALERT_VIEW_MESG_FONT), m_pContentLabel->getText(), _px(ALERT_VIEW_MESG_WIDTH)));
 
-		if (m_fAlertViewMessageHeight > alertViewMessageHeight)
-        {
-			m_fAlertViewHeight += alertViewMessageHeight;
-		}
-        else
-        {
-			m_fAlertViewHeight += m_fAlertViewMessageHeight;
-		}
+        m_fAlertViewHeight += MIN(m_fAlertViewMessageHeight, alertViewMessageHeight);
 	}
 
 	m_fAlertViewHeight += alertViewSpaceHeight;

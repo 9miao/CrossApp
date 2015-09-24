@@ -141,6 +141,8 @@ public:
     
     void startDeaccelerateScroll();
     
+    virtual void switchPCMode(bool var);
+    
 protected:
  
     inline virtual float minSpeed(float dt)
@@ -218,6 +220,8 @@ public:
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
+    virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent);
+    
 private:
     
     using CAView::initWithColor;
@@ -245,6 +249,8 @@ protected:
     CCPoint m_tCloseToPoint;
     
     CCPoint m_tInitialPoint;
+    
+    bool m_bPCMode;
 };
 
 

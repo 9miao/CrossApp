@@ -47,6 +47,7 @@ CAScrollView::CAScrollView()
 ,m_bShowsVerticalScrollIndicator(true)
 ,m_pHeaderRefreshView(NULL)
 ,m_pFooterRefreshView(NULL)
+,m_bPCMode(false)
 {
     this->setPriorityScroll(true);
     this->setReachBoundaryHandOverToSuperview(true);
@@ -659,6 +660,29 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     this->hideIndicator();
 }
 
+void CAScrollView::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent)
+{
+    CCPoint p_container = m_pContainer->getFrameOrigin();
+    p_container = ccpAdd(p_container, CCPoint(off_x, off_y) * 10);
+    this->getScrollWindowNotOutPoint(p_container);
+    this->setContainerFrame(p_container);
+    this->showIndicator();
+    
+    if (m_pScrollViewDelegate)
+    {
+        m_pScrollViewDelegate->scrollViewDidScroll(this);
+        m_pScrollViewDelegate->scrollViewDidMoved(this);
+    }
+}
+
+void CAScrollView::switchPCMode(bool var)
+{
+    m_bPCMode = var;
+    this->setMouseScrollWheelEnabled(m_bPCMode);
+    this->setPriorityScroll(!m_bPCMode);
+    this->showIndicator();
+}
+
 void CAScrollView::updatePointOffset(float dt)
 {
     CC_RETURN_IF(m_vTouches.size() == 0);
@@ -870,16 +894,26 @@ void CAScrollView::showIndicator()
     {
         CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f);
     }
-    m_pIndicatorHorizontal->setHide(false);
-    m_pIndicatorVertical->setHide(false);
+    if (m_pIndicatorHorizontal)
+    {
+        m_pIndicatorHorizontal->setHide(false);
+    }
+    if (m_pIndicatorVertical)
+    {
+        m_pIndicatorVertical->setHide(false);
+    }
     CAScrollView::update(0);
 }
 
 void CAScrollView::hideIndicator()
 {
     CAScheduler::unschedule(schedule_selector(CAScrollView::update), this);
-    m_pIndicatorHorizontal->setHide(true);
-    m_pIndicatorVertical->setHide(true);
+    
+    if (!m_bPCMode)
+    {
+        m_pIndicatorHorizontal->setHide(true);
+        m_pIndicatorVertical->setHide(true);
+    }
 }
 
 void CAScrollView::update(float dt)
