@@ -138,12 +138,14 @@ bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             {
                 CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
                 
-                if (m_pHighlightedTableCells)
+                if (m_pHighlightedTableCells != cell)
                 {
-                    m_pHighlightedTableCells->setControlStateNormal();
+                    if (m_pHighlightedTableCells)
+                    {
+                        m_pHighlightedTableCells->setControlStateNormal();
+                    }
+                    m_pHighlightedTableCells = cell;
                 }
-                
-                m_pHighlightedTableCells = cell;
 
                 CC_BREAK_IF(cell->getControlState() == CAControlStateSelected);
                 
@@ -253,6 +255,67 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         }
         m_pHighlightedTableCells = NULL;
     }
+}
+
+void CATableView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
+{
+    if (m_bAllowsSelection)
+    {
+        CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
+        
+        std::map<CAIndexPath2E, CATableViewCell*>::iterator itr;
+        for (itr=m_mpUsedTableCells.begin(); itr!=m_mpUsedTableCells.end(); itr++)
+        {
+            CATableViewCell* cell = itr->second;
+            CC_CONTINUE_IF(cell == NULL);
+            if (cell->getFrame().containsPoint(point) && cell->isVisible())
+            {
+                CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
+                
+                if (m_pHighlightedTableCells)
+                {
+                    CAIndexPath2E index = CAIndexPath2E(m_pHighlightedTableCells->getSection(), m_pHighlightedTableCells->getRow());
+                    if (m_pSelectedTableCells.count(index))
+                    {
+                        m_pHighlightedTableCells->setControlStateHighlighted();
+                    }
+                    else
+                    {
+                        m_pHighlightedTableCells->setControlStateNormal();
+                    }
+                    
+                }
+                
+                m_pHighlightedTableCells = cell;
+                cell->setControlStateHighlighted();
+
+                break;
+            }
+        }
+    }
+}
+
+void CATableView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
+{
+    if (m_pHighlightedTableCells)
+    {
+        CAIndexPath2E index = CAIndexPath2E(m_pHighlightedTableCells->getSection(), m_pHighlightedTableCells->getRow());
+        if (m_pSelectedTableCells.count(index))
+        {
+            m_pHighlightedTableCells->setControlStateSelected();
+        }
+        else
+        {
+            m_pHighlightedTableCells->setControlStateNormal();
+        }
+        m_pHighlightedTableCells = NULL;
+    }
+}
+
+void CATableView::switchPCMode(bool var)
+{
+    CAScrollView::switchPCMode(var);
+    this->setMouseMovedEnabled(true);
 }
 
 float CATableView::maxSpeed(float dt)

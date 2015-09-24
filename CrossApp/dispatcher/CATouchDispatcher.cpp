@@ -563,6 +563,14 @@ void CATouchDispatcher::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
             {
                 responder->mouseMoved(pTouch, pEvent);
             }
+            else
+            {
+                point = responder->convertToNodeSpace(pTouch->getPreviousLocation());
+                if (responder->getBounds().containsPoint(point))
+                {
+                    responder->mouseMovedOutSide(pTouch, pEvent);
+                }
+            }
         }
         else if (CAViewController* responder = dynamic_cast<CAViewController*>(*itr))
         {
@@ -570,6 +578,14 @@ void CATouchDispatcher::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
             if (responder->getView()->getBounds().containsPoint(point))
             {
                 responder->mouseMoved(pTouch, pEvent);
+            }
+            else
+            {
+                point = responder->getView()->convertToNodeSpace(pTouch->getPreviousLocation());
+                if (responder->getView()->getBounds().containsPoint(point))
+                {
+                    responder->mouseMovedOutSide(pTouch, pEvent);
+                }
             }
         }
     }

@@ -85,6 +85,10 @@ public:
     /**
      * @lua NA
      */
+    virtual void mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent);
+    /**
+     * @lua NA
+     */
     virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent);
 };
 

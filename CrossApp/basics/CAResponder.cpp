@@ -98,6 +98,12 @@ void CAResponder::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
     CC_UNUSED_PARAM(pEvent);
 }
 
+void CAResponder::mouseMovedOutSide(CATouch *pTouch, CAEvent *pEvent)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pEvent);
+}
+
 void CAResponder::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent)
 {
     CC_UNUSED_PARAM(pTouch);

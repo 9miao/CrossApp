@@ -116,6 +116,8 @@ public:
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
 
+    virtual void switchPCMode(bool var);
+    
 protected:
     
     inline virtual float maxSpeed(float dt);
@@ -144,6 +146,10 @@ public:
 
 	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 
+    virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
+    
+    virtual void mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent);
+    
 private:
     
     using CAScrollView::setBounceHorizontal;

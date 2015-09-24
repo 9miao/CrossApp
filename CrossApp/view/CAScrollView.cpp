@@ -680,6 +680,7 @@ void CAScrollView::switchPCMode(bool var)
     m_bPCMode = var;
     this->setMouseScrollWheelEnabled(m_bPCMode);
     this->setPriorityScroll(!m_bPCMode);
+    this->setScrollEnabled(!m_bPCMode);
     this->showIndicator();
 }
 

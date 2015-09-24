@@ -138,6 +138,8 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bAlwaysBottomSectionFooter, AlwaysBottomSectionFooter);
     
+    virtual void switchPCMode(bool var);
+    
 public:
     
     unsigned int getNumberOfSections();
@@ -187,6 +189,10 @@ public:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
+    
+    virtual void mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent);
     
 private:
     

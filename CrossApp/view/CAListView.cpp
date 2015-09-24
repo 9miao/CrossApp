@@ -218,11 +218,14 @@ bool CAListView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 			{
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateDisabled);
 
-				if (m_pHighlightedListCells)
-				{
-					m_pHighlightedListCells->setControlStateNormal();
-				}
-				m_pHighlightedListCells = pCell;
+                if (m_pHighlightedListCells != pCell)
+                {
+                    if (m_pHighlightedListCells)
+                    {
+                        m_pHighlightedListCells->setControlStateNormal();
+                    }
+                    m_pHighlightedListCells = pCell;
+                }
 
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
 
@@ -327,6 +330,68 @@ void CAListView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         }
 		m_pHighlightedListCells = NULL;
 	}
+}
+
+void CAListView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
+{
+    if (m_bAllowsSelection)
+    {
+        CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
+        
+        std::map<unsigned int, CAListViewCell*>::iterator itr;
+        for (itr = m_mpUsedListCells.begin(); itr != m_mpUsedListCells.end(); ++itr)
+        {
+            CAListViewCell* pCell = itr->second;
+            CC_CONTINUE_IF(pCell == NULL);
+            
+            if (pCell->getFrame().containsPoint(point) && pCell->isVisible())
+            {
+                CC_BREAK_IF(pCell->getControlState() == CAControlStateDisabled);
+                
+                if (m_pHighlightedListCells)
+                {
+                    unsigned int index = m_pHighlightedListCells->getIndex();
+                    if (m_pSelectedListCells.count(index))
+                    {
+                        m_pHighlightedListCells->setControlStateHighlighted();
+                    }
+                    else
+                    {
+                        m_pHighlightedListCells->setControlStateNormal();
+                    }
+                    
+                }
+                
+                m_pHighlightedListCells = pCell;
+                pCell->setControlStateHighlighted();
+
+                break;
+            }
+        }
+    }
+}
+
+void CAListView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
+{
+    if (m_pHighlightedListCells)
+    {
+        unsigned int index = m_pHighlightedListCells->getIndex();
+        if (m_pSelectedListCells.count(index))
+        {
+            m_pHighlightedListCells->setControlStateSelected();
+        }
+        else
+        {
+            m_pHighlightedListCells->setControlStateNormal();
+        }
+        m_pHighlightedListCells = NULL;
+    }
+}
+
+void CAListView::switchPCMode(bool var)
+{
+    CAScrollView::switchPCMode(var);
+    this->setMouseMovedEnabled(true);
 }
 
 void CAListView::reloadViewSizeData()
