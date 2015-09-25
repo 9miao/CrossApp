@@ -198,12 +198,15 @@ bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 			{
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateDisabled);
 
-				if (m_pHighlightedCollectionCells)
-				{
-					m_pHighlightedCollectionCells->setControlStateNormal();
-				}
-
-				m_pHighlightedCollectionCells = pCell;
+                if (m_pHighlightedCollectionCells != pCell)
+                {
+                    if (m_pHighlightedCollectionCells)
+                    {
+                        m_pHighlightedCollectionCells->setControlStateNormal();
+                    }
+                    
+                    m_pHighlightedCollectionCells = pCell;
+                }
 
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
 
@@ -310,6 +313,71 @@ void CACollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         }
 		m_pHighlightedCollectionCells = NULL;
 	}
+}
+
+void CACollectionView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
+{
+    if (m_bAllowsSelection)
+    {
+        CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
+        
+        std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
+        for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); ++itr)
+        {
+            CACollectionViewCell* cell = itr->second;
+            CC_CONTINUE_IF(cell == NULL);
+            if (cell->getFrame().containsPoint(point) && cell->isVisible())
+            {
+                CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
+                
+                if (m_pHighlightedCollectionCells)
+                {
+                    CAIndexPath3E index = CAIndexPath3E(m_pHighlightedCollectionCells->getSection(),
+                                                        m_pHighlightedCollectionCells->getRow(),
+                                                        m_pHighlightedCollectionCells->getItem());
+                    if (m_pSelectedCollectionCells.count(index))
+                    {
+                        m_pHighlightedCollectionCells->setControlStateHighlighted();
+                    }
+                    else
+                    {
+                        m_pHighlightedCollectionCells->setControlStateNormal();
+                    }
+                    
+                }
+                
+                m_pHighlightedCollectionCells = cell;
+                cell->setControlStateHighlighted();
+                
+                break;
+            }
+        }
+    }
+}
+
+void CACollectionView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
+{
+    if (m_pHighlightedCollectionCells)
+    {
+        CAIndexPath3E index = CAIndexPath3E(m_pHighlightedCollectionCells->getSection(),
+                                            m_pHighlightedCollectionCells->getRow(),
+                                            m_pHighlightedCollectionCells->getItem());
+        if (m_pSelectedCollectionCells.count(index))
+        {
+            m_pHighlightedCollectionCells->setControlStateSelected();
+        }
+        else
+        {
+            m_pHighlightedCollectionCells->setControlStateNormal();
+        }
+        m_pHighlightedCollectionCells = NULL;
+    }
+}
+
+void CACollectionView::switchPCMode(bool var)
+{
+    CAScrollView::switchPCMode(var);
+    this->setMouseMovedEnabled(true);
 }
 
 void CACollectionView::reloadViewSizeData()

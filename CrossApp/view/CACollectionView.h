@@ -150,6 +150,8 @@ public:
     
     CACollectionViewCell* getHighlightCollectionCell();
     
+    virtual void switchPCMode(bool var);
+    
 protected:
     
     inline virtual float maxSpeed(float dt);
@@ -179,6 +181,10 @@ public:
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 
 	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
+    
+    virtual void mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent);
     
 private:
     
