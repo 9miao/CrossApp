@@ -268,7 +268,7 @@ public:
     
 public:
     
-    CAIndicator(CAIndicatorType type);
+    CAIndicator(const CAIndicatorType& type, CAScrollView* var);
     
     virtual ~CAIndicator();
     
@@ -276,7 +276,7 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    static CAIndicator* create(CAIndicatorType type);
+    static CAIndicator* create(const CAIndicatorType& type, CAScrollView* var);
     
     virtual bool init();
     
@@ -284,11 +284,31 @@ public:
     
     void setHide(bool var);
 
+    void switchPCMode(bool var);
+    
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
+    
+    virtual void mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent);
+    
+    CC_SYNTHESIZE_READONLY(CAScrollView*, m_pMyScrollView, MyScrollView)
+    
 private:
 
     CAView* m_pIndicator;
     
     CAIndicatorType m_eType;
+    
+    bool m_bPCMode;
+    
+    bool m_bTouch;
 };
 
 
