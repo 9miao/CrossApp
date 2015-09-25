@@ -636,7 +636,6 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         m_bZooming = false;
     }
     m_vTouches.eraseObject(pTouch);
-    this->switchPCMode(true);
 }
 
 void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
