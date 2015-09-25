@@ -275,7 +275,7 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		CAViewAnimation::removeAnimations(m_s__StrID);
 
 		CAIndexPath3E deselectedIndexPath = CAIndexPath3EZero;
-		CAIndexPath3E selectedIndexPath = CAIndexPath3E(m_pHighlightedCollectionCells->getSection(), 0, m_pHighlightedCollectionCells->getItem());
+		CAIndexPath3E selectedIndexPath = CAIndexPath3E(m_pHighlightedCollectionCells->getSection(), m_pHighlightedCollectionCells->getRow(), m_pHighlightedCollectionCells->getItem());
 
 		if (m_pSelectedCollectionCells.count(selectedIndexPath) > 0 && m_bAllowsMultipleSelection)
 		{
