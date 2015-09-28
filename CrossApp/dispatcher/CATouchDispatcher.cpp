@@ -553,9 +553,47 @@ void CATouchDispatcher::touchesCancelled(CCSet *touches, CAEvent *pEvent)
 
 void CATouchDispatcher::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 {
-    CAResponder* responder = NULL;
+    std::vector<CAResponder*> responders;
     for (std::set<CAResponder*>::iterator itr=m_pMouseMoveds.begin();
          itr!=m_pMouseMoveds.end(); itr++)
+    {
+        if (CAView* view = dynamic_cast<CAView*>(*itr))
+        {
+            CCPoint point = view->convertTouchToNodeSpace(pTouch);
+            if (view->getBounds().containsPoint(point))
+            {
+                responders.push_back(view);
+            }
+            else
+            {
+                point = view->convertToNodeSpace(pTouch->getPreviousLocation());
+                if (view->getBounds().containsPoint(point))
+                {
+                    responders.push_back(view);
+                }
+            }
+        }
+        else if (CAViewController* viewController = dynamic_cast<CAViewController*>(*itr))
+        {
+            CCPoint point = viewController->getView()->convertTouchToNodeSpace(pTouch);
+            if (viewController->getView()->getBounds().containsPoint(point))
+            {
+                responders.push_back(viewController);
+            }
+            else
+            {
+                point = viewController->getView()->convertToNodeSpace(pTouch->getPreviousLocation());
+                if (viewController->getView()->getBounds().containsPoint(point))
+                {
+                    responders.push_back(viewController);
+                }
+            }
+        }
+    }
+    
+    CAResponder* responder = NULL;
+    for (std::vector<CAResponder*>::iterator itr=responders.begin();
+         itr!=responders.end(); itr++)
     {
         if (responder == NULL)
         {
@@ -566,6 +604,7 @@ void CATouchDispatcher::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
             responder = *itr;
         }
     }
+    responders.clear();
     
     if (CAView* view = dynamic_cast<CAView*>(responder))
     {
@@ -603,9 +642,47 @@ void CATouchDispatcher::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 
 void CATouchDispatcher::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent)
 {
-    CAResponder* responder = NULL;
+    std::vector<CAResponder*> responders;
     for (std::set<CAResponder*>::iterator itr=m_pMouseScrollWheels.begin();
          itr!=m_pMouseScrollWheels.end(); itr++)
+    {
+        if (CAView* view = dynamic_cast<CAView*>(*itr))
+        {
+            CCPoint point = view->convertTouchToNodeSpace(pTouch);
+            if (view->getBounds().containsPoint(point))
+            {
+                responders.push_back(view);
+            }
+            else
+            {
+                point = view->convertToNodeSpace(pTouch->getPreviousLocation());
+                if (view->getBounds().containsPoint(point))
+                {
+                    responders.push_back(view);
+                }
+            }
+        }
+        else if (CAViewController* viewController = dynamic_cast<CAViewController*>(*itr))
+        {
+            CCPoint point = viewController->getView()->convertTouchToNodeSpace(pTouch);
+            if (viewController->getView()->getBounds().containsPoint(point))
+            {
+                responders.push_back(viewController);
+            }
+            else
+            {
+                point = viewController->getView()->convertToNodeSpace(pTouch->getPreviousLocation());
+                if (viewController->getView()->getBounds().containsPoint(point))
+                {
+                    responders.push_back(viewController);
+                }
+            }
+        }
+    }
+    
+    CAResponder* responder = NULL;
+    for (std::vector<CAResponder*>::iterator itr=responders.begin();
+         itr!=responders.end(); itr++)
     {
         if (responder == NULL)
         {
@@ -616,7 +693,8 @@ void CATouchDispatcher::mouseScrollWheel(CATouch* pTouch, float off_x, float off
             responder = *itr;
         }
     }
-    
+    responders.clear();
+
     if (CAView* view = dynamic_cast<CAView*>(responder))
     {
         CCPoint point = view->convertTouchToNodeSpace(pTouch);
