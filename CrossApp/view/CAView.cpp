@@ -1083,6 +1083,8 @@ void CAView::sortAllSubviews()
 
 void CAView::draw()
 {
+    m_uZLevel = CAApplication::getApplication()->getCurrentNumberOfDraws();
+    
     CC_RETURN_IF(m_pobImage == NULL);
     CC_RETURN_IF(m_pShaderProgram == NULL);
     
@@ -1146,9 +1148,7 @@ void CAView::draw()
     };
     ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
-    
-    CC_INCREMENT_GL_DRAWS(1);
-    
+
     CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAView - draw");
 }
 

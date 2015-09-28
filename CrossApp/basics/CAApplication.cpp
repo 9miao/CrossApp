@@ -38,8 +38,6 @@
 
 using namespace std;
 
-unsigned int g_uNumberOfDraws = 0;
-
 NS_CC_BEGIN
 
 static CCDisplayLinkDirector *s_SharedApplication = NULL;
@@ -87,7 +85,7 @@ bool CAApplication::init(void)
     m_nDrawCount = 60;
     m_dAnimationInterval = 1.0 / 100.0f;
     m_bDisplayStats = false;
-    
+    m_uNumberOfDraws = 0;
     // paused ?
     m_bPaused = false;
    
@@ -195,7 +193,7 @@ void CAApplication::drawScene(float dt)
         kmGLPushMatrix();
         
         kmGLTranslatef(-0.5f, 0, 0);
-
+        m_uNumberOfDraws = 0;
         // draw the scene
         if (m_pRootWindow)
         {
@@ -638,8 +636,6 @@ void CAApplication::showStats(void)
         }
         m_pFPSLabel->visit();
     }
-    
-    g_uNumberOfDraws = 0;
 }
 
 void CAApplication::calculateMPF()
@@ -755,6 +751,11 @@ void CAApplication::setAccelerometer(CCAccelerometer* pAccelerometer)
 CCAccelerometer* CAApplication::getAccelerometer()
 {
     return m_pAccelerometer;
+}
+
+unsigned long CAApplication::getCurrentNumberOfDraws()
+{
+    return ++m_uNumberOfDraws;
 }
 
 /***************************************************

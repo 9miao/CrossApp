@@ -105,7 +105,6 @@ void ccDrawPoint( const CCPoint& point )
 
     glDrawArrays(GL_POINTS, 0, 1);
 
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints )
@@ -151,8 +150,6 @@ void ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints )
     glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
 
     CC_SAFE_DELETE_ARRAY(newPoints);
-
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 
@@ -177,8 +174,6 @@ void ccDrawLine( const CCPoint& origin, const CCPoint& destination )
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 #endif // EMSCRIPTEN
     glDrawArrays(GL_LINES, 0, 2);
-
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawRect( CCPoint origin, CCPoint destination )
@@ -249,8 +244,6 @@ void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePol
 
         CC_SAFE_DELETE_ARRAY(newPoli);
     }
-
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, CAColor4F color )
@@ -294,7 +287,6 @@ void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, CAColor4
     glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
 
     CC_SAFE_DELETE_ARRAY(newPoli);
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
@@ -337,8 +329,6 @@ void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned in
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments+additionalSegment);
 
     free( vertices );
-
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
@@ -376,8 +366,6 @@ void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoi
 #endif // EMSCRIPTEN
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
-
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawCatmullRom(const std::vector<CCPoint>& points, unsigned int segments )
@@ -434,7 +422,6 @@ void ccDrawCardinalSpline(const std::vector<CCPoint>& config, float tension,  un
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 
     CC_SAFE_DELETE_ARRAY(vertices);
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 // CatmullRom Spline formula:
@@ -489,8 +476,6 @@ void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCP
 #endif // EMSCRIPTEN
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
-
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )

@@ -250,6 +250,8 @@ public:
 
     bool isDrawing() {return (m_nDrawCount > 0);}
     
+    unsigned long getCurrentNumberOfDraws();
+    
 public:
 
     /** CATouchDispatcher associated with this director
@@ -273,6 +275,8 @@ public:
 	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
     
     CC_SYNTHESIZE_READONLY(float, m_fAdaptationRatio, AdaptationRatio);
+    
+    CC_SYNTHESIZE_READONLY(unsigned long, m_uNumberOfDraws, NumberOfDraws);
     
 public:
     /** returns a shared instance of the director 

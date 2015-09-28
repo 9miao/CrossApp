@@ -23,6 +23,7 @@ CAResponder::CAResponder()
 ,m_bTouchEventScrollHandOverToSuperview(true)
 ,m_bMouseMovedEnabled(false)
 ,m_bMouseScrollWheelEnabled(false)
+,m_uZLevel(0)
 {
 
 }

@@ -193,8 +193,6 @@ void CADrawView::render()
 
     glDrawArrays(GL_TRIANGLES, 0, m_nBufferCount);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    CC_INCREMENT_GL_DRAWS(1);
     CHECK_GL_ERROR_DEBUG();
 }
 

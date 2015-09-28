@@ -163,13 +163,6 @@ It should work same as apples CFSwapInt32LittleToHost(..)
     } while (false)
 #endif
 
-/** @def CC_INCREMENT_GL_DRAWS_BY_ONE
- Increments the GL Draws counts by one.
- The number of calls per frame are displayed on the screen when the CAApplication's stats are enabled.
- */
-extern unsigned int CC_DLL g_uNumberOfDraws;
-#define CC_INCREMENT_GL_DRAWS(__n__) g_uNumberOfDraws += __n__
-
 /*******************/
 /** Notifications **/
 /*******************/

@@ -366,7 +366,7 @@ protected:
     virtual void updateImageRect();
     
 protected:
-    
+
     CC_SYNTHESIZE(CAViewDelegate*, m_pViewDelegate, ViewDelegate);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bFrame, Frame);
@@ -374,7 +374,7 @@ protected:
     CC_SYNTHESIZE_READONLY(CABatchView*, m_pobBatchView, Batch);
     
     CC_SYNTHESIZE(CAImageAtlas*, m_pobImageAtlas, ImageAtlas);
-
+    
     float m_fRotationX;                 ///< rotation angle on x-axis
     float m_fRotationY;                 ///< rotation angle on y-axis
     

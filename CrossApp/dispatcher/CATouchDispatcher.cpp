@@ -553,39 +553,49 @@ void CATouchDispatcher::touchesCancelled(CCSet *touches, CAEvent *pEvent)
 
 void CATouchDispatcher::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 {
-    std::set<CAResponder*>::iterator itr;
-    for (itr=m_pMouseMoveds.begin() ; itr!=m_pMouseMoveds.end(); itr++)
+    CAResponder* responder = NULL;
+    for (std::set<CAResponder*>::iterator itr=m_pMouseMoveds.begin();
+         itr!=m_pMouseMoveds.end(); itr++)
     {
-        if (CAView* responder = dynamic_cast<CAView*>(*itr))
+        if (responder == NULL)
         {
-            CCPoint point = responder->convertTouchToNodeSpace(pTouch);
-            if (responder->getBounds().containsPoint(point))
+            responder = *itr;
+        }
+        else if (responder->getZLevel() < (*itr)->getZLevel())
+        {
+            responder = *itr;
+        }
+    }
+    
+    if (CAView* view = dynamic_cast<CAView*>(responder))
+    {
+        CCPoint point = view->convertTouchToNodeSpace(pTouch);
+        if (view->getBounds().containsPoint(point))
+        {
+            view->mouseMoved(pTouch, pEvent);
+        }
+        else
+        {
+            point = view->convertToNodeSpace(pTouch->getPreviousLocation());
+            if (view->getBounds().containsPoint(point))
             {
-                responder->mouseMoved(pTouch, pEvent);
-            }
-            else
-            {
-                point = responder->convertToNodeSpace(pTouch->getPreviousLocation());
-                if (responder->getBounds().containsPoint(point))
-                {
-                    responder->mouseMovedOutSide(pTouch, pEvent);
-                }
+                view->mouseMovedOutSide(pTouch, pEvent);
             }
         }
-        else if (CAViewController* responder = dynamic_cast<CAViewController*>(*itr))
+    }
+    else if (CAViewController* viewController = dynamic_cast<CAViewController*>(responder))
+    {
+        CCPoint point = viewController->getView()->convertTouchToNodeSpace(pTouch);
+        if (viewController->getView()->getBounds().containsPoint(point))
         {
-            CCPoint point = responder->getView()->convertTouchToNodeSpace(pTouch);
-            if (responder->getView()->getBounds().containsPoint(point))
+            viewController->mouseMoved(pTouch, pEvent);
+        }
+        else
+        {
+            point = viewController->getView()->convertToNodeSpace(pTouch->getPreviousLocation());
+            if (viewController->getView()->getBounds().containsPoint(point))
             {
-                responder->mouseMoved(pTouch, pEvent);
-            }
-            else
-            {
-                point = responder->getView()->convertToNodeSpace(pTouch->getPreviousLocation());
-                if (responder->getView()->getBounds().containsPoint(point))
-                {
-                    responder->mouseMovedOutSide(pTouch, pEvent);
-                }
+                viewController->mouseMovedOutSide(pTouch, pEvent);
             }
         }
     }
@@ -593,24 +603,34 @@ void CATouchDispatcher::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 
 void CATouchDispatcher::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent)
 {
-    std::set<CAResponder*>::iterator itr;
-    for (itr=m_pMouseScrollWheels.begin() ; itr!=m_pMouseScrollWheels.end(); itr++)
+    CAResponder* responder = NULL;
+    for (std::set<CAResponder*>::iterator itr=m_pMouseScrollWheels.begin();
+         itr!=m_pMouseScrollWheels.end(); itr++)
     {
-        if (CAView* responder = dynamic_cast<CAView*>(*itr))
+        if (responder == NULL)
         {
-            CCPoint point = responder->convertTouchToNodeSpace(pTouch);
-            if (responder->getBounds().containsPoint(point))
-            {
-                responder->mouseScrollWheel(pTouch, off_x, off_y, pEvent);
-            }
+            responder = *itr;
         }
-        else if (CAViewController* responder = dynamic_cast<CAViewController*>(*itr))
+        else if (responder->getZLevel() < (*itr)->getZLevel())
         {
-            CCPoint point = responder->getView()->convertTouchToNodeSpace(pTouch);
-            if (responder->getView()->getBounds().containsPoint(point))
-            {
-                responder->mouseScrollWheel(pTouch, off_x, off_y, pEvent);
-            }
+            responder = *itr;
+        }
+    }
+    
+    if (CAView* view = dynamic_cast<CAView*>(responder))
+    {
+        CCPoint point = view->convertTouchToNodeSpace(pTouch);
+        if (view->getBounds().containsPoint(point))
+        {
+            view->mouseScrollWheel(pTouch, off_x, off_y, pEvent);
+        }
+    }
+    else if (CAViewController* viewController = dynamic_cast<CAViewController*>(responder))
+    {
+        CCPoint point = viewController->getView()->convertTouchToNodeSpace(pTouch);
+        if (viewController->getView()->getBounds().containsPoint(point))
+        {
+            viewController->mouseScrollWheel(pTouch, off_x, off_y, pEvent);
         }
     }
 }

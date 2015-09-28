@@ -54,6 +54,8 @@ public:
     
     CC_PROPERTY_IS(bool, m_bMouseScrollWheelEnabled, MouseScrollWheelEnabled);// default is false
     
+    CC_SYNTHESIZE_READONLY(unsigned long, m_uZLevel, ZLevel);
+    
     virtual bool isReachBoundaryLeft() {return false;}
     
     virtual bool isReachBoundaryRight() {return false;}

@@ -115,11 +115,13 @@ public:
    
 protected:
     
+    CC_SYNTHESIZE_READONLY(unsigned long, m_uSerialNumberOfDraws, SerialNumberOfDraws);
+    
     CC_PROPERTY_READONLY(unsigned int, m_uTotalQuads, TotalQuads)
     
     CC_PROPERTY_READONLY(unsigned int, m_uCapacity, Capacity)
     
-    CC_PROPERTY(CAImage *, m_pImage, Image)
+    CC_PROPERTY(CAImage*, m_pImage, Image)
     
     CC_PROPERTY(ccV3F_C4B_T2F_Quad *, m_pQuads, Quads)
     
