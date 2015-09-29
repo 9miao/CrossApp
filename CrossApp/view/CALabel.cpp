@@ -174,8 +174,6 @@ void CALabel::updateImage()
 
     this->setImage(image);
 	CC_RETURN_IF(image == NULL);
-	image->saveToFile("c:\\xxx.bmp");
-
     m_cLabelSize = size;
     
     CCRect rect = CCRectZero;
