@@ -68,6 +68,7 @@ public:
     virtual ~CAImage();
     
     static CAImage* createWithString(const char *text,
+									 const CAColor4B& fontColor,
                                      const char *fontName,
                                      float fontSize,
                                      const CCSize& dimensions,

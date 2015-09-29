@@ -36,6 +36,7 @@ CALabel::CALabel()
 ,m_bItalics(false)
 ,m_bUnderLine(false)
 ,m_bEnableCopy(false)
+, m_cFontColor(CAColor_black)
 {
     m_obContentSize = CCSizeZero;
 }
@@ -159,6 +160,7 @@ void CALabel::updateImage()
     
     
 	CAImage* image = CAImage::createWithString(m_nText.c_str(),
+											   m_cFontColor,
                                                m_nfontName.c_str(),
                                                m_nfontSize,
                                                size,
@@ -172,6 +174,7 @@ void CALabel::updateImage()
 
     this->setImage(image);
 	CC_RETURN_IF(image == NULL);
+	image->saveToFile("c:\\xxx.bmp");
 
     m_cLabelSize = size;
     
@@ -438,6 +441,18 @@ void CALabel::setContentSize(const CrossApp::CCSize &var)
     }
 }
 
+const CAColor4B& CALabel::getFontColor(void)
+{
+	return m_cFontColor;
+}
+
+void CALabel::setFontColor(const CAColor4B& color)
+{
+	m_cFontColor = color;
+	updateImage();
+	CAView::setColor(CAColor_white);
+}
+
 void CALabel::visit()
 {
     if (m_bUpdateImage)
@@ -460,7 +475,8 @@ void CALabel::applyStyle(const CALabelStyle* pLabelStyle)
 
 	setFontName(pLabelStyle->getFontName());
 	setFontSize(pLabelStyle->getFontSize());
-	setColor(pLabelStyle->getFontColor());
+	
+//	setColor(pLabelStyle->getFontColor());
 	setLineSpacing(pLabelStyle->getLineSpace());
 	setBold(pLabelStyle->isBold());
 	setItalics(pLabelStyle->isItalics());

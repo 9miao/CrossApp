@@ -586,7 +586,7 @@ void CAButton::setControlState(const CAControlState& var)
     {
         m_pImageView->setImage(image);
     }
-    m_pLabel->setColor(m_sTitleColor[m_eControlState]);
+    m_pLabel->setFontColor(m_sTitleColor[m_eControlState]);
 
     
     if (!m_pTitleLabelSize.equals(CCSizeZero))

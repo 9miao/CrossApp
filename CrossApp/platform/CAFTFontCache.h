@@ -40,7 +40,7 @@ public:
 
 	int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 
-	CAImage* initWithString(const char* pText, const char* pFontName, int nSize, int width, int height,
+	CAImage* initWithString(const char* pText, const CAColor4B& fontColor, const char* pFontName, int nSize, int width, int height,
 		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false, std::vector<TextViewLineInfo>* pLinesText = 0);
 
     void destroyAllFontData();

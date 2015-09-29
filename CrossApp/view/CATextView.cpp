@@ -41,6 +41,7 @@ CATextView::CATextView()
 , m_bMoved(false)
 , m_bKeyboardOpen(false)
 , m_bFirstInput(false)
+, m_cFontColor(CAColor_black)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
     this->setHaveNextResponder(false);
@@ -235,6 +236,7 @@ void CATextView::updateImage()
 	width -= m_iHoriMargins * 2;
 
 	CAImage* image = g_AFTFontCache.initWithString(text.c_str(),
+		m_cFontColor,
 		m_szFontName.c_str(),
 		m_iFontSize,
 		width,

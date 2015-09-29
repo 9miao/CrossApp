@@ -1020,10 +1020,10 @@ CAImage::~CAImage()
     s_pImages.erase(this);
 }
 
-CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment,
+CAImage*  CAImage::createWithString(const char *text, const CAColor4B& fontColor, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment,
                                     CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine)
 {
-    return g_AFTFontCache.initWithString(text, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine);
+	return g_AFTFontCache.initWithString(text, fontColor, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine);
 }
 
 int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)

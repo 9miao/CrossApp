@@ -68,7 +68,7 @@ void CAFreeTypeFont::destroyAllFontBuff()
 }
 
 
-CAImage* CAFreeTypeFont::initWithString(const std::string& pText, const std::string& pFontName, int nSize, int inWidth, int inHeight,
+CAImage* CAFreeTypeFont::initWithString(const std::string& pText, const CAColor4B& fontColor, const std::string& pFontName, int nSize, int inWidth, int inHeight,
 	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, std::vector<TextViewLineInfo>* pLinesText)
 {
 	if (pText.empty())
@@ -86,6 +86,7 @@ _AgaginInitGlyphs:
 	m_bBold = bBold;
 	m_bItalics = bItalics;
 	m_bUnderLine = bUnderLine;
+	m_cFontColor = fontColor;
 	
 	FT_Error error = initGlyphs(cszNewText.c_str());
 	if (error) return NULL;
@@ -522,10 +523,15 @@ void CAFreeTypeFont::draw_bitmap(unsigned char* pBuffer, bool emoji, FT_Bitmap* 
 			if (emoji)
 			{
 				FT_Int index = (j * m_width * 4) + (i * 4);
-				pBuffer[index++] = 0xff;
-				pBuffer[index++] = 0;
-				pBuffer[index++] = 0xff;
-				pBuffer[index++] = bitmap->buffer[q * bitmap->width + p];
+				
+				unsigned char value = bitmap->buffer[q * bitmap->width + p];
+				if (value > 0)
+				{
+					pBuffer[index++] = m_cFontColor.r*value / 255.0f;
+					pBuffer[index++] = m_cFontColor.g*value / 255.0f;
+					pBuffer[index++] = m_cFontColor.b*value / 255.0f;
+					pBuffer[index++] = value;
+				}
 			}
 			else
 			{
