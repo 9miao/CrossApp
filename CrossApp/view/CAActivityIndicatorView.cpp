@@ -49,7 +49,7 @@ CAActivityIndicatorView* CAActivityIndicatorView::create()
     return view;
 }
 
-CAActivityIndicatorView* CAActivityIndicatorView::createWithFrame(const CCRect& rect)
+CAActivityIndicatorView* CAActivityIndicatorView::createWithFrame(const DRect& rect)
 {
     CAActivityIndicatorView* view = new CAActivityIndicatorView();
     if (view && view->initWithFrame(rect)) {
@@ -60,7 +60,7 @@ CAActivityIndicatorView* CAActivityIndicatorView::createWithFrame(const CCRect& 
     return view;
 }
 
-CAActivityIndicatorView* CAActivityIndicatorView::createWithCenter(const CCRect& rect)
+CAActivityIndicatorView* CAActivityIndicatorView::createWithCenter(const DRect& rect)
 {
     CAActivityIndicatorView* view = new CAActivityIndicatorView();
     if (view && view->initWithCenter(rect)) {
@@ -112,7 +112,7 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
         this->removeSubview(m_pBackView);
         CC_SAFE_RELEASE(m_pBackView);
         
-        CCRect center = getBounds();
+        DRect center = getBounds();
         center.origin = center.size/2;
         CAImage* image = NULL;
         
@@ -121,24 +121,24 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
             case CAActivityIndicatorViewStyleGray:
             {
                 image = CAImage::create("source_material/loading_black.png");
-                center.size = CCSize(40, 40);
+                center.size = DSize(40, 40);
             }
                 break;
             case CAActivityIndicatorViewStyleWhite:
             {
                 image = CAImage::create("source_material/loading_write.png");
-                center.size = CCSize(40, 40);
+                center.size = DSize(40, 40);
             }                break;
             case CAActivityIndicatorViewStyleGrayLarge:
             {
                 image = CAImage::create("source_material/loading_black.png");
-                center.size = CCSize(68, 68);
+                center.size = DSize(68, 68);
             }
                 break;
             case CAActivityIndicatorViewStyleWhiteLarge:
             {
                 image = CAImage::create("source_material/loading_write.png");
-                center.size = CCSize(68, 68);
+                center.size = DSize(68, 68);
             }
                 break;
             
@@ -268,7 +268,7 @@ CAView* CAActivityIndicatorView::getActivityBackView()
     return m_pBackView;
 }
 
-void CAActivityIndicatorView::setContentSize(const CCSize & var)
+void CAActivityIndicatorView::setContentSize(const DSize & var)
 {
     CAView::setContentSize(var);
     this->setStyle(m_style);

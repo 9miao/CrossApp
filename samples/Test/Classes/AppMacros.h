@@ -32,20 +32,20 @@
 
 typedef struct tagResource
 {
-    CrossApp::CCSize size;
+    CrossApp::DSize size;
     char directory[100];
 }Resource;
 
-static Resource smallResource  =  { CrossApp::CCSizeMake(480, 320),   "iphone" };
-static Resource mediumResource =  { CrossApp::CCSizeMake(1024, 768),  "ipad"   };
-static Resource largeResource  =  { CrossApp::CCSizeMake(2048, 1536), "ipadhd" };
+static Resource smallResource  =  { CrossApp::DSize(480, 320),   "iphone" };
+static Resource mediumResource =  { CrossApp::DSize(1024, 768),  "ipad"   };
+static Resource largeResource  =  { CrossApp::DSize(2048, 1536), "ipadhd" };
 
 #if (TARGET_DESIGN_RESOLUTION_SIZE == DESIGN_RESOLUTION_480X320)
-static CrossApp::CCSize designResolutionSize = CrossApp::CCSizeMake(480, 320);
+static CrossApp::DSize designResolutionSize = CrossApp::DSize(480, 320);
 #elif (TARGET_DESIGN_RESOLUTION_SIZE == DESIGN_RESOLUTION_1024X768)
-static CrossApp::CCSize designResolutionSize = CrossApp::CCSizeMake(1024, 768);
+static CrossApp::DSize designResolutionSize = CrossApp::DSize(1024, 768);
 #elif (TARGET_DESIGN_RESOLUTION_SIZE == DESIGN_RESOLUTION_2048X1536)
-static CrossApp::CCSize designResolutionSize = CrossApp::CCSizeMake(2048, 1536);
+static CrossApp::DSize designResolutionSize = CrossApp::DSize(2048, 1536);
 #else
 #error unknown target design resolution!
 #endif

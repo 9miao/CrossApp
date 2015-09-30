@@ -259,7 +259,7 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 
-        CAImageView* imageView = CAImageView::createWithFrame(CCRect(0, 0, m_uPixelsWide, m_uPixelsHigh));
+        CAImageView* imageView = CAImageView::createWithFrame(DRect(0, 0, m_uPixelsWide, m_uPixelsHigh));
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
         imageView->setBlendFunc(tBlendFunc);
         this->addSubview(imageView);
@@ -281,24 +281,24 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
 
 void CARenderImage::printscreenWithView(CAView* view)
 {
-    this->printscreenWithView(view, CCPointZero);
+    this->printscreenWithView(view, DPointZero);
 }
 
-void CARenderImage::printscreenWithView(CAView* view, CCPoint offset)
+void CARenderImage::printscreenWithView(CAView* view, DPoint offset)
 {
     this->printscreenWithView(view, offset, CAColor_clear);
 }
 
 void CARenderImage::printscreenWithView(CAView* view, const CAColor4B& backgroundColor)
 {
-    this->printscreenWithView(view, CCPointZero, backgroundColor);
+    this->printscreenWithView(view, DPointZero, backgroundColor);
 }
 
-void CARenderImage::printscreenWithView(CAView* view, CCPoint offset, const CAColor4B& backgroundColor)
+void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CAColor4B& backgroundColor)
 {
     CC_RETURN_IF(view == NULL);
     
-    CCPoint point = CCPointZero;
+    DPoint point = DPointZero;
     if (view->getSuperview())
     {
         point.y += view->getSuperview()->getFrame().size.height;
@@ -311,11 +311,11 @@ void CARenderImage::printscreenWithView(CAView* view, CCPoint offset, const CACo
     point.y += offset.y;
     point.x -= offset.x;
     
-    CCPoint originalFrameOrigin = view->getFrameOrigin();
-    CCPoint originalAnchorPoint = view->getAnchorPoint();
+    DPoint originalFrameOrigin = view->getFrameOrigin();
+    DPoint originalAnchorPoint = view->getAnchorPoint();
     float originalRotationX = view->getRotationX();
     
-    view->setAnchorPoint(CCPoint(0.5f, 0.5f));
+    view->setAnchorPoint(DPoint(0.5f, 0.5f));
     view->setRotationX(originalRotationX + 180);
     view->setFrameOrigin(point);
     
@@ -336,7 +336,7 @@ void CARenderImage::begin()
     kmGLPushMatrix();
 
     // Calculate the adjustment ratios based on the old and new projections
-    CCSize size = CAApplication::getApplication()->getWinSize();
+    DSize size = CAApplication::getApplication()->getWinSize();
     float widthRatio = size.width / m_uPixelsWide;
     float heightRatio = size.height / m_uPixelsHigh;
 
@@ -575,8 +575,8 @@ bool CARenderImage::saveToFile(const char *szFilePath)
 }
 
 
-void CARenderImage::setContentSize(const CCSize& contentSize)
+void CARenderImage::setContentSize(const DSize& contentSize)
 {
-    CAView::setContentSize(CCSize(m_uPixelsWide, m_uPixelsHigh));
+    CAView::setContentSize(DSize(m_uPixelsWide, m_uPixelsHigh));
 }
 NS_CC_END

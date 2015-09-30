@@ -10,7 +10,7 @@
 #include "view/CAImageView.h"
 #include "dispatcher/CATouch.h"
 #include "view/CAScale9ImageView.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "view/CARenderImage.h"
 #include "basics/CAApplication.h"
 
@@ -65,7 +65,7 @@ void CASlider::onEnterTransitionDidFinish()
         this->setThumbTintImage(CAImage::create("source_material/slider_indicator.png"));
     }
     
-    const CCSize size = this->getBounds().size;
+    const DSize size = this->getBounds().size;
     
     if (m_fTrackHeight > size.height)
     {
@@ -85,8 +85,8 @@ void CASlider::onEnterTransitionDidFinish()
     if (NULL == m_pThumbTintImageView)
     {
         m_pThumbTintImageView = CAImageView::createWithImage(m_pThumbTintImage);
-        const CCSize size = this->getBounds().size;
-        m_pThumbTintImageView->setFrame(CCRect(0, 0, size.height, size.height));
+        const DSize size = this->getBounds().size;
+        m_pThumbTintImageView->setFrame(DRect(0, 0, size.height, size.height));
     }
     if (m_pThumbTintImageView && m_pThumbTintImageView->getSuperview() == NULL)
     {
@@ -105,7 +105,7 @@ void CASlider::onEnterTransitionDidFinish()
     this->layoutSubViews();
 }
 
-CASlider* CASlider::createWithFrame(const CCRect& rect)
+CASlider* CASlider::createWithFrame(const DRect& rect)
 {
     CASlider* slider = new CASlider();
     
@@ -119,7 +119,7 @@ CASlider* CASlider::createWithFrame(const CCRect& rect)
     return NULL;
 }
 
-CASlider* CASlider::createWithCenter(const CCRect& rect)
+CASlider* CASlider::createWithCenter(const DRect& rect)
 {
     CASlider* slider = new CASlider();
     
@@ -133,7 +133,7 @@ CASlider* CASlider::createWithCenter(const CCRect& rect)
     return NULL;
 }
 
-bool CASlider::initWithFrame(const CCRect& rect)
+bool CASlider::initWithFrame(const DRect& rect)
 {
     if (!CAControl::init())
     {
@@ -144,7 +144,7 @@ bool CASlider::initWithFrame(const CCRect& rect)
     return true;
 }
 
-bool CASlider::initWithCenter(const CCRect& rect)
+bool CASlider::initWithCenter(const DRect& rect)
 {
     if (!CAControl::init())
     {
@@ -163,8 +163,8 @@ void CASlider::layoutSubViews()
         && m_pMinTrackTintImageView
         && m_pMaxTrackTintImageView)
     {
-        const CCSize size = this->getBounds().size;
-        const CCSize thumbSize = m_pThumbTintImageView->getBounds().size;
+        const DSize size = this->getBounds().size;
+        const DSize thumbSize = m_pThumbTintImageView->getBounds().size;
         const float halfThumbWidth = thumbSize.width / 2;
         const float totalWidth = size.width;
         const float percent = m_fValue / (m_fMaxValue - m_fMinValue);
@@ -173,9 +173,9 @@ void CASlider::layoutSubViews()
         const float minRight = centerX - halfThumbWidth;
         const float maxLeft = centerX + halfThumbWidth;
         
-        m_pThumbTintImageView->setCenterOrigin(CCPoint(centerX, size.height / 2));
-        m_pMinTrackTintImageView->setFrame(CCRect(0, trackOriginY, minRight, m_fTrackHeight));
-        m_pMaxTrackTintImageView->setFrame(CCRect(maxLeft, trackOriginY, size.width - maxLeft, m_fTrackHeight));
+        m_pThumbTintImageView->setCenterOrigin(DPoint(centerX, size.height / 2));
+        m_pMinTrackTintImageView->setFrame(DRect(0, trackOriginY, minRight, m_fTrackHeight));
+        m_pMaxTrackTintImageView->setFrame(DRect(maxLeft, trackOriginY, size.width - maxLeft, m_fTrackHeight));
     }
 }
 
@@ -255,8 +255,8 @@ void CASlider::setThumbTintImage(CAImage* image)
         if (m_pThumbTintImageView)
         {
             ((CAScale9ImageView*)m_pThumbTintImageView)->setImage(m_pThumbTintImage);
-            const CCSize size = this->getBounds().size;
-            m_pThumbTintImageView->setFrame(CCRect(0, 0, size.height, size.height));
+            const DSize size = this->getBounds().size;
+            m_pThumbTintImageView->setFrame(DRect(0, 0, size.height, size.height));
         }
         this->layoutSubViews();
     }
@@ -264,7 +264,7 @@ void CASlider::setThumbTintImage(CAImage* image)
 
 bool CASlider::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
 	m_bTouchClick = true;
@@ -273,13 +273,13 @@ bool CASlider::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CASlider::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
     if (!this->isTouchClick())
         return;
     
-    CCRect bounds = getBounds();
+    DRect bounds = getBounds();
     float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width);
     value = (point.x <= 0) ? m_fMinValue : ((point.x >= bounds.size.width) ? m_fMaxValue : value);
     this->setValue(value);
@@ -295,9 +295,9 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     if (!this->isTouchClick())
         return;
     
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
-    CCRect bounds = getBounds();
+    DRect bounds = getBounds();
     if (bounds.containsPoint(point))
     {
         float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width);
@@ -329,9 +329,9 @@ void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
     this->removeTarget(target, selector, CAControlEventTouchValueChanged);
 }
 
-void CASlider::setContentSize(const CCSize & var)
+void CASlider::setContentSize(const DSize & var)
 {
-    CAControl::setContentSize(CCSize(var.width, var.height));
+    CAControl::setContentSize(DSize(var.width, var.height));
 }
 
 NS_CC_END

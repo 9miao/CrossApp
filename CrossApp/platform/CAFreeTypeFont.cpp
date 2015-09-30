@@ -456,7 +456,7 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
             {
                 s_EmojiFont = new CAEmojiFont();
             }
-			CAImage* pEmoji = CAImage::scaleToNewImageWithImage(s_EmojiFont->getEmojiImage(glyph->c, m_inFontSize), CCSizeMake(m_inFontSize,m_inFontSize));
+			CAImage* pEmoji = CAImage::scaleToNewImageWithImage(s_EmojiFont->getEmojiImage(glyph->c, m_inFontSize), DSize(m_inFontSize,m_inFontSize));
 
 			FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
 			FT_Int y = (FT_Int)(pen->y - m_inFontSize);

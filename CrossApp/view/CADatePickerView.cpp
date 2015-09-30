@@ -42,7 +42,7 @@ CADatePickerView* CADatePickerView::create(const CADatePickerMode& m_mode)
     return view;
 }
 
-CADatePickerView* CADatePickerView::createWithFrame(const CCRect& rect,const CADatePickerMode& m_mode)
+CADatePickerView* CADatePickerView::createWithFrame(const DRect& rect,const CADatePickerMode& m_mode)
 {
     CADatePickerView* view = new CADatePickerView(m_mode);
     if (view && view->initWithFrame(rect)) {
@@ -53,7 +53,7 @@ CADatePickerView* CADatePickerView::createWithFrame(const CCRect& rect,const CAD
     return view;
 }
 
-CADatePickerView* CADatePickerView::createWithCenter(const CCRect& rect,const CADatePickerMode& m_mode)
+CADatePickerView* CADatePickerView::createWithCenter(const DRect& rect,const CADatePickerMode& m_mode)
 {
     CADatePickerView* view = new CADatePickerView(m_mode);
     if (view && view->initWithCenter(rect)) {
@@ -105,7 +105,7 @@ void CADatePickerView::visit()
 }
 
 
-bool CADatePickerView::initWithFrame(const CCRect& rect)
+bool CADatePickerView::initWithFrame(const DRect& rect)
 {
     if (CAControl::initWithFrame(rect) && m_pPickerView)
     {
@@ -116,7 +116,7 @@ bool CADatePickerView::initWithFrame(const CCRect& rect)
     return false;
 }
 
-bool CADatePickerView::initWithCenter(const CCRect& rect)
+bool CADatePickerView::initWithCenter(const DRect& rect)
 {
     if (CAControl::initWithCenter(rect) && m_pPickerView)
     {

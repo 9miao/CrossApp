@@ -15,14 +15,14 @@ class CC_DLL CAViewModel : public CAObject
 {
 public:
     
-    CCPoint startPoint;
-    CCPoint endPoint;
-    CCPoint deltaPoint;
+    DPoint startPoint;
+    DPoint endPoint;
+    DPoint deltaPoint;
     bool bPoint;
     
-    CCSize startContentSize;
-    CCSize endContentSize;
-    CCSize deltaContentSize;
+    DSize startContentSize;
+    DSize endContentSize;
+    DSize deltaContentSize;
     bool bContentSize;
     
     float startScaleX;
@@ -75,9 +75,9 @@ public:
     float deltaAlpha;
     bool bAlpha;
     
-    CCRect startImageRect;
-    CCRect endImageRect;
-    CCRect deltaImageRect;
+    DRect startImageRect;
+    DRect endImageRect;
+    DRect deltaImageRect;
     bool bImageRect;
     
     bool startFlipX;
@@ -582,7 +582,7 @@ void CAViewAnimation::update(float dt)
                 }
                 if (model->bImageRect)
                 {
-                    CCRect rect;
+                    DRect rect;
                     rect.origin = model->startImageRect.origin + model->deltaImageRect.origin * s;
                     rect.size = model->startImageRect.size + model->deltaImageRect.size * s;
                     view->setImageRect(rect);
@@ -631,7 +631,7 @@ void CAViewAnimation::update(float dt)
     }
 }
 
-void CAViewAnimation::setPoint(const CCPoint& point, CAView* view)
+void CAViewAnimation::setPoint(const DPoint& point, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
     CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
@@ -639,7 +639,7 @@ void CAViewAnimation::setPoint(const CCPoint& point, CAView* view)
     model->endPoint = point;
 }
 
-void CAViewAnimation::setContentSize(const CCSize& size, CAView* view)
+void CAViewAnimation::setContentSize(const DSize& size, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
     CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
@@ -727,7 +727,7 @@ void CAViewAnimation::setAlpha(float alpha, CAView* view)
     model->endAlpha = alpha;
 }
 
-void CAViewAnimation::setImageRect(const CCRect& imageRect, CAView* view)
+void CAViewAnimation::setImageRect(const DRect& imageRect, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
     CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);

@@ -1,6 +1,6 @@
 
 #include "CAWindow.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "basics/CAApplication.h"
 #include "animation/CAViewAnimation.h"
 #include "dispatcher/CATouchDispatcher.h"
@@ -26,7 +26,7 @@ bool CAWindow::init()
     bool bRet = false;
     if (CAApplication* pApplication = CAApplication::getApplication())
     {
-        CCRect rect = CCRectZero;
+        DRect rect = DRectZero;
         rect.size = pApplication->getWinSize();
         this->setFrame(rect);
         bRet = true;
@@ -87,11 +87,11 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
     if (animated)
     {
         CAView* view = m_pModalViewController->getView();
-        CCRect frame = view->getFrame();
+        DRect frame = view->getFrame();
         frame.origin.y = frame.size.height;
         view->setFrame(frame);
         
-        CCRect endFrame = CCRectZero;
+        DRect endFrame = DRectZero;
         endFrame.size = view->getFrame().size;
         
         CAViewAnimation::beginAnimations("", NULL);
@@ -131,7 +131,7 @@ void CAWindow::dismissModalViewController(bool animated)
     {
         CAView* view = m_pModalViewController->getView();
         
-        CCRect endFrame = view->getFrame();
+        DRect endFrame = view->getFrame();
         endFrame.origin.y = endFrame.size.height;
         
         CAViewAnimation::beginAnimations("", NULL);

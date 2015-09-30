@@ -75,9 +75,9 @@ static bool splitWithForm(const char* pStr, strArray& strs)
 
 // implement the functions
 
-CCRect CCRectFromString(const char* pszContent)
+DRect DRectFromString(const char* pszContent)
 {
-    CCRect result = CCRectZero;
+    DRect result = DRectZero;
 
     do 
     {
@@ -118,15 +118,15 @@ CCRect CCRectFromString(const char* pszContent)
         float width  = (float) atof(sizeInfo[0].c_str());
         float height = (float) atof(sizeInfo[1].c_str());
 
-        result = CCRectMake(x, y, width, height);
+        result = DRect(x, y, width, height);
     } while (0);
 
     return result;
 }
 
-CCPoint CCPointFromString(const char* pszContent)
+DPoint DPointFromString(const char* pszContent)
 {
-    CCPoint ret = CCPointZero;
+    DPoint ret = DPointZero;
 
     do 
     {
@@ -136,15 +136,15 @@ CCPoint CCPointFromString(const char* pszContent)
         float x = (float) atof(strs[0].c_str());
         float y = (float) atof(strs[1].c_str());
 
-        ret = CCPointMake(x, y);
+        ret = DPoint(x, y);
     } while (0);
 
     return ret;
 }
 
-CCSize CCSizeFromString(const char* pszContent)
+DSize DSizeFromString(const char* pszContent)
 {
-    CCSize ret = CCSizeZero;
+    DSize ret = DSizeZero;
 
     do 
     {
@@ -154,7 +154,7 @@ CCSize CCSizeFromString(const char* pszContent)
         float width  = (float) atof(strs[0].c_str());
         float height = (float) atof(strs[1].c_str());
 
-        ret = CCSizeMake(width, height);
+        ret = DSize(width, height);
     } while (0);
 
     return ret;

@@ -30,7 +30,7 @@ CAGifView::~CAGifView()
     CC_SAFE_DELETE(m_pGif);
 }
 
-CAGifView* CAGifView::createWithCenter(const CrossApp::CCRect &rect)
+CAGifView* CAGifView::createWithCenter(const CrossApp::DRect &rect)
 {
     CAGifView * pRet = new CAGifView();
     if (pRet && pRet->init())
@@ -43,7 +43,7 @@ CAGifView* CAGifView::createWithCenter(const CrossApp::CCRect &rect)
     return NULL;
 }
 
-CAGifView* CAGifView::createWithFrame(const CrossApp::CCRect &rect)
+CAGifView* CAGifView::createWithFrame(const CrossApp::DRect &rect)
 {
     CAGifView *pRet = new CAGifView();
     if (pRet && pRet->init())
@@ -83,13 +83,13 @@ bool CAGifView::initWithGif(CAGif* gif)
     return false;
 }
 
-void CAGifView::setFrame(CCRect rect)
+void CAGifView::setFrame(DRect rect)
 {
     CAView::setFrame(rect);
     this->setGifBounds(rect.size);
 }
 
-void CAGifView::setCenter(CCRect rect)
+void CAGifView::setCenter(DRect rect)
 {
     CAView::setCenter(rect);
     this->setGifBounds(rect.size);
@@ -112,7 +112,7 @@ void CAGifView::setGif(CAGif* gif)
     {
         CAImage* image = m_pGif->getImage();
         this->setImage(image);
-        CCRect rect = CCRectZero;
+        DRect rect = DRectZero;
         rect.size = image->getContentSize();
         this->setImageRect(rect);
         if(m_pGif->getGifImageCounts()>1)
@@ -124,13 +124,13 @@ void CAGifView::setGif(CAGif* gif)
     }
 }
 
-void CAGifView::setGifBounds(CCSize size)
+void CAGifView::setGifBounds(DSize size)
 {
-    CCSize newSize;
-    CCSize contentSize = size;
+    DSize newSize;
+    DSize contentSize = size;
     if(m_pGif)
     {
-        CCSize gifSize = CCSize(m_pGif->getWidth(),m_pGif->getHeight());
+        DSize gifSize = DSize(m_pGif->getWidth(),m_pGif->getHeight());
         newSize = compareSize(contentSize,gifSize);
         m_fLeft = (contentSize.width - newSize.width)*0.5;
         m_fRight = m_fLeft + newSize.width;
@@ -139,9 +139,9 @@ void CAGifView::setGifBounds(CCSize size)
     }
 }
 
-CCSize CAGifView::compareSize(CCSize setSize, CCSize gifSize)
+DSize CAGifView::compareSize(DSize setSize, DSize gifSize)
 {
-    CCSize size = CCSizeZero;
+    DSize size = DSizeZero;
     float rate = setSize.width/setSize.height;
     float rateGif = gifSize.width/gifSize.height;
     if(rate>rateGif)
@@ -179,7 +179,7 @@ void CAGifView::updateGif(float delta)
         this->setImage(image);
         if (image)
         {
-            CCRect rect = CCRectZero;
+            DRect rect = DRectZero;
             rect.size = image->getContentSize();
             this->setImageRect(rect);
         }

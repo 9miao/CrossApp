@@ -34,8 +34,8 @@ public:
     virtual ~CAActivityIndicatorView();
     
     static CAActivityIndicatorView* create();
-    static CAActivityIndicatorView* createWithFrame(const CCRect& rect);
-    static CAActivityIndicatorView* createWithCenter(const CCRect& rect);
+    static CAActivityIndicatorView* createWithFrame(const DRect& rect);
+    static CAActivityIndicatorView* createWithCenter(const DRect& rect);
     
     virtual bool init();
 
@@ -65,7 +65,7 @@ public:
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_color, Color);
     
 protected:
-    void setContentSize(const CCSize & var);
+    void setContentSize(const DSize & var);
 
 private:
     float m_fLoadingTime;

@@ -9,7 +9,7 @@
 #include "CAPullToRefreshView.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "animation/CAViewAnimation.h"
 
 #pragma CAPullToRefreshView
@@ -90,21 +90,21 @@ bool CAPullToRefreshView::isLayoutFinish()
 
 void CAPullToRefreshView::startLayout()
 {
-    CCSize viewSize = this->getBounds().size;
-    CCRect imageViewAndLoadingCenter;
-    CCRect labelCenter;
+    DSize viewSize = this->getBounds().size;
+    DRect imageViewAndLoadingCenter;
+    DRect labelCenter;
     if (m_eLayoutLinearType == CALayoutLinearHorizontal)
     {
-        imageViewAndLoadingCenter.size = CCSize(25, 120);
-        imageViewAndLoadingCenter.origin = CCPoint(viewSize.width / 2 - 160, viewSize.height/2);
-        labelCenter.size = CCSize(256, 80);
+        imageViewAndLoadingCenter.size = DSize(25, 120);
+        imageViewAndLoadingCenter.origin = DPoint(viewSize.width / 2 - 160, viewSize.height/2);
+        labelCenter.size = DSize(256, 80);
         labelCenter.origin = viewSize/2;
     }
     else
     {
-        imageViewAndLoadingCenter.size = CCSize(120, 25);
-        imageViewAndLoadingCenter.origin = CCPoint(viewSize.width / 2 - 160, 170);
-        labelCenter.size = CCSize(80, 256);
+        imageViewAndLoadingCenter.size = DSize(120, 25);
+        imageViewAndLoadingCenter.origin = DPoint(viewSize.width / 2 - 160, 170);
+        labelCenter.size = DSize(80, 256);
         labelCenter.origin = viewSize/2;
     }
     

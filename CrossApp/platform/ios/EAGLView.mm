@@ -878,11 +878,11 @@ static EAGLView *view = 0;
 
     
     CrossApp::CCIMEKeyboardNotificationInfo notiInfo;
-    notiInfo.begin = CrossApp::CCRect(begin.origin.x,
+    notiInfo.begin = CrossApp::DRect(begin.origin.x,
                                      begin.origin.y,
                                      begin.size.width,
                                      begin.size.height);
-    notiInfo.end = CrossApp::CCRect(end.origin.x,
+    notiInfo.end = CrossApp::DRect(end.origin.x,
                                    end.origin.y,
                                    end.size.width,
                                    end.size.height);

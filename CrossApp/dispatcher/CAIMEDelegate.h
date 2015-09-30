@@ -16,8 +16,8 @@ NS_CC_BEGIN
 
 typedef struct
 {
-    CCRect  begin;              // the soft keyboard rectangle when animation begins
-    CCRect  end;                // the soft keyboard rectangle when animation ends
+    DRect  begin;              // the soft keyboard rectangle when animation begins
+    DRect  end;                // the soft keyboard rectangle when animation ends
     float     duration;           // the soft keyboard animation duration
 } CCIMEKeyboardNotificationInfo;
 
@@ -78,8 +78,8 @@ protected:
     virtual void cursorMoveForward() {}
     virtual void cursorMoveUp() {}
     virtual void cursorMoveDown() {}
-	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt) {}
-	virtual void moveArrowBtn(const CCPoint& pt) {}
+	virtual void moveSelectChars(bool isLeftBtn, const DPoint& pt) {}
+	virtual void moveArrowBtn(const DPoint& pt) {}
 
 	virtual void copyToClipboard() {}
 	virtual void cutToClipboard() {}

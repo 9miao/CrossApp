@@ -17,12 +17,12 @@ CAScale9ImageView::CAScale9ImageView()
 , m_fInsetTop(0)
 , m_fInsetRight(0)
 , m_fInsetBottom(0)
-, m_obCapInsets(CCRectZero)
-, m_obOriginalSize(CCSizeZero)
+, m_obCapInsets(DRectZero)
+, m_obOriginalSize(DSizeZero)
 , m_pScale9ImageView(NULL)
 , m_bUpdatePositions(false)
 {
-    m_obFrameRect = CCRectZero;
+    m_obFrameRect = DRectZero;
     memset(m_pImageView, 0, sizeof(m_pImageView));
 }
 
@@ -55,7 +55,7 @@ CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image)
 	return NULL;
 }
 
-CAScale9ImageView* CAScale9ImageView::createWithFrame(const CCRect& rect)
+CAScale9ImageView* CAScale9ImageView::createWithFrame(const DRect& rect)
 {
 	CAScale9ImageView* pReturn = new CAScale9ImageView();
 	if (pReturn && pReturn->CAView::initWithFrame(rect))
@@ -67,7 +67,7 @@ CAScale9ImageView* CAScale9ImageView::createWithFrame(const CCRect& rect)
 	return NULL;
 }
 
-CAScale9ImageView* CAScale9ImageView::createWithCenter(const CCRect& rect)
+CAScale9ImageView* CAScale9ImageView::createWithCenter(const DRect& rect)
 {
     CAScale9ImageView* pReturn = new CAScale9ImageView();
 	if (pReturn && pReturn->CAView::initWithCenter(rect))
@@ -169,9 +169,9 @@ void CAScale9ImageView::updatePositions()
     CC_RETURN_IF(m_bUpdatePositions);
     m_bUpdatePositions = true;
     
-    CCSize size = this->m_obContentSize;
+    DSize size = this->m_obContentSize;
     
-    CCRect newRect[9];
+    DRect newRect[9];
     
     for (int i=0; i<9; i++)
     {
@@ -250,7 +250,7 @@ void CAScale9ImageView::updatePositions()
     m_bUpdatePositions = false;
 }
 
-void CAScale9ImageView::setContentSize(const CCSize &size)
+void CAScale9ImageView::setContentSize(const DSize &size)
 {
     CAView::setContentSize(size);
     
@@ -262,7 +262,7 @@ void CAScale9ImageView::draw(void)
 
 }
 
-void CAScale9ImageView::setCapInsets(const CCRect& capInsets)
+void CAScale9ImageView::setCapInsets(const DRect& capInsets)
 {
     CC_RETURN_IF(m_obCapInsets.equals(capInsets));
     m_obCapInsets = capInsets;
@@ -274,9 +274,9 @@ void CAScale9ImageView::updateCapInset()
     float w = m_obOriginalSize.width;
     float h = m_obOriginalSize.height;
     
-    if ( m_obCapInsets.equals(CCRectZero) )
+    if ( m_obCapInsets.equals(DRectZero) )
     {
-        m_obCapInsets = CCRect(w/3, h/3, w/3, h/3);
+        m_obCapInsets = DRect(w/3, h/3, w/3, h/3);
     }
     
     const float lenghtX1 = m_obCapInsets.origin.x;
@@ -286,15 +286,15 @@ void CAScale9ImageView::updateCapInset()
     const float lenghtY2 = m_obCapInsets.size.height;
     const float lenghtY3 = h - lenghtY1 - lenghtY2;
     
-    m_rFrame[0] = CCRect(0, 0, lenghtX1, lenghtY1);
-    m_rFrame[1] = CCRect(lenghtX1, 0, lenghtX2, lenghtY1);
-    m_rFrame[2] = CCRect(lenghtX1 + lenghtX2, 0, lenghtX3, lenghtY1);
-    m_rFrame[3] = CCRect(0, lenghtY1, lenghtX1, lenghtY2);
-    m_rFrame[4] = CCRect(lenghtX1, lenghtY1, lenghtX2, lenghtY2);
-    m_rFrame[5] = CCRect(lenghtX1 + lenghtX2, lenghtY1, lenghtX3, lenghtY2);
-    m_rFrame[6] = CCRect(0, lenghtY1 + lenghtY2, lenghtX1, lenghtY3);
-    m_rFrame[7] = CCRect(lenghtX1, lenghtY1 + lenghtY2, lenghtX2, lenghtY3);
-    m_rFrame[8] = CCRect(lenghtX1 + lenghtX2, lenghtY1 + lenghtY2, lenghtX3, lenghtY3);
+    m_rFrame[0] = DRect(0, 0, lenghtX1, lenghtY1);
+    m_rFrame[1] = DRect(lenghtX1, 0, lenghtX2, lenghtY1);
+    m_rFrame[2] = DRect(lenghtX1 + lenghtX2, 0, lenghtX3, lenghtY1);
+    m_rFrame[3] = DRect(0, lenghtY1, lenghtX1, lenghtY2);
+    m_rFrame[4] = DRect(lenghtX1, lenghtY1, lenghtX2, lenghtY2);
+    m_rFrame[5] = DRect(lenghtX1 + lenghtX2, lenghtY1, lenghtX3, lenghtY2);
+    m_rFrame[6] = DRect(0, lenghtY1 + lenghtY2, lenghtX1, lenghtY3);
+    m_rFrame[7] = DRect(lenghtX1, lenghtY1 + lenghtY2, lenghtX2, lenghtY3);
+    m_rFrame[8] = DRect(lenghtX1 + lenghtX2, lenghtY1 + lenghtY2, lenghtX3, lenghtY3);
     
     CC_RETURN_IF(m_pobImage == NULL);
     
@@ -317,10 +317,10 @@ void CAScale9ImageView::updateDisplayedColor(const CrossApp::CAColor4B &color)
 void CAScale9ImageView::setInsetLeft(float insetLeft)
 {
     this->m_fInsetLeft = insetLeft;
-    CCRect insets = m_obCapInsets;
+    DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
-        insets = CCRect(m_fInsetLeft,
+        insets = DRect(m_fInsetLeft,
                         m_fInsetTop,
                         m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
                         m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
@@ -331,10 +331,10 @@ void CAScale9ImageView::setInsetLeft(float insetLeft)
 void CAScale9ImageView::setInsetTop(float insetTop)
 {
     this->m_fInsetTop = insetTop;
-    CCRect insets = m_obCapInsets;
+    DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
-        insets = CCRect(m_fInsetLeft,
+        insets = DRect(m_fInsetLeft,
                         m_fInsetTop,
                         m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
                         m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
@@ -345,10 +345,10 @@ void CAScale9ImageView::setInsetTop(float insetTop)
 void CAScale9ImageView::setInsetRight(float insetRight)
 {
     this->m_fInsetRight = insetRight;
-    CCRect insets = m_obCapInsets;
+    DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
-        insets = CCRect(m_fInsetLeft,
+        insets = DRect(m_fInsetLeft,
                         m_fInsetTop,
                         m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
                         m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
@@ -359,10 +359,10 @@ void CAScale9ImageView::setInsetRight(float insetRight)
 void CAScale9ImageView::setInsetBottom(float insetBottom)
 {
     this->m_fInsetBottom = insetBottom;
-    CCRect insets = m_obCapInsets;
+    DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
-        insets = CCRect(m_fInsetLeft,
+        insets = DRect(m_fInsetLeft,
                         m_fInsetTop,
                         m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
                         m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
@@ -405,12 +405,12 @@ void CAScale9ImageView::setImage(CrossApp::CAImage *image)
     }
 }
 
-bool CAScale9ImageView::initWithFrame(const CCRect& rect, const CAColor4B& color4B)
+bool CAScale9ImageView::initWithFrame(const DRect& rect, const CAColor4B& color4B)
 {
     return CAView::initWithFrame(rect);
 }
 
-bool CAScale9ImageView::initWithCenter(const CCRect& rect, const CAColor4B& color4B)
+bool CAScale9ImageView::initWithCenter(const DRect& rect, const CAColor4B& color4B)
 {
     return CAView::initWithCenter(rect);
 }

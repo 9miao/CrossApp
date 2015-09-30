@@ -115,7 +115,7 @@ public:
     inline CAApplication::Projection getProjection(void) { return m_eProjection; }
     void setProjection(CAApplication::Projection kProjection);
      /** reshape projection matrix when canvas has been change"*/
-    void reshapeProjection(const CCSize& newWindowSize);
+    void reshapeProjection(const DSize& newWindowSize);
     
     inline const CAStatusBarStyle& getStatusBarStyle() { return m_eStatusBarStyle; }
     void setStatusBarStyle(const CAStatusBarStyle& var);
@@ -150,27 +150,27 @@ public:
 
     /** returns the size of the OpenGL view in points.
     */
-    CCSize getWinSize(void);
+    DSize getWinSize(void);
 
     /** returns visible size of the OpenGL view in points.
      *  the value is equal to getWinSize if don't invoke
      *  CCEGLView::setDesignResolutionSize()
      */
-    CCSize getVisibleSize();
+    DSize getVisibleSize();
     
     /** returns visible origin of the OpenGL view in points.
      */
-    CCPoint getVisibleOrigin();
+    DPoint getVisibleOrigin();
 
     /** converts a UIKit coordinate to an OpenGL coordinate
      Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
      */
-    CCPoint convertToGL(const CCPoint& obPoint);
+    DPoint convertToGL(const DPoint& obPoint);
 
     /** converts an OpenGL coordinate to a UIKit coordinate
      Useful to convert node points to window points for calls such as glScissor
      */
-    CCPoint convertToUI(const CCPoint& obPoint);
+    DPoint convertToUI(const DPoint& obPoint);
 
     /// XXX: missing description 
     float getZEye(void);
@@ -336,7 +336,7 @@ protected:
     Projection m_eProjection;
 
     /* window size in points */
-    CCSize    m_obWinSizeInPoints;
+    DSize    m_obWinSizeInPoints;
 
     /* store the fps string */
     char *m_pszFPS;

@@ -52,7 +52,7 @@ public:
      * Get the frame size of EGL view.
      * In general, it returns the screen size since the EGL view is a fullscreen view.
      */
-    virtual const CCSize& getFrameSize() const;
+    virtual const DSize& getFrameSize() const;
 
     /**
      * Set the frame size of EGL view.
@@ -62,12 +62,12 @@ public:
     /**
      * Get the visible area size of opengl viewport.
      */
-    virtual CCSize getVisibleSize() const;
+    virtual DSize getVisibleSize() const;
 
     /**
      * Get the visible origin point of opengl viewport.
      */
-    virtual CCPoint getVisibleOrigin() const;
+    virtual DPoint getVisibleOrigin() const;
 
     /**
      * Set the design resolution size.
@@ -82,7 +82,7 @@ public:
     /** Get design resolution size.
      *  Default resolution size is the same as 'getFrameSize'.
      */
-    virtual const CCSize&  getDesignResolutionSize() const;
+    virtual const DSize&  getDesignResolutionSize() const;
 
     /** Set touch delegate */
     virtual void setTouchDelegate(CCEGLTouchDelegate * pDelegate);
@@ -107,7 +107,7 @@ public:
      * Get the current scissor rectangle
      * @lua NA
      */
-    virtual CCRect getScissorRect();
+    virtual DRect getScissorRect();
     /**
      * @lua NA
      */
@@ -150,7 +150,7 @@ public:
     /**
      * Get the opengl view port rectangle.
      */
-    const CCRect& getViewPortRect() const;
+    const DRect& getViewPortRect() const;
 
     /**
      * Get scale factor of the horizontal direction.
@@ -168,11 +168,11 @@ protected:
     CCEGLTouchDelegate* m_pDelegate;
 
     // real screen size
-    CCSize m_obScreenSize;
+    DSize m_obScreenSize;
     // resolution size, it is the size appropriate for the app resources.
-    CCSize m_obDesignResolutionSize;
+    DSize m_obDesignResolutionSize;
     // the view port size
-    CCRect m_obViewPortRect;
+    DRect m_obViewPortRect;
     // the view name
     char   m_szViewName[50];
 

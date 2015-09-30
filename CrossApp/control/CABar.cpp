@@ -11,7 +11,7 @@
 #include "view/CALabel.h"
 #include "view/CAScrollView.h"
 #include "basics/CAApplication.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "dispatcher/CATouch.h"
 #include "animation/CAViewAnimation.h"
 
@@ -53,16 +53,16 @@ CANavigationBar::~CANavigationBar()
     CC_SAFE_RELEASE(m_pBackGroundView);
 }
 
-bool CANavigationBar::init(const CCSize& size)
+bool CANavigationBar::init(const DSize& size)
 {
     this->setColor(CAColor_clear);
-    CCSize winSize = CAApplication::getApplication()->getWinSize();
-    CCSize contentSize;
+    DSize winSize = CAApplication::getApplication()->getWinSize();
+    DSize contentSize;
     contentSize.width = size.width > FLT_EPSILON ? MIN(winSize.width, size.width) : winSize.width;
     contentSize.height = size.height > FLT_EPSILON ? size.height : NAVBAR_HEIGHT;
-    this->setFrame(CCRect(0, 0, contentSize.width, contentSize.height));
+    this->setFrame(DRect(0, 0, contentSize.width, contentSize.height));
     
-    CCRect rect = this->getBounds();
+    DRect rect = this->getBounds();
     rect.size.height = NAVBAR_CONTENT_HEIGHT;
     rect.origin.y = NAVBAR_HEIGHT - NAVBAR_CONTENT_HEIGHT;
     m_pContentView = new CAView();
@@ -72,7 +72,7 @@ bool CANavigationBar::init(const CCSize& size)
     return true;
 }
 
-CANavigationBar* CANavigationBar::create(const CCSize& size)
+CANavigationBar* CANavigationBar::create(const DSize& size)
 {
     CANavigationBar* nav = new CANavigationBar();
     if (nav && nav->init(size))
@@ -159,7 +159,7 @@ void CANavigationBar::showBackGround()
 
 void CANavigationBar::showTitle()
 {
-    CCRect rect;
+    DRect rect;
     rect.size = m_pContentView->getBounds().size;
     rect.origin = rect.size/2;
     rect.size.width = rect.size.width - rect.size.height * 4;
@@ -173,7 +173,7 @@ void CANavigationBar::showTitle()
     if (CAView* titleView = m_pItem->getTitleView())
     {
         float aspectRatio = 0;
-        if (!titleView->getFrame().size.equals(CCSizeZero))
+        if (!titleView->getFrame().size.equals(DSizeZero))
         {
             aspectRatio = titleView->getFrame().size.width / titleView->getFrame().size.height;
         }
@@ -189,7 +189,7 @@ void CANavigationBar::showTitle()
         float height = MIN(image->getContentSize().height, rect.size.height * 0.75f);
         float width =  height * image->getContentSize().width / image->getContentSize().height;
         width = MIN(rect.size.width, width);
-        rect.size = CCSize(width, height);
+        rect.size = DSize(width, height);
         m_pTitle = CAImageView::createWithImage(image);
         m_pTitle->setCenter(rect);
         m_pContentView->addSubview(m_pTitle);
@@ -224,7 +224,7 @@ void CANavigationBar::showLeftButton()
     
     const CAVector<CAObject*>& buttonItems = m_pItem->getLeftButtonItems();
 
-    CCRect rect;
+    DRect rect;
     rect.size.width = _px(80);
     rect.size.height = m_pContentView->getBounds().size.height * 0.8f;
     rect.origin.x = rect.size.width * 0.7f;
@@ -285,7 +285,7 @@ void CANavigationBar::showRightButton()
     
     const CAVector<CAObject*>& buttonItems = m_pItem->getRightButtonItems();
     
-    CCRect rect;
+    DRect rect;
     rect.size.width = _px(80);
     rect.size.height = m_pContentView->getBounds().size.height * 0.8f;
     rect.origin.x = m_pContentView->getBounds().size.width - rect.size.width * 0.7f;
@@ -329,7 +329,7 @@ void CANavigationBar::showRightButton()
     }
 }
 
-void CANavigationBar::goBack(CAControl* btn, CCPoint point)
+void CANavigationBar::goBack(CAControl* btn, DPoint point)
 {
     if (m_pDelegate)
     {
@@ -353,12 +353,12 @@ CABadgeView::~CABadgeView()
 
 bool CABadgeView::init()
 {
-    m_pBackground = CAScale9ImageView::createWithCenter(CCRect(0, 0, 46, 46));
-    m_pBackground->setCapInsets(CCRect(22.5, 22.5, 1, 1));
+    m_pBackground = CAScale9ImageView::createWithCenter(DRect(0, 0, 46, 46));
+    m_pBackground->setCapInsets(DRect(22.5, 22.5, 1, 1));
     m_pBackground->setImage(CAImage::create("source_material/bg_badge.png"));
     this->addSubview(m_pBackground);
     
-    m_pTextView = CALabel::createWithCenter(CCRect(0, 0, 180, 46));
+    m_pTextView = CALabel::createWithCenter(DRect(0, 0, 180, 46));
     m_pTextView->setTextAlignment(CATextAlignmentCenter);
     m_pTextView->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     m_pTextView->setFontSize(30);
@@ -375,10 +375,10 @@ void CABadgeView::setBadgeText(const std::string& text)
 {
     this->setVisible(!text.empty());
     
-    m_pTextView->setCenter(CCRect(0, 0, 180, 46));
+    m_pTextView->setCenter(DRect(0, 0, 180, 46));
     m_pTextView->setText(text);
     
-    CCRect rect = m_pBackground->getCenter();
+    DRect rect = m_pBackground->getCenter();
     rect.size.width = CAImage::getStringWidth("", 30, text);
     if (rect.size.width > 30)
     {
@@ -390,7 +390,7 @@ void CABadgeView::setBadgeText(const std::string& text)
     m_pBackground->setCenter(rect);
 }
 
-void CABadgeView::setContentSize(const CCSize& contentSize)
+void CABadgeView::setContentSize(const DSize& contentSize)
 {
 
 }
@@ -408,7 +408,7 @@ CATabBar::CATabBar()
 ,m_pSelectedIndicatorImage(NULL)
 ,m_sSelectedIndicatorColor(CAColor_white)
 ,m_pSelectedItem(NULL)
-,m_cItemSize(CCSizeZero)
+,m_cItemSize(DSizeZero)
 ,m_nSelectedIndex(-1)
 ,m_sTitleColor(CAColor_white)
 ,m_sSelectedTitleColor(ccc4(50, 193, 255, 255))
@@ -436,7 +436,7 @@ CATabBar::~CATabBar()
     CC_SAFE_RELEASE_NULL(m_pSelectedIndicatorImage);
 }
 
-bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size, const CABarVerticalAlignment& var)
+bool CATabBar::init(const CAVector<CATabBarItem*>& items, const DSize& size, const CABarVerticalAlignment& var)
 {
     if (!CAView::init())
     {
@@ -459,13 +459,13 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size, co
             break;
     }
     
-    CCSize winSize = CAApplication::getApplication()->getWinSize();
-    CCSize contentSize;
+    DSize winSize = CAApplication::getApplication()->getWinSize();
+    DSize contentSize;
     contentSize.width = size.width > FLT_EPSILON ? MIN(winSize.width, size.width) : winSize.width;
     contentSize.height = size.height > FLT_EPSILON ? size.height : height;
-    this->setFrame(CCRect(0, 0, contentSize.width, contentSize.height));
+    this->setFrame(DRect(0, 0, contentSize.width, contentSize.height));
 
-    CCRect rect = this->getBounds();
+    DRect rect = this->getBounds();
     rect.size.width = MIN(rect.size.width, _px(1024));
     rect.size.height = TABBAR_CONTENT_HEIGHT;
     rect.origin.x = (this->getBounds().size.width - rect.size.width) / 2;
@@ -484,7 +484,7 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size, co
     {
         for (unsigned int i=0; i<count; i++)
         {
-            CCRect rect = CCRectZero;
+            DRect rect = DRectZero;
             rect.size = m_cItemSize;
             rect.origin.x = m_cItemSize.width * i;
             
@@ -496,7 +496,7 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size, co
             
             CABadgeView* badgeView = new CABadgeView();
             badgeView->init();
-            badgeView->setCenter(CCRect(rect.size.width, _px(25), 0, 0));
+            badgeView->setCenter(DRect(rect.size.width, _px(25), 0, 0));
             btn->insertSubview(badgeView, 10);
             m_pBadgeViews.pushBack(badgeView);
             badgeView->release();
@@ -518,7 +518,7 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const CCSize& size, co
     return true;
 }
 
-CATabBar* CATabBar::create(const CAVector<CATabBarItem*>& items, const CCSize& size, const CABarVerticalAlignment& var)
+CATabBar* CATabBar::create(const CAVector<CATabBarItem*>& items, const DSize& size, const CABarVerticalAlignment& var)
 {
     CATabBar* tabBar = new CATabBar();
     if (tabBar && tabBar->init(items, size, var))
@@ -558,7 +558,7 @@ void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)
     }
 }
 
-const CCRect& CATabBar::getContentViewFrame()
+const DRect& CATabBar::getContentViewFrame()
 {
     return m_pContentView->getFrame();
 }
@@ -742,10 +742,10 @@ void CATabBar::showSelectedIndicatorView()
     if (m_pSelectedIndicatorImage)
     {
         CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(m_pSelectedIndicatorImage);
-        CCRect insetRect;
+        DRect insetRect;
         insetRect.origin = m_pSelectedIndicatorImage->getContentSize() / 2;
-        insetRect.origin = ccpSub(insetRect.origin, CCPoint(1, 1));
-        insetRect.size = CCPoint(2, 2);
+        insetRect.origin = ccpSub(insetRect.origin, DPoint(1, 1));
+        insetRect.size = DPoint(2, 2);
         imageView->setCapInsets(insetRect);
         m_pSelectedIndicatorView = imageView;
     }
@@ -754,7 +754,7 @@ void CATabBar::showSelectedIndicatorView()
         m_pSelectedIndicatorView = CAView::createWithColor(m_sSelectedIndicatorColor);
     }
     
-    CCRect rect;
+    DRect rect;
     rect.size.width = m_cItemSize.width;
     rect.size.height = 8;
     rect.origin.x = m_nSelectedIndex * m_cItemSize.width;
@@ -792,7 +792,7 @@ void CATabBar::setSelectedAtIndex(int index)
         if (m_pSelectedIndicatorView)
         {
             m_pSelectedIndicatorView->setVisible(m_bShowIndicator);
-            CCPoint p = m_pSelectedIndicatorView->getFrameOrigin();
+            DPoint p = m_pSelectedIndicatorView->getFrameOrigin();
             p.x = m_nSelectedIndex * m_cItemSize.width;
             
             CAViewAnimation::beginAnimations("", NULL);
@@ -813,7 +813,7 @@ void CATabBar::addForbidSelectedAtIndex(int index)
     m_sForbidSelectedIndexs.insert(index);
 }
 
-void CATabBar::setTouchSelected(CrossApp::CAControl *control, CrossApp::CCPoint point)
+void CATabBar::setTouchSelected(CrossApp::CAControl *control, CrossApp::DPoint point)
 {
     int index = control->getTag();
     if (!m_sForbidSelectedIndexs.count(index))

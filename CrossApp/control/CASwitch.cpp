@@ -10,7 +10,7 @@
 #include "view/CAImageView.h"
 #include "dispatcher/CATouch.h"
 #include "view/CAScale9ImageView.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "view/CARenderImage.h"
 #include "basics/CAApplication.h"
 #include "animation/CAViewAnimation.h"
@@ -130,7 +130,7 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
         time = 0.2f;
     }
 
-    CCPoint point = m_obContentSize/2;
+    DPoint point = m_obContentSize/2;
     m_pOnImageView->setCenterOrigin(point);
     m_pOffImageView->setCenterOrigin(point);
 
@@ -152,7 +152,7 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
 
     if (m_pThumbTintImageView)
     {
-        CCPoint point = CCPointZero;
+        DPoint point = DPointZero;
         point.x = m_isOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
         
         CAViewAnimation::beginAnimations("", NULL);
@@ -168,11 +168,11 @@ void CASwitch::updateValueChanged()
 {
     if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, CCPointZero);
+        ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, DPointZero);
     }
 }
 
-CASwitch* CASwitch::createWithFrame(const CCRect& rect)
+CASwitch* CASwitch::createWithFrame(const DRect& rect)
 {
     CASwitch* switchControl = new CASwitch();
     
@@ -186,7 +186,7 @@ CASwitch* CASwitch::createWithFrame(const CCRect& rect)
     return NULL;
 }
 
-CASwitch* CASwitch::createWithCenter(const CCRect& rect)
+CASwitch* CASwitch::createWithCenter(const DRect& rect)
 {
     CASwitch* switchControl = new CASwitch();
     
@@ -200,7 +200,7 @@ CASwitch* CASwitch::createWithCenter(const CCRect& rect)
     return NULL;
 }
 
-bool CASwitch::initWithFrame(const CCRect& rect)
+bool CASwitch::initWithFrame(const DRect& rect)
 {
     if (!CAControl::init())
     {
@@ -209,7 +209,7 @@ bool CASwitch::initWithFrame(const CCRect& rect)
     this->setColor(CAColor_clear);
     this->setFrame(rect);
     
-    CCRect bounds = this->getBounds();
+    DRect bounds = this->getBounds();
     
     m_pOnImageView = CAImageView::createWithFrame(bounds);
     this->addSubview(m_pOnImageView);
@@ -217,12 +217,12 @@ bool CASwitch::initWithFrame(const CCRect& rect)
     m_pOffImageView = CAImageView::createWithFrame(bounds);
     this->addSubview(m_pOffImageView);
     
-    m_pThumbTintImageView = CAImageView::createWithFrame(CCRect(0, 0, bounds.size.height, bounds.size.height));
+    m_pThumbTintImageView = CAImageView::createWithFrame(DRect(0, 0, bounds.size.height, bounds.size.height));
     this->addSubview(m_pThumbTintImageView);
     return true;
 }
 
-bool CASwitch::initWithCenter(const CCRect& rect)
+bool CASwitch::initWithCenter(const DRect& rect)
 {
     if (!CAControl::init())
     {
@@ -231,7 +231,7 @@ bool CASwitch::initWithCenter(const CCRect& rect)
     this->setColor(CAColor_clear);
     this->setCenter(rect);
     
-    CCRect bounds = this->getBounds();
+    DRect bounds = this->getBounds();
     
     m_pOnImageView = CAImageView::createWithImage(m_onImage);
     m_pOnImageView->setFrame(bounds);
@@ -242,7 +242,7 @@ bool CASwitch::initWithCenter(const CCRect& rect)
     this->addSubview(m_pOffImageView);
     
     m_pThumbTintImageView = CAImageView::createWithImage(m_thumbTintImage);
-    m_pThumbTintImageView->setFrame(CCRect(0, 0, bounds.size.height, bounds.size.height));
+    m_pThumbTintImageView->setFrame(DRect(0, 0, bounds.size.height, bounds.size.height));
     this->addSubview(m_pThumbTintImageView);
     
     return true;
@@ -250,7 +250,7 @@ bool CASwitch::initWithCenter(const CCRect& rect)
 
 bool CASwitch::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
 	m_bTouchClick = true;
@@ -264,7 +264,7 @@ void CASwitch::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     if (!this->isTouchClick())
         return;
     
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
     if (getBounds().containsPoint(point))
@@ -285,9 +285,9 @@ void CASwitch::removeTarget(CAObject* target, SEL_CAControl selector)
     this->removeTarget(target, selector, CAControlEventTouchValueChanged);
 }
 
-void CASwitch::setContentSize(const CCSize & var)
+void CASwitch::setContentSize(const DSize & var)
 {
-    CAControl::setContentSize(CCSize(102, 56));
+    CAControl::setContentSize(DSize(102, 56));
 }
 
 NS_CC_END

@@ -1,27 +1,4 @@
-/****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
-Copyright (c) Microsoft Open Technologies, Inc.
 
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
 
 #include "CCEGLView.h"
 #include "cocoa/CCSet.h"
@@ -31,7 +8,7 @@ THE SOFTWARE.
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "text_input_node/CCIMEDispatcher.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
 
@@ -166,11 +143,11 @@ void WinRTWindow::ResizeWindow()
      CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
-CCPoint WinRTWindow::GetCCPoint(PointerEventArgs^ args) {
+DPoint WinRTWindow::GetDPoint(PointerEventArgs^ args) {
 	auto p = args->CurrentPoint;
 	float x = getScaledDPIValue(p->Position.X);
 	float y = getScaledDPIValue(p->Position.Y);
-    CCPoint pt(x, y);
+    DPoint pt(x, y);
 
 	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
 
@@ -264,7 +241,7 @@ void WinRTWindow::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ ar
 {
     float direction = (float)args->CurrentPoint->Properties->MouseWheelDelta;
     int id = 0;
-    CCPoint p(0.0f,0.0f);
+    DPoint p(0.0f,0.0f);
     CCEGLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &p.x, &p.y);
     p.y += direction;
     CCEGLView::sharedOpenGLView()->handleTouchesMove(1, &id, &p.x, &p.y);
@@ -275,7 +252,7 @@ void WinRTWindow::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ ar
 void WinRTWindow::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
-    CCPoint pt = GetCCPoint(args);
+    DPoint pt = GetDPoint(args);
     CCEGLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &pt.x, &pt.y);
 }
 
@@ -287,7 +264,7 @@ void WinRTWindow::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 		if (m_lastPointValid)
 		{
 			int id = args->CurrentPoint->PointerId;
-			CCPoint p = GetCCPoint(args);
+			DPoint p = GetDPoint(args);
 			CCEGLView::sharedOpenGLView()->handleTouchesMove(1, &id, &p.x, &p.y);
 		}
 		m_lastPoint = currentPoint->Position;
@@ -302,7 +279,7 @@ void WinRTWindow::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 void WinRTWindow::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
-    CCPoint pt = GetCCPoint(args);
+    DPoint pt = GetDPoint(args);
     CCEGLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &pt.x, &pt.y);
 }
 
@@ -461,8 +438,8 @@ void CCEGLView::HideKeyboard(Rect r)
 	float factor = m_fScaleY / CC_CONTENT_SCALE_FACTOR();
 	height = (float)height / factor;
 
-	CCRect rect_end(0, 0, 0, 0);
-	CCRect rect_begin(0, 0, m_obScreenSize.width / factor, height);
+	DRect rect_end(0, 0, 0, 0);
+	DRect rect_begin(0, 0, m_obScreenSize.width / factor, height);
 
     CCIMEKeyboardNotificationInfo info;
     info.begin = rect_begin;
@@ -479,8 +456,8 @@ void CCEGLView::ShowKeyboard(Rect r)
 	float factor = m_fScaleY / CC_CONTENT_SCALE_FACTOR();
 	height = (float)height / factor;
 
-	CCRect rect_begin(0.0f, 0.0f - height, m_obScreenSize.width / factor, height);
-	CCRect rect_end(0.0f, 0.0f, m_obScreenSize.width / factor, height);
+	DRect rect_begin(0.0f, 0.0f - height, m_obScreenSize.width / factor, height);
+	DRect rect_end(0.0f, 0.0f, m_obScreenSize.width / factor, height);
 
     CCIMEKeyboardNotificationInfo info;
     info.begin = rect_begin;
@@ -504,8 +481,8 @@ void CCEGLView::UpdateForWindowSizeChange()
     }
     else
     {
-        m_obScreenSize = CCSizeMake(width, height);
-        CCSize designSize = getDesignResolutionSize();
+        m_obScreenSize = DSizeMake(width, height);
+        DSize designSize = getDesignResolutionSize();
         CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
         CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
    }

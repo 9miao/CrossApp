@@ -1,12 +1,12 @@
 
 
 #include "CCVertex.h"
-#include "CCPointExtension.h"
+#include "CAPointExtension.h"
 #include "ccMacros.h"
 
 NS_CC_BEGIN
 
-void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, unsigned int offset, unsigned int nuPoints)
+void ccVertexLineToPolygon(DPoint *points, float stroke, ccVertex2F *vertices, unsigned int offset, unsigned int nuPoints)
 {
     nuPoints += offset;
     if(nuPoints<=1) return;
@@ -19,8 +19,8 @@ void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, 
     for(unsigned int i = offset; i<nuPoints; i++)
     {
         idx = i*2;
-        CCPoint p1 = points[i];
-        CCPoint perpVector;
+        DPoint p1 = points[i];
+        DPoint perpVector;
 
         if(i == 0)
             perpVector = ccpPerp(ccpNormalize(ccpSub(p1, points[i+1])));
@@ -28,11 +28,11 @@ void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, 
             perpVector = ccpPerp(ccpNormalize(ccpSub(points[i-1], p1)));
         else
         {
-            CCPoint p2 = points[i+1];
-            CCPoint p0 = points[i-1];
+            DPoint p2 = points[i+1];
+            DPoint p0 = points[i-1];
 
-            CCPoint p2p1 = ccpNormalize(ccpSub(p2, p1));
-            CCPoint p0p1 = ccpNormalize(ccpSub(p0, p1));
+            DPoint p2p1 = ccpNormalize(ccpSub(p2, p1));
+            DPoint p0p1 = ccpNormalize(ccpSub(p0, p1));
 
             // Calculate angle between vectors
             float angle = acosf(ccpDot(p2p1, p0p1));
@@ -64,7 +64,7 @@ void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, 
         ccVertex2F p4 = vertices[idx1+1];
 
         float s;
-        //BOOL fixVertex = !ccpLineIntersect(ccp(p1.x, p1.y), ccp(p4.x, p4.y), ccp(p2.x, p2.y), ccp(p3.x, p3.y), &s, &t);
+        //BOOL fixVertex = !ccpLineIntersect(DPoint(p1.x, p1.y), DPoint(p4.x, p4.y), DPoint(p2.x, p2.y), DPoint(p3.x, p3.y), &s, &t);
         bool fixVertex = !ccVertexLineIntersect(p1.x, p1.y, p4.x, p4.y, p2.x, p2.y, p3.x, p3.y, &s);
         if(!fixVertex)
             if (s<0.0f || s>1.0f)

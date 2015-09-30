@@ -372,7 +372,7 @@ void VPFrameRender::draw(VPVideoFrame *frame, long offset)
     }
 }
 
-CCRect VPFrameRender::updateVertices(float width, float height, float screen_w, float screen_h)
+DRect VPFrameRender::updateVertices(float width, float height, float screen_w, float screen_h)
 {
     const bool fit      = true;
     const float dH      = (float)screen_h / height;
@@ -390,7 +390,7 @@ CCRect VPFrameRender::updateVertices(float width, float height, float screen_w, 
     _vertices[6] =   w;
     _vertices[7] =   h;
     
-    return CCRect((screen_w - w * screen_w)/2, (screen_h - screen_h * h)/2, w * screen_w, screen_h * h);
+    return DRect((screen_w - w * screen_w)/2, (screen_h - screen_h * h)/2, w * screen_w, screen_h * h);
 }
 
 NS_CC_END

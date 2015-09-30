@@ -40,7 +40,7 @@ public:
     virtual ~CATableViewDataSource(){};
     
     //Necessary
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row) = 0;
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row) = 0;
     
     //Necessary
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row) = 0;
@@ -53,7 +53,7 @@ public:
         return 1;
     }
 
-    virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
+    virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, const DSize& viewSize, unsigned int section)
     {
         return NULL;
     }
@@ -63,7 +63,7 @@ public:
         return 0;
     }
     
-    virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, const CCSize& viewSize, unsigned int section)
+    virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, const DSize& viewSize, unsigned int section)
     {
         return NULL;
     }
@@ -90,9 +90,9 @@ public:
     
     virtual void onExitTransitionDidStart();
 
-    static CATableView* createWithFrame(const CCRect& rect);
+    static CATableView* createWithFrame(const DRect& rect);
     
-    static CATableView* createWithCenter(const CCRect& rect);
+    static CATableView* createWithCenter(const DRect& rect);
     
     virtual bool init();
     
@@ -166,7 +166,7 @@ protected:
     
     void reloadViewSizeData();
     
-    virtual void setContentSize(const CCSize& var);
+    virtual void setContentSize(const DSize& var);
     
     virtual void update(float dt);
     
@@ -252,13 +252,13 @@ protected:
     
     std::vector<std::vector<unsigned int> > m_nRowHeightss;
     
-    std::vector<CCRect> m_rSectionRects;
+    std::vector<DRect> m_rSectionRects;
     
     std::map<int, CAView*> m_pSectionHeaderViews;
     
     std::map<int, CAView*> m_pSectionFooterViews;
     
-    std::vector<std::vector<CCRect> > m_rTableCellRectss;
+    std::vector<std::vector<DRect> > m_rTableCellRectss;
 
     std::map<CAIndexPath2E, CATableViewCell*> m_mpUsedTableCells;
     
@@ -270,7 +270,7 @@ protected:
     
     CATableViewCell* m_pHighlightedTableCells;
     
-    std::vector<std::vector<CCRect> > m_rLineRectss;
+    std::vector<std::vector<DRect> > m_rLineRectss;
     
     std::map<CAIndexPath2E, CAView*> m_pUsedLines;
     
@@ -320,7 +320,7 @@ protected:
     
     void setControlState(const CAControlState& var);
     
-    void setContentSize(const CCSize& var);
+    void setContentSize(const DSize& var);
     
 private:
     

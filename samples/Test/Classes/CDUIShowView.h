@@ -43,7 +43,7 @@ class ETableViewCell : public CATableViewCell
 public:
     ETableViewCell();
     virtual ~ETableViewCell();
-    static ETableViewCell* create(const std::string& identifier, const CCRect& _rect = CCRectZero);
+    static ETableViewCell* create(const std::string& identifier, const DRect& _rect = DRectZero);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
 public:
@@ -56,15 +56,15 @@ public:
     ETableView();
     virtual ~ETableView();
     
-    virtual bool init(const CrossApp::CCRect &rect);
-    static ETableView* createWithFrame(const CCRect& rect);
-    static ETableView* createWithCenter(const CCRect& rect);
+    virtual bool init(const CrossApp::DRect &rect);
+    static ETableView* createWithFrame(const DRect& rect);
+    static ETableView* createWithCenter(const DRect& rect);
     
 public:
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row);
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int numberOfSections(CATableView *table);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
@@ -74,7 +74,7 @@ public:
     CC_SYNTHESIZE(CDETableViewDelegate*, m_pETableViewDelegate, ETableViewDelegate);
 public:
     CATableView* p_TableView;
-    CCSize size;
+    DSize size;
 };
 
 class CDListView : public CAView ,CAListViewDelegate,CAListViewDataSource
@@ -83,16 +83,16 @@ public:
     CDListView();
     virtual ~CDListView();
     
-    virtual bool init(const CrossApp::CCRect &rect);
-    static CDListView* createWithFrame(const CCRect& rect);
-    static CDListView* createWithCenter(const CCRect& rect);
+    virtual bool init(const CrossApp::DRect &rect);
+    static CDListView* createWithFrame(const DRect& rect);
+    static CDListView* createWithCenter(const DRect& rect);
     
 public:
     virtual void listViewDidSelectCellAtIndex(CAListView *listView, unsigned int index);
     virtual void listViewDidDeselectCellAtIndex(CAListView *listView, unsigned int index);
     virtual unsigned int numberOfIndex(CAListView *listView);
     virtual unsigned int listViewHeightForIndex(CAListView *listView, unsigned int index);
-    virtual CAListViewCell* listViewCellAtIndex(CAListView *listView, const CCSize& cellSize, unsigned int index);
+    virtual CAListViewCell* listViewCellAtIndex(CAListView *listView, const DSize& cellSize, unsigned int index);
 public:
     std::vector<std::string> tempList;
 };
@@ -129,16 +129,16 @@ public:
     void showUiWithIndex(int _index);
     
     void initButtonControl();
-    void buttonControlCallBack(CAControl* btn,CCPoint point);
+    void buttonControlCallBack(CAControl* btn,DPoint point);
     
     void showAlertView();
     void alertCallBack(int btnIndex);
-    void alertButtonCallBack(CAControl* btn,CCPoint point);
+    void alertButtonCallBack(CAControl* btn,DPoint point);
     void setAlertViewNavigationBarTitle();
     
     void showButton();
     void showButtonByIndex();
-    void buttonCallBack(CAControl* btn,CCPoint point);
+    void buttonCallBack(CAControl* btn,DPoint point);
     
     void showImage();
     void showImageByIndex();
@@ -156,11 +156,11 @@ public:
     
     void showSlider();
     void showSliderByindex();
-    void sliderValueChange(CAControl* btn, CCPoint point);
+    void sliderValueChange(CAControl* btn, DPoint point);
     
     void showSwitch();
     void showSwitchByIndex();
-    void switchStateChange(CAControl* btn, CCPoint point);
+    void switchStateChange(CAControl* btn, DPoint point);
     
     void showTextField();
     void showTextFieldByIndex();
@@ -188,20 +188,20 @@ public:
     void showFlashView();
     
     void showAnimation();
-    void doAction(CAControl* btn,CCPoint point);
+    void doAction(CAControl* btn,DPoint point);
     void endAction();
     
     void showDatePickerView();
     
     void showStepper();
-    void stepperCallBack(CAControl* btn,CCPoint point);
+    void stepperCallBack(CAControl* btn,DPoint point);
     
     void showGifView();
     
     void showVideo();
     
     void showRenderImage();
-	void renderCallBack(CAControl* control, CCPoint point);
+	void renderCallBack(CAControl* control, DPoint point);
 	void scheduleFuck(float dt);
     
     void jsonTest();//json数据读写
@@ -219,9 +219,9 @@ public:
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
-    virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, const CCSize& viewSize, unsigned int section);
-    virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, const CCSize& viewSize, unsigned int section);
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row);
+    virtual CAView* tableViewSectionViewForHeaderInSection(CATableView* table, const DSize& viewSize, unsigned int section);
+    virtual CAView* tableViewSectionViewForFooterInSection(CATableView* table, const DSize& viewSize, unsigned int section);
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int numberOfSections(CATableView *table);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
@@ -229,27 +229,27 @@ public:
     virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
     
     virtual void etableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
-    void pageControlCallBack(CrossApp::CAControl *btn, CrossApp::CCPoint point);
+    void pageControlCallBack(CrossApp::CAControl *btn, CrossApp::DPoint point);
 public:
     //ListView
     virtual void listViewDidSelectCellAtIndex(CAListView *listView, unsigned int index);
     virtual void listViewDidDeselectCellAtIndex(CAListView *listView, unsigned int index);
     virtual unsigned int numberOfIndex(CAListView *listView);
     virtual unsigned int listViewHeightForIndex(CAListView *listView, unsigned int index);
-    virtual CAListViewCell* listViewCellAtIndex(CAListView *listView, const CCSize& cellSize, unsigned int index);
+    virtual CAListViewCell* listViewCellAtIndex(CAListView *listView, const DSize& cellSize, unsigned int index);
 public:
     //pageView
     virtual void reshapeViewRectDidFinish();
     
     virtual void pageViewDidBeginTurning(CAPageView* pageView);
     virtual void pageViewDidEndTurning(CAPageView* pageView);
-    virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point);
+    virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point);
 public:
     //CollectionView
     virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item);
     virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item);
     
-    virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item);
+    virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int row, unsigned int item);
     virtual unsigned int numberOfSections(CACollectionView *collectionView);
     virtual unsigned int numberOfRowsInSection(CACollectionView *collectionView, unsigned int section);
     virtual unsigned int numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row);
@@ -259,7 +259,7 @@ public:
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view);
     void refreshData(float interval);
 public:
-    void zoomViewBySliderValue(CAControl* btn,CCPoint point);
+    void zoomViewBySliderValue(CAControl* btn,DPoint point);
 public:
     //CAPickerView
     virtual unsigned int numberOfComponentsInPickerView(CAPickerView* pickerView);
@@ -275,7 +275,7 @@ public:
 public:
     
     std::vector<std::string> testList;
-    CCSize winSize;
+    DSize winSize;
     CALabel* progress_value;
     CAProgress* progress;
     CALabel* sliderValue1;

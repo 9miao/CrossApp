@@ -27,13 +27,13 @@ public:
     
     virtual ~CALabel();
     
-    static CALabel* createWithFrame(const CCRect& rect);
+    static CALabel* createWithFrame(const DRect& rect);
     
-    static CALabel* createWithCenter(const CCRect& rect);
+    static CALabel* createWithCenter(const DRect& rect);
     
-    virtual bool initWithFrame(const CCRect& rect);
+    virtual bool initWithFrame(const DRect& rect);
     
-    virtual bool initWithCenter(const CCRect& rect);
+    virtual bool initWithCenter(const DRect& rect);
     
     virtual void onEnterTransitionDidFinish();
     
@@ -57,13 +57,13 @@ public:
     
     CC_PROPERTY_PASS_BY_REF(CATextAlignment, m_nTextAlignment, TextAlignment);
     
-    CC_PROPERTY_PASS_BY_REF(CCSize, m_nDimensions, Dimensions);
+    CC_PROPERTY_PASS_BY_REF(DSize, m_nDimensions, Dimensions);
     
     CC_PROPERTY(unsigned int, m_nNumberOfLine, NumberOfLine);
 
 	CC_SYNTHESIZE(bool, m_bEnableCopy, EnableCopy);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_cLabelSize, LabelSize);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(DSize, m_cLabelSize, LabelSize);
 
 	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cFontColor, FontColor);
     
@@ -80,7 +80,7 @@ public:
 protected:
 	using CAView::setColor;
 
-    virtual void setContentSize(const CCSize& var);
+    virtual void setContentSize(const DSize& var);
 
 	virtual void updateImageRect();
 

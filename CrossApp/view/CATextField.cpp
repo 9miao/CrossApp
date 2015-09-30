@@ -93,7 +93,7 @@ bool CATextField::becomeFirstResponder()
 		result = attachWithIME();
         this->showCursorMark();
 
-        calculateSelChars(CCPoint(this->getCursorX() + m_iHoriMargins, m_obContentSize.height / 2), m_iString_l_length, m_iString_r_length, m_iCurPos);
+        calculateSelChars(DPoint(this->getCursorX() + m_iHoriMargins, m_obContentSize.height / 2), m_iString_l_length, m_iString_r_length, m_iCurPos);
         setCursorPosition();
 
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
@@ -110,7 +110,7 @@ void CATextField::resignResponder()
 	hideCursorMark();
 }
 
-CATextField* CATextField::createWithFrame(const CCRect& frame)
+CATextField* CATextField::createWithFrame(const DRect& frame)
 {
     CATextField *text = new CATextField();
     if (text && text->initWithFrame(frame))
@@ -122,7 +122,7 @@ CATextField* CATextField::createWithFrame(const CCRect& frame)
     return NULL;
 }
 
-CATextField* CATextField::createWithCenter(const CCRect& rect)
+CATextField* CATextField::createWithCenter(const DRect& rect)
 {
     CATextField* textField = new CATextField();
     
@@ -160,7 +160,7 @@ void CATextField::initMarkSprite()
         this->hideCursorMark();
     }
 
-	m_pCursorMark->setFrame(CCRect(m_iHoriMargins, 0, _px(2), CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize)));
+	m_pCursorMark->setFrame(DRect(m_iHoriMargins, 0, _px(2), CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize)));
 	setCursorPosition();
 }
 
@@ -189,12 +189,12 @@ void CATextField::setCursorPosition()
 {
     if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
     {
-		m_pCursorMark->setCenterOrigin(CCPoint((m_sText.empty() ? 0 : this->getImageRect().size.width) + m_iHoriMargins, m_obContentSize.height / 2));
+		m_pCursorMark->setCenterOrigin(DPoint((m_sText.empty() ? 0 : this->getImageRect().size.width) + m_iHoriMargins, m_obContentSize.height / 2));
     }
     else
     {
 		float mPmarkWidth = MIN(m_iLabelWidth, getCursorX());
-        m_pCursorMark->setCenterOrigin(CCPoint(mPmarkWidth + m_iHoriMargins, m_obContentSize.height / 2));
+        m_pCursorMark->setCenterOrigin(DPoint(mPmarkWidth + m_iHoriMargins, m_obContentSize.height / 2));
     }
 }
 
@@ -236,7 +236,7 @@ void CATextField::setText(const std::string &var)
 	m_iString_l_length = 0;
 	m_iString_r_length = 0;
 	m_vTextFiledChars.clear();
-    CCPoint p = CCPoint(this->getCursorX() + m_iHoriMargins, m_obContentSize.height / 2);
+    DPoint p = DPoint(this->getCursorX() + m_iHoriMargins, m_obContentSize.height / 2);
     m_pCursorMark->setCenterOrigin(p);
     insertText(var.c_str(), (int)var.length());
     m_pDelegate = pTemp;
@@ -363,7 +363,7 @@ eKeyBoardInputType CATextField::getInputType()
     return m_nInputType;
 }
 
-void CATextField::calculateSelChars(const CCPoint& point, int& l, int& r, int& p)
+void CATextField::calculateSelChars(const DPoint& point, int& l, int& r, int& p)
 {
 _CalcuAgain:
 
@@ -408,7 +408,7 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         return;
     }
     
-    CCPoint point = this->convertTouchToNodeSpace(pTouch);
+    DPoint point = this->convertTouchToNodeSpace(pTouch);
     
     if (this->getBounds().containsPoint(point))
     {
@@ -648,7 +648,7 @@ void CATextField::adjustCursorMove(bool forward)
 		}
 	}
 
-	CCRect r = CCRect(0, 0, MIN(m_iLabelWidth, m_cImageSize.width), m_cImageSize.height);
+	DRect r = DRect(0, 0, MIN(m_iLabelWidth, m_cImageSize.width), m_cImageSize.height);
 	r.origin.x = -m_iString_o_length;
 	r.size.width = getStringViewLength();
 	if (r.size.width == 0)
@@ -662,7 +662,7 @@ void CATextField::adjustCursorMove(bool forward)
 	setCursorPosition();
 }
 
-CCRect CATextField::getZZCRect(bool* l, bool* r)
+DRect CATextField::getZZCRect(bool* l, bool* r)
 {
 	int l1 = getStringLength(m_sText.substr(0, m_curSelCharRange.first));
 	int l2 = getStringLength(m_sText.substr(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first));
@@ -695,7 +695,7 @@ CCRect CATextField::getZZCRect(bool* l, bool* r)
 		*r = rr;
 	}
 
-	return CCRect((ll ? (l1 + m_iString_o_length) : 0) + m_iHoriMargins + ld, m_iVertMargins, dd, m_iFontHeight);
+	return DRect((ll ? (l1 + m_iString_o_length) : 0) + m_iHoriMargins + ld, m_iVertMargins, dd, m_iFontHeight);
 }
 
 
@@ -709,12 +709,12 @@ void CATextField::selectAll()
 
 	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool l, r;
-	CCRect cc = getZZCRect(&l, &r);
+	DRect cc = getZZCRect(&l, &r);
 	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), this, l, r);
 	this->hideCursorMark();
 }
 
-void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
+void CATextField::moveSelectChars(bool isLeftBtn, const DPoint& pt)
 {
 	int l, r, p;
 	calculateSelChars(convertToNodeSpace(pt), l, r, p);
@@ -737,13 +737,13 @@ void CATextField::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 	adjustCursorMove(!isBackward);
 	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool ll, rr;
-	CCRect cc = convertRectToWorldSpace(getZZCRect(&ll, &rr));
+	DRect cc = convertRectToWorldSpace(getZZCRect(&ll, &rr));
 	pSelCharsView->showTextSelView(cc, this, ll, rr);
 	this->hideCursorMark();
 }
 
 
-void CATextField::moveArrowBtn(const CCPoint& pt)
+void CATextField::moveArrowBtn(const DPoint& pt)
 {
 	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
 		return;
@@ -861,7 +861,7 @@ void CATextField::ccStartSelect()
 
 	CATextSelectView* pSelCharsView = CATextSelectView::create();
 	bool l, r;
-	CCRect cc = getZZCRect(&l, &r);
+	DRect cc = getZZCRect(&l, &r);
 	pSelCharsView->showTextSelView(convertRectToWorldSpace(cc), this, l, r);
 	m_pCursorMark->setVisible(false);
 }
@@ -892,7 +892,7 @@ CAView* CATextField::getBackgroundView()
     return m_pBackgroundView;
 }
 
-void CATextField::setContentSize(const CCSize& var)
+void CATextField::setContentSize(const DSize& var)
 {
 	CAView::setContentSize(var);
     if (m_pBackgroundView)
@@ -942,7 +942,7 @@ void CATextField::updateImage()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 	dt = 1.1f;
 #endif
-	CCSize size = CCSizeMake(0, m_iFontHeight*dt);
+	DSize size = DSize(0, m_iFontHeight*dt);
     CAImage* image = CAImage::createWithString(text.c_str(),
 											   m_cFontColor,
 											   m_nfontName.c_str(),
@@ -952,7 +952,7 @@ void CATextField::updateImage()
                                                CAVerticalTextAlignmentCenter,
                                                true);
     
-    CCRect rect = CCRectZero;
+    DRect rect = DRectZero;
     if (m_sPlaceHolder.length() == 0)
     {
         this->setImage(image);
@@ -966,7 +966,7 @@ void CATextField::updateImage()
 
 	if (text.empty())
 	{
-		m_cImageSize = CCSizeZero;
+		m_cImageSize = DSizeZero;
 	}
 	else
 	{
@@ -978,7 +978,7 @@ void CATextField::updateImage()
 	this->setImageRect(rect);
 }
 
-void CATextField::setImageRect(const CCRect& rect)
+void CATextField::setImageRect(const DRect& rect)
 {
     m_bRectRotated = false;
     setVertexRect(rect);

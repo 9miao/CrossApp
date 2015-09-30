@@ -36,9 +36,9 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
-    static CASegmentedControl* createWithFrame(const CCRect& rect, unsigned int itemsCount);
+    static CASegmentedControl* createWithFrame(const DRect& rect, unsigned int itemsCount);
     
-    static CASegmentedControl* createWithCenter(const CCRect& rect, unsigned int itemsCount);
+    static CASegmentedControl* createWithCenter(const DRect& rect, unsigned int itemsCount);
   
     void setBackgroundImage(CAImage* image);
     
@@ -79,24 +79,24 @@ public:
     void setWidthForSegmentAtIndex(float width, int index);
     float getWidthForSegmentAtIndex(int index);
     
-    void setContentOffsetForSegmentAtIndex(CCSize offset, int index);
-    CCSize getContentOffsetForSegmentAtIndex(int index);
+    void setContentOffsetForSegmentAtIndex(DSize offset, int index);
+    DSize getContentOffsetForSegmentAtIndex(int index);
     
     void setEnabledForSegmentAtIndex(bool isEnable, int index);
     bool isEnabledForSegmentAtIndex(int index);
     
     CC_PROPERTY_READONLY(CAView*, m_pBackgroundView, BackgroundView);
     
-    void setImageSizeAtIndex(CCSize size, int index);
+    void setImageSizeAtIndex(DSize size, int index);
     
     void setTitleFontName(std::string titleName);
     
     void setTitleFontSize(float titleSize);
 
 protected:
-    virtual bool initWithFrame(const CCRect& rect);
+    virtual bool initWithFrame(const DRect& rect);
     
-    virtual bool initWithCenter(const CCRect& rect);
+    virtual bool initWithCenter(const DRect& rect);
     
     virtual CAView* createDefaultSegment(int index);
     
@@ -105,7 +105,7 @@ protected:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
-    void setContentSize(const CCSize & var);
+    void setContentSize(const DSize & var);
         
     void createSeparate();
     
@@ -121,11 +121,11 @@ protected:
     
     void refreshAllSegmentItemBackgroundPosition();
     
-    void refreshSegmentItemByPoint(CCPoint point, CAControlState controlState);
+    void refreshSegmentItemByPoint(DPoint point, CAControlState controlState);
     
     void refreshSegmentItemByIndex(int index, CAControlState controlState);
         
-    int  getSegmentItemIndexByPoint(CCPoint point);
+    int  getSegmentItemIndexByPoint(DPoint point);
     
     CAObject* getObjectByIndex(int index, CAControlState controlState);
     
@@ -146,9 +146,9 @@ protected:
     
     std::vector<bool>                m_vIsEnabled;
     
-    std::vector<CCSize>              m_vContentOffset;
+    std::vector<DSize>              m_vContentOffset;
     
-    std::vector<CCSize>              m_vImageSize;
+    std::vector<DSize>              m_vImageSize;
     
     std::vector<float>               m_vSegmentWidth;
     

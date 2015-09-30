@@ -56,7 +56,7 @@ public:
     
 protected:
 
-    void setContentSize(const CCSize & var);
+    void setContentSize(const DSize & var);
     
 	void update(float dt);
     

@@ -77,13 +77,13 @@ protected:
 
 	bool init();
 
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row);
     
 	virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     
 	virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     
-	void onClickButton(CAControl* btn, CCPoint point);
+	void onClickButton(CAControl* btn, DPoint point);
 
 	void setLabel(CALabel*& pLabel, const char* szTitle, const char* fontName, const CAColor4B& col);
 

@@ -54,9 +54,9 @@ public:
 	void dispatchCursorMoveForward();
     void dispatchCursorMoveUp();
     void dispatchCursorMoveDown();
-	void dispatchMoveSelectChars(bool isLeftBtn, const CCPoint& pt);
-	void dispatchMoveSelectCharsCancel(const CCPoint& pt);
-	void dispatchMoveArrowBtn(const CCPoint& pt);
+	void dispatchMoveSelectChars(bool isLeftBtn, const DPoint& pt);
+	void dispatchMoveSelectCharsCancel(const DPoint& pt);
+	void dispatchMoveArrowBtn(const DPoint& pt);
 	void dispatchCopyToClipboard();
 	void dispatchCutToClipboard();
 	void dispatchPasteFromClipboard();

@@ -56,8 +56,8 @@ shaders/ccGLStateCache.cpp \
 shaders/ccShaders.cpp \
 support/md5.cpp \
 support/CANotificationCenter.cpp \
-support/CCPointExtension.cpp \
-support/CCProfiling.cpp \
+support/CAPointExtension.cpp \
+support/CAProfiling.cpp \
 support/CCVertex.cpp \
 support/TransformUtils.cpp \
 support/base64.cpp \

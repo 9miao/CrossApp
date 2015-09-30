@@ -11,7 +11,7 @@
 #include "view/CAView.h"
 #include "view/CAScrollView.h"
 #include "dispatcher/CATouch.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "cocoa/CCSet.h"
 #include "view/CALabel.h"
 #include "basics/CAApplication.h"
@@ -29,10 +29,10 @@ CAButton::CAButton(const CAButtonType& buttonType)
 ,m_pImageView(NULL)
 ,m_pLabel(NULL)
 ,m_fTitleFontSize(0)
-,m_pTitleLabelSize(CCSizeZero)
-,m_pImageSize(CCSizeZero)
-,m_pTitleOffset(CCSizeZero)
-,m_pImageOffset(CCSizeZero)
+,m_pTitleLabelSize(DSizeZero)
+,m_pImageSize(DSizeZero)
+,m_pTitleOffset(DSizeZero)
+,m_pImageOffset(DSizeZero)
 {
     for (int i=0; i<CAControlStateAll; i++)
     {
@@ -96,7 +96,7 @@ CAButton* CAButton::create(const CAButtonType& buttonType)
     return NULL;
 }
 
-CAButton* CAButton::createWithFrame(const CCRect& rect, const CAButtonType& buttonType)
+CAButton* CAButton::createWithFrame(const DRect& rect, const CAButtonType& buttonType)
 {
 
     CAButton* btn = new CAButton(buttonType);
@@ -111,7 +111,7 @@ CAButton* CAButton::createWithFrame(const CCRect& rect, const CAButtonType& butt
     return NULL;
 }
 
-CAButton* CAButton::createWithCenter(const CCRect& rect, const CAButtonType& buttonType)
+CAButton* CAButton::createWithCenter(const DRect& rect, const CAButtonType& buttonType)
 {
     
     CAButton* btn = new CAButton(buttonType);
@@ -228,9 +228,9 @@ void CAButton::setBackGroundViewForState(const CAControlState& controlState, CAV
     
     CC_RETURN_IF(var == NULL);
     
-    if (this->getBounds().equals(CCRectZero))
+    if (this->getBounds().equals(DRectZero))
     {
-        this->setBounds(CCRect(0, 0, var->getFrame().size.width, var->getFrame().size.height));
+        this->setBounds(DRect(0, 0, var->getFrame().size.width, var->getFrame().size.height));
     }
     
     this->updateWithPreferredSize();
@@ -367,7 +367,7 @@ void CAButton::updateWithPreferredSize()
 
 bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
 
     do
@@ -387,7 +387,7 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 {
     CC_RETURN_IF(!this->isTouchClick());
     
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
 
     CAScheduler::unschedule(schedule_selector(CAButton::setTouchLongPress), this);
@@ -415,7 +415,7 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 {
     CC_RETURN_IF(!this->isTouchClick());
     
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
     CAScheduler::unschedule(schedule_selector(CAButton::setTouchLongPress), this);
@@ -459,7 +459,7 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
     CAScheduler::unschedule(schedule_selector(CAButton::setTouchLongPress), this);
@@ -515,9 +515,9 @@ void CAButton::setControlState(const CAControlState& var)
     
     CAImage* image = NULL;
     std::string title = "";
-    CCRect imageViewCenter = CCRectZero;
-    CCRect rect = CCRectZero;
-    CCRect labelCenter = this->getBounds();
+    DRect imageViewCenter = DRectZero;
+    DRect rect = DRectZero;
+    DRect labelCenter = this->getBounds();
     float labelSize = 0;
     
     image = m_pImage[m_eControlState];
@@ -535,8 +535,8 @@ void CAButton::setControlState(const CAControlState& var)
     
     if (image && title.compare("") == 0)
     {
-        CCSize size = this->getBounds().size;
-        CCSize iSize = image->getContentSize();
+        DSize size = this->getBounds().size;
+        DSize iSize = image->getContentSize();
         float scaleX = size.width / iSize.width * 0.75f;
         float scaleY = size.height / iSize.height * 0.75f;
         float scale = MIN(scaleX, scaleY);
@@ -552,8 +552,8 @@ void CAButton::setControlState(const CAControlState& var)
     }
     else if (image && title.compare("") != 0)
     {
-        CCSize size = this->getBounds().size;
-        CCSize iSize = image->getContentSize();
+        DSize size = this->getBounds().size;
+        DSize iSize = image->getContentSize();
         float scaleX = size.width / iSize.width * 0.5f;
         float scaleY = size.height / iSize.height * 0.45f;
         float scale = MIN(scaleX, scaleY);
@@ -570,11 +570,11 @@ void CAButton::setControlState(const CAControlState& var)
 
     m_pImageView->setColor(m_sImageColor[m_eControlState]);
 
-    if (!m_pImageSize.equals(CCSizeZero))
+    if (!m_pImageSize.equals(DSizeZero))
     {
         imageViewCenter.size = m_pImageSize;
     }
-    if (!m_pImageOffset.equals(CCSizeZero))
+    if (!m_pImageOffset.equals(DSizeZero))
     {
         imageViewCenter.origin = ccpMult(this->getBounds().size, 0.5f);
         imageViewCenter.origin = ccpAdd(imageViewCenter.origin, m_pImageOffset);
@@ -589,11 +589,11 @@ void CAButton::setControlState(const CAControlState& var)
     m_pLabel->setFontColor(m_sTitleColor[m_eControlState]);
 
     
-    if (!m_pTitleLabelSize.equals(CCSizeZero))
+    if (!m_pTitleLabelSize.equals(DSizeZero))
     {
         labelCenter.size = m_pTitleLabelSize;
     }
-    if(!m_pTitleOffset.equals(CCSizeZero))
+    if(!m_pTitleOffset.equals(DSizeZero))
     {
         labelCenter.origin = ccpMult(this->getBounds().size, 0.5f);
         labelCenter.origin = ccpAdd(labelCenter.origin, m_pTitleOffset);
@@ -622,7 +622,7 @@ void CAButton::interruptTouchState()
     this->ccTouchCancelled(NULL, NULL);
 }
 
-bool CAButton::setTouchBegin(const CCPoint& point)
+bool CAButton::setTouchBegin(const DPoint& point)
 {
 	m_bTouchClick = true;
 
@@ -639,7 +639,7 @@ bool CAButton::setTouchBegin(const CCPoint& point)
 	return m_bTouchClick;
 }
 
-void CAButton::setTouchUpInSide(const CCPoint& point)
+void CAButton::setTouchUpInSide(const DPoint& point)
 {
     if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
     {
@@ -647,7 +647,7 @@ void CAButton::setTouchUpInSide(const CCPoint& point)
     }
 }
 
-void CAButton::setTouchUpOutSide(const CCPoint& point)
+void CAButton::setTouchUpOutSide(const DPoint& point)
 {
     if (m_pTarget[CAControlEventTouchUpOutSide] && m_selTouch[CAControlEventTouchUpOutSide])
     {
@@ -655,7 +655,7 @@ void CAButton::setTouchUpOutSide(const CCPoint& point)
     }
 }
 
-void CAButton::setTouchMoved(const CCPoint& point)
+void CAButton::setTouchMoved(const DPoint& point)
 {
     if (m_pTarget[CAControlEventTouchMoved] && m_selTouch[CAControlEventTouchMoved])
     {
@@ -663,7 +663,7 @@ void CAButton::setTouchMoved(const CCPoint& point)
     }
 }
 
-void CAButton::setTouchMovedOutSide(const CCPoint& point)
+void CAButton::setTouchMovedOutSide(const DPoint& point)
 {
     if (m_pTarget[CAControlEventTouchMovedOutSide] && m_selTouch[CAControlEventTouchMovedOutSide])
     {
@@ -675,13 +675,13 @@ void CAButton::setTouchLongPress(float dt)
 {
     if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
     {
-        ((CAObject *)m_pTarget[CAControlEventTouchLongPress]->*m_selTouch[CAControlEventTouchLongPress])(this, CCPointZero);
+        ((CAObject *)m_pTarget[CAControlEventTouchLongPress]->*m_selTouch[CAControlEventTouchLongPress])(this, DPointZero);
     }
 }
 
-void CAButton::setContentSize(const CCSize & var)
+void CAButton::setContentSize(const DSize & var)
 {
-    CCSize size = var;
+    DSize size = var;
     if (m_eButtonType != CAButtonTypeCustom)
     {
         size.height = MAX(size.height, _px(60));
@@ -698,36 +698,36 @@ void CAButton::setContentSize(const CCSize & var)
     this->setControlState(m_eControlState);
 }
 
-void CAButton::setImageOffset(const CCSize& offset)
+void CAButton::setImageOffset(const DSize& offset)
 {
     m_pImageOffset = offset;
-    CCRect rect = m_pImageView->getCenter();
+    DRect rect = m_pImageView->getCenter();
     rect.origin.x += offset.width;
     rect.origin.y += offset.height;
     m_pImageView->setCenter(rect);
 }
 
-void CAButton::setImageSize(const CCSize& size)
+void CAButton::setImageSize(const DSize& size)
 {
     m_pImageSize = size;
-    CCRect rect = m_pImageView->getCenter();
+    DRect rect = m_pImageView->getCenter();
     rect.size = m_pImageSize;
     m_pImageView->setCenter(rect);
 }
 
-void CAButton::setTitleOffset(const CCSize& offset)
+void CAButton::setTitleOffset(const DSize& offset)
 {
     m_pTitleOffset = offset;
-    CCRect rect = m_pLabel->getCenter();
+    DRect rect = m_pLabel->getCenter();
     rect.origin.x += offset.width;
     rect.origin.y += offset.height;
     m_pLabel->setCenter(rect);
 }
 
-void CAButton::setTitleLabelSize(const CCSize& size)
+void CAButton::setTitleLabelSize(const DSize& size)
 {
     m_pTitleLabelSize = size;
-    CCRect rect = m_pLabel->getCenter();
+    DRect rect = m_pLabel->getCenter();
     rect.size = m_pTitleLabelSize;
     m_pLabel->setCenter(rect);
 }

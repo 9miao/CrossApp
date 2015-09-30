@@ -45,9 +45,9 @@ public:
     
     virtual bool init();
     
-	static CAWebView *createWithFrame(const CCRect& rect);
+	static CAWebView *createWithFrame(const DRect& rect);
 
-	static CAWebView *createWithCenter(const CCRect& rect);
+	static CAWebView *createWithCenter(const DRect& rect);
 
     /**
     * Set javascript interface scheme.
@@ -135,7 +135,7 @@ public:
    
 protected:
     
-    virtual void setContentSize(const CCSize &contentSize);
+    virtual void setContentSize(const DSize &contentSize);
     
 private:
     
@@ -147,9 +147,9 @@ private:
     
     CAActivityIndicatorView* m_pLoadingView;
     
-    CCPoint m_obLastPoint;
+    DPoint m_obLastPoint;
     
-    CCSize m_obLastContentSize;
+    DSize m_obLastContentSize;
     
 	friend class CAWebViewImpl;
     

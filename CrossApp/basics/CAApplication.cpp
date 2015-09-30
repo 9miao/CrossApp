@@ -7,7 +7,7 @@
 #include "CAScheduler.h"
 #include "ccMacros.h"
 #include "dispatcher/CATouchDispatcher.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "support/CANotificationCenter.h"
 #include "images/CAImageCache.h"
 #include "basics/CAAutoreleasePool.h"
@@ -22,7 +22,7 @@
 #include "shaders/CAShaderCache.h"
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
-#include "support/CCProfiling.h"
+#include "support/CAProfiling.h"
 #include "CCEGLView.h"
 #include "platform/CADensityDpi.h"
 #include "view/CALabelStyle.h"
@@ -92,7 +92,7 @@ bool CAApplication::init(void)
     // purge ?
     m_bPurgeDirecotorInNextLoop = false;
 
-    m_obWinSizeInPoints = CCSizeZero;    
+    m_obWinSizeInPoints = DSizeZero;    
 
     m_pobOpenGLView = NULL;
 
@@ -309,7 +309,7 @@ void CAApplication::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 
 void CAApplication::setProjection(CAApplication::Projection kProjection)
 {
-    CCSize size = m_obWinSizeInPoints;
+    DSize size = m_obWinSizeInPoints;
 
     setViewport();
 
@@ -397,12 +397,12 @@ void CAApplication::setAlphaBlending(bool bOn)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void CAApplication::reshapeProjection(const CCSize& newWindowSize)
+void CAApplication::reshapeProjection(const DSize& newWindowSize)
 {
 	CC_UNUSED_PARAM(newWindowSize);
 	if (m_pobOpenGLView)
 	{
-		m_obWinSizeInPoints = CCSize(newWindowSize.width, newWindowSize.height);
+		m_obWinSizeInPoints = DSize(newWindowSize.width, newWindowSize.height);
 		setProjection(m_eProjection);       
 	}
 
@@ -445,7 +445,7 @@ GLToClipTransform(kmMat4 *transformOut)
 	kmMat4Multiply(transformOut, &projection, &modelview);
 }
 
-CCPoint CAApplication::convertToGL(const CCPoint& uiPoint)
+DPoint CAApplication::convertToGL(const DPoint& uiPoint)
 {
     kmMat4 transform;
 	GLToClipTransform(&transform);
@@ -456,16 +456,16 @@ CCPoint CAApplication::convertToGL(const CCPoint& uiPoint)
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
 	kmScalar zClip = transform.mat[14]/transform.mat[15];
 	
-    CCSize glSize = m_pobOpenGLView->getDesignResolutionSize();
+    DSize glSize = m_pobOpenGLView->getDesignResolutionSize();
 	kmVec3 clipCoord = {2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip};
 	
 	kmVec3 glCoord;
 	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
 	
-	return ccp(glCoord.x, glCoord.y);
+	return DPoint(glCoord.x, glCoord.y);
 }
 
-CCPoint CAApplication::convertToUI(const CCPoint& glPoint)
+DPoint CAApplication::convertToUI(const DPoint& glPoint)
 {
     kmMat4 transform;
 	GLToClipTransform(&transform);
@@ -475,16 +475,16 @@ CCPoint CAApplication::convertToUI(const CCPoint& glPoint)
 	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
 	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
 	
-	CCSize glSize = m_pobOpenGLView->getDesignResolutionSize();
-	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
+	DSize glSize = m_pobOpenGLView->getDesignResolutionSize();
+	return DPoint(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
 }
 
-CCSize CAApplication::getWinSize(void)
+DSize CAApplication::getWinSize(void)
 {
     return m_obWinSizeInPoints;
 }
 
-CCSize CAApplication::getVisibleSize()
+DSize CAApplication::getVisibleSize()
 {
     if (m_pobOpenGLView)
     {
@@ -492,11 +492,11 @@ CCSize CAApplication::getVisibleSize()
     }
     else 
     {
-        return CCSizeZero;
+        return DSizeZero;
     }
 }
 
-CCPoint CAApplication::getVisibleOrigin()
+DPoint CAApplication::getVisibleOrigin()
 {
     if (m_pobOpenGLView)
     {
@@ -504,7 +504,7 @@ CCPoint CAApplication::getVisibleOrigin()
     }
     else 
     {
-        return CCPointZero;
+        return DPointZero;
     }
 }
 
@@ -674,7 +674,7 @@ void CAApplication::createStatsLabel()
     
     float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 640.0f;
 
-    m_pFPSLabel = CALabel::createWithFrame(CCRect(0, 0, 100, 32));
+    m_pFPSLabel = CALabel::createWithFrame(DRect(0, 0, 100, 32));
     m_pFPSLabel->retain();
     m_pFPSLabel->setScale(factor);
 	m_pFPSLabel->setFontColor(CAColor_blue);

@@ -22,14 +22,14 @@ public:
     CAGifView();
     ~CAGifView();
 public:
-    static CAGifView* createWithFrame(const CCRect& rect);
-    static CAGifView* createWithCenter(const CCRect& rect);
+    static CAGifView* createWithFrame(const DRect& rect);
+    static CAGifView* createWithCenter(const DRect& rect);
     static CAGifView* createWithGif(CAGif* gif);
     
     virtual bool init();
     virtual bool initWithGif(CAGif* gif);
-    virtual void setFrame(CCRect rect);
-    virtual void setCenter(CCRect rect);
+    virtual void setFrame(DRect rect);
+    virtual void setCenter(DRect rect);
 
     void setGif(CAGif* gif);
     void setTimes(float times);
@@ -38,8 +38,8 @@ public:
 protected:
     virtual void updateImageRect();
     virtual void updateGif(float delta);
-    void setGifBounds(CCSize size);
-    CCSize compareSize(CCSize setSize, CCSize gifSize);
+    void setGifBounds(DSize size);
+    DSize compareSize(DSize setSize, DSize gifSize);
 private:
     
     CAGif* m_pGif;

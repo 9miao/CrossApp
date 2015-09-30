@@ -55,19 +55,19 @@ CCEGLViewProtocol::~CCEGLViewProtocol()
 }
 
 
-const CCSize& CCEGLViewProtocol::getDesignResolutionSize() const 
+const DSize& CCEGLViewProtocol::getDesignResolutionSize() const 
 {
     return m_obDesignResolutionSize;
 }
 
-const CCSize& CCEGLViewProtocol::getFrameSize() const
+const DSize& CCEGLViewProtocol::getFrameSize() const
 {
     return m_obScreenSize;
 }
 
 void CCEGLViewProtocol::setFrameSize(float width, float height)
 {
-    m_obScreenSize = CCSize(width, height);
+    m_obScreenSize = DSize(width, height);
     
     m_obDesignResolutionSize.setSize(s_px_to_dip(width), s_px_to_dip(height));
     
@@ -81,14 +81,14 @@ void CCEGLViewProtocol::setFrameSize(float width, float height)
     m_obViewPortRect.setRect((m_obScreenSize.width - viewPortW) / 2, (m_obScreenSize.height - viewPortH) / 2, viewPortW, viewPortH);
 }
 
-CCSize  CCEGLViewProtocol::getVisibleSize() const
+DSize  CCEGLViewProtocol::getVisibleSize() const
 {
     return m_obDesignResolutionSize;
 }
 
-CCPoint CCEGLViewProtocol::getVisibleOrigin() const
+DPoint CCEGLViewProtocol::getVisibleOrigin() const
 {
-    return CCPointZero;
+    return DPointZero;
 }
 
 void CCEGLViewProtocol::setTouchDelegate(CCEGLTouchDelegate * pDelegate)
@@ -118,7 +118,7 @@ bool CCEGLViewProtocol::isScissorEnabled()
 	return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
 }
 
-CCRect CCEGLViewProtocol::getScissorRect()
+DRect CCEGLViewProtocol::getScissorRect()
 {
 	GLfloat params[4];
 	glGetFloatv(GL_SCISSOR_BOX, params);
@@ -126,7 +126,7 @@ CCRect CCEGLViewProtocol::getScissorRect()
 	float y = (params[1] - m_obViewPortRect.origin.y) / m_fScaleY;
 	float w = params[2] / m_fScaleX;
 	float h = params[3] / m_fScaleY;
-	return CCRectMake(x, y, w, h);
+	return DRect(x, y, w, h);
 }
 
 void CCEGLViewProtocol::setViewName(const char* pszViewName)
@@ -335,7 +335,7 @@ void CCEGLViewProtocol::handleMouseExited(int num, intptr_t ids[], float xs[], f
     
 }
 
-const CCRect& CCEGLViewProtocol::getViewPortRect() const
+const DRect& CCEGLViewProtocol::getViewPortRect() const
 {
     return m_obViewPortRect;
 }

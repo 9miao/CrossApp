@@ -26,7 +26,7 @@ void MenuViewController::viewDidLoad()
     this->getView()->setColor(CAColor_clear);
     size = this->getView()->getBounds().size;
     
-    tableView = CATableView::createWithFrame(CCRect(0, size.height/3, size.width, size.height*0.6));
+    tableView = CATableView::createWithFrame(DRect(0, size.height/3, size.width, size.height*0.6));
     tableView->setAllowsSelection(true);
     tableView->setTableViewDelegate(this);
     tableView->setTableViewDataSource(this);
@@ -78,15 +78,15 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
     
 }
 
-CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
+CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
 {
-    CCSize _size = cellSize;
+    DSize _size = cellSize;
     CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
     if (cell == NULL)
     {
         cell = CATableViewCell::create("CrossApp");
         cell->setBackgroundView(NULL);
-        CALabel* test = CALabel::createWithCenter(CCRect(_size.width/2+30,
+        CALabel* test = CALabel::createWithCenter(DRect(_size.width/2+30,
                                                             _size.height/2,
                                                             _size.width,
                                                             _size.height));
@@ -97,7 +97,7 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         test->setTag(100);
         cell->addSubview(test);
         
-        CAImageView* arrow = CAImageView::createWithCenter(CCRect(_size.width-64,_size.height/2,64,64));
+        CAImageView* arrow = CAImageView::createWithCenter(DRect(_size.width-64,_size.height/2,64,64));
         arrow->setTag(101);
         cell->addSubview(arrow);
     }

@@ -29,8 +29,8 @@ public:
 	virtual ~CAVideoPlayerView();
     
 	static CAVideoPlayerView* create();
-	static CAVideoPlayerView* createWithFrame(const CCRect& rect);
-	static CAVideoPlayerView* createWithCenter(const CCRect& rect);
+	static CAVideoPlayerView* createWithFrame(const DRect& rect);
+	static CAVideoPlayerView* createWithCenter(const DRect& rect);
 
 	bool initWithPath(const std::string& szPath);
 	bool initWithUrl(const std::string& szUrl);
@@ -46,8 +46,8 @@ private:
 	virtual bool init();
 	virtual void visit();
 	virtual void draw();
-	virtual void setContentSize(const CCSize& size);
-	virtual void setImageCoords(CCRect rect);
+	virtual void setContentSize(const DSize& size);
+	virtual void setImageCoords(DRect rect);
 	virtual void updateImageRect();
 
 	bool createDecoder(const std::string& cszPath);
@@ -68,7 +68,7 @@ private:
 	CASyncQueue<VPFrame*> m_vVideoFrames;
 	CASyncQueue<VPFrame*> m_vAudioFrames;
 
-	CCRect m_viewRect;
+	DRect m_viewRect;
 
 	std::string m_cszPath;
 

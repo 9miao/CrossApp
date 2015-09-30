@@ -57,11 +57,11 @@ public:
 
     void printscreenWithView(CAView* view);
     
-    void printscreenWithView(CAView* view, CCPoint offset);
+    void printscreenWithView(CAView* view, DPoint offset);
     
     void printscreenWithView(CAView* view, const CAColor4B& backgroundColor);
     
-    void printscreenWithView(CAView* view, CCPoint offset, const CAColor4B& backgroundColor);
+    void printscreenWithView(CAView* view, DPoint offset, const CAColor4B& backgroundColor);
     
     void clear(const CAColor4B& backgroundColor);
 
@@ -104,7 +104,7 @@ protected:
     
     void end();
     
-    virtual void setContentSize(const CCSize& contentSize);
+    virtual void setContentSize(const DSize& contentSize);
     
 protected:
     GLuint       m_uFBO;

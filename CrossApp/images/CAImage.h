@@ -71,7 +71,7 @@ public:
 									 const CAColor4B& fontColor,
                                      const char *fontName,
                                      float fontSize,
-                                     const CCSize& dimensions,
+                                     const DSize& dimensions,
                                      CATextAlignment hAlignment,
                                      CAVerticalTextAlignment vAlignment,
                                      bool isForTextField = false,
@@ -99,7 +99,7 @@ public:
                                int iLineSpace = 0,
                                bool bWordWrap = true);
     
-    static CAImage* scaleToNewImageWithImage(CAImage* image, const CCSize& size);
+    static CAImage* scaleToNewImageWithImage(CAImage* image, const DSize& size);
     
     static CAImage* scaleToNewImageWithImage(CAImage* image, float scaleX, float scaleY);
     
@@ -141,9 +141,9 @@ public:
     
     void releaseData(unsigned char ** data);
     
-    void drawAtPoint(const CCPoint& point);
+    void drawAtPoint(const DPoint& point);
     
-    void drawInRect(const CCRect& rect);
+    void drawInRect(const DRect& rect);
     
     bool initWithETCFile(const char* file);
     
@@ -198,7 +198,7 @@ public:
     
     CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
     
-    CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
+    CC_PROPERTY_READONLY_PASS_BY_REF(DSize, m_tContentSize, ContentSize)
     
     CC_PROPERTY(CAGLProgram*, m_pShaderProgram, ShaderProgram);
     

@@ -72,7 +72,7 @@ void CASegmentedControl::onEnterTransitionDidFinish()
     CAControl::onEnterTransitionDidFinish();
 }
 
-CASegmentedControl* CASegmentedControl::createWithFrame(const CCRect& rect, unsigned int itemsCount)
+CASegmentedControl* CASegmentedControl::createWithFrame(const DRect& rect, unsigned int itemsCount)
 {
     CASegmentedControl* segmentedControl = new CASegmentedControl(itemsCount);
     if (segmentedControl && segmentedControl->initWithFrame(rect))
@@ -84,7 +84,7 @@ CASegmentedControl* CASegmentedControl::createWithFrame(const CCRect& rect, unsi
     return NULL;
 }
 
-CASegmentedControl* CASegmentedControl::createWithCenter(const CCRect& rect, unsigned int itemsCount)
+CASegmentedControl* CASegmentedControl::createWithCenter(const DRect& rect, unsigned int itemsCount)
 {
     CASegmentedControl* segmentedControl = new CASegmentedControl(itemsCount);
     if (segmentedControl && segmentedControl->initWithCenter(rect))
@@ -96,7 +96,7 @@ CASegmentedControl* CASegmentedControl::createWithCenter(const CCRect& rect, uns
     return NULL;
 }
 
-bool CASegmentedControl::initWithFrame(const CCRect& rect)
+bool CASegmentedControl::initWithFrame(const DRect& rect)
 {
     if (!CAControl::initWithFrame(rect))
     {
@@ -105,7 +105,7 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
     this->setBackgroundImage( CAImage::create("source_material/btn_rounded_normal.png") );
 
     const float elemWidth = this->getBounds().size.width / m_nItemsCount;
-    CCRect elemFrame = CCRectMake(0, 0, this->getBounds().size.width/m_nItemsCount, this->getBounds().size.height);
+    DRect elemFrame = DRect(0, 0, this->getBounds().size.width/m_nItemsCount, this->getBounds().size.height);
     for (int i = 0; i < m_nItemsCount; ++i)
     {
         CAView* segment = this->createDefaultSegment(i);
@@ -122,7 +122,7 @@ bool CASegmentedControl::initWithFrame(const CCRect& rect)
     return true;
 }
 
-bool CASegmentedControl::initWithCenter(const CCRect& rect)
+bool CASegmentedControl::initWithCenter(const DRect& rect)
 {
     if (!CAControl::initWithCenter(rect))
     {
@@ -131,7 +131,7 @@ bool CASegmentedControl::initWithCenter(const CCRect& rect)
     this->setBackgroundImage( CAImage::create("source_material/btn_rounded_normal.png") );
 
     const float elemWidth = this->getBounds().size.width / m_nItemsCount;
-    CCRect elemFrame = CCRectMake(0, 0, this->getBounds().size.width/m_nItemsCount, this->getBounds().size.height);
+    DRect elemFrame = DRect(0, 0, this->getBounds().size.width/m_nItemsCount, this->getBounds().size.height);
     for (int i = 0; i < m_nItemsCount; ++i)
     {
         CAView *segment = this->createDefaultSegment(i);
@@ -251,7 +251,7 @@ void CASegmentedControl::insertSegmentWithTitleAtIndex(const std::string& title,
         CAView *segment = this->createDefaultSegment(index);
         if (segment)
         {
-            segment->setFrame(CCRectMake(0,0,this->getBounds().size.width/m_vSegments.size(), this->getBounds().size.height));
+            segment->setFrame(DRect(0,0,this->getBounds().size.width/m_vSegments.size(), this->getBounds().size.height));
             m_vSegments.insert(index, segment);
 			m_nItemsCount++;
             this->insertSubview(segment, 1);
@@ -277,7 +277,7 @@ void CASegmentedControl::insertSegmentWithImageAtIndex(CAImage* image, int index
         CAView *segment = this->createDefaultSegment(index);
         if (segment)
         {
-            segment->setFrame(CCRectMake(0,0,this->getBounds().size.width/m_vSegments.size(), this->getBounds().size.height));
+            segment->setFrame(DRect(0,0,this->getBounds().size.width/m_vSegments.size(), this->getBounds().size.height));
             m_vSegments.insert(index, segment);
 			m_nItemsCount++;
             this->insertSubview(segment, 1);
@@ -297,13 +297,13 @@ void CASegmentedControl::refreshAllLable()
 {
     for(int i=0; i<m_vTitles.size(); i++)
     {
-        CCPoint point = m_vSegments.at(i)->getBounds().origin;
-        CCSize size = m_vSegments.at(i)->getBounds().size;
-        CCSize contentOffset = m_vContentOffset.at(i);
+        DPoint point = m_vSegments.at(i)->getBounds().origin;
+        DSize size = m_vSegments.at(i)->getBounds().size;
+        DSize contentOffset = m_vContentOffset.at(i);
         CALabel* label = m_vTitles.at(i);
         if(label != NULL)
         {
-            label->setCenter(CCRect(size.width*0.5f + contentOffset.width,
+            label->setCenter(DRect(size.width*0.5f + contentOffset.width,
                                     size.height*0.5f + contentOffset.height,
                                     size.width,
                                     size.height));
@@ -315,9 +315,9 @@ void CASegmentedControl::setTitleForSegmentAtIndex(const std::string& title, int
 {
     if(index < m_vSegments.size())
     {
-        CCPoint point = m_vSegments.at(index)->getBounds().origin;
-        CCSize size = m_vSegments.at(index)->getBounds().size;
-        CALabel* label = CALabel::createWithCenter(CCRect(m_vContentOffset.at(index).width+ size.width, m_vContentOffset.at(index).height + size.height, size.width, size.height));
+        DPoint point = m_vSegments.at(index)->getBounds().origin;
+        DSize size = m_vSegments.at(index)->getBounds().size;
+        CALabel* label = CALabel::createWithCenter(DRect(m_vContentOffset.at(index).width+ size.width, m_vContentOffset.at(index).height + size.height, size.width, size.height));
         label->setTextAlignment(CATextAlignmentCenter);
         label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         label->setText(title);
@@ -422,7 +422,7 @@ float CASegmentedControl::getWidthForSegmentAtIndex(int index)
     return width;
 }
 
-void CASegmentedControl::setContentOffsetForSegmentAtIndex(CCSize offset, int index)
+void CASegmentedControl::setContentOffsetForSegmentAtIndex(DSize offset, int index)
 {
     if(index >= 0 && index < m_vSegments.size())
     {
@@ -444,9 +444,9 @@ void CASegmentedControl::setContentOffsetForSegmentAtIndex(CCSize offset, int in
     }
 }
 
-CCSize CASegmentedControl::getContentOffsetForSegmentAtIndex(int index)
+DSize CASegmentedControl::getContentOffsetForSegmentAtIndex(int index)
 {
-    CCSize offset = CCSizeZero;
+    DSize offset = DSizeZero;
     if(index >= 0 && index < m_vSegments.size())
     {
         offset = m_vContentOffset.at(index);
@@ -493,12 +493,12 @@ void CASegmentedControl::removeSegmentAtIndex(int index)
     }
     
     {
-        std::vector<CCSize>::iterator itr = m_vContentOffset.begin() + index;
+        std::vector<DSize>::iterator itr = m_vContentOffset.begin() + index;
         m_vContentOffset.erase(itr);
     }
     
     {
-        std::vector<CCSize>::iterator itr = m_vImageSize.begin() + index;
+        std::vector<DSize>::iterator itr = m_vImageSize.begin() + index;
         m_vImageSize.erase(itr);
     }
     
@@ -532,9 +532,9 @@ void CASegmentedControl::removeSegmentAtIndex(int index)
 }
 
 
-void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
+void CASegmentedControl::setContentSize(const CrossApp::DSize &var)
 {
-    CCSize size = var;
+    DSize size = var;
     size.height = MAX(size.height, _px(58));
     size.width = MAX(size.width, size.height * 2);
     CAControl::setContentSize(size);
@@ -549,7 +549,7 @@ void CASegmentedControl::setContentSize(const CrossApp::CCSize &var)
     CAVector<CAView*>::iterator itr = m_vSegments.begin();
     for(; itr != m_vSegments.end(); ++itr)
     {
-        CCRect rect = CCRect(length, 0, (*itr)->getBounds().size.width, (*itr)->getBounds().size.height);
+        DRect rect = DRect(length, 0, (*itr)->getBounds().size.width, (*itr)->getBounds().size.height);
         length += (*itr)->getBounds().size.width;
         (*itr)->setFrame(rect);
     }
@@ -575,7 +575,7 @@ void CASegmentedControl::setBackgroundImage(CAImage* image)
 
 void CASegmentedControl::createSeparate()
 {
-    CCRect frame = CCRect(0, 0, m_fSeparateWidth, this->getBounds().size.height);
+    DRect frame = DRect(0, 0, m_fSeparateWidth, this->getBounds().size.height);
     float length = 0;
     size_t count = m_vSegments.size();
 	CAVector<CAView *>::iterator itr = m_vSegments.begin();
@@ -622,7 +622,7 @@ void CASegmentedControl::refreshAllSegmentItemBounds()
         {
             segmentWidth = (this->getBounds().size.width - setWidth)/(m_vSegmentWidth.size()-setWidthCount);
         }
-        (*itr_segment)->setBounds(CCRect((*itr_segment)->getBounds().origin.x,
+        (*itr_segment)->setBounds(DRect((*itr_segment)->getBounds().origin.x,
                                              (*itr_segment)->getBounds().origin.y,
                                              segmentWidth,
                                              (*itr_segment)->getBounds().size.height));
@@ -635,11 +635,11 @@ void CASegmentedControl::refreshAllSegmentItemPosition()
     CAVector<CAView*>::iterator itr = m_vSegments.begin();
     for(; itr != m_vSegments.end(); ++itr)
     {
-        CCRect rect = CCRect(length, 0, (*itr)->getBounds().size.width, (*itr)->getBounds().size.height);
+        DRect rect = DRect(length, 0, (*itr)->getBounds().size.width, (*itr)->getBounds().size.height);
         length += (*itr)->getBounds().size.width;
         (*itr)->setFrame(rect);
     }
-    this->setFrame(CCRect(this->getFrameOrigin().x, this->getFrameOrigin().y, length, this->getBounds().size.height));
+    this->setFrame(DRect(this->getFrameOrigin().x, this->getFrameOrigin().y, length, this->getBounds().size.height));
 }
 
 void CASegmentedControl::refreshAllSegmentItemBackgroundPosition()
@@ -649,13 +649,13 @@ void CASegmentedControl::refreshAllSegmentItemBackgroundPosition()
     CAVector<CAView*>::iterator itr_bg = m_vSegmentItemBackground.begin();
     for(; itr != m_vSegments.end(); ++itr, ++itr_bg)
     {
-        CCRect rect = CCRect(length, 0, (*itr)->getFrame().size.width, (*itr)->getBounds().size.height);
+        DRect rect = DRect(length, 0, (*itr)->getFrame().size.width, (*itr)->getBounds().size.height);
         length += (*itr)->getFrame().size.width;
         (*itr_bg)->setFrame(rect);
     }
 }
 
-void CASegmentedControl::refreshSegmentItemByPoint(CCPoint point, CAControlState controlState)
+void CASegmentedControl::refreshSegmentItemByPoint(DPoint point, CAControlState controlState)
 {
     int index =getSegmentItemIndexByPoint(point);
     refreshSegmentItemByIndex(index, controlState);
@@ -666,22 +666,22 @@ void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState con
     if(index<0 && index>=m_vSegments.size())
         return;
     CAObject* object = getObjectByIndex(index, controlState);
-    CCSize segmentSize = m_vSegments.at(index)->getBounds().size;
-    CCSize contentOffset = m_vContentOffset.at(index);
-    CCSize imageSize = m_vImageSize.at(index);
+    DSize segmentSize = m_vSegments.at(index)->getBounds().size;
+    DSize contentOffset = m_vContentOffset.at(index);
+    DSize imageSize = m_vImageSize.at(index);
     
     if(CALabel* label = dynamic_cast<CALabel*>(object))
     {
-        label->setCenter(CCRect(segmentSize.width*0.5f + contentOffset.width,
+        label->setCenter(DRect(segmentSize.width*0.5f + contentOffset.width,
                                 segmentSize.height*0.5f + contentOffset.height,
                                 segmentSize.width,
                                 segmentSize.height));
     }
     else if(CAImage* image = dynamic_cast<CAImage*>(object))
     {
-        CCSize imageSelfSize =  CCSize(image->getContentSize().width, image->getContentSize().height);
+        DSize imageSelfSize =  DSize(image->getContentSize().width, image->getContentSize().height);
     
-        CCSize segmentSizeDip = CCSize( segmentSize );
+        DSize segmentSizeDip = DSize( segmentSize );
         float width = imageSelfSize.width;
         float height = imageSelfSize.height;
         if(imageSelfSize.width > segmentSizeDip.width)
@@ -699,7 +699,7 @@ void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState con
             width = imageSize.width;
             height = imageSize.height;
         }
-        imageView->setCenter(CCRectMake(segmentSize.width*0.5f + contentOffset.width,
+        imageView->setCenter(DRect(segmentSize.width*0.5f + contentOffset.width,
                                         segmentSize.height*0.5f + contentOffset.height,
                                         width,
                                         height));
@@ -722,7 +722,7 @@ void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState con
     }
 }
 
-int CASegmentedControl::getSegmentItemIndexByPoint(CCPoint point)
+int CASegmentedControl::getSegmentItemIndexByPoint(DPoint point)
 {
     if(point.x < 0)
         return -1;
@@ -816,11 +816,11 @@ CAView* CASegmentedControl::createDefaultSegment(int index)
         std::vector<bool>::iterator itr = m_vIsEnabled.begin()+index;
         m_vIsEnabled.insert(itr, true);
         
-        std::vector<CCSize>::iterator itr_offset = m_vContentOffset.begin()+index;
-        m_vContentOffset.insert(itr_offset, CCSizeMake(0, 0));
+        std::vector<DSize>::iterator itr_offset = m_vContentOffset.begin()+index;
+        m_vContentOffset.insert(itr_offset, DSize(0, 0));
         
-        std::vector<CCSize>::iterator itr_imageSize = m_vImageSize.begin()+index;
-        m_vImageSize.insert(itr_imageSize, CCSizeMake(0, 0));
+        std::vector<DSize>::iterator itr_imageSize = m_vImageSize.begin()+index;
+        m_vImageSize.insert(itr_imageSize, DSize(0, 0));
         
         std::vector<float>::iterator itr_width = m_vSegmentWidth.begin()+index;
         m_vSegmentWidth.insert(itr_width, -1);
@@ -873,12 +873,12 @@ CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
     CAView* segment = m_vSegments.at(index);
     if(segment)
     {
-        CCSize size = clipNode->getFrame().size;
+        DSize size = clipNode->getFrame().size;
         CARenderImage* render = CARenderImage::create(size.width, size.height);
         render->printscreenWithView(clipNode);
         
-        CCRect rect;
-        rect.origin = CCPoint(x, 0);
+        DRect rect;
+        rect.origin = DPoint(x, 0);
         rect.size = segment->getBounds().size;
 
         imageView = CAImageView::createWithImage(render->getImageView()->getImage());
@@ -895,7 +895,7 @@ void CASegmentedControl::setSegmentItemBackgroundVisibleWithIndex(bool isVisible
         (*itr)->setVisible(isVisible);
 }
 
-void CASegmentedControl::setImageSizeAtIndex(CCSize size, int index)
+void CASegmentedControl::setImageSizeAtIndex(DSize size, int index)
 {
     if(index >= 0 && index < m_vSegments.size())
     {
@@ -930,7 +930,7 @@ void CASegmentedControl::setTitleFontSize(float titleSize)
 
 bool CASegmentedControl::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
     int index = getSegmentItemIndexByPoint(point);
@@ -950,7 +950,7 @@ bool CASegmentedControl::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CASegmentedControl::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
     if (getBounds().containsPoint(point))
@@ -980,7 +980,7 @@ void CASegmentedControl::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEve
 
 void CASegmentedControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    CCPoint point = pTouch->getLocation();
+    DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
     int index =getSegmentItemIndexByPoint(point);

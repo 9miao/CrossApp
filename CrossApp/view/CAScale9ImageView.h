@@ -25,15 +25,15 @@ public:
     
     static CAScale9ImageView* createWithImage(CAImage* image);
     
-    static CAScale9ImageView* createWithFrame(const CCRect& rect);
+    static CAScale9ImageView* createWithFrame(const DRect& rect);
     
-    static CAScale9ImageView* createWithCenter(const CCRect& rect);
+    static CAScale9ImageView* createWithCenter(const DRect& rect);
     
     virtual bool init();
     
 	virtual bool initWithImage(CAImage* image);
     
-    virtual void setCapInsets(const CCRect& capInsets);
+    virtual void setCapInsets(const DRect& capInsets);
     
     virtual void setInsetLeft(float insetLeft);
     
@@ -59,9 +59,9 @@ public:
     
 public:
 
-    CC_SYNTHESIZE_READONLY(CCSize, m_obOriginalSize, OriginalSize);
+    CC_SYNTHESIZE_READONLY(DSize, m_obOriginalSize, OriginalSize);
 
-    CC_SYNTHESIZE_READONLY(CCRect, m_obCapInsets, CapInsets);
+    CC_SYNTHESIZE_READONLY(DRect, m_obCapInsets, CapInsets);
 
     CC_SYNTHESIZE_READONLY(float, m_fInsetLeft, InsetLeft);
 
@@ -79,13 +79,13 @@ protected:
 
     void updateWithImage();
     
-    virtual void setContentSize(const CCSize & size);
+    virtual void setContentSize(const DSize & size);
 
     virtual void updateDisplayedColor(const CrossApp::CAColor4B& parentColor);
     
-    virtual bool initWithFrame(const CCRect& rect, const CAColor4B& color4B);
+    virtual bool initWithFrame(const DRect& rect, const CAColor4B& color4B);
     
-    virtual bool initWithCenter(const CCRect& rect, const CAColor4B& color4B);
+    virtual bool initWithCenter(const DRect& rect, const CAColor4B& color4B);
     
     using CAView::initWithColor;
     
@@ -95,7 +95,7 @@ protected:
     
     CAImageView* m_pImageView[9];
     
-    CCRect m_rFrame[9];
+    DRect m_rFrame[9];
     
     bool m_bUpdatePositions;
     

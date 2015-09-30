@@ -1,44 +1,44 @@
 
 
-#include "CCPointExtension.h"
+#include "CAPointExtension.h"
 #include "ccMacros.h" // FLT_EPSILON
 #include <stdio.h>
 
 NS_CC_BEGIN
 
-#define kCCPointEpsilon FLT_EPSILON
+#define kDPointEpsilon FLT_EPSILON
 
 float
-ccpLength(const CCPoint& v)
+ccpLength(const DPoint& v)
 {
     return v.getLength();
 }
 
 float
-ccpDistance(const CCPoint& v1, const CCPoint& v2)
+ccpDistance(const DPoint& v1, const DPoint& v2)
 {
     return (v1 - v2).getLength();
 }
 
-CCPoint
-ccpNormalize(const CCPoint& v)
+DPoint
+ccpNormalize(const DPoint& v)
 {
     return v.normalize();
 }
 
-CCPoint
+DPoint
 ccpForAngle(const float a)
 {
-    return CCPoint::forAngle(a);
+    return DPoint::forAngle(a);
 }
 
 float
-ccpToAngle(const CCPoint& v)
+ccpToAngle(const DPoint& v)
 {
     return v.getAngle();
 }
 
-CCPoint ccpLerp(const CCPoint& a, const CCPoint& b, float alpha)
+DPoint ccpLerp(const DPoint& a, const DPoint& b, float alpha)
 {
     return a.lerp(b, alpha);
 }
@@ -51,43 +51,43 @@ float clampf(float value, float min_inclusive, float max_inclusive)
     return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
 }
 
-CCPoint ccpClamp(const CCPoint& p, const CCPoint& min_inclusive, const CCPoint& max_inclusive)
+DPoint ccpClamp(const DPoint& p, const DPoint& min_inclusive, const DPoint& max_inclusive)
 {
-    return ccp(clampf(p.x,min_inclusive.x,max_inclusive.x), clampf(p.y, min_inclusive.y, max_inclusive.y));
+    return DPoint(clampf(p.x,min_inclusive.x,max_inclusive.x), clampf(p.y, min_inclusive.y, max_inclusive.y));
 }
 
-CCPoint ccpFromSize(const CCSize& s)
+DPoint ccpFromSize(const DSize& s)
 {
-    return CCPoint(s);
+    return DPoint(s);
 }
 
-CCPoint ccpCompOp(const CCPoint& p, float (*opFunc)(float))
+DPoint ccpCompOp(const DPoint& p, float (*opFunc)(float))
 {
-    return ccp(opFunc(p.x), opFunc(p.y));
+    return DPoint(opFunc(p.x), opFunc(p.y));
 }
 
-bool ccpFuzzyEqual(const CCPoint& a, const CCPoint& b, float var)
+bool ccpFuzzyEqual(const DPoint& a, const DPoint& b, float var)
 {
 	return a.fuzzyEquals(b, var);
 }
 
-CCPoint ccpCompMult(const CCPoint& a, const CCPoint& b)
+DPoint ccpCompMult(const DPoint& a, const DPoint& b)
 {
-    return ccp(a.x * b.x, a.y * b.y);
+    return DPoint(a.x * b.x, a.y * b.y);
 }
 
-float ccpAngleSigned(const CCPoint& a, const CCPoint& b)
+float ccpAngleSigned(const DPoint& a, const DPoint& b)
 {
 	return a.getAngle(b);
 }
 
-CCPoint ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle)
+DPoint ccpRotateByAngle(const DPoint& v, const DPoint& pivot, float angle)
 {
 	return v.rotateByAngle(pivot, angle);
 }
 
 
-bool ccpSegmentIntersect(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D)
+bool ccpSegmentIntersect(const DPoint& A, const DPoint& B, const DPoint& C, const DPoint& D)
 {
     float S, T;
 
@@ -98,24 +98,24 @@ bool ccpSegmentIntersect(const CCPoint& A, const CCPoint& B, const CCPoint& C, c
     return false;
 }
 
-CCPoint ccpIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D)
+DPoint ccpIntersectPoint(const DPoint& A, const DPoint& B, const DPoint& C, const DPoint& D)
 {
     float S, T;
 
     if( ccpLineIntersect(A, B, C, D, &S, &T) )
     {
         // Point of intersection
-        CCPoint P;
+        DPoint P;
         P.x = A.x + S * (B.x - A.x);
         P.y = A.y + S * (B.y - A.y);
         return P;
     }
 
-    return CCPointZero;
+    return DPointZero;
 }
 
-bool ccpLineIntersect(const CCPoint& A, const CCPoint& B, 
-                      const CCPoint& C, const CCPoint& D,
+bool ccpLineIntersect(const DPoint& A, const DPoint& B, 
+                      const DPoint& C, const DPoint& D,
                       float *S, float *T)
 {
     // FAIL: Line undefined
@@ -157,10 +157,10 @@ bool ccpLineIntersect(const CCPoint& A, const CCPoint& B,
     return true;
 }
 
-float ccpAngle(const CCPoint& a, const CCPoint& b)
+float ccpAngle(const DPoint& a, const DPoint& b)
 {
     float angle = acosf(ccpDot(ccpNormalize(a), ccpNormalize(b)));
-    if( fabs(angle) < kCCPointEpsilon ) return 0.f;
+    if( fabs(angle) < kDPointEpsilon ) return 0.f;
     return angle;
 }
 

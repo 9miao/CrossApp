@@ -101,9 +101,9 @@ public:
 
 	virtual void resignResponder();
 
-	static CATextView* createWithFrame(const CCRect& rect);
+	static CATextView* createWithFrame(const DRect& rect);
 
-	static CATextView* createWithCenter(const CCRect& rect);
+	static CATextView* createWithCenter(const DRect& rect);
 
     void setBackGroundImage(CAImage* image);
     
@@ -176,7 +176,7 @@ protected:
 	virtual int getCursorPos();
 	virtual void visit();
 
-	virtual void setContentSize(const CCSize& var);
+	virtual void setContentSize(const DSize& var);
 	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
@@ -189,8 +189,8 @@ protected:
 	virtual void cursorMoveForward();
     virtual void cursorMoveUp();
     virtual void cursorMoveDown();
-	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt);
-	virtual void moveArrowBtn(const CCPoint& pt);
+	virtual void moveSelectChars(bool isLeftBtn, const DPoint& pt);
+	virtual void moveArrowBtn(const DPoint& pt);
 
 	virtual void copyToClipboard();
 	virtual void cutToClipboard();
@@ -203,7 +203,7 @@ protected:
 	void calcCursorPosition();
 	int getStringLength(const std::string &var);
 	int getCurrentByPointY(int y);
-	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
+	void calculateSelChars(const DPoint& point, int& l, int& r, int& p);
 	bool execCurSelCharRange();
 
 	void ccStartSelect();
@@ -214,7 +214,7 @@ protected:
 	int getStringCharCount(const std::string &var);
 
 	std::pair<int, int> getLineAndPos(int iPos);
-	std::vector<CCRect> getZZCRect();
+	std::vector<DRect> getZZCRect();
 
 private:
     
@@ -239,7 +239,7 @@ private:
 	CATextSelViewEx* m_pTextSelView;
 	CATextArrowView* m_pTextArrView;
     
-    CCPoint m_pCurPosition;
+    DPoint m_pCurPosition;
 };
 
 

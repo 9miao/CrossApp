@@ -155,10 +155,10 @@
 		04EABA761956D75A00198A8E /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAB0111956D75500198A8E /* base64.h */; };
 		04EABA771956D75A00198A8E /* CANotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAB0121956D75500198A8E /* CANotificationCenter.cpp */; };
 		04EABA781956D75A00198A8E /* CANotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAB0131956D75500198A8E /* CANotificationCenter.h */; };
-		04EABA791956D75A00198A8E /* CCPointExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAB0141956D75500198A8E /* CCPointExtension.cpp */; };
-		04EABA7A1956D75A00198A8E /* CCPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAB0151956D75500198A8E /* CCPointExtension.h */; };
-		04EABA7B1956D75A00198A8E /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAB0161956D75500198A8E /* CCProfiling.cpp */; };
-		04EABA7C1956D75A00198A8E /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAB0171956D75500198A8E /* CCProfiling.h */; };
+		04EABA791956D75A00198A8E /* CAPointExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAB0141956D75500198A8E /* CAPointExtension.cpp */; };
+		04EABA7A1956D75A00198A8E /* CAPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAB0151956D75500198A8E /* CAPointExtension.h */; };
+		04EABA7B1956D75A00198A8E /* CAProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAB0161956D75500198A8E /* CAProfiling.cpp */; };
+		04EABA7C1956D75A00198A8E /* CAProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAB0171956D75500198A8E /* CAProfiling.h */; };
 		04EABA7D1956D75A00198A8E /* ccUTF8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAB0181956D75500198A8E /* ccUTF8.cpp */; };
 		04EABA7E1956D75A00198A8E /* ccUTF8.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAB0191956D75500198A8E /* ccUTF8.h */; };
 		04EABA7F1956D75A00198A8E /* ccUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAB01A1956D75500198A8E /* ccUtils.cpp */; };
@@ -494,10 +494,10 @@
 		04EAB0111956D75500198A8E /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		04EAB0121956D75500198A8E /* CANotificationCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CANotificationCenter.cpp; sourceTree = "<group>"; };
 		04EAB0131956D75500198A8E /* CANotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CANotificationCenter.h; sourceTree = "<group>"; };
-		04EAB0141956D75500198A8E /* CCPointExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPointExtension.cpp; sourceTree = "<group>"; };
-		04EAB0151956D75500198A8E /* CCPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPointExtension.h; sourceTree = "<group>"; };
-		04EAB0161956D75500198A8E /* CCProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProfiling.cpp; sourceTree = "<group>"; };
-		04EAB0171956D75500198A8E /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
+		04EAB0141956D75500198A8E /* CAPointExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPointExtension.cpp; sourceTree = "<group>"; };
+		04EAB0151956D75500198A8E /* CAPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPointExtension.h; sourceTree = "<group>"; };
+		04EAB0161956D75500198A8E /* CAProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAProfiling.cpp; sourceTree = "<group>"; };
+		04EAB0171956D75500198A8E /* CAProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAProfiling.h; sourceTree = "<group>"; };
 		04EAB0181956D75500198A8E /* ccUTF8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccUTF8.cpp; sourceTree = "<group>"; };
 		04EAB0191956D75500198A8E /* ccUTF8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUTF8.h; sourceTree = "<group>"; };
 		04EAB01A1956D75500198A8E /* ccUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccUtils.cpp; sourceTree = "<group>"; };
@@ -1076,10 +1076,10 @@
 				04EAB0111956D75500198A8E /* base64.h */,
 				04EAB0121956D75500198A8E /* CANotificationCenter.cpp */,
 				04EAB0131956D75500198A8E /* CANotificationCenter.h */,
-				04EAB0141956D75500198A8E /* CCPointExtension.cpp */,
-				04EAB0151956D75500198A8E /* CCPointExtension.h */,
-				04EAB0161956D75500198A8E /* CCProfiling.cpp */,
-				04EAB0171956D75500198A8E /* CCProfiling.h */,
+				04EAB0141956D75500198A8E /* CAPointExtension.cpp */,
+				04EAB0151956D75500198A8E /* CAPointExtension.h */,
+				04EAB0161956D75500198A8E /* CAProfiling.cpp */,
+				04EAB0171956D75500198A8E /* CAProfiling.h */,
 				04EAB0181956D75500198A8E /* ccUTF8.cpp */,
 				04EAB0191956D75500198A8E /* ccUTF8.h */,
 				04EAB01A1956D75500198A8E /* ccUtils.cpp */,
@@ -1548,8 +1548,8 @@
 				B074A8B81A722B5200F34F79 /* CAViewAnimation.h in Headers */,
 				B0B05FB01BB1483200B891CE /* CAImageView.h in Headers */,
 				04EABA781956D75A00198A8E /* CANotificationCenter.h in Headers */,
-				04EABA7A1956D75A00198A8E /* CCPointExtension.h in Headers */,
-				04EABA7C1956D75A00198A8E /* CCProfiling.h in Headers */,
+				04EABA7A1956D75A00198A8E /* CAPointExtension.h in Headers */,
+				04EABA7C1956D75A00198A8E /* CAProfiling.h in Headers */,
 				04EABA7E1956D75A00198A8E /* ccUTF8.h in Headers */,
 				04EABA801956D75A00198A8E /* ccUtils.h in Headers */,
 				04EABA821956D75A00198A8E /* CCVertex.h in Headers */,
@@ -1739,8 +1739,8 @@
 				B02CE48319AD869600B905FB /* CAPageControl.cpp in Sources */,
 				04EABA751956D75A00198A8E /* base64.cpp in Sources */,
 				04EABA771956D75A00198A8E /* CANotificationCenter.cpp in Sources */,
-				04EABA791956D75A00198A8E /* CCPointExtension.cpp in Sources */,
-				04EABA7B1956D75A00198A8E /* CCProfiling.cpp in Sources */,
+				04EABA791956D75A00198A8E /* CAPointExtension.cpp in Sources */,
+				04EABA7B1956D75A00198A8E /* CAProfiling.cpp in Sources */,
 				3E2154091B817AB80075448E /* HttpClient.cpp in Sources */,
 				04EABA7D1956D75A00198A8E /* ccUTF8.cpp in Sources */,
 				3E21540F1B817AB80075448E /* sqlite3.c in Sources */,

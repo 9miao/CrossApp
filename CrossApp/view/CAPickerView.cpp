@@ -40,7 +40,7 @@ CAPickerView* CAPickerView::create()
     return view;
 }
 
-CAPickerView* CAPickerView::createWithFrame(const CCRect& rect)
+CAPickerView* CAPickerView::createWithFrame(const DRect& rect)
 {
     CAPickerView* view = new CAPickerView();
     if (view && view->initWithFrame(rect)) {
@@ -51,7 +51,7 @@ CAPickerView* CAPickerView::createWithFrame(const CCRect& rect)
     return view;
 }
 
-CAPickerView* CAPickerView::createWithCenter(const CCRect& rect)
+CAPickerView* CAPickerView::createWithCenter(const DRect& rect)
 {
     CAPickerView* view = new CAPickerView();
     if (view && view->initWithCenter(rect)) {
@@ -72,7 +72,7 @@ bool CAPickerView::init()
     return true;
 }
 
-bool CAPickerView::initWithCenter(const CrossApp::CCRect &rect)
+bool CAPickerView::initWithCenter(const CrossApp::DRect &rect)
 {
     if (!CAView::initWithCenter(rect))
     {
@@ -82,7 +82,7 @@ bool CAPickerView::initWithCenter(const CrossApp::CCRect &rect)
     return true;
 }
 
-bool CAPickerView::initWithFrame(const CrossApp::CCRect &rect)
+bool CAPickerView::initWithFrame(const CrossApp::DRect &rect)
 {
     if (!CAView::initWithFrame(rect))
     {
@@ -130,15 +130,15 @@ int CAPickerView::numberOfRowsInComponent(unsigned int component)
     return -1;
 }
 
-CCSize CAPickerView::rowSizeForComponent(unsigned int component)
+DSize CAPickerView::rowSizeForComponent(unsigned int component)
 {
     if (m_dataSource)
     {
         float width = m_dataSource->widthForComponent(this, component);
         float height = m_dataSource->rowHeightForComponent(this, component);
-        return CCSize(width, height);
+        return DSize(width, height);
     }
-    return CCSize(0, 0);
+    return DSize(0, 0);
 }
 
 CAView* CAPickerView::viewForRow(unsigned int row, unsigned int component)
@@ -198,7 +198,7 @@ void CAPickerView::reloadAllComponents()
             float tableWidth = m_dataSource->widthForComponent(this, i);
             float tableHeight = m_dataSource->rowHeightForComponent(this, i) * m_displayRow[i];
             float start_y = getFrame().size.height/2 - tableHeight/2;
-            CATableView* tableView = CATableView::createWithFrame(CCRect(start_x, start_y, tableWidth, tableHeight));
+            CATableView* tableView = CATableView::createWithFrame(DRect(start_x, start_y, tableWidth, tableHeight));
             tableView->setTableViewDataSource(this);
             tableView->setScrollViewDelegate(this);
             tableView->setSeparatorViewHeight(0);
@@ -209,18 +209,18 @@ void CAPickerView::reloadAllComponents()
 			addSubview(tableView);
             
             // create highlight
-            CCSize selectSize = CCSizeMake(tableWidth, m_dataSource->rowHeightForComponent(this, i));
+            DSize selectSize = DSize(tableWidth, m_dataSource->rowHeightForComponent(this, i));
             CAView* select = m_dataSource->viewForSelect(this, i, selectSize);
             if (!select)
             {
-                CCRect sepRect = CCRectMake(start_x, getFrame().size.height/2 - m_dataSource->rowHeightForComponent(this, i)/2, tableWidth, 1);
+                DRect sepRect = DRect(start_x, getFrame().size.height/2 - m_dataSource->rowHeightForComponent(this, i)/2, tableWidth, 1);
                 addSubview(CAView::createWithFrame(sepRect, m_separateColor));
                 sepRect.origin.y += m_dataSource->rowHeightForComponent(this, i);
                 addSubview(CAView::createWithFrame(sepRect, m_separateColor));
             }
             else
             {
-                select->setCenter(CCRectMake(start_x, getFrame().size.height/2, selectSize.width, selectSize.height));
+                select->setCenter(DRect(start_x, getFrame().size.height/2, selectSize.width, selectSize.height));
                 addSubview(select);
             }
 
@@ -284,7 +284,7 @@ void CAPickerView::reloadComponent(unsigned int _row,unsigned int component, boo
     }
 }
 
-CAView* CAPickerView::viewForRowInComponent(int component, int row, CCSize size)
+CAView* CAPickerView::viewForRowInComponent(int component, int row, DSize size)
 {
     int index = m_componentsIndex[component][row];
     if (index == -1)
@@ -298,7 +298,7 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, CCSize size)
         const char* title = m_dataSource->titleForRow(this, index, component);
         if (title && strlen(title) > 0)
         {
-            CCRect rect = CCRectMake(0, 0, size.width, size.height);
+            DRect rect = DRect(0, 0, size.width, size.height);
             CALabel* label = CALabel::createWithFrame(rect);
             label->setText(title);
 			label->setFontColor(m_fontColorNormal);
@@ -313,7 +313,7 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, CCSize size)
     return view;
 }
 
-CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
+CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
 {
     if (m_dataSource && !m_tableViews.empty())
     {
@@ -383,8 +383,8 @@ void CAPickerView::selectRow(unsigned int row, unsigned int component, bool anim
         float height = m_dataSource->rowHeightForComponent(this, component);
         if (row < maxRow)
         {
-            //CCPoint offset = CCPointZero;
-            CCPoint offset;
+            //DPoint offset = DPointZero;
+            DPoint offset;
             if (maxRow <= m_displayRow[component])
             {
                 m_selected[component] = row + m_displayRow[component]/2;
@@ -418,7 +418,7 @@ void CAPickerView::visit()
         {
             // cycle data
             CATableView* tableView = (CATableView*)m_tableViews.at(i);
-            CCPoint offset = tableView->getContentOffset();
+            DPoint offset = tableView->getContentOffset();
             unsigned int component = (unsigned int)m_tableViews.getIndex(tableView);
             int row = m_dataSource->numberOfRowsInComponent(this, component);
             int row_height = m_dataSource->rowHeightForComponent(this, component);

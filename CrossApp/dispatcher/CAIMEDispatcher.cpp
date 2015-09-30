@@ -314,7 +314,7 @@ void CAIMEDispatcher::dispatchCursorMoveDown()
     } while (0);
 }
 
-void CAIMEDispatcher::dispatchMoveSelectChars(bool isLeftBtn, const CCPoint& pt)
+void CAIMEDispatcher::dispatchMoveSelectChars(bool isLeftBtn, const DPoint& pt)
 {
     do
     {
@@ -327,7 +327,7 @@ void CAIMEDispatcher::dispatchMoveSelectChars(bool isLeftBtn, const CCPoint& pt)
     } while (0);
 }
 
-void CAIMEDispatcher::dispatchMoveArrowBtn(const CCPoint& pt)
+void CAIMEDispatcher::dispatchMoveArrowBtn(const DPoint& pt)
 {
 	do
 	{

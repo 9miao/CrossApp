@@ -1,7 +1,7 @@
 #include "CACollectionView.h"
 #include "basics/CAApplication.h"
 #include "control/CAButton.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "dispatcher/CATouch.h"
 #include "animation/CAViewAnimation.h"
 
@@ -51,7 +51,7 @@ void CACollectionView::onExitTransitionDidStart()
 	CAScrollView::onExitTransitionDidStart();
 }
 
-CACollectionView* CACollectionView::createWithFrame(const CCRect& rect)
+CACollectionView* CACollectionView::createWithFrame(const DRect& rect)
 {
 	CACollectionView* collectionView = new CACollectionView();
 	if (collectionView && collectionView->initWithFrame(rect))
@@ -63,7 +63,7 @@ CACollectionView* CACollectionView::createWithFrame(const CCRect& rect)
 	return NULL;
 }
 
-CACollectionView* CACollectionView::createWithCenter(const CCRect& rect)
+CACollectionView* CACollectionView::createWithCenter(const DRect& rect)
 {
 	CACollectionView* collectionView = new CACollectionView();
 	if (collectionView && collectionView->initWithCenter(rect))
@@ -186,7 +186,7 @@ bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 	if (m_bAllowsSelection && this->isScrollWindowNotOutSide() == false && isInertia)
 	{
-		CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
+		DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
 
 		std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
 		for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); ++itr)
@@ -319,7 +319,7 @@ void CACollectionView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 {
     if (m_bAllowsSelection)
     {
-        CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
+        DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
         
         std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
         for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); ++itr)
@@ -439,7 +439,7 @@ void CACollectionView::reloadViewSizeData()
     viewHeight += m_nCollectionHeaderHeight;
     viewHeight += m_nCollectionFooterHeight;
     
-    CCSize size = this->getBounds().size;
+    DSize size = this->getBounds().size;
     size.height = viewHeight;
     this->setViewSize(size);
 
@@ -480,7 +480,7 @@ void CACollectionView::reloadData()
     
 	this->removeAllSubviews();
     
-	CCRect winRect = this->getBounds();
+	DRect winRect = this->getBounds();
 	winRect.origin = getContentOffset();
 	float width = winRect.size.width;
 	int y = 0;
@@ -488,7 +488,7 @@ void CACollectionView::reloadData()
 	if (m_nCollectionHeaderHeight > 0 && m_pCollectionHeaderView)
 	{
 		m_pCollectionHeaderView->setDisplayRange(true);
-		m_pCollectionHeaderView->setFrame(CCRect(0, y, width, m_nCollectionHeaderHeight));
+		m_pCollectionHeaderView->setFrame(DRect(0, y, width, m_nCollectionHeaderHeight));
 		addSubview(m_pCollectionHeaderView);
 		y += m_nCollectionHeaderHeight;
 	}
@@ -499,7 +499,7 @@ void CACollectionView::reloadData()
 	for (int i = 0; i < m_nSections; i++)
 	{
 		unsigned int iSectionHeaderHeight = m_nSectionHeaderHeights.at(i);
-		CCRect sectionHeaderRect = CCRect(0, y, width, iSectionHeaderHeight);
+		DRect sectionHeaderRect = DRect(0, y, width, iSectionHeaderHeight);
 		if (iSectionHeaderHeight>0)
 		{
 			CAView* pSectionHeaderView = m_pCollectionViewDataSource->collectionViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
@@ -529,7 +529,7 @@ void CACollectionView::reloadData()
 			for (int k = 0; k < itemCount; k++)
 			{
 				CAIndexPath3E indexPath = CAIndexPath3E(i, j, k);
-				CCRect cellRect = CCRect(m_nHoriInterval + (cellWidth + m_nHoriInterval)*k, y, cellWidth, iHeight);
+				DRect cellRect = DRect(m_nHoriInterval + (cellWidth + m_nHoriInterval)*k, y, cellWidth, iHeight);
 				m_rUsedCollectionCellRects[indexPath] = cellRect;
                 
 				std::pair<std::map<CAIndexPath3E, CACollectionViewCell*>::iterator, bool> itrResult =
@@ -558,7 +558,7 @@ void CACollectionView::reloadData()
 		}
         
 		unsigned int iSectionFooterHeight = m_nSectionFooterHeights.at(i);
-		CCRect sectionFooterRect = CCRectMake(0, y, width, iSectionFooterHeight);
+		DRect sectionFooterRect = DRect(0, y, width, iSectionFooterHeight);
 		if (iSectionFooterHeight > 0)
 		{
 			CAView* pSectionFooterView = m_pCollectionViewDataSource->collectionViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
@@ -572,7 +572,7 @@ void CACollectionView::reloadData()
 			}
 		}
         
-		CCRect sectionRect = sectionHeaderRect;
+		DRect sectionRect = sectionHeaderRect;
 		sectionRect.size.height = sectionFooterRect.origin.y
         + sectionFooterRect.size.height
         - sectionHeaderRect.origin.y;
@@ -581,7 +581,7 @@ void CACollectionView::reloadData()
     
 	if (m_nCollectionFooterHeight > 0 && m_pCollectionHeaderView)
 	{
-		m_pCollectionFooterView->setFrame(CCRect(0, y, width, m_nCollectionFooterHeight));
+		m_pCollectionFooterView->setFrame(DRect(0, y, width, m_nCollectionFooterHeight));
 		addSubview(m_pCollectionFooterView);
 		y += m_nCollectionFooterHeight;
 	}
@@ -599,7 +599,7 @@ void CACollectionView::firstReloadData()
 
 void CACollectionView::recoveryCollectionCell()
 {
-	CCRect rect = this->getBounds();
+	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
 	rect.origin.y -= rect.size.height * 0.1f;
 	rect.size.height *= 1.2f;
@@ -610,7 +610,7 @@ void CACollectionView::recoveryCollectionCell()
 		CACollectionViewCell* cell = itr->second;
 		CC_CONTINUE_IF(cell == NULL);
 
-		CCRect cellRect = cell->getFrame();
+		DRect cellRect = cell->getFrame();
 		CC_CONTINUE_IF(rect.intersectsRect(cellRect));
 
 		m_mpFreedCollectionCells[cell->getReuseIdentifier()].pushBack(cell);
@@ -623,7 +623,7 @@ void CACollectionView::recoveryCollectionCell()
 
 void CACollectionView::loadCollectionCell()
 {
-	CCRect rect = this->getBounds();
+	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
 	rect.origin.y -= rect.size.height * 0.1f;
 	rect.size.height *= 1.2f;
@@ -634,7 +634,7 @@ void CACollectionView::loadCollectionCell()
 		CC_CONTINUE_IF(itr->second != NULL);
 
 		CAIndexPath3E r = itr->first;
-		CCRect cellRect = m_rUsedCollectionCellRects[r];
+		DRect cellRect = m_rUsedCollectionCellRects[r];
 		CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
 
 		CACollectionViewCell* cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, r.section, r.row, r.item);
@@ -664,10 +664,10 @@ void CACollectionView::loadCollectionCell()
 
 void CACollectionView::updateSectionHeaderAndFooterRects()
 {
-	CCRect rect = this->getBounds();
+	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
 
-	std::vector<CCRect>::iterator itr;
+	std::vector<DRect>::iterator itr;
 	for (itr = m_rSectionRects.begin(); itr != m_rSectionRects.end(); itr++)
 	{
 		CC_CONTINUE_IF(!rect.intersectsRect(*itr));
@@ -688,7 +688,7 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
 		}
 		if (header && m_bAlwaysTopSectionHeader)
 		{
-			CCPoint p1 = rect.origin;
+			DPoint p1 = rect.origin;
 			p1.y = MAX(p1.y, itr->origin.y);
 			p1.y = MIN(p1.y, itr->origin.y + itr->size.height
 				- headerHeight - footerHeight);
@@ -696,7 +696,7 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
 		}
 		if (footer && m_bAlwaysBottomSectionFooter)
 		{
-			CCPoint p2 = CCPointZero;
+			DPoint p2 = DPointZero;
 			p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,
 				itr->origin.y + itr->size.height - footerHeight);
 			p2.y = MAX(p2.y, itr->origin.y + headerHeight);
@@ -812,7 +812,7 @@ CAView* CACollectionViewCell::getBackgroundView()
 	return m_pBackgroundView;
 }
 
-void CACollectionViewCell::setContentSize(const CrossApp::CCSize &var)
+void CACollectionViewCell::setContentSize(const CrossApp::DSize &var)
 {
 	CAView::setContentSize(var);
     

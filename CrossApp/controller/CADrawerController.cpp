@@ -88,10 +88,10 @@ CAViewController* CADrawerController::getRightViewController()
 
 void CADrawerController::viewDidLoad()
 {    
-    m_rHideFrame[0] = CCRect(-m_fDivision, 0, m_fDivision, this->getView()->getBounds().size.height);
-    m_rHideFrame[1] = CCRect(0 , 0, this->getView()->getBounds().size.width, this->getView()->getBounds().size.height);
-    m_rShowFrame[0] = CCRect(0, 0, m_fDivision, this->getView()->getBounds().size.height);
-    m_rShowFrame[1] = CCRect(m_fDivision , 0, this->getView()->getBounds().size.width, this->getView()->getBounds().size.height);
+    m_rHideFrame[0] = DRect(-m_fDivision, 0, m_fDivision, this->getView()->getBounds().size.height);
+    m_rHideFrame[1] = DRect(0 , 0, this->getView()->getBounds().size.width, this->getView()->getBounds().size.height);
+    m_rShowFrame[0] = DRect(0, 0, m_fDivision, this->getView()->getBounds().size.height);
+    m_rShowFrame[1] = DRect(m_fDivision , 0, this->getView()->getBounds().size.width, this->getView()->getBounds().size.height);
     
     
     for (int i=0; i<2; i++)
@@ -102,8 +102,8 @@ void CADrawerController::viewDidLoad()
         m_pContainer[i]->release();
     }
     
-    m_pContainer[0]->setAnchorPoint(CCPoint(1.0f, 0.5f));
-    m_pContainer[1]->setAnchorPoint(CCPoint(0.0f, 0.5f));
+    m_pContainer[0]->setAnchorPoint(DPoint(1.0f, 0.5f));
+    m_pContainer[1]->setAnchorPoint(DPoint(0.0f, 0.5f));
     
     m_pLeftViewController->addViewFromSuperview(m_pContainer[0]);
     m_pRightViewController->addViewFromSuperview(m_pContainer[1]);
@@ -153,7 +153,7 @@ void CADrawerController::reshapeViewRectDidFinish()
         m_pBackgroundView->setFrame(this->getView()->getBounds());
     }
     
-    CCRect* rect;
+    DRect* rect;
     if (m_bShow)
     {
         rect = m_rShowFrame;
@@ -234,10 +234,10 @@ void CADrawerController::hideEnded()
 
 void CADrawerController::updateViewFrame()
 {
-    CCPoint point[2] =
+    DPoint point[2] =
     {
-        CCPoint(m_fCurrDivision - m_fDivision, 0),
-        CCPoint(m_fCurrDivision, 0)
+        DPoint(m_fCurrDivision - m_fDivision, 0),
+        DPoint(m_fCurrDivision, 0)
     };
     
     if (m_bEffect3D)

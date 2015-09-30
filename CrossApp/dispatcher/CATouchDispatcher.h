@@ -93,7 +93,7 @@ protected:
     
     CAVector<CAResponder*> m_vTouchesViews;
     
-    CCPoint m_tFirstPoint;
+    DPoint m_tFirstPoint;
 };
 
 class CC_DLL CATouchDispatcher : public CAObject, public CCEGLTouchDelegate

@@ -133,9 +133,9 @@ public:
 
 	virtual void resignResponder();
     
-    static CATextField* createWithFrame(const CCRect& frame);
+    static CATextField* createWithFrame(const DRect& frame);
     
-    static CATextField* createWithCenter(const CCRect& rect);
+    static CATextField* createWithCenter(const DRect& rect);
 
     bool init();
     
@@ -174,7 +174,7 @@ public:
     
     inline int getKeyboardReturnType () {return m_keyBoardReturnType; }
     
-    virtual void setImageRect(const CCRect& rect);
+    virtual void setImageRect(const DRect& rect);
     
     virtual void updateImageRect();
 
@@ -192,7 +192,7 @@ protected:
     
     int getStringLength(const std::string &var);
     static int getStringCharCount(const std::string &var);
-    virtual void setContentSize(const CCSize& var);
+    virtual void setContentSize(const DSize& var);
     
     void initMarkSprite();
     void showCursorMark();
@@ -201,7 +201,7 @@ protected:
 	void adjustCursorMove(bool forward = true);
     
     void analyzeString(const char * text, int len);
-	void calculateSelChars(const CCPoint& point, int& l, int& r, int& p);
+	void calculateSelChars(const DPoint& point, int& l, int& r, int& p);
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
@@ -214,7 +214,7 @@ protected:
     virtual void getKeyBoradReturnCallBack();
     virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
     
-	CCRect getZZCRect(bool* l=NULL, bool* r=NULL);
+	DRect getZZCRect(bool* l=NULL, bool* r=NULL);
 	bool execCurSelCharRange();
 	void ccStartSelect();
 	void ccSelectAll() { selectAll(); }
@@ -223,8 +223,8 @@ protected:
     virtual void selectAll();
 	virtual void cursorMoveBackward();
 	virtual void cursorMoveForward();
-	virtual void moveSelectChars(bool isLeftBtn, const CCPoint& pt);
-	virtual void moveArrowBtn(const CCPoint& pt);
+	virtual void moveSelectChars(bool isLeftBtn, const DPoint& pt);
+	virtual void moveArrowBtn(const DPoint& pt);
 
 	virtual void copyToClipboard();
 	virtual void cutToClipboard();
@@ -248,7 +248,7 @@ private:
     
 	CAView* m_pCursorMark;
 	CAView* m_pTextViewMark;
-	CCSize m_cImageSize;
+	DSize m_cImageSize;
 	eKeyBoardType m_keyboardType;
     eKeyBoardReturnType m_keyBoardReturnType;
 };
