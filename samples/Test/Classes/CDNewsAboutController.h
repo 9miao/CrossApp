@@ -16,7 +16,7 @@ class CDNewsAboutTableCell : public CATableViewCell
 public:
     CDNewsAboutTableCell();
     virtual ~CDNewsAboutTableCell();
-    static CDNewsAboutTableCell* create(const std::string& identifier, const CADipRect& _rect = CADipRectZero);
+    static CDNewsAboutTableCell* create(const std::string& identifier, const CCRect& _rect = CADipRectZero);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
 public:
@@ -46,7 +46,7 @@ public:
     virtual unsigned int tableViewHeightForHeaderInSection(CATableView* table, unsigned int section);
     virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
 public:
-    CADipSize winSize;
+    CCSize winSize;
     CATableView* p_TableView;
 };
 

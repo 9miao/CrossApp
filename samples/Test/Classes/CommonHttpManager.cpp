@@ -339,11 +339,11 @@ void CommonHttpManager::starActivityIndicatorView()
         CCRect rect = window->getBounds();
         
         m_pActivityIndicatorView = CAActivityIndicatorView::createWithFrame(rect);
-        CAImageView* indicator = CAImageView::createWithFrame(CADipRect(0, 0, 50, 50));
+        CAImageView* indicator = CAImageView::createWithFrame(CCRect(0, 0, 50, 50));
         indicator->setImage(CAImage::create(common_loadingIcon));
         m_pActivityIndicatorView->setActivityIndicatorView(indicator);
-        CAView* bg = CAView::createWithFrame(CADipRect(0, 0, 275, 300), CAColor_clear);
-        CAImageView* bg2 = CAImageView::createWithFrame(CADipRect(0, 0, 275, 100));
+        CAView* bg = CAView::createWithFrame(CCRect(0, 0, 275, 300), CAColor_clear);
+        CAImageView* bg2 = CAImageView::createWithFrame(CCRect(0, 0, 275, 100));
         bg2->setImage(CAImage::create(common_loadingBackground));
         bg->addSubview(bg2);
         m_pActivityIndicatorView->setActivityBackView(bg);

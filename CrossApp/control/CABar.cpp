@@ -754,7 +754,7 @@ void CATabBar::showSelectedIndicatorView()
         m_pSelectedIndicatorView = CAView::createWithColor(m_sSelectedIndicatorColor);
     }
     
-    CADipRect rect;
+    CCRect rect;
     rect.size.width = m_cItemSize.width;
     rect.size.height = 8;
     rect.origin.x = m_nSelectedIndex * m_cItemSize.width;
@@ -792,7 +792,7 @@ void CATabBar::setSelectedAtIndex(int index)
         if (m_pSelectedIndicatorView)
         {
             m_pSelectedIndicatorView->setVisible(m_bShowIndicator);
-            CADipPoint p = m_pSelectedIndicatorView->getFrameOrigin();
+            CCPoint p = m_pSelectedIndicatorView->getFrameOrigin();
             p.x = m_nSelectedIndex * m_cItemSize.width;
             
             CAViewAnimation::beginAnimations("", NULL);

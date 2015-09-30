@@ -582,7 +582,7 @@ void CAViewAnimation::update(float dt)
                 }
                 if (model->bImageRect)
                 {
-                    CADipRect rect;
+                    CCRect rect;
                     rect.origin = model->startImageRect.origin + model->deltaImageRect.origin * s;
                     rect.size = model->startImageRect.size + model->deltaImageRect.size * s;
                     view->setImageRect(rect);

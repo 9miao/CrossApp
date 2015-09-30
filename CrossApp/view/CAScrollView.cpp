@@ -1044,10 +1044,10 @@ void CAScrollView::endFooterRefresh()
 
 void CAScrollView::layoutPullToRefreshView()
 {
-    CADipSize viewSize = this->getViewSize();
+    CCSize viewSize = this->getViewSize();
     if (m_pHeaderRefreshView)
     {
-        m_pHeaderRefreshView->setFrame(CADipRect(0, -128.0f, viewSize.width, 128.0f));
+        m_pHeaderRefreshView->setFrame(CCRect(0, -128.0f, viewSize.width, 128.0f));
         if (m_pHeaderRefreshView->getSuperview() == NULL)
         {
             m_pContainer->addSubview(m_pHeaderRefreshView);
@@ -1061,7 +1061,7 @@ void CAScrollView::layoutPullToRefreshView()
 
     if (m_pFooterRefreshView)
     {
-        m_pFooterRefreshView->setFrame(CADipRect(0, viewSize.height, viewSize.width, 128.0f));
+        m_pFooterRefreshView->setFrame(CCRect(0, viewSize.height, viewSize.width, 128.0f));
         if (m_pFooterRefreshView->getSuperview() == NULL)
         {
             m_pContainer->addSubview(m_pFooterRefreshView);

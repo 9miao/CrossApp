@@ -35,7 +35,7 @@ public:
     virtual unsigned int numberOfSections(CATableView *table);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
 private:
-    CADipSize size;
+    CCSize size;
     CATableView* tableView;
 };
 

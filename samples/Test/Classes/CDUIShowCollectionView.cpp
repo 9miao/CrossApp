@@ -89,26 +89,26 @@ CACollectionViewCell* CDUIShowCollectionView::collectionCellAtIndex(CACollection
         return NULL;
     }
     
-    CADipSize _size = cellSize;
+    CCSize _size = cellSize;
     CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
     if (p_Cell == NULL)
     {
         p_Cell = CACollectionViewCell::create("CrossApp");
         p_Cell->setAllowsSelected(false);
         
-        CAView* itemImage = CAView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
+        CAView* itemImage = CAView::createWithFrame(CCRect(0, 0, _size.width, _size.height));
         itemImage->setTag(99);
         p_Cell->addSubview(itemImage);
         
-        CADipSize itemSize = itemImage->getBounds().size;
-        CALabel* itemText = CALabel::createWithCenter(CADipRect(itemSize.width/2, itemSize.height-40, itemSize.width,40));
+        CCSize itemSize = itemImage->getBounds().size;
+        CALabel* itemText = CALabel::createWithCenter(CCRect(itemSize.width/2, itemSize.height-40, itemSize.width,40));
         itemText->setTag(100);
         itemText->setFontSize(_px(24));
         itemText->setTextAlignment(CATextAlignmentCenter);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         p_Cell->addSubview(itemText);
         
-        CAImageView* icon = CAImageView::createWithCenter(CADipRect(itemSize.width/2,itemSize.height/3,189,123));
+        CAImageView* icon = CAImageView::createWithCenter(CCRect(itemSize.width/2,itemSize.height/3,189,123));
         icon->setTag(101);
         icon->setScale(0.6f);
         p_Cell->addSubview(icon);

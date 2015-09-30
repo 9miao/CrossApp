@@ -16,7 +16,7 @@ class CDNewsImageTableCell : public CATableViewCell
 public:
     CDNewsImageTableCell();
     virtual ~CDNewsImageTableCell();
-    static CDNewsImageTableCell* create(const std::string& identifier, const CADipRect& _rect = CADipRectZero);
+    static CDNewsImageTableCell* create(const std::string& identifier, const CCRect& _rect = CADipRectZero);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
 public:
@@ -54,7 +54,7 @@ public:
     void showAlert();
     void buttonCallBack(CAControl* btn,CCPoint point);
 public:
-    CADipSize winSize;
+    CCSize winSize;
     CATableView* p_TableView;
     CAActivityIndicatorView* p_pLoading;
     std::vector<newsImage > m_ImageMsg;

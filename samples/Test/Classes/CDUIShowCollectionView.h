@@ -48,7 +48,7 @@ public:
     
 private:
     
-    CADipSize size;
+    CCSize size;
     
     //CACollectionView* p_Conllection;
     

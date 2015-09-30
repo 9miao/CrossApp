@@ -679,9 +679,9 @@ void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState con
     }
     else if(CAImage* image = dynamic_cast<CAImage*>(object))
     {
-        CADipSize imageSelfSize =  CADipSize(image->getContentSize().width, image->getContentSize().height);
+        CCSize imageSelfSize =  CCSize(image->getContentSize().width, image->getContentSize().height);
     
-        CADipSize segmentSizeDip = CADipSize( segmentSize );
+        CCSize segmentSizeDip = CCSize( segmentSize );
         float width = imageSelfSize.width;
         float height = imageSelfSize.height;
         if(imageSelfSize.width > segmentSizeDip.width)

@@ -9,9 +9,6 @@
 
 NS_CC_BEGIN
 
-class CC_DLL CADipPoint;
-class CC_DLL CADipSize;
-class CC_DLL CADipRect;
 class CC_DLL CCSize;
 
 class CC_DLL CCPoint
@@ -33,22 +30,6 @@ public:
      * @lua NA
      */
     CCPoint(const CCSize& size);
-    /**
-     * @lua NA
-     */
-    CCPoint(const CADipPoint& other);
-    /**
-     * @lua NA
-     */
-    CCPoint(const CADipSize& size);
-    /**
-     * @lua NA
-     */
-    CCPoint& operator= (const CADipPoint& other);
-    /**
-     * @lua NA
-     */
-    CCPoint& operator= (const CADipSize& other);
     /**
      * @lua NA
      */
@@ -255,22 +236,6 @@ public:
     /**
      * @lua NA
      */
-    CCSize(const CADipSize& other);
-    /**
-     * @lua NA
-     */
-    CCSize(const CADipPoint& point);
-    /**
-     * @lua NA
-     */
-    CCSize& operator= (const CADipPoint& other);
-    /**
-     * @lua NA
-     */
-    CCSize& operator= (const CADipSize& other);
-    /**
-     * @lua NA
-     */
     CCSize& operator= (const CCSize& other);
     /**
      * @lua NA
@@ -320,14 +285,10 @@ public:
     CCRect(float x, float y, float width, float height);
 
     CCRect(const CCRect& other);
-
-    CCRect(const CADipRect& other);
     
     void setRect(float x, float y, float width, float height);
     
     CCRect& operator= (const CCRect& other);
-    
-    CCRect& operator= (const CADipRect& other);
     
     CCRect operator*(float a) const;
 
@@ -347,146 +308,17 @@ public:
     CC_SYNTHESIZE_IS(bool, m_bCenter, Center);
 };
 
-class CC_DLL CADipPoint
-{
-public:
-    
-    float x;
-    
-    float y;
-    
-public:
-
-    CADipPoint();
-    
-    CADipPoint(float x, float y);
-    
-    CADipPoint(const CADipPoint& other);
-    
-    CADipPoint(const CADipSize& other);
-    
-    CADipPoint(const CCPoint& other);
-    
-    CADipPoint(const CCSize& other);
-    
-    CADipPoint& operator= (const CADipPoint& other);
-    
-    CADipPoint& operator= (const CADipSize& other);
-    
-    CADipPoint& operator= (const CCPoint& other);
-    
-    CADipPoint& operator= (const CCSize& other);
-    
-    CADipPoint operator*(float a) const;
-    
-    CADipPoint operator/(float a) const;
-    
-    CADipPoint operator+(const CADipPoint& right) const;
-    
-    CADipPoint operator-(const CADipPoint& right) const;
-
-    bool equals(const CADipPoint& target) const;
-    
-    inline float getLength() const
-    {
-        return sqrtf(x*x + y*y);
-    };
-};
-
-class CC_DLL CADipSize
-{
-public:
-    
-    float width;
-    
-    float height;
-    
-public:
-    
-    CADipSize();
-    
-    CADipSize(float width, float height);
-    
-    CADipSize(const CADipSize& other);
-    
-    CADipSize(const CADipPoint& other);
-    
-    CADipSize(const CCPoint& other);
-    
-    CADipSize(const CCSize& other);
-    
-    CADipSize& operator= (const CADipSize& other);
-    
-    CADipSize& operator= (const CADipPoint& other);
-    
-    CADipSize& operator= (const CCPoint& other);
-    
-    CADipSize& operator= (const CCSize& other);
-    
-    CADipSize operator*(float a) const;
-    
-    CADipSize operator/(float a) const;
-    
-    CADipSize operator+(const CADipSize& right) const;
-    
-    CADipSize operator-(const CADipSize& right) const;
-    
-    bool equals(const CADipSize& target) const;
-};
-
-class CC_DLL CADipRect
-{
-public:
-    
-    CADipPoint origin;
-    
-    CADipSize  size;
-    
-public:
-    
-    CADipRect();
-    
-    CADipRect(float x, float y, float width, float height);
-    
-    CADipRect(const CADipRect& other);
-    
-    CADipRect(const CCRect& other);
-    
-    CADipRect& operator= (const CADipRect& other);
-    
-    CADipRect& operator= (const CCRect& other);
-    
-    CADipRect operator*(float a) const;
-    
-    CADipRect operator/(float a) const;
-    
-    float getMinX() const; /// return the leftmost x-value of current rect
-    float getMidX() const; /// return the midpoint x-value of current rect
-    float getMaxX() const; /// return the rightmost x-value of current rect
-    float getMinY() const; /// return the bottommost y-value of current rect
-    float getMidY() const; /// return the midpoint y-value of current rect
-    float getMaxY() const; /// return the topmost y-value of current rect
-    bool equals(const CADipRect& rect) const;
-    bool containsPoint(const CADipPoint& point) const;
-    bool intersectsRect(const CADipRect& rect) const;
-    
-    CC_SYNTHESIZE_IS(bool, m_bCenter, Center);
-};
 
 const CCPoint CCPointZero = CCPoint();
 const CCSize CCSizeZero = CCSize();
 const CCRect CCRectZero = CCRect();
-const CADipPoint CADipPointZero = CADipPoint();
-const CADipSize CADipSizeZero = CADipSize();
-const CADipRect CADipRectZero = CADipRect();
+const CCPoint CADipPointZero = CCPoint();
+const CCSize CADipSizeZero = CCSize();
+const CCRect CADipRectZero = CCRect();
 
 #define CCPointMake(x, y) CCPoint((float)(x), (float)(y))
 #define CCSizeMake(width, height) CCSize((float)(width), (float)(height))
 #define CCRectMake(x, y, width, height) CCRect((float)(x), (float)(y), (float)(width), (float)(height))
-
-#define CADipPointMake(x, y) CADipPoint((float)(x), (float)(y))
-#define CADipSizeMake(x, y) CADipSize((float)(x), (float)(y))
-#define CADipRectMake(x, y, width, height) CADipRect((float)(x), (float)(y), (float)(width), (float)(height))
 
 
 NS_CC_END

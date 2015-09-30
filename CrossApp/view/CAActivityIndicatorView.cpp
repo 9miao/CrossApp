@@ -121,24 +121,24 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
             case CAActivityIndicatorViewStyleGray:
             {
                 image = CAImage::create("source_material/loading_black.png");
-                center.size = CADipSize(40, 40);
+                center.size = CCSize(40, 40);
             }
                 break;
             case CAActivityIndicatorViewStyleWhite:
             {
                 image = CAImage::create("source_material/loading_write.png");
-                center.size = CADipSize(40, 40);
+                center.size = CCSize(40, 40);
             }                break;
             case CAActivityIndicatorViewStyleGrayLarge:
             {
                 image = CAImage::create("source_material/loading_black.png");
-                center.size = CADipSize(68, 68);
+                center.size = CCSize(68, 68);
             }
                 break;
             case CAActivityIndicatorViewStyleWhiteLarge:
             {
                 image = CAImage::create("source_material/loading_write.png");
-                center.size = CADipSize(68, 68);
+                center.size = CCSize(68, 68);
             }
                 break;
             

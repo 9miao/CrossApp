@@ -90,21 +90,21 @@ bool CAPullToRefreshView::isLayoutFinish()
 
 void CAPullToRefreshView::startLayout()
 {
-    CADipSize viewSize = this->getBounds().size;
-    CADipRect imageViewAndLoadingCenter;
-    CADipRect labelCenter;
+    CCSize viewSize = this->getBounds().size;
+    CCRect imageViewAndLoadingCenter;
+    CCRect labelCenter;
     if (m_eLayoutLinearType == CALayoutLinearHorizontal)
     {
-        imageViewAndLoadingCenter.size = CADipSize(25, 120);
-        imageViewAndLoadingCenter.origin = CADipPoint(viewSize.width / 2 - 160, viewSize.height/2);
-        labelCenter.size = CADipSize(256, 80);
+        imageViewAndLoadingCenter.size = CCSize(25, 120);
+        imageViewAndLoadingCenter.origin = CCPoint(viewSize.width / 2 - 160, viewSize.height/2);
+        labelCenter.size = CCSize(256, 80);
         labelCenter.origin = viewSize/2;
     }
     else
     {
-        imageViewAndLoadingCenter.size = CADipSize(120, 25);
-        imageViewAndLoadingCenter.origin = CADipPoint(viewSize.width / 2 - 160, 170);
-        labelCenter.size = CADipSize(80, 256);
+        imageViewAndLoadingCenter.size = CCSize(120, 25);
+        imageViewAndLoadingCenter.origin = CCPoint(viewSize.width / 2 - 160, 170);
+        labelCenter.size = CCSize(80, 256);
         labelCenter.origin = viewSize/2;
     }
     

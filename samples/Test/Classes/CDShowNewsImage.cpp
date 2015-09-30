@@ -37,12 +37,12 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
 
     for (int i=0; i<m_image.m_imageUrl.size(); i++) {
         //初始化viewList
-        CommonUrlImageView* temImage = CommonUrlImageView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
+        CommonUrlImageView* temImage = CommonUrlImageView::createWithFrame(CCRect(0,0,winSize.width,winSize.height));
         temImage->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
         temImage->setImage(CAImage::create("HelloWorld.png"));
         temImage->setUrl(m_image.m_imageUrl[i]);
         
-        CAScrollView* p_ScrollView = CAScrollView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
+        CAScrollView* p_ScrollView = CAScrollView::createWithFrame(CCRect(0,0,winSize.width,winSize.height));
         p_ScrollView->setMinimumZoomScale(1.0f);
         p_ScrollView->setMaximumZoomScale(2.5f);
         p_ScrollView->setBackGroundColor(CAColor_clear);
@@ -52,7 +52,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         p_ScrollView->addSubview(temImage);
         viewList.pushBack(p_ScrollView);
     }
-    p_PageView = CAPageView::createWithFrame(CADipRect(0, 30, winSize.width, winSize.height), CAPageViewDirectionHorizontal);
+    p_PageView = CAPageView::createWithFrame(CCRect(0, 30, winSize.width, winSize.height), CAPageViewDirectionHorizontal);
     p_PageView->setViews(viewList);
     p_PageView->setPageViewDelegate(this);
     p_PageView->setBackGroundColor(CAColor_black);
@@ -60,10 +60,10 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     this->getView()->addSubview(p_PageView);
     
     p_bg = CAView::createWithColor(ccc4(0,0,0,200));
-    p_bg->setFrame(CADipRect(0,winSize.height/3*2,winSize.width,winSize.height/2));
+    p_bg->setFrame(CCRect(0,winSize.height/3*2,winSize.width,winSize.height/2));
     this->getView()->addSubview(p_bg);
 
-    p_title = CALabel::createWithFrame(CADipRect(10,10,winSize.width-80,40));
+    p_title = CALabel::createWithFrame(CCRect(10,10,winSize.width-80,40));
     p_title->setText(m_image.m_title);
 	p_title->setFontColor(CAColor_white);
     p_title->setFontSize(_px(34));
@@ -72,19 +72,19 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     
     char temp[10];
     sprintf(temp, "1/%lu",m_image.m_imageUrl.size());
-    p_index = CALabel::createWithFrame(CADipRect(winSize.width-60,10,80,30));
+    p_index = CALabel::createWithFrame(CCRect(winSize.width-60,10,80,30));
     p_index->setText(temp);
 	p_index->setFontColor(CAColor_white);
     p_index->setFontSize(_px(30));
     p_index->setBold(true);
     p_bg->addSubview(p_index);
     
-    p_des = CALabel::createWithFrame(CADipRect(10,0,winSize.width-20,200));
+    p_des = CALabel::createWithFrame(CCRect(10,0,winSize.width-20,200));
     p_des->setText(m_image.m_imageDesc[4]);
 	p_des->setFontColor(ccc4(200, 200, 200, 255));
     p_des->setFontSize(_px(26));
     
-    CAScrollView* ps = CAScrollView::createWithFrame(CADipRect(0,70,winSize.width,200));
+    CAScrollView* ps = CAScrollView::createWithFrame(CCRect(0,70,winSize.width,200));
     ps->setBackGroundColor(CAColor_clear);
     ps->setShowsVerticalScrollIndicator(false);
     ps->setShowsHorizontalScrollIndicator(false);
@@ -120,7 +120,7 @@ void CDShowNewsImage::scrollViewTouchUpWithoutMoved(CAScrollView* view, const CC
         //动画时长
         CAViewAnimation::setAnimationDuration(0.2f);
         
-        p_bg->setFrameOrigin(CADipPoint(0,winSize.height));
+        p_bg->setFrameOrigin(CCPoint(0,winSize.height));
         
         //执行动画
         CAViewAnimation::commitAnimations();
@@ -133,7 +133,7 @@ void CDShowNewsImage::scrollViewTouchUpWithoutMoved(CAScrollView* view, const CC
         //动画时长
         CAViewAnimation::setAnimationDuration(0.2f);
         
-        p_bg->setFrameOrigin(CADipPoint(0,winSize.height/3*2));
+        p_bg->setFrameOrigin(CCPoint(0,winSize.height/3*2));
         
         //执行动画
         CAViewAnimation::commitAnimations();
