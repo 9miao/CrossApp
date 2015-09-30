@@ -677,7 +677,7 @@ void CAApplication::createStatsLabel()
     m_pFPSLabel = CALabel::createWithFrame(CCRect(0, 0, 100, 32));
     m_pFPSLabel->retain();
     m_pFPSLabel->setScale(factor);
-    m_pFPSLabel->setColor(CAColor_blue);
+	m_pFPSLabel->setFontColor(CAColor_blue);
     m_pFPSLabel->setFrameOrigin(CC_DIRECTOR_STATS_POSITION);
 }
 

@@ -157,7 +157,7 @@ void CASegmentedControl::setTitleColor(const CAColor4B& color)
         CC_CONTINUE_IF(m_iSelectedIndex == index);
         CALabel* label = m_vTitles.at(index);
         if(label != NULL)
-            label->setColor(m_cTextColor);
+			label->setFontColor(m_cTextColor);
     }
 }
 
@@ -171,8 +171,10 @@ void CASegmentedControl::setTitleSelectedColor(const CAColor4B& color)
     m_cTextSelectedColor = color;
     CC_RETURN_IF(m_iSelectedIndex == -1);
     CALabel* label = m_vTitles.at(m_iSelectedIndex);
-    if(label != NULL)
-        label->setColor(m_cTextSelectedColor);
+	if (label != NULL)
+	{
+		label->setFontColor(m_cTextSelectedColor);
+	}
 }
 
 const CAColor4B& CASegmentedControl::getTitleSelectedColor()
@@ -321,7 +323,7 @@ void CASegmentedControl::setTitleForSegmentAtIndex(const std::string& title, int
         label->setText(title);
         label->setFontSize(m_fTitleFontSize);
         label->setFontName(m_sTitleFontName);
-        label->setColor(m_cTextColor);
+		label->setFontColor(m_cTextColor);
         label->retain();
         CAVector<CALabel*>::iterator itr = m_vTitles.begin()+index;
         if(*itr != NULL)
@@ -751,7 +753,7 @@ CAObject* CASegmentedControl::getObjectByIndex(int index, CAControlState control
             if(m_vTitles.at(index) != NULL)
             {
                 object = m_vTitles.at(index);
-                ((CALabel*)object)->setColor(m_cTextColor);
+				((CALabel*)object)->setFontColor(m_cTextColor);
             }
             else
             {
@@ -763,7 +765,7 @@ CAObject* CASegmentedControl::getObjectByIndex(int index, CAControlState control
             if(m_vTitles.at(index) != NULL)
             {
                 object = m_vTitles.at(index);
-                ((CALabel*)object)->setColor(m_cTextSelectedColor);
+				((CALabel*)object)->setFontColor(m_cTextSelectedColor);
             }
             else
             {
@@ -775,7 +777,7 @@ CAObject* CASegmentedControl::getObjectByIndex(int index, CAControlState control
             if(m_vTitles.at(index) != NULL)
             {
                 object = m_vTitles.at(index);
-                ((CALabel*)object)->setColor(m_cTextSelectedColor);
+				((CALabel*)object)->setFontColor(m_cTextSelectedColor);
             }
             else
             {

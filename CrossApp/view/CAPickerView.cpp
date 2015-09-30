@@ -301,7 +301,7 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, CCSize size)
             CCRect rect = CCRectMake(0, 0, size.width, size.height);
             CALabel* label = CALabel::createWithFrame(rect);
             label->setText(title);
-            label->setColor(m_fontColorNormal);
+			label->setFontColor(m_fontColorNormal);
             label->setFontSize(m_fontSizeNormal);
             label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
             label->setTextAlignment(CATextAlignmentCenter);

@@ -200,7 +200,7 @@ void CANavigationBar::showTitle()
         title->setTextAlignment(CATextAlignmentCenter);
         title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         title->setNumberOfLine(1);
-        title->setColor(m_cTitleColor);
+		title->setFontColor(m_cTitleColor);
         title->setFontSize(_px(32));
         m_pContentView->addSubview(title);
         m_pTitle = title;
@@ -362,7 +362,7 @@ bool CABadgeView::init()
     m_pTextView->setTextAlignment(CATextAlignmentCenter);
     m_pTextView->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     m_pTextView->setFontSize(30);
-    m_pTextView->setColor(CAColor_white);
+    m_pTextView->setFontColor(CAColor_white);
     m_pTextView->setBold(true);
     this->addSubview(m_pTextView);
     

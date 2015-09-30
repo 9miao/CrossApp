@@ -64,6 +64,8 @@ public:
 	CC_SYNTHESIZE(bool, m_bEnableCopy, EnableCopy);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_cLabelSize, LabelSize);
+
+	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cFontColor, FontColor);
     
     virtual void visit();
     
@@ -75,10 +77,9 @@ public:
 
 	void applyStyle(const CALabelStyle* pLabelStyle);
     
-    
-    
 protected:
-    
+	using CAView::setColor;
+
     virtual void setContentSize(const CCSize& var);
 
 	virtual void updateImageRect();
