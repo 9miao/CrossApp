@@ -375,8 +375,8 @@ protected:
 // end of base_node group
 /// @}
 
-static inline float _px(float dip) { return dip * CAApplication::getApplication()->getAdaptationRatio(); }
-static inline float _dip(float px) { return px / CAApplication::getApplication()->getAdaptationRatio(); }
+static inline float _px(float dip) { return dip; }
+static inline float _dip(float px) { return px; }
 
 NS_CC_END
 

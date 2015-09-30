@@ -6,7 +6,6 @@
 #include "JniHelper.h"
 #include "platform/android/CCApplication.h"
 #include <jni.h>
-#include "SDL_main.h"
 	
 using namespace CrossApp;
 

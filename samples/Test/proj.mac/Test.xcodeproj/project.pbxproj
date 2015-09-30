@@ -431,6 +431,16 @@
 		B0621C2E1AC3DCB2005EBCA7 /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
 		B0621C321AC3DCCA005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B0621C341AC3DCCA005EBCA7 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
+		B09DF4871BBB81E200B3F94B /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../CrossApp/the_third_party/ffmpeg/prebuilt/mac/libavcodec.a; sourceTree = "<group>"; };
+		B09DF4881BBB81E200B3F94B /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../../CrossApp/the_third_party/ffmpeg/prebuilt/mac/libavdevice.a; sourceTree = "<group>"; };
+		B09DF4891BBB81E200B3F94B /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../../../CrossApp/the_third_party/ffmpeg/prebuilt/mac/libavfilter.a; sourceTree = "<group>"; };
+		B09DF48A1BBB81E200B3F94B /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../CrossApp/the_third_party/ffmpeg/prebuilt/mac/libavformat.a; sourceTree = "<group>"; };
+		B09DF48B1BBB81E200B3F94B /* libavresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavresample.a; path = ../../../CrossApp/the_third_party/ffmpeg/prebuilt/mac/libavresample.a; sourceTree = "<group>"; };
+		B09DF48C1BBB81E200B3F94B /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../../../CrossApp/the_third_party/ffmpeg/prebuilt/mac/libavutil.a; sourceTree = "<group>"; };
+		B09DF48D1BBB81E200B3F94B /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../../../CrossApp/the_third_party/ffmpeg/prebuilt/mac/libpostproc.a; sourceTree = "<group>"; };
+		B09DF48E1BBB81E200B3F94B /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../../CrossApp/the_third_party/ffmpeg/prebuilt/mac/libswresample.a; sourceTree = "<group>"; };
+		B09DF48F1BBB81E200B3F94B /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../../../CrossApp/the_third_party/ffmpeg/prebuilt/mac/libswscale.a; sourceTree = "<group>"; };
+		B09DF4991BBB820300B3F94B /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../CrossApp/the_third_party/SDL/prebuilt/mac/SDL2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -439,7 +449,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */,
-				04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
 				15C64831165F39AB007D4F18 /* libxml2.dylib in Frameworks */,
 				15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */,
@@ -449,6 +458,7 @@
 				15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */,
 				15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */,
 				15C64823165F391E007D4F18 /* Cocoa.framework in Frameworks */,
+				04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +580,16 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B09DF4991BBB820300B3F94B /* SDL2.framework */,
+				B09DF4871BBB81E200B3F94B /* libavcodec.a */,
+				B09DF4881BBB81E200B3F94B /* libavdevice.a */,
+				B09DF4891BBB81E200B3F94B /* libavfilter.a */,
+				B09DF48A1BBB81E200B3F94B /* libavformat.a */,
+				B09DF48B1BBB81E200B3F94B /* libavresample.a */,
+				B09DF48C1BBB81E200B3F94B /* libavutil.a */,
+				B09DF48D1BBB81E200B3F94B /* libpostproc.a */,
+				B09DF48E1BBB81E200B3F94B /* libswresample.a */,
+				B09DF48F1BBB81E200B3F94B /* libswscale.a */,
 				B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */,
 				15C6498616633E65007D4F18 /* libcurl.a */,
 				15C64830165F39AB007D4F18 /* libxml2.dylib */,
@@ -1188,7 +1208,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -1203,7 +1223,7 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = c99;

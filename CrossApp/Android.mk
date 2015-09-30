@@ -185,7 +185,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 
 
 ifeq ($(VIDEO_ENABLE),1)
-LOCAL_SRC_FILES += video/CAVideoPlayerController.cpp \
+LOCAL_SRC_FILES += video/CAVideoPlayerControlView.cpp \
                    video/CAVideoPlayerDecoder.cpp \
                    video/CAVideoPlayerRender.cpp \
                    video/CAVideoPlayerView.cpp

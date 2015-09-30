@@ -3,31 +3,6 @@
 
 #include "ccTypes.h"
 
-enum ResolutionPolicy
-{
-    // The entire application is visible in the specified area without trying to preserve the original aspect ratio.
-    // Distortion can occur, and the application may appear stretched or compressed.
-    kResolutionExactFit,
-    // The entire application fills the specified area, without distortion but possibly with some cropping,
-    // while maintaining the original aspect ratio of the application.
-    kResolutionNoBorder,
-    // The entire application is visible in the specified area without distortion while maintaining the original
-    // aspect ratio of the application. Borders can appear on two sides of the application.
-    kResolutionShowAll,
-    // The application takes the height of the design resolution size and modifies the width of the internal
-    // canvas so that it fits the aspect ratio of the device
-    // no distortion will occur however you must make sure your application works on different
-    // aspect ratios
-    kResolutionFixedHeight,
-    // The application takes the width of the design resolution size and modifies the height of the internal
-    // canvas so that it fits the aspect ratio of the device
-    // no distortion will occur however you must make sure your application works on different
-    // aspect ratios
-    kResolutionFixedWidth,
-
-    kResolutionUnKnown,
-};
-
 NS_CC_BEGIN
 
 #define CC_MAX_TOUCHES  5
@@ -103,7 +78,6 @@ public:
      *                         [2] kResolutionNoBorder Full screen without black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two areas of your game view will be cut.
      *                         [3] kResolutionShowAll  Full screen with black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two black borders will be shown.
      */
-    virtual void setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy);
 
     /** Get design resolution size.
      *  Default resolution size is the same as 'getFrameSize'.
@@ -204,7 +178,6 @@ protected:
 
     float  m_fScaleX;
     float  m_fScaleY;
-    ResolutionPolicy m_eResolutionPolicy;
 };
 
 // end of platform group

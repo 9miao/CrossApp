@@ -1169,7 +1169,6 @@ void CAView::visit()
         restoreScissorRect = CCRect(params[0], params[1], params[2], params[3]);
     }
 
-    
     if (!m_bDisplayRange)
     {
         kmMat4 modelview;
@@ -1181,11 +1180,15 @@ void CAView::visit()
         kmMat4 tm2;
         kmMat4Multiply(&tm2, &modelview, &tm);
 
+        CCEGLView* pGLView = CCEGLView::sharedOpenGLView();
+        float glScaleX = pGLView->getScaleX();
+        float glScaleY = pGLView->getScaleY();
+        
         CCSize winSize = CAApplication::getApplication()->getWinSize();
         CCPoint point = CCPoint(modelview.mat[12], modelview.mat[13]) + winSize/2;
         CCSize size = CCSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
 
-        CCRect frame = CCRect(point.x + 0.5f, point.y, size.width + 1.0f, size.height + 1.0f);
+        CCRect frame = CCRect(point.x * glScaleX, point.y * glScaleY, size.width * glScaleX, size.height * glScaleY);
         if (isScissor)
         {
             float x1 = MAX(frame.getMinX(), restoreScissorRect.getMinX());

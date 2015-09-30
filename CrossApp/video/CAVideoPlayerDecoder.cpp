@@ -4,7 +4,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include "CAVideoPlayerDecoder.h"
-#include "SDL.h"
+#include <Foundation/Foundation.h>
 
 NS_CC_BEGIN
 

@@ -3,6 +3,7 @@
 #include "dispatcher/CATouch.h"
 #include "basics/CAApplication.h"
 #include "cocoa/CCSet.h"
+#include "platform/CADensityDpi.h"
 
 NS_CC_BEGIN
 
@@ -45,7 +46,6 @@ CCEGLViewProtocol::CCEGLViewProtocol()
 : m_pDelegate(NULL)
 , m_fScaleX(1.0f)
 , m_fScaleY(1.0f)
-, m_eResolutionPolicy(kResolutionUnKnown)
 {
 }
 
@@ -54,53 +54,6 @@ CCEGLViewProtocol::~CCEGLViewProtocol()
 
 }
 
-void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
-{
-    CCAssert(resolutionPolicy != kResolutionUnKnown, "should set resolutionPolicy");
-    
-    if (width == 0.0f || height == 0.0f)
-    {
-        return;
-    }
-
-    m_obDesignResolutionSize.setSize(width, height);
-    
-    m_fScaleX = (float)m_obScreenSize.width / m_obDesignResolutionSize.width;
-    m_fScaleY = (float)m_obScreenSize.height / m_obDesignResolutionSize.height;
-    
-    if (resolutionPolicy == kResolutionNoBorder)
-    {
-        m_fScaleX = m_fScaleY = MAX(m_fScaleX, m_fScaleY);
-    }
-    
-    if (resolutionPolicy == kResolutionShowAll)
-    {
-        m_fScaleX = m_fScaleY = MIN(m_fScaleX, m_fScaleY);
-    }
-
-    if ( resolutionPolicy == kResolutionFixedHeight) {
-    	m_fScaleX = m_fScaleY;
-    	m_obDesignResolutionSize.width = ceilf(m_obScreenSize.width/m_fScaleX);
-    }
-
-    if ( resolutionPolicy == kResolutionFixedWidth) {
-    	m_fScaleY = m_fScaleX;
-    	m_obDesignResolutionSize.height = ceilf(m_obScreenSize.height/m_fScaleY);
-    }
-
-    // calculate the rect of viewport    
-    float viewPortW = m_obDesignResolutionSize.width * m_fScaleX;
-    float viewPortH = m_obDesignResolutionSize.height * m_fScaleY;
-
-    m_obViewPortRect.setRect((m_obScreenSize.width - viewPortW) / 2, (m_obScreenSize.height - viewPortH) / 2, viewPortW, viewPortH);
-    
-    m_eResolutionPolicy = resolutionPolicy;
-    
-	// reset director's member variables to fit visible rect
-    CAApplication::getApplication()->m_obWinSizeInPoints = getDesignResolutionSize();
-    CAApplication::getApplication()->createStatsLabel();
-    CAApplication::getApplication()->setGLDefaultValues();
-}
 
 const CCSize& CCEGLViewProtocol::getDesignResolutionSize() const 
 {
@@ -114,32 +67,28 @@ const CCSize& CCEGLViewProtocol::getFrameSize() const
 
 void CCEGLViewProtocol::setFrameSize(float width, float height)
 {
-    m_obDesignResolutionSize = m_obScreenSize = CCSizeMake(width, height);
+    m_obScreenSize = CCSize(width, height);
+    
+    m_obDesignResolutionSize.setSize(s_px_to_dip(width), s_px_to_dip(height));
+    
+    m_fScaleX = s_dip_to_px(1.0f);
+    m_fScaleY = s_dip_to_px(1.0f);
+    
+    // calculate the rect of viewport
+    float viewPortW = m_obDesignResolutionSize.width * m_fScaleX;
+    float viewPortH = m_obDesignResolutionSize.height * m_fScaleY;
+    
+    m_obViewPortRect.setRect((m_obScreenSize.width - viewPortW) / 2, (m_obScreenSize.height - viewPortH) / 2, viewPortW, viewPortH);
 }
 
 CCSize  CCEGLViewProtocol::getVisibleSize() const
 {
-    if (m_eResolutionPolicy == kResolutionNoBorder)
-    {
-        return CCSizeMake(m_obScreenSize.width/m_fScaleX, m_obScreenSize.height/m_fScaleY);
-    }
-    else 
-    {
-        return m_obDesignResolutionSize;
-    }
+    return m_obDesignResolutionSize;
 }
 
 CCPoint CCEGLViewProtocol::getVisibleOrigin() const
 {
-    if (m_eResolutionPolicy == kResolutionNoBorder)
-    {
-        return CCPointMake((m_obDesignResolutionSize.width - m_obScreenSize.width/m_fScaleX)/2, 
-                           (m_obDesignResolutionSize.height - m_obScreenSize.height/m_fScaleY)/2);
-    }
-    else 
-    {
-        return CCPointZero;
-    }
+    return CCPointZero;
 }
 
 void CCEGLViewProtocol::setTouchDelegate(CCEGLTouchDelegate * pDelegate)
