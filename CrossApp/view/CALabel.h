@@ -65,20 +65,21 @@ public:
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(DSize, m_cLabelSize, LabelSize);
 
-	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cFontColor, FontColor);
-    
     virtual void visit();
     
     void sizeToFit();
     
     void unsizeToFit();
-
+    
+    void setColor(const CAColor4B& var);
+    
+    const CAColor4B& getColor();
+    
 	void applyStyle(const string& sStyleName);
 
 	void applyStyle(const CALabelStyle* pLabelStyle);
     
 protected:
-	using CAView::setColor;
 
     virtual void setContentSize(const DSize& var);
 
@@ -97,6 +98,8 @@ protected:
     float pTextHeight;
     
     bool m_bFitFlag;
+    
+    CAColor4B m_cFontColor;
 };
 
 NS_CC_END

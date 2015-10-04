@@ -196,7 +196,7 @@ void CAAlertView::setLabel(CALabel*& pLabel, const char* szTitle, const char* fo
 		pLabel->setFontSize(_px(ALERT_VIEW_MESG_FONT));
 	}
 	pLabel->setText(szTitle);
-	pLabel->setFontColor(col);
+	pLabel->setColor(col);
 }
 
 void CAAlertView::showAlertView() {

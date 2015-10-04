@@ -439,12 +439,12 @@ void CALabel::setContentSize(const CrossApp::DSize &var)
     }
 }
 
-const CAColor4B& CALabel::getFontColor(void)
+const CAColor4B& CALabel::getColor(void)
 {
 	return m_cFontColor;
 }
 
-void CALabel::setFontColor(const CAColor4B& color)
+void CALabel::setColor(const CAColor4B& color)
 {
 	m_cFontColor = color;
 	updateImage();
