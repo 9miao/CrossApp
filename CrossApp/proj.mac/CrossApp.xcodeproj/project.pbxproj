@@ -255,15 +255,6 @@
 		B09205BB19D554A800CB99C1 /* CASyncQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B619D554A800CB99C1 /* CASyncQueue.h */; };
 		B09205BC19D554A800CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205B719D554A800CB99C1 /* CAThread.cpp */; };
 		B09205BD19D554A800CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B819D554A800CB99C1 /* CAThread.h */; };
-		B09DF4BE1BBB8CBA00B3F94B /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09DF49B1BBB823F00B3F94B /* libavcodec.a */; };
-		B09DF4BF1BBB8CBA00B3F94B /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09DF49C1BBB823F00B3F94B /* libavdevice.a */; };
-		B09DF4C01BBB8CBA00B3F94B /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09DF49D1BBB823F00B3F94B /* libavfilter.a */; };
-		B09DF4C11BBB8CBA00B3F94B /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09DF49E1BBB823F00B3F94B /* libavformat.a */; };
-		B09DF4C21BBB8CBA00B3F94B /* libavresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09DF49F1BBB823F00B3F94B /* libavresample.a */; };
-		B09DF4C31BBB8CBA00B3F94B /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09DF4A01BBB823F00B3F94B /* libavutil.a */; };
-		B09DF4C41BBB8CBA00B3F94B /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09DF4A11BBB823F00B3F94B /* libpostproc.a */; };
-		B09DF4C51BBB8CBA00B3F94B /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09DF4A21BBB823F00B3F94B /* libswresample.a */; };
-		B09DF4C61BBB8CBA00B3F94B /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09DF4A31BBB823F00B3F94B /* libswscale.a */; };
 		B0A02FED1A8D8E960005CB8F /* CATempTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */; };
 		B0A02FEE1A8D8E960005CB8F /* CATempTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A02FEC1A8D8E960005CB8F /* CATempTypeFont.h */; };
 		B0A11D991AE8C47600933BF6 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A11D971AE8C47600933BF6 /* etc1.cpp */; };
@@ -692,15 +683,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B09DF4BE1BBB8CBA00B3F94B /* libavcodec.a in Frameworks */,
-				B09DF4BF1BBB8CBA00B3F94B /* libavdevice.a in Frameworks */,
-				B09DF4C01BBB8CBA00B3F94B /* libavfilter.a in Frameworks */,
-				B09DF4C11BBB8CBA00B3F94B /* libavformat.a in Frameworks */,
-				B09DF4C21BBB8CBA00B3F94B /* libavresample.a in Frameworks */,
-				B09DF4C31BBB8CBA00B3F94B /* libavutil.a in Frameworks */,
-				B09DF4C41BBB8CBA00B3F94B /* libpostproc.a in Frameworks */,
-				B09DF4C51BBB8CBA00B3F94B /* libswresample.a in Frameworks */,
-				B09DF4C61BBB8CBA00B3F94B /* libswscale.a in Frameworks */,
 				B0621A551AC3A28D005EBCA7 /* libjpeg.a in Frameworks */,
 				B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */,
 				B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */,
@@ -1849,7 +1831,6 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -1857,7 +1838,6 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -1891,7 +1871,6 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -1899,7 +1878,6 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

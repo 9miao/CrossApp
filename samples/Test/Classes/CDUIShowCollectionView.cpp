@@ -121,7 +121,7 @@ CACollectionViewCell* CDUIShowCollectionView::collectionCellAtIndex(CACollection
     
     CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(100);
     itemText->setText(m_vTitle.at(index));
-	itemText->setFontColor(ccc4(34, 151, 254, 255));
+	itemText->setColor(ccc4(34, 151, 254, 255));
     
     CAImageView* icon = (CAImageView*)p_Cell->getSubviewByTag(101);
     icon->setImage(CAImage::create(iconTag[index]));

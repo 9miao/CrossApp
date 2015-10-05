@@ -55,7 +55,7 @@ void ETableViewCell::initWithCell()
                                                         _size.height/2,
                                                         _size.width,
                                                         _size.height));
-	test->setFontColor(ccc4(34, 151, 254, 255));
+	test->setColor(ccc4(34, 151, 254, 255));
     test->setTextAlignment(CATextAlignmentCenter);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     test->setFontSize(_px(28));
@@ -270,7 +270,7 @@ CAListViewCell* CDListView::listViewCellAtIndex(CAListView *listView, const DSiz
                                                             _size.height/2,
                                                             _size.width,
                                                             _size.height));
-		test->setFontColor(ccc4(51, 204, 255, 255));
+		test->setColor(ccc4(51, 204, 255, 255));
         test->setTextAlignment(CATextAlignmentCenter);
         test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         test->setFontSize(_px(28));
@@ -855,7 +855,7 @@ void CDUIShowView::showLabel()
 		StringUtils::UTF32ToUTF8(c, cc);
 
         label->setText(cc);
-        label->setFontColor(CAColor_red);
+        label->setColor(CAColor_red);
         label->setFontName("c:/x.ttf");
         label->setFontSize((_px(36)));
         label->setTextAlignment(CATextAlignmentCenter);
@@ -897,7 +897,7 @@ void CDUIShowView::showProgress()
     progress_value->setTag(100);
     progress_value->setText("");
     progress_value->setFontSize(_px(30));
-	progress_value->setFontColor(ccc4(51, 204, 255, 255));
+	progress_value->setColor(ccc4(51, 204, 255, 255));
     progress_value->setTextAlignment(CATextAlignmentCenter);
     progress_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     this->getView()->addSubview(progress_value);
@@ -927,7 +927,7 @@ void CDUIShowView::showSlider()
     VIEWLIST.clear();
     
     sliderValue1 = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
-    sliderValue1->setFontColor(ccc4(51,204,255,255));
+    sliderValue1->setColor(ccc4(51,204,255,255));
     sliderValue1->setText("0");
     sliderValue1->setFontSize(_px(30));
     sliderValue1->setTextAlignment(CATextAlignmentCenter);
@@ -943,7 +943,7 @@ void CDUIShowView::showSlider()
     VIEWLIST.pushBack(view1);
     
     sliderValue2 = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
-	sliderValue2->setFontColor(ccc4(51, 204, 255, 255));
+	sliderValue2->setColor(ccc4(51, 204, 255, 255));
     sliderValue2->setText("0");
     sliderValue2->setFontSize(_px(30));
     sliderValue2->setTextAlignment(CATextAlignmentCenter);
@@ -1353,7 +1353,7 @@ CAView* CDUIShowView::tableViewSectionViewForHeaderInSection(CATableView* table,
     CALabel* header = CALabel::createWithCenter(DRect(50, _size.height/2, _size.width/2, _size.height));
     header->setText(head);
     header->setFontSize(_px(30));
-	header->setFontColor(CAColor_white);
+	header->setColor(CAColor_white);
     header->setTextAlignment(CATextAlignmentCenter);
     header->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     view->addSubview(header);
@@ -1441,7 +1441,7 @@ CAListViewCell* CDUIShowView::listViewCellAtIndex(CAListView *listView, const DS
                                                             _size.height/2,
                                                             _size.width,
                                                             _size.height));
-		test->setFontColor(ccc4(51, 204, 255, 255));
+		test->setColor(ccc4(51, 204, 255, 255));
         test->setTextAlignment(CATextAlignmentCenter);
         test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         test->setFontSize(_px(28));
@@ -1647,7 +1647,7 @@ void CDUIShowView::showDatePickerView()
     
     city_value = CALabel::createWithFrame(DRect(0, 100, winSize.width, 40));
     city_value->setText(UTF8("天津市"));
-	city_value->setFontColor(CAColor_black);
+	city_value->setColor(CAColor_black);
     city_value->setFontSize((_px(28)));
     city_value->setTextAlignment(CATextAlignmentCenter);
     city_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
@@ -1875,7 +1875,7 @@ void CDUIShowView::showStepper()
 {
     step_value = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, 40));
     step_value->setText("step_value:0");
-	step_value->setFontColor(CAColor_black);
+	step_value->setColor(CAColor_black);
     step_value->setFontSize((_px(28)));
     step_value->setTextAlignment(CATextAlignmentCenter);
     step_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);

@@ -5,7 +5,7 @@
 #include "basics/CAScheduler.h"
 #include "dispatcher/CATouch.h"
 #include "animation/CAViewAnimation.h"
-
+#include "platform/CADensityDpi.h"
 NS_CC_BEGIN
 
 #pragma CAListView
@@ -23,7 +23,7 @@ CAListView::CAListView()
 , m_nListHeaderHeight(0)
 , m_nListFooterHeight(0)
 , m_obSeparatorColor(CAColor_gray)
-, m_nSeparatorViewHeight(1)
+, m_nSeparatorViewHeight(s_px_to_dip(2.0f))
 {
     
 }

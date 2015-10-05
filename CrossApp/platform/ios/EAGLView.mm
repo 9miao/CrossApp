@@ -166,6 +166,15 @@ static EAGLView *view = 0;
 		{
 			view.contentScaleFactor = [[UIScreen mainScreen] scale];
 		}
+        
+        CGFloat scale = [[UIScreen mainScreen] scale];
+        CGRect frameRect = frame;
+        frameRect.origin.x *= scale;
+        frameRect.origin.y *= scale;
+        frameRect.size.width *= scale;
+        frameRect.size.height *= scale;
+        
+        CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
     }
         
     return self;

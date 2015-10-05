@@ -16,7 +16,7 @@ class CDNewsAboutTableCell : public CATableViewCell
 public:
     CDNewsAboutTableCell();
     virtual ~CDNewsAboutTableCell();
-    static CDNewsAboutTableCell* create(const std::string& identifier, const CADipRect& _rect = CADipRectZero);
+    static CDNewsAboutTableCell* create(const std::string& identifier, const DRect& _rect = DRectZero);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
     virtual void normalTableViewCell();
@@ -53,7 +53,7 @@ public:
     void endAction();
     void dissModel();
 public:
-    CADipSize winSize;
+    DSize winSize;
     CATableView* p_TableView;
     float _filesize;
     float _tempfilesize;

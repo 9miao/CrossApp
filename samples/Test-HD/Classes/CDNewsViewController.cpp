@@ -40,7 +40,7 @@ void CDNewsViewController::viewDidLoad()
                                                    CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
         
         
-        p_pLoading = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,50,50));
+        p_pLoading = CAActivityIndicatorView::createWithCenter(DRect(winSize.width/2,winSize.height/2,50,50));
         this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
         p_pLoading->setLoadingMinTime(0.5f);
         p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsView));
@@ -61,20 +61,20 @@ void CDNewsViewController::showAlert()
     p_alertView = CAView::createWithFrame(this->getView()->getBounds());
     this->getView()->addSubview(p_alertView);
     
-    CAImageView* bg = CAImageView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
+    CAImageView* bg = CAImageView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
     bg->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     bg->setImage(CAImage::create("image/HelloWorld.png"));
     
     CAButton* btn5 = CAButton::create(CAButtonTypeSquareRect);
     btn5->setTag(100);
-    btn5->setCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width, winSize.height));
+    btn5->setCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, winSize.height));
     btn5->setTitleColorForState(CAControlStateNormal,CAColor_white);
     btn5->setBackGroundViewForState(CAControlStateNormal, bg);
     btn5->setBackGroundViewForState(CAControlStateHighlighted, bg);
     btn5->addTarget(this, CAControl_selector(CDNewsViewController::buttonCallBack), CAControlEventTouchUpInSide);
     p_alertView->addSubview(btn5);
     
-    CALabel* test = CALabel::createWithCenter(CADipRect(winSize.width/2,
+    CALabel* test = CALabel::createWithCenter(DRect(winSize.width/2,
                                                         winSize.height-100,
                                                         winSize.width,
                                                         40));
@@ -98,7 +98,7 @@ void CDNewsViewController::buttonCallBack(CAControl* btn,CCPoint point)
     CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     {
-        p_pLoading = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,50,50));
+        p_pLoading = CAActivityIndicatorView::createWithCenter(DRect(winSize.width/2,winSize.height/2,50,50));
         this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
         p_pLoading->setLoadingMinTime(0.5f);
         p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsView));
@@ -306,32 +306,32 @@ void CDNewsViewController::collectionViewDidDeselectCellAtIndexPath(CAAutoCollec
 
 CACollectionViewCell* CDNewsViewController::collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item)
 {
-    CADipSize _size = cellSize;
+    DSize _size = cellSize;
     CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
     if (p_Cell == NULL)
     {
         p_Cell = CACollectionViewCell::create("CrossApp");
         p_Cell->setAllowsSelected(false);
         
-        CAImageView* itemImage = CAImageView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
+        CAImageView* itemImage = CAImageView::createWithFrame(DRect(0, 0, _size.width, _size.height));
         itemImage->setTag(99);
         p_Cell->addSubview(itemImage);
         
-        CommonUrlImageView* theImage = CommonUrlImageView::createWithFrame(CADipRect(30, 30, 440, 300));
+        CommonUrlImageView* theImage = CommonUrlImageView::createWithFrame(DRect(30, 30, 440, 300));
         theImage->setTag(101);
         theImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
         theImage->setImage(CAImage::create("image/HelloWorld.png"));
         p_Cell->addSubview(theImage);
         
-        CADipSize itemSize = itemImage->getBounds().size;
-        CALabel* itemText = CALabel::createWithFrame(CADipRect(30, 360, itemSize.width-60,80));
+        DSize itemSize = itemImage->getBounds().size;
+        CALabel* itemText = CALabel::createWithFrame(DRect(30, 360, itemSize.width-60,80));
         itemText->setTag(100);
         itemText->setFontSize(_px(34));
         itemText->setTextAlignment(CATextAlignmentLeft);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
         p_Cell->addSubview(itemText);
         
-        CAImageView* commentImage = CAImageView::createWithFrame(CADipRect(itemSize.width-100, itemSize.height-60, 48, 48));
+        CAImageView* commentImage = CAImageView::createWithFrame(DRect(itemSize.width-100, itemSize.height-60, 48, 48));
         commentImage->setTag(200);
         commentImage->setImage(CAImage::create("image/comment.png"));
         p_Cell->addSubview(commentImage);
@@ -377,5 +377,5 @@ unsigned int CDNewsViewController::numberOfItemsInSection(CAAutoCollectionView *
 
 CCSize CDNewsViewController::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
-    return CADipSize(500, 600);
+    return DSize(500, 600);
 }

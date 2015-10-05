@@ -51,7 +51,7 @@ void CDNewsTableCell::initWithCell()
 {
     DSize _size = this->getFrame().size;
     theTitle = CALabel::createWithFrame(DRect(240, 20, _size.width/2+50, 40));
-	theTitle->setFontColor(CAColor_black);
+	theTitle->setColor(CAColor_black);
     theTitle->setTextAlignment(CATextAlignmentLeft);
     theTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
     theTitle->setFontSize(_px(32));
@@ -59,12 +59,12 @@ void CDNewsTableCell::initWithCell()
     this->getContentView()->addSubview(theTitle);
     
     theDesc = CALabel::createWithFrame(DRect(240, 65, _size.width/2, 40));
-	theDesc->setFontColor(CAColor_black);
+	theDesc->setColor(CAColor_black);
     theDesc->setTextAlignment(CATextAlignmentLeft);
     theDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
     theDesc->setFontSize(_px(24));
     theDesc->setTag(102);
-	theDesc->setFontColor(CAColor_gray);
+	theDesc->setColor(CAColor_gray);
     theDesc->setLineSpacing(10);
     this->getContentView()->addSubview(theDesc);
     
@@ -148,7 +148,7 @@ void CDNewsViewController::showAlert()
                                                         winSize.height-100,
                                                         winSize.width,
                                                         40));
-	test->setFontColor(CAColor_gray);
+	test->setColor(CAColor_gray);
     test->setTextAlignment(CATextAlignmentCenter);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
     test->setFontSize(_px(24));
@@ -336,7 +336,7 @@ void CDNewsViewController::initNewsPageView()
     if (m_page.size()>0) {
         pageViewTitle = CALabel::createWithFrame(DRect(10, winSize.width/2-40, winSize.width-50, 50));
         pageViewTitle->setText(m_page[0].m_title);
-		pageViewTitle->setFontColor(CAColor_white);
+		pageViewTitle->setColor(CAColor_white);
         pageViewTitle->setFontSize(_px(28));
         tempview->addSubview(pageViewTitle);
     }

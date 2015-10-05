@@ -128,7 +128,6 @@
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
 		4E0AEC051AF9E903002158F0 /* CDShowNewsImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E0AEC031AF9E903002158F0 /* CDShowNewsImage.cpp */; };
-		4E0BB2B31AE0E6A20037017A /* CDNewsImageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E0BB2B11AE0E6A20037017A /* CDNewsImageController.cpp */; };
 		4E0BB2B61AE0E7370037017A /* CDNewsAboutController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E0BB2B41AE0E7370037017A /* CDNewsAboutController.cpp */; };
 		4E0FD26C1ADFC2A0006BCE76 /* CDNewsViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FD26A1ADFC2A0006BCE76 /* CDNewsViewController.cpp */; };
 		4EC5C5931AEE36B80003331B /* CDWebViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EC5C5911AEE36B80003331B /* CDWebViewController.cpp */; };
@@ -405,8 +404,6 @@
 		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
 		4E0AEC031AF9E903002158F0 /* CDShowNewsImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDShowNewsImage.cpp; path = ../Classes/CDShowNewsImage.cpp; sourceTree = "<group>"; };
 		4E0AEC041AF9E903002158F0 /* CDShowNewsImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDShowNewsImage.h; path = ../Classes/CDShowNewsImage.h; sourceTree = "<group>"; };
-		4E0BB2B11AE0E6A20037017A /* CDNewsImageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsImageController.cpp; path = ../Classes/CDNewsImageController.cpp; sourceTree = "<group>"; };
-		4E0BB2B21AE0E6A20037017A /* CDNewsImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsImageController.h; path = ../Classes/CDNewsImageController.h; sourceTree = "<group>"; };
 		4E0BB2B41AE0E7370037017A /* CDNewsAboutController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsAboutController.cpp; path = ../Classes/CDNewsAboutController.cpp; sourceTree = "<group>"; };
 		4E0BB2B51AE0E7370037017A /* CDNewsAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsAboutController.h; path = ../Classes/CDNewsAboutController.h; sourceTree = "<group>"; };
 		4E0FD26A1ADFC2A0006BCE76 /* CDNewsViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsViewController.cpp; path = ../Classes/CDNewsViewController.cpp; sourceTree = "<group>"; };
@@ -484,8 +481,6 @@
 				4EDF37381AD3B24000EB6022 /* CDUIShowView.h */,
 				4E0FD26A1ADFC2A0006BCE76 /* CDNewsViewController.cpp */,
 				4E0FD26B1ADFC2A0006BCE76 /* CDNewsViewController.h */,
-				4E0BB2B11AE0E6A20037017A /* CDNewsImageController.cpp */,
-				4E0BB2B21AE0E6A20037017A /* CDNewsImageController.h */,
 				4E0BB2B41AE0E7370037017A /* CDNewsAboutController.cpp */,
 				4E0BB2B51AE0E7370037017A /* CDNewsAboutController.h */,
 				4E89C58C1AE7A40900A6198A /* CDData.h */,
@@ -977,7 +972,6 @@
 				4EDF37361AD3B07C00EB6022 /* CDUIShowCollectionView.cpp in Sources */,
 				3EF48B601B7C915A00179E69 /* CAFlashView.cpp in Sources */,
 				3EF48B711B7C915A00179E69 /* as_matrix.cpp in Sources */,
-				4E0BB2B31AE0E6A20037017A /* CDNewsImageController.cpp in Sources */,
 				4E0BB2B61AE0E7370037017A /* CDNewsAboutController.cpp in Sources */,
 				3EF48B6C1B7C915A00179E69 /* as_geom.cpp in Sources */,
 				3EF48B9B1B7C915A00179E69 /* gameswf_shape.cpp in Sources */,

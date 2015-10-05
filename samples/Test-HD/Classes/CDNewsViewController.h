@@ -46,7 +46,7 @@ public:
     void buttonCallBack(CAControl* btn,CCPoint point);
     void tempCallBack();
 public:
-    CADipSize winSize;
+    DSize winSize;
     std::vector<std::string> tempList;
     std::vector<newsMsg > m_msg;
     std::vector<newsImage > m_ImageMsg;

@@ -33,7 +33,7 @@ void CDWebViewController::viewDidUnload()
 
 void CDWebViewController::initWebView(string url)
 {
-    p_webView = CAWebView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
+    p_webView = CAWebView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
     p_webView->loadURL(url);
     this->getView()->addSubview(p_webView);
 }

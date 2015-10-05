@@ -50,7 +50,7 @@ void CDNewsImageTableCell::initWithCell(int num)
                                                        _size.height-150,
                                                        _size.width-90,
                                                        40));
-	test->setFontColor(CAColor_black);
+	test->setColor(CAColor_black);
     test->setTextAlignment(CATextAlignmentLeft);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
     test->setFontSize(_px(32));
@@ -62,13 +62,13 @@ void CDNewsImageTableCell::initWithCell(int num)
                                                       _size.height-90,
                                                       _size.width-90,
                                                       70));
-	dsc->setFontColor(CAColor_black);
+	dsc->setColor(CAColor_black);
     dsc->setTextAlignment(CATextAlignmentLeft);
     dsc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
     dsc->setFontSize(_px(26));
 
     dsc->setTag(101);
-	dsc->setFontColor(ccc4(200, 200, 200, 255));
+	dsc->setColor(ccc4(200, 200, 200, 255));
     this->addSubview(dsc);
     
     CommonUrlImageView* temImage = CommonUrlImageView::createWithFrame(DRect(0,5,_size.width,_size.height-180));
@@ -182,7 +182,7 @@ void CDNewsImageController::showAlert()
                                                         winSize.height-100,
                                                         winSize.width,
                                                         40));
-	test->setFontColor(CAColor_gray);
+	test->setColor(CAColor_gray);
     test->setTextAlignment(CATextAlignmentCenter);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
     test->setFontSize(_px(24));

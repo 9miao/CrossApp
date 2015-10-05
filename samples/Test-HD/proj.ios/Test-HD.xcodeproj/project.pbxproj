@@ -916,7 +916,7 @@
 				LastUpgradeCheck = 0430;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = MTTM89KKVQ;
+						DevelopmentTeam = YV7UQS6C4A;
 					};
 				};
 			};
@@ -1118,9 +1118,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer: renhongguang@longtugame.com (Y7X488V584)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: renhongguang@longtugame.com (Y7X488V584)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 278688386@qq.com (475AJ682EQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 278688386@qq.com (475AJ682EQ)";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1141,7 +1142,7 @@
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include/ios\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/support/libwebsockets/ios/include\"",
 				);
@@ -1170,9 +1171,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer: renhongguang@longtugame.com (Y7X488V584)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: renhongguang@longtugame.com (Y7X488V584)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 278688386@qq.com (475AJ682EQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 278688386@qq.com (475AJ682EQ)";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1191,7 +1193,7 @@
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include/ios\"",
+					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/support/libwebsockets/ios/include\"",
 				);

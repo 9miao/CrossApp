@@ -25,7 +25,7 @@ public:
     CC_SYNTHESIZE_READONLY(CANavigationController*, m_pRootNavigationController1, RootNavigationController1);
     
     virtual void keyBackClicked();
-    CADipSize winSize;
+    DSize winSize;
     CASplitViewController* _splitViewController;
     CAVector<CrossApp::CAViewController *> _vec;
 };

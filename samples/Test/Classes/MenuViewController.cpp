@@ -93,7 +93,7 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         test->setTextAlignment(CATextAlignmentLeft);
         test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         test->setFontSize(_px(32));
-		test->setFontColor(CAColor_white);
+		test->setColor(CAColor_white);
         test->setTag(100);
         cell->addSubview(test);
         

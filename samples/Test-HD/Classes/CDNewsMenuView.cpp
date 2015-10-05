@@ -22,7 +22,7 @@ CDNewsMenuTableCell::~CDNewsMenuTableCell()
     
 }
 
-CDNewsMenuTableCell* CDNewsMenuTableCell::create(const std::string& identifier, const CADipRect& _rect,int row)
+CDNewsMenuTableCell* CDNewsMenuTableCell::create(const std::string& identifier, const DRect& _rect,int row)
 {
     CDNewsMenuTableCell* tableViewCell = new CDNewsMenuTableCell(row);
     if(tableViewCell&&tableViewCell->initWithReuseIdentifier(identifier))
@@ -44,7 +44,7 @@ void CDNewsMenuTableCell::highlightedTableViewCell()
 {
     char tempstr[50];
     sprintf(tempstr, "image/new_btn_down_%d.png",imageid);
-    CAImageView* im = CAImageView::createWithFrame(CADipRect(0,0,233,116));
+    CAImageView* im = CAImageView::createWithFrame(DRect(0,0,233,116));
     im->setImage(CAImage::create(tempstr));
     this->setBackgroundView(im);
 }
@@ -53,7 +53,7 @@ void CDNewsMenuTableCell::selectedTableViewCell()
 {
     char tempstr[50];
     sprintf(tempstr, "image/new_btn_down_%d.png",imageid);
-    CAImageView* im = CAImageView::createWithFrame(CADipRect(0,0,233,116));
+    CAImageView* im = CAImageView::createWithFrame(DRect(0,0,233,116));
     im->setImage(CAImage::create(tempstr));
     this->setBackgroundView(im);
 }
@@ -63,7 +63,7 @@ void CDNewsMenuTableCell::normalTableViewCell()
     char tempstr[50];
     sprintf(tempstr, "image/new_btn_normal_%d.png",imageid);
     CCLog("imageid==%d",imageid);
-    CAImageView* im = CAImageView::createWithFrame(CADipRect(0,0,233,116));
+    CAImageView* im = CAImageView::createWithFrame(DRect(0,0,233,116));
     im->setImage(CAImage::create(tempstr));
     this->setBackgroundView(im);
 }
@@ -84,12 +84,12 @@ void CDNewsMenuView::viewDidLoad()
     this->getView()->setColor(ccc4(234,234,234,255));
     size = this->getView()->getBounds().size;
     
-    CAImageView* icon = CAImageView::createWithCenter(CADipRect(size.width/2,200,278,88));
+    CAImageView* icon = CAImageView::createWithCenter(DRect(size.width/2,200,278,88));
     icon->setImage(CAImage::create("image/news_icon.png"));
     this->getView()->addSubview(icon);
     
     CAButton* btn_back = CAButton::create(CAButtonTypeSquareRect);
-    btn_back->setCenter(CADipRect(150, size.height-200, 40, 40));
+    btn_back->setCenter(DRect(150, size.height-200, 40, 40));
     btn_back->setTag(0);
     btn_back->setTitleColorForState(CAControlStateNormal,CAColor_white);
     btn_back->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("image/news_close.png")));
@@ -98,7 +98,7 @@ void CDNewsMenuView::viewDidLoad()
     this->getView()->addSubview(btn_back);
     
     CAButton* btn_set= CAButton::create(CAButtonTypeSquareRect);
-    btn_set->setCenter(CADipRect(300, size.height-200, 40, 40));
+    btn_set->setCenter(DRect(300, size.height-200, 40, 40));
     btn_set->setTag(1);
     btn_set->setTitleColorForState(CAControlStateNormal,CAColor_white);
     btn_set->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("image/news_set.png")));
@@ -106,7 +106,7 @@ void CDNewsMenuView::viewDidLoad()
     btn_set->addTarget(this, CAControl_selector(CDNewsMenuView::btn_callBack), CAControlEventTouchDown);
     this->getView()->addSubview(btn_set);
     
-    tableView = CATableView::createWithFrame(CADipRect(75, 300, size.width-150, size.height*0.6));
+    tableView = CATableView::createWithFrame(DRect(75, 300, size.width-150, size.height*0.6));
     tableView->setAllowsSelection(true);
     tableView->setTableViewDelegate(this);
     tableView->setTableViewDataSource(this);
@@ -189,11 +189,11 @@ void CDNewsMenuView::tableViewDidSelectRowAtIndexPath(CATableView* table, unsign
 CATableViewCell* CDNewsMenuView::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
     CCLog("row==%d",section);
-    CADipSize _size = cellSize;
+    DSize _size = cellSize;
     CDNewsMenuTableCell* cell = dynamic_cast<CDNewsMenuTableCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
     if (cell == NULL)
     {
-        cell = CDNewsMenuTableCell::create("CrossApp", CADipRect(0, 0, _size.width, _size.height),row+1);
+        cell = CDNewsMenuTableCell::create("CrossApp", DRect(0, 0, _size.width, _size.height),row+1);
         //cell->setImageID(row+1);
     }
     //cell->setImageID(row+1);

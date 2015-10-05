@@ -65,7 +65,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
 
     p_title = CALabel::createWithFrame(DRect(10,10,winSize.width-80,40));
     p_title->setText(m_image.m_title);
-	p_title->setFontColor(CAColor_white);
+	p_title->setColor(CAColor_white);
     p_title->setFontSize(_px(34));
     p_title->setBold(true);
     p_bg->addSubview(p_title);
@@ -74,14 +74,14 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     sprintf(temp, "1/%lu",m_image.m_imageUrl.size());
     p_index = CALabel::createWithFrame(DRect(winSize.width-60,10,80,30));
     p_index->setText(temp);
-	p_index->setFontColor(CAColor_white);
+	p_index->setColor(CAColor_white);
     p_index->setFontSize(_px(30));
     p_index->setBold(true);
     p_bg->addSubview(p_index);
     
     p_des = CALabel::createWithFrame(DRect(10,0,winSize.width-20,200));
     p_des->setText(m_image.m_imageDesc[4]);
-	p_des->setFontColor(ccc4(200, 200, 200, 255));
+	p_des->setColor(ccc4(200, 200, 200, 255));
     p_des->setFontSize(_px(26));
     
     CAScrollView* ps = CAScrollView::createWithFrame(DRect(0,70,winSize.width,200));

@@ -15,7 +15,7 @@
 #include "support/CAPointExtension.h"
 #include "CCEGLView.h"
 #include "animation/CAViewAnimation.h"
-
+#include "platform/CADensityDpi.h"
 NS_CC_BEGIN
 
 #pragma CATableView
@@ -24,7 +24,7 @@ CATableView::CATableView()
 :m_pTableHeaderView(NULL)
 ,m_pTableFooterView(NULL)
 ,m_obSeparatorColor(CAColor_gray)
-,m_nSeparatorViewHeight(1)
+,m_nSeparatorViewHeight(s_px_to_dip(2.0f))
 ,m_nTableHeaderHeight(0)
 ,m_nTableFooterHeight(0)
 ,m_nSections(0)
