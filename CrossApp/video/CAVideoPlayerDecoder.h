@@ -13,7 +13,6 @@
 
 #include <map>
 #include <vector>
-#include "basics/CAObject.h"
 #include "images/CAImage.h"
 #include "platform/CCCommon.h"
 

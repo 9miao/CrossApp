@@ -100,10 +100,10 @@
 #include "view/CATextEditHelper.h"
 #include "view/CAAutoCollectionView.h"
 
-//#include "video/CAVideoPlayerDecoder.h"
-//#include "video/CAVideoPlayerRender.h"
-//#include "video/CAVideoPlayerView.h"
-//#include "video/CAVideoPlayerControlView.h"
+#include "video/CAVideoPlayerDecoder.h"
+#include "video/CAVideoPlayerRender.h"
+#include "video/CAVideoPlayerView.h"
+#include "video/CAVideoPlayerControlView.h"
 
 // cocoa
 #include "cocoa/CCSet.h"

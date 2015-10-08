@@ -238,6 +238,14 @@
 		B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B04CF4301967B2EB00BA7030 /* CASTLContainer.h */; };
 		B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */; };
 		B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */; };
+		B05D32161BC60B6F00F9B4C8 /* CAVideoPlayerDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D320E1BC60B6F00F9B4C8 /* CAVideoPlayerDecoder.cpp */; };
+		B05D32171BC60B6F00F9B4C8 /* CAVideoPlayerDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D320F1BC60B6F00F9B4C8 /* CAVideoPlayerDecoder.h */; };
+		B05D32221BC613E000F9B4C8 /* CAVideoPlayerControlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D321C1BC613E000F9B4C8 /* CAVideoPlayerControlView.cpp */; };
+		B05D32231BC613E000F9B4C8 /* CAVideoPlayerControlView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D321D1BC613E000F9B4C8 /* CAVideoPlayerControlView.h */; };
+		B05D32241BC613E000F9B4C8 /* CAVideoPlayerRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D321E1BC613E000F9B4C8 /* CAVideoPlayerRender.cpp */; };
+		B05D32251BC613E000F9B4C8 /* CAVideoPlayerRender.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D321F1BC613E000F9B4C8 /* CAVideoPlayerRender.h */; };
+		B05D32261BC613E000F9B4C8 /* CAVideoPlayerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05D32201BC613E000F9B4C8 /* CAVideoPlayerView.cpp */; };
+		B05D32271BC613E000F9B4C8 /* CAVideoPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B05D32211BC613E000F9B4C8 /* CAVideoPlayerView.h */; };
 		B0621A4D1AC3A208005EBCA7 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A4C1AC3A208005EBCA7 /* libfreetype.a */; };
 		B0621A4F1AC3A22D005EBCA7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A4E1AC3A22D005EBCA7 /* libwebp.a */; };
 		B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A501AC3A23D005EBCA7 /* libtiff.a */; };
@@ -572,7 +580,14 @@
 		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDelegate.cpp; sourceTree = "<group>"; };
 		B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDelegate.h; sourceTree = "<group>"; };
-		B0602A441BB00C4000E64AF8 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../the_third_party/SDL/prebuilt/mac/SDL2.framework; sourceTree = "<group>"; };
+		B05D320E1BC60B6F00F9B4C8 /* CAVideoPlayerDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerDecoder.cpp; sourceTree = "<group>"; };
+		B05D320F1BC60B6F00F9B4C8 /* CAVideoPlayerDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerDecoder.h; sourceTree = "<group>"; };
+		B05D321C1BC613E000F9B4C8 /* CAVideoPlayerControlView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerControlView.cpp; sourceTree = "<group>"; };
+		B05D321D1BC613E000F9B4C8 /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerControlView.h; sourceTree = "<group>"; };
+		B05D321E1BC613E000F9B4C8 /* CAVideoPlayerRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerRender.cpp; sourceTree = "<group>"; };
+		B05D321F1BC613E000F9B4C8 /* CAVideoPlayerRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerRender.h; sourceTree = "<group>"; };
+		B05D32201BC613E000F9B4C8 /* CAVideoPlayerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerView.cpp; sourceTree = "<group>"; };
+		B05D32211BC613E000F9B4C8 /* CAVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerView.h; sourceTree = "<group>"; };
 		B0621A4C1AC3A208005EBCA7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../the_third_party/freetype/prebuilt/mac/libfreetype.a; sourceTree = "<group>"; };
 		B0621A4E1AC3A22D005EBCA7 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../the_third_party/webp/prebuilt/mac/libwebp.a; sourceTree = "<group>"; };
 		B0621A501AC3A23D005EBCA7 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../the_third_party/tiff/prebuilt/mac/libtiff.a; sourceTree = "<group>"; };
@@ -590,15 +605,6 @@
 		B09205B619D554A800CB99C1 /* CASyncQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASyncQueue.h; sourceTree = "<group>"; };
 		B09205B719D554A800CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
 		B09205B819D554A800CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
-		B09DF49B1BBB823F00B3F94B /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavcodec.a; sourceTree = "<group>"; };
-		B09DF49C1BBB823F00B3F94B /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavdevice.a; sourceTree = "<group>"; };
-		B09DF49D1BBB823F00B3F94B /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavfilter.a; sourceTree = "<group>"; };
-		B09DF49E1BBB823F00B3F94B /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavformat.a; sourceTree = "<group>"; };
-		B09DF49F1BBB823F00B3F94B /* libavresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavresample.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavresample.a; sourceTree = "<group>"; };
-		B09DF4A01BBB823F00B3F94B /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavutil.a; sourceTree = "<group>"; };
-		B09DF4A11BBB823F00B3F94B /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libpostproc.a; sourceTree = "<group>"; };
-		B09DF4A21BBB823F00B3F94B /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libswresample.a; sourceTree = "<group>"; };
-		B09DF4A31BBB823F00B3F94B /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libswscale.a; sourceTree = "<group>"; };
 		B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATempTypeFont.cpp; sourceTree = "<group>"; };
 		B0A02FEC1A8D8E960005CB8F /* CATempTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATempTypeFont.h; sourceTree = "<group>"; };
 		B0A11D971AE8C47600933BF6 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
@@ -676,6 +682,16 @@
 		B0D890441B9D3A59004A0830 /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
 		B0DAEECE1B256B6D0011E87D /* CAGif.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGif.cpp; sourceTree = "<group>"; };
 		B0DAEECF1B256B6D0011E87D /* CAGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGif.h; sourceTree = "<group>"; };
+		B0E951551BC645E400DBAB6A /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../the_third_party/SDL/prebuilt/mac/libSDL2.a; sourceTree = "<group>"; };
+		B0E951571BC645F900DBAB6A /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavcodec.a; sourceTree = "<group>"; };
+		B0E951581BC645F900DBAB6A /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavdevice.a; sourceTree = "<group>"; };
+		B0E951591BC645F900DBAB6A /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavfilter.a; sourceTree = "<group>"; };
+		B0E9515A1BC645F900DBAB6A /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavformat.a; sourceTree = "<group>"; };
+		B0E9515B1BC645F900DBAB6A /* libavresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavresample.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavresample.a; sourceTree = "<group>"; };
+		B0E9515C1BC645F900DBAB6A /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavutil.a; sourceTree = "<group>"; };
+		B0E9515D1BC645F900DBAB6A /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libpostproc.a; sourceTree = "<group>"; };
+		B0E9515E1BC645F900DBAB6A /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libswresample.a; sourceTree = "<group>"; };
+		B0E9515F1BC645F900DBAB6A /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libswscale.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -698,6 +714,7 @@
 		04EAA0491956D74D00198A8E /* CrossApp */ = {
 			isa = PBXGroup;
 			children = (
+				B05D320B1BC60B6F00F9B4C8 /* video */,
 				04EABB431956DD8E00198A8E /* CrossApp.cpp */,
 				04EAA09F1956D74D00198A8E /* CrossApp.h */,
 				04EAA0701956D74D00198A8E /* ccConfig.h */,
@@ -1146,16 +1163,16 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B09DF49B1BBB823F00B3F94B /* libavcodec.a */,
-				B09DF49C1BBB823F00B3F94B /* libavdevice.a */,
-				B09DF49D1BBB823F00B3F94B /* libavfilter.a */,
-				B09DF49E1BBB823F00B3F94B /* libavformat.a */,
-				B09DF49F1BBB823F00B3F94B /* libavresample.a */,
-				B09DF4A01BBB823F00B3F94B /* libavutil.a */,
-				B09DF4A11BBB823F00B3F94B /* libpostproc.a */,
-				B09DF4A21BBB823F00B3F94B /* libswresample.a */,
-				B09DF4A31BBB823F00B3F94B /* libswscale.a */,
-				B0602A441BB00C4000E64AF8 /* SDL2.framework */,
+				B0E951571BC645F900DBAB6A /* libavcodec.a */,
+				B0E951581BC645F900DBAB6A /* libavdevice.a */,
+				B0E951591BC645F900DBAB6A /* libavfilter.a */,
+				B0E9515A1BC645F900DBAB6A /* libavformat.a */,
+				B0E9515B1BC645F900DBAB6A /* libavresample.a */,
+				B0E9515C1BC645F900DBAB6A /* libavutil.a */,
+				B0E9515D1BC645F900DBAB6A /* libpostproc.a */,
+				B0E9515E1BC645F900DBAB6A /* libswresample.a */,
+				B0E9515F1BC645F900DBAB6A /* libswscale.a */,
+				B0E951551BC645E400DBAB6A /* libSDL2.a */,
 				B0621A541AC3A28D005EBCA7 /* libjpeg.a */,
 				B0621A521AC3A24D005EBCA7 /* libpng.a */,
 				B0621A501AC3A23D005EBCA7 /* libtiff.a */,
@@ -1283,6 +1300,21 @@
 			path = script_support;
 			sourceTree = "<group>";
 		};
+		B05D320B1BC60B6F00F9B4C8 /* video */ = {
+			isa = PBXGroup;
+			children = (
+				B05D321C1BC613E000F9B4C8 /* CAVideoPlayerControlView.cpp */,
+				B05D321D1BC613E000F9B4C8 /* CAVideoPlayerControlView.h */,
+				B05D321E1BC613E000F9B4C8 /* CAVideoPlayerRender.cpp */,
+				B05D321F1BC613E000F9B4C8 /* CAVideoPlayerRender.h */,
+				B05D32201BC613E000F9B4C8 /* CAVideoPlayerView.cpp */,
+				B05D32211BC613E000F9B4C8 /* CAVideoPlayerView.h */,
+				B05D320E1BC60B6F00F9B4C8 /* CAVideoPlayerDecoder.cpp */,
+				B05D320F1BC60B6F00F9B4C8 /* CAVideoPlayerDecoder.h */,
+			);
+			path = video;
+			sourceTree = "<group>";
+		};
 		B074A8B41A722B1600F34F79 /* animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1386,6 +1418,7 @@
 				B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */,
 				04EAB06A1956D75600198A8E /* CAAutoreleasePool.h in Headers */,
 				B0B05FA81BB1483200B891CE /* CADatePickerView.h in Headers */,
+				B05D32271BC613E000F9B4C8 /* CAVideoPlayerView.h in Headers */,
 				3E21544D1B8180340075448E /* autolink.h in Headers */,
 				B0B05FCA1BB1483200B891CE /* CATextView.h in Headers */,
 				04EAB06C1956D75600198A8E /* CACamera.h in Headers */,
@@ -1398,6 +1431,7 @@
 				04EAB0761956D75600198A8E /* CAScheduler.h in Headers */,
 				B0B05FCE1BB1483200B891CE /* CAWebView.h in Headers */,
 				04EAB0791956D75600198A8E /* ccConfig.h in Headers */,
+				B05D32231BC613E000F9B4C8 /* CAVideoPlayerControlView.h in Headers */,
 				04EAB07A1956D75600198A8E /* ccMacros.h in Headers */,
 				04EAB07B1956D75600198A8E /* ccTypeInfo.h in Headers */,
 				B0B05FBE1BB1483200B891CE /* CARenderImage.h in Headers */,
@@ -1427,6 +1461,7 @@
 				B0B05FAC1BB1483200B891CE /* CADrawView.h in Headers */,
 				04EAB0A51956D75600198A8E /* CrossApp.h in Headers */,
 				04EAB0A61956D75600198A8E /* CAIMEDelegate.h in Headers */,
+				B05D32171BC60B6F00F9B4C8 /* CAVideoPlayerDecoder.h in Headers */,
 				04EAB0A81956D75600198A8E /* CAIMEDispatcher.h in Headers */,
 				B0B05FCC1BB1483200B891CE /* CAView.h in Headers */,
 				3E21540C1B817AB80075448E /* HttpResponse.h in Headers */,
@@ -1458,6 +1493,7 @@
 				04EAB0CA1956D75600198A8E /* quaternion.h in Headers */,
 				04EAB0CB1956D75600198A8E /* ray2.h in Headers */,
 				B0B05FB61BB1483200B891CE /* CAListView.h in Headers */,
+				B05D32251BC613E000F9B4C8 /* CAVideoPlayerRender.h in Headers */,
 				04EAB0CC1956D75600198A8E /* utility.h in Headers */,
 				B0C3BD411ADE70B3009BE71A /* CAClipboard.h in Headers */,
 				04EAB0CD1956D75600198A8E /* vec2.h in Headers */,
@@ -1686,6 +1722,7 @@
 				3EF6A3A91B6781EB00A645EC /* CAMACTextField.m in Sources */,
 				3E2153E11B817AB80075448E /* CADevice.cpp in Sources */,
 				B0B05FA91BB1483200B891CE /* CADrawingPrimitives.cpp in Sources */,
+				B05D32241BC613E000F9B4C8 /* CAVideoPlayerRender.cpp in Sources */,
 				04EAB0D51956D75600198A8E /* neon_matrix_impl.c in Sources */,
 				04EAB0D61956D75600198A8E /* plane.c in Sources */,
 				04EAB0D71956D75600198A8E /* quaternion.c in Sources */,
@@ -1702,6 +1739,7 @@
 				B0A11DA71AE8C5C500933BF6 /* gif_font.c in Sources */,
 				04EAB10E1956D75600198A8E /* CCFileUtils.cpp in Sources */,
 				04EAB1151956D75600198A8E /* CCSAXParser.cpp in Sources */,
+				B05D32161BC60B6F00F9B4C8 /* CAVideoPlayerDecoder.cpp in Sources */,
 				04EAB1191956D75600198A8E /* CCEGLViewProtocol.cpp in Sources */,
 				04EAB1471956D75600198A8E /* CCApplication.mm in Sources */,
 				04EAB14B1956D75600198A8E /* CCCommon.mm in Sources */,
@@ -1709,6 +1747,7 @@
 				B09205BC19D554A800CB99C1 /* CAThread.cpp in Sources */,
 				04EAB1501956D75600198A8E /* CCFileUtilsMac.mm in Sources */,
 				04EAB1571956D75600198A8E /* CCWindow.m in Sources */,
+				B05D32221BC613E000F9B4C8 /* CAVideoPlayerControlView.cpp in Sources */,
 				B02A12CC197CE15D00F4F2C5 /* CATransformation.cpp in Sources */,
 				B0B05FA51BB1483200B891CE /* CACollectionView.cpp in Sources */,
 				04EAB1591956D75600198A8E /* EAGLView.mm in Sources */,
@@ -1743,6 +1782,7 @@
 				3E2154531B8180340075448E /* json_reader.cpp in Sources */,
 				3E2154071B817AB80075448E /* DownloadManager.cpp in Sources */,
 				B0A11DAD1AE8C5C500933BF6 /* quantize.c in Sources */,
+				B05D32261BC613E000F9B4C8 /* CAVideoPlayerView.cpp in Sources */,
 				04EABB441956DD8E00198A8E /* CrossApp.cpp in Sources */,
 				B0C3BD431ADE70B8009BE71A /* CAClipboard.mm in Sources */,
 				040665C21956F40E003E0D62 /* CAGLProgram.cpp in Sources */,
@@ -1831,6 +1871,8 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
+					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
+					"\"$(SRCROOT)/../the_third_party/ffmpeg/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -1838,6 +1880,8 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/ffmpeg/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -1871,6 +1915,8 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
+					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
+					"\"$(SRCROOT)/../the_third_party/ffmpeg/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -1878,6 +1924,8 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/ffmpeg/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

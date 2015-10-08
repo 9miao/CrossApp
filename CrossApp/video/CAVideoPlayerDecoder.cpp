@@ -4,7 +4,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include "CAVideoPlayerDecoder.h"
-#include <Foundation/Foundation.h>
+#include "SDL.h"
 
 NS_CC_BEGIN
 
@@ -18,9 +18,7 @@ extern "C"
 #include "libavutil/avutil.h"
 }
 
-
-
-static void FFLog(void* context, int level, const char* pszFormat, va_list args) 
+static void FFLog(void* context, int level, const char* pszFormat, va_list args)
 {
 	char szBuf[kMaxLogLen+1] = { 0 };
     vsnprintf(szBuf, kMaxLogLen, pszFormat, args);

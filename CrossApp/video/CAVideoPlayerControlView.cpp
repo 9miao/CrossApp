@@ -135,7 +135,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 		m_playTimeLabel = CALabel::createWithFrame(DRectZero);
 		m_playTimeLabel->setFontSize(32);
 		m_playTimeLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-		m_playTimeLabel->setFontColor(ccc4(255, 255, 255, 255));
+		m_playTimeLabel->setColor(ccc4(255, 255, 255, 255));
 		newFrame.origin.x = frame.origin.x * 2 + frame.size.width;
 		newFrame.origin.y = frame.origin.y;
 		newFrame.size.width = m_playTimeLabel->getFontSize() * 20;
@@ -184,7 +184,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 		CALabel* title = CALabel::createWithFrame(r);
 		title->setText(m_szTitle);
 		title->setFontSize(_px(42));
-		title->setFontColor(ccc4(255, 255, 255, 255));
+		title->setColor(ccc4(255, 255, 255, 255));
 		title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 		topPanel->addSubview(title);
 	} while (0);

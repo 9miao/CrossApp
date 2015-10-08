@@ -118,7 +118,6 @@
 		3EF48A6C1B7C7E0B00179E69 /* gameswf_video_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF48A081B7C7E0B00179E69 /* gameswf_video_impl.cpp */; };
 		3EF48A6D1B7C7E0B00179E69 /* NOTES.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3EF48A0A1B7C7E0B00179E69 /* NOTES.txt */; };
 		3EF48A6E1B7C7E0B00179E69 /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = 3EF48A0B1B7C7E0B00179E69 /* TODO */; };
-		4E6489181B412CF600643640 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E6489171B412CF600643640 /* libiconv.dylib */; };
 		B01F71671951682600BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71661951682600BA07A6 /* source_material */; };
 		B0621BE51AC3B871005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621BDB1AC3B871005EBCA7 /* fonts */; };
 		B0621E221AC3ECB0005EBCA7 /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */; };
@@ -140,8 +139,6 @@
 		B0DB99281B14531900710982 /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = B0DB99251B14531900710982 /* information.json */; };
 		B0DB99291B14531900710982 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = B0DB99261B14531900710982 /* test.html */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
-		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
-		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -398,11 +395,9 @@
 		3EF48A091B7C7E0B00179E69 /* gameswf_video_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gameswf_video_impl.h; sourceTree = "<group>"; };
 		3EF48A0A1B7C7E0B00179E69 /* NOTES.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTES.txt; sourceTree = "<group>"; };
 		3EF48A0B1B7C7E0B00179E69 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
-		4E6489171B412CF600643640 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		B00CC60D19792FF800A62E4C /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
 		B056375B195276CF00C63FAA /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.ios/CrossApp.xcodeproj; sourceTree = "<group>"; };
-		B0602A411BB00B2600E64AF8 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../CrossApp/the_third_party/SDL/prebuilt/ios/SDL2.framework; sourceTree = "<group>"; };
 		B0621BDB1AC3B871005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootWindow.cpp; path = ../Classes/RootWindow.cpp; sourceTree = "<group>"; };
 		B0621E201AC3ECB0005EBCA7 /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
@@ -436,8 +431,6 @@
 		B0DB99251B14531900710982 /* information.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = information.json; sourceTree = "<group>"; };
 		B0DB99261B14531900710982 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -454,9 +447,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				04033E2E1954849600473756 /* libCrossApp.a in Frameworks */,
-				4E6489181B412CF600643640 /* libiconv.dylib in Frameworks */,
-				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
-				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				B0A030081A8E071D0005CB8F /* CoreBluetooth.framework in Frameworks */,
 				B0CA5A2D1A77A7A000BECD89 /* MediaPlayer.framework in Frameworks */,
 				B0CA5A2B1A77A79900BECD89 /* SystemConfiguration.framework in Frameworks */,
@@ -597,12 +587,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B0602A411BB00B2600E64AF8 /* SDL2.framework */,
-				4E6489171B412CF600643640 /* libiconv.dylib */,
 				B0ABA50B1ACBD3FA00B0DEC5 /* libcurl.a */,
 				B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */,
-				BF170DB412928DE900B8313A /* libz.dylib */,
-				BF170DB212928DE900B8313A /* libxml2.dylib */,
 				B0CA5A2C1A77A7A000BECD89 /* MediaPlayer.framework */,
 				B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */,
 				EB1818D919388005002856FF /* AddressBookUI.framework */,
