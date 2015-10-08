@@ -379,13 +379,6 @@
 		B0E9513A1BC63A4000DBAB6A /* CAVideoPlayerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0E951321BC63A4000DBAB6A /* CAVideoPlayerView.cpp */; };
 		B0E9513B1BC63A4000DBAB6A /* CAVideoPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0E951331BC63A4000DBAB6A /* CAVideoPlayerView.h */; };
 		B0E9514C1BC6437D00DBAB6A /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E9513C1BC63CCB00DBAB6A /* libSDL2.a */; };
-		B0E9514D1BC6439500DBAB6A /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E9513E1BC63CFA00DBAB6A /* libavcodec.a */; };
-		B0E9514E1BC6439500DBAB6A /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E9513F1BC63CFA00DBAB6A /* libavdevice.a */; };
-		B0E9514F1BC6439500DBAB6A /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E951401BC63CFA00DBAB6A /* libavfilter.a */; };
-		B0E951501BC6439500DBAB6A /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E951411BC63CFA00DBAB6A /* libavformat.a */; };
-		B0E951511BC6439500DBAB6A /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E951421BC63CFA00DBAB6A /* libavutil.a */; };
-		B0E951521BC6439500DBAB6A /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E951431BC63CFA00DBAB6A /* libswresample.a */; };
-		B0E951531BC6439500DBAB6A /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E951441BC63CFA00DBAB6A /* libswscale.a */; };
 		B0F61E211B9C402800BDCBAB /* CAEmojiFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */; };
 		B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */; };
 		EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */; };
@@ -780,13 +773,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0E9514D1BC6439500DBAB6A /* libavcodec.a in Frameworks */,
-				B0E9514E1BC6439500DBAB6A /* libavdevice.a in Frameworks */,
-				B0E9514F1BC6439500DBAB6A /* libavfilter.a in Frameworks */,
-				B0E951501BC6439500DBAB6A /* libavformat.a in Frameworks */,
-				B0E951511BC6439500DBAB6A /* libavutil.a in Frameworks */,
-				B0E951521BC6439500DBAB6A /* libswresample.a in Frameworks */,
-				B0E951531BC6439500DBAB6A /* libswscale.a in Frameworks */,
 				B0E9514C1BC6437D00DBAB6A /* libSDL2.a in Frameworks */,
 				B0D7FA7E1B21506B004B2B86 /* libcrypto.a in Frameworks */,
 				B0D7FA7F1B21506B004B2B86 /* libssl.a in Frameworks */,
@@ -2032,7 +2018,7 @@
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/include\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2042,7 +2028,7 @@
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2073,7 +2059,7 @@
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/include\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2083,7 +2069,7 @@
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

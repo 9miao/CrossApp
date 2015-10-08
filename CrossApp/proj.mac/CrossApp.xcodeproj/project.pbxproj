@@ -1872,7 +1872,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/include\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -1881,7 +1881,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/mac\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -1916,7 +1916,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/include\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -1925,7 +1925,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/mac\"",
-					"\"$(SRCROOT)/../the_third_party/ffmpeg/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
