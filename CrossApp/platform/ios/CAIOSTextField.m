@@ -27,14 +27,6 @@
 
 - (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange
 {
-    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
-    {
-        if (self.markedTextRange == nil)
-        {
-            [self deleteBackward];
-        }
-    }
-
     [super setMarkedText:markedText selectedRange:selectedRange];
     [_cadelegate setMarkedText:markedText selectedRange:selectedRange];
 }
@@ -57,9 +49,29 @@
 {
     if ( [[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
     {
-        if (string.length > 0 && self.markedTextRange == nil)
+        if (string.length > 0)
         {
-            [_cadelegate insertText:string];
+            if (![[[UITextInputMode currentInputMode] primaryLanguage] isEqualToString: @"en-US"])
+            {
+                if (self.markedTextRange == nil)
+                {
+                    const char* cString = [string cStringUsingEncoding:NSUTF8StringEncoding];
+                    int ascii = cString[0];
+                    if (    ascii < 65
+                        || (ascii >= 91 && ascii < 97)
+                        || (ascii >= 123 && ascii < 128))
+                    {
+                        [_cadelegate insertText:string];
+                    }
+                    
+                    //NSLog(@"no en-US");
+                }
+            }
+            else
+            {
+                [_cadelegate insertText:string];
+                //NSLog(@"en-US");
+            }
         }
     }
     return YES;
@@ -76,9 +88,10 @@
     [_cadelegate deleteBackward];
 }
 
-- (BOOL)keyboardInputShouldDelete:(UITextField *)textField {
+- (BOOL)keyboardInputShouldDelete:(UITextField *)textField
+{
     BOOL shouldDelete = YES;
-    //[self deleteBackward];
+
     if ([UITextField instancesRespondToSelector:_cmd])
     {
         BOOL (*keyboardInputShouldDelete)(id, SEL, UITextField *) = (BOOL (*)(id, SEL, UITextField *))[UITextField instanceMethodForSelector:_cmd];
