@@ -682,11 +682,11 @@ void CAButton::setTouchLongPress(float dt)
 void CAButton::setContentSize(const CCSize & var)
 {
     CCSize size = var;
-    if (m_eButtonType != CAButtonTypeCustom)
-    {
-        size.height = MAX(size.height, _px(60));
-        size.width = MAX(size.width, _px(60));
-    }
+//    if (m_eButtonType != CAButtonTypeCustom)
+//    {
+//        size.height = MAX(size.height, _px(60));
+//        size.width = MAX(size.width, _px(60));
+//    }
     CAView::setContentSize(size);
     for(int i=0; i<CAControlStateAll; i++)
     {
@@ -702,6 +702,7 @@ void CAButton::setImageOffset(const CCSize& offset)
 {
     m_pImageOffset = offset;
     CCRect rect = m_pImageView->getCenter();
+    rect.origin = m_obContentSize/2;
     rect.origin.x += offset.width;
     rect.origin.y += offset.height;
     m_pImageView->setCenter(rect);
@@ -719,6 +720,7 @@ void CAButton::setTitleOffset(const CCSize& offset)
 {
     m_pTitleOffset = offset;
     CCRect rect = m_pLabel->getCenter();
+    rect.origin = m_obContentSize/2;
     rect.origin.x += offset.width;
     rect.origin.y += offset.height;
     m_pLabel->setCenter(rect);

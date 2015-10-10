@@ -479,6 +479,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_bPCMode);
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CCPoint p_container = m_pContainer->getFrameOrigin();
     CCPoint p_off = CCPointZero;
@@ -680,7 +681,6 @@ void CAScrollView::switchPCMode(bool var)
     m_bPCMode = var;
     this->setMouseScrollWheelEnabled(m_bPCMode);
     this->setPriorityScroll(!m_bPCMode);
-    this->setScrollEnabled(!m_bPCMode);
     if (m_pIndicatorHorizontal)
     {
         m_pIndicatorHorizontal->switchPCMode(m_bPCMode);
@@ -1148,7 +1148,7 @@ CAIndicator::CAIndicator(const CAIndicatorType& type, CAScrollView* var)
 ,m_pMyScrollView(var)
 ,m_bTouch(false)
 {
-    
+    this->setHaveNextResponder(false);
 }
 
 CAIndicator::~CAIndicator()
@@ -1316,7 +1316,7 @@ void CAIndicator::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     CCSize indictor_size = ccpSub(m_obContentSize, size);
     CCPoint indictor_point = ccpSub(point, ccpMult(size, 0.5f));
     CCSize view_size = ccpSub(m_pMyScrollView->getViewSize(), m_pMyScrollView->getBounds().size);
-    CCPoint view_offset = CCPointZero;
+    CCPoint view_offset = m_pMyScrollView->getContentOffset();
     if (m_eType == CAIndicatorTypeHorizontal)
     {
         view_offset.x = indictor_point.x / indictor_size.width * view_size.width;

@@ -1516,7 +1516,12 @@ CCRect CAView::convertRectToNodeSpace(const CrossApp::CCRect &worldRect)
 {
     CCRect ret = worldRect;
     ret.origin = this->convertToNodeSpace(ret.origin);
-    ret.size = CCSizeApplyAffineTransform(ret.size, nodeToParentTransform());
+    
+    for (CAView* v = this; v; v = v->getSuperview())
+    {
+        ret.size.width /= v->getScaleX();
+        ret.size.height /= v->getScaleY();
+    }
     return ret;
 }
 
@@ -1524,7 +1529,11 @@ CCRect CAView::convertRectToWorldSpace(const CrossApp::CCRect &nodeRect)
 {
     CCRect ret = nodeRect;
     ret.origin = this->convertToWorldSpace(ret.origin);
-    ret.size = CCSizeApplyAffineTransform(ret.size, worldToNodeTransform());
+    for (CAView* v = this; v; v = v->getSuperview())
+    {
+        ret.size.width *= v->getScaleX();
+        ret.size.height *= v->getScaleY();
+    }
     return ret;
 }
 

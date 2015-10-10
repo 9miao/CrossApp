@@ -65,6 +65,7 @@ public:
     void buttonCallBack(CAControl* btn,CCPoint point);
     void tempCallBack();
 public:
+    string getSign(std::map<std::string,std::string> key_value);
     CADipSize winSize;
     std::vector<std::string> tempList;
     std::vector<newsMsg > m_msg;

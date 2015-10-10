@@ -524,7 +524,7 @@ void CommonHttpResponseCallBack::onResponseJsonNoCache(CAHttpClient* client, CAH
                 CC_RETURN_IF(viewController->isViewRunning() == false);
             }
             
-            CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n",data.c_str());
+            //CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n",data.c_str());
             
             CSJson::Reader read;
             CSJson::Value root;
