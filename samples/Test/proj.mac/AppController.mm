@@ -3,6 +3,9 @@
 #import "AppController.h"
 #import "AppDelegate.h"
 
+#define Screen_Width 640
+#define Screen_Height 960
+
 @implementation AppController
 
 	static AppDelegate s_sharedApplication;
@@ -14,7 +17,7 @@
 		// create the window
 		// note that using NSResizableWindowMask causes the window to be a little
 		// smaller and therefore ipad graphics are not loaded
-        NSRect rect = NSMakeRect(200, 100, 640, 960);
+        NSRect rect = NSMakeRect(200, 100, Screen_Width/2, Screen_Height/2);
 		window = [[NSWindow alloc] initWithContentRect:rect
 			styleMask:( NSClosableWindowMask | NSTitledWindowMask )
 			backing:NSBackingStoreBuffered
@@ -34,10 +37,11 @@
 		// (isn't there already a shared EAGLView?)
 		glView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
 
+        NSString* title = @"CrossApp-Demo";
 		// set window parameters
 		[window becomeFirstResponder];
 		[window setContentView:glView];
-		[window setTitle:@"CrossApp-Demo"];
+		[window setTitle:[NSString stringWithFormat:@"%@ (%dx%d)", title, Screen_Width, Screen_Height]];
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
 

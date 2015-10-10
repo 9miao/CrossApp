@@ -2,7 +2,7 @@
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
 #include "view/CADrawingPrimitives.h"
-#include "SDL.h"
+//#include "SDL.h"
 
 NS_CC_BEGIN
 
@@ -238,7 +238,7 @@ bool CAVideoPlayerView::isPlaying()
 
 void CAVideoPlayerView::enableAudio(bool on)
 {
-	SDL_PauseAudio(!on);
+//	SDL_PauseAudio(!on);
 }
 
 float CAVideoPlayerView::getDuration()

@@ -123,6 +123,10 @@
 		4E000F441B85706100EBC223 /* CDTempViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E000F401B85706100EBC223 /* CDTempViewController.cpp */; };
 		4E6489181B412CF600643640 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E6489171B412CF600643640 /* libiconv.dylib */; };
 		B01F71671951682600BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71661951682600BA07A6 /* source_material */; };
+		B039AF8D1BC7BFB1002C1FDB /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF8C1BC7BFB1002C1FDB /* libbz2.1.0.tbd */; };
+		B039AF8F1BC7BFB7002C1FDB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF8E1BC7BFB7002C1FDB /* VideoToolbox.framework */; };
+		B039AF911BC7BFC0002C1FDB /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF901BC7BFC0002C1FDB /* CoreVideo.framework */; };
+		B039AF981BC7C52D002C1FDB /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF971BC7C52D002C1FDB /* CoreAudio.framework */; };
 		B0621BE51AC3B871005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621BDB1AC3B871005EBCA7 /* fonts */; };
 		B0621E221AC3ECB0005EBCA7 /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */; };
 		B0A030081A8E071D0005CB8F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */; };
@@ -409,6 +413,12 @@
 		4E6489171B412CF600643640 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		B00CC60D19792FF800A62E4C /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
+		B039AF8C1BC7BFB1002C1FDB /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
+		B039AF8E1BC7BFB7002C1FDB /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		B039AF901BC7BFC0002C1FDB /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		B039AF971BC7C52D002C1FDB /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		B039AF991BC7C539002C1FDB /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		B039AF9B1BC7C58E002C1FDB /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../../CrossApp/the_third_party/SDL/prebuilt/ios/libSDL2.a; sourceTree = "<group>"; };
 		B056375B195276CF00C63FAA /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.ios/CrossApp.xcodeproj; sourceTree = "<group>"; };
 		B0621BDB1AC3B871005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootWindow.cpp; path = ../Classes/RootWindow.cpp; sourceTree = "<group>"; };
@@ -458,6 +468,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B039AF981BC7C52D002C1FDB /* CoreAudio.framework in Frameworks */,
+				B039AF911BC7BFC0002C1FDB /* CoreVideo.framework in Frameworks */,
+				B039AF8F1BC7BFB7002C1FDB /* VideoToolbox.framework in Frameworks */,
+				B039AF8D1BC7BFB1002C1FDB /* libbz2.1.0.tbd in Frameworks */,
 				04033E2E1954849600473756 /* libCrossApp.a in Frameworks */,
 				4E6489181B412CF600643640 /* libiconv.dylib in Frameworks */,
 				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
@@ -606,6 +620,12 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B039AF9B1BC7C58E002C1FDB /* libSDL2.a */,
+				B039AF991BC7C539002C1FDB /* CoreAudioKit.framework */,
+				B039AF971BC7C52D002C1FDB /* CoreAudio.framework */,
+				B039AF901BC7BFC0002C1FDB /* CoreVideo.framework */,
+				B039AF8E1BC7BFB7002C1FDB /* VideoToolbox.framework */,
+				B039AF8C1BC7BFB1002C1FDB /* libbz2.1.0.tbd */,
 				4E6489171B412CF600643640 /* libiconv.dylib */,
 				B0ABA50B1ACBD3FA00B0DEC5 /* libcurl.a */,
 				B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */,
