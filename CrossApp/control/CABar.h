@@ -33,7 +33,7 @@ class CC_DLL CANavigationBar
     
 public:
     
-    static CANavigationBar* create(const CCSize& size = CCSizeZero);
+    static CANavigationBar* create(const DSize& size = DSizeZero);
 
 public:
     
@@ -41,7 +41,7 @@ public:
     
     virtual ~CANavigationBar();
     
-    virtual bool init(const CCSize& size = CCSizeZero);
+    virtual bool init(const DSize& size = DSizeZero);
     
     virtual void onEnterTransitionDidFinish();
     
@@ -75,7 +75,7 @@ protected:
     
     void showRightButton();
     
-    void goBack(CAControl* btn, CCPoint point);
+    void goBack(CAControl* btn, DPoint point);
     
     void updateNavigationBar();
     
@@ -113,7 +113,7 @@ public:
     
     void setBadgeText(const std::string& text);
     
-    virtual void setContentSize(const CCSize& contentSize);
+    virtual void setContentSize(const DSize& contentSize);
     
 protected:
     
@@ -135,7 +135,7 @@ class CC_DLL CATabBar
     
 public:
     
-    static CATabBar* create(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
+    static CATabBar* create(const CAVector<CATabBarItem*>& items, const DSize& size = DSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
     
 	void setItems(const CAVector<CATabBarItem*>& items);
     
@@ -145,7 +145,7 @@ public:
     
     virtual ~CATabBar();
 
-    virtual bool init(const CAVector<CATabBarItem*>& items, const CCSize& size = CCSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
+    virtual bool init(const CAVector<CATabBarItem*>& items, const DSize& size = DSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
     
     CC_PROPERTY(CAImage*, m_pBackGroundImage, BackGroundImage);
     
@@ -167,7 +167,7 @@ public:
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CATabBarItem*>, m_pItems, Items);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, m_cItemSize, ItemSize);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(DSize, m_cItemSize, ItemSize);
     
     CC_SYNTHESIZE_READONLY(int, m_nSelectedIndex, SelectedIndex);
     
@@ -181,7 +181,7 @@ public:
     
     void replaceItemAtIndex(size_t index, CATabBarItem* item);
     
-    const CCRect& getContentViewFrame();
+    const DRect& getContentViewFrame();
 
 protected:
     
@@ -191,7 +191,7 @@ protected:
     
     void showSelectedIndicatorView();
     
-    void setTouchSelected(CAControl* control, CCPoint point);
+    void setTouchSelected(CAControl* control, DPoint point);
 
 protected:
     

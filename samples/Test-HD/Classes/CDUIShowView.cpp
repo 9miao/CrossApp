@@ -22,7 +22,7 @@ ETableViewCell::~ETableViewCell()
     
 }
 
-ETableViewCell* ETableViewCell::create(const std::string& identifier, const CADipRect& _rect)
+ETableViewCell* ETableViewCell::create(const std::string& identifier, const DRect& _rect)
 {
     ETableViewCell* tableViewCell = new ETableViewCell();
     if(tableViewCell&&tableViewCell->initWithReuseIdentifier(identifier))
@@ -47,8 +47,8 @@ void ETableViewCell::selectedTableViewCell()
 
 void ETableViewCell::initWithCell()
 {
-    CADipSize _size = this->getFrame().size;
-    CALabel* test = CALabel::createWithCenter(CADipRect(_size.width/2,
+    DSize _size = this->getFrame().size;
+    CALabel* test = CALabel::createWithCenter(DRect(_size.width/2,
                                                         _size.height/2,
                                                         _size.width,
                                                         _size.height));
@@ -71,7 +71,7 @@ ETableView::~ETableView(){
 bool ETableView::init(const CrossApp::CCRect &rect)
 {
     size = rect.size;
-    p_TableView = CATableView::createWithFrame(CADipRect(0, 0, size.width, size.height));
+    p_TableView = CATableView::createWithFrame(DRect(0, 0, size.width, size.height));
     p_TableView->setAllowsSelection(true);
     p_TableView->setTableViewDelegate(this);
     p_TableView->setTableViewDataSource(this);
@@ -121,11 +121,11 @@ void ETableView::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned
 
 CATableViewCell* ETableView::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
-    CADipSize _size = cellSize;
+    DSize _size = cellSize;
     ETableViewCell* cell = dynamic_cast<ETableViewCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
     if (cell == NULL)
     {
-        cell = ETableViewCell::create("CrossApp", CADipRect(0, 0, _size.width, _size.height));
+        cell = ETableViewCell::create("CrossApp", DRect(0, 0, _size.width, _size.height));
         cell->initWithCell();
     }
     char order[20] = "";
@@ -195,8 +195,8 @@ CDListView::~CDListView()
 
 bool CDListView::init(const CrossApp::CCRect &rect)
 {
-    CADipSize size = rect.size;
-    CAListView *listView = CAListView::createWithCenter(CADipRect(size.width/2,size.height/2,size.width,100));
+    DSize size = rect.size;
+    CAListView *listView = CAListView::createWithCenter(DRect(size.width/2,size.height/2,size.width,100));
     listView->setListViewDelegate(this);
     listView->setListViewDataSource(this);
     listView->setAllowsSelection(true);
@@ -258,12 +258,12 @@ unsigned int CDListView::listViewHeightForIndex(CAListView *listView, unsigned i
 
 CAListViewCell* CDListView::listViewCellAtIndex(CAListView *listView, const CCSize& cellSize, unsigned int index)
 {
-    CADipSize _size = cellSize;
+    DSize _size = cellSize;
     CAListViewCell* cell = (CAListViewCell*)listView->dequeueReusableCellWithIdentifier("ListViewCell");
     if (!cell)
     {
         cell = CAListViewCell::create("ListViewCell");
-        CALabel* test = CALabel::createWithCenter(CADipRect(_size.width/2,
+        CALabel* test = CALabel::createWithCenter(DRect(_size.width/2,
                                                             _size.height/2,
                                                             _size.width,
                                                             _size.height));
@@ -435,7 +435,7 @@ void CDUIShowView::initButtonControl()
 {
     CAButton* btn_l = CAButton::create(CAButtonTypeSquareRect);
     btn_l->setTag(1);
-    btn_l->setCenter(CADipRect(winSize.width/2-80, winSize.height-50, 64, 64));
+    btn_l->setCenter(DRect(winSize.width/2-80, winSize.height-50, 64, 64));
     btn_l->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_white.png")));
     btn_l->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_blue.png")));
     btn_l->addTarget(this, CAControl_selector(CDUIShowView::buttonControlCallBack), CAControlEventTouchDown);
@@ -443,13 +443,13 @@ void CDUIShowView::initButtonControl()
     
     CAButton* btn_r = CAButton::create(CAButtonTypeSquareRect);
     btn_r->setTag(2);
-    btn_r->setCenter(CADipRect(winSize.width/2+80, winSize.height-50, 64, 64));
+    btn_r->setCenter(DRect(winSize.width/2+80, winSize.height-50, 64, 64));
     btn_r->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_white.png")));
     btn_r->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_blue.png")));
     btn_r->addTarget(this, CAControl_selector(CDUIShowView::buttonControlCallBack), CAControlEventTouchDown);
     this->getView()->insertSubview(btn_r,10);
     
-    p_PageViewVec = CAPageView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height-100), CAPageViewDirectionHorizontal);
+    p_PageViewVec = CAPageView::createWithFrame(DRect(0, 0, winSize.width, winSize.height-100), CAPageViewDirectionHorizontal);
     p_PageViewVec->setPageViewDelegate(this);
     p_PageViewVec->setBackGroundColor(CAColor_gray);
     p_PageViewVec->setPageViewDelegate(this);
@@ -526,11 +526,11 @@ void CDUIShowView::showAlertView()
         char tem[10];
         sprintf(tem, "Click-%d",i+1);
         CAButton* btn = CAButton::create(CAButtonTypeRoundedRect);
-        btn->setCenter(CADipRect(winSize.width/2, winSize.height/2, 100, 50));
+        btn->setCenter(DRect(winSize.width/2, winSize.height/2, 100, 50));
         btn->setTitleForState(CAControlStateAll, tem);
         btn->addTarget(this, CAControl_selector(CDUIShowView::alertButtonCallBack), CAControlEventTouchUpInSide);
         
-        CAView* view = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+        CAView* view = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
         view->addSubview(btn);
         view->setColor(CAColor_gray);
         VIEWLIST.pushBack(view);
@@ -579,47 +579,47 @@ void CDUIShowView::showButton()
     VIEWLIST.clear();
     
     CAButton* btn1 = CAButton::create(CAButtonTypeCustom);
-    btn1->setCenter(CADipRect(winSize.width/2, winSize.height/2, 100, 50));
+    btn1->setCenter(DRect(winSize.width/2, winSize.height/2, 100, 50));
     btn1->setTitleForState(CAControlStateNormal, "Noborder");
     btn1->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
     btn1->addTarget(this, CAControl_selector(CDUIShowView::buttonCallBack), CAControlEventTouchUpInSide);
-    CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(btn1);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
     
     CAButton* btn2 = CAButton::create(CAButtonTypeSquareRect);
-    btn2->setCenter(CADipRect(winSize.width/2, winSize.height/2, 200, 50));
+    btn2->setCenter(DRect(winSize.width/2, winSize.height/2, 200, 50));
     btn2->setTitleForState(CAControlStateAll,"SquareRect");
     btn2->addTarget(this, CAControl_selector(CDUIShowView::buttonCallBack), CAControlEventTouchUpInSide);
-    CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(btn2);
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);
     
     CAButton* btn3 = CAButton::create(CAButtonTypeRoundedRect);
-    btn3->setCenter(CADipRect(winSize.width/2, winSize.height/2, 200, 50));
+    btn3->setCenter(DRect(winSize.width/2, winSize.height/2, 200, 50));
     btn3->setTitleForState(CAControlStateAll, "RoundedRect");
     btn3->addTarget(this, CAControl_selector(CDUIShowView::buttonCallBack), CAControlEventTouchUpInSide);
-    CAView* view3 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view3 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view3->addSubview(btn3);
     view3->setColor(CAColor_gray);
     VIEWLIST.pushBack(view3);
     
     CAButton* btn4 = CAButton::create(CAButtonTypeSquareRect);
-    btn4->setCenter(CADipRect(winSize.width/2, winSize.height/2, 200, 50));
+    btn4->setCenter(DRect(winSize.width/2, winSize.height/2, 200, 50));
     btn4->setTitleColorForState(CAControlStateNormal,CAColor_white);
     btn4->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/button_normal.png")));
     btn4->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/button_down.png")));
     btn4->addTarget(this, CAControl_selector(CDUIShowView::buttonCallBack), CAControlEventTouchDown);
-    CAView* view4 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view4 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view4->addSubview(btn4);
     view4->setColor(CAColor_gray);
     VIEWLIST.pushBack(view4);
     
     CAButton* btn5 = CAButton::create(CAButtonTypeSquareRect);
     btn5->setAllowsSelected(true);
-    btn5->setCenter(CADipRect(winSize.width/2, winSize.height/2, 200, 50));
+    btn5->setCenter(DRect(winSize.width/2, winSize.height/2, 200, 50));
     btn5->setTitleForState(CAControlStateNormal, "Normal");
     btn5->setTitleColorForState(CAControlStateNormal, CAColor_white);
     btn5->setTitleForState(CAControlStateSelected, "Selected");
@@ -628,7 +628,7 @@ void CDUIShowView::showButton()
     btn5->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));
     btn5->setBackGroundViewForState(CAControlStateSelected, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_selected.png")));
     btn5->addTarget(this, CAControl_selector(CDUIShowView::buttonCallBack), CAControlEventTouchDown);
-    CAView* view5 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view5 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view5->addSubview(btn5);
     view5->setColor(CAColor_gray);
     VIEWLIST.pushBack(view5);
@@ -665,47 +665,47 @@ void CDUIShowView::showImage()
     
     CAImageView* image1 = CAImageView::createWithImage(CAImage::create("image/h1.png"));
     image1->setFrame(this->getView()->getBounds());
-    CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(image1);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
     
-    CAImageView* image2 = CAImageView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,400,400));
+    CAImageView* image2 = CAImageView::createWithCenter(DRect(winSize.width/2,winSize.height/2,400,400));
     image2->setImageViewScaleType(CAImageViewScaleTypeFitImageXY);
     image2->setImage(CAImage::create("image/h1.png"));
-    CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(image2);
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);
     
-    CAImageView* image3 = CAImageView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,400,400));
+    CAImageView* image3 = CAImageView::createWithCenter(DRect(winSize.width/2,winSize.height/2,400,400));
     image3->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     image3->setImage(CAImage::create("image/h1.png"));
-    CAView* view3 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view3 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view3->addSubview(image3);
     view3->setColor(CAColor_gray);
     VIEWLIST.pushBack(view3);
     
-    CAImageView* image4 = CAImageView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,400,400));
+    CAImageView* image4 = CAImageView::createWithCenter(DRect(winSize.width/2,winSize.height/2,400,400));
     image4->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
     image4->setImage(CAImage::create("image/h1.png"));
-    CAView* view4 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view4 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view4->addSubview(image4);
     view4->setColor(CAColor_gray);
     VIEWLIST.pushBack(view4);
     
-    CAImageView* image5 = CAImageView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,400,400));
+    CAImageView* image5 = CAImageView::createWithCenter(DRect(winSize.width/2,winSize.height/2,400,400));
     image5->setImageViewScaleType(CAImageViewScaleTypeFitViewByVertical);
     image5->setImage(CAImage::create("image/h1.png"));
-    CAView* view5 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view5 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view5->addSubview(image5);
     view5->setColor(CAColor_gray);
     VIEWLIST.pushBack(view5);
     
-    CAImageView* image6 = CAImageView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,400,400));
+    CAImageView* image6 = CAImageView::createWithCenter(DRect(winSize.width/2,winSize.height/2,400,400));
     image6->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
     image6->setImage(CAImage::create("image/h1.png"));
-    CAView* view6 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view6 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view6->addSubview(image6);
     view6->setColor(CAColor_gray);
     VIEWLIST.pushBack(view6);
@@ -718,11 +718,11 @@ void CDUIShowView::showImage()
         img.pushBack(im);
     }
     CAImageView* image7 = CAImageView::createWithImage(CAImage::create("animation/npc_382-1.png"));
-    image7->setCenter(CADipRect(winSize.width/2,winSize.height/2,40,88));
+    image7->setCenter(DRect(winSize.width/2,winSize.height/2,40,88));
     image7->setAnimationImages(img);
     image7->setAnimationDuration(0.2);
     image7->startAnimating();
-    CAView* view7 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view7 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view7->addSubview(image7);
     view7->setColor(CAColor_gray);
     VIEWLIST.pushBack(view7);
@@ -752,7 +752,7 @@ void CDUIShowView::showImageByIndex()
 void CDUIShowView::showScale9Image()
 {
     CAScale9ImageView* s9image = CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded_normal.png"));
-    s9image->setCenter(CADipRect(winSize.width/2,winSize.height/2,200,100));
+    s9image->setCenter(DRect(winSize.width/2,winSize.height/2,200,100));
     this->getView()->addSubview(s9image);
 }
 
@@ -762,49 +762,49 @@ void CDUIShowView::showIndicator()
     pageViewIndex = 1;
     VIEWLIST.clear();
     
-    CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
+    CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
     idc1->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
     idc1->startAnimating();
-    CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(idc1);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
     
-    CAActivityIndicatorView* idc2 = CAActivityIndicatorView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
+    CAActivityIndicatorView* idc2 = CAActivityIndicatorView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
     idc2->setStyle(CAActivityIndicatorViewStyleGrayLarge);
     idc2->startAnimating();
-    CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(idc2);
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);
     
-    CAActivityIndicatorView* idc3 = CAActivityIndicatorView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
+    CAActivityIndicatorView* idc3 = CAActivityIndicatorView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
     idc3->setStyle(CAActivityIndicatorViewStyleWhite);
     idc2->setCycleTime(1.0f);
     idc2->setTimesOneCycle(12);
     idc2->startAnimating();
-    CAView* view3 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view3 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view3->addSubview(idc3);
     view3->setColor(CAColor_gray);
     VIEWLIST.pushBack(view3);
     
-    CAActivityIndicatorView* idc4 = CAActivityIndicatorView::createWithFrame(CADipRect(0, 0,
+    CAActivityIndicatorView* idc4 = CAActivityIndicatorView::createWithFrame(DRect(0, 0,
                                                                                        winSize.width, winSize.height));
     idc4->setStyle(CAActivityIndicatorViewStyleGray);
     idc4->setCycleTime(1.0f);
     idc4->setTimesOneCycle(12);
     idc4->startAnimating();
-    CAView* view4 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view4 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view4->addSubview(idc4);
     view4->setColor(CAColor_gray);
     VIEWLIST.pushBack(view4);
     
-    CAActivityIndicatorView* idc5 = CAActivityIndicatorView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2,
+    CAActivityIndicatorView* idc5 = CAActivityIndicatorView::createWithCenter(DRect(winSize.width/2, winSize.height/2,
                                                                                        100, 100));
     idc5->setStyle(CAActivityIndicatorViewStyleImage);
     idc5->setActivityIndicatorView(CAImageView::createWithImage(CAImage::create("image/indicator2.png")));
     idc5->startAnimating();
-    CAView* view5 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view5 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view5->addSubview(idc5);
     view5->setColor(CAColor_gray);
     VIEWLIST.pushBack(view5);
@@ -834,7 +834,7 @@ void CDUIShowView::showLabel()
     pageViewIndex = 1;
     VIEWLIST.clear();
     for (int i=0; i<showNum; i++) {
-        CALabel* label = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 300, 40));
+        CALabel* label = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/2, 300, 40));
         label->setText("Hello World");
         label->setColor(CAColor_black);
         label->setFontName("fonts/m.ttf");
@@ -856,10 +856,10 @@ void CDUIShowView::showLabel()
             label->setBold(true);
             label->setItalics(true);
             label->setLineSpacing(20);
-            label->setCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width, 200));
+            label->setCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, 200));
         }
         
-        CAView* view = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+        CAView* view = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
         view->addSubview(label);
         view->setColor(CAColor_gray);
         VIEWLIST.pushBack(view);
@@ -874,7 +874,7 @@ void CDUIShowView::showLabelByIndex()
 
 void CDUIShowView::showProgress()
 {
-    progress_value = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/4, 200, 50));
+    progress_value = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
     progress_value->setTag(100);
     progress_value->setText("");
     progress_value->setFontSize(_px(30));
@@ -884,7 +884,7 @@ void CDUIShowView::showProgress()
     this->getView()->addSubview(progress_value);
     
     progress = CAProgress::create();
-    progress->setCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width/2, 0));
+    progress->setCenter(DRect(winSize.width/2, winSize.height/2, winSize.width/2, 0));
     CAScheduler::schedule(schedule_selector(CDUIShowView::progressValueChange), this, 0.01, false);
     
     this->getView()->addSubview(progress);
@@ -907,37 +907,36 @@ void CDUIShowView::showSlider()
     pageViewIndex = 1;
     VIEWLIST.clear();
     
-    sliderValue1 = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/4, 200, 50));
+    sliderValue1 = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
     sliderValue1->setColor(ccc4(51,204,255,255));
     sliderValue1->setText("0");
     sliderValue1->setFontSize(_px(30));
     sliderValue1->setTextAlignment(CATextAlignmentCenter);
     sliderValue1->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
-    CASlider* slider1 = CASlider::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,20));
+    CASlider* slider1 = CASlider::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width/2, 56));
     slider1->addTarget(this, CAControl_selector(CDUIShowView::sliderValueChange));
     slider1->setTag(100);
-    CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(slider1);
     view1->addSubview(sliderValue1);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
     
-    sliderValue2 = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/4, 200, 50));
+    sliderValue2 = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
     sliderValue2->setColor(ccc4(51,204,255,255));
     sliderValue2->setText("0");
     sliderValue2->setFontSize(_px(30));
     sliderValue2->setTextAlignment(CATextAlignmentCenter);
     sliderValue2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
-    CASlider* slider2 = CASlider::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width/2,20));
-    slider2->setTrackHeight(20);
+    CASlider* slider2 = CASlider::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width/2,56));
     slider2->setTag(101);
     slider2->setMaxTrackTintImage(CAImage::create("source_material/ex1.png"));
     slider2->setMinTrackTintImage(CAImage::create("source_material/ex3.png"));
     slider2->setThumbTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
     slider2->addTarget(this, CAControl_selector(CDUIShowView::sliderValueChange));
-    CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(slider2);
     view2->addSubview(sliderValue2);
     view2->setColor(CAColor_gray);
@@ -978,23 +977,23 @@ void CDUIShowView::showSwitch()
     pageViewIndex = 1;
     VIEWLIST.clear();
     
-    CASwitch* customSwitch1 = CASwitch::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 100, 20));
+    CASwitch* customSwitch1 = CASwitch::createWithCenter(DRect(winSize.width/2, winSize.height/2, 100, 20));
     customSwitch1->setTag(100);
     customSwitch1->setIsOn(true, false);
     customSwitch1->addTarget(this, CAControl_selector(CDUIShowView::switchStateChange));
     
-    CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(customSwitch1);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
     
-    CASwitch* customSwitch2 = CASwitch::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 100, 20));
+    CASwitch* customSwitch2 = CASwitch::createWithCenter(DRect(winSize.width/2, winSize.height/2, 100, 20));
     customSwitch2->setTag(101);
     customSwitch2->setIsOn(true, false);
     customSwitch2->setOnImage(CAImage::create("image/Switch_on.png"));
     customSwitch2->setOffImage(CAImage::create("image/Switch_off.png"));
     customSwitch2->addTarget(this, CAControl_selector(CDUIShowView::switchStateChange));
-    CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(customSwitch2);
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);
@@ -1029,7 +1028,7 @@ void CDUIShowView::switchStateChange(CAControl* btn, CCPoint point)
 
 void CDUIShowView::showTextField()
 {
-    CATextField* textField = CATextField::createWithFrame(CADipRect(100, 300, winSize.width-200, 80));
+    CATextField* textField = CATextField::createWithFrame(DRect(100, 300, winSize.width-200, 80));
     textField->setFontSize(_px(40));
     textField->setTag(100);
     textField->setPlaceHolder("Input");
@@ -1044,7 +1043,7 @@ void CDUIShowView::showTextFieldByIndex()
     if (showIndex == 0)
     {
         this->setNavigationBarItem(CANavigationBarItem::create("TextField"));
-        CATextField* textField = CATextField::createWithFrame(CADipRect(100, 150, winSize.width-200, 80));
+        CATextField* textField = CATextField::createWithFrame(DRect(100, 150, winSize.width-200, 80));
         textField->setFontSize(_px(40));
         textField->setTag(100);
         textField->setPlaceHolder("Input");
@@ -1053,7 +1052,7 @@ void CDUIShowView::showTextFieldByIndex()
     else if(showIndex == 1)
     {
         this->setNavigationBarItem(CANavigationBarItem::create("TextField Custem"));
-        CATextField* textField = CATextField::createWithFrame(CADipRect(100, 150, winSize.width-200, 80));
+        CATextField* textField = CATextField::createWithFrame(DRect(100, 150, winSize.width-200, 80));
         textField->setFontSize(_px(40));
         textField->setTag(100);
         textField->setPlaceHolder("Input");
@@ -1064,7 +1063,7 @@ void CDUIShowView::showTextFieldByIndex()
 
 void CDUIShowView::showTextView()
 {
-    CATextView* textView = CATextView::createWithFrame(CADipRect(100, 150, winSize.width-200, 300));
+    CATextView* textView = CATextView::createWithFrame(DRect(100, 150, winSize.width-200, 300));
     textView->setPlaceHolder("TextView");
     //textView->setSpaceHolderColor(CAColor_blueStyle);
     //textView->setTextColor(CAColor_green);
@@ -1086,7 +1085,7 @@ void CDUIShowView::showSegmentedControl()
     pageViewIndex = 1;
     VIEWLIST.clear();
     
-    CASegmentedControl* segment1 = CASegmentedControl::createWithCenter(CADipRect(winSize.width/2,
+    CASegmentedControl* segment1 = CASegmentedControl::createWithCenter(DRect(winSize.width/2,
                                                              winSize.height/2,
                                                              winSize.width/2,
                                                              50), 3);
@@ -1102,12 +1101,12 @@ void CDUIShowView::showSegmentedControl()
     segment1->addTarget(this, CASegmentedControl_selector(CDUIShowView::segmentCallback));
     segment1->setSelectedAtIndex(0);
     
-    CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(segment1);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
     
-    CASegmentedControl* segment2 = CASegmentedControl::createWithCenter(CADipRect(winSize.width/2,
+    CASegmentedControl* segment2 = CASegmentedControl::createWithCenter(DRect(winSize.width/2,
                                                                                  winSize.height/2,
                                                                                  winSize.width/2,
                                                                                  50), 3);
@@ -1126,7 +1125,7 @@ void CDUIShowView::showSegmentedControl()
     segment2->setTintColor(ccc4(44, 178, 93, 255));
     segment2->setSelectedAtIndex(0);
     
-    CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(segment2);
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);
@@ -1167,15 +1166,15 @@ void CDUIShowView::showTabBar()
     item.push_back(item2);
     item.push_back(item3);
     
-    CATabBar* tabBar = CATabBar::create(item,CADipSize(winSize.width, 100));
-    tabBar->setFrameOrigin(CADipPoint(0, winSize.height-200));
+    CATabBar* tabBar = CATabBar::create(item,DSize(winSize.width, 100));
+    tabBar->setFrameOrigin(DPoint(0, winSize.height-200));
     tabBar->showSelectedIndicator();
     tabBar->setTitleColorForNormal(CAColor_yellow);
     tabBar->setTitleColorForSelected(CAColor_orange);
     tabBar->setTag(100);
     tabBar->setSelectedAtIndex(0);
     
-    CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(tabBar);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
@@ -1189,8 +1188,8 @@ void CDUIShowView::showTabBar()
     it1.push_back(item5);
     it1.push_back(item6);
     
-    CATabBar* tabBar1 = CATabBar::create(it1,CADipSize(winSize.width, 100));
-    tabBar1->setFrameOrigin(CADipPoint(0, winSize.height-200));
+    CATabBar* tabBar1 = CATabBar::create(it1,DSize(winSize.width, 100));
+    tabBar1->setFrameOrigin(DPoint(0, winSize.height-200));
     tabBar1->setTitleColorForNormal(CAColor_yellow);
     tabBar1->setTitleColorForSelected(CAColor_orange);
     tabBar1->setBackGroundImage(CAImage::create("image/tab_news_bg.png"));
@@ -1198,7 +1197,7 @@ void CDUIShowView::showTabBar()
     tabBar1->setTag(100);
     tabBar1->setSelectedAtIndex(0);
     
-    CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(tabBar1);
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);
@@ -1217,12 +1216,12 @@ void CDUIShowView::showPageView()
     _view.pushBack(view2);
     _view.pushBack(view3);
     
-    p_pageView = CAPageView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width, winSize.height), CAPageViewDirectionHorizontal);
+    p_pageView = CAPageView::createWithCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, winSize.height), CAPageViewDirectionHorizontal);
     p_pageView->setViews(_view);
     p_pageView->setPageViewDelegate(this);
     this->getView()->addSubview(p_pageView);
     
-    pageControl = CAPageControl::createWithCenter(CADipRect(winSize.width/2, 50, 100, 50));
+    pageControl = CAPageControl::createWithCenter(DRect(winSize.width/2, 50, 100, 50));
     pageControl->setNumberOfPages(_view.size());
     pageControl->setPageIndicatorTintColor(CAColor_gray);
     pageControl->setCurrentPageIndicatorTintColor(CAColor_green);
@@ -1262,7 +1261,7 @@ void CDUIShowView::reshapeViewRectDidFinish()
 //TableView
 void CDUIShowView::showTableView()
 {
-    p_TableView = CATableView::createWithFrame(CADipRect(0, 0, winSize.width-50, winSize.height));
+    p_TableView = CATableView::createWithFrame(DRect(0, 0, winSize.width-50, winSize.height));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
     p_TableView->setAllowsSelection(true);
@@ -1272,7 +1271,7 @@ void CDUIShowView::showTableView()
     this->getView()->addSubview(p_TableView);
     
     
-    ETableView* p_TableView1 = ETableView::createWithFrame(CADipRect(winSize.width-50, 0, 50, winSize.height));
+    ETableView* p_TableView1 = ETableView::createWithFrame(DRect(winSize.width-50, 0, 50, winSize.height));
     p_TableView1->setETableViewDelegate(this);
     this->getView()->addSubview(p_TableView1);
 }
@@ -1280,7 +1279,7 @@ void CDUIShowView::showTableView()
 void CDUIShowView::etableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
     //CCLog("ssss====%d",row);
-    p_TableView->setContentOffset(CADipPoint(0,313*row), false);
+    p_TableView->setContentOffset(DPoint(0,313*row), false);
 }
 
 void CDUIShowView::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
@@ -1295,16 +1294,16 @@ void CDUIShowView::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsign
 
 CATableViewCell* CDUIShowView::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
-    CADipSize _size = cellSize;
+    DSize _size = cellSize;
     CATableViewCell* cell = dynamic_cast<CATableViewCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
     if (cell == NULL)
     {
         cell = CATableViewCell::create("CrossApp");
-        CAImageView* image = CAImageView::createWithCenter(CADipRect(50, _size.height/2, 96, 96));
+        CAImageView* image = CAImageView::createWithCenter(DRect(50, _size.height/2, 96, 96));
         image->setImage(CAImage::create("source_material/second_2.png"));
         cell->addSubview(image);
         
-        CALabel* cellText = CALabel::createWithCenter(CADipRect(200, _size.height/2, _size.width/2, _size.height));
+        CALabel* cellText = CALabel::createWithCenter(DRect(200, _size.height/2, _size.width/2, _size.height));
         cellText->setTag(100);
         cellText->setFontSize(_px(30));
         cellText->setTextAlignment(CATextAlignmentCenter);
@@ -1324,8 +1323,8 @@ CAView* CDUIShowView::tableViewSectionViewForHeaderInSection(CATableView* table,
     std::string head = sectionTitle.at(section);
     CAView* view = CAView::createWithColor(CAColor_gray);
     
-    CADipSize _size = viewSize;
-    CALabel* header = CALabel::createWithCenter(CADipRect(50, _size.height/2, _size.width/2, _size.height));
+    DSize _size = viewSize;
+    CALabel* header = CALabel::createWithCenter(DRect(50, _size.height/2, _size.width/2, _size.height));
     header->setText(head);
     header->setFontSize(_px(30));
     header->setColor(CAColor_white);
@@ -1369,10 +1368,10 @@ unsigned int CDUIShowView::tableViewHeightForFooterInSection(CATableView* table,
 
 void CDUIShowView::showListView()
 {
-    CDListView* listview1 = CDListView::createWithFrame(CADipRect(0,0,winSize.width,100));
+    CDListView* listview1 = CDListView::createWithFrame(DRect(0,0,winSize.width,100));
     this->getView()->addSubview(listview1);
     
-    p_ListView = CAListView::createWithFrame(CADipRect(0,100,winSize.width,winSize.height-100));
+    p_ListView = CAListView::createWithFrame(DRect(0,100,winSize.width,winSize.height-100));
     p_ListView->setListViewDelegate(this);
     p_ListView->setListViewDataSource(this);
     p_ListView->setAllowsSelection(true);
@@ -1406,13 +1405,13 @@ unsigned int CDUIShowView::listViewHeightForIndex(CAListView *listView, unsigned
 
 CAListViewCell* CDUIShowView::listViewCellAtIndex(CAListView *listView, const CCSize& cellSize, unsigned int index)
 {
-    CADipSize _size = cellSize;
+    DSize _size = cellSize;
     CAListViewCell* cell = (CAListViewCell*)listView->dequeueReusableCellWithIdentifier("ListViewCell");
     if (cell==NULL)
     {
         cell = CAListViewCell::create("ListViewCell");
         
-        CALabel* test = CALabel::createWithCenter(CADipRect(100,
+        CALabel* test = CALabel::createWithCenter(DRect(100,
                                                             _size.height/2,
                                                             _size.width,
                                                             _size.height));
@@ -1423,7 +1422,7 @@ CAListViewCell* CDUIShowView::listViewCellAtIndex(CAListView *listView, const CC
         test->setTag(100);
         cell->addSubview(test);
         
-        CAButton* btn = CAButton::createWithCenter(CADipRect(_size.width-100, _size.height/2, 100, 50), CAButtonTypeSquareRect);
+        CAButton* btn = CAButton::createWithCenter(DRect(_size.width-100, _size.height/2, 100, 50), CAButtonTypeSquareRect);
         btn->setTitleForState(CAControlStateNormal, "btn");
         btn->setTag(200);
         cell->addSubview(btn);
@@ -1439,7 +1438,7 @@ CAListViewCell* CDUIShowView::listViewCellAtIndex(CAListView *listView, const CC
 
 void CDUIShowView::showWebView()
 {
-    CAWebView* web = CAWebView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,winSize.height/2));
+    CAWebView* web = CAWebView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,winSize.height/2));
     web->loadURL("http://crossapp.9miao.com");
     this->getView()->addSubview(web);
 }
@@ -1458,7 +1457,7 @@ void CDUIShowView::showCollectionView()
     headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
     footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     
-    p_Conllection = CACollectionView::createWithFrame(CADipRect(0, 0, winSize.width, winSize.height));
+    p_Conllection = CACollectionView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
     p_Conllection->setAllowsSelection(true);
     //p_Conllection->setAllowsMultipleSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
@@ -1488,18 +1487,18 @@ CACollectionViewCell* CDUIShowView::collectionCellAtIndex(CACollectionView *coll
         return NULL;
     }
     
-    CADipSize _size = cellSize;
+    DSize _size = cellSize;
     CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
     if (p_Cell == NULL)
     {
         p_Cell = CACollectionViewCell::create("CrossApp");
         
-        CAView* itemImage = CAView::createWithFrame(CADipRect(0, 0, _size.width, _size.height));
+        CAView* itemImage = CAView::createWithFrame(DRect(0, 0, _size.width, _size.height));
         itemImage->setTag(99);
         p_Cell->addSubview(itemImage);
         
-        CADipSize itemSize = itemImage->getBounds().size;
-        CALabel* itemText = CALabel::createWithCenter(CADipRect(itemSize.width/2, itemSize.height/2, 150, 40));
+        DSize itemSize = itemImage->getBounds().size;
+        CALabel* itemText = CALabel::createWithCenter(DRect(itemSize.width/2, itemSize.height/2, 150, 40));
         itemText->setTag(100);
         itemText->setFontSize(_px(29));
         itemText->setTextAlignment(CATextAlignmentCenter);
@@ -1563,22 +1562,43 @@ void CDUIShowView::refreshData(float interval)
 
 void CDUIShowView::showScrollView()
 {
-    p_ScrollView = CAScrollView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
+    p_ScrollView = CAScrollView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
     p_ScrollView->setMinimumZoomScale(0.2f);
     p_ScrollView->setMaximumZoomScale(5.0f);
     this->getView()->addSubview(p_ScrollView);
     
-    CADipSize _size = p_ScrollView->getBounds().size;
+    DSize _size = p_ScrollView->getBounds().size;
     p_imageView = CAImageView::createWithImage(CAImage::create("image/h1.png"));
-    p_imageView->setCenter(CADipRect(_size.width/2, _size.height/2,800,1200));
+    p_imageView->setCenter(DRect(_size.width/2, _size.height/2,800,1200));
     p_ScrollView->addSubview(p_imageView);
 
 }
 
 void CDUIShowView::showFlashView()
-{
+{	//http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4
+//    //mnt/sdcard/video.mp4
+//    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");// image / 11.avi");// video.mp4");
+//    //CAVideoPlayerController* pv = CAVideoPlayerController::createWithPath(path.c_str(), "asdas");
+//    //CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "asdas");
+//    
+//    DRect frame = getView()->getFrame();
+//    
+//    //frame.origin.x = frame.size.width / 2;
+//    //frame.origin.y = frame.size.height / 2;
+//    
+//    //	CAView* pView = CAView::createWithFrame(frame);
+//    //	pView->setColor(ccc4(255, 0, 255, 255));
+//    CAVideoPlayerControlView* pView = CAVideoPlayerControlView::createWithFrame(frame);
+//    //	pView->setColor(ccc4(255, 0, 255, 255));
+//    
+//    pView->initWithPath(path);
+//    //	pView->initWithPath("D:\\XiGua Yingshi\\x.rmvb", false);
+//    this->getView()->addSubview(pView);
+//    //	pView->play();
+//    
+//    return;
     CrossApp::extension::CAFlashView* swfBg = CrossApp::extension::CAFlashView::createWithFlash(CrossApp::extension::CAFlash::createWithFilePath("image/swfWK.swf"));
-    swfBg->setFrame(CADipRect(100, 100, winSize.width/2, winSize.height/2));
+    swfBg->setFrame(DRect(100, 100, winSize.width/2, winSize.height/2));
     swfBg->runAnimation();
     swfBg->setRepeatForever(true);
     this->getView()->addSubview(swfBg);
@@ -1590,56 +1610,56 @@ void CDUIShowView::showDatePickerView()
     pageViewIndex = 1;
     VIEWLIST.clear();
     
-    p_pickerView = CAPickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280));
+    p_pickerView = CAPickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280));
     p_pickerView->setPickerViewDelegate(this);
     p_pickerView->setPickerViewDataSource(this);
     p_pickerView->setFontSizeNormal(_px(40));
     p_pickerView->setFontSizeSelected(_px(40));
     p_pickerView->reloadAllComponents();
     
-    city_value = CALabel::createWithFrame(CADipRect(0, 100, winSize.width, 40));
+    city_value = CALabel::createWithFrame(DRect(0, 100, winSize.width, 40));
     city_value->setText(UTF8("天津市"));
     city_value->setColor(CAColor_black);
     city_value->setFontSize((_px(28)));
     city_value->setTextAlignment(CATextAlignmentCenter);
     city_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
-    CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(p_pickerView);
     view1->addSubview(city_value);
     view1->setColor(CAColor_white);
     VIEWLIST.pushBack(view1);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     
-    CADatePickerView* dpv = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDate);
+    CADatePickerView* dpv = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDate);
     //dpv->setDate(2004, 2, 16, false);
     dpv->setDelegate(this);
 
-    CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(dpv);
     view2->setColor(CAColor_white);
     VIEWLIST.pushBack(view2);
     
-    CADatePickerView* dpv3 = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDateAndTime);
+    CADatePickerView* dpv3 = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDateAndTime);
     dpv3->setDelegate(this);
     
-    CAView* view3 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view3 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view3->addSubview(dpv3);
     view3->setColor(CAColor_white);
     VIEWLIST.pushBack(view3);
     
-    CADatePickerView* dpv4 = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeTime);
+    CADatePickerView* dpv4 = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeTime);
     dpv4->setDelegate(this);
     
-    CAView* view4 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view4 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view4->addSubview(dpv4);
     view4->setColor(CAColor_white);
     VIEWLIST.pushBack(view4);
     
-    CADatePickerView* dpv5 = CADatePickerView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeCountDownTimer);
+    CADatePickerView* dpv5 = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeCountDownTimer);
     dpv5->setDelegate(this);
     
-    CAView* view5 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view5 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view5->addSubview(dpv5);
     view5->setColor(CAColor_white);
     VIEWLIST.pushBack(view5);
@@ -1703,42 +1723,42 @@ void CDUIShowView::showAnimation()
     //Animation 1
     heart_index = 0;
     CAButton* btn1 = CAButton::create(CAButtonTypeRoundedRect);
-    btn1->setCenter(CADipRect(winSize.width/2, winSize.height/4, 200, 50));
+    btn1->setCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
     btn1->setTitleForState(CAControlStateNormal, "Play Animation");
     btn1->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
     btn1->setTag(100);
     btn1->addTarget(this, CAControl_selector(CDUIShowView::doAction), CAControlEventTouchUpInSide);
-    animation_1_view = CAImageView::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, 28, 24));
+    animation_1_view = CAImageView::createWithCenter(DRect(winSize.width/2, winSize.height/2, 28, 24));
     animation_1_view->setImage(CAImage::create("image/heart1.png"));
     
-    CAView* view1 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(btn1);
     view1->addSubview(animation_1_view);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
 
     //Animation 2
-    CAImageView* bg = CAImageView::createWithCenter(CADipRect(winSize.width/2,winSize.height/2,winSize.width,80));
+    CAImageView* bg = CAImageView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,80));
     bg->setImage(CAImage::create("image/navbg.jpg"));
     
-    animation_2_textfield = CATextField::createWithFrame(CADipRect(90,winSize.height/2-25,100,50));
+    animation_2_textfield = CATextField::createWithFrame(DRect(90,winSize.height/2-25,100,50));
     animation_2_textfield->setFontSize(_px(40));
     animation_2_textfield->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
     animation_2_textfield->setVisible(false);
     
-    animation_2_btn_search = CAButton::createWithCenter(CADipRect(70,winSize.height/2,56,48), CAButtonTypeCustom);
+    animation_2_btn_search = CAButton::createWithCenter(DRect(70,winSize.height/2,56,48), CAButtonTypeCustom);
     animation_2_btn_search->setImageForState(CAControlStateNormal, CAImage::create("image/search_btn.png"));
     animation_2_btn_search->addTarget(this, CAControl_selector(CDUIShowView::doAction), CAControlEventTouchUpInSide);
     animation_2_btn_search->setTag(201);
     
-    animation_2_btn_cancel = CAButton::createWithCenter(CADipRect(winSize.width-60,winSize.height/2,100,50), CAButtonTypeCustom);
+    animation_2_btn_cancel = CAButton::createWithCenter(DRect(winSize.width-60,winSize.height/2,100,50), CAButtonTypeCustom);
     animation_2_btn_cancel->setTitleForState(CAControlStateNormal, "Cancel");
     animation_2_btn_cancel->setTag(202);
     animation_2_btn_cancel->setTitleColorForState(CAControlStateNormal, CAColor_white);
     animation_2_btn_cancel->addTarget(this, CAControl_selector(CDUIShowView::doAction), CAControlEventTouchUpInSide);
     animation_2_btn_cancel->setVisible(false);
     
-    CAView* view2 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(bg);
     view2->addSubview(animation_2_textfield);
     view2->addSubview(animation_2_btn_search);
@@ -1746,16 +1766,16 @@ void CDUIShowView::showAnimation()
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);
     //Animation 3
-    animation_3_imageview = CAImageView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height));
+    animation_3_imageview = CAImageView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
     animation_3_imageview->setImage(CAImage::create("image/bg1.jpg"));
     
     CAButton* btn3 = CAButton::create(CAButtonTypeRoundedRect);
-    btn3->setCenter(CADipRect(winSize.width/2, winSize.height/4, 200, 50));
+    btn3->setCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
     btn3->setTitleForState(CAControlStateNormal, "Play Animation");
     btn3->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
     btn3->setTag(300);
     btn3->addTarget(this, CAControl_selector(CDUIShowView::doAction), CAControlEventTouchUpInSide);
-    CAView* view3 = CAView::createWithFrame(CADipRect(0,0,winSize.width,winSize.height-100));
+    CAView* view3 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view3->addSubview(animation_3_imageview);
     view3->addSubview(btn3);
     view3->setColor(CAColor_gray);
@@ -1787,29 +1807,29 @@ void CDUIShowView::doAction(CAControl* btn,CCPoint point)
         animation_2_textfield->setVisible(true);
         animation_2_btn_cancel->setVisible(false);
         animation_2_textfield->setAlpha(0);
-        animation_2_textfield->setFrame(CADipRect(90,winSize.height/2-25,100,50));
+        animation_2_textfield->setFrame(DRect(90,winSize.height/2-25,100,50));
         
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
-        animation_2_textfield->setFrame(CADipRect(90,winSize.height/2-25,winSize.width-200,50));
+        animation_2_textfield->setFrame(DRect(90,winSize.height/2-25,winSize.width-200,50));
         animation_2_textfield->setAlpha(1);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CDUIShowView::endAction));
         CAViewAnimation::commitAnimations();
     }else if(tag==202){
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
-        animation_2_textfield->setFrame(CADipRect(90,winSize.height/2-25,0,50));
+        animation_2_textfield->setFrame(DRect(90,winSize.height/2-25,0,50));
         animation_2_textfield->setAlpha(0);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CDUIShowView::endAction));
         CAViewAnimation::commitAnimations();
     }else if(tag==300){
-        animation_3_imageview->setImageRect(CADipRect(0,0,100,winSize.height));
-        animation_3_imageview->setFrame(CADipRect(0,0,100,winSize.height));
+        animation_3_imageview->setImageRect(DRect(0,0,100,winSize.height));
+        animation_3_imageview->setFrame(DRect(0,0,100,winSize.height));
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.8f);
         CAViewAnimation::setAnimationRepeatAutoreverses(true);
-        animation_3_imageview->setImageRect(CADipRect(winSize.width-100,0,100,winSize.height));
-        animation_3_imageview->setFrame(CADipRect(winSize.width-100,0,100,winSize.height));
+        animation_3_imageview->setImageRect(DRect(winSize.width-100,0,100,winSize.height));
+        animation_3_imageview->setFrame(DRect(winSize.width-100,0,100,winSize.height));
         CAViewAnimation::commitAnimations();
     }
 }
@@ -1826,7 +1846,7 @@ void CDUIShowView::endAction()
 
 void CDUIShowView::showStepper()
 {
-    step_value = CALabel::createWithCenter(CADipRect(winSize.width/2, winSize.height/2, winSize.width, 40));
+    step_value = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, 40));
     step_value->setText("step_value:0");
     step_value->setColor(CAColor_black);
     step_value->setFontSize((_px(28)));
@@ -1834,7 +1854,7 @@ void CDUIShowView::showStepper()
     step_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     this->getView()->addSubview(step_value);
     
-    step = CAStepper::createWithCenter(CADipRect(winSize.width/2,winSize.height/4*3,0,0));
+    step = CAStepper::createWithCenter(DRect(winSize.width/2,winSize.height/4*3,0,0));
     //step->setWraps(true);//是否循环,默认循环
     step->setMinValue(0);
     step->setMaxValue(50);
@@ -1861,7 +1881,7 @@ void CDUIShowView::stepperCallBack(CAControl *btn, CCPoint point)
 void CDUIShowView::showGifView()
 {
     CAGifView* swfBg = CAGifView::createWithGif(CAGif::createWithFilePath("image/gifview1.gif"));
-    swfBg->setFrame(CADipRect(100, 100, winSize.width/2, winSize.height/2));
+    swfBg->setFrame(DRect(100, 100, winSize.width/2, winSize.height/2));
     swfBg->setRepeatForever(true);
     this->getView()->addSubview(swfBg);
 }
@@ -1887,7 +1907,7 @@ void CDUIShowView::onVideoPlayerButtonBack()
 void CDUIShowView::showRenderImage()
 {
     CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
-    btn->setCenter(CADipRect(winSize.width/2, winSize.height/2, 100, 50));
+    btn->setCenter(DRect(winSize.width/2, winSize.height/2, 100, 50));
     btn->setTitleForState(CAControlStateNormal, "Click");
     btn->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
     btn->setTag(1);
@@ -1907,7 +1927,7 @@ void CDUIShowView::renderCallBack(CAControl* control, CCPoint point)
         CARenderImage* rm = CARenderImage::create(_px(winSize.width-100), _px(winSize.width-100));
         rm->printscreenWithView(m_clvImage);
         
-        renderImage = CAView::createWithFrame(CADipRect(50,winSize.height/4,winSize.width-100,winSize.width-100));
+        renderImage = CAView::createWithFrame(DRect(50,winSize.height/4,winSize.width-100,winSize.width-100));
         this->getView()->addSubview(renderImage);
         
         m_clvImage->setClippingEnabled(false);
@@ -1922,7 +1942,7 @@ void CDUIShowView::renderCallBack(CAControl* control, CCPoint point)
             render_btn = NULL;
         }
         
-        CAImageView* imageView = CAImageView::createWithFrame(CADipRect(0,0,winSize.width-100,winSize.width-100));
+        CAImageView* imageView = CAImageView::createWithFrame(DRect(0,0,winSize.width-100,winSize.width-100));
         imageView->setImage(rm->getImageView()->getImage());
         renderImage->addSubview(imageView);
         
@@ -1967,7 +1987,7 @@ void CDUIShowView::getSelectedImage(CAImage *image)
 {
     int index = 0;
     
-    CADipRect scrollRect;
+    DRect scrollRect;
     scrollRect.origin.x = 50;
     scrollRect.origin.y = winSize.height/4;
     scrollRect.size.width = winSize.width-100;
@@ -1987,8 +2007,8 @@ void CDUIShowView::getSelectedImage(CAImage *image)
         temp_mini = scrollRect.size.width/image->getContentSize().width;
     }
     CAScrollView* scrollView = CAScrollView::createWithFrame(m_clvImage->getBounds());
-    scrollView->setViewSize(CADipSize(image->getContentSize()));
-    scrollView->setContentOffset(CADipPoint(0,winSize.height/4), false);
+    scrollView->setViewSize(DSize(image->getContentSize()));
+    scrollView->setContentOffset(DPoint(0,winSize.height/4), false);
     scrollView->setMinimumZoomScale(temp_mini);
     scrollView->setMaximumZoomScale(2.5f);
     scrollView->setBackGroundColor(CAColor_clear);
@@ -1998,8 +2018,8 @@ void CDUIShowView::getSelectedImage(CAImage *image)
     scrollView->setDisplayRange(true);
     m_clvImage->addSubview(scrollView);
     
-    CADipRect rect;
-    rect.origin = CADipPointZero;
+    DRect rect;
+    rect.origin = DPointZero;
     rect.size = scrollView->getViewSize();
     CAImageView* imv = CAImageView::createWithFrame(rect);
     imv->setImage(image);
@@ -2015,7 +2035,7 @@ void CDUIShowView::getSelectedImage(CAImage *image)
     m_clv->setTouchEnabled(false);
     this->getView()->addSubview(m_clv);
 
-    CADipRect ivRect;
+    DRect ivRect;
     ivRect.size = winSize;
     ivRect.origin = ccpMult(scrollRect.origin, -1);
     CAView* iv = CAView::createWithColor(ccc4(0,0,0,128));
@@ -2023,7 +2043,7 @@ void CDUIShowView::getSelectedImage(CAImage *image)
     m_clv->addSubview(iv);
     
     render_btn = CAButton::create(CAButtonTypeSquareRect);
-    render_btn->setCenter(CADipRect(winSize.width/2, winSize.height-100, 100, 50));
+    render_btn->setCenter(DRect(winSize.width/2, winSize.height-100, 100, 50));
     render_btn->setTitleForState(CAControlStateNormal, "Click");
     render_btn->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
     render_btn->addTarget(this, CAControl_selector(CDUIShowView::renderCallBack), CAControlEventTouchUpInSide);

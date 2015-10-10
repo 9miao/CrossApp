@@ -1,10 +1,10 @@
 
 #include "CAThread.h"
-
+#ifndef usleep
+#include "libwebsockets.h"
+#endif
 
 NS_CC_BEGIN
-
-
 
 CALock::CALock()
 {

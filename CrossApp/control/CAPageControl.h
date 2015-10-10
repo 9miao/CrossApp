@@ -34,12 +34,12 @@ public:
     virtual ~CAPageControl();
     
     static CAPageControl* create();
-    static CAPageControl* createWithFrame(const CCRect& rect);
-    static CAPageControl* createWithCenter(const CCRect& rect);
+    static CAPageControl* createWithFrame(const DRect& rect);
+    static CAPageControl* createWithCenter(const DRect& rect);
     
     virtual bool init();
-    virtual bool initWithFrame(const CCRect& rect);
-    virtual bool initWithCenter(const CCRect& rect);
+    virtual bool initWithFrame(const DRect& rect);
+    virtual bool initWithCenter(const DRect& rect);
     
     virtual void onEnter();
     virtual void onExit();
@@ -61,7 +61,7 @@ public:
     void updateCurrentPageDisplay();
     
     // returns minimum size required to display dots for given page count. can be used to size control if page count could change
-    CCSize sizeForNumberOfPages(int pageCount);
+    DSize sizeForNumberOfPages(int pageCount);
     
     CC_SYNTHESIZE(CAColor4B, m_pageIndicatorTintColor, PageIndicatorTintColor);
     CC_SYNTHESIZE(CAColor4B, m_currentPageIndicatorTintColor, CurrentPageIndicatorTintColor);

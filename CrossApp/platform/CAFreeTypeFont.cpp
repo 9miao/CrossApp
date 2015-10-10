@@ -68,13 +68,13 @@ void CAFreeTypeFont::destroyAllFontBuff()
 }
 
 
-CAImage* CAFreeTypeFont::initWithString(const std::string& pText, const std::string& pFontName, int nSize, int inWidth, int inHeight,
+CAImage* CAFreeTypeFont::initWithString(const std::string& pText, const CAColor4B& fontColor, const std::string& pFontName, int nSize, int inWidth, int inHeight,
 	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, std::vector<TextViewLineInfo>* pLinesText)
 {
 	if (pText.empty())
 		return NULL;
 	
-	std::u16string cszTemp;
+	std::u32string cszTemp;
 	std::string cszNewText = pText;
 
 	s_TempFont.initTempTypeFont(nSize);
@@ -86,6 +86,12 @@ _AgaginInitGlyphs:
 	m_bBold = bBold;
 	m_bItalics = bItalics;
 	m_bUnderLine = bUnderLine;
+	m_cFontColor = fontColor;
+
+	if (hasEmoji(pText))
+	{
+		m_bItalics = false;
+	}
 	
 	FT_Error error = initGlyphs(cszNewText.c_str());
 	if (error) return NULL;
@@ -122,7 +128,7 @@ _AgaginInitGlyphs:
 			cszTemp.erase(cszTemp.end() - 1);
 
 			cszNewText.clear();
-			StringUtils::UTF16ToUTF8(cszTemp, cszNewText);
+			StringUtils::UTF32ToUTF8(cszTemp, cszNewText);
 			if (!cszNewText.empty())
 			{
 				cszNewText += "...";
@@ -153,10 +159,8 @@ _AgaginInitGlyphs:
 		eAlign = kAlignTopLeft;
 	}
 
-	bool emoji = hasEmoji();
-
 	int width = 0, height = 0;
-	unsigned char* pData = getBitmap(eAlign, emoji, &width, &height);
+	unsigned char* pData = getBitmap(eAlign, &width, &height);
 	if (pData == NULL)
 	{
 		return NULL;
@@ -168,7 +172,7 @@ _AgaginInitGlyphs:
 	m_bUnderLine = false;
 
 	CAImage* image = new CAImage();
-	if (!image->initWithRawData(pData, emoji ? CAImage::PixelFormat_RGBA8888 : CAImage::PixelFormat_A8, width, height))
+	if (!image->initWithRawData(pData, CAImage::PixelFormat_RGBA8888, width, height))
 	{
         CC_SAFE_RELEASE_NULL(image);
 	}
@@ -178,7 +182,7 @@ _AgaginInitGlyphs:
 	return image;
 }
 
-unsigned char* CAFreeTypeFont::getBitmap(ETextAlign eAlignMask, bool emoji, int* outWidth, int* outHeight)
+unsigned char* CAFreeTypeFont::getBitmap(ETextAlign eAlignMask, int* outWidth, int* outHeight)
 {
     int lineNumber = 0;
     int totalLines = (int)m_lines.size();
@@ -186,12 +190,8 @@ unsigned char* CAFreeTypeFont::getBitmap(ETextAlign eAlignMask, bool emoji, int*
     m_width = m_inWidth ? m_inWidth : m_textWidth;
     m_height = m_inHeight ? m_inHeight : m_textHeight;
     
-    unsigned int size = m_width * m_height;
-	if (emoji)
-	{
-		size *= 4;
-	}
-    unsigned char* pBuffer = new unsigned char[size];
+    unsigned int size = m_width * m_height * 4;
+	unsigned char* pBuffer = new unsigned char[size];
     if(!pBuffer)
     {
 		return NULL;
@@ -202,10 +202,10 @@ unsigned char* CAFreeTypeFont::getBitmap(ETextAlign eAlignMask, bool emoji, int*
 	for (line = m_lines.begin(); line != m_lines.end(); ++line)
     {
         FT_Vector pen = getPenForAlignment(*line, eAlignMask, lineNumber, totalLines);
-		drawText(*line, emoji, pBuffer, &pen);
+		drawText(*line, pBuffer, &pen);
 		if (m_bUnderLine)
 		{
-			draw_line(pBuffer, emoji, (FT_Int)pen.x, (FT_Int)pen.y, (FT_Int)(pen.x + (*line)->width), (FT_Int)pen.y);
+			draw_line(pBuffer, (FT_Int)pen.x, (FT_Int)pen.y, (FT_Int)(pen.x + (*line)->width), (FT_Int)pen.y);
 		}
         lineNumber++;
     }
@@ -444,7 +444,7 @@ FT_Vector CAFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, ETextAlign eAlig
     return pen;
 }
 
-void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, bool emoji, unsigned char* pBuffer, FT_Vector *pen)
+void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vector *pen)
 {
 	std::vector<TGlyph>& glyphs = pInfo->glyphs;
 	for (std::vector<TGlyph>::reverse_iterator glyph = glyphs.rbegin(); glyph != glyphs.rend(); ++glyph)
@@ -456,8 +456,7 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, bool emoji, unsigned char* pBu
             {
                 s_EmojiFont = new CAEmojiFont();
             }
-            
-			CAImage* pEmoji = CAImage::scaleToNewImageWithImage(s_EmojiFont->getEmojiImage(glyph->c, m_inFontSize), CCSizeMake(m_inFontSize,m_inFontSize));
+			CAImage* pEmoji = CAImage::scaleToNewImageWithImage(s_EmojiFont->getEmojiImage(glyph->c, m_inFontSize), DSize(m_inFontSize,m_inFontSize));
 
 			FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
 			FT_Int y = (FT_Int)(pen->y - m_inFontSize);
@@ -471,13 +470,9 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, bool emoji, unsigned char* pBu
         {
             FT_BitmapGlyph  bit = (FT_BitmapGlyph)image;
 
-			int dtValue = 0;
-//#if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
-//			dtValue = (glyph->c > 0x80) ? 0 : (m_lineHeight / 12);
-//#endif
             FT_Int x = (FT_Int)(pen->x + glyph->pos.x + bit->left);
-            FT_Int y = (FT_Int)(pen->y - bit->top + dtValue);
-			draw_bitmap(pBuffer, emoji, &bit->bitmap, x, y);
+            FT_Int y = (FT_Int)(pen->y - bit->top);
+			draw_bitmap(pBuffer, &bit->bitmap, x, y);
             FT_Done_Glyph(image);
         }
     }
@@ -506,7 +501,7 @@ void CAFreeTypeFont::draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int 
 	}
 }
 
-void CAFreeTypeFont::draw_bitmap(unsigned char* pBuffer, bool emoji, FT_Bitmap*  bitmap, FT_Int x, FT_Int y)
+void CAFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_Int x, FT_Int y)
 {
     FT_Int  i, j, p, q;
     FT_Int  x_max = x + bitmap->width;
@@ -519,38 +514,33 @@ void CAFreeTypeFont::draw_bitmap(unsigned char* pBuffer, bool emoji, FT_Bitmap* 
             if (i < 0 || j < 0 || i >= m_width || j >= m_height)
                 continue;
 
-			if (emoji)
+			FT_Int index = (j * m_width * 4) + (i * 4);
+
+			unsigned char value = bitmap->buffer[q * bitmap->width + p];
+			if (value > 0)
 			{
-				FT_Int index = (j * m_width * 4) + (i * 4);
-				pBuffer[index++] = 0xff;
-				pBuffer[index++] = 0;
-				pBuffer[index++] = 0xff;
-				pBuffer[index++] = bitmap->buffer[q * bitmap->width + p];
-			}
-			else
-			{
-				FT_Int index = j * m_width + i;
-				pBuffer[index] = bitmap->buffer[q * bitmap->width + p];
+				pBuffer[index++] = m_cFontColor.r*value / 255.0f;
+				pBuffer[index++] = m_cFontColor.g*value / 255.0f;
+				pBuffer[index++] = m_cFontColor.b*value / 255.0f;
+				pBuffer[index++] = value;
 			}
         }
     }  
 }
 
-void CAFreeTypeFont::draw_line(unsigned char* pBuffer, bool emoji, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2)
+void CAFreeTypeFont::draw_line(unsigned char* pBuffer, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2)
 {
-	for (FT_Int i = y1; i <= y2; i++)
+	for (FT_Int i = x1; i <= x2; i++)
 	{
-		for (FT_Int j = x1; j <= x2; j++)
+		for (FT_Int j = y1; j <= y2; j++)
 		{
-			FT_Int index = i * m_width + j;
-			if (emoji)
+			FT_Int index = (j * m_width * 4) + (i * 4);
+			for (int k = 0; k < 4; k++)
 			{
-				for (int k = 0; k < 4; k++)
-					pBuffer[index++] = 0xff;
-			}
-			else
-			{
-				pBuffer[index] = 0xff;
+				pBuffer[index++] = m_cFontColor.r;
+				pBuffer[index++] = m_cFontColor.g;
+				pBuffer[index++] = m_cFontColor.b;
+				pBuffer[index++] = 0xff;
 			}
 		}
 	}
@@ -566,15 +556,26 @@ void CAFreeTypeFont::endLine()
     }
 }
 
-bool CAFreeTypeFont::hasEmoji()
+bool CAFreeTypeFont::hasEmoji(const std::string& pText)
 {
-	for (int i = 0; i < m_lines.size(); i++)
+	std::u32string utf32String;
+	if (!StringUtils::UTF8ToUTF32(pText, utf32String))
+		return false;
+
+	for (int n = 0; n < utf32String.size(); n++)
 	{
-		FTLineInfo* l = m_lines[i];
-		for (int j = 0; j < l->glyphs.size(); j++)
+		FT_ULong c = utf32String[n];
+
+		if (c == '\r' || c == '\n')
+			continue;
+
+		if (s_EmojiFont == NULL)
 		{
-			if (l->glyphs[j].isEmoji)
-				return true;
+			s_EmojiFont = new CAEmojiFont();
+		}
+		if (s_EmojiFont->isEmojiCodePoint(c))
+		{
+			return true;
 		}
 	}
 	return false;
@@ -787,6 +788,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	FT_Error		error = 0;
 	PGlyph			glyph;
     unsigned int    numGlyphs = 0;
+	unsigned int	italicsDt = m_lineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
 
 	std::u32string utf32String;
 	if (!StringUtils::UTF8ToUTF32(text, utf32String))
@@ -852,7 +854,9 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		glyph->pos = pen;
 
 		if (glyph->isEmoji)
+		{
 			continue;
+		}
 
 		/* load glyph image into the slot without rendering */
 		error = FT_Load_Glyph(curFace, glyph_index, FT_LOAD_NO_HINTING | FT_LOAD_NO_BITMAP);
@@ -877,14 +881,14 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		FT_Matrix* pFTMat = m_bItalics ? &m_ItalicMatrix : NULL;
 
 		 /* translate the glyph image now */
-		FT_Glyph_Transform(glyph->image, pFTMat, NULL);//&glyph->pos
+		FT_Glyph_Transform(glyph->image, pFTMat, NULL);
 
 		/* increment pen position */
 		pen.x += slot->advance.x >> 6;
 
 		if (pFTMat)
 		{
-			pen.x += m_lineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
+			pen.x += italicsDt;
 		}
 
 		/* record current glyph index */

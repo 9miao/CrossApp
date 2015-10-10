@@ -22,7 +22,7 @@ CCFreeTypeFont::CCFreeTypeFont() :
     m_space(" ")
 {
 	m_face = nullptr;
-    CCSize size = CAApplication::getApplication()->getWinSizeInPixels();
+    DSize size = CAApplication::getApplication()->getWinSizeInPixels();
     m_windowWidth = (int)size.width;
 }
 

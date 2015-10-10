@@ -39,9 +39,9 @@ public:
     
     static CAButton* create(const CAButtonType& buttonType);
     
-    static CAButton* createWithFrame(const CCRect& rect, const CAButtonType& buttonType);
+    static CAButton* createWithFrame(const DRect& rect, const CAButtonType& buttonType);
     
-    static CAButton* createWithCenter(const CCRect& rect, const CAButtonType& buttonType);
+    static CAButton* createWithCenter(const DRect& rect, const CAButtonType& buttonType);
     
 public:
     
@@ -65,13 +65,13 @@ public:
     
     void setTitleFontName(const std::string& var);
     
-    void setImageOffset(const CCSize& offset);
+    void setImageOffset(const DSize& offset);
     
-    void setImageSize(const CCSize& size);
+    void setImageSize(const DSize& size);
     
-    void setTitleOffset(const CCSize& offset);
+    void setTitleOffset(const DSize& offset);
     
-    void setTitleLabelSize(const CCSize& size);
+    void setTitleLabelSize(const DSize& size);
     
     void setTitleFontSize(float fontSize);
     
@@ -127,30 +127,30 @@ protected:
     
     float m_fTitleFontSize;
     
-    CCSize m_pTitleLabelSize;
+    DSize m_pTitleLabelSize;
     
-    CCSize m_pImageSize;
+    DSize m_pImageSize;
     
-    CCSize m_pTitleOffset;
+    DSize m_pTitleOffset;
     
-    CCSize m_pImageOffset;
+    DSize m_pImageOffset;
 protected:
     
     void updateWithPreferredSize();
     
-    void setTouchMoved(const CCPoint& point);
+    void setTouchMoved(const DPoint& point);
     
-    void setTouchMovedOutSide(const CCPoint& point);
+    void setTouchMovedOutSide(const DPoint& point);
     
-    void setTouchUpOutSide(const CCPoint& point);
+    void setTouchUpOutSide(const DPoint& point);
     
-    void setTouchUpInSide(const CCPoint& point);
+    void setTouchUpInSide(const DPoint& point);
     
-    bool setTouchBegin(const CCPoint& point);
+    bool setTouchBegin(const DPoint& point);
 
     void setTouchLongPress(float dt);
     
-    void setContentSize(const CCSize & var);
+    void setContentSize(const DSize & var);
 
     void setBackGroundViewSquareRect();
     

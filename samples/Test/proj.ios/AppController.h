@@ -7,6 +7,5 @@
     RootViewController    *viewController;
 }
 
-
 @end
 

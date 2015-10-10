@@ -104,7 +104,7 @@ public:
     
 private:
     
-    void getSuperViewRect(const CCRect& rect);
+    void getSuperViewRect(const DRect& rect);
     
     void viewOnEnterTransitionDidFinish();
     
@@ -220,11 +220,11 @@ protected:
 
     void update(float dt);
     
-    CCPoint getNavigationBarOpenPoint();
+    DPoint getNavigationBarOpenPoint();
     
-    CCPoint getNavigationBarTakeBackPoint();
+    DPoint getNavigationBarTakeBackPoint();
     
-    CCPoint getNavigationBarNowPoint(CAViewController* viewController);
+    DPoint getNavigationBarNowPoint(CAViewController* viewController);
     
 protected:
 
@@ -240,7 +240,7 @@ protected:
     
     bool m_bPopViewController;
 
-    CCSize m_tNavigationBarSize;
+    DSize m_tNavigationBarSize;
 };
 
 class CC_DLL CATabBarController
@@ -323,11 +323,11 @@ protected:
     
     void tabBarHiddenAnimation(float delay, float now, float total);
     
-    CCPoint getTabBarOpenPoint();
+    DPoint getTabBarOpenPoint();
     
-    CCPoint getTabBarTakeBackPoint();
+    DPoint getTabBarTakeBackPoint();
     
-    CCPoint getTabBarNowPoint();
+    DPoint getTabBarNowPoint();
     
 protected:
     

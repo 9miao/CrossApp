@@ -125,7 +125,7 @@ void CAFlashView::draw()
 #if CC_ENABLE_GL_STATE_CACHE
     ccGLUseProgram(0);//valid program is NON_ZERO unsigned int
 #endif
-    CCSize size = this->getFrame().size;
+    DSize size = this->getFrame().size;
     float localScaleX = size.width/ m_pFlash->getWidth();
     float localScaleY = -(size.height / m_pFlash->getHeight());
     float localScale = localScaleX > -localScaleY ? -localScaleY : localScaleX;

@@ -161,8 +161,8 @@ static EAGLView *view;
 	
 	CrossApp::CAApplication *director = CrossApp::CAApplication::getApplication();
 	CGSize size = NSSizeToCGSize(rect.size);
-	CrossApp::CCSize ccsize = CrossApp::CCSizeMake(size.width, size.height);
-	director->reshapeProjection(ccsize);
+	CrossApp::DSize DSize = CrossApp::DSize(size.width, size.height);
+	director->reshapeProjection(DSize);
 	
 	// avoid flicker
 //	director->drawScene();

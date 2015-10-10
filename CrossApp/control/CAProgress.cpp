@@ -10,7 +10,7 @@
 #include "view/CAScale9ImageView.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "basics/CAApplication.h"
 #include "animation/CAViewAnimation.h"
 
@@ -27,7 +27,7 @@ CAProgress::CAProgress()
 {
     m_pIndicator = CAView::create();
     m_pIndicator->retain();
-	m_pIndicator->setFrameOrigin(CCPointZero);
+	m_pIndicator->setFrameOrigin(DPointZero);
 }
 
 CAProgress::~CAProgress()
@@ -65,7 +65,7 @@ bool CAProgress::init()
     m_pProgressImageView->setFrame(this->getBounds());
     this->addSubview(m_pProgressImageView);
     
-    CCRect rect = m_pProgressImageView->getBounds();
+    DRect rect = m_pProgressImageView->getBounds();
     rect.size.width *= m_fProgress;
     m_pProgressImageView->setFrame(rect);
     
@@ -153,7 +153,7 @@ void CAProgress::setProgress(float progress, bool animated)
 	progress = MIN(1.0f, progress);
 	progress = MAX(0.0f, progress);
 
-	CCPoint point = CCPoint(this->getBounds().size.width * progress, 0);
+	DPoint point = DPoint(this->getBounds().size.width * progress, 0);
 
 	if (animated)
 	{
@@ -180,7 +180,7 @@ float CAProgress::getProgress()
 
 void CAProgress::update(float dt)
 {
-	CCRect rect = CCRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
+	DRect rect = DRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
 
 	m_pProgressImageView->setFrame(rect);
     
@@ -198,12 +198,12 @@ void CAProgress::animatedFinish()
 	CAScheduler::unschedule(schedule_selector(CAProgress::update), this);
 }
 
-void CAProgress::setContentSize(const CCSize & var)
+void CAProgress::setContentSize(const DSize & var)
 {
-    CAView::setContentSize(CCSize(var.width, MAX(var.height, _px(6))));
+    CAView::setContentSize(DSize(var.width, MAX(var.height, _px(6))));
     
     m_pTarckImageView->setFrame(this->getBounds());
-    CCRect rect = CCRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
+    DRect rect = DRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
     m_pProgressImageView->setFrame(rect);
     this->setProgress(m_fProgress);
 }

@@ -1,7 +1,7 @@
 #import "RootViewController.h"
 #import "EAGLView.h"
 #import "CrossApp.h"
-#import <UIKit/UIKit.h>
+
 @implementation RootViewController
 
 /*
@@ -31,9 +31,9 @@
     CGRect rect = [[UIScreen mainScreen] bounds];
     //CGFloat scale = [[UIScreen mainScreen] scale];
     
-    //rect.size = [[UIScreen mainScreen]applicationFrame].size;
+    NSLog(@"%f", rect.size.width);
 
-    EAGLView *__glView = [EAGLView viewWithFrame: rect
+        EAGLView *__glView = [EAGLView viewWithFrame: rect
                                      pixelFormat: kEAGLColorFormatRGB565
                                      depthFormat: GL_DEPTH24_STENCIL8_OES
                               preserveBackbuffer: NO
@@ -42,29 +42,6 @@
                                  numberOfSamples: 0];
     [__glView setMultipleTouchEnabled:YES];
     [self.view addSubview:__glView];
-    
-    NSFileManager* fm=[NSFileManager defaultManager];
-    NSString* path = [NSString stringWithUTF8String:"/System/Library/Fonts"];
-    NSArray *files = [fm subpathsAtPath: path];
-    
-    for (int i = 0; i < files.count; i++)
-    {
-        NSLog(@"font : %@", files[i]);
-        NSString* s = files[i];
-        std::string ss = std::string("/System/Library/Fonts/") + [s UTF8String];
-        unsigned long pSize = 0;
-        
-        FILE* fp = fopen(ss.c_str(), "rb");
-        if (fp)
-        {
-            fseek(fp, 0L, SEEK_END);
-            pSize = ftell(fp);
-            fseek(fp,0,SEEK_SET);
-            fclose(fp);
-        }
-        
-        NSLog(@"fontSize : %lu", pSize / 1048576);
-    }
 }
 
 
@@ -72,23 +49,27 @@
 // This method is deprecated on ios6
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return UIInterfaceOrientationIsPortrait( interfaceOrientation );
+    //return UIInterfaceOrientationIsLandscape( interfaceOrientation );
 }
 
 // For ios6, use supportedInterfaceOrientations & shouldAutorotate instead
 - (NSUInteger) supportedInterfaceOrientations{
+    
 #ifdef __IPHONE_6_0
     return UIInterfaceOrientationMaskPortrait;
+    //return UIInterfaceOrientationMaskLandscapeRight;
 #endif
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
 {
     return UIInterfaceOrientationPortrait;
+    //return UIInterfaceOrientationLandscapeRight;
 }
 
 - (BOOL) shouldAutorotate
 {
-    return NO;
+    return YES;
 }
 
 //fix not hide status on ios7

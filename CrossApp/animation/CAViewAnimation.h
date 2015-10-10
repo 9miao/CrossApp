@@ -124,9 +124,9 @@ protected:
     
     virtual ~CAViewAnimation();
 
-    void setPoint(const CCPoint& point, CAView* view);
+    void setPoint(const DPoint& point, CAView* view);
     
-    void setContentSize(const CCSize& size, CAView* view);
+    void setContentSize(const DSize& size, CAView* view);
     
     void setScaleX(float scaleX, CAView* view);
     
@@ -148,7 +148,7 @@ protected:
     
     void setAlpha(float alpha, CAView* view);
     
-    void setImageRect(const CCRect& imageRect, CAView* view);
+    void setImageRect(const DRect& imageRect, CAView* view);
         
     void setFlipX(bool flipX, CAView* view);
     

@@ -7,7 +7,7 @@
 
 NS_CC_BEGIN
 
-class CCRect;
+class DRect;
 
 class CC_DLL CCApplication : public CCApplicationProtocol
 {

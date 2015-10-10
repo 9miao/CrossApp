@@ -16,7 +16,7 @@ class CDNewsImageTableCell : public CATableViewCell
 public:
     CDNewsImageTableCell();
     virtual ~CDNewsImageTableCell();
-    static CDNewsImageTableCell* create(const std::string& identifier, const CADipRect& _rect = CADipRectZero);
+    static CDNewsImageTableCell* create(const std::string& identifier, const DRect& _rect = DRectZero);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
 public:
@@ -39,7 +39,7 @@ public:
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row);
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     
@@ -52,9 +52,9 @@ public:
     void onRefreshRequestFinished(const HttpResponseStatus& status, const CSJson::Value& json);
     float getRandNum();
     void showAlert();
-    void buttonCallBack(CAControl* btn,CCPoint point);
+    void buttonCallBack(CAControl* btn,DPoint point);
 public:
-    CADipSize winSize;
+    DSize winSize;
     CATableView* p_TableView;
     CAActivityIndicatorView* p_pLoading;
     std::vector<newsImage > m_ImageMsg;

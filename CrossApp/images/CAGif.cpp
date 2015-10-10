@@ -131,9 +131,9 @@ int CAGif::getHeight()
     return m_uPixelsHigh;
 }
 
-//const CCSize& CAGif::getGifSize()
+//const DSize& CAGif::getGifSize()
 //{
-//    return CCSize(m_uPixelsWide, m_uPixelsHigh);
+//    return DSize(m_uPixelsWide, m_uPixelsHigh);
 //}
 
 void CAGif::copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width)

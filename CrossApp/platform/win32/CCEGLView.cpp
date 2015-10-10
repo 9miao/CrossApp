@@ -1,26 +1,4 @@
-/****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
 
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
 
 #include "CCEGLView.h"
 #include "cocoa/CCSet.h"
@@ -30,7 +8,7 @@ THE SOFTWARE.
 #include "dispatcher/CATouchDispatcher.h"
 #include "dispatcher/CAIMEDispatcher.h"
 #include "dispatcher/CAKeypadDispatcher.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "support/ccUTF8.h"
 #include "CCApplication.h"
 
@@ -347,12 +325,12 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if (m_pDelegate)
 		{
 			POINT point = { (short)LOWORD(lParam), (short)HIWORD(lParam) };
-			CCPoint pt(point.x, point.y);
+			DPoint pt(point.x, point.y);
 			pt.x /= m_fFrameZoomFactor;
 			pt.y /= m_fFrameZoomFactor;
-			CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
+			DPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
 			float zDelta = (short)HIWORD(wParam);
-			if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
+			if (m_obViewPortRect.equals(DRectZero) || m_obViewPortRect.containsPoint(tmp))
 			{
 				m_bCaptured = true;
 				SetCapture(m_hWnd);
@@ -374,11 +352,11 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if (m_pDelegate && MK_MBUTTON == wParam)
 		{
 			POINT point = { (short)LOWORD(lParam), (short)HIWORD(lParam) };
-			CCPoint pt(point.x, point.y);
+			DPoint pt(point.x, point.y);
 			pt.x /= m_fFrameZoomFactor;
 			pt.y /= m_fFrameZoomFactor;
-			CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
-			if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
+			DPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
+			if (m_obViewPortRect.equals(DRectZero) || m_obViewPortRect.containsPoint(tmp))
 			{
 				m_bCaptured = true;
 				SetCapture(m_hWnd);
@@ -401,11 +379,11 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if (m_pDelegate)
 		{
 			POINT point = { (short)LOWORD(lParam), (short)HIWORD(lParam) };
-			CCPoint pt(point.x, point.y);
+			DPoint pt(point.x, point.y);
 			pt.x /= m_fFrameZoomFactor;
 			pt.y /= m_fFrameZoomFactor;
-			CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
-			if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
+			DPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
+			if (m_obViewPortRect.equals(DRectZero) || m_obViewPortRect.containsPoint(tmp))
 			{
 				m_bCaptured = true;
 				SetCapture(m_hWnd);
@@ -427,11 +405,11 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_pDelegate && MK_LBUTTON == wParam)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            DPoint pt(point.x, point.y);
             pt.x /= m_fFrameZoomFactor;
             pt.y /= m_fFrameZoomFactor;
-            CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
-            if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
+            DPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
+            if (m_obViewPortRect.equals(DRectZero) || m_obViewPortRect.containsPoint(tmp))
             {
                 m_bCaptured = true;
                 SetCapture(m_hWnd);
@@ -453,7 +431,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (MK_LBUTTON == wParam && m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            DPoint pt(point.x, point.y);
             int id = 0;
             pt.x /= m_fFrameZoomFactor;
             pt.y /= m_fFrameZoomFactor;
@@ -478,7 +456,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            DPoint pt(point.x, point.y);
             int id = 0;
             pt.x /= m_fFrameZoomFactor;
             pt.y /= m_fFrameZoomFactor;
@@ -502,11 +480,11 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if (m_pDelegate && MK_RBUTTON == wParam)
 		{
 			POINT point = { (short)LOWORD(lParam), (short)HIWORD(lParam) };
-			CCPoint pt(point.x, point.y);
+			DPoint pt(point.x, point.y);
 			pt.x /= m_fFrameZoomFactor;
 			pt.y /= m_fFrameZoomFactor;
-			CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
-			if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
+			DPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
+			if (m_obViewPortRect.equals(DRectZero) || m_obViewPortRect.containsPoint(tmp))
 			{
 				m_bCaptured = true;
 				SetCapture(m_hWnd);
@@ -527,7 +505,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if (m_bCaptured)
 		{
 			POINT point = { (short)LOWORD(lParam), (short)HIWORD(lParam) };
-			CCPoint pt(point.x, point.y);
+			DPoint pt(point.x, point.y);
 			int id = 0;
 			pt.x /= m_fFrameZoomFactor;
 			pt.y /= m_fFrameZoomFactor;
@@ -559,9 +537,9 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                         input.x = TOUCH_COORD_TO_PIXEL(ti.x);
                         input.y = TOUCH_COORD_TO_PIXEL(ti.y);
                         ScreenToClient(m_hWnd, &input);
-                        CCPoint pt(input.x, input.y);
-                        CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
-                        if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
+                        DPoint pt(input.x, input.y);
+                        DPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
+                        if (m_obViewPortRect.equals(DRectZero) || m_obViewPortRect.containsPoint(tmp))
                         {
                             pt.x /= m_fFrameZoomFactor;
                             pt.y /= m_fFrameZoomFactor;
@@ -829,7 +807,7 @@ void CCEGLView::resize(int width, int height)
     rcClient.right = rcClient.left + width;
     rcClient.bottom = rcClient.top + height;
 
-    const CCSize& frameSize = getFrameSize();
+    const DSize& frameSize = getFrameSize();
     if (frameSize.width > 0)
     {
         WCHAR wszBuf[MAX_PATH] = {0};

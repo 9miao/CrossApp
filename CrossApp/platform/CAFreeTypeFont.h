@@ -92,7 +92,7 @@ public:
 	CAFreeTypeFont();
 	virtual ~CAFreeTypeFont();
 
-	CAImage* initWithString(const std::string& pText, const std::string& pFontName, int nSize, int inWidth, int inHeight,
+	CAImage* initWithString(const std::string& pText, const CAColor4B& fontColor, const std::string& pFontName, int nSize, int inWidth, int inHeight,
 		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false, std::vector<TextViewLineInfo>* pLinesText = 0);
 
 	static void destroyAllFontBuff();
@@ -100,7 +100,7 @@ protected:
 	bool initFreeTypeFont(const std::string& pFontName, unsigned long nSize);
 	void finiFreeTypeFont();
 	unsigned char* loadFont(const std::string& pFontName, unsigned long *size, int& ttfIndex);
-	unsigned char* getBitmap(ETextAlign eAlignMask, bool emoji, int* outWidth, int* outHeight);
+	unsigned char* getBitmap(ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);
     int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth);
@@ -118,10 +118,10 @@ protected:
 	void compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox);
 	void compute_bbox2(TGlyph& glyph, FT_BBox& bbox);
 
-	void drawText(FTLineInfo* pInfo, bool emoji, unsigned char* pBuffer, FT_Vector *pen);
+	void drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vector *pen);
 	void draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y);
-    void draw_bitmap(unsigned char* pBuffer, bool emoji, FT_Bitmap*  bitmap,FT_Int x,FT_Int y);
-	void draw_line(unsigned char* pBuffer, bool emoji, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
+    void draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap,FT_Int x,FT_Int y);
+	void draw_line(unsigned char* pBuffer, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
 
     FT_Vector getPenForAlignment(FTLineInfo* pInfo, ETextAlign eAlignMask, int lineNumber, int totalLines);
 
@@ -130,7 +130,7 @@ protected:
     FT_Error addWord(const std::string& word);
     void newLine();
     void endLine();
-	bool hasEmoji();
+	bool hasEmoji(const std::string& pText);
 
     const std::string m_space;
 	FT_Face			m_face;
@@ -153,6 +153,7 @@ protected:
 	bool m_bBold;
 	bool m_bItalics;
 	bool m_bUnderLine;
+	CAColor4B m_cFontColor;
 };
 
 NS_CC_END

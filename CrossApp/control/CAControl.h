@@ -39,7 +39,7 @@ typedef enum
 
 class CAControl;
 
-typedef void (CAObject::*SEL_CAControl)(CAControl*, CCPoint);
+typedef void (CAObject::*SEL_CAControl)(CAControl*, DPoint);
 #define CAControl_selector(_SELECTOR) (SEL_CAControl)(&_SELECTOR)
 
 class CC_DLL CAControl: public CAView

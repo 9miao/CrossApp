@@ -33,9 +33,9 @@ public:
     
     virtual void pageViewDidEndTurning(CAPageView* pageView){};
     
-    virtual void pageViewDidSelectedPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point){};
+    virtual void pageViewDidSelectedPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point){};
     
-    CC_DEPRECATED_ATTRIBUTE virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point){};
+    CC_DEPRECATED_ATTRIBUTE virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point){};
 };
 
 class CC_DLL CAPageView: public CAScrollView
@@ -48,9 +48,9 @@ public:
     
     virtual ~CAPageView();
     
-    static CAPageView* createWithFrame(const CCRect& rect, const CAPageViewDirection& type);
+    static CAPageView* createWithFrame(const DRect& rect, const CAPageViewDirection& type);
     
-    static CAPageView* createWithCenter(const CCRect& rect, const CAPageViewDirection& type);
+    static CAPageView* createWithCenter(const DRect& rect, const CAPageViewDirection& type);
     
     bool init();
     

@@ -31,7 +31,7 @@ void MenuViewController::viewDidLoad()
     size = this->getView()->getBounds().size;
     CCLog("size.width===%f,%f",size.width,size.height);
     
-    CAImageView* icon = CAImageView::createWithCenter(CADipRect(size.width/2,200,size.width,size.width));
+    CAImageView* icon = CAImageView::createWithCenter(DRect(size.width/2,200,size.width,size.width));
     icon->setImage(CAImage::create("image/logo.png"));
     icon->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
     this->getView()->addSubview(icon);
@@ -44,7 +44,7 @@ void MenuViewController::viewDidLoad()
         sprintf(imagename1, "image/navbtn_down_%d.png",i+1);
         CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
         btn->setTag(i);
-        btn->setCenter(CADipRect(size.width/2, size.width*i+500, size.width, size.width));
+        btn->setCenter(DRect(size.width/2, size.width*i+500, size.width, size.width));
         btn->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create(imagename)));
         btn->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create(imagename1)));
         btn->setBackGroundViewForState(CAControlStateDisabled, CAScale9ImageView::createWithImage(CAImage::create(imagename1)));

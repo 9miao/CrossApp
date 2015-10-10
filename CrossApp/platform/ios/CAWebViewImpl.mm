@@ -379,7 +379,7 @@ void CAWebViewImpl::setScalesPageToFit(const bool scalesPageToFit)
 
 void CAWebViewImpl::update(float dt)
 {
-    CCRect cRect = m_pWebView->convertRectToWorldSpace(m_pWebView->getBounds());
+    DRect cRect = m_pWebView->convertRectToWorldSpace(m_pWebView->getBounds());
     CGFloat scale = [[UIScreen mainScreen] scale];
     CGFloat x = cRect.origin.x/scale;
     CGFloat y = cRect.origin.y/scale;

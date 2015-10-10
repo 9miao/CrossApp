@@ -54,7 +54,7 @@ private:
 	void destroyGL();
 private:
 	//store current mouse point for moving, valid if and only if the mouse pressed
-	CCPoint m_mousePoint;
+	DPoint m_mousePoint;
 	bool bIsInit;
 	float m_fFrameZoomFactor;
 };

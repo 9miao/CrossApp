@@ -2,7 +2,7 @@
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
 #include "view/CADrawingPrimitives.h"
-#include "SDL.h"
+//#include "SDL.h"
 
 NS_CC_BEGIN
 
@@ -50,7 +50,7 @@ CAVideoPlayerView* CAVideoPlayerView::create()
     return NULL;
 }
 
-CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const CCRect &rect)
+CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const DRect &rect)
 {
     CAVideoPlayerView* view = new CAVideoPlayerView;
     if (view && view->initWithCenter(rect))
@@ -63,7 +63,7 @@ CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const CCRect &rect)
     return NULL;
 }
 
-CAVideoPlayerView* CAVideoPlayerView::createWithFrame(const CCRect &rect)
+CAVideoPlayerView* CAVideoPlayerView::createWithFrame(const DRect &rect)
 {
     CAVideoPlayerView* view = new CAVideoPlayerView;
     if (view && view->initWithFrame(rect)) 
@@ -113,7 +113,7 @@ bool CAVideoPlayerView::initWithUrl(const std::string& szUrl)
 	return createDecoder(szUrl);
 }
 
-void CAVideoPlayerView::setContentSize(const CCSize& size)
+void CAVideoPlayerView::setContentSize(const DSize& size)
 {
     CAView::setContentSize(size);
     
@@ -125,7 +125,7 @@ void CAVideoPlayerView::setContentSize(const CCSize& size)
 	setImageRect(m_viewRect);
 }
 
-void CAVideoPlayerView::setImageCoords(CCRect rect)
+void CAVideoPlayerView::setImageCoords(DRect rect)
 {
     float left = 0, right = 1, top = 0, bottom = 1;
     
@@ -238,7 +238,7 @@ bool CAVideoPlayerView::isPlaying()
 
 void CAVideoPlayerView::enableAudio(bool on)
 {
-	SDL_PauseAudio(!on);
+//	SDL_PauseAudio(!on);
 }
 
 float CAVideoPlayerView::getDuration()

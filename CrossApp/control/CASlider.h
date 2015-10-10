@@ -24,15 +24,15 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
-    static CASlider* createWithFrame(const CCRect& rect);
+    static CASlider* createWithFrame(const DRect& rect);
     
-    static CASlider* createWithCenter(const CCRect& rect);
+    static CASlider* createWithCenter(const DRect& rect);
     
 public:
     
-    bool initWithFrame(const CCRect& rect);
+    bool initWithFrame(const DRect& rect);
     
-    bool initWithCenter(const CCRect& rect);
+    bool initWithCenter(const DRect& rect);
     
     void addTarget(CAObject* target, SEL_CAControl selector);
     
@@ -73,7 +73,7 @@ public:
     virtual void layoutSubViews();
     
 protected:
-    void setContentSize(const CCSize & var);
+    void setContentSize(const DSize & var);
     using CAControl::addTarget;
     using CAControl::removeTarget;
     

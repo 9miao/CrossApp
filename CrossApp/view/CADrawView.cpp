@@ -1,7 +1,7 @@
 
 
 #include "CADrawView.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "shaders/CAShaderCache.h"
 #include "CCGL.h"
 #include "support/CANotificationCenter.h"
@@ -56,11 +56,11 @@ static inline ccVertex2F v2fforangle(float _a_)
 
 static inline ccVertex2F v2fnormalize(const ccVertex2F &p)
 {
-	CCPoint r = ccpNormalize(ccp(p.x, p.y));
+	DPoint r = ccpNormalize(DPoint(p.x, p.y));
 	return v2f(r.x, r.y);
 }
 
-static inline ccVertex2F __v2f(const CCPoint &v)
+static inline ccVertex2F __v2f(const DPoint &v)
 {
 //#ifdef __LP64__
 	return v2f(v.x, v.y);
@@ -204,7 +204,7 @@ void CADrawView::draw()
     render();
 }
 
-void CADrawView::drawDot(const CCPoint &pos, float radius, const CAColor4F &color)
+void CADrawView::drawDot(const DPoint &pos, float radius, const CAColor4F &color)
 {
     unsigned int vertex_count = 2*3;
     ensureCapacity(vertex_count);
@@ -225,7 +225,7 @@ void CADrawView::drawDot(const CCPoint &pos, float radius, const CAColor4F &colo
 	m_bDirty = true;
 }
 
-void CADrawView::drawSegment(const CCPoint &from, const CCPoint &to, float radius, const CAColor4F &color)
+void CADrawView::drawSegment(const DPoint &from, const DPoint &to, float radius, const CAColor4F &color)
 {
     unsigned int vertex_count = 6*3;
     ensureCapacity(vertex_count);
@@ -298,7 +298,7 @@ void CADrawView::drawSegment(const CCPoint &from, const CCPoint &to, float radiu
 	m_bDirty = true;
 }
 
-void CADrawView::drawPolygon(CCPoint *verts, unsigned int count, const CAColor4F &fillColor, float borderWidth, const CAColor4F &borderColor)
+void CADrawView::drawPolygon(DPoint *verts, unsigned int count, const CAColor4F &fillColor, float borderWidth, const CAColor4F &borderColor)
 {
     struct ExtrudeVerts {ccVertex2F offset, n;};
 	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
@@ -427,9 +427,9 @@ void CADrawView::listenBackToForeground(CAObject *obj)
     init();
 }
 
-void CADrawView::setContentSize(const CCSize& contentSize)
+void CADrawView::setContentSize(const DSize& contentSize)
 {
-    CAView::setContentSize(CCSize(0, 0));
+    CAView::setContentSize(DSize(0, 0));
 }
 
 NS_CC_END

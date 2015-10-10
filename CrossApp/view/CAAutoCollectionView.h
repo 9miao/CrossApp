@@ -60,15 +60,15 @@ public:
 	virtual ~CAAutoCollectionViewDataSource(){};
 
     //Necessary
-	virtual CACollectionViewCell* collectionCellAtIndex(CAAutoCollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int item)
+	virtual CACollectionViewCell* collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
     {
         return NULL;
     }
 
     //Necessary
-	virtual CCSize collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+	virtual DSize collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
     {
-        return CCSizeZero;
+        return DSizeZero;
     }
     
     //Necessary
@@ -82,7 +82,7 @@ public:
         return 1;
     }
     
-	virtual CAView* collectionViewSectionViewForHeaderInSection(CAAutoCollectionView *collectionView, const CCSize& viewSize, unsigned int section)
+	virtual CAView* collectionViewSectionViewForHeaderInSection(CAAutoCollectionView *collectionView, const DSize& viewSize, unsigned int section)
     {
         return NULL;
     }
@@ -92,7 +92,7 @@ public:
         return 0;
     }
     
-	virtual CAView* collectionViewSectionViewForFooterInSection(CAAutoCollectionView *collectionView, const CCSize& viewSize, unsigned int section)
+	virtual CAView* collectionViewSectionViewForFooterInSection(CAAutoCollectionView *collectionView, const DSize& viewSize, unsigned int section)
     {
         return NULL;
     }
@@ -113,7 +113,7 @@ class CC_DLL CAAutoCollectionView : public CAScrollView
 		CollectionViewRow() : iIniValue(0), iMaxValue(0) {}
 		unsigned int iIniValue;
 		unsigned int iMaxValue;
-		std::vector<CCRect> rItemRects;
+		std::vector<DRect> rItemRects;
 	};
 
 	struct CollectionViewSection
@@ -132,7 +132,7 @@ class CC_DLL CAAutoCollectionView : public CAScrollView
 
 		std::vector<CollectionViewRow> CollectionViewRows;
 
-		CCRect rSectionRect;
+		DRect rSectionRect;
 	};
 
 public:
@@ -143,9 +143,9 @@ public:
 
 	virtual void onExitTransitionDidStart();
 
-	static CAAutoCollectionView* createWithFrame(const CCRect& rect);
+	static CAAutoCollectionView* createWithFrame(const DRect& rect);
 
-	static CAAutoCollectionView* createWithCenter(const CCRect& rect);
+	static CAAutoCollectionView* createWithCenter(const DRect& rect);
 
 	virtual bool init();
 
@@ -213,7 +213,7 @@ protected:
 	int calculateAllCellsLength(CollectionViewSection& cvs);
 	int calculateAllCells(CollectionViewSection& cvs, int index, int dd, int dv, int dw);
 	int calculateAllRects();
-	bool fillSectionRowData(CollectionViewRow& r, CCSize rSize);
+	bool fillSectionRowData(CollectionViewRow& r, DSize rSize);
     void reloadViewSizeData();
     
     virtual void update(float dt);
@@ -287,7 +287,7 @@ private:
 private:
 	std::vector<CollectionViewSection> m_rCollectionViewSection;
     
-    std::map<CAIndexPath3E, CCRect> m_rUsedCollectionCellRects;
+    std::map<CAIndexPath3E, DRect> m_rUsedCollectionCellRects;
     
 	std::set<CAIndexPath3E> m_pSelectedCollectionCells;
 

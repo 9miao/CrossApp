@@ -24,8 +24,8 @@ public:
 	CAVideoPlayerControlView();
 	virtual ~CAVideoPlayerControlView();
 
-	static CAVideoPlayerControlView* createWithFrame(const CCRect& rect);
-	static CAVideoPlayerControlView* createWithCenter(const CCRect& rect);
+	static CAVideoPlayerControlView* createWithFrame(const DRect& rect);
+	static CAVideoPlayerControlView* createWithCenter(const DRect& rect);
 
 	CC_SYNTHESIZE(std::string, m_szTitle, Title);
 	
@@ -35,10 +35,10 @@ public:
 protected:
 	virtual bool init();
 //	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-	void onSlideTouched(CAControl* control, CCPoint point);
-	void onSlideChanged(CAControl* control, CCPoint point);
-	void onButtonPause(CAControl* control, CCPoint point);
-	void onButtonBack(CAControl* control, CCPoint point);
+	void onSlideTouched(CAControl* control, DPoint point);
+	void onSlideChanged(CAControl* control, DPoint point);
+	void onButtonPause(CAControl* control, DPoint point);
+	void onButtonBack(CAControl* control, DPoint point);
 	void updatePlayUI(float t);
 	void buildCtrlViews();
 	void updatePlayButton();

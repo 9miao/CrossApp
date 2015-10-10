@@ -114,7 +114,7 @@ void mouseButtonEventHandle(int iMouseID,int iMouseState) {
 		//get current mouse pos
 		int x,y;
 		glfwGetMousePos(&x, &y);
-		CCPoint oPoint((float)x,(float)y);
+		DPoint oPoint((float)x,(float)y);
 		/*
 		if (!CCRect::CCRectContainsPoint(s_pMainWindow->m_rcViewPort,oPoint))
 		{

@@ -56,8 +56,8 @@ shaders/ccGLStateCache.cpp \
 shaders/ccShaders.cpp \
 support/md5.cpp \
 support/CANotificationCenter.cpp \
-support/CCPointExtension.cpp \
-support/CCProfiling.cpp \
+support/CAPointExtension.cpp \
+support/CAProfiling.cpp \
 support/CCVertex.cpp \
 support/TransformUtils.cpp \
 support/base64.cpp \
@@ -185,7 +185,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 
 
 ifeq ($(VIDEO_ENABLE),1)
-LOCAL_SRC_FILES += video/CAVideoPlayerController.cpp \
+LOCAL_SRC_FILES += video/CAVideoPlayerControlView.cpp \
                    video/CAVideoPlayerDecoder.cpp \
                    video/CAVideoPlayerRender.cpp \
                    video/CAVideoPlayerView.cpp

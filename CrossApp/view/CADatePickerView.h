@@ -35,8 +35,8 @@ class CC_DLL CADatePickerView : public CAControl, public CAPickerViewDataSource,
     
 public:
     static CADatePickerView* create(const CADatePickerMode& m_mode);
-    static CADatePickerView* createWithFrame(const CCRect& rect,const CADatePickerMode& m_mode);
-    static CADatePickerView* createWithCenter(const CCRect& rect,const CADatePickerMode& m_mode);
+    static CADatePickerView* createWithFrame(const DRect& rect,const CADatePickerMode& m_mode);
+    static CADatePickerView* createWithCenter(const DRect& rect,const CADatePickerMode& m_mode);
     
     CADatePickerView(const CADatePickerMode& m_mode);
     virtual ~CADatePickerView();
@@ -46,8 +46,8 @@ public:
     virtual void onExit();
     virtual void visit();
     
-    virtual bool initWithFrame(const CCRect& rect);
-    virtual bool initWithCenter(const CCRect& rect);
+    virtual bool initWithFrame(const DRect& rect);
+    virtual bool initWithCenter(const DRect& rect);
     
 public:
     void setDate(int year, int month, int day, bool animated);

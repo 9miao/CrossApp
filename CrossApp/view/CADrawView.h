@@ -37,10 +37,10 @@ public:
     virtual void draw();
     
     /** draw a dot at a position, with a given radius and color */
-    void drawDot(const CCPoint &pos, float radius, const CAColor4F &color);
+    void drawDot(const DPoint &pos, float radius, const CAColor4F &color);
     
     /** draw a segment with a radius and color */
-    void drawSegment(const CCPoint &from, const CCPoint &to, float radius, const CAColor4F &color);
+    void drawSegment(const DPoint &from, const DPoint &to, float radius, const CAColor4F &color);
     
     /** draw a polygon with a fill color and line color 
      * @code
@@ -48,7 +48,7 @@ public:
      * js:var drawPolygon(var verts, var fillColor,var borderWidth,var borderColor)
      * @endcode
      */
-    void drawPolygon(CCPoint *verts, unsigned int count, const CAColor4F &fillColor, float borderWidth, const CAColor4F &borderColor);
+    void drawPolygon(DPoint *verts, unsigned int count, const CAColor4F &fillColor, float borderWidth, const CAColor4F &borderColor);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
@@ -71,7 +71,7 @@ public:
      */
     void listenBackToForeground(CAObject *obj);
 private:
-    virtual void setContentSize(const CCSize& contentSize);
+    virtual void setContentSize(const DSize& contentSize);
     void ensureCapacity(unsigned int count);
     void render();
 };

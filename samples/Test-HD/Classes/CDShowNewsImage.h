@@ -27,7 +27,7 @@ public:
     virtual void pageViewDidEndTurning(CAPageView* pageView);
     virtual void scrollViewTouchUpWithoutMoved(CAScrollView* view, const CCPoint& point);
 public:
-    CADipSize winSize;
+    DSize winSize;
     newsImage m_image;
     CAPageView* p_PageView;
     CALabel* p_title;

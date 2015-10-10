@@ -8,6 +8,7 @@
 #include "view/CAWindow.h"
 #include "view/CARenderImage.h"
 #include "animation/CAViewAnimation.h"
+#include "platform/CADensityDpi.h"
 NS_CC_BEGIN
 
 static CAVector<CAAlertView*> s_vAlertViewCaches;
@@ -42,7 +43,7 @@ bool CAAlertView::init()
 	}
 
 	this->setColor(ccc4(127,127,127,127));
-    CCRect rect = CCRectZero;
+    DRect rect = DRectZero;
     rect.size = CAApplication::getApplication()->getRootWindow()->getBounds().size;
     this->setFrame(rect);
 
@@ -203,9 +204,9 @@ void CAAlertView::showAlertView() {
 
 	calcuAlerViewSize();
 
-	CADipSize winSize = this->getBounds().size;
+	DSize winSize = this->getBounds().size;
 
-    CADipRect rect = CADipRect(winSize.width/2, winSize.height/2, ALERT_VIEW_WIDTH, m_fAlertViewHeight);
+    DRect rect = DRect(winSize.width/2, winSize.height/2, ALERT_VIEW_WIDTH, m_fAlertViewHeight);
     
     m_pBackView = CAClippingView::create();
     m_pBackView->setCenter(rect);
@@ -223,7 +224,7 @@ void CAAlertView::showAlertView() {
 	if (m_pTitleLabel && !m_pTitleLabel->getText().empty())
     {
 
-		m_pTitleLabel->setFrame(CADipRect(0, alertViewSpaceHeight , ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
+		m_pTitleLabel->setFrame(DRect(0, alertViewSpaceHeight , ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
 		m_pTitleLabel->setFontSize(_px(ALERT_VIEW_TITLE_FONT));
 		m_pBackView->addSubview(m_pTitleLabel);
 	}
@@ -233,13 +234,13 @@ void CAAlertView::showAlertView() {
 	if (m_fAlertViewMessageHeight > alertViewMessageHeight)
     {
 	
-		CAScrollView *scrollView = CAScrollView::createWithFrame(CADipRect(
+		CAScrollView *scrollView = CAScrollView::createWithFrame(DRect(
 			0 , 0, ALERT_VIEW_WIDTH, m_fAlertViewLineHeight - alertViewSpaceHeight ));
 		scrollView->setBackGroundColor(CAColor_clear);
 		scrollView->setShowsHorizontalScrollIndicator(false);
 		scrollView->setShowsVerticalScrollIndicator(true);
 		scrollView->setBounceHorizontal(false);
-		scrollView->setViewSize(CADipSize(ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight + m_fAlertViewTitleHeight));
+		scrollView->setViewSize(DSize(ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight + m_fAlertViewTitleHeight));
 		m_pBackView->addSubview(scrollView);
 
 		CCAssert(m_pTitleLabel, "");
@@ -247,19 +248,19 @@ void CAAlertView::showAlertView() {
         {
 			m_pTitleLabel->removeFromSuperview();
 			m_pTitleLabel->setFontSize(_px(ALERT_VIEW_TITLE_FONT));
-			m_pTitleLabel->setFrame(CADipRect(0, alertViewSpaceHeight, ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
+			m_pTitleLabel->setFrame(DRect(0, alertViewSpaceHeight, ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
 			scrollView->addSubview(m_pTitleLabel);
 		}
 
 		CCAssert(m_pContentLabel, "");
-		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
+		m_pContentLabel->setFrame(DRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
 		scrollView->addSubview(m_pContentLabel);
 	
 	}
 	else if (m_pContentLabel)
     {
 		alertViewMessageHeight = m_fAlertViewMessageHeight;
-		m_pContentLabel->setFrame(CADipRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
+		m_pContentLabel->setFrame(DRect((ALERT_VIEW_WIDTH - ALERT_VIEW_MESG_WIDTH) / 2, alertViewSpaceHeight + 10 + m_fAlertViewTitleHeight, ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight));
 		m_pBackView->addSubview(m_pContentLabel);
 	}
 
@@ -278,18 +279,18 @@ void CAAlertView::adjustButtonView() {
 
 	if (btnCount == 1) {
 		
-		m_vAllBtn.at(0)->setFrame(CADipRect(0, m_fAlertViewLineHeight, ALERT_VIEW_WIDTH, alertViewButtonHeight));
+		m_vAllBtn.at(0)->setFrame(DRect(0, m_fAlertViewLineHeight, ALERT_VIEW_WIDTH, alertViewButtonHeight));
 		
 		m_pBackView->addSubview(m_vAllBtn.at(0));
 
 	} else if (btnCount == 2) {
 
-		CAView *line = createWithFrame(CADipRect(ALERT_VIEW_WIDTH / 2, m_fAlertViewLineHeight, 1, alertViewButtonHeight));
+		CAView *line = createWithFrame(DRect(ALERT_VIEW_WIDTH / 2, m_fAlertViewLineHeight, s_px_to_dip(2.0f), alertViewButtonHeight));
 		line->setColor(ccc4(206, 206, 211, 255));
 		m_pBackView->addSubview(line);
 
 		for (int i = 0; i < btnCount; i++) {
-			m_vAllBtn.at(i)->setFrame(CADipRect(ALERT_VIEW_WIDTH / 2 * i, m_fAlertViewLineHeight, ALERT_VIEW_WIDTH / 2, alertViewButtonHeight));
+			m_vAllBtn.at(i)->setFrame(DRect(ALERT_VIEW_WIDTH / 2 * i, m_fAlertViewLineHeight, ALERT_VIEW_WIDTH / 2, alertViewButtonHeight));
 			m_pBackView->addSubview(m_vAllBtn.at(i));
 		}
 
@@ -298,7 +299,7 @@ void CAAlertView::adjustButtonView() {
 		for (int i = 0; i < btnCount; i++) {
 			addGrayLine(m_fAlertViewLineHeight + alertViewButtonHeight * i);
 
-			m_vAllBtn.at(i)->setFrame(CADipRect(0, m_fAlertViewLineHeight + alertViewButtonHeight * i, ALERT_VIEW_WIDTH, alertViewButtonHeight));
+			m_vAllBtn.at(i)->setFrame(DRect(0, m_fAlertViewLineHeight + alertViewButtonHeight * i, ALERT_VIEW_WIDTH, alertViewButtonHeight));
 			m_pBackView->addSubview(m_vAllBtn.at(i));
 		}
 
@@ -307,7 +308,7 @@ void CAAlertView::adjustButtonView() {
 		m_pBtnTableView = new CATableView();
 		CCAssert(m_pBtnTableView != NULL, "");
 		m_pBtnTableView->init();
-		m_pBtnTableView->setFrame(CADipRect(0,m_fAlertViewLineHeight,ALERT_VIEW_WIDTH,alertViewButtonHeight * 3));
+		m_pBtnTableView->setFrame(DRect(0,m_fAlertViewLineHeight,ALERT_VIEW_WIDTH,alertViewButtonHeight * 3));
 		m_pBtnTableView->setBackGroundColor(CAColor_clear);
 		m_pBtnTableView->setTableViewDataSource(this);
 		m_pBtnTableView->setTableViewDelegate(this);
@@ -331,7 +332,7 @@ void CAAlertView::adjustButtonView() {
 void CAAlertView::addGrayLine(int y) {
 	
 	CCAssert(y, "");
-	CAView *line = createWithFrame(CADipRect(0,y,ALERT_VIEW_WIDTH,1));
+	CAView *line = createWithFrame(DRect(0, y, ALERT_VIEW_WIDTH, s_px_to_dip(2.0f)));
 	line->setColor(ccc4(206, 206, 211, 255));
 	m_pBackView->addSubview(line);
 }
@@ -398,7 +399,7 @@ void CAAlertView::setTarget(CAObject* target, SEL_CAAlertBtnEvent selector)
 	m_pCAlertBtnEvent = selector;
 }
 
-void CAAlertView::onClickButton(CAControl* btn, CCPoint point)
+void CAAlertView::onClickButton(CAControl* btn, DPoint point)
 {
 	CC_RETURN_IF(m_bRunning == false);
 	if (m_pCAlertBtnEvent && m_pCAlertTarget)
@@ -445,7 +446,7 @@ void CAAlertView::hide()
     CAViewAnimation::commitAnimations();
 }
 
-CATableViewCell* CAAlertView::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
+CATableViewCell* CAAlertView::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
 {
 	CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("cellID");
 	if (cell == NULL)
@@ -454,7 +455,7 @@ CATableViewCell* CAAlertView::tableCellAtIndex(CATableView* table, const CCSize&
 	}
     cell->removeSubviewByTextTag("btn");
     m_vAllBtn.at(row)->removeFromSuperview();
-    m_vAllBtn.at(row)->setFrame(CCRect(0, 0, cellSize.width, cellSize.height));
+    m_vAllBtn.at(row)->setFrame(DRect(0, 0, cellSize.width, cellSize.height));
     cell->addSubview(m_vAllBtn.at(row));
 	return cell;
 }

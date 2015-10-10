@@ -32,7 +32,7 @@ public:
     virtual void resolveUniforms(GLuint program) = 0;
     virtual void setFrame(VPVideoFrame* frame) = 0;
     virtual bool prepareRender() = 0;
-    virtual CCRect updateVertices(float width, float height, float screen_w, float screen_h);
+    virtual DRect updateVertices(float width, float height, float screen_w, float screen_h);
     virtual bool loadShaders();
 	virtual const char* key();
     virtual void draw(VPVideoFrame* frame, long offset);

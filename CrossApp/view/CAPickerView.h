@@ -38,15 +38,15 @@ public:
 
     virtual CAView* viewForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
     
-    virtual CAView* viewForSelect(CAPickerView* pickerView, unsigned int component, const CCSize& size) {return NULL;}
+    virtual CAView* viewForSelect(CAPickerView* pickerView, unsigned int component, const DSize& size) {return NULL;}
 };
 
 class CC_DLL CAPickerView : public CAView, public CATableViewDataSource , public CATableViewDelegate, public CAScrollViewDelegate
 {
 public:
     static CAPickerView* create();
-    static CAPickerView* createWithFrame(const CCRect& rect);
-    static CAPickerView* createWithCenter(const CCRect& rect);
+    static CAPickerView* createWithFrame(const DRect& rect);
+    static CAPickerView* createWithCenter(const DRect& rect);
     
     CAPickerView();
     virtual ~CAPickerView();
@@ -61,14 +61,14 @@ public:
 
     virtual void visit();
     
-    virtual bool initWithFrame(const CCRect& rect);
-    virtual bool initWithCenter(const CCRect& rect);
+    virtual bool initWithFrame(const DRect& rect);
+    virtual bool initWithCenter(const DRect& rect);
     
     // info that was fetched and cached from the data source and delegate.
     // -1 if does not implement CAPickerViewDataSource
     virtual int numberOfComponents();
     virtual int numberOfRowsInComponent(unsigned int component);
-    virtual CCSize rowSizeForComponent(unsigned int component);
+    virtual DSize rowSizeForComponent(unsigned int component);
     
     // returns the view provided by the delegate via viewForRow
     // or NULL if the row/component is not visible or the delegate does not implement viewForRow
@@ -98,10 +98,10 @@ public:
 
 private:
     float calcTotalWidth(unsigned int component);
-    CAView* viewForRowInComponent(int component, int row, CCSize size);
+    CAView* viewForRowInComponent(int component, int row, DSize size);
     
 protected:
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row);
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     virtual void scrollViewDidEndDragging(CAScrollView* view);

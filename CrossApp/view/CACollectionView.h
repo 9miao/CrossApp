@@ -37,7 +37,7 @@ public:
 	virtual ~CACollectionViewDataSource(){};
 
     //Necessary
-	virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const CCSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
+	virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
     {
         return NULL;
     }
@@ -65,7 +65,7 @@ public:
         return 1;
     }
     
-	virtual CAView* collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section)
+	virtual CAView* collectionViewSectionViewForHeaderInSection(CACollectionView *collectionView, const DSize& viewSize, unsigned int section)
     {
         return NULL;
     }
@@ -75,7 +75,7 @@ public:
         return 0;
     }
     
-	virtual CAView* collectionViewSectionViewForFooterInSection(CACollectionView *collectionView, const CCSize& viewSize, unsigned int section)
+	virtual CAView* collectionViewSectionViewForFooterInSection(CACollectionView *collectionView, const DSize& viewSize, unsigned int section)
     {
         return NULL;
     }
@@ -99,9 +99,9 @@ public:
 
 	virtual void onExitTransitionDidStart();
 
-	static CACollectionView* createWithFrame(const CCRect& rect);
+	static CACollectionView* createWithFrame(const DRect& rect);
 
-	static CACollectionView* createWithCenter(const CCRect& rect);
+	static CACollectionView* createWithCenter(const DRect& rect);
 
 	virtual bool init();
 
@@ -244,9 +244,9 @@ private:
     
     std::vector<std::vector<unsigned int> > m_nRowHeightss;
     
-    std::vector<CCRect> m_rSectionRects;
+    std::vector<DRect> m_rSectionRects;
     
-    std::map<CAIndexPath3E, CCRect> m_rUsedCollectionCellRects;
+    std::map<CAIndexPath3E, DRect> m_rUsedCollectionCellRects;
     
     std::map<int, CAView*> m_pSectionHeaderViews;
     
@@ -306,7 +306,7 @@ protected:
     
     void setControlState(const CAControlState& var);
     
-    void setContentSize(const CCSize& var);
+    void setContentSize(const DSize& var);
     
 private:
     

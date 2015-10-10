@@ -13,7 +13,7 @@
 #include <string>
 
 NS_CC_BEGIN
-class CCRect;
+class DRect;
 
 class CCApplication : public CCApplicationProtocol
 {

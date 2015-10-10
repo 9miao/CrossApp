@@ -21,18 +21,18 @@ CATransformation __CATransformationMake(double a, double b, double c, double d, 
     return t;
 }
 
-CCPoint __CCPointApplyAffineTransform(const CCPoint& point, const CATransformation& t)
+DPoint __DPointApplyAffineTransform(const DPoint& point, const CATransformation& t)
 {
-    CCPoint p;
+    DPoint p;
     p.x = (float)((double)t.a * point.x + (double)t.c * point.y + t.tx);
     p.y = (float)((double)t.b * point.x + (double)t.d * point.y + t.ty);
     
     return p;
 }
 
-CCSize __CCSizeApplyAffineTransform(const CCSize& size, const CATransformation& t)
+DSize __DSizeApplyAffineTransform(const DSize& size, const CATransformation& t)
 {
-    CCSize s;
+    DSize s;
     s.width = (float)((double)t.a * size.width + (double)t.c * size.height);
     s.height = (float)((double)t.b * size.width + (double)t.d * size.height);
     
@@ -48,24 +48,24 @@ CATransformation CATransformationMakeIdentity()
 extern const CATransformation CATransformationIdentity = CATransformationMakeIdentity();
 
 
-CCRect CCRectApplyAffineTransform(const CCRect& rect, const CATransformation& anAffineTransform)
+DRect DRectApplyAffineTransform(const DRect& rect, const CATransformation& anAffineTransform)
 {
     float top    = rect.getMinY();
     float left   = rect.getMinX();
     float right  = rect.getMaxX();
     float bottom = rect.getMaxY();
     
-    CCPoint topLeft = CCPointApplyAffineTransform(CCPoint(left, top), anAffineTransform);
-    CCPoint topRight = CCPointApplyAffineTransform(CCPoint(right, top), anAffineTransform);
-    CCPoint bottomLeft = CCPointApplyAffineTransform(CCPoint(left, bottom), anAffineTransform);
-    CCPoint bottomRight = CCPointApplyAffineTransform(CCPoint(right, bottom), anAffineTransform);
+    DPoint topLeft = DPointApplyAffineTransform(DPoint(left, top), anAffineTransform);
+    DPoint topRight = DPointApplyAffineTransform(DPoint(right, top), anAffineTransform);
+    DPoint bottomLeft = DPointApplyAffineTransform(DPoint(left, bottom), anAffineTransform);
+    DPoint bottomRight = DPointApplyAffineTransform(DPoint(right, bottom), anAffineTransform);
 
     float minX = min(min(topLeft.x, topRight.x), min(bottomLeft.x, bottomRight.x));
     float maxX = max(max(topLeft.x, topRight.x), max(bottomLeft.x, bottomRight.x));
     float minY = min(min(topLeft.y, topRight.y), min(bottomLeft.y, bottomRight.y));
     float maxY = max(max(topLeft.y, topRight.y), max(bottomLeft.y, bottomRight.y));
         
-    return CCRect(minX, minY, (maxX - minX), (maxY - minY));
+    return DRect(minX, minY, (maxX - minX), (maxY - minY));
 }
 
 CATransformation CATransformationTranslate(const CATransformation& t, float tx, float ty)

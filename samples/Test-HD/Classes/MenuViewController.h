@@ -29,7 +29,7 @@ protected:
     
     void buttonCallBack(CAControl* btn,CCPoint point);
 private:
-    CADipSize size;
+    DSize size;
     bool isinitComplete;
 };
 

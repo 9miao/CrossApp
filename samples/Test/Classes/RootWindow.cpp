@@ -44,7 +44,7 @@ bool RootWindow::init()
     {
         return false;
     }
-    CCSize winSize = this->getBounds().size;
+    DSize winSize = this->getBounds().size;
     
     CAApplication::getApplication()->setNotificationView(CAView::createWithFrame(this->getBounds(), CAColor_green));
     
@@ -62,7 +62,7 @@ bool RootWindow::init()
     
     m_pRootDrawerController = drawer;
     CAApplication::getApplication()->setNotificationView(NULL);
-
+    
     return true;
 }
 
@@ -112,7 +112,7 @@ void RootWindow::initUIView()
     
     CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyleLightContent);
 }
-void RootWindow::buttonCallBack(CAControl* btn,CCPoint point)
+void RootWindow::buttonCallBack(CAControl* btn,DPoint point)
 {
     this->getDrawerController()->showLeftViewController(true);
 }

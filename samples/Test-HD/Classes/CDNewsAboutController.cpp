@@ -92,7 +92,7 @@ CDNewsAboutTableCell::~CDNewsAboutTableCell()
     
 }
 
-CDNewsAboutTableCell* CDNewsAboutTableCell::create(const std::string& identifier, const CADipRect& _rect)
+CDNewsAboutTableCell* CDNewsAboutTableCell::create(const std::string& identifier, const DRect& _rect)
 {
     CDNewsAboutTableCell* tableViewCell = new CDNewsAboutTableCell();
     if(tableViewCell&&tableViewCell->initWithReuseIdentifier(identifier))
@@ -122,21 +122,21 @@ void CDNewsAboutTableCell::normalTableViewCell()
 
 void CDNewsAboutTableCell::initWithCell()
 {
-    CADipSize m_size = this->getFrame().size;
+    DSize m_size = this->getFrame().size;
     
-    CALabel* cellText = CALabel::createWithCenter(CADipRect(m_size.width/2+40, m_size.height/2, m_size.width, 40));
+    CALabel* cellText = CALabel::createWithCenter(DRect(m_size.width/2+40, m_size.height/2, m_size.width, 40));
     cellText->setTag(100);
     cellText->setFontSize(_px(30));
     cellText->setTextAlignment(CATextAlignmentLeft);
     cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     this->addSubview(cellText);
     
-    CAScale9ImageView* iv = CAScale9ImageView::createWithCenter(CADipRect(m_size.width-50,m_size.height/2,50,50));
+    CAScale9ImageView* iv = CAScale9ImageView::createWithCenter(DRect(m_size.width-50,m_size.height/2,50,50));
     iv->setImage(CAImage::create("source_material/cell_btn_right.png"));
     iv->setTag(101);
     this->addSubview(iv);
     
-    CASwitch* sw = CASwitch::createWithCenter(CADipRect(m_size.width-90, m_size.height/2, 100, 50));
+    CASwitch* sw = CASwitch::createWithCenter(DRect(m_size.width-90, m_size.height/2, 100, 50));
     sw->setTag(103);
     sw->setVisible(false);
     this->addSubview(sw);
@@ -168,10 +168,10 @@ void CDNewsAboutController::viewDidLoad()
 //    this->getView()->addSubview(bg);
     
     bg = CAView::createWithColor(CAColor_white);
-    bg->setFrame(CADipRect(-500,0,500,winSize.height));
+    bg->setFrame(DRect(-500,0,500,winSize.height));
     this->getView()->addSubview(bg);
     
-    p_TableView= CATableView::createWithFrame(CADipRect(50, winSize.height/4, 400, winSize.height));
+    p_TableView= CATableView::createWithFrame(DRect(50, winSize.height/4, 400, winSize.height));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
     p_TableView->setAllowsSelection(true);
@@ -184,7 +184,7 @@ void CDNewsAboutController::viewDidLoad()
     bg->addSubview(p_TableView);
     
     CAButton* btn_back = CAButton::create(CAButtonTypeSquareRect);
-    btn_back->setCenter(CADipRect(250, winSize.height-200, 40, 40));
+    btn_back->setCenter(DRect(250, winSize.height-200, 40, 40));
     btn_back->setTitleColorForState(CAControlStateNormal,CAColor_white);
     btn_back->setBackGroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("image/news_close.png")));
     btn_back->setBackGroundViewForState(CAControlStateHighlighted, CAImageView::createWithImage(CAImage::create("image/news_close.png")));
@@ -258,11 +258,11 @@ void CDNewsAboutController::tableViewDidSelectRowAtIndexPath(CATableView* table,
     CCLog("section==%d,row==%d",section,row);
     if (section==0 && row == 0) {
         _waitview = CAView::createWithColor(ccc4(0,0,0,128));
-        _waitview->setFrame(CADipRect(0,0,winSize.width,winSize.height));
-        CAActivityIndicatorView* p_pLoading = CAActivityIndicatorView::createWithCenter(CADipRect( winSize.width/2, winSize.height/2,50,50));
+        _waitview->setFrame(DRect(0,0,winSize.width,winSize.height));
+        CAActivityIndicatorView* p_pLoading = CAActivityIndicatorView::createWithCenter(DRect( winSize.width/2, winSize.height/2,50,50));
         p_pLoading->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
         p_pLoading->startAnimating();
-        CALabel* label = CALabel::createWithCenter(CADipRect(winSize.width/2,winSize.height/2+100,200,50));
+        CALabel* label = CALabel::createWithCenter(DRect(winSize.width/2,winSize.height/2+100,200,50));
         label->setText("正在清理...");
         label->setColor(CAColor_white);
         label->setFontSize(18);
@@ -282,11 +282,11 @@ void CDNewsAboutController::tableViewDidDeselectRowAtIndexPath(CATableView* tabl
 
 CATableViewCell* CDNewsAboutController::tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row)
 {
-    CADipSize _size = cellSize;
+    DSize _size = cellSize;
     CDNewsAboutTableCell* cell = dynamic_cast<CDNewsAboutTableCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
     if (cell == NULL)
     {
-        cell = CDNewsAboutTableCell::create("CrossApp", CADipRect(0, 0, _size.width, _size.height));
+        cell = CDNewsAboutTableCell::create("CrossApp", DRect(0, 0, _size.width, _size.height));
         cell->initWithCell();
     }
     

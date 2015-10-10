@@ -16,14 +16,14 @@ struct CATransformation {
 CC_DLL CATransformation __CATransformationMake(double a, double b, double c, double d, double tx, double ty);
 #define CATransformationMake __CATransformationMake
 
-CC_DLL CCPoint __CCPointApplyAffineTransform(const CCPoint& point, const CATransformation& t);
-#define CCPointApplyAffineTransform __CCPointApplyAffineTransform
+CC_DLL DPoint __DPointApplyAffineTransform(const DPoint& point, const CATransformation& t);
+#define DPointApplyAffineTransform __DPointApplyAffineTransform
 
-CC_DLL CCSize __CCSizeApplyAffineTransform(const CCSize& size, const CATransformation& t);
-#define CCSizeApplyAffineTransform __CCSizeApplyAffineTransform
+CC_DLL DSize __DSizeApplyAffineTransform(const DSize& size, const CATransformation& t);
+#define DSizeApplyAffineTransform __DSizeApplyAffineTransform
 
 CC_DLL CATransformation CATransformationMakeIdentity();
-CC_DLL CCRect CCRectApplyAffineTransform(const CCRect& rect, const CATransformation& anAffineTransform);
+CC_DLL DRect DRectApplyAffineTransform(const DRect& rect, const CATransformation& anAffineTransform);
 
 CC_DLL CATransformation CATransformationTranslate(const CATransformation& t, float tx, float ty);
 CC_DLL CATransformation CATransformationRotate(const CATransformation& aTransform, float anAngle);

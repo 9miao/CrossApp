@@ -22,7 +22,7 @@ CAVideoPlayerControlView::~CAVideoPlayerControlView()
 	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this);
 }
 
-CAVideoPlayerControlView* CAVideoPlayerControlView::createWithFrame(const CCRect& rect)
+CAVideoPlayerControlView* CAVideoPlayerControlView::createWithFrame(const DRect& rect)
 {
 	CAVideoPlayerControlView* pCtrlView = new CAVideoPlayerControlView();
 	if (pCtrlView && pCtrlView->initWithFrame(rect))
@@ -35,7 +35,7 @@ CAVideoPlayerControlView* CAVideoPlayerControlView::createWithFrame(const CCRect
 	return pCtrlView;
 }
 
-CAVideoPlayerControlView* CAVideoPlayerControlView::createWithCenter(const CCRect& rect)
+CAVideoPlayerControlView* CAVideoPlayerControlView::createWithCenter(const DRect& rect)
 {
 	CAVideoPlayerControlView* pCtrlView = new CAVideoPlayerControlView();
 	if (pCtrlView && pCtrlView->initWithCenter(rect))
@@ -82,28 +82,28 @@ bool CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
 void CAVideoPlayerControlView::buildCtrlViews()
 {
 	m_glView = CAVideoPlayerView::createWithFrame(getFrame());
-	m_glView->setFrameOrigin(CCPointZero);
+	m_glView->setFrameOrigin(DPointZero);
 	m_glView->setColor(ccc4(0, 0, 0, 0));
 	this->insertSubview(m_glView, 1);
 
 	// Bottom Panel Back
 	CAImageView* bottomPanel = NULL;
 	do {
-		CCRect frame = m_glView->getFrame();
+		DRect frame = m_glView->getFrame();
 		CAImage* image = CAImage::create("source_material/vdo_panel_bottom_bg.png");
 		float width = m_glView->getFrame().size.width;
 		float height = _px(image->getContentSize().height);
-		bottomPanel = CAImageView::createWithFrame(CCRect(0, frame.size.height - height, width, height));
+		bottomPanel = CAImageView::createWithFrame(DRect(0, frame.size.height - height, width, height));
 		bottomPanel->setImage(image);
 		m_glView->addSubview(bottomPanel);
 	} while (0);
 
 	// Slider 
 	do {
-		CCRect frame = bottomPanel->getFrame();
+		DRect frame = bottomPanel->getFrame();
 		CAImage* backImage = CAImage::create("source_material/vdo_progress_back.png");
 		CAImage* barImage = CAImage::create("source_material/vdo_progress_bar.png");
-		m_playSlider = CASlider::createWithCenter(CCRect(frame.size.width / 2, frame.size.height*0.3, frame.size.width * 0.9, _px(barImage->getContentSize().height)));
+		m_playSlider = CASlider::createWithCenter(DRect(frame.size.width / 2, frame.size.height*0.3, frame.size.width * 0.9, _px(barImage->getContentSize().height)));
 		m_playSlider->setMaxTrackTintImage(backImage);
 		m_playSlider->setThumbTintImage(barImage);
 		m_playSlider->setTrackHeight(_px(backImage->getContentSize().height));
@@ -114,7 +114,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 
 	// Play Pause Button
 	do {
-		CCRect frame = bottomPanel->getFrame();
+		DRect frame = bottomPanel->getFrame();
 		CAImage* backImage = CAImage::create("source_material/vdo_pause.png");
 		CAImage* backImage_h = CAImage::create("source_material/vdo_pause_down.png");
 		frame.origin.y = frame.size.height * 2 / 3;
@@ -130,9 +130,9 @@ void CAVideoPlayerControlView::buildCtrlViews()
 
 	// play time
 	do {
-		CCRect frame = m_playButton->getFrame();
-		CCRect newFrame = CCRectZero;
-		m_playTimeLabel = CALabel::createWithFrame(CCRectZero);
+		DRect frame = m_playButton->getFrame();
+		DRect newFrame = DRectZero;
+		m_playTimeLabel = CALabel::createWithFrame(DRectZero);
 		m_playTimeLabel->setFontSize(32);
 		m_playTimeLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 		m_playTimeLabel->setColor(ccc4(255, 255, 255, 255));
@@ -149,7 +149,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 	CAImageView* topPanel = NULL;
 	do {
 		CAImage* image = CAImage::create("source_material/vdo_panel_top_bg.png");
-		topPanel = CAImageView::createWithFrame(CCRect(0, 0, m_glView->getFrame().size.width, _px(image->getContentSize().height)));
+		topPanel = CAImageView::createWithFrame(DRect(0, 0, m_glView->getFrame().size.width, _px(image->getContentSize().height)));
 		topPanel->setImage(image);
 		m_glView->addSubview(topPanel);
 	} while (0);
@@ -157,7 +157,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 	// Back Button
 	CAButton* buttonBack = NULL;
 	do {
-		CCRect frame = topPanel->getFrame();
+		DRect frame = topPanel->getFrame();
 		//        CAImage* backImage = CAImage::create("source_material/vdo_btn_back.png");
 		//        CAImage* backImage_h = CAImage::create("source_material/vdo_btn_back_h.png");
 		CAImage* backImage = CAImage::create("source_material/btn_left_blue.png");
@@ -175,8 +175,8 @@ void CAVideoPlayerControlView::buildCtrlViews()
 
 	// Title
 	do {
-		CCRect frame = buttonBack->getFrame();
-		CCRect r = CCRectZero;
+		DRect frame = buttonBack->getFrame();
+		DRect r = DRectZero;
 		r.origin.x = buttonBack->getFrame().origin.x * 2 + buttonBack->getFrame().size.width;
 		r.origin.y = buttonBack->getFrame().origin.y;
 		r.size.width = m_glView->getFrame().size.width - r.origin.x;
@@ -235,12 +235,12 @@ std::string CAVideoPlayerControlView::formatTimeInterval(float seconds, bool isL
 	return std::string(output);
 }
 
-void CAVideoPlayerControlView::onSlideTouched(CAControl* control, CCPoint point)
+void CAVideoPlayerControlView::onSlideTouched(CAControl* control, DPoint point)
 {
 	CCLog("1111111111 onSlideTouched\n");
 }
 
-void CAVideoPlayerControlView::onSlideChanged(CAControl* control, CCPoint point)
+void CAVideoPlayerControlView::onSlideChanged(CAControl* control, DPoint point)
 {
 	CCLog("22222222222 onSlideChanged\n");
 	if (m_glView == NULL || m_playSlider == NULL)
@@ -251,7 +251,7 @@ void CAVideoPlayerControlView::onSlideChanged(CAControl* control, CCPoint point)
 	m_glView->play();
 }
 
-void CAVideoPlayerControlView::onButtonPause(CAControl* control, CCPoint point)
+void CAVideoPlayerControlView::onButtonPause(CAControl* control, DPoint point)
 {
 	if (m_glView == NULL)
 		return;
@@ -267,7 +267,7 @@ void CAVideoPlayerControlView::onButtonPause(CAControl* control, CCPoint point)
 	updatePlayButton();
 }
 
-void CAVideoPlayerControlView::onButtonBack(CAControl* control, CCPoint point)
+void CAVideoPlayerControlView::onButtonBack(CAControl* control, DPoint point)
 {
 
 }

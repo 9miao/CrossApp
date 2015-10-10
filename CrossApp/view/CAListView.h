@@ -49,7 +49,7 @@ public:
 
 	virtual unsigned int listViewHeightForIndex(CAListView *listView, unsigned int index) = 0;
 
-	virtual CAListViewCell* listViewCellAtIndex(CAListView *listView, const CCSize& cellSize, unsigned int index) = 0;
+	virtual CAListViewCell* listViewCellAtIndex(CAListView *listView, const DSize& cellSize, unsigned int index) = 0;
     
     virtual void listViewWillDisplayCellAtIndex(CAListView* table, CAListViewCell* cell, unsigned int index) {};
 };
@@ -65,9 +65,9 @@ public:
 
 	virtual void onExitTransitionDidStart();
 
-	static CAListView* createWithFrame(const CCRect& rect);
+	static CAListView* createWithFrame(const DRect& rect);
 
-	static CAListView* createWithCenter(const CCRect& rect);
+	static CAListView* createWithCenter(const DRect& rect);
 
 	virtual bool init();
 
@@ -196,15 +196,15 @@ private:
     
 private:
     
-	CCRect m_rHeaderRect;
+	DRect m_rHeaderRect;
     
-	CCRect m_rFooterRect;
+	DRect m_rFooterRect;
 
     unsigned int m_nIndexs;
     
-    std::vector<CCRect> m_rIndexRects;
+    std::vector<DRect> m_rIndexRects;
 
-    std::vector<CCRect> m_rLineRects;
+    std::vector<DRect> m_rLineRects;
     
 	std::map<unsigned int, CAListViewCell*> m_mpUsedListCells;
 
@@ -259,7 +259,7 @@ protected:
     
     void setControlState(const CAControlState& var);
     
-    void setContentSize(const CCSize& var);
+    void setContentSize(const DSize& var);
     
 private:
     

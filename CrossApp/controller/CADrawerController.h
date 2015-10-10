@@ -98,8 +98,8 @@ protected:
     
     int m_fOffX;
     
-    CCRect m_rShowFrame[2];
-    CCRect m_rHideFrame[2];
+    DRect m_rShowFrame[2];
+    DRect m_rHideFrame[2];
 };
 
 NS_CC_END

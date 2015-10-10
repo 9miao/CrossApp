@@ -100,10 +100,10 @@
 #include "view/CATextEditHelper.h"
 #include "view/CAAutoCollectionView.h"
 
-//#include "video/CAVideoPlayerDecoder.h"
-//#include "video/CAVideoPlayerRender.h"
-//#include "video/CAVideoPlayerView.h"
-//#include "video/CAVideoPlayerControlView.h"
+#include "video/CAVideoPlayerDecoder.h"
+#include "video/CAVideoPlayerRender.h"
+#include "video/CAVideoPlayerView.h"
+#include "video/CAVideoPlayerControlView.h"
 
 // cocoa
 #include "cocoa/CCSet.h"
@@ -127,8 +127,8 @@
 #include "support/ccUtils.h"
 #include "support/ccUTF8.h"
 #include "support/CANotificationCenter.h"
-#include "support/CCPointExtension.h"
-#include "support/CCProfiling.h"
+#include "support/CAPointExtension.h"
+#include "support/CAProfiling.h"
 #include "support/user_default/CAUserDefault.h"
 #include "support/CCVertex.h"
 #include "support/tinyxml2/tinyxml2.h"
@@ -153,10 +153,6 @@
 #include "platform/CCPlatformMacros.h"
 #include "platform/CAFreeTypeFont.h"
 #include "platform/CAFTFontCache.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-// video
-//#include "video/CAVideoPlayerController.h"
-#endif //(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 //script_support
 #include "script_support/CCScriptSupport.h"

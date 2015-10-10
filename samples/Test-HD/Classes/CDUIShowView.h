@@ -43,7 +43,7 @@ class ETableViewCell : public CATableViewCell
 public:
     ETableViewCell();
     virtual ~ETableViewCell();
-    static ETableViewCell* create(const std::string& identifier, const CADipRect& _rect = CADipRectZero);
+    static ETableViewCell* create(const std::string& identifier, const DRect& _rect = DRectZero);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
 public:
@@ -74,7 +74,7 @@ public:
     CC_SYNTHESIZE(CDETableViewDelegate*, m_pETableViewDelegate, ETableViewDelegate);
 public:
     CATableView* p_TableView;
-    CADipSize size;
+    DSize size;
 };
 
 class CDListView : public CAView ,CAListViewDelegate,CAListViewDataSource
@@ -277,7 +277,7 @@ public:
 public:
     
     std::vector<std::string> testList;
-    CADipSize winSize;
+    DSize winSize;
     CALabel* progress_value;
     CAProgress* progress;
     CALabel* sliderValue1;

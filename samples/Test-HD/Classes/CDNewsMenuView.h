@@ -17,7 +17,7 @@ class CDNewsMenuTableCell : public CATableViewCell
 public:
     CDNewsMenuTableCell(int row);
     virtual ~CDNewsMenuTableCell();
-    static CDNewsMenuTableCell* create(const std::string& identifier, const CADipRect& _rect = CADipRectZero,const int row = 1);
+    static CDNewsMenuTableCell* create(const std::string& identifier, const DRect& _rect = DRectZero,const int row = 1);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
     virtual void normalTableViewCell();
@@ -52,7 +52,7 @@ public:
     virtual unsigned int numberOfSections(CATableView *table);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
 private:
-    CADipSize size;
+    DSize size;
     CATableView* tableView;
 };
 #endif /* CDNewsMenuView_cpp */

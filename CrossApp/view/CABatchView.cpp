@@ -4,13 +4,13 @@
 #include "CAView.h"
 #include "view/CADrawingPrimitives.h"
 #include "images/CAImageCache.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "shaders/CAShaderCache.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "basics/CAApplication.h"
 #include "support/TransformUtils.h"
-#include "support/CCProfiling.h"
+#include "support/CAProfiling.h"
 #include "kazmath/GL/matrix.h"
 
 NS_CC_BEGIN

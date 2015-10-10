@@ -40,7 +40,7 @@ public:
     
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view){};
     
-    virtual void scrollViewTouchUpWithoutMoved(CAScrollView* view, const CCPoint& point){};
+    virtual void scrollViewTouchUpWithoutMoved(CAScrollView* view, const DPoint& point){};
     
 public:
     
@@ -61,9 +61,9 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    static CAScrollView* createWithFrame(const CCRect& rect);
+    static CAScrollView* createWithFrame(const DRect& rect);
     
-    static CAScrollView* createWithCenter(const CCRect& rect);
+    static CAScrollView* createWithCenter(const DRect& rect);
     
     virtual bool init();
 
@@ -81,9 +81,9 @@ public:
     
     const CAVector<CAView*>& getSubviews();
     
-    void setContentOffset(const CCPoint& offset, bool animated);
+    void setContentOffset(const DPoint& offset, bool animated);
     
-    CCPoint getContentOffset();
+    DPoint getContentOffset();
     
     void setBackGroundImage(CAImage* image);
 
@@ -127,7 +127,7 @@ public:
     
     CC_SYNTHESIZE_READONLY(float, m_fZoomScale, ZoomScale);
     
-    CC_PROPERTY_PASS_BY_REF(CCSize, m_obViewSize, ViewSize);
+    CC_PROPERTY_PASS_BY_REF(DSize, m_obViewSize, ViewSize);
     
     CC_PROPERTY(CAPullToRefreshView*, m_pHeaderRefreshView, HeaderRefreshView);
     
@@ -172,7 +172,7 @@ protected:
     
     virtual void contentOffsetFinish(float dt) {};
     
-    void getScrollWindowNotOutPoint(CCPoint& point);
+    void getScrollWindowNotOutPoint(DPoint& point);
     
     virtual float getScrollWindowNotOutHorizontal(float x);
     
@@ -180,7 +180,7 @@ protected:
     
     bool isScrollWindowNotOutSide();
     
-    bool isScrollWindowNotMaxOutSide(const CCPoint& point);
+    bool isScrollWindowNotMaxOutSide(const DPoint& point);
     
     virtual void update(float dt);
     
@@ -204,9 +204,9 @@ protected:
     
     bool isFooterRefreshing();
     
-    void setContainerFrame(const CCPoint& point, const CCSize& size = CCSizeZero);
+    void setContainerFrame(const DPoint& point, const DSize& size = DSizeZero);
     
-    virtual void setContentSize(const CCSize& var);
+    virtual void setContentSize(const DSize& var);
     
     void updatePointOffset(float dt = 0);
     
@@ -242,13 +242,13 @@ protected:
     
     float m_fTouchLength;
 
-    CCPoint m_tInertia;
+    DPoint m_tInertia;
     
-    std::deque<CCPoint> m_tPointOffset;
+    std::deque<DPoint> m_tPointOffset;
     
-    CCPoint m_tCloseToPoint;
+    DPoint m_tCloseToPoint;
     
-    CCPoint m_tInitialPoint;
+    DPoint m_tInitialPoint;
     
     bool m_bPCMode;
 };
@@ -280,7 +280,7 @@ public:
     
     virtual bool init();
     
-    void setIndicator(const CCSize& parentSize, const CCRect& childrenFrame);
+    void setIndicator(const DSize& parentSize, const DRect& childrenFrame);
     
     void setHide(bool var);
 

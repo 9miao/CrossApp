@@ -24,9 +24,9 @@ CALabel::CALabel()
 ,m_nText("")
 ,m_nfontName("")
 ,m_nVerticalTextAlignmet(CAVerticalTextAlignmentTop)
-,m_nDimensions(CCSizeZero)
+,m_nDimensions(DSizeZero)
 ,m_nfontSize(_px(24))
-,m_cLabelSize(CCSizeZero)
+,m_cLabelSize(DSizeZero)
 ,m_bUpdateImage(false)
 ,pTextHeight(0)
 ,m_bFitFlag(false)
@@ -36,8 +36,9 @@ CALabel::CALabel()
 ,m_bItalics(false)
 ,m_bUnderLine(false)
 ,m_bEnableCopy(false)
+, m_cFontColor(CAColor_black)
 {
-    m_obContentSize = CCSizeZero;
+    m_obContentSize = DSizeZero;
 }
 
 CALabel::~CALabel()
@@ -45,7 +46,7 @@ CALabel::~CALabel()
     
 }
 
-CALabel *CALabel::createWithFrame(const CCRect& rect)
+CALabel *CALabel::createWithFrame(const DRect& rect)
 {
     CALabel *label = new CALabel();
     if (label && label->initWithFrame(rect))
@@ -57,7 +58,7 @@ CALabel *CALabel::createWithFrame(const CCRect& rect)
     return NULL;
 }
 
-CALabel* CALabel::createWithCenter(const CCRect &rect)
+CALabel* CALabel::createWithCenter(const DRect &rect)
 {
     CALabel *label = new CALabel();
     if (label && label->initWithCenter(rect))
@@ -80,7 +81,7 @@ void CALabel::onEnterTransitionDidFinish()
     }
 }
 
-bool CALabel::initWithFrame(const CCRect& rect)
+bool CALabel::initWithFrame(const DRect& rect)
 {
     if (!CAView::initWithFrame(rect,CAColor_black))
     {
@@ -89,7 +90,7 @@ bool CALabel::initWithFrame(const CCRect& rect)
     return true;
 }
 
-bool CALabel::initWithCenter(const CCRect& rect)
+bool CALabel::initWithCenter(const DRect& rect)
 {
     if (!CAView::initWithCenter(rect,CAColor_black))
     {
@@ -111,7 +112,7 @@ void CALabel::updateImage()
  
     unsigned int linenumber = (int)this->getBounds().size.height / fontHeight;
 
-    CCSize size = CCSizeZero;
+    DSize size = DSizeZero;
     if (m_bFitFlag)
     {
         float width = CAImage::getStringWidth(m_nfontName.c_str(), m_nfontSize, m_nText);
@@ -119,11 +120,11 @@ void CALabel::updateImage()
         {
             if (m_nNumberOfLine > 1)
             {
-				size = CCSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * m_nNumberOfLine);
+				size = DSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * m_nNumberOfLine);
             }
             else if (m_nNumberOfLine == 1)
             {
-				size = CCSize(width, fontHeight);
+				size = DSize(width, fontHeight);
             }
             else
             {
@@ -147,11 +148,11 @@ void CALabel::updateImage()
 		{
 			if (m_nNumberOfLine > 0)
 			{
-				size = CCSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
+				size = DSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
 			}
 			else
 			{
-				size = CCSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * linenumber);
+				size = DSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * linenumber);
 			}
 		}
     }
@@ -159,6 +160,7 @@ void CALabel::updateImage()
     
     
 	CAImage* image = CAImage::createWithString(m_nText.c_str(),
+											   m_cFontColor,
                                                m_nfontName.c_str(),
                                                m_nfontSize,
                                                size,
@@ -172,10 +174,9 @@ void CALabel::updateImage()
 
     this->setImage(image);
 	CC_RETURN_IF(image == NULL);
-
     m_cLabelSize = size;
     
-    CCRect rect = CCRectZero;
+    DRect rect = DRectZero;
     rect.size.width = this->getBounds().size.width;
     rect.size.height = size.height;
     
@@ -207,13 +208,13 @@ void CALabel::updateImage()
         {
             if (m_bFrame)
             {
-                CCRect rect = this->getFrame();
+                DRect rect = this->getFrame();
                 rect.size = size;
                 this->setFrame(rect);
             }
             else
             {
-                CCRect rect = this->getCenter();
+                DRect rect = this->getCenter();
                 rect.size = size;
                 this->setCenter(rect);
             }
@@ -255,7 +256,7 @@ void CALabel::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 }
 
 
-void CALabel::setDimensions(const CCSize& var)
+void CALabel::setDimensions(const DSize& var)
 {
     m_nDimensions = var;
     if(m_nText.empty())
@@ -265,7 +266,7 @@ void CALabel::setDimensions(const CCSize& var)
     this->updateImageDraw();
 }
 
-const CCSize& CALabel::getDimensions()
+const DSize& CALabel::getDimensions()
 {
     return m_nDimensions;
 }
@@ -428,14 +429,26 @@ const CAVerticalTextAlignment& CALabel::getVerticalTextAlignmet()
     return m_nVerticalTextAlignmet;
 }
 
-void CALabel::setContentSize(const CrossApp::CCSize &var)
+void CALabel::setContentSize(const CrossApp::DSize &var)
 {
-    CCSize originSize = getFrame().size;
+    DSize originSize = getFrame().size;
     CAView::setContentSize(var);
     if (originSize.width != var.width || originSize.height != var.height)
     {
         this->updateImageDraw();
     }
+}
+
+const CAColor4B& CALabel::getColor(void)
+{
+	return m_cFontColor;
+}
+
+void CALabel::setColor(const CAColor4B& color)
+{
+	m_cFontColor = color;
+	updateImage();
+	CAView::setColor(CAColor_white);
 }
 
 void CALabel::visit()
@@ -460,7 +473,8 @@ void CALabel::applyStyle(const CALabelStyle* pLabelStyle)
 
 	setFontName(pLabelStyle->getFontName());
 	setFontSize(pLabelStyle->getFontSize());
-	setColor(pLabelStyle->getFontColor());
+	
+//	setColor(pLabelStyle->getFontColor());
 	setLineSpacing(pLabelStyle->getLineSpace());
 	setBold(pLabelStyle->isBold());
 	setItalics(pLabelStyle->isItalics());

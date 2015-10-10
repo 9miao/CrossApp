@@ -166,6 +166,15 @@ static EAGLView *view = 0;
 		{
 			view.contentScaleFactor = [[UIScreen mainScreen] scale];
 		}
+        
+        CGFloat scale = [[UIScreen mainScreen] scale];
+        CGRect frameRect = frame;
+        frameRect.origin.x *= scale;
+        frameRect.origin.y *= scale;
+        frameRect.size.width *= scale;
+        frameRect.size.height *= scale;
+        
+        CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
     }
         
     return self;
@@ -878,11 +887,11 @@ static EAGLView *view = 0;
 
     
     CrossApp::CCIMEKeyboardNotificationInfo notiInfo;
-    notiInfo.begin = CrossApp::CCRect(begin.origin.x,
+    notiInfo.begin = CrossApp::DRect(begin.origin.x,
                                      begin.origin.y,
                                      begin.size.width,
                                      begin.size.height);
-    notiInfo.end = CrossApp::CCRect(end.origin.x,
+    notiInfo.end = CrossApp::DRect(end.origin.x,
                                    end.origin.y,
                                    end.size.width,
                                    end.size.height);

@@ -175,12 +175,12 @@ static inline ccTex2F tex2(const float u, const float v)
 
  
 //! Point Sprite component
-typedef struct _ccPointSprite
+typedef struct _DPointSprite
 {
     ccVertex2F    pos;        // 8 bytes
     CAColor4B    color;        // 4 bytes
     GLfloat        size;        // 4 bytes
-} ccPointSprite;
+} DPointSprite;
 
 //!    A 2D Quad. 4 * 2 floats
 typedef struct _ccQuad2 {
@@ -335,7 +335,7 @@ typedef struct
 {
     ccT2F_Quad texCoords;
     float delay;
-    CCSize size; 
+    DSize size; 
 } CAAnimationFrameData;
 
 typedef enum

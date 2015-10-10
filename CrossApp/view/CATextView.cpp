@@ -41,6 +41,7 @@ CATextView::CATextView()
 , m_bMoved(false)
 , m_bKeyboardOpen(false)
 , m_bFirstInput(false)
+, m_cFontColor(CAColor_black)
 {
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
     this->setHaveNextResponder(false);
@@ -105,7 +106,7 @@ bool CATextView::init()
 		return false;
 	}
     this->setColor(CAColor_clear);
-	m_pContainerView = CAScrollView::createWithFrame(CCRectZero);
+	m_pContainerView = CAScrollView::createWithFrame(DRectZero);
 	m_pContainerView->setShowsHorizontalScrollIndicator(false);
     m_pContainerView->setHorizontalScrollEnabled(false);
 	m_pContainerView->setBounceHorizontal(false);
@@ -147,7 +148,7 @@ CAView* CATextView::getBackgroundView()
 	return m_pBackgroundView;
 }
 
-CATextView* CATextView::createWithFrame(const CCRect& frame)
+CATextView* CATextView::createWithFrame(const DRect& frame)
 {
 	CATextView *text = new CATextView();
 	if (text && text->initWithFrame(frame))
@@ -159,7 +160,7 @@ CATextView* CATextView::createWithFrame(const CCRect& frame)
 	return NULL;
 }
 
-CATextView* CATextView::createWithCenter(const CCRect& rect)
+CATextView* CATextView::createWithCenter(const DRect& rect)
 {
 	CATextView *text = new CATextView();
 	if (text && text->initWithCenter(rect))
@@ -195,7 +196,7 @@ void CATextView::initMarkSprite()
 		m_pContainerView->addSubview(m_pCursorMark);
         hideCursorMark();
 	}
-	m_pCursorMark->setFrame(CCRect(0, 0, 2, m_iLineHeight));
+	m_pCursorMark->setFrame(DRect(0, 0, 2, m_iLineHeight));
 }
 
 void CATextView::showCursorMark()
@@ -235,6 +236,7 @@ void CATextView::updateImage()
 	width -= m_iHoriMargins * 2;
 
 	CAImage* image = g_AFTFontCache.initWithString(text.c_str(),
+		m_cFontColor,
 		m_szFontName.c_str(),
 		m_iFontSize,
 		width,
@@ -255,7 +257,7 @@ void CATextView::updateImage()
 	}
     m_pImageView->setColor(m_cFontColor);
 	m_pImageView->setImage(image);
-    CCRect rect = CCRectZero;
+    DRect rect = DRectZero;
 
 	if (image)
 	{
@@ -265,7 +267,7 @@ void CATextView::updateImage()
     m_pImageView->setImageRect(rect);
 	m_pContainerView->setViewSize(rect.size);
 
-	rect.origin = CCPointMake(m_iHoriMargins, 0);
+	rect.origin = DPoint(m_iHoriMargins, 0);
     m_pImageView->setFrame(rect);
     
 	calcCursorPosition();
@@ -292,7 +294,7 @@ void CATextView::calcCursorPosition()
 	float fHalfLineHeight = m_iLineHeight / 2.0f;
 	float fLineSpaceValue = m_iLineHeight / 4.0f;
 
-	CCPoint cCurPosition;
+	DPoint cCurPosition;
 	if (iCurLine == -1)
 	{
 		cCurPosition.x = m_iHoriMargins;
@@ -319,7 +321,7 @@ void CATextView::calcCursorPosition()
 	if (y < 0 || y > h)
 	{
 		y = y < 0 ? fHalfLineHeight : (h - fHalfLineHeight);
-		m_pContainerView->setContentOffset(CCPointMake(0, cCurPosition.y - y), true);
+		m_pContainerView->setContentOffset(DPoint(0, cCurPosition.y - y), true);
 	}
 }
 
@@ -602,7 +604,7 @@ int CATextView::getCurrentByPointY(int y)
 	return iCurLine;
 }
 
-void CATextView::calculateSelChars(const CCPoint& point, int& l, int& r, int& p)
+void CATextView::calculateSelChars(const DPoint& point, int& l, int& r, int& p)
 {
 	float y = point.y + m_pContainerView->getContentOffset().y;
 	int iCurLine = getCurrentByPointY(y);
@@ -706,9 +708,9 @@ std::pair<int, int> CATextView::getLineAndPos(int iPos)
 	return t;
 }
 
-std::vector<CCRect> CATextView::getZZCRect()
+std::vector<DRect> CATextView::getZZCRect()
 {
-	CCSize size = getFrame().size;
+	DSize size = getFrame().size;
 	std::pair<int, int> t1 = getLineAndPos(m_curSelCharRange.first);
 	std::pair<int, int> t2 = getLineAndPos(m_curSelCharRange.second);
 
@@ -720,21 +722,21 @@ std::vector<CCRect> CATextView::getZZCRect()
 	if (!s2.empty() && s2[0] == '\n') s2.erase(0, 1);
 	int l2 = m_iHoriMargins + getStringLength(s2);
 
-	std::vector<CCRect> vr;
+	std::vector<DRect> vr;
 	if (t1.first == t2.first)
 	{
-		vr.push_back(CCRect(l1, m_iLineHeight*1.25f*t1.first, l2 - l1, m_iLineHeight));
+		vr.push_back(DRect(l1, m_iLineHeight*1.25f*t1.first, l2 - l1, m_iLineHeight));
 	}
 	else
 	{
-		vr.push_back(CCRect(l1, m_iLineHeight*1.25f*t1.first, size.width - l1 - m_iHoriMargins, m_iLineHeight*1.25f));
+		vr.push_back(DRect(l1, m_iLineHeight*1.25f*t1.first, size.width - l1 - m_iHoriMargins, m_iLineHeight*1.25f));
 
 		int i = t1.first + 1;
 		for (; i < t2.first; i++)
 		{
-			vr.push_back(CCRect(m_iHoriMargins, m_iLineHeight*1.25f*i, size.width - 2 * m_iHoriMargins, m_iLineHeight*1.25f));
+			vr.push_back(DRect(m_iHoriMargins, m_iLineHeight*1.25f*i, size.width - 2 * m_iHoriMargins, m_iLineHeight*1.25f));
 		}
-		vr.push_back(CCRect(m_iHoriMargins, m_iLineHeight*1.25f*i, l2 - m_iHoriMargins, m_iLineHeight));
+		vr.push_back(DRect(m_iHoriMargins, m_iLineHeight*1.25f*i, l2 - m_iHoriMargins, m_iLineHeight));
 	}
 	for (int i = 0; i < vr.size(); i++)
 	{
@@ -743,7 +745,7 @@ std::vector<CCRect> CATextView::getZZCRect()
 	return vr;
 }
 
-void CATextView::setContentSize(const CCSize& var)
+void CATextView::setContentSize(const DSize& var)
 {
 	CAView::setContentSize(var);
 	if (m_pBackgroundView)
@@ -752,7 +754,7 @@ void CATextView::setContentSize(const CCSize& var)
 	}
 	if (m_pContainerView)
 	{
-		CCRect r = this->getBounds();
+		DRect r = this->getBounds();
 		r.origin.y += m_iVertMargins;
 		r.size.height -= m_iVertMargins * 2;
 		m_pContainerView->setFrame(r);
@@ -791,7 +793,7 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		return;
 	}
     
-	CCPoint point = this->convertTouchToNodeSpace(pTouch);
+	DPoint point = this->convertTouchToNodeSpace(pTouch);
 
     if (this->getBounds().containsPoint(point))
     {
@@ -800,12 +802,12 @@ void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			becomeFirstResponder();
             int iCurLine = 0; int iCurPosX = 0;
             calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
-			m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+			m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
 			showCursorMark();
             m_pCurPosition = m_pCursorMark->getCenterOrigin();
 
-            CCPoint pt = m_pCursorMark->getCenterOrigin();
-            m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
+            DPoint pt = m_pCursorMark->getCenterOrigin();
+            m_pTextArrView->showTextArrView(DPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
             m_curSelCharRange = std::pair<int,int>(m_iCurPos, m_iCurPos);
             
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -966,9 +968,9 @@ void CATextView::cursorMoveUp()
     if (m_iCurPos == 0 || m_szText.empty())
     return;
     
-    CCPoint cursorRect = m_pCursorMark->getCenterOrigin();//  ->setFrame(CCRect(0, 0, 2, m_iLineHeight));
+    DPoint cursorRect = m_pCursorMark->getCenterOrigin();//  ->setFrame(DRect(0, 0, 2, m_iLineHeight));
     float scrollViewOffSetY = m_pContainerView->getContentOffset().y;
-    CCPoint point = CCPoint(m_pCurPosition.x,cursorRect.y-m_iLineHeight-scrollViewOffSetY);
+    DPoint point = DPoint(m_pCurPosition.x,cursorRect.y-m_iLineHeight-scrollViewOffSetY);
     
    // if (this->getBounds().containsPoint(point))
     {
@@ -977,11 +979,11 @@ void CATextView::cursorMoveUp()
             becomeFirstResponder();
             int iCurLine = 0; int iCurPosX = 0;
             calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
-            m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+            m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
             showCursorMark();
             
-            CCPoint pt = m_pCursorMark->getCenterOrigin();
-            m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
+            DPoint pt = m_pCursorMark->getCenterOrigin();
+            m_pTextArrView->showTextArrView(DPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
             m_curSelCharRange = std::pair<int,int>(m_iCurPos, m_iCurPos);
             calcCursorPosition();
         }
@@ -993,9 +995,9 @@ void CATextView::cursorMoveDown()
     if (m_iCurPos == 0 || m_szText.empty())
     return;
     
-    CCPoint cursorRect = m_pCursorMark->getCenterOrigin();//  ->setFrame(CCRect(0, 0, 2, m_iLineHeight));
+    DPoint cursorRect = m_pCursorMark->getCenterOrigin();//  ->setFrame(DRect(0, 0, 2, m_iLineHeight));
     float scrollViewOffSetY = m_pContainerView->getContentOffset().y;
-    CCPoint point = CCPoint(m_pCurPosition.x,cursorRect.y+m_iLineHeight-scrollViewOffSetY);
+    DPoint point = DPoint(m_pCurPosition.x,cursorRect.y+m_iLineHeight-scrollViewOffSetY);
     
     if (this->getBounds().containsPoint(point))
     {
@@ -1004,18 +1006,18 @@ void CATextView::cursorMoveDown()
             becomeFirstResponder();
             int iCurLine = 0; int iCurPosX = 0;
             calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
-            m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+            m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
             showCursorMark();
             
-            CCPoint pt = m_pCursorMark->getCenterOrigin();
-            m_pTextArrView->showTextArrView(CCPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
+            DPoint pt = m_pCursorMark->getCenterOrigin();
+            m_pTextArrView->showTextArrView(DPoint(pt.x, pt.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
             m_curSelCharRange = std::pair<int,int>(m_iCurPos, m_iCurPos);
             calcCursorPosition();
         }
     }
 }
 
-void CATextView::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
+void CATextView::moveSelectChars(bool isLeftBtn, const DPoint& pt)
 {
 	int l, r, p;
 	calculateSelChars(convertToNodeSpace(pt), l, r, p);
@@ -1039,17 +1041,17 @@ void CATextView::moveSelectChars(bool isLeftBtn, const CCPoint& pt)
 	hideCursorMark();
 }
 
-void CATextView::moveArrowBtn(const CCPoint& pt)
+void CATextView::moveArrowBtn(const DPoint& pt)
 {
 	int iCurLine = 0; int iCurPosX = 0;
 	calculateSelChars(convertToNodeSpace(pt), iCurLine, iCurPosX, m_iCurPos);
 	m_curSelCharRange = std::make_pair(0, 0);
 	calcCursorPosition();
 
-	m_pCursorMark->setCenterOrigin(CCPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+	m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
 
-	CCPoint ptArr = m_pCursorMark->getCenterOrigin();
-	m_pTextArrView->showTextArrView(CCPoint(ptArr.x, ptArr.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
+	DPoint ptArr = m_pCursorMark->getCenterOrigin();
+	m_pTextArrView->showTextArrView(DPoint(ptArr.x, ptArr.y + m_iLineHeight*1.2f + m_pContainerView->getContentOffset().y));
 }
 
 void CATextView::copyToClipboard()
@@ -1084,7 +1086,7 @@ int CATextView::getStringLength(const std::string &var)
 	CAImage *image = CAImage::createWithString(var.c_str(),
 		"",
 		m_iFontSize,
-		CCSizeZero,
+		DSizeZero,
 		CATextAlignmentLeft,
 		CAVerticalTextAlignmentCenter);
 	if (image != NULL)

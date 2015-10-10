@@ -30,12 +30,12 @@ public:
     virtual ~CAStepper();
 
     static CAStepper* create();
-    static CAStepper* createWithFrame(const CCRect& rect);
-    static CAStepper* createWithCenter(const CCRect& rect);
+    static CAStepper* createWithFrame(const DRect& rect);
+    static CAStepper* createWithCenter(const DRect& rect);
     
     virtual bool init();
-    virtual bool initWithFrame(const CCRect& rect);
-    virtual bool initWithCenter(const CCRect& rect);
+    virtual bool initWithFrame(const DRect& rect);
+    virtual bool initWithCenter(const DRect& rect);
     
     virtual void onEnter();
     virtual void onExit();
@@ -93,7 +93,7 @@ protected:
     void repeat(float dt);
     void click(CATouch* pTouch);
     void action();
-    void setContentSize(const CCSize & var);
+    void setContentSize(const DSize & var);
 private:
     CAImage* m_pBackgroundImage[CAControlStateAll];
     CAImage* m_pIncrementImage[CAControlStateAll];

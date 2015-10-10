@@ -76,7 +76,7 @@ protected:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
 	void addGrayLine(int x);
-	void alertViewCallback(CAControl* btn, CCPoint point);
+	void alertViewCallback(CAControl* btn, DPoint point);
 
 private:
 	std::vector<CallbackTarget> m_CallbackTargets;
@@ -95,7 +95,7 @@ public:
 	static CATextSelectView *create();
 	static void hideTextSelectView();
 
-	void showTextSelView(const CCRect& rect, CAView* pControlView, bool showLeft = true, bool showRight = true);
+	void showTextSelView(const DRect& rect, CAView* pControlView, bool showLeft = true, bool showRight = true);
 
 protected:
 	virtual bool init();
@@ -125,9 +125,9 @@ public:
 
 	static CATextSelViewEx *create();
 
-	void showTextSelView(CAView* pControlView, const std::vector<CCRect>& vt, float iLineHeight);
+	void showTextSelView(CAView* pControlView, const std::vector<DRect>& vt, float iLineHeight);
 	void hideTextSelView();
-	void showTextViewMark(const std::vector<CCRect>& vt);
+	void showTextViewMark(const std::vector<DRect>& vt);
 	void hideTextViewMark();
     bool isTextViewShow();
     
@@ -156,7 +156,7 @@ public:
 
 	static CATextArrowView *create();
 
-	void showTextArrView(const CCPoint& pt);
+	void showTextArrView(const DPoint& pt);
 	void hideTextArrView();
 
 

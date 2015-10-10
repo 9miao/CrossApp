@@ -47,7 +47,7 @@ protected:
     unsigned long   m_pDataSize;
     GifFileType*    m_pGIF;
     int             m_iGIFIndex;
-   // CCSize          m_pSize;
+   // DSize          m_pSize;
     unsigned int    m_uPixelsWide;
     unsigned int    m_uPixelsHigh;
     float           m_fDurTime;

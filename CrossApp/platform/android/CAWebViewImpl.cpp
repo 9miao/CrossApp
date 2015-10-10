@@ -375,7 +375,7 @@ void CAWebViewImpl::setAllWebviewRectEmpty()
 
 void CAWebViewImpl::update(float dt)
 {
-	CCRect cRect = _webView->convertRectToWorldSpace(_webView->getBounds());
+	DRect cRect = _webView->convertRectToWorldSpace(_webView->getBounds());
 	setWebViewRectJNI(_viewTag, cRect.origin.x, cRect.origin.y, cRect.size.width, cRect.size.height);
 }
 
@@ -390,7 +390,7 @@ CAImageView* CAWebViewImpl::getWebViewImage()
 	
 	if (!s_cszWebViewImageData.empty())
 	{
-		CCSize size = _webView->getBounds().size;
+		DSize size = _webView->getBounds().size;
 
 		CAImage* pImage = new CAImage();
 		if (!pImage->initWithRawData((const unsigned char*)&s_cszWebViewImageData[0], CAImage::PixelFormat_RGBA8888, size.width, size.height))

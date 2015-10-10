@@ -39,9 +39,9 @@
 NS_CC_BEGIN
 
 
-CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const CCSize& size)
+CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
 {
-    CCRect rect;
+    DRect rect;
     rect.size = size;
     CARenderImage* renderImage = CARenderImage::create(size.width, size.height);
     renderImage->begin();
@@ -87,7 +87,7 @@ CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const CCSize& size)
 
 CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, float scaleX, float scaleY)
 {
-    CCSize size;
+    DSize size;
     size.width = image->getContentSize().width * scaleX;
     size.height = image->getContentSize().height * scaleY;
     return scaleToNewImageWithImage(image, size);
@@ -190,7 +190,7 @@ CAImage* generateMipmapsWithImageRGBA(CAImage* image)
 
 CAImage* CAImage::generateMipmapsWithImage(CAImage* image)
 {
-    if (CCPoint(image->getContentSize()).getLength() < 2895)
+    if (DPoint(image->getContentSize()).getLength() < 2895)
     {
         CAImage* newImage = new CAImage();
         newImage->initWithRawData(image->getData(), image->getPixelFormat(), image->getPixelsWide(), image->getPixelsHigh());
@@ -1020,10 +1020,10 @@ CAImage::~CAImage()
     s_pImages.erase(this);
 }
 
-CAImage*  CAImage::createWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CATextAlignment hAlignment,
+CAImage*  CAImage::createWithString(const char *text, const CAColor4B& fontColor, const char *fontName, float fontSize, const DSize& dimensions, CATextAlignment hAlignment,
                                     CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine)
 {
-    return g_AFTFontCache.initWithString(text, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine);
+	return g_AFTFontCache.initWithString(text, fontColor, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine);
 }
 
 int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
@@ -1850,7 +1850,7 @@ bool CAImage::initWithRawData(const unsigned char * data,
     
     this->setData(data, nDataLenght);
     
-    m_tContentSize = CCSize(pixelsWide, pixelsHigh);
+    m_tContentSize = DSize(pixelsWide, pixelsHigh);
     m_uPixelsWide = pixelsWide;
     m_uPixelsHigh = pixelsHigh;
     m_ePixelFormat = pixelFormat;
@@ -1907,7 +1907,7 @@ void CAImage::convertToRawData()
     releaseData(&m_pImageData);
     m_uImageDataLenght = 0;
 
-    m_tContentSize = CCSize(m_uPixelsWide, m_uPixelsHigh);
+    m_tContentSize = DSize(m_uPixelsWide, m_uPixelsHigh);
     m_fMaxS = 1;
     m_fMaxT = 1;
     
@@ -2093,7 +2093,7 @@ GLuint CAImage::getName()
     return m_uName;
 }
 
-const CCSize& CAImage::getContentSize()
+const DSize& CAImage::getContentSize()
 {
     return m_tContentSize;
 }
@@ -2151,7 +2151,7 @@ const char* CAImage::description(void)
     return crossapp_format_string("<CAImage | Name = %d | Dimensions = %u x %u | Coordinates = (%f, %f)>",m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT).c_str();
 }
 
-void CAImage::drawAtPoint(const CCPoint& point)
+void CAImage::drawAtPoint(const DPoint& point)
 {
     GLfloat    coordinates[] =
     {
@@ -2188,7 +2188,7 @@ void CAImage::drawAtPoint(const CCPoint& point)
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-void CAImage::drawInRect(const CCRect& rect)
+void CAImage::drawInRect(const DRect& rect)
 {
     GLfloat    coordinates[] =
     {

@@ -12,10 +12,10 @@
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "dispatcher/CATouch.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "CCEGLView.h"
 #include "animation/CAViewAnimation.h"
-
+#include "platform/CADensityDpi.h"
 NS_CC_BEGIN
 
 #pragma CATableView
@@ -24,7 +24,7 @@ CATableView::CATableView()
 :m_pTableHeaderView(NULL)
 ,m_pTableFooterView(NULL)
 ,m_obSeparatorColor(CAColor_gray)
-,m_nSeparatorViewHeight(1)
+,m_nSeparatorViewHeight(s_px_to_dip(2.0f))
 ,m_nTableHeaderHeight(0)
 ,m_nTableFooterHeight(0)
 ,m_nSections(0)
@@ -72,7 +72,7 @@ void CATableView::onExitTransitionDidStart()
     CAScrollView::onExitTransitionDidStart();
 }
 
-CATableView* CATableView::createWithFrame(const CCRect& rect)
+CATableView* CATableView::createWithFrame(const DRect& rect)
 {
     CATableView* tableView = new CATableView();
     if (tableView && tableView->initWithFrame(rect))
@@ -84,7 +84,7 @@ CATableView* CATableView::createWithFrame(const CCRect& rect)
     return NULL;
 }
 
-CATableView* CATableView::createWithCenter(const CCRect& rect)
+CATableView* CATableView::createWithCenter(const DRect& rect)
 {
     CATableView* tableView = new CATableView();
     if (tableView && tableView->initWithCenter(rect))
@@ -109,7 +109,7 @@ bool CATableView::init()
     return true;
 }
 
-void CATableView::setContentSize(const CrossApp::CCSize &var)
+void CATableView::setContentSize(const CrossApp::DSize &var)
 {
     CAScrollView::setContentSize(var);
 }
@@ -127,7 +127,7 @@ bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_bAllowsSelection && this->isScrollWindowNotOutSide() == false && isInertia)
     {
-        CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
+        DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
         
         std::map<CAIndexPath2E, CATableViewCell*>::iterator itr;
         for (itr=m_mpUsedTableCells.begin(); itr!=m_mpUsedTableCells.end(); itr++)
@@ -261,7 +261,7 @@ void CATableView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 {
     if (m_bAllowsSelection)
     {
-        CCPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
+        DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
         
         std::map<CAIndexPath2E, CATableViewCell*>::iterator itr;
         for (itr=m_mpUsedTableCells.begin(); itr!=m_mpUsedTableCells.end(); itr++)
@@ -446,7 +446,7 @@ void CATableView::clearData()
     }
     m_nRowHeightss.clear();
     
-    std::vector<std::vector<CCRect> >::iterator itr2;
+    std::vector<std::vector<DRect> >::iterator itr2;
     for (itr2=m_rTableCellRectss.begin(); itr2!=m_rTableCellRectss.end(); itr2++)
     {
         itr2->clear();
@@ -455,7 +455,7 @@ void CATableView::clearData()
     
     m_rSectionRects.clear();
     
-    std::vector<std::vector<CCRect> >::iterator itr3;
+    std::vector<std::vector<DRect> >::iterator itr3;
     for (itr3=m_rLineRectss.begin(); itr3!=m_rLineRectss.end(); itr3++)
     {
         itr3->clear();
@@ -539,7 +539,7 @@ void CATableView::reloadViewSizeData()
     viewHeight += m_nTableHeaderHeight;
     viewHeight += m_nTableFooterHeight;
 
-    CCSize size = this->getBounds().size;
+    DSize size = this->getBounds().size;
     size.height = viewHeight;
     this->setViewSize(size);
 }
@@ -555,7 +555,7 @@ void CATableView::reloadData()
     
     if (m_pTableHeaderView)
     {
-        m_pTableHeaderView->setFrame(CCRect(0, y, width, m_nTableHeaderHeight));
+        m_pTableHeaderView->setFrame(DRect(0, y, width, m_nTableHeaderHeight));
         this->addSubview(m_pTableHeaderView);
         y += m_nTableHeaderHeight;
     }
@@ -566,7 +566,7 @@ void CATableView::reloadData()
     m_rLineRectss.resize(sectionCount);
     for (unsigned int i=0; i<sectionCount; i++)
     {
-        CCRect sectionHeaderRect = CCRect(0, y, width, m_nSectionHeaderHeights.at(i));
+        DRect sectionHeaderRect = DRect(0, y, width, m_nSectionHeaderHeights.at(i));
         CAView* sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
         
         if (sectionHeaderView)
@@ -581,14 +581,14 @@ void CATableView::reloadData()
         m_rLineRectss[i].resize(m_nRowHeightss[i].size());
         for (unsigned int j=0; j<m_rTableCellRectss[i].size(); j++)
         {
-            m_rTableCellRectss[i][j] = CCRect(0, y, width, m_nRowHeightss[i][j]);
+            m_rTableCellRectss[i][j] = DRect(0, y, width, m_nRowHeightss[i][j]);
             y += m_nRowHeightss[i][j];
             
-            m_rLineRectss[i][j] = CCRect(0, y, width, m_nSeparatorViewHeight);
+            m_rLineRectss[i][j] = DRect(0, y, width, m_nSeparatorViewHeight);
             y += m_nSeparatorViewHeight;
         }
         
-        CCRect sectionFooterRect = CCRect(0, y, width, m_nSectionFooterHeights.at(i));
+        DRect sectionFooterRect = DRect(0, y, width, m_nSectionFooterHeights.at(i));
         
         CAView* sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
         
@@ -599,7 +599,7 @@ void CATableView::reloadData()
             m_pSectionFooterViews[i] = sectionFooterView;
         }
         
-        CCRect sectionRect = sectionHeaderRect;
+        DRect sectionRect = sectionHeaderRect;
         sectionRect.size.height = sectionFooterRect.origin.y
                                 + sectionFooterRect.size.height
                                 - sectionHeaderRect.origin.y;
@@ -610,7 +610,7 @@ void CATableView::reloadData()
     
     if (m_pTableFooterView)
     {
-        m_pTableFooterView->setFrame(CCRect(0, y, width, m_nTableFooterHeight));
+        m_pTableFooterView->setFrame(DRect(0, y, width, m_nTableFooterHeight));
         this->addSubview(m_pTableFooterView);
         y += m_nTableFooterHeight;
     }
@@ -629,7 +629,7 @@ void CATableView::firstReloadData()
 
 void CATableView::loadTableCell()
 {
-    CCRect rect = this->getBounds();
+    DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
     rect.origin.y -= rect.size.height * 0.1f;
     rect.size.height *= 1.2f;
@@ -640,7 +640,7 @@ void CATableView::loadTableCell()
         {
             CAIndexPath2E indexPath = CAIndexPath2E(i, j);
             CC_CONTINUE_IF(m_mpUsedTableCells.count(indexPath) && m_mpUsedTableCells[indexPath]);
-            CCRect cellRect = m_rTableCellRectss[i][j];
+            DRect cellRect = m_rTableCellRectss[i][j];
             CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
             CATableViewCell* cell = m_pTableViewDataSource->tableCellAtIndex(this, m_rTableCellRectss[i][j].size, i, j);
             CC_CONTINUE_IF(cell == NULL);
@@ -661,7 +661,7 @@ void CATableView::loadTableCell()
             }
             
             CAView* view = this->dequeueReusableLine();
-            CCRect lineRect = m_rLineRectss[i][j];
+            DRect lineRect = m_rLineRectss[i][j];
             if (view == NULL)
             {
                 view = CAView::createWithFrame(lineRect, m_obSeparatorColor);
@@ -675,7 +675,7 @@ void CATableView::loadTableCell()
 
 void CATableView::recoveryTableCell()
 {
-    CCRect rect = this->getBounds();
+    DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
     rect.origin.y -= rect.size.height * 0.1f;
     rect.size.height *= 1.2f;
@@ -687,7 +687,7 @@ void CATableView::recoveryTableCell()
     {
         CATableViewCell* cell = itr->second;
         CC_CONTINUE_IF(cell == NULL);
-        CCRect cellRect = cell->getFrame();
+        DRect cellRect = cell->getFrame();
 
         CC_CONTINUE_IF(rect.intersectsRect(cellRect));
         m_mpFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
@@ -718,10 +718,10 @@ CAView* CATableView::dequeueReusableLine()
 
 void CATableView::updateSectionHeaderAndFooterRects()
 {
-    CCRect rect = this->getBounds();
+    DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
     
-    std::vector<CCRect>::iterator itr;
+    std::vector<DRect>::iterator itr;
     for (itr=m_rSectionRects.begin(); itr!=m_rSectionRects.end(); itr++)
     {
         CC_CONTINUE_IF(!rect.intersectsRect(*itr));
@@ -740,7 +740,7 @@ void CATableView::updateSectionHeaderAndFooterRects()
         }
         if (header && m_bAlwaysTopSectionHeader)
         {
-            CCPoint p1 = rect.origin;
+            DPoint p1 = rect.origin;
             p1.y = MAX(p1.y, itr->origin.y);
             p1.y = MIN(p1.y, itr->origin.y + itr->size.height
                        - headerHeight - footerHeight);
@@ -748,7 +748,7 @@ void CATableView::updateSectionHeaderAndFooterRects()
         }
         if (footer && m_bAlwaysBottomSectionFooter)
         {
-            CCPoint p2 = CCPointZero;
+            DPoint p2 = DPointZero;
             p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,
                        itr->origin.y + itr->size.height - footerHeight);
             p2.y = MAX(p2.y, itr->origin.y + headerHeight);
@@ -881,7 +881,7 @@ CAView* CATableViewCell::getBackgroundView()
     return m_pBackgroundView;
 }
 
-void CATableViewCell::setContentSize(const CrossApp::CCSize &var)
+void CATableViewCell::setContentSize(const CrossApp::DSize &var)
 {
     CAView::setContentSize(var);
     

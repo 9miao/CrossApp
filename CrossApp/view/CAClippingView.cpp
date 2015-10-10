@@ -5,7 +5,7 @@
 #include "shaders/CAGLProgram.h"
 #include "shaders/CAShaderCache.h"
 #include "basics/CAApplication.h"
-#include "support/CCPointExtension.h"
+#include "support/CAPointExtension.h"
 #include "view/CADrawingPrimitives.h"
 
 NS_CC_BEGIN
@@ -228,8 +228,8 @@ void CAClippingView::visit()
     glStencilOp(!m_bInverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
     
     // draw a fullscreen solid rectangle to clear the stencil buffer
-    //ccDrawSolidRect(CCPointZero, ccpFromSize([[CAApplication sharedApplication] winSize]), ccc4f(1, 1, 1, 1));
-    ccDrawSolidRect(CCPointZero, ccpFromSize(CAApplication::getApplication()->getWinSize()), ccc4f(1, 1, 1, 1));
+    //ccDrawSolidRect(DPointZero, ccpFromSize([[CAApplication sharedApplication] winSize]), ccc4f(1, 1, 1, 1));
+    ccDrawSolidRect(DPointZero, ccpFromSize(CAApplication::getApplication()->getWinSize()), ccc4f(1, 1, 1, 1));
     
     ///////////////////////////////////
     // DRAW CLIPPING STENCIL
