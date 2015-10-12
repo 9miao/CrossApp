@@ -132,12 +132,6 @@
     <ClCompile Include="..\support\base64.cpp">
       <Filter>support</Filter>
     </ClCompile>
-    <ClCompile Include="..\support\CCPointExtension.cpp">
-      <Filter>support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\support\CCProfiling.cpp">
-      <Filter>support</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\ccUtils.cpp">
       <Filter>support</Filter>
     </ClCompile>
@@ -509,6 +503,12 @@
     <ClCompile Include="..\platform\CAEmojiFont.cpp">
       <Filter>platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\CAPointExtension.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\CAProfiling.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -563,12 +563,6 @@
       <Filter>platform\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\support\base64.h">
-      <Filter>support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\CCPointExtension.h">
-      <Filter>support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\CCProfiling.h">
       <Filter>support</Filter>
     </ClInclude>
     <ClInclude Include="..\support\ccUtils.h">
@@ -1019,6 +1013,12 @@
     </ClInclude>
     <ClInclude Include="..\platform\CAEmojiFont.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\CAPointExtension.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\CAProfiling.h">
+      <Filter>support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

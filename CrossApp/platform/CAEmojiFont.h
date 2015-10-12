@@ -33,6 +33,8 @@ public:
 	CAEmojiFont();
 	virtual ~CAEmojiFont();
 
+	static CAEmojiFont* getInstance();
+
 	bool initEmojiFont();
 	void finiEmojiFont();
 

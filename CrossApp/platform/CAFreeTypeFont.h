@@ -130,7 +130,6 @@ protected:
     FT_Error addWord(const std::string& word);
     void newLine();
     void endLine();
-	bool hasEmoji(const std::string& pText);
 
     const std::string m_space;
 	FT_Face			m_face;
