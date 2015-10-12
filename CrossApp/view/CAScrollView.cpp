@@ -479,6 +479,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_bPCMode);
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     DPoint p_container = m_pContainer->getFrameOrigin();
     DPoint p_off = DPointZero;
@@ -680,7 +681,6 @@ void CAScrollView::switchPCMode(bool var)
     m_bPCMode = var;
     this->setMouseScrollWheelEnabled(m_bPCMode);
     this->setPriorityScroll(!m_bPCMode);
-    this->setScrollEnabled(!m_bPCMode);
     if (m_pIndicatorHorizontal)
     {
         m_pIndicatorHorizontal->switchPCMode(m_bPCMode);
@@ -1044,10 +1044,10 @@ void CAScrollView::endFooterRefresh()
 
 void CAScrollView::layoutPullToRefreshView()
 {
-    DSize viewSize = this->getViewSize();
+    CADipSize viewSize = this->getViewSize();
     if (m_pHeaderRefreshView)
     {
-        m_pHeaderRefreshView->setFrame(DRect(0, -128.0f, viewSize.width, 128.0f));
+        m_pHeaderRefreshView->setFrame(CADipRect(0, -128.0f, viewSize.width, 128.0f));
         if (m_pHeaderRefreshView->getSuperview() == NULL)
         {
             m_pContainer->addSubview(m_pHeaderRefreshView);
@@ -1061,7 +1061,7 @@ void CAScrollView::layoutPullToRefreshView()
 
     if (m_pFooterRefreshView)
     {
-        m_pFooterRefreshView->setFrame(DRect(0, viewSize.height, viewSize.width, 128.0f));
+        m_pFooterRefreshView->setFrame(CADipRect(0, viewSize.height, viewSize.width, 128.0f));
         if (m_pFooterRefreshView->getSuperview() == NULL)
         {
             m_pContainer->addSubview(m_pFooterRefreshView);
@@ -1148,7 +1148,7 @@ CAIndicator::CAIndicator(const CAIndicatorType& type, CAScrollView* var)
 ,m_pMyScrollView(var)
 ,m_bTouch(false)
 {
-    
+    this->setHaveNextResponder(false);
 }
 
 CAIndicator::~CAIndicator()
@@ -1316,7 +1316,7 @@ void CAIndicator::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     DSize indictor_size = ccpSub(m_obContentSize, size);
     DPoint indictor_point = ccpSub(point, ccpMult(size, 0.5f));
     DSize view_size = ccpSub(m_pMyScrollView->getViewSize(), m_pMyScrollView->getBounds().size);
-    DPoint view_offset = DPointZero;
+    DPoint view_offset = m_pMyScrollView->getContentOffset();
     if (m_eType == CAIndicatorTypeHorizontal)
     {
         view_offset.x = indictor_point.x / indictor_size.width * view_size.width;

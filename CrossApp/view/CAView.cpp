@@ -28,6 +28,7 @@
 #include "CAImageView.h"
 #include "animation/CAViewAnimation.h"
 #include "CADrawingPrimitives.h"
+#include "platform/CADensityDpi.h"
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -565,7 +566,7 @@ void CAView::setAnchorPointInPoints(const DPoint& anchorPointInPoints)
         }
         
         m_obAnchorPointInPoints = anchorPointInPoints;
-        m_obAnchorPoint = DPoint(m_obAnchorPointInPoints.x / m_obContentSize.width,
+        m_obAnchorPoint = ccp(m_obAnchorPointInPoints.x / m_obContentSize.width,
                               m_obAnchorPointInPoints.y / m_obContentSize.height);
         
         if (m_bFrame)
@@ -597,7 +598,7 @@ void CAView::setAnchorPoint(const DPoint& point)
         
         
         m_obAnchorPoint = point;
-        m_obAnchorPointInPoints = DPoint(m_obContentSize.width * m_obAnchorPoint.x,
+        m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x,
                                       m_obContentSize.height * m_obAnchorPoint.y );
       
         if (m_bFrame)
@@ -1180,21 +1181,18 @@ void CAView::visit()
         kmMat4 tm2;
         kmMat4Multiply(&tm2, &modelview, &tm);
 
-        CCEGLView* pGLView = CCEGLView::sharedOpenGLView();
-        float glScaleX = pGLView->getScaleX();
-        float glScaleY = pGLView->getScaleY();
-        
         DSize winSize = CAApplication::getApplication()->getWinSize();
         DPoint point = DPoint(modelview.mat[12], modelview.mat[13]) + winSize/2;
         DSize size = DSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
-
-        DRect frame = DRect(point.x * glScaleX, point.y * glScaleY, size.width * glScaleX, size.height * glScaleY);
+        DRect frame = DRect(point.x, point.y, size.width, size.height);
+        
+        
         if (isScissor)
         {
-            float x1 = MAX(frame.getMinX(), restoreScissorRect.getMinX());
-            float y1 = MAX(frame.getMinY(), restoreScissorRect.getMinY());
-            float x2 = MIN(frame.getMaxX(), restoreScissorRect.getMaxX());
-            float y2 = MIN(frame.getMaxY(), restoreScissorRect.getMaxY());
+            float x1 = MAX(s_dip_to_px(frame.getMinX()), restoreScissorRect.getMinX());
+            float y1 = MAX(s_dip_to_px(frame.getMinY()), restoreScissorRect.getMinY());
+            float x2 = MIN(s_dip_to_px(frame.getMaxX()), restoreScissorRect.getMaxX());
+            float y2 = MIN(s_dip_to_px(frame.getMaxY()), restoreScissorRect.getMaxY());
             float width = MAX(x2-x1, 0);
             float height = MAX(y2-y1, 0);
             
@@ -1203,10 +1201,10 @@ void CAView::visit()
         else
         {
             glEnable(GL_SCISSOR_TEST);
-            glScissor(frame.origin.x,
-                      frame.origin.y,
-                      frame.size.width,
-                      frame.size.height);
+            glScissor(s_dip_to_px(frame.origin.x),
+                      s_dip_to_px(frame.origin.y),
+                      s_dip_to_px(frame.size.width),
+                      s_dip_to_px(frame.size.height));
         }
     }
 
@@ -1235,7 +1233,7 @@ void CAView::visit()
         if (isScissor)
         {
             glScissor(restoreScissorRect.origin.x,
-                      restoreScissorRect.origin.y,
+                      restoreScissorRect.origin.y ,
                       restoreScissorRect.size.width,
                       restoreScissorRect.size.height);
         }
@@ -1519,7 +1517,12 @@ DRect CAView::convertRectToNodeSpace(const CrossApp::DRect &worldRect)
 {
     DRect ret = worldRect;
     ret.origin = this->convertToNodeSpace(ret.origin);
-    ret.size = DSizeApplyAffineTransform(ret.size, nodeToParentTransform());
+    
+    for (CAView* v = this; v; v = v->getSuperview())
+    {
+        ret.size.width /= v->getScaleX();
+        ret.size.height /= v->getScaleY();
+    }
     return ret;
 }
 
@@ -1527,7 +1530,11 @@ DRect CAView::convertRectToWorldSpace(const CrossApp::DRect &nodeRect)
 {
     DRect ret = nodeRect;
     ret.origin = this->convertToWorldSpace(ret.origin);
-    ret.size = DSizeApplyAffineTransform(ret.size, worldToNodeTransform());
+    for (CAView* v = this; v; v = v->getSuperview())
+    {
+        ret.size.width *= v->getScaleX();
+        ret.size.height *= v->getScaleY();
+    }
     return ret;
 }
 

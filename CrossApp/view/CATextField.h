@@ -164,7 +164,6 @@ public:
 	CC_PROPERTY(int, m_iHoriMargins, HoriMargins);
 	CC_PROPERTY(int, m_iVertMargins, VertMargins);
 	CC_PROPERTY(eTextEditAlign, m_eTextEditAlign, TextEditAlign);
-	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cFontColor, FontColor);
     
     inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
     

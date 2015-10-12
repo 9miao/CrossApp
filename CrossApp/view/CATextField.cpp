@@ -48,7 +48,6 @@ CATextField::CATextField()
 , m_bMoved(false)
 , m_eTextEditAlign(eTextEditAlignLeft)
 , m_bFirstInput(false)
-, m_cFontColor(CAColor_black)
 {
 	m_iFontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize);
     this->setHaveNextResponder(false);
@@ -944,7 +943,7 @@ void CATextField::updateImage()
 #endif
 	DSize size = DSize(0, m_iFontHeight*dt);
     CAImage* image = CAImage::createWithString(text.c_str(),
-											   m_cFontColor,
+											   this->getColor(),
 											   m_nfontName.c_str(),
                                                m_iFontSize,
                                                size,
@@ -1072,17 +1071,6 @@ void CATextField::setTextEditAlign(eTextEditAlign e)
 eTextEditAlign CATextField::getTextEditAlign()
 {
 	return m_eTextEditAlign;
-}
-
-const CAColor4B& CATextField::getFontColor(void)
-{
-	return m_cFontColor;
-}
-
-void CATextField::setFontColor(const CAColor4B& color)
-{
-	m_cFontColor = color;
-	updateImage();
 }
 
 int CATextField::getDtStrLength()

@@ -44,8 +44,7 @@ static void removeUsedIndexBit(int index)
 
 CCEGLViewProtocol::CCEGLViewProtocol()
 : m_pDelegate(NULL)
-, m_fScaleX(1.0f)
-, m_fScaleY(1.0f)
+, m_fScale(1.0f)
 {
 }
 
@@ -71,14 +70,9 @@ void CCEGLViewProtocol::setFrameSize(float width, float height)
     
     m_obDesignResolutionSize.setSize(s_px_to_dip(width), s_px_to_dip(height));
     
-    m_fScaleX = s_dip_to_px(1.0f);
-    m_fScaleY = s_dip_to_px(1.0f);
+    m_fScale = s_dip_to_px(1.0f);
     
-    // calculate the rect of viewport
-    float viewPortW = m_obDesignResolutionSize.width * m_fScaleX;
-    float viewPortH = m_obDesignResolutionSize.height * m_fScaleY;
-    
-    m_obViewPortRect.setRect((m_obScreenSize.width - viewPortW) / 2, (m_obScreenSize.height - viewPortH) / 2, viewPortW, viewPortH);
+    m_obViewPortRect.setRect(0, 0, m_obScreenSize.width, m_obScreenSize.height);
 }
 
 DSize  CCEGLViewProtocol::getVisibleSize() const
@@ -99,18 +93,18 @@ void CCEGLViewProtocol::setTouchDelegate(CCEGLTouchDelegate * pDelegate)
 void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
 {
 
-    glViewport((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
-               (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
-               (GLsizei)(w * m_fScaleX),
-               (GLsizei)(h * m_fScaleY));
+    glViewport((GLint)(x * m_fScale + m_obViewPortRect.origin.x),
+               (GLint)(y * m_fScale + m_obViewPortRect.origin.y),
+               (GLsizei)(w * m_fScale),
+               (GLsizei)(h * m_fScale));
 }
 
 void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h)
 {
-    glScissor((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
-              (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
-              (GLsizei)(w * m_fScaleX),
-              (GLsizei)(h * m_fScaleY));
+    glScissor((GLint)(x * m_fScale + m_obViewPortRect.origin.x),
+              (GLint)(y * m_fScale + m_obViewPortRect.origin.y),
+              (GLsizei)(w * m_fScale),
+              (GLsizei)(h * m_fScale));
 }
 
 bool CCEGLViewProtocol::isScissorEnabled()
@@ -122,10 +116,10 @@ DRect CCEGLViewProtocol::getScissorRect()
 {
 	GLfloat params[4];
 	glGetFloatv(GL_SCISSOR_BOX, params);
-	float x = (params[0] - m_obViewPortRect.origin.x) / m_fScaleX;
-	float y = (params[1] - m_obViewPortRect.origin.y) / m_fScaleY;
-	float w = params[2] / m_fScaleX;
-	float h = params[3] / m_fScaleY;
+	float x = (params[0] - m_obViewPortRect.origin.x) / m_fScale;
+	float y = (params[1] - m_obViewPortRect.origin.y) / m_fScale;
+	float w = params[2] / m_fScale;
+	float h = params[3] / m_fScale;
 	return DRect(x, y, w, h);
 }
 
@@ -167,8 +161,8 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], 
 
             CATouch* pTouch = s_pTouches[nUnusedIndex] = new CATouch();
 			pTouch->setTouchInfo(nUnusedIndex,
-                                 (x - m_obViewPortRect.origin.x) / m_fScaleX,
-                                 (y - m_obViewPortRect.origin.y) / m_fScaleY);
+                                 (x - m_obViewPortRect.origin.x) / m_fScale,
+                                 (y - m_obViewPortRect.origin.y) / m_fScale);
             
             
             s_TouchesIntergerDict.insert(std::make_pair(id, nUnusedIndex));
@@ -202,8 +196,8 @@ void CCEGLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], f
         if (pTouch)
         {
 			pTouch->setTouchInfo(index,
-                                 (x - m_obViewPortRect.origin.x) / m_fScaleX,
-                                 (y - m_obViewPortRect.origin.y) / m_fScaleY);
+                                 (x - m_obViewPortRect.origin.x) / m_fScale,
+                                 (y - m_obViewPortRect.origin.y) / m_fScale);
             
             set.addObject(pTouch);
         }
@@ -241,8 +235,8 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, intptr_t
         {
             CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
 			pTouch->setTouchInfo(index,
-                                 (x - m_obViewPortRect.origin.x) / m_fScaleX,
-                                 (y - m_obViewPortRect.origin.y) / m_fScaleY);
+                                 (x - m_obViewPortRect.origin.x) / m_fScale,
+                                 (y - m_obViewPortRect.origin.y) / m_fScale);
 
             set.addObject(pTouch);
 
@@ -290,8 +284,8 @@ void CCEGLViewProtocol::handleMouseMoved(float x, float y, CAEvent* event)
         s_pMouseMoved = new CATouch();
     }
     s_pMouseMoved->setTouchInfo(-1,
-                         (x - m_obViewPortRect.origin.x) / m_fScaleX,
-                         (y - m_obViewPortRect.origin.y) / m_fScaleY);
+                         (x - m_obViewPortRect.origin.x) / m_fScale,
+                         (y - m_obViewPortRect.origin.y) / m_fScale);
     
     m_pDelegate->mouseMoved(s_pMouseMoved, event);
 }
@@ -303,8 +297,8 @@ void CCEGLViewProtocol::handleScrollWheel(float x, float y, float offx, float of
         s_pMouseMoved = new CATouch();
     }
     s_pMouseMoved->setTouchInfo(-1,
-                                (x - m_obViewPortRect.origin.x) / m_fScaleX,
-                                (y - m_obViewPortRect.origin.y) / m_fScaleY);
+                                (x - m_obViewPortRect.origin.x) / m_fScale,
+                                (y - m_obViewPortRect.origin.y) / m_fScale);
     
     m_pDelegate->mouseScrollWheel(s_pMouseMoved, offx, offy, event);
 }
@@ -340,14 +334,10 @@ const DRect& CCEGLViewProtocol::getViewPortRect() const
     return m_obViewPortRect;
 }
 
-float CCEGLViewProtocol::getScaleX() const
+float CCEGLViewProtocol::getScale() const
 {
-    return m_fScaleX;
+    return m_fScale;
 }
 
-float CCEGLViewProtocol::getScaleY() const
-{
-    return m_fScaleY;
-}
 
 NS_CC_END
