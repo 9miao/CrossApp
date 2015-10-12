@@ -7,7 +7,7 @@
 //
 
 #include "CAView.h"
-#include "support/CAPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "support/TransformUtils.h"
 #include "basics/CACamera.h"
 #include "basics/CAApplication.h"
@@ -67,7 +67,7 @@ CAView::CAView(void)
 , m_obContentSize(kCAViewSizeInvalid)
 , m_obFrameRect(kCAViewRectInvalid)
 , m_obPoint(kCAViewPointInvalid)
-, m_obRect(DRectZero)
+, m_obRect(CCRectZero)
 , m_sAdditionalTransform(CATransformationMakeIdentity())
 , m_pCamera(NULL)
 , m_nZOrder(0)
@@ -109,7 +109,7 @@ CAView::CAView(void)
     m_sQuad.tl.colors = tmpColor;
     m_sQuad.tr.colors = tmpColor;
     
-    this->setAnchorPoint(DPoint(0.5f, 0.5f));
+    this->setAnchorPoint(CCPoint(0.5f, 0.5f));
     
     //CCLog("CAView = %d\n", ++viewCount);
 }
@@ -155,7 +155,7 @@ bool CAView::init()
     return true;
 }
 
-CAView* CAView::createWithFrame(const DRect& rect)
+CAView* CAView::createWithFrame(const CCRect& rect)
 {
 	CAView * pRet = new CAView();
     if (pRet && pRet->initWithFrame(rect))
@@ -169,7 +169,7 @@ CAView* CAView::createWithFrame(const DRect& rect)
 	return pRet;
 }
 
-CAView* CAView::createWithFrame(const DRect& rect, const CAColor4B& color4B)
+CAView* CAView::createWithFrame(const CCRect& rect, const CAColor4B& color4B)
 {
 	CAView * pRet = new CAView();
     if (pRet && pRet->initWithFrame(rect, color4B))
@@ -183,7 +183,7 @@ CAView* CAView::createWithFrame(const DRect& rect, const CAColor4B& color4B)
 	return pRet;
 }
 
-CAView* CAView::createWithCenter(const DRect& rect)
+CAView* CAView::createWithCenter(const CCRect& rect)
 {
 	CAView * pRet = new CAView();
     if (pRet && pRet->initWithCenter(rect))
@@ -197,7 +197,7 @@ CAView* CAView::createWithCenter(const DRect& rect)
 	return pRet;
 }
 
-CAView* CAView::createWithCenter(const DRect& rect, const CAColor4B& color4B)
+CAView* CAView::createWithCenter(const CCRect& rect, const CAColor4B& color4B)
 {
     CAView * pRet = new CAView();
     if (pRet && pRet->initWithCenter(rect, color4B))
@@ -236,7 +236,7 @@ bool CAView::initWithColor(const CAColor4B& color4B)
     return true;
 }
 
-bool CAView::initWithFrame(const DRect& rect)
+bool CAView::initWithFrame(const CCRect& rect)
 {
     if (!this->init())
     {
@@ -247,7 +247,7 @@ bool CAView::initWithFrame(const DRect& rect)
     return true;
 }
 
-bool CAView::initWithFrame(const DRect& rect, const CAColor4B& color4B)
+bool CAView::initWithFrame(const CCRect& rect, const CAColor4B& color4B)
 {
     if (!CAView::initWithColor(color4B))
     {
@@ -258,7 +258,7 @@ bool CAView::initWithFrame(const DRect& rect, const CAColor4B& color4B)
     return true;
 }
 
-bool CAView::initWithCenter(const DRect& rect)
+bool CAView::initWithCenter(const CCRect& rect)
 {
     if (!this->init())
     {
@@ -269,7 +269,7 @@ bool CAView::initWithCenter(const DRect& rect)
     return true;
 }
 
-bool CAView::initWithCenter(const DRect& rect, const CAColor4B& color4B)
+bool CAView::initWithCenter(const CCRect& rect, const CAColor4B& color4B)
 {
     if (!this->initWithColor(color4B))
     {
@@ -495,10 +495,10 @@ void CAView::setScaleY(float newScaleY)
 }
 
 /// position setter
-void CAView::setPoint(const DPoint& newPoint)
+void CAView::setPoint(const CCPoint& newPoint)
 {
     m_obPoint = newPoint;
-    DPoint point = DPoint(m_obAnchorPointInPoints.x * m_fScaleX,
+    CCPoint point = CCPoint(m_obAnchorPointInPoints.x * m_fScaleX,
                             m_obAnchorPointInPoints.y * m_fScaleY);
     m_obFrameRect.origin = ccpSub(m_obPoint, point);
     this->updateDraw();
@@ -539,22 +539,22 @@ void CAView::setVisible(bool var)
     this->updateDraw();
 }
 
-const DPoint& CAView::getAnchorPointInPoints()
+const CCPoint& CAView::getAnchorPointInPoints()
 {
     return m_obAnchorPointInPoints;
 }
 
 /// anchorPoint getter
-const DPoint& CAView::getAnchorPoint()
+const CCPoint& CAView::getAnchorPoint()
 {
     return m_obAnchorPoint;
 }
 
-void CAView::setAnchorPointInPoints(const DPoint& anchorPointInPoints)
+void CAView::setAnchorPointInPoints(const CCPoint& anchorPointInPoints)
 {
     if( ! anchorPointInPoints.equals(m_obAnchorPointInPoints))
     {
-        DPoint p;
+        CCPoint p;
         if (m_bFrame)
         {
             p = this->getFrameOrigin();
@@ -565,7 +565,7 @@ void CAView::setAnchorPointInPoints(const DPoint& anchorPointInPoints)
         }
         
         m_obAnchorPointInPoints = anchorPointInPoints;
-        m_obAnchorPoint = DPoint(m_obAnchorPointInPoints.x / m_obContentSize.width,
+        m_obAnchorPoint = ccp(m_obAnchorPointInPoints.x / m_obContentSize.width,
                               m_obAnchorPointInPoints.y / m_obContentSize.height);
         
         if (m_bFrame)
@@ -581,11 +581,11 @@ void CAView::setAnchorPointInPoints(const DPoint& anchorPointInPoints)
     }
 }
 
-void CAView::setAnchorPoint(const DPoint& point)
+void CAView::setAnchorPoint(const CCPoint& point)
 {
     if( ! point.equals(m_obAnchorPoint))
     {
-        DPoint p;
+        CCPoint p;
         if (m_bFrame)
         {
             p = this->getFrameOrigin();
@@ -597,7 +597,7 @@ void CAView::setAnchorPoint(const DPoint& point)
         
         
         m_obAnchorPoint = point;
-        m_obAnchorPointInPoints = DPoint(m_obContentSize.width * m_obAnchorPoint.x,
+        m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x,
                                       m_obContentSize.height * m_obAnchorPoint.y );
       
         if (m_bFrame)
@@ -613,7 +613,7 @@ void CAView::setAnchorPoint(const DPoint& point)
     }
 }
 
-void CAView::setContentSize(const DSize & contentSize)
+void CAView::setContentSize(const CCSize & contentSize)
 {
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
@@ -626,11 +626,11 @@ void CAView::setContentSize(const DSize & contentSize)
         
         float anchorPointInPointsX = m_obContentSize.width * m_obAnchorPoint.x;
         float anchorPointInPointsY = m_obContentSize.height * m_obAnchorPoint.y;
-        m_obAnchorPointInPoints = DPoint(anchorPointInPointsX, anchorPointInPointsY);
+        m_obAnchorPointInPoints = CCPoint(anchorPointInPointsX, anchorPointInPointsY);
         
         float frameRectWidth = m_obContentSize.width * m_fScaleX;
         float frameRectHeight = m_obContentSize.height * m_fScaleY;
-        m_obFrameRect.size = DSize(frameRectWidth, frameRectHeight);
+        m_obFrameRect.size = CCSize(frameRectWidth, frameRectHeight);
         
         this->updateImageRect();
         
@@ -647,17 +647,17 @@ void CAView::setContentSize(const DSize & contentSize)
     }
 }
 
-const DRect& CAView::getFrame() const
+const CCRect& CAView::getFrame() const
 {
     return m_obFrameRect;
 }
 
-void CAView::setFrame(const DRect &rect)
+void CAView::setFrame(const CCRect &rect)
 {
     float width = rect.size.width / m_fScaleX;
     float height = rect.size.height / m_fScaleY;
-    DSize contentSize = DSize(width, height);
-    DSize originalSize = m_obContentSize;
+    CCSize contentSize = CCSize(width, height);
+    CCSize originalSize = m_obContentSize;
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
     {
@@ -685,12 +685,12 @@ void CAView::setFrame(const DRect &rect)
     }
 }
 
-void CAView::setFrameOrigin(const DPoint& point)
+void CAView::setFrameOrigin(const CCPoint& point)
 {
     float x = m_obAnchorPointInPoints.x * m_fScaleX;
     float y = m_obAnchorPointInPoints.y * m_fScaleY;
     
-    DPoint p = DPoint(x, y);
+    CCPoint p = CCPoint(x, y);
     p = ccpAdd(p, point);
     
     if (CAViewAnimation::areAnimationsEnabled()
@@ -706,25 +706,25 @@ void CAView::setFrameOrigin(const DPoint& point)
     }
 }
 
-const DPoint& CAView::getFrameOrigin()
+const CCPoint& CAView::getFrameOrigin()
 {
     return m_obFrameRect.origin;
 }
 
-DRect CAView::getCenter()
+CCRect CAView::getCenter()
 {
-    DRect rect = this->getFrame();
+    CCRect rect = this->getFrame();
     rect.origin = ccpAdd(rect.origin, ccpMult(rect.size, 0.5f));
     rect.setCenter(true);
     return rect;
 }
 
-void CAView::setCenter(const DRect& rect)
+void CAView::setCenter(const CCRect& rect)
 {
     float width = rect.size.width / m_fScaleX;
     float height = rect.size.height / m_fScaleY;
-    DSize contentSize = DSize(width, height);
-    DSize originalSize = m_obContentSize;
+    CCSize contentSize = CCSize(width, height);
+    CCSize originalSize = m_obContentSize;
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
     {
@@ -752,16 +752,16 @@ void CAView::setCenter(const DRect& rect)
     }
 }
 
-DPoint CAView::getCenterOrigin()
+CCPoint CAView::getCenterOrigin()
 {
     return this->getCenter().origin;
 }
 
-void CAView::setCenterOrigin(const DPoint& point)
+void CAView::setCenterOrigin(const CCPoint& point)
 {
-    DPoint p = ccpMult(m_obContentSize, 0.5f);
+    CCPoint p = ccpMult(m_obContentSize, 0.5f);
     p = ccpSub(p, m_obAnchorPointInPoints);
-    p = DPoint(p.x * m_fScaleX, p.y * m_fScaleY);
+    p = CCPoint(p.x * m_fScaleX, p.y * m_fScaleY);
     p = ccpSub(point, p);
     
     if (CAViewAnimation::areAnimationsEnabled()
@@ -777,16 +777,16 @@ void CAView::setCenterOrigin(const DPoint& point)
     }
 }
 
-DRect CAView::getBounds() const
+CCRect CAView::getBounds() const
 {
-    DRect rect = DRectZero;
+    CCRect rect = CCRectZero;
     rect.size = m_obContentSize;
     return rect;
 }
 
-void CAView::setBounds(const DRect& rect)
+void CAView::setBounds(const CCRect& rect)
 {
-    if (!rect.size.equals(DSizeZero))
+    if (!rect.size.equals(CCSizeZero))
     {
         this->setContentSize(rect.size);
     }
@@ -1139,12 +1139,12 @@ void CAView::draw()
     
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
-    DPoint vertices[4]=
+    CCPoint vertices[4]=
     {
-        DPoint(m_sQuad.tl.vertices.x, m_sQuad.tl.vertices.y),
-        DPoint(m_sQuad.bl.vertices.x, m_sQuad.bl.vertices.y),
-        DPoint(m_sQuad.br.vertices.x, m_sQuad.br.vertices.y),
-        DPoint(m_sQuad.tr.vertices.x, m_sQuad.tr.vertices.y),
+        CCPoint(m_sQuad.tl.vertices.x, m_sQuad.tl.vertices.y),
+        CCPoint(m_sQuad.bl.vertices.x, m_sQuad.bl.vertices.y),
+        CCPoint(m_sQuad.br.vertices.x, m_sQuad.br.vertices.y),
+        CCPoint(m_sQuad.tr.vertices.x, m_sQuad.tr.vertices.y),
     };
     ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
@@ -1161,14 +1161,15 @@ void CAView::visit()
     this->transform();
     
     bool isScissor = (bool)glIsEnabled(GL_SCISSOR_TEST);
-    DRect restoreScissorRect = DRectZero;
+    CCRect restoreScissorRect = CCRectZero;
     if (isScissor)
     {
         GLfloat params[4];
         glGetFloatv(GL_SCISSOR_BOX, params);
-        restoreScissorRect = DRect(params[0], params[1], params[2], params[3]);
+        restoreScissorRect = CCRect(params[0], params[1], params[2], params[3]);
     }
 
+    
     if (!m_bDisplayRange)
     {
         kmMat4 modelview;
@@ -1180,15 +1181,11 @@ void CAView::visit()
         kmMat4 tm2;
         kmMat4Multiply(&tm2, &modelview, &tm);
 
-        CCEGLView* pGLView = CCEGLView::sharedOpenGLView();
-        float glScaleX = pGLView->getScaleX();
-        float glScaleY = pGLView->getScaleY();
-        
-        DSize winSize = CAApplication::getApplication()->getWinSize();
-        DPoint point = DPoint(modelview.mat[12], modelview.mat[13]) + winSize/2;
-        DSize size = DSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
+        CCSize winSize = CAApplication::getApplication()->getWinSize();
+        CCPoint point = CCPoint(modelview.mat[12], modelview.mat[13]) + winSize/2;
+        CCSize size = CCSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
 
-        DRect frame = DRect(point.x * glScaleX, point.y * glScaleY, size.width * glScaleX, size.height * glScaleY);
+        CCRect frame = CCRect(point.x + 0.5f, point.y, size.width + 1.0f, size.height + 1.0f);
         if (isScissor)
         {
             float x1 = MAX(frame.getMinX(), restoreScissorRect.getMinX());
@@ -1274,7 +1271,7 @@ void CAView::transform()
     // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
     if ( m_pCamera != NULL)
     {
-        DPoint anchorPointInPoints = DPoint(m_obAnchorPointInPoints.x,
+        CCPoint anchorPointInPoints = CCPoint(m_obAnchorPointInPoints.x,
                                               m_obContentSize.height - m_obAnchorPointInPoints.y);
         
         bool translate = (anchorPointInPoints.x != 0.0f || anchorPointInPoints.y != 0.0f);
@@ -1428,10 +1425,10 @@ CATransformation CAView::nodeToParentTransform(void)
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
-        DPoint anchorPointInPoints = DPoint(m_obAnchorPointInPoints.x,
+        CCPoint anchorPointInPoints = CCPoint(m_obAnchorPointInPoints.x,
                                               m_obContentSize.height - m_obAnchorPointInPoints.y);
         
-        if (! needsSkewMatrix && !anchorPointInPoints.equals(DPointZero))
+        if (! needsSkewMatrix && !anchorPointInPoints.equals(CCPointZero))
         {
             x += cy * -anchorPointInPoints.x * m_fScaleX + -sx * -anchorPointInPoints.y * m_fScaleY;
             y += sy * -anchorPointInPoints.x * m_fScaleX +  cx * -anchorPointInPoints.y * m_fScaleY;
@@ -1460,10 +1457,10 @@ CATransformation CAView::nodeToParentTransform(void)
             m_sTransform = CATransformationConcat(skewMatrix, m_sTransform);
             
             // adjust anchor point
-            DPoint anchorPointInPoints = DPoint(m_obAnchorPointInPoints.x,
+            CCPoint anchorPointInPoints = CCPoint(m_obAnchorPointInPoints.x,
                                                   m_obContentSize.height - m_obAnchorPointInPoints.y);
             
-            if (!anchorPointInPoints.equals(DPointZero))
+            if (!anchorPointInPoints.equals(CCPointZero))
             {
                 m_sTransform = CATransformationTranslate(m_sTransform,
                                                          -anchorPointInPoints.x,
@@ -1515,60 +1512,69 @@ CATransformation CAView::worldToNodeTransform(void)
     return CATransformationInvert(this->nodeToWorldTransform());
 }
 
-DRect CAView::convertRectToNodeSpace(const CrossApp::DRect &worldRect)
+CCRect CAView::convertRectToNodeSpace(const CrossApp::CCRect &worldRect)
 {
-    DRect ret = worldRect;
+    CCRect ret = worldRect;
     ret.origin = this->convertToNodeSpace(ret.origin);
-    ret.size = DSizeApplyAffineTransform(ret.size, nodeToParentTransform());
+    
+    for (CAView* v = this; v; v = v->getSuperview())
+    {
+        ret.size.width /= v->getScaleX();
+        ret.size.height /= v->getScaleY();
+    }
     return ret;
 }
 
-DRect CAView::convertRectToWorldSpace(const CrossApp::DRect &nodeRect)
+CCRect CAView::convertRectToWorldSpace(const CrossApp::CCRect &nodeRect)
 {
-    DRect ret = nodeRect;
+    CCRect ret = nodeRect;
     ret.origin = this->convertToWorldSpace(ret.origin);
-    ret.size = DSizeApplyAffineTransform(ret.size, worldToNodeTransform());
+    for (CAView* v = this; v; v = v->getSuperview())
+    {
+        ret.size.width *= v->getScaleX();
+        ret.size.height *= v->getScaleY();
+    }
     return ret;
 }
 
-DPoint CAView::convertToNodeSpace(const DPoint& worldPoint)
+CCPoint CAView::convertToNodeSpace(const CCPoint& worldPoint)
 {
-    DPoint p = CAApplication::getApplication()->convertToGL(worldPoint);
-    DPoint ret = DPointApplyAffineTransform(p, worldToNodeTransform());
+    CCPoint p = CAApplication::getApplication()->convertToGL(worldPoint);
+    CCPoint ret = CCPointApplyAffineTransform(p, worldToNodeTransform());
     ret.y = this->getBounds().size.height - ret.y;
     return ret;
 }
 
-DPoint CAView::convertToWorldSpace(const DPoint& nodePoint)
+CCPoint CAView::convertToWorldSpace(const CCPoint& nodePoint)
 {
-    DPoint p = nodePoint;
+    CCPoint p = nodePoint;
     p.y = this->getBounds().size.height - p.y;
-    DPoint ret = DPointApplyAffineTransform(p, nodeToWorldTransform());
+    CCPoint ret = CCPointApplyAffineTransform(p, nodeToWorldTransform());
     ret = CAApplication::getApplication()->convertToUI(ret);
     return ret;
 }
 
-DPoint CAView::convertToNodeSpaceAR(const DPoint& worldPoint)
+CCPoint CAView::convertToNodeSpaceAR(const CCPoint& worldPoint)
 {
-    DPoint nodePoint = convertToNodeSpace(worldPoint);
+    CCPoint nodePoint = convertToNodeSpace(worldPoint);
     return ccpSub(nodePoint, m_obAnchorPointInPoints);
 }
 
-DPoint CAView::convertToWorldSpaceAR(const DPoint& nodePoint)
+CCPoint CAView::convertToWorldSpaceAR(const CCPoint& nodePoint)
 {
-    DPoint pt = ccpAdd(nodePoint, m_obAnchorPointInPoints);
+    CCPoint pt = ccpAdd(nodePoint, m_obAnchorPointInPoints);
     return convertToWorldSpace(pt);
 }
 
-// convenience methods which take a CATouch instead of DPoint
-DPoint CAView::convertTouchToNodeSpace(CATouch *touch)
+// convenience methods which take a CATouch instead of CCPoint
+CCPoint CAView::convertTouchToNodeSpace(CATouch *touch)
 {
-    DPoint point = touch->getLocation();
+    CCPoint point = touch->getLocation();
     return this->convertToNodeSpace(point);
 }
-DPoint CAView::convertTouchToNodeSpaceAR(CATouch *touch)
+CCPoint CAView::convertTouchToNodeSpaceAR(CATouch *touch)
 {
-    DPoint point = touch->getLocation();
+    CCPoint point = touch->getLocation();
     return this->convertToNodeSpaceAR(point);
 }
 
@@ -1597,7 +1603,7 @@ void CAView::updateTransform()
                 m_transformToBatch = CATransformationConcat( nodeToParentTransform() , m_pSuperview->m_transformToBatch );
             }
 
-            DSize size = m_obContentSize;
+            CCSize size = m_obContentSize;
             
             float x1 = 0;
             float y1 = 0;
@@ -1643,12 +1649,12 @@ void CAView::updateTransform()
     
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
-    DPoint vertices[4] =
+    CCPoint vertices[4] =
     {
-        DPoint( m_sQuad.bl.vertices.x, m_sQuad.bl.vertices.y ),
-        DPoint( m_sQuad.br.vertices.x, m_sQuad.br.vertices.y ),
-        DPoint( m_sQuad.tr.vertices.x, m_sQuad.tr.vertices.y ),
-        DPoint( m_sQuad.tl.vertices.x, m_sQuad.tl.vertices.y ),
+        CCPoint( m_sQuad.bl.vertices.x, m_sQuad.bl.vertices.y ),
+        CCPoint( m_sQuad.br.vertices.x, m_sQuad.br.vertices.y ),
+        CCPoint( m_sQuad.tr.vertices.x, m_sQuad.tr.vertices.y ),
+        CCPoint( m_sQuad.tl.vertices.x, m_sQuad.tl.vertices.y ),
     };
     ccDrawPoly(vertices, 4, true);
 #endif
@@ -1695,7 +1701,7 @@ CAImage* CAView::getImage(void)
     return m_pobImage;
 }
 
-void CAView::setImageRect(const DRect& rect)
+void CAView::setImageRect(const CCRect& rect)
 {
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
@@ -1737,12 +1743,12 @@ void CAView::updateImageRect()
 }
 
 // override this method to generate "double scale" sprites
-void CAView::setVertexRect(const DRect& rect)
+void CAView::setVertexRect(const CCRect& rect)
 {
     m_obRect = rect;
 }
 
-void CAView::setImageCoords(DRect rect)
+void CAView::setImageCoords(CCRect rect)
 {
     CAImage* tex = m_pobBatchView ? m_pobImageAtlas->getImage() : m_pobImage;
     if (! tex)

@@ -80,7 +80,7 @@ void CDNewsTableCell::setModel(const newsMsg &cellmodel)
     theTitle->setText(cellmodel.m_title);
     theDesc->setText(cellmodel.m_desc);
     theImage->setImage(CAImage::create("image/HelloWorld.png"));
-    theImage->setUrl(cellmodel.m_imageUrl[0]);
+    theImage->setUrl(cellmodel.m_imageUrl);
 }
 
 CDNewsViewController::CDNewsViewController(int index)
@@ -97,6 +97,27 @@ CDNewsViewController::~CDNewsViewController(){
     
 }
 
+string CDNewsViewController::getSign(std::map<std::string,std::string> key_value)
+{
+    string appsecret = "c174cb1fda3491285be953998bb867a0";
+    string tempStr = "";
+    std::map<std::string,std::string>::iterator itr;
+    for (itr=key_value.begin(); itr!=key_value.end(); itr++) {
+        tempStr = tempStr+itr->first+itr->second;
+    }
+    tempStr = appsecret+tempStr+appsecret;
+    CCLog("tempStr===%s",tempStr.c_str());
+    string sign = MD5(tempStr).md5();
+    for(int i=0;i<sign.length();i++)
+    {
+        if(sign[i]>='a'&&sign[i]<='z')
+            sign[i]-=32;
+        else if
+            (sign[i]>='A'&&sign[i]<='Z')sign[i]+=32;
+    }
+    return sign;
+}
+
 void CDNewsViewController::viewDidLoad()
 {
     winSize = this->getView()->getBounds().size;
@@ -104,9 +125,17 @@ void CDNewsViewController::viewDidLoad()
     {
         std::map<std::string,
         std::string> key_value;
-        char temurl[200];
-        sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=1&tag=%s",menuTag[urlID]);
-        CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
+        key_value["tag"] = menuTag[urlID];
+        key_value["page"]= "1";
+        key_value["limit"]= "20";
+        key_value["appid"]="10000";
+        key_value["sign_method"]="md5";
+        string tempSign = getSign(key_value);
+        CCLog("sign===%s",tempSign.c_str());
+        key_value["sign"] = tempSign;
+        string tempUrl = "http://api.doubi.so/news/";
+        
+        CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
                                                    CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
         
         
@@ -163,9 +192,16 @@ void CDNewsViewController::buttonCallBack(CAControl* btn,DPoint point)
     p_alertView = NULL;
     std::map<std::string,
     std::string> key_value;
-    char temurl[200];
-    sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=1&tag=%s",menuTag[urlID]);
-    CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
+    key_value["tag"] = menuTag[urlID];
+    key_value["page"]= "1";
+    key_value["limit"]= "20";
+    key_value["appid"]="10000";
+    key_value["sign_method"]="md5";
+    string tempSign = getSign(key_value);
+    CCLog("sign===%s",tempSign.c_str());
+    key_value["sign"] = tempSign;
+    string tempUrl = "http://api.doubi.so/news/";
+    CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     {
         p_pLoading = CAActivityIndicatorView::createWithCenter(DRect(winSize.width/2,winSize.height/2,50,50));
@@ -179,30 +215,25 @@ void CDNewsViewController::onRequestFinished(const HttpResponseStatus& status, c
 {
     if (status == HttpResponseSucceed)
     {
-        const CSJson::Value& value = json["msg"];
-        const CSJson::Value& value1 = json["headmsg"];
+        const CSJson::Value& value = json["result"];
         int length = value.size();
-        int length1 = value1.size();
         m_msg.clear();
         m_page.clear();
-        for (int index = 0; index < length; index++)
+        for (int i=0; i<3; i++) {
+            newsPage temp_page;
+            temp_page.m_title   = value[i]["title"].asString();
+            temp_page.m_pic     = value[i]["image"].asString();
+            temp_page.m_url     = value[i]["url"].asString();
+            m_page.push_back(temp_page);
+        }
+        for (int index = 3; index < length; index++)
         {
             newsMsg temp_msg;
             temp_msg.m_title = value[index]["title"].asString();
             temp_msg.m_desc = value[index]["desc"].asString();
             temp_msg.m_url = value[index]["url"].asString();
-            for(int i=0 ;i<value[index]["pic"].size();i++){
-                temp_msg.m_imageUrl.push_back(value[index]["pic"][i].asString());
-            }
+            temp_msg.m_imageUrl = value[index]["image"].asString();
             m_msg.push_back(temp_msg);
-        }
-        
-        for (int i=0; i<length1; i++) {
-            newsPage temp_page;
-            temp_page.m_title = value1[i]["title"].asString();
-            temp_page.m_pic = value1[i]["pic"].asString();
-            temp_page.m_url = value1[i]["url"].asString();
-            m_page.push_back(temp_page);
         }
 
     }
@@ -228,7 +259,7 @@ void CDNewsViewController::onRefreshRequestFinished(const HttpResponseStatus& st
 {
     if (status == HttpResponseSucceed)
     {
-        const CSJson::Value& value = json["msg"];
+        const CSJson::Value& value = json["result"];
         int length = value.size();
         for (int index = 0; index < length; index++)
         {
@@ -236,9 +267,7 @@ void CDNewsViewController::onRefreshRequestFinished(const HttpResponseStatus& st
             temp_msg.m_title = value[index]["title"].asString();
             temp_msg.m_desc = value[index]["desc"].asString();
             temp_msg.m_url = value[index]["url"].asString();
-            for(int i=0 ;i<value[index]["pic"].size();i++){
-                temp_msg.m_imageUrl.push_back(value[index]["pic"][i].asString());
-            }
+            temp_msg.m_imageUrl = value[index]["image"].asString();
             m_msg.push_back(temp_msg);
         }
 
@@ -431,9 +460,16 @@ void CDNewsViewController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollVie
 {
     std::map<std::string,
     std::string> key_value;
-    char temurl[200];
-    sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=1&tag=%s",menuTag[urlID]);
-    CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
+    key_value["tag"] = menuTag[urlID];
+    key_value["page"]= "1";
+    key_value["limit"]= "20";
+    key_value["appid"]="10000";
+    key_value["sign_method"]="md5";
+    string tempSign = getSign(key_value);
+    CCLog("sign===%s",tempSign.c_str());
+    key_value["sign"] = tempSign;
+    string tempUrl = "http://api.doubi.so/news/";
+    CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     CATabBarItem* item = this->getTabBarItem();
     CCLog("BadgeValue====%s",item->getBadgeValue().c_str());
@@ -445,12 +481,19 @@ void CDNewsViewController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollVie
 
 void CDNewsViewController::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
+    p_section++;
     std::map<std::string,
     std::string> key_value;
-    char temurl[200];
-    p_section++;
-    sprintf(temurl, "http://h5.9miao.com/getdemocon/?num=%d&tag=%s",p_section,menuTag[urlID]);
-    CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
+    key_value["tag"] = menuTag[urlID];
+    key_value["page"]= crossapp_format_string("%d",p_section);
+    key_value["limit"]= "20";
+    key_value["appid"]="10000";
+    key_value["sign_method"]="md5";
+    string tempSign = getSign(key_value);
+    CCLog("sign===%s",tempSign.c_str());
+    key_value["sign"] = tempSign;
+    string tempUrl = "http://api.doubi.so/news/";
+    CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRefreshRequestFinished));
 }
 
