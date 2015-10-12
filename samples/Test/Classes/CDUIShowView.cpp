@@ -1881,7 +1881,7 @@ void CDUIShowView::showStepper()
     step_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     this->getView()->addSubview(step_value);
     
-    step = CAStepper::createWithCenter(DRect(winSize.width/2,winSize.height/4*3,0,0));
+    step = CAStepper::createWithCenter(DRect(winSize.width/2,winSize.height/4*3,160, 56));
     //step->setWraps(true);//是否循环,默认循环
     step->setMinValue(0);
     step->setMaxValue(50);

@@ -153,14 +153,10 @@ public:
     const DRect& getViewPortRect() const;
 
     /**
-     * Get scale factor of the horizontal direction.
+     * Get scale factor of the direction.
      */
-    float getScaleX() const;
+    float getScale() const;
 
-    /**
-     * Get scale factor of the vertical direction.
-     */
-    float getScaleY() const;
 private:
     void getSetOfTouchesEndOrCancel(CCSet& set, int num, intptr_t ids[], float xs[], float ys[], CAEvent* event);
 
@@ -176,8 +172,7 @@ protected:
     // the view name
     char   m_szViewName[50];
 
-    float  m_fScaleX;
-    float  m_fScaleY;
+    float  m_fScale;
 };
 
 // end of platform group

@@ -13,6 +13,7 @@
 #include "view/CAClippingView.h"
 #include "view/CADrawView.h"
 #include "view/CARenderImage.h"
+#include "platform/CADensityDpi.h"
 
 using namespace std;
 NS_CC_BEGIN
@@ -21,7 +22,7 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     : CAControl()
     , m_nItemsCount(itemsCount)
     , m_pBackgroundView(NULL)
-    , m_fSeparateWidth(1)
+    , m_fSeparateWidth(s_px_to_dip(2))
     , m_iSelectedIndex(-1)
     , m_iTouchIndex(0)
     , m_cTextColor(ccc4(54, 195, 240, 255))
