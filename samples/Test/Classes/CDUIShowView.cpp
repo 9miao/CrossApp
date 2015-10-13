@@ -1602,28 +1602,28 @@ void CDUIShowView::showScrollView()
 
 void CDUIShowView::showFlashView()
 {
-//	//http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 
-//	//mnt/sdcard/video.mp4
-//	std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");// image / 11.avi");// video.mp4");
-//	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithPath(path.c_str(), "asdas");
-//	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "asdas");
-//
-//	DRect frame = getView()->getFrame();
-//
-//	//frame.origin.x = frame.size.width / 2;
-//	//frame.origin.y = frame.size.height / 2;
-//
-////	CAView* pView = CAView::createWithFrame(frame);
-////	pView->setColor(ccc4(255, 0, 255, 255));
-//	CAVideoPlayerControlView* pView = CAVideoPlayerControlView::createWithFrame(frame);
-////	pView->setColor(ccc4(255, 0, 255, 255));
-//
-//	pView->initWithPath(path);
-////	pView->initWithPath("D:\\XiGua Yingshi\\x.rmvb", false);
-//	this->getView()->addSubview(pView);
-////	pView->play();
-//
-//	return;
+	//http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 
+	//mnt/sdcard/video.mp4
+	std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");// image / 11.avi");// video.mp4");
+	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithPath(path.c_str(), "asdas");
+	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "asdas");
+
+	DRect frame = getView()->getFrame();
+
+	//frame.origin.x = frame.size.width / 2;
+	//frame.origin.y = frame.size.height / 2;
+
+//	CAView* pView = CAView::createWithFrame(frame);
+//	pView->setColor(ccc4(255, 0, 255, 255));
+	CAVideoPlayerControlView* pView = CAVideoPlayerControlView::createWithFrame(frame);
+//	pView->setColor(ccc4(255, 0, 255, 255));
+
+	pView->initWithPath(path);
+//	pView->initWithPath("D:\\XiGua Yingshi\\x.rmvb", false);
+	this->getView()->addSubview(pView);
+//	pView->play();
+
+	return;
 
     CAFlashView* swfBg = CAFlashView::createWithFlash(CrossApp::extension::CAFlash::createWithFilePath("image/swfWK.swf"));
     swfBg->setFrame(DRect(100, 100, winSize.width/2, winSize.height/2));

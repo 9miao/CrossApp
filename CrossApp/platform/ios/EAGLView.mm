@@ -859,10 +859,8 @@ static EAGLView *view = 0;
             break;
     }
     
-    float scaleX = CrossApp::CCEGLView::sharedOpenGLView()->getScaleX();
-	float scaleY = CrossApp::CCEGLView::sharedOpenGLView()->getScaleY();
-    
-    
+    float scale = CrossApp::CCEGLView::sharedOpenGLView()->getScale();
+
     if (self.contentScaleFactor == 2.0f)
     {
         // Convert to pixel coordinate
@@ -881,8 +879,8 @@ static EAGLView *view = 0;
     }
     
     // Convert to desigin coordinate
-    begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
-    end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
+    begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scale, 1.0f/scale));
+    end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scale, 1.0f/scale));
 
     
     CrossApp::CCIMEKeyboardNotificationInfo notiInfo;
@@ -934,7 +932,7 @@ static EAGLView *view = 0;
     
     if (dis < 0.0f) dis = 0.0f;
 
-	dis *= CrossApp::CCEGLView::sharedOpenGLView()->getScaleY();
+	dis *= CrossApp::CCEGLView::sharedOpenGLView()->getScale();
     
     if (self.contentScaleFactor == 2.0f)
     {

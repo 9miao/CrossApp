@@ -271,7 +271,6 @@
 		B02CE48C19AD8CFE00B905FB /* CAPageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B02CE48819AD8CFE00B905FB /* CAPageControl.h */; };
 		B0340826199211B3005DB179 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0340824199211B3005DB179 /* md5.cpp */; };
 		B0340827199211B3005DB179 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B0340825199211B3005DB179 /* md5.h */; };
-		B039AF9D1BC7C652002C1FDB /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E9513C1BC63CCB00DBAB6A /* libSDL2.a */; };
 		B0412DCC1BC7966C00E2C118 /* CAVideoPlayerControlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0412DC41BC7966C00E2C118 /* CAVideoPlayerControlView.cpp */; };
 		B0412DCD1BC7966C00E2C118 /* CAVideoPlayerControlView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0412DC51BC7966C00E2C118 /* CAVideoPlayerControlView.h */; };
 		B0412DCE1BC7966C00E2C118 /* CAVideoPlayerDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0412DC61BC7966C00E2C118 /* CAVideoPlayerDecoder.cpp */; };
@@ -386,6 +385,7 @@
 		B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */; };
 		B0D7FA7E1B21506B004B2B86 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D7FA7C1B21506B004B2B86 /* libcrypto.a */; };
 		B0D7FA7F1B21506B004B2B86 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D7FA7D1B21506B004B2B86 /* libssl.a */; };
+		B0EB62441BCBCCF100742621 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E9513C1BC63CCB00DBAB6A /* libSDL2.a */; };
 		B0F61E211B9C402800BDCBAB /* CAEmojiFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */; };
 		B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */; };
 		EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */; };
@@ -770,6 +770,7 @@
 		B0E951421BC63CFA00DBAB6A /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../the_third_party/ffmpeg/prebuilt/ios/libavutil.a; sourceTree = "<group>"; };
 		B0E951431BC63CFA00DBAB6A /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../the_third_party/ffmpeg/prebuilt/ios/libswresample.a; sourceTree = "<group>"; };
 		B0E951441BC63CFA00DBAB6A /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/ffmpeg/prebuilt/ios/libswscale.a; sourceTree = "<group>"; };
+		B0EB62421BCBC9AD00742621 /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../the_third_party/SDL/prebuilt/ios/libSDL.a; sourceTree = "<group>"; };
 		B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAEmojiFont.cpp; sourceTree = "<group>"; };
 		B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
 		EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
@@ -783,7 +784,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B039AF9D1BC7C652002C1FDB /* libSDL2.a in Frameworks */,
+				B0EB62441BCBCCF100742621 /* libSDL2.a in Frameworks */,
 				B0412DDB1BC7968400E2C118 /* libavdevice.a in Frameworks */,
 				B0412DDC1BC7968400E2C118 /* libavfilter.a in Frameworks */,
 				B0412DD41BC7968400E2C118 /* libavcodec.a in Frameworks */,
@@ -974,6 +975,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0EB62421BCBC9AD00742621 /* libSDL.a */,
 				B039AF951BC7C38F002C1FDB /* libSDL2test.a */,
 				B0412DD91BC7968400E2C118 /* libavdevice.a */,
 				B0412DDA1BC7968400E2C118 /* libavfilter.a */,

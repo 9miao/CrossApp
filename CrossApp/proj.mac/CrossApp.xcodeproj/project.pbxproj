@@ -231,12 +231,6 @@
 		B02CE48419AD869600B905FB /* CAPageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B02CE48019AD869600B905FB /* CAPageControl.h */; };
 		B03407F81991CA27005DB179 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03407F61991CA27005DB179 /* md5.cpp */; };
 		B03407F91991CA27005DB179 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B03407F71991CA27005DB179 /* md5.h */; };
-		B039AF261BC7A576002C1FDB /* libbz2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF251BC7A576002C1FDB /* libbz2.1.0.dylib */; };
-		B039AF331BC7A67A002C1FDB /* VideoDecodeAcceleration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF321BC7A67A002C1FDB /* VideoDecodeAcceleration.framework */; };
-		B039AF351BC7A683002C1FDB /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF341BC7A683002C1FDB /* CoreVideo.framework */; };
-		B039AF371BC7A689002C1FDB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF361BC7A689002C1FDB /* CoreFoundation.framework */; };
-		B039AF7F1BC7B81F002C1FDB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF7E1BC7B81F002C1FDB /* VideoToolbox.framework */; };
-		B039AF811BC7B86A002C1FDB /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF801BC7B86A002C1FDB /* libiconv.2.dylib */; };
 		B039AF841BC7BE47002C1FDB /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B000AFF71BC76068002FA61C /* libavcodec.a */; };
 		B039AF851BC7BE47002C1FDB /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B000AFF81BC76068002FA61C /* libavdevice.a */; };
 		B039AF861BC7BE47002C1FDB /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B000AFF91BC76068002FA61C /* libavfilter.a */; };
@@ -743,14 +737,8 @@
 				B039AF861BC7BE47002C1FDB /* libavfilter.a in Frameworks */,
 				B039AF871BC7BE47002C1FDB /* libavformat.a in Frameworks */,
 				B039AF881BC7BE47002C1FDB /* libavutil.a in Frameworks */,
-				B039AF261BC7A576002C1FDB /* libbz2.1.0.dylib in Frameworks */,
-				B039AF811BC7B86A002C1FDB /* libiconv.2.dylib in Frameworks */,
 				B039AF891BC7BE47002C1FDB /* libswresample.a in Frameworks */,
 				B039AF8A1BC7BE47002C1FDB /* libswscale.a in Frameworks */,
-				B039AF7F1BC7B81F002C1FDB /* VideoToolbox.framework in Frameworks */,
-				B039AF371BC7A689002C1FDB /* CoreFoundation.framework in Frameworks */,
-				B039AF351BC7A683002C1FDB /* CoreVideo.framework in Frameworks */,
-				B039AF331BC7A67A002C1FDB /* VideoDecodeAcceleration.framework in Frameworks */,
 				B0621A551AC3A28D005EBCA7 /* libjpeg.a in Frameworks */,
 				B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */,
 				B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */,
@@ -1897,7 +1885,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -1919,7 +1907,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;

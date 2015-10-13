@@ -142,7 +142,8 @@
 		B039AF721BC7B3CC002C1FDB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF381BC7A6AA002C1FDB /* CoreFoundation.framework */; };
 		B039AF731BC7B3D0002C1FDB /* VideoDecodeAcceleration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF3E1BC7A6D2002C1FDB /* VideoDecodeAcceleration.framework */; };
 		B039AF751BC7B43E002C1FDB /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF741BC7B43E002C1FDB /* libiconv.2.dylib */; };
-		B039AF831BC7B970002C1FDB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF761BC7B52B002C1FDB /* VideoToolbox.framework */; };
+		B049CD2D1BCBB25E001A2B30 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF761BC7B52B002C1FDB /* VideoToolbox.framework */; };
+		B049CD321BCBB372001A2B30 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049CD301BCBB34E001A2B30 /* Security.framework */; };
 		B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */; };
 		B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */; };
 		B0621C311AC3DCB2005EBCA7 /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C2D1AC3DCB2005EBCA7 /* RootWindow.cpp */; };
@@ -448,6 +449,8 @@
 		B039AF781BC7B5A8002C1FDB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B039AF7A1BC7B5B8002C1FDB /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		B039AF7C1BC7B5DD002C1FDB /* AudioVideoBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioVideoBridging.framework; path = System/Library/Frameworks/AudioVideoBridging.framework; sourceTree = SDKROOT; };
+		B049CD2E1BCBB342001A2B30 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
+		B049CD301BCBB34E001A2B30 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B05637581952735100C63FAA /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
 		B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
@@ -466,7 +469,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B039AF831BC7B970002C1FDB /* VideoToolbox.framework in Frameworks */,
+				B049CD321BCBB372001A2B30 /* Security.framework in Frameworks */,
+				B049CD2D1BCBB25E001A2B30 /* VideoToolbox.framework in Frameworks */,
 				B039AF751BC7B43E002C1FDB /* libiconv.2.dylib in Frameworks */,
 				B039AF701BC7B3AD002C1FDB /* libbz2.1.0.dylib in Frameworks */,
 				B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */,
@@ -606,6 +610,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B049CD301BCBB34E001A2B30 /* Security.framework */,
+				B049CD2E1BCBB342001A2B30 /* SecurityInterface.framework */,
 				B039AF7C1BC7B5DD002C1FDB /* AudioVideoBridging.framework */,
 				B039AF7A1BC7B5B8002C1FDB /* AVKit.framework */,
 				B039AF781BC7B5A8002C1FDB /* AVFoundation.framework */,
@@ -1187,7 +1193,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = Test;
 				SDKROOT = macosx;
@@ -1232,7 +1238,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = Test;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1251,7 +1257,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 				VALID_ARCHS = "x86_64 i386";
 			};
@@ -1267,7 +1273,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = macosx;
 				VALID_ARCHS = "x86_64 i386";

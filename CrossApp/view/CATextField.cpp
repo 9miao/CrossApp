@@ -100,8 +100,8 @@ bool CATextField::becomeFirstResponder()
         CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
         pGlView->setIMECursorPos(getCursorPos(), getContentText());
 #endif
-    }
-    return result;
+
+    }    return result;
 }
 
 void CATextField::resignResponder()
