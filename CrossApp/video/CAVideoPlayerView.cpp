@@ -447,56 +447,58 @@ void CAVideoPlayerView::tick(float dt)
 
 void CAVideoPlayerView::audioCallback(unsigned char *stream, int len, int channels)
 {
-	while (len > 0) 
-	{
-		if (!isPlaying())
-			return;
-
-		if (m_pCurAudioFrame == NULL)
-		{
-			VPFrame* frame = NULL;
-			if (m_vAudioFrames.PopElement(frame))
-			{
-				m_pCurAudioFrame = (VPAudioFrame*)frame;
-			}
-			m_uCurAudioFramePos = 0;
-		}
-
-		if (m_pCurAudioFrame)
-		{
-			if (m_pDecoder->isValidAudio())
-			{
-				const float delta = m_fMoviePosition - m_pCurAudioFrame->getPosition();
-				if (delta < -0.1) 
-				{
-					continue;
-				}
-			}
-			else
-			{
-				m_fMoviePosition = m_pCurAudioFrame->getPosition();
-				m_fBufferedDuration -= m_pCurAudioFrame->getDuration();
-			}
-
-			unsigned char* bytes = (unsigned char*)(m_pCurAudioFrame->getData() + m_uCurAudioFramePos);
-			const unsigned int bytesLeft = m_pCurAudioFrame->getDataLength() - m_uCurAudioFramePos;
-			const unsigned int bytesToCopy = MIN(len, bytesLeft);
-
-			memcpy(stream, bytes, bytesToCopy);
-			stream += bytesToCopy;
-			len -= bytesToCopy;
-
-			if (bytesToCopy < bytesLeft) 
-			{
-				m_uCurAudioFramePos += bytesToCopy;
-			}
-			else 
-			{
-				CC_SAFE_DELETE(m_pCurAudioFrame);
-			}
-		}
-	}
+    SDL_memset(stream, 0, len);
+    while (len > 0)
+    {
+        if (!isPlaying())
+            return;
+        
+        if (m_pCurAudioFrame == NULL)
+        {
+            VPFrame* frame = NULL;
+            if (m_vAudioFrames.PopElement(frame))
+            {
+                m_pCurAudioFrame = (VPAudioFrame*)frame;
+            }
+            m_uCurAudioFramePos = 0;
+        }
+        
+        if (m_pCurAudioFrame)
+        {
+            if (m_pDecoder->isValidAudio())
+            {
+                const float delta = m_fMoviePosition - m_pCurAudioFrame->getPosition();
+                if (delta < -0.1)
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                m_fMoviePosition = m_pCurAudioFrame->getPosition();
+                m_fBufferedDuration -= m_pCurAudioFrame->getDuration();
+            }
+            
+            unsigned char* bytes = (unsigned char*)(m_pCurAudioFrame->getData() + m_uCurAudioFramePos);
+            const unsigned int bytesLeft = m_pCurAudioFrame->getDataLength() - m_uCurAudioFramePos;
+            const unsigned int bytesToCopy = MIN(len, bytesLeft);
+            
+            if (bytesToCopy > 0)
+            {
+                memcpy(stream, bytes, bytesToCopy);
+                stream += bytesToCopy;
+                len -= bytesToCopy;
+                m_uCurAudioFramePos += bytesToCopy;
+            }
+            else
+            {
+                if (bytesLeft == 0)
+                {
+                    CC_SAFE_DELETE(m_pCurAudioFrame);
+                }
+            }
+        }
+    }
 }
-
 
 NS_CC_END

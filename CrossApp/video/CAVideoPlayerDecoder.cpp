@@ -22,7 +22,7 @@ static void FFLog(void* context, int level, const char* pszFormat, va_list args)
 {
 	char szBuf[kMaxLogLen+1] = { 0 };
     vsnprintf(szBuf, kMaxLogLen, pszFormat, args);
-	CCLog(szBuf);
+	CCLog("%s", szBuf);
 }
     
 static void avStreamFPSTimeBase(AVStream *st, float defaultTimeBase, float *pFPS, float *pTimeBase)
@@ -391,9 +391,11 @@ VPError VPDecoder::openAudioStream()
     m_iAudioStream = -1;
 	std::vector<int> audioStreams = collectStreams(AVMEDIA_TYPE_AUDIO);
 	std::vector<int>::iterator iter = audioStreams.begin();
-	while (iter != audioStreams.end()) {
+	while (iter != audioStreams.end())
+    {
         errCode = openAudioStream(*iter);
-        if (errCode == kErrorNone) {
+        if (errCode == kErrorNone)
+        {
             break;
         }
         iter++;
@@ -490,7 +492,7 @@ VPError VPDecoder::openAudioStream(int audioStream)
             return kErrorReSampler;
         }
     }
-        
+    
     m_pAudioFrame = av_frame_alloc();
     
     if (!m_pAudioFrame) {
