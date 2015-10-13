@@ -23,6 +23,12 @@ CAEmojiFont::~CAEmojiFont()
 	FT_Done_FreeType(m_gFtLibrary);
 }
 
+CAEmojiFont* CAEmojiFont::getInstance()
+{
+	static CAEmojiFont ins;
+	return &ins;
+}
+
 unsigned char* CAEmojiFont::loadEmojiFontBuffer(unsigned long& size)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

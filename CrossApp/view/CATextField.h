@@ -164,7 +164,6 @@ public:
 	CC_PROPERTY(int, m_iHoriMargins, HoriMargins);
 	CC_PROPERTY(int, m_iVertMargins, VertMargins);
 	CC_PROPERTY(eTextEditAlign, m_eTextEditAlign, TextEditAlign);
-	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cFontColor, FontColor);
     
     inline void setKeyboardType (eKeyBoardType type) {m_keyboardType = type; }
     
@@ -177,6 +176,10 @@ public:
     virtual void setImageRect(const DRect& rect);
     
     virtual void updateImageRect();
+
+	void setColor(const CAColor4B& var);
+
+	const CAColor4B& getColor();
 
 protected:
     void updateImage();
@@ -245,6 +248,7 @@ private:
 	int m_iString_o_length;
 	int m_iFontHeight;
     bool m_bFirstInput;
+	CAColor4B m_cFontColor;
     
 	CAView* m_pCursorMark;
 	CAView* m_pTextViewMark;

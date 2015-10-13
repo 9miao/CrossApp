@@ -23,7 +23,7 @@ struct StrICmpLess
 static map<std::string, FontBufferInfo, StrICmpLess> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
 static CATempTypeFont s_TempFont;
-static CAEmojiFont* s_EmojiFont = NULL;
+
 
 #define ITALIC_LEAN_VALUE (0.3f)
 
@@ -88,10 +88,6 @@ _AgaginInitGlyphs:
 	m_bUnderLine = bUnderLine;
 	m_cFontColor = fontColor;
 
-	if (hasEmoji(pText))
-	{
-		m_bItalics = false;
-	}
 	
 	FT_Error error = initGlyphs(cszNewText.c_str());
 	if (error) return NULL;
@@ -277,6 +273,10 @@ int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, i
     {
         FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
         
+		if (glyph->image == NULL)
+		{
+			glyph_bbox.xMax = (glyph_bbox.xMin + m_inFontSize);
+		}
         if (glyph_bbox.xMin == glyph_bbox.xMax)
         {
             glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6);
@@ -452,16 +452,19 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
         FT_Glyph image = glyph->image;
 		if (image == NULL)
 		{
-            if (s_EmojiFont == NULL)
+            CAImage* pEmoji = CAEmojiFont::getInstance()->getEmojiImage(glyph->c, m_inFontSize);
+            if (pEmoji)
             {
-                s_EmojiFont = new CAEmojiFont();
+                pEmoji = CAImage::scaleToNewImageWithImage(pEmoji, DSize(m_inFontSize, m_inFontSize));
             }
-			CAImage* pEmoji = CAImage::scaleToNewImageWithImage(s_EmojiFont->getEmojiImage(glyph->c, m_inFontSize), DSize(m_inFontSize,m_inFontSize));
 
-			FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
-			FT_Int y = (FT_Int)(pen->y - m_inFontSize);
+            if (pEmoji)
+            {
+				FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
+				FT_Int y = (FT_Int)(pen->y - m_inFontSize);
 
-			draw_emoji(pBuffer, pEmoji, x, y);
+				draw_emoji(pBuffer, pEmoji, x, y);
+            }
 			continue;
 		}
 		
@@ -556,30 +559,6 @@ void CAFreeTypeFont::endLine()
     }
 }
 
-bool CAFreeTypeFont::hasEmoji(const std::string& pText)
-{
-	std::u32string utf32String;
-	if (!StringUtils::UTF8ToUTF32(pText, utf32String))
-		return false;
-
-	for (int n = 0; n < utf32String.size(); n++)
-	{
-		FT_ULong c = utf32String[n];
-
-		if (c == '\r' || c == '\n')
-			continue;
-
-		if (s_EmojiFont == NULL)
-		{
-			s_EmojiFont = new CAEmojiFont();
-		}
-		if (s_EmojiFont->isEmojiCodePoint(c))
-		{
-			return true;
-		}
-	}
-	return false;
-}
 
 void CAFreeTypeFont::newLine() 
 {
@@ -607,6 +586,10 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 		FT_BBox glyph_bbox;
 		FT_Glyph_Get_CBox(glyphs[i].image, ft_glyph_bbox_pixels, &glyph_bbox);
         
+		if (glyphs[i].image == NULL)
+		{
+			glyph_bbox.xMax = (glyph_bbox.xMin + m_inFontSize);
+		}
 		if (glyph_bbox.xMin == glyph_bbox.xMax)
 		{
 			glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6);
@@ -813,17 +796,14 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		glyph_index = FT_Get_Char_Index(m_face, c);
 		glyph->index = glyph_index;
 		glyph->isOpenType = (glyph_index == 0);
+		glyph->isEmoji = false;
 		if (glyph_index == 0 && useOpenTypeFont)
 		{
 			glyph_index = FT_Get_Char_Index(s_TempFont.m_CurFontFace, c);
 		}
 		if (glyph_index == 0)
 		{
-            if (s_EmojiFont == NULL)
-            {
-                s_EmojiFont = new CAEmojiFont();
-            }
-			if (s_EmojiFont->isEmojiCodePoint(c))
+			if (CAEmojiFont::getInstance()->isEmojiCodePoint(c))
 			{
 				glyph->isOpenType = false;
 				glyph->isEmoji = true;
@@ -855,6 +835,8 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 
 		if (glyph->isEmoji)
 		{
+			pen.x += m_inFontSize;
+			numGlyphs++;
 			continue;
 		}
 
@@ -946,9 +928,9 @@ void CAFreeTypeFont::initTextView(std::vector<TextViewLineInfo>& linesText)
 				v.charlength = bbox.xMax - temp_bbox.xMax;
 			}
 
-			std::u16string cstr;
+			std::u32string cstr;
 			cstr += g.c; std::string s;
-			StringUtils::UTF16ToUTF8(cstr, s);
+			StringUtils::UTF32ToUTF8(cstr, s);
 			v.charSize = (int)s.size();
 			cTextViewLine.TextAttrVect.push_back(v);
 			iCurCharPos += v.charSize;
@@ -978,12 +960,17 @@ void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
     /* translate it, and grow the string bbox          */
 	for (std::vector<TGlyph>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
     {
-        FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
+		FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
 
+		if (glyph->image == NULL)
+		{
+			glyph_bbox.xMax = (glyph_bbox.xMin + m_inFontSize);
+		}
 		if (glyph_bbox.xMin == glyph_bbox.xMax)
 		{
 			glyph_bbox.xMax = (glyph_bbox.xMin + slot->advance.x) >> 6;
 		}
+        
         glyph_bbox.xMin += glyph->pos.x;
         glyph_bbox.xMax += glyph->pos.x;
         glyph_bbox.yMin += glyph->pos.y;
@@ -1021,6 +1008,10 @@ void CAFreeTypeFont::compute_bbox2(TGlyph& glyph, FT_BBox& bbox)
 	FT_GlyphSlot slot = m_face->glyph;
 	FT_Glyph_Get_CBox(glyph.image, ft_glyph_bbox_pixels, &glyph_bbox);
 
+	if (glyph.image == NULL)
+	{
+		glyph_bbox.xMax = (glyph_bbox.xMin + m_inFontSize);
+	}
 	if (glyph_bbox.xMin == glyph_bbox.xMax)
 	{
 		glyph_bbox.xMax = (glyph_bbox.xMin + slot->advance.x) >> 6;
