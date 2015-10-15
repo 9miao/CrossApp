@@ -1604,7 +1604,7 @@ void CDUIShowView::showFlashView()
 {
 	//http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 
 	//mnt/sdcard/video.mp4
-	std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");// image / 11.avi");// video.mp4");
+	//std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");// image / 11.avi");// video.mp4");
 	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithPath(path.c_str(), "asdas");
 	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "asdas");
 
@@ -1617,8 +1617,8 @@ void CDUIShowView::showFlashView()
 //	pView->setColor(ccc4(255, 0, 255, 255));
 	CAVideoPlayerControlView* pView = CAVideoPlayerControlView::createWithFrame(frame);
 //	pView->setColor(ccc4(255, 0, 255, 255));
-//    pView->initWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
-	pView->initWithPath(path);
+    pView->initWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
+//	pView->initWithPath(path);
 //	pView->initWithPath("D:\\XiGua Yingshi\\x.rmvb", false);
 	this->getView()->addSubview(pView);
 //	pView->play();

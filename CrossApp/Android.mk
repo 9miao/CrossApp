@@ -196,9 +196,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avresample_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avutil_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swresample_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swscale_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ass_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_vo-aacenc_static
-# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_vo-amrwbenc_static
 endif
 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libsdl_static
@@ -216,7 +213,7 @@ $(call import-module,png/prebuilt/android)
 $(call import-module,tiff/prebuilt/android)
 $(call import-module,webp/prebuilt/android)
 $(call import-module,freetype/prebuilt/android)
-$(call import-module,SDL/prebuilt/android)
+#$(call import-module,SDL/prebuilt/android)
 $(call import-module,FFmpeg/prebuilt/android)
 $(call import-module,CrossApp/the_third_party/curl/prebuilt/android)
 $(call import-module,CrossApp/support/libwebsockets/android)
