@@ -75,6 +75,24 @@ void showDialogJNI(const char * pszMsg, const char * pszTitle) {
     }
 }
 
+
+void showToastJNI(const char * pszMsg, int pFlag) {
+    if (!pszMsg) {
+        return;
+    }
+
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "showToast", "(Ljava/lang/String;I)V")) {
+
+        jint boolArg1 = pFlag;
+        jstring stringArg1 = t.env->NewStringUTF(pszMsg);
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, boolArg1);
+
+        t.env->DeleteLocalRef(stringArg1);
+        // t.env->DeleteLocalRef(boolArg1);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
 void showEditTextDialogJNI(const char* pszTitle, const char* pszMessage, int nInputMode, int nInputFlag, int nReturnType, int nMaxLength, EditTextCallback pfEditTextCallback, void* ctx) {
     if (pszMessage == NULL) {
         return;

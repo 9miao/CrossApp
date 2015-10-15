@@ -165,5 +165,8 @@ namespace CADevice
     void initBlueTooth(CABlueToothDelegate *target);
     
     void setBlueToothType(CABlueToothType type);
+    
+    //显示提示Toast _flag＝0表示短显示，显示2秒消失，_flag!=0为长显示，显示3.5秒消失
+    void showToast(const string& _message, int _flag = 0);
 };
 #endif /* defined(__PublishPhoto__CADevice__) */

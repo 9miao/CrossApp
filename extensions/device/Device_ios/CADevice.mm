@@ -16,6 +16,8 @@
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "CABlueTooth.h"
 #import "Reachability.h"
+#import "UIToast.h"
+#import "UIRotateViewController.h"
 namespace CADevice
 {
 
@@ -238,5 +240,14 @@ void setBlueToothType(CABlueToothType type)
         
 }
     
+    void showToast(const string &_message, int _flag)
+    {
+        NSString* message = [NSString stringWithUTF8String:_message.c_str()];
+        UIToast* toast = [[UIToast alloc] init];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [toast showToast:message tiemInterval:(_flag == 0 ? 2.0 : 3.5) ];
+        });
+        
+    }
 }
 

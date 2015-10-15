@@ -7,7 +7,9 @@ import java.lang.ref.WeakReference;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
+import android.widget.Toast;
 
 public class Cocos2dxHandler extends Handler {
 	// ===========================================================
@@ -15,7 +17,7 @@ public class Cocos2dxHandler extends Handler {
 	// ===========================================================
 	public final static int HANDLER_SHOW_DIALOG = 1;
 	public final static int HANDLER_SHOW_EDITBOX_DIALOG = 2;
-	
+	public final static int HANDLER_SHOW_TOAST = 3;
 	// ===========================================================
 	// Fields
 	// ===========================================================
@@ -48,6 +50,10 @@ public class Cocos2dxHandler extends Handler {
 		case Cocos2dxHandler.HANDLER_SHOW_EDITBOX_DIALOG:
 			showEditBoxDialog(msg);
 			break;
+
+		case Cocos2dxHandler.HANDLER_SHOW_TOAST:
+			showCAToast(msg);
+			break;
 		}
 	}
 	
@@ -66,6 +72,30 @@ public class Cocos2dxHandler extends Handler {
 						
 					}
 				}).create().show();
+	}
+	
+	class ToastShowRunnable implements Runnable
+	{
+		private Toast m_toast = null;
+		public ToastShowRunnable(Toast _t)
+		{
+			m_toast = _t;
+		}
+		public void run() {
+			m_toast.show();
+		}
+	}
+    
+	private void showCAToast(Message msg) {
+		final Cocos2dxActivity theActivity = this.mActivity.get();
+		ToastMessage toastMessage = (ToastMessage)msg.obj;
+		new Handler(Looper.getMainLooper()).post(
+				new ToastShowRunnable(
+						Toast.makeText(theActivity,
+								       toastMessage.message,
+								       toastMessage._flag==0 ? Toast.LENGTH_SHORT:Toast.LENGTH_LONG)));
+		
+  		// toast.setGravity(Gravity.CENTER, 0, 0);
 	}
 	
 	private void showEditBoxDialog(Message msg) {
@@ -90,6 +120,15 @@ public class Cocos2dxHandler extends Handler {
 		public DialogMessage(String title, String message) {
 			this.titile = title;
 			this.message = message;
+		}
+	}
+	
+	public static class ToastMessage {
+		public String message;
+		public int _flag;
+		public ToastMessage(String message, int flag) {
+			this.message = message;
+			this._flag    = flag;
 		}
 	}
 	

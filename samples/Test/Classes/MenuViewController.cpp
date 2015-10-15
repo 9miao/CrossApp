@@ -35,6 +35,8 @@ void MenuViewController::viewDidLoad()
     tableView->setShowsScrollIndicators(false);
     this->getView()->addSubview(tableView);
     
+    CADevice::showToast("欢迎进入CrossApp的世界");
+    
 }
 
 void MenuViewController::viewDidUnload()

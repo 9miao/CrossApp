@@ -496,6 +496,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		msg.obj = new Cocos2dxHandler.DialogMessage(pTitle, pMessage);
 		this.mHandler.sendMessage(msg);
 	}
+	
+	@Override
+	public void showToast(final String pMessage, int pFlag) {
+		Message msg = new Message();
+		msg.what = Cocos2dxHandler.HANDLER_SHOW_TOAST;
+		msg.obj = new Cocos2dxHandler.ToastMessage(pMessage, pFlag);
+		this.mHandler.sendMessage(msg);
+	}
+
 
 	@Override
 	public void showEditTextDialog(final String pTitle, final String pContent, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength) {
