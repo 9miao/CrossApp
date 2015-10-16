@@ -327,6 +327,53 @@ int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, i
     return nCharPos;
 }
 
+int CAFreeTypeFont::cusStringByDSize(std::string& text, const DSize& lableSize, const std::string& pFontName, int nFontSize, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
+{
+	std::u32string cszTemp;
+	std::string cszNewText = text;
+
+	s_TempFont.initTempTypeFont(nFontSize);
+_AgaginInitGlyphs:
+	m_inWidth = lableSize.width;
+	m_inHeight = lableSize.height;
+	m_lineSpacing = iLineSpacing;
+	m_bWordWrap = bWordWrap;
+	m_bBold = bBold;
+	m_bItalics = bItalics;
+	m_bUnderLine = false;
+
+	FT_Error error = initGlyphs(cszNewText.c_str());
+	if (error) return -1;
+
+	if (m_inHeight < m_textHeight)
+	{
+		if (cszTemp.empty())
+		{
+			int totalLines = m_inHeight / (m_lineHeight + m_lineSpacing);
+
+			for (int i = 0; i < m_lines.size(); i++)
+			{
+				if (i < totalLines)
+				{
+					if (!cszTemp.empty()) cszTemp += '\n';
+					std::vector<TGlyph>& v = m_lines[i]->glyphs;
+					for (int j = 0; j < v.size(); j++)
+					{
+						cszTemp += v[j].c;
+					}
+				}
+				else break;
+			}
+		}
+		cszNewText.clear();
+		StringUtils::UTF32ToUTF8(cszTemp, cszNewText);
+		destroyAllLineFontGlyph();
+		goto _AgaginInitGlyphs;
+	}
+	destroyAllLineFontGlyph();
+	text = cszNewText;
+	return 0;
+}
 
 // text encode with utf8
 int CAFreeTypeFont::getStringHeight(const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap)
