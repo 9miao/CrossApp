@@ -104,6 +104,7 @@ protected:
 	int getFontHeight();
 	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);
     int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth);
+	int cusStringByDSize(std::string& text, const DSize& lableSize, const std::string& pFontName, int nFontSize, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false);
 	int getStringHeight(const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 	void destroyAllLines();
 	void destroyFontGlyph(std::vector<TGlyph>& v);
