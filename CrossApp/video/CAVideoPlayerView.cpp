@@ -2,19 +2,9 @@
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
 #include "view/CADrawingPrimitives.h"
-//#include "SDL.h"
-
 extern "C"
 {
-    extern void SDL_PauseAudio(int pause_on)
-    {
-    
-    }
-    
-    extern void * SDL_memset(void *dst, int c, size_t len)
-    {
-        return 0;
-    }
+#include "SDL.h"
 }
 
 NS_CC_BEGIN

@@ -1494,6 +1494,8 @@ void CDUIShowView::showCollectionView()
     p_Conllection->setHoriInterval(_px(40));
     p_Conllection->setVertInterval(_px(40));
     this->getView()->addSubview(p_Conllection);
+    p_Conllection->reloadData();
+    p_Conllection->startPullToHeaderRefreshView();
 }
 
 void CDUIShowView::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
@@ -1566,12 +1568,12 @@ unsigned int CDUIShowView::collectionViewHeightForRowAtIndexPath(CACollectionVie
 void CDUIShowView::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
     colorArr.clear();
-    CAScheduler::schedule(schedule_selector(CDUIShowView::refreshData), this, 0.1, 0, CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(CDUIShowView::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
 }
 
 void CDUIShowView::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(CDUIShowView::refreshData), this, 0.1, 0, CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(CDUIShowView::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
 }
 
 void CDUIShowView::refreshData(float interval)

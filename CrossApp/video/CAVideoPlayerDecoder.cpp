@@ -4,12 +4,12 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include "CAVideoPlayerDecoder.h"
-//#include "SDL.h"
 
 NS_CC_BEGIN
 
 extern "C"
 {
+#include "SDL.h"
 #include "libavformat/avformat.h"
 #include "libavcodec/avcodec.h"
 #include "libswscale/swscale.h"
@@ -18,20 +18,20 @@ extern "C"
 #include "libavutil/avutil.h"
 
 
+
+//    extern void SDL_CloseAudio(void);
+//    
+//    extern void SDL_SetMainReady();
+//    
+//    extern int  SDL_Init(Uint32 flags);
 //
-//extern void SDL_CloseAudio(void){}
+//    extern const char * SDL_GetError();
 //    
-//    extern void SDL_SetMainReady(){}
+//    extern int SDL_OpenAudio(SDL_AudioSpec * desired, SDL_AudioSpec * obtained);
 //    
-//    extern int  SDL_Init(Uint32 flags){ return 0;}
-//
-//    extern const char * SDL_GetError(){return 0;}
+//    extern void SDL_PauseAudio(int pause_on);
 //    
-//    extern int SDL_OpenAudio(SDL_AudioSpec * desired, SDL_AudioSpec * obtained){return 0;}
-//    
-//    extern void SDL_PauseAudio(int pause_on){}
-//    
-//    extern void SDL_Quit(void){}
+//    extern void SDL_Quit(void);
 }
 
 
@@ -85,7 +85,7 @@ static void copyFrameData(unsigned char *src, unsigned char **dst, int linesize,
     }
 }
 
-//static SDL_AudioSpec s_audioSpec;
+static SDL_AudioSpec s_audioSpec;
 
 VPFrame::VPFrame()
 : m_duration(0)
@@ -179,7 +179,7 @@ VPDecoder::VPDecoder()
 VPDecoder::~VPDecoder()
 {
     closeFile();
-//    SDL_CloseAudio();
+    SDL_CloseAudio();
 }
 
 
@@ -394,14 +394,14 @@ VPError VPDecoder::openVideoStream(int videoStream)
     return kErrorNone;
 }
 
-//static void audio_callback(void *userdata, Uint8 *stream, int len) 
-//{
-//    VPDecoder* decoder = (VPDecoder*)userdata;
-//    
-//    if (decoder) {
-//        decoder->onAudioCallback(stream, len);
-//    }
-//}
+static void audio_callback(void *userdata, Uint8 *stream, int len) 
+{
+    VPDecoder* decoder = (VPDecoder*)userdata;
+    
+    if (decoder) {
+        decoder->onAudioCallback(stream, len);
+    }
+}
 
 VPError VPDecoder::openAudioStream()
 {
@@ -435,109 +435,109 @@ VPError VPDecoder::openAudioStream(int audioStream)
     
     if (avcodec_open2(codecCtx, codec, NULL) < 0)
         return kErrorOpenCodec;
-//    
-//    
-//    SDL_SetMainReady();
-//    if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-//        CCLog("Could not initialize SDL - %s\n", SDL_GetError());
-//        exit(0);
-//    }
-//    
-//    SDL_AudioSpec wanted_spec, spec;
-//    long long wanted_channel_layout = 0;
-//    int wanted_nb_channels = codecCtx->channels;
-//        
-//    if (!wanted_channel_layout || wanted_nb_channels != av_get_channel_layout_nb_channels(wanted_channel_layout)) {
-//        wanted_channel_layout = av_get_default_channel_layout(wanted_nb_channels);
-//        wanted_channel_layout &= ~AV_CH_LAYOUT_STEREO_DOWNMIX;
-//    }
-//    
-//    wanted_spec.channels = av_get_channel_layout_nb_channels(wanted_channel_layout);
-//    wanted_spec.freq = codecCtx->sample_rate;
-//    if (wanted_spec.freq <= 0 || wanted_spec.channels <= 0) {
-//        CCLog("Invalid sample rate or channel count!\n");
-//        return kErrorUnknown;
-//    }
-//    wanted_spec.format = AUDIO_S16SYS;
-//    wanted_spec.silence = 0;
-//    wanted_spec.samples = 1024;
-//    wanted_spec.callback = audio_callback;
-//    wanted_spec.userdata = this;
-//
-//    while (SDL_OpenAudio(&wanted_spec, &spec) < 0) {
-//        CCLog("SDL_OpenAudio (%d channels): %s\n", wanted_spec.channels, SDL_GetError());
-//
-//		const int next_nb_channels[] = { 0, 0, 1, 6, 2, 6, 4, 6 };
-//
-//        wanted_spec.channels = next_nb_channels[MIN(7, wanted_spec.channels)];
-//        if (!wanted_spec.channels) {
-//            CCLog("No more channel combinations to tyu, audio open failed\n");
-//            return kErrorUnknown;
-//        }
-//        wanted_channel_layout = av_get_default_channel_layout(wanted_spec.channels);
-//    }
-//    
-//    if (spec.format != AUDIO_S16SYS) {
-//        CCLog("SDL advised audio format %d is not supported!\n", spec.format);
-//        return kErrorUnknown;
-//    }
-//    
-//    if (spec.channels != wanted_spec.channels) {
-//        wanted_channel_layout = av_get_default_channel_layout(spec.channels);
-//        if (!wanted_channel_layout) {
-//            CCLog("SDL advised channel count %d is not supported!\n", spec.channels);
-//            return kErrorUnknown;
-//        }
-//    }
-//    
-//    s_audioSpec = spec;
-//
-//    if (1) {
-//        swrContext = swr_alloc_set_opts(NULL,
-//                                        av_get_default_channel_layout(spec.channels),
-//                                        AV_SAMPLE_FMT_S16,
-//                                        spec.freq,
-//                                        av_get_default_channel_layout(codecCtx->channels),
-//                                        codecCtx->sample_fmt,
-//                                        codecCtx->sample_rate,
-//                                        0,
-//                                        NULL);
-//        
-//        if (!swrContext || swr_init(swrContext)) {
-//            if (swrContext)
-//                swr_free(&swrContext);
-//            avcodec_close(codecCtx);
-//            return kErrorReSampler;
-//        }
-//    }
-//    
-//    m_pAudioFrame = av_frame_alloc();
-//    
-//    if (!m_pAudioFrame) {
-//        if (swrContext)
-//            swr_free(&swrContext);
-//        avcodec_close(codecCtx);
-//        return kErrorAllocateFrame;
-//    }
-//    
-//    m_iAudioStream = audioStream;
-//    m_pAudioCodecCtx = codecCtx;
-//    m_pSwrContext = swrContext;
-//    
-//    AVStream *st = m_pFormatCtx->streams[m_iAudioStream];
-//	avStreamFPSTimeBase(st, 0.025, 0, &m_fAudioTimeBase);
-//    
-//    CCLog("audio codec smr: %.d fmt: %d chn: %d tb: %f %s",
-//          m_pAudioCodecCtx->sample_rate,
-//          m_pAudioCodecCtx->sample_fmt,
-//          m_pAudioCodecCtx->channels,
-//		  m_fAudioTimeBase,
-//          m_pSwrContext ? "resample" : "");
-//    
-//    SDL_PauseAudio(0);
-//    
-//    m_pFormatCtx->streams[audioStream]->discard = AVDISCARD_DEFAULT;
-//    
+    
+    
+    SDL_SetMainReady();
+    if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+        CCLog("Could not initialize SDL - %s\n", SDL_GetError());
+        exit(0);
+    }
+    
+    SDL_AudioSpec wanted_spec, spec;
+    long long wanted_channel_layout = 0;
+    int wanted_nb_channels = codecCtx->channels;
+        
+    if (!wanted_channel_layout || wanted_nb_channels != av_get_channel_layout_nb_channels(wanted_channel_layout)) {
+        wanted_channel_layout = av_get_default_channel_layout(wanted_nb_channels);
+        wanted_channel_layout &= ~AV_CH_LAYOUT_STEREO_DOWNMIX;
+    }
+    
+    wanted_spec.channels = av_get_channel_layout_nb_channels(wanted_channel_layout);
+    wanted_spec.freq = codecCtx->sample_rate;
+    if (wanted_spec.freq <= 0 || wanted_spec.channels <= 0) {
+        CCLog("Invalid sample rate or channel count!\n");
+        return kErrorUnknown;
+    }
+    wanted_spec.format = AUDIO_S16SYS;
+    wanted_spec.silence = 0;
+    wanted_spec.samples = 1024;
+    wanted_spec.callback = audio_callback;
+    wanted_spec.userdata = this;
+
+    while (SDL_OpenAudio(&wanted_spec, &spec) < 0) {
+        CCLog("SDL_OpenAudio (%d channels): %s\n", wanted_spec.channels, SDL_GetError());
+
+		const int next_nb_channels[] = { 0, 0, 1, 6, 2, 6, 4, 6 };
+
+        wanted_spec.channels = next_nb_channels[MIN(7, wanted_spec.channels)];
+        if (!wanted_spec.channels) {
+            CCLog("No more channel combinations to tyu, audio open failed\n");
+            return kErrorUnknown;
+        }
+        wanted_channel_layout = av_get_default_channel_layout(wanted_spec.channels);
+    }
+    
+    if (spec.format != AUDIO_S16SYS) {
+        CCLog("SDL advised audio format %d is not supported!\n", spec.format);
+        return kErrorUnknown;
+    }
+    
+    if (spec.channels != wanted_spec.channels) {
+        wanted_channel_layout = av_get_default_channel_layout(spec.channels);
+        if (!wanted_channel_layout) {
+            CCLog("SDL advised channel count %d is not supported!\n", spec.channels);
+            return kErrorUnknown;
+        }
+    }
+    
+    s_audioSpec = spec;
+
+    if (1) {
+        swrContext = swr_alloc_set_opts(NULL,
+                                        av_get_default_channel_layout(spec.channels),
+                                        AV_SAMPLE_FMT_S16,
+                                        spec.freq,
+                                        av_get_default_channel_layout(codecCtx->channels),
+                                        codecCtx->sample_fmt,
+                                        codecCtx->sample_rate,
+                                        0,
+                                        NULL);
+        
+        if (!swrContext || swr_init(swrContext)) {
+            if (swrContext)
+                swr_free(&swrContext);
+            avcodec_close(codecCtx);
+            return kErrorReSampler;
+        }
+    }
+    
+    m_pAudioFrame = av_frame_alloc();
+    
+    if (!m_pAudioFrame) {
+        if (swrContext)
+            swr_free(&swrContext);
+        avcodec_close(codecCtx);
+        return kErrorAllocateFrame;
+    }
+    
+    m_iAudioStream = audioStream;
+    m_pAudioCodecCtx = codecCtx;
+    m_pSwrContext = swrContext;
+    
+    AVStream *st = m_pFormatCtx->streams[m_iAudioStream];
+	avStreamFPSTimeBase(st, 0.025, 0, &m_fAudioTimeBase);
+    
+    CCLog("audio codec smr: %.d fmt: %d chn: %d tb: %f %s",
+          m_pAudioCodecCtx->sample_rate,
+          m_pAudioCodecCtx->sample_fmt,
+          m_pAudioCodecCtx->channels,
+		  m_fAudioTimeBase,
+          m_pSwrContext ? "resample" : "");
+    
+    SDL_PauseAudio(0);
+    
+    m_pFormatCtx->streams[audioStream]->discard = AVDISCARD_DEFAULT;
+    
     return kErrorNone;
 }
 
@@ -605,7 +605,7 @@ void VPDecoder::closeAudioStream()
         m_pAudioCodecCtx = NULL;
     }
 
-//    SDL_Quit();
+    SDL_Quit();
 }
 
 void VPDecoder::closeScaler()
@@ -736,90 +736,90 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
 {
 	if (!m_pAudioFrame->data[0])
         return NULL;
-//    
-//    const unsigned int numChannels = s_audioSpec.channels;
-//    int numFrames;
-//    
-//    void * audioData = NULL;
-//    
-//	if (m_pSwrContext) 
-//	{
-//        const unsigned int ratio = MAX(1, s_audioSpec.freq / m_pAudioCodecCtx->sample_rate) * MAX(1, s_audioSpec.channels / m_pAudioCodecCtx->channels) * 2;
-//        
-//        const int bufSize = av_samples_get_buffer_size(NULL,
-//                                                       s_audioSpec.channels,
-//													   m_pAudioFrame->nb_samples * ratio,
-//                                                       AV_SAMPLE_FMT_S16,
-//                                                       1);
-//        
-//		if (m_pswrBuffer==NULL || m_uswrBufferSize < bufSize) {
-//			m_uswrBufferSize = bufSize;
-//			m_pswrBuffer = realloc(m_pswrBuffer, m_uswrBufferSize);
-//        }
-//        
-//		unsigned char *outbuf[2] = { (unsigned char*)m_pswrBuffer, 0 };
-//        
-//		if (s_audioSpec.samples != m_pAudioFrame->nb_samples) 
-//		{
-//			if (swr_set_compensation(m_pSwrContext,
-//				(s_audioSpec.samples - m_pAudioFrame->nb_samples) * s_audioSpec.freq / m_pAudioFrame->sample_rate,
-//				s_audioSpec.samples * s_audioSpec.freq / m_pAudioFrame->sample_rate) < 0) {
-//				return NULL;
-//			}
-//		}
-//        
-//		numFrames = swr_convert(m_pSwrContext,
-//                                outbuf,
-//								m_pAudioFrame->nb_samples * ratio,
-//								(const uint8_t **)m_pAudioFrame->data,
-//								m_pAudioFrame->nb_samples);
-//        
-//        if (numFrames < 0) {
-//            //CCLog("fail resample audio");
-//            return NULL;
-//        }
-//        
-//		swr_get_delay(m_pSwrContext, s_audioSpec.freq);
-//        
-//		audioData = m_pswrBuffer;
-//        
-//    } else {
-//        
-//		if (m_pAudioCodecCtx->sample_fmt != AV_SAMPLE_FMT_S16) {
-//           //CCAssert(false, "bucheck, audio format is invalid");
-//            return NULL;
-//        }
-//        
-//		audioData = m_pAudioFrame->data[0];
-//		numFrames = m_pAudioFrame->nb_samples;
-//    }
-//    
-//    const unsigned int numElements = numFrames * numChannels;
-//    int dataLength = numElements * av_get_bytes_per_sample(AV_SAMPLE_FMT_S16);
-//	char* data = new char[dataLength];
-//    memcpy(data, audioData, dataLength);
-//    
-//    VPAudioFrame *frame = new VPAudioFrame();
-//	frame->setPosition(av_frame_get_best_effort_timestamp(m_pAudioFrame) * m_fAudioTimeBase);
-//	frame->setDuration(av_frame_get_pkt_duration(m_pAudioFrame) * m_fAudioTimeBase);
-//    frame->setData(data);
-//    frame->setDataLength(dataLength);
-//    
-//    if (frame->getDuration() == 0) {
-//        // sometimes ffmpeg can't determine the duration of audio frame
-//        // especially of wma/wmv format
-//        // so in this case must compute duration
-//        frame->setDuration( dataLength / (sizeof(float) * numChannels * s_audioSpec.freq) );
-//    }
-//    return frame;
+    
+    const unsigned int numChannels = s_audioSpec.channels;
+    int numFrames;
+    
+    void * audioData = NULL;
+    
+	if (m_pSwrContext) 
+	{
+        const unsigned int ratio = MAX(1, s_audioSpec.freq / m_pAudioCodecCtx->sample_rate) * MAX(1, s_audioSpec.channels / m_pAudioCodecCtx->channels) * 2;
+        
+        const int bufSize = av_samples_get_buffer_size(NULL,
+                                                       s_audioSpec.channels,
+													   m_pAudioFrame->nb_samples * ratio,
+                                                       AV_SAMPLE_FMT_S16,
+                                                       1);
+        
+		if (m_pswrBuffer==NULL || m_uswrBufferSize < bufSize) {
+			m_uswrBufferSize = bufSize;
+			m_pswrBuffer = realloc(m_pswrBuffer, m_uswrBufferSize);
+        }
+        
+		unsigned char *outbuf[2] = { (unsigned char*)m_pswrBuffer, 0 };
+        
+		if (s_audioSpec.samples != m_pAudioFrame->nb_samples) 
+		{
+			if (swr_set_compensation(m_pSwrContext,
+				(s_audioSpec.samples - m_pAudioFrame->nb_samples) * s_audioSpec.freq / m_pAudioFrame->sample_rate,
+				s_audioSpec.samples * s_audioSpec.freq / m_pAudioFrame->sample_rate) < 0) {
+				return NULL;
+			}
+		}
+        
+		numFrames = swr_convert(m_pSwrContext,
+                                outbuf,
+								m_pAudioFrame->nb_samples * ratio,
+								(const uint8_t **)m_pAudioFrame->data,
+								m_pAudioFrame->nb_samples);
+        
+        if (numFrames < 0) {
+            //CCLog("fail resample audio");
+            return NULL;
+        }
+        
+		swr_get_delay(m_pSwrContext, s_audioSpec.freq);
+        
+		audioData = m_pswrBuffer;
+        
+    } else {
+        
+		if (m_pAudioCodecCtx->sample_fmt != AV_SAMPLE_FMT_S16) {
+           //CCAssert(false, "bucheck, audio format is invalid");
+            return NULL;
+        }
+        
+		audioData = m_pAudioFrame->data[0];
+		numFrames = m_pAudioFrame->nb_samples;
+    }
+    
+    const unsigned int numElements = numFrames * numChannels;
+    int dataLength = numElements * av_get_bytes_per_sample(AV_SAMPLE_FMT_S16);
+	char* data = new char[dataLength];
+    memcpy(data, audioData, dataLength);
+    
+    VPAudioFrame *frame = new VPAudioFrame();
+	frame->setPosition(av_frame_get_best_effort_timestamp(m_pAudioFrame) * m_fAudioTimeBase);
+	frame->setDuration(av_frame_get_pkt_duration(m_pAudioFrame) * m_fAudioTimeBase);
+    frame->setData(data);
+    frame->setDataLength(dataLength);
+    
+    if (frame->getDuration() == 0) {
+        // sometimes ffmpeg can't determine the duration of audio frame
+        // especially of wma/wmv format
+        // so in this case must compute duration
+        frame->setDuration( dataLength / (sizeof(float) * numChannels * s_audioSpec.freq) );
+    }
+    return frame;
     return 0;
 }
 
 void VPDecoder::onAudioCallback(unsigned char *stream, int len)
 {
-//    if (m_pAudioCallbackTarget && m_audioCallback) {
-//        ((CAObject*)m_pAudioCallbackTarget->*m_audioCallback)(stream, len, s_audioSpec.channels);
-//    }
+    if (m_pAudioCallbackTarget && m_audioCallback) {
+        ((CAObject*)m_pAudioCallbackTarget->*m_audioCallback)(stream, len, s_audioSpec.channels);
+    }
 }
 
 bool VPDecoder::setupVideoFrameFormat(VPVideoFrameFormat format)

@@ -33,7 +33,6 @@ public class Cocos2dxHelper {
 	private static String sFileDirectory;
 	private static Context sContext = null;
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
-	private static Cocos2dxSDL sCocos2dSDL;
 
 	// ===========================================================
 	// Constructors
@@ -53,7 +52,6 @@ public class Cocos2dxHelper {
 		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(pContext);
 		Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(pContext);
 		Cocos2dxHelper.sAssetManager = pContext.getAssets();
-		Cocos2dxHelper.sCocos2dSDL = new Cocos2dxSDL(pContext);
 		
 		Cocos2dxBitmap.setContext(pContext);
 		Cocos2dxETCLoader.setContext(pContext);

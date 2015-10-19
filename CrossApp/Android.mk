@@ -142,7 +142,6 @@ platform/android/CAClipboard.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
-platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxSDL.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \
 platform/android/jni/TouchesJni.cpp \
@@ -196,6 +195,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avresample_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avutil_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swresample_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swscale_static
+
 endif
 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libsdl_static
@@ -213,8 +213,7 @@ $(call import-module,png/prebuilt/android)
 $(call import-module,tiff/prebuilt/android)
 $(call import-module,webp/prebuilt/android)
 $(call import-module,freetype/prebuilt/android)
-#$(call import-module,SDL/prebuilt/android)
 $(call import-module,FFmpeg/prebuilt/android)
 $(call import-module,CrossApp/the_third_party/curl/prebuilt/android)
 $(call import-module,CrossApp/support/libwebsockets/android)
-
+$(call import-module,SDL/prebuilt/android)
