@@ -11,7 +11,6 @@ extern "C"
 {
 	void JAVAsetPasteBoardString(const char* str)
 	{
-
 		JniMethodInfo jmi;
 		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/Cocos2dxActivity", "getContext", "()Lorg/CrossApp/lib/Cocos2dxActivity;"))
 		{
@@ -19,14 +18,19 @@ extern "C"
 			bool isHave = JniHelper::getMethodInfo(jmi, "org/CrossApp/lib/Cocos2dxActivity", "setPasteBoardStr", "(Ljava/lang/String;)V");
 			if (isHave)
 			{
-				jmi.env->CallVoidMethod(obj, jmi.methodID, jmi.env->NewStringUTF(str));
+				jstring strArg = jmi.env->NewStringUTF(str);
+				jmi.env->CallVoidMethod(obj, jmi.methodID, strArg);
+				jmi.env->DeleteLocalRef(strArg);
 			}
+			jmi.env->DeleteLocalRef(obj);
+			jmi.env->DeleteLocalRef(jmi.classID);
 		}
 	}
 
 	std::string JAVAgetPasteBoardString()
 	{
-		JniMethodInfo jmi; std::string cszResult;
+		std::string cszResult;
+		JniMethodInfo jmi;
 		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/Cocos2dxActivity", "getContext", "()Lorg/CrossApp/lib/Cocos2dxActivity;"))
 		{
 			jobject obj = jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
@@ -35,7 +39,10 @@ extern "C"
 			{
 				jstring a = (jstring)jmi.env->CallObjectMethod(obj, jmi.methodID);
 				cszResult = JniHelper::jstring2string(a);
+				jmi.env->DeleteLocalRef(a);
 			}
+			jmi.env->DeleteLocalRef(obj);
+			jmi.env->DeleteLocalRef(jmi.classID);
 		}
 		return cszResult;
 	}
