@@ -116,6 +116,8 @@ typedef enum
 
 namespace CADevice
 {
+    CC_DLL const char* getSystemVersionWithIOS();
+    
     CC_DLL const char* getAppVersion();
     
     CC_DLL void openCamera(CAMediaDelegate* target);

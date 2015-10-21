@@ -209,6 +209,11 @@ extern "C"
     }
 }
     
+const char* getSystemVersionWithIOS()
+{
+    return "";
+}
+    
 const char* getAppVersion()
 {
     JniMethodInfo jmi;
