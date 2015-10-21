@@ -10,6 +10,7 @@ public class HelloCpp extends Cocos2dxActivity{
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);	
+		
 	}
 
     public Cocos2dxGLSurfaceView onCreateView() {

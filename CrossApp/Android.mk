@@ -145,6 +145,7 @@ platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \
 platform/android/jni/TouchesJni.cpp \
+platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxSDL.cpp \
 script_support/JSViewController.cpp \
 script_support/CCScriptSupport.cpp \
 
@@ -174,14 +175,14 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
                        -lz
 
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_tiff_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_webp_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_jpeg_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_png_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_tiff_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_webp_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_freetype_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
-
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_libsdl_static
 
 ifeq ($(VIDEO_ENABLE),1)
 LOCAL_SRC_FILES += video/CAVideoPlayerControlView.cpp \
@@ -189,16 +190,14 @@ LOCAL_SRC_FILES += video/CAVideoPlayerControlView.cpp \
                    video/CAVideoPlayerRender.cpp \
                    video/CAVideoPlayerView.cpp
 
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avcodec_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avformat_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avresample_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_avutil_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swresample_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_swscale_static
-
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avcodec_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avformat_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avresample_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avutil_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_swresample_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_swscale_static
 endif
 
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libsdl_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS -fexceptions
@@ -213,7 +212,7 @@ $(call import-module,png/prebuilt/android)
 $(call import-module,tiff/prebuilt/android)
 $(call import-module,webp/prebuilt/android)
 $(call import-module,freetype/prebuilt/android)
+$(call import-module,curl/prebuilt/android)
+$(call import-module,websockets/android)
 $(call import-module,FFmpeg/prebuilt/android)
-$(call import-module,CrossApp/the_third_party/curl/prebuilt/android)
-$(call import-module,CrossApp/support/libwebsockets/android)
 $(call import-module,SDL/prebuilt/android)
