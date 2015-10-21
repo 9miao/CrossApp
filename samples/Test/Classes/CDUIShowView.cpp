@@ -1736,7 +1736,9 @@ float CDUIShowView::rowHeightForComponent(CAPickerView* pickerView, unsigned int
 
 const char* CDUIShowView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
-    return unicode_to_utf8(adressTag[row]).c_str();
+	static std::string s;
+	s = unicode_to_utf8(adressTag[row]);
+    return s.c_str();
 }
 
 void CDUIShowView::zoomViewBySliderValue(CrossApp::CAControl *btn, CrossApp::DPoint point)
