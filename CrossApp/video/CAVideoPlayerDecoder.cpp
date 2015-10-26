@@ -72,7 +72,7 @@ static void copyFrameData(unsigned char *src, unsigned char **dst, int linesize,
 	if (dst) 
 	{
         width = MIN(linesize, width);
-        *dst = (unsigned char*)malloc(width * height);
+        *dst = (unsigned char*)new char[width * height];
         if (dstLength) {
             *dstLength = width * height;
         }
@@ -173,13 +173,14 @@ VPDecoder::VPDecoder()
 {
     av_log_set_callback(FFLog);
     av_register_all();
+	avcodec_register_all();
     avformat_network_init();
 }
 
 VPDecoder::~VPDecoder()
 {
+	avformat_network_deinit();
     closeFile();
-    SDL_CloseAudio();
 }
 
 
@@ -564,8 +565,8 @@ void VPDecoder::closeVideoStream()
     this->closeScaler();
     
     if (m_pVideoFrame) {
-        
-        av_free(m_pVideoFrame);
+
+		av_frame_free(&m_pVideoFrame);
         m_pVideoFrame = NULL;
     }
     
@@ -578,6 +579,7 @@ void VPDecoder::closeVideoStream()
 
 void VPDecoder::closeAudioStream()
 {
+	SDL_CloseAudio();
     m_iAudioStream = -1;
     
 	if (m_pswrBuffer) {
@@ -595,7 +597,7 @@ void VPDecoder::closeAudioStream()
     
     if (m_pAudioFrame) {
         
-        av_free(m_pAudioFrame);
+		av_frame_free(&m_pAudioFrame);
         m_pAudioFrame = NULL;
     }
     
@@ -631,22 +633,20 @@ bool VPDecoder::setupScaler()
 		m_pVideoCodecCtx->height))
 		return false;
 
-    m_pSwsContext = sws_getCachedContext(m_pSwsContext,
-                                       m_pVideoCodecCtx->width,
-                                       m_pVideoCodecCtx->height,
-                                       m_pVideoCodecCtx->pix_fmt,
-                                       m_pVideoCodecCtx->width,
-                                       m_pVideoCodecCtx->height,
-                                       AV_PIX_FMT_RGB24,
-                                       SWS_FAST_BILINEAR,
-                                       NULL, NULL, NULL);
-    
+	m_pSwsContext = sws_getContext(m_pVideoCodecCtx->width,
+		m_pVideoCodecCtx->height,
+		m_pVideoCodecCtx->pix_fmt,
+		m_pVideoCodecCtx->width,
+		m_pVideoCodecCtx->height,
+		AV_PIX_FMT_RGB24,
+		SWS_FAST_BILINEAR, NULL, NULL, NULL);
+
     return m_pSwsContext != NULL;
 }
 
 VPVideoFrame* VPDecoder::handleVideoFrame()
 {
-	if (!m_pVideoFrame->data[0])
+	if (m_pVideoFrame==NULL || !m_pVideoFrame->data[0])
         return NULL;
     
     VPVideoFrame *frame = NULL;
@@ -718,8 +718,6 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
         
         frame->setDuration(frameDuration * m_fVideoTimeBase);
 		frame->setDuration(frame->getDuration() + m_pVideoFrame->repeat_pict * m_fVideoTimeBase * 0.5);
-        
-        
     } 
 	else 
 	{
@@ -812,7 +810,6 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
         frame->setDuration( dataLength / (sizeof(float) * numChannels * s_audioSpec.freq) );
     }
     return frame;
-    return 0;
 }
 
 void VPDecoder::onAudioCallback(unsigned char *stream, int len)
@@ -859,26 +856,21 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
         }
         
 		if (packet.stream_index == m_iVideoStream) {
+			
             int pktSize = packet.size;
             
 				while (pktSize > 0) {
                 
                 int gotframe = 0;
+
 				int len = avcodec_decode_video2(m_pVideoCodecCtx, m_pVideoFrame, &gotframe, &packet);
-                
-                if (len < 0) {
-                    CCLog("decode video error, skip packet");
+				if (len < 0) {
+					CCLog("decode video error, skip packet");
                     break;
                 }
                 
                 if (gotframe) 
 				{
-                    
-					if (m_pVideoFrame->interlaced_frame) 
-					{
-//						avpicture_deinterlace((AVPicture*)m_pVideoFrame, (AVPicture*)m_pVideoFrame, m_pVideoCodecCtx->pix_fmt, m_pVideoCodecCtx->width, m_pVideoCodecCtx->height);
-                    }
-                    
                     VPVideoFrame *frame = this->handleVideoFrame();
                     if (frame)
 					{
@@ -896,10 +888,9 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
                 
                 pktSize -= len;
             }
-            
 		}
 		else if (packet.stream_index == m_iAudioStream) {
-            
+
             int pktSize = packet.size;
             
             while (pktSize > 0) {
@@ -908,7 +899,7 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
 				int len = avcodec_decode_audio4(m_pAudioCodecCtx, m_pAudioFrame, &gotframe, &packet);
                 
                 if (len < 0) {
-                    CCLog("decode audio error, skip packet");
+					CCLog("decode audio error, skip packet");
                     break;
                 }
                 
@@ -934,7 +925,6 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
                 
                 pktSize -= len;
             }
-            
         } 
         
         av_free_packet(&packet);

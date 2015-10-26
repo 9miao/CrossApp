@@ -75,7 +75,7 @@ void CAThread::close()
 	{
 		m_bIsRunning = false;
 		pthread_cond_wait(&m_SleepCondition, &m_SleepMutex);
-		pthread_detach(m_hThread);
+		pthread_join(m_hThread, NULL);
 	}
 }
 
@@ -131,6 +131,8 @@ void* CAThread::_ThreadProc(void* lpParameter)
 	pAThread->OnExitInstance();
 	pAThread->m_bIsRunning = false;
 	pthread_cond_signal(&pAThread->m_SleepCondition);
+	pthread_detach(pthread_self());
+	pthread_exit((void *)0);
 	return 0;
 }
 
