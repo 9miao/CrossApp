@@ -83,6 +83,7 @@ private:
 	VPVideoFrame *m_pCurVideoFrame;
 	VPAudioFrame *m_pCurAudioFrame;
 	unsigned int m_uCurAudioFramePos;
+	CALock m_aLock;
 };
 
 NS_CC_END
