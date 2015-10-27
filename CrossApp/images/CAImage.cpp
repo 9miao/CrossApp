@@ -1041,6 +1041,11 @@ int CAImage::cutStringByWidth(const char* pFontName, unsigned long nSize, const 
     return g_AFTFontCache.cutStringByWidth(pFontName, nSize, text, iLimitWidth, cutWidth);
 }
 
+int CAImage::cutStringByDSize(std::string& text, const DSize& lableSize, const char* pFontName, unsigned long nSize, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
+{
+	return g_AFTFontCache.cutStringByDSize(text, lableSize, pFontName, nSize, iLineSpacing, bBold, bItalics);
+}
+
 int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth, int iLineSpace, bool bWordWrap)
 {
     return g_AFTFontCache.getStringHeight(pFontName, nSize, pText, iLimitWidth, iLineSpace, bWordWrap);

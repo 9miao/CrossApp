@@ -16,7 +16,7 @@ extern "C"
 #include "libswresample/swresample.h"
 #include "libavutil/pixdesc.h"
 #include "libavutil/avutil.h"
-
+}
 
 
 //    extern void SDL_CloseAudio(void);
@@ -32,16 +32,8 @@ extern "C"
 //    extern void SDL_PauseAudio(int pause_on);
 //    
 //    extern void SDL_Quit(void);
-}
 
 
-
-static void FFLog(void* context, int level, const char* pszFormat, va_list args)
-{
-	char szBuf[kMaxLogLen+1] = { 0 };
-    vsnprintf(szBuf, kMaxLogLen, pszFormat, args);
-	CCLog("%s", szBuf);
-}
     
 static void avStreamFPSTimeBase(AVStream *st, float defaultTimeBase, float *pFPS, float *pTimeBase)
 {
@@ -171,16 +163,14 @@ VPDecoder::VPDecoder()
 , m_pAudioCallbackTarget(NULL)
 , m_pAVPicture(NULL)
 {
-    av_log_set_callback(FFLog);
     av_register_all();
-	avcodec_register_all();
     avformat_network_init();
 }
 
 VPDecoder::~VPDecoder()
 {
-	avformat_network_deinit();
     closeFile();
+	avformat_network_deinit();
 }
 
 
@@ -553,7 +543,9 @@ void VPDecoder::closeFile()
         m_pFormatCtx->interrupt_callback.opaque = NULL;
         m_pFormatCtx->interrupt_callback.callback = NULL;
         
-        avformat_close_input(&m_pFormatCtx);
+		avformat_close_input(&m_pFormatCtx);
+		avformat_free_context(m_pFormatCtx);
+        
         m_pFormatCtx = NULL;
     }
 }
@@ -579,7 +571,6 @@ void VPDecoder::closeVideoStream()
 
 void VPDecoder::closeAudioStream()
 {
-	SDL_CloseAudio();
     m_iAudioStream = -1;
     
 	if (m_pswrBuffer) {
@@ -607,6 +598,7 @@ void VPDecoder::closeAudioStream()
         m_pAudioCodecCtx = NULL;
     }
 
+    SDL_CloseAudio();
     SDL_Quit();
 }
 

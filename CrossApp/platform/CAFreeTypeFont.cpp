@@ -327,7 +327,7 @@ int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, i
     return nCharPos;
 }
 
-int CAFreeTypeFont::cusStringByDSize(std::string& text, const DSize& lableSize, const std::string& pFontName, int nFontSize, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
+int CAFreeTypeFont::cutStringByDSize(std::string& text, const DSize& lableSize, const std::string& pFontName, int nFontSize, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
 {
 	std::u32string cszTemp;
 	std::string cszNewText = text;
@@ -349,7 +349,7 @@ _AgaginInitGlyphs:
 	{
 		if (cszTemp.empty())
 		{
-			int totalLines = m_inHeight / (m_lineHeight + m_lineSpacing);
+			int totalLines = m_inHeight / m_lineHeight;
 
 			for (int i = 0; i < m_lines.size(); i++)
 			{
@@ -367,6 +367,7 @@ _AgaginInitGlyphs:
 		}
 		cszNewText.clear();
 		StringUtils::UTF32ToUTF8(cszTemp, cszNewText);
+
 		destroyAllLineFontGlyph();
 		goto _AgaginInitGlyphs;
 	}
