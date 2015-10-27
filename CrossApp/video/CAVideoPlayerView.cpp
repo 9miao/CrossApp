@@ -27,7 +27,6 @@ CAVideoPlayerView::CAVideoPlayerView()
 , m_pCurAudioFrame(NULL)
 , m_uCurAudioFramePos(0)
 {
-	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
 }
 
 CAVideoPlayerView::~CAVideoPlayerView()
@@ -221,6 +220,7 @@ void CAVideoPlayerView::play()
 	m_isPlaying = true;
 	this->enableAudio(true);
 	asyncDecodeFrames();
+	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
 }
 
 void CAVideoPlayerView::pause()
@@ -266,10 +266,9 @@ void CAVideoPlayerView::setPosition(float position)
 		return;
 	
 	freeBufferedFrames();
+	m_aLock.Lock();
 	position = MIN(m_pDecoder->getDuration(), MAX(0, position));
 	m_pDecoder->setPosition(position);
-
-	m_aLock.Lock();
 	m_fMoviePosition = position + m_pDecoder->getStartTime();
 	m_aLock.UnLock();
 	CCLog("CAVideoPlayerView::setPosition %f", position);
@@ -325,7 +324,9 @@ void CAVideoPlayerView::decodeProcess()
 	while (good) {
 		good = false;
 		if (m_pDecoder && (m_pDecoder->isValidVideo() || m_pDecoder->isValidAudio())) {
+			m_aLock.Lock();
 			std::vector<VPFrame*> frames = m_pDecoder->decodeFrames(0.1f);
+			m_aLock.UnLock();
 			if (!frames.empty()) 
 			{
 				good = addFrames(frames);
@@ -437,8 +438,7 @@ float CAVideoPlayerView::presentFrame()
 		if (m_pDecoder->getDuration() - m_fMoviePosition < 0.1f) {
 
 			pause();
-			m_pDecoder->setPosition(0);
-			freeBufferedFrames();
+			setPosition(0);
 		}
 
 		setCurrentFrame((VPVideoFrame*)frame);
@@ -453,7 +453,7 @@ void CAVideoPlayerView::tick(float dt)
 
 	if (m_pDecoder == NULL || m_pRenderer == NULL)
 		return;
-	
+
 
 	float interval = presentFrame();
 
