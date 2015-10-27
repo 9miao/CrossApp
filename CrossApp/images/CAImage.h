@@ -91,6 +91,15 @@ public:
                                 const std::string& text,
                                 int iLimitWidth,
                                 int& cutWidth);
+
+	static int cutStringByDSize(std::string& text, 
+								const DSize& lableSize, 
+								const char* pFontName, 
+								unsigned long nSize, 
+								bool bWordWrap = true, 
+								int iLineSpacing = 0, 
+								bool bBold = false, 
+								bool bItalics = false);
     
     static int getStringHeight(const char* pFontName,
                                unsigned long nSize,
