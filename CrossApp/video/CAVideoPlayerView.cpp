@@ -249,7 +249,7 @@ void CAVideoPlayerView::enableAudio(bool on)
 {
 	if (m_pDecoder)
 	{
-		return m_pDecoder->enableAudio(on);
+		m_pDecoder->enableAudio(on);
 	}
 }
 
