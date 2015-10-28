@@ -14,6 +14,7 @@
 #include "view/CAView.h"
 #include "view/CAImageView.h"
 #include "view/CARenderImage.h"
+#include "view/CAActivityIndicatorView.h"
 #include "basics/CAThread.h"
 #include "basics/CASyncQueue.h"
 #include "CAVideoPlayerRender.h"
@@ -50,13 +51,15 @@ private:
 	virtual void setImageCoords(DRect rect);
 	virtual void updateImageRect();
 
+	void showLoadingView(bool on);
 	bool createDecoder(const std::string& cszPath);
 	static bool decodeProcessThread(void* param);
+	void setVPPosition(float p);
 	void decodeProcess();
+	void asyncDecodeFrames();
+	void setDecodePosition(float pos);
 	bool addFrames(const std::vector<VPFrame*>& frames);
 	float presentFrame();
-	void asyncDecodeFrames();
-	void freeBufferedFrames();
 	void setCurrentFrame(VPVideoFrame* frame);
 	void tick(float dt);
 	void audioCallback(unsigned char *stream, int len, int channels);
@@ -84,6 +87,8 @@ private:
 	VPAudioFrame *m_pCurAudioFrame;
 	unsigned int m_uCurAudioFramePos;
 	CALock m_aLock;
+
+	CAActivityIndicatorView* m_pLoadingView;
 };
 
 NS_CC_END
