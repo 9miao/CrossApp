@@ -156,6 +156,7 @@ public:
     bool isValidAudio();
     bool isValidVideo();
 
+	void enableAudio(bool on);
     float getStartTime();
     bool isEOF();
 
