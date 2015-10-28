@@ -361,7 +361,9 @@ const char* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int
         default:
             break;
     }
-    return std::string(buff).c_str();
+    static std::string ret;
+    ret = std::string(buff);
+    return ret.c_str();
 }
 
 void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component)

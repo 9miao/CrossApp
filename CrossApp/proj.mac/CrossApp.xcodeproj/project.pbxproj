@@ -741,13 +741,13 @@
 		04EAA0491956D74D00198A8E /* CrossApp */ = {
 			isa = PBXGroup;
 			children = (
-				B05D320B1BC60B6F00F9B4C8 /* video */,
 				04EABB431956DD8E00198A8E /* CrossApp.cpp */,
 				04EAA09F1956D74D00198A8E /* CrossApp.h */,
 				04EAA0701956D74D00198A8E /* ccConfig.h */,
 				04EAA0711956D74D00198A8E /* ccMacros.h */,
 				04EAA0721956D74D00198A8E /* ccTypeInfo.h */,
 				04EAA0731956D74D00198A8E /* ccTypes.h */,
+				B05D320B1BC60B6F00F9B4C8 /* video */,
 				B074A8B41A722B1600F34F79 /* animation */,
 				B047B91119E9181800F24BE6 /* script_support */,
 				04EAA05D1956D74D00198A8E /* basics */,

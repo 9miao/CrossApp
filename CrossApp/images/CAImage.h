@@ -108,6 +108,15 @@ public:
                                int iLineSpace = 0,
                                bool bWordWrap = true);
     
+    static int cusStringByDSize(std::string& text,
+                                        const DSize& lableSize,
+                                        const char* pFontName,
+                                        unsigned long nSize,
+                                        bool bWordWrap = false,
+                                        int iLineSpacing = false,
+                                        bool bBold = false,
+                                        bool bItalics = false);
+    
     static CAImage* scaleToNewImageWithImage(CAImage* image, const DSize& size);
     
     static CAImage* scaleToNewImageWithImage(CAImage* image, float scaleX, float scaleY);
