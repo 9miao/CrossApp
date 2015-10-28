@@ -1053,7 +1053,7 @@ int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const s
 
 int CAImage::cusStringByDSize(std::string& text, const DSize& lableSize, const char* pFontName, unsigned long nSize, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
 {
-    return g_AFTFontCache.cusStringByDSize(text, lableSize, pFontName, nSize, bWordWrap, iLineSpacing, bBold, bItalics);
+    return g_AFTFontCache.cutStringByDSize(text, lableSize, pFontName, nSize, bWordWrap, iLineSpacing, bBold, bItalics);
 }
 
 CAImage* CAImage::create(const std::string& file)
