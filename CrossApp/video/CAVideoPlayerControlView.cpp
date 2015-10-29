@@ -10,8 +10,11 @@ CAVideoPlayerControlView::CAVideoPlayerControlView()
 : m_glView(NULL)
 , m_actView(NULL)
 , m_playButton(NULL)
+, m_backButton(NULL)
 , m_playSlider(NULL)
 , m_playTimeLabel(NULL)
+, m_bShowBackButton(false)
+, m_pPlayerControlViewDelegate(NULL)
 , m_szTitle(UTF8("\u672a\u547d\u540d"))
 {
 	CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this, 0);
@@ -59,6 +62,21 @@ bool CAVideoPlayerControlView::init()
 	this->setColor(ccc4(0, 0, 0, 255));
 	return true;
 }
+
+void CAVideoPlayerControlView::setShowBackButton(bool val)
+{
+	m_bShowBackButton = val;
+	if (m_backButton)
+	{
+		m_backButton->setVisible(val);
+	}
+}
+
+bool CAVideoPlayerControlView::getShowBackButton()
+{
+	return m_bShowBackButton;
+}
+
 
 void CAVideoPlayerControlView::initWithPath(const std::string& szPath)
 {
@@ -153,32 +171,30 @@ void CAVideoPlayerControlView::buildCtrlViews()
 	} while (0);
 
 	// Back Button
-	CAButton* buttonBack = NULL;
 	do {
 		DRect frame = topPanel->getFrame();
-		//        CAImage* backImage = CAImage::create("source_material/vdo_btn_back.png");
-		//        CAImage* backImage_h = CAImage::create("source_material/vdo_btn_back_h.png");
 		CAImage* backImage = CAImage::create("source_material/btn_left_blue.png");
 		CAImage* backImage_h = CAImage::create("source_material/btn_left_white.png");
 		frame.origin.y = frame.size.height / 3;
 		frame.origin.x = frame.origin.y;
 		frame.size.height = _px(backImage->getContentSize().height);
 		frame.size.width = _px(backImage->getContentSize().width);
-		buttonBack = CAButton::createWithCenter(frame, CAButtonTypeCustom);
-		buttonBack->setImageForState(CAControlStateAll, backImage);
-		buttonBack->setImageForState(CAControlStateHighlighted, backImage_h);
-		buttonBack->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onButtonBack), CAControlEventTouchUpInSide);
-		topPanel->addSubview(buttonBack);
+		m_backButton = CAButton::createWithCenter(frame, CAButtonTypeCustom);
+		m_backButton->setImageForState(CAControlStateAll, backImage);
+		m_backButton->setImageForState(CAControlStateHighlighted, backImage_h);
+		m_backButton->setVisible(m_bShowBackButton);
+		m_backButton->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onButtonBack), CAControlEventTouchUpInSide);
+		topPanel->addSubview(m_backButton);
 	} while (0);
 
 	// Title
 	do {
-		DRect frame = buttonBack->getFrame();
+		DRect frame = m_backButton->getFrame();
 		DRect r = DRectZero;
-		r.origin.x = buttonBack->getFrame().origin.x * 2 + buttonBack->getFrame().size.width;
-		r.origin.y = buttonBack->getFrame().origin.y;
+		r.origin.x = m_backButton->getFrame().origin.x * 2 + m_backButton->getFrame().size.width;
+		r.origin.y = m_backButton->getFrame().origin.y;
 		r.size.width = m_glView->getFrame().size.width - r.origin.x;
-		r.size.height = buttonBack->getFrame().size.height;
+		r.size.height = m_backButton->getFrame().size.height;
 		CALabel* title = CALabel::createWithFrame(r);
 		title->setText(m_szTitle);
 		title->setFontSize(_px(42));
@@ -267,7 +283,11 @@ void CAVideoPlayerControlView::onButtonPause(CAControl* control, DPoint point)
 
 void CAVideoPlayerControlView::onButtonBack(CAControl* control, DPoint point)
 {
-
+	if (m_pPlayerControlViewDelegate)
+	{
+		m_pPlayerControlViewDelegate->onBackButtonClicked(this);
+	}
+	this->removeFromSuperview();
 }
 
 void CAVideoPlayerControlView::updatePlayUI(float t)
