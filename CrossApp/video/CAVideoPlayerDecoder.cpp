@@ -256,6 +256,11 @@ bool VPDecoder::isValidVideo()
 	return m_iVideoStream != -1;
 }
 
+void VPDecoder::enableAudio(bool on)
+{
+	SDL_PauseAudio(!on);
+}
+
 float VPDecoder::getStartTime()
 {
 	if (m_iVideoStream != -1) {
@@ -868,10 +873,13 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
 					{
                         result.push_back((VPFrame*)frame);
                         
-						m_fPosition = frame->getPosition();
-                        decodedDuration += frame->getDuration();
-                        if (decodedDuration > minDuration)
-                            finished = true;
+						if (isValidVideo())
+						{
+							m_fPosition = frame->getPosition();
+							decodedDuration += frame->getDuration();
+							if (decodedDuration > minDuration)
+								finished = true;
+						}
                     }
                 }
                 
@@ -902,14 +910,14 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
                         
                         result.push_back((VPFrame*)frame);
                         
-						if (m_iAudioStream == -1) {
-                            
-                            m_fPosition = frame->getPosition();
-                            decodedDuration += frame->getDuration();
-                            if (decodedDuration > minDuration)
-                                finished = true;
-                        }
-                    }
+						if (!isValidVideo() && isValidAudio())
+						{
+							m_fPosition = frame->getPosition();
+							decodedDuration += frame->getDuration();
+							if (decodedDuration > minDuration)
+								finished = true;
+						}
+					}
                 }
                 
                 if (0 == len)
