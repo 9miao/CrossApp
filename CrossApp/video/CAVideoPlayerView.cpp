@@ -68,6 +68,7 @@ CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const DRect &rect)
     CAVideoPlayerView* view = new CAVideoPlayerView;
     if (view && view->initWithCenter(rect))
 	{
+		view->m_viewRect = rect;
         view->autorelease();
         return view;
     }
@@ -81,6 +82,7 @@ CAVideoPlayerView* CAVideoPlayerView::createWithFrame(const DRect &rect)
     CAVideoPlayerView* view = new CAVideoPlayerView;
     if (view && view->initWithFrame(rect)) 
 	{
+		view->m_viewRect = rect;
         view->autorelease();
         return view;
     }
@@ -218,9 +220,6 @@ void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
 
 void CAVideoPlayerView::play()
 {
-	if (!createDecoder())
-		return;
-	
 	if (isPlaying())
 		return;
 
@@ -503,6 +502,9 @@ float CAVideoPlayerView::presentFrame()
 
 void CAVideoPlayerView::tick(float dt)
 {
+	if (!createDecoder())
+		return;
+
 	if (!m_isPlaying)
 		return;
 
@@ -518,7 +520,6 @@ void CAVideoPlayerView::tick(float dt)
 			(m_pDecoder->isValidAudio() ? m_vAudioFrames.GetCount() : 0);
 		if (0 == leftFrames)
 		{
-			CCLog("CAVideoPlayerView::tick ############################################");
 			pause();
 			return;
 		}

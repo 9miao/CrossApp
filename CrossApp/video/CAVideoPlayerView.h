@@ -22,7 +22,6 @@
 
 NS_CC_BEGIN
 
-
 class CC_DLL CAVideoPlayerView : public CAView, public CAThread
 {
 public:
