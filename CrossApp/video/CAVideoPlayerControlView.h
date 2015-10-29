@@ -29,8 +29,8 @@ public:
 
 	CC_SYNTHESIZE(std::string, m_szTitle, Title);
 	
-	bool initWithPath(const std::string& szPath);
-	bool initWithUrl(const std::string& szUrl);
+	void initWithPath(const std::string& szPath);
+	void initWithUrl(const std::string& szUrl);
 
 protected:
 	virtual bool init();

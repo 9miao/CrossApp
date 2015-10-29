@@ -100,20 +100,18 @@ bool CAVideoPlayerView::init()
     return true;
 }
 
-bool CAVideoPlayerView::initWithPath(const std::string& szPath)
+void CAVideoPlayerView::initWithPath(const std::string& szPath)
 {
 	m_fMinBufferedDuration = LOCAL_MIN_BUFFERED_DURATION;
 	m_fMaxBufferedDuration = LOCAL_MAX_BUFFERED_DURATION;
-
-	return createDecoder(szPath);
+	m_cszPath = szPath;
 }
 
-bool CAVideoPlayerView::initWithUrl(const std::string& szUrl)
+void CAVideoPlayerView::initWithUrl(const std::string& szUrl)
 {
 	m_fMinBufferedDuration = NETWORK_MIN_BUFFERED_DURATION;
 	m_fMaxBufferedDuration = NETWORK_MAX_BUFFERED_DURATION;
-
-	return createDecoder(szUrl);
+	m_cszPath = szUrl;
 }
 
 void CAVideoPlayerView::setContentSize(const DSize& size)
@@ -220,6 +218,9 @@ void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
 
 void CAVideoPlayerView::play()
 {
+	if (!createDecoder())
+		return;
+	
 	if (isPlaying())
 		return;
 
@@ -293,15 +294,18 @@ void CAVideoPlayerView::showLoadingView(bool on)
 	m_pLoadingView->setVisible(on);
 }
 
-bool CAVideoPlayerView::createDecoder(const std::string& cszPath)
+bool CAVideoPlayerView::createDecoder()
 {
+	if (m_pDecoder)
+		return true;
+	
 	m_pDecoder = new VPDecoder();
 	if (m_pDecoder == NULL)
 	{
 		return false;
 	}
 
-	if (!m_pDecoder->openFile(cszPath))
+	if (!m_pDecoder->openFile(m_cszPath))
 	{
 		CC_SAFE_DELETE(m_pDecoder);
 		return false;

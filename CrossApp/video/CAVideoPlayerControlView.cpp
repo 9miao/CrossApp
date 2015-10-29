@@ -60,22 +60,20 @@ bool CAVideoPlayerControlView::init()
 	return true;
 }
 
-bool CAVideoPlayerControlView::initWithPath(const std::string& szPath)
+void CAVideoPlayerControlView::initWithPath(const std::string& szPath)
 {
-	if (m_glView == NULL)
+	if (m_glView)
 	{
-		return false;
+		m_glView->initWithPath(szPath);
 	}
-	return m_glView->initWithPath(szPath);
 }
 
-bool CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
+void CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
 {
-	if (m_glView == NULL)
+	if (m_glView)
 	{
-		return false;
+		m_glView->initWithUrl(szUrl);
 	}
-	return m_glView->initWithUrl(szUrl);
 }
 
 
