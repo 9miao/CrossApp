@@ -33,9 +33,10 @@ public:
 	void start();
 	void startAndWait(ThreadProcFunc func);
 	void notifyRun(void* param);
-	void clear();
+	void clear(bool bFree=false);
 	void close();
 	void closeAtOnce();
+	void setMaxMsgCount(int v);
 
 	bool isRunning();
 
@@ -56,6 +57,7 @@ private:
 	pthread_mutex_t m_SleepMutex;
 	pthread_cond_t m_SleepCondition;
 
+	int m_iMaxMsgCount;
 	CASyncQueue<void*> m_ThreadDataQueue;
 
 	ThreadProcFunc m_pThreadFunc;
