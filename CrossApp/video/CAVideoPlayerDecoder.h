@@ -177,6 +177,7 @@ protected:
 	VPVideoFrame* handleVideoFrame();
 	VPAudioFrame* handleAudioFrame();
     
+	static int interrupt_cb(void *ctx);
 private:
 	CAObject* m_pAudioCallbackTarget;
 	SEL_DecoderAudioCallback m_audioCallback;
@@ -200,6 +201,7 @@ private:
     float m_fVideoTimeBase;
     float m_fAudioTimeBase;
     float m_fPosition;
+	int m_iTimeoutCnt;
  
     void *m_pswrBuffer;
     unsigned int m_uswrBufferSize;

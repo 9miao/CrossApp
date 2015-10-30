@@ -164,6 +164,7 @@ VPDecoder::VPDecoder()
 , m_pAVPicture(NULL)
 {
     av_register_all();
+	avcodec_register_all();
     avformat_network_init();
 }
 
@@ -310,33 +311,48 @@ bool VPDecoder::openFile(const std::string& path)
     return true;
 }
 
+int VPDecoder::interrupt_cb(void *ctx)
+{
+	VPDecoder* pDecoder = (VPDecoder*)ctx;
+
+	if ( pDecoder->m_iTimeoutCnt > 150 )
+	{
+		pDecoder->m_iTimeoutCnt = 0;
+		return 1;
+	}
+	pDecoder->m_iTimeoutCnt++;
+	return 0;
+}
+
 VPError VPDecoder::openInput(std::string path)
 {
-	AVFormatContext *formatCtx = avformat_alloc_context();
+	m_pFormatCtx = avformat_alloc_context();
     
-	if (!formatCtx) {
+	if (!m_pFormatCtx) {
 		return kErrorOpenFile;
 	}
 
-    int ret = avformat_open_input(&formatCtx, path.c_str(), NULL, NULL);
+	m_iTimeoutCnt = 0;
+	m_pFormatCtx->interrupt_callback.callback = &VPDecoder::interrupt_cb;
+	m_pFormatCtx->interrupt_callback.opaque = this;
+
+	int ret = avformat_open_input(&m_pFormatCtx, path.c_str(), NULL, NULL);
     CCLog("avformat_open_input, %d", ret);
-    if (ret < 0) {
-        if (formatCtx) {
-            avformat_free_context(formatCtx);
-        }
+    if (ret < 0) 
+	{
+		avformat_free_context(m_pFormatCtx);
         return kErrorOpenFile;
     }
 
-	ret = avformat_find_stream_info(formatCtx, NULL);
+	ret = avformat_find_stream_info(m_pFormatCtx, NULL);
     CCLog("avformat_find_stream_info, %d", ret);
-    if (ret < 0) {
-        avformat_close_input(&formatCtx);
+    if (ret < 0) 
+	{
+		avformat_close_input(&m_pFormatCtx);
         return kErrorStreamInfoNotFound;
     }
     
-    av_dump_format(formatCtx, 0, path.c_str(), false);
-    
-    m_pFormatCtx = formatCtx;
+	av_dump_format(m_pFormatCtx, 0, path.c_str(), false);
     return kErrorNone;
 }
 
@@ -770,7 +786,7 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
 								m_pAudioFrame->nb_samples);
         
         if (numFrames < 0) {
-            //CCLog("fail resample audio");
+            CCLog("fail resample audio");
             return NULL;
         }
         
@@ -781,7 +797,7 @@ VPAudioFrame* VPDecoder::handleAudioFrame()
     } else {
         
 		if (m_pAudioCodecCtx->sample_fmt != AV_SAMPLE_FMT_S16) {
-           //CCAssert(false, "bucheck, audio format is invalid");
+			CCLog("bucheck, audio format is invalid");
             return NULL;
         }
         
@@ -847,10 +863,13 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
     
     while (!finished) {
         
-		if (av_read_frame(m_pFormatCtx, &packet) < 0) {
-            _isEOF = true;
-            break;
+		if (av_read_frame(m_pFormatCtx, &packet) < 0) 
+		{
+			CCLog("decode av_read_frame < 0");
+			_isEOF = true;
+			break;
         }
+		m_iTimeoutCnt = 0;
         
 		if (packet.stream_index == m_iVideoStream) {
 			

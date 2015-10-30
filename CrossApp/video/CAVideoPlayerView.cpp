@@ -40,7 +40,7 @@ CAVideoPlayerView::~CAVideoPlayerView()
 {
 	CAScheduler::unschedule(schedule_selector(CAVideoPlayerView::tick), this);
 
-	CAThread::clear();
+	CAThread::clear(true);
 	setPosition(0);
 	CAThread::close();
 
@@ -276,7 +276,7 @@ void CAVideoPlayerView::setPosition(float position)
 		return;
 	
 	pause();
-	CAThread::clear();
+	CAThread::clear(true);
 	setDecodePosition(position);
 }
 
@@ -331,15 +331,17 @@ bool CAVideoPlayerView::createDecoder()
 	}
 	setFrame(getFrame());
 
+	CAThread::setMaxMsgCount(8);
 	CAThread::startAndWait(decodeProcessThread);
 	return true;
 }
 
 void CAVideoPlayerView::setVPPosition(float p)
 {
-	m_vVideoFrames.Clear();
-	m_vAudioFrames.Clear();
-
+	VPFrame* frame = NULL;
+	while (m_vVideoFrames.PopElement(frame)) CC_SAFE_DELETE(frame);
+	while (m_vAudioFrames.PopElement(frame)) CC_SAFE_DELETE(frame);
+	
 	float position = MIN(m_pDecoder->getDuration(), MAX(0, p));
 	m_pDecoder->setPosition(position);
 
@@ -384,13 +386,13 @@ bool CAVideoPlayerView::decodeProcessThread(void* param)
 			pMsg->pAVGLView->decodeProcess();
 		}
 	}
-	CC_SAFE_DELETE(pMsg);
+	CC_SAFE_FREE(pMsg);
 	return true;
 }
 
 void CAVideoPlayerView::asyncDecodeFrames()
 {
-	DecodeFramesMsg* pMsg = new DecodeFramesMsg;
+	DecodeFramesMsg* pMsg = (DecodeFramesMsg*)malloc(sizeof(DecodeFramesMsg));
 	if (pMsg)
 	{
 		pMsg->pAVGLView = this;
@@ -401,7 +403,7 @@ void CAVideoPlayerView::asyncDecodeFrames()
 
 void CAVideoPlayerView::setDecodePosition(float pos)
 {
-	DecodeFramesMsg* pMsg = new DecodeFramesMsg;
+	DecodeFramesMsg* pMsg = (DecodeFramesMsg*)malloc(sizeof(DecodeFramesMsg));
 	if (pMsg)
 	{
 		pMsg->pAVGLView = this;

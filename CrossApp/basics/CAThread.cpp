@@ -30,6 +30,7 @@ void CALock::UnLock()
 CAThread::CAThread()
 : m_bIsRunning(false)
 , m_pThreadFunc(NULL)
+, m_iMaxMsgCount(32)
 {
 	pthread_mutex_init(&m_SleepMutex, NULL);
 	pthread_cond_init(&m_SleepCondition, NULL);
@@ -61,12 +62,26 @@ void CAThread::startAndWait(ThreadProcFunc func)
 
 void CAThread::notifyRun(void* param)
 {
-	m_ThreadDataQueue.AddElement(param);
+	if (m_ThreadDataQueue.GetCount() < m_iMaxMsgCount)
+	{
+		m_ThreadDataQueue.AddElement(param);
+	}
 }
 
-void CAThread::clear()
+void CAThread::clear(bool bFree)
 {
-	m_ThreadDataQueue.Clear();
+	if (bFree)
+	{
+		std::vector< void* > v = m_ThreadDataQueue.GetQueueElements();
+		for (int i = 0; i < v.size(); i++)
+		{
+			CC_SAFE_FREE(v[i]);
+		}
+	}
+	else
+	{
+		m_ThreadDataQueue.Clear();
+	}
 }
 
 void CAThread::close()
@@ -83,6 +98,11 @@ void CAThread::closeAtOnce()
 {
 	m_ThreadDataQueue.Clear();
 	close();
+}
+
+void CAThread::setMaxMsgCount(int v)
+{
+	m_iMaxMsgCount = v;
 }
 
 bool CAThread::isRunning()
