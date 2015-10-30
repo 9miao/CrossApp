@@ -214,7 +214,6 @@ void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
 {
 	CC_SAFE_DELETE(m_pCurVideoFrame);
 	m_pCurVideoFrame = frame;
-
 	showLoadingView(m_pCurVideoFrame == NULL);
 }
 
@@ -492,8 +491,8 @@ float CAVideoPlayerView::presentFrame()
 
 		if (m_pDecoder->getDuration() - m_fMoviePosition < 0.1f) 
 		{
-			pause();
 			setPosition(0);
+			pause();
 		}
 		setCurrentFrame((VPVideoFrame*)frame);
 	}
@@ -521,6 +520,7 @@ void CAVideoPlayerView::tick(float dt)
 		if (0 == leftFrames)
 		{
 			pause();
+			setPosition(0);
 			return;
 		}
 	}
