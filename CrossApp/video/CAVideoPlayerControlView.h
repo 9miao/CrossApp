@@ -53,14 +53,15 @@ protected:
 	void buildCtrlViews();
 	void updatePlayButton();
 	std::string formatTimeInterval(float seconds, bool isLeft);
+	void delayContinuePlay(float t);
 
 private:
 	CAVideoPlayerView *m_glView;
-	CAActivityIndicatorView *m_actView;
 	CAButton *m_playButton;
 	CAButton *m_backButton;
 	CASlider *m_playSlider;
 	CALabel *m_playTimeLabel;
+	bool m_bWaitingSlide;
 };
 
 NS_CC_END
