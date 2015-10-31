@@ -552,6 +552,7 @@ void CAVideoPlayerView::audioCallback(unsigned char *stream, int len, int channe
 			VPFrame* frame = NULL;
 			if (m_vAudioFrames.PopElement(frame))
 			{
+				m_pCurAudioFrame = (VPAudioFrame*)frame;
 				if (!m_pDecoder->isValidVideo())
 				{
 					m_aLock.Lock();
