@@ -9,7 +9,7 @@ NS_CC_BEGIN
 #define LOCAL_MIN_BUFFERED_DURATION   0.2
 #define LOCAL_MAX_BUFFERED_DURATION   0.4
 #define NETWORK_MIN_BUFFERED_DURATION 2.0
-#define NETWORK_MAX_BUFFERED_DURATION 10.0
+#define NETWORK_MAX_BUFFERED_DURATION 20.0
 
 #define ThreadMsgType_SetPosition 1
 #define ThreadMsgType_DecodeFrame 2
@@ -286,7 +286,10 @@ void CAVideoPlayerView::showLoadingView(bool on)
 	{
 		m_pLoadingView = CAActivityIndicatorView::create();
 		m_pLoadingView->setStyle(CAActivityIndicatorViewStyleWhite);
-		m_pLoadingView->setFrame(m_viewRect);
+		float x = m_viewRect.origin.x + m_viewRect.size.width / 2;
+		float y = m_viewRect.origin.y + m_viewRect.size.height / 2;
+		m_pLoadingView->setCenterOrigin(DPoint(x, y));
+		m_pLoadingView->resignFirstResponder();
 		this->addSubview(m_pLoadingView);
 	}
 	m_pLoadingView->setVisible(on);
@@ -363,7 +366,7 @@ void CAVideoPlayerView::decodeProcess()
 		good = false;
 		if (m_pDecoder && (m_pDecoder->isValidVideo() || m_pDecoder->isValidAudio())) 
 		{
-			std::vector<VPFrame*> frames = m_pDecoder->decodeFrames(0.1f);
+			std::vector<VPFrame*> frames = m_pDecoder->decodeFrames(1.2f);
 			if (!frames.empty()) 
 			{
 				good = addFrames(frames);
@@ -477,7 +480,7 @@ float CAVideoPlayerView::presentFrame()
 			m_aLock.UnLock();
 
 			float fCurPos = frame->getPosition();
-			
+
 			if (fCurPos >= m_fMoviePosition)
 			{
 				interval = frame->getDuration();
@@ -490,7 +493,7 @@ float CAVideoPlayerView::presentFrame()
 				CC_SAFE_DELETE(frame);
 			}
 		}
-
+		
 		if (m_pDecoder->getDuration() - m_fMoviePosition < 0.1f) 
 		{
 			setPosition(0);

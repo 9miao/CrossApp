@@ -2,18 +2,19 @@
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
 #include "view/CAWindow.h"
+#include "basics/CAScheduler.h"
 
 NS_CC_BEGIN
 
 
 CAVideoPlayerControlView::CAVideoPlayerControlView()
 : m_glView(NULL)
-, m_actView(NULL)
 , m_playButton(NULL)
 , m_backButton(NULL)
 , m_playSlider(NULL)
 , m_playTimeLabel(NULL)
 , m_bShowBackButton(false)
+, m_bWaitingSlide(false)
 , m_pPlayerControlViewDelegate(NULL)
 , m_szTitle(UTF8("\u672a\u547d\u540d"))
 {
@@ -100,7 +101,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 	m_glView = CAVideoPlayerView::createWithFrame(getFrame());
 	m_glView->setFrameOrigin(DPointZero);
 	m_glView->setColor(ccc4(0, 0, 0, 0));
-	this->insertSubview(m_glView, 1);
+	this->addSubview(m_glView);
 
 	// Bottom Panel Back
 	CAImageView* bottomPanel = NULL;
@@ -249,20 +250,30 @@ std::string CAVideoPlayerControlView::formatTimeInterval(float seconds, bool isL
 	return std::string(output);
 }
 
+void CAVideoPlayerControlView::delayContinuePlay(float t)
+{
+	if (m_glView)
+	{
+		m_glView->play();
+	}
+	m_bWaitingSlide = false;
+	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this);
+}
+
 void CAVideoPlayerControlView::onSlideTouched(CAControl* control, DPoint point)
 {
-	CCLog("1111111111 onSlideTouched\n");
+	m_bWaitingSlide = true;
+	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this);
+	CCLog("CAVideoPlayerControlView::onSlideTouched");
 }
 
 void CAVideoPlayerControlView::onSlideChanged(CAControl* control, DPoint point)
 {
-	CCLog("22222222222 onSlideChanged\n");
-	if (m_glView == NULL || m_playSlider == NULL)
-		return;
-
+	CCLog("CAVideoPlayerControlView::onSlideChanged");
 	float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
 	m_glView->setPosition(moviePosition);
-	m_glView->play();
+	
+	CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this, 0, 0, 0.8f);
 }
 
 void CAVideoPlayerControlView::onButtonPause(CAControl* control, DPoint point)
@@ -295,13 +306,16 @@ void CAVideoPlayerControlView::updatePlayUI(float t)
 	if (m_glView == NULL || m_playSlider == NULL || m_playTimeLabel == NULL)
 		return;
 
+	if (!m_bWaitingSlide)
+	{
+		updatePlayButton();
+	}
+
 	const float duration = m_glView->getDuration();
 	const float position = m_glView->getPosition();
 
 	m_playSlider->setValue(position / duration);
 	m_playTimeLabel->setText(formatTimeInterval(position, false).append(" / ").append(formatTimeInterval(duration - 1, false)));
-
-	updatePlayButton();
 }
 
 NS_CC_END
