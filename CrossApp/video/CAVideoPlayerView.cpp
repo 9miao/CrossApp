@@ -473,7 +473,13 @@ float CAVideoPlayerView::presentFrame()
 	{
 		VPFrame *frame = NULL;
 
-		while (m_vVideoFrames.PopElement(frame))
+		bool isBuffing = (m_fBufferedDuration<8.0f);
+		if (m_pDecoder->isEOF())
+		{
+			isBuffing = false;
+		}
+
+		while (!isBuffing && m_vVideoFrames.PopElement(frame))
 		{
 			m_aLock.Lock();
 			m_fBufferedDuration -= frame->getDuration();
