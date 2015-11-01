@@ -473,7 +473,7 @@ float CAVideoPlayerView::presentFrame()
 	{
 		VPFrame *frame = NULL;
 
-		bool isBuffing = (m_fBufferedDuration<8.0f);
+		bool isBuffing = (m_fBufferedDuration<m_fMaxBufferedDuration / 2);
 		if (m_pDecoder->isEOF())
 		{
 			isBuffing = false;
