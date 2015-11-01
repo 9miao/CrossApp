@@ -1,0 +1,13 @@
+﻿生成启动时间为 2015/7/2 14:12:23。
+     1>项目“C:\Users\renhongguang\Documents\CA\CrossApp\CocosDenshion\proj.win32\CocosDenshion.vcxproj”在节点 2 上(Build 个目标)。
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\renhongguang\Documents\CA\CrossApp\samples\Test\proj.win32\Debug.win32\libCocosDenshion.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\renhongguang\Documents\CA\CrossApp\samples\Test\proj.win32\Debug.win32\ winmm.lib libCrossApp.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\renhongguang\Documents\CA\CrossApp\samples\Test\proj.win32\Debug.win32\libCocosDenshion.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\renhongguang\Documents\CA\CrossApp\samples\Test\proj.win32\Debug.win32\libCocosDenshion.lib" /MACHINE:X86 /SAFESEH /DLL Debug.win32\MciPlayer.obj
+         Debug.win32\SimpleAudioEngine.obj
+     1>MciPlayer.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/OPT:LBR”规范)
+            正在创建库 C:\Users\renhongguang\Documents\CA\CrossApp\samples\Test\proj.win32\Debug.win32\libCocosDenshion.lib 和对象 C:\Users\renhongguang\Documents\CA\CrossApp\samples\Test\proj.win32\Debug.win32\libCocosDenshion.exp
+         CocosDenshion.vcxproj -> C:\Users\renhongguang\Documents\CA\CrossApp\samples\Test\proj.win32\Debug.win32\libCocosDenshion.dll
+     1>已完成生成项目“C:\Users\renhongguang\Documents\CA\CrossApp\CocosDenshion\proj.win32\CocosDenshion.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.68

@@ -1,0 +1,21 @@
+﻿生成启动时间为 2015/7/2 14:12:24。
+     1>项目“C:\Users\renhongguang\Documents\CA\CrossApp\extensions\proj.win32\libExtensions.vcxproj”在节点 2 上(Build 个目标)。
+     1>Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\Users\renhongguang\Documents\CA\CrossApp\samples\Test\proj.win32\Debug.win32\libExtensions.lib" /NOLOGO Debug.win32\CADevice.obj
+         Debug.win32\CSContentJsonDictionary.obj
+         Debug.win32\DictionaryHelper.obj
+         Debug.win32\json_reader.obj
+         Debug.win32\json_value.obj
+         Debug.win32\json_writer.obj
+         Debug.win32\LocalStorage.obj
+         Debug.win32\DownloadManager.obj
+         Debug.win32\HttpClient.obj
+         Debug.win32\Websocket.obj
+         Debug.win32\sqlite3.obj
+         Debug.win32\CAStudioViewParser.obj
+         libExtensions.vcxproj -> C:\Users\renhongguang\Documents\CA\CrossApp\samples\Test\proj.win32\Debug.win32\libExtensions.lib
+     1>已完成生成项目“C:\Users\renhongguang\Documents\CA\CrossApp\extensions\proj.win32\libExtensions.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.29
