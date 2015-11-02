@@ -36,7 +36,7 @@ enum {
 	kCCUniform_MAX,
 };
 
-#define kCCShader_PositionTextureColor              "ShaderPositionTextureColor"
+#define kCCShader_PositionTextureColor              "ShaderPositionTextureColor_noMVP"
 #define kCCShader_PositionTextureColorAlphaTest     "ShaderPositionTextureColorAlphaTest"
 #define kCCShader_PositionColor                     "ShaderPositionColor"
 #define kCCShader_PositionTexture                   "ShaderPositionTexture"

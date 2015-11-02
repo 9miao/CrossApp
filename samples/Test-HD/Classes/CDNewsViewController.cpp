@@ -27,6 +27,27 @@ CDNewsViewController::~CDNewsViewController(){
     
 }
 
+string CDNewsViewController::getSign(std::map<std::string,std::string> key_value)
+{
+    string appsecret = "c174cb1fda3491285be953998bb867a0";
+    string tempStr = "";
+    std::map<std::string,std::string>::iterator itr;
+    for (itr=key_value.begin(); itr!=key_value.end(); itr++) {
+        tempStr = tempStr+itr->first+itr->second;
+    }
+    tempStr = appsecret+tempStr+appsecret;
+    CCLog("tempStr===%s",tempStr.c_str());
+    string sign = MD5(tempStr).md5();
+    for(int i=0;i<sign.length();i++)
+    {
+        if(sign[i]>='a'&&sign[i]<='z')
+            sign[i]-=32;
+        else if
+            (sign[i]>='A'&&sign[i]<='Z')sign[i]+=32;
+    }
+    return sign;
+}
+
 void CDNewsViewController::viewDidLoad()
 {
     winSize = this->getView()->getBounds().size;
@@ -34,9 +55,15 @@ void CDNewsViewController::viewDidLoad()
     {
         std::map<std::string,
         std::string> key_value;
-        char temurl[200];
-        sprintf(temurl, "http://h5.9miao.com/%s/?num=1&tag=%s",m_pNewsType.c_str(),menuTag[urlID]);
-        CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
+        key_value["tag"] = menuTag[urlID];
+        key_value["page"]= "1";
+        key_value["limit"]= "20";
+        key_value["appid"]="10000";
+        key_value["sign_method"]="md5";
+        string tempSign = getSign(key_value);
+        key_value["sign"] = tempSign;
+        string tempUrl = crossapp_format_string("http://api.doubi.so/%s/",m_pNewsType.c_str());
+        CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,
                                                    CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
         
         
@@ -93,9 +120,15 @@ void CDNewsViewController::buttonCallBack(CAControl* btn,CCPoint point)
     p_alertView = NULL;
     std::map<std::string,
     std::string> key_value;
-    char temurl[200];
-    sprintf(temurl, "http://h5.9miao.com/%s/?num=1&tag=%s",m_pNewsType.c_str(),menuTag[urlID]);
-    CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
+    key_value["tag"] = menuTag[urlID];
+    key_value["page"]= "1";
+    key_value["limit"]= "20";
+    key_value["appid"]="10000";
+    key_value["sign_method"]="md5";
+    string tempSign = getSign(key_value);
+    key_value["sign"] = tempSign;
+    string tempUrl = crossapp_format_string("http://api.doubi.so/%s/",m_pNewsType.c_str());
+    CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     {
         p_pLoading = CAActivityIndicatorView::createWithCenter(DRect(winSize.width/2,winSize.height/2,50,50));
@@ -109,34 +142,21 @@ void CDNewsViewController::onRequestFinished(const HttpResponseStatus& status, c
 {
     if (status == HttpResponseSucceed)
     {
-        if (m_pNewsType == "getdemocon") {
-            const CSJson::Value& value = json["msg"];
-            const CSJson::Value& value1 = json["headmsg"];
+        if (m_pNewsType == "news") {
+            const CSJson::Value& value = json["result"];
             int length = value.size();
-            int length1 = value1.size();
             m_msg.clear();
-            m_page.clear();
             for (int index = 0; index < length; index++)
             {
                 newsMsg temp_msg;
                 temp_msg.m_title = value[index]["title"].asString();
                 temp_msg.m_desc = value[index]["desc"].asString();
                 temp_msg.m_url = value[index]["url"].asString();
-                for(int i=0 ;i<value[index]["pic"].size();i++){
-                    temp_msg.m_imageUrl.push_back(value[index]["pic"][i].asString());
-                }
+                temp_msg.m_imageUrl = value[index]["image"].asString();
                 m_msg.push_back(temp_msg);
             }
-            
-            for (int i=0; i<length1; i++) {
-                newsPage temp_page;
-                temp_page.m_title = value1[i]["title"].asString();
-                temp_page.m_pic = value1[i]["pic"].asString();
-                temp_page.m_url = value1[i]["url"].asString();
-                m_page.push_back(temp_page);
-            }
         }else{
-            const CSJson::Value& value = json["msg"];
+            const CSJson::Value& value = json["result"];
             int length = value.size();
             
             m_ImageMsg.clear();
@@ -144,9 +164,9 @@ void CDNewsViewController::onRequestFinished(const HttpResponseStatus& status, c
             {
                 newsImage temp_msg;
                 temp_msg.m_title = value[index]["title"].asString();
-                for (int i=0; i<value[index]["piccon"].size(); i++) {
-                    string temp_pic = value[index]["piccon"][i]["pic"].asString();
-                    string temp_dsc = value[index]["piccon"][i]["desc"].asString();
+                for (int i=0; i<value[index]["picon"].size(); i++) {
+                    string temp_pic = value[index]["picon"][i]["pic"].asString();
+                    string temp_dsc = value[index]["picon"][i]["desc"].asString();
                     temp_msg.m_imageUrl.push_back(temp_pic);
                     temp_msg.m_imageDesc.push_back(temp_dsc);
                 }
@@ -169,8 +189,8 @@ void CDNewsViewController::onRefreshRequestFinished(const HttpResponseStatus& st
 {
     if (status == HttpResponseSucceed)
     {
-        if (m_pNewsType == "getdemocon") {
-            const CSJson::Value& value = json["msg"];
+        if (m_pNewsType == "news") {
+            const CSJson::Value& value = json["result"];
             int length = value.size();
             for (int index = 0; index < length; index++)
             {
@@ -178,22 +198,19 @@ void CDNewsViewController::onRefreshRequestFinished(const HttpResponseStatus& st
                 temp_msg.m_title = value[index]["title"].asString();
                 temp_msg.m_desc = value[index]["desc"].asString();
                 temp_msg.m_url = value[index]["url"].asString();
-                for(int i=0 ;i<value[index]["pic"].size();i++){
-                    temp_msg.m_imageUrl.push_back(value[index]["pic"][i].asString());
-                }
+                temp_msg.m_imageUrl = value[index]["image"].asString();
                 m_msg.push_back(temp_msg);
             }
         }else{
-            const CSJson::Value& value = json["msg"];
+            const CSJson::Value& value = json["result"];
             int length = value.size();
-            CCLog("length==%d",length);
             for (int index = 0; index < length; index++)
             {
                 newsImage temp_msg;
                 temp_msg.m_title = value[index]["title"].asString();
-                for (int i=0; i<value[index]["piccon"].size(); i++) {
-                    string temp_pic = value[index]["piccon"][i]["pic"].asString();
-                    string temp_dsc = value[index]["piccon"][i]["desc"].asString();
+                for (int i=0; i<value[index]["picon"].size(); i++) {
+                    string temp_pic = value[index]["picon"][i]["pic"].asString();
+                    string temp_dsc = value[index]["picon"][i]["desc"].asString();
                     temp_msg.m_imageUrl.push_back(temp_pic);
                     temp_msg.m_imageDesc.push_back(temp_dsc);
                 }
@@ -221,12 +238,15 @@ void CDNewsViewController::onRefreshRequestFinished(const HttpResponseStatus& st
 
 void CDNewsViewController::initNewsView()
 {
-    if (m_page.empty()&&m_ImageMsg.empty())
+    if (m_pNewsType=="news"&&m_msg.empty()) {
+        showAlert();
+        return;
+    }else if(m_pNewsType=="newsgirlpic"&&m_ImageMsg.empty())
     {
         showAlert();
         return;
     }
-    p_Conllection = CAAutoCollectionView::createWithFrame(CCRect(0,20,this->getView()->getBounds().size.width,this->getView()->getBounds().size.height-20));
+    p_Conllection = CAAutoCollectionView::createWithFrame(CCRect(0,0,this->getView()->getBounds().size.width,this->getView()->getBounds().size.height));
     p_Conllection->setAllowsSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
     p_Conllection->setCollectionViewDataSource(this);
@@ -245,6 +265,7 @@ void CDNewsViewController::initNewsView()
     p_Conllection->setHeaderRefreshView(refreshDiscount1);
     
     this->getView()->addSubview(p_Conllection);
+    p_Conllection->reloadData();
 }
 
 void CDNewsViewController::viewDidUnload()
@@ -261,26 +282,38 @@ void CDNewsViewController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollVie
 {
     std::map<std::string,
     std::string> key_value;
-    char temurl[200];
-    sprintf(temurl, "http://h5.9miao.com/%s/?num=1&tag=%s",m_pNewsType.c_str(),menuTag[urlID]);
-    CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
+    key_value["tag"] = menuTag[urlID];
+    key_value["page"]= "1";
+    key_value["limit"]= "20";
+    key_value["appid"]="10000";
+    key_value["sign_method"]="md5";
+    string tempSign = getSign(key_value);
+    key_value["sign"] = tempSign;
+    string tempUrl = crossapp_format_string("http://api.doubi.so/%s/",m_pNewsType.c_str());
+    CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
 }
 
 void CDNewsViewController::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
+    p_section++;
     std::map<std::string,
     std::string> key_value;
-    char temurl[200];
-    p_section++;
-    sprintf(temurl, "http://h5.9miao.com/%s/?num=%d&tag=%s",m_pNewsType.c_str(),p_section,menuTag[urlID]);
-    CommonHttpManager::getInstance()->send_get(temurl, key_value, this,
+    key_value["tag"] = menuTag[urlID];
+    key_value["page"]= crossapp_format_string("%d",p_section);
+    key_value["limit"]= "20";
+    key_value["appid"]="10000";
+    key_value["sign_method"]="md5";
+    string tempSign = getSign(key_value);
+    key_value["sign"] = tempSign;
+    string tempUrl = crossapp_format_string("http://api.doubi.so/%s/",m_pNewsType.c_str());
+    CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRefreshRequestFinished));
 }
 
 void CDNewsViewController::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
-    if (m_pNewsType == "getdemocon") {
+    if (m_pNewsType == "news") {
         CDWebViewController* _webController = new CDWebViewController();
         _webController->init();
         _webController->setTitle(" ");
@@ -345,8 +378,8 @@ CACollectionViewCell* CDNewsViewController::collectionCellAtIndex(CAAutoCollecti
     CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(100);
     
     
-    if (m_pNewsType == "getdemocon") {
-        theImage->setUrl(m_msg[item].m_imageUrl[0]);
+    if (m_pNewsType == "news") {
+        theImage->setUrl(m_msg[item].m_imageUrl);
         itemText->setText(m_msg[item].m_title);
         itemText->setColor(ccc4(20,20,20,255));
     }else{
@@ -367,7 +400,7 @@ unsigned int CDNewsViewController::numberOfSections(CAAutoCollectionView *collec
 unsigned int CDNewsViewController::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
 {
     int tempNum = 0;
-    if (m_pNewsType=="getdemocon") {
+    if (m_pNewsType=="news") {
         tempNum = (int)m_msg.size();
     }else{
         tempNum = (int)m_ImageMsg.size();

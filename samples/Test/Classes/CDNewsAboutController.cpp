@@ -7,6 +7,80 @@
 //
 
 #include "CDNewsAboutController.h"
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#define ___FILE_PATH___ std::string(CCFileUtils::sharedFileUtils()->getWritablePath() + "image")
+
+void getAllFilePaths(std::vector<std::string>& filePaths, std::vector<std::string>& dirPaths, const std::string& path)
+{
+    std::string p = path.at(path.length() - 1) == '/' ? path : path + "/";
+    
+    struct dirent *ptr;
+    DIR* dir;
+    dir = opendir(p.c_str());
+    CC_RETURN_IF(dir == 0);
+    while ((ptr = readdir(dir)) != NULL)
+    {
+        std::string file_path = p + ptr->d_name;
+        
+        if (ptr->d_type == DT_DIR && ptr->d_name[0] != '.')
+        {
+            dirPaths.push_back(file_path);
+            getAllFilePaths(filePaths, dirPaths, file_path);
+        }
+        else
+        {
+            filePaths.push_back(file_path);
+        }
+    }
+    
+    closedir(dir);
+}
+
+unsigned long getFilePathSize(const std::string& path)
+{
+    unsigned long lCurFileSize = 0;
+    
+    std::vector<std::string> filePaths;
+    std::vector<std::string> dirPaths;
+    getAllFilePaths(filePaths, dirPaths, path);
+    
+    for (int i=0; i<filePaths.size(); i++)
+    {
+        FILE* fp = fopen(filePaths.at(i).c_str(), "rb");
+        if (fp != NULL)
+        {
+            fseek(fp, 0L, SEEK_END);
+            lCurFileSize += ftell(fp);
+            fclose(fp);
+        }
+    }
+    
+    return lCurFileSize;
+}
+
+void removeFilePath(const std::string& path)
+{
+    std::vector<std::string> filePaths;
+    std::vector<std::string> dirPaths;
+    getAllFilePaths(filePaths, dirPaths, path);
+    
+    for (std::vector<std::string>::iterator itr=filePaths.begin();
+         itr!=filePaths.end();
+         itr++)
+    {
+        remove(itr->c_str());
+    }
+    
+    for (std::vector<std::string>::iterator itr=dirPaths.begin();
+         itr!=dirPaths.end();
+         itr++)
+    {
+        remove(itr->c_str());
+    }
+}
 
 CDNewsAboutTableCell::CDNewsAboutTableCell()
 {
@@ -144,7 +218,23 @@ CAView* CDNewsAboutController::tableViewSectionViewForFooterInSection(CATableVie
 
 void CDNewsAboutController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-
+    if (section==1 && row == 5) {
+        _waitview = CAView::createWithColor(ccc4(0,0,0,128));
+        _waitview->setFrame(DRect(0,0,winSize.width,winSize.height));
+        CAActivityIndicatorView* p_pLoading = CAActivityIndicatorView::createWithCenter(DRect( winSize.width/2, winSize.height/2,50,50));
+        p_pLoading->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
+        p_pLoading->startAnimating();
+        CALabel* label = CALabel::createWithCenter(DRect(winSize.width/2,winSize.height/2+100,200,50));
+        label->setText("正在清理...");
+        label->setColor(CAColor_white);
+        label->setFontSize(18);
+        
+        _waitview->addSubview(p_pLoading);
+        _waitview->addSubview(label);
+        this->getView()->insertSubview(_waitview, CAWindowZOderTop);
+        this->start();
+        CAScheduler::schedule(schedule_selector(CDNewsAboutController::deleteCallBack), this, 0.01f);
+    }
 }
 
 void CDNewsAboutController::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
@@ -215,7 +305,31 @@ unsigned int CDNewsAboutController::tableViewHeightForHeaderInSection(CATableVie
     return _px(h);
 }
 
+void CDNewsAboutController::worker()
+{
+    _filesize = getFilePathSize(___FILE_PATH___);
+    _tempfilesize = _filesize;
+    CCLog("_filesize = = %f",_filesize);
+    removeFilePath(___FILE_PATH___);
+    _filesize = 0;
+    CCLog("_filesize111111 = = %f",_filesize);
+}
+
 unsigned int CDNewsAboutController::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
 {
     return 1;
+}
+
+void CDNewsAboutController::deleteCallBack(float dt)
+{
+    if (_filesize<=0) {
+        this->getView()->removeSubview(_waitview);
+        _waitview = NULL;
+        CAScheduler::unschedule(schedule_selector(CDNewsAboutController::deleteCallBack), this);
+        char temstr[200];
+        sprintf(temstr, "本次共清理%0.1f M缓存！",_tempfilesize/1048576.0f);
+        CAAlertView* alertView = CAAlertView::createWithText("提示", temstr, "关闭",NULL);
+        alertView->show();
+        _tempfilesize = 0;
+    }
 }

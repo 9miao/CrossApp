@@ -1,4 +1,4 @@
-﻿#include "CommonHttpManager.h"
+#include "CommonHttpManager.h"
 
 #define _T(x) L##x
 #define CHAR    wchar_t
@@ -37,7 +37,7 @@ static const CHAR* menuTitle[4] =
 
 static const CHAR* newsTitle[5] =
 {
-	_T("头条"), _T("娱乐"), _T("体育"), _T("财经"), _T("科技")
+	_T("头条"), _T("娱乐"), _T("社会"), _T("汽车"), _T("科技")
 };
 
 static const CHAR* imageTitle[4] =
@@ -47,7 +47,7 @@ static const CHAR* imageTitle[4] =
 
 static const char* menuTag[5] =
 {
-	"__all__", "news_entertainment", "news_fashion", "news_car", "news_society"
+	"__all__", "news_entertainment", "news_society", "news_car", "news_tech"
 };
 
 static const char* imageTag[4] =

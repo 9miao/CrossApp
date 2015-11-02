@@ -14,7 +14,7 @@ struct newsMsg
 {
 	std::string m_title;
 	std::string m_url;
-	std::vector<std::string > m_imageUrl;
+	std::string m_imageUrl;
 	std::string m_desc;
 };
 
@@ -48,7 +48,7 @@ static const CHAR* imageTitle[4] =
 
 static const char* menuTag[9] =
 {
-	"weixin", "news_entertainment", "news_sports", "news_car", "news_society","gossip", "style", "body", "beauty"
+	"__all__", "news_entertainment", "news_society", "news_car", "news_tech","gossip", "style", "body", "beauty"
 };
 
 static const char* imageTag[4] =

@@ -158,9 +158,9 @@ void CDNewsMenuView::tableViewDidSelectRowAtIndexPath(CATableView* table, unsign
     _menuview->setNavigationBarItem(temp_nav0);
     string temp_str;
     if (row<5) {
-        temp_str = "getdemocon";
+        temp_str = "news";
     }else{
-        temp_str = "pic";
+        temp_str = "newsgirlpic";
     }
     CDNewsViewController* news_controller1 = new CDNewsViewController(row,temp_str);
     news_controller1->autorelease();
