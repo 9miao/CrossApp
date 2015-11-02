@@ -136,6 +136,21 @@ namespace CAAnimation
         }
     }
     
-    
+    void unscheduleAllForTarget(CAObject* target)
+    {
+        for (CADeque<Animation*>::iterator itr=_deque.begin(); itr!=_deque.end(); )
+        {
+            Animation* obj = *itr;
+            if (obj->m_obInfo.target == target)
+            {
+                CAScheduler::unscheduleAllForTarget(obj);
+                itr = _deque.erase(itr);
+            }
+            else
+            {
+                itr++;
+            }
+        }
+    }
 }
 NS_CC_END
