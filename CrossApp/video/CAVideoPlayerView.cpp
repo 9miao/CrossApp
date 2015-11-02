@@ -25,10 +25,12 @@ CAVideoPlayerView::CAVideoPlayerView()
 : m_pRenderer(NULL)
 , m_pDecoder(NULL)
 , m_isPlaying(false)
+, m_isBuffered(false)
 , m_fMinBufferedDuration(0)
 , m_fMaxBufferedDuration(0)
 , m_fBufferedDuration(0)
 , m_fMoviePosition(0)
+, m_tickCorrectionPosition(0)
 , m_pCurVideoFrame(NULL)
 , m_pCurAudioFrame(NULL)
 , m_uCurAudioFramePos(0)
@@ -223,10 +225,14 @@ void CAVideoPlayerView::play()
 		return;
 
 	showLoadingView(true);
-	m_isPlaying = true;
+
+	m_tickCorrectionTime.tv_sec = 0;
+	m_tickCorrectionTime.tv_usec = 0;
+
 	this->enableAudio(true);
 	asyncDecodeFrames();
 	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
+	m_isPlaying = true;
 }
 
 void CAVideoPlayerView::pause()
@@ -246,7 +252,7 @@ bool CAVideoPlayerView::isPlaying()
 
 void CAVideoPlayerView::enableAudio(bool on)
 {
-	if (m_pDecoder)
+	if (m_pDecoder && m_pDecoder->isValidAudio())
 	{
 		m_pDecoder->enableAudio(on);
 	}
@@ -275,6 +281,7 @@ void CAVideoPlayerView::setPosition(float position)
 	if (m_pDecoder == NULL)
 		return;
 	
+	m_isBuffered = true;
 	pause();
 	CAThread::clear(true);
 	setDecodePosition(position);
@@ -351,14 +358,13 @@ void CAVideoPlayerView::setVPPosition(float p)
 	m_aLock.Lock();
 	m_fMoviePosition = position + m_pDecoder->getStartTime();
 	m_fBufferedDuration = 0;
+	CC_SAFE_DELETE(m_pCurAudioFrame);
+	m_uCurAudioFramePos = 0;
 	m_aLock.UnLock();
 }
 
 void CAVideoPlayerView::decodeProcess()
 {
-	if (!m_isPlaying)
-		return;
-	
 	bool good = true;
 	
 	while (good)
@@ -366,7 +372,7 @@ void CAVideoPlayerView::decodeProcess()
 		good = false;
 		if (m_pDecoder && (m_pDecoder->isValidVideo() || m_pDecoder->isValidAudio())) 
 		{
-			std::vector<VPFrame*> frames = m_pDecoder->decodeFrames(1.2f);
+			std::vector<VPFrame*> frames = m_pDecoder->decodeFrames(0.1f);
 			if (!frames.empty()) 
 			{
 				good = addFrames(frames);
@@ -473,20 +479,17 @@ float CAVideoPlayerView::presentFrame()
 	{
 		VPFrame *frame = NULL;
 
-		bool isBuffing = (m_fBufferedDuration<m_fMaxBufferedDuration / 2);
+		m_isBuffered = (m_fBufferedDuration<m_fMaxBufferedDuration / 2);
 		if (m_pDecoder->isEOF())
 		{
-			isBuffing = false;
+			m_isBuffered = false;
 		}
 
-		while (!isBuffing && m_vVideoFrames.PopElement(frame))
+		while (!m_isBuffered && m_vVideoFrames.PopElement(frame))
 		{
-			m_aLock.Lock();
 			m_fBufferedDuration -= frame->getDuration();
-			m_aLock.UnLock();
 
 			float fCurPos = frame->getPosition();
-
 			if (fCurPos >= m_fMoviePosition)
 			{
 				interval = frame->getDuration();
@@ -499,12 +502,6 @@ float CAVideoPlayerView::presentFrame()
 				CC_SAFE_DELETE(frame);
 			}
 		}
-		
-		if (m_pDecoder->getDuration() - m_fMoviePosition < 0.1f) 
-		{
-			setPosition(0);
-			pause();
-		}
 		setCurrentFrame((VPVideoFrame*)frame);
 	}
 	return interval;
@@ -515,13 +512,28 @@ void CAVideoPlayerView::tick(float dt)
 	if (!createDecoder())
 		return;
 
-	if (!m_isPlaying)
-		return;
-
 	if (m_pDecoder == NULL || m_pRenderer == NULL)
 		return;
 
-	float interval = presentFrame();
+	if (m_isBuffered && ((m_fBufferedDuration > m_fMinBufferedDuration) || m_pDecoder->isEOF())) {
+
+		m_tickCorrectionTime.tv_sec = 0;
+		m_tickCorrectionTime.tv_usec = 0;
+
+		m_isBuffered = false;
+	}
+
+	if (!m_isPlaying)
+		return;
+
+	float interval = 0;
+	if (!m_isBuffered)
+	{
+		m_aLock.Lock();
+		interval = presentFrame();
+		m_aLock.UnLock();
+	}
+		
 
 	if (m_pDecoder->isEOF()) 
 	{
@@ -541,17 +553,51 @@ void CAVideoPlayerView::tick(float dt)
 		asyncDecodeFrames();
 	}
 
-	float time = MAX(interval, 0.01);
+	float correction = tickCorrection();
+	float time = MAX(interval + correction, 0.01f);
 	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, time);
+}
+
+float CAVideoPlayerView::tickCorrection()
+{
+	if (m_isBuffered)
+		return 0;
+
+	struct timeval now;
+	gettimeofday(&now, 0);
+
+	if (!m_tickCorrectionTime.tv_sec) {
+
+		m_tickCorrectionTime = now;
+		m_tickCorrectionPosition = m_fMoviePosition;
+		return 0;
+	}
+
+	float dPosition = m_fMoviePosition - m_tickCorrectionPosition;
+	float dTime = (now.tv_sec - m_tickCorrectionTime.tv_sec) + (now.tv_usec - m_tickCorrectionTime.tv_usec) / 1000000.0f;
+	float correction = dPosition - dTime;
+
+	if (correction > 1.f || correction < -1.f) 
+	{
+		correction = 0;
+		m_tickCorrectionTime.tv_sec = 0;
+		m_tickCorrectionTime.tv_usec = 0;
+	}
+	return correction;
 }
 
 void CAVideoPlayerView::audioCallback(unsigned char *stream, int len, int channels)
 {
-    memset(stream, 0, len);
+	memset(stream, 0, len);
+
     while (len > 0)
     {
-        if (!isPlaying())
-            return;
+		if (!isPlaying())
+			return;
+
+		if (m_isBuffered)
+			return;
+    
         
         if (m_pCurAudioFrame == NULL)
         {
@@ -559,27 +605,19 @@ void CAVideoPlayerView::audioCallback(unsigned char *stream, int len, int channe
 			if (m_vAudioFrames.PopElement(frame))
 			{
 				m_pCurAudioFrame = (VPAudioFrame*)frame;
-				if (!m_pDecoder->isValidVideo())
-				{
-					m_aLock.Lock();
-					m_fMoviePosition = m_pCurAudioFrame->getPosition();
-					m_fBufferedDuration -= m_pCurAudioFrame->getDuration();
-					m_aLock.UnLock();
-				}
 			}
 			m_uCurAudioFramePos = 0;
         }
         
         if (m_pCurAudioFrame)
         {
-			if (m_pDecoder->isValidVideo())
+			if (!m_pDecoder->isValidVideo())
             {
-                const float delta = m_fMoviePosition - m_pCurAudioFrame->getPosition();
-				if (delta < -0.1)
-					break;
-				else if (delta > 0.1)
-					continue;
-            }
+				m_aLock.Lock();
+				m_fMoviePosition = m_pCurAudioFrame->getPosition();
+				m_fBufferedDuration -= m_pCurAudioFrame->getDuration();
+				m_aLock.UnLock();
+			}
 
             unsigned char* bytes = (unsigned char*)(m_pCurAudioFrame->getData() + m_uCurAudioFramePos);
             const unsigned int bytesLeft = m_pCurAudioFrame->getDataLength() - m_uCurAudioFramePos;

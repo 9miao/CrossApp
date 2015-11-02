@@ -163,7 +163,7 @@ VPDecoder::VPDecoder()
 , m_pAudioCallbackTarget(NULL)
 , m_pAVPicture(NULL)
 {
-    av_register_all();
+	av_register_all();
 	avcodec_register_all();
     avformat_network_init();
 }
@@ -259,7 +259,7 @@ bool VPDecoder::isValidVideo()
 
 void VPDecoder::enableAudio(bool on)
 {
-	SDL_PauseAudio(!on);
+	SDL_PauseAudio(on?0:1);
 }
 
 float VPDecoder::getStartTime()
@@ -408,11 +408,7 @@ VPError VPDecoder::openVideoStream(int videoStream)
 
 static void audio_callback(void *userdata, Uint8 *stream, int len) 
 {
-    VPDecoder* decoder = (VPDecoder*)userdata;
-    
-    if (decoder) {
-        decoder->onAudioCallback(stream, len);
-    }
+	((VPDecoder*)userdata)->onAudioCallback(stream, len);;
 }
 
 VPError VPDecoder::openAudioStream()

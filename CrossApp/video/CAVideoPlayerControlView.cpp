@@ -272,7 +272,6 @@ void CAVideoPlayerControlView::onSlideChanged(CAControl* control, DPoint point)
 	CCLog("CAVideoPlayerControlView::onSlideChanged");
 	float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
 	m_glView->setPosition(moviePosition);
-	
 	CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this, 0, 0, 0.8f);
 }
 
