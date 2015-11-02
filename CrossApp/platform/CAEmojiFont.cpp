@@ -4,6 +4,7 @@
 #include "support/ccUTF8.h"
 #include "CATempTypeFont.h"
 #include <string.h>
+#include "CADevice.h"
 
 using namespace std;
 
@@ -36,15 +37,31 @@ unsigned char* CAEmojiFont::loadEmojiFontBuffer(unsigned long& size)
 	const char* fontName = "";
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-	const char* fontName = "/system/fonts/DroidSansFallback.ttf";
+    
+	const char* fontName = "/System/Library/Fonts/Apple Color Emoji.ttf";
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
-	const char* fontName = "/system/fonts/DroidSansFallback.ttf";
+    
+    const char* fontName = NULL;
+    float version = atof(CADevice::getSystemVersionWithIOS());
+    
+    if (version >= 9.0f)
+    {
+        fontName = "/System/Library/Fonts/Core/AppleColorEmoji@2x.ttf";
+    }
+    else if (version >= 8.0f)
+    {
+        fontName = "/System/Library/Fonts/Core/AppleColorEmoji@2x.ttf";
+    }
+    else
+    {
+        fontName = "/System/Library/Fonts/Cache/AppleColorEmoji@2x.ttf";
+    }
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-	const char* fontName = "/system/fonts/DroidSansFallback.ttf";
+	const char* fontName = "/system/fonts/NotoColorEmoji.ttf";
+    
 #endif
 
 	return CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", &size);

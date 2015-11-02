@@ -23,7 +23,7 @@ ETableViewCell::ETableViewCell()
 ETableViewCell::~ETableViewCell()
 {
     
-}
+} 
 
 ETableViewCell* ETableViewCell::create(const std::string& identifier, const DRect& _rect)
 {
