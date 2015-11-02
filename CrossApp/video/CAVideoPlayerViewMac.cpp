@@ -2,11 +2,6 @@
 
 NS_CC_BEGIN
 
-#define LOCAL_MIN_BUFFERED_DURATION   0.2
-#define LOCAL_MAX_BUFFERED_DURATION   0.4
-#define NETWORK_MIN_BUFFERED_DURATION 2.0
-#define NETWORK_MAX_BUFFERED_DURATION 20.0
-
 
 CAVideoPlayerView::CAVideoPlayerView()
 : m_pRenderer(NULL)
@@ -80,15 +75,14 @@ bool CAVideoPlayerView::decodeProcessThread(void* param)
 	return true;
 }
 
-bool CAVideoPlayerView::initWithPath(const std::string& szPath)
+void CAVideoPlayerView::initWithPath(const std::string& szPath)
 {
-	return 0;
+//	return 0;
 }
 
-bool CAVideoPlayerView::initWithUrl(const std::string& szUrl)
+void CAVideoPlayerView::initWithUrl(const std::string& szUrl)
 {
-
-	return 0;
+//	return 0;
 }
 
 void CAVideoPlayerView::setContentSize(const DSize& size)
@@ -155,7 +149,7 @@ void CAVideoPlayerView::setPosition(float position)
 
 }
 
-bool CAVideoPlayerView::createDecoder(const std::string& cszPath)
+bool CAVideoPlayerView::createDecoder()
 {
 
 	return true;
@@ -173,11 +167,6 @@ bool CAVideoPlayerView::addFrames(const std::vector<VPFrame*>& frames)
 }
 
 void CAVideoPlayerView::asyncDecodeFrames()
-{
-
-}
-
-void CAVideoPlayerView::freeBufferedFrames()
 {
 
 }

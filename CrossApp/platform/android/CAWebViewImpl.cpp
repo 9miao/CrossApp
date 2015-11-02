@@ -1,10 +1,11 @@
 
 #include "CAWebViewImpl.h"
-#include "platform/android/jni/JniHelper.h"
-#include <jni.h>
 #include "view/CAWebView.h"
-#include "platform/CCFileUtils.h"
 #include "basics/CAApplication.h"
+#include "platform/android/jni/JniHelper.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CADensityDpi.h"
+#include <jni.h>
 
 #define CLASS_NAME "org/CrossApp/lib/Cocos2dxWebViewHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,"",__VA_ARGS__)
@@ -376,6 +377,10 @@ void CAWebViewImpl::setAllWebviewRectEmpty()
 void CAWebViewImpl::update(float dt)
 {
 	DRect cRect = _webView->convertRectToWorldSpace(_webView->getBounds());
+    cRect.origin.x = s_dip_to_px(cRect.origin.x);
+    cRect.origin.y = s_dip_to_px(cRect.origin.y);
+    cRect.size.width = s_dip_to_px(cRect.size.width);
+    cRect.size.height = s_dip_to_px(cRect.size.height);
 	setWebViewRectJNI(_viewTag, cRect.origin.x, cRect.origin.y, cRect.size.width, cRect.size.height);
 }
 

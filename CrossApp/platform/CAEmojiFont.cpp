@@ -33,7 +33,7 @@ unsigned char* CAEmojiFont::loadEmojiFontBuffer(unsigned long& size)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-	const char* fontName = "c:\\x.ttf";
+	const char* fontName = "";
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 	const char* fontName = "/system/fonts/DroidSansFallback.ttf";

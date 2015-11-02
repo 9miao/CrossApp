@@ -8,7 +8,6 @@ NS_CC_BEGIN
 
 CAVideoPlayerControlView::CAVideoPlayerControlView()
 : m_glView(NULL)
-, m_actView(NULL)
 , m_playButton(NULL)
 , m_playSlider(NULL)
 , m_playTimeLabel(NULL)
@@ -60,24 +59,25 @@ bool CAVideoPlayerControlView::init()
 	return true;
 }
 
-bool CAVideoPlayerControlView::initWithPath(const std::string& szPath)
+void CAVideoPlayerControlView::initWithPath(const std::string& szPath)
 {
-	if (m_glView == NULL)
-	{
-		return false;
-	}
 	return m_glView->initWithPath(szPath);
 }
 
-bool CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
+void CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
 {
-	if (m_glView == NULL)
-	{
-		return false;
-	}
 	return m_glView->initWithUrl(szUrl);
 }
 
+bool CAVideoPlayerControlView::getShowBackButton()
+{
+    return m_bShowBackButton;
+}
+
+void CAVideoPlayerControlView::setShowBackButton(bool var)
+{
+    m_bShowBackButton = var;
+}
 
 void CAVideoPlayerControlView::buildCtrlViews()
 {
