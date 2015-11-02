@@ -61,6 +61,7 @@ private:
 	float presentFrame();
 	void setCurrentFrame(VPVideoFrame* frame);
 	void tick(float dt);
+	float tickCorrection();
 	void audioCallback(unsigned char *stream, int len, int channels);
 
 private:
@@ -75,12 +76,16 @@ private:
 	std::string m_cszPath;
 
 	bool m_isPlaying;
+	bool m_isBuffered;
 
 	float m_fMinBufferedDuration;
 	float m_fMaxBufferedDuration;
 
 	float m_fBufferedDuration;
 	float m_fMoviePosition;
+
+	float m_tickCorrectionPosition;
+	struct timeval m_tickCorrectionTime;
 
 	VPVideoFrame *m_pCurVideoFrame;
 	VPAudioFrame *m_pCurAudioFrame;
