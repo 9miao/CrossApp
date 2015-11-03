@@ -299,7 +299,7 @@ void CANavigationBar::showRightButton()
         rect.origin.x -= i * rect.size.width;
         
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
-        this->addSubview(button);
+        m_pContentView->addSubview(button);
 
         if (item)
         {
