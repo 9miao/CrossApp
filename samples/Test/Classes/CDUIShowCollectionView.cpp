@@ -38,6 +38,7 @@ CDUIShowCollectionView::CDUIShowCollectionView()
     m_vTitle.push_back("Stepper");
     m_vTitle.push_back("RenderImage");
     m_vTitle.push_back("Animation");
+    m_vTitle.push_back("VideoPlayer");
 }
 
 CDUIShowCollectionView::~CDUIShowCollectionView()

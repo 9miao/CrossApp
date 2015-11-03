@@ -54,6 +54,7 @@ public:
     void showAlert();
     void buttonCallBack(CAControl* btn,DPoint point);
 public:
+    string getSign(std::map<std::string,std::string> key_value);
     DSize winSize;
     CATableView* p_TableView;
     CAActivityIndicatorView* p_pLoading;

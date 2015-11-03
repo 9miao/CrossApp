@@ -327,7 +327,7 @@ int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, i
     return nCharPos;
 }
 
-int CAFreeTypeFont::cutStringByDSize(std::string& text, const DSize& lableSize, const std::string& pFontName, int nFontSize, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
+int CAFreeTypeFont::cutStringByDSize(std::string& text, const DSize& lableSize, const std::string& pFontName, unsigned long nFontSize, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
 {
 	std::u32string cszTemp;
 	std::string cszNewText = text;
@@ -500,7 +500,7 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
         FT_Glyph image = glyph->image;
 		if (image == NULL)
 		{
-            CAImage* pEmoji = CAEmojiFont::getInstance()->getEmojiImage(glyph->c, m_inFontSize);
+            CAImage* pEmoji = CAEmojiFont::getInstance()->getEmojiImage((unsigned int)glyph->c, m_inFontSize);
             if (pEmoji)
             {
                 pEmoji = CAImage::scaleToNewImageWithImage(pEmoji, DSize(m_inFontSize, m_inFontSize));

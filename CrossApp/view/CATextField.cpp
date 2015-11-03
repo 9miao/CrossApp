@@ -528,7 +528,7 @@ void CATextField::insertText(const char * text, int len)
         getKeyBoradReturnCallBack();
         return;
     }
-	
+	CCLog("sss ssfdsfds");
 	execCurSelCharRange();
     analyzeString(text, len);
 	adjustCursorMove(true);

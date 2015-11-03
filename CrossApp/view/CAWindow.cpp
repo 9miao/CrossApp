@@ -31,8 +31,7 @@ bool CAWindow::init()
         this->setFrame(rect);
         bRet = true;
     }
-    
-     return bRet;
+    return bRet;
 }
 
 CAWindow *CAWindow::create()

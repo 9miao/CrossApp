@@ -292,7 +292,8 @@ obj/local/armeabi/objs/CrossApp_cpp_shared/__/__/Classes/CDNewsAboutController.o
  /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCEGLView.h \
  /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/CCEGLViewProtocol.h \
  /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCGL.h \
- /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCStdC.h
+ /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCStdC.h \
+ /Users/babyliynfg/work/engine/android-ndk-r9/platforms/android-18/arch-arm/usr/include/dirent.h
 
 jni/../../Classes/CDNewsAboutController.h:
 
@@ -883,3 +884,5 @@ jni/../../Classes/CommonHttpManager.h:
 /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCGL.h:
 
 /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCStdC.h:
+
+/Users/babyliynfg/work/engine/android-ndk-r9/platforms/android-18/arch-arm/usr/include/dirent.h:

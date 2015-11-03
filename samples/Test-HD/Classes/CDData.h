@@ -1,4 +1,4 @@
-﻿#include "CommonHttpManager.h"
+#include "CommonHttpManager.h"
 
 #define _T(x) L##x
 #define CHAR    wchar_t
@@ -14,7 +14,7 @@ struct newsMsg
 {
 	std::string m_title;
 	std::string m_url;
-	std::vector<std::string > m_imageUrl;
+	std::string m_imageUrl;
 	std::string m_desc;
 };
 
@@ -48,7 +48,7 @@ static const CHAR* imageTitle[4] =
 
 static const char* menuTag[9] =
 {
-	"weixin", "news_entertainment", "news_sports", "news_car", "news_society","gossip", "style", "body", "beauty"
+	"__all__", "news_entertainment", "news_society", "news_car", "news_tech","gossip", "style", "body", "beauty"
 };
 
 static const char* imageTag[4] =
@@ -103,7 +103,7 @@ static const CHAR* adressTag[34] =
     _T("澳门特别行政区"),
 };
 
-static const char* iconTag[26] =
+static const char* iconTag[27] =
 {
 	"image/AlertView.png",
     "image/button.png",
@@ -129,6 +129,7 @@ static const char* iconTag[26] =
     "image/PickerView.png",
     "image/Stepper.png",
     "image/RenderImage.png",
+    "image/Video.png",
     "image/Video.png",
     "image/Video.png"
 };

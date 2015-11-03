@@ -46,12 +46,13 @@ public:
     void buttonCallBack(CAControl* btn,CCPoint point);
     void tempCallBack();
 public:
+    string getSign(std::map<std::string,std::string> key_value);
     DSize winSize;
     std::vector<std::string> tempList;
     std::vector<newsMsg > m_msg;
     std::vector<newsImage > m_ImageMsg;
     //std::vector<std::vector<newsMsg > > m_MSG;
-    std::vector<newsPage > m_page;
+    //std::vector<newsPage > m_page;
     CATableView* p_TableView;
     CAPageView* p_PageView;
     CAPageControl* pageControl;

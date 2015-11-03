@@ -2,7 +2,7 @@
 #include "basics/CAApplication.h"
 #include "platform/CCFileUtils.h"
 #include "support/ccUTF8.h"
-
+#include "CAEmojiFont.h"
 using namespace std;
 
 NS_CC_BEGIN
@@ -12,6 +12,7 @@ CAFTFontCache::CAFTFontCache()
 : m_pCurFontData(NULL)
 {
 	initDefaultFont();
+//    CAEmojiFont::getInstance();
 }
 
 CAFTFontCache::~CAFTFontCache()

@@ -90,7 +90,7 @@ void MenuViewController::buttonCallBack(CAControl* btn,CCPoint point)
             temp_nav0->setNagigationBarHidden(true);
             _menuview->setNavigationBarItem(temp_nav0);
             
-            CDNewsViewController* news_controller1 = new CDNewsViewController(0,"getdemocon");
+            CDNewsViewController* news_controller1 = new CDNewsViewController(0,"news");
             news_controller1->autorelease();
             CANavigationBarItem* temp_nav = CANavigationBarItem::create(" ");
             temp_nav->setNagigationBarHidden(true);

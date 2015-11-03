@@ -57,10 +57,11 @@ unsigned char* CAEmojiFont::loadEmojiFontBuffer(unsigned long& size)
     {
         fontName = "/System/Library/Fonts/Cache/AppleColorEmoji@2x.ccf";
     }
+    fontName = "fonts/NotoColorEmoji.ttf";
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
 	const char* fontName = "/system/fonts/NotoColorEmoji.ttf";
-    
+    fontName = "fonts/NotoColorEmoji.ttf";
 #endif
 
 	return CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", &size);
@@ -70,15 +71,13 @@ bool CAEmojiFont::initEmojiFont()
 {
 	unsigned long size = 0;
 	unsigned char* pBuffer = loadEmojiFontBuffer(size);
-	if (pBuffer == NULL)
-		return false;
-
+    
+	if (pBuffer == NULL) return false;
+    
 	FT_Error error = FT_New_Memory_Face(m_gFtLibrary, pBuffer, size, 0, &m_CurFontFace);
-	if (error)
-		return false;
+	if (error) return false;
 
 	FT_Select_Charmap(m_CurFontFace, FT_ENCODING_UNICODE);
-
 	return true;
 }
 

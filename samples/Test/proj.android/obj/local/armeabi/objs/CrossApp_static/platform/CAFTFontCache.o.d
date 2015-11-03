@@ -292,7 +292,8 @@ obj/local/armeabi/objs/CrossApp_static/platform/CAFTFontCache.o: \
  /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCEGLView.h \
  /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/CCEGLViewProtocol.h \
  /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCGL.h \
- /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCStdC.h
+ /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCStdC.h \
+ /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/CAEmojiFont.h
 
 /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/CAFTFontCache.h:
 
@@ -879,3 +880,5 @@ obj/local/armeabi/objs/CrossApp_static/platform/CAFTFontCache.o: \
 /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCGL.h:
 
 /Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/android/CCStdC.h:
+
+/Users/babyliynfg/work/engine/CrossApp/samples/Test/proj.android/../../../CrossApp/platform/CAEmojiFont.h:

@@ -46,8 +46,28 @@ public:
     virtual unsigned int tableViewHeightForHeaderInSection(CATableView* table, unsigned int section);
     virtual unsigned int tableViewHeightForFooterInSection(CATableView* table, unsigned int section);
 public:
+    void deleteCallBack(float dt);
+    CAView* _waitview;
+    CAActivityIndicatorView* p_pLoading;
     DSize winSize;
     CATableView* p_TableView;
+    float _filesize;
+    float _tempfilesize;
+    pthread_t start()
+    {
+        pthread_t tid;
+        pthread_create(&tid, NULL, hook, this);
+        return tid;
+    }
+private:
+    static void* hook(void* args)
+    
+    {
+        reinterpret_cast<CDNewsAboutController*>(args)->worker();
+        return NULL;
+    }
+protected:
+    void worker();
 };
 
 #endif /* defined(__Test__CDNewsAboutController__) */
