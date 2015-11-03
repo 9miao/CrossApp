@@ -21,6 +21,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		2E325EC41BE8BB4600F65CBD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E325EC31BE8BB4600F65CBD /* Images.xcassets */; };
+		2E325ECD1BE8C83300F65CBD /* libbz2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E325ECC1BE8C83300F65CBD /* libbz2.1.0.dylib */; };
 		3EF48A0D1B7C7E0B00179E69 /* component_hackery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4893E1B7C7E0B00179E69 /* component_hackery.cpp */; };
 		3EF48A0E1B7C7E0B00179E69 /* configvars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4893F1B7C7E0B00179E69 /* configvars.cpp */; };
 		3EF48A0F1B7C7E0B00179E69 /* container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF489411B7C7E0B00179E69 /* container.cpp */; };
@@ -195,10 +196,11 @@
 		1AFCDA8016D4A25900906EA6 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = SOURCE_ROOT; };
 		1AFCDA8116D4A25900906EA6 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = SOURCE_ROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* HelloCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2E325EC31BE8BB4600F65CBD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = SOURCE_ROOT; };
+		2E325ECC1BE8C83300F65CBD /* libbz2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.1.0.dylib; path = usr/lib/libbz2.1.0.dylib; sourceTree = SDKROOT; };
 		3EF4893E1B7C7E0B00179E69 /* component_hackery.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = component_hackery.cpp; sourceTree = "<group>"; };
 		3EF4893F1B7C7E0B00179E69 /* configvars.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = configvars.cpp; sourceTree = "<group>"; };
 		3EF489401B7C7E0B00179E69 /* configvars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = configvars.h; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E325ECD1BE8C83300F65CBD /* libbz2.1.0.dylib in Frameworks */,
 				B039AF981BC7C52D002C1FDB /* CoreAudio.framework in Frameworks */,
 				B039AF911BC7BFC0002C1FDB /* CoreVideo.framework in Frameworks */,
 				B039AF8F1BC7BFB7002C1FDB /* VideoToolbox.framework in Frameworks */,
@@ -587,7 +590,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* HelloCpp.app */,
+				1D6058910D05DD3D006BFB54 /* Test.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -610,6 +613,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E325ECC1BE8C83300F65CBD /* libbz2.1.0.dylib */,
 				B039AF9B1BC7C58E002C1FDB /* libSDL2.a */,
 				B039AF991BC7C539002C1FDB /* CoreAudioKit.framework */,
 				B039AF971BC7C52D002C1FDB /* CoreAudio.framework */,
@@ -914,7 +918,7 @@
 			);
 			name = Test;
 			productName = iphone;
-			productReference = 1D6058910D05DD3D006BFB54 /* HelloCpp.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Test.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1162,7 +1166,7 @@
 				);
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_BUNDLE_IDENTIFIER = com.liynfg.Test;
-				PRODUCT_NAME = HelloCpp;
+				PRODUCT_NAME = Test;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -1213,7 +1217,7 @@
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.liynfg.Test;
-				PRODUCT_NAME = HelloCpp;
+				PRODUCT_NAME = Test;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;

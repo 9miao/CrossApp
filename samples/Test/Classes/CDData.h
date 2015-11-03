@@ -109,7 +109,7 @@ static const CHAR* adressTag[34] =
     _T("澳门特别行政区"),
 };
 
-static const char* iconTag[26] =
+static const char* iconTag[27] =
 {
 	"image/AlertView.png",
     "image/button.png",
@@ -135,6 +135,7 @@ static const char* iconTag[26] =
     "image/PickerView.png",
     "image/Stepper.png",
     "image/RenderImage.png",
+    "image/Video.png",
     "image/Video.png",
     "image/Video.png"
 };
