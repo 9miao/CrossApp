@@ -47,17 +47,16 @@ unsigned char* CAEmojiFont::loadEmojiFontBuffer(unsigned long& size)
     
     if (version >= 9.0f)
     {
-        fontName = "/System/Library/Fonts/Core/AppleColorEmoji@2x.ttf";
+        fontName = "/System/Library/Fonts/Core/AppleColorEmoji@2x.ccf";
     }
-    else if (version >= 8.0f)
+    else if (version >= 8.2f)
     {
-        fontName = "/System/Library/Fonts/Core/AppleColorEmoji@2x.ttf";
+        fontName = "/System/Library/Fonts/Core/AppleColorEmoji@2x.ccf";
     }
     else
     {
-        fontName = "/System/Library/Fonts/Cache/AppleColorEmoji@2x.ttf";
+        fontName = "/System/Library/Fonts/Cache/AppleColorEmoji@2x.ccf";
     }
-
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
 	const char* fontName = "/system/fonts/NotoColorEmoji.ttf";

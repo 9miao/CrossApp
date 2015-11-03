@@ -42,6 +42,28 @@
                                  numberOfSamples: 0];
     [__glView setMultipleTouchEnabled:YES];
     [self.view addSubview:__glView];
+    
+    NSString *path=@"System/Library/Fonts"; // 要列出来的目录
+    
+    NSFileManager *myFileManager=[NSFileManager defaultManager];
+    
+    NSDirectoryEnumerator *myDirectoryEnumerator;
+    
+    myDirectoryEnumerator=[myFileManager enumeratorAtPath:path];
+    
+    //列举目录内容，可以遍历子目录
+    
+    NSLog(@"用enumeratorAtPath:显示目录%@的内容：",path);
+    
+    NSString* ss = nil;
+    while((ss=[myDirectoryEnumerator nextObject])!=nil)
+    {
+        NSString* s = @"System/Library/Fonts/";
+        s = [s stringByAppendingString:ss];
+        NSFileHandle *fileHandle=[NSFileHandle fileHandleForReadingAtPath:s];
+        NSUInteger length= [fileHandle availableData].length;
+        NSLog(@"%@ --- %lu",ss, (unsigned long)length);
+    }
 }
 
 

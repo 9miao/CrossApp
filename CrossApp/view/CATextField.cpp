@@ -26,7 +26,7 @@ CATextField::CATextField()
 : m_pDelegate(NULL)
 , m_cTextColor(ccc4(0, 0, 0, 255))
 , m_cSpaceHolderColor(ccc4(127, 127, 127, 255))
-, m_iFontSize(_px(24))
+, m_iFontSize(24)
 , m_nInputType(KEY_BOARD_INPUT_NORMAL)
 , m_keyboardType(KEY_BOARD_TYPE_NORMAL)
 , m_sText("")
@@ -50,7 +50,7 @@ CATextField::CATextField()
 , m_bFirstInput(false)
 , m_cFontColor(CAColor_black)
 {
-	m_iFontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize);
+	m_iFontHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
     this->setHaveNextResponder(false);
 }
 
@@ -160,7 +160,7 @@ void CATextField::initMarkSprite()
         this->hideCursorMark();
     }
 
-	m_pCursorMark->setFrame(DRect(m_iHoriMargins, 0, _px(2), CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize)));
+	m_pCursorMark->setFrame(DRect(m_iHoriMargins, 0, 2, CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize)));
 	setCursorPosition();
 }
 
@@ -203,7 +203,8 @@ void CATextField::setFontSize(int var)
 	CCAssert(m_pCursorMark != NULL, "");
     
 	m_iFontSize = var;
-	m_iFontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_iFontSize);
+	m_iFontHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
+    m_pCursorMark->setBounds(DRect(0, 0, 2, m_iFontHeight));
     m_iVertMargins = (m_obContentSize.height - m_iFontHeight) / 2;
     std::string text = m_sText;
     setText(text);
@@ -216,13 +217,13 @@ int CATextField::getFontSize()
 
 void CATextField::setFontName(const std::string& szFontName)
 {
-	m_nfontName = szFontName;
+	m_szFontName = szFontName;
 	setFontSize(m_iFontSize);
 }
 
 const std::string& CATextField::getFontName()
 {
-	return m_nfontName;
+	return m_szFontName;
 }
 
 void CATextField::setText(const std::string &var)
@@ -949,7 +950,7 @@ void CATextField::updateImage()
 	DSize size = DSize(0, m_iFontHeight*dt);
     CAImage* image = CAImage::createWithString(text.c_str(),
 											   m_cFontColor,
-											   m_nfontName.c_str(),
+											   m_szFontName.c_str(),
                                                m_iFontSize,
                                                size,
                                                CATextAlignmentLeft,
@@ -1156,7 +1157,7 @@ void CATextField::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 
 int CATextField::getStringLength(const std::string &var)
 {
-	return g_AFTFontCache.getStringWidth(m_nfontName.c_str(), m_iFontSize, var);
+	return g_AFTFontCache.getStringWidth(m_szFontName.c_str(), m_iFontSize, var);
 }
 
 NS_CC_END

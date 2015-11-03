@@ -327,6 +327,7 @@ void CATextView::calcCursorPosition()
 void CATextView::setFontSize(int var)
 {
 	m_iFontSize = var;
+    m_pCursorMark->setBounds(DRect(0, 0, 2, CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize)));
 	m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_iFontSize);
 	initMarkSprite();
 	m_bUpdateImage = true;

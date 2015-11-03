@@ -1216,27 +1216,31 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         
-        const char* fontName = "/System/Library/Fonts/Cache/STHeiti-Light.ttc";
-        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+        const char* fontName = NULL;
         
-        if (pBuffer == NULL)
+        float version = atof(CADevice::getSystemVersionWithIOS());
+        
+        if (version >= 9.0f)
+        {
+            fontName = "/System/Library/Fonts/LanguageSupport/PingFang.ttc";
+        }
+        else if (version >= 8.2f)
         {
             fontName = "/System/Library/Fonts/Core/STHeiti-Light.ttc";
-            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+        }
+        else
+        {
+            fontName = "/System/Library/Fonts/Cache/STHeiti-Light.ttc";
         }
         
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+
         if (pBuffer == NULL)
         {
             fontName = "/System/Library/Fonts/STHeiti Light.ttc";
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
         }
 
-		if (pBuffer == NULL)
-		{
-			fontName = "/System/Library/Fonts/LanguageSupport/PingFang.ttc";
-			pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
-		}
-        
         ttfIndex = 1;
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

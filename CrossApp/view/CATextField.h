@@ -155,7 +155,7 @@ public:
     
     CC_PROPERTY(int, m_iFontSize, FontSize);
 
-	CC_PROPERTY_PASS_BY_REF(std::string, m_nfontName, FontName);
+	CC_PROPERTY_PASS_BY_REF(std::string, m_szFontName, FontName);
     
     CC_PROPERTY(eKeyBoardInputType, m_nInputType, InputType);
     
