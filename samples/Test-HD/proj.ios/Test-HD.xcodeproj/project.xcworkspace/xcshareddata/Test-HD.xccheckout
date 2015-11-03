@@ -5,13 +5,13 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>4744753A-06EB-4D5F-AD19-552409F35A0B</string>
+	<string>74E026C6-A91A-4D31-8966-39DD2047EEAF</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Test-HD</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>630594A0C3AF0041EB86DE5D805A5B25A32E1B5D</key>
-		<string>http://git.oschina.net/liyuanfeng/CrossApp.git</string>
+		<string>https://git.oschina.net/9miao/CrossApp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>samples/Test-HD/proj.ios/Test-HD.xcodeproj</string>
@@ -21,7 +21,7 @@
 		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>http://git.oschina.net/liyuanfeng/CrossApp.git</string>
+	<string>https://git.oschina.net/9miao/CrossApp.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>

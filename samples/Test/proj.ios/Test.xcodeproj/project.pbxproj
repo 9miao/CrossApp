@@ -20,6 +20,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		2E325EC41BE8BB4600F65CBD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E325EC31BE8BB4600F65CBD /* Images.xcassets */; };
 		3EF48A0D1B7C7E0B00179E69 /* component_hackery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4893E1B7C7E0B00179E69 /* component_hackery.cpp */; };
 		3EF48A0E1B7C7E0B00179E69 /* configvars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4893F1B7C7E0B00179E69 /* configvars.cpp */; };
 		3EF48A0F1B7C7E0B00179E69 /* container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EF489411B7C7E0B00179E69 /* container.cpp */; };
@@ -128,7 +129,6 @@
 		B0621E221AC3ECB0005EBCA7 /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */; };
 		B08BBA231BC8A6A50044340B /* CDNewsImageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08BBA211BC8A6A50044340B /* CDNewsImageController.cpp */; };
 		B0A030081A8E071D0005CB8F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */; };
-		B0AF8DBD1AFA168F00A1A4E2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0AF8DBC1AFA168F00A1A4E2 /* Images.xcassets */; };
 		B0CA5A2B1A77A79900BECD89 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */; };
 		B0CA5A2D1A77A7A000BECD89 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2C1A77A7A000BECD89 /* MediaPlayer.framework */; };
 		B0DB98891B1452EC00710982 /* CDNewsAboutController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB98771B1452EC00710982 /* CDNewsAboutController.cpp */; };
@@ -198,6 +198,7 @@
 		1D6058910D05DD3D006BFB54 /* HelloCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2E325EC31BE8BB4600F65CBD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = SOURCE_ROOT; };
 		3EF4893E1B7C7E0B00179E69 /* component_hackery.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = component_hackery.cpp; sourceTree = "<group>"; };
 		3EF4893F1B7C7E0B00179E69 /* configvars.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = configvars.cpp; sourceTree = "<group>"; };
 		3EF489401B7C7E0B00179E69 /* configvars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = configvars.h; sourceTree = "<group>"; };
@@ -420,7 +421,6 @@
 		B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		B0ABA50B1ACBD3FA00B0DEC5 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../CrossApp/the_third_party/curl/prebuilt/ios/libcurl.a; sourceTree = "<group>"; };
 		B0AD93E519207CA300EA40BB /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
-		B0AF8DBC1AFA168F00A1A4E2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HelloCpp/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B0CA5A2C1A77A7A000BECD89 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		B0DB98761B1452EC00710982 /* CDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDData.h; path = ../Classes/CDData.h; sourceTree = "<group>"; };
@@ -876,9 +876,9 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2E325EC31BE8BB4600F65CBD /* Images.xcassets */,
 				B0DB99251B14531900710982 /* information.json */,
 				B0DB99261B14531900710982 /* test.html */,
-				B0AF8DBC1AFA168F00A1A4E2 /* Images.xcassets */,
 				B0DB99201B14530F00710982 /* animation */,
 				B0DB99211B14530F00710982 /* image */,
 				B0621BDB1AC3B871005EBCA7 /* fonts */,
@@ -970,8 +970,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E325EC41BE8BB4600F65CBD /* Images.xcassets in Resources */,
 				B0DB99281B14531900710982 /* information.json in Resources */,
-				B0AF8DBD1AFA168F00A1A4E2 /* Images.xcassets in Resources */,
 				B0DB99221B14530F00710982 /* animation in Resources */,
 				3EF48A6D1B7C7E0B00179E69 /* NOTES.txt in Resources */,
 				3EF48A6E1B7C7E0B00179E69 /* TODO in Resources */,

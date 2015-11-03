@@ -23,7 +23,7 @@ ETableViewCell::ETableViewCell()
 ETableViewCell::~ETableViewCell()
 {
     
-} 
+}
 
 ETableViewCell* ETableViewCell::create(const std::string& identifier, const DRect& _rect)
 {
@@ -1494,8 +1494,6 @@ void CDUIShowView::showCollectionView()
     p_Conllection->setHoriInterval(_px(40));
     p_Conllection->setVertInterval(_px(40));
     this->getView()->addSubview(p_Conllection);
-    p_Conllection->reloadData();
-    p_Conllection->startPullToHeaderRefreshView();
 }
 
 void CDUIShowView::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
@@ -1568,12 +1566,12 @@ unsigned int CDUIShowView::collectionViewHeightForRowAtIndexPath(CACollectionVie
 void CDUIShowView::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
     colorArr.clear();
-    CAScheduler::schedule(schedule_selector(CDUIShowView::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(CDUIShowView::refreshData), this, 0.1, 0, CCRANDOM_0_1() * 2, false);
 }
 
 void CDUIShowView::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(CDUIShowView::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(CDUIShowView::refreshData), this, 0.1, 0, CCRANDOM_0_1() * 2, false);
 }
 
 void CDUIShowView::refreshData(float interval)
@@ -1604,29 +1602,28 @@ void CDUIShowView::showScrollView()
 
 void CDUIShowView::showFlashView()
 {
-	//http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 
-	//mnt/sdcard/video.mp4
-	std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");// image / 11.avi");// video.mp4");
-	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithPath(path.c_str(), "asdas");
-	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "asdas");
-
-//    path = "/storage/emulated/0/DCIM/Camera/VID_20150808_101842.mp4";
-	DRect frame = getView()->getFrame();
-
-	//frame.origin.x = frame.size.width / 2;
-	//frame.origin.y = frame.size.height / 2;
-
-//	CAView* pView = CAView::createWithFrame(frame);
-//	pView->setColor(ccc4(255, 0, 255, 255));
-	CAVideoPlayerControlView* pView = CAVideoPlayerControlView::createWithFrame(frame);
-//	pView->setColor(ccc4(255, 0, 255, 255));
-//    pView->initWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
-	pView->initWithPath(path);
-//	pView->initWithPath("D:\\XiGua Yingshi\\x.rmvb", false);
-	this->getView()->addSubview(pView);
-//	pView->play();
-
-	return;
+//	//http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 
+//	//mnt/sdcard/video.mp4
+//	std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("image/video.mp4");// image / 11.avi");// video.mp4");
+//	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithPath(path.c_str(), "asdas");
+//	//CAVideoPlayerController* pv = CAVideoPlayerController::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", "asdas");
+//
+//	DRect frame = getView()->getFrame();
+//
+//	//frame.origin.x = frame.size.width / 2;
+//	//frame.origin.y = frame.size.height / 2;
+//
+////	CAView* pView = CAView::createWithFrame(frame);
+////	pView->setColor(ccc4(255, 0, 255, 255));
+//	CAVideoPlayerControlView* pView = CAVideoPlayerControlView::createWithFrame(frame);
+////	pView->setColor(ccc4(255, 0, 255, 255));
+//
+//	pView->initWithPath(path);
+////	pView->initWithPath("D:\\XiGua Yingshi\\x.rmvb", false);
+//	this->getView()->addSubview(pView);
+////	pView->play();
+//
+//	return;
 
     CAFlashView* swfBg = CAFlashView::createWithFlash(CrossApp::extension::CAFlash::createWithFilePath("image/swfWK.swf"));
     swfBg->setFrame(DRect(100, 100, winSize.width/2, winSize.height/2));
@@ -1737,9 +1734,7 @@ float CDUIShowView::rowHeightForComponent(CAPickerView* pickerView, unsigned int
 
 const char* CDUIShowView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
-	static std::string s;
-	s = unicode_to_utf8(adressTag[row]);
-    return s.c_str();
+    return unicode_to_utf8(adressTag[row]).c_str();
 }
 
 void CDUIShowView::zoomViewBySliderValue(CrossApp::CAControl *btn, CrossApp::DPoint point)
