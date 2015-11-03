@@ -346,6 +346,7 @@ void CAScrollView::closeToPoint(float dt, float now, float total)
         {
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
+        this->changedFromPullToRefreshView();
     }
     else
     {
@@ -360,6 +361,8 @@ void CAScrollView::closeToPoint(float dt, float now, float total)
         this->hideIndicator();
         m_tCloseToPoint = this->getViewSize();
         m_tInitialPoint = m_tCloseToPoint;
+        this->changedFromPullToRefreshView();
+        this->detectionFromPullToRefreshView();
     }
 }
 
@@ -1003,8 +1006,8 @@ bool CAScrollView::isScrollWindowNotMaxOutSide(const DPoint& point)
 void CAScrollView::setHeaderRefreshView(CrossApp::CAPullToRefreshView *var)
 {
     this->removeSubview(m_pHeaderRefreshView);
-    CC_SAFE_RELEASE(m_pHeaderRefreshView);
     CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE(m_pHeaderRefreshView);
     m_pHeaderRefreshView = var;
 }
 
@@ -1016,8 +1019,8 @@ CAPullToRefreshView* CAScrollView::getHeaderRefreshView()
 void CAScrollView::setFooterRefreshView(CrossApp::CAPullToRefreshView *var)
 {
     this->removeSubview(m_pFooterRefreshView);
-    CC_SAFE_RELEASE(m_pFooterRefreshView);
     CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE(m_pFooterRefreshView);
     m_pFooterRefreshView = var;
 }
 
@@ -1044,10 +1047,10 @@ void CAScrollView::endFooterRefresh()
 
 void CAScrollView::layoutPullToRefreshView()
 {
-    CADipSize viewSize = this->getViewSize();
+    DSize viewSize = this->getViewSize();
     if (m_pHeaderRefreshView)
     {
-        m_pHeaderRefreshView->setFrame(CADipRect(0, -128.0f, viewSize.width, 128.0f));
+        m_pHeaderRefreshView->setFrame(DRect(0, -128.0f, viewSize.width, 128.0f));
         if (m_pHeaderRefreshView->getSuperview() == NULL)
         {
             m_pContainer->addSubview(m_pHeaderRefreshView);
@@ -1061,7 +1064,7 @@ void CAScrollView::layoutPullToRefreshView()
 
     if (m_pFooterRefreshView)
     {
-        m_pFooterRefreshView->setFrame(CADipRect(0, viewSize.height, viewSize.width, 128.0f));
+        m_pFooterRefreshView->setFrame(DRect(0, viewSize.height, viewSize.width, 128.0f));
         if (m_pFooterRefreshView->getSuperview() == NULL)
         {
             m_pContainer->addSubview(m_pFooterRefreshView);
@@ -1127,6 +1130,11 @@ void CAScrollView::detectionFromPullToRefreshView()
             m_pScrollViewDelegate->scrollViewFooterBeginRefreshing(this);
         }
     }
+}
+
+void CAScrollView::startPullToHeaderRefreshView()
+{
+    this->setContentOffset(DPoint(0, -128.0f), true);
 }
 
 bool CAScrollView::isHeaderRefreshing()

@@ -2,16 +2,20 @@
 #include "basics/CAScheduler.h"
 #include "basics/CAApplication.h"
 #include "view/CAWindow.h"
+#include "basics/CAScheduler.h"
 
 NS_CC_BEGIN
 
 
 CAVideoPlayerControlView::CAVideoPlayerControlView()
 : m_glView(NULL)
-, m_actView(NULL)
 , m_playButton(NULL)
+, m_backButton(NULL)
 , m_playSlider(NULL)
 , m_playTimeLabel(NULL)
+, m_bShowBackButton(false)
+, m_bWaitingSlide(false)
+, m_pPlayerControlViewDelegate(NULL)
 , m_szTitle(UTF8("\u672a\u547d\u540d"))
 {
 	CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this, 0);
@@ -60,22 +64,35 @@ bool CAVideoPlayerControlView::init()
 	return true;
 }
 
-bool CAVideoPlayerControlView::initWithPath(const std::string& szPath)
+void CAVideoPlayerControlView::setShowBackButton(bool val)
 {
-	if (m_glView == NULL)
+	m_bShowBackButton = val;
+	if (m_backButton)
 	{
-		return false;
+		m_backButton->setVisible(val);
 	}
-	return m_glView->initWithPath(szPath);
 }
 
-bool CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
+bool CAVideoPlayerControlView::getShowBackButton()
 {
-	if (m_glView == NULL)
+	return m_bShowBackButton;
+}
+
+
+void CAVideoPlayerControlView::initWithPath(const std::string& szPath)
+{
+	if (m_glView)
 	{
-		return false;
+		m_glView->initWithPath(szPath);
 	}
-	return m_glView->initWithUrl(szUrl);
+}
+
+void CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
+{
+	if (m_glView)
+	{
+		m_glView->initWithUrl(szUrl);
+	}
 }
 
 
@@ -84,7 +101,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 	m_glView = CAVideoPlayerView::createWithFrame(getFrame());
 	m_glView->setFrameOrigin(DPointZero);
 	m_glView->setColor(ccc4(0, 0, 0, 0));
-	this->insertSubview(m_glView, 1);
+	this->addSubview(m_glView);
 
 	// Bottom Panel Back
 	CAImageView* bottomPanel = NULL;
@@ -155,32 +172,30 @@ void CAVideoPlayerControlView::buildCtrlViews()
 	} while (0);
 
 	// Back Button
-	CAButton* buttonBack = NULL;
 	do {
 		DRect frame = topPanel->getFrame();
-		//        CAImage* backImage = CAImage::create("source_material/vdo_btn_back.png");
-		//        CAImage* backImage_h = CAImage::create("source_material/vdo_btn_back_h.png");
 		CAImage* backImage = CAImage::create("source_material/btn_left_blue.png");
 		CAImage* backImage_h = CAImage::create("source_material/btn_left_white.png");
 		frame.origin.y = frame.size.height / 3;
 		frame.origin.x = frame.origin.y;
 		frame.size.height = _px(backImage->getContentSize().height);
 		frame.size.width = _px(backImage->getContentSize().width);
-		buttonBack = CAButton::createWithCenter(frame, CAButtonTypeCustom);
-		buttonBack->setImageForState(CAControlStateAll, backImage);
-		buttonBack->setImageForState(CAControlStateHighlighted, backImage_h);
-		buttonBack->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onButtonBack), CAControlEventTouchUpInSide);
-		topPanel->addSubview(buttonBack);
+		m_backButton = CAButton::createWithCenter(frame, CAButtonTypeCustom);
+		m_backButton->setImageForState(CAControlStateAll, backImage);
+		m_backButton->setImageForState(CAControlStateHighlighted, backImage_h);
+		m_backButton->setVisible(m_bShowBackButton);
+		m_backButton->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onButtonBack), CAControlEventTouchUpInSide);
+		topPanel->addSubview(m_backButton);
 	} while (0);
 
 	// Title
 	do {
-		DRect frame = buttonBack->getFrame();
+		DRect frame = m_backButton->getFrame();
 		DRect r = DRectZero;
-		r.origin.x = buttonBack->getFrame().origin.x * 2 + buttonBack->getFrame().size.width;
-		r.origin.y = buttonBack->getFrame().origin.y;
+		r.origin.x = m_backButton->getFrame().origin.x * 2 + m_backButton->getFrame().size.width;
+		r.origin.y = m_backButton->getFrame().origin.y;
 		r.size.width = m_glView->getFrame().size.width - r.origin.x;
-		r.size.height = buttonBack->getFrame().size.height;
+		r.size.height = m_backButton->getFrame().size.height;
 		CALabel* title = CALabel::createWithFrame(r);
 		title->setText(m_szTitle);
 		title->setFontSize(_px(42));
@@ -235,20 +250,29 @@ std::string CAVideoPlayerControlView::formatTimeInterval(float seconds, bool isL
 	return std::string(output);
 }
 
+void CAVideoPlayerControlView::delayContinuePlay(float t)
+{
+	if (m_glView)
+	{
+		m_glView->play();
+	}
+	m_bWaitingSlide = false;
+	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this);
+}
+
 void CAVideoPlayerControlView::onSlideTouched(CAControl* control, DPoint point)
 {
-	CCLog("1111111111 onSlideTouched\n");
+	m_bWaitingSlide = true;
+	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this);
+	CCLog("CAVideoPlayerControlView::onSlideTouched");
 }
 
 void CAVideoPlayerControlView::onSlideChanged(CAControl* control, DPoint point)
 {
-	CCLog("22222222222 onSlideChanged\n");
-	if (m_glView == NULL || m_playSlider == NULL)
-		return;
-
+	CCLog("CAVideoPlayerControlView::onSlideChanged");
 	float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
 	m_glView->setPosition(moviePosition);
-	m_glView->play();
+	CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this, 0, 0, 0.8f);
 }
 
 void CAVideoPlayerControlView::onButtonPause(CAControl* control, DPoint point)
@@ -269,7 +293,11 @@ void CAVideoPlayerControlView::onButtonPause(CAControl* control, DPoint point)
 
 void CAVideoPlayerControlView::onButtonBack(CAControl* control, DPoint point)
 {
-
+	if (m_pPlayerControlViewDelegate)
+	{
+		m_pPlayerControlViewDelegate->onBackButtonClicked(this);
+	}
+	this->removeFromSuperview();
 }
 
 void CAVideoPlayerControlView::updatePlayUI(float t)
@@ -277,13 +305,16 @@ void CAVideoPlayerControlView::updatePlayUI(float t)
 	if (m_glView == NULL || m_playSlider == NULL || m_playTimeLabel == NULL)
 		return;
 
+	if (!m_bWaitingSlide)
+	{
+		updatePlayButton();
+	}
+
 	const float duration = m_glView->getDuration();
 	const float position = m_glView->getPosition();
 
 	m_playSlider->setValue(position / duration);
 	m_playTimeLabel->setText(formatTimeInterval(position, false).append(" / ").append(formatTimeInterval(duration - 1, false)));
-
-	updatePlayButton();
 }
 
 NS_CC_END

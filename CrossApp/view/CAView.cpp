@@ -566,7 +566,7 @@ void CAView::setAnchorPointInPoints(const DPoint& anchorPointInPoints)
         }
         
         m_obAnchorPointInPoints = anchorPointInPoints;
-        m_obAnchorPoint = ccp(m_obAnchorPointInPoints.x / m_obContentSize.width,
+        m_obAnchorPoint = DPoint(m_obAnchorPointInPoints.x / m_obContentSize.width,
                               m_obAnchorPointInPoints.y / m_obContentSize.height);
         
         if (m_bFrame)

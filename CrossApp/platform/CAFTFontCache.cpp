@@ -93,6 +93,12 @@ int CAFTFontCache::cutStringByWidth(const char* pFontName, unsigned long nSize, 
 	return m_pCurFontData->ftFont.cutStringByWidth(text, iLimitWidth, cutWidth);
 }
 
+int CAFTFontCache::cutStringByDSize(std::string& text, const DSize& lableSize, const char* pFontName, unsigned long nSize, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
+{
+	setCurrentFontData(pFontName, (int)nSize);
+	return m_pCurFontData->ftFont.cutStringByDSize(text, lableSize, pFontName, nSize, bWordWrap, iLineSpacing, bBold, bItalics);
+}
+
 int CAFTFontCache::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap)
 {
 	setCurrentFontData(pFontName, (int)nSize);

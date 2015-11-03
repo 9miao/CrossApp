@@ -231,8 +231,10 @@ struct vdpau_render_state {
 
     int state; ///< Holds FF_VDPAU_STATE_* values.
 
+#if AV_HAVE_INCOMPATIBLE_LIBAV_ABI
     /** picture parameter information for all supported codecs */
     union AVVDPAUPictureInfo info;
+#endif
 
     /** Describe size/location of the compressed video data.
         Set to 0 when freeing bitstream_buffers. */
@@ -240,6 +242,11 @@ struct vdpau_render_state {
     int bitstream_buffers_used;
     /** The user is responsible for freeing this buffer using av_freep(). */
     VdpBitstreamBuffer *bitstream_buffers;
+
+#if !AV_HAVE_INCOMPATIBLE_LIBAV_ABI
+    /** picture parameter information for all supported codecs */
+    union AVVDPAUPictureInfo info;
+#endif
 };
 #endif
 

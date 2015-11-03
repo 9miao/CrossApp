@@ -177,6 +177,10 @@ public:
     
     virtual void updateImageRect();
 
+	void setColor(const CAColor4B& var);
+
+	const CAColor4B& getColor();
+
 protected:
     void updateImage();
 	int getDtStrLength();
@@ -244,6 +248,7 @@ private:
 	int m_iString_o_length;
 	int m_iFontHeight;
     bool m_bFirstInput;
+	CAColor4B m_cFontColor;
     
 	CAView* m_pCursorMark;
 	CAView* m_pTextViewMark;

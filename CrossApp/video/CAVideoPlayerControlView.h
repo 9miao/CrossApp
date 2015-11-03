@@ -18,6 +18,15 @@
 NS_CC_BEGIN
 
 
+class CAVideoPlayerControlView;
+class CAVideoPlayerControlViewDelegate
+{
+public:
+	virtual ~CAVideoPlayerControlViewDelegate(){};
+
+	virtual void onBackButtonClicked(CAVideoPlayerControlView *playerControlView) {};
+};
+
 class CC_DLL CAVideoPlayerControlView : public CAView
 {
 public:
@@ -28,13 +37,14 @@ public:
 	static CAVideoPlayerControlView* createWithCenter(const DRect& rect);
 
 	CC_SYNTHESIZE(std::string, m_szTitle, Title);
+	CC_PROPERTY(bool, m_bShowBackButton, ShowBackButton);
+	CC_SYNTHESIZE(CAVideoPlayerControlViewDelegate*, m_pPlayerControlViewDelegate, PlayerControlViewDelegate);
 	
-	bool initWithPath(const std::string& szPath);
-	bool initWithUrl(const std::string& szUrl);
+	void initWithPath(const std::string& szPath);
+	void initWithUrl(const std::string& szUrl);
 
 protected:
 	virtual bool init();
-//	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
 	void onSlideTouched(CAControl* control, DPoint point);
 	void onSlideChanged(CAControl* control, DPoint point);
 	void onButtonPause(CAControl* control, DPoint point);
@@ -43,13 +53,15 @@ protected:
 	void buildCtrlViews();
 	void updatePlayButton();
 	std::string formatTimeInterval(float seconds, bool isLeft);
+	void delayContinuePlay(float t);
 
 private:
 	CAVideoPlayerView *m_glView;
-	CAActivityIndicatorView *m_actView;
 	CAButton *m_playButton;
+	CAButton *m_backButton;
 	CASlider *m_playSlider;
 	CALabel *m_playTimeLabel;
+	bool m_bWaitingSlide;
 };
 
 NS_CC_END

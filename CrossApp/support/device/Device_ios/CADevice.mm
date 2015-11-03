@@ -24,6 +24,11 @@ namespace CADevice
 
 static std::vector<CAAddressBookRecord> _addressBookArr;
     
+const char* getSystemVersionWithIOS()
+{
+    return [[[UIDevice currentDevice]systemVersion] UTF8String];
+}
+    
 const char* getAppVersion()
 {
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];

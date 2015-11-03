@@ -38,6 +38,8 @@ public:
 
 	int cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth, bool bBold = false, bool bItalics = false);
 
+	int cutStringByDSize(std::string& text, const DSize& lableSize, const char* pFontName, unsigned long nSize, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false);
+
 	int getStringHeight(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 
 	CAImage* initWithString(const char* pText, const CAColor4B& fontColor, const char* pFontName, int nSize, int width, int height,

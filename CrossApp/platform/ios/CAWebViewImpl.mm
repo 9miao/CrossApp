@@ -2,9 +2,9 @@
 #import <UIKit/UIKit.h>
 #include "CAWebViewImpl.h"
 #include "EAGLView.h"
-#include "platform/CCFileUtils.h"
 #include "basics/CAApplication.h"
-
+#include "platform/CCFileUtils.h"
+#include "platform/CADensityDpi.h"
 
 USING_NS_CC;
 
@@ -380,6 +380,11 @@ void CAWebViewImpl::setScalesPageToFit(const bool scalesPageToFit)
 void CAWebViewImpl::update(float dt)
 {
     DRect cRect = m_pWebView->convertRectToWorldSpace(m_pWebView->getBounds());
+    cRect.origin.x = s_dip_to_px(cRect.origin.x);
+    cRect.origin.y = s_dip_to_px(cRect.origin.y);
+    cRect.size.width = s_dip_to_px(cRect.size.width);
+    cRect.size.height = s_dip_to_px(cRect.size.height);
+    
     CGFloat scale = [[UIScreen mainScreen] scale];
     CGFloat x = cRect.origin.x/scale;
     CGFloat y = cRect.origin.y/scale;

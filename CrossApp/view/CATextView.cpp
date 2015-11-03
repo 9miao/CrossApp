@@ -250,12 +250,11 @@ void CATextView::updateImage()
 		false,
 		&m_vLinesTextView);
 
-    
 	if (m_szText.empty())
 	{
 		m_vLinesTextView.clear();
 	}
-    m_pImageView->setColor(m_cFontColor);
+	m_pImageView->setColor(CAColor_white);
 	m_pImageView->setImage(image);
     DRect rect = DRectZero;
 
@@ -272,7 +271,6 @@ void CATextView::updateImage()
     
 	calcCursorPosition();
     m_pCurPosition = m_pCursorMark->getCenterOrigin();
-
 }
 
 
@@ -444,17 +442,13 @@ const CAColor4B &CATextView::getTextColor()
 	return m_cTextColor;
 }
 
-void CATextView::setFontColor(const CAColor4B &var)
+void CATextView::setColor(const CAColor4B &var)
 {
 	m_cFontColor = var;
-	if (m_pImageView)
-	{
-		m_pImageView->setColor(m_cFontColor);
-	}
 	m_bUpdateImage = true;
 }
 
-const CAColor4B &CATextView::getFontColor()
+const CAColor4B &CATextView::getColor()
 {
 	return m_cFontColor;
 }
@@ -770,16 +764,9 @@ void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 int CATextView::getStringCharCount(const std::string &var)
 {
-	int count = 0;
-	for (std::string::size_type i = 0; i < var.size(); i++)
-	{
-		if (var[i] < 0 || var[i]>127)
-		{
-			i += 2;
-		}
-		count++;
-	}
-	return count;
+	std::u32string cszU32Text;
+	StringUtils::UTF8ToUTF32(var, cszU32Text);
+	return cszU32Text.size();
 }
 
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
@@ -1083,12 +1070,7 @@ int CATextView::getStringLength(const std::string &var)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 	return g_AFTFontCache.getStringWidth(m_szFontName.c_str(), m_iFontSize, var);
 #else
-	CAImage *image = CAImage::createWithString(var.c_str(),
-		"",
-		m_iFontSize,
-		DSizeZero,
-		CATextAlignmentLeft,
-		CAVerticalTextAlignmentCenter);
+	CAImage *image = CAImage::createWithString(var.c_str(), m_cFontColor, "", m_iFontSize, DSizeZero, CATextAlignmentLeft, CAVerticalTextAlignmentCenter);
 	if (image != NULL)
 	{
 		return image->getContentSize().width;

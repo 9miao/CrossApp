@@ -903,18 +903,18 @@ void CCEGLView::centerWindow()
 
 void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    glViewport((GLint)(x * m_fScaleX * m_fFrameZoomFactor + m_obViewPortRect.origin.x * m_fFrameZoomFactor),
-        (GLint)(y * m_fScaleY  * m_fFrameZoomFactor + m_obViewPortRect.origin.y * m_fFrameZoomFactor),
-        (GLsizei)(w * m_fScaleX * m_fFrameZoomFactor),
-        (GLsizei)(h * m_fScaleY * m_fFrameZoomFactor));
+    glViewport((GLint)(x * m_fScale * m_fFrameZoomFactor + m_obViewPortRect.origin.x * m_fFrameZoomFactor),
+        (GLint)(y * m_fScale  * m_fFrameZoomFactor + m_obViewPortRect.origin.y * m_fFrameZoomFactor),
+        (GLsizei)(w * m_fScale * m_fFrameZoomFactor),
+        (GLsizei)(h * m_fScale * m_fFrameZoomFactor));
 }
 
 void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 {
-    glScissor((GLint)(x * m_fScaleX * m_fFrameZoomFactor + m_obViewPortRect.origin.x * m_fFrameZoomFactor),
-              (GLint)(y * m_fScaleY * m_fFrameZoomFactor + m_obViewPortRect.origin.y * m_fFrameZoomFactor),
-              (GLsizei)(w * m_fScaleX * m_fFrameZoomFactor),
-              (GLsizei)(h * m_fScaleY * m_fFrameZoomFactor));
+    glScissor((GLint)(x * m_fScale * m_fFrameZoomFactor + m_obViewPortRect.origin.x * m_fFrameZoomFactor),
+              (GLint)(y * m_fScale * m_fFrameZoomFactor + m_obViewPortRect.origin.y * m_fFrameZoomFactor),
+              (GLsizei)(w * m_fScale * m_fFrameZoomFactor),
+              (GLsizei)(h * m_fScale * m_fFrameZoomFactor));
 }
 
 CCEGLView* CCEGLView::sharedOpenGLView()

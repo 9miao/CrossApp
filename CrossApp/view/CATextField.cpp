@@ -99,8 +99,8 @@ bool CATextField::becomeFirstResponder()
         CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();
         pGlView->setIMECursorPos(getCursorPos(), getContentText());
 #endif
-    }
-    return result;
+
+    }    return result;
 }
 
 void CATextField::resignResponder()
@@ -482,30 +482,34 @@ void CATextField::analyzeString(const char * text, int len)
 	std::string strLeft = m_sText.substr(0, m_iCurPos);
 	std::string strRight = m_sText.substr(m_iCurPos, m_sText.size());
 
-	for (int i = 0; i < len; i++)
+	std::string cszNewText(text, len);
+
+	std::u32string cszU32Text;
+	StringUtils::UTF8ToUTF32(cszNewText, cszU32Text);
+
+	for (int i = 0; i < cszU32Text.size(); i++)
 	{
+		std::u32string c;
+		c += cszU32Text[i];
+
 		TextAttribute t;
-		
+
 		int iStrLen1 = getStringLength(strLeft);
-		if (text[i] >= 0 && text[i] <= 127)
-		{
-			t.charSize = 1;
-			strLeft += text[i];
-		}
-		else
-		{
-			t.charSize = 3;
-			strLeft += text[i++];
-			strLeft += text[i++];
-			strLeft += text[i];
-		}
+
+		std::string str;
+		StringUtils::UTF32ToUTF8(c, str);
+
+		strLeft += str;
+		t.charSize = str.size();
+
 		int iStrLen2 = getStringLength(strLeft);
 
 		t.charlength = iStrLen2 - iStrLen1;
 
-		m_vTextFiledChars.insert(m_vTextFiledChars.begin() + (getStringCharCount(strLeft)-1), t);
+		m_vTextFiledChars.insert(m_vTextFiledChars.begin() + (getStringCharCount(strLeft) - 1), t);
 		m_iCurPos += t.charSize;
 	}
+
 	m_sText = strLeft + strRight;
 	m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 }
@@ -912,12 +916,12 @@ void CATextField::updateImage()
     if (m_sText.empty())
     {
         text = m_sPlaceHolder;
-        this->setColor(m_cSpaceHolderColor);
+		m_cFontColor = m_cSpaceHolderColor;
     }
 	else
     {
         text = m_sText;
-        this->setColor(m_cTextColor);
+		m_cFontColor = m_cTextColor;
     }
     std::string password("");
 	if (m_nInputType == KEY_BOARD_INPUT_PASSWORD)
@@ -950,7 +954,6 @@ void CATextField::updateImage()
                                                CATextAlignmentLeft,
                                                CAVerticalTextAlignmentCenter,
                                                true);
-    
     DRect rect = DRectZero;
     if (m_sPlaceHolder.length() == 0)
     {
@@ -1018,6 +1021,18 @@ void CATextField::updateImageRect()
     m_sQuad.br.vertices = vertex3(x2, y1, m_fVertexZ);
     m_sQuad.tl.vertices = vertex3(x1, y2, m_fVertexZ);
     m_sQuad.tr.vertices = vertex3(x2, y2, m_fVertexZ);
+}
+
+const CAColor4B& CATextField::getColor(void)
+{
+	return m_cFontColor;
+}
+
+void CATextField::setColor(const CAColor4B& color)
+{
+	m_cFontColor = color;
+	updateImage();
+	CAView::setColor(CAColor_white);
 }
 
 void CATextField::setCursorColor(const CAColor4B &var)
@@ -1107,16 +1122,9 @@ int CATextField::getStringViewLength()
 
 int CATextField::getStringCharCount(const std::string &var)
 {
-	int count = 0;
-	for (std::string::size_type i = 0; i < var.size(); i++)
-	{
-		if (var[i] < 0 || var[i]>127)
-		{
-			i += 2;
-		}
-		count++;
-	}
-	return count;
+	std::u32string cszU32Text;
+	StringUtils::UTF8ToUTF32(var, cszU32Text);
+	return cszU32Text.size();
 }
 
 void CATextField::getKeyBoardHeight(int height)

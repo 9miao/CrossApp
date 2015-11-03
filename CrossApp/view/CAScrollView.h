@@ -141,6 +141,8 @@ public:
     
     void startDeaccelerateScroll();
     
+    void startPullToHeaderRefreshView();
+    
     virtual void switchPCMode(bool var);
     
 protected:

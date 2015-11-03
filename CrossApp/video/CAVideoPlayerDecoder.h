@@ -5,7 +5,7 @@
 //  Created by dai xinping on 14-11-6.
 //  Modified by zhujian on 15-9-6
 //
-//  Copyright (c) 2015å¹´ http://www.9miao.com. All rights reserved.
+//  Copyright (c) 2015Äê http://www.9miao.com. All rights reserved.
 //
 
 #ifndef __CrossApp__CAVideoPlayerDecoder__
@@ -63,6 +63,7 @@ class VPFrame
 {
 public:
     VPFrame();
+    virtual ~VPFrame() {}
     
 	CC_SYNTHESIZE_PASS_BY_REF(VPFrameType, m_type, Type);
 	CC_SYNTHESIZE_PASS_BY_REF(float, m_position, Position);
@@ -73,7 +74,7 @@ class VPAudioFrame : public VPFrame
 {
 public:
     VPAudioFrame();
-    ~VPAudioFrame();
+    virtual ~VPAudioFrame();
     
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_dataLength, DataLength)
     CC_SYNTHESIZE(char*, m_data, Data)
@@ -83,6 +84,7 @@ class VPVideoFrame : public VPFrame
 {
 public:
     VPVideoFrame();
+    virtual ~VPVideoFrame() {}
 
     CC_SYNTHESIZE_PASS_BY_REF(VPVideoFrameFormat, m_format, Format)
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_width, Width);
@@ -94,7 +96,7 @@ class VPVideoFrameRGB : public VPVideoFrame
 {
 public:
     VPVideoFrameRGB();
-    ~VPVideoFrameRGB();
+    virtual ~VPVideoFrameRGB();
     
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_lineSize, LineSize);
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_dataLength, DataLength);
@@ -105,7 +107,7 @@ class VPVideoFrameYUV : public VPVideoFrame
 {
 public:
     VPVideoFrameYUV();
-    ~VPVideoFrameYUV();
+    virtual ~VPVideoFrameYUV();
     
     CC_SYNTHESIZE(char*, m_luma, Luma)
     CC_SYNTHESIZE_PASS_BY_REF(unsigned int, m_lumaLength, LumaLength)
@@ -154,6 +156,7 @@ public:
     bool isValidAudio();
     bool isValidVideo();
 
+	void enableAudio(bool on);
     float getStartTime();
     bool isEOF();
 
@@ -174,6 +177,7 @@ protected:
 	VPVideoFrame* handleVideoFrame();
 	VPAudioFrame* handleAudioFrame();
     
+	static int interrupt_cb(void *ctx);
 private:
 	CAObject* m_pAudioCallbackTarget;
 	SEL_DecoderAudioCallback m_audioCallback;
@@ -197,6 +201,7 @@ private:
     float m_fVideoTimeBase;
     float m_fAudioTimeBase;
     float m_fPosition;
+	int m_iTimeoutCnt;
  
     void *m_pswrBuffer;
     unsigned int m_uswrBufferSize;

@@ -123,8 +123,6 @@ public:
 
 	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cCursorColor, CursorColor);
 
-	CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cFontColor, FontColor);
-
 	CC_PROPERTY_PASS_BY_REF(std::string, m_szText, Text);
 
 	CC_PROPERTY(int, m_iFontSize, FontSize);
@@ -157,6 +155,10 @@ public:
     {
         return getPlaceHolderColor();
     }
+
+	void setColor(const CAColor4B& var);
+
+	const CAColor4B& getColor();
     
 protected:
 	virtual bool init();
@@ -240,6 +242,7 @@ private:
 	CATextArrowView* m_pTextArrView;
     
     DPoint m_pCurPosition;
+	CAColor4B m_cFontColor;
 };
 
 

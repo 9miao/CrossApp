@@ -104,6 +104,7 @@ protected:
 	int getFontHeight();
 	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);
     int cutStringByWidth(const std::string& text, int iLimitWidth, int& cutWidth);
+	int cutStringByDSize(std::string& text, const DSize& lableSize, const std::string& pFontName, int nFontSize, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false);
 	int getStringHeight(const std::string& text, int iLimitWidth, int iLineSpace, bool bWordWrap);
 	void destroyAllLines();
 	void destroyFontGlyph(std::vector<TGlyph>& v);
@@ -130,7 +131,6 @@ protected:
     FT_Error addWord(const std::string& word);
     void newLine();
     void endLine();
-	bool hasEmoji(const std::string& pText);
 
     const std::string m_space;
 	FT_Face			m_face;

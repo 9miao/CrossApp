@@ -13,6 +13,11 @@ NS_CC_BEGIN
 namespace CADevice
 {
     
+    const char* getSystemVersionWithIOS()
+    {
+        return "";
+    }
+    
     const char* getAppVersion()
     {
         return "";
