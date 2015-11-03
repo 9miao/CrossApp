@@ -1621,7 +1621,7 @@ void CDUIShowView::showFlashView()
 	CAVideoPlayerControlView* pView = CAVideoPlayerControlView::createWithFrame(frame);
 //	pView->setColor(ccc4(255, 0, 255, 255));
     pView->initWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
-	pView->initWithPath(path);
+//	pView->initWithPath(path);
 //	pView->initWithPath("D:\\XiGua Yingshi\\x.rmvb", false);
 	this->getView()->addSubview(pView);
 //	pView->play();
