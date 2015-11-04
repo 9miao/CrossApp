@@ -4,7 +4,7 @@
 #include "support/ccUTF8.h"
 #include "CATempTypeFont.h"
 #include <string.h>
-#include "CADevice.h"
+
 
 using namespace std;
 
