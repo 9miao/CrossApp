@@ -67,7 +67,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\freetype\include\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\freetype\include;$(ProjectDir)..\..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -130,10 +130,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\CASplitViewController.cpp" />
     <ClCompile Include="..\Classes\CDNewsAboutController.cpp" />
-    <ClCompile Include="..\Classes\CDNewsImageController.cpp" />
+    <ClCompile Include="..\Classes\CDNewsMenuView.cpp" />
     <ClCompile Include="..\Classes\CDNewsViewController.cpp" />
     <ClCompile Include="..\Classes\CDShowNewsImage.cpp" />
+    <ClCompile Include="..\Classes\CDTempViewController.cpp" />
     <ClCompile Include="..\Classes\CDUIShowCollectionView.cpp" />
     <ClCompile Include="..\Classes\CDUIShowView.cpp" />
     <ClCompile Include="..\Classes\CDWebViewController.cpp" />
@@ -145,11 +147,12 @@
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\AppMacros.h" />
-    <ClInclude Include="..\Classes\CDData.h" />
+    <ClInclude Include="..\Classes\CASplitViewController.h" />
     <ClInclude Include="..\Classes\CDNewsAboutController.h" />
-    <ClInclude Include="..\Classes\CDNewsImageController.h" />
+    <ClInclude Include="..\Classes\CDNewsMenuView.h" />
     <ClInclude Include="..\Classes\CDNewsViewController.h" />
     <ClInclude Include="..\Classes\CDShowNewsImage.h" />
+    <ClInclude Include="..\Classes\CDTempViewController.h" />
     <ClInclude Include="..\Classes\CDUIShowCollectionView.h" />
     <ClInclude Include="..\Classes\CDUIShowView.h" />
     <ClInclude Include="..\Classes\CDWebViewController.h" />

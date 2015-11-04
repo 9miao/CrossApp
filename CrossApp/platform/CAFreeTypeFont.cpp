@@ -510,7 +510,7 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
             {
 				int dtValue = 0;
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC)
-				dtValue = m_lineHeight / 12;
+                dtValue = m_lineHeight / 12;
 #endif
 				FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
 				FT_Int y = (FT_Int)(pen->y - m_inFontSize) + dtValue;

@@ -1,4 +1,4 @@
-//
+﻿//
 //  CDNewsAboutController.cpp
 //  Test
 //
@@ -7,36 +7,41 @@
 //
 
 #include "CDNewsAboutController.h"
+
+#ifndef WIN32
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#endif
 
 #define ___FILE_PATH___ std::string(CCFileUtils::sharedFileUtils()->getWritablePath() + "image")
 
 void getAllFilePaths(std::vector<std::string>& filePaths, std::vector<std::string>& dirPaths, const std::string& path)
 {
-    std::string p = path.at(path.length() - 1) == '/' ? path : path + "/";
-    
-    struct dirent *ptr;
-    DIR* dir;
-    dir = opendir(p.c_str());
-    CC_RETURN_IF(dir == 0);
-    while ((ptr = readdir(dir)) != NULL)
-    {
-        std::string file_path = p + ptr->d_name;
-        
-        if (ptr->d_type == DT_DIR && ptr->d_name[0] != '.')
-        {
-            dirPaths.push_back(file_path);
-            getAllFilePaths(filePaths, dirPaths, file_path);
-        }
-        else
-        {
-            filePaths.push_back(file_path);
-        }
-    }
-    
-    closedir(dir);
+#ifndef WIN32
+	std::string p = path.at(path.length() - 1) == '/' ? path : path + "/";
+
+	struct dirent *ptr;
+	DIR* dir;
+	dir = opendir(p.c_str());
+	CC_RETURN_IF(dir == 0);
+	while ((ptr = readdir(dir)) != NULL)
+	{
+		std::string file_path = p + ptr->d_name;
+
+		if (ptr->d_type == DT_DIR && ptr->d_name[0] != '.')
+		{
+			dirPaths.push_back(file_path);
+			getAllFilePaths(filePaths, dirPaths, file_path);
+		}
+		else
+		{
+			filePaths.push_back(file_path);
+		}
+	}
+
+	closedir(dir);
+#endif // WIN32
 }
 
 unsigned long getFilePathSize(const std::string& path)
@@ -222,7 +227,7 @@ void CDNewsAboutController::worker()
 }
 void* CDNewsAboutController::toGetFilePathSize()
 {
-    
+	return NULL;
 }
 
 void CDNewsAboutController::deleteCallBack(float dt)
@@ -232,8 +237,8 @@ void CDNewsAboutController::deleteCallBack(float dt)
         _waitview = NULL;
         CAScheduler::unschedule(schedule_selector(CDNewsAboutController::deleteCallBack), this);
         char temstr[200];
-        sprintf(temstr, "本次共清理%0.1f M缓存！",_tempfilesize/1048576.0f);
-        CAAlertView* alertView = CAAlertView::createWithText("提示", temstr, "关闭",NULL);
+        sprintf(temstr, UTF8("本次共清理%0.1f M缓存！"),_tempfilesize/1048576.0f);
+		CAAlertView* alertView = CAAlertView::createWithText(UTF8("提示"), temstr, UTF8("关闭"), NULL);
         alertView->show();
         _tempfilesize = 0;
     }
