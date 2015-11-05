@@ -107,24 +107,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Classes</name>
+			<name>assets</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/template/multi-platform-cpp/Classes</locationURI>
-		</link>
-		<link>
-			<name>CrossApp</name>
-			<type>2</type>
-			<locationURI>COCOS2DX/CrossApp</locationURI>
-		</link>
-		<link>
-			<name>extensions</name>
-			<type>2</type>
-			<locationURI>COCOS2DX/extensions</locationURI>
-		</link>
-		<link>
-			<name>scripting</name>
-			<type>2</type>
-			<locationURI>COCOS2DX/scripting</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Resources</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

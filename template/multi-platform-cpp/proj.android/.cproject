@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="0.756827735">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.756827735" moduleId="org.eclipse.cdt.core.settings" name="Default">
@@ -24,22 +26,19 @@
 								</outputEntries>
 							</builder>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.libs.1844369373" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs">
-								<option id="org.eclipse.cdt.build.core.settings.holder.libfiles.628519629" name="Library Files" superClass="org.eclipse.cdt.build.core.settings.holder.libfiles" valueType="libFiles">
-									<listOptionValue builtIn="false" value="../libCrossApp.a"/>
-								</option>
-								<option id="org.eclipse.cdt.build.core.settings.holder.libpaths.1705781501" name="Library Paths" superClass="org.eclipse.cdt.build.core.settings.holder.libpaths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a"/>
-								</option>
+								<option id="org.eclipse.cdt.build.core.settings.holder.libfiles.628519629" name="Library Files" superClass="org.eclipse.cdt.build.core.settings.holder.libfiles" valueType="libFiles"/>
+								<option id="org.eclipse.cdt.build.core.settings.holder.libpaths.1705781501" name="Library Paths" superClass="org.eclipse.cdt.build.core.settings.holder.libpaths" valueType="libPaths"/>
 							</tool>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.991472034" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1413805376" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/jni&quot;"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/lib/gcc/arm-linux-androideabi/4.4.3/include"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.6/include"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/sources/cxx-stl/system/include"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/platforms/android-8/arch-arm/usr/include"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../../CrossApp&quot;"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/template/multi-platform-cpp/proj.android/jni"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/lib/gcc/arm-linux-androideabi/4.4.3/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/system/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/platforms/android-8/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/CrossApp"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/stlport/stlport"/>
 								</option>
 								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.1267721019" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="COCOS2DX_ROOT=${ProjDirPath}/../../../"/>
@@ -48,13 +47,14 @@
 							</tool>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.2035290044" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.898748423" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/lib/gcc/arm-linux-androideabi/4.4.3/include"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/jni&quot;"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.6/include"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/sources/cxx-stl/stlport/stlport"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/platforms/android-8/arch-arm/usr/include"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../../CrossApp&quot;"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/template/multi-platform-cpp/proj.android/jni"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/lib/gcc/arm-linux-androideabi/4.4.3/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/system/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/platforms/android-8/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/CrossApp"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/stlport/stlport"/>
 								</option>
 								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.1267721019" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="COCOS2DX_ROOT=${ProjDirPath}/../../../"/>
@@ -63,11 +63,14 @@
 							</tool>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.731367497" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1548475709" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/jni&quot;"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/lib/gcc/arm-linux-androideabi/4.4.3/include"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/sources/cxx-stl/stlport/stlport"/>
-									<listOptionValue builtIn="false" value="${NDK_ROOT}/platforms/android-8/arch-arm/usr/include"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../../CrossApp&quot;"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/template/multi-platform-cpp/proj.android/jni"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/lib/gcc/arm-linux-androideabi/4.4.3/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/system/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/platforms/android-8/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/CrossApp"/>
+									<listOptionValue builtIn="false" value="/Users/babyliynfg/work/engine/CrossApp/android-ndk-r9/sources/cxx-stl/stlport/stlport"/>
 								</option>
 								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.1267721019" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="COCOS2DX_ROOT=${ProjDirPath}/../../../"/>
@@ -77,11 +80,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="CrossApp"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="scripting"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="extensions"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Classes"/>
-						<entry excluding="extensions|CrossApp|Classes|scripting" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="extensions|CrossApp|scripting|Classes" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
