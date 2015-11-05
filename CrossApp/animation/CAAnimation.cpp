@@ -146,8 +146,11 @@ namespace CAAnimation
             Animation* obj = *itr;
             if (obj->m_obInfo.target == target)
             {
-                set.insert(obj);
-                obj->retain();
+                bool ok = set.insert(obj).second;
+                if (ok)
+                {
+                    obj->retain();
+                }
                 itr = _deque.erase(itr);
             }
             else
