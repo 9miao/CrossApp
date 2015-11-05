@@ -53,7 +53,7 @@ namespace CAAnimation
     
     Animation::~Animation()
     {
-
+        CC_SAFE_RELEASE(m_obInfo.target);
     }
     
     void Animation::startAnimation(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay)
@@ -62,7 +62,7 @@ namespace CAAnimation
         m_obInfo.interval = interval;
         m_obInfo.delay = delay;
         m_obInfo.selector = selector;
-        m_obInfo.target = target;
+        m_obInfo.target = target->retain();
         CAScheduler::schedule(schedule_selector(Animation::update), this, interval);
     }
     
@@ -136,37 +136,6 @@ namespace CAAnimation
             }
         }
     }
-    
-    void unscheduleAllForTarget(CAObject* target)
-    {
-        std::set<Animation*> set;
-        
-        for (CADeque<Animation*>::iterator itr=_deque.begin(); itr!=_deque.end(); )
-        {
-            Animation* obj = *itr;
-            if (obj->m_obInfo.target == target)
-            {
-                bool ok = set.insert(obj).second;
-                if (ok)
-                {
-                    obj->retain();
-                }
-                itr = _deque.erase(itr);
-            }
-            else
-            {
-                itr++;
-            }
-        }
-        
-        for (std::set<Animation*>::iterator itr=set.begin(); itr!=set.end(); )
-        {
-            Animation* obj = *itr;
-            CAScheduler::unscheduleAllForTarget(obj);
-            obj->release();
-        }
-        
-        set.clear();
-    }
+
 }
 NS_CC_END
