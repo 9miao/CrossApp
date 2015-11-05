@@ -15,13 +15,22 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\CASplitViewController.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\CDNewsAboutController.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CDNewsMenuView.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\CDNewsViewController.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\CDShowNewsImage.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CDTempViewController.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\CDUIShowCollectionView.cpp">
@@ -33,22 +42,13 @@
     <ClCompile Include="..\Classes\CDWebViewController.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\CommonHttpManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\MenuViewController.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\RootWindow.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\CommonHttpManager.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\CASplitViewController.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\CDNewsMenuView.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\CDTempViewController.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,13 +62,25 @@
     <ClInclude Include="..\Classes\AppMacros.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\CASplitViewController.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CDData.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\CDNewsAboutController.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CDNewsMenuView.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\CDNewsViewController.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\CDShowNewsImage.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CDTempViewController.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\CDUIShowCollectionView.h">
@@ -80,22 +92,13 @@
     <ClInclude Include="..\Classes\CDWebViewController.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\CommonHttpManager.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\MenuViewController.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\RootWindow.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\CommonHttpManager.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\CASplitViewController.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\CDNewsMenuView.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\CDTempViewController.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

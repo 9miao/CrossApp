@@ -2,6 +2,9 @@
 #include "AppDelegate.h"
 #include "CCEGLView.h"
 
+#define Screen_Width 1080
+#define Screen_Height 1920
+
 USING_NS_CC;
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
@@ -16,6 +19,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     AppDelegate app;
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
     eglView->setViewName("HelloCpp");
-    eglView->setFrameSize(640, 960);
+    eglView->setFrameSize(Screen_Width/2, Screen_Height/2);
     return CCApplication::sharedApplication()->run();
 }

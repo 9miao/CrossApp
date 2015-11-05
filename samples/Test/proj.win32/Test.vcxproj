@@ -99,7 +99,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\freetype\include\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\SDL\include;$(ProjectDir)..\..\..\CrossApp\the_third_party\freetype\include;$(ProjectDir)..\..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
