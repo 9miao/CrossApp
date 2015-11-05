@@ -845,6 +845,8 @@ float CCEGLView::getFrameZoomFactor()
 
 void CCEGLView::setFrameSize(float width, float height)
 {
+	width /= 2;
+	height /= 2;
     CCEGLViewProtocol::setFrameSize(width, height);
 
     resize(width, height); // adjust window size for menubar
