@@ -16,9 +16,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     AppDelegate app;
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
     eglView->setViewName("Test");
-    eglView->setFrameSize(2048, 1536);
+    eglView->setFrameSize(1024, 768);
     
-    CCApplication::sharedApplication()->setResourceRootPath("../../Resource");
+    CCApplication::sharedApplication()->setResourceRootPath("../../Resources");
 
     return CCApplication::sharedApplication()->run();
 }

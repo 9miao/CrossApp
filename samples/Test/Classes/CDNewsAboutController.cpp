@@ -7,11 +7,15 @@
 //
 
 #include "CDNewsAboutController.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#endif
 
 #define ___FILE_PATH___ std::string(CCFileUtils::sharedFileUtils()->getWritablePath() + "image")
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 
 void getAllFilePaths(std::vector<std::string>& filePaths, std::vector<std::string>& dirPaths, const std::string& path)
 {
@@ -39,10 +43,14 @@ void getAllFilePaths(std::vector<std::string>& filePaths, std::vector<std::strin
     closedir(dir);
 }
 
+#endif
+
 unsigned long getFilePathSize(const std::string& path)
 {
+
     unsigned long lCurFileSize = 0;
-    
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     std::vector<std::string> filePaths;
     std::vector<std::string> dirPaths;
     getAllFilePaths(filePaths, dirPaths, path);
@@ -57,12 +65,14 @@ unsigned long getFilePathSize(const std::string& path)
             fclose(fp);
         }
     }
-    
+
+#endif
     return lCurFileSize;
 }
 
 void removeFilePath(const std::string& path)
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     std::vector<std::string> filePaths;
     std::vector<std::string> dirPaths;
     getAllFilePaths(filePaths, dirPaths, path);
@@ -80,6 +90,7 @@ void removeFilePath(const std::string& path)
     {
         remove(itr->c_str());
     }
+#endif
 }
 
 CDNewsAboutTableCell::CDNewsAboutTableCell()
@@ -327,8 +338,8 @@ void CDNewsAboutController::deleteCallBack(float dt)
         _waitview = NULL;
         CAScheduler::unschedule(schedule_selector(CDNewsAboutController::deleteCallBack), this);
         char temstr[200];
-        sprintf(temstr, "本次共清理%0.1f M缓存！",_tempfilesize/1048576.0f);
-        CAAlertView* alertView = CAAlertView::createWithText("提示", temstr, "关闭",NULL);
+        sprintf(temstr, UTF8("本次共清理%0.1fM缓存!"),_tempfilesize/1048576.0f);
+		CAAlertView* alertView = CAAlertView::createWithText(UTF8("提示"), temstr, UTF8("关闭"), NULL);
         alertView->show();
         _tempfilesize = 0;
     }
