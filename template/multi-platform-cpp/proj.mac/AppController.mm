@@ -37,7 +37,7 @@ static AppDelegate s_sharedApplication;
     // (isn't there already a shared EAGLView?)
     glView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
     
-    NSString* title = @"CrossApp-Demo";
+    NSString* title = @"CrossApp";
     // set window parameters
     [window becomeFirstResponder];
     [window setContentView:glView];

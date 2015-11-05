@@ -15,7 +15,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     // create the application instance
     AppDelegate app;
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
-    eglView->setViewName("Test");
+    eglView->setViewName("CrossApp");
     eglView->setFrameSize(750, 1334);
     
     CCApplication::sharedApplication()->setResourceRootPath("../../Resources");
