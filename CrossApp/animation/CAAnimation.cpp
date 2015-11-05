@@ -43,7 +43,6 @@ namespace CAAnimation
     
     Animation::Animation()
     {
-        
         m_obInfo.now = 0;
         m_obInfo.total = 0;
         m_obInfo.interval = 0;

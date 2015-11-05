@@ -550,14 +550,13 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
 
 void CAFreeTypeFont::draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y)
 {
-	FT_Int  i, j, p, q;
 	FT_Int  x_max = x + m_inFontSize;
 	FT_Int  y_max = y + m_inFontSize;
 
 	uint8_t* src = pEmoji->m_pData;
-	for (i = y, p = 0; i < y_max; i++, p++)
+	for (FT_Int i = y; i < y_max; i++)
 	{
-		for (j = x, q = 0; j < x_max; j++, q++)
+		for (FT_Int j = x; j < x_max; j++)
 		{
 			if (i < 0 || j < 0 || j >= m_width || i >= m_height)
 				continue;
@@ -706,7 +705,7 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 		FT_Pos iTruncted = glyphs[0].pos.x;
 		for (int i = 0; i < glyphs.size(); i++)
 		{
-			if (glyphs[i].index==0)
+			if (glyphs[i].index == 0 && !glyphs[i].isEmoji)
 				continue;
 			
 			glyphs[i].pos.x -= iTruncted;
