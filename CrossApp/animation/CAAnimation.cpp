@@ -8,6 +8,7 @@
 
 #include "CAAnimation.h"
 #include "basics/CASTLContainer.h"
+#include <set>
 NS_CC_BEGIN
 
 namespace CAAnimation
@@ -138,12 +139,14 @@ namespace CAAnimation
     
     void unscheduleAllForTarget(CAObject* target)
     {
+        std::set<Animation*> set;
+        
         for (CADeque<Animation*>::iterator itr=_deque.begin(); itr!=_deque.end(); )
         {
             Animation* obj = *itr;
             if (obj->m_obInfo.target == target)
             {
-                CAScheduler::unscheduleAllForTarget(obj);
+                set.insert(obj);
                 itr = _deque.erase(itr);
             }
             else
@@ -151,6 +154,14 @@ namespace CAAnimation
                 itr++;
             }
         }
+        
+        for (std::set<Animation*>::iterator itr=set.begin(); itr!=set.end(); )
+        {
+            Animation* obj = *itr;
+            CAScheduler::unscheduleAllForTarget(obj);
+        }
+        
+        set.clear();
     }
 }
 NS_CC_END
