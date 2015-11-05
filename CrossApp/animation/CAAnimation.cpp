@@ -147,6 +147,7 @@ namespace CAAnimation
             if (obj->m_obInfo.target == target)
             {
                 set.insert(obj);
+                obj->retain();
                 itr = _deque.erase(itr);
             }
             else
@@ -159,6 +160,7 @@ namespace CAAnimation
         {
             Animation* obj = *itr;
             CAScheduler::unscheduleAllForTarget(obj);
+            obj->release();
         }
         
         set.clear();
