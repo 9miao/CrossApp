@@ -550,14 +550,13 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
 
 void CAFreeTypeFont::draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y)
 {
-	FT_Int  i, j, p, q;
 	FT_Int  x_max = x + m_inFontSize;
 	FT_Int  y_max = y + m_inFontSize;
 
 	uint8_t* src = pEmoji->m_pData;
-	for (i = y, p = 0; i < y_max; i++, p++)
+	for (FT_Int i = y; i < y_max; i++)
 	{
-		for (j = x, q = 0; j < x_max; j++, q++)
+		for (FT_Int j = x; j < x_max; j++)
 		{
 			if (i < 0 || j < 0 || j >= m_width || i >= m_height)
 				continue;
@@ -706,7 +705,7 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 		FT_Pos iTruncted = glyphs[0].pos.x;
 		for (int i = 0; i < glyphs.size(); i++)
 		{
-			if (glyphs[i].index==0)
+			if (glyphs[i].index == 0 && !glyphs[i].isEmoji)
 				continue;
 			
 			glyphs[i].pos.x -= iTruncted;
@@ -848,7 +847,6 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	glyphs.reserve(utf32String.size());
 
 	FT_Bool useKerning = FT_HAS_KERNING(m_face);
-    FT_Bool useOpenTypeFont = FT_Get_Char_Index(m_face, 97) == 0;
 	for (int n = 0; n < utf32String.size(); n++)
 	{
 		FT_ULong c = utf32String[n];
@@ -861,18 +859,19 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		glyph = &glyphs[numGlyphs];
 		glyph->c = c;
 		glyph_index = FT_Get_Char_Index(m_face, c);
-		glyph->index = glyph_index;
-		glyph->isOpenType = (glyph_index == 0);
 		glyph->isEmoji = false;
-		if (glyph_index == 0 && useOpenTypeFont)
+
+		FT_Bool isOpenType = (glyph_index == 0);
+		if (glyph_index == 0)
 		{
 			glyph_index = FT_Get_Char_Index(s_TempFont.m_CurFontFace, c);
 		}
+        glyph->index = glyph_index;
 		if (glyph_index == 0)
 		{
 			if (CAEmojiFont::getInstance()->isEmojiCodePoint(c))
 			{
-				glyph->isOpenType = false;
+				isOpenType = false;
 				glyph->isEmoji = true;
 			}
 			else
@@ -882,7 +881,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 			}
 		}
 
-		FT_Face curFace = glyph->isOpenType ? s_TempFont.m_CurFontFace : m_face;
+		FT_Face curFace = isOpenType ? s_TempFont.m_CurFontFace : m_face;
 		if (curFace==NULL)
         {
             numGlyphs++;
