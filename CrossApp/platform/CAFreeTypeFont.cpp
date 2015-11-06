@@ -529,7 +529,7 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
 			if (atof(CADevice::getSystemVersionWithIOS()) >= 9.0f)
 			{
-				dtValue = -(m_lineHeight / 15);
+				//dtValue = -(m_lineHeight / 15);
 			}
 			else
 			{
@@ -847,7 +847,6 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	glyphs.reserve(utf32String.size());
 
 	FT_Bool useKerning = FT_HAS_KERNING(m_face);
-    FT_Bool useOpenTypeFont = FT_Get_Char_Index(m_face, 97) == 0;
 	for (int n = 0; n < utf32String.size(); n++)
 	{
 		FT_ULong c = utf32String[n];
@@ -860,18 +859,19 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		glyph = &glyphs[numGlyphs];
 		glyph->c = c;
 		glyph_index = FT_Get_Char_Index(m_face, c);
-		glyph->index = glyph_index;
-		glyph->isOpenType = (glyph_index == 0);
 		glyph->isEmoji = false;
-		if (glyph_index == 0 && useOpenTypeFont)
+
+		FT_Bool isOpenType = (glyph_index == 0);
+		if (glyph_index == 0)
 		{
 			glyph_index = FT_Get_Char_Index(s_TempFont.m_CurFontFace, c);
 		}
+        glyph->index = glyph_index;
 		if (glyph_index == 0)
 		{
 			if (CAEmojiFont::getInstance()->isEmojiCodePoint(c))
 			{
-				glyph->isOpenType = false;
+				isOpenType = false;
 				glyph->isEmoji = true;
 			}
 			else
@@ -881,7 +881,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 			}
 		}
 
-		FT_Face curFace = glyph->isOpenType ? s_TempFont.m_CurFontFace : m_face;
+		FT_Face curFace = isOpenType ? s_TempFont.m_CurFontFace : m_face;
 		if (curFace==NULL)
         {
             numGlyphs++;

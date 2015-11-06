@@ -50,7 +50,6 @@ typedef struct TGlyph_
     FT_Vector  pos;    // glyph origin on the baseline
 	FT_Glyph   image;  // glyph image
 	FT_ULong   c;
-	FT_Bool	   isOpenType;
 	FT_Bool	   isEmoji;
 } TGlyph, *PGlyph;
 
