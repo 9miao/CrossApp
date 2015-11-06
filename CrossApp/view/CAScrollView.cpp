@@ -72,7 +72,6 @@ void CAScrollView::onExitTransitionDidStart()
     CAView::onExitTransitionDidStart();
     
     m_tPointOffset.clear();
-    m_vTouches.clear();
     m_tInertia = DPointZero;
 }
 
@@ -639,7 +638,6 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         m_bZooming = false;
     }
-    m_vTouches.eraseObject(pTouch);
 }
 
 void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
@@ -659,7 +657,6 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     {
         m_bZooming = false;
     }
-    m_vTouches.eraseObject(pTouch);
     this->stopDeaccelerateScroll();
     this->hideIndicator();
 }

@@ -32,6 +32,7 @@ CAResponder::~CAResponder()
 {
     this->setMouseMovedEnabled(false);
     this->setMouseScrollWheelEnabled(false);
+    m_vTouches.clear();
 }
 
 bool CAResponder::isFirstResponder()

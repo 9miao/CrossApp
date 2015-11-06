@@ -116,11 +116,6 @@ void CATableView::setContentSize(const CrossApp::DSize &var)
 
 bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (!m_vTouches.empty())
-    {
-        m_vTouches.replace(0, pTouch);
-        return true;
-    }
     bool isInertia = m_tInertia.getLength() < 1.0f;
     if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
         return false;

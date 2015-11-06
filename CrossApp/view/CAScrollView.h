@@ -240,8 +240,6 @@ protected:
     
     CAVector<CAView*> m_vChildInThis;
     
-    CAVector<CATouch*> m_vTouches;
-    
     float m_fTouchLength;
 
     DPoint m_tInertia;
