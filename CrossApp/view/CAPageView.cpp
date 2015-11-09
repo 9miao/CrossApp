@@ -199,7 +199,7 @@ int CAPageView::getSpacing()
 void CAPageView::contentOffsetFinish(float dt)
 {
     CAScrollView::contentOffsetFinish(dt);
-    if (m_pPageViewDelegate && m_bListener)
+    if (m_pPageViewDelegate && m_bListener && m_vTouches.empty())
     {
         m_pPageViewDelegate->pageViewDidEndTurning(this);
         m_bListener = false;
@@ -208,11 +208,6 @@ void CAPageView::contentOffsetFinish(float dt)
 
 bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (!m_vTouches.empty())
-    {
-        m_vTouches.replace(0, pTouch);
-        return true;
-    }
     return CAScrollView::ccTouchBegan(pTouch, pEvent);
 }
 

@@ -1222,14 +1222,17 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         if (version >= 9.0f)
         {
             fontName = "/System/Library/Fonts/LanguageSupport/PingFang.ttc";
+            ttfIndex = 2;
         }
         else if (version >= 8.2f)
         {
             fontName = "/System/Library/Fonts/Core/STHeiti-Light.ttc";
+            ttfIndex = 1;
         }
         else
         {
             fontName = "/System/Library/Fonts/Cache/STHeiti-Light.ttc";
+            ttfIndex = 1;
         }
         
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
@@ -1238,9 +1241,10 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         {
             fontName = "/System/Library/Fonts/STHeiti Light.ttc";
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+            ttfIndex = 1;
         }
 
-        ttfIndex = 1;
+        
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         
