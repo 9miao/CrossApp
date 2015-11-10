@@ -245,7 +245,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\win32\lib\*.*" "$(OutDir
     <ClCompile Include="..\support\network\DownloadManager.cpp" />
     <ClCompile Include="..\support\network\HttpClient.cpp" />
     <ClCompile Include="..\support\network\WebSocket.cpp" />
-    <ClCompile Include="..\support\sqlite3\include\sqlite3.c" />
+    <ClCompile Include="..\support\sqlite3\sqlite3.c" />
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\data_support\ccCArray.cpp" />
@@ -417,8 +417,8 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\win32\lib\*.*" "$(OutDir
     <ClInclude Include="..\support\network\HttpRequest.h" />
     <ClInclude Include="..\support\network\HttpResponse.h" />
     <ClInclude Include="..\support\network\WebSocket.h" />
-    <ClInclude Include="..\support\sqlite3\include\sqlite3.h" />
-    <ClInclude Include="..\support\sqlite3\include\sqlite3ext.h" />
+    <ClInclude Include="..\support\sqlite3\sqlite3.h" />
+    <ClInclude Include="..\support\sqlite3\sqlite3ext.h" />
     <ClInclude Include="..\support\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\support\TransformUtils.h" />
     <ClInclude Include="..\support\data_support\ccCArray.h" />
