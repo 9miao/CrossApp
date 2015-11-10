@@ -139,7 +139,7 @@
 #include "support/network/HttpClient.h"
 #include "support/network/DownloadManager.h"
 #include "support/Json/CSContentJsonDictionary.h"
-#include "support/sqlite3/include/sqlite3.h"
+#include "support/sqlite3/sqlite3.h"
 #include "support/LocalStorage/LocalStorage.h"
 #include "support/device/CADevice.h"
 
