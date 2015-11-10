@@ -99,6 +99,7 @@
 #include "view/CADrawView.h"
 #include "view/CATextEditHelper.h"
 #include "view/CAAutoCollectionView.h"
+#include "view/CAWaterfallView.h"
 
 #include "video/CAVideoPlayerDecoder.h"
 #include "video/CAVideoPlayerRender.h"

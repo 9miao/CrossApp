@@ -1486,19 +1486,34 @@ void CDUIShowView::showCollectionView()
     headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
     footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     
-    p_Conllection = CACollectionView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
-    p_Conllection->setAllowsSelection(true);
-    //p_Conllection->setAllowsMultipleSelection(true);
-    p_Conllection->setCollectionViewDelegate(this);
-    p_Conllection->setCollectionViewDataSource(this);
-    p_Conllection->setScrollViewDelegate(this);
-    p_Conllection->setHeaderRefreshView(headerRefreshView);
-    p_Conllection->setFooterRefreshView(footerRefreshView);
-    p_Conllection->setHoriInterval(_px(40));
-    p_Conllection->setVertInterval(_px(40));
-    this->getView()->addSubview(p_Conllection);
-    p_Conllection->reloadData();
-    p_Conllection->startPullToHeaderRefreshView();
+	p_WaterfallView = CAWaterfallView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
+	p_WaterfallView->setAllowsSelection(true);
+	//p_Conllection->setAllowsMultipleSelection(true);
+	//p_WaterfallView->setWaterfallViewDelegate(this);
+	p_WaterfallView->setWaterfallViewDataSource(this);
+	p_WaterfallView->setScrollViewDelegate(this);
+	p_WaterfallView->setHeaderRefreshView(headerRefreshView);
+	p_WaterfallView->setFooterRefreshView(footerRefreshView);
+	//p_WaterfallView->setHoriInterval(_px(40));
+	//p_WaterfallView->setVertInterval(_px(40));
+	this->getView()->addSubview(p_WaterfallView);
+	p_WaterfallView->reloadData();
+	p_WaterfallView->startPullToHeaderRefreshView();
+
+
+    //p_Conllection = CACollectionView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
+    //p_Conllection->setAllowsSelection(true);
+    ////p_Conllection->setAllowsMultipleSelection(true);
+    //p_Conllection->setCollectionViewDelegate(this);
+    //p_Conllection->setCollectionViewDataSource(this);
+    //p_Conllection->setScrollViewDelegate(this);
+    //p_Conllection->setHeaderRefreshView(headerRefreshView);
+    //p_Conllection->setFooterRefreshView(footerRefreshView);
+    //p_Conllection->setHoriInterval(_px(40));
+    //p_Conllection->setVertInterval(_px(40));
+    //this->getView()->addSubview(p_Conllection);
+    //p_Conllection->reloadData();
+    //p_Conllection->startPullToHeaderRefreshView();
 }
 
 void CDUIShowView::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
@@ -1545,6 +1560,8 @@ CACollectionViewCell* CDUIShowView::collectionCellAtIndex(CACollectionView *coll
     CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
     itemText->setText(pos);
     
+	CAView* itemImage = p_Cell->getSubviewByTag(99);
+	itemImage->setFrame(DRect(0, 0, _size.width, _size.height));
     return p_Cell;
 }
 
@@ -1568,6 +1585,69 @@ unsigned int CDUIShowView::collectionViewHeightForRowAtIndexPath(CACollectionVie
     return (this->getView()->getBounds().size.width - _px(40) * 4) / 3;
 }
 
+
+CAWaterfallViewCell* CDUIShowView::waterfallCellAtIndex(CAWaterfallView *waterfallView, const DSize& cellSize, unsigned int itemIndex)
+{
+	DSize _size = cellSize;
+	CAWaterfallViewCell* p_Cell = waterfallView->dequeueReusableCellWithIdentifier("CrossApp");
+	if (p_Cell == NULL)
+	{
+		p_Cell = CAWaterfallViewCell::create("CrossApp");
+
+		CAView* itemImage = CAView::createWithFrame(DRect(0, 0, _size.width, _size.height));
+		itemImage->setTag(99);
+		p_Cell->addSubview(itemImage);
+
+		DSize itemSize = itemImage->getBounds().size;
+		CALabel* itemText = CALabel::createWithCenter(DRect(itemSize.width / 2, itemSize.height / 2, _size.width, _size.height));
+		itemText->setTag(100);
+		itemText->setFontSize(_px(29));
+		itemText->setTextAlignment(CATextAlignmentCenter);
+		itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		itemImage->addSubview(itemText);
+	}
+	CAView* itemImageView = p_Cell->getSubviewByTag(99);
+	itemImageView->setColor(colorArr.at(itemIndex));
+
+	char pos[20] = "";
+	sprintf(pos, "(%d)", itemIndex);
+	CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
+	itemText->setText(pos);
+
+	return p_Cell;
+}
+
+unsigned int CDUIShowView::numberOfItems(CAWaterfallView *waterfallView)
+{
+	return 14;
+}
+
+unsigned int CDUIShowView::waterfallViewHeightForItemAtIndex(CAWaterfallView *waterfallView, unsigned int itemIndex)
+{
+	return rand() % 80 + 100;
+}
+
+CAView* CDUIShowView::waterfallViewSectionViewForHeader(CAWaterfallView *waterfallView, const DSize& viewSize)
+{
+	return NULL;
+}
+
+unsigned int CDUIShowView::waterfallViewHeightForHeader(CAWaterfallView *waterfallView)
+{
+	return 0;
+}
+
+CAView* CDUIShowView::waterfallViewSectionViewForFooter(CAWaterfallView *waterfallView, const DSize& viewSize)
+{
+	return NULL;
+}
+
+unsigned int CDUIShowView::waterfallViewHeightForFooter(CAWaterfallView *waterfallView)
+{
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 void CDUIShowView::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
     colorArr.clear();
@@ -1588,7 +1668,8 @@ void CDUIShowView::refreshData(float interval)
         char b = CCRANDOM_0_1() * 255;
         colorArr.push_back(ccc4(r, g, b, 255));
     }
-    p_Conllection->reloadData();
+    //p_Conllection->reloadData();
+	p_WaterfallView->reloadData();
 }
 
 void CDUIShowView::showScrollView()

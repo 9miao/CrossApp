@@ -500,10 +500,12 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
         FT_Glyph image = glyph->image;
 		if (image == NULL)
 		{
-            CAImage* pEmoji = CAEmojiFont::getInstance()->getEmojiImage((unsigned int)glyph->c, m_inFontSize);
+			int iEmojiSize = (m_inFontSize % 2) ? (m_inFontSize - 1) : m_inFontSize;
+
+			CAImage* pEmoji = CAEmojiFont::getInstance()->getEmojiImage((unsigned int)glyph->c, iEmojiSize);
             if (pEmoji)
             {
-                pEmoji = CAImage::scaleToNewImageWithImage(pEmoji, DSize(m_inFontSize, m_inFontSize));
+				pEmoji = CAImage::scaleToNewImageWithImage(pEmoji, DSize(iEmojiSize, iEmojiSize));
             }
 
             if (pEmoji)
@@ -513,9 +515,9 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
                 dtValue = m_lineHeight / 12;
 #endif
 				FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
-				FT_Int y = (FT_Int)(pen->y - m_inFontSize) + dtValue;
+				FT_Int y = (FT_Int)(pen->y - iEmojiSize) + dtValue;
 
-				draw_emoji(pBuffer, pEmoji, x, y);
+				draw_emoji(pBuffer, pEmoji, x, y, iEmojiSize);
             }
 			continue;
 		}
@@ -548,10 +550,10 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
     }
 }
 
-void CAFreeTypeFont::draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y)
+void CAFreeTypeFont::draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y, int iEmojiSize)
 {
-	FT_Int  x_max = x + m_inFontSize;
-	FT_Int  y_max = y + m_inFontSize;
+	FT_Int  x_max = x + iEmojiSize;
+	FT_Int  y_max = y + iEmojiSize;
 
 	uint8_t* src = pEmoji->m_pData;
 	for (FT_Int i = y; i < y_max; i++)

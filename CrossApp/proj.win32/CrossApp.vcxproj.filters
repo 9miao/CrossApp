@@ -509,6 +509,9 @@
     <ClCompile Include="..\support\CAProfiling.cpp">
       <Filter>support</Filter>
     </ClCompile>
+    <ClCompile Include="..\view\CAWaterfallView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1019,6 +1022,9 @@
     </ClInclude>
     <ClInclude Include="..\support\CAProfiling.h">
       <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAWaterfallView.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

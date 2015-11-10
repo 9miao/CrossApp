@@ -296,6 +296,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\win32\lib\*.*" "$(OutDir
     <ClCompile Include="..\view\CATextField.cpp" />
     <ClCompile Include="..\view\CATextView.cpp" />
     <ClCompile Include="..\view\CAView.cpp" />
+    <ClCompile Include="..\view\CAWaterfallView.cpp" />
     <ClCompile Include="..\view\CAWebView.cpp" />
     <ClCompile Include="..\view\CAWindow.cpp" />
   </ItemGroup>
@@ -472,6 +473,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\win32\lib\*.*" "$(OutDir
     <ClInclude Include="..\view\CATextField.h" />
     <ClInclude Include="..\view\CATextView.h" />
     <ClInclude Include="..\view\CAView.h" />
+    <ClInclude Include="..\view\CAWaterfallView.h" />
     <ClInclude Include="..\view\CAWebView.h" />
     <ClInclude Include="..\view\CAWindow.h" />
     <ClInclude Include="resource.h" />
