@@ -21,6 +21,7 @@ std::string CAClipboard::getText()
 				str = lpszData;
 				::GlobalUnlock(hGlobal);
 			}
+			::GlobalFree(hGlobal);
 		}
 		::CloseClipboard();
 	}

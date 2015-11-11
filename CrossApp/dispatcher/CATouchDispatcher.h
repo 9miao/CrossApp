@@ -85,6 +85,14 @@ protected:
     
     std::vector<CAResponder*> getEventListener(CATouch* touch, CAView* view);
 
+    bool touchBeganWithResponder(CAResponder* responder);
+    
+    void touchMovedWithResponder(CAResponder* responder);
+    
+    void touchEndedWithResponder(CAResponder* responder);
+    
+    void touchCancelledWithResponder(CAResponder* responder);
+    
 protected:
 
     CAVector<CAResponder*> m_vTouchMovedsView;

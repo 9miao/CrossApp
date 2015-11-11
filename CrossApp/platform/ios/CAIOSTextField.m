@@ -51,12 +51,15 @@
     {
         if (string.length > 0)
         {
-            if (![[[UITextInputMode currentInputMode] primaryLanguage] isEqualToString: @"en-US"])
+            if (![[[textField textInputMode] primaryLanguage] isEqualToString: @"en-US"])
             {
                 if (self.markedTextRange == nil)
                 {
                     const char* cString = [string cStringUsingEncoding:NSUTF8StringEncoding];
                     int ascii = cString[0];
+                    
+                    if([[[textField textInputMode] primaryLanguage] isEqualToString: @"zh-Hans"] && ascii < 0)  return YES;
+                    
                     if (    ascii < 65
                         || (ascii >= 91 && ascii < 97)
                         || (ascii >= 123 && ascii < 128))
@@ -76,7 +79,6 @@
     }
     return YES;
 }
-
 
 - (void)insertText:(NSString *)text
 {

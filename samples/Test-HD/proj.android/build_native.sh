@@ -45,26 +45,6 @@ echo "NDK_ROOT = $NDK_ROOT"
 echo "COCOS2DX_ROOT = $COCOS2DX_ROOT"
 echo "APP_ROOT = $APP_ROOT"
 echo "APP_ANDROID_ROOT = $APP_ANDROID_ROOT"
-
-# make sure assets is exist
-if [ -d "$APP_ANDROID_ROOT"/assets ]; then
-    rm -rf "$APP_ANDROID_ROOT"/assets
-fi
-
-mkdir "$APP_ANDROID_ROOT"/assets
-
-# copy resources
-for file in "$APP_ROOT"/Resources/*
-do
-if [ -d "$file" ]; then
-    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
-fi
-
-if [ -f "$file" ]; then
-    cp "$file" "$APP_ANDROID_ROOT"/assets
-fi
-done
-
 echo "Using prebuilt externals"
 "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
 "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/CrossApp/the_third_party/"

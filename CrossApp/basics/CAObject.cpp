@@ -5,7 +5,6 @@
 #include "ccMacros.h"
 #include "CAScheduler.h"
 #include "script_support/CCScriptSupport.h"
-#include "animation/CAAnimation.h"
 NS_CC_BEGIN
 
 CAObject* CACopying::copyWithZone(CAZone *pZone)
@@ -33,7 +32,6 @@ CAObject::CAObject(void)
 
 CAObject::~CAObject(void)
 {
-    CAAnimation::unscheduleAllForTarget(this);
     CAScheduler::unscheduleAllForTarget(this);
     
     CC_SAFE_RELEASE(m_pUserObject);

@@ -19,7 +19,6 @@
 #include "dispatcher/CAProtocols.h"
 #include "platform/CCAccelerometerDelegate.h"
 #include "basics/CAResponder.h"
-#include "basics/CASTLContainer.h"
 #include "images/CAImageCache.h"
 
 #ifdef EMSCRIPTEN

@@ -12,9 +12,10 @@
 #include <iostream>
 #include "CAObject.h"
 #include "dispatcher/CATouch.h"
+#include "basics/CASTLContainer.h"
 
 NS_CC_BEGIN;
-
+class CATouchController;
 class CATouch;
 
 class CC_DLL CAResponder: public CAObject
@@ -56,6 +57,8 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned long, m_uZLevel, ZLevel);
     
+    CC_SYNTHESIZE_READONLY(CAVector<CATouch*>, m_vTouches, Touches);
+    
     virtual bool isReachBoundaryLeft() {return false;}
     
     virtual bool isReachBoundaryRight() {return false;}
@@ -92,6 +95,8 @@ public:
      * @lua NA
      */
     virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent);
+
+    friend class CATouchController;
 };
 
 NS_CC_END;

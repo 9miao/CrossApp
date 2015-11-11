@@ -3,8 +3,8 @@
 #import "AppController.h"
 #import "AppDelegate.h"
 
-#define Screen_Width 1080
-#define Screen_Height 1920
+#define Screen_Width 750
+#define Screen_Height 1344
 
 @implementation AppController
 
@@ -37,7 +37,7 @@ static AppDelegate s_sharedApplication;
     // (isn't there already a shared EAGLView?)
     glView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
     
-    NSString* title = @"CrossApp-Demo";
+    NSString* title = @"CrossApp";
     // set window parameters
     [window becomeFirstResponder];
     [window setContentView:glView];

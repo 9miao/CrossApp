@@ -116,7 +116,7 @@ void CATouchController::passingTouchesViews(float dt)
     bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
     if (!isContainsFirstPoint && view)
     {
-        view->ccTouchBegan(m_pTouch, m_pEvent);
+        this->touchBeganWithResponder(view);
     }
     
     CC_RETURN_IF(m_vTouchesViews.empty());
@@ -130,7 +130,7 @@ void CATouchController::passingTouchesViews(float dt)
     
     for (int i=0; i<m_vTouchesViews.size();)
     {
-        if (!m_vTouchesViews.at(i)->ccTouchBegan(m_pTouch, m_pEvent))
+        if (!this->touchBeganWithResponder(m_vTouchesViews.at(i)))
         {
             m_vTouchesViews.erase(i);
         }
@@ -307,7 +307,7 @@ void CATouchController::touchMoved()
                         CAVector<CAResponder*>::iterator itr;
                         for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
                         {
-                            (*itr)->ccTouchCancelled(m_pTouch, m_pEvent);
+                            this->touchCancelledWithResponder(*itr);
                         }
                     }
                     m_vTouchesViews.clear();
@@ -350,7 +350,7 @@ void CATouchController::touchMoved()
                             }
                         }
 
-                        if (responder->ccTouchBegan(m_pTouch, m_pEvent))
+                        if (this->touchBeganWithResponder(responder))
                         {
                             m_vTouchesViews.pushBack(responder);
                         }
@@ -364,7 +364,7 @@ void CATouchController::touchMoved()
                         
                         while (m_vTouchesViews.back())
                         {
-                            if (m_vTouchesViews.back()->ccTouchBegan(m_pTouch, m_pEvent))
+                            if (this->touchBeganWithResponder(m_vTouchesViews.back()))
                             {
                                 break;
                             }
@@ -382,14 +382,14 @@ void CATouchController::touchMoved()
     bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
     if (!isContainsFirstPoint && view && view->isScrollEnabled())
     {
-        view->ccTouchMoved(m_pTouch, m_pEvent);
+        this->touchMovedWithResponder(view);
     }
     
     CAVector<CAResponder*>::iterator itr;
     for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
     {
         CC_CONTINUE_IF(!(*itr)->isScrollEnabled());
-        (*itr)->ccTouchMoved(m_pTouch, m_pEvent);
+        this->touchMovedWithResponder(*itr);
     }
     
 }
@@ -407,13 +407,13 @@ void CATouchController::touchEnded()
     bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
     if (!isContainsFirstPoint && view)
     {
-        view->ccTouchEnded(m_pTouch, m_pEvent);
+        this->touchEndedWithResponder(view);
     }
     
     CAVector<CAResponder*>::iterator itr;
     for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
     {
-        (*itr)->ccTouchEnded(m_pTouch, m_pEvent);
+        this->touchEndedWithResponder(*itr);
     }
 }
 
@@ -425,15 +425,45 @@ void CATouchController::touchCancelled()
     bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
     if (!isContainsFirstPoint && view)
     {
-        view->ccTouchCancelled(m_pTouch, m_pEvent);
+        this->touchCancelledWithResponder(view);
     }
     
     CAVector<CAResponder*>::iterator itr;
     for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
     {
-        (*itr)->ccTouchCancelled(m_pTouch, m_pEvent);
+        this->touchCancelledWithResponder(*itr);
     }
 }
+
+bool CATouchController::touchBeganWithResponder(CAResponder* responder)
+{
+    responder->m_vTouches.pushBack(m_pTouch);
+    bool ret = responder->ccTouchBegan(m_pTouch, m_pEvent);
+    if (!ret)
+    {
+        responder->m_vTouches.eraseObject(m_pTouch);
+    }
+    return ret;
+}
+
+void CATouchController::touchMovedWithResponder(CAResponder* responder)
+{
+    responder->ccTouchMoved(m_pTouch, m_pEvent);
+}
+
+void CATouchController::touchEndedWithResponder(CAResponder* responder)
+{
+    responder->ccTouchEnded(m_pTouch, m_pEvent);
+    responder->m_vTouches.eraseObject(m_pTouch);
+}
+
+void CATouchController::touchCancelledWithResponder(CAResponder* responder)
+{
+    responder->ccTouchCancelled(m_pTouch, m_pEvent);
+    responder->m_vTouches.eraseObject(m_pTouch);
+}
+
+
 
 
 CATouchDispatcher::CATouchDispatcher(void)

@@ -815,7 +815,7 @@ void CCEGLView::resize(int width, int height)
         char szBuf[MAX_PATH + 1];
         memset(szBuf, 0, sizeof(szBuf));
         snprintf(szBuf, MAX_PATH, "%s - %0.0fx%0.0f - %0.2f",
-                   m_szViewName, frameSize.width, frameSize.height, m_fFrameZoomFactor);
+                   m_szViewName, frameSize.width * 2, frameSize.height * 2, m_fFrameZoomFactor);
         MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
 #else
         MultiByteToWideChar(CP_UTF8, 0, m_szViewName, -1, wszBuf, sizeof(wszBuf));
@@ -845,6 +845,8 @@ float CCEGLView::getFrameZoomFactor()
 
 void CCEGLView::setFrameSize(float width, float height)
 {
+	width /= 2;
+	height /= 2;
     CCEGLViewProtocol::setFrameSize(width, height);
 
     resize(width, height); // adjust window size for menubar

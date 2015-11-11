@@ -8,6 +8,7 @@
 
 #include "CAAnimation.h"
 #include "basics/CASTLContainer.h"
+#include <set>
 NS_CC_BEGIN
 
 namespace CAAnimation
@@ -42,7 +43,6 @@ namespace CAAnimation
     
     Animation::Animation()
     {
-        
         m_obInfo.now = 0;
         m_obInfo.total = 0;
         m_obInfo.interval = 0;
@@ -52,7 +52,7 @@ namespace CAAnimation
     
     Animation::~Animation()
     {
-
+        CC_SAFE_RELEASE(m_obInfo.target);
     }
     
     void Animation::startAnimation(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay)
@@ -61,7 +61,7 @@ namespace CAAnimation
         m_obInfo.interval = interval;
         m_obInfo.delay = delay;
         m_obInfo.selector = selector;
-        m_obInfo.target = target;
+        m_obInfo.target = target->retain();
         CAScheduler::schedule(schedule_selector(Animation::update), this, interval);
     }
     
@@ -135,22 +135,6 @@ namespace CAAnimation
             }
         }
     }
-    
-    void unscheduleAllForTarget(CAObject* target)
-    {
-        for (CADeque<Animation*>::iterator itr=_deque.begin(); itr!=_deque.end(); )
-        {
-            Animation* obj = *itr;
-            if (obj->m_obInfo.target == target)
-            {
-                CAScheduler::unscheduleAllForTarget(obj);
-                itr = _deque.erase(itr);
-            }
-            else
-            {
-                itr++;
-            }
-        }
-    }
+
 }
 NS_CC_END

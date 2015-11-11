@@ -485,9 +485,6 @@
     <ClCompile Include="..\support\network\WebSocket.cpp">
       <Filter>support\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\support\sqlite3\include\sqlite3.c">
-      <Filter>support\sqlite3</Filter>
-    </ClCompile>
     <ClCompile Include="..\video\CAVideoPlayerDecoder.cpp">
       <Filter>video</Filter>
     </ClCompile>
@@ -508,9 +505,6 @@
     </ClCompile>
     <ClCompile Include="..\support\CAProfiling.cpp">
       <Filter>support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\view\CAWaterfallView.cpp">
-      <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -995,12 +989,6 @@
     <ClInclude Include="..\support\network\WebSocket.h">
       <Filter>support\network</Filter>
     </ClInclude>
-    <ClInclude Include="..\support\sqlite3\include\sqlite3.h">
-      <Filter>support\sqlite3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\sqlite3\include\sqlite3ext.h">
-      <Filter>support\sqlite3</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="..\video\CAVideoPlayerDecoder.h">
       <Filter>video</Filter>
@@ -1023,8 +1011,11 @@
     <ClInclude Include="..\support\CAProfiling.h">
       <Filter>support</Filter>
     </ClInclude>
-    <ClInclude Include="..\view\CAWaterfallView.h">
-      <Filter>view</Filter>
+    <ClInclude Include="..\support\sqlite3\sqlite3.h">
+      <Filter>support\sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\sqlite3\sqlite3ext.h">
+      <Filter>support\sqlite3</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
