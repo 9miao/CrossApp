@@ -1,6 +1,8 @@
 
 package org.CrossApp.lib;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -140,9 +142,9 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	}
 
 	private static native void nativeInsertText(final String pText);
-	private static native void nativeAndroidWillInsertText(final int start,final String pString,final int before,final int count);
+	private static native void nativeAndroidWillInsertText(final int start,final byte [] pString,final int before,final int count);
 	private static native void nativeDeleteBackward();
-	private static native String nativeGetContentText();
+	private static native byte[] nativeGetContentText();
 	private static native int nativeGetCursorPos();
 	private static native int[] nativeGetCharRange();
 
@@ -151,7 +153,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public void handleWillInsertText(final int start,final String pString,final int before,final int count) {
-		Cocos2dxRenderer.nativeAndroidWillInsertText(start,pString,before,count);
+		Cocos2dxRenderer.nativeAndroidWillInsertText(start,pString.getBytes(),before,pString.getBytes().length);
 	}
 	
 	public void handleDeleteBackward() {
@@ -159,7 +161,13 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public String getContentText() {
-		return Cocos2dxRenderer.nativeGetContentText();
+		String str = "null";
+		try {
+			str = new String(Cocos2dxRenderer.nativeGetContentText(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}		
+		return str;
 	}
 
 	public int getCursorPos() {

@@ -119,7 +119,7 @@ protected:
 	void compute_bbox2(TGlyph& glyph, FT_BBox& bbox);
 
 	void drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vector *pen);
-	void draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y);
+	void draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y, int iEmojiSize);
     void draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap,FT_Int x,FT_Int y);
 	void draw_line(unsigned char* pBuffer, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
 

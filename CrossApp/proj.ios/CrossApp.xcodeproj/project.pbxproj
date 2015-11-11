@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020F5F831BF31A250098C44C /* CAWaterfallView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020F5F811BF31A250098C44C /* CAWaterfallView.cpp */; };
+		020F5F841BF31A250098C44C /* CAWaterfallView.h in Headers */ = {isa = PBXBuildFile; fileRef = 020F5F821BF31A250098C44C /* CAWaterfallView.h */; };
 		022CAAE41BF185DA00ED015B /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 022CAAE11BF185DA00ED015B /* sqlite3.c */; };
 		022CAAE51BF185DA00ED015B /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 022CAAE21BF185DA00ED015B /* sqlite3.h */; };
 		022CAAE61BF185DA00ED015B /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 022CAAE31BF185DA00ED015B /* sqlite3ext.h */; };
@@ -395,6 +397,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		020F5F811BF31A250098C44C /* CAWaterfallView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWaterfallView.cpp; sourceTree = "<group>"; };
+		020F5F821BF31A250098C44C /* CAWaterfallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWaterfallView.h; sourceTree = "<group>"; };
 		022CAAE11BF185DA00ED015B /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		022CAAE21BF185DA00ED015B /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		022CAAE31BF185DA00ED015B /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
@@ -897,6 +901,8 @@
 		04EA9FC41956CE2500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				020F5F811BF31A250098C44C /* CAWaterfallView.cpp */,
+				020F5F821BF31A250098C44C /* CAWaterfallView.h */,
 				3E2154781B81AAAE0075448E /* CAAutoCollectionView.cpp */,
 				3E2154791B81AAAE0075448E /* CAAutoCollectionView.h */,
 				B0ADAE311B2E7F1B00BE8FA3 /* CAActivityIndicatorView.cpp */,
@@ -1623,6 +1629,7 @@
 				1551A737158F2ADE00E66CFE /* CCGL.h in Headers */,
 				1551A73A158F2ADE00E66CFE /* CCLock.h in Headers */,
 				1551A73B158F2ADE00E66CFE /* CCPlatformDefine.h in Headers */,
+				020F5F841BF31A250098C44C /* CAWaterfallView.h in Headers */,
 				1551A73C158F2ADE00E66CFE /* CCStdC.h in Headers */,
 				1551A73E158F2ADE00E66CFE /* EAGLView.h in Headers */,
 				1551A74B158F2ADE00E66CFE /* OpenGL_Internal.h in Headers */,
@@ -1833,6 +1840,7 @@
 				1551A6CF158F2ADE00E66CFE /* utility.c in Sources */,
 				1551A6D0158F2ADE00E66CFE /* vec2.c in Sources */,
 				1551A6D1158F2ADE00E66CFE /* vec3.c in Sources */,
+				020F5F831BF31A250098C44C /* CAWaterfallView.cpp in Sources */,
 				1551A6D2158F2ADE00E66CFE /* vec4.c in Sources */,
 				B02CE48B19AD8CFE00B905FB /* CAPageControl.cpp in Sources */,
 				1551A724158F2ADE00E66CFE /* CCSAXParser.cpp in Sources */,

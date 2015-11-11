@@ -57,13 +57,14 @@ unsigned char* CAEmojiFont::loadEmojiFontBuffer(unsigned long& size)
     {
         fontName = "/System/Library/Fonts/Cache/AppleColorEmoji@2x.ccf";
     }
-    fontName = "fonts/NotoColorEmoji.ttf";
+
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
 	const char* fontName = "/system/fonts/NotoColorEmoji.ttf";
-    fontName = "fonts/NotoColorEmoji.ttf";
+    
 #endif
 
+	fontName = "fonts/NotoColorEmoji.ttf";
 	return CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", &size);
 }
 
