@@ -1485,35 +1485,32 @@ void CDUIShowView::showCollectionView()
     
     headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
     footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
-    
+
+	/*
 	p_WaterfallView = CAWaterfallView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
 	p_WaterfallView->setAllowsSelection(true);
-	//p_Conllection->setAllowsMultipleSelection(true);
-	//p_WaterfallView->setWaterfallViewDelegate(this);
 	p_WaterfallView->setWaterfallViewDataSource(this);
 	p_WaterfallView->setScrollViewDelegate(this);
 	p_WaterfallView->setHeaderRefreshView(headerRefreshView);
 	p_WaterfallView->setFooterRefreshView(footerRefreshView);
-	//p_WaterfallView->setHoriInterval(_px(40));
-	//p_WaterfallView->setVertInterval(_px(40));
 	this->getView()->addSubview(p_WaterfallView);
 	p_WaterfallView->reloadData();
 	p_WaterfallView->startPullToHeaderRefreshView();
+	*/
 
-
-    //p_Conllection = CACollectionView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
-    //p_Conllection->setAllowsSelection(true);
-    ////p_Conllection->setAllowsMultipleSelection(true);
-    //p_Conllection->setCollectionViewDelegate(this);
-    //p_Conllection->setCollectionViewDataSource(this);
-    //p_Conllection->setScrollViewDelegate(this);
-    //p_Conllection->setHeaderRefreshView(headerRefreshView);
-    //p_Conllection->setFooterRefreshView(footerRefreshView);
-    //p_Conllection->setHoriInterval(_px(40));
-    //p_Conllection->setVertInterval(_px(40));
-    //this->getView()->addSubview(p_Conllection);
-    //p_Conllection->reloadData();
-    //p_Conllection->startPullToHeaderRefreshView();
+    p_Conllection = CACollectionView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
+    p_Conllection->setAllowsSelection(true);
+    //p_Conllection->setAllowsMultipleSelection(true);
+    p_Conllection->setCollectionViewDelegate(this);
+    p_Conllection->setCollectionViewDataSource(this);
+    p_Conllection->setScrollViewDelegate(this);
+    p_Conllection->setHeaderRefreshView(headerRefreshView);
+    p_Conllection->setFooterRefreshView(footerRefreshView);
+    p_Conllection->setHoriInterval(_px(40));
+    p_Conllection->setVertInterval(_px(40));
+    this->getView()->addSubview(p_Conllection);
+    p_Conllection->reloadData();
+    p_Conllection->startPullToHeaderRefreshView();
 }
 
 void CDUIShowView::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
@@ -1668,8 +1665,7 @@ void CDUIShowView::refreshData(float interval)
         char b = CCRANDOM_0_1() * 255;
         colorArr.push_back(ccc4(r, g, b, 255));
     }
-    //p_Conllection->reloadData();
-	p_WaterfallView->reloadData();
+    p_Conllection->reloadData();
 }
 
 void CDUIShowView::showScrollView()

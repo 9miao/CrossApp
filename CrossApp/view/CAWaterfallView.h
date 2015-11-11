@@ -201,11 +201,8 @@ protected:
 	inline virtual float decelerationRatio(float dt);
 
 	void clearData();
-//	int calculateAllCellsLength(CollectionViewSection& cvs);
-//	int calculateAllCells(CollectionViewSection& cvs, int index, int dd, int dv, int dw);
 	unsigned int getCurColumnIndex();
 	unsigned int getMaxColumnValue();
-//	bool fillSectionRowData(CollectionViewRow& r, DSize rSize);
 	void reloadViewSizeData();
 
 	virtual void update(float dt);

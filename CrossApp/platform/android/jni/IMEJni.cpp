@@ -71,9 +71,15 @@ extern "C" {
             isHave = JniHelper::getMethodInfo(t,
                                               "org/CrossApp/lib/Cocos2dxGLSurfaceView",
                                               "setCursorPos",
-                                              "(ILjava/lang/String;)V");
+                                              "(I[B)V");
             if (isHave) {
-                t.env->CallVoidMethod(jobj, t.methodID,pos,t.env->NewStringUTF(text));
+        		size_t len = strlen(text);
+        		jbyteArray jba =t.env->NewByteArray(len);
+        		jbyte *jby =t.env->GetByteArrayElements(jba, 0);
+        		memcpy(jby, text, len);
+        		t.env->SetByteArrayRegion(jba, 0,len, jby);
+                t.env->CallVoidMethod(jobj, t.methodID,pos,jba);
+                t.env->ReleaseByteArrayElements(jba, jby, JNI_COMMIT);
             }
             t.env->DeleteLocalRef(t.classID);
         }

@@ -180,37 +180,36 @@ bool CAWaterfallView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	if (m_bAllowsSelection && this->isScrollWindowNotOutSide() == false && isInertia)
 	{
 		DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
-		/*
-		std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
-		for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); ++itr)
+		
+		std::map<int, CAWaterfallViewCell*>::iterator itr;
+		for (itr = m_mpUsedWaterfallCells.begin(); itr != m_mpUsedWaterfallCells.end(); ++itr)
 		{
-			CACollectionViewCell* pCell = itr->second;
+			CAWaterfallViewCell* pCell = itr->second;
 			CC_CONTINUE_IF(pCell == NULL);
 
 			if (pCell->getFrame().containsPoint(point) && pCell->isVisible())
 			{
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateDisabled);
 
-				if (m_pHighlightedCollectionCells != pCell)
+				if (m_pHighlightedWaterfallCells != pCell)
 				{
-					if (m_pHighlightedCollectionCells)
+					if (m_pHighlightedWaterfallCells)
 					{
-						m_pHighlightedCollectionCells->setControlStateNormal();
+						m_pHighlightedWaterfallCells->setControlStateNormal();
 					}
 
-					m_pHighlightedCollectionCells = pCell;
+					m_pHighlightedWaterfallCells = pCell;
 				}
 
 				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
 
 				CAViewAnimation::beginAnimations(m_s__StrID, NULL);
 				CAViewAnimation::setAnimationDuration(0.05f);
-				CAViewAnimation::setAnimationDidStopSelector(pCell, CAViewAnimation0_selector(CACollectionViewCell::setControlStateHighlighted));
+				CAViewAnimation::setAnimationDidStopSelector(pCell, CAViewAnimation0_selector(CAWaterfallViewCell::setControlStateHighlighted));
 				CAViewAnimation::commitAnimations();
 				break;
 			}
 		}
-		*/
 	}
 	return true;
 }
@@ -238,57 +237,56 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
 	//CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchEnded(pTouch, pEvent);
-	/*
+
 	if (m_pHighlightedWaterfallCells)
 	{
 		CAViewAnimation::removeAnimations(m_s__StrID);
 
-		CAIndexPath3E deselectedIndexPath = CAIndexPath3EZero;
-		CAIndexPath3E selectedIndexPath = CAIndexPath3E(m_pHighlightedWaterfallCells->getSection(), m_pHighlightedCollectionCells->getRow(), m_pHighlightedCollectionCells->getItem());
+		int deselectedIndex = 0;
+		int selectedIndex = m_pHighlightedWaterfallCells->getItemIndex();
 
-		if (m_pSelectedCollectionCells.count(selectedIndexPath) > 0 && m_bAllowsMultipleSelection)
+		if (m_pSelectedWaterfallCells.count(selectedIndex) > 0 && m_bAllowsMultipleSelection)
 		{
-			deselectedIndexPath = selectedIndexPath;
-			selectedIndexPath = CAIndexPath3EZero;
-			m_pSelectedCollectionCells.erase(deselectedIndexPath);
+			deselectedIndex = selectedIndex;
+			selectedIndex = 0;
+			m_pSelectedWaterfallCells.erase(deselectedIndex);
 		}
 		else
 		{
-			if (m_pSelectedCollectionCells.size() > 0 && m_bAllowsMultipleSelection == false)
+			if (m_pSelectedWaterfallCells.size() > 0 && m_bAllowsMultipleSelection == false)
 			{
-				deselectedIndexPath = *m_pSelectedCollectionCells.begin();
-				m_pSelectedCollectionCells.clear();
+				deselectedIndex = *m_pSelectedWaterfallCells.begin();
+				m_pSelectedWaterfallCells.clear();
 			}
-			m_pSelectedCollectionCells.insert(selectedIndexPath);
+			m_pSelectedWaterfallCells.insert(selectedIndex);
 		}
 
-		if (deselectedIndexPath != CAIndexPath3EZero)
+		if (deselectedIndex != 0)
 		{
-			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[deselectedIndexPath])
+			if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[deselectedIndex])
 			{
 				cell->setControlStateNormal();
 			}
-			if (m_pCollectionViewDelegate)
+			if (m_pWaterfallViewDelegate)
 			{
-				m_pCollectionViewDelegate->collectionViewDidDeselectCellAtIndexPath(this, deselectedIndexPath.section, deselectedIndexPath.item);
+				m_pWaterfallViewDelegate->waterfallViewDidDeselectCellAtIndexPath(this, deselectedIndex);
 			}
 		}
 
-		if (selectedIndexPath != CAIndexPath3EZero)
+		if (selectedIndex != 0)
 		{
-			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[selectedIndexPath])
+			if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[selectedIndex])
 			{
 				cell->setControlStateSelected();
 			}
-			if (m_pCollectionViewDelegate)
+			if (m_pWaterfallViewDelegate)
 			{
-				m_pCollectionViewDelegate->collectionViewDidSelectCellAtIndexPath(this, selectedIndexPath.section, selectedIndexPath.item);
+				m_pWaterfallViewDelegate->waterfallViewDidSelectCellAtIndexPath(this, selectedIndex);
 			}
 		}
 
-		m_pHighlightedCollectionCells = NULL;
+		m_pHighlightedWaterfallCells = NULL;
 	}
-	*/
 }
 
 void CAWaterfallView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
@@ -313,39 +311,35 @@ void CAWaterfallView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 	if (m_bAllowsSelection)
 	{
 		DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
-		/*
-		std::map<int, CACollectionViewCell*>::iterator itr;
-		for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); ++itr)
+		
+		std::map<int, CAWaterfallViewCell*>::iterator itr;
+		for (itr = m_mpUsedWaterfallCells.begin(); itr != m_mpUsedWaterfallCells.end(); ++itr)
 		{
-			CACollectionViewCell* cell = itr->second;
+			CAWaterfallViewCell* cell = itr->second;
 			CC_CONTINUE_IF(cell == NULL);
 			if (cell->getFrame().containsPoint(point) && cell->isVisible())
 			{
 				CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
 
-				if (m_pHighlightedCollectionCells)
+				if (m_pHighlightedWaterfallCells)
 				{
-					CAIndexPath3E index = CAIndexPath3E(m_pHighlightedCollectionCells->getSection(),
-						m_pHighlightedCollectionCells->getRow(),
-						m_pHighlightedCollectionCells->getItem());
-					if (m_pSelectedCollectionCells.count(index))
+					int index = m_pHighlightedWaterfallCells->getItemIndex();
+					if (m_pSelectedWaterfallCells.count(index))
 					{
-						m_pHighlightedCollectionCells->setControlStateHighlighted();
+						m_pHighlightedWaterfallCells->setControlStateHighlighted();
 					}
 					else
 					{
-						m_pHighlightedCollectionCells->setControlStateNormal();
+						m_pHighlightedWaterfallCells->setControlStateNormal();
 					}
-
 				}
 
-				m_pHighlightedCollectionCells = cell;
+				m_pHighlightedWaterfallCells = cell;
 				cell->setControlStateHighlighted();
 
 				break;
 			}
 		}
-		*/
 	}
 }
 
@@ -584,37 +578,31 @@ void CAWaterfallView::updateSectionHeaderAndFooterRects()
 {
 	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
-	/*
-	for (int i = 0; i < m_rCollectionViewSection.size(); i++)
+	
+
+	CAView* header = m_pWaterfallHeaderView;
+	CAView* footer = m_pWaterfallFooterView;
+
+	float headerHeight = m_nWaterfallHeaderHeight;
+	float footerHeight = m_nWaterfallFooterHeight;
+
+	DRect rRect;
+	rRect.size = this->getViewSize();
+
+	if (header && m_bAlwaysTopSectionHeader)
 	{
-		CollectionViewSection& cvs = m_rCollectionViewSection[i];
-
-		CC_CONTINUE_IF(!rect.intersectsRect(cvs.rSectionRect));
-
-		CAView* header = cvs.pSectionHeaderView;
-		CAView* footer = cvs.pSectionFooterView;
-
-		float headerHeight = cvs.nSectionHeaderHeight;
-		float footerHeight = cvs.nSectionFooterHeight;
-
-		if (header && m_bAlwaysTopSectionHeader)
-		{
-			DPoint p1 = rect.origin;
-			p1.y = MAX(p1.y, cvs.rSectionRect.origin.y);
-			p1.y = MIN(p1.y, cvs.rSectionRect.origin.y + cvs.rSectionRect.size.height
-				- headerHeight - footerHeight);
-			header->setFrameOrigin(p1);
-		}
-		if (footer && m_bAlwaysBottomSectionFooter)
-		{
-			DPoint p2 = DPointZero;
-			p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,
-				cvs.rSectionRect.origin.y + cvs.rSectionRect.size.height - footerHeight);
-			p2.y = MAX(p2.y, cvs.rSectionRect.origin.y + headerHeight);
-			footer->setFrameOrigin(p2);
-		}
+		DPoint p1 = rect.origin;
+		p1.y = MAX(p1.y, rRect.origin.y);
+		p1.y = MIN(p1.y, rRect.origin.y + rRect.size.height - headerHeight - footerHeight);
+		header->setFrameOrigin(p1);
 	}
-	*/
+	if (footer && m_bAlwaysBottomSectionFooter)
+	{
+		DPoint p2 = DPointZero;
+		p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight, rRect.origin.y + rRect.size.height - footerHeight);
+		p2.y = MAX(p2.y, rRect.origin.y + headerHeight);
+		footer->setFrameOrigin(p2);
+	}
 }
 
 void CAWaterfallView::update(float dt)

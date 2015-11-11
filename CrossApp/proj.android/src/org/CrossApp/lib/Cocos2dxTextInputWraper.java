@@ -1,6 +1,8 @@
 
 package org.CrossApp.lib;
 
+import java.io.UnsupportedEncodingException;
+
 import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
@@ -76,7 +78,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 	@Override
 	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
 		
-		Log.d(TAG, "onTextChanged(" + pCharSequence + ")start: " + start + ",before: " + before + ",count: " + count);
+		Log.d(TAG, "onTextChanged(" + pCharSequence + ")start: " + start + ",before: " + before + ",count: " + count+" inputLen="+pCharSequence.length());
 
 		String subReplace = null;
 		
@@ -92,8 +94,51 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			
 			return;
 		}
-		
-		this.mCocos2dxGLSurfaceView.willInsertText(start, subReplace, before, count);
+		String tmp =  subReplace;
+		if(start < subReplace.length()) {
+			tmp =  subReplace.substring(start);
+		}
+ 		final char[] chars = tmp.toCharArray();
+
+ 		int codePoint;
+ 		boolean isSurrogatePair;
+ 		// check every char in the input text
+ 		for (int i = 0; i < chars.length; i++) {
+ 			// if the char is a leading part of a surrogate pair (Unicode)
+ 			if (Character.isHighSurrogate(chars[i])) {
+ 				// just ignore it and wait for the trailing part
+ 				continue;
+ 			}
+ 			// if the char is a trailing part of a surrogate pair (Unicode)
+ 			else if (Character.isLowSurrogate(chars[i])) {
+ 				// if the char and its predecessor are indeed a valid surrogate pair
+ 				if (i > 0 && Character.isSurrogatePair(chars[i-1], chars[i])) {
+ 					// get the Unicode code point for the surrogate pair
+ 					codePoint = Character.toCodePoint(chars[i-1], chars[i]);
+ 					// remember that we have a surrogate pair here (which counts as two characters)
+ 					isSurrogatePair = true;
+ 				}
+ 				// if the char and its predecessor are not actually a valid surrogate pair
+ 				else {
+ 					// just ignore it
+ 					continue;
+ 				}
+ 			}
+ 			// if the char is not part of a surrogate pair, i.e. a simple char from the BMP
+ 			else {
+ 				// get the Unicode code point by simply casting the char to int
+ 				codePoint = (int) chars[i];
+ 				// remember that we have a BMP symbol here (which counts as a single character)
+ 				isSurrogatePair = false;
+ 			}
+ 			String bytes = "";
+ 			for(byte b: subReplace.getBytes()){
+ 				bytes += Integer.toHexString(b);
+ 			}
+ 			Log.d(TAG, "pCharSequence =0x"+ Integer.toHexString(codePoint)+" len="+subReplace.length()+" len2="+bytes);
+ 		}
+ 		
+		this.mCocos2dxGLSurfaceView.willInsertText(start, subReplace, (subReplace.length() == 0 && before > 1) ? 1 : before, count);
 	}
 
 	

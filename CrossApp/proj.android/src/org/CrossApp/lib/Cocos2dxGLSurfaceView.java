@@ -221,8 +221,15 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 	}
 
-	public void setCursorPos(int pos,String str) {
-		System.out.println(str);
+	public void setCursorPos(final int pos,final byte[] bs) {
+		String str = "null";
+		try {
+			str = new String(bs, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	    Cocos2dxTextInputWraper.lockTextWatcher = true;
+
 		final Message msg = new Message();
 		msg.what = SET_CURSOR_POS;
 		msg.arg1 = pos;
