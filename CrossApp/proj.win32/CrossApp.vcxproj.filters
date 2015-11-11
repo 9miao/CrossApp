@@ -506,9 +506,6 @@
     <ClCompile Include="..\support\CAProfiling.cpp">
       <Filter>support</Filter>
     </ClCompile>
-    <ClCompile Include="..\support\sqlite3\sqlite3.c">
-      <Filter>support\sqlite3</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
