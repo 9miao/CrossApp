@@ -10,7 +10,7 @@ namespace CrossApp {
     std::string base64Decode(std::string const& encoded_string)
     {
         std::string MyBase64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-        int in_len = encoded_string.size();
+        int in_len = (int)encoded_string.size();
         int i = 0;
         int j = 0;
         int in_ = 0;
