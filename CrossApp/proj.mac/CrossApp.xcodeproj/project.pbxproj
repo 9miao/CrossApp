@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020F5F881BF34BAB0098C44C /* CAWaterfallView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020F5F861BF34BAB0098C44C /* CAWaterfallView.cpp */; };
+		020F5F891BF34BAB0098C44C /* CAWaterfallView.h in Headers */ = {isa = PBXBuildFile; fileRef = 020F5F871BF34BAB0098C44C /* CAWaterfallView.h */; };
 		022CAAEB1BF1C41500ED015B /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 022CAAE81BF1C41500ED015B /* sqlite3.c */; };
 		022CAAEC1BF1C41500ED015B /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 022CAAE91BF1C41500ED015B /* sqlite3.h */; };
 		022CAAED1BF1C41500ED015B /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 022CAAEA1BF1C41500ED015B /* sqlite3ext.h */; };
@@ -343,6 +345,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		020F5F861BF34BAB0098C44C /* CAWaterfallView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWaterfallView.cpp; sourceTree = "<group>"; };
+		020F5F871BF34BAB0098C44C /* CAWaterfallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWaterfallView.h; sourceTree = "<group>"; };
 		022CAAE81BF1C41500ED015B /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		022CAAE91BF1C41500ED015B /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		022CAAEA1BF1C41500ED015B /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
@@ -1391,6 +1395,8 @@
 		B0B05F641BB1483200B891CE /* view */ = {
 			isa = PBXGroup;
 			children = (
+				020F5F861BF34BAB0098C44C /* CAWaterfallView.cpp */,
+				020F5F871BF34BAB0098C44C /* CAWaterfallView.h */,
 				B0B05F651BB1483200B891CE /* CAActivityIndicatorView.cpp */,
 				B0B05F661BB1483200B891CE /* CAActivityIndicatorView.h */,
 				B0B05F671BB1483200B891CE /* CAAlertView.cpp */,
@@ -1567,6 +1573,7 @@
 				3E2154521B8180340075448E /* json_lib.h in Headers */,
 				04EAB1541956D75600198A8E /* CCStdC.h in Headers */,
 				04EAB1561956D75600198A8E /* CCWindow.h in Headers */,
+				020F5F891BF34BAB0098C44C /* CAWaterfallView.h in Headers */,
 				04EAB1581956D75600198A8E /* EAGLView.h in Headers */,
 				04EAB15D1956D75600198A8E /* platform.h in Headers */,
 				04EABA5C1956D75A00198A8E /* CAGLProgram.h in Headers */,
@@ -1759,6 +1766,7 @@
 				B01A29411994C95F00D42BA0 /* CACalendar.cpp in Sources */,
 				04EAB0D01956D75600198A8E /* aabb.c in Sources */,
 				B0B05FAF1BB1483200B891CE /* CAImageView.cpp in Sources */,
+				020F5F881BF34BAB0098C44C /* CAWaterfallView.cpp in Sources */,
 				04EAB0D11956D75600198A8E /* mat4stack.c in Sources */,
 				04EAB0D21956D75600198A8E /* matrix.c in Sources */,
 				04EAB0D31956D75600198A8E /* mat3.c in Sources */,

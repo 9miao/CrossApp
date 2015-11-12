@@ -492,7 +492,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
                        this->convertToNodeSpace(pTouch->getPreviousLocation()));
         
         DPoint off = p_off;
-        if (off.getLength() <= _px(5))
+        if (off.getLength() <= 5)
         {
             off = DPointZero;
         }
@@ -699,7 +699,7 @@ void CAScrollView::updatePointOffset(float dt)
     DPoint p_off = ccpSub(this->convertToNodeSpace(pTouch->getLocation()),
                    this->convertToNodeSpace(pTouch->getPreviousLocation()));
 
-    if (p_off.getLength() <= _px(5))
+    if (p_off.getLength() <= 5)
     {
         p_off = DPointZero;
     }
@@ -840,22 +840,22 @@ void CAScrollView::deaccelerateScrolling(float dt)
             this->setContainerFrame(point);
         }
         
-        if (fabsf(m_tInertia.x) > _px(16))
+        if (fabsf(m_tInertia.x) > 16)
         {
             m_tInertia.x = m_tInertia.x * (1 - decelerationRatio(dt));
         }
         else if (fabsf(m_tInertia.x) > FLT_EPSILON)
         {
-            m_tInertia.x = MAX((fabsf(m_tInertia.x) - _px(0.5f)), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
+            m_tInertia.x = MAX((fabsf(m_tInertia.x) - 0.5f), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
         }
         
-        if (fabsf(m_tInertia.y) > _px(16))
+        if (fabsf(m_tInertia.y) > 16)
         {
             m_tInertia.y = m_tInertia.y * (1 - decelerationRatio(dt));
         }
         else if (fabsf(m_tInertia.y) > FLT_EPSILON)
         {
-            m_tInertia.y = MAX((fabsf(m_tInertia.y) - _px(0.5f)), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
+            m_tInertia.y = MAX((fabsf(m_tInertia.y) - 0.5f), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
         }
         
         if (m_pScrollViewDelegate)
@@ -881,7 +881,7 @@ void CAScrollView::updateIndicator()
         this->insertSubview(m_pIndicatorVertical, 1);
     }
     
-    const char indicatorSize = _px(6);
+    const char indicatorSize = 6;
 
     const DRect indicatorHorizontalFrame = DRect(indicatorSize * 2,
                                                    this->getBounds().size.height - indicatorSize * 2,

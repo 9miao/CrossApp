@@ -74,8 +74,8 @@ bool CADatePickerView::init()
     m_pPickerView->initWithFrame(this->getBounds());
     m_pPickerView->setPickerViewDelegate(this);
     m_pPickerView->setPickerViewDataSource(this);
-    m_pPickerView->setFontSizeNormal(_px(40));
-    m_pPickerView->setFontSizeSelected(_px(40));
+    m_pPickerView->setFontSizeNormal(40);
+    m_pPickerView->setFontSizeSelected(40);
     addSubview(m_pPickerView);
     
     struct timeval tp = {0};

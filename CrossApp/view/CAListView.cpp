@@ -620,7 +620,7 @@ void CAListView::update(float dt)
 
 float CAListView::maxSpeed(float dt)
 {
-    return (_px(128) * 60 * dt);
+    return (128 * 60 * dt);
 }
 
 float CAListView::maxSpeedCache(float dt)

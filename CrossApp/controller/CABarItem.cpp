@@ -34,7 +34,7 @@ CABarButtonItem::CABarButtonItem()
 ,m_pTarget(NULL)
 ,m_selCallFunc(NULL)
 ,m_pCustomView(NULL)
-,m_uItemWidth(_px(80))
+,m_uItemWidth(80)
 {
 
 }

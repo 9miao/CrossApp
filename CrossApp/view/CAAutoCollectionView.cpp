@@ -884,7 +884,7 @@ void CAAutoCollectionView::update(float dt)
 
 float CAAutoCollectionView::maxSpeed(float dt)
 {
-    return (_px(128) * 60 * dt);
+    return (128 * 60 * dt);
 }
 
 float CAAutoCollectionView::maxSpeedCache(float dt)

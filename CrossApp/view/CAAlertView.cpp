@@ -194,7 +194,7 @@ void CAAlertView::setLabel(CALabel*& pLabel, const char* szTitle, const char* fo
 		pLabel->setTextAlignment(CATextAlignmentCenter);
 		pLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
 		pLabel->setFontName(fontName);
-		pLabel->setFontSize(_px(ALERT_VIEW_MESG_FONT));
+		pLabel->setFontSize(ALERT_VIEW_MESG_FONT);
 	}
 	pLabel->setText(szTitle);
 	pLabel->setColor(col);
@@ -225,7 +225,7 @@ void CAAlertView::showAlertView() {
     {
 
 		m_pTitleLabel->setFrame(DRect(0, alertViewSpaceHeight , ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
-		m_pTitleLabel->setFontSize(_px(ALERT_VIEW_TITLE_FONT));
+		m_pTitleLabel->setFontSize(ALERT_VIEW_TITLE_FONT);
 		m_pBackView->addSubview(m_pTitleLabel);
 	}
 
@@ -247,7 +247,7 @@ void CAAlertView::showAlertView() {
 		if (m_pTitleLabel && !m_pTitleLabel->getText().empty())
         {
 			m_pTitleLabel->removeFromSuperview();
-			m_pTitleLabel->setFontSize(_px(ALERT_VIEW_TITLE_FONT));
+			m_pTitleLabel->setFontSize(ALERT_VIEW_TITLE_FONT);
 			m_pTitleLabel->setFrame(DRect(0, alertViewSpaceHeight, ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
 			scrollView->addSubview(m_pTitleLabel);
 		}
@@ -350,7 +350,7 @@ void CAAlertView::calcuAlerViewSize()
 	if (m_pTitleLabel && !m_pTitleLabel->getText().empty())
     {
 
-		m_fAlertViewTitleHeight = _dip(CAImage::getFontHeight("", _px(ALERT_VIEW_TITLE_FONT)));
+		m_fAlertViewTitleHeight = _dip(CAImage::getFontHeight("", ALERT_VIEW_TITLE_FONT));
 		
 		m_fAlertViewHeight += m_fAlertViewTitleHeight;
 	}
@@ -360,7 +360,7 @@ void CAAlertView::calcuAlerViewSize()
 	if (m_pContentLabel && !m_pContentLabel->getText().empty())
     {
 		
-		m_fAlertViewMessageHeight = _dip(CAImage::getStringHeight(m_sMsgFontName.c_str(), _px(ALERT_VIEW_MESG_FONT), m_pContentLabel->getText(), _px(ALERT_VIEW_MESG_WIDTH)));
+		m_fAlertViewMessageHeight = _dip(CAImage::getStringHeight(m_sMsgFontName.c_str(), ALERT_VIEW_MESG_FONT, m_pContentLabel->getText(), ALERT_VIEW_MESG_WIDTH));
 
         m_fAlertViewHeight += MIN(m_fAlertViewMessageHeight, alertViewMessageHeight);
 	}
@@ -467,7 +467,7 @@ unsigned int CAAlertView::numberOfRowsInSection(CATableView *table, unsigned int
 
 unsigned int CAAlertView::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-	return _px(88);
+	return 88;
 }
 
 NS_CC_END

@@ -713,7 +713,7 @@ void CACollectionView::update(float dt)
 
 float CACollectionView::maxSpeed(float dt)
 {
-    return (_px(128) * 60 * dt);
+    return (128 * 60 * dt);
 }
 
 float CACollectionView::maxSpeedCache(float dt)

@@ -18,8 +18,8 @@ CAWaterfallView::CAWaterfallView()
 , m_nWaterfallHeaderHeight(0)
 , m_nWaterfallFooterHeight(0)
 , m_nColumnCount(3)
-, m_nItemMargin(0)
-, m_nColumnMargin(0)
+, m_nItemMargin(4)
+, m_nColumnMargin(4)
 , m_bAlwaysTopSectionHeader(true)
 , m_bAlwaysBottomSectionFooter(true)
 {
@@ -235,7 +235,7 @@ void CAWaterfallView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-	//CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
+	CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
 	CAScrollView::ccTouchEnded(pTouch, pEvent);
 
 	if (m_pHighlightedWaterfallCells)
@@ -371,7 +371,7 @@ void CAWaterfallView::reloadViewSizeData()
 	clearData();
 
 	DSize size = this->getBounds().size;
-	unsigned int nColumnWidth = (size.width - (m_nColumnCount + 1)*m_nColumnMargin) / m_nColumnCount;
+	unsigned int nColumnWidth = (size.width - (m_nColumnCount + 1) * m_nColumnMargin) / m_nColumnCount;
 	
 	unsigned int viewHeight = 0;
 
@@ -390,7 +390,7 @@ void CAWaterfallView::reloadViewSizeData()
 		int x = index*(nColumnWidth + m_nColumnMargin) + m_nColumnMargin;
 		int y = m_nColumnHeightVect[index];
 
-		int nColumnHeight = m_pWaterfallViewDataSource->waterfallViewHeightForItemAtIndex(this, i);
+		unsigned int nColumnHeight = m_pWaterfallViewDataSource->waterfallViewHeightForItemAtIndex(this, i);
 
 		m_rUsedWaterfallCellRects[i] = DRect(x, y + viewHeight, nColumnWidth, nColumnHeight);
 		m_mpUsedWaterfallCells[i] = NULL;

@@ -138,7 +138,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
  			Log.d(TAG, "pCharSequence =0x"+ Integer.toHexString(codePoint)+" len="+subReplace.length()+" len2="+bytes);
  		}
  		
-		this.mCocos2dxGLSurfaceView.willInsertText(start, subReplace, (subReplace.length() == 0 && before > 1) ? 1 : before, count);
+ 		this.mCocos2dxGLSurfaceView.willInsertText(start, subReplace, (subReplace.length() == 0 && before == 2) ? 1 : before, count);
 	}
 
 	
