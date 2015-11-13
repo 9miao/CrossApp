@@ -92,7 +92,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 		DRect frame = m_glView->getFrame();
 		CAImage* image = CAImage::create("source_material/vdo_panel_bottom_bg.png");
 		float width = m_glView->getFrame().size.width;
-		float height = _px(image->getContentSize().height);
+		float height = image->getContentSize().height;
 		bottomPanel = CAImageView::createWithFrame(DRect(0, frame.size.height - height, width, height));
 		bottomPanel->setImage(image);
 		m_glView->addSubview(bottomPanel);
@@ -103,10 +103,10 @@ void CAVideoPlayerControlView::buildCtrlViews()
 		DRect frame = bottomPanel->getFrame();
 		CAImage* backImage = CAImage::create("source_material/vdo_progress_back.png");
 		CAImage* barImage = CAImage::create("source_material/vdo_progress_bar.png");
-		m_playSlider = CASlider::createWithCenter(DRect(frame.size.width / 2, frame.size.height*0.3, frame.size.width * 0.9, _px(barImage->getContentSize().height)));
+		m_playSlider = CASlider::createWithCenter(DRect(frame.size.width / 2, frame.size.height*0.3, frame.size.width * 0.9, barImage->getContentSize().height));
 		m_playSlider->setMaxTrackTintImage(backImage);
 		m_playSlider->setThumbTintImage(barImage);
-		m_playSlider->setTrackHeight(_px(backImage->getContentSize().height));
+		m_playSlider->setTrackHeight(backImage->getContentSize().height);
 		m_playSlider->addTargetForTouchUpSide(this, CAControl_selector(CAVideoPlayerControlView::onSlideChanged));
 		m_playSlider->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onSlideTouched));
 		bottomPanel->addSubview(m_playSlider);
@@ -119,8 +119,8 @@ void CAVideoPlayerControlView::buildCtrlViews()
 		CAImage* backImage_h = CAImage::create("source_material/vdo_pause_down.png");
 		frame.origin.y = frame.size.height * 2 / 3;
 		frame.origin.x = backImage->getContentSize().width;
-		frame.size.height = _px(backImage->getContentSize().height);
-		frame.size.width = _px(backImage->getContentSize().width);
+		frame.size.height = backImage->getContentSize().height;
+		frame.size.width = backImage->getContentSize().width;
 		m_playButton = CAButton::createWithCenter(frame, CAButtonTypeCustom);
 		m_playButton->setImageForState(CAControlStateAll, backImage);
 		m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
@@ -149,7 +149,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 	CAImageView* topPanel = NULL;
 	do {
 		CAImage* image = CAImage::create("source_material/vdo_panel_top_bg.png");
-		topPanel = CAImageView::createWithFrame(DRect(0, 0, m_glView->getFrame().size.width, _px(image->getContentSize().height)));
+		topPanel = CAImageView::createWithFrame(DRect(0, 0, m_glView->getFrame().size.width, image->getContentSize().height));
 		topPanel->setImage(image);
 		m_glView->addSubview(topPanel);
 	} while (0);
@@ -164,8 +164,8 @@ void CAVideoPlayerControlView::buildCtrlViews()
 		CAImage* backImage_h = CAImage::create("source_material/btn_left_white.png");
 		frame.origin.y = frame.size.height / 3;
 		frame.origin.x = frame.origin.y;
-		frame.size.height = _px(backImage->getContentSize().height);
-		frame.size.width = _px(backImage->getContentSize().width);
+		frame.size.height = backImage->getContentSize().height;
+		frame.size.width = backImage->getContentSize().width;
 		buttonBack = CAButton::createWithCenter(frame, CAButtonTypeCustom);
 		buttonBack->setImageForState(CAControlStateAll, backImage);
 		buttonBack->setImageForState(CAControlStateHighlighted, backImage_h);
@@ -183,7 +183,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 		r.size.height = buttonBack->getFrame().size.height;
 		CALabel* title = CALabel::createWithFrame(r);
 		title->setText(m_szTitle);
-		title->setFontSize(_px(42));
+		title->setFontSize(42);
 		title->setColor(ccc4(255, 255, 255, 255));
 		title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
 		topPanel->addSubview(title);

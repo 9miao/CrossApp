@@ -154,7 +154,7 @@ protected:
     
     inline virtual float maxSpeed(float dt)
     {
-        return (_px(90) * 60 * dt);
+        return (90 * 60 * dt);
     }
     
     inline virtual float maxSpeedCache(float dt)
@@ -169,7 +169,7 @@ protected:
     
     virtual float maxBouncesLenght()
     {
-        return _px(120.0f);
+        return 120.0f;
     }
     
     virtual void contentOffsetFinish(float dt) {};

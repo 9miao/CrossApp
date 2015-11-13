@@ -315,7 +315,7 @@ void CATableView::switchPCMode(bool var)
 
 float CATableView::maxSpeed(float dt)
 {
-    return (_px(128) * 60 * dt);
+    return (128 * 60 * dt);
 }
 
 float CATableView::maxSpeedCache(float dt)

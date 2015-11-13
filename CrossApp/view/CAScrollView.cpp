@@ -967,8 +967,8 @@ float CAScrollView::getScrollWindowNotOutVertical(float y)
     
     if (cSize.height >= size.height)
     {
-        float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
-        float y_min = this->isFooterRefreshing() ? size.height - cSize.height - _px(128) : size.height - cSize.height;
+        float y_max = this->isHeaderRefreshing() ? 128 : 0.0f;
+        float y_min = this->isFooterRefreshing() ? size.height - cSize.height - 128 : size.height - cSize.height;
         
         y = MIN(y, y_max);
         y = MAX(y, y_min);
@@ -1108,7 +1108,7 @@ void CAScrollView::detectionFromPullToRefreshView()
     if (m_pHeaderRefreshView && m_pHeaderRefreshView->isCanRefresh())
     {
         this->stopDeaccelerateScroll();
-        this->setContentOffset(DPoint(0, -_px(128)), true);
+        this->setContentOffset(DPoint(0, -128), true);
         m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateRefreshing);
         if (m_pScrollViewDelegate)
         {
@@ -1119,7 +1119,7 @@ void CAScrollView::detectionFromPullToRefreshView()
     if (m_pFooterRefreshView && m_pFooterRefreshView->isCanRefresh())
     {
         this->stopDeaccelerateScroll();
-        this->setContentOffset(DPoint(0, this->getViewSize().height - this->getBounds().size.height + _px(128)), true);
+        this->setContentOffset(DPoint(0, this->getViewSize().height - this->getBounds().size.height + 128), true);
         m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateRefreshing);
         
         if (m_pScrollViewDelegate)

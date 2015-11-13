@@ -618,7 +618,7 @@ void CAWaterfallView::update(float dt)
 
 float CAWaterfallView::maxSpeed(float dt)
 {
-	return (_px(128) * 60 * dt);
+	return (128 * 60 * dt);
 }
 
 float CAWaterfallView::maxSpeedCache(float dt)

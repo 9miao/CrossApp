@@ -180,7 +180,7 @@ void CATouchController::touchBegan()
 
 void CATouchController::touchMoved()
 {
-    CC_RETURN_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < _px(16));
+    CC_RETURN_IF(ccpDistance(m_tFirstPoint, m_pTouch->getLocation()) < 16);
     
     m_tFirstPoint = DPointZero;
 

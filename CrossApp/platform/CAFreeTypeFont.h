@@ -58,7 +58,7 @@ typedef struct FontBufferInfo
 	unsigned char*  pBuffer;  
 	unsigned long  size;
 	int face_index;
-
+    int font_offset_type;
 } FontBufferInfo;
 
 typedef struct FTLineInfo

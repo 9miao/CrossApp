@@ -491,6 +491,35 @@ FT_Vector CAFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, ETextAlign eAlig
     }
     return pen;
 }
+static int s_fontOffsetType = 0;
+
+static int getWordOffset(FT_ULong c, int lineHeight)
+{
+    int value = 0;
+    if (s_fontOffsetType == 0)
+    {
+        value = 0;
+    }
+    else if (s_fontOffsetType == 1)
+    {
+        value = (c > 0x80) ? 0 : (lineHeight / 12);
+    }
+    return value;
+}
+
+static int getEmojiOffset(int lineHeight)
+{
+    int value = 0;
+    if (s_fontOffsetType == 0)
+    {
+        value = lineHeight / 12;
+    }
+    else if (s_fontOffsetType == 1)
+    {
+        value = 0;
+    }
+    return value;
+}
 
 void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vector *pen)
 {
@@ -510,13 +539,9 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
 
             if (pEmoji)
             {
-				int dtValue = 0;
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC)
-                dtValue = m_lineHeight / 12;
-#endif
+				int dtValue = getEmojiOffset(m_lineHeight);
 				FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
 				FT_Int y = (FT_Int)(pen->y - iEmojiSize) + dtValue;
-
 				draw_emoji(pBuffer, pEmoji, x, y, iEmojiSize);
             }
 			continue;
@@ -527,21 +552,7 @@ void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
         {
             FT_BitmapGlyph  bit = (FT_BitmapGlyph)image;
 
-			int dtValue = 0;
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
-			if (atof(CADevice::getSystemVersionWithIOS()) >= 9.0f)
-			{
-				//dtValue = -(m_lineHeight / 15);
-			}
-			else
-			{
-				dtValue = (glyph->c > 0x80) ? 0 : (m_lineHeight / 12);
-			}
-#endif
-
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC)
-			dtValue = (glyph->c > 0x80) ? 0 : (m_lineHeight / 12);
-#endif
+			int dtValue = getWordOffset(glyph->c, m_lineHeight);
             FT_Int x = (FT_Int)(pen->x + glyph->pos.x + bit->left);
 			FT_Int y = (FT_Int)(pen->y - bit->top + dtValue);
 			draw_bitmap(pBuffer, &bit->bitmap, x, y);
@@ -1175,9 +1186,11 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
 	{
 		ttfIndex = ittFontNames->second.face_index;
 		*size = ittFontNames->second.size;
+        s_fontOffsetType = ittFontNames->second.font_offset_type;
 		return ittFontNames->second.pBuffer;
 	}
 
+    s_fontOffsetType = 0;
 	ttfIndex = 0;
 
 	for (unsigned int i = 6; i < path.length(); ++i)
@@ -1199,6 +1212,13 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         }
     }
     
+    if (pBuffer == NULL)
+    {
+        const char* fontName = "fonts/Regular.ttf";
+        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+        ttfIndex = 0;
+    }
+    
 	if (pBuffer == NULL)
 	{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -1214,6 +1234,7 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         const char* fontName = "/System/Library/Fonts/STHeiti Light.ttc";
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
 		ttfIndex = 1;
+        s_fontOffsetType = 1;
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         
@@ -1230,11 +1251,13 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         {
             fontName = "/System/Library/Fonts/Core/STHeiti-Light.ttc";
             ttfIndex = 1;
+            s_fontOffsetType = 1;
         }
         else
         {
             fontName = "/System/Library/Fonts/Cache/STHeiti-Light.ttc";
             ttfIndex = 1;
+            s_fontOffsetType = 1;
         }
         
         pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
@@ -1244,9 +1267,8 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
             fontName = "/System/Library/Fonts/STHeiti Light.ttc";
             pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
             ttfIndex = 1;
+            s_fontOffsetType = 1;
         }
-
-        
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         
@@ -1261,12 +1283,7 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
 #endif
 	}
 
-	if (pBuffer == NULL)
-	{
-		const char* fontName = "fonts/Regular.ttf";
-		pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
-		ttfIndex = 0;
-	}
+	
 
 	FontBufferInfo info;
 	info.pBuffer = pBuffer;

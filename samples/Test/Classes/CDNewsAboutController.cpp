@@ -132,7 +132,7 @@ void CDNewsAboutTableCell::initWithCell()
     
     CALabel* cellText = CALabel::createWithCenter(DRect(m_size.width/2+40, m_size.height/2, m_size.width, 40));
     cellText->setTag(100);
-    cellText->setFontSize(_px(30));
+    cellText->setFontSize(30);
     cellText->setTextAlignment(CATextAlignmentLeft);
     cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     this->addSubview(cellText);
@@ -174,7 +174,7 @@ void CDNewsAboutController::viewDidLoad()
     p_TableView->setAllowsMultipleSelection(false);
     p_TableView->setAlwaysTopSectionHeader(false);
     this->getView()->addSubview(p_TableView);
-    p_TableView->setTableHeaderHeight(_px(602));
+    p_TableView->setTableHeaderHeight(602);
     CAView* view = CAView::createWithColor(CAColor_clear);
     view->setFrame(DRect(0,0,winSize.width,602));
     
@@ -304,7 +304,7 @@ unsigned int CDNewsAboutController::numberOfSections(CATableView *table)
 }
 unsigned int CDNewsAboutController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    return _px(100);
+    return 100;
 }
 
 unsigned int CDNewsAboutController::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
@@ -313,7 +313,7 @@ unsigned int CDNewsAboutController::tableViewHeightForHeaderInSection(CATableVie
     if (section==0) {
         h=30;
     }
-    return _px(h);
+    return h;
 }
 
 void CDNewsAboutController::worker()
