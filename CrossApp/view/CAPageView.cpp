@@ -160,6 +160,16 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
     
     m_nCurrPage = var;
     
+    this->runAnimation(animated);
+}
+
+int CAPageView::getCurrPage()
+{
+    return m_nCurrPage;
+}
+
+void CAPageView::runAnimation(bool animated)
+{
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
         this->setContentOffset(DPoint(m_nCurrPage * (this->getBounds().size.width + m_fSpacing), 0), animated);
@@ -168,12 +178,6 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
     {
         this->setContentOffset(DPoint(0, m_nCurrPage * (this->getBounds().size.height + m_fSpacing)), animated);
     }
-    
-}
-
-int CAPageView::getCurrPage()
-{
-    return m_nCurrPage;
 }
 
 void CAPageView::setSpacing(int var)
@@ -301,6 +305,7 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             DPoint point = this->convertTouchToNodeSpace(pTouch);
             m_pPageViewDelegate->pageViewDidSelectPageAtIndex(this, this->getCurrPage(), point);
         }
+        this->runAnimation(true);
     }
     else
     {

@@ -69,6 +69,8 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
                     CAView* subview = *itr;
                     if (subview->isVisible() && subview->isTouchEnabled())
                     {
+                        CC_BREAK_IF(!subview->isTouchEnabled());
+                        
                         DPoint point = subview->convertTouchToNodeSpace(touch);
                         
                         if (subview->getBounds().containsPoint(point))
@@ -90,7 +92,7 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
                 CAView* subview = *itr;
                 if (subview->isVisible() && subview->isTouchEnabled())
                 {
-                    //CC_BREAK_IF(!subview->isTouchEnabled());
+                    CC_BREAK_IF(!subview->isTouchEnabled());
                     
                     DPoint point = subview->convertTouchToNodeSpace(touch);
                     
@@ -488,11 +490,12 @@ void CATouchDispatcher::setDispatchEvents(bool dispatchEvents)
 {
     if (dispatchEvents)
     {
-        ++m_iDispatchEvents;
+        --m_iDispatchEvents;
+        m_iDispatchEvents = MAX(m_iDispatchEvents, 0);
     }
     else
     {
-        --m_iDispatchEvents;
+        ++m_iDispatchEvents;
     }
 }
 

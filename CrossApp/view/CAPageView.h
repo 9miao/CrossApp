@@ -42,8 +42,6 @@ class CC_DLL CAPageView: public CAScrollView
 {
 public:
     
-    
-    
     CAPageView(const CAPageViewDirection& type);
     
     virtual ~CAPageView();
@@ -83,6 +81,8 @@ protected:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void contentOffsetFinish(float dt);
+    
+    void runAnimation(bool animated);
     
 private:
     

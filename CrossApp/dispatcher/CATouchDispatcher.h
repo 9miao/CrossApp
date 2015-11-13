@@ -122,7 +122,7 @@ public:
 
     virtual void setDispatchEvents(bool dispatchEvents);
     
-    virtual bool isDispatchEvents() { return m_iDispatchEvents > 0; }
+    virtual bool isDispatchEvents() { return m_iDispatchEvents <= 0; }
     
     void setDispatchEventsTrue();
     

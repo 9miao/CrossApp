@@ -664,8 +664,9 @@ void CASegmentedControl::refreshSegmentItemByPoint(DPoint point, CAControlState 
 
 void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState controlState)
 {
-    if(index<0 && index>=m_vSegments.size())
-        return;
+    index = MAX(index, 0);
+    index = MIN(index, m_vSegments.size());
+
     CAObject* object = getObjectByIndex(index, controlState);
     DSize segmentSize = m_vSegments.at(index)->getBounds().size;
     DSize contentOffset = m_vContentOffset.at(index);

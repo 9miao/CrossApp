@@ -320,6 +320,7 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
         m_tCloseToPoint = ccpMult(offset, -1);
         m_tInitialPoint = m_pContainer->getFrameOrigin();
         CAAnimation::schedule(CAAnimation_selector(CAScrollView::closeToPoint), this, 0.25f);
+        this->setTouchEnabledAtSubviews(false);
     }
     else
     {
@@ -362,6 +363,7 @@ void CAScrollView::closeToPoint(float dt, float now, float total)
         m_tInitialPoint = m_tCloseToPoint;
         this->changedFromPullToRefreshView();
         this->detectionFromPullToRefreshView();
+        this->setTouchEnabledAtSubviews(true);
     }
 }
 
