@@ -9,15 +9,13 @@
 #include "CAPageView.h"
 #include "basics/CAScheduler.h"
 
-#define s_fSpacing _px(0)
-
 CAPageView::CAPageView(const CAPageViewDirection& type)
 :m_ePageViewDirection(type)
 ,m_ePageViewState(None)
 ,m_nCurrPage(0)
 ,m_pPageViewDelegate(NULL)
 ,m_bListener(false)
-,m_fSpacing(_px(40))
+,m_fSpacing(40)
 {
 
 }
@@ -162,6 +160,16 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
     
     m_nCurrPage = var;
     
+    this->runAnimation(animated);
+}
+
+int CAPageView::getCurrPage()
+{
+    return m_nCurrPage;
+}
+
+void CAPageView::runAnimation(bool animated)
+{
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
         this->setContentOffset(DPoint(m_nCurrPage * (this->getBounds().size.width + m_fSpacing), 0), animated);
@@ -170,12 +178,6 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
     {
         this->setContentOffset(DPoint(0, m_nCurrPage * (this->getBounds().size.height + m_fSpacing)), animated);
     }
-    
-}
-
-int CAPageView::getCurrPage()
-{
-    return m_nCurrPage;
 }
 
 void CAPageView::setSpacing(int var)
@@ -199,7 +201,7 @@ int CAPageView::getSpacing()
 void CAPageView::contentOffsetFinish(float dt)
 {
     CAScrollView::contentOffsetFinish(dt);
-    if (m_pPageViewDelegate && m_bListener)
+    if (m_pPageViewDelegate && m_bListener && m_vTouches.empty())
     {
         m_pPageViewDelegate->pageViewDidEndTurning(this);
         m_bListener = false;
@@ -208,11 +210,6 @@ void CAPageView::contentOffsetFinish(float dt)
 
 bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (!m_vTouches.empty())
-    {
-        m_vTouches.replace(0, pTouch);
-        return true;
-    }
     return CAScrollView::ccTouchBegan(pTouch, pEvent);
 }
 
@@ -308,6 +305,7 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             DPoint point = this->convertTouchToNodeSpace(pTouch);
             m_pPageViewDelegate->pageViewDidSelectPageAtIndex(this, this->getCurrPage(), point);
         }
+        this->runAnimation(true);
     }
     else
     {

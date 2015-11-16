@@ -125,7 +125,7 @@ void CAPullToRefreshView::startLayout()
     if (m_pPullToRefreshLabel == NULL)
     {
         m_pPullToRefreshLabel = CALabel::createWithCenter(labelCenter);
-        m_pPullToRefreshLabel->setFontSize(_px(24));
+        m_pPullToRefreshLabel->setFontSize(24);
 		m_pPullToRefreshLabel->setColor(m_cLabelColor);
         m_pPullToRefreshLabel->setTextAlignment(CATextAlignmentCenter);
         m_pPullToRefreshLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
@@ -137,7 +137,7 @@ void CAPullToRefreshView::startLayout()
     if (m_pReleaseToRefreshLabel == NULL)
     {
         m_pReleaseToRefreshLabel = CALabel::createWithCenter(labelCenter);
-        m_pReleaseToRefreshLabel->setFontSize(_px(24));
+        m_pReleaseToRefreshLabel->setFontSize(24);
         m_pReleaseToRefreshLabel->setColor(m_cLabelColor);
         m_pReleaseToRefreshLabel->setTextAlignment(CATextAlignmentCenter);
         m_pReleaseToRefreshLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
@@ -149,7 +149,7 @@ void CAPullToRefreshView::startLayout()
     if (m_pRefreshingLabel == NULL)
     {
         m_pRefreshingLabel = CALabel::createWithCenter(labelCenter);
-        m_pRefreshingLabel->setFontSize(_px(24));
+        m_pRefreshingLabel->setFontSize(24);
 		m_pRefreshingLabel->setColor(m_cLabelColor);
         m_pRefreshingLabel->setTextAlignment(CATextAlignmentCenter);
         m_pRefreshingLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);

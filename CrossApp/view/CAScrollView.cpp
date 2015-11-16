@@ -72,7 +72,6 @@ void CAScrollView::onExitTransitionDidStart()
     CAView::onExitTransitionDidStart();
     
     m_tPointOffset.clear();
-    m_vTouches.clear();
     m_tInertia = DPointZero;
 }
 
@@ -321,6 +320,7 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
         m_tCloseToPoint = ccpMult(offset, -1);
         m_tInitialPoint = m_pContainer->getFrameOrigin();
         CAAnimation::schedule(CAAnimation_selector(CAScrollView::closeToPoint), this, 0.25f);
+        this->setTouchEnabledAtSubviews(false);
     }
     else
     {
@@ -363,6 +363,7 @@ void CAScrollView::closeToPoint(float dt, float now, float total)
         m_tInitialPoint = m_tCloseToPoint;
         this->changedFromPullToRefreshView();
         this->detectionFromPullToRefreshView();
+        this->setTouchEnabledAtSubviews(true);
     }
 }
 
@@ -493,7 +494,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
                        this->convertToNodeSpace(pTouch->getPreviousLocation()));
         
         DPoint off = p_off;
-        if (off.getLength() <= _px(5))
+        if (off.getLength() <= 5)
         {
             off = DPointZero;
         }
@@ -639,7 +640,6 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         m_bZooming = false;
     }
-    m_vTouches.eraseObject(pTouch);
 }
 
 void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
@@ -659,7 +659,6 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     {
         m_bZooming = false;
     }
-    m_vTouches.eraseObject(pTouch);
     this->stopDeaccelerateScroll();
     this->hideIndicator();
 }
@@ -702,7 +701,7 @@ void CAScrollView::updatePointOffset(float dt)
     DPoint p_off = ccpSub(this->convertToNodeSpace(pTouch->getLocation()),
                    this->convertToNodeSpace(pTouch->getPreviousLocation()));
 
-    if (p_off.getLength() <= _px(5))
+    if (p_off.getLength() <= 5)
     {
         p_off = DPointZero;
     }
@@ -843,22 +842,22 @@ void CAScrollView::deaccelerateScrolling(float dt)
             this->setContainerFrame(point);
         }
         
-        if (fabsf(m_tInertia.x) > _px(16))
+        if (fabsf(m_tInertia.x) > 16)
         {
             m_tInertia.x = m_tInertia.x * (1 - decelerationRatio(dt));
         }
         else if (fabsf(m_tInertia.x) > FLT_EPSILON)
         {
-            m_tInertia.x = MAX((fabsf(m_tInertia.x) - _px(0.5f)), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
+            m_tInertia.x = MAX((fabsf(m_tInertia.x) - 0.5f), 0) * fabsf(m_tInertia.x) / m_tInertia.x;
         }
         
-        if (fabsf(m_tInertia.y) > _px(16))
+        if (fabsf(m_tInertia.y) > 16)
         {
             m_tInertia.y = m_tInertia.y * (1 - decelerationRatio(dt));
         }
         else if (fabsf(m_tInertia.y) > FLT_EPSILON)
         {
-            m_tInertia.y = MAX((fabsf(m_tInertia.y) - _px(0.5f)), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
+            m_tInertia.y = MAX((fabsf(m_tInertia.y) - 0.5f), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
         }
         
         if (m_pScrollViewDelegate)
@@ -884,7 +883,7 @@ void CAScrollView::updateIndicator()
         this->insertSubview(m_pIndicatorVertical, 1);
     }
     
-    const char indicatorSize = _px(6);
+    const char indicatorSize = 6;
 
     const DRect indicatorHorizontalFrame = DRect(indicatorSize * 2,
                                                    this->getBounds().size.height - indicatorSize * 2,
@@ -970,8 +969,8 @@ float CAScrollView::getScrollWindowNotOutVertical(float y)
     
     if (cSize.height >= size.height)
     {
-        float y_max = this->isHeaderRefreshing() ? _px(128) : 0.0f;
-        float y_min = this->isFooterRefreshing() ? size.height - cSize.height - _px(128) : size.height - cSize.height;
+        float y_max = this->isHeaderRefreshing() ? 128 : 0.0f;
+        float y_min = this->isFooterRefreshing() ? size.height - cSize.height - 128 : size.height - cSize.height;
         
         y = MIN(y, y_max);
         y = MAX(y, y_min);
@@ -1111,7 +1110,7 @@ void CAScrollView::detectionFromPullToRefreshView()
     if (m_pHeaderRefreshView && m_pHeaderRefreshView->isCanRefresh())
     {
         this->stopDeaccelerateScroll();
-        this->setContentOffset(DPoint(0, -_px(128)), true);
+        this->setContentOffset(DPoint(0, -128), true);
         m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateRefreshing);
         if (m_pScrollViewDelegate)
         {
@@ -1122,7 +1121,7 @@ void CAScrollView::detectionFromPullToRefreshView()
     if (m_pFooterRefreshView && m_pFooterRefreshView->isCanRefresh())
     {
         this->stopDeaccelerateScroll();
-        this->setContentOffset(DPoint(0, this->getViewSize().height - this->getBounds().size.height + _px(128)), true);
+        this->setContentOffset(DPoint(0, this->getViewSize().height - this->getBounds().size.height + 128), true);
         m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateRefreshing);
         
         if (m_pScrollViewDelegate)

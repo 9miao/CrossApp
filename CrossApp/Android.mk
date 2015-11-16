@@ -81,7 +81,7 @@ support/Json/CSContentJsonDictionary.cpp \
 support/Json/lib_json/json_value.cpp \
 support/Json/lib_json/json_reader.cpp \
 support/Json/lib_json/json_writer.cpp \
-support/sqlite3/include/sqlite3.c \
+support/sqlite3/sqlite3.c \
 support/device/Device_android/CADevice.cpp \
 view/CABatchView.cpp \
 view/CAClippingView.cpp \
@@ -94,6 +94,7 @@ view/CAListView.cpp \
 view/CATableView.cpp \
 view/CACollectionView.cpp \
 view/CAAutoCollectionView.cpp \
+view/CAWaterfallView.cpp \
 view/CAView.cpp \
 view/CAWindow.cpp \
 view/CAAlertView.cpp \

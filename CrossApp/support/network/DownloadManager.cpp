@@ -1,7 +1,7 @@
 
 
 #include "DownloadManager.h"
-#include "support/sqlite3/include/sqlite3.h"
+#include "support/sqlite3/sqlite3.h"
 #include "support/zip_support/unzip.h"
 #include "platform/CCFileUtils.h"
 

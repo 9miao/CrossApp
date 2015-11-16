@@ -51,7 +51,7 @@ void CATouch::setTouchInfo(int id, float x, float y)
         m_startPoint = m_point;
         m_startPointCaptured = true;
     }
-    if ((m_startPoint - m_point).getLength() >= _px(32))
+    if ((m_startPoint - m_point).getLength() >= 32)
     {
         m_bDelta = true;
     }

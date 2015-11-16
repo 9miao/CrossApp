@@ -1482,10 +1482,7 @@ void CDUIShowView::showCollectionView()
         char b = CCRANDOM_0_1() * 255;
         colorArr.push_back(ccc4(r, g, b, 255));
     }
-    
-    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
-    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
-    
+
     p_Conllection = CACollectionView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
     p_Conllection->setAllowsSelection(true);
     //p_Conllection->setAllowsMultipleSelection(true);
@@ -1524,25 +1521,21 @@ CACollectionViewCell* CDUIShowView::collectionCellAtIndex(CACollectionView *coll
     {
         p_Cell = CACollectionViewCell::create("CrossApp");
         
-        CAView* itemImage = CAView::createWithFrame(DRect(0, 0, _size.width, _size.height));
-        itemImage->setTag(99);
-        p_Cell->addSubview(itemImage);
+        p_Cell->setBackgroundView(CAView::create());
         
-        DSize itemSize = itemImage->getBounds().size;
-        CALabel* itemText = CALabel::createWithCenter(DRect(itemSize.width/2, itemSize.height/2, 150, 40));
+        CALabel* itemText = CALabel::createWithCenter(DRect(cellSize.width/2, cellSize.height/2, 150, 40));
         itemText->setTag(100);
         itemText->setFontSize(_px(29));
         itemText->setTextAlignment(CATextAlignmentCenter);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        itemImage->addSubview(itemText);
+        p_Cell->getContentView()->addSubview(itemText);
     }
-    CAView* itemImageView = p_Cell->getSubviewByTag(99);
-    itemImageView->setColor(colorArr.at(row * 3 + item));
+     p_Cell->getBackgroundView()->setColor(colorArr.at(row * 3 + item));
     CCLog("%d", row * 3 + item);
     
     char pos[20] = "";
     sprintf(pos, "(%d,%d,%d)", section, row, item);
-    CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
+    CALabel* itemText = (CALabel*)p_Cell->getContentView()->getSubviewByTag(100);
     itemText->setText(pos);
     
     return p_Cell;
@@ -1568,6 +1561,9 @@ unsigned int CDUIShowView::collectionViewHeightForRowAtIndexPath(CACollectionVie
     return (this->getView()->getBounds().size.width - _px(40) * 4) / 3;
 }
 
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 void CDUIShowView::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
     colorArr.clear();

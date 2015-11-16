@@ -200,11 +200,6 @@ CACollectionViewOrientation CAAutoCollectionView::getCollectionViewOrientation()
 
 bool CAAutoCollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (!m_vTouches.empty())
-    {
-        m_vTouches.replace(0, pTouch);
-        return true;
-    }
 	bool isInertia = m_tInertia.getLength() < 1.0f;
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
 		return false;
@@ -889,7 +884,7 @@ void CAAutoCollectionView::update(float dt)
 
 float CAAutoCollectionView::maxSpeed(float dt)
 {
-    return (_px(128) * 60 * dt);
+    return (128 * 60 * dt);
 }
 
 float CAAutoCollectionView::maxSpeedCache(float dt)

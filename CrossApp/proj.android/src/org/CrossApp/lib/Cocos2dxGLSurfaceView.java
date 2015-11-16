@@ -1,6 +1,8 @@
 
 package org.CrossApp.lib;
 
+import java.io.UnsupportedEncodingException;
+
 import android.R.integer;
 import android.content.Context;
 import android.graphics.Rect;
@@ -221,8 +223,14 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
 	}
 
-	public void setCursorPos(int pos,String str) {
-		System.out.println(str);
+	public void setCursorPos(final int pos,final byte[] bs) {
+		String str = "null";
+		try {
+			str = new String(bs, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
 		final Message msg = new Message();
 		msg.what = SET_CURSOR_POS;
 		msg.arg1 = pos;
@@ -484,7 +492,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	}
 
 	public void insertText(final String pText) {
-		Log.e("11111 1", pText);
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run() 
@@ -494,7 +501,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		});
 	}
 	public void willInsertText(final int start,final String pString,final int before,final int count) {
-		Log.e("11111 2", pString);
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run()

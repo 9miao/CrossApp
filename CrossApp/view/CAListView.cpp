@@ -195,11 +195,6 @@ CAListViewOrientation CAListView::getListViewOrientation()
 
 bool CAListView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	if (!m_vTouches.empty())
-	{
-        m_vTouches.replace(0, pTouch);
-		return true;
-	}
     bool isInertia = m_tInertia.getLength() < 1.0f;
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
 		return false;
@@ -625,7 +620,7 @@ void CAListView::update(float dt)
 
 float CAListView::maxSpeed(float dt)
 {
-    return (_px(128) * 60 * dt);
+    return (128 * 60 * dt);
 }
 
 float CAListView::maxSpeedCache(float dt)

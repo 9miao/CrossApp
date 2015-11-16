@@ -32,26 +32,36 @@ extern "C" {
         env->ReleaseStringUTFChars(text, pszText);
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeAndroidWillInsertText(JNIEnv* env, jobject thiz, jint text, jstring str, jint text1, jint text2) {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeAndroidWillInsertText(JNIEnv* env, jobject thiz, jint text, jbyteArray str, jint text1, jint text2) {
 
-        const char* pszText = env->GetStringUTFChars(str, NULL);
+//        const char* pszText = env->GetStringUTFChars(str, NULL);
+    	jbyte* b = env->GetByteArrayElements(str, 0);
+    	char* pszText = (char *)b;
+    	pszText[text2] = 0;
         CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchAndroidWillInsertText(text,pszText,text1,text2);
-        env->ReleaseStringUTFChars(str, pszText);
+//        env->ReleaseStringUTFChars(str, pszText);
        // env->ReleaseStringUTFChars(text, pszText);
+        env->ReleaseByteArrayElements(str, b, 0);
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
         CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
     }
 
-    JNIEXPORT jstring JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeGetContentText() {
+    JNIEXPORT jbyteArray JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeGetContentText() {
         JNIEnv * env = 0;
 
         if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
             return 0;
         }
         const char * pszText = CrossApp::CAIMEDispatcher::sharedDispatcher()->getContentText();
-        return env->NewStringUTF(pszText);
+        size_t len = strlen(pszText);
+
+        jbyteArray jba = env->NewByteArray(len);
+        jbyte* jby = env->GetByteArrayElements(jba, 0);
+        memcpy(jby, pszText, len);
+        env->SetByteArrayRegion(jba, 0, len, jby);
+        return jba;
     }
 
     JNIEXPORT jint JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeGetCursorPos() {

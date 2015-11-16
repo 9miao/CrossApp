@@ -290,7 +290,6 @@ void CAApplication::setOpenGLView(CCEGLView *pobOpenGLView)
         CHECK_GL_ERROR_DEBUG();
 
         m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
-        m_pTouchDispatcher->setDispatchEvents(true);
     }
 }
 

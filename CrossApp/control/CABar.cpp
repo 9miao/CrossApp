@@ -19,18 +19,18 @@ NS_CC_BEGIN
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#define NAVBAR_HEIGHT _px(128)
-#define TABBAR_HEIGHT _px(138)
+#define NAVBAR_HEIGHT 128
+#define TABBAR_HEIGHT 138
 
 #else
 
-#define NAVBAR_HEIGHT _px(88)
-#define TABBAR_HEIGHT _px(98)
+#define NAVBAR_HEIGHT 88
+#define TABBAR_HEIGHT 98
 
 #endif
 
-#define NAVBAR_CONTENT_HEIGHT _px(88)
-#define TABBAR_CONTENT_HEIGHT _px(98)
+#define NAVBAR_CONTENT_HEIGHT 88
+#define TABBAR_CONTENT_HEIGHT 98
 
 
 #pragma CANavigationBar
@@ -201,7 +201,7 @@ void CANavigationBar::showTitle()
         title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         title->setNumberOfLine(1);
 		title->setColor(m_cTitleColor);
-        title->setFontSize(_px(32));
+        title->setFontSize(32);
         m_pContentView->addSubview(title);
         m_pTitle = title;
         
@@ -225,7 +225,7 @@ void CANavigationBar::showLeftButton()
     const CAVector<CAObject*>& buttonItems = m_pItem->getLeftButtonItems();
 
     DRect rect;
-    rect.size.width = _px(80);
+    rect.size.width = 80;
     rect.size.height = m_pContentView->getBounds().size.height * 0.8f;
     rect.origin.x = rect.size.width * 0.7f;
     rect.origin.y = m_pContentView->getBounds().size.height * 0.5f;
@@ -234,7 +234,7 @@ void CANavigationBar::showLeftButton()
     {
         CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
         
-        rect.size.width = item ? item->getItemWidth() : _px(80);
+        rect.size.width = item ? item->getItemWidth() : 80;
         rect.origin.x += i * rect.size.width;
         
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
@@ -286,7 +286,7 @@ void CANavigationBar::showRightButton()
     const CAVector<CAObject*>& buttonItems = m_pItem->getRightButtonItems();
     
     DRect rect;
-    rect.size.width = _px(80);
+    rect.size.width = 80;
     rect.size.height = m_pContentView->getBounds().size.height * 0.8f;
     rect.origin.x = m_pContentView->getBounds().size.width - rect.size.width * 0.7f;
     rect.origin.y = m_pContentView->getBounds().size.height * 0.5f;
@@ -295,7 +295,7 @@ void CANavigationBar::showRightButton()
     {
         CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
         
-        rect.size.width = item ? item->getItemWidth() : _px(80);
+        rect.size.width = item ? item->getItemWidth() : 80;
         rect.origin.x -= i * rect.size.width;
         
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
@@ -366,7 +366,7 @@ bool CABadgeView::init()
     m_pTextView->setBold(true);
     this->addSubview(m_pTextView);
     
-    this->setScale(_px(1) /1.23f);
+    this->setScale(1 /1.23f);
     
     return true;
 }
@@ -466,7 +466,7 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const DSize& size, con
     this->setFrame(DRect(0, 0, contentSize.width, contentSize.height));
 
     DRect rect = this->getBounds();
-    rect.size.width = MIN(rect.size.width, _px(1024));
+    rect.size.width = MIN(rect.size.width, 1024);
     rect.size.height = TABBAR_CONTENT_HEIGHT;
     rect.origin.x = (this->getBounds().size.width - rect.size.width) / 2;
     rect.origin.y = height - rect.size.height;
@@ -496,7 +496,7 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const DSize& size, con
             
             CABadgeView* badgeView = new CABadgeView();
             badgeView->init();
-            badgeView->setCenter(DRect(rect.size.width, _px(25), 0, 0));
+            badgeView->setCenter(DRect(rect.size.width, 25, 0, 0));
             btn->insertSubview(badgeView, 10);
             m_pBadgeViews.pushBack(badgeView);
             badgeView->release();

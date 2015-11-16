@@ -99,6 +99,7 @@
 #include "view/CADrawView.h"
 #include "view/CATextEditHelper.h"
 #include "view/CAAutoCollectionView.h"
+#include "view/CAWaterfallView.h"
 
 #include "video/CAVideoPlayerDecoder.h"
 #include "video/CAVideoPlayerRender.h"
@@ -139,7 +140,7 @@
 #include "support/network/HttpClient.h"
 #include "support/network/DownloadManager.h"
 #include "support/Json/CSContentJsonDictionary.h"
-#include "support/sqlite3/include/sqlite3.h"
+#include "support/sqlite3/sqlite3.h"
 #include "support/LocalStorage/LocalStorage.h"
 #include "support/device/CADevice.h"
 

@@ -34,7 +34,7 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_pCallFunc(NULL)
     , m_pSegmentItemBackgroundImage(NULL)
     , m_sTitleFontName("")
-    , m_fTitleFontSize(_px(24))
+    , m_fTitleFontSize(24)
 {
 
 }
@@ -536,8 +536,8 @@ void CASegmentedControl::removeSegmentAtIndex(int index)
 void CASegmentedControl::setContentSize(const CrossApp::DSize &var)
 {
     DSize size = var;
-    size.height = MAX(size.height, _px(58));
-    size.width = MAX(size.width, size.height * 2);
+//    size.height = MAX(size.height, 58);
+//    size.width = MAX(size.width, size.height * 2);
     CAControl::setContentSize(size);
     if (m_pBackgroundView)
     {
@@ -664,8 +664,9 @@ void CASegmentedControl::refreshSegmentItemByPoint(DPoint point, CAControlState 
 
 void CASegmentedControl::refreshSegmentItemByIndex(int index, CAControlState controlState)
 {
-    if(index<0 && index>=m_vSegments.size())
-        return;
+    index = MAX(index, 0);
+    index = MIN(index, m_vSegments.size());
+
     CAObject* object = getObjectByIndex(index, controlState);
     DSize segmentSize = m_vSegments.at(index)->getBounds().size;
     DSize contentOffset = m_vContentOffset.at(index);

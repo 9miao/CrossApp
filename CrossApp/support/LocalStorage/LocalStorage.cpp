@@ -6,7 +6,7 @@
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
 #include <assert.h>
-#include <sqlite3.h>
+#include "support/sqlite3/sqlite3.h"
 NS_CC_BEGIN
 
 static int _initialized = 0;

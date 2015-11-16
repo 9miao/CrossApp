@@ -985,7 +985,7 @@ void CANavigationController::update(float dt)
 
 bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (pTouch->getLocation().x > _px(48))
+    if (pTouch->getLocation().x > 48)
     {
         return false;
     }
@@ -1018,7 +1018,7 @@ void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     point2.x = point1.x/2;
     showContainer->setCenterOrigin(point2);
     
-    m_bPopViewController = ((offDis > _px(10)) || point1.x > this->getView()->getBounds().size.width/4);
+    m_bPopViewController = ((offDis > 10) || point1.x > this->getView()->getBounds().size.width/4);
 }
 
 void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
@@ -1497,7 +1497,6 @@ void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item
 
 void CATabBarController::pageViewDidEndTurning(CAPageView* pageView)
 {
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
     for (int i = MAX((int)m_nSelectedIndex - 1, 0);
          i < MIN((int)m_nSelectedIndex + 2, m_pViewControllers.size());
          i++)
@@ -1511,7 +1510,6 @@ void CATabBarController::pageViewDidEndTurning(CAPageView* pageView)
 
 void CATabBarController::scrollViewWillBeginDragging(CAScrollView* view)
 {
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     for (int i = MAX((int)m_nSelectedIndex - 1, 0);
          i < MIN((int)m_nSelectedIndex + 2, m_pViewControllers.size());
          i++)

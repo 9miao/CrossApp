@@ -12,8 +12,8 @@
 
 #define CATextArrowViewWidth 30
 #define CATextArrowViewHeight 62
-#define CATextSelectArrWidth _px(40)
-#define CATextSelectArrHeight _px(64)
+#define CATextSelectArrWidth 40
+#define CATextSelectArrHeight 64
 
 
 NS_CC_BEGIN

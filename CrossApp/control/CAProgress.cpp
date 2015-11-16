@@ -200,7 +200,7 @@ void CAProgress::animatedFinish()
 
 void CAProgress::setContentSize(const DSize & var)
 {
-    CAView::setContentSize(DSize(var.width, MAX(var.height, _px(6))));
+    CAView::setContentSize(DSize(var.width, MAX(var.height, 6)));
     
     m_pTarckImageView->setFrame(this->getBounds());
     DRect rect = DRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);

@@ -684,8 +684,8 @@ void CAButton::setContentSize(const DSize & var)
     DSize size = var;
 //    if (m_eButtonType != CAButtonTypeCustom)
 //    {
-//        size.height = MAX(size.height, _px(60));
-//        size.width = MAX(size.width, _px(60));
+//        size.height = MAX(size.height, 60);
+//        size.width = MAX(size.width, 60);
 //    }
     CAView::setContentSize(size);
     for(int i=0; i<CAControlStateAll; i++)
