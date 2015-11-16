@@ -168,11 +168,6 @@ const CAVector<CAWaterfallViewCell*>& CAWaterfallView::displayingWaterfallCell()
 
 bool CAWaterfallView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	if (!m_vTouches.empty())
-	{
-		m_vTouches.replace(0, pTouch);
-		return true;
-	}
 	bool isInertia = m_tInertia.getLength() < 1.0f;
 	if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
 		return false;
@@ -383,7 +378,7 @@ void CAWaterfallView::reloadViewSizeData()
 	}
 
 	int nItemCount = m_pWaterfallViewDataSource->numberOfItems(this);
-	for (size_t i = 0; i < nItemCount; i++)
+	for (int i = 0; i < nItemCount; i++)
 	{
 		unsigned int index = getCurColumnIndex();
 

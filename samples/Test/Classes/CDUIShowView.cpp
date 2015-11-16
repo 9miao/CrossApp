@@ -1475,39 +1475,27 @@ void CDUIShowView::showWebView()
 
 void CDUIShowView::showCollectionView()
 {
-    for (int i = 0; i < 200; i++)
+    for (int i = 0; i < 40; i++)
     {
         char r = CCRANDOM_0_1() * 255;
         char g = CCRANDOM_0_1() * 255;
         char b = CCRANDOM_0_1() * 255;
         colorArr.push_back(ccc4(r, g, b, 255));
     }
-    
-    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
-    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
 
-	
-	p_WaterfallView = CAWaterfallView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
-	p_WaterfallView->setAllowsSelection(true);
-	p_WaterfallView->setWaterfallViewDataSource(this);
-	p_WaterfallView->setScrollViewDelegate(this);
-	this->getView()->addSubview(p_WaterfallView);
-	p_WaterfallView->reloadData();
-	
-
-//    p_Conllection = CACollectionView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
-//    p_Conllection->setAllowsSelection(true);
-//    //p_Conllection->setAllowsMultipleSelection(true);
-//    p_Conllection->setCollectionViewDelegate(this);
-//    p_Conllection->setCollectionViewDataSource(this);
-//    p_Conllection->setScrollViewDelegate(this);
-//    p_Conllection->setHeaderRefreshView(headerRefreshView);
-//    p_Conllection->setFooterRefreshView(footerRefreshView);
-//    p_Conllection->setHoriInterval(_px(40));
-//    p_Conllection->setVertInterval(_px(40));
-//    this->getView()->addSubview(p_Conllection);
-//    p_Conllection->reloadData();
-//    p_Conllection->startPullToHeaderRefreshView();
+    p_Conllection = CACollectionView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
+    p_Conllection->setAllowsSelection(true);
+    //p_Conllection->setAllowsMultipleSelection(true);
+    p_Conllection->setCollectionViewDelegate(this);
+    p_Conllection->setCollectionViewDataSource(this);
+    p_Conllection->setScrollViewDelegate(this);
+    p_Conllection->setHeaderRefreshView(headerRefreshView);
+    p_Conllection->setFooterRefreshView(footerRefreshView);
+    p_Conllection->setHoriInterval(_px(40));
+    p_Conllection->setVertInterval(_px(40));
+    this->getView()->addSubview(p_Conllection);
+    p_Conllection->reloadData();
+    p_Conllection->startPullToHeaderRefreshView();
 }
 
 void CDUIShowView::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
@@ -1574,63 +1562,6 @@ unsigned int CDUIShowView::collectionViewHeightForRowAtIndexPath(CACollectionVie
 }
 
 
-CAWaterfallViewCell* CDUIShowView::waterfallCellAtIndex(CAWaterfallView *waterfallView, const DSize& cellSize, unsigned int itemIndex)
-{
-		CAWaterfallViewCell* p_Cell = waterfallView->dequeueReusableCellWithIdentifier("CrossApp");
-	if (p_Cell == NULL)
-	{
-		p_Cell = CAWaterfallViewCell::create("CrossApp");
-
-		CAView* itemImage = CAView::createWithFrame(DRect(0, 0, cellSize.width, cellSize.height));
-        p_Cell->setBackgroundView(itemImage);
-
-		CALabel* itemText = CALabel::createWithCenter(DRect(cellSize.width / 2, cellSize.height / 2, cellSize.width, cellSize.height));
-		itemText->setTag(100);
-		itemText->setFontSize(_px(29));
-		itemText->setTextAlignment(CATextAlignmentCenter);
-		itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-		p_Cell->getContentView()->addSubview(itemText);
-	}
-    CAView* itemImageView = p_Cell->getBackgroundView();
-	itemImageView->setColor(colorArr.at(itemIndex));
-
-	char pos[20] = "";
-	sprintf(pos, "(%d)", itemIndex);
-	CALabel* itemText = (CALabel*)p_Cell->getContentView()->getSubviewByTag(100);
-	itemText->setText(pos);
-
-	return p_Cell;
-}
-
-unsigned int CDUIShowView::numberOfItems(CAWaterfallView *waterfallView)
-{
-	return 140;
-}
-
-unsigned int CDUIShowView::waterfallViewHeightForItemAtIndex(CAWaterfallView *waterfallView, unsigned int itemIndex)
-{
-	return rand() % 80 + 100;
-}
-
-CAView* CDUIShowView::waterfallViewSectionViewForHeader(CAWaterfallView *waterfallView, const DSize& viewSize)
-{
-	return NULL;
-}
-
-unsigned int CDUIShowView::waterfallViewHeightForHeader(CAWaterfallView *waterfallView)
-{
-	return 0;
-}
-
-CAView* CDUIShowView::waterfallViewSectionViewForFooter(CAWaterfallView *waterfallView, const DSize& viewSize)
-{
-	return NULL;
-}
-
-unsigned int CDUIShowView::waterfallViewHeightForFooter(CAWaterfallView *waterfallView)
-{
-	return 0;
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 void CDUIShowView::scrollViewHeaderBeginRefreshing(CAScrollView* view)

@@ -256,14 +256,6 @@ public:
     virtual unsigned int numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row);
     virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row);
 
-	virtual CAWaterfallViewCell* waterfallCellAtIndex(CAWaterfallView *waterfallView, const DSize& cellSize, unsigned int itemIndex);
-	virtual unsigned int waterfallViewHeightForItemAtIndex(CAWaterfallView *waterfallView, unsigned int itemIndex);
-	virtual unsigned int numberOfItems(CAWaterfallView *waterfallView);
-	virtual CAView* waterfallViewSectionViewForHeader(CAWaterfallView *waterfallView, const DSize& viewSize);
-	virtual unsigned int waterfallViewHeightForHeader(CAWaterfallView *waterfallView);
-	virtual CAView* waterfallViewSectionViewForFooter(CAWaterfallView *waterfallView, const DSize& viewSize);
-	virtual unsigned int waterfallViewHeightForFooter(CAWaterfallView *waterfallView);
-    
     virtual void scrollViewHeaderBeginRefreshing(CAScrollView* view);
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view);
     void refreshData(float interval);
@@ -299,7 +291,6 @@ public:
     CAPageControl* pageControl;
     CAScrollView* p_ScrollView;
     CACollectionView* p_Conllection;
-	CAWaterfallView* p_WaterfallView;
     CAPullToRefreshView* headerRefreshView;
     CAPullToRefreshView* footerRefreshView;
     std::vector<CAColor4B> colorArr;
