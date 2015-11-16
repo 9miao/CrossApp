@@ -506,6 +506,7 @@
     <ClCompile Include="..\support\CAProfiling.cpp">
       <Filter>support</Filter>
     </ClCompile>
+    <ClCompile Include="..\view\CAWaterfallView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1017,6 +1018,7 @@
     <ClInclude Include="..\support\sqlite3\sqlite3ext.h">
       <Filter>support\sqlite3</Filter>
     </ClInclude>
+    <ClInclude Include="..\view\CAWaterfallView.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\support\Json\lib_json\json_internalarray.inl">
