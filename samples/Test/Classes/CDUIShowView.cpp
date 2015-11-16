@@ -1483,6 +1483,9 @@ void CDUIShowView::showCollectionView()
         colorArr.push_back(ccc4(r, g, b, 255));
     }
 
+    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
+    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
+    
     p_Conllection = CACollectionView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
     p_Conllection->setAllowsSelection(true);
     //p_Conllection->setAllowsMultipleSelection(true);
