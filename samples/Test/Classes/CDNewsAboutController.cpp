@@ -13,8 +13,6 @@
 #include <sys/stat.h>
 #endif
 
-#define ___FILE_PATH___ std::string(CCFileUtils::sharedFileUtils()->getWritablePath() + "image")
-
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 
 void getAllFilePaths(std::vector<std::string>& filePaths, std::vector<std::string>& dirPaths, const std::string& path)
@@ -54,7 +52,6 @@ unsigned long getFilePathSize(const std::string& path)
     std::vector<std::string> filePaths;
     std::vector<std::string> dirPaths;
     getAllFilePaths(filePaths, dirPaths, path);
-    
     for (int i=0; i<filePaths.size(); i++)
     {
         FILE* fp = fopen(filePaths.at(i).c_str(), "rb");
@@ -161,7 +158,7 @@ CDNewsAboutController::~CDNewsAboutController()
 void CDNewsAboutController::viewDidLoad()
 {
     winSize = this->getView()->getBounds().size;
-    
+    temp_Path = CCFileUtils::sharedFileUtils()->getWritablePath() + "image";
     if (p_TableView!=NULL)
     {
         this->getView()->removeSubview(p_TableView);
@@ -318,10 +315,10 @@ unsigned int CDNewsAboutController::tableViewHeightForHeaderInSection(CATableVie
 
 void CDNewsAboutController::worker()
 {
-    _filesize = getFilePathSize(___FILE_PATH___);
+    _filesize = getFilePathSize(temp_Path);
     _tempfilesize = _filesize;
     CCLog("_filesize = = %f",_filesize);
-    removeFilePath(___FILE_PATH___);
+    removeFilePath(temp_Path);
     _filesize = 0;
     CCLog("_filesize111111 = = %f",_filesize);
 }

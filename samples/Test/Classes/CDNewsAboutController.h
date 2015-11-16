@@ -53,6 +53,7 @@ public:
     CATableView* p_TableView;
     float _filesize;
     float _tempfilesize;
+    string temp_Path;
     pthread_t start()
     {
         pthread_t tid;
