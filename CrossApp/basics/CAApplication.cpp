@@ -521,7 +521,7 @@ void CAApplication::runWindow(CAWindow *pWindow)
     
     startAnimation();
  
-    CAScheduler::schedule(schedule_selector(CAApplication::run), this, 0);
+    this->run(0);
 }
 
 void CAApplication::run(float dt)
@@ -530,8 +530,8 @@ void CAApplication::run(float dt)
     {
         m_pRootWindow->onEnter();
         m_pRootWindow->onEnterTransitionDidFinish();
+        s_SharedApplication->mainLoop();
     }
-    CAScheduler::unschedule(schedule_selector(CAApplication::run), this);
 }
 
 void CAApplication::end()

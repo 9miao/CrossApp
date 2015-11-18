@@ -227,7 +227,7 @@ void CANavigationBar::showLeftButton()
     DRect rect;
     rect.size.width = m_pContentView->getBounds().size.height;
     rect.size.height = m_pContentView->getBounds().size.height;
-    rect.origin.x = rect.size.width * 0.5f;
+    rect.origin.x = rect.size.width * 0.5f + 10;
     rect.origin.y = rect.size.height * 0.5f;
 
     for (size_t i=0; i<buttonItems.size(); i++)
@@ -290,7 +290,7 @@ void CANavigationBar::showRightButton()
     DRect rect;
     rect.size.width = m_pContentView->getBounds().size.height;
     rect.size.height = m_pContentView->getBounds().size.height;
-    rect.origin.x = m_pContentView->getBounds().size.width - rect.size.width * 0.5f;
+    rect.origin.x = m_pContentView->getBounds().size.width - rect.size.width * 0.5f - 10;
     rect.origin.y = rect.size.height * 0.5f;
 
     for (size_t i=0; i<buttonItems.size(); i++)
