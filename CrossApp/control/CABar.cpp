@@ -201,7 +201,7 @@ void CANavigationBar::showTitle()
         title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         title->setNumberOfLine(1);
 		title->setColor(m_cTitleColor);
-        title->setFontSize(32);
+        title->setFontSize(36);
         m_pContentView->addSubview(title);
         m_pTitle = title;
         
@@ -225,10 +225,10 @@ void CANavigationBar::showLeftButton()
     const CAVector<CAObject*>& buttonItems = m_pItem->getLeftButtonItems();
 
     DRect rect;
-    rect.size.width = 80;
-    rect.size.height = m_pContentView->getBounds().size.height * 0.8f;
-    rect.origin.x = rect.size.width * 0.7f;
-    rect.origin.y = m_pContentView->getBounds().size.height * 0.5f;
+    rect.size.width = m_pContentView->getBounds().size.height;
+    rect.size.height = m_pContentView->getBounds().size.height;
+    rect.origin.x = rect.size.width * 0.5f + 10;
+    rect.origin.y = rect.size.height * 0.5f;
 
     for (size_t i=0; i<buttonItems.size(); i++)
     {
@@ -238,6 +238,8 @@ void CANavigationBar::showLeftButton()
         rect.origin.x += i * rect.size.width;
         
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
+        button->setImageSize(DSize(42, 42));
+        button->setTitleFontSize(36);
         m_pContentView->addSubview(button);
         
         if (item == NULL && m_pItem)
@@ -286,10 +288,10 @@ void CANavigationBar::showRightButton()
     const CAVector<CAObject*>& buttonItems = m_pItem->getRightButtonItems();
     
     DRect rect;
-    rect.size.width = 80;
-    rect.size.height = m_pContentView->getBounds().size.height * 0.8f;
-    rect.origin.x = m_pContentView->getBounds().size.width - rect.size.width * 0.7f;
-    rect.origin.y = m_pContentView->getBounds().size.height * 0.5f;
+    rect.size.width = m_pContentView->getBounds().size.height;
+    rect.size.height = m_pContentView->getBounds().size.height;
+    rect.origin.x = m_pContentView->getBounds().size.width - rect.size.width * 0.5f - 10;
+    rect.origin.y = rect.size.height * 0.5f;
 
     for (size_t i=0; i<buttonItems.size(); i++)
     {
@@ -299,6 +301,8 @@ void CANavigationBar::showRightButton()
         rect.origin.x -= i * rect.size.width;
         
         CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
+        button->setImageSize(DSize(42, 42));
+        button->setTitleFontSize(36);
         m_pContentView->addSubview(button);
 
         if (item)
