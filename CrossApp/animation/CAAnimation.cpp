@@ -35,6 +35,8 @@ namespace CAAnimation
         
         void update(float dt);
         
+        void end();
+        
         Info m_obInfo;
         
     };
@@ -95,6 +97,13 @@ namespace CAAnimation
         }
     }
     
+    void Animation::end()
+    {
+        if (m_obInfo.target && m_obInfo.selector)
+        {
+            ((CAObject *)m_obInfo.target->*m_obInfo.selector)(m_obInfo.interval, m_obInfo.total, m_obInfo.total);
+        }
+    }
     
     bool isSchedule(SEL_CAAnimation selector, CAObject* target)
     {
@@ -128,8 +137,8 @@ namespace CAAnimation
             Animation* obj = *itr;
             if (obj->m_obInfo.selector == selector && obj->m_obInfo.target == target)
             {
-                
                 CAScheduler::unscheduleAllForTarget(obj);
+                obj->end();
                 _deque.erase(itr);
                 break;
             }
