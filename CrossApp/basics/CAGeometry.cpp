@@ -79,8 +79,8 @@ void DPoint::setPoint(float x, float y)
 
 bool DPoint::equals(const DPoint& target) const
 {
-    return (fabs(this->x - target.x) < 0.5f)
-        && (fabs(this->y - target.y) < 0.5f);
+    return (fabs(this->x - target.x) < 0.1f)
+        && (fabs(this->y - target.y) < 0.1f);
 }
 
 bool DPoint::fuzzyEquals(const DPoint& b, float var) const
@@ -96,7 +96,7 @@ float DPoint::getAngle(const DPoint& other) const
     DPoint a2 = normalize();
     DPoint b2 = other.normalize();
     float angle = atan2f(a2.cross(b2), a2.dot(b2));
-    if( fabs(angle) < 0.5f ) return 0.f;
+    if( fabs(angle) < 0.1f ) return 0.f;
     return angle;
 }
 
@@ -167,8 +167,8 @@ void DSize::setSize(float width, float height)
 
 bool DSize::equals(const DSize& target) const
 {
-    return (fabs(this->width  - target.width)  < 0.5f)
-        && (fabs(this->height - target.height) < 0.5f);
+    return (fabs(this->width  - target.width)  < 0.1f)
+        && (fabs(this->height - target.height) < 0.1f);
 }
 
 // implementation of DRect
@@ -222,22 +222,22 @@ DRect DRect::operator/(float a) const
 
 bool DRect::equals(const DRect& rect) const
 {
-    if (fabsf(this->getMinX() - rect.getMinX()) >= 0.5f)
+    if (fabsf(this->getMinX() - rect.getMinX()) >= 0.1f)
     {
         return false;
     }
     
-    if (fabsf(this->getMaxX() - rect.getMaxX()) >= 0.5f)
+    if (fabsf(this->getMaxX() - rect.getMaxX()) >= 0.1f)
     {
         return false;
     }
     
-    if (fabsf(this->getMinY() - rect.getMinY()) >= 0.5f)
+    if (fabsf(this->getMinY() - rect.getMinY()) >= 0.1f)
     {
         return false;
     }
     
-    if (fabsf(this->getMaxY() - rect.getMaxY()) >= 0.5f)
+    if (fabsf(this->getMaxY() - rect.getMaxY()) >= 0.1f)
     {
         return false;
     }
