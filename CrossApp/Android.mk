@@ -65,6 +65,7 @@ support/ccUTF8.cpp \
 support/ConvertUTF.cpp \
 support/ConvertUTFWrapper.cpp \
 support/ccUtils.cpp \
+support/CAUIEditorParser.cpp \
 support/data_support/ccCArray.cpp \
 support/image_support/TGAlib.cpp \
 support/tinyxml2/tinyxml2.cpp \

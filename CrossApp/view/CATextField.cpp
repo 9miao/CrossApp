@@ -239,7 +239,14 @@ void CATextField::setText(const std::string &var)
 	m_vTextFiledChars.clear();
     DPoint p = DPoint(this->getCursorX() + m_iHoriMargins, m_obContentSize.height / 2);
     m_pCursorMark->setCenterOrigin(p);
-    insertText(var.c_str(), (int)var.length());
+	if (var.empty())
+	{
+		updateImage();
+	}
+	else
+	{
+		insertText(var.c_str(), (int)var.length());
+	}
     m_pDelegate = pTemp;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 	CCEGLView * pGlView = CAApplication::getApplication()->getOpenGLView();

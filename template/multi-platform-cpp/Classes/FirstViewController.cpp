@@ -14,13 +14,13 @@ FirstViewController::~FirstViewController()
 void FirstViewController::viewDidLoad()
 {
     // Do any additional setup after loading the view from its nib.
-	CCRect winRect = this->getView()->getBounds();
+	DRect winRect = this->getView()->getBounds();
     CAImageView* imageView = CAImageView::createWithImage(CAImage::create("r/HelloWorld.png"));
     imageView->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     imageView->setFrame(winRect);
     this->getView()->addSubview(imageView);
 
-    CALabel* label = CALabel::createWithCenter(CCRect(winRect.size.width*0.5, winRect.size.height*0.5-270, winRect.size.width, 200));
+    CALabel* label = CALabel::createWithCenter(DRect(winRect.size.width*0.5, winRect.size.height*0.5-270, winRect.size.width, 200));
     label->setTextAlignment(CATextAlignmentCenter);
     label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     label->setFontSize(_px(72));

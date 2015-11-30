@@ -104,7 +104,7 @@ public:
      * @param   Image A valid CAImage object, which will be applied to this sprite object.
      * @lua NA
      */
-    virtual void setImage(CAImage* texture) = 0;
+    virtual void setImage(CAImage* image) = 0;
 };
 
 /**

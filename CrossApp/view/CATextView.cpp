@@ -346,7 +346,14 @@ void CATextView::setText(const std::string& var)
 	m_iCurPos = 0;
 	m_vLinesTextView.clear();
 	m_curSelCharRange = std::make_pair(0, 0);
-	insertText(var.c_str(), (int)var.length());
+	if (var.empty())
+	{
+		updateImage();
+	}
+	else
+	{
+		insertText(var.c_str(), (int)var.length());
+	}
 	m_pTextViewDelegate = pTemp;
 	m_bUpdateImage = true;
 

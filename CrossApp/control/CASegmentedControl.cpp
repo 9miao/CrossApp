@@ -73,6 +73,18 @@ void CASegmentedControl::onEnterTransitionDidFinish()
     CAControl::onEnterTransitionDidFinish();
 }
 
+CASegmentedControl* CASegmentedControl::create(unsigned int itemsCount)
+{
+    CASegmentedControl* segmentedControl = new CASegmentedControl(itemsCount);
+    if (segmentedControl && segmentedControl->init())
+    {
+        segmentedControl->autorelease();
+        return segmentedControl;
+    }
+    CC_SAFE_DELETE(segmentedControl);
+    return NULL;
+}
+
 CASegmentedControl* CASegmentedControl::createWithFrame(const DRect& rect, unsigned int itemsCount)
 {
     CASegmentedControl* segmentedControl = new CASegmentedControl(itemsCount);
@@ -97,57 +109,24 @@ CASegmentedControl* CASegmentedControl::createWithCenter(const DRect& rect, unsi
     return NULL;
 }
 
-bool CASegmentedControl::initWithFrame(const DRect& rect)
+bool CASegmentedControl::init()
 {
-    if (!CAControl::initWithFrame(rect))
+    if (!CAControl::init())
     {
         return false;
     }
     this->setBackgroundImage( CAImage::create("source_material/btn_rounded_normal.png") );
-
-    const float elemWidth = this->getBounds().size.width / m_nItemsCount;
-    DRect elemFrame = DRect(0, 0, this->getBounds().size.width/m_nItemsCount, this->getBounds().size.height);
+    
     for (int i = 0; i < m_nItemsCount; ++i)
     {
         CAView* segment = this->createDefaultSegment(i);
-        if (segment)
-        {
-            segment->setFrame(elemFrame);
-            m_vSegments.pushBack(segment);
-            this->insertSubview(segment, 1);
-        }
-        elemFrame.origin.x += elemWidth;
+        this->insertSubview(segment, 1);
+        m_vSegments.pushBack(segment);
     }
     setSegmentItemBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"));
-    createSeparate();
     return true;
 }
 
-bool CASegmentedControl::initWithCenter(const DRect& rect)
-{
-    if (!CAControl::initWithCenter(rect))
-    {
-        return false;
-    }
-    this->setBackgroundImage( CAImage::create("source_material/btn_rounded_normal.png") );
-
-    const float elemWidth = this->getBounds().size.width / m_nItemsCount;
-    DRect elemFrame = DRect(0, 0, this->getBounds().size.width/m_nItemsCount, this->getBounds().size.height);
-    for (int i = 0; i < m_nItemsCount; ++i)
-    {
-        CAView *segment = this->createDefaultSegment(i);
-        if (segment)
-        {
-            segment->setFrame(elemFrame);
-            m_vSegments.pushBack(segment);
-            this->insertSubview(segment, 1);
-        }
-        elemFrame.origin.x += elemWidth;
-    }
-    setSegmentItemBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"));
-    createSeparate();
-    return true;
-}
 
 #pragma mark --
 void CASegmentedControl::setTitleColor(const CAColor4B& color)
@@ -546,14 +525,37 @@ void CASegmentedControl::setContentSize(const CrossApp::DSize &var)
     
     refreshAllSegmentItemBounds();
     refreshAllLable();
+    
+    const float elemWidth = this->getBounds().size.width / m_nItemsCount;
+    const float elemHeight = this->getBounds().size.height;
     float length = 0;
-    CAVector<CAView*>::iterator itr = m_vSegments.begin();
-    for(; itr != m_vSegments.end(); ++itr)
+    for(size_t i = 0; i < m_nItemsCount; i++)
     {
-        DRect rect = DRect(length, 0, (*itr)->getBounds().size.width, (*itr)->getBounds().size.height);
-        length += (*itr)->getBounds().size.width;
-        (*itr)->setFrame(rect);
+        CAView* itemView = m_vSegments.at(i);
+        DRect rect = DRect(length, 0, elemWidth, elemHeight);
+        length += elemWidth;
+        itemView->setFrame(rect);
     }
+    if (!m_vSegmentItemBackground.empty())
+    {
+        CAVector<CAView*>::iterator itr = m_vSegmentItemBackground.begin();
+        for (; itr != m_vSegmentItemBackground.end(); itr++)
+        {
+            this->removeSubview(*itr);
+        }
+        m_vSegmentItemBackground.clear();
+        for (int i = 0; i < m_nItemsCount; i++)
+        {
+            CAImageView* imageView = (CAImageView*)getTailorImageAtIndex(i, m_pSegmentItemBackgroundImage);
+            m_vSegmentItemBackground.pushBack(imageView);
+            imageView->setVisible(false);
+            this->insertSubview(imageView, -1);
+        }
+    }
+    
+    refreshAllSegmentItemBackgroundPosition();
+
+    
     refreshAllSegmentItemBackgroundPosition();
     cleanAllSeparate();
     createSeparate();
@@ -837,25 +839,6 @@ CAView* CASegmentedControl::createDefaultSegment(int index)
 void CASegmentedControl::setSegmentItemBackgroundImage(CAImage* image)
 {
     m_pSegmentItemBackgroundImage = image;
-    
-    if (!m_vSegmentItemBackground.empty())
-    {
-        CAVector<CAView*>::iterator itr = m_vSegmentItemBackground.begin();
-        for (; itr != m_vSegmentItemBackground.end(); itr++)
-        {
-            this->removeSubview(*itr);
-        }
-        m_vSegmentItemBackground.clear();
-        for (int i = 0; i < m_nItemsCount; i++)
-        {
-            CAImageView* imageView = (CAImageView*)getTailorImageAtIndex(i, image);
-            m_vSegmentItemBackground.pushBack(imageView);
-            imageView->setVisible(false);
-            this->insertSubview(imageView, -1);
-        }
-    }
-    
-    refreshAllSegmentItemBackgroundPosition();
 }
 
 CAView* CASegmentedControl::getTailorImageAtIndex(int index, CAImage* image)
