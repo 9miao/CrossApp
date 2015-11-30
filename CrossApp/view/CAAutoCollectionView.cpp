@@ -27,7 +27,7 @@ CAAutoCollectionView::CAAutoCollectionView()
 , m_bAlwaysTopSectionHeader(true)
 , m_bAlwaysBottomSectionFooter(true)
 , m_pCollectionViewOrientation(CACollectionViewOrientationVertical)
-, m_pCollectionViewCellHoriAlign(eCollectionViewCellHoriAlignRight)
+, m_pCollectionViewCellHoriAlign(eCollectionViewCellHoriAlignLeft)
 , m_pCollectionViewCellVertAlign(eCollectionViewCellVertAlignBottom)
 {
     
@@ -484,19 +484,21 @@ void CAAutoCollectionView::reloadViewSizeData()
 		if (cvs.nSectionHeaderHeight>0)
 		{
 			sectionHeight += cvs.nSectionHeaderHeight;
-			sectionHeight += cellXValue;
 		}
-		if (cvs.nSectionFooterHeight>0)
-		{
-			sectionHeight += cvs.nSectionFooterHeight;
-			sectionHeight += cellXValue;
-		}
-		
+		sectionHeight += cellXValue;
+	
 		for (unsigned int j = 0; j < cvs.CollectionViewRows.size(); j++)
 		{
 			sectionHeight += cvs.CollectionViewRows[j].iMaxValue;
 			sectionHeight += cellXValue;
 		}
+		
+		if (cvs.nSectionFooterHeight>0)
+		{
+			sectionHeight += cvs.nSectionFooterHeight;
+		}
+		sectionHeight += cellXValue;
+
 		viewHeight += sectionHeight;
 	}
 
@@ -669,10 +671,10 @@ int CAAutoCollectionView::calculateAllRects()
 				pSectionHeaderView->setFrame(sectionHeaderRect);
 				insertSubview(pSectionHeaderView, 1);
 			}
-			dd += (iSectionHeaderHeight + dv);
+			dd += iSectionHeaderHeight;
 			cvs.pSectionHeaderView = pSectionHeaderView;
 		}
-
+		dd += dv;
 		dd = calculateAllCells(cvs, i, dd, dv, dw);
 
 		unsigned int iSectionFooterHeight = cvs.nSectionFooterHeight;
@@ -696,9 +698,10 @@ int CAAutoCollectionView::calculateAllRects()
 				pSectionFooterView->setFrame(sectionFooterRect);
 				insertSubview(pSectionFooterView, 1);
 			}
-			dd += (iSectionFooterHeight + dv);
+			dd += iSectionFooterHeight;
 			cvs.pSectionFooterView = pSectionFooterView;
 		}
+		dd += dv;
 
 		DRect sectionRect = sectionHeaderRect;
 		if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
@@ -840,6 +843,15 @@ void CAAutoCollectionView::updateSectionHeaderAndFooterRects()
 	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
 
+	if (m_pCollectionViewOrientation == CACollectionViewOrientationVertical)
+	{
+		rect.origin.x = m_iHoriMargins;
+	}
+	else
+	{
+		rect.origin.x = m_iVertMargins;
+	}
+
 	for (int i = 0; i < m_rCollectionViewSection.size(); i++)
 	{
 		CollectionViewSection& cvs = m_rCollectionViewSection[i];
@@ -862,7 +874,7 @@ void CAAutoCollectionView::updateSectionHeaderAndFooterRects()
 		}
 		if (footer && m_bAlwaysBottomSectionFooter)
 		{
-			DPoint p2 = DPointZero;
+			DPoint p2 = rect.origin;
 			p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,
 				cvs.rSectionRect.origin.y + cvs.rSectionRect.size.height - footerHeight);
 			p2.y = MAX(p2.y, cvs.rSectionRect.origin.y + headerHeight);
