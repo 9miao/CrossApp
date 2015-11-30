@@ -36,10 +36,14 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
+    static CASegmentedControl* create(unsigned int itemsCount);
+    
     static CASegmentedControl* createWithFrame(const DRect& rect, unsigned int itemsCount);
     
     static CASegmentedControl* createWithCenter(const DRect& rect, unsigned int itemsCount);
   
+    virtual bool init();
+    
     void setBackgroundImage(CAImage* image);
     
     void setSegmentItemBackgroundImage(CAImage* image);
@@ -94,9 +98,6 @@ public:
     void setTitleFontSize(float titleSize);
 
 protected:
-    virtual bool initWithFrame(const DRect& rect);
-    
-    virtual bool initWithCenter(const DRect& rect);
     
     virtual CAView* createDefaultSegment(int index);
     

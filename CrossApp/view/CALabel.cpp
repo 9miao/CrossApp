@@ -46,6 +46,18 @@ CALabel::~CALabel()
     
 }
 
+CALabel *CALabel::create()
+{
+    CALabel *label = new CALabel();
+    if (label && label->init())
+    {
+        label->autorelease();
+        return label;
+    }
+    CC_SAFE_DELETE(label);
+    return NULL;
+}
+
 CALabel *CALabel::createWithFrame(const DRect& rect)
 {
     CALabel *label = new CALabel();

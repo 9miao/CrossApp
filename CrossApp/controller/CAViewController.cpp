@@ -15,7 +15,7 @@
 #include "dispatcher/CATouchDispatcher.h"
 #include "animation/CAViewAnimation.h"
 #include "animation/CAAnimation.h"
-
+#include "support/CAUIEditorParser.h"
 NS_CC_BEGIN
 
 CAViewController::CAViewController()
@@ -27,6 +27,7 @@ CAViewController::CAViewController()
 ,m_sTitle("The Title")
 ,m_bLifeLock(false)
 ,m_bKeypadEnabled(false)
+,m_pParser(NULL)
 {
     m_pView = CAView::createWithColor(CAColor_white);
     m_pView->retain();
@@ -50,6 +51,22 @@ bool CAViewController::init()
     return true;
 }
 
+CAView* CAViewController::getViewWithID(const std::string &tag)
+{
+    return m_pParser->m_mViews.getValue(tag);
+}
+
+void CAViewController::parser()
+{
+    m_pParser = new CAUIEditorParser();
+    
+    std::string name = typeid(*this).name();
+    name = name.substr(2, name.length() - 2);
+    std::string filePath = "UI/" + name + ".xib";
+
+    m_pParser->initWithPath(filePath, m_pView);
+}
+
 void CAViewController::getSuperViewRect(const DRect& rect)
 {
     m_pView->setFrame(rect);
@@ -59,7 +76,6 @@ void CAViewController::getSuperViewRect(const DRect& rect)
     }
 }
 
-
 void CAViewController::viewOnEnterTransitionDidFinish()
 {
     CAScheduler::getScheduler()->resumeTarget(this);
@@ -68,6 +84,7 @@ void CAViewController::viewOnEnterTransitionDidFinish()
     {
         CC_BREAK_IF(m_bLifeLock);
         m_bLifeLock = true;
+        this->parser();
         this->viewDidLoad();
     }
     while (0);

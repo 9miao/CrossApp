@@ -13,7 +13,7 @@ using namespace CrossApp;
 
 extern "C"
 {
-    
+
 jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
     JniHelper::setJavaVM(vm);

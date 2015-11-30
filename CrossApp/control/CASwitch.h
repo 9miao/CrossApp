@@ -26,6 +26,8 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
+    static CASwitch* create();
+    
     static CASwitch* createWithFrame(const DRect& rect);
     
     static CASwitch* createWithCenter(const DRect& rect);
@@ -33,12 +35,8 @@ public:
     void addTarget(CAObject* target, SEL_CAControl selector);
     
     void removeTarget(CAObject* target, SEL_CAControl selector);
-    
-public:
-    
-    bool initWithFrame(const DRect& rect);
-    
-    bool initWithCenter(const DRect& rect);
+
+    bool init();
     
 protected:
     bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
