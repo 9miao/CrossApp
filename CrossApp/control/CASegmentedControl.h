@@ -89,7 +89,7 @@ public:
     void setEnabledForSegmentAtIndex(bool isEnable, int index);
     bool isEnabledForSegmentAtIndex(int index);
     
-    CC_PROPERTY_READONLY(CAView*, m_pBackgroundView, BackgroundView);
+    CC_PROPERTY_READONLY(CAScale9ImageView*, m_pBackgroundView, BackgroundView);
     
     void setImageSizeAtIndex(DSize size, int index);
     

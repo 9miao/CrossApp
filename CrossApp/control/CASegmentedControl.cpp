@@ -22,7 +22,7 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     : CAControl()
     , m_nItemsCount(itemsCount)
     , m_pBackgroundView(NULL)
-    , m_fSeparateWidth(s_px_to_dip(2))
+    , m_fSeparateWidth(s_px_to_dip(1))
     , m_iSelectedIndex(-1)
     , m_iTouchIndex(0)
     , m_cTextColor(ccc4(54, 195, 240, 255))
@@ -561,19 +561,20 @@ void CASegmentedControl::setContentSize(const CrossApp::DSize &var)
     createSeparate();
 }
 
-CAView* CASegmentedControl::getBackgroundView()
+CAScale9ImageView* CASegmentedControl::getBackgroundView()
 {
     return m_pBackgroundView;
 }
 
 void CASegmentedControl::setBackgroundImage(CAImage* image)
 {
-    this->removeSubview(m_pBackgroundView);
-    CAScale9ImageView* backGroundImageView = CAScale9ImageView::createWithFrame(this->getBounds());
-    backGroundImageView->setImage(image);
-    backGroundImageView->setVisible(true);
-    m_pBackgroundView = backGroundImageView;
-    this->insertSubview(m_pBackgroundView, -2);
+    if (m_pBackgroundView == NULL)
+    {
+        m_pBackgroundView = CAScale9ImageView::createWithFrame(this->getBounds());
+        m_pBackgroundView->setVisible(true);
+        this->insertSubview(m_pBackgroundView, -2);
+    }
+    m_pBackgroundView->setImage(image);
 }
 
 void CASegmentedControl::createSeparate()
