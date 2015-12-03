@@ -579,10 +579,6 @@ void CAApplication::purgeDirector()
     m_pobOpenGLView->end();
     m_pobOpenGLView = NULL;
 
-	this->retain();
-    // delete CAApplication
-    release();
-
 	this->autorelease();
 }
 

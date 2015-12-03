@@ -133,7 +133,7 @@ void CDNewsViewController::viewDidLoad()
         string tempSign = getSign(key_value);
         CCLog("sign===%s",tempSign.c_str());
         key_value["sign"] = tempSign;
-        string tempUrl = "http://api.doubi.so/news/";
+        string tempUrl = "http://api.9miao.com/news/";
         
         CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
                                                    CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
@@ -200,7 +200,7 @@ void CDNewsViewController::buttonCallBack(CAControl* btn,DPoint point)
     string tempSign = getSign(key_value);
     CCLog("sign===%s",tempSign.c_str());
     key_value["sign"] = tempSign;
-    string tempUrl = "http://api.doubi.so/news/";
+    string tempUrl = "http://api.9miao.com/news/";
     CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     {
@@ -468,7 +468,7 @@ void CDNewsViewController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollVie
     string tempSign = getSign(key_value);
     CCLog("sign===%s",tempSign.c_str());
     key_value["sign"] = tempSign;
-    string tempUrl = "http://api.doubi.so/news/";
+    string tempUrl = "http://api.9miao.com/news/";
     CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     CATabBarItem* item = this->getTabBarItem();
@@ -492,7 +492,7 @@ void CDNewsViewController::scrollViewFooterBeginRefreshing(CAScrollView* view)
     string tempSign = getSign(key_value);
     CCLog("sign===%s",tempSign.c_str());
     key_value["sign"] = tempSign;
-    string tempUrl = "http://api.doubi.so/news/";
+    string tempUrl = "http://api.9miao.com/news/";
     CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRefreshRequestFinished));
 }
