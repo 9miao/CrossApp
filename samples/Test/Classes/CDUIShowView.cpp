@@ -1129,11 +1129,15 @@ void CDUIShowView::showSegmentedControl()
     segment1->setTitleSelectedColor(CAColor_white);
     segment1->addTarget(this, CASegmentedControl_selector(CDUIShowView::segmentCallback));
     segment1->setSelectedAtIndex(0);
-    
+
     CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(segment1);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
+    
+    
+    
+    
     
     CASegmentedControl* segment2 = CASegmentedControl::createWithCenter(DRect(winSize.width/2,
                                                                                  winSize.height/2,

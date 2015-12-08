@@ -237,7 +237,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             btn->setImageSize(size);
         }
         
-        if (atoi(viewXml->Attribute("isScale9")))
+        if (strcmp(viewXml->Attribute("backgroundType"), "Scale9") == 0)
         {
             if (const char* value = viewXml->Attribute("backgroundNormal"))
             {
@@ -267,7 +267,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
                 btn->setBackGroundViewForState(CAControlStateDisabled, scale9ImageView);
             }
         }
-        else if (atoi(viewXml->Attribute("isColorView")))
+        else if (strcmp(viewXml->Attribute("backgroundType"), "ColorView") == 0)
         {
             if (viewXml->Attribute("backgroundColorNormal"))
             {
@@ -385,7 +385,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             sw->setThumbTintImage(CAImage::create(value));
         }
     }
-    else if (contrlType.compare("CASegmentControl") == 0)
+    else if (contrlType.compare("CASegmentedControl") == 0)
     {
         CASegmentedControl* segmentControl = CASegmentedControl::create(2);
         superview->addSubview(segmentControl);

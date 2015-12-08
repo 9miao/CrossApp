@@ -62,7 +62,7 @@ void CAViewController::parser()
     
     std::string name = typeid(*this).name();
     name = name.substr(2, name.length() - 2);
-    std::string filePath = "UI/" + name + ".xib";
+    std::string filePath = "r/" + name + ".xib";
 
     m_pParser->initWithPath(filePath, m_pView);
 }
