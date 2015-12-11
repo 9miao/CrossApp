@@ -50,6 +50,34 @@ CASegmentedControl::~CASegmentedControl()
 void CASegmentedControl::onExitTransitionDidStart()
 {
     CAControl::onExitTransitionDidStart();
+    
+    for (size_t i=0; i<(size_t)m_nItemsCount; i++)
+    {
+        if (i == (size_t)m_iSelectedIndex)
+        {
+            m_vItemSelectedBackgrounds.at(i)->setVisible(true);
+        }
+        else
+        {
+            m_vItemSelectedBackgrounds.at(i)->setVisible(false);
+        }
+    }
+    
+    for (size_t i=0; i<(size_t)m_nItemsCount; i++)
+    {
+        if (CAImageView* imageView = dynamic_cast<CAImageView*>(m_vSegmentItemsTitles.at(i)))
+        {
+            CAImage* image = m_iSelectedIndex == i ? m_vSelectedImages.at(i) : m_vNormalImages.at(i);
+            imageView->setImage(image);
+            const CAColor4B& color = m_iSelectedIndex == i ? m_cImageSelectedColor : m_cImageColor;
+            imageView->setColor(color);
+        }
+        else if (CALabel* label = dynamic_cast<CALabel*>(m_vSegmentItemsTitles.at(i)))
+        {
+            const CAColor4B& color = m_iSelectedIndex == i ? m_cTextSelectedColor : m_cTextColor;
+            label->setColor(color);
+        }
+    }
 }
 
 void CASegmentedControl::onEnterTransitionDidFinish()
