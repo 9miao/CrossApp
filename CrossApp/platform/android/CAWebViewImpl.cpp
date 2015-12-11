@@ -2,9 +2,9 @@
 #include "CAWebViewImpl.h"
 #include "view/CAWebView.h"
 #include "basics/CAApplication.h"
-#include "platform/android/jni/JniHelper.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CADensityDpi.h"
+#include "platform/android/jni/JniHelper.h"
 #include <jni.h>
 
 #define CLASS_NAME "org/CrossApp/lib/Cocos2dxWebViewHelper"

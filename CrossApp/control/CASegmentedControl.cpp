@@ -387,10 +387,34 @@ void CASegmentedControl::setImageForSegmentAtIndex(CAImage* image, int index, CA
     center.origin = center.size/2 + m_vItemContentOffsets.at(index);
     center.size = m_vItemImageSizes.at(index).equals(DSizeZero) ? image->getContentSize() : m_vItemImageSizes.at(index);
     CAImageView* imageView = CAImageView::createWithCenter(center);
-    imageView->setImage(image);
     imageView->setColor(m_iSelectedIndex == index ? m_cImageSelectedColor : m_cImageColor);
     m_vSegmentItems.at(index)->addSubview(imageView);
     m_vSegmentItemsTitles.replace(index, imageView);
+
+    switch (controlState)
+    {
+        case CAControlStateNormal:
+        {
+            m_vNormalImages.replace(index, image);
+            if (m_iSelectedIndex != index)
+            {
+                imageView->setImage(image);
+            }
+        }
+            break;
+        case CAControlStateSelected:
+        {
+            m_vSelectedImages.replace(index, image);
+            if (m_iSelectedIndex == index)
+            {
+                imageView->setImage(image);
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    
 }
 
 CAImage* CASegmentedControl::getImageForSegmentAtIndex(int index)

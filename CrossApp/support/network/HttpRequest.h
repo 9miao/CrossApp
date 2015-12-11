@@ -18,7 +18,7 @@ public:
     /** Use this enum type as param in setReqeustType(param) */
     typedef enum
     {
-		kHttpGet,
+		kHttpGet = 0,
 		kHttpPost,
         kHttpPostFile,
 		kHttpPut,
