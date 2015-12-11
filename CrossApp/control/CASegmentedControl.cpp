@@ -47,9 +47,9 @@ CASegmentedControl::~CASegmentedControl()
     CC_SAFE_RELEASE(m_pNewSegmentItemBackgroundImage);
 }
 
-void CASegmentedControl::onExitTransitionDidStart()
+void CASegmentedControl::onEnterTransitionDidFinish()
 {
-    CAControl::onExitTransitionDidStart();
+    CAControl::onEnterTransitionDidFinish();
     
     for (size_t i=0; i<(size_t)m_nItemsCount; i++)
     {
@@ -80,9 +80,9 @@ void CASegmentedControl::onExitTransitionDidStart()
     }
 }
 
-void CASegmentedControl::onEnterTransitionDidFinish()
+void CASegmentedControl::onExitTransitionDidStart()
 {
-    CAControl::onEnterTransitionDidFinish();
+    CAControl::onExitTransitionDidStart();
 }
 
 CASegmentedControl* CASegmentedControl::create(unsigned int itemsCount)
