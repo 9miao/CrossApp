@@ -18,7 +18,7 @@
 
 NS_CC_BEGIN
 
-CAStepper::CAStepper()
+CAStepper::CAStepper(const CAStepperOrientation& type)
 : m_bAutoRepeat(true)
 , m_bContinuous(true)
 , m_bWraps(false)
@@ -33,12 +33,19 @@ CAStepper::CAStepper()
 , m_actionType(ActionNone)
 , m_bTouchEffect(false)
 , m_pDividerImageView(NULL)
-, m_pCAStepperOrientation(CAStepperOrientationHorizontal)
+, m_pCAStepperOrientation(type)
 ,m_cTintColor(ccc4(54, 195, 240, 255))
 {
     memset(m_pBackgroundImage, 0x00, sizeof(m_pBackgroundImage));
     memset(m_pIncrementImage, 0x00, sizeof(m_pIncrementImage));
     memset(m_pDecrementImage, 0x00, sizeof(m_pDecrementImage));
+    
+    setBackgroundImage(CAImage::create("source_material/btn_rounded_normal.png"), CAControlStateNormal);
+    setBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"), CAControlStateHighlighted);
+    setIncrementImage(CAImage::create("source_material/stepper_inc_h.png"), CAControlStateAll);
+    setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
+    setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);
+    setDecrementImage(CAImage::create("source_material/stepper_dec_n.png"), CAControlStateNormal);
 }
 
 CAStepper::~CAStepper()
@@ -60,9 +67,9 @@ CAStepper::~CAStepper()
     CC_SAFE_RELEASE(m_pDividerImageView);
 }
 
-CAStepper* CAStepper::create()
+CAStepper* CAStepper::create(const CAStepperOrientation& type)
 {
-    CAStepper* page = new CAStepper();
+    CAStepper* page = new CAStepper(type);
     
     if (page && page->init())
     {
@@ -74,9 +81,9 @@ CAStepper* CAStepper::create()
     return NULL;
 }
 
-CAStepper* CAStepper::createWithFrame(const DRect& rect)
+CAStepper* CAStepper::createWithFrame(const DRect& rect, const CAStepperOrientation& type)
 {
-    CAStepper* page = new CAStepper();
+    CAStepper* page = new CAStepper(type);
     
     if (page && page->initWithFrame(rect))
     {
@@ -88,9 +95,9 @@ CAStepper* CAStepper::createWithFrame(const DRect& rect)
     return NULL;
 }
 
-CAStepper* CAStepper::createWithCenter(const DRect& rect)
+CAStepper* CAStepper::createWithCenter(const DRect& rect, const CAStepperOrientation& type)
 {
-    CAStepper* page = new CAStepper();
+    CAStepper* page = new CAStepper(type);
     
     if (page && page->initWithCenter(rect))
     {
@@ -108,31 +115,7 @@ bool CAStepper::init()
     {
         return false;
     }
-    setBackgroundImage(CAImage::create("source_material/btn_rounded_normal.png"), CAControlStateNormal);
-    setBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"), CAControlStateHighlighted);
-    setIncrementImage(CAImage::create("source_material/stepper_inc_h.png"), CAControlStateAll);
-    setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
-    setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);
-    setDecrementImage(CAImage::create("source_material/stepper_dec_n.png"), CAControlStateNormal);
-    return true;
-}
-
-bool CAStepper::initWithFrame(const DRect& rect)
-{
-    if (!CAControl::initWithFrame(rect))
-    {
-        return false;
-    }
     
-    return true;
-}
-
-bool CAStepper::initWithCenter(const DRect& rect)
-{
-    if (!CAControl::initWithCenter(rect))
-    {
-        return false;
-    }
     return true;
 }
 

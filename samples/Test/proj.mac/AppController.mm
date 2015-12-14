@@ -32,19 +32,22 @@
         };
         
         NSOpenGLPixelFormat *pixelFormat = [[[NSOpenGLPixelFormat alloc] initWithAttributes:attributes] autorelease];
-		
-		// allocate our GL view
-		// (isn't there already a shared EAGLView?)
-		glView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
 
+        NSView* view = [[NSView alloc]initWithFrame:rect];
+        
+        // allocate our GL view
+        // (isn't there already a shared EAGLView?)
+        glView = [[[EAGLView alloc] initWithFrame:[view bounds] pixelFormat:pixelFormat] autorelease];;
+        [view addSubview:glView];
+        
         NSString* title = @"CrossApp-Demo";
 		// set window parameters
 		[window becomeFirstResponder];
-		[window setContentView:glView];
+		[window setContentView:view];
 		[window setTitle:[NSString stringWithFormat:@"%@ (%dx%d)", title, Screen_Width, Screen_Height]];
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
-
+        
 		CrossApp::CCApplication::sharedApplication()->run();
 	}
 

@@ -148,7 +148,7 @@ void CDNewsImageController::viewDidLoad()
         string tempSign = getSign(key_value);
         CCLog("sign===%s",tempSign.c_str());
         key_value["sign"] = tempSign;
-        string tempUrl = "http://api.doubi.so/newsgirlpic/";
+        string tempUrl = "http://api.9miao.com/newsgirlpic/";
         CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,
                                                    CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
         {
@@ -240,7 +240,7 @@ void CDNewsImageController::buttonCallBack(CAControl* btn,DPoint point)
     string tempSign = getSign(key_value);
     CCLog("sign===%s",tempSign.c_str());
     key_value["sign"] = tempSign;
-    string tempUrl = "http://api.doubi.so/newsgirlpic/";
+    string tempUrl = "http://api.9miao.com/newsgirlpic/";
     CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
     {
@@ -262,7 +262,7 @@ void CDNewsImageController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollVi
     string tempSign = getSign(key_value);
     CCLog("sign===%s",tempSign.c_str());
     key_value["sign"] = tempSign;
-    string tempUrl = "http://api.doubi.so/newsgirlpic/";
+    string tempUrl = "http://api.9miao.com/newsgirlpic/";
     CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
 }
@@ -279,7 +279,7 @@ void CDNewsImageController::scrollViewFooterBeginRefreshing(CAScrollView* view)
     string tempSign = getSign(key_value);
     CCLog("sign===%s",tempSign.c_str());
     key_value["sign"] = tempSign;
-    string tempUrl = "http://api.doubi.so/newsgirlpic/";
+    string tempUrl = "http://api.9miao.com/newsgirlpic/";
     CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsImageController::onRefreshRequestFinished));
 }

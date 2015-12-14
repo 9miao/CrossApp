@@ -21,6 +21,7 @@ class CAWindow;
 class CATabBarController;
 class CANavigationController;
 class CADrawerController;
+class CAUIEditorParser;
 
 class CC_DLL CAViewController
 : public CAResponder
@@ -66,6 +67,8 @@ public:
     
     virtual CAResponder* nextResponder();
 
+    CAView* getViewWithID(const std::string& tag);
+    
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -110,6 +113,8 @@ private:
     
     void viewOnExitTransitionDidStart();
     
+    void parser();
+    
 private:
     
     CAView* m_pView;
@@ -117,6 +122,8 @@ private:
     bool m_bLifeLock;
     
     bool m_bKeypadEnabled;
+    
+    CAUIEditorParser* m_pParser;
 };
 
 class CC_DLL CANavigationController

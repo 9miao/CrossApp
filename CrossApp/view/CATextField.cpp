@@ -1024,8 +1024,8 @@ void CATextField::updateImageRect()
 	}
 	
 	y1 = m_iVertMargins;
-    x2 = x1 + m_obRect.size.width;
-    y2 = y1 + m_obRect.size.height;
+    x2 = x1 + m_obRect.size.width + 0.5f;
+    y2 = y1 + m_obRect.size.height + 0.5f;
     m_sQuad.bl.vertices = vertex3(x1, y1, m_fVertexZ);
     m_sQuad.br.vertices = vertex3(x2, y1, m_fVertexZ);
     m_sQuad.tl.vertices = vertex3(x1, y2, m_fVertexZ);

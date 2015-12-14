@@ -27,6 +27,8 @@ public:
     
     virtual ~CALabel();
     
+    static CALabel* create();
+    
     static CALabel* createWithFrame(const DRect& rect);
     
     static CALabel* createWithCenter(const DRect& rect);

@@ -1135,9 +1135,7 @@ void CAView::draw()
                           (void*)(offset + diff));
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
+        
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
     DPoint vertices[4]=
@@ -1191,11 +1189,10 @@ void CAView::visit()
         {
             float x1 = MAX(s_dip_to_px(frame.getMinX()), restoreScissorRect.getMinX());
             float y1 = MAX(s_dip_to_px(frame.getMinY()), restoreScissorRect.getMinY());
-            float x2 = MIN(s_dip_to_px(frame.getMaxX()), restoreScissorRect.getMaxX());
-            float y2 = MIN(s_dip_to_px(frame.getMaxY()), restoreScissorRect.getMaxY());
+            float x2 = MIN(s_dip_to_px(frame.getMaxX() + 0.5f), restoreScissorRect.getMaxX());
+            float y2 = MIN(s_dip_to_px(frame.getMaxY() + 0.5f), restoreScissorRect.getMaxY());
             float width = MAX(x2-x1, 0);
             float height = MAX(y2-y1, 0);
-            
             glScissor(x1, y1, width, height);
         }
         else
@@ -1542,6 +1539,7 @@ DPoint CAView::convertToNodeSpace(const DPoint& worldPoint)
 {
     DPoint p = CAApplication::getApplication()->convertToGL(worldPoint);
     DPoint ret = DPointApplyAffineTransform(p, worldToNodeTransform());
+    
     ret.y = this->getBounds().size.height - ret.y;
     return ret;
 }
@@ -1623,8 +1621,8 @@ void CAView::updateTransform()
             x1 = RENDER_IN_SUBPIXEL(x1);
             y1 = RENDER_IN_SUBPIXEL(y1);
             
-            float x2 = x1 + size.width;
-            float y2 = y1 + size.height;
+            float x2 = x1 + size.width + 0.5f;
+            float y2 = y1 + size.height + 0.5f;
 
             m_sQuad.bl.vertices = vertex3( x1, y1, m_fVertexZ );
             m_sQuad.br.vertices = vertex3( x2, y1, m_fVertexZ );
@@ -1734,8 +1732,8 @@ void CAView::updateImageRect()
     GLfloat x1,x2,y1,y2;
     x1 = 0;
     y1 = 0;
-    x2 = m_obContentSize.width;
-    y2 = m_obContentSize.height;
+    x2 = m_obContentSize.width + 0.5f;
+    y2 = m_obContentSize.height + 0.5f;
     
     m_sQuad.bl.vertices = vertex3(x1, y1, m_fVertexZ);
     m_sQuad.br.vertices = vertex3(x2, y1, m_fVertexZ);
@@ -1751,15 +1749,12 @@ void CAView::setVertexRect(const DRect& rect)
 
 void CAView::setImageCoords(DRect rect)
 {
-    CAImage* tex = m_pobBatchView ? m_pobImageAtlas->getImage() : m_pobImage;
-    if (! tex)
-    {
-        return;
-    }
+    CAImage* image = m_pobBatchView ? m_pobImageAtlas->getImage() : m_pobImage;
+    CC_RETURN_IF(! image);
     
-    float atlasWidth = (float)tex->getPixelsWide();
-    float atlasHeight = (float)tex->getPixelsHigh();
-    
+    float atlasWidth = (float)image->getPixelsWide();
+    float atlasHeight = (float)image->getPixelsHigh();
+ 
     float left, right, top, bottom;
     
     if (m_bRectRotated)

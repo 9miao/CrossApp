@@ -27,7 +27,9 @@ CASwitch::CASwitch()
     , m_pOffImageView(NULL)
     , m_pThumbTintImageView(NULL)
 {
-    
+    this->setOnImage(CAImage::create("source_material/switch_on.png"));
+    this->setOffImage(CAImage::create("source_material/switch_off.png"));
+    this->setThumbTintImage(CAImage::create("source_material/switch_indicator.png"));
 }
 
 CASwitch::~CASwitch()
@@ -46,27 +48,6 @@ void CASwitch::onExitTransitionDidStart()
 void CASwitch::onEnterTransitionDidFinish()
 {
     CAControl::onEnterTransitionDidFinish();
-    
-    if (NULL == m_onImage)
-    {
-        this->setOnImage(CAImage::create("source_material/switch_on.png"));
-    }
-    
-    if (NULL == m_offImage)
-    {
-        this->setOffImage(CAImage::create("source_material/switch_off.png"));
-    }
-    
-    if (NULL == m_thumbTintImage)
-    {
-        this->setThumbTintImage(CAImage::create("source_material/switch_indicator.png"));
-    }
-    
-    m_pOnImageView->setImage(m_onImage);
-    m_pOffImageView->setImage(m_offImage);
-    m_pThumbTintImageView->setImage(m_thumbTintImage);
-    
-    this->updateSwitchState(false, false);
 }
 
 void CASwitch::setIsOn(bool on, bool animated)
@@ -172,6 +153,20 @@ void CASwitch::updateValueChanged()
     }
 }
 
+CASwitch* CASwitch::create()
+{
+    CASwitch* switchControl = new CASwitch();
+    
+    if (switchControl && switchControl->init())
+    {
+        switchControl->autorelease();
+        return switchControl;
+    }
+    
+    CC_SAFE_DELETE(switchControl);
+    return NULL;
+}
+
 CASwitch* CASwitch::createWithFrame(const DRect& rect)
 {
     CASwitch* switchControl = new CASwitch();
@@ -200,51 +195,23 @@ CASwitch* CASwitch::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-bool CASwitch::initWithFrame(const DRect& rect)
+bool CASwitch::init()
 {
     if (!CAControl::init())
     {
         return false;
     }
     this->setColor(CAColor_clear);
-    this->setFrame(rect);
-    
-    DRect bounds = this->getBounds();
-    
-    m_pOnImageView = CAImageView::createWithFrame(bounds);
-    this->addSubview(m_pOnImageView);
-    
-    m_pOffImageView = CAImageView::createWithFrame(bounds);
-    this->addSubview(m_pOffImageView);
-    
-    m_pThumbTintImageView = CAImageView::createWithFrame(DRect(0, 0, bounds.size.height, bounds.size.height));
-    this->addSubview(m_pThumbTintImageView);
-    return true;
-}
 
-bool CASwitch::initWithCenter(const DRect& rect)
-{
-    if (!CAControl::init())
-    {
-        return false;
-    }
-    this->setColor(CAColor_clear);
-    this->setCenter(rect);
-    
-    DRect bounds = this->getBounds();
-    
     m_pOnImageView = CAImageView::createWithImage(m_onImage);
-    m_pOnImageView->setFrame(bounds);
     this->addSubview(m_pOnImageView);
-    
+
     m_pOffImageView = CAImageView::createWithImage(m_offImage);
-    m_pOffImageView->setFrame(bounds);
     this->addSubview(m_pOffImageView);
     
     m_pThumbTintImageView = CAImageView::createWithImage(m_thumbTintImage);
-    m_pThumbTintImageView->setFrame(DRect(0, 0, bounds.size.height, bounds.size.height));
     this->addSubview(m_pThumbTintImageView);
-    
+ 
     return true;
 }
 
@@ -288,6 +255,11 @@ void CASwitch::removeTarget(CAObject* target, SEL_CAControl selector)
 void CASwitch::setContentSize(const DSize & var)
 {
     CAControl::setContentSize(DSize(102, 56));
+    DRect bounds = this->getBounds();
+    m_pOnImageView->setFrame(bounds);
+    m_pOffImageView->setFrame(bounds);
+    m_pThumbTintImageView->setFrame(DRect(0, 0, bounds.size.height, bounds.size.height));
+    this->updateSwitchState(false, false);
 }
 
 NS_CC_END

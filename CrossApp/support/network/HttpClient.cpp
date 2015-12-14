@@ -84,7 +84,7 @@ static void* networkThread(void *data)
         
        
         CAHttpResponse *response = new CAHttpResponse(request);
-         request->release();
+        
         
         int32_t responseCode = -1;
         int retValue = 0;
@@ -140,7 +140,7 @@ static void* networkThread(void *data)
                 CCAssert(true, "CAHttpClient: unkown request type, only GET and POSt are supported");
                 break;
         }
-
+        request->release();
         response->setResponseCode(responseCode);
         if (retValue != 0)
         {
@@ -234,8 +234,8 @@ public:
 
     ~CURLRaii()
     {
-        if (m_curl)
-            curl_easy_cleanup(m_curl);
+//        if (m_curl)
+//            curl_easy_cleanup(m_curl);
 
         if (m_headers)
             curl_slist_free_all(m_headers);

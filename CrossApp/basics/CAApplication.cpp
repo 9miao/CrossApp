@@ -572,18 +572,12 @@ void CAApplication::purgeDirector()
     CANotificationCenter::purgeNotificationCenter();
 
     ccGLInvalidateStateCache();
-    
-    CHECK_GL_ERROR_DEBUG();
-    
+        
     // OpenGL view
     m_pobOpenGLView->end();
     m_pobOpenGLView = NULL;
-
-	this->retain();
-    // delete CAApplication
-    release();
-
-	this->autorelease();
+    
+    this->release();
 }
 
 void CAApplication::pause(void)
