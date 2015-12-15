@@ -98,9 +98,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	this.init();
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
+		CrossAppTextField.initWithHandler();
 		exeHandler();
 		AndroidNetWorkManager.setContext(this);
-
+		
 		 if(mWebViewHelper == null)
 		 {
 			 mWebViewHelper = new Cocos2dxWebViewHelper(frame);
@@ -117,7 +118,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	     BatteryReceiver batteryReceiver = new BatteryReceiver();
 
 	     registerReceiver(batteryReceiver, intentFilter);
-
+	     
 	}
 
 //	@Override
@@ -193,7 +194,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		ArrayList<CustomScanResult> cList = new ArrayList<CustomScanResult>();
 		if(list!=null){
             for(int i=0;i<list.size();i++){
-                //�õ�ɨ����
+                //锟矫碉拷扫锟斤拷锟斤拷
                 mScanResult=list.get(i);
                 cScanResult = new CustomScanResult(mScanResult.SSID, mScanResult.BSSID, mScanResult.level);
                 if (cScanResult!=null) {
@@ -270,23 +271,23 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		case 0:
 			boolean result = mAdapter.enable();
 			if(result)
-				returnBlueToothState(0);//����������ɹ�
+				returnBlueToothState(0);//锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷晒锟�
 			else if(wasBtOpened)
-				returnBlueToothState(1);//�����Ѿ�����
+				returnBlueToothState(1);//锟斤拷锟斤拷锟窖撅拷锟斤拷锟斤拷
 			else
 			{
-				returnBlueToothState(2);//������ʧ��
+				returnBlueToothState(2);//锟斤拷锟斤拷锟斤拷失锟斤拷
 			}
 			break;
 
 		case 1:
 			boolean result1 = mAdapter.disable();
 			if(result1)
-				returnBlueToothState(3);//�����رղ����ɹ�
+				returnBlueToothState(3);//锟斤拷锟斤拷锟截闭诧拷锟斤拷锟缴癸拷
 			else if(!wasBtOpened)
-				returnBlueToothState(4);//�����Ѿ��ر�
+				returnBlueToothState(4);//锟斤拷锟斤拷锟窖撅拷锟截憋拷
 			else
-				returnBlueToothState(5);//�����ر�ʧ��.
+				returnBlueToothState(5);//锟斤拷锟斤拷锟截憋拷失锟斤拷.
 			break;
 		case 2:
 			if (!wasBtOpened)
@@ -295,7 +296,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 				startActivityForResult(intent, REQUEST_OPEN_BT_CODE);
 			}
 			else
-				returnBlueToothState(1);//�����Ѿ���
+				returnBlueToothState(1);//锟斤拷锟斤拷锟窖撅拷锟斤拷
 			break;
 		case 3:
 			if (!mAdapter.isDiscovering()){
@@ -303,7 +304,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                 mAdapter.startDiscovery();
             }
             else
-                toast("�������������豸��");
+                toast("锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟借备锟斤拷");
 			break;
 		case 4:
 			if (mAdapter.isDiscovering()){
@@ -320,7 +321,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 			break;
 		}
     }
-    //����ɨ��ʱ�Ĺ㲥������
+    //锟斤拷锟斤拷扫锟斤拷时锟侥广播锟斤拷锟斤拷锟斤拷
     public BroadcastReceiver BTDiscoveryReceiver = new BroadcastReceiver()
     {
         @Override
@@ -365,20 +366,20 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         switch (btState)
         {
             case BluetoothAdapter.STATE_OFF:
-                toast("����״̬:�ѹر�");
-                Log.v(TAG, "BT State �� BluetoothAdapter.STATE_OFF ###");
+                toast("锟斤拷锟斤拷状态:锟窖关憋拷");
+                Log.v(TAG, "BT State 锟斤拷 BluetoothAdapter.STATE_OFF ###");
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
-                toast("����״̬:���ڹر�");
+                toast("锟斤拷锟斤拷状态:锟斤拷锟节关憋拷");
                 Log.v(TAG, "BT State :  BluetoothAdapter.STATE_TURNING_OFF ###");
                 break;
             case BluetoothAdapter.STATE_TURNING_ON:
-                toast("����״̬:���ڴ�");
-                Log.v(TAG, "BT State ��BluetoothAdapter.STATE_TURNING_ON ###");
+                toast("锟斤拷锟斤拷状态:锟斤拷锟节达拷");
+                Log.v(TAG, "BT State 锟斤拷BluetoothAdapter.STATE_TURNING_ON ###");
                 break;
             case BluetoothAdapter.STATE_ON:
-                toast("����״̬:�Ѵ�");
-                Log.v(TAG, "BT State ��BluetoothAdapter.STATE_ON ###");
+                toast("锟斤拷锟斤拷状态:锟窖达拷");
+                Log.v(TAG, "BT State 锟斤拷BluetoothAdapter.STATE_ON ###");
                 break;
             default:
                 break;
