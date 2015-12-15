@@ -154,6 +154,7 @@
 #include "platform/CCPlatformMacros.h"
 #include "platform/CAFreeTypeFont.h"
 #include "platform/CAFTFontCache.h"
+#include "platform/CATextFieldX.h"
 
 //script_support
 #include "script_support/CCScriptSupport.h"

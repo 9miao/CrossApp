@@ -11,6 +11,8 @@
 		020F5F841BF31A250098C44C /* CAWaterfallView.h in Headers */ = {isa = PBXBuildFile; fileRef = 020F5F821BF31A250098C44C /* CAWaterfallView.h */; };
 		02150DCB1C07172900BC3F9C /* CAUIEditorParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02150DC91C07172900BC3F9C /* CAUIEditorParser.cpp */; };
 		02150DCC1C07172900BC3F9C /* CAUIEditorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 02150DCA1C07172900BC3F9C /* CAUIEditorParser.h */; };
+		022160771C1FAD38009FFCFC /* CATextFieldX.h in Headers */ = {isa = PBXBuildFile; fileRef = 022160761C1FAD38009FFCFC /* CATextFieldX.h */; };
+		022160791C1FAD42009FFCFC /* CATextFieldX.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022160781C1FAD42009FFCFC /* CATextFieldX.mm */; };
 		022CAAE41BF185DA00ED015B /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 022CAAE11BF185DA00ED015B /* sqlite3.c */; };
 		022CAAE51BF185DA00ED015B /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 022CAAE21BF185DA00ED015B /* sqlite3.h */; };
 		022CAAE61BF185DA00ED015B /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 022CAAE31BF185DA00ED015B /* sqlite3ext.h */; };
@@ -403,6 +405,8 @@
 		020F5F821BF31A250098C44C /* CAWaterfallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWaterfallView.h; sourceTree = "<group>"; };
 		02150DC91C07172900BC3F9C /* CAUIEditorParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIEditorParser.cpp; sourceTree = "<group>"; };
 		02150DCA1C07172900BC3F9C /* CAUIEditorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIEditorParser.h; sourceTree = "<group>"; };
+		022160761C1FAD38009FFCFC /* CATextFieldX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextFieldX.h; sourceTree = "<group>"; };
+		022160781C1FAD42009FFCFC /* CATextFieldX.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextFieldX.mm; sourceTree = "<group>"; };
 		022CAAE11BF185DA00ED015B /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		022CAAE21BF185DA00ED015B /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		022CAAE31BF185DA00ED015B /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
@@ -1143,6 +1147,7 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				022160761C1FAD38009FFCFC /* CATextFieldX.h */,
 				B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */,
 				B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */,
 				B0C3BD451ADE7264009BE71A /* CAClipboard.h */,
@@ -1174,6 +1179,7 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				022160781C1FAD42009FFCFC /* CATextFieldX.mm */,
 				B0AF8DBE1AFA257800A1A4E2 /* CAIOSTextField.h */,
 				B0AF8DBF1AFA257800A1A4E2 /* CAIOSTextField.m */,
 				B0C3BD471ADE726B009BE71A /* CAClipboard.mm */,
@@ -1750,6 +1756,7 @@
 				3E0F754F1B7DD0C4004CFD41 /* features.h in Headers */,
 				04EAA0281956CE3B00198A8E /* CrossApp.h in Headers */,
 				0460ED1B195700EE00D13001 /* CCApplicationProtocol.h in Headers */,
+				022160771C1FAD38009FFCFC /* CATextFieldX.h in Headers */,
 				0460ED1D195700EE00D13001 /* CCEGLViewProtocol.h in Headers */,
 				0460ED2D1957019600D13001 /* CCApplication.h in Headers */,
 				0460ED2F1957019600D13001 /* CCEGLView.h in Headers */,
@@ -1944,6 +1951,7 @@
 				04EAA0091956CE2500198A8E /* CATouchDispatcher.cpp in Sources */,
 				B0ADAE2B1B2E7EFB00BE8FA3 /* CAGif.cpp in Sources */,
 				3E19F2AE1B8B0ED100720027 /* CADevice.mm in Sources */,
+				022160791C1FAD42009FFCFC /* CATextFieldX.mm in Sources */,
 				B0ADAE7B1B2E7F1B00BE8FA3 /* CAImageView.cpp in Sources */,
 				B0A11DC11AE8E0B300933BF6 /* quantize.c in Sources */,
 				B0ADAE911B2E7F1B00BE8FA3 /* CATextEditHelper.cpp in Sources */,
