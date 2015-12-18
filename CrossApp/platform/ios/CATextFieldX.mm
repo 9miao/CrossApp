@@ -104,8 +104,8 @@ CATextFieldX::CATextFieldX()
 :m_pImgeView(NULL)
 ,m_pTextField(NULL)
 ,m_pDlayeShow(false)
-,m_marginLeft(16)
-,m_marginRight(16)
+,m_marginLeft(10)
+,m_marginRight(10)
 {
     this->setHaveNextResponder(false);
 }
