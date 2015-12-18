@@ -419,6 +419,7 @@ void CAImageCache::removeImage(CAImage* image)
         }
         images.clear();
     }
+    CCLog("CAImageCache:: %ld", m_mImages.size());
 }
 
 void CAImageCache::removeImageForKey(const std::string& imageKeyName)

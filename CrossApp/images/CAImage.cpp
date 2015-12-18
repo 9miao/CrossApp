@@ -1918,7 +1918,7 @@ void CAImage::convertToRawData()
     
     m_bHasMipmaps = false;
     
-    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
+    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 }
 
 void CAImage::premultipliedImageData()
@@ -2060,7 +2060,7 @@ void CAImage::premultipliedImageData()
             
     }
     
-    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
+    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 }
 
 void CAImage::freeName()

@@ -51,7 +51,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         CAImageView* imageView = CAImageView::create();
         superview->addSubview(imageView);
-        map.insert(viewXml->Attribute("textTag"), superview);
+        map.insert(viewXml->Attribute("textTag"), imageView);
         
         DRect rect;
         rect.origin.x = atoi(viewXml->Attribute("x"));
@@ -471,6 +471,59 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             progress->setProgress(atof(value));
         }
     }
+    else if (contrlType.compare("CASlider") == 0)
+    {
+        CASlider* slider = CASlider::create();
+        superview->addSubview(slider);
+        map.insert(viewXml->Attribute("textTag"), slider);
+        
+        DRect rect;
+        rect.origin.x = atoi(viewXml->Attribute("x"));
+        rect.origin.y = atoi(viewXml->Attribute("y"));
+        rect.size.width = atoi(viewXml->Attribute("w"));
+        rect.size.height = atoi(viewXml->Attribute("h"));
+        slider->setFrame(rect);
+        
+        if (const char* value = viewXml->Attribute("color"))
+        {
+            slider->setColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("minTrackTintImage"))
+        {
+            slider->setMinTrackTintImage(CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("maxTrackTintImage"))
+        {
+            slider->setMaxTrackTintImage(CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("thumbTintImage"))
+        {
+            slider->setThumbTintImage(CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("minValue"))
+        {
+            slider->setMinValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("maxValue"))
+        {
+            slider->setMaxValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("value"))
+        {
+            slider->setValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("trackHeight"))
+        {
+            slider->setTrackHeight(atof(value));
+        }
+    }
     else if (contrlType.compare("CAStepper") == 0)
     {
         CAStepper* stepper = CAStepper::create((CAStepperOrientation)(atoi(viewXml->Attribute("orientation"))));
@@ -529,12 +582,23 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("imageNormal"))
         {
-            activity->setActivityIndicatorView(CAImageView::createWithImage(CAImage::create(value)));
+            CAImage* image = CAImage::create(value);
+            DRect rect = DRectZero;
+            rect.size = image->getContentSize();
+            CAImageView* imageView = CAImageView::createWithImage(CAImage::create(value));
+            imageView->setFrame(rect);
+            activity->setActivityIndicatorView(imageView);
+            
         }
         
         if (const char* value = viewXml->Attribute("background"))
         {
-            activity->setActivityBackView(CAImageView::createWithImage(CAImage::create(value)));
+            CAImage* image = CAImage::create(value);
+            DRect rect = DRectZero;
+            rect.size = image->getContentSize();
+            CAImageView* imageView = CAImageView::createWithImage(CAImage::create(value));
+            imageView->setFrame(rect);
+            activity->setActivityBackView(imageView);
         }
     }
     

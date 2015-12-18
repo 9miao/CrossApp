@@ -366,7 +366,6 @@ void CAStepper::onEnter()
                                                   getBounds().size.height/2,
                                                   getBounds().size.width,
                                                   s_px_to_dip(2)));
-            m_pDividerImageView->setRotation(90);
         }
         
         

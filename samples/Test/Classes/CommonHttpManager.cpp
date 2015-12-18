@@ -76,6 +76,7 @@ void CommonImageCacheManager::update()
 {
     CAImageCache::sharedImageCache()->removeImage(m_dImageQueue.front());
     m_dImageQueue.popFront();
+    CCLog("------- %ld", m_dImageQueue.size());
 }
 
 void CommonImageCacheManager::pushImage(CAImage* image)
@@ -299,7 +300,7 @@ void CommonHttpManager::get_image(const std::string& url,
         std::string imagePath = CCFileUtils::sharedFileUtils()->getWritablePath() + "image/" + key;
         
         unsigned long pSize = 0;
-        
+
         FILE* fp = fopen(imagePath.c_str(), "rb");
         if (fp)
         {

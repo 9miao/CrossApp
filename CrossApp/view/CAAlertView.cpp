@@ -144,7 +144,7 @@ void CAAlertView::setAlertMessage(std::string var, CAColor4B col)
 {
 	CC_RETURN_IF(var.compare("") == 0);
 	setLabel(m_pContentLabel, var.c_str(), m_sMsgFontName.c_str(), col);
-    m_pContentLabel->setTextAlignment(CATextAlignmentLeft);
+    m_pContentLabel->setTextAlignment(CATextAlignmentCenter);
 }
 
 void CAAlertView::addButton(const std::string& btnText, CAColor4B col, CAImage* pNormalImage, CAImage* pHighlightedImage)
