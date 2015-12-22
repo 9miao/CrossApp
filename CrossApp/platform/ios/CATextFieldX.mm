@@ -15,91 +15,68 @@
 
 #define textField_iOS ((IOSTextField*)m_pTextField)
 
-
-
 @interface IOSTextField: UITextField<UITextFieldDelegate>
 {
     BOOL _isShouldEdit;
 }
+
 @property(nonatomic,assign) CrossApp::CATextFieldX* textField;
 @property(nonatomic,retain) NSString* beforeText;
+
 -(void)regiestKeyBoardMessage;
+
 @end
-
-
 
 @implementation IOSTextField
 {
     
 }
--(void)regiestKeyBoardMessage{
+
+-(void)regiestKeyBoardMessage
+{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillWasShown:) name:UIKeyboardWillShowNotification object:nil];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
     
-    [self addTarget:self action:@selector(textFieldEditDidBegin:) forControlEvents:UIControlEventEditingDidBegin];
     [self addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
 }
-- (void)textFieldEditDidBegin:(UITextField *)textField
-{
-    self.beforeText = [textField text];
-    //NSLog(@"%s  --   %lu---%lu",string.UTF8String,(unsigned long)range.length,(unsigned long)range.location);
-//    NSLog(@"textFieldEditDidBegin : %@", _beforeText);
-}
+
 - (void)textFieldEditChanged:(UITextField *)textField
 {
-    if (_isShouldEdit) {
+    if (_isShouldEdit)
+    {
         _isShouldEdit = NO;
         std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
         self.beforeText = [textField text];
         return;
     }
     
-    
-    //NSLog(@"%s  --   %lu---%lu",string.UTF8String,(unsigned long)range.length,(unsigned long)range.location);
-    NSLog(@"textFieldEditChanged before: %@", [textField text]);
-    NSLog(@"textFieldEditChanged after: %@", self.beforeText);
-    
     NSString *stra = @"";
     NSString *strb = @"";
     int location = 0;
-    for (int i =0,j =0; i<[self.beforeText length]; i++) {
+    for (int i =0,j =0; i<[self.beforeText length]; i++)
+    {
         location = i;
+        CC_BREAK_IF(i+1>[textField text].length);
         
-        if (i+1>[textField text].length) {
-            break;
-        }
         strb = [self.beforeText substringWithRange:NSMakeRange(i, 1)];
         stra = [[textField text] substringWithRange:NSMakeRange(j, 1)];
         
-        if ([strb isEqualToString:stra]) {
-            j++;
-        }else{
-            break;
-        }
+        CC_BREAK_IF(![strb isEqualToString:stra]);
+        j++;
     }
-    
-    NSRange _com = NSMakeRange(0, 1);
-    NSRange _no = NSMakeRange(0, 0);
-//    int result;
-//    while ([textField text].length>=_com.length) {
-//        result = [self.beforeText compare:[textField text] options:NSLiteralSearch range:_com];
-//        if (result!=NSOrderedSame&&_no.location==0) {
-//            _no.length = _com.length-1;
-//            break;
-//        }
-//    }
-    
-    
+
     std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
     self.beforeText = [textField text];
     
-    if (_textField->getDelegate()) {
+    if (_textField->getDelegate())
+    {
         _textField->getDelegate()->textFieldAfterTextChanged(_textField, str.c_str(), "haha", location, 1, 0);
     }
     
     _isShouldEdit = NO;
 }
+
 - (void) keyboardWillWasShown:(NSNotification *) notif
 {
     NSDictionary *info = [notif userInfo];
@@ -110,54 +87,29 @@
     int height = CrossApp::s_px_to_dip(keyboardSize.height * scale);
     
     
-    if (_textField->getDelegate()) {
+    if (_textField->getDelegate())
+    {
         _textField->getDelegate()->keyBoardHeight(_textField, height);
     }
 }
+
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
-//    NSDictionary *info = [notif userInfo];
-//    
-//    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-//    CGSize keyboardSize = [value CGRectValue].size;
-//    NSLog(@"keyboardWasHidden keyBoard:%f", keyboardSize.height);
-
-    if (_textField->getDelegate()) {
+    if (_textField->getDelegate())
+    {
         _textField->getDelegate()->keyBoardHeight(_textField, 0);
     }
 }
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
-{
-    NSLog(@"textFieldShouldBeginEditing : %@", [textField text]);
-    
-    return YES;
-}
-- (void)textFieldDidBeginEditing:(UITextField *)textField           // became first responder
-{
-    NSLog(@"textFieldDidBeginEditing : %@", [textField text]);
-}
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    NSLog(@"textFieldShouldEndEditing : %@", [textField text]);
-    
-    return YES;
-}
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    NSLog(@"textFieldDidEndEditing : %@", [textField text]);
-}
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    
-    //NSLog(@"xxxxxxxxx");
-    //NSLog(@"xxxxxxxxx %ld,%ld string - %@", (unsigned long)range.location, range.length, string);
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
 
-
-    
-    std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
+    std::string str = self.beforeText != nil ? [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding] : "";
     std::string insert = [string cStringUsingEncoding:NSUTF8StringEncoding];
     self.beforeText = [textField text];
     
-    if (_textField->getDelegate()) {
+    if (_textField->getDelegate())
+    {
         _textField->getDelegate()->textFieldAfterTextChanged(_textField, str.c_str(), insert.c_str(), (int)range.location, 0, (int)string.length);
     }
     
@@ -165,21 +117,15 @@
     return YES;
 }
 
-- (BOOL)textFieldShouldClear:(UITextField *)textField{
-    return YES;
-}
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    return YES;
-}
 @end
-
 
 
 
 
 NS_CC_BEGIN
 CATextFieldX::CATextFieldX()
-:m_pImgeView(NULL)
+:m_pBackgroundView(NULL)
+,m_pImgeView(NULL)
 ,m_pTextField(NULL)
 ,m_pDlayeShow(false)
 ,m_marginLeft(10)
@@ -257,7 +203,9 @@ void CATextFieldX::showNativeTextField()
     this->update(0);
     CAScheduler::schedule(schedule_selector(CATextFieldX::update), this, 1/60.0f);
 }
-void CATextFieldX::delayShowImageView(){
+
+void CATextFieldX::delayShowImageView()
+{
     if (m_pDlayeShow) {
         return;
     }
@@ -269,6 +217,7 @@ void CATextFieldX::delayShowImageView(){
     CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::showImageView));
     CAViewAnimation::commitAnimations();
 }
+
 void CATextFieldX::showImageView()
 {
     static float scale = [UIScreen mainScreen].scale;
@@ -289,7 +238,7 @@ void CATextFieldX::showImageView()
 
     m_pImgeView->setImage(image);
     m_pImgeView->setFrame(this->getBounds());
-    m_bgImgeView->setFrame(this->getBounds());
+    m_pBackgroundView->setFrame(this->getBounds());
     
     m_pDlayeShow = false;
 }
@@ -319,6 +268,7 @@ CATextFieldX* CATextFieldX::createWithCenter(const DRect& rect)
     CC_SAFE_DELETE(textField);
     return NULL;
 }
+
 bool CATextFieldX::init()
 {
     CGPoint point = CGPointMake(5000, 5000);
@@ -337,10 +287,10 @@ bool CATextFieldX::init()
     setMarginRight(m_marginRight);
     
     CAImage* image = CAImage::create("source_material/textField_bg.png");
-    m_bgImgeView = CAScale9ImageView::createWithFrame(DRect(0, 0, 1, 1));
-    m_bgImgeView->setCapInsets(DRect(image->getPixelsWide()/2,image->getPixelsHigh()/2,1,1));
-    m_bgImgeView->setImage(image);
-    this->addSubview(m_bgImgeView);
+    DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
+    m_pBackgroundView = CAScale9ImageView::createWithImage(image);
+    m_pBackgroundView->setCapInsets(capInsets);
+    this->insertSubview(m_pBackgroundView, -1);
     
     m_pImgeView = CAImageView::createWithFrame(DRect(0, 0, 1, 1));
     this->addSubview(m_pImgeView);
@@ -376,8 +326,8 @@ void CATextFieldX::setContentSize(const DSize& contentSize)
     rect.size.width = s_dip_to_px(worldContentSize.width) / scale;
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     textField_iOS.frame = rect;
- //   worldContentSize.width = s_px_to_dip(rect.size.width * scale);
-    m_bgImgeView->setFrame(this->getBounds());
+
+    m_pBackgroundView->setFrame(this->getBounds());
     m_pImgeView->setFrame(this->getBounds());
 }
 
@@ -412,8 +362,6 @@ void CATextFieldX::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     
 }
 
-
-
 void CATextFieldX::setKeyboardType(const KeyboardType& type){
     m_keyBoardType = type;
     
@@ -444,10 +392,14 @@ void CATextFieldX::setKeyboardType(const KeyboardType& type){
     
     textField_iOS.keyboardType = keyBoardType;
 }
-const CATextFieldX::KeyboardType& CATextFieldX::getKeyboardType(){
+
+const CATextFieldX::KeyboardType& CATextFieldX::getKeyboardType()
+{
     return m_keyBoardType;
 }
-void CATextFieldX::setReturnType(const ReturnType &var){
+
+void CATextFieldX::setReturnType(const ReturnType &var)
+{
     m_returnType = var;
     
     UIReturnKeyType keyBoardReturnType = UIReturnKeyDone;
@@ -471,60 +423,82 @@ void CATextFieldX::setReturnType(const ReturnType &var){
     
     textField_iOS.returnKeyType = keyBoardReturnType;
 }
-const CATextFieldX::ReturnType& CATextFieldX::getReturnType(){
+
+const CATextFieldX::ReturnType& CATextFieldX::getReturnType()
+{
     return m_returnType;
 }
-void CATextFieldX::setBackGroundImage(CAImage* image){
-    //设置背景
-    if (!image)return;
 
-    m_bgImgeView->setCapInsets(DRect(image->getPixelsWide()/2,image->getPixelsHigh()/2,1,1));
-    m_bgImgeView->setImage(image);
+void CATextFieldX::setBackGroundImage(CAImage* image)
+{
+    if (image)
+    {
+        DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
+        m_pBackgroundView->setCapInsets(capInsets);
+    }
+    m_pBackgroundView->setImage(image);
 }
 
-void CATextFieldX::setPlaceHolderText(const std::string &var){
+void CATextFieldX::setPlaceHolderText(const std::string &var)
+{
     m_placeHolderText = var;
     
     textField_iOS.placeholder = [NSString stringWithUTF8String:m_placeHolderText.c_str()];
     delayShowImageView();
 }
-const std::string& CATextFieldX::getPlaceHolderText(){
+
+const std::string& CATextFieldX::getPlaceHolderText()
+{
     return m_placeHolderText;
 }
-void CATextFieldX::setPlaceHolderColor(const CAColor4B &var) {
-    if (CAColor4BEqual(m_placeHdolderColor, var)) {
-        return;
-    }
+
+void CATextFieldX::setPlaceHolderColor(const CAColor4B &var)
+{
+    CC_RETURN_IF(CAColor4BEqual(m_placeHdolderColor, var));
     
     m_placeHdolderColor = var;
     
-    [textField_iOS setValue:[UIColor colorWithRed:var.r green:var.g blue:var.b alpha:var.a] forKeyPath:@"_placeholderLabel.textColor"];
+    UIColor* color = [UIColor colorWithRed:var.r green:var.g blue:var.b alpha:var.a];
+    [textField_iOS setValue:color forKeyPath:@"_placeholderLabel.textColor"];
     delayShowImageView();
 }
-const CAColor4B& CATextFieldX::getPlaceHolderColor(){
+
+const CAColor4B& CATextFieldX::getPlaceHolderColor()
+{
     return m_placeHdolderColor;
 }
-void CATextFieldX::setFontSize(const int &var){
+
+void CATextFieldX::setFontSize(const int &var)
+{
     m_fontSize = var;
     
-    [textField_iOS setValue:[UIFont boldSystemFontOfSize:var] forKeyPath:@"_placeholderLabel.font"];
-    textField_iOS.font = [UIFont boldSystemFontOfSize:var];
+    textField_iOS.font = [UIFont systemFontOfSize:var];
+    [textField_iOS setValue:textField_iOS.font forKeyPath:@"_placeholderLabel.font"];
+    
     delayShowImageView();
 }
-const int& CATextFieldX::getFontSize(){
+
+const int& CATextFieldX::getFontSize()
+{
     return m_fontSize;
 }
-void CATextFieldX::setFieldText(const std::string &var){
+
+void CATextFieldX::setFieldText(const std::string &var)
+{
     m_fieldText = var;
     
     textField_iOS.text = [NSString stringWithUTF8String:m_fieldText.c_str()];
     textField_iOS.beforeText = [textField_iOS text];
     delayShowImageView();
 }
-const std::string& CATextFieldX::getFieldText(){
+
+const std::string& CATextFieldX::getFieldText()
+{
     return m_fieldText;
 }
-void CATextFieldX::setFieldTextColor(const CAColor4B &var){
+
+void CATextFieldX::setFieldTextColor(const CAColor4B &var)
+{
     if (CAColor4BEqual(m_fieldTextColor, var)) {
         return;
     }
@@ -534,10 +508,14 @@ void CATextFieldX::setFieldTextColor(const CAColor4B &var){
     textField_iOS.textColor = [UIColor colorWithRed:var.r green:var.g blue:var.b alpha:var.a];
     delayShowImageView();
 }
-const CAColor4B& CATextFieldX::getFieldTextColor(){
+
+const CAColor4B& CATextFieldX::getFieldTextColor()
+{
     return m_fieldTextColor;
 }
-void CATextFieldX::setMarginLeft(const int &var){
+
+void CATextFieldX::setMarginLeft(const int &var)
+{
     m_marginLeft = var;
     
     DSize worldContentSize = DSizeApplyAffineTransform(DSize(var, 0), worldToNodeTransform());
@@ -552,10 +530,14 @@ void CATextFieldX::setMarginLeft(const int &var){
     
     delayShowImageView();
 }
-const int& CATextFieldX::getMarginLeft(){
+
+const int& CATextFieldX::getMarginLeft()
+{
     return m_marginLeft;
 }
-void CATextFieldX::setMarginRight(const int &var){
+
+void CATextFieldX::setMarginRight(const int &var)
+{
     m_marginRight = var;
     
     DSize worldContentSize = DSizeApplyAffineTransform(DSize(var, 0), worldToNodeTransform());
@@ -570,10 +552,14 @@ void CATextFieldX::setMarginRight(const int &var){
     
     delayShowImageView();
 }
-const int& CATextFieldX::getMarginRight(){
+
+const int& CATextFieldX::getMarginRight()
+{
     return m_marginRight;
 }
-void CATextFieldX::setMarginImageLeft(const DSize imgSize,const std::string& filePath){
+
+void CATextFieldX::setMarginImageLeft(const DSize imgSize,const std::string& filePath)
+{
     DSize worldContentSize = DSizeApplyAffineTransform(imgSize, worldToNodeTransform());
     CGFloat scale = [[UIScreen mainScreen] scale];
     CGRect rect;
@@ -582,14 +568,17 @@ void CATextFieldX::setMarginImageLeft(const DSize imgSize,const std::string& fil
     rect.size.width = s_dip_to_px(worldContentSize.width) / scale;
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     
-    UIImageView* paddingView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:[NSString stringWithUTF8String:filePath.c_str()]]];
+    UIImage* image = [UIImage imageNamed:[NSString stringWithUTF8String:filePath.c_str()]];
+    UIImageView* paddingView=[[UIImageView alloc]initWithImage:image];
     [paddingView setFrame:rect];
     textField_iOS.leftView = paddingView;
     textField_iOS.leftViewMode = UITextFieldViewModeAlways;
     
     delayShowImageView();
 }
-void CATextFieldX::setMarginImageRight(const DSize imgSize,const std::string& filePath){
+
+void CATextFieldX::setMarginImageRight(const DSize imgSize,const std::string& filePath)
+{
     DSize worldContentSize = DSizeApplyAffineTransform(imgSize, worldToNodeTransform());
     CGFloat scale = [[UIScreen mainScreen] scale];
     CGRect rect;
@@ -598,18 +587,22 @@ void CATextFieldX::setMarginImageRight(const DSize imgSize,const std::string& fi
     rect.size.width = s_dip_to_px(worldContentSize.width) / scale;
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     
-    UIImageView* paddingView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:[NSString stringWithUTF8String:filePath.c_str()]]];
+    UIImage* image = [UIImage imageNamed:[NSString stringWithUTF8String:filePath.c_str()]];
+    UIImageView* paddingView=[[UIImageView alloc]initWithImage:image];
     [paddingView setFrame:rect];
     textField_iOS.rightView = paddingView;
     textField_iOS.rightViewMode = UITextFieldViewModeAlways;
     
     delayShowImageView();
 }
-void CATextFieldX::setClearButtonMode(const ClearButtonMode &var){
+
+void CATextFieldX::setClearButtonMode(const ClearButtonMode &var)
+{
     m_clearBtn = var;
     
     UITextFieldViewMode mode= UITextFieldViewModeNever;
-    switch (var) {
+    switch (var)
+    {
         case ClearButtonMode::ClearButtonWhileEditing:
             mode = UITextFieldViewModeWhileEditing;
             textField_iOS.rightViewMode = UITextFieldViewModeNever;
@@ -623,13 +616,18 @@ void CATextFieldX::setClearButtonMode(const ClearButtonMode &var){
     
     delayShowImageView();
 }
-const CATextFieldX::ClearButtonMode& CATextFieldX::getClearButtonMode(){
+
+const CATextFieldX::ClearButtonMode& CATextFieldX::getClearButtonMode()
+{
     return m_clearBtn;
 }
-void CATextFieldX::setTextFieldAlign(const TextFieldAlign &var){
+
+void CATextFieldX::setTextFieldAlign(const TextFieldAlign &var)
+{
     m_align = var;
     
-    switch (var) {
+    switch (var)
+    {
         case CATextFieldX::TextEditAlignCenter:
             textField_iOS.textAlignment = NSTextAlignmentCenter;
             break;
@@ -645,8 +643,10 @@ void CATextFieldX::setTextFieldAlign(const TextFieldAlign &var){
     
     delayShowImageView();
 }
-const CATextFieldX::TextFieldAlign& CATextFieldX::getTextFieldAlign(){
-    return  m_align;
+
+const CATextFieldX::TextFieldAlign& CATextFieldX::getTextFieldAlign()
+{
+    return m_align;
 }
 NS_CC_END
 

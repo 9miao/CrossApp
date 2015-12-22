@@ -146,8 +146,11 @@ public:
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
 protected:
+    
 	void clearBtnCallBack(CAControl* con,DPoint point);
+    
     void delayShowImageView();
+    
     void showImageView();
     
     void hideNativeTextField();
@@ -160,15 +163,17 @@ protected:
     
     virtual void setContentSize(const DSize& contentSize);
     
-    void* m_pTextField;
-    
-    CAImageView* m_pImgeView;
-    DSize m_cImageSize;
-    
 private:
-    CAScale9ImageView * m_bgImgeView;
     
-    bool							    m_pDlayeShow;
+    void*                   m_pTextField;
+    
+    CAImageView*            m_pImgeView;
+    
+    DSize                   m_cImageSize;
+    
+    CAScale9ImageView*      m_pBackgroundView;
+    
+    bool                    m_pDlayeShow;
 };
 NS_CC_END
 
