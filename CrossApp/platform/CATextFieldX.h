@@ -11,6 +11,7 @@
 
 #include "view/CAImageView.h"
 #include "view/CAScale9ImageView.h"
+#include "control/CAControl.h"
 NS_CC_BEGIN
 
 class CATextFieldX;
@@ -34,21 +35,8 @@ public:
 	//
 	virtual void keyBoardHeight(CATextFieldX *sender, int height){}
 
-	//If the sender doesn't want to insert the text, return true;
-// 	virtual bool onTextFieldInsertText(CATextField * sender, const char * insText, int nLen, int nPosition)
-// 	{
-// 
-// 		return false;
-// 	}
-// 
-// 	//If the sender doesn't want to delete the delText, return true;
-// 	virtual bool onTextFieldDeleteBackward(CATextField * sender, const char * delText, int nLen, int nPosition)
-// 	{
-// 
-// 		return false;
-// 	}
-
-
+	//arg0  
+	virtual void textFieldAfterTextChanged(CATextFieldX *sender,const char* beforeText,const char* changeText,int arg0,int arg1,int arg2){}
 };
 class CATextFieldX: public CAView
 {
@@ -61,7 +49,7 @@ public:
     
     //keyBoard type
     typedef enum{
-        KeyboardTypeDefault,
+        KeyboardTypeDefault = 0,
         KeyboardTypeNumbersAndPunctuation,
         KeyboardTypeURL,
         KeyboardTypeNumberPad,
@@ -81,9 +69,16 @@ public:
     
     //clear button Mode
     typedef enum{
-        ClearButtonNone,
+        ClearButtonNone = 0,
         ClearButtonWhileEditing
     }ClearButtonMode;
+
+	typedef enum 
+	{
+		TextEditAlignCenter = 0,
+		TextEditAlignLeft,
+		TextEditAlignRight
+	}TextFieldAlign;
 public:
     CATextFieldX();
     
@@ -135,6 +130,9 @@ public:
     //returnType       default:ReturnTypeDone
     CC_PROPERTY_PASS_BY_REF(ReturnType,m_returnType,ReturnType);
     
+	//textFieldAlign  default:center
+	CC_PROPERTY_PASS_BY_REF(TextFieldAlign,m_align,TextFieldAlign);
+
     //backGroundImage
     void setBackGroundImage(CAImage* image);
 public:
@@ -148,6 +146,7 @@ public:
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
 protected:
+	void clearBtnCallBack(CAControl* con,DPoint point);
     void delayShowImageView();
     void showImageView();
     

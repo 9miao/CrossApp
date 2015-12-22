@@ -18,10 +18,16 @@
 
 
 @interface IOSTextField: UITextField<UITextFieldDelegate>
+{
+    BOOL _isShouldEdit;
+}
 @property(nonatomic,assign) CrossApp::CATextFieldX* textField;
-
+@property(nonatomic,retain) NSString* beforeText;
 -(void)regiestKeyBoardMessage;
 @end
+
+
+
 @implementation IOSTextField
 {
     
@@ -31,11 +37,68 @@
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
     
-    [self addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingDidBegin];
+    [self addTarget:self action:@selector(textFieldEditDidBegin:) forControlEvents:UIControlEventEditingDidBegin];
+    [self addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
+}
+- (void)textFieldEditDidBegin:(UITextField *)textField
+{
+    self.beforeText = [textField text];
+    //NSLog(@"%s  --   %lu---%lu",string.UTF8String,(unsigned long)range.length,(unsigned long)range.location);
+//    NSLog(@"textFieldEditDidBegin : %@", _beforeText);
 }
 - (void)textFieldEditChanged:(UITextField *)textField
 {
-
+    if (_isShouldEdit) {
+        _isShouldEdit = NO;
+        std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
+        self.beforeText = [textField text];
+        return;
+    }
+    
+    
+    //NSLog(@"%s  --   %lu---%lu",string.UTF8String,(unsigned long)range.length,(unsigned long)range.location);
+    NSLog(@"textFieldEditChanged before: %@", [textField text]);
+    NSLog(@"textFieldEditChanged after: %@", self.beforeText);
+    
+    NSString *stra = @"";
+    NSString *strb = @"";
+    int location = 0;
+    for (int i =0,j =0; i<[self.beforeText length]; i++) {
+        location = i;
+        
+        if (i+1>[textField text].length) {
+            break;
+        }
+        strb = [self.beforeText substringWithRange:NSMakeRange(i, 1)];
+        stra = [[textField text] substringWithRange:NSMakeRange(j, 1)];
+        
+        if ([strb isEqualToString:stra]) {
+            j++;
+        }else{
+            break;
+        }
+    }
+    
+    NSRange _com = NSMakeRange(0, 1);
+    NSRange _no = NSMakeRange(0, 0);
+//    int result;
+//    while ([textField text].length>=_com.length) {
+//        result = [self.beforeText compare:[textField text] options:NSLiteralSearch range:_com];
+//        if (result!=NSOrderedSame&&_no.location==0) {
+//            _no.length = _com.length-1;
+//            break;
+//        }
+//    }
+    
+    
+    std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
+    self.beforeText = [textField text];
+    
+    if (_textField->getDelegate()) {
+        _textField->getDelegate()->textFieldAfterTextChanged(_textField, str.c_str(), "haha", location, 1, 0);
+    }
+    
+    _isShouldEdit = NO;
 }
 - (void) keyboardWillWasShown:(NSNotification *) notif
 {
@@ -63,27 +126,42 @@
         _textField->getDelegate()->keyBoardHeight(_textField, 0);
     }
 }
-//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
-//{
-//    
-//}
-//- (void)textFieldDidBeginEditing:(UITextField *)textField           // became first responder
-//{
-//    
-//}
-//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-//{
-//    
-//}
-//- (void)textFieldDidEndEditing:(UITextField *)textField{
-//    
-//}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
+{
+    NSLog(@"textFieldShouldBeginEditing : %@", [textField text]);
+    
+    return YES;
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField           // became first responder
+{
+    NSLog(@"textFieldDidBeginEditing : %@", [textField text]);
+}
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    NSLog(@"textFieldShouldEndEditing : %@", [textField text]);
+    
+    return YES;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    NSLog(@"textFieldDidEndEditing : %@", [textField text]);
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
+    //NSLog(@"xxxxxxxxx");
+    //NSLog(@"xxxxxxxxx %ld,%ld string - %@", (unsigned long)range.location, range.length, string);
+
+
     
-    NSLog(@"%s  --   %lu---%lu",string.UTF8String,(unsigned long)range.length,(unsigned long)range.location);
-    NSLog(@"textField text : %@", [textField text]);
+    std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
+    std::string insert = [string cStringUsingEncoding:NSUTF8StringEncoding];
+    self.beforeText = [textField text];
+    
+    if (_textField->getDelegate()) {
+        _textField->getDelegate()->textFieldAfterTextChanged(_textField, str.c_str(), insert.c_str(), (int)range.location, 0, (int)string.length);
+    }
+    
+    _isShouldEdit = YES;
     return YES;
 }
 
@@ -106,6 +184,7 @@ CATextFieldX::CATextFieldX()
 ,m_pDlayeShow(false)
 ,m_marginLeft(10)
 ,m_marginRight(10)
+,m_pDelegate(NULL)
 {
     this->setHaveNextResponder(false);
 }
@@ -439,6 +518,7 @@ void CATextFieldX::setFieldText(const std::string &var){
     m_fieldText = var;
     
     textField_iOS.text = [NSString stringWithUTF8String:m_fieldText.c_str()];
+    textField_iOS.beforeText = [textField_iOS text];
     delayShowImageView();
 }
 const std::string& CATextFieldX::getFieldText(){
@@ -545,6 +625,28 @@ void CATextFieldX::setClearButtonMode(const ClearButtonMode &var){
 }
 const CATextFieldX::ClearButtonMode& CATextFieldX::getClearButtonMode(){
     return m_clearBtn;
+}
+void CATextFieldX::setTextFieldAlign(const TextFieldAlign &var){
+    m_align = var;
+    
+    switch (var) {
+        case CATextFieldX::TextEditAlignCenter:
+            textField_iOS.textAlignment = NSTextAlignmentCenter;
+            break;
+        case CATextFieldX::TextEditAlignLeft:
+            textField_iOS.textAlignment = NSTextAlignmentLeft;
+            break;
+        case CATextFieldX::TextEditAlignRight:
+            textField_iOS.textAlignment = NSTextAlignmentRight;
+            break;
+        default:
+            break;
+    }
+    
+    delayShowImageView();
+}
+const CATextFieldX::TextFieldAlign& CATextFieldX::getTextFieldAlign(){
+    return  m_align;
 }
 NS_CC_END
 

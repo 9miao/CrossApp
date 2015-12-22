@@ -2119,7 +2119,7 @@ void CDUIShowView::httpTest()
     string url = "http://test.yuhaisong.com/test/index.php";
     CAHttpRequest* request = new CAHttpRequest();
     request->setTextTag("Getpage");
-    request->setRequestType(CCHttpRequest::kHttpPost);
+    request->setRequestType(CAHttpRequest::kHttpPost);
     request->setUrl(url.c_str());
     request->setResponseCallback(this,httpresponse_selector(CDUIShowView::requestResult));
     CAHttpClient* httpClient = CAHttpClient::getInstance();
