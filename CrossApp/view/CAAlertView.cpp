@@ -285,7 +285,7 @@ void CAAlertView::adjustButtonView() {
 
 	} else if (btnCount == 2) {
 
-		CAView *line = createWithFrame(DRect(ALERT_VIEW_WIDTH / 2, m_fAlertViewLineHeight, s_px_to_dip(2.0f), alertViewButtonHeight));
+		CAView *line = createWithFrame(DRect(ALERT_VIEW_WIDTH / 2, m_fAlertViewLineHeight, s_px_to_dip(1.05f), alertViewButtonHeight));
 		line->setColor(ccc4(206, 206, 211, 255));
 		m_pBackView->addSubview(line);
 
@@ -332,7 +332,7 @@ void CAAlertView::adjustButtonView() {
 void CAAlertView::addGrayLine(int y) {
 	
 	CCAssert(y, "");
-	CAView *line = createWithFrame(DRect(0, y, ALERT_VIEW_WIDTH, s_px_to_dip(2.0f)));
+	CAView *line = createWithFrame(DRect(0, y, ALERT_VIEW_WIDTH, s_px_to_dip(1.05f)));
 	line->setColor(ccc4(206, 206, 211, 255));
 	m_pBackView->addSubview(line);
 }

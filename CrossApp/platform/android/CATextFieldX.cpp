@@ -21,53 +21,6 @@ NS_CC_BEGIN
 
 static std::map<int , CATextFieldX*> s_map;
 
-extern "C"
-{
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_onByte(JNIEnv *env, jclass cls, jint key, jbyteArray buf, jint width, jint height)
-    {
-        unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
-        env->GetByteArrayRegion(buf, 0, width * height * 4, (jbyte *)data);
-        CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat_RGBA8888, width, height);
-        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("textField"));
-		imageView->setImage(image);
-    }
-
-	//textfield delegate
-	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardHeightReturn(JNIEnv *env, jclass cls, jint key, jint height)
-	{
-		CATextFieldX* textField = s_map[(int)key];
-		if (textField->getDelegate())
-		{
-			textField->getDelegate()->keyBoardHeight(textField, (int)s_px_to_dip(height));
-		}
-	}
-	//return call back
-	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardReturnCallBack(JNIEnv *env, jclass cls, jint key, jint height)
-	{
-		CATextFieldX* textField = s_map[(int)key];
-		if (textField->getDelegate())
-		{
-			textField->getDelegate()->textFieldShouldReturn(textField);
-		}
-	}
-    
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_textChange(JNIEnv *env, jclass cls, jint key, jstring before, jstring change, int arg0, int arg1, int arg2)
-    {
-        const char* charBefore = env->GetStringUTFChars(before, NULL);
-        std::string strBefore = charBefore;
-        env->ReleaseStringUTFChars(before, charBefore);
-        const char* charChange = env->GetStringUTFChars(change, NULL);
-        std::string strChange = charChange;
-        env->ReleaseStringUTFChars(change, charChange);
-        
-        CATextFieldX* textField = s_map[(int)key];
-        if (textField->getDelegate())
-        {
-            textField->getDelegate()->textFieldAfterTextChanged(textField,strBefore.c_str(), strChange.c_str(), arg0, arg1, arg2);
-        }		
-    }
-}
-
 void onCreateView(int key)
 {
     JniMethodInfo jni;
@@ -294,6 +247,68 @@ void setTextFieldAlignJNI(int key, int type)
     }
 }
 
+
+extern "C"
+{
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_onByte(JNIEnv *env, jclass cls, jint key, jbyteArray buf, jint width, jint height)
+    {
+        unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
+        env->GetByteArrayRegion(buf, 0, width * height * 4, (jbyte *)data);
+        CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat_RGBA8888, width, height);
+        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("textField"));
+        imageView->setImage(image);
+        imageView->setVisible(true);
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_hideImageView(JNIEnv *env, jclass cls, jint key)
+    {
+        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("textField"));
+        imageView->setVisible(false);
+    }
+    
+    //textfield delegate
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardHeightReturn(JNIEnv *env, jclass cls, jint key, jint height)
+    {
+        CATextFieldX* textField = s_map[(int)key];
+        if (textField->getDelegate())
+        {
+            textField->getDelegate()->keyBoardHeight(textField, (int)s_px_to_dip(height));
+        }
+    }
+    //return call back
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardReturnCallBack(JNIEnv *env, jclass cls, jint key, jint height)
+    {
+        CATextFieldX* textField = s_map[(int)key];
+        if (textField->getDelegate())
+        {
+            textField->getDelegate()->textFieldShouldReturn(textField);
+        }
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_textChange(JNIEnv *env, jclass cls, jint key, jstring before, jstring change, int arg0, int arg1, int arg2)
+    {
+        const char* charBefore = env->GetStringUTFChars(before, NULL);
+        std::string strBefore = charBefore;
+        env->ReleaseStringUTFChars(before, charBefore);
+        const char* charChange = env->GetStringUTFChars(change, NULL);
+        std::string strChange = charChange;
+        env->ReleaseStringUTFChars(change, charChange);
+        
+        CATextFieldX* textField = s_map[(int)key];
+        if (textField->getDelegate())
+        {
+            textField->getDelegate()->textFieldAfterTextChanged(textField,strBefore.c_str(), strChange.c_str(), arg0, arg1, arg2);
+        }
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_resignFirstResponder(JNIEnv *env, jclass cls, jint key)
+    {
+        CATextFieldX* textField = s_map[(int)key];
+        textField->resignFirstResponder();
+    }
+}
+
+
 CATextFieldX::CATextFieldX()
 :m_pBackgroundView(NULL)
 ,m_pImgeView(NULL)
@@ -353,17 +368,12 @@ bool CATextFieldX::resignFirstResponder()
     
     this->hideNativeTextField();
 
-    CAViewAnimation::beginAnimations(m_s__StrID + "showTextField", NULL);
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::showTextField));
-    CAViewAnimation::commitAnimations();
-    
     if (m_clearBtn == ClearButtonMode::ClearButtonWhileEditing)
     {
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
         ima->setImage(NULL);
     }
-    
+
     return result;
 }
 
@@ -375,11 +385,6 @@ bool CATextFieldX::becomeFirstResponder()
 	}
 
 	bool result = CAView::becomeFirstResponder();
-
-    CAViewAnimation::beginAnimations(m_s__StrID + "hideTextField", NULL);
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::hideTextField));
-    CAViewAnimation::commitAnimations();
 
 	becomeFirstResponderID(m_u__ID);
 
@@ -395,12 +400,12 @@ bool CATextFieldX::becomeFirstResponder()
 
 void CATextFieldX::hideTextField()
 {
-    m_pImgeView->setVisible(false);
+//    m_pImgeView->setVisible(false);
 }
 
 void CATextFieldX::showTextField()
 {
-    m_pImgeView->setVisible(true);
+//    m_pImgeView->setVisible(true);
 }
 
 void CATextFieldX::hideNativeTextField()

@@ -73,6 +73,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     native static void returnFinfishedDiscoveryDevice();
     public static Handler msHandler;
     
+    
+    public static CrossAppTextField _sTextField = null;
 	public static Cocos2dxActivity getContext()
 	{
 		return Cocos2dxActivity.crossAppActivity;
@@ -83,6 +85,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		return Cocos2dxActivity.frame;
 	}
 	
+	public static void setSingleTextField(CrossAppTextField text) {
+		_sTextField = text;
+	}
 	public static Handler mLightHandler;
 	// ===========================================================
 	// Constructors
@@ -473,7 +478,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	@Override
 	protected void onResume() {
 		super.onResume();
-
+		if (_sTextField!=null) {
+			_sTextField.resume();
+		}
+		
+		
+		
 		Cocos2dxHelper.onResume();
 		this.mGLSurfaceView.onResume();
 		if (AndroidGPS.locationManager!=null)

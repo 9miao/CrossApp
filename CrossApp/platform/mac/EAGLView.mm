@@ -633,7 +633,6 @@ static EAGLView *view;
     CrossApp::CAIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     [_textfield setStringValue:@""];
-
 #endif
 }
 
