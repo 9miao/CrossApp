@@ -19,7 +19,7 @@
 
 NS_CC_BEGIN
 
-static std::map<int , CAImageView*> s_map;
+static std::map<int , CATextFieldX*> s_map;
 
 extern "C"
 {
@@ -28,13 +28,14 @@ extern "C"
         unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
         env->GetByteArrayRegion(buf, 0, width * height * 4, (jbyte *)data);
         CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat_RGBA8888, width, height);
-		s_map[(int)key]->setImage(image);
+        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("textField"));
+		imageView->setImage(image);
     }
 
 	//textfield delegate
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardHeightReturn(JNIEnv *env, jclass cls, jint key, jint height)
 	{
-		CATextFieldX* textField = (CATextFieldX*)(s_map[(int)key]->getSuperview());
+		CATextFieldX* textField = s_map[(int)key];
 		if (textField->getDelegate())
 		{
 			textField->getDelegate()->keyBoardHeight(textField, (int)s_px_to_dip(height));
@@ -43,20 +44,28 @@ extern "C"
 	//return call back
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardReturnCallBack(JNIEnv *env, jclass cls, jint key, jint height)
 	{
-		CATextFieldX* textField = (CATextFieldX*)(s_map[(int)key]->getSuperview());
+		CATextFieldX* textField = s_map[(int)key];
 		if (textField->getDelegate())
 		{
 			textField->getDelegate()->textFieldShouldReturn(textField);
 		}
 	}
-// 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardShow(JNIEnv *env, jclass cls, jint key)
-// 	{
-// 		CATextFieldX* textField = (CATextFieldX*)(s_map[(int)key]->getSuperview());
-// 	}
-// 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardHide(JNIEnv *env, jclass cls, jint key)
-// 	{
-// 		CATextFieldX* textField = (CATextFieldX*)(s_map[(int)key]->getSuperview());
-// 	}
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_textChange(JNIEnv *env, jclass cls, jint key, jstring before, jstring change, int arg0, int arg1, int arg2)
+    {
+        const char* charBefore = env->GetStringUTFChars(before, NULL);
+        std::string strBefore = charBefore;
+        env->ReleaseStringUTFChars(before, charBefore);
+        const char* charChange = env->GetStringUTFChars(change, NULL);
+        std::string strChange = charChange;
+        env->ReleaseStringUTFChars(change, charChange);
+        
+        CATextFieldX* textField = s_map[(int)key];
+        if (textField->getDelegate())
+        {
+            textField->getDelegate()->textFieldAfterTextChanged(textField,strBefore.c_str(), strChange.c_str(), arg0, arg1, arg2);
+        }		
+    }
 }
 
 void onCreateView(int key)
@@ -144,15 +153,158 @@ void resignFirstResponderID(int key)
     }
 }
 
-CATextFieldX::CATextFieldX()
-:m_pImgeView(NULL)
-,m_pTextField(NULL)
-, m_bgImgeView(NULL)
-, m_pDelegate(NULL)
-, m_pDlayeShow(false)
-, m_marginLeft(10)
-, m_marginRight(10)
+
+void setMarginJNI(int key, int left, int right, int top = 0, int bottom = 0)
 {
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setMarginsDis", "(IIII)V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID, left, right, top, bottom);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
+void setFontSizeJNI(int key, int size)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setFontSize", "(I)V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID, size);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
+void setPlaceHolderTextJNI(int key, const std::string& var)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setTextFieldPlacHolder", "(Ljava/lang/String;)V"))
+        {
+            jstring jFilePath = jni.env->NewStringUTF(var.c_str());
+            //jstring rtstr = jni.env->NewStringUTF(var);
+            jni.env->CallVoidMethod(obj, jni.methodID, jFilePath);
+            jni.env->DeleteLocalRef(jFilePath);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
+void setPlaceHolderColorJNI(int key, int color)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setTextFieldPlacHolderColor", "(I)V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID, color);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
+void setFieldTextJNI(int key, const std::string& var)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setTextFieldText", "(Ljava/lang/String;)V"))
+        {
+            jstring jFilePath = jni.env->NewStringUTF(var.c_str());
+            jni.env->CallVoidMethod(obj, jni.methodID, jFilePath);
+            jni.env->DeleteLocalRef(jFilePath);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
+void setFieldTextColorJNI(int key, int color)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setTextFieldTextColor", "(I)V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID, color);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
+void setKeyboardTypeJNI(int key, int type)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setKeyBoardType", "(I)V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID, type);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
+void setReturnTypeJNI(int key, int type)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setKeyBoardReturnType", "(I)V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID, type);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
+void setTextFieldAlignJNI(int key, int type)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setTextFieldAlgin", "(I)V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID, type);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
+CATextFieldX::CATextFieldX()
+:m_pBackgroundView(NULL)
+,m_pImgeView(NULL)
+,m_pTextField(NULL)
+,m_bUpdateImage(true)
+,m_marginLeft(10)
+,m_marginRight(10)
+,m_pDelegate(NULL)
+,m_obLastPoint(DPoint(-0xffff, -0xffff))
+{
+    s_map[m_u__ID] = this;
     this->setHaveNextResponder(false);
 }
 
@@ -165,32 +317,29 @@ void CATextFieldX::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
     
-	delayShowImageView();
-//     CAViewAnimation::beginAnimations("", NULL);
-//     CAViewAnimation::setAnimationDuration(0);
-//     CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::showImageView));
-//     CAViewAnimation::commitAnimations();
-    
+    this->delayShowImage();
 }
 
 void CATextFieldX::onExitTransitionDidStart()
 {
     CAView::onExitTransitionDidStart();
 }
-void setClearButtonJNI(int key, int size)
-{
-	JniMethodInfo jni;
-	if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
-	{
-		jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
 
-		if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setClearBtn", "(I)V"))
-		{
-			jni.env->CallVoidMethod(obj, jni.methodID, size);
-			jni.env->DeleteLocalRef(jni.classID);
-		}
-	}
+void showClearButtonJNI(int key)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "showClearButton", "()V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
 }
+
 bool CATextFieldX::resignFirstResponder()
 {
 	if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
@@ -201,20 +350,20 @@ bool CATextFieldX::resignFirstResponder()
     bool result = CAView::resignFirstResponder();
 
     resignFirstResponderID(m_u__ID);
-    this->showImageView();
     
-    m_pImgeView->setVisible(true);
+    this->hideNativeTextField();
+
+    CAViewAnimation::beginAnimations(m_s__StrID + "showTextField", NULL);
+    CAViewAnimation::setAnimationDuration(0);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::showTextField));
+    CAViewAnimation::commitAnimations();
     
-	this->hideNativeTextField();
-
-	if (m_clearBtn == ClearButtonMode::ClearButtonWhileEditing)
-	{
-		//设置margins
-		setMarginImageRight(DSize(10,0), "");
-
-		setClearButtonJNI(m_u__ID, 0);
-	}
-
+    if (m_clearBtn == ClearButtonMode::ClearButtonWhileEditing)
+    {
+        CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
+        ima->setImage(NULL);
+    }
+    
     return result;
 }
 
@@ -227,7 +376,10 @@ bool CATextFieldX::becomeFirstResponder()
 
 	bool result = CAView::becomeFirstResponder();
 
-	m_pImgeView->setVisible(false);
+    CAViewAnimation::beginAnimations(m_s__StrID + "hideTextField", NULL);
+    CAViewAnimation::setAnimationDuration(0);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::hideTextField));
+    CAViewAnimation::commitAnimations();
 
 	becomeFirstResponderID(m_u__ID);
 
@@ -235,24 +387,25 @@ bool CATextFieldX::becomeFirstResponder()
 
 	if (m_clearBtn == ClearButtonMode::ClearButtonWhileEditing)
 	{
-		//设置margins
-		setMarginImageRight(DSize(getBounds().size.height, getBounds().size.height), "source_material/clearbtn.png");
-
-		setClearButtonJNI(m_u__ID, 1);
+        CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
+        ima->setImage(CAImage::create("source_material/clear_button.png"));
 	}
     return result;
+}
+
+void CATextFieldX::hideTextField()
+{
+    m_pImgeView->setVisible(false);
+}
+
+void CATextFieldX::showTextField()
+{
+    m_pImgeView->setVisible(true);
 }
 
 void CATextFieldX::hideNativeTextField()
 {
     CAScheduler::unschedule(schedule_selector(CATextFieldX::update), this);
-    
-    this->hide();
-}
-
-void CATextFieldX::hide()
-{
-    setTextFieldPointJNI(m_u__ID, -1000, -1000);
 }
 
 void CATextFieldX::showNativeTextField()
@@ -261,13 +414,22 @@ void CATextFieldX::showNativeTextField()
     CAScheduler::schedule(schedule_selector(CATextFieldX::update), this, 1/60.0f);
 }
 
-void CATextFieldX::showImageView()
+void CATextFieldX::delayShowImage()
+{
+    if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
+    {
+        CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
+        CAViewAnimation::setAnimationDuration(0);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::showImage));
+        CAViewAnimation::commitAnimations();
+    }
+}
+
+void CATextFieldX::showImage()
 {
     getTextFieldImageJNI(m_u__ID);
     
     m_pImgeView->setFrame(this->getBounds());
-	//m_bgImgeView->setFrame(this->getBounds());
-	m_pDlayeShow = false;
 }
 
 CATextFieldX* CATextFieldX::createWithFrame(const DRect& frame)
@@ -300,16 +462,16 @@ bool CATextFieldX::init()
 {
     onCreateView(m_u__ID);
     
-	CAImage* image = CAImage::create("source_material/textField_bg.png");
-	m_bgImgeView = CAScale9ImageView::createWithFrame(DRect(0, 0, 1, 1));
-	m_bgImgeView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
-	m_bgImgeView->setImage(image);
-	this->addSubview(m_bgImgeView);
+    CAImage* image = CAImage::create("source_material/textField_bg.png");
+    DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
+    m_pBackgroundView = CAScale9ImageView::createWithImage(image);
+    m_pBackgroundView->setCapInsets(capInsets);
+    this->insertSubview(m_pBackgroundView, -1);
 
 	m_pImgeView = CAImageView::createWithFrame(DRect(0, 0, 1, 1));
 	this->addSubview(m_pImgeView);
-
-    s_map[m_u__ID] = m_pImgeView;
+    m_pImgeView->setTextTag("textField");
+    
     return true;
 }
 
@@ -317,10 +479,10 @@ void CATextFieldX::update(float dt)
 {
     do
     {
-        //CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
+        CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
         DPoint point = this->convertToWorldSpace(DPointZero);
         
-        //CC_BREAK_IF(m_obLastPoint.equals(point) && m_obLastContentSize.equals(contentSize));
+        CC_BREAK_IF(m_obLastPoint.equals(point));
 
         point.x = s_dip_to_px(point.x);
         point.y = s_dip_to_px(point.y);
@@ -340,8 +502,8 @@ void CATextFieldX::setContentSize(const DSize& contentSize)
     size.height =  s_dip_to_px(worldContentSize.height);
     setTextFieldSizeJNI(m_u__ID, size.width, size.height);
 
+    m_pBackgroundView->setFrame(this->getBounds());
     m_pImgeView->setFrame(this->getBounds());
-	m_bgImgeView->setFrame(this->getBounds());
 }
 
 bool CATextFieldX::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -367,37 +529,28 @@ void CATextFieldX::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         resignFirstResponder();
     }
-    
 }
 
 void CATextFieldX::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-    
+    this->ccTouchEnded(pTouch, pEvent);
 }
 
 //
-void CATextFieldX::setClearButtonMode(const ClearButtonMode& var){
+void CATextFieldX::setClearButtonMode(const ClearButtonMode& var)
+{
 	m_clearBtn = var;
+    setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
+    showClearButtonJNI(m_u__ID);
 }
-const CATextFieldX::ClearButtonMode& CATextFieldX::getClearButtonMode(){
+
+const CATextFieldX::ClearButtonMode& CATextFieldX::getClearButtonMode()
+{
 	return m_clearBtn;
 }
-void setMarginJNI(int key, int left, int right, int top = 0, int bottom = 0)
+
+void CATextFieldX::setMarginLeft(const int& var)
 {
-	JniMethodInfo jni;
-	if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
-	{
-		jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
-
-		if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setMarginsDis", "(IIII)V"))
-		{
-			jni.env->CallVoidMethod(obj, jni.methodID, left, right, top, bottom);
-			jni.env->DeleteLocalRef(jni.classID);
-		}
-	}
-}
-
-void CATextFieldX::setMarginLeft(const int& var){
 	m_marginLeft = var;
 
 	DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_marginLeft,0), worldToNodeTransform());
@@ -408,13 +561,16 @@ void CATextFieldX::setMarginLeft(const int& var){
 
 	setMarginJNI(m_u__ID, x, y);
 
-	delayShowImageView();
+    this->delayShowImage();
 }
-const int& CATextFieldX::getMarginLeft(){
+
+const int& CATextFieldX::getMarginLeft()
+{
 	return m_marginLeft;
 }
 
-void CATextFieldX::setMarginRight(const int& var){
+void CATextFieldX::setMarginRight(const int& var)
+{
 	m_marginRight= var;
 
 	DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_marginLeft, 0), worldToNodeTransform());
@@ -425,12 +581,16 @@ void CATextFieldX::setMarginRight(const int& var){
 
 	setMarginJNI(m_u__ID, x, y);
 
-	delayShowImageView();
+    this->delayShowImage();
 }
-const int& CATextFieldX::getMarginRight(){
+
+const int& CATextFieldX::getMarginRight()
+{
 	return m_marginRight;
 }
-void CATextFieldX::setMarginImageLeft(const DSize imgSize, const std::string& filePath){
+
+void CATextFieldX::setMarginImageLeft(const DSize imgSize, const std::string& filePath)
+{
 	//set margins
 	setMarginLeft(imgSize.width);
 
@@ -445,7 +605,9 @@ void CATextFieldX::setMarginImageLeft(const DSize imgSize, const std::string& fi
 	ima->setCenter(DRect(imgSize.width / 2, getBounds().size.height / 2, imgSize.width, imgSize.height));
 	ima->setImage(CAImage::create(filePath));
 }
-void CATextFieldX::setMarginImageRight(const DSize imgSize, const std::string& filePath){
+
+void CATextFieldX::setMarginImageRight(const DSize imgSize, const std::string& filePath)
+{
 	//set margins
 	setMarginRight(imgSize.width);
 
@@ -461,190 +623,115 @@ void CATextFieldX::setMarginImageRight(const DSize imgSize, const std::string& f
 	ima->setCenter(DRect(getBounds().size.width - imgSize.width / 2, getBounds().size.height / 2, imgSize.width, imgSize.height));
 	ima->setImage(CAImage::create(filePath));
 }
-void setFontSizeJNI(int key, int size)
-{
-	JniMethodInfo jni;
-	if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
-	{
-		jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
 
-		if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setFontSize", "(I)V"))
-		{
-			jni.env->CallVoidMethod(obj, jni.methodID, size);
-			jni.env->DeleteLocalRef(jni.classID);
-		}
-	}
-}
-void CATextFieldX::setFontSize(const int& var){
+void CATextFieldX::setFontSize(const int& var)
+{
 	m_fontSize = var;
 	setFontSizeJNI(m_u__ID,var);
 
-	delayShowImageView();
+    this->delayShowImage();
 }
+
 const int& CATextFieldX::getFontSize(){
 	return m_fontSize;
 }
 
-void setPlaceHolderTextJNI(int key, const std::string& var)
+void CATextFieldX::setPlaceHolderText(const std::string& var)
 {
-	JniMethodInfo jni;
-	if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
-	{
-		jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
-
-		if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setTextFieldPlacHolder", "(Ljava/lang/String;)V"))
-		{
-			jstring jFilePath = jni.env->NewStringUTF(var.c_str());
-			//jstring rtstr = jni.env->NewStringUTF(var);
-			jni.env->CallVoidMethod(obj, jni.methodID, jFilePath);
-			jni.env->DeleteLocalRef(jFilePath);
-			jni.env->DeleteLocalRef(jni.classID);
-		}
-	}
-}
-void CATextFieldX::setPlaceHolderText(const std::string& var){
 	m_placeHolderText = var;
 	setPlaceHolderTextJNI(m_u__ID, var);
 
-	delayShowImageView();
+    this->delayShowImage();
 }
-const std::string& CATextFieldX::getPlaceHolderText(){
+
+const std::string& CATextFieldX::getPlaceHolderText()
+{
 	return m_placeHolderText;
 }
-void setPlaceHolderColorJNI(int key, int color)
-{
-	JniMethodInfo jni;
-	if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
-	{
-		jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
 
-		if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setTextFieldPlacHolderColor", "(I)V"))
-		{
-			jni.env->CallVoidMethod(obj, jni.methodID, color);
-			jni.env->DeleteLocalRef(jni.classID);
-		}
-	}
-}
-void CATextFieldX::setPlaceHolderColor(const CAColor4B& var){
+void CATextFieldX::setPlaceHolderColor(const CAColor4B& var)
+{
 	m_placeHdolderColor = var;
 	setPlaceHolderColorJNI(m_u__ID, getUIntFormColor4B(var));
 
-	delayShowImageView();
+    this->delayShowImage();
 }
-const CAColor4B& CATextFieldX::getPlaceHolderColor(){
+
+const CAColor4B& CATextFieldX::getPlaceHolderColor()
+{
 	return m_placeHdolderColor;
 }
-void setFieldTextJNI(int key, const std::string& var)
-{
-	JniMethodInfo jni;
-	if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
-	{
-		jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
 
-		if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setTextFieldText", "(Ljava/lang/String;)V"))
-		{
-			jstring jFilePath = jni.env->NewStringUTF(var.c_str());
-			jni.env->CallVoidMethod(obj, jni.methodID, jFilePath);
-			jni.env->DeleteLocalRef(jFilePath);
-			jni.env->DeleteLocalRef(jni.classID);
-		}
-	}
-}
-void CATextFieldX::setFieldText(const std::string& var){
+void CATextFieldX::setFieldText(const std::string& var)
+{
 	m_fieldText = var;
 	setFieldTextJNI(m_u__ID, var);
 
-	delayShowImageView();
+    this->delayShowImage();
 }
-const std::string& CATextFieldX::getFieldText(){
+
+const std::string& CATextFieldX::getFieldText()
+{
 	return m_fieldText;
 }
-void setFieldTextColorJNI(int key, int color)
-{
-	JniMethodInfo jni;
-	if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
-	{
-		jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
 
-		if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setTextFieldTextColor", "(I)V"))
-		{
-			jni.env->CallVoidMethod(obj, jni.methodID, color);
-			jni.env->DeleteLocalRef(jni.classID);
-		}
-	}
-}
-void CATextFieldX::setFieldTextColor(const CAColor4B& var){
+void CATextFieldX::setFieldTextColor(const CAColor4B& var)
+{
 	m_fieldTextColor = var;
 	setFieldTextColorJNI(m_u__ID, getUIntFormColor4B(var));
 
-	delayShowImageView();
+    this->delayShowImage();
 }
-const CAColor4B& CATextFieldX::getFieldTextColor(){
+
+const CAColor4B& CATextFieldX::getFieldTextColor()
+{
 	return m_fieldTextColor; 
 }
 
-void setKeyboardTypeJNI(int key, int type)
+void CATextFieldX::setKeyboardType(const KeyboardType& var)
 {
-	JniMethodInfo jni;
-	if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
-	{
-		jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
-
-		if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setKeyBoardType", "(I)V"))
-		{
-			jni.env->CallVoidMethod(obj, jni.methodID, type);
-			jni.env->DeleteLocalRef(jni.classID);
-		}
-	}
-}
-void CATextFieldX::setKeyboardType(const KeyboardType& var){
 	m_keyBoardType = var;
 	setKeyboardTypeJNI(m_u__ID,(int)var);
 }
-const CATextFieldX::KeyboardType& CATextFieldX::getKeyboardType(){
+
+const CATextFieldX::KeyboardType& CATextFieldX::getKeyboardType()
+{
 	return m_keyBoardType;
 }
-void setReturnTypeJNI(int key, int type)
-{
-	JniMethodInfo jni;
-	if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
-	{
-		jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
 
-		if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setKeyBoardReturnType", "(I)V"))
-		{
-			jni.env->CallVoidMethod(obj, jni.methodID, type);
-			jni.env->DeleteLocalRef(jni.classID);
-		}
-	}
-}
-void CATextFieldX::setReturnType(const ReturnType& var){
+void CATextFieldX::setReturnType(const ReturnType& var)
+{
 	m_returnType = var;
 	setReturnTypeJNI(m_u__ID, (int)var);
 }
-const CATextFieldX::ReturnType& CATextFieldX::getReturnType(){
+
+const CATextFieldX::ReturnType& CATextFieldX::getReturnType()
+{
 	return m_returnType;
 }
-void CATextFieldX::setBackGroundImage(CAImage* image){
-	//设置背景
-	if (!image)return;
 
-	m_bgImgeView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
-	m_bgImgeView->setImage(image);
+void CATextFieldX::setBackGroundImage(CAImage* image)
+{
+    if (image)
+    {
+        DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
+        m_pBackgroundView->setCapInsets(capInsets);
+    }
+    m_pBackgroundView->setImage(image);
 }
 
-void CATextFieldX::delayShowImageView()
+void CATextFieldX::setTextFieldAlign(const TextFieldAlign& var)
 {
-	if (m_pDlayeShow) {
-		return;
-	}
+    m_align = var;
+    
+    setTextFieldAlignJNI(m_u__ID,(int)var);
+    
+    this->delayShowImage();
+}
 
-	m_pDlayeShow = true;
-
-	CAViewAnimation::beginAnimations("", NULL);
-	CAViewAnimation::setAnimationDuration(0);
-	CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::showImageView));
-	CAViewAnimation::commitAnimations();
+const CATextFieldX::TextFieldAlign& CATextFieldX::getTextFieldAlign()
+{
+    return m_align;
 }
 
 void CATextFieldX::clearBtnCallBack(CAControl* con, DPoint point)

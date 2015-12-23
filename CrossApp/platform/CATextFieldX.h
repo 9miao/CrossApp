@@ -38,6 +38,7 @@ public:
 	//arg0  
 	virtual void textFieldAfterTextChanged(CATextFieldX *sender,const char* beforeText,const char* changeText,int arg0,int arg1,int arg2){}
 };
+
 class CATextFieldX: public CAView
 {
 public:
@@ -103,7 +104,7 @@ public:
 
     //edit clearButton default:ClearButtonNone
     //MarginsRight set,clearbutton will be clear
-    CC_PROPERTY_PASS_BY_REF(ClearButtonMode,m_clearBtn,ClearButtonMode);
+    CC_PROPERTY_PASS_BY_REF(ClearButtonMode, m_clearBtn, ClearButtonMode);
     
     //textfield Margins    default:left 16,right 16
     CC_PROPERTY_PASS_BY_REF(int, m_marginLeft, MarginLeft);
@@ -149,15 +150,17 @@ protected:
     
 	void clearBtnCallBack(CAControl* con,DPoint point);
     
-    void delayShowImageView();
+    void delayShowImage();
+
+    void showImage();
     
-    void showImageView();
+    void hideTextField();
+    
+    void showTextField();
     
     void hideNativeTextField();
     
     void showNativeTextField();
-    
-    void hide();
     
     void update(float dt);
     
@@ -173,8 +176,11 @@ private:
     
     CAScale9ImageView*      m_pBackgroundView;
     
-    bool                    m_pDlayeShow;
+    bool                    m_bUpdateImage;
+    
+    DPoint                  m_obLastPoint;
 };
+
 NS_CC_END
 
 #endif /* CATextFieldX_hpp */

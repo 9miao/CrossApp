@@ -127,10 +127,11 @@ CATextFieldX::CATextFieldX()
 :m_pBackgroundView(NULL)
 ,m_pImgeView(NULL)
 ,m_pTextField(NULL)
-,m_pDlayeShow(false)
+,m_bUpdateImage(true)
 ,m_marginLeft(10)
 ,m_marginRight(10)
 ,m_pDelegate(NULL)
+,m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
 }
@@ -144,7 +145,7 @@ void CATextFieldX::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
     
-    delayShowImageView();
+    this->delayShowImage();
 }
 
 void CATextFieldX::onExitTransitionDidStart()
@@ -160,9 +161,12 @@ bool CATextFieldX::resignFirstResponder()
     {
         [textField_iOS resignFirstResponder];
     }
-    this->showImageView();
+    this->showImage();
     
-    m_pImgeView->setVisible(true);
+    CAViewAnimation::beginAnimations(m_s__StrID + "showTextField", NULL);
+    CAViewAnimation::setAnimationDuration(0);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::showTextField));
+    CAViewAnimation::commitAnimations();
     
     this->hideNativeTextField();
     
@@ -173,26 +177,32 @@ bool CATextFieldX::becomeFirstResponder()
 {
     bool result = CAView::becomeFirstResponder();
     
-    m_pImgeView->setVisible(false);
+    CAViewAnimation::beginAnimations(m_s__StrID + "hideTextField", NULL);
+    CAViewAnimation::setAnimationDuration(0);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::hideTextField));
+    CAViewAnimation::commitAnimations();
     
     [textField_iOS becomeFirstResponder];
     
     this->showNativeTextField();
+    
     return result;
+}
+
+void CATextFieldX::hideTextField()
+{
+    m_pImgeView->setVisible(false);
+}
+
+void CATextFieldX::showTextField()
+{
+    m_pImgeView->setVisible(true);
 }
 
 void CATextFieldX::hideNativeTextField()
 {
     CAScheduler::unschedule(schedule_selector(CATextFieldX::update), this);
     
-    CAViewAnimation::beginAnimations(m_s__StrID, NULL);
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::hide));
-    CAViewAnimation::commitAnimations();
-}
-
-void CATextFieldX::hide()
-{
     CGRect rect = textField_iOS.frame;
     rect.origin = CGPointMake(5000, 5000);
     textField_iOS.frame = rect;
@@ -200,25 +210,21 @@ void CATextFieldX::hide()
 
 void CATextFieldX::showNativeTextField()
 {
-    this->update(0);
     CAScheduler::schedule(schedule_selector(CATextFieldX::update), this, 1/60.0f);
 }
 
-void CATextFieldX::delayShowImageView()
+void CATextFieldX::delayShowImage()
 {
-    if (m_pDlayeShow) {
-        return;
+    if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
+    {
+        CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
+        CAViewAnimation::setAnimationDuration(0);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::showImage));
+        CAViewAnimation::commitAnimations();
     }
-    
-    m_pDlayeShow = true;
-    
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::showImageView));
-    CAViewAnimation::commitAnimations();
 }
 
-void CATextFieldX::showImageView()
+void CATextFieldX::showImage()
 {
     static float scale = [UIScreen mainScreen].scale;
     UIGraphicsBeginImageContextWithOptions(textField_iOS.bounds.size, NO, scale);
@@ -238,9 +244,6 @@ void CATextFieldX::showImageView()
 
     m_pImgeView->setImage(image);
     m_pImgeView->setFrame(this->getBounds());
-    m_pBackgroundView->setFrame(this->getBounds());
-    
-    m_pDlayeShow = false;
 }
 
 CATextFieldX* CATextFieldX::createWithFrame(const DRect& frame)
@@ -294,6 +297,8 @@ bool CATextFieldX::init()
     
     m_pImgeView = CAImageView::createWithFrame(DRect(0, 0, 1, 1));
     this->addSubview(m_pImgeView);
+    m_pImgeView->setTextTag("textField");
+
     return true;
 }
 
@@ -301,10 +306,10 @@ void CATextFieldX::update(float dt)
 {
     do
     {
-        //CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
+        CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
         DPoint point = this->convertToWorldSpace(DPointZero);
         
-        //CC_BREAK_IF(m_obLastPoint.equals(point) && m_obLastContentSize.equals(contentSize));
+        CC_BREAK_IF(m_obLastPoint.equals(point));
 
         CGFloat scale = [[UIScreen mainScreen] scale];
         CGRect rect = textField_iOS.frame;
@@ -359,7 +364,7 @@ void CATextFieldX::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 void CATextFieldX::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-    
+    this->ccTouchEnded(pTouch, pEvent);
 }
 
 void CATextFieldX::setKeyboardType(const KeyboardType& type){
@@ -444,7 +449,8 @@ void CATextFieldX::setPlaceHolderText(const std::string &var)
     m_placeHolderText = var;
     
     textField_iOS.placeholder = [NSString stringWithUTF8String:m_placeHolderText.c_str()];
-    delayShowImageView();
+    
+    this->delayShowImage();
 }
 
 const std::string& CATextFieldX::getPlaceHolderText()
@@ -460,7 +466,8 @@ void CATextFieldX::setPlaceHolderColor(const CAColor4B &var)
     
     UIColor* color = [UIColor colorWithRed:var.r green:var.g blue:var.b alpha:var.a];
     [textField_iOS setValue:color forKeyPath:@"_placeholderLabel.textColor"];
-    delayShowImageView();
+    
+    this->delayShowImage();
 }
 
 const CAColor4B& CATextFieldX::getPlaceHolderColor()
@@ -475,7 +482,7 @@ void CATextFieldX::setFontSize(const int &var)
     textField_iOS.font = [UIFont systemFontOfSize:var];
     [textField_iOS setValue:textField_iOS.font forKeyPath:@"_placeholderLabel.font"];
     
-    delayShowImageView();
+    this->delayShowImage();
 }
 
 const int& CATextFieldX::getFontSize()
@@ -489,7 +496,8 @@ void CATextFieldX::setFieldText(const std::string &var)
     
     textField_iOS.text = [NSString stringWithUTF8String:m_fieldText.c_str()];
     textField_iOS.beforeText = [textField_iOS text];
-    delayShowImageView();
+    
+    this->delayShowImage();
 }
 
 const std::string& CATextFieldX::getFieldText()
@@ -506,7 +514,8 @@ void CATextFieldX::setFieldTextColor(const CAColor4B &var)
     m_fieldTextColor = var;
     
     textField_iOS.textColor = [UIColor colorWithRed:var.r green:var.g blue:var.b alpha:var.a];
-    delayShowImageView();
+    
+    this->delayShowImage();
 }
 
 const CAColor4B& CATextFieldX::getFieldTextColor()
@@ -528,7 +537,7 @@ void CATextFieldX::setMarginLeft(const int &var)
     textField_iOS.leftViewMode = UITextFieldViewModeAlways;
     [paddingView release];
     
-    delayShowImageView();
+    this->delayShowImage();
 }
 
 const int& CATextFieldX::getMarginLeft()
@@ -550,7 +559,7 @@ void CATextFieldX::setMarginRight(const int &var)
     textField_iOS.rightViewMode = UITextFieldViewModeAlways;
     [paddingView release];
     
-    delayShowImageView();
+    this->delayShowImage();
 }
 
 const int& CATextFieldX::getMarginRight()
@@ -574,7 +583,7 @@ void CATextFieldX::setMarginImageLeft(const DSize imgSize,const std::string& fil
     textField_iOS.leftView = paddingView;
     textField_iOS.leftViewMode = UITextFieldViewModeAlways;
     
-    delayShowImageView();
+    this->delayShowImage();
 }
 
 void CATextFieldX::setMarginImageRight(const DSize imgSize,const std::string& filePath)
@@ -593,7 +602,7 @@ void CATextFieldX::setMarginImageRight(const DSize imgSize,const std::string& fi
     textField_iOS.rightView = paddingView;
     textField_iOS.rightViewMode = UITextFieldViewModeAlways;
     
-    delayShowImageView();
+    this->delayShowImage();
 }
 
 void CATextFieldX::setClearButtonMode(const ClearButtonMode &var)
@@ -614,7 +623,7 @@ void CATextFieldX::setClearButtonMode(const ClearButtonMode &var)
     }
     textField_iOS.clearButtonMode = mode;
     
-    delayShowImageView();
+    this->delayShowImage();
 }
 
 const CATextFieldX::ClearButtonMode& CATextFieldX::getClearButtonMode()
@@ -641,7 +650,7 @@ void CATextFieldX::setTextFieldAlign(const TextFieldAlign &var)
             break;
     }
     
-    delayShowImageView();
+    this->delayShowImage();
 }
 
 const CATextFieldX::TextFieldAlign& CATextFieldX::getTextFieldAlign()

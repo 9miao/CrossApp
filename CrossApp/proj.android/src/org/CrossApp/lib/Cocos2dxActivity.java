@@ -53,16 +53,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
 	public static Cocos2dxRenderer mCocos2dxRenderer;
-	private static Context sContext = null;
 	AndroidNativeTool actAndroidNativeTool;
 	AndroidVolumeControl androidVolumeControl;
-	static FrameLayout frame;
-	static View rootview;
-	public static int keyboardheight;
+	
+	private static View rootview;
 	public static int currentBattery=0;
-	private static Activity activity;
-	private static Cocos2dxActivity cocos2dxActivity;
-	native static void KeyBoardHeightReturn(int height);
+	private static Cocos2dxActivity crossAppActivity;
+	private static FrameLayout frame;
 	native static void getWifiList(ArrayList<CustomScanResult> s);
 	public static List<ScanResult> list;
 	public static ScanResult mScanResult;
@@ -75,9 +72,17 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     native static void returnStartedDiscoveryDevice();
     native static void returnFinfishedDiscoveryDevice();
     public static Handler msHandler;
-	public static Cocos2dxActivity getContext() {
-		return cocos2dxActivity;
+    
+	public static Cocos2dxActivity getContext()
+	{
+		return Cocos2dxActivity.crossAppActivity;
 	}
+	
+	public static FrameLayout getFrameLayout()
+	{
+		return Cocos2dxActivity.frame;
+	}
+	
 	public static Handler mLightHandler;
 	// ===========================================================
 	// Constructors
@@ -86,13 +91,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		sContext = this;
-		activity =this;
-		cocos2dxActivity = this;
+		
+		crossAppActivity = this;
 
     	this.mHandler = new Cocos2dxHandler(this);
     	actAndroidNativeTool = new AndroidNativeTool(this);
-    	AndroidVolumeControl.setContext(sContext);
+    	AndroidVolumeControl.setContext(crossAppActivity);
     	AndroidPersonList.Init(this);
 
     	this.init();
@@ -188,7 +192,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
 	public static void getWifiList()
 	{
-		AndroidNetWorkManager.setContext(activity);
+		AndroidNetWorkManager.setContext(crossAppActivity);
 		AndroidNetWorkManager.startScan();
 		list = AndroidNetWorkManager.getWifiList();
 		ArrayList<CustomScanResult> cList = new ArrayList<CustomScanResult>();
@@ -224,7 +228,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             @Override
             public String call() throws Exception 
             {
-            	ClipboardManager clipboard =  (ClipboardManager)sContext.getSystemService(Context.CLIPBOARD_SERVICE);
+            	ClipboardManager clipboard =  (ClipboardManager)crossAppActivity.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.getText();
                 return clipboard.getText().toString();
             }
@@ -425,11 +429,11 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	public static void setScreenBrightness(int value) {
 		try {
 			// System.putInt(s_pContext.getContentResolver(),android.provider.Settings.System.SCREEN_BRIGHTNESS,value);
-			WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+			WindowManager.LayoutParams lp = crossAppActivity.getWindow().getAttributes();
 			lp.screenBrightness = (value<=0?1:value) / 255f;
-			activity.getWindow().setAttributes(lp);
+			crossAppActivity.getWindow().setAttributes(lp);
 		} catch (Exception e) {
-			Toast.makeText(activity,"error",Toast.LENGTH_SHORT).show();
+			Toast.makeText(crossAppActivity,"error",Toast.LENGTH_SHORT).show();
 		}
 	}
 	private void exeHandler(){
@@ -439,9 +443,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 				 @Override
 				public void handleMessage(Message msg) {
 					int value = msg.what;
-					 WindowManager.LayoutParams lp = (Cocos2dxActivity.activity).getWindow().getAttributes();
+					 WindowManager.LayoutParams lp = crossAppActivity.getWindow().getAttributes();
 					 lp.screenBrightness = value/255.0f;
-				        (Cocos2dxActivity.activity).getWindow().setAttributes(lp);
+					 crossAppActivity.getWindow().setAttributes(lp);
 				}
 			 };
 		 }
@@ -463,7 +467,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         }
 	}
 	public static void startGps() {
-		AndroidGPS.Init(activity);
+		AndroidGPS.Init(crossAppActivity);
 
 	}
 	@Override
@@ -523,15 +527,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         FrameLayout framelayout = new FrameLayout(this);
         framelayout.setLayoutParams(framelayout_params);
         frame = framelayout;
-        // Cocos2dxEditText layout
-        ViewGroup.LayoutParams edittext_layout_params =
-            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-                                       ViewGroup.LayoutParams.WRAP_CONTENT);
-        Cocos2dxEditText edittext = new Cocos2dxEditText(this);
-        edittext.setLayoutParams(edittext_layout_params);
 
-        // ...add to FrameLayout
-        framelayout.addView(edittext);
 
         // Cocos2dxGLSurfaceView
         this.mGLSurfaceView = this.onCreateView();
@@ -544,54 +540,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
         mCocos2dxRenderer = new Cocos2dxRenderer();
         this.mGLSurfaceView.setCocos2dxRenderer(mCocos2dxRenderer);
-        this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
         // Set framelayout as the content view
 		setContentView(framelayout);
 		
-		getKeyBoardHeight();
 	}
 	
-	public static int getKeyBoardHeight()
-	{
-		frame.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            @Override
-            public void onGlobalLayout() {
-            	
-                // TODO Auto-generated method stub
-                Rect r = new Rect();
-                rootview.getWindowVisibleDisplayFrame(r);
-                System.out.println(r.toString());
-
-                int screenHeight = rootview.getRootView().getHeight();
-                keyboardheight =screenHeight- r.bottom;
-                System.out.println(keyboardheight);
-                
-                cocos2dxActivity.mGLSurfaceView.queueEvent(new Runnable()
-                {
-					@Override
-					public void run() {
-						if (keyboardheight!=0)
-		        		{
-		        			mCocos2dxRenderer.handleOpenKeyPad();
-		        			System.out.println("handleOpenKeyPad");
-		        		}
-		                else
-		                {
-		                	mCocos2dxRenderer.handleCloseKeyPad();
-		                	System.out.println("handleCloseKeyPad");
-						}
-						KeyBoardHeightReturn(keyboardheight);
-					}
-				});
-            }
-        });
-
-		return keyboardheight;
-
-	}
-
 	public static int dip2px(Context context, float dpValue) {
 	     final float scale = context.getResources().getDisplayMetrics().density;
 	     return (int) (dpValue * scale + 0.5f);
@@ -603,9 +557,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
    private final static boolean isAndroidEmulator() {
       String model = Build.MODEL;
-      Log.d(TAG, "model=" + model);
       String product = Build.PRODUCT;
-      Log.d(TAG, "product=" + product);
       boolean isEmulator = false;
       if (product != null) {
          isEmulator = product.equals("sdk") || product.contains("_sdk") || product.contains("sdk_");
@@ -614,15 +566,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
       return isEmulator;
    }
 
-   public static void setkeyboardHeight(int height){
-       if(height == 0){
-           if(keyboardheight > 0){
-               KeyBoardHeightReturn(keyboardheight);
-           }
-       } else {
-           KeyBoardHeightReturn(height);
-       }
-   }
 
 	// ===========================================================
 	// Inner and Anonymous Classes

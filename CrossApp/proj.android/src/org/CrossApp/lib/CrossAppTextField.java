@@ -3,8 +3,6 @@ package org.CrossApp.lib;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
-import org.CrossApp.lib.DrawableShapUtil;
-
 import android.R.bool;
 import android.R.integer;
 import android.annotation.SuppressLint;
@@ -26,6 +24,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.View.OnClickListener;
+import android.view.ViewDebug.IntToString;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -48,9 +47,13 @@ public class CrossAppTextField
 	private ByteBuffer imageData = null;
 	private Bitmap bmp = null;
 	private Button 	clearButton = null;
-	private boolean isClearBtn = false;
 	private int keyboardheight = 0;
 	private int keyboardheightTemp = 0;
+	private int leftMargin = 0;
+	private int rightMargin = 0;
+	
+	private boolean isSetText = false;
+	private String  _beforeTextString = "";
 	
  	protected void finalize()
     {
@@ -76,16 +79,13 @@ public class CrossAppTextField
 		
 		if (layout == null)
     	{
-    		ViewGroup.LayoutParams framelayout_params =
-                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-                                               ViewGroup.LayoutParams.FILL_PARENT);
-    		layout = (FrameLayout) context.getWindow().getDecorView() ;
-    		layout.setLayoutParams(framelayout_params);
+    		layout = Cocos2dxActivity.getFrameLayout();
     	}
 	}
 	
 	//keyBoard return call back
 	private static native void keyBoardReturnCallBack(int key);
+	private static native void textChange(int key,String before,String change,int arg0,int arg1,int arg2);
     public void init(int key)
     {
     	
@@ -100,34 +100,44 @@ public class CrossAppTextField
             {
             	//���濮����
 		    	textField = new EditText(context) ; 
-		    	textField.setPadding(10, 0, 10, 0) ;
+		    	//textField.setPadding(10, 0, 10, 0) ;
 		    	textField.setTextSize(14);
 		    	textField.setMaxLines(1) ;
 		    	textField.setSingleLine(true); 
-		    	textField.setGravity(Gravity.CENTER_VERTICAL);
-		    	
+		    	textField.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
 		    	
 		    	textField.addTextChangedListener(new TextWatcher() {
 					
 					@Override
 					public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 						// TODO Auto-generated method stub
-						String string = "onTextChanged:     "+arg0.toString() + ":"+arg1 +":"+ arg2 +":"+ arg3;
-						Log.d("android", string);
+						if (isSetText) {
+							isSetText = false;
+							return;
+						}
+						
+						String string = arg0.toString();
+						String newString = "";
+						if (arg2>arg3) {
+							newString = _beforeTextString.substring(arg1, arg1+arg2);
+						}else{
+							newString = string.substring(arg1, arg1+arg3);
+						}
+						
+						textChange(mykey, _beforeTextString,newString, arg1,arg2, arg3);
+						
 					}
 					
 					@Override
 					public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
 							int arg3) {
 						// TODO Auto-generated method stub
-						String string = "beforeTextChanged:     "+arg0.toString() + ":"+arg1 +":"+ arg2 +":"+ arg3;
-						Log.d("android", string);
+						_beforeTextString = arg0.toString();
 					}
 					
 					@Override
 					public void afterTextChanged(Editable arg0) {
 						// TODO Auto-generated method stub
-						Log.d("android", "afterTextChanged:     "+arg0.toString());
 					}
 				});
 		    	
@@ -143,10 +153,6 @@ public class CrossAppTextField
 					}
 				});
 		    		    	
-		    	
-		    	
-		    	
-		    	
 		    	//娣诲����板��灞�涓�
 				FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 
 		    	params.leftMargin = -1000; 
@@ -232,6 +238,7 @@ public class CrossAppTextField
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				isSetText = true;
 				textField.setText(text);
 			}
 		});
@@ -279,7 +286,7 @@ public class CrossAppTextField
 				switch (type) {
 				case 0:
 					//default
-					textField.setInputType(InputType.TYPE_NULL);
+					textField.setInputType(InputType.TYPE_CLASS_TEXT);
 					break;
 				case 1:
 					//NumbersAndPunctuation
@@ -312,6 +319,32 @@ public class CrossAppTextField
 		});
 	}
     
+    //textField Algin
+    public void setTextFieldAlgin(final int var) {
+    	context.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				switch (var) {
+				case 0:
+					//center
+					textField.setGravity(Gravity.CENTER_VERTICAL);
+					break;
+				case 1:
+					//left
+					textField.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
+					break;
+				case 2:
+					//right
+					textField.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
+					break;
+				default:
+					break;
+				}
+			}
+		});
+	}
+    
     //text field return type
     public void setKeyBoardReturnType(final int type) {
 		context.runOnUiThread(new Runnable() {
@@ -324,29 +357,21 @@ public class CrossAppTextField
 				switch (type) {
 				case 0:
 					textField.setImeOptions(EditorInfo.IME_ACTION_DONE);
-					Log.d("android", "00000");
 					break;
-					
 				case 1:
 					textField.setImeOptions(EditorInfo.IME_ACTION_GO);
-					Log.d("android", "11111");
 					break;
 				case 2:
 					textField.setImeOptions(EditorInfo.IME_ACTION_NEXT);
-					Log.d("android", "22222");
 					break;
 				case 3:
 					textField.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-					Log.d("android", "33333");
 					break;
 				case 4:
 					textField.setImeOptions(EditorInfo.IME_ACTION_SEND);
-					Log.d("android", "44444");
 					break;
-
 				default:
 					textField.setImeOptions(EditorInfo.IME_ACTION_DONE);
-					Log.d("android", "55555");
 					break;
 				}
 			}
@@ -355,6 +380,10 @@ public class CrossAppTextField
     
     //margins right length
     public void setMarginsDis(final int left,final int right,final int top,final int bottom) {
+    	
+    	leftMargin = left;
+    	rightMargin = right;
+    	
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
@@ -388,37 +417,37 @@ public class CrossAppTextField
         });
 	}
   //clearButton
-    public void setClearBtn(final int flag) {
+    public void showClearButton() {
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
             public void run()
             {
-            	isClearBtn = (flag>0)?true:false;
-            	if (isClearBtn&&(clearButton==null)) {
-					clearButton = new Button(context);
-	            	clearButton.setBackgroundColor(0);
-	            	
-	            	FrameLayout.LayoutParams btnParams = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-	            	btnParams.width = 0;
-	            	btnParams.height = 0;
-	            	btnParams.rightMargin = -1000;
-	            	btnParams.topMargin = -1000;
-	            	layout.addView(clearButton,btnParams) ;
-	            	
-	            	clearButton.setOnClickListener(new View.OnClickListener() {
-	                     public void onClick(View v) {
-	                     	textField.setText("");
-	                   }
-	                });
-
-				}else{
-					layout.removeView(clearButton);
-					clearButton = null;
-				}
+            	clearButton = new Button(context);
+            	clearButton.setBackgroundColor(0);
+//            	clearButton.setHighlightColor(Color.YELLOW);
+            	
+            	FrameLayout.LayoutParams btnParams = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+            	btnParams.width = 20;
+            	btnParams.height = 20;
+            	btnParams.rightMargin = -1000;
+            	btnParams.topMargin = -1000;
+            	layout.addView(clearButton,btnParams) ;
+            	
+            	clearButton.setVisibility(View.GONE);
+            	
+            	clearButton.setOnClickListener(new View.OnClickListener()
+            	{
+                     public void onClick(View v) {
+                     	textField.setText("");
+                   }
+                });
             }
         });
 	}
+    
+
+
 	public void setTextFieldPoint(final int x, final int y)
     {
     	context.runOnUiThread(new Runnable() 
@@ -428,12 +457,11 @@ public class CrossAppTextField
             {
             	FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textField.getLayoutParams(); 
             	params.leftMargin = x; 
-            	params.topMargin = y + 75;
+            	params.topMargin = y;
             	textField.setLayoutParams(params);
             	
-            	
-            	
-            	if (clearButton!=null) {
+            	if (clearButton != null) 
+            	{
 					FrameLayout.LayoutParams btnParams = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 					btnParams.width = textField.getPaddingRight();
 					btnParams.height = params.height;
@@ -469,7 +497,6 @@ public class CrossAppTextField
             @Override
             public void run()
             {
-            	
             	bmp = textField.getDrawingCache();
             	if (bmp != null)
             	{
@@ -484,8 +511,6 @@ public class CrossAppTextField
                         	onByte(mykey, imageData.array(), bmp.getWidth(), bmp.getHeight());
                         }
                     });
-            		
-            		
             	}
             }
         });
@@ -501,7 +526,12 @@ public class CrossAppTextField
             	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
         		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         		textField.requestFocus();
-      
+        		
+        		if (clearButton != null)
+            	{
+    				clearButton.setVisibility(View.VISIBLE);
+    				textField.setPadding(leftMargin, 0, rightMargin, 0);
+            	}
             }
         });
     }
@@ -513,9 +543,38 @@ public class CrossAppTextField
             @Override
             public void run()
             {
-            	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
-            	imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            	Editable etext = textField.getText();
+            	textField.setSelection(etext.length());
+            	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);  
+            	imm.hideSoftInputFromWindow(textField.getWindowToken(), 0);
         		textField.clearFocus();
+        		
+            	if (clearButton != null)
+            	{
+            		clearButton.setVisibility(View.GONE);
+            		textField.setPadding(leftMargin, 0, 5, 0);
+            	}
+            	
+            	FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textField.getLayoutParams(); 
+            	params.leftMargin = -1000;
+            	params.topMargin = -1000;
+            	textField.setLayoutParams(params);
+
+				bmp = textField.getDrawingCache();
+            	if (bmp != null)
+            	{
+            		imageData = ByteBuffer.allocate(bmp.getRowBytes() * bmp.getHeight());
+            		bmp.copyPixelsToBuffer(imageData);
+            		
+            		context.runOnGLThread(new Runnable() 
+                	{
+                        @Override
+                        public void run()
+                        {
+                        	onByte(mykey, imageData.array(), bmp.getWidth(), bmp.getHeight());
+                        }
+                    });
+            	}
             }
         });
     }
