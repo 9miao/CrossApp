@@ -32,6 +32,13 @@
     
 }
 
+-(void)hide
+{
+    CGRect rect = self.frame;
+    rect.origin = CGPointMake(5000, 5000);
+    self.frame = rect;
+}
+
 -(void)regiestKeyBoardMessage
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillWasShown:) name:UIKeyboardWillShowNotification object:nil];
@@ -85,7 +92,6 @@
     
     CGFloat scale  = [[UIScreen mainScreen] scale];
     int height = CrossApp::s_px_to_dip(keyboardSize.height * scale);
-    
     
     if (_textField->getDelegate())
     {
@@ -155,6 +161,11 @@ void CATextFieldX::onExitTransitionDidStart()
 
 bool CATextFieldX::resignFirstResponder()
 {
+    if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
+    {
+        return false;
+    }
+    
     bool result = CAView::resignFirstResponder();
 
     if ([textField_iOS isFirstResponder])
@@ -163,10 +174,7 @@ bool CATextFieldX::resignFirstResponder()
     }
     this->showImage();
     
-    CAViewAnimation::beginAnimations(m_s__StrID + "showTextField", NULL);
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::showTextField));
-    CAViewAnimation::commitAnimations();
+    this->showTextField();
     
     this->hideNativeTextField();
     
@@ -175,6 +183,11 @@ bool CATextFieldX::resignFirstResponder()
 
 bool CATextFieldX::becomeFirstResponder()
 {
+    if (m_pDelegate &&( !m_pDelegate->textFieldShouldBeginEditing(this)))
+    {
+        return false;
+    }
+    
     bool result = CAView::becomeFirstResponder();
     
     CAViewAnimation::beginAnimations(m_s__StrID + "hideTextField", NULL);
@@ -203,9 +216,7 @@ void CATextFieldX::hideNativeTextField()
 {
     CAScheduler::unschedule(schedule_selector(CATextFieldX::update), this);
     
-    CGRect rect = textField_iOS.frame;
-    rect.origin = CGPointMake(5000, 5000);
-    textField_iOS.frame = rect;
+    [textField_iOS performSelector:@selector(hide) withObject:nil afterDelay:1/60.0f];
 }
 
 void CATextFieldX::showNativeTextField()

@@ -207,7 +207,7 @@ public class CrossAppTextField
         			public void run() 
         			{
         				// TODO Auto-generated method stub
-        				if (keyboardheightTemp<1 && isShowKey == true)
+        				if (keyboardheightTemp < 1 && isShowKey == true)
         				{
 							//hide
         					isShowKey = false;
@@ -539,6 +539,7 @@ public class CrossAppTextField
     
     public void becomeFirstResponder()
     {
+    	isShowKey = true;
     	Cocos2dxActivity.setSingleTextField(this);
     	context.runOnUiThread(new Runnable() 
     	{
@@ -546,8 +547,6 @@ public class CrossAppTextField
             public void run()
             {
             	//show
-            	isShowKey = true;	
-            	
               	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
         		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         		textField.requestFocus();
@@ -572,6 +571,7 @@ public class CrossAppTextField
     
     public void resignFirstResponder()
     {
+    	isShowKey = false;
     	Cocos2dxActivity.setSingleTextField(null);
     	context.runOnUiThread(new Runnable() 
     	{
@@ -579,7 +579,6 @@ public class CrossAppTextField
             public void run()
             {
             	//show
-            	isShowKey = false;
             	if (clearButton != null)
             	{
             		clearButton.setVisibility(View.GONE);
