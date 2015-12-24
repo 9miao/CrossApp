@@ -443,10 +443,13 @@ const CAVerticalTextAlignment& CALabel::getVerticalTextAlignmet()
 
 void CALabel::setContentSize(const CrossApp::DSize &var)
 {
-    DSize originSize = getFrame().size;
-    CAView::setContentSize(var);
-    if (originSize.width != var.width || originSize.height != var.height)
+    DSize size = var;
+    size.width = MAX(size.width, m_nfontSize);
+    size.height = MAX(size.height, m_nfontSize);
+    
+    if (!m_obContentSize.equals(size))
     {
+        CAView::setContentSize(size);
         this->updateImageDraw();
     }
 }

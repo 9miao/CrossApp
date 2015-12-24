@@ -30,8 +30,6 @@ public:
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sTitle, Title);
     
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pImage, Image);
-    
-    CC_SYNTHESIZE_IS(bool, m_bTouchEnabled, TouchEnabled);
 };
 
 class CC_DLL CABarButtonItem

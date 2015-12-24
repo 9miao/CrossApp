@@ -14,8 +14,7 @@ NS_CC_BEGIN
 #pragma CABarItem
 
 CABarItem::CABarItem()
-:m_bTouchEnabled(true)
-,m_pImage(NULL)
+:m_pImage(NULL)
 ,m_sTitle("")
 {
 
