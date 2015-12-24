@@ -38,7 +38,8 @@ public:
 	//arg0  
 	virtual void textFieldAfterTextChanged(CATextFieldX *sender,const char* beforeText,const char* changeText,int arg0,int arg1,int arg2){}
 };
-class CATextFieldX: public CAView
+
+class CC_DLL CATextFieldX: public CAView
 {
 public:
     typedef enum {
@@ -168,7 +169,7 @@ protected:
 private:
     CAScale9ImageView * m_bgImgeView;
     
-    bool							    m_pDlayeShow;
+    bool m_pDelayShow;
 };
 NS_CC_END
 

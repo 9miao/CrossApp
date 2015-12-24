@@ -506,7 +506,15 @@
     <ClCompile Include="..\support\CAProfiling.cpp">
       <Filter>support</Filter>
     </ClCompile>
-    <ClCompile Include="..\view\CAWaterfallView.cpp" />
+    <ClCompile Include="..\view\CAWaterfallView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\CAUIEditorParser.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CATextFieldX.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1018,7 +1026,15 @@
     <ClInclude Include="..\support\sqlite3\sqlite3ext.h">
       <Filter>support\sqlite3</Filter>
     </ClInclude>
-    <ClInclude Include="..\view\CAWaterfallView.h" />
+    <ClInclude Include="..\view\CAWaterfallView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\CAUIEditorParser.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CATextFieldX.h">
+      <Filter>platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\support\Json\lib_json\json_internalarray.inl">
@@ -1030,8 +1046,5 @@
     <None Include="..\support\Json\lib_json\json_valueiterator.inl">
       <Filter>support\json\lib_json</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="libCrossApp.rc" />
   </ItemGroup>
 </Project>

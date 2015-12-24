@@ -304,6 +304,7 @@ public:
     bool containsPoint(const DPoint& point) const;
     bool intersectsRect(const DRect& rect) const;
     void InflateRect(float v);
+	void InflateRect(float l, float t, float r, float b);
     
     CC_SYNTHESIZE_IS(bool, m_bCenter, Center);
 };
