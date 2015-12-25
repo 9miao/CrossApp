@@ -462,8 +462,16 @@ const CAColor4B& CALabel::getColor(void)
 void CALabel::setColor(const CAColor4B& color)
 {
 	m_cFontColor = color;
-	updateImage();
-	CAView::setColor(CAColor_white);
+	if (!m_nText.empty())
+	{
+		updateImage();
+		CAView::setColor(CAColor_white);
+	}
+	else
+	{
+		CAView::setColor(color);
+	}
+	setAlpha(color.a / 255.0f);
 }
 
 void CALabel::visit()

@@ -121,9 +121,9 @@ public:
     CC_PROPERTY_PASS_BY_REF(std::string, m_placeHolderText, PlaceHolderText);
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_placeHdolderColor, PlaceHolderColor);
     
-    //fieldText     Text/Color
-    CC_PROPERTY_PASS_BY_REF(std::string, m_fieldText, FieldText);
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_fieldTextColor,FieldTextColor);
+    //Text     Text/Color
+    CC_PROPERTY_PASS_BY_REF(std::string, m_sText, Text);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTextColor,TextColor);
     
     //keyBoardType     default:KeyboardTypeDefault
     CC_PROPERTY_PASS_BY_REF(KeyboardType,m_keyBoardType,KeyboardType);

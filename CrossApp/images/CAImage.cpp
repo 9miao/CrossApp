@@ -1776,7 +1776,7 @@ bool CAImage::initWithTiffData(const unsigned char * data, unsigned long dataLen
                  after invoking TIFFReadRGBAImageOriented*/
                 m_bHasPremultipliedAlpha = true;
                 
-                memcpy(m_pData, raster, npixels*sizeof (uint32));
+                memcpy(m_pImageData, raster, npixels*sizeof (uint32));
             }
             
             _TIFFfree(raster);

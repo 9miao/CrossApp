@@ -170,7 +170,7 @@ void setPlaceHolderColorJNI(int key, int color)
     }
 }
 
-void setFieldTextJNI(int key, const std::string& var)
+void setTextJNI(int key, const std::string& var)
 {
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
@@ -187,7 +187,7 @@ void setFieldTextJNI(int key, const std::string& var)
     }
 }
 
-void setFieldTextColorJNI(int key, int color)
+void setTextColorJNI(int key, int color)
 {
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
@@ -667,30 +667,30 @@ const CAColor4B& CATextFieldX::getPlaceHolderColor()
 	return m_placeHdolderColor;
 }
 
-void CATextFieldX::setFieldText(const std::string& var)
+void CATextFieldX::setText(const std::string& var)
 {
-	m_fieldText = var;
-	setFieldTextJNI(m_u__ID, var);
+	m_sText = var;
+	setTextJNI(m_u__ID, var);
 
     this->delayShowImage();
 }
 
-const std::string& CATextFieldX::getFieldText()
+const std::string& CATextFieldX::getText()
 {
-	return m_fieldText;
+	return m_sText;
 }
 
-void CATextFieldX::setFieldTextColor(const CAColor4B& var)
+void CATextFieldX::setTextColor(const CAColor4B& var)
 {
-	m_fieldTextColor = var;
-	setFieldTextColorJNI(m_u__ID, getUIntFormColor4B(var));
+	m_sTextColor = var;
+	setTextColorJNI(m_u__ID, getUIntFormColor4B(var));
 
     this->delayShowImage();
 }
 
-const CAColor4B& CATextFieldX::getFieldTextColor()
+const CAColor4B& CATextFieldX::getTextColor()
 {
-	return m_fieldTextColor; 
+	return m_sTextColor; 
 }
 
 void CATextFieldX::setKeyboardType(const KeyboardType& var)
@@ -741,7 +741,7 @@ const CATextFieldX::TextFieldAlign& CATextFieldX::getTextFieldAlign()
 
 void CATextFieldX::clearBtnCallBack(CAControl* con, DPoint point)
 {
-	setFieldText("");
+	setText("");
 }
 
 NS_CC_END

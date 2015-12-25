@@ -344,6 +344,8 @@
 		B0D890461B9D3A59004A0830 /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D890441B9D3A59004A0830 /* CAEmojiFont.h */; };
 		B0DAEED21B256B6D0011E87D /* CAGif.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DAEECE1B256B6D0011E87D /* CAGif.cpp */; };
 		B0DAEED31B256B6D0011E87D /* CAGif.h in Headers */ = {isa = PBXBuildFile; fileRef = B0DAEECF1B256B6D0011E87D /* CAGif.h */; };
+		B0FCA6771C2BECB60014CDCF /* CATextFieldX.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0FCA6761C2BECB60014CDCF /* CATextFieldX.mm */; };
+		B0FCA6791C2BECBB0014CDCF /* CATextFieldX.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FCA6781C2BECBB0014CDCF /* CATextFieldX.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -727,6 +729,8 @@
 		B0E9515D1BC645F900DBAB6A /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libpostproc.a; sourceTree = "<group>"; };
 		B0E9515E1BC645F900DBAB6A /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libswresample.a; sourceTree = "<group>"; };
 		B0E9515F1BC645F900DBAB6A /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libswscale.a; sourceTree = "<group>"; };
+		B0FCA6761C2BECB60014CDCF /* CATextFieldX.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextFieldX.mm; sourceTree = "<group>"; };
+		B0FCA6781C2BECBB0014CDCF /* CATextFieldX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextFieldX.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -968,6 +972,7 @@
 		04EAA0E21956D74D00198A8E /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B0FCA6781C2BECBB0014CDCF /* CATextFieldX.h */,
 				B0D890431B9D3A59004A0830 /* CAEmojiFont.cpp */,
 				B0D890441B9D3A59004A0830 /* CAEmojiFont.h */,
 				B0C3BD401ADE70B3009BE71A /* CAClipboard.h */,
@@ -999,6 +1004,7 @@
 		04EAA15F1956D74D00198A8E /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				B0FCA6761C2BECB60014CDCF /* CATextFieldX.mm */,
 				B0C3BD421ADE70B8009BE71A /* CAClipboard.mm */,
 				B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */,
 				B0A7157D1A43F6DE00A85FB9 /* CAWebViewImpl.h */,
@@ -1500,6 +1506,7 @@
 				04EAB08A1956D75600198A8E /* CCNS.h in Headers */,
 				04EAB08C1956D75600198A8E /* CCSet.h in Headers */,
 				B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */,
+				B0FCA6791C2BECBB0014CDCF /* CATextFieldX.h in Headers */,
 				02150DC21C06B81300BC3F9C /* CAUIEditorParser.h in Headers */,
 				B0DAEED31B256B6D0011E87D /* CAGif.h in Headers */,
 				B09205BB19D554A800CB99C1 /* CASyncQueue.h in Headers */,
@@ -1802,6 +1809,7 @@
 				B01D4BF319A5947C0071F6A3 /* CADrawerController.cpp in Sources */,
 				B0A11DA71AE8C5C500933BF6 /* gif_font.c in Sources */,
 				04EAB10E1956D75600198A8E /* CCFileUtils.cpp in Sources */,
+				B0FCA6771C2BECB60014CDCF /* CATextFieldX.mm in Sources */,
 				04EAB1151956D75600198A8E /* CCSAXParser.cpp in Sources */,
 				04EAB1191956D75600198A8E /* CCEGLViewProtocol.cpp in Sources */,
 				04EAB1471956D75600198A8E /* CCApplication.mm in Sources */,

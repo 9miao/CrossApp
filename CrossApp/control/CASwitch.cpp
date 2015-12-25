@@ -104,44 +104,50 @@ void CASwitch::setThumbTintImage(CAImage* thumbTintImage)
 
 void CASwitch::updateSwitchState(bool animated, bool callfunced)
 {
-    float time = 0;
-    
-    if (animated)
-    {
-        time = 0.2f;
-    }
-
     DPoint point = m_obContentSize/2;
     m_pOnImageView->setCenterOrigin(point);
     m_pOffImageView->setCenterOrigin(point);
-
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDuration(0.2f);
-    if (m_isOn)
+    if (animated)
     {
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
-        m_pOffImageView->setAlpha(0.0f);
-        m_pOnImageView->setAlpha(1.0f);
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0.2f);
+        if (m_isOn)
+        {
+            CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
+            m_pOffImageView->setAlpha(0.0f);
+            m_pOnImageView->setAlpha(1.0f);
+        }
+        else
+        {
+            CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+            m_pOffImageView->setAlpha(1.0f);
+            m_pOnImageView->setAlpha(0.0f);
+        }
+        CAViewAnimation::commitAnimations();
+        if (m_pThumbTintImageView)
+        {
+            DPoint point = DPointZero;
+            point.x = m_isOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
+            
+            CAViewAnimation::beginAnimations("", NULL);
+            CAViewAnimation::setAnimationDuration(0.2f);
+            CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+            CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CASwitch::updateValueChanged));
+            m_pThumbTintImageView->setFrameOrigin(point);
+            CAViewAnimation::commitAnimations();
+        }
     }
     else
     {
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        m_pOffImageView->setAlpha(1.0f);
-        m_pOnImageView->setAlpha(0.0f);
-    }
-    CAViewAnimation::commitAnimations();
-
-    if (m_pThumbTintImageView)
-    {
-        DPoint point = DPointZero;
-        point.x = m_isOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
-        
-        CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CASwitch::updateValueChanged));
-        m_pThumbTintImageView->setFrameOrigin(point);
-        CAViewAnimation::commitAnimations();
+        m_pOffImageView->setAlpha(m_isOn ? 0.0f : 1.0f);
+        m_pOnImageView->setAlpha(m_isOn? 1.0f : 0.0f);
+        if (m_pThumbTintImageView)
+        {
+            DPoint point = DPointZero;
+            point.x = m_isOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
+            m_pThumbTintImageView->setFrameOrigin(point);
+            updateValueChanged();
+        }
     }
 }
 
