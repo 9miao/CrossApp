@@ -32,10 +32,10 @@ public:
     
     virtual ~CASegmentedControl();
     
-    virtual void onExitTransitionDidStart();
-    
     virtual void onEnterTransitionDidFinish();
     
+    virtual void onExitTransitionDidStart();
+
     static CASegmentedControl* create(unsigned int itemsCount);
     
     static CASegmentedControl* createWithFrame(const DRect& rect, unsigned int itemsCount);

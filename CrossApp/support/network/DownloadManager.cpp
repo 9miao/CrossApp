@@ -977,7 +977,7 @@ bool CADownloadResponse::downLoad()
     }
     
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    chmod(outFileName.c_str(), 0x666);
+    chmod(outFileName.c_str(), 0666);
 #endif
     
 	_curl = curl_easy_init();

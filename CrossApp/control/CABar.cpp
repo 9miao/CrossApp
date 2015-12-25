@@ -68,7 +68,7 @@ bool CANavigationBar::init(const DSize& size)
     m_pContentView = new CAView();
     m_pContentView->setFrame(rect);
     this->addSubview(m_pContentView);
-    
+    m_pContentView->release();
     return true;
 }
 

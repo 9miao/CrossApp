@@ -130,11 +130,7 @@ void CAStepper::setBackgroundImage(CrossApp::CAImage *image, CAControlState stat
     } else {
         CC_SAFE_RELEASE_NULL(m_pBackgroundImage[state]);
         m_pBackgroundImage[state] = image;
-        CC_SAFE_RETAIN(m_pBackgroundImage[state]);
-    }
-    if (m_pBackgroundImageView)
-    {
-        m_pBackgroundImageView->setImage(m_pBackgroundImage[m_eControlState]);
+        CC_SAFE_RETAIN(m_pBackgroundImage[state]);        
     }
 }
 
@@ -363,13 +359,15 @@ void CAStepper::onEnter()
         {
             m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
                                                   getBounds().size.height/2,
-                                                  s_px_to_dip(2),
+                                                  s_px_to_dip(1.05f),
                                                   getBounds().size.height));
-        }else{
+        }
+        else
+        {
             m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
                                                   getBounds().size.height/2,
                                                   getBounds().size.width,
-                                                  s_px_to_dip(2)));
+                                                  s_px_to_dip(1.05f)));
         }
         
         
@@ -539,13 +537,13 @@ void CAStepper::setContentSize(const DSize & var)
         {
             m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
                                                   getBounds().size.height/2,
-                                                  s_px_to_dip(2.0f),
+                                                  s_px_to_dip(1.05f),
                                                   getBounds().size.height));
         }else{
             m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
                                                   getBounds().size.height/2,
                                                   getBounds().size.width,
-                                                  s_px_to_dip(2.0f)));
+                                                   s_px_to_dip(1.05f)));
         }
     }
     

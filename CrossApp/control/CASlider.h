@@ -24,11 +24,15 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
+    static CASlider* create();
+    
     static CASlider* createWithFrame(const DRect& rect);
     
     static CASlider* createWithCenter(const DRect& rect);
     
 public:
+    
+    bool init();
     
     bool initWithFrame(const DRect& rect);
     
@@ -40,7 +44,22 @@ public:
     
     void removeTarget(CAObject* target, SEL_CAControl selector);
     
+    virtual void setValue(float value);
+    
+    virtual void setMinValue(float minValue);
+    
+    virtual void setMaxValue(float maxValue);
+    
+    virtual void setTrackHeight(float trackHeight);
+    
+    virtual void setMinTrackTintImage(CAImage* minTrackTintImage);
+    
+    virtual void setMaxTrackTintImage(CAImage* maxTrackTintImage);
+    
+    virtual void setThumbTintImage(CAImage* thumbTintImage);
+    
 public:
+    
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
     
     CC_SYNTHESIZE_READONLY(float, m_fValue, Value);       // default 0.0.
@@ -56,32 +75,32 @@ public:
 	CC_SYNTHESIZE_READONLY(CAImage*, m_pMaxTrackTintImage, MaxTrackTintImage);
     
 	CC_SYNTHESIZE_READONLY(CAImage*, m_pThumbTintImage, ThumbTintImage);
-    
+
 public:
-    virtual void setValue(float value);
-    virtual void setMinValue(float minValue);
-    virtual void setMaxValue(float maxValue);
-    virtual void setTrackHeight(float trackHeight);
-    virtual void setMinTrackTintImage(CAImage* minTrackTintImage);
-    virtual void setMaxTrackTintImage(CAImage* maxTrackTintImage);
-    virtual void setThumbTintImage(CAImage* thumbTintImage);
     
-public:
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+    
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    
     virtual void layoutSubViews();
     
 protected:
+    
     void setContentSize(const DSize & var);
+    
     using CAControl::addTarget;
+    
     using CAControl::removeTarget;
     
 protected:
-    CAScale9ImageView *m_pMinTrackTintImageView;
-    CAScale9ImageView *m_pMaxTrackTintImageView;
-    CAImageView *m_pThumbTintImageView;
     
+    CAScale9ImageView *m_pMinTrackTintImageView;
+    
+    CAScale9ImageView *m_pMaxTrackTintImageView;
+    
+    CAImageView *m_pThumbTintImageView;
 };
 
 NS_CC_END

@@ -24,7 +24,7 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_pBackgroundView(NULL)
     , m_pNewSegmentItemBackgroundImage(NULL)
     , m_pSegmentItemBackgroundImage(NULL)
-    , m_fSeparateWidth(s_px_to_dip(1))
+    , m_fSeparateWidth(s_px_to_dip(1.05f))
     , m_iSelectedIndex(0)
     , m_iTouchIndex(-1)
     , m_fSegmentWidth(0)
@@ -47,14 +47,42 @@ CASegmentedControl::~CASegmentedControl()
     CC_SAFE_RELEASE(m_pNewSegmentItemBackgroundImage);
 }
 
-void CASegmentedControl::onExitTransitionDidStart()
-{
-    CAControl::onExitTransitionDidStart();
-}
-
 void CASegmentedControl::onEnterTransitionDidFinish()
 {
     CAControl::onEnterTransitionDidFinish();
+    
+    for (size_t i=0; i<(size_t)m_nItemsCount; i++)
+    {
+        if (i == (size_t)m_iSelectedIndex)
+        {
+            m_vItemSelectedBackgrounds.at(i)->setVisible(true);
+        }
+        else
+        {
+            m_vItemSelectedBackgrounds.at(i)->setVisible(false);
+        }
+    }
+    
+    for (size_t i=0; i<(size_t)m_nItemsCount; i++)
+    {
+        if (CAImageView* imageView = dynamic_cast<CAImageView*>(m_vSegmentItemsTitles.at(i)))
+        {
+            CAImage* image = m_iSelectedIndex == i ? m_vSelectedImages.at(i) : m_vNormalImages.at(i);
+            imageView->setImage(image);
+            const CAColor4B& color = m_iSelectedIndex == i ? m_cImageSelectedColor : m_cImageColor;
+            imageView->setColor(color);
+        }
+        else if (CALabel* label = dynamic_cast<CALabel*>(m_vSegmentItemsTitles.at(i)))
+        {
+            const CAColor4B& color = m_iSelectedIndex == i ? m_cTextSelectedColor : m_cTextColor;
+            label->setColor(color);
+        }
+    }
+}
+
+void CASegmentedControl::onExitTransitionDidStart()
+{
+    CAControl::onExitTransitionDidStart();
 }
 
 CASegmentedControl* CASegmentedControl::create(unsigned int itemsCount)
@@ -387,10 +415,34 @@ void CASegmentedControl::setImageForSegmentAtIndex(CAImage* image, int index, CA
     center.origin = center.size/2 + m_vItemContentOffsets.at(index);
     center.size = m_vItemImageSizes.at(index).equals(DSizeZero) ? image->getContentSize() : m_vItemImageSizes.at(index);
     CAImageView* imageView = CAImageView::createWithCenter(center);
-    imageView->setImage(image);
     imageView->setColor(m_iSelectedIndex == index ? m_cImageSelectedColor : m_cImageColor);
     m_vSegmentItems.at(index)->addSubview(imageView);
     m_vSegmentItemsTitles.replace(index, imageView);
+
+    switch (controlState)
+    {
+        case CAControlStateNormal:
+        {
+            m_vNormalImages.replace(index, image);
+            if (m_iSelectedIndex != index)
+            {
+                imageView->setImage(image);
+            }
+        }
+            break;
+        case CAControlStateSelected:
+        {
+            m_vSelectedImages.replace(index, image);
+            if (m_iSelectedIndex == index)
+            {
+                imageView->setImage(image);
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    
 }
 
 CAImage* CASegmentedControl::getImageForSegmentAtIndex(int index)

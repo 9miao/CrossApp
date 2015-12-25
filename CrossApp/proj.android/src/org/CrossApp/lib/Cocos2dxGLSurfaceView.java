@@ -53,11 +53,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	private static Handler sHandler;
 
 	private static Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
-	private static Cocos2dxTextInputWraper sCocos2dxTextInputWraper;
 
 	private Cocos2dxRenderer mCocos2dxRenderer;
-	private Cocos2dxEditText mCocos2dxEditText;
-	private static Cocos2dxEditText text;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -79,127 +76,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		this.setFocusableInTouchMode(true);
 
 		Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView = this;
-		Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper = new Cocos2dxTextInputWraper(this);
-
-		Cocos2dxGLSurfaceView.sHandler = new Handler() {
-			@Override
-			public void handleMessage(final Message msg) {
-				switch (msg.what) {
-					case HANDLER_OPEN_IME_KEYBOARD:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
-							text = Cocos2dxGLSurfaceView.this.mCocos2dxEditText;
-							String text = (String) msg.obj;
-							text = text.replace('\n', ' ');
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText(text);
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(msg.arg1);
-							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
-						//	
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().length());
-
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
-							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0);
-							Log.d("GLSurfaceView", "showSoftInput +"+Cocos2dxActivity.keyboardheight);
-							Cocos2dxActivity.setkeyboardHeight(0);
-						}
-						break;
-					case SET_CURSOR_POS:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText) {
-							text = Cocos2dxGLSurfaceView.this.mCocos2dxEditText;
-							
-							
-							final String text = (String) msg.obj;
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.append(text);
-							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().length());
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(msg.arg1);
-							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-							imm.showSoftInput(Cocos2dxGLSurfaceView.this.mCocos2dxEditText, 0);
-							
-						}
-						break;
-					case HANDLER_CLOSE_IME_KEYBOARD:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText) {
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
-							final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-							imm.hideSoftInputFromWindow(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getWindowToken(), 0);
-							Cocos2dxGLSurfaceView.this.requestFocus();
-							Log.d("GLSurfaceView", "HideSoftInput");
-						}
-						break;
-					case KEY_BOARD_TYPE_NORMAL:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-						}
-						break;
-					case KEY_BOARD_TYPE_NUMBER:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
-						}
-						break;
-					case KEY_BOARD_TYPE_ALPHABET:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-						}
-						break;
-					case RESET_TEXT:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.removeTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setText("");
-							text = Cocos2dxGLSurfaceView.this.mCocos2dxEditText;
-							final String text = (String) msg.obj;
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.append(text);
-							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
-							
-							//
-							//InputType.TYPE_CLASS_NUMBER
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
-						}
-						break;
-					case KEY_BOARD_RETURNTYPE_DONE:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
-						{
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);//IME_FLAG_NO_ENTER_ACTION  IME_ACTION_DONE IME_ACTION_UNSPECIFIED
-						}
-						break;
-					case KEY_BOARD_RETURNTYPE_SEARCH:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
-						{
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-						}
-						break;
-					case KEY_BOARD_RETURNTYPE_SEND:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
-						{
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
-						}
-						break;
-					case KEY_BOARD_RETURNTYPE_ENTER:
-						if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus())
-						{
-	                        Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_WORDS|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-						}
-						break;
-					case RESET_SELECTION_POSITION:
-						if (Cocos2dxGLSurfaceView.this.mCocos2dxEditText !=null) 
-						{
-							int a= (int)msg.arg1;
-							final String text = (String) msg.obj;
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(a);
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.append(text);
-							Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper.setOriginText(text);
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setSelection(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getText().length());
-							Cocos2dxGLSurfaceView.this.mCocos2dxEditText.addTextChangedListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
-						}
-						break;
-				}
-			}
-		};
 	}
 
 	// ===========================================================
@@ -264,20 +140,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	}
 	public String getContentText() {
 		return this.mCocos2dxRenderer.getContentText();
-	}
-
-	public Cocos2dxEditText getCocos2dxEditText() {
-		return this.mCocos2dxEditText;
-	}
-
-	public void setCocos2dxEditText(final Cocos2dxEditText pCocos2dxEditText) {
-		this.mCocos2dxEditText = pCocos2dxEditText;
-		
-		if (null != this.mCocos2dxEditText && null != Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper) {
-			this.mCocos2dxEditText.setOnEditorActionListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
-			this.mCocos2dxEditText.setCocos2dxGLSurfaceView(this);
-			this.requestFocus();
-		}
 	}
 
 	// ===========================================================
@@ -441,26 +303,20 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				});
 				return true;
 			case KeyEvent.KEYCODE_DPAD_LEFT:
-				if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
-					Cocos2dxGLSurfaceView.text = Cocos2dxGLSurfaceView.this.mCocos2dxEditText;
-					this.queueEvent(new Runnable() {
-						@Override
-						public void run() {
-							Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyDown(pKeyCode);
-						}
-					});
-				}
+				this.queueEvent(new Runnable() {
+					@Override
+					public void run() {
+						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyDown(pKeyCode);
+					}
+				});
 				return true;
 			case KeyEvent.KEYCODE_DPAD_RIGHT:
-				if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText && Cocos2dxGLSurfaceView.this.mCocos2dxEditText.requestFocus()) {
-					Cocos2dxGLSurfaceView.text = Cocos2dxGLSurfaceView.this.mCocos2dxEditText;
-					this.queueEvent(new Runnable() {
-						@Override
-						public void run() {
-							Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyDown(pKeyCode);
-						}
-					});
-				}
+				this.queueEvent(new Runnable() {
+					@Override
+					public void run() {
+						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyDown(pKeyCode);
+					}
+				});
 				return true;
 			default:
 				return super.onKeyDown(pKeyCode, pKeyEvent);

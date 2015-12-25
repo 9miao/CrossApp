@@ -45,9 +45,7 @@ public class Cocos2dxHandler extends Handler {
 		case Cocos2dxHandler.HANDLER_SHOW_DIALOG:
 			showDialog(msg);
 			break;
-		case Cocos2dxHandler.HANDLER_SHOW_EDITBOX_DIALOG:
-			showEditBoxDialog(msg);
-			break;
+
 		}
 	}
 	
@@ -66,17 +64,6 @@ public class Cocos2dxHandler extends Handler {
 						
 					}
 				}).create().show();
-	}
-	
-	private void showEditBoxDialog(Message msg) {
-		EditBoxMessage editBoxMessage = (EditBoxMessage)msg.obj;
-		new Cocos2dxEditBoxDialog(this.mActivity.get(),
-				editBoxMessage.title,
-				editBoxMessage.content,
-				editBoxMessage.inputMode,
-				editBoxMessage.inputFlag,
-				editBoxMessage.returnType,
-				editBoxMessage.maxLength).show();
 	}
 	
 	// ===========================================================

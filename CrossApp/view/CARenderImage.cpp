@@ -210,10 +210,10 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         unsigned int powH = (unsigned int)(h + 1) / 2;
         powH *= 2;
         
-        data = (unsigned char *)malloc((int)(powW * powH * 4));
+        data = (unsigned char *)malloc((unsigned long)(powW * powH * 4));
         CC_BREAK_IF(! data);
 
-        memset(data, 0, (int)(powW * powH * 4));
+        memset(data, 0, (unsigned long)(powW * powH * 4));
         m_ePixelFormat = eFormat;
         m_uPixelsWide = powW;
         m_uPixelsHigh = powH;

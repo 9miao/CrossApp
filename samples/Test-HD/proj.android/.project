@@ -105,11 +105,4 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>assets</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Resources</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

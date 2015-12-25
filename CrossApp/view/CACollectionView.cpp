@@ -574,7 +574,7 @@ void CACollectionView::reloadData()
         m_rSectionRects[begin + i] = sectionRect;
 	}
     
-	if (m_nCollectionFooterHeight > 0 && m_pCollectionHeaderView)
+	if (m_nCollectionFooterHeight > 0 && m_pCollectionFooterView)
 	{
 		m_pCollectionFooterView->setFrame(DRect(0, y, width, m_nCollectionFooterHeight));
 		addSubview(m_pCollectionFooterView);

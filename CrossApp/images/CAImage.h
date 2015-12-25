@@ -125,7 +125,7 @@ public:
     static CAImage* createWithRawDataNoCache(const unsigned char * data,
                                              const CAImage::PixelFormat& pixelFormat,
                                              unsigned int pixelsWide,
-                                             unsigned int pixelsHigh);
+                                                 unsigned int pixelsHigh);
     
     static CAImage* createWithRawData(const unsigned char * data,
                                       const CAImage::PixelFormat& pixelFormat,

@@ -53,16 +53,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
 	public static Cocos2dxRenderer mCocos2dxRenderer;
-	private static Context sContext = null;
 	AndroidNativeTool actAndroidNativeTool;
 	AndroidVolumeControl androidVolumeControl;
-	static FrameLayout frame;
-	static View rootview;
-	public static int keyboardheight;
+	
+	private static View rootview;
 	public static int currentBattery=0;
-	private static Activity activity;
-	private static Cocos2dxActivity cocos2dxActivity;
-	native static void KeyBoardHeightReturn(int height);
+	private static Cocos2dxActivity crossAppActivity;
+	private static FrameLayout frame;
 	native static void getWifiList(ArrayList<CustomScanResult> s);
 	public static List<ScanResult> list;
 	public static ScanResult mScanResult;
@@ -75,8 +72,21 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     native static void returnStartedDiscoveryDevice();
     native static void returnFinfishedDiscoveryDevice();
     public static Handler msHandler;
-	public static Cocos2dxActivity getContext() {
-		return cocos2dxActivity;
+    
+    
+    public static CrossAppTextField _sTextField = null;
+	public static Cocos2dxActivity getContext()
+	{
+		return Cocos2dxActivity.crossAppActivity;
+	}
+	
+	public static FrameLayout getFrameLayout()
+	{
+		return Cocos2dxActivity.frame;
+	}
+	
+	public static void setSingleTextField(CrossAppTextField text) {
+		_sTextField = text;
 	}
 	public static Handler mLightHandler;
 	// ===========================================================
@@ -86,21 +96,21 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		sContext = this;
-		activity =this;
-		cocos2dxActivity = this;
+		
+		crossAppActivity = this;
 
     	this.mHandler = new Cocos2dxHandler(this);
     	actAndroidNativeTool = new AndroidNativeTool(this);
-    	AndroidVolumeControl.setContext(sContext);
+    	AndroidVolumeControl.setContext(crossAppActivity);
     	AndroidPersonList.Init(this);
 
     	this.init();
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
+		CrossAppTextField.initWithHandler();
 		exeHandler();
 		AndroidNetWorkManager.setContext(this);
-
+		
 		 if(mWebViewHelper == null)
 		 {
 			 mWebViewHelper = new Cocos2dxWebViewHelper(frame);
@@ -117,7 +127,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	     BatteryReceiver batteryReceiver = new BatteryReceiver();
 
 	     registerReceiver(batteryReceiver, intentFilter);
-
+	     
 	}
 
 //	@Override
@@ -187,13 +197,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
 	public static void getWifiList()
 	{
-		AndroidNetWorkManager.setContext(activity);
+		AndroidNetWorkManager.setContext(crossAppActivity);
 		AndroidNetWorkManager.startScan();
 		list = AndroidNetWorkManager.getWifiList();
 		ArrayList<CustomScanResult> cList = new ArrayList<CustomScanResult>();
 		if(list!=null){
             for(int i=0;i<list.size();i++){
-                //�õ�ɨ����
+                //锟矫碉拷扫锟斤拷锟斤拷
                 mScanResult=list.get(i);
                 cScanResult = new CustomScanResult(mScanResult.SSID, mScanResult.BSSID, mScanResult.level);
                 if (cScanResult!=null) {
@@ -223,7 +233,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             @Override
             public String call() throws Exception 
             {
-            	ClipboardManager clipboard =  (ClipboardManager)sContext.getSystemService(Context.CLIPBOARD_SERVICE);
+            	ClipboardManager clipboard =  (ClipboardManager)crossAppActivity.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.getText();
                 return clipboard.getText().toString();
             }
@@ -270,23 +280,23 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		case 0:
 			boolean result = mAdapter.enable();
 			if(result)
-				returnBlueToothState(0);//����������ɹ�
+				returnBlueToothState(0);//锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷晒锟�
 			else if(wasBtOpened)
-				returnBlueToothState(1);//�����Ѿ�����
+				returnBlueToothState(1);//锟斤拷锟斤拷锟窖撅拷锟斤拷锟斤拷
 			else
 			{
-				returnBlueToothState(2);//������ʧ��
+				returnBlueToothState(2);//锟斤拷锟斤拷锟斤拷失锟斤拷
 			}
 			break;
 
 		case 1:
 			boolean result1 = mAdapter.disable();
 			if(result1)
-				returnBlueToothState(3);//�����رղ����ɹ�
+				returnBlueToothState(3);//锟斤拷锟斤拷锟截闭诧拷锟斤拷锟缴癸拷
 			else if(!wasBtOpened)
-				returnBlueToothState(4);//�����Ѿ��ر�
+				returnBlueToothState(4);//锟斤拷锟斤拷锟窖撅拷锟截憋拷
 			else
-				returnBlueToothState(5);//�����ر�ʧ��.
+				returnBlueToothState(5);//锟斤拷锟斤拷锟截憋拷失锟斤拷.
 			break;
 		case 2:
 			if (!wasBtOpened)
@@ -295,7 +305,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 				startActivityForResult(intent, REQUEST_OPEN_BT_CODE);
 			}
 			else
-				returnBlueToothState(1);//�����Ѿ���
+				returnBlueToothState(1);//锟斤拷锟斤拷锟窖撅拷锟斤拷
 			break;
 		case 3:
 			if (!mAdapter.isDiscovering()){
@@ -303,7 +313,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                 mAdapter.startDiscovery();
             }
             else
-                toast("�������������豸��");
+                toast("锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟借备锟斤拷");
 			break;
 		case 4:
 			if (mAdapter.isDiscovering()){
@@ -320,7 +330,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 			break;
 		}
     }
-    //����ɨ��ʱ�Ĺ㲥������
+    //锟斤拷锟斤拷扫锟斤拷时锟侥广播锟斤拷锟斤拷锟斤拷
     public BroadcastReceiver BTDiscoveryReceiver = new BroadcastReceiver()
     {
         @Override
@@ -365,20 +375,20 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         switch (btState)
         {
             case BluetoothAdapter.STATE_OFF:
-                toast("����״̬:�ѹر�");
-                Log.v(TAG, "BT State �� BluetoothAdapter.STATE_OFF ###");
+                toast("锟斤拷锟斤拷状态:锟窖关憋拷");
+                Log.v(TAG, "BT State 锟斤拷 BluetoothAdapter.STATE_OFF ###");
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
-                toast("����״̬:���ڹر�");
+                toast("锟斤拷锟斤拷状态:锟斤拷锟节关憋拷");
                 Log.v(TAG, "BT State :  BluetoothAdapter.STATE_TURNING_OFF ###");
                 break;
             case BluetoothAdapter.STATE_TURNING_ON:
-                toast("����״̬:���ڴ�");
-                Log.v(TAG, "BT State ��BluetoothAdapter.STATE_TURNING_ON ###");
+                toast("锟斤拷锟斤拷状态:锟斤拷锟节达拷");
+                Log.v(TAG, "BT State 锟斤拷BluetoothAdapter.STATE_TURNING_ON ###");
                 break;
             case BluetoothAdapter.STATE_ON:
-                toast("����״̬:�Ѵ�");
-                Log.v(TAG, "BT State ��BluetoothAdapter.STATE_ON ###");
+                toast("锟斤拷锟斤拷状态:锟窖达拷");
+                Log.v(TAG, "BT State 锟斤拷BluetoothAdapter.STATE_ON ###");
                 break;
             default:
                 break;
@@ -424,11 +434,11 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	public static void setScreenBrightness(int value) {
 		try {
 			// System.putInt(s_pContext.getContentResolver(),android.provider.Settings.System.SCREEN_BRIGHTNESS,value);
-			WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+			WindowManager.LayoutParams lp = crossAppActivity.getWindow().getAttributes();
 			lp.screenBrightness = (value<=0?1:value) / 255f;
-			activity.getWindow().setAttributes(lp);
+			crossAppActivity.getWindow().setAttributes(lp);
 		} catch (Exception e) {
-			Toast.makeText(activity,"error",Toast.LENGTH_SHORT).show();
+			Toast.makeText(crossAppActivity,"error",Toast.LENGTH_SHORT).show();
 		}
 	}
 	private void exeHandler(){
@@ -438,9 +448,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 				 @Override
 				public void handleMessage(Message msg) {
 					int value = msg.what;
-					 WindowManager.LayoutParams lp = (Cocos2dxActivity.activity).getWindow().getAttributes();
+					 WindowManager.LayoutParams lp = crossAppActivity.getWindow().getAttributes();
 					 lp.screenBrightness = value/255.0f;
-				        (Cocos2dxActivity.activity).getWindow().setAttributes(lp);
+					 crossAppActivity.getWindow().setAttributes(lp);
 				}
 			 };
 		 }
@@ -462,13 +472,18 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         }
 	}
 	public static void startGps() {
-		AndroidGPS.Init(activity);
+		AndroidGPS.Init(crossAppActivity);
 
 	}
 	@Override
 	protected void onResume() {
 		super.onResume();
-
+		if (_sTextField!=null) {
+			_sTextField.resume();
+		}
+		
+		
+		
 		Cocos2dxHelper.onResume();
 		this.mGLSurfaceView.onResume();
 		if (AndroidGPS.locationManager!=null)
@@ -522,15 +537,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         FrameLayout framelayout = new FrameLayout(this);
         framelayout.setLayoutParams(framelayout_params);
         frame = framelayout;
-        // Cocos2dxEditText layout
-        ViewGroup.LayoutParams edittext_layout_params =
-            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-                                       ViewGroup.LayoutParams.WRAP_CONTENT);
-        Cocos2dxEditText edittext = new Cocos2dxEditText(this);
-        edittext.setLayoutParams(edittext_layout_params);
 
-        // ...add to FrameLayout
-        framelayout.addView(edittext);
 
         // Cocos2dxGLSurfaceView
         this.mGLSurfaceView = this.onCreateView();
@@ -543,54 +550,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
         mCocos2dxRenderer = new Cocos2dxRenderer();
         this.mGLSurfaceView.setCocos2dxRenderer(mCocos2dxRenderer);
-        this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
         // Set framelayout as the content view
 		setContentView(framelayout);
 		
-		getKeyBoardHeight();
 	}
 	
-	public static int getKeyBoardHeight()
-	{
-		frame.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            @Override
-            public void onGlobalLayout() {
-            	
-                // TODO Auto-generated method stub
-                Rect r = new Rect();
-                rootview.getWindowVisibleDisplayFrame(r);
-                System.out.println(r.toString());
-
-                int screenHeight = rootview.getRootView().getHeight();
-                keyboardheight =screenHeight- r.bottom;
-                System.out.println(keyboardheight);
-                
-                cocos2dxActivity.mGLSurfaceView.queueEvent(new Runnable()
-                {
-					@Override
-					public void run() {
-						if (keyboardheight!=0)
-		        		{
-		        			mCocos2dxRenderer.handleOpenKeyPad();
-		        			System.out.println("handleOpenKeyPad");
-		        		}
-		                else
-		                {
-		                	mCocos2dxRenderer.handleCloseKeyPad();
-		                	System.out.println("handleCloseKeyPad");
-						}
-						KeyBoardHeightReturn(keyboardheight);
-					}
-				});
-            }
-        });
-
-		return keyboardheight;
-
-	}
-
 	public static int dip2px(Context context, float dpValue) {
 	     final float scale = context.getResources().getDisplayMetrics().density;
 	     return (int) (dpValue * scale + 0.5f);
@@ -602,9 +567,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
    private final static boolean isAndroidEmulator() {
       String model = Build.MODEL;
-      Log.d(TAG, "model=" + model);
       String product = Build.PRODUCT;
-      Log.d(TAG, "product=" + product);
       boolean isEmulator = false;
       if (product != null) {
          isEmulator = product.equals("sdk") || product.contains("_sdk") || product.contains("sdk_");
@@ -613,15 +576,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
       return isEmulator;
    }
 
-   public static void setkeyboardHeight(int height){
-       if(height == 0){
-           if(keyboardheight > 0){
-               KeyBoardHeightReturn(keyboardheight);
-           }
-       } else {
-           KeyBoardHeightReturn(height);
-       }
-   }
 
 	// ===========================================================
 	// Inner and Anonymous Classes
