@@ -541,6 +541,7 @@ void CATableView::reloadViewSizeData()
 
 void CATableView::reloadData()
 {
+    CC_RETURN_IF(m_pTableViewDataSource == NULL);
     this->reloadViewSizeData();
 
     this->removeAllSubviews();
