@@ -130,7 +130,11 @@ void CAStepper::setBackgroundImage(CrossApp::CAImage *image, CAControlState stat
     } else {
         CC_SAFE_RELEASE_NULL(m_pBackgroundImage[state]);
         m_pBackgroundImage[state] = image;
-        CC_SAFE_RETAIN(m_pBackgroundImage[state]);        
+        CC_SAFE_RETAIN(m_pBackgroundImage[state]);
+    }
+    if (m_pBackgroundImageView)
+    {
+        m_pBackgroundImageView->setImage(m_pBackgroundImage[m_eControlState]);
     }
 }
 
@@ -366,7 +370,6 @@ void CAStepper::onEnter()
                                                   getBounds().size.height/2,
                                                   getBounds().size.width,
                                                   s_px_to_dip(2)));
-            m_pDividerImageView->setRotation(90);
         }
         
         
