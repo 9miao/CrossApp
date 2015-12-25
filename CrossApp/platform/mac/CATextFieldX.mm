@@ -32,6 +32,23 @@
     
 }
 
+-(id)initWithFrame:(NSRect)frameRect
+{
+    if ([super initWithFrame:frameRect])
+    {
+        self.backgroundColor = [NSColor clearColor];
+        self.bezeled = NO;
+        self.cell.alignment = NSTextAlignmentLeft;
+        self.cell.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.cell.userInterfaceLayoutDirection = NSUserInterfaceLayoutDirectionRightToLeft;
+        
+        [[self cell] setTruncatesLastVisibleLine:NO];
+        
+        return self;
+    }
+    return nil;
+}
+
 -(void)hide
 {
     [self setHidden:YES];
@@ -173,17 +190,17 @@ bool CATextFieldX::resignFirstResponder()
     }
     
     bool result = CAView::resignFirstResponder();
-
-    if ([textField_MAC acceptsFirstResponder])
+    
+    if (result)
     {
         [textField_MAC resignFirstResponder];
+        
+        this->showImage();
+        
+        this->showTextField();
+        
+        this->hideNativeTextField();
     }
-    this->showImage();
-    
-    this->showTextField();
-    
-    this->hideNativeTextField();
-    
     return result;
 }
 
@@ -195,15 +212,19 @@ bool CATextFieldX::becomeFirstResponder()
     }
     
     bool result = CAView::becomeFirstResponder();
+    if (result)
+    {
+        [textField_MAC becomeFirstResponder];
+        
+        CAViewAnimation::beginAnimations(m_s__StrID + "hideTextField", NULL);
+        CAViewAnimation::setAnimationDuration(0);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::hideTextField));
+        CAViewAnimation::commitAnimations();
+        
+        this->showNativeTextField();
+    }
     
-    CAViewAnimation::beginAnimations(m_s__StrID + "hideTextField", NULL);
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextFieldX::hideTextField));
-    CAViewAnimation::commitAnimations();
     
-    [textField_MAC becomeFirstResponder];
-    
-    this->showNativeTextField();
     
     return result;
 }
@@ -292,8 +313,7 @@ bool CATextFieldX::init()
     [eaglview addSubview:textField_MAC];
     textField_MAC.textField = this;
     textField_MAC.delegate = textField_MAC;
-    textField_MAC.backgroundColor = [NSColor clearColor];
-    textField_MAC.bezeled = NO;
+    
     textField_MAC.placeholderString = @"placeholder";
     textField_MAC.font = [NSFont systemFontOfSize:m_fontSize];
     [textField_MAC regiestKeyBoardMessage];
