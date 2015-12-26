@@ -272,6 +272,13 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned long, m_uNumberOfDraws, NumberOfDraws);
     
+	/** Sets an OpenGL projection
+	@since v0.8.2
+	@js NA
+	*/
+	inline CAApplication::Projection getProjection(void) { return m_eProjection; }
+	void setProjection(CAApplication::Projection kProjection);
+
 public:
     /** returns a shared instance of the director 
      *  @js getInstance
@@ -279,13 +286,6 @@ public:
     static CAApplication* getApplication(void);
 
 protected:
-
-    /** Sets an OpenGL projection
-     @since v0.8.2
-     @js NA
-     */
-    inline CAApplication::Projection getProjection(void) { return m_eProjection; }
-    void setProjection(CAApplication::Projection kProjection);
     
     void purgeDirector();
     bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()

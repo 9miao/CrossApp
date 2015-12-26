@@ -325,6 +325,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if (m_pDelegate)
 		{
 			POINT point = { (short)LOWORD(lParam), (short)HIWORD(lParam) };
+			::ScreenToClient(m_hWnd, &point);
 			DPoint pt(point.x, point.y);
 			pt.x /= m_fFrameZoomFactor;
 			pt.y /= m_fFrameZoomFactor;
