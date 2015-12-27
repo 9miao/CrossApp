@@ -15,6 +15,13 @@
 
 #define textField_MAC ((MACTextField*)m_pTextField)
 
+#ifdef NSTextAlignmentLeft
+#else
+#define NSTextAlignmentLeft NSLeftTextAlignment
+#define NSTextAlignmentCenter NSCenterTextAlignment
+#define NSTextAlignmentRight NSRightTextAlignment
+#endif
+
 @interface MACTextField: NSTextField<NSTextFieldDelegate>
 {
     BOOL _isShouldEdit;
@@ -36,14 +43,11 @@
 {
     if ([super initWithFrame:frameRect])
     {
-        self.backgroundColor = [NSColor clearColor];
-        self.bezeled = NO;
-        self.cell.alignment = NSTextAlignmentLeft;
-        self.cell.lineBreakMode = NSLineBreakByTruncatingTail;
-        self.cell.userInterfaceLayoutDirection = NSUserInterfaceLayoutDirectionRightToLeft;
-        
-        [[self cell] setTruncatesLastVisibleLine:NO];
-        
+        [self setDelegate:self];
+        [self setBackgroundColor:[NSColor clearColor]];
+        [self setBezeled:NO];
+        [[self cell] setAlignment:NSTextAlignmentLeft];
+        [[self cell] setLineBreakMode:NSLineBreakByTruncatingTail];
         return self;
     }
     return nil;
@@ -69,81 +73,57 @@
 //    
 //    [self addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
 }
+- (BOOL)textFieldShouldBeginEditing:(NSTextField *)sender        // return NO to disallow editing.
+{
+    CrossApp::CATextFieldDelegateX* delegate = _textField->getDelegate();
+    if (delegate != NULL)
+    {
+        
+    }
 
-//- (void)textFieldEditChanged:(UITextField *)textField
-//{
-//    if (_isShouldEdit)
-//    {
-//        _isShouldEdit = NO;
-//        std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
-//        self.beforeText = [textField text];
-//        return;
-//    }
-//    
-//    NSString *stra = @"";
-//    NSString *strb = @"";
-//    int location = 0;
-//    for (int i =0,j =0; i<[self.beforeText length]; i++)
-//    {
-//        location = i;
-//        CC_BREAK_IF(i+1>[textField text].length);
-//        
-//        strb = [self.beforeText substringWithRange:NSMakeRange(i, 1)];
-//        stra = [[textField text] substringWithRange:NSMakeRange(j, 1)];
-//        
-//        CC_BREAK_IF(![strb isEqualToString:stra]);
-//        j++;
-//    }
-//
-//    std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
-//    self.beforeText = [textField text];
-//    
-//    if (_textField->getDelegate())
-//    {
-//        _textField->getDelegate()->textFieldAfterTextChanged(_textField, str.c_str(), "haha", location, 1, 0);
-//    }
-//    
-//    _isShouldEdit = NO;
-//}
-//
-//- (void) keyboardWillWasShown:(NSNotification *) notif
-//{
-//    NSDictionary *info = [notif userInfo];
-//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-//    CGSize keyboardSize = [value CGRectValue].size;
-//    
-//    CGFloat scale  = [[NSScreen mainScreen] backingScaleFactor];
-//    int height = CrossApp::s_px_to_dip(keyboardSize.height * scale);
-//    
-//    if (_textField->getDelegate())
-//    {
-//        _textField->getDelegate()->keyBoardHeight(_textField, height);
-//    }
-//}
-//
-//- (void) keyboardWasHidden:(NSNotification *) notif
-//{
-//    if (_textField->getDelegate())
-//    {
-//        _textField->getDelegate()->keyBoardHeight(_textField, 0);
-//    }
-//}
-//
-//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-//{
-//
-//    std::string str = self.beforeText != nil ? [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding] : "";
-//    std::string insert = [string cStringUsingEncoding:NSUTF8StringEncoding];
-//    self.beforeText = [textField text];
-//    
-//    if (_textField->getDelegate())
-//    {
-//        _textField->getDelegate()->textFieldAfterTextChanged(_textField, str.c_str(), insert.c_str(), (int)range.location, 0, (int)string.length);
-//    }
-//    
-//    _isShouldEdit = YES;
-//    return YES;
-//}
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(NSTextField *)sender
+{
+    CrossApp::CATextFieldDelegateX* delegate = _textField->getDelegate();
+    if (delegate != NULL)
+    {
+        
+    }
+    return YES;
+}
+
+/**
+ * Delegate method called before the text has been changed.
+ * @param textField The text field containing the text.
+ * @param range The range of characters to be replaced.
+ * @param string The replacement string.
+ * @return YES if the specified text range should be replaced; otherwise, NO to keep the old text.
+ */
+- (BOOL)textField:(NSTextField *) textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (_textField->getMaxLenght() > 0)
+    {
+        NSUInteger oldLength = [[textField stringValue] length];
+        NSUInteger replacementLength = [string length];
+        NSUInteger rangeLength = range.length;
+        
+        NSUInteger newLength = oldLength - rangeLength + replacementLength;
+        
+        return newLength <= _textField->getMaxLenght();
+    }
+    
+    return YES;
+}
+
+/**
+ * Called each time when the text field's text has changed.
+ */
+- (void)controlTextDidChange:(NSNotification *)notification
+{
+
+}
 
 @end
 
@@ -160,6 +140,7 @@ CATextFieldX::CATextFieldX()
 ,m_marginLeft(10)
 ,m_marginRight(10)
 ,m_fontSize(24)
+,m_iMaxLenght(0)
 ,m_clearBtn(ClearButtonMode::ClearButtonNone)
 ,m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
@@ -461,7 +442,7 @@ const CAColor4B& CATextFieldX::getPlaceHolderColor()
     return m_placeHdolderColor;
 }
 
-void CATextFieldX::setFontSize(const int &var)
+void CATextFieldX::setFontSize(int var)
 {
     m_fontSize = var;
 
@@ -471,7 +452,7 @@ void CATextFieldX::setFontSize(const int &var)
     this->delayShowImage();
 }
 
-const int& CATextFieldX::getFontSize()
+int CATextFieldX::getFontSize()
 {
     return m_fontSize;
 }
@@ -620,20 +601,20 @@ void CATextFieldX::setTextFieldAlign(const TextFieldAlign &var)
 {
     m_align = var;
     
-//    switch (var)
-//    {
-//        case CATextFieldX::TextEditAlignCenter:
-//            textField_MAC.textAlignment = NSTextAlignmentCenter;
-//            break;
-//        case CATextFieldX::TextEditAlignLeft:
-//            textField_MAC.textAlignment = NSTextAlignmentLeft;
-//            break;
-//        case CATextFieldX::TextEditAlignRight:
-//            textField_MAC.textAlignment = NSTextAlignmentRight;
-//            break;
-//        default:
-//            break;
-//    }
+    switch (var)
+    {
+        case CATextFieldX::TextEditAlignLeft:
+            [[textField_MAC cell] setAlignment:NSTextAlignmentLeft];
+            break;
+        case CATextFieldX::TextEditAlignCenter:
+            [[textField_MAC cell] setAlignment:NSTextAlignmentCenter];
+            break;
+        case CATextFieldX::TextEditAlignRight:
+            [[textField_MAC cell] setAlignment:NSTextAlignmentRight];
+            break;
+        default:
+            break;
+    }
     
     this->delayShowImage();
 }
@@ -642,6 +623,17 @@ const CATextFieldX::TextFieldAlign& CATextFieldX::getTextFieldAlign()
 {
     return m_align;
 }
+
+void CATextFieldX::setMaxLenght(int var)
+{
+    m_iMaxLenght = var;
+}
+
+int CATextFieldX::getMaxLenght()
+{
+    return m_iMaxLenght;
+}
+
 NS_CC_END
 
 

@@ -109,7 +109,22 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-
+    _isShouldEdit = YES;
+    
+    if (_textField->getMaxLenght() > 0)
+    {
+        NSUInteger oldLength = [[textField stringValue] length];
+        NSUInteger replacementLength = [string length];
+        NSUInteger rangeLength = range.length;
+        
+        NSUInteger newLength = oldLength - rangeLength + replacementLength;
+        
+        if (newLength > _textField->getMaxLenght())
+        {
+            return NO;
+        }
+    }
+    
     std::string str = self.beforeText != nil ? [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding] : "";
     std::string insert = [string cStringUsingEncoding:NSUTF8StringEncoding];
     self.beforeText = [textField text];
@@ -119,7 +134,7 @@
         _textField->getDelegate()->textFieldAfterTextChanged(_textField, str.c_str(), insert.c_str(), (int)range.location, 0, (int)string.length);
     }
     
-    _isShouldEdit = YES;
+    
     return YES;
 }
 
@@ -137,6 +152,8 @@ CATextFieldX::CATextFieldX()
 ,m_bUpdateImage(true)
 ,m_marginLeft(10)
 ,m_marginRight(10)
+,m_fontSize(24)
+,m_iMaxLenght(0)
 ,m_clearBtn(ClearButtonMode::ClearButtonNone)
 ,m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
@@ -487,7 +504,7 @@ const CAColor4B& CATextFieldX::getPlaceHolderColor()
     return m_placeHdolderColor;
 }
 
-void CATextFieldX::setFontSize(const int &var)
+void CATextFieldX::setFontSize(int&var)
 {
     m_fontSize = var;
     
@@ -497,7 +514,7 @@ void CATextFieldX::setFontSize(const int &var)
     this->delayShowImage();
 }
 
-const int& CATextFieldX::getFontSize()
+int CATextFieldX::getFontSize()
 {
     return m_fontSize;
 }
@@ -669,6 +686,16 @@ const CATextFieldX::TextFieldAlign& CATextFieldX::getTextFieldAlign()
 {
     return m_align;
 }
+void CATextFieldX::setMaxLenght(int var)
+{
+    m_iMaxLenght = var;
+}
+
+int CATextFieldX::getMaxLenght()
+{
+    return m_iMaxLenght;
+}
+
 NS_CC_END
 
 

@@ -115,7 +115,7 @@ public:
     void setMarginImageRight(const DSize imgSize,const std::string& filePath);
     
     //textfield font size
-    CC_PROPERTY_PASS_BY_REF(int, m_fontSize, FontSize);
+    CC_PROPERTY(int, m_fontSize, FontSize);
     
     //splaceHolder  Text/Color
     CC_PROPERTY_PASS_BY_REF(std::string, m_placeHolderText, PlaceHolderText);
@@ -123,17 +123,19 @@ public:
     
     //Text     Text/Color
     CC_PROPERTY_PASS_BY_REF(std::string, m_sText, Text);
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTextColor,TextColor);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTextColor, TextColor);
     
     //keyBoardType     default:KeyboardTypeDefault
-    CC_PROPERTY_PASS_BY_REF(KeyboardType,m_keyBoardType,KeyboardType);
+    CC_PROPERTY_PASS_BY_REF(KeyboardType, m_keyBoardType, KeyboardType);
     
     //returnType       default:ReturnTypeDone
-    CC_PROPERTY_PASS_BY_REF(ReturnType,m_returnType,ReturnType);
+    CC_PROPERTY_PASS_BY_REF(ReturnType, m_returnType, ReturnType);
     
 	//textFieldAlign  default:center
-	CC_PROPERTY_PASS_BY_REF(TextFieldAlign,m_align,TextFieldAlign);
+	CC_PROPERTY_PASS_BY_REF(TextFieldAlign, m_align, TextFieldAlign);
 
+    CC_SYNTHESIZE(int, m_iMaxLenght, MaxLenght);
+    
     //backGroundImage
     void setBackGroundImage(CAImage* image);
 public:

@@ -19,6 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -621,6 +622,18 @@ public class CrossAppTextField
             	Timer timer = new Timer();  
             	timer.schedule(task, (long) 50);
 				
+            }
+        });
+    }
+    
+    public void setMaxLenght(final int var)
+    {
+    	context.runOnUiThread(new Runnable() 
+    	{
+            @Override
+            public void run()
+            {
+            	textField.setFilters(new InputFilter[]{new InputFilter.LengthFilter(var)});
             }
         });
     }

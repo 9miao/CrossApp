@@ -841,14 +841,14 @@ void CATextFieldX::setMarginImageRight(const DSize imgSize, const std::string& f
 }
 
 
-void CATextFieldX::setFontSize(const int& var)
+void CATextFieldX::setFontSize(int var)
 {
 	m_fontSize = var;
 
 	delayShowImage();
 }
 
-const int& CATextFieldX::getFontSize()
+int CATextFieldX::getFontSize()
 {
 	return m_fontSize;
 }
@@ -928,6 +928,16 @@ void CATextFieldX::setBackGroundImage(CAImage* image)
 
 	m_pBackgroundView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
 	m_pBackgroundView->setImage(image);
+}
+
+void CATextFieldX::setMaxLenght(int var)
+{
+    m_iMaxLenght = var;
+}
+
+int CATextFieldX::getMaxLenght()
+{
+    return m_iMaxLenght;
 }
 
 void CATextFieldX::clearBtnCallBack(CAControl* con, DPoint point)

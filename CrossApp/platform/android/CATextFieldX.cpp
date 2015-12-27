@@ -247,6 +247,21 @@ void setTextFieldAlignJNI(int key, int type)
     }
 }
 
+void setMaxLenghtJNI(int key, int type)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setMaxLenght", "(I)V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID, type);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
 
 extern "C"
 {
@@ -316,6 +331,8 @@ CATextFieldX::CATextFieldX()
 ,m_bUpdateImage(true)
 ,m_marginLeft(10)
 ,m_marginRight(10)
+,m_fontSize(24)
+,m_iMaxLenght(0)
 ,m_pDelegate(NULL)
 ,m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
@@ -629,7 +646,7 @@ void CATextFieldX::setMarginImageRight(const DSize imgSize, const std::string& f
 	ima->setImage(CAImage::create(filePath));
 }
 
-void CATextFieldX::setFontSize(const int& var)
+void CATextFieldX::setFontSize(int var)
 {
 	m_fontSize = var;
 	setFontSizeJNI(m_u__ID,var);
@@ -637,7 +654,7 @@ void CATextFieldX::setFontSize(const int& var)
     this->delayShowImage();
 }
 
-const int& CATextFieldX::getFontSize(){
+int CATextFieldX::getFontSize(){
 	return m_fontSize;
 }
 
@@ -739,10 +756,22 @@ const CATextFieldX::TextFieldAlign& CATextFieldX::getTextFieldAlign()
     return m_align;
 }
 
+void CATextFieldX::setMaxLenght(int var)
+{
+    m_iMaxLenght = var;
+    setMaxLenghtJNI(m_u__ID, var);
+}
+
+int CATextFieldX::getMaxLenght()
+{
+    return m_iMaxLenght;
+}
+
 void CATextFieldX::clearBtnCallBack(CAControl* con, DPoint point)
 {
 	setText("");
 }
+
 
 NS_CC_END
 

@@ -353,6 +353,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if (m_pDelegate && MK_MBUTTON == wParam)
 		{
 			POINT point = { (short)LOWORD(lParam), (short)HIWORD(lParam) };
+           ::ScreenToClient(m_hWnd, &point);
 			DPoint pt(point.x, point.y);
 			pt.x /= m_fFrameZoomFactor;
 			pt.y /= m_fFrameZoomFactor;
@@ -380,6 +381,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if (m_pDelegate)
 		{
 			POINT point = { (short)LOWORD(lParam), (short)HIWORD(lParam) };
+            ::ScreenToClient(m_hWnd, &point);
 			DPoint pt(point.x, point.y);
 			pt.x /= m_fFrameZoomFactor;
 			pt.y /= m_fFrameZoomFactor;
@@ -406,6 +408,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_pDelegate && MK_LBUTTON == wParam)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
+            ::ScreenToClient(m_hWnd, &point);
             DPoint pt(point.x, point.y);
             pt.x /= m_fFrameZoomFactor;
             pt.y /= m_fFrameZoomFactor;
@@ -432,6 +435,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (MK_LBUTTON == wParam && m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
+            ::ScreenToClient(m_hWnd, &point);
             DPoint pt(point.x, point.y);
             int id = 0;
             pt.x /= m_fFrameZoomFactor;
@@ -457,6 +461,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
+            ::ScreenToClient(m_hWnd, &point);
             DPoint pt(point.x, point.y);
             int id = 0;
             pt.x /= m_fFrameZoomFactor;
@@ -481,6 +486,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if (m_pDelegate && MK_RBUTTON == wParam)
 		{
 			POINT point = { (short)LOWORD(lParam), (short)HIWORD(lParam) };
+            ::ScreenToClient(m_hWnd, &point);
 			DPoint pt(point.x, point.y);
 			pt.x /= m_fFrameZoomFactor;
 			pt.y /= m_fFrameZoomFactor;
@@ -506,6 +512,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if (m_bCaptured)
 		{
 			POINT point = { (short)LOWORD(lParam), (short)HIWORD(lParam) };
+            ::ScreenToClient(m_hWnd, &point);
 			DPoint pt(point.x, point.y);
 			int id = 0;
 			pt.x /= m_fFrameZoomFactor;
