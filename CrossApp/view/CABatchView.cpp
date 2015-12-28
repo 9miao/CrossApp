@@ -39,7 +39,7 @@ bool CABatchView::initWithImage(CAImage *image, unsigned int capacity)
 
     updateBlendFunc();
 
-    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
     return true;
 }
 

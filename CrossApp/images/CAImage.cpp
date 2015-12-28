@@ -2060,7 +2060,7 @@ void CAImage::premultipliedImageData()
             
     }
     
-    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
 }
 
 void CAImage::freeName()
