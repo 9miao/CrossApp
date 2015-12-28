@@ -23,7 +23,7 @@ typedef enum
 CADeviceIdiom;
 
 
-class CADensityDpi
+class CC_DLL CADensityDpi
 {
 public:
     
@@ -31,6 +31,7 @@ public:
     
     static CADeviceIdiom getIdiom();
 };
+
 
 static inline float s_dip_to_px(float dip)
 {
