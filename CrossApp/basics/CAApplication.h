@@ -284,7 +284,7 @@ public:
      *  @js getInstance
      */
     static CAApplication* getApplication(void);
-
+	
 protected:
     
     void purgeDirector();

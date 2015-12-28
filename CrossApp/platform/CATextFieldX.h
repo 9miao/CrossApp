@@ -134,7 +134,7 @@ public:
 	//textFieldAlign  default:center
 	CC_PROPERTY_PASS_BY_REF(TextFieldAlign, m_align, TextFieldAlign);
 
-    CC_SYNTHESIZE(int, m_iMaxLenght, MaxLenght);
+    CC_PROPERTY(int, m_iMaxLenght, MaxLenght);
     
     //backGroundImage
     void setBackGroundImage(CAImage* image);

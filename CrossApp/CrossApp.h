@@ -155,7 +155,7 @@
 #include "platform/CAFreeTypeFont.h"
 #include "platform/CAFTFontCache.h"
 #include "platform/CATextFieldX.h"
-
+#include "platform/CADensityDpi.h"
 //script_support
 #include "script_support/CCScriptSupport.h"
 #include "script_support/JSViewController.h"

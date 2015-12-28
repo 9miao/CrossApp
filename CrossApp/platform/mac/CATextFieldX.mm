@@ -73,6 +73,7 @@
 //    
 //    [self addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
 }
+
 - (BOOL)textFieldShouldBeginEditing:(NSTextField *)sender        // return NO to disallow editing.
 {
     CrossApp::CATextFieldDelegateX* delegate = _textField->getDelegate();
@@ -94,13 +95,6 @@
     return YES;
 }
 
-/**
- * Delegate method called before the text has been changed.
- * @param textField The text field containing the text.
- * @param range The range of characters to be replaced.
- * @param string The replacement string.
- * @return YES if the specified text range should be replaced; otherwise, NO to keep the old text.
- */
 - (BOOL)textField:(NSTextField *) textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if (_textField->getMaxLenght() > 0)
@@ -117,9 +111,6 @@
     return YES;
 }
 
-/**
- * Called each time when the text field's text has changed.
- */
 - (void)controlTextDidChange:(NSNotification *)notification
 {
 
