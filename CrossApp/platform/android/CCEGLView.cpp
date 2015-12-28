@@ -68,43 +68,6 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
     CCLog("setIMEKeyboardState %d",bOpen);
     setKeyboardStateJNI((int)bOpen);
 }
-void CCEGLView::setIMEKeyboardNumber()
-{
-    setKeyboardType(11);
-}
 
-void CCEGLView::setIMEKeyboardDefault()
-{
-    setKeyboardType(10);
-}
-
-void CCEGLView::setIMEKeyboardAlphabet()
-{
-    setKeyboardType(12);
-}
-void CCEGLView::setIMEKeyboardReturnSend()
-{
-    setKeyboardReturnType(23);
-}
-
-void CCEGLView::setIMEKeyboardReturnSearch()
-{
-    setKeyboardReturnType(22);
-}
-
-void CCEGLView::setIMEKeyboardReturnDone()
-{
-    setKeyboardReturnType(21);
-}
-
-void CCEGLView::setIMEKeyboardReturnEnter()
-{
-    setKeyboardReturnType(25);
-}
-
-void CCEGLView::setIMECursorPos(int pos,const char* text)
-{
-    setCursorPos(pos,text);
-}
 NS_CC_END
 

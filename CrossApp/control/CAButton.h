@@ -116,24 +116,33 @@ protected:
     CAColor4B m_sImageColor[CAControlStateAll];
     
     CAColor4B m_sTitleColor[CAControlStateAll];
-    
-    std::string m_sTitleFontName;
-    
+
     CAImageView* m_pImageView;
     
     CALabel* m_pLabel;
     
     CAView* m_pBackGroundView[CAControlStateAll];
     
-    float m_fTitleFontSize;
+    std::string m_sTitleFontName;
     
+    float m_fTitleFontSize;
+        
     DSize m_pTitleLabelSize;
+    
+    bool m_bDefineTitleLabelSize;
     
     DSize m_pImageSize;
     
+    bool m_bDefineImageSize;
+    
     DSize m_pTitleOffset;
     
+    bool m_bDefineTitleOffset;
+    
     DSize m_pImageOffset;
+    
+    bool m_bDefineImageOffset;
+    
 protected:
     
     void updateWithPreferredSize();

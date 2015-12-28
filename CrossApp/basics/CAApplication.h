@@ -108,12 +108,6 @@ public:
     /** How many frames were called since the director started */
     inline unsigned int getTotalFrames(void) { return m_uTotalFrames; }
     
-    /** Sets an OpenGL projection
-     @since v0.8.2
-     @js NA
-     */
-    inline CAApplication::Projection getProjection(void) { return m_eProjection; }
-    void setProjection(CAApplication::Projection kProjection);
      /** reshape projection matrix when canvas has been change"*/
     void reshapeProjection(const DSize& newWindowSize);
     
@@ -286,6 +280,13 @@ public:
 
 protected:
 
+    /** Sets an OpenGL projection
+     @since v0.8.2
+     @js NA
+     */
+    inline CAApplication::Projection getProjection(void) { return m_eProjection; }
+    void setProjection(CAApplication::Projection kProjection);
+    
     void purgeDirector();
     bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()
     

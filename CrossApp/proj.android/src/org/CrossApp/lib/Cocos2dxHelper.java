@@ -54,7 +54,6 @@ public class Cocos2dxHelper {
 		Cocos2dxHelper.sAssetManager = pContext.getAssets();
 		Cocos2dxHelper.sSDL = new Cocos2dxSDL(pContext);
 		Cocos2dxBitmap.setContext(pContext);
-		Cocos2dxETCLoader.setContext(pContext);
 	}
 
 	// ===========================================================

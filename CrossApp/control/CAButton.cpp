@@ -25,14 +25,18 @@ CAButton::CAButton(const CAButtonType& buttonType)
 ,m_bTouchClick(false)
 ,m_color(CAColor_white)
 ,m_eButtonType(buttonType)
-,m_sTitleFontName("")
 ,m_pImageView(NULL)
 ,m_pLabel(NULL)
+,m_sTitleFontName("")
 ,m_fTitleFontSize(0)
 ,m_pTitleLabelSize(DSizeZero)
+,m_bDefineTitleLabelSize(false)
 ,m_pImageSize(DSizeZero)
+,m_bDefineImageSize(false)
 ,m_pTitleOffset(DSizeZero)
+,m_bDefineTitleOffset(false)
 ,m_pImageOffset(DSizeZero)
+,m_bDefineImageOffset(false)
 {
     for (int i=0; i<CAControlStateAll; i++)
     {
@@ -570,11 +574,11 @@ void CAButton::setControlState(const CAControlState& var)
 
     m_pImageView->setColor(m_sImageColor[m_eControlState]);
 
-    if (!m_pImageSize.equals(DSizeZero))
+    if (m_bDefineImageSize)
     {
         imageViewCenter.size = m_pImageSize;
     }
-    if (!m_pImageOffset.equals(DSizeZero))
+    if (m_bDefineImageOffset)
     {
         imageViewCenter.origin = ccpMult(this->getBounds().size, 0.5f);
         imageViewCenter.origin = ccpAdd(imageViewCenter.origin, m_pImageOffset);
@@ -589,11 +593,11 @@ void CAButton::setControlState(const CAControlState& var)
     m_pLabel->setColor(m_sTitleColor[m_eControlState]);
 
     
-    if (!m_pTitleLabelSize.equals(DSizeZero))
+    if (m_bDefineTitleLabelSize)
     {
         labelCenter.size = m_pTitleLabelSize;
     }
-    if(!m_pTitleOffset.equals(DSizeZero))
+    if(m_bDefineTitleOffset)
     {
         labelCenter.origin = ccpMult(this->getBounds().size, 0.5f);
         labelCenter.origin = ccpAdd(labelCenter.origin, m_pTitleOffset);
@@ -602,8 +606,10 @@ void CAButton::setControlState(const CAControlState& var)
     
     if (!title.empty())
     {
-        if(m_fTitleFontSize==0)
+        if(m_fTitleFontSize == 0)
+        {
             m_fTitleFontSize = labelSize;
+        }
         m_pLabel->setFontSize(m_fTitleFontSize);
     }
     
@@ -700,6 +706,7 @@ void CAButton::setContentSize(const DSize & var)
 
 void CAButton::setImageOffset(const DSize& offset)
 {
+    m_bDefineImageOffset = true;
     m_pImageOffset = offset;
     DRect rect = m_pImageView->getCenter();
     rect.origin = m_obContentSize/2;
@@ -710,6 +717,7 @@ void CAButton::setImageOffset(const DSize& offset)
 
 void CAButton::setImageSize(const DSize& size)
 {
+    m_bDefineImageSize = true;
     m_pImageSize = size;
     DRect rect = m_pImageView->getCenter();
     rect.size = m_pImageSize;
@@ -718,6 +726,7 @@ void CAButton::setImageSize(const DSize& size)
 
 void CAButton::setTitleOffset(const DSize& offset)
 {
+    m_bDefineTitleOffset = true;
     m_pTitleOffset = offset;
     DRect rect = m_pLabel->getCenter();
     rect.origin = m_obContentSize/2;
@@ -728,6 +737,7 @@ void CAButton::setTitleOffset(const DSize& offset)
 
 void CAButton::setTitleLabelSize(const DSize& size)
 {
+    m_bDefineTitleLabelSize= true;
     m_pTitleLabelSize = size;
     DRect rect = m_pLabel->getCenter();
     rect.size = m_pTitleLabelSize;

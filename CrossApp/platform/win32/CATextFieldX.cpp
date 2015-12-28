@@ -573,7 +573,7 @@ private:
 CATextFieldX::CATextFieldX()
 : m_pImgeView(NULL)
 , m_pTextField(NULL)
-, m_bgImgeView(NULL)
+, m_pBackgroundView(NULL)
 , m_pDelegate(NULL)
 , m_bUpdateImage(true)
 , m_marginLeft(10)
@@ -691,10 +691,10 @@ bool CATextFieldX::init()
 	this->setColor(CAColor_clear);
 
 	CAImage* image = CAImage::create("source_material/textField_bg.png");
-	m_bgImgeView = CAScale9ImageView::createWithFrame(DRect(0, 0, 1, 1));
-	m_bgImgeView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
-	m_bgImgeView->setImage(image);
-	this->addSubview(m_bgImgeView);
+	m_pBackgroundView = CAScale9ImageView::createWithFrame(DRect(0, 0, 1, 1));
+	m_pBackgroundView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
+	m_pBackgroundView->setImage(image);
+	this->addSubview(m_pBackgroundView);
 
 	CATextFieldWin32 *text = new CATextFieldWin32(this);
 	text->initWithFrame(DRect(0, 0, 1, 1));
@@ -724,9 +724,9 @@ void CATextFieldX::setContentSize(const DSize& contentSize)
 {
     CAView::setContentSize(contentSize);
 
-	if (m_bgImgeView)
+	if (m_pBackgroundView)
 	{
-		m_bgImgeView->setFrame(this->getBounds());
+		m_pBackgroundView->setFrame(this->getBounds());
 	}
 	if (m_pTextField)
 	{
@@ -926,8 +926,8 @@ void CATextFieldX::setBackGroundImage(CAImage* image)
 {
 	if (!image)return;
 
-	m_bgImgeView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
-	m_bgImgeView->setImage(image);
+	m_pBackgroundView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
+	m_pBackgroundView->setImage(image);
 }
 
 void CATextFieldX::clearBtnCallBack(CAControl* con, DPoint point)

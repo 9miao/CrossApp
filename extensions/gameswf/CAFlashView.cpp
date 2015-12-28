@@ -73,8 +73,7 @@ void CAFlashView::onExit()
 
 void CAFlashView::runAnimation()
 {
-    if(this->isRunning())
-        return;
+    CC_RETURN_IF(this->isRunning() || m_pFlash == NULL);
     this->setRunning(true);
     m_pFlash->setIndex(0);
     m_pFlash->playRun();
@@ -83,8 +82,7 @@ void CAFlashView::runAnimation()
 
 void CAFlashView::stopAnimation()
 {
-    if(! this->isRunning())
-        return;
+    CC_RETURN_IF(!this->isRunning() || m_pFlash == NULL);
     CAScheduler::unschedule(schedule_selector(CAFlashView::update), this);
     this->setRunning(false);
 }
@@ -114,6 +112,7 @@ void CAFlashView::update(float dt)
 void CAFlashView::draw()
 {
     CAView::draw();
+    CC_RETURN_IF(m_pFlash == NULL);
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
     kmMat4 matrixP;
     kmMat4 matrixMV;

@@ -138,20 +138,8 @@ CAApplication::~CAApplication(void)
 
 void CAApplication::setDefaultValues(void)
 {
-
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / 100;
-
-
-	const char *projection = "3d";
-	if( strcmp(projection, "3d") == 0 )
-        m_eProjection = CAApplication::P3D;
-	else if (strcmp(projection, "2d") == 0)
-		m_eProjection = CAApplication::P2D;
-	else if (strcmp(projection, "custom") == 0)
-		m_eProjection = CAApplication::PCustom;
-	else
-		CCAssert(false, "Invalid projection value");
-
+    m_eProjection = CAApplication::P3D;
 }
 
 void CAApplication::setGLDefaultValues(void)
@@ -212,6 +200,7 @@ void CAApplication::drawScene(float dt)
         }
         
         kmGLPopMatrix();
+        
         
         m_uTotalFrames++;
         
@@ -402,7 +391,7 @@ void CAApplication::reshapeProjection(const DSize& newWindowSize)
 	if (m_pobOpenGLView)
 	{
 		m_obWinSizeInPoints = DSize(newWindowSize.width, newWindowSize.height);
-		setProjection(m_eProjection);       
+		setProjection(m_eProjection);
 	}
 
 }
