@@ -132,6 +132,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         CAButton* btn = CAButton::create((CAButtonType)atoi(viewXml->Attribute("type")));
         superview->addSubview(btn);
+        
         map.insert(viewXml->Attribute("textTag"), btn);
         
         DRect rect;
@@ -155,6 +156,17 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             btn->setTitleFontName(value);
         }
+        
+        DSize titleOffSize = DSizeZero;
+        if (const char* value1 = viewXml->Attribute("titleOffSizeX"))
+        {
+            titleOffSize.width = atof(value1);
+        }
+        if (const char* value1 = viewXml->Attribute("titleOffSizeY"))
+        {
+            titleOffSize.height = atof(value1);
+        }
+        btn->setTitleOffset(titleOffSize);
         
         if (const char* value = viewXml->Attribute("titleNormal"))
         {
@@ -196,12 +208,27 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             btn->setTitleColorForState(CAControlStateDisabled, ccc4Int(atoi(value)));
         }
         
-        if (const char* value1 = viewXml->Attribute("titleOffSizeX"))
+        DSize imageOffSize = DSizeZero;
+        if (const char* value1 = viewXml->Attribute("imageOffSizeX"))
         {
-            const char* value2 = viewXml->Attribute("titleOffSizeY");
-            DSize offSize = DSize(atoi(value1), atoi(value2));
-            btn->setTitleOffset(offSize);
+            imageOffSize.width = atof(value1);
         }
+        if (const char* value1 = viewXml->Attribute("imageOffSizeY"))
+        {
+            imageOffSize.height = atof(value1);
+        }
+        btn->setImageOffset(imageOffSize);
+        
+        DSize imageSize = DSizeZero;
+        if (const char* value1 = viewXml->Attribute("imageSizeW"))
+        {
+            imageSize.width = atoi(value1);
+        }
+        if (const char* value1 = viewXml->Attribute("imageSizeH"))
+        {
+            imageSize.height = atoi(value1);
+        }
+        btn->setImageSize(imageSize);
         
         if (const char* value = viewXml->Attribute("imageNormal"))
         {
@@ -221,20 +248,6 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         if (const char* value = viewXml->Attribute("imageDisabled"))
         {
             btn->setImageForState(CAControlStateDisabled, CAImage::create(value));
-        }
-        
-        if (const char* value1 = viewXml->Attribute("imageOffSizeX"))
-        {
-            const char* value2 = viewXml->Attribute("imageOffSizeY");
-            DSize offSize = DSize(atoi(value1), atoi(value2));
-            btn->setImageOffset(offSize);
-        }
-        
-        if (const char* value1 = viewXml->Attribute("imageSizeW"))
-        {
-            const char* value2 = viewXml->Attribute("imageSizeH");
-            DSize size = DSize(atoi(value1), atoi(value2));
-            btn->setImageSize(size);
         }
         
         if (strcmp(viewXml->Attribute("backgroundType"), "Scale9") == 0)
@@ -601,6 +614,614 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             activity->setActivityBackView(imageView);
         }
     }
+    else if (contrlType.compare("CAPickerView") == 0)
+    {
+        DRect rect;
+        rect.origin.x = atoi(viewXml->Attribute("x"));
+        rect.origin.y = atoi(viewXml->Attribute("y"));
+        rect.size.width = atoi(viewXml->Attribute("w"));
+        rect.size.height = atoi(viewXml->Attribute("h"));
+        
+        CAPickerView* pickerView = CAPickerView::createWithFrame(rect);
+        superview->addSubview(pickerView);
+        map.insert(viewXml->Attribute("textTag"), pickerView);
+        
+        if (const char* value = viewXml->Attribute("color"))
+        {
+            pickerView->setColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("fontSizeNormal"))
+        {
+            pickerView->setFontSizeNormal(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("fontSizeSelected"))
+        {
+            pickerView->setFontSizeSelected(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("fontColorNormal"))
+        {
+            pickerView->setFontColorNormal(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("fontColorSelected"))
+        {
+            pickerView->setFontColorSelected(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("separateColor"))
+        {
+            pickerView->setSeparateColor(ccc4Int(atoi(value)));
+        }
+    }
+    else if (contrlType.compare("CAWebView") == 0)
+    {
+        DRect rect;
+        rect.origin.x = atoi(viewXml->Attribute("x"));
+        rect.origin.y = atoi(viewXml->Attribute("y"));
+        rect.size.width = atoi(viewXml->Attribute("w"));
+        rect.size.height = atoi(viewXml->Attribute("h"));
+        
+        CAWebView* webView = CAWebView::createWithFrame(rect);
+        superview->addSubview(webView);
+        map.insert(viewXml->Attribute("textTag"), webView);
+        
+        if (const char* value = viewXml->Attribute("loadURL"))
+        {
+            webView->loadURL(value);
+        }
+    }
+    else if (contrlType.compare("CAPageView") == 0)
+    {
+        DRect rect;
+        rect.origin.x = atoi(viewXml->Attribute("x"));
+        rect.origin.y = atoi(viewXml->Attribute("y"));
+        rect.size.width = atoi(viewXml->Attribute("w"));
+        rect.size.height = atoi(viewXml->Attribute("h"));
+        
+        CAPageView* pageView = CAPageView::createWithFrame(rect, (CAPageViewDirection)(atoi(viewXml->Attribute("driection"))));
+        
+        superview->addSubview(pageView);
+        map.insert(viewXml->Attribute("textTag"), pageView);
+        
+        if (const char* value = viewXml->Attribute("color"))
+        {
+            pageView->setBackGroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if(const char* value = viewXml->Attribute("spacing"))
+        {
+            pageView->setSpacing(atoi(value));
+        }
+        
+        if(const char* value = viewXml->Attribute("spacing"))
+        {
+            pageView->setSpacing(atoi(value));
+        }
+        
+        if(const char* value = viewXml->Attribute("showsScrollIndicator"))
+        {
+            pageView->setShowsScrollIndicators(atoi(value));
+        }
+        
+        if(const char* value = viewXml->Attribute("currPage"))
+        {
+            pageView->setCurrPage(atoi(value),false);
+        }
+        
+        if(const char* value = viewXml->Attribute("bounce"))
+        {
+            pageView->CAScrollView::setBounces(atoi(value));
+        }
+    }
+    else if (contrlType.compare("CATableView") == 0)
+    {
+        DRect rect;
+        rect.origin.x = atoi(viewXml->Attribute("x"));
+        rect.origin.y = atoi(viewXml->Attribute("y"));
+        rect.size.width = atoi(viewXml->Attribute("w"));
+        rect.size.height = atoi(viewXml->Attribute("h"));
+        
+        CATableView* tableView = CATableView::createWithFrame(rect);
+        superview->addSubview(tableView);
+        map.insert(viewXml->Attribute("textTag"), tableView);
+   
+        if (const char* value = viewXml->Attribute("color"))
+        {
+            tableView->setBackGroundColor(ccc4Int(atoi(value)));
+        }
+
+        if (const char* value = viewXml->Attribute("headerHeight"))
+        {
+            tableView->setTableHeaderHeight(atoi(value));
+        }
+
+        if (const char* value = viewXml->Attribute("footerHeight"))
+        {
+            tableView->setTableFooterHeight(atoi(value));
+        }
+
+        if (const char* value = viewXml->Attribute("separatorHeight"))
+        {
+            tableView->setSeparatorViewHeight(atoi(value));
+        }
+
+        if (const char* value = viewXml->Attribute("separatorColor"))
+        {
+            tableView->setSeparatorColor(ccc4Int(atoi(value)));
+        }
+
+        if (const char* value = viewXml->Attribute("bounce"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            tableView->CAScrollView::setBounces(var);
+        }
+
+        if (const char* value = viewXml->Attribute("showsScrollIndicator"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            tableView->setShowsScrollIndicators(var);
+        }
+
+        if (const char* value = viewXml->Attribute("headerRefreshView"))
+        {
+        
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
+                tableView->setHeaderRefreshView(pullview);
+            }
+            else
+            {
+                tableView->setHeaderRefreshView(NULL);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("footerRefreshView"))
+        {
+
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
+                tableView->setHeaderRefreshView(pullview);
+            }
+            else
+            {
+                tableView->setHeaderRefreshView(NULL);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysTopSectionHeader"))
+        {
+            
+            bool var = (atoi(value)==1) ? true : false;
+            tableView->setAlwaysTopSectionHeader(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysBottomSectionFooter"))
+        {
+            
+            bool var = (atoi(value)==1) ? true : false;
+            tableView->setAlwaysBottomSectionFooter(var);
+        }
+    }
+
+    else if (contrlType.compare("CAListView") == 0)
+    {
+        DRect rect;
+        rect.origin.x = atoi(viewXml->Attribute("x"));
+        rect.origin.y = atoi(viewXml->Attribute("y"));
+        rect.size.width = atoi(viewXml->Attribute("w"));
+        rect.size.height = atoi(viewXml->Attribute("h"));
+        
+        CAListView* listView = CAListView::createWithFrame(rect);
+        superview->addSubview(listView);
+        map.insert(viewXml->Attribute("textTag"), listView);
+ 
+        if (const char* value = viewXml->Attribute("color"))
+        {
+            listView->setBackGroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("headerHeight"))
+        {
+            listView->setListHeaderHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("footerHeight"))
+        {
+            listView->setListFooterHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("separatorHeight"))
+        {
+            listView->setSeparatorViewHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("separatorColor"))
+        {
+            listView->setSeparatorColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("orientation"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                listView->setListViewOrientation(CAListViewOrientation::CAListViewOrientationHorizontal);
+            }
+            else
+            {
+                listView->setListViewOrientation(CAListViewOrientation::CAListViewOrientationVertical);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("bounce"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            listView->CAScrollView::setBounces(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("showsScrollIndicator"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            listView->setShowsScrollIndicators(var);
+        }
+
+        if (const char* value = viewXml->Attribute("headerRefreshView"))
+        {
+
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
+                listView->setHeaderRefreshView(pullview);
+            }
+            else
+            {
+                listView->setHeaderRefreshView(NULL);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("footerRefreshView"))
+        {
+            
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
+                listView->setHeaderRefreshView(pullview);
+            }
+            else
+            {
+                listView->setHeaderRefreshView(NULL);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("allowsHeadAndFootHover"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            listView->setAllowsHeadAndFootHover(var);
+        }
+    }
+    else if (contrlType.compare("CACollectionView") == 0)
+    {
+        DRect rect;
+        rect.origin.x = atoi(viewXml->Attribute("x"));
+        rect.origin.y = atoi(viewXml->Attribute("y"));
+        rect.size.width = atoi(viewXml->Attribute("w"));
+        rect.size.height = atoi(viewXml->Attribute("h"));
+        
+        CACollectionView* collectionView = CACollectionView::createWithFrame(rect);
+        superview->addSubview(collectionView);
+        map.insert(viewXml->Attribute("textTag"), collectionView);
+  
+        if (const char* value = viewXml->Attribute("color"))
+        {
+            collectionView->setBackGroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("headerHeight"))
+        {
+            collectionView->setCollectionHeaderHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("footerHeight"))
+        {
+            collectionView->setCollectionFooterHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("horiInterval"))
+        {
+            collectionView->setHoriInterval(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("vertInterval"))
+        {
+            collectionView->setVertInterval(atoi(value));
+        }
+
+        if (const char* value = viewXml->Attribute("bounce"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            collectionView->CAScrollView::setBounces(var);
+        }
+
+        if (const char* value = viewXml->Attribute("showsScrollIndicator"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            collectionView->setShowsScrollIndicators(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("headerRefreshView"))
+        {
+            
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
+                collectionView->setHeaderRefreshView(pullview);
+            }
+            else
+            {
+                collectionView->setHeaderRefreshView(NULL);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("footerRefreshView"))
+        {
+            
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
+                collectionView->setHeaderRefreshView(pullview);
+            }
+            else
+            {
+                collectionView->setHeaderRefreshView(NULL);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysTopSectionHeader"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            collectionView->setAlwaysTopSectionHeader(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysBottomSectionFooter"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            collectionView->setAlwaysBottomSectionFooter(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("allowsSelection"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            collectionView->setAllowsSelection(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("allowsMultipleSelection"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            collectionView->setAllowsMultipleSelection(var);
+        }
+    }
+    else if (contrlType.compare("CAWaterfallView") == 0)
+    {
+        DRect rect;
+        rect.origin.x = atoi(viewXml->Attribute("x"));
+        rect.origin.y = atoi(viewXml->Attribute("y"));
+        rect.size.width = atoi(viewXml->Attribute("w"));
+        rect.size.height = atoi(viewXml->Attribute("h"));
+        
+        CAWaterfallView* waterfallView = CAWaterfallView::createWithFrame(rect);
+        superview->addSubview(waterfallView);
+        map.insert(viewXml->Attribute("textTag"), waterfallView);
+        
+        if (const char* value = viewXml->Attribute("color"))
+        {
+            waterfallView->setBackGroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("headerHeight"))
+        {
+            waterfallView->setWaterfallHeaderHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("footerHeight"))
+        {
+            waterfallView->setWaterfallFooterHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("columnCount"))
+        {
+            waterfallView->setColumnCount(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("itemMargin"))
+        {
+            waterfallView->setItemMargin(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("columnMargin"))
+        {
+            waterfallView->setColumnMargin(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("bounce"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            waterfallView->CAScrollView::setBounces(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("showsScrollIndicator"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            waterfallView->setShowsScrollIndicators(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("headerRefreshView"))
+        {
+            
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
+                waterfallView->setHeaderRefreshView(pullview);
+            }
+            else
+            {
+                waterfallView->setHeaderRefreshView(NULL);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("footerRefreshView"))
+        {
+            
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
+                waterfallView->setHeaderRefreshView(pullview);
+            }
+            else
+            {
+                waterfallView->setHeaderRefreshView(NULL);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysTopSectionHeader"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            waterfallView->setAlwaysTopSectionHeader(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysBottomSectionFooter"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            waterfallView->setAlwaysBottomSectionFooter(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("allowsSelection"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            waterfallView->setAllowsSelection(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("allowsMultipleSelection"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            waterfallView->setAllowsMultipleSelection(var);
+        }
+    }
+    else if (contrlType.compare("CAScrollView") == 0)
+    {
+        DRect rect;
+        rect.origin.x = atoi(viewXml->Attribute("x"));
+        rect.origin.y = atoi(viewXml->Attribute("y"));
+        rect.size.width = atoi(viewXml->Attribute("w"));
+        rect.size.height = atoi(viewXml->Attribute("h"));
+        
+        CAScrollView* scrollView = CAScrollView::createWithFrame(rect);
+        superview->addSubview(scrollView);
+        map.insert(viewXml->Attribute("textTag"), scrollView);
+        
+        if (const char* value = viewXml->Attribute("color"))
+        {
+            scrollView->setBackGroundColor(ccc4Int(atoi(value)));
+        }
+        
+        DPoint contentOffSet = DPointZero;
+        if (const char* value = viewXml->Attribute("contentOffSet_x"))
+        {
+            contentOffSet.x = atoi(value);
+        }
+        if (const char* value = viewXml->Attribute("contentOffSet_y"))
+        {
+            contentOffSet.y = atoi(value);
+        }
+        scrollView->setContentOffset(contentOffSet, false);
+        
+        if (const char* value = viewXml->Attribute("minZoomScale"))
+        {
+            scrollView->setMinimumZoomScale(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("maxZoomScale"))
+        {
+            scrollView->setMaximumZoomScale(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("touchEnabledAtSubviews"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            scrollView->setTouchEnabledAtSubviews(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("showsHorizontalScrollIndicator"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            scrollView->setShowsHorizontalScrollIndicator(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("showsVerticalScrollIndicator"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            scrollView->setShowsVerticalScrollIndicator(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("bounceHorizontal"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            scrollView->setBounceHorizontal(var);
+        }
+        
+        if (const char* value = viewXml->Attribute("bounceVertical"))
+        {
+            bool var = (atoi(value)==1) ? true : false;
+            scrollView->setBounceVertical(var);
+        }
+
+        if (const char* value = viewXml->Attribute("headerRefreshView"))
+        {
+            
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
+                scrollView->setHeaderRefreshView(pullview);
+            }
+            else
+            {
+                scrollView->setHeaderRefreshView(NULL);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("footerRefreshView"))
+        {
+            
+            bool var = (atoi(value)==1) ? true : false;
+            if(var)
+            {
+                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
+                scrollView->setHeaderRefreshView(pullview);
+            }
+            else
+            {
+                scrollView->setHeaderRefreshView(NULL);
+            }
+        }
+    }
+    
+    
+    
+    
+    
     
     return view;
 
