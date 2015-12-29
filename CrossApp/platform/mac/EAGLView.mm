@@ -318,7 +318,7 @@ static EAGLView *view;
 
 	CrossApp::CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, ids, xs, ys, event);
     event->release();
-}
+} 
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {

@@ -153,32 +153,15 @@
 //    [self addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
 }
 
-
-
-- (BOOL)textShouldBeginEditing:(NSText *)textObject
-{
-    NSLog(@"textShouldBeginEditing:%@",textObject.string);
-    return true;
-}
-
-- (BOOL)textShouldEndEditing:(NSText *)textObject
-{
-    
-    NSLog(@"textShouldEndEditing:%@",textObject.string);
-    return true;
-}
-
-
 - (void)textDidBeginEditing:(NSNotification *)notification
 {
-    NSLog(@"textDidBeginEditing:");
+
     
 }
 
 - (void)textDidEndEditing:(NSNotification *)notification
 {
-    //  NSLog(@"textDidEndEditing:");
-    
+    _textField->resignFirstResponder();
 }
 
 - (void)textDidChange:(NSNotification *)notification
@@ -321,16 +304,13 @@ bool CATextField::resignFirstResponder()
     
     bool result = CAView::resignFirstResponder();
     
-    if (result)
-    {
-        [textField_MAC resignFirstResponder];
-        
-        this->showTextField();
-        
-        this->showImage();
-        
-        this->hideNativeTextField();
-    }
+    [textField_MAC resignFirstResponder];
+    
+    this->showTextField();
+    
+    this->showImage();
+    
+    this->hideNativeTextField();
     return result;
 }
 
@@ -342,17 +322,12 @@ bool CATextField::becomeFirstResponder()
     }
     
     bool result = CAView::becomeFirstResponder();
-    if (result)
-    {
-        [textField_MAC becomeFirstResponder];
-        
-        this->showNativeTextField();
-        
-        CAViewAnimation::beginAnimations(m_s__StrID + "hideTextField", NULL);
-        CAViewAnimation::setAnimationDuration(0);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextField::hideTextField));
-        CAViewAnimation::commitAnimations();
-    }
+    
+    [textField_MAC becomeFirstResponder];
+    
+    this->showNativeTextField();
+    
+    this->hideTextField();
     
     return result;
 }
@@ -371,7 +346,7 @@ void CATextField::hideNativeTextField()
 {
     CAScheduler::unschedule(schedule_selector(CATextField::update), this);
     
-    [textField_MAC performSelector:@selector(hide) withObject:nil afterDelay:1/60.0f];
+    [textField_MAC hide];
 }
 
 void CATextField::showNativeTextField()
@@ -470,7 +445,7 @@ void CATextField::update(float dt)
         DPoint point = this->convertToWorldSpace(DPointZero);
         point.y = CAApplication::getApplication()->getWinSize().height - point.y;
         point.y = point.y - m_obContentSize.height;
-        CC_BREAK_IF(m_obLastPoint.equals(point));
+//        CC_BREAK_IF(m_obLastPoint.equals(point));
 
         CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
         NSPoint origin;

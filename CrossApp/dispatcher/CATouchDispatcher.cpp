@@ -511,7 +511,7 @@ void CATouchDispatcher::setDispatchEventsFalse()
 
 void CATouchDispatcher::touchesBegan(CCSet *touches, CAEvent *pEvent)
 {
-    CC_RETURN_IF(!isDispatchEvents());
+    CC_RETURN_IF(!isDispatchEvents() );
     m_bLocked = true;
     
     CATouch *pTouch;
