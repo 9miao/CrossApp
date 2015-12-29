@@ -1,4 +1,3 @@
-#include "dispatcher/CAIMEDispatcher.h"
 #include "basics/CAApplication.h"
 #include "platform/CCFileUtils.h"
 #include "ccTypes.h"

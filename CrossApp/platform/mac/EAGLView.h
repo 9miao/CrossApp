@@ -4,7 +4,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "ccConfig.h"
-#import "CAMACTextField.h"
 
 //PROTOCOLS:
 
@@ -46,7 +45,7 @@
  
  Only available for Mac OS X
  */
-@interface EAGLView : NSOpenGLView <CAMACTextFieldDelegate>{
+@interface EAGLView : NSOpenGLView{
 	id<MacEventDelegate> eventDelegate_;
 
 	BOOL isFullScreen_;
@@ -61,8 +60,6 @@
     
     NSString *              markedText_;
 }
-@property(nonatomic,assign)CAMACTextField *textfield;
-@property(nonatomic, assign) id<NSTextFieldDelegate> inputDelegate;
 
 @property (nonatomic, readwrite, assign) id<MacEventDelegate> eventDelegate;
 

@@ -35,11 +35,10 @@ control/CAStepper.cpp \
 controller/CABarItem.cpp \
 controller/CAViewController.cpp \
 controller/CADrawerController.cpp \
-dispatcher/CAIMEDispatcher.cpp \
 dispatcher/CAKeypadDelegate.cpp \
 dispatcher/CAKeypadDispatcher.cpp \
-dispatcher/CATouch.cpp \
 dispatcher/CATouchDispatcher.cpp \
+dispatcher/CATouch.cpp \
 images/CAImage.cpp \
 images/CAImageCache.cpp \
 images/CAGif.cpp \
@@ -104,8 +103,6 @@ view/CAPickerView.cpp \
 view/CADatePickerView.cpp \
 view/CAActivityIndicatorView.cpp \
 view/CAPullToRefreshView.cpp \
-view/CATextView.cpp \
-view/CATextField.cpp \
 view/CATextEditHelper.cpp \
 view/CALabelStyle.cpp \
 view/CAWebView.cpp \
@@ -140,13 +137,12 @@ platform/android/CCApplication.cpp \
 platform/android/CCCommon.cpp \
 platform/android/CCFileUtilsAndroid.cpp \
 platform/android/CAWebViewImpl.cpp \
-platform/android/CATextFieldX.cpp \
+platform/android/CATextField.cpp \
 platform/android/CAClipboard.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
 platform/android/jni/JniHelper.cpp \
-platform/android/jni/IMEJni.cpp \
 platform/android/jni/TouchesJni.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxSDL.cpp \
 script_support/JSViewController.cpp \

@@ -60,8 +60,6 @@
 #include "dispatcher/CATouchDispatcher.h"
 #include "dispatcher/CAKeypadDelegate.h"
 #include "dispatcher/CAKeypadDispatcher.h"
-#include "dispatcher/CAIMEDelegate.h"
-#include "dispatcher/CAIMEDispatcher.h"
 #include "dispatcher/CAProtocols.h"
 
 
@@ -92,8 +90,6 @@
 #include "view/CADatePickerView.h"
 #include "view/CAActivityIndicatorView.h"
 #include "view/CAPullToRefreshView.h"
-#include "view/CATextField.h"
-#include "view/CATextView.h"
 #include "view/CAWebView.h"
 #include "view/CADrawingPrimitives.h"
 #include "view/CADrawView.h"
@@ -154,7 +150,7 @@
 #include "platform/CCPlatformMacros.h"
 #include "platform/CAFreeTypeFont.h"
 #include "platform/CAFTFontCache.h"
-#include "platform/CATextFieldX.h"
+#include "platform/CATextField.h"
 #include "platform/CADensityDpi.h"
 //script_support
 #include "script_support/CCScriptSupport.h"

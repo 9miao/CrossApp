@@ -69,7 +69,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <CoreFoundation/CoreFoundation.h>
 
 #import "CCESRenderer.h"
-#import "CAIOSTextField.h"
 //CLASS INTERFACE:
 
 /** EAGLView Class.
@@ -77,7 +76,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * The view content is basically an EAGL surface you render your OpenGL scene into.
  * Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
  */
-@interface EAGLView : UIView <CAIOSTextFieldDelegate>
+@interface EAGLView : UIView
 {
     id                        <CCESRenderer> renderer_;    
     EAGLContext                *context_; // weak ref
@@ -92,26 +91,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     //fsaa addition
     BOOL                    multisampling_;
     unsigned int               requestedSamples_;
-    BOOL                    isUseUITextField;
 
-@private
-    
-    NSString *              markedText_;
-    CGRect                  caretRect_;
-    CGRect                  originalRect_;
-    NSNotification*         keyboardShowNotification_;
-    BOOL                    isKeyboardShown_;
 }
-@property(nonatomic,assign)CAIOSTextField *textfield;
-@property(nonatomic, readonly) UITextPosition *beginningOfDocument;
-@property(nonatomic, readonly) UITextPosition *endOfDocument;
-@property(nonatomic, assign) id<UITextInputDelegate> inputDelegate;
-@property(nonatomic, readonly) UITextRange *markedTextRange;
-@property (nonatomic, copy) NSDictionary *markedTextStyle;
-@property(readwrite, copy) UITextRange *selectedTextRange;
-@property(nonatomic, readonly) id<UITextInputTokenizer> tokenizer;
-@property(nonatomic, readonly, getter = isKeyboardShown) BOOL isKeyboardShown;
-@property(nonatomic, copy) NSNotification* keyboardShowNotification;
 /** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 + (id) viewWithFrame:(CGRect)frame;
 /** creates an initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
@@ -155,6 +136,4 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 -(int) getWidth;
 -(int) getHeight;
 
--(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis;
--(void) doAnimationWhenAnotherEditBeClicked;
 @end

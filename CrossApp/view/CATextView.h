@@ -12,8 +12,6 @@
 #include "view/CAView.h"
 #include "view/CAScrollView.h"
 #include "view/CAScale9ImageView.h"
-#include "view/CATextField.h"
-#include "dispatcher/CAIMEDispatcher.h"
 
 
 #include <vector>

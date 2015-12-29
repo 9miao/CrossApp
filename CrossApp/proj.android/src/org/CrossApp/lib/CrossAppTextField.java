@@ -58,7 +58,11 @@ public class CrossAppTextField
 	
 	private boolean isSetText = false;
 	private String  beforeTextString = "";
-	
+	private String  changedTextString = "";
+	private String  currTextString = "";
+	private int _arg1 = 0;
+	private int _arg2 = 0;
+	private int _arg3 = 0;
 	//是否弹出键盘
 	private boolean isShowKey = false;
 	
@@ -94,6 +98,7 @@ public class CrossAppTextField
 	//keyBoard return call back
 	private static native void keyBoardReturnCallBack(int key);
 	private static native void textChange(int key,String before,String change,int arg0,int arg1,int arg2);
+	private static native void text(int key, String text);
     public void init(int key)
     {
     	
@@ -117,34 +122,56 @@ public class CrossAppTextField
 		    	textField.addTextChangedListener(new TextWatcher() {
 					
 					@Override
-					public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+					public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
+					{//起始位置， 删除长度，增加长度
 						// TODO Auto-generated method stub
-						if (isSetText) {
+						if (isSetText)
+						{
 							isSetText = false;
 							return;
 						}
 						
 						String string = arg0.toString();
-						String newString = "";
-						if (arg2>arg3) {
-							newString = beforeTextString.substring(arg1, arg1+arg2);
-						}else{
-							newString = string.substring(arg1, arg1+arg3);
+						if (arg2>arg3) 
+						{
+							changedTextString = beforeTextString.substring(arg1, arg1+arg2);
+						}
+						else
+						{
+							changedTextString = string.substring(arg1, arg1+arg3);
 						}
 						
-						textChange(mykey, beforeTextString,newString, arg1,arg2, arg3);
+						_arg1 = arg1;
+						_arg2 = arg2;
+						_arg3 = arg3;
+						
+						context.runOnUiThread(new Runnable()
+						{
+							
+							@Override
+							public void run()
+							{
+								text(mykey, textField.getText().toString());
+								textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2, _arg3);
+							}
+							
+						});
+						
+						
 						
 					}
 					
 					@Override
 					public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-							int arg3) {
+							int arg3)
+					{
 						// TODO Auto-generated method stub
 						beforeTextString = arg0.toString();
 					}
 					
 					@Override
-					public void afterTextChanged(Editable arg0) {
+					public void afterTextChanged(Editable arg0)
+					{
 						// TODO Auto-generated method stub
 					}
 				});
@@ -242,8 +269,10 @@ public class CrossAppTextField
 }
 
     //placeholder text
-    public void setTextFieldPlacHolder(final String text) {
-		context.runOnUiThread(new Runnable() {
+    public void setTextFieldPlacHolder(final String text) 
+    {
+		context.runOnUiThread(new Runnable()
+		{
 			
 			@Override
 			public void run() {
@@ -252,8 +281,10 @@ public class CrossAppTextField
 			}
 		});
 	}
-    public void setTextFieldText(final String text) {
-    		context.runOnUiThread(new Runnable() {
+    public void setTextFieldText(final String text) 
+    {
+    		context.runOnUiThread(new Runnable()
+    		{
 			
 			@Override
 			public void run() {
@@ -263,8 +294,11 @@ public class CrossAppTextField
 			}
 		});
 	}
-    public void setFontSize(final int size) {
-		context.runOnUiThread(new Runnable() {
+    
+    public void setFontSize(final int size) 
+    {
+		context.runOnUiThread(new Runnable()
+		{
 			
 			@Override
 			public void run() {
@@ -274,8 +308,10 @@ public class CrossAppTextField
 		});
 	}
   //placeholder color
-    public void setTextFieldPlacHolderColor(final int color) {
-		context.runOnUiThread(new Runnable() {
+    public void setTextFieldPlacHolderColor(final int color)
+    {
+		context.runOnUiThread(new Runnable()
+		{
 			
 			@Override
 			public void run() {
@@ -285,8 +321,10 @@ public class CrossAppTextField
 		});
 	}
     //textfield color 
-    public void setTextFieldTextColor(final int color) {
-		context.runOnUiThread(new Runnable() {
+    public void setTextFieldTextColor(final int color)
+    {
+		context.runOnUiThread(new Runnable()
+		{
 			
 			@Override
 			public void run() {
@@ -297,8 +335,10 @@ public class CrossAppTextField
 	}
     
     //keyboard type
-    public void setKeyBoardType(final int type) {
-		context.runOnUiThread(new Runnable() {
+    public void setKeyBoardType(final int type)
+    {
+		context.runOnUiThread(new Runnable()
+		{
 			
 			@Override
 			public void run() {
@@ -340,8 +380,10 @@ public class CrossAppTextField
 	}
     
     //textField Algin
-    public void setTextFieldAlgin(final int var) {
-    	context.runOnUiThread(new Runnable() {
+    public void setTextFieldAlgin(final int var)
+    {
+    	context.runOnUiThread(new Runnable() 
+    	{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -366,8 +408,10 @@ public class CrossAppTextField
 	}
     
     //text field return type
-    public void setKeyBoardReturnType(final int type) {
-		context.runOnUiThread(new Runnable() {
+    public void setKeyBoardReturnType(final int type)
+    {
+		context.runOnUiThread(new Runnable() 
+		{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -399,7 +443,8 @@ public class CrossAppTextField
     }
     
     //margins right length
-    public void setMarginsDis(final int left,final int right,final int top,final int bottom) {
+    public void setMarginsDis(final int left,final int right,final int top,final int bottom) 
+    {
     	
     	leftMargin = left;
     	rightMargin = right;
@@ -415,7 +460,8 @@ public class CrossAppTextField
 	}
     
     //margins left image
-    public void setMarginLeftImage(final String filePath) {
+    public void setMarginLeftImage(final String filePath)
+    {
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
@@ -426,7 +472,8 @@ public class CrossAppTextField
         });
 	}
   //margins right image
-    public void setMarginRightImage(final String filePath) {
+    public void setMarginRightImage(final String filePath) 
+    {
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
@@ -437,7 +484,8 @@ public class CrossAppTextField
         });
 	}
   //clearButton
-    public void showClearButton() {
+    public void showClearButton()
+    {
     	context.runOnUiThread(new Runnable() 
     	{
             @Override

@@ -4,7 +4,6 @@
 #include "basics/CAApplication.h"
 #include "ccMacros.h"
 #include "dispatcher/CATouchDispatcher.h"
-#include "jni/IMEJni.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "CCGL.h"
 
@@ -61,12 +60,6 @@ CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView instance;
     return &instance;
-}
-
-void CCEGLView::setIMEKeyboardState(bool bOpen)
-{
-    CCLog("setIMEKeyboardState %d",bOpen);
-    setKeyboardStateJNI((int)bOpen);
 }
 
 NS_CC_END

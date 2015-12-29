@@ -111,9 +111,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
 
 	}
-	public String getContentText() {
-		return this.mCocos2dxRenderer.getContentText();
-	}
 
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces

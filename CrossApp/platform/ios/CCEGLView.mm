@@ -19,6 +19,13 @@ CCEGLView::~CCEGLView()
 
 }
 
+CCEGLView* CCEGLView::sharedOpenGLView()
+{
+    static CCEGLView instance;
+    return &instance;
+}
+
+
 bool CCEGLView::isOpenGLReady()
 {
     return [EAGLView sharedEGLView] != NULL;
@@ -43,59 +50,5 @@ void CCEGLView::checkContext()
     [[EAGLView sharedEGLView] checkContext];
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
-{
-    if (bOpen)
-    {
-        [[EAGLView sharedEGLView] becomeFirstResponder];
-    }
-    else
-    {
-        [[EAGLView sharedEGLView] resignFirstResponder];
-    }
-}
-void CCEGLView::setIMEKeyboardNumber()
-{
-    EAGLView * view = [EAGLView sharedEGLView];
-    view.textfield.keyboardType = UIKeyboardTypeNumberPad;
-}
-void CCEGLView::setIMEKeyboardDefault()
-{
-    EAGLView * view = [EAGLView sharedEGLView];
-    view.textfield.keyboardType = UIKeyboardTypeDefault;
-}
-void CCEGLView::setIMEKeyboardAlphabet()
-{
-    EAGLView * view = [EAGLView sharedEGLView];
-    view.textfield.keyboardType = UIKeyboardTypeEmailAddress;
-}
-CCEGLView* CCEGLView::sharedOpenGLView()
-{
-    static CCEGLView instance;
-    return &instance;
-}
-void CCEGLView::setIMEKeyboardReturnSend()
-{
-    EAGLView * view = [EAGLView sharedEGLView];
-    view.textfield.returnKeyType =UIReturnKeySend;
-}
-
-void CCEGLView::setIMEKeyboardReturnSearch()
-{
-    EAGLView * view = [EAGLView sharedEGLView];
-    view.textfield.returnKeyType =UIReturnKeySearch;
-}
-
-void CCEGLView::setIMEKeyboardReturnDone()
-{
-    EAGLView * view = [EAGLView sharedEGLView];
-    view.textfield.returnKeyType =UIReturnKeyDone;
-}
-
-void CCEGLView::setIMEKeyboardReturnEnter()
-{
-    EAGLView * view = [EAGLView sharedEGLView];
-    view.textfield.returnKeyType =UIReturnKeyDefault;
-}
 NS_CC_END
 

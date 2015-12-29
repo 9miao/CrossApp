@@ -23,22 +23,6 @@ public:
     virtual void    swapBuffers();
     virtual void    checkContext();
     
-    virtual void setIMEKeyboardState(bool bOpen);
-    
-    virtual void setIMEKeyboardNumber();
-    
-    virtual void setIMEKeyboardDefault();
-    
-    virtual void setIMEKeyboardAlphabet();
-    
-    virtual void setIMEKeyboardReturnSend();
-    
-    virtual void setIMEKeyboardReturnSearch();
-    
-    virtual void setIMEKeyboardReturnDone();
-    
-    virtual void setIMEKeyboardReturnEnter();
-    
     static CCEGLView* sharedOpenGLView();
 
 };

@@ -3,7 +3,7 @@
 #include "basics/CAApplication.h"
 #include "view/CAWindow.h"
 #include "basics/CAScheduler.h"
-
+#include "support/ccUTF8.h"
 NS_CC_BEGIN
 
 

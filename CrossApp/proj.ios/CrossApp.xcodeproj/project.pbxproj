@@ -11,8 +11,8 @@
 		020F5F841BF31A250098C44C /* CAWaterfallView.h in Headers */ = {isa = PBXBuildFile; fileRef = 020F5F821BF31A250098C44C /* CAWaterfallView.h */; };
 		02150DCB1C07172900BC3F9C /* CAUIEditorParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02150DC91C07172900BC3F9C /* CAUIEditorParser.cpp */; };
 		02150DCC1C07172900BC3F9C /* CAUIEditorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 02150DCA1C07172900BC3F9C /* CAUIEditorParser.h */; };
-		022160771C1FAD38009FFCFC /* CATextFieldX.h in Headers */ = {isa = PBXBuildFile; fileRef = 022160761C1FAD38009FFCFC /* CATextFieldX.h */; };
-		022160791C1FAD42009FFCFC /* CATextFieldX.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022160781C1FAD42009FFCFC /* CATextFieldX.mm */; };
+		022160771C1FAD38009FFCFC /* CATextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 022160761C1FAD38009FFCFC /* CATextField.h */; };
+		022160791C1FAD42009FFCFC /* CATextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022160781C1FAD42009FFCFC /* CATextField.mm */; };
 		022CAAE41BF185DA00ED015B /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 022CAAE11BF185DA00ED015B /* sqlite3.c */; };
 		022CAAE51BF185DA00ED015B /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 022CAAE21BF185DA00ED015B /* sqlite3.h */; };
 		022CAAE61BF185DA00ED015B /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 022CAAE31BF185DA00ED015B /* sqlite3ext.h */; };
@@ -62,9 +62,6 @@
 		04EA9FFC1956CE2500198A8E /* CABarItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FB41956CE2500198A8E /* CABarItem.h */; };
 		04EA9FFD1956CE2500198A8E /* CAViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9FB51956CE2500198A8E /* CAViewController.cpp */; };
 		04EA9FFE1956CE2500198A8E /* CAViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FB61956CE2500198A8E /* CAViewController.h */; };
-		04EA9FFF1956CE2500198A8E /* CAIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FB81956CE2500198A8E /* CAIMEDelegate.h */; };
-		04EAA0001956CE2500198A8E /* CAIMEDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9FB91956CE2500198A8E /* CAIMEDispatcher.cpp */; };
-		04EAA0011956CE2500198A8E /* CAIMEDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FBA1956CE2500198A8E /* CAIMEDispatcher.h */; };
 		04EAA0021956CE2500198A8E /* CAKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9FBB1956CE2500198A8E /* CAKeypadDelegate.cpp */; };
 		04EAA0031956CE2500198A8E /* CAKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FBC1956CE2500198A8E /* CAKeypadDelegate.h */; };
 		04EAA0041956CE2500198A8E /* CAKeypadDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EA9FBD1956CE2500198A8E /* CAKeypadDispatcher.cpp */; };
@@ -96,7 +93,6 @@
 		04EABB171956DAEA00198A8E /* CASwitch.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FAE1956CE2500198A8E /* CASwitch.cpp */; };
 		04EABB191956DAEA00198A8E /* CABarItem.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FB31956CE2500198A8E /* CABarItem.cpp */; };
 		04EABB1A1956DAEA00198A8E /* CAViewController.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FB51956CE2500198A8E /* CAViewController.cpp */; };
-		04EABB1B1956DAEA00198A8E /* CAIMEDispatcher.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FB91956CE2500198A8E /* CAIMEDispatcher.cpp */; };
 		04EABB1C1956DAEA00198A8E /* CAKeypadDelegate.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FBB1956CE2500198A8E /* CAKeypadDelegate.cpp */; };
 		04EABB1D1956DAEA00198A8E /* CAKeypadDispatcher.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FBD1956CE2500198A8E /* CAKeypadDispatcher.cpp */; };
 		04EABB1E1956DAEA00198A8E /* CATouch.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 04EA9FC01956CE2500198A8E /* CATouch.cpp */; };
@@ -364,18 +360,12 @@
 		B0ADAE901B2E7F1B00BE8FA3 /* CATableView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE5A1B2E7F1B00BE8FA3 /* CATableView.h */; };
 		B0ADAE911B2E7F1B00BE8FA3 /* CATextEditHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ADAE5B1B2E7F1B00BE8FA3 /* CATextEditHelper.cpp */; };
 		B0ADAE921B2E7F1B00BE8FA3 /* CATextEditHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE5C1B2E7F1B00BE8FA3 /* CATextEditHelper.h */; };
-		B0ADAE931B2E7F1B00BE8FA3 /* CATextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ADAE5D1B2E7F1B00BE8FA3 /* CATextField.cpp */; };
-		B0ADAE941B2E7F1B00BE8FA3 /* CATextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE5E1B2E7F1B00BE8FA3 /* CATextField.h */; };
-		B0ADAE951B2E7F1B00BE8FA3 /* CATextView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ADAE5F1B2E7F1B00BE8FA3 /* CATextView.cpp */; };
-		B0ADAE961B2E7F1B00BE8FA3 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE601B2E7F1B00BE8FA3 /* CATextView.h */; };
 		B0ADAE971B2E7F1B00BE8FA3 /* CAView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ADAE611B2E7F1B00BE8FA3 /* CAView.cpp */; };
 		B0ADAE981B2E7F1B00BE8FA3 /* CAView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE621B2E7F1B00BE8FA3 /* CAView.h */; };
 		B0ADAE991B2E7F1B00BE8FA3 /* CAWebView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ADAE631B2E7F1B00BE8FA3 /* CAWebView.cpp */; };
 		B0ADAE9A1B2E7F1B00BE8FA3 /* CAWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE641B2E7F1B00BE8FA3 /* CAWebView.h */; };
 		B0ADAE9B1B2E7F1B00BE8FA3 /* CAWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ADAE651B2E7F1B00BE8FA3 /* CAWindow.cpp */; };
 		B0ADAE9C1B2E7F1B00BE8FA3 /* CAWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE661B2E7F1B00BE8FA3 /* CAWindow.h */; };
-		B0AF8DC01AFA257800A1A4E2 /* CAIOSTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B0AF8DBE1AFA257800A1A4E2 /* CAIOSTextField.h */; };
-		B0AF8DC11AFA257800A1A4E2 /* CAIOSTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AF8DBF1AFA257800A1A4E2 /* CAIOSTextField.m */; };
 		B0B0A2E51AF0DCA900BAC0B0 /* CAAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B0A2E31AF0DCA900BAC0B0 /* CAAnimation.cpp */; };
 		B0B0A2E61AF0DCA900BAC0B0 /* CAAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B0A2E41AF0DCA900BAC0B0 /* CAAnimation.h */; };
 		B0B553D6193485BE0065053D /* CAImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B553CE193485BE0065053D /* CAImage.cpp */; };
@@ -405,8 +395,8 @@
 		020F5F821BF31A250098C44C /* CAWaterfallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWaterfallView.h; sourceTree = "<group>"; };
 		02150DC91C07172900BC3F9C /* CAUIEditorParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAUIEditorParser.cpp; sourceTree = "<group>"; };
 		02150DCA1C07172900BC3F9C /* CAUIEditorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUIEditorParser.h; sourceTree = "<group>"; };
-		022160761C1FAD38009FFCFC /* CATextFieldX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextFieldX.h; sourceTree = "<group>"; };
-		022160781C1FAD42009FFCFC /* CATextFieldX.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextFieldX.mm; sourceTree = "<group>"; };
+		022160761C1FAD38009FFCFC /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
+		022160781C1FAD42009FFCFC /* CATextField.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextField.mm; sourceTree = "<group>"; };
 		022CAAE11BF185DA00ED015B /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		022CAAE21BF185DA00ED015B /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		022CAAE31BF185DA00ED015B /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
@@ -455,9 +445,6 @@
 		04EA9FB41956CE2500198A8E /* CABarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABarItem.h; sourceTree = "<group>"; };
 		04EA9FB51956CE2500198A8E /* CAViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewController.cpp; sourceTree = "<group>"; };
 		04EA9FB61956CE2500198A8E /* CAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAViewController.h; sourceTree = "<group>"; };
-		04EA9FB81956CE2500198A8E /* CAIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIMEDelegate.h; sourceTree = "<group>"; };
-		04EA9FB91956CE2500198A8E /* CAIMEDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAIMEDispatcher.cpp; sourceTree = "<group>"; };
-		04EA9FBA1956CE2500198A8E /* CAIMEDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIMEDispatcher.h; sourceTree = "<group>"; };
 		04EA9FBB1956CE2500198A8E /* CAKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDelegate.cpp; sourceTree = "<group>"; };
 		04EA9FBC1956CE2500198A8E /* CAKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDelegate.h; sourceTree = "<group>"; };
 		04EA9FBD1956CE2500198A8E /* CAKeypadDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDispatcher.cpp; sourceTree = "<group>"; };
@@ -743,18 +730,12 @@
 		B0ADAE5A1B2E7F1B00BE8FA3 /* CATableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATableView.h; sourceTree = "<group>"; };
 		B0ADAE5B1B2E7F1B00BE8FA3 /* CATextEditHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextEditHelper.cpp; sourceTree = "<group>"; };
 		B0ADAE5C1B2E7F1B00BE8FA3 /* CATextEditHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextEditHelper.h; sourceTree = "<group>"; };
-		B0ADAE5D1B2E7F1B00BE8FA3 /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
-		B0ADAE5E1B2E7F1B00BE8FA3 /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
-		B0ADAE5F1B2E7F1B00BE8FA3 /* CATextView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextView.cpp; sourceTree = "<group>"; };
-		B0ADAE601B2E7F1B00BE8FA3 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
 		B0ADAE611B2E7F1B00BE8FA3 /* CAView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAView.cpp; sourceTree = "<group>"; };
 		B0ADAE621B2E7F1B00BE8FA3 /* CAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAView.h; sourceTree = "<group>"; };
 		B0ADAE631B2E7F1B00BE8FA3 /* CAWebView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebView.cpp; sourceTree = "<group>"; };
 		B0ADAE641B2E7F1B00BE8FA3 /* CAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebView.h; sourceTree = "<group>"; };
 		B0ADAE651B2E7F1B00BE8FA3 /* CAWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWindow.cpp; sourceTree = "<group>"; };
 		B0ADAE661B2E7F1B00BE8FA3 /* CAWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWindow.h; sourceTree = "<group>"; };
-		B0AF8DBE1AFA257800A1A4E2 /* CAIOSTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIOSTextField.h; sourceTree = "<group>"; };
-		B0AF8DBF1AFA257800A1A4E2 /* CAIOSTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAIOSTextField.m; sourceTree = "<group>"; };
 		B0B0A2E31AF0DCA900BAC0B0 /* CAAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimation.cpp; sourceTree = "<group>"; };
 		B0B0A2E41AF0DCA900BAC0B0 /* CAAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimation.h; sourceTree = "<group>"; };
 		B0B553CE193485BE0065053D /* CAImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImage.cpp; sourceTree = "<group>"; };
@@ -885,9 +866,6 @@
 		04EA9FB71956CE2500198A8E /* dispatcher */ = {
 			isa = PBXGroup;
 			children = (
-				04EA9FB81956CE2500198A8E /* CAIMEDelegate.h */,
-				04EA9FB91956CE2500198A8E /* CAIMEDispatcher.cpp */,
-				04EA9FBA1956CE2500198A8E /* CAIMEDispatcher.h */,
 				04EA9FBB1956CE2500198A8E /* CAKeypadDelegate.cpp */,
 				04EA9FBC1956CE2500198A8E /* CAKeypadDelegate.h */,
 				04EA9FBD1956CE2500198A8E /* CAKeypadDispatcher.cpp */,
@@ -950,10 +928,6 @@
 				B0ADAE5A1B2E7F1B00BE8FA3 /* CATableView.h */,
 				B0ADAE5B1B2E7F1B00BE8FA3 /* CATextEditHelper.cpp */,
 				B0ADAE5C1B2E7F1B00BE8FA3 /* CATextEditHelper.h */,
-				B0ADAE5D1B2E7F1B00BE8FA3 /* CATextField.cpp */,
-				B0ADAE5E1B2E7F1B00BE8FA3 /* CATextField.h */,
-				B0ADAE5F1B2E7F1B00BE8FA3 /* CATextView.cpp */,
-				B0ADAE601B2E7F1B00BE8FA3 /* CATextView.h */,
 				B0ADAE611B2E7F1B00BE8FA3 /* CAView.cpp */,
 				B0ADAE621B2E7F1B00BE8FA3 /* CAView.h */,
 				B0ADAE631B2E7F1B00BE8FA3 /* CAWebView.cpp */,
@@ -1137,7 +1111,7 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
-				022160761C1FAD38009FFCFC /* CATextFieldX.h */,
+				022160761C1FAD38009FFCFC /* CATextField.h */,
 				B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */,
 				B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */,
 				B0C3BD451ADE7264009BE71A /* CAClipboard.h */,
@@ -1169,9 +1143,7 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				022160781C1FAD42009FFCFC /* CATextFieldX.mm */,
-				B0AF8DBE1AFA257800A1A4E2 /* CAIOSTextField.h */,
-				B0AF8DBF1AFA257800A1A4E2 /* CAIOSTextField.m */,
+				022160781C1FAD42009FFCFC /* CATextField.mm */,
 				B0C3BD471ADE726B009BE71A /* CAClipboard.mm */,
 				B0CA5A391A77A8B400BECD89 /* CAWebViewImpl.h */,
 				B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */,
@@ -1545,7 +1517,6 @@
 				04EABB0E1956DAEA00198A8E /* CAResponder.cpp in Headers */,
 				04EABB0F1956DAEA00198A8E /* CAScheduler.cpp in Headers */,
 				04EABB101956DAEA00198A8E /* CABar.cpp in Headers */,
-				B0AF8DC01AFA257800A1A4E2 /* CAIOSTextField.h in Headers */,
 				04EABB111956DAEA00198A8E /* CAButton.cpp in Headers */,
 				04EABB121956DAEA00198A8E /* CAControl.cpp in Headers */,
 				04EABB141956DAEA00198A8E /* CAProgress.cpp in Headers */,
@@ -1557,7 +1528,6 @@
 				B09205DE19D5645300CB99C1 /* CAThread.h in Headers */,
 				04EABB191956DAEA00198A8E /* CABarItem.cpp in Headers */,
 				04EABB1A1956DAEA00198A8E /* CAViewController.cpp in Headers */,
-				04EABB1B1956DAEA00198A8E /* CAIMEDispatcher.cpp in Headers */,
 				04EABB1C1956DAEA00198A8E /* CAKeypadDelegate.cpp in Headers */,
 				3E19F2A41B8B0ED100720027 /* CAAddress.h in Headers */,
 				3E0F755E1B7DD0C4004CFD41 /* libwebsockets.h in Headers */,
@@ -1639,7 +1609,6 @@
 				B0596B421976356C00B1E8CB /* ConvertUTF.h in Headers */,
 				1551A74C158F2ADE00E66CFE /* AccelerometerSimulation.h in Headers */,
 				1551A74F158F2ADE00E66CFE /* platform.h in Headers */,
-				B0ADAE941B2E7F1B00BE8FA3 /* CATextField.h in Headers */,
 				1551A81B158F2ADF00E66CFE /* ccGLStateCache.h in Headers */,
 				1551A81C158F2ADF00E66CFE /* ccShader_Position_uColor_frag.h in Headers */,
 				3E0F75691B7DD0C4004CFD41 /* HttpResponse.h in Headers */,
@@ -1680,7 +1649,6 @@
 				3E0F75671B7DD0C4004CFD41 /* HttpClient.h in Headers */,
 				1551A848158F2ADF00E66CFE /* uthash.h in Headers */,
 				1551A849158F2ADF00E66CFE /* utlist.h in Headers */,
-				B0ADAE961B2E7F1B00BE8FA3 /* CATextView.h in Headers */,
 				B0340827199211B3005DB179 /* md5.h in Headers */,
 				1551A84B158F2ADF00E66CFE /* TGAlib.h in Headers */,
 				3E19F2A61B8B0ED100720027 /* CAAlbumController.h in Headers */,
@@ -1722,9 +1690,7 @@
 				04EA9FFC1956CE2500198A8E /* CABarItem.h in Headers */,
 				04EA9FFE1956CE2500198A8E /* CAViewController.h in Headers */,
 				B02A12D1197CE30A00F4F2C5 /* CATransformation.h in Headers */,
-				04EA9FFF1956CE2500198A8E /* CAIMEDelegate.h in Headers */,
 				B0412DD11BC7966C00E2C118 /* CAVideoPlayerRender.h in Headers */,
-				04EAA0011956CE2500198A8E /* CAIMEDispatcher.h in Headers */,
 				B0ADAE861B2E7F1B00BE8FA3 /* CAPickerView.h in Headers */,
 				04EAA0031956CE2500198A8E /* CAKeypadDelegate.h in Headers */,
 				EB9D562519E8DC2D0072BE8E /* JSViewController.h in Headers */,
@@ -1746,7 +1712,7 @@
 				3E0F754F1B7DD0C4004CFD41 /* features.h in Headers */,
 				04EAA0281956CE3B00198A8E /* CrossApp.h in Headers */,
 				0460ED1B195700EE00D13001 /* CCApplicationProtocol.h in Headers */,
-				022160771C1FAD38009FFCFC /* CATextFieldX.h in Headers */,
+				022160771C1FAD38009FFCFC /* CATextField.h in Headers */,
 				0460ED1D195700EE00D13001 /* CCEGLViewProtocol.h in Headers */,
 				0460ED2D1957019600D13001 /* CCApplication.h in Headers */,
 				0460ED2F1957019600D13001 /* CCEGLView.h in Headers */,
@@ -1809,7 +1775,6 @@
 			files = (
 				B02A12D0197CE30A00F4F2C5 /* CATransformation.cpp in Sources */,
 				B0596A581976287B00B1E8CB /* CAFreeTypeFont.cpp in Sources */,
-				B0ADAE951B2E7F1B00BE8FA3 /* CATextView.cpp in Sources */,
 				3EF48A711B7C89C300179E69 /* CAGifView.cpp in Sources */,
 				B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */,
 				B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */,
@@ -1867,7 +1832,6 @@
 				1551A81A158F2ADF00E66CFE /* ccGLStateCache.cpp in Sources */,
 				B0F61E211B9C402800BDCBAB /* CAEmojiFont.cpp in Sources */,
 				1551A82C158F2ADF00E66CFE /* ccShaders.cpp in Sources */,
-				B0AF8DC11AFA257800A1A4E2 /* CAIOSTextField.m in Sources */,
 				B0B553D6193485BE0065053D /* CAImage.cpp in Sources */,
 				1551A83A158F2ADF00E66CFE /* base64.cpp in Sources */,
 				B0ADAE871B2E7F1B00BE8FA3 /* CAPullToRefreshView.cpp in Sources */,
@@ -1930,7 +1894,6 @@
 				04EA9FFD1956CE2500198A8E /* CAViewController.cpp in Sources */,
 				B0ADAE851B2E7F1B00BE8FA3 /* CAPickerView.cpp in Sources */,
 				3E0F75661B7DD0C4004CFD41 /* HttpClient.cpp in Sources */,
-				04EAA0001956CE2500198A8E /* CAIMEDispatcher.cpp in Sources */,
 				04EAA0021956CE2500198A8E /* CAKeypadDelegate.cpp in Sources */,
 				04EAA0041956CE2500198A8E /* CAKeypadDispatcher.cpp in Sources */,
 				B0ADAE751B2E7F1B00BE8FA3 /* CADrawView.cpp in Sources */,
@@ -1941,7 +1904,7 @@
 				04EAA0091956CE2500198A8E /* CATouchDispatcher.cpp in Sources */,
 				B0ADAE2B1B2E7EFB00BE8FA3 /* CAGif.cpp in Sources */,
 				3E19F2AE1B8B0ED100720027 /* CADevice.mm in Sources */,
-				022160791C1FAD42009FFCFC /* CATextFieldX.mm in Sources */,
+				022160791C1FAD42009FFCFC /* CATextField.mm in Sources */,
 				B0ADAE7B1B2E7F1B00BE8FA3 /* CAImageView.cpp in Sources */,
 				B0A11DC11AE8E0B300933BF6 /* quantize.c in Sources */,
 				B0ADAE911B2E7F1B00BE8FA3 /* CATextEditHelper.cpp in Sources */,
@@ -1959,7 +1922,6 @@
 				0460ED301957019600D13001 /* CCEGLView.mm in Sources */,
 				0460ED351957031200D13001 /* CAGLProgram.cpp in Sources */,
 				B0ADAE711B2E7F1B00BE8FA3 /* CADatePickerView.cpp in Sources */,
-				B0ADAE931B2E7F1B00BE8FA3 /* CATextField.cpp in Sources */,
 				0460ED371957031200D13001 /* CAShaderCache.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,7 +7,6 @@
 #include "support/ccUTF8.h"
 #include "platform/CCPlatformMacros.h"
 #include "CAWindow.h"
-#include "CATextView.h"
 
 
 #define CATextArrowViewWidth 30
@@ -374,25 +373,21 @@ void CATextSelectView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 	if (m_iSelViewTouchPos != 1 && m_iSelViewTouchPos != 2)
 		return;
 
-	CAIMEDispatcher::sharedDispatcher()->dispatchMoveSelectChars(m_iSelViewTouchPos == 1, pTouch->getLocation());
 }
 
 void CATextSelectView::ccCopyToClipboard()
 {
 	hideTextSelView();
-	CAIMEDispatcher::sharedDispatcher()->dispatchCopyToClipboard();
 }
 
 void CATextSelectView::ccCutToClipboard()
 {
 	hideTextSelView();
-	CAIMEDispatcher::sharedDispatcher()->dispatchCutToClipboard();
 }
 
 void CATextSelectView::ccPasteFromClipboard()
 {
 	hideTextSelView();
-	CAIMEDispatcher::sharedDispatcher()->dispatchPasteFromClipboard();
 }
 
 
@@ -531,11 +526,7 @@ bool CATextSelViewEx::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	{
 		if (touchSelectText(pTouch))
 		{
-			CATextToolBarView *pToolBar = CATextToolBarView::create();
-			pToolBar->addButton(UTF8("\u526a\u5207"), m_pControlView, callfunc_selector(CATextView::ccCutToClipboard));
-			pToolBar->addButton(UTF8("\u590d\u5236"), m_pControlView, callfunc_selector(CATextView::ccCopyToClipboard));
-			pToolBar->addButton(UTF8("\u7c98\u8d34"), m_pControlView, callfunc_selector(CATextView::ccPasteFromClipboard));
-			pToolBar->show(m_pControlView);
+
 			return false;
 		}
 	}
@@ -547,7 +538,6 @@ void CATextSelViewEx::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 	if (m_iSelViewTouchPos != 1 && m_iSelViewTouchPos != 2)
 		return;
 
-	CAIMEDispatcher::sharedDispatcher()->dispatchMoveSelectChars(m_iSelViewTouchPos == 1, pTouch->getLocation());
 }
 
 
@@ -622,7 +612,6 @@ void CATextArrowView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
 	if (m_isBtnPress)
 	{
-		CAIMEDispatcher::sharedDispatcher()->dispatchMoveArrowBtn(pTouch->getLocation());
 	}
 }
 

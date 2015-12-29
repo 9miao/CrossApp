@@ -1,55 +1,63 @@
 //
-//  CATextFieldX.hpp
+//  CATextField.hpp
 //  tesss
 //
 //  Created by 栗元峰 on 15/11/20.
 //
 //
 
-#ifndef CATextFieldX_h
-#define CATextFieldX_h
+#ifndef CATextField_h
+#define CATextField_h
 
 #include "view/CAImageView.h"
 #include "view/CAScale9ImageView.h"
 #include "control/CAControl.h"
 NS_CC_BEGIN
 
-class CATextFieldX;
-class CATextFieldDelegateX
+class CATextField;
+class CATextFieldDelegate
 {
 public:
-	virtual bool textFieldShouldBeginEditing(CATextFieldX * sender)
+	virtual bool textFieldShouldBeginEditing(CATextField * sender)
 	{
 		return true;
 	}
 
 	//If the sender doesn't want to detach from the IME, return true;
-	virtual bool textFieldShouldEndEditing(CATextFieldX * sender)
+	virtual bool textFieldShouldEndEditing(CATextField * sender)
 	{
 		return true;
 	}
 
 	//
-	virtual void textFieldShouldReturn(CATextFieldX *sender){}
+	virtual void textFieldShouldReturn(CATextField *sender){}
 
 	//
-	virtual void keyBoardHeight(CATextFieldX *sender, int height){}
+	virtual void keyBoardHeight(CATextField *sender, int height){}
 
 	//arg0  
-	virtual void textFieldAfterTextChanged(CATextFieldX *sender,const char* beforeText,const char* changeText,int arg0,int arg1,int arg2){}
+	virtual void textFieldAfterTextChanged(CATextField *sender,
+                                           const char* beforeText,
+                                           const char* changeText,
+                                           int arg0,
+                                           int arg1,
+                                           int arg2)
+    {}
 };
 
-class CATextFieldX: public CAView
+class CATextField: public CAView
 {
 public:
-    typedef enum {
+    typedef enum
+    {
         TextFieldTypeNone = 0,
         TextFieldTypeSquareRect,
         TextFieldTypeRoundedRect
     }TextFieldType;
     
     //keyBoard type
-    typedef enum{
+    typedef enum
+    {
         KeyboardTypeDefault = 0,
         KeyboardTypeNumbersAndPunctuation,
         KeyboardTypeURL,
@@ -60,7 +68,8 @@ public:
     }KeyboardType;
     
     //return type
-    typedef enum{
+    typedef enum
+    {
 		ReturnTypeDone=0,
         ReturnTypeGo,
         ReturnTypeNext,
@@ -69,7 +78,8 @@ public:
     }ReturnType;
     
     //clear button Mode
-    typedef enum{
+    typedef enum
+    {
         ClearButtonNone = 0,
         ClearButtonWhileEditing
     }ClearButtonMode;
@@ -80,10 +90,11 @@ public:
 		TextEditAlignLeft,
 		TextEditAlignRight
 	}TextFieldAlign;
-public:
-    CATextFieldX();
     
-    virtual ~CATextFieldX();
+public:
+    CATextField();
+    
+    virtual ~CATextField();
     
     virtual void onEnterTransitionDidFinish();
     
@@ -93,26 +104,26 @@ public:
     
     virtual bool becomeFirstResponder();
     
-    static CATextFieldX* createWithFrame(const DRect& frame);
+    static CATextField* createWithFrame(const DRect& frame);
     
-    static CATextFieldX* createWithCenter(const DRect& rect);
+    static CATextField* createWithCenter(const DRect& rect);
     
     bool init();
     
 	//delegate
-	CC_SYNTHESIZE(CATextFieldDelegateX*, m_pDelegate, Delegate);
+	CC_SYNTHESIZE(CATextFieldDelegate*, m_pDelegate, Delegate);
 
     //edit clearButton default:ClearButtonNone
     //MarginsRight set,clearbutton will be clear
     CC_PROPERTY_PASS_BY_REF(ClearButtonMode, m_clearBtn, ClearButtonMode);
     
     //textfield Margins    default:left 16,right 16
-    CC_PROPERTY_PASS_BY_REF(int, m_marginLeft, MarginLeft);
-    CC_PROPERTY_PASS_BY_REF(int, m_marginRight, MarginRight);
+    CC_PROPERTY(int, m_marginLeft, MarginLeft);
+    CC_PROPERTY(int, m_marginRight, MarginRight);
     
     //textfield Margins image
-    void setMarginImageLeft(const DSize imgSize,const std::string& filePath);
-    void setMarginImageRight(const DSize imgSize,const std::string& filePath);
+    void setMarginImageLeft(const DSize& imgSize,const std::string& filePath);
+    void setMarginImageRight(const DSize& imgSize,const std::string& filePath);
     
     //textfield font size
     CC_PROPERTY(int, m_fontSize, FontSize);
@@ -185,4 +196,4 @@ private:
 
 NS_CC_END
 
-#endif /* CATextFieldX_hpp */
+#endif /* CATextField_hpp */

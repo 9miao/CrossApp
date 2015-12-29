@@ -14,7 +14,7 @@
 #include "shaders/CAShaderCache.h"
 #include "platform/CAClipboard.h"
 #include "basics/CAApplication.h"
-
+#include "support/ccUTF8.h"
 NS_CC_BEGIN
 
 

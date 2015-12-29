@@ -12,7 +12,6 @@
 #include <iostream>
 #include "CAView.h"
 #include "view/CATextEditHelper.h"
-#include "view/CATextField.h"
 
 
 NS_CC_BEGIN

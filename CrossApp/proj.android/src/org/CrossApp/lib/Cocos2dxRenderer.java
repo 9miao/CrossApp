@@ -141,43 +141,6 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 		Cocos2dxRenderer.nativeOnResume();
 	}
 
-	private static native void nativeInsertText(final String pText);
-	private static native void nativeAndroidWillInsertText(final int start,final byte [] pString,final int before,final int count);
-	private static native void nativeDeleteBackward();
-	private static native byte[] nativeGetContentText();
-	private static native int nativeGetCursorPos();
-	private static native int[] nativeGetCharRange();
-
-	public void handleInsertText(final String pText) {
-		Cocos2dxRenderer.nativeInsertText(pText);
-	}
-
-	public void handleWillInsertText(final int start,final String pString,final int before,final int count) {
-		Cocos2dxRenderer.nativeAndroidWillInsertText(start,pString.getBytes(),before,pString.getBytes().length);
-	}
-	
-	public void handleDeleteBackward() {
-		Cocos2dxRenderer.nativeDeleteBackward();
-	}
-
-	public String getContentText() {
-		String str = "null";
-		try {
-			str = new String(Cocos2dxRenderer.nativeGetContentText(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}		
-		return str;
-	}
-
-	public int getCursorPos() {
-		return Cocos2dxRenderer.nativeGetCursorPos();
-	}
-
-	public int[] getCharRange() {
-		return Cocos2dxRenderer.nativeGetCharRange();
-	}
-
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
