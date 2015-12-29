@@ -14,8 +14,8 @@
 #include "control/CAControl.h"
 NS_CC_BEGIN
 
-class CATextField;
-class CATextFieldDelegate
+class CC_DLL CATextField;
+class CC_DLL CATextFieldDelegate
 {
 public:
 	virtual bool textFieldShouldBeginEditing(CATextField * sender)
@@ -45,7 +45,7 @@ public:
     {}
 };
 
-class CATextField: public CAView
+class CC_DLL CATextField : public CAView
 {
 public:
     typedef enum

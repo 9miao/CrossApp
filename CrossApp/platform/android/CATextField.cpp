@@ -272,6 +272,8 @@ extern "C"
         CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("textField"));
         imageView->setImage(image);
         imageView->setVisible(true);
+        s_map[(int)key]->reViewlayout();
+        CAApplication::getApplication()->updateDraw();
     }
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_hideImageView(JNIEnv *env, jclass cls, jint key)
@@ -515,7 +517,7 @@ void CATextField::update(float dt)
         DPoint point = this->convertToWorldSpace(DPointZero);
         
         CC_BREAK_IF(m_obLastPoint.equals(point));
-        m_obLastPoint = point;
+        
         point.x = s_dip_to_px(point.x);
         point.y = s_dip_to_px(point.y);
         setTextFieldPointJNI(m_u__ID, point.x, point.y);

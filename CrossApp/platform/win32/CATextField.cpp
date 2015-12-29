@@ -13,7 +13,10 @@
 #include "basics/CAScheduler.h"
 #include "control/CAButton.h"
 #include "CCEGLView.h"
-
+#include "dispatcher/CAIMEDelegate.h"
+#include "../CAFreeTypeFont.h"
+#include "../ccUTF8.h"
+#include "../CAFTFontCache.h"
 
 NS_CC_BEGIN
 
@@ -576,6 +579,8 @@ CATextField::CATextField()
 , m_pBackgroundView(NULL)
 , m_pDelegate(NULL)
 , m_bUpdateImage(true)
+, m_sTextColor(CAColor_black)
+, m_placeHdolderColor(CAColor_gray)
 , m_marginLeft(10)
 , m_marginRight(10)
 , m_clearBtn(ClearButtonMode::ClearButtonNone)

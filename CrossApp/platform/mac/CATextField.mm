@@ -404,6 +404,7 @@ void CATextField::showImage()
     free(data);
     
     m_pImgeView->setImage(image);
+    this->updateDraw();
 }
 
 CATextField* CATextField::createWithFrame(const DRect& frame)
@@ -470,7 +471,7 @@ void CATextField::update(float dt)
         point.y = CAApplication::getApplication()->getWinSize().height - point.y;
         point.y = point.y - m_obContentSize.height;
         CC_BREAK_IF(m_obLastPoint.equals(point));
-        m_obLastPoint = point;
+
         CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
         NSPoint origin;
         origin.x = s_dip_to_px(point.x) / scale;

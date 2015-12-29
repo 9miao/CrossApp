@@ -277,6 +277,7 @@ void CATextField::showImage()
 
     m_pImgeView->setImage(image);
     m_pImgeView->setFrame(this->getBounds());
+    this->updateDraw();
 }
 
 CATextField* CATextField::createWithFrame(const DRect& frame)
@@ -343,7 +344,7 @@ void CATextField::update(float dt)
         DPoint point = this->convertToWorldSpace(DPointZero);
         
         CC_BREAK_IF(m_obLastPoint.equals(point));
-        m_obLastPoint = point;
+
         CGFloat scale = [[UIScreen mainScreen] scale];
         CGRect rect = textField_iOS.frame;
         rect.origin.x = s_dip_to_px(point.x) / scale;
