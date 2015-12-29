@@ -515,7 +515,8 @@ void CATextField::setFontSize(int var)
 {
     m_iFontSize = var;
     
-    textField_iOS.font = [UIFont systemFontOfSize:var];
+    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
     [textField_iOS setValue:textField_iOS.font forKeyPath:@"_placeholderLabel.font"];
     
     this->delayShowImage();
