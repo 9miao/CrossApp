@@ -146,11 +146,7 @@
 
 -(void)regiestKeyBoardMessage
 {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillWasShown:) name:NSKeyboardWillShowNotification object:nil];
-//
-//    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
-//    
-//    [self addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
+
 }
 
 - (void)textDidBeginEditing:(NSNotification *)notification
@@ -171,21 +167,12 @@
 
 - (void)setMarkedText:(id)aString selectedRange:(NSRange)selectedRange replacementRange:(NSRange)replacementRange
 {
-    const char * pszText = [aString cStringUsingEncoding:NSUTF8StringEncoding];
-    NSRange range;
-    range.length = 0;
-    range.location = [aString length];
-    
+
 }
 
 - (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
 {
-    
-    const char * pszText = [markedText cStringUsingEncoding:NSUTF8StringEncoding];
-    NSRange range;
-    range.length = 0;
-    range.location = [markedText length];
-    
+
 }
 
 - (void)unmarkText;
@@ -196,40 +183,25 @@
 
 - (BOOL)control:(NSControl *)control textShouldBeginEditing:(NSText *)fieldEditor
 {
-    CrossApp::CATextFieldDelegate* delegate = _textField->getDelegate();
-    if (delegate != NULL)
-    {
-        
-    }
-    NSLog(@"111111111");
     return YES;
 }
 
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
-    CrossApp::CATextFieldDelegate* delegate = _textField->getDelegate();
-    if (delegate != NULL)
-    {
-        
-    }
-    NSLog(@"222222222");
     return YES;
 }
 
-- (BOOL)control:(NSControl *)control didFailToFormatString:(NSString *)string errorDescription:(nullable NSString *)error
+- (BOOL)control:(NSControl *)control didFailToFormatString:(NSString *)string errorDescription:(NSString *)error
 {
-    NSLog(@"333333333");
     return YES;
 }
 
-- (void)control:(NSControl *)control didFailToValidatePartialString:(NSString *)string errorDescription:(nullable NSString *)error
+- (void)control:(NSControl *)control didFailToValidatePartialString:(NSString *)string errorDescription:(NSString *)error
 {
-    NSLog(@"444444444");
 }
 
 - (BOOL)control:(NSControl *)control isValidObject:(id)obj
 {
-    NSLog(@"555555555");
     return YES;
 }
 
@@ -377,8 +349,8 @@ void CATextField::showImage()
 
     CAImage *image = CAImage::createWithImageDataNoCache(data, data_MAC.length);
     free(data);
-    
     m_pImgeView->setImage(image);
+    
     this->updateDraw();
 }
 
@@ -554,8 +526,9 @@ void CATextField::setPlaceHolderColor(const CAColor4B &var)
     m_placeHdolderColor = var;
     
     NSColor* color = [NSColor colorWithRed:var.r green:var.g blue:var.b alpha:var.a];
-    [textField_MAC setValue:color forKeyPath:@"_placeholderLabel.textColor"];
-    
+//    [textField_MAC setValue:color forKeyPath:@"_placeholderLabel.textColor"];
+     CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_fontSize) / scale];
     this->delayShowImage();
 }
 
@@ -567,9 +540,10 @@ const CAColor4B& CATextField::getPlaceHolderColor()
 void CATextField::setFontSize(int var)
 {
     m_fontSize = var;
-
-    textField_MAC.font = [NSFont systemFontOfSize:var];
-    [textField_MAC setValue:textField_MAC.font forKeyPath:@"_placeholderLabel.font"];
+    
+    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_fontSize) / scale];
+//    [textField_MAC setValue:textField_MAC.font forKeyPath:@"_placeholderLabel.font"];
     
     this->delayShowImage();
 }
