@@ -149,84 +149,23 @@
 
 }
 
-- (void)textDidBeginEditing:(NSNotification *)notification
-{
-
-    
-}
-
-- (void)textDidEndEditing:(NSNotification *)notification
-{
-    _textField->resignFirstResponder();
-}
-
 - (void)textDidChange:(NSNotification *)notification
 {
-    NSLog(@"textDidChange:%@",notification);
+    [super textDidChange:notification];
 }
 
-- (void)setMarkedText:(id)aString selectedRange:(NSRange)selectedRange replacementRange:(NSRange)replacementRange
+- (void) keyDown:(NSEvent *)theEvent
 {
-
+    [super keyDown:theEvent];
 }
 
-- (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
+- (void) keyUp:(NSEvent *)theEvent
 {
-
-}
-
-- (void)unmarkText;
-{
-
-}
-
-
-- (BOOL)control:(NSControl *)control textShouldBeginEditing:(NSText *)fieldEditor
-{
-    return YES;
-}
-
-- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
-{
-    return YES;
-}
-
-- (BOOL)control:(NSControl *)control didFailToFormatString:(NSString *)string errorDescription:(NSString *)error
-{
-    return YES;
-}
-
-- (void)control:(NSControl *)control didFailToValidatePartialString:(NSString *)string errorDescription:(NSString *)error
-{
-}
-
-- (BOOL)control:(NSControl *)control isValidObject:(id)obj
-{
-    return YES;
-}
-
-
-
-
-- (BOOL)textField:(NSTextField *) textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if (_textField->getMaxLenght() > 0)
+    [super keyUp:theEvent];
+    if ([theEvent keyCode] == 36)
     {
-        NSUInteger oldLength = [[textField stringValue] length];
-        NSUInteger replacementLength = [string length];
-        NSUInteger rangeLength = range.length;
-        
-        NSUInteger newLength = oldLength - rangeLength + replacementLength;
-        
-        return newLength <= _textField->getMaxLenght();
+        _textField->resignFirstResponder();
     }
-    
-    return YES;
-}
-
-- (void)controlTextDidChange:(NSNotification *)notification
-{
-
 }
 
 @end
@@ -249,10 +188,21 @@ CATextField::CATextField()
 ,m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
+    
+    CGPoint point = CGPointMake(-50000, -50000);
+    m_pTextField = [[MACTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
+    EAGLView * eaglview = [EAGLView sharedEGLView];
+    [eaglview addSubview:textField_MAC];
+    textField_MAC.textField = this;
+    
+    textField_MAC.placeholderString = @"placeholder";
+    textField_MAC.font = [NSFont systemFontOfSize:m_fontSize];
+    [textField_MAC regiestKeyBoardMessage];
 }
 
 CATextField::~CATextField()
 {
+    [textField_MAC removeFromSuperview];
 }
 
 void CATextField::onEnterTransitionDidFinish()
@@ -265,6 +215,12 @@ void CATextField::onEnterTransitionDidFinish()
 void CATextField::onExitTransitionDidStart()
 {
     CAView::onExitTransitionDidStart();
+    
+    if (this->isFirstResponder())
+    {
+        this->resignFirstResponder();
+    }
+
 }
 
 bool CATextField::resignFirstResponder()
@@ -382,17 +338,6 @@ CATextField* CATextField::createWithCenter(const DRect& rect)
 
 bool CATextField::init()
 {
-    CGPoint point = CGPointMake(-50000, -50000);
-    m_pTextField = [[MACTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
-    EAGLView * eaglview = [EAGLView sharedEGLView];
-    [eaglview addSubview:textField_MAC];
-    textField_MAC.textField = this;
-    textField_MAC.delegate = textField_MAC;
-    
-    textField_MAC.placeholderString = @"placeholder";
-    textField_MAC.font = [NSFont systemFontOfSize:m_fontSize];
-    [textField_MAC regiestKeyBoardMessage];
-
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
