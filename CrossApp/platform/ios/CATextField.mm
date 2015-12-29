@@ -158,16 +158,34 @@ CATextField::CATextField()
 , m_bSecureTextEntry(false)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
-, m_iFontSize(24)
+, m_iFontSize(40)
 , m_iMaxLenght(0)
 , m_eClearBtn(ClearButtonMode::ClearButtonNone)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
+    
+    CGPoint point = CGPointMake(5000, 5000);
+    m_pTextField = [[IOSTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
+    EAGLView * eaglview = [EAGLView sharedEGLView];
+    [eaglview addSubview:textField_iOS];
+    textField_iOS.textField = this;
+    textField_iOS.delegate = textField_iOS;
+    textField_iOS.regiestKeyBoardMessage;
+    textField_iOS.keyboardType = UIKeyboardTypeDefault;
+    textField_iOS.returnKeyType = UIReturnKeyDone;
+    textField_iOS.borderStyle = UITextBorderStyleNone;
+    textField_iOS.placeholder = @"placeholder";
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale]
+    
+    setMarginLeft(m_iMarginLeft);
+    setMarginRight(m_iMarginRight);
 }
 
 CATextField::~CATextField()
 {
+    [textField_iOS removeFromSuperview];
 }
 
 void CATextField::onEnterTransitionDidFinish()
@@ -309,21 +327,6 @@ CATextField* CATextField::createWithCenter(const DRect& rect)
 
 bool CATextField::init()
 {
-    CGPoint point = CGPointMake(5000, 5000);
-    m_pTextField = [[IOSTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
-    EAGLView * eaglview = [EAGLView sharedEGLView];
-    [eaglview addSubview:textField_iOS];
-    textField_iOS.textField = this;
-    textField_iOS.delegate = textField_iOS;
-    textField_iOS.regiestKeyBoardMessage;
-    textField_iOS.keyboardType = UIKeyboardTypeDefault;
-    textField_iOS.returnKeyType = UIReturnKeyDone;
-    textField_iOS.placeholder = @"placeholder";
-    textField_iOS.borderStyle = UITextBorderStyleNone;
-
-    setMarginLeft(m_iMarginLeft);
-    setMarginRight(m_iMarginRight);
-    
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
@@ -500,7 +503,7 @@ void CATextField::setPlaceHolderColor(const CAColor4B &var)
     
     m_cPlaceHdolderColor = var;
     
-    UIColor* color = [UIColor colorWithRed:var.r green:var.g blue:var.b alpha:var.a];
+    UIColor* color = [UIColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
     [textField_iOS setValue:color forKeyPath:@"_placeholderLabel.textColor"];
     
     this->delayShowImage();
@@ -551,7 +554,7 @@ void CATextField::setTextColor(const CAColor4B &var)
     
     m_cTextColor = var;
     
-    textField_iOS.textColor = [UIColor colorWithRed:var.r green:var.g blue:var.b alpha:var.a];
+    textField_iOS.textColor = [UIColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
     
     this->delayShowImage();
 }

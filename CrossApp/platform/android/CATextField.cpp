@@ -31,6 +31,16 @@ void onCreateView(int key)
     }
 }
 
+void onRemoveView(int key)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "removeTextField", "(I)V"))
+    {
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID, key);
+        jni.env->DeleteLocalRef(jni.classID);
+    }
+}
+
 void setTextFieldPointJNI(int key, const int x, const int y)
 {
     JniMethodInfo jni;
@@ -358,18 +368,22 @@ CATextField::CATextField()
 , m_bSecureTextEntry(false)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
-, m_iFontSize(24)
+, m_iFontSize(40)
 , m_iMaxLenght(0)
 , m_pDelegate(NULL)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     s_map[m_u__ID] = this;
     this->setHaveNextResponder(false);
+    onCreateView(m_u__ID);
+    this->setPlaceHolderText("placeholder");
+    setFontSizeJNI(m_u__ID, s_dip_to_px(m_iFontSize));
 }
 
 CATextField::~CATextField()
 {
     s_map.erase(m_u__ID);
+    onRemoveView(m_u__ID);
 }
 
 void CATextField::onEnterTransitionDidFinish()
@@ -509,9 +523,6 @@ CATextField* CATextField::createWithCenter(const DRect& rect)
 
 bool CATextField::init()
 {
-    onCreateView(m_u__ID);
-    this->setPlaceHolderText("placeholder");
-    
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
@@ -688,7 +699,8 @@ void CATextField::setFontSize(int var)
     this->delayShowImage();
 }
 
-int CATextField::getFontSize(){
+int CATextField::getFontSize()
+{
 	return m_iFontSize;
 }
 

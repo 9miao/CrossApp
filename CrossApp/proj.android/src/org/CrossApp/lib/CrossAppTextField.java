@@ -738,6 +738,11 @@ public class CrossAppTextField
 	
 	static public void removeTextField(final int key) 
 	{
+		CrossAppTextField var = dict.get(key);
+		if (var != null)
+		{
+			
+		}
 		dict.remove(key);
 	}
 	

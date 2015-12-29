@@ -176,7 +176,7 @@ CATextField::CATextField()
 , m_bSecureTextEntry(false)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
-, m_iFontSize(24)
+, m_iFontSize(40)
 , m_iMaxLenght(0)
 , m_eClearBtn(ClearButtonMode::ClearButtonNone)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
@@ -190,7 +190,8 @@ CATextField::CATextField()
     textField_MAC.textField = this;
     
     textField_MAC.placeholderString = @"placeholder";
-    textField_MAC.font = [NSFont systemFontOfSize:m_iFontSize];
+    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
 }
 
 CATextField::~CATextField()
@@ -463,9 +464,9 @@ void CATextField::setPlaceHolderColor(const CAColor4B &var)
     
     m_cPlaceHdolderColor = var;
     
-    NSColor* color = [NSColor colorWithRed:var.r/256.f green:var.g/256.f blue:var.b/256.f alpha:var.a];
+    NSColor* color = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
 //    [textField_MAC setValue:color forKeyPath:@"_placeholderLabel.textColor"];
-     CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
     textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
     this->delayShowImage();
 }
@@ -514,7 +515,7 @@ void CATextField::setTextColor(const CAColor4B &var)
     
     m_cTextColor = var;
     
-    textField_MAC.textColor = [NSColor colorWithRed:var.r/256.f green:var.g/256.f blue:var.b/256.f alpha:var.a];
+    textField_MAC.textColor = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
     
     this->delayShowImage();
 }
