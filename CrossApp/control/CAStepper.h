@@ -51,7 +51,7 @@ public:
 //    CC_SYNTHESIZE(CAColor4B, m_tintColor, TintColor);
     
 public:
-    // a background image which will be 3-way stretched over the whole of the control. Each half of the stepper will paint the image appropriate for its state      
+    // a Background image which will be 3-way stretched over the whole of the control. Each half of the stepper will paint the image appropriate for its state      
     void setBackgroundImage(CAImage* image, CAControlState state);
     CAImage* getBackgroundImageForState(CAControlState state);
 

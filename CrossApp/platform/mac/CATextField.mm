@@ -523,7 +523,7 @@ const CATextField::ReturnType& CATextField::getReturnType()
     return m_returnType;
 }
 
-void CATextField::setBackGroundImage(CAImage* image)
+void CATextField::setBackgroundImage(CAImage* image)
 {
     if (image)
     {

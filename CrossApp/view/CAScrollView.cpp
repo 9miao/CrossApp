@@ -372,7 +372,7 @@ DPoint CAScrollView::getContentOffset()
     return ccpMult(m_pContainer->getFrameOrigin(), -1);
 }
 
-void CAScrollView::setBackGroundImage(CAImage* image)
+void CAScrollView::setBackgroundImage(CAImage* image)
 {
     CAView::setImage(image);
     
@@ -381,7 +381,7 @@ void CAScrollView::setBackGroundImage(CAImage* image)
     CAView::setImageRect(rect);
 }
 
-void CAScrollView::setBackGroundColor(const CAColor4B &color)
+void CAScrollView::setBackgroundColor(const CAColor4B &color)
 {
     CAView::setImage(CAImage::CC_WHITE_IMAGE());
     CAView::setColor(color);

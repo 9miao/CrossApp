@@ -147,8 +147,8 @@ public:
 
     CC_PROPERTY(int, m_iMaxLenght, MaxLenght);
     
-    //backGroundImage
-    void setBackGroundImage(CAImage* image);
+    //BackgroundImage
+    void setBackgroundImage(CAImage* image);
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);

@@ -155,20 +155,20 @@ void CAAlertView::addButton(const std::string& btnText, CAColor4B col, CAImage* 
 	btn->setTitleColorForState(CAControlStateAll, col);
 	if (pNormalImage == NULL)
 	{
-		btn->setBackGroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
+		btn->setBackgroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
 
 	} else {
 
-		btn->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(pNormalImage));
+		btn->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(pNormalImage));
 	}
 	
 	if (pHighlightedImage == NULL)
 	{
-		btn->setBackGroundViewForState(CAControlStateHighlighted, CAView::createWithColor(ccc4(226, 226, 226, 225)));
+		btn->setBackgroundViewForState(CAControlStateHighlighted, CAView::createWithColor(ccc4(226, 226, 226, 225)));
 
 	} else {
 		
-		btn->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(pHighlightedImage));
+		btn->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(pHighlightedImage));
 	}
 	
 	addButton(btn);
@@ -213,11 +213,11 @@ void CAAlertView::showAlertView() {
     this->addSubview(m_pBackView);
     m_pBackView->setAlphaThreshold(0.5f);
     
-    CAScale9ImageView *backgroundImageView = CAScale9ImageView::createWithFrame(m_pBackView->getBounds());
-    backgroundImageView->setImage(CAImage::create("source_material/alert_back.png"));
-    m_pBackView->addSubview(backgroundImageView);
+    CAScale9ImageView *BackgroundImageView = CAScale9ImageView::createWithFrame(m_pBackView->getBounds());
+    BackgroundImageView->setImage(CAImage::create("source_material/alert_back.png"));
+    m_pBackView->addSubview(BackgroundImageView);
     
-    m_pBackView->setStencil(backgroundImageView->copy());
+    m_pBackView->setStencil(BackgroundImageView->copy());
 	
 	float alertViewSpaceHeight = 40;
 
@@ -236,7 +236,7 @@ void CAAlertView::showAlertView() {
 	
 		CAScrollView *scrollView = CAScrollView::createWithFrame(DRect(
 			0 , 0, ALERT_VIEW_WIDTH, m_fAlertViewLineHeight - alertViewSpaceHeight ));
-		scrollView->setBackGroundColor(CAColor_clear);
+		scrollView->setBackgroundColor(CAColor_clear);
 		scrollView->setShowsHorizontalScrollIndicator(false);
 		scrollView->setShowsVerticalScrollIndicator(true);
 		scrollView->setBounceHorizontal(false);
@@ -309,7 +309,7 @@ void CAAlertView::adjustButtonView() {
 		CCAssert(m_pBtnTableView != NULL, "");
 		m_pBtnTableView->init();
 		m_pBtnTableView->setFrame(DRect(0,m_fAlertViewLineHeight,ALERT_VIEW_WIDTH,alertViewButtonHeight * 3));
-		m_pBtnTableView->setBackGroundColor(CAColor_clear);
+		m_pBtnTableView->setBackgroundColor(CAColor_clear);
 		m_pBtnTableView->setTableViewDataSource(this);
 		m_pBtnTableView->setTableViewDelegate(this);
 		m_pBtnTableView->setAllowsSelection(true);
@@ -320,12 +320,12 @@ void CAAlertView::adjustButtonView() {
 
 	if (btnCount == 2) {
 
-		m_vAllBtn.at(0)->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom_left.png")));
-		m_vAllBtn.at(1)->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom_right.png")));
+		m_vAllBtn.at(0)->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom_left.png")));
+		m_vAllBtn.at(1)->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom_right.png")));
 
 	} else {
 
-		m_vAllBtn.back()->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom.png")));
+		m_vAllBtn.back()->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom.png")));
 	}
 }
 

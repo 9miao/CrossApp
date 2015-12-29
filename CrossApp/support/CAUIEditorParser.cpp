@@ -250,118 +250,118 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             btn->setImageForState(CAControlStateDisabled, CAImage::create(value));
         }
         
-        if (strcmp(viewXml->Attribute("backgroundType"), "Scale9") == 0)
+        if (strcmp(viewXml->Attribute("BackgroundType"), "Scale9") == 0)
         {
-            if (const char* value = viewXml->Attribute("backgroundNormal"))
+            if (const char* value = viewXml->Attribute("BackgroundNormal"))
             {
                 CAScale9ImageView* scale9ImageView = CAScale9ImageView::create();
                 scale9ImageView->setImage(CAImage::create(value));
-                btn->setBackGroundViewForState(CAControlStateNormal, scale9ImageView);
+                btn->setBackgroundViewForState(CAControlStateNormal, scale9ImageView);
             }
             
-            if (const char* value = viewXml->Attribute("backgroundHighted"))
+            if (const char* value = viewXml->Attribute("BackgroundHighted"))
             {
                 CAScale9ImageView* scale9ImageView = CAScale9ImageView::create();
                 scale9ImageView->setImage(CAImage::create(value));
-                btn->setBackGroundViewForState(CAControlStateHighlighted, scale9ImageView);
+                btn->setBackgroundViewForState(CAControlStateHighlighted, scale9ImageView);
             }
             
-            if (const char* value = viewXml->Attribute("backgroundSelected"))
+            if (const char* value = viewXml->Attribute("BackgroundSelected"))
             {
                 CAScale9ImageView* scale9ImageView = CAScale9ImageView::create();
                 scale9ImageView->setImage(CAImage::create(value));
-                btn->setBackGroundViewForState(CAControlStateSelected, scale9ImageView);
+                btn->setBackgroundViewForState(CAControlStateSelected, scale9ImageView);
             }
             
-            if (const char* value = viewXml->Attribute("backgroundDisabled"))
+            if (const char* value = viewXml->Attribute("BackgroundDisabled"))
             {
                 CAScale9ImageView* scale9ImageView = CAScale9ImageView::create();
                 scale9ImageView->setImage(CAImage::create(value));
-                btn->setBackGroundViewForState(CAControlStateDisabled, scale9ImageView);
+                btn->setBackgroundViewForState(CAControlStateDisabled, scale9ImageView);
             }
         }
-        else if (strcmp(viewXml->Attribute("backgroundType"), "ColorView") == 0)
+        else if (strcmp(viewXml->Attribute("BackgroundType"), "ColorView") == 0)
         {
-            if (viewXml->Attribute("backgroundColorNormal"))
+            if (viewXml->Attribute("BackgroundColorNormal"))
             {
-                btn->setBackGroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
+                btn->setBackgroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
             }
             
-            if (viewXml->Attribute("backgroundColorHighted"))
+            if (viewXml->Attribute("BackgroundColorHighted"))
             {
-                btn->setBackGroundViewForState(CAControlStateHighlighted, CAView::createWithColor(CAColor_clear));
+                btn->setBackgroundViewForState(CAControlStateHighlighted, CAView::createWithColor(CAColor_clear));
             }
             
-            if (viewXml->Attribute("backgroundColorSelected"))
+            if (viewXml->Attribute("BackgroundColorSelected"))
             {
-                btn->setBackGroundViewForState(CAControlStateSelected, CAView::createWithColor(CAColor_clear));
+                btn->setBackgroundViewForState(CAControlStateSelected, CAView::createWithColor(CAColor_clear));
             }
             
-            if (viewXml->Attribute("backgroundColorDisabled"))
+            if (viewXml->Attribute("BackgroundColorDisabled"))
             {
-                btn->setBackGroundViewForState(CAControlStateDisabled, CAView::createWithColor(CAColor_clear));
+                btn->setBackgroundViewForState(CAControlStateDisabled, CAView::createWithColor(CAColor_clear));
             }
         }
         else
         {
-            if (const char* value = viewXml->Attribute("backgroundNormal"))
+            if (const char* value = viewXml->Attribute("BackgroundNormal"))
             {
                 CAImageView* imageView = CAImageView::create();
                 imageView->setImage(CAImage::create(value));
-                btn->setBackGroundViewForState(CAControlStateNormal, imageView);
+                btn->setBackgroundViewForState(CAControlStateNormal, imageView);
             }
             
-            if (const char* value = viewXml->Attribute("backgroundHighted"))
+            if (const char* value = viewXml->Attribute("BackgroundHighted"))
             {
                 CAImageView* imageView = CAImageView::create();
                 imageView->setImage(CAImage::create(value));
-                btn->setBackGroundViewForState(CAControlStateHighlighted, imageView);
+                btn->setBackgroundViewForState(CAControlStateHighlighted, imageView);
             }
             
-            if (const char* value = viewXml->Attribute("backgroundSelected"))
+            if (const char* value = viewXml->Attribute("BackgroundSelected"))
             {
                 CAImageView* imageView = CAImageView::create();
                 imageView->setImage(CAImage::create(value));
-                btn->setBackGroundViewForState(CAControlStateSelected, imageView);
+                btn->setBackgroundViewForState(CAControlStateSelected, imageView);
             }
             
-            if (const char* value = viewXml->Attribute("backgroundDisabled"))
+            if (const char* value = viewXml->Attribute("BackgroundDisabled"))
             {
                 CAImageView* imageView = CAImageView::create();
                 imageView->setImage(CAImage::create(value));
-                btn->setBackGroundViewForState(CAControlStateDisabled, imageView);
+                btn->setBackgroundViewForState(CAControlStateDisabled, imageView);
             }
         }
         
-        if (const char* value = viewXml->Attribute("backgroundColorNormal"))
+        if (const char* value = viewXml->Attribute("BackgroundColorNormal"))
         {
-            if (CAView* backgroundView = btn->getBackGroundViewForState(CAControlStateNormal))
+            if (CAView* BackgroundView = btn->getBackgroundViewForState(CAControlStateNormal))
             {
-                backgroundView->setColor(ccc4Int(atoi(value)));
+                BackgroundView->setColor(ccc4Int(atoi(value)));
             }
         }
         
-        if (const char* value = viewXml->Attribute("backgroundColorHighted"))
+        if (const char* value = viewXml->Attribute("BackgroundColorHighted"))
         {
-            if (CAView* backgroundView = btn->getBackGroundViewForState(CAControlStateHighlighted))
+            if (CAView* BackgroundView = btn->getBackgroundViewForState(CAControlStateHighlighted))
             {
-                backgroundView->setColor(ccc4Int(atoi(value)));
+                BackgroundView->setColor(ccc4Int(atoi(value)));
             }
         }
         
-        if (const char* value = viewXml->Attribute("backgroundColorSelected"))
+        if (const char* value = viewXml->Attribute("BackgroundColorSelected"))
         {
-            if (CAView* backgroundView = btn->getBackGroundViewForState(CAControlStateSelected))
+            if (CAView* BackgroundView = btn->getBackgroundViewForState(CAControlStateSelected))
             {
-                backgroundView->setColor(ccc4Int(atoi(value)));
+                BackgroundView->setColor(ccc4Int(atoi(value)));
             }
         }
         
-        if (const char* value = viewXml->Attribute("backgroundColorDisabled"))
+        if (const char* value = viewXml->Attribute("BackgroundColorDisabled"))
         {
-            if (CAView* backgroundView = btn->getBackGroundViewForState(CAControlStateDisabled))
+            if (CAView* BackgroundView = btn->getBackgroundViewForState(CAControlStateDisabled))
             {
-                backgroundView->setColor(ccc4Int(atoi(value)));
+                BackgroundView->setColor(ccc4Int(atoi(value)));
             }
         }
     }
@@ -416,7 +416,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             segmentControl->setColor(ccc4Int(atoi(value)));
         }
         
-        if (const char* value = viewXml->Attribute("background"))
+        if (const char* value = viewXml->Attribute("Background"))
         {
             segmentControl->setBackgroundImage(CAImage::create(value));
         }
@@ -565,7 +565,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             stepper->setDecrementImage(CAImage::create(value), CAControlStateDisabled);
         }
         
-        if (const char* value = viewXml->Attribute("background"))
+        if (const char* value = viewXml->Attribute("Background"))
         {
             stepper->setBackgroundImage(CAImage::create(value), CAControlStateDisabled);
         }
@@ -604,7 +604,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             
         }
         
-        if (const char* value = viewXml->Attribute("background"))
+        if (const char* value = viewXml->Attribute("Background"))
         {
             CAImage* image = CAImage::create(value);
             DRect rect = DRectZero;
@@ -688,7 +688,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("color"))
         {
-            pageView->setBackGroundColor(ccc4Int(atoi(value)));
+            pageView->setBackgroundColor(ccc4Int(atoi(value)));
         }
         
         if(const char* value = viewXml->Attribute("spacing"))
@@ -730,7 +730,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
    
         if (const char* value = viewXml->Attribute("color"))
         {
-            tableView->setBackGroundColor(ccc4Int(atoi(value)));
+            tableView->setBackgroundColor(ccc4Int(atoi(value)));
         }
 
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -824,7 +824,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
  
         if (const char* value = viewXml->Attribute("color"))
         {
-            listView->setBackGroundColor(ccc4Int(atoi(value)));
+            listView->setBackgroundColor(ccc4Int(atoi(value)));
         }
         
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -922,7 +922,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
   
         if (const char* value = viewXml->Attribute("color"))
         {
-            collectionView->setBackGroundColor(ccc4Int(atoi(value)));
+            collectionView->setBackgroundColor(ccc4Int(atoi(value)));
         }
         
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -1025,7 +1025,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("color"))
         {
-            waterfallView->setBackGroundColor(ccc4Int(atoi(value)));
+            waterfallView->setBackgroundColor(ccc4Int(atoi(value)));
         }
         
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -1133,7 +1133,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("color"))
         {
-            scrollView->setBackGroundColor(ccc4Int(atoi(value)));
+            scrollView->setBackgroundColor(ccc4Int(atoi(value)));
         }
         
         DPoint contentOffSet = DPointZero;

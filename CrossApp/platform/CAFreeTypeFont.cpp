@@ -355,11 +355,14 @@ _AgaginInitGlyphs:
 			{
 				if (i < totalLines)
 				{
-					if (!cszTemp.empty()) cszTemp += '\n';
 					std::vector<TGlyph>& v = m_lines[i]->glyphs;
 					for (int j = 0; j < v.size(); j++)
 					{
 						cszTemp += v[j].c;
+					}
+					if (m_lines[i]->includeRet)
+					{
+						cszTemp += '\n';
 					}
 				}
 				else break;
@@ -367,9 +370,6 @@ _AgaginInitGlyphs:
 		}
 		cszNewText.clear();
 		StringUtils::UTF32ToUTF8(cszTemp, cszNewText);
-
-		destroyAllLineFontGlyph();
-		goto _AgaginInitGlyphs;
 	}
 	destroyAllLineFontGlyph();
 	text = cszNewText;

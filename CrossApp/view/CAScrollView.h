@@ -85,9 +85,9 @@ public:
     
     DPoint getContentOffset();
     
-    void setBackGroundImage(CAImage* image);
+    void setBackgroundImage(CAImage* image);
 
-    void setBackGroundColor(const CAColor4B &color);
+    void setBackgroundColor(const CAColor4B &color);
     
     void setZoomScale(float zoom);
 

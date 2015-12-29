@@ -34,7 +34,7 @@ public:
     virtual bool applicationDidFinishLaunching() = 0;
 
     /**
-    @brief  The function be called when the application enter background
+    @brief  The function be called when the application enter Background
     @param  the pointer of the application
     */
     virtual void applicationDidEnterBackground() = 0;

@@ -47,9 +47,9 @@ public:
     
     virtual bool init();
     
-    void setBackGroundViewForState(const CAControlState& controlState, CAView *var);
+    void setBackgroundViewForState(const CAControlState& controlState, CAView *var);
     
-    CAView* getBackGroundViewForState(const CAControlState& controlState);
+    CAView* getBackgroundViewForState(const CAControlState& controlState);
     
     void setImageForState(const CAControlState& controlState, CAImage* var);
     
@@ -121,7 +121,7 @@ protected:
     
     CALabel* m_pLabel;
     
-    CAView* m_pBackGroundView[CAControlStateAll];
+    CAView* m_pBackgroundView[CAControlStateAll];
     
     std::string m_sTitleFontName;
     
@@ -161,9 +161,9 @@ protected:
     
     void setContentSize(const DSize & var);
 
-    void setBackGroundViewSquareRect();
+    void setBackgroundViewSquareRect();
     
-    void setBackGroundViewRoundedRect();
+    void setBackgroundViewRoundedRect();
 };
 
 NS_CC_END

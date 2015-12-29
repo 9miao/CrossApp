@@ -40,7 +40,7 @@ CAButton::CAButton(const CAButtonType& buttonType)
 {
     for (int i=0; i<CAControlStateAll; i++)
     {
-        m_pBackGroundView[i] = NULL;
+        m_pBackgroundView[i] = NULL;
     }
     
     for (int i=0; i<CAControlStateAll; i++)
@@ -67,7 +67,7 @@ CAButton::~CAButton(void)
 {
     for (int i=0; i<CAControlStateAll; i++)
     {
-        CC_SAFE_RELEASE_NULL(m_pBackGroundView[i]);
+        CC_SAFE_RELEASE_NULL(m_pBackgroundView[i]);
     }
     CC_SAFE_RELEASE_NULL(m_pImageView);
     CC_SAFE_RELEASE_NULL(m_pLabel);
@@ -142,10 +142,10 @@ bool CAButton::init()
     switch (m_eButtonType)
     {
         case CAButtonTypeSquareRect:
-            this->setBackGroundViewSquareRect();
+            this->setBackgroundViewSquareRect();
             break;
         case CAButtonTypeRoundedRect:
-            this->setBackGroundViewRoundedRect();
+            this->setBackgroundViewRoundedRect();
             break;
         default:
             break;
@@ -154,7 +154,7 @@ bool CAButton::init()
     return true;
 }
 
-void CAButton::setBackGroundViewSquareRect()
+void CAButton::setBackgroundViewSquareRect()
 {
     const char* fileName[CAControlStateAll] =
     {
@@ -177,12 +177,12 @@ void CAButton::setBackGroundViewSquareRect()
     {
         CAImage* image = CAImage::create(fileName[i]);
         CAScale9ImageView* bg = CAScale9ImageView::createWithImage(image);
-        this->setBackGroundViewForState((CAControlState)i, bg);
+        this->setBackgroundViewForState((CAControlState)i, bg);
         m_sTitleColor[i] = color[i];
     }
 }
 
-void CAButton::setBackGroundViewRoundedRect()
+void CAButton::setBackgroundViewRoundedRect()
 {
     const char* fileName[CAControlStateAll] =
     {
@@ -205,28 +205,28 @@ void CAButton::setBackGroundViewRoundedRect()
     {
         CAImage* image = CAImage::create(fileName[i]);
         CAScale9ImageView* bg = CAScale9ImageView::createWithImage(image);
-        this->setBackGroundViewForState((CAControlState)i, bg);
+        this->setBackgroundViewForState((CAControlState)i, bg);
         m_sTitleColor[i] = color[i];
     }
 }
 
-void CAButton::setBackGroundViewForState(const CAControlState& controlState, CAView *var)
+void CAButton::setBackgroundViewForState(const CAControlState& controlState, CAView *var)
 {
     if (controlState == CAControlStateAll)
     {
         for (int i=0; i<CAControlStateAll; i++)
         {
-            this->setBackGroundViewForState((CAControlState)i, var);
+            this->setBackgroundViewForState((CAControlState)i, var);
         }
         return;
     }
     
-    if (m_pBackGroundView[controlState] != var)
+    if (m_pBackgroundView[controlState] != var)
     {
         CC_SAFE_RETAIN(var);
-        this->removeSubview(m_pBackGroundView[controlState]);
-        CC_SAFE_RELEASE(m_pBackGroundView[controlState]);
-        m_pBackGroundView[controlState] = var;
+        this->removeSubview(m_pBackgroundView[controlState]);
+        CC_SAFE_RELEASE(m_pBackgroundView[controlState]);
+        m_pBackgroundView[controlState] = var;
         this->setControlState(m_eControlState);
     }
     
@@ -240,13 +240,13 @@ void CAButton::setBackGroundViewForState(const CAControlState& controlState, CAV
     this->updateWithPreferredSize();
 }
 
-CAView* CAButton::getBackGroundViewForState(const CAControlState& controlState)
+CAView* CAButton::getBackgroundViewForState(const CAControlState& controlState)
 {
     if (controlState == CAControlStateAll)
     {
         return NULL;
     }
-    return m_pBackGroundView[controlState];
+    return m_pBackgroundView[controlState];
 }
 
 void CAButton::setImageForState(const CAControlState& controlState, CAImage* var)
@@ -357,10 +357,10 @@ void CAButton::updateWithPreferredSize()
 {
     for (int i=0; i<CAControlStateAll; i++)
     {
-        CC_CONTINUE_IF(m_pBackGroundView[i] == NULL);
-        CC_CONTINUE_IF(this->getBounds().equals(m_pBackGroundView[i]->getBounds()));
+        CC_CONTINUE_IF(m_pBackgroundView[i] == NULL);
+        CC_CONTINUE_IF(this->getBounds().equals(m_pBackgroundView[i]->getBounds()));
         
-        m_pBackGroundView[i]->setFrame(this->getBounds());
+        m_pBackgroundView[i]->setFrame(this->getBounds());
     }
     
     if (m_fTitleFontSize < FLT_EPSILON)
@@ -491,7 +491,7 @@ void CAButton::setControlState(const CAControlState& var)
     
     for (int i=0; i<CAControlStateAll; i++)
     {
-        this->removeSubview(m_pBackGroundView[i]);
+        this->removeSubview(m_pBackgroundView[i]);
     }
     
     m_eControlState = var;
@@ -501,15 +501,15 @@ void CAButton::setControlState(const CAControlState& var)
         m_eControlState = CAControlStateNormal;
     }
     
-    if (m_pBackGroundView[m_eControlState] && m_eControlState != CAControlStateNormal)
+    if (m_pBackgroundView[m_eControlState] && m_eControlState != CAControlStateNormal)
     {
-        m_pBackGroundView[m_eControlState]->setFrame(this->getBounds());
-        this->insertSubview(m_pBackGroundView[m_eControlState], -1);
+        m_pBackgroundView[m_eControlState]->setFrame(this->getBounds());
+        this->insertSubview(m_pBackgroundView[m_eControlState], -1);
     }
-    else if (m_pBackGroundView[CAControlStateNormal])
+    else if (m_pBackgroundView[CAControlStateNormal])
     {
-        m_pBackGroundView[CAControlStateNormal]->setFrame(this->getBounds());
-        this->insertSubview(m_pBackGroundView[CAControlStateNormal], -1);
+        m_pBackgroundView[CAControlStateNormal]->setFrame(this->getBounds());
+        this->insertSubview(m_pBackgroundView[CAControlStateNormal], -1);
     }
     
     if (m_eControlState != CAControlStateHighlighted)
@@ -696,8 +696,8 @@ void CAButton::setContentSize(const DSize & var)
     CAView::setContentSize(size);
     for(int i=0; i<CAControlStateAll; i++)
     {
-        CC_CONTINUE_IF(m_pBackGroundView[i] == NULL);
-        m_pBackGroundView[i]->setFrame(this->getBounds());
+        CC_CONTINUE_IF(m_pBackgroundView[i] == NULL);
+        m_pBackgroundView[i]->setFrame(this->getBounds());
     }
     
     this->updateWithPreferredSize();

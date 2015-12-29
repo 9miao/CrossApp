@@ -344,7 +344,7 @@ void CAStepper::onEnter()
     if (m_value<m_minimumValue) {
         m_value = m_minimumValue;
     }
-    // init background
+    // init Background
     if (!m_pBackgroundImageView && m_pBackgroundImage[CAControlStateNormal]) {
         m_pBackgroundImageView = CAScale9ImageView::createWithImage(m_pBackgroundImage[CAControlStateNormal]);
         m_pBackgroundImageView->retain();

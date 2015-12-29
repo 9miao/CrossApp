@@ -47,9 +47,9 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    virtual void setBackGroundView(CAView* var);
+    virtual void setBackgroundView(CAView* var);
     
-    CC_SYNTHESIZE_READONLY(CAView*, m_pBackGroundView, BackGroundView);
+    CC_SYNTHESIZE_READONLY(CAView*, m_pBackgroundView, BackgroundView);
 
     virtual void setTitleColor(const CAColor4B& color);
     
@@ -67,7 +67,7 @@ public:
 
 protected:
     
-    void showBackGround();
+    void showBackground();
     
     void showTitle();
     
@@ -147,13 +147,13 @@ public:
 
     virtual bool init(const CAVector<CATabBarItem*>& items, const DSize& size = DSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
     
-    CC_PROPERTY(CAImage*, m_pBackGroundImage, BackGroundImage);
+    CC_PROPERTY(CAImage*, m_pBackgroundImage, BackgroundImage);
     
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sBackGroundColor, BackGroundColor);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sBackgroundColor, BackgroundColor);
     
-    CC_PROPERTY(CAImage*, m_pSelectedBackGroundImage, SelectedBackGroundImage);
+    CC_PROPERTY(CAImage*, m_pSelectedBackgroundImage, SelectedBackgroundImage);
     
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sSelectedBackGroundColor, SelectedBackGroundColor);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sSelectedBackgroundColor, SelectedBackgroundColor);
 
     CC_PROPERTY(CAImage*, m_pSelectedIndicatorImage, SelectedIndicatorImage);
     
@@ -185,9 +185,9 @@ public:
 
 protected:
     
-    void showBackGround();
+    void showBackground();
     
-    void showSelectedBackGround();
+    void showSelectedBackground();
     
     void showSelectedIndicatorView();
     
@@ -201,7 +201,7 @@ protected:
     
     CATabBarItem* m_pSelectedItem;
 
-    CAView* m_pBackGroundView;
+    CAView* m_pBackgroundView;
     
     CAView* m_pContentView;
     
