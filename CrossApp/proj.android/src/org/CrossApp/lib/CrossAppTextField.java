@@ -578,7 +578,15 @@ public class CrossAppTextField
                 @Override
                 public void run()
                 {
-                	textField.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                	if (inputType == InputType.TYPE_CLASS_NUMBER)
+                	{
+                		textField.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                	}
+                	else
+                	{
+                		textField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                	}
+                	
                 }
             });
     	}

@@ -794,7 +794,14 @@ const CATextField::TextFieldAlign& CATextField::getTextFieldAlign()
 void CATextField::setSecureTextEntry(bool var)
 {
     m_bSecureTextEntry = var;
-    setSecureTextEntryJNI(m_u__ID, var);
+    if (m_bSecureTextEntry)
+    {
+        setSecureTextEntryJNI(m_u__ID, 1);
+    }
+    else
+    {
+        setSecureTextEntryJNI(m_u__ID, 0);
+    }
 }
 
 bool CATextField::isSecureTextEntry()
