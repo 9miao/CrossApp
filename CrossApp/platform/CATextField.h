@@ -39,9 +39,9 @@ public:
 	virtual void textFieldAfterTextChanged(CATextField *sender,
                                            const char* beforeText,
                                            const char* changeText,
-                                           int arg0,
-                                           int arg1,
-                                           int arg2)
+                                           int location,
+                                           int delLenght,
+                                           int addLenght)
     {}
 };
 
