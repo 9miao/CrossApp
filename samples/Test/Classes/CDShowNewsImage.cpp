@@ -45,7 +45,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         CAScrollView* p_ScrollView = CAScrollView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
         p_ScrollView->setMinimumZoomScale(1.0f);
         p_ScrollView->setMaximumZoomScale(2.5f);
-        p_ScrollView->setBackGroundColor(CAColor_clear);
+        p_ScrollView->setBackgroundColor(CAColor_clear);
         p_ScrollView->setShowsScrollIndicators(false);
         p_ScrollView->setBounceVertical(false);
         p_ScrollView->setScrollViewDelegate(this);
@@ -55,7 +55,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     p_PageView = CAPageView::createWithFrame(DRect(0, 30, winSize.width, winSize.height), CAPageViewDirectionHorizontal);
     p_PageView->setViews(viewList);
     p_PageView->setPageViewDelegate(this);
-    p_PageView->setBackGroundColor(CAColor_black);
+    p_PageView->setBackgroundColor(CAColor_black);
     p_PageView->setPageViewDelegate(this);
     this->getView()->addSubview(p_PageView);
     
@@ -85,7 +85,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     p_des->setFontSize(_px(26));
     
     CAScrollView* ps = CAScrollView::createWithFrame(DRect(0,70,winSize.width,200));
-    ps->setBackGroundColor(CAColor_clear);
+    ps->setBackgroundColor(CAColor_clear);
     ps->setShowsVerticalScrollIndicator(false);
     ps->setShowsHorizontalScrollIndicator(false);
     ps->setBounceHorizontal(false);

@@ -29,7 +29,6 @@ public:
 		: m_pTextFieldX(e)
 		, m_pCursorMark(NULL)
 		, m_pTextViewMark(NULL)
-		, m_bInputTextPsw(false)
 		, m_iCurPos(0)
 		, m_curSelCharRange(std::make_pair(0, 0))
 		, m_iLabelWidth(0)
@@ -67,6 +66,9 @@ public:
 	
 	void insertText(const char * text, int len)
 	{
+		if (m_sText.size() + len > m_pTextFieldX->getMaxLenght())
+			return;
+
 		if (!strcmp(text, "\n"))
 		{
 			getKeyBoradReturnCallBack();
@@ -91,8 +93,9 @@ public:
 	void deleteBackward()
 	{
 		CC_RETURN_IF(m_sText.empty());
-		if (m_bInputTextPsw)
+		if (m_pTextFieldX->isSecureTextEntry())
 		{
+			CC_RETURN_IF(execCurSelCharRange());
 			clearText();
 			updateImage();
 			return;
@@ -265,7 +268,7 @@ public:
 	void setCursorPosition()
 	{
 		m_pCursorMark->setFrame(DRect(0, 0, 1.5f, m_iFontHeight));
-		if (m_bInputTextPsw)
+		if (m_pTextFieldX->isSecureTextEntry())
 		{
 			m_pCursorMark->setCenterOrigin(DPoint((m_sText.empty() ? 0 : this->getImageRect().size.width), m_obContentSize.height / 2));
 		}
@@ -277,7 +280,14 @@ public:
 	}
 	int getStringLength(const std::string &var)
 	{
-		return g_AFTFontCache.getStringWidth(m_szFontName.c_str(), m_pTextFieldX->getFontSize(), var);
+		std::string cszText = var;
+		if (m_pTextFieldX->isSecureTextEntry())
+		{
+			cszText.clear();
+			for (int i = 0; i < var.size(); i++)
+				cszText += '*';
+		}
+		return g_AFTFontCache.getStringWidth(m_szFontName.c_str(), m_pTextFieldX->getFontSize(), cszText);
 	}
 	int getStringViewLength()
 	{
@@ -440,7 +450,7 @@ public:
 			cFontColor = m_pTextFieldX->getTextColor();
 		}
 		
-		if (m_bInputTextPsw)
+		if (m_pTextFieldX->isSecureTextEntry())
 		{
 			std::string password;
 			for (std::string::size_type i = 0; i < m_sText.length(); i++)
@@ -564,7 +574,6 @@ private:
 	int m_iString_r_length;
 	int m_iString_o_length;
 	int m_iFontHeight;
-	bool m_bInputTextPsw;
 	std::string m_szFontName;
 	std::string m_sText;
 	DSize m_cImageSize;
@@ -942,6 +951,8 @@ void CATextField::setBackgroundImage(CAImage* image)
 void CATextField::setSecureTextEntry(bool var)
 {
     m_bSecureTextEntry = var;
+
+	delayShowImage();
 }
 
 bool CATextField::isSecureTextEntry()

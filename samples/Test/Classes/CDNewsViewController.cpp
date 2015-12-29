@@ -168,8 +168,8 @@ void CDNewsViewController::showAlert()
     btn5->setTag(100);
     btn5->setCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, winSize.height));
     btn5->setTitleColorForState(CAControlStateNormal,CAColor_white);
-    btn5->setBackGroundViewForState(CAControlStateNormal, bg);
-    btn5->setBackGroundViewForState(CAControlStateHighlighted, bg);
+    btn5->setBackgroundViewForState(CAControlStateNormal, bg);
+    btn5->setBackgroundViewForState(CAControlStateHighlighted, bg);
     btn5->addTarget(this, CAControl_selector(CDNewsViewController::buttonCallBack), CAControlEventTouchUpInSide);
     p_alertView->addSubview(btn5);
     

@@ -419,9 +419,6 @@
     <ClCompile Include="..\view\CADrawView.cpp">
       <Filter>view</Filter>
     </ClCompile>
-    <ClCompile Include="..\view\CATextField.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CAClipboard.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -512,7 +509,7 @@
     <ClCompile Include="..\support\CAUIEditorParser.cpp">
       <Filter>support</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\win32\CATextFieldX.cpp">
+    <ClCompile Include="..\platform\win32\CATextField.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
   </ItemGroup>
@@ -923,9 +920,6 @@
     <ClInclude Include="..\view\CADrawView.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="..\view\CATextField.h">
-      <Filter>view</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CAClipboard.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -1032,7 +1026,7 @@
     <ClInclude Include="..\support\CAUIEditorParser.h">
       <Filter>support</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CATextFieldX.h">
+    <ClInclude Include="..\platform\CATextField.h">
       <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>

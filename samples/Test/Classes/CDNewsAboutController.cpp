@@ -185,21 +185,21 @@ void CDNewsAboutController::viewDidLoad()
     
     CAButton* btn1 = CAButton::create(CAButtonTypeSquareRect);
     btn1->setCenter(DRect(winSize.width/6, 600-(winSize.width/3)/9*5/2, winSize.width/3-1, (winSize.width/3)/9*5));
-    btn1->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn1_up.png")));
-    btn1->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn1_down.png")));
+    btn1->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn1_up.png")));
+    btn1->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn1_down.png")));
     view->addSubview(btn1);
     
     CAButton* btn2 = CAButton::create(CAButtonTypeSquareRect);
     btn2->setCenter(DRect(winSize.width/2, 600-(winSize.width/3)/9*5/2, winSize.width/3-1, (winSize.width/3)/9*5));
-    btn2->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn2_up.png")));
-    btn2->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn2_down.png")));
+    btn2->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn2_up.png")));
+    btn2->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn2_down.png")));
     view->addSubview(btn2);
     
     CAButton* btn3 = CAButton::create(CAButtonTypeSquareRect);
     btn3->setTag(100);
     btn3->setCenter(DRect(winSize.width/6*5, 600-(winSize.width/3)/9*5/2, winSize.width/3-1, (winSize.width/3)/9*5));
-    btn3->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn3_up.png")));
-    btn3->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn3_down.png")));
+    btn3->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn3_up.png")));
+    btn3->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn3_down.png")));
     view->addSubview(btn3);
     
     p_TableView->setTableHeaderView(view);

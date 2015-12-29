@@ -12,15 +12,36 @@
 #include "view/CAView.h"
 #include "view/CAScrollView.h"
 #include "view/CAScale9ImageView.h"
-
-
+#include "dispatcher/CAIMEDispatcher.h"
+#include "platform/CAFTFontCache.h"
+#include "support/ccUTF8.h"
 #include <vector>
+#include <utility>
 
 NS_CC_BEGIN
 
+enum eKeyBoardType
+{
+	KEY_BOARD_TYPE_NORMAL = 0,
+	KEY_BOARD_TYPE_NUMBER,
+	KEY_BOARD_TYPE_ALPHABET,
+};
+
+enum eKeyBoardInputType
+{
+	KEY_BOARD_INPUT_NORMAL = 1,
+	KEY_BOARD_INPUT_PASSWORD,
+};
+
+enum eKeyBoardReturnType
+{
+	KEY_BOARD_RETURN_DONE = 21,
+	KEY_BOARD_RETURN_SEARCH,
+	KEY_BOARD_RETURN_SEND,
+	KEY_BOARD_RETURN_ENTER,
+};
 
 class CATextView;
-
 class CATextViewDelegate
 {
 public:
@@ -103,9 +124,9 @@ public:
 
 	static CATextView* createWithCenter(const DRect& rect);
 
-    void setBackGroundImage(CAImage* image);
+    void setBackgroundImage(CAImage* image);
     
-    void setBackGroundColor(const CAColor4B &color);
+    void setBackgroundColor(const CAColor4B &color);
 
 	int getLineCount();
     
