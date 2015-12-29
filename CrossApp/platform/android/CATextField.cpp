@@ -377,7 +377,7 @@ CATextField::CATextField()
     this->setHaveNextResponder(false);
     onCreateView(m_u__ID);
     this->setPlaceHolderText("placeholder");
-    setFontSizeJNI(m_u__ID, s_dip_to_px(m_iFontSize));
+    setFontSizeJNI(m_u__ID, m_iFontSize / 2);
 }
 
 CATextField::~CATextField()
@@ -694,7 +694,7 @@ void CATextField::setFontSize(int var)
 {
 	m_iFontSize = var;
 
-	setFontSizeJNI(m_u__ID, s_dip_to_px(m_iFontSize));
+	setFontSizeJNI(m_u__ID, m_iFontSize / 2);
 
     this->delayShowImage();
 }
