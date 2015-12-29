@@ -48,7 +48,6 @@
 
 -(CrossApp::DRect)getDRect;
 
--(void)regiestKeyBoardMessage;
 
 @end
 
@@ -125,7 +124,6 @@
         [self setBezeled:NO];
         [[self cell] setAlignment:NSTextAlignmentLeft];
         [[self cell] setLineBreakMode:NSLineBreakByTruncatingTail];
-        
         _marginLeft = 0;
         _marginRight = 0;
         return self;
@@ -142,11 +140,6 @@
 -(void)show
 {
     [self setWantsLayer:YES];
-}
-
--(void)regiestKeyBoardMessage
-{
-
 }
 
 - (void)textDidChange:(NSNotification *)notification
@@ -175,17 +168,18 @@
 
 NS_CC_BEGIN
 CATextField::CATextField()
-:m_pBackgroundView(NULL)
-,m_pImgeView(NULL)
-,m_pTextField(NULL)
-,m_pDelegate(NULL)
-,m_bUpdateImage(true)
-,m_marginLeft(10)
-,m_marginRight(10)
-,m_fontSize(24)
-,m_iMaxLenght(0)
-,m_clearBtn(ClearButtonMode::ClearButtonNone)
-,m_obLastPoint(DPoint(-0xffff, -0xffff))
+: m_pBackgroundView(NULL)
+, m_pImgeView(NULL)
+, m_pTextField(NULL)
+, m_pDelegate(NULL)
+, m_bUpdateImage(true)
+, m_bSecureTextEntry(false)
+, m_iMarginLeft(10)
+, m_iMarginRight(10)
+, m_iFontSize(24)
+, m_iMaxLenght(0)
+, m_eClearBtn(ClearButtonMode::ClearButtonNone)
+, m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
     
@@ -196,8 +190,7 @@ CATextField::CATextField()
     textField_MAC.textField = this;
     
     textField_MAC.placeholderString = @"placeholder";
-    textField_MAC.font = [NSFont systemFontOfSize:m_fontSize];
-    [textField_MAC regiestKeyBoardMessage];
+    textField_MAC.font = [NSFont systemFontOfSize:m_iFontSize];
 }
 
 CATextField::~CATextField()
@@ -348,8 +341,8 @@ bool CATextField::init()
     this->addSubview(m_pImgeView);
     m_pImgeView->setTextTag("textField");
 
-    setMarginLeft(m_marginLeft);
-    setMarginRight(m_marginRight);
+    setMarginLeft(m_iMarginLeft);
+    setMarginRight(m_iMarginRight);
     
     return true;
 }
@@ -422,22 +415,22 @@ void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CATextField::setKeyboardType(const KeyboardType& type)
 {
-    m_keyBoardType = type;
+    m_eKeyBoardType = type;
 }
 
 const CATextField::KeyboardType& CATextField::getKeyboardType()
 {
-    return m_keyBoardType;
+    return m_eKeyBoardType;
 }
 
 void CATextField::setReturnType(const ReturnType &var)
 {
-    m_returnType = var;
+    m_eReturnType = var;
 }
 
 const CATextField::ReturnType& CATextField::getReturnType()
 {
-    return m_returnType;
+    return m_eReturnType;
 }
 
 void CATextField::setBackgroundImage(CAImage* image)
@@ -452,42 +445,42 @@ void CATextField::setBackgroundImage(CAImage* image)
 
 void CATextField::setPlaceHolderText(const std::string &var)
 {
-    m_placeHolderText = var;
+    m_sPlaceHolderText = var;
     
-    textField_MAC.placeholderString = [NSString stringWithUTF8String:m_placeHolderText.c_str()];
+    textField_MAC.placeholderString = [NSString stringWithUTF8String:m_sPlaceHolderText.c_str()];
     
     this->delayShowImage();
 }
 
 const std::string& CATextField::getPlaceHolderText()
 {
-    return m_placeHolderText;
+    return m_sPlaceHolderText;
 }
 
 void CATextField::setPlaceHolderColor(const CAColor4B &var)
 {
-    CC_RETURN_IF(CAColor4BEqual(m_placeHdolderColor, var));
+    CC_RETURN_IF(CAColor4BEqual(m_cPlaceHdolderColor, var));
     
-    m_placeHdolderColor = var;
+    m_cPlaceHdolderColor = var;
     
     NSColor* color = [NSColor colorWithRed:var.r/256.f green:var.g/256.f blue:var.b/256.f alpha:var.a];
 //    [textField_MAC setValue:color forKeyPath:@"_placeholderLabel.textColor"];
      CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
-    textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_fontSize) / scale];
+    textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
     this->delayShowImage();
 }
 
 const CAColor4B& CATextField::getPlaceHolderColor()
 {
-    return m_placeHdolderColor;
+    return m_cPlaceHdolderColor;
 }
 
 void CATextField::setFontSize(int var)
 {
-    m_fontSize = var;
+    m_iFontSize = var;
     
     CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
-    textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_fontSize) / scale];
+    textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
 //    [textField_MAC setValue:textField_MAC.font forKeyPath:@"_placeholderLabel.font"];
     
     this->delayShowImage();
@@ -495,7 +488,7 @@ void CATextField::setFontSize(int var)
 
 int CATextField::getFontSize()
 {
-    return m_fontSize;
+    return m_iFontSize;
 }
 
 void CATextField::setText(const std::string &var)
@@ -515,11 +508,11 @@ const std::string& CATextField::getText()
 
 void CATextField::setTextColor(const CAColor4B &var)
 {
-    if (CAColor4BEqual(m_sTextColor, var)) {
+    if (CAColor4BEqual(m_cTextColor, var)) {
         return;
     }
     
-    m_sTextColor = var;
+    m_cTextColor = var;
     
     textField_MAC.textColor = [NSColor colorWithRed:var.r/256.f green:var.g/256.f blue:var.b/256.f alpha:var.a];
     
@@ -528,12 +521,12 @@ void CATextField::setTextColor(const CAColor4B &var)
 
 const CAColor4B& CATextField::getTextColor()
 {
-    return m_sTextColor;
+    return m_cTextColor;
 }
 
 void CATextField::setMarginLeft(int var)
 {
-    m_marginLeft = var;
+    m_iMarginLeft = var;
     
     DSize worldContentSize = DSizeApplyAffineTransform(DSize(var, 0), worldToNodeTransform());
     
@@ -546,14 +539,14 @@ void CATextField::setMarginLeft(int var)
 
 int CATextField::getMarginLeft()
 {
-    return m_marginLeft;
+    return m_iMarginLeft;
 }
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_clearBtn == ClearButtonNone)
+    if (m_eClearBtn == ClearButtonNone)
     {
-        m_marginRight = var;
+        m_iMarginRight = var;
         
         DSize worldContentSize = DSizeApplyAffineTransform(DSize(var, 0), worldToNodeTransform());
         
@@ -567,7 +560,7 @@ void CATextField::setMarginRight(int var)
 
 int CATextField::getMarginRight()
 {
-    return m_marginRight;
+    return m_iMarginRight;
 }
 
 void CATextField::setMarginImageLeft(const DSize& imgSize,const std::string& filePath)
@@ -617,7 +610,7 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
         rightMarginView->setImageColorForState(CAControlStateHighlighted, CAColor_blue);
         rightMarginView->addTarget(this, CAControl_selector(CATextField::clearBtnCallBack), CAControlEventTouchUpInSide);
 
-        DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_marginRight, 0), worldToNodeTransform());
+        DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_iMarginRight, 0), worldToNodeTransform());
         
         [textField_MAC setMarginRight:worldContentSize.width];
         
@@ -630,17 +623,17 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
         setMarginRight(10);
     }
     
-    m_clearBtn = var;
+    m_eClearBtn = var;
 }
 
 const CATextField::ClearButtonMode& CATextField::getClearButtonMode()
 {
-    return m_clearBtn;
+    return m_eClearBtn;
 }
 
 void CATextField::setTextFieldAlign(const TextFieldAlign &var)
 {
-    m_align = var;
+    m_eAlign = var;
     
     switch (var)
     {
@@ -662,7 +655,17 @@ void CATextField::setTextFieldAlign(const TextFieldAlign &var)
 
 const CATextField::TextFieldAlign& CATextField::getTextFieldAlign()
 {
-    return m_align;
+    return m_eAlign;
+}
+
+void CATextField::setSecureTextEntry(bool var)
+{
+    m_bSecureTextEntry = var;
+}
+
+bool CATextField::isSecureTextEntry()
+{
+    return m_bSecureTextEntry;
 }
 
 void CATextField::setMaxLenght(int var)
