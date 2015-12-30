@@ -184,7 +184,15 @@ public class CrossAppTextField
 					@Override
 					public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
 						// TODO Auto-generated method stub
-						keyBoardReturnCallBack(mykey);
+	            		context.runOnGLThread(new Runnable() 
+	                	{
+	                        @Override
+	                        public void run()
+	                        {
+	                        	keyBoardReturnCallBack(mykey);
+	                        }
+	                    });
+						
 						return true;
 					}
 				});

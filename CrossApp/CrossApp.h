@@ -94,7 +94,6 @@
 #include "view/CADrawingPrimitives.h"
 #include "view/CADrawView.h"
 #include "view/CATextEditHelper.h"
-#include "view/CATextView.h"
 #include "view/CAAutoCollectionView.h"
 #include "view/CAWaterfallView.h"
 
@@ -152,6 +151,7 @@
 #include "platform/CAFreeTypeFont.h"
 #include "platform/CAFTFontCache.h"
 #include "platform/CATextField.h"
+#include "platform/CATextView.h"
 #include "platform/CADensityDpi.h"
 //script_support
 #include "script_support/CCScriptSupport.h"

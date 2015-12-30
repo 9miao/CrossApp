@@ -303,6 +303,8 @@
 		B06805231A833DF700F6BE00 /* CAViewAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06805211A833DF700F6BE00 /* CAViewAnimation.cpp */; };
 		B06805241A833DF700F6BE00 /* CAViewAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = B06805221A833DF700F6BE00 /* CAViewAnimation.h */; };
 		B07AE0D51BD10092006C1C63 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E9513C1BC63CCB00DBAB6A /* libSDL2.a */; };
+		B07E81141C33B34800A39C95 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B07E81131C33B34800A39C95 /* CATextView.h */; };
+		B07E81161C33B36700A39C95 /* CATextView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B07E81151C33B36700A39C95 /* CATextView.mm */; };
 		B09205DC19D5645300CB99C1 /* CASyncQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D719D5645300CB99C1 /* CASyncQueue.h */; };
 		B09205DD19D5645300CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205D819D5645300CB99C1 /* CAThread.cpp */; };
 		B09205DE19D5645300CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D919D5645300CB99C1 /* CAThread.h */; };
@@ -673,6 +675,8 @@
 		B06E0C941AC8F7BF004F12F2 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libavutil.a; sourceTree = "<group>"; };
 		B06E0C951AC8F7BF004F12F2 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libswresample.a; sourceTree = "<group>"; };
 		B06E0C961AC8F7BF004F12F2 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libswscale.a; sourceTree = "<group>"; };
+		B07E81131C33B34800A39C95 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
+		B07E81151C33B36700A39C95 /* CATextView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextView.mm; sourceTree = "<group>"; };
 		B09205D719D5645300CB99C1 /* CASyncQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASyncQueue.h; sourceTree = "<group>"; };
 		B09205D819D5645300CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
 		B09205D919D5645300CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
@@ -1111,6 +1115,7 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B07E81131C33B34800A39C95 /* CATextView.h */,
 				022160761C1FAD38009FFCFC /* CATextField.h */,
 				B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */,
 				B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */,
@@ -1143,6 +1148,7 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				B07E81151C33B36700A39C95 /* CATextView.mm */,
 				022160781C1FAD42009FFCFC /* CATextField.mm */,
 				B0C3BD471ADE726B009BE71A /* CAClipboard.mm */,
 				B0CA5A391A77A8B400BECD89 /* CAWebViewImpl.h */,
@@ -1551,6 +1557,7 @@
 				B0A11DBD1AE8E0B300933BF6 /* gif_hash.h in Headers */,
 				3E0F75501B7DD0C4004CFD41 /* forwards.h in Headers */,
 				B0ADAE8C1B2E7F1B00BE8FA3 /* CAScale9ImageView.h in Headers */,
+				B07E81141C33B34800A39C95 /* CATextView.h in Headers */,
 				1551A65C158F2ADE00E66CFE /* CCNS.h in Headers */,
 				3E0F754D1B7DD0C4004CFD41 /* autolink.h in Headers */,
 				1551A660158F2ADE00E66CFE /* CCSet.h in Headers */,
@@ -1901,6 +1908,7 @@
 				3E0F75491B7DD0C4004CFD41 /* CSContentJsonDictionary.cpp in Sources */,
 				3E19F2AD1B8B0ED100720027 /* CACameraController.mm in Sources */,
 				B0C512C719A2DF9F00E6934B /* CAFTFontCache.cpp in Sources */,
+				B07E81161C33B36700A39C95 /* CATextView.mm in Sources */,
 				04EAA0091956CE2500198A8E /* CATouchDispatcher.cpp in Sources */,
 				B0ADAE2B1B2E7EFB00BE8FA3 /* CAGif.cpp in Sources */,
 				3E19F2AE1B8B0ED100720027 /* CADevice.mm in Sources */,
