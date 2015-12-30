@@ -66,14 +66,20 @@ public:
 	
 	void insertText(const char * text, int len)
 	{
-		if (m_sText.size() + len > m_pTextFieldX->getMaxLenght())
-			return;
-
 		if (!strcmp(text, "\n"))
 		{
 			getKeyBoradReturnCallBack();
+
+			CATextFieldDelegate* pDelegate = m_pTextFieldX->getDelegate();
+			if (pDelegate)
+			{
+				pDelegate->textFieldShouldReturn(m_pTextFieldX);
+			}
 			return;
 		}
+
+		if (m_sText.size() + len > m_pTextFieldX->getMaxLenght())
+			return;
 
 		execCurSelCharRange();
 		analyzeString(text, len);
@@ -262,6 +268,7 @@ public:
 			m_iCurPos += t.charSize;
 		}
 
+		//textFieldAfterTextChanged
 		m_sText = strLeft + strRight;
 		m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 	}

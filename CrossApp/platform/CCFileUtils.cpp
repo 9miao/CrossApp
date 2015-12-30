@@ -121,14 +121,12 @@ std::string CCFileUtils::getFileString(const char* pszFilePath)
     
     unsigned long pSize = 0;
     unsigned char* pData = this->getFileData(pszFilePath, "rb", &pSize);
-    
-    data.resize(pSize, sizeof(char));
-    for (int i=0; i<data.size(); i++)
-    {
-        data[i] = pData[i];
-    }
-    data += '\0';
-    
+
+	if (pSize > 0)
+	{
+		data.resize(pSize);
+		memcpy(&data[0], pData, pSize);
+	}
     return data;
 }
 
