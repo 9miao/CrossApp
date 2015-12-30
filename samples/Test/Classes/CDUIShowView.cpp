@@ -444,22 +444,22 @@ void CDUIShowView::initButtonControl()
     CAButton* btn_l = CAButton::create(CAButtonTypeSquareRect);
     btn_l->setTag(1);
     btn_l->setCenter(DRect(winSize.width/2-80, winSize.height-50, 64, 64));
-    btn_l->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_white.png")));
-    btn_l->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_blue.png")));
+    btn_l->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_white.png")));
+    btn_l->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_blue.png")));
     btn_l->addTarget(this, CAControl_selector(CDUIShowView::buttonControlCallBack), CAControlEventTouchDown);
     this->getView()->insertSubview(btn_l,10);
     
     CAButton* btn_r = CAButton::create(CAButtonTypeSquareRect);
     btn_r->setTag(2);
     btn_r->setCenter(DRect(winSize.width/2+80, winSize.height-50, 64, 64));
-    btn_r->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_white.png")));
-    btn_r->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_blue.png")));
+    btn_r->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_white.png")));
+    btn_r->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_blue.png")));
     btn_r->addTarget(this, CAControl_selector(CDUIShowView::buttonControlCallBack), CAControlEventTouchDown);
     this->getView()->insertSubview(btn_r,10);
     
     p_PageViewVec = CAPageView::createWithFrame(DRect(0, 0, winSize.width, winSize.height-100), CAPageViewDirectionHorizontal);
     p_PageViewVec->setPageViewDelegate(this);
-    p_PageViewVec->setBackGroundColor(CAColor_gray);
+    p_PageViewVec->setBackgroundColor(CAColor_gray);
     p_PageViewVec->setPageViewDelegate(this);
     p_PageViewVec->setScrollEnabled(false);
     this->getView()->addSubview(p_PageViewVec);
@@ -617,8 +617,8 @@ void CDUIShowView::showButton()
     CAButton* btn4 = CAButton::create(CAButtonTypeSquareRect);
     btn4->setCenter(DRect(winSize.width/2, winSize.height/2, 200, 50));
     btn4->setTitleColorForState(CAControlStateNormal,CAColor_white);
-    btn4->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/button_normal.png")));
-    btn4->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/button_down.png")));
+    btn4->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/button_normal.png")));
+    btn4->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/button_down.png")));
     btn4->addTarget(this, CAControl_selector(CDUIShowView::buttonCallBack), CAControlEventTouchDown);
     CAView* view4 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view4->addSubview(btn4);
@@ -632,9 +632,9 @@ void CDUIShowView::showButton()
     btn5->setTitleColorForState(CAControlStateNormal, CAColor_white);
     btn5->setTitleForState(CAControlStateSelected, "Selected");
     btn5->setTitleForState(CAControlStateHighlighted, "Highlighted");
-    btn5->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_normal.png")));
-    btn5->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));
-    btn5->setBackGroundViewForState(CAControlStateSelected, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_selected.png")));
+    btn5->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_normal.png")));
+    btn5->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));
+    btn5->setBackgroundViewForState(CAControlStateSelected, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_selected.png")));
     btn5->addTarget(this, CAControl_selector(CDUIShowView::buttonCallBack), CAControlEventTouchDown);
     CAView* view5 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view5->addSubview(btn5);
@@ -1053,8 +1053,8 @@ void CDUIShowView::showTextField()
     CATextField* textField = CATextField::createWithFrame(DRect(100, 300, winSize.width-200, 80));
     textField->setFontSize(_px(40));
     textField->setTag(100);
-    textField->setPlaceHolder("Input");
-    textField->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
+    textField->setPlaceHolderText("Input");
+	textField->setKeyboardType(CATextField::KeyboardTypeDefault);
     this->getView()->addSubview(textField);
     showNum = 1;
 }
@@ -1068,7 +1068,7 @@ void CDUIShowView::showTextFieldByIndex()
         CATextField* textField = CATextField::createWithFrame(DRect(100, 150, winSize.width-200, 80));
         textField->setFontSize(_px(40));
         textField->setTag(100);
-        textField->setPlaceHolder("Input");
+		textField->setPlaceHolderText("Input");
         this->getView()->addSubview(textField);
     }
     else if(showIndex == 1)
@@ -1077,8 +1077,8 @@ void CDUIShowView::showTextFieldByIndex()
         CATextField* textField = CATextField::createWithFrame(DRect(100, 150, winSize.width-200, 80));
         textField->setFontSize(_px(40));
         textField->setTag(100);
-        textField->setPlaceHolder("Input");
-        textField->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded_highlighted.png")));
+		textField->setPlaceHolderText("Input");
+        textField->setBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"));
         this->getView()->addSubview(textField);
     }
 }
@@ -1095,16 +1095,16 @@ void CDUIShowView::showTextView()
     //textView->setWordWrap(false);
     //textView->setLineSpacing(50);
     //textView->setFontColor(CAColor_gray);
-    //textView->setBackGroundColor(CAColor_blueStyle);
+    //textView->setBackgroundColor(CAColor_blueStyle);
 	//textView->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png")));
-    //textView->setBackGroundImage(CAImage::create("source_material/btn_square_selected.png"));
+    //textView->setBackgroundImage(CAImage::create("source_material/btn_square_selected.png"));
     this->getView()->addSubview(textView);
     
     CATextField* textField = CATextField::createWithFrame(DRect(100, 450, winSize.width-200, 80));
     textField->setFontSize(_px(40));
     textField->setTag(100);
-    textField->setPlaceHolder("Input");
-    textField->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded_highlighted.png")));
+	textField->setPlaceHolderText("Input");
+	textField->setBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"));
     this->getView()->addSubview(textField);
 }
 
@@ -1225,8 +1225,8 @@ void CDUIShowView::showTabBar()
     tabBar1->setFrameOrigin(DPoint(0, winSize.height-200));
     tabBar1->setTitleColorForNormal(CAColor_yellow);
     tabBar1->setTitleColorForSelected(CAColor_orange);
-    tabBar1->setBackGroundImage(CAImage::create("image/tab_news_bg.png"));
-    tabBar1->setSelectedBackGroundColor(CAColor_clear);
+    tabBar1->setBackgroundImage(CAImage::create("image/tab_news_bg.png"));
+    tabBar1->setSelectedBackgroundColor(CAColor_clear);
     tabBar1->setTag(100);
     tabBar1->setSelectedAtIndex(0);
     
@@ -1757,7 +1757,7 @@ void CDUIShowView::showAnimation()
     
     animation_2_textfield = CATextField::createWithFrame(DRect(90,winSize.height/2-25,100,50));
     animation_2_textfield->setFontSize(_px(40));
-    animation_2_textfield->setKeyboardType(KEY_BOARD_TYPE_NORMAL);
+	animation_2_textfield->setKeyboardType(CATextField::KeyboardTypeDefault);
     animation_2_textfield->setVisible(false);
     
     animation_2_btn_search = CAButton::createWithCenter(DRect(70,winSize.height/2,56,48), CAButtonTypeCustom);
@@ -2018,7 +2018,7 @@ void CDUIShowView::getSelectedImage(CAImage *image)
     scrollView->setContentOffset(DPoint(0,winSize.height/4), false);
     scrollView->setMinimumZoomScale(temp_mini);
     scrollView->setMaximumZoomScale(2.5f);
-    scrollView->setBackGroundColor(CAColor_clear);
+    scrollView->setBackgroundColor(CAColor_clear);
     scrollView->setShowsScrollIndicators(false);
     scrollView->setBounces(false);
     scrollView->setScrollViewDelegate(this);

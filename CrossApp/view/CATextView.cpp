@@ -111,7 +111,7 @@ bool CATextView::init()
     m_pContainerView->setHorizontalScrollEnabled(false);
 	m_pContainerView->setBounceHorizontal(false);
     m_pContainerView->setHaveNextResponder(true);
-	setBackGroundColor(CAColor_clear);
+	setBackgroundColor(CAColor_clear);
 	this->addSubview(m_pContainerView);
     
 	m_pImageView = new CAImageView();
@@ -172,14 +172,14 @@ CATextView* CATextView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
-void CATextView::setBackGroundImage(CAImage* image)
+void CATextView::setBackgroundImage(CAImage* image)
 {
-    m_pContainerView->setBackGroundImage(image);
+	m_pContainerView->setBackgroundImage(image);
 }
 
-void CATextView::setBackGroundColor(const CAColor4B &color)
+void CATextView::setBackgroundColor(const CAColor4B &color)
 {
-    m_pContainerView->setBackGroundColor(color);
+	m_pContainerView->setBackgroundColor(color);
 }
 
 int CATextView::getLineCount()

@@ -55,6 +55,7 @@ public class CrossAppTextField
 	private int keyboardheightTemp = 0;
 	private int leftMargin = 0;
 	private int rightMargin = 0;
+	private int inputType = 1;
 	
 	private boolean isSetText = false;
 	private String  beforeTextString = "";
@@ -346,35 +347,36 @@ public class CrossAppTextField
 				switch (type) {
 				case 0:
 					//default
-					textField.setInputType(InputType.TYPE_CLASS_TEXT);
+					inputType = InputType.TYPE_CLASS_TEXT;
 					break;
 				case 1:
 					//NumbersAndPunctuation
-					textField.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
+					inputType = InputType.TYPE_NUMBER_VARIATION_NORMAL;
 					break;
 				case 2:
 					//URL
-					textField.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
+					inputType = InputType.TYPE_TEXT_VARIATION_URI;
 					break;
 				case 3:
 					//NumberPad
-					textField.setInputType(InputType.TYPE_CLASS_NUMBER);
+					inputType = InputType.TYPE_CLASS_NUMBER;
 					break;
 				case 4:
 					//PhonePad
-					textField.setInputType(InputType.TYPE_CLASS_PHONE);
+					inputType = InputType.TYPE_CLASS_PHONE;
 					break;
 				case 5:
 					//NamePhonePad
-					textField.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+					inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME;
 					break;
 				case 6:
 					//EmailAddress
-					textField.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+					inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
 					break;
 				default:
 					break;
 				}
+				textField.setInputType(inputType);
 			}
 		});
 	}
@@ -556,6 +558,40 @@ public class CrossAppTextField
         });
     }
     
+    public void setSecureTextEntry(int var)
+    {
+    	if (var == 0)
+    	{
+    		context.runOnUiThread(new Runnable() 
+        	{
+                @Override
+                public void run()
+                {
+                	textField.setInputType(inputType);
+                }
+            });
+    	}
+    	else
+    	{
+    		context.runOnUiThread(new Runnable() 
+        	{
+                @Override
+                public void run()
+                {
+                	if (inputType == InputType.TYPE_CLASS_NUMBER)
+                	{
+                		textField.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                	}
+                	else
+                	{
+                		textField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                	}
+                	
+                }
+            });
+    	}
+    }
+    
     private static native void onByte(int key, byte[] buf, int wdith, int height);
     
     public void getImage()
@@ -702,6 +738,11 @@ public class CrossAppTextField
 	
 	static public void removeTextField(final int key) 
 	{
+		CrossAppTextField var = dict.get(key);
+		if (var != null)
+		{
+			
+		}
 		dict.remove(key);
 	}
 	

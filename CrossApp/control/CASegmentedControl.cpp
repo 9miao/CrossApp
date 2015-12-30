@@ -203,7 +203,9 @@ void CASegmentedControl::setContentSize(const CrossApp::DSize &var)
         
         DRect center = m_vSegmentItems.at(i)->getBounds();
         center.origin = center.size/2 + m_vItemContentOffsets.at(i);
-        if (CAImageView* imageView = dynamic_cast<CAImageView*>(m_vSegmentItemsTitles.at(i)))
+
+		CAImageView* imageView = dynamic_cast<CAImageView*>(m_vSegmentItemsTitles.at(i));
+		if (imageView && imageView->getImage())
         {
             center.size = m_vItemImageSizes.at(i).equals(DSizeZero) ? imageView->getImage()->getContentSize() : m_vItemImageSizes.at(i);
         }
@@ -463,6 +465,14 @@ void CASegmentedControl::setContentOffsetForSegmentAtIndex(DSize offset, int ind
     CC_RETURN_IF(index >= (int)m_nItemsCount);
     CC_RETURN_IF(index < 0);
     m_vItemContentOffsets.at(index) = offset;
+	CAView* item = m_vSegmentItemsTitles.at(index);
+	if (item)
+	{
+		DSize size = item->getCenterOrigin();
+		size.width += offset.width;
+		size.height += offset.height;
+		item->setCenterOrigin(size);
+	}
 }
 
 DSize CASegmentedControl::getContentOffsetForSegmentAtIndex(int index)
@@ -480,6 +490,14 @@ void CASegmentedControl::setImageSizeAtIndex(DSize size, int index)
     CC_RETURN_IF(index >= (int)m_nItemsCount);
     CC_RETURN_IF(index < 0);
     m_vItemImageSizes.at(index) = size;
+	CAView* item = m_vSegmentItemsTitles.at(index);
+	if (item)
+	{
+		DRect rect = item->getCenter();
+		rect.size.width = size.width;
+		rect.size.height = size.height;
+		item->setCenter(rect);
+	}
 }
 
 void CASegmentedControl::setTitleFontName(std::string titleName)

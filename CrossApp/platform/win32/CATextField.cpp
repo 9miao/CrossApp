@@ -29,7 +29,6 @@ public:
 		: m_pTextFieldX(e)
 		, m_pCursorMark(NULL)
 		, m_pTextViewMark(NULL)
-		, m_bInputTextPsw(false)
 		, m_iCurPos(0)
 		, m_curSelCharRange(std::make_pair(0, 0))
 		, m_iLabelWidth(0)
@@ -70,8 +69,21 @@ public:
 		if (!strcmp(text, "\n"))
 		{
 			getKeyBoradReturnCallBack();
+
+			CATextFieldDelegate* pDelegate = m_pTextFieldX->getDelegate();
+            if (m_pTextFieldX->isAllowkeyBoardHide())
+            {
+                m_pTextFieldX->resignFirstResponder();
+            }
+			if (pDelegate)
+			{
+				pDelegate->textFieldShouldReturn(m_pTextFieldX);
+			}
 			return;
 		}
+
+		if (m_sText.size() + len > m_pTextFieldX->getMaxLenght())
+			return;
 
 		execCurSelCharRange();
 		analyzeString(text, len);
@@ -91,8 +103,9 @@ public:
 	void deleteBackward()
 	{
 		CC_RETURN_IF(m_sText.empty());
-		if (m_bInputTextPsw)
+		if (m_pTextFieldX->isSecureTextEntry())
 		{
+			CC_RETURN_IF(execCurSelCharRange());
 			clearText();
 			updateImage();
 			return;
@@ -259,13 +272,14 @@ public:
 			m_iCurPos += t.charSize;
 		}
 
+		//textFieldAfterTextChanged
 		m_sText = strLeft + strRight;
 		m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 	}
 	void setCursorPosition()
 	{
 		m_pCursorMark->setFrame(DRect(0, 0, 1.5f, m_iFontHeight));
-		if (m_bInputTextPsw)
+		if (m_pTextFieldX->isSecureTextEntry())
 		{
 			m_pCursorMark->setCenterOrigin(DPoint((m_sText.empty() ? 0 : this->getImageRect().size.width), m_obContentSize.height / 2));
 		}
@@ -277,7 +291,14 @@ public:
 	}
 	int getStringLength(const std::string &var)
 	{
-		return g_AFTFontCache.getStringWidth(m_szFontName.c_str(), m_pTextFieldX->getFontSize(), var);
+		std::string cszText = var;
+		if (m_pTextFieldX->isSecureTextEntry())
+		{
+			cszText.clear();
+			for (int i = 0; i < var.size(); i++)
+				cszText += '*';
+		}
+		return g_AFTFontCache.getStringWidth(m_szFontName.c_str(), m_pTextFieldX->getFontSize(), cszText);
 	}
 	int getStringViewLength()
 	{
@@ -440,7 +461,7 @@ public:
 			cFontColor = m_pTextFieldX->getTextColor();
 		}
 		
-		if (m_bInputTextPsw)
+		if (m_pTextFieldX->isSecureTextEntry())
 		{
 			std::string password;
 			for (std::string::size_type i = 0; i < m_sText.length(); i++)
@@ -564,7 +585,6 @@ private:
 	int m_iString_r_length;
 	int m_iString_o_length;
 	int m_iFontHeight;
-	bool m_bInputTextPsw;
 	std::string m_szFontName;
 	std::string m_sText;
 	DSize m_cImageSize;
@@ -579,11 +599,14 @@ CATextField::CATextField()
 , m_pBackgroundView(NULL)
 , m_pDelegate(NULL)
 , m_bUpdateImage(true)
-, m_sTextColor(CAColor_black)
-, m_placeHdolderColor(CAColor_gray)
-, m_marginLeft(10)
-, m_marginRight(10)
-, m_clearBtn(ClearButtonMode::ClearButtonNone)
+, m_bSecureTextEntry(false)
+, m_bAllowkeyBoardHide(true)
+, m_cTextColor(CAColor_black)
+, m_cPlaceHdolderColor(CAColor_gray)
+, m_iFontSize(40)
+, m_iMarginLeft(10)
+, m_iMarginRight(10)
+, m_eClearBtn(ClearButtonMode::ClearButtonNone)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
@@ -612,7 +635,7 @@ bool CATextField::resignFirstResponder()
 
     bool result = CAView::resignFirstResponder();
 
-	if (m_clearBtn == ClearButtonMode::ClearButtonWhileEditing)
+	if (m_eClearBtn == ClearButtonMode::ClearButtonWhileEditing)
 	{
 		setMarginImageRight(DSize(10,0), "");
 	}
@@ -628,7 +651,7 @@ bool CATextField::becomeFirstResponder()
 
 	bool result = CAView::becomeFirstResponder();
 
-	if (m_clearBtn == ClearButtonMode::ClearButtonWhileEditing)
+	if (m_eClearBtn == ClearButtonMode::ClearButtonWhileEditing)
 	{
 		setMarginImageRight(DSize(getBounds().size.height, getBounds().size.height), "source_material/clearbtn.png");
 	}
@@ -712,13 +735,13 @@ bool CATextField::init()
 
 void CATextField::setTextFieldAlign(const TextFieldAlign& e)
 {
-	m_align = e;
+	m_eAlign = e;
 	((CATextFieldWin32*)m_pTextField)->updateImage();
 }
 
 const CATextField::TextFieldAlign& CATextField::getTextFieldAlign()
 {
-	return m_align;
+	return m_eAlign;
 }
 
 void CATextField::update(float dt)
@@ -736,7 +759,7 @@ void CATextField::setContentSize(const DSize& contentSize)
 	if (m_pTextField)
 	{
 		DRect r = this->getBounds();
-		r.InflateRect(-m_marginLeft, 0, -m_marginRight, 0);
+		r.InflateRect(-m_iMarginLeft, 0, -m_iMarginRight, 0);
 		((CATextFieldWin32*)m_pTextField)->setFrame(r);
 	}
 }
@@ -775,20 +798,20 @@ void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CATextField::setClearButtonMode(const ClearButtonMode& var)
 {
-	m_clearBtn = var;
+	m_eClearBtn = var;
 }
 
 const CATextField::ClearButtonMode& CATextField::getClearButtonMode()
 {
-	return m_clearBtn;
+	return m_eClearBtn;
 }
 
 void CATextField::setMarginLeft(int var)
 {
-	m_marginLeft = var;
+	m_iMarginLeft = var;
 
 	DRect r = this->getBounds();
-	r.InflateRect(-m_marginLeft, 0, -m_marginRight, 0);
+	r.InflateRect(-m_iMarginLeft, 0, -m_iMarginRight, 0);
 	((CATextFieldWin32*)m_pTextField)->setFrame(r);
 
 	delayShowImage();
@@ -796,17 +819,17 @@ void CATextField::setMarginLeft(int var)
 
 int CATextField::getMarginLeft()
 {
-	return m_marginLeft;
+	return m_iMarginLeft;
 }
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_clearBtn == ClearButtonNone)
+    if (m_eClearBtn == ClearButtonNone)
     {
-        m_marginRight = var;
+        m_iMarginRight = var;
         
         DRect r = this->getBounds();
-        r.InflateRect(-m_marginLeft, 0, -m_marginRight, 0);
+        r.InflateRect(-m_iMarginLeft, 0, -m_iMarginRight, 0);
         ((CATextFieldWin32*)m_pTextField)->setFrame(r);
         
         delayShowImage();
@@ -815,7 +838,7 @@ void CATextField::setMarginRight(int var)
 
 int CATextField::getMarginRight()
 {
-	return m_marginRight;
+	return m_iMarginRight;
 }
 
 void CATextField::setMarginImageLeft(const DSize& imgSize, const std::string& filePath)
@@ -851,38 +874,38 @@ void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& f
 
 void CATextField::setFontSize(int var)
 {
-	m_fontSize = var;
+	m_iFontSize = var;
 
 	delayShowImage();
 }
 
 int CATextField::getFontSize()
 {
-	return m_fontSize;
+	return m_iFontSize;
 }
 
 void CATextField::setPlaceHolderText(const std::string& var)
 {
-	m_placeHolderText = var;
+	m_sPlaceHolderText = var;
 
 	delayShowImage();
 }
 
 const std::string& CATextField::getPlaceHolderText()
 {
-	return m_placeHolderText;
+	return m_sPlaceHolderText;
 }
 
 void CATextField::setPlaceHolderColor(const CAColor4B& var)
 {
-	m_placeHdolderColor = var;
+	m_cPlaceHdolderColor = var;
 
 	delayShowImage();
 }
 
 const CAColor4B& CATextField::getPlaceHolderColor()
 {
-	return m_placeHdolderColor;
+	return m_cPlaceHdolderColor;
 }
 
 void CATextField::setText(const std::string& var)
@@ -899,35 +922,35 @@ const std::string& CATextField::getText()
 
 void CATextField::setTextColor(const CAColor4B& var)
 {
-	m_sTextColor = var;
+	m_cTextColor = var;
 
 	delayShowImage();
 }
 
 const CAColor4B& CATextField::getTextColor()
 {
-	return m_sTextColor; 
+	return m_cTextColor; 
 }
 
 
 void CATextField::setKeyboardType(const KeyboardType& var)
 {
-	m_keyBoardType = var;
+	m_eKeyBoardType = var;
 }
 
 const CATextField::KeyboardType& CATextField::getKeyboardType()
 {
-	return m_keyBoardType;
+	return m_eKeyBoardType;
 }
 
 void CATextField::setReturnType(const ReturnType& var)
 {
-	m_returnType = var;
+	m_eReturnType = var;
 }
 
 const CATextField::ReturnType& CATextField::getReturnType()
 {
-	return m_returnType;
+	return m_eReturnType;
 }
 
 void CATextField::setBackgroundImage(CAImage* image)
@@ -936,6 +959,18 @@ void CATextField::setBackgroundImage(CAImage* image)
 
 	m_pBackgroundView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
 	m_pBackgroundView->setImage(image);
+}
+
+void CATextField::setSecureTextEntry(bool var)
+{
+    m_bSecureTextEntry = var;
+
+	delayShowImage();
+}
+
+bool CATextField::isSecureTextEntry()
+{
+    return m_bSecureTextEntry;
 }
 
 void CATextField::setMaxLenght(int var)

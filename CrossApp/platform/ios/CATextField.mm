@@ -75,7 +75,7 @@
 
     std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
     self.beforeText = [textField text];
-    
+
     if (_textField->getDelegate())
     {
         _textField->getDelegate()->textFieldAfterTextChanged(_textField,
@@ -110,6 +110,20 @@
     {
         _textField->getDelegate()->keyBoardHeight(_textField, 0);
     }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (_textField->isAllowkeyBoardHide())
+    {
+        _textField->resignFirstResponder();
+    }
+    
+    if (_textField->getDelegate())
+    {
+        _textField->getDelegate()->textFieldShouldReturn(_textField);
+    }
+    return NO;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -150,23 +164,43 @@
 
 NS_CC_BEGIN
 CATextField::CATextField()
-:m_pBackgroundView(NULL)
-,m_pImgeView(NULL)
-,m_pTextField(NULL)
-,m_pDelegate(NULL)
-,m_bUpdateImage(true)
-,m_marginLeft(10)
-,m_marginRight(10)
-,m_fontSize(24)
-,m_iMaxLenght(0)
-,m_clearBtn(ClearButtonMode::ClearButtonNone)
-,m_obLastPoint(DPoint(-0xffff, -0xffff))
+: m_pBackgroundView(NULL)
+, m_pImgeView(NULL)
+, m_pTextField(NULL)
+, m_pDelegate(NULL)
+, m_bUpdateImage(true)
+, m_bSecureTextEntry(false)
+, m_bAllowkeyBoardHide(true)
+, m_iMarginLeft(10)
+, m_iMarginRight(10)
+, m_iFontSize(40)
+, m_iMaxLenght(0)
+, m_eClearBtn(ClearButtonMode::ClearButtonNone)
+, m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
+    
+    CGPoint point = CGPointMake(5000, 5000);
+    m_pTextField = [[IOSTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
+    EAGLView * eaglview = [EAGLView sharedEGLView];
+    [eaglview addSubview:textField_iOS];
+    textField_iOS.textField = this;
+    textField_iOS.delegate = textField_iOS;
+    textField_iOS.regiestKeyBoardMessage;
+    textField_iOS.keyboardType = UIKeyboardTypeDefault;
+    textField_iOS.returnKeyType = UIReturnKeyDone;
+    textField_iOS.borderStyle = UITextBorderStyleNone;
+    textField_iOS.placeholder = @"placeholder";
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
+    
+    setMarginLeft(m_iMarginLeft);
+    setMarginRight(m_iMarginRight);
 }
 
 CATextField::~CATextField()
 {
+    [textField_iOS removeFromSuperview];
 }
 
 void CATextField::onEnterTransitionDidFinish()
@@ -308,21 +342,6 @@ CATextField* CATextField::createWithCenter(const DRect& rect)
 
 bool CATextField::init()
 {
-    CGPoint point = CGPointMake(5000, 5000);
-    m_pTextField = [[IOSTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
-    EAGLView * eaglview = [EAGLView sharedEGLView];
-    [eaglview addSubview:textField_iOS];
-    textField_iOS.textField = this;
-    textField_iOS.delegate = textField_iOS;
-    textField_iOS.regiestKeyBoardMessage;
-    textField_iOS.keyboardType = UIKeyboardTypeDefault;
-    textField_iOS.returnKeyType = UIReturnKeyDone;
-    textField_iOS.placeholder = @"placeholder";
-    textField_iOS.borderStyle = UITextBorderStyleNone;
-
-    setMarginLeft(m_marginLeft);
-    setMarginRight(m_marginRight);
-    
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
@@ -403,7 +422,7 @@ void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CATextField::setKeyboardType(const KeyboardType& type)
 {
-    m_keyBoardType = type;
+    m_eKeyBoardType = type;
     
     UIKeyboardType keyBoardType = UIKeyboardTypeDefault;
     switch (type) {
@@ -435,12 +454,12 @@ void CATextField::setKeyboardType(const KeyboardType& type)
 
 const CATextField::KeyboardType& CATextField::getKeyboardType()
 {
-    return m_keyBoardType;
+    return m_eKeyBoardType;
 }
 
 void CATextField::setReturnType(const ReturnType &var)
 {
-    m_returnType = var;
+    m_eReturnType = var;
     
     UIReturnKeyType keyBoardReturnType = UIReturnKeyDone;
     switch (var) {
@@ -466,7 +485,7 @@ void CATextField::setReturnType(const ReturnType &var)
 
 const CATextField::ReturnType& CATextField::getReturnType()
 {
-    return m_returnType;
+    return m_eReturnType;
 }
 
 void CATextField::setBackgroundImage(CAImage* image)
@@ -481,25 +500,25 @@ void CATextField::setBackgroundImage(CAImage* image)
 
 void CATextField::setPlaceHolderText(const std::string &var)
 {
-    m_placeHolderText = var;
+    m_sPlaceHolderText = var;
     
-    textField_iOS.placeholder = [NSString stringWithUTF8String:m_placeHolderText.c_str()];
+    textField_iOS.placeholder = [NSString stringWithUTF8String:m_sPlaceHolderText.c_str()];
     
     this->delayShowImage();
 }
 
 const std::string& CATextField::getPlaceHolderText()
 {
-    return m_placeHolderText;
+    return m_sPlaceHolderText;
 }
 
 void CATextField::setPlaceHolderColor(const CAColor4B &var)
 {
-    CC_RETURN_IF(CAColor4BEqual(m_placeHdolderColor, var));
+    CC_RETURN_IF(CAColor4BEqual(m_cPlaceHdolderColor, var));
     
-    m_placeHdolderColor = var;
+    m_cPlaceHdolderColor = var;
     
-    UIColor* color = [UIColor colorWithRed:var.r green:var.g blue:var.b alpha:var.a];
+    UIColor* color = [UIColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
     [textField_iOS setValue:color forKeyPath:@"_placeholderLabel.textColor"];
     
     this->delayShowImage();
@@ -507,14 +526,15 @@ void CATextField::setPlaceHolderColor(const CAColor4B &var)
 
 const CAColor4B& CATextField::getPlaceHolderColor()
 {
-    return m_placeHdolderColor;
+    return m_cPlaceHdolderColor;
 }
 
 void CATextField::setFontSize(int var)
 {
-    m_fontSize = var;
+    m_iFontSize = var;
     
-    textField_iOS.font = [UIFont systemFontOfSize:var];
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
     [textField_iOS setValue:textField_iOS.font forKeyPath:@"_placeholderLabel.font"];
     
     this->delayShowImage();
@@ -522,7 +542,7 @@ void CATextField::setFontSize(int var)
 
 int CATextField::getFontSize()
 {
-    return m_fontSize;
+    return m_iFontSize;
 }
 
 void CATextField::setText(const std::string &var)
@@ -543,25 +563,25 @@ const std::string& CATextField::getText()
 
 void CATextField::setTextColor(const CAColor4B &var)
 {
-    if (CAColor4BEqual(m_sTextColor, var)) {
+    if (CAColor4BEqual(m_cTextColor, var)) {
         return;
     }
     
-    m_sTextColor = var;
+    m_cTextColor = var;
     
-    textField_iOS.textColor = [UIColor colorWithRed:var.r green:var.g blue:var.b alpha:var.a];
+    textField_iOS.textColor = [UIColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
     
     this->delayShowImage();
 }
 
 const CAColor4B& CATextField::getTextColor()
 {
-    return m_sTextColor;
+    return m_cTextColor;
 }
 
 void CATextField::setMarginLeft(int var)
 {
-    m_marginLeft = var;
+    m_iMarginLeft = var;
     
     DSize worldContentSize = DSizeApplyAffineTransform(DSize(var, 0), worldToNodeTransform());
     
@@ -578,14 +598,14 @@ void CATextField::setMarginLeft(int var)
 
 int CATextField::getMarginLeft()
 {
-    return m_marginLeft;
+    return m_iMarginLeft;
 }
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_clearBtn == ClearButtonNone)
+    if (m_eClearBtn == ClearButtonNone)
     {
-        m_marginRight = var;
+        m_iMarginRight = var;
         
         DSize worldContentSize = DSizeApplyAffineTransform(DSize(var, 0), worldToNodeTransform());
         
@@ -603,7 +623,7 @@ void CATextField::setMarginRight(int var)
 
 int CATextField::getMarginRight()
 {
-    return m_marginRight;
+    return m_iMarginRight;
 }
 
 void CATextField::setMarginImageLeft(const DSize& imgSize,const std::string& filePath)
@@ -646,7 +666,7 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
 
 void CATextField::setClearButtonMode(const ClearButtonMode &var)
 {
-    m_clearBtn = var;
+    m_eClearBtn = var;
     
     UITextFieldViewMode mode= UITextFieldViewModeNever;
     switch (var)
@@ -667,12 +687,12 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
 
 const CATextField::ClearButtonMode& CATextField::getClearButtonMode()
 {
-    return m_clearBtn;
+    return m_eClearBtn;
 }
 
 void CATextField::setTextFieldAlign(const TextFieldAlign &var)
 {
-    m_align = var;
+    m_eAlign = var;
     
     switch (var)
     {
@@ -694,8 +714,21 @@ void CATextField::setTextFieldAlign(const TextFieldAlign &var)
 
 const CATextField::TextFieldAlign& CATextField::getTextFieldAlign()
 {
-    return m_align;
+    return m_eAlign;
 }
+
+void CATextField::setSecureTextEntry(bool var)
+{
+    m_bSecureTextEntry = var;
+    [textField_iOS setSecureTextEntry:m_bSecureTextEntry];
+}
+
+bool CATextField::isSecureTextEntry()
+{
+    return m_bSecureTextEntry;
+}
+
+
 void CATextField::setMaxLenght(int var)
 {
     m_iMaxLenght = var;

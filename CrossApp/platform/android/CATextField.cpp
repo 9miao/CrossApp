@@ -31,6 +31,16 @@ void onCreateView(int key)
     }
 }
 
+void onRemoveView(int key)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "removeTextField", "(I)V"))
+    {
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID, key);
+        jni.env->DeleteLocalRef(jni.classID);
+    }
+}
+
 void setTextFieldPointJNI(int key, const int x, const int y)
 {
     JniMethodInfo jni;
@@ -246,6 +256,21 @@ void setTextFieldAlignJNI(int key, int type)
     }
 }
 
+void setSecureTextEntryJNI(int key, int var)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setSecureTextEntry", "(I)V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID, var);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
 void setMaxLenghtJNI(int key, int type)
 {
     JniMethodInfo jni;
@@ -295,6 +320,12 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardReturnCallBack(JNIEnv *env, jclass cls, jint key, jint height)
     {
         CATextField* textField = s_map[(int)key];
+        
+        if (_textField->isAllowkeyBoardHide())
+        {
+            _textField->resignFirstResponder();
+        }
+        
         if (textField->getDelegate())
         {
             textField->getDelegate()->textFieldShouldReturn(textField);
@@ -336,24 +367,30 @@ extern "C"
 
 
 CATextField::CATextField()
-:m_pBackgroundView(NULL)
-,m_pImgeView(NULL)
-,m_pTextField(NULL)
-,m_bUpdateImage(true)
-,m_marginLeft(10)
-,m_marginRight(10)
-,m_fontSize(24)
-,m_iMaxLenght(0)
-,m_pDelegate(NULL)
-,m_obLastPoint(DPoint(-0xffff, -0xffff))
+: m_pBackgroundView(NULL)
+, m_pImgeView(NULL)
+, m_pTextField(NULL)
+, m_bUpdateImage(true)
+, m_bSecureTextEntry(false)
+, m_bAllowkeyBoardHide(true)
+, m_iMarginLeft(10)
+, m_iMarginRight(10)
+, m_iFontSize(40)
+, m_iMaxLenght(0)
+, m_pDelegate(NULL)
+, m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     s_map[m_u__ID] = this;
     this->setHaveNextResponder(false);
+    onCreateView(m_u__ID);
+    this->setPlaceHolderText("placeholder");
+    setFontSizeJNI(m_u__ID, m_iFontSize / 2);
 }
 
 CATextField::~CATextField()
 {
     s_map.erase(m_u__ID);
+    onRemoveView(m_u__ID);
 }
 
 void CATextField::onEnterTransitionDidFinish()
@@ -396,7 +433,7 @@ bool CATextField::resignFirstResponder()
     
     this->hideNativeTextField();
 
-    if (m_clearBtn == ClearButtonMode::ClearButtonWhileEditing)
+    if (m_eClearBtn == ClearButtonMode::ClearButtonWhileEditing)
     {
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
         ima->setImage(NULL);
@@ -418,7 +455,7 @@ bool CATextField::becomeFirstResponder()
 
 	this->showNativeTextField();
 
-	if (m_clearBtn == ClearButtonMode::ClearButtonWhileEditing)
+	if (m_eClearBtn == ClearButtonMode::ClearButtonWhileEditing)
 	{
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
         ima->setImage(CAImage::create("source_material/clear_button.png"));
@@ -493,9 +530,6 @@ CATextField* CATextField::createWithCenter(const DRect& rect)
 
 bool CATextField::init()
 {
-    onCreateView(m_u__ID);
-    this->setPlaceHolderText("placeholder");
-    
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
@@ -575,22 +609,22 @@ void CATextField::setClearButtonMode(const ClearButtonMode& var)
 {
     setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
     showClearButtonJNI(m_u__ID);
-    m_clearBtn = var;
+    m_eClearBtn = var;
 }
 
 const CATextField::ClearButtonMode& CATextField::getClearButtonMode()
 {
-	return m_clearBtn;
+	return m_eClearBtn;
 }
 
 void CATextField::setMarginLeft(int var)
 {
-	m_marginLeft = var;
+	m_iMarginLeft = var;
 
-	DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_marginLeft,0), worldToNodeTransform());
+	DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_iMarginLeft,0), worldToNodeTransform());
 	float x = s_dip_to_px(worldContentSize.width);
 
-	worldContentSize = DSizeApplyAffineTransform(DSize(m_marginRight, 0), worldToNodeTransform());
+	worldContentSize = DSizeApplyAffineTransform(DSize(m_iMarginRight, 0), worldToNodeTransform());
 	float y = s_dip_to_px(worldContentSize.width);
 
 	setMarginJNI(m_u__ID, x, y);
@@ -600,19 +634,19 @@ void CATextField::setMarginLeft(int var)
 
 int CATextField::getMarginLeft()
 {
-	return m_marginLeft;
+	return m_iMarginLeft;
 }
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_clearBtn == ClearButtonNone)
+    if (m_eClearBtn == ClearButtonNone)
     {
-        m_marginRight = var;
+        m_iMarginRight = var;
         
-        DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_marginLeft, 0), worldToNodeTransform());
+        DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_iMarginLeft, 0), worldToNodeTransform());
         float x = s_dip_to_px(worldContentSize.width);
         
-        worldContentSize = DSizeApplyAffineTransform(DSize(m_marginRight, 0), worldToNodeTransform());
+        worldContentSize = DSizeApplyAffineTransform(DSize(m_iMarginRight, 0), worldToNodeTransform());
         float y = s_dip_to_px(worldContentSize.width);
         
         setMarginJNI(m_u__ID, x, y);
@@ -623,7 +657,7 @@ void CATextField::setMarginRight(int var)
 
 int CATextField::getMarginRight()
 {
-	return m_marginRight;
+	return m_iMarginRight;
 }
 
 void CATextField::setMarginImageLeft(const DSize& imgSize, const std::string& filePath)
@@ -648,7 +682,7 @@ void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& f
 	//set margins
 	setMarginRight(imgSize.width);
 
-    if (m_clearBtn == ClearButtonNone)
+    if (m_eClearBtn == ClearButtonNone)
     {
         //setimage
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
@@ -665,19 +699,21 @@ void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& f
 
 void CATextField::setFontSize(int var)
 {
-	m_fontSize = var;
-	setFontSizeJNI(m_u__ID,var);
+	m_iFontSize = var;
+
+	setFontSizeJNI(m_u__ID, m_iFontSize / 2);
 
     this->delayShowImage();
 }
 
-int CATextField::getFontSize(){
-	return m_fontSize;
+int CATextField::getFontSize()
+{
+	return m_iFontSize;
 }
 
 void CATextField::setPlaceHolderText(const std::string& var)
 {
-	m_placeHolderText = var;
+	m_sPlaceHolderText = var;
 	setPlaceHolderTextJNI(m_u__ID, var);
 
     this->delayShowImage();
@@ -685,12 +721,12 @@ void CATextField::setPlaceHolderText(const std::string& var)
 
 const std::string& CATextField::getPlaceHolderText()
 {
-	return m_placeHolderText;
+	return m_sPlaceHolderText;
 }
 
 void CATextField::setPlaceHolderColor(const CAColor4B& var)
 {
-	m_placeHdolderColor = var;
+	m_cPlaceHdolderColor = var;
 	setPlaceHolderColorJNI(m_u__ID, getUIntFormColor4B(var));
 
     this->delayShowImage();
@@ -698,7 +734,7 @@ void CATextField::setPlaceHolderColor(const CAColor4B& var)
 
 const CAColor4B& CATextField::getPlaceHolderColor()
 {
-	return m_placeHdolderColor;
+	return m_cPlaceHdolderColor;
 }
 
 void CATextField::setText(const std::string& var)
@@ -718,7 +754,7 @@ const std::string& CATextField::getText()
 
 void CATextField::setTextColor(const CAColor4B& var)
 {
-	m_sTextColor = var;
+	m_cTextColor = var;
 	setTextColorJNI(m_u__ID, getUIntFormColor4B(var));
 
     this->delayShowImage();
@@ -726,29 +762,29 @@ void CATextField::setTextColor(const CAColor4B& var)
 
 const CAColor4B& CATextField::getTextColor()
 {
-	return m_sTextColor; 
+	return m_cTextColor; 
 }
 
 void CATextField::setKeyboardType(const KeyboardType& var)
 {
-	m_keyBoardType = var;
+	m_eKeyBoardType = var;
 	setKeyboardTypeJNI(m_u__ID,(int)var);
 }
 
 const CATextField::KeyboardType& CATextField::getKeyboardType()
 {
-	return m_keyBoardType;
+	return m_eKeyBoardType;
 }
 
 void CATextField::setReturnType(const ReturnType& var)
 {
-	m_returnType = var;
+	m_eReturnType = var;
 	setReturnTypeJNI(m_u__ID, (int)var);
 }
 
 const CATextField::ReturnType& CATextField::getReturnType()
 {
-	return m_returnType;
+	return m_eReturnType;
 }
 
 void CATextField::setBackgroundImage(CAImage* image)
@@ -763,17 +799,36 @@ void CATextField::setBackgroundImage(CAImage* image)
 
 void CATextField::setTextFieldAlign(const TextFieldAlign& var)
 {
-    m_align = var;
+    m_eAlign = var;
     
-    setTextFieldAlignJNI(m_u__ID,(int)var);
+    setTextFieldAlignJNI(m_u__ID, (int)var);
     
     this->delayShowImage();
 }
 
 const CATextField::TextFieldAlign& CATextField::getTextFieldAlign()
 {
-    return m_align;
+    return m_eAlign;
 }
+
+void CATextField::setSecureTextEntry(bool var)
+{
+    m_bSecureTextEntry = var;
+    if (m_bSecureTextEntry)
+    {
+        setSecureTextEntryJNI(m_u__ID, 1);
+    }
+    else
+    {
+        setSecureTextEntryJNI(m_u__ID, 0);
+    }
+}
+
+bool CATextField::isSecureTextEntry()
+{
+    return m_bSecureTextEntry;
+}
+
 
 void CATextField::setMaxLenght(int var)
 {

@@ -92,6 +92,7 @@ public:
 	}TextFieldAlign;
     
 public:
+    
     CATextField();
     
     virtual ~CATextField();
@@ -115,40 +116,47 @@ public:
 
     //edit clearButton default:ClearButtonNone
     //MarginsRight set,clearbutton will be clear
-    CC_PROPERTY_PASS_BY_REF(ClearButtonMode, m_clearBtn, ClearButtonMode);
+    CC_PROPERTY_PASS_BY_REF(ClearButtonMode, m_eClearBtn, ClearButtonMode);
     
     //textfield Margins    default:left 16,right 16
-    CC_PROPERTY(int, m_marginLeft, MarginLeft);
-    CC_PROPERTY(int, m_marginRight, MarginRight);
+    CC_PROPERTY(int, m_iMarginLeft, MarginLeft);
+    CC_PROPERTY(int, m_iMarginRight, MarginRight);
     
     //textfield Margins image
     void setMarginImageLeft(const DSize& imgSize,const std::string& filePath);
     void setMarginImageRight(const DSize& imgSize,const std::string& filePath);
     
     //textfield font size
-    CC_PROPERTY(int, m_fontSize, FontSize);
+    CC_PROPERTY(int, m_iFontSize, FontSize);
     
     //splaceHolder  Text/Color
-    CC_PROPERTY_PASS_BY_REF(std::string, m_placeHolderText, PlaceHolderText);
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_placeHdolderColor, PlaceHolderColor);
+    CC_PROPERTY_PASS_BY_REF(std::string, m_sPlaceHolderText, PlaceHolderText);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cPlaceHdolderColor, PlaceHolderColor);
     
     //Text     Text/Color
     CC_PROPERTY_PASS_BY_REF(std::string, m_sText, Text);
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTextColor, TextColor);
+    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cTextColor, TextColor);
     
     //keyBoardType     default:KeyboardTypeDefault
-    CC_PROPERTY_PASS_BY_REF(KeyboardType, m_keyBoardType, KeyboardType);
+    CC_PROPERTY_PASS_BY_REF(KeyboardType, m_eKeyBoardType, KeyboardType);
     
     //returnType       default:ReturnTypeDone
-    CC_PROPERTY_PASS_BY_REF(ReturnType, m_returnType, ReturnType);
+    CC_PROPERTY_PASS_BY_REF(ReturnType, m_eReturnType, ReturnType);
     
 	//textFieldAlign  default:center
-	CC_PROPERTY_PASS_BY_REF(TextFieldAlign, m_align, TextFieldAlign);
-
+	CC_PROPERTY_PASS_BY_REF(TextFieldAlign, m_eAlign, TextFieldAlign);
+    
+    //Password, the default is false
+    CC_PROPERTY_IS(bool, m_bSecureTextEntry, SecureTextEntry);
+    
+    //Return key to recover the keyboard, the default is true
+    CC_SYNTHESIZE_IS(bool, m_bAllowkeyBoardHide, AllowkeyBoardHide);
+    
     CC_PROPERTY(int, m_iMaxLenght, MaxLenght);
     
     //BackgroundImage
     void setBackgroundImage(CAImage* image);
+    
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);

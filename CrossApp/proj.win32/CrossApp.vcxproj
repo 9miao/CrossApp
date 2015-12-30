@@ -217,7 +217,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\platform\platform.cpp" />
     <ClCompile Include="..\platform\win32\CAClipboard.cpp" />
     <ClCompile Include="..\platform\win32\CADensityDpi.cpp" />
-    <ClCompile Include="..\platform\win32\CATextFieldX.cpp" />
+    <ClCompile Include="..\platform\win32\CATextField.cpp" />
     <ClCompile Include="..\platform\win32\CAWebViewImpl.cpp" />
     <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication.cpp" />
@@ -299,7 +299,6 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\view\CAScrollView.cpp" />
     <ClCompile Include="..\view\CATableView.cpp" />
     <ClCompile Include="..\view\CATextEditHelper.cpp" />
-    <ClCompile Include="..\view\CATextField.cpp" />
     <ClCompile Include="..\view\CATextView.cpp" />
     <ClCompile Include="..\view\CAView.cpp" />
     <ClCompile Include="..\view\CAWaterfallView.cpp" />
@@ -357,7 +356,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\platform\CAFreeTypeFont.h" />
     <ClInclude Include="..\platform\CAFTFontCache.h" />
     <ClInclude Include="..\platform\CATempTypeFont.h" />
-    <ClInclude Include="..\platform\CATextFieldX.h" />
+    <ClInclude Include="..\platform\CATextField.h" />
     <ClInclude Include="..\platform\CCAccelerometerDelegate.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
@@ -478,7 +477,6 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\view\CAScrollView.h" />
     <ClInclude Include="..\view\CATableView.h" />
     <ClInclude Include="..\view\CATextEditHelper.h" />
-    <ClInclude Include="..\view\CATextField.h" />
     <ClInclude Include="..\view\CATextView.h" />
     <ClInclude Include="..\view\CAView.h" />
     <ClInclude Include="..\view\CAWaterfallView.h" />
