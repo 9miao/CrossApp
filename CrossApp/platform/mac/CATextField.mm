@@ -157,7 +157,15 @@
     [super keyUp:theEvent];
     if ([theEvent keyCode] == 36)
     {
-        _textField->resignFirstResponder();
+        if (_textField->isAllowkeyBoardHide())
+        {
+            _textField->resignFirstResponder();
+        }
+        
+        if (_textField->getDelegate())
+        {
+            _textField->getDelegate()->textFieldShouldReturn(_textField);
+        }
     }
 }
 
@@ -174,6 +182,7 @@ CATextField::CATextField()
 , m_pDelegate(NULL)
 , m_bUpdateImage(true)
 , m_bSecureTextEntry(false)
+, m_bAllowkeyBoardHide(true)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
 , m_iFontSize(40)

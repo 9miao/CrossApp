@@ -145,13 +145,18 @@ public:
     
 	//textFieldAlign  default:center
 	CC_PROPERTY_PASS_BY_REF(TextFieldAlign, m_eAlign, TextFieldAlign);
-
+    
+    //Password, the default is false
     CC_PROPERTY_IS(bool, m_bSecureTextEntry, SecureTextEntry);
+    
+    //Return key to recover the keyboard, the default is true
+    CC_SYNTHESIZE_IS(bool, m_bAllowkeyBoardHide, AllowkeyBoardHide);
     
     CC_PROPERTY(int, m_iMaxLenght, MaxLenght);
     
     //BackgroundImage
     void setBackgroundImage(CAImage* image);
+    
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);

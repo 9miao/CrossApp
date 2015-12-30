@@ -320,6 +320,12 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardReturnCallBack(JNIEnv *env, jclass cls, jint key, jint height)
     {
         CATextField* textField = s_map[(int)key];
+        
+        if (_textField->isAllowkeyBoardHide())
+        {
+            _textField->resignFirstResponder();
+        }
+        
         if (textField->getDelegate())
         {
             textField->getDelegate()->textFieldShouldReturn(textField);
@@ -366,6 +372,7 @@ CATextField::CATextField()
 , m_pTextField(NULL)
 , m_bUpdateImage(true)
 , m_bSecureTextEntry(false)
+, m_bAllowkeyBoardHide(true)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
 , m_iFontSize(40)

@@ -112,6 +112,20 @@
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (_textField->isAllowkeyBoardHide())
+    {
+        _textField->resignFirstResponder();
+    }
+    
+    if (_textField->getDelegate())
+    {
+        _textField->getDelegate()->textFieldShouldReturn(_textField);
+    }
+    return NO;
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     _isShouldEdit = YES;
@@ -156,6 +170,7 @@ CATextField::CATextField()
 , m_pDelegate(NULL)
 , m_bUpdateImage(true)
 , m_bSecureTextEntry(false)
+, m_bAllowkeyBoardHide(true)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
 , m_iFontSize(40)
@@ -712,6 +727,7 @@ bool CATextField::isSecureTextEntry()
 {
     return m_bSecureTextEntry;
 }
+
 
 void CATextField::setMaxLenght(int var)
 {
