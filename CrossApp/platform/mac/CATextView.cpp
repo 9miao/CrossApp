@@ -242,27 +242,26 @@ const CAColor4B& CATextView::getTextColor()
 	return m_sTextColor; 
 }
 
-
-// void CATextView::setBackgroundImage(CAImage* image)
-// {
-//     if (image)
-//     {
-//         DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
-// 		m_pBgImageView->setCapInsets(capInsets);
-//     }
-//     m_pBgImageView->setImage(image);
-// }
+void CATextView::setBackgroundImage(CAImage* image)
+{
+    if (image)
+    {
+        DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
+        m_pBgImageView->setCapInsets(capInsets);
+    }
+    m_pBgImageView->setImage(image);
+}
 
 void CATextView::setTextViewAlign(const TextViewAlign& var)
 {
-    m_align = var;
+    m_eAlign = var;
     
     this->delayShowImage();
 }
 
 const CATextView::TextViewAlign& CATextView::getTextViewAlign()
 {
-    return m_align;
+    return m_eAlign;
 }
 
 

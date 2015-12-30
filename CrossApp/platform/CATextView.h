@@ -83,7 +83,11 @@ public:
     CC_PROPERTY_PASS_BY_REF(int, m_iFontSize, TextFontSize);
     
     //TextViewAlign
-    CC_PROPERTY_PASS_BY_REF(TextViewAlign,m_align,TextViewAlign);
+    CC_PROPERTY_PASS_BY_REF(TextViewAlign,m_eAlign,TextViewAlign);
+    
+    //BackgroundImage
+    void setBackgroundImage(CAImage* image);
+    
 private:
     bool init();
     

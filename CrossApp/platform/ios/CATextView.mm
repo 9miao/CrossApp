@@ -163,10 +163,10 @@ bool CATextView::init()
     //bg
     CAImage* image = CAImage::create("source_material/textView_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
-    m_pBgImageView = CAScale9ImageView::createWithFrame(DRectZero);
-    m_pBgImageView->setImage(image);
-    m_pBgImageView->setCapInsets(capInsets);
-    this->insertSubview(m_pBgImageView, -1);
+    m_pBackgroundView = CAScale9ImageView::createWithFrame(DRectZero);
+    m_pBackgroundView->setImage(image);
+    m_pBackgroundView->setCapInsets(capInsets);
+    this->insertSubview(m_pBackgroundView, -1);
 
     //show
     m_pShowImageView = CAImageView::createWithFrame(DRect(0,0,0,0));
@@ -319,27 +319,12 @@ void CATextView::setContentSize(const DSize& contentSize)
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     [textView_iOS setContentSize:rect.size];
     
-    m_pBgImageView->setFrame(this->getBounds());
+    m_pBackgroundView->setFrame(this->getBounds());
     m_pShowImageView->setFrame(this->getBounds());
 }
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    CCLog("----%d",getTag());
-    return true;
-}
-
-void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
-{
-    
-}
-
-void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
-{
-    DPoint point = this->convertTouchToNodeSpace(pTouch);
-    
-    if (this->getBounds().containsPoint(point))
-    {
-        becomeFirstResponder();
+   becomeFirstResponder();
     }
     else
     {
@@ -388,13 +373,26 @@ void CATextView::setTextFontSize(const int &var)
     
     delayShowImage();
 }
+
 const int& CATextView::getTextFontSize()
 {
     return m_iFontSize;
 }
+
+void CATextView::setBackgroundImage(CAImage* image)
+{
+    if (image)
+    {
+        DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
+        m_pBgImageView->setCapInsets(capInsets);
+    }
+    m_pBgImageView->setImage(image);
+}
+
+
 void CATextView::setTextViewAlign(const TextViewAlign &var)
 {
-    m_align = var;
+    m_eAlign = var;
     
     textView_iOS1.textAlignment = (NSTextAlignment)var;
     
@@ -403,7 +401,7 @@ void CATextView::setTextViewAlign(const TextViewAlign &var)
 }
 const CATextView::TextViewAlign& CATextView::getTextViewAlign()
 {
-    return m_align;
+    return m_eAlign;
 }
 
 NS_CC_END
