@@ -281,8 +281,8 @@ CATextView::CATextView()
 {
     s_map[m_u__ID] = this;
     this->setHaveNextResponder(false);
-//	textViewOnCreateView(m_u__ID);
-//    textViewSetFontSizeJNI(m_u__ID, m_iFontSize / 2);
+	textViewOnCreateView(m_u__ID);
+    textViewSetFontSizeJNI(m_u__ID, m_iFontSize / 2);
 }
 
 CATextView::~CATextView()
