@@ -321,9 +321,9 @@ extern "C"
     {
         CATextField* textField = s_map[(int)key];
         
-        if (_textField->isAllowkeyBoardHide())
+        if (textField->isAllowkeyBoardHide())
         {
-            _textField->resignFirstResponder();
+            textField->resignFirstResponder();
         }
         
         if (textField->getDelegate())
