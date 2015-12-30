@@ -382,15 +382,17 @@ void CAStepper::onEnter()
         m_pIncrementImageView = CAImageView::createWithImage(m_pIncrementImage[CAControlStateNormal]);
         m_pIncrementImageView->retain();
         if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+            int tempw = MIN(getBounds().size.width, getBounds().size.height);
             m_pIncrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
             m_pIncrementImageView->setCenter(DRect(getBounds().size.width/4*3, getBounds().size.height/2,
-                                                   getBounds().size.width/2,
-                                                   getBounds().size.height));
+                                                   tempw,
+                                                   tempw));
         }else{
+            int tempw = MIN(getBounds().size.width, getBounds().size.height);
             m_pIncrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByVertical);
             m_pIncrementImageView->setCenter(DRect(getBounds().size.width/2, getBounds().size.height/4,
-                                                   getBounds().size.width,
-                                                   getBounds().size.height/2));
+                                                   tempw,
+                                                   tempw));
         }
         
         insertSubview(m_pIncrementImageView,10);
@@ -401,15 +403,17 @@ void CAStepper::onEnter()
         m_pDecrementImageView = CAImageView::createWithImage(m_pDecrementImage[CAControlStateNormal]);
         m_pDecrementImageView->retain();
         if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+            int tempw = MIN(getBounds().size.width, getBounds().size.height);
             m_pDecrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
             m_pDecrementImageView->setCenter(DRect(getBounds().size.width/4, getBounds().size.height/2,
-                                                   getBounds().size.width/2,
-                                                   getBounds().size.height));
+                                                   tempw,
+                                                   tempw));
         }else{
+            int tempw = MIN(getBounds().size.width, getBounds().size.height);
             m_pDecrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByVertical);
             m_pDecrementImageView->setCenter(DRect(getBounds().size.width/2, getBounds().size.height/4*3,
-                                                   getBounds().size.width,
-                                                   getBounds().size.height/2));
+                                                   tempw,
+                                                   tempw));
         }
         
         insertSubview(m_pDecrementImageView,10);
@@ -552,26 +556,30 @@ void CAStepper::setContentSize(const DSize & var)
     // init increment
     if (m_pIncrementImageView) {
         if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+            int tempw = MIN(getBounds().size.width, getBounds().size.height);
             m_pIncrementImageView->setCenter(DRect(getBounds().size.width/4*3, getBounds().size.height/2,
-                                                    getBounds().size.width/2,
-                                                    getBounds().size.height));
+                                                    tempw,
+                                                    tempw));
         }else{
+            int tempw = MIN(getBounds().size.width, getBounds().size.height);
             m_pIncrementImageView->setCenter(DRect(getBounds().size.width/2, getBounds().size.height/4,
-                                                    getBounds().size.width,
-                                                    getBounds().size.height/2));
+                                                    tempw,
+                                                    tempw));
         }
     }
     
     // init decrement
     if (m_pDecrementImageView) {
         if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+            int tempw = MIN(getBounds().size.width, getBounds().size.height);
             m_pDecrementImageView->setCenter(DRect(getBounds().size.width/4, getBounds().size.height/2,
-                                                    getBounds().size.width/2,
-                                                    getBounds().size.height));
+                                                    tempw,
+                                                    tempw));
         }else{
+            int tempw = MIN(getBounds().size.width, getBounds().size.height);
             m_pDecrementImageView->setCenter(DRect(getBounds().size.width/2, getBounds().size.height/4*3,
-                                                    getBounds().size.width,
-                                                    getBounds().size.height/2));
+                                                    tempw,
+                                                    tempw));
         }
     }
 }
