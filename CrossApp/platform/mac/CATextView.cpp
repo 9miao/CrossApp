@@ -17,7 +17,7 @@ NS_CC_BEGIN
 
 
 CATextView::CATextView()
-: m_pBgImageView(NULL)
+: m_pBackgroundView(NULL)
 , m_pShowImageView(NULL)
 , m_pTextView(NULL)
 , m_iFontSize(40)
@@ -72,12 +72,12 @@ bool CATextView::becomeFirstResponder()
 
 void CATextView::hideTextView()
 {
-    m_pBgImageView->setVisible(false);
+    m_pBackgroundView->setVisible(false);
 }
 
 void CATextView::showTextView()
 {
-    m_pBgImageView->setVisible(true);
+    m_pBackgroundView->setVisible(true);
 }
 
 void CATextView::hideNativeTextView()
@@ -132,9 +132,9 @@ bool CATextView::init()
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
 
-	m_pBgImageView = CAScale9ImageView::createWithImage(image);
-	m_pBgImageView->setCapInsets(capInsets);
-	this->insertSubview(m_pBgImageView, -1);
+	m_pBackgroundView = CAScale9ImageView::createWithImage(image);
+	m_pBackgroundView->setCapInsets(capInsets);
+	this->insertSubview(m_pBackgroundView, -1);
     
 	m_pShowImageView = CAImageView::createWithFrame(DRect(0, 0, 1, 1));
 	m_pShowImageView->setTextTag("textView");
@@ -169,7 +169,7 @@ void CATextView::setContentSize(const DSize& contentSize)
     size.height =  s_dip_to_px(worldContentSize.height);
 
     
-	m_pBgImageView->setFrame(this->getBounds());
+	m_pBackgroundView->setFrame(this->getBounds());
     m_pShowImageView->setFrame(this->getBounds());
 }
 
@@ -247,9 +247,9 @@ void CATextView::setBackgroundImage(CAImage* image)
     if (image)
     {
         DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
-        m_pBgImageView->setCapInsets(capInsets);
+        m_pBackgroundView->setCapInsets(capInsets);
     }
-    m_pBgImageView->setImage(image);
+    m_pBackgroundView->setImage(image);
 }
 
 void CATextView::setTextViewAlign(const TextViewAlign& var)

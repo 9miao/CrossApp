@@ -384,9 +384,9 @@ void CATextView::setBackgroundImage(CAImage* image)
     if (image)
     {
         DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
-        m_pBgImageView->setCapInsets(capInsets);
+        m_pBackgroundView->setCapInsets(capInsets);
     }
-    m_pBgImageView->setImage(image);
+    m_pBackgroundView->setImage(image);
 }
 
 
