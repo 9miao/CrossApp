@@ -93,13 +93,7 @@ void CATextView::showNativeTextView()
 
 void CATextView::delayShowImage()
 {
-    if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
-    {
-        CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
-        CAViewAnimation::setAnimationDuration(0);
-		CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextView::showImage));
-        CAViewAnimation::commitAnimations();
-    }
+
 }
 
 void CATextView::showImage()

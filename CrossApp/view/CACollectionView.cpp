@@ -468,8 +468,7 @@ void CACollectionView::clearData()
 
 void CACollectionView::reloadData()
 {
-	if (m_pCollectionViewDataSource == NULL)
-		return;
+	CC_RETURN_IF(m_pCollectionViewDataSource == NULL);
     
 	this->reloadViewSizeData();
     

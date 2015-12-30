@@ -720,8 +720,7 @@ int CAAutoCollectionView::calculateAllRects()
 
 void CAAutoCollectionView::reloadData()
 {
-	if (m_pCollectionViewDataSource == NULL)
-		return;
+	CC_RETURN_IF(m_pCollectionViewDataSource == NULL);
     
 	this->reloadViewSizeData();
     

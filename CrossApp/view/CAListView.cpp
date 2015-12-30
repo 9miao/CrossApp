@@ -483,8 +483,7 @@ void CAListView::clearData()
 
 void CAListView::reloadData()
 {
-    if (m_pListViewDataSource == NULL)
-        return;
+    CC_RETURN_IF(m_pListViewDataSource == NULL);
     
     this->reloadViewSizeData();
     
