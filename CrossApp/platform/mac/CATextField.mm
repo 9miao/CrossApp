@@ -172,8 +172,6 @@
 @end
 
 
-
-
 NS_CC_BEGIN
 CATextField::CATextField()
 : m_pBackgroundView(NULL)

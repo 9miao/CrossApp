@@ -74,7 +74,17 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     public static Handler msHandler;
     
     
+    //退到后台返回时候用
     public static CrossAppTextField _sTextField = null;
+    public static CrossAppTextView _sTextView = null;
+    public static void setSingleTextField(CrossAppTextField text) {
+		_sTextField = text;
+	}
+	public static void setSingleTextView(CrossAppTextView text) {
+		_sTextView = text;
+	}
+	
+	
 	public static Cocos2dxActivity getContext()
 	{
 		return Cocos2dxActivity.crossAppActivity;
@@ -85,9 +95,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		return Cocos2dxActivity.frame;
 	}
 	
-	public static void setSingleTextField(CrossAppTextField text) {
-		_sTextField = text;
-	}
+	
+	
 	public static Handler mLightHandler;
 	// ===========================================================
 	// Constructors
@@ -108,6 +117,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
 		CrossAppTextField.initWithHandler();
+		CrossAppTextView.initWithHandler();
+		
 		exeHandler();
 		AndroidNetWorkManager.setContext(this);
 		
@@ -480,6 +491,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		super.onResume();
 		if (_sTextField!=null) {
 			_sTextField.resume();
+		}
+		if (_sTextView!=null) {
+			_sTextView.resume();
 		}
 		
 		

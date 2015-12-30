@@ -936,8 +936,6 @@ void CAView::insertSubview(CAView* subview, int z)
         subview->onEnter();
         subview->onEnterTransitionDidFinish();
     }
-    
-    this->updateDraw();
 }
 
 void CAView::removeFromSuperview()
@@ -1330,6 +1328,7 @@ void CAView::onEnter()
     }
     
     m_bRunning = true;
+    this->updateDraw();
 }
 
 void CAView::onEnterTransitionDidFinish()
