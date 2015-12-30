@@ -1086,12 +1086,12 @@ void CDUIShowView::showTextFieldByIndex()
 void CDUIShowView::showTextView()
 {
     CATextView* textView = CATextView::createWithFrame(DRect(100, 150, winSize.width-200, 300));
-    textView->setPlaceHolder("TextView");
+    //textView->setPlaceHolder("TextView");
     //textView->setSpaceHolderColor(CAColor_blueStyle);
     //textView->setTextColor(CAColor_green);
     //textView->setCursorColor(CAColor_red);
-    textView->setFontSize(_px(40));
-    textView->setSpaceHolderColor(CAColor_blue);
+	textView->setTextFontSize(_px(40));
+    //textView->setSpaceHolderColor(CAColor_blue);
     //textView->setWordWrap(false);
     //textView->setLineSpacing(50);
     //textView->setFontColor(CAColor_gray);

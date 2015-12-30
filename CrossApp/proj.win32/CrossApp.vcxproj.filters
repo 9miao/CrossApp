@@ -395,9 +395,6 @@
       <Filter>script_support</Filter>
     </ClCompile>
     <ClCompile Include="..\basics\CAThread.cpp" />
-    <ClCompile Include="..\view\CATextView.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
     <ClCompile Include="..\view\CALabelStyle.cpp">
       <Filter>view</Filter>
     </ClCompile>
@@ -510,6 +507,9 @@
       <Filter>support</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\win32\CATextField.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CATextView.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
   </ItemGroup>
@@ -896,9 +896,6 @@
     </ClInclude>
     <ClInclude Include="..\basics\CASyncQueue.h" />
     <ClInclude Include="..\basics\CAThread.h" />
-    <ClInclude Include="..\view\CATextView.h">
-      <Filter>view</Filter>
-    </ClInclude>
     <ClInclude Include="..\view\CALabelStyle.h">
       <Filter>view</Filter>
     </ClInclude>
@@ -1027,6 +1024,9 @@
       <Filter>support</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CATextField.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CATextView.h">
       <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
