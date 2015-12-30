@@ -74,6 +74,7 @@ public:
             if (m_pTextFieldX->isAllowkeyBoardHide())
             {
                 m_pTextFieldX->resignFirstResponder();
+				EndMouseMoveArr();
             }
 			if (pDelegate)
 			{
