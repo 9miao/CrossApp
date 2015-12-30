@@ -24,7 +24,7 @@
 @property(nonatomic,retain) NSString* beforeText;
 
 -(void)regiestKeyBoardMessage;
-
+-(void)removeTextView;
 @end
  
 @implementation IOSTextField
@@ -46,6 +46,12 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
     
     [self addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
+}
+
+-(void)removeTextView
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeFromSuperview];
 }
 
 - (void)textFieldEditChanged:(UITextField *)textField
@@ -200,7 +206,7 @@ CATextField::CATextField()
 
 CATextField::~CATextField()
 {
-    [textField_iOS removeFromSuperview];
+    [textField_iOS removeTextView];
 }
 
 void CATextField::onEnterTransitionDidFinish()

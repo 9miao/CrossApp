@@ -629,7 +629,10 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
     else
     {
         CAButton* rightMarginView = (CAButton*)this->getSubviewByTag(1011);
-        rightMarginView->removeFromSuperview();
+        if (rightMarginView)
+        {
+            rightMarginView->removeFromSuperview();
+        }
         setMarginRight(10);
     }
     
